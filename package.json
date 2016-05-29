@@ -1,0 +1,19 @@
+{
+  "name": "lisk-nano",
+  "version": "0.0.1",
+  "description": "Lisk Nano",
+  "homepage": "https://github.com/LiskHQ/lisk-nano",
+  "bugs": "https://github.com/LiskHQ/lisk-nano/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LiskHQ/lisk-nano"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
+  "license": "MIT"
+}
