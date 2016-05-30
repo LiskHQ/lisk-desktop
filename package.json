@@ -10,12 +10,43 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "jspm": "^0.16.35"
+    "babel-cli": "^6.9.0",
+    "babel-preset-es2015": "^6.9.0",
+    "gulp": "^3.9.1",
+    "gulp-connect": "^4.0.0",
+    "gulp-jspm": "^0.5.10",
+    "gulp-less": "^3.1.0",
+    "gulp-pug": "^3.0.2",
+    "gulp-rename": "^1.2.2",
+    "gulp-util": "^3.0.7",
+    "jspm": "^0.16.35",
+    "require-dir": "^0.3.0"
   },
   "babel": {
     "presets": [
       "es2015"
     ]
   },
-  "license": "MIT"
+  "license": "MIT",
+  "jspm": {
+    "directories": {
+      "baseURL": "src",
+      "packages": "src/lib"
+    },
+    "dependencies": {
+      "angular": "github:angular/bower-angular@^1.5.6",
+      "angular-animate": "github:angular/bower-angular-animate@^1.5.6",
+      "angular-aria": "github:angular/bower-angular-aria@^1.5.6",
+      "angular-material": "github:angular/bower-material@^1.0.9",
+      "angular-messages": "github:angular/bower-angular-messages@^1.5.6",
+      "css": "github:systemjs/plugin-css@^0.1.22",
+      "jquery": "npm:jquery@^2.2.4",
+      "path": "github:jspm/nodelibs-path@^0.1.0"
+    },
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.8.24",
+      "babel-runtime": "npm:babel-runtime@^5.8.24",
+      "core-js": "npm:core-js@^1.1.4"
+    }
+  }
 }
