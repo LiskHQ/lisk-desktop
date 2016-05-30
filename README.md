@@ -3,6 +3,18 @@
 
 # Lisk Nano
 
+## Development
+
+```
+git clone https://github.com/LiskHQ/lisk-nano.git
+cd lisk-nano
+npm install
+./node_modules/.bin/jspm install
+gulp
+```
+
+Open http://localhost:8080
+
 ## License
 
 The MIT License (MIT)
