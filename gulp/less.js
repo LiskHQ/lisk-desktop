@@ -8,7 +8,8 @@ import order from 'gulp-order'
 import { gulp as config } from '../config'
 
 gulp.task('less:build', () => {
-  gulp.src(config.less.src)
+  gulp
+    .src(config.less.src)
     .pipe(order(['index.less']))
     .pipe(concat(config.less.out))
     .pipe(less())

@@ -9,4 +9,4 @@ gulp.task('connect', () => {
     root: config.build,
     livereload: true,
   })
-});
+})
