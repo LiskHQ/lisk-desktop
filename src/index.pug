@@ -2,9 +2,9 @@ doctype html
 html
   head
     meta(charset='utf-8')
-    meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
     title Lisk Nano
 
+    link(rel='stylesheet', href='app.css')
     style(type='text/css').
       .preloading {
         position: absolute;
@@ -78,7 +78,7 @@ html
         md-toolbar
           .md-toolbar-tools
             h2 Lisk Nano
-        md-dialog-content(style='min-width: 800px')
+        md-dialog-content
           md-tabs(md-dynamic-height)
             md-tab(label='Login with my passphrase')
               md-content.md-padding
@@ -86,7 +86,7 @@ html
                   label Passphrase
                   input(ng-model='passphrase')
               div.md-padding(layout="row", layout-align="center end")
-                md-button.md-raised.md-primary(ng-disabled='passphrase.valid', ng-click="answer('not useful')") Login
+                md-button.md-raised.md-primary(ng-disabled='passphrase.valid') Login
             md-tab(label='Create a new random wallet')
               md-content.md-padding
 

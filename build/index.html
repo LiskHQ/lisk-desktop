@@ -2,8 +2,8 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Lisk Nano</title>
+    <link rel="stylesheet" href="app.css">
     <style type="text/css">
       .preloading {
         position: absolute;
@@ -85,7 +85,7 @@
             <h2>Lisk Nano</h2>
           </div>
         </md-toolbar>
-        <md-dialog-content style="min-width: 800px">
+        <md-dialog-content>
           <md-tabs md-dynamic-height>
             <md-tab label="Login with my passphrase">
               <md-content class="md-padding">
@@ -95,7 +95,7 @@
                 </md-input-container>
               </md-content>
               <div class="md-padding" layout="row" layout-align="center end">
-                <md-button class="md-raised md-primary" ng-disabled="passphrase.valid" ng-click="answer('not useful')">Login</md-button>
+                <md-button class="md-raised md-primary" ng-disabled="passphrase.valid">Login</md-button>
               </div>
             </md-tab>
             <md-tab label="Create a new random wallet">
