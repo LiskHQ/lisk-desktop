@@ -6,9 +6,8 @@
   "bugs": "https://github.com/LiskHQ/lisk-nano/issues",
   "scripts": {
     "clean": "rimraf build",
-    "index": "pug -P -o build src/index.pug",
-    "build": "npm run clean && npm run index && webpack --progress --profile -p",
-    "server": "npm run clean && npm run index && webpack-dev-server --history-api-fallback --inline --progress --content-base build"
+    "build": "npm run clean && webpack --progress --profile -p",
+    "server": "npm run clean && webpack-dev-server --history-api-fallback --inline --progress --content-base build"
   },
   "repository": {
     "type": "git",
