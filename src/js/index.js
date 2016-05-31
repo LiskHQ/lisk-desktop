@@ -1,8 +1,12 @@
 
+import 'babel-polyfill'
+
+import '../css/index.less'
+
 import $ from 'jquery'
 import angular from 'angular'
 
-import 'angular-material/angular-material.min.css!'
+import 'angular-material/angular-material.min.css'
 import 'angular-material'
 
 import './controllers'
