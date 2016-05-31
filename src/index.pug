@@ -70,22 +70,4 @@ html
   body(ng-controller='AppCtrl')
     .preloading: .preloading-loader: svg.preloading-circular(viewbox='25 25 50 50')
       circle.preloading-path(cx='50', cy='50', r='20', fill='none', stroke-width='2', stroke-miterlimit='10')
-
-    script(type='text/ng-template', id='login')
-      md-dialog.login-dialog(aria-label='Lisk Nano')
-        md-toolbar
-          .md-toolbar-tools
-            h2 Lisk Nano
-        md-dialog-content
-          md-tabs(md-dynamic-height)
-            md-tab(label='Login with my passphrase')
-              md-content.md-padding
-                md-input-container.md-block
-                  label Passphrase
-                  input(ng-model='passphrase')
-              div.md-padding(layout="row", layout-align="center end")
-                md-button.md-raised.md-primary(ng-disabled='passphrase.valid') Login
-            md-tab(label='Create a new random wallet')
-              md-content.md-padding
-
     script(src='app.js')

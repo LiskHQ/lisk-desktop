@@ -6,7 +6,7 @@ angular.module('app.controllers', [])
 .controller('AppCtrl', ['$scope', '$mdDialog', ($scope, $mdDialog) => {
   $scope.start = (ev) => {
     $mdDialog.show({
-      templateUrl: 'login',
+      template: require('../view/login.pug'),
       escapeToClose: false
     })
   }
