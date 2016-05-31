@@ -1,5 +1,7 @@
 
-module.exports = {
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+
+export default {
   entry: './src/js/index.js',
   output: {
     path: './build',
@@ -25,5 +27,16 @@ module.exports = {
         loader: 'pug-html-loader'
       },
     ]
-  }
+  },
+  externals: {
+    jquery: 'jQuery',
+    angular: 'angular'
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: 'src/index.pug',
+      minify: false
+    })
+  ]
 }
