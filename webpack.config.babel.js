@@ -28,6 +28,9 @@ export default {
       },
     ]
   },
+  resolve: {
+    extensions: ['', '.js', '.pug', '.less']
+  },
   externals: {
     jquery: 'jQuery',
     angular: 'angular'

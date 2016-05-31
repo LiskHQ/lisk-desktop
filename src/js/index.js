@@ -1,7 +1,7 @@
 
 import 'babel-polyfill'
 
-import '../css/index.less'
+import '../css'
 
 import $ from 'jquery'
 import angular from 'angular'
