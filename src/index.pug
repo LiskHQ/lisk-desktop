@@ -1,3 +1,18 @@
+-
+  cdn = {
+    js: [
+      "https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js",
+      "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js",
+      "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js",
+      "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js",
+      "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js",
+      "https://ajax.googleapis.com/ajax/libs/angular_material/1.0.7/angular-material.min.js"
+    ],
+    css: [
+      "https://ajax.googleapis.com/ajax/libs/angular_material/1.0.7/angular-material.min.css"
+    ]
+  }
+
 doctype html
 html
   head
@@ -67,7 +82,12 @@ html
         66% { stroke: #0288d1; }
       }
 
+    each item in cdn.css
+      link(rel='stylesheet', href=item)
+
   body(ng-controller='AppCtrl')
     .preloading: .preloading-loader: svg.preloading-circular(viewbox='25 25 50 50')
       circle.preloading-path(cx='50', cy='50', r='20', fill='none', stroke-width='2', stroke-miterlimit='10')
-    script(src='app.js')
+
+    each item in cdn.js
+      script(src=item)
