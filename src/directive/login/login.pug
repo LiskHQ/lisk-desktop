@@ -1,0 +1,14 @@
+md-toolbar
+  .md-toolbar-tools
+    h2 Lisk Nano
+md-dialog-content
+  md-tabs(md-dynamic-height)
+    md-tab(label='SIGN IN')
+      md-content.md-padding
+        md-input-container.md-block(md-is-error='!valid')
+          label Passphrase
+          input(ng-model='passphrase', ng-keyup='validPassphrase($event)')
+      div.md-padding(layout='row', layout-align='center end')
+        md-button.md-raised.md-primary(ng-disabled='!valid') Login
+    md-tab(label='NEW ACCOUNT')
+      md-content.md-padding

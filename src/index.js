@@ -4,16 +4,13 @@ import './css'
 import $ from 'jquery'
 import angular from 'angular'
 
-import './js/controllers'
-import './js/directives'
-import './js/filters'
-
-angular.module('app', [
+let app = angular.module('app', [
   'ngMaterial',
-  'app.controllers',
-  'app.directives',
-  'app.filters'
 ])
+
+require('./controller/main').default(app)
+
+require('./directive/login/login').default(app)
 
 setTimeout(() => {
   $('.preloading').remove()
@@ -21,4 +18,4 @@ setTimeout(() => {
   angular.element(document).ready(() => {
     angular.bootstrap(document, ['app'])
   })
-}, 2000)
+}, 1)
