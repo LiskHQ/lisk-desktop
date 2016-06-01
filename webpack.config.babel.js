@@ -3,11 +3,6 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 
 export default {
-  entry: './src/index.js',
-  output: {
-    path: './build',
-    filename: 'app.js',
-  },
   module: {
     loaders: [
       {
