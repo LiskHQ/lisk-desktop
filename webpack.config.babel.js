@@ -1,5 +1,6 @@
 
 import HtmlWebpackPlugin from 'html-webpack-plugin'
+import ExtractTextPlugin from 'extract-text-webpack-plugin'
 
 export default {
   entry: './src/js/index.js',
@@ -16,30 +17,27 @@ export default {
       },
       {
         test: /\.less$/,
-        loader: 'style!css!less'
-      },
-      {
-        test: /\.css$/,
-        loader: 'style!css'
+        loader: ExtractTextPlugin.extract("style", "css?minimize!less"),
       },
       {
         test: /\.pug$/,
-        loader: 'pug-html-loader'
+        loader: 'pug-html-loader',
       },
     ]
   },
   resolve: {
-    extensions: ['', '.js', '.pug', '.less']
+    extensions: ['', '.js', '.pug', '.less'],
   },
   externals: {
     jquery: 'jQuery',
-    angular: 'angular'
+    angular: 'angular',
   },
   plugins: [
+    new ExtractTextPlugin("style.css"),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'src/index.pug',
-      minify: false
+      minify: false,
     })
   ]
 }
