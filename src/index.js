@@ -1,14 +1,12 @@
 
-import 'babel-polyfill'
-
-import '../css'
+import './css'
 
 import $ from 'jquery'
 import angular from 'angular'
 
-import './controllers'
-import './directives'
-import './filters'
+import './js/controllers'
+import './js/directives'
+import './js/filters'
 
 angular.module('app', [
   'ngMaterial',
