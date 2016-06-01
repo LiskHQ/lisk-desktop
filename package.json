@@ -5,11 +5,11 @@
   "homepage": "https://github.com/LiskHQ/lisk-nano",
   "bugs": "https://github.com/LiskHQ/lisk-nano/issues",
   "scripts": {
-    "dev": "npm run clean && webpack-dev-server --history-api-fallback --inline --progress --content-base build",
-    "build:clean": "rimraf build",
+    "build:clean": "rimraf ./build",
     "build": "npm run build:clean && webpack --progress --profile --colors --display-error-details --display-cached -d ./src/index.js ./build/app.js",
-    "dist:clean": "rimraf dist",
-    "dist": "npm run dist:clean && webpack --progress --profile --colors --display-error-details --display-cached -p ./src/index.js ./dist/app.js"
+    "dist:clean": "rimraf ./dist",
+    "dist": "npm run dist:clean && webpack --progress --profile --colors --display-error-details --display-cached -p ./src/index.js ./dist/app.js",
+    "dev": "npm run build:clean && webpack-dev-server --history-api-fallback --inline --progress --content-base ./build"
   },
   "repository": {
     "type": "git",
