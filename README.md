@@ -9,7 +9,7 @@
 git clone https://github.com/LiskHQ/lisk-nano.git
 cd lisk-nano
 npm install
-npm run server
+npm run dev
 ```
 
 Open http://localhost:8080
