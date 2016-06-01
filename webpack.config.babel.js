@@ -16,7 +16,11 @@ export default {
       },
       {
         test: /\.pug$/,
-        loader: 'pug-html-loader?pretty',
+        loader: 'pug-html?pretty',
+      },
+      {
+        test: /\.json$/,
+        loader: 'json',
       },
     ]
   },

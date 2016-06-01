@@ -22,6 +22,7 @@
     "angular-material": "^1.1.0-rc4-master-06e7e99",
     "angular-messages": "^1.5.6",
     "babel-polyfill": "^6.9.1",
+    "bitcore-mnemonic": "^1.1.1",
     "jquery": "^2.2.4"
   },
   "devDependencies": {
@@ -32,6 +33,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
     "html-webpack-plugin": "^2.19.0",
+    "json-loader": "^0.5.4",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
     "pug": "^2.0.0-alpha8",
