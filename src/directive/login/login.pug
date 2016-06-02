@@ -3,12 +3,19 @@ md-toolbar
     h2 Lisk Nano
 md-dialog-content
   md-tabs(md-dynamic-height)
-    md-tab(label='SIGN IN')
+    md-tab(label='SIGN IN', md-on-select='tab = 1; reset(); focus()')
       md-content.md-padding
-        md-input-container.md-block(md-is-error='!valid')
-          label Passphrase
-          input(ng-model='passphrase', ng-keyup='validPassphrase($event)')
-      div.md-padding(layout='row', layout-align='center end')
-        md-button.md-raised.md-primary(ng-disabled='!valid') Login
-    md-tab(label='NEW ACCOUNT')
+        form(name='form')
+          md-input-container.md-block(md-is-error='passphrase.valid === 0')
+            label Enter your passphrase
+            input(ng-model='passphrase.value')
+    md-tab(label='NEW ACCOUNT', md-on-select='tab = 2; reset(); random.start()', md-on-deselect='random.stop()')
       md-content.md-padding
+        .md-padding(layout='row', layout-align='center center')
+          byte(ng-repeat='byte in random.tmp track by $index', ng-data='byte', animate-on-change='byte')
+        md-progress-linear(md-mode='determinate', value='{{ random.progress }}')
+        div(layout='row', layout-align='center center')
+          h4.passphrase(ng-bind='passphrase.value')
+md-dialog-actions(layout='row', layout-align='center center')
+  md-button.md-mini.md-primary(ng-disabled='random.started', ng-click='random.start()', ng-if='tab === 2') Restart
+  md-button.md-raised.md-primary(md-autofocus, ng-disabled='passphrase.valid !== 1') Login
