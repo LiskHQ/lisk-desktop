@@ -6,6 +6,7 @@ import angular from 'angular'
 
 let app = angular.module('app', [
   'ngMaterial',
+  'ngAnimate',
 ])
 
 require('./theme').default(app)
