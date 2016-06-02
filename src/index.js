@@ -8,6 +8,8 @@ let app = angular.module('app', [
   'ngMaterial',
 ])
 
+require('./theme').default(app)
+
 require('./controller/main').default(app)
 
 require('./directive/login/login').default(app)
