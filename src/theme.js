@@ -43,22 +43,22 @@ export default (app) => {
       '100': '#ffffff',
       '200': '#ffffff',
       '300': '#ffffff',
-      '400': '#fbfbfb',
-      '500': '#eee',
-      '600': '#e1e1e1',
-      '700': '#d4d4d4',
-      '800': '#c8c8c8',
-      '900': '#bbbbbb',
+      '400': '#ffffff',
+      '500': '#ffffff',
+      '600': '#f2f2f2',
+      '700': '#e6e6e6',
+      '800': '#d9d9d9',
+      '900': '#cccccc',
       'A100': '#ffffff',
       'A200': '#ffffff',
       'A400': '#ffffff',
-      'A700': '#aeaeae'
+      'A700': '#bfbfbf'
     })
 
    $mdThemingProvider
     .theme('default')
     .primaryPalette('customPrimary')
     .accentPalette('customAccent')
-    .backgroundPalette('customBackground')
+    // .backgroundPalette('customBackground')
   })
 }
