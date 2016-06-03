@@ -62,7 +62,7 @@ export default (app) => {
             let last = [0, 0]
             let used = $scope.random.empty()
 
-            let turns = 2 // 10 + parseInt(Math.random() * 10)
+            let turns = 10 + parseInt(Math.random() * 10)
             let steps = 1
             let total = turns * used.length
             let count = 0
