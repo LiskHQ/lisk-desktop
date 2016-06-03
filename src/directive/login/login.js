@@ -14,12 +14,7 @@ export default (app) => {
     return str
   }
 
-  let rpad = (str, pad, length) => {
-    while (str.length < length) str = str + pad
-    return str
-  }
-
-  app.directive('login', ($timeout) => {
+  app.directive('login', ($document, $timeout) => {
     return {
       restrict: 'E',
       template: require('./login.pug'),
@@ -29,7 +24,7 @@ export default (app) => {
           elem.find('input').focus()
         }
       },
-      controller ($scope, $document, $timeout) {
+      controller ($scope, $rootScope) {
         $scope.passphrase = {
           isValid (value) {
             value = fix(value)
@@ -45,10 +40,6 @@ export default (app) => {
         }
 
         $scope.$watch('passphrase.value', $scope.passphrase.isValid)
-
-        $scope.reset = () => {
-          $scope.passphrase.value = ''
-        }
 
         $scope.random = {
           empty () {
@@ -71,7 +62,7 @@ export default (app) => {
             let last = [0, 0]
             let used = $scope.random.empty()
 
-            let turns = 10 + parseInt(Math.random() * 10)
+            let turns = 2 // 10 + parseInt(Math.random() * 10)
             let steps = 1
             let total = turns * used.length
             let count = 0
@@ -126,20 +117,14 @@ export default (app) => {
             $timeout(() => $document.mousemove($scope.random.listener), 300)
           }
         }
-      }
-    }
-  })
 
-  app.directive('byte', () => {
-    return {
-      restrict: 'E',
-      template: require('./byte.pug'),
-      scope: { data: '=ngData' },
-      link (scope, elem, attrs) {
-        scope.$watch('data', (nv) => {
-          scope.dec = lpad(nv.toString(), '0', 3)
-          scope.hex = lpad(nv.toString(16), '0', 2)
-        })
+        $scope.reset = () => {
+          $scope.passphrase.value = ''
+        }
+
+        $scope.login = () => {
+          $rootScope.$broadcast('start', $scope.passphrase.value)
+        }
       }
     }
   })

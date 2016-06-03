@@ -11,11 +11,13 @@ md-dialog-content
             input(ng-model='passphrase.value')
     md-tab(label='NEW ACCOUNT', md-on-select='tab = 2; reset(); random.start()', md-on-deselect='random.stop()')
       md-content.md-padding
+        section(ng-show='random.started', layout='row', layout-sm='column', layout-align='center center', layout-wrap)
+          p Move your mouse to generate random bytes
         .md-padding(layout='row', layout-align='center center')
           byte(ng-repeat='byte in random.tmp track by $index', ng-data='byte', animate-on-change='byte')
         md-progress-linear(md-mode='determinate', value='{{ random.progress }}')
-        div(layout='row', layout-align='center center')
+        section(layout='row', layout-sm='column', layout-align='center center', layout-wrap)
           h4.passphrase(ng-bind='passphrase.value')
 md-dialog-actions(layout='row', layout-align='center center')
   md-button.md-mini.md-primary(ng-disabled='random.started', ng-click='random.start()', ng-if='tab === 2') Restart
-  md-button.md-raised.md-primary(md-autofocus, ng-disabled='passphrase.valid !== 1') Login
+  md-button.md-raised.md-primary(md-autofocus, ng-disabled='passphrase.valid !== 1', ng-click='login()') Login

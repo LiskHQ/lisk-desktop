@@ -1,0 +1,14 @@
+
+byte {
+  &.change-add, &.change-remove {
+    transition: all .15s linear;
+  }
+
+  &.change, &.change-add-active, &.change-remove {
+    transform: scale(1.2);
+  }
+
+  &.change-remove-active {
+    transform: none;
+  }
+}

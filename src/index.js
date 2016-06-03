@@ -16,6 +16,8 @@ require('./controller/main').default(app)
 require('./directive/animateOnChange').default(app)
 
 require('./directive/login/login').default(app)
+require('./directive/byte/byte').default(app)
+require('./directive/wallet/wallet').default(app)
 
 setTimeout(() => {
   $('.preloading').remove()
@@ -23,4 +25,4 @@ setTimeout(() => {
   angular.element(document).ready(() => {
     angular.bootstrap(document, ['app'])
   })
-}, 1)
+}, 2000)
