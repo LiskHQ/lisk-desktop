@@ -14,7 +14,7 @@ export default (app) => {
     return str
   }
 
-  app.directive('login', ($document, $timeout) => {
+  app.directive('login', ['$document', '$timeout', ($document, $timeout) => {
     return {
       restrict: 'E',
       template: require('./login.pug'),
@@ -24,7 +24,7 @@ export default (app) => {
           elem.find('input').focus()
         }
       },
-      controller ($scope, $rootScope) {
+      controller: ['$scope', '$rootScope', ($scope, $rootScope) => {
         $scope.passphrase = {
           isValid (value) {
             value = fix(value)
@@ -125,7 +125,7 @@ export default (app) => {
         $scope.login = () => {
           $rootScope.$broadcast('start', $scope.passphrase.value)
         }
-      }
+      }]
     }
-  })
+  }])
 }

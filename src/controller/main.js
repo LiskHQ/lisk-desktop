@@ -1,6 +1,6 @@
 
 export default (app) => {
-  app.controller('main', ($scope, $rootScope, $mdDialog) => {
+  app.controller('main', ['$scope', '$rootScope', '$mdDialog', ($scope, $rootScope, $mdDialog) => {
     $scope.start = (ev) => {
       $mdDialog.show({
         template: '<login />',
@@ -26,5 +26,5 @@ export default (app) => {
     $rootScope.$on('close', (ev, v) => {
       $scope.start()
     })
-  })
+  }])
 }
