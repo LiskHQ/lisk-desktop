@@ -38,28 +38,9 @@ export default (app) => {
       'A700': '#a0a8ad'
     })
 
-    $mdThemingProvider.definePalette('customBackground', {
-      '50': '#ffffff',
-      '100': '#ffffff',
-      '200': '#ffffff',
-      '300': '#ffffff',
-      '400': '#ffffff',
-      '500': '#ffffff',
-      '600': '#f2f2f2',
-      '700': '#e6e6e6',
-      '800': '#d9d9d9',
-      '900': '#cccccc',
-      'A100': '#ffffff',
-      'A200': '#ffffff',
-      'A400': '#ffffff',
-      'A700': '#bfbfbf'
-    })
-
-   $mdThemingProvider
-    .theme('default')
-    .primaryPalette('customPrimary')
-    .accentPalette('customAccent')
-    // .backgroundPalette('customBackground')
-  })
+    $mdThemingProvider
+      .theme('default')
+      .primaryPalette('customPrimary')
+      .accentPalette('customAccent')
   }])
 }
