@@ -9,11 +9,11 @@ export default (app) => {
       template: require('./wallet.pug'),
       scope: { data: '=ngData' },
       link (scope, elem, attrs) {},
-      controller: ['$scope', '$rootScope', ($scope, $rootScope) => {
+      controller: ($scope, $rootScope) => {
         $scope.close = () => {
           $rootScope.$broadcast('close')
         }
-      }]
+      }
     }
   })
 }

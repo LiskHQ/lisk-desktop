@@ -2,7 +2,7 @@
 // https://angular-md-color.com
 
 export default (app) => {
-  app.config(['$mdThemingProvider', ($mdThemingProvider) => {
+  app.config(($mdThemingProvider) => {
     $mdThemingProvider.definePalette('customPrimary', {
       '50': '#55c2fd',
       '100': '#3cb9fd',
@@ -42,5 +42,5 @@ export default (app) => {
       .theme('default')
       .primaryPalette('customPrimary')
       .accentPalette('customAccent')
-  }])
+  })
 }
