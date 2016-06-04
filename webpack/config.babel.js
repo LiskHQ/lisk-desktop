@@ -1,12 +1,11 @@
 
-import HtmlWebpackPlugin from 'html-webpack-plugin'
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import pkg from '../package.json'
 
 export default {
-  entry: "./src/index.js",
+  entry: './src/index.js',
   output: {
-    path: './dist',
-    filename: "app.[hash].js"
+    path: './build',
+    filename: `lisk_nano-v${pkg.version}-[hash].js`,
   },
   module: {
     loaders: [
@@ -36,13 +35,5 @@ export default {
     jquery: 'jQuery',
     angular: 'angular',
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: 'src/view/index.pug',
-      minify: {
-        minifyCSS: true,
-      }
-    })
-  ]
+  plugins: []
 }
