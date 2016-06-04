@@ -6,8 +6,8 @@
   "bugs": "https://github.com/LiskHQ/lisk-nano/issues",
   "scripts": {
     "dist:clean": "rimraf ./dist",
-    "dist": "npm run dist:clean && webpack --progress --profile --colors --display-error-details --display-cached",
-    "dev": "webpack-dev-server --inline --progress ./src/index.js"
+    "dist": "npm run dist:clean && webpack --config webpack/dist.babel.js --progress --profile --colors --display-error-details --display-cached",
+    "dev": "webpack-dev-server --inline --config webpack/config.babel.js --progress ./src/index.js"
   },
   "repository": {
     "type": "git",

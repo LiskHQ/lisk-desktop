@@ -1,8 +1,6 @@
 
-import webpack from 'webpack'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
-import ngAnnotatePlugin from 'ng-annotate-webpack-plugin'
 
 export default {
   entry: "./src/index.js",
@@ -45,11 +43,6 @@ export default {
       minify: {
         minifyCSS: true,
       }
-    }),
-    new ngAnnotatePlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      mangle: false,
-      comments: false,
     })
   ]
 }
