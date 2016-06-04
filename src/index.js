@@ -25,4 +25,4 @@ setTimeout(() => {
   angular.element(document).ready(() => {
     angular.bootstrap(document, ['app'])
   })
-}, 2000)
+}, 500)
