@@ -34,6 +34,7 @@
     "json-loader": "^0.5.4",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
+    "ng-annotate-webpack-plugin": "^0.1.2",
     "pug": "^2.0.0-alpha8",
     "pug-cli": "^1.0.0-alpha5",
     "pug-html-loader": "^1.0.5",
