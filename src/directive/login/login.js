@@ -48,7 +48,7 @@ export default (app) => {
           },
           reset () {
             $scope.random.progress = 0
-            $scope.random.tmp = $scope.random.empty()
+            $scope.random.tmp = $scope.random.empty().map(v => '00')
           },
           stop () {
             $scope.random.started = false
@@ -63,7 +63,7 @@ export default (app) => {
             let last = [0, 0]
             let used = $scope.random.empty()
 
-            let turns = 10 + parseInt(Math.random() * 10)
+            let turns = 2
             let steps = 1
             let total = turns * used.length
             let count = 0
@@ -97,13 +97,13 @@ export default (app) => {
                   used[pos] = 1
 
                   $scope.$apply(() => {
-                    $scope.random.tmp[pos] = crypto.randomBytes(1)[0]
+                    $scope.random.tmp[pos] = lpad(crypto.randomBytes(1)[0].toString(16), '0', 2)
                     $scope.random.progress = parseInt(count / total * 100)
                   })
 
                   if (count >= total) {
                     $timeout(() => {
-                      let hex = $scope.random.tmp.map(v => lpad(v.toString(16), '0', 2)).join('')
+                      let hex = $scope.random.tmp.join('')
                       $scope.passphrase.value = (new mnemonic(new Buffer(hex, 'hex'))).toString()
 
                       $scope.random.stop()

@@ -15,7 +15,7 @@ md-dialog.login(aria-label='Login')
           section(ng-style='{ opacity: random.started ? 1 : 0 }', layout='row', layout-sm='column', layout-align='center center', layout-wrap)
             p Move your mouse to generate random bytes
           md-content.md-padding(layout='row', layout-wrap, layout-align='center center')
-            byte(ng-repeat='byte in random.tmp track by $index', ng-data='byte', animate-on-change='byte')
+            span.byte(ng-repeat='byte in random.tmp track by $index', ng-bind='byte', animate-on-change='byte')
           md-progress-linear(md-mode='determinate', value='{{ random.progress }}')
           md-content.md-padding(layout='row', layout-align='center center')
             h4.passphrase(ng-bind='passphrase.value')
