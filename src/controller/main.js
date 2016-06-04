@@ -4,9 +4,12 @@ export default (app) => {
     $scope.start = (ev) => {
       $mdDialog.show({
         template: '<login />',
+        parent: angular.element(document.body),
         escapeToClose: false,
         clickOutsideToClose: false,
         hasBackdrop: false,
+        fullscreen: true,
+        autoWrap: false,
       })
     }
 
@@ -18,8 +21,9 @@ export default (app) => {
         parent: angular.element(document.body),
         escapeToClose: false,
         clickOutsideToClose: false,
-        fullscreen: true,
         hasBackdrop: false,
+        fullscreen: true,
+        autoWrap: false,
       })
     })
 

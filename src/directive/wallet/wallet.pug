@@ -1,16 +1,17 @@
-md-toolbar
-  .md-toolbar-tools
-    h2 Lisk Nano
-    span(flex)
-    md-button.md-icon-button(ng-click='close()')
-      md-icon(md-font-set="material-icons") close
-md-dialog-content
-  md-tabs(md-dynamic-height, md-border-bottom)
-    md-tab(label='Account')
-      md-content.md-padding
-    md-tab(label='Send')
-      md-content.md-padding
-    md-tab(label='Receive')
-      md-content.md-padding
-    md-tab(label='Transactions')
-      md-content.md-padding
+md-dialog.wallet(aria-label='Wallet')
+  md-toolbar
+    .md-toolbar-tools
+      h2 Lisk Nano
+      span(flex)
+      md-button.md-icon-button(ng-click='close()')
+        md-icon(md-font-set='material-icons') close
+  md-dialog-content
+    md-tabs(md-dynamic-height, md-border-bottom)
+      md-tab(label='Account')
+        md-content.md-padding
+      md-tab(label='Send')
+        md-content.md-padding
+      md-tab(label='Receive')
+        md-content.md-padding
+      md-tab(label='Transactions')
+        md-content.md-padding

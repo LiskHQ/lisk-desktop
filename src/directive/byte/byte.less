@@ -1,5 +1,16 @@
 
 byte {
+  display: inline-block;
+  text-align: center;
+  font-size: 140%;
+  font-family: monospace;
+  padding: 4px 5px;
+  color: #555;
+  line-height: 1.1;
+  margin: 2px;
+  text-transform: uppercase;
+  color: #888;
+
   &.change-add, &.change-remove {
     transition: all .15s linear;
   }
@@ -9,6 +20,7 @@ byte {
   }
 
   &.change-remove-active {
+    color: #000;
     transform: none;
   }
 }

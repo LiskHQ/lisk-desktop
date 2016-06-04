@@ -17,6 +17,7 @@ export default (app) => {
   app.directive('login', ['$document', '$timeout', ($document, $timeout) => {
     return {
       restrict: 'E',
+      replace: true,
       template: require('./login.pug'),
       scope: {},
       link (scope, elem, attrs) {

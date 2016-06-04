@@ -1,23 +1,24 @@
-md-toolbar
-  .md-toolbar-tools
-    h2 Lisk Nano
-md-dialog-content
-  md-tabs(md-dynamic-height)
-    md-tab(label='SIGN IN', md-on-select='tab = 1; reset(); focus()')
-      md-content.md-padding
-        form(name='form')
-          md-input-container.md-block(md-is-error='passphrase.valid === 0')
-            label Enter your passphrase
-            input(ng-model='passphrase.value')
-    md-tab(label='NEW ACCOUNT', md-on-select='tab = 2; reset(); random.start()', md-on-deselect='random.stop()')
-      md-content.md-padding
-        section(ng-show='random.started', layout='row', layout-sm='column', layout-align='center center', layout-wrap)
-          p Move your mouse to generate random bytes
-        .md-padding(layout='row', layout-align='center center')
-          byte(ng-repeat='byte in random.tmp track by $index', ng-data='byte', animate-on-change='byte')
-        md-progress-linear(md-mode='determinate', value='{{ random.progress }}')
-        section(layout='row', layout-sm='column', layout-align='center center', layout-wrap)
-          h4.passphrase(ng-bind='passphrase.value')
-md-dialog-actions(layout='row', layout-align='center center')
-  md-button.md-mini.md-primary(ng-disabled='random.started', ng-click='random.start()', ng-if='tab === 2') Restart
-  md-button.md-raised.md-primary(md-autofocus, ng-disabled='passphrase.valid !== 1', ng-click='login()') Login
+md-dialog.login(aria-label='Login')
+  md-toolbar
+    .md-toolbar-tools
+      h2 Lisk Nano
+  md-dialog-content
+    md-tabs(md-dynamic-height, md-border-bottom)
+      md-tab(label='SIGN IN', md-on-select='tab = 1; reset(); focus()')
+        md-content.md-padding
+          form(name='form')
+            md-input-container.md-block(md-is-error='passphrase.valid === 0')
+              label Enter your passphrase
+              input(ng-model='passphrase.value')
+      md-tab(label='NEW ACCOUNT', md-on-select='tab = 2; reset(); random.start()', md-on-deselect='random.stop()')
+        md-content.md-padding
+          section(ng-style='{ opacity: random.started ? 1 : 0 }', layout='row', layout-sm='column', layout-align='center center', layout-wrap)
+            p Move your mouse to generate random bytes
+          md-content.md-padding(layout='row', layout-wrap, layout-align='center center')
+            byte(ng-repeat='byte in random.tmp track by $index', ng-data='byte', animate-on-change='byte')
+          md-progress-linear(md-mode='determinate', value='{{ random.progress }}')
+          md-content.md-padding(layout='row', layout-align='center center')
+            h4.passphrase(ng-bind='passphrase.value')
+  md-dialog-actions(layout='row', layout-align='center center')
+    md-button.md-mini.md-primary(ng-disabled='random.started', ng-click='random.start()', ng-if='tab === 2') Restart
+    md-button.md-raised.md-primary(md-autofocus, ng-disabled='passphrase.valid !== 1', ng-click='login()') Login
