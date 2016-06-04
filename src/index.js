@@ -13,10 +13,9 @@ require('./theme').default(app)
 
 require('./controller/main').default(app)
 
-require('./directive/animateOnChange').default(app)
+require('./directive/animateOnChange/animateOnChange').default(app)
 
 require('./directive/login/login').default(app)
-require('./directive/byte/byte').default(app)
 require('./directive/wallet/wallet').default(app)
 
 setTimeout(() => {
