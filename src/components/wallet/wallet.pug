@@ -1,0 +1,27 @@
+md-content(layout='column', layout-fill, ng-show='passphrase_active')
+  md-toolbar
+    .md-toolbar-tools
+      h5: span {{ account.address }}
+      span(flex)
+      md-button.md-icon-button(ng-click='close()')
+        md-tooltip(md-direction='left') Logout
+        md-icon(md-font-set='material-icons') close
+
+  md-content(flex)
+    md-tabs(md-border-bottom, md-dynamic-height)
+      md-tab(label='Account')
+        md-content(flex)
+          md-card
+            md-card-title
+              md-card-title-text
+                span.md-headline Action buttons
+            md-card-content
+              account
+      md-tab(label='Send')
+        md-content(flex)
+          md-card
+            md-card-title
+              md-card-title-text
+                span.md-headline asxsadasdsd
+            md-card-content
+              send

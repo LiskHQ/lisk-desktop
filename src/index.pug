@@ -1,17 +1,17 @@
 -
   cdn = {
     js: [
-      "https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js",
-      "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js",
-      "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js",
-      "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js",
-      "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js",
-      "https://ajax.googleapis.com/ajax/libs/angular_material/1.0.7/angular-material.min.js",
+      'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js',
+      'https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js',
+      'https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js',
+      'https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js',
+      'https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js',
+      'https://ajax.googleapis.com/ajax/libs/angular_material/1.0.7/angular-material.min.js',
     ],
     css: [
-      "https://ajax.googleapis.com/ajax/libs/angular_material/1.0.7/angular-material.min.css",
-      "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic",
-      "https://fonts.googleapis.com/icon?family=Material+Icons",
+      'https://ajax.googleapis.com/ajax/libs/angular_material/1.0.7/angular-material.min.css',
+      'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic',
+      'https://fonts.googleapis.com/icon?family=Material+Icons',
     ]
   }
 
@@ -19,6 +19,7 @@ doctype html
 html
   head
     meta(charset='utf-8')
+    meta(name="viewport", content="width=device-width, initial-scale=1")
     title Lisk Nano
     style(type='text/css').
       .preloading {
@@ -87,7 +88,9 @@ html
     each item in cdn.css
       link(rel='stylesheet', href=item)
   body(ng-controller='main')
-    .preloading: .preloading-loader: svg.preloading-circular(viewbox='25 25 50 50')
-      circle.preloading-path(cx='50', cy='50', r='20', fill='none', stroke-width='2', stroke-miterlimit='10')
+    wallet
+
+    //- .preloading: .preloading-loader: svg.preloading-circular(viewbox='25 25 50 50')
+    //-   circle.preloading-path(cx='50', cy='50', r='20', fill='none', stroke-width='2', stroke-miterlimit='10')
     each item in cdn.js
       script(src=item)
