@@ -18,7 +18,7 @@ let lpad = (str, pad, length) => {
 app.directive('login', ($document, $timeout) => {
   return {
     restrict: 'E',
-    template: require('./login.pug'),
+    template: require('./login.jade'),
     link (scope, elem, attrs) {
       scope.focus = () => {
         elem.find('input').focus()

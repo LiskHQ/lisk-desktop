@@ -6,7 +6,7 @@ import app from '../../app'
 app.directive('wallet', () => {
   return {
     restrict: 'E',
-    template: require('./wallet.pug'),
+    template: require('./wallet.jade'),
     link (scope, elem, attrs) {},
     controller: ($scope, account) => {
       $scope.$watch('passphrase', (value) => {

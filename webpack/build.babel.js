@@ -14,7 +14,7 @@ config.plugins.push(
   }),
   new HtmlWebpackPlugin({
     filename: 'index.html',
-    template: 'src/index.pug',
+    template: 'src/index.jade',
   })
 )
 

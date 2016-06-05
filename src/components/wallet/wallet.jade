@@ -1,7 +1,7 @@
 md-content(layout='row')
   md-content(flex='100', flex-gt-sm='70', flex-offset-gt-sm='15')
     md-content.header(layout='row', layout-align='center center', layout-padding)
-      img.logo(src="./images/LISK.png")
+      img.logo(src=require("./images/LISK.png"))
       h2.md-display-1 Lisk Nano
       div(flex)
       md-button.md-fab.md-mini.md-primary(ng-click='logout()', ng-if='passphrase')

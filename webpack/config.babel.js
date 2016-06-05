@@ -19,8 +19,12 @@ export default {
         loader: 'style!css!less',
       },
       {
-        test: /\.pug$/,
-        loader: 'pug-html?pretty',
+        test: /\.jade$/,
+        loader: 'jade',
+      },
+      {
+        test: /\.png$/,
+        loader: 'url',
       },
       {
         test: /\.json$/,
@@ -32,7 +36,7 @@ export default {
     fs: "empty"
   },
   resolve: {
-    extensions: ['', '.js', '.pug', '.less'],
+    extensions: ['', '.js', '.jade', '.less'],
   },
   externals: {
     jquery: 'jQuery',
