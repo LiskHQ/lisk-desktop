@@ -90,7 +90,7 @@ html
   body(ng-controller='main')
     wallet
 
-    //- .preloading: .preloading-loader: svg.preloading-circular(viewbox='25 25 50 50')
-    //-   circle.preloading-path(cx='50', cy='50', r='20', fill='none', stroke-width='2', stroke-miterlimit='10')
+    .preloading: .preloading-loader: svg.preloading-circular(viewbox='25 25 50 50')
+      circle.preloading-path(cx='50', cy='50', r='20', fill='none', stroke-width='2', stroke-miterlimit='10')
     each item in cdn.js
       script(src=item)
