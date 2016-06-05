@@ -15,75 +15,48 @@ let lpad = (str, pad, length) => {
   return str
 }
 
-app.factory('login', ($mdDialog) => {
-  return {
-    start (scope) {
-      scope.passphrase_active = null
-
-      $mdDialog.show({
-        template: '<login />',
-        parent: angular.element(document.body),
-        escapeToClose: false,
-        clickOutsideToClose: false,
-        fullscreen: true,
-        autoWrap: false,
-        preserveScope: true,
-        scope
-      })
-    }
-  }
-})
-
 app.directive('login', ($document, $timeout) => {
   return {
     restrict: 'E',
-    replace: true,
     template: require('./login.pug'),
     link (scope, elem, attrs) {
       scope.focus = () => {
         elem.find('input').focus()
       }
     },
-    controller: ($scope, $rootScope, $mdDialog) => {
-      $scope.passphrase = {
+    controller: ($scope) => {
+      $scope.login = {
+        empty () {
+          return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        },
         reset () {
-          $scope.passphrase.value = 'stay undo beyond powder sand laptop grow gloom apology hamster primary arrive'
+          $scope.login.passphrase = 'stay undo beyond powder sand laptop grow gloom apology hamster primary arrive'
+          // $scope.login.passphrase = ''
+          $scope.login.progress = 0
+          $scope.login.tmp = $scope.login.empty().map(v => '00')
+        },
+        stop () {
+          $scope.login.onRandom = false
+          $document.unbind('mousemove', $scope.listener)
         },
         isValid (value) {
           value = fix(value)
 
           if (value === '') {
-            $scope.passphrase.valid = 2
+            $scope.login.valid = 2
           } else if (value.split(' ').length !== 12 || !mnemonic.isValid(value)) {
-            $scope.passphrase.valid = 0
+            $scope.login.valid = 0
           } else {
-            $scope.passphrase.valid = 1
+            $scope.login.valid = 1
           }
-        }
-      }
-
-      $scope.$watch('passphrase.value', $scope.passphrase.isValid)
-
-      $scope.random = {
-        empty () {
-          return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        },
-        reset () {
-          $scope.random.progress = 0
-          $scope.random.tmp = $scope.random.empty().map(v => '00')
-        },
-        stop () {
-          $scope.random.started = false
-          $document.unbind('mousemove', $scope.random.listener)
         },
         start () {
-          $scope.random.started = true
+          $scope.login.reset()
 
-          $scope.passphrase.reset()
-          $scope.random.reset()
+          $scope.login.onRandom = true
 
           let last = [0, 0]
-          let used = $scope.random.empty()
+          let used = $scope.login.empty()
 
           let turns = 2
           let steps = 1
@@ -92,7 +65,7 @@ app.directive('login', ($document, $timeout) => {
 
           console.log('entropy', { turns, steps, total })
 
-          $scope.random.listener = (ev) => {
+          $scope.login.listener = (ev) => {
             let distance = Math.sqrt(Math.pow(ev.pageX - last[0], 2) + Math.pow(ev.pageY - last[1], 2))
 
             if (distance > 60) {
@@ -119,16 +92,16 @@ app.directive('login', ($document, $timeout) => {
                 used[pos] = 1
 
                 $scope.$apply(() => {
-                  $scope.random.tmp[pos] = lpad(crypto.randomBytes(1)[0].toString(16), '0', 2)
-                  $scope.random.progress = parseInt(count / total * 100)
+                  $scope.login.tmp[pos] = lpad(crypto.randomBytes(1)[0].toString(16), '0', 2)
+                  $scope.login.progress = parseInt(count / total * 100)
                 })
 
                 if (count >= total) {
                   $timeout(() => {
-                    let hex = $scope.random.tmp.join('')
-                    $scope.passphrase.value = (new mnemonic(new Buffer(hex, 'hex'))).toString()
+                    let hex = $scope.login.tmp.join('')
+                    $scope.login.passphrase = (new mnemonic(new Buffer(hex, 'hex'))).toString()
 
-                    $scope.random.stop()
+                    $scope.login.stop()
                   })
 
                   return
@@ -137,18 +110,16 @@ app.directive('login', ($document, $timeout) => {
             }
           }
 
-          $timeout(() => $document.mousemove($scope.random.listener), 300)
+          $timeout(() => $document.mousemove($scope.login.listener), 300)
         }
       }
 
-      $scope.login = () => {
-        $scope.passphrase_active = $scope.passphrase.value
-        $mdDialog.hide()
-      }
+      $scope.$watch('login.passphrase', $scope.login.isValid)
 
-      // $timeout(() => {
-      //   $scope.login()
-      // }, 100)
+      $scope.go = () => {
+        $scope.logged = true
+        $scope.passphrase = $scope.login.passphrase
+      }
     }
   }
 })

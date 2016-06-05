@@ -1,12 +1,14 @@
 
 import './index.less'
+
 import './app'
-import './theme'
-import './components/main'
-import './components/account'
+
+import './theme/theme'
+import './services/account'
 import './components/animateOnChange/animateOnChange'
-import './components/login/login'
+import './components/account/account'
 import './components/wallet/wallet'
+import './components/login/login'
 
 import $ from 'jquery'
 import angular from 'angular'

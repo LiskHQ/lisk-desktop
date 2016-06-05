@@ -1,7 +1,7 @@
 
 import './send.less'
 
-import app from '../../../app'
+import app from '../../app'
 
 app.directive('send', () => {
   return {

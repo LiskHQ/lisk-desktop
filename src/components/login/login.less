@@ -1,33 +1,31 @@
 
-md-dialog.login {
-  width: 60%;
+login {
+  md-input-container {
+    margin-top: 45px;
+    margin-bottom: 0;
+  }
 
-  .passphrase {
-    height: 50px;
+  .move {
+    text-align: center;
   }
 
   .byte {
     display: inline-block;
     text-align: center;
     font-size: 140%;
+    margin: 5px;
     font-family: monospace;
-    padding: 4px 5px;
-    color: #555;
-    line-height: 1.1;
-    margin: 2px;
-    text-transform: uppercase;
-    color: #888;
 
     &.change-add, &.change-remove {
-      transition: all .15s linear;
+      transition: all .1s linear;
     }
 
     &.change, &.change-add-active, &.change-remove {
-      transform: scale(1.2);
+      transform: scale(1.3);
     }
 
     &.change-remove-active {
-      color: #000;
+      color: #f57c00;
       transform: none;
     }
   }
