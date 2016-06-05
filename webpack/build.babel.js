@@ -8,7 +8,7 @@ import config from './config.babel'
 config.plugins.push(
   new HtmlWebpackPlugin({
     filename: 'index.html',
-    template: 'src/view/index.pug',
+    template: 'src/index.pug',
   }),
   new ngAnnotatePlugin(),
   new webpack.optimize.UglifyJsPlugin({
