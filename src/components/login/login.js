@@ -117,7 +117,6 @@ app.directive('login', ($document, $timeout) => {
       $scope.$watch('login.passphrase', $scope.login.isValid)
 
       $scope.go = () => {
-        $scope.logged = true
         $scope.passphrase = $scope.login.passphrase
       }
     }

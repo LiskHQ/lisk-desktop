@@ -9,11 +9,15 @@ app.directive('wallet', () => {
     template: require('./wallet.pug'),
     link (scope, elem, attrs) {},
     controller: ($scope, account) => {
-      $scope.$watch('passphrase_active', (value) => {
+      $scope.$watch('passphrase', (value) => {
         if (value) {
           $scope.account = account($scope.passphrase_active)
         }
       })
+
+      $scope.logout = () => {
+        $scope.passphrase = null
+      }
     }
   }
 })
