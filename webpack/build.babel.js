@@ -6,14 +6,15 @@ import ngAnnotatePlugin from 'ng-annotate-webpack-plugin'
 import config from './config.babel'
 
 config.plugins.push(
-  new HtmlWebpackPlugin({
-    filename: 'index.html',
-    template: 'src/index.pug',
-  }),
+  new webpack.optimize.DedupePlugin(),
   new ngAnnotatePlugin(),
   new webpack.optimize.UglifyJsPlugin({
     mangle: false,
     comments: false,
+  }),
+  new HtmlWebpackPlugin({
+    filename: 'index.html',
+    template: 'src/index.pug',
   })
 )
 
