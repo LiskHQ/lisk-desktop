@@ -11,7 +11,7 @@ app.directive('wallet', () => {
     controller: ($scope, account) => {
       $scope.$watch('passphrase', (value) => {
         if (value) {
-          $scope.account = account($scope.passphrase_active)
+          $scope.account = account($scope.passphrase)
         }
       })
 

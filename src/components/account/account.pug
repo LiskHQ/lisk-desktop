@@ -1,7 +1,10 @@
 md-card
   md-card-title
     md-card-title-text
-      span.md-headline Account
+      span.md-title Account {{ account.address }}
   md-card-content
-    h4 {{ account.publicKey }}
-    h4 {{ account.privateKey }}
+    md-list
+      md-list-item(ng-repeat='(a,b) in account')
+        h4 {{ a }}
+        p {{ b }}
+        md-divider(ng-if="!$last")

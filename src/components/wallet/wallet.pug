@@ -1,9 +1,9 @@
 md-content(layout='row')
   md-content(flex='100', flex-gt-sm='70', flex-offset-gt-sm='15')
     md-content.header(layout='row', layout-align='center center', layout-padding)
-      h2.md-headline Lisk Nano
+      img.logo(src="./images/LISK.png")
+      h2.md-display-1 Lisk Nano
       div(flex)
-      span(ng-if='passphrase') Balance: {{ balence }}
       md-button.md-fab.md-mini.md-primary(ng-click='logout()', ng-if='passphrase')
         i.material-icons exit_to_app
         md-tooltip(md-direction='left') Logout
