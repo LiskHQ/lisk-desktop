@@ -35,7 +35,7 @@ app.directive('data', ($timeout, $http) => {
     controller: ($scope) => {
       $scope.value = '...'
 
-      $scope.update = () => {
+      $scope.update = (show) => {
         if ($scope.disabled) {
           return
         }
@@ -43,6 +43,10 @@ app.directive('data', ($timeout, $http) => {
         $scope.disabled = true
 
         $timeout.cancel($scope.timer)
+
+        if (show) {
+          $scope.value = '...'
+        }
 
         updates[$scope.type]($scope.data, (err, data) => {
           $scope.disabled = false
