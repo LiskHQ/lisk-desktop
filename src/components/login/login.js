@@ -118,6 +118,7 @@ app.directive('login', ($document, $timeout) => {
 
       $scope.go = () => {
         $scope.passphrase = $scope.login.passphrase
+        $scope.login.reset()
       }
     }
   }

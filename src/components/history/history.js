@@ -1,12 +1,12 @@
 
-import './send.less'
+import './history.less'
 
 import app from '../../app'
 
-app.directive('send', () => {
+app.directive('history', () => {
   return {
     restrict: 'E',
-    template: require('./send.jade'),
+    template: require('./history.jade'),
     link (scope, elem, attrs) {},
     controller: ($scope) => {}
   }

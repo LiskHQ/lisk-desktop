@@ -1,10 +1,17 @@
 md-card
-  md-card-title
-    md-card-title-text
-      span.md-title Account {{ account.address }}
   md-card-content
     md-list
-      md-list-item(ng-repeat='(a,b) in account')
-        h4 {{ a }}
-        p {{ b }}
-        md-divider(ng-if="!$last")
+      md-list-item
+        h4 Address
+        div(flex)
+        p(flex='none') {{ address }}
+        md-divider
+      md-list-item
+        h4 Balance
+        div(flex)
+        data(flex='none', type='balance', data='address', time=10)
+        md-divider
+      md-list-item
+        h4 Unconfirmed Balance
+        div(flex)
+        data(flex='none', type='unconfirmedBalance', data='address', time=10)

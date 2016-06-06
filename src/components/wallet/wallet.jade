@@ -4,9 +4,10 @@ md-content(layout='row')
       img.logo(src=require("./images/LISK.png"))
       h2.md-display-1 Lisk Nano
       div(flex)
-      md-button.md-fab.md-mini.md-primary(ng-click='logout()', ng-if='passphrase')
+      md-button.md-fab.md-mini.md-primary.logout(ng-click='logout()', ng-if='passphrase')
         i.material-icons exit_to_app
         md-tooltip(md-direction='left') Logout
     login(ng-show='!passphrase')
-    account(ng-show='passphrase')
-    send(ng-show='passphrase')
+    account(ng-if='passphrase')
+    send(ng-if='passphrase')
+    history(ng-if='passphrase')
