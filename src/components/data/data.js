@@ -3,8 +3,6 @@ import './data.less'
 
 import app from '../../app'
 
-
-
 app.directive('data', ($timeout, $http) => {
   let updates = {
     balance (data, cb) {
