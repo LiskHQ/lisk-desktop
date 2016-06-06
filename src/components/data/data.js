@@ -33,19 +33,25 @@ app.directive('data', ($timeout, $http) => {
     scope: { type: '@', data: '=', time: '@' },
     link (scope, elem, attrs) {},
     controller: ($scope) => {
-      $scope.value = '...'
+      $scope.wait = () => {
+        $scope.value = '...'
+      }
+
+      $scope.stop = () => {
+        $timeout.cancel($scope.timer)
+      }
 
       $scope.update = (show) => {
-        if ($scope.disabled) {
+        if ($scope.disabled || $scope.data === null) {
           return
         }
 
         $scope.disabled = true
 
-        $timeout.cancel($scope.timer)
+        $scope.stop()
 
         if (show) {
-          $scope.value = '...'
+          $scope.wait()
         }
 
         updates[$scope.type]($scope.data, (err, data) => {
@@ -56,10 +62,17 @@ app.directive('data', ($timeout, $http) => {
         })
       }
 
-      $scope.update()
+      $scope.$watch('data', () => {
+        if ($scope.data === null) {
+          $scope.stop()
+          $scope.wait()
+        } else {
+          $scope.update()
+        }
+      })
 
       $scope.$on('$destroy', () => {
-        $timeout.cancel($scope.timer)
+        $scope.stop()
       })
     }
   }
