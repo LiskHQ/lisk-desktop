@@ -13,17 +13,17 @@ app.directive('wallet', () => {
     controller: ($scope) => {
       $scope.$watch('passphrase', () => {
         if (!$scope.passphrase) {
-          $scope.address = null;
-          $scope.publicKey = null;
-          $scope.privateKey = null;
+          $scope.address = null
+          $scope.publicKey = null
+          $scope.privateKey = null
           return
         }
 
         let kp = lisk.crypto.getKeys($scope.passphrase)
 
-        $scope.address = lisk.crypto.getAddress(kp.publicKey);
-        $scope.publicKey = kp.publicKey;
-        $scope.privateKey = kp.privateKey;
+        $scope.address = lisk.crypto.getAddress(kp.publicKey)
+        $scope.publicKey = kp.publicKey
+        $scope.privateKey = kp.privateKey
       })
 
       $scope.logout = () => {
