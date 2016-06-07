@@ -1,7 +1,7 @@
 
 import numeral from 'numeral'
 
-import app from '../../app'
+import app from '../app'
 
 app.filter('usd', () => {
   return (value) => {
