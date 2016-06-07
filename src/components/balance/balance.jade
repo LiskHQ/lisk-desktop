@@ -1,0 +1,3 @@
+h3(animate-on-change='data.lsk', ng-class='{ error: data.err }')
+  span(ng-if='!usd') {{ data.lsk | lsk }}
+  span(ng-if='usd') {{ data.usd | usd }}
