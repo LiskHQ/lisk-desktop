@@ -20,7 +20,8 @@
     "angular-messages": "^1.5.6",
     "babel-polyfill": "^6.9.1",
     "bitcore-mnemonic": "^1.1.1",
-    "jquery": "^2.2.4"
+    "jquery": "^2.2.4",
+    "numeral": "^1.5.3"
   },
   "devDependencies": {
     "babel-core": "^6.9.1",
