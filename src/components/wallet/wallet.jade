@@ -2,13 +2,13 @@ md-content(layout='row')
   md-content(flex='100', flex-gt-sm='70', flex-offset-gt-sm='15')
     md-content.header(layout='row', layout-align='center center', layout-padding)
       img.logo(src=require("./images/LISK.png"))
-      h2.md-display-1 Lisk Nano
+      h2.md-display-2 Lisk Nano
       div(flex)
       md-button.md-fab.md-mini.md-primary.logout(ng-click='logout()', ng-if='passphrase')
         i.material-icons exit_to_app
         md-tooltip(md-direction='left') Logout
     login(ng-show='!passphrase')
-    h2.address(ng-bind='address', ng-show='passphrase')
+    h2.address(ng-show='passphrase') Your Address: {{ address }}
     account(ng-show='passphrase')
     send(ng-show='passphrase')
     history(ng-show='passphrase')
