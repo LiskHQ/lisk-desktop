@@ -2,11 +2,11 @@ md-card
   md-card-content
     md-list
       md-list-item
-        h4 Balance
+        h3 Balance
         div(flex)
-        data(flex='none', type='balance', data='address', time=10)
+        balance(flex='none', address='address')
         md-divider
       md-list-item
-        h4 Unconfirmed Balance
+        h3 USD equivalent
         div(flex)
-        data(flex='none', type='unconfirmedBalance', data='address', time=10)
+        balance(flex='none', address='address', usd)
