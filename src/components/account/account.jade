@@ -1,12 +1,7 @@
+h2.address Your Address: {{ address }}
 md-card
   md-card-content
-    md-list
-      md-list-item
-        h3 Balance
-        div(flex)
-        balance(flex='none', address='address')
-        md-divider
-      md-list-item
-        h3 USD equivalent
-        div(flex)
-        balance(flex='none', address='address', usd)
+    md-content(layout='row')
+      h3 Balance
+      div(flex)
+      h3(flex='none') {{ balance.value | lsk }}

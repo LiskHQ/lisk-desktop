@@ -1,0 +1,15 @@
+md-content(layout='row')
+  md-content(flex='100', flex-gt-sm='70', flex-offset-gt-sm='15')
+    md-content.header(layout='row', layout-align='center center', layout-padding)
+      img.logo(src=require("./images/LISK.png"))
+      h2.md-display-1 Lisk Nano
+      div(flex)
+      md-button.md-fab.md-mini.md-primary.logout(ng-click='logout()', ng-if='logged')
+        i.material-icons exit_to_app
+        md-tooltip(md-direction='left') Logout
+    .loading(ng-show='prelogged'): .loading-loader: svg.loading-circular(viewbox='25 25 50 50')
+      circle.loading-path(cx='50', cy='50', r='20', fill='none', stroke-width='2', stroke-miterlimit='10')
+    login
+    account
+    send
+    history

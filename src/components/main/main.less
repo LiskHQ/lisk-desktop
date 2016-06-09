@@ -1,0 +1,87 @@
+
+main {
+  .logo {
+    margin-left: 5px;
+  }
+
+  .logout {
+    margin-right: 15px;
+  }
+
+  .address {
+    text-align: center;
+  }
+
+  md-content {
+    background-color: #eee;
+  }
+
+  md-card md-content {
+    background-color: #fff;
+  }
+
+  .header {
+    margin-top: 5px;
+
+    h2 {
+      margin: 5px 0
+    }
+  }
+
+  .loading {
+    .loading-loader {
+      position: relative;
+      margin: 50px auto 0;
+      width: 100px;
+      height: 100%;
+
+      &.loading-loader:before {
+        content:'';
+        display: block;
+        padding-top: 100%;
+      }
+    }
+
+    .loading-circular {
+      animation: loading_rotate 2s linear infinite;
+      height: 100%;
+      transform-origin: center center;
+      width: 100%;
+      position: absolute;
+      top: 0; bottom: 0; left: 0; right: 0;
+      margin: auto;
+    }
+
+    @keyframes loading_rotate {
+      100% { transform: rotate(360deg); }
+    }
+
+    .loading-path {
+      stroke-dasharray: 1,200;
+      stroke-dashoffset: 0;
+      animation: loading_dash 1.5s ease-in-out infinite, loading_color 6s ease-in-out infinite;
+      stroke-linecap: round;
+
+      @keyframes loading_dash {
+        0% {
+          stroke-dasharray: 1,200;
+          stroke-dashoffset: 0;
+        }
+        50% {
+          stroke-dasharray: 89,200;
+          stroke-dashoffset: -35px;
+        }
+        100% {
+          stroke-dasharray: 89,200;
+          stroke-dashoffset: -124px;
+        }
+      }
+
+      @keyframes loading_color {
+        100%, 0% { stroke: #f57c00; }
+        40% { stroke: #be9c77; }
+        66% { stroke: #0288d1; }
+      }
+    }
+  }
+}
