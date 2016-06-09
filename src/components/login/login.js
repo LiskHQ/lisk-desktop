@@ -6,38 +6,48 @@ import './login.less'
 
 import app from '../../app'
 
-let fix = v => {
-  return (v || '').replace(/ +/g, ' ').trim().toLowerCase()
-}
-
-let lpad = (str, pad, length) => {
-  while (str.length < length) str = pad + str
-  return str
-}
-
 app.directive('login', ($document, $timeout) => {
   return {
     restrict: 'E',
     template: require('./login.jade'),
     link (scope, elem, attrs) {
-      scope.focus = () => {
-        elem.find('input').focus()
-      }
+      elem.show()
+
+      scope.$on('prelogin', () => {
+        elem.hide()
+      })
+
+      scope.$on('logout', () => {
+        elem.show()
+      })
+
+      elem.find('input').focus()
     },
     controller: ($scope) => {
+      let fix = v => {
+        return (v || '').replace(/ +/g, ' ').trim().toLowerCase()
+      }
+
+      let lpad = (str, pad, length) => {
+        while (str.length < length) str = pad + str
+        return str
+      }
+
+      let emptyBytes = () => {
+        return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      }
+
       $scope.login = {
-        empty () {
-          return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        },
         reset () {
-          $scope.login.passphrase = 'stay undo beyond powder sand laptop grow gloom apology hamster primary arrive'
-          // $scope.login.passphrase = ''
+          $scope.login.passphrase = ''
           $scope.login.progress = 0
-          $scope.login.tmp = $scope.login.empty().map(v => '00')
+          $scope.login.seed = emptyBytes().map(v => '00')
         },
         stop () {
-          $scope.login.onRandom = false
-          $document.unbind('mousemove', $scope.listener)
+          $document.unbind('mousemove', $scope.login.listener)
+
+          $scope.login.listener = null
+          $scope.login.random = false
         },
         isValid (value) {
           value = fix(value)
@@ -53,17 +63,15 @@ app.directive('login', ($document, $timeout) => {
         start () {
           $scope.login.reset()
 
-          $scope.login.onRandom = true
+          $scope.login.random = true
 
           let last = [0, 0]
-          let used = $scope.login.empty()
+          let used = emptyBytes()
 
-          let turns = 2
-          let steps = 1
+          let turns = 5
+          let steps = 2
           let total = turns * used.length
           let count = 0
-
-          console.log('entropy', { turns, steps, total })
 
           $scope.login.listener = (ev) => {
             let distance = Math.sqrt(Math.pow(ev.pageX - last[0], 2) + Math.pow(ev.pageY - last[1], 2))
@@ -92,16 +100,14 @@ app.directive('login', ($document, $timeout) => {
                 used[pos] = 1
 
                 $scope.$apply(() => {
-                  $scope.login.tmp[pos] = lpad(crypto.randomBytes(1)[0].toString(16), '0', 2)
+                  $scope.login.seed[pos] = lpad(crypto.randomBytes(1)[0].toString(16), '0', 2)
                   $scope.login.progress = parseInt(count / total * 100)
                 })
 
                 if (count >= total) {
                   $timeout(() => {
-                    let hex = $scope.login.tmp.join('')
-                    $scope.login.passphrase = (new mnemonic(new Buffer(hex, 'hex'))).toString()
-
                     $scope.login.stop()
+                    $scope.login.passphrase = (new mnemonic(new Buffer($scope.login.seed.join(''), 'hex'))).toString()
                   })
 
                   return
@@ -117,9 +123,14 @@ app.directive('login', ($document, $timeout) => {
       $scope.$watch('login.passphrase', $scope.login.isValid)
 
       $scope.go = () => {
-        $scope.passphrase = $scope.login.passphrase
+        $scope.passphrase = fix($scope.login.passphrase)
         $scope.login.reset()
+        $scope.$emit('prelogin')
       }
+
+      $scope.$on('logout', () => {
+        $scope.passphrase = null
+      })
     }
   }
 })

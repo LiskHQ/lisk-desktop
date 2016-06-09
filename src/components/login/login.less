@@ -1,8 +1,7 @@
 
 login {
-  md-input-container {
-    margin-top: 30px;
-    margin-bottom: 0;
+  input {
+    text-transform: lowercase;
   }
 
   .move {
@@ -17,7 +16,7 @@ login {
     font-family: monospace;
 
     &.change-add, &.change-remove {
-      transition: all .1s linear;
+      transition: all .15s ease;
     }
 
     &.change, &.change-add-active, &.change-remove {
@@ -25,7 +24,6 @@ login {
     }
 
     &.change-remove-active {
-      color: #f57c00;
       transform: none;
     }
   }

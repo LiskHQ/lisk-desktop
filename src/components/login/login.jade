@@ -1,23 +1,18 @@
 md-card
+  md-card-title
+    md-card-title-text
+      span.md-title Sign In
   md-card-content
-    md-tabs(md-dynamic-height, md-border-bottom)
-      md-tab(label='SIGN IN', md-on-select='login.reset(); focus()')
-        md-content(layout-padding)
-          form(name='form')
-            md-input-container.md-block(md-is-error='login.valid === 0')
-              label Enter your passphrase
-              input(ng-model='login.passphrase')
-          md-content(layout='row', layout-align='center center')
-            md-button.md-raised.md-primary(md-autofocus, ng-disabled='login.valid !== 1 || passphrase', ng-click='go()') Login
-      md-tab(label='NEW ACCOUNT', md-on-select='login.start()', md-on-deselect='login.stop()')
-        md-content(layout-padding)
-          md-content(layout='column', layout-align='center center')
-            md-content.bytes(layout-padding)
-              span.byte(ng-repeat='byte in login.tmp track by $index', ng-bind='byte', animate-on-change='byte')
-            md-progress-linear(md-mode='determinate', value='{{ login.progress }}')
-            md-content
-              h4.move(ng-if='!login.passphrase') Move your mouse to generate random bytes
-              h4.passphrase(ng-bind='login.passphrase', ng-if='login.passphrase')
-            md-content(layout='row', layout-align='center center')
-              md-button.md-mini.md-primary(ng-disabled='login.onRandom', ng-click='login.start()') Restart
-              md-button.md-raised.md-primary(md-autofocus, ng-disabled='login.valid !== 1 || passphrase', ng-click='go()') Login
+    form
+      md-input-container.md-block(md-is-error='login.valid === 0')
+        label Enter your passphrase
+        input(ng-model='login.passphrase')
+    md-content(layout='row', layout-align='center center')
+      md-button(ng-disabled='login.random', ng-click="login.passphrase = 'stay undo beyond powder sand laptop grow gloom apology hamster primary arrive'; go()") Dev Test Account
+      md-button.md-primary(ng-disabled='login.random', ng-click='login.start()') NEW ACCOUNT
+      md-button.md-raised.md-primary(md-autofocus, ng-disabled='login.valid !== 1 || passphrase', ng-click='go()') Login
+    md-content(layout-padding, layout='column', layout-align='center center', ng-show='login.random')
+      h4.move Move your mouse to generate random bytes
+      md-progress-linear(md-mode='determinate', value='{{ login.progress }}')
+      md-content.bytes
+        span.byte(ng-repeat='byte in login.seed track by $index', ng-bind='byte', animate-on-change='byte')
