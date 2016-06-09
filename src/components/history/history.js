@@ -7,7 +7,17 @@ app.directive('history', () => {
   return {
     restrict: 'E',
     template: require('./history.jade'),
-    link (scope, elem, attrs) {},
+    link (scope, elem, attrs) {
+      elem.hide()
+
+      scope.$on('login', () => {
+        elem.show()
+      })
+
+      scope.$on('logout', () => {
+        elem.hide()
+      })
+    },
     controller: ($scope) => {}
   }
 })
