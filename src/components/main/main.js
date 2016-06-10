@@ -20,7 +20,7 @@ app.directive('main', ($timeout, peer) => {
         $scope.address = lisk.crypto.getAddress(kp.publicKey)
         $scope.publicKey = kp.publicKey
 
-        peer.random()
+        peer.session()
 
         $scope.balance.update(() => {
           $scope.prelogged = false
@@ -49,10 +49,14 @@ app.directive('main', ($timeout, peer) => {
       }
 
       $scope.logout = () => {
-        $timeout.cancel($scope.balance.timeout)
-        $scope.logged = false
         $scope.$emit('logout')
       }
+
+      $scope.$on('logout', () => {
+        $timeout.cancel($scope.balance.timeout)
+        $scope.logged = false
+        $scope.prelogged = false
+      })
     }
   }
 })
