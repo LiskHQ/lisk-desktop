@@ -10,7 +10,7 @@ app.factory('peers', ($log, $q, $timeout, peer) => {
       this.public = []
       this.official = [
         new peer({ host: 'login.lisk.io', https: true }),
-        new peer({ host: 'lisk.fullstack.me' }),
+        // new peer({ host: 'lisk.fullstack.me' }),
       ]
 
       this.update()
