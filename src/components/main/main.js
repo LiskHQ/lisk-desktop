@@ -5,47 +5,50 @@ import lisk from 'lisk-js'
 
 import app from '../../app'
 
-app.directive('main', ($timeout, peer) => {
+app.directive('main', ($timeout, $q, peers) => {
   return {
     restrict: 'E',
     template: require('./main.jade'),
     scope: {},
     link (scope, elem, attrs) {},
-    controller: ($scope) => {
+    controller: ($scope, $log, $mdToast) => {
+      let timeouts = {}
+
       $scope.$on('prelogin', () => {
         $scope.prelogged = true
 
         let kp = lisk.crypto.getKeys($scope.passphrase)
 
+        $scope.peer = peers.random()
         $scope.address = lisk.crypto.getAddress(kp.publicKey)
         $scope.publicKey = kp.publicKey
 
-        peer.session()
-
-        $scope.balance.update(() => {
-          $scope.prelogged = false
-          $scope.logged = true
-          $scope.$emit('login')
-          $scope.balance.call()
-        })
+        $scope.updateBalance()
+          .then(() => {
+            $scope.prelogged = false
+            $scope.logged = true
+            $scope.$emit('login')
+          })
       })
 
-      $scope.balance = {
-        update (cb) {
-          peer.getBalance($scope.address, (value) => {
-            $scope.balance.value = value
+      $scope.$on('error', () => {
+        $mdToast.show($mdToast.simple().textContent(`Error connecting to the peer ${$scope.peer.url}`).position('bottom right'))
+        $scope.logout()
+      })
 
-            if (typeof cb === 'function') {
-              cb(value)
+      $scope.updateBalance = () => {
+        return $scope.peer.getBalance($scope.address)
+          .then(balance => {
+            $scope.balance = balance
+
+            if ($scope.prelogged || $scope.logged) {
+              timeouts.balance = $timeout($scope.updateBalance, 10000)
             }
           })
-        },
-        call () {
-          $scope.balance.timeout = $timeout($scope.balance.start, 5000)
-        },
-        start () {
-          $scope.balance.update($scope.balance.call)
-        }
+          .catch(() => {
+            $scope.$emit('error')
+            return $q.reject()
+          })
       }
 
       $scope.logout = () => {
@@ -53,9 +56,12 @@ app.directive('main', ($timeout, peer) => {
       }
 
       $scope.$on('logout', () => {
-        $timeout.cancel($scope.balance.timeout)
         $scope.logged = false
         $scope.prelogged = false
+
+        for (let name in timeouts) {
+          $timeout.cancel(timeouts[name])
+        }
       })
     }
   }
