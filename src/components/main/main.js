@@ -23,6 +23,8 @@ app.directive('main', ($timeout, $q, peers) => {
         $scope.address = lisk.crypto.getAddress(kp.publicKey)
         $scope.publicKey = kp.publicKey
 
+        $log.info('session peer %s', $scope.peer.uri)
+
         $scope.updateBalance()
           .then(() => {
             $scope.prelogged = false

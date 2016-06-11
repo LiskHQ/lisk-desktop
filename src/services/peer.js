@@ -11,8 +11,8 @@ app.factory('peer', ($http, $log, $q) => {
       this.https = https
     }
 
-    toString () {
-      return this.url
+    get uri () {
+      return `${this.host}` + (this.port ? `:${this.port}` : '')
     }
 
     get url () {

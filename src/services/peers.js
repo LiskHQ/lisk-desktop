@@ -17,11 +17,7 @@ app.factory('peers', ($log, peer) => {
 
     random (official = true) {
       let stack = (official || !this.public.length) ? this.official : this.public
-      let peer = stack[parseInt(Math.random() * stack.length)]
-
-      $log.info('session peer %s', peer.toString())
-
-      return peer
+      return stack[parseInt(Math.random() * stack.length)]
     }
 
     update () {
