@@ -1,15 +1,14 @@
 
 import app from '../app'
 
-const API_PEERS = '/api/peers'
-const UPDATE_INTERVAL = 60000
+const UPDATE_INTERVAL = 2000
 
 app.factory('peers', ($log, $q, $timeout, peer) => {
   class peers {
     constructor () {
-      this.public = []
+      this.unnofficial = []
       this.official = [
-        new peer({ host: 'login.lisk.io', https: true }),
+        new peer({ host: 'login.lisk.io', ssl: true }),
         // new peer({ host: 'lisk.fullstack.me' }),
       ]
 
@@ -17,25 +16,17 @@ app.factory('peers', ($log, $q, $timeout, peer) => {
     }
 
     random (official = true) {
-      let stack = (official || !this.public.length) ? this.official : this.public
+      let stack = (official || !this.unnofficial.length) ? this.official : this.unnofficial
       return stack[parseInt(Math.random() * stack.length)]
     }
 
     update () {
-      this.random(true).get(API_PEERS, { state: 2 })
-        .then(
-          (res) => {
-            this.public = res.data.peers.map(obj => {
-              return new peer({
-                host: obj.ip,
-                port: obj.port,
-                https: false,
-              })
-            })
-
-            $log.info('loaded %s peers', this.public.length)
-          }
-        )
+      this.random(true).getPeers()
+        .then(res => {
+          this.unnofficial = res.map(obj => {
+            return new peer({ host: obj.ip, port: obj.port })
+          })
+        })
         .finally(() => {
           $timeout(this.update.bind(this), UPDATE_INTERVAL)
         })
