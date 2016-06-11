@@ -2,6 +2,7 @@
 import app from '../app'
 
 const API_BALANCE = '/api/accounts/getBalance'
+const API_HISTORY = '/api/transactions'
 const REQUEST_TIMEOUT = 5000
 
 app.factory('peer', ($http, $log, $q) => {
@@ -48,6 +49,18 @@ app.factory('peer', ($http, $log, $q) => {
       return this.get(API_BALANCE, { address })
         .then(res => {
           return res.data.balance
+        })
+    }
+
+    getHistory (address, limit = 10, orderBy = 't_timestamp:desc') {
+      return this.get(API_HISTORY, {
+        senderId: address,
+        recipientId: address,
+        limit,
+        orderBy
+      })
+        .then(res => {
+          return res.data.transactions
         })
     }
   }
