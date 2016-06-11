@@ -5,6 +5,8 @@ import lisk from 'lisk-js'
 
 import app from '../../app'
 
+const UPDATE_INTERVAL_BALANCE = 10000
+
 app.directive('main', ($timeout, $q, peers) => {
   return {
     restrict: 'E',
@@ -46,7 +48,7 @@ app.directive('main', ($timeout, $q, peers) => {
             $scope.balance = balance
 
             if ($scope.prelogged || $scope.logged) {
-              timeouts.balance = $timeout($scope.updateBalance, 10000)
+              timeouts.balance = $timeout($scope.updateBalance, UPDATE_INTERVAL_BALANCE)
             }
           })
           .catch(() => {
