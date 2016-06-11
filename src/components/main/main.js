@@ -14,7 +14,7 @@ app.directive('main', ($timeout, $q, peers) => {
     scope: {},
     link (scope, elem, attrs) {},
     controller: ($scope, $log, $mdToast) => {
-      let timeouts = {}
+      $scope.timeouts = {}
 
       $scope.only_official = true
 
@@ -48,7 +48,7 @@ app.directive('main', ($timeout, $q, peers) => {
             $scope.balance = balance
 
             if ($scope.prelogged || $scope.logged) {
-              timeouts.balance = $timeout($scope.updateBalance, UPDATE_INTERVAL_BALANCE)
+              $scope.timeouts.balance = $timeout($scope.updateBalance, UPDATE_INTERVAL_BALANCE)
             }
           })
           .catch(() => {
@@ -65,8 +65,8 @@ app.directive('main', ($timeout, $q, peers) => {
         $scope.logged = false
         $scope.prelogged = false
 
-        for (let name in timeouts) {
-          $timeout.cancel(timeouts[name])
+        for (let name in $scope.timeouts) {
+          $timeout.cancel($scope.timeouts[name])
         }
       })
     }
