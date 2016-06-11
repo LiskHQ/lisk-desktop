@@ -2,8 +2,9 @@
 import app from '../app'
 
 const API_PEERS = '/api/peers'
+const UPDATE_INTERVAL = 60000
 
-app.factory('peers', ($log, peer) => {
+app.factory('peers', ($log, $q, $timeout, peer) => {
   class peers {
     constructor () {
       this.public = []
@@ -32,11 +33,11 @@ app.factory('peers', ($log, peer) => {
               })
             })
 
-            console.log(this.public)
+            $log.info('loaded %s peers', this.public.length)
           }
         )
         .finally(() => {
-          this.$timeout(this.update.bind(this), 50000)
+          $timeout(this.update.bind(this), UPDATE_INTERVAL)
         })
     }
   }
