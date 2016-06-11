@@ -2,13 +2,14 @@
 import app from '../app'
 
 const API_BALANCE = '/api/accounts/getBalance'
+const REQUEST_TIMEOUT = 5000
 
 app.factory('peer', ($http, $log, $q) => {
   return class peer {
     constructor ({ host, port, https }) {
       this.host = host
       this.port = port
-      this.https = https
+      this.https = !!https
     }
 
     get uri () {
@@ -22,7 +23,7 @@ app.factory('peer', ($http, $log, $q) => {
     request (method, api, params) {
       let url = this.url + api
 
-      return $http({ url, method, params, timeout: 3000 })
+      return $http({ url, method, params, timeout: REQUEST_TIMEOUT })
         .then(
           (res) => {
             $log.debug('%s %s%s %s', method, this.url, api, res.status)
