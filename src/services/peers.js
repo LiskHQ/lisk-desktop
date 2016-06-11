@@ -1,7 +1,7 @@
 
 import app from '../app'
 
-const UPDATE_INTERVAL = 2000
+const UPDATE_INTERVAL = 60000
 
 app.factory('peers', ($log, $q, $timeout, peer) => {
   class peers {

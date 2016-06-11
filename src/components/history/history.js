@@ -3,7 +3,7 @@ import './history.less'
 
 import app from '../../app'
 
-const UPDATE_INTERVAL = 20000
+const UPDATE_INTERVAL = 30000
 
 app.directive('history', ($timeout) => {
   return {
