@@ -1,13 +1,13 @@
-h2.address Your Address: {{ address }}
+h2.address {{ address }}
 md-card
   md-card-content
-    md-content(layout='row')
-      h3 Peer
-      div(flex)
-      h3(flex='none') {{ peer.uri }}
-md-card
-  md-card-content
-    md-content(layout='row')
-      h3 Balance
-      div(flex)
-      h3(flex='none') {{ balance | lsk }}
+    md-list
+      md-list-item
+        span.md-title Peer
+        div(flex)
+        h4 {{ peer.uri }}
+        md-divider
+      md-list-item
+        span.md-title Balance
+        div(flex)
+        h4 {{ balance | lsk }}
