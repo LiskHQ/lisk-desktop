@@ -7,6 +7,8 @@ md-card
       md-input-container.md-block(md-is-error='login.valid === 0')
         label Enter your passphrase
         input(ng-model='login.passphrase')
+      md-input-container.md-block
+        md-checkbox.md-primary(ng-model='only_official') Only official peers
     md-content(layout='row', layout-align='center center')
       md-button(ng-disabled='login.random', ng-click="login.passphrase = 'stay undo beyond powder sand laptop grow gloom apology hamster primary arrive'; go()") Dev Test Account
       md-button.md-primary(ng-disabled='login.random', ng-click='login.start()') NEW ACCOUNT
