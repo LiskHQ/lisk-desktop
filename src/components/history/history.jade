@@ -1,7 +1,23 @@
-md-card
+md-card(ng-show='history.length')
   md-card-title
     md-card-title-text
       span.md-title History
   md-card-content
-    md-content(layout-padding)
-      p TODO
+    md-table-container
+      table(md-table)
+        thead(md-head)
+          tr(md-row)
+            th(md-column) Date
+            th(md-column) Sender
+            th(md-column) Recipient
+            th(md-column) Amount
+            th(md-column)
+        tbody(md-body)
+          tr(md-row, ng-repeat="transaction in history")
+            td(md-cell) {{ transaction.timestamp | timestamp }}
+            td(md-cell) {{ transaction.senderId }}
+            td(md-cell) {{ transaction.recipientId }}
+            td(md-cell) {{ transaction.amount | lsk }}
+            td(md-cell, flex='none')
+              i.material-icons.type(ng-if='transaction.senderId === address', style='color: red') call_made
+              i.material-icons.type(ng-if='transaction.senderId !== address', style='color: green') call_received
