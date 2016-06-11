@@ -1,116 +1,53 @@
 
-import path from 'path'
-
-import debug from 'debug'
-
 import app from '../app'
 
-let dbg = debug('app:peer')
-
-let peers = [
-  'https://login.lisk.io',
-  'https://login01.lisk.io',
-  'https://login02.lisk.io',
-]
-
-const API_PEERS = '/api/peers'
 const API_BALANCE = '/api/accounts/getBalance'
 
-class peer {
-  constructor($rootScope, $timeout, $http, $mdDialog, $q) {
-    this.$rootScope = $rootScope
-    this.$timeout = $timeout
-    this.$http = $http
-    this.$mdDialog = $mdDialog
-    this.$q = $q
-  }
-
-  http (config) {
-    config.url = path.join(config.endpoint, config.api)
-
-    return this.$http(config)
-  }
-
-  request (method, endpoint, api, params) {
-    return this.http({
-      endpoint,
-      api,
-      method,
-      params,
-      timeout: 3000
-    })
-  }
-
-  get (url, params) {
-    return this.request('get', this.endpoint, url, params)
-  }
-
-  post (url, params) {
-    return this.request('post', this.endpoint, url, params)
-  }
-
-  random () {
-    return peers[parseInt(Math.random() * peers.length)]
-  }
-
-  session () {
-    this.endpoint = this.random()
-  }
-
-  error () {
-    this.$rootScope.$broadcast('logout')
-  }
-
-  getBalance (address, cb) {
-    this.get(API_BALANCE, { address })
-      .then(res => cb(res.data.balance))
-      .catch(this.error.bind(this))
-  }
-
-  update () {
-    let endpoint = this.random()
-
-    this.get(endpoint, API_PEERS, { state: 2 }).then(
-      (res) => {
-        peers = res.data.peers.map(obj => `http://${obj.ip}:${obj.port}`)
-
-        dbg('update peers from %s', endpoint)
-        this.$timeout(this.update.bind(this), 60000)
-      },
-      (res) => {
-        dbg('update error')
-        this.$timeout(this.update.bind(this), 60000)
-      }
-    )
-  }
-}
-
-app.service('peer', peer)
-
-app.config($httpProvider => {
-  $httpProvider.interceptors.push(($q, $injector) => {
-    return {
-      responseError: (rej) => {
-        let peer = $injector.get('peer')
-        let $http = $injector.get('$http')
-
-        peer.session()
-        rej.config.endpoint = peer.endpoint
-
-        if (typeof rej.config.counter == 'undefined') {
-          rej.config.counter = 0
-        }
-
-        rej.config.counter++
-
-        if (rej.config.counter > 2) {
-          return $q.reject(rej)
-        }
-
-        dbg('trying %s %s', peer.endpoint, rej.config.counter)
-
-        return peer.http(rej.config)
-      }
+app.factory('peer', ($http, $log, $q) => {
+  return class peer {
+    constructor ({ host, port, https }) {
+      this.host = host
+      this.port = port
+      this.https = https
     }
-  })
+
+    toString () {
+      return this.url
+    }
+
+    get url () {
+      return (this.https ? 'https' : 'http') + `://${this.host}` + (this.port ? `:${this.port}` : '')
+    }
+
+    request (method, api, params) {
+      let url = this.url + api
+
+      return $http({ url, method, params, timeout: 3000 })
+        .then(
+          (res) => {
+            $log.debug('%s %s%s %s', method, this.url, api, res.status)
+            return res
+          },
+          (res) => {
+            $log.error('%s %s%s %s', method, this.url, api, res.status)
+            return $q.reject()
+          }
+        )
+    }
+
+    get (api, data) {
+      return this.request('get', api, data)
+    }
+
+    post (api, data) {
+      return this.request('post', api, data)
+    }
+
+    getBalance (address) {
+      return this.get(API_BALANCE, { address })
+        .then(res => {
+          return res.data.balance
+        })
+    }
+  }
 })
