@@ -23,8 +23,6 @@ import $ from 'jquery'
 import angular from 'angular'
 
 angular.element(document).ready(() => {
-  setTimeout(() => {
-    $('.preloading').remove()
-    angular.bootstrap(document, ['app'])
-  }, 1000)
+  $('.preloading').remove()
+  angular.bootstrap(document, ['app'])
 })
