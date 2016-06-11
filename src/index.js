@@ -12,6 +12,7 @@ import './components/send/send'
 import './components/history/history'
 import './filters/lsk'
 import './services/peer'
+import './services/peers'
 
 import $ from 'jquery'
 import angular from 'angular'
