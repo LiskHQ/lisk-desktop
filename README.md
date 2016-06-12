@@ -20,10 +20,6 @@ Open http://localhost:8080
 npm run build
 ```
 
-## Credits
-
-Lisk Icon - http://labs.allienworks.net/icons/cryptocoins
-
 ## License
 
 The MIT License (MIT)
