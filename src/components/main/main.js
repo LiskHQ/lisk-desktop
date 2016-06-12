@@ -43,6 +43,8 @@ app.directive('main', ($timeout, $q, peers) => {
       })
 
       $scope.updateBalance = () => {
+        $timeout.cancel($scope.timeouts.balance)
+
         return $scope.peer.getBalance($scope.address)
           .then(balance => {
             $scope.balance = balance
