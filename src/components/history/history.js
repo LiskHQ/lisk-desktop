@@ -5,7 +5,7 @@ import app from '../../app'
 
 const UPDATE_INTERVAL = 30000
 
-app.directive('history', ($timeout) => {
+app.directive('history', ($timeout, $q) => {
   return {
     restrict: 'E',
     template: require('./history.jade'),

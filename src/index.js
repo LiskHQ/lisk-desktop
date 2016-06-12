@@ -18,6 +18,7 @@ import './filters/epochStamp'
 import './filters/timestamp'
 import './services/peer'
 import './services/peers'
+import './services/error'
 
 import $ from 'jquery'
 import angular from 'angular'

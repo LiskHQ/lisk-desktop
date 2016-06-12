@@ -13,7 +13,7 @@ app.directive('main', ($timeout, $q, peers) => {
     template: require('./main.jade'),
     scope: {},
     link (scope, elem, attrs) {},
-    controller: ($scope, $log, $mdToast) => {
+    controller: ($scope, $log, error) => {
       $scope.timeouts = {}
 
       $scope.only_official = true
@@ -38,8 +38,8 @@ app.directive('main', ($timeout, $q, peers) => {
       })
 
       $scope.$on('error', () => {
-        $mdToast.show($mdToast.simple().textContent(`Error connecting to the peer ${$scope.peer.url}`).position('bottom right'))
         $scope.logout()
+        error.dialog({ text: `Error connecting to the peer ${$scope.peer.url}` })
       })
 
       $scope.updateBalance = () => {
