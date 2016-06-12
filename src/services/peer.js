@@ -20,13 +20,20 @@ app.factory('peer', ($http, $log, $q) => {
     }
 
     get url () {
-      return (this.ssl ? 'https' : 'http') + `://${this.host}` + (this.port ? `:${this.port}` : '')
+      return (this.ssl ? 'https' : 'http') + `://${this.uri}`
     }
 
-    request (method, api, params) {
-      let url = this.url + api
+    request (method, api, params, data, headers) {
+      let config = {
+        url: this.url + api,
+        method,
+        params,
+        data,
+        headers,
+        timeout: REQUEST_TIMEOUT,
+      }
 
-      return $http({ url, method, params, timeout: REQUEST_TIMEOUT })
+      return $http(config)
         .then(
           (res) => {
             let success = !!res.data.success
@@ -39,18 +46,19 @@ app.factory('peer', ($http, $log, $q) => {
             return res
           },
           (res) => {
-            $log.error('%s %s %s %s %s', method.toUpperCase(), this.url, api, res.status(params))
+            console.log(res)
+            $log.error('%s %s %s%s', method.toUpperCase(), res.status, this.url, api)
             return $q.reject()
           }
         )
     }
 
-    get (api, data) {
-      return this.request('get', api, data)
+    get (api, data, headers) {
+      return this.request('GET', api, data, null, headers)
     }
 
-    post (api, data) {
-      return this.request('post', api, data)
+    post (api, data, headers) {
+      return this.request('POST', api, null, data, headers)
     }
 
     getPeers () {
