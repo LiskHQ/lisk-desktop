@@ -50,7 +50,6 @@ app.factory('peer', ($http, $log, $q) => {
             return res
           },
           (res) => {
-            console.log(res)
             $log.error('%s %s %s%s', method.toUpperCase(), res.status, this.url, api)
             return $q.reject()
           }
