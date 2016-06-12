@@ -3,5 +3,19 @@ md-card
     md-card-title-text
       span.md-title Send
   md-card-content
-    md-content(layout-padding)
-      p TODO
+    form(name='sendForm')
+      md-content(flex='100', flex-gt-sm='70', flex-offset-gt-sm='15')
+        md-input-container.md-block
+          label Recipient Address
+          input(type='text', name='recipient', ng-model='send.recipient.value', required, ng-pattern='send.recipient.regexp', ng-disabled='send.loading')
+          div(ng-messages='sendForm.recipient.$error')
+            div(ng-message='required') Required
+            div(ng-message='pattern') Invalid
+        md-input-container.md-block
+          label Enter the amount
+          input(type='text', name='amount', ng-model='send.amount.value', required, ng-pattern='send.amount.regexp', ng-disabled='send.loading')
+          div(ng-messages='sendForm.amount.$error')
+            div(ng-message='required') Required
+            div(ng-message='pattern') Invalid
+    md-content(layout='row', layout-align='center center')
+      md-button.md-raised.md-primary(ng-disabled='!sendForm.$valid || send.loading', ng-click='send.go()') {{ send.loading ? 'Sending...' : 'Send' }}
