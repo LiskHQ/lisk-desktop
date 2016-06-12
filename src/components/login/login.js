@@ -128,8 +128,17 @@ app.directive('login', ($document, $timeout) => {
         $scope.$emit('prelogin')
       }
 
+      $scope.devTestAccount = () => {
+        $scope.login.passphrase = 'stay undo beyond powder sand laptop grow gloom apology hamster primary arrive'
+        $scope.go()
+      }
+
       $scope.$on('logout', () => {
         $scope.passphrase = null
+      })
+
+      $timeout(() => {
+        $scope.devTestAccount()
       })
     }
   }
