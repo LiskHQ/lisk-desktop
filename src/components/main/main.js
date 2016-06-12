@@ -16,14 +16,14 @@ app.directive('main', ($timeout, $q, peers) => {
     controller: ($scope, $log, error) => {
       $scope.timeouts = {}
 
-      $scope.only_official = true
+      $scope.peer_type = 1
 
       $scope.$on('prelogin', () => {
         $scope.prelogged = true
 
         let kp = lisk.crypto.getKeys($scope.passphrase)
 
-        $scope.peer = peers.random($scope.only_official)
+        $scope.peer = peers.random($scope.peer_type)
         $scope.address = lisk.crypto.getAddress(kp.publicKey)
         $scope.publicKey = kp.publicKey
 

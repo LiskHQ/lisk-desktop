@@ -3,14 +3,18 @@ md-card
     md-card-title-text
       span.md-title Sign In
   md-card-content
-    form
-      md-input-container.md-block(md-is-error='login.valid === 0')
+    form(layout='column', layout-gt-sm='row')
+      md-input-container.md-block(flex,md-is-error='login.valid === 0')
         label Enter your passphrase
-        input(ng-model='login.passphrase')
+        input(ng-model='login.passphrase', ng-disabled='login.random')
       md-input-container.md-block
-        md-checkbox.md-primary(ng-model='only_official') Only official peers
+        label Peer
+        md-select(ng-model='peer_type')
+          md-option(value='1') MainNet Official
+          md-option(value='2') MainNet Unnofficial
+          md-option(value='3') TestNet
     md-content(layout='row', layout-align='center center')
-      md-button(ng-disabled='login.random', ng-click="devTestAccount()") Dev Test Account
+      md-button(ng-disabled='login.random', ng-click='devTestAccount()') Dev Test Account
       md-button.md-primary(ng-disabled='login.random', ng-click='login.start()') NEW ACCOUNT
       md-button.md-raised.md-primary(md-autofocus, ng-disabled='login.valid !== 1 || passphrase', ng-click='go()') Login
     md-content(layout-padding, layout='column', layout-align='center center', ng-show='login.random')
