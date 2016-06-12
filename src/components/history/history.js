@@ -3,7 +3,7 @@ import './history.less'
 
 import app from '../../app'
 
-const UPDATE_INTERVAL = 30000
+const UPDATE_INTERVAL = 5000
 
 app.directive('history', ($timeout, $q) => {
   return {
@@ -24,6 +24,8 @@ app.directive('history', ($timeout, $q) => {
     },
     controller: ($scope) => {
       $scope.updateHistory = () => {
+        $timeout.cancel($scope.timeouts.history)
+
         return $scope.peer.getHistory($scope.address)
           .then(res => {
             $scope.history = res
