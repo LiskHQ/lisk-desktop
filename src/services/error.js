@@ -4,7 +4,7 @@ import app from '../app'
 app.factory('error', ($mdDialog, $mdToast) => {
   return {
     toast ({ text }) {
-      $mdToast.show(
+      return $mdToast.show(
         $mdToast.simple()
           .textContent(text)
           .position('bottom right')
