@@ -8,7 +8,8 @@ app.factory('peers', ($log, $q, $timeout, peer) => {
     constructor () {
       this.unnofficial = []
       this.official = [
-        new peer({ host: 'login.lisk.io', ssl: true }),
+        new peer({ host: 'testnet.lisk.io', ssl: true }),
+        // new peer({ host: 'login.lisk.io', ssl: true }),
         // new peer({ host: 'lisk.fullstack.me' }),
       ]
 
