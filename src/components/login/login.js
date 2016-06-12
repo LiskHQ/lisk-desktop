@@ -130,15 +130,11 @@ app.directive('login', ($document, $timeout) => {
 
       $scope.devTestAccount = () => {
         $scope.login.passphrase = 'stay undo beyond powder sand laptop grow gloom apology hamster primary arrive'
-        $scope.go()
+        $timeout($scope.go, 250)
       }
 
       $scope.$on('logout', () => {
         $scope.passphrase = null
-      })
-
-      $timeout(() => {
-        $scope.devTestAccount()
       })
     }
   }
