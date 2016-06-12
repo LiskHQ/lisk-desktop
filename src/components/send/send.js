@@ -25,8 +25,8 @@ app.directive('send', (error, success) => {
     controller: ($scope) => {
       $scope.send = {
         reset () {
-          $scope.send.recipient.value = '8127389478970013735L'
-          $scope.send.amount.value = parseFloat((1 + (Math.random() * 3)).toFixed(8))
+          $scope.send.recipient.value = ''
+          $scope.send.amount.value = ''
         },
         go () {
           $scope.send.loading = true
