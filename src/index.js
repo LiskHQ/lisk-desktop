@@ -21,10 +21,8 @@ import './services/peers'
 import './services/error'
 import './services/success'
 
-import $ from 'jquery'
 import angular from 'angular'
 
 angular.element(document).ready(() => {
-  $('.preloading').remove()
   angular.bootstrap(document, ['app'])
 })
