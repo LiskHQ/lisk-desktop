@@ -17,7 +17,7 @@ md-card(ng-show='history.length')
             td(md-cell) {{ ::transaction.timestamp | timestamp }}
             td(md-cell) {{ ::transaction.senderId }}
             td(md-cell) {{ ::transaction.recipientId }}
-            td(md-cell) {{ ::transaction.amount | lsk }}
+            td(md-cell).lsk(data='transaction.amount')
             td(md-cell, flex='none')
               i.material-icons.type(ng-if='transaction.senderId === address', style='color: red') call_made
               i.material-icons.type(ng-if='transaction.senderId !== address', style='color: green') call_received
