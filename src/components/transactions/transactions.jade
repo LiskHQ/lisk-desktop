@@ -1,7 +1,7 @@
-md-card(ng-show='history.length')
+md-card(ng-show='transactions.length')
   md-card-title
     md-card-title-text
-      span.md-title History
+      span.md-title Transactions
   md-card-content
     md-table-container
       table(md-table)
@@ -13,7 +13,7 @@ md-card(ng-show='history.length')
             th(md-column) Amount
             th(md-column)
         tbody(md-body)
-          tr(md-row, ng-repeat="transaction in history")
+          tr(md-row, ng-repeat="transaction in transactions")
             td(md-cell) {{ ::transaction.timestamp | timestamp }}
             td(md-cell) {{ ::transaction.senderId }}
             td(md-cell) {{ ::transaction.recipientId }}

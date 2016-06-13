@@ -1,37 +1,37 @@
 
-import './history.less'
+import './transactions.less'
 
 import app from '../../app'
 
 const UPDATE_INTERVAL = 5000
 
-app.directive('history', ($timeout, $q) => {
+app.directive('transactions', ($timeout, $q) => {
   return {
     restrict: 'E',
-    template: require('./history.jade'),
+    template: require('./transactions.jade'),
     link (scope, elem, attrs) {
       elem.hide()
 
       scope.$on('login', () => {
         elem.show()
-        scope.updateHistory()
+        scope.updateTransactions()
       })
 
       scope.$on('logout', () => {
         elem.hide()
-        scope.history = []
+        scope.transactions = []
       })
     },
     controller: ($scope) => {
-      $scope.updateHistory = () => {
-        $timeout.cancel($scope.timeouts.history)
+      $scope.updateTransactions = () => {
+        $timeout.cancel($scope.timeouts.transactions)
 
-        return $scope.peer.getHistory($scope.address)
+        return $scope.peer.getTransactions($scope.address)
           .then(res => {
-            $scope.history = res
+            $scope.transactions = res
 
             if ($scope.prelogged || $scope.logged) {
-              $scope.timeouts.history = $timeout($scope.updateHistory, UPDATE_INTERVAL)
+              $scope.timeouts.transactions = $timeout($scope.updateTransactions, UPDATE_INTERVAL)
             }
           })
           .catch(() => {

@@ -5,9 +5,9 @@ import lisk from 'lisk-js'
 
 const API_PEERS = '/api/peers'
 const API_BALANCE = '/api/accounts/getBalance'
-const API_HISTORY = '/api/transactions'
+const API_TRANSACTIONS = '/api/transactions'
 const API_NETHASH = '/api/blocks/getNetHash'
-const API_TRANSACTION = '/peer/transactions'
+const API_SEND_TRANSACTION = '/peer/transactions'
 
 const REQUEST_TIMEOUT = 5000
 
@@ -80,7 +80,7 @@ app.factory('peer', ($http, $log, $q) => {
         .then(res => res.data.balance)
     }
 
-    getHistory (address, limit = 10, orderBy = 't_timestamp:desc') {
+    getTransactions (address, limit = 10, orderBy = 't_timestamp:desc') {
       let data = {
         senderId: address,
         recipientId: address,
@@ -88,7 +88,7 @@ app.factory('peer', ($http, $log, $q) => {
         orderBy
       }
 
-      return this.get(API_HISTORY, data)
+      return this.get(API_TRANSACTIONS, data)
         .then(res => res.data.transactions)
     }
 
@@ -122,7 +122,7 @@ app.factory('peer', ($http, $log, $q) => {
             port: TRANSACTION_HEADER_PORT,
           }
 
-          return this.post(API_TRANSACTION, { transaction }, headers)
+          return this.post(API_SEND_TRANSACTION, { transaction }, headers)
         })
     }
   }

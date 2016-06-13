@@ -43,7 +43,7 @@ app.directive('send', (error, success) => {
                 .then(() => {
                   $scope.send.reset()
                   $scope.updateBalance()
-                  $scope.updateHistory()
+                  $scope.updateTransactions()
                 })
             },
             (res) => {
