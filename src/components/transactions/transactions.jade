@@ -14,7 +14,7 @@ md-card(ng-show='transactions.length')
             th(md-column) Amount
             th(md-column)
         tbody(md-body)
-          tr(md-row, ng-repeat="transaction in transactions")
+          tr(md-row, ng-repeat="transaction in transactions | orderBy:'-timestamp'")
             td.timestamp(md-cell, data='transaction.timestamp')
             td(md-cell, ng-bind='transaction.confirmations')
             td.address(md-cell, data='transaction.senderId', current='address')

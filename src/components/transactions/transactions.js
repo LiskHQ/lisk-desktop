@@ -23,12 +23,34 @@ app.directive('transactions', ($timeout, $q) => {
       })
     },
     controller: ($scope) => {
+      $scope.transactions = []
+
       $scope.updateTransactions = () => {
         $timeout.cancel($scope.timeouts.transactions)
 
         return $scope.peer.getTransactions($scope.address)
           .then(res => {
-            $scope.transactions = res
+            let news = []
+
+            for (let transaction of res) {
+              let found
+
+              for (let item of $scope.transactions) {
+                if (item.id === transaction.id) {
+                  found = item
+                }
+              }
+
+              if (found) {
+                found.confirmations = transaction.confirmations
+              } else {
+                news.push(transaction)
+              }
+            }
+
+            for (let item of news) {
+              $scope.transactions.push(item)
+            }
 
             if ($scope.prelogged || $scope.logged) {
               $scope.timeouts.transactions = $timeout($scope.updateTransactions, UPDATE_INTERVAL)
