@@ -14,10 +14,10 @@ md-card(ng-show='transactions.length')
             th(md-column)
         tbody(md-body)
           tr(md-row, ng-repeat="transaction in transactions")
-            td(md-cell).timestamp(data='transaction.timestamp')
-            td(md-cell) {{ ::transaction.senderId }}
-            td(md-cell) {{ ::transaction.recipientId }}
-            td(md-cell).lsk(data='transaction.amount')
+            td.timestamp(md-cell, data='transaction.timestamp')
+            td.address(md-cell, data='transaction.senderId', current='address')
+            td.address(md-cell, data='transaction.recipientId', current='address')
+            td.lsk(md-cell, data='transaction.amount')
             td(md-cell, flex='none')
               i.material-icons.type(ng-if='transaction.senderId === address', style='color: red') call_made
               i.material-icons.type(ng-if='transaction.senderId !== address', style='color: green') call_received
