@@ -1,13 +1,13 @@
-h2.address {{ address }}
-md-card
-  md-card-content
-    md-list
-      md-list-item
-        span.md-title Peer
-        div(flex)
-        h4 {{ peer.uri }}
-        md-divider
-      md-list-item
-        span.md-title Balance
-        div(flex)
-        h4.lsk(data='balance')
+md-content(layout='row')
+  md-card(flex=33)
+    md-card-content.address
+      h4 Your Address
+      h3 {{ address }}
+  md-card(flex=33)
+    md-card-content.amount
+      h4 Balance
+      h3.lsk(data='balance')
+  md-card(flex=33)
+    md-card-content.peer
+      h4 Peer
+      h3 {{ peer.uri }}
