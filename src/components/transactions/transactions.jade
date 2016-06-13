@@ -8,6 +8,7 @@ md-card(ng-show='transactions.length')
         thead(md-head)
           tr(md-row)
             th(md-column) Date
+            th(md-column) Confirmations
             th(md-column) Sender
             th(md-column) Recipient
             th(md-column) Amount
@@ -15,9 +16,10 @@ md-card(ng-show='transactions.length')
         tbody(md-body)
           tr(md-row, ng-repeat="transaction in transactions")
             td.timestamp(md-cell, data='transaction.timestamp')
+            td(md-cell, ng-bind='transaction.confirmations')
             td.address(md-cell, data='transaction.senderId', current='address')
             td.address(md-cell, data='transaction.recipientId', current='address')
-            td.lsk(md-cell, data='transaction.amount')
+            td.lsk(md-cell, data='transaction.amount', fee='transaction.fee')
             td(md-cell, flex='none')
               i.material-icons.type(ng-if='transaction.senderId === address', style='color: red') call_made
               i.material-icons.type(ng-if='transaction.senderId !== address', style='color: green') call_received
