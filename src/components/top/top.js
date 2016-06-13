@@ -1,12 +1,12 @@
 
-import './account.less'
+import './top.less'
 
 import app from '../../app'
 
-app.directive('account', () => {
+app.directive('top', () => {
   return {
     restrict: 'E',
-    template: require('./account.jade'),
+    template: require('./top.jade'),
     link (scope, elem, attrs) {
       elem.hide()
 
