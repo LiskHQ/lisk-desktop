@@ -20,6 +20,7 @@ import './services/peer'
 import './services/peers'
 import './services/error'
 import './services/success'
+import './filters/timestamp'
 
 import angular from 'angular'
 
