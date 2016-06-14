@@ -19,7 +19,7 @@ app.directive('timestamp', () => {
 
         let obj = moment(timestampFilter($scope.data))
         $scope.full = obj.format('llll')
-        $scope.time_ago = obj.fromNow()
+        $scope.time_ago = obj.format('LTS')
 
         timeout = $timeout(update, 60000)
       }

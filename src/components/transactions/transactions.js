@@ -1,6 +1,8 @@
 
 import './transactions.less'
 
+import moment from 'moment'
+
 import app from '../../app'
 
 const UPDATE_INTERVAL = 5000
@@ -22,35 +24,25 @@ app.directive('transactions', ($timeout, $q) => {
         scope.transactions = []
       })
     },
-    controller: ($scope) => {
-      $scope.transactions = []
-
+    controller: ($scope, timestampFilter) => {
       $scope.updateTransactions = () => {
         $timeout.cancel($scope.timeouts.transactions)
 
         return $scope.peer.getTransactions($scope.address)
           .then(res => {
-            let news = []
+            let data = {}
 
             for (let transaction of res) {
-              let found
+              let group = moment(timestampFilter(transaction.timestamp)).format('LL')
 
-              for (let item of $scope.transactions) {
-                if (item.id === transaction.id) {
-                  found = item
-                }
+              if (!data[group]) {
+                data[group] = []
               }
 
-              if (found) {
-                found.confirmations = transaction.confirmations
-              } else {
-                news.push(transaction)
-              }
+              data[group].push(transaction)
             }
 
-            for (let item of news) {
-              $scope.transactions.push(item)
-            }
+            $scope.transactions = data
 
             if ($scope.prelogged || $scope.logged) {
               $scope.timeouts.transactions = $timeout($scope.updateTransactions, UPDATE_INTERVAL)
