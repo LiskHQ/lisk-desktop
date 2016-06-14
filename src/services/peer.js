@@ -80,7 +80,7 @@ app.factory('peer', ($http, $log, $q) => {
         .then(res => res.data.balance)
     }
 
-    getTransactions (address, limit = 10, orderBy = 't_timestamp:desc') {
+    getTransactions (address, limit = 100, orderBy = 't_timestamp:desc') {
       let data = {
         senderId: address,
         recipientId: address,
