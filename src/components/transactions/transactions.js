@@ -11,19 +11,7 @@ app.directive('transactions', ($timeout, $q) => {
   return {
     restrict: 'E',
     template: require('./transactions.jade'),
-    link (scope, elem, attrs) {
-      elem.hide()
-
-      scope.$on('login', () => {
-        elem.show()
-        scope.updateTransactions()
-      })
-
-      scope.$on('logout', () => {
-        elem.hide()
-        scope.transactions = []
-      })
-    },
+    link (scope, elem, attrs) {},
     controller: ($scope, timestampFilter) => {
       $scope.updateTransactions = () => {
         $timeout.cancel($scope.timeouts.transactions)
@@ -43,16 +31,15 @@ app.directive('transactions', ($timeout, $q) => {
             }
 
             $scope.transactions = data
-
-            if ($scope.prelogged || $scope.logged) {
-              $scope.timeouts.transactions = $timeout($scope.updateTransactions, UPDATE_INTERVAL)
-            }
+            $scope.timeouts.transactions = $timeout($scope.updateTransactions, UPDATE_INTERVAL)
           })
           .catch(() => {
             $scope.$emit('error')
             return $q.reject()
           })
       }
+
+      $scope.updateTransactions()
     }
   }
 })

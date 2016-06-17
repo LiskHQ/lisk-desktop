@@ -3,7 +3,7 @@ md-card
     md-card-title-text
       span.md-title Transactions
   md-card-content
-    md-content(style='max-height: 500px')
+    md-content
       section(ng-repeat="(group, list) in transactions")
         md-subheader {{ group }}
         md-table-container
@@ -11,7 +11,7 @@ md-card
             tbody(md-body)
               tr(md-row, ng-repeat="transaction in list track by transaction.id | orderBy:'-timestamp'")
                 td.timestamp(md-cell, data='transaction.timestamp')
-                td.lsk(md-cell, data='transaction.amount', fee='transaction.fee')
+                td.lsk(md-cell, amount='transaction.amount', fee='transaction.fee', negative='transaction.senderId === address')
                 td(md-cell)
                   i.material-icons.type(ng-if='transaction.senderId === address', style='color: red') call_made
                   i.material-icons.type(ng-if='transaction.senderId !== address', style='color: green') call_received
