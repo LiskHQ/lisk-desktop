@@ -9,7 +9,9 @@ md-content(layout='row')
         md-tooltip(md-direction='left') Logout
     div(layout='row', layout-align='space-around', ng-show='prelogged')
       md-progress-circular.md-warn(md-mode='indeterminate', md-diameter='120')
-    login
-    top
-    send
-    transactions
+    div(ng-show='!prelogged && !logged')
+      login
+    div(ng-if='logged')
+      top
+      send
+      transactions
