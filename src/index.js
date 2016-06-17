@@ -16,10 +16,13 @@ import './components/transactions/transactions'
 import './components/timestamp/timestamp'
 import './components/lsk/lsk'
 import './components/address/address'
+
 import './services/peer'
 import './services/peers'
 import './services/error'
 import './services/success'
+import './services/lsk'
+
 import './filters/timestamp'
 
 import angular from 'angular'
