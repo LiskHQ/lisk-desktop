@@ -1,25 +1,19 @@
 
 import './lsk.less'
 
-import numeral from 'numeral'
-
 import app from '../../app'
 
 app.directive('lsk', () => {
   return {
     restrict: 'C',
     template: require('./lsk.jade'),
-    scope: { data: '=', fee: '=?' },
+    scope: { amount: '=', fee: '=?', negative: '=?' },
     link (scope, elem, attrs) {},
-    controller: ($scope) => {
-      let fix = value => {
-        return numeral(parseInt(value) || 0).divide(Math.pow(10, 8)).format('0.00000000')
-      }
+    controller: ($scope, lsk) => {
+      $scope.fee = $scope.fee ? lsk.normalize($scope.fee) : null
 
-      $scope.fee = $scope.fee ? fix($scope.fee) : null
-
-      $scope.$watch('data', () => {
-        $scope.amount = fix($scope.data)
+      $scope.$watch('amount', () => {
+        $scope.value = lsk.normalize($scope.amount)
       })
     }
   }

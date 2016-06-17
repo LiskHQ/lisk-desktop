@@ -1,5 +1,3 @@
 span.lsk-inner
-  span.lsk-amount(ng-bind='amount')
-  = ' '
-  span.lsk-symbol LSK
+  span.lsk-amount(ng-bind='value', ng-class='{ negative: negative }')
   md-tooltip(ng-if='fee', md-direction='top', md-delay='500') Fee: {{ fee }} LSK
