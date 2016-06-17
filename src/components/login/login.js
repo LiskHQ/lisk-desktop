@@ -11,16 +11,6 @@ app.directive('login', ($document, $timeout) => {
     restrict: 'E',
     template: require('./login.jade'),
     link (scope, elem, attrs) {
-      elem.show()
-
-      scope.$on('prelogin', () => {
-        elem.hide()
-      })
-
-      scope.$on('logout', () => {
-        elem.show()
-      })
-
       elem.find('input').focus()
     },
     controller: ($scope) => {
