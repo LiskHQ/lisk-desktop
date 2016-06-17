@@ -10,18 +10,7 @@ app.directive('send', (error, success) => {
   return {
     restrict: 'E',
     template: require('./send.jade'),
-    link (scope, elem, attrs) {
-      elem.hide()
-
-      scope.$on('login', () => {
-        scope.send.reset()
-        elem.show()
-      })
-
-      scope.$on('logout', () => {
-        elem.hide()
-      })
-    },
+    link (scope, elem, attrs) {},
     controller: ($scope) => {
       $scope.send = {
         reset () {
