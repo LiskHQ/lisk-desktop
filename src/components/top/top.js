@@ -7,17 +7,7 @@ app.directive('top', () => {
   return {
     restrict: 'E',
     template: require('./top.jade'),
-    link (scope, elem, attrs) {
-      elem.hide()
-
-      scope.$on('login', () => {
-        elem.show()
-      })
-
-      scope.$on('logout', () => {
-        elem.hide()
-      })
-    },
+    link (scope, elem, attrs) {},
     controller: ($scope) => {}
   }
 })
