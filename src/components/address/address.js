@@ -9,9 +9,6 @@ app.directive('address', () => {
     template: require('./address.jade'),
     scope: { data: '=', current: '=' },
     link (scope, elem, attrs) {},
-    controller: ($scope) => {
-      $scope.$watch('data', () => {
-      })
-    }
+    controller: ($scope) => {}
   }
 })
