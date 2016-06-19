@@ -18,8 +18,8 @@ app.directive('timestamp', () => {
         $timeout.cancel(timeout)
 
         let obj = moment(timestampFilter($scope.data))
-        $scope.full = obj.format('llll')
-        $scope.time_ago = obj.format('hh:mm:ss A')
+        $scope.full = obj.toISOString()
+        $scope.time_ago = obj.fromNow()
 
         timeout = $timeout(update, 60000)
       }
