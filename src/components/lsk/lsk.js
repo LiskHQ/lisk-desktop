@@ -7,13 +7,13 @@ app.directive('lsk', () => {
   return {
     restrict: 'C',
     template: require('./lsk.jade'),
-    scope: { amount: '=', fee: '=?', negative: '=?' },
+    scope: { amount: '=', negative: '=?' },
     link (scope, elem, attrs) {},
-    controller: ($scope, lsk) => {
-      $scope.fee = $scope.fee ? lsk.normalize($scope.fee) : null
+    controller: ($scope, $attrs, lsk) => {
+      $scope.nocolor = typeof $attrs.nocolor !== 'undefined'
 
       $scope.$watch('amount', () => {
-        $scope.value = lsk.normalize($scope.amount)
+        $scope._amount = lsk.normalize($scope.amount)
       })
     }
   }
