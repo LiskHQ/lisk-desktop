@@ -4,18 +4,37 @@ md-card
       span.md-title Transactions
   md-card-content
     md-content
-      section(ng-repeat="(group, list) in transactions")
-        md-subheader {{ group }}
-        md-table-container
-          table(md-table)
-            tbody(md-body)
-              tr(md-row, ng-repeat="transaction in list track by transaction.id | orderBy:'-timestamp'")
-                td.timestamp(md-cell, data='transaction.timestamp')
-                td.lsk(md-cell, amount='transaction.amount', fee='transaction.fee', negative='transaction.senderId === address')
-                td(md-cell)
-                  i.material-icons.type(ng-if='transaction.senderId === address', style='color: red') call_made
-                  i.material-icons.type(ng-if='transaction.senderId !== address', style='color: green') call_received
-                td(md-cell)
+      md-table-container
+        table(md-table)
+          thead(md-head)
+            tr(md-row)
+              th(md-column)
+              th(md-column) Date
+              th(md-column) From / To
+              th(md-column)
+              th(md-column) Amount
+              th(md-column) Fee
+              th(md-column) Confirmations
+          tbody(md-body)
+            tr(md-row, ng-repeat="transaction in transactions track by transaction.id | orderBy:'-timestamp'")
+              td(md-cell, ng-bind='transaction.type')
+              td.timestamp(md-cell, data='transaction.timestamp')
+              td(md-cell, ng-switch, on='transaction.type')
+                span.tx(ng-switch-when='1') Second Signature Creation
+                span.tx(ng-switch-when='2') Delegate Registration
+                span.tx(ng-switch-when='3') Vote
+                span.tx(ng-switch-when='4') Multisignature Creation
+                span.tx(ng-switch-when='5') Blockchain Application Registration
+                span.tx(ng-switch-when='6') Transfer Lisk to Blockchain Application
+                span.tx(ng-switch-when='7') Transfer Lisk from Blockchain Applicatio
+                span(ng-switch-default)
                   span.address(md-cell, data='transaction.senderId', current='address', ng-if='transaction.senderId !== address')
                   span.address(md-cell, data='transaction.recipientId', current='address', ng-if='transaction.senderId === address')
-                td(md-cell, ng-bind='transaction.confirmations')
+              td(md-cell, width='1%')
+                i.material-icons.type(ng-if='transaction.senderId === address', style='color: red') call_made
+                i.material-icons.type(ng-if='transaction.senderId !== address', style='color: green') call_received
+              td(md-cell, width='1%')
+                .lsk(md-cell, amount='transaction.amount', negative='transaction.senderId === address')
+              td(md-cell, width='1%')
+                .lsk(md-cell, amount='transaction.fee', nocolor)
+              td(md-cell, width='1%', ng-bind='transaction.confirmations')

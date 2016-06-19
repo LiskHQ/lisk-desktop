@@ -18,19 +18,7 @@ app.directive('transactions', ($timeout, $q) => {
 
         return $scope.peer.getTransactions($scope.address)
           .then(res => {
-            let data = {}
-
-            for (let transaction of res) {
-              let group = moment(timestampFilter(transaction.timestamp)).format('LL')
-
-              if (!data[group]) {
-                data[group] = []
-              }
-
-              data[group].push(transaction)
-            }
-
-            $scope.transactions = data
+            $scope.transactions = res
             $scope.timeouts.transactions = $timeout($scope.updateTransactions, UPDATE_INTERVAL)
           })
           .catch(() => {
