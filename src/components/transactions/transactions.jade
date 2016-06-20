@@ -1,4 +1,4 @@
-md-card
+md-card(ng-show='transactions.length')
   md-card-title
     md-card-title-text
       span.md-title Transactions
@@ -9,14 +9,15 @@ md-card
           thead(md-head)
             tr(md-row)
               th(md-column) Date
+              th(md-column) Confirmations
               th(md-column) From / To
               th(md-column)
               th(md-column) Amount
               th(md-column) Fee
-              th(md-column) Confirmations
           tbody(md-body)
             tr(md-row, ng-repeat="transaction in transactions track by transaction.id | orderBy:'-timestamp'")
               td.timestamp(md-cell, data='transaction.timestamp')
+              td(md-cell, width='1%', ng-bind='transaction.confirmations')
               td(md-cell, ng-switch, on='transaction.type')
                 span.tx(ng-switch-when='1') Second Signature Creation
                 span.tx(ng-switch-when='2') Delegate Registration
@@ -35,4 +36,5 @@ md-card
                 .lsk(md-cell, amount='transaction.amount', negative='transaction.senderId === address')
               td(md-cell, width='1%')
                 .lsk(md-cell, amount='transaction.fee', nocolor)
-              td(md-cell, width='1%', ng-bind='transaction.confirmations')
+      md-content(layout='row', layout-align='center center', ng-show='more')
+        md-button.more(ng-disabled='loading_more', ng-click='updateTransactions(true)') Load More
