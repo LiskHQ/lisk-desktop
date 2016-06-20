@@ -48,7 +48,7 @@ app.factory('peer', ($http, $log, $q) => {
 
       return $http(config).then(res => {
         if (!res.data.success) {
-          return $q.reject({ message: res.data.message || null })
+          return $q.reject({ message: res.data.message || res.data.error || null })
         } else {
           return res
         }
