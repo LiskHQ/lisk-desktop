@@ -11,13 +11,13 @@ app.directive('timestamp', () => {
     template: require('./timestamp.jade'),
     scope: { data: '=' },
     link (scope, elem, attrs) {},
-    controller: ($scope, $timeout, timestampFilter) => {
+    controller: ($scope, $timeout, timestamp) => {
       let timeout
 
       let update = () => {
         $timeout.cancel(timeout)
 
-        let obj = moment(timestampFilter($scope.data))
+        let obj = moment(timestamp.fix($scope.data))
         $scope.full = obj.toISOString()
         $scope.time_ago = obj.fromNow()
 
