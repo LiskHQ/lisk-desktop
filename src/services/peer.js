@@ -4,6 +4,7 @@ import app from '../app'
 import lisk from 'lisk-js'
 
 const API_PEERS = '/api/peers'
+const API_ACCOUNT = '/api/accounts'
 const API_BALANCE = '/api/accounts/getBalance'
 const API_TRANSACTIONS = '/api/transactions'
 const API_NETHASH = '/api/blocks/getNetHash'
@@ -69,6 +70,11 @@ app.factory('peer', ($http, $log, $q) => {
 
       return this.get(API_PEERS, data)
         .then(res => res.data.peers)
+    }
+
+    getAccount (address) {
+      return this.get(API_ACCOUNT, { address })
+        .then(res => res.data.account)
     }
 
     getBalance (address) {
