@@ -7,7 +7,7 @@ app.directive('address', () => {
   return {
     restrict: 'C',
     template: require('./address.jade'),
-    scope: { data: '=', current: '=' },
+    scope: { data: '=' },
     link (scope, elem, attrs) {},
     controller: ($scope) => {}
   }
