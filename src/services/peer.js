@@ -89,7 +89,7 @@ app.factory('peer', ($http, $log, $q) => {
       }
 
       return this.get(API_TRANSACTIONS, data)
-        .then(res => res.data.transactions)
+        .then(res => res.data)
     }
 
     getNetHash () {
