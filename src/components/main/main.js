@@ -12,11 +12,8 @@ app.directive('main', ($timeout, $q, peers) => {
     restrict: 'E',
     template: require('./main.jade'),
     scope: {},
-    link (scope, elem, attrs) {},
     controller: ($scope, $log, error) => {
-      $scope.timeouts = {}
-
-      $scope.peer_type = 1
+      $scope.peer_type = 3
 
       $scope.$on('prelogin', () => {
         $scope.prelogged = true
@@ -25,15 +22,11 @@ app.directive('main', ($timeout, $q, peers) => {
 
         $scope.peer = peers.random($scope.peer_type)
         $scope.address = lisk.crypto.getAddress(kp.publicKey)
-        $scope.publicKey = kp.publicKey
 
-        $log.info('session peer %s', $scope.peer.uri)
-
-        $scope.updateBalance()
+        $scope.updateAccount()
           .then(() => {
             $scope.prelogged = false
             $scope.logged = true
-            $scope.$emit('login')
           })
       })
 
@@ -42,15 +35,15 @@ app.directive('main', ($timeout, $q, peers) => {
         error.dialog({ text: `Error connecting to the peer ${$scope.peer.url}` })
       })
 
-      $scope.updateBalance = () => {
-        $timeout.cancel($scope.timeouts.balance)
+      $scope.updateAccount = () => {
+        $timeout.cancel($scope.timeout)
 
-        return $scope.peer.getBalance($scope.address)
-          .then(balance => {
-            $scope.balance = balance
+        return $scope.peer.getAccount($scope.address)
+          .then(res => {
+            $scope.account = res
 
             if ($scope.prelogged || $scope.logged) {
-              $scope.timeouts.balance = $timeout($scope.updateBalance, UPDATE_INTERVAL_BALANCE)
+              $scope.timeout = $timeout($scope.updateAccount, UPDATE_INTERVAL_BALANCE)
             }
           })
           .catch(() => {
@@ -60,17 +53,12 @@ app.directive('main', ($timeout, $q, peers) => {
       }
 
       $scope.logout = () => {
-        $scope.$emit('logout')
-      }
-
-      $scope.$on('logout', () => {
         $scope.logged = false
         $scope.prelogged = false
+        $scope.passphrase = ''
 
-        for (let name in $scope.timeouts) {
-          $timeout.cancel($scope.timeouts[name])
-        }
-      })
+        $timeout.cancel($scope.timeout)
+      }
     }
   }
 })
