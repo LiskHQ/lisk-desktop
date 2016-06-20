@@ -13,7 +13,7 @@ app.directive('main', ($timeout, $q, peers) => {
     template: require('./main.jade'),
     scope: {},
     controller: ($scope, $log, error) => {
-      $scope.peer_type = 3
+      $scope.peer_type = 1
 
       $scope.$on('prelogin', () => {
         $scope.prelogged = true
