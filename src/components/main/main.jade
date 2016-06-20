@@ -12,6 +12,6 @@ md-content(layout='row')
     div(ng-show='!prelogged && !logged')
       login
     div(ng-if='logged')
-      top
-      send
-      transactions(address='address', peer='peer')
+      top(account='account', peer='peer')
+      send(account='account', peer='peer', passphrase='passphrase')
+      transactions(account='account', peer='peer')

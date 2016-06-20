@@ -9,8 +9,7 @@ app.directive('transactions', ($timeout, $q) => {
   return {
     restrict: 'E',
     template: require('./transactions.jade'),
-    scope: { address: '=', peer: '=' },
-    link (scope, elem, attrs) {},
+    scope: { account: '=', peer: '=' },
     controller: ($scope) => {
       $scope.transactions = []
 
@@ -21,7 +20,7 @@ app.directive('transactions', ($timeout, $q) => {
 
         $timeout.cancel($scope.timeout)
 
-        return $scope.peer.getTransactions($scope.address, ($scope.transactions.length || 10) + (more ? 10 : 0))
+        return $scope.peer.getTransactions($scope.account.address, ($scope.transactions.length || 10) + (more ? 10 : 0))
           .then(res => {
             $scope.transactions = res.transactions
             $scope.total = res.count

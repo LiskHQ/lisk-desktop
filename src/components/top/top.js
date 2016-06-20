@@ -7,7 +7,7 @@ app.directive('top', () => {
   return {
     restrict: 'E',
     template: require('./top.jade'),
-    link (scope, elem, attrs) {},
+    scope: { account: '=', peer: '=' },
     controller: ($scope) => {}
   }
 })

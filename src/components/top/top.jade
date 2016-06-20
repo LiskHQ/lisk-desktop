@@ -2,11 +2,11 @@ md-content(layout='row')
   md-card(flex=33)
     md-card-content.top-address
       h2 Address
-      h3 {{ address }}
+      h3 {{ account.address }}
   md-card(flex=33)
     md-card-content.top-amount
       h2 Balance
-      h3.lsk(amount='balance', nocolor)
+      h3.lsk(amount='account.balance', nocolor)
   md-card(flex=33)
     md-card-content.top-peer
       h2 Peer
