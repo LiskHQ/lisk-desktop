@@ -13,7 +13,9 @@ app.directive('login', ($document, $timeout) => {
     link (scope, elem, attrs) {
       elem.find('input').focus()
     },
-    controller: ($scope) => {
+    controller: ($scope, peers) => {
+      $scope.peers = peers.official
+
       let fix = v => {
         return (v || '').replace(/ +/g, ' ').trim().toLowerCase()
       }

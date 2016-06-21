@@ -9,10 +9,9 @@ md-card
         input(ng-model='login.passphrase', ng-disabled='login.random')
       md-input-container.md-block
         label Peer
-        md-select(ng-model='peer_type')
-          md-option(value='1') MainNet Official
-          md-option(value='2') MainNet Unnofficial
-          md-option(value='3') TestNet
+        md-select(ng-model='peer_selected')
+          md-option(ng-value='null', selected) Random
+          md-option(ng-repeat='item in peers', ng-value='item') {{ item.host }}
     md-content(layout='row', layout-align='center center')
       md-button(ng-disabled='login.random', ng-click='devTestAccount()') Dev Test Account
       md-button.md-primary(ng-disabled='login.random', ng-click='login.start()') NEW ACCOUNT
@@ -22,3 +21,4 @@ md-card
       md-progress-linear(md-mode='determinate', value='{{ login.progress }}')
       md-content.bytes
         span.byte(ng-repeat='byte in login.seed track by $index', ng-bind='byte', animate-on-change='byte')
+pre {{ peer_selected }}
