@@ -6,43 +6,20 @@ const UPDATE_INTERVAL = 60000
 app.factory('peers', ($log, $q, $timeout, peer) => {
   class peers {
     constructor () {
-      this.unnofficial = []
-
       this.official = [
-        new peer({ host: 'login.lisk.io', ssl: true }),
+        new peer({ host: 'node01.lisk.io' }),
+        new peer({ host: 'node02.lisk.io' }),
+        new peer({ host: 'node03.lisk.io' }),
+        new peer({ host: 'node04.lisk.io' }),
+        new peer({ host: 'node05.lisk.io' }),
+        new peer({ host: 'node06.lisk.io' }),
+        new peer({ host: 'node07.lisk.io' }),
+        new peer({ host: 'node08.lisk.io' }),
       ]
-
-      this.test = [
-        new peer({ host: 'testnet.lisk.io', ssl: true }),
-      ]
-
-      this.update()
     }
 
     random (type) {
-      let stack
-
-      if (type == 3) {
-        stack = this.test
-      } else if (type == 2 && this.unnofficial.length) {
-        stack = this.unnofficial
-      } else {
-        stack = this.official
-      }
-
-      return stack[parseInt(Math.random() * stack.length)]
-    }
-
-    update () {
-      this.random(1).getPeers()
-        .then(res => {
-          this.unnofficial = res.map(obj => {
-            return new peer({ host: obj.ip, port: obj.port })
-          })
-        })
-        .finally(() => {
-          $timeout(this.update.bind(this), UPDATE_INTERVAL)
-        })
+      return this.official[parseInt(Math.random() * this.official.length)]
     }
   }
 
