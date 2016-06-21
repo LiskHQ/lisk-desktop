@@ -13,14 +13,12 @@ app.directive('main', ($timeout, $q, peers) => {
     template: require('./main.jade'),
     scope: {},
     controller: ($scope, $log, error) => {
-      $scope.peer_type = 1
-
       $scope.$on('prelogin', () => {
         $scope.prelogged = true
 
         let kp = lisk.crypto.getKeys($scope.passphrase)
 
-        $scope.peer = peers.random($scope.peer_type)
+        $scope.peer = $scope.peer_selected || peers.random()
         $scope.address = lisk.crypto.getAddress(kp.publicKey)
 
         $scope.updateAccount()
