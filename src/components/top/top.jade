@@ -10,4 +10,5 @@ md-content(layout='row')
   md-card(flex=33)
     md-card-content.top-peer
       h2 Peer
-      h3 {{ peer.uri }}
+      md-select(ng-model='peer')
+        md-option(ng-repeat='item in peers', ng-value='item') {{ item.host }}

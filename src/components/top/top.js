@@ -8,6 +8,8 @@ app.directive('top', () => {
     restrict: 'E',
     template: require('./top.jade'),
     scope: { account: '=', peer: '=' },
-    controller: ($scope) => {}
+    controller: ($scope, peers) => {
+      $scope.peers = peers.official
+    }
   }
 })
