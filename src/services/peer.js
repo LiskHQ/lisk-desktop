@@ -82,6 +82,15 @@ app.factory('peer', ($http, $log, $q) => {
     getAccount (address) {
       return this.get(API_ACCOUNT, { address })
         .then(res => res.data.account)
+        .catch(res => {
+          return this.getBalance(address)
+            .then(balance => {
+              return {
+                address,
+                balance,
+              }
+            })
+        })
     }
 
     getBalance (address) {
