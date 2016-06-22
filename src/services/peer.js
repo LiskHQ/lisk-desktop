@@ -33,8 +33,10 @@ app.factory('peer', ($http, $log, $q) => {
     }
 
     request (method, api, data, headers) {
+      let url = this.url + api
+
       let config = {
-        url: this.url + api,
+        url,
         method,
         headers,
         timeout: REQUEST_TIMEOUT,
@@ -46,13 +48,18 @@ app.factory('peer', ($http, $log, $q) => {
         config.params = data
       }
 
-      return $http(config).then(res => {
-        if (!res.data.success) {
-          return $q.reject({ message: res.data.message || res.data.error || null })
-        } else {
+      return $http(config)
+        .then(res => {
+          $log.info(`${method} ${url}`)
           return res
-        }
-      })
+        })
+        .then(res => {
+          if (!res.data.success) {
+            return $q.reject({ message: res.data.message || res.data.error || null })
+          } else {
+            return res
+          }
+        })
     }
 
     get (api, data, headers) {
