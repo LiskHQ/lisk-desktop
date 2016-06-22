@@ -12,7 +12,7 @@ app.component('send', {
     passphrase: '=',
     peer: '=',
   },
-  controller: class main {
+  controller: class send {
     constructor (success, error) {
       this.success = success
       this.error = error

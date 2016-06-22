@@ -12,7 +12,7 @@ app.component('login', {
     passphrase: '=',
     peer: '=',
   },
-  controller: class main {
+  controller: class login {
     constructor ($scope, $timeout, $q, $document, peers) {
       this.$scope = $scope
       this.$timeout = $timeout

@@ -11,7 +11,7 @@ app.component('transactions', {
     account: '=',
     peer: '=',
   },
-  controller: class main {
+  controller: class transactions {
     constructor ($scope, $timeout, $q) {
       this.$scope = $scope
       this.$timeout = $timeout
