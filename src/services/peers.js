@@ -7,6 +7,7 @@ app.factory('peers', ($log, $q, $timeout, peer) => {
   class peers {
     constructor () {
       this.official = [
+        new peer({ host: 'testnet.lisk.io', port: null, ssl: true }),
         new peer({ host: 'node01.lisk.io' }),
         new peer({ host: 'node02.lisk.io' }),
         new peer({ host: 'node03.lisk.io' }),
