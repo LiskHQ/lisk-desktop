@@ -10,7 +10,7 @@ app.directive('send', (error, success) => {
   return {
     restrict: 'E',
     template: require('./send.jade'),
-    scope: { account: '=', peer: '=', passphrase: '=' },
+    scope: { peer: '=', passphrase: '=' },
     controller: ($scope) => {
       $scope.recipient = {
         regexp: ADDRESS_VALID_RE,
