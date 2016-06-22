@@ -4,20 +4,20 @@ md-card
       span.md-title Sign In
   md-card-content
     form(layout='column', layout-gt-sm='row')
-      md-input-container.md-block(flex,md-is-error='login.valid === 0')
+      md-input-container.md-block(flex, md-is-error='$ctrl.valid === 0')
         label Enter your passphrase
-        input(ng-model='login.passphrase', ng-disabled='login.random')
+        input(ng-model='$ctrl.input_passphrase', ng-disabled='$ctrl.random')
       md-input-container.md-block
         label Peer
-        md-select(ng-model='peer_selected')
+        md-select(ng-model='$ctrl.peer')
           md-option(ng-value='null', selected) Random
-          md-option(ng-repeat='item in peers', ng-value='item') {{ item.host }}
+          md-option(ng-repeat='item in $ctrl.peers', ng-value='item') {{ item.host }}
     md-content(layout='row', layout-align='center center')
-      md-button(ng-disabled='login.random', ng-click='devTestAccount()') Dev Test Account
-      md-button.md-primary(ng-disabled='login.random', ng-click='login.start()') NEW ACCOUNT
-      md-button.md-raised.md-primary(md-autofocus, ng-disabled='login.valid !== 1 || passphrase', ng-click='go()') Login
-    md-content(layout-padding, layout='column', layout-align='center center', ng-show='login.random')
+      md-button(ng-disabled='$ctrl.random', ng-click='$ctrl.devTestAccount()') Dev Test Account
+      md-button.md-primary(ng-disabled='$ctrl.random', ng-click='$ctrl.start()') NEW ACCOUNT
+      md-button.md-raised.md-primary(md-autofocus, ng-disabled='$ctrl.valid !== 1 || $ctrl.passphrase', ng-click='$ctrl.go()') Login
+    md-content(layout-padding, layout='column', layout-align='center center', ng-show='$ctrl.random')
       h4.move Move your mouse to generate random bytes
-      md-progress-linear(md-mode='determinate', value='{{ login.progress }}')
+      md-progress-linear(md-mode='determinate', value='{{ $ctrl.progress }}')
       md-content.bytes
-        span.byte(ng-repeat='byte in login.seed track by $index', ng-bind='byte', animate-on-change='byte')
+        span.byte(ng-repeat='byte in $ctrl.seed track by $index', ng-bind='byte', animate-on-change='byte')

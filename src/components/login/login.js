@@ -6,128 +6,135 @@ import './login.less'
 
 import app from '../../app'
 
-app.directive('login', ($document, $timeout) => {
-  return {
-    restrict: 'E',
-    template: require('./login.jade'),
-    link (scope, elem, attrs) {
-      elem.find('input').focus()
-    },
-    controller: ($scope, peers) => {
-      $scope.peers = peers.official
+app.component('login', {
+  template: require('./login.jade')(),
+  bindings: {
+    passphrase: '=',
+    peer: '=',
+  },
+  controller: class main {
+    constructor ($scope, $timeout, $q, $document, peers) {
+      this.$scope = $scope
+      this.$timeout = $timeout
+      this.$q = $q
+      this.$document = $document
+      this.peers = peers
 
-      let fix = v => {
-        return (v || '').replace(/ +/g, ' ').trim().toLowerCase()
+      this.peers = this.peers.official
+
+      this.$scope.$on('logout', () => {
+        this.input_passphrase = null
+      })
+
+      this.$scope.$watch('$ctrl.input_passphrase', this.isValid.bind(this))
+      // this.$timeout(this.devTestAccount.bind(this))
+    }
+
+    reset () {
+      this.input_passphrase = ''
+      this.progress = 0
+      this.seed = this.emptyBytes().map(v => '00')
+    }
+
+    stop () {
+      this.$document.unbind('mousemove', this.listener)
+
+      this.listener = null
+      this.random = false
+    }
+
+    isValid (value) {
+      value = this.fix(value)
+
+      if (value === '') {
+        this.valid = 2
+      } else if (value.split(' ').length !== 12 || !mnemonic.isValid(value)) {
+        this.valid = 0
+      } else {
+        this.valid = 1
       }
+    }
 
-      let lpad = (str, pad, length) => {
-        while (str.length < length) str = pad + str
-        return str
-      }
+    start () {
+      this.reset()
 
-      let emptyBytes = () => {
-        return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-      }
+      this.random = true
 
-      $scope.login = {
-        reset () {
-          $scope.login.passphrase = ''
-          $scope.login.progress = 0
-          $scope.login.seed = emptyBytes().map(v => '00')
-        },
-        stop () {
-          $document.unbind('mousemove', $scope.login.listener)
+      let last = [0, 0]
+      let used = this.emptyBytes()
 
-          $scope.login.listener = null
-          $scope.login.random = false
-        },
-        isValid (value) {
-          value = fix(value)
+      let turns = 5
+      let steps = 2
+      let total = turns * used.length
+      let count = 0
 
-          if (value === '') {
-            $scope.login.valid = 2
-          } else if (value.split(' ').length !== 12 || !mnemonic.isValid(value)) {
-            $scope.login.valid = 0
-          } else {
-            $scope.login.valid = 1
-          }
-        },
-        start () {
-          $scope.login.reset()
+      this.listener = (ev) => {
+        let distance = Math.sqrt(Math.pow(ev.pageX - last[0], 2) + Math.pow(ev.pageY - last[1], 2))
 
-          $scope.login.random = true
+        if (distance > 60) {
+          for (let p = 0; p < steps; p++) {
+            let pos
+            let available = []
 
-          let last = [0, 0]
-          let used = emptyBytes()
-
-          let turns = 5
-          let steps = 2
-          let total = turns * used.length
-          let count = 0
-
-          $scope.login.listener = (ev) => {
-            let distance = Math.sqrt(Math.pow(ev.pageX - last[0], 2) + Math.pow(ev.pageY - last[1], 2))
-
-            if (distance > 60) {
-              for (let p = 0; p < steps; p++) {
-                let pos
-                let available = []
-
-                for (let i in used) {
-                  if (!used[i]) {
-                    available.push(i)
-                  }
-                }
-
-                if (!available.length) {
-                  used = used.map(v => 0)
-                  pos = parseInt(Math.random() * used.length)
-                } else {
-                  pos = available[parseInt(Math.random() * available.length)]
-                }
-
-                count++
-
-                last = [ev.pageX, ev.pageY]
-                used[pos] = 1
-
-                $scope.$apply(() => {
-                  $scope.login.seed[pos] = lpad(crypto.randomBytes(1)[0].toString(16), '0', 2)
-                  $scope.login.progress = parseInt(count / total * 100)
-                })
-
-                if (count >= total) {
-                  $timeout(() => {
-                    $scope.login.stop()
-                    $scope.login.passphrase = (new mnemonic(new Buffer($scope.login.seed.join(''), 'hex'))).toString()
-                  })
-
-                  return
-                }
+            for (let i in used) {
+              if (!used[i]) {
+                available.push(i)
               }
             }
-          }
 
-          $timeout(() => $document.mousemove($scope.login.listener), 300)
+            if (!available.length) {
+              used = used.map(v => 0)
+              pos = parseInt(Math.random() * used.length)
+            } else {
+              pos = available[parseInt(Math.random() * available.length)]
+            }
+
+            count++
+
+            last = [ev.pageX, ev.pageY]
+            used[pos] = 1
+
+            this.$scope.$apply(() => {
+              this.seed[pos] = this.lpad(crypto.randomBytes(1)[0].toString(16), '0', 2)
+              this.progress = parseInt(count / total * 100)
+            })
+
+            if (count >= total) {
+              this.$timeout(() => {
+                this.stop()
+                this.input_passphrase = (new mnemonic(new Buffer(this.seed.join(''), 'hex'))).toString()
+              })
+
+              return
+            }
+          }
         }
       }
 
-      $scope.$watch('login.passphrase', $scope.login.isValid)
+      this.$timeout(() => this.$document.mousemove(this.listener), 300)
+    }
 
-      $scope.go = () => {
-        $scope.passphrase = fix($scope.login.passphrase)
-        $scope.login.reset()
-        $scope.$emit('prelogin')
-      }
+    go () {
+      this.passphrase = this.fix(this.input_passphrase)
+      this.reset()
+    }
 
-      $scope.devTestAccount = () => {
-        $scope.login.passphrase = 'stay undo beyond powder sand laptop grow gloom apology hamster primary arrive'
-        $timeout($scope.go, 250)
-      }
+    devTestAccount () {
+      this.input_passphrase = 'stay undo beyond powder sand laptop grow gloom apology hamster primary arrive'
+      this.$timeout(this.go.bind(this), 100)
+    }
 
-      $scope.$on('logout', () => {
-        $scope.passphrase = null
-      })
+    fix (v) {
+      return (v || '').replace(/ +/g, ' ').trim().toLowerCase()
+    }
+
+    lpad (str, pad, length) {
+      while (str.length < length) str = pad + str
+      return str
+    }
+
+    emptyBytes () {
+      return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     }
   }
 })
