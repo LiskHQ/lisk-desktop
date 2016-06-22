@@ -9,7 +9,6 @@ const UPDATE_INTERVAL_BALANCE = 5000
 
 app.component('main', {
   template: require('./main.jade')(),
-  bindings: {},
   controller: class main {
     constructor ($scope, $timeout, $q, peers, error) {
       this.$scope = $scope
@@ -18,35 +17,35 @@ app.component('main', {
       this.peers = peers
       this.error = error
 
+      this.$scope.$watch('$ctrl.passphrase', this.login.bind(this))
+      this.$scope.$on('error', this.onError.bind(this))
+    }
+
+    login () {
+      if (this.passphrase) {
+        this.prelogged = true
+
+        let kp = lisk.crypto.getKeys(this.passphrase)
+
+        this.peer = this.peer_selected || this.peers.random()
+        this.address = lisk.crypto.getAddress(kp.publicKey)
+
+        this.updateAccount()
+          .then(() => {
+            this.prelogged = false
+            this.logged = true
+          })
+      } else {
+        this.logged = false
+        this.prelogged = false
+        this.passphrase = ''
+
+        this.$timeout.cancel(this.timeout)
+      }
+    }
+
+    logout () {
       this.passphrase = ''
-
-      this.$scope.$watch('$ctrl.passphrase', () => {
-        if (this.passphrase) {
-          this.prelogged = true
-
-          let kp = lisk.crypto.getKeys(this.passphrase)
-
-          this.peer = this.peer_selected || peers.random()
-          this.address = lisk.crypto.getAddress(kp.publicKey)
-
-          this.updateAccount()
-            .then(() => {
-              this.prelogged = false
-              this.logged = true
-            })
-        } else {
-          this.logged = false
-          this.prelogged = false
-          this.passphrase = ''
-
-          this.$timeout.cancel(this.timeout)
-        }
-      })
-
-      this.$scope.$on('error', () => {
-        this.logout()
-        this.error.dialog({ text: `Error connecting to the peer ${this.peer.url}` })
-      })
     }
 
     updateAccount () {
@@ -66,8 +65,9 @@ app.component('main', {
         })
     }
 
-    logout () {
-      this.passphrase = ''
+    onError () {
+      this.logout()
+      this.error.dialog({ text: `Error connecting to the peer ${this.peer.url}` })
     }
   }
 })
