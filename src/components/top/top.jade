@@ -2,13 +2,13 @@ md-content(layout='row')
   md-card(flex=33)
     md-card-content.top-address
       h2 Address
-      h3 {{ account.address }}
+      h3 {{ $ctrl.account.address }}
   md-card(flex=33)
     md-card-content.top-amount
       h2 Balance
-      h3.lsk(amount='account.balance', nocolor)
+      h3.lsk(amount='$ctrl.account.balance', nocolor)
   md-card(flex=33)
     md-card-content.top-peer
       h2 Peer
-      md-select(ng-model='peer')
-        md-option(ng-repeat='item in peers', ng-value='item') {{ item.host }}
+      md-select(ng-model='$ctrl.peer')
+        md-option(ng-repeat='item in $ctrl.peers', ng-value='item') {{ item.host }}
