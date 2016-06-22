@@ -6,51 +6,54 @@ import app from '../../app'
 const ADDRESS_VALID_RE = '^[0-9]{1,21}[L|l]$'
 const AMOUNT_VALID_RE = '^[0-9]+(\.[0-9]{1,8})?$'
 
-app.directive('send', (error, success) => {
-  return {
-    restrict: 'E',
-    template: require('./send.jade'),
-    scope: { peer: '=', passphrase: '=' },
-    controller: ($scope) => {
-      $scope.recipient = {
+app.component('send', {
+  template: require('./send.jade')(),
+  bindings: {
+    passphrase: '=',
+    peer: '=',
+  },
+  controller: class main {
+    constructor (success, error) {
+      this.success = success
+      this.error = error
+
+      this.recipient = {
         regexp: ADDRESS_VALID_RE,
       }
 
-      $scope.amount = {
+      this.amount = {
         regexp: AMOUNT_VALID_RE,
       }
+    }
 
-      $scope.reset = () => {
-        $scope.recipient.value = ''
-        $scope.amount.value = ''
-      }
+    reset () {
+      this.recipient.value = ''
+      this.amount.value = ''
+    }
 
-      $scope.go = () => {
-        $scope.loading = true
+    go () {
+      this.loading = true
 
-        $scope.peer.sendTransaction(
-          $scope.passphrase,
-          $scope.secondPassphrase,
-          $scope.recipient.value,
-          $scope.amount.value
-        )
-        .then(
-          (res) => {
-            return success.dialog({ text: `${$scope.amount.value} sent to ${$scope.recipient.value}` })
-              .then(() => {
-                $scope.reset()
-                $scope.updateBalance()
-                $scope.updateTransactions()
-              })
-          },
-          (res) => {
-            error.dialog({ text: res && res.message ? res.message : 'An error occurred while sending the transaction.' })
-          }
-        )
-        .finally(() => {
-          $scope.loading = false
-        })
-      }
+      this.peer.sendTransaction(
+        this.passphrase,
+        this.secondPassphrase,
+        this.recipient.value,
+        this.amount.value
+      )
+      .then(
+        (res) => {
+          return this.success.dialog({ text: `${this.amount.value} sent to ${this.recipient.value}` })
+            .then(() => {
+              this.reset()
+            })
+        },
+        (res) => {
+          this.error.dialog({ text: res && res.message ? res.message : 'An error occurred while sending the transaction.' })
+        }
+      )
+      .finally(() => {
+        this.loading = false
+      })
     }
   }
 })
