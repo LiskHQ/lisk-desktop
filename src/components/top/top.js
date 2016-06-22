@@ -6,7 +6,7 @@ import app from '../../app'
 app.component('top', {
   template: require('./top.jade')(),
   bindings: {
-    account: '=',
+    account: '<',
     peer: '=',
   },
   controller: class top {
