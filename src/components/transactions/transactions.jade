@@ -33,8 +33,8 @@ md-card(ng-show='$ctrl.transactions.length')
                 i.material-icons.type(ng-if='transaction.senderId === $ctrl.account.address', style='color: red') call_made
                 i.material-icons.type(ng-if='transaction.senderId !== $ctrl.account.address', style='color: green') call_received
               td(md-cell, width='1%')
-                .lsk(md-cell, amount='transaction.amount', negative='transaction.senderId === $ctrl.account.address')
+                lsk(amount='transaction.amount', negative='transaction.senderId === $ctrl.account.address')
               td(md-cell, width='1%')
-                .lsk(md-cell, amount='transaction.fee', nocolor)
+                lsk(amount='transaction.fee', nocolor)
       md-content(layout='row', layout-align='center center', ng-show='$ctrl.more')
         md-button.more(ng-disabled='$ctrl.loading_more', ng-click='$ctrl.updateTransactions(true)') Load More

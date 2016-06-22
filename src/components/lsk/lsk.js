@@ -3,18 +3,15 @@ import './lsk.less'
 
 import app from '../../app'
 
-app.directive('lsk', () => {
-  return {
-    restrict: 'C',
-    template: require('./lsk.jade'),
-    scope: { amount: '=', negative: '=?' },
-    link (scope, elem, attrs) {},
-    controller: ($scope, $attrs, lsk) => {
-      $scope.nocolor = typeof $attrs.nocolor !== 'undefined'
-
-      $scope.$watch('amount', () => {
-        $scope._amount = lsk.normalize($scope.amount)
-      })
+app.component('lsk', {
+  template: require('./lsk.jade')(),
+  bindings: {
+    amount: '<',
+    negative: '<?',
+  },
+  controller: class lsk {
+    constructor ($attrs) {
+      this.nocolor = typeof $attrs.nocolor !== 'undefined'
     }
   }
 })
