@@ -1,4 +1,4 @@
-md-card(ng-show='transactions.length')
+md-card(ng-show='$ctrl.transactions.length')
   md-card-title
     md-card-title-text
       span.md-title Transactions
@@ -15,7 +15,7 @@ md-card(ng-show='transactions.length')
               th(md-column) Amount
               th(md-column) Fee
           tbody(md-body)
-            tr(md-row, ng-repeat="transaction in transactions track by transaction.id | orderBy:'-timestamp'")
+            tr(md-row, ng-repeat="transaction in $ctrl.transactions track by transaction.id | orderBy:'-timestamp'")
               td.timestamp(md-cell, data='transaction.timestamp')
               td(md-cell, width='1%', ng-bind='transaction.confirmations')
               td(md-cell, ng-switch, on='transaction.type')
@@ -27,14 +27,14 @@ md-card(ng-show='transactions.length')
                 span.tx(ng-switch-when='6') Transfer Lisk to Blockchain Application
                 span.tx(ng-switch-when='7') Transfer Lisk from Blockchain Applicatio
                 span(ng-switch-default)
-                  span.address(md-cell, data='transaction.senderId', ng-if='transaction.senderId !== account.address')
-                  span.address(md-cell, data='transaction.recipientId', ng-if='transaction.senderId === account.address')
+                  span.address(md-cell, data='transaction.senderId', ng-if='transaction.senderId !== $ctrl.account.address')
+                  span.address(md-cell, data='transaction.recipientId', ng-if='transaction.senderId === $ctrl.account.address')
               td(md-cell, width='1%')
-                i.material-icons.type(ng-if='transaction.senderId === account.address', style='color: red') call_made
-                i.material-icons.type(ng-if='transaction.senderId !== account.address', style='color: green') call_received
+                i.material-icons.type(ng-if='transaction.senderId === $ctrl.account.address', style='color: red') call_made
+                i.material-icons.type(ng-if='transaction.senderId !== $ctrl.account.address', style='color: green') call_received
               td(md-cell, width='1%')
-                .lsk(md-cell, amount='transaction.amount', negative='transaction.senderId === account.address')
+                .lsk(md-cell, amount='transaction.amount', negative='transaction.senderId === $ctrl.account.address')
               td(md-cell, width='1%')
                 .lsk(md-cell, amount='transaction.fee', nocolor)
-      md-content(layout='row', layout-align='center center', ng-show='more')
-        md-button.more(ng-disabled='loading_more', ng-click='updateTransactions(true)') Load More
+      md-content(layout='row', layout-align='center center', ng-show='$ctrl.more')
+        md-button.more(ng-disabled='$ctrl.loading_more', ng-click='$ctrl.updateTransactions(true)') Load More

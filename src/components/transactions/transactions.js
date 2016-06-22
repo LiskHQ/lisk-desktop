@@ -5,48 +5,54 @@ import app from '../../app'
 
 const UPDATE_INTERVAL = 10000
 
-app.directive('transactions', ($timeout, $q) => {
-  return {
-    restrict: 'E',
-    template: require('./transactions.jade'),
-    scope: { account: '=', peer: '=' },
-    controller: ($scope) => {
-      $scope.transactions = []
+app.component('transactions', {
+  template: require('./transactions.jade')(),
+  bindings: {
+    account: '=',
+    peer: '=',
+  },
+  controller: class main {
+    constructor ($scope, $timeout, $q) {
+      this.$scope = $scope
+      this.$timeout = $timeout
+      this.$q = $q
 
-      $scope.updateTransactions = (more) => {
-        if (more) {
-          $scope.loading_more = true
-        }
+      this.transactions = []
 
-        $timeout.cancel($scope.timeout)
+      this.updateTransactions()
+    }
 
-        return $scope.peer.getTransactions($scope.account.address, ($scope.transactions.length || 10) + (more ? 10 : 0))
-          .then(res => {
-            $scope.transactions = res.transactions
-            $scope.total = res.count
+    $onDestroy () {
+      this.$timeout.cancel(this.timeout)
+    }
 
-            if ($scope.total > $scope.transactions.length) {
-              $scope.more = $scope.total - $scope.transactions.length
-            } else {
-              $scope.more = 0
-            }
-
-            if (more) {
-              $scope.loading_more = false
-            }
-
-            $scope.timeout = $timeout($scope.updateTransactions, UPDATE_INTERVAL)
-          })
-          .catch(() => {
-            return $q.reject()
-          })
+    updateTransactions (more) {
+      if (more) {
+        this.loading_more = true
       }
 
-      $scope.updateTransactions()
+      this.$timeout.cancel(this.timeout)
 
-      $scope.$on('$destroy', () => {
-        $timeout.cancel($scope.timeout)
-      })
+      return this.peer.getTransactions(this.account.address, (this.transactions.length || 10) + (more ? 10 : 0))
+        .then(res => {
+          this.transactions = res.transactions
+          this.total = res.count
+
+          if (this.total > this.transactions.length) {
+            this.more = this.total - this.transactions.length
+          } else {
+            this.more = 0
+          }
+
+          if (more) {
+            this.loading_more = false
+          }
+
+          this.timeout = this.$timeout(this.updateTransactions.bind(this), UPDATE_INTERVAL)
+        })
+        .catch(() => {
+          return this.$q.reject()
+        })
     }
   }
 })
