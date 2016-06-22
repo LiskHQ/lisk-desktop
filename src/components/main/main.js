@@ -7,56 +7,67 @@ import app from '../../app'
 
 const UPDATE_INTERVAL_BALANCE = 5000
 
-app.directive('main', ($timeout, $q, peers) => {
-  return {
-    restrict: 'E',
-    template: require('./main.jade'),
-    scope: {},
-    controller: ($scope, $log, error) => {
-      $scope.updateAccount = () => {
-        $timeout.cancel($scope.timeout)
+app.component('main', {
+  template: require('./main.jade')(),
+  bindings: {},
+  controller: class main {
+    constructor ($scope, $timeout, $q, peers, error) {
+      this.$scope = $scope
+      this.$timeout = $timeout
+      this.$q = $q
+      this.peers = peers
+      this.error = error
 
-        return $scope.peer.getAccount($scope.address)
-          .then(res => {
-            $scope.account = res
+      this.passphrase = ''
 
-            if ($scope.prelogged || $scope.logged) {
-              $scope.timeout = $timeout($scope.updateAccount, UPDATE_INTERVAL_BALANCE)
-            }
-          })
-          .catch(() => {
-            $scope.$emit('error')
-            return $q.reject()
-          })
-      }
+      this.$scope.$watch('$ctrl.passphrase', () => {
+        if (this.passphrase) {
+          this.prelogged = true
 
-      $scope.logout = () => {
-        $scope.logged = false
-        $scope.prelogged = false
-        $scope.passphrase = ''
+          let kp = lisk.crypto.getKeys(this.passphrase)
 
-        $timeout.cancel($scope.timeout)
-      }
+          this.peer = this.peer_selected || peers.random()
+          this.address = lisk.crypto.getAddress(kp.publicKey)
 
-      $scope.$on('prelogin', () => {
-        $scope.prelogged = true
+          this.updateAccount()
+            .then(() => {
+              this.prelogged = false
+              this.logged = true
+            })
+        } else {
+          this.logged = false
+          this.prelogged = false
+          this.passphrase = ''
 
-        let kp = lisk.crypto.getKeys($scope.passphrase)
-
-        $scope.peer = $scope.peer_selected || peers.random()
-        $scope.address = lisk.crypto.getAddress(kp.publicKey)
-
-        $scope.updateAccount()
-          .then(() => {
-            $scope.prelogged = false
-            $scope.logged = true
-          })
+          this.$timeout.cancel(this.timeout)
+        }
       })
 
-      $scope.$on('error', () => {
-        $scope.logout()
-        error.dialog({ text: `Error connecting to the peer ${$scope.peer.url}` })
+      this.$scope.$on('error', () => {
+        this.logout()
+        this.error.dialog({ text: `Error connecting to the peer ${this.peer.url}` })
       })
+    }
+
+    updateAccount () {
+      this.$timeout.cancel(this.timeout)
+
+      return this.peer.getAccount(this.address)
+        .then(res => {
+          this.account = res
+
+          if (this.prelogged || this.logged) {
+            this.timeout = this.$timeout(this.updateAccount.bind(this), UPDATE_INTERVAL_BALANCE)
+          }
+        })
+        .catch(() => {
+          this.$scope.$emit('error')
+          return this.$q.reject()
+        })
+    }
+
+    logout () {
+      this.passphrase = ''
     }
   }
 })
