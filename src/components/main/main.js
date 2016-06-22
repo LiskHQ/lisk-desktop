@@ -13,26 +13,6 @@ app.directive('main', ($timeout, $q, peers) => {
     template: require('./main.jade'),
     scope: {},
     controller: ($scope, $log, error) => {
-      $scope.$on('prelogin', () => {
-        $scope.prelogged = true
-
-        let kp = lisk.crypto.getKeys($scope.passphrase)
-
-        $scope.peer = $scope.peer_selected || peers.random()
-        $scope.address = lisk.crypto.getAddress(kp.publicKey)
-
-        $scope.updateAccount()
-          .then(() => {
-            $scope.prelogged = false
-            $scope.logged = true
-          })
-      })
-
-      $scope.$on('error', () => {
-        $scope.logout()
-        error.dialog({ text: `Error connecting to the peer ${$scope.peer.url}` })
-      })
-
       $scope.updateAccount = () => {
         $timeout.cancel($scope.timeout)
 
@@ -57,6 +37,26 @@ app.directive('main', ($timeout, $q, peers) => {
 
         $timeout.cancel($scope.timeout)
       }
+
+      $scope.$on('prelogin', () => {
+        $scope.prelogged = true
+
+        let kp = lisk.crypto.getKeys($scope.passphrase)
+
+        $scope.peer = $scope.peer_selected || peers.random()
+        $scope.address = lisk.crypto.getAddress(kp.publicKey)
+
+        $scope.updateAccount()
+          .then(() => {
+            $scope.prelogged = false
+            $scope.logged = true
+          })
+      })
+
+      $scope.$on('error', () => {
+        $scope.logout()
+        error.dialog({ text: `Error connecting to the peer ${$scope.peer.url}` })
+      })
     }
   }
 })
