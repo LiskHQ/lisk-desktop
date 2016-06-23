@@ -10,8 +10,9 @@ const UPDATE_INTERVAL_BALANCE = 5000
 app.component('main', {
   template: require('./main.jade')(),
   controller: class main {
-    constructor ($scope, $timeout, $q, peers, error) {
+    constructor ($scope, $rootScope, $timeout, $q, peers, error) {
       this.$scope = $scope
+      this.$rootScope = $rootScope
       this.$timeout = $timeout
       this.$q = $q
       this.peers = peers
@@ -20,6 +21,12 @@ app.component('main', {
       this.$scope.$watch('$ctrl.passphrase', this.login.bind(this))
       this.$scope.$on('peerUpdate', this.updateAccount.bind(this))
       this.$scope.$on('error', this.onError.bind(this))
+
+      $scope.$watch('$ctrl.peer', (peer, old) => {
+        if (peer != old) {
+          this.$rootScope.$broadcast('peerUpdate')
+        }
+      })
     }
 
     login () {
@@ -69,6 +76,10 @@ app.component('main', {
     onError () {
       this.logout()
       this.error.dialog({ text: `Error connecting to the peer ${this.peer.url}` })
+    }
+
+    getPeerSelectedText () {
+      return `Peer: ${this.peer.host}`
     }
   }
 })
