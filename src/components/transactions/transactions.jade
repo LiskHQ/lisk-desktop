@@ -9,6 +9,7 @@ md-card(ng-show='$ctrl.transactions.length')
           thead(md-head)
             tr(md-row)
               th(md-column) Date
+              th(md-column) Transaction ID
               th(md-column) Confirmations
               th(md-column) From / To
               th(md-column)
@@ -17,6 +18,9 @@ md-card(ng-show='$ctrl.transactions.length')
           tbody(md-body)
             tr(md-row, ng-repeat="transaction in $ctrl.transactions track by transaction.id | orderBy:'-timestamp'")
               td.timestamp(md-cell, data='transaction.timestamp')
+              td(md-cell, width='1%')
+                md-button(ng-href='https://explorer.lisk.io/tx/{{ transaction.id }}', ng-bind='transaction.id', target='_blank')
+                  md-tooltip(md-direction='top', md-delay='350') Open in Explorer
               td(md-cell, width='1%', ng-bind='transaction.confirmations')
               td(md-cell, ng-switch, on='transaction.type')
                 span.tx(ng-switch-when='1') Second Signature Creation
