@@ -21,10 +21,8 @@ import './services/lsk'
 import './services/peer'
 import './services/peers'
 import './services/success'
-import './services/timestamp'
 
 import './filters/lsk'
-import './filters/timestamp'
 
 import angular from 'angular'
 
