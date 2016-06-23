@@ -27,8 +27,10 @@ md-card(ng-show='$ctrl.transactions.length')
                 span.tx(ng-switch-when='6') Transfer Lisk to Blockchain Application
                 span.tx(ng-switch-when='7') Transfer Lisk from Blockchain Applicatio
                 span(ng-switch-default)
-                  address(md-cell, data='transaction.senderId', ng-if='transaction.senderId !== $ctrl.account.address')
-                  address(md-cell, data='transaction.recipientId', ng-if='transaction.senderId === $ctrl.account.address')
+                  md-button(ng-href='https://explorer.lisk.io/address/{{ transaction.senderId }}', ng-bind='transaction.senderId', target='_blank', ng-if='transaction.senderId !== $ctrl.account.address')
+                    md-tooltip(md-direction='top', md-delay='350') Open in Explorer
+                  md-button(ng-href='https://explorer.lisk.io/address/{{ transaction.recipientId }}', ng-bind='transaction.recipientId', target='_blank', ng-if='transaction.senderId === $ctrl.account.address')
+                    md-tooltip(md-direction='top', md-delay='350') Open in Explorer
               td(md-cell, width='1%')
                 i.material-icons.type(ng-if='transaction.senderId === $ctrl.account.address', style='color: red') call_made
                 i.material-icons.type(ng-if='transaction.senderId !== $ctrl.account.address', style='color: green') call_received
