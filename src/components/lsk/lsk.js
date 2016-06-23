@@ -12,6 +12,7 @@ app.component('lsk', {
   controller: class lsk {
     constructor ($attrs) {
       this.nocolor = typeof $attrs.nocolor !== 'undefined'
+      this.append = typeof $attrs.append !== 'undefined'
     }
   }
 })
