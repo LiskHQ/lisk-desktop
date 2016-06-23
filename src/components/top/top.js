@@ -10,8 +10,14 @@ app.component('top', {
     peer: '=',
   },
   controller: class top {
-    constructor (peers) {
+    constructor ($scope, $rootScope, peers) {
       this.peers = peers.official
+
+      $scope.$watch('$ctrl.peer', (peer, old) => {
+        if (peer != old) {
+          $rootScope.$broadcast('peerUpdate')
+        }
+      })
     }
   }
 })
