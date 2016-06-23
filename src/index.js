@@ -15,7 +15,6 @@ import './components/send/send'
 import './components/transactions/transactions'
 import './components/timestamp/timestamp'
 import './components/lsk/lsk'
-import './components/address/address'
 
 import './services/error'
 import './services/lsk'
