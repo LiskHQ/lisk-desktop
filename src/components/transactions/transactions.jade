@@ -17,7 +17,8 @@ md-card(ng-show='$ctrl.transactions.length')
               th(md-column) Fee
           tbody(md-body)
             tr(md-row, ng-repeat="transaction in $ctrl.transactions track by transaction.id | orderBy:'-timestamp'")
-              td.timestamp(md-cell, data='transaction.timestamp')
+              td(md-cell)
+                timestamp(data='transaction.timestamp')
               td(md-cell, width='1%')
                 md-button(ng-href='https://explorer.lisk.io/tx/{{ transaction.id }}', ng-bind='transaction.id', target='_blank')
                   md-tooltip(md-direction='top', md-delay='350') Open in Explorer

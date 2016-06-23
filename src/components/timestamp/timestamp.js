@@ -5,32 +5,34 @@ import moment from 'moment'
 
 import app from '../../app'
 
-app.directive('timestamp', () => {
-  return {
-    restrict: 'C',
-    template: require('./timestamp.jade'),
-    scope: { data: '=' },
-    link (scope, elem, attrs) {},
-    controller: ($scope, $timeout, timestamp) => {
-      let timeout
+app.component('timestamp', {
+  template: require('./timestamp.jade')(),
+  bindings: {
+    data: '<',
+  },
+  controller: class timestamp {
+    constructor ($scope, $timeout) {
+      this.$timeout = $timeout
 
-      let update = () => {
-        $timeout.cancel(timeout)
+      $scope.$watch('$ctrl.data', this.update.bind(this))
+    }
 
-        let obj = moment(timestamp.fix($scope.data))
-        $scope.full = obj.toISOString()
-        $scope.time_ago = obj.fromNow()
+    $onDestroy () {
+      this.$timeout.cancel(this.timeout)
+    }
 
-        timeout = $timeout(update, 60000)
-      }
+    update () {
+      this.$timeout.cancel(this.timeout)
 
-      $scope.$watch('data', () => {
-        update()
-      })
+      let obj = moment(this.fix(this.data))
+      this.full = obj.toISOString()
+      this.time_ago = obj.fromNow()
 
-      $scope.$on('$destroy', () => {
-        $timeout.cancel(timeout)
-      })
+      this.timeout = this.$timeout(this.update.bind(this), 60000)
+    }
+
+    fix (value) {
+      return new Date((((Date.UTC(2016, 4, 24, 17, 0, 0, 0) / 1000) + value) * 1000))
     }
   }
 })
