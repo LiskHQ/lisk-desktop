@@ -17,13 +17,21 @@ app.component('transactions', {
       this.$timeout = $timeout
       this.$q = $q
 
-      this.transactions = []
-
+      this.reset()
       this.updateTransactions()
+
+      this.$scope.$on('peerUpdate', () => {
+        this.reset()
+        this.updateTransactions()
+      })
     }
 
     $onDestroy () {
       this.$timeout.cancel(this.timeout)
+    }
+
+    reset () {
+      this.transactions = []
     }
 
     updateTransactions (more) {

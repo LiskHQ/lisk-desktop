@@ -18,6 +18,7 @@ app.component('main', {
       this.error = error
 
       this.$scope.$watch('$ctrl.passphrase', this.login.bind(this))
+      this.$scope.$on('peerUpdate', this.updateAccount.bind(this))
       this.$scope.$on('error', this.onError.bind(this))
     }
 
