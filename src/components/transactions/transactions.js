@@ -41,7 +41,13 @@ app.component('transactions', {
 
       this.$timeout.cancel(this.timeout)
 
-      return this.peer.getTransactions(this.account.address, (this.transactions.length || 10) + (more ? 10 : 0))
+      let limit = (this.transactions.length || 10) + (more ? 10 : 0)
+
+      if (limit < 10) {
+        limit = 10
+      }
+
+      return this.peer.getTransactions(this.account.address, limit)
         .then(res => {
           this.transactions = res.transactions
           this.total = res.count
