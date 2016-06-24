@@ -23,6 +23,7 @@
     "bitcore-mnemonic": "^1.1.1",
     "debug": "^2.2.0",
     "jquery": "^2.2.4",
+    "lodash": "^4.13.1",
     "moment": "^2.13.0",
     "numeral": "^1.5.3"
   },
