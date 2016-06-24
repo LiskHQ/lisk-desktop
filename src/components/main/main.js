@@ -10,12 +10,12 @@ const UPDATE_INTERVAL_BALANCE = 5000
 app.component('main', {
   template: require('./main.jade')(),
   controller: class main {
-    constructor ($scope, $rootScope, $timeout, $q, peers, error) {
+    constructor ($scope, $rootScope, $timeout, $q, $peers, error) {
       this.$scope = $scope
       this.$rootScope = $rootScope
       this.$timeout = $timeout
       this.$q = $q
-      this.peers = peers
+      this.$peers = $peers
       this.error = error
 
       this.$scope.$watch('$ctrl.passphrase', this.login.bind(this))
@@ -35,7 +35,7 @@ app.component('main', {
 
         let kp = lisk.crypto.getKeys(this.passphrase)
 
-        this.peer = this.peer_selected || this.peers.random()
+        this.peer = this.$peers.random()
         this.address = lisk.crypto.getAddress(kp.publicKey)
 
         this.updateAccount()

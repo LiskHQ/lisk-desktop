@@ -5,8 +5,8 @@ md-content(layout='row')
       h2.md-display-1 Lisk Nano
       div(flex)
       md-select(ng-model='$ctrl.peer', md-selected-text="$ctrl.getPeerSelectedText()", ng-if='$ctrl.logged')
-        md-optgroup(label='peers')
-          md-option(ng-repeat='item in $ctrl.peers.official', ng-value='item') {{ item.host }}
+        md-optgroup(ng-repeat='(name, peers) in $ctrl.$peers.stack', ng-if='peers.length', label='{{ name }}')
+          md-option(ng-repeat='peer in peers', ng-value='peer') {{ peer.host }}
       md-button.md-fab.md-mini.md-primary.logout(ng-click='$ctrl.logout()', ng-if='$ctrl.logged')
         i.material-icons close
         md-tooltip(md-direction='bottom') Logout
