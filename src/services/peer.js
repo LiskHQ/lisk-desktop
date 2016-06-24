@@ -16,8 +16,8 @@ const TRANSACTION_HEADER_OS = 'nanowallet'
 const TRANSACTION_HEADER_PORT = '8000'
 const TRANSACTION_HEADER_VERSION = '0.0.0'
 
-app.factory('peer', ($http, $log, $q) => {
-  return class peer {
+app.factory('$peer', ($http, $log, $q) => {
+  return class $peer {
     constructor ({ host, port = 8000, ssl = false }) {
       this.host = host
       this.port = port
