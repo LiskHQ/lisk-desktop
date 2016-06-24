@@ -3,15 +3,10 @@ md-card
     md-card-title-text
       span.md-title Sign In
   md-card-content
-    form(layout='column', layout-gt-sm='row')
-      md-input-container.md-block(flex, md-is-error='$ctrl.valid === 0')
+    form
+      md-input-container.md-block(md-is-error='$ctrl.valid === 0')
         label Enter your passphrase
         input(ng-model='$ctrl.input_passphrase', ng-disabled='$ctrl.random')
-      md-input-container.md-block
-        label Peer
-        md-select(ng-model='$ctrl.peer')
-          md-option(ng-value='null', selected) Random
-          md-option(ng-repeat='item in $ctrl.peers', ng-value='item') {{ item.host }}
     md-content(layout='row', layout-align='center center')
       md-button(ng-disabled='$ctrl.random', ng-click='$ctrl.devTestAccount()') Dev Test Account
       md-button.md-primary(ng-disabled='$ctrl.random', ng-click='$ctrl.start()') NEW ACCOUNT

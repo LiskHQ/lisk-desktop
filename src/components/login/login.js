@@ -13,20 +13,13 @@ app.component('login', {
     peer: '=',
   },
   controller: class login {
-    constructor ($scope, $timeout, $q, $document, peers) {
+    constructor ($scope, $timeout, $document) {
       this.$scope = $scope
       this.$timeout = $timeout
-      this.$q = $q
       this.$document = $document
-      this.peers = peers
-
-      this.peers = this.peers.official
-
-      this.$scope.$on('logout', () => {
-        this.input_passphrase = null
-      })
 
       this.$scope.$watch('$ctrl.input_passphrase', this.isValid.bind(this))
+      this.$scope.$on('logout', () => this.input_passphrase = null)
       // this.$timeout(this.devTestAccount.bind(this))
     }
 
@@ -37,10 +30,8 @@ app.component('login', {
     }
 
     stop () {
-      this.$document.unbind('mousemove', this.listener)
-
-      this.listener = null
       this.random = false
+      this.$document.unbind('mousemove', this.listener)
     }
 
     isValid (value) {
