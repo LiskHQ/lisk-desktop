@@ -10,7 +10,6 @@ md-card(ng-show='$ctrl.transactions.length')
             tr(md-row)
               th(md-column) Time
               th(md-column) Transaction ID
-              th(md-column) Confirmations
               th(md-column) From / To
               th(md-column)
               th(md-column) Amount
@@ -21,8 +20,7 @@ md-card(ng-show='$ctrl.transactions.length')
                 timestamp(data='transaction.timestamp')
               td(md-cell, width='1%')
                 md-button(ng-href='https://explorer.lisk.io/tx/{{ transaction.id }}', ng-bind='transaction.id', target='_blank')
-                  md-tooltip(md-direction='top', md-delay='350') Open in Explorer
-              td(md-cell, width='1%', ng-bind='transaction.confirmations')
+                  md-tooltip(md-direction='top', md-delay='350') {{ transaction.confirmations }} confirmations
               td(md-cell, ng-switch, on='transaction.type')
                 span.tx(ng-switch-when='1') Second Signature Creation
                 span.tx(ng-switch-when='2') Delegate Registration
