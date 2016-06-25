@@ -6,7 +6,7 @@
   "bugs": "https://github.com/LiskHQ/lisk-nano/issues",
   "scripts": {
     "build": "rimraf ./build && webpack --config webpack/build.babel.js --progress --profile",
-    "dev": "webpack-dev-server --inline --host 0.0.0.0 --config webpack/dev.babel.js --progress --profile ./src/index.js"
+    "dev": "webpack-dev-server --inline --hot --host 0.0.0.0 --config webpack/dev.babel.js --progress --profile ./src/index.js"
   },
   "repository": {
     "type": "git",
