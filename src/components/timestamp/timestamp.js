@@ -26,7 +26,7 @@ app.component('timestamp', {
 
       let obj = moment(this.fix(this.data))
       this.full = obj.format('LL LTS')
-      this.time_ago = obj.fromNow()
+      this.time_ago = obj.fromNow(true)
 
       this.timeout = this.$timeout(this.update.bind(this), 60000)
     }
