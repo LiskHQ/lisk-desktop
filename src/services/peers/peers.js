@@ -27,8 +27,11 @@ app.factory('$peers', ($peer) => {
     }
 
     setActive () {
-      let stack = _.concat(this.stack.official, this.stack.public)
-      this.active = stack[parseInt(Math.random() * stack.length)]
+      this.active = _.chain([])
+        .concat(this.stack.official, this.stack.public)
+        .filter('enabled')
+        .sample()
+        .value()
     }
 
     add (data) {

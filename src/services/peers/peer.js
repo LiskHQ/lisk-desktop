@@ -3,6 +3,7 @@ import app from '../../app'
 
 import lisk from 'lisk-js'
 
+const API_PING = '/api/loader/status'
 const API_PEERS = '/api/peers'
 const API_ACCOUNT = '/api/accounts'
 const API_BALANCE = '/api/accounts/getBalance'
@@ -16,12 +17,15 @@ const TRANSACTION_HEADER_OS = 'nanowallet'
 const TRANSACTION_HEADER_PORT = '8000'
 const TRANSACTION_HEADER_VERSION = '0.0.0'
 
-app.factory('$peer', ($http, $log, $q) => {
+app.factory('$peer', ($http, $log, $q, $timeout) => {
   return class $peer {
     constructor ({ host, port = 8000, ssl = false }) {
       this.host = host
       this.port = port
       this.ssl = !!ssl
+      this.enabled = false
+
+      this.check()
     }
 
     get uri () {
@@ -30,6 +34,19 @@ app.factory('$peer', ($http, $log, $q) => {
 
     get url () {
       return (this.ssl ? 'https' : 'http') + `://${this.uri}`
+    }
+
+    check () {
+      this.get(API_PING)
+        .then((res) => {
+          this.enabled = true
+        })
+        .catch((res) => {
+          this.enabled = false
+        })
+        .finally(() => {
+          $timeout(this.check.bind(this), 10000)
+        })
     }
 
     request (method, api, data, headers) {
