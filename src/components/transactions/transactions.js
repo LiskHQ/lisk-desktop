@@ -3,7 +3,7 @@ import './transactions.less'
 
 import app from '../../app'
 
-const UPDATE_INTERVAL = 10000
+const UPDATE_INTERVAL = 15000
 
 app.component('transactions', {
   template: require('./transactions.jade')(),
@@ -17,12 +17,15 @@ app.component('transactions', {
       this.$q = $q
       this.$peers = $peers
 
+      this.loaded = false
+      this.transactions = []
+
       this.reset()
-      this.updateTransactions()
+      this.update()
 
       this.$scope.$on('peerUpdate', () => {
         this.reset()
-        this.updateTransactions()
+        this.update(true)
       })
     }
 
@@ -31,12 +34,16 @@ app.component('transactions', {
     }
 
     reset () {
-      this.transactions = []
+      this.loaded = false
+      this.more = 0
+      // this.transactions = []
     }
 
-    updateTransactions (more) {
-      if (more) {
-        this.loading_more = true
+    update (show, more) {
+      this.loading = true
+
+      if (show) {
+        this.loading_show = true
       }
 
       this.$timeout.cancel(this.timeout)
@@ -58,11 +65,14 @@ app.component('transactions', {
             this.more = 0
           }
 
-          if (more) {
-            this.loading_more = false
+          this.loaded = true
+          this.loading = false
+
+          if (show) {
+            this.loading_show = false
           }
 
-          this.timeout = this.$timeout(this.updateTransactions.bind(this), UPDATE_INTERVAL)
+          this.timeout = this.$timeout(this.update.bind(this), UPDATE_INTERVAL)
         })
         .catch(() => {
           return this.$q.reject()
