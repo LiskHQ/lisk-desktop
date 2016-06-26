@@ -9,13 +9,13 @@ app.component('transactions', {
   template: require('./transactions.jade')(),
   bindings: {
     account: '=',
-    peer: '=',
   },
   controller: class transactions {
-    constructor ($scope, $timeout, $q) {
+    constructor ($scope, $timeout, $q, $peers) {
       this.$scope = $scope
       this.$timeout = $timeout
       this.$q = $q
+      this.$peers = $peers
 
       this.reset()
       this.updateTransactions()
@@ -47,7 +47,7 @@ app.component('transactions', {
         limit = 10
       }
 
-      return this.peer.getTransactions(this.account.address, limit)
+      return this.$peers.active.getTransactions(this.account.address, limit)
         .then(res => {
           this.transactions = res.transactions
           this.total = res.count
