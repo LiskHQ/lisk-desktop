@@ -22,7 +22,7 @@ app.component('main', {
       this.$scope.$on('peerUpdate', this.updateAccount.bind(this))
       this.$scope.$on('error', this.onError.bind(this))
 
-      $scope.$watch('$ctrl.peer', (peer, old) => {
+      $scope.$watch('$ctrl.$peers.active', (peer, old) => {
         if (peer != old) {
           this.$rootScope.$broadcast('peerUpdate')
         }
@@ -33,9 +33,9 @@ app.component('main', {
       if (this.passphrase) {
         this.prelogged = true
 
-        let kp = lisk.crypto.getKeys(this.passphrase)
+        this.$peers.setActive()
 
-        this.peer = this.$peers.random()
+        let kp = lisk.crypto.getKeys(this.passphrase)
         this.address = lisk.crypto.getAddress(kp.publicKey)
 
         this.updateAccount()
@@ -59,7 +59,7 @@ app.component('main', {
     updateAccount () {
       this.$timeout.cancel(this.timeout)
 
-      return this.peer.getAccount(this.address)
+      return this.$peers.active.getAccount(this.address)
         .then(res => {
           this.account = res
 

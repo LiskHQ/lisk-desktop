@@ -9,7 +9,8 @@ app.component('top', {
     account: '<',
   },
   controller: class top {
-    constructor ($scope) {
+    constructor ($peers) {
+      this.$peers = $peers
     }
   }
 })

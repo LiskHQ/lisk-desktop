@@ -10,10 +10,10 @@ app.component('send', {
   template: require('./send.jade')(),
   bindings: {
     passphrase: '<',
-    peer: '<',
   },
   controller: class send {
-    constructor (success, error) {
+    constructor ($peers, success, error) {
+      this.$peers = $peers
       this.success = success
       this.error = error
 
@@ -34,7 +34,7 @@ app.component('send', {
     go () {
       this.loading = true
 
-      this.peer.sendTransaction(
+      this.$peers.active.sendTransaction(
         this.passphrase,
         this.secondPassphrase,
         this.recipient.value,

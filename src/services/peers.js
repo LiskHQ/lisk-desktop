@@ -26,9 +26,9 @@ app.factory('$peers', ($log, $q, $timeout, $peer, $interval) => {
       }
     }
 
-    random (type) {
+    setActive () {
       let stack = _.concat(this.stack.official, this.stack.public)
-      return stack[parseInt(Math.random() * stack.length)]
+      this.active = stack[parseInt(Math.random() * stack.length)]
     }
 
     add (data) {
