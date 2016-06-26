@@ -76,7 +76,7 @@ app.component('main', {
 
     onError () {
       this.logout()
-      this.error.dialog({ text: `Error connecting to the peer ${this.peer.url}` })
+      this.error.dialog({ text: `Error connecting to the peer ${this.$peers.active.url}` })
     }
 
     getPeerSelectedText () {
