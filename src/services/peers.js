@@ -3,9 +3,7 @@ import _ from 'lodash'
 
 import app from '../app'
 
-const UPDATE_INTERVAL = 60000
-
-app.factory('$peers', ($log, $q, $timeout, $peer, $interval) => {
+app.factory('$peers', ($peer) => {
   class $peers {
     constructor () {
       this.stack = {
