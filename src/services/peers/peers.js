@@ -1,7 +1,9 @@
 
 import _ from 'lodash'
 
-import app from '../app'
+import './peer'
+
+import app from '../../app'
 
 app.factory('$peers', ($peer) => {
   class $peers {

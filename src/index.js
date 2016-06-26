@@ -16,11 +16,10 @@ import './components/transactions/transactions'
 import './components/timestamp/timestamp'
 import './components/lsk/lsk'
 
-import './services/error'
+import './services/peers/peers'
 import './services/lsk'
-import './services/peer'
-import './services/peers'
 import './services/success'
+import './services/error'
 
 import './filters/lsk'
 
