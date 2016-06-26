@@ -35,6 +35,11 @@ app.component('main', {
 
         this.$peers.setActive()
 
+        if (!this.$peers.active) {
+          this.logout()
+          return this.error.dialog({ text: `No online peers!` })
+        }
+
         let kp = lisk.crypto.getKeys(this.passphrase)
         this.address = lisk.crypto.getAddress(kp.publicKey)
 
