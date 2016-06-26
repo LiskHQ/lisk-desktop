@@ -54,6 +54,7 @@ app.component('main', {
 
     logout () {
       this.passphrase = ''
+      this.account = {}
     }
 
     updateAccount () {
