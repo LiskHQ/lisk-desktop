@@ -3,12 +3,12 @@ md-content(layout='column', layout-gt-xs='row')
     md-card-content(layout='column', layout-align='center center')
       span.md-title.title Address
       .address.value {{ $ctrl.account.address }}
-  md-card(flex=33)
+  md-card(flex=33, ng-class='{ online: $ctrl.$peers.active.enabled, offline: !$ctrl.$peers.active.enabled }')
     md-card-content(layout='column', layout-align='center center')
       span.md-title.title Peer
       md-select(ng-model='$ctrl.$peers.active')
         md-optgroup(ng-repeat='(name, peers) in $ctrl.$peers.stack', ng-if='peers.length', label='{{ name }}')
-          md-option(ng-repeat='peer in peers', ng-value='peer') {{ peer.host }}
+          md-option(ng-repeat='peer in peers', ng-value='peer', ng-disabled='!peer.enabled') {{ peer.host }}
   md-card(flex=33)
     md-card-content(layout='column', layout-align='center center')
       span.md-title.title Balance
