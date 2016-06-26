@@ -19,7 +19,7 @@ app.component('login', {
 
       this.$scope.$watch('$ctrl.input_passphrase', this.isValid.bind(this))
       this.$scope.$on('logout', () => this.input_passphrase = null)
-      this.$timeout(this.devTestAccount.bind(this))
+      // this.$timeout(this.devTestAccount.bind(this))
     }
 
     reset () {
