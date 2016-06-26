@@ -1,2 +1,2 @@
-span.amount(ng-bind='$ctrl.amount | lsk', ng-class='{ positive: !$ctrl.negative && !$ctrl.nocolor, negative: $ctrl.negative && !$ctrl.nocolor }')
+span(ng-bind='$ctrl.amount | lsk')
 span(ng-show='$ctrl.append')= ' LSK'

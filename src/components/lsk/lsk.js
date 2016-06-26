@@ -7,11 +7,9 @@ app.component('lsk', {
   template: require('./lsk.jade')(),
   bindings: {
     amount: '<',
-    negative: '<?',
   },
   controller: class lsk {
     constructor ($attrs) {
-      this.nocolor = typeof $attrs.nocolor !== 'undefined'
       this.append = typeof $attrs.append !== 'undefined'
     }
   }
