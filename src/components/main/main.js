@@ -5,7 +5,7 @@ import lisk from 'lisk-js'
 
 import app from '../../app'
 
-const UPDATE_INTERVAL_BALANCE = 5000
+const UPDATE_INTERVAL_BALANCE = 10000
 
 app.component('main', {
   template: require('./main.jade')(),
@@ -18,74 +18,69 @@ app.component('main', {
       this.$peers = $peers
       this.error = error
 
-      this.$scope.$watch('$ctrl.passphrase', this.login.bind(this))
-      this.$scope.$on('peerUpdate', this.updateAccount.bind(this))
-      this.$scope.$on('error', this.onError.bind(this))
+      this.$scope.$on('login', this.login.bind(this))
+      this.$scope.$on('peerUpdate', this.update.bind(this))
 
       $scope.$watch('$ctrl.$peers.active', (peer, old) => {
-        if (peer != old) {
+        if (peer && old) {
+          this.$peers.check()
           this.$rootScope.$broadcast('peerUpdate')
         }
       })
     }
 
-    login () {
-      if (this.passphrase) {
-        this.prelogged = true
+    reset () {
+      this.$timeout.cancel(this.timeout)
+    }
 
-        this.$peers.setActive()
+    login (attempts = 0) {
+      this.prelogged = true
 
-        if (!this.$peers.active) {
-          this.logout()
-          return this.error.dialog({ text: `No online peers!` })
-        }
+      this.$peers.setActive()
 
-        let kp = lisk.crypto.getKeys(this.passphrase)
-        this.address = lisk.crypto.getAddress(kp.publicKey)
+      let kp = lisk.crypto.getKeys(this.passphrase)
+      this.address = lisk.crypto.getAddress(kp.publicKey)
 
-        this.updateAccount()
-          .then(() => {
-            this.prelogged = false
-            this.logged = true
-          })
-      } else {
-        this.logged = false
-        this.prelogged = false
-        this.passphrase = ''
-
-        this.$timeout.cancel(this.timeout)
-      }
+      this.update()
+        .then(() => {
+          this.prelogged = false
+          this.logged = true
+        })
+        .catch((res) => {
+          if (attempts < 10) {
+            this.$timeout(() => this.login(++attempts), 1000)
+          } else {
+            this.error.dialog({ text: 'No peer connection' })
+            this.logout()
+          }
+        })
     }
 
     logout () {
-      this.passphrase = ''
+      this.reset()
+      this.$peers.reset(true)
+
+      this.logged = false
+      this.prelogged = false
       this.account = {}
+      this.passphrase = ''
     }
 
-    updateAccount () {
-      this.$timeout.cancel(this.timeout)
+    update () {
+      this.reset()
 
       return this.$peers.active.getAccount(this.address)
         .then(res => {
           this.account = res
-
-          if (this.prelogged || this.logged) {
-            this.timeout = this.$timeout(this.updateAccount.bind(this), UPDATE_INTERVAL_BALANCE)
-          }
         })
-        .catch(() => {
-          this.$scope.$emit('error')
-          return this.$q.reject()
+        .catch((res) => {
+          this.account.balance = undefined
+          return this.$q.reject(res)
         })
-    }
-
-    onError () {
-      this.logout()
-      this.error.dialog({ text: `Error connecting to the peer ${this.$peers.active.url}` })
-    }
-
-    getPeerSelectedText () {
-      return `Peer: ${this.peer.host}`
+        .finally(() => {
+          this.timeout = this.$timeout(this.update.bind(this), UPDATE_INTERVAL_BALANCE)
+          return this.$q.resolve()
+        })
     }
   }
 })

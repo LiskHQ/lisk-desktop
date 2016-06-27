@@ -3,7 +3,7 @@ import './transactions.less'
 
 import app from '../../app'
 
-const UPDATE_INTERVAL = 15000
+const UPDATE_INTERVAL = 20000
 
 app.component('transactions', {
   template: require('./transactions.jade')(),
@@ -35,8 +35,6 @@ app.component('transactions', {
 
     reset () {
       this.loaded = false
-      this.more = 0
-      // this.transactions = []
     }
 
     update (show, more) {
@@ -64,7 +62,12 @@ app.component('transactions', {
           } else {
             this.more = 0
           }
-
+        })
+        .catch(() => {
+          this.transactions = []
+          this.more = 0
+        })
+        .finally(() => {
           this.loaded = true
           this.loading = false
 
@@ -73,9 +76,6 @@ app.component('transactions', {
           }
 
           this.timeout = this.$timeout(this.update.bind(this), UPDATE_INTERVAL)
-        })
-        .catch(() => {
-          return this.$q.reject()
         })
     }
   }

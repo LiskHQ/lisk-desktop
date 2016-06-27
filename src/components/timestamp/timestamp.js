@@ -5,6 +5,8 @@ import moment from 'moment'
 
 import app from '../../app'
 
+const UPDATE_INTERVAL_UPDATE = 15000
+
 app.component('timestamp', {
   template: require('./timestamp.jade')(),
   bindings: {
@@ -28,7 +30,7 @@ app.component('timestamp', {
       this.full = obj.format('LL LTS')
       this.time_ago = obj.fromNow(true)
 
-      this.timeout = this.$timeout(this.update.bind(this), 60000)
+      this.timeout = this.$timeout(this.update.bind(this), UPDATE_INTERVAL_UPDATE)
     }
 
     fix (value) {

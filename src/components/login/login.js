@@ -10,16 +10,17 @@ app.component('login', {
   template: require('./login.jade')(),
   bindings: {
     passphrase: '=',
+    onLogin: '&',
   },
   controller: class login {
-    constructor ($scope, $timeout, $document) {
+    constructor ($scope, $rootScope, $timeout, $document) {
       this.$scope = $scope
+      this.$rootScope = $rootScope
       this.$timeout = $timeout
       this.$document = $document
 
       this.$scope.$watch('$ctrl.input_passphrase', this.isValid.bind(this))
-      this.$scope.$on('logout', () => this.input_passphrase = null)
-      // this.$timeout(this.devTestAccount.bind(this))
+      // this.$timeout(this.devTestAccount.bind(this), 200)
     }
 
     reset () {
@@ -31,6 +32,13 @@ app.component('login', {
     stop () {
       this.random = false
       this.$document.unbind('mousemove', this.listener)
+    }
+
+    go () {
+      this.passphrase = this.fix(this.input_passphrase)
+
+      this.reset()
+      this.$timeout(this.onLogin)
     }
 
     isValid (value) {
@@ -102,11 +110,6 @@ app.component('login', {
       }
 
       this.$timeout(() => this.$document.mousemove(this.listener), 300)
-    }
-
-    go () {
-      this.passphrase = this.fix(this.input_passphrase)
-      this.reset()
     }
 
     devTestAccount () {

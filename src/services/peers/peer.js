@@ -3,15 +3,15 @@ import app from '../../app'
 
 import lisk from 'lisk-js'
 
-const API_PING = '/api/loader/status'
 const API_PEERS = '/api/peers'
 const API_ACCOUNT = '/api/accounts'
 const API_BALANCE = '/api/accounts/getBalance'
 const API_TRANSACTIONS = '/api/transactions'
 const API_NETHASH = '/api/blocks/getNetHash'
 const API_SEND_TRANSACTION = '/peer/transactions'
+const API_STATUS = '/api/loader/status'
 
-const REQUEST_TIMEOUT = 5000
+const REQUEST_TIMEOUT = 12000
 
 const TRANSACTION_HEADER_OS = 'nanowallet'
 const TRANSACTION_HEADER_PORT = '8000'
@@ -24,8 +24,6 @@ app.factory('$peer', ($http, $log, $q, $timeout) => {
       this.port = port
       this.ssl = !!ssl
       this.enabled = false
-
-      this.check()
     }
 
     get uri () {
@@ -34,19 +32,6 @@ app.factory('$peer', ($http, $log, $q, $timeout) => {
 
     get url () {
       return (this.ssl ? 'https' : 'http') + `://${this.uri}`
-    }
-
-    check () {
-      this.get(API_PING)
-        .then((res) => {
-          this.enabled = true
-        })
-        .catch((res) => {
-          this.enabled = false
-        })
-        .finally(() => {
-          $timeout(this.check.bind(this), 10000)
-        })
     }
 
     request (method, api, data, headers) {
@@ -163,6 +148,11 @@ app.factory('$peer', ($http, $log, $q, $timeout) => {
 
           return this.post(API_SEND_TRANSACTION, { transaction }, headers)
         })
+    }
+
+    status () {
+      return this.get(API_STATUS)
+        .then(res => res.data)
     }
   }
 })
