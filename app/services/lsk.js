@@ -1,8 +1,6 @@
 
 import numeral from 'numeral'
 
-import app from '../app'
-
 app.factory('lsk', () => {
   return {
     normalize (value) {

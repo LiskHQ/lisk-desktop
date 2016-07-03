@@ -1,8 +1,6 @@
 
 import './lsk.less'
 
-import app from '../../app'
-
 app.component('lsk', {
   template: require('./lsk.jade')(),
   bindings: {

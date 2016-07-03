@@ -1,6 +1,4 @@
 
-import app from '../../app'
-
 app.directive('animateOnChange', ($animate, $timeout) => {
   return (scope, elem, attr) => {
     scope.$watch(attr.animateOnChange, (nv, ov) => {

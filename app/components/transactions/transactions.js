@@ -1,8 +1,6 @@
 
 import './transactions.less'
 
-import app from '../../app'
-
 const UPDATE_INTERVAL = 20000
 
 app.component('transactions', {

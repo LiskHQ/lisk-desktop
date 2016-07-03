@@ -4,8 +4,6 @@ import mnemonic from 'bitcore-mnemonic'
 
 import './login.less'
 
-import app from '../../app'
-
 app.component('login', {
   template: require('./login.jade')(),
   bindings: {

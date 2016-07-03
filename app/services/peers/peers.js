@@ -3,8 +3,6 @@ import _ from 'lodash'
 
 import './peer'
 
-import app from '../../app'
-
 const UPDATE_INTERVAL_CHECK = 10000
 
 app.factory('$peers', ($peer, $timeout) => {

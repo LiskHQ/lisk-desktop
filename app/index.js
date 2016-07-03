@@ -4,8 +4,6 @@ import 'angular-material-data-table/dist/md-data-table.css'
 
 import './index.less'
 
-import './app'
-
 import './theme/theme'
 import './util/animateOnChange/animateOnChange'
 import './components/main/main'
@@ -22,8 +20,6 @@ import './services/success'
 import './services/error'
 
 import './filters/lsk'
-
-import angular from 'angular'
 
 angular.element(document).ready(() => {
   angular.bootstrap(document, ['app'])

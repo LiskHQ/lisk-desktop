@@ -1,8 +1,6 @@
 
 import './send.less'
 
-import app from '../../app'
-
 const ADDRESS_VALID_RE = '^[0-9]{1,21}[L|l]$'
 const AMOUNT_VALID_RE = '^[0-9]+(\.[0-9]{1,8})?$'
 

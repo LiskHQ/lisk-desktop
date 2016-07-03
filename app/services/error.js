@@ -1,6 +1,4 @@
 
-import app from '../app'
-
 app.factory('error', ($mdDialog, $mdToast) => {
   return {
     toast ({ text }) {

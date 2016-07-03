@@ -3,8 +3,6 @@ import './main.less'
 
 import lisk from 'lisk-js'
 
-import app from '../../app'
-
 const UPDATE_INTERVAL_BALANCE = 10000
 
 app.component('main', {

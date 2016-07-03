@@ -3,8 +3,6 @@ import './timestamp.less'
 
 import moment from 'moment'
 
-import app from '../../app'
-
 const UPDATE_INTERVAL_UPDATE = 15000
 
 app.component('timestamp', {

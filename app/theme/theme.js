@@ -1,6 +1,4 @@
 
-import app from '../app'
-
 // https://angular-md-color.com
 
 app.config(($mdThemingProvider) => {
