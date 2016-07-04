@@ -4,9 +4,7 @@ md-content(layout='row')
       img.logo(src=require('./images/LISK.png'))
       h2.md-display-1 Lisk Nano
       div(flex)
-      md-button.md-fab.md-mini.md-primary.logout(ng-click='$ctrl.logout()', ng-if='$ctrl.logged')
-        i.material-icons close
-        md-tooltip(md-direction='bottom') Logout
+      md-button.md-raised.md-primary.logout(ng-click='$ctrl.logout()', ng-if='$ctrl.logged') Logout
     div(layout='row', layout-align='space-around', ng-show='$ctrl.prelogged')
       md-progress-circular.md-warn(md-mode='indeterminate', md-diameter='140')
     div(ng-show='!$ctrl.prelogged && !$ctrl.logged')
