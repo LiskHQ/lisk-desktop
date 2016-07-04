@@ -3,8 +3,11 @@ md-content(layout='column', layout-gt-xs='row')
     md-card-content(layout='column', layout-align='center center')
       span.md-title.title Address
       .address.value {{ $ctrl.account.address }}
-  md-card(flex=33, ng-class='{ online: $ctrl.$peers.online, offline: !$ctrl.$peers.online }')
+  md-card.peer(flex=33)
     md-card-content(layout='column', layout-align='center center')
+      span.status
+        i.material-icons.offline(ng-show='!$ctrl.$peers.online') error
+        i.material-icons.online(ng-show='$ctrl.$peers.online') check circle
       span.md-title.title Peer
       md-select(ng-model='$ctrl.$peers.active', aria-label='Peer')
         md-optgroup(ng-repeat='(name, peers) in $ctrl.$peers.stack', ng-if='peers.length', label='{{ name }}')

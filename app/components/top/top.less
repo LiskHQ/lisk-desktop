@@ -1,15 +1,25 @@
 
 top {
+  .peer {
+    position: relative;
+  }
+
   .title {
     margin-bottom: 15px;
   }
 
-  .online {
-    background-color: #73C8A9;
-  }
+  .status {
+    position: absolute;
+    top: 5px;
+    right: 5px;
 
-  .offline {
-    background-color: #F45D4C;
+    .online {
+      color: #73C8A9;
+    }
+
+    .offline {
+      color: #F45D4C;
+    }
   }
 
   .value {
