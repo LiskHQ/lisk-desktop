@@ -21,7 +21,7 @@ const common = {
   },
   output: {
     path: PATHS.build,
-    filename: `lisk-nano.[hash].js`,
+    filename: `lisk-nano-${pkg.version}.[hash].js`,
   },
   node: {
     fs: 'empty'
@@ -165,6 +165,20 @@ let png = () => {
   }
 }
 
+let fonts = () => {
+  return {
+    module: {
+      loaders: [
+        {
+          test: /\.(eot|svg|ttf|woff|woff2)$/,
+          loader: 'url',
+          include: path.join(PATHS.app, 'assets')
+        }
+      ]
+    }
+  }
+}
+
 let provide = () => {
   return {
     plugins: [
@@ -192,7 +206,8 @@ switch(process.env.npm_lifecycle_event) {
       less(),
       css(),
       json(),
-      png()
+      png(),
+      fonts()
     )
     break
   default:
@@ -209,7 +224,8 @@ switch(process.env.npm_lifecycle_event) {
       less(),
       css(),
       json(),
-      png()
+      png(),
+      fonts()
     )
     break
 }
