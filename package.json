@@ -6,7 +6,7 @@
   "bugs": "https://github.com/LiskHQ/lisk-nano/issues",
   "scripts": {
     "build": "webpack --profile --progress --display-modules --display-exclude --display-chunks --display-cached --display-cached-assets",
-    "dev": "webpack-dev-server --profile --progress"
+    "dev": "webpack-dev-server --host 0.0.0.0 --profile --progress"
   },
   "repository": {
     "type": "git",
