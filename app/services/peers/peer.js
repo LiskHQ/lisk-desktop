@@ -122,8 +122,6 @@ app.factory('$peer', ($http, $log, $q, $timeout) => {
     sendTransaction (passphrase, secondPassphrase, recipient, amount) {
       let transaction
 
-      amount = parseInt(amount * Math.pow(10, 8))
-
       try {
         transaction = lisk.transaction.createTransaction(
           recipient,

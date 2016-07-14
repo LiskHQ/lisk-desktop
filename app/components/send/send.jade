@@ -13,9 +13,10 @@ md-card.offline-hide
             div(ng-message='pattern') Invalid
         md-input-container.md-block
           label Enter the amount
-          input(type='text', name='amount', ng-model='$ctrl.amount.value', required, ng-pattern='$ctrl.amount.regexp', ng-disabled='$ctrl.loading')
+          input(type='number', name='amount', ng-model='$ctrl.amount.value', required, ng-pattern='$ctrl.amount.regexp', ng-disabled='$ctrl.loading', ng-max='$ctrl.amount.max')
           div(ng-messages='$ctrl.sendForm.amount.$error')
             div(ng-message='required') Required
             div(ng-message='pattern') Invalid
+            div(ng-message='max') Insufficient funds
     md-content(layout='row', layout-align='center center')
       md-button.md-raised.md-primary(ng-disabled='!$ctrl.sendForm.$valid || $ctrl.loading', ng-click='$ctrl.go()') {{ $ctrl.loading ? 'Sending...' : 'Send' }}
