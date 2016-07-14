@@ -13,18 +13,18 @@
     "url": "https://github.com/LiskHQ/lisk-nano"
   },
   "dependencies": {
-    "angular": "^1.5.6",
-    "angular-animate": "^1.5.6",
-    "angular-aria": "^1.5.6",
-    "angular-material": "^1.0.0",
+    "angular": "^1.5.7",
+    "angular-animate": "^1.5.7",
+    "angular-aria": "^1.5.7",
+    "angular-material": "^1.0.9",
     "angular-material-data-table": "^0.10.9",
-    "angular-messages": "^1.5.6",
+    "angular-messages": "^1.5.7",
     "bitcore-mnemonic": "^1.1.1",
     "debug": "^2.2.0",
     "jquery": "^2.2.4",
     "lisk-js": "^0.2.0",
     "lodash": "^4.13.1",
-    "moment": "^2.13.0",
+    "moment": "^2.14.1",
     "numeral": "^1.5.3"
   },
   "devDependencies": {
