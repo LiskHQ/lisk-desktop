@@ -4,11 +4,13 @@
   "description": "Lisk Nano",
   "homepage": "https://github.com/LiskHQ/lisk-nano",
   "bugs": "https://github.com/LiskHQ/lisk-nano/issues",
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/LiskHQ/lisk-nano"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "electron-prebuilt": "^1.2.7"
+  }
 }
