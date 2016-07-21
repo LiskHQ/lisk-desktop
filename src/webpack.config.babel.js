@@ -21,7 +21,7 @@ const common = {
   },
   output: {
     path: PATHS.build,
-    filename: `lisk-nano-${pkg.version}.[hash].js`,
+    filename: `app.js`,
   },
   node: {
     fs: 'empty'
