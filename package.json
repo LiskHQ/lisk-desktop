@@ -4,13 +4,22 @@
   "description": "Lisk Nano",
   "homepage": "https://github.com/LiskHQ/lisk-nano",
   "bugs": "https://github.com/LiskHQ/lisk-nano/issues",
-  "scripts": {},
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist:osx": "build --osx"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/LiskHQ/lisk-nano"
   },
-  "license": "MIT",
   "devDependencies": {
+    "electron-builder": "^5.14.1",
     "electron-prebuilt": "^1.2.7"
-  }
+  },
+  "build": {
+    "appId": "io.lisk.nano",
+    "app-category-type": "finance"
+  },
+  "license": "MIT"
 }
