@@ -2,15 +2,9 @@
   "name": "lisk-nano",
   "version": "0.0.1",
   "description": "Lisk Nano",
-  "homepage": "https://github.com/LiskHQ/lisk-nano",
-  "bugs": "https://github.com/LiskHQ/lisk-nano/issues",
   "scripts": {
     "build": "webpack --profile --progress --display-modules --display-exclude --display-chunks --display-cached --display-cached-assets",
     "dev": "webpack-dev-server --host 0.0.0.0 --profile --progress"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/LiskHQ/lisk-nano"
   },
   "dependencies": {
     "angular": "^1.5.7",
@@ -57,6 +51,5 @@
     "presets": [
       "es2015"
     ]
-  },
-  "license": "MIT"
+  }
 }
