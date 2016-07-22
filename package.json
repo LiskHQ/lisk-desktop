@@ -6,7 +6,7 @@
   "bugs": "https://github.com/LiskHQ/lisk-nano/issues",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
+    "start": "electron app",
     "dist:osx": "build --osx"
   },
   "repository": {
@@ -14,7 +14,7 @@
     "url": "https://github.com/LiskHQ/lisk-nano"
   },
   "devDependencies": {
-    "electron-builder": "^5.14.1",
+    "electron-packager": "^7.3.0",
     "electron-prebuilt": "^1.2.7"
   },
   "build": {
