@@ -7,7 +7,12 @@ let win
 
 function createWindow () {
   let { width, height } = electron.screen.getPrimaryDisplay().workAreaSize
-  win = new BrowserWindow({ width: width - 100, height: height - 100, center: true })
+  win = new BrowserWindow({
+    width: width - 250,
+    height: height - 150,
+    center: true,
+    icon: __dirname + '/assets/lisk.ico',
+  })
 
   win.loadURL(`file://${__dirname}/index.html`)
 
