@@ -7,17 +7,17 @@
     "dev": "webpack-dev-server --host 0.0.0.0 --profile --progress"
   },
   "dependencies": {
-    "angular": "^1.5.7",
-    "angular-animate": "^1.5.7",
-    "angular-aria": "^1.5.7",
+    "angular": "^1.5.8",
+    "angular-animate": "^1.5.8",
+    "angular-aria": "^1.5.8",
     "angular-material": "^1.0.9",
     "angular-material-data-table": "^0.10.9",
-    "angular-messages": "^1.5.7",
+    "angular-messages": "^1.5.8",
     "bitcore-mnemonic": "^1.1.1",
     "debug": "^2.2.0",
     "jquery": "^2.2.4",
     "lisk-js": "^0.2.0",
-    "lodash": "^4.13.1",
+    "lodash": "^4.14.1",
     "moment": "^2.14.1",
     "numeral": "^1.5.3"
   },
@@ -30,7 +30,7 @@
     "css-loader": "^0.23.1",
     "exports-loader": "^0.6.3",
     "extract-text-webpack-plugin": "^1.0.1",
-    "file-loader": "^0.8.5",
+    "file-loader": "^0.9.0",
     "html-webpack-plugin": "^2.19.0",
     "imports-loader": "^0.6.5",
     "jade": "^1.11.0",
@@ -44,8 +44,8 @@
     "url-loader": "^0.5.7",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1",
-    "webpack-merge": "^0.14.0",
-    "webpack-validator": "^2.2.2"
+    "webpack-merge": "^0.14.1",
+    "webpack-validator": "^2.2.6"
   },
   "babel": {
     "presets": [
