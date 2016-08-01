@@ -11,7 +11,6 @@ function createWindow () {
     width: width - 250,
     height: height - 150,
     center: true,
-    icon: __dirname + '/assets/lisk.ico',
   })
 
   win.loadURL(`file://${__dirname}/index.html`)
