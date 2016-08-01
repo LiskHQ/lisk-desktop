@@ -7,7 +7,9 @@
   "main": "main.js",
   "scripts": {
     "start": "electron app",
-    "dist:osx": "build --osx"
+    "dist:win": "build --win",
+    "dist:osx": "build --osx",
+    "dist:linux": "build --linux"
   },
   "repository": {
     "type": "git",
