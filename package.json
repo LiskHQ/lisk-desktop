@@ -20,7 +20,10 @@
   },
   "build": {
     "appId": "io.lisk.nano",
-    "app-category-type": "finance"
+    "app-category-type": "finance",
+    "win": {
+      "iconUrl": "https://lisk.io/i/mediakit/icon_1.png"
+    }
   },
   "license": "MIT"
 }
