@@ -20,6 +20,40 @@ Open http://localhost:8080
 npm run build
 ```
 
+## Electron
+
+### Start
+
+Start the Electron client.
+
+```
+npm run start
+```
+
+### Windows
+
+Build package for Windows.
+
+```
+npm run dist:win
+```
+
+### Mac OS X
+
+Build package for Mac OS X.
+
+```
+npm run dist:osx
+```
+
+### Linux
+
+Build package for Linux.
+
+```
+npm run dist:linux
+```
+
 ## License
 
 The MIT License (MIT)
