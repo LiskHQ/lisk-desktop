@@ -55,6 +55,10 @@ Build package for Linux.
 npm run dist:linux
 ```
 
+## Authors
+
+Ricardo Ferro <ricardo@lisk.io>
+
 ## License
 
 The MIT License (MIT)
