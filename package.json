@@ -20,7 +20,7 @@
   },
   "build": {
     "appId": "io.lisk.nano",
-    "app-category-type": "finance",
+    "category": "finance",
     "productName": "Lisk Nano",
     "win": {
       "iconUrl": "https://lisk.io/i/mediakit/icon_1.png"
