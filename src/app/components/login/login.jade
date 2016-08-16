@@ -8,7 +8,7 @@ md-card
         label Enter your passphrase
         input(ng-model='$ctrl.input_passphrase', ng-disabled='$ctrl.random')
     md-content(layout='row', layout-align='center center')
-      md-button(ng-disabled='$ctrl.random', ng-click='$ctrl.devTestAccount()') Dev Test Account
+      // md-button(ng-disabled='$ctrl.random', ng-click='$ctrl.devTestAccount()') Dev Test Account
       md-button.md-primary(ng-disabled='$ctrl.random', ng-click='$ctrl.start()') NEW ACCOUNT
       md-button.md-raised.md-primary(md-autofocus, ng-disabled='$ctrl.valid !== 1', ng-click='$ctrl.go()') Login
     md-content(layout-padding, layout='column', layout-align='center center', ng-show='$ctrl.random')
