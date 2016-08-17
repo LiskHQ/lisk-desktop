@@ -125,7 +125,7 @@ app.component('login', {
 
       this.$mdDialog.show({
         controllerAs: '$ctrl',
-        controller: class save {
+        controller: /*@ngInject*/ class save {
           constructor ($scope, $mdDialog) {
             this.$mdDialog = $mdDialog
             this.passphrase = passphrase
