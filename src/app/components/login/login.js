@@ -5,8 +5,6 @@ import mnemonic from 'bitcore-mnemonic'
 import './login.less'
 import './save.less'
 
-import save from './save/save'
-
 app.component('login', {
   template: require('./login.jade')(),
   bindings: {
