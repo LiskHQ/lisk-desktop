@@ -24,8 +24,7 @@
     "category": "finance",
     "productName": "Lisk Nano",
     "win": {
-      "target": "nsis",
-      "iconUrl": "https://lisk.io/i/mediakit/icon_1.png"
+      "target": "nsis"
     }
   },
   "license": "MIT"
