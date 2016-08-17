@@ -6,7 +6,7 @@ md-card
     form
       md-input-container.md-block(md-is-error='$ctrl.valid === 0')
         label Enter your passphrase
-        input(ng-model='$ctrl.input_passphrase', ng-disabled='$ctrl.random')
+        input(type='password' ng-model='$ctrl.input_passphrase', ng-disabled='$ctrl.random')
     md-content(layout='row', layout-align='center center')
       // md-button(ng-disabled='$ctrl.random', ng-click='$ctrl.devTestAccount()') Dev Test Account
       md-button.md-primary(ng-disabled='$ctrl.random', ng-click='$ctrl.start()') NEW ACCOUNT
