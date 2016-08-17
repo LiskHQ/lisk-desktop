@@ -131,8 +131,7 @@ app.component('login', {
             this.passphrase = passphrase
 
             $scope.$watch('$ctrl.missing_input', () => {
-              console.log(this.missing_input, this.missing_word)
-              this.missing_ok = this.missing_input === this.missing_word
+              this.missing_ok = this.missing_input && this.missing_input === this.missing_word
             })
           }
 
