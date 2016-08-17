@@ -1,0 +1,24 @@
+md-dialog.dialog-save(aria-label='Save your passphrase in a safe place!')
+  form
+    md-toolbar
+      .md-toolbar-tools
+        h2
+          span(ng-if="!$ctrl.enter") Save your passphrase in a safe place!
+          span(ng-if="$ctrl.enter") Enter the missing word to continue
+    md-dialog-content
+      .md-dialog-content
+        div(ng-if="!$ctrl.enter")
+          p.passphrase(ng-bind='$ctrl.passphrase')
+        div(ng-if="$ctrl.enter")
+          p.passphrase
+            {{ $ctrl.pre }}
+            span.missing -----
+            {{ $ctrl.pos }}
+          md-input-container.md-block(md-is-error='!$ctrl.missing_ok')
+            label Enter the missing word
+            input(ng-model='$ctrl.missing_input')
+    md-dialog-actions(layout='row')
+      md-button(ng-click="$ctrl.close()") Close
+      span(flex)
+      md-button(ng-click="$ctrl.next()", md-autofocus, ng-show='!$ctrl.enter') Yes! It's safe!
+      md-button(ng-click="$ctrl.ok()", md-autofocus, ng-show='$ctrl.enter', ng-disabled='!$ctrl.missing_ok') OK

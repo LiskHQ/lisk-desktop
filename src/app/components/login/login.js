@@ -3,6 +3,9 @@ import crypto from 'crypto'
 import mnemonic from 'bitcore-mnemonic'
 
 import './login.less'
+import './save.less'
+
+import save from './save/save'
 
 app.component('login', {
   template: require('./login.jade')(),
@@ -11,14 +14,22 @@ app.component('login', {
     onLogin: '&',
   },
   controller: class login {
-    constructor ($scope, $rootScope, $timeout, $document) {
+    constructor ($scope, $rootScope, $timeout, $document, $mdDialog, $mdMedia) {
       this.$scope = $scope
       this.$rootScope = $rootScope
       this.$timeout = $timeout
       this.$document = $document
+      this.$mdDialog = $mdDialog
+      this.$mdMedia = $mdMedia
 
       this.$scope.$watch('$ctrl.input_passphrase', this.isValid.bind(this))
       // this.$timeout(this.devTestAccount.bind(this), 200)
+
+      this.$scope.$watch(() => {
+        return this.$mdMedia('xs') || this.$mdMedia('sm');
+      }, (wantsFullScreen) => {
+        this.$scope.customFullscreen = wantsFullScreen === true
+      })
     }
 
     reset () {
@@ -98,7 +109,7 @@ app.component('login', {
             if (count >= total) {
               this.$timeout(() => {
                 this.stop()
-                this.input_passphrase = (new mnemonic(new Buffer(this.seed.join(''), 'hex'))).toString()
+                this.setNew()
               })
 
               return
@@ -108,6 +119,49 @@ app.component('login', {
       }
 
       this.$timeout(() => this.$document.mousemove(this.listener), 300)
+    }
+
+    setNew () {
+      let passphrase = (new mnemonic(new Buffer(this.seed.join(''), 'hex'))).toString()
+      let ok = () => this.input_passphrase = passphrase
+
+      this.$mdDialog.show({
+        controllerAs: '$ctrl',
+        controller: class save {
+          constructor ($scope, $mdDialog) {
+            this.$mdDialog = $mdDialog
+            this.passphrase = passphrase
+
+            $scope.$watch('$ctrl.missing_input', () => {
+              console.log(this.missing_input, this.missing_word)
+              this.missing_ok = this.missing_input === this.missing_word
+            })
+          }
+
+          next () {
+            this.enter = true
+
+            let words = this.passphrase.split(' ')
+            let missing_number = parseInt(Math.random() * words.length)
+
+            this.missing_word = words[missing_number]
+            this.pre = words.slice(0, missing_number).join(' ')
+            this.pos = words.slice(missing_number + 1).join(' ')
+          }
+
+          ok () {
+            ok()
+            this.close()
+          }
+
+          close () {
+            this.$mdDialog.hide()
+          }
+        },
+
+        template: require('./save.jade')(),
+        fullscreen: (this.$mdMedia('sm') || this.$mdMedia('xs'))  && this.$scope.customFullscreen
+      })
     }
 
     devTestAccount () {
