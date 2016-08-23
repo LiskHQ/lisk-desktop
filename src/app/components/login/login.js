@@ -53,7 +53,7 @@ app.component('login', {
 
       if (value === '') {
         this.valid = 2
-      } else if (value.split(' ').length !== 12 || !mnemonic.isValid(value)) {
+      } else if (value.split(' ').length < 12 || !mnemonic.isValid(value)) {
         this.valid = 0
       } else {
         this.valid = 1
