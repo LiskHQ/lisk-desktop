@@ -11,9 +11,9 @@ md-dialog.dialog-save(aria-label='Save your passphrase in a safe place!')
           p.passphrase(ng-bind='$ctrl.passphrase')
         div(ng-if="$ctrl.enter")
           p.passphrase
-            {{ $ctrl.pre }}
+            span {{ $ctrl.pre }}
             span.missing -----
-            {{ $ctrl.pos }}
+            span {{ $ctrl.pos }}
           md-input-container.md-block(md-is-error='!$ctrl.missing_ok')
             label Enter the missing word
             input(ng-model='$ctrl.missing_input')
