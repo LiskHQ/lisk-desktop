@@ -121,7 +121,10 @@ app.component('login', {
 
     setNew () {
       let passphrase = (new mnemonic(new Buffer(this.seed.join(''), 'hex'))).toString()
-      let ok = () => this.input_passphrase = passphrase
+      let ok = () => {
+        this.input_passphrase = passphrase
+        this.$timeout(this.go.bind(this), 100)
+      }
 
       this.$mdDialog.show({
         controllerAs: '$ctrl',
