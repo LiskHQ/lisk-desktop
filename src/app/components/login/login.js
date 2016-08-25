@@ -68,7 +68,7 @@ app.component('login', {
       let last = [0, 0]
       let used = this.emptyBytes()
 
-      let turns = 5
+      let turns = 10 + parseInt(Math.random() * 10)
       let steps = 2
       let total = turns * used.length
       let count = 0
