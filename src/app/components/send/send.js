@@ -11,11 +11,13 @@ app.component('send', {
     passphrase: '<',
   },
   controller: class send {
-    constructor ($scope, $peers, lsk, success, error) {
+    constructor ($scope, $peers, lsk, success, error, $mdDialog, $q) {
       this.$scope = $scope
       this.$peers = $peers
       this.success = success
       this.error = error
+      this.$mdDialog = $mdDialog
+      this.$q = $q
 
       this.recipient = {
         regexp: ADDRESS_VALID_RE,
@@ -39,29 +41,62 @@ app.component('send', {
       this.amount.value = ''
     }
 
+    promptSecondPassphrase () {
+      return this.$q((resolve, reject) => {
+        if (this.account.secondSignature) {
+          this.$mdDialog.show({
+            controllerAs: '$ctrl',
+            template: require('./second.jade')(),
+            controller: /*@ngInject*/ class second {
+              constructor ($scope, $mdDialog) {
+                this.$mdDialog = $mdDialog
+              }
+
+              ok () {
+                this.$mdDialog.hide()
+                resolve(this.value)
+              }
+
+              cancel () {
+                this.$mdDialog.hide()
+                reject()
+              }
+            }
+          })
+        } else {
+          resolve()
+        }
+      })
+    }
+
     go () {
       this.loading = true
 
-      this.$peers.active.sendTransaction(
-        this.passphrase,
-        this.secondPassphrase,
-        this.recipient.value,
-        this.amount.raw
-      )
-      .then(
-        (res) => {
-          return this.success.dialog({ text: `${this.amount.value} sent to ${this.recipient.value}` })
-            .then(() => {
-              this.reset()
-            })
-        },
-        (res) => {
-          this.error.dialog({ text: res && res.message ? res.message : 'An error occurred while sending the transaction.' })
-        }
-      )
-      .finally(() => {
-        this.loading = false
-      })
+      this.promptSecondPassphrase()
+        .then((secondPassphrase) => {
+          this.$peers.active.sendTransaction(
+            this.passphrase,
+            secondPassphrase,
+            this.recipient.value,
+            this.amount.raw
+          )
+          .then(
+            (res) => {
+              return this.success.dialog({ text: `${this.amount.value} sent to ${this.recipient.value}` })
+                .then(() => {
+                  this.reset()
+                })
+            },
+            (res) => {
+              this.error.dialog({ text: res && res.message ? res.message : 'An error occurred while sending the transaction.' })
+            }
+          )
+          .finally(() => {
+            this.loading = false
+          })
+        }, () => {
+          this.loading = false
+        })
     }
   }
 })
