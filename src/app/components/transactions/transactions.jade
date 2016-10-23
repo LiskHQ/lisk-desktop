@@ -22,7 +22,7 @@ md-card.offline-hide
               td(md-cell)
                 timestamp(data='transaction.timestamp')
               td(md-cell)
-                md-button(ng-href='https://explorer.lisk.io/tx/{{ transaction.id }}', ng-bind='transaction.id', target='_blank')
+                span(ng-bind='transaction.id')
                   md-tooltip(md-direction='top', md-delay='350') {{ transaction.confirmations }} confirmations
               td(md-cell, ng-switch, on='transaction.type')
                 span.tx(ng-switch-when='1') Second Signature Creation
@@ -33,10 +33,8 @@ md-card.offline-hide
                 span.tx(ng-switch-when='6') Transfer Lisk to Blockchain Application
                 span.tx(ng-switch-when='7') Transfer Lisk from Blockchain Applicatio
                 span(ng-switch-default)
-                  md-button(ng-href='https://explorer.lisk.io/address/{{ transaction.senderId }}', ng-bind='transaction.senderId', target='_blank', ng-if='transaction.senderId !== $ctrl.account.address')
-                    md-tooltip(md-direction='top', md-delay='350') Open in Explorer
-                  md-button(ng-href='https://explorer.lisk.io/address/{{ transaction.recipientId }}', ng-bind='transaction.recipientId', target='_blank', ng-if='transaction.senderId === $ctrl.account.address')
-                    md-tooltip(md-direction='top', md-delay='350') Open in Explorer
+                  span(ng-bind='transaction.senderId', ng-if='transaction.senderId !== $ctrl.account.address')
+                  span(ng-bind='transaction.recipientId', ng-if='transaction.senderId === $ctrl.account.address')
               td(md-cell)
                 i.material-icons.in(ng-if='transaction.senderId !== $ctrl.account.address') call_received
                 i.material-icons.out(ng-if='transaction.senderId === $ctrl.account.address') call_made
