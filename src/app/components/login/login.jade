@@ -14,7 +14,9 @@ md-card
       md-button.md-primary(ng-disabled='$ctrl.random', ng-click='$ctrl.start()') NEW ACCOUNT
       md-button.md-raised.md-primary(md-autofocus, ng-disabled='$ctrl.valid !== 1', ng-click='$ctrl.go()') Login
     md-content(layout-padding, layout='column', layout-align='center center', ng-show='$ctrl.random')
-      h4.move Move your mouse to generate random bytes
+      h4.move(ng-show='$ctrl.mobileAndTabletcheck()') Enter text below to generate random bytes
+      h4.move(ng-hide='$ctrl.mobileAndTabletcheck()') Move your mouse to generate random bytes
+      input.random-input(type="text", ng-keydown='$ctrl.asd()', ng-show='$ctrl.mobileAndTabletcheck()')
       md-progress-linear(md-mode='determinate', value='{{ $ctrl.progress }}')
       md-content.bytes
         span.byte(ng-repeat='byte in $ctrl.seed track by $index', ng-bind='byte', animate-on-change='byte')
