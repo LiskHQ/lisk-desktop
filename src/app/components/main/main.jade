@@ -5,7 +5,7 @@ md-content(layout='row')
       div(flex)
       md-button.md-raised.md-primary.logout(ng-click='$ctrl.logout()', ng-if='$ctrl.logged') Logout
     div(layout='row', layout-align='space-around', ng-show='$ctrl.prelogged')
-      md-progress-circular.md-warn(md-mode='indeterminate', md-diameter='140')
+      md-progress-circular.md-warn(md-mode='indeterminate', md-diameter='80')
     div(ng-show='!$ctrl.prelogged && !$ctrl.logged')
       login(passphrase='$ctrl.passphrase', on-login='$ctrl.login()')
     div(ng-if='$ctrl.logged', ng-class='{ online: $ctrl.$peers.online, offline: !$ctrl.$peers.online }')
