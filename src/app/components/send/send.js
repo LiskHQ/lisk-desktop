@@ -100,3 +100,12 @@ app.component('send', {
     }
   }
 })
+
+app.directive('ignoreMouseWheel', () => {
+  return {
+    restrict: 'A',
+    link: (scope, element, attrs) => {
+      element.bind('mousewheel', event => element.blur())
+    }
+  }
+})
