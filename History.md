@@ -1,4 +1,18 @@
 
+v0.1.2 / 2016-12-01
+==================
+
+  * Update lisk-js version
+  * Fix TRANSACTION_HEADER_VERSION to work with lisk v0.5.0
+  * Disable mouse scroll and arrow buttons in transaction amount. Fix #18.
+  * Fix loading animation size
+  * Fix generation of new passphrase from the smartphone. Fix #10.
+  * Remove links from transactions list. Fix #14.
+  * Bumping dependencies versions
+  * Bumping electron versions
+  * Add passphrase unhide possibility. Fix #6.
+  * electron-prebuilt will be depreciated (Merge pull request #13 from Citizen-X/patch-1)
+
 v0.1.1 / 2016-10-13
 ==================
 
