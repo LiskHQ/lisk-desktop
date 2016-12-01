@@ -13,7 +13,7 @@ const REQUEST_TIMEOUT = 12000
 
 const TRANSACTION_HEADER_OS = 'nanowallet'
 const TRANSACTION_HEADER_PORT = '8000'
-const TRANSACTION_HEADER_VERSION = '0.0.0'
+const TRANSACTION_HEADER_VERSION = '0.5.0'
 
 app.factory('$peer', ($http, $log, $q, $timeout) => {
   return class $peer {
