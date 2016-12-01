@@ -1,6 +1,6 @@
 {
   "name": "lisk-nano",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Lisk Nano",
   "scripts": {
     "build": "webpack --profile --progress --display-modules --display-exclude --display-chunks --display-cached --display-cached-assets",
