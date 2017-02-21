@@ -4,7 +4,8 @@
   "description": "Lisk Nano",
   "scripts": {
     "build": "webpack --profile --progress --display-modules --display-exclude --display-chunks --display-cached --display-cached-assets",
-    "dev": "webpack-dev-server --host 0.0.0.0 --profile --progress"
+    "dev": "webpack-dev-server --host 0.0.0.0 --profile --progress",
+    "test": "mocha"
   },
   "dependencies": {
     "angular": "^1.5.8",
@@ -14,12 +15,16 @@
     "angular-material-data-table": "^0.10.9",
     "angular-messages": "^1.5.8",
     "bitcore-mnemonic": "^1.1.1",
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
     "debug": "^2.2.0",
     "jquery": "^2.2.4",
     "lisk-js": "^0.2.3",
     "lodash": "^4.16.4",
+    "mocha": "^3.2.0",
     "moment": "^2.15.1",
-    "numeral": "^1.5.3"
+    "numeral": "^1.5.3",
+    "should": "^11.2.0"
   },
   "devDependencies": {
     "babel-core": "^6.9.1",
