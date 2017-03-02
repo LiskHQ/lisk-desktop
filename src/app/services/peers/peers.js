@@ -5,7 +5,7 @@ import './peer'
 
 const UPDATE_INTERVAL_CHECK = 10000
 
-app.factory('$peers', ($peer, $timeout) => {
+app.factory('$peers', ($peer, $timeout, $cookies) => {
   class $peers {
     constructor () {
       this.stack = {
@@ -38,7 +38,9 @@ app.factory('$peers', ($peer, $timeout) => {
 
     setActive () {
       this.active = _.chain([])
-        .concat(this.stack.official, this.stack.public)
+        .concat($cookies.get('peerStack') == 'testnet' ?
+          this.stack.testnet : this.stack.official,
+          this.stack.public)
         .sample()
         .value()
 
