@@ -55,6 +55,28 @@ Build package for Linux.
 npm run dist:linux
 ```
 
+## Run end-to-end tests
+
+### Setup
+As described on http://www.protractortest.org/#/ run:
+```
+npm install -g protractor
+webdriver-manager update
+webdriver-manager start 
+```
+
+### Run
+As described on http://www.protractortest.org/#/ run:
+Start the development version as described above.
+
+Run the tests:
+```
+cd src
+protractor spec/conf.js
+```
+
+
+
 ## Authors
 
 Ricardo Ferro <ricardo@lisk.io>
