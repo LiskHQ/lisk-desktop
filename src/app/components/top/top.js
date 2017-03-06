@@ -2,7 +2,7 @@
 import './top.less'
 
 app.component('top', {
-  template: require('./top.jade')(),
+  template: require('./top.pug')(),
   bindings: {
     account: '<',
   },

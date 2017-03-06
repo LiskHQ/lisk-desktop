@@ -6,7 +6,7 @@ import moment from 'moment'
 const UPDATE_INTERVAL_UPDATE = 15000
 
 app.component('timestamp', {
-  template: require('./timestamp.jade')(),
+  template: require('./timestamp.pug')(),
   bindings: {
     data: '<',
   },

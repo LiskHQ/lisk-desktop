@@ -5,7 +5,7 @@ const ADDRESS_VALID_RE = '^[0-9]{1,21}[L|l]$'
 const AMOUNT_VALID_RE = '^[0-9]+(\.[0-9]{1,8})?$'
 
 app.component('send', {
-  template: require('./send.jade')(),
+  template: require('./send.pug')(),
   bindings: {
     account: '<',
     passphrase: '<',
@@ -46,7 +46,7 @@ app.component('send', {
         if (this.account.secondSignature) {
           this.$mdDialog.show({
             controllerAs: '$ctrl',
-            template: require('./second.jade')(),
+            template: require('./second.pug')(),
             controller: /*@ngInject*/ class second {
               constructor ($scope, $mdDialog) {
                 this.$mdDialog = $mdDialog

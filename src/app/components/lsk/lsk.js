@@ -2,7 +2,7 @@
 import './lsk.less'
 
 app.component('lsk', {
-  template: require('./lsk.jade')(),
+  template: require('./lsk.pug')(),
   bindings: {
     amount: '<',
   },
