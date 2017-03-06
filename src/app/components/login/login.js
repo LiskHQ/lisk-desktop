@@ -114,11 +114,8 @@ app.component('login', {
             }
 
             if (count >= total) {
-              this.$timeout(() => {
-                this.stop()
-                this.setNew()
-              })
-
+              this.stop()
+              this.setNew()
               return
             }
           }
