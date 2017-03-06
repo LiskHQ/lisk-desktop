@@ -1,13 +1,13 @@
 
-import _ from 'lodash'
+import _ from 'lodash';
 
-import './peer'
+import './peer';
 
-const UPDATE_INTERVAL_CHECK = 10000
+const UPDATE_INTERVAL_CHECK = 10000;
 
 app.factory('$peers', ($peer, $timeout, $cookies) => {
   class $peers {
-    constructor () {
+    constructor() {
       this.stack = {
         official: [
           new $peer({ host: 'node01.lisk.io' }),
@@ -22,46 +22,46 @@ app.factory('$peers', ($peer, $timeout, $cookies) => {
         public: [],
         testnet: [
           new $peer({ host: 'testnet.lisk.io', port: null, ssl: true }),
-        ]
-      }
+        ],
+      };
 
-      this.check()
+      this.check();
     }
 
-    reset (active) {
-      $timeout.cancel(this.timeout)
+    reset(active) {
+      $timeout.cancel(this.timeout);
 
       if (active) {
-        this.active = undefined
+        this.active = undefined;
       }
     }
 
-    setActive () {
+    setActive() {
       this.active = _.chain([])
         .concat($cookies.get('peerStack') == 'testnet' ?
           this.stack.testnet : this.stack.official,
           this.stack.public)
         .sample()
-        .value()
+        .value();
 
-      this.check()
+      this.check();
     }
 
-    check () {
-      this.reset()
+    check() {
+      this.reset();
 
-      let next = () => this.timeout = $timeout(this.check.bind(this), UPDATE_INTERVAL_CHECK)
+      const next = () => this.timeout = $timeout(this.check.bind(this), UPDATE_INTERVAL_CHECK);
 
       if (!this.active) {
-        return next()
+        return next();
       }
 
       this.active.status()
         .then(() => this.online = true)
         .catch(() => this.online = false)
-        .finally(() => next())
+        .finally(() => next());
     }
   }
 
-  return new $peers()
-})
+  return new $peers();
+});

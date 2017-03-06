@@ -1,9 +1,9 @@
 
-import './timestamp.less'
+import './timestamp.less';
 
-import moment from 'moment'
+import moment from 'moment';
 
-const UPDATE_INTERVAL_UPDATE = 15000
+const UPDATE_INTERVAL_UPDATE = 15000;
 
 app.component('timestamp', {
   template: require('./timestamp.pug')(),
@@ -11,28 +11,28 @@ app.component('timestamp', {
     data: '<',
   },
   controller: class timestamp {
-    constructor ($scope, $timeout) {
-      this.$timeout = $timeout
+    constructor($scope, $timeout) {
+      this.$timeout = $timeout;
 
-      $scope.$watch('$ctrl.data', this.update.bind(this))
+      $scope.$watch('$ctrl.data', this.update.bind(this));
     }
 
-    $onDestroy () {
-      this.$timeout.cancel(this.timeout)
+    $onDestroy() {
+      this.$timeout.cancel(this.timeout);
     }
 
-    update () {
-      this.$timeout.cancel(this.timeout)
+    update() {
+      this.$timeout.cancel(this.timeout);
 
-      let obj = moment(this.fix(this.data))
-      this.full = obj.format('LL LTS')
-      this.time_ago = obj.fromNow(true)
+      const obj = moment(this.fix(this.data));
+      this.full = obj.format('LL LTS');
+      this.time_ago = obj.fromNow(true);
 
-      this.timeout = this.$timeout(this.update.bind(this), UPDATE_INTERVAL_UPDATE)
+      this.timeout = this.$timeout(this.update.bind(this), UPDATE_INTERVAL_UPDATE);
     }
 
-    fix (value) {
-      return new Date((((Date.UTC(2016, 4, 24, 17, 0, 0, 0) / 1000) + value) * 1000))
+    fix(value) {
+      return new Date((((Date.UTC(2016, 4, 24, 17, 0, 0, 0) / 1000) + value) * 1000));
     }
-  }
-})
+  },
+});

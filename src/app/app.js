@@ -5,4 +5,4 @@ export default angular.module('app', [
   'ngAnimate',
   'ngCookies',
   'md.data.table',
-])
+]);
