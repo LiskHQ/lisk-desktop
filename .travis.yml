@@ -7,6 +7,4 @@ before_script:
   - npm install -g grunt-cli
   - npm install
 script: npm run test
-after_failure:
-  - cat .app.log
 
