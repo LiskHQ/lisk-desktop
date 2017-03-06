@@ -7,10 +7,10 @@ module.exports = function (grunt) {
   grunt.initConfig({
     eslint: {
       options: {
-				configFile: '.eslintrc.json',
-				format: 'codeframe',
-				fix: false
-			},
+        configFile: '.eslintrc.json',
+        format: 'codeframe',
+        fix: false
+      },
       target: ['app'],
     }
   });
@@ -20,8 +20,8 @@ module.exports = function (grunt) {
   grunt.registerTask('default', ['test']);
 
   grunt.registerTask('eslint-fix', 'Run eslint and fix formatting', function () {
-		grunt.config.set('eslint.options.fix', true);
-		grunt.task.run('eslint');
-	});
+    grunt.config.set('eslint.options.fix', true);
+    grunt.task.run('eslint');
+  });
 
 };
