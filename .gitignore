@@ -5,3 +5,4 @@ npm-debug.log
 /src/app/services/peers/peer.js
 src/.nyc_output
 src/coverage
+*.sw[pon]
