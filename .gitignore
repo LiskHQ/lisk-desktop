@@ -5,3 +5,4 @@ npm-debug.log
 src/.nyc_output
 src/coverage
 *.sw[pon]
+app/app.js
