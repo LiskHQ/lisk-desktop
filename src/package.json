@@ -43,8 +43,6 @@
     "grunt-eslint": "^19.0.0",
     "html-webpack-plugin": "^2.19.0",
     "imports-loader": "^0.6.5",
-    "jade": "^1.11.0",
-    "jade-loader": "^0.8.0",
     "jit-grunt": "^0.10.0",
     "json-loader": "^0.5.4",
     "less": "^2.7.1",
