@@ -6,7 +6,7 @@ import lisk from 'lisk-js'
 const UPDATE_INTERVAL_BALANCE = 10000
 
 app.component('main', {
-  template: require('./main.jade')(),
+  template: require('./main.pug')(),
   controller: class main {
     constructor ($scope, $rootScope, $timeout, $q, $peers, error) {
       this.$scope = $scope

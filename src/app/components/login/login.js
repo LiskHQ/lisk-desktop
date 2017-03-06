@@ -6,7 +6,7 @@ import './login.less'
 import './save.less'
 
 app.component('login', {
-  template: require('./login.jade')(),
+  template: require('./login.pug')(),
   bindings: {
     passphrase: '=',
     onLogin: '&',
@@ -170,7 +170,7 @@ app.component('login', {
           }
         },
 
-        template: require('./save.jade')(),
+        template: require('./save.pug')(),
         fullscreen: (this.$mdMedia('sm') || this.$mdMedia('xs'))  && this.$scope.customFullscreen
       })
     }

@@ -4,7 +4,7 @@ import './transactions.less'
 const UPDATE_INTERVAL = 20000
 
 app.component('transactions', {
-  template: require('./transactions.jade')(),
+  template: require('./transactions.pug')(),
   bindings: {
     account: '=',
   },

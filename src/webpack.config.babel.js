@@ -48,7 +48,7 @@ let html = () => {
     plugins: [
       new HtmlWebpackPlugin({
         filename: 'index.html',
-        template: 'app/index.jade',
+        template: 'app/index.pug',
         minify: {
           collapseWhitespace: true,
           minifyCSS: true,
@@ -98,13 +98,13 @@ let babel = () => {
   }
 }
 
-let jade = () => {
+let pug = () => {
   return {
     module: {
       loaders: [
         {
-          test: /\.jade$/,
-          loader: 'jade',
+          test: /\.pug$/,
+          loader: 'pug-loader',
           include: PATHS.app,
         }
       ]
@@ -202,7 +202,7 @@ switch(process.env.npm_lifecycle_event) {
       html(),
       provide(),
       babel(),
-      jade(),
+      pug(),
       less(),
       css(),
       json(),
@@ -220,7 +220,7 @@ switch(process.env.npm_lifecycle_event) {
       html(),
       provide(),
       babel(),
-      jade(),
+      pug(),
       less(),
       css(),
       json(),
