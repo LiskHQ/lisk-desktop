@@ -3,3 +3,4 @@ dist
 node_modules
 npm-debug.log
 *.sw[pon]
+app/app.js
