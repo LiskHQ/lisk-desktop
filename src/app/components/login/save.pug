@@ -8,7 +8,7 @@ md-dialog.dialog-save(aria-label='Save your passphrase in a safe place!')
     md-dialog-content
       .md-dialog-content
         div(ng-if="!$ctrl.enter")
-          textarea.passphrase(ng-bind='$ctrl.passphrase', autofocus)
+          textarea.passphrase(ng-bind='$ctrl.passphrase', md-autofocus)
         div(ng-if="$ctrl.enter")
           p.passphrase
             span {{ $ctrl.pre }}
@@ -20,5 +20,5 @@ md-dialog.dialog-save(aria-label='Save your passphrase in a safe place!')
     md-dialog-actions(layout='row')
       md-button(ng-click="$ctrl.close()") Close
       span(flex)
-      md-button(ng-click="$ctrl.next()", md-autofocus, ng-show='!$ctrl.enter') Yes! It's safe!
-      md-button(ng-click="$ctrl.ok()", md-autofocus, ng-show='$ctrl.enter', ng-disabled='!$ctrl.missing_ok') OK
+      md-button(ng-click="$ctrl.next()", ng-show='!$ctrl.enter') Yes! It's safe!
+      md-button(ng-click="$ctrl.ok()", ng-show='$ctrl.enter', ng-disabled='!$ctrl.missing_ok') OK
