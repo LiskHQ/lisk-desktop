@@ -3,6 +3,7 @@ import 'jquery'
 
 import 'angular'
 import 'angular-animate'
+import 'angular-cookies'
 import 'angular-aria'
 import 'angular-messages'
 import 'angular-material'
