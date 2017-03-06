@@ -12,16 +12,17 @@ app.component('login', {
     onLogin: '&',
   },
   controller: class login {
-    constructor ($scope, $rootScope, $timeout, $document, $mdDialog, $mdMedia) {
+    constructor ($scope, $rootScope, $timeout, $document, $mdDialog, $mdMedia, $cookies) {
       this.$scope = $scope
       this.$rootScope = $rootScope
       this.$timeout = $timeout
       this.$document = $document
       this.$mdDialog = $mdDialog
       this.$mdMedia = $mdMedia
+      this.$cookies = $cookies
 
       this.$scope.$watch('$ctrl.input_passphrase', this.isValid.bind(this))
-      // this.$timeout(this.devTestAccount.bind(this), 200)
+      this.$timeout(this.devTestAccount.bind(this), 200)
 
       this.$scope.$watch(() => {
         return this.$mdMedia('xs') || this.$mdMedia('sm');
@@ -175,8 +176,10 @@ app.component('login', {
     }
 
     devTestAccount () {
-      this.input_passphrase = 'stay undo beyond powder sand laptop grow gloom apology hamster primary arrive'
-      this.$timeout(this.go.bind(this), 100)
+      this.input_passphrase = this.$cookies.get('passphrase');
+      if (this.input_passphrase) {
+        this.$timeout(this.go.bind(this), 100)
+      }
     }
 
     fix (v) {
