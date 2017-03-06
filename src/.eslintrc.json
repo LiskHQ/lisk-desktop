@@ -2,5 +2,21 @@
   "extends": "airbnb-base",
   "plugins": [
     "import"
-  ]
+  ],
+  "globals": {
+    "angular": true,
+    "app": true
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "rules": {
+    "new-cap": ["error", { "newIsCapExceptions": ["mnemonic"]}],
+    "global-require": "off",
+    "no-return-assign": "off",
+    "no-plusplus": "off",
+    "no-loop-func": "off",
+    "func-names": "off"
+  }
 }

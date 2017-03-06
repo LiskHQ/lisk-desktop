@@ -1,7 +1,6 @@
+import moment from 'moment';
 
 import './timestamp.less';
-
-import moment from 'moment';
 
 const UPDATE_INTERVAL_UPDATE = 15000;
 
@@ -31,7 +30,7 @@ app.component('timestamp', {
       this.timeout = this.$timeout(this.update.bind(this), UPDATE_INTERVAL_UPDATE);
     }
 
-    fix(value) {
+    static fix(value) {
       return new Date((((Date.UTC(2016, 4, 24, 17, 0, 0, 0) / 1000) + value) * 1000));
     }
   },

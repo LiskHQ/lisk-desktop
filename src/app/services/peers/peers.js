@@ -38,7 +38,7 @@ app.factory('$peers', ($peer, $timeout, $cookies) => {
 
     setActive() {
       this.active = _.chain([])
-        .concat($cookies.get('peerStack') == 'testnet' ?
+        .concat($cookies.get('peerStack') === 'testnet' ?
           this.stack.testnet : this.stack.official,
           this.stack.public)
         .sample()
@@ -53,7 +53,8 @@ app.factory('$peers', ($peer, $timeout, $cookies) => {
       const next = () => this.timeout = $timeout(this.check.bind(this), UPDATE_INTERVAL_CHECK);
 
       if (!this.active) {
-        return next();
+        next();
+        return;
       }
 
       this.active.status()

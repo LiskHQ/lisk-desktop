@@ -1,7 +1,6 @@
+import lisk from 'lisk-js';
 
 import './main.less';
-
-import lisk from 'lisk-js';
 
 const UPDATE_INTERVAL_BALANCE = 10000;
 
@@ -44,9 +43,9 @@ app.component('main', {
           this.prelogged = false;
           this.logged = true;
         })
-        .catch((res) => {
+        .catch(() => {
           if (attempts < 10) {
-            this.$timeout(() => this.login(++attempts), 1000);
+            this.$timeout(() => this.login(attempts + 1), 1000);
           } else {
             this.error.dialog({ text: 'No peer connection' });
             this.logout();

@@ -15,7 +15,7 @@ const TRANSACTION_HEADER_OS = 'nanowallet';
 const TRANSACTION_HEADER_PORT = '8000';
 const TRANSACTION_HEADER_VERSION = '0.5.0';
 
-app.factory('$peer', ($http, $log, $q, $timeout) => class $peer {
+app.factory('$peer', ($http, $log, $q) => class $peer {
   constructor({ host, port = 8000, ssl = false }) {
     this.host = host;
     this.port = port;
@@ -80,7 +80,7 @@ app.factory('$peer', ($http, $log, $q, $timeout) => class $peer {
   getAccount(address) {
     return this.get(API_ACCOUNT, { address })
         .then(res => res.data.account)
-        .catch(res => this.getBalance(address)
+        .catch(() => this.getBalance(address)
             .then(balance => ({
               address,
               balance,

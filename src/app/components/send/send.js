@@ -2,7 +2,7 @@
 import './send.less';
 
 const ADDRESS_VALID_RE = '^[0-9]{1,21}[L|l]$';
-const AMOUNT_VALID_RE = '^[0-9]+(\.[0-9]{1,8})?$';
+const AMOUNT_VALID_RE = '^[0-9]+(.[0-9]{1,8})?$';
 
 app.component('send', {
   template: require('./send.pug')(),
@@ -81,7 +81,7 @@ app.component('send', {
             this.amount.raw,
           )
           .then(
-            res => this.success.dialog({ text: `${this.amount.value} sent to ${this.recipient.value}` })
+            () => this.success.dialog({ text: `${this.amount.value} sent to ${this.recipient.value}` })
                 .then(() => {
                   this.reset();
                 }),
@@ -101,7 +101,7 @@ app.component('send', {
 
 app.directive('ignoreMouseWheel', () => ({
   restrict: 'A',
-  link: (scope, element, attrs) => {
-    element.bind('mousewheel', event => element.blur());
+  link: (scope, element) => {
+    element.bind('mousewheel', () => element.blur());
   },
 }));
