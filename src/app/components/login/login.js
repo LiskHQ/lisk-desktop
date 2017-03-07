@@ -32,7 +32,7 @@ app.component('login', {
     reset() {
       this.input_passphrase = '';
       this.progress = 0;
-      this.seed = this.emptyBytes().map(() => '00');
+      this.seed = login.emptyBytes().map(() => '00');
     }
 
     stop() {
@@ -41,14 +41,14 @@ app.component('login', {
     }
 
     go() {
-      this.passphrase = this.fix(this.input_passphrase);
+      this.passphrase = login.fix(this.input_passphrase);
 
       this.reset();
       this.$timeout(this.onLogin);
     }
 
     isValid(value) {
-      const fixedValue = this.fix(value);
+      const fixedValue = login.fix(value);
 
       if (fixedValue === '') {
         this.valid = 2;
@@ -65,7 +65,7 @@ app.component('login', {
       this.random = true;
 
       let last = [0, 0];
-      let used = this.emptyBytes();
+      let used = login.emptyBytes();
 
       const turns = 10 + parseInt(Math.random() * 10, 10);
       const steps = 2;
@@ -97,7 +97,7 @@ app.component('login', {
             used[pos] = 1;
 
             const update = () => {
-              this.seed[pos] = this.lpad(crypto.randomBytes(1)[0].toString(16), '0', 2);
+              this.seed[pos] = login.lpad(crypto.randomBytes(1)[0].toString(16), '0', 2);
               this.progress = parseInt((count / total) * 100, 10);
             };
 

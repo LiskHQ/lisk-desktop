@@ -23,7 +23,7 @@ app.component('timestamp', {
     update() {
       this.$timeout.cancel(this.timeout);
 
-      const obj = moment(this.fix(this.data));
+      const obj = moment(timestamp.fix(this.data));
       this.full = obj.format('LL LTS');
       this.time_ago = obj.fromNow(true);
 
