@@ -19,8 +19,8 @@ app.component('transactions', {
       this.transactions = [];
 
       this.$scope.$watch('account', () => {
-        this.reset()
-        this.update()
+        this.reset();
+        this.update();
       });
 
       this.$scope.$on('peerUpdate', () => {
