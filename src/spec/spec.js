@@ -62,7 +62,7 @@ function testPeer() {
 
 function login(account) {
   browser.ignoreSynchronization = true;
-  browser.get('http://localhost:8080');
+  browser.get('http://localhost:8080#?peerStack=localhost');
   element(by.css('input[type="password"]')).sendKeys(account.passphrase);
   element(by.css('.md-button.md-primary.md-raised')).click();
 }
