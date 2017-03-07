@@ -23,6 +23,9 @@ app.factory('$peers', ($peer, $timeout, $cookies) => {
         testnet: [
           new $peer({ host: 'testnet.lisk.io', port: null, ssl: true }),
         ],
+        localhost: [
+          new $peer({ host: 'localhost:4000', port: null, ssl: false }),
+        ],
       };
 
       this.check();
@@ -38,8 +41,8 @@ app.factory('$peers', ($peer, $timeout, $cookies) => {
 
     setActive() {
       this.active = _.chain([])
-        .concat($cookies.get('peerStack') === 'testnet' ?
-          this.stack.testnet : this.stack.official,
+        .concat(
+          this.stack[$cookies.get('peerStack') ? $cookies.get('peerStack') : 'official'],
           this.stack.public)
         .sample()
         .value();
