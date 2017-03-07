@@ -57,7 +57,7 @@ function testPeer() {
   
   var peerElem  = element(by.css('.peer md-select-value .md-text'));
   browser.wait(EC.presenceOf(peerElem), 10000);
-  expect(peerElem.getText()).toMatch(/node0\d.lisk.io/);
+  expect(peerElem.getText()).toEqual('localhost:4000');
 }
 
 function login(account) {
