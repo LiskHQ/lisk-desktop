@@ -1,7 +1,6 @@
-
-<img align="right" src="https://cdn.rawgit.com/feross/standard/master/badge.svg">
-
 # Lisk Nano
+
+[![Build Status](https://travis-ci.org/LiskHQ/lisk-nano.svg?branch=development)](https://travis-ci.org/LiskHQ/lisk-nano)
 
 ## Development
 
