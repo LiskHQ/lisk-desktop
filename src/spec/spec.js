@@ -9,7 +9,7 @@ describe('Lisk Nano functionality', function() {
   it('should allow to logout', testLogout);
   it('should allow to create a new account', testUndefined);
   it('should show address', testAddress);
-  it('should show peer', testUndefined);
+  it('should show peer', testPeer);
   it('should allow to change peer', testUndefined);
   it('should show balance', testUndefined);
   it('should allow to send transaction when enough funds and correct address form', testUndefined);
@@ -50,6 +50,14 @@ function testAddress() {
   var addressElem = element(by.css('.address'));
   browser.wait(EC.presenceOf(addressElem), 10000);
   expect(addressElem.getText()).toEqual(testAcocunt.address);
+}
+
+function testPeer() {
+  login(testAcocunt);
+  
+  var peerElem  = element(by.css('.peer md-select-value .md-text'));
+  browser.wait(EC.presenceOf(peerElem), 10000);
+  expect(peerElem.getText()).toMatch(/node0\d.lisk.io/);
 }
 
 function login(account) {
