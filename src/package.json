@@ -5,7 +5,7 @@
   "scripts": {
     "build": "webpack --profile --progress --display-modules --display-exclude --display-chunks --display-cached --display-cached-assets",
     "dev": "webpack-dev-server --host 0.0.0.0 --profile --progress",
-    "test": "nyc mocha"
+    "test": "grunt test && nyc mocha"
   },
   "dependencies": {
     "angular": "=1.5.8",
