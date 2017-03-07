@@ -169,9 +169,10 @@ app.component('login', {
     }
 
     devTestAccount() {
-      this.input_passphrase = this.$cookies.get('passphrase');
-      if (this.input_passphrase) {
-        this.$timeout(this.go.bind(this), 100);
+      const passphrase = this.$cookies.get('passphrase');
+      if (passphrase) {
+        this.input_passphrase = passphrase;
+        this.$timeout(this.go.bind(this), 10);
       }
     }
 
