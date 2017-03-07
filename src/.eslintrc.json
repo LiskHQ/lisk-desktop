@@ -12,6 +12,7 @@
     "node": true
   },
   "rules": {
+    "no-restricted-properties": "off",
     "new-cap": ["error", { "newIsCapExceptions": ["mnemonic"]}],
     "global-require": "off",
     "no-return-assign": "off",

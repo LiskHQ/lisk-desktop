@@ -73,7 +73,8 @@ app.component('login', {
       let count = 0;
 
       this.listener = (ev) => {
-        const distance = Math.sqrt(((ev.pageX - last[0]) ** 2) + ((ev.pageY - last[1]) ** 2));
+        const distance = Math.sqrt(Math.pow(ev.pageX - last[0], 2) +
+          (Math.pow(ev.pageY - last[1]), 2));
 
         if (distance > 60 || ev.isTrigger) {
           for (let p = 0; p < steps; p++) {
