@@ -5,7 +5,7 @@ import './peer';
 
 const UPDATE_INTERVAL_CHECK = 10000;
 
-app.factory('$peers', ($peer, $timeout, $cookies) => {
+app.factory('$peers', ($peer, $timeout, $cookies, $location) => {
   class $peers {
     constructor() {
       this.stack = {
@@ -40,10 +40,9 @@ app.factory('$peers', ($peer, $timeout, $cookies) => {
     }
 
     setActive() {
+      const peerStack = $location.search().peerStack || $cookies.get('peerStack') || 'official';
       this.active = _.chain([])
-        .concat(
-          this.stack[$cookies.get('peerStack') ? $cookies.get('peerStack') : 'official'],
-          this.stack.public)
+        .concat(this.stack[peerStack], this.stack.public)
         .sample()
         .value();
 
