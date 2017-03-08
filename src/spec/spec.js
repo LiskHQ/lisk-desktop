@@ -8,7 +8,7 @@ var delegateAccount = {
  address: '537318935439898807L',
 };
   
-var testAccount = {
+var emptyAccount = {
  passphrase: 'stay undo beyond powder sand laptop grow gloom apology hamster primary arrive',
  address: '5932438298200837883L',
 };
@@ -19,7 +19,6 @@ var waitTime = 5000;
 describe('Lisk Nano functionality', function() {
   it('should allow to login', testLogin);
   it('should allow to logout', testLogout);
-  it('should allow to create a new account', testNewAccount);
   it('should show address', testAddress);
   it('should show peer', testPeer);
   it('should allow to change peer', testChangePeer);
@@ -29,6 +28,7 @@ describe('Lisk Nano functionality', function() {
   it('should not allow to send transaction when invalid address', testSendWithInvalidAddress);
   it('should show transactions', testUndefined);
   it('should allow to load more transactions', testUndefined);
+  it('should allow to create a new account', testNewAccount);
 });
 
 
@@ -42,18 +42,14 @@ function testLogin() {
 }
  
 function checkIsLoggedIn() {
-  var elem = element(by.css('.logout'));
-  browser.wait(EC.presenceOf(elem), waitTime);
-  expect(elem.getText()).toEqual('LOGOUT');
+  waitForElemAndCheckItsText('.logout', 'LOGOUT');
 }
 
 function testLogout() {
   login(masterAccount);
   
   logout();
-  var loginButton = element(by.css('.md-button.md-primary.md-raised'));
-  browser.wait(EC.presenceOf(loginButton), waitTime);
-  expect(loginButton.getText()).toEqual('LOGIN');
+  waitForElemAndCheckItsText('.md-button.md-primary.md-raised', 'LOGIN');
 }
 
 function testNewAccount() {
@@ -69,9 +65,7 @@ function testNewAccount() {
     browser.sleep(5);
   }
 
-  var saveDialogH2 = element(by.css('.dialog-save h2'));
-  browser.wait(EC.presenceOf(saveDialogH2), waitTime);
-  expect(saveDialogH2.getText()).toEqual('Save your passphrase in a safe place!');
+  waitForElemAndCheckItsText('.dialog-save h2', 'Save your passphrase in a safe place!');
   
   element(by.css('.dialog-save textarea.passphrase')).getText().then(function(passphrase) {
     expect(passphrase).toBeDefined();
@@ -95,18 +89,12 @@ function testNewAccount() {
 
 function testAddress() {
   login(masterAccount);
-  
-  var addressElem = element(by.css('.address'));
-  browser.wait(EC.presenceOf(addressElem), waitTime);
-  expect(addressElem.getText()).toEqual(masterAccount.address);
+  waitForElemAndCheckItsText('.address', masterAccount.address);
 }
 
 function testPeer() {
   login(masterAccount);
-  
-  var peerElem  = element(by.css('.peer md-select-value .md-text'));
-  browser.wait(EC.presenceOf(peerElem), waitTime);
-  expect(peerElem.getText()).toEqual('localhost:4000');
+  waitForElemAndCheckItsText('.peer md-select-value .md-text', 'localhost:4000');
 }
 
 function testChangePeer() {
@@ -120,9 +108,7 @@ function testChangePeer() {
   browser.wait(EC.presenceOf(optionElem), waitTime);
   optionElem.click();
 
-  var peerTextElem  = element(by.css('.peer md-select-value .md-text'));
-  browser.wait(EC.presenceOf(peerTextElem), waitTime);
-  expect(peerTextElem.getText()).toEqual('node01.lisk.io');
+  waitForElemAndCheckItsText('.peer md-select-value .md-text', 'node01.lisk.io');
 }
 
 function testShowBalance() {
@@ -143,20 +129,23 @@ function testSend() {
 }
 
 function testSendWithNotEnoughFunds() {
-  send(testAccount, delegateAccount.address, 10000);
+  send(emptyAccount, delegateAccount.address, 10000);
   checkErrorMessage('Insufficient funds');
 }
 
 function testSendWithInvalidAddress() {
-  send(masterAccount, testAccount.address.substr(0, 10), 1);
+  send(masterAccount, emptyAccount.address.substr(0, 10), 1);
   checkErrorMessage('Invalid');
 }
 
 function checkErrorMessage(message) {
-  var messageElem = element(by.css('send .md-input-message-animation'));
-  browser.wait(EC.presenceOf(messageElem), waitTime);
-  expect(messageElem.getText()).toEqual(message);
-  
+  waitForElemAndCheckItsText('send .md-input-message-animation', message);
+}
+
+function waitForElemAndCheckItsText(selector, text) {
+  var elem = element(by.css(selector));
+  browser.wait(EC.presenceOf(elem), waitTime);
+  expect(elem.getText()).toEqual(text);
 }
 
 function send(fromAccount, toAddress, amount) {
@@ -171,9 +160,7 @@ function send(fromAccount, toAddress, amount) {
 }
 
 function checkSendConfirmation() {
-  var saveDialogH2 = element(by.css('md-dialog h2'));
-  browser.wait(EC.presenceOf(saveDialogH2), waitTime);
-  expect(saveDialogH2.getText()).toEqual('Success');
+  waitForElemAndCheckItsText('md-dialog h2', 'Success');
   var okButton = element(by.css('md-dialog .md-button.md-ink-ripple'));
   okButton.click();
   browser.sleep(500);
