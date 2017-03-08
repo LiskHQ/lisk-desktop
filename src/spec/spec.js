@@ -12,7 +12,7 @@ describe('Lisk Nano functionality', function() {
   it('should show address', testAddress);
   it('should show peer', testPeer);
   it('should allow to change peer', testChangePeer);
-  it('should show balance', testUndefined);
+  it('should show balance', testShowBalance);
   it('should allow to send transaction when enough funds and correct address form', testUndefined);
   it('should not allow to send transaction when not enough funds', testUndefined);
   it('should not allow to send transaction when incorrect address form', testUndefined);
@@ -115,6 +115,14 @@ function testChangePeer() {
   var peerTextElem  = element(by.css('.peer md-select-value .md-text'));
   browser.wait(EC.presenceOf(peerTextElem), waitTime);
   expect(peerTextElem.getText()).toEqual('node01.lisk.io');
+}
+
+function testShowBalance() {
+  login(testAcocunt);
+  
+  var balanceElem = element(by.css('lsk.balance'));
+  browser.wait(EC.presenceOf(balanceElem), waitTime);
+  expect(balanceElem.getText()).toMatch(/\d+\.\d+ LSK/);
 }
 
 function launchApp() {
