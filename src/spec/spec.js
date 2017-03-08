@@ -11,7 +11,7 @@ describe('Lisk Nano functionality', function() {
   it('should allow to create a new account', testNewAccount);
   it('should show address', testAddress);
   it('should show peer', testPeer);
-  it('should allow to change peer', testUndefined);
+  it('should allow to change peer', testChangePeer);
   it('should show balance', testUndefined);
   it('should allow to send transaction when enough funds and correct address form', testUndefined);
   it('should not allow to send transaction when not enough funds', testUndefined);
@@ -99,6 +99,22 @@ function testPeer() {
   var peerElem  = element(by.css('.peer md-select-value .md-text'));
   browser.wait(EC.presenceOf(peerElem), waitTime);
   expect(peerElem.getText()).toEqual('localhost:4000');
+}
+
+function testChangePeer() {
+  login(testAcocunt);
+  
+  var peerElem  = element(by.css('.peer md-select-value'));
+  browser.wait(EC.presenceOf(peerElem), waitTime);
+  peerElem.click();
+  
+  var optionElem  = element(by.css('md-select-menu md-optgroup md-option'));
+  browser.wait(EC.presenceOf(optionElem), waitTime);
+  optionElem.click();
+
+  var peerTextElem  = element(by.css('.peer md-select-value .md-text'));
+  browser.wait(EC.presenceOf(peerTextElem), waitTime);
+  expect(peerTextElem.getText()).toEqual('node01.lisk.io');
 }
 
 function launchApp() {
