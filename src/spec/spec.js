@@ -26,7 +26,7 @@ describe('Lisk Nano functionality', function() {
   it('should allow to send transaction when enough funds and correct address form', testSend);
   it('should not allow to send transaction when not enough funds', testSendWithNotEnoughFunds);
   it('should not allow to send transaction when invalid address', testSendWithInvalidAddress);
-  it('should show transactions', testUndefined);
+  it('should show transactions', testShowTransactions);
   it('should allow to load more transactions', testUndefined);
   it('should allow to create a new account', testNewAccount);
 });
@@ -136,6 +136,12 @@ function testSendWithNotEnoughFunds() {
 function testSendWithInvalidAddress() {
   send(masterAccount, emptyAccount.address.substr(0, 10), 1);
   checkErrorMessage('Invalid');
+}
+
+function testShowTransactions() {
+  login(masterAccount);
+  waitForElemAndCheckItsText('transactions .title', 'Transactions');
+  expect(element.all(by.css('transactions table tbody tr')).count()).toEqual(10);
 }
 
 function checkErrorMessage(message) {
