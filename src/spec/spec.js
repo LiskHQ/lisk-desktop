@@ -25,7 +25,7 @@ describe('Lisk Nano functionality', function() {
   it('should allow to change peer', testChangePeer);
   it('should show balance', testShowBalance);
   it('should allow to send transaction when enough funds and correct address form', testSend);
-  it('should not allow to send transaction when not enough funds', testUndefined);
+  it('should not allow to send transaction when not enough funds', testSendWithNotEnoughFunds);
   it('should not allow to send transaction when incorrect address form', testUndefined);
   it('should show transactions', testUndefined);
   it('should allow to load more transactions', testUndefined);
@@ -135,7 +135,23 @@ function testShowBalance() {
 
 function testSend() {
   send(masterAccount, delegateAccount.address, 1.1);
+  checkSendConfirmation();
+  logout();
+
   send(delegateAccount, masterAccount.address, 1);
+  checkSendConfirmation();
+}
+
+function testSendWithNotEnoughFunds() {
+  send(testAccount, delegateAccount.address, 10000);
+  checkErrorMessage('Insufficient funds');
+}
+
+function checkErrorMessage(message) {
+  var messageElem = element(by.css('send .md-input-message-animation'));
+  browser.wait(EC.presenceOf(messageElem), waitTime);
+  expect(messageElem.getText()).toEqual(message);
+  
 }
 
 function send(fromAccount, toAddress, amount) {
@@ -147,14 +163,15 @@ function send(fromAccount, toAddress, amount) {
   var sendButton  = element(by.css('send button.md-primary'));
   browser.wait(EC.presenceOf(sendButton), waitTime);
   sendButton.click();
+}
 
+function checkSendConfirmation() {
   var saveDialogH2 = element(by.css('md-dialog h2'));
   browser.wait(EC.presenceOf(saveDialogH2), waitTime);
   expect(saveDialogH2.getText()).toEqual('Success');
   var okButton = element(by.css('md-dialog .md-button.md-ink-ripple'));
   okButton.click();
   browser.sleep(500);
-  logout();
 }
 
 function launchApp() {
