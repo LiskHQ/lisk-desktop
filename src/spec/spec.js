@@ -1,7 +1,18 @@
-var testAcocunt = {
+var masterAccount = {
+ passphrase: 'wagon stock borrow episode laundry kitten salute link globe zero feed marble',
+ address: '16313739661670634666L',
+};
+  
+var delegateAccount = {
+ passphrase: 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit',
+ address: '537318935439898807L',
+};
+  
+var testAccount = {
  passphrase: 'stay undo beyond powder sand laptop grow gloom apology hamster primary arrive',
  address: '5932438298200837883L',
 };
+
 var EC = protractor.ExpectedConditions;
 var waitTime = 5000;
 
@@ -13,7 +24,7 @@ describe('Lisk Nano functionality', function() {
   it('should show peer', testPeer);
   it('should allow to change peer', testChangePeer);
   it('should show balance', testShowBalance);
-  it('should allow to send transaction when enough funds and correct address form', testUndefined);
+  it('should allow to send transaction when enough funds and correct address form', testSend);
   it('should not allow to send transaction when not enough funds', testUndefined);
   it('should not allow to send transaction when incorrect address form', testUndefined);
   it('should show transactions', testUndefined);
@@ -26,7 +37,7 @@ function testUndefined() {
 }
 
 function testLogin() {
-  login(testAcocunt);
+  login(masterAccount);
   checkIsLoggedIn();
 }
  
@@ -37,12 +48,9 @@ function checkIsLoggedIn() {
 }
 
 function testLogout() {
-  login(testAcocunt);
+  login(masterAccount);
   
-  var logoutButton = element(by.css('.logout'));
-  browser.wait(EC.presenceOf(logoutButton), waitTime);
-  logoutButton.click();
-
+  logout();
   var loginButton = element(by.css('.md-button.md-primary.md-raised'));
   browser.wait(EC.presenceOf(loginButton), waitTime);
   expect(loginButton.getText()).toEqual('LOGIN');
@@ -77,8 +85,8 @@ function testNewAccount() {
         firstPartOfPassphrase.split(' ').length :
         0;
       element(by.css('.dialog-save input')).sendKeys(passphraseWords[missingWordIndex]);
-      var nextButton = element.all(by.css('.dialog-save .md-button.md-ink-ripple')).get(2);
-      nextButton.click();
+      var okButton = element.all(by.css('.dialog-save .md-button.md-ink-ripple')).get(2);
+      okButton.click();
 
       checkIsLoggedIn();
     });
@@ -86,15 +94,15 @@ function testNewAccount() {
 }
 
 function testAddress() {
-  login(testAcocunt);
+  login(masterAccount);
   
   var addressElem = element(by.css('.address'));
   browser.wait(EC.presenceOf(addressElem), waitTime);
-  expect(addressElem.getText()).toEqual(testAcocunt.address);
+  expect(addressElem.getText()).toEqual(masterAccount.address);
 }
 
 function testPeer() {
-  login(testAcocunt);
+  login(masterAccount);
   
   var peerElem  = element(by.css('.peer md-select-value .md-text'));
   browser.wait(EC.presenceOf(peerElem), waitTime);
@@ -102,7 +110,7 @@ function testPeer() {
 }
 
 function testChangePeer() {
-  login(testAcocunt);
+  login(masterAccount);
   
   var peerElem  = element(by.css('.peer md-select-value'));
   browser.wait(EC.presenceOf(peerElem), waitTime);
@@ -118,17 +126,48 @@ function testChangePeer() {
 }
 
 function testShowBalance() {
-  login(testAcocunt);
+  login(masterAccount);
   
   var balanceElem = element(by.css('lsk.balance'));
   browser.wait(EC.presenceOf(balanceElem), waitTime);
   expect(balanceElem.getText()).toMatch(/\d+\.\d+ LSK/);
 }
 
+function testSend() {
+  send(masterAccount, delegateAccount.address, 1.1);
+  send(delegateAccount, masterAccount.address, 1);
+}
+
+function send(fromAccount, toAddress, amount) {
+  login(fromAccount);
+  var sendElem = element(by.css('send'));
+  browser.wait(EC.presenceOf(sendElem), waitTime);
+  element(by.css('send input[name="recipient"]')).sendKeys(toAddress);
+  element(by.css('send input[name="amount"]')).sendKeys("" + amount);
+  var sendButton  = element(by.css('send button.md-primary'));
+  browser.wait(EC.presenceOf(sendButton), waitTime);
+  sendButton.click();
+
+  var saveDialogH2 = element(by.css('md-dialog h2'));
+  browser.wait(EC.presenceOf(saveDialogH2), waitTime);
+  expect(saveDialogH2.getText()).toEqual('Success');
+  var okButton = element(by.css('md-dialog .md-button.md-ink-ripple'));
+  okButton.click();
+  browser.sleep(500);
+  logout();
+}
+
 function launchApp() {
   browser.ignoreSynchronization = true;
   browser.get('http://localhost:8080#?peerStack=localhost');
 }
+
+function logout() {
+  var logoutButton = element(by.css('.logout'));
+  browser.wait(EC.presenceOf(logoutButton), waitTime);
+  logoutButton.click();
+}
+
 
 function login(account) {
   launchApp();
