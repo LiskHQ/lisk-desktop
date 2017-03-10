@@ -66,17 +66,20 @@ webdriver-manager update
 webdriver-manager start
 ```
 
-Setup lisk test node to run on localhost:4000 as described in https://github.com/LiskHQ/lisk#tests
+Setup a lisk test node to run on localhost:4000 as described in https://github.com/LiskHQ/lisk#tests
 
 ### Run
 
-As described on http://www.protractortest.org/#/ run:
-Start the development version as described above.
-
-Run the tests:
+Start the development version of lisk-nano:
 
 ```
 cd src
+npm run dev
+```
+
+Run the protractor tests:
+
+```
 protractor spec/conf.js
 ```
 
