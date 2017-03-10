@@ -57,25 +57,28 @@ npm run dist:linux
 ## Run end-to-end tests
 
 ### Setup
+
 To setup protractor as described on http://www.protractortest.org/#/ run:
+
 ```
 npm install -g protractor
 webdriver-manager update
-webdriver-manager start 
+webdriver-manager start
 ```
+
 Setup lisk test node to run on localhost:4000 as described in https://github.com/LiskHQ/lisk#tests
 
 ### Run
+
 As described on http://www.protractortest.org/#/ run:
 Start the development version as described above.
 
 Run the tests:
+
 ```
 cd src
 protractor spec/conf.js
 ```
-
-
 
 ## Authors
 

@@ -1,16 +1,16 @@
 var masterAccount = {
- passphrase: 'wagon stock borrow episode laundry kitten salute link globe zero feed marble',
- address: '16313739661670634666L',
+  passphrase: 'wagon stock borrow episode laundry kitten salute link globe zero feed marble',
+  address: '16313739661670634666L',
 };
-  
+
 var delegateAccount = {
- passphrase: 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit',
- address: '537318935439898807L',
+  passphrase: 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit',
+  address: '537318935439898807L',
 };
-  
+
 var emptyAccount = {
- passphrase: 'stay undo beyond powder sand laptop grow gloom apology hamster primary arrive',
- address: '5932438298200837883L',
+  passphrase: 'stay undo beyond powder sand laptop grow gloom apology hamster primary arrive',
+  address: '5932438298200837883L',
 };
 
 var EC = protractor.ExpectedConditions;
@@ -31,7 +31,6 @@ describe('Lisk Nano functionality', function() {
   it('should allow to create a new account', testNewAccount);
 });
 
-
 function testUndefined() {
   throw 'Not defined yet.';
 }
@@ -40,14 +39,14 @@ function testLogin() {
   login(masterAccount);
   checkIsLoggedIn();
 }
- 
+
 function checkIsLoggedIn() {
   waitForElemAndCheckItsText('.logout', 'LOGOUT');
 }
 
 function testLogout() {
   login(masterAccount);
-  
+
   logout();
   waitForElemAndCheckItsText('.md-button.md-primary.md-raised', 'LOGIN');
 }
@@ -66,7 +65,7 @@ function testNewAccount() {
   }
 
   waitForElemAndCheckItsText('.dialog-save h2', 'Save your passphrase in a safe place!');
-  
+
   element(by.css('.dialog-save textarea.passphrase')).getText().then(function(passphrase) {
     expect(passphrase).toBeDefined();
     var passphraseWords = passphrase.split(' ');
@@ -99,11 +98,11 @@ function testPeer() {
 
 function testChangePeer() {
   login(masterAccount);
-  
+
   var peerElem  = element(by.css('.peer md-select-value'));
   browser.wait(EC.presenceOf(peerElem), waitTime);
   peerElem.click();
-  
+
   var optionElem  = element(by.css('md-select-menu md-optgroup md-option'));
   browser.wait(EC.presenceOf(optionElem), waitTime);
   optionElem.click();
@@ -113,7 +112,7 @@ function testChangePeer() {
 
 function testShowBalance() {
   login(masterAccount);
-  
+
   var balanceElem = element(by.css('lsk.balance'));
   browser.wait(EC.presenceOf(balanceElem), waitTime);
   expect(balanceElem.getText()).toMatch(/\d+\.\d+ LSK/);
@@ -182,7 +181,6 @@ function logout() {
   browser.wait(EC.presenceOf(logoutButton), waitTime);
   logoutButton.click();
 }
-
 
 function login(account) {
   launchApp();
