@@ -27,13 +27,9 @@ describe('Lisk Nano functionality', function() {
   it('should not allow to send transaction when not enough funds', testSendWithNotEnoughFunds);
   it('should not allow to send transaction when invalid address', testSendWithInvalidAddress);
   it('should show transactions', testShowTransactions);
-  it('should allow to load more transactions', testUndefined);
+  it('should allow to load more transactions', testLoadMoreTransactions);
   it('should allow to create a new account', testNewAccount);
 });
-
-function testUndefined() {
-  throw 'Not defined yet.';
-}
 
 function testLogin() {
   login(masterAccount);
@@ -141,6 +137,16 @@ function testShowTransactions() {
   login(masterAccount);
   waitForElemAndCheckItsText('transactions .title', 'Transactions');
   expect(element.all(by.css('transactions table tbody tr')).count()).toEqual(10);
+}
+
+function testLoadMoreTransactions() {
+  login(masterAccount);
+
+  var moreButton  = element(by.css('transactions button.more'));
+  browser.wait(EC.presenceOf(moreButton), waitTime);
+  moreButton.click();
+
+  expect(element.all(by.css('transactions table tbody tr')).count()).toEqual(20);
 }
 
 function checkErrorMessage(message) {
