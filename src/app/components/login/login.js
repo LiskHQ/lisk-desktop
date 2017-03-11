@@ -79,7 +79,7 @@ app.component('login', {
         if (distance > 60 || ev.isTrigger) {
           for (let p = 0; p < steps; p++) {
             let pos;
-            const available = used.filter(u => u);
+            const available = used.map((u, i) => (!u ? i : null)).filter(u => u !== null);
 
             if (!available.length) {
               used = used.map(() => 0);
