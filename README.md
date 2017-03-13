@@ -74,7 +74,7 @@ Make sure there are some transactions on the master account so we can test they 
 ```
 for i in {1..20}
 do
-   curl -k -H "Content-Type: application/json" -X PUT -d '{"secret":"wagon stock borrow episode laundry kitten salute link globe zero feed marble","amount":1,"recipientId":"537318935439898807L"}' http://localhost:4000/api/transactions
+   curl -k -H "Content-Type: application/json" -X PUT -d '{"secret":"wagon stock borrow episode laundry kitten salute link globe zero feed marble","amount":'"$i"',"recipientId":"537318935439898807L"}' http://localhost:4000/api/transactions; echo ''
 done
 ```
 
