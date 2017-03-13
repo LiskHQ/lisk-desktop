@@ -68,6 +68,16 @@ webdriver-manager start
 
 Setup a lisk test node to run on localhost:4000 as described in https://github.com/LiskHQ/lisk#tests
 
+Make sure that the Lisk version of the node matches version in https://github.com/LiskHQ/lisk-nano/blob/development/src/app/services/peers/peer.js#L16
+
+Make sure there are some transactions on the master account so we can test they display correctly:
+```
+for i in {1..20}
+do
+   curl -k -H "Content-Type: application/json" -X PUT -d '{"secret":"wagon stock borrow episode laundry kitten salute link globe zero feed marble","amount":1,"recipientId":"537318935439898807L"}' http://localhost:4000/api/transactions
+done
+```
+
 ### Run
 
 Start the development version of lisk-nano:
