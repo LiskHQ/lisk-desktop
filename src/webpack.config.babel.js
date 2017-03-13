@@ -1,14 +1,24 @@
 
-import path from 'path'
+//import path from 'path'
 
-import webpack from 'webpack'
-import merge from 'webpack-merge'
-import validate from 'webpack-validator'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
-import ngAnnotatePlugin from 'ng-annotate-webpack-plugin'
-import CleanWebpackPlugin from 'clean-webpack-plugin'
+var path = require('path');
 
-import pkg from './package'
+//import webpack from 'webpack'
+//import merge from 'webpack-merge'
+//import validate from 'webpack-validator'
+//import HtmlWebpackPlugin from 'html-webpack-plugin'
+//import ngAnnotatePlugin from 'ng-annotate-webpack-plugin'
+//import CleanWebpackPlugin from 'clean-webpack-plugin'
+
+
+var webpack = require('webpack');
+var merge = require('webpack-merge');
+var validate = require('webpack-validator');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ngAnnotatePlugin = require('ng-annotate-webpack-plugin');
+var CleanWebpackPlugin = require('clean-webpack-plugin');
+
+//import pkg from './package'
 
 const PATHS = {
   app: path.join(__dirname, 'app'),
@@ -230,4 +240,5 @@ switch(process.env.npm_lifecycle_event) {
     break
 }
 
-export default validate(config)
+//export default validate(config)
+module.exports = validate(config);
