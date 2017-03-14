@@ -58,7 +58,7 @@ module.exports = function(config) {
 
 		// start these browsers
 		// available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-		browsers: ['Chrome'],
+		browsers: ['PhantomJS'],
 
 		// Continuous Integration mode
 		// if true, Karma captures browsers, runs the tests and exits
@@ -70,7 +70,8 @@ module.exports = function(config) {
 			'karma-mocha',
 			'karma-chrome-launcher',
 			'karma-ng-html2js-preprocessor',
-			'karma-mocha-reporter'
+			'karma-mocha-reporter',
+			'karma-phantomjs-launcher'
 		]
 	});
 }
