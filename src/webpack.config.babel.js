@@ -1,15 +1,5 @@
 
-//import path from 'path'
-
 var path = require('path');
-
-//import webpack from 'webpack'
-//import merge from 'webpack-merge'
-//import validate from 'webpack-validator'
-//import HtmlWebpackPlugin from 'html-webpack-plugin'
-//import ngAnnotatePlugin from 'ng-annotate-webpack-plugin'
-//import CleanWebpackPlugin from 'clean-webpack-plugin'
-
 
 var webpack = require('webpack');
 var merge = require('webpack-merge');
@@ -18,7 +8,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ngAnnotatePlugin = require('ng-annotate-webpack-plugin');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 
-//import pkg from './package'
+var nodeEnvironment = process.env.NODE_ENV;
 
 const PATHS = {
   app: path.join(__dirname, 'app'),
@@ -26,12 +16,12 @@ const PATHS = {
 }
 
 const common = {
-  entry: {
+  entry: nodeEnvironment == 'test' ? { } : {
     app: PATHS.app,
   },
   output: {
     path: PATHS.build,
-    filename: `app.js`,
+    filename: 'app.js',
   },
   node: {
     fs: 'empty'

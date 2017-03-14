@@ -1,9 +1,12 @@
 var path = require('path');
 var webpackConfig = require('./webpack.config.babel');
-var entry = path.resolve(__dirname + '/app', './app/index.js'); //accessing [0] because there are mutli entry points for webpack hot loader
+// var entry = path.resolve(webpackConfig.entry.app, '..', '..', 'app', 'app.js'); //accessing [0] because there are mutli entry points for webpack hot loader
 var preprocessors = {};
-preprocessors[entry] = ['webpack'];
+//preprocessors[entry] = ['webpack'];
 preprocessors['**/*.html'] = ['ng-html2js'];
+var test = path.join(__dirname, 'test', 'test.js');
+preprocessors[test] = ['webpack'];
+preprocessors['app/**/*.js'] = ['coverage'];
 
 module.exports = function(config) {
 	config.set({
@@ -16,7 +19,7 @@ module.exports = function(config) {
 		frameworks: ['mocha', 'chai'],
 
 		// list of files / patterns to load in the browser
-		files: [entry],
+		files: [test],
 		webpack: webpackConfig,
 
 		// list of files to exclude
@@ -25,7 +28,7 @@ module.exports = function(config) {
 		// test results reporter to use
 		// possible values: 'dots', 'progress'
 		// available reporters: https://npmjs.org/browse/keyword/karma-reporter
-		reporters: ['progress'],
+		reporters: ['progress', 'coverage'],
 
 		preprocessors: preprocessors,
 
@@ -47,7 +50,7 @@ module.exports = function(config) {
 
 
 		// enable / disable watching file and executing tests whenever any file changes
-		autoWatch: true,
+		autoWatch: false,
 
 		ngHtml2JsPreprocessor: {
 			stripPrefix: 'app/components/',
@@ -56,13 +59,25 @@ module.exports = function(config) {
 
 		reporters: ['mocha'],
 
+		coverageReporter: {
+      type : 'html',
+      dir : 'coverage/'
+    },
+
+
 		// start these browsers
 		// available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
 		browsers: ['PhantomJS'],
 
 		// Continuous Integration mode
 		// if true, Karma captures browsers, runs the tests and exits
-		singleRun: false,
+		singleRun: true,
+		client: {
+			mocha: {
+				opts: 'test/mocha.opts' // You can set opts to equal true then plugin will load opts from default location 'test/mocha.opts'
+			},
+		},
+
 
 		plugins: [
 			require('karma-webpack'),
@@ -71,6 +86,7 @@ module.exports = function(config) {
 			'karma-chrome-launcher',
 			'karma-ng-html2js-preprocessor',
 			'karma-mocha-reporter',
+			'karma-coverage',
 			'karma-phantomjs-launcher'
 		]
 	});

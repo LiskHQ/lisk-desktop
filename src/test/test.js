@@ -1,9 +1,6 @@
-var should = require('should');
+require('../app');
 
-describe('Example Test', function () {
+require('angular-mocks/angular-mocks');
 
-	it('should show an example', function () {
-		var x = 5;
-		(x).should.be.equal(5);
-	});
-});
+require('./components/top/top.spec');
+
