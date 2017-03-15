@@ -11,6 +11,10 @@ preprocessors[libs] = ['webpack'];
 preprocessors[app] = ['webpack', 'coverage'];
 preprocessors[test] = ['webpack'];
 
+var opts = {
+  onTravis: process.env.ON_TRAVIS,
+};
+
 module.exports = function(config) {
 	config.set({
 
@@ -31,7 +35,7 @@ module.exports = function(config) {
 		// test results reporter to use
 		// possible values: 'dots', 'progress'
 		// available reporters: https://npmjs.org/browse/keyword/karma-reporter
-		reporters: ['progress', 'mocha', 'coverage', 'coveralls'],
+		reporters: ['progress', 'mocha', 'coverage'].concat(opts.onTravis ? ['coveralls'] : []),
 
 		preprocessors: preprocessors,
 
@@ -61,7 +65,7 @@ module.exports = function(config) {
 		},
 
 		coverageReporter: {
-      type : 'lcov',
+      type : opts.onTravis ? 'lcov' : 'text',
       dir : 'coverage/',
     },
 
