@@ -18,8 +18,10 @@ app.component('transactions', {
       this.loaded = false;
       this.transactions = [];
 
-      this.reset();
-      this.update();
+      this.$scope.$watch('account', () => {
+        this.reset();
+        this.update();
+      });
 
       this.$scope.$on('peerUpdate', () => {
         this.reset();

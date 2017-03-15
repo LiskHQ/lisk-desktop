@@ -5,7 +5,7 @@ import './peer';
 
 const UPDATE_INTERVAL_CHECK = 10000;
 
-app.factory('$peers', ($peer, $timeout, $cookies) => {
+app.factory('$peers', ($peer, $timeout, $cookies, $location) => {
   class $peers {
     constructor() {
       this.stack = {
@@ -23,6 +23,9 @@ app.factory('$peers', ($peer, $timeout, $cookies) => {
         testnet: [
           new $peer({ host: 'testnet.lisk.io', port: null, ssl: true }),
         ],
+        localhost: [
+          new $peer({ host: 'localhost:4000', port: null, ssl: false }),
+        ],
       };
 
       this.check();
@@ -37,10 +40,9 @@ app.factory('$peers', ($peer, $timeout, $cookies) => {
     }
 
     setActive() {
+      const peerStack = $location.search().peerStack || $cookies.get('peerStack') || 'official';
       this.active = _.chain([])
-        .concat($cookies.get('peerStack') === 'testnet' ?
-          this.stack.testnet : this.stack.official,
-          this.stack.public)
+        .concat(this.stack[peerStack], this.stack.public)
         .sample()
         .value();
 
