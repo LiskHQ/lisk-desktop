@@ -1,6 +1,6 @@
 
 import './libs';
-import './app';
+import './lisk-nano';
 
 angular.element(document).ready(() => {
   angular.bootstrap(document, ['app']);
