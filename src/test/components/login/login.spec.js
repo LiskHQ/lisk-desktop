@@ -1,4 +1,4 @@
-describe('Top component', function() {
+describe('Login component', function() {
   var $compile,
       $rootScope;
 
@@ -13,12 +13,11 @@ describe('Top component', function() {
     $rootScope = _$rootScope_;
   }));
 
-  it('should contain address', function() {
+  it('should contain header', function() {
     // Compile a piece of HTML containing the directive
-    var element = $compile("<top></top>")($rootScope);
-    // fire all the watches, so the scope expression {{1 + 1}} will be evaluated
+    var element = $compile("<login></login>")($rootScope);
     $rootScope.$digest();
-    // Check that the compiled element contains the templated content
-    expect(element.html()).to.contain("address");
+    expect(element.html()).to.contain("Sign In");
   });
 });
+
