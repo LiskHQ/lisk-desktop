@@ -64,6 +64,7 @@ module.exports = function(config) {
 			moduleName: 'my.templates'
 		},
 
+
 		coverageReporter: {
       type : opts.onTravis ? 'lcov' : 'text',
       dir : 'coverage/',

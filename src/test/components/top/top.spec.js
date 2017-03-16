@@ -1,3 +1,4 @@
+
 describe('Top component', function() {
   var $compile,
       $rootScope;
