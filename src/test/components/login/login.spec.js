@@ -69,7 +69,7 @@ describe('Login controller', function() {
     });
   });
 
-  describe('$scope.isValid(value)', function() {
+  describe('$scope.isValidPassphrase(value)', function() {
     var $scope,
         controller;
 
@@ -79,17 +79,17 @@ describe('Login controller', function() {
     });
 
     it('sets $scope.valid = 2 if  value is empty', function() {
-      controller.isValid('');
+      controller.isValidPassphrase('');
       expect(controller.valid).to.equal(2);
     });
 
     it('sets $scope.valid = 1 if value is valid', function() {
-      controller.isValid('ability theme abandon abandon abandon abandon abandon abandon abandon abandon abandon absorb');
+      controller.isValidPassphrase('ability theme abandon abandon abandon abandon abandon abandon abandon abandon abandon absorb');
       expect(controller.valid).to.equal(1);
     });
 
     it('sets $scope.valid = 0 if value is invalid', function() {
-      controller.isValid('INVALID VALUE');
+      controller.isValidPassphrase('INVALID VALUE');
       expect(controller.valid).to.equal(0);
     });
   });
