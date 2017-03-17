@@ -1,6 +1,7 @@
 describe('Login component', function() {
   var $compile,
-      $rootScope;
+      $rootScope,
+      element;
 
   // Load the myApp module, which contains the directive
   beforeEach(angular.mock.module("app"));
@@ -13,11 +14,29 @@ describe('Login component', function() {
     $rootScope = _$rootScope_;
   }));
 
-  it('should contain header', function() {
+  beforeEach(function() {
     // Compile a piece of HTML containing the directive
-    var element = $compile("<login></login>")($rootScope);
+    element = $compile("<login></login>")($rootScope);
     $rootScope.$digest();
-    expect(element.html()).to.contain("Sign In");
+  });
+
+  var HEADER_TEXT = 'Sign In';
+  it('should contain header saying "' + HEADER_TEXT + '"', function() {
+    expect(element.find('.md-title').text()).to.equal(HEADER_TEXT);
+  });
+
+  var LABEL_TEXT = 'Enter your passphrase';
+  it('should contain a form with label saying "' + LABEL_TEXT + '"', function() {
+    expect(element.find('form label').text()).to.equal(LABEL_TEXT);
+  });
+
+  it('should contain an input field', function() {
+    expect(element.find('form input').html()).to.equal('');
+  });
+
+  var LOGIN_BUTTON_TEXT = 'Login';
+  it('should contain a button saying "' + LOGIN_BUTTON_TEXT + '"', function() {
+    expect(element.find('.md-raised').text()).to.equal(LOGIN_BUTTON_TEXT);
   });
 });
 
