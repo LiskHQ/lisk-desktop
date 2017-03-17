@@ -52,7 +52,7 @@ app.component('login', {
 
       if (fixedValue === '') {
         this.valid = 2;
-      } else if (fixedValue.split(' ').length < 12 || !mnemonic.isValidPassphrase(fixedValue)) {
+      } else if (fixedValue.split(' ').length < 12 || !mnemonic.isValid(fixedValue)) {
         this.valid = 0;
       } else {
         this.valid = 1;
