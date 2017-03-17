@@ -51,11 +51,21 @@ describe('Login controller', function() {
     $rootScope = _$rootScope_;
   }));
 
-  describe('$scope.emptyBytes', function() {
-    it('it returns array of 12 zeros', function() {
-      var $scope = $rootScope.$new();
-      var controller = $componentController('login', $scope, { });
-      expect(controller.emptyBytes()).to.equal([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+  describe('$scope.reset()', function() {
+    var $scope,
+        controller;
+
+    beforeEach(function() {
+      $scope = $rootScope.$new();
+      controller = $componentController('login', $scope, { });
+    });
+
+    it('makes input_passphrase empty', function() {
+      passphrase = 'TEST';
+      controller.input_passphrase = passphrase;
+      expect(controller.input_passphrase).to.equal(passphrase);
+      controller.reset();
+      expect(controller.input_passphrase).to.equal('');
     });
   });
 
