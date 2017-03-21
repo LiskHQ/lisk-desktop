@@ -1,6 +1,7 @@
-describe('Top component', function() {
+describe('timestamp component', function() {
   var $compile,
-      $rootScope;
+      $rootScope,
+      element;
 
   // Load the myApp module, which contains the directive
   beforeEach(angular.mock.module('app'));
@@ -13,12 +14,15 @@ describe('Top component', function() {
     $rootScope = _$rootScope_;
   }));
 
-  it('should contain address', function() {
-    // Compile a piece of HTML containing the directive
-    var element = $compile('<top></top>')($rootScope);
-    // fire all the watches, so the scope expression {{1 + 1}} will be evaluated
+  beforeEach(function() {
+    var liskEpoch = Date.UTC(2016, 4, 24, 17, 0, 0, 0);
+    $rootScope.currentTimestamp = Math.floor((new Date().valueOf() - liskEpoch) / 1000);
+
+    element = $compile('<timestamp data="currentTimestamp"></timestamp>')($rootScope);
     $rootScope.$digest();
-    // Check that the compiled element contains the templated content
-    expect(element.html()).to.contain('address');
+  });
+
+  it('should contain a timeago of the date', function() {
+    expect(element.text()).to.equal('a few seconds');
   });
 });

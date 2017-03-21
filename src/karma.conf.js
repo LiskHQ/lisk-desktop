@@ -13,6 +13,7 @@ preprocessors[test] = ['webpack'];
 
 var opts = {
   onTravis: process.env.ON_TRAVIS,
+  live: process.env.LIVE,
 };
 
 module.exports = function(config) {
@@ -57,7 +58,7 @@ module.exports = function(config) {
 
 
 		// enable / disable watching file and executing tests whenever any file changes
-		autoWatch: false,
+		autoWatch: opts.live,
 
 		ngHtml2JsPreprocessor: {
 			stripPrefix: 'app/components/',
@@ -77,7 +78,7 @@ module.exports = function(config) {
 
 		// Continuous Integration mode
 		// if true, Karma captures browsers, runs the tests and exits
-		singleRun: true,
+		singleRun: !opts.live,
 		client: {
 			mocha: {
 				opts: 'test/mocha.opts' // You can set opts to equal true then plugin will load opts from default location 'test/mocha.opts'

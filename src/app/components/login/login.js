@@ -21,7 +21,7 @@ app.component('login', {
       this.$mdMedia = $mdMedia;
       this.$cookies = $cookies;
 
-      this.$scope.$watch('$ctrl.input_passphrase', this.isValid.bind(this));
+      this.$scope.$watch('$ctrl.input_passphrase', this.isValidPassphrase.bind(this));
       this.$timeout(this.devTestAccount.bind(this), 200);
 
       this.$scope.$watch(() => this.$mdMedia('xs') || this.$mdMedia('sm'), (wantsFullScreen) => {
@@ -35,20 +35,20 @@ app.component('login', {
       this.seed = login.emptyBytes().map(() => '00');
     }
 
-    stop() {
-      this.random = false;
+    stopNewPassphraseGeneration() {
+      this.generatingNewPassphrase = false;
       this.$document.unbind('mousemove', this.listener);
     }
 
-    go() {
-      this.passphrase = login.fix(this.input_passphrase);
+    doTheLogin() {
+      this.passphrase = login.fixCaseAndWhitespace(this.input_passphrase);
 
       this.reset();
       this.$timeout(this.onLogin);
     }
 
-    isValid(value) {
-      const fixedValue = login.fix(value);
+    isValidPassphrase(value) {
+      const fixedValue = login.fixCaseAndWhitespace(value);
 
       if (fixedValue === '') {
         this.valid = 2;
@@ -59,10 +59,10 @@ app.component('login', {
       }
     }
 
-    start() {
+    startGenratingNewPassphrase() {
       this.reset();
 
-      this.random = true;
+      this.generatingNewPassphrase = true;
 
       let last = [0, 0];
       let used = login.emptyBytes();
@@ -108,8 +108,8 @@ app.component('login', {
             }
 
             if (count >= total) {
-              this.stop();
-              this.setNew();
+              this.stopNewPassphraseGeneration();
+              this.setNewPassphrase(this.seed);
               return;
             }
           }
@@ -119,15 +119,15 @@ app.component('login', {
       this.$timeout(() => this.$document.mousemove(this.listener), 300);
     }
 
-    asd() {
+    simulateMousemove() {
       this.$document.mousemove();
     }
 
-    setNew() {
-      const passphrase = (new mnemonic(new Buffer(this.seed.join(''), 'hex'))).toString();
+    setNewPassphrase(seed) {
+      const passphrase = (new mnemonic(new Buffer(seed.join(''), 'hex'))).toString();
       const ok = () => {
         this.input_passphrase = passphrase;
-        this.$timeout(this.go.bind(this), 100);
+        this.$timeout(this.doTheLogin.bind(this), 100);
       };
 
       this.$mdDialog.show({
@@ -172,11 +172,11 @@ app.component('login', {
       const passphrase = this.$cookies.get('passphrase');
       if (passphrase) {
         this.input_passphrase = passphrase;
-        this.$timeout(this.go.bind(this), 10);
+        this.$timeout(this.doTheLogin.bind(this), 10);
       }
     }
 
-    static fix(v) {
+    static fixCaseAndWhitespace(v) {
       return (v || '').replace(/ +/g, ' ').trim().toLowerCase();
     }
 
