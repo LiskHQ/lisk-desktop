@@ -144,30 +144,6 @@ describe('Login controller', function() {
     });
   });
 
-  describe('$scope.doTheLogin()', function() {
-    it.skip('sets this.phassphrase as this.input_passphrase processed by fixCaseAndWhitespace', function() {
-    });
-
-    it.skip('calls this.reset()', function() {
-    });
-
-    it.skip('sets timeout with this.onLogin', function() {
-    });
-  });
-
-  describe('$scope.constructor()', function() {
-    it.skip('sets $watch on $ctrl.input_passphrase to keep validating it', function() {
-    });
-
-    it.skip('sets $watch that sets customFullscreen on small screens', function() {
-    });
-  });
-
-  describe('$scope.simulateMousemove()', function() {
-    it.skip('calls this.$document.mousemove()', function() {
-    });
-  });
-
   describe('$scope.setNewPassphrase()', function() {
     it('opens a material design dialog', function() {
       var seed = ['23', '34', '34', '34', '34', '34', '34', '34'];
@@ -197,14 +173,6 @@ describe('Login controller', function() {
     });
   });
 
-  describe('$scope.devTestAccount()', function() {
-    it.skip('sets input_passphrase from cookie called passphrase if present', function() {
-    });
-
-    it.skip('does nothing if cooke called passphrase not present', function() {
-    });
-  });
-
   describe('$scope.isValidPassphrase(value)', function() {
     it('sets $scope.valid = 2 if  value is empty', function() {
       controller.isValidPassphrase('');
@@ -219,40 +187,6 @@ describe('Login controller', function() {
     it('sets $scope.valid = 0 if value is invalid', function() {
       controller.isValidPassphrase('INVALID VALUE');
       expect(controller.valid).to.equal(0);
-    });
-  });
-});
-
-describe('save $mdDialog controller', function() {
-  describe('constructor()', function() {
-    it.skip('sets $watch on $ctrl.missing_input', function() {
-    });
-  });
-
-  describe('next()', function() {
-    it.skip('sets this.enter=true', function() {
-    });
-
-    it.skip('sets this.missing_word to a random word of passphrase', function() {
-    });
-
-    it.skip('sets this.pre to part of the passphrase before this.missing_word', function() {
-    });
-
-    it.skip('sets this.pos to part of the passphrase after this.missing_word', function() {
-    });
-  });
-
-  describe('ok()', function() {
-    it.skip('calls ok()', function() {
-    });
-
-    it.skip('calls this.close()', function() {
-    });
-  });
-
-  describe('close()', function() {
-    it.skip('calls this.$mdDialog.hide()', function() {
     });
   });
 });
