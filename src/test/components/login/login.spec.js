@@ -1,3 +1,8 @@
+var sinon = require('sinon');
+var sinonChai = require("sinon-chai");
+var expect = chai.expect;
+chai.use(sinonChai);
+
 describe('Login component', function() {
   var $compile,
       $rootScope,
@@ -66,6 +71,23 @@ describe('Login controller', function() {
       expect(controller.input_passphrase).to.equal(passphrase);
       controller.reset();
       expect(controller.input_passphrase).to.equal('');
+    });
+  });
+
+  describe('$scope.setNewPassphrase()', function() {
+    var $scope,
+        controller;
+
+    beforeEach(function() {
+      $scope = $rootScope.$new();
+      controller = $componentController('login', $scope, { });
+    });
+
+    it('opens a material design dialog', function() {
+      var seed = ['23', '34', '34', '34', '34', '34', '34', '34'];
+      var dialogSpy = sinon.spy(controller.$mdDialog, 'show');
+      controller.setNewPassphrase(seed);
+      expect(dialogSpy).to.have.been.calledWith();
     });
   });
 
