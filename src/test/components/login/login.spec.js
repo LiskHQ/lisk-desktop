@@ -21,7 +21,7 @@ describe('Login component', function() {
 
   beforeEach(function() {
     // Compile a piece of HTML containing the directive
-    element = $compile("<login></login>")($rootScope);
+    element = $compile('<login></login>')($rootScope);
     $rootScope.$digest();
   });
 
@@ -46,7 +46,7 @@ describe('Login component', function() {
 });
 
 describe('Login controller', function() {
-  beforeEach(angular.mock.module("app"));
+  beforeEach(angular.mock.module('app'));
 
   var $controller,
       $rootScope;
