@@ -40,7 +40,7 @@ app.component('login', {
       this.$document.unbind('mousemove', this.listener);
     }
 
-    doTheLogin () {
+    doTheLogin() {
       this.passphrase = login.fixCaseAndWhitespace(this.input_passphrase);
 
       this.reset();

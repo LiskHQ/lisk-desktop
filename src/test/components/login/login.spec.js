@@ -1,5 +1,5 @@
 var sinon = require('sinon');
-var sinonChai = require("sinon-chai");
+var sinonChai = require('sinon-chai');
 var expect = chai.expect;
 chai.use(sinonChai);
 
@@ -13,7 +13,7 @@ describe('Login component', function() {
 
   // Store references to $rootScope and $compile
   // so they are available to all tests in this describe block
-  beforeEach(inject(function(_$compile_, _$rootScope_){
+  beforeEach(inject(function(_$compile_, _$rootScope_) {
     // The injector unwraps the underscores (_) from around the parameter names when matching
     $compile = _$compile_;
     $rootScope = _$rootScope_;
@@ -51,7 +51,7 @@ describe('Login controller', function() {
   var $controller,
       $rootScope;
 
-  beforeEach(inject(function(_$componentController_, _$rootScope_){
+  beforeEach(inject(function(_$componentController_, _$rootScope_) {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
   }));
@@ -62,7 +62,7 @@ describe('Login controller', function() {
 
     beforeEach(function() {
       $scope = $rootScope.$new();
-      controller = $componentController('login', $scope, { });
+      controller = $componentController('login', $scope, {});
     });
 
     it('makes input_passphrase empty', function() {
@@ -80,7 +80,7 @@ describe('Login controller', function() {
 
     beforeEach(function() {
       $scope = $rootScope.$new();
-      controller = $componentController('login', $scope, { });
+      controller = $componentController('login', $scope, {});
     });
 
     it('opens a material design dialog', function() {
@@ -97,10 +97,10 @@ describe('Login controller', function() {
 
     beforeEach(function() {
       $scope = $rootScope.$new();
-      controller = $componentController('login', $scope, { });
+      controller = $componentController('login', $scope, {});
     });
 
-    it('sets $scope.valid = 2 if  value is empty', function() {
+    it('sets $scope.valid = 2 if value is empty', function() {
       controller.isValidPassphrase('');
       expect(controller.valid).to.equal(2);
     });
