@@ -85,4 +85,24 @@ describe('transactions component controller', function() {
     });
 
   });
+
+  describe('_processTransactionsResponse(response)', function() {
+    it('sets this.transactions = response.transactions', function() {
+      var response = {
+        transactions : [{}],
+        count: 1,
+      };
+      controller._processTransactionsResponse(response);
+      expect(controller.transactions).to.equal(response.transactions);
+    });
+
+    it('sets this.more to how many more other transactions are there on server', function() {
+      var response = {
+        transactions : [{}, {}],
+        count: 3,
+      };
+      controller._processTransactionsResponse(response);
+      expect(controller.more).to.equal(response.count - response.transactions.length);
+    });
+  });
 });
