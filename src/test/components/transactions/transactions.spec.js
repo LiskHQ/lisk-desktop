@@ -78,8 +78,14 @@ describe('transactions component controller', function() {
     it('calls this.$peers.active.getTransactions(this.account.address, limit) with limit = 10 by default', function() {
       controller.$peers = {active: {getTransactions: function(){}}};
       mock = sinon.mock(controller.$peers.active);
-      mock.expects("getTransactions").withArgs(controller.account.address, 10).returns($q(function() {}));
+      var transactionsDeferred = $q.defer();
+      mock.expects("getTransactions").withArgs(controller.account.address, 10).returns(transactionsDeferred.promise);
       controller.update();
+      transactionsDeferred.reject();
+
+      //mock because $scope.apply() will call update() again.
+      mock.expects("getTransactions").withArgs(controller.account.address, 10).returns(transactionsDeferred.promise);
+      $scope.$apply();
       mock.verify();
       mock.restore();
     });
