@@ -105,4 +105,24 @@ describe('transactions component controller', function() {
       expect(controller.more).to.equal(response.count - response.transactions.length);
     });
   });
+
+  describe('constructor()', function() {
+    it('sets $watch on acount to run reset() and update()', function() {
+      var mock = sinon.mock(controller);
+      mock.expects('reset').withArgs();
+      mock.expects('update').withArgs();
+      $scope.$apply();
+      mock.verify();
+      mock.restore();
+    });
+
+    it('sets to run reset() and update() $on "peerUpdate" is $emited', function() {
+      var mock = sinon.mock(controller);
+      mock.expects('reset').withArgs();
+      mock.expects('update').withArgs(true);
+      controller.$scope.$emit('peerUpdate');
+      mock.verify();
+      mock.restore();
+    });
+  });
 });
