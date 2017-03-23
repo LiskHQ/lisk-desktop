@@ -56,6 +56,18 @@ Build package for Linux.
 npm run dist:linux
 ```
 
+## Run unit tests
+
+### Single run
+```
+npm run test
+```
+
+### Run each time a file changes
+```
+npm run test-live
+```
+
 ## Run end-to-end tests
 
 ### Setup
