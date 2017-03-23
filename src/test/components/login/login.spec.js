@@ -54,10 +54,12 @@ describe('Login controller', () => {
   let $scope;
   let controller;
   let $componentController;
+  let $timeout;
 
-  beforeEach(inject((_$componentController_, _$rootScope_) => {
+  beforeEach(inject((_$componentController_, _$rootScope_, _$timeout_) => {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
+    $timeout = _$timeout_;
   }));
 
   beforeEach(() => {
@@ -84,7 +86,6 @@ describe('Login controller', () => {
       expect(controller.generatingNewPassphrase).to.equal(false);
     });
 
-    it('unbinds mousemove listener', () => {
       const unbindSpy = sinon.spy(controller.$document, 'unbind');
       controller.stopNewPassphraseGeneration();
       expect(unbindSpy).to.have.been.calledWith('mousemove', controller.listener);
@@ -101,6 +102,28 @@ describe('Login controller', () => {
       const spy = sinon.spy(controller, 'reset');
       controller.startGenratingNewPassphrase();
       expect(spy).to.have.been.calledWith();
+    });
+
+    it('creates this.listener(ev) which if called repeatedly will gnerate a random this.seed', function() {
+      controller.startGenratingNewPassphrase();
+      for (var i = 0; i < 16; i++) {
+        expect(controller.seed[i]).to.equal('00');
+      }
+      expect(controller.progress).to.equal(0);
+
+      for (var j = 0; j < 300; j++) {
+        var ev = {
+          pageX: Math.random() * 1000,
+          pageY: Math.random() * 1000,
+        };
+        controller.listener(ev);
+      }
+
+      expect(controller.progress).to.equal(100);
+
+      for (var k = 0; k < 16; k++) {
+        expect(controller.seed[k]).not.to.equal('00');
+      }
     });
   });
 
