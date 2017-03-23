@@ -5,7 +5,7 @@
   "scripts": {
     "build": "webpack --profile --progress --display-modules --display-exclude --display-chunks --display-cached --display-cached-assets",
     "dev": "webpack-dev-server --host 0.0.0.0 --profile --progress",
-    "test": "export NODE_ENV=test && karma start",
+    "test": "export NODE_ENV=test && karma start; grunt eslint",
     "test-live": "export NODE_ENV=test && export LIVE=true && karma start"
   },
   "dependencies": {
