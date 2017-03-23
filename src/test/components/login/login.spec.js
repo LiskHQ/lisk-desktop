@@ -86,6 +86,7 @@ describe('Login controller', () => {
       expect(controller.generatingNewPassphrase).to.equal(false);
     });
 
+    it('unbinds mousemove listener', () => {
       const unbindSpy = sinon.spy(controller.$document, 'unbind');
       controller.stopNewPassphraseGeneration();
       expect(unbindSpy).to.have.been.calledWith('mousemove', controller.listener);

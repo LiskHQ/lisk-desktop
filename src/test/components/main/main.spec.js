@@ -10,6 +10,7 @@ describe('main component controller', function() {
       $rootScope,
       $scope,
       $q,
+      $componentController,
       controller;
 
   beforeEach(inject(function(_$componentController_, _$rootScope_, _$q_){
