@@ -1,4 +1,3 @@
-
 import lisk from 'lisk-js';
 
 const API_PEERS = '/api/peers';

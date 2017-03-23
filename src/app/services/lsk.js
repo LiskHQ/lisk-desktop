@@ -1,4 +1,3 @@
-
 import numeral from 'numeral';
 
 app.factory('lsk', () => ({

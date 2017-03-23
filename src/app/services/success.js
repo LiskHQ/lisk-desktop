@@ -1,4 +1,3 @@
-
 app.factory('success', ($mdDialog, $mdToast) => ({
   toast({ text }) {
     $mdToast.show(
