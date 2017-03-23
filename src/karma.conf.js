@@ -38,7 +38,7 @@ module.exports = function (config) {
     },
 
 		// list of files to exclude
-		exclude: [],
+    exclude: [],
 
     // Rest results reporter to use
     // Possible values: 'dots', 'progress'

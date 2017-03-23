@@ -77,7 +77,6 @@ app.component('login', {
 
         if (distance > 60 || ev.isTrigger) {
           for (let p = 0; p < steps; p++) {
-
             if (count >= total) {
               this.stopNewPassphraseGeneration();
               this.setNewPassphrase(this.seed);

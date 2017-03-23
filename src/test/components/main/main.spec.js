@@ -1,38 +1,38 @@
-var sinon = require('sinon');
-var sinonChai = require("sinon-chai");
-var expect = chai.expect;
+const sinon = require('sinon');
+const sinonChai = require('sinon-chai');
+const expect = chai.expect;
 chai.use(sinonChai);
 
-describe('main component controller', function() {
-  beforeEach(angular.mock.module("app"));
+describe('main component controller', () => {
+  beforeEach(angular.mock.module('app'));
 
-  var $controller,
-      $rootScope,
-      $scope,
-      $q,
-      $componentController,
-      controller;
+  let $controller,
+    $rootScope,
+    $scope,
+    $q,
+    $componentController,
+    controller;
 
-  beforeEach(inject(function(_$componentController_, _$rootScope_, _$q_){
+  beforeEach(inject((_$componentController_, _$rootScope_, _$q_) => {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
     $q = _$q_;
   }));
 
-  beforeEach(function() {
+  beforeEach(() => {
     $scope = $rootScope.$new();
     controller = $componentController('main', $scope, {
       passphrase: '',
     });
   });
 
-  describe('controller()', function() {
-    it.skip('sets $watch on $ctrl.$peers.active to broadcast it changed', function() {
-      //skipped as it doesn't work
+  describe('controller()', () => {
+    it.skip('sets $watch on $ctrl.$peers.active to broadcast it changed', () => {
+      // skipped as it doesn't work
       $scope.$apply();
-      var mock = sinon.mock(controller.$rootScope);
-      mock.expects("$broadcast").withArgs('peerUpdate').returns();
-      controller.$peers.active = {name : 'CHANGED'};
+      const mock = sinon.mock(controller.$rootScope);
+      mock.expects('$broadcast').withArgs('peerUpdate').returns();
+      controller.$peers.active = { name: 'CHANGED' };
       $scope.$apply();
       controller.$peers.active.name = 'CHANGED AGAIN';
       $scope.$apply();
@@ -41,42 +41,42 @@ describe('main component controller', function() {
     });
   });
 
-  describe('reset()', function() {
-    it('cancels $timeout', function() {
-      var spy = sinon.spy(controller.$timeout, 'cancel');
+  describe('reset()', () => {
+    it('cancels $timeout', () => {
+      const spy = sinon.spy(controller.$timeout, 'cancel');
       controller.reset();
       expect(spy).to.have.been.calledWith(controller.timeout);
     });
   });
-  
-  describe('login()', function() {
-    var deffered,
-        updateMock,
-        peersMock;
+
+  describe('login()', () => {
+    let deffered,
+      updateMock,
+      peersMock;
 
 
-    beforeEach(function() {
+    beforeEach(() => {
       deffered = $q.defer();
       updateMock = sinon.mock(controller);
-      updateMock.expects("update").withArgs().returns(deffered.promise);
+      updateMock.expects('update').withArgs().returns(deffered.promise);
 
       peersMock = sinon.mock(controller.$peers);
-      peersMock.expects("setActive").withArgs();
+      peersMock.expects('setActive').withArgs();
     });
 
-    afterEach(function() {
+    afterEach(() => {
       updateMock.verify();
       updateMock.restore();
     });
 
-    it('sets active peer', function() {
+    it('sets active peer', () => {
       controller.login();
 
       deffered.resolve();
       $scope.$apply();
     });
 
-    it('calls this.update() and then sets this.logged = true', function() {
+    it('calls this.update() and then sets this.logged = true', () => {
       controller.login();
       deffered.resolve();
       $scope.$apply();
@@ -84,8 +84,8 @@ describe('main component controller', function() {
       expect(controller.logged).to.equal(true);
     });
 
-    it('calls this.update() and if that fails and attempts < 10, then sets a timeout to try again', function() {
-      var spy = sinon.spy(controller, '$timeout');
+    it('calls this.update() and if that fails and attempts < 10, then sets a timeout to try again', () => {
+      const spy = sinon.spy(controller, '$timeout');
 
       controller.login();
       deffered.reject();
@@ -94,66 +94,66 @@ describe('main component controller', function() {
       expect(spy).to.have.been.calledWith();
     });
 
-    it('calls this.update() and if that fails and attempts >= 10, then show error dialog', function() {
-      var spy = sinon.spy(controller.error, 'dialog');
+    it('calls this.update() and if that fails and attempts >= 10, then show error dialog', () => {
+      const spy = sinon.spy(controller.error, 'dialog');
 
       controller.login(10);
       deffered.reject();
       $scope.$apply();
 
-      expect(spy).to.have.been.calledWith({text: 'No peer connection'});
+      expect(spy).to.have.been.calledWith({ text: 'No peer connection' });
     });
   });
-  
-  describe('logout()', function() {
-    it('resets main component', function() {
-      var spy = sinon.spy(controller, 'reset');
+
+  describe('logout()', () => {
+    it('resets main component', () => {
+      const spy = sinon.spy(controller, 'reset');
       controller.logout();
       expect(spy).to.have.been.calledWith();
     });
 
-    it('resets peers', function() {
-      var spy = sinon.spy(controller.$peers, 'reset');
+    it('resets peers', () => {
+      const spy = sinon.spy(controller.$peers, 'reset');
       controller.logout();
       expect(spy).to.have.been.calledWith(true);
     });
 
-    it('sets this.logged = false', function() {
+    it('sets this.logged = false', () => {
       controller.logout();
       expect(controller.logged).to.equal(false);
     });
 
-    it('sets this.prelogged = false', function() {
+    it('sets this.prelogged = false', () => {
       controller.logout();
       expect(controller.prelogged).to.equal(false);
     });
 
-    it('sets this.account = {}', function() {
+    it('sets this.account = {}', () => {
       controller.logout();
       expect(controller.account).to.deep.equal({});
     });
 
-    it('sets this.passphrase = \'\'', function() {
+    it('sets this.passphrase = \'\'', () => {
       controller.logout();
       expect(controller.passphrase).to.equal('');
     });
   });
-  
-  describe('update()', function() {
-    var deffered,
-        account;
-    beforeEach(function() {
+
+  describe('update()', () => {
+    let deffered,
+      account;
+    beforeEach(() => {
       deffered = $q.defer();
       account = {
-        address: "16313739661670634666L",
-        balance: "0"
+        address: '16313739661670634666L',
+        balance: '0',
       };
       controller.$peers.active = {
-        getAccount: function(){
+        getAccount() {
           return deffered.promise;
         },
-        status: function(){
-          var deffered = $q.defer();
+        status() {
+          const deffered = $q.defer();
           return deffered.promise;
         },
       };
@@ -161,7 +161,7 @@ describe('main component controller', function() {
       controller.account = {};
     });
 
-    it('calls this.$peers.active.getAccount(this.address) and then sets result to this.account', function() {
+    it('calls this.$peers.active.getAccount(this.address) and then sets result to this.account', () => {
       expect(controller.account).not.to.equal(account);
       controller.update();
       deffered.resolve(account);
@@ -169,8 +169,8 @@ describe('main component controller', function() {
       expect(controller.account).to.equal(account);
     });
 
-    it('calls this.$peers.active.getAccount(this.address) and if it fails, then resets this.account.balance and reject the promise that update() returns', function() {
-      var spy = sinon.spy(controller.$q, 'reject');
+    it('calls this.$peers.active.getAccount(this.address) and if it fails, then resets this.account.balance and reject the promise that update() returns', () => {
+      const spy = sinon.spy(controller.$q, 'reject');
       controller.update();
       deffered.reject();
       $scope.$apply();
