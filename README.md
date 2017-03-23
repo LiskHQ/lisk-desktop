@@ -10,6 +10,7 @@ git clone https://github.com/LiskHQ/lisk-nano.git
 cd lisk-nano
 npm install
 cd src
+npm install
 npm run dev
 ```
 
