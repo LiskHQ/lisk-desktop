@@ -10,7 +10,7 @@ const app = path.join(__dirname, 'app', 'lisk-nano.js');
 const testLibs = path.join(__dirname, 'test', 'libs.js');
 const test = path.join(__dirname, 'test', 'test.js');
 preprocessors[libs] = ['webpack'];
-preprocessors[app] = ['coverage', 'webpack'];
+preprocessors[app] = ['webpack'];
 preprocessors[testLibs] = ['webpack'];
 preprocessors[test] = ['webpack'];
 
