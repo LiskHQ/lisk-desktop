@@ -1,4 +1,3 @@
-
 import './libs';
 import './lisk-nano';
 

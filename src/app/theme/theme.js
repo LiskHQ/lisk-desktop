@@ -1,4 +1,3 @@
-
 // https://angular-md-color.com
 
 app.config(($mdThemingProvider) => {

@@ -1,80 +1,80 @@
+const electron = require('electron'); // eslint-disable-line import/no-extraneous-dependencies
 
-const electron = require('electron');
-const {app} = electron;
-const {BrowserWindow} = electron;
-const {Menu} = electron;
+const { app } = electron;
+const { BrowserWindow } = electron;
+const { Menu } = electron;
 
-let win
+let win;
 
-function createWindow () {
-  let { width, height } = electron.screen.getPrimaryDisplay().workAreaSize
+function createWindow() {
+  const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;
   win = new BrowserWindow({
     width: width - 250,
     height: height - 150,
     center: true,
-  })
+  });
 
-  let template = [
+  const template = [
     {
       label: 'Edit',
       submenu: [
         {
-          role: 'undo'
+          role: 'undo',
         },
         {
-          role: 'redo'
+          role: 'redo',
         },
         {
-          type: 'separator'
+          type: 'separator',
         },
         {
-          role: 'cut'
+          role: 'cut',
         },
         {
-          role: 'copy'
+          role: 'copy',
         },
         {
-          role: 'paste'
+          role: 'paste',
         },
         {
-          role: 'selectall'
-        }
-      ]
-    }
-  ]
+          role: 'selectall',
+        },
+      ],
+    },
+  ];
 
   if (process.platform === 'darwin') {
-    let name = app.getName()
+    const name = app.getName();
 
     template.unshift({
       label: name,
       submenu: [
         {
           role: 'quit',
-          label: 'Quit'
-        }
-      ]
-    })
+          label: 'Quit',
+        },
+      ],
+    });
   }
 
-  let menu = Menu.buildFromTemplate(template)
-  Menu.setApplicationMenu(menu)
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
 
-  win.loadURL(`file://${__dirname}/index.html`)
+  win.loadURL(`file://${__dirname}/index.html`);
 
-  win.on('closed', () => win = null)
+  win.on('closed', () => win = null);
 }
 
-app.on('ready', createWindow)
+app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    app.quit()
+    app.quit();
   }
-})
+});
 
 app.on('activate', () => {
   if (win === null) {
-    createWindow()
+    createWindow();
   }
-})
+});

@@ -1,4 +1,3 @@
-
 import './transactions.less';
 
 const UPDATE_INTERVAL = 20000;

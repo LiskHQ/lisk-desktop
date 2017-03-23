@@ -1,0 +1,14 @@
+{
+  "extends": "airbnb-base",
+  "plugins": [
+    "import"
+  ],
+  "env": {
+    "mocha": true,
+    "protractor": true
+  },
+  "rules": {
+    "new-cap": ["error", { "newIsCapExceptions": ["mnemonic"]}],
+    "no-underscore-dangle": "off"
+  }
+}

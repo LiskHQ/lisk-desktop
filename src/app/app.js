@@ -1,4 +1,3 @@
-
 export default angular.module('app', [
   'ngMessages',
   'ngMaterial',

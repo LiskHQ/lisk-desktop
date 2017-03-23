@@ -1,4 +1,3 @@
-
 import './lsk.less';
 
 app.component('lsk', {

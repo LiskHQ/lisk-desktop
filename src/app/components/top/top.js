@@ -1,4 +1,3 @@
-
 import './top.less';
 
 app.component('top', {

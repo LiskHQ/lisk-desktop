@@ -1,108 +1,111 @@
-var path = require('path');
-var webpackConfig = require('./webpack.config.babel');
-// var entry = path.resolve(webpackConfig.entry.app, '..', '..', 'app', 'app.js'); //accessing [0] because there are mutli entry points for webpack hot loader
-var preprocessors = {};
-//preprocessors[entry] = ['webpack'];
+const path = require('path');
+const webpackConfig = require('./webpack.config.babel');
+// Accessing [0] because there are mutli entry points for webpack hot loader
+// var entry = path.resolve(webpackConfig.entry.app, '..', '..', 'app', 'app.js');
+const preprocessors = {};
+// preprocessors[entry] = ['webpack'];
 preprocessors['**/*.html'] = ['ng-html2js'];
-var libs = path.join(__dirname, 'app', 'libs.js');
-var app = path.join(__dirname, 'app', 'lisk-nano.js');
-var testLibs = path.join(__dirname, 'test', 'libs.js');
-var test = path.join(__dirname, 'test', 'test.js');
+const libs = path.join(__dirname, 'app', 'libs.js');
+const app = path.join(__dirname, 'app', 'lisk-nano.js');
+const testLibs = path.join(__dirname, 'test', 'libs.js');
+const test = path.join(__dirname, 'test', 'test.js');
 preprocessors[libs] = ['webpack'];
-preprocessors[app] = ['coverage', 'webpack'];
+preprocessors[app] = ['webpack'];
 preprocessors[testLibs] = ['webpack'];
 preprocessors[test] = ['webpack'];
 
-var opts = {
+const opts = {
   onTravis: process.env.ON_TRAVIS,
   live: process.env.LIVE,
 };
 
-module.exports = function(config) {
-	config.set({
+module.exports = function (config) {
+  config.set({
 
-		// base path that will be used to resolve all patterns (eg. files, exclude)
-		basePath: '',
+    // Base path that will be used to resolve all patterns (eg. files, exclude)
+    basePath: '',
 
-		// frameworks to use
-		// available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-		frameworks: ['mocha', 'chai'],
+    // Frameworks to use
+    // Available frameworks: https://npmjs.org/browse/keyword/karma-adapter
+    frameworks: ['mocha', 'chai'],
 
-		// list of files / patterns to load in the browser
-		files: [libs, app, testLibs, test],
-		webpack: webpackConfig,
+    // List of files / patterns to load in the browser
+    files: [libs, app, testLibs, test],
+    webpack: webpackConfig,
 
-		// list of files to exclude
-		exclude: [],
+    // List of files to exclude
+    exclude: [],
 
-		// test results reporter to use
-		// possible values: 'dots', 'progress'
-		// available reporters: https://npmjs.org/browse/keyword/karma-reporter
-		reporters: ['coverage', 'mocha'].concat(opts.onTravis ? ['coveralls'] : []),
+    // Rest results reporter to use
+    // Possible values: 'dots', 'progress'
+    // Available reporters: https://npmjs.org/browse/keyword/karma-reporter
+    reporters: ['coverage', 'mocha'].concat(opts.onTravis ? ['coveralls'] : []),
 
-		preprocessors: preprocessors,
+    preprocessors,
 
-		babelPreprocessor: {
-			options: {
-				presets: ['es2015']
-			}
-		},
+    babelPreprocessor: {
+      options: {
+        presets: ['es2015'],
+      },
+    },
 
-		// web server port
-		port: 9876,
+    // Web server port
+    port: 9876,
 
-		// enable / disable colors in the output (reporters and logs)
-		colors: true,
+    // Enable / disable colors in the output (reporters and logs)
+    colors: true,
 
-		// level of logging
-		// possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-		logLevel: config.LOG_INFO,
+    // Level of logging
+    //
+    // Possible values:
+    //   config.LOG_DISABLE
+    //   config.LOG_ERROR
+    //   config.LOG_WARN
+    //   config.LOG_INFO
+    //   config.LOG_DEBUG
+    logLevel: config.LOG_INFO,
 
+    // Enable / disable watching file and executing tests whenever any file changes
+    autoWatch: opts.live,
 
-		// enable / disable watching file and executing tests whenever any file changes
-		autoWatch: opts.live,
+    ngHtml2JsPreprocessor: {
+      stripPrefix: 'app/components/',
+      moduleName: 'my.templates',
+    },
 
-		ngHtml2JsPreprocessor: {
-			stripPrefix: 'app/components/',
-			moduleName: 'my.templates'
-		},
-
-
-		coverageReporter: {
+    coverageReporter: {
       reporters: [{
-        type : 'text',
-        dir : 'coverage/',
+        type: 'text',
+        dir: 'coverage/',
       }, {
-        type : opts.onTravis ? 'lcov' : 'html',
-        dir : 'coverage/',
+        type: opts.onTravis ? 'lcov' : 'html',
+        dir: 'coverage/',
       }],
     },
 
+    // Start these browsers
+    // Available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
+    browsers: ['PhantomJS'],
 
-		// start these browsers
-		// available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-		browsers: ['PhantomJS'],
+    // Continuous Integration mode
+    // If true, Karma captures browsers, runs the tests and exits
+    singleRun: !opts.live,
+    client: {
+      mocha: {
+        opts: 'test/mocha.opts', // You can set opts to equal true then plugin will load opts from default location 'test/mocha.opts'
+      },
+    },
 
-		// Continuous Integration mode
-		// if true, Karma captures browsers, runs the tests and exits
-		singleRun: !opts.live,
-		client: {
-			mocha: {
-				opts: 'test/mocha.opts' // You can set opts to equal true then plugin will load opts from default location 'test/mocha.opts'
-			},
-		},
-
-
-		plugins: [
-			require('karma-webpack'),
-			'karma-chai',
-			'karma-mocha',
-			'karma-chrome-launcher',
-			'karma-ng-html2js-preprocessor',
-			'karma-mocha-reporter',
-			'karma-coverage',
-			'karma-coveralls',
-			'karma-phantomjs-launcher'
-		]
-	});
-}
+    plugins: [
+      require('karma-webpack'), // eslint-disable-line import/no-extraneous-dependencies
+      'karma-chai',
+      'karma-mocha',
+      'karma-chrome-launcher',
+      'karma-ng-html2js-preprocessor',
+      'karma-mocha-reporter',
+      'karma-coverage',
+      'karma-coveralls',
+      'karma-phantomjs-launcher',
+    ],
+  });
+};

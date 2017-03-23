@@ -1,4 +1,3 @@
-
 import './send.less';
 
 const ADDRESS_VALID_RE = '^[0-9]{1,21}[L|l]$';
