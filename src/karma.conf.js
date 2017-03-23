@@ -90,7 +90,7 @@ module.exports = function (config) {
     },
 
     plugins: [
-      require('karma-webpack'),
+      require('karma-webpack'), // eslint-disable-line import/no-extraneous-dependencies
       'karma-chai',
       'karma-mocha',
       'karma-chrome-launcher',

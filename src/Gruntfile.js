@@ -1,5 +1,5 @@
 module.exports = function (grunt) {
-  require('jit-grunt')(grunt);
+  require('jit-grunt')(grunt); // eslint-disable-line import/no-extraneous-dependencies
 
   grunt.initConfig({
     eslint: {
