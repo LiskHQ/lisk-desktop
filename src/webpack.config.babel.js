@@ -12,6 +12,8 @@ const nodeEnvironment = process.env.NODE_ENV;
 const PATHS = {
   app: path.join(__dirname, 'app'),
   build: path.resolve(__dirname, '..', 'app'),
+  spec: path.join(__dirname, 'spec'),
+  test: path.join(__dirname, 'test'),
 };
 
 const common = {
@@ -81,7 +83,7 @@ const babel = () => ({
       {
         test: /\.js$/,
         loader: 'babel',
-        include: PATHS.app,
+        include: [PATHS.app, PATHS.spec, PATHS.test],
       },
     ],
   },
