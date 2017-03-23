@@ -66,7 +66,7 @@ describe('send component controller', () => {
 
     it('calls this.$peers.active.sendTransaction() and success.dialog on success', () => {
       controller.$peers = { active: { sendTransaction() {} } };
-      mock = sinon.mock(controller.$peers.active);
+      const mock = sinon.mock(controller.$peers.active);
       const deffered = $q.defer();
       mock.expects('sendTransaction').returns(deffered.promise);
       controller.go();
@@ -81,7 +81,7 @@ describe('send component controller', () => {
 
     it('calls this.$peers.active.sendTransaction() and error.dialog on error', () => {
       controller.$peers = { active: { sendTransaction() {} } };
-      mock = sinon.mock(controller.$peers.active);
+      const mock = sinon.mock(controller.$peers.active);
       const deffered = $q.defer();
       mock.expects('sendTransaction').returns(deffered.promise);
       controller.go();
