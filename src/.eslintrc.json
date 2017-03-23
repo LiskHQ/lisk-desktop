@@ -18,6 +18,7 @@
     "no-return-assign": "off",
     "no-plusplus": "off",
     "no-loop-func": "off",
-    "func-names": "off"
+    "func-names": "off",
+    "no-underscore-dangle": "off"
   }
 }
