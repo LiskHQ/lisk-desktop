@@ -53,16 +53,7 @@ app.component('transactions', {
       }
 
       return this.$peers.active.getTransactions(this.account.address, limit)
-        .then((res) => {
-          this.transactions = res.transactions;
-          this.total = res.count;
-
-          if (this.total > this.transactions.length) {
-            this.more = this.total - this.transactions.length;
-          } else {
-            this.more = 0;
-          }
-        })
+        .then(this._processTransactionsResponse)
         .catch(() => {
           this.transactions = [];
           this.more = 0;
@@ -77,6 +68,17 @@ app.component('transactions', {
 
           this.timeout = this.$timeout(this.update.bind(this), UPDATE_INTERVAL);
         });
+    }
+
+    _processTransactionsResponse(response) {
+      this.transactions = response.transactions;
+      this.total = response.count;
+
+      if (this.total > this.transactions.length) {
+        this.more = this.total - this.transactions.length;
+      } else {
+        this.more = 0;
+      }
     }
   },
 });

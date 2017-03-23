@@ -6,9 +6,11 @@ var preprocessors = {};
 preprocessors['**/*.html'] = ['ng-html2js'];
 var libs = path.join(__dirname, 'app', 'libs.js');
 var app = path.join(__dirname, 'app', 'lisk-nano.js');
+var testLibs = path.join(__dirname, 'test', 'libs.js');
 var test = path.join(__dirname, 'test', 'test.js');
 preprocessors[libs] = ['webpack'];
-preprocessors[app] = ['webpack', 'coverage'];
+preprocessors[app] = ['coverage', 'webpack'];
+preprocessors[testLibs] = ['webpack'];
 preprocessors[test] = ['webpack'];
 
 var opts = {
@@ -27,7 +29,7 @@ module.exports = function(config) {
 		frameworks: ['mocha', 'chai'],
 
 		// list of files / patterns to load in the browser
-		files: [libs, app, test],
+		files: [libs, app, testLibs, test],
 		webpack: webpackConfig,
 
 		// list of files to exclude
@@ -36,7 +38,7 @@ module.exports = function(config) {
 		// test results reporter to use
 		// possible values: 'dots', 'progress'
 		// available reporters: https://npmjs.org/browse/keyword/karma-reporter
-		reporters: ['progress', 'mocha', 'coverage'].concat(opts.onTravis ? ['coveralls'] : []),
+		reporters: ['progress', 'coverage', 'mocha'].concat(opts.onTravis ? ['coveralls'] : []),
 
 		preprocessors: preprocessors,
 
