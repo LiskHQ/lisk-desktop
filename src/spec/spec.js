@@ -16,28 +16,58 @@ const emptyAccount = {
 const EC = protractor.ExpectedConditions;
 const waitTime = 5000;
 
-describe('Lisk Nano functionality', () => {
-  it('should allow to login', testLogin);
-  it('should allow to logout', testLogout);
-  it('should show address', testAddress);
-  it('should show peer', testPeer);
-  it('should allow to change peer', testChangePeer);
-  it('should show balance', testShowBalance);
-  it('should allow to send transaction when enough funds and correct address form', testSend);
-  it('should not allow to send transaction when not enough funds', testSendWithNotEnoughFunds);
-  it('should not allow to send transaction when invalid address', testSendWithInvalidAddress);
-  it('should show transactions', testShowTransactions);
-  it('should allow to load more transactions', testLoadMoreTransactions);
-  it('should allow to create a new account', testNewAccount);
-});
+function waitForElemAndCheckItsText(selector, text) {
+  const elem = element(by.css(selector));
+  browser.wait(EC.presenceOf(elem), waitTime);
+  expect(elem.getText()).toEqual(text);
+}
 
-function testLogin() {
-  login(masterAccount);
-  checkIsLoggedIn();
+function checkErrorMessage(message) {
+  waitForElemAndCheckItsText('send .md-input-message-animation', message);
+}
+
+function launchApp() {
+  browser.ignoreSynchronization = true;
+  browser.get('http://localhost:8080#?peerStack=localhost');
+}
+
+function login(account) {
+  launchApp();
+  element(by.css('input[type="password"]')).sendKeys(account.passphrase);
+  element(by.css('.md-button.md-primary.md-raised')).click();
+}
+
+function logout() {
+  const logoutButton = element(by.css('.logout'));
+  browser.wait(EC.presenceOf(logoutButton), waitTime);
+  logoutButton.click();
+}
+
+function send(fromAccount, toAddress, amount) {
+  login(fromAccount);
+  const sendElem = element(by.css('send'));
+  browser.wait(EC.presenceOf(sendElem), waitTime);
+  element(by.css('send input[name="recipient"]')).sendKeys(toAddress);
+  element(by.css('send input[name="amount"]')).sendKeys(`${amount}`);
+  const sendButton = element(by.css('send button.md-primary'));
+  browser.wait(EC.presenceOf(sendButton), waitTime);
+  sendButton.click();
+}
+
+function checkSendConfirmation() {
+  waitForElemAndCheckItsText('md-dialog h2', 'Success');
+  const okButton = element(by.css('md-dialog .md-button.md-ink-ripple'));
+  okButton.click();
+  browser.sleep(500);
 }
 
 function checkIsLoggedIn() {
   waitForElemAndCheckItsText('.logout', 'LOGOUT');
+}
+
+function testLogin() {
+  login(masterAccount);
+  checkIsLoggedIn();
 }
 
 function testLogout() {
@@ -149,47 +179,17 @@ function testLoadMoreTransactions() {
   expect(element.all(by.css('transactions table tbody tr')).count()).toEqual(20);
 }
 
-function checkErrorMessage(message) {
-  waitForElemAndCheckItsText('send .md-input-message-animation', message);
-}
-
-function waitForElemAndCheckItsText(selector, text) {
-  const elem = element(by.css(selector));
-  browser.wait(EC.presenceOf(elem), waitTime);
-  expect(elem.getText()).toEqual(text);
-}
-
-function send(fromAccount, toAddress, amount) {
-  login(fromAccount);
-  const sendElem = element(by.css('send'));
-  browser.wait(EC.presenceOf(sendElem), waitTime);
-  element(by.css('send input[name="recipient"]')).sendKeys(toAddress);
-  element(by.css('send input[name="amount"]')).sendKeys(`${amount}`);
-  const sendButton = element(by.css('send button.md-primary'));
-  browser.wait(EC.presenceOf(sendButton), waitTime);
-  sendButton.click();
-}
-
-function checkSendConfirmation() {
-  waitForElemAndCheckItsText('md-dialog h2', 'Success');
-  const okButton = element(by.css('md-dialog .md-button.md-ink-ripple'));
-  okButton.click();
-  browser.sleep(500);
-}
-
-function launchApp() {
-  browser.ignoreSynchronization = true;
-  browser.get('http://localhost:8080#?peerStack=localhost');
-}
-
-function logout() {
-  const logoutButton = element(by.css('.logout'));
-  browser.wait(EC.presenceOf(logoutButton), waitTime);
-  logoutButton.click();
-}
-
-function login(account) {
-  launchApp();
-  element(by.css('input[type="password"]')).sendKeys(account.passphrase);
-  element(by.css('.md-button.md-primary.md-raised')).click();
-}
+describe('Lisk Nano functionality', () => {
+  it('should allow to login', testLogin);
+  it('should allow to logout', testLogout);
+  it('should show address', testAddress);
+  it('should show peer', testPeer);
+  it('should allow to change peer', testChangePeer);
+  it('should show balance', testShowBalance);
+  it('should allow to send transaction when enough funds and correct address form', testSend);
+  it('should not allow to send transaction when not enough funds', testSendWithNotEnoughFunds);
+  it('should not allow to send transaction when invalid address', testSendWithInvalidAddress);
+  it('should show transactions', testShowTransactions);
+  it('should allow to load more transactions', testLoadMoreTransactions);
+  it('should allow to create a new account', testNewAccount);
+});
