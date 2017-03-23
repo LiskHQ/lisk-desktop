@@ -168,40 +168,10 @@ let config;
 
 switch (process.env.npm_lifecycle_event) {
   case 'build':
-    config = merge(
-      common,
-
-      clean(path.join(PATHS.build, '*')),
-      minify(),
-
-      html(),
-      provide(),
-      babel(),
-      pug(),
-      less(),
-      css(),
-      json(),
-      png(),
-      fonts(),
-    );
+    config = merge(common, clean(path.join(PATHS.build, '*')), minify(), html(), provide(), babel(), pug(), less(), css(), json(), png(), fonts());
     break;
   default:
-    config = merge(
-      common,
-
-      devServer(),
-      { devtool: 'eval-source-map' },
-
-      html(),
-      provide(),
-      babel(),
-      pug(),
-      less(),
-      css(),
-      json(),
-      png(),
-      fonts(),
-    );
+    config = merge(common, devServer(), { devtool: 'eval-source-map' }, html(), provide(), babel(), pug(), less(), css(), json(), png(), fonts());
     break;
 }
 
