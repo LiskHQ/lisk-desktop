@@ -1,6 +1,7 @@
 const path = require('path');
 const webpackConfig = require('./webpack.config.babel');
-// var entry = path.resolve(webpackConfig.entry.app, '..', '..', 'app', 'app.js'); // Accessing [0] because there are mutli entry points for webpack hot loader
+// Accessing [0] because there are mutli entry points for webpack hot loader
+// var entry = path.resolve(webpackConfig.entry.app, '..', '..', 'app', 'app.js');
 const preprocessors = {};
 // preprocessors[entry] = ['webpack'];
 preprocessors['**/*.html'] = ['ng-html2js'];
@@ -55,7 +56,13 @@ module.exports = function (config) {
     colors: true,
 
     // Level of logging
-    // Possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
+    //
+    // Possible values:
+    //   config.LOG_DISABLE
+    //   config.LOG_ERROR
+    //   config.LOG_WARN
+    //   config.LOG_INFO
+    //   config.LOG_DEBUG
     logLevel: config.LOG_INFO,
 
     // Enable / disable watching file and executing tests whenever any file changes
