@@ -45,8 +45,8 @@ describe('transactions component controller', () => {
   });
 
   describe('update(show, more)', () => {
-    let activePeerMock,
-        mock;
+    let activePeerMock;
+    let mock;
 
     beforeEach(() => {
       controller.$peers = { active: { getTransactions() {} } };
