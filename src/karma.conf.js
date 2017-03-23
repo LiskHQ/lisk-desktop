@@ -33,8 +33,12 @@ module.exports = function (config) {
     files: [libs, app, testLibs, test],
     webpack: webpackConfig,
 
-    // List of files to exclude
-    exclude: [],
+    webpackMiddleware: {
+      noInfo: true,
+    },
+
+		// list of files to exclude
+		exclude: [],
 
     // Rest results reporter to use
     // Possible values: 'dots', 'progress'
