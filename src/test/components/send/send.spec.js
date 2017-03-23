@@ -8,7 +8,6 @@ chai.use(sinonChai);
 describe('send component controller', () => {
   beforeEach(angular.mock.module('app'));
 
-  let $controller;
   let $rootScope;
   let $scope;
   let $q;
@@ -53,7 +52,7 @@ describe('send component controller', () => {
     it('creates promise with a modal dialog if this.account.secondSignature', () => {
       controller.account.secondSignature = 'TEST';
       const spy = sinon.spy(controller.$mdDialog, 'show');
-      const promise = controller.promptSecondPassphrase();
+      controller.promptSecondPassphrase();
       expect(spy).to.have.been.calledWith();
     });
   });

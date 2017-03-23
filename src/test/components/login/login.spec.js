@@ -9,18 +9,16 @@ describe('Login component', () => {
   let $compile;
   let $rootScope;
   let element;
-  let cookies;
 
   // Load the myApp module, which contains the directive
   beforeEach(angular.mock.module('app'));
 
   // Store references to $rootScope and $compile
   // so they are available to all tests in this describe block
-  beforeEach(inject((_$compile_, _$rootScope_, _$cookies_) => {
+  beforeEach(inject((_$compile_, _$rootScope_) => {
     // The injector unwraps the underscores (_) from around the parameter names when matching
     $compile = _$compile_;
     $rootScope = _$rootScope_;
-    $cookies = _$cookies_;
   }));
 
   beforeEach(() => {
@@ -52,7 +50,6 @@ describe('Login component', () => {
 describe('Login controller', () => {
   beforeEach(angular.mock.module('app'));
 
-  let $controller;
   let $rootScope;
   let $scope;
   let controller;

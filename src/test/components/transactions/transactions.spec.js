@@ -8,7 +8,6 @@ chai.use(sinonChai);
 describe('transactions component controller', () => {
   beforeEach(angular.mock.module('app'));
 
-  let $controller;
   let $rootScope;
   let $scope;
   let $q;
@@ -47,7 +46,6 @@ describe('transactions component controller', () => {
   });
 
   describe('update(show, more)', () => {
-    let activePeerMock;
     let mock;
 
     beforeEach(() => {
