@@ -32,9 +32,9 @@ const common = {
   },
 };
 
-const clean = pluginPath => ({
+const clean = pathToClean => ({
   plugins: [
-    new CleanWebpackPlugin([pluginPath], {
+    new CleanWebpackPlugin([pathToClean], {
       root: process.cwd(),
     }),
   ],
