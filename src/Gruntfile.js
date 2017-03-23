@@ -11,7 +11,7 @@ module.exports = function (grunt) {
         format: 'codeframe',
         fix: false
       },
-      target: ['app'],
+      target: ['app/**/*.js', 'spec/**/*.js', 'test/**/*.js', '*.js'],
     }
   });
 
