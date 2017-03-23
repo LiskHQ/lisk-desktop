@@ -55,7 +55,7 @@ const html = () => ({
 
 const minify = () => ({
   plugins: [
-    new ngAnnotatePlugin(),
+    new ngAnnotatePlugin(), // eslint-disable-line new-cap
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false,
