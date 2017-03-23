@@ -6,11 +6,11 @@ chai.use(sinonChai);
 describe('send component controller', () => {
   beforeEach(angular.mock.module('app'));
 
-  let $controller,
-      $rootScope,
-      $scope,
-      $q,
-      controller;
+  let $controller;
+  let $rootScope;
+  let $scope;
+  let $q;
+  let controller;
 
   beforeEach(inject((_$componentController_, _$rootScope_, _$q_) => {
     $componentController = _$componentController_;

@@ -1,6 +1,6 @@
 describe('Top component', () => {
-  let $compile,
-      $rootScope;
+  let $compile;
+  let $rootScope;
 
   // Load the myApp module, which contains the directive
   beforeEach(angular.mock.module('app'));

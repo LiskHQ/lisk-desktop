@@ -4,10 +4,10 @@ const expect = chai.expect;
 chai.use(sinonChai);
 
 describe('Login component', () => {
-  let $compile,
-      $rootScope,
-      element,
-      cookies;
+  let $compile;
+  let $rootScope;
+  let element;
+  let cookies;
 
   // Load the myApp module, which contains the directive
   beforeEach(angular.mock.module('app'));
@@ -50,10 +50,10 @@ describe('Login component', () => {
 describe('Login controller', () => {
   beforeEach(angular.mock.module('app'));
 
-  let $controller,
-      $rootScope,
-      $scope,
-      controller;
+  let $controller;
+  let $rootScope;
+  let $scope;
+  let controller;
 
   beforeEach(inject((_$componentController_, _$rootScope_) => {
     $componentController = _$componentController_;
