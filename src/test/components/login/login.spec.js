@@ -69,7 +69,7 @@ describe('Login controller', () => {
 
   describe('$scope.reset()', () => {
     it('makes input_passphrase empty', () => {
-      passphrase = 'TEST';
+      const passphrase = 'TEST';
       controller.input_passphrase = passphrase;
       expect(controller.input_passphrase).to.equal(passphrase);
       controller.reset();
