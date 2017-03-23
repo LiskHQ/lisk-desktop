@@ -83,7 +83,7 @@ describe('transactions component controller', () => {
       controller.update();
       transactionsDeferred.reject();
 
-      // mock because $scope.apply() will call update() again.
+      // Mock because $scope.apply() will call update() again
       mock.expects('getTransactions').withArgs(controller.account.address, 10).returns(transactionsDeferred.promise);
       $scope.$apply();
       mock.verify();

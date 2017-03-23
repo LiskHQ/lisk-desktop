@@ -1,6 +1,6 @@
 const path = require('path');
 const webpackConfig = require('./webpack.config.babel');
-// var entry = path.resolve(webpackConfig.entry.app, '..', '..', 'app', 'app.js'); //accessing [0] because there are mutli entry points for webpack hot loader
+// var entry = path.resolve(webpackConfig.entry.app, '..', '..', 'app', 'app.js'); // Accessing [0] because there are mutli entry points for webpack hot loader
 const preprocessors = {};
 // preprocessors[entry] = ['webpack'];
 preprocessors['**/*.html'] = ['ng-html2js'];
@@ -21,23 +21,23 @@ const opts = {
 module.exports = function (config) {
   config.set({
 
-    // base path that will be used to resolve all patterns (eg. files, exclude)
+    // Base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
 
-    // frameworks to use
-    // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
+    // Frameworks to use
+    // Available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['mocha', 'chai'],
 
-    // list of files / patterns to load in the browser
+    // List of files / patterns to load in the browser
     files: [libs, app, testLibs, test],
     webpack: webpackConfig,
 
-    // list of files to exclude
+    // List of files to exclude
     exclude: [],
 
-    // test results reporter to use
-    // possible values: 'dots', 'progress'
-    // available reporters: https://npmjs.org/browse/keyword/karma-reporter
+    // Rest results reporter to use
+    // Possible values: 'dots', 'progress'
+    // Available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: ['coverage', 'mocha'].concat(opts.onTravis ? ['coveralls'] : []),
 
     preprocessors,
@@ -48,18 +48,18 @@ module.exports = function (config) {
       },
     },
 
-    // web server port
+    // Web server port
     port: 9876,
 
-    // enable / disable colors in the output (reporters and logs)
+    // Enable / disable colors in the output (reporters and logs)
     colors: true,
 
-    // level of logging
-    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
+    // Level of logging
+    // Possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
     logLevel: config.LOG_INFO,
 
 
-    // enable / disable watching file and executing tests whenever any file changes
+    // Enable / disable watching file and executing tests whenever any file changes
     autoWatch: opts.live,
 
     ngHtml2JsPreprocessor: {
@@ -79,12 +79,12 @@ module.exports = function (config) {
     },
 
 
-    // start these browsers
-    // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
+    // Start these browsers
+    // Available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: ['PhantomJS'],
 
     // Continuous Integration mode
-    // if true, Karma captures browsers, runs the tests and exits
+    // If true, Karma captures browsers, runs the tests and exits
     singleRun: !opts.live,
     client: {
       mocha: {

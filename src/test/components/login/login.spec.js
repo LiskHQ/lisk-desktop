@@ -126,7 +126,7 @@ describe('Login controller', () => {
 
   describe('$scope.constructor()', () => {
     it.skip('sets $watch on $ctrl.input_passphrase to keep validating it', () => {
-      // skipped because it doesn't work
+      // Skipped because it doesn't work
       const spy = sinon.spy(controller.$scope, '$watch');
       controller.constructor();
       expect(spy).to.have.been.calledWith('$ctrl.input_passphrase', controller.isValidPassphrase);

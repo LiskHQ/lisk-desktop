@@ -16,7 +16,7 @@ describe('Top component', () => {
   it('should contain address', () => {
     // Compile a piece of HTML containing the directive
     const element = $compile('<top></top>')($rootScope);
-    // fire all the watches, so the scope expression {{1 + 1}} will be evaluated
+    // Fire all the watches, so the scope expression {{1 + 1}} will be evaluated
     $rootScope.$digest();
     // Check that the compiled element contains the templated content
     expect(element.html()).to.contain('address');
