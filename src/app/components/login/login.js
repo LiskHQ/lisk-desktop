@@ -77,14 +77,11 @@ app.component('login', {
 
         if (distance > 60 || ev.isTrigger) {
           for (let p = 0; p < steps; p++) {
-            let pos;
-            const available = used.map((u, i) => (!u ? i : null)).filter(u => u !== null);
 
-            if (!available.length) {
-              used = used.map(() => 0);
-              pos = parseInt(Math.random() * used.length, 10);
-            } else {
-              pos = available[parseInt(Math.random() * available.length, 10)];
+            if (count >= total) {
+              this.stopNewPassphraseGeneration();
+              this.setNewPassphrase(this.seed);
+              return;
             }
 
             count++;
@@ -93,29 +90,34 @@ app.component('login', {
               last = [ev.pageX, ev.pageY];
             }
 
-            used[pos] = 1;
-
-            const update = () => {
-              this.seed[pos] = login.lpad(crypto.randomBytes(1)[0].toString(16), '0', 2);
-              this.progress = parseInt((count / total) * 100, 10);
-            };
-
-            if (this.$scope.$root.$$phase !== '$apply' && this.$scope.$root.$$phase !== '$digest') {
-              this.$scope.$apply(update);
-            } else {
-              update();
-            }
-
-            if (count >= total) {
-              this.stopNewPassphraseGeneration();
-              this.setNewPassphrase(this.seed);
-              return;
-            }
+            used = this.updateSeedAndProgress(used, count / total);
           }
         }
       };
 
       this.$timeout(() => this.$document.mousemove(this.listener), 300);
+    }
+
+    updateSeedAndProgress(used, progress) {
+      let pos;
+      const available = used.map((u, i) => (!u ? i : null)).filter(u => u !== null);
+
+      if (!available.length) {
+        used = used.map(() => 0);
+        pos = parseInt(Math.random() * used.length, 10);
+      } else {
+        pos = available[parseInt(Math.random() * available.length, 10)];
+      }
+
+      this.seed[pos] = login.lpad(crypto.randomBytes(1)[0].toString(16), '0', 2);
+      this.progress = parseInt((progress) * 100, 10);
+
+      if (this.$scope.$root.$$phase !== '$apply' && this.$scope.$root.$$phase !== '$digest') {
+        this.$scope.$apply();
+      }
+
+      used[pos] = 1;
+      return used;
     }
 
     simulateMousemove() {
