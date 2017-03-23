@@ -1,3 +1,7 @@
+const chai = require('chai');
+
+const expect = chai.expect;
+
 describe('Top component', () => {
   let $compile;
   let $rootScope;

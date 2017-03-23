@@ -1,3 +1,7 @@
+const chai = require('chai');
+
+const expect = chai.expect;
+
 describe('timestamp component', () => {
   let $compile;
   let $rootScope;

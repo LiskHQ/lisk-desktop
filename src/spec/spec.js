@@ -1,3 +1,7 @@
+const chai = require('chai');
+
+const expect = chai.expect;
+
 const masterAccount = {
   passphrase: 'wagon stock borrow episode laundry kitten salute link globe zero feed marble',
   address: '16313739661670634666L',
