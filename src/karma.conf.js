@@ -58,7 +58,6 @@ module.exports = function (config) {
     // Possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
     logLevel: config.LOG_INFO,
 
-
     // Enable / disable watching file and executing tests whenever any file changes
     autoWatch: opts.live,
 
@@ -66,7 +65,6 @@ module.exports = function (config) {
       stripPrefix: 'app/components/',
       moduleName: 'my.templates',
     },
-
 
     coverageReporter: {
       reporters: [{
@@ -77,7 +75,6 @@ module.exports = function (config) {
         dir: 'coverage/',
       }],
     },
-
 
     // Start these browsers
     // Available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
@@ -91,7 +88,6 @@ module.exports = function (config) {
         opts: 'test/mocha.opts', // You can set opts to equal true then plugin will load opts from default location 'test/mocha.opts'
       },
     },
-
 
     plugins: [
       require('karma-webpack'),
