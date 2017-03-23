@@ -1,17 +1,19 @@
 const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
+const chai = require('chai');
+
 const expect = chai.expect;
+
 chai.use(sinonChai);
 
 describe('main component controller', () => {
   beforeEach(angular.mock.module('app'));
 
-  let $controller,
-    $rootScope,
-    $scope,
-    $q,
-    $componentController,
-    controller;
+  let $rootScope;
+  let $scope;
+  let $q;
+  let $componentController;
+  let controller;
 
   beforeEach(inject((_$componentController_, _$rootScope_, _$q_) => {
     $componentController = _$componentController_;
@@ -50,9 +52,9 @@ describe('main component controller', () => {
   });
 
   describe('login()', () => {
-    let deffered,
-      updateMock,
-      peersMock;
+    let deffered;
+    let updateMock;
+    let peersMock;
 
 
     beforeEach(() => {
@@ -140,8 +142,9 @@ describe('main component controller', () => {
   });
 
   describe('update()', () => {
-    let deffered,
-      account;
+    let deffered;
+    let account;
+
     beforeEach(() => {
       deffered = $q.defer();
       account = {
@@ -153,8 +156,7 @@ describe('main component controller', () => {
           return deffered.promise;
         },
         status() {
-          const deffered = $q.defer();
-          return deffered.promise;
+          return $q.defer().promise;
         },
       };
       controller.address = account.address;

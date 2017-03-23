@@ -1,7 +1,11 @@
+const chai = require('chai');
+
+const expect = chai.expect;
+
 describe('animate-on-change directive', () => {
-  let $compile,
-    $rootScope,
-    element;
+  let $compile;
+  let $rootScope;
+  let element;
 
   // Load the myApp module, which contains the directive
   beforeEach(angular.mock.module('app'));

@@ -97,8 +97,9 @@ app.component('login', {
       this.$timeout(() => this.$document.mousemove(this.listener), 300);
     }
 
-    updateSeedAndProgress(used, progress) {
+    updateSeedAndProgress(_used, progress) {
       let pos;
+      let used = _used;
       const available = used.map((u, i) => (!u ? i : null)).filter(u => u !== null);
 
       if (!available.length) {

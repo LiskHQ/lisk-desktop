@@ -54,12 +54,10 @@ describe('Login controller', () => {
   let $scope;
   let controller;
   let $componentController;
-  let $timeout;
 
-  beforeEach(inject((_$componentController_, _$rootScope_, _$timeout_) => {
+  beforeEach(inject((_$componentController_, _$rootScope_) => {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
-    $timeout = _$timeout_;
   }));
 
   beforeEach(() => {
