@@ -17,7 +17,7 @@ const PATHS = {
 };
 
 const common = {
-  entry: nodeEnvironment === 'test' ? { } : {
+  entry: nodeEnvironment === 'test' ? {} : {
     app: PATHS.app,
   },
   output: {
