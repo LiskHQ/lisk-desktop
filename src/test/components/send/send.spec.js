@@ -12,6 +12,7 @@ describe('send component controller', () => {
   let $scope;
   let $q;
   let controller;
+  let $componentController;
 
   beforeEach(inject((_$componentController_, _$rootScope_, _$q_) => {
     $componentController = _$componentController_;

@@ -53,6 +53,7 @@ describe('Login controller', () => {
   let $rootScope;
   let $scope;
   let controller;
+  let $componentController;
 
   beforeEach(inject((_$componentController_, _$rootScope_) => {
     $componentController = _$componentController_;
