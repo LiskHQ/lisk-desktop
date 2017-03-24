@@ -96,13 +96,17 @@ protractor spec/conf.js
 
 ## Authors
 
-Ricardo Ferro <ricardo@lisk.io>
+- Ricardo Ferro <ricardo.ferro@gmail.com>
+- Oliver Beddows <oliver@lightcurve.io>
+- Vít Stanislav <vit@lightcurve.io>
+- Tobias Schwarz <tobias@lightcurve.io>
+- Ali Haghighatkhah <ali@lightcurve.io>
 
 ## License
 
 The MIT License (MIT)
 
-Copyright (c) 2016-2017 Lisk
+Copyright (c) 2016-2017 Lisk Foundation
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:  
 

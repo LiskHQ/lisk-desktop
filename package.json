@@ -11,6 +11,7 @@
     "dist:osx": "build --osx",
     "dist:linux": "build --linux"
   },
+  "author": "Lisk Foundation <admin@lisk.io>, lightcurve GmbH <admin@lightcurve.io>",
   "repository": {
     "type": "git",
     "url": "https://github.com/LiskHQ/lisk-nano"
