@@ -96,7 +96,11 @@ protractor spec/conf.js
 
 ## Authors
 
-Ricardo Ferro <ricardo@lisk.io>
+- Ricardo Ferro <ricardo@lisk.io>
+- Oliver Beddows <oliver@lightcurve.io>
+- Vít Stanislav <vit@lightcurve.io>
+- Tobias Schwarz <tobias@lightcurve.io>
+- Ali Haghighatkhah <ali@lightcurve.io>
 
 ## License
 
