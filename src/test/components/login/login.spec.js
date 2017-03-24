@@ -105,9 +105,7 @@ describe('Login controller', () => {
 
     it('creates this.listener(ev) which if called repeatedly will gnerate a random this.seed', () => {
       controller.startGenratingNewPassphrase();
-      for (let i = 0; i < 16; i++) {
-        expect(controller.seed[i]).to.equal('00');
-      }
+      expect(controller.seed).to.deep.equal(['00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00']);
       expect(controller.progress).to.equal(0);
 
       for (let j = 0; j < 300; j++) {
@@ -118,11 +116,8 @@ describe('Login controller', () => {
         controller.listener(ev);
       }
 
+      expect(controller.seed).not.to.deep.equal(['00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00']);
       expect(controller.progress).to.equal(100);
-
-      for (let k = 0; k < 16; k++) {
-        expect(controller.seed[k]).not.to.equal('00');
-      }
     });
   });
 
