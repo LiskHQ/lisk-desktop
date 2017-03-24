@@ -59,7 +59,8 @@ function send(fromAccount, toAddress, amount) {
   sendButton.click();
 }
 
-function checkSendConfirmation() {
+function checkSendConfirmation(address, amount) {
+  waitForElemAndCheckItsText('md-dialog .md-dialog-content-body', `${amount} sent to ${address}`);
   waitForElemAndCheckItsText('md-dialog h2', 'Success');
   const okButton = element(by.css('md-dialog .md-button.md-ink-ripple'));
   okButton.click();
@@ -151,11 +152,11 @@ function testShowBalance() {
 
 function testSend() {
   send(masterAccount, delegateAccount.address, 1.1);
-  checkSendConfirmation();
+  checkSendConfirmation(delegateAccount.address, 1.1);
   logout();
 
   send(delegateAccount, masterAccount.address, 1);
-  checkSendConfirmation();
+  checkSendConfirmation(masterAccount.address, 1);
 }
 
 function testSendWithNotEnoughFunds() {
