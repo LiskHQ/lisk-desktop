@@ -53,6 +53,7 @@ function send(fromAccount, toAddress, amount) {
   browser.wait(EC.presenceOf(sendElem), waitTime);
   element(by.css('send input[name="recipient"]')).sendKeys(toAddress);
   element(by.css('send input[name="amount"]')).sendKeys(`${amount}`);
+  element(by.css('send input[name="recipient"]')).click();
   const sendButton = element(by.css('send button.md-primary'));
   browser.wait(EC.presenceOf(sendButton), waitTime);
   sendButton.click();
