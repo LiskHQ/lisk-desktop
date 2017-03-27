@@ -9,9 +9,9 @@ md-content(layout='column', layout-gt-xs='row')
         i.material-icons.offline(ng-show='!$ctrl.$peers.online') error
         i.material-icons.online(ng-show='$ctrl.$peers.online') check circle
       span.md-title.title Peer
-      md-select(ng-model='$ctrl.$peers.active', aria-label='Peer')
+      md-select(ng-model='$ctrl.$peers.active.currentPeer', aria-label='Peer')
         md-optgroup(ng-repeat='(name, peers) in $ctrl.$peers.stack', ng-if='peers.length', label='{{ name }}')
-          md-option(ng-repeat='peer in peers', ng-value='peer') {{ peer.host }}
+          md-option(ng-repeat='peer in peers', ng-value='peer') {{ peer }}
   md-card.offline-hide(flex-gt-xs=33)
     md-card-content(layout='column', layout-align='center center')
       span.md-title.title Balance

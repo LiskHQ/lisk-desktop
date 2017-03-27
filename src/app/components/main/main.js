@@ -66,7 +66,7 @@ app.component('main', {
     update() {
       this.reset();
 
-      return this.$peers.active.getAccount(this.address)
+      return this.$peers.active.getAccountPromise(this.address)
         .then((res) => {
           this.account = res;
         })

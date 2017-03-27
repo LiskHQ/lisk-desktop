@@ -151,7 +151,7 @@ describe('main component controller', () => {
         balance: '0',
       };
       controller.$peers.active = {
-        getAccount() {
+        getAccountPromise() {
           return deffered.promise;
         },
         status() {
@@ -162,7 +162,7 @@ describe('main component controller', () => {
       controller.account = {};
     });
 
-    it('calls this.$peers.active.getAccount(this.address) and then sets result to this.account', () => {
+    it('calls this.$peers.active.getAccountPromise(this.address) and then sets result to this.account', () => {
       expect(controller.account).not.to.equal(account);
       controller.update();
       deffered.resolve(account);
@@ -170,7 +170,7 @@ describe('main component controller', () => {
       expect(controller.account).to.equal(account);
     });
 
-    it('calls this.$peers.active.getAccount(this.address) and if it fails, then resets this.account.balance and reject the promise that update() returns', () => {
+    it('calls this.$peers.active.getAccountPromise(this.address) and if it fails, then resets this.account.balance and reject the promise that update() returns', () => {
       const spy = sinon.spy(controller.$q, 'reject');
       controller.update();
       deffered.reject();
