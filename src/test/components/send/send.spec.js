@@ -152,7 +152,7 @@ describe('send component controller', () => {
       controller.go();
 
       const spy = sinon.spy(controller.success, 'dialog');
-      deffered.resolve();
+      deffered.resolve({});
       $scope.$apply();
       expect(spy).to.have.been.calledWith({
         text: `${controller.amount.value} sent to ${controller.recipient.value}`,
