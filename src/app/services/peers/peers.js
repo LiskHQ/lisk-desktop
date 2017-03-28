@@ -43,7 +43,20 @@ app.factory('$peers', ($timeout, $cookies, $location, $q) => {
 
       this.active.getAccountPromise = (address) => {
         const deferred = $q.defer();
-        this.active.getAccount(address, data => deferred.resolve(data.account));
+        this.active.getAccount(address, (data) => {
+          if (data.success) {
+            deferred.resolve(data.account);
+          }
+          this.active.sendRequest('accounts/getBalance', { address }, (balanceData) => {
+            if (balanceData.success) {
+              deferred.resolve({
+                address,
+                balance: balanceData.balance,
+              });
+            }
+            deferred.reject(balanceData);
+          });
+        });
         return deferred.promise;
       };
 
