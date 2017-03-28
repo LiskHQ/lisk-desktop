@@ -154,7 +154,7 @@ describe('main component controller', () => {
         getAccountPromise() {
           return deffered.promise;
         },
-        status() {
+        getStatusPromise() {
           return $q.defer().promise;
         },
       };

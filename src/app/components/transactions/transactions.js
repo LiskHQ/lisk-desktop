@@ -51,7 +51,7 @@ app.component('transactions', {
         limit = 10;
       }
 
-      return this.$peers.active.getTransactions(this.account.address, limit)
+      return this.$peers.active.listTransactionsPromise(this.account.address, limit)
         .then(this._processTransactionsResponse.bind(this))
         .catch(() => {
           this.transactions = [];

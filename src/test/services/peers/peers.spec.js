@@ -7,15 +7,13 @@ chai.use(sinonChai);
 
 describe('Factory: $peers', () => {
   let $peers;
-  let $peer;
   let $q;
   let $rootScope;
 
   beforeEach(angular.mock.module('app'));
 
-  beforeEach(inject((_$peers_, _$peer_, _$q_, _$rootScope_) => {
+  beforeEach(inject((_$peers_, _$q_, _$rootScope_) => {
     $peers = _$peers_;
-    $peer = _$peer_;
     $q = _$q_;
     $rootScope = _$rootScope_;
   }));
@@ -35,9 +33,16 @@ describe('Factory: $peers', () => {
 
     beforeEach(() => {
       deffered = $q.defer();
-      $peers.active = new $peer({ host: 'node01.lisk.io' });
+      $peers.active = {
+        getAccountPromise() {
+          return deffered.promise;
+        },
+        getStatusPromise() {
+          return $q.defer().promise;
+        },
+      };
       mock = sinon.mock($peers.active);
-      mock.expects('status').withArgs().returns(deffered.promise);
+      mock.expects('getStatusPromise').withArgs().returns(deffered.promise);
     });
 
     afterEach(() => {

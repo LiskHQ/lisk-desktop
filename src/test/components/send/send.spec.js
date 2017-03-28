@@ -144,11 +144,11 @@ describe('send component controller', () => {
       expect(spy).to.have.been.calledWith();
     });
 
-    it('calls this.$peers.active.sendTransaction() and success.dialog on success', () => {
-      controller.$peers = { active: { sendTransaction() {} } };
+    it('calls this.$peers.active.sendLSKPromise() and success.dialog on success', () => {
+      controller.$peers = { active: { sendLSKPromise() {} } };
       const mock = sinon.mock(controller.$peers.active);
       const deffered = $q.defer();
-      mock.expects('sendTransaction').returns(deffered.promise);
+      mock.expects('sendLSKPromise').returns(deffered.promise);
       controller.go();
 
       const spy = sinon.spy(controller.success, 'dialog');
@@ -159,11 +159,11 @@ describe('send component controller', () => {
       });
     });
 
-    it('calls this.$peers.active.sendTransaction() and error.dialog on error', () => {
-      controller.$peers = { active: { sendTransaction() {} } };
+    it('calls this.$peers.active.sendLSKPromise() and error.dialog on error', () => {
+      controller.$peers = { active: { sendLSKPromise() {} } };
       const mock = sinon.mock(controller.$peers.active);
       const deffered = $q.defer();
-      mock.expects('sendTransaction').returns(deffered.promise);
+      mock.expects('sendLSKPromise').returns(deffered.promise);
       controller.go();
 
       const spy = sinon.spy(controller.error, 'dialog');
