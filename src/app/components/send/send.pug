@@ -2,6 +2,14 @@ md-card.offline-hide
   md-card-title
     md-card-title-text
       span.md-title Send
+    md-menu(md-position-mode='target-right target')
+      md-button.md-icon-button(ng-click='$mdOpenMenu()')
+        i.material-icons more_vert
+      md-menu-content(width='4')
+        md-menu-item
+          md-button(ng-click='$ctrl.setMaxAmount()')
+            div(layout='row', flex='')
+              p(flex='') Set maximum amount
   md-card-content
     form(name='$ctrl.sendForm')
       md-content(flex='100', flex-gt-sm='70', flex-offset-gt-sm='15')

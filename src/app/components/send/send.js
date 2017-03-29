@@ -95,6 +95,10 @@ app.component('send', {
           this.loading = false;
         });
     }
+
+    setMaxAmount() {
+      this.amount.value = this.amount.max;
+    }
   },
 });
 
