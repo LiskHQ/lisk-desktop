@@ -32,8 +32,8 @@
     "angular-mocks": "=1.5.8",
     "babel-core": "=6.9.1",
     "babel-loader": "=6.2.4",
-    "babel-plugin-syntax-trailing-function-commas": "=6.22.0",
     "babel-plugin-istanbul": "^4.0.0",
+    "babel-plugin-syntax-trailing-function-commas": "=6.22.0",
     "babel-preset-es2015": "=6.9.0",
     "chai": "=3.5.0",
     "clean-webpack-plugin": "=0.1.9",
@@ -89,7 +89,9 @@
     "presets": [
       "es2015"
     ],
-    "plugins": ["syntax-trailing-function-commas"],
+    "plugins": [
+      "syntax-trailing-function-commas"
+    ],
     "env": {
       "test": {
         "plugins": [
