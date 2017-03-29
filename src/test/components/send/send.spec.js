@@ -64,10 +64,10 @@ describe('Send component', () => {
       const RECIPIENT_ADDRESS = '5932438298200837883L';
       const AMOUNT = '10';
 
-      $peers.active = { sendTransaction() {} };
+      $peers.active = { sendLSKPromise() {} };
       const mock = sinon.mock($peers.active);
       const deffered = $q.defer();
-      mock.expects('sendTransaction').returns(deffered.promise);
+      mock.expects('sendLSKPromise').returns(deffered.promise);
 
       const spy = sinon.spy(success, 'dialog');
 
@@ -76,7 +76,7 @@ describe('Send component', () => {
       $scope.$apply();
       element.find('button.md-raised').click();
 
-      deffered.resolve();
+      deffered.resolve({});
       $scope.$apply();
       expect(spy).to.have.been.calledWith();
       mock.verify();
