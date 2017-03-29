@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 cd src
-grunt eslint
+grunt test
 
 exit $?

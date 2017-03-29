@@ -46,6 +46,7 @@
     "git-hooks": "=1.1.8",
     "grunt": "=1.0.1",
     "grunt-eslint": "=19.0.0",
+    "grunt-newer": "^1.2.0",
     "html-webpack-plugin": "=2.19.0",
     "imports-loader": "=0.6.5",
     "jasmine-spec-reporter": "^3.2.0",
