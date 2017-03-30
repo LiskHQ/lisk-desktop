@@ -23,7 +23,7 @@ describe('Factory: $peers', () => {
       expect($peers.active).to.equal(undefined);
       $peers.setActive();
       expect($peers.active).not.to.equal(undefined);
-      expect($peers.stack.official).to.include($peers.active.currentPeer);
+      expect($peers.stack.official).to.include({ node: $peers.active.currentPeer });
     });
   });
 
