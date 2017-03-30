@@ -16,19 +16,36 @@ app.factory('$peers', ($timeout, $cookies, $location, $q) => {
       }
     }
 
-    setActive() {
+    setActive(peerConf) {
       const peerStack = $location.search().peerStack || $cookies.get('peerStack') || 'official';
-      const conf = { };
-      if (peerStack === 'localhost') {
-        conf.node = 'localhost';
-        conf.port = 4000;
-        conf.testnet = true;
-        conf.nethash = '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d';
-      } else if (peerStack === 'testnet') {
+      let conf = peerConf || { };
+      const localhostConf = {
+        node: 'localhost',
+        port: 4000,
+        testnet: true,
+        nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+      };
+      if (peerStack === 'localhost' && !peerConf) {
+        conf = localhostConf;
+      } else if (peerStack === 'testnet' && !peerConf) {
         conf.testnet = true;
       }
-      this.active = lisk.api(conf);
-      this.stack = this.active.listPeers();
+
+      this.setPeerAPIObject(conf);
+      this.currentPeerConfig = conf;
+      if (!this.stack) {
+        this.stack = this.active.listPeers();
+        this.stack.localhost = [localhostConf, {
+          node: 'localhost',
+          port: 8000,
+        }];
+      }
+
+      this.check();
+    }
+
+    setPeerAPIObject(config) {
+      this.active = lisk.api(config);
 
       this.active.getStatusPromise = () => {
         const deferred = $q.defer();
@@ -81,8 +98,6 @@ app.factory('$peers', ($timeout, $cookies, $location, $q) => {
         });
         return deferred.promise;
       };
-
-      this.check();
     }
 
     check() {
