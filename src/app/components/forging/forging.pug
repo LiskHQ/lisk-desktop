@@ -1,0 +1,92 @@
+div.offline-hide
+  div
+    .loading
+      md-progress-linear(md-mode='indeterminate', ng-show='$ctrl.loading_show || !$ctrl.loaded')
+    md-content
+      div(layout='row', ng-if='!delegate.username')
+        .col-sm-12.col-xs-12.col-md-12
+          .info-panel.info-panel-grey
+            span.title To become a delegate, click on the "Delegate Registration" button.
+      div(layout='row', ng-if='delegate.username')
+        md-card(flex-gt-xs=50, layout-padding)
+          .info-panel.info-panel-grey
+            span.title {{delegate.username}} 
+            span.plain-text(ng-show='delegate.time') Registered 
+              timestamp(data='delegate.time')
+              span  ago
+        md-card(flex-gt-xs=50, layout-padding)
+          .info-panel.info-panel-grey
+            span.title LSK Earned 
+            span.plain-text {{totalForged  | lsk }} LSK
+          //               LSK Earned                                {{totalForged / 100000000 | feeFilter }}LSK
+      div(layout='row', ng-if='statistics')
+        md-card(flex-gt-xs=25, layout-padding)
+          .info-panel.info-panel-grey
+            span.title Today 
+            span.plain-text {{statistics.today  | lsk | number:2 }} LSK
+        md-card(flex-gt-xs=25, layout-padding)
+          .info-panel.info-panel-grey
+            span.title Last 24 hours 
+            span.plain-text {{statistics.last24h  | lsk | number:2 }} LSK
+        md-card(flex-gt-xs=25, layout-padding)
+          .info-panel.info-panel-grey
+            span.title {{'Last 7 days'}} 
+            span.plain-text {{statistics.last7d  | lsk | number:2 }} LSK
+        md-card(flex-gt-xs=25, layout-padding)
+          .info-panel.info-panel-grey
+            span.title {{'Last 30 days'}} 
+            span.plain-text {{statistics.last30d  | lsk | number:2 }} LSK
+      div(layout='row', ng-if='delegate.username')
+        md-card(flex-gt-xs=33, layout-align='center center', layout-padding)
+          div Rank
+          md-progress-circular(md-mode='determinate', value='{{rank}}', md-diameter='200') {{rank}}
+        md-card(flex-gt-xs=33, layout-align='center center', layout-padding)
+          div Productivity
+          md-progress-circular(md-mode='determinate', value='{{productivity}}', md-diameter='200')
+        md-card(flex-gt-xs=33, layout-align='center center', layout-padding)
+          div Approval
+          md-progress-circular(md-mode='determinate', value='{{approval}}', md-diameter='200')
+      md-card(layout='column', ng-if='delegate.username')
+        md-card-title
+          md-card-title-text
+            spa.md-title Forged Blocks
+          md-menu(md-position-mode='target-right target')
+             md-button.md-icon-button(ng-click='$mdOpenMenu()')
+               i.material-icons more_vert
+             md-menu-content(width='4')
+               md-menu-item
+                p(ng-click='check($event)')
+                  input#advanced.filled-in.violet(type='checkbox', ng-model='showAllColumns')
+                  label(for='advanced')
+                    translate Show All Columns
+               md-menu-item
+                p(ng-click='check($event)')
+                  input#fulltime.filled-in.violet(type='checkbox', ng-model='showFullTime')
+                  label(for='fulltime')
+                    translate Show Full Time
+        md-card-content
+          md-content(layout='column')
+            md-table-container(ng-show='blocks.length')
+              table(md-table, ng-table='tableBlocks', border='0', width='100%', cellpadding='0', cellspacing='0', ng-show='blocks.length')
+                thead(md-head)
+                  tr(md-row)
+                    th(md-column) Block height
+                    th(md-column, ng-show='showAllColumns') Block Id
+                    th(md-column) Timestamp
+                    th(md-column) Total fee
+                    th(md-column) Reward
+                tbody(md-body)
+                  tr(md-row, ng-repeat='block in blocks')
+                    td(md-cell data-title='tableBlocks.cols.height', sortable="'height'") {{block.height}}
+                    td.pointer(md-cell data-title='tableBlocks.cols.blockId', ng-click='blockInfo(block)', ng-show='showAllColumns')
+                      a(href='#') {{block.id}}
+                    td(md-cell data-title='tableBlocks.cols.timestamp', sortable="'timestamp'")
+                      span(ng-show='block.timestamp > 0')
+                        timestamp(data='block.timestamp')
+                      span(ng-show='block.timestamp == 0') -
+                    td(md-cell data-title='tableBlocks.cols.totalFee', sortable="'totalFee'") {{block.totalFee | lsk}}
+                    td(md-cell data-title='tableBlocks.cols.reward', sortable="'reward'") {{block.reward | lsk}}
+                    td.width-80(md-cell data-title="''")
+              |
+              .panel-body.empty-body.empty-table.without-margin-top(ng-if='!blocks.length')
+                p.empty-state-text {{'You have not forged any blocks yet.'}}
