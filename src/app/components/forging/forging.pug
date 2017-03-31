@@ -4,9 +4,9 @@ div.offline-hide
       md-progress-linear(md-mode='indeterminate', ng-show='$ctrl.loading_show || !$ctrl.loaded')
     md-content
       div(layout='row', ng-if='!delegate.username')
-        .col-sm-12.col-xs-12.col-md-12
-          .info-panel.info-panel-grey
-            span.title To become a delegate, click on the "Delegate Registration" button.
+        md-card(flex-gt-xs=100, layout-align='center center', layout-padding)
+          span.title You need to become a delegate to start forging
+          md-button.md-raised.md-primary Become Delegate
       div(layout='row', ng-if='delegate.username')
         md-card(flex-gt-xs=50, layout-padding)
           .info-panel.info-panel-grey
@@ -19,7 +19,7 @@ div.offline-hide
             span.title LSK Earned 
             span.plain-text {{totalForged  | lsk }} LSK
           //               LSK Earned                                {{totalForged / 100000000 | feeFilter }}LSK
-      div(layout='row', ng-if='statistics')
+      div(layout='row', ng-if='delegate.username')
         md-card(flex-gt-xs=25, layout-padding)
           .info-panel.info-panel-grey
             span.title Today 
@@ -39,18 +39,23 @@ div.offline-hide
       div(layout='row', ng-if='delegate.username')
         md-card(flex-gt-xs=33, layout-align='center center', layout-padding)
           div Rank
-          md-progress-circular(md-mode='determinate', value='{{rank}}', md-diameter='200') {{rank}}
+          div.progress-label {{rank}}
+          md-progress-circular(md-mode='determinate', value='{{101 - rank}}', md-diameter='200') {{rank}}
         md-card(flex-gt-xs=33, layout-align='center center', layout-padding)
           div Productivity
+          div.progress-label {{productivity}}%
           md-progress-circular(md-mode='determinate', value='{{productivity}}', md-diameter='200')
         md-card(flex-gt-xs=33, layout-align='center center', layout-padding)
           div Approval
+          div.progress-label {{approval}}%
           md-progress-circular(md-mode='determinate', value='{{approval}}', md-diameter='200')
       md-card(layout='column', ng-if='delegate.username')
         md-card-title
           md-card-title-text
             spa.md-title Forged Blocks
-          md-menu(md-position-mode='target-right target')
+          span(md-position-mode='target-right target', ng-if='!blocks.length')
+            span {{'You have not forged any blocks yet.'}}
+          md-menu(md-position-mode='target-right target', ng-if='blocks.length')
              md-button.md-icon-button(ng-click='$mdOpenMenu()')
                i.material-icons more_vert
              md-menu-content(width='4')
@@ -87,6 +92,3 @@ div.offline-hide
                     td(md-cell data-title='tableBlocks.cols.totalFee', sortable="'totalFee'") {{block.totalFee | lsk}}
                     td(md-cell data-title='tableBlocks.cols.reward', sortable="'reward'") {{block.reward | lsk}}
                     td.width-80(md-cell data-title="''")
-              |
-              .panel-body.empty-body.empty-table.without-margin-top(ng-if='!blocks.length')
-                p.empty-state-text {{'You have not forged any blocks yet.'}}
