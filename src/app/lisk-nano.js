@@ -10,6 +10,7 @@ import './components/transactions/transactions';
 import './components/timestamp/timestamp';
 import './components/lsk/lsk';
 import './components/forging/forging';
+import './components/delegates/delegates';
 
 import './services/peers/peers';
 import './services/lsk';
@@ -17,3 +18,4 @@ import './services/success';
 import './services/error';
 
 import './filters/lsk';
+import './filters/boolFilter';
