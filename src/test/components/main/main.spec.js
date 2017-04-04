@@ -30,7 +30,7 @@ describe('main component controller', () => {
 
   describe('controller()', () => {
     it.skip('sets $watch on $ctrl.$peers.active to broadcast it changed', () => {
-      // skipped as it doesn't work
+      // Skipped as it doesn't work
       $scope.$apply();
       const mock = sinon.mock(controller.$rootScope);
       mock.expects('$broadcast').withArgs('peerUpdate').returns();
@@ -182,4 +182,3 @@ describe('main component controller', () => {
     });
   });
 });
-
