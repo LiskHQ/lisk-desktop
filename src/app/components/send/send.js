@@ -10,13 +10,14 @@ app.component('send', {
     passphrase: '<',
   },
   controller: class send {
-    constructor($scope, $peers, lsk, success, error, $mdDialog, $q) {
+    constructor($scope, $peers, lsk, success, error, $mdDialog, $q, $rootScope) {
       this.$scope = $scope;
       this.$peers = $peers;
       this.success = success;
       this.error = error;
       this.$mdDialog = $mdDialog;
       this.$q = $q;
+      this.$rootScope = $rootScope;
 
       this.recipient = {
         regexp: ADDRESS_VALID_RE,
@@ -80,10 +81,21 @@ app.component('send', {
             secondPassphrase,
           )
           .then(
-            () => this.success.dialog({ text: `${this.amount.value} sent to ${this.recipient.value}` })
+            (data) => {
+              const transaction = {
+                id: data.transactionId,
+                senderPublicKey: this.account.publicKey,
+                senderId: this.account.address,
+                recipientId: this.recipient.value,
+                amount: this.amount.raw,
+                fee: 10000000,
+              };
+              this.$rootScope.$broadcast('transaction-sent', transaction);
+              return this.success.dialog({ text: `${this.amount.value} sent to ${this.recipient.value}` })
                 .then(() => {
                   this.reset();
-                }),
+                });
+            },
             (res) => {
               this.error.dialog({ text: res && res.message ? res.message : 'An error occurred while sending the transaction.' });
             },

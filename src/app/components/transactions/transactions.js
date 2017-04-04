@@ -8,14 +8,21 @@ app.component('transactions', {
     account: '=',
   },
   controller: class transactions {
-    constructor($scope, $timeout, $q, $peers) {
+    constructor($scope, $timeout, $q, $peers, $rootScope) {
       this.$scope = $scope;
       this.$timeout = $timeout;
       this.$q = $q;
       this.$peers = $peers;
+      this.$rootScope = $rootScope;
 
       this.loaded = false;
       this.transactions = [];
+      this.pendingTransactions = [];
+
+      this.$rootScope.$on('transaction-sent', (event, transaction) => {
+        this.pendingTransactions.push(transaction);
+        this.transactions = this.pendingTransactions.concat(this.transactions);
+      });
 
       this.$scope.$watch('account', () => {
         this.reset();
@@ -70,7 +77,9 @@ app.component('transactions', {
     }
 
     _processTransactionsResponse(response) {
-      this.transactions = response.transactions;
+      this.pendingTransactions = this.pendingTransactions.filter(
+        pt => response.transactions.filter(t => t.id === pt.id).length === 0);
+      this.transactions = this.pendingTransactions.concat(response.transactions);
       this.total = response.count;
 
       if (this.total > this.transactions.length) {

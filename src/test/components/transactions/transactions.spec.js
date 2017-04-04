@@ -99,7 +99,7 @@ describe('transactions component controller', () => {
         count: 1,
       };
       controller._processTransactionsResponse(response);
-      expect(controller.transactions).to.equal(response.transactions);
+      expect(controller.transactions).to.deep.equal(response.transactions);
     });
 
     it('sets this.more to how many more other transactions are there on server', () => {
