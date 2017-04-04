@@ -33,6 +33,10 @@ module.exports = function (config) {
     files: [libs, app, testLibs, test],
     webpack: webpackConfig,
 
+    webpackMiddleware: {
+      noInfo: true,
+    },
+
     // List of files to exclude
     exclude: [],
 

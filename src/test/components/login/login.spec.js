@@ -102,6 +102,23 @@ describe('Login controller', () => {
       controller.startGenratingNewPassphrase();
       expect(spy).to.have.been.calledWith();
     });
+
+    it('creates this.listener(ev) which if called repeatedly will generate a random this.seed', () => {
+      controller.startGenratingNewPassphrase();
+      expect(controller.seed).to.deep.equal(['00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00']);
+      expect(controller.progress).to.equal(0);
+
+      for (let j = 0; j < 300; j++) {
+        const ev = {
+          pageX: Math.random() * 1000,
+          pageY: Math.random() * 1000,
+        };
+        controller.listener(ev);
+      }
+
+      expect(controller.seed).not.to.deep.equal(['00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00']);
+      expect(controller.progress).to.equal(100);
+    });
   });
 
   describe('$scope.doTheLogin()', () => {

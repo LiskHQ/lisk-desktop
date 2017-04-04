@@ -11,6 +11,7 @@ git clone https://github.com/LiskHQ/lisk-nano.git
 cd lisk-nano
 npm install
 cd src
+npm install
 npm run dev
 ```
 
@@ -54,6 +55,18 @@ Build package for Linux.
 
 ```
 npm run dist:linux
+```
+
+## Run unit tests
+
+### Single run
+```
+npm run test
+```
+
+### Run each time a file changes
+```
+npm run test-live
 ```
 
 ## Run end-to-end tests

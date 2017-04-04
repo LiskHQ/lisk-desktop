@@ -52,7 +52,7 @@ app.component('transactions', {
       }
 
       return this.$peers.active.getTransactions(this.account.address, limit)
-        .then(this._processTransactionsResponse)
+        .then(this._processTransactionsResponse.bind(this))
         .catch(() => {
           this.transactions = [];
           this.more = 0;
