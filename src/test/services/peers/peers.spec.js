@@ -23,7 +23,7 @@ describe('Factory: $peers', () => {
       expect($peers.active).to.equal(undefined);
       $peers.setActive();
       expect($peers.active).not.to.equal(undefined);
-      expect($peers.stack.official).to.include($peers.active);
+      expect($peers.stack.official).to.include({ node: $peers.active.currentPeer });
     });
   });
 
@@ -33,9 +33,16 @@ describe('Factory: $peers', () => {
 
     beforeEach(() => {
       deffered = $q.defer();
-      $peers.active = $peers.stack.official[0];
+      $peers.active = {
+        getAccountPromise() {
+          return deffered.promise;
+        },
+        getStatusPromise() {
+          return $q.defer().promise;
+        },
+      };
       mock = sinon.mock($peers.active);
-      mock.expects('status').withArgs().returns(deffered.promise);
+      mock.expects('getStatusPromise').withArgs().returns(deffered.promise);
     });
 
     afterEach(() => {

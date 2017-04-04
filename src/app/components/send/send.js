@@ -73,11 +73,11 @@ app.component('send', {
 
       this.promptSecondPassphrase()
         .then((secondPassphrase) => {
-          this.$peers.active.sendTransaction(
-            this.passphrase,
-            secondPassphrase,
+          this.$peers.active.sendLSKPromise(
             this.recipient.value,
             this.amount.raw,
+            this.passphrase,
+            secondPassphrase,
           )
           .then(
             () => this.success.dialog({ text: `${this.amount.value} sent to ${this.recipient.value}` })
