@@ -10,12 +10,14 @@ describe('Send component', () => {
   let $rootScope;
   let element;
   let $scope;
+  let lsk;
 
   beforeEach(angular.mock.module('app'));
 
-  beforeEach(inject((_$compile_, _$rootScope_) => {
+  beforeEach(inject((_$compile_, _$rootScope_, _lsk_) => {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
+    lsk = _lsk_;
   }));
 
   beforeEach(() => {
@@ -23,7 +25,7 @@ describe('Send component', () => {
     $scope.passphrase = 'robust swift grocery peasant forget share enable convince deputy road keep cheap';
     $scope.account = {
       address: '8273455169423958419L',
-      balance: '10000',
+      balance: lsk.from(100),
     };
     element = $compile('<send passphrase="passphrase" account="account"></send>')($scope);
     $scope.$digest();
@@ -64,10 +66,10 @@ describe('Send component', () => {
       const RECIPIENT_ADDRESS = '5932438298200837883L';
       const AMOUNT = '10';
 
-      $peers.active = { sendTransaction() {} };
+      $peers.active = { sendLSKPromise() {} };
       const mock = sinon.mock($peers.active);
       const deffered = $q.defer();
-      mock.expects('sendTransaction').returns(deffered.promise);
+      mock.expects('sendLSKPromise').returns(deffered.promise);
 
       const spy = sinon.spy(success, 'dialog');
 
@@ -76,9 +78,33 @@ describe('Send component', () => {
       $scope.$apply();
       element.find('button.md-raised').click();
 
-      deffered.resolve();
+      deffered.resolve({});
+      $scope.$apply();
+      expect(spy).to.have.been.calledWith({ text: `${AMOUNT} sent to ${RECIPIENT_ADDRESS}` });
+      mock.verify();
+    });
+
+    it('should allow to send all funds', () => {
+      const RECIPIENT_ADDRESS = '5932438298200837883L';
+      const AMOUNT = lsk.normalize($scope.account.balance) - 0.1;
+
+      $peers.active = { sendLSKPromise() {} };
+      const mock = sinon.mock($peers.active);
+      const deffered = $q.defer();
+      mock.expects('sendLSKPromise').returns(deffered.promise);
+
+      const spy = sinon.spy(success, 'dialog');
+
+      element.find('md-menu-item button').click();
+      element.find('form input[name="recipient"]').val(RECIPIENT_ADDRESS).trigger('input');
+      $scope.$apply();
+      expect(element.find('form input[name="amount"]').val()).to.equal(`${AMOUNT}`);
+      element.find('button.md-raised').click();
+
+      deffered.resolve({});
       $scope.$apply();
       expect(spy).to.have.been.calledWith();
+      expect(spy).to.have.been.calledWith({ text: `${AMOUNT} sent to ${RECIPIENT_ADDRESS}` });
       mock.verify();
     });
   });
