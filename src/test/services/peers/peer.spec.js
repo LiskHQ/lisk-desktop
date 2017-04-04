@@ -62,7 +62,7 @@ describe('Factory: $peer', () => {
   });
 
   describe('getAccount(address)', () => {
-    it('calls accout API and returns promise with the account', () => {
+    it('calls account API and returns promise with the account', () => {
       let response;
       const data = {
         success: true,
@@ -78,7 +78,7 @@ describe('Factory: $peer', () => {
       expect(response).to.deep.equal(account);
     });
 
-    it('calls accout API and id request fails then calls balance API', () => {
+    it('calls account API and id request fails then calls balance API', () => {
       let response;
       const data = {
         success: false,
@@ -97,7 +97,7 @@ describe('Factory: $peer', () => {
   });
 
   describe('getBalance(address)', () => {
-    it('calls accout API and returns promise with the balance', () => {
+    it('calls account API and returns promise with the balance', () => {
       let response;
       const data = {
         success: true,
@@ -115,7 +115,7 @@ describe('Factory: $peer', () => {
   });
 
   describe('getTransactions(address, limit)', () => {
-    it('calls accout API and returns promise with the balance', () => {
+    it('calls account API and returns promise with the balance', () => {
       let response;
       const limit = 10;
       const orderBy = 'timestamp:desc';
