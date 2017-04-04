@@ -2,4 +2,4 @@
 
 ### Actual behaviour
 
-### steps to reporduce
+### Steps to reproduce
