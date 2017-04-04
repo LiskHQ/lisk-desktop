@@ -1,7 +1,3 @@
-const chai = require('chai');
-
-const expect = chai.expect;
-
 const masterAccount = {
   passphrase: 'wagon stock borrow episode laundry kitten salute link globe zero feed marble',
   address: '16313739661670634666L',
@@ -22,7 +18,7 @@ const waitTime = 5000;
 
 function waitForElemAndCheckItsText(selector, text) {
   const elem = element(by.css(selector));
-  browser.wait(EC.presenceOf(elem), waitTime);
+  browser.wait(EC.presenceOf(elem), waitTime, `waiting for element ${selector}`);
   expect(elem.getText()).toEqual(text);
 }
 
@@ -53,13 +49,15 @@ function send(fromAccount, toAddress, amount) {
   browser.wait(EC.presenceOf(sendElem), waitTime);
   element(by.css('send input[name="recipient"]')).sendKeys(toAddress);
   element(by.css('send input[name="amount"]')).sendKeys(`${amount}`);
-  const sendButton = element(by.css('send button.md-primary'));
+  element(by.css('send input[name="recipient"]')).click();
+  const sendButton = element.all(by.css('send button.md-primary')).get(0);
   browser.wait(EC.presenceOf(sendButton), waitTime);
   sendButton.click();
 }
 
-function checkSendConfirmation() {
+function checkSendConfirmation(address, amount) {
   waitForElemAndCheckItsText('md-dialog h2', 'Success');
+  waitForElemAndCheckItsText('md-dialog .md-dialog-content-body', `${amount} sent to ${address}`);
   const okButton = element(by.css('md-dialog .md-button.md-ink-ripple'));
   okButton.click();
   browser.sleep(500);
@@ -84,7 +82,7 @@ function testLogout() {
 function testNewAccount() {
   launchApp();
 
-  element(by.css('.md-button.md-primary')).click();
+  element.all(by.css('.md-button.md-primary')).get(0).click();
   for (let i = 0; i < 250; i++) {
     browser.actions()
     .mouseMove(element(by.css('body')), {
@@ -103,7 +101,7 @@ function testNewAccount() {
     const nextButton = element.all(by.css('.dialog-save .md-button.md-ink-ripple')).get(1);
     nextButton.click();
 
-    element(by.css('.dialog-save p.passphrase span')).getText().then((firstPartOfPassphrase) => {
+    element.all(by.css('.dialog-save p.passphrase span')).get(0).getText().then((firstPartOfPassphrase) => {
       const missingWordIndex = firstPartOfPassphrase.length ?
         firstPartOfPassphrase.split(' ').length :
         0;
@@ -133,7 +131,7 @@ function testChangePeer() {
   browser.wait(EC.presenceOf(peerElem), waitTime);
   peerElem.click();
 
-  const optionElem = element(by.css('md-select-menu md-optgroup md-option'));
+  const optionElem = element.all(by.css('md-select-menu md-optgroup md-option')).get(0);
   browser.wait(EC.presenceOf(optionElem), waitTime);
   optionElem.click();
 
@@ -150,11 +148,11 @@ function testShowBalance() {
 
 function testSend() {
   send(masterAccount, delegateAccount.address, 1.1);
-  checkSendConfirmation();
+  checkSendConfirmation(delegateAccount.address, 1.1);
   logout();
 
   send(delegateAccount, masterAccount.address, 1);
-  checkSendConfirmation();
+  checkSendConfirmation(masterAccount.address, 1);
 }
 
 function testSendWithNotEnoughFunds() {

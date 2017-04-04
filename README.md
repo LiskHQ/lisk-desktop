@@ -105,7 +105,7 @@ npm run dev
 Run the protractor tests:
 
 ```
-protractor spec/conf.js
+npm run e2e-test
 ```
 
 ## Authors

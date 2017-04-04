@@ -3,7 +3,7 @@ md-card
     md-card-title-text
       span.md-title Sign In
   md-card-content
-    form(ng-submit='$ctrl.go()')
+    form(ng-submit='$ctrl.doTheLogin()')
       md-input-container.md-block(md-is-error='$ctrl.valid === 0')
         label Enter your passphrase
         input(type="{{ $ctrl.show_passphrase ? 'text' : 'password' }}", ng-model='$ctrl.input_passphrase', ng-disabled='$ctrl.generatingNewPassphrase', autofocus)
@@ -12,7 +12,7 @@ md-card
     md-content(layout='row', layout-align='center center')
       // md-button(ng-disabled='$ctrl.generatingNewPassphrase', ng-click='$ctrl.devTestAccount()') Dev Test Account
       md-button.md-primary(ng-disabled='$ctrl.random', ng-click='$ctrl.startGenratingNewPassphrase()') NEW ACCOUNT
-      md-button.md-raised.md-primary(md-autofocus, ng-disabled='$ctrl.valid !== 1', ng-click='$ctrl.go()') Login
+      md-button.md-raised.md-primary(md-autofocus, ng-disabled='$ctrl.valid !== 1', ng-click='$ctrl.doTheLogin()') Login
     md-content(layout-padding, layout='column', layout-align='center center', ng-show='$ctrl.generatingNewPassphrase')
       h4.move(ng-show='$ctrl.mobileAndTabletcheck()') Enter text below to generate random bytes
       h4.move(ng-hide='$ctrl.mobileAndTabletcheck()') Move your mouse to generate random bytes

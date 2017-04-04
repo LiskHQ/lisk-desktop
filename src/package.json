@@ -5,6 +5,7 @@
   "scripts": {
     "build": "webpack --profile --progress --display-modules --display-exclude --display-chunks --display-cached --display-cached-assets",
     "dev": "webpack-dev-server --host 0.0.0.0 --profile --progress",
+    "e2e-test": "protractor spec/conf.js",
     "test": "export NODE_ENV=test && karma start; grunt eslint",
     "test-live": "export NODE_ENV=test && export LIVE=true && karma start"
   },
@@ -47,6 +48,7 @@
     "grunt-eslint": "=19.0.0",
     "html-webpack-plugin": "=2.19.0",
     "imports-loader": "=0.6.5",
+    "jasmine-spec-reporter": "^3.2.0",
     "jit-grunt": "=0.10.0",
     "json-loader": "=0.5.4",
     "karma": "^1.5.0",
