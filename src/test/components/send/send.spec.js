@@ -71,7 +71,6 @@ describe('Send component', () => {
 
       const spy = sinon.spy(success, 'dialog');
 
-
       element.find('form input[name="amount"]').val(AMOUNT).trigger('input');
       element.find('form input[name="recipient"]').val(RECIPIENT_ADDRESS).trigger('input');
       $scope.$apply();

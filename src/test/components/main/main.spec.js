@@ -56,7 +56,6 @@ describe('main component controller', () => {
     let updateMock;
     let peersMock;
 
-
     beforeEach(() => {
       deffered = $q.defer();
       updateMock = sinon.mock(controller);
