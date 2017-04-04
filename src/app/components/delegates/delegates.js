@@ -12,18 +12,22 @@ app.component('delegates', {
 
       this.filter = 'All';
       this.voteList = [];
+      this.votedList = [];
       this.unvoteList = [];
       this.delegates = [];
       this.delegatesDisplayedCount = 20;
       this.$scope.states = ['All', 'Active', 'Stand by', 'Voted', 'Not Voted', 'Selected'];
 
-      this.$peers.active.listActiveDelegates(101, this.addDelegates.bind(this));
-      this.$peers.active.listStandyDelegates(101, this.addDelegates.bind(this));
+      this.$peers.active.sendRequest('accounts/delegates', { address: this.account.address }, (data) => {
+        this.votedList = data.delegates;
+        this.$peers.active.listActiveDelegates(101, this.addDelegates.bind(this));
+        this.$peers.active.listStandyDelegates(101, this.addDelegates.bind(this));
+      });
     }
 
     addDelegates(data) {
       this.delegates = this.delegates.concat(data.delegates.map((delegate) => {
-        const voted = Math.random() > 0.5;
+        const voted = this.votedList.filter(vote => vote.address === delegate.address).length === 1;
         delegate.status = {  // eslint-disable-line no-param-reassign
           All: true,
           Voted: voted,

@@ -1,15 +1,4 @@
 div.offline-hide
-  md-card(layout='column')
-    md-card-content(layout-align='center center')
-      span(md-position-mode='target-right target')
-        md-button.pull-right.remove-votes-link()
-          i.material-icons close
-          span Remove votes 
-          span(ng-if='$ctrl.unvoteList.length') from {{$ctrl.unvoteList.length}} selected delegates 
-        md-button.pull-right.green-link()
-          i.material-icons done
-          span  Vote 
-          span(ng-if='$ctrl.voteList.length')  for {{$ctrl.voteList.length}} selected delegates 
   md-card(flex-gt-xs=100)
     md-card-title
       md-card-title-text
@@ -19,6 +8,13 @@ div.offline-hide
             md-select(ng-model='$ctrl.filter')
               md-option(ng-repeat='filter in states', ng-value='filter') {{ filter }}
           span ({{$ctrl.filteredDelegates.length}})
+      span(md-position-mode='target-right target')
+        md-button.pull-right.remove-votes-link(ng-class='{"red-link": $ctrl.unvoteList.length}')
+          i.material-icons close
+          span Remove votes ({{$ctrl.unvoteList.length}} of {{$ctrl.votedList.length}})
+        md-button.pull-right(ng-class='{"green-link": $ctrl.voteList.length}')
+          i.material-icons done
+          span  Vote ({{$ctrl.voteList.length}})
     md-content(layout='column')
       md-table-container(ng-show='$ctrl.delegates.length')
         table(md-table)
@@ -49,7 +45,7 @@ div.offline-hide
               td(md-cell) No delegates found
             tr(md-row, ng-repeat="delegate in ($ctrl.filteredDelegates = ($ctrl.delegates | filter : {username: $ctrl.search} | boolFilter: {status : $ctrl.filter})) | limitTo : $ctrl.delegatesDisplayedCount")
               td(md-cell)
-                input(type='checkbox', ng-model='delegate.status.Selected' ng-change='$ctrl.selectionChange(delegate)')
+                md-checkbox(ng-model='delegate.status.Selected', ng-change='$ctrl.selectionChange(delegate)')
               //td.status(md-cell) 
                 span(ng-repeat='(status, value) in delegate.status', ng-if='status != "Selected" && status != "All" && value')
                   span  
