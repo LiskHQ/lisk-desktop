@@ -103,7 +103,7 @@ describe('Login controller', () => {
       expect(spy).to.have.been.calledWith();
     });
 
-    it('creates this.listener(ev) which if called repeatedly will gnerate a random this.seed', () => {
+    it('creates this.listener(ev) which if called repeatedly will generate a random this.seed', () => {
       controller.startGenratingNewPassphrase();
       expect(controller.seed).to.deep.equal(['00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00']);
       expect(controller.progress).to.equal(0);

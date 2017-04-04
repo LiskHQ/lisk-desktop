@@ -9,6 +9,8 @@
     "test": "export NODE_ENV=test && karma start; grunt eslint",
     "test-live": "export NODE_ENV=test && export LIVE=true && karma start"
   },
+  "author": "Lisk Foundation <admin@lisk.io>, lightcurve GmbH <admin@lightcurve.io>",
+  "license": "GPL-3.0",
   "dependencies": {
     "angular": "=1.5.8",
     "angular-animate": "=1.5.8",

@@ -37,7 +37,7 @@ module.exports = function (config) {
       noInfo: true,
     },
 
-    // list of files to exclude
+    // List of files to exclude
     exclude: [],
 
     // Rest results reporter to use

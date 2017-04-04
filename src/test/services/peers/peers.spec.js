@@ -18,7 +18,6 @@ describe('Factory: $peers', () => {
     $rootScope = _$rootScope_;
   }));
 
-
   describe('setActive()', () => {
     it('sets $peers.active to a random active official peer', () => {
       expect($peers.active).to.equal(undefined);
