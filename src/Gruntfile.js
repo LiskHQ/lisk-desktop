@@ -8,16 +8,18 @@ module.exports = function (grunt) {
         format: 'codeframe',
         fix: false,
       },
-      target: ['app/**/*.js', 'spec/**/*.js', 'test/**/*.js', '*.js'],
+      all: {
+        src: ['app/**/*.js', 'spec/**/*.js', 'test/**/*.js', '*.js'],
+      },
     },
   });
 
-  grunt.registerTask('test', ['eslint']);
+  grunt.registerTask('test', ['newer:eslint']);
   grunt.registerTask('travis', ['test']);
   grunt.registerTask('default', ['test']);
 
   grunt.registerTask('eslint-fix', 'Run eslint and fix formatting', () => {
     grunt.config.set('eslint.options.fix', true);
-    grunt.task.run('eslint');
+    grunt.task.run('newer:eslint');
   });
 };
