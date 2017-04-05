@@ -4,7 +4,6 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 const validate = require('webpack-validator');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ngAnnotatePlugin = require('ng-annotate-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const nodeEnvironment = process.env.NODE_ENV;
@@ -50,17 +49,6 @@ const html = () => ({
       minify: {
         collapseWhitespace: true,
         minifyCSS: true,
-      },
-    }),
-  ],
-});
-
-const minify = () => ({
-  plugins: [
-    new ngAnnotatePlugin(), // eslint-disable-line new-cap
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
       },
     }),
   ],
@@ -170,7 +158,7 @@ let config;
 
 switch (process.env.npm_lifecycle_event) {
   case 'build':
-    config = merge(common, clean(path.join(PATHS.build, '*')), minify(), html(), provide(), babel(), pug(), less(), css(), json(), png(), fonts());
+    config = merge(common, clean(path.join(PATHS.build, '*')), html(), provide(), babel(), pug(), less(), css(), json(), png(), fonts());
     break;
   default:
     config = merge(common, devServer(), { devtool: 'eval-source-map' }, html(), provide(), babel(), pug(), less(), css(), json(), png(), fonts());
