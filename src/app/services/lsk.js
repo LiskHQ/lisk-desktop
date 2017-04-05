@@ -1,8 +1,10 @@
-import numeral from 'numeral';
+import BigNumber from 'bignumber.js';
+
+BigNumber.config({ ERRORS: false });
 
 app.factory('lsk', () => ({
   normalize(value) {
-    return numeral(parseInt(value, 10) || 0).divide(Math.pow(10, 8)).format('0.0[0000000]');
+    return new BigNumber(value || 0).dividedBy(Math.pow(10, 8)).toString();
   },
   from(value) {
     return parseInt(value * Math.pow(10, 8), 10);
