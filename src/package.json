@@ -20,7 +20,7 @@
     "angular-material-data-table": "=0.10.9",
     "angular-messages": "=1.5.8",
     "babel-polyfill": "=6.9.1",
-    "bignumber.js": "^4.0.0",
+    "bignumber.js": "=4.0.0",
     "bitcore-mnemonic": "=1.1.1",
     "debug": "=2.2.0",
     "jquery": "=2.2.4",
