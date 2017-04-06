@@ -16,6 +16,7 @@ const PATHS = {
 };
 
 const common = {
+  devtool: 'source-map',
   entry: nodeEnvironment === 'test' ? {} : {
     app: PATHS.app,
   },

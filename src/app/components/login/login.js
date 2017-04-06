@@ -11,7 +11,7 @@ app.component('login', {
     onLogin: '&',
   },
   controller: class login {
-    constructor($scope, $rootScope, $timeout, $document, $mdDialog, $mdMedia, $cookies) {
+    constructor($scope, $rootScope, $timeout, $document, $mdDialog, $mdMedia, $cookies, $peers) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$timeout = $timeout;
@@ -19,12 +19,17 @@ app.component('login', {
       this.$mdDialog = $mdDialog;
       this.$mdMedia = $mdMedia;
       this.$cookies = $cookies;
+      this.$peers = $peers;
 
       this.$scope.$watch('$ctrl.input_passphrase', this.isValidPassphrase.bind(this));
       this.$timeout(this.devTestAccount.bind(this), 200);
 
       this.$scope.$watch(() => this.$mdMedia('xs') || this.$mdMedia('sm'), (wantsFullScreen) => {
         this.$scope.customFullscreen = wantsFullScreen === true;
+      });
+
+      this.$scope.$watch('$ctrl.$peers.currentPeerConfig', () => {
+        this.$peers.setActive(this.$peers.currentPeerConfig);
       });
     }
 

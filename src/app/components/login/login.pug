@@ -2,10 +2,15 @@ md-card
   md-card-title
     md-card-title-text
       span.md-title Sign In
-  md-card-content
+  md-card-content(flex='100', flex-gt-sm='70', flex-offset-gt-sm='15')
     form(ng-submit='$ctrl.doTheLogin()')
       md-input-container.md-block(md-is-error='$ctrl.valid === 0')
-        label Enter your passphrase
+        label.select Choose your network
+        md-select(ng-model='$ctrl.$peers.currentPeerConfig', aria-label='Peer')
+          md-optgroup(ng-repeat='(name, peers) in $ctrl.$peers.stack', ng-if='peers.length', label='{{ name }}')
+            md-option(ng-repeat='peer in peers', ng-value='peer') {{ peer.node }}{{ peer.port ? ':' + peer.port : '' }}
+      md-input-container.md-block(md-is-error='$ctrl.valid === 0')
+        label.pass Enter your passphrase
         input(type="{{ $ctrl.show_passphrase ? 'text' : 'password' }}", ng-model='$ctrl.input_passphrase', ng-disabled='$ctrl.generatingNewPassphrase', autofocus)
       md-input-container.md-block
         md-checkbox.md-primary(ng-model="$ctrl.show_passphrase", aria-label="Show passphrase") Show passphrase

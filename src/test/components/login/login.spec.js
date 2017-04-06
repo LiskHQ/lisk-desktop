@@ -32,9 +32,14 @@ describe('Login component', () => {
     expect(element.find('.md-title').text()).to.equal(HEADER_TEXT);
   });
 
-  const LABEL_TEXT = 'Enter your passphrase';
-  it(`should contain a form with label saying "${LABEL_TEXT}"`, () => {
-    expect(element.find('form label').text()).to.equal(LABEL_TEXT);
+  const PASS_LABEL_TEXT = 'Enter your passphrase';
+  it(`should contain a form input with label saying "${PASS_LABEL_TEXT}"`, () => {
+    expect(element.find('form md-input-container label.pass').text()).to.equal(PASS_LABEL_TEXT);
+  });
+
+  const SELECT_LABEL_TEXT = 'Choose your network';
+  it(`should contain a select element with label saying "${SELECT_LABEL_TEXT}"`, () => {
+    expect(element.find('form md-input-container label.select').text()).to.equal(SELECT_LABEL_TEXT);
   });
 
   it('should contain an input field', () => {

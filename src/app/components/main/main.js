@@ -16,7 +16,9 @@ app.component('main', {
       this.error = error;
 
       this.$scope.$on('login', this.login.bind(this));
-      this.$scope.$on('peerUpdate', this.update.bind(this));
+      this.$scope.$on('peerUpdate', () => {
+        this.update.bind(this);
+      });
 
       $scope.$watch('$ctrl.$peers.active', (peer, old) => {
         if (peer && old) {
@@ -65,7 +67,6 @@ app.component('main', {
 
     update() {
       this.reset();
-
       return this.$peers.active.getAccountPromise(this.address)
         .then((res) => {
           this.account = res;
