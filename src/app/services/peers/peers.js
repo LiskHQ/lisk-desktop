@@ -32,14 +32,18 @@ app.factory('$peers', ($timeout, $cookies, $location, $q) => {
       }
 
       this.setPeerAPIObject(conf);
-      this.currentPeerConfig = conf;
       if (!this.stack) {
         this.stack = this.active.listPeers();
         this.stack.localhost = [localhostConf, {
           node: 'localhost',
           port: 8000,
         }];
+        this.peerByName = {};
+        Object.keys(this.stack).forEach((key) => {
+          this.stack[key].forEach(peer => this.peerByName[peer.node] = peer);
+        });
       }
+      this.currentPeerConfig = this.peerByName[this.active.currentPeer];
 
       this.check();
     }
