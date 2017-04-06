@@ -20,12 +20,15 @@ app.component('main', {
         this.update.bind(this);
       });
 
-      $scope.$watch('$ctrl.$peers.active', (peer, old) => {
-        if (peer && old) {
-          this.$peers.check();
-          this.$rootScope.$broadcast('peerUpdate');
-        }
-      });
+      /**
+       * Since we're setting network nodes in login we won't need this one
+       */
+      // $scope.$watch('$ctrl.$peers.active', (peer, old) => {
+      //   if (peer && old) {
+      //     this.$peers.check();
+      //     this.$rootScope.$broadcast('peerUpdate');
+      //   }
+      // });
     }
 
     reset() {
