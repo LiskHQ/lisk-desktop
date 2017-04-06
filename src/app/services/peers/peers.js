@@ -40,10 +40,11 @@ app.factory('$peers', ($timeout, $cookies, $location, $q) => {
         }];
         this.peerByName = {};
         Object.keys(this.stack).forEach((key) => {
-          this.stack[key].forEach(peer => this.peerByName[peer.node + peer.port] = peer);
+          this.stack[key].forEach(peer => this.peerByName[peer.node + (peer.port || '')] = peer);
         });
       }
-      this.currentPeerConfig = this.peerByName[this.active.currentPeer + this.active.port];
+      this.currentPeerConfig = this.peerByName[this.active.currentPeer + this.active.port] ||
+        this.peerByName[this.active.currentPeer];
 
       this.check();
     }
