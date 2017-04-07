@@ -63,7 +63,7 @@ app.component('forging', {
             Array.prototype.push.apply(this.blocks, data.blocks);
           } else if (this.blocks[0].id !== data.blocks[0].id) {
             Array.prototype.unshift.apply(this.blocks,
-              data.blocks.filter(block => block.timestamp < this.blocks[0].timestamp));
+              data.blocks.filter(block => block.timestamp > this.blocks[0].timestamp));
           }
           this.blocksLoaded = true;
           this.moreBlocksExist = this.blocks.length < data.count;

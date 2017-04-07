@@ -79,3 +79,149 @@ describe('Forging component', () => {
   });
 });
 
+describe('forging component controller', () => {
+  beforeEach(angular.mock.module('app'));
+
+  let $rootScope;
+  let $scope;
+  let controller;
+  let $componentController;
+  let activePeerMock;
+  let $peers;
+  let delegate;
+  let blocks;
+
+  beforeEach(inject((_$componentController_, _$rootScope_, _$peers_) => {
+    $componentController = _$componentController_;
+    $rootScope = _$rootScope_;
+    $peers = _$peers_;
+  }));
+
+  beforeEach(() => {
+    blocks = Array.from({ length: 10 }, (v, k) => ({
+      id: 10 - k,
+      timestamp: 10 - k,
+    }));
+
+    delegate = {
+      address: '14018336151296112016L',
+      approval: 90,
+      missedblocks: 10,
+      producedblocks: 304,
+      productivity: 96.82,
+      publicKey: '3ff32442bb6da7d60c1b7752b24e6467813c9b698e0f278d48c43580da972135',
+      rate: 20,
+      username: 'genesis_42',
+      vote: '9999982470000000',
+    };
+
+    $peers.active = { sendRequest() {} };
+    activePeerMock = sinon.mock($peers.active);
+
+    $scope = $rootScope.$new();
+    controller = $componentController('forging', $scope, {
+      account: {
+        address: '8273455169423958419L',
+        balance: '10000',
+      },
+    });
+  });
+
+  describe('updateDelegate()', () => {
+    beforeEach(() => {
+    });
+
+    it('sets this.delegate to delegate object if delegate exists', () => {
+      activePeerMock.expects('sendRequest').withArgs('delegates/get').callsArgWith(2, {
+        success: true,
+        delegate,
+      });
+      expect(controller.delegate).to.equal(undefined);
+      controller.updateDelegate();
+      expect(controller.delegate).to.deep.equal(delegate);
+    });
+
+    it('sets this.delegate = {} if delegate doesn\'t exist', () => {
+      activePeerMock.expects('sendRequest').withArgs('delegates/get').callsArgWith(2, {
+        success: false,
+      });
+      expect(controller.delegate).to.equal(undefined);
+      controller.updateDelegate();
+      expect(controller.delegate).to.deep.equal({});
+    });
+  });
+
+  describe('updateForgedBlocks(limit, offset)', () => {
+    it('does nothing if requst fails', () => {
+      activePeerMock.expects('sendRequest').withArgs('blocks').callsArgWith(2, {
+        success: false,
+      });
+      controller.updateForgedBlocks(10);
+      expect(controller.blocks).to.deep.equal([]);
+    });
+
+    it('updates this.blocks with what was returned', () => {
+      activePeerMock.expects('sendRequest').withArgs('blocks').callsArgWith(2, {
+        success: true,
+        blocks,
+      });
+      controller.updateForgedBlocks(10);
+      expect(controller.blocks.length).to.equal(10);
+      expect(controller.blocks).to.deep.equal(blocks);
+    });
+
+    it('if offset is set then it appends returned blocks to this.blocks', () => {
+      const extraBlocks = Array.from({ length: 20 }, (v, k) => ({
+        id: 0 - k,
+        timestamp: 0 - k,
+      }));
+      activePeerMock.expects('sendRequest').withArgs('blocks').callsArgWith(2, {
+        success: true,
+        blocks: extraBlocks,
+      });
+      controller.blocks = blocks;
+      controller.updateForgedBlocks(20, 10);
+      expect(controller.blocks.length).to.equal(30);
+      expect(controller.blocks).to.deep.equal(blocks);
+    });
+
+    it('if returned blocks have no new value, then it this.blocks is unchanged', () => {
+      activePeerMock.expects('sendRequest').withArgs('blocks').callsArgWith(2, {
+        success: true,
+        blocks,
+      });
+      controller.blocks = blocks;
+      controller.updateForgedBlocks(10);
+      expect(controller.blocks).to.deep.equal(blocks);
+    });
+
+    it('if returned blocks contain a new value, then it is prepended to this.blocks', () => {
+      const newBlock = { id: 11, timestamp: 11 };
+      activePeerMock.expects('sendRequest').withArgs('blocks').callsArgWith(2, {
+        success: true,
+        blocks: [newBlock].concat(blocks),
+      });
+      controller.blocks = blocks;
+      controller.updateForgedBlocks(10);
+      expect(controller.blocks.length).to.equal(11);
+      expect(controller.blocks[0]).to.deep.equal(newBlock);
+    });
+  });
+
+  describe('loadMoreBlocks()', () => {
+    it('it fetches and appends 20 more blocks to this.blocks', () => {
+      const extraBlocks = Array.from({ length: 20 }, (v, k) => ({
+        id: 0 - k,
+        timestamp: 0 - k,
+      }));
+      activePeerMock.expects('sendRequest').withArgs('blocks').callsArgWith(2, {
+        success: true,
+        blocks: extraBlocks,
+      });
+      controller.blocks = blocks;
+      controller.loadMoreBlocks();
+      expect(controller.blocks.length).to.equal(30);
+      expect(controller.blocks).to.deep.equal(blocks);
+    });
+  });
+});
