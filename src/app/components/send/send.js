@@ -111,6 +111,10 @@ app.component('send', {
     setMaxAmount() {
       this.amount.value = this.amount.max;
     }
+
+    cancel() {
+      this.$mdDialog.cancel();
+    }
   },
 });
 

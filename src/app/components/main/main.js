@@ -7,13 +7,14 @@ const UPDATE_INTERVAL_BALANCE = 10000;
 app.component('main', {
   template: require('./main.pug')(),
   controller: class main {
-    constructor($scope, $rootScope, $timeout, $q, $peers, error) {
+    constructor($scope, $rootScope, $timeout, $q, $peers, error, $mdDialog) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$timeout = $timeout;
       this.$q = $q;
       this.$peers = $peers;
       this.error = error;
+      this.$mdDialog = $mdDialog;
 
       this.$scope.$on('login', this.login.bind(this));
       this.$scope.$on('peerUpdate', this.update.bind(this));
@@ -78,6 +79,20 @@ app.component('main', {
           this.timeout = this.$timeout(this.update.bind(this), UPDATE_INTERVAL_BALANCE);
           return this.$q.resolve();
         });
+    }
+
+    showTransfer(account, passphrase) {
+      // Appending dialog to document.body to cover sidenav in docs app
+      this.$mdDialog.show({
+        template: "<send passphrase='$ctrl.passphrase' account='$ctrl.account'></send>",
+        parent: angular.element('#main'),
+        locals: {
+          account, passphrase,
+        },
+        bindToController: true,
+        controller() {},
+        controllerAs: '$ctrl',
+      });
     }
   },
 });
