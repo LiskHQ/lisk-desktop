@@ -11,7 +11,7 @@ md-content(layout='column', layout-gt-xs='row')
       span.md-title.title Peer
       md-select(ng-model='$ctrl.$peers.currentPeerConfig', aria-label='Peer')
         md-optgroup(ng-repeat='(name, peers) in $ctrl.$peers.stack', ng-if='peers.length', label='{{ name }}')
-          md-option(ng-repeat='peer in peers', ng-value='peer') {{ peer.node }}{{ peer.port ? ':' + peer.port : '' }}
+          md-option(ng-repeat='peer in peers', ng-value='peer') {{ peer.node }}{{ name === 'localhost' ? ':' + peer.port : '' }}
   md-card.offline-hide(flex-gt-xs=33)
     md-card-content(layout='column', layout-align='center center')
       span.md-title.title Balance
