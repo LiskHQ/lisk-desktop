@@ -1,90 +1,79 @@
 div.offline-hide
   div
-    .loading
-      md-progress-linear(md-mode='indeterminate', ng-show='$ctrl.loading_show || !$ctrl.loaded')
+    md-card.loading(ng-show='!$ctrl.delegate')
+      md-progress-linear(md-mode='indeterminate')
     md-content
-      div(layout='row', ng-if='!delegate.username')
-        md-card(flex-gt-xs=100, layout-align='center center', layout-padding)
+      div(layout='row', ng-if='$ctrl.delegate && !$ctrl.delegate.username')
+        md-card(flex-100, flex-gt-xs=100, layout-align='center center', layout-padding)
           span.title You need to become a delegate to start forging
-          md-button.md-raised.md-primary Become Delegate
-      div(layout='row', ng-if='delegate.username')
-        md-card(flex-gt-xs=50, layout-padding)
+          md-button.md-raised.md-primary(disabled) Become Delegate
+      div(layout='column', layout-gt-xs='row', ng-if='$ctrl.delegate.username')
+        md-card(flex-gt-xs=100, layout-padding)
           .info-panel.info-panel-grey
-            span.title {{delegate.username}} 
-            span.plain-text(ng-show='delegate.time') Registered 
-              timestamp(data='delegate.time')
-              span  ago
-        md-card(flex-gt-xs=50, layout-padding)
-          .info-panel.info-panel-grey
-            span.title LSK Earned 
-            span.plain-text {{totalForged  | lsk }} LSK
-          //               LSK Earned                                {{totalForged / 100000000 | feeFilter }}LSK
-      div(layout='row', ng-if='delegate.username')
-        md-card(flex-gt-xs=25, layout-padding)
+            span.title {{$ctrl.delegate.username}} 
+            span.pull-right {{$ctrl.statistics.total  | lsk | number:2 }} LSK Earned
+      md-content(layout='column', layout-gt-xs='row', ng-if='$ctrl.delegate.username')
+        md-card(flex-50, flex-gt-xs=25, layout-padding)
           .info-panel.info-panel-grey
             span.title Today 
-            span.plain-text {{statistics.today  | lsk | number:2 }} LSK
-        md-card(flex-gt-xs=25, layout-padding)
+            span.pull-right {{$ctrl.statistics.today  | lsk | number:2 }} LSK
+        md-card(flex-50, flex-gt-xs=25, layout-padding)
           .info-panel.info-panel-grey
             span.title Last 24 hours 
-            span.plain-text {{statistics.last24h  | lsk | number:2 }} LSK
-        md-card(flex-gt-xs=25, layout-padding)
+            span.pull-right {{$ctrl.statistics.last24h  | lsk | number:2 }} LSK
+        md-card(flex-50, flex-gt-xs=25, layout-padding)
           .info-panel.info-panel-grey
             span.title {{'Last 7 days'}} 
-            span.plain-text {{statistics.last7d  | lsk | number:2 }} LSK
-        md-card(flex-gt-xs=25, layout-padding)
+            span.pull-right {{$ctrl.statistics.last7d  | lsk | number:2 }} LSK
+        md-card(flex-50, flex-gt-xs=25, layout-padding)
           .info-panel.info-panel-grey
             span.title {{'Last 30 days'}} 
-            span.plain-text {{statistics.last30d  | lsk | number:2 }} LSK
-      div(layout='row', ng-if='delegate.username')
+            span.pull-right {{$ctrl.statistics.last30d  | lsk | number:2 }} LSK
+      div(layout='column', layout-gt-xs='row', ng-if='$ctrl.delegate.username')
         md-card(flex-gt-xs=33, layout-align='center center', layout-padding)
           div Rank
-          div.progress-label {{rank}}
-          md-progress-circular(md-mode='determinate', value='{{101 - rank}}', md-diameter='200') {{rank}}
+          div.progress-label {{$ctrl.delegate.rate}}
+          md-progress-circular(md-mode='determinate', value='{{101 - $ctrl.delegate.rate}}', md-diameter='200') {{$ctrl.delegate.rate}}
         md-card(flex-gt-xs=33, layout-align='center center', layout-padding)
           div Productivity
-          div.progress-label {{productivity}}%
-          md-progress-circular(md-mode='determinate', value='{{productivity}}', md-diameter='200')
+          div.progress-label {{$ctrl.delegate.productivity}}%
+          md-progress-circular(md-mode='determinate', value='{{$ctrl.delegate.productivity}}', md-diameter='200')
         md-card(flex-gt-xs=33, layout-align='center center', layout-padding)
           div Approval
-          div.progress-label {{approval}}%
-          md-progress-circular(md-mode='determinate', value='{{approval}}', md-diameter='200')
-      md-card(layout='column', ng-if='delegate.username')
+          div.progress-label {{$ctrl.delegate.approval}}%
+          md-progress-circular(md-mode='determinate', value='{{$ctrl.delegate.approval}}', md-diameter='200')
+      md-card(layout='column', ng-if='$ctrl.delegate.username')
         md-card-title
           md-card-title-text
             spa.md-title Forged Blocks
-          span(md-position-mode='target-right target', ng-if='!blocks.length')
-            span {{'You have not forged any blocks yet.'}}
-          md-menu(md-position-mode='target-right target', ng-if='blocks.length')
+          span(md-position-mode='target-right target', ng-if='$ctrl.blocks.length === 0 && $ctrl.blocksLoaded')
+            span You have not forged any blocks yet.
+          md-menu(md-position-mode='target-right target', ng-if='$ctrl.blocks.length')
              md-button.md-icon-button(ng-click='$mdOpenMenu()')
                i.material-icons more_vert
              md-menu-content(width='4')
                md-menu-item
                 p(ng-click='check($event)')
-                  input#advanced.filled-in.violet(type='checkbox', ng-model='showAllColumns')
-                  label(for='advanced')
-                    translate Show All Columns
-               md-menu-item
+                  md-checkbox#advanced.filled-in.violet(ng-model='$ctrl.showAllColumns') Show All Columns
+               // md-menu-item
                 p(ng-click='check($event)')
-                  input#fulltime.filled-in.violet(type='checkbox', ng-model='showFullTime')
-                  label(for='fulltime')
-                    translate Show Full Time
+                  md-checkbox#fulltime.filled-in.violet(ng-model='showFullTime')
+                  label(for='fulltime')  Show Full Time
         md-card-content
           md-content(layout='column')
-            md-table-container(ng-show='blocks.length')
-              table(md-table, ng-table='tableBlocks', border='0', width='100%', cellpadding='0', cellspacing='0', ng-show='blocks.length')
+            md-table-container(ng-show='$ctrl.blocks.length')
+              table(md-table, ng-table='tableBlocks', border='0', width='100%', cellpadding='0', cellspacing='0', ng-show='$ctrl.blocks.length')
                 thead(md-head)
                   tr(md-row)
                     th(md-column) Block height
-                    th(md-column, ng-show='showAllColumns') Block Id
+                    th(md-column, ng-show='$ctrl.showAllColumns') Block Id
                     th(md-column) Timestamp
                     th(md-column) Total fee
                     th(md-column) Reward
                 tbody(md-body)
-                  tr(md-row, ng-repeat='block in blocks')
+                  tr(md-row, ng-repeat='block in $ctrl.blocks')
                     td(md-cell data-title='tableBlocks.cols.height', sortable="'height'") {{block.height}}
-                    td.pointer(md-cell data-title='tableBlocks.cols.blockId', ng-click='blockInfo(block)', ng-show='showAllColumns')
-                      a(href='#') {{block.id}}
+                    td(md-cell data-title='tableBlocks.cols.blockId', ng-show='$ctrl.showAllColumns') {{block.id}}
                     td(md-cell data-title='tableBlocks.cols.timestamp', sortable="'timestamp'")
                       span(ng-show='block.timestamp > 0')
                         timestamp(data='block.timestamp')
@@ -92,3 +81,6 @@ div.offline-hide
                     td(md-cell data-title='tableBlocks.cols.totalFee', sortable="'totalFee'") {{block.totalFee | lsk}}
                     td(md-cell data-title='tableBlocks.cols.reward', sortable="'reward'") {{block.reward | lsk}}
                     td.width-80(md-cell data-title="''")
+        md-button.more(ng-show='$ctrl.moreBlocksExist', ng-disabled='!$ctrl.blocksLoaded', ng-click='$ctrl.loadMoreBlocks()') Load More
+        .loading
+          md-progress-linear(md-mode='indeterminate', ng-hide='$ctrl.blocksLoaded')
