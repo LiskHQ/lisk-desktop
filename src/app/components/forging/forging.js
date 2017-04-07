@@ -18,25 +18,25 @@ app.component('forging', {
       this.statistics = {};
       this.blocks = [];
 
-      this.loadAllData();
+      this.updateAllData();
     }
 
     $onDestroy() {
       this.$timeout.cancel(this.timeout);
     }
 
-    loadAllData() {
-      this.loadDelegate();
-      this.loadForgedBlocks(10);
+    updateAllData() {
+      this.updateDelegate();
+      this.updateForgedBlocks(10);
 
-      this.loadForgingStats('today', moment().format('YYYY-MM-DD'));
-      this.loadForgingStats('last24h', moment().subtract(1, 'days'));
-      this.loadForgingStats('last7d', moment().subtract(7, 'days'));
-      this.loadForgingStats('last30d', moment().subtract(30, 'days'));
-      this.loadForgingStats('total', moment('2016-04-24 17:00'));
+      this.updateForgingStats('today', moment().format('YYYY-MM-DD'));
+      this.updateForgingStats('last24h', moment().subtract(1, 'days'));
+      this.updateForgingStats('last7d', moment().subtract(7, 'days'));
+      this.updateForgingStats('last30d', moment().subtract(30, 'days'));
+      this.updateForgingStats('total', moment('2016-04-24 17:00'));
     }
 
-    loadDelegate() {
+    updateDelegate() {
       this.$peers.active.sendRequest('delegates/get', {
         publicKey: this.account.publicKey,
       }, (data) => {
@@ -48,7 +48,7 @@ app.component('forging', {
       });
     }
 
-    loadForgedBlocks(limit, offset) {
+    updateForgedBlocks(limit, offset) {
       this.$timeout.cancel(this.timeout);
 
       this.$peers.active.sendRequest('blocks', {
@@ -69,22 +69,24 @@ app.component('forging', {
           this.moreBlocksExist = this.blocks.length < data.count;
         }
 
-        this.timeout = this.$timeout(this.loadAllData.bind(this), UPDATE_INTERVAL);
+        this.timeout = this.$timeout(this.updateAllData.bind(this), UPDATE_INTERVAL);
       });
     }
 
     loadMoreBlocks() {
       this.blocksLoaded = false;
-      this.loadForgedBlocks(20, this.blocks.length);
+      this.updateForgedBlocks(20, this.blocks.length);
     }
 
-    loadForgingStats(key, startMoment) {
+    updateForgingStats(key, startMoment) {
       this.$peers.active.sendRequest('delegates/forging/getForgedByAccount', {
         generatorPublicKey: this.account.publicKey,
         start: moment(startMoment).unix(),
         end: moment().unix(),
       }, (data) => {
-        this.statistics[key] = data.forged;
+        if (data.success) {
+          this.statistics[key] = data.forged;
+        }
       });
     }
   },
