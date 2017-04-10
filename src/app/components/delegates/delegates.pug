@@ -18,7 +18,7 @@ div.offline-hide
     md-content(layout='column')
       md-table-container(ng-show='$ctrl.delegates.length')
         table(md-table)
-          thead(md-head, ng-show='$ctrl.filteredDelegates.length')
+          thead(md-head)
             tr(md-row)
               th(md-column) 
               //th(md-column) Status
@@ -42,10 +42,10 @@ div.offline-hide
                 i.material-icons sort
           tbody(md-body)
             tr(md-row, ng-hide='$ctrl.filteredDelegates.length')
-              td(md-cell) No delegates found
+              td(md-cell, colspan='6') No delegates found
             tr(md-row, ng-repeat="delegate in ($ctrl.filteredDelegates = ($ctrl.delegates | filter : {username: $ctrl.search} | boolFilter: {status : $ctrl.filter})) | limitTo : $ctrl.delegatesDisplayedCount")
               td(md-cell)
-                md-checkbox(ng-model='delegate.status.Selected', ng-change='$ctrl.selectionChange(delegate)')
+                md-checkbox(ng-model='delegate.status.Selected', ng-change='$ctrl.selectionChange(delegate)', aria-label='delegate selected for voting')
               //td.status(md-cell) 
                 span(ng-repeat='(status, value) in delegate.status', ng-if='status != "Selected" && status != "All" && value')
                   span  
