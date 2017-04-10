@@ -5,16 +5,19 @@ div.offline-hide
         span.md-title
           span Delegates:
           span.filter-select
-            md-select(ng-model='$ctrl.filter')
+            md-select(ng-model='$ctrl.filter', aria-label='Delegate state filter')
               md-option(ng-repeat='filter in states', ng-value='filter') {{ filter }}
-          span ({{$ctrl.filteredDelegates.length}})
+          // span ({{$ctrl.filteredDelegates.length}})
       span(md-position-mode='target-right target')
-        md-button.pull-right.remove-votes-link(ng-class='{"red-link": $ctrl.unvoteList.length}')
-          i.material-icons close
-          span Remove votes ({{$ctrl.unvoteList.length}} of {{$ctrl.votedList.length}})
-        md-button.pull-right(ng-class='{"green-link": $ctrl.voteList.length}')
+        md-button.pull-right
           i.material-icons done
-          span  Vote ({{$ctrl.voteList.length}})
+          span  Vote 
+          span(ng-show='$ctrl.voteList.length || $ctrl.unvoteList.length') 
+            span (
+            span.green-link(ng-show='$ctrl.voteList.length') +{{$ctrl.voteList.length}}
+            span(ng-show='$ctrl.voteList.length && $ctrl.unvoteList.length') /
+            span.red-link(ng-show='$ctrl.unvoteList.length') -{{$ctrl.unvoteList.length}}
+            span )
     md-content(layout='column')
       md-table-container(ng-show='$ctrl.delegates.length')
         table(md-table)
