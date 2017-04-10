@@ -5,8 +5,8 @@ div.offline-hide
         span.md-title
           span Delegates:
           span.filter-select
-            md-select(ng-model='$ctrl.filter', aria-label='Delegate state filter')
-              md-option(ng-repeat='filter in states', ng-value='filter') {{ filter }}
+            md-select(ng-model='filter', aria-label='Delegate state filter')
+              md-option(ng-repeat='state in states', ng-value='state') {{ state }}
           // span ({{$ctrl.filteredDelegates.length}})
       span(md-position-mode='target-right target')
         md-button.pull-right(ng-click='$ctrl.confirmVote()')
@@ -43,10 +43,10 @@ div.offline-hide
               th(md-column)
                 span Approval 
                 i.material-icons sort
-          tbody(md-body)
+          tbody(md-body, infinite-scroll='$ctrl.showMore()', infinite-scroll-distance='1')
             tr(md-row, ng-hide='$ctrl.filteredDelegates.length')
               td(md-cell, colspan='6') No delegates found
-            tr(md-row, ng-repeat="delegate in ($ctrl.filteredDelegates = ($ctrl.delegates | filter : {username: $ctrl.search} | boolFilter: {status : $ctrl.filter})) | limitTo : $ctrl.delegatesDisplayedCount", ng-class='{"downvote": delegate.status.Voted && delegate.status.Changed, "upvote": !delegate.status.Voted && delegate.status.Changed}')
+            tr(md-row, ng-repeat="delegate in ($ctrl.filteredDelegates = ($ctrl.delegates | filter : {username: $ctrl.search} | boolFilter: {status : filter})) | limitTo : $ctrl.delegatesDisplayedCount", ng-class='{"downvote": delegate.status.Voted && delegate.status.Changed, "upvote": !delegate.status.Voted && delegate.status.Changed}')
               td(md-cell)
                 md-checkbox(ng-model='delegate.status.Selected', ng-change='$ctrl.selectionChange(delegate)', aria-label='delegate selected for voting')
               //td.status(md-cell) 

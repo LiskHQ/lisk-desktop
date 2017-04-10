@@ -14,7 +14,7 @@ app.component('delegates', {
       this.$mdDialog = $mdDialog;
       this.$mdMedia = $mdMedia;
 
-      this.filter = 'All';
+      this.$scope.filter = 'All';
       this.voteList = [];
       this.votedList = [];
       this.unvoteList = [];
@@ -26,6 +26,10 @@ app.component('delegates', {
         this.votedList = data.delegates;
         this.$peers.active.listActiveDelegates(101, this.addDelegates.bind(this));
         this.$peers.active.listStandyDelegates(101, this.addDelegates.bind(this));
+      });
+
+      this.$scope.$watch('filter', () => {
+        this.delegatesDisplayedCount = 20;
       });
     }
 
@@ -46,7 +50,9 @@ app.component('delegates', {
     }
 
     showMore() {
-      this.delegatesDisplayedCount += 20;
+      if (this.delegatesDisplayedCount < this.delegates.length) {
+        this.delegatesDisplayedCount += 20;
+      }
     }
 
     selectionChange(delegate) {
@@ -150,6 +156,7 @@ app.component('delegates', {
     }
 
     activateSearch() {
+      this.delegatesDisplayedCount = 20;
       this.searchActive = true;
     }
   },
