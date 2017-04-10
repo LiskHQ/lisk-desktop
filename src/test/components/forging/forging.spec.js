@@ -186,7 +186,7 @@ describe('forging component controller', () => {
       expect(controller.blocks).to.deep.equal(blocks);
     });
 
-    it('if returned blocks have no new value, then it this.blocks is unchanged', () => {
+    it('if returned blocks have no new value, then this.blocks is unchanged', () => {
       activePeerMock.expects('sendRequest').withArgs('blocks').callsArgWith(2, {
         success: true,
         blocks,
