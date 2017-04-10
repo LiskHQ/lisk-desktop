@@ -9,7 +9,7 @@ div.offline-hide
               md-option(ng-repeat='filter in states', ng-value='filter') {{ filter }}
           // span ({{$ctrl.filteredDelegates.length}})
       span(md-position-mode='target-right target')
-        md-button.pull-right
+        md-button.pull-right(ng-click='$ctrl.confirmVote()')
           i.material-icons done
           span  Vote 
           span(ng-show='$ctrl.voteList.length || $ctrl.unvoteList.length') 
@@ -46,7 +46,7 @@ div.offline-hide
           tbody(md-body)
             tr(md-row, ng-hide='$ctrl.filteredDelegates.length')
               td(md-cell, colspan='6') No delegates found
-            tr(md-row, ng-repeat="delegate in ($ctrl.filteredDelegates = ($ctrl.delegates | filter : {username: $ctrl.search} | boolFilter: {status : $ctrl.filter})) | limitTo : $ctrl.delegatesDisplayedCount")
+            tr(md-row, ng-repeat="delegate in ($ctrl.filteredDelegates = ($ctrl.delegates | filter : {username: $ctrl.search} | boolFilter: {status : $ctrl.filter})) | limitTo : $ctrl.delegatesDisplayedCount", ng-class='{"downvote": delegate.status.Voted && delegate.status.Changed, "upvote": !delegate.status.Voted && delegate.status.Changed}')
               td(md-cell)
                 md-checkbox(ng-model='delegate.status.Selected', ng-change='$ctrl.selectionChange(delegate)', aria-label='delegate selected for voting')
               //td.status(md-cell) 
@@ -59,3 +59,5 @@ div.offline-hide
               td(md-cell) {{ delegate.productivity}}
               td(md-cell) {{ delegate.approval}}
       md-button.more(ng-show='$ctrl.delegatesDisplayedCount < $ctrl.filteredDelegates.length', ng-click='$ctrl.showMore()') Show More
+      .loading
+        md-progress-linear(md-mode='indeterminate', ng-show='!$ctrl.loaded')
