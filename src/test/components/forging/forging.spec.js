@@ -1,6 +1,7 @@
 const chai = require('chai');
 const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
+const moment = require('moment');
 
 const expect = chai.expect;
 chai.use(sinonChai);
@@ -222,6 +223,34 @@ describe('forging component controller', () => {
       controller.loadMoreBlocks();
       expect(controller.blocks.length).to.equal(30);
       expect(controller.blocks).to.deep.equal(blocks);
+    });
+  });
+
+  describe('updateForgingStats(key, startMoment)', () => {
+    it('it fetches forged by account since startMoment and sets it to this.statistics[key]', () => {
+      const forged = 42;
+      const key = 'testStat';
+      const startMoment = moment().subtract(1, 'days');
+      activePeerMock.expects('sendRequest').withArgs('delegates/forging/getForgedByAccount').callsArgWith(2, {
+        success: true,
+        forged,
+      });
+
+      expect(controller.statistics[key]).to.equal(undefined);
+      controller.updateForgingStats(key, startMoment);
+      expect(controller.statistics[key]).to.equal(forged);
+    });
+
+    it('it tries to fetch forged by account since startMoment. If request fails, then it does nothing', () => {
+      const key = 'testStat';
+      const startMoment = moment().subtract(1, 'days');
+      activePeerMock.expects('sendRequest').withArgs('delegates/forging/getForgedByAccount').callsArgWith(2, {
+        success: false,
+      });
+
+      expect(controller.statistics[key]).to.equal(undefined);
+      controller.updateForgingStats(key, startMoment);
+      expect(controller.statistics[key]).to.equal(undefined);
     });
   });
 });
