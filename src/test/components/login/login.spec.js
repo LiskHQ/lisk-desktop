@@ -37,7 +37,7 @@ describe('Login component', () => {
     expect(element.find('form md-input-container label.pass').text()).to.equal(PASS_LABEL_TEXT);
   });
 
-  const SELECT_LABEL_TEXT = 'Choose your network node';
+  const SELECT_LABEL_TEXT = 'Choose a peer';
   it(`should contain a select element with label saying "${SELECT_LABEL_TEXT}"`, () => {
     expect(element.find('form md-input-container label.select').text()).to.equal(SELECT_LABEL_TEXT);
   });

@@ -5,7 +5,7 @@ md-card
   md-card-content(flex='100', flex-gt-sm='70', flex-offset-gt-sm='15')
     form(ng-submit='$ctrl.doTheLogin()')
       md-input-container.md-block(md-is-error='$ctrl.valid === 0')
-        label.select Choose your network node
+        label.select Choose a peer
         md-select(ng-model='$ctrl.$peers.currentPeerConfig', aria-label='Peer')
           md-optgroup(ng-repeat='(name, peers) in $ctrl.$peers.stack', ng-if='peers.length', label='{{ name }}')
             md-option(ng-repeat='peer in peers', ng-value='peer') {{ peer.node }}{{ peer.port ? ':' + peer.port : '' }}

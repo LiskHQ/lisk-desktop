@@ -125,7 +125,7 @@ function testAddress() {
 }
 
 function testPeer() {
-  expect(element.all(by.css('form md-select md-select-value span:first-child')).get(0).getText()).toEqual('Choose your network node');
+  expect(element.all(by.css('form md-select md-select-value span:first-child')).get(0).getText()).toEqual('Choose a peer');
 }
 
 function testChangePeer() {
