@@ -9,7 +9,7 @@ md-content(layout='column', layout-gt-xs='row')
         i.material-icons.offline(ng-show='!$ctrl.$peers.online') error
         i.material-icons.online(ng-show='$ctrl.$peers.online') check circle
       span.md-title.title Peer
-      div.address.value {{ $ctrl.$peers.currentPeerConfig.node }}:{{ $ctrl.$peers.currentPeerConfig.port }}
+      div.active-peer.value {{ $ctrl.$peers.currentPeerConfig.node }}:{{ $ctrl.$peers.currentPeerConfig.port }}
   md-card.offline-hide(flex-gt-xs=33)
     md-card-content(layout='column', layout-align='center center')
       span.md-title.title Balance
