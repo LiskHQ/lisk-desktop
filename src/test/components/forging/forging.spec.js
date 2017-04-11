@@ -142,7 +142,7 @@ describe('forging component controller', () => {
       expect(controller.delegate).to.deep.equal(delegate);
     });
 
-    it('sets this.delegate = {} if delegate doesn\'t exist', () => {
+    it('sets this.delegate = {} if delegate does not exist', () => {
       activePeerMock.expects('sendRequest').withArgs('delegates/get').callsArgWith(2, {
         success: false,
       });
@@ -153,7 +153,7 @@ describe('forging component controller', () => {
   });
 
   describe('updateForgedBlocks(limit, offset)', () => {
-    it('does nothing if requst fails', () => {
+    it('does nothing if request fails', () => {
       activePeerMock.expects('sendRequest').withArgs('blocks').callsArgWith(2, {
         success: false,
       });
@@ -171,7 +171,7 @@ describe('forging component controller', () => {
       expect(controller.blocks).to.deep.equal(blocks);
     });
 
-    it('if offset is set then it appends returned blocks to this.blocks', () => {
+    it('appends returned blocks to this.blocks if offset is set', () => {
       const extraBlocks = Array.from({ length: 20 }, (v, k) => ({
         id: 0 - k,
         timestamp: 0 - k,
@@ -186,7 +186,7 @@ describe('forging component controller', () => {
       expect(controller.blocks).to.deep.equal(blocks);
     });
 
-    it('if returned blocks have no new value, then this.blocks is unchanged', () => {
+    it('does not change this.blocks when returned blocks values are unchanged', () => {
       activePeerMock.expects('sendRequest').withArgs('blocks').callsArgWith(2, {
         success: true,
         blocks,
@@ -196,7 +196,7 @@ describe('forging component controller', () => {
       expect(controller.blocks).to.deep.equal(blocks);
     });
 
-    it('if returned blocks contain a new value, then it is prepended to this.blocks', () => {
+    it('prepends to this.blocks when returned blocks contains a new value', () => {
       const newBlock = { id: 11, timestamp: 11 };
       activePeerMock.expects('sendRequest').withArgs('blocks').callsArgWith(2, {
         success: true,
@@ -210,7 +210,7 @@ describe('forging component controller', () => {
   });
 
   describe('loadMoreBlocks()', () => {
-    it('it fetches and appends 20 more blocks to this.blocks', () => {
+    it('fetches and appends 20 more blocks to this.blocks', () => {
       const extraBlocks = Array.from({ length: 20 }, (v, k) => ({
         id: 0 - k,
         timestamp: 0 - k,
@@ -227,7 +227,7 @@ describe('forging component controller', () => {
   });
 
   describe('updateForgingStats(key, startMoment)', () => {
-    it('it fetches forged by account since startMoment and sets it to this.statistics[key]', () => {
+    it('fetches forged by account since startMoment and sets it to this.statistics[key]', () => {
       const forged = 42;
       const key = 'testStat';
       const startMoment = moment().subtract(1, 'days');
@@ -241,7 +241,7 @@ describe('forging component controller', () => {
       expect(controller.statistics[key]).to.equal(forged);
     });
 
-    it('it tries to fetch forged by account since startMoment. If request fails, then it does nothing', () => {
+    it('does nothing after failing to fetch forged by account since startMoment', () => {
       const key = 'testStat';
       const startMoment = moment().subtract(1, 'days');
       activePeerMock.expects('sendRequest').withArgs('delegates/forging/getForgedByAccount').callsArgWith(2, {
