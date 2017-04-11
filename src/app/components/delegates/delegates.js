@@ -14,14 +14,12 @@ app.component('delegates', {
       this.$mdDialog = $mdDialog;
       this.$mdMedia = $mdMedia;
 
-      this.$scope.filter = 'All';
       this.$scope.search = '';
       this.voteList = [];
       this.votedList = [];
       this.unvoteList = [];
       this.delegates = [];
       this.delegatesDisplayedCount = 20;
-      this.$scope.states = ['All', 'Active', 'Stand by', 'Voted', 'Not Voted', 'Changed'];
 
       this.$peers.active.sendRequest('accounts/delegates', { address: this.account.address }, (data) => {
         this.votedList = data.delegates || [];
@@ -33,10 +31,6 @@ app.component('delegates', {
         if (search || oldValue) {
           this.loadDelegates(0, search, true);
         }
-      });
-
-      this.$scope.$watch('filter', () => {
-        this.delegatesDisplayedCount = 20;
       });
     }
 
@@ -60,14 +54,9 @@ app.component('delegates', {
         this.delegates = this.delegates.concat(data.delegates.map((delegate) => {
           const voted = this.votedList.filter(
             vote => vote.address === delegate.address).length === 1;
-          const active = delegate.rate <= 101;
           delegate.status = {  // eslint-disable-line no-param-reassign
-            All: true,
-            Selected: voted,
-            Voted: voted,
-            'Not Voted': !voted,
-            Active: active,
-            'Stand By': !active,
+            selected: voted,
+            voted,
           };
           return delegate;
         }));
@@ -89,9 +78,9 @@ app.component('delegates', {
 
     selectionChange(delegate) {
       // eslint-disable-next-line no-param-reassign
-      delegate.status.Changed = delegate.status.Voted !== delegate.status.Selected;
-      const list = delegate.status.Voted ? this.unvoteList : this.voteList;
-      if (delegate.status.Changed) {
+      delegate.status.changed = delegate.status.voted !== delegate.status.selected;
+      const list = delegate.status.voted ? this.unvoteList : this.voteList;
+      if (delegate.status.changed) {
         list.push(delegate);
       } else {
         list.splice(list.indexOf(delegate), 1);
@@ -116,8 +105,8 @@ app.component('delegates', {
           // eslint-disable-next-line class-methods-use-this
           removeVote(list, index) {
             /* eslint-disable no-param-reassign */
-            list[index].status.Selected = list[index].status.Voted;
-            list[index].status.Changed = false;
+            list[index].status.selected = list[index].status.voted;
+            list[index].status.changed = false;
             /* eslint-enable no-param-reassign */
             list.splice(index, 1);
           }
@@ -155,16 +144,14 @@ app.component('delegates', {
           clearVotes() {
             this.voteList.forEach((delegate) => {
               /* eslint-disable no-param-reassign */
-              delegate.status.Changed = false;
-              delegate.status.Voted = true;
-              delegate.status['Not Voted'] = false;
+              delegate.status.changed = false;
+              delegate.status.voted = true;
             });
             this.voteList.splice(0, this.voteList.length);
 
             this.unvoteList.forEach((delegate) => {
-              delegate.status.Changed = false;
-              delegate.status.Voted = false;
-              delegate.status['Not Voted'] = true;
+              delegate.status.changed = false;
+              delegate.status.voted = false;
               /* eslint-enable no-param-reassign */
             });
             this.unvoteList.splice(0, this.voteList.length);
