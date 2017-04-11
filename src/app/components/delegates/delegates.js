@@ -15,6 +15,7 @@ app.component('delegates', {
       this.$mdMedia = $mdMedia;
 
       this.$scope.filter = 'All';
+      this.$scope.search = '';
       this.voteList = [];
       this.votedList = [];
       this.unvoteList = [];
@@ -23,9 +24,19 @@ app.component('delegates', {
       this.$scope.states = ['All', 'Active', 'Stand by', 'Voted', 'Not Voted', 'Changed'];
 
       this.$peers.active.sendRequest('accounts/delegates', { address: this.account.address }, (data) => {
-        this.votedList = data.delegates;
-        this.$peers.active.listActiveDelegates(101, this.addDelegates.bind(this));
-        this.$peers.active.listStandyDelegates(101, this.addDelegates.bind(this));
+        this.votedList = data.delegates || [];
+        this.loadDelegates(0, this.$scope.search, () => {
+          this.loadDelegates(100, this.$scope.search);
+        });
+      });
+
+      this.$scope.$watch('search', () => {
+        this.delegatesDisplayedCount = 20;
+        if (this.$scope.search.length > 2 || this.$scope.search.length === 0) {
+          this.loadDelegates(0, this.$scope.search, () => {
+            this.delegates = [];
+          });
+        }
       });
 
       this.$scope.$watch('filter', () => {
@@ -33,25 +44,48 @@ app.component('delegates', {
       });
     }
 
-    addDelegates(data) {
-      this.delegates = this.delegates.concat(data.delegates.map((delegate) => {
-        const voted = this.votedList.filter(vote => vote.address === delegate.address).length === 1;
-        delegate.status = {  // eslint-disable-line no-param-reassign
-          All: true,
-          Selected: voted,
-          Voted: voted,
-          'Not Voted': !voted,
-          Active: delegate.rate <= 101,
-          'Stand By': delegate.rate > 101,
-        };
-        return delegate;
+    loadDelegates(offset, search, callback) {
+      this.loading = true;
+      this.$peers.active.sendRequest(`delegates/${search ? 'search' : ''}`, {
+        offset,
+        limit: '100',
+        q: search,
+      }, ((data) => {
+        callback(data);
+        this.addDelegates(data);
       }));
-      this.loaded = true;
+      this.lastSearch = search;
+    }
+
+    addDelegates(data) {
+      if (data.success) {
+        this.delegates = this.delegates.concat(data.delegates.map((delegate) => {
+          const voted = this.votedList.filter(
+            vote => vote.address === delegate.address).length === 1;
+          const active = delegate.rate <= 101;
+          delegate.status = {  // eslint-disable-line no-param-reassign
+            All: true,
+            Selected: voted,
+            Voted: voted,
+            'Not Voted': !voted,
+            Active: active,
+            'Stand By': !active,
+          };
+          return delegate;
+        }));
+        this.delegatesTotalCount = data.totalCount;
+        this.loading = false;
+      }
     }
 
     showMore() {
       if (this.delegatesDisplayedCount < this.delegates.length) {
         this.delegatesDisplayedCount += 20;
+      }
+      if (this.delegates.length - this.delegatesDisplayedCount <= 20 &&
+          this.delegates.length < this.delegatesTotalCount &&
+          !this.loading) {
+        this.loadDelegates(this.delegates.length, this.$scope.search);
       }
     }
 
