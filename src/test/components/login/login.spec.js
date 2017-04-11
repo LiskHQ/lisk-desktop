@@ -72,6 +72,29 @@ describe('Login controller', () => {
     controller.passphrase = '';
   });
 
+  describe('controller()', () => {
+    it('Should define a watcher for $ctrl.$peers.currentPeerConfig', () => {
+      $scope.$apply();
+      const peers = controller.$peers;
+      const spy = sinon.spy(peers, 'setActive');
+      peers.currentPeerConfig = peers.stack.localhost[0];
+      $scope.$apply();
+      peers.currentPeerConfig = peers.stack.official[0];
+      $scope.$apply();
+      expect(spy).to.have.been.calledWith();
+    });
+
+    it('Should be able to change the active peer', () => {
+      $scope.$apply();
+      controller.$peers.setActive(controller.$peers.stack.localhost[0]);
+      $scope.$apply();
+      expect(controller.$peers.currentPeerConfig).to.equal(controller.$peers.stack.localhost[0]);
+      controller.$peers.setActive(controller.$peers.stack.official[0]);
+      $scope.$apply();
+      expect(controller.$peers.currentPeerConfig).to.equal(controller.$peers.stack.official[0]);
+    });
+  });
+
   describe('$scope.reset()', () => {
     it('makes input_passphrase empty', () => {
       const passphrase = 'TEST';

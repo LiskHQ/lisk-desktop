@@ -27,12 +27,10 @@ app.component('login', {
       this.$scope.$watch(() => this.$mdMedia('xs') || this.$mdMedia('sm'), (wantsFullScreen) => {
         this.$scope.customFullscreen = wantsFullScreen === true;
       });
-
       this.$scope.$watch('$ctrl.$peers.currentPeerConfig', () => {
         this.$peers.setActive(this.$peers.currentPeerConfig);
       });
-
-      $scope.$watch('$ctrl.$peers.stack', (val) => {
+      this.$scope.$watch('$ctrl.$peers.stack', (val) => {
         if (val && !this.$peers.currentPeerConfig.node) {
           this.$peers.setActive($peers.stack.official[0]);
         }
