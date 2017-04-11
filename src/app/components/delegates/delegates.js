@@ -25,17 +25,13 @@ app.component('delegates', {
 
       this.$peers.active.sendRequest('accounts/delegates', { address: this.account.address }, (data) => {
         this.votedList = data.delegates || [];
-        this.loadDelegates(0, this.$scope.search, () => {
-          this.loadDelegates(100, this.$scope.search);
-        });
+        this.loadDelegates(0, this.$scope.search);
       });
 
-      this.$scope.$watch('search', () => {
+      this.$scope.$watch('search', (search, oldValue) => {
         this.delegatesDisplayedCount = 20;
-        if (this.$scope.search.length > 2 || this.$scope.search.length === 0) {
-          this.loadDelegates(0, this.$scope.search, () => {
-            this.delegates = [];
-          });
+        if (search || oldValue) {
+          this.loadDelegates(0, search, true);
         }
       });
 
@@ -44,21 +40,23 @@ app.component('delegates', {
       });
     }
 
-    loadDelegates(offset, search, callback) {
+    loadDelegates(offset, search, replace) {
       this.loading = true;
       this.$peers.active.sendRequest(`delegates/${search ? 'search' : ''}`, {
         offset,
         limit: '100',
         q: search,
       }, ((data) => {
-        callback(data);
-        this.addDelegates(data);
+        this.addDelegates(data, replace);
       }));
       this.lastSearch = search;
     }
 
-    addDelegates(data) {
+    addDelegates(data, replace) {
       if (data.success) {
+        if (replace) {
+          this.delegates = [];
+        }
         this.delegates = this.delegates.concat(data.delegates.map((delegate) => {
           const voted = this.votedList.filter(
             vote => vote.address === delegate.address).length === 1;
@@ -100,7 +98,7 @@ app.component('delegates', {
       }
     }
 
-    confirmVote() {
+    openVoteDialog() {
       this.$mdDialog.show({
         controllerAs: '$ctrl',
         controller: /* @ngInject*/ class save {
@@ -187,11 +185,6 @@ app.component('delegates', {
         },
 
       });
-    }
-
-    activateSearch() {
-      this.delegatesDisplayedCount = 20;
-      this.searchActive = true;
     }
   },
 });

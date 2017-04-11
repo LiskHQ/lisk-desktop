@@ -3,18 +3,18 @@ div.offline-hide
     md-card-title
       md-card-title-text
         span.md-title(layout='row')
-          span Delegates:
-          span.filter-select
+          // span Delegates:
+          // span.filter-select
             md-select(ng-model='filter', aria-label='Delegate state filter')
               md-option(ng-repeat='state in states', ng-value='state') {{ state }}
           // span ({{$ctrl.filteredDelegates.length}})
           md-input-container.md-block
             label Search 
-            input(type='text', name='name', ng-model='search')
+            input(type='text', name='name', ng-model='search', ng-model-options='{ debounce: 200 }')
           i.material-icons.search-append(ng-click='search = ""', ng-show='search') close 
           i.material-icons.search-append(ng-hide='search') search 
       span(md-position-mode='target-right target')
-        md-button.pull-right(ng-click='$ctrl.confirmVote()')
+        md-button.pull-right(ng-click='$ctrl.openVoteDialog()')
           i.material-icons done
           span  Vote 
           span(ng-show='$ctrl.voteList.length || $ctrl.unvoteList.length') 
