@@ -140,6 +140,29 @@ describe('main component controller', () => {
     });
   });
 
+  describe('checkIfIsDelegate()', () => {
+    let account;
+
+    beforeEach(() => {
+      account = {
+        address: '16313739661670634666L',
+        balance: '0',
+        publicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
+      };
+      controller.account = account;
+    });
+
+    it('calls /api/delegates/get and sets this.isDelegate according to the response.success', () => {
+      controller.$peers.active = { sendRequest() {} };
+      const activePeerMock = sinon.mock(controller.$peers.active);
+      activePeerMock.expects('sendRequest').withArgs('delegates/get').callsArgWith(2, {
+        success: true,
+      });
+      controller.checkIfIsDelegate();
+      expect(controller.isDelegate).to.equal(true);
+    });
+  });
+
   describe('update()', () => {
     let deffered;
     let account;

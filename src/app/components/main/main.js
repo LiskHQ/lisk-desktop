@@ -42,6 +42,7 @@ app.component('main', {
         .then(() => {
           this.prelogged = false;
           this.logged = true;
+          this.checkIfIsDelegate();
         })
         .catch(() => {
           if (attempts < 10) {
@@ -61,6 +62,16 @@ app.component('main', {
       this.prelogged = false;
       this.account = {};
       this.passphrase = '';
+    }
+
+    checkIfIsDelegate() {
+      if (this.account && this.account.publicKey) {
+        this.$peers.active.sendRequest('delegates/get', {
+          publicKey: this.account.publicKey,
+        }, (data) => {
+          this.isDelegate = data.success;
+        });
+      }
     }
 
     update() {
