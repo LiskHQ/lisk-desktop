@@ -9,6 +9,7 @@ import './components/send/send';
 import './components/transactions/transactions';
 import './components/timestamp/timestamp';
 import './components/lsk/lsk';
+import './components/forging/forging';
 
 import './services/peers/peers';
 import './services/lsk';

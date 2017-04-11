@@ -11,4 +11,16 @@ md-content(layout='row')
     div(ng-if='$ctrl.logged', ng-class='{ online: $ctrl.$peers.online, offline: !$ctrl.$peers.online }')
       top(account='$ctrl.account')
       send(passphrase='$ctrl.passphrase', account='$ctrl.account')
-      transactions(account='$ctrl.account')
+      md-tabs(md-selected='selectedIndex', md-dynamic-height='true', md-stretch-tabs='always')
+        md-tab(md-on-select='onTabSelected(tab)', md-on-deselect='announceDeselected(tab)', ng-disabled='tab.disabled')
+          md-tab-label Transactions
+          md-tab-body
+            transactions(account='$ctrl.account')
+        md-tab(md-on-select='onTabSelected(tab)', md-on-deselect='announceDeselected(tab)', ng-disabled='tab.disabled')
+          md-tab-label Voting
+          md-tab-body
+            delegates(account='$ctrl.account')
+        md-tab(ng-if='$ctrl.isDelegate')
+          md-tab-label Forging 
+          md-tab-body
+            forging(account='$ctrl.account')

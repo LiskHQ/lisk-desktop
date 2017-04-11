@@ -36,6 +36,10 @@ app.factory('$peers', ($timeout, $cookies, $location, $q) => {
         this.stack = this.active.listPeers();
         this.stack.localhost = [localhostConf, {
           node: 'localhost',
+          port: 7000,
+          testnet: true,
+        }, {
+          node: 'localhost',
           port: 8000,
         }];
         this.peerByName = {};
