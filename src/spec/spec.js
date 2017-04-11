@@ -85,8 +85,8 @@ function testNewAccount() {
 
   element.all(by.css('.md-button.md-primary')).get(0).click();
   /**
-   * To generate a random pattern of mousemove events, we're randomizing the x,y pairs that
-   * based on even/odd valkuds of i will locate right/left halves of screen
+   * Generates a sequence of random pairs of x,y coordinates on the screen that simulates
+   * the movement of mouse to produce a pass phrase.
    */
   for (let i = 0; i < 250; i++) {
     browser.actions()

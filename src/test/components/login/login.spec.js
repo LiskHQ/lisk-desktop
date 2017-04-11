@@ -73,7 +73,7 @@ describe('Login controller', () => {
   });
 
   describe('controller()', () => {
-    it('Should define a watcher for $ctrl.$peers.currentPeerConfig', () => {
+    it('should define a watcher for $ctrl.$peers.currentPeerConfig', () => {
       $scope.$apply();
       const peers = controller.$peers;
       const spy = sinon.spy(peers, 'setActive');
@@ -84,7 +84,7 @@ describe('Login controller', () => {
       expect(spy).to.have.been.calledWith();
     });
 
-    it('Should be able to change the active peer', () => {
+    it('should be able to change the active peer', () => {
       $scope.$apply();
       controller.$peers.setActive(controller.$peers.stack.localhost[0]);
       $scope.$apply();
