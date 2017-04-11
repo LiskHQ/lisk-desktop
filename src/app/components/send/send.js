@@ -109,7 +109,7 @@ app.component('send', {
     }
 
     setMaxAmount() {
-      this.amount.value = this.amount.max;
+      this.amount.value = Math.max(0, this.amount.max);
     }
   },
 });
