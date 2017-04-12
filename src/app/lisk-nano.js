@@ -11,6 +11,7 @@ import './components/timestamp/timestamp';
 import './components/lsk/lsk';
 import './components/forging/forging';
 import './components/delegates/delegates';
+import './components/delegates/vote';
 
 import './services/peers/peers';
 import './services/lsk';
