@@ -37,6 +37,6 @@ div.dialog-vote(aria-label='Vote for delegates')
           input(type='password', ng-model='$ctrl.secondPassphrase')
           md-divider
     md-dialog-actions(layout='row')
-      md-button(ng-click="$ctrl.close()") Cancel
+      md-button(ng-click="$ctrl.$mdDialog.hide()") Cancel
       span(flex)
       md-button(ng-disabled='!$ctrl.canVote()', ng-click="$ctrl.vote()") {{$ctrl.votingInProgress ? 'Voting...' : 'Confirm vote'}}

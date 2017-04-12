@@ -15,13 +15,30 @@ app.component('vote', {
       this.$peers = $peers;
     }
 
-          // eslint-disable-next-line class-methods-use-this
-    removeVote(list, index) {
-            /* eslint-disable no-param-reassign */
-      list[index].status.selected = list[index].status.voted;
-      list[index].status.changed = false;
-            /* eslint-enable no-param-reassign */
-      list.splice(index, 1);
+    vote() {
+      this.votingInProgress = true;
+      this.$peers.active.sendRequest('accounts/delegates',
+        {
+          secret: this.passphrase,
+          publicKey: this.account.publicKey,
+          secondSecret: this.secondPassphrase,
+          delegates: this.voteList.map(delegate => `+${delegate.publicKey}`).concat(
+                      this.unvoteList.map(delegate => `-${delegate.publicKey}`)),
+        },
+        (response) => {
+          const toast = this.$mdToast.simple();
+          if (response.success) {
+            this.clearVotes();
+            this.$mdDialog.hide();
+            toast.toastClass('lsk-toast-success');
+            toast.textContent('Voting succesfull');
+          } else {
+            toast.toastClass('lsk-toast-error');
+            toast.textContent(response.message || 'Voting failed');
+          }
+          this.$mdToast.show(toast);
+          this.votingInProgress = false;
+        });
     }
 
     canVote() {
@@ -31,34 +48,19 @@ app.component('vote', {
               (!this.account.secondSignature || this.secondPassphrase);
     }
 
-    vote() {
-      this.votingInProgress = true;
-      this.$peers.active.sendRequest('accounts/delegates', {
-        secret: this.passphrase,
-        publicKey: this.account.publicKey,
-        secondSecret: this.secondPassphrase,
-        delegates: this.voteList.map(delegate => `+${delegate.publicKey}`).concat(
-                  this.unvoteList.map(delegate => `-${delegate.publicKey}`)),
-      },
-              (response) => {
-                const toast = this.$mdToast.simple();
-                if (response.success) {
-                  this.clearVotes();
-                  this.$mdDialog.hide();
-                  toast.toastClass('lsk-toast-success');
-                  toast.textContent('Voting succesfull');
-                } else {
-                  toast.toastClass('lsk-toast-error');
-                  toast.textContent(response.message || 'Voting failed');
-                }
-                this.$mdToast.show(toast);
-                this.votingInProgress = false;
-              });
+    // eslint-disable-next-line class-methods-use-this
+    removeVote(list, index) {
+      /* eslint-disable no-param-reassign */
+      list[index].status.selected = list[index].status.voted;
+      list[index].status.changed = false;
+      /* eslint-enable no-param-reassign */
+      list.splice(index, 1);
     }
+
 
     clearVotes() {
       this.voteList.forEach((delegate) => {
-              /* eslint-disable no-param-reassign */
+        /* eslint-disable no-param-reassign */
         delegate.status.changed = false;
         delegate.status.voted = true;
       });
@@ -67,14 +69,10 @@ app.component('vote', {
       this.unvoteList.forEach((delegate) => {
         delegate.status.changed = false;
         delegate.status.voted = false;
-              /* eslint-enable no-param-reassign */
+        /* eslint-enable no-param-reassign */
       });
       this.unvoteList.splice(0, this.voteList.length);
     }
-
-    close() {
-      this.$mdDialog.hide();
-    }
-        },
+  },
 });
 
