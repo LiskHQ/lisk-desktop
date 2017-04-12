@@ -16,13 +16,15 @@ app.component('delegates', {
 
       this.$scope.search = '';
       this.voteList = [];
-      this.votedList = [];
+      this.votedDict = {};
       this.unvoteList = [];
       this.delegates = [];
       this.delegatesDisplayedCount = 20;
 
       this.$peers.active.sendRequest('accounts/delegates', { address: this.account.address }, (data) => {
-        this.votedList = data.delegates || [];
+        (data.delegates || []).forEach((delegate) => {
+          this.votedDict[delegate.username] = delegate;
+        });
         this.loadDelegates(0, this.$scope.search);
       });
 
@@ -52,8 +54,7 @@ app.component('delegates', {
           this.delegates = [];
         }
         this.delegates = this.delegates.concat(data.delegates.map((delegate) => {
-          const voted = this.votedList.filter(
-            vote => vote.address === delegate.address).length === 1;
+          const voted = this.votedDict[delegate.username] !== undefined;
           delegate.status = {  // eslint-disable-line no-param-reassign
             selected: voted,
             voted,

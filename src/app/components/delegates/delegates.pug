@@ -6,17 +6,17 @@ div.offline-hide
           md-input-container.md-block
             label Search 
             input(type='text', name='name', ng-model='search', ng-model-options='{ debounce: 200 }')
-          i.material-icons.search-append(ng-click='search = ""', ng-show='search') close 
+          i.material-icons.search-append(ng-click='search = ""', ng-if='search') close 
           i.material-icons.search-append(ng-hide='search') search 
       span(md-position-mode='target-right target')
         md-button.pull-right(ng-click='$ctrl.openVoteDialog()')
           i.material-icons done
           span  Vote 
-          span(ng-show='$ctrl.voteList.length || $ctrl.unvoteList.length') 
+          span(ng-if='$ctrl.voteList.length || $ctrl.unvoteList.length') 
             span (
-            span.green-link(ng-show='$ctrl.voteList.length') +{{$ctrl.voteList.length}}
-            span(ng-show='$ctrl.voteList.length && $ctrl.unvoteList.length') /
-            span.red-link(ng-show='$ctrl.unvoteList.length') -{{$ctrl.unvoteList.length}}
+            span.green-link(ng-if='$ctrl.voteList.length') +{{$ctrl.voteList.length}}
+            span(ng-if='$ctrl.voteList.length && $ctrl.unvoteList.length') /
+            span.red-link(ng-if='$ctrl.unvoteList.length') -{{$ctrl.unvoteList.length}}
             span )
     md-content(layout='column')
       md-table-container(ng-show='$ctrl.delegates.length')
