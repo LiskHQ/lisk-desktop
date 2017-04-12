@@ -71,7 +71,7 @@ app.component('vote', {
         delegate.status.voted = false;
         /* eslint-enable no-param-reassign */
       });
-      this.unvoteList.splice(0, this.voteList.length);
+      this.unvoteList.splice(0, this.unvoteList.length);
     }
   },
 });
