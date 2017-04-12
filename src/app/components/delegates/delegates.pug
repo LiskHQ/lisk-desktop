@@ -6,7 +6,7 @@ div.offline-hide
           md-input-container.md-block
             label Search 
             input(type='text', name='name', ng-model='search', ng-model-options='{ debounce: 200 }')
-          i.material-icons.search-append(ng-click='search = ""', ng-if='search') close 
+          i.material-icons.search-append(ng-click='$ctrl.clearSearch()', ng-if='search') close 
           i.material-icons.search-append(ng-hide='search') search 
       span(md-position-mode='target-right target')
         md-button.pull-right(ng-click='$ctrl.openVoteDialog()')

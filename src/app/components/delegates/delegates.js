@@ -88,6 +88,10 @@ app.component('delegates', {
       }
     }
 
+    clearSearch() {
+      this.$scope.search = '';
+    }
+
     openVoteDialog() {
       this.$mdDialog.show({
         controllerAs: '$ctrl',
@@ -101,6 +105,7 @@ app.component('delegates', {
             this.passphrase = passphrase;
             this.voteList = voteList || [];
             this.unvoteList = unvoteList || [];
+            this.loading = true;
           }
 
           // eslint-disable-next-line class-methods-use-this
