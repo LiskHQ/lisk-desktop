@@ -18,4 +18,3 @@ import './services/success';
 import './services/error';
 
 import './filters/lsk';
-import './filters/boolFilter';
