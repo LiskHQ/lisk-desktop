@@ -8,6 +8,8 @@ app.component('send', {
   bindings: {
     account: '<',
     passphrase: '<',
+    recipientId: '<',
+    transferAmount: '<',
   },
   controller: class send {
     constructor($scope, $peers, lsk, success, error, $mdDialog, $q, $rootScope) {
@@ -21,10 +23,12 @@ app.component('send', {
 
       this.recipient = {
         regexp: ADDRESS_VALID_RE,
+        value: $scope.$ctrl.recipientId,
       };
 
       this.amount = {
         regexp: AMOUNT_VALID_RE,
+        raw: $scope.$ctrl.transferAmount,
       };
 
       this.$scope.$watch('$ctrl.amount.value', () => {
