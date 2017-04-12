@@ -20,12 +20,16 @@
     float: right;
   }
 
-  .remove-icon {
+  .remove-button {
     float: right;
-    color: transparent;
     position: absolute;
-    right: 24px;
-    top: 14px;
+    right: 4px;
+    top: 0px;
+    min-width: 30px;
+
+    .material-icons {
+      vertical-align: inherit;
+    }
   }
 
   .vote-list-item {
@@ -38,7 +42,7 @@
   .vote-list-item:hover {
     cursor: pointer;
 
-    .remove-icon {
+    .remove-button {
       color: #c62828;
     }
   }
