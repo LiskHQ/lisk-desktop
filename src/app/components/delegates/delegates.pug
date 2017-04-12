@@ -1,4 +1,18 @@
 div.offline-hide
+  md-card(flex-gt-xs=100, ng-if='$ctrl.usernameListActive')
+    md-card-content(layout='column')
+      md-input-container
+        label Insert list of delegate usernames separated by new line
+        textarea(ng-model='$ctrl.usernameInput')
+      div
+        md-button(ng-click='$ctrl.usernameListActive = false')
+          span Cancel 
+        span.pull-right
+          md-button(ng-click='$ctrl.selectListFromInput($ctrl.voteList)', ng-disabled='$ctrl.pendingRequests || !$ctrl.usernameInput')
+            span Add to vote list
+          md-button(ng-click='$ctrl.selectListFromInput($ctrl.unvoteList)', ng-disabled='$ctrl.pendingRequests || !$ctrl.usernameInput')
+            span Add to unvote list
+    md-progress-linear(md-mode='indeterminate', ng-show='$ctrl.pendingRequests')
   md-card(flex-gt-xs=100)
     md-card-title
       md-card-title-text
@@ -8,7 +22,11 @@ div.offline-hide
             input(type='text', name='name', ng-model='search', ng-model-options='{ debounce: 200 }')
           i.material-icons.search-append(ng-click='$ctrl.clearSearch()', ng-if='search') close 
           i.material-icons.search-append(ng-hide='search') search 
-      md-menu(md-position-mode='target-right target')
+      span.pull-right.right-action-buttons
+        md-button(ng-click='$ctrl.usernameListActive = true')
+          i.material-icons list
+          span Input Names
+      md-menu.pull-right.right-action-buttons
         md-button.pull-right(ng-click='$mdOpenMenu()')
           i.material-icons visibility
           span My votes ({{$ctrl.votedList.length}})
@@ -19,8 +37,8 @@ div.offline-hide
                 span(ng-bind='username') 
                 md-button.md-icon-button.lsk-vote-remove-button(ng-click='$ctrl.unselect(username)')
                   i.material-icons close
-      span(md-position-mode='target-right target')
-        md-button.pull-right(ng-click='$ctrl.openVoteDialog()')
+      span.pull-right.right-action-buttons
+        md-button(ng-click='$ctrl.openVoteDialog()')
           i.material-icons done
           span  Vote 
           span(ng-if='$ctrl.voteList.length || $ctrl.unvoteList.length') 

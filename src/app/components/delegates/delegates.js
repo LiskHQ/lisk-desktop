@@ -7,17 +7,21 @@ app.component('delegates', {
     passphrase: '<',
   },
   controller: class delegates {
-    constructor($scope, $peers, $mdDialog, $mdMedia) {
+    constructor($scope, $peers, $mdDialog, $mdMedia, $mdToast) {
       this.$scope = $scope;
       this.$peers = $peers;
       this.$mdDialog = $mdDialog;
       this.$mdMedia = $mdMedia;
+      this.$mdToast = $mdToast;
 
       this.$scope.search = '';
       this.voteList = [];
       this.votedDict = {};
       this.votedList = [];
       this.unvoteList = [];
+      this.loading = true;
+      this.usernameInput = '';
+      this.usernameSeparator = '\n';
 
       this.updateAll();
 
@@ -128,6 +132,71 @@ app.component('delegates', {
         /* eslint-enable no-param-reassign */
       });
       this.unvoteList.splice(0, this.unvoteList.length);
+    }
+
+    selectListFromInput(list) {
+      this.invalidUsernames = [];
+      this.pendingRequests = 0;
+      this.usernameList = this.usernameInput.trim().split(this.usernameSeparator);
+      this.usernameList.forEach((username) => {
+        if (!this.votedDict[username.trim()]) {
+          this.setSelected(username.trim(), list);
+        }
+      });
+
+      if (this.pendingRequests === 0) {
+        this.selectFinish(true, list);
+      }
+    }
+
+    selectFinish(success, list) {
+      const toast = this.$mdToast.simple();
+      toast.toastClass(success ? 'lsk-toast-success' : 'lsk-toast-error');
+      let message = '';
+      if (success) {
+        message = `${this.usernameList.length} delegates selected. Now you can vote for them.`;
+      } else if (list.length === 0) {
+        message = 'No delegate usernames could be parsed from the input';
+      } else {
+        message = `Some usernames could not be resolved: ${this.invalidUsernames.join(', ')}`;
+      }
+      this.$mdToast.show(toast);
+      toast.textContent(message);
+      if (list.length !== 0) {
+        this.usernameListActive = false;
+        this.openVoteDialog();
+      }
+    }
+
+    setSelected(username, list) {
+      const delegate = this.delegates.filter(d => d.username === username)[0];
+      if (delegate) {
+        this.selectDelegate(delegate, list);
+      } else {
+        this.pendingRequests++;
+        this.$peers.active.sendRequest('delegates/get', { username }, (data) => {
+          if (data.success) {
+            this.selectDelegate(data.delegate, list);
+          } else {
+            this.invalidUsernames.push(username);
+          }
+          this.pendingRequests--;
+          if (this.pendingRequests === 0) {
+            this.selectFinish(this.invalidUsernames.length === 0, list);
+          }
+        });
+      }
+    }
+
+    selectDelegate(delegate, list) {
+      // eslint-disable-next-line no-param-reassign
+      delegate.status = delegate.status || {};
+      // eslint-disable-next-line no-param-reassign
+      delegate.status.selected = true;
+      list.push(delegate);
+      this.usernameInput = this.usernameInput
+        .replace(delegate.username + this.usernameSeparator, '')
+        .replace(delegate.username, '');
     }
 
     openVoteDialog() {
