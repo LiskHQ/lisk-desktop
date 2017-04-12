@@ -28,8 +28,10 @@ app.component('send', {
 
       this.amount = {
         regexp: AMOUNT_VALID_RE,
-        value: parseInt(lsk.normalize($scope.$ctrl.transferAmount), 10),
       };
+      if ($scope.$ctrl.transferAmount) {
+        this.amount.value = parseInt(lsk.normalize($scope.$ctrl.transferAmount), 10);
+      }
 
       this.$scope.$watch('$ctrl.amount.value', () => {
         this.amount.raw = lsk.from(this.amount.value) || 0;
