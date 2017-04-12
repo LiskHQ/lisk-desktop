@@ -28,7 +28,7 @@ app.component('send', {
 
       this.amount = {
         regexp: AMOUNT_VALID_RE,
-        raw: $scope.$ctrl.transferAmount,
+        value: parseInt(lsk.normalize($scope.$ctrl.transferAmount), 10),
       };
 
       this.$scope.$watch('$ctrl.amount.value', () => {
