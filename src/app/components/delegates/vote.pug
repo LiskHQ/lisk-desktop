@@ -30,6 +30,10 @@ md-dialog.dialog-vote(aria-label='Vote for delegates')
             br
             span You can vote for up to 101 delegates in total.
         md-divider
+        md-input-container.md-block(ng-if='$ctrl.account.secondSignature')
+          label Second Passphrase
+          input(type='password', ng-model='$ctrl.secondPassphrase')
+          md-divider
     md-dialog-actions(layout='row')
       md-button(ng-click="$ctrl.close()") Cancel
       span(flex)

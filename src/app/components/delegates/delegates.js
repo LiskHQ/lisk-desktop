@@ -114,7 +114,9 @@ app.component('delegates', {
 
           canVote() {
             const totalVotes = this.voteList.length + this.unvoteList.length;
-            return totalVotes > 0 && totalVotes <= 33 && !this.votingInProgress;
+            return totalVotes > 0 && totalVotes <= 33 &&
+              !this.votingInProgress &&
+              (!this.account.secondSignature || this.secondPassphrase);
           }
 
           vote() {
@@ -122,7 +124,7 @@ app.component('delegates', {
             this.$peers.active.sendRequest('accounts/delegates', {
               secret: this.passphrase,
               publicKey: this.account.publicKey,
-              secondSecret: this.account.secondSecret,
+              secondSecret: this.secondPassphrase,
               delegates: this.voteList.map(delegate => `+${delegate.publicKey}`).concat(
                   this.unvoteList.map(delegate => `-${delegate.publicKey}`)),
             },
