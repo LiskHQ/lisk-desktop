@@ -63,9 +63,12 @@ app.component('delegates', {
         }
         this.delegates = this.delegates.concat(data.delegates.map((delegate) => {
           const voted = this.votedDict[delegate.username] !== undefined;
+          const changed = this.voteList.concat(this.unvoteList)
+            .map(d => d.username).indexOf(delegate.username) !== -1;
           delegate.status = {  // eslint-disable-line no-param-reassign
-            selected: voted,
+            selected: (voted && !changed) || (!voted && changed),
             voted,
+            changed,
           };
           return delegate;
         }));
