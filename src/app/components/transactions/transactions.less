@@ -1,6 +1,7 @@
 
 @in: #73C8A9;
 @out: #F45D4C;
+@btn: rgb(2,136,209);
 
 transactions {
   md-card-content {
@@ -85,6 +86,16 @@ transactions {
       background-color: #eee;
       color: #555;
       font-weight: normal;
+    }
+  }
+
+  .expanding-button {
+    color: #555;
+    cursor: pointer;
+    background-color: #eee;
+    border-radius: 3px;
+    &:hover {
+      color: @btn;
     }
   }
 }
