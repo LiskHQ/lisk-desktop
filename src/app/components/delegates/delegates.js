@@ -18,21 +18,29 @@ app.component('delegates', {
       this.voteList = [];
       this.votedDict = {};
       this.unvoteList = [];
-      this.delegates = [];
-      this.delegatesDisplayedCount = 20;
 
-      this.$peers.active.sendRequest('accounts/delegates', { address: this.account.address }, (data) => {
-        (data.delegates || []).forEach((delegate) => {
-          this.votedDict[delegate.username] = delegate;
-        });
-        this.loadDelegates(0, this.$scope.search);
-      });
+      this.updateAll();
 
       this.$scope.$watch('search', (search, oldValue) => {
         this.delegatesDisplayedCount = 20;
         if (search || oldValue) {
           this.loadDelegates(0, search, true);
         }
+      });
+
+      this.$scope.$on('peerUpdate', () => {
+        this.updateAll();
+      });
+    }
+
+    updateAll() {
+      this.delegates = [];
+      this.delegatesDisplayedCount = 20;
+      this.$peers.active.sendRequest('accounts/delegates', { address: this.account.address }, (data) => {
+        (data.delegates || []).forEach((delegate) => {
+          this.votedDict[delegate.username] = delegate;
+        });
+        this.loadDelegates(0, this.$scope.search);
       });
     }
 
