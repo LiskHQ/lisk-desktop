@@ -134,12 +134,22 @@ app.component('delegates', {
       this.unvoteList.splice(0, this.unvoteList.length);
     }
 
-    parseVoteListFromInput(list) {
+    parseVoteListFromInput() {
+      this._parseListFromInput('voteList');
+    }
+
+    parseUnvoteListFromInput() {
+      this._parseListFromInput('unvoteList');
+    }
+
+    _parseListFromInput(listName) {
+      const list = this[listName];
       this.invalidUsernames = [];
       this.pendingRequests = 0;
       this.usernameList = this.usernameInput.trim().split(this.usernameSeparator);
       this.usernameList.forEach((username) => {
-        if (!this.votedDict[username.trim()]) {
+        if ((listName === 'voteList' && !this.votedDict[username.trim()]) ||
+            (listName === 'unvoteList' && this.votedDict[username.trim()])) {
           this._setSelected(username.trim(), list);
         }
       });
@@ -174,12 +184,12 @@ app.component('delegates', {
         this._selectDelegate(delegate, list);
       } else {
         this.pendingRequests++;
-        this.$peers.active.sendRequest('delegates/get', { username }, (data) => {
-          if (data.success) {
-            this._selectDelegate(data.delegate, list);
-          } else {
-            this.invalidUsernames.push(username);
-          }
+        this.$peers.sendRequestPromise('delegates/get', { username,
+        }).then((data) => {
+          this._selectDelegate(data.delegate, list);
+        }).catch(() => {
+          this.invalidUsernames.push(username);
+        }).finally(() => {
           this.pendingRequests--;
           if (this.pendingRequests === 0) {
             this._selectFinish(this.invalidUsernames.length === 0, list);

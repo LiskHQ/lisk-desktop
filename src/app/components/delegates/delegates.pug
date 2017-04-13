@@ -8,9 +8,9 @@ div.offline-hide
         md-button(ng-click='$ctrl.usernameListActive = false')
           span Cancel 
         span.pull-right
-          md-button(ng-click='$ctrl.parseVoteListFromInput($ctrl.voteList)', ng-disabled='$ctrl.pendingRequests || !$ctrl.usernameInput')
+          md-button(ng-click='$ctrl.parseVoteListFromInput()', ng-disabled='$ctrl.pendingRequests || !$ctrl.usernameInput')
             span Add to vote list
-          md-button(ng-click='$ctrl.parseVoteListFromInput($ctrl.unvoteList)', ng-disabled='$ctrl.pendingRequests || !$ctrl.usernameInput')
+          md-button(ng-click='$ctrl.parseUnvoteListFromInput()', ng-disabled='$ctrl.pendingRequests || !$ctrl.usernameInput')
             span Add to unvote list
     md-progress-linear(md-mode='indeterminate', ng-show='$ctrl.pendingRequests')
   md-card(flex-gt-xs=100)
