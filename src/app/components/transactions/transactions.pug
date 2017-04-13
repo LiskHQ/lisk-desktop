@@ -1,7 +1,5 @@
 md-card.offline-hide
   md-card-content
-    .loading
-      md-progress-linear(md-mode='indeterminate', ng-show='$ctrl.loading_show || !$ctrl.loaded')
     md-content(layout='row', layout-align='start center', layout-padding)
       span.title.md-title Transactions
       div(flex)
@@ -17,7 +15,7 @@ md-card.offline-hide
               th(md-column)
               th(md-column) Amount
               th(md-column) Fee
-          tbody(md-body)
+          tbody(md-body, infinite-scroll='$ctrl.showMore()')
             tr(md-row, ng-repeat="transaction in $ctrl.transactions track by transaction.id | orderBy:'-timestamp'")
               td(md-cell)
                 timestamp(data='transaction.timestamp', ng-show='transaction.confirmations')
@@ -45,4 +43,5 @@ md-card.offline-hide
               td(md-cell)
                 .fee
                   lsk(amount='transaction.fee')
-      md-button.more(ng-show='$ctrl.more', ng-disabled='$ctrl.loading_show', ng-click='$ctrl.update(true, true)') Load More
+  .loading
+    md-progress-linear(md-mode='indeterminate', ng-show='$ctrl.loading_show || !$ctrl.loaded')
