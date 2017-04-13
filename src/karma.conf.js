@@ -95,6 +95,7 @@ module.exports = function (config) {
     // If true, Karma captures browsers, runs the tests and exits
     singleRun: !opts.live,
     client: {
+      captureConsole: true,
       mocha: {
         opts: 'test/mocha.opts', // You can set opts to equal true then plugin will load opts from default location 'test/mocha.opts'
       },

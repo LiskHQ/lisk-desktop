@@ -6,12 +6,8 @@ app.component('top', {
     account: '<',
   },
   controller: class top {
-    constructor($peers, $scope) {
+    constructor($peers) {
       this.$peers = $peers;
-
-      $scope.$watch('$ctrl.$peers.currentPeerConfig', () => {
-        this.$peers.setActive(this.$peers.currentPeerConfig);
-      });
     }
   },
 });
