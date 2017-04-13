@@ -64,16 +64,19 @@ describe('delegates component controller', () => {
   let activePeerMock;
   let $peers;
   let delegates;
+  let $q;
 
-  beforeEach(inject((_$componentController_, _$rootScope_, _$peers_) => {
+  beforeEach(inject((_$componentController_, _$rootScope_, _$q_, _$peers_) => {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
     $peers = _$peers_;
+    $q = _$q_;
   }));
 
   beforeEach(() => {
     delegates = Array.from({ length: 100 }, (v, k) => ({
       username: `genesis_${k}`,
+      status: {},
     }));
 
     $peers.active = { sendRequest() {} };
@@ -192,6 +195,126 @@ describe('delegates component controller', () => {
     it('opens vote dialog', () => {
       const spy = sinon.spy(controller.$mdDialog, 'show');
       controller.openVoteDialog();
+      expect(spy).to.have.been.calledWith();
+    });
+  });
+
+  describe('addToUnvoteList()', () => {
+    it('adds delegate to unvoteList', () => {
+      const delegate = {
+        username: 'test',
+        status: {
+          voted: true,
+          selected: true,
+        },
+      };
+      controller.addToUnvoteList(delegate);
+      expect(controller.unvoteList.length).to.equal(1);
+      expect(controller.unvoteList[0]).to.deep.equal(delegate);
+    });
+
+    it('does not add delegate to unvoteList if already there', () => {
+      const delegate = {
+        username: 'genesis_42',
+        status: {
+          voted: true,
+          selected: false,
+        },
+      };
+      controller.unvoteList = [delegate];
+      controller.addToUnvoteList(delegate);
+      expect(controller.unvoteList.length).to.equal(1);
+    });
+  });
+
+  describe('clearVotes()', () => {
+    it('clears this.voteList and this.unvoteList', () => {
+      controller.unvoteList = controller.delegates.slice(10, 13);
+      expect(controller.voteList.length).to.not.equal(0);
+      expect(controller.unvoteList.length).to.not.equal(0);
+
+      controller.clearVotes();
+
+      expect(controller.voteList.length).to.equal(0);
+      expect(controller.unvoteList.length).to.equal(0);
+    });
+  });
+
+  describe('parseVoteListFromInput(list)', () => {
+    let peersMock;
+
+    beforeEach(() => {
+      peersMock = sinon.mock(controller.$peers);
+    });
+
+    it('parses this.usernameInput to list of delegates and opens vote dialog if all delegates were immediately resolved', () => {
+      const spy = sinon.spy(controller, 'openVoteDialog');
+      controller.usernameInput = 'genesis_20\ngenesis_42\ngenesis_46\n';
+      controller.parseVoteListFromInput(controller.unvoteList);
+      expect(spy).to.have.been.calledWith();
+    });
+
+    it('parses this.usernameInput to list of delegates and opens vote dialog if all delegates were resolved immediately or from server', () => {
+      const username = 'not_fetched_yet';
+      const deffered = $q.defer();
+      peersMock.expects('sendRequestPromise').withArgs('delegates/get', { username }).returns(deffered.promise);
+      const spy = sinon.spy(controller, 'openVoteDialog');
+      controller.usernameInput = `${username}\ngenesis_42\ngenesis_46`;
+
+      controller.parseVoteListFromInput(controller.unvoteList);
+
+      deffered.resolve({
+        success: true,
+        delegate: {
+          username,
+        },
+      });
+      $scope.$apply();
+      expect(spy).to.have.been.calledWith();
+    });
+
+    it('parses this.usernameInput to list of delegates and opens vote dialog if any delegates were resolved', () => {
+      const username = 'invalid_name';
+      const deffered = $q.defer();
+      peersMock.expects('sendRequestPromise').withArgs('delegates/get', { username }).returns(deffered.promise);
+      const spy = sinon.spy(controller, 'openVoteDialog');
+      controller.usernameInput = `${username}\ngenesis_42\ngenesis_46`;
+
+      controller.parseVoteListFromInput(controller.unvoteList);
+
+      deffered.reject({ success: false });
+      $scope.$apply();
+      expect(spy).to.have.been.calledWith();
+    });
+
+    it('parses this.usernameInput to list of delegates and shows error toast if no delegates were resolved', () => {
+      const username = 'invalid_name';
+      const deffered = $q.defer();
+      peersMock.expects('sendRequestPromise').withArgs('delegates/get', { username }).returns(deffered.promise);
+      const toastSpy = sinon.spy(controller.$mdToast, 'show');
+      const dialogSpy = sinon.spy(controller, 'openVoteDialog');
+      controller.usernameInput = username;
+      controller.voteList = [];
+
+      controller.parseVoteListFromInput(controller.unvoteList);
+
+      deffered.reject({ success: false });
+      $scope.$apply();
+      expect(toastSpy).to.have.been.calledWith();
+      expect(dialogSpy).to.not.have.been.calledWith();
+    });
+  });
+
+  describe('parseUnvoteListFromInput(list)', () => {
+    it('parses this.usernameInput to list of delegates and opens vote dialog if all delegates were immediately resolved', () => {
+      const delegate = {
+        username: 'genesis_20',
+        status: {},
+      };
+      const spy = sinon.spy(controller, 'openVoteDialog');
+      controller.votedDict[delegate.username] = delegate;
+      controller.usernameInput = `${delegate.username}\ngenesis_42\ngenesis_46\n`;
+      controller.parseUnvoteListFromInput(controller.unvoteList);
       expect(spy).to.have.been.calledWith();
     });
   });
