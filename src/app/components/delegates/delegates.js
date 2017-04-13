@@ -134,22 +134,22 @@ app.component('delegates', {
       this.unvoteList.splice(0, this.unvoteList.length);
     }
 
-    selectListFromInput(list) {
+    parseVoteListFromInput(list) {
       this.invalidUsernames = [];
       this.pendingRequests = 0;
       this.usernameList = this.usernameInput.trim().split(this.usernameSeparator);
       this.usernameList.forEach((username) => {
         if (!this.votedDict[username.trim()]) {
-          this.setSelected(username.trim(), list);
+          this._setSelected(username.trim(), list);
         }
       });
 
       if (this.pendingRequests === 0) {
-        this.selectFinish(true, list);
+        this._selectFinish(true, list);
       }
     }
 
-    selectFinish(success, list) {
+    _selectFinish(success, list) {
       const toast = this.$mdToast.simple();
       toast.toastClass(success ? 'lsk-toast-success' : 'lsk-toast-error');
       let message = '';
@@ -168,27 +168,27 @@ app.component('delegates', {
       }
     }
 
-    setSelected(username, list) {
+    _setSelected(username, list) {
       const delegate = this.delegates.filter(d => d.username === username)[0];
       if (delegate) {
-        this.selectDelegate(delegate, list);
+        this._selectDelegate(delegate, list);
       } else {
         this.pendingRequests++;
         this.$peers.active.sendRequest('delegates/get', { username }, (data) => {
           if (data.success) {
-            this.selectDelegate(data.delegate, list);
+            this._selectDelegate(data.delegate, list);
           } else {
             this.invalidUsernames.push(username);
           }
           this.pendingRequests--;
           if (this.pendingRequests === 0) {
-            this.selectFinish(this.invalidUsernames.length === 0, list);
+            this._selectFinish(this.invalidUsernames.length === 0, list);
           }
         });
       }
     }
 
-    selectDelegate(delegate, list) {
+    _selectDelegate(delegate, list) {
       // eslint-disable-next-line no-param-reassign
       delegate.status = delegate.status || {};
       // eslint-disable-next-line no-param-reassign
