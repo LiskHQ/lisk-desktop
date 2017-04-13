@@ -160,21 +160,15 @@ app.component('delegates', {
     }
 
     _selectFinish(success, list) {
-      const toast = this.$mdToast.simple();
-      toast.toastClass(success ? 'lsk-toast-success' : 'lsk-toast-error');
-      let message = '';
-      if (success) {
-        message = `${this.usernameList.length} delegates selected. Now you can vote for them.`;
-      } else if (list.length === 0) {
-        message = 'No delegate usernames could be parsed from the input';
-      } else {
-        message = `Some usernames could not be resolved: ${this.invalidUsernames.join(', ')}`;
-      }
-      this.$mdToast.show(toast);
-      toast.textContent(message);
       if (list.length !== 0) {
         this.usernameListActive = false;
+        this.usernameInput = '';
         this.openVoteDialog();
+      } else {
+        const toast = this.$mdToast.simple();
+        toast.toastClass('lsk-toast-error');
+        toast.textContent('No delegate usernames could be parsed from the input');
+        this.$mdToast.show(toast);
       }
     }
 
@@ -198,15 +192,15 @@ app.component('delegates', {
       }
     }
 
+    // eslint-disable-next-line class-methods-use-this
     _selectDelegate(delegate, list) {
       // eslint-disable-next-line no-param-reassign
       delegate.status = delegate.status || {};
       // eslint-disable-next-line no-param-reassign
       delegate.status.selected = true;
-      list.push(delegate);
-      this.usernameInput = this.usernameInput
-        .replace(delegate.username + this.usernameSeparator, '')
-        .replace(delegate.username, '');
+      if (list.indexOf(delegate) === -1) {
+        list.push(delegate);
+      }
     }
 
     openVoteDialog() {
