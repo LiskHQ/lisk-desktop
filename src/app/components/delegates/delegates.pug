@@ -8,6 +8,17 @@ div.offline-hide
             input(type='text', name='name', ng-model='search', ng-model-options='{ debounce: 200 }')
           i.material-icons.search-append(ng-click='$ctrl.clearSearch()', ng-if='search') close 
           i.material-icons.search-append(ng-hide='search') search 
+      md-menu(md-position-mode='target-right target')
+        md-button.pull-right(ng-click='$mdOpenMenu()')
+          i.material-icons visibility
+          span My votes ({{$ctrl.votedList.length}})
+        md-menu-content(width='4')
+          md-menu-item.vote-list-item(ng-repeat='(username, delegate) in $ctrl.votedDict')
+            md-button(ng-click='$ctrl.addToUnvoteList(delegate)')
+              div
+                span(ng-bind='username') 
+                md-button.md-icon-button.lsk-vote-remove-button(ng-click='$ctrl.unselect(username)')
+                  i.material-icons close
       span(md-position-mode='target-right target')
         md-button.pull-right(ng-click='$ctrl.openVoteDialog()')
           i.material-icons done

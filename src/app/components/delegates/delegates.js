@@ -106,6 +106,14 @@ app.component('delegates', {
       this.$scope.search = '';
     }
 
+    addToUnvoteList(vote) {
+      const delegate = this.delegates.filter(d => d.username === vote.username)[0] || vote;
+      if (delegate.status.selected) {
+        this.unvoteList.push(delegate);
+      }
+      delegate.status.selected = false;
+    }
+
     clearVotes() {
       this.voteList.forEach((delegate) => {
         /* eslint-disable no-param-reassign */
