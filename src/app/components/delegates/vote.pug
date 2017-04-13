@@ -11,7 +11,7 @@ div.dialog-vote(aria-label='Vote for delegates')
             md-list-item.vote-list-item(ng-repeat='delegate in $ctrl.voteList', ng-click='$ctrl.removeVote($ctrl.voteList, $index)')
               div
                 span {{delegate.username}}
-                md-button.remove-button(ng-click='$ctrl.removeVote($ctrl.voteList, $index)')
+                md-button.md-icon-button.remove-button(ng-click='$ctrl.removeVote($ctrl.voteList, $index)')
                   i.material-icons close
         md-divider(ng-if='$ctrl.voteList.length && $ctrl.unvoteList.length')
         div(ng-if='$ctrl.unvoteList.length')
@@ -20,7 +20,7 @@ div.dialog-vote(aria-label='Vote for delegates')
             md-list-item.vote-list-item(ng-repeat='delegate in $ctrl.unvoteList', ng-click='$ctrl.removeVote($ctrl.unvoteList, $index)')
               div
                 span {{delegate.username}}
-                md-button.remove-button(ng-click='$ctrl.removeVote($ctrl.unvoteList, $index)')
+                md-button.md-icon-button.remove-button(ng-click='$ctrl.removeVote($ctrl.unvoteList, $index)')
                   i.material-icons close
         p.pull-right Fee: 1 LSK
         md-divider
