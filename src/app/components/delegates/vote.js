@@ -54,23 +54,6 @@ app.component('vote', {
       /* eslint-enable no-param-reassign */
       list.splice(index, 1);
     }
-
-
-    clearVotes() {
-      this.voteList.forEach((delegate) => {
-        /* eslint-disable no-param-reassign */
-        delegate.status.changed = false;
-        delegate.status.voted = true;
-      });
-      this.voteList.splice(0, this.voteList.length);
-
-      this.unvoteList.forEach((delegate) => {
-        delegate.status.changed = false;
-        delegate.status.voted = false;
-        /* eslint-enable no-param-reassign */
-      });
-      this.unvoteList.splice(0, this.unvoteList.length);
-    }
   },
 });
 

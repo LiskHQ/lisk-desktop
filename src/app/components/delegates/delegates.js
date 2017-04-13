@@ -106,6 +106,22 @@ app.component('delegates', {
       this.$scope.search = '';
     }
 
+    clearVotes() {
+      this.voteList.forEach((delegate) => {
+        /* eslint-disable no-param-reassign */
+        delegate.status.changed = false;
+        delegate.status.voted = true;
+      });
+      this.voteList.splice(0, this.voteList.length);
+
+      this.unvoteList.forEach((delegate) => {
+        delegate.status.changed = false;
+        delegate.status.voted = false;
+        /* eslint-enable no-param-reassign */
+      });
+      this.unvoteList.splice(0, this.unvoteList.length);
+    }
+
     openVoteDialog() {
       this.$mdDialog.show({
         controllerAs: '$ctrl',
@@ -131,8 +147,9 @@ app.component('delegates', {
           voteList: this.voteList,
           unvoteList: this.unvoteList,
         },
-
-      });
+      }).then((() => {
+        this.clearVotes();
+      }));
     }
   },
 });
