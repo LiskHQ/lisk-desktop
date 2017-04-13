@@ -53,6 +53,17 @@ app.factory('$peers', ($timeout, $cookies, $location, $q) => {
       this.check();
     }
 
+    sendRequestPromise(api, urlParams) {
+      const deferred = $q.defer();
+      this.active.sendRequest(api, urlParams, (data) => {
+        if (data.success) {
+          return deferred.resolve(data);
+        }
+        return deferred.reject(data);
+      });
+      return deferred.promise;
+    }
+
     setPeerAPIObject(config) {
       this.active = lisk.api(config);
 

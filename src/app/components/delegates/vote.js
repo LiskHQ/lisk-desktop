@@ -17,28 +17,26 @@ app.component('vote', {
 
     vote() {
       this.votingInProgress = true;
-      this.$peers.active.sendRequest('accounts/delegates',
-        {
-          secret: this.passphrase,
-          publicKey: this.account.publicKey,
-          secondSecret: this.secondPassphrase,
-          delegates: this.voteList.map(delegate => `+${delegate.publicKey}`).concat(
-                      this.unvoteList.map(delegate => `-${delegate.publicKey}`)),
-        },
-        (response) => {
-          const toast = this.$mdToast.simple();
-          if (response.success) {
-            this.clearVotes();
-            this.$mdDialog.hide();
-            toast.toastClass('lsk-toast-success');
-            toast.textContent('Voting succesfull');
-          } else {
-            toast.toastClass('lsk-toast-error');
-            toast.textContent(response.message || 'Voting failed');
-          }
-          this.$mdToast.show(toast);
-          this.votingInProgress = false;
-        });
+      this.$peers.sendRequestPromise('accounts/delegates', {
+        secret: this.passphrase,
+        publicKey: this.account.publicKey,
+        secondSecret: this.secondPassphrase,
+        delegates: this.voteList.map(delegate => `+${delegate.publicKey}`).concat(
+                    this.unvoteList.map(delegate => `-${delegate.publicKey}`)),
+      }).then(() => {
+        this.$mdDialog.hide(this.voteList, this.unvoteList);
+        const toast = this.$mdToast.simple();
+        toast.toastClass('lsk-toast-success');
+        toast.textContent('Voting succesfull');
+        this.$mdToast.show(toast);
+      }).catch((response) => {
+        const toast = this.$mdToast.simple();
+        toast.toastClass('lsk-toast-error');
+        toast.textContent(response.message || 'Voting failed');
+        this.$mdToast.show(toast);
+      }).finally(() => {
+        this.votingInProgress = false;
+      });
     }
 
     canVote() {

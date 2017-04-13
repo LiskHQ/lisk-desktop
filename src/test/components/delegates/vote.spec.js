@@ -55,18 +55,19 @@ describe('Vote component controller', () => {
   let $scope;
   let controller;
   let $componentController;
-  let activePeerMock;
+  let peersMock;
   let $peers;
+  let $q;
 
-  beforeEach(inject((_$componentController_, _$rootScope_, _$peers_) => {
+  beforeEach(inject((_$componentController_, _$rootScope_, _$peers_, _$q_) => {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
     $peers = _$peers_;
+    $q = _$q_;
   }));
 
   beforeEach(() => {
-    $peers.active = { sendRequest() {} };
-    activePeerMock = sinon.mock($peers.active);
+    peersMock = sinon.mock($peers);
 
     $scope = $rootScope.$new();
     controller = $componentController('vote', $scope, {
@@ -94,35 +95,31 @@ describe('Vote component controller', () => {
   });
 
   describe('vote()', () => {
-    it('shows an error $mdToast if request fails', () => {
-      const mdToastMock = sinon.mock(controller.$mdToast);
-      mdToastMock.expects('show');
-      activePeerMock.expects('sendRequest').withArgs('accounts/delegates').callsArgWith(2, {
-        success: false,
-      });
+    let deffered;
+    let mdToastMock;
 
+    beforeEach(() => {
+      deffered = $q.defer();
+      peersMock.expects('sendRequestPromise').withArgs('accounts/delegates').returns(deffered.promise);
+      mdToastMock = sinon.mock(controller.$mdToast);
+      mdToastMock.expects('show');
+    });
+
+    afterEach(() => {
+      mdToastMock.verify();
+      peersMock.verify();
+    });
+
+    it('shows an error $mdToast if request fails', () => {
       controller.vote();
+      deffered.reject({ success: false });
+      $scope.$apply();
     });
 
     it('shows a success $mdToast if request succeeds', () => {
-      const mdToastMock = sinon.mock(controller.$mdToast);
-      mdToastMock.expects('show');
-      activePeerMock.expects('sendRequest').withArgs('accounts/delegates').callsArgWith(2, {
-        success: true,
-      });
-
       controller.vote();
-    });
-
-    it('clears voteList and unvoteList $mdToast if request succeeds', () => {
-      activePeerMock.expects('sendRequest').withArgs('accounts/delegates').callsArgWith(2, {
-        success: true,
-      });
-
-      controller.vote();
+      deffered.resolve({ success: true });
       $scope.$apply();
-      expect(controller.voteList).to.deep.equal([]);
-      expect(controller.unvoteList).to.deep.equal([]);
     });
   });
 

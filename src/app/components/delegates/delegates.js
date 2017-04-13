@@ -16,6 +16,7 @@ app.component('delegates', {
       this.$scope.search = '';
       this.voteList = [];
       this.votedDict = {};
+      this.votedList = [];
       this.unvoteList = [];
 
       this.updateAll();
@@ -35,8 +36,11 @@ app.component('delegates', {
     updateAll() {
       this.delegates = [];
       this.delegatesDisplayedCount = 20;
-      this.$peers.active.sendRequest('accounts/delegates', { address: this.account.address }, (data) => {
-        (data.delegates || []).forEach((delegate) => {
+      this.$peers.sendRequestPromise('accounts/delegates', {
+        address: this.account.address,
+      }).then((data) => {
+        this.votedList = data.delegates || [];
+        (this.votedList).forEach((delegate) => {
           this.votedDict[delegate.username] = delegate;
         });
         this.loadDelegates(0, this.$scope.search);
@@ -45,13 +49,13 @@ app.component('delegates', {
 
     loadDelegates(offset, search, replace) {
       this.loading = true;
-      this.$peers.active.sendRequest(`delegates/${search ? 'search' : ''}`, {
+      this.$peers.sendRequestPromise(`delegates/${search ? 'search' : ''}`, {
         offset,
         limit: '100',
         q: search,
-      }, ((data) => {
+      }).then((data) => {
         this.addDelegates(data, replace);
-      }));
+      });
       this.lastSearch = search;
     }
 
