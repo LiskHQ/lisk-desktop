@@ -1,5 +1,7 @@
 import './delegates.less';
 
+const UPDATE_INTERVAL = 10000;
+
 app.component('delegates', {
   template: require('./delegates.pug')(),
   bindings: {
@@ -7,12 +9,13 @@ app.component('delegates', {
     passphrase: '<',
   },
   controller: class delegates {
-    constructor($scope, $peers, $mdDialog, $mdMedia, $mdToast) {
+    constructor($scope, $peers, $mdDialog, $mdMedia, $mdToast, $timeout) {
       this.$scope = $scope;
       this.$peers = $peers;
       this.$mdDialog = $mdDialog;
       this.$mdMedia = $mdMedia;
       this.$mdToast = $mdToast;
+      this.$timeout = $timeout;
 
       this.$scope.search = '';
       this.voteList = [];
@@ -118,20 +121,56 @@ app.component('delegates', {
       delegate.status.selected = false;
     }
 
-    clearVotes() {
+    setPendingVotes() {
       this.voteList.forEach((delegate) => {
         /* eslint-disable no-param-reassign */
         delegate.status.changed = false;
         delegate.status.voted = true;
+        delegate.status.pending = true;
       });
-      this.voteList.splice(0, this.voteList.length);
+      this.votePendingList = this.voteList.splice(0, this.voteList.length);
 
       this.unvoteList.forEach((delegate) => {
         delegate.status.changed = false;
         delegate.status.voted = false;
+        delegate.status.pending = true;
         /* eslint-enable no-param-reassign */
       });
-      this.unvoteList.splice(0, this.unvoteList.length);
+      this.unvotePendingList = this.unvoteList.splice(0, this.unvoteList.length);
+      this.checkPendingVotes();
+    }
+
+    checkPendingVotes() {
+      this.$timeout(() => {
+        this.$peers.sendRequestPromise('accounts/delegates', {
+          address: this.account.address,
+        }).then((data) => {
+          this.votedList = data.delegates || [];
+          this.votedDict = {};
+          (this.votedList).forEach((delegate) => {
+            this.votedDict[delegate.username] = delegate;
+          });
+          this.votePendingList = this.votePendingList.filter((vote) => {
+            if (this.votedDict[vote.username]) {
+              // eslint-disable-next-line no-param-reassign
+              vote.status.pending = false;
+              return false;
+            }
+            return true;
+          });
+          this.unvotePendingList = this.unvotePendingList.filter((vote) => {
+            if (!this.votedDict[vote.username]) {
+              // eslint-disable-next-line no-param-reassign
+              vote.status.pending = false;
+              return false;
+            }
+            return true;
+          });
+          if (this.votePendingList.length + this.unvotePendingList.length > 0) {
+            this.checkPendingVotes();
+          }
+        });
+      }, UPDATE_INTERVAL);
     }
 
     parseVoteListFromInput() {
@@ -229,7 +268,7 @@ app.component('delegates', {
           unvoteList: this.unvoteList,
         },
       }).then((() => {
-        this.clearVotes();
+        this.setPendingVotes();
       }));
     }
   },
