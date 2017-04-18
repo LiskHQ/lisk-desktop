@@ -50,6 +50,10 @@ function createWindow() {
       label: name,
       submenu: [
         {
+          role: 'about',
+          label: 'About',
+        },
+        {
           role: 'quit',
           label: 'Quit',
         },
