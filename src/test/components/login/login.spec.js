@@ -54,6 +54,7 @@ describe('Login controller', () => {
   let $scope;
   let controller;
   let $componentController;
+  let testPassphrase;
 
   beforeEach(inject((_$componentController_, _$rootScope_) => {
     $componentController = _$componentController_;
@@ -61,6 +62,7 @@ describe('Login controller', () => {
   }));
 
   beforeEach(() => {
+    testPassphrase = 'glow two glimpse camp aware tip brief confirm similar code float defense';
     $scope = $rootScope.$new();
     controller = $componentController('login', $scope, { });
     controller.onLogin = function () {};
@@ -123,18 +125,20 @@ describe('Login controller', () => {
 
   describe('$scope.doTheLogin()', () => {
     it('sets this.phassphrase as this.input_passphrase processed by fixCaseAndWhitespace', () => {
-      controller.input_passphrase = '\tTEST  PassPHrASe  ';
+      controller.input_passphrase = '\tGLOW two GliMpse camp aware tip brief confirm similar code float defense  ';
       controller.doTheLogin();
-      expect(controller.passphrase).to.equal('test passphrase');
+      expect(controller.passphrase).to.equal('glow two glimpse camp aware tip brief confirm similar code float defense');
     });
 
     it('calls this.reset()', () => {
+      controller.input_passphrase = testPassphrase;
       const spy = sinon.spy(controller, 'reset');
       controller.doTheLogin();
       expect(spy).to.have.been.calledWith();
     });
 
     it('sets timeout with this.onLogin', () => {
+      controller.input_passphrase = testPassphrase;
       const spy = sinon.spy(controller, '$timeout');
       controller.doTheLogin();
       expect(spy).to.have.been.calledWith(controller.onLogin);
@@ -172,7 +176,6 @@ describe('Login controller', () => {
 
   describe('$scope.devTestAccount()', () => {
     it('sets input_passphrase from cookie called passphrase if present', () => {
-      const testPassphrase = 'test passphrase';
       const mock = sinon.mock(controller.$cookies);
       mock.expects('get').returns(testPassphrase);
       controller.devTestAccount();
@@ -180,7 +183,6 @@ describe('Login controller', () => {
     });
 
     it('does nothing if cooke called passphrase not present', () => {
-      const testPassphrase = 'test passphrase';
       controller.input_passphrase = testPassphrase;
       const mock = sinon.mock(controller.$cookies);
 
