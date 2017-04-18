@@ -27,6 +27,53 @@ describe('Factory: $peers', () => {
     });
   });
 
+  describe('setPeerAPIObject', () => {
+    const RECIPIENT_ADDRESS = '5932438298200837883L';
+    const AMOUNT = '10';
+    const PASSPHRASE = 'robust swift grocery peasant forget share enable convince deputy road keep cheap';
+
+    beforeEach(() => {
+      $peers.setActive();
+      $peers.setPeerAPIObject({
+        node: 'localhost',
+        port: 4000,
+        testnet: true,
+        nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+      });
+    });
+
+    it('sets getter/setter methods on $peers.active if it\'s called with correct configs', () => {
+      expect($peers.active.getStatusPromise).not.to.equal(undefined);
+      expect($peers.active.getAccountPromise).not.to.equal(undefined);
+      expect($peers.active.sendLSKPromise).not.to.equal(undefined);
+      expect($peers.active.listTransactionsPromise).not.to.equal(undefined);
+    });
+
+    it('creates $peers.active.getStatusPromise which returns a promise', () => {
+      const promise = $peers.active.getStatusPromise();
+      $rootScope.$apply();
+      expect(promise.then.constructor).to.be.equal(Function);
+    });
+
+    it('creates $peers.active.getAccountPromise which returns a promise', () => {
+      const promise = $peers.active.getAccountPromise(RECIPIENT_ADDRESS);
+      $rootScope.$apply();
+      expect(promise.then.constructor).to.be.equal(Function);
+    });
+
+    it('creates $peers.active.sendLSKPromise which returns a promise', () => {
+      const promise = $peers.active.sendLSKPromise(RECIPIENT_ADDRESS, AMOUNT, PASSPHRASE);
+      $rootScope.$apply();
+      expect(promise.then.constructor).to.be.equal(Function);
+    });
+
+    it('creates $peers.active.listTransactionsPromise which returns a promise', () => {
+      const promise = $peers.active.listTransactionsPromise(RECIPIENT_ADDRESS, AMOUNT);
+      $rootScope.$apply();
+      expect(promise.then.constructor).to.be.equal(Function);
+    });
+  });
+
   describe('check()', () => {
     let deffered;
     let mock;
