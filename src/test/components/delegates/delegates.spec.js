@@ -227,13 +227,13 @@ describe('delegates component controller', () => {
     });
   });
 
-  describe('clearVotes()', () => {
+  describe('setPendingVotes()', () => {
     it('clears this.voteList and this.unvoteList', () => {
       controller.unvoteList = controller.delegates.slice(10, 13);
       expect(controller.voteList.length).to.not.equal(0);
       expect(controller.unvoteList.length).to.not.equal(0);
 
-      controller.clearVotes();
+      controller.setPendingVotes();
 
       expect(controller.voteList.length).to.equal(0);
       expect(controller.unvoteList.length).to.equal(0);
