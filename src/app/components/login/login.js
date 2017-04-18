@@ -49,10 +49,12 @@ app.component('login', {
     }
 
     doTheLogin() {
-      this.passphrase = login.fixCaseAndWhitespace(this.input_passphrase);
+      if (this.isValidPassphrase(this.input_passphrase) === 1) {
+        this.passphrase = login.fixCaseAndWhitespace(this.input_passphrase);
 
-      this.reset();
-      this.$timeout(this.onLogin);
+        this.reset();
+        this.$timeout(this.onLogin);
+      }
     }
 
     isValidPassphrase(value) {
@@ -65,6 +67,7 @@ app.component('login', {
       } else {
         this.valid = 1;
       }
+      return this.valid;
     }
 
     startGenratingNewPassphrase() {
