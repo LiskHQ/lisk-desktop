@@ -1,6 +1,6 @@
 {
   "name": "lisk-nano",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Lisk Nano",
   "homepage": "https://github.com/LiskHQ/lisk-nano",
   "bugs": "https://github.com/LiskHQ/lisk-nano/issues",
@@ -18,16 +18,15 @@
     "url": "https://github.com/LiskHQ/lisk-nano"
   },
   "devDependencies": {
-    "electron": "=1.4.4",
-    "electron-builder": "=7.14.2"
+    "electron": "=1.6.2",
+    "electron-builder": "=16.8.3"
   },
   "build": {
     "appId": "io.lisk.nano",
-    "category": "finance",
     "productName": "Lisk Nano",
     "win": {
       "target": "nsis"
     }
   },
-  "license": "MIT"
+  "license": "GPL-3.0"
 }
