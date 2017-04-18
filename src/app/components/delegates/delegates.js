@@ -43,7 +43,7 @@ app.component('delegates', {
     updateAll() {
       this.delegates = [];
       this.delegatesDisplayedCount = 20;
-      this.$peers.sendRequestPromise('accounts/delegates', {
+      this.$peers.listAccountDelegates({
         address: this.account.address,
       }).then((data) => {
         this.votedList = data.delegates || [];
@@ -56,7 +56,7 @@ app.component('delegates', {
 
     loadDelegates(offset, search, replace) {
       this.loading = true;
-      this.$peers.sendRequestPromise(`delegates/${search ? 'search' : ''}`, {
+      this.$peers.listDelegates({
         offset,
         limit: '100',
         q: search,
@@ -142,7 +142,7 @@ app.component('delegates', {
 
     checkPendingVotes() {
       this.$timeout(() => {
-        this.$peers.sendRequestPromise('accounts/delegates', {
+        this.$peers.listAccountDelegates({
           address: this.account.address,
         }).then((data) => {
           this.votedList = data.delegates || [];
@@ -217,7 +217,7 @@ app.component('delegates', {
         this._selectDelegate(delegate, list);
       } else {
         this.pendingRequests++;
-        this.$peers.sendRequestPromise('delegates/get', { username,
+        this.$peers.getDelegate({ username,
         }).then((data) => {
           this._selectDelegate(data.delegate, list);
         }).catch(() => {
