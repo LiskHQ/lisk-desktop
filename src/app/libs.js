@@ -9,5 +9,7 @@ import 'angular-material';
 import 'angular-material/angular-material.css';
 import 'angular-material-data-table/dist/md-data-table';
 import 'angular-material-data-table/dist/md-data-table.css';
+import 'ng-infinite-scroll';
+
 
 import 'babel-polyfill';

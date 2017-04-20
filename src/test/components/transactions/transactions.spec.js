@@ -50,9 +50,9 @@ describe('transactions component controller', () => {
     let mock;
 
     beforeEach(() => {
-      controller.$peers = { active: { listTransactionsPromise() {} } };
-      mock = sinon.mock(controller.$peers.active);
-      mock.expects('listTransactionsPromise').returns($q(() => {}));
+      controller.$peers.listTransactions = () => {};
+      mock = sinon.mock(controller.$peers);
+      mock.expects('listTransactions').returns($q(() => {}));
     });
 
     it('sets this.loading = true', () => {
@@ -76,16 +76,16 @@ describe('transactions component controller', () => {
       expect(spy).to.have.been.calledWith(controller.timeout);
     });
 
-    it('calls this.$peers.active.listTransactionsPromise(this.account.address, limit) with limit = 10 by default', () => {
-      controller.$peers = { active: { listTransactionsPromise() {} } };
-      mock = sinon.mock(controller.$peers.active);
+    it('calls this.$peers.listTransactions(this.account.address, limit) with limit = 10 by default', () => {
+      controller.$peers.listTransactions = () => {};
+      mock = sinon.mock(controller.$peers);
       const transactionsDeferred = $q.defer();
-      mock.expects('listTransactionsPromise').withArgs(controller.account.address, 10).returns(transactionsDeferred.promise);
+      mock.expects('listTransactions').withArgs(controller.account.address, 10).returns(transactionsDeferred.promise);
       controller.update();
       transactionsDeferred.reject();
 
       // Mock because $scope.apply() will call update() again
-      mock.expects('listTransactionsPromise').withArgs(controller.account.address, 10).returns(transactionsDeferred.promise);
+      mock.expects('listTransactions').withArgs(controller.account.address, 10).returns(transactionsDeferred.promise);
       $scope.$apply();
       mock.verify();
       mock.restore();
