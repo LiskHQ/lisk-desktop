@@ -11,7 +11,7 @@ app.component('login', {
     onLogin: '&',
   },
   controller: class login {
-    constructor($scope, $rootScope, $timeout, $document, $mdDialog, $mdMedia, $cookies) {
+    constructor($scope, $rootScope, $timeout, $document, $mdDialog, $mdMedia, $cookies, $peers) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$timeout = $timeout;
@@ -19,12 +19,21 @@ app.component('login', {
       this.$mdDialog = $mdDialog;
       this.$mdMedia = $mdMedia;
       this.$cookies = $cookies;
+      this.$peers = $peers;
 
       this.$scope.$watch('$ctrl.input_passphrase', this.isValidPassphrase.bind(this));
       this.$timeout(this.devTestAccount.bind(this), 200);
 
       this.$scope.$watch(() => this.$mdMedia('xs') || this.$mdMedia('sm'), (wantsFullScreen) => {
         this.$scope.customFullscreen = wantsFullScreen === true;
+      });
+      this.$scope.$watch('$ctrl.$peers.currentPeerConfig', () => {
+        this.$peers.setActive(this.$peers.currentPeerConfig);
+      });
+      this.$scope.$watch('$ctrl.$peers.stack', (val) => {
+        if (val && !this.$peers.currentPeerConfig.node) {
+          this.$peers.setActive($peers.stack.official[0]);
+        }
       });
     }
 
@@ -40,10 +49,12 @@ app.component('login', {
     }
 
     doTheLogin() {
-      this.passphrase = login.fixCaseAndWhitespace(this.input_passphrase);
+      if (this.isValidPassphrase(this.input_passphrase) === 1) {
+        this.passphrase = login.fixCaseAndWhitespace(this.input_passphrase);
 
-      this.reset();
-      this.$timeout(this.onLogin);
+        this.reset();
+        this.$timeout(this.onLogin);
+      }
     }
 
     isValidPassphrase(value) {
@@ -56,6 +67,7 @@ app.component('login', {
       } else {
         this.valid = 1;
       }
+      return this.valid;
     }
 
     startGenratingNewPassphrase() {

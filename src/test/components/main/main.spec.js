@@ -28,21 +28,6 @@ describe('main component controller', () => {
     });
   });
 
-  describe('controller()', () => {
-    it.skip('sets $watch on $ctrl.$peers.active to broadcast it changed', () => {
-      // Skipped as it doesn't work
-      $scope.$apply();
-      const mock = sinon.mock(controller.$rootScope);
-      mock.expects('$broadcast').withArgs('peerUpdate').returns();
-      controller.$peers.active = { name: 'CHANGED' };
-      $scope.$apply();
-      controller.$peers.active.name = 'CHANGED AGAIN';
-      $scope.$apply();
-      mock.verify();
-      mock.restore();
-    });
-  });
-
   describe('reset()', () => {
     it('cancels $timeout', () => {
       const spy = sinon.spy(controller.$timeout, 'cancel');

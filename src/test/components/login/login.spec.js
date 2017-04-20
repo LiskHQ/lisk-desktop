@@ -32,9 +32,14 @@ describe('Login component', () => {
     expect(element.find('.md-title').text()).to.equal(HEADER_TEXT);
   });
 
-  const LABEL_TEXT = 'Enter your passphrase';
-  it(`should contain a form with label saying "${LABEL_TEXT}"`, () => {
-    expect(element.find('form label').text()).to.equal(LABEL_TEXT);
+  const PASS_LABEL_TEXT = 'Enter your passphrase';
+  it(`should contain a form input with label saying "${PASS_LABEL_TEXT}"`, () => {
+    expect(element.find('form md-input-container label.pass').text()).to.equal(PASS_LABEL_TEXT);
+  });
+
+  const SELECT_LABEL_TEXT = 'Choose a peer';
+  it(`should contain a select element with label saying "${SELECT_LABEL_TEXT}"`, () => {
+    expect(element.find('form md-input-container label.select').text()).to.equal(SELECT_LABEL_TEXT);
   });
 
   it('should contain an input field', () => {
@@ -54,6 +59,7 @@ describe('Login controller', () => {
   let $scope;
   let controller;
   let $componentController;
+  let testPassphrase;
 
   beforeEach(inject((_$componentController_, _$rootScope_) => {
     $componentController = _$componentController_;
@@ -61,10 +67,34 @@ describe('Login controller', () => {
   }));
 
   beforeEach(() => {
+    testPassphrase = 'glow two glimpse camp aware tip brief confirm similar code float defense';
     $scope = $rootScope.$new();
     controller = $componentController('login', $scope, { });
     controller.onLogin = function () {};
     controller.passphrase = '';
+  });
+
+  describe('controller()', () => {
+    it('should define a watcher for $ctrl.$peers.currentPeerConfig', () => {
+      $scope.$apply();
+      const peers = controller.$peers;
+      const spy = sinon.spy(peers, 'setActive');
+      peers.currentPeerConfig = peers.stack.localhost[0];
+      $scope.$apply();
+      peers.currentPeerConfig = peers.stack.official[0];
+      $scope.$apply();
+      expect(spy).to.have.been.calledWith();
+    });
+
+    it('should be able to change the active peer', () => {
+      $scope.$apply();
+      controller.$peers.setActive(controller.$peers.stack.localhost[0]);
+      $scope.$apply();
+      expect(controller.$peers.currentPeerConfig).to.equal(controller.$peers.stack.localhost[0]);
+      controller.$peers.setActive(controller.$peers.stack.official[0]);
+      $scope.$apply();
+      expect(controller.$peers.currentPeerConfig).to.equal(controller.$peers.stack.official[0]);
+    });
   });
 
   describe('$scope.reset()', () => {
@@ -123,18 +153,20 @@ describe('Login controller', () => {
 
   describe('$scope.doTheLogin()', () => {
     it('sets this.phassphrase as this.input_passphrase processed by fixCaseAndWhitespace', () => {
-      controller.input_passphrase = '\tTEST  PassPHrASe  ';
+      controller.input_passphrase = '\tGLOW two GliMpse camp aware tip brief confirm similar code float defense  ';
       controller.doTheLogin();
-      expect(controller.passphrase).to.equal('test passphrase');
+      expect(controller.passphrase).to.equal('glow two glimpse camp aware tip brief confirm similar code float defense');
     });
 
     it('calls this.reset()', () => {
+      controller.input_passphrase = testPassphrase;
       const spy = sinon.spy(controller, 'reset');
       controller.doTheLogin();
       expect(spy).to.have.been.calledWith();
     });
 
     it('sets timeout with this.onLogin', () => {
+      controller.input_passphrase = testPassphrase;
       const spy = sinon.spy(controller, '$timeout');
       controller.doTheLogin();
       expect(spy).to.have.been.calledWith(controller.onLogin);
@@ -172,7 +204,6 @@ describe('Login controller', () => {
 
   describe('$scope.devTestAccount()', () => {
     it('sets input_passphrase from cookie called passphrase if present', () => {
-      const testPassphrase = 'test passphrase';
       const mock = sinon.mock(controller.$cookies);
       mock.expects('get').returns(testPassphrase);
       controller.devTestAccount();
@@ -180,7 +211,6 @@ describe('Login controller', () => {
     });
 
     it('does nothing if cooke called passphrase not present', () => {
-      const testPassphrase = 'test passphrase';
       controller.input_passphrase = testPassphrase;
       const mock = sinon.mock(controller.$cookies);
 

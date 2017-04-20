@@ -1,6 +1,6 @@
 {
   "name": "lisk-nano",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Lisk Nano",
   "scripts": {
     "build": "webpack --profile --progress --display-modules --display-exclude --display-chunks --display-cached --display-cached-assets",
@@ -24,7 +24,7 @@
     "bitcore-mnemonic": "=1.1.1",
     "debug": "=2.2.0",
     "jquery": "=2.2.4",
-    "lisk-js": "git://github.com/liskHQ/lisk-js.git#development",
+    "lisk-js": "=0.4.0",
     "lodash": "=4.16.4",
     "moment": "=2.15.1",
     "ng-infinite-scroll": "=1.3.0",
@@ -54,7 +54,7 @@
     "jasmine-spec-reporter": "^3.2.0",
     "jit-grunt": "=0.10.0",
     "json-loader": "=0.5.4",
-    "karma": "^1.5.0",
+    "karma": "=1.4.1",
     "karma-babel-preprocessor": "=6.0.1",
     "karma-chai": "=0.1.0",
     "karma-chrome-launcher": "=2.0.0",
