@@ -32,7 +32,7 @@ app.component('send', {
       });
 
       this.$scope.$watch('$ctrl.account.balance', () => {
-        this.amount.max = parseFloat(lsk.normalize(this.account.balance)) - 0.1;
+        this.amount.max = lsk.normalize(this.account.balance - 10000000);
       });
     }
 
