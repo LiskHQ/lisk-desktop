@@ -26,8 +26,7 @@ app.factory('signVerify', ($mdDialog, $mdMedia) => ({
     return $mdDialog.show({
       template:
           '<md-dialog flex="80" >' +
-            '<verify-message account="account" passphrase="passphrase">' +
-            '</verify-message>' +
+            '<verify-message></verify-message>' +
           '</md-dialog>',
       fullscreen: ($mdMedia('sm') || $mdMedia('xs')),
     });
