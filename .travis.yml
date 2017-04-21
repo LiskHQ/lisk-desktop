@@ -1,15 +1,35 @@
-language: node_js
-node_js:
-  - 'node' # Latest stable Node.js release
+dist: 'trusty'
+language: java
+jdk:
+  - oraclejdk8
+env:
+  - NODE_VERSION=6.10.1
 cache:
   directories:
     - src/node_modules/
-env:
-  - ON_TRAVIS=true
-before_install: cd src
-before_script:
+services:
+  - postgresql
+addons:
+  postgresql: '9.6'
+before_install:
+  - cd src
+install:
+  - nvm install $NODE_VERSION
   - npm install
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - ./node_modules/protractor/bin/webdriver-manager update
+  - ./node_modules/protractor/bin/webdriver-manager start &> .protractor.log &
+  - sleep 3
+before_script:
+  - ../.travis/before_script.sh
 script:
+  - nvm use $NODE_VERSION
   - npm run test
-  - npm run build
-
+  - npm run dev &> .lisk-nano.log &
+  - sleep 5
+  - npm run e2e-test
+after_script:
+  - cat .protractor.log
+  - cat .lisk-core.log
+  - cat .lisk-nano.log
