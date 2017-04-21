@@ -47,7 +47,7 @@ describe('Verify message component', () => {
     expect(element.find('textarea[name="result"]').val()).to.equal('');
   });
 
-  it.skip('should display error message "Invalid" if part of signature is misisng', () => {
+  it('should display error message "Invalid" if part of signature is misisng', () => {
     const signaturModelController = element.find('textarea[name="signature"]').controller('ngModel');
     signaturModelController.$setViewValue(signature.substr(0, 100));
     const publicKeyModelController = element.find('input[name="publicKey"]').controller('ngModel');
