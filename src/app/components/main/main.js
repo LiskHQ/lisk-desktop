@@ -7,13 +7,14 @@ const UPDATE_INTERVAL_BALANCE = 10000;
 app.component('main', {
   template: require('./main.pug')(),
   controller: class main {
-    constructor($scope, $rootScope, $timeout, $q, $peers, error) {
+    constructor($scope, $rootScope, $timeout, $q, $peers, error, signVerify) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$timeout = $timeout;
       this.$q = $q;
       this.$peers = $peers;
       this.error = error;
+      this.signVerify = signVerify;
 
       this.$scope.$on('login', this.login.bind(this));
     }
