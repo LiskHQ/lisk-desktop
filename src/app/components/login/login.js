@@ -8,17 +8,21 @@ app.component('login', {
     onLogin: '&',
   },
   controller: class login {
-    constructor($scope, $rootScope, $timeout, $document, $mdDialog, $mdMedia, $cookies, $peers) {
+
+   /* eslint no-param-reassign: ["error", { "props": false }] */
+
+    constructor($scope, $rootScope, $timeout, $document, $mdMedia, $cookies, $peers, Passphrase) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$timeout = $timeout;
       this.$document = $document;
-      this.$mdDialog = $mdDialog;
       this.$mdMedia = $mdMedia;
       this.$cookies = $cookies;
       this.$peers = $peers;
+      this.Passphrase = Passphrase;
+      this.generatingNewPassphrase = false;
 
-      this.$scope.$watch('$ctrl.input_passphrase', this.isValidPassphrase.bind(this));
+      this.$scope.$watch('$ctrl.input_passphrase', val => this.valid = this.Passphrase.isValidPassphrase(val));
       this.$timeout(this.devTestAccount.bind(this), 200);
 
       this.$scope.$watch(() => this.$mdMedia('xs') || this.$mdMedia('sm'), (wantsFullScreen) => {
