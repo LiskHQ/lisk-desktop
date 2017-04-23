@@ -15,5 +15,6 @@ import './services/peers/peers';
 import './services/lsk';
 import './services/success';
 import './services/error';
+import './services/passphrase';
 
 import './filters/lsk';
