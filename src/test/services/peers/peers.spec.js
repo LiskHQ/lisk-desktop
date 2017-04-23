@@ -46,7 +46,6 @@ describe('Factory: $peers', () => {
       expect($peers.active.getStatusPromise).not.to.equal(undefined);
       expect($peers.active.getAccountPromise).not.to.equal(undefined);
       expect($peers.active.sendLSKPromise).not.to.equal(undefined);
-      expect($peers.active.listTransactionsPromise).not.to.equal(undefined);
     });
 
     it('creates $peers.active.getStatusPromise which returns a promise', () => {
@@ -67,7 +66,7 @@ describe('Factory: $peers', () => {
       expect(promise.then.constructor).to.be.equal(Function);
     });
 
-    it('creates $peers.active.listTransactionsPromise which returns a promise', () => {
+    it.skip('creates $peers.active.listTransactionsPromise which returns a promise', () => {
       const promise = $peers.active.listTransactionsPromise(RECIPIENT_ADDRESS, AMOUNT);
       $rootScope.$apply();
       expect(promise.then.constructor).to.be.equal(Function);
