@@ -23,7 +23,7 @@ describe('Passphrase factory', () => {
   describe('ok', () => {
     it('should call $mdDialog.hide()', () => {
       const spy = sinon.spy($mdDialog, 'hide');
-      setSecondPass.hide();
+      setSecondPass.ok();
       expect(spy).to.have.been.calledWith();
     });
   });
@@ -31,7 +31,7 @@ describe('Passphrase factory', () => {
   describe('cancel', () => {
     it('should call $mdDialog.hide()', () => {
       const spy = sinon.spy($mdDialog, 'hide');
-      setSecondPass.hide();
+      setSecondPass.cancel();
       expect(spy).to.have.been.calledWith();
     });
   });
