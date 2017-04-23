@@ -3,6 +3,7 @@ md-content(layout='row')
     md-content.header(layout='row', layout-align='center center', layout-padding)
       img.logo(src=require('./images/LISK-nano.png'))
       div(flex)
+      md-button.md-raised.md-secondary.set-2nd(data-set-second-pass ng-if='$ctrl.logged') Set 2nd passphrase
       md-button.md-raised.md-primary.logout(ng-click='$ctrl.logout()', ng-if='$ctrl.logged') Logout
     div(layout='row', layout-align='space-around', ng-show='$ctrl.prelogged')
       md-progress-circular.md-warn(md-mode='indeterminate', md-diameter='80')
