@@ -6,5 +6,6 @@ require('./components/timestamp/timestamp.spec');
 require('./components/transactions/transactions.spec');
 
 require('./services/peers/peers.spec');
+require('./services/lsk.spec');
 
 require('./util/animateOnChange/animateOnChange.spec');
