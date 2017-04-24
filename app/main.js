@@ -50,10 +50,33 @@ function createWindow() {
       label: name,
       submenu: [
         {
+          role: 'about',
+          label: 'About',
+        },
+        {
           role: 'quit',
           label: 'Quit',
         },
       ],
+    });
+  } else {
+    template.push({
+      label: "Help",
+      submenu: [
+        {
+          label: 'About',
+          click: function (item, focusedWindow) {
+            if (focusedWindow) {
+              const options = {
+                buttons: ['OK'],
+                icon: `${__dirname}/assets/lisk.png`,
+                message: `Lisk Nano\nVersion ${app.getVersion()}\nCopyright © 2017 Lisk Foundation`,
+              }
+              electron.dialog.showMessageBox(focusedWindow, options, function () {})
+            }
+          }
+        }
+    ]
     });
   }
 
