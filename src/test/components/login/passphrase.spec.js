@@ -12,28 +12,28 @@ describe('Passphrase Directive', () => {
   let $document;
   let Passphrase;
 
-  // Load the myApp module, which contains the directive
-  beforeEach(angular.mock.module('app'));
-
-  // Store references to $rootScope and $compile
-  // so they are available to all tests in this describe block
-  beforeEach(inject((_$compile_, _$rootScope_, _$document_, _Passphrase_) => {
-    $compile = _$compile_;
-    $rootScope = _$rootScope_;
-    $document = _$document_;
-    Passphrase = _Passphrase_;
-  }));
-
   beforeEach(() => {
-    $scope = $rootScope.$new();
+    // Load the myApp module, which contains the directive
+    angular.mock.module('app');
+
+    // Store references to $rootScope and $compile
+    // so they are available to all tests in this describe block
+    inject((_$compile_, _$rootScope_, _$document_, _Passphrase_) => {
+      $compile = _$compile_;
+      $rootScope = _$rootScope_;
+      $document = _$document_;
+      Passphrase = _Passphrase_;
+      $scope = $rootScope.$new();
+    });
+
     // Compile a piece of HTML containing the directive
-    $compile('<passphrase data-target="primary-pass"></passphrase>')($scope);
+    $compile('<div><passphrase data-target="primary-pass"></passphrase></div>')($scope);
     $scope.$digest();
   });
 
-  describe('SignupLink', () => {
+  describe('PassphraseLink', () => {
     it.skip('should intiate Passphrase service', () => {
-      expect(Passphrase.init).toHaveBeenCalled();
+      expect(Passphrase.init).called();
     });
 
     it.skip('should asign progress to its own $scope', () => {
