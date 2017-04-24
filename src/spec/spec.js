@@ -177,21 +177,6 @@ function testShowTransactions() {
   expect(element.all(by.css('transactions table tbody tr')).count()).toEqual(10);
 }
 
-function testLoadMoreTransactions() {
-  login(masterAccount);
-
-  const moreButton = element(by.css('transactions button.more'));
-  const transactionsList = element.all(by.css('transactions table tbody tr'));
-  browser.wait(EC.presenceOf(moreButton), waitTime);
-
-  const initalCount = transactionsList.count();
-  moreButton.click();
-  browser.sleep(200);
-  const secondaryCount = transactionsList.count();
-
-  expect(secondaryCount).not.toBeLessThan(initalCount);
-}
-
 describe('Lisk Nano functionality', () => {
   it('should allow to login', testLogin);
   it('should allow to logout', testLogout);
@@ -203,6 +188,5 @@ describe('Lisk Nano functionality', () => {
   it('should not allow to send transaction when not enough funds', testSendWithNotEnoughFunds);
   it('should not allow to send transaction when invalid address', testSendWithInvalidAddress);
   it('should show transactions', testShowTransactions);
-  it('should allow to load more transactions', testLoadMoreTransactions);
   it('should allow to create a new account', testNewAccount);
 });
