@@ -3,5 +3,6 @@ export default angular.module('app', [
   'ngMaterial',
   'ngAnimate',
   'ngCookies',
+  'infinite-scroll',
   'md.data.table',
 ]);

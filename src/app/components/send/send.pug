@@ -1,31 +1,33 @@
-md-card.offline-hide
-  md-card-title
-    md-card-title-text
-      span.md-title Send
-    md-menu(md-position-mode='target-right target')
-      md-button.md-icon-button(ng-click='$mdOpenMenu()')
-        i.material-icons more_vert
-      md-menu-content(width='4')
-        md-menu-item
-          md-button(ng-click='$ctrl.setMaxAmount()')
-            div(layout='row', flex='')
-              p(flex='') Set maximum amount
-  md-card-content
-    form(name='$ctrl.sendForm')
-      md-content(flex='100', flex-gt-sm='70', flex-offset-gt-sm='15')
-        md-input-container.md-block
-          label Recipient Address
-          input(type='text', name='recipient', ng-model='$ctrl.recipient.value', required, ng-pattern='$ctrl.recipient.regexp', ng-disabled='$ctrl.loading')
-          div(ng-messages='$ctrl.sendForm.recipient.$error')
-            div(ng-message='required') Required
-            div(ng-message='pattern') Invalid
-        md-input-container.md-block
-          label Transaction Amount
-          input(type='number', name='amount', ng-model='$ctrl.amount.value', required, ng-pattern='$ctrl.amount.regexp', ng-disabled='$ctrl.loading', ng-max='$ctrl.amount.max', ignore-mouse-wheel)
-          div.fee(ng-show='$ctrl.amount.value') Fee: 0.1 LSK
-          div(ng-messages='$ctrl.sendForm.amount.$error')
-            div(ng-message='required') Required
-            div(ng-message='pattern') Invalid
-            div(ng-message='max') Insufficient funds
-    md-content(layout='row', layout-align='center center')
-      md-button.md-raised.md-primary(ng-disabled='!$ctrl.sendForm.$valid || $ctrl.loading', ng-click='$ctrl.go()') {{ $ctrl.loading ? 'Sending...' : 'Send' }}
+md-dialog.dialog-send(aria-label='Transfering', style='width: 700px; max-width: 700px')
+  md-card.offline-hide
+    md-card-title
+      md-card-title-text
+        span.md-title Send
+      md-menu(md-position-mode='target-right target')
+        md-button.md-icon-button(ng-click='$mdOpenMenu()')
+          i.material-icons more_vert
+        md-menu-content(width='4')
+          md-menu-item
+            md-button(ng-click='$ctrl.setMaxAmount()')
+              div(layout='row', flex='')
+                p(flex='') Set maximum amount
+    md-card-content
+      form(name='$ctrl.sendForm')
+        md-content(flex='100', flex-gt-sm='70', flex-offset-gt-sm='15')
+          md-input-container.md-block
+            label Recipient Address
+            input(type='text', name='recipient', ng-model='$ctrl.recipient.value', required, ng-pattern='$ctrl.recipient.regexp', ng-disabled='$ctrl.loading')
+            div(ng-messages='$ctrl.sendForm.recipient.$error')
+              div(ng-message='required') Required
+              div(ng-message='pattern') Invalid
+          md-input-container.md-block
+            label Transaction Amount
+            input(type='number', name='amount', ng-model='$ctrl.amount.value', required, ng-pattern='$ctrl.amount.regexp', ng-disabled='$ctrl.loading', ng-max='$ctrl.amount.max', ignore-mouse-wheel)
+            div.fee(ng-show='$ctrl.amount.value') Fee: 0.1 LSK
+            div(ng-messages='$ctrl.sendForm.amount.$error')
+              div(ng-message='required') Required
+              div(ng-message='pattern') Invalid
+              div(ng-message='max') Insufficient funds
+      md-content(layout='row', layout-align='center center')
+        md-button.md-raised.md-secondary(ng-disabled='$ctrl.loading', ng-click='$ctrl.cancel()') {{ 'Cancel' }}
+        md-button.md-raised.md-primary(ng-disabled='!$ctrl.sendForm.$valid || $ctrl.loading', ng-click='$ctrl.go()') {{ $ctrl.loading ? 'Sending...' : 'Send' }}

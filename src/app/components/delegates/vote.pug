@@ -1,0 +1,42 @@
+div.dialog-vote(aria-label='Vote for delegates')
+  form
+    md-toolbar
+      .md-toolbar-tools
+        h2 Vote for delegates
+    md-dialog-content
+      .md-dialog-content
+        div(ng-if='$ctrl.voteList.length')
+          h4 Add vote to:
+          md-list
+            md-list-item.vote-list-item(ng-repeat='delegate in $ctrl.voteList', ng-click='$ctrl.removeVote($ctrl.voteList, $index)')
+              div
+                span {{delegate.username}}
+                md-button.md-icon-button.remove-button(ng-click='$ctrl.removeVote($ctrl.voteList, $index)')
+                  i.material-icons close
+        md-divider(ng-if='$ctrl.voteList.length && $ctrl.unvoteList.length')
+        div(ng-if='$ctrl.unvoteList.length')
+          h4 Remove vote from:
+          md-list
+            md-list-item.vote-list-item(ng-repeat='delegate in $ctrl.unvoteList', ng-click='$ctrl.removeVote($ctrl.unvoteList, $index)')
+              div
+                span {{delegate.username}}
+                md-button.md-icon-button.remove-button(ng-click='$ctrl.removeVote($ctrl.unvoteList, $index)')
+                  i.material-icons close
+        p.pull-right Fee: 1 LSK
+        md-divider
+        div(layout='row')
+          p.info-icon-wrapper 
+            i.material-icons info
+          p
+            span You can select up to 33 delegates in one voting turn.
+            br
+            span You can vote for up to 101 delegates in total.
+        md-divider
+        md-input-container.md-block(ng-if='$ctrl.account.secondSignature')
+          label Second Passphrase
+          input(type='password', ng-model='$ctrl.secondPassphrase')
+          md-divider
+    md-dialog-actions(layout='row')
+      md-button(ng-click="$ctrl.$mdDialog.cancel()") Cancel
+      span(flex)
+      md-button(ng-disabled='!$ctrl.canVote()', ng-click="$ctrl.vote()") {{$ctrl.votingInProgress ? 'Voting...' : 'Confirm vote'}}
