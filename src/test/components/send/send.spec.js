@@ -25,7 +25,7 @@ describe('Send component', () => {
     $scope.passphrase = 'robust swift grocery peasant forget share enable convince deputy road keep cheap';
     $scope.account = {
       address: '8273455169423958419L',
-      balance: lsk.from(100),
+      balance: lsk.from(10535.77379498),
     };
     element = $compile('<send passphrase="passphrase" account="account"></send>')($scope);
     $scope.$digest();
@@ -91,7 +91,7 @@ describe('Send component', () => {
 
     it('should allow to send all funds', () => {
       const RECIPIENT_ADDRESS = '5932438298200837883L';
-      const AMOUNT = lsk.normalize($scope.account.balance) - 0.1;
+      const AMOUNT = lsk.normalize($scope.account.balance - 10000000);
 
       $peers.active = { sendLSKPromise() {} };
       const mock = sinon.mock($peers.active);
