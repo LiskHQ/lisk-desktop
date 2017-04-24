@@ -7,13 +7,14 @@ const UPDATE_INTERVAL_BALANCE = 10000;
 app.component('main', {
   template: require('./main.pug')(),
   controller: class main {
-    constructor($scope, $rootScope, $timeout, $q, $peers, error) {
+    constructor($scope, $rootScope, $timeout, $q, $peers, error, SendModal) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$timeout = $timeout;
       this.$q = $q;
       this.$peers = $peers;
       this.error = error;
+      this.sendModal = SendModal;
 
       this.$scope.$on('login', this.login.bind(this));
     }
@@ -71,6 +72,7 @@ app.component('main', {
       return this.$peers.active.getAccountPromise(this.address)
         .then((res) => {
           this.account = res;
+          this.sendModal.init(this.account, this.passphrase);
         })
         .catch((res) => {
           this.account.balance = undefined;
