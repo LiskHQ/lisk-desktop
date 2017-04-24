@@ -14,7 +14,7 @@ describe('setSecondPass Directive', () => {
 
   beforeEach(() => {
     // Load the myApp module, which contains the directive
-    angular.mock.module('app')
+    angular.mock.module('app');
 
     // Store references to $rootScope and $compile
     // so they are available to all tests in this describe block
