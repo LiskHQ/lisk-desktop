@@ -37,7 +37,88 @@ function createWindow() {
           role: 'paste',
         },
         {
+          role: 'pasteandmatchstyle',
+        },
+        {
+          role: 'delete',
+        },
+        {
           role: 'selectall',
+        },
+      ],
+    },
+    {
+      label: 'View',
+      submenu: [
+        {
+          role: 'reload',
+        },
+        {
+          type: 'separator',
+        },
+        {
+          role: 'togglefullscreen',
+        },
+        {
+          type: 'separator',
+        },
+        {
+          role: 'resetzoom',
+        },
+        {
+          role: 'zoomin',
+        },
+        {
+          role: 'zoomout',
+        },
+      ],
+    },
+    {
+      label: 'Window',
+      submenu: [
+        {
+          role: 'minimize',
+        },
+      ],
+    },
+    {
+      label: 'Help',
+      submenu: [
+        {
+          label: 'Official Lisk Website',
+          click: function () {
+            electron.shell.openExternal('https://lisk.io');
+          }
+        },
+        {
+          type: 'separator',
+        },
+        {
+          label: 'Lisk Chat',
+          click: function () {
+            electron.shell.openExternal('https://lisk.chat');
+          }
+        },
+        {
+          label: 'Lisk Forum',
+          click: function () {
+            electron.shell.openExternal('https://forum.lisk.io');
+          }
+        },
+        {
+          label: 'Report Issue',
+          click: function () {
+            electron.shell.openExternal('https://github.com/LiskHQ/lisk-nano/issues/new');
+          }
+        },
+        {
+          type: 'separator',
+        },
+        {
+          label: 'What\'s new',
+          click: function () {
+            electron.shell.openExternal('https://github.com/LiskHQ/lisk-nano/releases');
+          }
         },
       ],
     },
@@ -60,23 +141,18 @@ function createWindow() {
       ],
     });
   } else {
-    template.push({
-      label: "Help",
-      submenu: [
-        {
-          label: 'About',
-          click: function (item, focusedWindow) {
-            if (focusedWindow) {
-              const options = {
-                buttons: ['OK'],
-                icon: `${__dirname}/assets/lisk.png`,
-                message: `Lisk Nano\nVersion ${app.getVersion()}\nCopyright © 2017 Lisk Foundation`,
-              }
-              electron.dialog.showMessageBox(focusedWindow, options, function () {})
-            }
+    template[template.length - 1].submenu.push({
+      label: 'About',
+      click: function (item, focusedWindow) {
+        if (focusedWindow) {
+          const options = {
+            buttons: ['OK'],
+            icon: `${__dirname}/assets/lisk.png`,
+            message: `Lisk Nano\nVersion ${app.getVersion()}\nCopyright © 2017 Lisk Foundation`,
           }
+          electron.dialog.showMessageBox(focusedWindow, options, function () {})
         }
-    ]
+      }
     });
   }
 
