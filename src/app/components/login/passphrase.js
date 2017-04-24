@@ -2,7 +2,7 @@ import './passphrase.less';
 
 app.directive('passphrase', ($rootScope, $document, Passphrase, $mdDialog, $mdMedia, $timeout) => {
   /* eslint no-param-reassign: ["error", { "props": false }] */
-  const SignupLink = function (scope, element, attrs) {
+  const PassphraseLink = function (scope, element, attrs) {
     const bindEvents = (listener) => {
       $document.bind('mousemove', listener);
     };
@@ -85,12 +85,11 @@ app.directive('passphrase', ($rootScope, $document, Passphrase, $mdDialog, $mdMe
   };
 
   return {
-    link: SignupLink,
+    link: PassphraseLink,
     restrict: 'E',
     scope: {
       onLogin: '=',
     },
-    controller: () => {},
     template: require('./passphrase.pug')(),
   };
 });
