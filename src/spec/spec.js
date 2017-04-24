@@ -193,6 +193,5 @@ describe('Lisk Nano functionality', () => {
   it('should not allow to send transaction when not enough funds', testSendWithNotEnoughFunds);
   it('should not allow to send transaction when invalid address', testSendWithInvalidAddress);
   it('should show transactions', testShowTransactions);
-  it('should allow to load more transactions', testLoadMoreTransactions);
   xit('should allow to create a new account', testNewAccount);
 });
