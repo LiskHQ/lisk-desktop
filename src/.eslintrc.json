@@ -19,6 +19,12 @@
     "no-plusplus": "off",
     "no-restricted-properties": "off",
     "no-return-assign": "off",
-    "no-underscore-dangle": "off"
+    "no-underscore-dangle": "off",
+    "no-param-reassign": [
+      "error", {
+        "props": true,
+        "ignorePropertyModificationsFor": ["scope", "$scope", "rootScope", "$rootScope"]
+      }
+    ]
   }
 }
