@@ -188,9 +188,9 @@ describe('Lisk Nano functionality', () => {
   it('should allow to change peer', testChangePeer);
   it('should show address', testAddress);
   it('should show balance', testShowBalance);
-  xit('should allow to send transaction when enough funds and correct address form', testSend);
+  it('should allow to send transaction when enough funds and correct address form', testSend);
   it('should not allow to send transaction when not enough funds', testSendWithNotEnoughFunds);
   it('should not allow to send transaction when invalid address', testSendWithInvalidAddress);
   it('should show transactions', testShowTransactions);
-  xit('should allow to create a new account', testNewAccount);
+  it('should allow to create a new account', testNewAccount);
 });
