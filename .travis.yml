@@ -26,6 +26,7 @@ install:
   - npm install
 before_script:
   - ../.travis/before_script.sh
+ - ./node_modules/protractor/bin/webdriver-manager update
 script:
   - nvm use $NODE_VERSION
   - npm run test
