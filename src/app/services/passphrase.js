@@ -68,7 +68,7 @@ app.factory('Passphrase', function ($rootScope) {
     /**
      * @todo why it's not working without manual digestion
      */
-    if ($rootScope.$root.$$phase !== '$apply' && $rootScope.$root.$$phase !== '$digest') {
+    if ($rootScope.$$phase !== '$apply' && $rootScope.$$phase !== '$digest') {
       $rootScope.$apply();
     }
 
