@@ -107,6 +107,17 @@ app.factory('$peers', ($timeout, $cookies, $location, $q) => {
         });
         return deferred.promise;
       };
+
+      this.active.setSignature = (secondSecret, publicKey, secret) => {
+        const deferred = $q.defer();
+        this.active.sendRequest('signatures', { secondSecret, publicKey, secret }, (res) => {
+          if (res.success) {
+            deferred.resolve(res);
+          }
+          deferred.reject(res);
+        });
+        return deferred.promise;
+      };
     }
 
     check() {
