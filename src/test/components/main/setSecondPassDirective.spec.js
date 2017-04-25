@@ -10,7 +10,10 @@ describe('setSecondPass Directive', () => {
   let $scope;
   let $rootScope;
   let element;
+  let $peers;
   let setSecondPass;
+  let $q;
+  let success;
 
   beforeEach(() => {
     // Load the myApp module, which contains the directive
@@ -18,11 +21,14 @@ describe('setSecondPass Directive', () => {
 
     // Store references to $rootScope and $compile
     // so they are available to all tests in this describe block
-    inject((_$compile_, _$rootScope_, _setSecondPass_) => {
+    inject((_$compile_, _$rootScope_, _setSecondPass_, _$peers_, _$q_, _success_) => {
       // The injector unwraps the underscores (_) from around the parameter names when matching
       $compile = _$compile_;
       $rootScope = _$rootScope_;
       setSecondPass = _setSecondPass_;
+      $peers = _$peers_;
+      $q = _$q_;
+      success = _success_;
       $scope = $rootScope.$new();
     });
 
@@ -33,12 +39,22 @@ describe('setSecondPass Directive', () => {
 
   describe('SetSecondPassLink', () => {
     it('Listens for broadcasting onAfterSignup', () => {
-      const spy = sinon.spy($scope, 'passConfirmSubmit');
+      $peers.active = { setSignature() {} };
+      const mock = sinon.mock($peers.active);
+      const deffered = $q.defer();
+      mock.expects('setSignature').returns(deffered.promise);
+
+      const spy = sinon.spy(success, 'dialog');
+
       $scope.$broadcast('onAfterSignup', {
         passphrase: 'TEST_VALUE',
         target: 'second-pass',
       });
-      expect(spy).to.have.been.calledWith('TEST_VALUE');
+
+      deffered.resolve({});
+      $scope.$apply();
+
+      expect(spy).to.have.been.calledWith();
     });
 
     it('binds click listener to call setSecondPass.show()', () => {
@@ -51,9 +67,18 @@ describe('setSecondPass Directive', () => {
   });
 
   describe('scope.passConfirmSubmit', () => {
-    it('should call console.log', () => {
-      const spy = sinon.spy(console, 'log');
+    it('should call $peers.active.setSignature', () => {
+      $peers.active = { setSignature() {} };
+      const mock = sinon.mock($peers.active);
+      const deffered = $q.defer();
+      mock.expects('setSignature').returns(deffered.promise);
+
+      const spy = sinon.spy(success, 'dialog');
       $scope.passConfirmSubmit();
+
+      deffered.resolve({});
+      $scope.$apply();
+
       expect(spy).to.have.been.calledWith();
     });
   });
