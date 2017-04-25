@@ -45,7 +45,6 @@
     "exports-loader": "=0.6.3",
     "extract-text-webpack-plugin": "=1.0.1",
     "file-loader": "=0.9.0",
-    "git-hooks": "=1.1.8",
     "grunt": "=1.0.1",
     "grunt-eslint": "=19.0.0",
     "grunt-newer": "^1.2.0",

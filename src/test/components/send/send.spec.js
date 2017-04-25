@@ -25,7 +25,7 @@ describe('Send component', () => {
     $scope.passphrase = 'robust swift grocery peasant forget share enable convince deputy road keep cheap';
     $scope.account = {
       address: '8273455169423958419L',
-      balance: lsk.from(100),
+      balance: lsk.from(10535.77379498),
     };
     element = $compile('<send passphrase="passphrase" account="account"></send>')($scope);
     $scope.$digest();
@@ -46,9 +46,14 @@ describe('Send component', () => {
     expect(element.find('form label:last').text()).to.equal(AMOUT_LABEL_TEXT);
   });
 
-  const LOGIN_BUTTON_TEXT = 'Send';
-  it(`should contain a button saying "${LOGIN_BUTTON_TEXT}"`, () => {
-    expect(element.find('button.md-raised').text()).to.equal(LOGIN_BUTTON_TEXT);
+  const SEND_BUTTON_TEXT = 'Send';
+  it(`should contain a button saying "${SEND_BUTTON_TEXT}"`, () => {
+    expect(element.find('button.md-raised.md-primary').text()).to.equal(SEND_BUTTON_TEXT);
+  });
+
+  const CANCEL_BUTTON_TEXT = 'Cancel';
+  it(`should contain a button saying "${CANCEL_BUTTON_TEXT}"`, () => {
+    expect(element.find('button.md-raised.md-secondary').text()).to.equal(CANCEL_BUTTON_TEXT);
   });
 
   describe('send transaction', () => {
@@ -76,7 +81,7 @@ describe('Send component', () => {
       element.find('form input[name="amount"]').val(AMOUNT).trigger('input');
       element.find('form input[name="recipient"]').val(RECIPIENT_ADDRESS).trigger('input');
       $scope.$apply();
-      element.find('button.md-raised').click();
+      element.find('button.md-raised.md-primary').click();
 
       deffered.resolve({});
       $scope.$apply();
@@ -86,7 +91,7 @@ describe('Send component', () => {
 
     it('should allow to send all funds', () => {
       const RECIPIENT_ADDRESS = '5932438298200837883L';
-      const AMOUNT = lsk.normalize($scope.account.balance) - 0.1;
+      const AMOUNT = lsk.normalize($scope.account.balance - 10000000);
 
       $peers.active = { sendLSKPromise() {} };
       const mock = sinon.mock($peers.active);

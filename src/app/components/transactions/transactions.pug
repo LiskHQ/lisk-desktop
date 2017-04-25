@@ -1,7 +1,5 @@
 md-card.offline-hide
   md-card-content
-    .loading
-      md-progress-linear(md-mode='indeterminate', ng-show='$ctrl.loading_show || !$ctrl.loaded')
     md-content(layout='row', layout-align='start center', layout-padding)
       span.title.md-title Transactions
       div(flex)
@@ -14,10 +12,10 @@ md-card.offline-hide
               th(md-column) Time
               th(md-column) Transaction ID
               th(md-column) From / To
-              th(md-column)
+              th(md-column) Send to this
               th(md-column) Amount
               th(md-column) Fee
-          tbody(md-body)
+          tbody(md-body, infinite-scroll='$ctrl.showMore()')
             tr(md-row, ng-repeat="transaction in $ctrl.transactions track by transaction.id | orderBy:'-timestamp'")
               td(md-cell)
                 timestamp(data='transaction.timestamp', ng-show='transaction.confirmations')
@@ -37,6 +35,9 @@ md-card.offline-hide
                   span(ng-bind='transaction.senderId', ng-if='transaction.senderId !== $ctrl.account.address')
                   span(ng-bind='transaction.recipientId', ng-if='transaction.senderId === $ctrl.account.address')
               td(md-cell)
+                i.material-icons.expanding-button(ng-if='transaction.senderId !== $ctrl.account.address', data-show-send-modal, data-recipient-id='transaction.senderId') arrow_forward
+                i.material-icons.expanding-button(ng-if='transaction.senderId === $ctrl.account.address', data-show-send-modal, data-recipient-id='transaction.recipientId') arrow_forward
+              td(md-cell)
                 i.material-icons.in(ng-if='transaction.senderId !== $ctrl.account.address') call_received
                 i.material-icons.out(ng-if='transaction.senderId === $ctrl.account.address') call_made
               td(md-cell)
@@ -45,4 +46,5 @@ md-card.offline-hide
               td(md-cell)
                 .fee
                   lsk(amount='transaction.fee')
-      md-button.more(ng-show='$ctrl.more', ng-disabled='$ctrl.loading_show', ng-click='$ctrl.update(true, true)') Load More
+  .loading
+    md-progress-linear(md-mode='indeterminate', ng-show='$ctrl.loading_show || !$ctrl.loaded')

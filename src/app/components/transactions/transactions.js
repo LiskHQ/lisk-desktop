@@ -42,7 +42,11 @@ app.component('transactions', {
     reset() {
       this.loaded = false;
     }
-
+    showMore() {
+      if (this.more) {
+        this.update(true, true);
+      }
+    }
     update(show, more) {
       this.loading = true;
 

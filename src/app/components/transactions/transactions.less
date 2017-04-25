@@ -1,6 +1,7 @@
 
 @in: #73C8A9;
 @out: #F45D4C;
+@btn: rgb(2,136,209);
 
 transactions {
   md-card-content {
@@ -9,20 +10,6 @@ transactions {
 
   .title {
     height: 40px;
-  }
-
-  .loading {
-    height: 5px;
-
-    .md-container {
-      background-color: #fff;
-      border-top-left-radius: 2px;
-      border-top-right-radius: 2px;
-    }
-
-    .md-dashed {
-      background-color: #0288d1;
-    }
   }
 
   md-table-container {
@@ -85,6 +72,16 @@ transactions {
       background-color: #eee;
       color: #555;
       font-weight: normal;
+    }
+  }
+
+  .expanding-button {
+    color: #555;
+    cursor: pointer;
+    background-color: #eee;
+    border-radius: 3px;
+    &:hover {
+      color: @btn;
     }
   }
 }
