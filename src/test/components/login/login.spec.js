@@ -62,6 +62,7 @@ describe('Login controller', () => {
   let controller;
   let $componentController;
   let Passphrase;
+  let testPassphrase;
 
   beforeEach(inject((_$componentController_, _$rootScope_, _Passphrase_) => {
     $componentController = _$componentController_;
@@ -70,6 +71,7 @@ describe('Login controller', () => {
   }));
 
   beforeEach(() => {
+    testPassphrase = 'glow two glimpse camp aware tip brief confirm similar code float defense';
     $scope = $rootScope.$new();
     controller = $componentController('login', $scope, { });
     controller.onLogin = function () {};
@@ -127,6 +129,7 @@ describe('Login controller', () => {
       expect(controller.generatingNewPassphrase).to.equal(true);
     });
   });
+
   // OK
   describe('componentController.passConfirmSubmit()', () => {
     it('sets this.phassphrase as this.input_passphrase processed by normalizer', () => {
@@ -142,6 +145,7 @@ describe('Login controller', () => {
     });
 
     it('sets timeout with this.onLogin', () => {
+      controller.input_passphrase = testPassphrase;
       const spy = sinon.spy(controller, '$timeout');
       controller.passConfirmSubmit();
       expect(spy).to.have.been.calledWith(controller.onLogin);

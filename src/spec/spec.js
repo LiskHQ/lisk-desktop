@@ -47,12 +47,16 @@ function logout() {
 function send(fromAccount, toAddress, amount) {
   login(fromAccount);
   const sendElem = element(by.css('send'));
+  const sendModalButton = element(by.css('md-content.header button.send'));
+
+  browser.wait(EC.presenceOf(sendModalButton), waitTime);
+  sendModalButton.click();
   browser.wait(EC.presenceOf(sendElem), waitTime);
   element(by.css('send input[name="recipient"]')).sendKeys(toAddress);
   element(by.css('send input[name="amount"]')).sendKeys(`${amount}`);
   element(by.css('send input[name="recipient"]')).click();
   const sendButton = element.all(by.css('send button.md-primary')).get(0);
-  browser.wait(EC.presenceOf(sendButton), waitTime);
+  // browser.wait(EC.presenceOf(sendButton), waitTime);
   sendButton.click();
 }
 
@@ -125,7 +129,7 @@ function testAddress() {
 }
 
 function testPeer() {
-  expect(element.all(by.css('form md-select md-select-value span:first-child')).get(0).getText()).toEqual('Choose a peer');
+  expect(element.all(by.css('login form md-input-container:first-child > label')).get(0).getText()).toEqual('Choose a peer');
 }
 
 function testChangePeer() {
@@ -145,7 +149,7 @@ function testShowBalance() {
 
   const balanceElem = element(by.css('lsk.balance'));
   browser.wait(EC.presenceOf(balanceElem), waitTime);
-  expect(balanceElem.getText()).toMatch(/\d+\.\d+ LSK/);
+  expect(balanceElem.getText()).toMatch(/\d+(\.\d+)* LSK/);
 }
 
 function testSend() {
@@ -173,17 +177,6 @@ function testShowTransactions() {
   expect(element.all(by.css('transactions table tbody tr')).count()).toEqual(10);
 }
 
-function testLoadMoreTransactions() {
-  login(masterAccount);
-
-  const moreButton = element(by.css('transactions button.more'));
-  browser.wait(EC.presenceOf(moreButton), waitTime);
-  moreButton.click();
-  browser.sleep(200);
-
-  expect(element.all(by.css('transactions table tbody tr')).count()).toEqual(20);
-}
-
 describe('Lisk Nano functionality', () => {
   it('should allow to login', testLogin);
   it('should allow to logout', testLogout);
@@ -195,6 +188,5 @@ describe('Lisk Nano functionality', () => {
   it('should not allow to send transaction when not enough funds', testSendWithNotEnoughFunds);
   it('should not allow to send transaction when invalid address', testSendWithInvalidAddress);
   it('should show transactions', testShowTransactions);
-  it('should allow to load more transactions', testLoadMoreTransactions);
   it('should allow to create a new account', testNewAccount);
 });

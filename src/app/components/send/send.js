@@ -8,6 +8,8 @@ app.component('send', {
   bindings: {
     account: '<',
     passphrase: '<',
+    recipientId: '<',
+    transferAmount: '<',
   },
   controller: class send {
     constructor($scope, $peers, lsk, success, error, $mdDialog, $q, $rootScope) {
@@ -21,18 +23,22 @@ app.component('send', {
 
       this.recipient = {
         regexp: ADDRESS_VALID_RE,
+        value: $scope.$ctrl.recipientId,
       };
 
       this.amount = {
         regexp: AMOUNT_VALID_RE,
       };
+      if ($scope.$ctrl.transferAmount) {
+        this.amount.value = parseInt(lsk.normalize($scope.$ctrl.transferAmount), 10);
+      }
 
       this.$scope.$watch('$ctrl.amount.value', () => {
         this.amount.raw = lsk.from(this.amount.value) || 0;
       });
 
       this.$scope.$watch('$ctrl.account.balance', () => {
-        this.amount.max = parseFloat(lsk.normalize(this.account.balance)) - 0.1;
+        this.amount.max = lsk.normalize(this.account.balance - 10000000);
       });
     }
 
@@ -110,6 +116,10 @@ app.component('send', {
 
     setMaxAmount() {
       this.amount.value = Math.max(0, this.amount.max);
+    }
+
+    cancel() {
+      this.$mdDialog.cancel();
     }
   },
 });

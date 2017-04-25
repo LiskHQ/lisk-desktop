@@ -46,7 +46,7 @@ npm run dist:win
 Build package for Mac OS X.
 
 ```
-npm run dist:osx
+npm run dist:mac
 ```
 
 ### Linux

@@ -53,35 +53,54 @@ app.factory('$peers', ($timeout, $cookies, $location, $q) => {
       this.check();
     }
 
+    sendRequestPromise(api, urlParams) {
+      const deferred = $q.defer();
+      this.active.sendRequest(api, urlParams, (data) => {
+        if (data.success) {
+          return deferred.resolve(data);
+        }
+        return deferred.reject(data);
+      });
+      return deferred.promise;
+    }
+
+    listAccountDelegates(urlParams) {
+      return this.sendRequestPromise('accounts/delegates', urlParams);
+    }
+
+    listDelegates(urlParams) {
+      return this.sendRequestPromise(`delegates/${urlParams.q ? 'search' : ''}`, urlParams);
+    }
+
+    getDelegate(urlParams) {
+      return this.sendRequestPromise('delegates/get', urlParams);
+    }
+
+    listTransactions(address, limit, offset) {
+      return this.sendRequestPromise('transactions', {
+        senderId: address,
+        recipientId: address,
+        limit: limit || 20,
+        offset: offset || 0,
+      });
+    }
+
     setPeerAPIObject(config) {
       this.active = lisk.api(config);
 
-      this.active.getStatusPromise = () => {
-        const deferred = $q.defer();
-        this.active.sendRequest('loader/status', {}, (data) => {
-          if (data.success) {
-            return deferred.resolve();
-          }
-          return deferred.reject();
-        });
-        return deferred.promise;
-      };
+      this.active.getStatusPromise = () => this.sendRequestPromise('loader/status', {});
 
       this.active.getAccountPromise = (address) => {
         const deferred = $q.defer();
         this.active.getAccount(address, (data) => {
           if (data.success) {
             deferred.resolve(data.account);
+          } else {
+            deferred.resolve({
+              address,
+              balance: 0,
+            });
           }
-          this.active.sendRequest('accounts/getBalance', { address }, (balanceData) => {
-            if (balanceData.success) {
-              deferred.resolve({
-                address,
-                balance: balanceData.balance,
-              });
-            }
-            deferred.reject(balanceData);
-          });
         });
         return deferred.promise;
       };
