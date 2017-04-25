@@ -6,12 +6,8 @@ import './save.less';
 
 app.component('login', {
   template: require('./login.pug')(),
-  bindings: {
-    passphrase: '=',
-    onLogin: '&',
-  },
   controller: class login {
-    constructor($scope, $rootScope, $timeout, $document, $mdDialog, $mdMedia, $cookies, $peers) {
+    constructor($scope, $rootScope, $timeout, $document, $mdDialog, $mdMedia, $cookies, $peers, $state) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$timeout = $timeout;
@@ -20,6 +16,8 @@ app.component('login', {
       this.$mdMedia = $mdMedia;
       this.$cookies = $cookies;
       this.$peers = $peers;
+      this.$state = $state;
+
 
       this.$scope.$watch('$ctrl.input_passphrase', this.isValidPassphrase.bind(this));
       this.$timeout(this.devTestAccount.bind(this), 200);
@@ -50,10 +48,12 @@ app.component('login', {
 
     doTheLogin() {
       if (this.isValidPassphrase(this.input_passphrase) === 1) {
-        this.passphrase = login.fixCaseAndWhitespace(this.input_passphrase);
+        this.$rootScope.passphrase = login.fixCaseAndWhitespace(this.input_passphrase);
 
         this.reset();
-        this.$timeout(this.onLogin);
+        // this.$timeout(this.onLogin);
+        // console.log(this.$state);
+        this.$state.go('main');
       }
     }
 
