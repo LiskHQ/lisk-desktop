@@ -6,6 +6,7 @@ const UPDATE_INTERVAL_BALANCE = 10000;
 
 app.component('main', {
   template: require('./main.pug')(),
+  controllerAs: '$ctrl',
   controller: class main {
     constructor($scope, $rootScope, $timeout, $q, $peers, error, SendModal) {
       this.$scope = $scope;
@@ -16,7 +17,8 @@ app.component('main', {
       this.error = error;
       this.sendModal = SendModal;
 
-      this.$scope.$on('login', this.login.bind(this));
+      // this.$scope.$on('login', this.login.bind(this));
+      this.login();
     }
 
     reset() {
@@ -27,8 +29,7 @@ app.component('main', {
       this.prelogged = true;
 
       this.$peers.setActive();
-
-      const kp = lisk.crypto.getKeys(this.passphrase);
+      const kp = lisk.crypto.getKeys(this.$rootScope.passphrase);
       this.address = lisk.crypto.getAddress(kp.publicKey);
 
       this.update()
