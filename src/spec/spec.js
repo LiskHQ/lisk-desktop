@@ -131,7 +131,6 @@ function testAddress() {
 function testPeer() {
   launchApp();
   expect(element.all(by.css('form md-input-container:first-child label')).get(0).getText()).toEqual('Choose a peer');
->>>>>>> Fix e2e tests to pass in Travis
 }
 
 function testChangePeer() {
