@@ -30,7 +30,7 @@ script:
   - nvm use $NODE_VERSION
   - npm run test
   - npm run dev &> .lisk-nano.log &
-  - sleep 5
+  - sleep 20
   - npm run e2e-test
 after_script:
   - cat .protractor.log
