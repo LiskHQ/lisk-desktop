@@ -1,4 +1,5 @@
-export default angular.module('app', [
+const app = angular.module('app', [
+  'ui.router',
   'ngMessages',
   'ngMaterial',
   'ngAnimate',
@@ -6,3 +7,5 @@ export default angular.module('app', [
   'infinite-scroll',
   'md.data.table',
 ]);
+
+export default app;
