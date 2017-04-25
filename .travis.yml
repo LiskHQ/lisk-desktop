@@ -24,9 +24,6 @@ before_install:
 install:
   - nvm install $NODE_VERSION
   - npm install
-  - ./node_modules/protractor/bin/webdriver-manager update
-  - ./node_modules/protractor/bin/webdriver-manager start &> .protractor.log &
-  - sleep 3
 before_script:
   - ../.travis/before_script.sh
 script:
