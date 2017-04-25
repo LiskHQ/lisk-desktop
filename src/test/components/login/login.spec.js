@@ -57,13 +57,15 @@ describe('Login controller', () => {
 
   let $rootScope;
   let $scope;
+  let $state;
   let controller;
   let $componentController;
   let testPassphrase;
 
-  beforeEach(inject((_$componentController_, _$rootScope_) => {
+  beforeEach(inject((_$componentController_, _$rootScope_, _$state_) => {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
+    $state = _$state_;
   }));
 
   beforeEach(() => {
@@ -155,7 +157,7 @@ describe('Login controller', () => {
     it('sets this.phassphrase as this.input_passphrase processed by fixCaseAndWhitespace', () => {
       controller.input_passphrase = '\tGLOW two GliMpse camp aware tip brief confirm similar code float defense  ';
       controller.doTheLogin();
-      expect(controller.passphrase).to.equal('glow two glimpse camp aware tip brief confirm similar code float defense');
+      expect($rootScope.passphrase).to.equal('glow two glimpse camp aware tip brief confirm similar code float defense');
     });
 
     it('calls this.reset()', () => {
@@ -165,11 +167,11 @@ describe('Login controller', () => {
       expect(spy).to.have.been.calledWith();
     });
 
-    it('sets timeout with this.onLogin', () => {
+    it('redirects to main if passphrase is valid', () => {
       controller.input_passphrase = testPassphrase;
-      const spy = sinon.spy(controller, '$timeout');
+      const spy = sinon.spy($state, 'go');
       controller.doTheLogin();
-      expect(spy).to.have.been.calledWith(controller.onLogin);
+      expect(spy).to.have.been.calledWith('main');
     });
   });
 

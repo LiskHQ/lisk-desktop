@@ -23,6 +23,7 @@ describe('main component controller', () => {
 
   beforeEach(() => {
     $scope = $rootScope.$new();
+    $rootScope.passphrase = '';
     controller = $componentController('main', $scope, {
       passphrase: '',
     });
