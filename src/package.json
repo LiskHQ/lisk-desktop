@@ -19,6 +19,7 @@
     "angular-material": "=1.1.1",
     "angular-material-data-table": "=0.10.9",
     "angular-messages": "=1.5.8",
+    "angular-ui-router": "=1.0.0-rc.1",
     "babel-polyfill": "=6.9.1",
     "bignumber.js": "=4.0.0",
     "bitcore-mnemonic": "=1.1.1",
@@ -81,6 +82,7 @@
     "style-loader": "=0.13.1",
     "url-loader": "=0.5.7",
     "webpack": "=1.13.1",
+    "webpack-bundle-analyzer": "^2.4.0",
     "webpack-dev-server": "=1.14.1",
     "webpack-merge": "=0.14.1",
     "webpack-validator": "=2.2.6"
