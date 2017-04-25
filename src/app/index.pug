@@ -3,9 +3,20 @@ html
   head
     meta(name="viewport" content="width=device-width, user-scalable=no")
     title Lisk Nano
+    base(href='/')
     style(type='text/css').
       body {
         background-color: #eee !important;
       }
   body
-    main
+  md-content(layout='row', id="main")
+  md-content(flex='100', flex-gt-sm='80', flex-offset-gt-sm='10')
+    md-content.header(layout='row', layout-align='center center', layout-padding)
+      img.logo(src=require('./assets/images/LISK-nano.png'))
+      div(flex)
+      md-button.md-raised.md-primary.send(data-show-send-modal, ng-if='$ctrl.logged') Send
+      md-button.md-raised.md-secondary.logout(ng-click='$ctrl.logout()', ng-if='$ctrl.logged') Logout
+    div(layout='row', layout-align='space-around', ng-show='$ctrl.prelogged')
+      md-progress-circular.md-warn(md-mode='indeterminate', md-diameter='80')
+    div(ng-class='{ online: $ctrl.$peers.online, offline: !$ctrl.$peers.online }')
+      div(data-ui-view)

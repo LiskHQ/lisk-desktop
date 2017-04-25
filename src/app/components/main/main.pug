@@ -1,26 +1,14 @@
-md-content(layout='row', id="main")
-  md-content(flex='100', flex-gt-sm='80', flex-offset-gt-sm='10')
-    md-content.header(layout='row', layout-align='center center', layout-padding)
-      img.logo(src=require('./images/LISK-nano.png'))
-      div(flex)
-      md-button.md-raised.md-primary.send(data-show-send-modal, ng-if='$ctrl.logged') Send
-      md-button.md-raised.md-secondary.logout(ng-click='$ctrl.logout()', ng-if='$ctrl.logged') Logout
-    div(layout='row', layout-align='space-around', ng-show='$ctrl.prelogged')
-      md-progress-circular.md-warn(md-mode='indeterminate', md-diameter='80')
-    div(ng-show='!$ctrl.prelogged && !$ctrl.logged')
-      login(passphrase='$ctrl.passphrase', on-login='$ctrl.login()')
-    div(ng-if='$ctrl.logged', ng-class='{ online: $ctrl.$peers.online, offline: !$ctrl.$peers.online }')
-      top(account='$ctrl.account')
-      md-tabs(md-selected='selectedIndex', md-dynamic-height='true', md-stretch-tabs='always')
-        md-tab(md-on-select='onTabSelected(tab)', md-on-deselect='announceDeselected(tab)', ng-disabled='tab.disabled')
-          md-tab-label Transactions
-          md-tab-body
-            transactions(account='$ctrl.account')
-        md-tab(md-on-select='onTabSelected(tab)', md-on-deselect='announceDeselected(tab)', ng-disabled='tab.disabled')
-          md-tab-label Voting
-          md-tab-body
-            delegates(account='$ctrl.account', passphrase='$ctrl.passphrase')
-        md-tab(ng-if='$ctrl.isDelegate')
-          md-tab-label Forging 
-          md-tab-body
-            forging(account='$ctrl.account')
+top(account='$ctrl.account')
+md-tabs(md-selected='selectedIndex', md-dynamic-height='true', md-stretch-tabs='always')
+  md-tab(md-on-select='onTabSelected(tab)', md-on-deselect='announceDeselected(tab)', ng-disabled='tab.disabled')
+    md-tab-label Transactions
+    md-tab-body
+      transactions(data-ng-if="$ctrl.account", data-account='$ctrl.account')
+  md-tab(md-on-select='onTabSelected(tab)', md-on-deselect='announceDeselected(tab)', ng-disabled='tab.disabled')
+    md-tab-label Voting
+    md-tab-body
+      delegates(data-ng-if="$ctrl.account", data-account='$ctrl.account', data-passphrase='passphrase')
+  md-tab(ng-if='$ctrl.isDelegate')
+    md-tab-label Forging 
+    md-tab-body
+      forging(data-ng-if="$ctrl.account", data-account='$ctrl.account')
