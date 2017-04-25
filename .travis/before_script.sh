@@ -4,8 +4,8 @@ psql -c 'drop database lisk_test;' -U postgres
 psql -c 'create database lisk_test;' -U postgres
 psql -d lisk_test -c "alter user "$USER" with password 'password';"
 git clone https://github.com/LiskHQ/lisk
-git checkout master
 cd lisk/
+git checkout master
 npm install
 cd test/lisk-js/; npm install; cd ../..
 cp test/config.json test/genesisBlock.json .
