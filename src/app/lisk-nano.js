@@ -2,6 +2,11 @@ import './index.less';
 
 import './theme/theme';
 import './util/animateOnChange/animateOnChange';
+import './components/main/main';
+import './components/main/setSecondPassService';
+import './components/main/setSecondPassDirective';
+import './components/login/login';
+import './components/login/passphrase';
 import './components/top/top';
 import './components/send/send';
 import './components/send/sendModalService';
@@ -17,6 +22,7 @@ import './services/peers/peers';
 import './services/lsk';
 import './services/success';
 import './services/error';
+import './services/passphrase';
 
 import './filters/lsk';
 

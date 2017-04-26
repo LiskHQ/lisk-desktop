@@ -14,8 +14,11 @@ html
     md-content.header(layout='row', layout-align='center center', layout-padding)
       img.logo(src=require('./assets/images/LISK-nano.png'))
       div(flex)
+      md-button.md-raised.md-secondary.set-2nd(data-set-second-pass, ng-if='$ctrl.logged && !$ctrl.account.secondSignature',
+        data-account='{{$ctrl.account.publicKey}}', data-passphrase='{{$ctrl.passphrase}}') Set 2nd passphrase
       md-button.md-raised.md-primary.send(data-show-send-modal, ng-if='$ctrl.logged') Send
       md-button.md-raised.md-secondary.logout(ng-click='$ctrl.logout()', ng-if='$ctrl.logged') Logout
+
     div(layout='row', layout-align='space-around', ng-show='$ctrl.prelogged')
       md-progress-circular.md-warn(md-mode='indeterminate', md-diameter='80')
     div(ng-class='{ online: $ctrl.$peers.online, offline: !$ctrl.$peers.online }')
