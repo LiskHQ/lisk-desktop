@@ -13,5 +13,4 @@ import 'ng-infinite-scroll';
 import 'angular-svg-round-progressbar';
 
 
-
 import 'babel-polyfill';
