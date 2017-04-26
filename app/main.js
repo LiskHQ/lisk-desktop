@@ -64,13 +64,10 @@ function createWindow() {
       label: 'Help',
       submenu: [
         {
-          label: 'Official Lisk Website',
+          label: 'Lisk Website',
           click: function () {
             electron.shell.openExternal('https://lisk.io');
           }
-        },
-        {
-          type: 'separator',
         },
         {
           label: 'Lisk Chat',
@@ -85,16 +82,16 @@ function createWindow() {
           }
         },
         {
-          label: 'Report Issue',
+          type: 'separator',
+        },
+        {
+          label: 'Report Issue...',
           click: function () {
             electron.shell.openExternal('https://github.com/LiskHQ/lisk-nano/issues/new');
           }
         },
         {
-          type: 'separator',
-        },
-        {
-          label: 'What\'s new',
+          label: 'What\'s New...',
           click: function () {
             electron.shell.openExternal('https://github.com/LiskHQ/lisk-nano/releases');
           }
