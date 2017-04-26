@@ -142,7 +142,7 @@ app.component('delegates', {
 
     checkPendingVotes() {
       this.$timeout(() => {
-        this.delegateService.listAccountDelegates(this.account
+        this.delegateService.listAccountDelegates(this.account,
         ).then((data) => {
           this.votedList = data.delegates || [];
           this.votedDict = {};
@@ -216,7 +216,7 @@ app.component('delegates', {
         this._selectDelegate(delegate, list);
       } else {
         this.pendingRequests++;
-        this.delegateService.getDelegate(username
+        this.delegateService.getDelegate(username,
         ).then((data) => {
           this._selectDelegate(data.delegate, list);
         }).catch(() => {
