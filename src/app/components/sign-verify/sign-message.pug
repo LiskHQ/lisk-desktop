@@ -1,0 +1,16 @@
+div
+  md-toolbar
+    .md-toolbar-tools
+      h2 Sign message
+      span(flex='')
+      md-button.md-icon-button(ng-click='$ctrl.$mdDialog.hide()', aria-label='Close dialog')
+        i.material-icons close
+  div(layout-padding)
+    form
+      md-input-container.md-block
+        label Message
+        textarea(name='message', ng-model='$ctrl.message', ng-change='$ctrl.sign()', md-autofocus)
+    div
+      md-input-container.md-block
+        label Result
+        textarea(name='result', ng-model='$ctrl.result')

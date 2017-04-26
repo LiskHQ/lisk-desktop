@@ -7,7 +7,18 @@ md-content(layout='row', id="main")
         data-account='{{$ctrl.account.publicKey}}', data-passphrase='{{$ctrl.passphrase}}') Set 2nd passphrase
       md-button.md-raised.md-primary.send(data-show-send-modal, ng-if='$ctrl.logged') Send
       md-button.md-raised.md-secondary.logout(ng-click='$ctrl.logout()', ng-if='$ctrl.logged') Logout
-
+      md-menu.top-menu(ng-if='$ctrl.logged', md-position-mode='target-right target', md-offset='14 0')
+        md-button.md-icon-button(ng-click='$mdOpenMenu()')
+          i.material-icons more_vert
+        md-menu-content(width='2')
+          md-menu-item
+            md-button(ng-click='$ctrl.signVerify.openSignMessageDialog($ctrl.account, $ctrl.passphrase)')
+              div(layout='row', flex='')
+                p(flex='') Sign message
+          md-menu-item
+            md-button(ng-click='$ctrl.signVerify.openVerifyMessageDialog()')
+              div(layout='row', flex='')
+                p(flex='') Verify message
     div(layout='row', layout-align='space-around', ng-show='$ctrl.prelogged')
       md-progress-circular.md-warn(md-mode='indeterminate', md-diameter='80')
     div(ng-show='!$ctrl.prelogged && !$ctrl.logged')
