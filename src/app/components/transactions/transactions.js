@@ -8,12 +8,12 @@ app.component('transactions', {
     account: '=',
   },
   controller: class transactions {
-    constructor($scope, $timeout, $q, $peers, $rootScope) {
+    constructor($scope, $rootScope, $timeout, $q, $peers) {
       this.$scope = $scope;
+      this.$rootScope = $rootScope;
       this.$timeout = $timeout;
       this.$q = $q;
       this.$peers = $peers;
-      this.$rootScope = $rootScope;
 
       this.loaded = false;
       this.transactions = [];
@@ -62,7 +62,7 @@ app.component('transactions', {
         limit = 10;
       }
 
-      return this.$peers.listTransactions(this.account.address, limit)
+      return this.$peers.listTransactions(this.$rootScope.account.address, limit)
         .then(this._processTransactionsResponse.bind(this))
         .catch(() => {
           this.transactions = [];

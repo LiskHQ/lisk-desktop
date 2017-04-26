@@ -1,14 +1,14 @@
-top(account='$ctrl.account')
+top(account='$root.account')
 md-tabs(md-selected='selectedIndex', md-dynamic-height='true', md-stretch-tabs='always')
   md-tab(md-on-select='onTabSelected(tab)', md-on-deselect='announceDeselected(tab)', ng-disabled='tab.disabled')
     md-tab-label Transactions
     md-tab-body
-      transactions(data-ng-if="$ctrl.account", data-account='$ctrl.account')
+      transactions(data-ng-if='$root.account.address', data-account='$root.account')
   md-tab(md-on-select='onTabSelected(tab)', md-on-deselect='announceDeselected(tab)', ng-disabled='tab.disabled')
     md-tab-label Voting
     md-tab-body
-      delegates(data-ng-if="$ctrl.account", data-account='$ctrl.account', data-passphrase='passphrase')
+      delegates(data-ng-if='$root.account.address', data-account='$root.account', data-passphrase='$root.passphrase')
   md-tab(ng-if='$ctrl.isDelegate')
     md-tab-label Forging 
     md-tab-body
-      forging(data-ng-if="$ctrl.account", data-account='$ctrl.account')
+      forging(data-ng-if='$root.account.address', data-account='$root.account')

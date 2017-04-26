@@ -21,29 +21,26 @@ app.component('main', {
       this.login();
     }
 
-    reset() {
-      this.$timeout.cancel(this.timeout);
-    }
-
-    login(attempts = 0) {
-      this.prelogged = true;
+    init(attempts = 0) {
+      this.$rootScope.account = {};
+      this.$rootScope.prelogged = true;
 
       this.$peers.setActive();
       const kp = lisk.crypto.getKeys(this.$rootScope.passphrase);
-      this.address = lisk.crypto.getAddress(kp.publicKey);
+      this.$rootScope.address = lisk.crypto.getAddress(kp.publicKey);
 
       this.update()
         .then(() => {
-          this.prelogged = false;
-          this.logged = true;
+          this.$rootScope.prelogged = false;
+          this.$rootScope.logged = true;
           this.checkIfIsDelegate();
         })
         .catch(() => {
           if (attempts < 10) {
-            this.$timeout(() => this.login(attempts + 1), 1000);
+            this.$timeout(() => this.init(attempts + 1), 1000);
           } else {
             this.error.dialog({ text: 'No peer connection' });
-            this.logout();
+            this.$rootSope.logout();
           }
         });
     }
@@ -59,9 +56,9 @@ app.component('main', {
     }
 
     checkIfIsDelegate() {
-      if (this.account && this.account.publicKey) {
+      if (this.$rootScope.account && this.$rootScope.account.publicKey) {
         this.$peers.active.sendRequest('delegates/get', {
-          publicKey: this.account.publicKey,
+          publicKey: this.$rootScope.account.publicKey,
         }, (data) => {
           this.isDelegate = data.success;
         });
@@ -69,18 +66,19 @@ app.component('main', {
     }
 
     update() {
-      this.reset();
-      return this.$peers.active.getAccountPromise(this.address)
+      this.$rootScope.reset();
+      return this.$peers.active.getAccountPromise(this.$rootScope.address)
         .then((res) => {
-          this.account = res;
-          this.sendModal.init(this.account, this.passphrase);
+          this.$rootScope.account.address = res.address;
+          this.$rootScope.account.balance = res.balance;
+          this.sendModal.init(this.$rootScope.account, this.passphrase);
         })
         .catch((res) => {
-          this.account.balance = undefined;
+          this.$rootScope.account.balance = undefined;
           return this.$q.reject(res);
         })
         .finally(() => {
-          this.timeout = this.$timeout(this.update.bind(this), UPDATE_INTERVAL_BALANCE);
+          this.$rootScope.timeout = this.$timeout(this.update.bind(this), UPDATE_INTERVAL_BALANCE);
           return this.$q.resolve();
         });
     }

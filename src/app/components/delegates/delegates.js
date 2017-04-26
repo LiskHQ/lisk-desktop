@@ -9,8 +9,9 @@ app.component('delegates', {
     passphrase: '<',
   },
   controller: class delegates {
-    constructor($scope, $peers, $mdDialog, $mdMedia, $mdToast, $timeout) {
+    constructor($scope, $rootScope, $peers, $mdDialog, $mdMedia, $mdToast, $timeout) {
       this.$scope = $scope;
+      this.$rootScope = $rootScope;
       this.$peers = $peers;
       this.$mdDialog = $mdDialog;
       this.$mdMedia = $mdMedia;
@@ -44,7 +45,7 @@ app.component('delegates', {
       this.delegates = [];
       this.delegatesDisplayedCount = 20;
       this.$peers.listAccountDelegates({
-        address: this.account.address,
+        address: this.$rootScope.account.address,
       }).then((data) => {
         this.votedList = data.delegates || [];
         (this.votedList).forEach((delegate) => {
@@ -143,7 +144,7 @@ app.component('delegates', {
     checkPendingVotes() {
       this.$timeout(() => {
         this.$peers.listAccountDelegates({
-          address: this.account.address,
+          address: this.$rootScope.account.address,
         }).then((data) => {
           this.votedList = data.delegates || [];
           this.votedDict = {};
