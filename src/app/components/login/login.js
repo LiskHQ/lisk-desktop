@@ -58,7 +58,7 @@ app.component('login', {
       const passphrase = this.$cookies.get('passphrase');
       if (passphrase) {
         this.input_passphrase = passphrase;
-        this.$timeout(this.passConfirmSubmit.bind(this), 10);
+        // this.$timeout(this.passConfirmSubmit.bind(this), 10);
       }
     }
   },
