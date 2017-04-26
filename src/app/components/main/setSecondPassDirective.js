@@ -13,13 +13,15 @@ app.directive('setSecondPass', (setSecondPass, $peers, $rootScope, success, erro
           success.dialog('Your second passphrase is successfully registered.');
         })
         .catch((err) => {
+          let text = '';
           if (err.message === 'Missing sender second signature') {
-            error.dialog({ text: 'You already have a second passphrase.' });
+            text = 'You already have a second passphrase.';
           } else if (/^(Account does not have enough LSK)/.test(err.message)) {
-            error.dialog({ text: 'You don\'t have enought credit to register second passphrase.' });
+            text = 'You don\'t have enought credit to register second passphrase.';
           } else {
-            error.dialog({ text: 'An error happended registering your second passphrase. Please try later.' });
+            text = 'An error happended registering your second passphrase. Please try later.';
           }
+          error.dialog({ text });
         });
     };
 
