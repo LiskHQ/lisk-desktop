@@ -1,4 +1,4 @@
-app.run(($rootScope, $timeout, $peers) => {
+app.run(($rootScope, $timeout, $state, $peers) => {
     $rootScope.peers = $peers;
 
     $rootScope.reset = () => {
@@ -13,5 +13,7 @@ app.run(($rootScope, $timeout, $peers) => {
       $rootScope.prelogged = false;
       $rootScope.account = {};
       $rootScope.passphrase = '';
+
+      $state.go('login');
     }
 });
