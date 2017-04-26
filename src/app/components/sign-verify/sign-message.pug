@@ -10,7 +10,7 @@ div
       md-input-container.md-block
         label Message
         textarea(name='message', ng-model='$ctrl.message', ng-change='$ctrl.sign()', md-autofocus)
-    div
+    div(ng-show='$ctrl.result')
       md-input-container.md-block
         label Result
-        textarea(name='result', ng-model='$ctrl.result')
+        textarea(name='result', ng-model='$ctrl.result', readonly)
