@@ -64,14 +64,19 @@ describe('Login controller', () => {
   let Passphrase;
   let testPassphrase;
   let $cookies;
+  /* eslint-disable no-unused-vars */
   let $timeout;
+  /* eslint-enable no-unused-vars */
 
-  beforeEach(inject((_$componentController_, _$rootScope_, _Passphrase_, _$cookies_, _$timeout_) => {
+  beforeEach(inject((_$componentController_, _$rootScope_,
+    _Passphrase_, _$cookies_, _$timeout_) => {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
     Passphrase = _Passphrase_;
     $cookies = _$cookies_;
+    /* eslint-disable no-unused-vars */
     $timeout = _$timeout_;
+    /* eslint-enable no-unused-vars */
   }));
 
   beforeEach(() => {
