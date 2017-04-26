@@ -1,0 +1,24 @@
+div
+  md-toolbar
+    .md-toolbar-tools
+      h2 Verify message
+      span(flex='')
+      md-button.md-icon-button(ng-click='$ctrl.$mdDialog.hide()', aria-label='Close dialog')
+        i.material-icons close
+  div(layout-padding)
+    form
+      md-input-container.md-block(ng-class='{"md-input-invalid": $ctrl.publicKey.error.invalid}')
+        label Public key
+        input(type='text', name='publicKey', ng-model='$ctrl.publicKey.value', ng-change='$ctrl.verify()', md-autofocus)
+        div(ng-messages='$ctrl.publicKey.error')
+          div(ng-message='invalid') Invalid
+      md-input-container.md-block(ng-class='{"md-input-invalid": $ctrl.signature.error.invalid}')
+        label Signature 
+        textarea(name='signature', ng-model='$ctrl.signature.value', ng-change='$ctrl.verify()')
+        div(ng-messages='$ctrl.signature.error')
+          div(ng-message='invalid') Invalid
+    div
+      md-input-container.md-block
+        label Original Message
+        textarea(name='result', ng-model='$ctrl.result')
+
