@@ -37,12 +37,6 @@ function createWindow() {
           role: 'paste',
         },
         {
-          role: 'pasteandmatchstyle',
-        },
-        {
-          role: 'delete',
-        },
-        {
           role: 'selectall',
         },
       ],
