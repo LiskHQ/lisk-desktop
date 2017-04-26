@@ -254,7 +254,7 @@ app.component('delegates', {
           }
         },
         template:
-          '<md-dialog>' +
+          '<md-dialog flex="80">' +
             '<vote account="account" passphrase="passphrase" ' +
               'vote-list="voteList" unvote-list="unvoteList">' +
             '</vote>' +

@@ -13,6 +13,18 @@ app.component('vote', {
       this.$mdDialog = $mdDialog;
       this.$mdToast = $mdToast;
       this.delegateService = delegateService;
+
+      this.votedDict = {};
+      this.votedList = [];
+
+      this.delegateService.listAccountDelegates({
+        address: this.account.address,
+      }).then((data) => {
+        this.votedList = data.delegates || [];
+        this.votedList.forEach((delegate) => {
+          this.votedDict[delegate.username] = delegate;
+        });
+      });
     }
 
     vote() {
