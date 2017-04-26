@@ -17,8 +17,7 @@ app.component('main', {
       this.error = error;
       this.sendModal = SendModal;
 
-      // this.$scope.$on('login', this.login.bind(this));
-      this.login();
+      this.init();
     }
 
     init(attempts = 0) {
