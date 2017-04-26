@@ -48,23 +48,8 @@ function createWindow() {
           role: 'reload',
         },
         {
-          type: 'separator',
-        },
-        {
           role: 'togglefullscreen',
-        },
-        {
-          type: 'separator',
-        },
-        {
-          role: 'resetzoom',
-        },
-        {
-          role: 'zoomin',
-        },
-        {
-          role: 'zoomout',
-        },
+        }
       ],
     },
     {
