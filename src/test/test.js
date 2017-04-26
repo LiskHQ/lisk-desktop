@@ -14,5 +14,6 @@ require('./components/sign-verify/verify-message.spec');
 require('./services/peers/peers.spec');
 require('./services/sign-verify.spec');
 require('./services/lsk.spec');
+require('./services/delegateService.spec');
 
 require('./util/animateOnChange/animateOnChange.spec');
