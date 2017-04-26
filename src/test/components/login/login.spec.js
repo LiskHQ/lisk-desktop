@@ -63,11 +63,15 @@ describe('Login controller', () => {
   let $componentController;
   let Passphrase;
   let testPassphrase;
+  let $cookies;
+  let $timeout;
 
-  beforeEach(inject((_$componentController_, _$rootScope_, _Passphrase_) => {
+  beforeEach(inject((_$componentController_, _$rootScope_, _Passphrase_, _$cookies_, _$timeout_) => {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
     Passphrase = _Passphrase_;
+    $cookies = _$cookies_;
+    $timeout = _$timeout_;
   }));
 
   beforeEach(() => {
@@ -122,16 +126,14 @@ describe('Login controller', () => {
     });
   });
 
-  // OK
-  describe('$scope.generatePassphrase()', () => {
+  describe('generatePassphrase()', () => {
     it('sets this.generatingNewPassphrase = true', () => {
       controller.generatePassphrase();
       expect(controller.generatingNewPassphrase).to.equal(true);
     });
   });
 
-  // OK
-  describe('componentController.passConfirmSubmit()', () => {
+  describe('passConfirmSubmit()', () => {
     it('sets this.phassphrase as this.input_passphrase processed by normalizer', () => {
       controller.input_passphrase = '\tTEST  PassPHrASe  ';
       controller.passConfirmSubmit();
@@ -149,6 +151,15 @@ describe('Login controller', () => {
       const spy = sinon.spy(controller, '$timeout');
       controller.passConfirmSubmit();
       expect(spy).to.have.been.calledWith(controller.onLogin);
+    });
+  });
+
+  describe('devTestAccount()', () => {
+    it('calls passConfirmSubmit with timeoout if a passphrase is set in the cookies', () => {
+      $cookies.put('passphrase', testPassphrase);
+      const spy = sinon.spy(controller, '$timeout');
+      controller.devTestAccount();
+      expect(spy).to.have.been.calledWith();
     });
   });
 });
