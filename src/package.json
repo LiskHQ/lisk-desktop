@@ -19,6 +19,7 @@
     "angular-material": "=1.1.1",
     "angular-material-data-table": "=0.10.9",
     "angular-messages": "=1.5.8",
+    "angular-svg-round-progressbar": "=0.4.8",
     "babel-polyfill": "=6.9.1",
     "bignumber.js": "=4.0.0",
     "bitcore-mnemonic": "=1.1.1",
