@@ -8,7 +8,7 @@ app.component('main', {
   template: require('./main.pug')(),
   controllerAs: '$ctrl',
   controller: class main {
-    constructor($scope, $rootScope, $timeout, $q, $peers, error, SendModal, signVerify) {
+    constructor($scope, $rootScope, $timeout, $q, $state, $peers, error, SendModal, signVerify) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$timeout = $timeout;
@@ -17,11 +17,17 @@ app.component('main', {
       this.error = error;
       this.signVerify = signVerify;
       this.sendModal = SendModal;
+      this.$state = $state;
 
       this.init();
     }
 
     init(attempts = 0) {
+      if (!this.$rootScope.passphrase) {
+        this.$state.go('login');
+        return;
+      }
+
       this.$rootScope.account = {};
       this.$rootScope.prelogged = true;
 
