@@ -40,7 +40,7 @@ describe('setSecondPass Directive', () => {
   });
 
   describe('SetSecondPassLink', () => {
-    it('Listens for broadcasting onAfterSignup', () => {
+    it('listens for an onAfterSignup event', () => {
       $peers.active = { setSignature() {} };
       const mock = sinon.mock($peers.active);
       const deffered = $q.defer();

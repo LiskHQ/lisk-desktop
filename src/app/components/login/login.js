@@ -9,8 +9,7 @@ app.component('login', {
   },
   controller: class login {
 
-   /* eslint no-param-reassign: ["error", { "props": false }] */
-
+    /* eslint no-param-reassign: ["error", { "props": false }] */
     constructor($scope, $rootScope, $timeout, $document, $mdMedia, $cookies, $peers, Passphrase) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;

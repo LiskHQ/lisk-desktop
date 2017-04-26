@@ -33,7 +33,7 @@ describe('Passphrase Directive', () => {
   });
 
   describe('PassphraseLink', () => {
-    it('should asign progress to its own $scope', () => {
+    it('should assign progress to its own $scope', () => {
       expect($isolateScope.progress).to.not.equal(undefined);
       expect($isolateScope.progress).to.equal(Passphrase.progress);
     });

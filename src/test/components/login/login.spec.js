@@ -121,7 +121,7 @@ describe('Login controller', () => {
       expect(spy).to.have.been.calledWith();
     });
 
-    it('Listens for broadcasting onAfterSignup', () => {
+    it('listens for an onAfterSignup event', () => {
       const spy = sinon.spy(controller, 'passConfirmSubmit');
       $rootScope.$broadcast('onAfterSignup', {
         passphrase: 'TEST_VALUE',
@@ -160,7 +160,7 @@ describe('Login controller', () => {
   });
 
   describe('devTestAccount()', () => {
-    it('calls passConfirmSubmit with timeoout if a passphrase is set in the cookies', () => {
+    it('calls passConfirmSubmit with timeout if a passphrase is set in the cookies', () => {
       $cookies.put('passphrase', testPassphrase);
       const spy = sinon.spy(controller, '$timeout');
       controller.devTestAccount();
