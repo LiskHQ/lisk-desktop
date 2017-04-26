@@ -45,9 +45,7 @@ app.component('login', {
     passConfirmSubmit(_passphrase = this.input_passphrase) {
       if (this.Passphrase.normalize.constructor === Function) {
         this.$rootScope.passphrase = this.Passphrase.normalize(_passphrase);
-        
-        // this.$timeout(this.onLogin);
-        // @todo should I vaidate here?
+
         this.$state.go('main');
       }
     }
