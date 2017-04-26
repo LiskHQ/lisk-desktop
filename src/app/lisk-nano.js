@@ -27,3 +27,4 @@ import './services/passphrase';
 import './filters/lsk';
 
 import './states';
+import './run';
