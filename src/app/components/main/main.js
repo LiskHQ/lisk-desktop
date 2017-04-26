@@ -44,16 +44,6 @@ app.component('main', {
         });
     }
 
-    logout() {
-      this.reset();
-      this.$peers.reset(true);
-
-      this.logged = false;
-      this.prelogged = false;
-      this.account = {};
-      this.passphrase = '';
-    }
-
     checkIfIsDelegate() {
       if (this.$rootScope.account && this.$rootScope.account.publicKey) {
         this.$peers.active.sendRequest('delegates/get', {
