@@ -64,18 +64,6 @@ app.factory('$peers', ($timeout, $cookies, $location, $q) => {
       return deferred.promise;
     }
 
-    listAccountDelegates(urlParams) {
-      return this.sendRequestPromise('accounts/delegates', urlParams);
-    }
-
-    listDelegates(urlParams) {
-      return this.sendRequestPromise(`delegates/${urlParams.q ? 'search' : ''}`, urlParams);
-    }
-
-    getDelegate(urlParams) {
-      return this.sendRequestPromise('delegates/get', urlParams);
-    }
-
     listTransactions(address, limit, offset) {
       return this.sendRequestPromise('transactions', {
         senderId: address,
