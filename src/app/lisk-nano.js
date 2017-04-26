@@ -17,12 +17,15 @@ import './components/lsk/lsk';
 import './components/forging/forging';
 import './components/delegates/delegates';
 import './components/delegates/vote';
+import './components/sign-verify/sign-message';
+import './components/sign-verify/verify-message';
 
 import './services/peers/peers';
 import './services/lsk';
 import './services/success';
 import './services/error';
 import './services/passphrase';
+import './services/sign-verify';
 
 import './filters/lsk';
 
