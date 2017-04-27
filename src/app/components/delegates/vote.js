@@ -9,20 +9,32 @@ app.component('vote', {
     unvoteList: '=',
   },
   controller: class vote {
-    constructor($scope, $mdDialog, $mdToast, $peers) {
+    constructor($scope, $mdDialog, $mdToast, delegateService) {
       this.$mdDialog = $mdDialog;
       this.$mdToast = $mdToast;
-      this.$peers = $peers;
+      this.delegateService = delegateService;
+
+      this.votedDict = {};
+      this.votedList = [];
+
+      this.delegateService.listAccountDelegates({
+        address: this.account.address,
+      }).then((data) => {
+        this.votedList = data.delegates || [];
+        this.votedList.forEach((delegate) => {
+          this.votedDict[delegate.username] = delegate;
+        });
+      });
     }
 
     vote() {
       this.votingInProgress = true;
-      this.$peers.sendRequestPromise('accounts/delegates', {
+      this.delegateService.vote({
         secret: this.passphrase,
         publicKey: this.account.publicKey,
         secondSecret: this.secondPassphrase,
-        delegates: this.voteList.map(delegate => `+${delegate.publicKey}`).concat(
-                    this.unvoteList.map(delegate => `-${delegate.publicKey}`)),
+        voteList: this.voteList,
+        unvoteList: this.unvoteList,
       }).then(() => {
         this.$mdDialog.hide(this.voteList, this.unvoteList);
         const toast = this.$mdToast.simple();

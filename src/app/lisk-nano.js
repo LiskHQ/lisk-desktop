@@ -26,5 +26,6 @@ import './services/success';
 import './services/error';
 import './services/passphrase';
 import './services/sign-verify';
+import './services/delegateService';
 
 import './filters/lsk';
