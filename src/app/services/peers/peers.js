@@ -64,18 +64,6 @@ app.factory('$peers', ($timeout, $cookies, $location, $q) => {
       return deferred.promise;
     }
 
-    listAccountDelegates(urlParams) {
-      return this.sendRequestPromise('accounts/delegates', urlParams);
-    }
-
-    listDelegates(urlParams) {
-      return this.sendRequestPromise(`delegates/${urlParams.q ? 'search' : ''}`, urlParams);
-    }
-
-    getDelegate(urlParams) {
-      return this.sendRequestPromise('delegates/get', urlParams);
-    }
-
     listTransactions(address, limit, offset) {
       return this.sendRequestPromise('transactions', {
         senderId: address,
@@ -112,6 +100,28 @@ app.factory('$peers', ($timeout, $cookies, $location, $q) => {
             return deferred.resolve(data);
           }
           return deferred.reject(data);
+        });
+        return deferred.promise;
+      };
+
+      this.active.listTransactionsPromise = (address, limit, offset) => {
+        const deferred = $q.defer();
+        this.active.listTransactions(address, limit, offset, (data) => {
+          if (data.success) {
+            return deferred.resolve(data);
+          }
+          return deferred.reject(data);
+        });
+        return deferred.promise;
+      };
+
+      this.active.setSignature = (secondSecret, publicKey, secret) => {
+        const deferred = $q.defer();
+        this.active.sendRequest('signatures', { secondSecret, publicKey, secret }, (res) => {
+          if (res.success) {
+            deferred.resolve(res);
+          }
+          deferred.reject(res);
         });
         return deferred.promise;
       };

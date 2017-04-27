@@ -241,10 +241,10 @@ describe('delegates component controller', () => {
   });
 
   describe('parseVoteListFromInput(list)', () => {
-    let peersMock;
+    let delegateServiceMock;
 
     beforeEach(() => {
-      peersMock = sinon.mock(controller.$peers);
+      delegateServiceMock = sinon.mock(controller.delegateService);
     });
 
     it('parses this.usernameInput to list of delegates and opens vote dialog if all delegates were immediately resolved', () => {
@@ -257,7 +257,7 @@ describe('delegates component controller', () => {
     it('parses this.usernameInput to list of delegates and opens vote dialog if all delegates were resolved immediately or from server', () => {
       const username = 'not_fetched_yet';
       const deffered = $q.defer();
-      peersMock.expects('sendRequestPromise').withArgs('delegates/get', { username }).returns(deffered.promise);
+      delegateServiceMock.expects('getDelegate').withArgs(username).returns(deffered.promise);
       const spy = sinon.spy(controller, 'openVoteDialog');
       controller.usernameInput = `${username}\ngenesis_42\ngenesis_46`;
 
@@ -276,7 +276,7 @@ describe('delegates component controller', () => {
     it('parses this.usernameInput to list of delegates and opens vote dialog if any delegates were resolved', () => {
       const username = 'invalid_name';
       const deffered = $q.defer();
-      peersMock.expects('sendRequestPromise').withArgs('delegates/get', { username }).returns(deffered.promise);
+      delegateServiceMock.expects('getDelegate').withArgs(username).returns(deffered.promise);
       const spy = sinon.spy(controller, 'openVoteDialog');
       controller.usernameInput = `${username}\ngenesis_42\ngenesis_46`;
 
@@ -290,7 +290,7 @@ describe('delegates component controller', () => {
     it('parses this.usernameInput to list of delegates and shows error toast if no delegates were resolved', () => {
       const username = 'invalid_name';
       const deffered = $q.defer();
-      peersMock.expects('sendRequestPromise').withArgs('delegates/get', { username }).returns(deffered.promise);
+      delegateServiceMock.expects('getDelegate').withArgs(username).returns(deffered.promise);
       const toastSpy = sinon.spy(controller.$mdToast, 'show');
       const dialogSpy = sinon.spy(controller, 'openVoteDialog');
       controller.usernameInput = username;
