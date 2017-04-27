@@ -52,6 +52,9 @@ function send(fromAccount, toAddress, amount) {
   browser.wait(EC.presenceOf(sendModalButton), waitTime);
   sendModalButton.click();
   browser.wait(EC.presenceOf(sendElem), waitTime);
+
+  // wait for modal animation to finish
+  browser.sleep(1000);
   element(by.css('send input[name="recipient"]')).sendKeys(toAddress);
   element(by.css('send input[name="amount"]')).sendKeys(`${amount}`);
   element(by.css('send input[name="recipient"]')).click();
