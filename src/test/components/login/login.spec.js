@@ -64,12 +64,14 @@ describe('Login controller', () => {
   let $componentController;
   let Passphrase;
   let testPassphrase;
+  let account;
 
-  beforeEach(inject((_$componentController_, _$rootScope_, _$state_, _Passphrase_) => {
+  beforeEach(inject((_$componentController_, _$rootScope_, _$state_, _Passphrase_, _Account_) => {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
     $state = _$state_;
     Passphrase = _Passphrase_;
+    account = _Account_;
   }));
 
   beforeEach(() => {
@@ -124,7 +126,6 @@ describe('Login controller', () => {
     });
   });
 
-  // OK
   describe('$scope.generatePassphrase()', () => {
     it('sets this.generatingNewPassphrase = true', () => {
       controller.generatePassphrase();
@@ -132,12 +133,11 @@ describe('Login controller', () => {
     });
   });
 
-  // OK
   describe('componentController.passConfirmSubmit()', () => {
-    it('sets this.phassphrase as this.input_passphrase processed by normalizer', () => {
+    it('sets account.phassphrase as this.input_passphrase processed by normalizer', () => {
       controller.input_passphrase = '\tTEST  PassPHrASe  ';
       controller.passConfirmSubmit();
-      expect(controller.passphrase).to.equal('test passphrase');
+      expect(account.get().passphrase).to.equal('test passphrase');
     });
 
     it('calls Passphrase.normalize()', () => {
@@ -149,7 +149,7 @@ describe('Login controller', () => {
     it('redirects to main if passphrase is valid', () => {
       controller.input_passphrase = testPassphrase;
       const spy = sinon.spy($state, 'go');
-      controller.doTheLogin();
+      controller.passConfirmSubmit();
       expect(spy).to.have.been.calledWith('main');
     });
   });

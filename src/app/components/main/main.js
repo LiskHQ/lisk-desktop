@@ -1,5 +1,3 @@
-import lisk from 'lisk-js';
-
 import './main.less';
 
 const UPDATE_INTERVAL_BALANCE = 10000;
@@ -8,7 +6,8 @@ app.component('main', {
   template: require('./main.pug')(),
   controllerAs: '$ctrl',
   controller: class main {
-    constructor($scope, $rootScope, $timeout, $q, $state, $peers, error, SendModal, signVerify) {
+    constructor($scope, $rootScope, $timeout, $q, $state, $peers,
+      error, SendModal, signVerify, Account) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$timeout = $timeout;
@@ -18,22 +17,22 @@ app.component('main', {
       this.signVerify = signVerify;
       this.sendModal = SendModal;
       this.$state = $state;
+      this.account = Account;
 
       this.init();
     }
 
     init(attempts = 0) {
-      if (!this.$rootScope.passphrase) {
+      if (!this.account.get() || !this.account.get().passphrase) {
+        // return to login but keep the state
+        this.$rootScope.landingUrl = this.$state.current.name;
         this.$state.go('login');
         return;
       }
 
-      this.$rootScope.account = {};
       this.$rootScope.prelogged = true;
 
       this.$peers.setActive();
-      const kp = lisk.crypto.getKeys(this.$rootScope.passphrase);
-      this.$rootScope.address = lisk.crypto.getAddress(kp.publicKey);
 
       this.update()
         .then(() => {
@@ -49,28 +48,32 @@ app.component('main', {
             this.$rootSope.logout();
           }
         });
+
+      // return to landing page if there's any
+      this.$scope.activeTab = this.$rootScope.landingUrl || 'main.transactions';
+      this.$state.go(this.$rootScope.landingUrl || 'main.transactions');
+      delete this.$rootScope.landingUrl;
     }
 
     checkIfIsDelegate() {
-      if (this.$rootScope.account && this.$rootScope.account.publicKey) {
+      if (this.account.get() && this.account.get().publicKey) {
         this.$peers.active.sendRequest('delegates/get', {
-          publicKey: this.$rootScope.account.publicKey,
+          publicKey: this.account.get().publicKey,
         }, (data) => {
-          this.isDelegate = data.success;
+          this.account.set({ isDelegate: data.success });
         });
       }
     }
 
     update() {
       this.$rootScope.reset();
-      return this.$peers.active.getAccountPromise(this.$rootScope.address)
+      return this.$peers.active.getAccountPromise(this.account.get().address)
         .then((res) => {
-          this.$rootScope.account.address = res.address;
-          this.$rootScope.account.balance = res.balance;
-          this.sendModal.init(this.$rootScope.account, this.passphrase);
+          this.account.get().balance = res.balance;
+          this.sendModal.init(this.account.get(), this.account.get().passphrase);
         })
         .catch((res) => {
-          this.$rootScope.account.balance = undefined;
+          this.account.get().balance = undefined;
           return this.$q.reject(res);
         })
         .finally(() => {

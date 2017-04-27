@@ -9,17 +9,19 @@ app.component('vote', {
     unvoteList: '=',
   },
   controller: class vote {
-    constructor($scope, $mdDialog, $mdToast, $peers) {
+    constructor($scope, $mdDialog, $mdToast, $peers, $rootScope, Account) {
       this.$mdDialog = $mdDialog;
       this.$mdToast = $mdToast;
       this.$peers = $peers;
+      this.$rootScope = $rootScope;
+      this.account = Account;
     }
 
     vote() {
       this.votingInProgress = true;
       this.$peers.sendRequestPromise('accounts/delegates', {
         secret: this.passphrase,
-        publicKey: this.account.publicKey,
+        publicKey: this.account.get().publicKey,
         secondSecret: this.secondPassphrase,
         delegates: this.voteList.map(delegate => `+${delegate.publicKey}`).concat(
                     this.unvoteList.map(delegate => `-${delegate.publicKey}`)),
@@ -43,7 +45,7 @@ app.component('vote', {
       const totalVotes = this.voteList.length + this.unvoteList.length;
       return totalVotes > 0 && totalVotes <= 33 &&
               !this.votingInProgress &&
-              (!this.account.secondSignature || this.secondPassphrase);
+              (!this.account.get().secondSignature || this.secondPassphrase);
     }
 
     // eslint-disable-next-line class-methods-use-this

@@ -12,7 +12,7 @@ app.component('send', {
     transferAmount: '<',
   },
   controller: class send {
-    constructor($scope, $peers, lsk, success, error, $mdDialog, $q, $rootScope) {
+    constructor($scope, $peers, lsk, success, error, $mdDialog, $q, $rootScope, Account) {
       this.$scope = $scope;
       this.$peers = $peers;
       this.success = success;
@@ -20,6 +20,7 @@ app.component('send', {
       this.$mdDialog = $mdDialog;
       this.$q = $q;
       this.$rootScope = $rootScope;
+      this.account = Account;
 
       this.recipient = {
         regexp: ADDRESS_VALID_RE,
@@ -38,7 +39,7 @@ app.component('send', {
       });
 
       this.$scope.$watch('$ctrl.account.balance', () => {
-        this.amount.max = lsk.normalize(this.account.balance - 10000000);
+        this.amount.max = lsk.normalize(this.account.get().balance - 10000000);
       });
     }
 
@@ -83,15 +84,15 @@ app.component('send', {
           this.$peers.active.sendLSKPromise(
             this.recipient.value,
             this.amount.raw,
-            this.passphrase,
+            this.account.get().passphrase,
             secondPassphrase,
           )
           .then(
             (data) => {
               const transaction = {
                 id: data.transactionId,
-                senderPublicKey: this.account.publicKey,
-                senderId: this.account.address,
+                senderPublicKey: this.account.get().publicKey,
+                senderId: this.account.get().address,
                 recipientId: this.recipient.value,
                 amount: this.amount.raw,
                 fee: 10000000,

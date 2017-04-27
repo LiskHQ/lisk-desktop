@@ -1,19 +1,18 @@
-app.run(($rootScope, $timeout, $state, $peers) => {
-    $rootScope.peers = $peers;
+app.run(($rootScope, $timeout, $state, $peers, Account) => {
+  $rootScope.peers = $peers;
 
-    $rootScope.reset = () => {
-      $timeout.cancel($rootScope.timeout);
-    }
-    
-    $rootScope.logout = () => {
-      $rootScope.reset();
-      $peers.reset(true);
+  $rootScope.reset = () => {
+    $timeout.cancel($rootScope.timeout);
+  };
 
-      $rootScope.logged = false;
-      $rootScope.prelogged = false;
-      $rootScope.account = {};
-      $rootScope.passphrase = '';
+  $rootScope.logout = () => {
+    $rootScope.reset();
+    $peers.reset(true);
 
-      $state.go('login');
-    }
+    $rootScope.logged = false;
+    $rootScope.prelogged = false;
+    Account.reset();
+
+    $state.go('login');
+  };
 });

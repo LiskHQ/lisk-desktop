@@ -11,22 +11,24 @@ describe('Send component', () => {
   let element;
   let $scope;
   let lsk;
+  let account;
 
   beforeEach(angular.mock.module('app'));
 
-  beforeEach(inject((_$compile_, _$rootScope_, _lsk_) => {
+  beforeEach(inject((_$compile_, _$rootScope_, _lsk_, _Account_) => {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     lsk = _lsk_;
+    account = _Account_;
   }));
 
   beforeEach(() => {
     $scope = $rootScope.$new();
-    $scope.passphrase = 'robust swift grocery peasant forget share enable convince deputy road keep cheap';
-    $scope.account = {
-      address: '8273455169423958419L',
+    account.set({
+      passphrase: 'robust swift grocery peasant forget share enable convince deputy road keep cheap',
       balance: lsk.from(10535.77379498),
-    };
+    });
+
     element = $compile('<send passphrase="passphrase" account="account"></send>')($scope);
     $scope.$digest();
   });

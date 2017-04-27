@@ -32,16 +32,16 @@ md-card.offline-hide
                 span.tx(ng-switch-when='6') Transfer Lisk to Blockchain Application
                 span.tx(ng-switch-when='7') Transfer Lisk from Blockchain Application
                 span(ng-switch-default)
-                  span(ng-bind='transaction.senderId', ng-if='transaction.senderId !== $ctrl.account.address')
-                  span(ng-bind='transaction.recipientId', ng-if='transaction.senderId === $ctrl.account.address')
+                  span(ng-bind='transaction.senderId', ng-if='transaction.senderId !== $ctrl.account.get().address')
+                  span(ng-bind='transaction.recipientId', ng-if='transaction.senderId === $ctrl.account.get().address')
               td(md-cell)
-                i.material-icons.expanding-button(ng-if='transaction.senderId !== $ctrl.account.address', data-show-send-modal, data-recipient-id='transaction.senderId') arrow_forward
-                i.material-icons.expanding-button(ng-if='transaction.senderId === $ctrl.account.address', data-show-send-modal, data-recipient-id='transaction.recipientId') arrow_forward
+                i.material-icons.expanding-button(ng-if='transaction.senderId !== $ctrl.account.get().address', data-show-send-modal, data-recipient-id='transaction.senderId') arrow_forward
+                i.material-icons.expanding-button(ng-if='transaction.senderId === $ctrl.account.get().address', data-show-send-modal, data-recipient-id='transaction.recipientId') arrow_forward
               td(md-cell)
-                i.material-icons.in(ng-if='transaction.senderId !== $ctrl.account.address') call_received
-                i.material-icons.out(ng-if='transaction.senderId === $ctrl.account.address') call_made
+                i.material-icons.in(ng-if='transaction.senderId !== $ctrl.account.get().address') call_received
+                i.material-icons.out(ng-if='transaction.senderId === $ctrl.account.get().address') call_made
               td(md-cell)
-                .amount(ng-class='{ positive: transaction.senderId !== $ctrl.account.address, negative: transaction.senderId === $ctrl.account.address }')
+                .amount(ng-class='{ positive: transaction.senderId !== $ctrl.account.get().address, negative: transaction.senderId === $ctrl.account.get().address }')
                   lsk.value(amount='transaction.amount')
               td(md-cell)
                 .fee
