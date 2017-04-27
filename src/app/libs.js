@@ -10,6 +10,7 @@ import 'angular-material/angular-material.css';
 import 'angular-material-data-table/dist/md-data-table';
 import 'angular-material-data-table/dist/md-data-table.css';
 import 'ng-infinite-scroll';
+import 'angular-svg-round-progressbar';
 
 
 import 'babel-polyfill';

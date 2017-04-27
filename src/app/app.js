@@ -1,4 +1,5 @@
 export default angular.module('app', [
+  'angular-svg-round-progressbar',
   'ngMessages',
   'ngMaterial',
   'ngAnimate',
