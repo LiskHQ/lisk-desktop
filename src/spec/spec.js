@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 const masterAccount = {
   passphrase: 'wagon stock borrow episode laundry kitten salute link globe zero feed marble',
   address: '16313739661670634666L',
@@ -184,7 +186,34 @@ function testShowTransactions() {
   expect(element.all(by.css('transactions table tbody tr')).count()).toEqual(10);
 }
 
+function writeScreenShot(data, filename) {
+  const stream = fs.createWriteStream(filename);
+  stream.write(new Buffer(data, 'base64'));
+  stream.end();
+}
+
+function slugify(text) {
+  return text.toString().toLowerCase()
+    .replace(/\s+/g, '-')           // Replace spaces with -
+    .replace(/[^\w-]+/g, '')       // Remove all non-word chars
+    .replace(/--+/g, '-')         // Replace multiple - with single -
+    .replace(/^-+/, '')             // Trim - from start of text
+    .replace(/-+$/, '');            // Trim - from end of text
+}
+
+
 describe('Lisk Nano functionality', () => {
+  afterEach(() => {
+    const specDescription = jasmine.getEnv().currentSpec.description;
+    browser.takeScreenshot().then((png) => {
+      const dirName = 'e2e-test-screenshots';
+      if (!fs.existsSync(dirName)) {
+        fs.mkdirSync(dirName);
+      }
+      writeScreenShot(png, `${dirName}/${slugify(specDescription)}.png`);
+    });
+  });
+
   it('should allow to login', testLogin);
   it('should allow to logout', testLogout);
   it('should show peer', testPeer);

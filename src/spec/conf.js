@@ -22,5 +22,14 @@ exports.config = {
         displayDuration: true,
       },
     }));
+
+    jasmine.getEnv().addReporter({
+      specStarted(result) {
+        jasmine.getEnv().currentSpec = result;
+      },
+      specDone() {
+        jasmine.getEnv().currentSpec = null;
+      },
+    });
   },
 };
