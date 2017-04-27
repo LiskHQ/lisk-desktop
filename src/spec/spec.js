@@ -145,11 +145,11 @@ function testChangePeer() {
   browser.wait(EC.presenceOf(peerElem), waitTime);
   peerElem.click();
 
-  const optionElem = element.all(by.css('md-select-menu md-optgroup md-option')).get(0);
+  const optionElem = element.all(by.css('md-select-menu md-optgroup md-option')).get(3);
   browser.wait(EC.presenceOf(optionElem), waitTime);
   optionElem.click();
 
-  waitForElemAndCheckItsText('form md-select-value .md-text', 'node01.lisk.io');
+  waitForElemAndCheckItsText('form md-select-value .md-text', 'node04.lisk.io');
 }
 
 function testShowBalance() {
