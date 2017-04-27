@@ -17,13 +17,15 @@ app.factory('delegateService', $peers => ({
       publicKey: options.publicKey,
       secondSecret: options.secondSecret,
       delegates: options.voteList.map(delegate => `+${delegate.publicKey}`).concat(
-                    options.unvoteList.map(delegate => `-${delegate.publicKey}`)),
+        options.unvoteList.map(delegate => `-${delegate.publicKey}`),
+      ),
     });
   },
 
   voteAutocomplete(username, votedDict) {
-    return this.listDelegates({ q: username,
-    }).then(response => response.delegates.filter(d => !votedDict[d.username]));
+    return this.listDelegates({ q: username }).then(
+      response => response.delegates.filter(d => !votedDict[d.username]),
+    );
   },
 
   unvoteAutocomplete(username, votedList) {
