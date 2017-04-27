@@ -160,7 +160,7 @@ const bundleAnalyzer = () => ({
   plugins: [
     new BundleAnalyzerPlugin({
       openAnalyzer: false,
-      analyzerMode: 'static'
+      analyzerMode: 'static',
     }),
   ],
 });
