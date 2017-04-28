@@ -10,29 +10,7 @@ html
       }
   body
   md-content(id="main", flex='100', flex-gt-sm='80', flex-offset-gt-sm='10')
-    md-content.header(layout='row', layout-align='center center', layout-padding)
-      img.logo(src=require('./assets/images/LISK-nano.png'))
-      div(flex)
-      md-button.md-raised.md-primary.send(data-show-send-modal, ng-if='logged') Send
-      md-button.md-raised.md-secondary.logout(ng-click='$root.logout()', ng-if='logged') Logout
-      md-menu.top-menu(ng-if='logged', md-position-mode='target-right target', md-offset='14 0')
-        md-button.md-icon-button(ng-click='$mdOpenMenu()')
-          i.material-icons more_vert
-        md-menu-content(width='2')
-          md-menu-item
-            md-button(ng-click='$ctrl.signVerify.openSignMessageDialog($ctrl.account, $ctrl.passphrase)')
-              div(layout='row', flex='')
-                p(flex='') Sign message
-          md-menu-item
-            md-button(ng-click='$ctrl.signVerify.openVerifyMessageDialog()')
-              div(layout='row', flex='')
-                p(flex='') Verify message
-          md-menu-item
-            md-button(data-set-second-pass, ng-if='$root.logged && !$root.account.secondSignature',
-              data-account='{{$root.account.publicKey}}', data-passphrase='{{$root.account.passphrase}}')
-              div(layout='row', flex='')
-                p(flex='') Set 2nd passphrase
-
+    header
     div(layout='row', layout-align='space-around', ng-show='prelogged')
       md-progress-circular.md-warn(md-mode='indeterminate', md-diameter='80')
     div(ng-class='{ online: $root.peers.online, offline: !$root.peers.online }')
