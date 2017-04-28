@@ -22,7 +22,7 @@ md-dialog.dialog-send(aria-label='Transfering', style='width: 700px; max-width: 
               div(ng-message='pattern') Invalid
           md-input-container.md-block
             label Transaction Amount
-            input(type='number', name='amount', ng-model='$ctrl.amount.value', required, ng-pattern='$ctrl.amount.regexp', ng-disabled='$ctrl.loading', ng-max='$ctrl.amount.max', ignore-mouse-wheel)
+            input(type='text', name='amount', ng-model='$ctrl.amount.value', required, ng-pattern='$ctrl.amount.regexp', ng-disabled='$ctrl.loading', ng-max='$ctrl.amount.max')
             div.fee(ng-show='$ctrl.amount.value') Fee: 0.1 LSK
             div(ng-messages='$ctrl.sendForm.amount.$error')
               div(ng-message='required') Required
