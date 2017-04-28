@@ -4,9 +4,6 @@ const UPDATE_INTERVAL = 20000;
 
 app.component('transactions', {
   template: require('./transactions.pug')(),
-  bindings: {
-    // account: '=',
-  },
   controller: class transactions {
     constructor($scope, $rootScope, $timeout, $q, $peers, Account) {
       this.$scope = $scope;

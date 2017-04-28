@@ -2,10 +2,6 @@ import lisk from 'lisk-js';
 
 app.component('signMessage', {
   template: require('./sign-message.pug')(),
-  bindings: {
-    // account: '=',
-    // passphrase: '=',
-  },
   controller: class signMessage {
     constructor($mdDialog, Account) {
       this.$mdDialog = $mdDialog;

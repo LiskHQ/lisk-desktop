@@ -3,8 +3,8 @@ import './vote.less';
 app.component('vote', {
   template: require('./vote.pug')(),
   bindings: {
-    account: '=',
-    passphrase: '<',
+    // account: '=',
+    // passphrase: '<',
     voteList: '=',
     unvoteList: '=',
   },
@@ -20,7 +20,7 @@ app.component('vote', {
     vote() {
       this.votingInProgress = true;
       this.$peers.sendRequestPromise('accounts/delegates', {
-        secret: this.passphrase,
+        secret: this.account.get().passphrase,
         publicKey: this.account.get().publicKey,
         secondSecret: this.secondPassphrase,
         delegates: this.voteList.map(delegate => `+${delegate.publicKey}`).concat(

@@ -6,8 +6,6 @@ const AMOUNT_VALID_RE = '^[0-9]+(.[0-9]{1,8})?$';
 app.component('send', {
   template: require('./send.pug')(),
   bindings: {
-    account: '<',
-    passphrase: '<',
     recipientId: '<',
     transferAmount: '<',
   },

@@ -3,8 +3,9 @@ import lisk from 'lisk-js';
 app.component('verifyMessage', {
   template: require('./verify-message.pug')(),
   controller: class verifyMessage {
-    constructor($mdDialog) {
+    constructor($mdDialog, Account) {
       this.$mdDialog = $mdDialog;
+      this.account = Account;
 
       this.publicKey = {
         error: {

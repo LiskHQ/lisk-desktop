@@ -7,14 +7,13 @@ app.component('main', {
   controllerAs: '$ctrl',
   controller: class main {
     constructor($scope, $rootScope, $timeout, $q, $state, $peers,
-      error, SendModal, signVerify, Account) {
+      error, SendModal, Account) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$timeout = $timeout;
       this.$q = $q;
       this.$peers = $peers;
       this.error = error;
-      this.signVerify = signVerify;
       this.sendModal = SendModal;
       this.$state = $state;
       this.account = Account;
@@ -45,7 +44,7 @@ app.component('main', {
             this.$timeout(() => this.init(attempts + 1), 1000);
           } else {
             this.error.dialog({ text: 'No peer connection' });
-            this.$rootSope.logout();
+            this.$rootScope.logout();
           }
         });
 
@@ -69,11 +68,10 @@ app.component('main', {
       this.$rootScope.reset();
       return this.$peers.active.getAccountPromise(this.account.get().address)
         .then((res) => {
-          this.account.get().balance = res.balance;
-          this.sendModal.init(this.account.get(), this.account.get().passphrase);
+          this.account.set({ balance: res.balance });
         })
         .catch((res) => {
-          this.account.get().balance = undefined;
+          this.account.get({ balance: null });
           return this.$q.reject(res);
         })
         .finally(() => {

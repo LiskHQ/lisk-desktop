@@ -1,24 +1,18 @@
 app.factory('signVerify', ($mdDialog, $mdMedia) => ({
-  openSignMessageDialog(_account, _passphrase) {
+  openSignMessageDialog() {
     return $mdDialog.show({
       controllerAs: '$ctrl',
       controller: class signMessageDialog {
-        constructor($scope, account, passphrase, Account) {
+        constructor($scope, Account) {
           this.$scope = $scope;
           this.account = Account;
-          this.$scope.passphrase = passphrase;
         }
-        },
+      },
       template:
-          '<md-dialog flex="80" >' +
-            '<sign-message account="account" passphrase="passphrase">' +
-            '</sign-message>' +
+          '<md-dialog flex="80">' +
+            '<sign-message></sign-message>' +
           '</md-dialog>',
       fullscreen: ($mdMedia('sm') || $mdMedia('xs')),
-      locals: {
-        // account: _account,
-        passphrase: _passphrase,
-      },
     });
   },
 
