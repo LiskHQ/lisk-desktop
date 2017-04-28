@@ -4,6 +4,11 @@ const chai = require('chai');
 
 const expect = chai.expect;
 
+const delegateAccount = {
+  passphrase: 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit',
+  address: '537318935439898807L',
+};
+
 chai.use(sinonChai);
 
 describe('main component controller', () => {
@@ -25,7 +30,7 @@ describe('main component controller', () => {
 
   beforeEach(() => {
     $scope = $rootScope.$new();
-    account.set({ passphrase: '' });
+    account.set({ passphrase: delegateAccount.passphrase });
     controller = $componentController('main', $scope, {});
   });
 
@@ -38,7 +43,7 @@ describe('main component controller', () => {
     });
   });
 
-  describe('login()', () => {
+  describe('init()', () => {
     let deffered;
     let updateMock;
     let peersMock;
@@ -69,7 +74,7 @@ describe('main component controller', () => {
       deffered.resolve();
       $scope.$apply();
 
-      expect(controller.logged).to.equal(true);
+      expect($rootScope.logged).to.equal(true);
     });
 
     it('calls this.update() and if that fails and attempts < 10, then sets a timeout to try again', () => {
@@ -85,7 +90,7 @@ describe('main component controller', () => {
     it('calls this.update() and if that fails and attempts >= 10, then show error dialog', () => {
       const spy = sinon.spy(controller.error, 'dialog');
 
-      controller.login(10);
+      controller.init(10);
       deffered.reject();
       $scope.$apply();
 
@@ -95,35 +100,30 @@ describe('main component controller', () => {
 
   describe('logout()', () => {
     it('resets main component', () => {
-      const spy = sinon.spy(controller, 'reset');
-      controller.logout();
+      const spy = sinon.spy($rootScope, 'reset');
+      $rootScope.logout();
       expect(spy).to.have.been.calledWith();
     });
 
     it('resets peers', () => {
       const spy = sinon.spy(controller.$peers, 'reset');
-      controller.logout();
+      $rootScope.logout();
       expect(spy).to.have.been.calledWith(true);
     });
 
-    it('sets this.logged = false', () => {
-      controller.logout();
-      expect(controller.logged).to.equal(false);
+    it('sets $rootScope.logged = false', () => {
+      $rootScope.logout();
+      expect($rootScope.logged).to.equal(false);
     });
 
-    it('sets this.prelogged = false', () => {
-      controller.logout();
-      expect(controller.prelogged).to.equal(false);
+    it('sets $rootScope.prelogged = false', () => {
+      $rootScope.logout();
+      expect($rootScope.prelogged).to.equal(false);
     });
 
-    it('sets this.account = {}', () => {
-      controller.logout();
+    it('resets account service', () => {
+      $rootScope.logout();
       expect(account.get()).to.deep.equal({});
-    });
-
-    it('sets this.passphrase = \'\'', () => {
-      controller.logout();
-      expect(controller.passphrase).to.equal('');
     });
   });
 
@@ -135,14 +135,14 @@ describe('main component controller', () => {
       });
     });
 
-    it('calls /api/delegates/get and sets this.isDelegate according to the response.success', () => {
+    it('calls /api/delegates/get and sets account.isDelegate according to the response.success', () => {
       controller.$peers.active = { sendRequest() {} };
       const activePeerMock = sinon.mock(controller.$peers.active);
       activePeerMock.expects('sendRequest').withArgs('delegates/get').callsArgWith(2, {
         success: true,
       });
       controller.checkIfIsDelegate();
-      expect(controller.isDelegate).to.equal(true);
+      expect(account.get().isDelegate).to.equal(true);
     });
   });
 
@@ -167,12 +167,12 @@ describe('main component controller', () => {
       account.reset();
     });
 
-    it('calls this.$peers.active.getAccountPromise(this.address) and then sets result to this.account', () => {
-      expect(controller.account).not.to.equal(account.get());
+    it('calls this.$peers.active.getAccountPromise(this.address) and then sets balance', () => {
+      expect(account.get().balance).to.equal(undefined);
       controller.update();
-      deffered.resolve(account.get());
+      deffered.resolve({ balance: 12345 });
       $scope.$apply();
-      expect(controller.account).to.equal(account.get());
+      expect(account.get().balance).to.equal(12345);
     });
 
     it('calls this.$peers.active.getAccountPromise(this.address) and if it fails, then resets this.account.balance and reject the promise that update() returns', () => {
@@ -181,7 +181,7 @@ describe('main component controller', () => {
       deffered.reject();
       $scope.$apply();
       expect(account.get().balance).to.equal(undefined);
-      controller.reset();
+      $rootScope.reset();
       expect(spy).to.have.been.calledWith();
     });
   });

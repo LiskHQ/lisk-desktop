@@ -93,7 +93,7 @@ describe('Send component', () => {
 
     it('should allow to send all funds', () => {
       const RECIPIENT_ADDRESS = '5932438298200837883L';
-      const AMOUNT = lsk.normalize($scope.account.balance - 10000000);
+      const AMOUNT = lsk.normalize(account.get().balance - 10000000);
 
       $peers.active = { sendLSKPromise() {} };
       const mock = sinon.mock($peers.active);
@@ -125,20 +125,20 @@ describe('send component controller', () => {
   let $q;
   let controller;
   let $componentController;
+  let account;
 
-  beforeEach(inject((_$componentController_, _$rootScope_, _$q_) => {
+  beforeEach(inject((_$componentController_, _$rootScope_, _$q_, _Account_) => {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
     $q = _$q_;
+    account = _Account_;
   }));
 
   beforeEach(() => {
     $scope = $rootScope.$new();
-    controller = $componentController('send', $scope, {
-      account: {
-        address: '8273455169423958419L',
-        balance: '10000',
-      },
+    controller = $componentController('send', $scope, {});
+    account.set({
+      balance: '10000',
       passphrase: 'robust swift grocery peasant forget share enable convince deputy road keep cheap',
     });
   });

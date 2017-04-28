@@ -13,20 +13,27 @@ describe('transactions component controller', () => {
   let $q;
   let controller;
   let $componentController;
+  let account;
+  let $peers;
 
-  beforeEach(inject((_$componentController_, _$rootScope_, _$q_) => {
+  beforeEach(inject((_$componentController_, _$rootScope_, _$q_, _Account_, _$peers_) => {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
     $q = _$q_;
+    account = _Account_;
+    $peers = _$peers_;
   }));
 
   beforeEach(() => {
     $scope = $rootScope.$new();
-    controller = $componentController('transactions', $scope, {
-      account: {
-        address: '16313739661670634666L',
-        balance: '0',
-      },
+    const mock = sinon.mock($peers);
+    const deffered = $q.defer();
+    mock.expects('listTransactions').returns(deffered.promise);
+    mock.expects('listTransactions').returns(deffered.promise);
+    controller = $componentController('transactions', $scope, {});
+    account.set({
+      passphrase: 'robust swift grocery peasant forget share enable convince deputy road keep cheap',
+      balance: '0',
     });
   });
 
@@ -76,16 +83,14 @@ describe('transactions component controller', () => {
       expect(spy).to.have.been.calledWith(controller.timeout);
     });
 
-    it('calls this.$peers.listTransactions(this.account.address, limit) with limit = 10 by default', () => {
+    it('calls this.$peers.listTransactions(account.get().address, limit) with limit = 10 by default', () => {
       controller.$peers.listTransactions = () => {};
       mock = sinon.mock(controller.$peers);
       const transactionsDeferred = $q.defer();
-      mock.expects('listTransactions').withArgs(controller.account.address, 10).returns(transactionsDeferred.promise);
+      mock.expects('listTransactions').withArgs(account.get().address, 10).returns(transactionsDeferred.promise);
       controller.update();
       transactionsDeferred.reject();
 
-      // Mock because $scope.apply() will call update() again
-      mock.expects('listTransactions').withArgs(controller.account.address, 10).returns(transactionsDeferred.promise);
       $scope.$apply();
       mock.verify();
       mock.restore();
@@ -113,10 +118,10 @@ describe('transactions component controller', () => {
   });
 
   describe('constructor()', () => {
-    it('sets $watch on acount to run reset() and update()', () => {
+    it('sets $watch on acount to run init()', () => {
       const mock = sinon.mock(controller);
-      mock.expects('reset').withArgs();
-      mock.expects('update').withArgs();
+      mock.expects('init').withArgs();
+      account.set({ balance: 1000 });
       $scope.$apply();
       mock.verify();
       mock.restore();
