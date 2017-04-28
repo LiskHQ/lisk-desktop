@@ -70,7 +70,7 @@ describe('Login controller', () => {
   let $timeout;
   /* eslint-enable no-unused-vars */
 
-  beforeEach(inject((_$componentController_, _$rootScope_,
+  beforeEach(inject((_$componentController_, _$rootScope_, _$state_,
     _Passphrase_, _$cookies_, _$timeout_, _Account_) => {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
@@ -164,11 +164,10 @@ describe('Login controller', () => {
   });
 
   describe('devTestAccount()', () => {
-    it('calls passConfirmSubmit with timeout if a passphrase is set in the cookies', () => {
+    it('sets the passphrase into passphrase input if it is set in the cookies', () => {
       $cookies.put('passphrase', testPassphrase);
-      const spy = sinon.spy(controller, '$timeout');
       controller.devTestAccount();
-      expect(spy).to.have.been.calledWith();
+      expect(controller.input_passphrase).to.equal(testPassphrase);
     });
   });
 });
