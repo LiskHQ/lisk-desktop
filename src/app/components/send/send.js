@@ -45,6 +45,7 @@ app.component('send', {
     reset() {
       this.recipient.value = '';
       this.amount.value = '';
+      this.sendForm.$setUntouched();
     }
 
     promptSecondPassphrase() {
