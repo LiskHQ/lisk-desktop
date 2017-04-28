@@ -52,8 +52,9 @@ app.component('delegates', {
           address: this.account.get().address,
         }).then((data) => {
           this.votedList = data.delegates || [];
-          (this.votedList).forEach((delegate) => {
+          this.votedList.forEach((delegate) => {
             this.votedDict[delegate.username] = delegate;
+          });
         });
       }
     }
