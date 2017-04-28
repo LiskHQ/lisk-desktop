@@ -35,7 +35,7 @@ describe('main component controller', () => {
   });
 
   describe('reset()', () => {
-    // there's not reset anymore
+    // There's no reset anymore
     it.skip('cancels $timeout', () => {
       const spy = sinon.spy(controller.$timeout, 'cancel');
       controller.reset();

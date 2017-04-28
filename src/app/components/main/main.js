@@ -23,7 +23,7 @@ app.component('main', {
 
     init(attempts = 0) {
       if (!this.account.get() || !this.account.get().passphrase) {
-        // return to login but keep the state
+        // Return to login but keep the state
         this.$rootScope.landingUrl = this.$state.current.name;
         this.$state.go('login');
         return;
@@ -48,7 +48,7 @@ app.component('main', {
           }
         });
 
-      // return to landing page if there's any
+      // Return to landing page if there's any
       this.$scope.activeTab = this.$rootScope.landingUrl || 'main.transactions';
       this.$state.go(this.$rootScope.landingUrl || 'main.transactions');
       delete this.$rootScope.landingUrl;

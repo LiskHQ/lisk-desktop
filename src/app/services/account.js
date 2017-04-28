@@ -14,7 +14,7 @@ app.factory('Account', function ($rootScope) {
         this.account.address = lisk.crypto.getAddress(kp.publicKey);
       }
 
-      // calling listeners with the list of changes
+      // Calling listeners with the list of changes
       $rootScope.$broadcast('onAccountChange', {});
     });
   };
