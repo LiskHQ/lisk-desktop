@@ -18,8 +18,8 @@ app.component('transactions', {
       this.pendingTransactions = [];
 
       this.$rootScope.$on('transaction-sent', (event, transaction) => {
-        this.pendingTransactions.push(transaction);
-        this.transactions = this.pendingTransactions.concat(this.transactions);
+        this.pendingTransactions.unshift(transaction);
+        this.transactions.unshift(transaction);
       });
 
       if (this.account.get().address) {
