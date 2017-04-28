@@ -1,5 +1,6 @@
 const app = angular.module('app', [
   'ui.router',
+  'angular-svg-round-progressbar',
   'ngMessages',
   'ngMaterial',
   'ngAnimate',

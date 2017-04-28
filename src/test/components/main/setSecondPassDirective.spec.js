@@ -14,6 +14,7 @@ describe('setSecondPass Directive', () => {
   let setSecondPass;
   let $q;
   let success;
+  let error;
 
   beforeEach(() => {
     // Load the myApp module, which contains the directive
@@ -21,7 +22,7 @@ describe('setSecondPass Directive', () => {
 
     // Store references to $rootScope and $compile
     // so they are available to all tests in this describe block
-    inject((_$compile_, _$rootScope_, _setSecondPass_, _$peers_, _$q_, _success_) => {
+    inject((_$compile_, _$rootScope_, _setSecondPass_, _$peers_, _$q_, _success_, _error_) => {
       // The injector unwraps the underscores (_) from around the parameter names when matching
       $compile = _$compile_;
       $rootScope = _$rootScope_;
@@ -29,6 +30,7 @@ describe('setSecondPass Directive', () => {
       $peers = _$peers_;
       $q = _$q_;
       success = _success_;
+      error = _error_;
       $scope = $rootScope.$new();
     });
 
@@ -38,7 +40,7 @@ describe('setSecondPass Directive', () => {
   });
 
   describe('SetSecondPassLink', () => {
-    it('Listens for broadcasting onAfterSignup', () => {
+    it('listens for an onAfterSignup event', () => {
       $peers.active = { setSignature() {} };
       const mock = sinon.mock($peers.active);
       const deffered = $q.defer();
@@ -79,6 +81,56 @@ describe('setSecondPass Directive', () => {
       deffered.resolve({});
       $scope.$apply();
 
+      expect(spy).to.have.been.calledWith();
+    });
+
+    it('should show error dialog if trying to set second passphrase mulpiple times', () => {
+      $peers.active = { setSignature() {} };
+      const mock = sinon.mock($peers.active);
+      const deffered = $q.defer();
+      mock.expects('setSignature').returns(deffered.promise);
+
+      const spy = sinon.spy(error, 'dialog');
+      $scope.passConfirmSubmit();
+
+      deffered.reject({ message: 'Missing sender second signature' });
+      $scope.$apply();
+      expect(spy).to.have.been.calledWith();
+
+      deffered.reject({ message: 'Account does not have enough LSK : TEST_ADDRESS' });
+      $scope.$apply();
+      expect(spy).to.have.been.calledWith();
+
+      deffered.reject({ message: 'OTHER MESSAGE' });
+      $scope.$apply();
+      expect(spy).to.have.been.calledWith();
+    });
+
+    it('should show error dialog if account does not have enough LSK', () => {
+      $peers.active = { setSignature() {} };
+      const mock = sinon.mock($peers.active);
+      const deffered = $q.defer();
+      mock.expects('setSignature').returns(deffered.promise);
+
+      const spy = sinon.spy(error, 'dialog');
+      $scope.passConfirmSubmit();
+
+      deffered.reject({ message: 'Missing sender second signature' });
+      $scope.$apply();
+      expect(spy).to.have.been.calledWith();
+    });
+
+    it('should show error dialog for all the other errors', () => {
+      $peers.active = { setSignature() {} };
+      const mock = sinon.mock($peers.active);
+      const deffered = $q.defer();
+      mock.expects('setSignature').returns(deffered.promise);
+
+      const spy = sinon.spy(error, 'dialog');
+      $scope.passConfirmSubmit();
+
+      deffered.reject({ message: 'Other messages' });
+      $scope.$apply();
       expect(spy).to.have.been.calledWith();
     });
   });

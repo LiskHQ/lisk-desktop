@@ -55,19 +55,20 @@ describe('Vote component controller', () => {
   let $scope;
   let controller;
   let $componentController;
-  let peersMock;
-  let $peers;
+  let delegateServiceMock;
+  let delegateService;
   let $q;
 
-  beforeEach(inject((_$componentController_, _$rootScope_, _$peers_, _$q_) => {
+  beforeEach(inject((_$componentController_, _$rootScope_, _delegateService_, _$q_) => {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
-    $peers = _$peers_;
+    delegateService = _delegateService_;
     $q = _$q_;
   }));
 
   beforeEach(() => {
-    peersMock = sinon.mock($peers);
+    delegateServiceMock = sinon.mock(delegateService);
+    delegateServiceMock.expects('listAccountDelegates').returns($q.defer().promise);
 
     $scope = $rootScope.$new();
     controller = $componentController('vote', $scope, {
@@ -100,14 +101,14 @@ describe('Vote component controller', () => {
 
     beforeEach(() => {
       deffered = $q.defer();
-      peersMock.expects('sendRequestPromise').withArgs('accounts/delegates').returns(deffered.promise);
+      delegateServiceMock.expects('vote').returns(deffered.promise);
       mdToastMock = sinon.mock(controller.$mdToast);
       mdToastMock.expects('show');
     });
 
     afterEach(() => {
       mdToastMock.verify();
-      peersMock.verify();
+      delegateServiceMock.verify();
     });
 
     it('shows an error $mdToast if request fails', () => {

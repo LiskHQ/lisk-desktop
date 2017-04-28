@@ -9,10 +9,12 @@ app.component('delegates', {
     passphrase: '<',
   },
   controller: class delegates {
-    constructor($scope, $rootScope, $peers, $mdDialog, $mdMedia, $mdToast, $timeout, Account) {
+    constructor($scope, $rootScope, $peers, $mdDialog, $mdMedia,
+      $mdToast, $timeout, delegateService, Account) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$peers = $peers;
+      this.delegateService = delegateService;
       this.$mdDialog = $mdDialog;
       this.$mdMedia = $mdMedia;
       this.$mdToast = $mdToast;
@@ -46,21 +48,19 @@ app.component('delegates', {
       this.delegates = [];
       this.delegatesDisplayedCount = 20;
       if (this.$peers.active) {
-        this.$peers.listAccountDelegates({
+        this.delegateService.listAccountDelegates({
           address: this.account.get().address,
         }).then((data) => {
           this.votedList = data.delegates || [];
           (this.votedList).forEach((delegate) => {
             this.votedDict[delegate.username] = delegate;
-          });
-          this.loadDelegates(0, this.$scope.search);
         });
       }
     }
 
     loadDelegates(offset, search, replace) {
       this.loading = true;
-      this.$peers.listDelegates({
+      this.delegateService.listDelegates({
         offset,
         limit: '100',
         q: search,
@@ -146,9 +146,12 @@ app.component('delegates', {
 
     checkPendingVotes() {
       this.$timeout(() => {
-        this.$peers.listAccountDelegates({
-          address: this.account.get().address,
-        }).then((data) => {
+        this.delegateService.list
+        
+        
+        
+        Delegates(this.account.get().address,
+        ).then((data) => {
           this.votedList = data.delegates || [];
           this.votedDict = {};
           (this.votedList).forEach((delegate) => {
@@ -221,8 +224,8 @@ app.component('delegates', {
         this._selectDelegate(delegate, list);
       } else {
         this.pendingRequests++;
-        this.$peers.getDelegate({ username,
-        }).then((data) => {
+        this.delegateService.getDelegate(username,
+        ).then((data) => {
           this._selectDelegate(data.delegate, list);
         }).catch(() => {
           this.invalidUsernames.push(username);
@@ -259,7 +262,7 @@ app.component('delegates', {
           }
         },
         template:
-          '<md-dialog>' +
+          '<md-dialog flex="80">' +
             '<vote account="account" passphrase="passphrase" ' +
               'vote-list="voteList" unvote-list="unvoteList">' +
             '</vote>' +

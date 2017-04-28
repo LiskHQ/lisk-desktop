@@ -33,15 +33,15 @@ div.offline-hide
         md-card(flex-gt-xs=33, layout-align='center center', layout-padding)
           div Rank
           div.progress-label {{$ctrl.delegate.rate}}
-          md-progress-circular(md-mode='determinate', value='{{101 - $ctrl.delegate.rate}}', md-diameter='200') {{$ctrl.delegate.rate}}
+          round-progress(max='101', current='101 - $ctrl.delegate.rate', color='#0288D1')
         md-card(flex-gt-xs=33, layout-align='center center', layout-padding)
           div Productivity
           div.progress-label {{$ctrl.delegate.productivity}}%
-          md-progress-circular(md-mode='determinate', value='{{$ctrl.delegate.productivity}}', md-diameter='200')
+          round-progress(max='100', current='$ctrl.delegate.productivity', color='#0288D1')
         md-card(flex-gt-xs=33, layout-align='center center', layout-padding)
           div Approval
           div.progress-label {{$ctrl.delegate.approval}}%
-          md-progress-circular(md-mode='determinate', value='{{$ctrl.delegate.approval}}', md-diameter='200')
+          round-progress(max='100', current='$ctrl.delegate.approval', color='#0288D1')
       md-card(layout='column', ng-if='$ctrl.delegate.username')
         md-card-title
           md-card-title-text
