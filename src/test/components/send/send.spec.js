@@ -140,7 +140,12 @@ describe('send component controller', () => {
     it('resets this.recipient.value and this.amount.value', () => {
       controller.recipient.value = 'TEST';
       controller.amount.value = '1000';
+      controller.sendForm = { $setUntouched: () => {} };
+      const mock = sinon.mock(controller.sendForm);
+      mock.expects('$setUntouched');
+
       controller.reset();
+
       expect(controller.recipient.value).to.equal('');
       expect(controller.amount.value).to.equal('');
     });
