@@ -64,7 +64,7 @@ app.component('send', {
             },
           });
         } else {
-          resolve();
+          resolve(null);
         }
       });
     }
