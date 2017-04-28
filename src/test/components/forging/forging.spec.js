@@ -14,19 +14,22 @@ describe('Forging component', () => {
   let lsk;
   let $peers;
   let delegate;
+  let account;
 
   beforeEach(angular.mock.module('app'));
 
-  beforeEach(inject((_$compile_, _$rootScope_, _lsk_, _$peers_) => {
+  beforeEach(inject((_$compile_, _$rootScope_, _lsk_, _$peers_, _Account_) => {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     lsk = _lsk_;
     $peers = _$peers_;
+    account = _Account_;
   }));
 
   beforeEach(() => {
     delegate = {
-      address: '14018336151296112016L',
+      passphrase: 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit',
+      address: '537318935439898807L',
       approval: 90,
       missedblocks: 10,
       producedblocks: 304,
@@ -50,10 +53,10 @@ describe('Forging component', () => {
     mock.expects('sendRequest').withArgs('delegates/forging/getForgedByAccount').exactly(5);
 
     $scope = $rootScope.$new();
-    $scope.account = {
-      address: delegate.address,
+    account.set({
+      passphrase: delegate.passphrase,
       balance: lsk.from(100),
-    };
+    });
     element = $compile('<forging account="account"></forging>')($scope);
     $scope.$digest();
   });
@@ -91,11 +94,13 @@ describe('forging component controller', () => {
   let $peers;
   let delegate;
   let blocks;
+  let account;
 
-  beforeEach(inject((_$componentController_, _$rootScope_, _$peers_) => {
+  beforeEach(inject((_$componentController_, _$rootScope_, _$peers_, _Account_) => {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
     $peers = _$peers_;
+    account = _Account_;
   }));
 
   beforeEach(() => {
@@ -105,7 +110,8 @@ describe('forging component controller', () => {
     }));
 
     delegate = {
-      address: '14018336151296112016L',
+      passphrase: 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit',
+      address: '537318935439898807L',
       approval: 90,
       missedblocks: 10,
       producedblocks: 304,
@@ -120,11 +126,15 @@ describe('forging component controller', () => {
     activePeerMock = sinon.mock($peers.active);
 
     $scope = $rootScope.$new();
+    account.set({
+      passphrase: delegate.passphrase,
+      balance: '10000',
+    });
     controller = $componentController('forging', $scope, {
-      account: {
-        address: '8273455169423958419L',
-        balance: '10000',
-      },
+      // account: {
+      //   address: '8273455169423958419L',
+      //   balance: '10000',
+      // },
     });
   });
 

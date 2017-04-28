@@ -10,7 +10,6 @@ const setSecondPassConstructor = function ($mdDialog) {
   this.show = () => {
     $mdDialog.show({
       template: require('./secondPass.pug')(),
-      parent: angular.element('#main'),
       bindToController: true,
       locals: {
         ok: this.ok,

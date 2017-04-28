@@ -10,15 +10,21 @@ app.component('forging', {
     account: '=',
   },
   controller: class forging {
-    constructor($scope, $timeout, $peers) {
+    constructor($scope, $timeout, $peers, Account) {
       this.$scope = $scope;
       this.$timeout = $timeout;
       this.$peers = $peers;
+      this.account = Account;
 
       this.statistics = {};
       this.blocks = [];
-
-      this.updateAllData();
+      if (!this.account.get().publicKey) {
+        this.$scope.$on('onAccountChange', () => {
+          this.updateAllData();
+        });
+      } else {
+        this.updateAllData();
+      }
     }
 
     $onDestroy() {
@@ -38,7 +44,7 @@ app.component('forging', {
 
     updateDelegate() {
       this.$peers.active.sendRequest('delegates/get', {
-        publicKey: this.account.publicKey,
+        publicKey: this.account.get().publicKey,
       }, (data) => {
         if (data.success) {
           this.delegate = data.delegate;
@@ -54,7 +60,7 @@ app.component('forging', {
       this.$peers.active.sendRequest('blocks', {
         limit,
         offset: offset || 0,
-        generatorPublicKey: this.account.publicKey,
+        generatorPublicKey: this.account.get().publicKey,
       }, (data) => {
         if (data.success) {
           if (this.blocks.length === 0) {
@@ -80,7 +86,7 @@ app.component('forging', {
 
     updateForgingStats(key, startMoment) {
       this.$peers.active.sendRequest('delegates/forging/getForgedByAccount', {
-        generatorPublicKey: this.account.publicKey,
+        generatorPublicKey: this.account.get().publicKey,
         start: moment(startMoment).unix(),
         end: moment().unix(),
       }, (data) => {

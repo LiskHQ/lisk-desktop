@@ -7,22 +7,22 @@ describe('Sign message component', () => {
   let $rootScope;
   let element;
   let $scope;
+  let account;
 
   beforeEach(angular.mock.module('app'));
 
-  beforeEach(inject((_$compile_, _$rootScope_) => {
+  beforeEach(inject((_$compile_, _$rootScope_, _Account_) => {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
+    account = _Account_;
   }));
 
   beforeEach(() => {
     $scope = $rootScope.$new();
-    $scope.passphrase = 'robust swift grocery peasant forget share enable convince deputy road keep cheap';
-    $scope.account = {
-      address: '8273455169423958419L',
-      publicKey: '9d3058175acab969f41ad9b86f7a2926c74258670fe56b37c429c01fca9f2f0f',
-    };
-    element = $compile('<sign-message passphrase="passphrase" account="account"></sign-message>')($scope);
+    account.set({
+      passphrase: 'robust swift grocery peasant forget share enable convince deputy road keep cheap',
+    });
+    element = $compile('<sign-message></sign-message>')($scope);
     $scope.$digest();
   });
 

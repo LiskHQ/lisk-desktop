@@ -4,16 +4,14 @@ const UPDATE_INTERVAL = 20000;
 
 app.component('transactions', {
   template: require('./transactions.pug')(),
-  bindings: {
-    account: '=',
-  },
   controller: class transactions {
-    constructor($scope, $timeout, $q, $peers, $rootScope) {
+    constructor($scope, $rootScope, $timeout, $q, $peers, Account) {
       this.$scope = $scope;
+      this.$rootScope = $rootScope;
       this.$timeout = $timeout;
       this.$q = $q;
       this.$peers = $peers;
-      this.$rootScope = $rootScope;
+      this.account = Account;
 
       this.loaded = false;
       this.transactions = [];
@@ -24,15 +22,21 @@ app.component('transactions', {
         this.transactions.unshift(transaction);
       });
 
-      this.$scope.$watch('account', () => {
-        this.reset();
-        this.update();
+      if (this.account.get().address) {
+        this.init.call(this);
+      }
+      this.$rootScope.$on('onAccountChange', () => {
+        this.init.call(this);
       });
 
       this.$scope.$on('peerUpdate', () => {
-        this.reset();
-        this.update(true);
+        this.init(true);
       });
+    }
+
+    init(show) {
+      this.reset();
+      this.update(show);
     }
 
     $onDestroy() {
@@ -62,7 +66,7 @@ app.component('transactions', {
         limit = 10;
       }
 
-      return this.$peers.listTransactions(this.account.address, limit)
+      return this.$peers.listTransactions(this.account.get().address, limit)
         .then(this._processTransactionsResponse.bind(this))
         .catch(() => {
           this.transactions = [];

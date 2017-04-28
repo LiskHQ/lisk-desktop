@@ -3,16 +3,16 @@ import './vote.less';
 app.component('vote', {
   template: require('./vote.pug')(),
   bindings: {
-    account: '=',
-    passphrase: '<',
     voteList: '=',
     unvoteList: '=',
   },
   controller: class vote {
-    constructor($scope, $mdDialog, $mdToast, delegateService) {
+    constructor($scope, $mdDialog, $mdToast, delegateService, $rootScope, Account) {
       this.$mdDialog = $mdDialog;
       this.$mdToast = $mdToast;
       this.delegateService = delegateService;
+      this.$rootScope = $rootScope;
+      this.account = Account;
 
       this.votedDict = {};
       this.votedList = [];
@@ -30,8 +30,8 @@ app.component('vote', {
     vote() {
       this.votingInProgress = true;
       this.delegateService.vote({
-        secret: this.passphrase,
-        publicKey: this.account.publicKey,
+        secret: this.account.get().passphrase,
+        publicKey: this.account.get().publicKey,
         secondSecret: this.secondPassphrase,
         voteList: this.voteList,
         unvoteList: this.unvoteList,
@@ -55,7 +55,7 @@ app.component('vote', {
       const totalVotes = this.voteList.length + this.unvoteList.length;
       return totalVotes > 0 && totalVotes <= 33 &&
               !this.votingInProgress &&
-              (!this.account.secondSignature || this.secondPassphrase);
+              (!this.account.get().secondSignature || this.secondPassphrase);
     }
 
     // eslint-disable-next-line class-methods-use-this

@@ -9,13 +9,17 @@ app.component('delegates', {
     passphrase: '<',
   },
   controller: class delegates {
-    constructor($scope, delegateService, $mdDialog, $mdMedia, $mdToast, $timeout) {
+    constructor($scope, $rootScope, $peers, $mdDialog, $mdMedia,
+      $mdToast, $timeout, delegateService, Account) {
       this.$scope = $scope;
+      this.$rootScope = $rootScope;
+      this.$peers = $peers;
       this.delegateService = delegateService;
       this.$mdDialog = $mdDialog;
       this.$mdMedia = $mdMedia;
       this.$mdToast = $mdToast;
       this.$timeout = $timeout;
+      this.account = Account;
 
       this.$scope.search = '';
       this.voteList = [];
@@ -43,15 +47,16 @@ app.component('delegates', {
     updateAll() {
       this.delegates = [];
       this.delegatesDisplayedCount = 20;
-      this.delegateService.listAccountDelegates({
-        address: this.account.address,
-      }).then((data) => {
-        this.votedList = data.delegates || [];
-        (this.votedList).forEach((delegate) => {
-          this.votedDict[delegate.username] = delegate;
+      if (this.$peers.active) {
+        this.delegateService.listAccountDelegates({
+          address: this.account.get().address,
+        }).then((data) => {
+          this.votedList = data.delegates || [];
+          this.votedList.forEach((delegate) => {
+            this.votedDict[delegate.username] = delegate;
+          });
         });
-        this.loadDelegates(0, this.$scope.search);
-      });
+      }
     }
 
     loadDelegates(offset, search, replace) {
@@ -142,7 +147,7 @@ app.component('delegates', {
 
     checkPendingVotes() {
       this.$timeout(() => {
-        this.delegateService.listAccountDelegates(this.account,
+        this.delegateService.listAccountDelegates(this.account.get().address,
         ).then((data) => {
           this.votedList = data.delegates || [];
           this.votedDict = {};
@@ -261,8 +266,8 @@ app.component('delegates', {
           '</md-dialog>',
         fullscreen: (this.$mdMedia('sm') || this.$mdMedia('xs')) && this.$scope.customFullscreen,
         locals: {
-          account: this.account,
-          passphrase: this.passphrase,
+          account: this.account.get(),
+          passphrase: this.account.get().passphrase,
           voteList: this.voteList,
           unvoteList: this.unvoteList,
         },

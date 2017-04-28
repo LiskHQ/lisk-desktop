@@ -1,0 +1,21 @@
+md-content.header(layout='row', layout-align='center center', layout-padding)
+  img.logo(src=require('../../assets/images/LISK-nano.png'))
+  div(flex)
+  md-button.md-raised.md-primary.send(data-show-send-modal, ng-if='$root.logged') Send
+  md-button.md-raised.md-secondary.logout(ng-click='$root.logout()', ng-if='$root.logged') Logout
+  md-menu.top-menu(ng-if='$root.logged', md-position-mode='target-right target', md-offset='14 0')
+    md-button.md-icon-button(ng-click='$mdOpenMenu()')
+      i.material-icons more_vert
+    md-menu-content(width='2')
+      md-menu-item
+        md-button(ng-click='$ctrl.signVerify.openSignMessageDialog()')
+          div(layout='row', flex='')
+            p(flex='') Sign message
+      md-menu-item
+        md-button(ng-click='$ctrl.signVerify.openVerifyMessageDialog()')
+          div(layout='row', flex='')
+            p(flex='') Verify message
+      md-menu-item
+        md-button(data-set-second-pass, ng-if='$root.logged && !$ctrl.account.get().secondSignature')
+          div(layout='row', flex='')
+            p(flex='') Set 2nd passphrase

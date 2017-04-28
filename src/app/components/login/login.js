@@ -3,14 +3,12 @@ import './save.less';
 
 app.component('login', {
   template: require('./login.pug')(),
-  bindings: {
-    passphrase: '=',
-    onLogin: '&',
-  },
   controller: class login {
 
     /* eslint no-param-reassign: ["error", { "props": false }] */
-    constructor($scope, $rootScope, $timeout, $document, $mdMedia, $cookies, $peers, Passphrase) {
+
+    constructor($scope, $rootScope, $timeout, $document, $mdMedia,
+      $cookies, $peers, Passphrase, $state, Account) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$timeout = $timeout;
@@ -18,6 +16,9 @@ app.component('login', {
       this.$mdMedia = $mdMedia;
       this.$cookies = $cookies;
       this.$peers = $peers;
+      this.$state = $state;
+      this.account = Account;
+
       this.Passphrase = Passphrase;
       this.generatingNewPassphrase = false;
 
@@ -45,9 +46,9 @@ app.component('login', {
 
     passConfirmSubmit(_passphrase = this.input_passphrase) {
       if (this.Passphrase.normalize.constructor === Function) {
-        this.passphrase = this.Passphrase.normalize(_passphrase);
+        this.account.set({ passphrase: this.Passphrase.normalize(_passphrase) });
 
-        this.$timeout(this.onLogin);
+        this.$state.go('main');
       }
     }
 
@@ -59,7 +60,7 @@ app.component('login', {
       const passphrase = this.$cookies.get('passphrase');
       if (passphrase) {
         this.input_passphrase = passphrase;
-        this.$timeout(this.passConfirmSubmit.bind(this), 10);
+        // this.$timeout(this.passConfirmSubmit.bind(this), 10);
       }
     }
   },

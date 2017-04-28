@@ -59,20 +59,24 @@ describe('Login controller', () => {
 
   let $rootScope;
   let $scope;
+  let $state;
   let controller;
   let $componentController;
   let Passphrase;
   let testPassphrase;
+  let account;
   let $cookies;
   /* eslint-disable no-unused-vars */
   let $timeout;
   /* eslint-enable no-unused-vars */
 
-  beforeEach(inject((_$componentController_, _$rootScope_,
-    _Passphrase_, _$cookies_, _$timeout_) => {
+  beforeEach(inject((_$componentController_, _$rootScope_, _$state_,
+    _Passphrase_, _$cookies_, _$timeout_, _Account_) => {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
+    $state = _$state_;
     Passphrase = _Passphrase_;
+    account = _Account_;
     $cookies = _$cookies_;
     /* eslint-disable no-unused-vars */
     $timeout = _$timeout_;
@@ -139,10 +143,10 @@ describe('Login controller', () => {
   });
 
   describe('passConfirmSubmit()', () => {
-    it('sets this.phassphrase as this.input_passphrase processed by normalizer', () => {
+    it('sets account.phassphrase as this.input_passphrase processed by normalizer', () => {
       controller.input_passphrase = '\tTEST  PassPHrASe  ';
       controller.passConfirmSubmit();
-      expect(controller.passphrase).to.equal('test passphrase');
+      expect(account.get().passphrase).to.equal('test passphrase');
     });
 
     it('calls Passphrase.normalize()', () => {
@@ -151,20 +155,19 @@ describe('Login controller', () => {
       expect(spy).to.have.been.calledWith();
     });
 
-    it('sets timeout with this.onLogin', () => {
+    it('redirects to main if passphrase is valid', () => {
       controller.input_passphrase = testPassphrase;
-      const spy = sinon.spy(controller, '$timeout');
+      const spy = sinon.spy($state, 'go');
       controller.passConfirmSubmit();
-      expect(spy).to.have.been.calledWith(controller.onLogin);
+      expect(spy).to.have.been.calledWith('main');
     });
   });
 
   describe('devTestAccount()', () => {
-    it('calls passConfirmSubmit with timeout if a passphrase is set in the cookies', () => {
+    it('sets the passphrase into passphrase input if it is set in the cookies', () => {
       $cookies.put('passphrase', testPassphrase);
-      const spy = sinon.spy(controller, '$timeout');
       controller.devTestAccount();
-      expect(spy).to.have.been.calledWith();
+      expect(controller.input_passphrase).to.equal(testPassphrase);
     });
   });
 });
