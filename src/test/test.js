@@ -13,6 +13,7 @@ require('./components/timestamp/timestamp.spec');
 require('./components/transactions/transactions.spec');
 require('./components/sign-verify/sign-message.spec');
 require('./components/sign-verify/verify-message.spec');
+require('./components/delegate-registration/delegateRegistration.spec.js');
 
 require('./services/peers/peers.spec');
 require('./services/passphrase.spec');
