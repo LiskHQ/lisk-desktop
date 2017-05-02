@@ -47,7 +47,9 @@ app.component('delegates', {
     updateAll() {
       this.delegates = [];
       this.delegatesDisplayedCount = 20;
+      console.log(this.$peers.active);
       if (this.$peers.active) {
+        console.log('listAccountDelegates');
         this.delegateService.listAccountDelegates({
           address: this.account.get().address,
         }).then((data) => {
@@ -55,6 +57,8 @@ app.component('delegates', {
           this.votedList.forEach((delegate) => {
             this.votedDict[delegate.username] = delegate;
           });
+          console.log(this.votedDict);
+          this.loadDelegates(0, this.$scope.search);
         });
       }
     }
@@ -72,6 +76,7 @@ app.component('delegates', {
     }
 
     addDelegates(data, replace) {
+      console.log('addDelegates', data);
       if (data.success) {
         if (replace) {
           this.delegates = [];
