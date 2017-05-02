@@ -2,15 +2,15 @@ import './delegateRegistration.less';
 
 app.directive('delegateRegistration', ($mdDialog, $peers, Account, success) => {
   const DelegateRegistrationLink = function ($scope, $element) {
-    this.form = {
+    $scope.form = {
       name: '',
       fee: 25,
       error: '',
       onSubmit: (form) => {
         if (form.$valid) {
-          $peers.active.registerDelegate(this.form.name.toLowerCase(), Account.get().passphrase)
+          $peers.active.registerDelegate($scope.form.name.toLowerCase(), Account.get().passphrase)
             .then(() => {
-              this.reset(form);
+              $scope.reset(form);
 
               success.dialog({ text: 'Account was successfully registered as delegate.' })
                 .then(() => {
@@ -18,22 +18,22 @@ app.directive('delegateRegistration', ($mdDialog, $peers, Account, success) => {
                 });
             })
             .catch((error) => {
-              this.form.error = error.message ? error.message : '';
+              $scope.form.error = error.message ? error.message : '';
             });
         }
       },
     };
 
-    this.reset = (form) => {
-      this.form.name = '';
-      this.form.error = '';
+    $scope.reset = (form) => {
+      $scope.form.name = '';
+      $scope.form.error = '';
 
       form.$setPristine();
       form.$setUntouched();
     };
 
-    this.cancel = (form) => {
-      this.reset(form);
+    $scope.cancel = (form) => {
+      $scope.reset(form);
       $mdDialog.hide();
     };
 
@@ -42,8 +42,8 @@ app.directive('delegateRegistration', ($mdDialog, $peers, Account, success) => {
         template: require('./delegateRegistration.pug')(),
         bindToController: true,
         locals: {
-          form: this.form,
-          cancel: this.cancel,
+          form: $scope.form,
+          cancel: $scope.cancel,
         },
         controller: () => {},
         controllerAs: '$ctrl',
