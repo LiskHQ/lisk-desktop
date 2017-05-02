@@ -23,10 +23,10 @@ app.component('login', {
 
       this.networks = [{
         name: 'Mainnet',
-      },{
+      }, {
         name: 'Testnet',
         testnet: true,
-      },{
+      }, {
         name: 'Custom Node',
         custom: true,
         address: 'http://localhost:8000',
@@ -49,7 +49,7 @@ app.component('login', {
 
     passConfirmSubmit(_passphrase = this.input_passphrase) {
       if (this.Passphrase.normalize.constructor === Function) {
-        this.account.set({ 
+        this.account.set({
           passphrase: this.Passphrase.normalize(_passphrase),
           network: this.network,
         });
