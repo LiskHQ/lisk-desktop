@@ -27,9 +27,10 @@ app.directive('passphrase', ($rootScope, $document, Passphrase, $mdDialog, $mdMe
       $mdDialog.show({
         controllerAs: '$ctrl',
         controller: /* @ngInject*/ class save {
-          constructor($scope) {
+          constructor($scope, $state) {
             this.$mdDialog = $mdDialog;
             this.passphrase = passphrase;
+            this.$state = $state;
 
             $scope.$watch('$ctrl.missing_input', () => {
               this.missing_ok = this.missing_input && this.missing_input === this.missing_word;
@@ -54,6 +55,7 @@ app.directive('passphrase', ($rootScope, $document, Passphrase, $mdDialog, $mdMe
 
           close() {
             this.$mdDialog.hide();
+            this.$state.reload();
           }
         },
 
