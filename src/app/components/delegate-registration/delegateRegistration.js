@@ -9,7 +9,7 @@ app.directive('delegateRegistration', ($mdDialog, $peers, Account, success) => {
       onSubmit: (form) => {
         if (form.$valid) {
           $peers.active.registerDelegate(this.form.name.toLowerCase(), Account.get().passphrase)
-            .then((response) => {
+            .then(() => {
               this.reset(form);
 
               success.dialog({ text: 'Account was successfully registered as delegate.' })
@@ -21,7 +21,7 @@ app.directive('delegateRegistration', ($mdDialog, $peers, Account, success) => {
               this.form.error = error.message ? error.message : '';
             });
         }
-      }
+      },
     };
 
     this.reset = (form) => {
@@ -30,7 +30,7 @@ app.directive('delegateRegistration', ($mdDialog, $peers, Account, success) => {
 
       form.$setPristine();
       form.$setUntouched();
-    }
+    };
 
     this.cancel = (form) => {
       this.reset(form);
@@ -53,6 +53,6 @@ app.directive('delegateRegistration', ($mdDialog, $peers, Account, success) => {
 
   return {
     restrict: 'A',
-    link: DelegateRegistrationLink
+    link: DelegateRegistrationLink,
   };
 });

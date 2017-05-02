@@ -126,15 +126,16 @@ app.factory('$peers', ($timeout, $cookies, $location, $q) => {
         return deferred.promise;
       };
 
-      this.active.registerDelegate = (username, secret, publicKey, secondSecret) => {
-        console.log('peers registerDelegate: ', username, secret, publicKey, secondSecret);
+      this.active.registerDelegate = (username, secret, secondSecret) => {
+        const data = { username, secret };
+        if (secondSecret) {
+          data.secondSecret = secondSecret;
+        }
         const deferred = $q.defer();
-        this.active.sendRequest('delegates', { username, secret }, (res) => {
+        this.active.sendRequest('delegates', data, (res) => {
           if (res.success) {
-            console.log('got success', res);
             deferred.resolve(res);
           } else {
-            console.log('got error', res);
             deferred.reject(res);
           }
         });
