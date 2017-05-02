@@ -2,10 +2,14 @@ import lisk from 'lisk-js';
 
 const UPDATE_INTERVAL_CHECK = 10000;
 
-app.factory('$peers', ($timeout, $cookies, $location, $q) => {
+app.factory('$peers', ($timeout, $cookies, $location, $q, $rootScope, Account) => {
   class $peers {
     constructor() {
       this.check();
+
+      $rootScope.$on('onAccountChange', () => {
+        this.setActive();
+      });
     }
 
     reset(active) {
@@ -16,40 +20,22 @@ app.factory('$peers', ($timeout, $cookies, $location, $q) => {
       }
     }
 
-    setActive(peerConf) {
-      const peerStack = $location.search().peerStack || $cookies.get('peerStack') || 'official';
-      let conf = peerConf || { };
-      const localhostConf = {
-        node: 'localhost',
-        port: 4000,
-        testnet: true,
-        nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
-      };
-      if (peerStack === 'localhost' && !peerConf) {
-        conf = localhostConf;
-      } else if (peerStack === 'testnet' && !peerConf) {
-        conf.testnet = true;
+    setActive() {
+      let conf = { };
+      const network = Account.get().network;
+      if (network) {
+        conf = network;
+        if (network.address) {
+          conf.node = network.address.split(':')[1].replace('//', '');
+          conf.port = network.address.match(/:([0-9]{1,5})$/)[1];
+          conf.ssl = network.address.split(':')[0] === 'https';
+        }
+        if (conf.testnet === undefined && conf.port !== undefined) {
+          conf.testnet = conf.port === '7000';
+        }
       }
 
       this.setPeerAPIObject(conf);
-      if (!this.stack) {
-        this.stack = this.active.listPeers();
-        this.stack.localhost = [localhostConf, {
-          node: 'localhost',
-          port: 7000,
-          testnet: true,
-        }, {
-          node: 'localhost',
-          port: 8000,
-        }];
-        this.peerByName = {};
-        Object.keys(this.stack).forEach((key) => {
-          this.stack[key].forEach(peer => this.peerByName[peer.node + (peer.port || '')] = peer);
-        });
-      }
-      this.currentPeerConfig = this.peerByName[this.active.currentPeer + this.active.port] ||
-        this.peerByName[this.active.currentPeer];
-
       this.check();
     }
 
