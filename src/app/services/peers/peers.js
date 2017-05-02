@@ -90,17 +90,6 @@ app.factory('$peers', ($timeout, $cookies, $location, $q, $rootScope, Account) =
         return deferred.promise;
       };
 
-      this.active.listTransactionsPromise = (address, limit, offset) => {
-        const deferred = $q.defer();
-        this.active.listTransactions(address, limit, offset, (data) => {
-          if (data.success) {
-            return deferred.resolve(data);
-          }
-          return deferred.reject(data);
-        });
-        return deferred.promise;
-      };
-
       this.active.setSignature = (secondSecret, publicKey, secret) => {
         const deferred = $q.defer();
         this.active.sendRequest('signatures', { secondSecret, publicKey, secret }, (res) => {
