@@ -87,8 +87,8 @@ describe('main component controller', () => {
       expect(spy).to.have.been.calledWith();
     });
 
-    it('calls this.update() and if that fails and attempts >= 10, then show error dialog', () => {
-      const spy = sinon.spy(controller.error, 'dialog');
+    it('calls this.update() and if that fails and attempts >= 10, then show error alert dialog', () => {
+      const spy = sinon.spy(controller.dialog, 'errorAlert');
 
       controller.init(10);
       deffered.reject();

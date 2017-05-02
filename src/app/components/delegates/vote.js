@@ -7,9 +7,9 @@ app.component('vote', {
     unvoteList: '=',
   },
   controller: class vote {
-    constructor($scope, $mdDialog, $mdToast, delegateService, $rootScope, Account) {
+    constructor($scope, $mdDialog, dialog, delegateService, $rootScope, Account) {
       this.$mdDialog = $mdDialog;
-      this.$mdToast = $mdToast;
+      this.dialog = dialog;
       this.delegateService = delegateService;
       this.$rootScope = $rootScope;
       this.account = Account;
@@ -18,7 +18,7 @@ app.component('vote', {
       this.votedList = [];
 
       this.delegateService.listAccountDelegates({
-        address: this.account.address,
+        address: this.account.get().address,
       }).then((data) => {
         this.votedList = data.delegates || [];
         this.votedList.forEach((delegate) => {
@@ -37,15 +37,9 @@ app.component('vote', {
         unvoteList: this.unvoteList,
       }).then(() => {
         this.$mdDialog.hide(this.voteList, this.unvoteList);
-        const toast = this.$mdToast.simple();
-        toast.toastClass('lsk-toast-success');
-        toast.textContent('Voting succesfull');
-        this.$mdToast.show(toast);
+        this.dialog.successToast('Voting succesfull');
       }).catch((response) => {
-        const toast = this.$mdToast.simple();
-        toast.toastClass('lsk-toast-error');
-        toast.textContent(response.message || 'Voting failed');
-        this.$mdToast.show(toast);
+        this.dialog.errorToast(response.message || 'Voting failed');
       }).finally(() => {
         this.votingInProgress = false;
       });
