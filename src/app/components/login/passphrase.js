@@ -60,7 +60,7 @@ app.directive('passphrase', ($rootScope, $document, Passphrase, $mdDialog, $mdMe
         },
 
         template: require('./save.pug')(),
-        fullscreen: ($mdMedia('sm') || $mdMedia('xs')) && this.scope.customFullscreen,
+        fullscreen: ($mdMedia('xs')),
       });
     };
 
