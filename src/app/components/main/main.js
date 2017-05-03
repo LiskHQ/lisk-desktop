@@ -49,7 +49,7 @@ app.component('main', {
         });
 
       // Return to landing page if there's any
-      this.$scope.activeTab = this.$rootScope.landingUrl || 'main.transactions';
+      this.activeTab = this.$rootScope.landingUrl || 'main.transactions';
       this.$state.go(this.$rootScope.landingUrl || 'main.transactions');
       delete this.$rootScope.landingUrl;
     }
