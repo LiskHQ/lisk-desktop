@@ -18,7 +18,7 @@ app.component('vote', {
       this.votedList = [];
 
       this.delegateService.listAccountDelegates({
-        address: this.account.address,
+        address: this.account.get().address,
       }).then((data) => {
         this.votedList = data.delegates || [];
         this.votedList.forEach((delegate) => {
