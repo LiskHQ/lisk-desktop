@@ -9,6 +9,10 @@ body {
     height: 100%;
   }
 }
+.body-wrapper {
+  width: 100%;
+  background-color: #eee;
+}
 
 md-card {
   margin-bottom: 20px;
@@ -43,5 +47,12 @@ body {
 
   .offline .offline-hide {
     opacity: 0.5;
+  }
+
+  md-input-container {
+    overflow-x: hidden;
+    label:not(.md-no-float):not(.md-container-ignore), .md-placeholder {
+      box-sizing: content-box;
+    }
   }
 }
