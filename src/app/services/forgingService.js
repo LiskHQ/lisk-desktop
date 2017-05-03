@@ -7,7 +7,7 @@ app.factory('forgingService', ($peers, Account) => ({
     });
   },
 
-  getForgedBlocks(limit=10, offset=0) {
+  getForgedBlocks(limit = 10, offset = 0) {
     return $peers.sendRequestPromise('blocks', {
       limit,
       offset,
@@ -17,9 +17,9 @@ app.factory('forgingService', ($peers, Account) => ({
 
   getForgedStats(startMoment) {
     return $peers.sendRequestPromise('delegates/forging/getForgedByAccount', {
-        generatorPublicKey: Account.get().publicKey,
-        start: moment(startMoment).unix(),
-        end: moment().unix(),
+      generatorPublicKey: Account.get().publicKey,
+      start: moment(startMoment).unix(),
+      end: moment().unix(),
     });
   },
 }));
