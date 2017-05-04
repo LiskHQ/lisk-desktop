@@ -48,7 +48,8 @@ app.factory('Account', function ($rootScope, $peers, $q) {
     return deferred.promise;
   };
 
-  this.sendLSK = (recipientId, amount, passphrase, secondPassphrase) => $peers.sendRequestPromise('transactions', { recipientId, amount, secret, secondSecret });
+  this.sendLSK = (recipientId, amount, secret, secondSecret) => $peers.sendRequestPromise(
+    'transactions', { recipientId, amount, secret, secondSecret });
 
   this.listTransactions = (address, limit, offset) => $peers.sendRequestPromise('transactions', {
     senderId: address,
@@ -57,7 +58,8 @@ app.factory('Account', function ($rootScope, $peers, $q) {
     offset: offset || 0,
   });
 
-  this.setSignature = (secondSecret, publicKey, secret) => $peers.sendRequestPromise('signatures', { secondSecret, publicKey, secret });
+  this.setSignature = (secondSecret, publicKey, secret) => $peers.sendRequestPromise(
+    'signatures', { secondSecret, publicKey, secret });
 
   return this;
 });
