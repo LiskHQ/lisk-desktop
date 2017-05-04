@@ -11,7 +11,6 @@ div.dialog-delegate-registration(aria-label='Vote for delegates')
             input(type='text', name='delegateName', ng-model='$ctrl.form.name', required, ng-disabled='$ctrl.loading')
             div(ng-messages='delegateRegistrationForm.name.$error')
               div(ng-message='required') Required
-              //- div(ng-message='pattern') Invalid
             md-input-container.md-block
               div.fee Fee: {{$ctrl.form.fee}} LSK
             md-divider
