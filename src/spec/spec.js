@@ -202,7 +202,7 @@ function slugify(text) {
 }
 
 
-describe('Lisk Nano functionality', () => {
+describe('Lisk Nano', () => {
   afterEach(() => {
     const currentSpec = jasmine.getEnv().currentSpec;
     const specSlug = slugify([currentSpec.id, currentSpec.description].join(' '));
@@ -217,15 +217,46 @@ describe('Lisk Nano functionality', () => {
     }
   });
 
-  it('should allow to login', testLogin);
-  it('should allow to logout', testLogout);
-  it('should show peer', testPeer);
-  it('should allow to change peer', testChangePeer);
-  it('should show address', testAddress);
-  it('should show balance', testShowBalance);
-  it('should allow to send transaction when enough funds and correct address form', testSend);
-  it('should not allow to send transaction when not enough funds', testSendWithNotEnoughFunds);
-  it('should not allow to send transaction when invalid address', testSendWithInvalidAddress);
-  it('should show transactions', testShowTransactions);
-  it('should allow to create a new account', testNewAccount);
+  describe('Login page', () => {
+    it('should allow to login', testLogin);
+    it('should allow to change peer', testChangePeer);
+    it('should allow to create a new account', testNewAccount);
+  });
+
+  describe('Main page top area', () => {
+    it('should allow to logout', testLogout);
+    it('should show peer', testPeer);
+    it('should show address', testAddress);
+    it('should show balance', testShowBalance);
+  });
+
+  describe('Top right menu', () => {
+    xit('should allow to sign message', () => {});
+    xit('should allow to verify message', () => {});
+    xit('should allow to set 2nd passphrase', () => {});
+    xit('should allow to register a delegate', () => {});
+  });
+
+  describe('Send dialog', () => {
+    it('should allow to send transaction when enough funds and correct address form', testSend);
+    it('should not allow to send transaction when not enough funds', testSendWithNotEnoughFunds);
+    it('should not allow to send transaction when invalid address', testSendWithInvalidAddress);
+  });
+
+  describe('Transactions tab', () => {
+    it('should show transactions', testShowTransactions);
+  });
+
+  describe('Forging tab', () => {
+    xit('should allow to view forging center if account is delegate', () => {});
+  });
+
+  describe('Voting tab', () => {
+    xit('should allow to view delegates', () => {});
+    xit('should allow to search delegates', () => {});
+    xit('should allow to view my votes', () => {});
+    xit('should allow to select delegates in the "Voting" tab and vote for them', () => {});
+    xit('should allow to select delegates in the "Vote" dialog and vote for them', () => {});
+    xit('should allow to remove votes form delegates', () => {});
+  });
 });
