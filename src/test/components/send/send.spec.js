@@ -35,7 +35,7 @@ describe('Send component', () => {
 
   const HEADER_TEXT = 'Send';
   it(`should contain header saying "${HEADER_TEXT}"`, () => {
-    expect(element.find('.md-title').text()).to.equal(HEADER_TEXT);
+    expect(element.find('form md-toolbar .md-toolbar-tools h2').text()).to.equal(HEADER_TEXT);
   });
 
   const RECIPIENT_LABEL_TEXT = 'Recipient Address';
