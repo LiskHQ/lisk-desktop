@@ -14,6 +14,7 @@ require('./components/transactions/transactions.spec');
 require('./components/sign-verify/sign-message.spec');
 require('./components/sign-verify/verify-message.spec');
 
+require('./services/account.spec');
 require('./services/peers/peers.spec');
 require('./services/passphrase.spec');
 require('./services/sign-verify.spec');
