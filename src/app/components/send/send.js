@@ -33,7 +33,9 @@ app.component('send', {
       }
 
       this.$scope.$watch('$ctrl.amount.value', () => {
-        this.amount.raw = lsk.from(this.amount.value) || 0;
+        if (lsk.from(this.amount.value) !== this.amount.raw) {
+          this.amount.raw = lsk.from(this.amount.value) || 0;
+        }
       });
 
       this.$scope.$watch('$ctrl.account.balance', () => {
