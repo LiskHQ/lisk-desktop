@@ -155,10 +155,9 @@ describe('main component controller', () => {
         balance: '0',
         passphrase: 'wagon stock borrow episode laundry kitten salute link globe zero feed marble',
       });
-      controller.$peers.active = {
-        getAccountPromise() {
-          return deffered.promise;
-        },
+      const mock = sinon.mock(controller.account);
+      mock.expects('getAccountPromise').returns(deffered.promise);
+      controller.$peers = {
         getStatusPromise() {
           return $q.defer().promise;
         },
@@ -167,7 +166,7 @@ describe('main component controller', () => {
       account.reset();
     });
 
-    it('calls this.$peers.active.getAccountPromise(this.address) and then sets balance', () => {
+    it('calls this.account.getAccountPromise(this.address) and then sets balance', () => {
       expect(account.get().balance).to.equal(undefined);
       controller.update();
       deffered.resolve({ balance: 12345 });
@@ -175,7 +174,7 @@ describe('main component controller', () => {
       expect(account.get().balance).to.equal(12345);
     });
 
-    it('calls this.$peers.active.getAccountPromise(this.address) and if it fails, then resets this.account.balance and reject the promise that update() returns', () => {
+    it('calls this.account.getAccountPromise(this.address) and if it fails, then resets this.account.balance and reject the promise that update() returns', () => {
       const spy = sinon.spy(controller.$q, 'reject');
       controller.update();
       deffered.reject();

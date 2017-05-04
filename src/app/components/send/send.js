@@ -79,7 +79,7 @@ app.component('send', {
 
       this.promptSecondPassphrase()
         .then((secondPassphrase) => {
-          this.$peers.active.sendLSKPromise(
+          this.account.sendLSK(
             this.recipient.value,
             this.amount.raw,
             this.account.get().passphrase,
