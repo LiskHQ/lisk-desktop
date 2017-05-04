@@ -125,22 +125,6 @@ app.factory('$peers', ($timeout, $cookies, $location, $q) => {
         });
         return deferred.promise;
       };
-
-      this.active.registerDelegate = (username, secret, secondSecret) => {
-        const data = { username, secret };
-        if (secondSecret) {
-          data.secondSecret = secondSecret;
-        }
-        const deferred = $q.defer();
-        this.active.sendRequest('delegates', data, (res) => {
-          if (res.success) {
-            deferred.resolve(res);
-          } else {
-            deferred.reject(res);
-          }
-        });
-        return deferred.promise;
-      };
     }
 
     check() {
