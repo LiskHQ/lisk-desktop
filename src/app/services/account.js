@@ -51,11 +51,11 @@ app.factory('Account', function ($rootScope, $peers, $q) {
   this.sendLSK = (recipientId, amount, secret, secondSecret) => $peers.sendRequestPromise(
     'transactions', { recipientId, amount, secret, secondSecret });
 
-  this.listTransactions = (address, limit, offset) => $peers.sendRequestPromise('transactions', {
+  this.listTransactions = (address, limit = 20, offset = 0) => $peers.sendRequestPromise('transactions', {
     senderId: address,
     recipientId: address,
-    limit: limit || 20,
-    offset: offset || 0,
+    limit,
+    offset,
   });
 
   this.setSignature = (secondSecret, publicKey, secret) => $peers.sendRequestPromise(
