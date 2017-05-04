@@ -3,6 +3,7 @@ md-content(layout='column', layout-gt-xs='row')
     md-card-content(layout='column', layout-align='center center')
       span.md-title.title Address
       .address.value {{ $ctrl.account.get().address }}
+      small.username(ng-if='$ctrl.account.get().isDelegate') {{ $ctrl.account.get().username }}
   md-card.peer(flex-gt-xs=33)
     md-card-content(layout='column', layout-align='center center')
       span.status
