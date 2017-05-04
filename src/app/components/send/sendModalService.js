@@ -6,7 +6,7 @@ app.factory('SendModal', ($mdDialog) => {
   };
 
   const show = (recipientId, amount) => ($mdDialog.show({
-    template: '<send recipient-id="ms.recipientId" transfer-amount="ms.amount"></send>',
+    template: '<md-dialog flex="80" ><send recipient-id="ms.recipientId" transfer-amount="ms.amount"></send></md-dialog>',
     parent: angular.element('#main'),
     locals: {
       recipientId, amount,
