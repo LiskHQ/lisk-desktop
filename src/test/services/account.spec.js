@@ -64,7 +64,7 @@ describe('Factory: Account', () => {
     });
   });
 
-  describe('setSignature(secondSecret, publicKey, secret)', () => {
+  describe('setSecondSecret(secondSecret, publicKey, secret)', () => {
     it('returns $peers.sendRequestPromise(\'signatures\', { secondSecret, publicKey, secret });', () => {
       const publicKey = '3ff32442bb6da7d60c1b7752b24e6467813c9b698e0f278d48c43580da972135';
       const secret = 'wagon stock borrow episode laundry kitten salute link globe zero feed marble';
@@ -73,7 +73,7 @@ describe('Factory: Account', () => {
         .withArgs('signatures', { secondSecret, publicKey, secret })
         .returns(deffered.promise);
 
-      const promise = account.setSignature(secondSecret, publicKey, secret);
+      const promise = account.setSecondSecret(secondSecret, publicKey, secret);
 
       expect(promise).to.equal(deffered.promise);
     });

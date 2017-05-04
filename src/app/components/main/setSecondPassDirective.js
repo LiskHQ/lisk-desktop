@@ -8,7 +8,7 @@ app.directive('setSecondPass', (setSecondPass, Account, $rootScope, dialog) => {
     });
 
     scope.passConfirmSubmit = (secondsecret) => {
-      Account.setSignature(secondsecret, attrs.publicKey, attrs.passphrase)
+      Account.setSecondSecret(secondsecret, attrs.publicKey, attrs.passphrase)
         .then(() => {
           dialog.successAlert('Your second passphrase was successfully registered.');
         })

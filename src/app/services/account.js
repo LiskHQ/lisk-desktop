@@ -58,7 +58,7 @@ app.factory('Account', function ($rootScope, $peers, $q) {
     offset,
   });
 
-  this.setSignature = (secondSecret, publicKey, secret) => $peers.sendRequestPromise(
+  this.setSecondSecret = (secondSecret, publicKey, secret) => $peers.sendRequestPromise(
     'signatures', { secondSecret, publicKey, secret });
 
   return this;

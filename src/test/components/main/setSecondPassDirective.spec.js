@@ -41,7 +41,7 @@ describe('setSecondPass Directive', () => {
     it('listens for an onAfterSignup event', () => {
       const mock = sinon.mock(account);
       const deffered = $q.defer();
-      mock.expects('setSignature').returns(deffered.promise);
+      mock.expects('setSecondSecret').returns(deffered.promise);
 
       const spy = sinon.spy(dialog, 'successAlert');
 
@@ -66,10 +66,10 @@ describe('setSecondPass Directive', () => {
   });
 
   describe('scope.passConfirmSubmit', () => {
-    it('should call account.setSignature', () => {
+    it('should call account.setSecondSecret', () => {
       const mock = sinon.mock(account);
       const deffered = $q.defer();
-      mock.expects('setSignature').returns(deffered.promise);
+      mock.expects('setSecondSecret').returns(deffered.promise);
 
       const spy = sinon.spy(dialog, 'successAlert');
       $scope.passConfirmSubmit();
@@ -83,7 +83,7 @@ describe('setSecondPass Directive', () => {
     it('should show error dialog if trying to set second passphrase multiple times', () => {
       const mock = sinon.mock(account);
       const deffered = $q.defer();
-      mock.expects('setSignature').returns(deffered.promise);
+      mock.expects('setSecondSecret').returns(deffered.promise);
 
       const spy = sinon.spy(dialog, 'errorAlert');
       $scope.passConfirmSubmit();
@@ -104,7 +104,7 @@ describe('setSecondPass Directive', () => {
     it('should show error dialog if account does not have enough LSK', () => {
       const mock = sinon.mock(account);
       const deffered = $q.defer();
-      mock.expects('setSignature').returns(deffered.promise);
+      mock.expects('setSecondSecret').returns(deffered.promise);
 
       const spy = sinon.spy(dialog, 'errorAlert');
       $scope.passConfirmSubmit();
@@ -117,7 +117,7 @@ describe('setSecondPass Directive', () => {
     it('should show error dialog for all the other errors', () => {
       const mock = sinon.mock(account);
       const deffered = $q.defer();
-      mock.expects('setSignature').returns(deffered.promise);
+      mock.expects('setSecondSecret').returns(deffered.promise);
 
       const spy = sinon.spy(dialog, 'errorAlert');
       $scope.passConfirmSubmit();
