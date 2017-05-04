@@ -38,6 +38,6 @@ app.factory('delegateService', $peers => ({
       data.secondSecret = secondSecret;
     }
     return $peers.sendRequestPromise('delegates', data);
-  }
+  },
 }));
 

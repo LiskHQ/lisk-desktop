@@ -59,10 +59,10 @@ app.component('main', {
         this.$peers.active.sendRequest('delegates/get', {
           publicKey: this.account.get().publicKey,
         }, (data) => {
-          if (data.success) {
+          if (data.success && data.delegate) {
             this.account.set({
               isDelegate: true,
-              username: data.delegate.username
+              username: data.delegate.username,
             });
           }
         });
@@ -76,7 +76,7 @@ app.component('main', {
           this.account.set({ balance: res.balance });
         })
         .catch((res) => {
-          this.account.get({ balance: null });
+          this.account.set({ balance: null });
           return this.$q.reject(res);
         })
         .finally(() => {
