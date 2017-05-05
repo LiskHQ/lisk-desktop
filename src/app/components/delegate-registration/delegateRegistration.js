@@ -1,6 +1,6 @@
 import './delegateRegistration.less';
 
-app.directive('delegateRegistration', ($mdDialog, delegateService, Account, success) => {
+app.directive('delegateRegistration', ($mdDialog, delegateService, Account, dialog) => {
   const DelegateRegistrationLink = function ($scope, $element) {
     $scope.form = {
       name: '',
@@ -10,7 +10,10 @@ app.directive('delegateRegistration', ($mdDialog, delegateService, Account, succ
         if (form.$valid) {
           delegateService.registerDelegate($scope.form.name.toLowerCase(), Account.get().passphrase)
             .then(() => {
-              success.dialog({ text: 'Account was successfully registered as delegate.' })
+              dialog.successAlert({
+                title: 'Congratulations!',
+                text: 'Account was successfully registered as delegate.',
+              })
                 .then(() => {
                   Account.set({
                     isDelegate: true,
