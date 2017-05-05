@@ -2,13 +2,13 @@ import lisk from 'lisk-js';
 
 const UPDATE_INTERVAL_CHECK = 10000;
 
-app.factory('$peers', ($timeout, $cookies, $location, $q, $rootScope, Account) => {
+app.factory('$peers', ($timeout, $cookies, $location, $q, $rootScope) => {
   class $peers {
     constructor() {
       this.check();
 
-      $rootScope.$on('onAccountChange', () => {
-        this.setActive();
+      $rootScope.$on('onAccountChange', (event, account) => {
+        this.setActive(account);
       });
     }
 
@@ -20,9 +20,9 @@ app.factory('$peers', ($timeout, $cookies, $location, $q, $rootScope, Account) =
       }
     }
 
-    setActive() {
+    setActive(account) {
       let conf = { };
-      const network = Account.get().network;
+      const network = account.network;
       if (network) {
         conf = network;
         if (network.address) {
@@ -35,7 +35,7 @@ app.factory('$peers', ($timeout, $cookies, $location, $q, $rootScope, Account) =
         }
       }
 
-      this.setPeerAPIObject(conf);
+      this.active = lisk.api(conf);
       this.check();
     }
 
@@ -50,56 +50,8 @@ app.factory('$peers', ($timeout, $cookies, $location, $q, $rootScope, Account) =
       return deferred.promise;
     }
 
-    listTransactions(address, limit, offset) {
-      return this.sendRequestPromise('transactions', {
-        senderId: address,
-        recipientId: address,
-        limit: limit || 20,
-        offset: offset || 0,
-      });
-    }
-
-    setPeerAPIObject(config) {
-      this.active = lisk.api(config);
-
-      this.active.getStatusPromise = () => this.sendRequestPromise('loader/status', {});
-
-      this.active.getAccountPromise = (address) => {
-        const deferred = $q.defer();
-        this.active.getAccount(address, (data) => {
-          if (data.success) {
-            deferred.resolve(data.account);
-          } else {
-            deferred.resolve({
-              address,
-              balance: 0,
-            });
-          }
-        });
-        return deferred.promise;
-      };
-
-      this.active.sendLSKPromise = (recipient, amount, passphrase, secondPassphrase) => {
-        const deferred = $q.defer();
-        this.active.sendLSK(recipient, amount, passphrase, secondPassphrase, (data) => {
-          if (data.success) {
-            return deferred.resolve(data);
-          }
-          return deferred.reject(data);
-        });
-        return deferred.promise;
-      };
-
-      this.active.setSignature = (secondSecret, publicKey, secret) => {
-        const deferred = $q.defer();
-        this.active.sendRequest('signatures', { secondSecret, publicKey, secret }, (res) => {
-          if (res.success) {
-            deferred.resolve(res);
-          }
-          deferred.reject(res);
-        });
-        return deferred.promise;
-      };
+    getStatusPromise() {
+      return this.sendRequestPromise('loader/status', {});
     }
 
     check() {
@@ -112,7 +64,7 @@ app.factory('$peers', ($timeout, $cookies, $location, $q, $rootScope, Account) =
         return;
       }
 
-      this.active.getStatusPromise()
+      this.getStatusPromise()
         .then(() => this.online = true)
         .catch(() => this.online = false)
         .finally(() => next());

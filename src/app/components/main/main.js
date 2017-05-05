@@ -31,7 +31,7 @@ app.component('main', {
 
       this.$rootScope.prelogged = true;
 
-      this.$peers.setActive();
+      this.$peers.setActive(this.account.get());
 
       this.update()
         .then(() => {
@@ -71,7 +71,7 @@ app.component('main', {
 
     update() {
       this.$rootScope.reset();
-      return this.$peers.active.getAccountPromise(this.account.get().address)
+      return this.account.getAccountPromise(this.account.get().address)
         .then((res) => {
           this.account.set({ balance: res.balance });
         })
