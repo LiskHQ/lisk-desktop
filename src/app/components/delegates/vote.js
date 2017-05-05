@@ -37,7 +37,7 @@ app.component('vote', {
         unvoteList: this.unvoteList,
       }).then(() => {
         this.$mdDialog.hide(this.voteList, this.unvoteList);
-        this.dialog.successToast('Voting succesfull');
+        this.dialog.successToast('Voting successful');
       }).catch((response) => {
         this.dialog.errorToast(response.message || 'Voting failed');
       }).finally(() => {
