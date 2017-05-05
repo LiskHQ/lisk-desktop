@@ -59,7 +59,12 @@ app.component('main', {
         this.$peers.active.sendRequest('delegates/get', {
           publicKey: this.account.get().publicKey,
         }, (data) => {
-          this.account.set({ isDelegate: data.success });
+          if (data.success && data.delegate) {
+            this.account.set({
+              isDelegate: true,
+              username: data.delegate.username,
+            });
+          }
         });
       }
     }

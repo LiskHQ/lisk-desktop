@@ -20,12 +20,14 @@ describe('main component controller', () => {
   let $componentController;
   let controller;
   let account;
+  let delegateService;
 
-  beforeEach(inject((_$componentController_, _$rootScope_, _$q_, _Account_) => {
+  beforeEach(inject((_$componentController_, _$rootScope_, _$q_, _Account_, _delegateService_) => {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
     $q = _$q_;
     account = _Account_;
+    delegateService = _delegateService_;
   }));
 
   beforeEach(() => {
@@ -135,12 +137,8 @@ describe('main component controller', () => {
       });
     });
 
-    it('calls /api/delegates/get and sets account.isDelegate according to the response.success', () => {
-      controller.$peers.active = { sendRequest() {} };
-      const activePeerMock = sinon.mock(controller.$peers.active);
-      activePeerMock.expects('sendRequest').withArgs('delegates/get').callsArgWith(2, {
-        success: true,
-      });
+    it.skip('calls /api/delegates/get and sets account.isDelegate according to the response.success', () => {
+      delegateService.registerDelegate();
       controller.checkIfIsDelegate();
       expect(account.get().isDelegate).to.equal(true);
     });

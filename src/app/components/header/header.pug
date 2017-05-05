@@ -19,3 +19,7 @@ md-content.header(layout='row', layout-align='center center', layout-padding)
         md-button(data-set-second-pass, ng-if='$root.logged && !$ctrl.account.get().secondSignature')
           div(layout='row', flex='')
             p(flex='') Set 2nd passphrase
+      md-menu-item(ng-if='$root.logged && !$ctrl.account.get().isDelegate')
+        md-button(data-delegate-registration)
+          div(layout='row', flex='')
+            p(flex='') Delegate registration
