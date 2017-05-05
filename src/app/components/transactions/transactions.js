@@ -66,7 +66,7 @@ app.component('transactions', {
         limit = 10;
       }
 
-      return this.$peers.listTransactions(this.account.get().address, limit)
+      return this.account.listTransactions(this.account.get().address, limit)
         .then(this._processTransactionsResponse.bind(this))
         .catch(() => {
           this.transactions = [];

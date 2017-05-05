@@ -291,7 +291,7 @@ describe('delegates component controller', () => {
       const username = 'invalid_name';
       const deffered = $q.defer();
       delegateServiceMock.expects('getDelegate').withArgs(username).returns(deffered.promise);
-      const toastSpy = sinon.spy(controller.$mdToast, 'show');
+      const toastSpy = sinon.spy(controller.dialog, 'errorToast');
       const dialogSpy = sinon.spy(controller, 'openVoteDialog');
       controller.usernameInput = username;
       controller.voteList = [];

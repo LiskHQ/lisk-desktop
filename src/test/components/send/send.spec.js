@@ -59,26 +59,23 @@ describe('Send component', () => {
   });
 
   describe('send transaction', () => {
+    let dialog;
     let $q;
-    let $peers;
-    let success;
 
-    beforeEach(inject((_success_, _$q_, _$peers_) => {
-      success = _success_;
+    beforeEach(inject((_dialog_, _$q_) => {
+      dialog = _dialog_;
       $q = _$q_;
-      $peers = _$peers_;
     }));
 
     it('should allow to send a transaction', () => {
       const RECIPIENT_ADDRESS = '5932438298200837883L';
       const AMOUNT = '10';
 
-      $peers.active = { sendLSKPromise() {} };
-      const mock = sinon.mock($peers.active);
+      const mock = sinon.mock(account);
       const deffered = $q.defer();
-      mock.expects('sendLSKPromise').returns(deffered.promise);
+      mock.expects('sendLSK').returns(deffered.promise);
 
-      const spy = sinon.spy(success, 'dialog');
+      const spy = sinon.spy(dialog, 'successAlert');
 
       element.find('form input[name="amount"]').val(AMOUNT).trigger('input');
       element.find('form input[name="recipient"]').val(RECIPIENT_ADDRESS).trigger('input');
@@ -95,12 +92,11 @@ describe('Send component', () => {
       const RECIPIENT_ADDRESS = '5932438298200837883L';
       const AMOUNT = lsk.normalize(account.get().balance - 10000000);
 
-      $peers.active = { sendLSKPromise() {} };
-      const mock = sinon.mock($peers.active);
+      const mock = sinon.mock(account);
       const deffered = $q.defer();
-      mock.expects('sendLSKPromise').returns(deffered.promise);
+      mock.expects('sendLSK').returns(deffered.promise);
 
-      const spy = sinon.spy(success, 'dialog');
+      const spy = sinon.spy(dialog, 'successAlert');
 
       element.find('md-menu-item button').click();
       element.find('form input[name="recipient"]').val(RECIPIENT_ADDRESS).trigger('input');
@@ -182,14 +178,13 @@ describe('send component controller', () => {
       expect(spy).to.have.been.calledWith();
     });
 
-    it('calls this.$peers.active.sendLSKPromise() and success.dialog on success', () => {
-      controller.$peers = { active: { sendLSKPromise() {} } };
-      const mock = sinon.mock(controller.$peers.active);
+    it('calls this.account.sendLSK() and success.dialog on success', () => {
+      const mock = sinon.mock(controller.account);
       const deffered = $q.defer();
-      mock.expects('sendLSKPromise').returns(deffered.promise);
+      mock.expects('sendLSK').returns(deffered.promise);
       controller.go();
 
-      const spy = sinon.spy(controller.success, 'dialog');
+      const spy = sinon.spy(controller.dialog, 'successAlert');
       deffered.resolve({});
       $scope.$apply();
       expect(spy).to.have.been.calledWith({
@@ -197,14 +192,13 @@ describe('send component controller', () => {
       });
     });
 
-    it('calls this.$peers.active.sendLSKPromise() and error.dialog on error', () => {
-      controller.$peers = { active: { sendLSKPromise() {} } };
-      const mock = sinon.mock(controller.$peers.active);
+    it('calls this.account.sendLSK() and error.dialog on error', () => {
+      const mock = sinon.mock(controller.account);
       const deffered = $q.defer();
-      mock.expects('sendLSKPromise').returns(deffered.promise);
+      mock.expects('sendLSK').returns(deffered.promise);
       controller.go();
 
-      const spy = sinon.spy(controller.error, 'dialog');
+      const spy = sinon.spy(controller.dialog, 'errorAlert');
       const response = {
         message: 'error',
       };

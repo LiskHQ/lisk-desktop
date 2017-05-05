@@ -31,5 +31,13 @@ app.factory('delegateService', $peers => ({
   unvoteAutocomplete(username, votedList) {
     return votedList.filter(delegate => delegate.username.indexOf(username) !== -1);
   },
+
+  registerDelegate(username, secret, secondSecret) {
+    const data = { username, secret };
+    if (secondSecret) {
+      data.secondSecret = secondSecret;
+    }
+    return $peers.sendRequestPromise('delegates', data);
+  },
 }));
 

@@ -10,11 +10,10 @@ describe('setSecondPass Directive', () => {
   let $scope;
   let $rootScope;
   let element;
-  let $peers;
+  let account;
   let setSecondPass;
   let $q;
-  let success;
-  let error;
+  let dialog;
 
   beforeEach(() => {
     // Load the myApp module, which contains the directive
@@ -22,15 +21,14 @@ describe('setSecondPass Directive', () => {
 
     // Store references to $rootScope and $compile
     // so they are available to all tests in this describe block
-    inject((_$compile_, _$rootScope_, _setSecondPass_, _$peers_, _$q_, _success_, _error_) => {
+    inject((_$compile_, _$rootScope_, _setSecondPass_, _Account_, _$q_, _dialog_) => {
       // The injector unwraps the underscores (_) from around the parameter names when matching
       $compile = _$compile_;
       $rootScope = _$rootScope_;
       setSecondPass = _setSecondPass_;
-      $peers = _$peers_;
+      account = _Account_;
       $q = _$q_;
-      success = _success_;
-      error = _error_;
+      dialog = _dialog_;
       $scope = $rootScope.$new();
     });
 
@@ -41,12 +39,11 @@ describe('setSecondPass Directive', () => {
 
   describe('SetSecondPassLink', () => {
     it('listens for an onAfterSignup event', () => {
-      $peers.active = { setSignature() {} };
-      const mock = sinon.mock($peers.active);
+      const mock = sinon.mock(account);
       const deffered = $q.defer();
-      mock.expects('setSignature').returns(deffered.promise);
+      mock.expects('setSecondSecret').returns(deffered.promise);
 
-      const spy = sinon.spy(success, 'dialog');
+      const spy = sinon.spy(dialog, 'successAlert');
 
       $scope.$broadcast('onAfterSignup', {
         passphrase: 'TEST_VALUE',
@@ -69,13 +66,12 @@ describe('setSecondPass Directive', () => {
   });
 
   describe('scope.passConfirmSubmit', () => {
-    it('should call $peers.active.setSignature', () => {
-      $peers.active = { setSignature() {} };
-      const mock = sinon.mock($peers.active);
+    it('should call account.setSecondSecret', () => {
+      const mock = sinon.mock(account);
       const deffered = $q.defer();
-      mock.expects('setSignature').returns(deffered.promise);
+      mock.expects('setSecondSecret').returns(deffered.promise);
 
-      const spy = sinon.spy(success, 'dialog');
+      const spy = sinon.spy(dialog, 'successAlert');
       $scope.passConfirmSubmit();
 
       deffered.resolve({});
@@ -84,13 +80,12 @@ describe('setSecondPass Directive', () => {
       expect(spy).to.have.been.calledWith();
     });
 
-    it('should show error dialog if trying to set second passphrase mulpiple times', () => {
-      $peers.active = { setSignature() {} };
-      const mock = sinon.mock($peers.active);
+    it('should show error dialog if trying to set second passphrase multiple times', () => {
+      const mock = sinon.mock(account);
       const deffered = $q.defer();
-      mock.expects('setSignature').returns(deffered.promise);
+      mock.expects('setSecondSecret').returns(deffered.promise);
 
-      const spy = sinon.spy(error, 'dialog');
+      const spy = sinon.spy(dialog, 'errorAlert');
       $scope.passConfirmSubmit();
 
       deffered.reject({ message: 'Missing sender second signature' });
@@ -107,12 +102,11 @@ describe('setSecondPass Directive', () => {
     });
 
     it('should show error dialog if account does not have enough LSK', () => {
-      $peers.active = { setSignature() {} };
-      const mock = sinon.mock($peers.active);
+      const mock = sinon.mock(account);
       const deffered = $q.defer();
-      mock.expects('setSignature').returns(deffered.promise);
+      mock.expects('setSecondSecret').returns(deffered.promise);
 
-      const spy = sinon.spy(error, 'dialog');
+      const spy = sinon.spy(dialog, 'errorAlert');
       $scope.passConfirmSubmit();
 
       deffered.reject({ message: 'Missing sender second signature' });
@@ -121,12 +115,11 @@ describe('setSecondPass Directive', () => {
     });
 
     it('should show error dialog for all the other errors', () => {
-      $peers.active = { setSignature() {} };
-      const mock = sinon.mock($peers.active);
+      const mock = sinon.mock(account);
       const deffered = $q.defer();
-      mock.expects('setSignature').returns(deffered.promise);
+      mock.expects('setSecondSecret').returns(deffered.promise);
 
-      const spy = sinon.spy(error, 'dialog');
+      const spy = sinon.spy(dialog, 'errorAlert');
       $scope.passConfirmSubmit();
 
       deffered.reject({ message: 'Other messages' });

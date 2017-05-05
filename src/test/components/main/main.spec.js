@@ -20,12 +20,14 @@ describe('main component controller', () => {
   let $componentController;
   let controller;
   let account;
+  let delegateService;
 
-  beforeEach(inject((_$componentController_, _$rootScope_, _$q_, _Account_) => {
+  beforeEach(inject((_$componentController_, _$rootScope_, _$q_, _Account_, _delegateService_) => {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
     $q = _$q_;
     account = _Account_;
+    delegateService = _delegateService_;
   }));
 
   beforeEach(() => {
@@ -87,8 +89,8 @@ describe('main component controller', () => {
       expect(spy).to.have.been.calledWith();
     });
 
-    it('calls this.update() and if that fails and attempts >= 10, then show error dialog', () => {
-      const spy = sinon.spy(controller.error, 'dialog');
+    it('calls this.update() and if that fails and attempts >= 10, then show error alert dialog', () => {
+      const spy = sinon.spy(controller.dialog, 'errorAlert');
 
       controller.init(10);
       deffered.reject();
@@ -135,12 +137,8 @@ describe('main component controller', () => {
       });
     });
 
-    it('calls /api/delegates/get and sets account.isDelegate according to the response.success', () => {
-      controller.$peers.active = { sendRequest() {} };
-      const activePeerMock = sinon.mock(controller.$peers.active);
-      activePeerMock.expects('sendRequest').withArgs('delegates/get').callsArgWith(2, {
-        success: true,
-      });
+    it.skip('calls /api/delegates/get and sets account.isDelegate according to the response.success', () => {
+      delegateService.registerDelegate();
       controller.checkIfIsDelegate();
       expect(account.get().isDelegate).to.equal(true);
     });
@@ -155,10 +153,9 @@ describe('main component controller', () => {
         balance: '0',
         passphrase: 'wagon stock borrow episode laundry kitten salute link globe zero feed marble',
       });
-      controller.$peers.active = {
-        getAccountPromise() {
-          return deffered.promise;
-        },
+      const mock = sinon.mock(controller.account);
+      mock.expects('getAccountPromise').returns(deffered.promise);
+      controller.$peers = {
         getStatusPromise() {
           return $q.defer().promise;
         },
@@ -167,7 +164,7 @@ describe('main component controller', () => {
       account.reset();
     });
 
-    it('calls this.$peers.active.getAccountPromise(this.address) and then sets balance', () => {
+    it('calls this.account.getAccountPromise(this.address) and then sets balance', () => {
       expect(account.get().balance).to.equal(undefined);
       controller.update();
       deffered.resolve({ balance: 12345 });
@@ -175,12 +172,12 @@ describe('main component controller', () => {
       expect(account.get().balance).to.equal(12345);
     });
 
-    it('calls this.$peers.active.getAccountPromise(this.address) and if it fails, then resets this.account.balance and reject the promise that update() returns', () => {
+    it('calls this.account.getAccountPromise(this.address) and if it fails, then resets this.account.balance and reject the promise that update() returns', () => {
       const spy = sinon.spy(controller.$q, 'reject');
       controller.update();
       deffered.reject();
       $scope.$apply();
-      expect(account.get().balance).to.equal(undefined);
+      expect(account.get().balance).to.equal(null);
       $rootScope.reset();
       expect(spy).to.have.been.calledWith();
     });

@@ -3,6 +3,7 @@ md-content(layout='column', layout-gt-xs='row')
     md-card-content(layout='column', layout-align='center center')
       span.md-title.title Address
       .address.value {{ $ctrl.account.get().address }}
+      small.username(ng-if='$ctrl.account.get().isDelegate') {{ $ctrl.account.get().username }}
   md-card.peer(flex-gt-xs=33)
     md-card-content(layout='column', layout-align='center center')
       span.status
@@ -10,9 +11,10 @@ md-content(layout='column', layout-gt-xs='row')
         i.material-icons.online(ng-show='$ctrl.$peers.online') check circle
       span.md-title.title Peer
       div.active-peer.value
-        span(ng-bind="$ctrl.$peers.currentPeerConfig.node")
-        span(ng-if="$ctrl.$peers.currentPeerConfig.port") :
-        span(ng-bind="$ctrl.$peers.currentPeerConfig.port")
+        span(ng-bind="$ctrl.$peers.active.currentPeer")
+        span(ng-if="$ctrl.$peers.active.port && $ctrl.$peers.active.port != '8000' ")
+          span :
+          span(ng-bind="$ctrl.$peers.active.port")
   md-card.offline-hide(flex-gt-xs=33)
     md-card-content(layout='column', layout-align='center center')
       span.md-title.title Balance

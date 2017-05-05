@@ -12,18 +12,19 @@ describe('Forging component', () => {
   let element;
   let $scope;
   let lsk;
-  let $peers;
   let delegate;
   let account;
+  let forgingServiceMock;
+  let $q;
 
   beforeEach(angular.mock.module('app'));
 
-  beforeEach(inject((_$compile_, _$rootScope_, _lsk_, _$peers_, _Account_) => {
+  beforeEach(inject((_$compile_, _$rootScope_, _lsk_, _Account_, _$q_) => {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     lsk = _lsk_;
-    $peers = _$peers_;
     account = _Account_;
+    $q = _$q_;
   }));
 
   beforeEach(() => {
@@ -40,25 +41,42 @@ describe('Forging component', () => {
       vote: '9999982470000000',
     };
 
-    $peers.active = { sendRequest() {} };
-    const mock = sinon.mock($peers.active);
-    mock.expects('sendRequest').withArgs('blocks').callsArgWith(2, {
-      success: true,
-      blocks: [],
-    });
-    mock.expects('sendRequest').withArgs('delegates/get').callsArgWith(2, {
-      success: true,
-      delegate,
-    });
-    mock.expects('sendRequest').withArgs('delegates/forging/getForgedByAccount').exactly(5);
-
-    $scope = $rootScope.$new();
     account.set({
       passphrase: delegate.passphrase,
       balance: lsk.from(100),
     });
-    element = $compile('<forging account="account"></forging>')($scope);
+
+    $scope = $rootScope.$new();
+    element = $compile('<forging></forging>')($scope);
+
+    const controller = element.controller('forging');
+    forgingServiceMock = sinon.mock(controller.forgingService);
+
+    let deferred = $q.defer();
+    forgingServiceMock.expects('getDelegate').returns(deferred.promise);
+    deferred.resolve({
+      success: true,
+      delegate,
+    });
+
+    deferred = $q.defer();
+    forgingServiceMock.expects('getForgedBlocks').returns(deferred.promise);
+    deferred.resolve({
+      success: true,
+      blocks: [],
+    });
+
+    deferred = $q.defer();
+    forgingServiceMock.expects('getForgedStats').returns(deferred.promise).exactly(5);
+    deferred.resolve({ });
+
+    controller.$scope.$emit('onAccountChange');
     $scope.$digest();
+  });
+
+  afterEach(() => {
+    forgingServiceMock.verify();
+    forgingServiceMock.restore();
   });
 
   it('should contain a card with delegate name', () => {
@@ -90,17 +108,19 @@ describe('forging component controller', () => {
   let $scope;
   let controller;
   let $componentController;
-  let activePeerMock;
-  let $peers;
+  let forgingServiceMock;
+  let forgingService;
   let delegate;
   let blocks;
   let account;
+  let $q;
 
-  beforeEach(inject((_$componentController_, _$rootScope_, _$peers_, _Account_) => {
+  beforeEach(inject((_$componentController_, _$rootScope_, _forgingService_, _Account_, _$q_) => {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
-    $peers = _$peers_;
+    forgingService = _forgingService_;
     account = _Account_;
+    $q = _$q_;
   }));
 
   beforeEach(() => {
@@ -116,67 +136,77 @@ describe('forging component controller', () => {
       missedblocks: 10,
       producedblocks: 304,
       productivity: 96.82,
-      publicKey: '3ff32442bb6da7d60c1b7752b24e6467813c9b698e0f278d48c43580da972135',
+      publicKey: '86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19',
       rate: 20,
       username: 'genesis_42',
       vote: '9999982470000000',
     };
 
-    $peers.active = { sendRequest() {} };
-    activePeerMock = sinon.mock($peers.active);
+    forgingServiceMock = sinon.mock(forgingService);
 
     $scope = $rootScope.$new();
     account.set({
       passphrase: delegate.passphrase,
       balance: '10000',
     });
-    controller = $componentController('forging', $scope, {
-      // account: {
-      //   address: '8273455169423958419L',
-      //   balance: '10000',
-      // },
-    });
+    controller = $componentController('forging', $scope, { });
   });
 
-  describe('updateDelegate()', () => {
-    beforeEach(() => {
-    });
+  afterEach(() => {
+    forgingServiceMock.verify();
+    forgingServiceMock.restore();
+  });
 
+
+  describe('updateDelegate()', () => {
     it('sets this.delegate to delegate object if delegate exists', () => {
-      activePeerMock.expects('sendRequest').withArgs('delegates/get').callsArgWith(2, {
+      const deferred = $q.defer();
+      forgingServiceMock.expects('getDelegate').returns(deferred.promise);
+      controller.updateDelegate();
+
+      expect(controller.delegate).to.equal(undefined);
+      deferred.resolve({
         success: true,
         delegate,
       });
-      expect(controller.delegate).to.equal(undefined);
-      controller.updateDelegate();
+      $scope.$apply();
       expect(controller.delegate).to.deep.equal(delegate);
     });
 
     it('sets this.delegate = {} if delegate does not exist', () => {
-      activePeerMock.expects('sendRequest').withArgs('delegates/get').callsArgWith(2, {
-        success: false,
-      });
-      expect(controller.delegate).to.equal(undefined);
+      const deferred = $q.defer();
+      forgingServiceMock.expects('getDelegate').returns(deferred.promise);
       controller.updateDelegate();
+
+      expect(controller.delegate).to.equal(undefined);
+      deferred.reject();
+      $scope.$apply();
       expect(controller.delegate).to.deep.equal({});
     });
   });
 
   describe('updateForgedBlocks(limit, offset)', () => {
+    let deferred;
+
+    beforeEach(() => {
+      deferred = $q.defer();
+      forgingServiceMock.expects('getForgedBlocks').returns(deferred.promise);
+    });
+
     it('does nothing if request fails', () => {
-      activePeerMock.expects('sendRequest').withArgs('blocks').callsArgWith(2, {
-        success: false,
-      });
       controller.updateForgedBlocks(10);
+      deferred.reject();
+      $scope.$apply();
       expect(controller.blocks).to.deep.equal([]);
     });
 
     it('updates this.blocks with what was returned', () => {
-      activePeerMock.expects('sendRequest').withArgs('blocks').callsArgWith(2, {
+      controller.updateForgedBlocks(10);
+      deferred.resolve({
         success: true,
         blocks,
       });
-      controller.updateForgedBlocks(10);
+      $scope.$apply();
       expect(controller.blocks.length).to.equal(10);
       expect(controller.blocks).to.deep.equal(blocks);
     });
@@ -186,34 +216,38 @@ describe('forging component controller', () => {
         id: 0 - k,
         timestamp: 0 - k,
       }));
-      activePeerMock.expects('sendRequest').withArgs('blocks').callsArgWith(2, {
+
+      controller.blocks = blocks;
+      controller.updateForgedBlocks(20, 10);
+      deferred.resolve({
         success: true,
         blocks: extraBlocks,
       });
-      controller.blocks = blocks;
-      controller.updateForgedBlocks(20, 10);
+      $scope.$apply();
       expect(controller.blocks.length).to.equal(30);
       expect(controller.blocks).to.deep.equal(blocks);
     });
 
     it('does not change this.blocks when returned blocks values are unchanged', () => {
-      activePeerMock.expects('sendRequest').withArgs('blocks').callsArgWith(2, {
+      controller.blocks = blocks;
+      controller.updateForgedBlocks(10);
+      deferred.resolve({
         success: true,
         blocks,
       });
-      controller.blocks = blocks;
-      controller.updateForgedBlocks(10);
+      $scope.$apply();
       expect(controller.blocks).to.deep.equal(blocks);
     });
 
     it('prepends to this.blocks when returned blocks contains a new value', () => {
       const newBlock = { id: 11, timestamp: 11 };
-      activePeerMock.expects('sendRequest').withArgs('blocks').callsArgWith(2, {
+      controller.blocks = blocks;
+      controller.updateForgedBlocks(10);
+      deferred.resolve({
         success: true,
         blocks: [newBlock].concat(blocks),
       });
-      controller.blocks = blocks;
-      controller.updateForgedBlocks(10);
+      $scope.$apply();
       expect(controller.blocks.length).to.equal(11);
       expect(controller.blocks[0]).to.deep.equal(newBlock);
     });
@@ -225,41 +259,52 @@ describe('forging component controller', () => {
         id: 0 - k,
         timestamp: 0 - k,
       }));
-      activePeerMock.expects('sendRequest').withArgs('blocks').callsArgWith(2, {
+      const deferred = $q.defer();
+      forgingServiceMock.expects('getForgedBlocks').returns(deferred.promise);
+      controller.blocks = blocks;
+
+      controller.loadMoreBlocks();
+      deferred.resolve({
         success: true,
         blocks: extraBlocks,
       });
-      controller.blocks = blocks;
-      controller.loadMoreBlocks();
+      $scope.$apply();
       expect(controller.blocks.length).to.equal(30);
       expect(controller.blocks).to.deep.equal(blocks);
     });
   });
 
   describe('updateForgingStats(key, startMoment)', () => {
+    let deferred;
+
+    beforeEach(() => {
+      deferred = $q.defer();
+      forgingServiceMock.expects('getForgedStats').returns(deferred.promise);
+    });
+
     it('fetches forged by account since startMoment and sets it to this.statistics[key]', () => {
       const forged = 42;
       const key = 'testStat';
       const startMoment = moment().subtract(1, 'days');
-      activePeerMock.expects('sendRequest').withArgs('delegates/forging/getForgedByAccount').callsArgWith(2, {
-        success: true,
-        forged,
-      });
 
       expect(controller.statistics[key]).to.equal(undefined);
       controller.updateForgingStats(key, startMoment);
+      deferred.resolve({
+        success: true,
+        forged,
+      });
+      $scope.$apply();
       expect(controller.statistics[key]).to.equal(forged);
     });
 
     it('does nothing after failing to fetch forged by account since startMoment', () => {
       const key = 'testStat';
       const startMoment = moment().subtract(1, 'days');
-      activePeerMock.expects('sendRequest').withArgs('delegates/forging/getForgedByAccount').callsArgWith(2, {
-        success: false,
-      });
 
       expect(controller.statistics[key]).to.equal(undefined);
       controller.updateForgingStats(key, startMoment);
+      deferred.reject();
+      $scope.$apply();
       expect(controller.statistics[key]).to.equal(undefined);
     });
   });

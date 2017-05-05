@@ -7,13 +7,13 @@ app.component('main', {
   controllerAs: '$ctrl',
   controller: class main {
     constructor($scope, $rootScope, $timeout, $q, $state, $peers,
-      error, SendModal, Account) {
+      dialog, SendModal, Account) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$timeout = $timeout;
       this.$q = $q;
       this.$peers = $peers;
-      this.error = error;
+      this.dialog = dialog;
       this.sendModal = SendModal;
       this.$state = $state;
       this.account = Account;
@@ -31,7 +31,7 @@ app.component('main', {
 
       this.$rootScope.prelogged = true;
 
-      this.$peers.setActive();
+      this.$peers.setActive(this.account.get());
 
       this.update()
         .then(() => {
@@ -43,13 +43,13 @@ app.component('main', {
           if (attempts < 10) {
             this.$timeout(() => this.init(attempts + 1), 1000);
           } else {
-            this.error.dialog({ text: 'No peer connection' });
+            this.dialog.errorAlert({ text: 'No peer connection' });
             this.$rootScope.logout();
           }
         });
 
       // Return to landing page if there's any
-      this.$scope.activeTab = this.$rootScope.landingUrl || 'main.transactions';
+      this.activeTab = this.$rootScope.landingUrl || 'main.transactions';
       this.$state.go(this.$rootScope.landingUrl || 'main.transactions');
       delete this.$rootScope.landingUrl;
     }
@@ -59,19 +59,24 @@ app.component('main', {
         this.$peers.active.sendRequest('delegates/get', {
           publicKey: this.account.get().publicKey,
         }, (data) => {
-          this.account.set({ isDelegate: data.success });
+          if (data.success && data.delegate) {
+            this.account.set({
+              isDelegate: true,
+              username: data.delegate.username,
+            });
+          }
         });
       }
     }
 
     update() {
       this.$rootScope.reset();
-      return this.$peers.active.getAccountPromise(this.account.get().address)
+      return this.account.getAccountPromise(this.account.get().address)
         .then((res) => {
           this.account.set({ balance: res.balance });
         })
         .catch((res) => {
-          this.account.get({ balance: null });
+          this.account.set({ balance: null });
           return this.$q.reject(res);
         })
         .finally(() => {

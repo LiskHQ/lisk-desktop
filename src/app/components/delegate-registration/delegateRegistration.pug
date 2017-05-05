@@ -1,0 +1,27 @@
+div.dialog-delegate-registration(aria-label='Vote for delegates')
+  form(name='delegateRegistrationForm', ng-submit='$ctrl.form.onSubmit(delegateRegistrationForm)')
+    md-toolbar
+      .md-toolbar-tools
+        h2 Delegate Registration
+    md-dialog-content
+      .md-dialog-content
+        div
+          md-input-container.md-block
+            label Delegate name
+            input(type='text', name='delegateName', ng-model='$ctrl.form.name', required, ng-disabled='$ctrl.loading')
+            div(ng-messages='delegateRegistrationForm.name.$error')
+              div(ng-message='required') Required
+            md-input-container.md-block
+              div.fee Fee: {{$ctrl.form.fee}} LSK
+            md-divider
+            div(layout='row')
+              p.info-icon-wrapper 
+                i.material-icons info
+              p
+                span Becoming a delegate requires registration. You may choose your own delegate name, which can be used to promote your delegate. Only the top 101 delegates are eligible to forge. All fees are shared equally between the top 101 delegates.
+            md-divider
+              p.error(ng-bind='$ctrl.form.error', ng-if='$ctrl.form.error')
+      md-dialog-actions(layout='row')
+        md-button.md-raised.md-secondary(ng-disabled='$ctrl.loading', ng-click='$ctrl.cancel(delegateRegistrationForm)') {{ 'Cancel' }}
+        span(flex)
+        md-button.md-raised.md-primary(ng-disabled='!delegateRegistrationForm.$valid || $ctrl.loading', type='submit') {{ $ctrl.loading ? 'Registering...' : 'Register' }}

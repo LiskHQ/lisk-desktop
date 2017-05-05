@@ -1,6 +1,6 @@
 import './secondPass.less';
 
-app.directive('setSecondPass', (setSecondPass, $peers, $rootScope, success, error) => {
+app.directive('setSecondPass', (setSecondPass, Account, $rootScope, dialog) => {
   /* eslint no-param-reassign: ["error", { "props": false }] */
   const SetSecondPassLink = function (scope, element, attrs) {
     element.bind('click', () => {
@@ -8,9 +8,9 @@ app.directive('setSecondPass', (setSecondPass, $peers, $rootScope, success, erro
     });
 
     scope.passConfirmSubmit = (secondsecret) => {
-      $peers.active.setSignature(secondsecret, attrs.publicKey, attrs.passphrase)
+      Account.setSecondSecret(secondsecret, attrs.publicKey, attrs.passphrase)
         .then(() => {
-          success.dialog('Your second passphrase was successfully registered.');
+          dialog.successAlert('Your second passphrase was successfully registered.');
         })
         .catch((err) => {
           let text = '';
@@ -21,7 +21,7 @@ app.directive('setSecondPass', (setSecondPass, $peers, $rootScope, success, erro
           } else {
             text = 'An error occurred while registering your second passphrase. Please try again.';
           }
-          error.dialog({ text });
+          dialog.errorAlert({ text });
         });
     };
 

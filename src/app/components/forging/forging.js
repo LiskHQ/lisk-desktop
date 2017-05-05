@@ -6,19 +6,15 @@ const UPDATE_INTERVAL = 20000;
 
 app.component('forging', {
   template: require('./forging.pug')(),
-  bindings: {
-    account: '=',
-  },
   controller: class forging {
-    constructor($scope, $timeout, $peers, Account) {
+    constructor($scope, $timeout, forgingService, Account) {
       this.$scope = $scope;
       this.$timeout = $timeout;
-      this.$peers = $peers;
-      this.account = Account;
+      this.forgingService = forgingService;
 
       this.statistics = {};
       this.blocks = [];
-      if (!this.account.get().publicKey) {
+      if (Account.get().publicKey) {
         this.$scope.$on('onAccountChange', () => {
           this.updateAllData();
         });
@@ -43,38 +39,28 @@ app.component('forging', {
     }
 
     updateDelegate() {
-      this.$peers.active.sendRequest('delegates/get', {
-        publicKey: this.account.get().publicKey,
-      }, (data) => {
-        if (data.success) {
-          this.delegate = data.delegate;
-        } else {
-          this.delegate = {};
-        }
+      this.forgingService.getDelegate().then((data) => {
+        this.delegate = data.delegate;
+      }).catch(() => {
+        this.delegate = {};
       });
     }
 
     updateForgedBlocks(limit, offset) {
       this.$timeout.cancel(this.timeout);
 
-      this.$peers.active.sendRequest('blocks', {
-        limit,
-        offset: offset || 0,
-        generatorPublicKey: this.account.get().publicKey,
-      }, (data) => {
-        if (data.success) {
-          if (this.blocks.length === 0) {
-            this.blocks = data.blocks;
-          } else if (offset) {
-            Array.prototype.push.apply(this.blocks, data.blocks);
-          } else if (this.blocks[0].id !== data.blocks[0].id) {
-            Array.prototype.unshift.apply(this.blocks,
-              data.blocks.filter(block => block.timestamp > this.blocks[0].timestamp));
-          }
-          this.blocksLoaded = true;
-          this.moreBlocksExist = this.blocks.length < data.count;
+      this.forgingService.getForgedBlocks(limit, offset).then((data) => {
+        if (this.blocks.length === 0) {
+          this.blocks = data.blocks;
+        } else if (offset) {
+          Array.prototype.push.apply(this.blocks, data.blocks);
+        } else if (this.blocks[0].id !== data.blocks[0].id) {
+          Array.prototype.unshift.apply(this.blocks,
+            data.blocks.filter(block => block.timestamp > this.blocks[0].timestamp));
         }
-
+        this.blocksLoaded = true;
+        this.moreBlocksExist = this.blocks.length < data.count;
+      }).finally(() => {
         this.timeout = this.$timeout(this.updateAllData.bind(this), UPDATE_INTERVAL);
       });
     }
@@ -85,14 +71,8 @@ app.component('forging', {
     }
 
     updateForgingStats(key, startMoment) {
-      this.$peers.active.sendRequest('delegates/forging/getForgedByAccount', {
-        generatorPublicKey: this.account.get().publicKey,
-        start: moment(startMoment).unix(),
-        end: moment().unix(),
-      }, (data) => {
-        if (data.success) {
-          this.statistics[key] = data.forged;
-        }
+      this.forgingService.getForgedStats(startMoment).then((data) => {
+        this.statistics[key] = data.forged;
       });
     }
   },

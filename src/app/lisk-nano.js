@@ -20,15 +20,16 @@ import './components/delegates/delegates';
 import './components/delegates/vote';
 import './components/sign-verify/sign-message';
 import './components/sign-verify/verify-message';
+import './components/delegate-registration/delegateRegistration';
 
 import './services/peers/peers';
 import './services/lsk';
-import './services/success';
-import './services/error';
+import './services/dialog';
 import './services/passphrase';
 import './services/sign-verify';
 import './services/account';
 import './services/delegateService';
+import './services/forgingService';
 
 import './filters/lsk';
 

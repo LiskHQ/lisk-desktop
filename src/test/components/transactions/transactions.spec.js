@@ -14,19 +14,18 @@ describe('transactions component controller', () => {
   let controller;
   let $componentController;
   let account;
-  let $peers;
+  let mock;
 
-  beforeEach(inject((_$componentController_, _$rootScope_, _$q_, _Account_, _$peers_) => {
+  beforeEach(inject((_$componentController_, _$rootScope_, _$q_, _Account_) => {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
     $q = _$q_;
     account = _Account_;
-    $peers = _$peers_;
   }));
 
   beforeEach(() => {
     $scope = $rootScope.$new();
-    const mock = sinon.mock($peers);
+    mock = sinon.mock(account);
     const deffered = $q.defer();
     mock.expects('listTransactions').returns(deffered.promise);
     mock.expects('listTransactions').returns(deffered.promise);
@@ -35,6 +34,11 @@ describe('transactions component controller', () => {
       passphrase: 'robust swift grocery peasant forget share enable convince deputy road keep cheap',
       balance: '0',
     });
+  });
+
+  afterEach(() => {
+    mock.verify();
+    mock.restore();
   });
 
   describe('$onDestroy()', () => {
@@ -54,46 +58,43 @@ describe('transactions component controller', () => {
   });
 
   describe('update(show, more)', () => {
-    let mock;
+    let transactionsDeferred;
 
     beforeEach(() => {
-      controller.$peers.listTransactions = () => {};
-      mock = sinon.mock(controller.$peers);
-      mock.expects('listTransactions').returns($q(() => {}));
+      transactionsDeferred = $q.defer();
     });
 
     it('sets this.loading = true', () => {
+      mock.expects('listTransactions').returns(transactionsDeferred.promise);
       controller.update();
       expect(controller.loading).to.equal(true);
     });
 
     it('sets this.loading_show = true if show == true', () => {
+      mock.expects('listTransactions').returns(transactionsDeferred.promise);
       controller.update(true);
       expect(controller.loading_show).to.equal(true);
     });
 
     it('doesn\'t change this.loading_show if show == false', () => {
+      mock.expects('listTransactions').returns(transactionsDeferred.promise);
       controller.update(false);
       expect(controller.loading_show).to.equal(undefined);
     });
 
     it('cancels update timeout', () => {
+      mock.expects('listTransactions').returns(transactionsDeferred.promise);
       const spy = sinon.spy(controller.$timeout, 'cancel');
       controller.update();
       expect(spy).to.have.been.calledWith(controller.timeout);
     });
 
-    it('calls this.$peers.listTransactions(account.get().address, limit) with limit = 10 by default', () => {
-      controller.$peers.listTransactions = () => {};
-      mock = sinon.mock(controller.$peers);
-      const transactionsDeferred = $q.defer();
+    it('calls this.account.listTransactions(account.get().address, limit) with limit = 10 by default', () => {
       mock.expects('listTransactions').withArgs(account.get().address, 10).returns(transactionsDeferred.promise);
       controller.update();
       transactionsDeferred.reject();
 
       $scope.$apply();
-      mock.verify();
-      mock.restore();
     });
   });
 
@@ -119,21 +120,17 @@ describe('transactions component controller', () => {
 
   describe('constructor()', () => {
     it('sets $watch on acount to run init()', () => {
-      const mock = sinon.mock(controller);
+      mock = sinon.mock(controller);
       mock.expects('init').withArgs();
       account.set({ balance: 1000 });
       $scope.$apply();
-      mock.verify();
-      mock.restore();
     });
 
     it('sets to run reset() and update() $on "peerUpdate" is $emited', () => {
-      const mock = sinon.mock(controller);
+      mock = sinon.mock(controller);
       mock.expects('reset').withArgs();
       mock.expects('update').withArgs(true);
       controller.$scope.$emit('peerUpdate');
-      mock.verify();
-      mock.restore();
     });
   });
 });

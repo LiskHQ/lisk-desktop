@@ -1,5 +1,9 @@
-app.run(($rootScope, $timeout, $state, $peers, Account) => {
+app.run(($rootScope, $timeout, $state, $transitions, $mdDialog, $peers, Account) => {
   $rootScope.peers = $peers;
+
+  $transitions.onStart({ to: '*' }, () => {
+    $mdDialog.cancel();
+  });
 
   $rootScope.reset = () => {
     $timeout.cancel($rootScope.timeout);
