@@ -97,27 +97,28 @@ describe('Vote component controller', () => {
 
   describe('vote()', () => {
     let deffered;
-    let mdToastMock;
+    let dilaogServiceMock;
 
     beforeEach(() => {
       deffered = $q.defer();
       delegateServiceMock.expects('vote').returns(deffered.promise);
-      mdToastMock = sinon.mock(controller.$mdToast);
-      mdToastMock.expects('show');
+      dilaogServiceMock = sinon.mock(controller.dialog);
     });
 
     afterEach(() => {
-      mdToastMock.verify();
+      dilaogServiceMock.verify();
       delegateServiceMock.verify();
     });
 
-    it('shows an error $mdToast if request fails', () => {
+    it('shows an error toast if request fails', () => {
+      dilaogServiceMock.expects('errorToast');
       controller.vote();
       deffered.reject({ success: false });
       $scope.$apply();
     });
 
-    it('shows a success $mdToast if request succeeds', () => {
+    it('shows a success toast if request succeeds', () => {
+      dilaogServiceMock.expects('successToast');
       controller.vote();
       deffered.resolve({ success: true });
       $scope.$apply();
