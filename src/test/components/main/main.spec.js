@@ -180,7 +180,7 @@ describe('main component controller', () => {
       controller.update();
       deffered.reject();
       $scope.$apply();
-      expect(account.get().balance).to.equal(undefined);
+      expect(account.get().balance).to.equal(null);
       $rootScope.reset();
       expect(spy).to.have.been.calledWith();
     });
