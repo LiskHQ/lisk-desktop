@@ -29,6 +29,7 @@ import './services/passphrase';
 import './services/sign-verify';
 import './services/account';
 import './services/delegateService';
+import './services/forgingService';
 
 import './filters/lsk';
 

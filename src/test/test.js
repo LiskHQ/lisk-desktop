@@ -20,5 +20,6 @@ require('./services/passphrase.spec');
 require('./services/sign-verify.spec');
 require('./services/lsk.spec');
 require('./services/delegateService.spec');
+require('./services/forgingService.spec');
 
 require('./util/animateOnChange/animateOnChange.spec');
