@@ -71,7 +71,7 @@ app.component('main', {
           this.account.set({ balance: res.balance });
         })
         .catch((res) => {
-          this.account.get({ balance: null });
+          this.account.set({ balance: null });
           return this.$q.reject(res);
         })
         .finally(() => {
