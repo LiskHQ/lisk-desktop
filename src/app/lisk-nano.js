@@ -24,8 +24,7 @@ import './components/delegate-registration/delegateRegistration';
 
 import './services/peers/peers';
 import './services/lsk';
-import './services/success';
-import './services/error';
+import './services/dialog';
 import './services/passphrase';
 import './services/sign-verify';
 import './services/account';

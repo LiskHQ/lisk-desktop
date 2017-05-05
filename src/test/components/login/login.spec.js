@@ -39,7 +39,7 @@ describe('Login component', () => {
     expect(element.find('form md-input-container label.pass').text()).to.equal(PASS_LABEL_TEXT);
   });
 
-  const SELECT_LABEL_TEXT = 'Choose a peer';
+  const SELECT_LABEL_TEXT = 'Network';
   it(`should contain a select element with label saying "${SELECT_LABEL_TEXT}"`, () => {
     expect(element.find('form md-input-container label.select').text()).to.equal(SELECT_LABEL_TEXT);
   });
@@ -92,27 +92,6 @@ describe('Login controller', () => {
   });
 
   describe('controller()', () => {
-    it('should define a watcher for $ctrl.$peers.currentPeerConfig', () => {
-      $scope.$apply();
-      const peers = controller.$peers;
-      const spy = sinon.spy(peers, 'setActive');
-      peers.currentPeerConfig = peers.stack.localhost[0];
-      $scope.$apply();
-      peers.currentPeerConfig = peers.stack.official[0];
-      $scope.$apply();
-      expect(spy).to.have.been.calledWith();
-    });
-
-    it('should be able to change the active peer', () => {
-      $scope.$apply();
-      controller.$peers.setActive(controller.$peers.stack.localhost[0]);
-      $scope.$apply();
-      expect(controller.$peers.currentPeerConfig).to.equal(controller.$peers.stack.localhost[0]);
-      controller.$peers.setActive(controller.$peers.stack.official[0]);
-      $scope.$apply();
-      expect(controller.$peers.currentPeerConfig).to.equal(controller.$peers.stack.official[0]);
-    });
-
     it('should define a watcher for $ctrl.input_passphrase', () => {
       $scope.$apply();
       const spy = sinon.spy(Passphrase, 'isValidPassphrase');

@@ -61,10 +61,10 @@ describe('Send component', () => {
   describe('send transaction', () => {
     let $q;
     let $peers;
-    let success;
+    let dialog;
 
-    beforeEach(inject((_success_, _$q_, _$peers_) => {
-      success = _success_;
+    beforeEach(inject((_dialog_, _$q_, _$peers_) => {
+      dialog = _dialog_;
       $q = _$q_;
       $peers = _$peers_;
     }));
@@ -78,7 +78,7 @@ describe('Send component', () => {
       const deffered = $q.defer();
       mock.expects('sendLSKPromise').returns(deffered.promise);
 
-      const spy = sinon.spy(success, 'dialog');
+      const spy = sinon.spy(dialog, 'successAlert');
 
       element.find('form input[name="amount"]').val(AMOUNT).trigger('input');
       element.find('form input[name="recipient"]').val(RECIPIENT_ADDRESS).trigger('input');
@@ -100,7 +100,7 @@ describe('Send component', () => {
       const deffered = $q.defer();
       mock.expects('sendLSKPromise').returns(deffered.promise);
 
-      const spy = sinon.spy(success, 'dialog');
+      const spy = sinon.spy(dialog, 'successAlert');
 
       element.find('md-menu-item button').click();
       element.find('form input[name="recipient"]').val(RECIPIENT_ADDRESS).trigger('input');
@@ -182,14 +182,14 @@ describe('send component controller', () => {
       expect(spy).to.have.been.calledWith();
     });
 
-    it('calls this.$peers.active.sendLSKPromise() and success.dialog on success', () => {
+    it('calls this.$peers.active.sendLSKPromise() and dialog.successAlert on success', () => {
       controller.$peers = { active: { sendLSKPromise() {} } };
       const mock = sinon.mock(controller.$peers.active);
       const deffered = $q.defer();
       mock.expects('sendLSKPromise').returns(deffered.promise);
       controller.go();
 
-      const spy = sinon.spy(controller.success, 'dialog');
+      const spy = sinon.spy(controller.dialog, 'successAlert');
       deffered.resolve({});
       $scope.$apply();
       expect(spy).to.have.been.calledWith({
@@ -204,7 +204,7 @@ describe('send component controller', () => {
       mock.expects('sendLSKPromise').returns(deffered.promise);
       controller.go();
 
-      const spy = sinon.spy(controller.error, 'dialog');
+      const spy = sinon.spy(controller.dialog, 'errorAlert');
       const response = {
         message: 'error',
       };

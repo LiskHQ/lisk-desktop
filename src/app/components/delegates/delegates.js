@@ -10,14 +10,14 @@ app.component('delegates', {
   },
   controller: class delegates {
     constructor($scope, $rootScope, $peers, $mdDialog, $mdMedia,
-      $mdToast, $timeout, delegateService, Account) {
+      dialog, $timeout, delegateService, Account) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$peers = $peers;
       this.delegateService = delegateService;
       this.$mdDialog = $mdDialog;
       this.$mdMedia = $mdMedia;
-      this.$mdToast = $mdToast;
+      this.dialog = dialog;
       this.$timeout = $timeout;
       this.account = Account;
 
@@ -209,10 +209,7 @@ app.component('delegates', {
         this.usernameInput = '';
         this.openVoteDialog();
       } else {
-        const toast = this.$mdToast.simple();
-        toast.toastClass('lsk-toast-error');
-        toast.textContent('No delegate usernames could be parsed from the input');
-        this.$mdToast.show(toast);
+        this.dialog.errorToast('No delegate usernames could be parsed from the input');
       }
     }
 
@@ -251,24 +248,19 @@ app.component('delegates', {
       this.$mdDialog.show({
         controllerAs: '$ctrl',
         controller: class voteDialog {
-          constructor($scope, account, passphrase, voteList, unvoteList) {
+          constructor($scope, voteList, unvoteList) {
             this.$scope = $scope;
-            this.$scope.account = account;
-            this.$scope.passphrase = passphrase;
             this.$scope.voteList = voteList;
             this.$scope.unvoteList = unvoteList;
           }
         },
         template:
           '<md-dialog flex="80">' +
-            '<vote account="account" passphrase="passphrase" ' +
-              'vote-list="voteList" unvote-list="unvoteList">' +
+            '<vote vote-list="voteList" unvote-list="unvoteList">' +
             '</vote>' +
           '</md-dialog>',
         fullscreen: (this.$mdMedia('sm') || this.$mdMedia('xs')) && this.$scope.customFullscreen,
         locals: {
-          account: this.account.get(),
-          passphrase: this.account.get().passphrase,
           voteList: this.voteList,
           unvoteList: this.unvoteList,
         },

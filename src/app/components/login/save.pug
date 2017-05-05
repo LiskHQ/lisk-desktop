@@ -1,4 +1,4 @@
-md-dialog.dialog-save(aria-label='Save your passphrase in a safe place!')
+md-dialog.dialog-save(flex='80', aria-label='Save your passphrase in a safe place!')
   form
     md-toolbar
       .md-toolbar-tools
@@ -7,8 +7,8 @@ md-dialog.dialog-save(aria-label='Save your passphrase in a safe place!')
           span(ng-if="$ctrl.enter") Enter the missing word to continue
     md-dialog-content
       .md-dialog-content
-        div(ng-if="!$ctrl.enter")
-          textarea.passphrase(ng-bind='$ctrl.passphrase', md-autofocus)
+        md-input-container.md-block(ng-if="!$ctrl.enter")
+          textarea.passphrase(ng-bind='$ctrl.passphrase', md-autofocus, readonly)
         div(ng-if="$ctrl.enter")
           p.passphrase
             span {{ $ctrl.pre }}

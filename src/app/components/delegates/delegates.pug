@@ -10,7 +10,7 @@ div.offline-hide
         span.pull-right
           md-button(ng-click='$ctrl.parseVoteListFromInput("voteList")', ng-disabled='$ctrl.pendingRequests || !$ctrl.usernameInput')
             span Add to vote list
-          md-button(ng-click='$ctrl.parseUnvoteListFromInput(")', ng-disabled='$ctrl.pendingRequests || !$ctrl.usernameInput')
+          md-button(ng-click='$ctrl.parseUnvoteListFromInput("unvoteList")', ng-disabled='$ctrl.pendingRequests || !$ctrl.usernameInput')
             span Add to unvote list
     md-progress-linear(md-mode='indeterminate', ng-show='$ctrl.pendingRequests')
   md-card(flex-gt-xs=100)
@@ -27,7 +27,7 @@ div.offline-hide
           i.material-icons list
           span Input Names
       md-menu.pull-right.right-action-buttons
-        md-button.pull-right(ng-click='$mdOpenMenu()')
+        md-button.pull-right(ng-click='$mdOpenMenu()', ng-disabled='$ctrl.votedList.length == 0')
           i.material-icons visibility
           span My votes ({{$ctrl.votedList.length}})
         md-menu-content(width='4')
@@ -38,7 +38,7 @@ div.offline-hide
                 md-button.md-icon-button.lsk-vote-remove-button(ng-click='$ctrl.unselect(username)')
                   i.material-icons close
       span.pull-right.right-action-buttons
-        md-button(ng-click='$ctrl.openVoteDialog()', ng-disabled='$ctrl.voteList.length + $ctrl.unvoteList.length == 0')
+        md-button(ng-click='$ctrl.openVoteDialog()')
           i.material-icons done
           span  Vote 
           span(ng-if='$ctrl.voteList.length || $ctrl.unvoteList.length') 

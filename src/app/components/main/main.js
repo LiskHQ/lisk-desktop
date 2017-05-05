@@ -7,13 +7,13 @@ app.component('main', {
   controllerAs: '$ctrl',
   controller: class main {
     constructor($scope, $rootScope, $timeout, $q, $state, $peers,
-      error, SendModal, Account) {
+      dialog, SendModal, Account) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$timeout = $timeout;
       this.$q = $q;
       this.$peers = $peers;
-      this.error = error;
+      this.dialog = dialog;
       this.sendModal = SendModal;
       this.$state = $state;
       this.account = Account;
@@ -43,7 +43,7 @@ app.component('main', {
           if (attempts < 10) {
             this.$timeout(() => this.init(attempts + 1), 1000);
           } else {
-            this.error.dialog({ text: 'No peer connection' });
+            this.dialog.errorAlert({ text: 'No peer connection' });
             this.$rootScope.logout();
           }
         });

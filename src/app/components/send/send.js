@@ -10,11 +10,10 @@ app.component('send', {
     transferAmount: '<',
   },
   controller: class send {
-    constructor($scope, $peers, lsk, success, error, $mdDialog, $q, $rootScope, Account) {
+    constructor($scope, $peers, lsk, dialog, $mdDialog, $q, $rootScope, Account) {
       this.$scope = $scope;
       this.$peers = $peers;
-      this.success = success;
-      this.error = error;
+      this.dialog = dialog;
       this.$mdDialog = $mdDialog;
       this.$q = $q;
       this.$rootScope = $rootScope;
@@ -99,13 +98,13 @@ app.component('send', {
                 fee: 10000000,
               };
               this.$rootScope.$broadcast('transaction-sent', transaction);
-              return this.success.dialog({ text: `${this.amount.value} sent to ${this.recipient.value}` })
+              return this.dialog.successAlert({ text: `${this.amount.value} sent to ${this.recipient.value}` })
                 .then(() => {
                   this.reset();
                 });
             },
             (res) => {
-              this.error.dialog({ text: res && res.message ? res.message : 'An error occurred while sending the transaction.' });
+              this.dialog.errorAlert({ text: res && res.message ? res.message : 'An error occurred while sending the transaction.' });
             },
           )
           .finally(() => {

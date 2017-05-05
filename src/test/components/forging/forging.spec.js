@@ -40,6 +40,11 @@ describe('Forging component', () => {
       vote: '9999982470000000',
     };
 
+    account.set({
+      passphrase: delegate.passphrase,
+      balance: lsk.from(100),
+    });
+
     $peers.active = { sendRequest() {} };
     const mock = sinon.mock($peers.active);
     mock.expects('sendRequest').withArgs('blocks').callsArgWith(2, {
@@ -53,10 +58,6 @@ describe('Forging component', () => {
     mock.expects('sendRequest').withArgs('delegates/forging/getForgedByAccount').exactly(5);
 
     $scope = $rootScope.$new();
-    account.set({
-      passphrase: delegate.passphrase,
-      balance: lsk.from(100),
-    });
     element = $compile('<forging account="account"></forging>')($scope);
     $scope.$digest();
   });
@@ -91,15 +92,13 @@ describe('forging component controller', () => {
   let controller;
   let $componentController;
   let activePeerMock;
-  let $peers;
   let delegate;
   let blocks;
   let account;
 
-  beforeEach(inject((_$componentController_, _$rootScope_, _$peers_, _Account_) => {
+  beforeEach(inject((_$componentController_, _$rootScope_, _Account_) => {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
-    $peers = _$peers_;
     account = _Account_;
   }));
 
@@ -122,8 +121,6 @@ describe('forging component controller', () => {
       vote: '9999982470000000',
     };
 
-    $peers.active = { sendRequest() {} };
-    activePeerMock = sinon.mock($peers.active);
 
     $scope = $rootScope.$new();
     account.set({
@@ -136,6 +133,9 @@ describe('forging component controller', () => {
       //   balance: '10000',
       // },
     });
+
+    controller.$peers.active = { sendRequest() {} };
+    activePeerMock = sinon.mock(controller.$peers.active);
   });
 
   describe('updateDelegate()', () => {
