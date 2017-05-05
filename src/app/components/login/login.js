@@ -8,13 +8,14 @@ app.component('login', {
     /* eslint no-param-reassign: ["error", { "props": false }] */
 
     constructor($scope, $rootScope, $timeout, $document, $mdMedia,
-      $cookies, Passphrase, $state, Account) {
+      $cookies, $location, Passphrase, $state, Account) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$timeout = $timeout;
       this.$document = $document;
       this.$mdMedia = $mdMedia;
       this.$cookies = $cookies;
+      this.$location = $location;
       this.$state = $state;
       this.account = Account;
 
@@ -63,7 +64,7 @@ app.component('login', {
     }
 
     devTestAccount() {
-      const peerStack = this.$cookies.get('peerStack');
+      const peerStack = this.$location.search().peerStack || this.$cookies.get('peerStack');
       if (peerStack === 'localhost') {
         this.network = this.networks[2];
         angular.merge(this.network, {
@@ -74,7 +75,7 @@ app.component('login', {
       } else if (peerStack === 'testnet') {
         this.network = this.networks[1];
       }
-      const passphrase = this.$cookies.get('passphrase');
+      const passphrase = this.$location.search().passphrase || this.$cookies.get('passphrase');
       if (passphrase) {
         this.input_passphrase = passphrase;
         if (this.$rootScope.logged === undefined) {
