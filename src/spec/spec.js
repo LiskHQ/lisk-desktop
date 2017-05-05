@@ -201,21 +201,23 @@ function slugify(text) {
     .replace(/-+$/, '');            // Trim - from end of text
 }
 
+function takeScreenshotAfterFail() {
+  const currentSpec = jasmine.getEnv().currentSpec;
+  const specSlug = slugify([currentSpec.id, currentSpec.description].join(' '));
+  if (currentSpec.failedExpectations.length) {
+    browser.takeScreenshot().then((png) => {
+      const dirName = 'e2e-test-screenshots';
+      if (!fs.existsSync(dirName)) {
+        fs.mkdirSync(dirName);
+      }
+      writeScreenShot(png, `${dirName}/${specSlug}.png`);
+    });
+  }
+}
+
 
 describe('Lisk Nano', () => {
-  afterEach(() => {
-    const currentSpec = jasmine.getEnv().currentSpec;
-    const specSlug = slugify([currentSpec.id, currentSpec.description].join(' '));
-    if (currentSpec.failedExpectations.length) {
-      browser.takeScreenshot().then((png) => {
-        const dirName = 'e2e-test-screenshots';
-        if (!fs.existsSync(dirName)) {
-          fs.mkdirSync(dirName);
-        }
-        writeScreenShot(png, `${dirName}/${specSlug}.png`);
-      });
-    }
-  });
+  afterEach(takeScreenshotAfterFail);
 
   describe('Login page', () => {
     it('should allow to login', testLogin);
