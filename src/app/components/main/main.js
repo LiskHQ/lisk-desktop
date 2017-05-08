@@ -73,7 +73,7 @@ app.component('main', {
       this.$rootScope.reset();
       return this.account.getAccountPromise(this.account.get().address)
         .then((res) => {
-          this.account.set({ balance: res.balance });
+          this.account.set(res);
         })
         .catch((res) => {
           this.account.set({ balance: null });

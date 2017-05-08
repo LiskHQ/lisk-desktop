@@ -57,29 +57,42 @@ describe('transactions component controller', () => {
     });
   });
 
-  describe('update(show, more)', () => {
+  describe('showMore()', () => {
+    it('calls this.update(true, true) if this.moreTransactionsExist', () => {
+      controller.moreTransactionsExist = true;
+      mock.expects('listTransactions').returns($q.defer().promise);
+      controller.loaded = true;
+      controller.showMore();
+      expect(controller.loaded).to.equal(false);
+    });
+
+    it('does nothing if not this.moreTransactionsExist', () => {
+      controller.moreTransactionsExist = false;
+      controller.loaded = undefined;
+      controller.showMore();
+      expect(controller.loaded).to.equal(undefined);
+    });
+  });
+
+  describe('update(showLoading, showMore)', () => {
     let transactionsDeferred;
 
     beforeEach(() => {
       transactionsDeferred = $q.defer();
     });
 
-    it('sets this.loading = true', () => {
+    it('sets this.loaded = false if showLoading == true', () => {
       mock.expects('listTransactions').returns(transactionsDeferred.promise);
-      controller.update();
-      expect(controller.loading).to.equal(true);
-    });
-
-    it('sets this.loading_show = true if show == true', () => {
-      mock.expects('listTransactions').returns(transactionsDeferred.promise);
+      controller.loaded = undefined;
       controller.update(true);
-      expect(controller.loading_show).to.equal(true);
+      expect(controller.loaded).to.equal(false);
     });
 
-    it('doesn\'t change this.loading_show if show == false', () => {
+    it('doesn\'t change this.loaded if showLoading == false', () => {
       mock.expects('listTransactions').returns(transactionsDeferred.promise);
+      controller.loaded = undefined;
       controller.update(false);
-      expect(controller.loading_show).to.equal(undefined);
+      expect(controller.loaded).to.equal(undefined);
     });
 
     it('cancels update timeout', () => {
@@ -108,13 +121,14 @@ describe('transactions component controller', () => {
       expect(controller.transactions).to.deep.equal(response.transactions);
     });
 
-    it('sets this.more to how many more other transactions are there on server', () => {
+    it('sets this.moreTransactionsExist to how many more other transactions are there on server', () => {
       const response = {
         transactions: [{}, {}],
         count: 3,
       };
       controller._processTransactionsResponse(response);
-      expect(controller.more).to.equal(response.count - response.transactions.length);
+      expect(controller.moreTransactionsExist).to.equal(
+        response.count - response.transactions.length);
     });
   });
 
