@@ -26,6 +26,9 @@ app.component('verifyMessage', {
       try {
         this.result = lisk.crypto.verifyMessageWithPublicKey(
           this.signature.value, this.publicKey.value);
+        if (this.result && this.result.message) {
+          throw this.result;
+        }
       } catch (e) {
         if (e.message.indexOf('Invalid publicKey') !== -1 && this.publicKey.value) {
           this.publicKey.error.invalid = true;
