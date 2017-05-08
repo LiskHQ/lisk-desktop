@@ -138,7 +138,7 @@ describe('Login controller', () => {
       controller.input_passphrase = testPassphrase;
       const spy = sinon.spy($state, 'go');
       controller.passConfirmSubmit();
-      expect(spy).to.have.been.calledWith('main');
+      expect(spy).to.have.been.calledWith();
     });
   });
 
