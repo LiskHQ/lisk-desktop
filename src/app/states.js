@@ -8,11 +8,12 @@ app.config(($stateProvider, $urlRouterProvider) => {
       component: 'login',
     })
     .state('main', {
+      abstract: true,
       url: '/main',
       component: 'main',
     })
     .state('main.transactions', {
-      url: '/transactions',
+      url: '',
       component: 'transactions',
     })
     .state('main.voting', {
@@ -23,6 +24,6 @@ app.config(($stateProvider, $urlRouterProvider) => {
       url: '/forging',
       component: 'forging',
     });
-  $urlRouterProvider.otherwise('/404');
+  $urlRouterProvider.otherwise('/');
   // $locationProvider.html5Mode(true);
 });
