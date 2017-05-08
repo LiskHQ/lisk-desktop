@@ -26,12 +26,16 @@ app.component('verifyMessage', {
       try {
         this.result = lisk.crypto.verifyMessageWithPublicKey(
           this.signature.value, this.publicKey.value);
+        if (this.result && this.result.message) {
+          throw this.result;
+        }
       } catch (e) {
-        if (e.message.substring(0, 4) === 'nacl' && this.publicKey.value) {
+        if (e.message.indexOf('Invalid publicKey') !== -1 && this.publicKey.value) {
           this.publicKey.error.invalid = true;
-        } else if (e.message.indexOf('length') !== -1 && this.signature.value) {
+        } else if (e.message.indexOf('Invalid signature') !== -1 && this.signature.value) {
           this.signature.error.invalid = true;
         }
+        this.result = '';
       }
     }
   },
