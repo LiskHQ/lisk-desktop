@@ -12,7 +12,7 @@ div.dialog-send(aria-label='Send funds')
             div(ng-messages='$ctrl.sendForm.recipient.$error')
               div(ng-message='required') Required
               div(ng-message='pattern') Invalid
-          <div layout="row">
+          div(layout="row")
             md-input-container.md-block.flex-95
               label Transaction Amount
               input(type='text', name='amount', ng-model='$ctrl.amount.value', required, ng-pattern='$ctrl.amount.regexp', ng-disabled='$ctrl.loading', ng-max='$ctrl.amount.max')
@@ -29,8 +29,10 @@ div.dialog-send(aria-label='Send funds')
                   md-button(ng-click='$ctrl.setMaxAmount()')
                     div(layout='row', flex='')
                       p(flex='') Set maximum amount
-
+          md-input-container.md-block(ng-if='$ctrl.account.get().secondSignature')
+            label Second Passphrase
+            input(type='password', ng-model='$ctrl.secondPassphrase', required)
     md-dialog-actions(layout='row')
       md-button.md-raised.md-secondary(ng-disabled='$ctrl.loading', ng-click='$ctrl.cancel()') {{ 'Cancel' }}
       span(flex)
-      md-button.md-raised.md-primary(ng-disabled='!$ctrl.sendForm.$valid || $ctrl.loading', ng-click='$ctrl.go()') {{ $ctrl.loading ? 'Sending...' : 'Send' }}
+      md-button.md-raised.md-primary(ng-disabled='!$ctrl.sendForm.$valid || $ctrl.loading', ng-click='$ctrl.sendLSK()') {{ $ctrl.loading ? 'Sending...' : 'Send' }}
