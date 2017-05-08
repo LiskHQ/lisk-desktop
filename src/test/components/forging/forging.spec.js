@@ -42,12 +42,12 @@ describe('Forging component', () => {
     };
 
     const network = {
-      address: "http://localhost:4000",
+      address: 'http://localhost:4000',
       custom: true,
-      name: "Custom Node",
-      nethash: "198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d",
-      node: "localhost",
-      port: "4000",
+      name: 'Custom Node',
+      nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+      node: 'localhost',
+      port: '4000',
       ssl: false,
       testnet: true,
     };
