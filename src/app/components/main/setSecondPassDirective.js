@@ -8,9 +8,9 @@ app.directive('setSecondPass', (setSecondPass, Account, $rootScope, dialog) => {
     });
 
     scope.passConfirmSubmit = (secondsecret) => {
-      Account.setSecondSecret(secondsecret, attrs.publicKey, attrs.passphrase)
+      Account.setSecondSecret(secondsecret, Account.get().publicKey, Account.get().passphrase)
         .then(() => {
-          dialog.successAlert('Your second passphrase was successfully registered.');
+          dialog.successAlert({text: 'Your second passphrase was successfully registered.'});
         })
         .catch((err) => {
           let text = '';
@@ -19,7 +19,7 @@ app.directive('setSecondPass', (setSecondPass, Account, $rootScope, dialog) => {
           } else if (/^(Account does not have enough LSK)/.test(err.message)) {
             text = 'You have insuffcient funds to register a second passphrase.';
           } else {
-            text = 'An error occurred while registering your second passphrase. Please try again.';
+            text = err.message || 'An error occurred while registering your second passphrase. Please try again.';
           }
           dialog.errorAlert({ text });
         });
