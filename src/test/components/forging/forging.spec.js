@@ -41,10 +41,23 @@ describe('Forging component', () => {
       vote: '9999982470000000',
     };
 
-    account.set({
+    const network = {
+      address: 'http://localhost:4000',
+      custom: true,
+      name: 'Custom Node',
+      nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+      node: 'localhost',
+      port: '4000',
+      ssl: false,
+      testnet: true,
+    };
+    const testAcount = {
       passphrase: delegate.passphrase,
       balance: lsk.from(100),
-    });
+      network,
+    };
+
+    account.set(testAcount);
 
     $scope = $rootScope.$new();
     element = $compile('<forging></forging>')($scope);
@@ -70,7 +83,7 @@ describe('Forging component', () => {
     forgingServiceMock.expects('getForgedStats').returns(deferred.promise).exactly(5);
     deferred.resolve({ });
 
-    controller.$scope.$emit('onAccountChange');
+    controller.$scope.$emit('onAccountChange', testAcount);
     $scope.$digest();
   });
 
