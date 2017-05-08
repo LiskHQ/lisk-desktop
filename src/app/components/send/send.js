@@ -55,21 +55,21 @@ app.component('send', {
         this.account.get().passphrase,
         this.secondPassphrase,
       ).then((data) => {
-          const transaction = {
-            id: data.transactionId,
-            senderPublicKey: this.account.get().publicKey,
-            senderId: this.account.get().address,
-            recipientId: this.recipient.value,
-            amount: this.amount.raw,
-            fee: 10000000,
-          };
-          this.$rootScope.$broadcast('transaction-sent', transaction);
-          return this.dialog.successAlert({ text: `${this.amount.value} sent to ${this.recipient.value}` })
+        const transaction = {
+          id: data.transactionId,
+          senderPublicKey: this.account.get().publicKey,
+          senderId: this.account.get().address,
+          recipientId: this.recipient.value,
+          amount: this.amount.raw,
+          fee: 10000000,
+        };
+        this.$rootScope.$broadcast('transaction-sent', transaction);
+        return this.dialog.successAlert({ text: `${this.amount.value} sent to ${this.recipient.value}` })
             .then(() => {
               this.reset();
             });
       }).catch((res) => {
-          this.dialog.errorAlert({ text: res && res.message ? res.message : 'An error occurred while sending the transaction.' });
+        this.dialog.errorAlert({ text: res && res.message ? res.message : 'An error occurred while sending the transaction.' });
       }).finally(() => {
         this.loading = false;
       });

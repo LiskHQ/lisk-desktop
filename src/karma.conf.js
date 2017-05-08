@@ -83,10 +83,10 @@ module.exports = function (config) {
 
     coverageReporter: {
       reporters: [
-       {
-        type: opts.onTravis ? 'lcov' : 'html',
-        dir: 'coverage/',
-      }].concat(opts.onTravis ? [{type: 'text'}] : []),
+        {
+          type: opts.onTravis ? 'lcov' : 'html',
+          dir: 'coverage/',
+        }].concat(opts.onTravis ? [{ type: 'text' }] : []),
     },
 
     // Start these browsers

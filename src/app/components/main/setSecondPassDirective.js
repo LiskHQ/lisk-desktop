@@ -2,7 +2,7 @@ import './secondPass.less';
 
 app.directive('setSecondPass', (setSecondPass, Account, $rootScope, dialog) => {
   /* eslint no-param-reassign: ["error", { "props": false }] */
-  const SetSecondPassLink = function (scope, element, attrs) {
+  const SetSecondPassLink = function (scope, element) {
     element.bind('click', () => {
       setSecondPass.show();
     });
@@ -10,7 +10,7 @@ app.directive('setSecondPass', (setSecondPass, Account, $rootScope, dialog) => {
     scope.passConfirmSubmit = (secondsecret) => {
       Account.setSecondSecret(secondsecret, Account.get().publicKey, Account.get().passphrase)
         .then(() => {
-          dialog.successAlert({text: 'Your second passphrase was successfully registered.'});
+          dialog.successAlert({ text: 'Your second passphrase was successfully registered.' });
         })
         .catch((err) => {
           let text = '';

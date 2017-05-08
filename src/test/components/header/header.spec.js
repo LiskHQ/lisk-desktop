@@ -1,5 +1,4 @@
 const chai = require('chai');
-const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 
 const expect = chai.expect;
@@ -10,16 +9,12 @@ describe('Header component', () => {
   let $rootScope;
   let element;
   let $scope;
-  let lsk;
-  let account;
 
   beforeEach(angular.mock.module('app'));
 
-  beforeEach(inject((_$compile_, _$rootScope_, _lsk_, _Account_) => {
+  beforeEach(inject((_$compile_, _$rootScope_) => {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
-    lsk = _lsk_;
-    account = _Account_;
   }));
 
   beforeEach(() => {

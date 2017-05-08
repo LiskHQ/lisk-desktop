@@ -127,7 +127,8 @@ describe('transactions component controller', () => {
         count: 3,
       };
       controller._processTransactionsResponse(response);
-      expect(controller.moreTransactionsExist).to.equal(response.count - response.transactions.length);
+      expect(controller.moreTransactionsExist).to.equal(
+        response.count - response.transactions.length);
     });
   });
 

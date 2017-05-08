@@ -59,7 +59,7 @@ app.component('transactions', {
       }
 
       this.$timeout.cancel(this.timeout);
-      let limit = Math.max(10, this.transactions.length + (showMore ? 10 : 0));
+      const limit = Math.max(10, this.transactions.length + (showMore ? 10 : 0));
       return this.loadTransactions(limit);
     }
 
