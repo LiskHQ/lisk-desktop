@@ -54,8 +54,7 @@ app.component('login', {
           passphrase: this.Passphrase.normalize(_passphrase),
           network: this.network,
         });
-
-        this.$state.go('main');
+        this.$state.go(this.$rootScope.landingUrl || 'main.transactions');
       }
     }
 
@@ -79,7 +78,7 @@ app.component('login', {
       if (passphrase) {
         this.input_passphrase = passphrase;
         if (this.$rootScope.logged === undefined) {
-          this.$timeout(this.passConfirmSubmit.bind(this), 10);
+          // this.$timeout(this.passConfirmSubmit.bind(this), 10);
         }
       }
     }
