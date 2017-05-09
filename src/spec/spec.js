@@ -165,12 +165,8 @@ function testShowBalance() {
 
 function testSend() {
   send(masterAccount, delegateAccount.address, 1.1);
-  checkSendConfirmation(delegateAccount.address, 1.1);
   browser.sleep(1000);
-  logout();
-
-  send(delegateAccount, masterAccount.address, 1);
-  checkSendConfirmation(masterAccount.address, 1);
+  checkSendConfirmation(delegateAccount.address, 1.1);
 }
 
 function testSendWithNotEnoughFunds() {
