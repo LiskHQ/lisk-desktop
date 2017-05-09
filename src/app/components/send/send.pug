@@ -12,7 +12,7 @@ div.dialog-send(aria-label='Send funds')
             div(ng-messages='$ctrl.sendForm.recipient.$error')
               div(ng-message='required') Required
               div(ng-message='pattern') Invalid
-          <div layout="row">
+          .row
             md-input-container.md-block.flex-95
               label Transaction Amount
               input(type='text', name='amount', ng-model='$ctrl.amount.value', required, ng-pattern='$ctrl.amount.regexp', ng-disabled='$ctrl.loading', ng-max='$ctrl.amount.max')
