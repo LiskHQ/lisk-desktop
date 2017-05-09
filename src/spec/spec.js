@@ -31,6 +31,7 @@ function checkErrorMessage(message) {
 function launchApp() {
   browser.ignoreSynchronization = true;
   browser.driver.manage().window().setSize(1000, 1000);
+  browser.refresh();
   browser.get('http://localhost:8080#/?peerStack=localhost');
 }
 
@@ -135,21 +136,23 @@ function testAddress() {
 
 function testPeer() {
   launchApp();
-  expect(element.all(by.css('form md-input-container:first-child label')).get(0).getText()).toEqual('Choose a peer');
+  login(masterAccount);
+  expect(element.all(by.css('.peer .md-title')).get(0).getText()).toEqual('Peer');
+  expect(element.all(by.css('.peer .value')).get(0).getText()).toEqual('localhost:4000');
 }
 
-function testChangePeer() {
+function testChangeNetwork() {
   launchApp();
 
   const peerElem = element(by.css('form md-select'));
   browser.wait(EC.presenceOf(peerElem), waitTime);
   peerElem.click();
 
-  const optionElem = element.all(by.css('md-select-menu md-optgroup md-option')).get(3);
+  const optionElem = element.all(by.css('md-select-menu md-option')).get(1);
   browser.wait(EC.presenceOf(optionElem), waitTime);
   optionElem.click();
 
-  waitForElemAndCheckItsText('form md-select-value .md-text', 'node04.lisk.io');
+  waitForElemAndCheckItsText('form md-select-value .md-text', 'Testnet');
 }
 
 function testShowBalance() {
@@ -221,7 +224,7 @@ describe('Lisk Nano', () => {
 
   describe('Login page', () => {
     it('should allow to login', testLogin);
-    it('should allow to change peer', testChangePeer);
+    it('should allow to change network', testChangeNetwork);
     it('should allow to create a new account', testNewAccount);
   });
 
@@ -240,7 +243,7 @@ describe('Lisk Nano', () => {
   });
 
   describe('Send dialog', () => {
-    it('should allow to send transaction when enough funds and correct address form', testSend);
+    fit('should allow to send transaction when enough funds and correct address form', testSend);
     it('should not allow to send transaction when not enough funds', testSendWithNotEnoughFunds);
     it('should not allow to send transaction when invalid address', testSendWithInvalidAddress);
   });
