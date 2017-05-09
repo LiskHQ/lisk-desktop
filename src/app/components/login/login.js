@@ -77,9 +77,6 @@ app.component('login', {
       const passphrase = this.$location.search().passphrase || this.$cookies.get('passphrase');
       if (passphrase) {
         this.input_passphrase = passphrase;
-        if (this.$rootScope.logged === undefined) {
-          // this.$timeout(this.passConfirmSubmit.bind(this), 10);
-        }
       }
     }
   },
