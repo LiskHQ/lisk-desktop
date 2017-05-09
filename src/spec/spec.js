@@ -8,6 +8,7 @@ const masterAccount = {
 const delegateAccount = {
   passphrase: 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit',
   address: '537318935439898807L',
+  username: 'genesis_17',
 };
 
 const emptyAccount = {
@@ -22,6 +23,12 @@ function waitForElemAndCheckItsText(selector, text) {
   const elem = element(by.css(selector));
   browser.wait(EC.presenceOf(elem), waitTime, `waiting for element ${selector}`);
   expect(elem.getText()).toEqual(text);
+}
+
+function waitForElemAndClickIt(selector) {
+  const elem = element(by.css(selector));
+  browser.wait(EC.presenceOf(elem), waitTime);
+  elem.click();
 }
 
 function checkErrorMessage(message) {
@@ -185,6 +192,79 @@ function testShowTransactions() {
   expect(element.all(by.css('transactions table tbody tr')).count()).toEqual(10);
 }
 
+function testSignMessage() {
+  const message = 'Hello world';
+  const result =
+    '-----BEGIN LISK SIGNED MESSAGE-----\n' +
+    '-----MESSAGE-----\n' +
+    'Hello world\n' +
+    '-----PUBLIC KEY-----\n' +
+    'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f\n' +
+    '-----SIGNATURE-----\n' +
+    '079331d868678fd5f272f09d6dc8792fb21335aec42af7f11caadbfbc17d4707e7d7f343854b0' +
+    'c619b647b81ba3f29b23edb4eaf382a47c534746bad4529560b48656c6c6f20776f726c64\n' +
+    '-----END LISK SIGNED MESSAGE-----';
+
+  login(masterAccount);
+  waitForElemAndClickIt('header .md-icon-button');
+  browser.sleep(1000);
+  waitForElemAndClickIt('md-menu-item .md-button');
+  element(by.css('textarea[name="message"]')).sendKeys(message);
+  browser.sleep(1000);
+  expect(element(by.css('textarea[name="result"]')).getText()).toEqual(result);
+}
+
+function testVerifyMessage() {
+  const publicKey = 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f';
+  const signature = '079331d868678fd5f272f09d6dc8792fb21335aec42af7f11caadbfbc17d4707e7d7f343854b0' +
+    'c619b647b81ba3f29b23edb4eaf382a47c534746bad4529560b48656c6c6f20776f726c64';
+  const message = 'Hello world';
+
+  login(masterAccount);
+  waitForElemAndClickIt('header .md-icon-button');
+  browser.sleep(1000);
+  waitForElemAndClickIt('md-menu-item:nth-child(2) .md-button');
+  element(by.css('input[name="publicKey"]')).sendKeys(publicKey);
+  element(by.css('textarea[name="signature"]')).sendKeys(signature);
+  browser.sleep(1000);
+  expect(element(by.css('textarea[name="result"]')).getText()).toEqual(message);
+}
+
+function testForgingCenter() {
+  login(delegateAccount);
+  waitForElemAndClickIt('main md-tab-item:nth-child(3)');
+
+  // FIXME: there is some bug in forging center that makes it really slow to load
+  browser.sleep(5000);
+
+  waitForElemAndCheckItsText('forging md-card .title', delegateAccount.username);
+  waitForElemAndCheckItsText('forging md-card md-card-title .md-title', 'Forged Blocks');
+}
+
+function testViewDelegates() {
+  login(masterAccount);
+  waitForElemAndClickIt('main md-tab-item:nth-child(2)');
+  waitForElemAndCheckItsText('delegates table thead tr th:nth-child(1)', 'Vote');
+  waitForElemAndCheckItsText('delegates table tbody tr td:nth-child(5)', '100');
+
+  // FIXME: there are 20 delegates displayed, so this should be toEqual(20)
+  // but we have to use ng-if instead of ng-hide for tr with "No delegates found" message
+  expect(element.all(by.css('delegates table tbody tr')).count()).toEqual(21);
+}
+
+function testSearchDelegates() {
+  login(masterAccount);
+  waitForElemAndClickIt('main md-tab-item:nth-child(2)');
+  waitForElemAndCheckItsText('delegates table thead tr th:nth-child(1)', 'Vote');
+  element(by.css('delegates input[name="name"]')).sendKeys(delegateAccount.username);
+  browser.sleep(500);
+  waitForElemAndCheckItsText('delegates table tbody tr td:nth-child(3)', delegateAccount.username);
+
+  // FIXME: there should be 1 delegate displayed, so this should be toEqual(1)
+  // but we have to use ng-if instead of ng-hide for tr with "No delegates found" message
+  expect(element.all(by.css('delegates table tbody tr')).count()).toEqual(2);
+}
+
 function writeScreenShot(data, filename) {
   const stream = fs.createWriteStream(filename);
   stream.write(new Buffer(data, 'base64'));
@@ -232,14 +312,14 @@ describe('Lisk Nano', () => {
   });
 
   describe('Top right menu', () => {
-    xit('should allow to sign message', () => {});
-    xit('should allow to verify message', () => {});
+    xit('should allow to sign message', testSignMessage);
+    xit('should allow to verify message', testVerifyMessage);
     xit('should allow to set 2nd passphrase', () => {});
     xit('should allow to register a delegate', () => {});
   });
 
   describe('Send dialog', () => {
-    fit('should allow to send transaction when enough funds and correct address form', testSend);
+    it('should allow to send transaction when enough funds and correct address form', testSend);
     it('should not allow to send transaction when not enough funds', testSendWithNotEnoughFunds);
     it('should not allow to send transaction when invalid address', testSendWithInvalidAddress);
   });
@@ -249,12 +329,12 @@ describe('Lisk Nano', () => {
   });
 
   describe('Forging tab', () => {
-    xit('should allow to view forging center if account is delegate', () => {});
+    it('should allow to view forging center if account is delegate', testForgingCenter);
   });
 
   describe('Voting tab', () => {
-    xit('should allow to view delegates', () => {});
-    xit('should allow to search delegates', () => {});
+    it('should allow to view delegates', testViewDelegates);
+    it('should allow to search delegates', testSearchDelegates);
     xit('should allow to view my votes', () => {});
     xit('should allow to select delegates in the "Voting" tab and vote for them', () => {});
     xit('should allow to select delegates in the "Vote" dialog and vote for them', () => {});
