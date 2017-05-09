@@ -65,12 +65,14 @@ describe('delegates component controller', () => {
   let $peers;
   let delegates;
   let $q;
+  let $timeout;
 
-  beforeEach(inject((_$componentController_, _$rootScope_, _$q_, _$peers_) => {
+  beforeEach(inject((_$componentController_, _$rootScope_, _$q_, _$peers_, _$timeout_) => {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
     $peers = _$peers_;
     $q = _$q_;
+    $timeout = _$timeout_;
   }));
 
   beforeEach(() => {
@@ -237,6 +239,68 @@ describe('delegates component controller', () => {
 
       expect(controller.voteList.length).to.equal(0);
       expect(controller.unvoteList.length).to.equal(0);
+    });
+  });
+
+  describe('checkPendingVotes()', () => {
+    let delegateServiceMock;
+    let accountDelegtatesDeferred;
+    let delegate41;
+    let delegate42;
+
+    beforeEach(() => {
+      accountDelegtatesDeferred = $q.defer();
+      delegateServiceMock = sinon.mock(controller.delegateService);
+      delegateServiceMock.expects('listAccountDelegates').returns(accountDelegtatesDeferred.promise);
+      delegate41 = { username: 'genesis_41', status: {} };
+      delegate42 = { username: 'genesis_42', status: {} };
+    });
+
+    afterEach(() => {
+      delegateServiceMock.verify();
+      delegateServiceMock.restore();
+    });
+
+    it('calls delegateService.listAccountDelegates and then removes all returned delegates from this.votePendingList', () => {
+      controller.votePendingList = [delegate41, delegate42];
+      controller.unvotePendingList = [];
+
+      controller.checkPendingVotes();
+
+      $timeout.flush();
+      accountDelegtatesDeferred.resolve({ success: true, delegates: [delegate42] });
+      $scope.$apply();
+
+      expect(controller.votePendingList.length).to.equal(1);
+      expect(controller.votePendingList[0]).to.deep.equal(delegate41);
+    });
+
+    it('calls delegateService.listAccountDelegates and then removes all NOT returned delegates from this.unvotePendingList', () => {
+      controller.votePendingList = [];
+      controller.unvotePendingList = [delegate41, delegate42];
+
+      controller.checkPendingVotes();
+
+      $timeout.flush();
+      accountDelegtatesDeferred.resolve({ success: true, delegates: [delegate42] });
+      $scope.$apply();
+
+      expect(controller.unvotePendingList.length).to.equal(1);
+      expect(controller.unvotePendingList[0]).to.deep.equal(delegate42);
+    });
+
+    it('calls delegateService.listAccountDelegates and if in the end there are still some votes pending calls itself again', () => {
+      controller.votePendingList = [];
+      controller.unvotePendingList = [delegate41, delegate42];
+
+      controller.checkPendingVotes();
+
+      $timeout.flush();
+      const selfMock = sinon.mock(controller);
+      selfMock.expects('checkPendingVotes');
+      accountDelegtatesDeferred.resolve({ success: true, delegates: [] });
+
+      $scope.$apply();
     });
   });
 

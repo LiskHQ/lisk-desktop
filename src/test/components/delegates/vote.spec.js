@@ -58,6 +58,7 @@ describe('Vote component controller', () => {
   let delegateServiceMock;
   let delegateService;
   let $q;
+  let accountDelegtatesDeferred;
 
   beforeEach(inject((_$componentController_, _$rootScope_, _delegateService_, _$q_) => {
     $componentController = _$componentController_;
@@ -67,8 +68,9 @@ describe('Vote component controller', () => {
   }));
 
   beforeEach(() => {
+    accountDelegtatesDeferred = $q.defer();
     delegateServiceMock = sinon.mock(delegateService);
-    delegateServiceMock.expects('listAccountDelegates').returns($q.defer().promise);
+    delegateServiceMock.expects('listAccountDelegates').returns(accountDelegtatesDeferred.promise);
 
     $scope = $rootScope.$new();
     controller = $componentController('vote', $scope, {
@@ -93,6 +95,29 @@ describe('Vote component controller', () => {
         changed: true,
       },
     }));
+  });
+
+  describe('constructor()', () => {
+    it('calls delegateService.listAccountDelegates and then sets result to this.votedList', () => {
+      const delegates = [{ username: 'genesis_42' }];
+      accountDelegtatesDeferred.resolve({ success: true, delegates });
+      $scope.$apply();
+      expect(controller.votedList).to.deep.equal(delegates);
+    });
+
+    it('calls delegateService.listAccountDelegates and if result.delegates is not defined then sets [] to this.votedList', () => {
+      const delegates = undefined;
+      accountDelegtatesDeferred.resolve({ success: true, delegates });
+      $scope.$apply();
+      expect(controller.votedList).to.deep.equal([]);
+    });
+
+    it('calls delegateService.listAccountDelegates and then sets result to this.votedDict', () => {
+      const delegates = [{ username: 'genesis_42' }];
+      accountDelegtatesDeferred.resolve({ success: true, delegates });
+      $scope.$apply();
+      expect(controller.votedDict[delegates[0].username]).to.deep.equal(delegates[0]);
+    });
   });
 
   describe('vote()', () => {

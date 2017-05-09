@@ -3,7 +3,7 @@ md-card.offline-hide
     md-content(layout='row', layout-align='start center', layout-padding)
       span.title.md-title Transactions
       div(flex)
-      span.empty(ng-show='!$ctrl.transactions.length') No transactions
+      span.empty(ng-show='!$ctrl.transactions.length && $ctrl.loaded') No transactions
     md-content(layout='column', layout-align='center center')
       md-table-container(ng-show='$ctrl.transactions.length')
         table(md-table)
@@ -47,4 +47,4 @@ md-card.offline-hide
                 .fee
                   lsk(amount='transaction.fee')
   .loading
-    md-progress-linear(md-mode='indeterminate', ng-show='$ctrl.loading_show || !$ctrl.loaded')
+    md-progress-linear(md-mode='indeterminate', ng-show='!$ctrl.loaded')
