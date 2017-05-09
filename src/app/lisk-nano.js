@@ -22,14 +22,14 @@ import './components/sign-verify/sign-message';
 import './components/sign-verify/verify-message';
 import './components/delegate-registration/delegateRegistration';
 
-import './services/peers/peers';
+import './services/api/peers';
 import './services/lsk';
 import './services/dialog';
 import './services/passphrase';
 import './services/sign-verify';
 import './services/account';
-import './services/delegateService';
-import './services/forgingService';
+import './services/api/delegateApi';
+import './services/api/forgingApi';
 import './services/api/accountApi';
 
 import './filters/lsk';

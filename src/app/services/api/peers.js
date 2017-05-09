@@ -6,10 +6,6 @@ app.factory('$peers', ($timeout, $cookies, $location, $q, $rootScope) => {
   class $peers {
     constructor() {
       this.check();
-
-      $rootScope.$on('onAccountChange', (event, account) => {
-        this.setActive(account);
-      });
     }
 
     reset(active) {
@@ -20,9 +16,8 @@ app.factory('$peers', ($timeout, $cookies, $location, $q, $rootScope) => {
       }
     }
 
-    setActive(account) {
+    setActive(network) {
       let conf = { };
-      const network = account.network;
       if (network) {
         conf = network;
         if (network.address) {
@@ -50,7 +45,7 @@ app.factory('$peers', ($timeout, $cookies, $location, $q, $rootScope) => {
       return deferred.promise;
     }
 
-    getStatusPromise() {
+    getStatus() {
       return this.sendRequestPromise('loader/status', {});
     }
 
@@ -64,7 +59,7 @@ app.factory('$peers', ($timeout, $cookies, $location, $q, $rootScope) => {
         return;
       }
 
-      this.getStatusPromise()
+      this.getStatus()
         .then(() => this.online = true)
         .catch(() => this.online = false)
         .finally(() => next());
