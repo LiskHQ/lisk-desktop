@@ -7,7 +7,7 @@ app.component('main', {
   controllerAs: '$ctrl',
   controller: class main {
     constructor($scope, $rootScope, $timeout, $q, $state, $peers,
-      dialog, SendModal, Account) {
+      dialog, SendModal, Account, AccountApi) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$timeout = $timeout;
@@ -17,6 +17,7 @@ app.component('main', {
       this.sendModal = SendModal;
       this.$state = $state;
       this.account = Account;
+      this.accountApi = AccountApi;
 
       this.init();
     }
@@ -69,7 +70,7 @@ app.component('main', {
 
     update() {
       this.$rootScope.reset();
-      return this.account.getAccountPromise(this.account.get().address)
+      return this.accountApi.get(this.account.get().address)
         .then((res) => {
           this.account.set({ balance: res.balance });
         })

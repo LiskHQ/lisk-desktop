@@ -10,7 +10,7 @@ app.component('send', {
     transferAmount: '<',
   },
   controller: class send {
-    constructor($scope, $peers, lsk, dialog, $mdDialog, $q, $rootScope, Account) {
+    constructor($scope, $peers, lsk, dialog, $mdDialog, $q, $rootScope, Account, AccountApi) {
       this.$scope = $scope;
       this.$peers = $peers;
       this.dialog = dialog;
@@ -18,6 +18,7 @@ app.component('send', {
       this.$q = $q;
       this.$rootScope = $rootScope;
       this.account = Account;
+      this.accountApi = AccountApi;
 
       this.recipient = {
         regexp: ADDRESS_VALID_RE,
@@ -81,7 +82,7 @@ app.component('send', {
 
       this.promptSecondPassphrase()
         .then((secondPassphrase) => {
-          this.account.sendLSK(
+          this.accountApi.transactions.create(
             this.recipient.value,
             this.amount.raw,
             this.account.get().passphrase,
