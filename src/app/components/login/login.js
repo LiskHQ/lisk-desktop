@@ -8,7 +8,7 @@ app.component('login', {
     /* eslint no-param-reassign: ["error", { "props": false }] */
 
     constructor($scope, $rootScope, $timeout, $document, $mdMedia,
-      $cookies, $location, Passphrase, $state, Account) {
+      $cookies, $location, Passphrase, $state, Account, $peers) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$timeout = $timeout;
@@ -18,6 +18,7 @@ app.component('login', {
       this.$location = $location;
       this.$state = $state;
       this.account = Account;
+      this.$peers = $peers;
 
       this.Passphrase = Passphrase;
       this.generatingNewPassphrase = false;
@@ -50,6 +51,8 @@ app.component('login', {
 
     passConfirmSubmit(_passphrase = this.input_passphrase) {
       if (this.Passphrase.normalize.constructor === Function) {
+        this.$peers.setActive(this.network);
+
         this.account.set({
           passphrase: this.Passphrase.normalize(_passphrase),
           network: this.network,

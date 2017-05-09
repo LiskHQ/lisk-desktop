@@ -31,8 +31,6 @@ app.component('main', {
 
       this.$rootScope.prelogged = true;
 
-      this.$peers.setActive(this.account.get());
-
       this.update()
         .then(() => {
           this.$rootScope.prelogged = false;
