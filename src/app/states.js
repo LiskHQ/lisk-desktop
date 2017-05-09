@@ -24,5 +24,4 @@ app.config(($stateProvider, $urlRouterProvider) => {
       component: 'forging',
     });
   $urlRouterProvider.otherwise('/404');
-  // $locationProvider.html5Mode(true);
 });
