@@ -30,6 +30,7 @@ import './services/sign-verify';
 import './services/account';
 import './services/delegateService';
 import './services/forgingService';
+import './services/api/accountApi';
 
 import './filters/lsk';
 
