@@ -5,30 +5,30 @@ const sinonChai = require('sinon-chai');
 const expect = chai.expect;
 chai.use(sinonChai);
 
-describe('Factory: $peers', () => {
-  let $peers;
+describe('Factory: Peers', () => {
+  let Peers;
   let $q;
   let $rootScope;
 
   beforeEach(angular.mock.module('app'));
 
-  beforeEach(inject((_$peers_, _$q_, _$rootScope_) => {
-    $peers = _$peers_;
+  beforeEach(inject((_Peers_, _$q_, _$rootScope_) => {
+    Peers = _Peers_;
     $q = _$q_;
     $rootScope = _$rootScope_;
   }));
 
   describe('setActive(account)', () => {
-    it('sets $peers.active to a random active official peer', () => {
+    it('sets Peers.active to a random active official peer', () => {
       const account = {
         network: {
           address: 'http://localhost:8000',
         },
       };
-      expect($peers.active).to.equal(undefined);
-      $peers.setActive(account);
-      expect($peers.active).not.to.equal(undefined);
-      expect($peers.active.currentPeer).not.to.equal(undefined);
+      expect(Peers.active).to.equal(undefined);
+      Peers.setActive(account);
+      expect(Peers.active).not.to.equal(undefined);
+      expect(Peers.active.currentPeer).not.to.equal(undefined);
     });
   });
 
@@ -38,9 +38,9 @@ describe('Factory: $peers', () => {
 
     beforeEach(() => {
       deffered = $q.defer();
-      mock = sinon.mock($peers);
-      mock.expects('getStatusPromise').returns(deffered.promise);
-      $peers.active = {};
+      mock = sinon.mock(Peers);
+      mock.expects('getStatus').returns(deffered.promise);
+      Peers.active = {};
     });
 
     afterEach(() => {
@@ -49,17 +49,17 @@ describe('Factory: $peers', () => {
     });
 
     it('checks active peer status and if that succeeds then sets this.online = true', () => {
-      $peers.check();
+      Peers.check();
       deffered.resolve();
       $rootScope.$apply();
-      expect($peers.online).to.equal(true);
+      expect(Peers.online).to.equal(true);
     });
 
     it('checks active peer status and if that fails then sets this.online = false', () => {
-      $peers.check();
+      Peers.check();
       deffered.reject();
       $rootScope.$apply();
-      expect($peers.online).to.equal(false);
+      expect(Peers.online).to.equal(false);
     });
   });
 });
