@@ -11,16 +11,19 @@ div.dialog-delegate-registration(aria-label='Vote for delegates')
             input(type='text', name='delegateName', ng-model='$ctrl.form.name', required, ng-disabled='$ctrl.loading')
             div(ng-messages='delegateRegistrationForm.name.$error')
               div(ng-message='required') Required
+          md-input-container.md-block(ng-if='$ctrl.account.get().secondSignature')
+            label Second Passphrase
+            input(type='password', ng-model='$ctrl.form.secondPassphrase', required)
             md-input-container.md-block
               div.fee Fee: {{$ctrl.form.fee}} LSK
-            md-divider
-            div(layout='row')
-              p.info-icon-wrapper 
-                i.material-icons info
-              p
-                span Becoming a delegate requires registration. You may choose your own delegate name, which can be used to promote your delegate. Only the top 101 delegates are eligible to forge. All fees are shared equally between the top 101 delegates.
-            md-divider
-              p.error(ng-bind='$ctrl.form.error', ng-if='$ctrl.form.error')
+          md-divider
+          div(layout='row')
+            p.info-icon-wrapper 
+              i.material-icons info
+            p
+              span Becoming a delegate requires registration. You may choose your own delegate name, which can be used to promote your delegate. Only the top 101 delegates are eligible to forge. All fees are shared equally between the top 101 delegates.
+          md-divider
+            p.error(ng-bind='$ctrl.form.error', ng-if='$ctrl.form.error')
       md-dialog-actions(layout='row')
         md-button.md-raised.md-secondary(ng-disabled='$ctrl.loading', ng-click='$ctrl.cancel(delegateRegistrationForm)') {{ 'Cancel' }}
         span(flex)
