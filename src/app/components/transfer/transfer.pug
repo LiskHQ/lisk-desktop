@@ -1,15 +1,15 @@
-div.dialog-send(aria-label='Send funds')
-  form(name='$ctrl.sendForm')
+div.dialog-transfer(aria-label='Transfer funds')
+  form(name='$ctrl.transferForm')
     md-toolbar
       .md-toolbar-tools
-        h2 Send
+        h2 Transfer
     md-dialog-content
       .md-dialog-content
         div
           md-input-container.md-block
             label Recipient Address
             input(type='text', name='recipient', ng-model='$ctrl.recipient.value', required, ng-pattern='$ctrl.recipient.regexp', ng-disabled='$ctrl.loading')
-            div(ng-messages='$ctrl.sendForm.recipient.$error')
+            div(ng-messages='$ctrl.transferForm.recipient.$error')
               div(ng-message='required') Required
               div(ng-message='pattern') Invalid
           div(layout="row")
@@ -17,7 +17,7 @@ div.dialog-send(aria-label='Send funds')
               label Transaction Amount
               input(type='text', name='amount', ng-model='$ctrl.amount.value', required, ng-pattern='$ctrl.amount.regexp', ng-disabled='$ctrl.loading', ng-max='$ctrl.amount.max')
               div.fee(ng-show='$ctrl.amount.value') Fee: 0.1 LSK
-              div(ng-messages='$ctrl.sendForm.amount.$error')
+              div(ng-messages='$ctrl.transferForm.amount.$error')
                 div(ng-message='required') Required
                 div(ng-message='pattern') Invalid
                 div(ng-message='max') Insufficient funds
@@ -35,4 +35,4 @@ div.dialog-send(aria-label='Send funds')
     md-dialog-actions(layout='row')
       md-button.md-raised.md-secondary(ng-disabled='$ctrl.loading', ng-click='$ctrl.cancel()') {{ 'Cancel' }}
       span(flex)
-      md-button.md-raised.md-primary(ng-disabled='!$ctrl.sendForm.$valid || $ctrl.loading', ng-click='$ctrl.sendLSK()') {{ $ctrl.loading ? 'Sending...' : 'Send' }}
+      md-button.md-raised.md-primary(ng-disabled='!$ctrl.transferForm.$valid || $ctrl.loading', ng-click='$ctrl.transfer()') {{ $ctrl.loading ? 'Transfering...' : 'Transfer' }}

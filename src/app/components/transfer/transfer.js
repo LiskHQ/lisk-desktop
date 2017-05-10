@@ -1,15 +1,15 @@
-import './send.less';
+import './transfer.less';
 
 const ADDRESS_VALID_RE = '^[0-9]{1,21}[L|l]$';
 const AMOUNT_VALID_RE = '^[0-9]+(.[0-9]{1,8})?$';
 
-app.component('send', {
-  template: require('./send.pug')(),
+app.component('transfer', {
+  template: require('./transfer.pug')(),
   bindings: {
     recipientId: '<',
     transferAmount: '<',
   },
-  controller: class send {
+  controller: class transfer {
     constructor($scope, lsk, dialog, $mdDialog, $q, $rootScope, Account, AccountApi) {
       this.$scope = $scope;
       this.dialog = dialog;
@@ -47,7 +47,7 @@ app.component('send', {
       this.amount.value = '';
     }
 
-    sendLSK() {
+    transfer() {
       this.loading = true;
 
       this.accountApi.transactions.create(
@@ -65,12 +65,12 @@ app.component('send', {
           fee: 10000000,
         };
         this.$rootScope.$broadcast('transaction-sent', transaction);
-        return this.dialog.successAlert({ text: `${this.amount.value} sent to ${this.recipient.value}` })
+        return this.dialog.successAlert({ text: `${this.amount.value} LSK was successfully transferred to ${this.recipient.value}` })
             .then(() => {
               this.reset();
             });
       }).catch((res) => {
-        this.dialog.errorAlert({ text: res && res.message ? res.message : 'An error occurred while sending the transaction.' });
+        this.dialog.errorAlert({ text: res && res.message ? res.message : 'An error occurred while creating the transaction.' });
       }).finally(() => {
         this.loading = false;
       });

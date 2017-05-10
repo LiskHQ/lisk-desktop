@@ -1,4 +1,4 @@
-app.factory('SendModal', ($mdDialog) => {
+app.factory('TransferModal', ($mdDialog) => {
   const init = () => {
   };
 
@@ -6,7 +6,7 @@ app.factory('SendModal', ($mdDialog) => {
   };
 
   const show = (recipientId, amount) => ($mdDialog.show({
-    template: '<md-dialog flex="80" ><send recipient-id="ms.recipientId" transfer-amount="ms.amount"></send></md-dialog>',
+    template: '<md-dialog flex="80" ><transfer recipient-id="ms.recipientId" transfer-amount="ms.amount"></transfer></md-dialog>',
     locals: {
       recipientId, amount,
     },

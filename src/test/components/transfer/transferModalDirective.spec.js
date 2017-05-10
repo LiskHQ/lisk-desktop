@@ -5,25 +5,25 @@ const sinonChai = require('sinon-chai');
 const expect = chai.expect;
 chai.use(sinonChai);
 
-describe('Send modal directive', () => {
+describe('Transfer modal directive', () => {
   let $scope;
-  let SendModal;
+  let TransferModal;
   let compiled;
-  const template = '<div><button type="button" data-show-send-modal=""></button></div>';
+  const template = '<div><button type="button" data-show-transfer-modal=""></button></div>';
 
   beforeEach(angular.mock.module('app'));
 
-  beforeEach(inject(($compile, $rootScope, _SendModal_) => {
+  beforeEach(inject(($compile, $rootScope, _TransferModal_) => {
     $scope = $rootScope.$new();
-    SendModal = _SendModal_;
+    TransferModal = _TransferModal_;
     compiled = $compile(template)($scope);
 
     $scope.$digest();
   }));
 
   afterEach(() => {
-    if (typeof SendModal.show.restore === 'function') {
-      SendModal.show.restore();
+    if (typeof TransferModal.show.restore === 'function') {
+      TransferModal.show.restore();
     }
   });
 
@@ -32,9 +32,9 @@ describe('Send modal directive', () => {
     expect(el.length).to.equal(1);
   });
 
-  it('should run SendModal.show() when clicked', () => {
+  it('should run TransferModal.show() when clicked', () => {
     const el = compiled.find('button');
-    const spy = sinon.spy(SendModal, 'show');
+    const spy = sinon.spy(TransferModal, 'show');
     el.triggerHandler('click');
     expect(spy).to.have.been.calledWith();
   });

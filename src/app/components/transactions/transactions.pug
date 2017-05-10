@@ -12,7 +12,7 @@ md-card.offline-hide
               th(md-column) Time
               th(md-column) Transaction ID
               th(md-column) From / To
-              th(md-column) Send to this
+              th(md-column) Transfer to this
               th(md-column) Amount
               th(md-column) Fee
           tbody(md-body, infinite-scroll='$ctrl.showMore()')
@@ -35,8 +35,8 @@ md-card.offline-hide
                   span(ng-bind='transaction.senderId', ng-if='transaction.senderId !== $ctrl.account.get().address')
                   span(ng-bind='transaction.recipientId', ng-if='transaction.senderId === $ctrl.account.get().address')
               td(md-cell)
-                i.material-icons.expanding-button(ng-if='transaction.senderId !== $ctrl.account.get().address', data-show-send-modal, data-recipient-id='transaction.senderId') arrow_forward
-                i.material-icons.expanding-button(ng-if='transaction.senderId === $ctrl.account.get().address', data-show-send-modal, data-recipient-id='transaction.recipientId') arrow_forward
+                i.material-icons.expanding-button(ng-if='transaction.senderId !== $ctrl.account.get().address', data-show-transfer-modal, data-recipient-id='transaction.senderId') arrow_forward
+                i.material-icons.expanding-button(ng-if='transaction.senderId === $ctrl.account.get().address', data-show-transfer-modal, data-recipient-id='transaction.recipientId') arrow_forward
               td(md-cell)
                 i.material-icons.in(ng-if='transaction.senderId !== $ctrl.account.get().address') call_received
                 i.material-icons.out(ng-if='transaction.senderId === $ctrl.account.get().address') call_made

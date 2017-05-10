@@ -7,14 +7,14 @@ app.component('main', {
   controllerAs: '$ctrl',
   controller: class main {
     constructor($scope, $rootScope, $timeout, $q, $state, Peers,
-      dialog, SendModal, Account, AccountApi) {
+      dialog, TransferModal, Account, AccountApi) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$timeout = $timeout;
       this.$q = $q;
       this.peers = Peers;
       this.dialog = dialog;
-      this.sendModal = SendModal;
+      this.transferModal = TransferModal;
       this.$state = $state;
       this.account = Account;
       this.accountApi = AccountApi;
