@@ -44,7 +44,7 @@ pipeline {
 
 								# Build nano
 								cd $WORKSPACE/src
-								npm installå
+								npm install
 
 								# Add coveralls config file
 								cp ~/.coveralls.yml-nano .coveralls.yml
