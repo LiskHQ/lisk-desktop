@@ -16,13 +16,24 @@ const emptyAccount = {
   address: '5932438298200837883L',
 };
 
+const accountDelegateCandidate = {
+  passphrase: 'right cat soul renew under climb middle maid powder churn cram coconut',
+  address: '544792633152563672L',
+  username: 'test',
+};
+
+const account2ndPassphraseCandidate = {
+  passphrase: 'dolphin inhale planet talk insect release maze engine guilt loan attend lawn',
+  address: '4264113712245538326L',
+};
+
 const EC = protractor.ExpectedConditions;
 const waitTime = 5000;
 
 function waitForElemAndCheckItsText(selector, text) {
   const elem = element(by.css(selector));
   browser.wait(EC.presenceOf(elem), waitTime, `waiting for element ${selector}`);
-  expect(elem.getText()).toEqual(text);
+  expect(elem.getText()).toEqual(text, `inside element "${selector}"`);
 }
 
 function waitForElemAndClickIt(selector) {
@@ -74,8 +85,11 @@ function send(fromAccount, toAddress, amount) {
 }
 
 function checkSendConfirmation(address, amount) {
-  waitForElemAndCheckItsText('md-dialog h2', 'Success');
-  waitForElemAndCheckItsText('md-dialog .md-dialog-content-body', `${amount} sent to ${address}`);
+}
+
+function checkAlertDialog(title, text) {
+  waitForElemAndCheckItsText('md-dialog h2', title);
+  waitForElemAndCheckItsText('md-dialog .md-dialog-content-body', text);
   const okButton = element(by.css('md-dialog .md-button.md-ink-ripple'));
   okButton.click();
   browser.sleep(500);
@@ -101,6 +115,10 @@ function testNewAccount() {
   launchApp();
 
   element.all(by.css('.md-button.md-primary')).get(0).click();
+  doPassphraseGenerationProcedure(checkIsLoggedIn);
+}
+
+function doPassphraseGenerationProcedure(callback) {
   /**
    * Generates a sequence of random pairs of x,y coordinates on the screen that simulates
    * the movement of mouse to produce a pass phrase.
@@ -131,7 +149,7 @@ function testNewAccount() {
       const okButton = element.all(by.css('.dialog-save .md-button.md-ink-ripple')).get(2);
       okButton.click();
 
-      checkIsLoggedIn();
+      callback();
     });
   });
 }
@@ -171,9 +189,10 @@ function testShowBalance() {
 }
 
 function testSend() {
-  send(masterAccount, delegateAccount.address, 1.1);
+  const amount = 1.1;
+  send(masterAccount, delegateAccount.address, amount);
   browser.sleep(1000);
-  checkSendConfirmation(delegateAccount.address, 1.1);
+  checkAlertDialog('Success', `${amount} sent to ${delegateAccount.address}`);
 }
 
 function testSendWithNotEnoughFunds() {
@@ -230,6 +249,31 @@ function testVerifyMessage() {
   expect(element(by.css('textarea[name="result"]')).getText()).toEqual(message);
 }
 
+function test2ndPassphrase() {
+  login(account2ndPassphraseCandidate);
+  waitForElemAndClickIt('header .md-icon-button');
+  browser.sleep(1000);
+  waitForElemAndClickIt('md-menu-item:nth-child(3) .md-button');
+  doPassphraseGenerationProcedure(() => {
+    browser.sleep(500);
+    checkAlertDialog('Success', 'Your second passphrase was successfully registered.'); 
+  });
+}
+
+function testDelegateRegistration() {
+  login(accountDelegateCandidate);
+  waitForElemAndClickIt('header .md-icon-button');
+  browser.sleep(1000);
+  waitForElemAndClickIt('md-menu-item:nth-child(4) .md-button');
+  browser.sleep(500);
+  element(by.css('md-dialog input[name="delegateName"]')).sendKeys(accountDelegateCandidate.username);
+  waitForElemAndClickIt('md-dialog button.md-primary');
+
+  browser.sleep(500);
+  // FIXME: the title should really be "Success", not "Congratulations!" to be consistent
+  checkAlertDialog('Congratulations!', 'Account was successfully registered as delegate.'); 
+}
+
 function testForgingCenter() {
   login(delegateAccount);
   waitForElemAndClickIt('main md-tab-item:nth-child(3)');
@@ -263,6 +307,15 @@ function testSearchDelegates() {
   // FIXME: there should be 1 delegate displayed, so this should be toEqual(1)
   // but we have to use ng-if instead of ng-hide for tr with "No delegates found" message
   expect(element.all(by.css('delegates table tbody tr')).count()).toEqual(2);
+}
+
+function testViewVotes() {
+  login(masterAccount);
+  waitForElemAndClickIt('main md-tab-item:nth-child(2)');
+  waitForElemAndCheckItsText('delegates md-menu button span.ng-scope', 'MY VOTES (101)');
+  waitForElemAndClickIt('delegates md-menu button');
+  browser.sleep(500);
+  expect(element.all(by.css('md-menu-item.vote-list-item')).count()).toEqual(101);
 }
 
 function writeScreenShot(data, filename) {
@@ -316,8 +369,8 @@ describe('Lisk Nano', () => {
     xit('should allow to sign message', testSignMessage);
     // FIXME: suspended because it doesn't pass, though the feature works
     xit('should allow to verify message', testVerifyMessage);
-    xit('should allow to set 2nd passphrase', () => {});
-    xit('should allow to register a delegate', () => {});
+    it('should allow to set 2nd passphrase', test2ndPassphrase);
+    it('should allow to register a delegate', testDelegateRegistration);
   });
 
   describe('Send dialog', () => {
@@ -338,7 +391,7 @@ describe('Lisk Nano', () => {
   describe('Voting tab', () => {
     it('should allow to view delegates', testViewDelegates);
     it('should allow to search delegates', testSearchDelegates);
-    xit('should allow to view my votes', () => {});
+    it('should allow to view my votes', testViewVotes);
     xit('should allow to select delegates in the "Voting" tab and vote for them', () => {});
     xit('should allow to select delegates in the "Vote" dialog and vote for them', () => {});
     xit('should allow to remove votes form delegates', () => {});
