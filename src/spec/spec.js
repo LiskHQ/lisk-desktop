@@ -230,7 +230,7 @@ function testSignMessage() {
   waitForElemAndClickIt('md-menu-item .md-button');
   element(by.css('textarea[name="message"]')).sendKeys(message);
   browser.sleep(1000);
-  expect(element(by.css('textarea[name="result"]')).getText()).toEqual(result);
+  expect(element(by.css('textarea[name="result"]')).getAttribute('value')).toEqual(result);
 }
 
 function testVerifyMessage() {
@@ -246,7 +246,7 @@ function testVerifyMessage() {
   element(by.css('input[name="publicKey"]')).sendKeys(publicKey);
   element(by.css('textarea[name="signature"]')).sendKeys(signature);
   browser.sleep(1000);
-  expect(element(by.css('textarea[name="result"]')).getText()).toEqual(message);
+  expect(element(by.css('textarea[name="result"]')).getAttribute('value')).toEqual(message);
 }
 
 function test2ndPassphrase() {
@@ -289,7 +289,7 @@ function testViewDelegates() {
   login(masterAccount);
   waitForElemAndClickIt('main md-tab-item:nth-child(2)');
   waitForElemAndCheckItsText('delegates table thead tr th:nth-child(1)', 'Vote');
-  waitForElemAndCheckItsText('delegates table tbody tr td:nth-child(5)', '100');
+  waitForElemAndCheckItsText('delegates table tbody tr td:nth-child(2)', '1');
 
   // FIXME: there are 20 delegates displayed, so this should be toEqual(20)
   // but we have to use ng-if instead of ng-hide for tr with "No delegates found" message
@@ -407,10 +407,8 @@ describe('Lisk Nano', () => {
   });
 
   describe('Top right menu', () => {
-    // FIXME: suspended because it doesn't pass, though the feature works
-    xit('should allow to sign message', testSignMessage);
-    // FIXME: suspended because it doesn't pass, though the feature works
-    xit('should allow to verify message', testVerifyMessage);
+    it('should allow to sign message', testSignMessage);
+    it('should allow to verify message', testVerifyMessage);
     it('should allow to set 2nd passphrase', test2ndPassphrase);
     it('should allow to register a delegate', testDelegateRegistration);
   });
