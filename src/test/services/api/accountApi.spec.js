@@ -7,21 +7,17 @@ chai.use(sinonChai);
 
 describe('Factory: AccountApi', () => {
   let peers;
-  let $q;
   let accountApi;
   let peersMock;
-  let deffered;
 
   beforeEach(angular.mock.module('app'));
 
-  beforeEach(inject((_Peers_, _$q_, _AccountApi_) => {
+  beforeEach(inject((_Peers_, _AccountApi_) => {
     peers = _Peers_;
-    $q = _$q_;
     accountApi = _AccountApi_;
   }));
 
   beforeEach(() => {
-    deffered = $q.defer();
     peersMock = sinon.mock(peers);
     peers.setActive({
       name: 'Mainnet',
@@ -35,7 +31,6 @@ describe('Factory: AccountApi', () => {
 
   describe('transaction.create(recipientId, amount, secret, secondSecret)', () => {
     it('returns Peers.sendRequest(\'transactions\', options);', () => {
-      console.log(deffered);
       const options = {
         recipientId: '537318935439898807L',
         amount: 10,
@@ -43,14 +38,11 @@ describe('Factory: AccountApi', () => {
         secondSecret: null,
       };
       const spy = sinon.spy(peers, 'sendRequestPromise');
-      // peers.expects('sendRequestPromise').withArgs('transactions',
-      //   options).returns(deffered.promise);
 
       accountApi.transactions.create(
         options.recipientId, options.amount, options.secret, options.secondSecret);
 
       expect(spy).to.have.been.calledWith('transactions', options);
-      // expect(promise).to.equal(deffered.promise);
     });
   });
 
@@ -64,14 +56,11 @@ describe('Factory: AccountApi', () => {
       };
 
       const spy = sinon.spy(peers, 'sendRequestPromise');
-      // peersMock.expects('sendRequestPromise').withArgs('transactions',
-      //   options).returns(deffered.promise);
 
       accountApi.transactions.get(
         options.recipientId, options.limit, options.offset);
 
       expect(spy).to.have.been.calledWith('transactions', options);
-      // expect(promise).to.equal(deffered.promise);
     });
   });
 
@@ -82,14 +71,10 @@ describe('Factory: AccountApi', () => {
       const secondSecret = 'stay undo beyond powder sand laptop grow gloom apology hamster primary arrive';
 
       const spy = sinon.spy(peers, 'sendRequestPromise');
-      // peersMock.expects('sendRequestPromise')
-      //   .withArgs('signatures', { secondSecret, publicKey, secret })
-      //   .returns(deffered.promise);
 
       accountApi.setSecondSecret(secondSecret, publicKey, secret);
 
       expect(spy).to.have.been.calledWith('signatures', { secondSecret, publicKey, secret });
-      // expect(promise).to.equal(deffered.promise);
     });
   });
 });
