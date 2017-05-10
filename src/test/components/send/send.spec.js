@@ -12,14 +12,16 @@ describe.skip('Send component', () => {
   let $scope;
   let lsk;
   let account;
+  let accountApi;
 
   beforeEach(angular.mock.module('app'));
 
-  beforeEach(inject((_$compile_, _$rootScope_, _lsk_, _Account_) => {
+  beforeEach(inject((_$compile_, _$rootScope_, _lsk_, _Account_, _AccountApi_) => {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     lsk = _lsk_;
     account = _Account_;
+    accountApi = _AccountApi_;
   }));
 
   beforeEach(() => {
@@ -92,9 +94,9 @@ describe.skip('Send component', () => {
       const RECIPIENT_ADDRESS = '5932438298200837883L';
       const AMOUNT = lsk.normalize(account.get().balance - 10000000);
 
-      const mock = sinon.mock(account);
+      const mock = sinon.mock(accountApi);
       const deffered = $q.defer();
-      mock.expects('sendLSK').returns(deffered.promise);
+      mock.expects('transactions.create').returns(deffered.promise);
 
       const spy = sinon.spy(dialog, 'successAlert');
 
@@ -155,10 +157,10 @@ describe('send component controller', () => {
   });
 
   describe('sendLSK()', () => {
-    it('calls this.account.sendLSK() and success.dialog on success', () => {
-      const mock = sinon.mock(controller.account);
+    it('calls accountApi.transactions.create and success.dialog on success', () => {
+      const mock = sinon.mock(controller.accountApi.transactions);
       const deffered = $q.defer();
-      mock.expects('sendLSK').returns(deffered.promise);
+      mock.expects('create').returns(deffered.promise);
       controller.sendLSK();
 
       const spy = sinon.spy(controller.dialog, 'successAlert');
@@ -169,10 +171,10 @@ describe('send component controller', () => {
       });
     });
 
-    it('calls this.account.sendLSK() and error.dialog on error', () => {
-      const mock = sinon.mock(controller.account);
+    it('calls accountApi.transactions.create and error.dialog on error', () => {
+      const mock = sinon.mock(controller.accountApi.transactions);
       const deffered = $q.defer();
-      mock.expects('sendLSK').returns(deffered.promise);
+      mock.expects('create').returns(deffered.promise);
       controller.sendLSK();
 
       const spy = sinon.spy(controller.dialog, 'errorAlert');

@@ -10,20 +10,20 @@ describe('Vote component', () => {
   let $rootScope;
   let element;
   let $scope;
-  let $peers;
+  let Peers;
   let lsk;
 
   beforeEach(angular.mock.module('app'));
 
-  beforeEach(inject((_$compile_, _$rootScope_, _$peers_, _lsk_) => {
+  beforeEach(inject((_$compile_, _$rootScope_, _Peers_, _lsk_) => {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
-    $peers = _$peers_;
+    Peers = _Peers_;
     lsk = _lsk_;
   }));
 
   beforeEach(() => {
-    $peers.active = { sendRequest() {} };
+    Peers.active = { sendRequest() {} };
 
     $scope = $rootScope.$new();
     $scope.passphrase = 'robust swift grocery peasant forget share enable convince deputy road keep cheap';

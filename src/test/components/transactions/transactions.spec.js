@@ -14,21 +14,23 @@ describe('transactions component controller', () => {
   let controller;
   let $componentController;
   let account;
+  let accountApi;
   let mock;
 
-  beforeEach(inject((_$componentController_, _$rootScope_, _$q_, _Account_) => {
+  beforeEach(inject((_$componentController_, _$rootScope_, _$q_, _Account_, _AccountApi_) => {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
     $q = _$q_;
     account = _Account_;
+    accountApi = _AccountApi_;
   }));
 
   beforeEach(() => {
     $scope = $rootScope.$new();
-    mock = sinon.mock(account);
+    mock = sinon.mock(accountApi.transactions);
     const deffered = $q.defer();
-    mock.expects('listTransactions').returns(deffered.promise);
-    mock.expects('listTransactions').returns(deffered.promise);
+    mock.expects('get').returns(deffered.promise);
+    mock.expects('get').returns(deffered.promise);
     controller = $componentController('transactions', $scope, {});
     account.set({
       passphrase: 'robust swift grocery peasant forget share enable convince deputy road keep cheap',
@@ -60,7 +62,7 @@ describe('transactions component controller', () => {
   describe('showMore()', () => {
     it('calls this.update(true, true) if this.moreTransactionsExist', () => {
       controller.moreTransactionsExist = true;
-      mock.expects('listTransactions').returns($q.defer().promise);
+      mock.expects('get').returns($q.defer().promise);
       controller.loaded = true;
       controller.showMore();
       expect(controller.loaded).to.equal(false);
@@ -82,28 +84,28 @@ describe('transactions component controller', () => {
     });
 
     it('sets this.loaded = false if showLoading == true', () => {
-      mock.expects('listTransactions').returns(transactionsDeferred.promise);
+      mock.expects('get').returns(transactionsDeferred.promise);
       controller.loaded = undefined;
       controller.update(true);
       expect(controller.loaded).to.equal(false);
     });
 
     it('doesn\'t change this.loaded if showLoading == false', () => {
-      mock.expects('listTransactions').returns(transactionsDeferred.promise);
+      mock.expects('get').returns(transactionsDeferred.promise);
       controller.loaded = undefined;
       controller.update(false);
       expect(controller.loaded).to.equal(undefined);
     });
 
     it('cancels update timeout', () => {
-      mock.expects('listTransactions').returns(transactionsDeferred.promise);
+      mock.expects('get').returns(transactionsDeferred.promise);
       const spy = sinon.spy(controller.$timeout, 'cancel');
       controller.update();
       expect(spy).to.have.been.calledWith(controller.timeout);
     });
 
-    it('calls this.account.listTransactions(account.get().address, limit) with limit = 10 by default', () => {
-      mock.expects('listTransactions').withArgs(account.get().address, 10).returns(transactionsDeferred.promise);
+    it('calls accountApi.transactions.get(account.get().address, limit) with limit = 10 by default', () => {
+      mock.expects('get').withArgs(account.get().address, 10).returns(transactionsDeferred.promise);
       controller.update();
       transactionsDeferred.reject();
 
