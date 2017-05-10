@@ -32,13 +32,13 @@ const waitTime = 5000;
 
 function waitForElemAndCheckItsText(selector, text) {
   const elem = element(by.css(selector));
-  browser.wait(EC.presenceOf(elem), waitTime, `waiting for element ${selector}`);
+  browser.wait(EC.presenceOf(elem), waitTime, `waiting for element '${selector}'`);
   expect(elem.getText()).toEqual(text, `inside element "${selector}"`);
 }
 
 function waitForElemAndClickIt(selector) {
   const elem = element(by.css(selector));
-  browser.wait(EC.presenceOf(elem), waitTime);
+  browser.wait(EC.presenceOf(elem), waitTime, `waiting for element '${selector}'`);
   elem.click();
 }
 
@@ -318,6 +318,48 @@ function testViewVotes() {
   expect(element.all(by.css('md-menu-item.vote-list-item')).count()).toEqual(101);
 }
 
+function testVoteFromTable() {
+  login(accountDelegateCandidate);
+  waitForElemAndClickIt('main md-tab-item:nth-child(2)');
+  waitForElemAndClickIt('delegates tr:nth-child(3) md-checkbox');
+  waitForElemAndClickIt('delegates tr:nth-child(5) md-checkbox');
+  waitForElemAndClickIt('delegates tr:nth-child(8) md-checkbox');
+  // FIXME: add 'vote-button' class the "Vote" button and use it here
+  element.all(by.css('delegates md-card-title button')).last().click();
+  // FIXME: add 'md-primary' class the "Confirm vote" button and use it here
+  waitForElemAndClickIt('vote md-dialog-actions button[ng-disabled]');
+  waitForElemAndCheckItsText('md-toast', 'Voting successful');
+}
+
+function testVoteFromDialog() {
+  login(accountDelegateCandidate);
+  waitForElemAndClickIt('main md-tab-item:nth-child(2)');
+  waitForElemAndClickIt('delegates tr:nth-child(3) md-checkbox');
+  waitForElemAndClickIt('delegates tr:nth-child(3) md-checkbox');
+  // FIXME: add 'vote-button' class the "Vote" button and use it here
+  element.all(by.css('delegates md-card-title button')).last().click();
+  element(by.css('md-autocomplete-wrap input')).sendKeys('genesis_7');
+  waitForElemAndClickIt('md-autocomplete-parent-scope');
+  element(by.css('md-autocomplete-wrap input')).sendKeys('genesis_7');
+  waitForElemAndClickIt('md-autocomplete-parent-scope');
+  // FIXME: add 'md-primary' class the "Confirm vote" button and use it here
+  waitForElemAndClickIt('vote md-dialog-actions button[ng-disabled]');
+  waitForElemAndCheckItsText('md-toast', 'Voting successful');
+}
+
+function testUnvote() {
+  login(masterAccount);
+  waitForElemAndClickIt('main md-tab-item:nth-child(2)');
+  waitForElemAndClickIt('delegates tr:nth-child(3) md-checkbox');
+  waitForElemAndClickIt('delegates tr:nth-child(5) md-checkbox');
+  waitForElemAndClickIt('delegates tr:nth-child(8) md-checkbox');
+  // FIXME: add 'vote-button' class the "Vote" button and use it here
+  element.all(by.css('delegates md-card-title button')).last().click();
+  // FIXME: add 'md-primary' class the "Confirm vote" button and use it here
+  waitForElemAndClickIt('vote md-dialog-actions button[ng-disabled]');
+  waitForElemAndCheckItsText('md-toast', 'Voting successful');
+}
+
 function writeScreenShot(data, filename) {
   const stream = fs.createWriteStream(filename);
   stream.write(new Buffer(data, 'base64'));
@@ -392,8 +434,11 @@ describe('Lisk Nano', () => {
     it('should allow to view delegates', testViewDelegates);
     it('should allow to search delegates', testSearchDelegates);
     it('should allow to view my votes', testViewVotes);
-    xit('should allow to select delegates in the "Voting" tab and vote for them', () => {});
-    xit('should allow to select delegates in the "Vote" dialog and vote for them', () => {});
-    xit('should allow to remove votes form delegates', () => {});
+    // FIXME: voting is broken, because it sends secondPassphrase = undefined
+    xit('should allow to select delegates in the "Voting" tab and vote for them', testVoteFromTable);
+    // FIXME: voting is broken, because it sends secondPassphrase = undefined
+    xit('should allow to select delegates in the "Vote" dialog and vote for them', testVoteFromDialog);
+    // FIXME: voting is broken, because it sends secondPassphrase = undefined
+    xit('should allow to remove votes form delegates', testUnvote);
   });
 });
