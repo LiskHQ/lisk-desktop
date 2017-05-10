@@ -2,14 +2,10 @@ import lisk from 'lisk-js';
 
 const UPDATE_INTERVAL_CHECK = 10000;
 
-app.factory('$peers', ($timeout, $cookies, $location, $q, $rootScope) => {
-  class $peers {
+app.factory('Peers', ($timeout, $cookies, $location, $q) => {
+  class Peers {
     constructor() {
       this.check();
-
-      $rootScope.$on('onAccountChange', (event, account) => {
-        this.setActive(account);
-      });
     }
 
     reset(active) {
@@ -20,9 +16,8 @@ app.factory('$peers', ($timeout, $cookies, $location, $q, $rootScope) => {
       }
     }
 
-    setActive(account) {
+    setActive(network) {
       let conf = { };
-      const network = account.network;
       if (network) {
         conf = network;
         if (network.address) {
@@ -50,7 +45,7 @@ app.factory('$peers', ($timeout, $cookies, $location, $q, $rootScope) => {
       return deferred.promise;
     }
 
-    getStatusPromise() {
+    getStatus() {
       return this.sendRequestPromise('loader/status', {});
     }
 
@@ -64,12 +59,12 @@ app.factory('$peers', ($timeout, $cookies, $location, $q, $rootScope) => {
         return;
       }
 
-      this.getStatusPromise()
+      this.getStatus()
         .then(() => this.online = true)
         .catch(() => this.online = false)
         .finally(() => next());
     }
   }
 
-  return new $peers();
+  return new Peers();
 });

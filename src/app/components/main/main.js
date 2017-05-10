@@ -6,17 +6,18 @@ app.component('main', {
   template: require('./main.pug')(),
   controllerAs: '$ctrl',
   controller: class main {
-    constructor($scope, $rootScope, $timeout, $q, $state, $peers,
-      dialog, SendModal, Account) {
+    constructor($scope, $rootScope, $timeout, $q, $state, Peers,
+      dialog, TransferModal, Account, AccountApi) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$timeout = $timeout;
       this.$q = $q;
-      this.$peers = $peers;
+      this.peers = Peers;
       this.dialog = dialog;
-      this.sendModal = SendModal;
+      this.transferModal = TransferModal;
       this.$state = $state;
       this.account = Account;
+      this.accountApi = AccountApi;
 
       this.init();
     }
@@ -30,8 +31,6 @@ app.component('main', {
       }
 
       this.$rootScope.prelogged = true;
-
-      this.$peers.setActive(this.account.get());
 
       this.update()
         .then(() => {
@@ -53,7 +52,7 @@ app.component('main', {
 
     checkIfIsDelegate() {
       if (this.account.get() && this.account.get().publicKey) {
-        this.$peers.active.sendRequest('delegates/get', {
+        this.peers.active.sendRequest('delegates/get', {
           publicKey: this.account.get().publicKey,
         }, (data) => {
           if (data.success && data.delegate) {
@@ -68,7 +67,7 @@ app.component('main', {
 
     update() {
       this.$rootScope.reset();
-      return this.account.getAccountPromise(this.account.get().address)
+      return this.accountApi.get(this.account.get().address)
         .then((res) => {
           this.account.set(res);
         })

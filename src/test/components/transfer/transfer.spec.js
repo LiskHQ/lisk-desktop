@@ -5,21 +5,23 @@ const sinonChai = require('sinon-chai');
 const expect = chai.expect;
 chai.use(sinonChai);
 
-describe.skip('Send component', () => {
+describe.skip('Transfer component', () => {
   let $compile;
   let $rootScope;
   let element;
   let $scope;
   let lsk;
   let account;
+  let accountApi;
 
   beforeEach(angular.mock.module('app'));
 
-  beforeEach(inject((_$compile_, _$rootScope_, _lsk_, _Account_) => {
+  beforeEach(inject((_$compile_, _$rootScope_, _lsk_, _Account_, _AccountApi_) => {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     lsk = _lsk_;
     account = _Account_;
+    accountApi = _AccountApi_;
   }));
 
   beforeEach(() => {
@@ -29,11 +31,11 @@ describe.skip('Send component', () => {
       balance: lsk.from(10535.77379498),
     });
 
-    element = $compile('<send passphrase="passphrase" account="account"></send>')($scope);
+    element = $compile('<transfer passphrase="passphrase" account="account"></transfer>')($scope);
     $scope.$digest();
   });
 
-  const HEADER_TEXT = 'Send';
+  const HEADER_TEXT = 'Transfer';
   it(`should contain header saying "${HEADER_TEXT}"`, () => {
     expect(element.find('.md-title').text()).to.equal(HEADER_TEXT);
   });
@@ -48,9 +50,9 @@ describe.skip('Send component', () => {
     expect(element.find('form label:last').text()).to.equal(AMOUT_LABEL_TEXT);
   });
 
-  const SEND_BUTTON_TEXT = 'Send';
-  it(`should contain a button saying "${SEND_BUTTON_TEXT}"`, () => {
-    expect(element.find('button.md-raised.md-primary').text()).to.equal(SEND_BUTTON_TEXT);
+  const TRANSFER_BUTTON_TEXT = 'Transfer';
+  it(`should contain a button saying "${TRANSFER_BUTTON_TEXT}"`, () => {
+    expect(element.find('button.md-raised.md-primary').text()).to.equal(TRANSFER_BUTTON_TEXT);
   });
 
   const CANCEL_BUTTON_TEXT = 'Cancel';
@@ -58,7 +60,7 @@ describe.skip('Send component', () => {
     expect(element.find('button.md-raised.md-secondary').text()).to.equal(CANCEL_BUTTON_TEXT);
   });
 
-  describe('send transaction', () => {
+  describe('create transaction', () => {
     let dialog;
     let $q;
 
@@ -67,13 +69,13 @@ describe.skip('Send component', () => {
       $q = _$q_;
     }));
 
-    it('should allow to send a transaction', () => {
+    it('should allow to create a transaction', () => {
       const RECIPIENT_ADDRESS = '5932438298200837883L';
       const AMOUNT = '10';
 
       const mock = sinon.mock(account);
       const deffered = $q.defer();
-      mock.expects('sendLSK').returns(deffered.promise);
+      mock.expects('transfer').returns(deffered.promise);
 
       const spy = sinon.spy(dialog, 'successAlert');
 
@@ -88,13 +90,13 @@ describe.skip('Send component', () => {
       mock.verify();
     });
 
-    it('should allow to send all funds', () => {
+    it('should allow to transfer all funds', () => {
       const RECIPIENT_ADDRESS = '5932438298200837883L';
       const AMOUNT = lsk.normalize(account.get().balance - 10000000);
 
-      const mock = sinon.mock(account);
+      const mock = sinon.mock(accountApi);
       const deffered = $q.defer();
-      mock.expects('sendLSK').returns(deffered.promise);
+      mock.expects('transactions.create').returns(deffered.promise);
 
       const spy = sinon.spy(dialog, 'successAlert');
 
@@ -107,13 +109,13 @@ describe.skip('Send component', () => {
       deffered.resolve({});
       $scope.$apply();
       expect(spy).to.have.been.calledWith();
-      expect(spy).to.have.been.calledWith({ text: `${AMOUNT} sent to ${RECIPIENT_ADDRESS}` });
+      expect(spy).to.have.been.calledWith({ text: `${AMOUNT} LSK was successfully transferred to ${RECIPIENT_ADDRESS}` });
       mock.verify();
     });
   });
 });
 
-describe('send component controller', () => {
+describe('Transfer component controller', () => {
   beforeEach(angular.mock.module('app'));
 
   let $rootScope;
@@ -132,7 +134,7 @@ describe('send component controller', () => {
 
   beforeEach(() => {
     $scope = $rootScope.$new();
-    controller = $componentController('send', $scope, {});
+    controller = $componentController('transfer', $scope, {});
     account.set({
       balance: '10000',
       passphrase: 'robust swift grocery peasant forget share enable convince deputy road keep cheap',
@@ -143,8 +145,8 @@ describe('send component controller', () => {
     it('resets this.recipient.value and this.amount.value', () => {
       controller.recipient.value = 'TEST';
       controller.amount.value = '1000';
-      controller.sendForm = { $setUntouched: () => {} };
-      const mock = sinon.mock(controller.sendForm);
+      controller.transferForm = { $setUntouched: () => {} };
+      const mock = sinon.mock(controller.transferForm);
       mock.expects('$setUntouched');
 
       controller.reset();
@@ -154,26 +156,26 @@ describe('send component controller', () => {
     });
   });
 
-  describe('sendLSK()', () => {
-    it('calls this.account.sendLSK() and success.dialog on success', () => {
-      const mock = sinon.mock(controller.account);
+  describe('transfer()', () => {
+    it('calls accountApi.transactions.create and success.dialog on success', () => {
+      const mock = sinon.mock(controller.accountApi.transactions);
       const deffered = $q.defer();
-      mock.expects('sendLSK').returns(deffered.promise);
-      controller.sendLSK();
+      mock.expects('create').returns(deffered.promise);
+      controller.transfer();
 
       const spy = sinon.spy(controller.dialog, 'successAlert');
       deffered.resolve({});
       $scope.$apply();
       expect(spy).to.have.been.calledWith({
-        text: `${controller.amount.value} sent to ${controller.recipient.value}`,
+        text: `${controller.amount.value} LSK was successfully transferred to ${controller.recipient.value}`,
       });
     });
 
-    it('calls this.account.sendLSK() and error.dialog on error', () => {
-      const mock = sinon.mock(controller.account);
+    it('calls accountApi.transactions.create and error.dialog on error', () => {
+      const mock = sinon.mock(controller.accountApi.transactions);
       const deffered = $q.defer();
-      mock.expects('sendLSK').returns(deffered.promise);
-      controller.sendLSK();
+      mock.expects('create').returns(deffered.promise);
+      controller.transfer();
 
       const spy = sinon.spy(controller.dialog, 'errorAlert');
       const response = {

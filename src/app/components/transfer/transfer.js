@@ -1,23 +1,23 @@
-import './send.less';
+import './transfer.less';
 
 const ADDRESS_VALID_RE = '^[0-9]{1,21}[L|l]$';
 const AMOUNT_VALID_RE = '^[0-9]+(.[0-9]{1,8})?$';
 
-app.component('send', {
-  template: require('./send.pug')(),
+app.component('transfer', {
+  template: require('./transfer.pug')(),
   bindings: {
     recipientId: '<',
     transferAmount: '<',
   },
-  controller: class send {
-    constructor($scope, $peers, lsk, dialog, $mdDialog, $q, $rootScope, Account) {
+  controller: class transfer {
+    constructor($scope, lsk, dialog, $mdDialog, $q, $rootScope, Account, AccountApi) {
       this.$scope = $scope;
-      this.$peers = $peers;
       this.dialog = dialog;
       this.$mdDialog = $mdDialog;
       this.$q = $q;
       this.$rootScope = $rootScope;
       this.account = Account;
+      this.accountApi = AccountApi;
 
       this.recipient = {
         regexp: ADDRESS_VALID_RE,
@@ -43,7 +43,7 @@ app.component('send', {
 
       this.$scope.$watch('$ctrl.amount.value', () => {
         if (this.amount.value) {
-          this.sendForm.amount.$setValidity('max', parseFloat(this.amount.value) <= parseFloat(this.amount.max));
+          this.transferForm.amount.$setValidity('max', parseFloat(this.amount.value) <= parseFloat(this.amount.max));
         }
       });
     }
@@ -53,9 +53,10 @@ app.component('send', {
       this.amount.value = '';
     }
 
-    sendLSK() {
+    transfer() {
       this.loading = true;
-      this.account.sendLSK(
+
+      this.accountApi.transactions.create(
         this.recipient.value,
         this.amount.raw,
         this.account.get().passphrase,
@@ -70,12 +71,12 @@ app.component('send', {
           fee: 10000000,
         };
         this.$rootScope.$broadcast('transaction-sent', transaction);
-        return this.dialog.successAlert({ text: `${this.amount.value} sent to ${this.recipient.value}` })
+        return this.dialog.successAlert({ text: `${this.amount.value} LSK was successfully transferred to ${this.recipient.value}` })
             .then(() => {
               this.reset();
             });
       }).catch((res) => {
-        this.dialog.errorAlert({ text: res && res.message ? res.message : 'An error occurred while sending the transaction.' });
+        this.dialog.errorAlert({ text: res && res.message ? res.message : 'An error occurred while creating the transaction.' });
       }).finally(() => {
         this.loading = false;
       });

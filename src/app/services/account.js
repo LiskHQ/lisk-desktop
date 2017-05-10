@@ -1,21 +1,35 @@
 import lisk from 'lisk-js';
 
-app.factory('Account', function ($rootScope, $peers, $q) {
+app.factory('Account', function ($rootScope) {
   this.account = {};
 
   const merge = (obj) => {
     const keys = Object.keys(obj);
+    const changes = {};
+
     keys.forEach((key) => {
+      changes[key] = {
+        old: this.account[key],
+        new: obj[key],
+      };
       this.account[key] = obj[key];
 
       if (key === 'passphrase') {
         const kp = lisk.crypto.getKeys(obj[key]);
+
+        changes.account = {
+          old: this.account.publicKey,
+          new: kp.publicKey,
+        };
         this.account.publicKey = kp.publicKey;
+
+        changes.address = { old: this.account.address };
         this.account.address = lisk.crypto.getAddress(kp.publicKey);
+        changes.address.new = this.account.address;
       }
 
       // Calling listeners with the list of changes
-      $rootScope.$broadcast('onAccountChange', this.account);
+      $rootScope.$broadcast('onAccountChange', changes);
     });
   };
 
@@ -32,34 +46,6 @@ app.factory('Account', function ($rootScope, $peers, $q) {
       delete this.account[key];
     });
   };
-
-  this.getAccountPromise = (address) => {
-    const deferred = $q.defer();
-    $peers.active.getAccount(this.account.address, (data) => {
-      if (data.success) {
-        deferred.resolve(data.account);
-      } else {
-        deferred.resolve({
-          address,
-          balance: 0,
-        });
-      }
-    });
-    return deferred.promise;
-  };
-
-  this.sendLSK = (recipientId, amount, secret, secondSecret) => $peers.sendRequestPromise(
-    'transactions', { recipientId, amount, secret, secondSecret });
-
-  this.listTransactions = (address, limit = 20, offset = 0) => $peers.sendRequestPromise('transactions', {
-    senderId: address,
-    recipientId: address,
-    limit,
-    offset,
-  });
-
-  this.setSecondSecret = (secondSecret, publicKey, secret) => $peers.sendRequestPromise(
-    'signatures', { secondSecret, publicKey, secret });
 
   return this;
 });

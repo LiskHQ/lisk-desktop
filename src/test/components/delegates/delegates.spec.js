@@ -10,21 +10,21 @@ describe('Delegates component', () => {
   let $rootScope;
   let element;
   let $scope;
-  let $peers;
+  let Peers;
   let lsk;
 
   beforeEach(angular.mock.module('app'));
 
-  beforeEach(inject((_$compile_, _$rootScope_, _$peers_, _lsk_) => {
+  beforeEach(inject((_$compile_, _$rootScope_, _Peers_, _lsk_) => {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
-    $peers = _$peers_;
+    Peers = _Peers_;
     lsk = _lsk_;
   }));
 
   beforeEach(() => {
-    $peers.active = { sendRequest() {} };
-    const mock = sinon.mock($peers.active);
+    Peers.active = { sendRequest() {} };
+    const mock = sinon.mock(Peers.active);
     mock.expects('sendRequest').withArgs('accounts/delegates').callsArgWith(2, {
       success: true,
       delegates: Array.from({ length: 10 }, (v, k) => ({
@@ -62,15 +62,15 @@ describe('delegates component controller', () => {
   let controller;
   let $componentController;
   let activePeerMock;
-  let $peers;
+  let Peers;
   let delegates;
   let $q;
   let $timeout;
 
-  beforeEach(inject((_$componentController_, _$rootScope_, _$q_, _$peers_, _$timeout_) => {
+  beforeEach(inject((_$componentController_, _$rootScope_, _$q_, _Peers_, _$timeout_) => {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
-    $peers = _$peers_;
+    Peers = _Peers_;
     $q = _$q_;
     $timeout = _$timeout_;
   }));
@@ -81,8 +81,8 @@ describe('delegates component controller', () => {
       status: {},
     }));
 
-    $peers.active = { sendRequest() {} };
-    activePeerMock = sinon.mock($peers.active);
+    Peers.active = { sendRequest() {} };
+    activePeerMock = sinon.mock(Peers.active);
 
     $scope = $rootScope.$new();
     controller = $componentController('delegates', $scope, {

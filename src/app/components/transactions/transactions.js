@@ -5,13 +5,14 @@ const UPDATE_INTERVAL = 20000;
 app.component('transactions', {
   template: require('./transactions.pug')(),
   controller: class transactions {
-    constructor($scope, $rootScope, $timeout, $q, $peers, Account) {
+    constructor($scope, $rootScope, $timeout, $q, Peers, Account, AccountApi) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$timeout = $timeout;
       this.$q = $q;
-      this.$peers = $peers;
+      this.peers = Peers;
       this.account = Account;
+      this.accountApi = AccountApi;
 
       this.loaded = false;
       this.transactions = [];
@@ -64,7 +65,7 @@ app.component('transactions', {
     }
 
     loadTransactions(limit) {
-      return this.account.listTransactions(this.account.get().address, limit)
+      return this.accountApi.transactions.get(this.account.get().address, limit)
         .then(this._processTransactionsResponse.bind(this))
         .catch(() => {
           this.transactions = [];

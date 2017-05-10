@@ -10,7 +10,7 @@ describe('setSecondPass Directive', () => {
   let $scope;
   let $rootScope;
   let element;
-  let account;
+  let accountApi;
   let setSecondPass;
   let $q;
   let dialog;
@@ -21,12 +21,12 @@ describe('setSecondPass Directive', () => {
 
     // Store references to $rootScope and $compile
     // so they are available to all tests in this describe block
-    inject((_$compile_, _$rootScope_, _setSecondPass_, _Account_, _$q_, _dialog_) => {
+    inject((_$compile_, _$rootScope_, _setSecondPass_, _AccountApi_, _$q_, _dialog_) => {
       // The injector unwraps the underscores (_) from around the parameter names when matching
       $compile = _$compile_;
       $rootScope = _$rootScope_;
       setSecondPass = _setSecondPass_;
-      account = _Account_;
+      accountApi = _AccountApi_;
       $q = _$q_;
       dialog = _dialog_;
       $scope = $rootScope.$new();
@@ -39,7 +39,7 @@ describe('setSecondPass Directive', () => {
 
   describe('SetSecondPassLink', () => {
     it('listens for an onAfterSignup event', () => {
-      const mock = sinon.mock(account);
+      const mock = sinon.mock(accountApi);
       const deffered = $q.defer();
       mock.expects('setSecondSecret').returns(deffered.promise);
 
@@ -66,8 +66,8 @@ describe('setSecondPass Directive', () => {
   });
 
   describe('scope.passConfirmSubmit', () => {
-    it('should call account.setSecondSecret', () => {
-      const mock = sinon.mock(account);
+    it('should call accountApi.setSecondSecret', () => {
+      const mock = sinon.mock(accountApi);
       const deffered = $q.defer();
       mock.expects('setSecondSecret').returns(deffered.promise);
 
@@ -81,7 +81,7 @@ describe('setSecondPass Directive', () => {
     });
 
     it('should show error dialog if trying to set second passphrase multiple times', () => {
-      const mock = sinon.mock(account);
+      const mock = sinon.mock(accountApi);
       const deffered = $q.defer();
       mock.expects('setSecondSecret').returns(deffered.promise);
 
@@ -102,7 +102,7 @@ describe('setSecondPass Directive', () => {
     });
 
     it('should show error dialog if account does not have enough LSK', () => {
-      const mock = sinon.mock(account);
+      const mock = sinon.mock(accountApi);
       const deffered = $q.defer();
       mock.expects('setSecondSecret').returns(deffered.promise);
 
@@ -115,7 +115,7 @@ describe('setSecondPass Directive', () => {
     });
 
     it('should show error dialog for all the other errors', () => {
-      const mock = sinon.mock(account);
+      const mock = sinon.mock(accountApi);
       const deffered = $q.defer();
       mock.expects('setSecondSecret').returns(deffered.promise);
 

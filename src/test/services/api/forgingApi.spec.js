@@ -6,7 +6,7 @@ const expect = chai.expect;
 chai.use(sinonChai);
 
 describe('Factory: forgingService', () => {
-  let $peers;
+  let Peers;
   let $q;
   let forgingService;
   let mock;
@@ -14,15 +14,15 @@ describe('Factory: forgingService', () => {
 
   beforeEach(angular.mock.module('app'));
 
-  beforeEach(inject((_$peers_, _$q_, _forgingService_) => {
-    $peers = _$peers_;
+  beforeEach(inject((_Peers_, _$q_, _forgingService_) => {
+    Peers = _Peers_;
     $q = _$q_;
     forgingService = _forgingService_;
   }));
 
   beforeEach(() => {
     deffered = $q.defer();
-    mock = sinon.mock($peers);
+    mock = sinon.mock(Peers);
   });
 
   afterEach(() => {
@@ -31,7 +31,7 @@ describe('Factory: forgingService', () => {
   });
 
   describe('getDelegate()', () => {
-    it('returns $peers.sendRequestPromise(\'delegates/get\');', () => {
+    it('returns Peers.sendRequestPromise(\'delegates/get\');', () => {
       mock.expects('sendRequestPromise').withArgs('delegates/get').returns(deffered.promise);
 
       const promise = forgingService.getDelegate();
@@ -41,7 +41,7 @@ describe('Factory: forgingService', () => {
   });
 
   describe('getForgedBlocks(limit, offset)', () => {
-    it('returns $peers.sendRequestPromise(\'blocks\');', () => {
+    it('returns Peers.sendRequestPromise(\'blocks\');', () => {
       mock.expects('sendRequestPromise').withArgs('blocks').returns(deffered.promise);
 
       const promise = forgingService.getForgedBlocks();
@@ -51,7 +51,7 @@ describe('Factory: forgingService', () => {
   });
 
   describe('getForgedStats(startMoment)', () => {
-    it('returns $peers.sendRequestPromise(\'delegates/forging/getForgedByAccount\');', () => {
+    it('returns Peers.sendRequestPromise(\'delegates/forging/getForgedByAccount\');', () => {
       mock.expects('sendRequestPromise').withArgs('delegates/forging/getForgedByAccount').returns(deffered.promise);
 
       const promise = forgingService.getForgedStats();

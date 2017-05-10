@@ -1,14 +1,14 @@
 import moment from 'moment';
 
-app.factory('forgingService', ($peers, Account) => ({
+app.factory('forgingService', (Peers, Account) => ({
   getDelegate() {
-    return $peers.sendRequestPromise('delegates/get', {
+    return Peers.sendRequestPromise('delegates/get', {
       publicKey: Account.get().publicKey,
     });
   },
 
   getForgedBlocks(limit = 10, offset = 0) {
-    return $peers.sendRequestPromise('blocks', {
+    return Peers.sendRequestPromise('blocks', {
       limit,
       offset,
       generatorPublicKey: Account.get().publicKey,
@@ -16,7 +16,7 @@ app.factory('forgingService', ($peers, Account) => ({
   },
 
   getForgedStats(startMoment) {
-    return $peers.sendRequestPromise('delegates/forging/getForgedByAccount', {
+    return Peers.sendRequestPromise('delegates/forging/getForgedByAccount', {
       generatorPublicKey: Account.get().publicKey,
       start: moment(startMoment).unix(),
       end: moment().unix(),

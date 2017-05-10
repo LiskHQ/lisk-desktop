@@ -1,18 +1,18 @@
-app.factory('delegateService', $peers => ({
+app.factory('delegateService', Peers => ({
   listAccountDelegates(options) {
-    return $peers.sendRequestPromise('accounts/delegates', options);
+    return Peers.sendRequestPromise('accounts/delegates', options);
   },
 
   listDelegates(options) {
-    return $peers.sendRequestPromise(`delegates/${options.q ? 'search' : ''}`, options);
+    return Peers.sendRequestPromise(`delegates/${options.q ? 'search' : ''}`, options);
   },
 
   getDelegate(options) {
-    return $peers.sendRequestPromise('delegates/get', options);
+    return Peers.sendRequestPromise('delegates/get', options);
   },
 
   vote(options) {
-    return $peers.sendRequestPromise('accounts/delegates', {
+    return Peers.sendRequestPromise('accounts/delegates', {
       secret: options.secret,
       publicKey: options.publicKey,
       secondSecret: options.secondSecret,
@@ -37,7 +37,7 @@ app.factory('delegateService', $peers => ({
     if (secondSecret) {
       data.secondSecret = secondSecret;
     }
-    return $peers.sendRequestPromise('delegates', data);
+    return Peers.sendRequestPromise('delegates', data);
   },
 }));
 

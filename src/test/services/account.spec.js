@@ -2,81 +2,54 @@ const chai = require('chai');
 const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 
+const VALID_PASSPHRASE = 'illegal symbol search tree deposit youth mixture craft amazing tool soon unit';
+
 const expect = chai.expect;
 chai.use(sinonChai);
 
 describe('Factory: Account', () => {
-  let $peers;
-  let $q;
   let account;
-  let mock;
-  let deffered;
+  let $rootScope;
 
   beforeEach(angular.mock.module('app'));
 
-  beforeEach(inject((_$peers_, _$q_, Account) => {
-    $peers = _$peers_;
-    $q = _$q_;
-    account = Account;
+  beforeEach(inject((_Account_, _$rootScope_) => {
+    account = _Account_;
+    $rootScope = _$rootScope_;
   }));
 
-  beforeEach(() => {
-    deffered = $q.defer();
-    mock = sinon.mock($peers);
-  });
+  describe('set(config)', () => {
+    it('returns this.account', () => {
+      const accountInstanse = account.get();
 
-  afterEach(() => {
-    mock.verify();
-    mock.restore();
-  });
+      const setReturnValue = account.set({ passphrase: VALID_PASSPHRASE });
 
-  describe('sendLSK(recipientId, amount, secret, secondSecret)', () => {
-    it('returns $peers.sendRequestPromise(\'transactions\', options);', () => {
-      const options = {
-        recipientId: '537318935439898807L',
-        amount: 10,
-        secret: 'wagon stock borrow episode laundry kitten salute link globe zero feed marble',
-        secondSecret: null,
-      };
-      mock.expects('sendRequestPromise').withArgs('transactions', options).returns(deffered.promise);
+      expect(setReturnValue).to.equal(accountInstanse);
+    });
 
-      const promise = account.sendLSK(
-        options.recipientId, options.amount, options.secret, options.secondSecret);
+    it('should set address and publicKey for a given valid passphrase', () => {
+      const accountInstanse = account.set({ passphrase: VALID_PASSPHRASE });
 
-      expect(promise).to.equal(deffered.promise);
+      expect(accountInstanse.address).to.not.equal(undefined);
+      expect(accountInstanse.publicKey).to.not.equal(undefined);
+    });
+
+    it('should broadcast the changes', () => {
+      const spy = sinon.spy($rootScope, '$broadcast');
+      account.set({ passphrase: VALID_PASSPHRASE });
+      expect(spy).to.have.been.calledWith();
     });
   });
 
-  describe('listTransactions(address, limit, offset)', () => {
-    it('returns $peers.sendRequestPromise(\'transactions\', options);', () => {
-      const options = {
-        senderId: '537318935439898807L',
-        recipientId: '537318935439898807L',
-        limit: 20,
-        offset: 0,
-      };
-      mock.expects('sendRequestPromise').withArgs('transactions', options).returns(deffered.promise);
+  describe('get(config)', () => {
+    it('returns this.account', () => {
+      account.set({ passphrase: VALID_PASSPHRASE });
+      const accountInstanse = account.get();
 
-      const promise = account.listTransactions(
-        options.recipientId, options.limit, options.offset);
-
-      expect(promise).to.equal(deffered.promise);
-    });
-  });
-
-  describe('setSecondSecret(secondSecret, publicKey, secret)', () => {
-    it('returns $peers.sendRequestPromise(\'signatures\', { secondSecret, publicKey, secret });', () => {
-      const publicKey = '3ff32442bb6da7d60c1b7752b24e6467813c9b698e0f278d48c43580da972135';
-      const secret = 'wagon stock borrow episode laundry kitten salute link globe zero feed marble';
-      const secondSecret = 'stay undo beyond powder sand laptop grow gloom apology hamster primary arrive';
-      mock.expects('sendRequestPromise')
-        .withArgs('signatures', { secondSecret, publicKey, secret })
-        .returns(deffered.promise);
-
-      const promise = account.setSecondSecret(secondSecret, publicKey, secret);
-
-      expect(promise).to.equal(deffered.promise);
+      expect(accountInstanse).to.not.equal(undefined);
+      expect(accountInstanse.address).to.not.equal(undefined);
+      expect(accountInstanse.publicKey).to.not.equal(undefined);
+      expect(accountInstanse.passphrase).to.not.equal(undefined);
     });
   });
 });
-
