@@ -55,9 +55,6 @@ pipeline {
 								# Run test
 								npm run test
 
-								# Run nano build
-								npm run build
-
 								# Commented until e2e is ready
 								# export CHROME_BIN=chromium-browser
 								# export DISPLAY=:0.0
@@ -67,7 +64,7 @@ pipeline {
 
 								# Commented until e2e is ready
 								# cat .protractor.log
-								cat .lisk-nano.log
+								# cat .lisk-nano.log
 
 								pkill -f app.js -9 || true
 								pkill -f webpack-dev-server -9 || true
