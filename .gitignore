@@ -4,5 +4,6 @@ node_modules
 npm-debug.log
 src/.nyc_output
 src/coverage
+src/e2e-test-screenshots
 *.sw[pon]
 app/app.js
