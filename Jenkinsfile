@@ -8,6 +8,7 @@ pipeline {
 			steps {
 				node('master-nano-01'){
 					lock(resource: "master-nano-01", inversePrecedence: true) {
+            checkout scm
 						sh '''#!/bin/bash
 								env
 
