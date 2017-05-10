@@ -16,6 +16,7 @@ preprocessors[test] = ['webpack'];
 
 const opts = {
   onTravis: process.env.ON_TRAVIS,
+  onJenkins: process.env.ON_JENKINS,
   live: process.env.LIVE,
 };
 
@@ -43,13 +44,9 @@ module.exports = function (config) {
     // Rest results reporter to use
     // Possible values: 'dots', 'progress'
     // Available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['coverage', 'mocha'].concat(opts.onTravis ? ['coveralls'] : []),
+    reporters: ['coverage', 'mocha'].concat(opts.onTravis ? ['coveralls'] : []).concat(opts.onJenkins ? ['coveralls'] : []),
 
     preprocessors,
-
-    mochaReporter: {
-      output: 'autowatch',
-    },
 
     babelPreprocessor: {
       options: {
@@ -82,11 +79,16 @@ module.exports = function (config) {
     },
 
     coverageReporter: {
-      reporters: [
-        {
-          type: opts.onTravis ? 'lcov' : 'html',
-          dir: 'coverage/',
-        }].concat(opts.onTravis ? [{ type: 'text' }] : []),
+      reporters: [{
+        type: 'text',
+        dir: 'coverage/',
+      }, {
+        type: opts.onTravis ? 'lcov' : 'html',
+        dir: 'coverage/',
+      }, {
+        type: opts.onJenkins ? 'lcov' : 'html',
+        dir: 'coverage/',
+      }],
     },
 
     // Start these browsers
