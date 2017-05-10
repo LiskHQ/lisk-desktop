@@ -40,6 +40,12 @@ app.component('send', {
       this.$scope.$watch('$ctrl.account.balance', () => {
         this.amount.max = lsk.normalize(this.account.get().balance - 10000000);
       });
+
+      this.$scope.$watch('$ctrl.amount.value', () => {
+        if (this.amount.value) {
+          this.sendForm.amount.$setValidity('max', parseFloat(this.amount.value) <= parseFloat(this.amount.max));
+        }
+      });
     }
 
     reset() {
