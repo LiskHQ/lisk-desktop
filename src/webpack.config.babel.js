@@ -5,6 +5,7 @@ const merge = require('webpack-merge');
 const validate = require('webpack-validator');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const nodeEnvironment = process.env.NODE_ENV;
 
@@ -16,6 +17,7 @@ const PATHS = {
 };
 
 const common = {
+  devtool: 'source-map',
   entry: nodeEnvironment === 'test' ? {} : {
     app: PATHS.app,
   },
@@ -154,11 +156,20 @@ const provide = () => ({
   ],
 });
 
+const bundleAnalyzer = () => ({
+  plugins: [
+    new BundleAnalyzerPlugin({
+      openAnalyzer: false,
+      analyzerMode: 'static',
+    }),
+  ],
+});
+
 let config;
 
 switch (process.env.npm_lifecycle_event) {
   case 'build':
-    config = merge(common, clean(path.join(PATHS.build, '*')), html(), provide(), babel(), pug(), less(), css(), json(), png(), fonts());
+    config = merge(common, clean(path.join(PATHS.build, '*')), html(), provide(), babel(), pug(), less(), css(), json(), png(), fonts(), bundleAnalyzer());
     break;
   default:
     config = merge(common, devServer(), { devtool: 'eval-source-map' }, html(), provide(), babel(), pug(), less(), css(), json(), png(), fonts());

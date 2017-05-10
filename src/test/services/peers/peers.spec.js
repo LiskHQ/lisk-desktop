@@ -18,12 +18,17 @@ describe('Factory: $peers', () => {
     $rootScope = _$rootScope_;
   }));
 
-  describe('setActive()', () => {
+  describe('setActive(account)', () => {
     it('sets $peers.active to a random active official peer', () => {
+      const account = {
+        network: {
+          address: 'http://localhost:8000',
+        },
+      };
       expect($peers.active).to.equal(undefined);
-      $peers.setActive();
+      $peers.setActive(account);
       expect($peers.active).not.to.equal(undefined);
-      expect($peers.stack.official).to.include({ node: $peers.active.currentPeer });
+      expect($peers.active.currentPeer).not.to.equal(undefined);
     });
   });
 
@@ -33,16 +38,9 @@ describe('Factory: $peers', () => {
 
     beforeEach(() => {
       deffered = $q.defer();
-      $peers.active = {
-        getAccountPromise() {
-          return deffered.promise;
-        },
-        getStatusPromise() {
-          return $q.defer().promise;
-        },
-      };
-      mock = sinon.mock($peers.active);
-      mock.expects('getStatusPromise').withArgs().returns(deffered.promise);
+      mock = sinon.mock($peers);
+      mock.expects('getStatusPromise').returns(deffered.promise);
+      $peers.active = {};
     });
 
     afterEach(() => {

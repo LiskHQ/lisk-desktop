@@ -4,6 +4,8 @@ const sinonChai = require('sinon-chai');
 
 const expect = chai.expect;
 chai.use(sinonChai);
+const VALID_PASSPHRASE = 'illegal symbol search tree deposit youth mixture craft amazing tool soon unit';
+const INVALID_PASSPHRASE = 'INVALID_PASSPHRASE';
 
 describe('Login component', () => {
   let $compile;
@@ -32,9 +34,14 @@ describe('Login component', () => {
     expect(element.find('.md-title').text()).to.equal(HEADER_TEXT);
   });
 
-  const LABEL_TEXT = 'Enter your passphrase';
-  it(`should contain a form with label saying "${LABEL_TEXT}"`, () => {
-    expect(element.find('form label').text()).to.equal(LABEL_TEXT);
+  const PASS_LABEL_TEXT = 'Enter your passphrase';
+  it(`should contain a form input with label saying "${PASS_LABEL_TEXT}"`, () => {
+    expect(element.find('form md-input-container label.pass').text()).to.equal(PASS_LABEL_TEXT);
+  });
+
+  const SELECT_LABEL_TEXT = 'Network';
+  it(`should contain a select element with label saying "${SELECT_LABEL_TEXT}"`, () => {
+    expect(element.find('form md-input-container label.select').text()).to.equal(SELECT_LABEL_TEXT);
   });
 
   it('should contain an input field', () => {
@@ -52,13 +59,28 @@ describe('Login controller', () => {
 
   let $rootScope;
   let $scope;
+  let $state;
   let controller;
   let $componentController;
+  let Passphrase;
   let testPassphrase;
+  let account;
+  let $cookies;
+  /* eslint-disable no-unused-vars */
+  let $timeout;
+  /* eslint-enable no-unused-vars */
 
-  beforeEach(inject((_$componentController_, _$rootScope_) => {
+  beforeEach(inject((_$componentController_, _$rootScope_, _$state_,
+    _Passphrase_, _$cookies_, _$timeout_, _Account_) => {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
+    $state = _$state_;
+    Passphrase = _Passphrase_;
+    account = _Account_;
+    $cookies = _$cookies_;
+    /* eslint-disable no-unused-vars */
+    $timeout = _$timeout_;
+    /* eslint-enable no-unused-vars */
   }));
 
   beforeEach(() => {
@@ -69,177 +91,62 @@ describe('Login controller', () => {
     controller.passphrase = '';
   });
 
-  describe('$scope.reset()', () => {
-    it('makes input_passphrase empty', () => {
-      const passphrase = 'TEST';
-      controller.input_passphrase = passphrase;
-      expect(controller.input_passphrase).to.equal(passphrase);
-      controller.reset();
-      expect(controller.input_passphrase).to.equal('');
+  describe('controller()', () => {
+    it('should define a watcher for $ctrl.input_passphrase', () => {
+      $scope.$apply();
+      const spy = sinon.spy(Passphrase, 'isValidPassphrase');
+      controller.input_passphrase = INVALID_PASSPHRASE;
+      $scope.$apply();
+      expect(controller.valid).to.not.equal(1);
+      controller.input_passphrase = VALID_PASSPHRASE;
+      $scope.$apply();
+      expect(controller.valid).to.equal(1);
+      expect(spy).to.have.been.calledWith();
+    });
+
+    it('listens for an onAfterSignup event', () => {
+      const spy = sinon.spy(controller, 'passConfirmSubmit');
+      $rootScope.$broadcast('onAfterSignup', {
+        passphrase: 'TEST_VALUE',
+        target: 'primary-pass',
+      });
+      expect(spy).to.have.been.calledWith('TEST_VALUE');
     });
   });
 
-  describe('$scope.stopNewPassphraseGeneration()', () => {
-    it('sets this.generatingNewPassphrase = false', () => {
-      controller.generatingNewPassphrase = true;
-      controller.stopNewPassphraseGeneration();
-      expect(controller.generatingNewPassphrase).to.equal(false);
-    });
-
-    it('unbinds mousemove listener', () => {
-      const unbindSpy = sinon.spy(controller.$document, 'unbind');
-      controller.stopNewPassphraseGeneration();
-      expect(unbindSpy).to.have.been.calledWith('mousemove', controller.listener);
-    });
-  });
-
-  describe('$scope.startGenratingNewPassphrase()', () => {
+  describe('generatePassphrase()', () => {
     it('sets this.generatingNewPassphrase = true', () => {
-      controller.startGenratingNewPassphrase();
+      controller.generatePassphrase();
       expect(controller.generatingNewPassphrase).to.equal(true);
     });
+  });
 
-    it('unbinds mousemove listener', () => {
-      const spy = sinon.spy(controller, 'reset');
-      controller.startGenratingNewPassphrase();
+  describe('passConfirmSubmit()', () => {
+    it('sets account.phassphrase as this.input_passphrase processed by normalizer', () => {
+      controller.input_passphrase = '\tTEST  PassPHrASe  ';
+      controller.passConfirmSubmit();
+      expect(account.get().passphrase).to.equal('test passphrase');
+    });
+
+    it('calls Passphrase.normalize()', () => {
+      const spy = sinon.spy(Passphrase, 'normalize');
+      controller.passConfirmSubmit();
       expect(spy).to.have.been.calledWith();
     });
 
-    it('creates this.listener(ev) which if called repeatedly will generate a random this.seed', () => {
-      controller.startGenratingNewPassphrase();
-      expect(controller.seed).to.deep.equal(['00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00']);
-      expect(controller.progress).to.equal(0);
-
-      for (let j = 0; j < 300; j++) {
-        const ev = {
-          pageX: Math.random() * 1000,
-          pageY: Math.random() * 1000,
-        };
-        controller.listener(ev);
-      }
-
-      expect(controller.seed).not.to.deep.equal(['00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00']);
-      expect(controller.progress).to.equal(100);
-    });
-  });
-
-  describe('$scope.doTheLogin()', () => {
-    it('sets this.phassphrase as this.input_passphrase processed by fixCaseAndWhitespace', () => {
-      controller.input_passphrase = '\tGLOW two GliMpse camp aware tip brief confirm similar code float defense  ';
-      controller.doTheLogin();
-      expect(controller.passphrase).to.equal('glow two glimpse camp aware tip brief confirm similar code float defense');
-    });
-
-    it('calls this.reset()', () => {
+    it('redirects to main if passphrase is valid', () => {
       controller.input_passphrase = testPassphrase;
-      const spy = sinon.spy(controller, 'reset');
-      controller.doTheLogin();
-      expect(spy).to.have.been.calledWith();
-    });
-
-    it('sets timeout with this.onLogin', () => {
-      controller.input_passphrase = testPassphrase;
-      const spy = sinon.spy(controller, '$timeout');
-      controller.doTheLogin();
-      expect(spy).to.have.been.calledWith(controller.onLogin);
-    });
-  });
-
-  describe('$scope.constructor()', () => {
-    it.skip('sets $watch on $ctrl.input_passphrase to keep validating it', () => {
-      // Skipped because it doesn't work
-      const spy = sinon.spy(controller.$scope, '$watch');
-      controller.constructor();
-      expect(spy).to.have.been.calledWith('$ctrl.input_passphrase', controller.isValidPassphrase);
-    });
-
-    it.skip('sets $watch that sets customFullscreen on small screens', () => {
-    });
-  });
-
-  describe('$scope.simulateMousemove()', () => {
-    it('calls this.$document.mousemove()', () => {
-      const spy = sinon.spy(controller.$document, 'mousemove');
-      controller.simulateMousemove();
+      const spy = sinon.spy($state, 'go');
+      controller.passConfirmSubmit();
       expect(spy).to.have.been.calledWith();
     });
   });
 
-  describe('$scope.setNewPassphrase()', () => {
-    it('opens a material design dialog', () => {
-      const seed = ['23', '34', '34', '34', '34', '34', '34', '34'];
-      const dialogSpy = sinon.spy(controller.$mdDialog, 'show');
-      controller.setNewPassphrase(seed);
-      expect(dialogSpy).to.have.been.calledWith();
-    });
-  });
-
-  describe('$scope.devTestAccount()', () => {
-    it('sets input_passphrase from cookie called passphrase if present', () => {
-      const mock = sinon.mock(controller.$cookies);
-      mock.expects('get').returns(testPassphrase);
+  describe('devTestAccount()', () => {
+    it('sets the passphrase into passphrase input if it is set in the cookies', () => {
+      $cookies.put('passphrase', testPassphrase);
       controller.devTestAccount();
       expect(controller.input_passphrase).to.equal(testPassphrase);
-    });
-
-    it('does nothing if cooke called passphrase not present', () => {
-      controller.input_passphrase = testPassphrase;
-      const mock = sinon.mock(controller.$cookies);
-
-      mock.expects('get').returns(undefined);
-      controller.devTestAccount();
-      expect(controller.input_passphrase).to.equal(testPassphrase);
-    });
-  });
-
-  describe('$scope.isValidPassphrase(value)', () => {
-    it('sets $scope.valid = 2 if  value is empty', () => {
-      controller.isValidPassphrase('');
-      expect(controller.valid).to.equal(2);
-    });
-
-    it('sets $scope.valid = 1 if value is valid', () => {
-      controller.isValidPassphrase('ability theme abandon abandon abandon abandon abandon abandon abandon abandon abandon absorb');
-      expect(controller.valid).to.equal(1);
-    });
-
-    it('sets $scope.valid = 0 if value is invalid', () => {
-      controller.isValidPassphrase('INVALID VALUE');
-      expect(controller.valid).to.equal(0);
-    });
-  });
-});
-
-describe('save $mdDialog controller', () => {
-  describe('constructor()', () => {
-    it.skip('sets $watch on $ctrl.missing_input', () => {
-    });
-  });
-
-  describe('next()', () => {
-    it.skip('sets this.enter=true', () => {
-    });
-
-    it.skip('sets this.missing_word to a random word of passphrase', () => {
-    });
-
-    it.skip('sets this.pre to part of the passphrase before this.missing_word', () => {
-    });
-
-    it.skip('sets this.pos to part of the passphrase after this.missing_word', () => {
-    });
-  });
-
-  describe('ok()', () => {
-    it.skip('calls ok()', () => {
-    });
-
-    it.skip('calls this.close()', () => {
-    });
-  });
-
-  describe('close()', () => {
-    it.skip('calls this.$mdDialog.hide()', () => {
     });
   });
 });

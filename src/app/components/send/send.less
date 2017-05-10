@@ -1,4 +1,3 @@
-
 send {
   input[type=number]::-webkit-inner-spin-button,
   input[type=number]::-webkit-outer-spin-button {
@@ -23,7 +22,31 @@ send {
     color: grey;
   }
 
+  md-dialog {
+    max-height: 100%;
+  }
+
+  md-card {
+    margin: 0;
+  }
+
   md-card-title md-menu {
     margin: -8px -14px;
+  }
+
+  md-dialog-actions .md-button {
+    margin-left: -8px;
+  }
+
+  md-menu.max-funds {
+    &:after {
+      content: '';
+      display: inline-block;
+      vertical-align: middle;
+      height: 100%;
+    }
+    button {
+      vertical-align: middle;
+    }
   }
 }

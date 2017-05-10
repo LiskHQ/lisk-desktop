@@ -1,14 +1,9 @@
-md-content(layout='row')
-  md-content(flex='100', flex-gt-sm='80', flex-offset-gt-sm='10')
-    md-content.header(layout='row', layout-align='center center', layout-padding)
-      img.logo(src=require('./images/LISK-nano.png'))
-      div(flex)
-      md-button.md-raised.md-primary.logout(ng-click='$ctrl.logout()', ng-if='$ctrl.logged') Logout
-    div(layout='row', layout-align='space-around', ng-show='$ctrl.prelogged')
-      md-progress-circular.md-warn(md-mode='indeterminate', md-diameter='80')
-    div(ng-show='!$ctrl.prelogged && !$ctrl.logged')
-      login(passphrase='$ctrl.passphrase', on-login='$ctrl.login()')
-    div(ng-if='$ctrl.logged', ng-class='{ online: $ctrl.$peers.online, offline: !$ctrl.$peers.online }')
-      top(account='$ctrl.account')
-      send(passphrase='$ctrl.passphrase', account='$ctrl.account')
-      transactions(account='$ctrl.account')
+top
+md-tabs(md-stretch-tabs='always')
+  md-tab(data-ui-sref='main.transactions', md-active='$ctrl.activeTab === "main.transactions"')
+    md-tab-label Transactions
+  md-tab(data-ui-sref='main.voting', md-active='$ctrl.activeTab === "main.voting"')
+    md-tab-label Voting
+  md-tab(data-ng-if='$ctrl.account.get().isDelegate', data-ui-sref='main.forging', md-active='$ctrl.activeTab === "main.forging"')
+    md-tab-label Forging 
+div(data-ui-view)

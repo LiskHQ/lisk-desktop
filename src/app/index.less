@@ -5,8 +5,56 @@
 
 body {
   min-width: 320px;
+  & > main, & > main > md-content {
+    height: 100%;
+  }
+}
+
+.body-wrapper {
+  width: 100%;
+  background-color: #eee;
 }
 
 md-card {
   margin-bottom: 20px;
+}
+
+login, login md-card {
+  display: block;
+  height: auto;
+}
+
+body {
+  .logout {
+    margin-right: 0;
+  }
+
+  md-tabs-wrapper {
+    margin: 0 10px;
+  }
+
+  md-content {
+    background-color: #eee;
+  }
+
+  md-card md-content {
+    background-color: #fff;
+  }
+
+  md-tabs md-ink-bar {
+    color: rgb(2,136,209);
+    background-color: rgb(2,136,209);
+    height: 4px;
+  }
+
+  .offline .offline-hide {
+    opacity: 0.5;
+  }
+
+  md-input-container {
+    overflow-x: hidden;
+    label:not(.md-no-float):not(.md-container-ignore), .md-placeholder {
+      box-sizing: content-box;
+    }
+  }
 }

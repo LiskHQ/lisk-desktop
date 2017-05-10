@@ -47,6 +47,10 @@ module.exports = function (config) {
 
     preprocessors,
 
+    mochaReporter: {
+      output: 'autowatch',
+    },
+
     babelPreprocessor: {
       options: {
         presets: ['es2015'],
@@ -78,13 +82,11 @@ module.exports = function (config) {
     },
 
     coverageReporter: {
-      reporters: [{
-        type: 'text',
-        dir: 'coverage/',
-      }, {
-        type: opts.onTravis ? 'lcov' : 'html',
-        dir: 'coverage/',
-      }],
+      reporters: [
+        {
+          type: opts.onTravis ? 'lcov' : 'html',
+          dir: 'coverage/',
+        }].concat(opts.onTravis ? [{ type: 'text' }] : []),
     },
 
     // Start these browsers
@@ -95,6 +97,7 @@ module.exports = function (config) {
     // If true, Karma captures browsers, runs the tests and exits
     singleRun: !opts.live,
     client: {
+      captureConsole: true,
       mocha: {
         opts: 'test/mocha.opts', // You can set opts to equal true then plugin will load opts from default location 'test/mocha.opts'
       },

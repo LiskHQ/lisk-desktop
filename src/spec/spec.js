@@ -28,6 +28,7 @@ function checkErrorMessage(message) {
 
 function launchApp() {
   browser.ignoreSynchronization = true;
+  browser.driver.manage().window().setSize(1000, 1000);
   browser.get('http://localhost:8080#?peerStack=localhost');
 }
 
@@ -46,12 +47,16 @@ function logout() {
 function send(fromAccount, toAddress, amount) {
   login(fromAccount);
   const sendElem = element(by.css('send'));
+  const sendModalButton = element(by.css('md-content.header button.send'));
+
+  browser.wait(EC.presenceOf(sendModalButton), waitTime);
+  sendModalButton.click();
   browser.wait(EC.presenceOf(sendElem), waitTime);
   element(by.css('send input[name="recipient"]')).sendKeys(toAddress);
   element(by.css('send input[name="amount"]')).sendKeys(`${amount}`);
   element(by.css('send input[name="recipient"]')).click();
   const sendButton = element.all(by.css('send button.md-primary')).get(0);
-  browser.wait(EC.presenceOf(sendButton), waitTime);
+  // browser.wait(EC.presenceOf(sendButton), waitTime);
   sendButton.click();
 }
 
@@ -83,11 +88,15 @@ function testNewAccount() {
   launchApp();
 
   element.all(by.css('.md-button.md-primary')).get(0).click();
+  /**
+   * Generates a sequence of random pairs of x,y coordinates on the screen that simulates
+   * the movement of mouse to produce a pass phrase.
+   */
   for (let i = 0; i < 250; i++) {
     browser.actions()
     .mouseMove(element(by.css('body')), {
-      x: Math.floor(Math.random() * 1000),
-      y: Math.floor(Math.random() * 1000),
+      x: 500 + (Math.floor((((i % 2) * 2) - 1) * (249 + (Math.random() * 250)))),
+      y: 500 + (Math.floor((((i % 2) * 2) - 1) * (249 + (Math.random() * 250)))),
     }).perform();
     browser.sleep(5);
   }
@@ -120,22 +129,19 @@ function testAddress() {
 }
 
 function testPeer() {
-  login(masterAccount);
-  waitForElemAndCheckItsText('.peer md-select-value .md-text', 'localhost:4000');
+  expect(element.all(by.css('login form md-input-container:first-child > label')).get(0).getText()).toEqual('Choose a peer');
 }
 
 function testChangePeer() {
-  login(masterAccount);
-
-  const peerElem = element(by.css('.peer md-select-value'));
-  browser.wait(EC.presenceOf(peerElem), waitTime);
+  const peerElem = element(by.css('form md-select'));
+  // browser.wait(EC.presenceOf(peerElem), waitTime);
   peerElem.click();
 
   const optionElem = element.all(by.css('md-select-menu md-optgroup md-option')).get(0);
   browser.wait(EC.presenceOf(optionElem), waitTime);
   optionElem.click();
 
-  waitForElemAndCheckItsText('.peer md-select-value .md-text', 'node01.lisk.io');
+  waitForElemAndCheckItsText('form md-select-value .md-text', 'node01.lisk.io');
 }
 
 function testShowBalance() {
@@ -143,7 +149,7 @@ function testShowBalance() {
 
   const balanceElem = element(by.css('lsk.balance'));
   browser.wait(EC.presenceOf(balanceElem), waitTime);
-  expect(balanceElem.getText()).toMatch(/\d+\.\d+ LSK/);
+  expect(balanceElem.getText()).toMatch(/\d+(\.\d+)* LSK/);
 }
 
 function testSend() {
@@ -171,27 +177,16 @@ function testShowTransactions() {
   expect(element.all(by.css('transactions table tbody tr')).count()).toEqual(10);
 }
 
-function testLoadMoreTransactions() {
-  login(masterAccount);
-
-  const moreButton = element(by.css('transactions button.more'));
-  browser.wait(EC.presenceOf(moreButton), waitTime);
-  moreButton.click();
-
-  expect(element.all(by.css('transactions table tbody tr')).count()).toEqual(20);
-}
-
 describe('Lisk Nano functionality', () => {
   it('should allow to login', testLogin);
   it('should allow to logout', testLogout);
-  it('should show address', testAddress);
   it('should show peer', testPeer);
   it('should allow to change peer', testChangePeer);
+  it('should show address', testAddress);
   it('should show balance', testShowBalance);
   it('should allow to send transaction when enough funds and correct address form', testSend);
   it('should not allow to send transaction when not enough funds', testSendWithNotEnoughFunds);
   it('should not allow to send transaction when invalid address', testSendWithInvalidAddress);
   it('should show transactions', testShowTransactions);
-  it('should allow to load more transactions', testLoadMoreTransactions);
   it('should allow to create a new account', testNewAccount);
 });

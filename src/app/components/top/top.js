@@ -2,16 +2,10 @@ import './top.less';
 
 app.component('top', {
   template: require('./top.pug')(),
-  bindings: {
-    account: '<',
-  },
   controller: class top {
-    constructor($peers, $scope) {
+    constructor($peers, Account) {
       this.$peers = $peers;
-
-      $scope.$watch('$ctrl.$peers.currentPeerConfig', () => {
-        this.$peers.setActive(this.$peers.currentPeerConfig);
-      });
+      this.account = Account;
     }
   },
 });

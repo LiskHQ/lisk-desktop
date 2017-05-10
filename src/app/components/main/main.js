@@ -1,81 +1,83 @@
-import lisk from 'lisk-js';
-
 import './main.less';
 
 const UPDATE_INTERVAL_BALANCE = 10000;
 
 app.component('main', {
   template: require('./main.pug')(),
+  controllerAs: '$ctrl',
   controller: class main {
-    constructor($scope, $rootScope, $timeout, $q, $peers, error) {
+    constructor($scope, $rootScope, $timeout, $q, $state, $peers,
+      dialog, SendModal, Account) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$timeout = $timeout;
       this.$q = $q;
       this.$peers = $peers;
-      this.error = error;
+      this.dialog = dialog;
+      this.sendModal = SendModal;
+      this.$state = $state;
+      this.account = Account;
 
-      this.$scope.$on('login', this.login.bind(this));
-      this.$scope.$on('peerUpdate', this.update.bind(this));
-
-      $scope.$watch('$ctrl.$peers.active', (peer, old) => {
-        if (peer && old) {
-          this.$peers.check();
-          this.$rootScope.$broadcast('peerUpdate');
-        }
-      });
+      this.init();
     }
 
-    reset() {
-      this.$timeout.cancel(this.timeout);
-    }
+    init(attempts = 0) {
+      if (!this.account.get() || !this.account.get().passphrase) {
+        // Return to login but keep the state
+        this.$rootScope.landingUrl = this.$state.current.name;
+        this.$state.go('login');
+        return;
+      }
 
-    login(attempts = 0) {
-      this.prelogged = true;
+      this.$rootScope.prelogged = true;
 
-      this.$peers.setActive();
-
-      const kp = lisk.crypto.getKeys(this.passphrase);
-      this.address = lisk.crypto.getAddress(kp.publicKey);
+      this.$peers.setActive(this.account.get());
 
       this.update()
         .then(() => {
-          this.prelogged = false;
-          this.logged = true;
+          this.$rootScope.prelogged = false;
+          this.$rootScope.logged = true;
+          this.checkIfIsDelegate();
         })
         .catch(() => {
           if (attempts < 10) {
-            this.$timeout(() => this.login(attempts + 1), 1000);
+            this.$timeout(() => this.init(attempts + 1), 1000);
           } else {
-            this.error.dialog({ text: 'No peer connection' });
-            this.logout();
+            this.dialog.errorAlert({ text: 'No peer connection' });
+            this.$rootScope.logout();
           }
         });
+
+      this.activeTab = this.$state.current.name;
     }
 
-    logout() {
-      this.reset();
-      this.$peers.reset(true);
-
-      this.logged = false;
-      this.prelogged = false;
-      this.account = {};
-      this.passphrase = '';
+    checkIfIsDelegate() {
+      if (this.account.get() && this.account.get().publicKey) {
+        this.$peers.active.sendRequest('delegates/get', {
+          publicKey: this.account.get().publicKey,
+        }, (data) => {
+          if (data.success && data.delegate) {
+            this.account.set({
+              isDelegate: true,
+              username: data.delegate.username,
+            });
+          }
+        });
+      }
     }
 
     update() {
-      this.reset();
-
-      return this.$peers.active.getAccountPromise(this.address)
+      this.$rootScope.reset();
+      return this.account.getAccountPromise(this.account.get().address)
         .then((res) => {
-          this.account = res;
+          this.account.set(res);
         })
         .catch((res) => {
-          this.account.balance = undefined;
+          this.account.set({ balance: null });
           return this.$q.reject(res);
         })
         .finally(() => {
-          this.timeout = this.$timeout(this.update.bind(this), UPDATE_INTERVAL_BALANCE);
+          this.$rootScope.timeout = this.$timeout(this.update.bind(this), UPDATE_INTERVAL_BALANCE);
           return this.$q.resolve();
         });
     }
