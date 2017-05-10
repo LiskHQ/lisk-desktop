@@ -84,9 +84,6 @@ function send(fromAccount, toAddress, amount) {
   sendButton.click();
 }
 
-function checkSendConfirmation(address, amount) {
-}
-
 function checkAlertDialog(title, text) {
   waitForElemAndCheckItsText('md-dialog h2', title);
   waitForElemAndCheckItsText('md-dialog .md-dialog-content-body', text);
@@ -109,13 +106,6 @@ function testLogout() {
 
   logout();
   waitForElemAndCheckItsText('.md-button.md-primary.md-raised', 'LOGIN');
-}
-
-function testNewAccount() {
-  launchApp();
-
-  element.all(by.css('.md-button.md-primary')).get(0).click();
-  doPassphraseGenerationProcedure(checkIsLoggedIn);
 }
 
 function doPassphraseGenerationProcedure(callback) {
@@ -152,6 +142,13 @@ function doPassphraseGenerationProcedure(callback) {
       callback();
     });
   });
+}
+
+function testNewAccount() {
+  launchApp();
+
+  element.all(by.css('.md-button.md-primary')).get(0).click();
+  doPassphraseGenerationProcedure(checkIsLoggedIn);
 }
 
 function testAddress() {
@@ -256,7 +253,7 @@ function test2ndPassphrase() {
   waitForElemAndClickIt('md-menu-item:nth-child(3) .md-button');
   doPassphraseGenerationProcedure(() => {
     browser.sleep(500);
-    checkAlertDialog('Success', 'Your second passphrase was successfully registered.'); 
+    checkAlertDialog('Success', 'Your second passphrase was successfully registered.');
   });
 }
 
@@ -271,7 +268,7 @@ function testDelegateRegistration() {
 
   browser.sleep(500);
   // FIXME: the title should really be "Success", not "Congratulations!" to be consistent
-  checkAlertDialog('Congratulations!', 'Account was successfully registered as delegate.'); 
+  checkAlertDialog('Congratulations!', 'Account was successfully registered as delegate.');
 }
 
 function testForgingCenter() {
