@@ -99,35 +99,6 @@ describe('main component controller', () => {
     });
   });
 
-  describe('logout()', () => {
-    it('resets main component', () => {
-      const spy = sinon.spy($rootScope, 'reset');
-      $rootScope.logout();
-      expect(spy).to.have.been.calledWith();
-    });
-
-    it('resets peers', () => {
-      const spy = sinon.spy(controller.$peers, 'reset');
-      $rootScope.logout();
-      expect(spy).to.have.been.calledWith(true);
-    });
-
-    it('sets $rootScope.logged = false', () => {
-      $rootScope.logout();
-      expect($rootScope.logged).to.equal(false);
-    });
-
-    it('sets $rootScope.prelogged = false', () => {
-      $rootScope.logout();
-      expect($rootScope.prelogged).to.equal(false);
-    });
-
-    it('resets account service', () => {
-      $rootScope.logout();
-      expect(account.get()).to.deep.equal({});
-    });
-  });
-
   describe('checkIfIsDelegate()', () => {
     beforeEach(() => {
       account.set({
