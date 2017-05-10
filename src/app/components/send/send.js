@@ -10,9 +10,8 @@ app.component('send', {
     transferAmount: '<',
   },
   controller: class send {
-    constructor($scope, $peers, lsk, dialog, $mdDialog, $q, $rootScope, Account, AccountApi) {
+    constructor($scope, lsk, dialog, $mdDialog, $q, $rootScope, Account, AccountApi) {
       this.$scope = $scope;
-      this.$peers = $peers;
       this.dialog = dialog;
       this.$mdDialog = $mdDialog;
       this.$q = $q;
@@ -46,74 +45,35 @@ app.component('send', {
     reset() {
       this.recipient.value = '';
       this.amount.value = '';
-      this.sendForm.$setUntouched();
     }
 
-    promptSecondPassphrase() {
-      return this.$q((resolve, reject) => {
-        if (this.account.secondSignature) {
-          this.$mdDialog.show({
-            controllerAs: '$ctrl',
-            template: require('./second.pug')(),
-            controller: /* @ngInject*/ class second {
-              constructor($scope, $mdDialog) {
-                this.$mdDialog = $mdDialog;
-              }
-
-              ok() {
-                this.$mdDialog.hide();
-                resolve(this.value);
-              }
-
-              cancel() {
-                this.$mdDialog.hide();
-                reject();
-              }
-            },
-          });
-        } else {
-          resolve(null);
-        }
-      });
-    }
-
-    go() {
+    sendLSK() {
       this.loading = true;
 
-      this.promptSecondPassphrase()
-        .then((secondPassphrase) => {
-          this.accountApi.transactions.create(
-            this.recipient.value,
-            this.amount.raw,
-            this.account.get().passphrase,
-            secondPassphrase,
-          )
-          .then(
-            (data) => {
-              const transaction = {
-                id: data.transactionId,
-                senderPublicKey: this.account.get().publicKey,
-                senderId: this.account.get().address,
-                recipientId: this.recipient.value,
-                amount: this.amount.raw,
-                fee: 10000000,
-              };
-              this.$rootScope.$broadcast('transaction-sent', transaction);
-              return this.dialog.successAlert({ text: `${this.amount.value} sent to ${this.recipient.value}` })
-                .then(() => {
-                  this.reset();
-                });
-            },
-            (res) => {
-              this.dialog.errorAlert({ text: res && res.message ? res.message : 'An error occurred while sending the transaction.' });
-            },
-          )
-          .finally(() => {
-            this.loading = false;
-          });
-        }, () => {
-          this.loading = false;
-        });
+      this.accountApi.transactions.create(
+        this.recipient.value,
+        this.amount.raw,
+        this.account.get().passphrase,
+        this.secondPassphrase,
+      ).then((data) => {
+        const transaction = {
+          id: data.transactionId,
+          senderPublicKey: this.account.get().publicKey,
+          senderId: this.account.get().address,
+          recipientId: this.recipient.value,
+          amount: this.amount.raw,
+          fee: 10000000,
+        };
+        this.$rootScope.$broadcast('transaction-sent', transaction);
+        return this.dialog.successAlert({ text: `${this.amount.value} sent to ${this.recipient.value}` })
+            .then(() => {
+              this.reset();
+            });
+      }).catch((res) => {
+        this.dialog.errorAlert({ text: res && res.message ? res.message : 'An error occurred while sending the transaction.' });
+      }).finally(() => {
+        this.loading = false;
+      });
     }
 
     setMaxAmount() {

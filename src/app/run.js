@@ -1,5 +1,5 @@
-app.run(($rootScope, $timeout, $state, $transitions, $mdDialog, $peers, Account) => {
-  $rootScope.peers = $peers;
+app.run(($rootScope, $timeout, $state, $transitions, $mdDialog, Peers, Account) => {
+  $rootScope.peers = Peers;
 
   $transitions.onStart({ to: '*' }, () => {
     $mdDialog.cancel();
@@ -11,7 +11,7 @@ app.run(($rootScope, $timeout, $state, $transitions, $mdDialog, $peers, Account)
 
   $rootScope.logout = () => {
     $rootScope.reset();
-    $peers.reset(true);
+    Peers.reset(true);
 
     $rootScope.logged = false;
     $rootScope.prelogged = false;

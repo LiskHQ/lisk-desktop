@@ -8,7 +8,7 @@ app.component('login', {
     /* eslint no-param-reassign: ["error", { "props": false }] */
 
     constructor($scope, $rootScope, $timeout, $document, $mdMedia,
-      $cookies, $location, Passphrase, $state, Account, $peers) {
+      $cookies, $location, Passphrase, $state, Account, Peers) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$timeout = $timeout;
@@ -18,7 +18,7 @@ app.component('login', {
       this.$location = $location;
       this.$state = $state;
       this.account = Account;
-      this.$peers = $peers;
+      this.peers = Peers;
 
       this.Passphrase = Passphrase;
       this.generatingNewPassphrase = false;
@@ -51,14 +51,13 @@ app.component('login', {
 
     passConfirmSubmit(_passphrase = this.input_passphrase) {
       if (this.Passphrase.normalize.constructor === Function) {
-        this.$peers.setActive(this.network);
+        this.peers.setActive(this.network);
 
         this.account.set({
           passphrase: this.Passphrase.normalize(_passphrase),
           network: this.network,
         });
-
-        this.$state.go('main');
+        this.$state.go(this.$rootScope.landingUrl || 'main.transactions');
       }
     }
 
@@ -81,9 +80,6 @@ app.component('login', {
       const passphrase = this.$location.search().passphrase || this.$cookies.get('passphrase');
       if (passphrase) {
         this.input_passphrase = passphrase;
-        if (this.$rootScope.logged === undefined) {
-          this.$timeout(this.passConfirmSubmit.bind(this), 10);
-        }
       }
     }
   },

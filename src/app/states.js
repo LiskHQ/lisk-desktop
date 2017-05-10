@@ -23,5 +23,5 @@ app.config(($stateProvider, $urlRouterProvider) => {
       url: '/forging',
       component: 'forging',
     });
-  $urlRouterProvider.otherwise('/404');
+  $urlRouterProvider.otherwise('/');
 });

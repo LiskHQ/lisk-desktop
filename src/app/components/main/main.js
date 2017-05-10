@@ -6,13 +6,13 @@ app.component('main', {
   template: require('./main.pug')(),
   controllerAs: '$ctrl',
   controller: class main {
-    constructor($scope, $rootScope, $timeout, $q, $state, $peers,
+    constructor($scope, $rootScope, $timeout, $q, $state, Peers,
       dialog, SendModal, Account, AccountApi) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$timeout = $timeout;
       this.$q = $q;
-      this.$peers = $peers;
+      this.peers = Peers;
       this.dialog = dialog;
       this.sendModal = SendModal;
       this.$state = $state;
@@ -47,15 +47,12 @@ app.component('main', {
           }
         });
 
-      // Return to landing page if there's any
-      this.activeTab = this.$rootScope.landingUrl || 'main.transactions';
-      this.$state.go(this.$rootScope.landingUrl || 'main.transactions');
-      delete this.$rootScope.landingUrl;
+      this.activeTab = this.$state.current.name;
     }
 
     checkIfIsDelegate() {
       if (this.account.get() && this.account.get().publicKey) {
-        this.$peers.active.sendRequest('delegates/get', {
+        this.peers.active.sendRequest('delegates/get', {
           publicKey: this.account.get().publicKey,
         }, (data) => {
           if (data.success && data.delegate) {
@@ -72,7 +69,7 @@ app.component('main', {
       this.$rootScope.reset();
       return this.accountApi.get(this.account.get().address)
         .then((res) => {
-          this.account.set({ balance: res.balance });
+          this.account.set(res);
         })
         .catch((res) => {
           this.account.set({ balance: null });

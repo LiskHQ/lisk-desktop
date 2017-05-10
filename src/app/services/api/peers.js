@@ -2,8 +2,8 @@ import lisk from 'lisk-js';
 
 const UPDATE_INTERVAL_CHECK = 10000;
 
-app.factory('$peers', ($timeout, $cookies, $location, $q, $rootScope) => {
-  class $peers {
+app.factory('Peers', ($timeout, $cookies, $location, $q) => {
+  class Peers {
     constructor() {
       this.check();
     }
@@ -66,5 +66,5 @@ app.factory('$peers', ($timeout, $cookies, $location, $q, $rootScope) => {
     }
   }
 
-  return new $peers();
+  return new Peers();
 });

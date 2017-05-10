@@ -1,6 +1,6 @@
 import lisk from 'lisk-js';
 
-app.factory('Account', function ($rootScope, $q) {
+app.factory('Account', function ($rootScope) {
   this.account = {};
 
   const merge = (obj) => {

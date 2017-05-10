@@ -9,11 +9,11 @@ app.component('delegates', {
     passphrase: '<',
   },
   controller: class delegates {
-    constructor($scope, $rootScope, $peers, $mdDialog, $mdMedia,
+    constructor($scope, $rootScope, Peers, $mdDialog, $mdMedia,
       dialog, $timeout, delegateService, Account) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
-      this.$peers = $peers;
+      this.peers = Peers;
       this.delegateService = delegateService;
       this.$mdDialog = $mdDialog;
       this.$mdMedia = $mdMedia;
@@ -47,7 +47,7 @@ app.component('delegates', {
     updateAll() {
       this.delegates = [];
       this.delegatesDisplayedCount = 20;
-      if (this.$peers.active) {
+      if (this.peers.active) {
         this.delegateService.listAccountDelegates({
           address: this.account.get().address,
         }).then((data) => {
