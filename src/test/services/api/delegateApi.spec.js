@@ -6,7 +6,7 @@ const expect = chai.expect;
 chai.use(sinonChai);
 
 describe('Factory: delegateService', () => {
-  let $peers;
+  let Peers;
   let $q;
   let delegateService;
   let mock;
@@ -14,15 +14,15 @@ describe('Factory: delegateService', () => {
 
   beforeEach(angular.mock.module('app'));
 
-  beforeEach(inject((_$peers_, _$q_, _delegateService_) => {
-    $peers = _$peers_;
+  beforeEach(inject((_Peers_, _$q_, _delegateService_) => {
+    Peers = _Peers_;
     $q = _$q_;
     delegateService = _delegateService_;
   }));
 
   beforeEach(() => {
     deffered = $q.defer();
-    mock = sinon.mock($peers);
+    mock = sinon.mock(Peers);
   });
 
   afterEach(() => {
@@ -31,7 +31,7 @@ describe('Factory: delegateService', () => {
   });
 
   describe('listAccountDelegates(options)', () => {
-    it('returns $peers.sendRequestPromise(\'accounts/delegates\', options);', () => {
+    it('returns Peers.sendRequestPromise(\'accounts/delegates\', options);', () => {
       const options = {
         account: {},
       };
@@ -44,7 +44,7 @@ describe('Factory: delegateService', () => {
   });
 
   describe('listDelegates(options)', () => {
-    it('returns $peers.sendRequestPromise(\'delegates\', options);', () => {
+    it('returns Peers.sendRequestPromise(\'delegates\', options);', () => {
       const options = {
         username: 'genesis_42',
       };
@@ -57,7 +57,7 @@ describe('Factory: delegateService', () => {
   });
 
   describe('getDelegate(options)', () => {
-    it('returns $peers.sendRequestPromise(\'delegates/get\', options);', () => {
+    it('returns Peers.sendRequestPromise(\'delegates/get\', options);', () => {
       const options = {
         username: 'genesis_42',
       };
@@ -70,7 +70,7 @@ describe('Factory: delegateService', () => {
   });
 
   describe('vote(options)', () => {
-    it('returns $peers.sendRequestPromise(\'accounts/delegates\', options);', () => {
+    it('returns Peers.sendRequestPromise(\'accounts/delegates\', options);', () => {
       const options = {
         secret: '',
         publicKey: '',
@@ -91,7 +91,7 @@ describe('Factory: delegateService', () => {
   });
 
   describe('voteAutocomplete(username, votedDict)', () => {
-    it('returns $peers.sendRequestPromise(\'delegates/search\', {q: username}) delegates filtered by not in voteDialog);', () => {
+    it('returns Peers.sendRequestPromise(\'delegates/search\', {q: username}) delegates filtered by not in voteDialog);', () => {
       const username = 'genesis_4';
       const votedDict = {
         genesis_44: {
