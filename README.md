@@ -85,14 +85,6 @@ Setup a lisk test node to run on localhost:4000 as described in https://github.c
 
 Make sure that the Lisk version of the node matches version in https://github.com/LiskHQ/lisk-nano/blob/development/src/app/services/peers/peer.js#L16
 
-Make sure there are some transactions on the master account so we can test they display correctly:
-```
-for i in {1..20}
-do
-   curl -k -H "Content-Type: application/json" -X PUT -d '{"secret":"wagon stock borrow episode laundry kitten salute link globe zero feed marble","amount":'"$i"'0000000,"recipientId":"537318935439898807L"}' http://localhost:4000/api/transactions; echo ''
-done
-```
-
 ### Run
 
 Start the development version of lisk-nano:
@@ -102,9 +94,10 @@ cd src
 npm run dev
 ```
 
-Run the protractor tests:
+Run the protractor tests (replace `~/git/lisk/` with your path to lisk core):
 
 ```
+./spec/setup.sh ~/git/lisk/
 npm run e2e-test
 ```
 

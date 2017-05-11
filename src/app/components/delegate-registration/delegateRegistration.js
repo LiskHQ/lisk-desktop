@@ -8,7 +8,11 @@ app.directive('delegateRegistration', ($mdDialog, delegateService, Account, dial
       error: '',
       onSubmit: (form) => {
         if (form.$valid) {
-          delegateService.registerDelegate($scope.form.name.toLowerCase(), Account.get().passphrase)
+          delegateService.registerDelegate(
+              $scope.form.name.toLowerCase(),
+              Account.get().passphrase,
+              $scope.form.secondPassphrase,
+            )
             .then(() => {
               dialog.successAlert({
                 title: 'Congratulations!',
@@ -50,6 +54,7 @@ app.directive('delegateRegistration', ($mdDialog, delegateService, Account, dial
         locals: {
           form: $scope.form,
           cancel: $scope.cancel,
+          account: Account,
         },
         controller: () => {},
         controllerAs: '$ctrl',

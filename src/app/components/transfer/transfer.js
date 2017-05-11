@@ -60,7 +60,7 @@ app.component('transfer', {
         this.recipient.value,
         this.amount.raw,
         this.account.get().passphrase,
-        this.secondPassphrase,
+        this.secondPassphrase || null,
       ).then((data) => {
         const transaction = {
           id: data.transactionId,
