@@ -43,7 +43,7 @@ function waitForElemAndClickIt(selector) {
 }
 
 function checkErrorMessage(message) {
-  waitForElemAndCheckItsText('send .md-input-message-animation', message);
+  waitForElemAndCheckItsText('transfer .md-input-message-animation', message);
 }
 
 function launchApp() {
@@ -65,10 +65,10 @@ function logout() {
   logoutButton.click();
 }
 
-function send(fromAccount, toAddress, amount) {
+function transfer(fromAccount, toAddress, amount) {
   login(fromAccount);
-  const sendElem = element(by.css('send'));
-  const sendModalButton = element(by.css('md-content.header button.send'));
+  const sendElem = element(by.css('transfer'));
+  const sendModalButton = element(by.css('md-content.header button.transfer'));
 
   browser.wait(EC.presenceOf(sendModalButton), waitTime);
   sendModalButton.click();
@@ -76,10 +76,10 @@ function send(fromAccount, toAddress, amount) {
 
   // wait for modal animation to finish
   browser.sleep(1000);
-  element(by.css('send input[name="recipient"]')).sendKeys(toAddress);
-  element(by.css('send input[name="amount"]')).sendKeys(`${amount}`);
-  element(by.css('send input[name="recipient"]')).click();
-  const sendButton = element.all(by.css('send button.md-primary')).get(0);
+  element(by.css('transfer input[name="recipient"]')).sendKeys(toAddress);
+  element(by.css('transfer input[name="amount"]')).sendKeys(`${amount}`);
+  element(by.css('transfer input[name="recipient"]')).click();
+  const sendButton = element.all(by.css('transfer button.md-primary')).get(0);
   // browser.wait(EC.presenceOf(sendButton), waitTime);
   sendButton.click();
 }
@@ -187,18 +187,18 @@ function testShowBalance() {
 
 function testSend() {
   const amount = 1.1;
-  send(masterAccount, delegateAccount.address, amount);
+  transfer(masterAccount, delegateAccount.address, amount);
   browser.sleep(1000);
-  checkAlertDialog('Success', `${amount} sent to ${delegateAccount.address}`);
+  checkAlertDialog('Success', `${amount} LSK was successfully transferred to ${delegateAccount.address}`);
 }
 
 function testSendWithNotEnoughFunds() {
-  send(emptyAccount, delegateAccount.address, 10000);
+  transfer(emptyAccount, delegateAccount.address, 10000);
   checkErrorMessage('Insufficient funds');
 }
 
 function testSendWithInvalidAddress() {
-  send(masterAccount, emptyAccount.address.substr(0, 10), 1);
+  transfer(masterAccount, emptyAccount.address.substr(0, 10), 1);
   checkErrorMessage('Invalid');
 }
 
@@ -267,8 +267,7 @@ function testDelegateRegistration() {
   waitForElemAndClickIt('md-dialog button.md-primary');
 
   browser.sleep(500);
-  // FIXME: the title should really be "Success", not "Congratulations!" to be consistent
-  checkAlertDialog('Congratulations!', 'Account was successfully registered as delegate.');
+  checkAlertDialog('Success', 'Account was successfully registered as delegate.');
 }
 
 function testForgingCenter() {
@@ -276,6 +275,7 @@ function testForgingCenter() {
   waitForElemAndClickIt('main md-tab-item:nth-child(3)');
 
   // FIXME: there is some bug in forging center that makes it really slow to load
+  // should be fixed by @alihaghighatkhah in #174
   browser.sleep(5000);
 
   waitForElemAndCheckItsText('forging md-card .title', delegateAccount.username);
@@ -288,9 +288,7 @@ function testViewDelegates() {
   waitForElemAndCheckItsText('delegates table thead tr th:nth-child(1)', 'Vote');
   waitForElemAndCheckItsText('delegates table tbody tr td:nth-child(2)', '1');
 
-  // FIXME: there are 20 delegates displayed, so this should be toEqual(20)
-  // but we have to use ng-if instead of ng-hide for tr with "No delegates found" message
-  expect(element.all(by.css('delegates table tbody tr')).count()).toEqual(21);
+  expect(element.all(by.css('delegates table tbody tr')).count()).toEqual(20);
 }
 
 function testSearchDelegates() {
@@ -301,9 +299,7 @@ function testSearchDelegates() {
   browser.sleep(500);
   waitForElemAndCheckItsText('delegates table tbody tr td:nth-child(3)', delegateAccount.username);
 
-  // FIXME: there should be 1 delegate displayed, so this should be toEqual(1)
-  // but we have to use ng-if instead of ng-hide for tr with "No delegates found" message
-  expect(element.all(by.css('delegates table tbody tr')).count()).toEqual(2);
+  expect(element.all(by.css('delegates table tbody tr')).count()).toEqual(1);
 }
 
 function testViewVotes() {
@@ -321,10 +317,8 @@ function testVoteFromTable() {
   waitForElemAndClickIt('delegates tr:nth-child(3) md-checkbox');
   waitForElemAndClickIt('delegates tr:nth-child(5) md-checkbox');
   waitForElemAndClickIt('delegates tr:nth-child(8) md-checkbox');
-  // FIXME: add 'vote-button' class the "Vote" button and use it here
-  element.all(by.css('delegates md-card-title button')).last().click();
-  // FIXME: add 'md-primary' class the "Confirm vote" button and use it here
-  waitForElemAndClickIt('vote md-dialog-actions button[ng-disabled]');
+  element.all(by.css('delegates md-card-title button.vote-button')).last().click();
+  waitForElemAndClickIt('vote md-dialog-actions button.md-primary');
   waitForElemAndCheckItsText('md-toast', 'Voting successful');
 }
 
@@ -333,14 +327,12 @@ function testVoteFromDialog() {
   waitForElemAndClickIt('main md-tab-item:nth-child(2)');
   waitForElemAndClickIt('delegates tr:nth-child(3) md-checkbox');
   waitForElemAndClickIt('delegates tr:nth-child(3) md-checkbox');
-  // FIXME: add 'vote-button' class the "Vote" button and use it here
-  element.all(by.css('delegates md-card-title button')).last().click();
+  element.all(by.css('delegates md-card-title button.vote-button')).last().click();
   element(by.css('md-autocomplete-wrap input')).sendKeys('genesis_7');
   waitForElemAndClickIt('md-autocomplete-parent-scope');
   element(by.css('md-autocomplete-wrap input')).sendKeys('genesis_7');
   waitForElemAndClickIt('md-autocomplete-parent-scope');
-  // FIXME: add 'md-primary' class the "Confirm vote" button and use it here
-  waitForElemAndClickIt('vote md-dialog-actions button[ng-disabled]');
+  waitForElemAndClickIt('vote md-dialog-actions button.md-primary');
   waitForElemAndCheckItsText('md-toast', 'Voting successful');
 }
 
@@ -350,10 +342,8 @@ function testUnvote() {
   waitForElemAndClickIt('delegates tr:nth-child(3) md-checkbox');
   waitForElemAndClickIt('delegates tr:nth-child(5) md-checkbox');
   waitForElemAndClickIt('delegates tr:nth-child(8) md-checkbox');
-  // FIXME: add 'vote-button' class the "Vote" button and use it here
-  element.all(by.css('delegates md-card-title button')).last().click();
-  // FIXME: add 'md-primary' class the "Confirm vote" button and use it here
-  waitForElemAndClickIt('vote md-dialog-actions button[ng-disabled]');
+  element.all(by.css('delegates md-card-title button.vote-button')).last().click();
+  waitForElemAndClickIt('vote md-dialog-actions button.md-primary');
   waitForElemAndCheckItsText('md-toast', 'Voting successful');
 }
 
@@ -411,10 +401,9 @@ describe('Lisk Nano', () => {
   });
 
   describe('Send dialog', () => {
-    it('should allow to send transaction when enough funds and correct address form', testSend);
-    // FIXME: there is currently a bug - #194 Maximum amount validation doesn't work
-    xit('should not allow to send transaction when not enough funds', testSendWithNotEnoughFunds);
-    it('should not allow to send transaction when invalid address', testSendWithInvalidAddress);
+    it('should allow to do a transfer when enough funds and correct address form', testSend);
+    it('should not allow to do a transfer when not enough funds', testSendWithNotEnoughFunds);
+    it('should not allow to do a transfer when invalid address', testSendWithInvalidAddress);
   });
 
   describe('Transactions tab', () => {
@@ -429,11 +418,8 @@ describe('Lisk Nano', () => {
     it('should allow to view delegates', testViewDelegates);
     it('should allow to search delegates', testSearchDelegates);
     it('should allow to view my votes', testViewVotes);
-    // FIXME: voting is broken, because it sends secondPassphrase = undefined
-    xit('should allow to select delegates in the "Voting" tab and vote for them', testVoteFromTable);
-    // FIXME: voting is broken, because it sends secondPassphrase = undefined
-    xit('should allow to select delegates in the "Vote" dialog and vote for them', testVoteFromDialog);
-    // FIXME: voting is broken, because it sends secondPassphrase = undefined
-    xit('should allow to remove votes form delegates', testUnvote);
+    it('should allow to select delegates in the "Voting" tab and vote for them', testVoteFromTable);
+    it('should allow to select delegates in the "Vote" dialog and vote for them', testVoteFromDialog);
+    it('should allow to remove votes form delegates', testUnvote);
   });
 });

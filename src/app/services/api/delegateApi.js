@@ -11,14 +11,14 @@ app.factory('delegateService', Peers => ({
     return Peers.sendRequestPromise('delegates/get', options);
   },
 
-  vote(options) {
+  vote({secret, publicKey, voteList, unvoteList, secondSecret = null}) {
     return Peers.sendRequestPromise('accounts/delegates', {
-      secret: options.secret,
-      publicKey: options.publicKey,
-      secondSecret: options.secondSecret,
-      delegates: options.voteList.map(delegate => `+${delegate.publicKey}`).concat(
-        options.unvoteList.map(delegate => `-${delegate.publicKey}`),
+      secret: secret,
+      publicKey: publicKey,
+      delegates: voteList.map(delegate => `+${delegate.publicKey}`).concat(
+        unvoteList.map(delegate => `-${delegate.publicKey}`),
       ),
+      secondSecret: secondSecret,
     });
   },
 
