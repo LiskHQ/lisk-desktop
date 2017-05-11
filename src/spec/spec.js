@@ -42,6 +42,12 @@ function waitForElemAndClickIt(selector) {
   elem.click();
 }
 
+function waitForElemAndSendKeys(selector, keys) {
+  const elem = element.all(by.css(selector)).get(0);
+  browser.wait(EC.presenceOf(elem), waitTime, `waiting for element '${selector}'`);
+  elem.sendKeys(keys);
+}
+
 function checkErrorMessage(message) {
   waitForElemAndCheckItsText('transfer .md-input-message-animation', message);
 }
@@ -55,7 +61,7 @@ function launchApp() {
 
 function login(account) {
   launchApp();
-  element(by.css('input[type="password"]')).sendKeys(account.passphrase);
+  waitForElemAndSendKeys('input[type="password"]', account.passphrase);
   element(by.css('.md-button.md-primary.md-raised')).click();
 }
 
@@ -147,7 +153,7 @@ function doPassphraseGenerationProcedure(callback) {
 function testNewAccount() {
   launchApp();
 
-  element.all(by.css('.md-button.md-primary')).get(0).click();
+  waitForElemAndClickIt('.md-button.md-primary');
   doPassphraseGenerationProcedure(checkIsLoggedIn);
 }
 
@@ -159,16 +165,14 @@ function testAddress() {
 function testPeer() {
   launchApp();
   login(masterAccount);
-  expect(element.all(by.css('.peer .md-title')).get(0).getText()).toEqual('Peer');
-  expect(element.all(by.css('.peer .value')).get(0).getText()).toEqual('localhost:4000');
+  waitForElemAndCheckItsText('.peer .md-title', 'Peer');
+  waitForElemAndCheckItsText('.peer .value', 'localhost:4000');
 }
 
 function testChangeNetwork() {
   launchApp();
 
-  const peerElem = element(by.css('form md-select'));
-  browser.wait(EC.presenceOf(peerElem), waitTime);
-  peerElem.click();
+  waitForElemAndClickIt('form md-select');
 
   const optionElem = element.all(by.css('md-select-menu md-option')).get(1);
   browser.wait(EC.presenceOf(optionElem), waitTime);
