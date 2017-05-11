@@ -31,13 +31,13 @@ const EC = protractor.ExpectedConditions;
 const waitTime = 5000;
 
 function waitForElemAndCheckItsText(selector, text) {
-  const elem = element(by.css(selector));
+  const elem = element.all(by.css(selector)).get(0);
   browser.wait(EC.presenceOf(elem), waitTime, `waiting for element '${selector}'`);
   expect(elem.getText()).toEqual(text, `inside element "${selector}"`);
 }
 
 function waitForElemAndClickIt(selector) {
-  const elem = element(by.css(selector));
+  const elem = element.all(by.css(selector)).get(0);
   browser.wait(EC.presenceOf(elem), waitTime, `waiting for element '${selector}'`);
   elem.click();
 }
@@ -328,9 +328,9 @@ function testVoteFromDialog() {
   waitForElemAndClickIt('delegates tr:nth-child(3) md-checkbox');
   waitForElemAndClickIt('delegates tr:nth-child(3) md-checkbox');
   element.all(by.css('delegates md-card-title button.vote-button')).last().click();
-  element(by.css('md-autocomplete-wrap input')).sendKeys('genesis_7');
+  element.all(by.css('md-autocomplete-wrap input')).get(0).sendKeys('genesis_7');
   waitForElemAndClickIt('md-autocomplete-parent-scope');
-  element(by.css('md-autocomplete-wrap input')).sendKeys('genesis_7');
+  element.all(by.css('md-autocomplete-wrap input')).get(0).sendKeys('genesis_7');
   waitForElemAndClickIt('md-autocomplete-parent-scope');
   waitForElemAndClickIt('vote md-dialog-actions button.md-primary');
   waitForElemAndCheckItsText('md-toast', 'Voting successful');
