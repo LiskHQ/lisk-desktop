@@ -1,10 +1,10 @@
 {
   "name": "lisk-nano",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Lisk Nano",
   "main": "main.js",
   "author":{
-    "name": "Ricardo Ferro",
-    "email": "ricardo.ferro@gmail.com"
+    "name": "Lisk Foundation",
+    "email": "admin@lisk.io"
   }
 }
