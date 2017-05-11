@@ -49,24 +49,30 @@ pipeline {
               # Add coveralls config file
               cp ~/.coveralls.yml-nano .coveralls.yml
 
-              # Prepare lisk core for testing
-              bash ~/tx.sh
-
               # Run test
               npm run test
 
-              # Commented until e2e is ready
-              # export CHROME_BIN=chromium-browser
-              # export DISPLAY=:0.0
-              # Xvfb :0 -ac -screen 0 1280x1024x24 &
-              # ./node_modules/protractor/bin/webdriver-manager update
-              # npm run e2e-test
+              # Run Dev build and Build
+              npm run dev &> .lisk-nano.log &
+              sleep 30
 
-              # Commented until e2e is ready
-              # cat .protractor.log
-              # cat .lisk-nano.log
+              # End to End test configuration
+              export CHROME_BIN=chromium-browser
+              export DISPLAY=:99
+              Xvfb :99 -ac -screen 0 1024x768x24 &
+              ./node_modules/protractor/bin/webdriver-manager update
+              ./node_modules/protractor/bin/webdriver-manager start &
 
-              pkill -f app.js -9 || true
+              # Prepare lisk core for testing
+              bash ~/tx.sh
+
+              # Run End to End Tests
+              npm run e2e-test
+
+              pkill -f selenium -9 || true
+              pkill -f Xvfb -9 || true
+              rm -rf /tmp/.X0-lock || true
+              pkill -f app.js || true
               pkill -f webpack-dev-server -9 || true
             '''
             milestone 1
