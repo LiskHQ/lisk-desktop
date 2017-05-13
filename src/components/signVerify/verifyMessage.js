@@ -1,7 +1,7 @@
 import lisk from 'lisk-js';
 
 app.component('verifyMessage', {
-  template: require('./verify-message.pug')(),
+  template: require('./verifyMessage.pug')(),
   controllerAs: '$ctrl',
   controller: class verifyMessage {
     constructor($mdDialog, Account) {

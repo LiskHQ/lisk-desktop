@@ -10,9 +10,9 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const nodeEnvironment = process.env.NODE_ENV;
 
 const PATHS = {
-  app: path.join(__dirname, 'app'),
-  build: path.resolve(__dirname, '..', 'app'),
-  spec: path.join(__dirname, 'spec'),
+  app: path.join(__dirname, 'src'),
+  build: path.resolve(__dirname, 'app'),
+  spec: path.join(__dirname, 'e2e-test'),
   test: path.join(__dirname, 'test'),
 };
 
@@ -47,7 +47,7 @@ const html = () => ({
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: 'app/index.pug',
+      template: path.resolve(PATHS.app, 'index.pug'),
       minify: {
         collapseWhitespace: true,
         minifyCSS: true,
