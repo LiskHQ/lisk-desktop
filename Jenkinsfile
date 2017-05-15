@@ -81,6 +81,9 @@ node('master-nano-01'){
     stage ('Start Dev Server and Run Tests') {
       try {
         sh '''
+        # Prepare lisk core for testing
+        bash ~/tx.sh
+                        
         # Run Dev build and Build
         cd $WORKSPACE/src
         export NODE_ENV=
@@ -92,9 +95,6 @@ node('master-nano-01'){
         Xvfb :99 -ac -screen 0 1280x1024x24 &
         ./node_modules/protractor/bin/webdriver-manager update
         ./node_modules/protractor/bin/webdriver-manager start &
-
-        # Prepare lisk core for testing
-        bash ~/tx.sh
 
         # Run End to End Tests
         npm run e2e-test
