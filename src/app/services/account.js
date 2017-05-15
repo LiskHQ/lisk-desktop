@@ -54,13 +54,13 @@ app.factory('Account', function ($rootScope) {
         setChangedItem(changes, 'address', address);
         this.account.address = address;
       }
-
-      // Calling listeners with the list of changes
-      if (Object.keys(changes).length) {
-        $rootScope.$broadcast('accountChange', changes);
-        changes = {};
-      }
     });
+
+    // Calling listeners with the list of changes
+    if (Object.keys(changes).length) {
+      $rootScope.$broadcast('accountChange', changes);
+      changes = {};
+    }
   };
 
   this.set = (config) => {
