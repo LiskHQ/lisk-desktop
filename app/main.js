@@ -9,8 +9,8 @@ let win;
 function createWindow() {
   const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;
   win = new BrowserWindow({
-    width: width - 250,
-    height: height - 150,
+    width: width > 2000 ? Math.floor(width * 0.5) : width - 250),
+    height: height > 1000 ? Math.floor(height * 0.7) : height - 150),
     center: true,
   });
 
