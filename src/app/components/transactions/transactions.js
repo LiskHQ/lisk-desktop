@@ -3,7 +3,7 @@ import './transactions.less';
 app.component('transactions', {
   template: require('./transactions.pug')(),
   controller: class transactions {
-    constructor($scope, $rootScope, $timeout, $q, Peers, Account, AccountApi) {
+    constructor($scope, $rootScope, $q, Peers, Account, AccountApi) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$q = $q;
@@ -16,13 +16,13 @@ app.component('transactions', {
       this.pendingTransactions = [];
 
       // Update transactions list if one was created
-      this.$rootScope.$on('transactionCreation', (event, transaction) => {
+      this.$scope.$on('transactionCreation', (event, transaction) => {
         this.pendingTransactions.unshift(transaction);
         this.transactions.unshift(transaction);
       });
 
       this.init.call(this);
-      this.$rootScope.$on('accountChange', () => {
+      this.$scope.$on('accountChange', () => {
         this.init.call(this);
       });
     }

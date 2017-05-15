@@ -41,7 +41,7 @@ app.component('main', {
 
           if (this.account.get() && this.account.get().publicKey) {
             this.checkIfIsDelegate();
-            this.$rootScope.$on('syncTick', this.update.bind(this));
+            this.$scope.$on('syncTick', this.update.bind(this));
           }
         })
         .catch(() => {
