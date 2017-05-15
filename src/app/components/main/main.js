@@ -1,7 +1,5 @@
 import './main.less';
 
-const UPDATE_INTERVAL_BALANCE = 10000;
-
 app.component('main', {
   template: require('./main.pug')(),
   controllerAs: '$ctrl',
@@ -32,15 +30,23 @@ app.component('main', {
 
       this.$rootScope.prelogged = true;
 
-      this.update()
+      this.update(attempts)
         .then(() => {
           this.$rootScope.prelogged = false;
           this.$rootScope.logged = true;
-          this.checkIfIsDelegate();
+          if (this.$timeout) {
+            clearTimeout(this.$timeout);
+            delete this.$timeout;
+          }
+
+          if (this.account.get() && this.account.get().publicKey) {
+            this.checkIfIsDelegate();
+            this.$scope.$on('syncTick', this.update.bind(this));
+          }
         })
         .catch(() => {
           if (attempts < 10) {
-            this.$timeout(() => this.init(attempts + 1), 1000);
+            this.$timeout(() => this.update(attempts + 1), 1000);
           } else {
             this.dialog.errorAlert({ text: 'No peer connection' });
             this.$rootScope.logout();
@@ -51,22 +57,19 @@ app.component('main', {
     }
 
     checkIfIsDelegate() {
-      if (this.account.get() && this.account.get().publicKey) {
-        this.peers.active.sendRequest('delegates/get', {
-          publicKey: this.account.get().publicKey,
-        }, (data) => {
-          if (data.success && data.delegate) {
-            this.account.set({
-              isDelegate: true,
-              username: data.delegate.username,
-            });
-          }
-        });
-      }
+      this.peers.active.sendRequest('delegates/get', {
+        publicKey: this.account.get().publicKey,
+      }, (data) => {
+        if (data.success && data.delegate) {
+          this.account.set({
+            isDelegate: true,
+            username: data.delegate.username,
+          });
+        }
+      });
     }
 
     update() {
-      this.$rootScope.reset();
       return this.accountApi.get(this.account.get().address)
         .then((res) => {
           this.account.set(res);
@@ -75,10 +78,7 @@ app.component('main', {
           this.account.set({ balance: null });
           return this.$q.reject(res);
         })
-        .finally(() => {
-          this.$rootScope.timeout = this.$timeout(this.update.bind(this), UPDATE_INTERVAL_BALANCE);
-          return this.$q.resolve();
-        });
+        .finally(() => this.$q.resolve());
     }
   },
 });

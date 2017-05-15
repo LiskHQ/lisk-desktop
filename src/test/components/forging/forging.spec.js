@@ -16,15 +16,17 @@ describe('Forging component', () => {
   let account;
   let forgingServiceMock;
   let $q;
+  let peers;
 
   beforeEach(angular.mock.module('app'));
 
-  beforeEach(inject((_$compile_, _$rootScope_, _lsk_, _Account_, _$q_) => {
+  beforeEach(inject((_$compile_, _$rootScope_, _lsk_, _Account_, _$q_, _Peers_) => {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     lsk = _lsk_;
     account = _Account_;
     $q = _$q_;
+    peers = _Peers_;
   }));
 
   beforeEach(() => {
@@ -58,6 +60,7 @@ describe('Forging component', () => {
     };
 
     account.set(testAcount);
+    peers.setActive(network);
 
     $scope = $rootScope.$new();
     element = $compile('<forging></forging>')($scope);
@@ -83,7 +86,7 @@ describe('Forging component', () => {
     forgingServiceMock.expects('getForgedStats').returns(deferred.promise).exactly(5);
     deferred.resolve({ });
 
-    controller.$scope.$emit('onAccountChange', testAcount);
+    controller.$scope.$emit('accountChange', testAcount);
     $scope.$digest();
   });
 
@@ -127,13 +130,16 @@ describe('forging component controller', () => {
   let blocks;
   let account;
   let $q;
+  let peers;
 
-  beforeEach(inject((_$componentController_, _$rootScope_, _forgingService_, _Account_, _$q_) => {
+  beforeEach(inject((_$componentController_, _$rootScope_,
+    _forgingService_, _Account_, _$q_, _Peers_) => {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
     forgingService = _forgingService_;
     account = _Account_;
     $q = _$q_;
+    peers = _Peers_;
   }));
 
   beforeEach(() => {
@@ -162,6 +168,7 @@ describe('forging component controller', () => {
       passphrase: delegate.passphrase,
       balance: '10000',
     });
+    peers.setActive({ nane: 'mainnet' });
     controller = $componentController('forging', $scope, { });
   });
 

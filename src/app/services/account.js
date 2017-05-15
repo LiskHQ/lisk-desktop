@@ -3,34 +3,64 @@ import lisk from 'lisk-js';
 app.factory('Account', function ($rootScope) {
   this.account = {};
 
+  const equals = (ref1, ref2) => {
+    /* eslint-disable eqeqeq */
+
+    if (ref1 == undefined && ref2 == undefined) {
+      return true;
+    }
+    if (typeof ref1 !== typeof ref2 || (typeof ref1 !== 'object' && ref1 != ref2)) {
+      return false;
+    }
+
+    const props1 = (ref1 instanceof Array) ? ref1.map((val, idx) => idx) : Object.keys(ref1).sort();
+    const props2 = (ref2 instanceof Array) ? ref2.map((val, idx) => idx) : Object.keys(ref2).sort();
+
+    let isEqual = true;
+
+    props1.forEach((value1, index) => {
+      if (typeof ref1[value1] === 'object' && typeof ref2[props2[index]] === 'object') {
+        if (!equals(ref1[value1], ref2[props2[index]])) {
+          isEqual = false;
+        }
+      } else if (ref1[value1] != ref2[props2[index]]) {
+        isEqual = false;
+      }
+    });
+    return isEqual;
+  };
+
+  const setChangedItem = (changes, property, value) => {
+    if (!equals(this.account[property], value)) {
+      changes[property] = [this.account[property], value];
+    }
+  };
+
   const merge = (obj) => {
     const keys = Object.keys(obj);
-    const changes = {};
+    let changes = {};
 
     keys.forEach((key) => {
-      changes[key] = {
-        old: this.account[key],
-        new: obj[key],
-      };
+      setChangedItem(changes, key, obj[key]);
+
       this.account[key] = obj[key];
 
       if (key === 'passphrase') {
         const kp = lisk.crypto.getKeys(obj[key]);
-
-        changes.account = {
-          old: this.account.publicKey,
-          new: kp.publicKey,
-        };
+        setChangedItem(changes, 'publicKey', kp.publicKey);
         this.account.publicKey = kp.publicKey;
 
-        changes.address = { old: this.account.address };
-        this.account.address = lisk.crypto.getAddress(kp.publicKey);
-        changes.address.new = this.account.address;
+        const address = lisk.crypto.getAddress(kp.publicKey);
+        setChangedItem(changes, 'address', address);
+        this.account.address = address;
       }
-
-      // Calling listeners with the list of changes
-      $rootScope.$broadcast('onAccountChange', changes);
     });
+
+    // Calling listeners with the list of changes
+    if (Object.keys(changes).length) {
+      $rootScope.$broadcast('accountChange', changes);
+      changes = {};
+    }
   };
 
   this.set = (config) => {

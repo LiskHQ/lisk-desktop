@@ -14,13 +14,9 @@ app.component('forging', {
 
       this.statistics = {};
       this.blocks = [];
-      if (Account.get().publicKey) {
-        this.$scope.$on('onAccountChange', () => {
-          this.updateAllData();
-        });
-      } else {
-        this.updateAllData();
-      }
+
+      if (Account.get().publicKey) this.updateAllData();
+      this.$scope.$on('accountChange', this.updateAllData.bind(this));
     }
 
     $onDestroy() {
