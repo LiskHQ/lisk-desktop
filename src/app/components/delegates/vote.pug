@@ -18,6 +18,9 @@ div.dialog-vote(aria-label='Vote for delegates')
             md-chip-template {{$chip.username}}
             md-autocomplete(flex, required, md-input-minlength='2', md-no-cache='false', md-selected-item='$ctrl.selectedUnvoteDelegate', md-search-text='$ctrl.unvoteSearchText', md-items='delegate in $ctrl.delegateService.unvoteAutocomplete($ctrl.unvoteSearchText, $ctrl.votedList)', md-item-text='delegate.username', md-require-match, placeholder='Search by username')
               span(md-highlight-text='$ctrl.unvoteSearchText') {{delegate.username}}
+        md-input-container.md-block(ng-if='$ctrl.account.get().secondSignature')
+          label Second Passphrase
+          input(type='password', ng-model='$ctrl.secondPassphrase')
         p.pull-right Fee: 1 LSK
         md-divider
         div(layout='row')
@@ -28,11 +31,7 @@ div.dialog-vote(aria-label='Vote for delegates')
             br
             span You can vote for up to 101 delegates in total.
         md-divider
-        md-input-container.md-block(ng-if='$ctrl.account.get().secondSignature')
-          label Second Passphrase
-          input(type='password', ng-model='$ctrl.secondPassphrase')
-          md-divider
     md-dialog-actions(layout='row')
       md-button(ng-click="$ctrl.$mdDialog.cancel()") Cancel
       span(flex)
-      md-button(ng-disabled='!$ctrl.canVote()', ng-click="$ctrl.vote()") {{$ctrl.votingInProgress ? 'Voting...' : 'Confirm vote'}}
+      md-button.md-primary(ng-disabled='!$ctrl.canVote()', ng-click="$ctrl.vote()") {{$ctrl.votingInProgress ? 'Voting...' : 'Confirm vote'}}
