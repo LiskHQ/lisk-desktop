@@ -54,7 +54,7 @@ app.component('forging', {
           this.blocks = data.blocks;
         } else if (offset) {
           Array.prototype.push.apply(this.blocks, data.blocks);
-        } else if (this.blocks[0].id !== data.blocks[0].id) {
+        } else if (this.blocks[0] && data.blocks[0] && this.blocks[0].id !== data.blocks[0].id) {
           Array.prototype.unshift.apply(this.blocks,
             data.blocks.filter(block => block.timestamp > this.blocks[0].timestamp));
         }

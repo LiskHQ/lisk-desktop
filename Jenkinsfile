@@ -8,6 +8,7 @@ pipeline {
       steps {
         node('master-nano-01'){
           lock(resource: "master-nano-01", inversePrecedence: true) {
+            deleteDir()
             checkout scm
             sh '''#!/bin/bash
               env
@@ -27,7 +28,7 @@ pipeline {
               dropdb lisk_test || true
               createdb lisk_test
               psql -d lisk_test -c "alter user "$USER" with password 'password';"
-              cp /var/lib/jenkins/workspace/lisk-node-Linux-x86_64.tßar.gz .
+              cp /var/lib/jenkins/workspace/lisk-node-Linux-x86_64.tar.gz .
               tar -zxvf lisk-node-Linux-x86_64.tar.gz
               npm install
               git submodule init
@@ -49,24 +50,33 @@ pipeline {
               # Add coveralls config file
               cp ~/.coveralls.yml-nano .coveralls.yml
 
-              # Prepare lisk core for testing
-              bash ~/tx.sh
+              # Run Build
+              npm run build
 
               # Run test
               npm run test
 
-              # Commented until e2e is ready
-              # export CHROME_BIN=chromium-browser
-              # export DISPLAY=:0.0
-              # Xvfb :0 -ac -screen 0 1280x1024x24 &
-              # ./node_modules/protractor/bin/webdriver-manager update
-              # npm run e2e-test
+              # Run Dev build and Build
+              export NODE_ENV=
+              npm run dev &> .lisk-nano.log &
+              sleep 20
 
-              # Commented until e2e is ready
-              # cat .protractor.log
-              # cat .lisk-nano.log
+              # End to End test configuration
+              export DISPLAY=:99
+              Xvfb :99 -ac -screen 0 1024x768x24 &
+              ./node_modules/protractor/bin/webdriver-manager update
+              ./node_modules/protractor/bin/webdriver-manager start &
 
-              pkill -f app.js -9 || true
+              # Prepare lisk core for testing
+              bash ~/tx.sh
+
+              # Run End to End Tests
+              npm run e2e-test
+
+              pkill -f selenium -9 || true
+              pkill -f Xvfb -9 || true
+              rm -rf /tmp/.X0-lock || true
+              pkill -f app.js || true
               pkill -f webpack-dev-server -9 || true
             '''
             milestone 1
