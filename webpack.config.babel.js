@@ -22,7 +22,7 @@ const common = {
     app: PATHS.app,
   },
   output: {
-    path: PATHS.build,
+    path: path.join(PATHS.build, 'dist'),
     filename: 'app.js',
   },
   node: {
@@ -169,7 +169,7 @@ let config;
 
 switch (process.env.npm_lifecycle_event) {
   case 'build':
-    config = merge(common, clean(path.join(PATHS.build, '*')), html(), provide(), babel(), pug(), less(), css(), json(), png(), fonts(), bundleAnalyzer());
+    config = merge(common, clean(path.join(PATHS.build, 'dist')), html(), provide(), babel(), pug(), less(), css(), json(), png(), fonts(), bundleAnalyzer());
     break;
   default:
     config = merge(common, devServer(), { devtool: 'eval-source-map' }, html(), provide(), babel(), pug(), less(), css(), json(), png(), fonts());
