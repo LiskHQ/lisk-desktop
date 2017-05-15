@@ -30,7 +30,6 @@ describe('transactions component controller', () => {
     mock = sinon.mock(accountApi.transactions);
     const deffered = $q.defer();
     mock.expects('get').returns(deffered.promise);
-    mock.expects('get').returns(deffered.promise);
     controller = $componentController('transactions', $scope, {});
     account.set({
       passphrase: 'robust swift grocery peasant forget share enable convince deputy road keep cheap',
