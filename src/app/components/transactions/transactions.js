@@ -1,14 +1,11 @@
 import './transactions.less';
 
-const UPDATE_INTERVAL = 20000;
-
 app.component('transactions', {
   template: require('./transactions.pug')(),
   controller: class transactions {
-    constructor($scope, $rootScope, $timeout, $q, Peers, Account, AccountApi) {
+    constructor($scope, $rootScope, $q, Peers, Account, AccountApi) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
-      this.$timeout = $timeout;
       this.$q = $q;
       this.peers = Peers;
       this.account = Account;
@@ -18,30 +15,23 @@ app.component('transactions', {
       this.transactions = [];
       this.pendingTransactions = [];
 
-      this.$rootScope.$on('transaction-sent', (event, transaction) => {
+      // Update transactions list if one was created
+      this.$scope.$on('transactionCreation', (event, transaction) => {
         this.pendingTransactions.unshift(transaction);
         this.transactions.unshift(transaction);
       });
 
-      if (this.account.get().address) {
+      this.init.call(this);
+      this.$scope.$on('accountChange', () => {
         this.init.call(this);
-      }
-      this.$rootScope.$on('onAccountChange', () => {
-        this.init.call(this);
-      });
-
-      this.$scope.$on('peerUpdate', () => {
-        this.init(true);
       });
     }
 
     init(showLoading) {
-      this.reset();
-      this.update(showLoading);
-    }
-
-    $onDestroy() {
-      this.$timeout.cancel(this.timeout);
+      if (this.account.get().address) {
+        this.reset();
+        this.update(showLoading);
+      }
     }
 
     /**
@@ -63,7 +53,6 @@ app.component('transactions', {
         this.loaded = false;
       }
 
-      this.$timeout.cancel(this.timeout);
       const limit = Math.max(10, this.transactions.length + (showMore ? 10 : 0));
       return this.loadTransactions(limit);
     }
@@ -77,8 +66,6 @@ app.component('transactions', {
         })
         .finally(() => {
           this.loaded = true;
-
-          this.timeout = this.$timeout(this.update.bind(this), UPDATE_INTERVAL);
         });
     }
 

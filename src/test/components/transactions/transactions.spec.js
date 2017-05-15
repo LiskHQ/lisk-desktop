@@ -30,7 +30,6 @@ describe('transactions component controller', () => {
     mock = sinon.mock(accountApi.transactions);
     const deffered = $q.defer();
     mock.expects('get').returns(deffered.promise);
-    mock.expects('get').returns(deffered.promise);
     controller = $componentController('transactions', $scope, {});
     account.set({
       passphrase: 'robust swift grocery peasant forget share enable convince deputy road keep cheap',
@@ -41,14 +40,6 @@ describe('transactions component controller', () => {
   afterEach(() => {
     mock.verify();
     mock.restore();
-  });
-
-  describe('$onDestroy()', () => {
-    it('cancels update timeout', () => {
-      const spy = sinon.spy(controller.$timeout, 'cancel');
-      controller.$onDestroy();
-      expect(spy).to.have.been.calledWith(controller.timeout);
-    });
   });
 
   describe('reset()', () => {
@@ -97,13 +88,6 @@ describe('transactions component controller', () => {
       expect(controller.loaded).to.equal(undefined);
     });
 
-    it('cancels update timeout', () => {
-      mock.expects('get').returns(transactionsDeferred.promise);
-      const spy = sinon.spy(controller.$timeout, 'cancel');
-      controller.update();
-      expect(spy).to.have.been.calledWith(controller.timeout);
-    });
-
     it('calls accountApi.transactions.get(account.get().address, limit) with limit = 10 by default', () => {
       mock.expects('get').withArgs(account.get().address, 10).returns(transactionsDeferred.promise);
       controller.update();
@@ -140,13 +124,6 @@ describe('transactions component controller', () => {
       mock.expects('init').withArgs();
       account.set({ balance: 1000 });
       $scope.$apply();
-    });
-
-    it('sets to run reset() and update() $on "peerUpdate" is $emited', () => {
-      mock = sinon.mock(controller);
-      mock.expects('reset').withArgs();
-      mock.expects('update').withArgs(true);
-      controller.$scope.$emit('peerUpdate');
     });
   });
 });

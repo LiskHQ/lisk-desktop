@@ -1,16 +1,14 @@
 import lisk from 'lisk-js';
 
-const UPDATE_INTERVAL_CHECK = 10000;
-
-app.factory('Peers', ($timeout, $cookies, $location, $q) => {
+app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope) => {
   class Peers {
     constructor() {
-      this.check();
+      $rootScope.$on('syncTick', () => {
+        if (this.active) this.check();
+      });
     }
 
     reset(active) {
-      $timeout.cancel(this.timeout);
-
       if (active) {
         this.active = undefined;
       }
@@ -52,17 +50,9 @@ app.factory('Peers', ($timeout, $cookies, $location, $q) => {
     check() {
       this.reset();
 
-      const next = () => this.timeout = $timeout(this.check.bind(this), UPDATE_INTERVAL_CHECK);
-
-      if (!this.active) {
-        next();
-        return;
-      }
-
       this.getStatus()
         .then(() => this.online = true)
-        .catch(() => this.online = false)
-        .finally(() => next());
+        .catch(() => this.online = false);
     }
   }
 

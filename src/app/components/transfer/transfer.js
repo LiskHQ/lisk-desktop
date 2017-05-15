@@ -78,7 +78,7 @@ app.component('transfer', {
           amount: this.amount.raw,
           fee: 10000000,
         };
-        this.$rootScope.$broadcast('transaction-sent', transaction);
+        this.$rootScope.$broadcast('transactionCreation', transaction);
         return this.dialog.successAlert({ text: `${this.amount.value} LSK was successfully transferred to ${this.recipient.value}` })
             .then(() => {
               this.reset();
