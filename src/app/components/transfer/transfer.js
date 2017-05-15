@@ -1,8 +1,5 @@
 import './transfer.less';
 
-const ADDRESS_VALID_RE = '^[0-9]{1,21}[L|l]$';
-const AMOUNT_VALID_RE = '^[0-9]+(.[0-9]{1,8})?$';
-
 app.component('transfer', {
   template: require('./transfer.pug')(),
   bindings: {
@@ -20,12 +17,12 @@ app.component('transfer', {
       this.accountApi = AccountApi;
 
       this.recipient = {
-        regexp: ADDRESS_VALID_RE,
+        regexp: '^[0-9]{1,21}[L|l]$',
         value: $scope.$ctrl.recipientId,
       };
 
       this.amount = {
-        regexp: AMOUNT_VALID_RE,
+        regexp: '^[0-9]+(.[0-9]{1,8})?$',
       };
       if ($scope.$ctrl.transferAmount) {
         this.amount.value = parseInt(lsk.normalize($scope.$ctrl.transferAmount), 10);
