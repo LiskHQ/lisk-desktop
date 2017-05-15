@@ -48,6 +48,9 @@ app.component('transfer', {
       });
     }
 
+    /**
+     * Resets the values of receipentId and amount
+     */
     reset() {
       this.recipient.value = '';
       this.amount.value = '';
