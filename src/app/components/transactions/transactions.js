@@ -44,6 +44,10 @@ app.component('transactions', {
       this.$timeout.cancel(this.timeout);
     }
 
+    /**
+     * Resets the loader
+     * @todo Create a service to manage loaders instead.
+     */
     reset() {
       this.loaded = false;
     }

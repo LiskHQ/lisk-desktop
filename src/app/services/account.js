@@ -33,6 +33,15 @@ app.factory('Account', function ($rootScope) {
     });
   };
 
+  /**
+   * Merged the existing account object with the given changes object.
+   * For a given passphrase, it also sets address and publicKey.
+   * Broadcasts an event from rootScope downwards containing changes.
+   * 
+   * @param {object} config - Changes to be applied to account object.
+   * @returns {object} the account object after changes applied.
+   *  for each key in changes: {key: [newValue, oldValue]}
+   */
   this.set = (config) => {
     merge(config);
     return this.account;

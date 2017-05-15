@@ -1,4 +1,6 @@
 app.factory('TransferModal', ($mdDialog) => {
+  const init = () => {
+  };
   /**
    * Hides the existing modal, destroying the initiated controller and related scope
    * @todo show be possible to cancel dialogs by their Id

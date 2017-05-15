@@ -34,6 +34,11 @@ app.directive('delegateRegistration', ($mdDialog, delegateService, Account, dial
       },
     };
 
+    /**
+     * Resets the from fields and form state.
+     * 
+     * @param {object} from - The form event object. containing form elements and erros list.
+     */
     $scope.reset = (form) => {
       $scope.form.name = '';
       $scope.form.error = '';
@@ -42,11 +47,21 @@ app.directive('delegateRegistration', ($mdDialog, delegateService, Account, dial
       form.$setUntouched();
     };
 
+    /**
+     * hides the dialog and resets form.
+     * 
+     * @param {object} from - The form event object. containing form elements and erros list.
+     */
     $scope.cancel = (form) => {
       $scope.reset(form);
       $mdDialog.hide();
     };
 
+    /**
+     * Shows from dialog.
+     * 
+     * @todo This should be replaced by a generaldialog directive.
+     */
     $element.bind('click', () => {
       $mdDialog.show({
         template: require('./delegateRegistration.pug')(),

@@ -56,6 +56,11 @@ app.component('transfer', {
       this.amount.value = '';
     }
 
+    /**
+     * Should be called on form submittion.
+     * Calls transaction.create to transfer the specified amount to recipient. 
+     * Shows 
+     */
     transfer() {
       this.loading = true;
 

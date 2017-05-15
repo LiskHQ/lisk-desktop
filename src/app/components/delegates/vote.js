@@ -27,6 +27,10 @@ app.component('vote', {
       });
     }
 
+    /**
+     * for an existing voteList and unvoteList it calls delegateService.vote
+     * to update vote list. Shows a toast on each state change.
+     */
     vote() {
       this.votingInProgress = true;
       this.delegateService.vote({
@@ -45,6 +49,11 @@ app.component('vote', {
       });
     }
 
+    /**
+     * Checks if valiity of votes list. used to enable/disable sibmit button.
+     * 
+     * @returns {boolean} Is the vote form valid?
+     */
     canVote() {
       const totalVotes = this.voteList.length + this.unvoteList.length;
       return totalVotes > 0 && totalVotes <= 33 &&
@@ -52,6 +61,12 @@ app.component('vote', {
               (!this.account.get().secondSignature || this.secondPassphrase);
     }
 
+    /**
+     * Removes the delegate in the given index from votes list
+     * 
+     * @param {array} list the votes list
+     * @param {number} index the index of the delegate to be removed
+     */
     // eslint-disable-next-line class-methods-use-this
     removeVote(list, index) {
       /* eslint-disable no-param-reassign */
