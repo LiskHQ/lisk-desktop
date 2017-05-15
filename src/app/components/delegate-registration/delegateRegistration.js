@@ -15,7 +15,7 @@ app.directive('delegateRegistration', ($mdDialog, delegateService, Account, dial
             )
             .then(() => {
               dialog.successAlert({
-                title: 'Congratulations!',
+                title: 'Success',
                 text: 'Account was successfully registered as delegate.',
               })
                 .then(() => {
