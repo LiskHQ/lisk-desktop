@@ -91,7 +91,7 @@ node('lisk-nano-01'){
         cd $WORKSPACE/src
         export NODE_ENV=
         npm run dev &> .lisk-nano.log &
-        sleep 20
+        sleep 30
 
         # End to End test configuration
         export DISPLAY=:99
