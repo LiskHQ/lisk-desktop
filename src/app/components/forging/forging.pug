@@ -9,9 +9,11 @@ div.offline-hide
           md-button.md-raised.md-primary(disabled) Become Delegate
       div(layout='column', layout-gt-xs='row', ng-if='$ctrl.delegate.username')
         md-card(flex-gt-xs=100, layout-padding)
-          .info-panel.info-panel-grey
-            span.title {{$ctrl.delegate.username}} 
-            span.pull-right {{$ctrl.statistics.total  | lsk | number:2 }} LSK Earned
+          md-card-title
+            md-card-title-text
+              span.md-title {{$ctrl.delegate.username}} 
+            span(md-position-mode='target-right target')
+              span {{$ctrl.statistics.total  | lsk | number:2 }} LSK Earned
       md-content(layout='column', layout-gt-xs='row', ng-if='$ctrl.delegate.username')
         md-card(flex-50, flex-gt-xs=25, layout-padding)
           .info-panel.info-panel-grey
@@ -45,7 +47,7 @@ div.offline-hide
       md-card(layout='column', ng-if='$ctrl.delegate.username')
         md-card-title
           md-card-title-text
-            spa.md-title Forged Blocks
+            span.md-title Forged Blocks
           span(md-position-mode='target-right target', ng-if='$ctrl.blocks.length === 0 && $ctrl.blocksLoaded')
             span You have not forged any blocks yet.
           md-menu(md-position-mode='target-right target', ng-if='$ctrl.blocks.length')
