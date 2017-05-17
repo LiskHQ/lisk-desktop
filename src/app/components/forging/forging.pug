@@ -5,8 +5,7 @@ div.offline-hide
     md-content
       div(layout='row', ng-if='$ctrl.delegate && !$ctrl.delegate.username')
         md-card(flex-100, flex-gt-xs=100, layout-align='center center', layout-padding)
-          span.title You need to become a delegate to start forging
-          md-button.md-raised.md-primary(disabled) Become Delegate
+          span.title You need to become a delegate to start forging. If you already registered to become a delegate, your registration hasn't been processed, yet.
       div(layout='column', layout-gt-xs='row', ng-if='$ctrl.delegate.username')
         md-card(flex-gt-xs=100, layout-padding)
           .info-panel.info-panel-grey
