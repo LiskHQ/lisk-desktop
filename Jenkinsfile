@@ -48,6 +48,9 @@ node('master-nano-01'){
     stage ('Build Nano') {
       try {
         sh '''#!/bin/bash
+	# Install Electron
+	npm install
+
         # Build nano
         cd $WORKSPACE/src
         npm install
