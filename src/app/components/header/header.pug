@@ -7,19 +7,19 @@ md-content.header(layout='row', layout-align='center center', layout-padding)
     md-button.md-icon-button(ng-click='$mdOpenMenu()')
       i.material-icons more_vert
     md-menu-content(width='2')
+      md-menu-item(ng-if='$root.logged && !$ctrl.account.get().secondSignature')
+        md-button.register-second-passphrase(data-set-second-pass)
+          div(layout='row', flex='')
+            p(flex='') Register second passphrase
+      md-menu-item(ng-if='$root.logged && !$ctrl.account.get().isDelegate')
+        md-button.register-as-delegate(data-delegate-registration)
+          div(layout='row', flex='')
+            p(flex='') Register as delegate 
       md-menu-item
-        md-button(ng-click='$ctrl.signVerify.openSignMessageDialog()')
+        md-button.sign-message(ng-click='$ctrl.signVerify.openSignMessageDialog()')
           div(layout='row', flex='')
             p(flex='') Sign message
       md-menu-item
-        md-button(ng-click='$ctrl.signVerify.openVerifyMessageDialog()')
+        md-button.verify-message(ng-click='$ctrl.signVerify.openVerifyMessageDialog()')
           div(layout='row', flex='')
             p(flex='') Verify message
-      md-menu-item(ng-if='$root.logged && !$ctrl.account.get().secondSignature')
-        md-button(data-set-second-pass)
-          div(layout='row', flex='')
-            p(flex='') Set 2nd passphrase
-      md-menu-item(ng-if='$root.logged && !$ctrl.account.get().isDelegate')
-        md-button(data-delegate-registration)
-          div(layout='row', flex='')
-            p(flex='') Delegate registration
