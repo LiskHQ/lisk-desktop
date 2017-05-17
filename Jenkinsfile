@@ -1,13 +1,13 @@
 environment {
   ON_JENKINS = 'TRUE'
 }
-node('master-nano-01'){
+node('lisk-nano-01'){
   lock(resource: "master-nano-01", inversePrecedence: true) {
     stage ('Cleanup Orphaned Processes') {
       try {
       sh '''
         # Clean up old processes
-        cd /var/lib/jenkins/lisk-test-nano
+        cd ~/lisk-test-nano
         bash lisk.sh stop_node
         pkill -f selenium -9 || true
         pkill -f Xvfb -9 || true
@@ -35,7 +35,7 @@ node('master-nano-01'){
     stage ('Start Lisk Core') {
       try {
         sh '''#!/bin/bash
-          cd /var/lib/jenkins/lisk-test-nano
+          cd ~/lisk-test-nano
           bash lisk.sh rebuild -0
           '''
       } catch (err) {
@@ -102,7 +102,7 @@ node('master-nano-01'){
         # Run End to End Tests
         npm run e2e-test
 
-        cd /var/lib/jenkins/lisk-test-nano
+        cd ~/lisk-test-nano
         bash lisk.sh stop_node
         pkill -f selenium -9 || true
         pkill -f Xvfb -9 || true
