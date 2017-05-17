@@ -57,7 +57,9 @@ app.component('login', {
           passphrase: this.Passphrase.normalize(_passphrase),
           network: this.network,
         });
-        this.$state.go(this.$rootScope.landingUrl || 'main.transactions');
+        this.$state.go(this.$rootScope.landingUrl && this.$rootScope.landingUrl !== 'main.forging' ?
+          this.$rootScope.landingUrl :
+          'main.transactions');
       }
     }
 

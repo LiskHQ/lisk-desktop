@@ -65,6 +65,9 @@ app.component('main', {
             isDelegate: true,
             username: data.delegate.username,
           });
+          if (this.$rootScope.landingUrl === 'main.forging') {
+            this.$state.go(this.$rootScope.landingUrl);
+          }
         }
       });
     }
