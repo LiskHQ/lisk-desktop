@@ -8,7 +8,7 @@ div.dialog-delegate-registration(aria-label='Vote for delegates')
         div
           md-input-container.md-block
             label Delegate name
-            input(type='text', name='delegateName', ng-model='$ctrl.form.name', required, ng-disabled='$ctrl.loading')
+            input(type='text', name='delegateName', ng-model='$ctrl.form.name', required, ng-disabled='$ctrl.loading', md-autofocus)
             div(ng-messages='delegateRegistrationForm.name.$error')
               div(ng-message='required') Required
           md-input-container.md-block(ng-if='$ctrl.account.get().secondSignature')

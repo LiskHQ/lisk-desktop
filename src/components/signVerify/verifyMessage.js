@@ -1,8 +1,20 @@
 import lisk from 'lisk-js';
 
+/**
+ * This component contains the form for verifying a signed message
+ *
+ * @module app
+ * @submodule signMessage
+ */
 app.component('verifyMessage', {
   template: require('./verifyMessage.pug')(),
   controllerAs: '$ctrl',
+  /**
+   * The verifyMessage component constructor class
+   *
+   * @class verifyMessage
+   * @constructor
+   */
   controller: class verifyMessage {
     constructor($mdDialog, Account) {
       this.$mdDialog = $mdDialog;
@@ -20,6 +32,11 @@ app.component('verifyMessage', {
       };
     }
 
+    /**
+     * Uses lisk.crypto and verifies a signed message
+     *
+     * @method verify
+     */
     verify() {
       this.publicKey.error = {};
       this.signature.error = {};

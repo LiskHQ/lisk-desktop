@@ -1,14 +1,23 @@
 import './transactions.less';
 
-const UPDATE_INTERVAL = 20000;
-
+/**
+ * The transactions tab component, produces a list of transactions for the current account.
+ *
+ * @module app
+ * @submodule transactions
+ */
 app.component('transactions', {
   template: require('./transactions.pug')(),
+  /**
+   * The main component constructor class
+   *
+   * @class main
+   * @constructor
+   */
   controller: class transactions {
-    constructor($scope, $rootScope, $timeout, $q, Peers, Account, AccountApi) {
+    constructor($scope, $rootScope, $q, Peers, Account, AccountApi) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
-      this.$timeout = $timeout;
       this.$q = $q;
       this.peers = Peers;
       this.account = Account;
@@ -18,32 +27,37 @@ app.component('transactions', {
       this.transactions = [];
       this.pendingTransactions = [];
 
-      this.$rootScope.$on('transaction-sent', (event, transaction) => {
+      // Update transactions list if one was created
+      this.$scope.$on('transactionCreation', (event, transaction) => {
         this.pendingTransactions.unshift(transaction);
         this.transactions.unshift(transaction);
       });
 
-      if (this.account.get().address) {
+      this.init.call(this);
+      this.$scope.$on('accountChange', () => {
         this.init.call(this);
-      }
-      this.$rootScope.$on('onAccountChange', () => {
-        this.init.call(this);
-      });
-
-      this.$scope.$on('peerUpdate', () => {
-        this.init(true);
       });
     }
 
+    /**
+     * resets the old values - if any - and updates transactions.
+     *
+     * @param {Boolean} showLoading
+     * @todo Use a loader service instead.
+     * @todo Is it possible to initiate the component after account if fully fetched
+     *  and remove this condition block?
+     */
     init(showLoading) {
-      this.reset();
-      this.update(showLoading);
+      if (this.account.get().address) {
+        this.reset();
+        this.update(showLoading);
+      }
     }
 
-    $onDestroy() {
-      this.$timeout.cancel(this.timeout);
-    }
-
+    /**
+     * Resets the loader
+     * @todo Create a service to manage loaders instead.
+     */
     reset() {
       this.loaded = false;
     }
@@ -54,16 +68,29 @@ app.component('transactions', {
       }
     }
 
+    /**
+     * updates the lists of confirmed and pending transactions.
+     *
+     * @param {Boolean} showLoading
+     * @param {Boolean} showMore
+     * @returns {promise} Api call promise
+     */
     update(showLoading, showMore) {
       if (showLoading) {
         this.loaded = false;
       }
 
-      this.$timeout.cancel(this.timeout);
       const limit = Math.max(10, this.transactions.length + (showMore ? 10 : 0));
       return this.loadTransactions(limit);
     }
 
+    /**
+     * Fetches the list of transactions using accountApi
+     *
+     * @param {Number} limit The maximum number of transactions to be fetched
+     * @returns {promise} Api call promise
+     * @todo Is it possible to use offset and not loaded all the list every time?
+     */
     loadTransactions(limit) {
       return this.accountApi.transactions.get(this.account.get().address, limit)
         .then(this._processTransactionsResponse.bind(this))
@@ -73,11 +100,16 @@ app.component('transactions', {
         })
         .finally(() => {
           this.loaded = true;
-
-          this.timeout = this.$timeout(this.update.bind(this), UPDATE_INTERVAL);
         });
     }
 
+    /**
+     * Removes pending transactions if they are already in the confirmed
+     * transactions list.
+     *
+     * @param {Object} response - The response of transactions.get containing
+     *  list and count of transactions
+     */
     _processTransactionsResponse(response) {
       this.pendingTransactions = this.pendingTransactions.filter(
         pt => response.transactions.filter(t => t.id === pt.id).length === 0);

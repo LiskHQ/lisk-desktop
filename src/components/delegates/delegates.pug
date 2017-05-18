@@ -38,7 +38,7 @@ div.offline-hide
                 md-button.md-icon-button.lsk-vote-remove-button(ng-click='$ctrl.unselect(username)')
                   i.material-icons close
       span.pull-right.right-action-buttons
-        md-button(ng-click='$ctrl.openVoteDialog()')
+        md-button.vote-button(ng-click='$ctrl.openVoteDialog()')
           i.material-icons done
           span  Vote 
           span(ng-if='$ctrl.voteList.length || $ctrl.unvoteList.length') 
@@ -59,7 +59,7 @@ div.offline-hide
               th(md-column) Uptime 
               th(md-column) Approval 
           tbody(md-body, infinite-scroll='$ctrl.showMore()', infinite-scroll-distance='1')
-            tr(md-row, ng-hide='$ctrl.filteredDelegates.length || $ctrl.loading')
+            tr(md-row, ng-if='!$ctrl.filteredDelegates.length && !$ctrl.loading')
               td(md-cell, colspan='6') No delegates found
             tr(md-row, ng-repeat="delegate in ($ctrl.filteredDelegates = ($ctrl.delegates | filter : {username: search} )) | limitTo : $ctrl.delegatesDisplayedCount", ng-class='{"downvote": delegate.status.voted && !delegate.status.selected, "upvote": !delegate.status.voted && delegate.status.selected, "pending": delegate.status.pending}')
               td(md-cell)

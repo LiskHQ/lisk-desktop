@@ -1,14 +1,23 @@
 import './transfer.less';
 
-const ADDRESS_VALID_RE = '^[0-9]{1,21}[L|l]$';
-const AMOUNT_VALID_RE = '^[0-9]+(.[0-9]{1,8})?$';
-
+/**
+ * This component is a form for transferring funds to other accounts.
+ *
+ * @module app
+ * @submodule transfer
+ */
 app.component('transfer', {
   template: require('./transfer.pug')(),
   bindings: {
     recipientId: '<',
     transferAmount: '<',
   },
+  /**
+   * The transfer component constructor class
+   *
+   * @class transfer
+   * @constructor
+   */
   controller: class transfer {
     constructor($scope, lsk, dialog, $mdDialog, $q, $rootScope, Account, AccountApi) {
       this.$scope = $scope;
@@ -20,13 +29,17 @@ app.component('transfer', {
       this.accountApi = AccountApi;
 
       this.recipient = {
-        regexp: ADDRESS_VALID_RE,
+        regexp: '^[0-9]{1,21}[L|l]$',
         value: $scope.$ctrl.recipientId,
       };
 
       this.amount = {
-        regexp: AMOUNT_VALID_RE,
+        regexp: '^[0-9]+(.[0-9]{1,8})?$',
       };
+
+      /**
+       * @todo Check if it's possible to replace these watchers with filters.
+       */
       if ($scope.$ctrl.transferAmount) {
         this.amount.value = parseInt(lsk.normalize($scope.$ctrl.transferAmount), 10);
       }
@@ -48,11 +61,22 @@ app.component('transfer', {
       });
     }
 
+    /**
+     * Resets the values of recipientId and amount
+     *
+     * @method reset
+     */
     reset() {
       this.recipient.value = '';
       this.amount.value = '';
     }
 
+    /**
+     * Should be called on form submission.
+     * Calls transaction.create to transfer the specified amount to recipient.
+     *
+     * @method transfer
+     */
     transfer() {
       this.loading = true;
 
@@ -70,7 +94,7 @@ app.component('transfer', {
           amount: this.amount.raw,
           fee: 10000000,
         };
-        this.$rootScope.$broadcast('transaction-sent', transaction);
+        this.$rootScope.$broadcast('transactionCreation', transaction);
         return this.dialog.successAlert({ text: `${this.amount.value} LSK was successfully transferred to ${this.recipient.value}` })
             .then(() => {
               this.reset();
@@ -82,10 +106,21 @@ app.component('transfer', {
       });
     }
 
+    /**
+     * Sets all the funds of the account to the value input field to be transferred.
+     *
+     * @method setMaxAmount
+     */
     setMaxAmount() {
       this.amount.value = Math.max(0, this.amount.max);
     }
 
+    /**
+     * Cancels the dialog.
+     *
+     * @method cancel
+     * @todo Should reset the form too.
+     */
     cancel() {
       this.$mdDialog.cancel();
     }

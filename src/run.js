@@ -1,5 +1,11 @@
-app.run(($rootScope, $timeout, $state, $transitions, $mdDialog, Peers, Account) => {
+/**
+ * @function run
+ *
+ * @description The application state method.
+ */
+app.run(($rootScope, $timeout, $state, $transitions, $mdDialog, Peers, Account, Sync) => {
   $rootScope.peers = Peers;
+  Sync.init();
 
   $transitions.onStart({ to: '*' }, () => {
     $mdDialog.cancel();

@@ -31,6 +31,7 @@ import './services/account';
 import './services/api/delegateApi';
 import './services/api/forgingApi';
 import './services/api/accountApi';
+import './services/sync';
 
 import './filters/lsk';
 

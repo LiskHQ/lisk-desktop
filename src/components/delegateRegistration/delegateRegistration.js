@@ -1,27 +1,45 @@
 import './delegateRegistration.less';
 
-app.directive('delegateRegistration', ($mdDialog, delegateService, Account, dialog) => {
+/**
+ * @description The directive performing as the form to register the account as delegate
+ *
+ * @class app.delegateRegistration
+ * @memberOf app
+ */
+app.directive('delegateRegistration', ($mdDialog, delegateService, Account, dialog, $rootScope) => {
   const DelegateRegistrationLink = function ($scope, $element) {
+    function checkPendingRegistration() {
+      delegateService.getDelegate({
+        username: $scope.username,
+      }).then((data) => {
+        Account.set({
+          isDelegate: true,
+          username: data.delegate.username,
+        });
+        $scope.pendingRegistrationListener();
+      });
+    }
+
     $scope.form = {
       name: '',
       fee: 25,
       error: '',
       onSubmit: (form) => {
         if (form.$valid) {
+          $scope.username = $scope.form.name.toLowerCase();
           delegateService.registerDelegate(
-              $scope.form.name.toLowerCase(),
+              $scope.username,
               Account.get().passphrase,
               $scope.form.secondPassphrase,
             )
             .then(() => {
               dialog.successAlert({
-                title: 'Congratulations!',
-                text: 'Account was successfully registered as delegate.',
+                title: 'Success',
+                text: 'Delegate registration was successfully submitted. It can take several seconds before it is confirmed.',
               })
                 .then(() => {
-                  Account.set({
-                    isDelegate: true,
-                    username: $scope.form.name.toLowerCase(),
+                  $scope.pendingRegistrationListener = $rootScope.$on('syncTick', () => {
+                    checkPendingRegistration();
                   });
                   $scope.reset(form);
                   $mdDialog.hide();
@@ -34,6 +52,12 @@ app.directive('delegateRegistration', ($mdDialog, delegateService, Account, dial
       },
     };
 
+    /**
+     * Resets the from fields and form state.
+     *
+     * @method reset
+     * @param {Object} from - The form event object. containing form elements and errors list.
+     */
     $scope.reset = (form) => {
       $scope.form.name = '';
       $scope.form.error = '';
@@ -42,11 +66,22 @@ app.directive('delegateRegistration', ($mdDialog, delegateService, Account, dial
       form.$setUntouched();
     };
 
+    /**
+     * hides the dialog and resets form.
+     *
+     * @method cancel
+     * @param {Object} from - The form event object. containing form elements and errors list.
+     */
     $scope.cancel = (form) => {
       $scope.reset(form);
       $mdDialog.hide();
     };
 
+    /**
+     * Shows from dialog.
+     *
+     * @todo This should be replaced by a general dialog directive.
+     */
     $element.bind('click', () => {
       $mdDialog.show({
         template: require('./delegateRegistration.pug')(),

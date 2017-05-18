@@ -9,8 +9,8 @@ let win;
 function createWindow() {
   const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;
   win = new BrowserWindow({
-    width: width - 250,
-    height: height - 150,
+    width: width > 2000 ? Math.floor(width * 0.5) : width - 250,
+    height: height > 1000 ? Math.floor(height * 0.7) : height - 150,
     center: true,
   });
 
@@ -49,7 +49,7 @@ function createWindow() {
         },
         {
           role: 'togglefullscreen',
-        }
+        },
       ],
     },
     {
@@ -65,36 +65,36 @@ function createWindow() {
       submenu: [
         {
           label: 'Lisk Website',
-          click: function () {
+          click() {
             electron.shell.openExternal('https://lisk.io');
-          }
+          },
         },
         {
           label: 'Lisk Chat',
-          click: function () {
+          click() {
             electron.shell.openExternal('https://lisk.chat');
-          }
+          },
         },
         {
           label: 'Lisk Forum',
-          click: function () {
+          click() {
             electron.shell.openExternal('https://forum.lisk.io');
-          }
+          },
         },
         {
           type: 'separator',
         },
         {
           label: 'Report Issue...',
-          click: function () {
+          click() {
             electron.shell.openExternal('https://github.com/LiskHQ/lisk-nano/issues/new');
-          }
+          },
         },
         {
           label: 'What\'s New...',
-          click: function () {
+          click() {
             electron.shell.openExternal('https://github.com/LiskHQ/lisk-nano/releases');
-          }
+          },
         },
       ],
     },
@@ -119,16 +119,16 @@ function createWindow() {
   } else {
     template[template.length - 1].submenu.push({
       label: 'About',
-      click: function (item, focusedWindow) {
+      click(item, focusedWindow) {
         if (focusedWindow) {
           const options = {
             buttons: ['OK'],
             icon: `${__dirname}/assets/lisk.png`,
             message: `Lisk Nano\nVersion ${app.getVersion()}\nCopyright © 2017 Lisk Foundation`,
-          }
-          electron.dialog.showMessageBox(focusedWindow, options, function () {})
+          };
+          electron.dialog.showMessageBox(focusedWindow, options, () => {});
         }
-      }
+      },
     });
   }
 
@@ -139,33 +139,29 @@ function createWindow() {
 
   win.on('closed', () => win = null);
 
-  setupContextMenu(win);
-}
-
-function setupContextMenu(window) {
   const selectionMenu = Menu.buildFromTemplate([
-    {role: 'copy'},
-    {type: 'separator'},
-    {role: 'selectall'},
+    { role: 'copy' },
+    { type: 'separator' },
+    { role: 'selectall' },
   ]);
 
   const inputMenu = Menu.buildFromTemplate([
-    {role: 'undo'},
-    {role: 'redo'},
-    {type: 'separator'},
-    {role: 'cut'},
-    {role: 'copy'},
-    {role: 'paste'},
-    {type: 'separator'},
-    {role: 'selectall'},
+    { role: 'undo' },
+    { role: 'redo' },
+    { type: 'separator' },
+    { role: 'cut' },
+    { role: 'copy' },
+    { role: 'paste' },
+    { type: 'separator' },
+    { role: 'selectall' },
   ]);
 
-  window.webContents.on('context-menu', (e, props) => {
+  win.webContents.on('context-menu', (e, props) => {
     const { selectionText, isEditable } = props;
     if (isEditable) {
-      inputMenu.popup(window);
+      inputMenu.popup(win);
     } else if (selectionText && selectionText.trim() !== '') {
-      selectionMenu.popup(window);
+      selectionMenu.popup(win);
     }
   });
 }

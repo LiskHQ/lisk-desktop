@@ -38,6 +38,9 @@ app.component('login', {
       this.$scope.$watch('$ctrl.input_passphrase', val => this.valid = this.Passphrase.isValidPassphrase(val));
       this.$timeout(this.devTestAccount.bind(this), 200);
 
+      /**
+       * @todo Move this after creating the dialog service
+       */
       this.$scope.$watch(() => this.$mdMedia('xs') || this.$mdMedia('sm'), (wantsFullScreen) => {
         this.$scope.customFullscreen = wantsFullScreen === true;
       });
@@ -49,6 +52,11 @@ app.component('login', {
       });
     }
 
+    /**
+     * Called of login/sign-up form submission. this is where we set the active peer.
+     *
+     * @param {String} [_passphrase=this.input_passphrase]
+     */
     passConfirmSubmit(_passphrase = this.input_passphrase) {
       if (this.Passphrase.normalize.constructor === Function) {
         this.peers.setActive(this.network);

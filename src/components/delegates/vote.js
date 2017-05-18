@@ -1,11 +1,23 @@
 import './vote.less';
 
+/**
+ * The vote dialog component
+ *
+ * @module app
+ * @submodule vote
+ */
 app.component('vote', {
   template: require('./vote.pug')(),
   bindings: {
     voteList: '=',
     unvoteList: '=',
   },
+  /**
+   * The vote dialog component constructor class
+   *
+   * @class vote
+   * @constructor
+   */
   controller: class vote {
     constructor($scope, $mdDialog, dialog, delegateService, $rootScope, Account) {
       this.$mdDialog = $mdDialog;
@@ -17,6 +29,15 @@ app.component('vote', {
       this.votedDict = {};
       this.votedList = [];
 
+      this.getDelegates();
+    }
+
+    /**
+     * Needs summary
+     *
+     * @method getDelegates
+     */
+    getDelegates() {
       this.delegateService.listAccountDelegates({
         address: this.account.get().address,
       }).then((data) => {
@@ -27,15 +48,21 @@ app.component('vote', {
       });
     }
 
+    /**
+     * for an existing voteList and unvoteList it calls delegateService.vote
+     * to update vote list. Shows a toast on each state change.
+     *
+     * @method vote
+     */
     vote() {
       this.votingInProgress = true;
-      this.delegateService.vote({
-        secret: this.account.get().passphrase,
-        publicKey: this.account.get().publicKey,
-        secondSecret: this.secondPassphrase,
-        voteList: this.voteList,
-        unvoteList: this.unvoteList,
-      }).then(() => {
+      this.delegateService.vote(
+        this.account.get().passphrase,
+        this.account.get().publicKey,
+        this.voteList,
+        this.unvoteList,
+        this.secondPassphrase,
+      ).then(() => {
         this.$mdDialog.hide(this.voteList, this.unvoteList);
         this.dialog.successToast('Voting successful');
       }).catch((response) => {
@@ -45,6 +72,12 @@ app.component('vote', {
       });
     }
 
+    /**
+     * Checks for validity of votes list. used to enable/disable submit button.
+     *
+     * @method canVote
+     * @returns {Boolean} Is the vote form valid?
+     */
     canVote() {
       const totalVotes = this.voteList.length + this.unvoteList.length;
       return totalVotes > 0 && totalVotes <= 33 &&
@@ -52,6 +85,13 @@ app.component('vote', {
               (!this.account.get().secondSignature || this.secondPassphrase);
     }
 
+    /**
+     * Removes the delegate in the given index from votes list
+     *
+     * @method removeVote
+     * @param {object[]} list the votes list
+     * @param {Number} index the index of the delegate to be removed
+     */
     // eslint-disable-next-line class-methods-use-this
     removeVote(list, index) {
       /* eslint-disable no-param-reassign */
