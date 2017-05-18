@@ -75,9 +75,12 @@ app.component('delegates', {
     addDelegates(data, replace) {
       if (data.success) {
         if (replace) {
-          this.delegates = [];
+          this.delegates = data.delegates;
+        } else {
+          this.delegates = this.delegates.concat(data.delegates);
         }
-        this.delegates = this.delegates.concat(data.delegates.map((delegate) => {
+  
+        data.delegates.forEach((delegate) => {
           const voted = this.votedDict[delegate.username] !== undefined;
           const changed = this.voteList.concat(this.unvoteList)
             .map(d => d.username).indexOf(delegate.username) !== -1;
@@ -86,8 +89,8 @@ app.component('delegates', {
             voted,
             changed,
           };
-          return delegate;
-        }));
+        });
+
         this.delegatesTotalCount = data.totalCount;
         this.loading = false;
       }
