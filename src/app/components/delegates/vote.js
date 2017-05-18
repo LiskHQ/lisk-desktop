@@ -33,13 +33,13 @@ app.component('vote', {
      */
     vote() {
       this.votingInProgress = true;
-      this.delegateService.vote({
-        secret: this.account.get().passphrase,
-        publicKey: this.account.get().publicKey,
-        secondSecret: this.secondPassphrase,
-        voteList: this.voteList,
-        unvoteList: this.unvoteList,
-      }).then(() => {
+      this.delegateService.vote(
+        this.account.get().passphrase,
+        this.account.get().publicKey,
+        this.secondPassphrase,
+        this.voteList,
+        this.unvoteList
+      ).then(() => {
         this.$mdDialog.hide(this.voteList, this.unvoteList);
         this.dialog.successToast('Voting successful');
       }).catch((response) => {
