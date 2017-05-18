@@ -1,6 +1,6 @@
 /**
- * This factory provides methods for requesting the informations related
- * to the current client. it's using Account factory to access to account
+ * This factory provides methods for requesting the information of
+ * the current account. it's using Account factory to access account
  * publicKey and address
  *
  * @module app
@@ -10,7 +10,7 @@ app.factory('AccountApi', function ($q, Peers, Account) {
   /**
    * Uses Peers service to fetch the account stats for a given address.
    *
-   * @param {String} address - the address(wallet Id) of the client.
+   * @param {String} address - the address(wallet Id) of the account.
    * @returns {promise} Api call promise
    */
   this.get = (address) => {
@@ -46,8 +46,8 @@ app.factory('AccountApi', function ($q, Peers, Account) {
    *
    * @param {String} recipientId - The address(wallet Id) of the recipient
    * @param {Number} amount - A floating point value in LSK
-   * @param {String} secret - client's primary passphrase
-   * @param {String} [secondSecret = null] - The second passphase of the account (if enabled).
+   * @param {String} secret - account's primary passphrase
+   * @param {String} [secondSecret = null] - The second passphrase of the account (if enabled).
    */
   this.transactions.create = (recipientId, amount, secret,
     secondSecret = null) => Peers.sendRequestPromise('transactions',

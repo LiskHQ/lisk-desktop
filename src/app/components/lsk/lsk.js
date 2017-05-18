@@ -2,7 +2,7 @@ import './lsk.less';
 
 /**
  * The lsk component showing the amount and unit of the transaction
- * This components adds the unit and it just needs the raw amount
+ * This component adds the unit and it just needs the raw amount
  *
  * @module app
  * @submodule lsk

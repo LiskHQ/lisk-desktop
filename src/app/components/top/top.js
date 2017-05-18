@@ -1,7 +1,7 @@
 import './top.less';
 
 /**
- * Contains some of important and basic information about the account
+ * Contains some of the important and basic information about the account
  *
  * @module app
  * @submodule top

@@ -26,7 +26,7 @@ app.component('timestamp', {
       this.$timeout = $timeout;
 
       /**
-       * @todo If we change thid to directive, we won't need thid watcher
+       * @todo If we change this component to a directive, we won't need this watcher
        */
       $scope.$watch('$ctrl.data', this.update.bind(this));
     }

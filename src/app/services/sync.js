@@ -20,7 +20,7 @@ app.factory('Sync', ($rootScope, $window) => {
 
   /**
    * We're calling this in framerate. call broadcast every config.updateInterval and
-   * sends a numeric factor for ease of use as a multiples of updateInterval.
+   * sends a numeric factor for ease of use as multiples of updateInterval.
    */
   const step = () => {
     const now = new Date();
@@ -35,7 +35,7 @@ app.factory('Sync', ($rootScope, $window) => {
   };
   /**
    * Starts the first frame by calling requestAnimationFrame.
-   * Tis will be
+   * This will be
    */
   const init = () => {
     if (!running) {

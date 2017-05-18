@@ -1,8 +1,8 @@
 import moment from 'moment';
 
 /**
- * This factory provides methods for requesting the informations about
- * the blocks forged by the client. it's using Account factory to access to account
+ * This factory provides methods for requesting the information of
+ * the blocks forged by the account. it's using Account factory to access to account
  * publicKey and address and it's only used for accounts registered as delegate.
  *
  * @module app
@@ -21,9 +21,9 @@ app.factory('forgingService', (Peers, Account) => ({
   },
 
   /**
-   * fetches the list of forged blocks for the current clinet
+   * fetches the list of forged blocks for the current account
    *
-   * @param {Number} [limit=10] The maximun number of delegates
+   * @param {Number} [limit=10] The maximum number of delegates
    * @param {Number} [offset=0] The offset for pagination
    * @returns {promise} Api call promise
    */
@@ -36,7 +36,7 @@ app.factory('forgingService', (Peers, Account) => ({
   },
 
   /**
-   * Fetches the statistics of forged blockes from the given date-time
+   * Fetches the statistics of forged blocks from the given date-time
    *
    * @param {Object} startMoment The moment.js date object
    */

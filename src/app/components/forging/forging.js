@@ -31,14 +31,14 @@ app.component('forging', {
     }
 
     /**
-     * @todo Tis should be rmeoved after using SyncService
+     * @todo This should be removed after using SyncService
      */
     $onDestroy() {
       this.$timeout.cancel(this.timeout);
     }
 
     /**
-     * Needs summery
+     * Needs summary
      *
      * @method updateAllData
      */
@@ -54,7 +54,7 @@ app.component('forging', {
     }
 
     /**
-     * Needs summery
+     * Needs summary
      *
      * @method updateDelegate
      */

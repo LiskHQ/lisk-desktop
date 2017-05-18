@@ -4,7 +4,7 @@ import './components/login/login';
 /**
  * @function states
  *
- * @description Uses stateProvider to confifure routing of the application
+ * @description Uses stateProvider to configure the routing of the application
  */
 app.config(($stateProvider, $urlRouterProvider) => {
   $stateProvider

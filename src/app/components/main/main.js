@@ -33,11 +33,11 @@ app.component('main', {
     }
 
     /**
-     * - Reidrects to login if not logged in yet.
+     * - Redirects to login if not logged in yet.
      * - Updates account info.
-     * - Tries to find an active peer for 10 times iuntil finds one.
+     * - Tries to find an active peer for 10 times until finds one.
      *
-     * @param {Number} [attempts=0] The number of attemps to find an active peer
+     * @param {Number} [attempts=0] The number of attempts to find an active peer
      * @returns {string} The name of the current state
      * @todo We're safe to remove prelogged and we can replace logged with accountApi
      */
@@ -78,7 +78,7 @@ app.component('main', {
     }
 
     /**
-     * Uses peers service to check if the current client is a delegate
+     * Uses peers service to check if the current account is a delegate
      *
      * @todo This property can be included in accountApi.get to
      *  eliminate this Api call
@@ -97,7 +97,7 @@ app.component('main', {
     }
 
     /**
-     * Sets accoutn statistics using accountApi.get
+     * Sets account credentials and balance using accountApi.get
      *
      * @returns {promise} Api call promise
      */

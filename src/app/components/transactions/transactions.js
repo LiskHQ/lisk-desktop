@@ -1,7 +1,7 @@
 import './transactions.less';
 
 /**
- * The transactions tab components, produces a list of transactions for the current client.
+ * The transactions tab component, produces a list of transactions for the current account.
  *
  * @module app
  * @submodule transactions
@@ -44,7 +44,7 @@ app.component('transactions', {
      *
      * @param {Boolean} showLoading
      * @todo Use a loader service instead.
-     * @todo Is it possible to initate the component after account if fully fetched
+     * @todo Is it possible to initiate the component after account if fully fetched
      *  and remove this condition block?
      */
     init(showLoading) {
@@ -69,9 +69,9 @@ app.component('transactions', {
     }
 
     /**
-     * updates the lists of confrimed and pending transactions.
+     * updates the lists of confirmed and pending transactions.
      *
-     * @param {booean} showLoading
+     * @param {Boolean} showLoading
      * @param {Boolean} showMore
      * @returns {promise} Api call promise
      */
@@ -89,7 +89,7 @@ app.component('transactions', {
      *
      * @param {Number} limit The maximum number of transactions to be fetched
      * @returns {promise} Api call promise
-     * @todo Is it possible to use offset and not loaded all the list everytime?
+     * @todo Is it possible to use offset and not loaded all the list every time?
      */
     loadTransactions(limit) {
       return this.accountApi.transactions.get(this.account.get().address, limit)
@@ -107,7 +107,7 @@ app.component('transactions', {
      * Removes pending transactions if they are already in the confirmed
      * transactions list.
      *
-     * @param {Object} response - The response of transactions.get containg
+     * @param {Object} response - The response of transactions.get containing
      *  list and count of transactions
      */
     _processTransactionsResponse(response) {

@@ -81,7 +81,7 @@ app.component('delegates', {
      * Fetches a list of delegates based on the given search phrase
      *
      * @method loadDelegates
-     * @param {Number} offset - The strating index of for the results
+     * @param {Number} offset - The starting index of for the results
      * @param {String} search - The search phrase to match with the delegate name
      * @param {Boolean} replace - Passed to addDelegates, defines if the results
      *  should replace the old delegates list
@@ -100,7 +100,7 @@ app.component('delegates', {
     }
 
     /**
-     * Fiils the list of delegates, sets their voted and changed status
+     * Fills the list of delegates, sets their voted and changed status
      *
      * @method addDelegates
      * @param {Object} data - The result of delegateService.listDelegates Api call
@@ -132,7 +132,7 @@ app.component('delegates', {
     }
 
     /**
-     * Needs summery
+     * Needs summary
      *
      * @method showMore
      */
@@ -148,7 +148,7 @@ app.component('delegates', {
     }
 
     /**
-     * Needs summery
+     * Needs summary
      *
      * @method selectionChange
      * @param {any} delegate
@@ -165,7 +165,7 @@ app.component('delegates', {
     }
 
     /**
-     * Needs summery
+     * Needs summary
      *
      * @method clearSearch
      */
@@ -174,7 +174,7 @@ app.component('delegates', {
     }
 
     /**
-     * Adds deelgates to vote delegates list
+     * Adds delegates to vote delegates list
      *
      * @method addToUnvoteList
      * @param {Object} vote - The delegate to add to voted delegates list
@@ -188,7 +188,7 @@ app.component('delegates', {
     }
 
     /**
-     * Needs summery
+     * Needs summary
      *
      * @method setPendingVotes
      */
@@ -212,7 +212,7 @@ app.component('delegates', {
     }
 
     /**
-     * Fetches the lisy of delegates we've voted for (voted delegates),
+     * Fetches the list of delegates we've voted for (voted delegates),
      * and updates the list and removes the confirmed votes from votePendingList
      *
      * @method checkPendingVotes
@@ -251,7 +251,7 @@ app.component('delegates', {
     }
 
     /**
-     * Needs summery
+     * Needs summary
      *
      * @method parseVoteListFromInput
      */
@@ -260,7 +260,7 @@ app.component('delegates', {
     }
 
     /**
-     * Needs summery
+     * Needs summary
      *
      * @method parseUnvoteListFromInput
      */

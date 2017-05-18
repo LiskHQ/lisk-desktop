@@ -1,7 +1,7 @@
 import './vote.less';
 
 /**
- * The votes tab component
+ * The vote dialog component
  *
  * @module app
  * @submodule vote
@@ -13,7 +13,7 @@ app.component('vote', {
     unvoteList: '=',
   },
   /**
-   * The vote tab component constructor class
+   * The vote dialog component constructor class
    *
    * @class vote
    * @constructor
@@ -33,7 +33,7 @@ app.component('vote', {
     }
 
     /**
-     * Needs summery
+     * Needs summary
      *
      * @method getDelegates
      */
@@ -73,10 +73,10 @@ app.component('vote', {
     }
 
     /**
-     * Checks if valiity of votes list. used to enable/disable sibmit button.
+     * Checks for validity of votes list. used to enable/disable submit button.
      *
      * @method canVote
-     * @returns {boolean} Is the vote form valid?
+     * @returns {Boolean} Is the vote form valid?
      */
     canVote() {
       const totalVotes = this.voteList.length + this.unvoteList.length;

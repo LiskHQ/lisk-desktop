@@ -1,8 +1,8 @@
 import lisk from 'lisk-js';
 
 /**
- * This factory provides methods for communicating with peers. It exposses
- * sendRequestPromise method for requesting to available endpoint tot he active peer,
+ * This factory provides methods for communicating with peers. It exposes
+ * sendRequestPromise method for requesting to available endpoint to the active peer,
  * so we need to set the active peer using `setActive` method before using other methods
  *
  * @module app
@@ -23,14 +23,14 @@ app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope) => {
     }
 
     /**
-     * Deletaes the active peer
+     * Delegates the active peer
      *
      * @param {Boolean} active - defines if the function should delete the active peer
      *
      * @memberOf Peers
      * @method reset
      * @todo Since the usage of this function without passing active parameter
-     *  doesn't perform any action, this function and its usecases must be revised.
+     *  doesn't perform any action, this function and its use-cases must be revised.
      */
     reset(active) {
       if (active) {
@@ -43,7 +43,7 @@ app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope) => {
      * a peer will be selected in random base.
      * Also checks the status of the network
      *
-     * @param {Object} [network] - The network to to be set as active
+     * @param {Object} [network] - The network to be set as active
      *
      * @memberOf Peers
      * @method setActive
@@ -88,7 +88,7 @@ app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope) => {
     }
 
     /**
-     * Gets the basic status of the client. and sets the online/ofline status
+     * Gets the basic status of the account. and sets the online/offline status
      *
      * @private
      * @memberOf Peer

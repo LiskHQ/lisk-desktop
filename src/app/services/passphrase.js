@@ -21,10 +21,10 @@ app.factory('Passphrase', function ($rootScope) {
   const emptyBytes = () => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
   /**
-   *  Retuns a single space separated lowercased string from a given string.
+   *  Returns a single space separated lower-cased string from a given string.
    *
    * @param {String} [str = ''] - The string to get normalized.
-   * @returns {string} - The single space separated lowercased string
+   * @returns {string} - The single space separated lower-cased string
    */
   this.normalize = (str = '') => str.replace(/ +/g, ' ').trim().toLowerCase();
 
@@ -38,7 +38,7 @@ app.factory('Passphrase', function ($rootScope) {
    *
    * @param {String} str - The string to fill with pad
    * @param {String} pad - The string used as padding
-   * @param {Number} length  - The final length of the stering after adding padding
+   * @param {Number} length  - The final length of the string after adding padding
    * @private
    * @returns {string} padded string
    */
@@ -52,7 +52,7 @@ app.factory('Passphrase', function ($rootScope) {
    * Checks if given value is a valid passphrase
    *
    * @param {String} value
-   * @returns {number} 0, 1, 2, repectively if invalid, valid or empty string.
+   * @returns {number} 0, 1, 2, respectively if invalid, valid or empty string.
    */
   this.isValidPassphrase = (value) => {
     const normalizedValue = this.normalize(value);
@@ -66,7 +66,7 @@ app.factory('Passphrase', function ($rootScope) {
   };
 
   /**
-   * Resets previous setting s and creates a step with a random length between 1.5% to 3.2%
+   * Resets previous settings and creates a step with a random length between 1.6% to 3.2%
    */
   this.init = () => {
     this.reset();
@@ -76,14 +76,14 @@ app.factory('Passphrase', function ($rootScope) {
 
   /**
    * - From a zero byte:
-   * - Removes the all the 1s and replaces all the 1s with their index
+   * - Removes all the 1s and replaces all the 1s with their index
    * - Creates a random number with the length of resulting array (pos)
    * - sets the bit in the pos position
    * - creates random byte using crypto and assigns that to seed in the
    *    position of pos
    * - Repeats this until the length of the given byte is zero.
    *
-   * @returns {number[]} The input array whose memebr is pos is set
+   * @returns {number[]} The input array whose member is pos is set
    */
   const updateSeedAndProgress = () => {
     let pos;

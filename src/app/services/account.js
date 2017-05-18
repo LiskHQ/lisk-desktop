@@ -1,8 +1,8 @@
 import lisk from 'lisk-js';
 
 /**
- * @description This factory provides methods to get and set basic informations and
- * statistics of the current client
+ * @description This factory provides methods to get and set basic information and
+ * statistics of the current account
  *
  * @memberOf app
  * @function Account
@@ -21,7 +21,7 @@ app.factory('Account', function ($rootScope) {
    * @method equals
    * @param {any} ref1 - Value to compare equality
    * @param {any} ref2 - Value to compare equality
-   * @returns {boolean} Whether two parameters are equal or not
+   * @returns {Boolean} Whether two parameters are equal or not
    */
   const equals = (ref1, ref2) => {
     /* eslint-disable eqeqeq */

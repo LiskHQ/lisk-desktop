@@ -1,7 +1,7 @@
 import './transfer.less';
 
 /**
- * This component is a form for transfering funds to other accounts.
+ * This component is a form for transferring funds to other accounts.
  *
  * @module app
  * @submodule transfer
@@ -62,7 +62,7 @@ app.component('transfer', {
     }
 
     /**
-     * Resets the values of receipentId and amount
+     * Resets the values of recipientId and amount
      *
      * @method reset
      */
@@ -72,7 +72,7 @@ app.component('transfer', {
     }
 
     /**
-     * Should be called on form submittion.
+     * Should be called on form submission.
      * Calls transaction.create to transfer the specified amount to recipient.
      *
      * @method transfer
@@ -107,7 +107,7 @@ app.component('transfer', {
     }
 
     /**
-     * Sets all the funds of the account to the amount value to be transfered.
+     * Sets all the funds of the account to the value input field to be transferred.
      *
      * @method setMaxAmount
      */

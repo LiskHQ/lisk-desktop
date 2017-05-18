@@ -1,6 +1,6 @@
 /**
- * This factory provides methods for requesting and updating the informations related
- * to the current client. it's using Account factory to access to account
+ * This factory provides methods for requesting and updating the information of
+ * the current account. it's using Account factory to access to account
  * publicKey and address and it's only used for accounts registered as delegate.
  *
  * @module app
@@ -8,9 +8,9 @@
  */
 app.factory('delegateService', Peers => ({
   /**
-   * gets the list of delegtes for whom the given address has been voted
+   * gets the list of delegates for whom the given address has voted
    *
-   * @param {object|string} address - The client address in string or in {address} format
+   * @param {object|string} address - The account address in string or in {address} format
    * @returns {promise} Api call promise
    */
   listAccountDelegates(address) {
@@ -48,12 +48,12 @@ app.factory('delegateService', Peers => ({
   },
 
   /**
-   * Searches between delegates with the given username, then filters the voteDic
-   * from the results and only shows the delegated for which we haven't voted.
+   * Searches between delegates with the given username, then filters the voteDict
+   * from the results and only shows the delegates for which we haven't voted.
    *
    * @param {String} username - username to search for
-   * @param {Object} votedDict - The deligate list to filter from the results
-   * @returns {array} The list of delegates whose username starts with the given username
+   * @param {Object} votedDict - The delegate list to filter from the results
+   * @returns {array} The list of delegates whose username contains the given username
    */
   voteAutocomplete(username, votedDict) {
     return this.listDelegates({ q: username }).then(
@@ -66,18 +66,18 @@ app.factory('delegateService', Peers => ({
    *
    * @param {String} username  - username to search for
    * @param {array} votedList - The list of the delegates for which we have voted
-   * @returns  {array} The list of delegates whose username starts with the given username
+   * @returns  {array} The list of delegates whose username contains the given username
    */
   unvoteAutocomplete(username, votedList) {
     return votedList.filter(delegate => delegate.username.indexOf(username) !== -1);
   },
 
   /**
-   * Uses Peers service to register the client as delegate.
+   * Uses Peers service to register the account as delegate.
    *
    * @param {String} username
    * @param {String} secret - Account primary passphrase
-   * @param {String} [secondSecret = null] - The second passphase of the account (if enabled).
+   * @param {String} [secondSecret = null] - The second passphrase of the account (if enabled).
    * @returns {promise} Api call promise
    */
   registerDelegate(username, secret, secondSecret = null) {

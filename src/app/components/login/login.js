@@ -53,7 +53,7 @@ app.component('login', {
     }
 
     /**
-     * Called of login/signup form submition. this is where we set the active peer.
+     * Called of login/sign-up form submission. this is where we set the active peer.
      *
      * @param {String} [_passphrase=this.input_passphrase]
      */

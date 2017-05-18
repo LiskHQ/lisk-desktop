@@ -15,12 +15,12 @@ app.directive('setSecondPass', (setSecondPass, Account, $rootScope, dialog, Acco
 
     /**
      * We call this after second passphrase is generated.
-     * Shows an alert with approapriate message in case the request fails.
+     * Shows an alert with appropriate message in case the request fails.
      *
-     * @param {String} secondsecret - The validated passphrase to register as second secret
+     * @param {String} secondSecret - The validated passphrase to register as second secret
      */
-    scope.passConfirmSubmit = (secondsecret) => {
-      AccountApi.setSecondSecret(secondsecret, Account.get().publicKey, Account.get().passphrase)
+    scope.passConfirmSubmit = (secondSecret) => {
+      AccountApi.setSecondSecret(secondSecret, Account.get().publicKey, Account.get().passphrase)
         .then(() => {
           dialog.successAlert({ text: 'Your second passphrase was successfully registered.' });
         })
@@ -29,7 +29,7 @@ app.directive('setSecondPass', (setSecondPass, Account, $rootScope, dialog, Acco
           if (err.message === 'Missing sender second signature') {
             text = 'You already have a second passphrase.';
           } else if (/^(Account does not have enough LSK)/.test(err.message)) {
-            text = 'You have insuffcient funds to register a second passphrase.';
+            text = 'You have insufficient funds to register a second passphrase.';
           } else {
             text = err.message || 'An error occurred while registering your second passphrase. Please try again.';
           }

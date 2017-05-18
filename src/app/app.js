@@ -1,6 +1,6 @@
 /**
  * The main application
- * This is an Angular module to nest all the other submodules
+ * This is an Angular module to nest all the other sub-modules
  * and also to apply routing.
  *
  * @namespace app
