@@ -27,7 +27,7 @@ app.component('forging', {
       this.updateDelegate();
       this.updateForgedBlocks(10);
 
-      this.updateForgingStats('today', moment().format('YYYY-MM-DD'));
+      this.updateForgingStats('today', moment().set({'hour': 0, 'minute': 0, 'second': 0}));
       this.updateForgingStats('last24h', moment().subtract(1, 'days'));
       this.updateForgingStats('last7d', moment().subtract(7, 'days'));
       this.updateForgingStats('last30d', moment().subtract(30, 'days'));
