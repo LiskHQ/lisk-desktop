@@ -1,9 +1,12 @@
 md-content(layout='column', layout-gt-xs='row')
   md-card.offline-hide(flex-gt-xs=33)
-    md-card-content(layout='column', layout-align='center center')
+    md-card-content(layout='column', layout-align='center center', ng-if='!$ctrl.account.get().isDelegate')
       span.md-title.title Address
       .address.value {{ $ctrl.account.get().address }}
-      small.username(ng-if='$ctrl.account.get().isDelegate') {{ $ctrl.account.get().username }}
+    md-card-content(layout='column', layout-align='center center', ng-if='$ctrl.account.get().isDelegate')
+      span.md-title.title Delegate
+      .address.value {{ $ctrl.account.get().username }}
+      small.username {{ $ctrl.account.get().address }}
   md-card.peer(flex-gt-xs=33)
     md-card-content(layout='column', layout-align='center center')
       span.status

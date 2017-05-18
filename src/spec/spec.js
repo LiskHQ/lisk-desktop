@@ -228,7 +228,7 @@ function testSignMessage() {
   login(masterAccount);
   waitForElemAndClickIt('header .md-icon-button');
   browser.sleep(1000);
-  waitForElemAndClickIt('md-menu-item .md-button');
+  waitForElemAndClickIt('md-menu-item .md-button.sign-message');
   element(by.css('textarea[name="message"]')).sendKeys(message);
   browser.sleep(1000);
   expect(element(by.css('textarea[name="result"]')).getAttribute('value')).toEqual(result);
@@ -243,7 +243,7 @@ function testVerifyMessage() {
   login(masterAccount);
   waitForElemAndClickIt('header .md-icon-button');
   browser.sleep(1000);
-  waitForElemAndClickIt('md-menu-item:nth-child(2) .md-button');
+  waitForElemAndClickIt('md-menu-item .md-button.verify-message');
   element(by.css('input[name="publicKey"]')).sendKeys(publicKey);
   element(by.css('textarea[name="signature"]')).sendKeys(signature);
   browser.sleep(1000);
@@ -254,7 +254,7 @@ function test2ndPassphrase() {
   login(account2ndPassphraseCandidate);
   waitForElemAndClickIt('header .md-icon-button');
   browser.sleep(1000);
-  waitForElemAndClickIt('md-menu-item:nth-child(3) .md-button');
+  waitForElemAndClickIt('md-menu-item .md-button.register-second-passphrase');
   doPassphraseGenerationProcedure(() => {
     browser.sleep(500);
     checkAlertDialog('Success', 'Your second passphrase was successfully registered.');
@@ -265,13 +265,13 @@ function testDelegateRegistration() {
   login(accountDelegateCandidate);
   waitForElemAndClickIt('header .md-icon-button');
   browser.sleep(1000);
-  waitForElemAndClickIt('md-menu-item:nth-child(4) .md-button');
+  waitForElemAndClickIt('md-menu-item .md-button.register-as-delegate');
   browser.sleep(500);
   element(by.css('md-dialog input[name="delegateName"]')).sendKeys(accountDelegateCandidate.username);
   waitForElemAndClickIt('md-dialog button.md-primary');
 
   browser.sleep(500);
-  checkAlertDialog('Success', 'Account was successfully registered as delegate.');
+  checkAlertDialog('Success', 'Delegate registration was successfully submitted. It can take several seconds before it is confirmed.');
 }
 
 function testForgingCenter() {
@@ -397,11 +397,11 @@ describe('Lisk Nano', () => {
     it('should show balance', testShowBalance);
   });
 
-  describe('Top right menu', () => {
+  fdescribe('Top right menu', () => {
+    it('should allow to register second passphrase', test2ndPassphrase);
+    it('should allow to register as delegate', testDelegateRegistration);
     it('should allow to sign message', testSignMessage);
     it('should allow to verify message', testVerifyMessage);
-    it('should allow to set 2nd passphrase', test2ndPassphrase);
-    it('should allow to register a delegate', testDelegateRegistration);
   });
 
   describe('Send dialog', () => {
