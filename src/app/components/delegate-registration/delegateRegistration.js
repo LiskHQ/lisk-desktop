@@ -1,6 +1,6 @@
 import './delegateRegistration.less';
 
-app.directive('delegateRegistration', ($mdDialog, delegateService, Account, dialog, $timeout) => {
+app.directive('delegateRegistration', ($mdDialog, delegateService, Account, dialog, $rootScope) => {
   const DelegateRegistrationLink = function ($scope, $element) {
     function checkPendingRegistration() {
       delegateService.getDelegate({
@@ -10,8 +10,7 @@ app.directive('delegateRegistration', ($mdDialog, delegateService, Account, dial
           isDelegate: true,
           username: data.delegate.username,
         });
-      }).catch(() => {
-        $timeout(checkPendingRegistration, 10000);
+        $scope.pendingRegistrationListener();
       });
     }
 
@@ -33,7 +32,9 @@ app.directive('delegateRegistration', ($mdDialog, delegateService, Account, dial
                 text: 'Delegate registration was successfully submitted. It can take several seconds before it is confirmed.',
               })
                 .then(() => {
-                  checkPendingRegistration();
+                  $scope.pendingRegistrationListener = $rootScope.$on('syncTick', () => {
+                    checkPendingRegistration();
+                  });
                   $scope.reset(form);
                   $mdDialog.hide();
                 });
