@@ -72,6 +72,12 @@ app.component('main', {
     update() {
       return this.accountApi.get(this.account.get().address)
         .then((res) => {
+          if (res.publicKey === null) {
+            // because res.publicKey is null if the account didn't send any transaction yet,
+            // but we have the publicKey computed from passphrase
+            delete res.publicKey;
+          }
+
           this.account.set(res);
         })
         .catch((res) => {
