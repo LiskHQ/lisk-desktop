@@ -271,7 +271,7 @@ function testDelegateRegistration() {
   waitForElemAndClickIt('md-dialog button.md-primary');
 
   browser.sleep(500);
-  checkAlertDialog('Success', 'Account was successfully registered as delegate.');
+  checkAlertDialog('Success', 'Delegate registration was successfully submitted. It can take several seconds before it is confirmed.');
 }
 
 function testForgingCenter() {
