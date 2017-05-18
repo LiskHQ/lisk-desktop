@@ -17,7 +17,7 @@ app.component('main', {
       this.account = Account;
       this.accountApi = AccountApi;
 
-      this.init();
+      this.activeTab = this.init();
     }
 
     init(attempts = 0) {
@@ -25,7 +25,7 @@ app.component('main', {
         // Return to login but keep the state
         this.$rootScope.landingUrl = this.$state.current.name;
         this.$state.go('login');
-        return;
+        return '';
       }
 
       this.$rootScope.prelogged = true;
@@ -53,7 +53,7 @@ app.component('main', {
           }
         });
 
-      this.activeTab = this.$state.current.name;
+      return this.$state.current.name;
     }
 
     checkIfIsDelegate() {
