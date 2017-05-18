@@ -43,14 +43,17 @@ app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope) => {
       return deferred.promise;
     }
 
-    getStatus() {
-      return this.sendRequestPromise('loader/status', {});
-    }
-
+    /**
+     * Gets the basic status of the client. and sets the online/ofline status
+     * 
+     * @private
+     * @memberOf Peer
+     * @method check
+     */
     check() {
       this.reset();
 
-      this.getStatus()
+      this.sendRequestPromise('loader/status', {})
         .then(() => this.online = true)
         .catch(() => this.online = false);
     }
