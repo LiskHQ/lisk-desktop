@@ -56,13 +56,12 @@ app.component('vote', {
      */
     vote() {
       this.votingInProgress = true;
-      console.log(this.voteList, this.unvoteList);
       this.delegateService.vote(
         this.account.get().passphrase,
         this.account.get().publicKey,
         this.voteList,
         this.unvoteList,
-        this.secondPassphrase
+        this.secondPassphrase,
       ).then(() => {
         this.$mdDialog.hide(this.voteList, this.unvoteList);
         this.dialog.successToast('Voting successful');
