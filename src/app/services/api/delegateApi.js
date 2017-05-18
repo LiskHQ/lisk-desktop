@@ -9,7 +9,7 @@
 app.factory('delegateService', Peers => ({
   /**
    * gets the list of delegtes for whom the given address has been voted
-   * 
+   *
    * @param {object|string} address - The client address in string or in {address} format
    * @returns {promise} Api call promise
    */
@@ -26,14 +26,14 @@ app.factory('delegateService', Peers => ({
   },
 
   /**
-   * (un)votes delegates based on voteList and unvoteList. 
+   * (un)votes delegates based on voteList and unvoteList.
    * The lists of the delegates contain plain addresses (without +-)
-   * 
+   *
    * @param {String} secret  - Account primary passphrase
    * @param {String} publicKey  - Account publicKey
    * @param {array} voteList - The list of the delegates for whom we're voting
    * @param {array} unvoteList  - The list of the delegates from whom we're removing our votes
-   * @param {String} [secondSecret=null] 
+   * @param {String} [secondSecret=null]
    * @returns {promise} Api call promise
    */
   vote(secret, publicKey, voteList, unvoteList, secondSecret = null) {
@@ -50,7 +50,7 @@ app.factory('delegateService', Peers => ({
   /**
    * Searches between delegates with the given username, then filters the voteDic
    * from the results and only shows the delegated for which we haven't voted.
-   * 
+   *
    * @param {String} username - username to search for
    * @param {Object} votedDict - The deligate list to filter from the results
    * @returns {array} The list of delegates whose username starts with the given username
@@ -63,7 +63,7 @@ app.factory('delegateService', Peers => ({
 
   /**
    * Filters the list of voted delegates with the given username
-   * 
+   *
    * @param {String} username  - username to search for
    * @param {array} votedList - The list of the delegates for which we have voted
    * @returns  {array} The list of delegates whose username starts with the given username
@@ -74,8 +74,8 @@ app.factory('delegateService', Peers => ({
 
   /**
    * Uses Peers service to register the client as delegate.
-   * 
-   * @param {String} username 
+   *
+   * @param {String} username
    * @param {String} secret - Account primary passphrase
    * @param {String} [secondSecret = null] - The second passphase of the account (if enabled).
    * @returns {promise} Api call promise

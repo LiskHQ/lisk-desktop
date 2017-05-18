@@ -39,14 +39,14 @@ app.component('forging', {
 
     /**
      * Needs summery
-     * 
+     *
      * @method updateAllData
      */
     updateAllData() {
       this.updateDelegate();
       this.updateForgedBlocks(10);
 
-      this.updateForgingStats('today', moment().set({'hour': 0, 'minute': 0, 'second': 0}));
+      this.updateForgingStats('today', moment().set({ hour: 0, minute: 0, second: 0 }));
       this.updateForgingStats('last24h', moment().subtract(1, 'days'));
       this.updateForgingStats('last7d', moment().subtract(7, 'days'));
       this.updateForgingStats('last30d', moment().subtract(30, 'days'));
@@ -55,7 +55,7 @@ app.component('forging', {
 
     /**
      * Needs summery
-     * 
+     *
      * @method updateDelegate
      */
     updateDelegate() {
@@ -69,11 +69,11 @@ app.component('forging', {
     /**
      * Call forgingService to fetch forged blocks considering the given limit and offset
      * If offset is not defined and the fetched and existing lists aren't identical,
-     * it'll unshift assuming we're fetching new forged blocks 
-     * 
+     * it'll unshift assuming we're fetching new forged blocks
+     *
      * @method updateForgedBlocks
-     * @param {Number} limit 
-     * @param {Number} offset 
+     * @param {Number} limit
+     * @param {Number} offset
      */
     updateForgedBlocks(limit, offset) {
       this.$timeout.cancel(this.timeout);
@@ -99,7 +99,7 @@ app.component('forging', {
 
     /**
      * Fetches older blocks using updateForgedBlocks.
-     * 
+     *
      * @method loadMoreBlocks
      * @todo Replace loader with a loader service
      */
@@ -110,7 +110,7 @@ app.component('forging', {
 
     /**
      * Uses forgingService to update forging statistics
-     * 
+     *
      * @method updateForgingStats
      * @param {String} key The key to categorize forged blocks stats.
      *  presently one of today, last24h, last7d, last30d, total.

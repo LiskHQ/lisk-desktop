@@ -41,8 +41,8 @@ app.component('transactions', {
 
     /**
      * resets the old values - if any - and updates transactions.
-     * 
-     * @param {Boolean} showLoading 
+     *
+     * @param {Boolean} showLoading
      * @todo Use a loader service instead.
      * @todo Is it possible to initate the component after account if fully fetched
      *  and remove this condition block?
@@ -70,9 +70,9 @@ app.component('transactions', {
 
     /**
      * updates the lists of confrimed and pending transactions.
-     * 
-     * @param {booean} showLoading 
-     * @param {Boolean} showMore 
+     *
+     * @param {booean} showLoading
+     * @param {Boolean} showMore
      * @returns {promise} Api call promise
      */
     update(showLoading, showMore) {
@@ -86,7 +86,7 @@ app.component('transactions', {
 
     /**
      * Fetches the list of transactions using accountApi
-     * 
+     *
      * @param {Number} limit The maximum number of transactions to be fetched
      * @returns {promise} Api call promise
      * @todo Is it possible to use offset and not loaded all the list everytime?
@@ -106,7 +106,7 @@ app.component('transactions', {
     /**
      * Removes pending transactions if they are already in the confirmed
      * transactions list.
-     * 
+     *
      * @param {Object} response - The response of transactions.get containg
      *  list and count of transactions
      */

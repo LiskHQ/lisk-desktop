@@ -11,7 +11,7 @@ app.directive('showTransferModal', (TransferModal) => {
    *
    * @param {Object} scope - Isolated scope.
    * @param {Object} element - Angular.element instance refering directive element
-   * 
+   *
    */
   const ShowTransferModalLink = function (scope, element) {
     element.bind('click', () => {

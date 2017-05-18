@@ -2,7 +2,7 @@ import './delegateRegistration.less';
 
 /**
  * @description The directive performing as the form to register the client as delegate
- * 
+ *
  * @class app.delegateRegistration
  * @memberOf app
  */
@@ -42,7 +42,7 @@ app.directive('delegateRegistration', ($mdDialog, delegateService, Account, dial
 
     /**
      * Resets the from fields and form state.
-     * 
+     *
      * @method reset
      * @param {Object} from - The form event object. containing form elements and erros list.
      */
@@ -56,7 +56,7 @@ app.directive('delegateRegistration', ($mdDialog, delegateService, Account, dial
 
     /**
      * hides the dialog and resets form.
-     * 
+     *
      * @method cancel
      * @param {Object} from - The form event object. containing form elements and erros list.
      */
@@ -67,7 +67,7 @@ app.directive('delegateRegistration', ($mdDialog, delegateService, Account, dial
 
     /**
      * Shows from dialog.
-     * 
+     *
      * @todo This should be replaced by a generaldialog directive.
      */
     $element.bind('click', () => {

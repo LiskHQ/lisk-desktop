@@ -34,7 +34,7 @@ app.component('verifyMessage', {
 
     /**
      * Uses lisk.crypto and verifies a signed message
-     * 
+     *
      * @method verify
      */
     verify() {

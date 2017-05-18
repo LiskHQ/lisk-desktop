@@ -14,7 +14,7 @@ app.directive('passphrase', ($rootScope, $document, Passphrase, $mdDialog, $mdMe
     /**
      * Uses assphrase.generatePassPhrase to generate passphrase from a given seed
      * Randomly asks for one of the words in passphrase to ensure it's noted down
-     * 
+     *
      * @param {string[]} seed - The array of 16 hex numbers in string format
      * @todo Why we're broadcasting onAfterSignup here?
      *  Isn't this only related to login component?
@@ -83,8 +83,9 @@ app.directive('passphrase', ($rootScope, $document, Passphrase, $mdDialog, $mdMe
 
     /**
      * Tests useragent with a regexp and defines if the client is mobile device
-     * 
-     * @param {String} [agent] - The useragent string, This parameter is used for unit testing perpose
+     *
+     * @param {String} [agent] - The useragent string, This parameter is used for
+     *  unit testing perpose
      * @returns {boolean} - whether the agent represents a mobile device or not
      */
     scope.mobileAndTabletcheck = (agent) => {

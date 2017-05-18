@@ -30,14 +30,14 @@ describe('Factory: delegateService', () => {
     mock.restore();
   });
 
-  describe('listAccountDelegates(options)', () => {
-    it('returns Peers.sendRequestPromise(\'accounts/delegates\', options);', () => {
-      const options = {
-        account: {},
+  describe('listAccountDelegates(address)', () => {
+    it('returns Peers.sendRequestPromise(\'accounts/delegates\', address);', () => {
+      const address = {
+        address: {},
       };
-      mock.expects('sendRequestPromise').withArgs('accounts/delegates', options).returns(deffered.promise);
+      mock.expects('sendRequestPromise').withArgs('accounts/delegates', address).returns(deffered.promise);
 
-      const promise = delegateService.listAccountDelegates(options);
+      const promise = delegateService.listAccountDelegates(address);
 
       expect(promise).to.equal(deffered.promise);
     });
@@ -69,22 +69,21 @@ describe('Factory: delegateService', () => {
     });
   });
 
-  describe('vote(options)', () => {
+  describe('vote(secret, publicKey, voteList, unvoteList, secondSecret = null)', () => {
     it('returns Peers.sendRequestPromise(\'accounts/delegates\', options);', () => {
-      const options = {
-        secret: '',
-        publicKey: '',
-        secondPassphrase: undefined,
-        voteList: [{
-          username: 'genesis_42',
-        }],
-        unvoteList: [{
-          username: 'genesis_24',
-        }],
-      };
+      const secret = '';
+      const publicKey = '';
+      const secondPassphrase = undefined;
+      const voteList = [{
+        username: 'genesis_42',
+      }];
+      const unvoteList = [{
+        username: 'genesis_24',
+      }];
       mock.expects('sendRequestPromise').withArgs('accounts/delegates').returns(deffered.promise);
 
-      const promise = delegateService.vote(options);
+      const promise = delegateService.vote(secret, publicKey,
+        voteList, unvoteList, secondPassphrase);
 
       expect(promise).to.equal(deffered.promise);
     });

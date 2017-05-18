@@ -58,7 +58,7 @@ app.component('delegates', {
 
     /**
      * Updates the lists of delegates and voted delegates
-     * 
+     *
      * @method updateAll
      */
     updateAll() {
@@ -79,7 +79,7 @@ app.component('delegates', {
 
     /**
      * Fetches a list of delegates based on the given search phrase
-     * 
+     *
      * @method loadDelegates
      * @param {Number} offset - The strating index of for the results
      * @param {String} search - The search phrase to match with the delegate name
@@ -101,7 +101,7 @@ app.component('delegates', {
 
     /**
      * Fiils the list of delegates, sets their voted and changed status
-     * 
+     *
      * @method addDelegates
      * @param {Object} data - The result of delegateService.listDelegates Api call
      * @param {Boolean} replace - defines if the results should replace
@@ -114,7 +114,7 @@ app.component('delegates', {
         } else {
           this.delegates = this.delegates.concat(data.delegates);
         }
-  
+
         data.delegates.forEach((delegate) => {
           const voted = this.votedDict[delegate.username] !== undefined;
           const changed = this.voteList.concat(this.unvoteList)
@@ -133,7 +133,7 @@ app.component('delegates', {
 
     /**
      * Needs summery
-     * 
+     *
      * @method showMore
      */
     showMore() {
@@ -149,9 +149,9 @@ app.component('delegates', {
 
     /**
      * Needs summery
-     * 
+     *
      * @method selectionChange
-     * @param {any} delegate 
+     * @param {any} delegate
      */
     selectionChange(delegate) {
       // eslint-disable-next-line no-param-reassign
@@ -166,7 +166,7 @@ app.component('delegates', {
 
     /**
      * Needs summery
-     * 
+     *
      * @method clearSearch
      */
     clearSearch() {
@@ -175,7 +175,7 @@ app.component('delegates', {
 
     /**
      * Adds deelgates to vote delegates list
-     * 
+     *
      * @method addToUnvoteList
      * @param {Object} vote - The delegate to add to voted delegates list
      */
@@ -189,7 +189,7 @@ app.component('delegates', {
 
     /**
      * Needs summery
-     * 
+     *
      * @method setPendingVotes
      */
     setPendingVotes() {
@@ -214,7 +214,7 @@ app.component('delegates', {
     /**
      * Fetches the lisy of delegates we've voted for (voted delegates),
      * and updates the list and removes the confirmed votes from votePendingList
-     * 
+     *
      * @method checkPendingVotes
      * @todo Use Sync service and remove recursive timeout
      */
@@ -252,7 +252,7 @@ app.component('delegates', {
 
     /**
      * Needs summery
-     * 
+     *
      * @method parseVoteListFromInput
      */
     parseVoteListFromInput() {
@@ -261,7 +261,7 @@ app.component('delegates', {
 
     /**
      * Needs summery
-     * 
+     *
      * @method parseUnvoteListFromInput
      */
     parseUnvoteListFromInput() {
@@ -336,7 +336,7 @@ app.component('delegates', {
 
     /**
      * Uses mdDialog to show vote list directive.
-     * 
+     *
      * @method openVoteDialog
      * @todo Use a general dialog service instead.
      */

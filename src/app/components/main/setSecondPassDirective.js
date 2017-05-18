@@ -16,7 +16,7 @@ app.directive('setSecondPass', (setSecondPass, Account, $rootScope, dialog, Acco
     /**
      * We call this after second passphrase is generated.
      * Shows an alert with approapriate message in case the request fails.
-     * 
+     *
      * @param {String} secondsecret - The validated passphrase to register as second secret
      */
     scope.passConfirmSubmit = (secondsecret) => {

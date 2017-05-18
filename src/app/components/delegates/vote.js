@@ -34,7 +34,7 @@ app.component('vote', {
 
     /**
      * Needs summery
-     * 
+     *
      * @method getDelegates
      */
     getDelegates() {
@@ -51,17 +51,18 @@ app.component('vote', {
     /**
      * for an existing voteList and unvoteList it calls delegateService.vote
      * to update vote list. Shows a toast on each state change.
-     * 
+     *
      * @method vote
      */
     vote() {
       this.votingInProgress = true;
+      console.log(this.voteList, this.unvoteList);
       this.delegateService.vote(
         this.account.get().passphrase,
         this.account.get().publicKey,
-        this.secondPassphrase,
         this.voteList,
-        this.unvoteList
+        this.unvoteList,
+        this.secondPassphrase
       ).then(() => {
         this.$mdDialog.hide(this.voteList, this.unvoteList);
         this.dialog.successToast('Voting successful');
@@ -74,7 +75,7 @@ app.component('vote', {
 
     /**
      * Checks if valiity of votes list. used to enable/disable sibmit button.
-     * 
+     *
      * @method canVote
      * @returns {boolean} Is the vote form valid?
      */
@@ -87,7 +88,7 @@ app.component('vote', {
 
     /**
      * Removes the delegate in the given index from votes list
-     * 
+     *
      * @method removeVote
      * @param {object[]} list the votes list
      * @param {Number} index the index of the delegate to be removed

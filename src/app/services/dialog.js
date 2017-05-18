@@ -8,7 +8,7 @@ app.factory('dialog', ($mdDialog, $mdToast, $mdMedia) => ({
 
   /**
    * Uses mdDialog to show a toast with error theme
-   * 
+   *
    * @param {String} text - The message of the toast
    * @returns {promise} The mdDialog promise
    */
@@ -18,7 +18,7 @@ app.factory('dialog', ($mdDialog, $mdToast, $mdMedia) => ({
 
   /**
    * Uses mdDialog to show a toast with success theme
-   * 
+   *
    * @param {String} text - The message of the toast
    * @returns {promise} The mdDialog promise
    */
@@ -41,12 +41,12 @@ app.factory('dialog', ($mdDialog, $mdToast, $mdMedia) => ({
 
   /**
    * Shows alet dialog with error theme using mdDialog
-   * 
+   *
    * @param {Object} config
    * @param {steing} config.title - The title of the alert box
    * @param {steing} config.test - The message of the alert box
    * @param {steing} config.button - The label of the button of the alert box
-   * @returns {promise} The mdDialog promise 
+   * @returns {promise} The mdDialog promise
    */
   errorAlert({ title, text, button }) {
     return this.alert({ success: false, title, text, button });
@@ -54,12 +54,12 @@ app.factory('dialog', ($mdDialog, $mdToast, $mdMedia) => ({
 
   /**
    * Shows alet dialog with success theme using mdDialog
-   * 
+   *
    * @param {Object} config
    * @param {steing} config.title - The title of the alert box
    * @param {steing} config.test - The message of the alert box
    * @param {steing} config.button - The label of the button of the alert box
-   * @returns {promise} The mdDialog promise 
+   * @returns {promise} The mdDialog promise
    */
   successAlert({ title, text, button }) {
     return this.alert({ success: true, title, text, button });
@@ -80,10 +80,10 @@ app.factory('dialog', ($mdDialog, $mdToast, $mdMedia) => ({
 
   /**
    * A general dialog to use with any directive or component
-   * 
-   * @param {any} options 
-   * @returns {promise} The mdDialog promise 
-   * @todo We shoudl try using this for all the other mdDialog usages the application 
+   *
+   * @param {any} options
+   * @returns {promise} The mdDialog promise
+   * @todo We shoudl try using this for all the other mdDialog usages the application
    */
   modal(options) {
     options.fullscreen = ($mdMedia('sm') || $mdMedia('xs'));

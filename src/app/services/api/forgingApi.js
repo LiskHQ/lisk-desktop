@@ -11,7 +11,7 @@ import moment from 'moment';
 app.factory('forgingService', (Peers, Account) => ({
   /**
    * Fetches the list of the delegates
-   * 
+   *
    * @returns {promise} Api call promise
    */
   getDelegate() {
@@ -22,7 +22,7 @@ app.factory('forgingService', (Peers, Account) => ({
 
   /**
    * fetches the list of forged blocks for the current clinet
-   * 
+   *
    * @param {Number} [limit=10] The maximun number of delegates
    * @param {Number} [offset=0] The offset for pagination
    * @returns {promise} Api call promise
@@ -37,7 +37,7 @@ app.factory('forgingService', (Peers, Account) => ({
 
   /**
    * Fetches the statistics of forged blockes from the given date-time
-   * 
+   *
    * @param {Object} startMoment The moment.js date object
    */
   getForgedStats(startMoment) {

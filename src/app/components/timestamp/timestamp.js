@@ -37,7 +37,7 @@ app.component('timestamp', {
 
     /**
      * Uses moment JS to update the human readable timestamp
-     * 
+     *
      * @todo Either remove this interval and use moment directly, or use Sync service instead.
      */
     update() {

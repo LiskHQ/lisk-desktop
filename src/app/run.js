@@ -1,6 +1,6 @@
 /**
  * @function run
- * 
+ *
  * @description The application state method.
  */
 app.run(($rootScope, $timeout, $state, $transitions, $mdDialog, Peers, Account, Sync) => {

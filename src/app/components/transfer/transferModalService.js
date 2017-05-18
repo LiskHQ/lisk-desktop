@@ -5,7 +5,7 @@
  * @submodule TransferModal
  * @todo Replace this with a general dislog service
  */
-app.factory('TransferModal', ($mdDialog) => { 
+app.factory('TransferModal', ($mdDialog) => {
   const init = () => {
   };
   /**
@@ -21,7 +21,7 @@ app.factory('TransferModal', ($mdDialog) => {
    * Uses ndModal to along with transfer form directive to show a modal.
    * @param {String} recipientId -The address or the wallet ID of recipient
    * @param {Number} amount - The amount value in LSK
-   * 
+   *
    * @todo This must be replced by a genersl service with the possibility to
    *       be used with any child directive.
    */

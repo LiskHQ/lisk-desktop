@@ -9,12 +9,10 @@ app.factory('Sync', ($rootScope, $window) => {
 
   /**
    * Broadcast an event from rootScope downwards
-   * 
-   * @param {Number} factor 
-   * @param {Date} lastTick 
-   * @param {Date} timeStamp 
+   *
+   * @param {Date} timeStamp
    */
-  const broadcast = (lastTick, timeStamp, factor) => {
+  const broadcast = (timeStamp) => {
     $rootScope.$broadcast('syncTick', {
       factor, lastTick, timeStamp,
     });
@@ -50,7 +48,7 @@ app.factory('Sync', ($rootScope, $window) => {
    */
   const end = () => {
     config.freeze = false;
-  }
+  };
 
   init();
   return {

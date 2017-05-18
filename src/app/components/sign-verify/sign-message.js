@@ -23,7 +23,7 @@ app.component('signMessage', {
     /**
      * Uses lisk.crypto and signs the value assigned to this.message
      * The result will be available on this.result
-     * 
+     *
      * @method sign
      */
     sign() {

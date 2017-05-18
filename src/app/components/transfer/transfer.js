@@ -63,7 +63,7 @@ app.component('transfer', {
 
     /**
      * Resets the values of receipentId and amount
-     * 
+     *
      * @method reset
      */
     reset() {
@@ -73,8 +73,8 @@ app.component('transfer', {
 
     /**
      * Should be called on form submittion.
-     * Calls transaction.create to transfer the specified amount to recipient. 
-     * 
+     * Calls transaction.create to transfer the specified amount to recipient.
+     *
      * @method transfer
      */
     transfer() {
@@ -108,7 +108,7 @@ app.component('transfer', {
 
     /**
      * Sets all the funds of the account to the amount value to be transfered.
-     * 
+     *
      * @method setMaxAmount
      */
     setMaxAmount() {
@@ -117,7 +117,7 @@ app.component('transfer', {
 
     /**
      * Cancels the dialog.
-     * 
+     *
      * @method cancel
      * @todo Should reset the form too.
      */

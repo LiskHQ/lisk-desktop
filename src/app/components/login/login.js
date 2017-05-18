@@ -54,8 +54,8 @@ app.component('login', {
 
     /**
      * Called of login/signup form submition. this is where we set the active peer.
-     * 
-     * @param {String} [_passphrase=this.input_passphrase] 
+     *
+     * @param {String} [_passphrase=this.input_passphrase]
      */
     passConfirmSubmit(_passphrase = this.input_passphrase) {
       if (this.Passphrase.normalize.constructor === Function) {

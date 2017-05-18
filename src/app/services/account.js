@@ -16,10 +16,10 @@ app.factory('Account', function ($rootScope) {
   /**
    * Deep compare any two parameter for equality. if not a primary value,
    * compares all the members recursively checking if all primary value members are equal
-   * 
+   *
    * @private
    * @method equals
-   * @param {any} ref1 - Value to compare equality 
+   * @param {any} ref1 - Value to compare equality
    * @param {any} ref2 - Value to compare equality
    * @returns {boolean} Whether two parameters are equal or not
    */
@@ -53,7 +53,7 @@ app.factory('Account', function ($rootScope) {
   /**
    * If the new value of the given property on the account is changed,
    * it sets the changed property with the values on a dictionary
-   * 
+   *
    * @private
    * @method setChangedItem
    * @param {Object} changes - The object to collect a dictionary of all the changes
@@ -97,7 +97,7 @@ app.factory('Account', function ($rootScope) {
    * Merged the existing account object with the given changes object.
    * For a given passphrase, it also sets address and publicKey.
    * Broadcasts an event from rootScope downwards containing changes.
-   * 
+   *
    * @method set
    * @param {Object} config - Changes to be applied to account object.
    * @returns {object} the account object after changes applied.
@@ -110,7 +110,7 @@ app.factory('Account', function ($rootScope) {
 
   /**
    * Returns the dictionary of the account basic statistics
-   * 
+   *
    * @method get
    * @returns {object} The account dictionary
    */
@@ -118,7 +118,7 @@ app.factory('Account', function ($rootScope) {
 
   /**
    * Removes all the keys from the account but keeps the reference
-   * 
+   *
    * @method reset
    */
   this.reset = () => {

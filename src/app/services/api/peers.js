@@ -24,9 +24,9 @@ app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope) => {
 
     /**
      * Deletaes the active peer
-     * 
+     *
      * @param {Boolean} active - defines if the function should delete the active peer
-     * 
+     *
      * @memberOf Peers
      * @method reset
      * @todo Since the usage of this function without passing active parameter
@@ -42,9 +42,9 @@ app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope) => {
      * User Lisk.js to set the active peer. if network is not passed
      * a peer will be selected in random base.
      * Also checks the status of the network
-     * 
+     *
      * @param {Object} [network] - The network to to be set as active
-     * 
+     *
      * @memberOf Peers
      * @method setActive
      */
@@ -68,11 +68,11 @@ app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope) => {
 
     /**
      * Converts the callback-based peer.active.sendRequest to promise
-     * 
+     *
      * @param {String} api - The relative path of the endpoint
      * @param {any} [urlParams] - The parameters of the request
      * @returns {promise} Api call promise
-     * 
+     *
      * @memberOf Peer
      * @method sendRequestPromise
      */
@@ -89,7 +89,7 @@ app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope) => {
 
     /**
      * Gets the basic status of the client. and sets the online/ofline status
-     * 
+     *
      * @private
      * @memberOf Peer
      * @method check
