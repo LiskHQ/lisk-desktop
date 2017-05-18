@@ -4,19 +4,28 @@ app.factory('Sync', ($rootScope, $window) => {
     freeze: false,
   };
   let lastTick = new Date();
+  let factor = 0;
   const running = false;
 
-  const broadcast = (timeStamp) => {
+  /**
+   * Broadcast an event from rootScope downwards
+   * 
+   * @param {Number} factor 
+   * @param {Date} lastTick 
+   * @param {Date} timeStamp 
+   */
+  const broadcast = (lastTick, timeStamp, factor) => {
     $rootScope.$broadcast('syncTick', {
-      lastTick, timeStamp,
+      factor, lastTick, timeStamp,
     });
   };
 
   const step = () => {
     const now = new Date();
     if (now - lastTick >= config.updateInterval) {
+      broadcast(lastTick, now, factor);
       lastTick = now;
-      broadcast();
+      factor += factor < 9 ? 1 : -9;
     }
     if (!config.freeze) {
       $window.requestAnimationFrame(step);
@@ -31,6 +40,6 @@ app.factory('Sync', ($rootScope, $window) => {
 
   init();
   return {
-    init, config,
+    init, config, end,
   };
 });
