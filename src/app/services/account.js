@@ -1,8 +1,28 @@
 import lisk from 'lisk-js';
 
+/**
+ * @description This factory provides methods to get and set basic information and
+ * statistics of the current account
+ *
+ * @memberOf app
+ * @function Account
+ */
 app.factory('Account', function ($rootScope) {
+  /**
+   * @type Object
+   */
   this.account = {};
 
+  /**
+   * Deep compare any two parameter for equality. if not a primary value,
+   * compares all the members recursively checking if all primary value members are equal
+   *
+   * @private
+   * @method equals
+   * @param {any} ref1 - Value to compare equality
+   * @param {any} ref2 - Value to compare equality
+   * @returns {Boolean} Whether two parameters are equal or not
+   */
   const equals = (ref1, ref2) => {
     /* eslint-disable eqeqeq */
 
@@ -30,6 +50,16 @@ app.factory('Account', function ($rootScope) {
     return isEqual;
   };
 
+  /**
+   * If the new value of the given property on the account is changed,
+   * it sets the changed property with the values on a dictionary
+   *
+   * @private
+   * @method setChangedItem
+   * @param {Object} changes - The object to collect a dictionary of all the changes
+   * @param {String} property - The name of the property to check if changed
+   * @param {any} value - The new value of the property
+   */
   const setChangedItem = (changes, property, value) => {
     if (!equals(this.account[property], value)) {
       changes[property] = [this.account[property], value];
@@ -63,13 +93,34 @@ app.factory('Account', function ($rootScope) {
     }
   };
 
+  /**
+   * Merged the existing account object with the given changes object.
+   * For a given passphrase, it also sets address and publicKey.
+   * Broadcasts an event from rootScope downwards containing changes.
+   *
+   * @method set
+   * @param {Object} config - Changes to be applied to account object.
+   * @returns {object} the account object after changes applied.
+   *  for each key in changes: {key: [newValue, oldValue]}
+   */
   this.set = (config) => {
     merge(config);
     return this.account;
   };
 
+  /**
+   * Returns the dictionary of the account basic statistics
+   *
+   * @method get
+   * @returns {object} The account dictionary
+   */
   this.get = () => this.account;
 
+  /**
+   * Removes all the keys from the account but keeps the reference
+   *
+   * @method reset
+   */
   this.reset = () => {
     const keys = Object.keys(this.account);
     keys.forEach((key) => {

@@ -27,6 +27,5 @@
     "win": {
       "target": "nsis"
     }
-  },
-  "license": "GPL-3.0"
+  }
 }

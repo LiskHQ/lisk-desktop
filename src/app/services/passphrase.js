@@ -20,7 +20,13 @@ app.factory('Passphrase', function ($rootScope) {
 
   const emptyBytes = () => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-  this.normalize = (v = '') => v.replace(/ +/g, ' ').trim().toLowerCase();
+  /**
+   *  Returns a single space separated lower-cased string from a given string.
+   *
+   * @param {String} [str = ''] - The string to get normalized.
+   * @returns {string} - The single space separated lower-cased string
+   */
+  this.normalize = (str = '') => str.replace(/ +/g, ' ').trim().toLowerCase();
 
   this.reset = () => {
     this.progress.percentage = 0;
@@ -29,6 +35,12 @@ app.factory('Passphrase', function ($rootScope) {
 
   /**
    * fills the left side of str with a given padding string to meet the required length
+   *
+   * @param {String} str - The string to fill with pad
+   * @param {String} pad - The string used as padding
+   * @param {Number} length  - The final length of the string after adding padding
+   * @private
+   * @returns {string} padded string
    */
   const leftPadd = (str, pad, length) => {
     let paddedStr = str;
@@ -36,6 +48,12 @@ app.factory('Passphrase', function ($rootScope) {
     return paddedStr;
   };
 
+  /**
+   * Checks if given value is a valid passphrase
+   *
+   * @param {String} value
+   * @returns {number} 0, 1, 2, respectively if invalid, valid or empty string.
+   */
   this.isValidPassphrase = (value) => {
     const normalizedValue = this.normalize(value);
 
@@ -47,12 +65,26 @@ app.factory('Passphrase', function ($rootScope) {
     return 1;
   };
 
+  /**
+   * Resets previous settings and creates a step with a random length between 1.6% to 3.2%
+   */
   this.init = () => {
     this.reset();
     byte = emptyBytes();
     this.progress.step = (160 + Math.floor(Math.random() * 160)) / 100;
   };
 
+  /**
+   * - From a zero byte:
+   * - Removes all the 1s and replaces all the 1s with their index
+   * - Creates a random number with the length of resulting array (pos)
+   * - sets the bit in the pos position
+   * - creates random byte using crypto and assigns that to seed in the
+   *    position of pos
+   * - Repeats this until the length of the given byte is zero.
+   *
+   * @returns {number[]} The input array whose member is pos is set
+   */
   const updateSeedAndProgress = () => {
     let pos;
     const available = byte.map((bit, index) => (!bit ? index : null)).filter(bit => (bit !== null));
@@ -76,6 +108,12 @@ app.factory('Passphrase', function ($rootScope) {
     return byte;
   };
 
+  /**
+   * Generates a passphrase from a given seed array using mnemonic
+   *
+   * @param {string[]} seed - An array of 16 hex numbers in string format
+   * @returns {string} The generated passphrase
+   */
   this.generatePassPhrase = seed => (new mnemonic(new Buffer(seed.join(''), 'hex'))).toString();
 
   this.listener = (ev, callback) => {
@@ -95,7 +133,7 @@ app.factory('Passphrase', function ($rootScope) {
         }
 
         this.progress.percentage += this.progress.step;
-        byte = updateSeedAndProgress(byte, this.progress.percentage);
+        byte = updateSeedAndProgress(byte);
       }
     }
   };

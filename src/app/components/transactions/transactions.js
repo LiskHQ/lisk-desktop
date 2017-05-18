@@ -1,7 +1,19 @@
 import './transactions.less';
 
+/**
+ * The transactions tab component, produces a list of transactions for the current account.
+ *
+ * @module app
+ * @submodule transactions
+ */
 app.component('transactions', {
   template: require('./transactions.pug')(),
+  /**
+   * The main component constructor class
+   *
+   * @class main
+   * @constructor
+   */
   controller: class transactions {
     constructor($scope, $rootScope, $q, Peers, Account, AccountApi) {
       this.$scope = $scope;
@@ -27,6 +39,14 @@ app.component('transactions', {
       });
     }
 
+    /**
+     * resets the old values - if any - and updates transactions.
+     *
+     * @param {Boolean} showLoading
+     * @todo Use a loader service instead.
+     * @todo Is it possible to initiate the component after account if fully fetched
+     *  and remove this condition block?
+     */
     init(showLoading) {
       if (this.account.get().address) {
         this.reset();
@@ -34,6 +54,10 @@ app.component('transactions', {
       }
     }
 
+    /**
+     * Resets the loader
+     * @todo Create a service to manage loaders instead.
+     */
     reset() {
       this.loaded = false;
     }
@@ -44,6 +68,13 @@ app.component('transactions', {
       }
     }
 
+    /**
+     * updates the lists of confirmed and pending transactions.
+     *
+     * @param {Boolean} showLoading
+     * @param {Boolean} showMore
+     * @returns {promise} Api call promise
+     */
     update(showLoading, showMore) {
       if (showLoading) {
         this.loaded = false;
@@ -53,6 +84,13 @@ app.component('transactions', {
       return this.loadTransactions(limit);
     }
 
+    /**
+     * Fetches the list of transactions using accountApi
+     *
+     * @param {Number} limit The maximum number of transactions to be fetched
+     * @returns {promise} Api call promise
+     * @todo Is it possible to use offset and not loaded all the list every time?
+     */
     loadTransactions(limit) {
       return this.accountApi.transactions.get(this.account.get().address, limit)
         .then(this._processTransactionsResponse.bind(this))
@@ -65,6 +103,13 @@ app.component('transactions', {
         });
     }
 
+    /**
+     * Removes pending transactions if they are already in the confirmed
+     * transactions list.
+     *
+     * @param {Object} response - The response of transactions.get containing
+     *  list and count of transactions
+     */
     _processTransactionsResponse(response) {
       this.pendingTransactions = this.pendingTransactions.filter(
         pt => response.transactions.filter(t => t.id === pt.id).length === 0);

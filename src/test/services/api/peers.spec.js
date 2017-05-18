@@ -39,7 +39,7 @@ describe('Factory: Peers', () => {
     beforeEach(() => {
       deffered = $q.defer();
       mock = sinon.mock(Peers);
-      mock.expects('getStatus').returns(deffered.promise);
+      mock.expects('sendRequestPromise').returns(deffered.promise);
       Peers.active = {};
     });
 

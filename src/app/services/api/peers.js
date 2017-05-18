@@ -1,6 +1,20 @@
 import lisk from 'lisk-js';
 
+/**
+ * This factory provides methods for communicating with peers. It exposes
+ * sendRequestPromise method for requesting to available endpoint to the active peer,
+ * so we need to set the active peer using `setActive` method before using other methods
+ *
+ * @module app
+ * @submodule Peers
+ */
 app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope) => {
+  /**
+   * The Peers factory constructor class
+   *
+   * @class Peers
+   * @constructor
+   */
   class Peers {
     constructor() {
       $rootScope.$on('syncTick', () => {
@@ -8,12 +22,32 @@ app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope) => {
       });
     }
 
+    /**
+     * Delegates the active peer
+     *
+     * @param {Boolean} active - defines if the function should delete the active peer
+     *
+     * @memberOf Peers
+     * @method reset
+     * @todo Since the usage of this function without passing active parameter
+     *  doesn't perform any action, this function and its use-cases must be revised.
+     */
     reset(active) {
       if (active) {
         this.active = undefined;
       }
     }
 
+    /**
+     * User Lisk.js to set the active peer. if network is not passed
+     * a peer will be selected in random base.
+     * Also checks the status of the network
+     *
+     * @param {Object} [network] - The network to be set as active
+     *
+     * @memberOf Peers
+     * @method setActive
+     */
     setActive(network) {
       let conf = { };
       if (network) {
@@ -32,6 +66,16 @@ app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope) => {
       this.check();
     }
 
+    /**
+     * Converts the callback-based peer.active.sendRequest to promise
+     *
+     * @param {String} api - The relative path of the endpoint
+     * @param {any} [urlParams] - The parameters of the request
+     * @returns {promise} Api call promise
+     *
+     * @memberOf Peer
+     * @method sendRequestPromise
+     */
     sendRequestPromise(api, urlParams) {
       const deferred = $q.defer();
       this.active.sendRequest(api, urlParams, (data) => {
@@ -43,14 +87,17 @@ app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope) => {
       return deferred.promise;
     }
 
-    getStatus() {
-      return this.sendRequestPromise('loader/status', {});
-    }
-
+    /**
+     * Gets the basic status of the account. and sets the online/offline status
+     *
+     * @private
+     * @memberOf Peer
+     * @method check
+     */
     check() {
       this.reset();
 
-      this.getStatus()
+      this.sendRequestPromise('loader/status', {})
         .then(() => this.online = true)
         .catch(() => this.online = false);
     }
