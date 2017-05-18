@@ -44,7 +44,7 @@ div.offline-hide
           div Approval
           div.progress-label {{$ctrl.delegate.approval}}%
           round-progress(max='100', current='$ctrl.delegate.approval', color='#0288D1')
-      md-card(layout='column', ng-if='$ctrl.delegate.username')
+      md-card.forged-blocks(layout='column', ng-if='$ctrl.delegate.username')
         md-card-title
           md-card-title-text
             span.md-title Forged Blocks

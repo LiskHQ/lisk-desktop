@@ -113,7 +113,7 @@ describe('Forging component', () => {
 
   const FORGED_BLOCKS_TITLE = 'Forged Blocks';
   it(`should contain a card with title ${FORGED_BLOCKS_TITLE}`, () => {
-    expect(element.find('md-card .md-title').text()).to.equal(FORGED_BLOCKS_TITLE);
+    expect(element.find('md-card.forged-blocks .md-title').text()).to.equal(FORGED_BLOCKS_TITLE);
   });
 });
 
