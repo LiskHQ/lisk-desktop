@@ -1,3 +1,11 @@
+/**
+ * This factory provides methods for requesting and updating the informations related
+ * to the current client. it's using Account factory to access to account
+ * publicKey and address and it's only used for accounts registered as delegate.
+ *
+ * @module app
+ * @submodule delegateService
+ */
 app.factory('delegateService', Peers => ({
   /**
    * gets the list of delegtes for whom the given address has been voted
@@ -39,12 +47,27 @@ app.factory('delegateService', Peers => ({
     });
   },
 
+  /**
+   * Searches between delegates with the given username, then filters the voteDic
+   * from the results and only shows the delegated for which we haven't voted.
+   * 
+   * @param {String} username - username to search for
+   * @param {Object} votedDict - The deligate list to filter from the results
+   * @returns {array} The list of delegates whose username starts with the given username
+   */
   voteAutocomplete(username, votedDict) {
     return this.listDelegates({ q: username }).then(
       response => response.delegates.filter(d => !votedDict[d.username]),
     );
   },
 
+  /**
+   * Filters the list of voted delegates with the given username
+   * 
+   * @param {String} username  - username to search for
+   * @param {array} votedList - The list of the delegates for which we have voted
+   * @returns  {array} The list of delegates whose username starts with the given username
+   */
   unvoteAutocomplete(username, votedList) {
     return votedList.filter(delegate => delegate.username.indexOf(username) !== -1);
   },

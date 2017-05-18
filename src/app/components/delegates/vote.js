@@ -1,11 +1,23 @@
 import './vote.less';
 
+/**
+ * The votes tab component
+ *
+ * @module app
+ * @submodule vote
+ */
 app.component('vote', {
   template: require('./vote.pug')(),
   bindings: {
     voteList: '=',
     unvoteList: '=',
   },
+  /**
+   * The vote tab component constructor class
+   *
+   * @class vote
+   * @constructor
+   */
   controller: class vote {
     constructor($scope, $mdDialog, dialog, delegateService, $rootScope, Account) {
       this.$mdDialog = $mdDialog;
@@ -17,6 +29,15 @@ app.component('vote', {
       this.votedDict = {};
       this.votedList = [];
 
+      this.getDelegates();
+    }
+
+    /**
+     * Needs summery
+     * 
+     * @method getDelegates
+     */
+    getDelegates() {
       this.delegateService.listAccountDelegates({
         address: this.account.get().address,
       }).then((data) => {
@@ -30,6 +51,8 @@ app.component('vote', {
     /**
      * for an existing voteList and unvoteList it calls delegateService.vote
      * to update vote list. Shows a toast on each state change.
+     * 
+     * @method vote
      */
     vote() {
       this.votingInProgress = true;
@@ -52,6 +75,7 @@ app.component('vote', {
     /**
      * Checks if valiity of votes list. used to enable/disable sibmit button.
      * 
+     * @method canVote
      * @returns {boolean} Is the vote form valid?
      */
     canVote() {
@@ -64,8 +88,9 @@ app.component('vote', {
     /**
      * Removes the delegate in the given index from votes list
      * 
-     * @param {array} list the votes list
-     * @param {number} index the index of the delegate to be removed
+     * @method removeVote
+     * @param {object[]} list the votes list
+     * @param {Number} index the index of the delegate to be removed
      */
     // eslint-disable-next-line class-methods-use-this
     removeVote(list, index) {

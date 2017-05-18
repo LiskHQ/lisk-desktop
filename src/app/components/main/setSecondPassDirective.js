@@ -1,5 +1,11 @@
 import './secondPass.less';
 
+/**
+ * The directive to show the second passphrase form and register it using AccountApi
+ *
+ * @module app
+ * @submodule setSecondPass
+ */
 app.directive('setSecondPass', (setSecondPass, Account, $rootScope, dialog, AccountApi) => {
   /* eslint no-param-reassign: ["error", { "props": false }] */
   const SetSecondPassLink = function (scope, element) {
@@ -7,6 +13,12 @@ app.directive('setSecondPass', (setSecondPass, Account, $rootScope, dialog, Acco
       setSecondPass.show();
     });
 
+    /**
+     * We call this after second passphrase is generated.
+     * Shows an alert with approapriate message in case the request fails.
+     * 
+     * @param {String} secondsecret - The validated passphrase to register as second secret
+     */
     scope.passConfirmSubmit = (secondsecret) => {
       AccountApi.setSecondSecret(secondsecret, Account.get().publicKey, Account.get().passphrase)
         .then(() => {
@@ -25,6 +37,9 @@ app.directive('setSecondPass', (setSecondPass, Account, $rootScope, dialog, Acco
         });
     };
 
+    /**
+     * @todo Why we're listening for onAfterSignup here?
+     */
     scope.$on('onAfterSignup', (ev, args) => {
       if (args.target === 'second-pass') {
         scope.passConfirmSubmit(args.passphrase);

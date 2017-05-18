@@ -1,5 +1,11 @@
 import './top.less';
 
+/**
+ * Contains some of important and basic information about the account
+ *
+ * @module app
+ * @submodule top
+ */
 app.component('top', {
   template: require('./top.pug')(),
   controller: class top {

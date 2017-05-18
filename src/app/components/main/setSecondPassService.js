@@ -1,3 +1,10 @@
+/**
+ * This service uses mdDialog to show a modal containing the set second passphrase form
+ *
+ * @module app
+ * @submodule setSecondPassFactory
+ * @todo Should be replaced by a general dialog service
+ */
 const setSecondPassConstructor = function ($mdDialog) {
   this.ok = () => {
     $mdDialog.hide();

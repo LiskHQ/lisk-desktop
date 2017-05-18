@@ -11,6 +11,14 @@ app.directive('passphrase', ($rootScope, $document, Passphrase, $mdDialog, $mdMe
       $document.unbind('mousemove', listener);
     };
 
+    /**
+     * Uses assphrase.generatePassPhrase to generate passphrase from a given seed
+     * Randomly asks for one of the words in passphrase to ensure it's noted down
+     * 
+     * @param {string[]} seed - The array of 16 hex numbers in string format
+     * @todo Why we're broadcasting onAfterSignup here?
+     *  Isn't this only related to login component?
+     */
     const generateAndDoubleCheck = (seed) => {
       const passphrase = Passphrase.generatePassPhrase(seed);
 
@@ -73,6 +81,12 @@ app.directive('passphrase', ($rootScope, $document, Passphrase, $mdDialog, $mdMe
       $document.mousemove();
     };
 
+    /**
+     * Tests useragent with a regexp and defines if the client is mobile device
+     * 
+     * @param {String} [agent] - The useragent string, This parameter is used for unit testing perpose
+     * @returns {boolean} - whether the agent represents a mobile device or not
+     */
     scope.mobileAndTabletcheck = (agent) => {
       let check = false;
       if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(agent || navigator.userAgent || navigator.vendor || window.opera)) {

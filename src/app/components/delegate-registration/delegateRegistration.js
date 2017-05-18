@@ -1,5 +1,11 @@
 import './delegateRegistration.less';
 
+/**
+ * @description The directive performing as the form to register the client as delegate
+ * 
+ * @class app.delegateRegistration
+ * @memberOf app
+ */
 app.directive('delegateRegistration', ($mdDialog, delegateService, Account, dialog) => {
   const DelegateRegistrationLink = function ($scope, $element) {
     $scope.form = {
@@ -37,7 +43,8 @@ app.directive('delegateRegistration', ($mdDialog, delegateService, Account, dial
     /**
      * Resets the from fields and form state.
      * 
-     * @param {object} from - The form event object. containing form elements and erros list.
+     * @method reset
+     * @param {Object} from - The form event object. containing form elements and erros list.
      */
     $scope.reset = (form) => {
       $scope.form.name = '';
@@ -50,7 +57,8 @@ app.directive('delegateRegistration', ($mdDialog, delegateService, Account, dial
     /**
      * hides the dialog and resets form.
      * 
-     * @param {object} from - The form event object. containing form elements and erros list.
+     * @method cancel
+     * @param {Object} from - The form event object. containing form elements and erros list.
      */
     $scope.cancel = (form) => {
       $scope.reset(form);

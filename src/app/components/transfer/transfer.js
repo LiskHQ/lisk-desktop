@@ -1,11 +1,23 @@
 import './transfer.less';
 
+/**
+ * This component is a form for transfering funds to other accounts.
+ *
+ * @module app
+ * @submodule transfer
+ */
 app.component('transfer', {
   template: require('./transfer.pug')(),
   bindings: {
     recipientId: '<',
     transferAmount: '<',
   },
+  /**
+   * The transfer component constructor class
+   *
+   * @class transfer
+   * @constructor
+   */
   controller: class transfer {
     constructor($scope, lsk, dialog, $mdDialog, $q, $rootScope, Account, AccountApi) {
       this.$scope = $scope;
@@ -24,6 +36,10 @@ app.component('transfer', {
       this.amount = {
         regexp: '^[0-9]+(.[0-9]{1,8})?$',
       };
+
+      /**
+       * @todo Check if it's possible to replace these watchers with filters.
+       */
       if ($scope.$ctrl.transferAmount) {
         this.amount.value = parseInt(lsk.normalize($scope.$ctrl.transferAmount), 10);
       }
@@ -47,6 +63,8 @@ app.component('transfer', {
 
     /**
      * Resets the values of receipentId and amount
+     * 
+     * @method reset
      */
     reset() {
       this.recipient.value = '';
@@ -56,7 +74,8 @@ app.component('transfer', {
     /**
      * Should be called on form submittion.
      * Calls transaction.create to transfer the specified amount to recipient. 
-     * Shows 
+     * 
+     * @method transfer
      */
     transfer() {
       this.loading = true;
@@ -87,10 +106,21 @@ app.component('transfer', {
       });
     }
 
+    /**
+     * Sets all the funds of the account to the amount value to be transfered.
+     * 
+     * @method setMaxAmount
+     */
     setMaxAmount() {
       this.amount.value = Math.max(0, this.amount.max);
     }
 
+    /**
+     * Cancels the dialog.
+     * 
+     * @method cancel
+     * @todo Should reset the form too.
+     */
     cancel() {
       this.$mdDialog.cancel();
     }

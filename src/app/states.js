@@ -1,6 +1,11 @@
 import './components/main/main';
 import './components/login/login';
 
+/**
+ * @function states
+ * 
+ * @description Uses stateProvider to confifure routing of the application
+ */
 app.config(($stateProvider, $urlRouterProvider) => {
   $stateProvider
     .state('login', {

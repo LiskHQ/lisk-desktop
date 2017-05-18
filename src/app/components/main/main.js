@@ -1,8 +1,20 @@
 import './main.less';
 
+/**
+ * The main component, used as parent for transaction, forging and delgate tabs.
+ *
+ * @module app
+ * @submodule main
+ */
 app.component('main', {
   template: require('./main.pug')(),
   controllerAs: '$ctrl',
+  /**
+   * The main component constructor class
+   *
+   * @class main
+   * @constructor
+   */
   controller: class main {
     constructor($scope, $rootScope, $timeout, $q, $state, Peers,
       dialog, TransferModal, Account, AccountApi) {
@@ -20,6 +32,15 @@ app.component('main', {
       this.activeTab = this.init();
     }
 
+    /**
+     * - Reidrects to login if not logged in yet.
+     * - Updates account info.
+     * - Tries to find an active peer for 10 times iuntil finds one.
+     * 
+     * @param {Number} [attempts=0] The number of attemps to find an active peer
+     * @returns {string} The name of the current state
+     * @todo We're safe to remove prelogged and we can replace logged with accountApi
+     */
     init(attempts = 0) {
       if (!this.account.get() || !this.account.get().passphrase) {
         // Return to login but keep the state
@@ -56,6 +77,12 @@ app.component('main', {
       return this.$state.current.name;
     }
 
+    /**
+     * Uses peers service to check if the current client is a delegate
+     * 
+     * @todo This property can be included in accountApi.get to
+     *  eliminate this Api call
+     */
     checkIfIsDelegate() {
       this.peers.active.sendRequest('delegates/get', {
         publicKey: this.account.get().publicKey,
@@ -69,6 +96,11 @@ app.component('main', {
       });
     }
 
+    /**
+     * Sets accoutn statistics using accountApi.get
+     * 
+     * @returns {promise} Api call promise
+     */
     update() {
       return this.accountApi.get(this.account.get().address)
         .then((res) => {

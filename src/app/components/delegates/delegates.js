@@ -2,12 +2,24 @@ import './delegates.less';
 
 const UPDATE_INTERVAL = 10000;
 
+/**
+ * The delegates tab component
+ *
+ * @module app
+ * @submodule delegates
+ */
 app.component('delegates', {
   template: require('./delegates.pug')(),
   bindings: {
     account: '=',
     passphrase: '<',
   },
+  /**
+   * The delegates tab component constructor class
+   *
+   * @class delegates
+   * @constructor
+   */
   controller: class delegates {
     constructor($scope, $rootScope, Peers, $mdDialog, $mdMedia,
       dialog, $timeout, delegateService, Account) {
@@ -44,6 +56,11 @@ app.component('delegates', {
       });
     }
 
+    /**
+     * Updates the lists of delegates and voted delegates
+     * 
+     * @method updateAll
+     */
     updateAll() {
       this.delegates = [];
       this.delegatesDisplayedCount = 20;
@@ -60,11 +77,21 @@ app.component('delegates', {
       }
     }
 
-    loadDelegates(offset, search, replace) {
+    /**
+     * Fetches a list of delegates based on the given search phrase
+     * 
+     * @method loadDelegates
+     * @param {Number} offset - The strating index of for the results
+     * @param {String} search - The search phrase to match with the delegate name
+     * @param {Boolean} replace - Passed to addDelegates, defines if the results
+     *  should replace the old delegates list
+     * @param {Number} limit - The maximum number of results
+     */
+    loadDelegates(offset, search, replace, limit = 100) {
       this.loading = true;
       this.delegateService.listDelegates({
         offset,
-        limit: '100',
+        limit: limit.toString(),
         q: search,
       }).then((data) => {
         this.addDelegates(data, replace);
@@ -72,6 +99,14 @@ app.component('delegates', {
       this.lastSearch = search;
     }
 
+    /**
+     * Fiils the list of delegates, sets their voted and changed status
+     * 
+     * @method addDelegates
+     * @param {Object} data - The result of delegateService.listDelegates Api call
+     * @param {Boolean} replace - defines if the results should replace
+     *  the old delegates list
+     */
     addDelegates(data, replace) {
       if (data.success) {
         if (replace) {
@@ -96,6 +131,11 @@ app.component('delegates', {
       }
     }
 
+    /**
+     * Needs summery
+     * 
+     * @method showMore
+     */
     showMore() {
       if (this.delegatesDisplayedCount < this.delegates.length) {
         this.delegatesDisplayedCount += 20;
@@ -107,6 +147,12 @@ app.component('delegates', {
       }
     }
 
+    /**
+     * Needs summery
+     * 
+     * @method selectionChange
+     * @param {any} delegate 
+     */
     selectionChange(delegate) {
       // eslint-disable-next-line no-param-reassign
       delegate.status.changed = delegate.status.voted !== delegate.status.selected;
@@ -118,10 +164,21 @@ app.component('delegates', {
       }
     }
 
+    /**
+     * Needs summery
+     * 
+     * @method clearSearch
+     */
     clearSearch() {
       this.$scope.search = '';
     }
 
+    /**
+     * Adds deelgates to vote delegates list
+     * 
+     * @method addToUnvoteList
+     * @param {Object} vote - The delegate to add to voted delegates list
+     */
     addToUnvoteList(vote) {
       const delegate = this.delegates.filter(d => d.username === vote.username)[0] || vote;
       if (delegate.status.selected) {
@@ -130,6 +187,11 @@ app.component('delegates', {
       delegate.status.selected = false;
     }
 
+    /**
+     * Needs summery
+     * 
+     * @method setPendingVotes
+     */
     setPendingVotes() {
       this.voteList.forEach((delegate) => {
         /* eslint-disable no-param-reassign */
@@ -149,6 +211,13 @@ app.component('delegates', {
       this.checkPendingVotes();
     }
 
+    /**
+     * Fetches the lisy of delegates we've voted for (voted delegates),
+     * and updates the list and removes the confirmed votes from votePendingList
+     * 
+     * @method checkPendingVotes
+     * @todo Use Sync service and remove recursive timeout
+     */
     checkPendingVotes() {
       this.$timeout(() => {
         this.delegateService.listAccountDelegates(this.account.get().address,
@@ -181,14 +250,27 @@ app.component('delegates', {
       }, UPDATE_INTERVAL);
     }
 
+    /**
+     * Needs summery
+     * 
+     * @method parseVoteListFromInput
+     */
     parseVoteListFromInput() {
       this._parseListFromInput('voteList');
     }
 
+    /**
+     * Needs summery
+     * 
+     * @method parseUnvoteListFromInput
+     */
     parseUnvoteListFromInput() {
       this._parseListFromInput('unvoteList');
     }
 
+    /**
+     * @private
+     */
     _parseListFromInput(listName) {
       const list = this[listName];
       this.invalidUsernames = [];
@@ -206,6 +288,9 @@ app.component('delegates', {
       }
     }
 
+    /**
+     * @private
+     */
     _selectFinish(success, list) {
       if (list.length !== 0) {
         this.usernameListActive = false;
@@ -216,6 +301,9 @@ app.component('delegates', {
       }
     }
 
+    /**
+     * @private
+     */
     _setSelected(username, list) {
       const delegate = this.delegates.filter(d => d.username === username)[0];
       if (delegate) {
@@ -235,7 +323,6 @@ app.component('delegates', {
         });
       }
     }
-
     // eslint-disable-next-line class-methods-use-this
     _selectDelegate(delegate, list) {
       // eslint-disable-next-line no-param-reassign
@@ -247,6 +334,12 @@ app.component('delegates', {
       }
     }
 
+    /**
+     * Uses mdDialog to show vote list directive.
+     * 
+     * @method openVoteDialog
+     * @todo Use a general dialog service instead.
+     */
     openVoteDialog() {
       this.$mdDialog.show({
         controllerAs: '$ctrl',

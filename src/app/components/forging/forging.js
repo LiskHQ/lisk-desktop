@@ -1,11 +1,22 @@
 import moment from 'moment';
-
 import './forging.less';
 
 const UPDATE_INTERVAL = 20000;
 
+/**
+ * The forging tab component
+ *
+ * @module app
+ * @submodule forging
+ */
 app.component('forging', {
   template: require('./forging.pug')(),
+  /**
+   * The forging tab component constructor class
+   *
+   * @class forging
+   * @constructor
+   */
   controller: class forging {
     constructor($scope, $timeout, forgingService, Account) {
       this.$scope = $scope;
@@ -19,10 +30,18 @@ app.component('forging', {
       this.$scope.$on('accountChange', this.updateAllData.bind(this));
     }
 
+    /**
+     * @todo Tis should be rmeoved after using SyncService
+     */
     $onDestroy() {
       this.$timeout.cancel(this.timeout);
     }
 
+    /**
+     * Needs summery
+     * 
+     * @method updateAllData
+     */
     updateAllData() {
       this.updateDelegate();
       this.updateForgedBlocks(10);
@@ -34,6 +53,11 @@ app.component('forging', {
       this.updateForgingStats('total', moment('2016-04-24 17:00'));
     }
 
+    /**
+     * Needs summery
+     * 
+     * @method updateDelegate
+     */
     updateDelegate() {
       this.forgingService.getDelegate().then((data) => {
         this.delegate = data.delegate;
@@ -42,6 +66,15 @@ app.component('forging', {
       });
     }
 
+    /**
+     * Call forgingService to fetch forged blocks considering the given limit and offset
+     * If offset is not defined and the fetched and existing lists aren't identical,
+     * it'll unshift assuming we're fetching new forged blocks 
+     * 
+     * @method updateForgedBlocks
+     * @param {Number} limit 
+     * @param {Number} offset 
+     */
     updateForgedBlocks(limit, offset) {
       this.$timeout.cancel(this.timeout);
 
@@ -57,15 +90,32 @@ app.component('forging', {
         this.blocksLoaded = true;
         this.moreBlocksExist = this.blocks.length < data.count;
       }).finally(() => {
+        /**
+         * @todo Replace this with SyncService
+         */
         this.timeout = this.$timeout(this.updateAllData.bind(this), UPDATE_INTERVAL);
       });
     }
 
+    /**
+     * Fetches older blocks using updateForgedBlocks.
+     * 
+     * @method loadMoreBlocks
+     * @todo Replace loader with a loader service
+     */
     loadMoreBlocks() {
       this.blocksLoaded = false;
       this.updateForgedBlocks(20, this.blocks.length);
     }
 
+    /**
+     * Uses forgingService to update forging statistics
+     * 
+     * @method updateForgingStats
+     * @param {String} key The key to categorize forged blocks stats.
+     *  presently one of today, last24h, last7d, last30d, total.
+     * @param {Object} startMoment The moment.js date object
+     */
     updateForgingStats(key, startMoment) {
       this.forgingService.getForgedStats(startMoment).then((data) => {
         this.statistics[key] = data.forged;
@@ -73,4 +123,3 @@ app.component('forging', {
     }
   },
 });
-
