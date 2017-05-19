@@ -18,10 +18,10 @@ app.component('forging', {
    * @constructor
    */
   controller: class forging {
-    constructor($scope, $timeout, forgingService, Account) {
+    constructor($scope, $timeout, forgingApi, Account) {
       this.$scope = $scope;
       this.$timeout = $timeout;
-      this.forgingService = forgingService;
+      this.forgingApi = forgingApi;
 
       this.statistics = {};
       this.blocks = [];
@@ -59,7 +59,7 @@ app.component('forging', {
      * @method updateDelegate
      */
     updateDelegate() {
-      this.forgingService.getDelegate().then((data) => {
+      this.forgingApi.getDelegate().then((data) => {
         this.delegate = data.delegate;
       }).catch(() => {
         this.delegate = {};
@@ -67,7 +67,7 @@ app.component('forging', {
     }
 
     /**
-     * Call forgingService to fetch forged blocks considering the given limit and offset
+     * Call forgingApi to fetch forged blocks considering the given limit and offset
      * If offset is not defined and the fetched and existing lists aren't identical,
      * it'll unshift assuming we're fetching new forged blocks
      *
@@ -78,7 +78,7 @@ app.component('forging', {
     updateForgedBlocks(limit, offset) {
       this.$timeout.cancel(this.timeout);
 
-      this.forgingService.getForgedBlocks(limit, offset).then((data) => {
+      this.forgingApi.getForgedBlocks(limit, offset).then((data) => {
         if (this.blocks.length === 0) {
           this.blocks = data.blocks;
         } else if (offset) {
@@ -109,7 +109,7 @@ app.component('forging', {
     }
 
     /**
-     * Uses forgingService to update forging statistics
+     * Uses forgingApi to update forging statistics
      *
      * @method updateForgingStats
      * @param {String} key The key to categorize forged blocks stats.
@@ -117,7 +117,7 @@ app.component('forging', {
      * @param {Object} startMoment The moment.js date object
      */
     updateForgingStats(key, startMoment) {
-      this.forgingService.getForgedStats(startMoment).then((data) => {
+      this.forgingApi.getForgedStats(startMoment).then((data) => {
         this.statistics[key] = data.forged;
       });
     }

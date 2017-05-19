@@ -19,10 +19,10 @@ app.component('vote', {
    * @constructor
    */
   controller: class vote {
-    constructor($scope, $mdDialog, dialog, delegateService, $rootScope, Account) {
+    constructor($scope, $mdDialog, dialog, delegateApi, $rootScope, Account) {
       this.$mdDialog = $mdDialog;
       this.dialog = dialog;
-      this.delegateService = delegateService;
+      this.delegateApi = delegateApi;
       this.$rootScope = $rootScope;
       this.account = Account;
 
@@ -38,7 +38,7 @@ app.component('vote', {
      * @method getDelegates
      */
     getDelegates() {
-      this.delegateService.listAccountDelegates({
+      this.delegateApi.listAccountDelegates({
         address: this.account.get().address,
       }).then((data) => {
         this.votedList = data.delegates || [];
@@ -49,14 +49,14 @@ app.component('vote', {
     }
 
     /**
-     * for an existing voteList and unvoteList it calls delegateService.vote
+     * for an existing voteList and unvoteList it calls delegateApi.vote
      * to update vote list. Shows a toast on each state change.
      *
      * @method vote
      */
     vote() {
       this.votingInProgress = true;
-      this.delegateService.vote(
+      this.delegateApi.vote(
         this.account.get().passphrase,
         this.account.get().publicKey,
         this.voteList,
