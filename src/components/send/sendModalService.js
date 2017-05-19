@@ -1,11 +1,11 @@
 /**
- * This component shows a modal with the transfer form component.
+ * This component shows a modal with the send form component.
  *
  * @module app
- * @submodule TransferModal
+ * @submodule SendModal
  * @todo Replace this with a general dialog service
  */
-app.factory('TransferModal', ($mdDialog) => {
+app.factory('SendModal', ($mdDialog) => {
   const init = () => {
   };
   /**
@@ -18,7 +18,7 @@ app.factory('TransferModal', ($mdDialog) => {
 
   /**
    *
-   * Uses ndModal to along with transfer form directive to show a modal.
+   * Uses ndModal to along with send form directive to show a modal.
    * @param {String} recipientId -The address or the wallet ID of recipient
    * @param {Number} amount - The amount value in LSK
    *
@@ -26,7 +26,7 @@ app.factory('TransferModal', ($mdDialog) => {
    *       be used with any child directive.
    */
   const show = (recipientId, amount) => ($mdDialog.show({
-    template: '<md-dialog flex="80" ><transfer recipient-id="ms.recipientId" transfer-amount="ms.amount"></transfer></md-dialog>',
+    template: '<md-dialog flex="80" ><send recipient-id="ms.recipientId" send-amount="ms.amount"></send></md-dialog>',
     locals: {
       recipientId, amount,
     },
