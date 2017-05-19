@@ -2,7 +2,7 @@ environment {
   ON_JENKINS = 'TRUE'
 }
 node('lisk-nano-01'){
-  lock(resource: "master-nano-01", inversePrecedence: true) {
+  lock(resource: "lisk-nano-01", inversePrecedence: true) {
     stage ('Cleanup Orphaned Processes') {
       try {
       sh '''
