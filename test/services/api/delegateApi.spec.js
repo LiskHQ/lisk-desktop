@@ -5,19 +5,19 @@ const sinonChai = require('sinon-chai');
 const expect = chai.expect;
 chai.use(sinonChai);
 
-describe('Factory: delegateService', () => {
+describe('Factory: delegateApi', () => {
   let Peers;
   let $q;
-  let delegateService;
+  let delegateApi;
   let mock;
   let deffered;
 
   beforeEach(angular.mock.module('app'));
 
-  beforeEach(inject((_Peers_, _$q_, _delegateService_) => {
+  beforeEach(inject((_Peers_, _$q_, _delegateApi_) => {
     Peers = _Peers_;
     $q = _$q_;
-    delegateService = _delegateService_;
+    delegateApi = _delegateApi_;
   }));
 
   beforeEach(() => {
@@ -37,7 +37,7 @@ describe('Factory: delegateService', () => {
       };
       mock.expects('sendRequestPromise').withArgs('accounts/delegates', address).returns(deffered.promise);
 
-      const promise = delegateService.listAccountDelegates(address);
+      const promise = delegateApi.listAccountDelegates(address);
 
       expect(promise).to.equal(deffered.promise);
     });
@@ -50,7 +50,7 @@ describe('Factory: delegateService', () => {
       };
       mock.expects('sendRequestPromise').withArgs('delegates/', options).returns(deffered.promise);
 
-      const promise = delegateService.listDelegates(options);
+      const promise = delegateApi.listDelegates(options);
 
       expect(promise).to.equal(deffered.promise);
     });
@@ -63,7 +63,7 @@ describe('Factory: delegateService', () => {
       };
       mock.expects('sendRequestPromise').withArgs('delegates/get', options).returns(deffered.promise);
 
-      const promise = delegateService.getDelegate(options);
+      const promise = delegateApi.getDelegate(options);
 
       expect(promise).to.equal(deffered.promise);
     });
@@ -82,7 +82,7 @@ describe('Factory: delegateService', () => {
       }];
       mock.expects('sendRequestPromise').withArgs('accounts/delegates').returns(deffered.promise);
 
-      const promise = delegateService.vote(secret, publicKey,
+      const promise = delegateApi.vote(secret, publicKey,
         voteList, unvoteList, secondPassphrase);
 
       expect(promise).to.equal(deffered.promise);
@@ -102,7 +102,7 @@ describe('Factory: delegateService', () => {
       ];
       mock.expects('sendRequestPromise').withArgs('delegates/search', { q: username }).returns(deffered.promise);
 
-      delegateService.voteAutocomplete(username, votedDict);
+      delegateApi.voteAutocomplete(username, votedDict);
       deffered.resolve({ delegates });
     });
   });
@@ -115,7 +115,7 @@ describe('Factory: delegateService', () => {
         { username: 'genesis_24' },
       ];
 
-      const result = delegateService.unvoteAutocomplete(username, votedList);
+      const result = delegateApi.unvoteAutocomplete(username, votedList);
       expect(result).to.deep.equal([votedList[0]]);
     });
   });

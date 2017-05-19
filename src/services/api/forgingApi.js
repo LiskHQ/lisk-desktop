@@ -6,9 +6,9 @@ import moment from 'moment';
  * publicKey and address and it's only used for accounts registered as delegate.
  *
  * @module app
- * @submodule forgingService
+ * @submodule forgingApi
  */
-app.factory('forgingService', (Peers, Account) => ({
+app.factory('forgingApi', (Peers, Account) => ({
   /**
    * Fetches the list of the delegates
    *

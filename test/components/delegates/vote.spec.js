@@ -55,22 +55,22 @@ describe('Vote component controller', () => {
   let $scope;
   let controller;
   let $componentController;
-  let delegateServiceMock;
-  let delegateService;
+  let delegateApiMock;
+  let delegateApi;
   let $q;
   let accountDelegtatesDeferred;
 
-  beforeEach(inject((_$componentController_, _$rootScope_, _delegateService_, _$q_) => {
+  beforeEach(inject((_$componentController_, _$rootScope_, _delegateApi_, _$q_) => {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
-    delegateService = _delegateService_;
+    delegateApi = _delegateApi_;
     $q = _$q_;
   }));
 
   beforeEach(() => {
     accountDelegtatesDeferred = $q.defer();
-    delegateServiceMock = sinon.mock(delegateService);
-    delegateServiceMock.expects('listAccountDelegates').returns(accountDelegtatesDeferred.promise);
+    delegateApiMock = sinon.mock(delegateApi);
+    delegateApiMock.expects('listAccountDelegates').returns(accountDelegtatesDeferred.promise);
 
     $scope = $rootScope.$new();
     controller = $componentController('vote', $scope, {
@@ -98,21 +98,21 @@ describe('Vote component controller', () => {
   });
 
   describe('constructor()', () => {
-    it('calls delegateService.listAccountDelegates and then sets result to this.votedList', () => {
+    it('calls delegateApi.listAccountDelegates and then sets result to this.votedList', () => {
       const delegates = [{ username: 'genesis_42' }];
       accountDelegtatesDeferred.resolve({ success: true, delegates });
       $scope.$apply();
       expect(controller.votedList).to.deep.equal(delegates);
     });
 
-    it('calls delegateService.listAccountDelegates and if result.delegates is not defined then sets [] to this.votedList', () => {
+    it('calls delegateApi.listAccountDelegates and if result.delegates is not defined then sets [] to this.votedList', () => {
       const delegates = undefined;
       accountDelegtatesDeferred.resolve({ success: true, delegates });
       $scope.$apply();
       expect(controller.votedList).to.deep.equal([]);
     });
 
-    it('calls delegateService.listAccountDelegates and then sets result to this.votedDict', () => {
+    it('calls delegateApi.listAccountDelegates and then sets result to this.votedDict', () => {
       const delegates = [{ username: 'genesis_42' }];
       accountDelegtatesDeferred.resolve({ success: true, delegates });
       $scope.$apply();
@@ -126,13 +126,13 @@ describe('Vote component controller', () => {
 
     beforeEach(() => {
       deffered = $q.defer();
-      delegateServiceMock.expects('vote').returns(deffered.promise);
+      delegateApiMock.expects('vote').returns(deffered.promise);
       dilaogServiceMock = sinon.mock(controller.dialog);
     });
 
     afterEach(() => {
       dilaogServiceMock.verify();
-      delegateServiceMock.verify();
+      delegateApiMock.verify();
     });
 
     it('shows an error toast if request fails', () => {

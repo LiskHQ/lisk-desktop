@@ -6,10 +6,10 @@ import './delegateRegistration.less';
  * @class app.delegateRegistration
  * @memberOf app
  */
-app.directive('delegateRegistration', ($mdDialog, delegateService, Account, dialog, $rootScope) => {
+app.directive('delegateRegistration', ($mdDialog, delegateApi, Account, dialog, $rootScope) => {
   const DelegateRegistrationLink = function ($scope, $element) {
     function checkPendingRegistration() {
-      delegateService.getDelegate({
+      delegateApi.getDelegate({
         username: $scope.username,
       }).then((data) => {
         Account.set({
@@ -27,7 +27,7 @@ app.directive('delegateRegistration', ($mdDialog, delegateService, Account, dial
       onSubmit: (form) => {
         if (form.$valid) {
           $scope.username = $scope.form.name.toLowerCase();
-          delegateService.registerDelegate(
+          delegateApi.registerDelegate(
               $scope.username,
               Account.get().passphrase,
               $scope.form.secondPassphrase,

@@ -243,25 +243,25 @@ describe('delegates component controller', () => {
   });
 
   describe('checkPendingVotes()', () => {
-    let delegateServiceMock;
+    let delegateApiMock;
     let accountDelegtatesDeferred;
     let delegate41;
     let delegate42;
 
     beforeEach(() => {
       accountDelegtatesDeferred = $q.defer();
-      delegateServiceMock = sinon.mock(controller.delegateService);
-      delegateServiceMock.expects('listAccountDelegates').returns(accountDelegtatesDeferred.promise);
+      delegateApiMock = sinon.mock(controller.delegateApi);
+      delegateApiMock.expects('listAccountDelegates').returns(accountDelegtatesDeferred.promise);
       delegate41 = { username: 'genesis_41', status: {} };
       delegate42 = { username: 'genesis_42', status: {} };
     });
 
     afterEach(() => {
-      delegateServiceMock.verify();
-      delegateServiceMock.restore();
+      delegateApiMock.verify();
+      delegateApiMock.restore();
     });
 
-    it('calls delegateService.listAccountDelegates and then removes all returned delegates from this.votePendingList', () => {
+    it('calls delegateApi.listAccountDelegates and then removes all returned delegates from this.votePendingList', () => {
       controller.votePendingList = [delegate41, delegate42];
       controller.unvotePendingList = [];
 
@@ -275,7 +275,7 @@ describe('delegates component controller', () => {
       expect(controller.votePendingList[0]).to.deep.equal(delegate41);
     });
 
-    it('calls delegateService.listAccountDelegates and then removes all NOT returned delegates from this.unvotePendingList', () => {
+    it('calls delegateApi.listAccountDelegates and then removes all NOT returned delegates from this.unvotePendingList', () => {
       controller.votePendingList = [];
       controller.unvotePendingList = [delegate41, delegate42];
 
@@ -289,7 +289,7 @@ describe('delegates component controller', () => {
       expect(controller.unvotePendingList[0]).to.deep.equal(delegate42);
     });
 
-    it('calls delegateService.listAccountDelegates and if in the end there are still some votes pending calls itself again', () => {
+    it('calls delegateApi.listAccountDelegates and if in the end there are still some votes pending calls itself again', () => {
       controller.votePendingList = [];
       controller.unvotePendingList = [delegate41, delegate42];
 
@@ -305,10 +305,10 @@ describe('delegates component controller', () => {
   });
 
   describe('parseVoteListFromInput(list)', () => {
-    let delegateServiceMock;
+    let delegateApiMock;
 
     beforeEach(() => {
-      delegateServiceMock = sinon.mock(controller.delegateService);
+      delegateApiMock = sinon.mock(controller.delegateApi);
     });
 
     it('parses this.usernameInput to list of delegates and opens vote dialog if all delegates were immediately resolved', () => {
@@ -321,7 +321,7 @@ describe('delegates component controller', () => {
     it('parses this.usernameInput to list of delegates and opens vote dialog if all delegates were resolved immediately or from server', () => {
       const username = 'not_fetched_yet';
       const deffered = $q.defer();
-      delegateServiceMock.expects('getDelegate').withArgs(username).returns(deffered.promise);
+      delegateApiMock.expects('getDelegate').withArgs(username).returns(deffered.promise);
       const spy = sinon.spy(controller, 'openVoteDialog');
       controller.usernameInput = `${username}\ngenesis_42\ngenesis_46`;
 
@@ -340,7 +340,7 @@ describe('delegates component controller', () => {
     it('parses this.usernameInput to list of delegates and opens vote dialog if any delegates were resolved', () => {
       const username = 'invalid_name';
       const deffered = $q.defer();
-      delegateServiceMock.expects('getDelegate').withArgs(username).returns(deffered.promise);
+      delegateApiMock.expects('getDelegate').withArgs(username).returns(deffered.promise);
       const spy = sinon.spy(controller, 'openVoteDialog');
       controller.usernameInput = `${username}\ngenesis_42\ngenesis_46`;
 
@@ -354,7 +354,7 @@ describe('delegates component controller', () => {
     it('parses this.usernameInput to list of delegates and shows error toast if no delegates were resolved', () => {
       const username = 'invalid_name';
       const deffered = $q.defer();
-      delegateServiceMock.expects('getDelegate').withArgs(username).returns(deffered.promise);
+      delegateApiMock.expects('getDelegate').withArgs(username).returns(deffered.promise);
       const toastSpy = sinon.spy(controller.dialog, 'errorToast');
       const dialogSpy = sinon.spy(controller, 'openVoteDialog');
       controller.usernameInput = username;

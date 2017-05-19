@@ -22,16 +22,16 @@ describe('main component controller', () => {
   let account;
   let peers;
   let accountApi;
-  let delegateService;
+  let delegateApi;
 
   beforeEach(inject((_$componentController_, _$rootScope_, _Peers_,
-    _$q_, _Account_, _AccountApi_, _delegateService_) => {
+    _$q_, _Account_, _AccountApi_, _delegateApi_) => {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
     $q = _$q_;
     account = _Account_;
     accountApi = _AccountApi_;
-    delegateService = _delegateService_;
+    delegateApi = _delegateApi_;
     peers = _Peers_;
   }));
 
@@ -108,7 +108,7 @@ describe('main component controller', () => {
     });
 
     it.skip('calls /api/delegates/get and sets account.isDelegate according to the response.success', () => {
-      delegateService.registerDelegate();
+      delegateApi.registerDelegate();
       controller.checkIfIsDelegate();
       expect(account.get().isDelegate).to.equal(true);
     });

@@ -22,11 +22,11 @@ app.component('delegates', {
    */
   controller: class delegates {
     constructor($scope, $rootScope, Peers, $mdDialog, $mdMedia,
-      dialog, $timeout, delegateService, Account) {
+      dialog, $timeout, delegateApi, Account) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.peers = Peers;
-      this.delegateService = delegateService;
+      this.delegateApi = delegateApi;
       this.$mdDialog = $mdDialog;
       this.$mdMedia = $mdMedia;
       this.dialog = dialog;
@@ -65,7 +65,7 @@ app.component('delegates', {
       this.delegates = [];
       this.delegatesDisplayedCount = 20;
       if (this.peers.active) {
-        this.delegateService.listAccountDelegates({
+        this.delegateApi.listAccountDelegates({
           address: this.account.get().address,
         }).then((data) => {
           this.votedList = data.delegates || [];
@@ -89,7 +89,7 @@ app.component('delegates', {
      */
     loadDelegates(offset, search, replace, limit = 100) {
       this.loading = true;
-      this.delegateService.listDelegates({
+      this.delegateApi.listDelegates({
         offset,
         limit: limit.toString(),
         q: search,
@@ -103,7 +103,7 @@ app.component('delegates', {
      * Fills the list of delegates, sets their voted and changed status
      *
      * @method addDelegates
-     * @param {Object} data - The result of delegateService.listDelegates Api call
+     * @param {Object} data - The result of delegateApi.listDelegates Api call
      * @param {Boolean} replace - defines if the results should replace
      *  the old delegates list
      */
@@ -220,7 +220,7 @@ app.component('delegates', {
      */
     checkPendingVotes() {
       this.$timeout(() => {
-        this.delegateService.listAccountDelegates(this.account.get().address,
+        this.delegateApi.listAccountDelegates(this.account.get().address,
         ).then((data) => {
           this.votedList = data.delegates || [];
           this.votedDict = {};
@@ -310,7 +310,7 @@ app.component('delegates', {
         this._selectDelegate(delegate, list);
       } else {
         this.pendingRequests++;
-        this.delegateService.getDelegate(username,
+        this.delegateApi.getDelegate(username,
         ).then((data) => {
           this._selectDelegate(data.delegate, list);
         }).catch(() => {
