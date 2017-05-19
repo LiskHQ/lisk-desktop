@@ -10,9 +10,9 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const nodeEnvironment = process.env.NODE_ENV;
 
 const PATHS = {
-  app: path.join(__dirname, 'app'),
-  build: path.resolve(__dirname, '..', 'app'),
-  spec: path.join(__dirname, 'spec'),
+  app: path.join(__dirname, 'src'),
+  build: path.resolve(__dirname, 'app'),
+  spec: path.join(__dirname, 'e2e-test'),
   test: path.join(__dirname, 'test'),
 };
 
@@ -22,7 +22,7 @@ const common = {
     app: PATHS.app,
   },
   output: {
-    path: PATHS.build,
+    path: path.join(PATHS.build, 'dist'),
     filename: 'app.js',
   },
   node: {
@@ -47,7 +47,7 @@ const html = () => ({
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: 'app/index.pug',
+      template: path.resolve(PATHS.app, 'index.pug'),
       minify: {
         collapseWhitespace: true,
         minifyCSS: true,
@@ -169,7 +169,7 @@ let config;
 
 switch (process.env.npm_lifecycle_event) {
   case 'build':
-    config = merge(common, clean(path.join(PATHS.build, '*')), html(), provide(), babel(), pug(), less(), css(), json(), png(), fonts(), bundleAnalyzer());
+    config = merge(common, clean(path.join(PATHS.build, 'dist')), html(), provide(), babel(), pug(), less(), css(), json(), png(), fonts(), bundleAnalyzer());
     break;
   default:
     config = merge(common, devServer(), { devtool: 'eval-source-map' }, html(), provide(), babel(), pug(), less(), css(), json(), png(), fonts());

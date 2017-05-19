@@ -48,11 +48,10 @@ node('lisk-nano-01'){
     stage ('Build Nano') {
       try {
         sh '''#!/bin/bash
-	# Install Electron
-	npm install
-
+        # Install Electron
+        npm install
         # Build nano
-        cd $WORKSPACE/src
+        cd $WORKSPACE
         npm install
 
         # Add coveralls config file
@@ -72,7 +71,7 @@ node('lisk-nano-01'){
       try {
         sh '''
         # Run test
-        cd $WORKSPACE/src
+        cd $WORKSPACE
         npm run test
         '''
       } catch (err) {
@@ -86,9 +85,9 @@ node('lisk-nano-01'){
         sh '''
         # Prepare lisk core for testing
         bash ~/tx.sh
-                        
+
         # Run Dev build and Build
-        cd $WORKSPACE/src
+        cd $WORKSPACE
         export NODE_ENV=
         npm run dev &> .lisk-nano.log &
         sleep 30

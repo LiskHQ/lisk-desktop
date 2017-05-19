@@ -12,12 +12,12 @@ require('./components/transfer/transferModalDirective.spec');
 require('./components/top/top.spec');
 require('./components/timestamp/timestamp.spec');
 require('./components/transactions/transactions.spec');
-require('./components/sign-verify/sign-message.spec');
-require('./components/sign-verify/verify-message.spec');
-require('./components/delegate-registration/delegateRegistration.spec.js');
+require('./components/signVerify/signMessage.spec');
+require('./components/signVerify/verifyMessage.spec');
+require('./components/delegateRegistration/delegateRegistration.spec.js');
 
 require('./services/passphrase.spec');
-require('./services/sign-verify.spec');
+require('./services/signVerify.spec');
 require('./services/lsk.spec');
 require('./services/api/peers.spec');
 require('./services/api/delegateApi.spec');

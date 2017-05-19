@@ -7,7 +7,7 @@ import lisk from 'lisk-js';
  * @submodule signMessage
  */
 app.component('signMessage', {
-  template: require('./sign-message.pug')(),
+  template: require('./signMessage.pug')(),
   /**
    * The signMessage component constructor class
    *

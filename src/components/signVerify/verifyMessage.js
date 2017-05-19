@@ -7,7 +7,7 @@ import lisk from 'lisk-js';
  * @submodule signMessage
  */
 app.component('verifyMessage', {
-  template: require('./verify-message.pug')(),
+  template: require('./verifyMessage.pug')(),
   controllerAs: '$ctrl',
   /**
    * The verifyMessage component constructor class
