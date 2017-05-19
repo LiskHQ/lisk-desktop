@@ -4,9 +4,9 @@
  * publicKey and address and it's only used for accounts registered as delegate.
  *
  * @module app
- * @submodule delegateService
+ * @submodule delegateApi
  */
-app.factory('delegateService', Peers => ({
+app.factory('delegateApi', Peers => ({
   /**
    * gets the list of delegates for whom the given address has voted
    *

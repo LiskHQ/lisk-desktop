@@ -14,7 +14,7 @@ describe('Forging component', () => {
   let lsk;
   let delegate;
   let account;
-  let forgingServiceMock;
+  let forgingApiMock;
   let $q;
   let peers;
 
@@ -66,24 +66,24 @@ describe('Forging component', () => {
     element = $compile('<forging></forging>')($scope);
 
     const controller = element.controller('forging');
-    forgingServiceMock = sinon.mock(controller.forgingService);
+    forgingApiMock = sinon.mock(controller.forgingApi);
 
     let deferred = $q.defer();
-    forgingServiceMock.expects('getDelegate').returns(deferred.promise);
+    forgingApiMock.expects('getDelegate').returns(deferred.promise);
     deferred.resolve({
       success: true,
       delegate,
     });
 
     deferred = $q.defer();
-    forgingServiceMock.expects('getForgedBlocks').returns(deferred.promise);
+    forgingApiMock.expects('getForgedBlocks').returns(deferred.promise);
     deferred.resolve({
       success: true,
       blocks: [],
     });
 
     deferred = $q.defer();
-    forgingServiceMock.expects('getForgedStats').returns(deferred.promise).exactly(5);
+    forgingApiMock.expects('getForgedStats').returns(deferred.promise).exactly(5);
     deferred.resolve({ });
 
     controller.$scope.$emit('accountChange', testAcount);
@@ -91,8 +91,8 @@ describe('Forging component', () => {
   });
 
   afterEach(() => {
-    forgingServiceMock.verify();
-    forgingServiceMock.restore();
+    forgingApiMock.verify();
+    forgingApiMock.restore();
   });
 
   it('should contain a card with delegate name', () => {
@@ -124,8 +124,8 @@ describe('forging component controller', () => {
   let $scope;
   let controller;
   let $componentController;
-  let forgingServiceMock;
-  let forgingService;
+  let forgingApiMock;
+  let forgingApi;
   let delegate;
   let blocks;
   let account;
@@ -133,10 +133,10 @@ describe('forging component controller', () => {
   let peers;
 
   beforeEach(inject((_$componentController_, _$rootScope_,
-    _forgingService_, _Account_, _$q_, _Peers_) => {
+    _forgingApi_, _Account_, _$q_, _Peers_) => {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
-    forgingService = _forgingService_;
+    forgingApi = _forgingApi_;
     account = _Account_;
     $q = _$q_;
     peers = _Peers_;
@@ -161,7 +161,7 @@ describe('forging component controller', () => {
       vote: '9999982470000000',
     };
 
-    forgingServiceMock = sinon.mock(forgingService);
+    forgingApiMock = sinon.mock(forgingApi);
 
     $scope = $rootScope.$new();
     account.set({
@@ -173,15 +173,15 @@ describe('forging component controller', () => {
   });
 
   afterEach(() => {
-    forgingServiceMock.verify();
-    forgingServiceMock.restore();
+    forgingApiMock.verify();
+    forgingApiMock.restore();
   });
 
 
   describe('updateDelegate()', () => {
     it('sets this.delegate to delegate object if delegate exists', () => {
       const deferred = $q.defer();
-      forgingServiceMock.expects('getDelegate').returns(deferred.promise);
+      forgingApiMock.expects('getDelegate').returns(deferred.promise);
       controller.updateDelegate();
 
       expect(controller.delegate).to.equal(undefined);
@@ -195,7 +195,7 @@ describe('forging component controller', () => {
 
     it('sets this.delegate = {} if delegate does not exist', () => {
       const deferred = $q.defer();
-      forgingServiceMock.expects('getDelegate').returns(deferred.promise);
+      forgingApiMock.expects('getDelegate').returns(deferred.promise);
       controller.updateDelegate();
 
       expect(controller.delegate).to.equal(undefined);
@@ -210,7 +210,7 @@ describe('forging component controller', () => {
 
     beforeEach(() => {
       deferred = $q.defer();
-      forgingServiceMock.expects('getForgedBlocks').returns(deferred.promise);
+      forgingApiMock.expects('getForgedBlocks').returns(deferred.promise);
     });
 
     it('does nothing if request fails', () => {
@@ -280,7 +280,7 @@ describe('forging component controller', () => {
         timestamp: 0 - k,
       }));
       const deferred = $q.defer();
-      forgingServiceMock.expects('getForgedBlocks').returns(deferred.promise);
+      forgingApiMock.expects('getForgedBlocks').returns(deferred.promise);
       controller.blocks = blocks;
 
       controller.loadMoreBlocks();
@@ -299,7 +299,7 @@ describe('forging component controller', () => {
 
     beforeEach(() => {
       deferred = $q.defer();
-      forgingServiceMock.expects('getForgedStats').returns(deferred.promise);
+      forgingApiMock.expects('getForgedStats').returns(deferred.promise);
     });
 
     it('fetches forged by account since startMoment and sets it to this.statistics[key]', () => {
