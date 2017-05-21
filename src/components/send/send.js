@@ -1,24 +1,24 @@
-import './transfer.less';
+import './send.less';
 
 /**
  * This component is a form for transferring funds to other accounts.
  *
  * @module app
- * @submodule transfer
+ * @submodule send
  */
-app.component('transfer', {
-  template: require('./transfer.pug')(),
+app.component('send', {
+  template: require('./send.pug')(),
   bindings: {
     recipientId: '<',
     transferAmount: '<',
   },
   /**
-   * The transfer component constructor class
+   * The send component constructor class
    *
-   * @class transfer
+   * @class send
    * @constructor
    */
-  controller: class transfer {
+  controller: class send {
     constructor($scope, lsk, dialog, $mdDialog, $q, $rootScope, Account, AccountApi) {
       this.$scope = $scope;
       this.dialog = dialog;
@@ -73,11 +73,11 @@ app.component('transfer', {
 
     /**
      * Should be called on form submission.
-     * Calls transaction.create to transfer the specified amount to recipient.
+     * Calls transaction.create to send the specified amount to recipient.
      *
-     * @method transfer
+     * @method send
      */
-    transfer() {
+    send() {
       this.loading = true;
 
       this.accountApi.transactions.create(

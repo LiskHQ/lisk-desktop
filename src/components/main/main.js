@@ -17,14 +17,14 @@ app.component('main', {
    */
   controller: class main {
     constructor($scope, $rootScope, $timeout, $q, $state, Peers,
-      dialog, TransferModal, Account, AccountApi) {
+      dialog, SendModal, Account, AccountApi) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$timeout = $timeout;
       this.$q = $q;
       this.peers = Peers;
       this.dialog = dialog;
-      this.transferModal = TransferModal;
+      this.transferModal = SendModal;
       this.$state = $state;
       this.account = Account;
       this.accountApi = AccountApi;

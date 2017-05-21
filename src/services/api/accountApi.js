@@ -42,7 +42,7 @@ app.factory('AccountApi', function ($q, Peers, Account) {
   this.transactions = {};
 
   /**
-   * Uses Peers service to transfer a given amount of LSK to a given account
+   * Uses Peers service to send a given amount of LSK to a given account
    *
    * @param {String} recipientId - The address(wallet Id) of the recipient
    * @param {Number} amount - A floating point value in LSK

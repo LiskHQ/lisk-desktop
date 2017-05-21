@@ -1,8 +1,8 @@
-div.dialog-transfer(aria-label='Transfer funds')
+div.dialog-send(aria-label='Send funds')
   form(name='$ctrl.transferForm')
     md-toolbar
       .md-toolbar-tools
-        h2 Transfer
+        h2 Send
     md-dialog-content
       .md-dialog-content
         div
@@ -35,4 +35,4 @@ div.dialog-transfer(aria-label='Transfer funds')
     md-dialog-actions(layout='row')
       md-button.md-raised.md-secondary(ng-disabled='$ctrl.loading', ng-click='$ctrl.cancel()') {{ 'Cancel' }}
       span(flex)
-      md-button.md-raised.md-primary(ng-disabled='!$ctrl.transferForm.$valid || $ctrl.loading', ng-click='$ctrl.transfer()') {{ $ctrl.loading ? 'Transfering...' : 'Transfer' }}
+      md-button.md-raised.md-primary(ng-disabled='!$ctrl.transferForm.$valid || $ctrl.loading', ng-click='$ctrl.send()') {{ $ctrl.loading ? 'Sending...' : 'Send' }}

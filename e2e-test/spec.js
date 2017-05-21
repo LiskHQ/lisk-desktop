@@ -49,7 +49,7 @@ function waitForElemAndSendKeys(selector, keys) {
 }
 
 function checkErrorMessage(message) {
-  waitForElemAndCheckItsText('transfer .md-input-message-animation', message);
+  waitForElemAndCheckItsText('send .md-input-message-animation', message);
 }
 
 function launchApp() {
@@ -71,10 +71,10 @@ function logout() {
   logoutButton.click();
 }
 
-function transfer(fromAccount, toAddress, amount) {
+function send(fromAccount, toAddress, amount) {
   login(fromAccount);
-  const sendElem = element(by.css('transfer'));
-  const sendModalButton = element(by.css('md-content.header button.transfer'));
+  const sendElem = element(by.css('send'));
+  const sendModalButton = element(by.css('md-content.header button.send'));
 
   browser.wait(EC.presenceOf(sendModalButton), waitTime);
   sendModalButton.click();
@@ -82,10 +82,10 @@ function transfer(fromAccount, toAddress, amount) {
 
   // wait for modal animation to finish
   browser.sleep(1000);
-  element(by.css('transfer input[name="recipient"]')).sendKeys(toAddress);
-  element(by.css('transfer input[name="amount"]')).sendKeys(`${amount}`);
-  element(by.css('transfer input[name="recipient"]')).click();
-  const sendButton = element.all(by.css('transfer button.md-primary')).get(0);
+  element(by.css('send input[name="recipient"]')).sendKeys(toAddress);
+  element(by.css('send input[name="amount"]')).sendKeys(`${amount}`);
+  element(by.css('send input[name="recipient"]')).click();
+  const sendButton = element.all(by.css('send button.md-primary')).get(0);
   // browser.wait(EC.presenceOf(sendButton), waitTime);
   sendButton.click();
 }
@@ -191,18 +191,18 @@ function testShowBalance() {
 
 function testSend() {
   const amount = 1.1;
-  transfer(masterAccount, delegateAccount.address, amount);
+  send(masterAccount, delegateAccount.address, amount);
   browser.sleep(1000);
   checkAlertDialog('Success', `${amount} LSK was successfully transferred to ${delegateAccount.address}`);
 }
 
 function testSendWithNotEnoughFunds() {
-  transfer(emptyAccount, delegateAccount.address, 10000);
+  send(emptyAccount, delegateAccount.address, 10000);
   checkErrorMessage('Insufficient funds');
 }
 
 function testSendWithInvalidAddress() {
-  transfer(masterAccount, emptyAccount.address.substr(0, 10), 1);
+  send(masterAccount, emptyAccount.address.substr(0, 10), 1);
   checkErrorMessage('Invalid');
 }
 
@@ -405,9 +405,9 @@ describe('Lisk Nano', () => {
   });
 
   describe('Send dialog', () => {
-    it('should allow to do a transfer when enough funds and correct address form', testSend);
-    it('should not allow to do a transfer when not enough funds', testSendWithNotEnoughFunds);
-    it('should not allow to do a transfer when invalid address', testSendWithInvalidAddress);
+    it('should allow to do a send when enough funds and correct address form', testSend);
+    it('should not allow to do a send when not enough funds', testSendWithNotEnoughFunds);
+    it('should not allow to do a send when invalid address', testSendWithInvalidAddress);
   });
 
   describe('Transactions tab', () => {

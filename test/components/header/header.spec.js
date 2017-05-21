@@ -25,11 +25,11 @@ describe('Header component', () => {
     $scope.$digest();
   });
 
-  const TRANSFER_BUTTON_TEXT = 'Transfer';
+  const TRANSFER_BUTTON_TEXT = 'Send';
   it(`should contain "${TRANSFER_BUTTON_TEXT}" button if $root.logged`, () => {
     $rootScope.logged = true;
     $scope.$digest();
-    expect(element.find('button.md-primary.transfer').text()).to.equal(TRANSFER_BUTTON_TEXT);
+    expect(element.find('button.md-primary.send').text()).to.equal(TRANSFER_BUTTON_TEXT);
   });
 
   const LOGOUT_BUTTON_TEXT = 'Logout';

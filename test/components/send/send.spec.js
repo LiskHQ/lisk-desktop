@@ -5,7 +5,7 @@ const sinonChai = require('sinon-chai');
 const expect = chai.expect;
 chai.use(sinonChai);
 
-describe.skip('Transfer component', () => {
+describe.skip('Send component', () => {
   let $compile;
   let $rootScope;
   let element;
@@ -31,11 +31,11 @@ describe.skip('Transfer component', () => {
       balance: lsk.from(10535.77379498),
     });
 
-    element = $compile('<transfer passphrase="passphrase" account="account"></transfer>')($scope);
+    element = $compile('<send passphrase="passphrase" account="account"></send>')($scope);
     $scope.$digest();
   });
 
-  const HEADER_TEXT = 'Transfer';
+  const HEADER_TEXT = 'Send';
   it(`should contain header saying "${HEADER_TEXT}"`, () => {
     expect(element.find('.md-title').text()).to.equal(HEADER_TEXT);
   });
@@ -50,7 +50,7 @@ describe.skip('Transfer component', () => {
     expect(element.find('form label:last').text()).to.equal(AMOUT_LABEL_TEXT);
   });
 
-  const TRANSFER_BUTTON_TEXT = 'Transfer';
+  const TRANSFER_BUTTON_TEXT = 'Send';
   it(`should contain a button saying "${TRANSFER_BUTTON_TEXT}"`, () => {
     expect(element.find('button.md-raised.md-primary').text()).to.equal(TRANSFER_BUTTON_TEXT);
   });
@@ -75,7 +75,7 @@ describe.skip('Transfer component', () => {
 
       const mock = sinon.mock(account);
       const deffered = $q.defer();
-      mock.expects('transfer').returns(deffered.promise);
+      mock.expects('send').returns(deffered.promise);
 
       const spy = sinon.spy(dialog, 'successAlert');
 
@@ -90,7 +90,7 @@ describe.skip('Transfer component', () => {
       mock.verify();
     });
 
-    it('should allow to transfer all funds', () => {
+    it('should allow to send all funds', () => {
       const RECIPIENT_ADDRESS = '5932438298200837883L';
       const AMOUNT = lsk.normalize(account.get().balance - 10000000);
 
@@ -115,7 +115,7 @@ describe.skip('Transfer component', () => {
   });
 });
 
-describe('Transfer component controller', () => {
+describe('Send component controller', () => {
   beforeEach(angular.mock.module('app'));
 
   let $rootScope;
@@ -134,7 +134,7 @@ describe('Transfer component controller', () => {
 
   beforeEach(() => {
     $scope = $rootScope.$new();
-    controller = $componentController('transfer', $scope, {});
+    controller = $componentController('send', $scope, {});
     account.set({
       balance: '10000',
       passphrase: 'robust swift grocery peasant forget share enable convince deputy road keep cheap',
@@ -156,12 +156,12 @@ describe('Transfer component controller', () => {
     });
   });
 
-  describe('transfer()', () => {
+  describe('send()', () => {
     it('calls accountApi.transactions.create and success.dialog on success', () => {
       const mock = sinon.mock(controller.accountApi.transactions);
       const deffered = $q.defer();
       mock.expects('create').returns(deffered.promise);
-      controller.transfer();
+      controller.send();
 
       const spy = sinon.spy(controller.dialog, 'successAlert');
       deffered.resolve({});
@@ -175,7 +175,7 @@ describe('Transfer component controller', () => {
       const mock = sinon.mock(controller.accountApi.transactions);
       const deffered = $q.defer();
       mock.expects('create').returns(deffered.promise);
-      controller.transfer();
+      controller.send();
 
       const spy = sinon.spy(controller.dialog, 'errorAlert');
       const response = {
