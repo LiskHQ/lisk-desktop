@@ -4,11 +4,9 @@
     "import"
   ],
   "env": {
-    "jasmine": true,
     "protractor": true
   },
   "rules": {
-    "new-cap": ["error", { "newIsCapExceptions": ["mnemonic"]}],
     "no-underscore-dangle": "off"
   }
 }
