@@ -20,5 +20,5 @@ md-dialog.dialog-save(flex='80', aria-label='Save your passphrase in a safe plac
     md-dialog-actions(layout='row')
       md-button(ng-click="$ctrl.close()") Close
       span(flex)
-      md-button(ng-click="$ctrl.next()", ng-show='!$ctrl.enter') Yes! It's safe!
-      md-button(ng-click="$ctrl.ok()", ng-show='$ctrl.enter', ng-disabled='!$ctrl.missing_ok') OK
+      md-button.yes-its-save-button(ng-click="$ctrl.next()", ng-show='!$ctrl.enter') Yes! It's safe!
+      md-button.ok-button(ng-click="$ctrl.ok()", ng-show='$ctrl.enter', ng-disabled='!$ctrl.missing_ok') OK

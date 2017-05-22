@@ -8,14 +8,14 @@ div.dialog-send(aria-label='Send funds')
         div
           md-input-container.md-block
             label Recipient Address
-            input(type='text', name='recipient', ng-model='$ctrl.recipient.value', required, ng-pattern='$ctrl.recipient.regexp', ng-disabled='$ctrl.loading')
+            input.recipient(type='text', name='recipient', ng-model='$ctrl.recipient.value', required, ng-pattern='$ctrl.recipient.regexp', ng-disabled='$ctrl.loading')
             div(ng-messages='$ctrl.transferForm.recipient.$error')
               div(ng-message='required') Required
               div(ng-message='pattern') Invalid
           div(layout="row")
             md-input-container.md-block.flex-95
               label Transaction Amount
-              input(type='text', name='amount', ng-model='$ctrl.amount.value', required, ng-pattern='$ctrl.amount.regexp', ng-disabled='$ctrl.loading')
+              input.amount(type='text', name='amount', ng-model='$ctrl.amount.value', required, ng-pattern='$ctrl.amount.regexp', ng-disabled='$ctrl.loading')
               div.fee(ng-show='$ctrl.amount.value') Fee: 0.1 LSK
               div(ng-messages='$ctrl.transferForm.amount.$error')
                 div(ng-message='required') Required
@@ -35,4 +35,4 @@ div.dialog-send(aria-label='Send funds')
     md-dialog-actions(layout='row')
       md-button.md-raised.md-secondary(ng-disabled='$ctrl.loading', ng-click='$ctrl.cancel()') {{ 'Cancel' }}
       span(flex)
-      md-button.md-raised.md-primary(ng-disabled='!$ctrl.transferForm.$valid || $ctrl.loading', ng-click='$ctrl.send()') {{ $ctrl.loading ? 'Sending...' : 'Send' }}
+      md-button.md-raised.md-primary.submit-button(ng-disabled='!$ctrl.transferForm.$valid || $ctrl.loading', ng-click='$ctrl.send()') {{ $ctrl.loading ? 'Sending...' : 'Send' }}

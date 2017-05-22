@@ -19,7 +19,7 @@ div.offline-hide
         span.md-title(layout='row')
           md-input-container.md-block
             label Search 
-            input(type='text', name='name', ng-model='search', ng-model-options='{ debounce: 200 }')
+            input.search(type='text', name='name', ng-model='search', ng-model-options='{ debounce: 200 }')
           i.material-icons.search-append(ng-click='$ctrl.clearSearch()', ng-if='search') close 
           i.material-icons.search-append(ng-hide='search') search 
       span.pull-right.right-action-buttons
@@ -27,7 +27,7 @@ div.offline-hide
           i.material-icons list
           span Input Names
       md-menu.pull-right.right-action-buttons
-        md-button.pull-right(ng-click='$mdOpenMenu()', ng-disabled='$ctrl.votedList.length == 0')
+        md-button.pull-right.my-votes-button(ng-click='$mdOpenMenu()', ng-disabled='$ctrl.votedList.length == 0')
           i.material-icons visibility
           span My votes ({{$ctrl.votedList.length}})
         md-menu-content(width='4')
