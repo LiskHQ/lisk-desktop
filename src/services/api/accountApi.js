@@ -59,12 +59,14 @@ app.factory('AccountApi', function ($q, Peers, Account) {
    * @param {String} address - The address of the account to get transactions list for
    * @param {Number} [limit = 20] - The maximum number of items in list
    * @param {Number} [offset = 0] - The offset index
+   * @param {String} [orderBy = 'timestamp:desc'] - How is the list ordered
    */
-  this.transactions.get = (address, limit = 20, offset = 0) => Peers.sendRequestPromise('transactions', {
+  this.transactions.get = (address, limit = 20, offset = 0, orderBy = 'timestamp:desc') => Peers.sendRequestPromise('transactions', {
     senderId: address,
     recipientId: address,
     limit,
     offset,
+    orderBy,
   });
 
   return this;
