@@ -8,7 +8,7 @@ div.dialog-delegate-registration(aria-label='Vote for delegates')
         div
           md-input-container.md-block
             label Delegate name
-            input(type='text', name='delegateName', ng-model='$ctrl.form.name', required, ng-disabled='$ctrl.loading', md-autofocus)
+            input.username(type='text', name='delegateName', ng-model='$ctrl.form.name', required, ng-disabled='$ctrl.loading', md-autofocus)
             div(ng-messages='delegateRegistrationForm.name.$error')
               div(ng-message='required') Required
           md-input-container.md-block(ng-if='$ctrl.account.get().secondSignature')
@@ -27,4 +27,4 @@ div.dialog-delegate-registration(aria-label='Vote for delegates')
       md-dialog-actions(layout='row')
         md-button.md-raised.md-secondary(ng-disabled='$ctrl.loading', ng-click='$ctrl.cancel(delegateRegistrationForm)') {{ 'Cancel' }}
         span(flex)
-        md-button.md-raised.md-primary(ng-disabled='!delegateRegistrationForm.$valid || $ctrl.loading', type='submit') {{ $ctrl.loading ? 'Registering...' : 'Register' }}
+        md-button.md-raised.md-primary.register-button(ng-disabled='!delegateRegistrationForm.$valid || $ctrl.loading', type='submit') {{ $ctrl.loading ? 'Registering...' : 'Register' }}

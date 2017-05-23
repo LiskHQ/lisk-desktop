@@ -9,7 +9,7 @@ module.exports = function (grunt) {
         fix: false,
       },
       all: {
-        src: ['src/**/*.js', 'e2e-test/**/*.js', 'test/**/*.js', 'app/main.js', '*.js'],
+        src: ['src/**/*.js', 'features/**/*.js', 'test/**/*.js', 'app/main.js', '*.js'],
       },
     },
   });

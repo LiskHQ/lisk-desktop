@@ -10,7 +10,7 @@ md-card.offline-hide
         md-card(flex-gt-xs=100, layout-padding)
           md-card-title
             md-card-title-text
-              span.md-title {{$ctrl.delegate.username}} 
+              span.md-title.delegate-name {{$ctrl.delegate.username}} 
             span(md-position-mode='target-right target')
               span {{$ctrl.statistics.total  | lsk | number:2 }} LSK Earned
       md-content(layout='column', layout-gt-xs='row', ng-if='$ctrl.delegate.username')

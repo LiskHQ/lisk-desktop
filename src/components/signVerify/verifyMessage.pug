@@ -9,16 +9,16 @@ div
     form
       md-input-container.md-block(ng-class='{"md-input-invalid": $ctrl.publicKey.error.invalid}')
         label Public key
-        input(type='text', name='publicKey', ng-model='$ctrl.publicKey.value', ng-change='$ctrl.verify()', md-autofocus)
+        input.public-key(type='text', name='publicKey', ng-model='$ctrl.publicKey.value', ng-change='$ctrl.verify()', md-autofocus)
         div(ng-messages='$ctrl.publicKey.error')
           div(ng-message='invalid') Invalid
       md-input-container.md-block(ng-class='{"md-input-invalid": $ctrl.signature.error.invalid}')
         label Signature 
-        textarea(name='signature', ng-model='$ctrl.signature.value', ng-change='$ctrl.verify()')
+        textarea.signature(name='signature', ng-model='$ctrl.signature.value', ng-change='$ctrl.verify()')
         div(ng-messages='$ctrl.signature.error')
           div(ng-message='invalid') Invalid
     div(ng-show='$ctrl.result')
       md-input-container.md-block
         label Original Message
-        textarea(name='result', ng-model='$ctrl.result', readonly)
+        textarea.result(name='result', ng-model='$ctrl.result', readonly)
 

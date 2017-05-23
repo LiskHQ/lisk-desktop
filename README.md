@@ -94,7 +94,7 @@ npm run dev
 Run the protractor tests (replace `~/git/lisk/` with your path to lisk core):
 
 ```
-./spec/setup.sh ~/git/lisk/
+./e2e-test-setup.sh ~/git/lisk/
 npm run e2e-test
 ```
 

@@ -29,12 +29,12 @@ describe('Header component', () => {
   it(`should contain "${TRANSFER_BUTTON_TEXT}" button if $root.logged`, () => {
     $rootScope.logged = true;
     $scope.$digest();
-    expect(element.find('button.md-primary.send').text()).to.equal(TRANSFER_BUTTON_TEXT);
+    expect(element.find('button.md-primary.send-button').text()).to.equal(TRANSFER_BUTTON_TEXT);
   });
 
   const LOGOUT_BUTTON_TEXT = 'Logout';
   it(`should contain "${LOGOUT_BUTTON_TEXT}" button if $root.logged`, () => {
-    expect(element.find('button.logout').text()).to.equal(LOGOUT_BUTTON_TEXT);
+    expect(element.find('button.logout-button').text()).to.equal(LOGOUT_BUTTON_TEXT);
   });
 });
 
