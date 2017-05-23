@@ -4,7 +4,7 @@ node_modules
 npm-debug.log
 src/.nyc_output
 coverage
-src/e2e-test-screenshots
+e2e-test-screenshots
 app/report.html
 app/*.map
 *.sw[pon]
