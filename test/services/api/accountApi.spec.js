@@ -46,13 +46,14 @@ describe('Factory: AccountApi', () => {
     });
   });
 
-  describe('transaction.get(address, limit, offset)', () => {
+  describe('transaction.get(address, limit, offset, orderBy)', () => {
     it('returns Peers.sendRequest(\'transactions\', options);', () => {
       const options = {
         senderId: '537318935439898807L',
         recipientId: '537318935439898807L',
         limit: 20,
         offset: 0,
+        orderBy: 'timestamp:desc',
       };
 
       const spy = sinon.spy(peers, 'sendRequestPromise');
