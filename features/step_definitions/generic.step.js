@@ -80,19 +80,21 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     waitForElemAndClickIt('.md-button.md-primary.md-raised', callback);
   });
 
-  When('I {iterations} times move mouse randomly', (iterations) => {
+  When('I {iterations} times move mouse randomly', (iterations, callback) => {
+    const actions = browser.actions();
     /**
      * Generates a sequence of random pairs of x,y coordinates on the screen that simulates
      * the movement of mouse to produce a pass phrase.
      */
     for (let i = 0; i < iterations; i++) {
-      browser.actions()
+      actions
       .mouseMove(element(by.css('body')), {
         x: 500 + (Math.floor((((i % 2) * 2) - 1) * (249 + (Math.random() * 250)))),
         y: 500 + (Math.floor((((i % 2) * 2) - 1) * (249 + (Math.random() * 250)))),
-      }).perform();
-      browser.sleep(5);
+      });
     }
+    actions.perform();
+    callback();
   });
 
   When('I remember passphrase, click "{nextButtonSelector}", fill in missing word', (nextButtonSelector, callback) => {
