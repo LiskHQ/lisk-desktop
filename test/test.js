@@ -19,6 +19,7 @@ require('./components/delegateRegistration/delegateRegistration.spec.js');
 require('./services/passphrase.spec');
 require('./services/signVerify.spec');
 require('./services/lsk.spec');
+require('./services/notify.spec');
 require('./services/api/peers.spec');
 require('./services/api/delegateApi.spec');
 require('./services/api/forgingApi.spec');
