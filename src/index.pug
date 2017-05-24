@@ -7,6 +7,10 @@ html
       body {
         background-color: #eee !important;
       }
+    script.
+      if (window.require) {
+        var electron = window.require('electron');
+      }
   body
     div.body-wrapper
       md-content(id="main", flex='100', flex-gt-sm='80', flex-offset-gt-sm='10')

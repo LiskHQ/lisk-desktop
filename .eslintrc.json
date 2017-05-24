@@ -5,7 +5,8 @@
   ],
   "globals": {
     "angular": true,
-    "app": true
+    "app": true,
+    "electron": true
   },
   "env": {
     "browser": true,

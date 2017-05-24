@@ -12,7 +12,13 @@ function createWindow() {
     width: width > 2000 ? Math.floor(width * 0.5) : width - 250,
     height: height > 1000 ? Math.floor(height * 0.7) : height - 150,
     center: true,
+    webPreferences: {
+      // Avoid app throttling when Electron is in background
+      backgroundThrottling: false,
+    },
   });
+  win.on('blur', () => win.webContents.send('blur'));
+  win.on('focus', () => win.webContents.send('focus'));
 
   const template = [
     {
