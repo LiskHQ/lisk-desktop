@@ -17,7 +17,7 @@ app.component('main', {
    */
   controller: class main {
     constructor($scope, $rootScope, $timeout, $q, $state, Peers,
-      dialog, SendModal, Account, AccountApi) {
+      dialog, SendModal, Account, AccountApi, Notify) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$timeout = $timeout;
@@ -28,6 +28,7 @@ app.component('main', {
       this.$state = $state;
       this.account = Account;
       this.accountApi = AccountApi;
+      this.notify = Notify.init();
 
       this.activeTab = this.init();
     }
@@ -110,6 +111,10 @@ app.component('main', {
             delete res.publicKey;
           }
 
+          this.notify.about(
+            'deposite',
+            res.balance - this.account.get().balance,
+          );
           this.account.set(res);
         })
         .catch((res) => {
