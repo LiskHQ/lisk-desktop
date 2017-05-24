@@ -47,5 +47,6 @@ md-card.offline-hide
               td(md-cell)
                 .fee
                   lsk(amount='transaction.fee')
+      md-button.more-button(ng-show='$ctrl.moreTransactionsExist', ng-disabled='!$ctrl.loaded', ng-click='$ctrl.showMore()') Load More
   .loading
     md-progress-linear(md-mode='indeterminate', ng-show='!$ctrl.loaded')
