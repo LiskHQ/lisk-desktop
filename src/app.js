@@ -14,6 +14,7 @@ const app = angular.module('app', [
   'ngCookies',
   'infinite-scroll',
   'md.data.table',
+  'ngclipboard',
 ]);
 
 export default app;
