@@ -16,7 +16,7 @@ exports.config = {
 
   cucumberOpts: {
     require: 'features/step_definitions/*.js',
-    tags: false,
+    tags: '~@ignore',
     format: 'pretty',
     profile: false,
     'no-source': true,
