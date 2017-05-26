@@ -5,6 +5,11 @@ div
       span(flex='')
       md-button.md-icon-button(ng-click='$ctrl.$mdDialog.hide()', aria-label='Close dialog')
         i.material-icons close
+  div(layout='row', layout-padding, layout-align="center center")
+    div(layout-margin)
+      i.material-icons info
+    p When you have the signature, you only need the publicKey of the signer in order to verify that the message came from the right private/publicKey pair. Be aware, everybody knowing the signature and the publicKey can verify the message. If ever there is a dispute, everybody can take the publicKey and signature to a judge and prove that the message is coming from the specific private/publicKey pair.
+  md-divider
   div(layout-padding)
     form
       md-input-container.md-block(ng-class='{"md-input-invalid": $ctrl.publicKey.error.invalid}')
