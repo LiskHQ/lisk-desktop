@@ -18,7 +18,9 @@ div
       md-input-container.md-block
         label Message
         textarea.message(name='message', ng-model='$ctrl.message', ng-change='$ctrl.sign()', md-autofocus)
-    div(ng-show='$ctrl.result')
+      div(layout='row', layout-align='center center')
+        md-button.sign-button(ngclipboard, data-clipboard-text='{{$ctrl.result}}', ng-click='$ctrl.showResult()', ngclipboard-success="$ctrl.dialog.successToast('Result copied to clipboard')", ng-disabled='!$ctrl.result || $ctrl.resultIsShown') Sign and copy result to clipboard
+    div(ng-if='$ctrl.resultIsShown')
       md-input-container.md-block
         label Result
         textarea.result(name='result', ng-model='$ctrl.result', readonly)

@@ -45,6 +45,7 @@ describe('Sign message component', () => {
       '-----END LISK SIGNED MESSAGE-----';
     const ngModelController = element.find('textarea[name="message"]').controller('ngModel');
     ngModelController.$setViewValue(message);
+    element.find('.sign-button').click();
     expect(element.find('textarea[name="result"]').val()).to.equal(result);
   });
 });

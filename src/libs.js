@@ -12,6 +12,6 @@ import 'angular-material-data-table/dist/md-data-table';
 import 'angular-material-data-table/dist/md-data-table.css';
 import 'ng-infinite-scroll';
 import 'angular-svg-round-progressbar';
-
+import 'ngclipboard';
 
 import 'babel-polyfill';

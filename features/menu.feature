@@ -17,7 +17,8 @@ Feature: Top right menu
   Scenario: should allow to sign message
     Given I'm logged in as "any account"
     When I click "sign message" in main menu
-    And  I fill in "Hello world" to "message" field
+    And I fill in "Hello world" to "message" field
+    And I click "sign button"
     Then I should see in "result" field:
          """
          -----BEGIN LISK SIGNED MESSAGE-----
