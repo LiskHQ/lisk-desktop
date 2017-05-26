@@ -10,6 +10,7 @@ Feature: Login page
     When I select option no. 2 from "network" select
     Then the option "Testnet" is selected in "network" select
 
+  @ignore
   Scenario: should allow to create a new account
     Given I'm on login page
     When I click "new account button"
