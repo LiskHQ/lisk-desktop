@@ -44,7 +44,7 @@ md-card.offline-hide
                 .amount(ng-class='{"has-send-modal": transaction.amount > 0, neutral:transaction.type === 0 && transaction.senderId === transaction.recipientId, positive: transaction.senderId !== $ctrl.account.get().address, negative: transaction.type !== 0 || transaction.recipientId !== $ctrl.account.get().address }',
                   data-show-send-modal, data-amount='transaction.amount')
                   lsk.value(amount='transaction.amount')
-                  md-tooltip(md-direction='top', md-delay='350', data-ng-if='transaction.amount > 0') Send {{transaction.amount}} LSK
+                  md-tooltip(md-direction='top', md-delay='350', data-ng-if='transaction.amount > 0') Send {{transaction.amount | lsk}} LSK
               td(md-cell)
                 .fee
                   lsk(amount='transaction.fee')
