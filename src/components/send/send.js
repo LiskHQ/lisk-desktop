@@ -10,7 +10,7 @@ app.component('send', {
   template: require('./send.pug')(),
   bindings: {
     recipientId: '<',
-    transferAmount: '<',
+    sendAmount: '<',
   },
   /**
    * The send component constructor class
@@ -40,8 +40,8 @@ app.component('send', {
       /**
        * @todo Check if it's possible to replace these watchers with filters.
        */
-      if ($scope.$ctrl.transferAmount) {
-        this.amount.value = parseInt(lsk.normalize($scope.$ctrl.transferAmount), 10);
+      if ($scope.$ctrl.sendAmount) {
+        this.amount.value = parseFloat(lsk.normalize($scope.$ctrl.sendAmount), 10);
       }
 
       this.$scope.$watch('$ctrl.amount.value', () => {
