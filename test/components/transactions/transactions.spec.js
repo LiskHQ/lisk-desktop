@@ -103,7 +103,7 @@ describe('transactions component controller', () => {
         transactions: [{}],
         count: 1,
       };
-      controller._processTransactionsResponse(response);
+      controller._processTransactionsResponse(response); // eslint-disable-line
       expect(controller.transactions).to.deep.equal(response.transactions);
     });
 
@@ -112,7 +112,7 @@ describe('transactions component controller', () => {
         transactions: [{}, {}],
         count: 3,
       };
-      controller._processTransactionsResponse(response);
+      controller._processTransactionsResponse(response); // eslint-disable-line
       expect(controller.moreTransactionsExist).to.equal(
         response.count - response.transactions.length);
     });
