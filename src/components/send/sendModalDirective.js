@@ -15,7 +15,7 @@ app.directive('showSendModal', (SendModal) => {
    */
   const ShowSendModalLink = function (scope, element) {
     element.bind('click', () => {
-      if (scope.amount == undefined || scope.amount > 0) {
+      if (scope.amount === undefined || scope.amount > 0) {
         SendModal.show(scope.recipientId, scope.amount);
       }
     });
