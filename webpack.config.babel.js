@@ -79,6 +79,19 @@ const babel = () => ({
   },
 });
 
+const eslint = () => ({
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        loader: 'eslint-loader',
+        exclude: /node_modules/,
+        include: [PATHS.app, PATHS.spec, PATHS.test],
+      },
+    ],
+  },
+});
+
 const pug = () => ({
   module: {
     loaders: [
@@ -169,10 +182,10 @@ let config;
 
 switch (process.env.npm_lifecycle_event) {
   case 'build':
-    config = merge(common, clean(path.join(PATHS.build, 'dist')), html(), provide(), babel(), pug(), less(), css(), json(), png(), fonts(), bundleAnalyzer());
+    config = merge(common, clean(path.join(PATHS.build, 'dist')), html(), provide(), eslint(), babel(), pug(), less(), css(), json(), png(), fonts(), bundleAnalyzer());
     break;
   default:
-    config = merge(common, devServer(), { devtool: 'eval-source-map' }, html(), provide(), babel(), pug(), less(), css(), json(), png(), fonts());
+    config = merge(common, devServer(), { devtool: 'eval-source-map' }, html(), provide(), eslint(), babel(), pug(), less(), css(), json(), png(), fonts());
     break;
 }
 

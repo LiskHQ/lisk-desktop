@@ -4,7 +4,7 @@ module.exports = function (grunt) {
   grunt.initConfig({
     eslint: {
       options: {
-        configFile: '.eslintrc.json',
+        configFile: '.eslintrc',
         format: 'codeframe',
         fix: false,
       },
