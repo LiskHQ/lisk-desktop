@@ -87,7 +87,7 @@ describe('Login controller', () => {
     testPassphrase = 'glow two glimpse camp aware tip brief confirm similar code float defense';
     $scope = $rootScope.$new();
     controller = $componentController('login', $scope, { });
-    controller.onLogin = function () {};
+    controller.onLogin = () => {};
     controller.passphrase = '';
   });
 

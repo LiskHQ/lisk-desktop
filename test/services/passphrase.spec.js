@@ -98,7 +98,7 @@ describe('Factory: Passphrase', () => {
       let isProgressIncreasing = true;
 
       // √(2 * 90^2) > 120
-      for (let i = 0; i < 100; i++) {
+      for (let i = 0; i < 100; i++) {// eslint-disable-line
         event.pageX = i * 90;
         event.pageY = i * 90;
         Passphrase.listener(event, () => {});
@@ -117,10 +117,10 @@ describe('Factory: Passphrase', () => {
         pageX: 0,
       };
       let seed = null;
-      const callback = param => seed = param;
+      const callback = param => (seed = param);
 
       // √(2 * 90^2) > 120
-      for (let i = 0; i < 100; i++) {
+      for (let i = 0; i < 100; i++) { // eslint-disable-line
         event.pageX = i * 90;
         event.pageY = i * 90;
         Passphrase.listener(event, callback);
