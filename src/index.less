@@ -49,6 +49,7 @@ body {
 
   .offline .offline-hide {
     opacity: 0.5;
+    pointer-events: none;
   }
 
   md-input-container {
@@ -56,5 +57,12 @@ body {
     label:not(.md-no-float):not(.md-container-ignore), .md-placeholder {
       box-sizing: content-box;
     }
+  }
+
+  .absolutely-positioned-loading {
+    position: absolute;
+    margin: 24px 12px;
+    width: 100%;
+    z-index: 10;
   }
 }
