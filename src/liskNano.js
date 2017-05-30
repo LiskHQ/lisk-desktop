@@ -21,6 +21,7 @@ import './components/delegates/vote';
 import './components/signVerify/signMessage';
 import './components/signVerify/verifyMessage';
 import './components/delegateRegistration/delegateRegistration';
+import './components/openDialog/openDialog';
 
 import './services/api/peers';
 import './services/lsk';
