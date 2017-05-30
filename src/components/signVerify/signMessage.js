@@ -15,9 +15,10 @@ app.component('signMessage', {
    * @constructor
    */
   controller: class signMessage {
-    constructor($mdDialog, Account) {
+    constructor($mdDialog, Account, dialog) {
       this.$mdDialog = $mdDialog;
       this.account = Account;
+      this.dialog = dialog;
     }
 
     /**
@@ -31,6 +32,13 @@ app.component('signMessage', {
         this.account.get().passphrase);
       this.result = lisk.crypto.printSignedMessage(
         this.message, signnedMessage, this.account.get().publicKey);
+      this.resultIsShown = false;
+    }
+
+    showResult() {
+      if (this.result) {
+        this.resultIsShown = true;
+      }
     }
   },
 });
