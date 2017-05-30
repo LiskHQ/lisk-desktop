@@ -1,5 +1,4 @@
 import './login.less';
-import './save.less';
 
 app.component('login', {
   template: require('./login.pug')(),

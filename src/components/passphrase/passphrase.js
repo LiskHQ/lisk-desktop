@@ -1,4 +1,5 @@
 import './passphrase.less';
+import './savePassphrase.less';
 
 app.directive('passphrase', ($rootScope, $document, Passphrase, $mdDialog, $mdMedia, $timeout) => {
   /* eslint no-param-reassign: ["error", { "props": false }] */
@@ -26,15 +27,6 @@ app.directive('passphrase', ($rootScope, $document, Passphrase, $mdDialog, $mdMe
     const generateAndDoubleCheck = (seed) => {
       const passphrase = Passphrase.generatePassPhrase(seed);
 
-      const ok = () => {
-        // this.input_passphrase = passphrase;
-        $timeout(() => {
-          $rootScope.$broadcast('onAfterSignup', {
-            passphrase,
-            target: attrs.target,
-          });
-        }, 100);
-      };
 
       $mdDialog.show({
         controllerAs: '$ctrl',
@@ -61,18 +53,25 @@ app.directive('passphrase', ($rootScope, $document, Passphrase, $mdDialog, $mdMe
           }
 
           ok() {
-            ok();
-            this.close();
+            this.$mdDialog.hide();
+            this.$state.reload();
           }
 
           close() {
-            this.$mdDialog.hide();
+            this.$mdDialog.cancel();
             this.$state.reload();
           }
         },
 
-        template: require('./save.pug')(),
+        template: require('./savePassphrase.pug')(),
         fullscreen: ($mdMedia('xs')),
+      }).then(() => {
+        $timeout(() => {
+          $rootScope.$broadcast('onAfterSignup', {
+            passphrase,
+            target: attrs.target,
+          });
+        }, 100);
       });
     };
 
