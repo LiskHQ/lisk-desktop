@@ -1,5 +1,3 @@
-import './main.less';
-
 /**
  * The main component, used as parent for transaction, forging and delgate tabs.
  *
