@@ -21,4 +21,6 @@ md-content(layout='column', layout-gt-xs='row')
   md-card.offline-hide(flex-gt-xs=33)
     md-card-content(layout='column', layout-align='center center')
       span.md-title.title Balance
-      lsk.balance.value(amount='$ctrl.account.get().balance', nocolor, append)
+      div(class='balance-wrapper', data-show-send-modal, data-amount='$ctrl.totalSendable', data-ng-class='{"has-send-modal": $ctrl.totalSendable > 0}')
+        lsk.balance.value(amount='$ctrl.account.get().balance', nocolor, append)
+        md-tooltip(md-direction='top', md-delay='350', data-ng-if='$ctrl.account.get().balance > 0') Send all funds

@@ -33,7 +33,7 @@ app.factory('SendModal', ($mdDialog) => {
     bindToController: true,
     controller: ['$scope', ($scope) => {
       $scope.recipientId = recipientId;
-      $scope.amount = amount;
+      $scope.sendAmount = amount;
     }],
     controllerAs: 'ms',
   }));
