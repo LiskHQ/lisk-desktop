@@ -1,7 +1,6 @@
 import './passphrase.less';
-import './savePassphrase.less';
 
-app.directive('passphrase', ($rootScope, $document, Passphrase, $mdDialog, $mdMedia, $timeout) => {
+app.directive('passphrase', ($rootScope, $document, Passphrase, dialog, $mdMedia, $timeout) => {
   /* eslint no-param-reassign: ["error", { "props": false }] */
   const PassphraseLink = function (scope, element, attrs) {
     const bindEvents = (listener) => {
@@ -28,43 +27,16 @@ app.directive('passphrase', ($rootScope, $document, Passphrase, $mdDialog, $mdMe
       const passphrase = Passphrase.generatePassPhrase(seed);
 
 
-      $mdDialog.show({
+      dialog.modal({
         controllerAs: '$ctrl',
         controller: /* @ngInject*/ class save {
-          constructor($scope, $state) {
-            this.$mdDialog = $mdDialog;
+          // eslint-disable-next-line no-shadow
+          constructor(passphrase) {
             this.passphrase = passphrase;
-            this.$state = $state;
-
-            $scope.$watch('$ctrl.missing_input', () => {
-              this.missing_ok = this.missing_input && this.missing_input === this.missing_word;
-            });
-          }
-
-          next() {
-            this.enter = true;
-
-            const words = this.passphrase.split(' ');
-            const missingNumber = parseInt(Math.random() * words.length, 10);
-
-            this.missing_word = words[missingNumber];
-            this.pre = words.slice(0, missingNumber).join(' ');
-            this.pos = words.slice(missingNumber + 1).join(' ');
-          }
-
-          ok() {
-            this.$mdDialog.hide();
-            this.$state.reload();
-          }
-
-          close() {
-            this.$mdDialog.cancel();
-            this.$state.reload();
           }
         },
-
-        template: require('./savePassphrase.pug')(),
-        fullscreen: ($mdMedia('xs')),
+        template: '<save-passphrase passphrase="$ctrl.passphrase"></save-passphrase>',
+        locals: { passphrase },
       }).then(() => {
         $timeout(() => {
           $rootScope.$broadcast('onAfterSignup', {

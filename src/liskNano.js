@@ -7,6 +7,7 @@ import './components/main/setSecondPassService';
 import './components/main/setSecondPassDirective';
 import './components/login/login';
 import './components/passphrase/passphrase';
+import './components/passphrase/savePassphrase';
 import './components/passphrase/passphraseService';
 import './components/top/top';
 import './components/header/header';
