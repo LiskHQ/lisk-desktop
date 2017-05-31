@@ -62,12 +62,12 @@ app.directive('passphrase', ($rootScope, $document, Passphrase, $mdDialog, $mdMe
 
           ok() {
             ok();
-            this.close();
+            this.$mdDialog.hide();
           }
 
           close() {
-            this.$mdDialog.hide();
-            this.$state.reload();
+            this.$mdDialog.cancel();
+            $rootScope.$broadcast('onSignupCancel');
           }
         },
 

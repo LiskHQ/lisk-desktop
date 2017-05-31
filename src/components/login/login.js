@@ -50,6 +50,9 @@ app.component('login', {
           this.passConfirmSubmit(args.passphrase);
         }
       });
+      this.$scope.$on('onSignupCancel', () => {
+        this.generatingNewPassphrase = false;
+      });
     }
 
     /**
