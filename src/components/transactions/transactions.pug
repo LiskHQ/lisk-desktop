@@ -11,7 +11,6 @@ md-card.offline-hide
               th(md-column) Time
               th(md-column) Transaction ID
               th(md-column) From / To
-              th(md-column) Send to this
               th(md-column)
               th(md-column) Amount
               th(md-column) Fee
@@ -32,17 +31,24 @@ md-card.offline-hide
                 span.tx(ng-switch-when='6') Send Lisk to Blockchain Application
                 span.tx(ng-switch-when='7') Send Lisk from Blockchain Application
                 span(ng-switch-default)
-                  span(ng-bind='transaction.senderId', ng-if='transaction.senderId !== $ctrl.account.get().address')
-                  span(ng-bind='transaction.recipientId', ng-if='transaction.senderId === $ctrl.account.get().address')
-              td(md-cell)
-                i.material-icons.expanding-button(ng-if='transaction.senderId !== $ctrl.account.get().address', data-show-send-modal, data-recipient-id='transaction.senderId') arrow_forward
-                i.material-icons.expanding-button(ng-if='transaction.senderId === $ctrl.account.get().address', data-show-send-modal, data-recipient-id='transaction.recipientId') arrow_forward
+                  span(ng-bind='transaction.senderId', ng-if='transaction.senderId !== $ctrl.account.get().address',
+                    data-show-send-modal, data-recipient-id='transaction.senderId', class='has-send-modal')
+                  span(ng-bind='transaction.recipientId', ng-if='transaction.senderId === $ctrl.account.get().address',
+                    data-show-send-modal, data-recipient-id='transaction.recipientId', class='has-send-modal')
+                  md-tooltip(md-direction='top', md-delay='350') Send to this recipient
               td(md-cell)
                 i.material-icons(ng-if='transaction.type === 0 && transaction.senderId === transaction.recipientId') replay
                 i.material-icons.in(ng-if='transaction.senderId !== $ctrl.account.get().address') call_received
                 i.material-icons.out(ng-if='transaction.type !== 0 || transaction.recipientId !== $ctrl.account.get().address') call_made
               td(md-cell)
-                .amount(ng-class='{ neutral:transaction.type === 0 &&  transaction.senderId === transaction.recipientId, positive: transaction.senderId !== $ctrl.account.get().address, negative: transaction.type !== 0 || transaction.recipientId !== $ctrl.account.get().address }')
+                .amount.negative(data-ng-if='transaction.type !== 0 || transaction.recipientId !== $ctrl.account.get().address',
+                  data-ng-class='{"has-send-modal": transaction.amount > 0}',
+                  data-show-send-modal, data-amount='transaction.amount', data-recipient-id='transaction.recipientId')
+                  lsk.value(amount='transaction.amount')
+                  md-tooltip(md-direction='top', md-delay='350', data-ng-if='transaction.amount > 0') Repeat the transaction
+                .amount.positive(data-ng-if='transaction.senderId !== $ctrl.account.get().address')
+                  lsk.value(amount='transaction.amount')
+                .amount.neutral(ng-if='transaction.type === 0 && transaction.senderId === transaction.recipientId')
                   lsk.value(amount='transaction.amount')
               td(md-cell)
                 .fee

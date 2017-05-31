@@ -9,9 +9,14 @@ import './top.less';
 app.component('top', {
   template: require('./top.pug')(),
   controller: class top {
-    constructor(Peers, Account) {
+    constructor($scope, Peers, Account) {
       this.peers = Peers;
       this.account = Account;
+
+      $scope.$on('accountChange', () => {
+        this.totalSendable = this.account.get().balance > 1e7 ?
+          this.account.get().balance - 1e7 : 0;
+      });
     }
   },
 });

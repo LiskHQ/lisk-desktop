@@ -14,7 +14,6 @@
   "rules": {
     "func-names": "off",
     "global-require": "off",
-    "new-cap": ["error", { "newIsCapExceptions": ["mnemonic"]}],
     "new-cap": ["error", {
       "newIsCapExceptions": ["mnemonic"],
       "capIsNewExceptions" : [
