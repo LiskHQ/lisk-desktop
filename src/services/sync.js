@@ -46,9 +46,9 @@ app.factory('Sync', ($rootScope, $window) => {
   };
 
   const initIntervalToggler = () => {
-    const { electron } = $window;
-    electron.ipcRenderer.on('blur', () => toggleSyncTimer(false));
-    electron.ipcRenderer.on('focus', () => toggleSyncTimer(true));
+    const { ipc } = $window;
+    ipc.on('blur', () => toggleSyncTimer(false));
+    ipc.on('focus', () => toggleSyncTimer(true));
   };
 
   /**
@@ -59,8 +59,7 @@ app.factory('Sync', ($rootScope, $window) => {
     if (!running) {
       $window.requestAnimationFrame(step);
     }
-
-    if ($window.electron) {
+    if (PRODUCTION) {
       initIntervalToggler();
     }
   };
@@ -72,7 +71,6 @@ app.factory('Sync', ($rootScope, $window) => {
     config.freeze = false;
   };
 
-  init();
   return {
     init, config, end,
   };

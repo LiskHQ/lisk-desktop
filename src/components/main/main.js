@@ -17,7 +17,7 @@ app.component('main', {
    */
   controller: class main {
     constructor($scope, $rootScope, $timeout, $q, $state, Peers,
-      dialog, SendModal, Account, AccountApi, Notify) {
+      dialog, SendModal, Account, AccountApi, Notification) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$timeout = $timeout;
@@ -28,7 +28,7 @@ app.component('main', {
       this.$state = $state;
       this.account = Account;
       this.accountApi = AccountApi;
-      this.notify = Notify.init();
+      this.notify = Notification.init();
 
       this.activeTab = this.init();
     }
@@ -111,10 +111,11 @@ app.component('main', {
             delete res.publicKey;
           }
 
-          this.notify.about(
-            'deposite',
-            res.balance - this.account.get().balance,
-          );
+          if (res.balance > this.account.get().balance) {
+            const amount = res.balance - this.account.get().balance;
+            this.notify.about('deposit', amount);
+          }
+
           this.account.set(res);
         })
         .catch((res) => {

@@ -4,13 +4,13 @@
  * @module app
  * @submodule Notify
  */
-app.factory('Notify', ($window, lsk) => {
+app.factory('Notification', ($window, lsk) => {
   /**
    * The Notify factory constructor class
    * @class Notify
    * @constructor
    */
-  class Notify {
+  class Notification {
     constructor() {
       this.isFocused = true;
     }
@@ -23,10 +23,10 @@ app.factory('Notify', ($window, lsk) => {
      * @memberof Notify
      */
     init() {
-      const { electron } = $window;
-      if (electron) {
-        electron.ipcRenderer.on('blur', () => this.isFocused = false);
-        electron.ipcRenderer.on('focus', () => this.isFocused = true);
+      if (PRODUCTION) {
+        const { ipc } = $window;
+        ipc.on('blur', () => this.isFocused = false);
+        ipc.on('focus', () => this.isFocused = true);
       }
       return this;
     }
@@ -43,8 +43,8 @@ app.factory('Notify', ($window, lsk) => {
     about(type, data) {
       if (this.isFocused) return;
       switch (type) {
-        case 'deposite':
-          this.__deposite(data);
+        case 'deposit':
+          this._deposit(data);
           break;
         default: break;
       }
@@ -57,17 +57,11 @@ app.factory('Notify', ($window, lsk) => {
      * @private
      * @memberof Notify
      */
-    __deposite(amount) { // eslint-disable-line
-      if (amount > 0) {
-        new $window.Notification( // eslint-disable-line
-          'LSK received',
-          {
-            body: `You've received ${lsk.normalize(amount)} LSK.`,
-          },
-        );
-      }
+    _deposit(amount) { // eslint-disable-line
+      const body = `You've received ${lsk.normalize(amount)} LSK.`;
+      new $window.Notification('LSK received', { body }); // eslint-disable-line
     }
   }
 
-  return new Notify();
+  return new Notification();
 });

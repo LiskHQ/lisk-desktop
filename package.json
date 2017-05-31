@@ -6,7 +6,7 @@
   "bugs": "https://github.com/LiskHQ/lisk-nano/issues",
   "main": "main.js",
   "scripts": {
-    "build": "webpack --profile --progress --display-modules --display-exclude --display-chunks --display-cached --display-cached-assets",
+    "build": "export NODE_ENV=prod && webpack --profile --progress --display-modules --display-exclude --display-chunks --display-cached --display-cached-assets",
     "dev": "webpack-dev-server --host 0.0.0.0 --profile --progress",
     "e2e-test": "protractor protractor.conf.js",
     "test": "grunt eslint && export NODE_ENV=test && karma start",

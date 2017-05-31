@@ -1,4 +1,5 @@
 const electron = require('electron'); // eslint-disable-line import/no-extraneous-dependencies
+const path = require('path');
 
 const { app } = electron;
 const { BrowserWindow } = electron;
@@ -15,6 +16,8 @@ function createWindow() {
     webPreferences: {
       // Avoid app throttling when Electron is in background
       backgroundThrottling: false,
+      // Specifies a script that will be loaded before other scripts run in the page.
+      preload: path.resolve(__dirname, 'ipc.js'),
     },
   });
   win.on('blur', () => win.webContents.send('blur'));
