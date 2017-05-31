@@ -59,13 +59,32 @@ top {
   .balance-wrapper {
     display: inline-block;
     line-height: 41px;
+    position: relative;
+    overflow: hidden;
     &.has-send-modal {
       cursor: pointer;
 
-      lsk {
+      .tooltip {
+        position: absolute;
+        z-index: 1;
+        width: 100%;
+        text-align: center;
+        left: 0;
+        top: 100%;
         transition: all ease 200ms;
+        font-size: 85%;
+      }
+
+      lsk {
+        position: relative;
+        transition: all ease 200ms;
+        z-index: 2;
         &:hover {
           color: #000;
+
+          & + .tooltip {
+            transform: translateY(-33px);
+          }
         }
       }
     }

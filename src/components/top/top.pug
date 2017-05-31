@@ -28,4 +28,4 @@ md-content(layout='column', layout-gt-xs='row')
       div.value-wrapper
         div(class='balance-wrapper', data-show-send-modal, data-amount='$ctrl.totalSendable', data-ng-class='{"has-send-modal": $ctrl.totalSendable > 0}')
           lsk.balance.value.primary.full(amount='$ctrl.account.get().balance', nocolor, append)
-          md-tooltip(md-direction='bottom', md-delay='350', data-ng-if='$ctrl.account.get().balance > 0') Click to send all funds
+          span.tooltip.secondary(data-ng-if='$ctrl.account.get().balance > 0') Click to send all funds
