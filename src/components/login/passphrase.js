@@ -11,6 +11,10 @@ app.directive('passphrase', ($rootScope, $document, Passphrase, $mdDialog, $mdMe
       $document.unbind('mousemove', listener);
     };
 
+    scope.$on('$destroy', () => {
+      unbindEvents();
+    });
+
     /**
      * Uses passphrase.generatePassPhrase to generate passphrase from a given seed
      * Randomly asks for one of the words in passphrase to ensure it's noted down
