@@ -11,7 +11,7 @@ html
     div.body-wrapper
       md-content(id="main", flex='100', flex-gt-sm='80', flex-offset-gt-sm='10')
         header
-        div(layout='row', layout-align='space-around', ng-show='prelogged')
+        div.absolutely-positioned-loading(layout='row', layout-align='space-around', ng-show='prelogged')
           md-progress-circular.md-warn(md-mode='indeterminate', md-diameter='80')
         div(ng-class='{ online: $root.peers.online, offline: !$root.peers.online }')
           div(data-ui-view)
