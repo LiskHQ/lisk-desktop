@@ -3,7 +3,7 @@
  */
 app.directive('openDialog', (dialog) => {
   const linkFunc = ($scope, $element) => {
-    $element[0].addEventListener('click', () => {
+    $element.bind('click', () => {
       dialog.modal($scope.openDialog, $scope.options);
     });
   };
