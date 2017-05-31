@@ -8,13 +8,13 @@ require('./components/main/main.spec');
 require('./components/main/setSecondPassDirective.spec');
 require('./components/main/setSecondPassService.spec');
 require('./components/send/send.spec');
-require('./components/send/sendModalDirective.spec');
 require('./components/top/top.spec');
 require('./components/timestamp/timestamp.spec');
 require('./components/transactions/transactions.spec');
 require('./components/signVerify/signMessage.spec');
 require('./components/signVerify/verifyMessage.spec');
 require('./components/delegateRegistration/delegateRegistration.spec.js');
+require('./components/openDialog/openDialog.spec.js');
 
 require('./services/passphrase.spec');
 require('./services/signVerify.spec');
