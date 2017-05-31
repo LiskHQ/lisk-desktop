@@ -3,7 +3,7 @@ require('./components/delegates/delegates.spec');
 require('./components/delegates/vote.spec');
 require('./components/header/header.spec');
 require('./components/login/login.spec');
-require('./components/login/passphrase.spec');
+require('./components/passphrase/passphrase.spec');
 require('./components/passphrase/savePassphrase.spec');
 require('./components/main/main.spec');
 require('./components/main/setSecondPassDirective.spec');
