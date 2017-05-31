@@ -11,7 +11,6 @@ top {
     display: block;
     width: 100%;
     text-align: center;
-    padding-top: 12px;
   }
 
   .status {
@@ -27,15 +26,29 @@ top {
       color: #F45D4C;
     }
   }
-
-  .value {
-    font-size: 120%;
-    font-weight: bold;
-    background-color: #5f696e;
-    color: #fff;
-    border-radius: 3px;
-    padding: 9px 9px;
+  .value-wrapper {
+    width: 100%;
+    height: 70px;
+    text-align: center;
+    background: #eee;
+    .primary {
+      font-size: 120%;
+      font-weight: bold;
+      color: #5f696e;
+      padding: 9px 9px;
+      display: inline-block;
+      &.full {
+        height: 51px;
+        line-height: 51px;
+      }
+    }
+    .secondary {
+      color: #5f696e;
+      border-radius: 3px;
+      font-size: 100%;
+    }
   }
+  
 
   md-select {
     margin: 0;
@@ -48,6 +61,13 @@ top {
     line-height: 41px;
     &.has-send-modal {
       cursor: pointer;
+
+      lsk {
+        transition: all ease 200ms;
+        &:hover {
+          color: #000;
+        }
+      }
     }
   }
 }
