@@ -99,7 +99,8 @@ app.factory('dialog', ($mdDialog, $mdToast) => ({
    * @param {object} options
    */
   modal(component, options) {
-    function modalController($scope) {
+    function modalController($scope, option) {
+      $scope.option = option;
       $scope.closeDialog = function () {
         $mdDialog.hide();
       };
@@ -107,7 +108,7 @@ app.factory('dialog', ($mdDialog, $mdToast) => ({
     let attrs = '';
     if (options) {
       Object.keys(options).forEach((item) => {
-        attrs += `data-${item}="${options[item]}" `;
+        attrs += `data-${item}="option['${item}']" `;
       });
     }
     $mdDialog.show({
@@ -117,6 +118,9 @@ app.factory('dialog', ($mdDialog, $mdToast) => ({
                     <${component} ${attrs} close-dialog="closeDialog()" ></${component}>
                 </md-dialog>
               `,
+      locals: {
+        option: options,
+      },
       controller: modalController,
     });
   },
