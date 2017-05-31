@@ -124,7 +124,7 @@ function createWindow() {
           const options = {
             buttons: ['OK'],
             icon: `${__dirname}/assets/lisk.png`,
-            message: `Lisk Nano\nVersion ${app.getVersion()}\nCopyright © 2017 Lisk Foundation`,
+            message: `Lisk Nano\nVersion ${app.getVersion()}\nCopyright © 2016 - ${new Date().getFullYear()} Lisk Foundation`,
           };
           electron.dialog.showMessageBox(focusedWindow, options, () => {});
         }
