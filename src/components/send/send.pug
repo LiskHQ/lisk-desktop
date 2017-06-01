@@ -12,8 +12,8 @@ div.dialog-send(aria-label='Send funds')
             div(ng-messages='$ctrl.transferForm.recipient.$error')
               div(ng-message='required') Required
               div(ng-message='pattern') Invalid
-          div(layout="row")
-            md-input-container.md-block.flex-95
+          div(style={'position': 'relative'})
+            md-input-container.md-block
               label Transaction Amount
               input.amount(type='text', name='amount', ng-model='$ctrl.amount.value', required, ng-pattern='$ctrl.amount.regexp', ng-disabled='$ctrl.loading')
               div.fee(ng-show='$ctrl.amount.value') Fee: 0.1 LSK
@@ -21,7 +21,7 @@ div.dialog-send(aria-label='Send funds')
                 div(ng-message='required') Required
                 div(ng-message='pattern') Invalid
                 div(ng-message='max') Insufficient funds
-            md-menu.flex-5.max-funds(md-position-mode='target-right target')
+            md-menu.max-funds(md-position-mode='target-right target')
               md-button.md-icon-button(ng-click='$mdOpenMenu()')
                 i.material-icons more_vert
               md-menu-content(width='4')

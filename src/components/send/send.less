@@ -39,6 +39,9 @@ send {
   }
 
   md-menu.max-funds {
+    position: absolute;
+    top: -10px;
+    right: 0;
     &:after {
       content: '';
       display: inline-block;
@@ -47,6 +50,11 @@ send {
     }
     button {
       vertical-align: middle;
+    }
+  }
+  .dialog-send {
+    .md-toolbar-tools {
+      padding: 0 24px;
     }
   }
 }
