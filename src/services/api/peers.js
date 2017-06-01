@@ -54,7 +54,7 @@ app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope) => {
         conf = network;
         if (network.address) {
           conf.node = network.address.split(':')[1].replace('//', '');
-          conf.port = network.address.match(/:([0-9]{1,5})$/)[1];
+          conf.port = network.address.match(/:([0-9]{1,5})\/?$/) && network.address.match(/:([0-9]{1,5})\/?$/)[1];
           conf.ssl = network.address.split(':')[0] === 'https';
         }
         if (conf.testnet === undefined && conf.port !== undefined) {
@@ -63,7 +63,7 @@ app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope) => {
       }
 
       this.active = lisk.api(conf);
-      this.check();
+      return this.check();
     }
 
     /**
@@ -95,9 +95,7 @@ app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope) => {
      * @method check
      */
     check() {
-      this.reset();
-
-      this.sendRequestPromise('loader/status', {})
+      return this.sendRequestPromise('loader/status', {})
         .then(() => this.online = true)
         .catch(() => this.online = false);
     }
