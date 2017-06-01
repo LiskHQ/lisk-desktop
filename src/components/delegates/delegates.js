@@ -72,6 +72,7 @@ app.component('delegates', {
           this.votedList.forEach((delegate) => {
             this.votedDict[delegate.username] = delegate;
           });
+        }).finally(() => {
           this.loadDelegates(0, this.$scope.search);
         });
       }
