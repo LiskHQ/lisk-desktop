@@ -7,7 +7,7 @@ md-content(layout='column', layout-gt-xs='row')
       span.md-title.title Delegate
       .address.value {{ $ctrl.account.get().username }}
       small.username {{ $ctrl.account.get().address }}
-  md-card.peer(flex-gt-xs=33)
+  md-card.peer.offline-hide(flex-gt-xs=33)
     md-card-content(layout='column', layout-align='center center')
       span.status
         i.material-icons.offline(ng-show='!$ctrl.peers.online') error

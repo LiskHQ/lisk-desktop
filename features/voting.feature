@@ -3,6 +3,10 @@ Feature: Voting tab
     Given I'm logged in as "any account"
     When I click tab number 2
     Then I should see table with 20 lines
+  Scenario: should allow to view delegates with cold account
+    Given I'm logged in as "empty account"
+    When I click tab number 2
+    Then I should see table with 20 lines
   Scenario: should allow to search delegates
     Given I'm logged in as "any account"
     When I click tab number 2
