@@ -8,7 +8,7 @@ app.component('login', {
     /* eslint no-param-reassign: ["error", { "props": false }] */
 
     constructor($scope, $rootScope, $timeout, $document, $mdMedia,
-      $cookies, $location, Passphrase, $state, Account, Peers) {
+      $cookies, $location, Passphrase, $state, Account, Peers, dialog) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$timeout = $timeout;
@@ -19,9 +19,11 @@ app.component('login', {
       this.$state = $state;
       this.account = Account;
       this.peers = Peers;
+      this.dialog = dialog;
 
       this.Passphrase = Passphrase;
       this.generatingNewPassphrase = false;
+      this.$rootScope.loggingIn = false;
 
       this.networks = [{
         name: 'Mainnet',
@@ -61,14 +63,20 @@ app.component('login', {
      * @param {String} [_passphrase=this.input_passphrase]
      */
     passConfirmSubmit(_passphrase = this.input_passphrase) {
+      this.$rootScope.loggingIn = true;
       if (this.Passphrase.normalize.constructor === Function) {
-        this.peers.setActive(this.network);
-
-        this.account.set({
-          passphrase: this.Passphrase.normalize(_passphrase),
-          network: this.network,
+        this.peers.setActive(this.network).then(() => {
+          this.$rootScope.loggingIn = false;
+          if (this.peers.online) {
+            this.account.set({
+              passphrase: this.Passphrase.normalize(_passphrase),
+              network: this.network,
+            });
+            this.$state.go(this.$rootScope.landingUrl || 'main.transactions');
+          } else {
+            this.dialog.errorToast(`Failed to connect to node ${this.network.address}`);
+          }
         });
-        this.$state.go(this.$rootScope.landingUrl || 'main.transactions');
       }
     }
 

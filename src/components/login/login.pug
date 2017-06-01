@@ -20,5 +20,5 @@ md-card
       md-content(layout='row', layout-align='center center')
         // md-button(ng-disabled='$ctrl.generatingNewPassphrase', ng-click='$ctrl.devTestAccount()') Dev Test Account
         md-button.md-primary.new-account-button(ng-disabled='$ctrl.random || $ctrl.generatingNewPassphrase', ng-click='$ctrl.generatePassphrase()') NEW ACCOUNT
-        md-button.md-raised.md-primary.login-button(md-autofocus, ng-disabled='$ctrl.valid != undefined && $ctrl.valid !== 1', type='submit') Login
+        md-button.md-raised.md-primary.login-button(md-autofocus, ng-disabled='($ctrl.valid != undefined && $ctrl.valid !== 1) || $root.loggingIn', type='submit') Login
     passphrase(ng-if='$ctrl.generatingNewPassphrase', data-on-login='$ctrl.onLogin', data-target='primary-pass')

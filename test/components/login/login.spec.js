@@ -69,9 +69,10 @@ describe('Login controller', () => {
   /* eslint-disable no-unused-vars */
   let $timeout;
   /* eslint-enable no-unused-vars */
+  let $q;
 
   beforeEach(inject((_$componentController_, _$rootScope_, _$state_,
-    _Passphrase_, _$cookies_, _$timeout_, _Account_) => {
+    _Passphrase_, _$cookies_, _$timeout_, _Account_, _$q_) => {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
     $state = _$state_;
@@ -81,6 +82,7 @@ describe('Login controller', () => {
     /* eslint-disable no-unused-vars */
     $timeout = _$timeout_;
     /* eslint-enable no-unused-vars */
+    $q = _$q_;
   }));
 
   beforeEach(() => {
@@ -122,15 +124,29 @@ describe('Login controller', () => {
   });
 
   describe('passConfirmSubmit()', () => {
+    let peersMock;
+    let deferred;
+
+    beforeEach(() => {
+      deferred = $q.defer();
+      peersMock = sinon.mock(controller.peers);
+      peersMock.expects('setActive').returns(deferred.promise);
+      controller.peers.online = true;
+    });
+
     it('sets account.phassphrase as this.input_passphrase processed by normalizer', () => {
       controller.input_passphrase = '\tTEST  PassPHrASe  ';
       controller.passConfirmSubmit();
+      deferred.resolve();
+      $scope.$apply();
       expect(account.get().passphrase).to.equal('test passphrase');
     });
 
     it('calls Passphrase.normalize()', () => {
       const spy = sinon.spy(Passphrase, 'normalize');
       controller.passConfirmSubmit();
+      deferred.resolve();
+      $scope.$apply();
       expect(spy).to.have.been.calledWith();
     });
 
@@ -138,7 +154,18 @@ describe('Login controller', () => {
       controller.input_passphrase = testPassphrase;
       const spy = sinon.spy($state, 'go');
       controller.passConfirmSubmit();
+      deferred.resolve();
+      $scope.$apply();
       expect(spy).to.have.been.calledWith();
+    });
+
+    it('shows error toast if peers.setActive sets peers.online = false', () => {
+      const spy = sinon.spy(controller.dialog, 'errorToast');
+      controller.peers.online = false;
+      controller.passConfirmSubmit();
+      deferred.resolve();
+      $scope.$apply();
+      expect(spy).to.have.been.calledWith(`Failed to connect to node ${controller.network.address}`);
     });
   });
 
