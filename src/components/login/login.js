@@ -35,7 +35,19 @@ app.component('login', {
         custom: true,
         address: 'http://localhost:8000',
       }];
+
       this.network = this.networks[0];
+      try {
+        const network = JSON.parse(this.$cookies.get('network'));
+        if (network.custom) {
+          this.networks[2].address = network.address;
+          this.network = this.networks[2];
+        } else if (network.testnet) {
+          this.network = this.networks[1];
+        }
+      } catch (e) {
+        this.$cookies.remove('network');
+      }
 
       this.$scope.$watch('$ctrl.input_passphrase', val => this.valid = this.Passphrase.isValidPassphrase(val));
       this.$timeout(this.devTestAccount.bind(this), 200);
@@ -72,6 +84,7 @@ app.component('login', {
               passphrase: this.Passphrase.normalize(_passphrase),
               network: this.network,
             });
+            this.$cookies.put('network', JSON.stringify(this.network));
             this.$state.go(this.$rootScope.landingUrl || 'main.transactions');
           } else {
             this.dialog.errorToast(`Failed to connect to node ${this.network.address}`);
