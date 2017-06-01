@@ -6,6 +6,7 @@ const { BrowserWindow } = electron;
 const { Menu } = electron;
 
 let win;
+const copyright = `Copyright © 2016 - ${new Date().getFullYear()} Lisk Foundation`;
 
 function createWindow() {
   const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;
@@ -133,7 +134,7 @@ function createWindow() {
           const options = {
             buttons: ['OK'],
             icon: `${__dirname}/assets/lisk.png`,
-            message: `Lisk Nano\nVersion ${app.getVersion()}\nCopyright © 2017 Lisk Foundation`,
+            message: `Lisk Nano\nVersion ${app.getVersion()}\n${copyright}`,
           };
           electron.dialog.showMessageBox(focusedWindow, options, () => {});
         }
@@ -181,6 +182,12 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
+});
+
+// This will override the values defined in the app’s .plist file (macOS)
+app.setAboutPanelOptions({
+  applicationName: 'Lisk Nano',
+  copyright,
 });
 
 app.on('activate', () => {
