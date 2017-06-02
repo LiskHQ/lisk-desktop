@@ -22,7 +22,9 @@ app.directive('setSecondPass', (setSecondPass, Account, $rootScope, dialog, Acco
     scope.passConfirmSubmit = (secondSecret) => {
       AccountApi.setSecondSecret(secondSecret, Account.get().publicKey, Account.get().passphrase)
         .then(() => {
-          dialog.successAlert({ text: 'Your second passphrase was successfully registered.' });
+          dialog.successAlert({
+            text: 'Second passphrase registation was successfully submitted. It can take several seconds before it is processed.',
+          });
         })
         .catch((err) => {
           let text = '';
