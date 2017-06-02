@@ -39,7 +39,6 @@ describe('Save passphrase component', () => {
     let controller;
     let $componentController;
     let dialogMock;
-    let stateMock;
 
     beforeEach(inject((_$componentController_) => {
       $componentController = _$componentController_;
@@ -49,32 +48,24 @@ describe('Save passphrase component', () => {
       $scope = $rootScope.$new();
       $scope.passphrase = PASSPHRASE;
       controller = $componentController('savePassphrase', $scope, {});
-
       dialogMock = sinon.mock(controller.$mdDialog);
-      stateMock = sinon.mock(controller.$state);
     });
 
     afterEach(() => {
       dialogMock.verify();
       dialogMock.restore();
-      stateMock.verify();
-      stateMock.restore();
     });
 
     describe('ok()', () => {
-      it('calls $mdDialog.hide and $state.reload', () => {
+      it('calls $mdDialog.hide', () => {
         dialogMock.expects('hide');
-        stateMock.expects('reload');
-
         controller.ok();
       });
     });
 
     describe('close()', () => {
-      it('calls $mdDialog.cancel and $state.reload', () => {
+      it('calls $mdDialog.cancel', () => {
         dialogMock.expects('cancel');
-        stateMock.expects('reload');
-
         controller.close();
       });
     });

@@ -7,9 +7,9 @@ app.component('savePassphrase', {
     okButtonLabel: '<',
   },
   controller: class savePassphrase {
-    constructor($scope, $state, $mdDialog) {
+    constructor($scope, $rootScope, $mdDialog) {
       this.$mdDialog = $mdDialog;
-      this.$state = $state;
+      this.$rootScope = $rootScope;
 
       this.step = 1;
 
@@ -31,7 +31,6 @@ app.component('savePassphrase', {
 
     ok() {
       this.$mdDialog.hide();
-      this.$state.reload();
     }
 
     back() {
@@ -40,7 +39,7 @@ app.component('savePassphrase', {
 
     close() {
       this.$mdDialog.cancel();
-      this.$state.reload();
+      this.$rootScope.$broadcast('onSignupCancel');
     }
   },
 });
