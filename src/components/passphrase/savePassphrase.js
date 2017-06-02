@@ -4,11 +4,14 @@ app.component('savePassphrase', {
   template: require('./savePassphrase.pug')(),
   bindings: {
     passphrase: '<',
+    okButtonLabel: '<',
   },
   controller: class savePassphrase {
     constructor($scope, $rootScope, $mdDialog) {
       this.$mdDialog = $mdDialog;
       this.$rootScope = $rootScope;
+
+      this.step = 1;
 
       $scope.$watch('$ctrl.missing_input', () => {
         this.missing_ok = this.missing_input && this.missing_input === this.missing_word;
@@ -16,7 +19,7 @@ app.component('savePassphrase', {
     }
 
     next() {
-      this.enter = true;
+      this.step = 2;
 
       const words = this.passphrase.split(' ');
       const missingNumber = parseInt(Math.random() * words.length, 10);
@@ -28,6 +31,10 @@ app.component('savePassphrase', {
 
     ok() {
       this.$mdDialog.hide();
+    }
+
+    back() {
+      this.step = 1;
     }
 
     close() {
