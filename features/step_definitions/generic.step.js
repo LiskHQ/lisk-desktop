@@ -98,20 +98,20 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   });
 
   When('I remember passphrase, click "{nextButtonSelector}", fill in missing word', (nextButtonSelector, callback) => {
-    waitForElemAndCheckItsText('.dialog-save h2', 'Save your passphrase in a safe place!');
+    waitForElemAndCheckItsText('save-passphrase h2', 'Save your passphrase in a safe place!');
 
-    element(by.css('.dialog-save textarea.passphrase')).getText().then((passphrase) => {
+    element(by.css('save-passphrase textarea.passphrase')).getText().then((passphrase) => {
       // eslint-disable-next-line no-unused-expressions
       expect(passphrase).to.not.be.undefined;
       const passphraseWords = passphrase.split(' ');
       expect(passphraseWords.length).to.equal(12);
       waitForElemAndClickIt(`.${nextButtonSelector.replace(/ /g, '-')}`);
 
-      element.all(by.css('.dialog-save p.passphrase span')).get(0).getText().then((firstPartOfPassphrase) => {
+      element.all(by.css('save-passphrase p.passphrase span')).get(0).getText().then((firstPartOfPassphrase) => {
         const missingWordIndex = firstPartOfPassphrase.length ?
           firstPartOfPassphrase.split(' ').length :
           0;
-        element(by.css('.dialog-save input')).sendKeys(passphraseWords[missingWordIndex]).then(callback);
+        element(by.css('save-passphrase input')).sendKeys(passphraseWords[missingWordIndex]).then(callback);
       });
     });
   });
