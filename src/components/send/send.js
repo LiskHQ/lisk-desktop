@@ -95,10 +95,11 @@ app.component('send', {
           fee: 10000000,
         };
         this.$rootScope.$broadcast('transactionCreation', transaction);
-        return this.dialog.successAlert({ text: `${this.amount.value} LSK was successfully transferred to ${this.recipient.value}` })
-            .then(() => {
-              this.reset();
-            });
+        return this.dialog.successAlert({
+          text: `Your transaction of ${this.amount.value} LSK to ${this.recipient.value} was accepted and will be processed in a few seconds.`,
+        }).then(() => {
+          this.reset();
+        });
       }).catch((res) => {
         this.dialog.errorAlert({ text: res && res.message ? res.message : 'An error occurred while creating the transaction.' });
       }).finally(() => {

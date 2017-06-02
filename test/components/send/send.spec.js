@@ -167,7 +167,7 @@ describe('Send component controller', () => {
       deffered.resolve({});
       $scope.$apply();
       expect(spy).to.have.been.calledWith({
-        text: `${controller.amount.value} LSK was successfully transferred to ${controller.recipient.value}`,
+        text: `Your transaction of ${controller.amount.value} LSK to ${controller.recipient.value} was accepted and will be processed in a few seconds.`,
       });
     });
 

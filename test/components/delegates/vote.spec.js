@@ -142,8 +142,8 @@ describe('Vote component controller', () => {
       $scope.$apply();
     });
 
-    it('shows a success toast if request succeeds', () => {
-      dilaogServiceMock.expects('successToast');
+    it('shows a success alert if request succeeds', () => {
+      dilaogServiceMock.expects('successAlert');
       controller.vote();
       deffered.resolve({ success: true });
       $scope.$apply();

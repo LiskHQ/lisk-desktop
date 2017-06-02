@@ -5,7 +5,7 @@ Feature: Send dialog
     And I fill in "1" to "amount" field
     And I fill in "537318935439898807L" to "recipient" field
     And I click "submit button"
-    Then I should see alert dialog with title "Success" and text "1 LSK was successfully transferred to 537318935439898807L"
+    Then I should see alert dialog with title "Success" and text "Your transaction of 1 LSK to 537318935439898807L was accepted and will be processed in a few seconds."
 
   Scenario: should not allow to send when not enough funds
     Given I'm logged in as "empty account"
