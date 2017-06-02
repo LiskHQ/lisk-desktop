@@ -158,15 +158,6 @@ describe('Login controller', () => {
       $scope.$apply();
       expect(spy).to.have.been.calledWith();
     });
-
-    it('shows error toast if peers.setActive sets peers.online = false', () => {
-      const spy = sinon.spy(controller.dialog, 'errorToast');
-      controller.peers.online = false;
-      controller.passConfirmSubmit();
-      deferred.resolve();
-      $scope.$apply();
-      expect(spy).to.have.been.calledWith(`Failed to connect to node ${controller.network.address}`);
-    });
   });
 
   describe('devTestAccount()', () => {

@@ -8,7 +8,7 @@ import lisk from 'lisk-js';
  * @module app
  * @submodule Peers
  */
-app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope) => {
+app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope, dialog) => {
   /**
    * The Peers factory constructor class
    *
@@ -49,6 +49,7 @@ app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope) => {
      * @method setActive
      */
     setActive(network) {
+      this.network = network;
       let conf = { };
       if (network) {
         conf = network;
@@ -63,7 +64,7 @@ app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope) => {
       }
 
       this.active = lisk.api(conf);
-      return this.check();
+      return this.check(true);
     }
 
     /**
@@ -93,11 +94,24 @@ app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope) => {
      * @private
      * @memberOf Peer
      * @method check
+     * @notifyUser {bool} - Should an error toast be displayed on error?
      */
-    check() {
+    check(notifyUser) {
       return this.sendRequestPromise('loader/status', {})
         .then(() => this.online = true)
-        .catch(() => this.online = false);
+        .catch((data) => {
+          this.online = false;
+          if (notifyUser) {
+            const address = `${this.active.currentPeer}:${this.active.port}`;
+            let message = `Failed to connect to node ${address}. `;
+            if (data && data.error && data.error.code === 'EUNAVAILABLE') {
+              message = `Failed to connect: Node ${address} is not active`;
+            } else if (!(data && data.error && data.error.code)) {
+              message += ' Make sure that you are using the latest version of Lisk Nano.';
+            }
+            dialog.errorToast(message);
+          }
+        });
     }
   }
 
