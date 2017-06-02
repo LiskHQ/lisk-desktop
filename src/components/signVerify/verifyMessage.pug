@@ -22,7 +22,7 @@ div
         textarea.signature(name='signature', ng-model='$ctrl.signature.value', ng-change='$ctrl.verify()')
         div(ng-messages='$ctrl.signature.error')
           div(ng-message='invalid') Invalid
-    div(ng-show='$ctrl.result')
+    div.result-wrapper(ng-show='$ctrl.result')
       md-input-container.md-block
         h4 Original Message
         textarea.result(name='result', ng-model='$ctrl.result', readonly)

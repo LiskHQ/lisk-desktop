@@ -22,7 +22,7 @@ div
         md-button(ng-click="$ctrl.$mdDialog.cancel()") Cancel
         span(flex)
         md-button.md-raised.md-primary.sign-button(ngclipboard, data-clipboard-text='{{$ctrl.result}}', ng-click='$ctrl.showResult()', ngclipboard-success="$ctrl.dialog.successToast('Result copied to clipboard')", ng-disabled='!$ctrl.result || $ctrl.resultIsShown') Sign and copy result to clipboard
-    div(ng-if='$ctrl.resultIsShown')
+    div.result-wrapper(ng-if='$ctrl.resultIsShown')
       md-input-container.md-block
         h4 Result
         textarea.result(name='result', ng-model='$ctrl.result', readonly)
