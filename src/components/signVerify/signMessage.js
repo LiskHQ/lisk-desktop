@@ -1,4 +1,5 @@
 import lisk from 'lisk-js';
+import './sign-message.less';
 
 /**
  * This component contains the form for signing a message
