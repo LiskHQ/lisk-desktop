@@ -5,14 +5,14 @@ Feature: Top right menu
     And I 250 times move mouse randomly
     And I remember passphrase, click "yes its save button", fill in missing word
     And I click "ok button"
-    Then I should see alert dialog with title "Success" and text "Your second passphrase was successfully registered."
+    Then I should see alert dialog with title "Success" and text "Second passphrase registration was successfully submitted. It can take several seconds before it is processed."
 
   Scenario: should allow to register a delegate
     Given I'm logged in as "delegate candidate"
     When I click "register as delegate" in main menu
     And I fill in "test" to "username" field
     And I click "register button"
-    Then I should see alert dialog with title "Success" and text "Account was successfully registered as delegate."
+    Then I should see alert dialog with title "Success" and text "Delegate registration was successfully submitted. It can take several seconds before it is processed."
 
   Scenario: should allow to sign message
     Given I'm logged in as "any account"
