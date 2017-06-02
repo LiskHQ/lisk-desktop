@@ -169,6 +169,14 @@ const provide = () => ({
   ],
 });
 
+const define = () => ({
+  plugins: [
+    new webpack.DefinePlugin({
+      PRODUCTION: JSON.stringify(nodeEnvironment === 'prod'),
+    }),
+  ],
+});
+
 const bundleAnalyzer = () => ({
   plugins: [
     new BundleAnalyzerPlugin({
@@ -182,10 +190,10 @@ let config;
 
 switch (process.env.npm_lifecycle_event) {
   case 'build':
-    config = merge(common, clean(path.join(PATHS.build, 'dist')), html(), provide(), eslint(), babel(), pug(), less(), css(), json(), png(), fonts(), bundleAnalyzer());
+    config = merge(common, clean(path.join(PATHS.build, 'dist')), html(), provide(), define(), eslint(), babel(), pug(), less(), css(), json(), png(), fonts(), bundleAnalyzer());
     break;
   default:
-    config = merge(common, devServer(), { devtool: 'eval-source-map' }, html(), provide(), eslint(), babel(), pug(), less(), css(), json(), png(), fonts());
+    config = merge(common, devServer(), { devtool: 'eval-source-map' }, html(), provide(), define(), eslint(), babel(), pug(), less(), css(), json(), png(), fonts());
     break;
 }
 

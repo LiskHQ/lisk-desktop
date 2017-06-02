@@ -15,7 +15,7 @@ app.component('main', {
    */
   controller: class main {
     constructor($scope, $rootScope, $timeout, $q, $state, Peers,
-      dialog, Account, AccountApi) {
+      dialog, Account, AccountApi, Notification) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$timeout = $timeout;
@@ -25,6 +25,7 @@ app.component('main', {
       this.$state = $state;
       this.account = Account;
       this.accountApi = AccountApi;
+      this.notify = Notification.init();
 
       this.activeTab = this.init();
     }
@@ -105,6 +106,11 @@ app.component('main', {
             // because res.publicKey is null if the account didn't send any transaction yet,
             // but we have the publicKey computed from passphrase
             delete res.publicKey;
+          }
+
+          if (res.balance > this.account.get().balance) {
+            const amount = res.balance - this.account.get().balance;
+            this.notify.about('deposit', amount);
           }
 
           this.account.set(res);

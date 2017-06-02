@@ -26,6 +26,7 @@ require('./services/api/peers.spec');
 require('./services/lsk.spec');
 require('./services/passphrase.spec');
 require('./services/signVerify.spec');
+require('./services/notification.spec');
 
 require('./run.spec');
 
