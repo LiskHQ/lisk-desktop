@@ -1,4 +1,5 @@
 const electron = require('electron'); // eslint-disable-line import/no-extraneous-dependencies
+const path = require('path');
 
 const { app } = electron;
 const { BrowserWindow } = electron;
@@ -13,7 +14,15 @@ function createWindow() {
     width: width > 2000 ? Math.floor(width * 0.5) : width - 250,
     height: height > 1000 ? Math.floor(height * 0.7) : height - 150,
     center: true,
+    webPreferences: {
+      // Avoid app throttling when Electron is in background
+      backgroundThrottling: false,
+      // Specifies a script that will be loaded before other scripts run in the page.
+      preload: path.resolve(__dirname, 'ipc.js'),
+    },
   });
+  win.on('blur', () => win.webContents.send('blur'));
+  win.on('focus', () => win.webContents.send('focus'));
 
   const template = [
     {
