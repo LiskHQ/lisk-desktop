@@ -48,10 +48,6 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     waitForElemAndCheckItsText(`.${selectName} md-select-value .md-text`, optionText, callback);
   });
 
-  Then('I should see toast saying "{text}"', (text, callback) => {
-    waitForElemAndCheckItsText('md-toast', text, callback);
-  });
-
   Then('I should see alert dialog with title "{title}" and text "{text}"', (title, text, callback) => {
     checkAlertDialog(title, text, callback);
   });

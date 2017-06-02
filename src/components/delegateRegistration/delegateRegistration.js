@@ -34,8 +34,7 @@ app.directive('delegateRegistration', ($mdDialog, delegateApi, Account, dialog, 
             )
             .then(() => {
               dialog.successAlert({
-                title: 'Success',
-                text: 'Delegate registration was successfully submitted. It can take several seconds before it is confirmed.',
+                text: 'Delegate registration was successfully submitted. It can take several seconds before it is processed.',
               })
                 .then(() => {
                   $scope.pendingRegistrationListener = $rootScope.$on('syncTick', () => {
