@@ -1,4 +1,5 @@
 import lisk from 'lisk-js';
+import './signVerifyMessage.less';
 
 /**
  * This component contains the form for verifying a signed message
