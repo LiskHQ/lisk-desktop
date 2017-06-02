@@ -23,7 +23,7 @@ app.directive('setSecondPass', (setSecondPass, Account, $rootScope, dialog, Acco
       AccountApi.setSecondSecret(secondSecret, Account.get().publicKey, Account.get().passphrase)
         .then(() => {
           dialog.successAlert({
-            text: 'Second passphrase registation was successfully submitted. It can take several seconds before it is processed.',
+            text: 'Second passphrase registration was successfully submitted. It can take several seconds before it is processed.',
           });
         })
         .catch((err) => {
