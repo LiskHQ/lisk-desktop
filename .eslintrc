@@ -5,7 +5,9 @@
   ],
   "globals": {
     "angular": true,
-    "app": true
+    "app": true,
+    "ipc": true,
+    "PRODUCTION": true
   },
   "env": {
     "browser": true,

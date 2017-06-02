@@ -1,6 +1,11 @@
+const intervals = {
+  activeApp: 10000,
+  inactiveApp: 60000,
+};
+
 app.factory('Sync', ($rootScope, $window) => {
   const config = {
-    updateInterval: 10000,
+    updateInterval: intervals.activeApp,
     freeze: false,
   };
   let lastTick = new Date();
@@ -33,6 +38,19 @@ app.factory('Sync', ($rootScope, $window) => {
       $window.requestAnimationFrame(step);
     }
   };
+
+  const toggleSyncTimer = (inFocus) => {
+    config.updateInterval = (inFocus) ?
+      intervals.activeApp :
+      intervals.inactiveApp;
+  };
+
+  const initIntervalToggler = () => {
+    const { ipc } = $window;
+    ipc.on('blur', () => toggleSyncTimer(false));
+    ipc.on('focus', () => toggleSyncTimer(true));
+  };
+
   /**
    * Starts the first frame by calling requestAnimationFrame.
    * This will be
@@ -40,6 +58,9 @@ app.factory('Sync', ($rootScope, $window) => {
   const init = () => {
     if (!running) {
       $window.requestAnimationFrame(step);
+    }
+    if (PRODUCTION) {
+      initIntervalToggler();
     }
   };
 
@@ -50,7 +71,6 @@ app.factory('Sync', ($rootScope, $window) => {
     config.freeze = false;
   };
 
-  init();
   return {
     init, config, end,
   };
