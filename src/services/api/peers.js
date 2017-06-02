@@ -94,14 +94,14 @@ app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope, dialog) => 
      * @private
      * @memberOf Peer
      * @method check
-     * @notifyUser {bool} - Should an error toast be displayed on error?
+     * @isOnLogin {bool} - Should an error toast be displayed on error?
      */
-    check(notifyUser) {
+    check(isOnLogin) {
       return this.sendRequestPromise('loader/status', {})
         .then(() => this.online = true)
         .catch((data) => {
           this.online = false;
-          if (notifyUser) {
+          if (isOnLogin) {
             const address = `${this.active.currentPeer}:${this.active.port}`;
             let message = `Failed to connect to node ${address}. `;
             if (data && data.error && data.error.code === 'EUNAVAILABLE') {
@@ -110,6 +110,7 @@ app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope, dialog) => 
               message += ' Make sure that you are using the latest version of Lisk Nano.';
             }
             dialog.errorToast(message);
+            this.active = undefined;
           }
         });
     }
