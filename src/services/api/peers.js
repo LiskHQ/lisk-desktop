@@ -64,7 +64,8 @@ app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope, dialog) => 
       }
 
       this.active = lisk.api(conf);
-      return this.check(true);
+      this.wasOffline = false;
+      return this.check();
     }
 
     /**
@@ -94,14 +95,19 @@ app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope, dialog) => 
      * @private
      * @memberOf Peer
      * @method check
-     * @isOnLogin {bool} - Should an error toast be displayed on error?
      */
-    check(isOnLogin) {
+    check() {
       return this.sendRequestPromise('loader/status', {})
-        .then(() => this.online = true)
+        .then(() => {
+          this.online = true;
+          if (this.wasOffline) {
+            dialog.successToast('Connection rerestablished');
+          }
+          this.wasOffline = false;
+        })
         .catch((data) => {
           this.online = false;
-          if (isOnLogin) {
+          if (!this.wasOffline) {
             const address = `${this.active.currentPeer}:${this.active.port}`;
             let message = `Failed to connect to node ${address}. `;
             if (data && data.error && data.error.code === 'EUNAVAILABLE') {
@@ -110,8 +116,8 @@ app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope, dialog) => 
               message += ' Make sure that you are using the latest version of Lisk Nano.';
             }
             dialog.errorToast(message);
-            this.active = undefined;
           }
+          this.wasOffline = true;
         });
     }
   }
