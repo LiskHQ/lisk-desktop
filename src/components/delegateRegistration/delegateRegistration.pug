@@ -3,6 +3,9 @@ div.dialog-delegate-registration(aria-label='Vote for delegates')
     md-toolbar
       .md-toolbar-tools
         h2 Delegate Registration
+        span(flex='')
+        md-button.md-icon-button(ng-click='$ctrl.cancel(delegateRegistrationForm)', aria-label='Close dialog')
+          i.material-icons close
     md-dialog-content
       .md-dialog-content
         div
@@ -25,6 +28,6 @@ div.dialog-delegate-registration(aria-label='Vote for delegates')
           md-divider
             p.error(ng-bind='$ctrl.form.error', ng-if='$ctrl.form.error')
       md-dialog-actions(layout='row')
-        md-button.md-raised.md-secondary(ng-disabled='$ctrl.loading', ng-click='$ctrl.cancel(delegateRegistrationForm)') {{ 'Cancel' }}
+        md-button.md-secondary(ng-disabled='$ctrl.loading', ng-click='$ctrl.cancel(delegateRegistrationForm)') {{ 'Cancel' }}
         span(flex)
         md-button.md-raised.md-primary.register-button(ng-disabled='!delegateRegistrationForm.$valid || $ctrl.loading', type='submit') {{ $ctrl.loading ? 'Registering...' : 'Register' }}

@@ -26,17 +26,23 @@ app.directive('passphrase', ($rootScope, $document, Passphrase, dialog, $mdMedia
     const generateAndDoubleCheck = (seed) => {
       const passphrase = Passphrase.generatePassPhrase(seed);
 
-
       dialog.modal({
         controllerAs: '$ctrl',
         controller: /* @ngInject*/ class save {
           // eslint-disable-next-line no-shadow
-          constructor(passphrase) {
+          constructor(passphrase, okButtonLabel) {
             this.passphrase = passphrase;
+            this.okButtonLabel = okButtonLabel;
           }
         },
-        template: '<save-passphrase passphrase="$ctrl.passphrase"></save-passphrase>',
-        locals: { passphrase },
+        template: '<save-passphrase ' +
+          'passphrase="$ctrl.passphrase" ' +
+          'ok-button-label="$ctrl.okButtonLabel">' +
+        '</save-passphrase>',
+        locals: {
+          passphrase,
+          okButtonLabel: attrs.okButtonLabel,
+        },
       }).then(() => {
         $timeout(() => {
           $rootScope.$broadcast('onAfterSignup', {
