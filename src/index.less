@@ -92,9 +92,14 @@ md-tabs.main-tabs {
   md-tabs-wrapper {
     margin: 0 8px;
 
+    md-tabs-canvas {
+      margin-left: -2px;
+    }
+
     &.md-stretch-tabs md-pagination-wrapper {
       width: auto;
       display: block;
+      padding-left: 2px;
     }
     md-ink-bar {
       bottom: auto;
@@ -106,7 +111,7 @@ md-tabs.main-tabs {
     box-shadow: inset 0px -1px 1px -1px rgba(0, 0, 0, 0.12);
     &.md-active {
       background: white;
-      box-shadow: 0px -2px 1px 0px rgba(0,0,0,0.54);
+      box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.12);
     }
   }
 }
