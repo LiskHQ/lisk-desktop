@@ -33,6 +33,7 @@ import './services/dialog';
 import './services/lsk';
 import './services/signVerify';
 import './services/sync';
+import './services/notification';
 
 import './filters/lsk';
 
