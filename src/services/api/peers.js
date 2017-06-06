@@ -101,7 +101,7 @@ app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope, dialog) => 
         .then(() => {
           this.online = true;
           if (this.wasOffline) {
-            dialog.successToast('Connection rerestablished');
+            dialog.successToast('Connection re-established');
           }
           this.wasOffline = false;
         })
