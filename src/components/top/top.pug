@@ -11,11 +11,11 @@ md-content(layout='column', layout-gt-xs='row')
         small.username.secondary {{ $ctrl.account.get().address }}
   md-card.peer.offline-hide(flex-gt-xs=33)
     md-card-content(layout='column', layout-align='center center')
-      span.status
-        i.material-icons.offline(ng-show='!$ctrl.peers.online') error
-        i.material-icons.online(ng-show='$ctrl.peers.online') check circle
       span.md-title.title Peer
       div.value-wrapper
+        span.status
+          i.material-icons.offline(ng-show='!$ctrl.peers.online') error
+          i.material-icons.online(ng-show='$ctrl.peers.online') check circle
         span.primary {{ $ctrl.peers.active.options.name }}
         div.active-peer.value.secondary
           span(ng-bind="$ctrl.peers.active.currentPeer")
