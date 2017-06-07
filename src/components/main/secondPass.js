@@ -6,7 +6,7 @@ import './secondPass.less';
  * @module app
  * @submodule SetSecondPassCtrl
  */
-app.component('setsecondpass', {
+app.component('setSecondPass', {
   template: require('./secondPass.pug')(),
   controller: function ($scope, Account, $rootScope, dialog, AccountApi) {
     /**
