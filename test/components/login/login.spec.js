@@ -29,11 +29,6 @@ describe('Login component', () => {
     $rootScope.$digest();
   });
 
-  const HEADER_TEXT = 'Sign In';
-  it(`should contain header saying "${HEADER_TEXT}"`, () => {
-    expect(element.find('.md-title').text()).to.equal(HEADER_TEXT);
-  });
-
   const PASS_LABEL_TEXT = 'Enter your passphrase';
   it(`should contain a form input with label saying "${PASS_LABEL_TEXT}"`, () => {
     expect(element.find('form md-input-container label.pass').text()).to.equal(PASS_LABEL_TEXT);
