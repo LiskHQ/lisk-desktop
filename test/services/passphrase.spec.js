@@ -33,9 +33,9 @@ describe('Factory: Passphrase', () => {
   });
 
   describe('Passphrase.init()', () => {
-    it('should define progress.steps as a number above 1.6', () => {
+    it('should define progress.steps as a number above or equal to 1.6', () => {
       Passphrase.init();
-      expect(Passphrase.progress.step).to.be.above(1.6);
+      expect(Passphrase.progress.step).to.not.be.below(1.6);
     });
 
     it('should call Passphrase.reset()', () => {
