@@ -56,10 +56,6 @@ md-card.offline-hide
                md-menu-item(ng-click='check($event)')
                 div
                   md-checkbox#advanced.filled-in.violet(ng-model='$ctrl.showAllColumns') Show All Columns
-               // md-menu-item
-                p(ng-click='check($event)')
-                  md-checkbox#fulltime.filled-in.violet(ng-model='showFullTime')
-                  label(for='fulltime')  Show Full Time
         md-card-content
           md-content(layout='column')
             md-table-container(ng-show='$ctrl.blocks.length')
