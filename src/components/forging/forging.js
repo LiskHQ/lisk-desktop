@@ -104,7 +104,7 @@ app.component('forging', {
      * @todo Replace loader with a loader service
      */
     loadMoreBlocks() {
-      if (this.blocksLoaded && this.blocks.length !== 0) {
+      if (this.blocksLoaded && this.blocks.length !== 0 && this.moreBlocksExist) {
         this.blocksLoaded = false;
         this.updateForgedBlocks(20, this.blocks.length);
       }
