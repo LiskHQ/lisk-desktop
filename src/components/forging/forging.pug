@@ -10,25 +10,25 @@ md-card.offline-hide
         md-card(flex-gt-xs=100, layout-padding)
           md-card-title
             md-card-title-text
-              span.md-title.delegate-name {{$ctrl.delegate.username}} 
+              span.md-title.delegate-name {{$ctrl.delegate.username}}
             span(md-position-mode='target-right target')
               span {{$ctrl.statistics.total  | lsk | number:2 }} LSK Earned
       md-content(layout='column', layout-gt-xs='row', ng-if='$ctrl.delegate.username')
         md-card(flex-50, flex-gt-xs=25, layout-padding)
           .info-panel.info-panel-grey
-            span.title Today 
+            span.title Today
             span.pull-right {{$ctrl.statistics.today  | lsk | number:2 }} LSK
         md-card(flex-50, flex-gt-xs=25, layout-padding)
           .info-panel.info-panel-grey
-            span.title Last 24 hours 
+            span.title Last 24 hours
             span.pull-right {{$ctrl.statistics.last24h  | lsk | number:2 }} LSK
         md-card(flex-50, flex-gt-xs=25, layout-padding)
           .info-panel.info-panel-grey
-            span.title {{'Last 7 days'}} 
+            span.title {{'Last 7 days'}}
             span.pull-right {{$ctrl.statistics.last7d  | lsk | number:2 }} LSK
         md-card(flex-50, flex-gt-xs=25, layout-padding)
           .info-panel.info-panel-grey
-            span.title {{'Last 30 days'}} 
+            span.title {{'Last 30 days'}}
             span.pull-right {{$ctrl.statistics.last30d  | lsk | number:2 }} LSK
       div(layout='column', layout-gt-xs='row', ng-if='$ctrl.delegate.username')
         md-card(flex-gt-xs=33, layout-align='center center', layout-padding)
@@ -71,7 +71,7 @@ md-card.offline-hide
                     th(md-column) Timestamp
                     th(md-column) Total fee
                     th(md-column) Reward
-                tbody(md-body)
+                tbody(md-body, infinite-scroll='$ctrl.loadMoreBlocks()', infinite-scroll-distance='1')
                   tr(md-row, ng-repeat='block in $ctrl.blocks')
                     td(md-cell data-title='tableBlocks.cols.height', sortable="'height'") {{block.height}}
                     td(md-cell data-title='tableBlocks.cols.blockId', ng-show='$ctrl.showAllColumns') {{block.id}}
