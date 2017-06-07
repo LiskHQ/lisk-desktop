@@ -64,7 +64,9 @@ app.component('vote', {
         this.secondPassphrase,
       ).then(() => {
         this.$mdDialog.hide(this.voteList, this.unvoteList);
-        this.dialog.successToast('Voting successful');
+        this.dialog.successAlert({
+          text: 'Your votes were successfully submitted. It can take several seconds before they are processed.',
+        });
       }).catch((response) => {
         this.dialog.errorToast(response.message || 'Voting failed');
       }).finally(() => {

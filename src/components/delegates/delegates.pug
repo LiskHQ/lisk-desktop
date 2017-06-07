@@ -16,7 +16,7 @@ div.offline-hide
   md-card(flex-gt-xs=100)
     md-card-title
       md-card-title-text
-        span.md-title(layout='row')
+        span.md-title.search(layout='row')
           md-input-container.md-block
             label Search 
             input.search(type='text', name='name', ng-model='search', ng-model-options='{ debounce: 200 }')
@@ -67,8 +67,8 @@ div.offline-hide
               td(md-cell, ng-bind='delegate.rank')
               td(md-cell, ng-bind='delegate.username')
               td(md-cell, ng-bind='delegate.address')
-              td(md-cell, ng-bind='delegate.productivity')
-              td(md-cell, ng-bind='delegate.approval')
+              td(md-cell, ng-bind='delegate.productivity + "%"')
+              td(md-cell, ng-bind='delegate.approval + "%"')
       md-button.more(ng-show='$ctrl.delegatesDisplayedCount < $ctrl.filteredDelegates.length', ng-click='$ctrl.showMore()') Show More
       .loading
         md-progress-linear(md-mode='indeterminate', ng-show='$ctrl.loading')

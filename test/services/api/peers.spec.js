@@ -9,13 +9,15 @@ describe('Factory: Peers', () => {
   let Peers;
   let $q;
   let $rootScope;
+  let dialog;
 
   beforeEach(angular.mock.module('app'));
 
-  beforeEach(inject((_Peers_, _$q_, _$rootScope_) => {
+  beforeEach(inject((_Peers_, _$q_, _$rootScope_, _dialog_) => {
     Peers = _Peers_;
     $q = _$q_;
     $rootScope = _$rootScope_;
+    dialog = _dialog_;
   }));
 
   describe('setActive(account)', () => {
@@ -32,7 +34,7 @@ describe('Factory: Peers', () => {
     });
   });
 
-  describe('check()', () => {
+  describe('check(notifyUser)', () => {
     let deffered;
     let mock;
 
@@ -60,6 +62,14 @@ describe('Factory: Peers', () => {
       deffered.reject();
       $rootScope.$apply();
       expect(Peers.online).to.equal(false);
+    });
+
+    it('shows error toast if notifyUser is true', () => {
+      const spy = sinon.spy(dialog, 'errorToast');
+      Peers.check(true);
+      deffered.reject();
+      $rootScope.$apply();
+      expect(spy).to.have.been.calledWith();
     });
   });
 });
