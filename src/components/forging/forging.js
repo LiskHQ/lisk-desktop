@@ -44,7 +44,7 @@ app.component('forging', {
      */
     updateAllData() {
       this.updateDelegate();
-      this.updateForgedBlocks(10);
+      this.updateForgedBlocks(20);
 
       this.updateForgingStats('today', moment().set({ hour: 0, minute: 0, second: 0 }));
       this.updateForgingStats('last24h', moment().subtract(1, 'days'));
@@ -104,8 +104,10 @@ app.component('forging', {
      * @todo Replace loader with a loader service
      */
     loadMoreBlocks() {
-      this.blocksLoaded = false;
-      this.updateForgedBlocks(20, this.blocks.length);
+      if (this.blocksLoaded && this.blocks.length !== 0 && this.moreBlocksExist) {
+        this.blocksLoaded = false;
+        this.updateForgedBlocks(20, this.blocks.length);
+      }
     }
 
     /**

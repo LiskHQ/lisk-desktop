@@ -282,6 +282,8 @@ describe('forging component controller', () => {
       const deferred = $q.defer();
       forgingApiMock.expects('getForgedBlocks').returns(deferred.promise);
       controller.blocks = blocks;
+      controller.blocksLoaded = true;
+      controller.moreBlocksExist = true;
 
       controller.loadMoreBlocks();
       deferred.resolve({
