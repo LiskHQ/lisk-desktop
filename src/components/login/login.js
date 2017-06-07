@@ -74,9 +74,11 @@ app.component('login', {
      */
     passConfirmSubmit(_passphrase = this.input_passphrase) {
       this.$rootScope.loggingIn = true;
+      this.$scope.$emit('showLoadingBar');
       if (this.Passphrase.normalize.constructor === Function) {
         this.peers.setActive(this.network).then(() => {
           this.$rootScope.loggingIn = false;
+          this.$scope.$emit('hideLoadingBar');
           if (this.peers.online) {
             this.account.set({
               passphrase: this.Passphrase.normalize(_passphrase),

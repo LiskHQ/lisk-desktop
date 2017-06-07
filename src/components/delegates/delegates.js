@@ -39,6 +39,7 @@ app.component('delegates', {
       this.votedList = [];
       this.unvoteList = [];
       this.loading = true;
+      this.$scope.$emit('showLoadingBar');
       this.usernameInput = '';
       this.usernameSeparator = '\n';
 
@@ -90,6 +91,7 @@ app.component('delegates', {
      */
     loadDelegates(offset, search, replace, limit = 100) {
       this.loading = true;
+      this.$scope.$emit('showLoadingBar');
       this.delegateApi.listDelegates({
         offset,
         limit: limit.toString(),
@@ -129,6 +131,7 @@ app.component('delegates', {
 
         this.delegatesTotalCount = data.totalCount;
         this.loading = false;
+        this.$scope.$emit('hideLoadingBar');
       }
     }
 

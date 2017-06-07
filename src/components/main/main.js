@@ -38,7 +38,6 @@ app.component('main', {
      *
      * @param {Number} [attempts=0] The number of attempts to find an active peer
      * @returns {string} The name of the current state
-     * @todo We're safe to remove prelogged and we can replace logged with accountApi
      */
     init(attempts = 0) {
       if (!this.account.get() || !this.account.get().passphrase) {
@@ -48,11 +47,11 @@ app.component('main', {
         return '';
       }
 
-      this.$rootScope.prelogged = true;
+      this.$scope.$emit('showLoadingBar');
 
       this.update(attempts)
         .then(() => {
-          this.$rootScope.prelogged = false;
+          this.$scope.$emit('hideLoadingBar');
           this.$rootScope.logged = true;
           if (this.$timeout) {
             clearTimeout(this.$timeout);
@@ -90,6 +89,7 @@ app.component('main', {
           this.account.set({
             isDelegate: true,
             username: data.delegate.username,
+            delegate: data.delegate,
           });
         }
       });
