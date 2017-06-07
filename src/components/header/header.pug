@@ -12,7 +12,7 @@ md-content.header(layout='row', layout-align='center center', layout-padding)
           div(layout='row', flex='')
             p(flex='') Register second passphrase
       md-menu-item(ng-if='$root.logged && !$ctrl.account.get().isDelegate')
-        md-button.register-as-delegate(data-delegate-registration)
+        md-button.register-as-delegate(data-open-dialog='delegate-registration')
           div(layout='row', flex='')
             p(flex='') Register as delegate 
       md-menu-item
