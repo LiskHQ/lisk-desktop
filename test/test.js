@@ -10,7 +10,7 @@ require('./components/main/setSecondPassService.spec');
 require('./components/passphrase/passphrase.spec');
 require('./components/passphrase/savePassphrase.spec');
 require('./components/send/send.spec');
-require('./components/send/sendModalDirective.spec');
+// require('./components/send/sendModalDirective.spec');
 require('./components/signVerify/signMessage.spec');
 require('./components/signVerify/verifyMessage.spec');
 require('./components/timestamp/timestamp.spec');
