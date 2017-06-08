@@ -5,13 +5,11 @@ const sinonChai = require('sinon-chai');
 const expect = chai.expect;
 chai.use(sinonChai);
 
-describe('setSecondPass Directive', () => {
+describe('setSecondPass component', () => {
   let $compile;
   let $scope;
   let $rootScope;
-  let element;
   let accountApi;
-  let setSecondPass;
   let $q;
   let dialog;
 
@@ -21,58 +19,31 @@ describe('setSecondPass Directive', () => {
 
     // Store references to $rootScope and $compile
     // so they are available to all tests in this describe block
-    inject((_$compile_, _$rootScope_, _setSecondPass_, _AccountApi_, _$q_, _dialog_) => {
+    inject((_$compile_, _$rootScope_, _AccountApi_, _$q_, _dialog_) => {
       // The injector unwraps the underscores (_) from around the parameter names when matching
       $compile = _$compile_;
       $rootScope = _$rootScope_;
-      setSecondPass = _setSecondPass_;
       accountApi = _AccountApi_;
       $q = _$q_;
       dialog = _dialog_;
-      $scope = $rootScope.$new();
-    });
+      const scope = $rootScope.$new();
 
-    // Compile a piece of HTML containing the directive
-    element = $compile('<button data-set-second-pass></button>')($scope);
-    $scope.$digest();
-  });
+      $compile('<set-second-pass></set-second-pass>')(scope);
+      scope.$digest();
 
-  describe('SetSecondPassLink', () => {
-    it('listens for an onAfterSignup event', () => {
-      const mock = sinon.mock(accountApi);
-      const deffered = $q.defer();
-      mock.expects('setSecondSecret').returns(deffered.promise);
-
-      const spy = sinon.spy(dialog, 'successAlert');
-
-      $scope.$broadcast('onAfterSignup', {
-        passphrase: 'TEST_VALUE',
-        target: 'second-pass',
-      });
-
-      deffered.resolve({});
-      $scope.$apply();
-
-      expect(spy).to.have.been.calledWith();
-    });
-
-    it('binds click listener to call setSecondPass.show()', () => {
-      const spy = sinon.spy(setSecondPass, 'show');
-      element.triggerHandler('click');
-      $scope.$digest();
-
-      expect(spy).to.have.been.calledWith();
+      $scope = scope.$$childTail;
     });
   });
 
   describe('scope.passConfirmSubmit', () => {
     it('should call accountApi.setSecondSecret', () => {
+      const testPassphrase = 'glow two glimpse camp aware tip brief confirm similar code float defense';
       const mock = sinon.mock(accountApi);
       const deffered = $q.defer();
       mock.expects('setSecondSecret').returns(deffered.promise);
 
       const spy = sinon.spy(dialog, 'successAlert');
-      $scope.passConfirmSubmit();
+      $scope.passConfirmSubmit(testPassphrase);
 
       deffered.resolve({});
       $scope.$apply();

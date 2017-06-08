@@ -100,15 +100,6 @@ describe('Login controller', () => {
       expect(controller.valid).to.equal(1);
       expect(spy).to.have.been.calledWith();
     });
-
-    it('listens for an onAfterSignup event', () => {
-      const spy = sinon.spy(controller, 'passConfirmSubmit');
-      $rootScope.$broadcast('onAfterSignup', {
-        passphrase: 'TEST_VALUE',
-        target: 'primary-pass',
-      });
-      expect(spy).to.have.been.calledWith('TEST_VALUE');
-    });
   });
 
   describe('generatePassphrase()', () => {

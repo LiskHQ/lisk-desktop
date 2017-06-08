@@ -57,11 +57,10 @@ app.component('login', {
         this.$scope.customFullscreen = wantsFullScreen === true;
       });
 
-      this.$scope.$on('onAfterSignup', (ev, args) => {
-        if (args.target === 'primary-pass') {
-          this.passConfirmSubmit(args.passphrase);
-        }
-      });
+      this.$scope.onSave = (primaryPass) => {
+        this.passConfirmSubmit(primaryPass);
+      };
+
       this.$scope.$on('onSignupCancel', () => {
         this.generatingNewPassphrase = false;
       });
@@ -74,9 +73,11 @@ app.component('login', {
      */
     passConfirmSubmit(_passphrase = this.input_passphrase) {
       this.$rootScope.loggingIn = true;
+      this.$scope.$emit('showLoadingBar');
       if (this.Passphrase.normalize.constructor === Function) {
         this.peers.setActive(this.network).then(() => {
           this.$rootScope.loggingIn = false;
+          this.$scope.$emit('hideLoadingBar');
           if (this.peers.online) {
             this.account.set({
               passphrase: this.Passphrase.normalize(_passphrase),

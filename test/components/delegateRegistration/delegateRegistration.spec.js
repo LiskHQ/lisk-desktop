@@ -5,11 +5,9 @@ const sinonChai = require('sinon-chai');
 const expect = chai.expect;
 chai.use(sinonChai);
 
-describe('Delegate registration directive', () => {
+describe('Delegate registration component', () => {
   let $scope;
-  let $mdDialog;
-  let $element;
-  const template = '<button type="button" data-delegate-registration=""></button>';
+  const template = '<delegate-registration></delegate-registration>';
   const form = {
     $setPristine: () => {},
     $setUntouched: () => {},
@@ -18,32 +16,21 @@ describe('Delegate registration directive', () => {
 
   beforeEach(angular.mock.module('app'));
 
-  beforeEach(inject(($compile, $rootScope, _$mdDialog_) => {
-    $scope = $rootScope.$new();
-    $mdDialog = _$mdDialog_;
-    $element = $compile(template)($scope);
-
-    $scope.$digest();
+  beforeEach(inject(($compile, $rootScope) => {
+    const scope = $rootScope.$new();
+    $compile(template)(scope);
+    scope.$digest();
+    $scope = scope.$$childTail;
   }));
-
-  it('binds click listener to call $mdDialog.show()', () => {
-    const spy = sinon.spy($mdDialog, 'show');
-    $element.triggerHandler('click');
-    $scope.$digest();
-
-    expect(spy).to.have.been.calledWith();
-  });
 
   it('defines a cancel method to hide modal and reset the form', () => {
     const spyReset = sinon.spy($scope, 'reset');
-    const spydialog = sinon.spy($mdDialog, 'hide');
 
     expect($scope.cancel).to.not.equal(undefined);
     $scope.cancel(form);
     $scope.$digest();
 
     expect(spyReset).to.have.been.calledWith();
-    expect(spydialog).to.have.been.calledWith();
   });
 
   it('defines a reset method to reset the form and form values', () => {

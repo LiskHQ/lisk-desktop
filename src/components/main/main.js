@@ -16,14 +16,13 @@ app.component('main', {
    */
   controller: class main {
     constructor($scope, $rootScope, $timeout, $q, $state, Peers,
-      dialog, SendModal, Account, AccountApi, Notification) {
+      dialog, Account, AccountApi, Notification) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.$timeout = $timeout;
       this.$q = $q;
       this.peers = Peers;
       this.dialog = dialog;
-      this.transferModal = SendModal;
       this.$state = $state;
       this.account = Account;
       this.accountApi = AccountApi;
@@ -39,7 +38,6 @@ app.component('main', {
      *
      * @param {Number} [attempts=0] The number of attempts to find an active peer
      * @returns {string} The name of the current state
-     * @todo We're safe to remove prelogged and we can replace logged with accountApi
      */
     init(attempts = 0) {
       if (!this.account.get() || !this.account.get().passphrase) {
@@ -49,11 +47,11 @@ app.component('main', {
         return '';
       }
 
-      this.$rootScope.prelogged = true;
+      this.$scope.$emit('showLoadingBar');
 
       this.update(attempts)
         .then(() => {
-          this.$rootScope.prelogged = false;
+          this.$scope.$emit('hideLoadingBar');
           this.$rootScope.logged = true;
           if (this.$timeout) {
             clearTimeout(this.$timeout);
@@ -91,6 +89,7 @@ app.component('main', {
           this.account.set({
             isDelegate: true,
             username: data.delegate.username,
+            delegate: data.delegate,
           });
         }
       });

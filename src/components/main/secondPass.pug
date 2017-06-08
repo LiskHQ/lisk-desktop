@@ -1,6 +1,6 @@
-md-dialog.dialog-second(aria-label='Generate a second passphrase for your account')
+div.dialog-second(aria-label='Generate a second passphrase for your account')
   form
     md-toolbar
       .md-toolbar-tools
         h2 Generate a second passphrase of your account
-    passphrase(data-on-login='md.onLogin', data-target='second-pass', data-ok-button-label='Register')
+    passphrase(data-on-save='onSave', data-target='second-pass', data-ok-button-label='Register')

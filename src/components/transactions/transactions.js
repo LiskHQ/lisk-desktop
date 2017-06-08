@@ -24,6 +24,7 @@ app.component('transactions', {
       this.accountApi = AccountApi;
 
       this.loaded = false;
+      this.$scope.$emit('showLoadingBar');
       this.transactions = [];
       this.pendingTransactions = [];
 
@@ -33,7 +34,7 @@ app.component('transactions', {
         this.transactions.unshift(transaction);
       });
 
-      this.init.call(this);
+      this.init.call(this, true);
       this.$scope.$on('accountChange', () => {
         this.init.call(this);
       });
@@ -77,6 +78,7 @@ app.component('transactions', {
      */
     update(showLoading, showMore) {
       if (showLoading) {
+        this.$scope.$emit('showLoadingBar');
         this.loaded = false;
       }
 
@@ -99,6 +101,7 @@ app.component('transactions', {
           this.moreTransactionsExist = 0;
         })
         .finally(() => {
+          this.$scope.$emit('hideLoadingBar');
           this.loaded = true;
         });
     }

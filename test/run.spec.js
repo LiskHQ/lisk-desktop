@@ -59,11 +59,6 @@ describe('Application run method', () => {
       expect($rootScope.logged).to.equal(false);
     });
 
-    it('sets $rootScope.prelogged = false', () => {
-      $rootScope.logout();
-      expect($rootScope.prelogged).to.equal(false);
-    });
-
     it('resets account service', () => {
       $rootScope.logout();
       expect(account.get()).to.deep.equal({});

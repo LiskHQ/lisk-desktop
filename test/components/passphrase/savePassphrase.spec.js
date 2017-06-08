@@ -22,8 +22,10 @@ describe('Save passphrase component', () => {
   beforeEach(() => {
     $scope = $rootScope.$new();
     $scope.passphrase = PASSPHRASE;
-    element = $compile('<save-passphrase passphrase="passphrase"></save-passphrase>')($scope);
-    $rootScope.$digest();
+    $scope.label = 'Save';
+    $scope.onSave = () => {};
+    element = $compile('<save-passphrase data-passphrase="passphrase" data-label="label" data-on-save="onSave"></save-passphrase>')($scope);
+    $scope.$digest();
   });
 
   it('should contain an input field with the passphrase', () => {
@@ -47,7 +49,10 @@ describe('Save passphrase component', () => {
     beforeEach(() => {
       $scope = $rootScope.$new();
       $scope.passphrase = PASSPHRASE;
-      controller = $componentController('savePassphrase', $scope, {});
+      controller = $componentController('savePassphrase', $scope, {
+        onSave: () => {},
+        label: 'Save',
+      });
       dialogMock = sinon.mock(controller.$mdDialog);
     });
 
