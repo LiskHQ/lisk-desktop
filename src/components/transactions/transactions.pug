@@ -1,9 +1,9 @@
 md-card.offline-hide
-  md-card-content
-    md-content(layout='row', layout-align='start center', layout-padding)
+  md-card-content(ng-show='$ctrl.loaded')
+    md-content(layout='row', layout-align='start center', layout-padding, ng-show='!$ctrl.transactions.length')
       div(flex)
-      span.empty(ng-show='!$ctrl.transactions.length && $ctrl.loaded') No transactions
-    md-content(layout='column', layout-align='center center')
+      span.empty No transactions
+    md-content(layout='column', layout-align='center center', ng-hide='!$ctrl.transactions.length')
       md-table-container(ng-show='$ctrl.transactions.length')
         table(md-table)
           thead(md-head)
