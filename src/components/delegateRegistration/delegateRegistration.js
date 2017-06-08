@@ -6,8 +6,9 @@ import './delegateRegistration.less';
  * @class app.delegateRegistration
  * @memberOf app
  */
-app.directive('delegateRegistration', ($mdDialog, delegateApi, Account, dialog, $rootScope) => {
-  const DelegateRegistrationLink = function ($scope, $element) {
+app.component('delegateRegistration', {
+  template: require('./delegateRegistration.pug')(),
+  controller($scope, $mdDialog, delegateApi, Account, dialog, $rootScope) {
     function checkPendingRegistration() {
       delegateApi.getDelegate({
         username: $scope.username,
@@ -73,31 +74,7 @@ app.directive('delegateRegistration', ($mdDialog, delegateApi, Account, dialog, 
      */
     $scope.cancel = (form) => {
       $scope.reset(form);
-      $mdDialog.hide();
+      // $mdDialog.hide();
     };
-
-    /**
-     * Shows from dialog.
-     *
-     * @todo This should be replaced by a general dialog directive.
-     */
-    $element.bind('click', () => {
-      $mdDialog.show({
-        template: require('./delegateRegistration.pug')(),
-        bindToController: true,
-        locals: {
-          form: $scope.form,
-          cancel: $scope.cancel,
-          account: Account,
-        },
-        controller: () => {},
-        controllerAs: '$ctrl',
-      });
-    });
-  };
-
-  return {
-    restrict: 'A',
-    link: DelegateRegistrationLink,
-  };
+  },
 });

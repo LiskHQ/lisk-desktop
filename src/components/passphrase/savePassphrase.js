@@ -4,7 +4,8 @@ app.component('savePassphrase', {
   template: require('./savePassphrase.pug')(),
   bindings: {
     passphrase: '<',
-    okButtonLabel: '<',
+    label: '<',
+    onSave: '=',
   },
   controller: class savePassphrase {
     constructor($scope, $rootScope, $mdDialog) {
@@ -31,6 +32,7 @@ app.component('savePassphrase', {
 
     ok() {
       this.$mdDialog.hide();
+      this.onSave(this.passphrase);
     }
 
     back() {

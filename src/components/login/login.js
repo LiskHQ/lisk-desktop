@@ -57,11 +57,10 @@ app.component('login', {
         this.$scope.customFullscreen = wantsFullScreen === true;
       });
 
-      this.$scope.$on('onAfterSignup', (ev, args) => {
-        if (args.target === 'primary-pass') {
-          this.passConfirmSubmit(args.passphrase);
-        }
-      });
+      this.$scope.onSave = (primaryPass) => {
+        this.passConfirmSubmit(primaryPass);
+      };
+
       this.$scope.$on('onSignupCancel', () => {
         this.generatingNewPassphrase = false;
       });
