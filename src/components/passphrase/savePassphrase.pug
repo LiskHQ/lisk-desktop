@@ -33,4 +33,4 @@ form(ng-if='$ctrl.step === 2')
   md-dialog-actions(layout='row')
     md-button.back-button(ng-click="$ctrl.back()") Back
     span(flex)
-    md-button.md-raised.md-primary.ok-button(ng-click="$ctrl.ok()", ng-disabled='!$ctrl.missing_ok', ng-bind='$ctrl.okButtonLabel')
+    md-button.md-raised.md-primary.ok-button(ng-click="$ctrl.ok()", ng-disabled='!$ctrl.missing_ok', ng-bind='$ctrl.label')
