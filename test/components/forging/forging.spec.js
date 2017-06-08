@@ -57,6 +57,7 @@ describe('Forging component', () => {
       passphrase: delegate.passphrase,
       balance: lsk.from(100),
       network,
+      delegate,
     };
 
     account.set(testAcount);
@@ -69,12 +70,6 @@ describe('Forging component', () => {
     forgingApiMock = sinon.mock(controller.forgingApi);
 
     let deferred = $q.defer();
-    forgingApiMock.expects('getDelegate').returns(deferred.promise);
-    deferred.resolve({
-      success: true,
-      delegate,
-    });
-
     deferred = $q.defer();
     forgingApiMock.expects('getForgedBlocks').returns(deferred.promise);
     deferred.resolve({
@@ -175,34 +170,6 @@ describe('forging component controller', () => {
   afterEach(() => {
     forgingApiMock.verify();
     forgingApiMock.restore();
-  });
-
-
-  describe('updateDelegate()', () => {
-    it('sets this.delegate to delegate object if delegate exists', () => {
-      const deferred = $q.defer();
-      forgingApiMock.expects('getDelegate').returns(deferred.promise);
-      controller.updateDelegate();
-
-      expect(controller.delegate).to.equal(undefined);
-      deferred.resolve({
-        success: true,
-        delegate,
-      });
-      $scope.$apply();
-      expect(controller.delegate).to.deep.equal(delegate);
-    });
-
-    it('sets this.delegate = {} if delegate does not exist', () => {
-      const deferred = $q.defer();
-      forgingApiMock.expects('getDelegate').returns(deferred.promise);
-      controller.updateDelegate();
-
-      expect(controller.delegate).to.equal(undefined);
-      deferred.reject();
-      $scope.$apply();
-      expect(controller.delegate).to.deep.equal({});
-    });
   });
 
   describe('updateForgedBlocks(limit, offset)', () => {

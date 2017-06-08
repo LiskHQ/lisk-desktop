@@ -102,6 +102,7 @@ app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope, dialog) => 
           this.online = true;
           if (this.wasOffline) {
             dialog.successToast('Connection re-established');
+            $rootScope.$emit('hideLoadingBar', 'connection');
           }
           this.wasOffline = false;
         })
@@ -116,6 +117,7 @@ app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope, dialog) => 
               message += ' Make sure that you are using the latest version of Lisk Nano.';
             }
             dialog.errorToast(message);
+            $rootScope.$emit('showLoadingBar', 'connection');
           }
           this.wasOffline = true;
         });

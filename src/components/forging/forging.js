@@ -22,6 +22,7 @@ app.component('forging', {
       this.$scope = $scope;
       this.$timeout = $timeout;
       this.forgingApi = forgingApi;
+      this.account = Account;
 
       this.statistics = {};
       this.blocks = [];
@@ -43,27 +44,14 @@ app.component('forging', {
      * @method updateAllData
      */
     updateAllData() {
-      this.updateDelegate();
-      this.updateForgedBlocks(20);
+      this.delegate = this.account.get().delegate || {};
+      this.updateForgedBlocks(20, 0, true);
 
       this.updateForgingStats('today', moment().set({ hour: 0, minute: 0, second: 0 }));
       this.updateForgingStats('last24h', moment().subtract(1, 'days'));
       this.updateForgingStats('last7d', moment().subtract(7, 'days'));
       this.updateForgingStats('last30d', moment().subtract(30, 'days'));
       this.updateForgingStats('total', moment('2016-04-24 17:00'));
-    }
-
-    /**
-     * Needs summary
-     *
-     * @method updateDelegate
-     */
-    updateDelegate() {
-      this.forgingApi.getDelegate().then((data) => {
-        this.delegate = data.delegate;
-      }).catch(() => {
-        this.delegate = {};
-      });
     }
 
     /**
@@ -74,9 +62,13 @@ app.component('forging', {
      * @method updateForgedBlocks
      * @param {Number} limit
      * @param {Number} offset
+     * @param {Bool} showLoadingBar
      */
-    updateForgedBlocks(limit, offset) {
+    updateForgedBlocks(limit, offset, showLoadingBar) {
       this.$timeout.cancel(this.timeout);
+      if (showLoadingBar) {
+        this.$scope.$emit('showLoadingBar');
+      }
 
       this.forgingApi.getForgedBlocks(limit, offset).then((data) => {
         if (this.blocks.length === 0) {
@@ -90,6 +82,7 @@ app.component('forging', {
         this.blocksLoaded = true;
         this.moreBlocksExist = this.blocks.length < data.count;
       }).finally(() => {
+        this.$scope.$emit('hideLoadingBar');
         /**
          * @todo Replace this with SyncService
          */
@@ -106,7 +99,7 @@ app.component('forging', {
     loadMoreBlocks() {
       if (this.blocksLoaded && this.blocks.length !== 0 && this.moreBlocksExist) {
         this.blocksLoaded = false;
-        this.updateForgedBlocks(20, this.blocks.length);
+        this.updateForgedBlocks(20, this.blocks.length, true);
       }
     }
 
