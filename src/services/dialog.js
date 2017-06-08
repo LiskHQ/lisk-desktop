@@ -4,7 +4,7 @@
  * @module app
  * @submodule dialog
  */
-app.factory('dialog', ($mdDialog, $mdToast, $mdMedia) => ({
+app.factory('dialog', ($mdDialog, $mdToast) => ({
 
   /**
    * Uses mdToast to show a toast with error theme
@@ -41,9 +41,9 @@ app.factory('dialog', ($mdDialog, $mdToast, $mdMedia) => ({
     toastClass = toastClass || (success ? 'lsk-toast-success' : 'lsk-toast-error');
     $mdToast.show(
       $mdToast.simple()
-        .textContent(text)
-        .toastClass(toastClass)
-        .position('bottom right'),
+      .textContent(text)
+      .toastClass(toastClass)
+      .position('bottom right'),
     );
   },
 
@@ -86,28 +86,42 @@ app.factory('dialog', ($mdDialog, $mdToast, $mdMedia) => ({
     title = title || (success ? 'Success' : 'Error');
     return $mdDialog.show(
       $mdDialog.alert()
-        .title(title)
-        .textContent(text)
-        .ok(button),
+      .title(title)
+      .textContent(text)
+      .ok(button),
     );
   },
 
   /**
    * A general dialog to use with any directive or component
    *
-   * @param {any} options
-   * @returns {promise} The mdDialog promise
-   * @todo We should try using this for all the other mdDialog usages the application
+   * @param {string} component - name of the component that we want to open it inside a dialog
+   * @param {object} options
    */
-  modal(options) {
-    options.fullscreen = ($mdMedia('sm') || $mdMedia('xs'));
-    if (options.template) {
-      options.template =
-          `<md-dialog flex="80" >${
-            options.template
-          }</md-dialog>`;
+  modal(component, options) {
+    function modalController($scope, option) {
+      $scope.option = option;
+      $scope.closeDialog = function () {
+        $mdDialog.hide();
+      };
     }
-    return $mdDialog.show(options);
+    let attrs = '';
+    if (options) {
+      Object.keys(options).forEach((item) => {
+        attrs += `data-${item}="option['${item}']" `;
+      });
+    }
+    return $mdDialog.show({
+      parent: angular.element(document.body),
+      template: `
+                <md-dialog flex="80" >
+                    <${component} ${attrs} close-dialog="closeDialog()" ></${component}>
+                </md-dialog>
+              `,
+      locals: {
+        option: options,
+      },
+      controller: modalController,
+    });
   },
 }));
-
