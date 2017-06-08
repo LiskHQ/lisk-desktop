@@ -14,7 +14,9 @@ div.dialog-delegate-registration(aria-label='Vote for delegates')
             input.username(type='text', name='delegateName', ng-model='form.name', required, ng-disabled='loading', md-autofocus)
             div(ng-messages='delegateRegistrationForm.name.$error')
               div(ng-message='required') Required
-          md-input-container.md-block(ng-if='account.get().secondSignature')
+            md-input-container.md-block(ng-if='!$ctrl.account.get().secondSignature')
+              div.fee Fee: {{$ctrl.form.fee}} LSK
+          md-input-container.md-block(ng-if='$ctrl.account.get().secondSignature')
             label Second Passphrase
             input(type='password', ng-model='form.secondPassphrase', required)
             md-input-container.md-block
