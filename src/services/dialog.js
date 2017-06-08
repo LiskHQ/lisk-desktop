@@ -111,7 +111,7 @@ app.factory('dialog', ($mdDialog, $mdToast) => ({
         attrs += `data-${item}="option['${item}']" `;
       });
     }
-    $mdDialog.show({
+    return $mdDialog.show({
       parent: angular.element(document.body),
       template: `
                 <md-dialog flex="80" >
