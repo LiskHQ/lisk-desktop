@@ -1,19 +1,17 @@
 md-card.offline-hide
   div
-    md-card.loading(ng-show='!$ctrl.delegate')
-      md-progress-linear(md-mode='indeterminate')
     md-content
       div(layout='row', ng-if='$ctrl.delegate && !$ctrl.delegate.username')
         md-card(flex-100, flex-gt-xs=100, layout-align='center center', layout-padding)
           span.title You need to become a delegate to start forging. If you already registered to become a delegate, your registration hasn't been processed, yet.
-      div(layout='column', layout-gt-xs='row', ng-if='$ctrl.delegate.username')
+      div(layout='column', layout-gt-xs='row')
         md-card(flex-gt-xs=100, layout-padding)
           md-card-title
             md-card-title-text
               span.md-title.delegate-name {{$ctrl.delegate.username}}
             span(md-position-mode='target-right target')
               span {{$ctrl.statistics.total  | lsk | number:2 }} LSK Earned
-      md-content(layout='column', layout-gt-xs='row', ng-if='$ctrl.delegate.username')
+      md-content(layout='column', layout-gt-xs='row')
         md-card(flex-50, flex-gt-xs=25, layout-padding)
           .info-panel.info-panel-grey
             span.title Today
@@ -30,7 +28,7 @@ md-card.offline-hide
           .info-panel.info-panel-grey
             span.title {{'Last 30 days'}}
             span.pull-right {{$ctrl.statistics.last30d  | lsk | number:2 }} LSK
-      div(layout='column', layout-gt-xs='row', ng-if='$ctrl.delegate.username')
+      div(layout='column', layout-gt-xs='row')
         md-card(flex-gt-xs=33, layout-align='center center', layout-padding)
           div Rank
           div.progress-label {{$ctrl.delegate.rate}}
@@ -43,7 +41,7 @@ md-card.offline-hide
           div Approval
           div.progress-label {{$ctrl.delegate.approval}}%
           round-progress(max='100', current='$ctrl.delegate.approval', color='#0288D1')
-      md-card.forged-blocks(layout='column', ng-if='$ctrl.delegate.username')
+      md-card.forged-blocks(layout='column')
         md-card-title
           md-card-title-text
             span.md-title Forged Blocks
@@ -79,5 +77,3 @@ md-card.offline-hide
                     td(md-cell data-title='tableBlocks.cols.reward', sortable="'reward'") {{block.reward | lsk}}
                     td.width-80(md-cell data-title="''")
         md-button.more(ng-show='$ctrl.moreBlocksExist', ng-disabled='!$ctrl.blocksLoaded', ng-click='$ctrl.loadMoreBlocks()') Load More
-        .loading
-          md-progress-linear(md-mode='indeterminate', ng-hide='$ctrl.blocksLoaded')

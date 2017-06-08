@@ -20,7 +20,7 @@ app.run(($rootScope, $timeout, $state, $transitions, $mdDialog, Peers, Account, 
     Peers.reset(true);
 
     $rootScope.logged = false;
-    $rootScope.prelogged = false;
+    $rootScope.$emit('hideLoadingBar');
     Account.reset();
 
     $state.go('login');
