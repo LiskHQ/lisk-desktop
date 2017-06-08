@@ -8,7 +8,7 @@ import './secondPass.less';
  */
 app.component('setSecondPass', {
   template: require('./secondPass.pug')(),
-  controller: function ($scope, Account, $rootScope, dialog, AccountApi) {
+  controller($scope, Account, $rootScope, dialog, AccountApi) {
     /**
      * We call this after second passphrase is generated.
      * Shows an alert with appropriate message in case the request fails.
@@ -35,14 +35,9 @@ app.component('setSecondPass', {
         });
     };
 
-    /**
-     * @todo Why we're listening for onAfterSignup here?
-     */
-    $scope.$on('onAfterSignup', (ev, args) => {
-      if (args.target === 'second-pass') {
-        $scope.passConfirmSubmit(args.passphrase);
-      }
-    });
+    $scope.onSave = (secondPass) => {
+      $scope.passConfirmSubmit(secondPass);
+    };
   },
   // controllerAs: 'md',
 });
