@@ -74,7 +74,7 @@ module.exports = function (config) {
     autoWatch: opts.live,
 
     ngHtml2JsPreprocessor: {
-      stripPrefix: 'app/components/',
+      stripPrefix: 'src/app/components/',
       moduleName: 'my.templates',
     },
 
