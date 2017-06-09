@@ -15,7 +15,6 @@ preprocessors[testLibs] = ['webpack'];
 preprocessors[test] = ['webpack'];
 
 const opts = {
-  onTravis: process.env.ON_TRAVIS,
   onJenkins: process.env.ON_JENKINS,
   live: process.env.LIVE,
 };
@@ -44,7 +43,7 @@ module.exports = function (config) {
     // Rest results reporter to use
     // Possible values: 'dots', 'progress'
     // Available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['coverage', 'mocha'].concat(opts.onTravis ? ['coveralls'] : []).concat(opts.onJenkins ? ['coveralls'] : []),
+    reporters: ['coverage', 'mocha'].concat(opts.onJenkins ? ['coveralls'] : []),
 
     preprocessors,
 
@@ -68,7 +67,7 @@ module.exports = function (config) {
     //   config.LOG_WARN
     //   config.LOG_INFO
     //   config.LOG_DEBUG
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_DEBUG,
 
     // Enable / disable watching file and executing tests whenever any file changes
     autoWatch: opts.live,
@@ -81,9 +80,6 @@ module.exports = function (config) {
     coverageReporter: {
       reporters: [{
         type: 'text',
-        dir: 'coverage/',
-      }, {
-        type: opts.onTravis ? 'lcov' : 'html',
         dir: 'coverage/',
       }, {
         type: opts.onJenkins ? 'lcov' : 'html',
