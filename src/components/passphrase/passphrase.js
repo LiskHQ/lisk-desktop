@@ -25,7 +25,7 @@ app.directive('passphrase', ($rootScope, $document, Passphrase, dialog, $mdMedia
      */
     const generateAndDoubleCheck = (seed) => {
       const passphrase = Passphrase.generatePassPhrase(seed);
-      const label = 'Save';
+      const label = attrs.okButtonLabel || 'Save';
 
       dialog.modal('save-passphrase', {
         passphrase,
