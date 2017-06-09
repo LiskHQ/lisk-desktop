@@ -1,9 +1,4 @@
-
 node('lisk-nano-01'){
-  environment {
-    ON_JENKINS = 'true'
-    CI_BRANCH = '$BRANCH_NAME'
-  }
   lock(resource: "lisk-nano-01", inversePrecedence: true) {
     stage ('Cleanup Orphaned Processes') {
       try {
@@ -72,6 +67,7 @@ node('lisk-nano-01'){
     stage ('Run Tests') {
       try {
         sh '''
+        export ON_JENKINS=true
         # Run test
         cd $WORKSPACE
         npm run test
