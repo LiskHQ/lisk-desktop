@@ -74,7 +74,7 @@ app.component('delegateRegistration', {
      */
     $scope.cancel = (form) => {
       $scope.reset(form);
-      // $mdDialog.hide();
+      $mdDialog.hide();
     };
   },
 });
