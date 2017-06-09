@@ -17,10 +17,9 @@ app.component('header', {
    * @constructor
    */
   controller: class header {
-    constructor($rootScope, Account, signVerify) {
+    constructor($rootScope, Account) {
       this.$rootScope = $rootScope;
       this.account = Account;
-      this.signVerify = signVerify;
     }
   },
 });
