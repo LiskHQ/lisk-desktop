@@ -31,7 +31,6 @@ import './services/api/forgingApi';
 import './services/api/peers';
 import './services/dialog';
 import './services/lsk';
-import './services/signVerify';
 import './services/sync';
 import './services/notification';
 
