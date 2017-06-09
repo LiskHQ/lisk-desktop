@@ -14,7 +14,6 @@ div.dialog-vote(aria-label='Vote for delegates')
             md-chip-template {{$chip.username}}
             md-autocomplete(flex, required, md-input-minlength='2', md-no-cache='false', md-selected-item='$ctrl.selectedVoteDelegate', md-search-text='$ctrl.voteSearchText', md-items='delegate in $ctrl.delegateApi.voteAutocomplete($ctrl.voteSearchText, $ctrl.votedDict)', md-item-text='delegate.username', md-require-match, placeholder='Search by username')
               span(md-highlight-text='$ctrl.voteSearchText') {{delegate.username}}
-        md-divider(ng-if='$ctrl.voteList.length && $ctrl.unvoteList.length')
         div
           h4 Remove vote from
           md-chips(ng-model='$ctrl.unvoteList', md-require-match='true', md-max-chips='33')
