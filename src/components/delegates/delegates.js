@@ -21,15 +21,14 @@ app.component('delegates', {
    * @constructor
    */
   controller: class delegates {
-    constructor($scope, $rootScope, Peers, $mdDialog, $mdMedia,
-      dialog, $timeout, delegateApi, Account) {
+    constructor($scope, $rootScope, Peers, dialog, $mdMedia,
+      $timeout, delegateApi, Account) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.peers = Peers;
       this.delegateApi = delegateApi;
-      this.$mdDialog = $mdDialog;
-      this.$mdMedia = $mdMedia;
       this.dialog = dialog;
+      this.$mdMedia = $mdMedia;
       this.$timeout = $timeout;
       this.account = Account;
 
@@ -339,31 +338,14 @@ app.component('delegates', {
     }
 
     /**
-     * Uses mdDialog to show vote list directive.
+     * Uses dialog.modal to show vote list directive.
      *
      * @method openVoteDialog
-     * @todo Use a general dialog service instead.
      */
     openVoteDialog() {
-      this.$mdDialog.show({
-        controllerAs: '$ctrl',
-        controller: class voteDialog {
-          constructor($scope, voteList, unvoteList) {
-            this.$scope = $scope;
-            this.$scope.voteList = voteList;
-            this.$scope.unvoteList = unvoteList;
-          }
-        },
-        template:
-          '<md-dialog flex="80">' +
-            '<vote vote-list="voteList" unvote-list="unvoteList">' +
-            '</vote>' +
-          '</md-dialog>',
-        fullscreen: (this.$mdMedia('sm') || this.$mdMedia('xs')) && this.$scope.customFullscreen,
-        locals: {
-          voteList: this.voteList,
-          unvoteList: this.unvoteList,
-        },
+      this.dialog.modal('vote', {
+        'vote-list': this.voteList,
+        'unvote-list': this.unvoteList,
       }).then((() => {
         this.setPendingVotes();
       }));
