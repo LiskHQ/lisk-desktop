@@ -112,6 +112,7 @@ module.exports = function (config) {
       'karma-chrome-launcher',
       'karma-ng-html2js-preprocessor',
       'karma-mocha-reporter',
+      'karma-jenkins-reporter',
       'karma-coverage',
       'karma-coveralls',
       'karma-phantomjs-launcher',
