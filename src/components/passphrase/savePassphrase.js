@@ -5,6 +5,7 @@ app.component('savePassphrase', {
   bindings: {
     passphrase: '<',
     label: '<',
+    fee: '<',
     onSave: '=',
   },
   controller: class savePassphrase {
