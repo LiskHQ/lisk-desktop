@@ -45,7 +45,7 @@ app.component('delegateRegistration', {
                     checkPendingRegistration();
                   });
                   $scope.reset(form);
-                  $mdDialog.hide();
+                  this.closeDialog();
                 });
             })
             .catch((error) => {
