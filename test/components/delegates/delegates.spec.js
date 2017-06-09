@@ -195,7 +195,7 @@ describe('delegates component controller', () => {
 
   describe('openVoteDialog()', () => {
     it('opens vote dialog', () => {
-      const spy = sinon.spy(controller.$mdDialog, 'show');
+      const spy = sinon.spy(controller.dialog, 'modal');
       controller.openVoteDialog();
       expect(spy).to.have.been.calledWith();
     });
