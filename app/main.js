@@ -185,10 +185,12 @@ app.on('window-all-closed', () => {
 });
 
 // This will override the values defined in the app’s .plist file (macOS)
-app.setAboutPanelOptions({
-  applicationName: 'Lisk Nano',
-  copyright,
-});
+if (process.platform === 'darwin') {
+  app.setAboutPanelOptions({
+    applicationName: 'Lisk Nano',
+    copyright,
+  });
+}
 
 app.on('activate', () => {
   if (win === null) {
