@@ -8,7 +8,7 @@ import './secondPass.less';
  */
 app.component('setSecondPass', {
   template: require('./secondPass.pug')(),
-  controller($scope, Account, $rootScope, dialog, AccountApi) {
+  controller($scope, Account, $rootScope, dialog, AccountApi, $mdDialog) {
     /**
      * We call this after second passphrase is generated.
      * Shows an alert with appropriate message in case the request fails.
@@ -38,6 +38,9 @@ app.component('setSecondPass', {
     $scope.onSave = (secondPass) => {
       $scope.passConfirmSubmit(secondPass);
     };
+
+    $scope.cancel = function () {
+      $mdDialog.hide();
+    };
   },
-  // controllerAs: 'md',
 });
