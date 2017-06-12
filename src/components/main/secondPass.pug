@@ -21,4 +21,5 @@ div.dialog-second(aria-label='Generate a second passphrase for your account', da
       span(flex)
       md-button.md-raised.md-primary.submit-button.next-button(ng-click='$ctrl.step = 1') Next
     section(data-ng-if='$ctrl.step === 1')
-      passphrase(data-on-save='onSave', data-label='Register')
+      passphrase(data-on-save='onSave', data-label='Register', data-fee='5')
+      

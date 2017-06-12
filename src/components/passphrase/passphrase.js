@@ -29,6 +29,7 @@ app.directive('passphrase', ($rootScope, $document, Passphrase, dialog) => {
       dialog.modal('save-passphrase', {
         passphrase,
         label: attrs.label,
+        fee: attrs.fee,
         'on-save': scope.onSave,
       });
     };
