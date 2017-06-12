@@ -32,7 +32,7 @@ md-card.offline-hide
                 span.tx(ng-switch-when='7') Send Lisk from Blockchain Application
                 span(ng-switch-default)
                   span(ng-bind='transaction.senderId', ng-if='transaction.senderId !== $ctrl.account.get().address',
-                    data-open-dialog='send', data-recipient-id='transaction.senderId', class='has-send-modal')
+                    data-open-dialog='send', data-options='{"recipient-id": transaction.senderId}', class='has-send-modal')
                   span(ng-bind='transaction.recipientId', ng-if='transaction.senderId === $ctrl.account.get().address',
                     data-open-dialog='send', data-options='{"recipient-id": transaction.recipientId}', class='has-send-modal')
                   md-tooltip(md-direction='top', md-delay='350') Send to this recipient
