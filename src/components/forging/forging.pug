@@ -68,7 +68,7 @@ md-card.offline-hide
                     th(md-column) Reward
                 tbody(md-body, infinite-scroll='$ctrl.loadMoreBlocks()', infinite-scroll-distance='1')
                   tr(md-row, ng-repeat='block in $ctrl.blocks')
-                    td(md-cell data-title='tableBlocks.cols.height', sortable="'height'") {{block.height}}
+                    td(md-cell data-title='tableBlocks.cols.height', sortable="'height'") {{block.height | liskNumber}}
                     td(md-cell data-title='tableBlocks.cols.blockId', ng-show='$ctrl.showAllColumns') {{block.id}}
                     td(md-cell data-title='tableBlocks.cols.timestamp', sortable="'timestamp'")
                       span(ng-show='block.timestamp > 0')
