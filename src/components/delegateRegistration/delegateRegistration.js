@@ -12,6 +12,8 @@ app.component('delegateRegistration', {
     closeDialog: '&',
   },
   controller($scope, delegateApi, Account, dialog, $rootScope) {
+    $scope.account = Account;
+
     function checkPendingRegistration() {
       delegateApi.getDelegate({
         username: $scope.username,
