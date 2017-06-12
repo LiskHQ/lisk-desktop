@@ -66,9 +66,8 @@ app.component('delegates', {
       this.delegates = [];
       this.delegatesDisplayedCount = 20;
       if (this.peers.active) {
-        this.delegateApi.listAccountDelegates({
-          address: this.account.get().address,
-        }).then((data) => {
+        this.delegateApi.listAccountDelegates(this.account.get().address,
+        ).then((data) => {
           this.votedList = data.delegates || [];
           this.votedList.forEach((delegate) => {
             this.votedDict[delegate.username] = delegate;

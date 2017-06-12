@@ -38,9 +38,8 @@ app.component('vote', {
      * @method getDelegates
      */
     getDelegates() {
-      this.delegateApi.listAccountDelegates({
-        address: this.account.get().address,
-      }).then((data) => {
+      this.delegateApi.listAccountDelegates(this.account.get().address,
+      ).then((data) => {
         this.votedList = data.delegates || [];
         this.votedList.forEach((delegate) => {
           this.votedDict[delegate.username] = delegate;

@@ -32,12 +32,12 @@ describe('Factory: delegateApi', () => {
 
   describe('listAccountDelegates(address)', () => {
     it('returns Peers.sendRequestPromise(\'accounts/delegates\', address);', () => {
-      const address = {
+      const params = {
         address: {},
       };
-      mock.expects('sendRequestPromise').withArgs('accounts/delegates', address).returns(deffered.promise);
+      mock.expects('sendRequestPromise').withArgs('accounts/delegates', params).returns(deffered.promise);
 
-      const promise = delegateApi.listAccountDelegates(address);
+      const promise = delegateApi.listAccountDelegates(params.address);
 
       expect(promise).to.equal(deffered.promise);
     });
