@@ -1,6 +1,6 @@
 import './passphrase.less';
 
-app.directive('passphrase', ($rootScope, $document, Passphrase, dialog, $mdMedia, $timeout) => {
+app.directive('passphrase', ($rootScope, $document, Passphrase, dialog) => {
   /* eslint no-param-reassign: ["error", { "props": false }] */
   const PassphraseLink = function (scope, element, attrs) {
     const bindEvents = (listener) => {
@@ -25,19 +25,12 @@ app.directive('passphrase', ($rootScope, $document, Passphrase, dialog, $mdMedia
      */
     const generateAndDoubleCheck = (seed) => {
       const passphrase = Passphrase.generatePassPhrase(seed);
-      const label = 'Save';
 
       dialog.modal('save-passphrase', {
         passphrase,
-        label,
+        label: attrs.label,
+        fee: attrs.fee,
         'on-save': scope.onSave,
-      }).then(() => {
-        $timeout(() => {
-          $rootScope.$broadcast('onAfterSignup', {
-            passphrase,
-            target: attrs.target,
-          });
-        }, 100);
       });
     };
 

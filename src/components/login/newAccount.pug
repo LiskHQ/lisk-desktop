@@ -1,7 +1,7 @@
-div.dialog-second(aria-label='Generate a second passphrase for your account', data-ng-init='$ctrl.step = 0')
+div.dialog-primary(aria-label='Generate a primary passphrase for a new account', data-ng-init='$ctrl.step = 0')
     md-toolbar
       .md-toolbar-tools
-        h2 Generate a second passphrase of your account
+        h2 New Account
         span(flex='')
         md-button.md-icon-button(ng-click='cancel()', aria-label='Close dialog')
           i.material-icons close
@@ -12,14 +12,13 @@ div.dialog-second(aria-label='Generate a second passphrase for your account', da
         span Please click Next, then move around your mouse randomly to generate a random passphrase.
         br
         br
-        span Note: After registration completes, your second passphrase will be required for all transactions sent from this account.
+        span Note: After registration completes, your passphrase will be required for loging in to your account.
         <br>
-        span Losing access to this passphrase will mean no funds can be sent from this account. So be sure to keep it safe!
+        span This passphrase is not recoverable and if you lose it, you will lose access to your account forever. Please keep it safe!
 
     md-dialog-actions(layout='row', data-ng-if='$ctrl.step === 0')
       md-button.md-secondary(ng-disabled='$ctrl.loading', ng-click='cancel()') Cancel
       span(flex)
       md-button.md-raised.md-primary.submit-button.next-button(ng-click='$ctrl.step = 1') Next
     section(data-ng-if='$ctrl.step === 1')
-      passphrase(data-on-save='onSave', data-label='Register', data-fee='5')
-      
+      passphrase(data-on-save='onSave', data-label='Login')
