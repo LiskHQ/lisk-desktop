@@ -4,6 +4,7 @@ require('./components/delegates/vote.spec');
 require('./components/forging/forging.spec');
 require('./components/header/header.spec');
 require('./components/login/login.spec');
+require('./components/login/newAccount.spec');
 require('./components/main/main.spec');
 require('./components/main/secondPass.spec');
 require('./components/passphrase/passphrase.spec');

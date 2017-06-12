@@ -2,6 +2,7 @@ Feature: Top right menu
   Scenario: should allow to set 2nd passphrase
     Given I'm logged in as "second passphrase candidate"
     When I click "register second passphrase" in main menu
+    And I click "next button"
     And I 250 times move mouse randomly
     And I remember passphrase, click "yes its save button", fill in missing word
     And I click "ok button"

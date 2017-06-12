@@ -16,6 +16,7 @@ md-card
         md-checkbox.md-primary(ng-model="$ctrl.show_passphrase", aria-label="Show passphrase") Show passphrase
       md-content(layout='row', layout-align='center center')
         // md-button(ng-disabled='$ctrl.generatingNewPassphrase', ng-click='$ctrl.devTestAccount()') Dev Test Account
-        md-button.md-primary.new-account-button(ng-disabled='$ctrl.random || $ctrl.generatingNewPassphrase', ng-click='$ctrl.generatePassphrase()') NEW ACCOUNT
+        md-button.md-primary.new-account-button(ng-disabled='$ctrl.random || $ctrl.generatingNewPassphrase',
+          data-open-dialog='new-account', data-options='{network: $ctrl.network}') NEW ACCOUNT
         md-button.md-raised.md-primary.login-button(md-autofocus, ng-disabled='($ctrl.valid != undefined && $ctrl.valid !== 1) || $root.loggingIn', type='submit') Login
     passphrase(ng-if='$ctrl.generatingNewPassphrase', data-on-save='onSave', data-target='primary-pass', data-ok-button-label='Login')
