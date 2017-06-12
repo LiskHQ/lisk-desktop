@@ -58,6 +58,7 @@ describe('Forging component', () => {
       balance: lsk.from(100),
       network,
       delegate,
+      isDelegate: true,
     };
 
     account.set(testAcount);
@@ -91,7 +92,7 @@ describe('Forging component', () => {
   });
 
   it('should contain a card with delegate name', () => {
-    expect(element.find('md-card').text()).to.contain(delegate.username);
+    expect(element.find('.delegate-name').text()).to.contain(delegate.username);
   });
 
   it('should contain a card with rank ', () => {
