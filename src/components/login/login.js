@@ -58,14 +58,6 @@ app.component('login', {
       this.$scope.$watch(() => this.$mdMedia('xs') || this.$mdMedia('sm'), (wantsFullScreen) => {
         this.$scope.customFullscreen = wantsFullScreen === true;
       });
-
-      this.$scope.onSave = (primaryPass) => {
-        this.passConfirmSubmit(primaryPass);
-      };
-
-      this.$scope.$on('onSignupCancel', () => {
-        this.generatingNewPassphrase = false;
-      });
     }
 
     /**
@@ -90,10 +82,6 @@ app.component('login', {
           }
         });
       }
-    }
-
-    generatePassphrase() {
-      this.generatingNewPassphrase = true;
     }
 
     devTestAccount() {
