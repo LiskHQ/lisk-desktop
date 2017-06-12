@@ -76,4 +76,4 @@ md-card.offline-hide
                     td(md-cell data-title='tableBlocks.cols.totalFee', sortable="'totalFee'") {{block.totalFee | lsk}}
                     td(md-cell data-title='tableBlocks.cols.reward', sortable="'reward'") {{block.reward | lsk}}
                     td.width-80(md-cell data-title="''")
-        md-button.more(ng-show='$ctrl.moreBlocksExist', ng-disabled='!$ctrl.blocksLoaded', ng-click='$ctrl.loadMoreBlocks()') Load More
+        md-button.more(ng-show='$ctrl.moreBlocksExist && $ctrl.blocksLoaded', ng-click='$ctrl.loadMoreBlocks()') Load More
