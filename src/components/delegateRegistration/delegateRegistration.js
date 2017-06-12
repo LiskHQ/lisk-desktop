@@ -19,6 +19,7 @@ app.component('delegateRegistration', {
         Account.set({
           isDelegate: true,
           username: data.delegate.username,
+          delegate: data.delegate,
         });
         $scope.pendingRegistrationListener();
       });

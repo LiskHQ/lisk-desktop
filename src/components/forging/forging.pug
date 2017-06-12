@@ -1,9 +1,10 @@
 md-card.offline-hide
   div
-    md-content
-      div(layout='row', ng-if='$ctrl.delegate && !$ctrl.delegate.username')
+    md-content(ng-if='!$ctrl.account.get().isDelegate')
+      div(layout='row')
         md-card(flex-100, flex-gt-xs=100, layout-align='center center', layout-padding)
           span.title You need to become a delegate to start forging. If you already registered to become a delegate, your registration hasn't been processed, yet.
+    md-content(ng-if='$ctrl.account.get().isDelegate')
       div(layout='column', layout-gt-xs='row')
         md-card(flex-gt-xs=100, layout-padding)
           md-card-title
