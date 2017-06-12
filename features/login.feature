@@ -14,6 +14,7 @@ Feature: Login page
   Scenario: should allow to create a new account
     Given I'm on login page
     When I click "new account button"
+    And I click on "next button"
     And I 250 times move mouse randomly
     And I remember passphrase, click "yes its save button", fill in missing word
     And I click "ok button"

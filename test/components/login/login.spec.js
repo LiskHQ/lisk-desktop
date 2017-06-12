@@ -61,21 +61,17 @@ describe('Login controller', () => {
   let testPassphrase;
   let account;
   let $cookies;
-  /* eslint-disable no-unused-vars */
-  let $timeout;
   /* eslint-enable no-unused-vars */
   let $q;
 
   beforeEach(inject((_$componentController_, _$rootScope_, _$state_,
-    _Passphrase_, _$cookies_, _$timeout_, _Account_, _$q_) => {
+    _Passphrase_, _$cookies_, _Account_, _$q_) => {
     $componentController = _$componentController_;
     $rootScope = _$rootScope_;
     $state = _$state_;
     Passphrase = _Passphrase_;
     account = _Account_;
     $cookies = _$cookies_;
-    /* eslint-disable no-unused-vars */
-    $timeout = _$timeout_;
     /* eslint-enable no-unused-vars */
     $q = _$q_;
   }));
@@ -99,13 +95,6 @@ describe('Login controller', () => {
       $scope.$apply();
       expect(controller.valid).to.equal(1);
       expect(spy).to.have.been.calledWith();
-    });
-  });
-
-  describe('generatePassphrase()', () => {
-    it('sets this.generatingNewPassphrase = true', () => {
-      controller.generatePassphrase();
-      expect(controller.generatingNewPassphrase).to.equal(true);
     });
   });
 
