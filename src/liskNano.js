@@ -35,6 +35,7 @@ import './services/sync';
 import './services/notification';
 
 import './filters/lsk';
+import './filters/liskNumber';
 
 import './run';
 import './states';
