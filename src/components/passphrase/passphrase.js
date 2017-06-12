@@ -30,6 +30,7 @@ app.directive('passphrase', ($rootScope, $document, Passphrase, dialog, $mdMedia
       dialog.modal('save-passphrase', {
         passphrase,
         label,
+        fee: attrs.fee,
         'on-save': scope.onSave,
       }).then(() => {
         $timeout(() => {
