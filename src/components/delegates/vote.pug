@@ -36,4 +36,4 @@ div.dialog-vote(aria-label='Vote for delegates')
     md-dialog-actions(layout='row')
       md-button(ng-click="$ctrl.$mdDialog.cancel()") Cancel
       span(flex)
-      md-button.md-primary.md-raised.submit-button(ng-disabled='!$ctrl.canVote()', ng-click="$ctrl.vote()") {{$ctrl.votingInProgress ? 'Voting...' : 'Confirm vote'}}
+      md-button.md-primary.md-raised.submit-button(ng-disabled='!$ctrl.canVote()', ng-click="$ctrl.vote()") {{$ctrl.votingInProgress ? 'Voting...' : 'Confirm'}}

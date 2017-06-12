@@ -7,6 +7,7 @@ import './components/forging/forging';
 import './components/header/header';
 import './components/loadingBar/loadingBar';
 import './components/login/login';
+import './components/login/newAccount';
 import './components/lsk/lsk';
 import './components/main/main';
 import './components/main/secondPass';

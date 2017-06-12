@@ -23,9 +23,6 @@ div.offline-hide
           i.material-icons.search-append(ng-click='$ctrl.clearSearch()', ng-if='search') close 
           i.material-icons.search-append(ng-hide='search') search 
       span.pull-right.right-action-buttons
-        md-button(ng-click='$ctrl.usernameListActive = true')
-          i.material-icons list
-          span Input Names
       md-menu.pull-right.right-action-buttons
         md-button.pull-right.my-votes-button(ng-click='$mdOpenMenu()', ng-disabled='$ctrl.votedList.length == 0')
           i.material-icons visibility
@@ -61,9 +58,9 @@ div.offline-hide
           tbody(md-body, infinite-scroll='$ctrl.showMore()', infinite-scroll-distance='1')
             tr(md-row, ng-if='!$ctrl.filteredDelegates.length && !$ctrl.loading')
               td(md-cell, colspan='6') No delegates found
-            tr(md-row, ng-repeat="delegate in ($ctrl.filteredDelegates = ($ctrl.delegates | filter : {username: search} )) | limitTo : $ctrl.delegatesDisplayedCount", ng-class='{"downvote": delegate.status.voted && !delegate.status.selected, "upvote": !delegate.status.voted && delegate.status.selected, "pending": delegate.status.pending}')
+            tr(md-row, ng-repeat="delegate in ($ctrl.filteredDelegates = ($ctrl.delegates | filter : {username: search} )) | limitTo : $ctrl.delegatesDisplayedCount", ng-class='{"downvote": delegate.status.voted && !delegate.status.selected, "upvote": !delegate.status.voted && delegate.status.selected, "pending": delegate.status.pending, "voted": delegate.status.voted && delegate.status.selected}')
               td(md-cell)
-                md-checkbox(ng-model='delegate.status.selected', ng-change='$ctrl.selectionChange(delegate)', ng-disabled='delegate.status.pending', aria-label='delegate selected for voting')
+                md-checkbox.md-primary(ng-model='delegate.status.selected', ng-change='$ctrl.selectionChange(delegate)', ng-disabled='delegate.status.pending', aria-label='delegate selected for voting')
               td(md-cell, ng-bind='delegate.rank')
               td(md-cell, ng-bind='delegate.username')
               td(md-cell, ng-bind='delegate.address')
