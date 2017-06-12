@@ -25,6 +25,8 @@ app.component('login', {
 
       this.networks = [{
         name: 'Mainnet',
+        ssl: true,
+        port: 443,
       }, {
         name: 'Testnet',
         testnet: true,
