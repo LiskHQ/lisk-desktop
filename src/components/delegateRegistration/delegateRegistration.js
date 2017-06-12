@@ -8,7 +8,10 @@ import './delegateRegistration.less';
  */
 app.component('delegateRegistration', {
   template: require('./delegateRegistration.pug')(),
-  controller($scope, $mdDialog, delegateApi, Account, dialog, $rootScope) {
+  bindings: {
+    closeDialog: '&',
+  },
+  controller($scope, delegateApi, Account, dialog, $rootScope) {
     function checkPendingRegistration() {
       delegateApi.getDelegate({
         username: $scope.username,
@@ -42,7 +45,7 @@ app.component('delegateRegistration', {
                     checkPendingRegistration();
                   });
                   $scope.reset(form);
-                  $mdDialog.hide();
+                  this.closeDialog();
                 });
             })
             .catch((error) => {
@@ -74,7 +77,7 @@ app.component('delegateRegistration', {
      */
     $scope.cancel = (form) => {
       $scope.reset(form);
-      // $mdDialog.hide();
+      this.closeDialog();
     };
   },
 });

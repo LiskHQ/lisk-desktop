@@ -16,10 +16,10 @@ md-content.header(layout='row', layout-align='center center', layout-padding)
           div(layout='row', flex='')
             p(flex='') Register as delegate 
       md-menu-item
-        md-button.sign-message(ng-click='$ctrl.signVerify.openSignMessageDialog()')
+        md-button.sign-message(data-open-dialog='sign-message')
           div(layout='row', flex='')
             p(flex='') Sign message
       md-menu-item
-        md-button.verify-message(ng-click='$ctrl.signVerify.openVerifyMessageDialog()')
+        md-button.verify-message(data-open-dialog='verify-message')
           div(layout='row', flex='')
             p(flex='') Verify message
