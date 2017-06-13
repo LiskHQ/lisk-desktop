@@ -14,7 +14,7 @@ app.factory('delegateApi', Peers => ({
    * @returns {promise} Api call promise
    */
   listAccountDelegates(address) {
-    return Peers.sendRequestPromise('accounts/delegates', address);
+    return Peers.sendRequestPromise('accounts/delegates', { address });
   },
 
   listDelegates(options) {

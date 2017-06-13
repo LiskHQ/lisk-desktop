@@ -4,7 +4,7 @@
  * @module app
  * @submodule dialog
  */
-app.factory('dialog', ($mdDialog, $mdToast) => ({
+app.factory('dialog', ($mdDialog, $mdToast, $mdMedia) => ({
 
   /**
    * Uses mdToast to show a toast with error theme
@@ -114,13 +114,14 @@ app.factory('dialog', ($mdDialog, $mdToast) => ({
     return $mdDialog.show({
       parent: angular.element(document.body),
       template: `
-                <md-dialog flex="80" >
+                <md-dialog flex-gt-sm="75" flex="95" >
                     <${component} ${attrs} close-dialog="closeDialog()" ></${component}>
                 </md-dialog>
               `,
       locals: {
         option: options,
       },
+      fullscreen: $mdMedia('xs'),
       controller: modalController,
     });
   },

@@ -21,21 +21,21 @@ app.component('delegates', {
    * @constructor
    */
   controller: class delegates {
-    constructor($scope, $rootScope, Peers, $mdDialog, $mdMedia,
-      dialog, $timeout, delegateApi, Account) {
+    constructor($scope, $rootScope, Peers, dialog, $mdMedia,
+      $timeout, delegateApi, Account) {
       this.$scope = $scope;
       this.$rootScope = $rootScope;
       this.peers = Peers;
       this.delegateApi = delegateApi;
-      this.$mdDialog = $mdDialog;
-      this.$mdMedia = $mdMedia;
       this.dialog = dialog;
+      this.$mdMedia = $mdMedia;
       this.$timeout = $timeout;
       this.account = Account;
 
       this.$scope.search = '';
       this.voteList = [];
       this.votedDict = {};
+      this.delegateStateByAddress = {};
       this.votedList = [];
       this.unvoteList = [];
       this.loading = true;
@@ -66,9 +66,8 @@ app.component('delegates', {
       this.delegates = [];
       this.delegatesDisplayedCount = 20;
       if (this.peers.active) {
-        this.delegateApi.listAccountDelegates({
-          address: this.account.get().address,
-        }).then((data) => {
+        this.delegateApi.listAccountDelegates(this.account.get().address,
+        ).then((data) => {
           this.votedList = data.delegates || [];
           this.votedList.forEach((delegate) => {
             this.votedDict[delegate.username] = delegate;
@@ -118,16 +117,7 @@ app.component('delegates', {
           this.delegates = this.delegates.concat(data.delegates);
         }
 
-        data.delegates.forEach((delegate) => {
-          const voted = this.votedDict[delegate.username] !== undefined;
-          const changed = this.voteList.concat(this.unvoteList)
-            .map(d => d.username).indexOf(delegate.username) !== -1;
-          delegate.status = {  // eslint-disable-line no-param-reassign
-            selected: (voted && !changed) || (!voted && changed),
-            voted,
-            changed,
-          };
-        });
+        this.delegates = this.delegates.map(delegate => this.setDelegateStatus(delegate));
 
         this.delegatesTotalCount = data.totalCount;
         this.loading = false;
@@ -199,6 +189,7 @@ app.component('delegates', {
     setPendingVotes() {
       this.voteList.forEach((delegate) => {
         /* eslint-disable no-param-reassign */
+        delegate = this.setDelegateStatus(delegate);
         delegate.status.changed = false;
         delegate.status.voted = true;
         delegate.status.pending = true;
@@ -206,6 +197,7 @@ app.component('delegates', {
       this.votePendingList = this.voteList.splice(0, this.voteList.length);
 
       this.unvoteList.forEach((delegate) => {
+        delegate = this.setDelegateStatus(delegate);
         delegate.status.changed = false;
         delegate.status.voted = false;
         delegate.status.pending = true;
@@ -213,6 +205,25 @@ app.component('delegates', {
       });
       this.unvotePendingList = this.unvoteList.splice(0, this.unvoteList.length);
       this.checkPendingVotes();
+    }
+
+    /**
+     * Sets deleagte.status to be always the same object for given delegate.address
+     *
+     * @method setDelegateStatus
+     */
+    setDelegateStatus(delegate) {
+      const voted = this.votedDict[delegate.username] !== undefined;
+      const changed = this.voteList.concat(this.unvoteList)
+        .map(d => d.username).indexOf(delegate.username) !== -1;
+      this.delegateStateByAddress[delegate.address] =
+        this.delegateStateByAddress[delegate.address] || {
+          selected: (voted && !changed) || (!voted && changed),
+          voted,
+          changed,
+        };
+      delegate.status = this.delegateStateByAddress[delegate.address];
+      return delegate;
     }
 
     /**
@@ -255,115 +266,14 @@ app.component('delegates', {
     }
 
     /**
-     * Needs summary
-     *
-     * @method parseVoteListFromInput
-     */
-    parseVoteListFromInput() {
-      this._parseListFromInput('voteList');
-    }
-
-    /**
-     * Needs summary
-     *
-     * @method parseUnvoteListFromInput
-     */
-    parseUnvoteListFromInput() {
-      this._parseListFromInput('unvoteList');
-    }
-
-    /**
-     * @private
-     */
-    _parseListFromInput(listName) {
-      const list = this[listName];
-      this.invalidUsernames = [];
-      this.pendingRequests = 0;
-      this.usernameList = this.usernameInput.trim().split(this.usernameSeparator);
-      this.usernameList.forEach((username) => {
-        if ((listName === 'voteList' && !this.votedDict[username.trim()]) ||
-            (listName === 'unvoteList' && this.votedDict[username.trim()])) {
-          this._setSelected(username.trim(), list);
-        }
-      });
-
-      if (this.pendingRequests === 0) {
-        this._selectFinish(true, list);
-      }
-    }
-
-    /**
-     * @private
-     */
-    _selectFinish(success, list) {
-      if (list.length !== 0) {
-        this.usernameListActive = false;
-        this.usernameInput = '';
-        this.openVoteDialog();
-      } else {
-        this.dialog.errorToast('No delegate usernames could be parsed from the input');
-      }
-    }
-
-    /**
-     * @private
-     */
-    _setSelected(username, list) {
-      const delegate = this.delegates.filter(d => d.username === username)[0];
-      if (delegate) {
-        this._selectDelegate(delegate, list);
-      } else {
-        this.pendingRequests++;
-        this.delegateApi.getDelegate(username,
-        ).then((data) => {
-          this._selectDelegate(data.delegate, list);
-        }).catch(() => {
-          this.invalidUsernames.push(username);
-        }).finally(() => {
-          this.pendingRequests--;
-          if (this.pendingRequests === 0) {
-            this._selectFinish(this.invalidUsernames.length === 0, list);
-          }
-        });
-      }
-    }
-    // eslint-disable-next-line class-methods-use-this
-    _selectDelegate(delegate, list) {
-      // eslint-disable-next-line no-param-reassign
-      delegate.status = delegate.status || {};
-      // eslint-disable-next-line no-param-reassign
-      delegate.status.selected = true;
-      if (list.indexOf(delegate) === -1) {
-        list.push(delegate);
-      }
-    }
-
-    /**
-     * Uses mdDialog to show vote list directive.
+     * Uses dialog.modal to show vote list directive.
      *
      * @method openVoteDialog
-     * @todo Use a general dialog service instead.
      */
     openVoteDialog() {
-      this.$mdDialog.show({
-        controllerAs: '$ctrl',
-        controller: class voteDialog {
-          constructor($scope, voteList, unvoteList) {
-            this.$scope = $scope;
-            this.$scope.voteList = voteList;
-            this.$scope.unvoteList = unvoteList;
-          }
-        },
-        template:
-          '<md-dialog flex="80">' +
-            '<vote vote-list="voteList" unvote-list="unvoteList">' +
-            '</vote>' +
-          '</md-dialog>',
-        fullscreen: (this.$mdMedia('sm') || this.$mdMedia('xs')) && this.$scope.customFullscreen,
-        locals: {
-          voteList: this.voteList,
-          unvoteList: this.unvoteList,
-        },
+      this.dialog.modal('vote', {
+        'vote-list': this.voteList,
+        'unvote-list': this.unvoteList,
       }).then((() => {
         this.setPendingVotes();
       }));

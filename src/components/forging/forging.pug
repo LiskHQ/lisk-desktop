@@ -1,9 +1,10 @@
 md-card.offline-hide
   div
-    md-content
-      div(layout='row', ng-if='$ctrl.delegate && !$ctrl.delegate.username')
+    md-content(ng-if='!$ctrl.account.get().isDelegate')
+      div(layout='row')
         md-card(flex-100, flex-gt-xs=100, layout-align='center center', layout-padding)
           span.title You need to become a delegate to start forging. If you already registered to become a delegate, your registration hasn't been processed, yet.
+    md-content(ng-if='$ctrl.account.get().isDelegate')
       div(layout='column', layout-gt-xs='row')
         md-card(flex-gt-xs=100, layout-padding)
           md-card-title
@@ -67,7 +68,7 @@ md-card.offline-hide
                     th(md-column) Reward
                 tbody(md-body, infinite-scroll='$ctrl.loadMoreBlocks()', infinite-scroll-distance='1')
                   tr(md-row, ng-repeat='block in $ctrl.blocks')
-                    td(md-cell data-title='tableBlocks.cols.height', sortable="'height'") {{block.height}}
+                    td(md-cell data-title='tableBlocks.cols.height', sortable="'height'") {{block.height | liskNumber}}
                     td(md-cell data-title='tableBlocks.cols.blockId', ng-show='$ctrl.showAllColumns') {{block.id}}
                     td(md-cell data-title='tableBlocks.cols.timestamp', sortable="'timestamp'")
                       span(ng-show='block.timestamp > 0')
@@ -76,4 +77,4 @@ md-card.offline-hide
                     td(md-cell data-title='tableBlocks.cols.totalFee', sortable="'totalFee'") {{block.totalFee | lsk}}
                     td(md-cell data-title='tableBlocks.cols.reward', sortable="'reward'") {{block.reward | lsk}}
                     td.width-80(md-cell data-title="''")
-        md-button.more(ng-show='$ctrl.moreBlocksExist', ng-disabled='!$ctrl.blocksLoaded', ng-click='$ctrl.loadMoreBlocks()') Load More
+        md-button.more(ng-show='$ctrl.moreBlocksExist && $ctrl.blocksLoaded', ng-click='$ctrl.loadMoreBlocks()') Load More

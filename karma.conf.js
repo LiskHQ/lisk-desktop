@@ -15,7 +15,6 @@ preprocessors[testLibs] = ['webpack'];
 preprocessors[test] = ['webpack'];
 
 const opts = {
-  onTravis: process.env.ON_TRAVIS,
   onJenkins: process.env.ON_JENKINS,
   live: process.env.LIVE,
 };
@@ -44,7 +43,7 @@ module.exports = function (config) {
     // Rest results reporter to use
     // Possible values: 'dots', 'progress'
     // Available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['coverage', 'mocha'].concat(opts.onTravis ? ['coveralls'] : []).concat(opts.onJenkins ? ['coveralls'] : []),
+    reporters: ['coverage', 'mocha'].concat(opts.onJenkins ? ['coveralls'] : []),
 
     preprocessors,
 
@@ -74,16 +73,13 @@ module.exports = function (config) {
     autoWatch: opts.live,
 
     ngHtml2JsPreprocessor: {
-      stripPrefix: 'app/components/',
+      stripPrefix: 'src/app/components/',
       moduleName: 'my.templates',
     },
 
     coverageReporter: {
       reporters: [{
         type: 'text',
-        dir: 'coverage/',
-      }, {
-        type: opts.onTravis ? 'lcov' : 'html',
         dir: 'coverage/',
       }, {
         type: opts.onJenkins ? 'lcov' : 'html',
@@ -112,6 +108,7 @@ module.exports = function (config) {
       'karma-chrome-launcher',
       'karma-ng-html2js-preprocessor',
       'karma-mocha-reporter',
+      'karma-jenkins-reporter',
       'karma-coverage',
       'karma-coveralls',
       'karma-phantomjs-launcher',

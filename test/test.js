@@ -4,6 +4,7 @@ require('./components/delegates/vote.spec');
 require('./components/forging/forging.spec');
 require('./components/header/header.spec');
 require('./components/login/login.spec');
+require('./components/login/newAccount.spec');
 require('./components/main/main.spec');
 require('./components/main/secondPass.spec');
 require('./components/passphrase/passphrase.spec');
@@ -23,7 +24,6 @@ require('./services/api/forgingApi.spec');
 require('./services/api/peers.spec');
 require('./services/lsk.spec');
 require('./services/passphrase.spec');
-require('./services/signVerify.spec');
 require('./services/notification.spec');
 
 require('./run.spec');

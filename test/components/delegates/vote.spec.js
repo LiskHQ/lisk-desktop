@@ -149,18 +149,5 @@ describe('Vote component controller', () => {
       $scope.$apply();
     });
   });
-
-  describe('removeVote(list, index)', () => {
-    it('removes vote at index from the list', () => {
-      const index = 2;
-      const vote = controller.voteList[index];
-
-      controller.removeVote(controller.voteList, index);
-
-      expect(vote.status.changed).to.equal(false);
-      expect(vote.status.selected).to.equal(false);
-      expect(controller.voteList).to.not.contain(vote);
-    });
-  });
 });
 

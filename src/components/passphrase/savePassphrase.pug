@@ -30,7 +30,7 @@ form(ng-if='$ctrl.step === 2')
         md-input-container.md-block(md-is-error='!$ctrl.missing_ok')
           label Enter the missing word
           input(ng-model='$ctrl.missing_input', md-autofocus, aria-label='Enter the missing word')
-          div.fee Fee: 25 LSK
+          div.fee(ng-if='$ctrl.fee') Fee: {{$ctrl.fee}} LSK
   md-dialog-actions(layout='row')
     md-button.back-button(ng-click="$ctrl.back()") Back
     span(flex)

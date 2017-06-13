@@ -7,6 +7,7 @@ import './components/forging/forging';
 import './components/header/header';
 import './components/loadingBar/loadingBar';
 import './components/login/login';
+import './components/login/newAccount';
 import './components/lsk/lsk';
 import './components/main/main';
 import './components/main/secondPass';
@@ -30,11 +31,11 @@ import './services/api/forgingApi';
 import './services/api/peers';
 import './services/dialog';
 import './services/lsk';
-import './services/signVerify';
 import './services/sync';
 import './services/notification';
 
 import './filters/lsk';
+import './filters/liskNumber';
 
 import './run';
 import './states';
