@@ -1,4 +1,40 @@
 top {
+  // layout
+  @media (max-width: 768px) {
+    & > .layout-gt-xs-row {
+      flex: none;
+      width: 100%;
+      display: block;
+      overflow-x: hidden;
+      padding: 0 8px;
+      & > .flex-gt-xs-33 {
+        flex: none;
+        width: 100%;
+        max-width: 100%;
+        margin-right: 0;
+        margin-left: 0;
+
+        md-card-content {
+          display: table;
+          .title {
+            margin-bottom: 15px;
+            display: inline-block;
+            vertical-align: middle;
+            width: 100px;
+            margin: 0;
+            line-height: 70px;
+          }
+          .value-wrapper {
+            display: table-cell;
+            vertical-align: middle;
+            .primary {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
   .peer {
     position: relative;
   }
@@ -41,6 +77,9 @@ top {
       &.full {
         height: 51px;
         line-height: 51px;
+      }
+      @media (max-width: 1280px) {
+        font-size: 100%;
       }
     }
     .secondary {
