@@ -86,6 +86,12 @@ function createWindow() {
           },
         },
         {
+          label: 'Lisk Explorer',
+          click() {
+            electron.shell.openExternal('https://explorer.lisk.io');
+          },
+        },
+        {
           label: 'Lisk Forum',
           click() {
             electron.shell.openExternal('https://forum.lisk.io');
