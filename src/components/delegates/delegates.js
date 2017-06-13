@@ -35,6 +35,7 @@ app.component('delegates', {
       this.$scope.search = '';
       this.voteList = [];
       this.votedDict = {};
+      this.delegateStateByAddress = {};
       this.votedList = [];
       this.unvoteList = [];
       this.loading = true;
@@ -65,9 +66,8 @@ app.component('delegates', {
       this.delegates = [];
       this.delegatesDisplayedCount = 20;
       if (this.peers.active) {
-        this.delegateApi.listAccountDelegates({
-          address: this.account.get().address,
-        }).then((data) => {
+        this.delegateApi.listAccountDelegates(this.account.get().address,
+        ).then((data) => {
           this.votedList = data.delegates || [];
           this.votedList.forEach((delegate) => {
             this.votedDict[delegate.username] = delegate;
@@ -117,16 +117,7 @@ app.component('delegates', {
           this.delegates = this.delegates.concat(data.delegates);
         }
 
-        data.delegates.forEach((delegate) => {
-          const voted = this.votedDict[delegate.username] !== undefined;
-          const changed = this.voteList.concat(this.unvoteList)
-            .map(d => d.username).indexOf(delegate.username) !== -1;
-          delegate.status = {  // eslint-disable-line no-param-reassign
-            selected: (voted && !changed) || (!voted && changed),
-            voted,
-            changed,
-          };
-        });
+        this.delegates = this.delegates.map(delegate => this.setDelegateStatus(delegate));
 
         this.delegatesTotalCount = data.totalCount;
         this.loading = false;
@@ -198,6 +189,7 @@ app.component('delegates', {
     setPendingVotes() {
       this.voteList.forEach((delegate) => {
         /* eslint-disable no-param-reassign */
+        delegate = this.setDelegateStatus(delegate);
         delegate.status.changed = false;
         delegate.status.voted = true;
         delegate.status.pending = true;
@@ -205,6 +197,7 @@ app.component('delegates', {
       this.votePendingList = this.voteList.splice(0, this.voteList.length);
 
       this.unvoteList.forEach((delegate) => {
+        delegate = this.setDelegateStatus(delegate);
         delegate.status.changed = false;
         delegate.status.voted = false;
         delegate.status.pending = true;
@@ -212,6 +205,25 @@ app.component('delegates', {
       });
       this.unvotePendingList = this.unvoteList.splice(0, this.unvoteList.length);
       this.checkPendingVotes();
+    }
+
+    /**
+     * Sets deleagte.status to be always the same object for given delegate.address
+     *
+     * @method setDelegateStatus
+     */
+    setDelegateStatus(delegate) {
+      const voted = this.votedDict[delegate.username] !== undefined;
+      const changed = this.voteList.concat(this.unvoteList)
+        .map(d => d.username).indexOf(delegate.username) !== -1;
+      this.delegateStateByAddress[delegate.address] =
+        this.delegateStateByAddress[delegate.address] || {
+          selected: (voted && !changed) || (!voted && changed),
+          voted,
+          changed,
+        };
+      delegate.status = this.delegateStateByAddress[delegate.address];
+      return delegate;
     }
 
     /**

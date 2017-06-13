@@ -1,18 +1,4 @@
 div.offline-hide
-  md-card(flex-gt-xs=100, ng-if='$ctrl.usernameListActive')
-    md-card-content(layout='column')
-      md-input-container
-        label Insert list of delegate usernames separated by new line
-        textarea(ng-model='$ctrl.usernameInput')
-      div
-        md-button(ng-click='$ctrl.usernameListActive = false')
-          span Cancel 
-        span.pull-right
-          md-button(ng-click='$ctrl.parseVoteListFromInput("voteList")', ng-disabled='$ctrl.pendingRequests || !$ctrl.usernameInput')
-            span Add to vote list
-          md-button(ng-click='$ctrl.parseUnvoteListFromInput("unvoteList")', ng-disabled='$ctrl.pendingRequests || !$ctrl.usernameInput')
-            span Add to unvote list
-    md-progress-linear(md-mode='indeterminate', ng-show='$ctrl.pendingRequests')
   md-card(flex-gt-xs=100)
     md-card-title
       md-card-title-text
@@ -60,7 +46,11 @@ div.offline-hide
               td(md-cell, colspan='6') No delegates found
             tr(md-row, ng-repeat="delegate in ($ctrl.filteredDelegates = ($ctrl.delegates | filter : {username: search} )) | limitTo : $ctrl.delegatesDisplayedCount", ng-class='{"downvote": delegate.status.voted && !delegate.status.selected, "upvote": !delegate.status.voted && delegate.status.selected, "pending": delegate.status.pending, "voted": delegate.status.voted && delegate.status.selected}')
               td(md-cell)
-                md-checkbox.md-primary(ng-model='delegate.status.selected', ng-change='$ctrl.selectionChange(delegate)', ng-disabled='delegate.status.pending', aria-label='delegate selected for voting')
+                .spinner(ng-show='delegate.status.pending')
+                  .bounce1
+                  .bounce2
+                  .bounce3
+                md-checkbox.md-primary(ng-show='!delegate.status.pending', ng-model='delegate.status.selected', ng-change='$ctrl.selectionChange(delegate)', aria-label='delegate selected for voting')
               td(md-cell, ng-bind='delegate.rank')
               td(md-cell, ng-bind='delegate.username')
               td(md-cell, ng-bind='delegate.address')
