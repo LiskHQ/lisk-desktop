@@ -1,18 +1,4 @@
 div.offline-hide
-  md-card(flex-gt-xs=100, ng-if='$ctrl.usernameListActive')
-    md-card-content(layout='column')
-      md-input-container
-        label Insert list of delegate usernames separated by new line
-        textarea(ng-model='$ctrl.usernameInput')
-      div
-        md-button(ng-click='$ctrl.usernameListActive = false')
-          span Cancel 
-        span.pull-right
-          md-button(ng-click='$ctrl.parseVoteListFromInput("voteList")', ng-disabled='$ctrl.pendingRequests || !$ctrl.usernameInput')
-            span Add to vote list
-          md-button(ng-click='$ctrl.parseUnvoteListFromInput("unvoteList")', ng-disabled='$ctrl.pendingRequests || !$ctrl.usernameInput')
-            span Add to unvote list
-    md-progress-linear(md-mode='indeterminate', ng-show='$ctrl.pendingRequests')
   md-card(flex-gt-xs=100)
     md-card-title
       md-card-title-text

@@ -86,22 +86,6 @@ app.component('vote', {
               !this.votingInProgress &&
               (!this.account.get().secondSignature || this.secondPassphrase);
     }
-
-    /**
-     * Removes the delegate in the given index from votes list
-     *
-     * @method removeVote
-     * @param {object[]} list the votes list
-     * @param {Number} index the index of the delegate to be removed
-     */
-    // eslint-disable-next-line class-methods-use-this
-    removeVote(list, index) {
-      /* eslint-disable no-param-reassign */
-      list[index].status.selected = list[index].status.voted;
-      list[index].status.changed = false;
-      /* eslint-enable no-param-reassign */
-      list.splice(index, 1);
-    }
   },
 });
 
