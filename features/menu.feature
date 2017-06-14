@@ -12,6 +12,12 @@ Feature: Top right menu
     Given I'm logged in as "second passphrase account"
     Then There is no "register second passphrase" in main menu
 
+  Scenario: should not allow to set 2nd passphrase if not enough funds for the fee
+    Given I'm logged in as "empty account"
+    When I click "register second passphrase" in main menu
+    Then I should see "Not enough LSK to pay 5 LSK fee" error message
+    And "next button" should be disabled
+
   Scenario: should allow to exit 2nd passphrase registration dialog
     Given I'm logged in as "genesis"
     When I click "register second passphrase" in main menu
@@ -42,6 +48,12 @@ Feature: Top right menu
     When I click "register as delegate" in main menu
     And I click "cancel button"
     Then I should see no "modal dialog"
+
+  Scenario: should not allow to register delegate if not enough funds for the fee
+    Given I'm logged in as "empty account"
+    When I click "register as delegate" in main menu
+    Then I should see "Not enough LSK to pay 25 LSK fee" error message
+    And "register button" should be disabled
 
   Scenario: should allow to sign message
     Given I'm logged in as "any account"

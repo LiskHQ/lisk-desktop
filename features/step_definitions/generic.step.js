@@ -84,7 +84,13 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   });
 
   Then('I should see "{text}" error message', (text, callback) => {
-    waitForElemAndCheckItsText('.md-input-message-animation', text, callback);
+    waitForElemAndCheckItsText('.md-input-message-animation, .error-message', text, callback);
+  });
+
+  Then('"{elementName}" should be disabled', (elementName, callback) => {
+    expect(element(by.css(`.${elementName.replace(/ /g, '-')}`)).getAttribute('disabled'))
+      .to.eventually.equal('true')
+      .and.notify(callback);
   });
 
   Then('I should see text "{text}" in "{fieldName}" element', (text, fieldName, callback) => {
