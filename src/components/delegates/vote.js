@@ -19,17 +19,19 @@ app.component('vote', {
    * @constructor
    */
   controller: class vote {
-    constructor($scope, $mdDialog, dialog, delegateApi, $rootScope, Account) {
+    constructor($scope, $mdDialog, dialog, delegateApi, $rootScope, Account, lsk) {
       this.$mdDialog = $mdDialog;
       this.dialog = dialog;
       this.delegateApi = delegateApi;
       this.$rootScope = $rootScope;
       this.account = Account;
+      this.lsk = lsk;
 
       this.votedDict = {};
       this.votedList = [];
 
       this.getDelegates();
+      this.fee = 1;
     }
 
     /**
@@ -83,7 +85,8 @@ app.component('vote', {
       const totalVotes = this.voteList.length + this.unvoteList.length;
       return totalVotes > 0 && totalVotes <= 33 &&
               !this.votingInProgress &&
-              (!this.account.get().secondSignature || this.secondPassphrase);
+              (!this.account.get().secondSignature || this.secondPassphrase) &&
+              this.lsk.normalize(this.account.get().balance) > this.fee;
     }
   },
 });

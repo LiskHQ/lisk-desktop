@@ -13,13 +13,13 @@ div.dialog-second(aria-label='Generate a second passphrase for your account', da
         br
         br
         span Note: After registration completes, your second passphrase will be required for all transactions sent from this account.
-        <br>
+        br
         span Losing access to this passphrase will mean no funds can be sent from this account. So be sure to keep it safe!
 
     md-dialog-actions(layout='row', data-ng-if='$ctrl.step === 0')
       md-button.md-secondary(ng-disabled='$ctrl.loading', ng-click='cancel()') Cancel
       span(flex)
-      md-button.md-raised.md-primary.submit-button.next-button(ng-click='$ctrl.step = 1') Next
+      fee(data-fee='$ctrl.fee')
+      md-button.md-raised.md-primary.submit-button.next-button(ng-click='$ctrl.step = 1', ng-disabled='$ctrl.fee | fundsInsufficiency') Next
     section(data-ng-if='$ctrl.step === 1')
-      passphrase(data-on-save='onSave', data-label='Register', data-fee='5')
-      
+      passphrase(data-on-save='onSave', data-label='Register', data-fee='{{$ctrl.fee}}')

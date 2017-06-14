@@ -9,6 +9,7 @@ import './secondPass.less';
 app.component('setSecondPass', {
   template: require('./secondPass.pug')(),
   controller($scope, Account, $rootScope, dialog, AccountApi, $mdDialog) {
+    this.fee = 5;
     /**
      * We call this after second passphrase is generated.
      * Shows an alert with appropriate message in case the request fails.

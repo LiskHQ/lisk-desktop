@@ -23,7 +23,6 @@ div.dialog-vote(aria-label='Vote for delegates')
         md-input-container.md-block(ng-if='$ctrl.account.get().secondSignature')
           label Second Passphrase
           input(type='password', ng-model='$ctrl.secondPassphrase')
-        p.pull-right.fee Fee: 1 LSK
         md-divider
         div(layout='row')
           p.info-icon-wrapper 
@@ -36,4 +35,5 @@ div.dialog-vote(aria-label='Vote for delegates')
     md-dialog-actions(layout='row')
       md-button(ng-click="$ctrl.$mdDialog.cancel()") Cancel
       span(flex)
+      fee(data-fee='$ctrl.fee')
       md-button.md-primary.md-raised.submit-button(ng-disabled='!$ctrl.canVote()', ng-click="$ctrl.vote()") {{$ctrl.votingInProgress ? 'Voting...' : 'Confirm'}}
