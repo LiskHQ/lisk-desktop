@@ -44,6 +44,10 @@ app.component('savePassphrase', {
       this.$mdDialog.cancel();
       this.$rootScope.$broadcast('onSignupCancel');
     }
+
+    preventBlur(event) { //eslint-disable-line
+      angular.element(event.currentTarget)[0].focus();
+    }
   },
 });
 
