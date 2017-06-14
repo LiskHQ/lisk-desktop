@@ -8,7 +8,7 @@ form(ng-if='$ctrl.step === 1')
   md-dialog-content
     .md-dialog-content
       md-input-container.md-block
-        textarea.passphrase(ng-bind='$ctrl.passphrase', md-autofocus, readonly, aria-label='Passphrase')
+        textarea.passphrase(ng-bind='$ctrl.passphrase', md-autofocus, readonly, aria-label='Passphrase', ng-blur='$ctrl.preventBlur($event)')
   md-dialog-actions(layout='row')
     md-button.close-button(ng-click="$ctrl.close()") Cancel
     span(flex)
