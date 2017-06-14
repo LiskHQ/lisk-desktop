@@ -18,7 +18,7 @@ md-card.offline-hide
             tr(md-row, ng-repeat="transaction in $ctrl.transactions track by transaction.id | orderBy:'-timestamp'")
               td(md-cell)
                 timestamp(data='transaction.timestamp', ng-show='transaction.confirmations')
-                span(ng-bind='transaction.confirmations ? "" : "PENDING"')
+                spinner(ng-show='!transaction.confirmations')
               td(md-cell)
                 span(ng-bind='transaction.id')
                   md-tooltip(md-direction='top', md-delay='350') {{ transaction.confirmations }} confirmations

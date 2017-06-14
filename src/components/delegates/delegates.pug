@@ -46,10 +46,7 @@ div.offline-hide
               td(md-cell, colspan='6') No delegates found
             tr(md-row, ng-repeat="delegate in ($ctrl.filteredDelegates = ($ctrl.delegates | filter : {username: search} )) | limitTo : $ctrl.delegatesDisplayedCount", ng-class='{"downvote": delegate.status.voted && !delegate.status.selected, "upvote": !delegate.status.voted && delegate.status.selected, "pending": delegate.status.pending, "voted": delegate.status.voted && delegate.status.selected}')
               td(md-cell)
-                .spinner(ng-show='delegate.status.pending')
-                  .bounce1
-                  .bounce2
-                  .bounce3
+                spinner(ng-show='delegate.status.pending')
                 md-checkbox.md-primary(ng-show='!delegate.status.pending', ng-model='delegate.status.selected', ng-change='$ctrl.selectionChange(delegate)', aria-label='delegate selected for voting')
               td(md-cell, ng-bind='delegate.rank')
               td(md-cell, ng-bind='delegate.username')
