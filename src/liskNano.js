@@ -3,6 +3,7 @@ import './index.less';
 import './components/delegateRegistration/delegateRegistration';
 import './components/delegates/delegates';
 import './components/delegates/vote';
+import './components/fee/fee';
 import './components/forging/forging';
 import './components/header/header';
 import './components/loadingBar/loadingBar';
@@ -36,6 +37,7 @@ import './services/notification';
 
 import './filters/lsk';
 import './filters/liskNumber';
+import './filters/notEnoughBalance';
 
 import './run';
 import './states';
