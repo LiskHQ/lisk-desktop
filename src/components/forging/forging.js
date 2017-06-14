@@ -47,10 +47,10 @@ app.component('forging', {
       this.delegate = this.account.get().delegate || {};
       this.updateForgedBlocks(20, 0, true);
 
-      this.updateForgingStats('today', moment().set({ hour: 0, minute: 0, second: 0 }));
       this.updateForgingStats('last24h', moment().subtract(1, 'days'));
       this.updateForgingStats('last7d', moment().subtract(7, 'days'));
       this.updateForgingStats('last30d', moment().subtract(30, 'days'));
+      this.updateForgingStats('last365d', moment().subtract(365, 'days'));
       this.updateForgingStats('total', moment('2016-04-24 17:00'));
     }
 
