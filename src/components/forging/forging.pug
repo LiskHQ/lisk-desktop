@@ -15,10 +15,6 @@ md-card.offline-hide
       md-content(layout='column', layout-gt-xs='row')
         md-card(flex-50, flex-gt-xs=25, layout-padding)
           .info-panel.info-panel-grey
-            span.title Today
-            span.pull-right {{$ctrl.statistics.today  | lsk | number:2 }} LSK
-        md-card(flex-50, flex-gt-xs=25, layout-padding)
-          .info-panel.info-panel-grey
             span.title Last 24 hours
             span.pull-right {{$ctrl.statistics.last24h  | lsk | number:2 }} LSK
         md-card(flex-50, flex-gt-xs=25, layout-padding)
@@ -29,6 +25,10 @@ md-card.offline-hide
           .info-panel.info-panel-grey
             span.title {{'Last 30 days'}}
             span.pull-right {{$ctrl.statistics.last30d  | lsk | number:2 }} LSK
+        md-card(flex-50, flex-gt-xs=25, layout-padding)
+          .info-panel.info-panel-grey
+            span.title {{'Last 365 days'}}
+            span.pull-right {{$ctrl.statistics.last365d  | lsk | number:2 }} LSK
       div(layout='column', layout-gt-xs='row')
         md-card(flex-gt-xs=33, layout-align='center center', layout-padding)
           div Rank
