@@ -9,3 +9,5 @@ app/report.html
 app/*.map
 *.sw[pon]
 app/app.js
+.vscode
+.idea

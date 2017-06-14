@@ -11,6 +11,7 @@ import './components/login/newAccount';
 import './components/lsk/lsk';
 import './components/main/main';
 import './components/main/secondPass';
+import './components/spinner/spinner';
 import './components/openDialog/openDialog';
 import './components/passphrase/passphrase';
 import './components/passphrase/passphraseService';
