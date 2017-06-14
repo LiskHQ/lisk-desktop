@@ -82,7 +82,7 @@ app.component('transactions', {
         this.loaded = false;
       }
 
-      const limit = Math.max(10, this.transactions.length + (showMore ? 10 : 0));
+      const limit = Math.max(20, this.transactions.length + (showMore ? 20 : 0));
       return this.loadTransactions(limit);
     }
 

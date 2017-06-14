@@ -88,8 +88,8 @@ describe('transactions component controller', () => {
       expect(controller.loaded).to.equal(undefined);
     });
 
-    it('calls accountApi.transactions.get(account.get().address, limit) with limit = 10 by default', () => {
-      mock.expects('get').withArgs(account.get().address, 10).returns(transactionsDeferred.promise);
+    it('calls accountApi.transactions.get(account.get().address, limit) with limit = 20 by default', () => {
+      mock.expects('get').withArgs(account.get().address, 20).returns(transactionsDeferred.promise);
       controller.update();
       transactionsDeferred.reject();
 
