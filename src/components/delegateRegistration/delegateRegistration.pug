@@ -29,4 +29,4 @@ div.dialog-delegate-registration(aria-label='Vote for delegates')
         md-button.md-secondary(ng-disabled='loading', ng-click='cancel(delegateRegistrationForm)') {{ 'Cancel' }}
         span(flex)
         fee(data-fee='form.fee')
-        md-button.md-raised.md-primary.register-button(ng-disabled='!delegateRegistrationForm.$valid || loading || form.fee | notEnoughBalance', type='submit') {{ loading ? 'Registering...' : 'Register' }}
+        md-button.md-raised.md-primary.register-button(ng-disabled='!delegateRegistrationForm.$valid || loading || form.fee | fundsInsufficiency', type='submit') {{ loading ? 'Registering...' : 'Register' }}

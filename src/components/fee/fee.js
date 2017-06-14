@@ -14,13 +14,13 @@ app.component('fee', {
   controller: class fee {
     constructor($scope, Account, lsk, $element) {
       this.account = Account;
-      const notEnoughtLSK = lsk.normalize(this.account.get().balance) < this.fee;
+      const insufficientFunds = lsk.normalize(this.account.get().balance) < this.fee;
 
-      this.text = notEnoughtLSK ?
+      this.text = insufficientFunds ?
           `Not enough LSK to pay ${this.fee} LSK fee` :
           `Fee: ${this.fee} LSK`;
 
-      if (notEnoughtLSK) {
+      if (insufficientFunds) {
         $element.addClass('error-message');
       }
     }

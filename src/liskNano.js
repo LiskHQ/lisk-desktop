@@ -37,7 +37,7 @@ import './services/notification';
 
 import './filters/lsk';
 import './filters/liskNumber';
-import './filters/notEnoughBalance';
+import './filters/fundsInsufficiency';
 
 import './run';
 import './states';

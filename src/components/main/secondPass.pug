@@ -20,6 +20,6 @@ div.dialog-second(aria-label='Generate a second passphrase for your account', da
       md-button.md-secondary(ng-disabled='$ctrl.loading', ng-click='cancel()') Cancel
       span(flex)
       fee(data-fee='$ctrl.fee')
-      md-button.md-raised.md-primary.submit-button.next-button(ng-click='$ctrl.step = 1', ng-disabled='$ctrl.fee | notEnoughBalance') Next
+      md-button.md-raised.md-primary.submit-button.next-button(ng-click='$ctrl.step = 1', ng-disabled='$ctrl.fee | fundsInsufficiency') Next
     section(data-ng-if='$ctrl.step === 1')
       passphrase(data-on-save='onSave', data-label='Register', data-fee='{{$ctrl.fee}}')
