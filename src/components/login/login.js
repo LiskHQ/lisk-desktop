@@ -49,7 +49,20 @@ app.component('login', {
         this.$cookies.remove('network');
       }
 
-      this.$scope.$watch('$ctrl.input_passphrase', val => this.valid = this.Passphrase.isValidPassphrase(val));
+      this.validity = {
+        url: true,
+      };
+
+      this.$scope.$watch('$ctrl.input_passphrase', val => this.validity.passphrase = this.Passphrase.isValidPassphrase(val));
+      this.$scope.$watch('$ctrl.network.address', (val) => {
+        try {
+          const url = new URL(val);
+          this.validity.url = url.port !== '';
+        } catch (e) {
+          this.validity.url = false;
+        }
+      });
+
       this.$timeout(this.devTestAccount.bind(this), 200);
 
       /**

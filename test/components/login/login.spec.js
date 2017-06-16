@@ -93,7 +93,7 @@ describe('Login controller', () => {
       expect(controller.valid).to.not.equal(1);
       controller.input_passphrase = VALID_PASSPHRASE;
       $scope.$apply();
-      expect(controller.valid).to.equal(1);
+      expect(controller.validity.passphrase).to.equal(1);
       expect(spy).to.have.been.calledWith();
     });
   });

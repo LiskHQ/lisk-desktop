@@ -6,17 +6,17 @@ md-card
         md-select.network(ng-model='$ctrl.network', aria-label='Network')
             md-option(ng-repeat='network in $ctrl.networks', ng-value='network') {{ network.name }}
       div(ng-if='$ctrl.network.custom')
-        md-input-container.md-block
+        md-input-container.md-block(md-is-error='!$ctrl.validity.url')
           label.pass Node address
           input(type="text", ng-model="$ctrl.network.address")
-      md-input-container.md-block(md-is-error='$ctrl.valid === 0')
+      md-input-container.md-block(md-is-error='$ctrl.validity.passphrase === 0')
         label.pass Enter your passphrase
         input.passphrase(type="{{ $ctrl.show_passphrase ? 'text' : 'password' }}", ng-model='$ctrl.input_passphrase', ng-disabled='$ctrl.generatingNewPassphrase', autofocus)
       md-input-container.md-block
         md-checkbox.md-primary(ng-model="$ctrl.show_passphrase", aria-label="Show passphrase") Show passphrase
       md-content(layout='row', layout-align='center center')
         // md-button(ng-disabled='$ctrl.generatingNewPassphrase', ng-click='$ctrl.devTestAccount()') Dev Test Account
-        md-button.md-primary.new-account-button(ng-disabled='$ctrl.random || $ctrl.generatingNewPassphrase',
+        md-button.md-primary.new-account-button(ng-disabled='$ctrl.random || $ctrl.generatingNewPassphrase || !$ctrl.validity.url',
           data-open-dialog='new-account', data-options='{network: $ctrl.network}') NEW ACCOUNT
-        md-button.md-raised.md-primary.login-button(md-autofocus, ng-disabled='($ctrl.valid != undefined && $ctrl.valid !== 1) || $root.loggingIn', type='submit') Login
+        md-button.md-raised.md-primary.login-button(md-autofocus, ng-disabled='($ctrl.validity.passphrase !== 1 || !$ctrl.validity.url) || $root.loggingIn', type='submit') Login
     passphrase(ng-if='$ctrl.generatingNewPassphrase', data-on-save='onSave', data-target='primary-pass', data-ok-button-label='Login')

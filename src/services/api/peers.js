@@ -49,14 +49,21 @@ app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope, dialog) => 
      * @method setActive
      */
     setActive(network) {
+      const addHttp = (url) => {
+        const reg = /^(?:f|ht)tps?:\/\//i;
+        return reg.test(url) ? url : `http://${url}`;
+      };
+
       this.network = network;
       let conf = { };
       if (network) {
         conf = network;
         if (network.address) {
-          conf.node = network.address.split(':')[1].replace('//', '');
-          conf.port = network.address.match(/:([0-9]{1,5})\/?$/) && network.address.match(/:([0-9]{1,5})\/?$/)[1];
-          conf.ssl = network.address.split(':')[0] === 'https';
+          const normalizedUrl = new URL(addHttp(network.address));
+
+          conf.node = normalizedUrl.hostname;
+          conf.port = normalizedUrl.port;
+          conf.ssl = normalizedUrl.protocol === 'https';
         }
         if (conf.testnet === undefined && conf.port !== undefined) {
           conf.testnet = conf.port === '7000';
