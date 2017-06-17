@@ -1,11 +1,15 @@
 {
-  "extends": "airbnb-base",
+  "extends": [
+    "airbnb-base",
+    "plugin:react/recommended"
+  ],
   "plugins": [
     "import"
   ],
   "globals": {
-    "angular": true,
-    "app": true,
+    "describe": true,
+    "it": true,
+    "expect": true,
     "ipc": true,
     "PRODUCTION": true
   },
