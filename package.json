@@ -6,7 +6,7 @@
   "bugs": "https://github.com/LiskHQ/lisk-nano/issues",
   "main": "main.js",
   "scripts": {
-    "build": "npm clean && webpack --env.prod",
+    "build": "npm run clean && npm run copy-files && webpack --env.prod",
     "dev": "webpack-dev-server --env.dev",
     "e2e-test": "protractor protractor.conf.js",
     "test": "karma start",
@@ -15,8 +15,8 @@
     "dist:win": "build --win",
     "dist:mac": "build --mac",
     "dist:linux": "build --linux",
-    "copy-files": "cpy src/index.html dist",
-    "clean": "del dist -f"
+    "copy-files": "cpy src/index.html app && cpy src/assets app",
+    "clean": "del app -f"
   },
   "author": "Lisk Foundation <admin@lisk.io>, lightcurve GmbH <admin@lightcurve.io>",
   "license": "GPL-3.0",

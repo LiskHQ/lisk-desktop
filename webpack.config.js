@@ -26,7 +26,7 @@ module.exports = env => {
       historyApiFallback: true,
     },
     plugins: [
-      env.prod ? new Webpack.optimize.UglifyJsPlugin({
+      env.prod ? new webpack.optimize.UglifyJsPlugin({
         sourceMap: false,
         mangle: false
       }): undefined,
