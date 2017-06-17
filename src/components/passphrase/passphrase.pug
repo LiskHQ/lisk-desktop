@@ -1,7 +1,0 @@
-md-content(layout-padding, layout='column', layout-align='center center')
-      h4.move(ng-show='mobileAndTabletcheck()') Enter text below to generate random bytes
-      h4.move(ng-hide='mobileAndTabletcheck()') Move your mouse to generate random bytes
-      input.random-input(type="text", ng-keydown='simulateMousemove()', ng-show='mobileAndTabletcheck()')
-      md-progress-linear(md-mode='determinate', value='{{ progress.percentage }}')
-      md-content.bytes
-        span.byte(ng-repeat='byte in progress.seed track by $index', ng-bind='byte', animate-on-change='byte')
