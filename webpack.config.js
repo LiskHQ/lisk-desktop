@@ -1,48 +1,53 @@
-const path = require("path");
+const path = require('path');
 const webpack = require('webpack');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin;
 
 let entries = {
-  app: path.resolve(__dirname, "src") + '/main.js',
-  vendor: ['react', 'redux', 'react-dom']
+  app: `${path.resolve(__dirname, 'src')}/main.js`,
+  vendor: ['react', 'redux', 'react-dom'],
 };
 const external = {
   'react/addons': true,
   'react/lib/ExecutionEnvironment': true,
-  'react/lib/ReactContext': true
+  'react/lib/ReactContext': true,
 };
-module.exports = env => {
-  entries = env.test ? path.resolve(__dirname, "src") + '/main.js' : entries;
+module.exports = (env) => {
+  entries = env.test ? `${path.resolve(__dirname, 'src')}/main.js` : entries;
   return {
     entry: entries,
     output: {
-      path: path.resolve(__dirname, "dist"),
-      filename: env.test ? 'bundle.js' : 'bundle.[name].js'
+      path: path.resolve(__dirname, 'dist'),
+      filename: env.test ? 'bundle.js' : 'bundle.[name].js',
     },
     devServer: {
-      contentBase: "src",
+      contentBase: 'src',
       inline: true,
       port: 8080,
       historyApiFallback: true,
     },
     plugins: [
-      env.prod ? new webpack.optimize.UglifyJsPlugin({
-        sourceMap: false,
-        mangle: false
-      }): undefined,
+      env.prod
+        ? new webpack.optimize.UglifyJsPlugin({
+          sourceMap: false,
+          mangle: false,
+        })
+        : undefined,
       env.analyze ? new BundleAnalyzerPlugin() : undefined,
-      env.test ? undefined : new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendor'
-      })
-    ].filter((p) => !!p),
+      env.test
+        ? undefined
+        : new webpack.optimize.CommonsChunkPlugin({
+          name: 'vendor',
+        }),
+    ].filter(p => !!p),
     externals: env.test ? external : {},
     module: {
       rules: [
         {
-          enforce: "pre",
+          enforce: 'pre',
           test: /\.js$/,
           exclude: /node_modules/,
-          loader: 'eslint-loader'
+          loader: 'eslint-loader',
         },
         {
           test: /\.js$/,
@@ -50,25 +55,23 @@ module.exports = env => {
           loader: 'babel-loader',
           options: {
             presets: ['es2015', 'react'],
-            plugins: [
-              "syntax-trailing-function-commas"
-            ],
+            plugins: ['syntax-trailing-function-commas'],
             env: {
               test: {
-                plugins: ["__coverage__"]
-              }
-            }
-          }
+                plugins: ['__coverage__'],
+              },
+            },
+          },
         },
         {
           test: /\.css$/,
-          use: ['style-loader', 'css-loader']
+          use: ['style-loader', 'css-loader'],
         },
         {
           test: /\.json$/,
-          use: ['json-loader']
-        }
-      ]
-    }
+          use: ['json-loader'],
+        },
+      ],
+    },
   };
-}
+};
