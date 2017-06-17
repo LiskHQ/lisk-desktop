@@ -15,8 +15,8 @@
     "dist:win": "build --win",
     "dist:mac": "build --mac",
     "dist:linux": "build --linux",
-    "copy-files": "cpy src/index.html app && cpy src/assets app",
-    "clean": "del app -f"
+    "copy-files": "mkdir dist && cp -r ./src/index.html ./src/assets ./dist",
+    "clean": "del dist -f"
   },
   "author": "Lisk Foundation <admin@lisk.io>, lightcurve GmbH <admin@lightcurve.io>",
   "license": "GPL-3.0",
@@ -46,7 +46,6 @@
     "chai": "=3.5.0",
     "chai-as-promised": "=6.0.0",
     "chai-enzyme": "^0.6.1",
-    "cpy-cli": "^1.0.1",
     "css-loader": "^0.28.0",
     "cucumber": "=2.2.0",
     "del-cli": "^0.2.1",

@@ -16,7 +16,7 @@ module.exports = env => {
   return {
     entry: entries,
     output: {
-      path: path.resolve(__dirname, "app"),
+      path: path.resolve(__dirname, "dist"),
       filename: env.test ? 'bundle.js' : 'bundle.[name].js'
     },
     devServer: {
