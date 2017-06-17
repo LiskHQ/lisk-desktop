@@ -1,4 +1,5 @@
 Feature: Top right menu
+  @ignore
   Scenario: should allow to set 2nd passphrase
     Given I'm logged in as "second passphrase candidate"
     When I click "register second passphrase" in main menu
@@ -8,6 +9,7 @@ Feature: Top right menu
     And I click "ok button"
     Then I should see alert dialog with title "Success" and text "Second passphrase registration was successfully submitted. It can take several seconds before it is processed."
 
+  @ignore
   Scenario: should allow to register a delegate
     Given I'm logged in as "delegate candidate"
     When I click "register as delegate" in main menu
@@ -15,6 +17,7 @@ Feature: Top right menu
     And I click "register button"
     Then I should see alert dialog with title "Success" and text "Delegate registration was successfully submitted. It can take several seconds before it is processed."
 
+  @ignore
   Scenario: should allow to sign message
     Given I'm logged in as "any account"
     When I click "sign message" in main menu
@@ -32,6 +35,7 @@ Feature: Top right menu
          -----END LISK SIGNED MESSAGE-----
          """
 
+  @ignore
   Scenario: should allow to verify message
     Given I'm logged in as "any account"
     When I click "verify message" in main menu

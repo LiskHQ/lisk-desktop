@@ -1,4 +1,5 @@
 Feature: Transactions tab
+  @ignore
   Scenario: should show transactions
     Given I'm logged in as "genesis"
     When I click tab number 1
