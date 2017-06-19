@@ -1,9 +1,0 @@
-top
-md-tabs.main-tabs.offline-hide(md-stretch-tabs='always')
-  md-tab(data-ui-sref='main.transactions', md-active='$ctrl.activeTab === "main.transactions"')
-    md-tab-label Transactions
-  md-tab(data-ui-sref='main.voting', md-active='$ctrl.activeTab === "main.voting"')
-    md-tab-label Voting
-  md-tab(data-ng-if='$ctrl.account.get().isDelegate', data-ui-sref='main.forging', md-active='$ctrl.activeTab === "main.forging"')
-    md-tab-label Forging 
-div(data-ui-view)
