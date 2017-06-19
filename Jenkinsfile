@@ -96,11 +96,11 @@ node('lisk-nano-01'){
         sleep 30
 
         # End to End test configuration
-        ./node_modules/protractor/bin/webdriver-manager update
-        ./node_modules/protractor/bin/webdriver-manager start &
+        # ./node_modules/protractor/bin/webdriver-manager update
+        # ./node_modules/protractor/bin/webdriver-manager start &
 
         # Run End to End Tests
-        npm run e2e-test
+        # npm run e2e-test
 
         cd ~/lisk-test-nano
         bash lisk.sh stop_node
