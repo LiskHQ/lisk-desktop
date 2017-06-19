@@ -107,9 +107,9 @@ app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope, dialog) => 
       return this.sendRequestPromise('loader/status', {})
         .then(() => {
           this.online = true;
+          $rootScope.$emit('hideLoadingBar', 'connection');
           if (this.wasOffline) {
             dialog.successToast('Connection re-established');
-            $rootScope.$emit('hideLoadingBar', 'connection');
           }
           this.wasOffline = false;
         })
