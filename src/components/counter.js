@@ -47,7 +47,7 @@ Counter.propTypes = {
   reset: PropTypes.func,
 };
 
-const Contact = () => (
+const ReduxConter = () => (
   <Provider store={createStore(counterReducer)}>
     <ConnectedCounter />
   </Provider>
@@ -80,4 +80,4 @@ const mapStateToProps = state => ({ value: state });
 
 const ConnectedCounter = connect(mapStateToProps, mapDispatchToProps)(Counter);
 
-export default Contact;
+export default ReduxConter;
