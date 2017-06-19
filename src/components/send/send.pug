@@ -25,17 +25,17 @@ div.dialog-send(aria-label='Send funds')
                 div(ng-message='pattern') Invalid
                 div(ng-message='max') Insufficient funds
             md-menu.max-funds(md-position-mode='target-right target', md-offset='4 -15')
-              md-button.md-icon-button(ng-click='$mdOpenMenu()')
+              md-button.md-icon-button.transaction-amount(ng-click='$mdOpenMenu()')
                 i.material-icons more_vert
               md-menu-content(width='4')
                 md-menu-item
-                  md-button(ng-click='$ctrl.setMaxAmount()')
+                  md-button.send-maximum-amount(ng-click='$ctrl.setMaxAmount()')
                     div(layout='row', flex='')
                       p(flex='') Set maximum amount
           md-input-container.md-block(ng-if='$ctrl.account.get().secondSignature')
             label Second Passphrase
-            input(type='password', ng-model='$ctrl.secondPassphrase', required)
+            input.second-passphrase(type='password', ng-model='$ctrl.secondPassphrase', required)
     md-dialog-actions(layout='row')
-      md-button.md-secondary(ng-disabled='$ctrl.loading', ng-click='$ctrl.cancel()') {{ 'Cancel' }}
+      md-button.md-secondary.cancel-button(ng-disabled='$ctrl.loading', ng-click='$ctrl.cancel()') {{ 'Cancel' }}
       span(flex)
       md-button.md-raised.md-primary.submit-button(ng-disabled='!$ctrl.transferForm.$valid || $ctrl.loading', ng-click='$ctrl.send()') {{ $ctrl.loading ? 'Sending...' : 'Send' }}

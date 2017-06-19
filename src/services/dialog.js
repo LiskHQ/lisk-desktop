@@ -114,7 +114,7 @@ app.factory('dialog', ($mdDialog, $mdToast, $mdMedia) => ({
     return $mdDialog.show({
       parent: angular.element(document.body),
       template: `
-                <md-dialog flex-gt-sm="75" flex="95" >
+                <md-dialog class='modal-dialog' flex-gt-sm="75" flex="95" >
                     <${component} ${attrs} close-dialog="closeDialog()" ></${component}>
                 </md-dialog>
               `,

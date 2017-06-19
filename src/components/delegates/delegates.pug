@@ -43,7 +43,7 @@ div.offline-hide
               th(md-column) Approval 
           tbody(md-body, infinite-scroll='$ctrl.showMore()', infinite-scroll-distance='1')
             tr(md-row, ng-if='!$ctrl.filteredDelegates.length && !$ctrl.loading')
-              td(md-cell, colspan='6') No delegates found
+              td.empty-message(md-cell, colspan='6') No delegates found
             tr(md-row, ng-repeat="delegate in ($ctrl.filteredDelegates = ($ctrl.delegates | filter : {username: search} )) | limitTo : $ctrl.delegatesDisplayedCount", ng-class='{"downvote": delegate.status.voted && !delegate.status.selected, "upvote": !delegate.status.voted && delegate.status.selected, "pending": delegate.status.pending, "voted": delegate.status.voted && delegate.status.selected}')
               td(md-cell)
                 spinner(ng-show='delegate.status.pending')

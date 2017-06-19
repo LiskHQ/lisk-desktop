@@ -22,7 +22,7 @@ div.dialog-vote(aria-label='Vote for delegates')
               span(md-highlight-text='$ctrl.unvoteSearchText') {{delegate.username}}
         md-input-container.md-block(ng-if='$ctrl.account.get().secondSignature')
           label Second Passphrase
-          input(type='password', ng-model='$ctrl.secondPassphrase')
+          input.second-passphrase(type='password', ng-model='$ctrl.secondPassphrase')
         br
         br
         md-divider
@@ -35,7 +35,7 @@ div.dialog-vote(aria-label='Vote for delegates')
             span You can vote for up to 101 delegates in total.
         md-divider
     md-dialog-actions(layout='row')
-      md-button(ng-click="$ctrl.$mdDialog.cancel()") Cancel
+      md-button.cancel-button(ng-click="$ctrl.$mdDialog.cancel()") Cancel
       span(flex)
       fee(data-fee='$ctrl.fee')
       md-button.md-primary.md-raised.submit-button(ng-disabled='!$ctrl.canVote()', ng-click="$ctrl.vote()") {{$ctrl.votingInProgress ? 'Voting...' : 'Confirm'}}
