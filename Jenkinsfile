@@ -87,7 +87,7 @@ node('lisk-nano-01'){
       try {
         sh '''
         # Prepare lisk core for testing
-        bash ~/tx.sh
+        bash ./e2e-transactions.sh
 
         # Run Dev build and Build
         cd $WORKSPACE
