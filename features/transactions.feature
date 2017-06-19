@@ -24,4 +24,3 @@ Feature: Transactions tab
     When I click tab number 1
     Then I should see table with 0 lines
     And I should see text "No transactions" in "empty message" element
->>>>>>> Implement more e2e tests
