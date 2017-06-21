@@ -29,12 +29,13 @@
     "bitcore-mnemonic": "=1.1.1",
     "lisk-js": "=0.4.2",
     "moment": "=2.15.1",
+    "prop-types": "^15.5.10",
     "react": "^15.6.x",
     "react-dom": "^15.6.x",
     "react-redux": "^5.0.3",
     "react-router-dom": "^4.0.0",
-    "prop-types": "^15.5.10",
-    "redux": "^3.6.0"
+    "redux": "^3.6.0",
+    "redux-logger": "^3.0.6"
   },
   "devDependencies": {
     "babel-core": "^6.20.0",
@@ -78,6 +79,7 @@
     "protractor": "=5.1.1",
     "protractor-cucumber-framework": "=3.1.0",
     "raw-loader": "=0.5.1",
+    "react-addons-test-utils": "^15.6.0",
     "react-test-renderer": "^15.6.1",
     "should": "=11.2.0",
     "sinon": "=2.0.0",
