@@ -27,6 +27,9 @@ module.exports = (env) => {
       historyApiFallback: true,
     },
     plugins: [
+      new webpack.DefinePlugin({
+        PRODUCTION: env.prod,
+      }),
       env.prod
         ? new webpack.optimize.UglifyJsPlugin({
           sourceMap: false,
