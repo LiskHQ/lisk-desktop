@@ -58,7 +58,7 @@ module.exports = (env) => {
             plugins: ['syntax-trailing-function-commas'],
             env: {
               test: {
-                plugins: ['__coverage__'],
+                plugins: ['istanbul'],
               },
             },
           },
