@@ -1,22 +1,18 @@
-import store from '../reducers';
+import actionTypes from '../constants/actions';
 
 /**
- * 
- * 
+ *
+ *
  */
-export const setAccount = (data) => {
-    store.dispatch({
-        data
-        type: 'SET_ACCOUNT',
-    });
-};
+export const setAccount = data => ({
+  data,
+  type: actionTypes.setAccount,
+});
 
 /**
- * 
- * 
+ *
+ *
  */
-export const resetAccount = () => {
-    store.dispatch({
-        type: 'RESET_ACCOUNT',
-    });
-};
+export const resetAccount = () => ({
+  type: actionTypes.resetAccount,
+});
