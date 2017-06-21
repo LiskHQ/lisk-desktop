@@ -12,6 +12,8 @@ class Metronome {
    * Broadcast an event from rootScope downwards
    *
    * @param {Date} timeStamp
+   * @memberOf Metronome
+   * @private
    */
   dispatch(timeStamp) {
     const ev = new Event('beat', {
@@ -23,8 +25,12 @@ class Metronome {
   }
 
    /**
-    * We're calling this in framerate. call broadcast every config.updateInterval and
+    * We're calling this in framerate.
+    * calls broadcast method every SYNC_(IN)ACTIVE_INTERVAL and
     * sends a numeric factor for ease of use as multiples of updateInterval.
+    *
+    * @memberOf Metronome
+    * @private
     */
   step() {
     const now = new Date();
@@ -33,9 +39,19 @@ class Metronome {
       this.lastBeat = now;
       this.factor += this.factor < 9 ? 1 : -9;
     }
-    window.requestAnimationFrame(this.step.bind(this));
+    if (this.running) {
+      window.requestAnimationFrame(this.step.bind(this));
+    }
   }
 
+  /**
+   * Changes the duration of intervals.
+   *
+   * @param {Boolean} isFocused
+   *
+   * @memberOf Metronome
+   * @private
+   */
   toggleSyncTimer(isFocused) {
     this.interval = (isFocused) ?
       SYNC_ACTIVE_INTERVAL :
@@ -49,8 +65,18 @@ class Metronome {
   }
 
   /**
+   * Terminates the intervals
+   *
+   * @memberOf Metronome
+   */
+  terminate() {
+    this.running = false;
+  }
+
+  /**
    * Starts the first frame by calling requestAnimationFrame.
-   * This will be
+   *
+   * @memberOf Metronome
    */
   init() {
     if (!this.running) {
@@ -59,6 +85,7 @@ class Metronome {
     if (PRODUCTION) {
       this.initIntervalToggler();
     }
+    this.running = true;
   }
 }
 
