@@ -7,6 +7,8 @@ import { createStore } from 'redux';
 import { Provider, connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+document.addEventListener('syncTick', e => console.log(e));
+
 /**
 * @description this is a reducer for handling counter state
 * @param {number} state - current state of our component
@@ -47,7 +49,7 @@ Counter.propTypes = {
   reset: PropTypes.func,
 };
 
-const ReduxConter = () => (
+const ReduxCounter = () => (
   <Provider store={createStore(counterReducer)}>
     <ConnectedCounter />
   </Provider>
@@ -80,4 +82,4 @@ const mapStateToProps = state => ({ value: state });
 
 const ConnectedCounter = connect(mapStateToProps, mapDispatchToProps)(Counter);
 
-export default ReduxConter;
+export default ReduxCounter;
