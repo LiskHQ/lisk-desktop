@@ -25,7 +25,7 @@ export const deepEquals = (ref1, ref2) => {
 
   props1.forEach((value1, index) => {
     if (typeof ref1[value1] === 'object' && typeof ref2[props2[index]] === 'object') {
-      if (!equals(ref1[value1], ref2[props2[index]])) {
+      if (!deepEquals(ref1[value1], ref2[props2[index]])) {
         isEqual = false;
       }
     } else if (ref1[value1] != ref2[props2[index]]) {
@@ -34,3 +34,5 @@ export const deepEquals = (ref1, ref2) => {
   });
   return isEqual;
 };
+
+export const fn = () => {};
