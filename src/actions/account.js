@@ -4,15 +4,15 @@ import actionTypes from '../constants/actions';
  *
  *
  */
-export const setAccount = data => ({
+export const accountUpdated = data => ({
   data,
-  type: actionTypes.setAccount,
+  type: actionTypes.accountUpdated,
 });
 
 /**
  *
  *
  */
-export const resetAccount = () => ({
-  type: actionTypes.resetAccount,
+export const accountLoggedOut = () => ({
+  type: actionTypes.accountLoggedOut,
 });

@@ -1,6 +1,6 @@
 const actionTypes = {
-  setAccount: 'SET_ACCOUNT',
-  resetAccount: 'RESET_ACCOUNT',
+  accountUpdated: 'ACCOUNT_UPDATED',
+  accountLoggedOut: 'ACCOUNT_LOGGED_OUT',
 };
 
 export default actionTypes;

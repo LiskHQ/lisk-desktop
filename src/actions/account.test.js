@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import actionTypes from '../constants/actions';
-import { setAccount, resetAccount } from './account';
+import { accountUpdated, accountLoggedOut } from './account';
 
 describe('actions', () => {
   it('should create an action to set values to account', () => {
@@ -10,15 +10,15 @@ describe('actions', () => {
 
     const expectedAction = {
       data,
-      type: actionTypes.setAccount,
+      type: actionTypes.accountUpdated,
     };
-    expect(setAccount(data)).to.be.deep.equal(expectedAction);
+    expect(accountUpdated(data)).to.be.deep.equal(expectedAction);
   });
 
   it('should create an action to reset the account', () => {
     const expectedAction = {
-      type: actionTypes.resetAccount,
+      type: actionTypes.accountLoggedOut,
     };
-    expect(resetAccount()).to.be.deep.equal(expectedAction);
+    expect(accountLoggedOut()).to.be.deep.equal(expectedAction);
   });
 });
