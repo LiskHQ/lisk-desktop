@@ -1,3 +1,4 @@
+// import { ipcMain as ipc, BrowserWindow } from 'electron';
 import { SYNC_ACTIVE_INTERVAL, SYNC_INACTIVE_INTERVAL } from '../constants/api';
 
 class Metronome {
@@ -45,23 +46,15 @@ class Metronome {
   }
 
   /**
-   * Changes the duration of intervals.
-   *
-   * @param {Boolean} isFocused
+   * Changes the duration of intervals when sending application
+   * to tray or activating it again.
    *
    * @memberOf Metronome
-   * @private
    */
-  toggleSyncTimer(isFocused) {
-    this.interval = (isFocused) ?
-      SYNC_ACTIVE_INTERVAL :
-      SYNC_INACTIVE_INTERVAL;
-  }
-
   initIntervalToggler() {
     const { ipc } = window;
-    ipc.on('blur', () => this.toggleSyncTimer(false));
-    ipc.on('focus', () => this.toggleSyncTimer(true));
+    ipc.on('blur', () => this.interval = SYNC_INACTIVE_INTERVAL);
+    ipc.on('focus', () => this.interval = SYNC_ACTIVE_INTERVAL);
   }
 
   /**

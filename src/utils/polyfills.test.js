@@ -27,8 +27,8 @@ describe('Polyfills', () => {
     expect(deepEquals(ref1, ref2)).to.be.equal(false);
 
     // different objects
-    ref1 = { key1: 'value 1' };
-    ref2 = { key2: 'value 2' };
+    ref1 = { key1: { inner1: 'value 1' } };
+    ref2 = { key2: { inner2: 'value 2' } };
     expect(deepEquals(ref1, ref2)).to.be.equal(false);
   });
   it('should return true for reference values with equal primary members', () => {
