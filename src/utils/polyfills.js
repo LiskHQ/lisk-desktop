@@ -8,6 +8,7 @@
  * @param {any} ref2 - Value to compare equality
  * @returns {Boolean} Whether two parameters are equal or not
  */
+  /* eslint-disable import/prefer-default-export  */
 export const deepEquals = (ref1, ref2) => {
   /* eslint-disable eqeqeq */
 
@@ -34,5 +35,3 @@ export const deepEquals = (ref1, ref2) => {
   });
   return isEqual;
 };
-
-export const fn = () => {};
