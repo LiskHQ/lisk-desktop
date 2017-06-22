@@ -12,15 +12,17 @@ class Metronome {
   /**
    * Broadcast an event from rootScope downwards
    *
-   * @param {Date} timeStamp
+   * @param {Date} lastBeat
+   * @param {Date} now
+   * @param {Number} factor
    * @memberOf Metronome
    * @private
    */
-  dispatch(timeStamp) {
+  static _dispatch(lastBeat, now, factor) {
     const ev = new Event('beat', {
-      factor: this.factor,
-      lastBeat: this.lastBeat,
-      timeStamp,
+      factor,
+      lastBeat,
+      now,
     });
     document.dispatchEvent(ev);
   }
@@ -33,15 +35,15 @@ class Metronome {
     * @memberOf Metronome
     * @private
     */
-  step() {
+  _step() {
     const now = new Date();
     if (now - this.lastBeat >= this.interval) {
-      this.dispatch(this.lastBeat, now, this.factor);
+      Metronome._dispatch(this.lastBeat, now, this.factor);
       this.lastBeat = now;
       this.factor += this.factor < 9 ? 1 : -9;
     }
     if (this.running) {
-      window.requestAnimationFrame(this.step.bind(this));
+      window.requestAnimationFrame(this._step.bind(this));
     }
   }
 
@@ -50,8 +52,9 @@ class Metronome {
    * to tray or activating it again.
    *
    * @memberOf Metronome
+   * @private
    */
-  initIntervalToggler() {
+  _initIntervalToggler() {
     const { ipc } = window;
     ipc.on('blur', () => this.interval = SYNC_INACTIVE_INTERVAL);
     ipc.on('focus', () => this.interval = SYNC_ACTIVE_INTERVAL);
@@ -73,10 +76,10 @@ class Metronome {
    */
   init() {
     if (!this.running) {
-      window.requestAnimationFrame(this.step.bind(this));
+      window.requestAnimationFrame(this._step.bind(this));
     }
     if (PRODUCTION) {
-      this.initIntervalToggler();
+      this._initIntervalToggler();
     }
     this.running = true;
   }
