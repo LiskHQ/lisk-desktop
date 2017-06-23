@@ -12,7 +12,7 @@ const external = {
   'react/lib/ExecutionEnvironment': true,
   'react/lib/ReactContext': true,
 };
-module.exports = (env) => {  
+module.exports = (env) => {
   entries = env.test ? `${path.resolve(__dirname, 'src')}/main.js` : entries;
   return {
     entry: entries,
@@ -99,6 +99,11 @@ module.exports = (env) => {
         {
           test: /\.json$/,
           use: ['json-loader'],
+        },
+        {
+          test: /\.less$/,
+          use: ['style-loader', 'css-loader', 'less-loader'],
+          include: path.join(__dirname, 'src'),
         },
       ],
     },
