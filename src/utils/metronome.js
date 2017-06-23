@@ -1,5 +1,6 @@
 // import { ipcMain as ipc, BrowserWindow } from 'electron';
 import { SYNC_ACTIVE_INTERVAL, SYNC_INACTIVE_INTERVAL } from '../constants/api';
+import env from '../constants/env';
 
 class Metronome {
   constructor() {
@@ -78,7 +79,7 @@ class Metronome {
     if (!this.running) {
       window.requestAnimationFrame(this._step.bind(this));
     }
-    if (PRODUCTION) {
+    if (env.production) {
       this._initIntervalToggler();
     }
     this.running = true;

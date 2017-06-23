@@ -32,6 +32,7 @@ module.exports = (env) => {
     plugins: [
       new webpack.DefinePlugin({
         PRODUCTION: env.prod,
+        TEST: env.test,
       }),
       env.prod
         ? new webpack.optimize.UglifyJsPlugin({

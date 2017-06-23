@@ -12,7 +12,8 @@
     "beforeEach": true,
     "afterEach": true,
     "ipc": true,
-    "PRODUCTION": true
+    "PRODUCTION": true,
+    "TEST": true,
   },
   "env": {
     "browser": true,
