@@ -12,7 +12,7 @@ const external = {
   'react/lib/ExecutionEnvironment': true,
   'react/lib/ReactContext': true,
 };
-module.exports = (env) => {
+module.exports = (env) => {  
   entries = env.test ? `${path.resolve(__dirname, 'src')}/main.js` : entries;
   return {
     entry: entries,
@@ -67,8 +67,34 @@ module.exports = (env) => {
           },
         },
         {
+          test: /\.(eot|svg|ttf|woff|woff2)$/,
+          loader: 'url-loader',
+          include: path.join(path.join(__dirname, 'src'), 'assets'),
+        },
+        {
           test: /\.css$/,
-          use: ['style-loader', 'css-loader'],
+          use: [
+            { loader: 'style-loader' },
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: !env.prod,
+                modules: !env.prod,
+                importLoaders: 1,
+                localIdentName: '[name]__[local]___[hash:base64:5]',
+              },
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                sourceMap: !env.prod,
+                sourceComments: !env.prod,
+                /* eslint-disable global-require */
+                plugins: [require('postcss-cssnext')()],
+                /* eslint-enable */
+              },
+            },
+          ],
         },
         {
           test: /\.json$/,
