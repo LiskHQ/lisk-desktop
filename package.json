@@ -63,6 +63,7 @@
     "exports-loader": "=0.6.3",
     "file-loader": "=0.9.0",
     "imports-loader": "=0.6.5",
+    "js-nacl": "^1.2.2",
     "json-loader": "=0.5.4",
     "karma": "^1.6.0",
     "karma-chai": "=0.1.0",
