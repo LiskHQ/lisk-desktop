@@ -1,17 +1,17 @@
-import { requestActivePeer } from './peers';
+import { requestToActivePeer } from './peers';
 
 export const listAccountDelegates = (activePeer, address) =>
-  requestActivePeer(activePeer, 'accounts/delegates', { address });
+  requestToActivePeer(activePeer, 'accounts/delegates', { address });
 
 
 export const listDelegates = (activePeer, options) =>
-  requestActivePeer(activePeer, `delegates/${options.q ? 'search' : ''}`, options);
+  requestToActivePeer(activePeer, `delegates/${options.q ? 'search' : ''}`, options);
 
 export const getDelegate = (activePeer, options) =>
-  requestActivePeer(activePeer, 'delegates/get', options);
+  requestToActivePeer(activePeer, 'delegates/get', options);
 
 export const vote = (activePeer, secret, publicKey, voteList, unvoteList, secondSecret = null) =>
-  requestActivePeer(activePeer, 'accounts/delegates', {
+  requestToActivePeer(activePeer, 'accounts/delegates', {
     secret,
     publicKey,
     delegates: voteList.map(delegate => `+${delegate.publicKey}`).concat(
@@ -42,5 +42,5 @@ export const registerDelegate = (activePeer, username, secret, secondSecret = nu
   if (secondSecret) {
     data.secondSecret = secondSecret;
   }
-  return requestActivePeer(activePeer, 'delegates', data);
+  return requestToActivePeer(activePeer, 'delegates', data);
 };

@@ -1,29 +1,30 @@
-import { requestActivePeer } from './peers';
+import { requestToActivePeer } from './peers';
 
-export const get = address =>
+export const getPeer = (activePeer, address) =>
   new Promise((resolve) => {
-    this.peers.active.getAccount(address, (data) => {
+    activePeer.getAccount(address, (data) => {
       if (data.success) {
-        return resolve(data.account);
+        resolve(data.account);
+      } else {
+        // when the account if registered for the first time
+        // this endpoint returns { success: false }
+        resolve({
+          address,
+          balance: 0,
+        });
       }
-
-      // @todo shouldn't I just reject this promise?
-      return resolve({
-        address,
-        balance: 0,
-      });
     });
   });
 
 export const setSecondSecret = (activePeer, secondSecret, publicKey, secret) =>
-  requestActivePeer(activePeer, 'signatures', { secondSecret, publicKey, secret });
+  requestToActivePeer(activePeer, 'signatures', { secondSecret, publicKey, secret });
 
 export const send = (activePeer, recipientId, amount, secret, secondSecret = null) =>
-  requestActivePeer(activePeer, 'transactions',
+  requestToActivePeer(activePeer, 'transactions',
     { recipientId, amount, secret, secondSecret });
 
 export const transactions = (activePeer, address, limit = 20, offset = 0, orderBy = 'timestamp:desc') =>
-  requestActivePeer(activePeer, 'transactions', {
+  requestToActivePeer(activePeer, 'transactions', {
     senderId: address,
     recipientId: address,
     limit,

@@ -27,10 +27,10 @@ export const setActivePeer = (store, network) => {
     }
   }
 
-  store.dispatch(activePeerSet(Lisk.api(config)));
+  return store.dispatch(activePeerSet(Lisk.api(config)));
 };
 
-export const requestActivePeer = (activePeer, path, urlParams) =>
+export const requestToActivePeer = (activePeer, path, urlParams) =>
   new Promise((resolve, reject) => {
     activePeer.sendRequest(path, urlParams, (data) => {
       if (data.success) {

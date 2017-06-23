@@ -1,24 +1,21 @@
 import moment from 'moment';
-import { requestActivePeer } from './peers';
+import { requestToActivePeer } from './peers';
 
-export const getDelegate = (activePeer, publicKey) => {
-  return requestActivePeer(activePeer, 'delegates/get', {
+export const getDelegate = (activePeer, publicKey) =>
+  requestToActivePeer(activePeer, 'delegates/get', {
     publicKey,
   });
-};
 
-export const getForgedBlocks = (activePeer, limit = 10, offset = 0, generatorPublicKey) => {
-  return requestActivePeer(activePeer, 'blocks', {
+export const getForgedBlocks = (activePeer, limit = 10, offset = 0, generatorPublicKey) =>
+  requestToActivePeer(activePeer, 'blocks', {
     limit,
     offset,
     generatorPublicKey,
   });
-};
 
-export const getForgedStats = (activePeer, startMoment, generatorPublicKey) => {
-  return requestActivePeer(activePeer, 'delegates/forging/getForgedByAccount', {
+export const getForgedStats = (activePeer, startMoment, generatorPublicKey) =>
+  requestToActivePeer(activePeer, 'delegates/forging/getForgedByAccount', {
     generatorPublicKey,
     start: moment(startMoment).unix(),
     end: moment().unix(),
   });
-};
