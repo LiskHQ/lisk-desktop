@@ -1,5 +1,6 @@
-import { deepEquals } from '../utils/polyfills';
 import Lisk from 'lisk-js';
+import { deepEquals } from '../utils/polyfills';
+import actionTypes from '../constants/actions';
 
 /**
  * If the new value of the given property on the account is changed,
@@ -11,8 +12,8 @@ import Lisk from 'lisk-js';
  * @param {String} property - The name of the property to check if changed
  * @param {any} value - The new value of the property
  */
-const setChangedItem = (account, changes, property, value) => {
-  return Object.assign({}, changes, () => {
+const setChangedItem = (account, changes, property, value) =>
+  Object.assign({}, changes, () => {
     const obj = {};
 
     if (!deepEquals(account[property], value)) {
@@ -20,7 +21,6 @@ const setChangedItem = (account, changes, property, value) => {
     }
     return obj;
   });
-};
 
 /**
  * Merges account object with given info object
@@ -62,9 +62,9 @@ const merge = (account, info) => {
  */
 const account = (state = {}, action) => {
   switch (action.type) {
-    case 'SET_ACCOUNT':
+    case actionTypes.accountUpdated:
       return merge(state, action.data);
-    case 'RESET_ACCOUNT':
+    case actionTypes.accountLoggedOut:
       return {};
     default:
       return state;
