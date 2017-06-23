@@ -4,6 +4,7 @@ import ReactDom from 'react-dom';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import ReduxCounter from './components/counter';
 import Metronome from './utils/metronome';
+import './main.less';
 
 class App extends React.Component {
   constructor() {
