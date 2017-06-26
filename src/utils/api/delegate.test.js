@@ -1,5 +1,6 @@
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
+import sinon from 'sinon';
 import { listAccountDelegates,
   listDelegates,
   getDelegate,
@@ -7,6 +8,7 @@ import { listAccountDelegates,
   voteAutocomplete,
   unvoteAutocomplete,
   registerDelegate } from './delegate';
+import * as peers from './peers';
 
 chai.use(sinonChai);
 const username = 'genesis_1';
@@ -15,6 +17,19 @@ const secondSecret = 'samepl_second_secret';
 const publicKey = '';
 
 describe('Delegate', () => {
+  let peersMock;
+  let activePeer;
+
+  beforeEach(() => {
+    peersMock = sinon.mock(peers);
+    activePeer = {};
+  });
+
+  afterEach(() => {
+    peersMock.verify();
+    peersMock.restore();
+  });
+
   describe('listAccountDelegates', () => {
     it('should return a promise', () => {
       const promise = listAccountDelegates();
@@ -23,16 +38,35 @@ describe('Delegate', () => {
   });
 
   describe('listDelegates', () => {
-    it('should return a promise', () => {
-      const promise = listDelegates(null, {});
-      expect(typeof promise.then).to.be.equal('function');
+    it('should return requestToActivePeer(activePeer, `delegates/`, options) if options = {}', () => {
+      const options = {};
+      const mockedPromise = new Promise((resolve) => { resolve(); });
+      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates/', options).returns(mockedPromise);
+
+      const returnedPromise = listDelegates(activePeer, options);
+      expect(returnedPromise).to.equal(mockedPromise);
+    });
+
+    it('should return requestToActivePeer(activePeer, `delegates/search`, options) if options.q is set', () => {
+      const options = {
+        q: 'genesis_1',
+      };
+      const mockedPromise = new Promise((resolve) => { resolve(); });
+      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates/search', options).returns(mockedPromise);
+
+      const returnedPromise = listDelegates(activePeer, options);
+      expect(returnedPromise).to.equal(mockedPromise);
     });
   });
 
   describe('getDelegate', () => {
-    it('should return a promise', () => {
-      const promise = getDelegate();
-      expect(typeof promise.then).to.be.equal('function');
+    it('should return requestToActivePeer(activePeer, `delegates/get`, options)', () => {
+      const options = {};
+      const mockedPromise = new Promise((resolve) => { resolve(); });
+      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates/get', options).returns(mockedPromise);
+
+      const returnedPromise = getDelegate(activePeer, options);
+      expect(returnedPromise).to.equal(mockedPromise);
     });
   });
 
@@ -53,9 +87,30 @@ describe('Delegate', () => {
   });
 
   describe('registerDelegate', () => {
-    it('should return a promise', () => {
-      const promise = registerDelegate(null, username, secret, secondSecret);
-      expect(typeof promise.then).to.be.equal('function');
+    it('should return requestToActivePeer(activePeer, `delegates`, data)', () => {
+      const data = {
+        username: 'test',
+        secret: 'wagon dens',
+        secondSecret: 'wagon dens',
+      };
+      const mockedPromise = new Promise((resolve) => { resolve(); });
+      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates', data).returns(mockedPromise);
+
+      const returnedPromise = registerDelegate(
+        activePeer, data.username, data.secret, data.secondSecret);
+      expect(returnedPromise).to.equal(mockedPromise);
+    });
+
+    it('should return requestToActivePeer(activePeer, `delegates`, data) even if no secondSecret specified', () => {
+      const data = {
+        username: 'test',
+        secret: 'wagon dens',
+      };
+      const mockedPromise = new Promise((resolve) => { resolve(); });
+      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates', data).returns(mockedPromise);
+
+      const returnedPromise = registerDelegate(activePeer, data.username, data.secret);
+      expect(returnedPromise).to.equal(mockedPromise);
     });
   });
 
@@ -75,9 +130,16 @@ describe('Delegate', () => {
   });
 
   describe('voteAutocomplete', () => {
-    it('should return a promise', () => {
-      const promise = voteAutocomplete();
-      expect(typeof promise.then).to.be.equal('function');
+    it('should return requestToActivePeer(activePeer, `delegates/`, data)', () => {
+      const delegates = [
+        { username: 'genesis_42' },
+        { username: 'genesis_44' },
+      ];
+      const mockedPromise = new Promise((resolve) => { resolve({ success: true, delegates }); });
+      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates/search', { q: username }).returns(Promise.resolve({ success: true, delegates }));
+
+      const returnedPromise = voteAutocomplete(activePeer, username, {});
+      expect(returnedPromise).to.deep.equal(mockedPromise);
     });
   });
 });

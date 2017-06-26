@@ -1,12 +1,12 @@
 import { requestToActivePeer } from './peers';
 
-export const getPeer = (activePeer, address) =>
+export const getAccount = (activePeer, address) =>
   new Promise((resolve) => {
     activePeer.getAccount(address, (data) => {
       if (data.success) {
         resolve(data.account);
       } else {
-        // when the account if registered for the first time
+        // when the account has no transactions yet (therefore is not saved on the blockchain)
         // this endpoint returns { success: false }
         resolve({
           address,

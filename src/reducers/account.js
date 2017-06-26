@@ -13,14 +13,14 @@ import actionTypes from '../constants/actions';
  * @param {any} value - The new value of the property
  */
 const setChangedItem = (account, changes, property, value) =>
-  Object.assign({}, changes, () => {
+  Object.assign({}, changes, (() => {
     const obj = {};
 
     if (!deepEquals(account[property], value)) {
       obj[property] = [account[property], value];
     }
     return obj;
-  });
+  })());
 
 /**
  * Merges account object with given info object

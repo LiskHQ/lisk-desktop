@@ -1,16 +1,49 @@
 import chai, { expect } from 'chai';
-import { spy } from 'sinon';
+import { spy, mock } from 'sinon';
 import sinonChai from 'sinon-chai';
+import chaiAsPromised from 'chai-as-promised';
 import { setActivePeer, resetActivePeer, requestToActivePeer } from './peers';
 import store from '../../reducers';
 
+chai.use(chaiAsPromised);
 chai.use(sinonChai);
 
 describe('Peers', () => {
   describe('requestToActivePeer', () => {
-    it('should return a promise', () => {
-      const _requestToActivePeer = requestToActivePeer();
-      expect(typeof _requestToActivePeer.then).to.be.equal('function');
+    let activePeerMock;
+    const path = '/test/';
+    const urlParams = {};
+    const activePeer = {
+      sendRequest: () => { },
+    };
+
+    beforeEach(() => {
+      activePeerMock = mock(activePeer);
+    });
+
+    afterEach(() => {
+      activePeerMock.verify();
+      activePeerMock.restore();
+    });
+
+    it('should return a promise that is resolved when activePeer.sendRequest() calls its callback with data.success == true', () => {
+      const response = {
+        success: true,
+        data: [],
+      };
+      activePeerMock.expects('sendRequest').withArgs(path, urlParams).callsArgWith(2, response);
+      const requestPromise = requestToActivePeer(activePeer, path, urlParams);
+      expect(requestPromise).to.eventually.deep.equal(response);
+    });
+
+    it('should return a promise that is resolved when activePeer.sendRequest() calls its callback with data.success == true', () => {
+      const response = {
+        success: false,
+        message: 'some error message',
+      };
+      activePeerMock.expects('sendRequest').withArgs(path, urlParams).callsArgWith(2, response);
+      const requestPromise = requestToActivePeer(activePeer, path, urlParams);
+      expect(requestPromise).to.be.rejectedWith(response);
     });
   });
 
@@ -21,6 +54,31 @@ describe('Peers', () => {
         testnet: true,
         nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
       };
+      const actionSpy = spy(store, 'dispatch');
+      setActivePeer(store, network);
+      expect(actionSpy).to.have.been.calledWith();
+      store.dispatch.restore();
+    });
+
+    it('dispatch activePeerSet action also when address http missing', () => {
+      const network = {
+        address: 'localhost:8000',
+      };
+      const actionSpy = spy(store, 'dispatch');
+      setActivePeer(store, network);
+      expect(actionSpy).to.have.been.calledWith();
+      store.dispatch.restore();
+    });
+
+    it('dispatch activePeerSet action even if network is undefined', () => {
+      const actionSpy = spy(store, 'dispatch');
+      setActivePeer(store);
+      expect(actionSpy).to.have.been.calledWith();
+      store.dispatch.restore();
+    });
+
+    it('dispatch activePeerSet action even if network.address is undefined', () => {
+      const network = {};
       const actionSpy = spy(store, 'dispatch');
       setActivePeer(store, network);
       expect(actionSpy).to.have.been.calledWith();
