@@ -87,7 +87,7 @@ module.exports = (env) => {
               loader: 'css-loader',
               options: {
                 sourceMap: !env.prod,
-                modules: !env.prod,
+                modules: true,
                 importLoaders: 1,
                 localIdentName: '[name]__[local]___[hash:base64:5]',
               },
