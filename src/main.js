@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import ReduxCounter from './components/counter';
 import Metronome from './utils/metronome';
 import './main.less';
+import Static from './components/static';
 
 class App extends React.Component {
   constructor() {
@@ -31,9 +32,13 @@ class App extends React.Component {
                 <li>
                   <Link to="/counter">counter</Link>
                 </li>
+                <li>
+                  <Link to="/static">Static</Link>
+                </li>
               </ul>
             </nav>
             <Route exact path="/" render={() => <p>Home</p>} />
+            <Route path="/static" component={Static} />
             <Route path="/counter" component={this.ReduxCounter} />
           </div>
         </Router>
