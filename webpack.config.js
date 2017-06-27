@@ -2,6 +2,10 @@ const path = require('path');
 const webpack = require('webpack');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
+const reactToolboxVariables = {
+  'color-primary': '#0288D1',
+  'color-primary-dark': '#0288D1',
+};
 
 let entries = {
   app: `${path.resolve(__dirname, 'src')}/main.js`,
@@ -83,7 +87,7 @@ module.exports = (env) => {
               loader: 'css-loader',
               options: {
                 sourceMap: !env.prod,
-                modules: !env.prod,
+                modules: true,
                 importLoaders: 1,
                 localIdentName: '[name]__[local]___[hash:base64:5]',
               },
@@ -94,7 +98,15 @@ module.exports = (env) => {
                 sourceMap: !env.prod,
                 sourceComments: !env.prod,
                 /* eslint-disable global-require */
-                plugins: [require('postcss-cssnext')()],
+                plugins: [
+                  require('postcss-cssnext')({
+                    features: {
+                      customProperties: {
+                        variables: reactToolboxVariables,
+                      },
+                    },
+                  }),
+                ],
                 /* eslint-enable */
               },
             },
