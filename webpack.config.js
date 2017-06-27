@@ -16,6 +16,9 @@ module.exports = (env) => {
   entries = env.test ? `${path.resolve(__dirname, 'src')}/main.js` : entries;
   return {
     entry: entries,
+    node: {
+      fs: 'empty',
+    },
     output: {
       path: path.resolve(__dirname, 'dist'),
       filename: env.test ? 'bundle.js' : 'bundle.[name].js',
@@ -29,6 +32,7 @@ module.exports = (env) => {
     plugins: [
       new webpack.DefinePlugin({
         PRODUCTION: env.prod,
+        TEST: env.test,
       }),
       env.prod
         ? new webpack.optimize.UglifyJsPlugin({
