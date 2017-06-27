@@ -100,11 +100,11 @@ module.exports = (env) => {
                 /* eslint-disable global-require */
                 plugins: [
                   require('postcss-cssnext')({
-                    // features: {
-                    //   customProperties: {
-                    //     variables: reactToolboxVariables,
-                    //   },
-                    // },
+                    features: {
+                      customProperties: {
+                        variables: reactToolboxVariables,
+                      },
+                    },
                   }),
                 ],
                 /* eslint-enable */
