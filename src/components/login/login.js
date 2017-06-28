@@ -56,8 +56,9 @@ app.component('login', {
       this.$scope.$watch('$ctrl.input_passphrase', val => this.validity.passphrase = this.Passphrase.isValidPassphrase(val));
       this.$scope.$watch('$ctrl.network.address', (val) => {
         try {
-          const url = new URL(val);
-          this.validity.url = url.port !== '';
+          // eslint-disable-next-line no-new
+          new URL(val);
+          this.validity.url = true;
         } catch (e) {
           this.validity.url = false;
         }
