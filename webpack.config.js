@@ -77,7 +77,6 @@ module.exports = (env) => {
         {
           test: /\.(eot|svg|ttf|woff|woff2)$/,
           loader: 'url-loader',
-          include: path.join(path.join(__dirname, 'src'), 'assets'),
         },
         {
           test: /\.css$/,
@@ -105,7 +104,10 @@ module.exports = (env) => {
                         variables: reactToolboxVariables,
                       },
                     },
+                    plugins: [require('stylelint')({ /* your options */ })],
                   }),
+                  require('postcss-partial-import')({ /* options */ }),
+                  require('postcss-reporter')({ clearMessages: true }),
                 ],
                 /* eslint-enable */
               },
@@ -115,11 +117,6 @@ module.exports = (env) => {
         {
           test: /\.json$/,
           use: ['json-loader'],
-        },
-        {
-          test: /\.less$/,
-          use: ['style-loader', 'css-loader', 'less-loader'],
-          include: path.join(__dirname, 'src'),
         },
       ],
     },
