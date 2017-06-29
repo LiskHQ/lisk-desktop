@@ -61,7 +61,7 @@ class VerifyMessage extends React.Component {
       <div className='verify-message'>
           <AppBar title="Verify Message" flat={true}>
             <Navigation type='horizontal'>
-              <IconButton className={dialogsStyles['x-button']} onClick={this.props.closeDialog} icon='close'/>
+              <IconButton className={`${dialogsStyles['x-button']} x-button`} onClick={this.props.closeDialog} icon='close'/>
             </Navigation>
           </AppBar>
           <div className='layout-row layout-align-center-center'>
@@ -91,7 +91,7 @@ class VerifyMessage extends React.Component {
           {this.state.result ?
             <div className={styles.resultWrapper}>
               <h4>Original Message</h4>
-              <Input className={styles.result} multiline readOnly value={this.state.result} />
+              <Input className={`${styles.result} result`} multiline readOnly value={this.state.result} />
             </div> :
             null
           }
