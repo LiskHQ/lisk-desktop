@@ -4,7 +4,7 @@ import ReactDom from 'react-dom';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import ReduxCounter from './components/counter';
 import Metronome from './utils/metronome';
-import './main.css';
+import styles from './main.css';
 import Static from './components/static';
 
 class App extends React.Component {
@@ -21,7 +21,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <section className={styles['body-wrapper']}>
         <Router>
           <div>
             <nav>
@@ -42,7 +42,7 @@ class App extends React.Component {
             <Route path="/counter" component={this.ReduxCounter} />
           </div>
         </Router>
-      </div>
+      </section>
     );
   }
 }
