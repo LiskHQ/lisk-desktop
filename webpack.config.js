@@ -113,6 +113,7 @@ module.exports = (env) => {
                   }),
                   require('postcss-partial-import')({ /* options */ }),
                   require('postcss-reporter')({ clearMessages: true }),
+                  require('postcss-nested')({ /* options */ }),
                 ],
                 /* eslint-enable */
               },

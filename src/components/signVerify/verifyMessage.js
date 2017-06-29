@@ -7,7 +7,8 @@ import Navigation from 'react-toolbox/lib/navigation';
 import PropTypes from 'prop-types';
 
 import lisk from 'lisk-js';
-import './signVerifyMessage.less';
+import styles from './verifyMessage.css';
+import dialogsStyles from '../dialogs/dialogs.css';
 
 class VerifyMessage extends React.Component {
 
@@ -60,7 +61,7 @@ class VerifyMessage extends React.Component {
       <div className='verify-message'>
           <AppBar title="Verify Message" flat={true}>
             <Navigation type='horizontal'>
-              <IconButton className='x-button' onClick={this.props.closeDialog} icon='close'/>
+              <IconButton className={dialogsStyles['x-button']} onClick={this.props.closeDialog} icon='close'/>
             </Navigation>
           </AppBar>
           <div className='layout-row layout-align-center-center'>
@@ -88,9 +89,9 @@ class VerifyMessage extends React.Component {
               onChange={this.handleChange.bind(this, 'signature')} />
           </section>
           {this.state.result ?
-            <div className='result-wrapper'>
+            <div className={styles.resultWrapper}>
               <h4>Original Message</h4>
-              <Input className='result' multiline readOnly value={this.state.result} />
+              <Input className={styles.result} multiline readOnly value={this.state.result} />
             </div> :
             null
           }

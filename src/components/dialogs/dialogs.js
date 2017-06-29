@@ -3,14 +3,14 @@ import Dialog from 'react-toolbox/lib/dialog';
 import PropTypes from 'prop-types';
 
 import VerifyMessage from '../signVerify/verifyMessage';
-import './dialogs.less';
+import styles from './dialogs.css';
 
 class Dialogs extends React.Component {
   render() {
     return (
-      <div className='dialogs'>
-        <Dialog active={!!this.props.active} >
-          <div className='dialogs'>
+      <div>
+        <Dialog active={!!this.props.active} type='fullscreen' >
+          <div className={styles.dialogs}>
             {(() => {
               switch (this.props.active) {
                 case 'verify-message':
