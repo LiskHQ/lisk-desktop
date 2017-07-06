@@ -5,6 +5,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
 const reactToolboxVariables = {
   'color-primary': '#0288D1',
   'color-primary-dark': '#0288D1',
+  'button-border-radius': '3px',
 };
 
 let entries = {
@@ -75,7 +76,7 @@ module.exports = (env) => {
           },
         },
         {
-          test: /\.(eot|svg|ttf|woff|woff2)$/,
+          test: /\.(eot|svg|ttf|woff|woff2|png)$/,
           loader: 'url-loader',
         },
         {

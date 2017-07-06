@@ -1,0 +1,18 @@
+.wrapper{
+    margin-top: 5px;
+    padding: 8px;
+}
+.logo{
+    width: 25%;
+    min-width: 128px;
+    max-width: 256px;
+}
+.button, .iconButton{
+    padding: 8px;
+    margin: 6px 8px;
+    height: auto;
+    float: right;
+}
+.material-icons{
+    font-size: 24px !important;
+}

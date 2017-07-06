@@ -6,6 +6,7 @@ import ReduxCounter from './components/counter';
 import Metronome from './utils/metronome';
 import styles from './main.css';
 import Static from './components/static';
+import Header from './components/header';
 
 class App extends React.Component {
   constructor() {
@@ -22,6 +23,7 @@ class App extends React.Component {
   render() {
     return (
       <section className={styles['body-wrapper']}>
+      <Header></Header>
         <Router>
           <div>
             <nav>
