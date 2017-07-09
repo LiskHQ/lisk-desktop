@@ -33,6 +33,7 @@
       ]
     }],
 
+    "react/prop-types": "off",
     "no-loop-func": "off",
     "no-plusplus": "off",
     "no-restricted-properties": "off",
