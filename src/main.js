@@ -7,11 +7,33 @@ import Metronome from './utils/metronome';
 import styles from './main.css';
 import Static from './components/static';
 import Header from './components/header';
+import Account from './components/account';
 
 class App extends React.Component {
   constructor() {
     super();
     this.ReduxCounter = ReduxCounter;
+    this.state = {
+      accountInfo: {
+        account: {
+          isDelegate: false,
+          address: '16313739661670634666L',
+          username: 'lisk-nano',
+        },
+        address: '16313739661670634666L',
+        peers: {
+          online: true,
+          active: {
+            currentPeer: 'localhost',
+            port: 4000,
+            options: {
+              name: 'Custom Node',
+            },
+          },
+        },
+        balance: '99992689.6',
+      },
+    };
   }
 
   componentDidMount() {
@@ -24,6 +46,7 @@ class App extends React.Component {
     return (
       <section className={styles['body-wrapper']}>
       <Header></Header>
+      <Account {...this.state.accountInfo}></Account>
         <Router>
           <div>
             <nav>
