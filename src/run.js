@@ -3,7 +3,7 @@
  *
  * @description The application state method.
  */
-app.run(($rootScope, $timeout, $state, $transitions, $mdDialog, Peers, Account, Sync) => {
+app.run(($rootScope, $timeout, $state, $transitions, $mdDialog, Peers, Account, Sync, $window) => {
   $rootScope.peers = Peers;
   Sync.init();
 
@@ -22,6 +22,11 @@ app.run(($rootScope, $timeout, $state, $transitions, $mdDialog, Peers, Account, 
     $rootScope.logged = false;
     $rootScope.$emit('hideLoadingBar');
     Account.reset();
+    if (PRODUCTION) {
+      const { ipc } = $window;
+      ipc.removeAllListeners('blur');
+      ipc.removeAllListeners('focus');
+    }
 
     $state.go('login');
   };
