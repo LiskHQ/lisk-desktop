@@ -1,13 +1,19 @@
 {
-  "extends": "airbnb-base",
+  "extends": [
+    "airbnb-base",
+    "plugin:react/recommended"
+  ],
   "plugins": [
     "import"
   ],
   "globals": {
-    "angular": true,
-    "app": true,
+    "describe": true,
+    "it": true,
+    "beforeEach": true,
+    "afterEach": true,
     "ipc": true,
-    "PRODUCTION": true
+    "PRODUCTION": true,
+    "TEST": true,
   },
   "env": {
     "browser": true,
@@ -27,6 +33,7 @@
       ]
     }],
 
+    "react/prop-types": "off",
     "no-loop-func": "off",
     "no-plusplus": "off",
     "no-restricted-properties": "off",

@@ -13,6 +13,13 @@ defineSupportCode(({ When, Then }) => {
     waitForElemAndClickIt(`md-menu-item .md-button.${itemSelector.replace(/ /g, '-')}`, callback);
   });
 
+  Then('There is no "{itemSelector}" in main menu', (itemSelector, callback) => {
+    waitForElemAndClickIt('header .md-icon-button');
+    browser.sleep(1000);
+    expect(element.all(by.css(`md-menu-item .md-button.${itemSelector.replace(/ /g, '-')}`)).count()).to.eventually.equal(0)
+      .and.notify(callback);
+  });
+
   Then('I should see in "{fieldName}" field:', (fieldName, value, callback) => {
     const elem = element(by.css(`.${fieldName.replace(/ /g, '-')}`));
     expect(elem.getAttribute('value')).to.eventually.equal(value)

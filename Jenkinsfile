@@ -68,6 +68,11 @@ node('lisk-nano-01'){
       try {
         sh '''
         export ON_JENKINS=true
+
+	# Start xvfb
+        export DISPLAY=:99
+        Xvfb :99 -ac -screen 0 1280x1024x24 &
+
         # Run test
         cd $WORKSPACE
         npm run test
@@ -82,7 +87,7 @@ node('lisk-nano-01'){
       try {
         sh '''
         # Prepare lisk core for testing
-        bash ~/tx.sh
+        bash ./e2e-transactions.sh
 
         # Run Dev build and Build
         cd $WORKSPACE
@@ -91,13 +96,11 @@ node('lisk-nano-01'){
         sleep 30
 
         # End to End test configuration
-        export DISPLAY=:99
-        Xvfb :99 -ac -screen 0 1280x1024x24 &
-        ./node_modules/protractor/bin/webdriver-manager update
-        ./node_modules/protractor/bin/webdriver-manager start &
+        # ./node_modules/protractor/bin/webdriver-manager update
+        # ./node_modules/protractor/bin/webdriver-manager start &
 
         # Run End to End Tests
-        npm run e2e-test
+        # npm run e2e-test
 
         cd ~/lisk-test-nano
         bash lisk.sh stop_node
