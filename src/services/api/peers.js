@@ -63,7 +63,7 @@ app.factory('Peers', ($timeout, $cookies, $location, $q, $rootScope, dialog) => 
 
           conf.node = normalizedUrl.hostname;
           conf.port = normalizedUrl.port;
-          conf.ssl = normalizedUrl.protocol === 'https';
+          conf.ssl = normalizedUrl.protocol === 'https:';
         }
         if (conf.testnet === undefined && conf.port !== undefined) {
           conf.testnet = conf.port === '7000';
