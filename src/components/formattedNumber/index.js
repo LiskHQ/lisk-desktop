@@ -1,10 +1,10 @@
 import React from 'react';
 /**
  *
- * @param {*} num - it is a number that we want to formate it as formatted number
+ * @param {*} num - it is a number that we want to format it as formatted number
  * @return {string} - formatted version of input number
  */
-const formateNumber = (num) => {
+const formatNumber = (num) => {
   num = parseFloat(num);
   const sign = num < 0 ? '-' : '';
   const absVal = String(parseInt(num = Math.abs(Number(num) || 0), 10));
@@ -17,7 +17,7 @@ const formateNumber = (num) => {
   return num;
 };
 const FormattedNumber = (props) => {
-  const formatedNumber = formateNumber(props.val);
+  const formatedNumber = formatNumber(props.val);
   return <span>{formatedNumber}</span>;
 };
 
