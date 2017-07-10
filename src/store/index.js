@@ -1,6 +1,5 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import account from './account';
-import peers from './peers';
+import * as reducers from './reducers';
 import env from '../constants/env';
 
 // Create Logger if not in production mode
@@ -10,11 +9,15 @@ if (env.development) {
   middleWares.push(logger);
 }
 
-const App = combineReducers({
-  account,
-  peers,
-});
+const App = combineReducers(reducers);
 
 const store = createStore(App, applyMiddleware(...middleWares));
+
+if (module.hot) {
+  module.hot.accept('./reducers', () => {
+    const nextReducer = combineReducers(require('./reducers'));
+    store.replaceReducer(nextReducer);
+  });
+}
 
 export default store;

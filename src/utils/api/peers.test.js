@@ -3,7 +3,7 @@ import { spy, mock } from 'sinon';
 import sinonChai from 'sinon-chai';
 import chaiAsPromised from 'chai-as-promised';
 import { setActivePeer, resetActivePeer, requestToActivePeer } from './peers';
-import store from '../../reducers';
+import store from '../../store';
 
 chai.use(chaiAsPromised);
 chai.use(sinonChai);

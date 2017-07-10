@@ -5,7 +5,7 @@ import Metronome from './utils/metronome';
 import styles from './main.css';
 import Header from './components/header';
 import Account from './components/account';
-import store from './reducers';
+import store from './store';
 import { setActivePeer } from './utils/api/peers';
 
 export default class App extends React.Component {
