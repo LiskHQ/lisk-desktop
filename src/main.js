@@ -6,10 +6,18 @@ import Metronome from './utils/metronome';
 import styles from './main.css';
 import Header from './components/header';
 import Account from './components/account';
+import store from './reducers';
+import { setActivePeer } from './utils/api/peers';
 
 class App extends React.Component {
   constructor() {
     super();
+    const network = {
+      address: 'http://localhost:4000',
+      testnet: true,
+      nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+    };
+
     this.state = {
       accountInfo: {
         account: {
@@ -31,6 +39,8 @@ class App extends React.Component {
         balance: '99992689.6',
       },
     };
+
+    setActivePeer(store, network);
   }
 
   componentDidMount() {
