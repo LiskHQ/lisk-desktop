@@ -1,6 +1,6 @@
 # Lisk Nano
 
-[![Build Status](https://travis-ci.org/LiskHQ/lisk-nano.svg?branch=development)](https://travis-ci.org/LiskHQ/lisk-nano)
+[![Build Status](https://jenkins.lisk.io/buildStatus/icon?job=Nano-Pipeline/development)](https://jenkins.lisk.io/job/Nano-Pipeline/development)
 [![Coverage Status](https://coveralls.io/repos/github/LiskHQ/lisk-nano/badge.svg?branch=development)](https://coveralls.io/github/LiskHQ/lisk-nano?branch=development)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
