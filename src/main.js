@@ -2,17 +2,14 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import ReduxCounter from './components/counter';
 import Metronome from './utils/metronome';
 import styles from './main.css';
-import Static from './components/static';
 import Header from './components/header';
 import Account from './components/account';
 
 class App extends React.Component {
   constructor() {
     super();
-    this.ReduxCounter = ReduxCounter;
     this.state = {
       accountInfo: {
         account: {
@@ -54,17 +51,9 @@ class App extends React.Component {
                 <li>
                   <Link to="/">home</Link>
                 </li>
-                <li>
-                  <Link to="/counter">counter</Link>
-                </li>
-                <li>
-                  <Link to="/static">Static</Link>
-                </li>
               </ul>
             </nav>
             <Route exact path="/" render={() => <p>Home</p>} />
-            <Route path="/static" component={Static} />
-            <Route path="/counter" component={this.ReduxCounter} />
           </div>
         </Router>
       </section>
