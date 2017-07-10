@@ -12,9 +12,9 @@
     "test": "grunt eslint && export NODE_ENV=test && karma start",
     "test-live": "export NODE_ENV=test && export LIVE=true && karma start",
     "start": "electron app",
-    "dist:win": "build --win",
+    "dist:win": "build --win --ia32 --x64",
     "dist:mac": "build --mac",
-    "dist:linux": "build --linux"
+    "dist:linux": "build --linux --ia32 --x64 --armv7l" 
   },
   "author": "Lisk Foundation <admin@lisk.io>, lightcurve GmbH <admin@lightcurve.io>",
   "license": "GPL-3.0",
@@ -128,6 +128,15 @@
   "build": {
     "appId": "io.lisk.nano",
     "productName": "Lisk Nano",
+    "artifactName": "lisk-nano-${os}-${arch}-${version}.${ext}",
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb",
+        "rpm",
+        "tar.gz"
+      ]
+    },
     "win": {
       "target": "nsis"
     }
