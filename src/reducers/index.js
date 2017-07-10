@@ -1,5 +1,6 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import account from './account';
+import peers from './peers';
 import env from '../constants/env';
 
 // Create Logger if not in production mode
@@ -11,6 +12,7 @@ if (env.development) {
 
 const App = combineReducers({
   account,
+  peers,
 });
 
 const store = createStore(App, applyMiddleware(...middleWares));
