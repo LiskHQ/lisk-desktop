@@ -14,7 +14,7 @@
     "start": "electron app",
     "dist:win": "build --win --ia32 --x64",
     "dist:mac": "build --mac",
-    "dist:linux": "build --linux --arch all"
+    "dist:linux": "build --linux --ia32 --x64 --armv7l" 
   },
   "author": "Lisk Foundation <admin@lisk.io>, lightcurve GmbH <admin@lightcurve.io>",
   "license": "GPL-3.0",
