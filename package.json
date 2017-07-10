@@ -27,6 +27,7 @@
   "dependencies": {
     "bignumber.js": "=4.0.0",
     "bitcore-mnemonic": "=1.1.1",
+    "copy-to-clipboard": "=3.0.6",
     "flexboxgrid": "=6.3.1",
     "lisk-js": "=0.4.2",
     "moment": "=2.15.1",
