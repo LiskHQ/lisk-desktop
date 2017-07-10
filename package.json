@@ -12,9 +12,9 @@
     "test": "karma start",
     "test-live": "npm test -- --auto-watch --no-single-run",
     "start": "electron app",
-    "dist:win": "build --win",
+    "dist:win": "build --win --ia32 --x64",
     "dist:mac": "build --mac",
-    "dist:linux": "build --linux",
+    "dist:linux": "build --linux --ia32 --x64 --armv7l",
     "copy-files": "mkdir dist && cp -r ./src/index.html ./src/assets ./dist",
     "clean": "del dist -f"
   },
@@ -100,6 +100,15 @@
   "build": {
     "appId": "io.lisk.nano",
     "productName": "Lisk Nano",
+    "artifactName": "lisk-nano-${os}-${arch}-${version}.${ext}",
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb",
+        "rpm",
+        "tar.gz"
+      ]
+    },
     "win": {
       "target": "nsis"
     }
