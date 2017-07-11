@@ -21,7 +21,7 @@ defineSupportCode(({ When, Then }) => {
   });
 
   Then('I should see in "{fieldName}" field:', (fieldName, value, callback) => {
-    const elem = element(by.css(`.${fieldName.replace(/ /g, '-')}`));
+    const elem = element(by.css(`.${fieldName.replace(/ /g, '-')} textarea`));
     expect(elem.getAttribute('value')).to.eventually.equal(value)
       .and.notify(callback);
   });
