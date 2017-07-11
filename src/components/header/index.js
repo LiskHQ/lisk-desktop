@@ -4,9 +4,7 @@ import { IconMenu, MenuItem } from 'react-toolbox/lib/menu';
 import logo from '../../assets/images/LISK-nano.png';
 import styles from './header.css';
 
-class Header extends React.Component {
-  render() {
-    return (
+const Header = props => (
   <header className={styles.wrapper}>
     <img className={styles.logo} src={logo} alt="logo" />
     <IconMenu
@@ -20,17 +18,16 @@ class Header extends React.Component {
       <MenuItem caption="Register as delegate" />
       <MenuItem caption="Sign message"
         className='sign-message'
-        onClick={() => this.props.setActiveDialog('sign-message')}
+        onClick={() => props.setActiveDialog('sign-message')}
       />
       <MenuItem caption="Verify message"
         className='verify-message'
-        onClick={() => this.props.setActiveDialog('verify-message')}
+        onClick={() => props.setActiveDialog('verify-message')}
       />
     </IconMenu>
     <Button className={styles.button} raised>logout</Button>
     <Button className={styles.button} raised primary>send</Button>
   </header>
-    );
-  }
-}
+);
+
 export default Header;
