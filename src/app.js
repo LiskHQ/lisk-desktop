@@ -5,6 +5,7 @@ import Metronome from './utils/metronome';
 import styles from './main.css';
 import Header from './components/header';
 import Account from './components/account';
+import Dialogs from './components/dialogs/dialogs';
 import store from './store';
 import { setActivePeer } from './utils/api/peers';
 
@@ -23,6 +24,8 @@ export default class App extends React.Component {
           isDelegate: false,
           address: '16313739661670634666L',
           username: 'lisk-nano',
+          passphrase: 'wagon stock borrow episode laundry kitten salute link globe zero feed marble',
+          publicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
         },
         address: '16313739661670634666L',
         peers: {
@@ -42,6 +45,10 @@ export default class App extends React.Component {
     setActivePeer(store, network);
   }
 
+  setActiveDialog(name) {
+    this.setState(Object.assign({}, this.state, { activeDialog: name }));
+  }
+
   componentDidMount() {
     // start dispatching sync ticks
     this.metronome = new Metronome();
@@ -51,7 +58,7 @@ export default class App extends React.Component {
   render() {
     return (
       <section className={styles['body-wrapper']}>
-      <Header></Header>
+      <Header setActiveDialog={this.setActiveDialog.bind(this)}></Header>
       <Account {...this.state.accountInfo}></Account>
         <Router>
           <div>
@@ -65,6 +72,9 @@ export default class App extends React.Component {
             <Route exact path="/" render={() => <p>Home</p>} />
           </div>
         </Router>
+        <Dialogs active={this.state.activeDialog}
+          account={this.state.accountInfo.account}
+          closeDialog={this.setActiveDialog.bind(this, null)} />
       </section>
     );
   }
