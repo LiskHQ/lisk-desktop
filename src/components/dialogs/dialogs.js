@@ -10,22 +10,24 @@ class Dialogs extends React.Component {
   render() {
     return (
       <div>
-        <Dialog active={!!this.props.active} type='fullscreen' >
-          <div className={styles.dialogs}>
-            {(() => {
-              switch (this.props.active) {
-                case 'verify-message':
-                  return <VerifyMessage closeDialog={this.props.closeDialog}/>;
-                case 'sign-message':
-                  return <SignMessage
-                    closeDialog={this.props.closeDialog}
-                    account={this.props.account}/>;
-                default :
-                  return null;
-              }
-            })()}
-          </div>
-        </Dialog>
+        {[
+          {
+            key: 'verify-message',
+            component: <VerifyMessage closeDialog={this.props.closeDialog}/>,
+          }, {
+            key: 'sign-message',
+            component: <SignMessage
+                        closeDialog={this.props.closeDialog}
+                        account={this.props.account}/>,
+          },
+        ].map(dialog => (
+          <Dialog active={this.props.active === dialog.key} type='fullscreen' key={dialog.key}>
+            <div className={styles.dialogs}>
+              {dialog.component}
+            </div>
+          </Dialog>
+        ))
+        }
       </div>
     );
   }
