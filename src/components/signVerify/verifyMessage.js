@@ -1,14 +1,9 @@
 import React from 'react';
 import Input from 'react-toolbox/lib/input';
-import FontIcon from 'react-toolbox/lib/font_icon';
-import AppBar from 'react-toolbox/lib/app_bar';
-import { IconButton } from 'react-toolbox/lib/button';
-import Navigation from 'react-toolbox/lib/navigation';
-import PropTypes from 'prop-types';
 
 import lisk from 'lisk-js';
-import styles from './verifyMessage.css';
-import dialogsStyles from '../dialogs/dialogs.css';
+import InfoParagraph from '../infoParagraph';
+import SignVerifyResult from './signVerifyResult';
 
 class VerifyMessage extends React.Component {
 
@@ -59,24 +54,13 @@ class VerifyMessage extends React.Component {
   render() {
     return (
       <div className='verify-message'>
-          <AppBar title="Verify Message" flat={true}>
-            <Navigation type='horizontal'>
-              <IconButton className={`${dialogsStyles['x-button']} x-button`} onClick={this.props.closeDialog} icon='close'/>
-            </Navigation>
-          </AppBar>
-          <div className='layout-row layout-align-center-center'>
-            <span className='layout-padding layout-margin'>
-              <FontIcon className='layout-margin' value='info' />
-            </span>
-            <p className='layout-padding layout-margin'>
+          <InfoParagraph>
               When you have the signature, you only need the publicKey of the signer
               in order to verify that the message came from the right private/publicKey pair.
               Be aware, everybody knowing the signature and the publicKey can verify the message.
               If ever there is a dispute, everybody can take the publicKey and signature to a judge
               and prove that the message is coming from the specific private/publicKey pair.
-            </p>
-          </div>
-          <hr />
+          </InfoParagraph>
           <section>
             <Input className='public-key' type='text' label='Public Key'
               autoFocus="true"
@@ -89,19 +73,12 @@ class VerifyMessage extends React.Component {
               onChange={this.handleChange.bind(this, 'signature')} />
           </section>
           {this.state.result ?
-            <div className={styles.resultWrapper}>
-              <h4>Original Message</h4>
-              <Input className={`${styles.result} result`} multiline readOnly value={this.state.result} />
-            </div> :
+            <SignVerifyResult result={this.state.result} title='Original Message' /> :
             null
           }
       </div>
     );
   }
 }
-
-VerifyMessage.propTypes = {
-  closeDialog: PropTypes.func,
-};
 
 export default VerifyMessage;

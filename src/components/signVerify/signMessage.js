@@ -1,16 +1,13 @@
 import React from 'react';
 import Input from 'react-toolbox/lib/input';
-import FontIcon from 'react-toolbox/lib/font_icon';
-import AppBar from 'react-toolbox/lib/app_bar';
-import { Button, IconButton } from 'react-toolbox/lib/button';
-import Navigation from 'react-toolbox/lib/navigation';
+import Button from 'react-toolbox/lib/button';
 import PropTypes from 'prop-types';
 import copy from 'copy-to-clipboard';
 import { toastr } from 'react-redux-toastr';
 
 import lisk from 'lisk-js';
-import styles from './verifyMessage.css';
-import dialogsStyles from '../dialogs/dialogs.css';
+import InfoParagraph from '../infoParagraph';
+import SignVerifyResult from './signVerifyResult';
 import grid from '../../../node_modules/flexboxgrid/dist/flexboxgrid.css';
 
 class SignMessage extends React.Component {
@@ -53,16 +50,7 @@ class SignMessage extends React.Component {
   render() {
     return (
       <div className='verify-message'>
-          <AppBar title='Sign Message' flat={true}>
-            <Navigation type='horizontal'>
-              <IconButton className={`${dialogsStyles['x-button']} x-button`} onClick={this.props.closeDialog} icon='close'/>
-            </Navigation>
-          </AppBar>
-          <div className='layout-row layout-align-center-center'>
-            <span className='layout-padding layout-margin'>
-              <FontIcon className='layout-margin' value='info' />
-            </span>
-            <p className='layout-padding layout-margin'>
+          <InfoParagraph>
               Signing a message with this tool indicates ownership of a privateKey (secret) and
               provides a level of proof that you are the owner of the key.
               Its important to bear in mind that this is not a 100% proof as computer systems
@@ -70,9 +58,7 @@ class SignMessage extends React.Component {
               of a particular publicKey/address pair.
               <br />
               Note: Digital Signatures and signed messages are not encrypted!
-            </p>
-          </div>
-          <hr />
+          </InfoParagraph>
           <section>
             <Input className='message' multiline label='Message'
               autoFocus={true}
@@ -88,10 +74,7 @@ class SignMessage extends React.Component {
               onClick={this.showResult.bind(this)}/>
           </section>
           {this.state.resultIsShown ?
-            <div className={styles.resultWrapper}>
-              <h4>Result</h4>
-              <Input className={`${styles.result} result`} multiline readOnly value={this.state.result} />
-            </div> :
+            <SignVerifyResult result={this.state.result} title='Result' /> :
             null
           }
       </div>
