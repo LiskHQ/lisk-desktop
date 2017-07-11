@@ -18,14 +18,10 @@ module.exports = function (config) {
     coverageReporter: {
       reporters: [
         {
-          type: 'text',
-          dir: 'coverage/',
-        },
-        {
           type: onJenkins ? 'lcov' : 'html',
           dir: 'coverage/',
         },
-      ],
+      ].concat(onJenkins ? { type: 'text' } : []),
     },
     webpack: webpackConfig,
     webpackMiddleware: {
