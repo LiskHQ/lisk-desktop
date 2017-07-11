@@ -6,6 +6,7 @@ import { Button, IconButton } from 'react-toolbox/lib/button';
 import Navigation from 'react-toolbox/lib/navigation';
 import PropTypes from 'prop-types';
 import copy from 'copy-to-clipboard';
+import { toastr } from 'react-redux-toastr';
 
 import lisk from 'lisk-js';
 import styles from './verifyMessage.css';
@@ -41,7 +42,9 @@ class SignMessage extends React.Component {
         message: 'Press #{key} to copy',
       });
       if (coppied) {
-        // TODO display toast that says: Result copied to clipboard
+        // TODO: set up the toaster in redux
+        // https://github.com/diegoddox/react-redux-toastr
+        toastr.success('Result copied to clipboard');
       }
       this.setState(Object.assign({}, this.state, { resultIsShown: true }));
     }
