@@ -109,8 +109,10 @@ app.component('main', {
             delete res.publicKey;
           }
 
-          if (res.balance > this.account.get().balance) {
-            const amount = res.balance - this.account.get().balance;
+          const currentBalance = this.account.get().balance;
+
+          if (res.balance > currentBalance) {
+            const amount = res.balance - currentBalance;
             this.notify.about('deposit', amount);
           }
 
