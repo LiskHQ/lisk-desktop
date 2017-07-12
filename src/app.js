@@ -1,9 +1,4 @@
 /* global document */
-import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import Metronome from './utils/metronome';
-import styles from './main.css';
-import Header from './components/header';
 import Account from './components/account';
 import Dialogs from './components/dialogs/dialogs';
 import store from './store';
