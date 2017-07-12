@@ -81,6 +81,7 @@
     "karma-webpack": "=2.0.3",
     "mocha": "=3.2.0",
     "postcss-loader": "=2.0.6",
+    "postcss-nested": "=2.0.2",
     "postcss-partial-import": "=4.1.0",
     "postcss-reporter": "=4.0.0",
     "protractor": "=5.1.1",
