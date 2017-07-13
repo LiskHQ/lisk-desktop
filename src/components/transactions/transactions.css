@@ -1,0 +1,31 @@
+:root{
+    --in: #73C8A9;
+    --out: #F45D4C;
+    --btn: rgb(2,136,209);
+}
+
+
+.grayButton, .inButton, .outButton {
+    background-color: #eee;
+    border-radius: 3px;
+    padding: 6px;
+    text-transform: uppercase;
+}
+
+.inButton {
+    background: var(--in);
+}
+
+.outButton {
+    background: var(--out);
+}
+.in {
+    color: var(--in);
+}
+
+.out {
+    color: var(--out);
+}
+.centerText{
+    text-align: center;
+}
