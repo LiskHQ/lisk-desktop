@@ -65,17 +65,16 @@ class SignMessage extends React.Component {
               value={this.state.message}
               onChange={this.handleChange.bind(this)} />
           </section>
-          <section className={`${grid.row} ${grid['between-xs']}`}>
-            <Button label='Cancel' className='cancel-button' onClick={this.props.closeDialog} />
-            <Button label='Sign and copy result to clipboard'
-              className='sign-button'
-              primary={true} raised={true}
-              disabled={!this.state.result || this.state.resultIsShown}
-              onClick={this.showResult.bind(this)}/>
-          </section>
           {this.state.resultIsShown ?
             <SignVerifyResult result={this.state.result} title='Result' /> :
-            null
+            <section className={`${grid.row} ${grid['between-xs']}`}>
+              <Button label='Cancel' className='cancel-button' onClick={this.props.closeDialog} />
+              <Button label='Sign and copy result to clipboard'
+                className='sign-button'
+                primary={true} raised={true}
+                disabled={!this.state.result || this.state.resultIsShown}
+                onClick={this.showResult.bind(this)}/>
+          </section>
           }
       </div>
     );
