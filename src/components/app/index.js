@@ -10,6 +10,7 @@ import styles from './app.css';
 import Metronome from '../../utils/metronome';
 import { setActivePeer } from '../../utils/api/peers';
 import { accountUpdated } from '../../actions/account';
+import Dialog from '../dialog';
 
 // temporarily hard-coded
 const network = {
@@ -68,6 +69,7 @@ const App = (props) => {
         <Link to='/main/transactions'>Transactions</Link>
         <Link to='/main/voting'>Voting</Link>
         <Link to='/main/forging'>Forging</Link>
+        <Dialog />
       </section>
     </Router>
   );
