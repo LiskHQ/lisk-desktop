@@ -2,7 +2,7 @@ import React from 'react';
 import tableStyle from 'react-toolbox/lib/table/theme.css';
 import { transactions } from '../../utils/api/account';
 import TransactionsHeader from './transactionsHeader';
-import TransactionRow from './transactionsRow';
+import TransactionRow from './transactionRow';
 
 class Transactions extends React.Component {
   constructor() {
@@ -30,7 +30,6 @@ class Transactions extends React.Component {
   // };
   componentDidMount() {
     transactions(this.props.activePeer, this.props.address).then((res) => {
-      console.log(JSON.stringify(res.transactions[0]));
       const list = res.transactions.map(transaction => (
         <TransactionRow address={this.props.address}
             tableStyle={tableStyle}
