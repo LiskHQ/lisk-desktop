@@ -30,8 +30,7 @@ class Transactions extends React.Component {
   //   asset: {},
   // };
   componentDidMount() {
-    console.log(this.state);
-    transactions(this.props.activePeer, this.props.address, 40, this.state.offset).then((res) => {
+    transactions(this.props.activePeer, this.props.address, 20, this.state.offset).then((res) => {
       const list = res.transactions.map(transaction => (
         <TransactionRow address={this.props.address}
           key={transaction.id}
