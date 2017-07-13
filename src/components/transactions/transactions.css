@@ -5,26 +5,30 @@
 }
 
 
-.grayButton, .inButton, .outButton {
+.grayButton, .inButton, .outButton, .smallButton {
     background-color: #eee;
     border-radius: 3px;
     padding: 6px;
     text-transform: uppercase;
+    color: #000;
+    display: block;
 }
-
+.smallButton{
+    display: inline-block;
+}
 .inButton {
-    background: var(--in);
+    background: color(var(--in) alpha(45%))!important;
 }
 
 .outButton {
-    background: var(--out);
+    background: color(var(--out) alpha(45%))!important;
 }
 .in {
-    color: var(--in);
+    color: var(--in) !important;
 }
 
 .out {
-    color: var(--out);
+    color: var(--out) !important;
 }
 .centerText{
     text-align: center;
