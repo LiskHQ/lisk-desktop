@@ -8,6 +8,7 @@ import Header from './components/header';
 import Account from './components/account';
 import store from './reducers';
 import { setActivePeer } from './utils/api/peers';
+import Transation from './components/transactions';
 
 class App extends React.Component {
   constructor() {
@@ -54,6 +55,8 @@ class App extends React.Component {
       <section className={styles['body-wrapper']}>
       <Header></Header>
       <Account {...this.state.accountInfo}></Account>
+      <Transation address={this.state.accountInfo.account.address}
+        activePeer={store.getState().peers.active}></Transation>
         <Router>
           <div>
             <nav>
