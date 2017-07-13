@@ -35,10 +35,12 @@
     "postcss-cssnext": "=2.11.0",
     "prop-types": "=15.5.10",
     "react": "=15.6.x",
+    "react-circular-progressbar": "=0.1.5",
     "react-dom": "=15.6.x",
     "react-redux": "=5.0.3",
     "react-redux-toastr": "=7.0.0",
     "react-router-dom": "=4.0.0",
+    "react-timeago": "=3.3.0",
     "react-toolbox": "=2.0.0-beta.12",
     "redux": "=3.6.0",
     "redux-logger": "=3.0.6"

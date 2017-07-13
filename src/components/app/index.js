@@ -28,9 +28,15 @@ const App = (props) => {
 
   // temporary, will be deleted with #347
   setActivePeer(network);
-  getAccount(props.store.getState().peers.data, '16313739661670634666L').then((result) => {
+  getAccount(props.store.getState().peers.data, '537318935439898807L').then((result) => {
     props.store.dispatch(accountUpdated(Object.assign({}, result, {
-      passphrase: 'wagon stock borrow episode laundry kitten salute link globe zero feed marble',
+      passphrase: 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit',
+      delegate: {
+        username: 'genesis_17',
+        rate: 19,
+        approval: 30,
+        productivity: 99.2,
+      },
     })));
   });
 

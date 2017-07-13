@@ -6,6 +6,8 @@ const actionTypes = {
   activePeerReset: 'ACTIVE_PEER_RESET',
   dialogDisplayed: 'DIALOG_DISPLAYED',
   dialogHidden: 'DIALOG_HIDDEN',
+  forgedBlocksUpdated: 'FORGED_BLOCKS_UPDATED',
+  forgingStatsUpdated: 'FORGING_STATS_UPDATED',
 };
 
 export default actionTypes;

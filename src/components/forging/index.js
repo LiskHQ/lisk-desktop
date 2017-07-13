@@ -1,7 +1,31 @@
-import React from 'react';
+import { connect } from 'react-redux';
+import { updateForgedBlocks, updateForgingStats } from '../../actions/forging';
+import ForgingComponent from './forgingComponent';
+import { getForgedBlocks, getForgedStats } from '../../utils/api/forging';
 
-const Forging = () => (
-  <h1>Forging</h1>
-);
+const mapStateToProps = state => ({
+  account: state.account,
+  peers: state.peers,
+  statistics: state.forging.statistics,
+  forgedBlocks: state.forging.forgedBlocks,
+});
+
+const mapDispatchToProps = dispatch => ({
+  loadForgedBlocks: (activePeer, limit = 10, offset = 0, generatorPublicKey) => {
+    getForgedBlocks(activePeer, limit, offset, generatorPublicKey).then((data) => {
+      dispatch(updateForgedBlocks(data.blocks));
+    });
+  },
+  loadStats: (activePeer, key, startMoment, generatorPublicKey) => {
+    getForgedStats(activePeer, startMoment, generatorPublicKey).then((data) => {
+      dispatch(updateForgingStats({ [key]: data.forged }));
+    });
+  },
+});
+
+const Forging = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ForgingComponent);
 
 export default Forging;
