@@ -9,6 +9,7 @@ class Transactions extends React.Component {
     super();
     this.state = {
       transactions: [],
+      offset: 0,
     };
   }
 
@@ -29,15 +30,18 @@ class Transactions extends React.Component {
   //   asset: {},
   // };
   componentDidMount() {
-    transactions(this.props.activePeer, this.props.address).then((res) => {
+    console.log(this.state);
+    transactions(this.props.activePeer, this.props.address, 40, this.state.offset).then((res) => {
       const list = res.transactions.map(transaction => (
         <TransactionRow address={this.props.address}
-            tableStyle={tableStyle}
-            value={transaction}>
-          </TransactionRow>
+          key={transaction.id}
+          tableStyle={tableStyle}
+          value={transaction}>
+        </TransactionRow>
       ));
       this.setState({
         transactions: list,
+        offset: this.state.offset + 20,
       });
     });
   }
