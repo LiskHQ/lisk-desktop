@@ -27,6 +27,7 @@ describe('<DialogElement />', () => {
   });
 
   it('renders component passed in props.dialog.childComponent', () => {
+    wrapper = shallow(<DialogElement dialog={{ childComponent: Dummy }} onCancelClick={() => {}}/>);
     expect(wrapper.find(Dummy)).to.have.length(1);
   });
 

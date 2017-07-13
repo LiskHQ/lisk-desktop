@@ -31,8 +31,11 @@ class DialogElement extends Component {
             </Navigation>
           </AppBar>
           {this.props.dialog.childComponent ?
-            <this.props.dialog.childComponent {...this.props.dialog.childComponentProps} /> :
-            <div></div>}
+            <this.props.dialog.childComponent
+              {...(this.props.dialog.childComponentProps || {})}
+              /> :
+            <div></div>
+          }
         </div>
       </Dialog>
     );
