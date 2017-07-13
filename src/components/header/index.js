@@ -25,7 +25,9 @@ const Header = props => (
         onClick={() => store.dispatch(
           dialogDisplayed({
             title: 'Sign message',
-            childComponentProps: { account: props.account },
+            childComponentProps: {
+              account: props.account,
+            },
             childComponent: SignMessage,
           }),
         )}
