@@ -8,46 +8,13 @@ import Voting from '../voting';
 import Forging from '../forging';
 import styles from './app.css';
 import Metronome from '../../utils/metronome';
-import { setActivePeer } from '../../utils/api/peers';
-import { accountUpdated } from '../../actions/account';
 
-// temporarily hard-coded
-const network = {
-  address: 'http://localhost:4000',
-  testnet: true,
-  nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
-};
-
-const accountInfo = {
-  account: {
-    isDelegate: false,
-    address: '16313739661670634666L',
-    username: 'lisk-nano',
-  },
-  address: '16313739661670634666L',
-  peers: {
-    online: true,
-    active: {
-      currentPeer: 'localhost',
-      port: 4000,
-      options: {
-        name: 'Custom Node',
-      },
-    },
-  },
-  balance: '99992689.6',
-};
-
-const App = (props) => {
+const App = ({ store }) => {
   // start dispatching sync ticks
   const metronome = new Metronome();
   metronome.init();
 
-  // temporarily
-  props.store.dispatch(accountUpdated(accountInfo));
-  setActivePeer(props.store, network);
-
-  const state = props.store.getState();
+  const state = store.getState();
   return (
     <Router history={browserHistory}>
       <section className={styles['body-wrapper']}>
