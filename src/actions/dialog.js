@@ -1,7 +1,7 @@
 import actionTypes from '../constants/actions';
 
 /**
- *
+ * An action to dispatch to display a dialog
  *
  */
 export const dialogDisplayed = data => ({
@@ -10,7 +10,7 @@ export const dialogDisplayed = data => ({
 });
 
 /**
- *
+ * An action to dispatch to hide a dialog
  *
  */
 export const dialogHidden = () => ({
