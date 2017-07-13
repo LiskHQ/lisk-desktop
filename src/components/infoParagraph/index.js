@@ -1,13 +1,14 @@
 import React from 'react';
 import FontIcon from 'react-toolbox/lib/font_icon';
+import layout from './infoParagraph.css';
 
 const InfoParagraph = props => (
   <div>
-    <div className='layout-row layout-align-center-center'>
-      <span className='layout-padding layout-margin'>
-        <FontIcon className='layout-margin' value='info' />
+    <div className={`${layout['layout-row']} ${layout['layout-align-center-center']}`}>
+      <span className={`${layout['layout-padding']} ${layout['layout-margin']}`}>
+        <FontIcon className={layout['layout-margin']} value='info' />
       </span>
-      <p className='layout-padding layout-margin'>
+      <p className={`${layout['layout-padding']} ${layout['layout-margin']}`}>
         {props.children}
       </p>
     </div>

@@ -1,5 +1,3 @@
-:global {
-
 .layout-margin {
   display: inline-block;
   margin: 8px;
@@ -17,6 +15,4 @@
 
 .layout-align-center-center {
   align-items: center;
-}
-
 }

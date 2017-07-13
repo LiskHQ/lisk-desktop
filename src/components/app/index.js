@@ -9,7 +9,6 @@ import Forging from '../forging';
 import styles from './app.css';
 import Metronome from '../../utils/metronome';
 import { setActivePeer } from '../../utils/api/peers';
-import { setActiveDialog } from '../../utils/dialogs';
 import { accountUpdated } from '../../actions/account';
 import Dialog from '../dialog';
 
@@ -55,7 +54,7 @@ const App = (props) => {
   return (
     <Router history={browserHistory}>
       <section className={styles['body-wrapper']}>
-        <Header setActiveDialog={name => setActiveDialog(props.store, name)}></Header>
+        <Header account={state.account.account} />
         <main className=''>
           <Route path="/main" render={({ match }) => (
             <main className=''>

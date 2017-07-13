@@ -3,6 +3,10 @@ import { Button } from 'react-toolbox/lib/button';
 import { IconMenu, MenuItem } from 'react-toolbox/lib/menu';
 import logo from '../../assets/images/LISK-nano.png';
 import styles from './header.css';
+import store from '../../store';
+import { dialogDisplayed } from '../../actions/dialog';
+import VerifyMessage from '../signVerify/verifyMessage';
+import SignMessage from '../signVerify/signMessage';
 
 const Header = props => (
   <header className={styles.wrapper}>
@@ -18,11 +22,22 @@ const Header = props => (
       <MenuItem caption="Register as delegate" />
       <MenuItem caption="Sign message"
         className='sign-message'
-        onClick={() => props.setActiveDialog('sign-message')}
+        onClick={() => store.dispatch(
+          dialogDisplayed({
+            title: 'Sign message',
+            childComponentProps: { account: props.account },
+            childComponent: SignMessage,
+          }),
+        )}
       />
       <MenuItem caption="Verify message"
         className='verify-message'
-        onClick={() => props.setActiveDialog('verify-message')}
+        onClick={() => store.dispatch(
+          dialogDisplayed({
+            title: 'Verify message',
+            childComponent: VerifyMessage,
+          }),
+        )}
       />
     </IconMenu>
     <Button className={styles.button} raised>logout</Button>
