@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, browserHistory, Link } from 'react-router-dom';
 import Header from '../header';
-import Dialogs from '../dialogs/dialogs';
 import Account from '../account';
 import Login from '../login';
 import Transactions from '../transactions';
@@ -12,6 +11,7 @@ import Metronome from '../../utils/metronome';
 import { setActivePeer } from '../../utils/api/peers';
 import { setActiveDialog } from '../../utils/dialogs';
 import { accountUpdated } from '../../actions/account';
+import Dialog from '../dialog';
 
 // temporarily hard-coded
 const network = {
@@ -72,9 +72,7 @@ const App = (props) => {
         <Link to='/main/transactions'>Transactions</Link>
         <Link to='/main/voting'>Voting</Link>
         <Link to='/main/forging'>Forging</Link>
-        <Dialogs active={props.store.getState().dialogs.activeDialog}
-          account={state.account}
-          closeDialog={() => setActiveDialog(props.store, null)} />
+        <Dialog />
       </section>
     </Router>
   );
