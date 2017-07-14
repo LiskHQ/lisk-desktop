@@ -1,7 +1,6 @@
 import React from 'react';
 import Input from 'react-toolbox/lib/input';
 import Button from 'react-toolbox/lib/button';
-import PropTypes from 'prop-types';
 import copy from 'copy-to-clipboard';
 import { toastr } from 'react-redux-toastr';
 
@@ -80,10 +79,5 @@ class SignMessage extends React.Component {
     );
   }
 }
-
-SignMessage.propTypes = {
-  closeDialog: PropTypes.func,
-  account: PropTypes.object,
-};
 
 export default SignMessage;
