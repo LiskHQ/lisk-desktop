@@ -1,5 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router';
+import Cookies from 'js-cookie';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Input from 'react-toolbox/lib/input';
 import Dropdown from 'react-toolbox/lib/dropdown';
 import Button from 'react-toolbox/lib/button';
@@ -46,6 +48,11 @@ class LoginForm extends React.Component {
     };
   }
 
+  componentDidMount() {
+    // pre-fill passphrase and address if exiting in cookies
+    this.devPreFill();
+  }
+
   handleChange(value) {
     this.setState({ address: value });
   }
@@ -61,8 +68,8 @@ class LoginForm extends React.Component {
     this.setState({ address: value, addressValidity });
   }
 
-  changeHandler(field, value) {
-    this.setState({ [field]: value });
+  changeHandler(name, value) {
+    this.setState({ [name]: value });
   }
 
   onLoginSubmission() {
@@ -80,6 +87,15 @@ class LoginForm extends React.Component {
       // redirect to main/transactions
       this.props.router.push('/main/transactions/');
     });
+  }
+
+  devPreFill() {
+    const address = Cookies.get('address');
+    this.setState({
+      passphrase: Cookies.get('passphrase') || '',
+      network: address ? 2 : 0,
+    });
+    this.validateUrl(address);
   }
 
   render() {
@@ -106,11 +122,13 @@ class LoginForm extends React.Component {
           label="Show passphrase"
           onChange={this.changeHandler.bind(this, 'showPassphrase')}
         />
-        <CardActions>
-          <Button label='NEW ACCOUNT' flat primary />
-          <Button label='LOGIN' primary raised onClick={this.onLoginSubmission.bind(this)}
-            disabled={this.state.network === 2 && this.state.addressValidity !== ''} />
-        </CardActions>
+        <footer className={ `${grid.row} ${grid['center-xs']}` }>
+          <div className={grid['col-xs-12']}>
+            <Button label='NEW ACCOUNT' flat primary />
+            <Button label='LOGIN' primary raised onClick={this.onLoginSubmission.bind(this)}
+              disabled={this.state.network === 2 && this.state.addressValidity !== ''} />
+          </div>
+        </footer>
       </form>
     );
   }
