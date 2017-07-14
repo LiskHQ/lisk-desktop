@@ -7,14 +7,13 @@ import Dropdown from 'react-toolbox/lib/dropdown';
 import Button from 'react-toolbox/lib/button';
 import Checkbox from 'react-toolbox/lib/checkbox';
 import { setActivePeer } from '../../utils/api/peers';
-import store from '../../store';
 import { getAccount } from '../../utils/api/account';
 
 /**
  * The container component containing login
  * and create account functionality
  */
-class LoginForm extends React.Component {
+class LoginFormComponent extends React.Component {
   constructor() {
     super();
     this.networksRaw = [
@@ -74,19 +73,21 @@ class LoginForm extends React.Component {
 
   onLoginSubmission() {
     // set active peer
-    setActivePeer(store, this.state.network);
+    setActivePeer(this.state.network);
 
-    // get account info
-    const { onAccountUpdated } = this.props;
-    onAccountUpdated({ passphrase: this.state.passphrase });
-    const accountInfo = store.getState().account;
+    setTimeout(() => {
+      // get account info
+      const { onAccountUpdated } = this.props;
+      onAccountUpdated({ passphrase: this.state.passphrase });
+      const accountInfo = this.props.account;
 
-    // redirect to main/transactions
-    getAccount(store.getState().peers.active, accountInfo.address).then((result) => {
-      onAccountUpdated(result);
       // redirect to main/transactions
-      this.props.router.push('/main/transactions/');
-    });
+      getAccount(this.props.peers.data, accountInfo.address).then((result) => {
+        onAccountUpdated(result);
+        // redirect to main/transactions
+        this.props.history.push('/main/transactions');
+      });
+    }, 5);
   }
 
   devPreFill() {
@@ -134,4 +135,4 @@ class LoginForm extends React.Component {
   }
 }
 
-export default withRouter(LoginForm);
+export default withRouter(LoginFormComponent);
