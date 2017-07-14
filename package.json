@@ -28,6 +28,7 @@
     "bignumber.js": "=4.0.0",
     "bitcore-mnemonic": "=1.1.1",
     "flexboxgrid": "=6.3.1",
+    "js-cookie": "^2.1.4",
     "lisk-js": "=0.4.2",
     "moment": "=2.15.1",
     "postcss": "=6.0.2",
