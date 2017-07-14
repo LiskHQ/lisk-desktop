@@ -8,6 +8,7 @@ import Voting from '../voting';
 import Forging from '../forging';
 import styles from './app.css';
 import Metronome from '../../utils/metronome';
+import Dialog from '../dialog';
 
 const App = ({ store }) => {
   // start dispatching sync ticks
@@ -35,6 +36,7 @@ const App = ({ store }) => {
         <Link to='/main/transactions'>Transactions</Link>
         <Link to='/main/voting'>Voting</Link>
         <Link to='/main/forging'>Forging</Link>
+        <Dialog />
       </section>
     </Router>
   );
