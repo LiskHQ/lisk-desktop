@@ -5,13 +5,13 @@ import chaiEnzyme from 'chai-enzyme';
 import sinonChai from 'sinon-chai';
 import { Button } from 'react-toolbox/lib/button';
 import styles from './header.css';
-import Header from '../header/index';
+import HeaderElement from './headerElement';
 import logo from '../../assets/images/LISK-nano.png';
 import sinon from 'sinon';
 
 chai.use(sinonChai);
 chai.use(chaiEnzyme()); // Note the invocation at the end
-describe('<Header />', () => {
+describe('<HeaderElement />', () => {
   let wrapper;
   let propsMock;
 
@@ -20,7 +20,7 @@ describe('<Header />', () => {
       setActiveDialog: () => { },
     };
     propsMock = sinon.mock(mockInputProps);
-    wrapper = shallow(<Header setActiveDialog={mockInputProps.setActiveDialog} />);
+    wrapper = shallow(<HeaderElement setActiveDialog={mockInputProps.setActiveDialog} />);
   });
 
   afterEach(() => {
