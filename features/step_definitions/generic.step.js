@@ -19,7 +19,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
 
   When('I fill in "{value}" to "{fieldName}" field', (value, fieldName, callback) => {
     const selectorClass = `.${fieldName.replace(/ /g, '-')}`;
-    waitForElemAndSendKeys(`input${selectorClass}, textarea${selectorClass}`, value, callback);
+    waitForElemAndSendKeys(`${selectorClass} input, ${selectorClass} textarea`, value, callback);
   });
 
   When('I fill in second passphrase of "{accountName}" to "{fieldName}" field', (accountName, fieldName, callback) => {
@@ -31,7 +31,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
 
 
   Then('I should see "{value}" in "{fieldName}" field', (value, fieldName, callback) => {
-    const elem = element(by.css(`.${fieldName.replace(/ /g, '-')}`));
+    const elem = element(by.css(`.${fieldName.replace(/ /g, '-')} input, .${fieldName.replace(/ /g, '-')} textarea`));
     expect(elem.getAttribute('value')).to.eventually.equal(value)
       .and.notify(callback);
   });
@@ -102,9 +102,12 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     browser.ignoreSynchronization = true;
     browser.driver.manage().window().setSize(1000, 1000);
     browser.driver.get('about:blank');
-    browser.get('http://localhost:8080/#/?peerStack=localhost');
-    waitForElemAndSendKeys('.passphrase', accounts[accountName].passphrase);
-    waitForElemAndClickIt('.md-button.md-primary.md-raised', callback);
+    // TODO: remove this after login is implemented
+    browser.get('http://localhost:8080/#/?peerStack=localhost').then(callback);
+    // TODO: Uncomment these after login is implemented
+    // browser.get('http://localhost:8080/#/?peerStack=localhost');
+    // waitForElemAndSendKeys('.passphrase', accounts[accountName].passphrase);
+    // waitForElemAndClickIt('.md-button.md-primary.md-raised', callback);
   });
 
   When('I {iterations} times move mouse randomly', (iterations, callback) => {

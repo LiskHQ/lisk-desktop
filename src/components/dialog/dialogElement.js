@@ -33,8 +33,9 @@ class DialogElement extends Component {
           {this.props.dialog.childComponent ?
             <this.props.dialog.childComponent
               {...(this.props.dialog.childComponentProps || {})}
+              closeDialog={this.closeDialog.bind(this)}
               /> :
-            <div></div>
+            null
           }
         </div>
       </Dialog>

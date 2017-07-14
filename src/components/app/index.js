@@ -24,6 +24,8 @@ const accountInfo = {
     isDelegate: false,
     address: '16313739661670634666L',
     username: 'lisk-nano',
+    passphrase: 'wagon stock borrow episode laundry kitten salute link globe zero feed marble',
+    publicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
   },
   address: '16313739661670634666L',
   peers: {
@@ -52,7 +54,7 @@ const App = (props) => {
   return (
     <Router history={browserHistory}>
       <section className={styles['body-wrapper']}>
-        <Header />
+        <Header account={state.account.account} />
         <main className=''>
           <Route path="/main" render={({ match }) => (
             <main className=''>
