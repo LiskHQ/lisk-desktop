@@ -25,20 +25,20 @@ class SignMessage extends React.Component {
   }
 
   sign(message) {
-    const signnedMessage = lisk.crypto.signMessageWithSecret(message,
+    const signedMessage = lisk.crypto.signMessageWithSecret(message,
       this.props.account.passphrase);
     const result = lisk.crypto.printSignedMessage(
-      message, signnedMessage, this.props.account.publicKey);
+      message, signedMessage, this.props.account.publicKey);
     this.setState(Object.assign({}, this.state, { result, resultIsShown: false, message }));
   }
 
   showResult() {
     if (this.state.result) {
-      const coppied = copy(this.state.result, {
+      const copied = copy(this.state.result, {
         debug: true,
         message: 'Press #{key} to copy',
       });
-      if (coppied) {
+      if (copied) {
         // TODO: set up the toaster in redux
         // https://github.com/diegoddox/react-redux-toastr
         toastr.success('Result copied to clipboard');
