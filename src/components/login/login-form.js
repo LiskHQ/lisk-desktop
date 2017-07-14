@@ -3,11 +3,9 @@ import { withRouter } from 'react-router';
 import Input from 'react-toolbox/lib/input';
 import Dropdown from 'react-toolbox/lib/dropdown';
 import Button from 'react-toolbox/lib/button';
-import { CardActions } from 'react-toolbox/lib/card';
 import Checkbox from 'react-toolbox/lib/checkbox';
 import { setActivePeer } from '../../utils/api/peers';
 import store from '../../store';
-import { accountUpdated } from '../../actions/account';
 import { getAccount } from '../../utils/api/account';
 
 /**
@@ -72,11 +70,13 @@ class LoginForm extends React.Component {
     setActivePeer(store, this.state.network);
 
     // get account info
-    store.dispatch(accountUpdated({ passphrase: this.state.passphrase }));
+    const { onAccountUpdated } = this.props;
+    onAccountUpdated({ passphrase: this.state.passphrase });
     const accountInfo = store.getState().account;
+
     // redirect to main/transactions
     getAccount(store.getState().peers.active, accountInfo.address).then((result) => {
-      store.dispatch(accountUpdated(result));
+      onAccountUpdated(result);
       // redirect to main/transactions
       this.props.router.push('/main/transactions/');
     });
