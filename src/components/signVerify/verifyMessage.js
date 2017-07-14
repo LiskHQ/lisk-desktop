@@ -23,14 +23,12 @@ class VerifyMessage extends React.Component {
   }
 
   handleChange(name, value) {
-    const newState = Object.assign({}, this.state);
+    const newState = this.state;
     newState[name].value = value;
-    this.setState(newState);
-    this.verify();
+    this.setState(this.verify(newState));
   }
 
-  verify() {
-    const newState = Object.assign({}, this.state);
+  verify(newState) {
     newState.publicKey.error = '';
     newState.signature.error = '';
     newState.result = '';
@@ -48,7 +46,7 @@ class VerifyMessage extends React.Component {
       }
       newState.result = '';
     }
-    this.setState(newState);
+    return newState;
   }
 
   render() {

@@ -28,7 +28,7 @@ class SignMessage extends React.Component {
       this.props.account.passphrase);
     const result = lisk.crypto.printSignedMessage(
       message, signedMessage, this.props.account.publicKey);
-    this.setState(Object.assign({}, this.state, { result, resultIsShown: false, message }));
+    this.setState({ result, resultIsShown: false, message });
   }
 
   showResult() {
@@ -42,7 +42,7 @@ class SignMessage extends React.Component {
         // https://github.com/diegoddox/react-redux-toastr
         toastr.success('Result copied to clipboard');
       }
-      this.setState(Object.assign({}, this.state, { resultIsShown: true }));
+      this.setState({ resultIsShown: true });
     }
   }
 
