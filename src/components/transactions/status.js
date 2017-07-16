@@ -7,11 +7,9 @@ const Status = (props) => {
   if (props.value.type === 0 &&
     props.value.senderId === props.value.recipientId) {
     template = <IconButton icon='replay' />;
-  }
-  if (props.value.senderId !== props.address) {
+  } else if (props.value.senderId !== props.address) {
     template = <IconButton icon='call_received' className={styles.in} />;
-  }
-  if (props.value.type !== 0 || props.value.recipientId !== props.address) {
+  } else if (props.value.type !== 0 || props.value.recipientId !== props.address) {
     template = <IconButton icon='call_made' className={styles.out} />;
   }
   return template;
