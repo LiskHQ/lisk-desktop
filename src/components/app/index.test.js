@@ -1,9 +1,10 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { MemoryRouter } from 'react-router';
+import { Provider } from 'react-redux';
 import { expect } from 'chai';
 import store from '../../store';
-import App from './index';
+import App from './';
 import Login from '../login';
 import Transactions from '../transactions';
 import Voting from '../voting';
@@ -11,9 +12,11 @@ import Forging from '../forging';
 
 const addRouter = Component => (props, path) =>
     mount(
+      <Provider {...props}>
         <MemoryRouter initialEntries={path}>
             <Component {...props} />
-        </MemoryRouter>,
+        </MemoryRouter>
+      </Provider>,
     );
 
 const routesComponent = [
