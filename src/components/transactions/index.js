@@ -1,4 +1,5 @@
 import React from 'react';
+import Waypoint from 'react-waypoint';
 import tableStyle from 'react-toolbox/lib/table/theme.css';
 import { transactions } from '../../utils/api/account';
 import TransactionsHeader from './transactionsHeader';
@@ -10,39 +11,37 @@ class Transactions extends React.Component {
     this.state = {
       transactions: [],
       offset: 0,
+      loadMore: true,
+      length: 1,
     };
   }
 
-  // const transaction = {
-  //   id: '8650097545654773965',
-  //   height: 12248,
-  //   blockId: '1288793478441806835',
-  //   type: 0,
-  //   timestamp: 35326451,
-  //   senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
-  //   senderId: '16313739661670634666L',
-  //   recipientId: '4264113712245538326L',
-  //   recipientPublicKey: null,
-  //   amount: 500000000000,
-  //   fee: 10000000,
-  //   signatures: [],
-  //   confirmations: 7025,
-  //   asset: {},
-  // };
   componentDidMount() {
-    transactions(this.props.activePeer, this.props.address, 20, this.state.offset).then((res) => {
-      const list = res.transactions.map(transaction => (
-        <TransactionRow address={this.props.address}
-          key={transaction.id}
-          tableStyle={tableStyle}
-          value={transaction}>
-        </TransactionRow>
-      ));
-      this.setState({
-        transactions: list,
-        offset: this.state.offset + 20,
-      });
-    });
+    this.loadMore();
+  }
+
+  loadMore() {
+    if (this.state.loadMore && this.state.length > this.state.offset) {
+      this.setState({ loadMore: false });
+      transactions(this.props.activePeer, this.props.address, 20, this.state.offset)
+      .then((res) => {
+        console.log(JSON.stringify(res.transactions[0]));
+        const list = res.transactions.map(transaction => (
+          <TransactionRow address={this.props.address}
+            key={transaction.id}
+            tableStyle={tableStyle}
+            value={transaction}>
+          </TransactionRow>
+        ));
+        this.setState({
+          transactions: this.state.transactions.concat(list),
+          offset: this.state.offset + 20,
+          loadMore: true,
+          length: parseInt(res.count, 10),
+        });
+      })
+      .catch(error => console.error(error.message));
+    }
   }
 
   render() {
@@ -54,6 +53,7 @@ class Transactions extends React.Component {
             {this.state.transactions}
           </tbody>
         </table>
+        <Waypoint onEnter={() => { this.loadMore(); } }></Waypoint>
       </div>
     );
   }
