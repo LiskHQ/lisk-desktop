@@ -1,19 +1,36 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { Route } from 'react-router';
+import { mount } from 'enzyme';
+import { MemoryRouter } from 'react-router';
 import { expect } from 'chai';
 import store from '../../store';
 import App from './index';
 import Login from '../login';
+import Transactions from '../transactions';
+import Voting from '../voting';
+import Forging from '../forging';
 
-it('renders correct routes', () => {
-  const wrapper = shallow(<App store={store} />);
-  const pathMap = wrapper.find(Route).reduce((pathMapItem, route) => {
-    const routeProps = route.props();
-    pathMapItem[routeProps.path] = routeProps.component || routeProps.render;
-    return pathMapItem;
-  }, {});
+const addRouter = Component => (props, path) =>
+    mount(
+        <MemoryRouter initialEntries={path}>
+            <Component {...props} />
+        </MemoryRouter>,
+    );
 
-  expect(pathMap['/']).to.be.equal(Login);
-  expect(typeof pathMap['/main']).to.be.equal('function');
+const routesComponent = [
+  { route: '/', component: Login },
+  { route: '/main/transactions', component: Transactions },
+  { route: '/main/voting', component: Voting },
+  { route: '/main/forging', component: Forging },
+];
+
+describe('<App />', () => {
+  describe('renders correct routes', () => {
+    const navigateTo = addRouter(App);
+    routesComponent.forEach(({ route, component }) => {
+      it(`should render ${component.name} component at "${route}" route`, () => {
+        const wrapper = navigateTo({ store }, [route]);
+        expect(wrapper.find(component).exists()).to.be.equal(true);
+      });
+    });
+  });
 });
