@@ -37,5 +37,5 @@ export const Time = (props) => {
 
 export const TooltipTime = (props) => {
   const time = moment(_fix(props.label));
-  return <TooltipWrapper tooltip={time.format('LL LTS')} >{time.fromNow(true)}</TooltipWrapper>;
+  return <TooltipWrapper tooltip={time.format('LL LTS')} ><Time label={props.label}></Time></TooltipWrapper>;
 };
