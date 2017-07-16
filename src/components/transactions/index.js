@@ -25,7 +25,6 @@ class Transactions extends React.Component {
       this.setState({ loadMore: false });
       transactions(this.props.activePeer, this.props.address, 20, this.state.offset)
       .then((res) => {
-        console.log(JSON.stringify(res.transactions[0]));
         const list = res.transactions.map(transaction => (
           <TransactionRow address={this.props.address}
             key={transaction.id}
