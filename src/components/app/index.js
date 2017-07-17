@@ -21,7 +21,6 @@ const network = {
   nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
 };
 
-
 const App = (props) => {
   // start dispatching sync ticks
   const metronome = new Metronome();
@@ -36,7 +35,7 @@ const App = (props) => {
   return (
     <Router>
       <section className={styles['body-wrapper']}>
-        <Header />
+        <Header account={state.account.account} />
         <main className=''>
           <Route path="/main" render={({ match }) => (
             <main className=''>
