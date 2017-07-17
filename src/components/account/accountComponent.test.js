@@ -28,7 +28,7 @@ describe('<AccountComponent />', () => {
     username: 'lisk-nano',
   };
 
-  it('there are 3 article tags inside it', () => {
+  it(' should render 3 article tags', () => {
     const wrapper = shallow(<AccountComponent account={testAccount} peers={peers}
       onActivePeerUpdated={onActivePeerUpdated} />);
     expect(wrapper.find('article')).to.have.lengthOf(3);
