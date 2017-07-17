@@ -35,7 +35,7 @@ const App = (props) => {
   return (
     <Router>
       <section className={styles['body-wrapper']}>
-        <Header account={state.account.account} />
+        <Header />
         <main className=''>
           <Route path="/main" render={({ match }) => (
             <main className=''>
