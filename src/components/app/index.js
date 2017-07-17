@@ -11,10 +11,10 @@ import Metronome from '../../utils/metronome';
 import { setActivePeer } from '../../utils/api/peers';
 import { accountUpdated } from '../../actions/account';
 import Dialog from '../dialog';
-// temporary
+  // temporary, will be deleted with #347
 import { getAccount } from '../../utils/api/account';
 
-// temporarily hard-coded
+  // temporary, will be deleted with #347
 const network = {
   address: 'http://localhost:4000',
   testnet: true,
@@ -26,8 +26,8 @@ const App = (props) => {
   const metronome = new Metronome();
   metronome.init();
 
-  // temporarily
-  setActivePeer(props.store, network);
+  // temporary, will be deleted with #347
+  setActivePeer(network);
   getAccount(props.store.getState().peers.data, '16313739661670634666L').then((result) => {
     props.store.dispatch(accountUpdated(Object.assign({}, result, {
       passphrase: 'wagon stock borrow episode laundry kitten salute link globe zero feed marble',
