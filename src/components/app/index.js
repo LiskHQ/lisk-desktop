@@ -29,7 +29,9 @@ const App = (props) => {
   // temporarily
   setActivePeer(props.store, network);
   getAccount(props.store.getState().peers.data, '16313739661670634666L').then((result) => {
-    props.store.dispatch(accountUpdated(result));
+    props.store.dispatch(accountUpdated(Object.assign({}, result, {
+      passphrase: 'wagon stock borrow episode laundry kitten salute link globe zero feed marble',
+    })));
   });
 
   return (
