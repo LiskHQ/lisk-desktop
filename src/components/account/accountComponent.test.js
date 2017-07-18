@@ -34,7 +34,7 @@ describe('<AccountComponent />', () => {
     expect(wrapper.find('article')).to.have.lengthOf(3);
   });
 
-  it('expect "status" to be online when peers.status.online is true', () => {
+  it('depicts being online when peers.status.online is true', () => {
     const onlinePeers = Object.assign({}, peers, { status: { online: true } });
     const wrapper = shallow(<AccountComponent account={testAccount} peers={onlinePeers}
       onActivePeerUpdated={onActivePeerUpdated} />);
@@ -42,7 +42,7 @@ describe('<AccountComponent />', () => {
     expect(wrapper.find('.material-icons').text()).to.be.equal(expectedValue);
   });
 
-  it('expect "status" to be online when peers.offline is false', () => {
+  it('depicts being offline when peers.offline is false', () => {
     const wrapper = shallow(<AccountComponent account={testAccount} peers={peers}
       onActivePeerUpdated={onActivePeerUpdated} />);
     const expectedValue = 'error';
