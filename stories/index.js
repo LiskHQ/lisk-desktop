@@ -1,12 +1,13 @@
 import React from 'react';
 
 import { storiesOf } from '@storybook/react';
-// import { action } from '@storybook/addon-actions';
+import { action } from '@storybook/addon-actions';
 // import { linkTo } from '@storybook/addon-links';
 
 import FormattedNumber from '../src/components/formattedNumber';
 import Account from '../src/components/account/accountComponent';
 import Address from '../src/components/account/address';
+import Dialog from '../src/components/dialog/dialogElement';
 
 storiesOf('FormattedNumber', module)
   .add('with val', () => (
@@ -49,5 +50,18 @@ storiesOf('Address', module)
     <Address
       isDelegate={false}
       address="9396639332432599292L"
+    />
+  ));
+
+const dialogContent = () => (<div>Hello</div>);
+
+storiesOf('Dialog', module)
+  .add('default', () => (
+    <Dialog
+      dialog={{
+        title: 'Title',
+        childComponent: dialogContent,
+      }}
+      onCancelClick={ action('onCancelClick') }
     />
   ));
