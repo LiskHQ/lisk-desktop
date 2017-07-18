@@ -8,6 +8,7 @@ import Button from 'react-toolbox/lib/button';
 import Checkbox from 'react-toolbox/lib/checkbox';
 import { setActivePeer } from '../../utils/api/peers';
 import { getAccount } from '../../utils/api/account';
+import networksRaw from './networks';
 
 /**
  * The container component containing login
@@ -16,26 +17,8 @@ import { getAccount } from '../../utils/api/account';
 class LoginFormComponent extends React.Component {
   constructor() {
     super();
-    this.networksRaw = [
-      {
-        name: 'Mainnet',
-        ssl: true,
-        port: 443,
-      }, {
-        name: 'Testnet',
-        testnet: true,
-      }, {
-        name: 'Custom Node',
-        custom: true,
-        address: 'http://localhost:8000',
-        // @todo this part is only used for development purpose.
-        //   check if it should be separated
-        testnet: true,
-        nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
-      },
-    ];
 
-    this.networks = this.networksRaw.map((network, index) => ({
+    this.networks = networksRaw.map((network, index) => ({
       label: network.name,
       value: index,
     }));
