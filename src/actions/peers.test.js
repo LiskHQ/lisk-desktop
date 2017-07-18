@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import actionTypes from '../constants/actions';
-import { activePeerSet, activePeerReset } from './peers';
+import { activePeerSet, activePeerReset, activePeerUpdate } from './peers';
 
 describe('actions', () => {
   it('should create an action to set the active peer', () => {
@@ -16,6 +16,18 @@ describe('actions', () => {
       type: actionTypes.activePeerSet,
     };
     expect(activePeerSet(data)).to.be.deep.equal(expectedAction);
+  });
+
+  it('should create an action to update the active peer', () => {
+    const data = {
+      online: true,
+    };
+
+    const expectedAction = {
+      data,
+      type: actionTypes.activePeerUpdate,
+    };
+    expect(activePeerUpdate(data)).to.be.deep.equal(expectedAction);
   });
 
   it('should create an action to reset the active peer', () => {
