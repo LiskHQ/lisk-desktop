@@ -1,11 +1,12 @@
 import Lisk from 'lisk-js';
+import store from '../../store';
 import { activePeerSet, activePeerReset } from '../../actions/peers';
 
-export const resetActivePeer = (store) => {
+export const resetActivePeer = () => {
   store.dispatch(activePeerReset());
 };
 
-export const setActivePeer = (store, network) => {
+export const setActivePeer = (network) => {
   const addHttp = (url) => {
     const reg = /^(?:f|ht)tps?:\/\//i;
     return reg.test(url) ? url : `http://${url}`;

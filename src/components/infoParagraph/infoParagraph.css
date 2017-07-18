@@ -1,0 +1,18 @@
+.layout-margin {
+  display: inline-block;
+  margin: 8px;
+}
+
+.layout-padding {
+  display: inline-block;
+  padding: 8px;
+}
+
+.layout-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.layout-align-center-center {
+  align-items: center;
+}

@@ -27,6 +27,7 @@
   "dependencies": {
     "bignumber.js": "=4.0.0",
     "bitcore-mnemonic": "=1.1.1",
+    "copy-to-clipboard": "=3.0.6",
     "flexboxgrid": "=6.3.1",
     "js-cookie": "^2.1.4",
     "lisk-js": "=0.4.2",
@@ -37,6 +38,7 @@
     "react": "=15.6.x",
     "react-dom": "=15.6.x",
     "react-redux": "=5.0.3",
+    "react-redux-toastr": "=7.0.0",
     "react-router-dom": "=4.0.0",
     "react-toolbox": "=2.0.0-beta.12",
     "redux": "=3.6.0",
