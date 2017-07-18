@@ -4,10 +4,10 @@ import { shallow } from 'enzyme';
 import chaiEnzyme from 'chai-enzyme';
 import sinonChai from 'sinon-chai';
 import { Button } from 'react-toolbox/lib/button';
+import sinon from 'sinon';
 import styles from './header.css';
 import HeaderElement from './headerElement';
 import logo from '../../assets/images/LISK-nano.png';
-import sinon from 'sinon';
 
 chai.use(sinonChai);
 chai.use(chaiEnzyme()); // Note the invocation at the end

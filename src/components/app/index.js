@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import Header from '../header';
 import Account from '../account';
 import Login from '../login';
@@ -35,28 +35,26 @@ const App = (props) => {
   });
 
   return (
-    <Router>
-      <section className={styles['body-wrapper']}>
-        <Header />
-        <main className=''>
-          <Route path="/main" render={({ match }) => (
-            <main className=''>
-              <Account></Account>
-              <Route path={`${match.url}/transactions`} component={Transactions}/>
-              <Route path={`${match.url}/voting`} component={Voting}/>
-              <Route path={`${match.url}/forging`} component={Forging}/>
-            </main>
-          )} />
-          <Route exact path="/" component={Login} />
-        </main>
+    <section className={styles['body-wrapper']}>
+      <Header />
+      <main className=''>
+        <Route path="/main" render={({ match }) => (
+          <main className=''>
+            <Account />
+            <Route path={`${match.url}/transactions`} component={Transactions}/>
+            <Route path={`${match.url}/voting`} component={Voting}/>
+            <Route path={`${match.url}/forging`} component={Forging}/>
+          </main>
+        )} />
+        <Route exact path="/" component={Login} />
+      </main>
 
-        <Link to='/'>Login</Link>
-        <Link to='/main/transactions'>Transactions</Link>
-        <Link to='/main/voting'>Voting</Link>
-        <Link to='/main/forging'>Forging</Link>
-        <Dialog />
-      </section>
-    </Router>
+      <Link to='/'>Login</Link>
+      <Link to='/main/transactions'>Transactions</Link>
+      <Link to='/main/voting'>Voting</Link>
+      <Link to='/main/forging'>Forging</Link>
+      <Dialog />
+    </section>
   );
 };
 
