@@ -31,3 +31,6 @@ export const transactions = (activePeer, address, limit = 20, offset = 0, orderB
     offset,
     orderBy,
   });
+
+export const getAccountStatus = activePeer =>
+  requestToActivePeer(activePeer, 'loader/status', {});

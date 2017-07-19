@@ -1,6 +1,6 @@
 import Lisk from 'lisk-js';
-import { deepEquals } from '../utils/polyfills';
-import actionTypes from '../constants/actions';
+import { deepEquals } from '../../utils/polyfills';
+import actionTypes from '../../constants/actions';
 
 /**
  * If the new value of the given property on the account is changed,

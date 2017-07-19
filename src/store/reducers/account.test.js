@@ -1,7 +1,7 @@
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
 import account from './account';
-import actionTypes from '../constants/actions';
+import actionTypes from '../../constants/actions';
 
 
 chai.use(sinonChai);

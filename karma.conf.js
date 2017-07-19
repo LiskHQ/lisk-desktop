@@ -14,18 +14,14 @@ module.exports = function (config) {
     preprocessors: {
       [fileGlob]: ['webpack'],
     },
-    reporters: ['progress', 'coverage'],
+    reporters: ['coverage', 'mocha'].concat(onJenkins ? ['coveralls'] : []),
     coverageReporter: {
       reporters: [
-        {
-          type: 'text',
-          dir: 'coverage/',
-        },
         {
           type: onJenkins ? 'lcov' : 'html',
           dir: 'coverage/',
         },
-      ],
+      ].concat(onJenkins ? { type: 'text' } : []),
     },
     webpack: webpackConfig,
     webpackMiddleware: {

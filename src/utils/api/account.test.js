@@ -4,7 +4,7 @@ import sinonChai from 'sinon-chai';
 import chaiAsPromised from 'chai-as-promised';
 import { getAccount, setSecondSecret, send, transactions } from './account';
 import { setActivePeer } from './peers';
-import store from '../../reducers';
+import store from '../../store';
 
 chai.use(chaiAsPromised);
 chai.use(sinonChai);
