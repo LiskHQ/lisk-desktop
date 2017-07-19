@@ -2,10 +2,11 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import Login from './index';
+import LoginForm from './loginForm';
 
-describe('in <Login />', () => {
-  it('Should render the login form"', () => {
+describe('Login', () => {
+  it('should render the login form', () => {
     const wrapper = shallow(<Login />);
-    expect(wrapper.find('form')).to.not.equal(undefined);
+    expect(wrapper.find(LoginForm).exists()).to.equal(true);
   });
 });
