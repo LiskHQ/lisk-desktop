@@ -8,7 +8,7 @@ import LoginFormComponent from './loginFormComponent';
 
 chai.use(sinonChai);
 
-describe('LoginForm', () => {
+describe('LoginFormComponent', () => {
   // Mocking store
   const peers = {};
   const account = {
@@ -27,9 +27,12 @@ describe('LoginForm', () => {
     history: [],
     onAccountUpdated: () => {},
     activePeerSet: (network) => {
+      store.peers = {};
       store.peers.data = Lisk.api(network);
     },
   };
+  store.spyActivePeerSet = spy(store.activePeerSet);
+
   const options = {
     context: { store },
     childContextTypes: { store: React.PropTypes.object.isRequired },
@@ -95,11 +98,21 @@ describe('LoginForm', () => {
   });
 
   describe('onLoginSubmission', () => {
-    it.skip('it should call setTimeout', () => {
-      const wrapper = shallow(<LoginFormComponent />, options);
+    it('it should expose onAccountUpdated as function', () => {
+      const wrapper = mount(<LoginFormComponent {...store} />);
+      expect(typeof wrapper.props().onAccountUpdated).to.equal('function');
+    });
+
+    it.skip('it should call activePeerSet', () => {
+      const wrapper = mount(<LoginFormComponent {...store} />);
+      wrapper.instance().onLoginSubmission();
+      expect(wrapper.props().spyActivePeerSet).to.have.been.calledWith();
+    });
+
+    it('it should call setTimeout', () => {
+      const wrapper = mount(<LoginFormComponent {...store} />);
       const spyFn = spy(window, 'setTimeout');
-      LoginFormComponent.prototype.onLoginSubmission();
-      expect(typeof wrapper.props().activePeerSet).to.be.equal('function');
+      wrapper.instance().onLoginSubmission();
       expect(spyFn).to.have.been.calledWith();
     });
   });
