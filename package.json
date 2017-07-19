@@ -17,7 +17,7 @@
     "dist:linux": "build --linux --ia32 --x64 --armv7l",
     "copy-files": "mkdir dist && cp -r ./src/index.html ./src/assets ./dist",
     "clean": "del dist -f",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -p 6006 -s ./src/",
     "build-storybook": "build-storybook"
   },
   "author": "Lisk Foundation <admin@lisk.io>, lightcurve GmbH <admin@lightcurve.io>",
