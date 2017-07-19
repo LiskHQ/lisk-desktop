@@ -1,12 +1,10 @@
 import React from 'react';
-import { withRouter } from 'react-router';
 import Cookies from 'js-cookie';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Input from 'react-toolbox/lib/input';
 import Dropdown from 'react-toolbox/lib/dropdown';
 import Button from 'react-toolbox/lib/button';
 import Checkbox from 'react-toolbox/lib/checkbox';
-import { setActivePeer } from '../../utils/api/peers';
 import { getAccount } from '../../utils/api/account';
 import networksRaw from './networks';
 
@@ -35,19 +33,23 @@ class LoginFormComponent extends React.Component {
     this.devPreFill();
   }
 
-  handleChange(value) {
-    this.setState({ address: value });
-  }
-
   validateUrl(value) {
+    const addHttp = (url) => {
+      const reg = /^(?:f|ht)tps?:\/\//i;
+      return reg.test(url) ? url : `http://${url}`;
+    };
+
     let addressValidity = '';
     try {
-      const url = new URL(value);
+      const url = new URL(addHttp(value));
       addressValidity = url && url.port !== '' ? '' : 'URL is invalid';
     } catch (e) {
       addressValidity = 'URL is invalid';
     }
-    this.setState({ address: value, addressValidity });
+
+    const data = { address: value, addressValidity };
+    this.setState(data);
+    return data;
   }
 
   changeHandler(name, value) {
@@ -55,8 +57,12 @@ class LoginFormComponent extends React.Component {
   }
 
   onLoginSubmission() {
+    const network = Object.assign({}, networksRaw[this.state.network]);
+    if (this.state.network === 2) {
+      network.address = this.state.address;
+    }
     // set active peer
-    setActivePeer(this.state.network);
+    this.props.activePeerSet(network);
 
     setTimeout(() => {
       // get account info
@@ -118,4 +124,4 @@ class LoginFormComponent extends React.Component {
   }
 }
 
-export default withRouter(LoginFormComponent);
+export default LoginFormComponent;
