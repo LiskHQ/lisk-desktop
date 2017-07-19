@@ -14,7 +14,7 @@ const addRouter = Component => (props, path) =>
     mount(
       <Provider {...props}>
         <MemoryRouter initialEntries={path}>
-            <Component {...props} />
+            <Component />
         </MemoryRouter>
       </Provider>,
     );
