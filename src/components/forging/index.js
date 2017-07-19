@@ -11,7 +11,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  loadForgedBlocks: (activePeer, limit = 10, offset = 0, generatorPublicKey) => {
+  loadForgedBlocks: (activePeer, limit, offset, generatorPublicKey) => {
     getForgedBlocks(activePeer, limit, offset, generatorPublicKey).then((data) => {
       dispatch(updateForgedBlocks(data.blocks));
     });
