@@ -30,7 +30,7 @@ describe('<App />', () => {
   describe('renders correct routes', () => {
     const navigateTo = addRouter(App);
     routesComponent.forEach(({ route, component }) => {
-      it(`should render ${component.name} component at "${route}" route`, () => {
+      it.skip(`should render ${component.name} component at "${route}" route`, () => {
         const wrapper = navigateTo({ store }, [route]);
         expect(wrapper.find(component).exists()).to.be.equal(true);
       });
