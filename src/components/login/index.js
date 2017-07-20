@@ -10,7 +10,7 @@ import styles from './login.css';
  */
 const LoginComponent = () => (
   <section>
-    <div className={`box ${styles.paddingTop}`}>
+    <div className={`box ${styles.wrapper}`}>
       <div className={`${grid.row}`}>
         <div className={grid['col-xs-2']}></div>
         <div className={grid['col-xs-8']}>
