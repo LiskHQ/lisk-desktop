@@ -35,11 +35,13 @@ app.factory('delegateApi', Peers => ({
    * @param {array} unvoteList  - The list of the delegates from whom we're removing our votes
    * @param {String} [secondSecret=null]
    * @returns {promise} Api call promise
+   * @param {Number} [timestamp = 10] - The time offset to compensate time setting issues
    */
-  vote(secret, publicKey, voteList, unvoteList, secondSecret = null) {
+  vote(secret, publicKey, voteList, unvoteList, secondSecret = null, timestamp = 10) {
     return Peers.sendRequestPromise('accounts/delegates', {
       secret,
       publicKey,
+      timestamp,
       delegates: voteList.map(delegate => `+${delegate.publicKey}`).concat(
         unvoteList.map(delegate => `-${delegate.publicKey}`),
       ),
@@ -79,9 +81,10 @@ app.factory('delegateApi', Peers => ({
    * @param {String} secret - Account primary passphrase
    * @param {String} [secondSecret = null] - The second passphrase of the account (if enabled).
    * @returns {promise} Api call promise
+   * @param {Number} [timestamp = 10] - The time offset to compensate time setting issues
    */
-  registerDelegate(username, secret, secondSecret = null) {
-    const data = { username, secret };
+  registerDelegate(username, secret, secondSecret = null, timestamp = 10) {
+    const data = { username, secret, timestamp };
     if (secondSecret) {
       data.secondSecret = secondSecret;
     }
