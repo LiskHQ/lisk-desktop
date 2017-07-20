@@ -35,9 +35,11 @@ app.factory('AccountApi', function ($q, Peers, Account) {
    * @param {String} publicKey - Account publicKey
    * @param {String} secret - Account primary passphrase
    * @returns {promise} Api call promise
+   * @param {Number} [timestamp = 10] - The time offset to compensate time setting issues
    */
-  this.setSecondSecret = (secondSecret, publicKey, secret) => Peers.sendRequestPromise(
-    'signatures', { secondSecret, publicKey, secret });
+  this.setSecondSecret = (secondSecret, publicKey,
+    secret, timestamp = 10) => Peers.sendRequestPromise(
+    'signatures', { secondSecret, publicKey, secret, timestamp });
 
   this.transactions = {};
 
@@ -48,10 +50,11 @@ app.factory('AccountApi', function ($q, Peers, Account) {
    * @param {Number} amount - A floating point value in LSK
    * @param {String} secret - account's primary passphrase
    * @param {String} [secondSecret = null] - The second passphrase of the account (if enabled).
+   * @param {Number} [timestamp = 10] - The time offset to compensate time setting issues
    */
   this.transactions.create = (recipientId, amount, secret,
-    secondSecret = null) => Peers.sendRequestPromise('transactions',
-      { recipientId, amount, secret, secondSecret });
+    secondSecret = null, timestamp = 10) => Peers.sendRequestPromise('transactions',
+      { recipientId, amount, secret, secondSecret, timestamp });
 
   /**
    * Uses Peers service to get the list of transactions for a specific address

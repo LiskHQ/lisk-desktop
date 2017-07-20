@@ -34,13 +34,15 @@ describe('Factory: AccountApi', () => {
       const options = {
         recipientId: '537318935439898807L',
         amount: 10,
+        timestamp: 10,
         secret: 'wagon stock borrow episode laundry kitten salute link globe zero feed marble',
         secondSecret: null,
       };
       const spy = sinon.spy(peers, 'sendRequestPromise');
 
       accountApi.transactions.create(
-        options.recipientId, options.amount, options.secret, options.secondSecret);
+        options.recipientId, options.amount, options.secret,
+        options.secondSecret, options.timestamp);
 
       expect(spy).to.have.been.calledWith('transactions', options);
     });
@@ -72,10 +74,11 @@ describe('Factory: AccountApi', () => {
       const secondSecret = 'stay undo beyond powder sand laptop grow gloom apology hamster primary arrive';
 
       const spy = sinon.spy(peers, 'sendRequestPromise');
+      const timestamp = 10;
 
-      accountApi.setSecondSecret(secondSecret, publicKey, secret);
+      accountApi.setSecondSecret(secondSecret, publicKey, secret, timestamp);
 
-      expect(spy).to.have.been.calledWith('signatures', { secondSecret, publicKey, secret });
+      expect(spy).to.have.been.calledWith('signatures', { secondSecret, publicKey, secret, timestamp });
     });
   });
 });
