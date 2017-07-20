@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import chai, { expect } from 'chai';
 import { spy } from 'sinon';
 import sinonChai from 'sinon-chai';
@@ -35,7 +36,7 @@ describe('LoginFormComponent', () => {
 
   const options = {
     context: { store },
-    childContextTypes: { store: React.PropTypes.object.isRequired },
+    childContextTypes: { store: PropTypes.object.isRequired },
   };
 
   it('should render a form tag', () => {

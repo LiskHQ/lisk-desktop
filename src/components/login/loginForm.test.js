@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -45,7 +46,7 @@ describe('LoginForm', () => {
   };
   const options = {
     context: { store },
-    childContextTypes: { store: React.PropTypes.object.isRequired },
+    childContextTypes: { store: PropTypes.object.isRequired },
   };
 
   it('should mount LoginFormComponent with appropriate properties', () => {
