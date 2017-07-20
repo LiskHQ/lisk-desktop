@@ -1,5 +1,6 @@
 import React from 'react';
 import Cookies from 'js-cookie';
+import mnemonic from 'bitcore-mnemonic';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Input from 'react-toolbox/lib/input';
 import Dropdown from 'react-toolbox/lib/dropdown';
@@ -26,6 +27,8 @@ class LoginFormComponent extends React.Component {
       address: '',
       network: 0,
     };
+
+    this.mnemonic = mnemonic;
   }
 
   componentDidMount() {
@@ -48,6 +51,23 @@ class LoginFormComponent extends React.Component {
     }
 
     const data = { address: value, addressValidity };
+    this.setState(data);
+    return data;
+  }
+
+  validatePassphrase(value) {
+    const data = { passphrase: value };
+    if (!value || value === '') {
+      data.passphraseValidity = 'Empty passphrase';
+    } else {
+      const normalizedValue = value.replace(/ +/g, ' ').trim().toLowerCase();
+      if (normalizedValue.split(' ').length < 12 || !this.mnemonic.isValid(normalizedValue)) {
+        data.passphraseValidity = 'Invalid passphrase';
+      } else {
+        data.passphraseValidity = '';
+      }
+    }
+
     this.setState(data);
     return data;
   }
@@ -81,11 +101,11 @@ class LoginFormComponent extends React.Component {
 
   devPreFill() {
     const address = Cookies.get('address');
-    this.setState({
-      passphrase: Cookies.get('passphrase') || '',
-      network: address ? 2 : 0,
-    });
+    const passphrase = Cookies.get('passphrase');
+
+    this.setState({ network: address ? 2 : 0 });
     this.validateUrl(address);
+    this.validatePassphrase(passphrase);
   }
 
   render() {
@@ -106,17 +126,19 @@ class LoginFormComponent extends React.Component {
         }
         <Input type={this.state.showPassphrase ? 'text' : 'password'}
           label='Enter your passphrase' name='passphrase'
-          value={this.state.passphrase} onChange={this.changeHandler.bind(this, 'passphrase')} />
+          error={this.state.passphraseValidity === 'Invalid passphrase' ? 'Invalid passphrase' : ''}
+          value={this.state.passphrase} onChange={this.validatePassphrase.bind(this)} />
         <Checkbox
           checked={this.state.showPassphrase}
           label="Show passphrase"
-          onChange={this.changeHandler.bind(this, 'showPassphrase')}
+          onChange={this.changeHandler.bind(this, 'passphrase')}
         />
         <footer className={ `${grid.row} ${grid['center-xs']}` }>
           <div className={grid['col-xs-12']}>
             <Button label='NEW ACCOUNT' flat primary />
             <Button label='LOGIN' primary raised onClick={this.onLoginSubmission.bind(this)}
-              disabled={this.state.network === 2 && this.state.addressValidity !== ''} />
+              disabled={(this.state.network === 2 && this.state.addressValidity !== '') ||
+              this.state.passphraseValidity !== ''} />
           </div>
         </footer>
       </form>

@@ -87,6 +87,41 @@ describe('LoginFormComponent', () => {
     });
   });
 
+  describe.skip('validatePassphrase', () => {
+    it('should set passphraseValidity="" for a valid passphrase', () => {
+      const passphrase = 'wagon stock borrow episode laundry kitten salute link globe zero feed marble';
+      const wrapper = shallow(<LoginFormComponent />, options);
+      const data = wrapper.instance().validatePassphrase(passphrase);
+      const expectedData = {
+        passphrase,
+        passphraseValidity: '',
+      };
+      expect(data).to.deep.equal(expectedData);
+    });
+
+    it('should set passphraseValidity="Empty passphrase" for an empty string', () => {
+      const passphrase = '';
+      const wrapper = shallow(<LoginFormComponent />, options);
+      const data = wrapper.instance().validatePassphrase(passphrase);
+      const expectedData = {
+        passphrase,
+        passphraseValidity: 'Empty passphrase',
+      };
+      expect(data).to.deep.equal(expectedData);
+    });
+
+    it('should set passphraseValidity="Invalid passphrase" for a non-empty invalid passphrase', () => {
+      const passphrase = 'invalid passphrase';
+      const wrapper = shallow(<LoginFormComponent />, options);
+      const data = wrapper.instance().validatePassphrase(passphrase);
+      const expectedData = {
+        passphrase,
+        passphraseValidity: 'URL is invalid',
+      };
+      expect(data).to.deep.equal(expectedData);
+    });
+  });
+
   describe('changeHandler', () => {
     it('call setState with matching data', () => {
       const wrapper = shallow(<LoginFormComponent />, options);

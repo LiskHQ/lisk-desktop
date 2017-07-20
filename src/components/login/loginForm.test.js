@@ -37,7 +37,6 @@ describe('LoginForm', () => {
     }),
     onAccountUpdated: (data) => {
       store.account = data;
-      console.log('inside onAccountUpdated');
       return accountUpdated(data);
     },
     activePeerSet: (network) => {
