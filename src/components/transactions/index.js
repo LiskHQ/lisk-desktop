@@ -1,7 +1,9 @@
-import React from 'react';
+import { connect } from 'react-redux';
+import Transactions from './transactionsComponent';
 
-const Transactions = () => (
-  <h1>Transactions</h1>
-);
+const mapStateToProps = state => ({
+  address: state.account.address,
+  activePeer: state.peers.data,
+});
+export default connect(mapStateToProps)(Transactions);
 
-export default Transactions;
