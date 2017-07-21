@@ -8,31 +8,13 @@ import Voting from '../voting';
 import Forging from '../forging';
 import styles from './app.css';
 import Metronome from '../../utils/metronome';
-import { setActivePeer } from '../../utils/api/peers';
-import { accountUpdated } from '../../actions/account';
 import Dialog from '../dialog';
   // temporary, will be deleted with #347
-import { getAccount } from '../../utils/api/account';
 
-  // temporary, will be deleted with #347
-const network = {
-  address: 'http://localhost:4000',
-  testnet: true,
-  nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
-};
-
-const App = (props) => {
+const App = () => {
   // start dispatching sync ticks
   const metronome = new Metronome();
   metronome.init();
-
-  // temporary, will be deleted with #347
-  setActivePeer(network);
-  getAccount(props.store.getState().peers.data, '16313739661670634666L').then((result) => {
-    props.store.dispatch(accountUpdated(Object.assign({}, result, {
-      passphrase: 'wagon stock borrow episode laundry kitten salute link globe zero feed marble',
-    })));
-  });
 
   return (
     <section className={styles['body-wrapper']}>

@@ -36,7 +36,7 @@ describe('Account', () => {
   };
   const options = {
     context: { store },
-    // childContextTypes: { store: React.PropTypes.object.isRequired },
+    // childContextTypes: { store: PropTypes.object.isRequired },
   };
 
   it('should mount AccountComponent with appropriate properties', () => {

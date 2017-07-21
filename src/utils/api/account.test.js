@@ -3,8 +3,7 @@ import { mock } from 'sinon';
 import sinonChai from 'sinon-chai';
 import chaiAsPromised from 'chai-as-promised';
 import { getAccount, setSecondSecret, send, transactions } from './account';
-import { setActivePeer } from './peers';
-import store from '../../store';
+import { activePeerSet } from '../../actions/peers';
 
 chai.use(chaiAsPromised);
 chai.use(sinonChai);
@@ -59,7 +58,7 @@ describe('Utils: Account', () => {
         nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
       };
 
-      const { data } = setActivePeer(store, network);
+      const { data } = activePeerSet(network);
       getAccount(data, address).then((result) => {
         expect(result.balance).to.be.equal(0);
       });
