@@ -26,7 +26,7 @@ const routesComponent = [
   { route: '/main/forging', component: Forging },
 ];
 
-describe('<App />', () => {
+describe('App', () => {
   describe('renders correct routes', () => {
     const navigateTo = addRouter(App);
     routesComponent.forEach(({ route, component }) => {

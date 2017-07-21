@@ -5,8 +5,8 @@ import sinon from 'sinon';
 import { Time, TooltipTime, TooltipWrapper } from './index';
 
 sinon.useFakeTimers(new Date(2017, 1, 15).getTime());
-describe('<Time />', () => {
-  it('expect text of span to be equal of "5 months"', () => {
+describe('Time', () => {
+  it('shows "5 months" for the equivalent timestamp (35929631)', () => {
     const inputValue = 35929631;
     const expectedValue = '5 months';
     const wrapper = shallow(<Time label = {inputValue} />);
@@ -15,7 +15,7 @@ describe('<Time />', () => {
   });
 });
 
-describe('<TooltipWrapper />', () => {
+describe('TooltipWrapper', () => {
   it('simulates mouseenter events with tooltip', () => {
     const onMouseEnter = sinon.spy();
     const wrapper = mount((
@@ -24,9 +24,7 @@ describe('<TooltipWrapper />', () => {
     wrapper.find(TooltipWrapper).simulate('mouseEnter');
     expect(onMouseEnter.callCount).to.be.equal(1);
   });
-});
 
-describe('<TooltipWrapper />', () => {
   it('simulates mouseenter events without tooltip', () => {
     const onMouseEnter = sinon.spy();
     const wrapper = mount((
@@ -37,8 +35,8 @@ describe('<TooltipWrapper />', () => {
   });
 });
 
-describe('<TooltipTime />', () => {
-  it('expect html of Time to be equal "<span>5 months</span>"', () => {
+describe('TooltipTime', () => {
+  it('has innerHTML equal to "<span>5 months</span>" for equivalent timestamp (35929631)', () => {
     const inputValue = 35929631;
     const expectedValue = '<span>5 months</span>';
     const wrapper = shallow(<TooltipTime label = {inputValue} />);

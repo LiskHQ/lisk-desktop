@@ -4,7 +4,7 @@ import { mount } from 'enzyme';
 import Account from './index';
 import AccountComponent from './accountComponent';
 
-describe('<Account />', () => {
+describe('Account', () => {
   // Mocking store
   const onActivePeerUpdated = () => {};
   const peers = {

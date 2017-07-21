@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import Address from './address';
 
-describe('in <Address />', () => {
+describe('Address', () => {
   it('when value of "isDelegate" is "false" expect text of "h3#firstBox" to be equal "Address"', () => {
     const inputValue = {
       isDelegate: false,

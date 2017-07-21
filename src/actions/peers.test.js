@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import actionTypes from '../constants/actions';
 import { activePeerSet, activePeerReset, activePeerUpdate } from './peers';
 
-describe('actions', () => {
+describe('actions: peers', () => {
   it('should create an action to set the active peer', () => {
     const data = {
       currentPeer: 'localhost',

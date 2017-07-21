@@ -8,7 +8,7 @@ import store from '../../store';
 chai.use(chaiAsPromised);
 chai.use(sinonChai);
 
-describe('Peers', () => {
+describe('Utils: Peers', () => {
   describe('requestToActivePeer', () => {
     let activePeerMock;
     const path = '/test/';
@@ -51,7 +51,7 @@ describe('Peers', () => {
     afterEach(() => {
       resetActivePeer(store);
     });
-    it('dispatch activePeerSet action', () => {
+    it('dispatches activePeerSet action', () => {
       const network = {
         address: 'http://localhost:4000',
         testnet: true,
@@ -63,7 +63,7 @@ describe('Peers', () => {
       store.dispatch.restore();
     });
 
-    it('dispatch activePeerSet action also when address http missing', () => {
+    it('dispatches activePeerSet action also when address http missing', () => {
       const network = {
         address: 'localhost:8000',
       };
@@ -73,14 +73,14 @@ describe('Peers', () => {
       store.dispatch.restore();
     });
 
-    it('dispatch activePeerSet action even if network is undefined', () => {
+    it('dispatches activePeerSet action even if network is undefined', () => {
       const actionSpy = spy(store, 'dispatch');
       setActivePeer();
       expect(actionSpy).to.have.been.calledWith();
       store.dispatch.restore();
     });
 
-    it('dispatch activePeerSet action even if network.address is undefined', () => {
+    it('dispatches activePeerSet action even if network.address is undefined', () => {
       const network = {};
       const actionSpy = spy(store, 'dispatch');
       setActivePeer(network);
@@ -105,7 +105,7 @@ describe('Peers', () => {
   });
 
   describe('resetActivePeer', () => {
-    it('dispatch activePeerReset action', () => {
+    it('dispatches activePeerReset action', () => {
       const actionSpy = spy(store, 'dispatch');
 
       resetActivePeer(store);

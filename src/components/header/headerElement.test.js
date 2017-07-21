@@ -11,7 +11,7 @@ import logo from '../../assets/images/LISK-nano.png';
 
 chai.use(sinonChai);
 chai.use(chaiEnzyme()); // Note the invocation at the end
-describe('<HeaderElement />', () => {
+describe('HeaderElement', () => {
   let wrapper;
   let propsMock;
 
@@ -28,11 +28,11 @@ describe('<HeaderElement />', () => {
     propsMock.restore();
   });
 
-  it('renders two <Button /> components', () => {
+  it('renders two Button components', () => {
     expect(wrapper.find(Button)).to.have.length(2);
   });
 
-  it('image should have srouce of "logo"', () => {
+  it('should have an image with srouce of "logo"', () => {
     expect(wrapper.contains(<img className={styles.logo} src={logo} alt="logo" />))
       .to.be.equal(true);
   });
