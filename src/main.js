@@ -10,7 +10,7 @@ const rootElement = document.getElementById('app');
 const renderWithRouter = Component =>
   <Provider store={store}>
     <Router>
-      <Component store={store} />
+      <Component />
     </Router>
   </Provider>;
 
