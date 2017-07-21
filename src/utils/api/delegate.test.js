@@ -61,11 +61,11 @@ describe('Delegate', () => {
 
   describe('getDelegate', () => {
     it('should return requestToActivePeer(activePeer, `delegates/get`, options)', () => {
-      const options = {};
+      const options = { publicKey: '"86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19"' };
       const mockedPromise = new Promise((resolve) => { resolve(); });
       peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates/get', options).returns(mockedPromise);
 
-      const returnedPromise = getDelegate(activePeer, options);
+      const returnedPromise = getDelegate(activePeer, options.publicKey);
       expect(returnedPromise).to.equal(mockedPromise);
     });
   });

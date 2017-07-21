@@ -6,6 +6,7 @@ import Dropdown from 'react-toolbox/lib/dropdown';
 import Button from 'react-toolbox/lib/button';
 import Checkbox from 'react-toolbox/lib/checkbox';
 import { getAccount } from '../../utils/api/account';
+import { getDelegate } from '../../utils/api/delegate';
 import networksRaw from './networks';
 
 if (global._bitcore) delete global._bitcore;
@@ -94,6 +95,13 @@ class LoginFormComponent extends React.Component {
       // redirect to main/transactions
       getAccount(this.props.peers.data, accountInfo.address).then((result) => {
         onAccountUpdated(result);
+        getDelegate(this.props.peers.data, accountInfo.publicKey).then((data) => {
+          if (data.success) {
+            onAccountUpdated({ delegate: data.delegate, isDelegate: true });
+          } else {
+            onAccountUpdated({ delegate: {}, isDelegate: false });
+          }
+        });
         // redirect to main/transactions
         this.props.history.push('/main/transactions');
       });

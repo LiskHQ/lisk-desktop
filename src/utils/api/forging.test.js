@@ -5,13 +5,6 @@ import { getDelegate, getForgedBlocks, getForgedStats } from './forging';
 chai.use(sinonChai);
 
 describe('Peers', () => {
-  describe('getDelegate', () => {
-    it('should return a promise', () => {
-      const promise = getDelegate();
-      expect(typeof promise.then).to.be.equal('function');
-    });
-  });
-
   describe('getForgedBlocks', () => {
     it('should return a promise', () => {
       const promise = getForgedBlocks();
