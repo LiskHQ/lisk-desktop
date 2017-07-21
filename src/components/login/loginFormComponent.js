@@ -132,6 +132,7 @@ class LoginFormComponent extends React.Component {
         <Checkbox
           checked={this.state.showPassphrase}
           label="Show passphrase"
+          className={grid['start-xs']}
           onChange={this.changeHandler.bind(this, 'showPassphrase')}
         />
         <footer className={ `${grid.row} ${grid['center-xs']}` }>

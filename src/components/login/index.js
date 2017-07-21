@@ -11,12 +11,10 @@ import styles from './login.css';
 const Login = () => (
   <section>
     <div className={`box ${styles.wrapper}`}>
-      <div className={`${grid.row}`}>
-        <div className={grid['col-xs-2']}></div>
+      <div className={`${grid.row} ${grid['center-xs']}`}>
         <div className={grid['col-xs-8']}>
           <LoginForm />
         </div>
-        <div className={grid['col-xs-2']}></div>
       </div>
     </div>
   </section>
