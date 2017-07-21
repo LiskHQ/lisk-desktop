@@ -1,6 +1,5 @@
 import React from 'react';
 import Cookies from 'js-cookie';
-import mnemonic from 'bitcore-mnemonic';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Input from 'react-toolbox/lib/input';
 import Dropdown from 'react-toolbox/lib/dropdown';
@@ -8,6 +7,10 @@ import Button from 'react-toolbox/lib/button';
 import Checkbox from 'react-toolbox/lib/checkbox';
 import { getAccount } from '../../utils/api/account';
 import networksRaw from './networks';
+
+if (global._bitcore) delete global._bitcore;
+
+const mnemonic = require('bitcore-mnemonic');
 
 /**
  * The container component containing login
@@ -27,8 +30,6 @@ class LoginFormComponent extends React.Component {
       address: '',
       network: 0,
     };
-
-    this.mnemonic = mnemonic;
   }
 
   componentDidMount() {
@@ -61,7 +62,7 @@ class LoginFormComponent extends React.Component {
       data.passphraseValidity = 'Empty passphrase';
     } else {
       const normalizedValue = value.replace(/ +/g, ' ').trim().toLowerCase();
-      if (normalizedValue.split(' ').length < 12 || !this.mnemonic.isValid(normalizedValue)) {
+      if (normalizedValue.split(' ').length < 12 || !mnemonic.isValid(normalizedValue)) {
         data.passphraseValidity = 'Invalid passphrase';
       } else {
         data.passphraseValidity = '';

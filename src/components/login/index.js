@@ -8,7 +8,7 @@ import styles from './login.css';
  * The container component containing login
  * and create account functionality
  */
-const LoginComponent = () => (
+const Login = () => (
   <section>
     <div className={`box ${styles.wrapper}`}>
       <div className={`${grid.row}`}>
@@ -22,4 +22,4 @@ const LoginComponent = () => (
   </section>
 );
 
-export default LoginComponent;
+export default Login;
