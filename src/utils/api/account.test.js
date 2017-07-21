@@ -8,7 +8,7 @@ import { activePeerSet } from '../../actions/peers';
 chai.use(chaiAsPromised);
 chai.use(sinonChai);
 
-describe('Account', () => {
+describe('Utils: Account', () => {
   const address = '1449310910991872227L';
 
   describe('getAccount', () => {

@@ -4,7 +4,7 @@ import { getDelegate, getForgedBlocks, getForgedStats } from './forging';
 
 chai.use(sinonChai);
 
-describe('Peers', () => {
+describe('Utils: Forging', () => {
   describe('getDelegate', () => {
     it('should return a promise', () => {
       const promise = getDelegate();

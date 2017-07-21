@@ -4,8 +4,8 @@ import { shallow } from 'enzyme';
 import { IconButton } from 'react-toolbox/lib/button';
 import Status from './status';
 
-describe('<Status />', () => {
-  it('expect icon to be equal "replay"', () => {
+describe('Status', () => {
+  it('shows "replay" icon for sender and receiver are the same', () => {
     const inputValue = {
       value: {
         type: 0,
@@ -20,7 +20,7 @@ describe('<Status />', () => {
       .to.equal(expectedValue);
   });
 
-  it('expect icon to be equal "call_received"', () => {
+  it('shows "call_received" icon for type 1', () => {
     const inputValue = {
       value: {
         type: 1,
@@ -35,7 +35,7 @@ describe('<Status />', () => {
       .to.equal(expectedValue);
   });
 
-  it('expect icon to be equal "call_made"', () => {
+  it('shows "call_made" icon for outgoing transaction', () => {
     const inputValue = {
       value: {
         type: 1,
