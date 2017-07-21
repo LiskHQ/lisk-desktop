@@ -96,11 +96,9 @@ class LoginFormComponent extends React.Component {
       getAccount(this.props.peers.data, accountInfo.address).then((result) => {
         onAccountUpdated(result);
         getDelegate(this.props.peers.data, accountInfo.publicKey).then((data) => {
-          if (data.success) {
-            onAccountUpdated({ delegate: data.delegate, isDelegate: true });
-          } else {
-            onAccountUpdated({ delegate: {}, isDelegate: false });
-          }
+          onAccountUpdated({ delegate: data.delegate, isDelegate: true });
+        }).catch(() => {
+          onAccountUpdated({ delegate: {}, isDelegate: false });
         });
         // redirect to main/transactions
         this.props.history.push('/main/transactions');

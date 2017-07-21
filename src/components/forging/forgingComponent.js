@@ -19,7 +19,7 @@ class ForgingComponent extends React.Component {
   render() {
     return (
       <Card style={{ padding: 8 }}>
-        {this.props.account && this.props.account.delegate ?
+        {this.props.account && this.props.account.isDelegate ?
           <div>
             <ForgingTitle account={this.props.account} statistics={this.props.statistics}
               loadStats={this.loadStats.bind(this)} />
@@ -37,6 +37,14 @@ class ForgingComponent extends React.Component {
               this.props.account.publicKey,
             ) } />
           </div> :
+          null
+        }
+        {this.props.account && this.props.account.delegate && !this.props.account.isDelegate ?
+          <p>
+            You need to become a delegate to start forging.
+            If you already registered to become a delegate,
+            your registration hasn't been processed, yet.
+          </p> :
           null
         }
       </Card>
