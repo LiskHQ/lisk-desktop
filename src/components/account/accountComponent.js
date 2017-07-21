@@ -56,7 +56,7 @@ class AccountComponent extends React.Component {
             <h3 className={styles.title}>Balance</h3>
             <div className={styles['value-wrapper']}>
               <p className="inner primary full hasTip">
-                <LiskAmount val={this.props.balance} /> LSK
+                <LiskAmount val={this.props.account.balance} /> LSK
               </p>
               <p className="inner secondary tooltip">
                 Click to send all funds
