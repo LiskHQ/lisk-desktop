@@ -16,11 +16,11 @@ const forging = (state = { forgedBlocks: [], statistics: {} }, action) => {
         state.forgedBlocks[state.forgedBlocks.length - 1].timestamp :
         0;
       return Object.assign({}, state, {
-        forgedBlocks: [].concat(
-          action.data.filter(block => block.timestamp > startTimesamp),
-          state.forgedBlocks,
-          action.data.filter(block => block.timestamp < endTimesamp),
-        ),
+        forgedBlocks: [
+          ...action.data.filter(block => block.timestamp > startTimesamp),
+          ...state.forgedBlocks,
+          ...action.data.filter(block => block.timestamp < endTimesamp),
+        ],
       });
     case actionTypes.forgingStatsUpdated:
       return Object.assign({}, state, {
