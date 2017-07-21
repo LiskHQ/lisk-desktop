@@ -1,5 +1,5 @@
 import React from 'react';
-import FormattedNumber from '../formattedNumber';
+import LiskAmount from '../liskAmount';
 import { TooltipTime, TooltipWrapper } from '../timestamp';
 import TransactionType from './transactionType';
 import styles from './transactions.css';
@@ -25,7 +25,7 @@ const TransactionRow = props => (
     </td>
     <td className={`${props.tableStyle.rowCell} ${styles.centerText}`}>
       <span className={styles.grayButton}>
-        <FormattedNumber val={props.value.fee}></FormattedNumber>
+        <LiskAmount val={props.value.fee} />
       </span>
     </td>
   </tr>
