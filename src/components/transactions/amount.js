@@ -1,12 +1,12 @@
 import React from 'react';
 import styles from './transactions.css';
-import FormattedNumber from '../formattedNumber';
+import LiskAmount from '../liskAmount';
 import { TooltipWrapper } from '../timestamp';
 
 const Amount = (props) => {
   let template = null;
   let tooltipText = null;
-  const amount = <FormattedNumber val={props.value.amount}></FormattedNumber>;
+  const amount = <LiskAmount val={props.value.amount} />;
   if (props.value.type === 0 &&
     props.value.senderId === props.value.recipientId) {
     template = <span className={styles.grayButton}>{amount}</span>;
