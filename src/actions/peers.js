@@ -1,3 +1,4 @@
+import Lisk from 'lisk-js';
 import actionTypes from '../constants/actions';
 
 /**
@@ -7,10 +8,35 @@ import actionTypes from '../constants/actions';
  * @param {Object} data - Active peer data
  * @returns {Object} Action object
  */
-export const activePeerSet = data => ({
-  data,
-  type: actionTypes.activePeerSet,
-});
+export const activePeerSet = (network) => {
+  const addHttp = (url) => {
+    const reg = /^(?:f|ht)tps?:\/\//i;
+    return reg.test(url) ? url : `http://${url}`;
+  };
+
+  // this.network = network;
+  let config = { };
+  if (network) {
+    config = network;
+    if (network.address) {
+      const normalizedUrl = new URL(addHttp(network.address));
+
+      config.node = normalizedUrl.hostname;
+      config.port = normalizedUrl.port;
+      config.ssl = normalizedUrl.protocol === 'https';
+    }
+    if (config.testnet === undefined && config.port !== undefined) {
+      config.testnet = config.port === '7000';
+    }
+  }
+
+  const data = Lisk.api(config);
+
+  return {
+    data,
+    type: actionTypes.activePeerSet,
+  };
+};
 
 /**
  * Returns required action object to partially

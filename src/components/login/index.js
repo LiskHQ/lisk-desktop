@@ -1,21 +1,23 @@
 import React from 'react';
-
-// import grid from '../../../node_modules/flexboxgrid/dist/flexboxgrid.css';
-// import styles from './login.css';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import LoginForm from './loginForm';
+import styles from './login.css';
 
 
 /**
- * The container component containing login and create account functionality
+ * The container component containing login
+ * and create account functionality
  */
-class Login extends React.Component {
-  constructor() {
-    super();
-    this.title = 'Login';
-  }
-  render() {
-    return (
-      <h1>{this.title}</h1>
-    );
-  }
-}
+const Login = () => (
+  <section>
+    <div className={`box ${styles.wrapper}`}>
+      <div className={`${grid.row} ${grid['center-xs']}`}>
+        <div className={grid['col-xs-8']}>
+          <LoginForm />
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
 export default Login;
