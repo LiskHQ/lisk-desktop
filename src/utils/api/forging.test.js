@@ -1,6 +1,6 @@
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
-import { getDelegate, getForgedBlocks, getForgedStats } from './forging';
+import { getForgedBlocks, getForgedStats } from './forging';
 
 chai.use(sinonChai);
 
