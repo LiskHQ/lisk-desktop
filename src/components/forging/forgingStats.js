@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardText } from 'react-toolbox/lib/card';
 import moment from 'moment';
-import FormattedNumber from '../formattedNumber';
+import LiskAmount from '../liskAmount';
 import grid from '../../../node_modules/flexboxgrid/dist/flexboxgrid.css';
 import style from './forging.css';
 
@@ -43,7 +43,7 @@ class ForgingStats extends React.Component {
                 <div className={`${grid.row}  ${grid['between-xs']}`}>
                   <span className='title'> {cardObj.label} </span>
                   <span>
-                    <FormattedNumber val={this.props.statistics[cardObj.key] / (10 ** 8)}
+                    <LiskAmount val={this.props.statistics[cardObj.key]}
                       /> LSK
                   </span>
                 </div>

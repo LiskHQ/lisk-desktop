@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardText } from 'react-toolbox/lib/card';
 import moment from 'moment';
-import FormattedNumber from '../formattedNumber';
+import LiskAmount from '../liskAmount';
 import grid from '../../../node_modules/flexboxgrid/dist/flexboxgrid.css';
 import style from './forging.css';
 
@@ -21,8 +21,7 @@ class ForgingTitle extends React.Component {
               {this.props.account.delegate.username}
             </h2>
             <span>
-              <FormattedNumber val={this.props.statistics.total / (10 ** 8)}
-              /> LSK Earned
+              <LiskAmount val={this.props.statistics.total} /> LSK Earned
             </span>
           </div>
         </CardText>
