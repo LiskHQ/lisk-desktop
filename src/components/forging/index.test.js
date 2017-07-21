@@ -9,14 +9,14 @@ import store from '../../store';
 chai.use(sinonChai);
 
 
-describe('<Forging />', () => {
+describe('Forging', () => {
   let wrapper;
 
   beforeEach(() => {
     wrapper = mount(<Provider store={store}><Forging /></Provider>);
   });
 
-  it('should render 1 <ForgingComponent/>', () => {
+  it('should render ForgingComponent', () => {
     expect(wrapper.find('ForgingComponent')).to.have.lengthOf(1);
   });
 });

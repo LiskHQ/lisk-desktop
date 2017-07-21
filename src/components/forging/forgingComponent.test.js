@@ -7,7 +7,7 @@ import ForgingComponent from './forgingComponent';
 chai.use(sinonChai);
 
 
-describe('<ForgingComponent />', () => {
+describe('ForgingComponent', () => {
   let wrapper;
   const props = {
     account: {
@@ -24,19 +24,19 @@ describe('<ForgingComponent />', () => {
     wrapper = mount(<ForgingComponent {...props} />);
   });
 
-  it('should render <ForgingTitle/>', () => {
+  it('should render ForgingTitle', () => {
     expect(wrapper.find('ForgingTitle')).to.have.lengthOf(1);
   });
 
-  it('should render <ForgingStats/>', () => {
+  it('should render ForgingStats', () => {
     expect(wrapper.find('ForgingStats')).to.have.lengthOf(1);
   });
 
-  it('should render <DelegateStats/>', () => {
+  it('should render DelegateStats', () => {
     expect(wrapper.find('DelegateStats')).to.have.lengthOf(1);
   });
 
-  it('should render <ForgedBlocks/>', () => {
+  it('should render ForgedBlocks', () => {
     expect(wrapper.find('ForgedBlocks')).to.have.lengthOf(1);
   });
 });
