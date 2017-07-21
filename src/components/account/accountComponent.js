@@ -2,7 +2,7 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './account.css';
 import Address from './address';
-import FormattedNumber from '../formattedNumber';
+import LiskAmount from '../liskAmount';
 import { getAccountStatus } from '../../utils/api/account';
 
 /**
@@ -56,7 +56,7 @@ class AccountComponent extends React.Component {
             <h3 className={styles.title}>Balance</h3>
             <div className={styles['value-wrapper']}>
               <p className="inner primary full hasTip">
-                <FormattedNumber val={this.props.account.balance}></FormattedNumber> Lsk
+                <LiskAmount val={this.props.account.balance} /> LSK
               </p>
               <p className="inner secondary tooltip">
                 Click to send all funds
