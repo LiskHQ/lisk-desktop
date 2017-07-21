@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import tableStyle from 'react-toolbox/lib/table/theme.css';
 import TransactionRow from './transactionRow';
 
-describe('<TransactionRow />', () => {
+describe('TransactionRow', () => {
   it('expect to have 6 "td"', () => {
     const address = '16313739661670634666L';
     const rowData = {

@@ -16,7 +16,7 @@ const secret = 'sample_secret';
 const secondSecret = 'samepl_second_secret';
 const publicKey = '';
 
-describe('Delegate', () => {
+describe('Utils: Delegate', () => {
   let peersMock;
   let activePeer;
 
