@@ -11,8 +11,10 @@ const forging = (state = { forgedBlocks: [], statistics: {} }, action) => {
 
   switch (action.type) {
     case actionTypes.forgedBlocksUpdated:
-      startTimesamp = state.forgedBlocks.length ? state.forgedBlocks[0].timestamp : 0;
-      endTimesamp = state.forgedBlocks.length ?
+      startTimesamp = state.forgedBlocks && state.forgedBlocks.length ?
+        state.forgedBlocks[0].timestamp :
+        0;
+      endTimesamp = state.forgedBlocks && state.forgedBlocks.length ?
         state.forgedBlocks[state.forgedBlocks.length - 1].timestamp :
         0;
       return Object.assign({}, state, {
