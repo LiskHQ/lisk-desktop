@@ -4,12 +4,12 @@ import CircularProgressbar from 'react-circular-progressbar';
 import grid from '../../../node_modules/flexboxgrid/dist/flexboxgrid.css';
 import style from './forging.css';
 
-const progressCircleCardObjects = [
+const progressCircleCardList = [
   {
     key: 'rate',
     label: 'Rank',
-    textForPercentage: pct => (101 - pct),
-    percentageTransform: pct => (101 - pct),
+    textForPercentage: percentage => (101 - percentage),
+    percentageTransform: percentage => (101 - percentage),
   }, {
     key: 'productivity',
     label: 'Productivity',
@@ -23,16 +23,16 @@ const identity = x => (x);
 
 const DelegateStats = props => (
   <div className={`${grid.row} ${grid['between-xs']}`}>
-    {progressCircleCardObjects.map(cardObj => (
-      <div className={grid['col-xs-4']} key={cardObj.key}>
+    {progressCircleCardList.map(cardItem => (
+      <div className={grid['col-xs-4']} key={cardItem.key}>
         <Card className={style.grayCard}>
           <CardText>
           <div className={grid['col-xs-12']}>
             <div className={`${grid.row}  ${grid['between-xs']}`}>
-              <div className={style.circularProgressTitle}> {cardObj.label} </div>
+              <div className={style.circularProgressTitle}> {cardItem.label} </div>
               <CircularProgressbar
-                percentage={(cardObj.percentageTransform || identity)(props.delegate[cardObj.key])}
-                textForPercentage={cardObj.textForPercentage}/>
+                percentage={(cardItem.percentageTransform || identity)(props.delegate[cardItem.key])}
+                textForPercentage={cardItem.textForPercentage}/>
             </div>
           </div>
           </CardText>
