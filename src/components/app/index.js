@@ -10,6 +10,7 @@ import Forging from '../forging';
 import styles from './app.css';
 import Metronome from '../../utils/metronome';
 import Dialog from '../dialog';
+import Toaster from '../toaster';
   // temporary, will be deleted with #347
 
 // start dispatching sync ticks
@@ -35,6 +36,7 @@ const App = () => (
       <Route exact path="/" component={Login} />
     </main>
     <Dialog />
+    <Toaster />
   </section>
 );
 
