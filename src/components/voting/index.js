@@ -1,7 +1,8 @@
-import React from 'react';
+import { connect } from 'react-redux';
+import Voting from './votingComponent';
 
-const Voting = () => (
-  <h1>Voting</h1>
-);
-
-export default Voting;
+const mapStateToProps = state => ({
+  address: state.account.address,
+  activePeer: state.peers.data,
+});
+export default connect(mapStateToProps)(Voting);
