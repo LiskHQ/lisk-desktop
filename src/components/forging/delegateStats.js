@@ -4,6 +4,8 @@ import CircularProgressbar from 'react-circular-progressbar';
 import grid from '../../../node_modules/flexboxgrid/dist/flexboxgrid.css';
 import style from './forging.css';
 
+const identity = x => (x);
+
 const progressCircleCardList = [
   {
     key: 'rate',
@@ -13,13 +15,13 @@ const progressCircleCardList = [
   }, {
     key: 'productivity',
     label: 'Productivity',
+    percentageTransform: identity,
   }, {
     key: 'approval',
     label: 'Approval',
+    percentageTransform: identity,
   },
 ];
-
-const identity = x => (x);
 
 const DelegateStats = props => (
   <div className={`${grid.row} ${grid['between-xs']}`}>
@@ -31,7 +33,7 @@ const DelegateStats = props => (
             <div className={`${grid.row}  ${grid['between-xs']}`}>
               <div className={style.circularProgressTitle}> {cardItem.label} </div>
               <CircularProgressbar
-                percentage={(cardItem.percentageTransform || identity)(props.delegate[cardItem.key])}
+                percentage={cardItem.percentageTransform(props.delegate[cardItem.key])}
                 textForPercentage={cardItem.textForPercentage}/>
             </div>
           </div>
