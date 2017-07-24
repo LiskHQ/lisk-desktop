@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import { updateForgedBlocks, updateForgingStats } from '../../actions/forging';
 import ForgingComponent from './forgingComponent';
-import { getForgedBlocks, getForgedStats } from '../../utils/api/forging';
 
 const mapStateToProps = state => ({
   account: state.account,
@@ -11,15 +10,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  loadForgedBlocks: (activePeer, limit, offset, generatorPublicKey) => {
-    getForgedBlocks(activePeer, limit, offset, generatorPublicKey).then((data) => {
-      dispatch(updateForgedBlocks(data.blocks));
-    });
+  onForgedBlocksLoaded: (blocks) => {
+    dispatch(updateForgedBlocks(blocks));
   },
-  loadStats: (activePeer, key, startMoment, generatorPublicKey) => {
-    getForgedStats(activePeer, startMoment, generatorPublicKey).then((data) => {
-      dispatch(updateForgingStats({ [key]: data.forged }));
-    });
+  onForgingStatsUpdate: (stats) => {
+    dispatch(updateForgingStats(stats));
   },
 });
 

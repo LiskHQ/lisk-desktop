@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card } from 'react-toolbox/lib/card';
 import Waypoint from 'react-waypoint';
+import { getForgedBlocks, getForgedStats } from '../../utils/api/forging';
 import ForgingTitle from './forgingTitle';
 import DelegateStats from './delegateStats';
 import ForgingStats from './forgingStats';
@@ -8,12 +9,16 @@ import ForgedBlocks from './forgedBlocks';
 
 class ForgingComponent extends React.Component {
   loadStats(key, startMoment) {
-    this.props.loadStats(
-      this.props.peers.data,
-      key,
-      startMoment,
-      this.props.account.publicKey,
-    );
+    getForgedStats(this.props.peers.data, startMoment, this.props.account.publicKey,
+    ).then((data) => {
+      this.props.onForgingStatsUpdate({ [key]: data.forged });
+    });
+  }
+
+  loadForgedBlocks(activePeer, limit, offset, generatorPublicKey) {
+    getForgedBlocks(activePeer, limit, offset, generatorPublicKey).then((data) => {
+      this.props.onForgedBlocksLoaded(data.blocks);
+    });
   }
 
   render() {
@@ -30,7 +35,7 @@ class ForgingComponent extends React.Component {
             <DelegateStats delegate={this.props.account.delegate} />
             <br />
             <ForgedBlocks forgedBlocks={this.props.forgedBlocks} />
-            <Waypoint onEnter={() => this.props.loadForgedBlocks(
+            <Waypoint onEnter={() => this.loadForgedBlocks(
               this.props.peers.data,
               20,
               this.props.forgedBlocks.length,
