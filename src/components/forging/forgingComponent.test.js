@@ -12,6 +12,7 @@ describe('ForgingComponent', () => {
   const props = {
     account: {
       delegate: {},
+      isDelegate: true,
     },
     peers: {},
     statistics: {},
