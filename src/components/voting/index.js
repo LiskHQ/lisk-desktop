@@ -5,4 +5,5 @@ const mapStateToProps = state => ({
   address: state.account.address,
   activePeer: state.peers.data,
 });
+
 export default connect(mapStateToProps)(VotingComponent);
