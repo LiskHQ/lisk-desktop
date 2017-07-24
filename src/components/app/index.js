@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Link } from 'react-router-dom';
+import DefaultLayout from '../defaultLayout';
 import Header from '../header';
-import Account from '../account';
 import Login from '../login';
 import Transactions from '../transactions';
 import Voting from '../voting';
@@ -19,22 +19,17 @@ const App = () => {
   return (
     <section className={styles['body-wrapper']}>
       <Header />
-      <main className=''>
-        <Route path="/main" render={({ match }) => (
-          <main className=''>
-            <Account />
-            <Route path={`${match.url}/transactions`} component={Transactions}/>
-            <Route path={`${match.url}/voting`} component={Voting}/>
-            <Route path={`${match.url}/forging`} component={Forging}/>
-          </main>
-        )} />
+      <main>
+        <DefaultLayout path='/transactions' component={Transactions} />
+        <DefaultLayout path='/voting' component={Voting} />
+        <DefaultLayout path='/forging' component={Forging} />
         <Route exact path="/" component={Login} />
       </main>
 
       <Link to='/'>Login</Link>
-      <Link to='/main/transactions'>Transactions</Link>
-      <Link to='/main/voting'>Voting</Link>
-      <Link to='/main/forging'>Forging</Link>
+      <Link to='/transactions'>Transactions</Link>
+      <Link to='/voting'>Voting</Link>
+      <Link to='/forging'>Forging</Link>
       <Dialog />
     </section>
   );
