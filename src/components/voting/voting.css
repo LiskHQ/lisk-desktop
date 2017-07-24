@@ -1,0 +1,14 @@
+.table{
+    & :global thead th:first-child{
+        display: none !important;
+    }
+}
+.searchBox{
+    position: relative;
+}
+.searchIcon{
+    position: absolute;
+    top: 27px;
+    right: 10px;
+    color: rgba(0, 0, 0, .38);
+}
