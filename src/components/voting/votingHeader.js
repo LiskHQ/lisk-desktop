@@ -11,7 +11,7 @@ class VotingHeader extends React.Component {
       searchIcon: 'search',
     };
   }
-  doSearch(name, value) {
+  search(name, value) {
     const icon = value.length > 0 ? 'close' : 'search';
     this.setState({
       query: value,
@@ -21,7 +21,7 @@ class VotingHeader extends React.Component {
   }
   clearSearch() {
     if (this.state.searchIcon === 'close') {
-      this.doSearch('query', '');
+      this.search('query', '');
     }
   }
   render() {
@@ -30,9 +30,9 @@ class VotingHeader extends React.Component {
         <div className={`${grid['col-xs-3']} ${styles.searchBox}`}>
           <Input type='tel' label='Search' name='query'
             value={this.state.query}
-            onChange={this.doSearch.bind(this, 'query')}
+            onChange={this.search.bind(this, 'query')}
           />
-          <i className={`material-icons ${styles.searchIcon}`} onClick={ () => this.clearSearch() }>
+          <i className={`material-icons ${styles.searchIcon}`} onClick={ this.clearSearch.bind(this) }>
             {this.state.searchIcon}
           </i>
         </div>
