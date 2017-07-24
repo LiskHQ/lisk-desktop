@@ -4,7 +4,7 @@ import { listAccountDelegates, listDelegates } from '../../utils/api/delegate';
 import VotingHeader from './votingHeader';
 import styles from './voting.css';
 
-class Voting extends React.Component {
+class VotingComponent extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -15,7 +15,6 @@ class Voting extends React.Component {
   }
   componentDidMount() {
     listAccountDelegates(this.props.activePeer, this.props.address).then((res) => {
-      console.log(res);
       this.setState({
         delegates: res.delegates,
       });
@@ -23,14 +22,12 @@ class Voting extends React.Component {
   }
   search(value) {
     listDelegates(this.props.activePeer, { q: value }).then((res) => {
-      console.log(res);
       this.setState({
         delegates: res.delegates,
       });
     });
   }
   handleRowSelect(selected) {
-    console.log(selected);
     // this.setState({ selected: selected.map(item => sortedData[item].name) });
     this.setState({
       selected: selected.map(item => this.state.delegates[item].username),
@@ -67,4 +64,4 @@ class Voting extends React.Component {
   }
 }
 
-export default Voting;
+export default VotingComponent;
