@@ -5,21 +5,24 @@ import grid from '../../../node_modules/flexboxgrid/dist/flexboxgrid.css';
 import style from './forging.css';
 
 const identity = x => (x);
+const addPercentSign = x => (`${x}%`);
 
 const progressCircleCardList = [
   {
     key: 'rate',
     label: 'Rank',
-    textForPercentage: percentage => (101 - percentage),
-    percentageTransform: percentage => (101 - percentage),
+    percentageTransform: percentage => (Math.max(0, 101 - percentage)),
+    textForPercentage: identity,
   }, {
     key: 'productivity',
     label: 'Productivity',
     percentageTransform: identity,
+    textForPercentage: addPercentSign,
   }, {
     key: 'approval',
     label: 'Approval',
     percentageTransform: identity,
+    textForPercentage: addPercentSign,
   },
 ];
 
@@ -34,7 +37,7 @@ const DelegateStats = props => (
               <div className={style.circularProgressTitle}> {cardItem.label} </div>
               <CircularProgressbar
                 percentage={cardItem.percentageTransform(props.delegate[cardItem.key])}
-                textForPercentage={cardItem.textForPercentage}/>
+                textForPercentage={cardItem.textForPercentage.bind(props.delegate[cardItem.key])}/>
             </div>
           </div>
           </CardText>
