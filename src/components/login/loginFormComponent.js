@@ -95,7 +95,7 @@ class LoginFormComponent extends React.Component {
       getAccount(this.props.peers.data, accountInfo.address).then((result) => {
         onAccountUpdated(result);
         // redirect to main/transactions
-        this.props.history.push('/main/transactions');
+        this.props.history.replace('/transactions');
       });
     }, 5);
   }
