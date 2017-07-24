@@ -6,7 +6,7 @@ const Address = (props) => {
   const content = props.isDelegate ?
     (<div>
       <p className="inner primary">
-        {props.username}
+        {props.delegate.username}
       </p>
       <p className="inner secondary">
         <span>{props.address}</span>

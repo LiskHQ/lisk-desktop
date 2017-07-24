@@ -18,7 +18,9 @@ describe('Address', () => {
     const inputValue = {
       isDelegate: true,
       address: '16313739661670634666L',
-      username: 'lisk-nano',
+      delegate: {
+        username: 'lisk-nano',
+      },
     };
     const expectedHeaderValue = 'Delegate';
     const wrapper = shallow(<Address {...inputValue} />);
@@ -29,7 +31,9 @@ describe('Address', () => {
     const inputValue = {
       isDelegate: true,
       address: '16313739661670634666L',
-      username: 'lisk-nano',
+      delegate: {
+        username: 'lisk-nano',
+      },
     };
     const expectedValue = 'lisk-nano';
     const wrapper = shallow(<Address {...inputValue} />);
