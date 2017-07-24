@@ -19,6 +19,11 @@ const App = () => {
   return (
     <section className={styles['body-wrapper']}>
       <Header />
+
+      <Link to='/'>Login</Link>
+      <Link to='/main/transactions'>Transactions</Link>
+      <Link to='/main/voting'>Voting</Link>
+      <Link to='/main/forging'>Forging</Link>
       <main className=''>
         <Route path="/main" render={({ match }) => (
           <main className=''>
@@ -30,11 +35,6 @@ const App = () => {
         )} />
         <Route exact path="/" component={Login} />
       </main>
-
-      <Link to='/'>Login</Link>
-      <Link to='/main/transactions'>Transactions</Link>
-      <Link to='/main/voting'>Voting</Link>
-      <Link to='/main/forging'>Forging</Link>
       <Dialog />
     </section>
   );
