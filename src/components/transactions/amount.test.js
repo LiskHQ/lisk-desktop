@@ -3,8 +3,8 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import Amount from './amount';
 
-describe('<Status />', () => {
-  it('expect amount to have className "transactions__grayButton"', () => {
+describe('Amount', () => {
+  it('should have className "transactions__grayButton" for type 0', () => {
     const inputValue = {
       value: {
         type: 0,
@@ -20,7 +20,7 @@ describe('<Status />', () => {
         .to.have.lengthOf(1);
   });
 
-  it('expect amount to have className "transactions__inButton"', () => {
+  it('should have className "transactions__inButton" for type 1', () => {
     const inputValue = {
       value: {
         type: 1,
@@ -36,7 +36,7 @@ describe('<Status />', () => {
         .to.have.lengthOf(1);
   });
 
-  it('expect amount to have className "transactions__outButton"', () => {
+  it('should have className "transactions__outButton" for outgoing transaction', () => {
     const inputValue = {
       value: {
         type: 1,

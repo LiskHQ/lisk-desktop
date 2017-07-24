@@ -32,7 +32,7 @@ const createTest = (type) => {
       expectedValue = false;
       break;
   }
-  it(`expect text of TransactionType to be equal "${expectedValue}"`, () => {
+  it(`show TransactionType equal to "${expectedValue}" for transaction type ${type}`, () => {
     const inputValue = {
       type,
       senderId: '1085993630748340485L',
@@ -42,12 +42,12 @@ const createTest = (type) => {
   });
 };
 
-describe('<TransactionType />', () => {
+describe('TransactionType', () => {
   for (let i = 1; i < 8; i++) {
     createTest(i);
   }
 
-  it('expect text of TransactionType to be equal "props.sederId"', () => {
+  it('sets TransactionType equal the values of "props.sederId"', () => {
     const inputValue = {
       type: 0,
       senderId: '1085993630748340485L',

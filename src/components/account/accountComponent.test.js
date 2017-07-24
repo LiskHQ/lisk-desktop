@@ -7,7 +7,7 @@ import AccountComponent from './accountComponent';
 
 chai.use(sinonChai);
 
-describe('<AccountComponent />', () => {
+describe('AccountComponent', () => {
   // Mocking store
   const onActivePeerUpdated = () => {};
   const peers = {

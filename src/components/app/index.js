@@ -19,15 +19,13 @@ const App = () => {
   return (
     <section className={styles['body-wrapper']}>
       <Header />
-
-      <Link to='/'>Login</Link>
-      <Link to='/main/transactions'>Transactions</Link>
-      <Link to='/main/voting'>Voting</Link>
-      <Link to='/main/forging'>Forging</Link>
       <main className=''>
         <Route path="/main" render={({ match }) => (
           <main className=''>
             <Account />
+            <Link to='/main/transactions'>Transactions</Link>
+            <Link to='/main/voting'>Voting</Link>
+            <Link to='/main/forging'>Forging</Link>
             <Route path={`${match.url}/transactions`} component={Transactions}/>
             <Route path={`${match.url}/voting`} component={Voting}/>
             <Route path={`${match.url}/forging`} component={Forging}/>

@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import Address from './address';
 
-describe('in <Address />', () => {
+describe('Address', () => {
   it('when value of "isDelegate" is "false" expect text of "h3#firstBox" to be equal "Address"', () => {
     const inputValue = {
       isDelegate: false,
@@ -18,7 +18,9 @@ describe('in <Address />', () => {
     const inputValue = {
       isDelegate: true,
       address: '16313739661670634666L',
-      username: 'lisk-nano',
+      delegate: {
+        username: 'lisk-nano',
+      },
     };
     const expectedHeaderValue = 'Delegate';
     const wrapper = shallow(<Address {...inputValue} />);
@@ -29,7 +31,9 @@ describe('in <Address />', () => {
     const inputValue = {
       isDelegate: true,
       address: '16313739661670634666L',
-      username: 'lisk-nano',
+      delegate: {
+        username: 'lisk-nano',
+      },
     };
     const expectedValue = 'lisk-nano';
     const wrapper = shallow(<Address {...inputValue} />);

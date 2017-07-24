@@ -7,7 +7,7 @@ import { Dialog } from 'react-toolbox/lib/dialog';
 import DialogElement from '../dialog/dialogElement';
 
 chai.use(chaiEnzyme()); // Note the invocation at the end
-describe('<DialogElement />', () => {
+describe('DialogElement', () => {
   let wrapper;
   const Dummy = props => (<div>DUMMY {props.name}</div>);
   const dialogProps = {

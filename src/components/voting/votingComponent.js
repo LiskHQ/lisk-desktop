@@ -2,7 +2,7 @@ import React from 'react';
 import { Table, TableHead, TableRow, TableCell } from 'react-toolbox/lib/table';
 import { listAccountDelegates, listDelegates } from '../../utils/api/delegate';
 import VotingHeader from './votingHeader';
-// import styles from './voting.css';
+import styles from './voting.css';
 
 class Voting extends React.Component {
   constructor() {
@@ -40,9 +40,9 @@ class Voting extends React.Component {
     return (
       <div className="box">
         <VotingHeader search={ value => this.search(value) }></VotingHeader>
-        <Table
+        <Table className={styles.table}
           onRowSelect={ selected => this.handleRowSelect(selected) }
-          Selectable={false}
+          multiSelectable={true}
         >
           <TableHead displaySelect={false}>
             <TableCell numeric>Vote</TableCell>
