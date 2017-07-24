@@ -98,6 +98,18 @@ Run the protractor tests (replace `~/git/lisk/` with your path to lisk core):
 npm run e2e-test
 ```
 
+## Launch React Storybook
+
+To launch storybook sandbox with components run
+```
+npm run storybook
+```
+and go to
+
+http://localhost:6006/
+
+
+
 ## Authors
 
 - Ricardo Ferro <ricardo.ferro@gmail.com>
