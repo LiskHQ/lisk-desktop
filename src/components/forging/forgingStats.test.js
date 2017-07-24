@@ -7,7 +7,7 @@ import ForgingStats from './forgingStats';
 chai.use(sinonChai);
 
 
-describe('<ForgingStats />', () => {
+describe('ForgingStats', () => {
   const account = {
     delegate: {
       username: 'genesis_17',

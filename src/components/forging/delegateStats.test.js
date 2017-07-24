@@ -6,7 +6,7 @@ import DelegateStats from './delegateStats';
 
 chai.use(sinonChai);
 
-describe('<DelegateStats />', () => {
+describe('DelegateStats', () => {
   const delegate = {
     username: 'genesis_17',
     rate: 19,

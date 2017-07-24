@@ -7,7 +7,7 @@ import ForgingTitle from './forgingTitle';
 chai.use(sinonChai);
 
 
-describe('<ForgingTitle />', () => {
+describe('ForgingTitle', () => {
   const account = {
     delegate: {
       username: 'genesis_17',

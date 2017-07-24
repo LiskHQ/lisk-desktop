@@ -6,7 +6,7 @@ import ForgedBlocks from './forgedBlocks';
 
 chai.use(sinonChai);
 
-describe('<ForgedBlocks />', () => {
+describe('ForgedBlocks', () => {
   const forgedBlocks = [{
     id: '16113150790072764126',
     timestamp: 36280810,
