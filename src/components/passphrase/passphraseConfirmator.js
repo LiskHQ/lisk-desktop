@@ -17,9 +17,9 @@ class PassphraseConfirmator extends React.Component {
     };
   }
 
-  hideRandomWord() {
+  hideRandomWord(rand = Math.random()) {
     const words = this.props.passphrase.trim().split(/\s+/);
-    const index = Math.floor(Math.random() * words.length);
+    const index = Math.floor(rand * words.length);
 
     this.setState({
       passphraseParts: this.props.passphrase.split(` ${words[index]} `),
