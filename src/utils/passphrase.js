@@ -9,14 +9,7 @@ const mnemonic = require('bitcore-mnemonic');
  * @param {Number|String} value
  * @returns {Array} - Array of 16 'value's
  */
-const emptyBytes = (value) => {
-  const byte = [];
-  for (let i = 0; i < 16; i++) {
-    byte.push(value);
-  }
-
-  return byte;
-};
+const emptyBytes = (value) => Array.apply(null, Array(16)).map(item => value); //eslint-disable-line
 
 /**
  * fills the left side of str with a given padding string to meet the required length
