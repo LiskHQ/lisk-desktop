@@ -31,4 +31,17 @@ describe('VotingHeader', () => {
     wrapper.instance().search('query', '555');
     expect(search).to.have.been.calledWith('555');
   });
+
+
+  it('should this.props.search when this.search is called', () => {
+    wrapper.instance().search('query', '555');
+    expect(search).to.have.been.calledWith('555');
+  });
+
+
+  it('click on i.material-icons should clear vlaue of search input', () => {
+    wrapper.instance().search('query', '555');
+    wrapper.find('i.material-icons').simulate('click')
+    expect(wrapper.state('query')).to.be.equal('');
+  });
 });
