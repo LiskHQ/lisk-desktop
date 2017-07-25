@@ -1,0 +1,22 @@
+.byte {
+    display: inline-block;
+    text-align: center;
+    font-size: 140%;
+    margin: 5px;
+    font-family: monospace;
+}
+
+.missing {
+    padding: 0 5px 0;
+    font-weight: bold;
+    color: #0288d1;
+}
+hr {
+    display: none;
+}
+.templateItem {
+    min-height: 100px;
+}
+:global .box {
+    box-shadow: none !important;
+}
