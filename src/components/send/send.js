@@ -49,7 +49,7 @@ class Send extends React.Component {
       state.amount.error = 'Required';
     } else if (!state.amount.value.match(/^\d+(\.\d{1,8})?$/)) {
       state.amount.error = 'Invalid LSK amount';
-    } else if (state.amount.value > this.getMaxAmount()) {
+    } else if (state.amount.value > parseFloat(this.getMaxAmount())) {
       state.amount.error = 'Insufficient funds';
     }
 
@@ -93,17 +93,21 @@ class Send extends React.Component {
     return (
       <div className={`${styles.send} send`}>
         <Input label='Recipient Address' required={true}
+          className='recipient'
           autoFocus={true}
           error={this.state.recipient.error}
           value={this.state.recipient.value}
           onChange={this.handleChange.bind(this, 'recipient')} />
         <Input label='Transaction Amount' required={true}
+          className='amount'
           error={this.state.amount.error}
           value={this.state.amount.value}
           onChange={this.handleChange.bind(this, 'amount')} />
         <div className={styles.fee}> Fee: {this.fee} LSK</div>
-        <IconMenu icon='more_vert' position='topRight' menuRipple className={styles.sendAllMenu} >
-          <MenuItem onClick={this.setMaxAmount.bind(this)} caption='Set maximum amount' />
+        <IconMenu icon='more_vert' position='topRight' menuRipple className={`${styles.sendAllMenu} transaction-amount`} >
+          <MenuItem onClick={this.setMaxAmount.bind(this)}
+            caption='Set maximum amount'
+            className='send-maximum-amount'/>
         </IconMenu>
         <section className={`${grid.row} ${grid['between-xs']}`}>
           <Button label='Cancel' className='cancel-button' onClick={this.props.closeDialog} />
