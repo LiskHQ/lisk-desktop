@@ -101,7 +101,7 @@ class LoginFormComponent extends React.Component {
           onAccountUpdated({ delegate: {}, isDelegate: false });
         });
         // redirect to main/transactions
-        this.props.history.replace('/transactions');
+        this.props.history.replace('/main/transactions');
       });
     }, 5);
   }

@@ -2,20 +2,20 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { MemoryRouter, Route } from 'react-router';
-import { PrivateRouteComponent } from './index';
+import { PrivateRouteRender } from './index';
 
 const Public = () => <h1>Public</h1>;
 const Private = () => <h1>Private</h1>;
 
-describe('<PrivateRoute />', () => {
+describe('PrivateRouteRender', () => {
   const isAuth = isAuthenticated => (
     mount(
-      <MemoryRouter initialEntries={['/private']}>
+      <MemoryRouter initialEntries={['/private/test']}>
         <div>
           <Route path='/' component={Public} />
-          <PrivateRouteComponent
+          <PrivateRouteRender
             path='/private'
-            component={Private}
+            render={({ match }) => <Route to={`${match.url}/test`} component={Private}/>}
             isAuthenticated={isAuthenticated} />
         </div>
       </MemoryRouter>,

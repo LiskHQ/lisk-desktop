@@ -26,9 +26,9 @@ const publicComponent = [
 ];
 
 const privateComponent = [
-  { route: '/transactions', component: Transactions },
-  { route: '/voting', component: Voting },
-  { route: '/forging', component: Forging },
+  { route: '/main/transactions', component: Transactions },
+  { route: '/main/voting', component: Voting },
+  { route: '/main/forging', component: Forging },
 ];
 
 describe('App', () => {
