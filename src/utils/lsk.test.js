@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { fromRawLsk, toRawLsk } from './lsk';
 
-describe.only('lsk', () => {
+describe('lsk', () => {
   describe('fromRawLsk', () => {
     it('should convert 100000000 to "1"', () => {
       expect(fromRawLsk(100000000)).to.be.equal('1');
