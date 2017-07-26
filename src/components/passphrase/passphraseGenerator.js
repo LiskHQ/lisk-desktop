@@ -1,8 +1,18 @@
 import React from 'react';
+import AnimateOnChange from 'react-animate-on-change';
 import ProgressBar from 'react-toolbox/lib/progress_bar';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { generateSeed, generatePassphrase } from '../../utils/passphrase';
+import { generateSeed, generatePassphrase, emptyByte } from '../../utils/passphrase';
 import styles from './passphrase.css';
+
+const Byte = props => (
+  <AnimateOnChange
+      animate={props.diff}
+      baseClassName={styles.stable}
+      animationClassName={styles.bouncing}>
+      <span className={styles.byte}>{ props.value }</span>
+    </AnimateOnChange>
+);
 
 class PassphraseGenerator extends React.Component {
   constructor() {
@@ -13,8 +23,8 @@ class PassphraseGenerator extends React.Component {
         x: 0,
         y: 0,
       },
-      zeroSeed: ['00', '00', '00', '00', '00', '00', '00', '00',
-        '00', '00', '00', '00', '00', '00', '00', '00'],
+      zeroSeed: emptyByte('00'),
+      seedDiff: emptyByte(0),
     };
   }
 
@@ -31,8 +41,14 @@ class PassphraseGenerator extends React.Component {
         },
       });
 
-      // in the first iteration data is undefined
-      this.setState({ data: generateSeed(this.state.data) });
+      // defining diffSeed to use for animating HEX numbers
+      // note: in the first iteration data is undefined
+      const oldSeed = this.state.data ? this.state.data.seed : this.state.zeroSeed;
+      const data = generateSeed(this.state.data);
+      const seedDiff = oldSeed.map((item, index) =>
+        ((item !== data.seed[index]) ? index : null))
+        .filter(item => item !== null);
+      this.setState({ data, seedDiff });
     } else if (this.state.data && this.state.data.percentage >= 100 && !this.state.passphrase) {
       // also change the step here
       const phrase = generatePassphrase(this.state.data);
@@ -58,7 +74,7 @@ class PassphraseGenerator extends React.Component {
           {
             (this.state.data ? this.state.data.seed : this.state.zeroSeed)
               .map((byte, index) => (
-                <span className={styles.byte} key={index}>{ byte }</span>
+                <Byte value={byte} key={index} diff={this.state.seedDiff.indexOf(index) >= 0} />
               ))
           }
         </div>

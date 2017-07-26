@@ -1,6 +1,7 @@
 import React from 'react';
 import Input from 'react-toolbox/lib/input';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import styles from './passphrase.css';
 
 class PassphraseConfirmator extends React.Component {
   constructor() {
@@ -32,19 +33,26 @@ class PassphraseConfirmator extends React.Component {
     this.props.updateAnswer(value === this.state.missing);
   }
 
+  // eslint-disable-next-line
+  focus({ nativeEvent }) {
+    nativeEvent.target.focus();
+  }
+
   render() {
     return (
       <div className={`${grid.row} ${grid['start-xs']}`}>
         <div className={grid['col-xs-12']}>
           <p>
             <span>{this.state.passphraseParts[0]}</span>
-            <span className="missing">-----</span>
+            <span className={styles.missing}>-----</span>
             <span>{this.state.passphraseParts[1]}</span>
           </p>
         </div>
         <div className={grid['col-xs-12']}>
-            <Input type='text' label='Enter the missing word'
-              onChange={this.changeHandler.bind(this)} />
+          <Input type='text' label='Enter the missing word'
+            autoFocus
+            onBlur={this.focus.bind(this)}
+            onChange={this.changeHandler.bind(this)} />
         </div>
       </div>
     );

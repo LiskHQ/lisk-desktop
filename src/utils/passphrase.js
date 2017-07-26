@@ -9,7 +9,7 @@ const mnemonic = require('bitcore-mnemonic');
  * @param {Number|String} value
  * @returns {Array} - Array of 16 'value's
  */
-const emptyBytes = (value) => Array.apply(null, Array(16)).map(item => value); //eslint-disable-line
+export const emptyByte = (value) => Array.apply(null, Array(16)).map(item => value); //eslint-disable-line
 
 /**
  * fills the left side of str with a given padding string to meet the required length
@@ -32,8 +32,8 @@ const leftPadd = (str, pad, length) => {
 const init = (rand = Math.random()) => ({
   step: (160 + Math.floor(rand * 160)) / 100,
   percentage: 0,
-  seed: emptyBytes('00'),
-  byte: emptyBytes(0),
+  seed: emptyByte('00'),
+  byte: emptyByte(0),
 });
 
 /**
@@ -63,7 +63,7 @@ export const generateSeed = ({ byte, seed, percentage, step } = init(), rand = M
   return {
     seed: seed.map((item, idx) => ((idx === seedIndex) ? content : item)),
     byte: available.length > 0 ? byte.map((item, idx) =>
-      ((idx === seedIndex) ? 1 : item)) : emptyBytes(0),
+      ((idx === seedIndex) ? 1 : item)) : emptyByte(0),
     percentage: (percentage + step),
     step,
   };

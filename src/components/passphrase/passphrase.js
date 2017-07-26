@@ -62,11 +62,12 @@ class Passphrase extends React.Component {
         </section>
         <section className={`${grid.row} ${grid['between-xs']}`}>
           <Button label={this.state.steps[this.state.currentStep].cancelButton.title}
-            className='cancel-button'
+            className={`${styles.cancel} cancel-button`}
             onClick={this.state.steps[this.state.currentStep].cancelButton.onClick.bind(this)} />
 
           <Button label={this.state.steps[this.state.currentStep].confirmButton.title}
             primary={true} raised={true}
+            className={styles.approve}
             disabled={(this.state.currentStep === 'generate' && !this.state.passphrase) ||
               (this.state.currentStep === 'confirm' && !this.state.answer)}
             onClick={this.state.steps[this.state.currentStep].confirmButton.onClick.bind(this)}/>
