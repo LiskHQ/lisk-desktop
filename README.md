@@ -117,6 +117,7 @@ http://localhost:6006/
 - Vít Stanislav <vit@lightcurve.io>
 - Tobias Schwarz <tobias@lightcurve.io>
 - Ali Haghighatkhah <ali@lightcurve.io>
+- Yashar Ayari <darkyashi@gmail.com>
 
 ## License
 
