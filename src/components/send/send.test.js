@@ -41,12 +41,12 @@ describe('Send', () => {
 
   it('accepts valid amount', () => {
     wrapper.find('.amount input').simulate('change', { target: { value: '120.25' } });
-    expect(wrapper.find('.amount').text()).to.not.contain('Invalid LSK amount');
+    expect(wrapper.find('.amount').text()).to.not.contain('Invalid');
   });
 
   it('recognizes invalid amount', () => {
     wrapper.find('.amount input').simulate('change', { target: { value: '120 INVALID' } });
-    expect(wrapper.find('.amount').text()).to.contain('Invalid LSK amount');
+    expect(wrapper.find('.amount').text()).to.contain('Invalid');
   });
 
   it('recognizes too high amount', () => {
@@ -54,14 +54,20 @@ describe('Send', () => {
     expect(wrapper.find('.amount').text()).to.contain('Insufficient funds');
   });
 
+  it('recognizes empty amount', () => {
+    wrapper.find('.amount input').simulate('change', { target: { value: '12000' } });
+    wrapper.find('.amount input').simulate('change', { target: { value: '' } });
+    expect(wrapper.find('.amount').text()).to.contain('Required');
+  });
+
   it('accepts valid recipient', () => {
     wrapper.find('.recipient input').simulate('change', { target: { value: '11004588490103196952L' } });
-    expect(wrapper.find('.recipient').text()).to.not.contain('Invalid address');
+    expect(wrapper.find('.recipient').text()).to.not.contain('Invalid');
   });
 
   it('recognizes invalid recipient', () => {
     wrapper.find('.recipient input').simulate('change', { target: { value: '11004588490103196952' } });
-    expect(wrapper.find('.recipient').text()).to.contain('Invalid address');
+    expect(wrapper.find('.recipient').text()).to.contain('Invalid');
   });
 
   it('allows to set maximum amount', () => {

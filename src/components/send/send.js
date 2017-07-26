@@ -21,6 +21,10 @@ class Send extends React.Component {
       },
     };
     this.fee = 0.1;
+    this.inputValidationRegexps = {
+      recipient: /^\d{1,21}[L|l]$/,
+      amount: /^\d+(\.\d{1,8})?$/,
+    };
   }
 
   componentDidMount() {
@@ -36,29 +40,23 @@ class Send extends React.Component {
   }
 
   handleChange(name, value) {
-    const newState = this.state;
-    newState[name].value = value;
-    this.setState(this.validate(newState));
+    this.setState({
+      [name]: {
+        value,
+        error: this.validateInput(name, value),
+      },
+    });
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  validate(state) {
-    state.amount.error = undefined;
-    state.recipient.error = undefined;
-    if (!state.amount.value) {
-      state.amount.error = 'Required';
-    } else if (!state.amount.value.match(/^\d+(\.\d{1,8})?$/)) {
-      state.amount.error = 'Invalid LSK amount';
-    } else if (state.amount.value > parseFloat(this.getMaxAmount())) {
-      state.amount.error = 'Insufficient funds';
+  validateInput(name, value) {
+    if (!value) {
+      return 'Required';
+    } else if (!value.match(this.inputValidationRegexps[name])) {
+      return 'Invalid';
+    } else if (name === 'amount' && value > parseFloat(this.getMaxAmount())) {
+      return 'Insufficient funds';
     }
-
-    if (!state.recipient.value) {
-      state.recipient.error = 'Required';
-    } else if (!state.recipient.value.match(/^\d{1,21}[L|l]$/)) {
-      state.recipient.error = 'Invalid address';
-    }
-    return state;
+    return undefined;
   }
 
   send() {
