@@ -24,7 +24,7 @@ hr {
     display: none;
 }
 .templateItem {
-    min-height: 100px;
+    min-height: 130px;
 }
 :global .box {
     box-shadow: none !important;
