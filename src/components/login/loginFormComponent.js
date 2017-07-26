@@ -8,6 +8,7 @@ import Checkbox from 'react-toolbox/lib/checkbox';
 import { getAccount } from '../../utils/api/account';
 import networksRaw from './networks';
 import Passphrase from '../passphrase';
+import styles from './login.css';
 
 if (global._bitcore) delete global._bitcore;
 
@@ -139,6 +140,7 @@ class LoginFormComponent extends React.Component {
         <footer className={ `${grid.row} ${grid['center-xs']}` }>
           <div className={grid['col-xs-12']}>
             <Button label='NEW ACCOUNT' flat primary
+              className={styles.newAccount}
               onClick={() => this.props.setActiveDialog({
                 title: 'New Account',
                 childComponent: Passphrase,
