@@ -15,7 +15,7 @@ export default context => ({
       onClick: () => { context.props.closeDialog(); },
     },
     confirmButton: {
-      title: 'Yes! It\'s safe',
+      title: 'Next',
       onClick: () => {},
     },
   },
