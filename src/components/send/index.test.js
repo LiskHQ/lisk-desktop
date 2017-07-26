@@ -1,12 +1,9 @@
 import React from 'react';
-import chai, { expect } from 'chai';
-import sinonChai from 'sinon-chai';
+import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import SendContainer from './';
 import store from '../../store';
-
-chai.use(sinonChai);
 
 
 describe('Send Container', () => {

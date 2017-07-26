@@ -2,13 +2,11 @@ import React from 'react';
 import chai, { expect } from 'chai';
 import { mount } from 'enzyme';
 import chaiEnzyme from 'chai-enzyme';
-import sinonChai from 'sinon-chai';
 import sinon from 'sinon';
 import Send from './send';
 import * as accountApi from '../../utils/api/account';
 
 
-chai.use(sinonChai);
 chai.use(chaiEnzyme()); // Note the invocation at the end
 describe('Send', () => {
   let wrapper;
