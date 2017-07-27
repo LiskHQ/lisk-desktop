@@ -28,6 +28,7 @@ class VotingComponent extends React.Component {
       offset: 0,
       loadMore: true,
       length: 1,
+      notFound: '',
     };
     this.delegates = [];
     this.query = '';
@@ -80,6 +81,7 @@ class VotingComponent extends React.Component {
         offset: this.state.offset + delegatesList.length,
         length: parseInt(res.totalCount, 10),
         loadMore: true,
+        notFound: delegatesList.length > 0 ? '' : <div className="hasPaddingRow">No delegates found</div>,
       });
     });
   }
@@ -144,6 +146,7 @@ class VotingComponent extends React.Component {
             </TableRow>
           ))}
         </Table>
+        {this.state.notFound}
         <Waypoint onEnter={this.loadMore.bind(this)}></Waypoint>
       </div>
     );
