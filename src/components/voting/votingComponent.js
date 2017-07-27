@@ -122,11 +122,11 @@ class VotingComponent extends React.Component {
         >
           <TableHead displaySelect={false}>
             <TableCell>Vote</TableCell>
-            <TableCell numeric>Rank</TableCell>
-            <TableCell numeric>Name</TableCell>
-            <TableCell numeric>Lisk Address</TableCell>
-            <TableCell numeric>Uptime</TableCell>
-            <TableCell numeric>Approval</TableCell>
+            <TableCell>Rank</TableCell>
+            <TableCell>Name</TableCell>
+            <TableCell>Lisk Address</TableCell>
+            <TableCell>Uptime</TableCell>
+            <TableCell>Approval</TableCell>
           </TableHead>
           {this.state.delegates.map((item, idx) => (
             <TableRow key={idx} className={`${styles.row} ${setRowClass(item)}`}>
@@ -136,11 +136,11 @@ class VotingComponent extends React.Component {
                   onChange={this.handleChange.bind(this, idx)}
                 />
               </TableCell>
-              <TableCell numeric>{item.rank}</TableCell>
-              <TableCell numeric>{item.username}</TableCell>
-              <TableCell numeric>{item.address}</TableCell>
-              <TableCell numeric>{item.productivity} %</TableCell>
-              <TableCell numeric>{item.approval} %</TableCell>
+              <TableCell>{item.rank}</TableCell>
+              <TableCell>{item.username}</TableCell>
+              <TableCell>{item.address}</TableCell>
+              <TableCell>{item.productivity} %</TableCell>
+              <TableCell>{item.approval} %</TableCell>
             </TableRow>
           ))}
         </Table>
