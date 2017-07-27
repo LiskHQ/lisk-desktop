@@ -38,7 +38,7 @@ const HeaderElement = props => (
       />
     </IconMenu>
     <Button className={`${styles.button} logout-button`} raised>logout</Button>
-    <Button className={styles.button}
+    <Button className={`${styles.button} send-button`}
       raised primary
       onClick={() => props.setActiveDialog({
         title: 'Send',

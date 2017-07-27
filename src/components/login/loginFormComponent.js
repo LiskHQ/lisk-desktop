@@ -148,7 +148,7 @@ class LoginFormComponent extends React.Component {
         <footer className={ `${grid.row} ${grid['center-xs']}` }>
           <div className={grid['col-xs-12']}>
             <Button label='NEW ACCOUNT' flat primary
-              className={styles.newAccount}
+              className={`${styles.newAccount} new-account-button`}
               onClick={() => this.props.setActiveDialog({
                 title: 'New Account',
                 childComponent: Passphrase,
