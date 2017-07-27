@@ -1,7 +1,5 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { dialogDisplayed } from '../../actions/dialog';
-import LoginFormComponent from './loginFormComponent';
+import Passphrase from './passphrase';
 import { accountUpdated } from '../../actions/account';
 import { activePeerSet } from '../../actions/peers';
 
@@ -16,12 +14,11 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   onAccountUpdated: data => dispatch(accountUpdated(data)),
   activePeerSet: network => dispatch(activePeerSet(network)),
-  setActiveDialog: data => dispatch(dialogDisplayed(data)),
 });
 
-const LoginFormConnected = connect(
+const PassphraseConnected = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withRouter(LoginFormComponent));
+)(Passphrase);
 
-export default LoginFormConnected;
+export default PassphraseConnected;

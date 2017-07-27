@@ -8,6 +8,8 @@ import Checkbox from 'react-toolbox/lib/checkbox';
 import { getAccount } from '../../utils/api/account';
 import { getDelegate } from '../../utils/api/delegate';
 import networksRaw from './networks';
+import Passphrase from '../passphrase';
+import styles from './login.css';
 
 if (global._bitcore) delete global._bitcore;
 
@@ -78,7 +80,7 @@ class LoginFormComponent extends React.Component {
     this.setState({ [name]: value });
   }
 
-  onLoginSubmission() {
+  onLoginSubmission(passphrase) {
     const network = Object.assign({}, networksRaw[this.state.network]);
     if (this.state.network === 2) {
       network.address = this.state.address;
@@ -89,7 +91,7 @@ class LoginFormComponent extends React.Component {
     setTimeout(() => {
       // get account info
       const { onAccountUpdated } = this.props;
-      onAccountUpdated({ passphrase: this.state.passphrase });
+      onAccountUpdated({ passphrase: (passphrase || this.state.passphrase) });
       const accountInfo = this.props.account;
 
       // redirect to main/transactions
@@ -143,7 +145,15 @@ class LoginFormComponent extends React.Component {
         />
         <footer className={ `${grid.row} ${grid['center-xs']}` }>
           <div className={grid['col-xs-12']}>
-            <Button label='NEW ACCOUNT' flat primary />
+            <Button label='NEW ACCOUNT' flat primary
+              className={styles.newAccount}
+              onClick={() => this.props.setActiveDialog({
+                title: 'New Account',
+                childComponent: Passphrase,
+                childComponentProps: {
+                  onPassGenerated: this.onLoginSubmission.bind(this),
+                },
+              })} />
             <Button label='LOGIN' primary raised onClick={this.onLoginSubmission.bind(this)}
               disabled={(this.state.network === 2 && this.state.addressValidity !== '') ||
               this.state.passphraseValidity !== ''} />
