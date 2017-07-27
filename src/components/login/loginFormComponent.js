@@ -91,7 +91,7 @@ class LoginFormComponent extends React.Component {
     setTimeout(() => {
       // get account info
       const { onAccountUpdated } = this.props;
-      onAccountUpdated({ passphrase: (passphrase || this.state.passphrase) });
+      onAccountUpdated({ passphrase });
       const accountInfo = this.props.account;
 
       // redirect to main/transactions
@@ -156,7 +156,8 @@ class LoginFormComponent extends React.Component {
                   onPassGenerated: this.onLoginSubmission.bind(this),
                 },
               })} />
-            <Button label='LOGIN' primary raised onClick={this.onLoginSubmission.bind(this)}
+            <Button label='LOGIN' primary raised
+              onClick={this.onLoginSubmission.bind(this, this.state.passphrase)}
               className='login-button'
               disabled={(this.state.network === 2 && this.state.addressValidity !== '') ||
               this.state.passphraseValidity !== ''} />
