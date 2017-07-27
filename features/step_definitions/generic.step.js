@@ -74,11 +74,6 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
       .and.notify(callback);
   });
 
-  Then('I should see "{elementName}"', (elementName, callback) => {
-    expect(element.all(by.css(`.${elementName.replace(/ /g, '-')}`)).count()).to.eventually.equal(1)
-      .and.notify(callback);
-  });
-
   Then('I should see no "{elementName}"', (elementName, callback) => {
     browser.sleep(1000);
     expect(element.all(by.css(`.${elementName.replace(/ /g, '-')}`)).count()).to.eventually.equal(0)
