@@ -124,6 +124,7 @@ class LoginFormComponent extends React.Component {
           onChange={this.changeHandler.bind(this, 'network')}
           label='Select a network'
           value={this.state.network}
+          className='network'
         />
         {
           this.state.network === 2 &&
@@ -133,6 +134,7 @@ class LoginFormComponent extends React.Component {
         }
         <Input type={this.state.showPassphrase ? 'text' : 'password'}
           label='Enter your passphrase' name='passphrase'
+          className='passphrase'
           error={this.state.passphraseValidity === 'Invalid passphrase' ? 'Invalid passphrase' : ''}
           value={this.state.passphrase} onChange={this.validatePassphrase.bind(this)} />
         <Checkbox
@@ -145,6 +147,7 @@ class LoginFormComponent extends React.Component {
           <div className={grid['col-xs-12']}>
             <Button label='NEW ACCOUNT' flat primary />
             <Button label='LOGIN' primary raised onClick={this.onLoginSubmission.bind(this)}
+              className='login-button'
               disabled={(this.state.network === 2 && this.state.addressValidity !== '') ||
               this.state.passphraseValidity !== ''} />
           </div>

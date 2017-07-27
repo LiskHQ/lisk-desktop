@@ -36,7 +36,7 @@ const HeaderElement = props => (
         })}
       />
     </IconMenu>
-    <Button className={styles.button} raised>logout</Button>
+    <Button className={`${styles.button} logout-button`} raised>logout</Button>
     <Button className={styles.button} raised primary>send</Button>
   </header>
 );

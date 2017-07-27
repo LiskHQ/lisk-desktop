@@ -52,14 +52,16 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   });
 
   When('I select option no. {index} from "{selectName}" select', (index, selectName, callback) => {
-    waitForElemAndClickIt(`md-select.${selectName}`);
-    const optionElem = element.all(by.css('md-select-menu md-option')).get(index - 1);
+    waitForElemAndClickIt(`.${selectName}`);
+    const optionElem = element.all(by.css(`.${selectName} ul li`)).get(index - 1);
     browser.wait(EC.presenceOf(optionElem), waitTime);
     optionElem.click().then(callback);
   });
 
   Then('the option "{optionText}" is selected in "{selectName}" select', (optionText, selectName, callback) => {
-    waitForElemAndCheckItsText(`.${selectName} md-select-value .md-text`, optionText, callback);
+    const elem = element(by.css(`.${selectName} input`));
+    expect(elem.getAttribute('value')).to.eventually.equal(optionText)
+      .and.notify(callback);
   });
 
   Then('I should see alert dialog with title "{title}" and text "{text}"', (title, text, callback) => {
