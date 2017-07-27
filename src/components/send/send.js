@@ -55,6 +55,8 @@ class Send extends React.Component {
       return 'Invalid';
     } else if (name === 'amount' && value > parseFloat(this.getMaxAmount())) {
       return 'Insufficient funds';
+    } else if (name === 'amount' && value === '0') {
+      return 'Zero not allowed';
     }
     return undefined;
   }

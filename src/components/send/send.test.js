@@ -47,6 +47,11 @@ describe('Send', () => {
     expect(wrapper.find('.amount').text()).to.contain('Invalid');
   });
 
+  it('recognizes zero amount', () => {
+    wrapper.find('.amount input').simulate('change', { target: { value: '0' } });
+    expect(wrapper.find('.amount').text()).to.contain('Zero not allowed');
+  });
+
   it('recognizes too high amount', () => {
     wrapper.find('.amount input').simulate('change', { target: { value: '12000' } });
     expect(wrapper.find('.amount').text()).to.contain('Insufficient funds');
