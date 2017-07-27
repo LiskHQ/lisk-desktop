@@ -38,6 +38,7 @@
     "postcss-cssnext": "=2.11.0",
     "prop-types": "=15.5.10",
     "react": "=15.6.x",
+    "react-animate-on-change": "^1.0.0",
     "react-circular-progressbar": "=0.1.5",
     "react-dom": "=15.6.x",
     "react-redux": "=5.0.3",
