@@ -116,7 +116,7 @@ class VotingComponent extends React.Component {
   }
   render() {
     return (
-      <div className="box">
+      <div className="box noPaddingBox">
         <VotingHeader search={ value => this.search(value) }></VotingHeader>
         <Table selectable={false}
         >
@@ -124,7 +124,7 @@ class VotingComponent extends React.Component {
             <TableCell>Vote</TableCell>
             <TableCell numeric>Rank</TableCell>
             <TableCell numeric>Name</TableCell>
-            <TableCell numeric>Uptime</TableCell>
+            <TableCell numeric>Lisk Address</TableCell>
             <TableCell numeric>Uptime</TableCell>
             <TableCell numeric>Approval</TableCell>
           </TableHead>
