@@ -9,7 +9,7 @@ import style from './forging.css';
 
 
 const ForgedBlocks = props => (
-  <Card className={`${style.grayCard} ${grid['col-xs-12']}`}>
+  <Card className={`${style.grayCard} ${grid['col-xs-12']} forged-blocks`}>
     <CardTitle>
       Forged Blocks
     </CardTitle>

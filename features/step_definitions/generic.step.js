@@ -42,7 +42,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   });
 
   When('I click tab number {index}', (index, callback) => {
-    waitForElemAndClickIt(`main md-tab-item:nth-child(${index})`, callback);
+    waitForElemAndClickIt(`.main-tabs *:nth-child(${index})`, callback);
   });
 
   When('I click "{elementName}" in "{menuName}" menu', (elementName, menuName, callback) => {
@@ -103,13 +103,11 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   Given('I\'m logged in as "{accountName}"', (accountName, callback) => {
     browser.ignoreSynchronization = true;
     browser.driver.manage().window().setSize(1000, 1000);
-    browser.driver.get('about:blank');
-    // TODO: remove this after login is implemented
-    browser.get('http://localhost:8080/#/?peerStack=localhost').then(callback);
-    // TODO: Uncomment these after login is implemented
-    // browser.get('http://localhost:8080/#/?peerStack=localhost');
-    // waitForElemAndSendKeys('.passphrase', accounts[accountName].passphrase);
-    // waitForElemAndClickIt('.md-button.md-primary.md-raised', callback);
+    browser.get('http://localhost:8080/');
+    browser.manage().addCookie({ name: 'address', value: 'http://localhost:4000' });
+    browser.get('http://localhost:8080/');
+    waitForElemAndSendKeys('.passphrase input', accounts[accountName].passphrase);
+    waitForElemAndClickIt('.login-button', callback);
   });
 
   When('I {iterations} times move mouse randomly', (iterations, callback) => {

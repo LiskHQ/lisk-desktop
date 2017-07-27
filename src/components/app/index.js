@@ -23,9 +23,11 @@ const App = () => (
       <PrivateRoutes path='/main' render={ ({ match }) => (
         <main>
           <Account />
-          <Link to={`${match.url}/transactions`}>Transactions</Link>
-          <Link to={`${match.url}/voting`}>Voting</Link>
-          <Link to={`${match.url}/forging`}>Forging</Link>
+          <section className='main-tabs'>
+            <Link to={`${match.url}/transactions`}>Transactions</Link>
+            <Link to={`${match.url}/voting`}>Voting</Link>
+            <Link to={`${match.url}/forging`}>Forging</Link>
+          </section>
 
           <Route path={`${match.url}/transactions`} component={Transactions} />
           <Route path={`${match.url}/voting`} component={Voting} />
