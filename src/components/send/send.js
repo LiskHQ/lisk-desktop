@@ -80,13 +80,11 @@ class Send extends React.Component {
   }
 
   getMaxAmount() {
-    return fromRawLsk(this.props.account.balance - toRawLsk(this.fee));
+    return fromRawLsk(Math.max(0, this.props.account.balance - toRawLsk(this.fee)));
   }
 
   setMaxAmount() {
-    const newState = this.state;
-    newState.amount.value = this.getMaxAmount();
-    this.setState(newState);
+    this.handleChange('amount', this.getMaxAmount());
   }
 
   render() {
