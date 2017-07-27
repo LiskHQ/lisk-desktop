@@ -26,7 +26,7 @@ class VotingHeader extends React.Component {
   }
   render() {
     return (
-      <header className={grid.row}>
+      <header className={`${grid.row} hasPaddingRow`}>
         <div className={`${grid['col-xs-3']} ${styles.searchBox}`}>
           <Input type='tel' label='Search' name='query'
             value={this.state.query}
