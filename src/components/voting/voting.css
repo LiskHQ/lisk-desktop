@@ -1,0 +1,34 @@
+.table{
+    & :global thead th:first-child{
+        display: none !important;
+    }
+}
+.searchBox{
+    position: relative;
+}
+.searchIcon{
+    position: absolute;
+    top: 27px;
+    right: 10px;
+    color: rgba(0, 0, 0, .38);
+}
+.field{
+    margin-bottom: 0 !important;
+}
+.row{
+    &:hover{
+        background: #fff;
+    }
+}
+.upVoteRow {
+    background-color: rgb(226, 238, 213) !important;
+}
+.downVoteRow {
+    background-color: rgb(255, 228, 220) !important;
+}
+.votedRow{
+    background-color: #d6f0ff !important;
+}
+.pendingRow {
+    background-color: #eaeae9 !important;
+}

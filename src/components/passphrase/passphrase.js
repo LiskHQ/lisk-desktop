@@ -67,7 +67,7 @@ class Passphrase extends React.Component {
 
           <Button label={this.state.steps[this.state.currentStep].confirmButton.title}
             primary={true} raised={true}
-            className={styles.approve}
+            className={`${styles.approve} next-button`}
             disabled={(this.state.currentStep === 'generate' && !this.state.passphrase) ||
               (this.state.currentStep === 'confirm' && !this.state.answer)}
             onClick={this.state.steps[this.state.currentStep].confirmButton.onClick.bind(this)}/>

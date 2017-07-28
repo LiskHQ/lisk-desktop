@@ -1,8 +1,8 @@
 import React from 'react';
 import { Card, CardText } from 'react-toolbox/lib/card';
 import moment from 'moment';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import LiskAmount from '../liskAmount';
-import grid from '../../../node_modules/flexboxgrid/dist/flexboxgrid.css';
 import style from './forging.css';
 
 const statCardObjects = [
