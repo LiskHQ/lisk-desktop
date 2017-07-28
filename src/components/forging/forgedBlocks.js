@@ -1,10 +1,10 @@
 import React from 'react';
 import { Card, CardTitle } from 'react-toolbox/lib/card';
 import { Table, TableHead, TableRow, TableCell } from 'react-toolbox/lib/table';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { TooltipTime } from '../timestamp';
 import LiskAmount from '../liskAmount';
 import FormattedNumber from '../formattedNumber';
-import grid from '../../../node_modules/flexboxgrid/dist/flexboxgrid.css';
 import style from './forging.css';
 
 

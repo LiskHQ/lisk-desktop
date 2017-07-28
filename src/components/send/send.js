@@ -2,12 +2,12 @@ import React from 'react';
 import Input from 'react-toolbox/lib/input';
 import Button from 'react-toolbox/lib/button';
 import { IconMenu, MenuItem } from 'react-toolbox/lib/menu';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import { send } from '../../utils/api/account';
 import { fromRawLsk, toRawLsk } from '../../utils/lsk';
 
 import styles from './send.css';
-import grid from '../../../node_modules/flexboxgrid/dist/flexboxgrid.css';
 
 class Send extends React.Component {
   constructor() {

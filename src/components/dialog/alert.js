@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from 'react-toolbox/lib/button';
-import grid from '../../../node_modules/flexboxgrid/dist/flexboxgrid.css';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 
 const Alert = props => (
