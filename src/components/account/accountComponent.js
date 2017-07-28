@@ -11,9 +11,17 @@ import { getAccountStatus } from '../../utils/api/account';
  * @param {object} props - include properties of component
  */
 class AccountComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.update = this.update.bind(this);
+  }
   componentDidMount() {
     this.update();
-    document.addEventListener('beat', this.update.bind(this));
+    document.addEventListener('beat', this.update);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('beat', this.update);
   }
 
   update() {
