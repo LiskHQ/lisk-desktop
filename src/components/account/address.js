@@ -8,11 +8,11 @@ const Address = (props) => {
       <p className="inner primary">
         {props.delegate.username}
       </p>
-      <p className="inner secondary">
+      <p className="inner secondary address">
         <span>{props.address}</span>
       </p>
     </div>)
-    : (<p className="inner primary full">
+    : (<p className="inner primary full address">
       {props.address}
     </p>);
 

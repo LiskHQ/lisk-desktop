@@ -84,20 +84,20 @@ describe('Send', () => {
 
     wrapper.find('.amount input').simulate('change', { target: { value: '120.25' } });
     wrapper.find('.recipient input').simulate('change', { target: { value: '11004588490103196952L' } });
-    wrapper.find('.send-button').simulate('click');
+    wrapper.find('.submit-button').simulate('click');
   });
 
   it('allows to send a transaction and handles error response with message', () => {
     accountApiMock.expects('send').rejects({ message: 'Some server-side error' });
     wrapper.find('.amount input').simulate('change', { target: { value: '120.25' } });
     wrapper.find('.recipient input').simulate('change', { target: { value: '11004588490103196952L' } });
-    wrapper.find('.send-button').simulate('click');
+    wrapper.find('.submit-button').simulate('click');
   });
 
   it('allows to send a transaction and handles error response without message', () => {
     accountApiMock.expects('send').rejects({ success: false });
     wrapper.find('.amount input').simulate('change', { target: { value: '120.25' } });
     wrapper.find('.recipient input').simulate('change', { target: { value: '11004588490103196952L' } });
-    wrapper.find('.send-button').simulate('click');
+    wrapper.find('.submit-button').simulate('click');
   });
 });

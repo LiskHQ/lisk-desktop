@@ -110,7 +110,7 @@ class Send extends React.Component {
         <section className={`${grid.row} ${grid['between-xs']}`}>
           <Button label='Cancel' className='cancel-button' onClick={this.props.closeDialog} />
           <Button label='Send'
-            className='send-button'
+            className='submit-button'
             primary={true} raised={true}
             disabled={!!this.state.recipient.error || !!this.state.amount.error ||
               !this.state.recipient.value || !this.state.amount.value}
