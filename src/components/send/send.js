@@ -2,12 +2,12 @@ import React from 'react';
 import Input from 'react-toolbox/lib/input';
 import Button from 'react-toolbox/lib/button';
 import { IconMenu, MenuItem } from 'react-toolbox/lib/menu';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import { send } from '../../utils/api/account';
 import { fromRawLsk, toRawLsk } from '../../utils/lsk';
 
 import styles from './send.css';
-import grid from '../../../node_modules/flexboxgrid/dist/flexboxgrid.css';
 
 class Send extends React.Component {
   constructor() {
@@ -68,14 +68,13 @@ class Send extends React.Component {
       this.props.account.passphrase,
       this.props.account.sencodPassphrase,
     ).then(() => {
-      // TODO implement and use our custom alert dialogs
-      // eslint-disable-next-line no-alert
-      alert(`Your transaction of ${this.state.amount.value} LSK to ${this.state.recipient.value} was accepted and will be processed in a few seconds.`);
-      this.props.closeDialog();
+      this.props.showSuccessAlert({
+        text: `Your transaction of ${this.state.amount.value} LSK to ${this.state.recipient.value} was accepted and will be processed in a few seconds.`,
+      });
     }).catch((res) => {
-      // TODO implement and use our custom alert dialogs
-      // eslint-disable-next-line no-alert
-      alert(res && res.message ? res.message : 'An error occurred while creating the transaction.');
+      this.props.showErrorAlert({
+        text: res && res.message ? res.message : 'An error occurred while creating the transaction.',
+      });
     });
   }
 
