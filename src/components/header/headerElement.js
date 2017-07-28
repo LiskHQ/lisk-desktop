@@ -6,44 +6,47 @@ import styles from './header.css';
 import VerifyMessage from '../signVerify/verifyMessage';
 import SignMessage from '../signVerify/signMessage';
 import Send from '../send';
+import PrivateWrapper from '../privateWrapper';
 
 const HeaderElement = props => (
   <header className={styles.wrapper}>
     <img className={styles.logo} src={logo} alt="logo" />
-    <IconMenu
-      className={`${styles.iconButton} main-menu-icon-button`}
-      icon="more_vert"
-      position="topRight"
-      menuRipple
-      theme={styles}
-    >
-      <MenuItem caption="Register second passphrase" />
-      <MenuItem caption="Register as delegate" />
-      <MenuItem caption="Sign message"
-        className='sign-message'
+    <PrivateWrapper>
+      <IconMenu
+        className={`${styles.iconButton} main-menu-icon-button`}
+        icon="more_vert"
+        position="topRight"
+        menuRipple
+        theme={styles}
+      >
+        <MenuItem caption="Register second passphrase" />
+        <MenuItem caption="Register as delegate" />
+        <MenuItem caption="Sign message"
+          className='sign-message'
+          onClick={() => props.setActiveDialog({
+            title: 'Sign message',
+            childComponentProps: {
+              account: props.account,
+            },
+            childComponent: SignMessage,
+          })}
+        />
+        <MenuItem caption="Verify message"
+          className='verify-message'
+          onClick={() => props.setActiveDialog({
+            title: 'Verify message',
+            childComponent: VerifyMessage,
+          })}
+        />
+      </IconMenu>
+      <Button className={styles.button} raised>logout</Button>
+      <Button className={styles.button}
+        raised primary
         onClick={() => props.setActiveDialog({
-          title: 'Sign message',
-          childComponentProps: {
-            account: props.account,
-          },
-          childComponent: SignMessage,
-        })}
-      />
-      <MenuItem caption="Verify message"
-        className='verify-message'
-        onClick={() => props.setActiveDialog({
-          title: 'Verify message',
-          childComponent: VerifyMessage,
-        })}
-      />
-    </IconMenu>
-    <Button className={styles.button} raised>logout</Button>
-    <Button className={styles.button}
-      raised primary
-      onClick={() => props.setActiveDialog({
-        title: 'Send',
-        childComponent: Send,
-      })}>Send</Button>
+          title: 'Send',
+          childComponent: Send,
+        })}>Send</Button>
+      </PrivateWrapper>
   </header>
 );
 
