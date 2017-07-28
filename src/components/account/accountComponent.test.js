@@ -3,7 +3,10 @@ import chai, { expect } from 'chai';
 import { spy } from 'sinon';
 import sinonChai from 'sinon-chai';
 import { shallow, mount } from 'enzyme';
+import { Provider } from 'react-redux';
+import store from '../../store';
 import AccountComponent from './accountComponent';
+import ClickToSend from '../send/clickToSend';
 
 chai.use(sinonChai);
 
@@ -26,6 +29,7 @@ describe('AccountComponent', () => {
     isDelegate: false,
     address: '16313739661670634666L',
     username: 'lisk-nano',
+    balance: 1e8,
   };
 
   it(' should render 3 article tags', () => {
@@ -42,25 +46,26 @@ describe('AccountComponent', () => {
     expect(wrapper.find('.material-icons').text()).to.be.equal(expectedValue);
   });
 
-  it('depicts being offline when peers.offline is false', () => {
-    const wrapper = shallow(<AccountComponent account={testAccount} peers={peers}
-      onActivePeerUpdated={onActivePeerUpdated} />);
-    const expectedValue = 'error';
-    expect(wrapper.find('.material-icons').text()).to.be.equal(expectedValue);
+  it('should render balance with ClickToSend component', () => {
+    const wrapper = mount(<Provider store={store}>
+      <AccountComponent account={testAccount} peers={peers}
+        onActivePeerUpdated={onActivePeerUpdated} />
+    </Provider>);
+    expect(wrapper.find('.balance').find(ClickToSend)).to.have.lengthOf(1);
   });
 
   describe('componentDidMount', () => {
     it('should be called once', () => {
       const actionSpy = spy(AccountComponent.prototype, 'componentDidMount');
-      mount(<AccountComponent account={testAccount} peers={peers}
-        onActivePeerUpdated={onActivePeerUpdated} />);
+      mount(<Provider store={store}><AccountComponent account={testAccount} peers={peers}
+        onActivePeerUpdated={onActivePeerUpdated} /></Provider>);
       expect(actionSpy).to.have.been.calledWith();
     });
 
     it('binds listener to beat event', () => {
       const actionSpy = spy(document, 'addEventListener');
-      mount(<AccountComponent account={testAccount} peers={peers}
-        onActivePeerUpdated={onActivePeerUpdated} />);
+      mount(<Provider store={store}><AccountComponent account={testAccount} peers={peers}
+        onActivePeerUpdated={onActivePeerUpdated} /></Provider>);
       expect(actionSpy).to.have.been.calledWith();
     });
   });
