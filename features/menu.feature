@@ -81,13 +81,13 @@ Feature: Top right menu
          -----END LISK SIGNED MESSAGE-----
          """
 
-  Scenario: should allow to exit sign message dialog
+  Scenario: should allow to exit sign message dialog with "cancel button"
     Given I'm logged in as "any account"
     When I click "sign message" in main menu
     And I click "cancel button"
     Then I should see no "modal dialog"
 
-  Scenario: should allow to exit sign message dialog
+  Scenario: should allow to exit sign message dialog with "x button"
     Given I'm logged in as "any account"
     When I click "sign message" in main menu
     And I click "x button"
