@@ -1,7 +1,9 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import { Button } from 'react-toolbox/lib/button';
 import Input from 'react-toolbox/lib/input';
 import styles from './voting.css';
+import ConfirmVotes from './confirmVotes';
 
 class VotingHeader extends React.Component {
   constructor() {
@@ -26,7 +28,7 @@ class VotingHeader extends React.Component {
   }
   render() {
     return (
-      <header className={`${grid.row} hasPaddingRow`}>
+      <header className={`${grid.row} ${grid['between-xs']} hasPaddingRow`}>
         <div className={`${grid['col-xs-3']} ${styles.searchBox}`}>
           <Input type='tel' label='Search' name='query'
             value={this.state.query}
@@ -36,6 +38,12 @@ class VotingHeader extends React.Component {
             {this.state.searchIcon}
           </i>
         </div>
+        <Button icon='done' flat
+          onClick={() => this.props.setActiveDialog({
+            title: 'Verify Vote for delegates',
+            childComponent: ConfirmVotes,
+          })}
+          label={`VOTE (+${this.props.votedList.length} / -${this.props.unvotedList.length})`} />
       </header>
     );
   }
