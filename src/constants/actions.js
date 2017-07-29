@@ -8,6 +8,10 @@ const actionTypes = {
   dialogHidden: 'DIALOG_HIDDEN',
   forgedBlocksUpdated: 'FORGED_BLOCKS_UPDATED',
   forgingStatsUpdated: 'FORGING_STATS_UPDATED',
+  addToVotedList: 'ADD_TO_VOTED_LIST',
+  removeFromVotedList: 'REMOVE_FROM_VOTED_LIST',
+  addToUnvotedList: 'ADD_TO_UNVOTED_LIST',
+  removeFromUnvotedList: 'REMOVE_FROM_UNVOTED_LIST',
 };
 
 export default actionTypes;
