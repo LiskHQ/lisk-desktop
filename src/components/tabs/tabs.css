@@ -1,0 +1,21 @@
+.tab {
+  background: #f4f4f4;
+  box-shadow: inset 0px -1px 1px -1px rgba(0, 0, 0, 0.12);
+  padding-right: 24px;
+  padding-left: 24px;
+}
+
+.tabs nav {
+  overflow: hidden;
+}
+
+:global .theme__pointer___1xgdB {
+  height: 4px;
+  margin-top: -48px;
+}
+
+:global .theme__label___1yb8L.theme__active___2LZ7Z {
+  background: white;
+  color: #0288D1;
+  margin-bottom: -1px;
+}

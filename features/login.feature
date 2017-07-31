@@ -1,12 +1,10 @@
 Feature: Login page
-  @ignore
   Scenario: should allow to login
     Given I'm on login page
     When I fill in "wagon stock borrow episode laundry kitten salute link globe zero feed marble" to "passphrase" field
     And I click "login button"
     Then I should be logged in
 
-  @ignore
   Scenario: should allow to login to Mainnet 
     Given I'm on login page
     When I fill in "wagon stock borrow episode laundry kitten salute link globe zero feed marble" to "passphrase" field
@@ -14,7 +12,6 @@ Feature: Login page
     And I click "login button"
     Then I should be logged in
 
-  @ignore
   Scenario: should allow to change network
     Given I'm on login page
     When I select option no. 2 from "network" select
