@@ -5,6 +5,10 @@
   padding-left: 24px;
 }
 
+.tabs nav {
+  overflow: hidden;
+}
+
 :global .theme__pointer___1xgdB {
   height: 4px;
   margin-top: -48px;
