@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import LoadingBar from './loadingBar';
 
 const mapStateToProps = state => ({
-  loadingBar: state.loadingBar,
+  loading: state.loading,
 });
 
 export default connect(mapStateToProps)(LoadingBar);
