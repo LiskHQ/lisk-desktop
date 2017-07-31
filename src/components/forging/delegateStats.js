@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardText } from 'react-toolbox/lib/card';
 import CircularProgressbar from 'react-circular-progressbar';
-import grid from '../../../node_modules/flexboxgrid/dist/flexboxgrid.css';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import style from './forging.css';
 
 const identity = x => (x);

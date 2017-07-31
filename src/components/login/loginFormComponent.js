@@ -126,6 +126,7 @@ class LoginFormComponent extends React.Component {
           onChange={this.changeHandler.bind(this, 'network')}
           label='Select a network'
           value={this.state.network}
+          className='network'
         />
         {
           this.state.network === 2 &&
@@ -135,18 +136,19 @@ class LoginFormComponent extends React.Component {
         }
         <Input type={this.state.showPassphrase ? 'text' : 'password'}
           label='Enter your passphrase' name='passphrase'
+          className='passphrase'
           error={this.state.passphraseValidity === 'Invalid passphrase' ? 'Invalid passphrase' : ''}
           value={this.state.passphrase} onChange={this.validatePassphrase.bind(this)} />
         <Checkbox
           checked={this.state.showPassphrase}
           label="Show passphrase"
-          className={grid['start-xs']}
+          className={`${grid['start-xs']} show-passphrase`}
           onChange={this.changeHandler.bind(this, 'showPassphrase')}
         />
         <footer className={ `${grid.row} ${grid['center-xs']}` }>
           <div className={grid['col-xs-12']}>
             <Button label='NEW ACCOUNT' flat primary
-              className={styles.newAccount}
+              className={`${styles.newAccount} new-account-button`}
               onClick={() => this.props.setActiveDialog({
                 title: 'New Account',
                 childComponent: Passphrase,
@@ -156,6 +158,7 @@ class LoginFormComponent extends React.Component {
               })} />
             <Button label='LOGIN' primary raised
               onClick={this.onLoginSubmission.bind(this, this.state.passphrase)}
+              className='login-button'
               disabled={(this.state.network === 2 && this.state.addressValidity !== '') ||
               this.state.passphraseValidity !== ''} />
           </div>

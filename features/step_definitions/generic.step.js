@@ -42,7 +42,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   });
 
   When('I click tab number {index}', (index, callback) => {
-    waitForElemAndClickIt(`main md-tab-item:nth-child(${index})`, callback);
+    waitForElemAndClickIt(`.main-tabs *:nth-child(${index})`, callback);
   });
 
   When('I click "{elementName}" in "{menuName}" menu', (elementName, menuName, callback) => {
@@ -52,14 +52,16 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   });
 
   When('I select option no. {index} from "{selectName}" select', (index, selectName, callback) => {
-    waitForElemAndClickIt(`md-select.${selectName}`);
-    const optionElem = element.all(by.css('md-select-menu md-option')).get(index - 1);
+    waitForElemAndClickIt(`.${selectName}`);
+    const optionElem = element.all(by.css(`.${selectName} ul li`)).get(index - 1);
     browser.wait(EC.presenceOf(optionElem), waitTime);
     optionElem.click().then(callback);
   });
 
   Then('the option "{optionText}" is selected in "{selectName}" select', (optionText, selectName, callback) => {
-    waitForElemAndCheckItsText(`.${selectName} md-select-value .md-text`, optionText, callback);
+    const elem = element(by.css(`.${selectName} input`));
+    expect(elem.getAttribute('value')).to.eventually.equal(optionText)
+      .and.notify(callback);
   });
 
   Then('I should see alert dialog with title "{title}" and text "{text}"', (title, text, callback) => {
@@ -69,11 +71,6 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   Then('I should see table with {lineCount} lines', (lineCount, callback) => {
     browser.sleep(3500);
     expect(element.all(by.css('table tbody tr')).count()).to.eventually.equal(parseInt(lineCount, 10))
-      .and.notify(callback);
-  });
-
-  Then('I should see "{elementName}"', (elementName, callback) => {
-    expect(element.all(by.css(`.${elementName.replace(/ /g, '-')}`)).count()).to.eventually.equal(1)
       .and.notify(callback);
   });
 
@@ -101,13 +98,11 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   Given('I\'m logged in as "{accountName}"', (accountName, callback) => {
     browser.ignoreSynchronization = true;
     browser.driver.manage().window().setSize(1000, 1000);
-    browser.driver.get('about:blank');
-    // TODO: remove this after login is implemented
-    browser.get('http://localhost:8080/#/?peerStack=localhost').then(callback);
-    // TODO: Uncomment these after login is implemented
-    // browser.get('http://localhost:8080/#/?peerStack=localhost');
-    // waitForElemAndSendKeys('.passphrase', accounts[accountName].passphrase);
-    // waitForElemAndClickIt('.md-button.md-primary.md-raised', callback);
+    browser.get('http://localhost:8080/');
+    browser.manage().addCookie({ name: 'address', value: 'http://localhost:4000' });
+    browser.get('http://localhost:8080/');
+    waitForElemAndSendKeys('.passphrase input', accounts[accountName].passphrase);
+    waitForElemAndClickIt('.login-button', callback);
   });
 
   When('I {iterations} times move mouse randomly', (iterations, callback) => {
