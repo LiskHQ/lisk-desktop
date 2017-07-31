@@ -76,6 +76,7 @@ node('lisk-nano-01'){
         # Run test
         cd $WORKSPACE
         npm run test
+        cat "coverage/Chrome 58.0.3029 (Linux 0.0.0)/lcov.info" | coveralls -v
         '''
       } catch (err) {
         currentBuild.result = 'FAILURE'
