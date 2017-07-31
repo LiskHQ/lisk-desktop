@@ -59,7 +59,7 @@ class AccountComponent extends React.Component {
             <ClickToSend
               rawAmount={Math.max(0, this.props.account.balance - toRawLsk(0.1))} >
               <div className={styles['value-wrapper']}>
-                <p className="inner primary full hasTip balance">
+                <p className="inner primary full hasTip balance-value">
                   <LiskAmount val={this.props.account.balance} /> LSK
                 </p>
                 <p className="inner secondary tooltip">
