@@ -76,6 +76,9 @@ node('lisk-nano-01'){
         # Run test
         cd $WORKSPACE
         npm run test
+
+        # Submit coverage to coveralls
+        cat coverage/*/lcov.info | coveralls -v
         '''
       } catch (err) {
         currentBuild.result = 'FAILURE'
