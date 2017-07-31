@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import PrivateRoutes from '../privateRoute';
 import Account from '../account';
 import Header from '../header';
@@ -11,7 +11,7 @@ import styles from './app.css';
 import Metronome from '../../utils/metronome';
 import Dialog from '../dialog';
 import Toaster from '../toaster';
-  // temporary, will be deleted with #347
+import Tabs from '../tabs';
 
 // start dispatching sync ticks
 const metronome = new Metronome();
@@ -24,12 +24,7 @@ const App = () => (
       <PrivateRoutes path='/main' render={ ({ match }) => (
         <main>
           <Account />
-          <section className='main-tabs'>
-            <Link to={`${match.url}/transactions`}>Transactions</Link>
-            <Link to={`${match.url}/voting`}>Voting</Link>
-            <Link to={`${match.url}/forging`}>Forging</Link>
-          </section>
-
+          <Tabs />
           <Route path={`${match.url}/transactions`} component={Transactions} />
           <Route path={`${match.url}/voting`} component={Voting} />
           <Route path={`${match.url}/forging`} component={Forging} />
