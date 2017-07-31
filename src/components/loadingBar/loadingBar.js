@@ -4,7 +4,7 @@ import styles from './loadingBar.css';
 
 const LoadingBar = props => (
   <div className={styles.fixedAtTop}>
-    {props.loading.length ?
+    {props.loading && props.loading.length ?
       <ProgressBar type="linear" mode="indeterminate" /> :
       null
     }
