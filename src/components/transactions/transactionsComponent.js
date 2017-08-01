@@ -39,7 +39,7 @@ class Transactions extends React.Component {
           length: parseInt(res.count, 10),
         });
       })
-      .catch(error => console.error(error.message));
+      .catch(error => console.error(error.message)); //eslint-disable-line
     }
   }
 
