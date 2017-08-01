@@ -10,6 +10,8 @@ const actionTypes = {
   forgingStatsUpdated: 'FORGING_STATS_UPDATED',
   toastDisplayed: 'TOAST_DISPLAYED',
   toastHidden: 'TOAST_HIDDEN',
+  loadingStarted: 'LOADING_STARTED',
+  loadingFinished: 'LOADING_FINISHED',
 };
 
 export default actionTypes;

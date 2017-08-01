@@ -12,6 +12,7 @@ import Metronome from '../../utils/metronome';
 import Dialog from '../dialog';
 import Toaster from '../toaster';
 import Tabs from '../tabs';
+import LoadingBar from '../loadingBar';
 
 // start dispatching sync ticks
 const metronome = new Metronome();
@@ -34,6 +35,7 @@ const App = () => (
     </main>
     <Dialog />
     <Toaster />
+    <LoadingBar />
   </section>
 );
 
