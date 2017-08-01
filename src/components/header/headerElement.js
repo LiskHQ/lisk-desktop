@@ -6,6 +6,7 @@ import styles from './header.css';
 import VerifyMessage from '../signVerify/verifyMessage';
 import SignMessage from '../signVerify/signMessage';
 import RegisterDelegate from '../registerDelegate';
+import Send from '../send';
 
 const HeaderElement = props => (
   <header className={styles.wrapper}>
@@ -42,8 +43,13 @@ const HeaderElement = props => (
         })}
       />
     </IconMenu>
-    <Button className={styles.button} raised>logout</Button>
-    <Button className={styles.button} raised primary>send</Button>
+    <Button className={`${styles.button} logout-button`} raised>logout</Button>
+    <Button className={`${styles.button} send-button`}
+      raised primary
+      onClick={() => props.setActiveDialog({
+        title: 'Send',
+        childComponent: Send,
+      })}>Send</Button>
   </header>
 );
 

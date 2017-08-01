@@ -38,3 +38,11 @@
     }
   }
 }
+
+.error {
+  background-color: #c62828;
+}
+
+.success {
+  background-color: #7cb342;
+}

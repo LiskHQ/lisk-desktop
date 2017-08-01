@@ -33,4 +33,10 @@ body{
   background-color: #fff;
   padding: 16px;
   box-sizing: border-box;
+  &.noPaddingBox{
+    padding: 16px 0;
+  }
+}
+:global .hasPaddingRow{
+  padding: 0 16px;
 }
