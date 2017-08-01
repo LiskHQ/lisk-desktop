@@ -1,6 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Button } from 'react-toolbox/lib/button';
+import { IconMenu, MenuItem } from 'react-toolbox/lib/menu';
 import Input from 'react-toolbox/lib/input';
 import styles from './voting.css';
 import ConfirmVotes from './confirmVotes';
@@ -27,6 +28,7 @@ class VotingHeader extends React.Component {
     }
   }
   render() {
+    const button = <div><i className="material-icons">visibility</i><span>this is test</span></div>;
     return (
       <header className={`${grid.row} ${grid['between-xs']} hasPaddingRow`}>
         <div className={`${grid['col-xs-3']} ${styles.searchBox}`}>
@@ -38,6 +40,13 @@ class VotingHeader extends React.Component {
             {this.state.searchIcon}
           </i>
         </div>
+        <IconMenu icon={button} position='topLeft' iconRipple={false}>
+          {this.props.votedDelegates.map(delegate =>
+            <MenuItem
+              key={delegate.username}
+              caption={delegate.username}
+              onClick={this.props.addToUnvoted.bind(this, delegate)} />)}
+        </IconMenu>
         <Button icon='done' flat
           onClick={() => this.props.setActiveDialog({
             title: 'Verify Vote for delegates',
