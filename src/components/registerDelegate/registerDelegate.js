@@ -1,10 +1,9 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Input from 'react-toolbox/lib/input';
-import Dropdown from 'react-toolbox/lib/dropdown';
 import Button from 'react-toolbox/lib/button';
 import InfoParagraph from '../infoParagraph';
-import registerDelegate from '../../utils/api/delegate';
+import { registerDelegate } from '../../utils/api/delegate';
 
 class RegisterDelegate extends React.Component {
   constructor() {
@@ -12,29 +11,48 @@ class RegisterDelegate extends React.Component {
 
     this.state = {
       title: 'register as delegate',
-      name: {
-        error: '',
-        name: '',
-      },
+      name: '',
+      nameError: '',
     };
   }
 
-  register(username) {
-    console.log(name);
-    const secondSecret = this.props.account.secondSecret ? this.props.account.secondSecret : null;
-    registerDelegate(this.props.peers.data, username, this.props.account.passphrase, secondSecret)
-    .then((res) => {
-      console.log('res', res);
-    });
+  changeHandler(name, value) {
+    this.setState({ [name]: value });
+  }
+
+  register(username, secondSecret) {
+    registerDelegate(this.props.peers.data, username,
+      this.props.account.passphrase, secondSecret)
+      .then(() => {
+        this.props.showSuccessAlert({
+          text: `Delegate registration was successfully submitted with username: "${this.state.name}". It can take several seconds before it is processed.`,
+        });
+      })
+      .catch((error) => {
+        if (error && error.message === 'Username already exists') {
+          this.setState({ nameError: error.message });
+        } else {
+          this.props.showErrorAlert({
+            text: error && error.message ? `${error.message}.` : 'An error occurred while registering as delegate.',
+          });
+        }
+      });
   }
 
   render() {
+    // notify use about insufficient balance
     return (
       <div>
         <Input label='Delegate name' required={true}
           autoFocus={true}
-          error={this.state.name.error}
-          value={this.state.name.value} />
+          onChange={this.changeHandler.bind(this, 'name')}
+          error={this.state.nameError}
+          value={this.state.name} />
+          {
+             this.props.account.secondSecret &&
+              <Input label='Second secret' required={true}
+                value={this.state.secondSecret} />
+          }
         <hr/>
         <InfoParagraph>
           Becoming a delegate requires registration. You may choose your own
@@ -46,8 +64,8 @@ class RegisterDelegate extends React.Component {
           <Button label='Cancel' className='cancel-button' onClick={this.props.closeDialog} />
           <Button label='Register'
             primary={true} raised={true}
-            disabled={!this.state.name.value}
-            onClick={this.register.bind(this)}/>
+            disabled={!this.state.name}
+            onClick={this.register.bind(this, this.state.name, this.state.secondSecret)}/>
         </section>
       </div>
     );
