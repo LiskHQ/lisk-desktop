@@ -23,6 +23,7 @@ class VotingComponent extends React.Component {
     super();
     this.state = {
       delegates: [],
+      votedDelegates: [],
       selected: [],
       offset: 0,
       loadMore: true,
@@ -31,10 +32,29 @@ class VotingComponent extends React.Component {
     };
     this.query = '';
   }
+  componentWillReceiveProps() {
+    console.log(this.props);
+    setTimeout(() => {
+      const delegates = this.state.delegates.map(delegate => this.setStatus(delegate));
+      this.setState({
+        delegates,
+      });
+    }, 100);
+  }
   componentDidMount() {
     listAccountDelegates(this.props.activePeer, this.props.address).then((res) => {
-      this.votedDelegates = [];
-      res.delegates.forEach(delegate => this.votedDelegates.push(delegate.username));
+      const votedDelegates = res.delegates
+        .map((delegate) => {
+          let item = delegate; // eslint-disable-line
+          item.status = {
+            voted: true,
+            selected: false,
+          };
+          return item;
+        });
+      this.setState({
+        votedDelegates,
+      });
       this.loadDelegates(this.query);
     });
   }
@@ -52,7 +72,7 @@ class VotingComponent extends React.Component {
     });
     setTimeout(() => {
       this.loadDelegates(this.query);
-    }, 100);
+    }, 10);
   }
   /**
    * Fetches a list of delegates
@@ -84,7 +104,7 @@ class VotingComponent extends React.Component {
     });
   }
   /**
-   * Sets deleagte.status to be always the same object for given delegate.address
+   * Sets delegate.status to be always the same object for given delegate.address
    */
   setStatus(delegate) {
     let item = delegate;// eslint-disable-line
@@ -106,7 +126,8 @@ class VotingComponent extends React.Component {
     if (delegateExisted) {
       return delegateExisted;
     }
-    const voted = this.votedDelegates.indexOf(delegate.username) > -1;
+    const voted = this.state.votedDelegates
+      .filter(row => row.username === delegate.username).length > 0;
     item.status = {
       voted,
       selected: voted,
@@ -121,7 +142,7 @@ class VotingComponent extends React.Component {
    */
   handleChange(index, value) {
     let delegates = this.state.delegates; // eslint-disable-line
-    delegates[index].status.selected = value;
+    delegates[index].status.selected = !delegates[index].status.selected;
     if (value && !delegates[index].status.voted) {
       this.props.addToVoted(delegates[index]);
     } else if (!value && !delegates[index].status.voted) {
@@ -131,7 +152,7 @@ class VotingComponent extends React.Component {
     } else if (value && delegates[index].status.voted) {
       this.props.removeFromUnvoted(delegates[index]);
     }
-    this.setState({ delegates });
+    // this.setState({ delegates });
   }
   /**
    * load more data when scroll bar reachs end of the page
@@ -144,9 +165,12 @@ class VotingComponent extends React.Component {
   render() {
     return (
       <div className="box noPaddingBox">
-        <VotingHeaderWrapper search={ value => this.search(value) }></VotingHeaderWrapper>
-        <Table selectable={false}
-        >
+        <VotingHeaderWrapper
+          votedDelegates={this.state.votedDelegates}
+          search={ value => this.search(value) }
+          // addToUnvoted={ item => this.props.addToUnvoted(item) }
+        />
+        <Table selectable={false}>
           <TableHead displaySelect={false}>
             <TableCell>Vote</TableCell>
             <TableCell>Rank</TableCell>
