@@ -52,7 +52,7 @@ class AccountComponent extends React.Component {
               <p className="inner primary">
                 {this.props.peers.data.options.name}
               </p>
-              <p className="inner secondary">
+              <p className="inner secondary peer">
                 {this.props.peers.data.currentPeer}
                 <span> : {this.props.peers.data.port}</span>
               </p>
@@ -63,7 +63,7 @@ class AccountComponent extends React.Component {
           <div className="box">
             <h3 className={styles.title}>Balance</h3>
             <div className={styles['value-wrapper']}>
-              <p className="inner primary full hasTip">
+              <p className="inner primary full hasTip balance">
                 <LiskAmount val={this.props.account.balance} /> LSK
               </p>
               <p className="inner secondary tooltip">

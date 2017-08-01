@@ -3,11 +3,11 @@ import Input from 'react-toolbox/lib/input';
 import Button from 'react-toolbox/lib/button';
 import copy from 'copy-to-clipboard';
 import { toastr } from 'react-redux-toastr';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import lisk from 'lisk-js';
 import InfoParagraph from '../infoParagraph';
 import SignVerifyResult from './signVerifyResult';
-import grid from '../../../node_modules/flexboxgrid/dist/flexboxgrid.css';
 
 class SignMessage extends React.Component {
 
