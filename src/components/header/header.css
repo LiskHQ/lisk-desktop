@@ -16,3 +16,10 @@
 .material-icons{
     font-size: 24px !important;
 }
+
+.menu {
+    right: -16px !important;
+}
+.hidden {
+    display: none;
+}

@@ -8,6 +8,8 @@ const actionTypes = {
   dialogHidden: 'DIALOG_HIDDEN',
   forgedBlocksUpdated: 'FORGED_BLOCKS_UPDATED',
   forgingStatsUpdated: 'FORGING_STATS_UPDATED',
+  loadingStarted: 'LOADING_STARTED',
+  loadingFinished: 'LOADING_FINISHED',
 };
 
 export default actionTypes;
