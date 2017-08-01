@@ -28,6 +28,7 @@ export const errorToastDisplayed = ({ type = 'error', ...rest }) =>
  * An action to dispatch to hide a toast
  *
  */
-export const toastHidden = () => ({
+export const toastHidden = data => ({
+  data,
   type: actionTypes.toastHidden,
 });

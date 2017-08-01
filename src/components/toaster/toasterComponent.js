@@ -5,25 +5,32 @@ import styles from './toaster.css';
 class ToasterComponent extends Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      hidden: {},
+    };
   }
 
-  hideToast() {
+  hideToast(toast) {
     setTimeout(() => {
-      this.props.hideToast();
-      this.setState({ hidden: false });
+      this.props.hideToast(toast);
+      this.setState({ hidden: { ...this.state.hidden, [toast.index]: false } });
     }, 500);
-    this.setState({ hidden: true });
+    this.setState({ hidden: { ...this.state.hidden, [toast.index]: true } });
   }
 
   render() {
-    return (<Snackbar
-      active={!!this.props.label && !this.state.hidden}
-      label={this.props.label}
-      timeout={4000}
-      className={`${styles.toast} ${styles[this.props.type]}`}
-      onTimeout={this.hideToast.bind(this)}
-    />);
+    return (<span>
+      {this.props.toasts.map(toast => (
+        <Snackbar
+          active={!!toast.label && !this.state.hidden[toast.index]}
+          key={toast.index}
+          label={toast.label}
+          timeout={4000}
+          className={`${styles.toast} ${styles[toast.type]} ${styles[`index-${toast.index}`]}`}
+          onTimeout={this.hideToast.bind(this, toast)}
+        />
+      ))}
+    </span>);
   }
 }
 

@@ -3,6 +3,22 @@
   left: initial;
 }
 
+@for $i from 0 to 10 {
+  @keyframes move-$i {
+    from {
+      bottom: -50px; 
+    }
+    to {
+      bottom: calc($(i) * 50px + 10px); 
+    }
+  }
+  .index-$i { 
+    animation: move-$i 0.5s ease-in;
+    bottom: calc($(i) * 50px + 10px); 
+  }
+}
+
+
 .error {
   background-color: #c62828;
 }

@@ -42,9 +42,10 @@ describe('actions: toaster', () => {
   describe('toastHidden', () => {
     it('should create an action to hide toast', () => {
       const expectedAction = {
+        data,
         type: actionTypes.toastHidden,
       };
-      expect(toastHidden()).to.be.deep.equal(expectedAction);
+      expect(toastHidden(data)).to.be.deep.equal(expectedAction);
     });
   });
 });
