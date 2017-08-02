@@ -1,10 +1,8 @@
 import { connect } from 'react-redux';
 import VotingComponent from './votingComponent';
 import {
-          addToVotedList,
-          removeFromVotedList,
-          addToUnvotedList,
-          removeFromUnvotedList,
+          addToVoteList,
+          removeFromVoteList,
        } from '../../actions/voting';
 
 const mapStateToProps = state => ({
@@ -14,10 +12,8 @@ const mapStateToProps = state => ({
   unvotedList: state.voting.unvotedList,
 });
 const mapDispatchToProps = dispatch => ({
-  addToVoted: data => dispatch(addToVotedList(data)),
-  removeFromVoted: data => dispatch(removeFromVotedList(data)),
-  addToUnvoted: data => dispatch(addToUnvotedList(data)),
-  removeFromUnvoted: data => dispatch(removeFromUnvotedList(data)),
+  addToVoteList: data => dispatch(addToVoteList(data)),
+  removeFromVoteList: data => dispatch(removeFromVoteList(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(VotingComponent);

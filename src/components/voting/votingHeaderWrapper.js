@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
 import VotingHeader from './votingHeader';
 import { dialogDisplayed } from '../../actions/dialog';
-import { addToUnvotedList } from '../../actions/voting';
+import { removeFromVoteList } from '../../actions/voting';
 
 
 const mapDispatchToProps = dispatch => ({
   setActiveDialog: data => dispatch(dialogDisplayed(data)),
-  addToUnvoted: data => dispatch(addToUnvotedList(data)),
+  addToUnvoted: data => dispatch(removeFromVoteList(data)),
 });
 const mapStateToProps = state => ({
   votedList: state.voting.votedList,

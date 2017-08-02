@@ -8,11 +8,11 @@ import styles from './voting.css';
 
 const setRowClass = (item) => {
   let className = '';
-  if (item.status.selected && item.status.voted) {
+  if (item.selected && item.voted) {
     className = styles.votedRow;
-  } else if (!item.status.selected && item.status.voted) {
+  } else if (!item.selected && item.voted) {
     className = styles.downVoteRow;
-  } else if (item.status.selected && !item.status.voted) {
+  } else if (item.selected && !item.voted) {
     className = styles.upVoteRow;
   }
   return className;
@@ -33,25 +33,17 @@ class VotingComponent extends React.Component {
     this.query = '';
   }
   componentWillReceiveProps() {
-    console.log(this.props);
     setTimeout(() => {
       const delegates = this.state.delegates.map(delegate => this.setStatus(delegate));
       this.setState({
         delegates,
       });
-    }, 100);
+    }, 10);
   }
   componentDidMount() {
     listAccountDelegates(this.props.activePeer, this.props.address).then((res) => {
       const votedDelegates = res.delegates
-        .map((delegate) => {
-          let item = delegate; // eslint-disable-line
-          item.status = {
-            voted: true,
-            selected: false,
-          };
-          return item;
-        });
+        .map(delegate => Object.assign({}, delegate, { voted: true }));
       this.setState({
         votedDelegates,
       });
@@ -72,7 +64,7 @@ class VotingComponent extends React.Component {
     });
     setTimeout(() => {
       this.loadDelegates(this.query);
-    }, 10);
+    }, 1);
   }
   /**
    * Fetches a list of delegates
@@ -107,7 +99,6 @@ class VotingComponent extends React.Component {
    * Sets delegate.status to be always the same object for given delegate.address
    */
   setStatus(delegate) {
-    let item = delegate;// eslint-disable-line
     let delegateExisted = false;
     if (this.props.unvotedList.length > 0) {
       this.props.unvotedList.forEach((row) => {
@@ -128,11 +119,7 @@ class VotingComponent extends React.Component {
     }
     const voted = this.state.votedDelegates
       .filter(row => row.username === delegate.username).length > 0;
-    item.status = {
-      voted,
-      selected: voted,
-    };
-    return item;
+    return Object.assign(delegate, { voted }, { selected: voted });
   }
 
   /**
@@ -141,18 +128,12 @@ class VotingComponent extends React.Component {
    * @param {boolian} value - value of checkbox
    */
   handleChange(index, value) {
-    let delegates = this.state.delegates; // eslint-disable-line
-    delegates[index].status.selected = !delegates[index].status.selected;
-    if (value && !delegates[index].status.voted) {
-      this.props.addToVoted(delegates[index]);
-    } else if (!value && !delegates[index].status.voted) {
-      this.props.removeFromVoted(delegates[index]);
-    } else if (!value && delegates[index].status.voted) {
-      this.props.addToUnvoted(delegates[index]);
-    } else if (value && delegates[index].status.voted) {
-      this.props.removeFromUnvoted(delegates[index]);
+    const delegates = this.state.delegates[index]; // eslint-disable-line
+    if (value) {
+      this.props.addToVoteList(delegates);
+    } else if (!value) {
+      this.props.removeFromVoteList(delegates);
     }
-    // this.setState({ delegates });
   }
   /**
    * load more data when scroll bar reachs end of the page
@@ -183,7 +164,7 @@ class VotingComponent extends React.Component {
             <TableRow key={idx} className={`${styles.row} ${setRowClass(item)}`}>
               <TableCell>
                 <Checkbox className={styles.field}
-                  checked={item.status.selected}
+                  checked={item.selected}
                   onChange={this.handleChange.bind(this, idx)}
                 />
               </TableCell>
