@@ -10,7 +10,6 @@ class RegisterDelegate extends React.Component {
     super();
 
     this.state = {
-      title: 'register as delegate',
       name: '',
       nameError: '',
     };
@@ -45,12 +44,14 @@ class RegisterDelegate extends React.Component {
       <div>
         <Input label='Delegate name' required={true}
           autoFocus={true}
+          className='username'
           onChange={this.changeHandler.bind(this, 'name')}
           error={this.state.nameError}
           value={this.state.name} />
           {
              this.props.account.secondSecret &&
               <Input label='Second secret' required={true}
+                className='second-secret'
                 value={this.state.secondSecret} />
           }
         <hr/>
@@ -65,6 +66,7 @@ class RegisterDelegate extends React.Component {
           <Button label='Register'
             primary={true} raised={true}
             disabled={!this.state.name}
+            className='submit-button'
             onClick={this.register.bind(this, this.state.name, this.state.secondSecret)}/>
         </section>
       </div>
