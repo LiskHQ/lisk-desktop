@@ -1,6 +1,7 @@
 import React from 'react';
 import { TooltipWrapper } from '../timestamp';
 import sytles from './transactions.css';
+import ClickToSend from '../send/clickToSend';
 
 const TransactionType = (props) => {
   let type;
@@ -30,8 +31,11 @@ const TransactionType = (props) => {
       type = false;
       break;
   }
-  const template = type ? <span className={sytles.smallButton}>{type}</span>
-    : <TooltipWrapper tooltip="Send to this recipient">{props.senderId}</TooltipWrapper>;
+  const template = type ?
+    <span className={sytles.smallButton}>{type}</span> :
+    <ClickToSend recipient={props.senderId} >
+      <TooltipWrapper tooltip="Send to this recipient">{props.senderId}</TooltipWrapper>
+    </ClickToSend>;
   return template;
 };
 

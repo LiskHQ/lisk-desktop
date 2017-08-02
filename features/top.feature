@@ -15,5 +15,5 @@ Feature: Main page top area
 
   Scenario: should show balance
     Given I'm logged in as "empty account"
-    Then I should see text "0 LSK" in "balance" element
+    Then I should see text "0 LSK" in "balance value" element
 
