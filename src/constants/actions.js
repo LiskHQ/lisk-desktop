@@ -12,6 +12,9 @@ const actionTypes = {
   toastHidden: 'TOAST_HIDDEN',
   loadingStarted: 'LOADING_STARTED',
   loadingFinished: 'LOADING_FINISHED',
+  transactionAdded: 'TRANSACTION_ADDED',
+  transactionsUpdated: 'TRANSACTIONS_UPDATED',
+  transactionsLoaded: 'TRANSACTIONS_LOADED',
 };
 
 export default actionTypes;
