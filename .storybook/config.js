@@ -7,6 +7,7 @@ function loadStories() {
   require('../src/components/formattedNumber/stories');
   require('../src/components/toaster/stories');
   require('../src/components/send/stories');
+  require('../src/components/spinner/stories');
 }
 
 configure(loadStories, module);
