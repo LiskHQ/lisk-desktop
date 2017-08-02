@@ -10,6 +10,7 @@ import Forging from '../forging';
 import styles from './app.css';
 import Metronome from '../../utils/metronome';
 import Dialog from '../dialog';
+import Toaster from '../toaster';
 import Tabs from '../tabs';
 import LoadingBar from '../loadingBar';
 
@@ -33,6 +34,7 @@ const App = () => (
       <Route exact path="/" component={Login} />
     </main>
     <Dialog />
+    <Toaster />
     <LoadingBar />
   </section>
 );

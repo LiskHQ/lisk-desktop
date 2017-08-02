@@ -2,10 +2,12 @@ import React from 'react';
 import Input from 'react-toolbox/lib/input';
 import Button from 'react-toolbox/lib/button';
 import copy from 'copy-to-clipboard';
-import { toastr } from 'react-redux-toastr';
+import { connect } from 'react-redux';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import lisk from 'lisk-js';
+
+import { successToastDisplayed } from '../../actions/toaster';
 import InfoParagraph from '../infoParagraph';
 import SignVerifyResult from './signVerifyResult';
 
@@ -38,9 +40,7 @@ class SignMessage extends React.Component {
         message: 'Press #{key} to copy',
       });
       if (copied) {
-        // TODO: set up the toaster in redux
-        // https://github.com/diegoddox/react-redux-toastr
-        toastr.success('Result copied to clipboard');
+        this.props.successToast({ label: 'Result copied to clipboard' });
       }
       this.setState({ resultIsShown: true });
     }
@@ -48,7 +48,7 @@ class SignMessage extends React.Component {
 
   render() {
     return (
-      <div className='verify-message'>
+      <div className='sign-message'>
           <InfoParagraph>
               Signing a message with this tool indicates ownership of a privateKey (secret) and
               provides a level of proof that you are the owner of the key.
@@ -80,4 +80,11 @@ class SignMessage extends React.Component {
   }
 }
 
-export default SignMessage;
+const mapDispatchToProps = dispatch => ({
+  successToast: data => dispatch(successToastDisplayed(data)),
+});
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(SignMessage);
