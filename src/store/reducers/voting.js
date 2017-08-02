@@ -5,14 +5,13 @@ const removeFromList = (list, item) => {
   return list.filter(delegate => delegate.address !== address);
 };
 const findItemInList = (list, item) => {
-  const username = item.username;
+  const address = item.address;
   let idx = -1;
   list.forEach((delegate, index) => {
-    if (delegate.address === username) {
+    if (delegate.address === address) {
       idx = index;
     }
   });
-  console.log(idx);
   return idx;
 };
 /**
@@ -22,32 +21,35 @@ const findItemInList = (list, item) => {
  */
 const voting = (state = { votedList: [], unvotedList: [] }, action) => {
   switch (action.type) {
-    case actionTypes.addToVotedList:
+    case actionTypes.addToVoteList:
+      if (action.data.voted) {
+        return Object.assign({}, state, {
+          unvotedList: [...removeFromList(state.unvotedList, action.data)],
+        });
+      }
       if (findItemInList(state.votedList, action.data) > -1) {
-        console.log(action.data);
-        return Object.assign({}, state, {
-          votedList: [...removeFromList(state.votedList, action.data), action.data],
-        });
+        return state;
       }
       return Object.assign({}, state, {
-        votedList: [...state.votedList, action.data],
+        votedList: [
+          ...state.votedList,
+          Object.assign(action.data, { selected: true }),
+        ],
       });
-    case actionTypes.removeFromVotedList:
-      return Object.assign({}, state, {
-        votedList: removeFromList(state.votedList, action.data),
-      });
-    case actionTypes.addToUnvotedList:
+    case actionTypes.removeFromVoteList:
+      if (!action.data.voted) {
+        return Object.assign({}, state, {
+          votedList: [...removeFromList(state.votedList, action.data)],
+        });
+      }
       if (findItemInList(state.unvotedList, action.data) > -1) {
-        return Object.assign({}, state, {
-          unvotedList: [...removeFromList(state.unvotedList, action.data), action.data],
-        });
+        return state;
       }
       return Object.assign({}, state, {
-        unvotedList: [...state.unvotedList, action.data],
-      });
-    case actionTypes.removeFromUnvotedList:
-      return Object.assign({}, state, {
-        unvotedList: removeFromList(state.unvotedList, action.data),
+        unvotedList: [
+          ...state.unvotedList,
+          Object.assign(action.data, { selected: false }),
+        ],
       });
     default:
       return state;
