@@ -1,7 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-  .BundleAnalyzerPlugin;
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 const reactToolboxVariables = {
   'color-primary': '#0288D1',
   'color-primary-dark': '#0288D1',
@@ -22,9 +23,6 @@ module.exports = (env) => {
   entries = env.test ? `${path.resolve(__dirname, 'src')}/main.js` : entries;
   return {
     entry: entries,
-    node: {
-      fs: 'empty',
-    },
     output: {
       path: path.resolve(__dirname, 'dist'),
       filename: env.test ? 'bundle.js' : 'bundle.[name].js',
@@ -39,6 +37,10 @@ module.exports = (env) => {
       new webpack.DefinePlugin({
         PRODUCTION: env.prod,
         TEST: env.test,
+      }),
+      new ExtractTextPlugin({
+        filename: 'styles.css',
+        allChunks: true,
       }),
       env.prod
         ? new webpack.optimize.UglifyJsPlugin({
@@ -86,39 +88,41 @@ module.exports = (env) => {
         },
         {
           test: /\.css$/,
-          use: [
-            { loader: 'style-loader' },
-            {
-              loader: 'css-loader',
-              options: {
-                sourceMap: !env.prod,
-                modules: true,
-                importLoaders: 1,
-                localIdentName: '[name]__[local]___[hash:base64:5]',
+          use: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: [
+              {
+                loader: 'css-loader',
+                options: {
+                  sourceMap: !env.prod,
+                  modules: true,
+                  importLoaders: 1,
+                  localIdentName: '[name]__[local]___[hash:base64:5]',
+                },
               },
-            },
-            {
-              loader: 'postcss-loader',
-              options: {
-                sourceMap: !env.prod,
-                sourceComments: !env.prod,
-                /* eslint-disable global-require */
-                plugins: [
-                  require('postcss-cssnext')({
-                    features: {
-                      customProperties: {
-                        variables: reactToolboxVariables,
+              {
+                loader: 'postcss-loader',
+                options: {
+                  sourceMap: !env.prod,
+                  sourceComments: !env.prod,
+                  /* eslint-disable global-require */
+                  plugins: [
+                    require('postcss-cssnext')({
+                      features: {
+                        customProperties: {
+                          variables: reactToolboxVariables,
+                        },
                       },
-                    },
-                    plugins: [require('stylelint')({ /* your options */ })],
-                  }),
-                  require('postcss-partial-import')({ /* options */ }),
-                  require('postcss-reporter')({ clearMessages: true }),
-                ],
-                /* eslint-enable */
+                      plugins: [require('stylelint')({ /* your options */ })],
+                    }),
+                    require('postcss-partial-import')({ /* options */ }),
+                    require('postcss-reporter')({ clearMessages: true }),
+                  ],
+                  /* eslint-enable */
+                },
               },
-            },
-          ],
+            ],
+          }),
         },
         {
           test: /\.json$/,
