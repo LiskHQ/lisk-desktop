@@ -73,6 +73,7 @@
     "eslint-plugin-import": "=2.2.0",
     "eslint-plugin-react": "=6.10.3",
     "exports-loader": "=0.6.3",
+    "extract-text-webpack-plugin": "=2.1.2",
     "file-loader": "=0.9.0",
     "imports-loader": "=0.6.5",
     "js-nacl": "=1.2.2",
