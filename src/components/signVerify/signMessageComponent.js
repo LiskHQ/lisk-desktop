@@ -1,7 +1,6 @@
 import React from 'react';
 import Input from 'react-toolbox/lib/input';
 import Button from 'react-toolbox/lib/button';
-import copy from 'copy-to-clipboard';
 import lisk from 'lisk-js';
 
 import InfoParagraph from '../infoParagraph';
@@ -32,7 +31,7 @@ class SignMessageComponent extends React.Component {
   }
 
   showResult() {
-    const copied = copy(this.state.result, {
+    const copied = this.props.copyToClipboard(this.state.result, {
       message: 'Press #{key} to copy',
     });
     if (copied) {
