@@ -21,13 +21,15 @@ const HeaderElement = props => (
         theme={styles}
       >
         <MenuItem caption="Register second passphrase" />
-        <MenuItem caption="Register as delegate"
-          className={(props.account.isDelegate) ? styles.hidden : ''}
-          onClick={() => props.setActiveDialog({
-            title: 'Register as delegate',
-            childComponent: RegisterDelegate,
-          })}
-        />
+        {
+          !props.account.isDelegate &&
+            <MenuItem caption="Register as delegate"
+            onClick={() => props.setActiveDialog({
+              title: 'Register as delegate',
+              childComponent: RegisterDelegate,
+            })}
+          />
+        }
         <MenuItem caption="Sign message"
           className='sign-message'
           onClick={() => props.setActiveDialog({
