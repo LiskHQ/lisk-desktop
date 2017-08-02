@@ -3,7 +3,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './account.css';
 import Address from './address';
 import LiskAmount from '../liskAmount';
-import { getAccountStatus } from '../../utils/api/account';
+import { getAccountStatus, getAccount, transactions } from '../../utils/api/account';
 import ClickToSend from '../send/clickToSend';
 import { toRawLsk } from '../../utils/lsk';
 
@@ -27,6 +27,16 @@ class AccountComponent extends React.Component {
   }
 
   update() {
+    getAccount(this.props.peers.data, this.props.account.address).then((result) => {
+      this.props.onAccountUpdated(result);
+      if (result.balance !== this.props.account.balance) {
+        transactions(this.props.activePeer, this.account.address, 25)
+        .then((res) => {
+          this.props.updateTransactions(res.transactions);
+        });
+      }
+    });
+
     const { onActivePeerUpdated } = this.props;
     return getAccountStatus(this.props.peers.data).then(() => {
       onActivePeerUpdated({ online: true });

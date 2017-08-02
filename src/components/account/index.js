@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import AccountComponent from './accountComponent';
 import { activePeerUpdate } from '../../actions/peers';
+import { accountUpdated } from '../../actions/account';
 
 /**
  * Passing state
@@ -12,6 +13,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onActivePeerUpdated: data => dispatch(activePeerUpdate(data)),
+  onAccountUpdated: data => dispatch(accountUpdated(data)),
 });
 
 const Account = connect(
