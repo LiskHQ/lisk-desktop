@@ -7,7 +7,7 @@ import VerifyMessage from '../signVerify/verifyMessage';
 import SignMessage from '../signVerify/signMessage';
 import Send from '../send';
 import PrivateWrapper from '../privateWrapper';
-import SecondPassphrase from '../secondPassphrase';
+import SecondPassphraseMenu from '../secondPassphrase';
 
 const HeaderElement = props => (
   <header className={styles.wrapper}>
@@ -20,7 +20,7 @@ const HeaderElement = props => (
         menuRipple
         theme={styles}
       >
-        <SecondPassphrase />
+        <SecondPassphraseMenu />
         <MenuItem caption="Register as delegate" />
         <MenuItem caption="Sign message"
           className='sign-message'
