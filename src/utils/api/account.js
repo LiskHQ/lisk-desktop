@@ -16,7 +16,7 @@ export const getAccount = (activePeer, address) =>
     });
   });
 
-export const setSecondSecret = (activePeer, secondSecret, publicKey, secret) =>
+export const setSecondPassphrase = (activePeer, secondSecret, publicKey, secret) =>
   requestToActivePeer(activePeer, 'signatures', { secondSecret, publicKey, secret });
 
 export const send = (activePeer, recipientId, amount, secret, secondSecret = null) =>
