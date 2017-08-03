@@ -6,6 +6,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import { send } from '../../utils/api/account';
 import { fromRawLsk, toRawLsk } from '../../utils/lsk';
+import SecondPassphraseInput from '../secondPassphraseInput';
 
 import styles from './send.css';
 
@@ -18,6 +19,9 @@ class Send extends React.Component {
       },
       amount: {
         value: '',
+      },
+      secondPassphrase: {
+        value: null,
       },
     };
     this.fee = 0.1;
@@ -48,6 +52,15 @@ class Send extends React.Component {
     });
   }
 
+  setErrorAndValue(name, error, value) {
+    this.setState({
+      [name]: {
+        value,
+        error,
+      },
+    });
+  }
+
   validateInput(name, value) {
     if (!value) {
       return 'Required';
@@ -66,7 +79,7 @@ class Send extends React.Component {
       this.state.recipient.value,
       toRawLsk(this.state.amount.value),
       this.props.account.passphrase,
-      this.props.account.sencodPassphrase,
+      this.state.secondPassphrase.value,
     ).then((data) => {
       this.props.showSuccessAlert({
         text: `Your transaction of ${this.state.amount.value} LSK to ${this.state.recipient.value} was accepted and will be processed in a few seconds.`,
@@ -108,6 +121,11 @@ class Send extends React.Component {
           error={this.state.amount.error}
           value={this.state.amount.value}
           onChange={this.handleChange.bind(this, 'amount')} />
+        <SecondPassphraseInput
+          error={this.state.secondPassphrase.error}
+          value={this.state.secondPassphrase.value}
+          onChange={this.handleChange.bind(this, 'secondPassphrase')}
+          onError={this.setErrorAndValue.bind(this, 'secondPassphrase')} />
         <div className={styles.fee}> Fee: {this.fee} LSK</div>
         <IconMenu icon='more_vert' position='topRight' menuRipple className={`${styles.sendAllMenu} transaction-amount`} >
           <MenuItem onClick={this.setMaxAmount.bind(this)}
@@ -120,6 +138,7 @@ class Send extends React.Component {
             className='submit-button'
             primary={true} raised={true}
             disabled={!!this.state.recipient.error || !!this.state.amount.error ||
+              !!this.state.secondPassphrase.error || this.state.secondPassphrase.value === '' ||
               !this.state.recipient.value || !this.state.amount.value}
             onClick={this.send.bind(this)}/>
         </section>
