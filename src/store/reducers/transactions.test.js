@@ -17,9 +17,9 @@ describe('Reducer: transactions(state, action)', () => {
     timestamp: 33505743,
   }];
 
-  it('should push action.data to state.pending if action.type = actionTypes.transactionAdded', () => {
+  it('should prepend action.data to state.pending if action.type = actionTypes.transactionAdded', () => {
     const state = {
-      pending: [],
+      pending: [mockTransactions[1]],
       confirmed: [],
     };
     const action = {
@@ -27,7 +27,7 @@ describe('Reducer: transactions(state, action)', () => {
       data: mockTransactions[0],
     };
     const changedState = transactions(state, action);
-    expect(changedState).to.deep.equal({ ...state, pending: [action.data] });
+    expect(changedState).to.deep.equal({ ...state, pending: [action.data, mockTransactions[1]] });
   });
 
   it('should concat action.data to state.confirmed if action.type = actionTypes.transactionsLoaded', () => {
