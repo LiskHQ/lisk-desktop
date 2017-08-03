@@ -38,7 +38,9 @@ export default context => ({
       title: 'Login',
       onClick: () => {
         context.props.onPassGenerated(context.state.passphrase);
-        context.props.closeDialog();
+        if (!context.props.keepModal) {
+          context.props.closeDialog();
+        }
       },
     },
   },
