@@ -2,21 +2,29 @@ import React from 'react';
 import styles from './transactions.css';
 import LiskAmount from '../liskAmount';
 import { TooltipWrapper } from '../timestamp';
+import ClickToSend from '../send/clickToSend';
 
 const Amount = (props) => {
-  let template = null;
-  let tooltipText = null;
-  const amount = <LiskAmount val={props.value.amount} />;
+  const params = {};
   if (props.value.type === 0 &&
     props.value.senderId === props.value.recipientId) {
-    template = <span className={styles.grayButton}>{amount}</span>;
+    params.className = 'grayButton';
   } else if (props.value.senderId !== props.address) {
-    template = <span className={styles.inButton}>{amount}</span>;
+    params.className = 'inButton';
   } else if (props.value.type !== 0 || props.value.recipientId !== props.address) {
-    template = <span className={styles.outButton}>{amount}</span>;
-    tooltipText = 'Repeat the transaction';
+    params.className = 'outButton';
+    params.tooltipText = 'Repeat the transaction';
+    params.clickToSendEnabled = true;
   }
-  return <TooltipWrapper tooltip={tooltipText}>{template}</TooltipWrapper>;
+  return <TooltipWrapper tooltip={params.tooltipText} >
+    <ClickToSend rawAmount={props.value.amount}
+      recipient={props.value.recipientId}
+      disabled={!params.clickToSendEnabled}>
+      <span className={styles[params.className]}>
+        <LiskAmount val={props.value.amount} />
+      </span>
+    </ClickToSend>
+  </TooltipWrapper>;
 };
 // <FormattedNumber val={props.value.fee}></FormattedNumber>
 export default Amount;

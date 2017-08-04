@@ -42,13 +42,13 @@
     "react-circular-progressbar": "=0.1.5",
     "react-dom": "=15.6.x",
     "react-redux": "=5.0.3",
-    "react-redux-toastr": "=7.0.0",
     "react-router-dom": "=4.0.0",
     "react-toolbox": "=2.0.0-beta.12",
     "redux": "=3.6.0",
     "redux-logger": "=3.0.6"
   },
   "devDependencies": {
+    "@storybook/react": "=3.1.8",
     "babel-core": "=6.20.0",
     "babel-loader": "=7.0.0-beta.1",
     "babel-plugin-istanbul": "=4.1.4",
@@ -73,6 +73,7 @@
     "eslint-plugin-import": "=2.2.0",
     "eslint-plugin-react": "=6.10.3",
     "exports-loader": "=0.6.3",
+    "extract-text-webpack-plugin": "=2.1.2",
     "file-loader": "=0.9.0",
     "imports-loader": "=0.6.5",
     "js-nacl": "=1.2.2",
@@ -87,6 +88,7 @@
     "karma-verbose-reporter": "=0.0.6",
     "karma-webpack": "=2.0.3",
     "mocha": "=3.2.0",
+    "postcss-for": "=2.1.1",
     "postcss-loader": "=2.0.6",
     "postcss-partial-import": "=4.1.0",
     "postcss-reporter": "=4.0.0",
@@ -106,8 +108,7 @@
     "url-loader": "=0.5.7",
     "webpack": "=2.2.1",
     "webpack-bundle-analyzer": "=2.4.0",
-    "webpack-dev-server": "=2.4.2",
-    "@storybook/react": "=3.1.8"
+    "webpack-dev-server": "=2.4.2"
   },
   "build": {
     "appId": "io.lisk.nano",

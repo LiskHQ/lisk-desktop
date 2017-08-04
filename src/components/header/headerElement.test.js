@@ -21,8 +21,7 @@ describe('HeaderElement', () => {
       account: {},
     };
     propsMock = sinon.mock(mockInputProps);
-    wrapper = shallow(<HeaderElement account={mockInputProps.account}
-      setActiveDialog={mockInputProps.setActiveDialog} />);
+    wrapper = shallow(<HeaderElement {...mockInputProps} />);
   });
 
   afterEach(() => {
