@@ -10,6 +10,10 @@ const actionTypes = {
   forgingStatsUpdated: 'FORGING_STATS_UPDATED',
   addToVoteList: 'ADD_TO_VOTE_LIST',
   removeFromVoteList: 'REMOVE_FROM_VOTE_LIST',
+  toastDisplayed: 'TOAST_DISPLAYED',
+  toastHidden: 'TOAST_HIDDEN',
+  loadingStarted: 'LOADING_STARTED',
+  loadingFinished: 'LOADING_FINISHED',
 };
 
 export default actionTypes;

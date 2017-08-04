@@ -10,8 +10,9 @@ import Forging from '../forging';
 import styles from './app.css';
 import Metronome from '../../utils/metronome';
 import Dialog from '../dialog';
+import Toaster from '../toaster';
 import Tabs from '../tabs';
-  // temporary, will be deleted with #347
+import LoadingBar from '../loadingBar';
 
 // start dispatching sync ticks
 const metronome = new Metronome();
@@ -33,6 +34,8 @@ const App = () => (
       <Route exact path="/" component={Login} />
     </main>
     <Dialog />
+    <Toaster />
+    <LoadingBar />
   </section>
 );
 

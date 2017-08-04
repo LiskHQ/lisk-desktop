@@ -4,6 +4,8 @@ import styles from './account.css';
 import Address from './address';
 import LiskAmount from '../liskAmount';
 import { getAccountStatus } from '../../utils/api/account';
+import ClickToSend from '../send/clickToSend';
+import { toRawLsk } from '../../utils/lsk';
 
 /**
  * Contains some of the important and basic information about the account
@@ -11,9 +13,17 @@ import { getAccountStatus } from '../../utils/api/account';
  * @param {object} props - include properties of component
  */
 class AccountComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.update = this.update.bind(this);
+  }
   componentDidMount() {
     this.update();
-    document.addEventListener('beat', this.update.bind(this));
+    document.addEventListener('beat', this.update);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('beat', this.update);
   }
 
   update() {
@@ -51,17 +61,20 @@ class AccountComponent extends React.Component {
             </div>
           </div>
         </article>
-        <article className={grid['col-xs-4']}>
+        <article className={`${grid['col-xs-4']} balance`}>
           <div className="box">
             <h3 className={styles.title}>Balance</h3>
-            <div className={styles['value-wrapper']}>
-              <p className="inner primary full hasTip balance">
-                <LiskAmount val={this.props.account.balance} /> LSK
-              </p>
-              <p className="inner secondary tooltip">
-                Click to send all funds
-              </p>
-            </div>
+            <ClickToSend
+              rawAmount={Math.max(0, this.props.account.balance - toRawLsk(0.1))} >
+              <div className={styles['value-wrapper']}>
+                <p className="inner primary full hasTip balance-value">
+                  <LiskAmount val={this.props.account.balance} /> LSK
+                </p>
+                <p className="inner secondary tooltip">
+                  Click to send all funds
+                </p>
+              </div>
+            </ClickToSend>
           </div>
         </article>
       </section>

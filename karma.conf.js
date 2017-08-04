@@ -14,7 +14,7 @@ module.exports = function (config) {
     preprocessors: {
       [fileGlob]: ['webpack'],
     },
-    reporters: ['coverage', 'mocha'].concat(onJenkins ? ['coveralls'] : []),
+    reporters: ['coverage', 'mocha'],
     coverageReporter: {
       reporters: [
         {
