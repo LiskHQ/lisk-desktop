@@ -51,6 +51,16 @@ const voting = (state = { votedList: [], unvotedList: [] }, action) => {
           Object.assign(action.data, { selected: false }),
         ],
       });
+    case actionTypes.clearVotes:
+      return Object.assign({}, state, {
+        votedList: [],
+        unvotedList: [],
+      });
+    case actionTypes.penddingVotes:
+      return Object.assign({}, state, {
+        votedList: state.votedList.map(item => Object.assign(item, { padding: true })),
+        unvotedList: state.unvotedList.map(item => Object.assign(item, { padding: true })),
+      });
     default:
       return state;
   }

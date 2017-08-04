@@ -17,3 +17,19 @@ export const removeFromVoteList = data => ({
   type: actionTypes.removeFromVoteList,
   data,
 });
+
+/**
+ * Remove all data from the list of voted delegates and list of unvoted delegates
+ *
+ */
+export const clearVoteLists = () => ({
+  type: actionTypes.clearVotes,
+});
+
+/**
+ * Remove all data from the list of voted delegates and list of unvoted delegates
+ *
+ */
+export const penddingVotes = () => ({
+  type: actionTypes.penddingVotes,
+});

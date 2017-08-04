@@ -14,6 +14,8 @@ const actionTypes = {
   toastHidden: 'TOAST_HIDDEN',
   loadingStarted: 'LOADING_STARTED',
   loadingFinished: 'LOADING_FINISHED',
+  clearVotes: 'CLEAR_VOTES',
+  penddingVotes: 'PENDDING_VOTES',
 };
 
 export default actionTypes;
