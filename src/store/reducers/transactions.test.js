@@ -27,7 +27,7 @@ describe('Reducer: transactions(state, action)', () => {
       data: mockTransactions[0],
     };
     const changedState = transactions(state, action);
-    expect(changedState).to.deep.equal({ ...state, pending: [action.data, mockTransactions[1]] });
+    expect(changedState).to.deep.equal({ ...state, pending: [action.data, ...state.pending] });
   });
 
   it('should concat action.data to state.confirmed if action.type = actionTypes.transactionsLoaded', () => {

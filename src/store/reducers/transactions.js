@@ -10,12 +10,14 @@ const dialog = (state = { pending: [], confirmed: [] }, action) => {
 
   switch (action.type) {
     case actionTypes.transactionAdded:
-      return Object.assign({}, state, { pending: [...state.pending, action.data] });
+      return Object.assign({}, state, {
+        pending: [action.data, ...state.pending],
+      });
     case actionTypes.transactionsLoaded:
       return Object.assign({}, state, {
         confirmed: [
-          ...action.data,
           ...state.confirmed,
+          ...action.data,
         ],
       });
     case actionTypes.transactionsUpdated:
