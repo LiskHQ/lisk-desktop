@@ -6,7 +6,7 @@ import store from '../../store';
 import SignMessage from './signMessage';
 import SignMessageComponent from './signMessageComponent';
 
-describe.only('SignMessage', () => {
+describe('SignMessage', () => {
   it('should render the SignMessageComponent with props.successToast and props.copyToClipboard', () => {
     const wrapper = mount(<Provider store={store}><SignMessage /></Provider>);
     expect(wrapper.find(SignMessageComponent).exists()).to.equal(true);
