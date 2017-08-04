@@ -23,11 +23,14 @@ export const SecondPassphrase = (props) => {
     !props.account.secondSignature ?
       <MenuItem caption="Register second passphrase"
         onClick={() => props.setActiveDialog({
-          title: 'Second Passphrase',
+          title: 'Register second passphrase',
           childComponent: Passphrase,
           childComponentProps: {
             onPassGenerated: onLoginSubmission,
             keepModal: true,
+            approveButton: 'Register',
+            useCaseNote: 'your second passphrase will be required for all transactions sent from this account',
+            securityNote: 'Losing access to this passphrase will mean no funds can be sent from this account.',
           },
         })}/> : <li className={`empty-template ${styles.hidden}`}></li>
   );

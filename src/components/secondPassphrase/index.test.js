@@ -25,37 +25,31 @@ describe('SecondPassphrase', () => {
     secondSignature: 'sample phrase',
   };
 
+  const props = {
+    peers: {},
+    setActiveDialog: () => {},
+    showSuccessAlert: () => {},
+  };
+
   it('renders one MenuItem component for a normal account', () => {
-    const props = {
-      account: normalAccount,
-      peers: {},
-      setActiveDialog: () => {},
-      showSuccessAlert: () => {},
-    };
-    wrapper = mount(<SecondPassphrase {...props} />);
+    wrapper = mount(<SecondPassphrase {...Object.assign({}, props,
+      { account: normalAccount })} />);
     expect(wrapper.find('MenuItem')).to.have.length(1);
   });
 
   it('renders a list element for an account which already has a second passphrase', () => {
-    const props = {
-      account: withSecondPassAccount,
-      peers: {},
-      setActiveDialog: () => {},
-      showSuccessAlert: () => {},
-    };
-    wrapper = mount(<SecondPassphrase {...props} />);
+    wrapper = mount(<SecondPassphrase {...Object.assign({}, props,
+      { account: withSecondPassAccount })} />);
     expect(wrapper.find('.empty-template')).to.have.length(1);
   });
 
   it('calls setActiveDialog when clicked', () => {
-    const props = {
+    const spiedProps = Object.assign({}, props, {
       account: normalAccount,
-      peers: {},
       setActiveDialog: sinon.spy(),
-      showSuccessAlert: () => {},
-    };
-    wrapper = mount(<SecondPassphrase {...props}/>);
+    });
+    wrapper = mount(<SecondPassphrase {...spiedProps}/>);
     wrapper.find('MenuItem').simulate('click');
-    expect(props.setActiveDialog).to.have.been.calledWith();
+    expect(spiedProps.setActiveDialog).to.have.been.calledWith();
   });
 });
