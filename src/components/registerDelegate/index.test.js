@@ -1,11 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import { BrowserRouter as Router } from 'react-router-dom';
+import configureStore from 'redux-mock-store';
 import RegisterDelegate from './registerDelegate';
 import RegisterDelegateConnected from './index';
 import { accountUpdated } from '../../actions/account';
+import actionTypes from '../../constants/actions';
+import Alert from '../dialog/alert';
+
+const fakeStore = configureStore();
 
 describe('RegisterDelegateConnected', () => {
   let mountedAccount;
@@ -29,13 +32,12 @@ describe('RegisterDelegateConnected', () => {
     username: 'lisk-nano',
   };
 
-  const store = {
-    dispatch: () => {},
-    subscribe: () => {},
-    getState: () => ({
-      peers,
-      account,
-    }),
+  const store = fakeStore({
+    account,
+    peers,
+  });
+
+  const initialProps = {
     onAccountUpdated: () => (data) => {
       store.account = data;
       return accountUpdated(data);
@@ -43,13 +45,9 @@ describe('RegisterDelegateConnected', () => {
     showSuccessAlert: () => {},
     showErrorAlert: () => {},
   };
-  const options = {
-    context: { store },
-    childContextTypes: { store: PropTypes.object.isRequired },
-  };
 
   beforeEach(() => {
-    mountedAccount = mount(<Router><RegisterDelegateConnected/></Router>, options);
+    mountedAccount = mount(<RegisterDelegateConnected store={store} {...initialProps} />);
   });
 
   it('should mount registerDelegate with appropriate properties', () => {
@@ -65,23 +63,49 @@ describe('RegisterDelegateConnected', () => {
     it('should return a dispatch object', () => {
       const props = mountedAccount.find(RegisterDelegate).props();
       const data = props.onAccountUpdated(account);
-      expect(data).to.be.equal();
+
+      expect(data).to.deep.equal({
+        type: actionTypes.accountUpdated,
+        data: account,
+      });
     });
   });
 
   describe('showSuccessAlert', () => {
     it('should return a dispatch object', () => {
       const props = mountedAccount.find(RegisterDelegate).props();
-      const data = props.showSuccessAlert('sample text');
-      expect(data).to.be.equal();
+      const data = props.showSuccessAlert({ text: 'sample text' });
+
+      expect(data).to.deep.equal({
+        type: actionTypes.dialogDisplayed,
+        data: {
+          title: 'Success',
+          type: 'success',
+          childComponent: Alert,
+          childComponentProps: {
+            text: 'sample text',
+          },
+        },
+      });
     });
   });
 
   describe('showErrorAlert', () => {
     it('should return a dispatch object', () => {
       const props = mountedAccount.find(RegisterDelegate).props();
-      const data = props.showErrorAlert('sample text');
-      expect(data).to.be.equal();
+      const data = props.showErrorAlert({ text: 'sample text' });
+
+      expect(data).to.deep.equal({
+        type: actionTypes.dialogHidden,
+        data: {
+          title: 'Error',
+          type: 'error',
+          childComponent: Alert,
+          childComponentProps: {
+            text: 'sample text',
+          },
+        },
+      });
     });
   });
 });
