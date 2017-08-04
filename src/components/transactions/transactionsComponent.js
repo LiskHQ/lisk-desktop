@@ -8,21 +8,16 @@ import TransactionRow from './transactionRow';
 class Transactions extends React.Component {
   constructor() {
     super();
-    this.state = {
-      canLoadMore: true,
-    };
+    this.canLoadMore = true;
   }
 
   loadMore() {
     if (this.state.canLoadMore) {
-      this.setState({ canLoadMore: false });
+      this.canLoadMore = false;
       transactions(this.props.activePeer, this.props.address, 20, this.props.transactions.length)
       .then((res) => {
+        this.canLoadMore = parseInt(res.count, 10) > this.props.transactions.length;
         this.props.transactionsLoaded(res.transactions);
-        this.setState({
-          canLoadMore: parseInt(res.count, 10) > this.props.transactions.length,
-          length: parseInt(res.count, 10),
-        });
       })
       .catch(error => console.error(error.message)); //eslint-disable-line
     }
