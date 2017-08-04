@@ -8,7 +8,7 @@
 }
 .searchIcon{
     position: absolute;
-    top: 27px;
+    top: 15px;
     right: 10px;
     color: rgba(0, 0, 0, .38);
 }
@@ -31,4 +31,38 @@
 }
 .pendingRow {
     background-color: #eaeae9 !important;
+}
+.actionBar{
+    margin-top: 9px;
+    display: inline-block;
+}
+.votesMenuButton{
+    margin-right: 16px;
+    margin-top: 8px;
+    & :global span{
+        vertical-align: top;
+        line-height: 24px;
+        margin-left: 6px;
+    }
+}
+
+.input{
+    margin-top: -15px;
+}
+.menuItem{
+    flex-direction: row-reverse;
+    width: 241px;
+}
+.icon{
+    text-align: right;
+    width: auto
+}
+.menuInner{
+    height: 306px;
+    overflow-y: auto;
+}
+.button{
+    width: auto;
+    margin-top: 18px;
+    margin-right: 16px;
 }
