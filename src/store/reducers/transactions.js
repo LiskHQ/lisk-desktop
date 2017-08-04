@@ -21,14 +21,17 @@ const transactions = (state = { pending: [], confirmed: [] }, action) => {
         ],
       });
     case actionTypes.transactionsUpdated:
-      startTimesamp = state && state.confirmed && state.confirmed.length ?
+      startTimesamp = state.confirmed.length ?
         state.confirmed[0].timestamp :
         0;
       return Object.assign({}, state, {
+        // Filter any newly confirmed transaction from pending
         pending: state.pending.filter(
-          tx => action.data.filter(tx2 => tx2.id === tx.id).length === 0),
+          pendingTransaction => action.data.filter(
+            transaction => transaction.id === pendingTransaction.id).length === 0),
+        // Add any newly confirmed transaction to confirmed
         confirmed: [
-          ...action.data.filter(tx => tx.timestamp > startTimesamp),
+          ...action.data.filter(transaction => transaction.timestamp > startTimesamp),
           ...state.confirmed,
         ],
       });
