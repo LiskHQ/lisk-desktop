@@ -28,11 +28,15 @@ class VotingHeader extends React.Component {
     }
   }
   render() {
-    const button = <div><i className="material-icons">visibility</i><span>this is test</span></div>;
+    const button = <div className={styles.votesMenuButton}>
+      <i className="material-icons">visibility</i>
+      <span>this is test</span>
+    </div>;
     return (
       <header className={`${grid.row} ${grid['between-xs']} hasPaddingRow`}>
         <div className={`${grid['col-xs-3']} ${styles.searchBox}`}>
           <Input type='tel' label='Search' name='query'
+            theme={styles}
             value={this.state.query}
             onChange={this.search.bind(this, 'query')}
           />
@@ -40,19 +44,23 @@ class VotingHeader extends React.Component {
             {this.state.searchIcon}
           </i>
         </div>
-        <IconMenu icon={button} position='topLeft' iconRipple={false}>
-          {this.props.votedDelegates.map(delegate =>
-            <MenuItem
-              key={delegate.username}
-              caption={delegate.username}
-              onClick={this.props.addToUnvoted.bind(this, delegate)} />)}
-        </IconMenu>
-        <Button icon='done' flat
-          onClick={() => this.props.setActiveDialog({
-            title: 'Verify Vote for delegates',
-            childComponent: ConfirmVotes,
-          })}
-          label={`VOTE (+${this.props.votedList.length} / -${this.props.unvotedList.length})`} />
+        <div className={styles.actionBar}>
+          <IconMenu theme={styles} icon={button} position='topLeft' iconRipple={false}>
+            {this.props.votedDelegates.map(delegate =>
+              <MenuItem
+                theme={styles}
+                key={delegate.username}
+                caption={delegate.username}
+                icon="close"
+                onClick={this.props.addToUnvoted.bind(this, delegate)} />)}
+          </IconMenu>
+          <Button icon='done' flat
+            onClick={() => this.props.setActiveDialog({
+              title: 'Verify Vote for delegates',
+              childComponent: ConfirmVotes,
+            })}
+            label={`VOTE (+${this.props.votedList.length} / -${this.props.unvotedList.length})`} />
+        </div>
       </header>
     );
   }
