@@ -1,12 +1,12 @@
 import React from 'react';
 import Input from 'react-toolbox/lib/input';
 import Button from 'react-toolbox/lib/button';
-import lisk from 'lisk-js';
+import Lisk from 'lisk-js';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import InfoParagraph from '../infoParagraph';
 import SignVerifyResult from './signVerifyResult';
 
-import grid from '../../../node_modules/flexboxgrid/dist/flexboxgrid.css';
 
 class SignMessageComponent extends React.Component {
 
@@ -18,14 +18,10 @@ class SignMessageComponent extends React.Component {
     };
   }
 
-  handleChange(message) {
-    this.sign(message);
-  }
-
   sign(message) {
-    const signedMessage = lisk.crypto.signMessageWithSecret(message,
+    const signedMessage = Lisk.crypto.signMessageWithSecret(message,
       this.props.account.passphrase);
-    const result = lisk.crypto.printSignedMessage(
+    const result = Lisk.crypto.printSignedMessage(
       message, signedMessage, this.props.account.publicKey);
     this.setState({ result, resultIsShown: false, message });
   }
@@ -56,7 +52,7 @@ class SignMessageComponent extends React.Component {
             <Input className='message' multiline label='Message'
               autoFocus={true}
               value={this.state.message}
-              onChange={this.handleChange.bind(this)} />
+              onChange={this.sign.bind(this)} />
           </section>
           {this.state.resultIsShown ?
             <SignVerifyResult result={this.state.result} title='Result' /> :
