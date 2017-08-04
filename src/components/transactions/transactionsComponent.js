@@ -12,7 +12,7 @@ class Transactions extends React.Component {
   }
 
   loadMore() {
-    if (this.state.canLoadMore) {
+    if (this.canLoadMore) {
       this.canLoadMore = false;
       transactions(this.props.activePeer, this.props.address, 20, this.props.transactions.length)
       .then((res) => {
