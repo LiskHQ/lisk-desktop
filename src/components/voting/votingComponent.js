@@ -26,7 +26,7 @@ class VotingComponent extends React.Component {
       votedDelegates: [],
       selected: [],
       offset: 0,
-      loadMore: true,
+      loadMore: false,
       length: 1,
       notFound: '',
     };
@@ -149,7 +149,6 @@ class VotingComponent extends React.Component {
         <VotingHeaderWrapper
           votedDelegates={this.state.votedDelegates}
           search={ value => this.search(value) }
-          // addToUnvoted={ item => this.props.addToUnvoted(item) }
         />
         <Table selectable={false}>
           <TableHead displaySelect={false}>
