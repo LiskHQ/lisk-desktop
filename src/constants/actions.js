@@ -16,6 +16,9 @@ const actionTypes = {
   loadingFinished: 'LOADING_FINISHED',
   clearVotes: 'CLEAR_VOTES',
   penddingVotes: 'PENDDING_VOTES',
+  transactionAdded: 'TRANSACTION_ADDED',
+  transactionsUpdated: 'TRANSACTIONS_UPDATED',
+  transactionsLoaded: 'TRANSACTIONS_LOADED',
 };
 
 export default actionTypes;
