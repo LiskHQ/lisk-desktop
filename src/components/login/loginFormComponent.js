@@ -5,7 +5,7 @@ import Input from 'react-toolbox/lib/input';
 import Dropdown from 'react-toolbox/lib/dropdown';
 import Button from 'react-toolbox/lib/button';
 import Checkbox from 'react-toolbox/lib/checkbox';
-import { getAccount } from '../../utils/api/account';
+import { getAccount, extractAddress, extractPublicKey } from '../../utils/api/account';
 import { getDelegate } from '../../utils/api/delegate';
 import networksRaw from './networks';
 import Passphrase from '../passphrase';
@@ -90,22 +90,28 @@ class LoginFormComponent extends React.Component {
 
     setTimeout(() => {
       // get account info
-      const { onAccountUpdated } = this.props;
-      onAccountUpdated({ passphrase });
-      const accountInfo = this.props.account;
+      const accountBasics = {
+        passphrase,
+        publicKey: extractPublicKey(passphrase),
+        address: extractAddress(passphrase),
+      };
 
       // redirect to main/transactions
-      getAccount(this.props.peers.data, accountInfo.address).then((result) => {
-        onAccountUpdated(result);
-        getDelegate(this.props.peers.data, accountInfo.publicKey).then((data) => {
-          onAccountUpdated({ delegate: data.delegate, isDelegate: true });
+      getAccount(this.props.peers.data, accountBasics.address).then((accountData) => {
+        getDelegate(this.props.peers.data, accountBasics.publicKey).then((delegateData) => {
+          this.login(Object.assign({}, accountData, accountBasics,
+            { delegate: delegateData.delegate, isDelegate: true }));
         }).catch(() => {
-          onAccountUpdated({ delegate: {}, isDelegate: false });
+          this.login(Object.assign({}, accountData, accountBasics,
+            { delegate: {}, isDelegate: false }));
         });
-        // redirect to main/transactions
-        this.props.history.replace('/main/transactions');
       });
     }, 5);
+  }
+
+  login(accountInfo) {
+    this.props.onAccountUpdated(accountInfo);
+    this.props.history.replace('/main/transactions');
   }
 
   devPreFill() {
