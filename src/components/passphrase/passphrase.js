@@ -25,16 +25,17 @@ class Passphrase extends React.Component {
   render() {
     const templates = {};
 
+    const useCaseNote = 'your passphrase will be required for logging in to your account.';
+    const securityNote = 'This passphrase is not recoverable and if you lose it, you will lose access to your account forever.';
+
     // Step 1: Information/introduction
     templates.info = <InfoParagraph className={styles.noHr}>
         Please click Next, then move around your mouse randomly to generate a random passphrase.
         <br />
         <br />
-        Note: After registration completes, your passphrase will be
-          required for logging in to your account.
+        Note: After registration completes, { this.props.useCaseNote || useCaseNote }
         <br />
-        This passphrase is not recoverable and if you lose it, you will
-          lose access to your account forever. Please keep it safe!
+        { this.props.securityNote || securityNote } Please keep it safe!
       </InfoParagraph>;
 
     // step 2: Generator, binds mouse events
@@ -65,7 +66,7 @@ class Passphrase extends React.Component {
             className={`${styles.cancel} cancel-button`}
             onClick={this.state.steps[this.state.currentStep].cancelButton.onClick.bind(this)} />
 
-          <Button label={this.state.steps[this.state.currentStep].confirmButton.title}
+          <Button label={this.state.steps[this.state.currentStep].confirmButton.title()}
             primary={true} raised={true}
             className={`${styles.approve} next-button`}
             disabled={(this.state.currentStep === 'generate' && !this.state.passphrase) ||

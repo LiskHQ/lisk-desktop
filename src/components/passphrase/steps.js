@@ -5,7 +5,7 @@ export default context => ({
       onClick: () => { context.props.closeDialog(); },
     },
     confirmButton: {
-      title: 'next',
+      title: () => 'next',
       onClick: () => { context.setState({ currentStep: 'generate' }); },
     },
   },
@@ -15,7 +15,7 @@ export default context => ({
       onClick: () => { context.props.closeDialog(); },
     },
     confirmButton: {
-      title: 'Next',
+      title: () => 'Next',
       onClick: () => {},
     },
   },
@@ -25,7 +25,7 @@ export default context => ({
       onClick: () => { context.props.closeDialog(); },
     },
     confirmButton: {
-      title: 'Yes! It\'s safe',
+      title: () => 'Yes! It\'s safe',
       onClick: () => { context.setState({ currentStep: 'confirm' }); },
     },
   },
@@ -35,7 +35,7 @@ export default context => ({
       onClick: () => { context.setState({ currentStep: 'show' }); },
     },
     confirmButton: {
-      title: 'Login',
+      title: () => (context.props.approveButton || 'Login'),
       onClick: () => {
         context.props.onPassGenerated(context.state.passphrase);
         if (!context.props.keepModal) {
