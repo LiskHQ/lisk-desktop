@@ -5,7 +5,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './passphrase.css';
 import InfoParagraph from '../infoParagraph';
 import PassphraseGenerator from './passphraseGenerator';
-import PassphraseConfirmator from './passphraseConfirmator';
+import PassphraseVerifier from './passphraseVerifier';
 import steps from './steps';
 
 class Passphrase extends React.Component {
@@ -45,8 +45,8 @@ class Passphrase extends React.Component {
     templates.show = <Input type='text' multiline label='Passphrase'
       value={this.state.passphrase} />;
 
-    // step 4: Confirmation, Asks for a random word to make sure the user has copied the passphrase
-    templates.confirm = <PassphraseConfirmator
+    // step 4: Verification, Asks for a random word to make sure the user has copied the passphrase
+    templates.confirm = <PassphraseVerifier
       passphrase={this.state.passphrase}
       answer={this.state.answer}
       updateAnswer={this.changeHandler.bind(this, 'answer')} />;

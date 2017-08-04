@@ -5,7 +5,7 @@ import { mount } from 'enzyme';
 import Passphrase from './passphrase';
 import InfoParagraph from '../infoParagraph';
 import PassphraseGenerator from './passphraseGenerator';
-import PassphraseConfirmator from './passphraseConfirmator';
+import PassphraseVerifier from './passphraseVerifier';
 
 chai.use(sinonChai);
 
@@ -34,6 +34,6 @@ describe('ForgedBlocks', () => {
       currentStep: 'confirm',
       passphrase: 'survey stereo pool fortune oblige slight gravity goddess mistake sentence anchor pool',
     });
-    expect(wrapper.find(PassphraseConfirmator)).to.have.lengthOf(1);
+    expect(wrapper.find(PassphraseVerifier)).to.have.lengthOf(1);
   });
 });
