@@ -5,7 +5,7 @@ import actionTypes from '../../constants/actions';
  * @param {Array} state
  * @param {Object} action
  */
-const dialog = (state = { pending: [], confirmed: [] }, action) => {
+const transactions = (state = { pending: [], confirmed: [] }, action) => {
   let startTimesamp;
 
   switch (action.type) {
@@ -37,4 +37,4 @@ const dialog = (state = { pending: [], confirmed: [] }, action) => {
   }
 };
 
-export default dialog;
+export default transactions;
