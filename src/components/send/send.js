@@ -67,9 +67,17 @@ class Send extends React.Component {
       toRawLsk(this.state.amount.value),
       this.props.account.passphrase,
       this.props.account.sencodPassphrase,
-    ).then(() => {
+    ).then((data) => {
       this.props.showSuccessAlert({
         text: `Your transaction of ${this.state.amount.value} LSK to ${this.state.recipient.value} was accepted and will be processed in a few seconds.`,
+      });
+      this.props.addTransaction({
+        id: data.transactionId,
+        senderPublicKey: this.props.account.publicKey,
+        senderId: this.props.account.address,
+        recipientId: this.state.recipient.value,
+        amount: toRawLsk(this.state.amount.value),
+        fee: toRawLsk(this.fee),
       });
     }).catch((res) => {
       this.props.showErrorAlert({

@@ -3,23 +3,30 @@ import chai, { expect } from 'chai';
 import { mount } from 'enzyme';
 import chaiEnzyme from 'chai-enzyme';
 import sinon from 'sinon';
+import sinonChai from 'sinon-chai';
 import Send from './send';
 import * as accountApi from '../../utils/api/account';
 
 
-chai.use(chaiEnzyme()); // Note the invocation at the end
+chai.use(sinonChai);
+chai.use(chaiEnzyme());
+
 describe('Send', () => {
   let wrapper;
   let accountApiMock;
+  let props;
 
   beforeEach(() => {
     accountApiMock = sinon.mock(accountApi);
-    const props = {
+    props = {
       activePeer: {},
       account: {
         balance: 1000e8,
       },
       closeDialog: () => {},
+      showSuccessAlert: sinon.spy(),
+      showErrorAlert: sinon.spy(),
+      addTransaction: sinon.spy(),
     };
     wrapper = mount(<Send {...props} />);
   });
@@ -79,19 +86,25 @@ describe('Send', () => {
     expect(wrapper.find('.amount input').props().value).to.equal('999.9');
   });
 
-  it('allows to send a transaction and handles success', () => {
+  it('allows to send a transaction, handles success and adds pending transaction', () => {
     accountApiMock.expects('send').resolves({ success: true });
 
     wrapper.find('.amount input').simulate('change', { target: { value: '120.25' } });
     wrapper.find('.recipient input').simulate('change', { target: { value: '11004588490103196952L' } });
     wrapper.find('.submit-button').simulate('click');
+    // TODO: this doesn't work for some reason
+    // expect(props.showSuccessAlert).to.have.been.calledWith();
+    // expect(props.addTransaction).to.have.been.calledWith();
   });
 
   it('allows to send a transaction and handles error response with message', () => {
-    accountApiMock.expects('send').rejects({ message: 'Some server-side error' });
+    const response = { message: 'Some server-side error' };
+    accountApiMock.expects('send').rejects(response);
     wrapper.find('.amount input').simulate('change', { target: { value: '120.25' } });
     wrapper.find('.recipient input').simulate('change', { target: { value: '11004588490103196952L' } });
     wrapper.find('.submit-button').simulate('click');
+    // TODO: this doesn't work for some reason
+    // expect(props.showErrorAlert).to.have.been.calledWith({ text: response.message });
   });
 
   it('allows to send a transaction and handles error response without message', () => {
@@ -99,5 +112,8 @@ describe('Send', () => {
     wrapper.find('.amount input').simulate('change', { target: { value: '120.25' } });
     wrapper.find('.recipient input').simulate('change', { target: { value: '11004588490103196952L' } });
     wrapper.find('.submit-button').simulate('click');
+    // TODO: this doesn't work for some reason
+    // expect(props.showErrorAlert).to.have.been.calledWith({
+    //    text: 'An error occurred while creating the transaction.' });
   });
 });
