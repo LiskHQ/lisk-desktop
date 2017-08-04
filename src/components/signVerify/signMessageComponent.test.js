@@ -3,7 +3,6 @@ import chai, { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
-
 import SignMessageComponent from './signMessageComponent';
 
 chai.use(sinonChai);
@@ -49,6 +48,6 @@ ${signature}
     copyMock.returns(false);
     wrapper.find('.message textarea').simulate('change', { target: { value: message } });
     wrapper.find('.sign-button').simulate('click');
-    expect(successToastSpy).to.have.not.been.calledWith({ label: 'Result copied to clipboard' });
+    expect(successToastSpy).to.have.not.been.calledWith();
   });
 });
