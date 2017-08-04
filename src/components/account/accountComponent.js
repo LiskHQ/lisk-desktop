@@ -28,13 +28,14 @@ class AccountComponent extends React.Component {
 
   update() {
     getAccount(this.props.peers.data, this.props.account.address).then((result) => {
-      this.props.onAccountUpdated(result);
       if (result.balance !== this.props.account.balance) {
-        transactions(this.props.activePeer, this.account.address, 25)
+        const maxBlockSize = 25;
+        transactions(this.props.peers.data, this.props.account.address, maxBlockSize)
         .then((res) => {
-          this.props.updateTransactions(res.transactions);
+          this.props.onTransactionsUpdated(res.transactions);
         });
       }
+      this.props.onAccountUpdated(result);
     });
 
     const { onActivePeerUpdated } = this.props;
