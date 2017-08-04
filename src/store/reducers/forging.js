@@ -6,22 +6,22 @@ import actionTypes from '../../constants/actions';
  * @param {Object} action
  */
 const forging = (state = { forgedBlocks: [], statistics: {} }, action) => {
-  let startTimesamp;
-  let endTimesamp;
+  let startTimestamp;
+  let endTimestamp;
 
   switch (action.type) {
     case actionTypes.forgedBlocksUpdated:
-      startTimesamp = state.forgedBlocks && state.forgedBlocks.length ?
+      startTimestamp = state.forgedBlocks && state.forgedBlocks.length ?
         state.forgedBlocks[0].timestamp :
         0;
-      endTimesamp = state.forgedBlocks && state.forgedBlocks.length ?
+      endTimestamp = state.forgedBlocks && state.forgedBlocks.length ?
         state.forgedBlocks[state.forgedBlocks.length - 1].timestamp :
         0;
       return Object.assign({}, state, {
         forgedBlocks: [
-          ...action.data.filter(block => block.timestamp > startTimesamp),
+          ...action.data.filter(block => block.timestamp > startTimestamp),
           ...state.forgedBlocks,
-          ...action.data.filter(block => block.timestamp < endTimesamp),
+          ...action.data.filter(block => block.timestamp < endTimestamp),
         ],
       });
     case actionTypes.forgingStatsUpdated:
