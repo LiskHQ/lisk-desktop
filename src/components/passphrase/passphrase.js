@@ -1,11 +1,11 @@
 import React from 'react';
-import Button from 'react-toolbox/lib/button';
 import Input from 'react-toolbox/lib/input';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './passphrase.css';
 import InfoParagraph from '../infoParagraph';
 import PassphraseGenerator from './passphraseGenerator';
 import PassphraseConfirmator from './passphraseConfirmator';
+import ActionBar from '../actionBar';
 import steps from './steps';
 
 class Passphrase extends React.Component {
@@ -60,18 +60,18 @@ class Passphrase extends React.Component {
             </div>
           </div>
         </section>
-        <section className={`${grid.row} ${grid['between-xs']}`}>
-          <Button label={this.state.steps[this.state.currentStep].cancelButton.title}
-            className={`${styles.cancel} cancel-button`}
-            onClick={this.state.steps[this.state.currentStep].cancelButton.onClick.bind(this)} />
-
-          <Button label={this.state.steps[this.state.currentStep].confirmButton.title}
-            primary={true} raised={true}
-            className={`${styles.approve} next-button`}
-            disabled={(this.state.currentStep === 'generate' && !this.state.passphrase) ||
-              (this.state.currentStep === 'confirm' && !this.state.answer)}
-            onClick={this.state.steps[this.state.currentStep].confirmButton.onClick.bind(this)}/>
-        </section>
+        <ActionBar
+          secondaryButton={{
+            label: this.state.steps[this.state.currentStep].cancelButton.title,
+            onClick: this.state.steps[this.state.currentStep].cancelButton.onClick.bind(this),
+          }}
+          primaryButton={{
+            label: this.state.steps[this.state.currentStep].confirmButton.title,
+            className: 'next-button',
+            disabled: (this.state.currentStep === 'generate' && !this.state.passphrase) ||
+              (this.state.currentStep === 'confirm' && !this.state.answer),
+            onClick: this.state.steps[this.state.currentStep].confirmButton.onClick.bind(this),
+          }} />
       </div>
     );
   }
