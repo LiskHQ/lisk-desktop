@@ -16,7 +16,7 @@ describe('SecondPassphraseInput', () => {
     props = {
       onChange: sinon.spy(),
       onError: sinon.spy(),
-    }
+    };
   });
 
   it('should render Input if props.hasSecondPassphrase', () => {
@@ -28,13 +28,12 @@ describe('SecondPassphraseInput', () => {
   it('should render null if !props.hasSecondPassphrase', () => {
     props.hasSecondPassphrase = false;
     wrapper = mount(<SecondPassphraseInput {...props} />);
-    expect(wrapper.html()).to.equal('');
+    expect(wrapper.html()).to.equal(null);
   });
 
   it('should render null if !props.hasSecondPassphrase', () => {
     props.hasSecondPassphrase = false;
     wrapper = mount(<SecondPassphraseInput {...props} />);
-    expect(wrapper.html()).to.equal('');
+    expect(wrapper.html()).to.equal(null);
   });
-    wrapper.find('.amount input').simulate('change', { target: { value: '0' } });
 });
