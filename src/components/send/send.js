@@ -1,11 +1,10 @@
 import React from 'react';
 import Input from 'react-toolbox/lib/input';
-import Button from 'react-toolbox/lib/button';
 import { IconMenu, MenuItem } from 'react-toolbox/lib/menu';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import { send } from '../../utils/api/account';
 import { fromRawLsk, toRawLsk } from '../../utils/lsk';
+import ActionBar from '../actionBar';
 
 import styles from './send.css';
 
@@ -114,15 +113,19 @@ class Send extends React.Component {
             caption='Set maximum amount'
             className='send-maximum-amount'/>
         </IconMenu>
-        <section className={`${grid.row} ${grid['between-xs']}`}>
-          <Button label='Cancel' className='cancel-button' onClick={this.props.closeDialog} />
-          <Button label='Send'
-            className='submit-button'
-            primary={true} raised={true}
-            disabled={!!this.state.recipient.error || !!this.state.amount.error ||
-              !this.state.recipient.value || !this.state.amount.value}
-            onClick={this.send.bind(this)}/>
-        </section>
+        <ActionBar
+          secondaryButton={{
+            onClick: this.props.closeDialog,
+          }}
+          primaryButton={{
+            label: 'Send',
+            disabled: (
+              !!this.state.recipient.error ||
+              !!this.state.amount.error ||
+              !this.state.recipient.value ||
+              !this.state.amount.value),
+            onClick: this.send.bind(this),
+          }} />
       </div>
     );
   }
