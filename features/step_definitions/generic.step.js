@@ -81,7 +81,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   });
 
   Then('I should see "{text}" error message', (text, callback) => {
-    waitForElemAndCheckItsText('.md-input-message-animation, .error-message', text, callback);
+    waitForElemAndCheckItsText('.error-message, .theme__error___2k5Jz', text, callback);
   });
 
   Then('"{elementName}" should be disabled', (elementName, callback) => {
