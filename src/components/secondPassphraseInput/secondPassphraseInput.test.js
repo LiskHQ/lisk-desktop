@@ -7,7 +7,6 @@ import SecondPassphraseInput from './secondPassphraseInput';
 
 chai.use(sinonChai);
 
-
 describe('SecondPassphraseInput', () => {
   let wrapper;
   let props;

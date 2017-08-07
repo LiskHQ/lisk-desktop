@@ -9,7 +9,7 @@ class SecondPassphraseInput extends React.Component {
     }
   }
 
-  handleChange(value) {
+  handleValueChange(value) {
     this.props.onChange(value);
     const error = this.validate(value);
     if (error) {
@@ -33,7 +33,7 @@ class SecondPassphraseInput extends React.Component {
         className='second-passphrase'
         error={this.props.error}
         value={this.props.value}
-        onChange={this.handleChange.bind(this)} /> :
+        onChange={this.handleValueChange.bind(this)} /> :
       null);
   }
 }

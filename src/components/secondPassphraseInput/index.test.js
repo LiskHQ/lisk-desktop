@@ -3,11 +3,10 @@ import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
-import SecondPassphraseInputContainer from './';
+import SecondPassphraseInputContainer from './index';
 import store from '../../store';
 
 chai.use(sinonChai);
-
 
 describe('SecondPassphraseInputContainer', () => {
   let wrapper;
