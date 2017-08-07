@@ -31,13 +31,15 @@ class DialogElement extends Component {
               <IconButton className={`${styles['x-button']} x-button`} onClick={this.closeDialog.bind(this)} icon='close'/>
             </Navigation>
           </AppBar>
-          {this.props.dialog.childComponent ?
-            <this.props.dialog.childComponent
-              {...(this.props.dialog.childComponentProps || {})}
-              closeDialog={this.closeDialog.bind(this)}
-              /> :
-            null
-          }
+          <div className='modal-dialog-body'>
+            {this.props.dialog.childComponent ?
+              <this.props.dialog.childComponent
+                {...(this.props.dialog.childComponentProps || {})}
+                closeDialog={this.closeDialog.bind(this)}
+                /> :
+              null
+            }
+          </div>
         </div>
       </Dialog>
     );

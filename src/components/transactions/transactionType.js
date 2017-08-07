@@ -33,7 +33,7 @@ const TransactionType = (props) => {
   }
   const template = type ?
     <span className={sytles.smallButton}>{type}</span> :
-    <ClickToSend recipient={props.senderId} >
+    <ClickToSend recipient={props.senderId} className='from-to' >
       <TooltipWrapper tooltip="Send to this recipient">{props.senderId}</TooltipWrapper>
     </ClickToSend>;
   return template;
