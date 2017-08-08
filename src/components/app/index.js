@@ -8,15 +8,15 @@ import Transactions from '../transactions';
 import Voting from '../voting';
 import Forging from '../forging';
 import styles from './app.css';
-import Metronome from '../../utils/metronome';
+// import Metronome from '../../utils/metronome';
 import Dialog from '../dialog';
 import Toaster from '../toaster';
 import Tabs from '../tabs';
 import LoadingBar from '../loadingBar';
 
 // start dispatching sync ticks
-const metronome = new Metronome();
-metronome.init();
+// const metronome = new Metronome();
+// metronome.init();
 
 const App = () => (
   <section className={styles['body-wrapper']}>
