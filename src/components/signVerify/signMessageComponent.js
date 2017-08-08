@@ -1,11 +1,10 @@
 import React from 'react';
 import Input from 'react-toolbox/lib/input';
-import Button from 'react-toolbox/lib/button';
 import Lisk from 'lisk-js';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import InfoParagraph from '../infoParagraph';
 import SignVerifyResult from './signVerifyResult';
+import ActionBar from '../actionBar';
 
 
 class SignMessageComponent extends React.Component {
@@ -56,14 +55,16 @@ class SignMessageComponent extends React.Component {
           </section>
           {this.state.resultIsShown ?
             <SignVerifyResult result={this.state.result} title='Result' /> :
-            <section className={`${grid.row} ${grid['between-xs']}`}>
-              <Button label='Cancel' className='cancel-button' onClick={this.props.closeDialog} />
-              <Button label='Sign and copy result to clipboard'
-                className='sign-button'
-                primary={true} raised={true}
-                disabled={!this.state.result || this.state.resultIsShown}
-                onClick={this.showResult.bind(this)}/>
-          </section>
+            <ActionBar
+              secondaryButton={{
+                onClick: this.props.closeDialog,
+              }}
+              primaryButton={{
+                label: 'Sign and copy result to clipboard',
+                className: 'sign-button',
+                disabled: !this.state.result || this.state.resultIsShown,
+                onClick: this.showResult.bind(this),
+              }} />
           }
       </div>
     );
