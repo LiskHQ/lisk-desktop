@@ -4,7 +4,7 @@ import { mount } from 'enzyme';
 import chaiEnzyme from 'chai-enzyme';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
-import ActionBar from './';
+import ActionBar from './index';
 import * as accountApi from '../../utils/api/account';
 
 
