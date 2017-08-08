@@ -4,6 +4,8 @@ import { mount } from 'enzyme';
 import chaiEnzyme from 'chai-enzyme';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
+import { Provider } from 'react-redux';
+import store from '../../store';
 import Send from './send';
 import * as accountApi from '../../utils/api/account';
 
@@ -28,7 +30,7 @@ describe('Send', () => {
       showErrorAlert: sinon.spy(),
       addTransaction: sinon.spy(),
     };
-    wrapper = mount(<Send {...props} />);
+    wrapper = mount(<Provider store={store}><Send {...props} /></Provider>);
   });
 
   afterEach(() => {
