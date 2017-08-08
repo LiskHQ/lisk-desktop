@@ -29,9 +29,3 @@ hr {
 :global .box {
     box-shadow: none !important;
 }
-.cancel {
-    margin-left: 8px;
-}
-.approve {
-    margin-right: 8px;
-}

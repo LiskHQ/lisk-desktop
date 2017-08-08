@@ -19,7 +19,7 @@ class Transactions extends React.Component {
         this.canLoadMore = parseInt(res.count, 10) > this.props.transactions.length;
         this.props.transactionsLoaded(res.transactions);
       })
-      .catch(error => console.error(error.message)); //eslint-disable-line
+      .catch(error => console.error(error.message)); // eslint-disable-line no-console
     }
   }
 
