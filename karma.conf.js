@@ -14,7 +14,7 @@ module.exports = function (config) {
     frameworks: ['mocha', 'chai'],
     files: [
       fileRoot,
-      { pattern: filePattern, included: false, served: false, watched: true }
+      { pattern: filePattern, included: false, served: false, watched: false },
     ],
     preprocessors: {
       [fileRoot]: ['webpack'],
