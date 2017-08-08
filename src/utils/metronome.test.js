@@ -61,7 +61,7 @@ describe('Metronome', () => {
       env.production = true;
       metronome.init();
       callbacks.blur();
-      expect(metronome.interval).to.equal(SYNC_INACTIVE_INTERVAL)
+      expect(metronome.interval).to.equal(SYNC_INACTIVE_INTERVAL);
     });
 
     it('should set window.ipc to set this.interval to SYNC_ACTIVE_INTERVAL on focus', () => {
@@ -74,9 +74,9 @@ describe('Metronome', () => {
       env.production = true;
       metronome.init();
       callbacks.blur();
-      expect(metronome.interval).to.equal(SYNC_INACTIVE_INTERVAL)
+      expect(metronome.interval).to.equal(SYNC_INACTIVE_INTERVAL);
       callbacks.focus();
-      expect(metronome.interval).to.equal(SYNC_ACTIVE_INTERVAL)
+      expect(metronome.interval).to.equal(SYNC_ACTIVE_INTERVAL);
     });
   });
 
