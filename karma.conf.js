@@ -1,8 +1,10 @@
 // Karma configuration
 const webpackEnv = { test: true };
 const webpackConfig = require('./webpack.config')(webpackEnv);
+webpackConfig.watch = true;
 
-const fileGlob = 'src/**/*.test.js';
+const filePattern = 'src/**/*.test.js';
+const fileRoot = 'src/tests.js';
 const onJenkins = process.env.ON_JENKINS;
 process.env.BABEL_ENV = 'test';
 module.exports = function (config) {
@@ -10,9 +12,12 @@ module.exports = function (config) {
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
     frameworks: ['mocha', 'chai'],
-    files: [fileGlob],
+    files: [
+      fileRoot,
+      { pattern: filePattern, included: false, served: false, watched: true }
+    ],
     preprocessors: {
-      [fileGlob]: ['webpack'],
+      [fileRoot]: ['webpack'],
     },
     reporters: ['coverage', 'mocha'],
     coverageReporter: {
