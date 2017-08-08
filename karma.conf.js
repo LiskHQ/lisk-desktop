@@ -38,6 +38,8 @@ module.exports = function (config) {
     autoWatch: false,
     browsers: ['Chrome'],
     singleRun: true,
+    browserNoActivityTimeout: 60000,
+    browserDisconnectTolerance: 3,
     concurrency: Infinity,
   });
 };
