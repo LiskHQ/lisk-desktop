@@ -2,7 +2,9 @@ import chai, { expect } from 'chai';
 import { spy } from 'sinon';
 import sinonChai from 'sinon-chai';
 import Metronome from './metronome';
-import { SYNC_ACTIVE_INTERVAL } from '../constants/api';
+import { SYNC_ACTIVE_INTERVAL, SYNC_INACTIVE_INTERVAL } from '../constants/api';
+import env from '../constants/env';
+
 
 chai.use(sinonChai);
 
@@ -24,11 +26,57 @@ describe('Metronome', () => {
   });
 
   describe('init', () => {
-    it('should call requestAnimationFrame', () => {
+    it('should call requestAnimationFrame if !this.running', () => {
       const reqSpy = spy(window, 'requestAnimationFrame');
       metronome.init();
       expect(reqSpy).to.have.been.calledWith();
       window.requestAnimationFrame.restore();
+    });
+
+    it('should not call requestAnimationFrame if this.running', () => {
+      const reqSpy = spy(window, 'requestAnimationFrame');
+      metronome.running = true;
+      metronome.init();
+      expect(reqSpy).to.not.have.been.calledWith();
+      window.requestAnimationFrame.restore();
+    });
+
+    it('should call window.ipc.on(\'blur\') and window.ipc.on(\'focus\')', () => {
+      window.ipc = {
+        on: spy(),
+      };
+      env.production = true;
+      metronome.init();
+      expect(window.ipc.on).to.have.been.calledWith('blur');
+      expect(window.ipc.on).to.have.been.calledWith('focus');
+    });
+
+    it('should set window.ipc to set this.interval to SYNC_INACTIVE_INTERVAL on blur', () => {
+      const callbacks = {};
+      window.ipc = {
+        on: (type, callback) => {
+          callbacks[type] = callback;
+        },
+      };
+      env.production = true;
+      metronome.init();
+      callbacks.blur();
+      expect(metronome.interval).to.equal(SYNC_INACTIVE_INTERVAL)
+    });
+
+    it('should set window.ipc to set this.interval to SYNC_ACTIVE_INTERVAL on focus', () => {
+      const callbacks = {};
+      window.ipc = {
+        on: (type, callback) => {
+          callbacks[type] = callback;
+        },
+      };
+      env.production = true;
+      metronome.init();
+      callbacks.blur();
+      expect(metronome.interval).to.equal(SYNC_INACTIVE_INTERVAL)
+      callbacks.focus();
+      expect(metronome.interval).to.equal(SYNC_ACTIVE_INTERVAL)
     });
   });
 
