@@ -11,20 +11,15 @@ class SecondPassphraseInput extends React.Component {
 
   handleValueChange(value) {
     this.props.onChange(value);
-    const error = this.validate(value);
+    const error;
+    if (!value) {
+      error = 'Required';
+    } else if (!isValidPassphrase(value)) {
+      error = 'Invalid passphrase';
+    }
     if (error) {
       this.props.onError(error, value);
     }
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  validate(value) {
-    if (!value) {
-      return 'Required';
-    } else if (!isValidPassphrase(value)) {
-      return 'Invalid passphrase';
-    }
-    return undefined;
   }
 
   render() {
