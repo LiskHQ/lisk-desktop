@@ -24,7 +24,7 @@ const PricedButton = ({
         raised={true}
         className={`next-button ${customClassName}`}
         disabled={disabled || (fee && !hasFunds)}
-        onClick={onClick.bind(this)} />
+        onClick={onClick} />
     </div>
   );
 };
