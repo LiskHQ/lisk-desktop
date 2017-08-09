@@ -35,7 +35,7 @@ describe('DialogElement', () => {
 
     it('allows to click on Button', () => {
       wrapper.find(Button).simulate('click');
-      expect(props.onClick).to.have.been.calledWith();
+      expect(props.onClick).to.have.been.calledWithExactly();
     });
   });
 
