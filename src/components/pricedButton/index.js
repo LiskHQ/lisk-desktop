@@ -18,7 +18,7 @@ const PricedButton = (props) => {
       }
       <Button label={props.label}
         primary={true} raised={true}
-        className='next-button'
+        className={`next-button ${props.customClassName}`}
         disabled={props.disabled || (props.fee && !hasFunds)}
         onClick={props.onClick.bind(this)}/>
     </div>

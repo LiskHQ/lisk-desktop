@@ -10,7 +10,7 @@ import PricedButton from './index';
 chai.use(sinonChai);
 chai.use(chaiEnzyme());
 
-describe.only('DialogElement', () => {
+describe('DialogElement', () => {
   let wrapper;
   const props = {
     fee: 5e8,
