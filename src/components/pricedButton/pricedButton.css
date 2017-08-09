@@ -6,6 +6,7 @@
   margin: 0 16px;
   transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
 }
+
 .error {
   color: #dd2c00 !important;
 }

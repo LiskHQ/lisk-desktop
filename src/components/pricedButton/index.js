@@ -3,24 +3,28 @@ import Button from 'react-toolbox/lib/button';
 import { fromRawLsk } from '../../utils/lsk';
 import styles from './pricedButton.css';
 
-const PricedButton = (props) => {
-  const hasFunds = props.balance >= props.fee;
+const PricedButton = ({
+  balance, fee, label, customClassName, onClick, disabled,
+}) => {
+  const hasFunds = balance >= fee;
   return (
     <div className='primary-button'>
       {
-        props.fee &&
-          <span className={`${styles.fee} ${hasFunds ? '' : styles.error}`}>
+        fee &&
+          (<span className={`${styles.fee} ${hasFunds ? '' : styles.error}`}>
             {
-              hasFunds ? `Fee: ${fromRawLsk(props.fee)} LSK` :
-              `Not enough credit to pay ${fromRawLsk(props.fee)} LSK fee`
+              hasFunds ? `Fee: ${fromRawLsk(fee)} LSK` :
+              `Insufficient funds for ${fromRawLsk(fee)} LSK fee`
             }
-          </span>
+          </span>)
       }
-      <Button label={props.label}
-        primary={true} raised={true}
-        className={`next-button ${props.customClassName}`}
-        disabled={props.disabled || (props.fee && !hasFunds)}
-        onClick={props.onClick.bind(this)}/>
+      <Button
+        label={label}
+        primary={true}
+        raised={true}
+        className={`next-button ${customClassName}`}
+        disabled={disabled || (fee && !hasFunds)}
+        onClick={onClick.bind(this)} />
     </div>
   );
 };

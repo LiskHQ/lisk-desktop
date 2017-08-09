@@ -16,7 +16,7 @@ describe('DialogElement', () => {
     fee: 5e8,
     onClick: sinon.spy(),
   };
-  const insufficientBalance = 0;
+  const insufficientBalance = 4.9999e8;
   const sufficientBalance = 6e8;
 
   it('renders <Button /> component from react-toolbox', () => {
@@ -24,7 +24,7 @@ describe('DialogElement', () => {
     expect(wrapper.find(Button)).to.have.length(1);
   });
 
-  describe('Sufficient credit', () => {
+  describe('Sufficient funds', () => {
     beforeEach(() => {
       wrapper = shallow(<PricedButton {...props} balance={sufficientBalance} />);
     });
@@ -39,13 +39,13 @@ describe('DialogElement', () => {
     });
   });
 
-  describe('Insufficient credit', () => {
+  describe('Insufficient funds', () => {
     beforeEach(() => {
       wrapper = shallow(<PricedButton {...props} balance={insufficientBalance} />);
     });
 
-    it('renders a span saying "Not enough credit to pay 5 LSK fee"', () => {
-      expect(wrapper.find('span').text()).to.be.equal('Not enough credit to pay 5 LSK fee');
+    it('renders a span saying "Insufficient funds for 5 LSK fee"', () => {
+      expect(wrapper.find('span').text()).to.be.equal('Insufficient funds for 5 LSK fee');
     });
 
     it('sets the disabled attribute of the button', () => {
