@@ -76,3 +76,14 @@ export const generateSeed = ({ byte, seed, percentage, step } = init(), rand = M
    * @returns {string} The generated passphrase
    */
 export const generatePassphrase = ({ seed }) => (new mnemonic(new Buffer(seed.join(''), 'hex'))).toString();
+
+  /**
+   * Checks if passphrase is valid using mnemonic
+   *
+   * @param {string} passphrase
+   * @returns {bool} isValidPassphrase
+   */
+export const isValidPassphrase = (passphrase) => {
+  const normalizedValue = passphrase.replace(/ +/g, ' ').trim().toLowerCase();
+  return normalizedValue.split(' ').length >= 12 && mnemonic.isValid(normalizedValue);
+};
