@@ -1,9 +1,18 @@
 import actionTypes from '../../constants/actions';
-
+/**
+ * remove a gelegate from list of delegates
+ * @param {array} list - list for delegates
+ * @param {object} item - a delegates that we want to remove it
+ */
 const removeFromList = (list, item) => {
   const address = item.address;
   return list.filter(delegate => delegate.address !== address);
 };
+/**
+ * find index of a gelegate in list of delegates
+ * @param {array} list - list for delegates
+ * @param {object} item - a delegates that we want to find its index
+ */
 const findItemInList = (list, item) => {
   const address = item.address;
   let idx = -1;
@@ -16,7 +25,7 @@ const findItemInList = (list, item) => {
 };
 /**
  *
- * @param {Array} state
+ * @param {Object} state
  * @param {Object} action
  */
 const voting = (state = { votedList: [], unvotedList: [] }, action) => {
@@ -24,6 +33,7 @@ const voting = (state = { votedList: [], unvotedList: [] }, action) => {
     case actionTypes.addToVoteList:
       if (action.data.voted) {
         return Object.assign({}, state, {
+          refresh: false,
           unvotedList: [...removeFromList(state.unvotedList, action.data)],
         });
       }
@@ -31,6 +41,7 @@ const voting = (state = { votedList: [], unvotedList: [] }, action) => {
         return state;
       }
       return Object.assign({}, state, {
+        refresh: false,
         votedList: [
           ...state.votedList,
           Object.assign(action.data, { selected: true }),
@@ -39,6 +50,7 @@ const voting = (state = { votedList: [], unvotedList: [] }, action) => {
     case actionTypes.removeFromVoteList:
       if (!action.data.voted) {
         return Object.assign({}, state, {
+          refresh: false,
           votedList: [...removeFromList(state.votedList, action.data)],
         });
       }
@@ -46,6 +58,7 @@ const voting = (state = { votedList: [], unvotedList: [] }, action) => {
         return state;
       }
       return Object.assign({}, state, {
+        refresh: false,
         unvotedList: [
           ...state.unvotedList,
           Object.assign(action.data, { selected: false }),
@@ -53,13 +66,14 @@ const voting = (state = { votedList: [], unvotedList: [] }, action) => {
       });
     case actionTypes.clearVotes:
       return Object.assign({}, state, {
-        votedList: [],
-        unvotedList: [],
+        votedList: state.votedList.filter(item => !item.pending),
+        unvotedList: state.unvotedList.filter(item => !item.pending),
+        refresh: true,
       });
-    case actionTypes.penddingVotes:
+    case actionTypes.pendingVotes:
       return Object.assign({}, state, {
-        votedList: state.votedList.map(item => Object.assign(item, { padding: true })),
-        unvotedList: state.unvotedList.map(item => Object.assign(item, { padding: true })),
+        votedList: state.votedList.map(item => Object.assign(item, { pending: true })),
+        unvotedList: state.unvotedList.map(item => Object.assign(item, { pending: true })),
       });
     default:
       return state;
