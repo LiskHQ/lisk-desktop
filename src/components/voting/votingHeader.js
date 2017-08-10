@@ -27,10 +27,22 @@ class VotingHeader extends React.Component {
       this.search('query', '');
     }
   }
+  confirmVoteText() {
+    let text = 'VOTE';
+    const voted = this.props.votedList.filter(item => !item.pending).length;
+    const unvoted = this.props.unvotedList.filter(item => !item.pending).length;
+    if (voted > 0 || unvoted > 0) {
+      const seprator = (voted > 0 && unvoted > 0) ? ' / ' : ''; // eslint-disable-line
+      const votedHtml = voted > 0 ? <span className={styles.voted}>+{voted}</span> : '';
+      const unvotedHtml = unvoted > 0 ? <span className={styles.unvoted}>-{unvoted}</span> : '';
+      text = <span>VOTE ({votedHtml}{seprator}{unvotedHtml})</span>;
+    }
+    return text;
+  }
   render() {
     const button = <div className={styles.votesMenuButton}>
       <i className="material-icons">visibility</i>
-      <span>this is test</span>
+      <span>my votes ({this.props.votedDelegates.length})</span>
     </div>;
     return (
       <header className={`${grid.row} ${grid['between-xs']} hasPaddingRow`}>
@@ -40,7 +52,7 @@ class VotingHeader extends React.Component {
             value={this.state.query}
             onChange={this.search.bind(this, 'query')}
           />
-          <i className={`material-icons ${styles.searchIcon}`} onClick={ this.clearSearch.bind(this) }>
+          <i id="searchIcon" className={`material-icons ${styles.searchIcon}`} onClick={ this.clearSearch.bind(this) }>
             {this.state.searchIcon}
           </i>
         </div>
@@ -59,7 +71,7 @@ class VotingHeader extends React.Component {
               title: 'Verify Vote for delegates',
               childComponent: ConfirmVotes,
             })}
-            label={`VOTE (+${this.props.votedList.length} / -${this.props.unvotedList.length})`} />
+            label={this.confirmVoteText()} />
         </div>
       </header>
     );
