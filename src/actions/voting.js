@@ -27,9 +27,9 @@ export const clearVoteLists = () => ({
 });
 
 /**
- * Remove all data from the list of voted delegates and list of unvoted delegates
+ * Add pending variable to the list of voted delegates and list of unvoted delegates
  *
  */
-export const penddingVotes = () => ({
-  type: actionTypes.penddingVotes,
+export const pendingVotes = () => ({
+  type: actionTypes.pendingVotes,
 });
