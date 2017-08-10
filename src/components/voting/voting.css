@@ -45,7 +45,13 @@
         margin-left: 6px;
     }
 }
-
+.voted {
+    color: #7cb342;
+}
+.unvoted {
+    color: #c62828;
+}
+/* react toolbar overwroght */
 .input{
     margin-top: -15px;
 }
