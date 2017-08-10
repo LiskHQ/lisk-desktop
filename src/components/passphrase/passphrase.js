@@ -76,7 +76,6 @@ class Passphrase extends React.Component {
               (current === 'confirm' && !this.state.answer),
             onClick: steps[current].confirmButton.onClick.bind(this),
           }} />
-
       </div>
     );
   }

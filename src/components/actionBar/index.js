@@ -21,7 +21,7 @@ const ActionBar = ({
       balance={account ? account.balance : 0}
       className={primaryButton.className || 'submit-button'}
       disabled={primaryButton.disabled}
-      onClick={primaryButton.onClick}/>
+      onClick={primaryButton.onClick} />
   </section>
 );
 
