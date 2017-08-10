@@ -6,6 +6,7 @@ export default context => ({
     },
     confirmButton: {
       title: () => 'next',
+      fee: () => context.props.fee,
       onClick: () => { context.setState({ currentStep: 'generate' }); },
     },
   },
@@ -16,6 +17,7 @@ export default context => ({
     },
     confirmButton: {
       title: () => 'Next',
+      fee: () => {},
       onClick: () => {},
     },
   },
@@ -26,6 +28,7 @@ export default context => ({
     },
     confirmButton: {
       title: () => 'Yes! It\'s safe',
+      fee: () => {},
       onClick: () => { context.setState({ currentStep: 'confirm' }); },
     },
   },
@@ -36,6 +39,7 @@ export default context => ({
     },
     confirmButton: {
       title: () => (context.props.approveButton || 'Login'),
+      fee: () => {},
       onClick: () => {
         context.props.onPassGenerated(context.state.passphrase);
         if (!context.props.keepModal) {

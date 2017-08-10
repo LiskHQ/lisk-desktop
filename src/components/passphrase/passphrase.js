@@ -4,6 +4,7 @@ import Input from 'react-toolbox/lib/input';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './passphrase.css';
 import InfoParagraph from '../infoParagraph';
+import PrimaryButton from '../primaryButton';
 import PassphraseGenerator from './passphraseGenerator';
 import PassphraseVerifier from './passphraseVerifier';
 import steps from './steps';
@@ -61,13 +62,16 @@ class Passphrase extends React.Component {
             </div>
           </div>
         </section>
+
         <section className={`${grid.row} ${grid['between-xs']}`}>
           <Button label={this.state.steps[this.state.currentStep].cancelButton.title}
             className={`${styles.cancel} cancel-button`}
             onClick={this.state.steps[this.state.currentStep].cancelButton.onClick.bind(this)} />
 
-          <Button label={this.state.steps[this.state.currentStep].confirmButton.title()}
-            primary={true} raised={true}
+          <PrimaryButton
+            label={this.state.steps[this.state.currentStep].confirmButton.title()}
+            balance={this.props.account.balance}
+            fee={this.state.steps[this.state.currentStep].confirmButton.fee()}
             className={`${styles.approve} next-button`}
             disabled={(this.state.currentStep === 'generate' && !this.state.passphrase) ||
               (this.state.currentStep === 'confirm' && !this.state.answer)}

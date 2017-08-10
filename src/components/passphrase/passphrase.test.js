@@ -20,7 +20,7 @@ describe('ForgedBlocks', () => {
     expect(wrapper.find('button')).to.have.lengthOf(2);
   });
 
-  it('should intially render InfoParagraph', () => {
+  it('should initially render InfoParagraph', () => {
     expect(wrapper.find(InfoParagraph)).to.have.lengthOf(1);
   });
 

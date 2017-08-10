@@ -5,7 +5,7 @@ import Passphrase from '../passphrase';
 import { setSecondPassphrase } from '../../utils/api/account';
 import { dialogDisplayed, successAlertDialogDisplayed } from '../../actions/dialog';
 import styles from './secondPassphrase.css';
-
+import Fees from '../../constants/fees';
 
 export const SecondPassphrase = (props) => {
   const onLoginSubmission = (secondPassphrase) => {
@@ -28,6 +28,7 @@ export const SecondPassphrase = (props) => {
           childComponentProps: {
             onPassGenerated: onLoginSubmission,
             keepModal: true,
+            fee: Fees.setSecondPassphrase,
             approveButton: 'Register',
             useCaseNote: 'your second passphrase will be required for all transactions sent from this account',
             securityNote: 'Losing access to this passphrase will mean no funds can be sent from this account.',

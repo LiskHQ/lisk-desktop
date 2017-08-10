@@ -66,7 +66,7 @@ class Send extends React.Component {
       this.state.recipient.value,
       toRawLsk(this.state.amount.value),
       this.props.account.passphrase,
-      this.props.account.sencodPassphrase,
+      this.props.account.secondPassphrase,
     ).then(() => {
       this.props.showSuccessAlert({
         text: `Your transaction of ${this.state.amount.value} LSK to ${this.state.recipient.value} was accepted and will be processed in a few seconds.`,
