@@ -1,22 +1,17 @@
 import React from 'react';
-import { Table, TableHead, TableRow, TableCell } from 'react-toolbox/lib/table';
+import { themr } from 'react-css-themr';
+import { TABLE } from 'react-toolbox/lib/identifiers';
+import { tableFactory } from 'react-toolbox/lib/table/Table';
+import { TableHead, TableCell } from 'react-toolbox/lib/table';
+import TableTheme from 'react-toolbox/lib/table/theme.css';
 import Waypoint from 'react-waypoint';
-import Checkbox from 'react-toolbox/lib/checkbox';
 import { listAccountDelegates, listDelegates } from '../../utils/api/delegate';
 import VotingHeaderWrapper from './votingHeaderWrapper';
-import styles from './voting.css';
+import VotingRow from './votingRow';
 
-const setRowClass = (item) => {
-  let className = '';
-  if (item.selected && item.voted) {
-    className = styles.votedRow;
-  } else if (!item.selected && item.voted) {
-    className = styles.downVoteRow;
-  } else if (item.selected && !item.voted) {
-    className = styles.upVoteRow;
-  }
-  return className;
-};
+// Create a new Table component injecting Head and Row
+// Feel free to inject default styles there, check index.js
+const Table = themr(TABLE, TableTheme)(tableFactory(TableHead, VotingRow));
 
 class VotingComponent extends React.Component {
   constructor() {
@@ -34,20 +29,36 @@ class VotingComponent extends React.Component {
   }
   componentWillReceiveProps() {
     setTimeout(() => {
-      const delegates = this.state.delegates.map(delegate => this.setStatus(delegate));
-      this.setState({
-        delegates,
-      });
-    }, 10);
+      if (this.props.refreshDelegates) {
+        this.loadVotedDelegates(true);
+      } else {
+        const delegates = this.state.delegates.map(delegate => this.setStatus(delegate));
+        this.setState({
+          delegates,
+        });
+      }
+    }, 1);
   }
   componentDidMount() {
+    this.loadVotedDelegates();
+  }
+  loadVotedDelegates(refresh) {
     listAccountDelegates(this.props.activePeer, this.props.address).then((res) => {
       const votedDelegates = res.delegates
         .map(delegate => Object.assign({}, delegate, { voted: true }));
       this.setState({
         votedDelegates,
       });
-      this.loadDelegates(this.query);
+      if (refresh) {
+        setTimeout(() => {
+          const delegates = this.state.delegates.map(delegate => this.setStatus(delegate));
+          this.setState({
+            delegates,
+          });
+        }, 10);
+      } else {
+        this.loadDelegates(this.query);
+      }
     });
   }
   /**
@@ -119,22 +130,9 @@ class VotingComponent extends React.Component {
     }
     const voted = this.state.votedDelegates
       .filter(row => row.username === delegate.username).length > 0;
-    return Object.assign(delegate, { voted }, { selected: voted });
+    return Object.assign(delegate, { voted }, { selected: voted }, { pending: false });
   }
 
-  /**
-   * change status of selected row
-   * @param {integer} index - index of row that we want to change status of that
-   * @param {boolian} value - value of checkbox
-   */
-  handleChange(index, value) {
-    const delegates = this.state.delegates[index]; // eslint-disable-line
-    if (value) {
-      this.props.addToVoteList(delegates);
-    } else if (!value) {
-      this.props.removeFromVoteList(delegates);
-    }
-  }
   /**
    * load more data when scroll bar reachs end of the page
    */
@@ -160,19 +158,7 @@ class VotingComponent extends React.Component {
             <TableCell>Approval</TableCell>
           </TableHead>
           {this.state.delegates.map((item, idx) => (
-            <TableRow key={idx} className={`${styles.row} ${setRowClass(item)}`}>
-              <TableCell>
-                <Checkbox className={styles.field}
-                  checked={item.selected}
-                  onChange={this.handleChange.bind(this, idx)}
-                />
-              </TableCell>
-              <TableCell>{item.rank}</TableCell>
-              <TableCell>{item.username}</TableCell>
-              <TableCell>{item.address}</TableCell>
-              <TableCell>{item.productivity} %</TableCell>
-              <TableCell>{item.approval} %</TableCell>
-            </TableRow>
+              <VotingRow key={idx} data={item} />
           ))}
         </Table>
         {this.state.notFound}
