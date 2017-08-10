@@ -1,5 +1,4 @@
 import React from 'react';
-import Button from 'react-toolbox/lib/button';
 import Input from 'react-toolbox/lib/input';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './passphrase.css';
@@ -7,6 +6,7 @@ import InfoParagraph from '../infoParagraph';
 import PrimaryButton from '../primaryButton';
 import PassphraseGenerator from './passphraseGenerator';
 import PassphraseVerifier from './passphraseVerifier';
+import ActionBar from '../actionBar';
 import steps from './steps';
 
 class Passphrase extends React.Component {
@@ -63,20 +63,21 @@ class Passphrase extends React.Component {
           </div>
         </section>
 
-        <section className={`${grid.row} ${grid['between-xs']}`}>
-          <Button label={this.state.steps[this.state.currentStep].cancelButton.title}
-            className={`${styles.cancel} cancel-button`}
-            onClick={this.state.steps[this.state.currentStep].cancelButton.onClick.bind(this)} />
+        <ActionBar
+          secondaryButton={{
+            label: this.state.steps[this.state.currentStep].cancelButton.title,
+            onClick: this.state.steps[this.state.currentStep].cancelButton.onClick.bind(this),
+          }}
+          primaryButton={{
+            label: this.state.steps[this.state.currentStep].confirmButton.title(),
+            fee: this.state.steps[this.state.currentStep].confirmButton.fee(),
+            balance: this.props.account.balance,
+            className: 'next-button',
+            disabled: (this.state.currentStep === 'generate' && !this.state.passphrase) ||
+              (this.state.currentStep === 'confirm' && !this.state.answer),
+            onClick: this.state.steps[this.state.currentStep].confirmButton.onClick.bind(this),
+          }} />
 
-          <PrimaryButton
-            label={this.state.steps[this.state.currentStep].confirmButton.title()}
-            balance={this.props.account.balance}
-            fee={this.state.steps[this.state.currentStep].confirmButton.fee()}
-            className={`${styles.approve} next-button`}
-            disabled={(this.state.currentStep === 'generate' && !this.state.passphrase) ||
-              (this.state.currentStep === 'confirm' && !this.state.answer)}
-            onClick={this.state.steps[this.state.currentStep].confirmButton.onClick.bind(this)}/>
-        </section>
       </div>
     );
   }

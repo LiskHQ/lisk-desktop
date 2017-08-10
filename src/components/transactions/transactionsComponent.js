@@ -8,38 +8,18 @@ import TransactionRow from './transactionRow';
 class Transactions extends React.Component {
   constructor() {
     super();
-    this.state = {
-      transactions: [],
-      offset: 0,
-      loadMore: true,
-      length: 1,
-    };
-  }
-
-  componentDidMount() {
-    this.loadMore();
+    this.canLoadMore = true;
   }
 
   loadMore() {
-    if (this.state.loadMore && this.state.length > this.state.offset) {
-      this.setState({ loadMore: false });
-      transactions(this.props.activePeer, this.props.address, 20, this.state.offset)
+    if (this.canLoadMore) {
+      this.canLoadMore = false;
+      transactions(this.props.activePeer, this.props.address, 20, this.props.transactions.length)
       .then((res) => {
-        const list = res.transactions.map(transaction => (
-          <TransactionRow address={this.props.address}
-            key={transaction.id}
-            tableStyle={tableStyle}
-            value={transaction}>
-          </TransactionRow>
-        ));
-        this.setState({
-          transactions: this.state.transactions.concat(list),
-          offset: this.state.offset + 20,
-          loadMore: true,
-          length: parseInt(res.count, 10),
-        });
+        this.canLoadMore = parseInt(res.count, 10) > this.props.transactions.length;
+        this.props.transactionsLoaded(res.transactions);
       })
-      .catch(error => console.error(error.message)); //eslint-disable-line
+      .catch(error => console.error(error.message)); // eslint-disable-line no-console
     }
   }
 
@@ -49,7 +29,13 @@ class Transactions extends React.Component {
         <table className={tableStyle.table}>
           <TransactionsHeader tableStyle={tableStyle}></TransactionsHeader>
           <tbody>
-            {this.state.transactions}
+            {this.props.transactions.map(transaction => (
+              <TransactionRow address={this.props.address}
+                key={transaction.id}
+                tableStyle={tableStyle}
+                value={transaction}>
+              </TransactionRow>
+            ))}
           </tbody>
         </table>
         <Waypoint onEnter={() => { this.loadMore(); } }></Waypoint>
