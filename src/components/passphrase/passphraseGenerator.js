@@ -56,7 +56,7 @@ class PassphraseGenerator extends React.Component {
         passphrase: phrase,
       });
       this.props.changeHandler('passphrase', phrase);
-      this.props.changeHandler('currentStep', 'show');
+      this.props.changeHandler('current', 'show');
     }
   }
 

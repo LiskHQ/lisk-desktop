@@ -1,6 +1,5 @@
 import { deepEquals } from '../../utils/polyfills';
 import actionTypes from '../../constants/actions';
-import { extractPublicKey, extractAddress } from '../../utils/api/account';
 
 /**
  * If the new value of the given property on the account is changed,
@@ -38,17 +37,9 @@ const merge = (account, info) => {
   const updatedAccount = Object.assign({}, account);
 
   keys.forEach((key) => {
-    changes = setChangedItem(account, changes, key, info[key]);
-    updatedAccount[key] = info[key];
-
-    if (key === 'passphrase') {
-      const publicKey = extractPublicKey(info[key]);
-      changes = setChangedItem(account, changes, 'publicKey', publicKey);
-      updatedAccount.publicKey = publicKey;
-
-      const address = extractAddress(publicKey);
-      changes = setChangedItem(account, changes, 'address', address);
-      updatedAccount.address = address;
+    if (info[key]) {
+      changes = setChangedItem(account, changes, key, info[key]);
+      updatedAccount[key] = info[key];
     }
   });
 

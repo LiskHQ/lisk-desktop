@@ -8,6 +8,7 @@ import SignMessage from '../signVerify/signMessage';
 import RegisterDelegate from '../registerDelegate';
 import Send from '../send';
 import PrivateWrapper from '../privateWrapper';
+import SecondPassphraseMenu from '../secondPassphrase';
 
 const HeaderElement = props => (
   <header className={styles.wrapper}>
@@ -20,7 +21,6 @@ const HeaderElement = props => (
         menuRipple
         theme={styles}
       >
-        <MenuItem caption="Register second passphrase" />
         {
           !props.account.isDelegate &&
             <MenuItem caption="Register as delegate"
@@ -30,6 +30,7 @@ const HeaderElement = props => (
             })}
           />
         }
+        <SecondPassphraseMenu />
         <MenuItem caption="Sign message"
           className='sign-message'
           onClick={() => props.setActiveDialog({

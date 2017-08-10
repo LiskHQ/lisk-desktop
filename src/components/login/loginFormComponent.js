@@ -7,13 +7,12 @@ import Button from 'react-toolbox/lib/button';
 import Checkbox from 'react-toolbox/lib/checkbox';
 import { getAccount, extractAddress, extractPublicKey } from '../../utils/api/account';
 import { getDelegate } from '../../utils/api/delegate';
+import { isValidPassphrase } from '../../utils/passphrase';
 import networksRaw from './networks';
 import Passphrase from '../passphrase';
 import styles from './login.css';
 
 if (global._bitcore) delete global._bitcore;
-
-const mnemonic = require('bitcore-mnemonic');
 
 /**
  * The container component containing login
@@ -64,12 +63,7 @@ class LoginFormComponent extends React.Component {
     if (!value || value === '') {
       data.passphraseValidity = 'Empty passphrase';
     } else {
-      const normalizedValue = value.replace(/ +/g, ' ').trim().toLowerCase();
-      if (normalizedValue.split(' ').length < 12 || !mnemonic.isValid(normalizedValue)) {
-        data.passphraseValidity = 'Invalid passphrase';
-      } else {
-        data.passphraseValidity = '';
-      }
+      data.passphraseValidity = isValidPassphrase(value) ? '' : 'Invalid passphrase';
     }
 
     this.setState(data);
