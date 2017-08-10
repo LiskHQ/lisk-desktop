@@ -5,7 +5,7 @@ import sinon from 'sinon';
 import { shallow } from 'enzyme';
 import chaiEnzyme from 'chai-enzyme';
 import Button from 'react-toolbox/lib/button';
-import PricedButton from './index';
+import { PricedButtonComponent } from './index';
 
 chai.use(sinonChai);
 chai.use(chaiEnzyme());
@@ -20,13 +20,13 @@ describe('PricedButton', () => {
   const sufficientBalance = 6e8;
 
   it('renders <Button /> component from react-toolbox', () => {
-    wrapper = shallow(<PricedButton {...props} balance={sufficientBalance} />);
+    wrapper = shallow(<PricedButtonComponent {...props} balance={sufficientBalance} />);
     expect(wrapper.find(Button)).to.have.length(1);
   });
 
   describe('Sufficient funds', () => {
     beforeEach(() => {
-      wrapper = shallow(<PricedButton {...props} balance={sufficientBalance} />);
+      wrapper = shallow(<PricedButtonComponent {...props} balance={sufficientBalance} />);
     });
 
     it('renders a span saying "Fee: 5 LSK"', () => {
@@ -41,7 +41,7 @@ describe('PricedButton', () => {
 
   describe('Insufficient funds', () => {
     beforeEach(() => {
-      wrapper = shallow(<PricedButton {...props} balance={insufficientBalance} />);
+      wrapper = shallow(<PricedButtonComponent {...props} balance={insufficientBalance} />);
     });
 
     it('renders a span saying "Insufficient funds for 5 LSK fee"', () => {

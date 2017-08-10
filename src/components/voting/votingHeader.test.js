@@ -41,7 +41,7 @@ describe('VotingHeader', () => {
 
   it('click on i.material-icons should clear vlaue of search input', () => {
     wrapper.instance().search('query', '555');
-    wrapper.find('i.material-icons').simulate('click')
+    wrapper.find('i.material-icons').simulate('click');
     expect(wrapper.state('query')).to.be.equal('');
   });
 });

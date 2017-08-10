@@ -68,7 +68,7 @@ Feature: Top right menu
     Given I'm logged in as "any account"
     When I click "sign message" in main menu
     And I fill in "Hello world" to "message" field
-    And I click "sign button"
+    And I click "primary button"
     Then I should see in "result" field:
          """
          -----BEGIN LISK SIGNED MESSAGE-----

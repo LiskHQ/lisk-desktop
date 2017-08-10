@@ -4,8 +4,10 @@ import { mount } from 'enzyme';
 import chaiEnzyme from 'chai-enzyme';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
+import { Provider } from 'react-redux';
 import ActionBar from './index';
-import * as accountApi from '../../utils/api/account';
+import store from '../../store';
+// import * as accountApi from '../../utils/api/account';
 
 
 chai.use(sinonChai);
@@ -27,7 +29,7 @@ describe('ActionBar', () => {
         onClick: sinon.spy(),
       },
     };
-    wrapper = mount(<ActionBar {...props} />);
+    wrapper = mount(<Provider store={store}><ActionBar {...props} /></Provider>);
   });
 
   it('renders two Button components', () => {
