@@ -18,7 +18,6 @@ class SignMessageComponent extends React.Component {
   }
 
   sign(message) {
-    console.log('result is shown0');
     const signedMessage = Lisk.crypto.signMessageWithSecret(message,
       this.props.account.passphrase);
     const result = Lisk.crypto.printSignedMessage(
@@ -27,14 +26,12 @@ class SignMessageComponent extends React.Component {
   }
 
   showResult() {
-    console.log('result is shown1');
     const copied = this.props.copyToClipboard(this.state.result, {
       message: 'Press #{key} to copy',
     });
     if (copied) {
       this.props.successToast({ label: 'Result copied to clipboard' });
     }
-    console.log('result is shown');
     this.setState({ resultIsShown: true });
   }
 
