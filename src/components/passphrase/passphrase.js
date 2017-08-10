@@ -6,14 +6,13 @@ import InfoParagraph from '../infoParagraph';
 import PassphraseGenerator from './passphraseGenerator';
 import PassphraseVerifier from './passphraseVerifier';
 import ActionBar from '../actionBar';
-import steps from './steps';
+import stepsConfig from './steps';
 
 class Passphrase extends React.Component {
   constructor() {
     super();
     this.state = {
-      steps: steps(this),
-      currentStep: 'info',
+      current: 'info',
       answer: '',
     };
   }
@@ -24,6 +23,8 @@ class Passphrase extends React.Component {
 
   render() {
     const templates = {};
+    const { current } = this.state;
+    const steps = stepsConfig(this);
 
     const useCaseNote = 'your passphrase will be required for logging in to your account.';
     const securityNote = 'This passphrase is not recoverable and if you lose it, you will lose access to your account forever.';
@@ -57,24 +58,23 @@ class Passphrase extends React.Component {
         <section className={`${styles.templateItem} ${grid['middle-xs']}`}>
           <div className={grid['col-xs-12']}>
             <div className='box'>
-              { templates[this.state.currentStep] }
+              { templates[current] }
             </div>
           </div>
         </section>
 
         <ActionBar
           secondaryButton={{
-            label: this.state.steps[this.state.currentStep].cancelButton.title,
-            onClick: this.state.steps[this.state.currentStep].cancelButton.onClick.bind(this),
+            label: steps[current].cancelButton.title,
+            onClick: steps[current].cancelButton.onClick.bind(this),
           }}
           primaryButton={{
-            label: this.state.steps[this.state.currentStep].confirmButton.title(),
-            fee: this.state.steps[this.state.currentStep].confirmButton.fee(),
-            balance: this.props.account.balance,
+            label: steps[current].confirmButton.title(),
+            fee: steps[current].confirmButton.fee(),
             className: 'next-button',
-            disabled: (this.state.currentStep === 'generate' && !this.state.passphrase) ||
-              (this.state.currentStep === 'confirm' && !this.state.answer),
-            onClick: this.state.steps[this.state.currentStep].confirmButton.onClick.bind(this),
+            disabled: (current === 'generate' && !this.state.passphrase) ||
+              (current === 'confirm' && !this.state.answer),
+            onClick: steps[current].confirmButton.onClick.bind(this),
           }} />
 
       </div>
