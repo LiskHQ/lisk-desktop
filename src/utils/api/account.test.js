@@ -2,7 +2,7 @@ import chai, { expect } from 'chai';
 import { mock } from 'sinon';
 import sinonChai from 'sinon-chai';
 import chaiAsPromised from 'chai-as-promised';
-import { getAccount, setSecondSecret, send, transactions,
+import { getAccount, setSecondPassphrase, send, transactions,
   extractPublicKey, extractAddress } from './account';
 import { activePeerSet } from '../../actions/peers';
 
@@ -66,9 +66,9 @@ describe('Utils: Account', () => {
     });
   });
 
-  describe('setSecondSecret', () => {
+  describe('setSecondPassphrase', () => {
     it('should return a promise', () => {
-      const promise = setSecondSecret();
+      const promise = setSecondPassphrase();
       expect(typeof promise.then).to.be.equal('function');
     });
   });

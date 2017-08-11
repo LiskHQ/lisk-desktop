@@ -9,8 +9,6 @@ describe('actions: toaster', () => {
 
   describe('toastDisplayed', () => {
     it('should create an action to show toast', () => {
-
-
       const expectedAction = {
         data,
         type: actionTypes.toastDisplayed,

@@ -1,44 +1,50 @@
-export default context => ({
+export default ({ props, state, setState }) => ({
   info: {
     cancelButton: {
       title: 'cancel',
-      onClick: () => { context.props.closeDialog(); },
+      onClick: () => { props.closeDialog(); },
     },
     confirmButton: {
-      title: 'next',
-      onClick: () => { context.setState({ currentStep: 'generate' }); },
+      title: () => 'next',
+      fee: () => props.fee,
+      onClick: () => { setState({ current: 'generate' }); },
     },
   },
   generate: {
     cancelButton: {
       title: 'cancel',
-      onClick: () => { context.props.closeDialog(); },
+      onClick: () => { props.closeDialog(); },
     },
     confirmButton: {
-      title: 'Next',
+      title: () => 'Next',
+      fee: () => {},
       onClick: () => {},
     },
   },
   show: {
     cancelButton: {
       title: 'cancel',
-      onClick: () => { context.props.closeDialog(); },
+      onClick: () => { props.closeDialog(); },
     },
     confirmButton: {
-      title: 'Yes! It\'s safe',
-      onClick: () => { context.setState({ currentStep: 'confirm' }); },
+      title: () => 'Yes! It\'s safe',
+      fee: () => {},
+      onClick: () => { setState({ current: 'confirm' }); },
     },
   },
   confirm: {
     cancelButton: {
       title: 'Back',
-      onClick: () => { context.setState({ currentStep: 'show' }); },
+      onClick: () => { setState({ current: 'show' }); },
     },
     confirmButton: {
-      title: 'Login',
+      title: () => (props.confirmButton || 'Login'),
+      fee: () => {},
       onClick: () => {
-        context.props.onPassGenerated(context.state.passphrase);
-        context.props.closeDialog();
+        props.onPassGenerated(state.passphrase);
+        if (!props.keepModal) {
+          props.closeDialog();
+        }
       },
     },
   },
