@@ -18,9 +18,10 @@ describe('HeaderElement', () => {
   beforeEach(() => {
     const mockInputProps = {
       setActiveDialog: () => { },
+      account: {},
     };
     propsMock = sinon.mock(mockInputProps);
-    wrapper = shallow(<HeaderElement setActiveDialog={mockInputProps.setActiveDialog} />);
+    wrapper = shallow(<HeaderElement {...mockInputProps} />);
   });
 
   afterEach(() => {
