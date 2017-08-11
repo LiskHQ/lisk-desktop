@@ -4,6 +4,8 @@ import { mount } from 'enzyme';
 import chaiEnzyme from 'chai-enzyme';
 import sinon from 'sinon';
 import Lisk from 'lisk-js';
+import { Provider } from 'react-redux';
+import store from '../../store';
 import RegisterDelegate from './registerDelegate';
 import * as delegateApi from '../../utils/api/delegate';
 
@@ -25,13 +27,12 @@ const delegateAccount = {
 };
 
 const withSecondSecretAccount = {
-  isDelegate: true,
   address: '16313739661670634666L',
   balance: 1000e8,
   delegate: {
     username: 'lisk-nano',
   },
-  secondSecret: 'sample phrase',
+  secondSignature: 1,
 };
 
 const props = {
@@ -69,7 +70,7 @@ describe('RegisterDelegate', () => {
 
   describe('Ordinary account', () => {
     beforeEach(() => {
-      wrapper = mount(<RegisterDelegate {...normalProps} />);
+      wrapper = mount(<Provider store={store}><RegisterDelegate {...normalProps} /></Provider>);
     });
 
     it('renders an InfoParagraph components', () => {
@@ -80,24 +81,16 @@ describe('RegisterDelegate', () => {
       expect(wrapper.find('Input')).to.have.length(1);
     });
 
-    it('allows register as delegate for a non delegate account', () => {
-      delegateApiMock.expects('registerDelegate').resolves({ success: true });
-
+    it.skip('allows register as delegate for a non delegate account', () => {
       wrapper.find('.username input').simulate('change', { target: { value: 'sample_username' } });
-      wrapper.find('.submit-button').simulate('click');
-    });
-
-    it('does not allow registering an existing username', () => {
-      delegateApiMock.expects('registerDelegate').resolves({ success: false });
-
-      wrapper.find('.username input').simulate('change', { target: { value: 'sample_username' } });
-      wrapper.find('.submit-button').simulate('click');
+      expect(wrapper.find('.primary-button button').props().disabled).to.not.equal(true);
     });
   });
 
   describe('Ordinary account with second secret', () => {
     beforeEach(() => {
-      wrapper = mount(<RegisterDelegate {...withSecondSecretProps} />);
+      wrapper = mount(<Provider store={store}>
+        <RegisterDelegate {...withSecondSecretProps} /></Provider>);
     });
 
     it('renders two Input component for a an account with second secret', () => {
@@ -105,24 +98,19 @@ describe('RegisterDelegate', () => {
     });
 
     it('allows register as delegate for a non delegate account with second secret', () => {
-      delegateApiMock.expects('registerDelegate').resolves({ success: true });
-
       wrapper.find('.username input').simulate('change', { target: { value: 'sample_username' } });
       wrapper.find('.second-secret input').simulate('change', { target: { value: 'sample phrase' } });
-      wrapper.find('.submit-button').simulate('click');
     });
   });
 
   describe('Delegate account', () => {
     beforeEach(() => {
-      wrapper = mount(<RegisterDelegate {...delegateProps} />);
+      wrapper = mount(<Provider store={store}><RegisterDelegate {...delegateProps} /></Provider>);
     });
 
     it('does not allow register as delegate for a delegate account', () => {
-      delegateApiMock.expects('registerDelegate').resolves({ success: false });
-
       wrapper.find('.username input').simulate('change', { target: { value: 'sample_username' } });
-      wrapper.find('.submit-button').simulate('click');
+      expect(wrapper.find('.primary-button button').props().disabled).to.be.equal(true);
     });
   });
 });
