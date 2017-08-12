@@ -24,8 +24,28 @@ describe('VotingHeader', () => {
         address: 'address 2',
       },
     ],
-    votedList: [],
-    unvotedList: [],
+    votedList: [
+      {
+        username: 'yashar',
+        address: 'address 1',
+        pending: true,
+      },
+      {
+        username: 'tom',
+        address: 'address 2',
+      },
+    ],
+    unvotedList: [
+      {
+        username: 'yashar',
+        address: 'address 1',
+      },
+      {
+        username: 'tom',
+        address: 'address 2',
+        pending: true,
+      },
+    ],
     setActiveDialog: () => {},
     addToUnvoted: sinon.spy(),
   };
