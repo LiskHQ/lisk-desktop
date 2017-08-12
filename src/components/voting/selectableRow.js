@@ -1,10 +1,10 @@
 import React from 'react';
 import Checkbox from 'react-toolbox/lib/checkbox';
 import { connect } from 'react-redux';
-import { addToVoteList, removeFromVoteList } from '../../actions/voting';
-import Snipper from '../spinner';
+import { addedToVoteList, removedFromVoteList } from '../../actions/voting';
+import Spinner from '../spinner';
 
-class selectableRow extends React.Component {
+export class SelectableRow extends React.Component {
   /**
    * change status of selected row
    * @param {integer} index - index of row that we want to change status of that
@@ -18,7 +18,7 @@ class selectableRow extends React.Component {
     }
   }
   render() {
-    const template = this.props.pending ? <Snipper /> :
+    const template = this.props.pending ? <Spinner /> :
       <Checkbox className={this.props.styles.field}
         checked={this.props.value}
         onChange={this.handleChange.bind(this, this.props.data)}
@@ -28,9 +28,9 @@ class selectableRow extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  addToVoteList: data => dispatch(addToVoteList(data)),
-  removeFromVoteList: data => dispatch(removeFromVoteList(data)),
+  addToVoteList: data => dispatch(addedToVoteList(data)),
+  removeFromVoteList: data => dispatch(removedFromVoteList(data)),
 });
 
-export default connect(null, mapDispatchToProps)(selectableRow);
+export default connect(null, mapDispatchToProps)(SelectableRow);
 
