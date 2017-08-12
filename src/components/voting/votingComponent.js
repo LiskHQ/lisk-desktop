@@ -10,7 +10,6 @@ import VotingHeaderWrapper from './votingHeaderWrapper';
 import VotingRow from './votingRow';
 
 // Create a new Table component injecting Head and Row
-// Feel free to inject default styles there, check index.js
 const Table = themr(TABLE, TableTheme)(tableFactory(TableHead, VotingRow));
 
 class VotingComponent extends React.Component {
