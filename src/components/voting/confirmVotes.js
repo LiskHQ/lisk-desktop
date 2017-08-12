@@ -5,18 +5,18 @@ import { Button } from 'react-toolbox/lib/button';
 import Input from 'react-toolbox/lib/input';
 import { vote } from '../../utils/api/delegate';
 import { alertDialogDisplayed } from '../../actions/dialog';
-import { clearVoteLists, pendingVotes } from '../../actions/voting';
+import { clearVoteLists, pendingVotesAdded } from '../../actions/voting';
 import InfoParagraph from '../infoParagraph';
 
 const delay = 10000;
-class ConfirmVotes extends React.Component {
+export class ConfirmVotes extends React.Component {
   constructor() {
     super();
     this.state = {
       secondSecret: '',
     };
   }
-  confrim() {
+  confirm() {
     const secondSecret = this.state.secondSecret.length === 0 ? null : this.state.secondSecret;
     const text = 'Your votes were successfully  submitted. It can take several seconds before they are processed.';
     vote(
@@ -27,7 +27,7 @@ class ConfirmVotes extends React.Component {
       this.props.unvotedList,
       secondSecret,
     ).then(() => {
-      this.props.pendingVotes();
+      this.props.pendingVotesAdded();
       setTimeout(() => {
         this.props.clearVoteLists();
       }, delay);
@@ -36,15 +36,14 @@ class ConfirmVotes extends React.Component {
         type: 'success',
         text,
       });
-    }); // this.props.clearVoteLists());
-    // this.props.closeDialog();
+    });
   }
   setSecondPass(name, value) {
     this.setState({ ...this.state, [name]: value });
   }
   render() {
     const secondPass = this.props.account.secondSignature === 0 ? null :
-      <Input type='text' label='Second Passphrase' name='secondSecret'
+      <Input type='text' label='Second Passphrase' name='secondSecret' className='secondSecret'
         value={this.state.secondSecret} onChange={this.setSecondPass.bind(this, 'secondSecret')}/>;
     return (
       <article>
@@ -66,11 +65,11 @@ class ConfirmVotes extends React.Component {
               className='cancel-button'
               onClick={this.props.closeDialog}
             />
-            <Button key={1} label='Confirm'
+            <Button key={1} label='Confirm' id="confirm"
               className='send-button'
               primary={true} raised={true}
               disabled={this.props.votedList.length === 0 && this.props.unvotedList.length === 0}
-              onClick={this.confrim.bind(this)}
+              onClick={this.confirm.bind(this)}
             />
           </footer>
       </article>
@@ -89,7 +88,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   showSuccessAlert: data => dispatch(alertDialogDisplayed(data)),
   clearVoteLists: () => dispatch(clearVoteLists()),
-  pendingVotes: () => dispatch(pendingVotes()),
+  pendingVotesAdded: () => dispatch(pendingVotesAdded()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConfirmVotes);
