@@ -79,6 +79,8 @@ Setup protractor
 
 Setup a lisk test node to run on localhost:4000 as described in https://github.com/LiskHQ/lisk#tests
 
+And run it with [pm2](http://pm2.keymetrics.io/).
+
 ### Run
 
 Start the development version of lisk-nano:
