@@ -31,6 +31,7 @@ export const SecondPassphrase = (props) => {
   return (
     !props.account.secondSignature ?
       <MenuItem caption="Register second passphrase"
+        className='register-second-passphrase'
         onClick={() => props.setActiveDialog({
           title: 'Register second passphrase',
           childComponent: Passphrase,
