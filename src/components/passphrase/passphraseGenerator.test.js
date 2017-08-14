@@ -2,7 +2,7 @@ import React from 'react';
 import chai, { expect } from 'chai';
 import { spy } from 'sinon';
 import sinonChai from 'sinon-chai';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import PassphraseGenerator from './passphraseGenerator';
 
 chai.use(sinonChai);

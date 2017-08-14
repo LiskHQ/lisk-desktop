@@ -5,8 +5,10 @@ import logo from '../../assets/images/LISK-nano.png';
 import styles from './header.css';
 import VerifyMessage from '../signVerify/verifyMessage';
 import SignMessage from '../signVerify/signMessage';
+import RegisterDelegate from '../registerDelegate';
 import Send from '../send';
 import PrivateWrapper from '../privateWrapper';
+import SecondPassphraseMenu from '../secondPassphrase';
 
 const HeaderElement = props => (
   <header className={styles.wrapper}>
@@ -19,8 +21,16 @@ const HeaderElement = props => (
         menuRipple
         theme={styles}
       >
-        <MenuItem caption="Register second passphrase" />
-        <MenuItem caption="Register as delegate" />
+        {
+          !props.account.isDelegate &&
+            <MenuItem caption="Register as delegate"
+            onClick={() => props.setActiveDialog({
+              title: 'Register as delegate',
+              childComponent: RegisterDelegate,
+            })}
+          />
+        }
+        <SecondPassphraseMenu />
         <MenuItem caption="Sign message"
           className='sign-message'
           onClick={() => props.setActiveDialog({

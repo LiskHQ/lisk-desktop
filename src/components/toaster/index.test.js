@@ -8,7 +8,6 @@ import store from '../../store';
 
 chai.use(sinonChai);
 
-
 describe('Toaster', () => {
   let wrapper;
 

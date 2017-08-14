@@ -1,9 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Button from 'react-toolbox/lib/button';
 import { fromRawLsk } from '../../utils/lsk';
 import styles from './pricedButton.css';
 
-const PricedButton = ({
+export const PricedButtonComponent = ({
   balance, fee, label, customClassName, onClick, disabled,
 }) => {
   const hasFunds = balance >= fee;
@@ -29,4 +30,8 @@ const PricedButton = ({
   );
 };
 
-export default PricedButton;
+const mapStateToProps = state => ({
+  balance: state.account.balance,
+});
+
+export default connect(mapStateToProps)(PricedButtonComponent);
