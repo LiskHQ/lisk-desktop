@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import sinonStubPromise from 'sinon-stub-promise';
-import VotingComponent from './votingComponent';
+import Voting from './voting';
 import store from '../../store';
 import * as delegateApi from '../../utils/api/delegate';
 
@@ -14,7 +14,7 @@ sinonStubPromise(sinon);
 chai.use(sinonChai);
 chai.use(chaiEnzyme());
 
-describe('VotingComponent', () => {
+describe('Voting', () => {
   let wrapper;
 
   const listAccountDelegatesMock = sinon.stub(delegateApi, 'listAccountDelegates');
@@ -37,9 +37,9 @@ describe('VotingComponent', () => {
     unvotedList: [],
   };
   beforeEach(() => {
-    sinon.spy(VotingComponent.prototype, 'loadVotedDelegates');
-    sinon.spy(VotingComponent.prototype, 'loadDelegates');
-    sinon.spy(VotingComponent.prototype, 'setStatus');
+    sinon.spy(Voting.prototype, 'loadVotedDelegates');
+    sinon.spy(Voting.prototype, 'loadDelegates');
+    sinon.spy(Voting.prototype, 'setStatus');
     listDelegatesMock = sinon.stub(delegateApi, 'listDelegates');
     listDelegatesMock.returnsPromise().resolves({
       delegates: [
@@ -52,7 +52,7 @@ describe('VotingComponent', () => {
       ],
       totalCount: 110,
     });
-    wrapper = mount(<VotingComponent {...props}></VotingComponent>,
+    wrapper = mount(<Voting {...props}></Voting>,
       {
         context: { store },
         childContextTypes: { store: PropTypes.object.isRequired },
@@ -61,17 +61,17 @@ describe('VotingComponent', () => {
   });
 
   afterEach(() => {
-    VotingComponent.prototype.loadVotedDelegates.restore();
-    VotingComponent.prototype.loadDelegates.restore();
-    VotingComponent.prototype.setStatus.restore();
+    Voting.prototype.loadVotedDelegates.restore();
+    Voting.prototype.loadDelegates.restore();
+    Voting.prototype.setStatus.restore();
     listDelegatesMock.restore();
   });
 
   it('should call "loadVotedDelegates" after component did mount', () => {
-    expect(VotingComponent.prototype.loadVotedDelegates).to.have.property('callCount', 1);
+    expect(Voting.prototype.loadVotedDelegates).to.have.property('callCount', 1);
     expect(wrapper.state('votedDelegates')).to.have.lengthOf(2);
-    expect(VotingComponent.prototype.loadDelegates).to.have.property('callCount', 1);
-    expect(VotingComponent.prototype.setStatus).to.have.property('callCount', 2);
+    expect(Voting.prototype.loadDelegates).to.have.property('callCount', 1);
+    expect(Voting.prototype.setStatus).to.have.property('callCount', 2);
   });
 
 
@@ -82,9 +82,9 @@ describe('VotingComponent', () => {
     // it should triger 'wrapper.loadDelegates' after 1 ms
     clock.tick(1);
 
-    expect(VotingComponent.prototype.loadVotedDelegates).to.have.property('callCount', 2);
+    expect(Voting.prototype.loadVotedDelegates).to.have.property('callCount', 2);
     clock.tick(10);
-    expect(VotingComponent.prototype.loadDelegates).to.have.property('callCount', 1);
+    expect(Voting.prototype.loadDelegates).to.have.property('callCount', 1);
   });
 
 
@@ -95,14 +95,14 @@ describe('VotingComponent', () => {
     // it should triger 'wrapper.loadDelegates' after 1 ms
     clock.tick(1);
 
-    expect(VotingComponent.prototype.loadVotedDelegates).to.have.property('callCount', 1);
+    expect(Voting.prototype.loadVotedDelegates).to.have.property('callCount', 1);
     clock.tick(10);
-    expect(VotingComponent.prototype.setStatus).to.have.property('callCount', 4);
+    expect(Voting.prototype.setStatus).to.have.property('callCount', 4);
   });
 
   it('should "loadMore" calls "loadDelegates" when state.loadMore is true', () => {
     wrapper.instance().loadMore();
-    expect(VotingComponent.prototype.loadDelegates).to.have.property('callCount', 2);
+    expect(Voting.prototype.loadDelegates).to.have.property('callCount', 2);
   });
 
   it('should "search" function call "loadDelegates"', () => {

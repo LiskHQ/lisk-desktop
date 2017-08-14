@@ -6,13 +6,13 @@ import { TableHead, TableCell } from 'react-toolbox/lib/table';
 import TableTheme from 'react-toolbox/lib/table/theme.css';
 import Waypoint from 'react-waypoint';
 import { listAccountDelegates, listDelegates } from '../../utils/api/delegate';
-import VotingHeaderWrapper from './votingHeaderWrapper';
+import Header from './votingHeaderWrapper';
 import VotingRow from './votingRow';
 
 // Create a new Table component injecting Head and Row
 const Table = themr(TABLE, TableTheme)(tableFactory(TableHead, VotingRow));
 
-class VotingComponent extends React.Component {
+class Voting extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -26,6 +26,7 @@ class VotingComponent extends React.Component {
     };
     this.query = '';
   }
+
   componentWillReceiveProps() {
     setTimeout(() => {
       if (this.props.refreshDelegates) {
@@ -38,9 +39,11 @@ class VotingComponent extends React.Component {
       }
     }, 1);
   }
+
   componentDidMount() {
     this.loadVotedDelegates();
   }
+
   loadVotedDelegates(refresh) {
     listAccountDelegates(this.props.activePeer, this.props.address).then((res) => {
       const votedDelegates = res.delegates
@@ -60,6 +63,7 @@ class VotingComponent extends React.Component {
       }
     });
   }
+
   /**
    * Fetches a list of delegates based on the given search phrase
    * @param {string} query - username of a delegate
@@ -76,6 +80,7 @@ class VotingComponent extends React.Component {
       this.loadDelegates(this.query);
     }, 1);
   }
+
   /**
    * Fetches a list of delegates
    *
@@ -86,9 +91,9 @@ class VotingComponent extends React.Component {
    */
   loadDelegates(search, limit = 100) {
     this.setState({ loadMore: false });
+
     listDelegates(
-      this.props.activePeer,
-      {
+      this.props.activePeer, {
         offset: this.state.offset,
         limit: limit.toString(),
         q: search,
@@ -105,6 +110,7 @@ class VotingComponent extends React.Component {
       });
     });
   }
+
   /**
    * Sets delegate.status to be always the same object for given delegate.address
    */
@@ -140,10 +146,11 @@ class VotingComponent extends React.Component {
       this.loadDelegates(this.query);
     }
   }
+
   render() {
     return (
       <div className="box noPaddingBox">
-        <VotingHeaderWrapper
+        <Header
           votedDelegates={this.state.votedDelegates}
           search={ value => this.search(value) }
         />
@@ -167,4 +174,4 @@ class VotingComponent extends React.Component {
   }
 }
 
-export default VotingComponent;
+export default Voting;
