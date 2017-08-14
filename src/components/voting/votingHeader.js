@@ -4,7 +4,7 @@ import { Button } from 'react-toolbox/lib/button';
 import { IconMenu, MenuItem } from 'react-toolbox/lib/menu';
 import Input from 'react-toolbox/lib/input';
 import styles from './voting.css';
-import ConfirmVotes from './confirmVotes';
+import Confirm from './confirmVotes';
 
 class VotingHeader extends React.Component {
   constructor() {
@@ -14,6 +14,7 @@ class VotingHeader extends React.Component {
       searchIcon: 'search',
     };
   }
+
   search(name, value) {
     const icon = value.length > 0 ? 'close' : 'search';
     this.setState({
@@ -22,23 +23,26 @@ class VotingHeader extends React.Component {
     });
     this.props.search(value);
   }
+
   clearSearch() {
     if (this.state.searchIcon === 'close') {
       this.search('query', '');
     }
   }
+
   confirmVoteText() {
-    let text = 'VOTE';
+    let info = 'VOTE';
     const voted = this.props.votedList.filter(item => !item.pending).length;
     const unvoted = this.props.unvotedList.filter(item => !item.pending).length;
     if (voted > 0 || unvoted > 0) {
       const seprator = (voted > 0 && unvoted > 0) ? ' / ' : ''; // eslint-disable-line
       const votedHtml = voted > 0 ? <span className={styles.voted}>+{voted}</span> : '';
       const unvotedHtml = unvoted > 0 ? <span className={styles.unvoted}>-{unvoted}</span> : '';
-      text = <span>VOTE ({votedHtml}{seprator}{unvotedHtml})</span>;
+      info = <span>VOTE ({votedHtml}{seprator}{unvotedHtml})</span>;
     }
-    return text;
+    return info;
   }
+
   render() {
     const button = <div className={styles.votesMenuButton}>
       <i className="material-icons">visibility</i>
@@ -69,7 +73,10 @@ class VotingHeader extends React.Component {
           <Button icon='done' flat
             onClick={() => this.props.setActiveDialog({
               title: 'Verify Vote for delegates',
-              childComponent: ConfirmVotes,
+              childComponent: Confirm,
+              childComponentProps: {
+                addTransaction: this.props.addTransaction,
+              },
             })}
             label={this.confirmVoteText()} />
         </div>

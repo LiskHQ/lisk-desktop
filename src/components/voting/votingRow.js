@@ -1,35 +1,34 @@
 import React from 'react';
 import { TableRow, TableCell } from 'react-toolbox/lib/table';
 import styles from './voting.css';
-import SelectableRow from './selectableRow';
+import Checkbox from './voteCheckbox';
 
-const setRowClass = (item) => {
-  let className = '';
-  if (item.pending) {
-    className = styles.pendingRow;
-  } else if (item.selected && item.voted) {
-    className = styles.votedRow;
-  } else if (!item.selected && item.voted) {
-    className = styles.downVoteRow;
-  } else if (item.selected && !item.voted) {
-    className = styles.upVoteRow;
+const setRowClass = ({ pending, selected, voted }) => {
+  if (pending) {
+    return styles.pendingRow;
+  } else if (selected) {
+    return voted ? styles.votedRow : styles.upVoteRow;
   }
-  return className;
+  return voted ? styles.downVoteRow : '';
 };
-const VotingRow = props => (<TableRow {...props} className={`${styles.row} ${setRowClass(props.data)}`}>
-    <TableCell>
-      <SelectableRow styles={styles}
-        value={props.data.selected}
-        pending={props.data.pending}
-        data={props.data}
-      />
-    </TableCell>
-    <TableCell>{props.data.rank}</TableCell>
-    <TableCell>{props.data.username}</TableCell>
-    <TableCell>{props.data.address}</TableCell>
-    <TableCell>{props.data.productivity} %</TableCell>
-    <TableCell>{props.data.approval} %</TableCell>
-  </TableRow>
-);
+
+const VotingRow = (props) => {
+  const { data } = props;
+  return (<TableRow {...props} className={`${styles.row} ${setRowClass(data)}`}>
+      <TableCell>
+        <Checkbox styles={styles}
+          value={data.selected}
+          pending={data.pending}
+          data={data}
+        />
+      </TableCell>
+      <TableCell>{data.rank}</TableCell>
+      <TableCell>{data.username}</TableCell>
+      <TableCell>{data.address}</TableCell>
+      <TableCell>{data.productivity} %</TableCell>
+      <TableCell>{data.approval} %</TableCell>
+    </TableRow>
+  );
+};
 
 export default VotingRow;
