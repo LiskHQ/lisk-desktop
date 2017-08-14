@@ -74,4 +74,13 @@ describe('LoginForm', () => {
       expect(data).to.deep.equal(undefined);
     });
   });
+
+  describe('setActiveDialog', () => {
+    it('should return a dispatch object', () => {
+      const mountedAccount = mount(<Router><LoginForm/></Router>, options);
+      const props = mountedAccount.find(LoginFormComponent).props();
+      const data = props.setActiveDialog({});
+      expect(data).to.deep.equal(undefined);
+    });
+  });
 });
