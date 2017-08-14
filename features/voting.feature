@@ -1,15 +1,14 @@
 Feature: Voting tab
-  @ignore
   Scenario: should allow to view delegates
     Given I'm logged in as "any account"
     When I click tab number 2
-    Then I should see table with 20 lines
+    Then I should see table with 100 lines
 
   @ignore
   Scenario: should allow to view delegates with cold account
     Given I'm logged in as "empty account"
     When I click tab number 2
-    Then I should see table with 20 lines
+    Then I should see table with 100 lines
 
   @ignore
   Scenario: should allow to search delegates
@@ -18,15 +17,13 @@ Feature: Voting tab
     And I fill in "genesis_42" to "search" field
     Then I should see table with 1 lines
 
-  @ignore
   Scenario: search delegates should provide "no results" message
     Given I'm logged in as "any account"
     When I click tab number 2
     And I fill in "doesntexist" to "search" field
-    Then I should see table with 1 lines
+    Then I should see table with 0 lines
     And I should see text "No delegates found" in "empty message" element
 
-  @ignore
   Scenario: should allow to view my votes
     Given I'm logged in as "genesis"
     When I click tab number 2
@@ -42,7 +39,6 @@ Feature: Voting tab
     Then I should see "Not enough LSK to pay 1 LSK fee" error message
     And "submit button" should be disabled
 
-  @ignore
   Scenario: should allow to select delegates in the "Voting" tab and vote for them
     Given I'm logged in as "delegate candidate"
     When I click tab number 2
@@ -53,7 +49,6 @@ Feature: Voting tab
     And I click "submit button"
     Then I should see alert dialog with title "Success" and text "Your votes were successfully submitted. It can take several seconds before they are processed."
 
-  @ignore
   Scenario: should allow to vote with second passphrase account
     Given I'm logged in as "second passphrase account"
     When I click tab number 2
@@ -74,7 +69,6 @@ Feature: Voting tab
     And I click "submit button"
     Then I should see alert dialog with title "Success" and text "Your votes were successfully submitted. It can take several seconds before they are processed."
 
-  @ignore
   Scenario: should allow to remove votes form delegates
     Given I'm logged in as "genesis"
     When I click tab number 2
@@ -84,7 +78,6 @@ Feature: Voting tab
     And I click "submit button"
     Then I should see alert dialog with title "Success" and text "Your votes were successfully submitted. It can take several seconds before they are processed."
 
-  @ignore
   Scenario: should allow to exit vote dialog
     Given I'm logged in as "genesis"
     When I click tab number 2
