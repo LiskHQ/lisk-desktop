@@ -2,6 +2,7 @@ import { getAccountStatus, getAccount, transactions } from '../../utils/api/acco
 import { accountUpdated } from '../../actions/account';
 import { transactionsUpdated } from '../../actions/transactions';
 import { activePeerUpdate } from '../../actions/peers';
+import actionsType from '../../constants/actions';
 
 const updateAccountData = next => (store) => { // eslint-disable-line
   const { peers, account } = store.getState();
@@ -21,11 +22,12 @@ const updateAccountData = next => (store) => { // eslint-disable-line
     });
   }
 };
+
 const accountMiddleware = store => next => (action) => {
   next(action);
   const update = updateAccountData(next);
   switch (action.type) {
-    case 'BEAT':
+    case actionsType.metronomeBeat:
       update(store);
       break;
     default: break;

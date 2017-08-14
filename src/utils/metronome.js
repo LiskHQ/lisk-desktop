@@ -1,6 +1,7 @@
 // import { ipcMain as ipc, BrowserWindow } from 'electron';
 import { SYNC_ACTIVE_INTERVAL, SYNC_INACTIVE_INTERVAL } from '../constants/api';
 import env from '../constants/env';
+import actionsType from '../constants/actions';
 
 class Metronome {
   constructor(dispatchFn) {
@@ -22,12 +23,8 @@ class Metronome {
    */
   _dispatch(lastBeat, now, factor) {
     this.dispatchFn({
-      type: 'BEAT',
-      data: {
-        lastBeat,
-        now,
-        factor,
-      },
+      type: actionsType.metronomeBeat,
+      data: { lastBeat, now, factor },
     });
   }
 
