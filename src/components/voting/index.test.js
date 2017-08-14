@@ -13,6 +13,6 @@ describe('Voting', () => {
   });
 
   it('should render VotingComponent', () => {
-    expect(wrapper.find('VotingComponent')).to.have.lengthOf(1);
+    expect(wrapper.find('Voting')).to.have.lengthOf(1);
   });
 });

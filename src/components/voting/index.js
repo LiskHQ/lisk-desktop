@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import VotingComponent from './votingComponent';
+import Voting from './voting';
 
 const mapStateToProps = state => ({
   address: state.account.address,
@@ -9,4 +9,4 @@ const mapStateToProps = state => ({
   refreshDelegates: state.voting.refresh,
 });
 
-export default connect(mapStateToProps)(VotingComponent);
+export default connect(mapStateToProps)(Voting);
