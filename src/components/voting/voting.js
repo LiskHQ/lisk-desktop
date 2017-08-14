@@ -106,7 +106,7 @@ class Voting extends React.Component {
         offset: this.state.offset + delegatesList.length,
         length: parseInt(res.totalCount, 10),
         loadMore: true,
-        notFound: delegatesList.length > 0 ? '' : <div className="hasPaddingRow">No delegates found</div>,
+        notFound: delegatesList.length > 0 ? '' : <div className="hasPaddingRow empty-message">No delegates found</div>,
       });
     });
   }
