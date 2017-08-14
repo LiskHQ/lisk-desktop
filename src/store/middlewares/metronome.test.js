@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { spy, stub } from 'sinon';
 import middleware from './metronome';
+import actionTypes from '../../constants/actions';
 import * as MetronomeService from '../../utils/metronome';
 
 describe('Metronome middleware', () => {
@@ -24,6 +25,12 @@ describe('Metronome middleware', () => {
   it('should call Metronome init method', () => {
     const spyFn = spy(MetronomeService.default.prototype, 'init');
     middleware(store);
+    expect(spyFn).to.have.been.calledWith();
+  });
+
+  it(`should call metronome.terminate on ${actionTypes.accountLoggedOut} action`, () => {
+    const spyFn = spy(MetronomeService.default.prototype, 'terminate');
+    middleware(store)(next)({ type: actionTypes.accountLoggedOut });
     expect(spyFn).to.have.been.calledWith();
   });
 

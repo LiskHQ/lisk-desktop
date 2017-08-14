@@ -6,6 +6,7 @@ import actionsType from '../../constants/actions';
 
 const updateAccountData = next => (store) => { // eslint-disable-line
   const { peers, account } = store.getState();
+  // TODO remove if statement when the beat event wiil be launched after loged in
   if (peers.data && account) {
     getAccount(peers.data, account.address).then((result) => {
       if (result.balance !== account.balance) {
