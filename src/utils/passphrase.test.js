@@ -1,12 +1,8 @@
-import chai, { expect } from 'chai';
-import { spy } from 'sinon';
-import sinonChai from 'sinon-chai';
-import { generateSeed, generatePassphrase } from './passphrase';
+import { expect } from 'chai';
+import { generateSeed, generatePassphrase, isValidPassphrase } from './passphrase';
 
 if (global._bitcore) delete global._bitcore;
 const mnemonic = require('bitcore-mnemonic');
-
-chai.use(sinonChai);
 
 const randoms = [
   0.35125316992864564, 0.6836880327771695, 0.05720201294124072, 0.7136064360838184,
@@ -120,6 +116,18 @@ describe('Passphrase', () => {
     it('generates a valid random passphrase from a given seed', () => {
       const passphrase = generatePassphrase({ seed });
       expect(mnemonic.isValid(passphrase)).to.be.equal(true);
+    });
+  });
+
+  describe('isValidPassphrase', () => {
+    it('recognises a valid passphrase', () => {
+      const passphrase = 'wagon stock borrow episode laundry kitten salute link globe zero feed marble';
+      expect(isValidPassphrase(passphrase)).to.be.equal(true);
+    });
+
+    it('recognises an invalid passphrase', () => {
+      const passphrase = 'stock borrow episode laundry kitten salute link globe zero feed marble';
+      expect(isValidPassphrase(passphrase)).to.be.equal(false);
     });
   });
 });

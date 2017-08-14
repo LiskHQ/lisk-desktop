@@ -1,5 +1,5 @@
 .wrapper{
-    margin-top: 5px;
+    margin: 5px -8px 16px 0;
     padding: 8px;
 }
 .logo{
@@ -18,5 +18,5 @@
 }
 
 .menu {
-    right: -16px !important;
+    right: -8px !important;
 }
