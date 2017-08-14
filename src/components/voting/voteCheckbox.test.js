@@ -4,13 +4,13 @@ import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
-import SelectableRowContainer, { SelectableRow } from './selectableRow';
+import Checkbox, { VoteCheckbox } from './voteCheckbox';
 import styles from './voting.css';
 
 chai.use(sinonChai);
 const mockStore = configureStore();
 
-describe('SelectableRowContainer', () => {
+describe('Checkbox', () => {
   const props = {
     store: mockStore({ runtime: {} }),
     data: {
@@ -24,16 +24,16 @@ describe('SelectableRowContainer', () => {
     removeFromVoteList: () => true,
   };
   it('it should expose onAccountUpdated as function', () => {
-    const wrapper = mount(<SelectableRowContainer {...props} />);
+    const wrapper = mount(<Checkbox {...props} />);
     expect(typeof wrapper.props().addToVoteList).to.equal('function');
   });
 
   it('it should expose removeFromVoteList as function', () => {
-    const wrapper = mount(<SelectableRowContainer {...props} />);
+    const wrapper = mount(<Checkbox {...props} />);
     expect(typeof wrapper.props().removeFromVoteList).to.equal('function');
   });
 });
-describe('SelectableRow', () => {
+describe('VoteCheckbox', () => {
   let wrapper;
   const props = {
     store: mockStore({ runtime: {} }),
@@ -49,7 +49,7 @@ describe('SelectableRow', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<SelectableRow {...props} />);
+    wrapper = mount(<VoteCheckbox {...props} />);
   });
 
   it('should render a Spinner When pending is true', () => {
@@ -62,12 +62,12 @@ describe('SelectableRow', () => {
   });
 
   it('should Checkbox change event should call this.props.addToVoteList when value is true', () => {
-    wrapper.instance().handleChange(props.data, true);
+    wrapper.instance().toggle(props.data, true);
     expect(props.addToVoteList).to.have.been.calledWith(props.data);
   });
 
   it('should Checkbox change event should call this.props.removeFromVoteList when value is false', () => {
-    wrapper.instance().handleChange(props.data, false);
+    wrapper.instance().toggle(props.data, false);
     expect(props.removeFromVoteList).to.have.been.calledWith(props.data);
   });
 });

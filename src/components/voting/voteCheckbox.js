@@ -4,24 +4,27 @@ import { connect } from 'react-redux';
 import { addedToVoteList, removedFromVoteList } from '../../actions/voting';
 import Spinner from '../spinner';
 
-export class SelectableRow extends React.Component {
+export class VoteCheckbox extends React.Component {
   /**
    * change status of selected row
-   * @param {integer} index - index of row that we want to change status of that
-   * @param {boolian} value - value of checkbox
+   * @param {Number} index - index of row that we want to change status of that
+   * @param {Boolean} value - value of checkbox
    */
-  handleChange(delegate, value) {
+  toggle(delegate, value) {
     if (value) {
       this.props.addToVoteList(delegate);
-    } else if (!value) {
+    } else {
       this.props.removeFromVoteList(delegate);
     }
   }
+
   render() {
-    const template = this.props.pending ? <Spinner /> :
-      <Checkbox className={this.props.styles.field}
+    const template = this.props.pending ?
+      <Spinner /> :
+      <Checkbox
+        className={this.props.styles.field}
         checked={this.props.value}
-        onChange={this.handleChange.bind(this, this.props.data)}
+        onChange={this.toggle.bind(this, this.props.data)}
       />;
     return template;
   }
@@ -32,5 +35,5 @@ const mapDispatchToProps = dispatch => ({
   removeFromVoteList: data => dispatch(removedFromVoteList(data)),
 });
 
-export default connect(null, mapDispatchToProps)(SelectableRow);
+export default connect(null, mapDispatchToProps)(VoteCheckbox);
 
