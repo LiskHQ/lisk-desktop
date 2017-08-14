@@ -26,7 +26,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     const selectorClass = `.${fieldName.replace(/ /g, '-')}`;
     const secondPassphrase = accounts[accountName].secondPassphrase;
     browser.sleep(500);
-    waitForElemAndSendKeys(`input${selectorClass}, textarea${selectorClass}`, secondPassphrase, callback);
+    waitForElemAndSendKeys(`${selectorClass} input, ${selectorClass} textarea`, secondPassphrase, callback);
   });
 
 
@@ -81,6 +81,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   });
 
   Then('I should see "{text}" error message', (text, callback) => {
+    browser.sleep(500);
     waitForElemAndCheckItsText('.error-message, .theme__error___2k5Jz', text, callback);
   });
 
