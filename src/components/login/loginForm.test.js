@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { BrowserRouter as Router } from 'react-router-dom';
-import Lisk from 'lisk-js';
 import LoginForm from './loginForm';
 import LoginFormComponent from './loginFormComponent';
 
@@ -34,9 +33,7 @@ describe('LoginForm', () => {
       peers,
       account,
     }),
-    activePeerSet: (network) => {
-      store.peers.data = Lisk.api(network);
-    },
+    activePeerSet: () => {},
   };
   const options = {
     context: { store },
@@ -46,6 +43,7 @@ describe('LoginForm', () => {
   it('should mount LoginFormComponent with appropriate properties', () => {
     const mountedAccount = mount(<Router><LoginForm/></Router>, options);
     const props = mountedAccount.find(LoginFormComponent).props();
+    console.log( Object.keys(props) )
     expect(props.peers).to.be.equal(peers);
     expect(props.account).to.be.equal(account);
     expect(typeof props.activePeerSet).to.be.equal('function');
