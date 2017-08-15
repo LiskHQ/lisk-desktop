@@ -85,7 +85,7 @@ class LoginFormComponent extends React.Component {
     }
 
     // set active peer
-    this.props.setActivePeer({
+    this.props.activePeerSet({
       passphrase,
       network,
     });

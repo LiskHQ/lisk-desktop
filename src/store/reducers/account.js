@@ -54,6 +54,7 @@ const merge = (account, info) => {
 const account = (state = {}, action) => {
   switch (action.type) {
     case actionTypes.accountUpdated:
+    case actionTypes.accountLoggedIn:
       return merge(state, action.data);
     case actionTypes.accountLoggedOut:
       return {};

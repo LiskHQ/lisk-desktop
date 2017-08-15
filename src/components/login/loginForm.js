@@ -13,7 +13,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setActivePeer: network => dispatch(activePeerSet(network)),
+  activePeerSet: network => dispatch(activePeerSet(network)),
   setActiveDialog: data => dispatch(dialogDisplayed(data)),
 });
 

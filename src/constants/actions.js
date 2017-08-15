@@ -2,7 +2,7 @@ const actionTypes = {
   metronomeBeat: 'METRONOME_BEAT',
   accountUpdated: 'ACCOUNT_UPDATED',
   accountLoggedOut: 'ACCOUNT_LOGGED_OUT',
-  accountLogin: 'ACCOUNT_LOGIN',
+  accountLoggedIn: 'ACCOUNT_LOGGED_IN',
   activePeerSet: 'ACTIVE_PEER_SET',
   activePeerUpdate: 'ACTIVE_PEER_UPDATE',
   activePeerReset: 'ACTIVE_PEER_RESET',

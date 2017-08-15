@@ -22,6 +22,6 @@ export const accountLoggedOut = () => ({
  *
  */
 export const accountLoggedIn = data => ({
-  type: actionTypes.accountLogin,
+  type: actionTypes.accountLoggedIn,
   data,
 });
