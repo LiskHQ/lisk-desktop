@@ -57,5 +57,4 @@ describe('SecondPassphraseInput', () => {
     wrapper.find('.second-passphrase input').simulate('change', { target: { value: 'test' } });
     expect(props.onError).to.have.been.calledWith('Invalid passphrase', 'test');
   });
-
 });

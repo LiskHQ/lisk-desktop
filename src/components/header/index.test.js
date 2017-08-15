@@ -34,5 +34,3 @@ describe('Header', () => {
     actionsSpy.restore();
   });
 });
-
-

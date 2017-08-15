@@ -39,7 +39,7 @@ describe('AccountComponent', () => {
     };
   });
 
-  it(' should render 3 article tags', () => {
+  it('should render 3 article tags', () => {
     const wrapper = shallow(<AccountComponent {...props} />);
     expect(wrapper.find('article')).to.have.lengthOf(3);
   });
@@ -62,7 +62,7 @@ describe('AccountComponent', () => {
     let accountApiMock;
 
     beforeEach(() => {
-       accountApiMock = mock(accountApi);
+      accountApiMock = mock(accountApi);
     });
 
     afterEach(() => {
@@ -77,14 +77,14 @@ describe('AccountComponent', () => {
 
     it('calls props.onActivePeerUpdated', () => {
       accountApiMock.expects('getAccountStatus').resolves({ success: true });
-      const wrapper = mount(<Provider store={store}><AccountComponent {...props} /></Provider>);
+      mount(<Provider store={store}><AccountComponent {...props} /></Provider>);
       // TODO: this doesn't work for some reason
       // expect(props.onActivePeerUpdated).to.have.been.calledWith();
     });
 
     it('calls props.onAccountUpdated', () => {
       accountApiMock.expects('getAccount').resolves({ balance: props.account.balance });
-      const wrapper = mount(<Provider store={store}><AccountComponent {...props} /></Provider>);
+      mount(<Provider store={store}><AccountComponent {...props} /></Provider>);
       // TODO: this doesn't work for some reason
       // expect(props.onAccountUpdated).to.have.been.calledWith();
     });
@@ -92,7 +92,7 @@ describe('AccountComponent', () => {
     it('calls props.onTransactionsUpdated if getAccount returns different balance', () => {
       accountApiMock.expects('transactions').resolves({ transactions: [{}] });
       accountApiMock.expects('getAccount').resolves({ balance: props.account.balance + 1 });
-      const wrapper = mount(<Provider store={store}><AccountComponent {...props} /></Provider>);
+      mount(<Provider store={store}><AccountComponent {...props} /></Provider>);
       // TODO: this doesn't work for some reason
       // expect(props.onAccountUpdated).to.have.been.calledWith();
     });
