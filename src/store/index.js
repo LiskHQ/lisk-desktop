@@ -1,9 +1,9 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import * as reducers from './reducers';
+import middleWares from './middlewares';
 import env from '../constants/env';
 
 // Create Logger if not in production mode
-const middleWares = [];
 if (env.development) {
   const { logger } = require('redux-logger');
   middleWares.push(logger);

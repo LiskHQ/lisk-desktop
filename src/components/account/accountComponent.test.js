@@ -53,20 +53,4 @@ describe('AccountComponent', () => {
     </Provider>);
     expect(wrapper.find('.balance').find(ClickToSend)).to.have.lengthOf(1);
   });
-
-  describe('componentDidMount', () => {
-    it('should be called once', () => {
-      const actionSpy = spy(AccountComponent.prototype, 'componentDidMount');
-      mount(<Provider store={store}><AccountComponent account={testAccount} peers={peers}
-        onActivePeerUpdated={onActivePeerUpdated} /></Provider>);
-      expect(actionSpy).to.have.been.calledWith();
-    });
-
-    it('binds listener to beat event', () => {
-      const actionSpy = spy(document, 'addEventListener');
-      mount(<Provider store={store}><AccountComponent account={testAccount} peers={peers}
-        onActivePeerUpdated={onActivePeerUpdated} /></Provider>);
-      expect(actionSpy).to.have.been.calledWith();
-    });
-  });
 });

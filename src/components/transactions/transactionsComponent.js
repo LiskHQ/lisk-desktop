@@ -4,6 +4,7 @@ import tableStyle from 'react-toolbox/lib/table/theme.css';
 import { transactions } from '../../utils/api/account';
 import TransactionsHeader from './transactionsHeader';
 import TransactionRow from './transactionRow';
+import styles from './transactions.css';
 
 class Transactions extends React.Component {
   constructor() {
@@ -25,8 +26,9 @@ class Transactions extends React.Component {
 
   render() {
     return (
-      <div className='box'>
-        <table className={tableStyle.table}>
+      <div className='box noPaddingBox'>
+        {this.props.transactions.length > 0 ?
+          <table className={tableStyle.table}>
           <TransactionsHeader tableStyle={tableStyle}></TransactionsHeader>
           <tbody>
             {this.props.transactions.map(transaction => (
@@ -37,7 +39,9 @@ class Transactions extends React.Component {
               </TransactionRow>
             ))}
           </tbody>
-        </table>
+        </table> :
+          <p className={`${styles.empty} hasPaddingRow`}>No transactions</p>
+        }
         <Waypoint onEnter={() => { this.loadMore(); } }></Waypoint>
       </div>
     );
