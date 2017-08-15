@@ -1,6 +1,6 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const { defineSupportCode } = require('cucumber');
 const { waitForElemAndClickIt } = require('../support/util.js');
-
 
 defineSupportCode(({ When }) => {
   When('I click "{elementName}" element on table row no. {index}', (elementName, index, callback) => {
