@@ -8,9 +8,10 @@ chai.use(sinonChai);
 
 describe('Metronome', () => {
   let metronome;
+  const spyDispatch = spy();
 
   beforeEach(() => {
-    metronome = new Metronome();
+    metronome = new Metronome(spyDispatch);
   });
 
   afterEach(() => {
@@ -21,6 +22,7 @@ describe('Metronome', () => {
     expect(metronome.interval).to.be.equal(SYNC_ACTIVE_INTERVAL);
     expect(metronome.running).to.be.equal(false);
     expect(metronome.factor).to.be.equal(0);
+    expect(metronome.dispatchFn).to.be.equal(spyDispatch);
   });
 
   describe('init', () => {
@@ -41,9 +43,8 @@ describe('Metronome', () => {
 
   describe('_dispatch', () => {
     it('should dispatch a Vanilla JS event', () => {
-      const dispatchSpy = spy(document, 'dispatchEvent');
-      Metronome._dispatch();
-      expect(dispatchSpy).to.have.been.calledWith();
+      metronome._dispatch();
+      expect(spyDispatch).to.have.been.calledWith();
     });
   });
 
@@ -76,14 +77,14 @@ describe('Metronome', () => {
     });
 
     it('should call _dispatch if lastBeat is older that 10sec', () => {
-      const reqSpy = spy(Metronome, '_dispatch');
+      const reqSpy = spy(metronome, '_dispatch');
       metronome.running = true;
 
       const now = new Date();
       metronome.lastBeat = now - 20000;
       metronome._step();
       expect(reqSpy).to.have.been.calledWith();
-      Metronome._dispatch.restore();
+      metronome._dispatch.restore();
     });
   });
 });
