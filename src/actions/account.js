@@ -16,3 +16,12 @@ export const accountUpdated = data => ({
 export const accountLoggedOut = () => ({
   type: actionTypes.accountLoggedOut,
 });
+
+/**
+ *
+ *
+ */
+export const accountLoggedIn = data => ({
+  type: actionTypes.accountLogin,
+  data,
+});

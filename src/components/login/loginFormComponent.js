@@ -79,28 +79,12 @@ class LoginFormComponent extends React.Component {
     if (this.state.network === 2) {
       network.address = this.state.address;
     }
+
     // set active peer
-    this.props.activePeerSet(network);
-
-    setTimeout(() => {
-      // get account info
-      const accountBasics = {
-        passphrase,
-        publicKey: extractPublicKey(passphrase),
-        address: extractAddress(passphrase),
-      };
-
-      // redirect to main/transactions
-      getAccount(this.props.peers.data, accountBasics.address).then((accountData) => {
-        getDelegate(this.props.peers.data, accountBasics.publicKey).then((delegateData) => {
-          this.login(Object.assign({}, accountData, accountBasics,
-            { delegate: delegateData.delegate, isDelegate: true }));
-        }).catch(() => {
-          this.login(Object.assign({}, accountData, accountBasics,
-            { delegate: {}, isDelegate: false }));
-        });
-      });
-    }, 5);
+    this.props.setActivePeer({
+      passphrase,
+      network,
+    });
   }
 
   login(accountInfo) {
