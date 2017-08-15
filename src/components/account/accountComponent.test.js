@@ -1,10 +1,9 @@
 import React from 'react';
 import chai, { expect } from 'chai';
-import sinon, { spy, mock } from 'sinon';
+import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import { shallow, mount } from 'enzyme';
 import { Provider } from 'react-redux';
-import * as accountApi from '../../utils/api/account';
 import store from '../../store';
 import AccountComponent from './accountComponent';
 import ClickToSend from '../send/clickToSend';
