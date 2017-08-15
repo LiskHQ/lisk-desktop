@@ -12,6 +12,14 @@ describe('TransactionsConnected', () => {
   let wrapper;
 
   beforeEach(() => {
+    store.getState = () => ({
+      peers: {},
+      transactions: {
+        pending: [],
+        confirmed: [],
+      },
+      account: {},
+    });
     wrapper = mount(<Provider store={store}><TransactionsConnected /></Provider>);
   });
 

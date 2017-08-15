@@ -13,6 +13,10 @@ describe('Send Container', () => {
   let wrapper;
 
   beforeEach(() => {
+    store.getState = () => ({
+      peers: {},
+      account: {},
+    });
     wrapper = mount(<Provider store={store}><SendContainer /></Provider>);
   });
 
