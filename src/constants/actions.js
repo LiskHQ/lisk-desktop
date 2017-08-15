@@ -1,4 +1,5 @@
 const actionTypes = {
+  metronomeBeat: 'METRONOME_BEAT',
   accountUpdated: 'ACCOUNT_UPDATED',
   accountLoggedOut: 'ACCOUNT_LOGGED_OUT',
   activePeerSet: 'ACTIVE_PEER_SET',

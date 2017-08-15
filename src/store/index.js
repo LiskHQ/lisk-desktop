@@ -1,9 +1,9 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import * as reducers from './reducers';
+import middleWares from './middlewares';
 import env from '../constants/env';
 
 // Create Logger if not in production mode
-const middleWares = [];
 // ignore this in coverage as it is hard to test and does not run in production
 /* istanbul ignore if */
 if (env.development) {

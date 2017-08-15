@@ -1,13 +1,15 @@
 // import { ipcMain as ipc, BrowserWindow } from 'electron';
 import { SYNC_ACTIVE_INTERVAL, SYNC_INACTIVE_INTERVAL } from '../constants/api';
 import env from '../constants/env';
+import actionsType from '../constants/actions';
 
 class Metronome {
-  constructor() {
+  constructor(dispatchFn) {
     this.interval = SYNC_ACTIVE_INTERVAL;
     this.lastBeat = new Date();
     this.factor = 0;
     this.running = false;
+    this.dispatchFn = dispatchFn;
   }
 
   /**
@@ -19,13 +21,11 @@ class Metronome {
    * @memberOf Metronome
    * @private
    */
-  static _dispatch(lastBeat, now, factor) {
-    const ev = new Event('beat', {
-      factor,
-      lastBeat,
-      now,
+  _dispatch(lastBeat, now, factor) {
+    this.dispatchFn({
+      type: actionsType.metronomeBeat,
+      data: { lastBeat, now, factor },
     });
-    document.dispatchEvent(ev);
   }
 
    /**
@@ -39,7 +39,7 @@ class Metronome {
   _step() {
     const now = new Date();
     if (now - this.lastBeat >= this.interval) {
-      Metronome._dispatch(this.lastBeat, now, this.factor);
+      this._dispatch(this.lastBeat, now, this.factor);
       this.lastBeat = now;
       this.factor += this.factor < 9 ? 1 : -9;
     }

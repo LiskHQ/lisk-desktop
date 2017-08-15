@@ -57,44 +57,4 @@ describe('AccountComponent', () => {
     </Provider>);
     expect(wrapper.find('.balance').find(ClickToSend)).to.have.lengthOf(1);
   });
-
-  describe('componentDidMount', () => {
-    let accountApiMock;
-
-    beforeEach(() => {
-      accountApiMock = mock(accountApi);
-    });
-
-    afterEach(() => {
-      accountApiMock.restore();
-    });
-
-    it('binds listener to beat event', () => {
-      const actionSpy = spy(document, 'addEventListener');
-      mount(<Provider store={store}><AccountComponent {...props} /></Provider>);
-      expect(actionSpy).to.have.been.calledWith();
-    });
-
-    it('calls props.onActivePeerUpdated', () => {
-      accountApiMock.expects('getAccountStatus').resolves({ success: true });
-      mount(<Provider store={store}><AccountComponent {...props} /></Provider>);
-      // TODO: this doesn't work for some reason
-      // expect(props.onActivePeerUpdated).to.have.been.calledWith();
-    });
-
-    it('calls props.onAccountUpdated', () => {
-      accountApiMock.expects('getAccount').resolves({ balance: props.account.balance });
-      mount(<Provider store={store}><AccountComponent {...props} /></Provider>);
-      // TODO: this doesn't work for some reason
-      // expect(props.onAccountUpdated).to.have.been.calledWith();
-    });
-
-    it('calls props.onTransactionsUpdated if getAccount returns different balance', () => {
-      accountApiMock.expects('transactions').resolves({ transactions: [{}] });
-      accountApiMock.expects('getAccount').resolves({ balance: props.account.balance + 1 });
-      mount(<Provider store={store}><AccountComponent {...props} /></Provider>);
-      // TODO: this doesn't work for some reason
-      // expect(props.onAccountUpdated).to.have.been.calledWith();
-    });
-  });
 });

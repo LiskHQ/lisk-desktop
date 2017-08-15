@@ -3,7 +3,6 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './account.css';
 import Address from './address';
 import LiskAmount from '../liskAmount';
-import { getAccountStatus, getAccount, transactions } from '../../utils/api/account';
 import ClickToSend from '../send/clickToSend';
 import { toRawLsk } from '../../utils/lsk';
 
@@ -13,39 +12,6 @@ import { toRawLsk } from '../../utils/lsk';
  * @param {object} props - include properties of component
  */
 class AccountComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.update = this.update.bind(this);
-  }
-  componentDidMount() {
-    this.update();
-    document.addEventListener('beat', this.update);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('beat', this.update);
-  }
-
-  update() {
-    getAccount(this.props.peers.data, this.props.account.address).then((result) => {
-      if (result.balance !== this.props.account.balance) {
-        const maxBlockSize = 25;
-        transactions(this.props.peers.data, this.props.account.address, maxBlockSize)
-        .then((res) => {
-          this.props.onTransactionsUpdated(res.transactions);
-        });
-      }
-      this.props.onAccountUpdated(result);
-    });
-
-    const { onActivePeerUpdated } = this.props;
-    return getAccountStatus(this.props.peers.data).then(() => {
-      onActivePeerUpdated({ online: true });
-    }).catch(() => {
-      onActivePeerUpdated({ online: false });
-    });
-  }
-
   render() {
     const status = (this.props.peers.status && this.props.peers.status.online) ?
       <i className="material-icons online">check</i>
