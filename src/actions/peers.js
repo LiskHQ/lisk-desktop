@@ -4,8 +4,9 @@ import actionTypes from '../constants/actions';
 /**
  * Returns required action object to set
  * the given peer data as active peer
+ * This should be called once in login page
  *
- * @param {Object} data - Active peer data
+ * @param {Object} data - Active peer data and the passphrase of account
  * @returns {Object} Action object
  */
 export const activePeerSet = (data) => {

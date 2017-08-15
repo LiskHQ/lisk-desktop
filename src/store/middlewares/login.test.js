@@ -5,6 +5,7 @@ import sinonStubPromise from 'sinon-stub-promise';
 import middleware from './login';
 import actionTypes from '../../constants/actions';
 import * as accountApi from '../../utils/api/account';
+import * as delegateApi from '../../utils/api/delegate';
 
 sinonStubPromise(sinon);
 
@@ -30,6 +31,12 @@ describe('Login middleware', () => {
   beforeEach(() => {
     next = spy();
     store = stub();
+    store.getState = () => ({
+      peers: {
+        data: {},
+      },
+      account: {},
+    });
     store.dispatch = spy();
   });
 
@@ -50,11 +57,11 @@ describe('Login middleware', () => {
     });
   });
 
-  it.skip(`should fetch account and delegate info on ${actionTypes.activePeerSet} action (non delegate)`, () => {
-    const accountApiMock = sinon.stub(accountApi, 'getAccount');
-    const delegateApiMock = sinon.stub(accountApi, 'getDelegate');
-    accountApiMock.returnsPromise().resolves({ success: true });
-    delegateApiMock.returnsPromise().rejects({ success: false });
+  it(`should fetch account and delegate info on ${actionTypes.activePeerSet} action (non delegate)`, () => {
+    const accountApiMock = stub(accountApi, 'getAccount');
+    const delegateApiMock = stub(delegateApi, 'getDelegate');
+    accountApiMock.resolves({ success: true, balance: 0 });
+    delegateApiMock.rejects({ success: false });
     middleware(store)(next)(activePeerSetAction);
     expect(next).to.have.been.calledWith();
 
@@ -62,11 +69,11 @@ describe('Login middleware', () => {
     delegateApiMock.restore();
   });
 
-  it.skip(`should fetch account and delegate info on ${actionTypes.activePeerSet} action (delegate)`, () => {
-    const accountApiMock = sinon.stub(accountApi, 'getAccount');
-    const delegateApiMock = sinon.stub(accountApi, 'getDelegate');
-    accountApiMock.returnsPromise().resolves({ success: true });
-    delegateApiMock.returnsPromise().resolves({ delegate: { username: 'TEST' }, username: 'TEST' });
+  it(`should fetch account and delegate info on ${actionTypes.activePeerSet} action (delegate)`, () => {
+    const accountApiMock = stub(accountApi, 'getAccount');
+    const delegateApiMock = stub(delegateApi, 'getDelegate');
+    accountApiMock.resolves({ success: true, balance: 0 });
+    delegateApiMock.resolves({ success: true, delegate: { username: 'TEST' }, username: 'TEST' });
     middleware(store)(next)(activePeerSetAction);
     expect(next).to.have.been.calledWith();
 

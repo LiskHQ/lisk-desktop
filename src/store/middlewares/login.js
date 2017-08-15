@@ -4,7 +4,6 @@ import { accountLoggedIn } from '../../actions/account';
 import actionTypes from '../../constants/actions';
 
 const loginMiddleware = () => next => (action) => {
-  // get account info
   if (action.type !== actionTypes.activePeerSet) {
     return next(action);
   }

@@ -43,7 +43,6 @@ describe('LoginForm', () => {
   it('should mount LoginFormComponent with appropriate properties', () => {
     const mountedAccount = mount(<Router><LoginForm/></Router>, options);
     const props = mountedAccount.find(LoginFormComponent).props();
-    console.log( Object.keys(props) )
     expect(props.peers).to.be.equal(peers);
     expect(props.account).to.be.equal(account);
     expect(typeof props.activePeerSet).to.be.equal('function');
