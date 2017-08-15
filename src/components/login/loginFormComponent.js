@@ -5,8 +5,6 @@ import Input from 'react-toolbox/lib/input';
 import Dropdown from 'react-toolbox/lib/dropdown';
 import Button from 'react-toolbox/lib/button';
 import Checkbox from 'react-toolbox/lib/checkbox';
-import { getAccount, extractAddress, extractPublicKey } from '../../utils/api/account';
-import { getDelegate } from '../../utils/api/delegate';
 import { isValidPassphrase } from '../../utils/passphrase';
 import networksRaw from './networks';
 import Passphrase from '../passphrase';
