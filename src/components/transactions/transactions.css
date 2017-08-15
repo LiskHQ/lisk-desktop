@@ -4,7 +4,6 @@
     --btn: rgb(2,136,209);
 }
 
-
 .grayButton, .inButton, .outButton, .smallButton {
     background-color: #eee;
     border-radius: 3px;
@@ -19,7 +18,10 @@
 .inButton {
     background: color(var(--in) alpha(45%))!important;
 }
-
+.empty{
+    color: #777;
+    text-align: right;
+}
 .outButton {
     background: color(var(--out) alpha(45%))!important;
 }
