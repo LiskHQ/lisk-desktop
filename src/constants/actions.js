@@ -4,7 +4,6 @@ const actionTypes = {
   accountLoggedOut: 'ACCOUNT_LOGGED_OUT',
   accountLogin: 'ACCOUNT_LOGIN',
   activePeerSet: 'ACTIVE_PEER_SET',
-  setActivePeer: 'SET_ACTIVE_PEER',
   activePeerUpdate: 'ACTIVE_PEER_UPDATE',
   activePeerReset: 'ACTIVE_PEER_RESET',
   dialogDisplayed: 'DIALOG_DISPLAYED',

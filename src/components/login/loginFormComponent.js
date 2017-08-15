@@ -39,6 +39,12 @@ class LoginFormComponent extends React.Component {
     this.devPreFill();
   }
 
+  componentDidUpdate() {
+    if (this.props.account && this.props.account.address) {
+      this.props.history.replace('/main/transactions');
+    }
+  }
+
   validateUrl(value) {
     const addHttp = (url) => {
       const reg = /^(?:f|ht)tps?:\/\//i;
@@ -85,11 +91,6 @@ class LoginFormComponent extends React.Component {
       passphrase,
       network,
     });
-  }
-
-  login(accountInfo) {
-    this.props.onAccountUpdated(accountInfo);
-    this.props.history.replace('/main/transactions');
   }
 
   devPreFill() {
