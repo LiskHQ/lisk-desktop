@@ -7,7 +7,7 @@ import sinonChai from 'sinon-chai';
 import PropTypes from 'prop-types';
 import sinonStubPromise from 'sinon-stub-promise';
 import store from '../../store';
-import ConfrimVotesContainer, { ConfirmVotes } from './confirmVotes';
+import ConfirmVotesContainer, { ConfirmVotes } from './confirmVotes';
 import * as delegateApi from '../../utils/api/delegate';
 
 sinonStubPromise(sinon);
@@ -43,16 +43,16 @@ const props = {
   pendingVotesAdded: sinon.spy(),
   addTransaction: sinon.spy(),
 };
-describe('ConfrimVotesContainer', () => {
-  it('should render ConfrimVotes', () => {
-    const wrapper = mount(<ConfrimVotesContainer {...props} store={store} />, {
+describe('ConfirmVotesContainer', () => {
+  it('should render ConfirmVotes', () => {
+    const wrapper = mount(<ConfirmVotesContainer {...props} store={store} />, {
       context: { store },
       childContextTypes: { store: PropTypes.object.isRequired },
     });
     expect(wrapper.find('ConfirmVotes').exists()).to.be.equal(true);
   });
 });
-describe('ConfrimVotes', () => {
+describe('ConfirmVotes', () => {
   let wrapper;
   const delegateApiMock = sinon.stub(delegateApi, 'vote');
   beforeEach(() => {
@@ -69,7 +69,7 @@ describe('ConfrimVotes', () => {
     expect(props.pendingVotesAdded).to.have.been.calledWith();
     expect(props.addTransaction).to.have.been.calledWith();
     expect(props.showSuccessAlert).to.have.been.calledWith();
-    // it should triger 'props.clearVoteLists' after 10000 ms
+    // it should trigger 'props.clearVoteLists' after 10000 ms
     clock.tick(10000);
     expect(props.clearVoteLists).to.have.been.calledWith();
   });
