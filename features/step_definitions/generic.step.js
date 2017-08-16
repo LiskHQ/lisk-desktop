@@ -46,9 +46,9 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   });
 
   When('I click "{elementName}" in "{menuName}" menu', (elementName, menuName, callback) => {
-    waitForElemAndClickIt(`.md-icon-button.${menuName.replace(/ /g, '-')}`);
+    waitForElemAndClickIt(`.${menuName.replace(/ /g, '-')}`);
     browser.sleep(1000);
-    waitForElemAndClickIt(`md-menu-item .md-button.${elementName.replace(/ /g, '-')}`, callback);
+    waitForElemAndClickIt(`.${elementName.replace(/ /g, '-')}`, callback);
   });
 
   When('I select option no. {index} from "{selectName}" select', (index, selectName, callback) => {

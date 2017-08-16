@@ -27,7 +27,6 @@ Feature: Send dialog
     And I click "cancel button"
     Then I should see no "modal dialog"
 
-  @ignore
   Scenario: should allow to send all funds 
     Given I'm logged in as "send all account"
     When I click "send button"
@@ -36,7 +35,6 @@ Feature: Send dialog
     And I click "submit button"
     Then I should see alert dialog with title "Success" and text "Your transaction of 101 LSK to 537318935439898807L was accepted and will be processed in a few seconds."
 
-  @ignore
   Scenario: should allow to send with second passphrase
     Given I'm logged in as "second passphrase account"
     When I click "send button"
