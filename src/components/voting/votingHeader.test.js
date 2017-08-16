@@ -75,16 +75,11 @@ describe('VotingHeader', () => {
   });
 
   it('should this.props.search when this.search is called', () => {
+    const clock = sinon.useFakeTimers();
     wrapper.instance().search('query', '555');
+    clock.tick(250);
     expect(props.search).to.have.been.calledWith('555');
   });
-
-
-  it('should this.props.search when this.search is called', () => {
-    wrapper.instance().search('query', '555');
-    expect(props.search).to.have.been.calledWith('555');
-  });
-
 
   it('click on #searchIcon should clear vlaue of search input', () => {
     wrapper.instance().search('query', '555');
