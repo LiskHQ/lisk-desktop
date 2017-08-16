@@ -14,7 +14,7 @@ describe('Metronome middleware', () => {
     store.dispatch = spy();
   });
 
-  it('should call Metronome constructor', () => {
+  it(`should call Metronome constructor on ${actionTypes.accountLoggedIn} action`, () => {
     const metronome = spy(MetronomeService, 'default');
     middleware(store);
     expect(metronome.calledWithNew()).to.equal(true);
@@ -24,7 +24,7 @@ describe('Metronome middleware', () => {
 
   it('should call Metronome init method', () => {
     const spyFn = spy(MetronomeService.default.prototype, 'init');
-    middleware(store);
+    middleware(store)(next)({ type: actionTypes.accountLoggedIn });
     expect(spyFn).to.have.been.calledWith();
   });
 

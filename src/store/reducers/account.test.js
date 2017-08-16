@@ -42,5 +42,13 @@ describe('Reducer: account(state, action)', () => {
     const changedAccount = account(state, action);
     expect(changedAccount).to.deep.equal({ });
   });
+
+  it('should return state if action.type is none of the above', () => {
+    const action = {
+      type: 'UNKNOWN',
+    };
+    const changedAccount = account(state, action);
+    expect(changedAccount).to.deep.equal(state);
+  });
 });
 

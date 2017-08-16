@@ -5,13 +5,13 @@ import Input from 'react-toolbox/lib/input';
 import Dropdown from 'react-toolbox/lib/dropdown';
 import Button from 'react-toolbox/lib/button';
 import Checkbox from 'react-toolbox/lib/checkbox';
-import { getAccount, extractAddress, extractPublicKey } from '../../utils/api/account';
-import { getDelegate } from '../../utils/api/delegate';
 import { isValidPassphrase } from '../../utils/passphrase';
 import networksRaw from './networks';
 import Passphrase from '../passphrase';
 import styles from './login.css';
 
+// ignore else in coverage as it is hard to test and not our business logic
+/* istanbul ignore else */
 if (global._bitcore) delete global._bitcore;
 
 /**
@@ -37,6 +37,12 @@ class LoginFormComponent extends React.Component {
   componentDidMount() {
     // pre-fill passphrase and address if exiting in cookies
     this.devPreFill();
+  }
+
+  componentDidUpdate() {
+    if (this.props.account && this.props.account.address) {
+      this.props.history.replace('/main/transactions');
+    }
   }
 
   validateUrl(value) {
@@ -79,33 +85,12 @@ class LoginFormComponent extends React.Component {
     if (this.state.network === 2) {
       network.address = this.state.address;
     }
+
     // set active peer
-    this.props.activePeerSet(network);
-
-    setTimeout(() => {
-      // get account info
-      const accountBasics = {
-        passphrase,
-        publicKey: extractPublicKey(passphrase),
-        address: extractAddress(passphrase),
-      };
-
-      // redirect to main/transactions
-      getAccount(this.props.peers.data, accountBasics.address).then((accountData) => {
-        getDelegate(this.props.peers.data, accountBasics.publicKey).then((delegateData) => {
-          this.login(Object.assign({}, accountData, accountBasics,
-            { delegate: delegateData.delegate, isDelegate: true }));
-        }).catch(() => {
-          this.login(Object.assign({}, accountData, accountBasics,
-            { delegate: {}, isDelegate: false }));
-        });
-      });
-    }, 5);
-  }
-
-  login(accountInfo) {
-    this.props.onAccountUpdated(accountInfo);
-    this.props.history.replace('/main/transactions');
+    this.props.activePeerSet({
+      passphrase,
+      network,
+    });
   }
 
   devPreFill() {
@@ -130,7 +115,7 @@ class LoginFormComponent extends React.Component {
         />
         {
           this.state.network === 2 &&
-          <Input type='text' label='Node address' name='address'
+          <Input type='text' label='Node address' name='address' className='address'
             value={this.state.address} error={this.state.addressValidity}
             onChange={this.validateUrl.bind(this)} />
         }

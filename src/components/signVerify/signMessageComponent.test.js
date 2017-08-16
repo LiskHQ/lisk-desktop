@@ -42,7 +42,7 @@ ${signature}
     copyMock.returns(true);
     wrapper.find('.message textarea').simulate('change', { target: { value: message } });
     wrapper.find('.primary-button').simulate('click');
-    expect(wrapper.find('.message textarea').text()).to.equal(message);
+    expect(wrapper.find('.result textarea').text()).to.equal(result);
     expect(successToastSpy).to.have.been.calledWith({ label: 'Result copied to clipboard' });
   });
 

@@ -43,8 +43,17 @@ const props = {
   pendingVotesAdded: sinon.spy(),
   addTransaction: sinon.spy(),
 };
+
 describe('ConfrimVotesContainer', () => {
   it('should render ConfrimVotes', () => {
+    store.getState = () => ({
+      peers: {},
+      voting: {
+        votedList: [],
+        unvotedList: [],
+      },
+      account: {},
+    });
     const wrapper = mount(<ConfrimVotesContainer {...props} store={store} />, {
       context: { store },
       childContextTypes: { store: PropTypes.object.isRequired },
@@ -52,6 +61,7 @@ describe('ConfrimVotesContainer', () => {
     expect(wrapper.find('ConfirmVotes').exists()).to.be.equal(true);
   });
 });
+
 describe('ConfrimVotes', () => {
   let wrapper;
   const delegateApiMock = sinon.stub(delegateApi, 'vote');

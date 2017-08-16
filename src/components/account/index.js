@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import AccountComponent from './accountComponent';
+import Account from './account';
 import { activePeerUpdate } from '../../actions/peers';
 import { accountUpdated } from '../../actions/account';
 import { transactionsUpdated } from '../../actions/transactions';
@@ -18,9 +18,7 @@ const mapDispatchToProps = dispatch => ({
   onTransactionsUpdated: data => dispatch(transactionsUpdated(data)),
 });
 
-const Account = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(AccountComponent);
-
-export default Account;
+)(Account);
