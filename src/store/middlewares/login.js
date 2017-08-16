@@ -3,7 +3,7 @@ import { getDelegate } from '../../utils/api/delegate';
 import { accountLoggedIn } from '../../actions/account';
 import actionTypes from '../../constants/actions';
 
-const loginMiddleware = () => next => (action) => {
+const loginMiddleware = store => next => (action) => {
   if (action.type !== actionTypes.activePeerSet) {
     return next(action);
   }
@@ -24,10 +24,10 @@ const loginMiddleware = () => next => (action) => {
   return getAccount(activePeer, address).then(accountData =>
     getDelegate(activePeer, publicKey)
       .then((delegateData) => {
-        next(accountLoggedIn(Object.assign({}, accountData, accountBasics,
+        store.dispatch(accountLoggedIn(Object.assign({}, accountData, accountBasics,
           { delegate: delegateData.delegate, isDelegate: true })));
       }).catch(() => {
-        next(accountLoggedIn(Object.assign({}, accountData, accountBasics,
+        store.dispatch(accountLoggedIn(Object.assign({}, accountData, accountBasics,
           { delegate: {}, isDelegate: false })));
       }),
   );
