@@ -2,7 +2,6 @@ import React from 'react';
 import Input from 'react-toolbox/lib/input';
 import InfoParagraph from '../infoParagraph';
 import ActionBar from '../actionBar';
-import { registerDelegate } from '../../utils/api/delegate';
 import Fees from '../../constants/fees';
 
 class RegisterDelegate extends React.Component {
@@ -19,32 +18,14 @@ class RegisterDelegate extends React.Component {
     this.setState({ [name]: value });
   }
 
-  register(username, secondSecret) {
-    registerDelegate(this.props.peers.data, username,
-      this.props.account.passphrase, secondSecret)
-      .then((data) => {
-        this.props.showSuccessAlert({
-          text: `Delegate registration was successfully submitted with username: "${this.state.name}". It can take several seconds before it is processed.`,
-        });
-
-        // add to pending transaction
-        this.props.addTransaction({
-          id: data.transactionId,
-          senderPublicKey: this.props.account.publicKey,
-          senderId: this.props.account.address,
-          amount: 0,
-          fee: Fees.registerDelegate,
-        });
-      })
-      .catch((error) => {
-        if (error && error.message === 'Username already exists') {
-          this.setState({ nameError: error.message });
-        } else {
-          this.props.showErrorAlert({
-            text: error && error.message ? `${error.message}.` : 'An error occurred while registering as delegate.',
-          });
-        }
-      });
+  register(username, secondPassphrase) {
+    // @todo I'm not handling this part: this.setState({ nameError: error.message });
+    this.props.delegateRegistered({
+      activePeer: this.props.peers.data,
+      account: this.props.account,
+      username,
+      secondPassphrase,
+    });
   }
 
   render() {

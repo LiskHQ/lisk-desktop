@@ -42,6 +42,27 @@ export const accountLoggedIn = data => ({
 /**
  *
  */
+export const delegateRegistered = ({ activePeer, account, username, secondPassphrase }) =>
+  (dispatch) => {
+    registerDelegate(activePeer, username, account.passphrase, secondPassphrase)
+      .then((data) => {
+        // dispatch to add to pending transaction
+        dispatch(transactionAdded({
+          id: data.transactionId,
+          senderPublicKey: account.publicKey,
+          senderId: account.address,
+          username,
+          amount: 0,
+          fee: Fees.registerDelegate,
+          type: 2,
+        }));
+      });
+      // @todo catch is not handled
+  };
+
+/**
+ *
+ */
 export const sent = ({ activePeer, account, recipientId, amount, passphrase, secondPassphrase }) =>
   (dispatch) => {
     send(activePeer, recipientId, toRawLsk(amount), passphrase, secondPassphrase)
