@@ -42,6 +42,24 @@ export const accountLoggedIn = data => ({
 /**
  *
  */
+export const secondPassphraseRegistered = ({ activePeer, secondPassphrase, account }) =>
+  (dispatch) => {
+    setSecondPassphrase(activePeer, secondPassphrase, account.publicKey, account.passphrase)
+      .then((data) => {
+        dispatch(transactionAdded({
+          id: data.transactionId,
+          senderPublicKey: account.publicKey,
+          senderId: account.address,
+          amount: 0,
+          fee: Fees.setSecondPassphrase,
+          type: 1,
+        }));
+      });
+  };
+
+/**
+ *
+ */
 export const delegateRegistered = ({ activePeer, account, username, secondPassphrase }) =>
   (dispatch) => {
     registerDelegate(activePeer, username, account.passphrase, secondPassphrase)

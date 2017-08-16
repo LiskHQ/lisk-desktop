@@ -2,36 +2,26 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { MenuItem } from 'react-toolbox/lib/menu';
 import Passphrase from '../passphrase';
-import { setSecondPassphrase } from '../../utils/api/account';
-import { dialogDisplayed, successAlertDialogDisplayed } from '../../actions/dialog';
-import { transactionAdded } from '../../actions/transactions';
+import { dialogDisplayed } from '../../actions/dialog';
+import { secondPassphraseRegistered } from '../../actions/account';
 import styles from './secondPassphrase.css';
 import Fees from '../../constants/fees';
 
-export const SecondPassphrase = (props) => {
+export const SecondPassphrase = ({
+  account, peers, setActiveDialog, registerSecondPassphrase,
+}) => {
   const onLoginSubmission = (secondPassphrase) => {
-    setSecondPassphrase(props.peers.data, secondPassphrase, props.account.publicKey,
-      props.account.passphrase)
-      .then((data) => {
-        props.showSuccessAlert({ text: 'Second passphrase registration was successfully submitted. It can take several seconds before it is processed.' });
-        // add to pending transactions
-        props.addTransaction({
-          id: data.transactionId,
-          senderPublicKey: props.account.publicKey,
-          senderId: props.account.address,
-          amount: 0,
-          fee: Fees.setSecondPassphrase,
-        });
-      }).catch((error) => {
-        const text = (error && error.message) ? error.message : 'An error occurred while registering your second passphrase. Please try again.';
-        props.showSuccessAlert({ text });
-      });
+    registerSecondPassphrase({
+      activePeer: peers.data,
+      secondPassphrase,
+      account,
+    });
   };
 
   return (
-    !props.account.secondSignature ?
+    !account.secondSignature ?
       <MenuItem caption="Register second passphrase"
-        onClick={() => props.setActiveDialog({
+        onClick={() => setActiveDialog({
           title: 'Register second passphrase',
           childComponent: Passphrase,
           childComponentProps: {
@@ -56,8 +46,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   setActiveDialog: data => dispatch(dialogDisplayed(data)),
-  showSuccessAlert: data => dispatch(successAlertDialogDisplayed(data)),
-  addTransaction: data => dispatch(transactionAdded(data)),
+  registerSecondPassphrase: data => dispatch(secondPassphraseRegistered(data)),
 });
 
 export default connect(
