@@ -27,6 +27,7 @@ describe('LoginFormComponent', () => {
     }),
     history: [],
     onAccountUpdated: () => {},
+    setActiveDialog: spy(),
     activePeerSet: (network) => {
       store.peers = {};
       store.peers.data = Lisk.api(network);
@@ -42,6 +43,31 @@ describe('LoginFormComponent', () => {
   it('should render a form tag', () => {
     const wrapper = mount(<LoginFormComponent />, options);
     expect(wrapper.find('form')).to.not.equal(undefined);
+  });
+
+  it('should render address input if state.network === 2', () => {
+    const wrapper = mount(<LoginFormComponent />, options);
+    wrapper.setState({ network: 2 });
+    expect(wrapper.find('.address')).to.have.lengthOf(1);
+  });
+
+  it('should allow to change passphrase field to type="text"', () => {
+    const wrapper = mount(<LoginFormComponent />, options);
+    expect(wrapper.find('.passphrase input').props().type).to.equal('password');
+    wrapper.setState({ showPassphrase: true });
+    expect(wrapper.find('.passphrase input').props().type).to.equal('text');
+  });
+
+  it('should show "Invalid passphrase" error message if passphrase is invalid', () => {
+    const wrapper = mount(<LoginFormComponent />, options);
+    wrapper.find('.passphrase input').simulate('change', { target: { value: 'INVALID' } });
+    expect(wrapper.find('.passphrase').text()).to.contain('Invalid passphrase');
+  });
+
+  it('should show call props.setActiveDialog when "new accout" button is clicked', () => {
+    const wrapper = mount(<LoginFormComponent setActiveDialog={store.setActiveDialog} />, options);
+    wrapper.find('.new-account-button').simulate('click');
+    expect(store.setActiveDialog).to.have.been.calledWith();
   });
 
   describe('componentDidMount', () => {
@@ -87,7 +113,7 @@ describe('LoginFormComponent', () => {
     });
   });
 
-  describe.skip('validatePassphrase', () => {
+  describe('validatePassphrase', () => {
     it('should set passphraseValidity="" for a valid passphrase', () => {
       const passphrase = 'wagon stock borrow episode laundry kitten salute link globe zero feed marble';
       const wrapper = shallow(<LoginFormComponent />, options);
@@ -110,7 +136,7 @@ describe('LoginFormComponent', () => {
       expect(data).to.deep.equal(expectedData);
     });
 
-    it('should set passphraseValidity="Invalid passphrase" for a non-empty invalid passphrase', () => {
+    it.skip('should set passphraseValidity="Invalid passphrase" for a non-empty invalid passphrase', () => {
       const passphrase = 'invalid passphrase';
       const wrapper = shallow(<LoginFormComponent />, options);
       const data = wrapper.instance().validatePassphrase(passphrase);
@@ -134,22 +160,10 @@ describe('LoginFormComponent', () => {
   });
 
   describe('onLoginSubmission', () => {
-    it('it should expose onAccountUpdated as function', () => {
-      const wrapper = mount(<LoginFormComponent {...store} />);
-      expect(typeof wrapper.props().onAccountUpdated).to.equal('function');
-    });
-
     it.skip('it should call activePeerSet', () => {
       const wrapper = mount(<LoginFormComponent {...store} />);
       wrapper.instance().onLoginSubmission();
       expect(wrapper.props().spyActivePeerSet).to.have.been.calledWith();
-    });
-
-    it('it should call setTimeout', () => {
-      const wrapper = mount(<LoginFormComponent {...store} />);
-      const spyFn = spy(window, 'setTimeout');
-      wrapper.instance().onLoginSubmission();
-      expect(spyFn).to.have.been.calledWith();
     });
   });
 

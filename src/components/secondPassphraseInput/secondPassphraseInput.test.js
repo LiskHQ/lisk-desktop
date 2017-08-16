@@ -10,6 +10,7 @@ chai.use(sinonChai);
 describe('SecondPassphraseInput', () => {
   let wrapper;
   let props;
+  const passphrase = 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit';
 
   beforeEach(() => {
     props = {
@@ -34,5 +35,26 @@ describe('SecondPassphraseInput', () => {
     props.hasSecondPassphrase = false;
     wrapper = mount(<SecondPassphraseInput {...props} />);
     expect(wrapper.html()).to.equal(null);
+  });
+
+  it('should call props.onChange when input value changes', () => {
+    props.hasSecondPassphrase = true;
+    wrapper = mount(<SecondPassphraseInput {...props} />);
+    wrapper.find('.second-passphrase input').simulate('change', { target: { value: passphrase } });
+    expect(props.onChange).to.have.been.calledWith(passphrase);
+  });
+
+  it('should call props.onError(\'Required\') when input value changes to \'\'', () => {
+    props.hasSecondPassphrase = true;
+    wrapper = mount(<SecondPassphraseInput {...props} />);
+    wrapper.find('.second-passphrase input').simulate('change', { target: { value: '' } });
+    expect(props.onError).to.have.been.calledWith('Required', '');
+  });
+
+  it('should call props.onError(\'Invalid passphrase\') when input value changes to \'test\'', () => {
+    props.hasSecondPassphrase = true;
+    wrapper = mount(<SecondPassphraseInput {...props} />);
+    wrapper.find('.second-passphrase input').simulate('change', { target: { value: 'test' } });
+    expect(props.onError).to.have.been.calledWith('Invalid passphrase', 'test');
   });
 });

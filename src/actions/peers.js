@@ -4,17 +4,18 @@ import actionTypes from '../constants/actions';
 /**
  * Returns required action object to set
  * the given peer data as active peer
+ * This should be called once in login page
  *
- * @param {Object} data - Active peer data
+ * @param {Object} data - Active peer data and the passphrase of account
  * @returns {Object} Action object
  */
-export const activePeerSet = (network) => {
+export const activePeerSet = (data) => {
   const addHttp = (url) => {
     const reg = /^(?:f|ht)tps?:\/\//i;
     return reg.test(url) ? url : `http://${url}`;
   };
 
-  // this.network = network;
+  const { network } = data;
   let config = { };
   if (network) {
     config = network;
@@ -30,10 +31,11 @@ export const activePeerSet = (network) => {
     }
   }
 
-  const data = Lisk.api(config);
-
   return {
-    data,
+    data: Object.assign({
+      passphrase: data.passphrase,
+      activePeer: Lisk.api(config),
+    }),
     type: actionTypes.activePeerSet,
   };
 };

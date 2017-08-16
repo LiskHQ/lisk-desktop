@@ -95,7 +95,7 @@ describe('Passphrase', () => {
 
       let data;
       randoms.forEach((rand, i) => {
-        if (!data || data.percentage < 100) {
+        if ((!data || data.percentage < 100) && i < bytes.length) {
           data = generateSeed(data, rand);
           expect(data.byte).to.deep.equal(bytes[i]);
         }

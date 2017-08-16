@@ -45,6 +45,14 @@ const props = {
 };
 describe('ConfirmVotesContainer', () => {
   it('should render ConfirmVotes', () => {
+    store.getState = () => ({
+      peers: {},
+      voting: {
+        votedList: [],
+        unvotedList: [],
+      },
+      account: {},
+    });
     const wrapper = mount(<ConfirmVotesContainer {...props} store={store} />, {
       context: { store },
       childContextTypes: { store: PropTypes.object.isRequired },

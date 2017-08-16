@@ -79,6 +79,7 @@ class RegisterDelegate extends React.Component {
             label: 'Register',
             fee: Fees.registerDelegate,
             disabled: !this.state.name ||
+              this.props.account.isDelegate ||
               (this.props.account.secondSignature && !this.state.secondSecret),
             onClick: this.register.bind(this, this.state.name, this.state.secondSecret),
           }} />
