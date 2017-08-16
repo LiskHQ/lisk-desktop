@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { updateForgedBlocks, updateForgingStats } from '../../actions/forging';
+import { fetchAndUpdateForgedBlocks, fetchAndUpdateForgedStats } from '../../actions/forging';
 import ForgingComponent from './forgingComponent';
 
 const mapStateToProps = state => ({
@@ -10,11 +10,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onForgedBlocksLoaded: (blocks) => {
-    dispatch(updateForgedBlocks(blocks));
+  onForgedBlocksLoaded: (...params) => {
+    dispatch(fetchAndUpdateForgedBlocks(...params));
   },
-  onForgingStatsUpdate: (stats) => {
-    dispatch(updateForgingStats(stats));
+  onForgingStatsUpdate: (...params) => {
+    dispatch(fetchAndUpdateForgedStats(...params));
   },
 });
 
