@@ -1,38 +1,44 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 
 import { storiesOf } from '@storybook/react';
-import Account from './accountComponent';
+import Account from './account';
 import Address from './address';
+import store from '../../store';
 
 storiesOf('Account', module)
   .add('delegate', () => (
-    <Account
-      peers={{
-        status: {
-          online: true,
-        },
-        data: {
-          options: {
-            name: 'testy',
+    <Provider store={store}>
+      <Account
+        peers={{
+          status: {
+            online: true,
           },
-          currentPeer: 'testpeer',
-          port: 8000,
-        },
-      }}
-      account={{
-        isDelegate: true,
-        username: 'testy',
-        address: '9396639332432599292L',
-      }}
-      balance="3.1415926535"
-    />
+          data: {
+            options: {
+              name: 'testy',
+            },
+            currentPeer: 'testpeer',
+            port: 8000,
+          },
+        }}
+        account={{
+          isDelegate: true,
+          address: '9396639332432599292L',
+          delegate: {
+            username: 'testy',
+          },
+        }}
+        balance="3.1415926535"
+      />
+    </Provider>
   ));
 
 storiesOf('Address', module)
   .add('delegate', () => (
     <Address
       isDelegate={true}
-      username="testy"
+      delegate= {{ username: 'testy' }}
       address="9396639332432599292L"
     />
   ))
