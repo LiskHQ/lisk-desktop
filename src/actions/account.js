@@ -1,4 +1,9 @@
 import actionTypes from '../constants/actions';
+import { setSecondPassphrase, send } from '../utils/api/account';
+import { registerDelegate } from '../utils/api/delegate';
+import { transactionAdded } from './transactions';
+import Fees from '../constants/fees';
+import { toRawLsk } from '../utils/lsk';
 
 /**
  * Trigger this action to update the account object
@@ -33,3 +38,21 @@ export const accountLoggedIn = data => ({
   type: actionTypes.accountLoggedIn,
   data,
 });
+
+/**
+ *
+ */
+export const sent = ({ activePeer, account, recipientId, amount, passphrase, secondPassphrase }) =>
+  (dispatch) => {
+    send(activePeer, recipientId, toRawLsk(amount), passphrase, secondPassphrase)
+      .then((data) => {
+        dispatch(transactionAdded({
+          id: data.transactionId,
+          senderPublicKey: account.publicKey,
+          senderId: account.address,
+          recipientId,
+          amount,
+          fee: Fees.send,
+        }));
+      });
+  };
