@@ -10,6 +10,7 @@ const actionTypes = {
   dialogHidden: 'DIALOG_HIDDEN',
   forgedBlocksUpdated: 'FORGED_BLOCKS_UPDATED',
   forgingStatsUpdated: 'FORGING_STATS_UPDATED',
+  VotePlaced: 'VOTE_PLACED',
   addedToVoteList: 'ADDED_TO_VOTE_LIST',
   removedFromVoteList: 'REMOVEd_FROM_VOTE_LIST',
   votesCleared: 'VOTES_CLEARED',
