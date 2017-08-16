@@ -134,22 +134,10 @@ describe('LoginFormComponent', () => {
   });
 
   describe('onLoginSubmission', () => {
-    it('it should expose onAccountUpdated as function', () => {
-      const wrapper = mount(<LoginFormComponent {...store} />);
-      expect(typeof wrapper.props().onAccountUpdated).to.equal('function');
-    });
-
     it.skip('it should call activePeerSet', () => {
       const wrapper = mount(<LoginFormComponent {...store} />);
       wrapper.instance().onLoginSubmission();
       expect(wrapper.props().spyActivePeerSet).to.have.been.calledWith();
-    });
-
-    it('it should call setTimeout', () => {
-      const wrapper = mount(<LoginFormComponent {...store} />);
-      const spyFn = spy(window, 'setTimeout');
-      wrapper.instance().onLoginSubmission();
-      expect(spyFn).to.have.been.calledWith();
     });
   });
 

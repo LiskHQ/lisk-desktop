@@ -1,16 +1,15 @@
 import React from 'react';
 import chai, { expect } from 'chai';
-import { spy } from 'sinon';
 import sinonChai from 'sinon-chai';
 import { shallow, mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import store from '../../store';
-import AccountComponent from './accountComponent';
+import Account from './account';
 import ClickToSend from '../send/clickToSend';
 
 chai.use(sinonChai);
 
-describe('AccountComponent', () => {
+describe('Account', () => {
   // Mocking store
   const onActivePeerUpdated = () => {};
   const peers = {
@@ -33,14 +32,14 @@ describe('AccountComponent', () => {
   };
 
   it(' should render 3 article tags', () => {
-    const wrapper = shallow(<AccountComponent account={testAccount} peers={peers}
+    const wrapper = shallow(<Account account={testAccount} peers={peers}
       onActivePeerUpdated={onActivePeerUpdated} />);
     expect(wrapper.find('article')).to.have.lengthOf(3);
   });
 
   it('depicts being online when peers.status.online is true', () => {
     const onlinePeers = Object.assign({}, peers, { status: { online: true } });
-    const wrapper = shallow(<AccountComponent account={testAccount} peers={onlinePeers}
+    const wrapper = shallow(<Account account={testAccount} peers={onlinePeers}
       onActivePeerUpdated={onActivePeerUpdated} />);
     const expectedValue = 'check';
     expect(wrapper.find('.material-icons').text()).to.be.equal(expectedValue);
@@ -48,7 +47,7 @@ describe('AccountComponent', () => {
 
   it('should render balance with ClickToSend component', () => {
     const wrapper = mount(<Provider store={store}>
-      <AccountComponent account={testAccount} peers={peers}
+      <Account account={testAccount} peers={peers}
         onActivePeerUpdated={onActivePeerUpdated} />
     </Provider>);
     expect(wrapper.find('.balance').find(ClickToSend)).to.have.lengthOf(1);

@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import Account from './index';
-import AccountComponent from './accountComponent';
+import AccountComponent from './account';
 
 describe('Account', () => {
   // Mocking store

@@ -3,10 +3,11 @@ import actionTypes from '../../constants/actions';
 
 const metronomeMiddleware = (store) => {
   const metronome = new MetronomeService(store.dispatch);
-  // TODO: call metronome.init on login success event
-  metronome.init();
   return next => (action) => {
     switch (action.type) {
+      case actionTypes.accountLoggedIn:
+        metronome.init();
+        break;
       case actionTypes.accountLoggedOut:
         metronome.terminate();
         break;
