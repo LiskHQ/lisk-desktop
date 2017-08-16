@@ -45,7 +45,8 @@
     "react-router-dom": "=4.1.2",
     "react-toolbox": "=2.0.0-beta.12",
     "redux": "=3.6.0",
-    "redux-logger": "=3.0.6"
+    "redux-logger": "=3.0.6",
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "@storybook/react": "=3.1.8",
