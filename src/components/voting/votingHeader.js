@@ -72,7 +72,7 @@ class VotingHeader extends React.Component {
           </IconMenu>
           <Button icon='done' flat
             onClick={() => this.props.setActiveDialog({
-              title: 'Verify Vote for delegates',
+              title: 'Vote for delegates',
               childComponent: Confirm,
               childComponentProps: {
                 addTransaction: this.props.addTransaction,
