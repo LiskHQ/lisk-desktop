@@ -42,6 +42,9 @@ class LoginFormComponent extends React.Component {
   componentDidUpdate() {
     if (this.props.account && this.props.account.address) {
       this.props.history.replace('/main/transactions');
+      if (this.state.address) {
+        Cookies.set('address', this.state.address);
+      }
     }
   }
 
