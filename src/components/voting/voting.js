@@ -63,6 +63,9 @@ class Voting extends React.Component {
       } else {
         this.loadDelegates(this.query);
       }
+    })
+    .catch(() => {
+      this.loadDelegates(this.query);
     });
   }
 
