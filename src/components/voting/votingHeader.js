@@ -21,7 +21,12 @@ class VotingHeader extends React.Component {
       query: value,
       searchIcon: icon,
     });
-    this.props.search(value);
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      if (value === this.state.query) {
+        this.props.search(value);
+      }
+    }, 250);
   }
 
   clearSearch() {
@@ -75,7 +80,7 @@ class VotingHeader extends React.Component {
           <Button icon='done' flat
             className='vote-button'
             onClick={() => this.props.setActiveDialog({
-              title: 'Verify Vote for delegates',
+              title: 'Vote for delegates',
               childComponent: Confirm,
               childComponentProps: {
                 addTransaction: this.props.addTransaction,
