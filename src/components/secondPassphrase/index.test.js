@@ -4,7 +4,12 @@ import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import { mount } from 'enzyme';
 import chaiEnzyme from 'chai-enzyme';
-import { SecondPassphrase } from './index';
+import { Provider } from 'react-redux';
+import * as accountActions from '../../actions/account';
+import * as transactionsActions from '../../actions/transactions';
+import * as dialogActions from '../../actions/dialog';
+import store from '../../store';
+import SecondPassphraseConnected, { SecondPassphrase } from './index';
 
 chai.use(chaiEnzyme());
 chai.use(sinonChai);
@@ -51,5 +56,43 @@ describe('SecondPassphrase', () => {
     wrapper = mount(<SecondPassphrase {...spiedProps}/>);
     wrapper.find('MenuItem').simulate('click');
     expect(spiedProps.setActiveDialog).to.have.been.calledWith();
+  });
+
+  describe('SecondPassphraseConnected', () => {
+    let wrapper;
+    let props;
+    store.getState = () => ({
+      account: { secondSignature: 1 }
+    });
+
+    beforeEach(() => {
+      wrapper = mount(<Provider store={store}><SecondPassphraseConnected  /></Provider>);
+      props = wrapper.find(SecondPassphrase).props();
+    });
+
+    it('should render SecondPassphrase', () => {
+      expect(wrapper.find(SecondPassphrase)).to.have.lengthOf(1);
+    });
+
+    it('should bind dialogDisplayed action to SecondPassphrase props.setActiveDialog', () => {
+      const actionsSpy = sinon.spy(dialogActions, 'dialogDisplayed');
+      props.setActiveDialog({});
+      expect(actionsSpy).to.be.calledWith();
+      actionsSpy.restore();
+    });
+
+    it('should bind successAlertDialogDisplayed action to SecondPassphrase props.showSuccessAlert', () => {
+      const actionsSpy = sinon.spy(dialogActions, 'successAlertDialogDisplayed');
+      props.showSuccessAlert({});
+      expect(actionsSpy).to.be.calledWith();
+      actionsSpy.restore();
+    });
+
+    it('should bind transactionAdded action to SecondPassphrase props.addTransaction', () => {
+      const actionsSpy = sinon.spy(transactionsActions, 'transactionAdded');
+      props.addTransaction({});
+      expect(actionsSpy).to.be.calledWith();
+      actionsSpy.restore();
+    });
   });
 });

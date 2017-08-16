@@ -9,6 +9,18 @@ describe('Voting', () => {
   let wrapper;
 
   beforeEach(() => {
+    store.getState = () => ({
+      peers: {},
+      transactions: {
+        pending: [],
+        confirmed: [],
+      },
+      voting: {
+        votedList: [],
+        unvotedList: [],
+      },
+      account: {},
+    });
     wrapper = mount(<Provider store={store}><Voting /></Provider>);
   });
 

@@ -1,6 +1,10 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
+import sinon from 'sinon';
+import * as accountActions from '../../actions/account';
+import * as transactionsActions from '../../actions/transactions';
+import * as peersActions from '../../actions/peers';
 import Account from './index';
 import AccountComponent from './account';
 
@@ -38,12 +42,37 @@ describe('Account', () => {
     context: { store },
     // childContextTypes: { store: PropTypes.object.isRequired },
   };
+  let props;
+
+  beforeEach(() => {
+    const mountedAccount = mount(<Account/>, options);
+    props = mountedAccount.find(AccountComponent).props();
+  });
 
   it('should mount AccountComponent with appropriate properties', () => {
-    const mountedAccount = mount(<Account/>, options);
-    const props = mountedAccount.find(AccountComponent).props();
     expect(props.peers).to.be.equal(peers);
     expect(props.account).to.be.equal(account);
     expect(typeof props.onActivePeerUpdated).to.be.equal('function');
+  });
+
+  it('should bind activePeerUpdate action to AccountComponent props.onActivePeerUpdated', () => {
+    const actionsSpy = sinon.spy(peersActions, 'activePeerUpdate');
+    props.onActivePeerUpdated({});
+    expect(actionsSpy).to.be.calledWith();
+    actionsSpy.restore();
+  });
+
+  it('should bind accountUpdated action to AccountComponent props.onAccountUpdated', () => {
+    const actionsSpy = sinon.spy(accountActions, 'accountUpdated');
+    props.onAccountUpdated({});
+    expect(actionsSpy).to.be.calledWith();
+    actionsSpy.restore();
+  });
+
+  it('should bind transactionsUpdated action to AccountComponent props.onTransactionsUpdated', () => {
+    const actionsSpy = sinon.spy(transactionsActions, 'transactionsUpdated');
+    props.onTransactionsUpdated({});
+    expect(actionsSpy).to.be.calledWith();
+    actionsSpy.restore();
   });
 });

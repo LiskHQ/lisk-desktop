@@ -10,6 +10,8 @@ import networksRaw from './networks';
 import Passphrase from '../passphrase';
 import styles from './login.css';
 
+// ignore else in coverage as it is hard to test and not our business logic
+/* istanbul ignore else */
 if (global._bitcore) delete global._bitcore;
 
 /**
@@ -113,7 +115,7 @@ class LoginFormComponent extends React.Component {
         />
         {
           this.state.network === 2 &&
-          <Input type='text' label='Node address' name='address'
+          <Input type='text' label='Node address' name='address' className='address'
             value={this.state.address} error={this.state.addressValidity}
             onChange={this.validateUrl.bind(this)} />
         }

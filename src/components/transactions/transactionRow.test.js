@@ -37,7 +37,7 @@ describe('TransactionRow', () => {
     rowData.confirmations = undefined;
     const wrapper = shallow(
       <TransactionRow tableStyle={tableStyle} address={address} value={rowData}>
-      </TransactionRow>); 
+      </TransactionRow>);
     expect(wrapper.find('Spinner')).to.have.lengthOf(1);
   });
 });

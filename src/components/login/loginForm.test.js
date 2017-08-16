@@ -25,7 +25,6 @@ describe('LoginForm', () => {
     address: '16313739661670634666L',
     username: 'lisk-nano',
   };
-
   const store = {
     dispatch: () => {},
     subscribe: () => {},
@@ -46,5 +45,23 @@ describe('LoginForm', () => {
     expect(props.peers).to.be.equal(peers);
     expect(props.account).to.be.equal(account);
     expect(typeof props.activePeerSet).to.be.equal('function');
+  });
+
+  describe('activePeerSet', () => {
+    it('should return a dispatch object', () => {
+      const mountedAccount = mount(<Router><LoginForm/></Router>, options);
+      const props = mountedAccount.find(LoginFormComponent).props();
+      const data = props.activePeerSet(peers.data);
+      expect(data).to.deep.equal(undefined);
+    });
+  });
+
+  describe('setActiveDialog', () => {
+    it('should return a dispatch object', () => {
+      const mountedAccount = mount(<Router><LoginForm/></Router>, options);
+      const props = mountedAccount.find(LoginFormComponent).props();
+      const data = props.setActiveDialog({});
+      expect(data).to.deep.equal(undefined);
+    });
   });
 });

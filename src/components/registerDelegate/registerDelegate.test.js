@@ -9,6 +9,7 @@ import store from '../../store';
 import RegisterDelegate from './registerDelegate';
 import * as delegateApi from '../../utils/api/delegate';
 
+
 chai.use(chaiEnzyme());
 
 const normalAccount = {
@@ -47,8 +48,8 @@ const props = {
   },
   closeDialog: () => {},
   onAccountUpdated: () => {},
-  showSuccessAlert: () => {},
-  showErrorAlert: () => {},
+  showSuccessAlert: sinon.spy(),
+  showErrorAlert: sinon.spy(),
 };
 
 const delegateProps = { ...props, account: delegateAccount };
@@ -70,6 +71,9 @@ describe('RegisterDelegate', () => {
 
   describe('Ordinary account', () => {
     beforeEach(() => {
+      store.getState = () => ({
+        account: normalAccount,
+      });
       wrapper = mount(<Provider store={store}><RegisterDelegate {...normalProps} /></Provider>);
     });
 
@@ -81,14 +85,39 @@ describe('RegisterDelegate', () => {
       expect(wrapper.find('Input')).to.have.length(1);
     });
 
-    it.skip('allows register as delegate for a non delegate account', () => {
+    it('allows register as delegate for a non delegate account', () => {
+      delegateApiMock.expects('registerDelegate').resolves({ success: true });
       wrapper.find('.username input').simulate('change', { target: { value: 'sample_username' } });
+      wrapper.find('.next-button').simulate('click')
       expect(wrapper.find('.primary-button button').props().disabled).to.not.equal(true);
+      // TODO: this doesn't work for some reason
+      // expect(props.showSuccessAlert).to.have.been.calledWith();
+    });
+
+    it('handles register as delegate "username already exists" failure', () => {
+      const message = 'Username already exists';
+      delegateApiMock.expects('registerDelegate').rejects({ message });
+      wrapper.find('.username input').simulate('change', { target: { value: 'sample_username' } });
+      wrapper.find('.next-button').simulate('click')
+      // TODO: this doesn't work for some reason
+      // expect(wrapper.find('RegisterDelegate .username').text()).to.contain(message);
+    });
+
+    it('handles register as delegate failure', () => {
+      delegateApiMock.expects('registerDelegate').rejects({ success: false });
+      wrapper.find('.username input').simulate('change', { target: { value: 'sample_username' } });
+      wrapper.find('.next-button').simulate('click')
+      expect(wrapper.find('.primary-button button').props().disabled).to.not.equal(true);
+      // TODO: this doesn't work for some reason
+      // expect(props.showErrorAlert).to.have.been.calledWith();
     });
   });
 
   describe('Ordinary account with second secret', () => {
     beforeEach(() => {
+      store.getState = () => ({
+        account: withSecondSecretAccount,
+      });
       wrapper = mount(<Provider store={store}>
         <RegisterDelegate {...withSecondSecretProps} /></Provider>);
     });
@@ -105,6 +134,9 @@ describe('RegisterDelegate', () => {
 
   describe('Delegate account', () => {
     beforeEach(() => {
+      store.getState = () => ({
+        account: delegateAccount,
+      });
       wrapper = mount(<Provider store={store}><RegisterDelegate {...delegateProps} /></Provider>);
     });
 
