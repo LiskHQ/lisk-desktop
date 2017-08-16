@@ -13,7 +13,7 @@ export const pendingVotesAdded = () => ({
 /**
  *
  */
-export const voteCasted = ({ activePeer, account, votedList, unvotedList, secondSecret }) =>
+export const votePlaced = ({ activePeer, account, votedList, unvotedList, secondSecret }) =>
   (dispatch) => {
     // Make the Api call
     vote(
