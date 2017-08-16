@@ -87,7 +87,7 @@ export class ConfirmVotes extends React.Component {
             onClick: this.props.closeDialog,
           }}
           primaryButton={{
-            label: 'Vote',
+            label: 'Confirm',
             fee: Fees.vote,
             disabled: (
               this.props.votedList.length === 0 &&
