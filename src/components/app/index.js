@@ -12,20 +12,23 @@ import Dialog from '../dialog';
 import Toaster from '../toaster';
 import Tabs from '../tabs';
 import LoadingBar from '../loadingBar';
+import OfflineWrapper from '../offlineWrapper';
 
 const App = () => (
   <section className={styles['body-wrapper']}>
     <Header />
     <main>
-      <PrivateRoutes path='/main' render={ ({ match }) => (
-        <main>
-          <Account />
-          <Tabs />
-          <Route path={`${match.url}/transactions`} component={Transactions} />
-          <Route path={`${match.url}/voting`} component={Voting} />
-          <Route path={`${match.url}/forging`} component={Forging} />
-        </main>
-      )} />
+      <OfflineWrapper>
+        <PrivateRoutes path='/main' render={ ({ match }) => (
+          <main>
+            <Account />
+            <Tabs />
+            <Route path={`${match.url}/transactions`} component={Transactions} />
+            <Route path={`${match.url}/voting`} component={Voting} />
+            <Route path={`${match.url}/forging`} component={Forging} />
+          </main>
+        )} />
+      </OfflineWrapper>
       <Route exact path="/" component={Login} />
     </main>
     <Dialog />
