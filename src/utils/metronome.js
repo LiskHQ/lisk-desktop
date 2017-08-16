@@ -6,7 +6,6 @@ import actionsType from '../constants/actions';
 class Metronome {
   constructor(dispatchFn) {
     this.interval = SYNC_ACTIVE_INTERVAL;
-    this.lastBeat = new Date();
     this.factor = 0;
     this.running = false;
     this.dispatchFn = dispatchFn;
@@ -38,7 +37,7 @@ class Metronome {
     */
   _step() {
     const now = new Date();
-    if (now - this.lastBeat >= this.interval) {
+    if (!this.lastBeat || (now - this.lastBeat >= this.interval)) {
       this._dispatch(this.lastBeat, now, this.factor);
       this.lastBeat = now;
       this.factor += this.factor < 9 ? 1 : -9;

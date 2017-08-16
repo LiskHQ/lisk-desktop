@@ -6,7 +6,7 @@ import * as accountActions from '../../actions/account';
 import * as transactionsActions from '../../actions/transactions';
 import * as peersActions from '../../actions/peers';
 import Account from './index';
-import AccountComponent from './accountComponent';
+import AccountComponent from './account';
 
 describe('Account', () => {
   // Mocking store

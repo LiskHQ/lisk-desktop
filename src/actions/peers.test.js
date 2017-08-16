@@ -8,6 +8,8 @@ import { activePeerSet, activePeerReset, activePeerUpdate } from './peers';
 chai.use(sinonChai);
 
 describe('actions: peers', () => {
+  const passphrase = 'wagon stock borrow episode laundry kitten salute link globe zero feed marble';
+
   describe('activePeerUpdate', () => {
     it('should create an action to update the active peer', () => {
       const data = {
@@ -33,38 +35,47 @@ describe('actions: peers', () => {
 
   describe('activePeerSet', () => {
     it('creates active peer config', () => {
-      const network = {
-        address: 'http://localhost:4000',
-        testnet: true,
-        nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+      const data = {
+        passphrase,
+        network: {
+          name: 'Custom Node',
+          custom: true,
+          address: 'http://localhost:4000',
+          testnet: true,
+          nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+        },
       };
       const actionSpy = spy(Lisk, 'api');
-      activePeerSet(network);
-      expect(actionSpy).to.have.been.calledWith(network);
+      activePeerSet(data);
+      expect(actionSpy).to.have.been.calledWith(data.network);
       Lisk.api.restore();
     });
 
     it('dispatch activePeerSet action also when address http missing', () => {
-      const network = {
-        address: 'localhost:8000',
+      const data = {
+        passphrase,
+        network: {
+          address: 'localhost:8000',
+        },
       };
       const actionSpy = spy(Lisk, 'api');
-      activePeerSet(network);
+      activePeerSet(data);
       expect(actionSpy).to.have.been.calledWith();
       Lisk.api.restore();
     });
 
     it('dispatch activePeerSet action even if network is undefined', () => {
+      const data = { passphrase };
       const actionSpy = spy(Lisk, 'api');
-      activePeerSet();
+      activePeerSet(data);
       expect(actionSpy).to.have.been.calledWith();
       Lisk.api.restore();
     });
 
     it('dispatch activePeerSet action even if network.address is undefined', () => {
-      const network = {};
+      const data = { passphrase, network: {} };
       const actionSpy = spy(Lisk, 'api');
-      activePeerSet(network);
+      activePeerSet(data);
       expect(actionSpy).to.have.been.calledWith();
       Lisk.api.restore();
     });
@@ -78,10 +89,10 @@ describe('actions: peers', () => {
         address: 'http://127.0.0.1:4000',
         nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
       };
-      let activePeer = activePeerSet(network7000);
-      expect(activePeer.data.testnet).to.be.equal(true);
-      activePeer = activePeerSet(network4000);
-      expect(activePeer.data.testnet).to.be.equal(false);
+      let actionObj = activePeerSet({ passphrase, network: network7000 });
+      expect(actionObj.data.activePeer.testnet).to.be.equal(true);
+      actionObj = activePeerSet({ passphrase, network: network4000 });
+      expect(actionObj.data.activePeer.testnet).to.be.equal(false);
     });
   });
 });
