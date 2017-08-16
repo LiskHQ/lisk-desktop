@@ -46,11 +46,13 @@ class Voting extends React.Component {
 
   loadVotedDelegates(refresh) {
     listAccountDelegates(this.props.activePeer, this.props.address).then((res) => {
-      const votedDelegates = res.delegates
-        .map(delegate => Object.assign({}, delegate, { voted: true }));
-      this.setState({
-        votedDelegates,
-      });
+      if (res.delegates) {
+        const votedDelegates = res.delegates
+          .map(delegate => Object.assign({}, delegate, { voted: true }));
+        this.setState({
+          votedDelegates,
+        });
+      }
       if (refresh) {
         setTimeout(() => {
           const delegates = this.state.delegates.map(delegate => this.setStatus(delegate));
