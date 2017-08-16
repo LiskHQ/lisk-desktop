@@ -69,7 +69,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   });
 
   Then('I should see table with {lineCount} lines', (lineCount, callback) => {
-    browser.sleep(3500);
+    browser.sleep(500);
     expect(element.all(by.css('table tbody tr')).count()).to.eventually.equal(parseInt(lineCount, 10))
       .and.notify(callback);
   });

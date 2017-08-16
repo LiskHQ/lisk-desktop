@@ -4,13 +4,11 @@ Feature: Voting tab
     When I click tab number 2
     Then I should see table with 100 lines
 
-  @ignore
   Scenario: should allow to view delegates with cold account
     Given I'm logged in as "empty account"
     When I click tab number 2
     Then I should see table with 100 lines
 
-  @ignore
   Scenario: should allow to search delegates
     Given I'm logged in as "any account"
     When I click tab number 2
@@ -30,13 +28,12 @@ Feature: Voting tab
     And I click "my votes button"
     Then I should see delegates list with 101 lines
 
-  @ignore
   Scenario: should not allow to vote if not enough funds for the fee
     Given I'm logged in as "empty account"
     When I click tab number 2
     And I click checkbox on table row no. 3
     And I click "vote button"
-    Then I should see "Not enough LSK to pay 1 LSK fee" error message
+    Then I should see "Insufficient funds for 1 LSK fee" error message
     And "submit button" should be disabled
 
   Scenario: should allow to select delegates in the "Voting" tab and vote for them
