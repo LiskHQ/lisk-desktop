@@ -11,7 +11,10 @@ const updateAccountData = next => (store) => { // eslint-disable-line
     if (result.balance !== account.balance) {
       const maxBlockSize = 25;
       transactions(peers.data, account.address, maxBlockSize)
-      .then(res => next(transactionsUpdated(res.transactions)));
+      .then(response => next(transactionsUpdated({
+        confirmed: response.transactions,
+        count: parseInt(response.count, 10),
+      })));
     }
     next(accountUpdated(result));
   });
