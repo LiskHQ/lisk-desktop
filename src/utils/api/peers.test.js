@@ -1,11 +1,7 @@
-import chai, { expect } from 'chai';
+import { expect } from 'chai';
 import { mock } from 'sinon';
-import sinonChai from 'sinon-chai';
-import chaiAsPromised from 'chai-as-promised';
 import { requestToActivePeer } from './peers';
 
-chai.use(chaiAsPromised);
-chai.use(sinonChai);
 
 describe('Utils: Peers', () => {
   describe('requestToActivePeer', () => {

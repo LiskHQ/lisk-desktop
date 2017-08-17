@@ -1,14 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import chai, { expect } from 'chai';
+import { expect } from 'chai';
 import { spy } from 'sinon';
-import sinonChai from 'sinon-chai';
 import { mount, shallow } from 'enzyme';
 import Lisk from 'lisk-js';
 import Cookies from 'js-cookie';
 import LoginFormComponent from './loginFormComponent';
 
-chai.use(sinonChai);
 
 describe('LoginFormComponent', () => {
   // Mocking store

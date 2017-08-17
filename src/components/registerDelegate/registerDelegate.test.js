@@ -1,7 +1,6 @@
 import React from 'react';
-import chai, { expect } from 'chai';
+import { expect } from 'chai';
 import { mount } from 'enzyme';
-import chaiEnzyme from 'chai-enzyme';
 import sinon from 'sinon';
 import Lisk from 'lisk-js';
 import { Provider } from 'react-redux';
@@ -9,8 +8,6 @@ import store from '../../store';
 import RegisterDelegate from './registerDelegate';
 import * as delegateApi from '../../utils/api/delegate';
 
-
-chai.use(chaiEnzyme());
 
 const normalAccount = {
   isDelegate: false,

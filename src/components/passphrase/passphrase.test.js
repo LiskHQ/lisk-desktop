@@ -1,13 +1,11 @@
 import React from 'react';
-import chai, { expect } from 'chai';
+import { expect } from 'chai';
 import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
 import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
 import store from '../../store';
 import Passphrase from './passphrase';
 
-chai.use(sinonChai);
 
 describe('Passphrase Component', () => {
   let wrapper;

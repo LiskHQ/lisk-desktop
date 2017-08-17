@@ -1,17 +1,13 @@
 import React from 'react';
-import chai, { expect } from 'chai';
+import { expect } from 'chai';
 import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
 import { mount } from 'enzyme';
-import chaiEnzyme from 'chai-enzyme';
 import { Provider } from 'react-redux';
 import * as transactionsActions from '../../actions/transactions';
 import * as dialogActions from '../../actions/dialog';
 import store from '../../store';
 import SecondPassphraseConnected, { SecondPassphrase } from './index';
 
-chai.use(chaiEnzyme());
-chai.use(sinonChai);
 
 describe('SecondPassphrase', () => {
   let wrapper;

@@ -1,5 +1,4 @@
-import chai, { expect } from 'chai';
-import sinonChai from 'sinon-chai';
+import { expect } from 'chai';
 import sinon from 'sinon';
 import { listAccountDelegates,
   listDelegates,
@@ -10,7 +9,6 @@ import { listAccountDelegates,
   registerDelegate } from './delegate';
 import * as peers from './peers';
 
-chai.use(sinonChai);
 const username = 'genesis_1';
 const secret = 'sample_secret';
 const secondSecret = 'samepl_second_secret';

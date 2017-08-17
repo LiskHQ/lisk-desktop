@@ -1,10 +1,7 @@
-import chai, { expect } from 'chai';
-import sinonChai from 'sinon-chai';
+import { expect } from 'chai';
 import peers from './peers';
 import actionTypes from '../../constants/actions';
 
-
-chai.use(sinonChai);
 
 describe('Reducer: peers(state, action)', () => {
   it('should return state object with data of active peer in state.data if action is activePeerSet', () => {

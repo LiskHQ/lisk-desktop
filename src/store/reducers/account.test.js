@@ -1,10 +1,7 @@
-import chai, { expect } from 'chai';
-import sinonChai from 'sinon-chai';
+import { expect } from 'chai';
 import account from './account';
 import actionTypes from '../../constants/actions';
 
-
-chai.use(sinonChai);
 
 describe('Reducer: account(state, action)', () => {
   let state;

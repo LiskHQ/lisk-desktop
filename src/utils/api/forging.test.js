@@ -1,8 +1,5 @@
-import chai, { expect } from 'chai';
-import sinonChai from 'sinon-chai';
+import { expect } from 'chai';
 import { getForgedBlocks, getForgedStats } from './forging';
-
-chai.use(sinonChai);
 
 
 describe('Utils: Forging', () => {

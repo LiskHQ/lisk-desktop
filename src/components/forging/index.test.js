@@ -1,14 +1,11 @@
 import React from 'react';
-import chai, { expect } from 'chai';
-import sinonChai from 'sinon-chai';
+import { expect } from 'chai';
 import sinon from 'sinon';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import * as forgingActions from '../../actions/forging';
 import Forging from './';
-
-chai.use(sinonChai);
 
 
 describe('Forging', () => {

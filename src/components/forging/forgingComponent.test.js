@@ -1,12 +1,9 @@
 import React from 'react';
-import chai, { expect } from 'chai';
-import sinonChai from 'sinon-chai';
+import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
 import ForgingComponent from './forgingComponent';
 import * as forgingApi from '../../utils/api/forging';
-
-chai.use(sinonChai);
 
 
 describe('ForgingComponent', () => {

@@ -1,13 +1,11 @@
 import React from 'react';
-import chai, { expect } from 'chai';
+import { expect } from 'chai';
 import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
 import VotingHeader from './votingHeader';
 
-chai.use(sinonChai);
 describe('VotingHeader', () => {
   let wrapper;
   const mockStore = configureStore();
