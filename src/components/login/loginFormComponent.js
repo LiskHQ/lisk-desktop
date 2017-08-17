@@ -32,6 +32,11 @@ class LoginFormComponent extends React.Component {
       address: '',
       network: 0,
     };
+
+    this.validators = {
+      address: this.validateUrl,
+      passphrase: this.validatePassphrase,
+    };
   }
 
   componentDidMount() {
@@ -42,9 +47,14 @@ class LoginFormComponent extends React.Component {
   componentDidUpdate() {
     if (this.props.account && this.props.account.address) {
       this.props.history.replace('/main/transactions');
+      if (this.state.address) {
+        Cookies.set('address', this.state.address);
+      }
+      Cookies.set('network', this.state.network);
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   validateUrl(value) {
     const addHttp = (url) => {
       const reg = /^(?:f|ht)tps?:\/\//i;
@@ -60,10 +70,10 @@ class LoginFormComponent extends React.Component {
     }
 
     const data = { address: value, addressValidity };
-    this.setState(data);
     return data;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   validatePassphrase(value) {
     const data = { passphrase: value };
     if (!value || value === '') {
@@ -71,13 +81,15 @@ class LoginFormComponent extends React.Component {
     } else {
       data.passphraseValidity = isValidPassphrase(value) ? '' : 'Invalid passphrase';
     }
-
-    this.setState(data);
     return data;
   }
 
   changeHandler(name, value) {
-    this.setState({ [name]: value });
+    const validator = this.validators[name] || (() => ({}));
+    this.setState({
+      [name]: value,
+      ...validator(value),
+    });
   }
 
   onLoginSubmission(passphrase) {
@@ -96,10 +108,13 @@ class LoginFormComponent extends React.Component {
   devPreFill() {
     const address = Cookies.get('address');
     const passphrase = Cookies.get('passphrase');
+    const network = parseInt(Cookies.get('network'), 10) || 0;
 
-    this.setState({ network: address ? 2 : 0 });
-    this.validateUrl(address);
-    this.validatePassphrase(passphrase);
+    this.setState({
+      network,
+      ...this.validators.address(address),
+      ...this.validators.passphrase(passphrase),
+    });
   }
 
   render() {
@@ -117,13 +132,14 @@ class LoginFormComponent extends React.Component {
           this.state.network === 2 &&
           <Input type='text' label='Node address' name='address' className='address'
             value={this.state.address} error={this.state.addressValidity}
-            onChange={this.validateUrl.bind(this)} />
+            onChange={this.changeHandler.bind(this, 'address')} />
         }
         <Input type={this.state.showPassphrase ? 'text' : 'password'}
           label='Enter your passphrase' name='passphrase'
           className='passphrase'
           error={this.state.passphraseValidity === 'Invalid passphrase' ? 'Invalid passphrase' : ''}
-          value={this.state.passphrase} onChange={this.validatePassphrase.bind(this)} />
+          value={this.state.passphrase}
+          onChange={this.changeHandler.bind(this, 'passphrase')} />
         <Checkbox
           checked={this.state.showPassphrase}
           label="Show passphrase"
