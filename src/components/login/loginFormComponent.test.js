@@ -179,8 +179,8 @@ describe('LoginFormComponent', () => {
   describe('changeHandler', () => {
     it('call setState with matching data', () => {
       const wrapper = shallow(<LoginFormComponent />, options);
-      const key = 'address';
-      const value = 'http://llocalhost:8080';
+      const key = 'network';
+      const value = 0;
       const spyFn = spy(LoginFormComponent.prototype, 'setState');
       wrapper.instance().changeHandler(key, value);
       expect(spyFn).to.have.been.calledWith({ [key]: value });
