@@ -30,8 +30,8 @@ function waitForElemAndSendKeys(selector, keys, callback) {
 }
 
 function checkAlertDialog(title, text, callback) {
-  waitForElemAndCheckItsText('md-dialog h2', title);
-  waitForElemAndCheckItsText('md-dialog .md-dialog-content-body', text, () => {
+  waitForElemAndCheckItsText('.modal-dialog h1', title);
+  waitForElemAndCheckItsText('.modal-dialog .modal-dialog-body', text, () => {
     if (callback) callback();
   });
 }

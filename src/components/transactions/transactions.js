@@ -50,7 +50,7 @@ class Transactions extends React.Component {
             ))}
           </tbody>
         </table> :
-          <p className={`${styles.empty} hasPaddingRow`}>No transactions</p>
+          <p className={`${styles.empty} hasPaddingRow empty-message`}>No transactions</p>
         }
         <Waypoint onEnter={() => { this.loadMore(); } }></Waypoint>
       </div>
