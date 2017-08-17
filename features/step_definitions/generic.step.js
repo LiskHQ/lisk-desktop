@@ -53,6 +53,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
 
   When('I select option no. {index} from "{selectName}" select', (index, selectName, callback) => {
     waitForElemAndClickIt(`.${selectName}`);
+    browser.sleep(500);
     const optionElem = element.all(by.css(`.${selectName} ul li`)).get(index - 1);
     browser.wait(EC.presenceOf(optionElem), waitTime);
     optionElem.click().then(callback);
