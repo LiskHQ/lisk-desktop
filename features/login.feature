@@ -21,6 +21,17 @@ Feature: Login page
     Then I should be logged in
     And I should see text "Testnet" in "peer network" element
 
+  Scenario: should remember the selected network
+    Given I'm on login page
+    When I fill in "wagon stock borrow episode laundry kitten salute link globe zero feed marble" to "passphrase" field
+    And I select option no. 2 from "network" select
+    And I click "login button"
+    And I click "logout button"
+    And I fill in "wagon stock borrow episode laundry kitten salute link globe zero feed marble" to "passphrase" field
+    And I click "login button"
+    Then I should be logged in
+    And I should see text "Testnet" in "peer network" element
+
   @ignore
   Scenario: should allow to create a new account
     Given I'm on login page
