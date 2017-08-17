@@ -45,6 +45,7 @@ class LoginFormComponent extends React.Component {
       if (this.state.address) {
         Cookies.set('address', this.state.address);
       }
+      Cookies.set('network', this.state.network);
     }
   }
 
@@ -99,8 +100,9 @@ class LoginFormComponent extends React.Component {
   devPreFill() {
     const address = Cookies.get('address');
     const passphrase = Cookies.get('passphrase');
+    const network = parseInt(Cookies.get('network'), 10);
 
-    this.setState({ network: address ? 2 : 0 });
+    this.setState({ network });
     this.validateUrl(address);
     this.validatePassphrase(passphrase);
   }
