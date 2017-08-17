@@ -1,5 +1,4 @@
 Feature: Main page top area
-  @ignore
   Scenario: should allow to logout
     Given I'm logged in as "any account"
     When I click "logout button"

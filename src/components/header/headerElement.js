@@ -26,6 +26,7 @@ const HeaderElement = props => (
           {
             !props.account.isDelegate &&
               <MenuItem caption="Register as delegate"
+                className='register-as-delegate'
                 onClick={() => props.setActiveDialog({
                   title: 'Register as delegate',
                   childComponent: RegisterDelegate,

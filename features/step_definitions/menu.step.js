@@ -14,7 +14,7 @@ defineSupportCode(({ When, Then }) => {
   });
 
   Then('There is no "{itemSelector}" in main menu', (itemSelector, callback) => {
-    waitForElemAndClickIt('header .md-icon-button');
+    waitForElemAndClickIt('.main-menu-icon-button');
     browser.sleep(1000);
     expect(element.all(by.css(`md-menu-item .md-button.${itemSelector.replace(/ /g, '-')}`)).count()).to.eventually.equal(0)
       .and.notify(callback);

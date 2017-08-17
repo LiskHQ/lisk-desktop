@@ -5,6 +5,7 @@ import { spy } from 'sinon';
 import sinonChai from 'sinon-chai';
 import { mount, shallow } from 'enzyme';
 import Lisk from 'lisk-js';
+import Cookies from 'js-cookie';
 import LoginFormComponent from './loginFormComponent';
 
 chai.use(sinonChai);
@@ -75,6 +76,33 @@ describe('LoginFormComponent', () => {
       const spyFn = spy(LoginFormComponent.prototype, 'devPreFill');
       mount(<LoginFormComponent />, options);
       expect(spyFn).to.have.been.calledWith();
+    });
+  });
+
+  describe('componentDidUpdate', () => {
+    const address = 'http:localhost:8080';
+    const props = {
+      account: { address: 'dummy' },
+      history: {
+        replace: spy(),
+      },
+    };
+
+    it('calls this.props.history.replace(\'/main/transactions\')', () => {
+      const wrapper = mount(<LoginFormComponent />, options);
+      wrapper.setProps(props);
+      expect(props.history.replace).to.have.been.calledWith('/main/transactions');
+    });
+
+    it('calls Cookies.set(\'address\', address) if this.state.address', () => {
+      const spyFn = spy(Cookies, 'set');
+      const wrapper = mount(<LoginFormComponent />, options);
+      wrapper.setState({ address });
+      wrapper.setProps(props);
+      expect(spyFn).to.have.been.calledWith('address', address);
+
+      spyFn.restore();
+      Cookies.remove('address');
     });
   });
 
@@ -151,8 +179,8 @@ describe('LoginFormComponent', () => {
   describe('changeHandler', () => {
     it('call setState with matching data', () => {
       const wrapper = shallow(<LoginFormComponent />, options);
-      const key = 'address';
-      const value = 'http://llocalhost:8080';
+      const key = 'network';
+      const value = 0;
       const spyFn = spy(LoginFormComponent.prototype, 'setState');
       wrapper.instance().changeHandler(key, value);
       expect(spyFn).to.have.been.calledWith({ [key]: value });

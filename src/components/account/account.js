@@ -30,7 +30,7 @@ const Account = ({
             <span id="accountStatus" className="status">
               {status}
             </span>
-            <p className="inner primary">
+            <p className="inner primary peer-network">
               {peers.data.options.name}
             </p>
             <p className="inner secondary peer">
