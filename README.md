@@ -71,17 +71,15 @@ npm run test-live
 
 ### Setup
 
-To setup protractor as described on http://www.protractortest.org/#/ run:
+Setup protractor
 
 ```
-npm install -g protractor
-webdriver-manager update
-webdriver-manager start
+./node_modules/protractor/bin/webdriver-manager update
 ```
 
 Setup a lisk test node to run on localhost:4000 as described in https://github.com/LiskHQ/lisk#tests
 
-Make sure that the Lisk version of the node matches version in https://github.com/LiskHQ/lisk-nano/blob/development/src/app/services/peers/peer.js#L16
+And run it with [pm2](http://pm2.keymetrics.io/).
 
 ### Run
 

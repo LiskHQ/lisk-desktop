@@ -7,7 +7,7 @@ import { fromRawLsk } from '../../utils/lsk';
 const ClickToSendComponent = props => (
   props.disabled ?
     props.children :
-    <span className={styles.clickable}
+    <span className={`${styles.clickable} ${props.className}`}
       onClick={() => (props.setActiveDialog({
         title: 'Send',
         childComponent: Send,
