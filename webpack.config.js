@@ -38,9 +38,9 @@ module.exports = (env) => {
         PRODUCTION: env.prod,
         TEST: env.test,
         // because of https://fb.me/react-minification
-        'process.env': env.prod ? {
-          NODE_ENV: JSON.stringify('production'),
-        } : null,
+        'process.env': {
+          NODE_ENV: env.prod ? JSON.stringify('production') : null,
+        },
       }),
       new ExtractTextPlugin({
         filename: 'styles.css',
