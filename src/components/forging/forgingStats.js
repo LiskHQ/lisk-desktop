@@ -36,7 +36,7 @@ class ForgingStats extends React.Component {
     return (
       <div className={`${grid.row} ${grid['between-xs']}`}>
         {statCardObjects.map(cardObj => (
-          <div className={grid['col-xs-3']} key={cardObj.key}>
+          <div className={`${grid['col-xs-12']} ${grid['col-sm-3']}`} key={cardObj.key}>
             <Card className={style.grayCard}>
               <CardText>
               <div className={grid['col-xs-12']}>
