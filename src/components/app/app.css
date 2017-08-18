@@ -40,3 +40,7 @@ body{
 :global .hasPaddingRow{
   padding: 0 16px;
 }
+
+:global .verticalScroll {
+  overflow-x: auto;
+}
