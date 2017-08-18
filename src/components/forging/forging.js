@@ -6,15 +6,23 @@ import DelegateStats from './delegateStats';
 import ForgingStats from './forgingStats';
 import ForgedBlocks from './forgedBlocks';
 
-class ForgingComponent extends React.Component {
+class Forging extends React.Component {
   loadStats(key, startMoment) {
-    this.props.onForgingStatsUpdate(this.props.peers.data, key,
-      startMoment, this.props.account.publicKey);
+    this.props.onForgingStatsUpdated({
+      activePeer: this.props.peers.data,
+      key,
+      startMoment,
+      generatorPublicKey: this.props.account.publicKey,
+    });
   }
 
   loadForgedBlocks(activePeer, limit, offset) {
-    this.props.onForgedBlocksLoaded(this.props.peers.data, limit,
-      offset, this.props.account.publicKey);
+    this.props.onForgedBlocksLoaded({
+      activePeer: this.props.peers.data,
+      limit,
+      offset,
+      generatorPublicKey: this.props.account.publicKey,
+    });
   }
 
   render() {
@@ -52,4 +60,4 @@ class ForgingComponent extends React.Component {
   }
 }
 
-export default ForgingComponent;
+export default Forging;
