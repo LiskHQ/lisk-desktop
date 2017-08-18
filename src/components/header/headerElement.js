@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from 'react-toolbox/lib/button';
 import { IconMenu, MenuItem } from 'react-toolbox/lib/menu';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import logo from '../../assets/images/LISK-nano.png';
 import styles from './header.css';
 import VerifyMessage from '../signVerify/verifyMessage';
@@ -11,8 +12,10 @@ import PrivateWrapper from '../privateWrapper';
 import SecondPassphraseMenu from '../secondPassphrase';
 
 const HeaderElement = props => (
-  <header className={styles.wrapper}>
-    <img className={styles.logo} src={logo} alt="logo" />
+  <header className={`${grid.row} ${grid['between-xs']} ${styles.wrapper}`} >
+    <div className={styles.logoWrapper}>
+      <img className={styles.logo} src={logo} alt="logo" />
+    </div>
     <PrivateWrapper>
       <IconMenu
         className={`${styles.iconButton} main-menu-icon-button`}
@@ -57,7 +60,7 @@ const HeaderElement = props => (
           title: 'Send',
           childComponent: Send,
         })}>Send</Button>
-      </PrivateWrapper>
+    </PrivateWrapper>
   </header>
 );
 

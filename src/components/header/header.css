@@ -1,11 +1,15 @@
 .wrapper{
-    margin: 5px -8px 16px 0;
+    margin: 5px -8px 8px 0;
     padding: 8px;
 }
+.logoWrapper {
+    width: 50%;
+}
 .logo{
-    width: 25%;
+    width: 50%;
     min-width: 128px;
-    max-width: 256px;
+    max-width: 200px;
+    padding: 8px;
 }
 .button, .iconButton{
     padding: 8px;
