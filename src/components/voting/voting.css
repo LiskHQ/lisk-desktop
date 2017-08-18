@@ -36,6 +36,12 @@
     margin-top: 9px;
     display: inline-block;
 }
+.selectedRow{
+    background: #EEEEEE;
+}
+.hidden{
+    display: none !important;
+}
 .votesMenuButton{
     margin-right: 16px;
     margin-top: 8px;
@@ -50,6 +56,18 @@
 }
 .unvoted {
     color: #c62828;
+}
+.searchContainer{
+    position: relative;
+}
+.searchResult{
+    position: absolute;
+    left: 0;
+    top: 52px;
+    width: 300px !important;
+    max-height: 200px;
+    overflow: auto !important;
+    z-index: 9;
 }
 /* react toolbar overwroght */
 .input{
