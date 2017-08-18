@@ -57,6 +57,7 @@ class VotingHeader extends React.Component {
       <header className={`${grid.row} ${grid['between-xs']} hasPaddingRow`}>
         <div className={`${grid['col-xs-3']} ${styles.searchBox}`}>
           <Input type='tel' label='Search' name='query'
+            className='search'
             theme={styles}
             value={this.state.query}
             onChange={this.search.bind(this, 'query')}
@@ -66,7 +67,8 @@ class VotingHeader extends React.Component {
           </i>
         </div>
         <div className={styles.actionBar}>
-          <IconMenu theme={styles} icon={button} position='topLeft' iconRipple={false}>
+          <IconMenu theme={styles} icon={button} position='topLeft'
+            iconRipple={false} className='my-votes-button'>
             {this.props.votedDelegates.map(delegate =>
               <MenuItem
                 theme={styles}
@@ -76,6 +78,7 @@ class VotingHeader extends React.Component {
                 onClick={this.props.addToUnvoted.bind(this, delegate)} />)}
           </IconMenu>
           <Button icon='done' flat
+            className='vote-button'
             onClick={() => this.props.setActiveDialog({
               title: 'Vote for delegates',
               childComponent: Confirm,

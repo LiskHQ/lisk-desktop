@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const { defineSupportCode } = require('cucumber');
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -26,7 +27,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     const selectorClass = `.${fieldName.replace(/ /g, '-')}`;
     const secondPassphrase = accounts[accountName].secondPassphrase;
     browser.sleep(500);
-    waitForElemAndSendKeys(`input${selectorClass}, textarea${selectorClass}`, secondPassphrase, callback);
+    waitForElemAndSendKeys(`${selectorClass} input, ${selectorClass} textarea`, secondPassphrase, callback);
   });
 
 
@@ -46,13 +47,14 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   });
 
   When('I click "{elementName}" in "{menuName}" menu', (elementName, menuName, callback) => {
-    waitForElemAndClickIt(`.md-icon-button.${menuName.replace(/ /g, '-')}`);
+    waitForElemAndClickIt(`.${menuName.replace(/ /g, '-')}`);
     browser.sleep(1000);
-    waitForElemAndClickIt(`md-menu-item .md-button.${elementName.replace(/ /g, '-')}`, callback);
+    waitForElemAndClickIt(`.${elementName.replace(/ /g, '-')}`, callback);
   });
 
   When('I select option no. {index} from "{selectName}" select', (index, selectName, callback) => {
     waitForElemAndClickIt(`.${selectName}`);
+    browser.sleep(500);
     const optionElem = element.all(by.css(`.${selectName} ul li`)).get(index - 1);
     browser.wait(EC.presenceOf(optionElem), waitTime);
     optionElem.click().then(callback);
@@ -69,7 +71,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   });
 
   Then('I should see table with {lineCount} lines', (lineCount, callback) => {
-    browser.sleep(3500);
+    browser.sleep(500);
     expect(element.all(by.css('table tbody tr')).count()).to.eventually.equal(parseInt(lineCount, 10))
       .and.notify(callback);
   });
@@ -81,7 +83,8 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   });
 
   Then('I should see "{text}" error message', (text, callback) => {
-    waitForElemAndCheckItsText('.md-input-message-animation, .error-message', text, callback);
+    browser.sleep(500);
+    waitForElemAndCheckItsText('.error-message, .theme__error___2k5Jz', text, callback);
   });
 
   Then('"{elementName}" should be disabled', (elementName, callback) => {
@@ -100,6 +103,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     browser.driver.manage().window().setSize(1000, 1000);
     browser.get('http://localhost:8080/');
     browser.manage().addCookie({ name: 'address', value: 'http://localhost:4000' });
+    browser.manage().addCookie({ name: 'network', value: '2' });
     browser.get('http://localhost:8080/');
     waitForElemAndSendKeys('.passphrase input', accounts[accountName].passphrase);
     waitForElemAndClickIt('.login-button', callback);
@@ -111,9 +115,8 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
      * Generates a sequence of random pairs of x,y coordinates on the screen that simulates
      * the movement of mouse to produce a pass phrase.
      */
-    for (let i = 0; i < iterations; i++) {
-      actions
-      .mouseMove(element(by.css('body')), {
+    for (let i = 0; i < iterations; i += 1) {
+      actions.mouseMove(element(by.css('body')), {
         x: 500 + (Math.floor((((i % 2) * 2) - 1) * (249 + (Math.random() * 250)))),
         y: 500 + (Math.floor((((i % 2) * 2) - 1) * (249 + (Math.random() * 250)))),
       });

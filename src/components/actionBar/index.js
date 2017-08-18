@@ -19,7 +19,7 @@ const ActionBar = ({
       label={primaryButton.label}
       fee={primaryButton.fee}
       balance={account ? account.balance : 0}
-      className={primaryButton.className || 'submit-button'}
+      customClassName={primaryButton.className || 'submit-button'}
       disabled={primaryButton.disabled}
       onClick={primaryButton.onClick} />
   </section>

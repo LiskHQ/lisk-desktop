@@ -18,7 +18,7 @@ const TransactionRow = props => (
         <TooltipWrapper tooltip={`${props.value.confirmations} confirmations`}>{props.value.id}</TooltipWrapper>
     </td>
     <td className={`${props.tableStyle.rowCell} ${styles.centerText}`}>
-      <TransactionType {...props.value}></TransactionType>
+      <TransactionType {...props.value} address={props.address}></TransactionType>
     </td>
     <td className={`${props.tableStyle.rowCell} ${styles.centerText}`}>
       <Status {...props}></Status>

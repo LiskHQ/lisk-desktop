@@ -60,7 +60,7 @@ class RegisterDelegate extends React.Component {
              this.props.account.secondSignature &&
               <Input label='Second secret'
                 required={true}
-                className='second-secret'
+                className='second-secret second-passphrase'
                 onChange={this.changeHandler.bind(this, 'secondSecret')}
                 value={this.state.secondSecret} />
           }
@@ -78,6 +78,7 @@ class RegisterDelegate extends React.Component {
           primaryButton={{
             label: 'Register',
             fee: Fees.registerDelegate,
+            className: 'register-button',
             disabled: !this.state.name ||
               this.props.account.isDelegate ||
               (this.props.account.secondSignature && !this.state.secondSecret),
