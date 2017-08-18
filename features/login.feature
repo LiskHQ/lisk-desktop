@@ -21,6 +21,7 @@ Feature: Login page
     Then I should be logged in
     And I should see text "Testnet" in "peer network" element
 
+  @ignore
   Scenario: should remember the selected network
     Given I'm on login page
     When I fill in "wagon stock borrow episode laundry kitten salute link globe zero feed marble" to "passphrase" field
