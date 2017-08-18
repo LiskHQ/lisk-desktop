@@ -91,10 +91,6 @@ node('lisk-nano-01'){
         sh '''
         export ON_JENKINS=true
 
-	# Start xvfb
-        export DISPLAY=:99
-        Xvfb :99 -ac -screen 0 1280x1024x24 &
-
         # Run test
         cd $WORKSPACE
         npm run test

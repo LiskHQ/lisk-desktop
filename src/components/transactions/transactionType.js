@@ -31,10 +31,11 @@ const TransactionType = (props) => {
       type = false;
       break;
   }
+  const address = props.address !== props.senderId ? props.senderId : props.recipientId;
   const template = type ?
     <span className={sytles.smallButton}>{type}</span> :
-    <ClickToSend recipient={props.senderId} >
-      <TooltipWrapper tooltip="Send to this recipient">{props.senderId}</TooltipWrapper>
+    <ClickToSend recipient={address} className='from-to' >
+      <TooltipWrapper tooltip="Send to this address">{address}</TooltipWrapper>
     </ClickToSend>;
   return template;
 };

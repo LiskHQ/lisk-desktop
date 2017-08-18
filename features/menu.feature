@@ -9,26 +9,22 @@ Feature: Top right menu
     And I click "ok button"
     Then I should see alert dialog with title "Success" and text "Second passphrase registration was successfully submitted. It can take several seconds before it is processed."
 
-  @ignore
   Scenario: should not allow to set 2nd passphrase again
     Given I'm logged in as "second passphrase account"
     Then There is no "register second passphrase" in main menu
 
-  @ignore
   Scenario: should not allow to set 2nd passphrase if not enough funds for the fee
     Given I'm logged in as "empty account"
     When I click "register second passphrase" in main menu
-    Then I should see "Not enough LSK to pay 5 LSK fee" error message
+    Then I should see "Insufficient funds for 5 LSK fee" error message
     And "next button" should be disabled
 
-  @ignore
   Scenario: should allow to exit 2nd passphrase registration dialog
     Given I'm logged in as "genesis"
     When I click "register second passphrase" in main menu
     And I click "cancel button"
     Then I should see no "modal dialog"
 
-  @ignore
   Scenario: should allow to register a delegate
     Given I'm logged in as "delegate candidate"
     When I click "register as delegate" in main menu
@@ -36,12 +32,10 @@ Feature: Top right menu
     And I click "register button"
     Then I should see alert dialog with title "Success" and text "Delegate registration was successfully submitted. It can take several seconds before it is processed."
 
-  @ignore
   Scenario: should not allow to register a delegate again
     Given I'm logged in as "delegate"
     Then There is no "register as delegate" in main menu
 
-  @ignore
   Scenario: should allow to register a delegate with second passphrase
     Given I'm logged in as "second passphrase account"
     When I click "register as delegate" in main menu
@@ -50,18 +44,16 @@ Feature: Top right menu
     And I click "register button"
     Then I should see alert dialog with title "Success" and text "Delegate registration was successfully submitted. It can take several seconds before it is processed."
 
-  @ignore
   Scenario: should allow to exit delegate registration dialog
     Given I'm logged in as "genesis"
     When I click "register as delegate" in main menu
     And I click "cancel button"
     Then I should see no "modal dialog"
 
-  @ignore
   Scenario: should not allow to register delegate if not enough funds for the fee
     Given I'm logged in as "empty account"
     When I click "register as delegate" in main menu
-    Then I should see "Not enough LSK to pay 25 LSK fee" error message
+    Then I should see "Insufficient funds for 25 LSK fee" error message
     And "register button" should be disabled
 
   Scenario: should allow to sign message

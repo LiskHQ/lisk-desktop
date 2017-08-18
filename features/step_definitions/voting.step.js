@@ -9,7 +9,7 @@ const expect = chai.expect;
 
 defineSupportCode(({ When, Then }) => {
   When('I click checkbox on table row no. {index}', (index, callback) => {
-    waitForElemAndClickIt(`delegates tr:nth-child(${index}) md-checkbox`, callback);
+    waitForElemAndClickIt(`table tr:nth-child(${index}) td label`, callback);
   });
 
   When('Search twice for "{searchTerm}" in vote dialog', (searchTerm, callback) => {
@@ -20,7 +20,7 @@ defineSupportCode(({ When, Then }) => {
   });
 
   Then('I should see delegates list with {count} lines', (count, callback) => {
-    expect(element.all(by.css('md-menu-item.vote-list-item')).count())
+    expect(element.all(by.css('.my-votes-button li')).count())
       .to.eventually.equal(parseInt(count, 10))
       .and.notify(callback);
   });
