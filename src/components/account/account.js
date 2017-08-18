@@ -15,8 +15,8 @@ const Account = ({
   account, peers,
 }) => {
   const status = (peers.status && peers.status.online) ?
-      <i className="material-icons online">check</i>
-      : <i className="material-icons offline">error</i>;
+    <i className="material-icons online">check</i> :
+    <i className="material-icons offline">error</i>;
 
   return (
     <section className={`${grid.row} ${styles.wrapper}`}>
