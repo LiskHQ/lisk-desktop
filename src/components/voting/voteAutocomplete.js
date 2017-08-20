@@ -29,32 +29,36 @@ export class VoteAutocomplete extends React.Component {
   }
   search(name, value) {
     this.setState({ ...this.state, [name]: value });
-    if (value.length > 0) {
-      if (name === 'votedListSearch') {
-        voteAutocomplete(this.props.activePeer, value, this.props.voted)
-          .then((res) => {
-            this.setState({
-              votedResult: res,
-              votedSuggestionClass: '',
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      if (value.length > 0) {
+        if (name === 'votedListSearch') {
+          voteAutocomplete(this.props.activePeer, value, this.props.voted)
+            .then((res) => {
+              this.setState({
+                votedResult: res,
+                votedSuggestionClass: '',
+              });
             });
-          });
+        } else {
+          unvoteAutocomplete(value, this.props.voted)
+            .then((res) => {
+              this.setState({
+                unvotedResult: res,
+                unvotedSuggestionClass: '',
+              });
+            });
+        }
       } else {
-        unvoteAutocomplete(value, this.props.voted)
-          .then((res) => {
-            this.setState({
-              unvotedResult: res,
-              unvotedSuggestionClass: '',
-            });
-          });
+        this.setState({
+          votedResult: [],
+          votedSuggestionClass: styles.hidden,
+          unvotedSuggestionClass: styles.hidden,
+        });
       }
-    } else {
-      this.setState({
-        votedResult: [],
-        votedSuggestionClass: styles.hidden,
-      });
-    }
+    }, 250);
   }
-  votedSearchKeydown(event) {
+  votedSearchKeyDown(event) {
     this.keyPress(event, 'votedSuggestionClass', 'votedResult');
   }
   unvotedSearchKeyDown(event) {
@@ -141,7 +145,7 @@ export class VoteAutocomplete extends React.Component {
             className='votedListSearch' value={this.state.votedListSearch}
             // onFocus={this.suggestionStatus.bind(this, true)}
             onBlur={this.suggestionStatus.bind(this, false, 'votedSuggestionClass')}
-            onKeyDown={this.votedSearchKeydown.bind(this)}
+            onKeyDown={this.votedSearchKeyDown.bind(this)}
             onChange={this.search.bind(this, 'votedListSearch')}/>
           <Card id='votedResult' className={`${styles.searchResult} ${this.state.votedSuggestionClass}`}>
             <List>
