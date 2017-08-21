@@ -37,7 +37,8 @@ const DelegateStats = props => (
               <div className={style.circularProgressTitle}> {cardItem.label} </div>
               <CircularProgressbar
                 percentage={cardItem.percentageTransform(props.delegate[cardItem.key])}
-                textForPercentage={cardItem.textForPercentage.bind(props.delegate[cardItem.key])}/>
+                textForPercentage={
+                  cardItem.textForPercentage.bind(null, props.delegate[cardItem.key])}/>
             </div>
           </div>
           </CardText>
