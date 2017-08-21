@@ -13,13 +13,13 @@ describe('OfflineWrapperComponent', () => {
     const wrapper = shallow(
       <OfflineWrapperComponent offline={true}><h1 /> </OfflineWrapperComponent>);
     expect(wrapper).to.contain(<h1 />);
-    expect(wrapper).to.have.className(styles.offline);
+    expect(wrapper).to.have.className(styles.isOffline);
   });
 
   it('renders without "offline" class if props.offline', () => {
     const wrapper = shallow(
       <OfflineWrapperComponent offline={false}><h1 /> </OfflineWrapperComponent>);
-    expect(wrapper).not.to.have.className(styles.offline);
+    expect(wrapper).not.to.have.className(styles.isOffline);
   });
 });
 

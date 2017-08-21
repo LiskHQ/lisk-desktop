@@ -13,14 +13,15 @@ import Toaster from '../toaster';
 import Tabs from '../tabs';
 import LoadingBar from '../loadingBar';
 import OfflineWrapper from '../offlineWrapper';
+import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 
 const App = () => (
-  <section className={styles['body-wrapper']}>
-    <Header />
-    <main>
-      <OfflineWrapper>
+  <OfflineWrapper>
+    <section className={styles['body-wrapper']}>
+      <Header />
+      <main>
         <PrivateRoutes path='/main' render={ ({ match }) => (
-          <main>
+          <main className={offlineStyle.disableWhenOffline}>
             <Account />
             <Tabs />
             <Route path={`${match.url}/transactions`} component={Transactions} />
@@ -28,13 +29,13 @@ const App = () => (
             <Route path={`${match.url}/forging`} component={Forging} />
           </main>
         )} />
-      </OfflineWrapper>
-      <Route exact path="/" component={Login} />
-    </main>
-    <Dialog />
-    <Toaster />
-    <LoadingBar />
-  </section>
+        <Route exact path="/" component={Login} />
+      </main>
+      <Dialog />
+      <Toaster />
+      <LoadingBar />
+    </section>
+  </OfflineWrapper>
 );
 
 export default App;
