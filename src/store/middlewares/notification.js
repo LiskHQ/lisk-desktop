@@ -4,9 +4,9 @@ import Notification from '../../utils/notification';
 const notificationMiddleware = (store) => {
   const notify = Notification.init();
   return next => (action) => {
+    const { account } = store.getState();
     next(action);
 
-    const { account } = store.getState();
     switch (action.type) {
       case actionTypes.accountUpdated: {
         const amount = action.data.balance - account.balance;
