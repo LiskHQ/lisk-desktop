@@ -141,7 +141,7 @@ export class VoteAutocomplete extends React.Component {
           )}
         </div>
         <section className={styles.searchContainer}>
-          <Input type='text' label='search' name='votedListSearch'
+          <Input type='text' label='Search by username' name='votedListSearch'
             className='votedListSearch' value={this.state.votedListSearch}
             // onFocus={this.suggestionStatus.bind(this, true)}
             onBlur={this.suggestionStatus.bind(this, false, 'votedSuggestionClass')}
@@ -172,7 +172,7 @@ export class VoteAutocomplete extends React.Component {
           )}
         </div>
         <section className={styles.searchContainer}>
-          <Input type='text' label='search' name='unvotedListSearch'
+          <Input type='text' label='Search by username' name='unvotedListSearch'
             className='unvotedListSearch' value={this.state.unvotedListSearch}
             // onFocus={this.suggestionStatus.bind(this, true)}
             onBlur={this.suggestionStatus.bind(this, false, 'unvotedSuggestionClass')}
