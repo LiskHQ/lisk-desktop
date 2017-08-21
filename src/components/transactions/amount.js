@@ -16,8 +16,9 @@ const Amount = (props) => {
     params.tooltipText = 'Repeat the transaction';
     params.clickToSendEnabled = true;
   }
-  return <TooltipWrapper tooltip={params.tooltipText} >
+  return <TooltipWrapper tooltip={params.tooltipText}>
     <ClickToSend rawAmount={props.value.amount}
+      className='amount'
       recipient={props.value.recipientId}
       disabled={!params.clickToSendEnabled}>
       <span className={styles[params.className]}>

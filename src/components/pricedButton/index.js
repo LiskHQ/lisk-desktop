@@ -12,7 +12,7 @@ export const PricedButtonComponent = ({
     <div className='primary-button'>
       {
         fee &&
-          (<span className={`${styles.fee} ${hasFunds ? '' : styles.error}`}>
+          (<span className={`${styles.fee} ${hasFunds ? '' : `${styles.error} error-message`} `}>
             {
               hasFunds ? `Fee: ${fromRawLsk(fee)} LSK` :
               `Insufficient funds for ${fromRawLsk(fee)} LSK fee`

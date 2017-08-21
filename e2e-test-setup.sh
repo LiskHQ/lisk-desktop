@@ -9,9 +9,9 @@ fi
 
 pwd=`pwd`
 cd $1
-forever stop app.js
+pm2 stop app.js
 dropdb lisk_test && createdb lisk_test
-forever start app.js
+pm2 start app.js
 sleep 5
 cd $pwd
 

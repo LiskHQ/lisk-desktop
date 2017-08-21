@@ -46,11 +46,13 @@ class Voting extends React.Component {
 
   loadVotedDelegates(refresh) {
     listAccountDelegates(this.props.activePeer, this.props.address).then((res) => {
-      const votedDelegates = res.delegates
-        .map(delegate => Object.assign({}, delegate, { voted: true }));
-      this.setState({
-        votedDelegates,
-      });
+      if (res.delegates) {
+        const votedDelegates = res.delegates
+          .map(delegate => Object.assign({}, delegate, { voted: true }));
+        this.setState({
+          votedDelegates,
+        });
+      }
       if (refresh) {
         setTimeout(() => {
           const delegates = this.state.delegates.map(delegate => this.setStatus(delegate));
@@ -61,6 +63,9 @@ class Voting extends React.Component {
       } else {
         this.loadDelegates(this.query);
       }
+    })
+    .catch(() => {
+      this.loadDelegates(this.query);
     });
   }
 
@@ -106,7 +111,7 @@ class Voting extends React.Component {
         offset: this.state.offset + delegatesList.length,
         length: parseInt(res.totalCount, 10),
         loadMore: true,
-        notFound: delegatesList.length > 0 ? '' : <div className="hasPaddingRow">No delegates found</div>,
+        notFound: delegatesList.length > 0 ? '' : <div className="hasPaddingRow empty-message">No delegates found</div>,
       });
     });
   }

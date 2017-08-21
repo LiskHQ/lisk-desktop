@@ -1,6 +1,6 @@
 # Lisk Nano
 
-[![Build Status](https://jenkins.lisk.io/buildStatus/icon?job=Nano-Pipeline/development)](https://jenkins.lisk.io/job/Nano-Pipeline/job/development)
+[![Build Status](https://jenkins.lisk.io/buildStatus/icon?job=lisk-nano/development)](https://jenkins.lisk.io/job/lisk-nano/job/development)
 [![Coverage Status](https://coveralls.io/repos/github/LiskHQ/lisk-nano/badge.svg?branch=development)](https://coveralls.io/github/LiskHQ/lisk-nano?branch=development)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
@@ -71,17 +71,15 @@ npm run test-live
 
 ### Setup
 
-To setup protractor as described on http://www.protractortest.org/#/ run:
+Setup protractor
 
 ```
-npm install -g protractor
-webdriver-manager update
-webdriver-manager start
+./node_modules/protractor/bin/webdriver-manager update
 ```
 
 Setup a lisk test node to run on localhost:4000 as described in https://github.com/LiskHQ/lisk#tests
 
-Make sure that the Lisk version of the node matches version in https://github.com/LiskHQ/lisk-nano/blob/development/src/app/services/peers/peer.js#L16
+And run it with [pm2](http://pm2.keymetrics.io/).
 
 ### Run
 

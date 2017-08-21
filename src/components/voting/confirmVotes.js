@@ -60,7 +60,7 @@ export class ConfirmVotes extends React.Component {
   render() {
     const secondPassphrase = this.props.account.secondSignature === 1 ?
       <Input type='text' label='Second Passphrase' name='secondSecret'
-        className='secondSecret' value={this.state.secondSecret}
+        className='secondSecret second-passphrase' value={this.state.secondSecret}
         onChange={this.setSecondPass.bind(this, 'secondSecret')}/> : null;
 
     return (
@@ -87,7 +87,7 @@ export class ConfirmVotes extends React.Component {
             onClick: this.props.closeDialog,
           }}
           primaryButton={{
-            label: 'Vote',
+            label: 'Confirm',
             fee: Fees.vote,
             disabled: (
               this.props.votedList.length === 0 &&
