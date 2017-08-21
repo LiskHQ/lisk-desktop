@@ -1,13 +1,10 @@
 import Lisk from 'lisk-js';
 import { expect } from 'chai';
-import sinon, { spy, stub } from 'sinon';
-import sinonStubPromise from 'sinon-stub-promise';
+import { spy, stub } from 'sinon';
 import middleware from './login';
 import actionTypes from '../../constants/actions';
 import * as accountApi from '../../utils/api/account';
 import * as delegateApi from '../../utils/api/delegate';
-
-sinonStubPromise(sinon);
 
 describe('Login middleware', () => {
   let store;

@@ -3,12 +3,9 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
 import PropTypes from 'prop-types';
-import sinonStubPromise from 'sinon-stub-promise';
 import store from '../../store';
 import ConfirmVotesContainer, { ConfirmVotes } from './confirmVotes';
 import * as delegateApi from '../../utils/api/delegate';
-
-sinonStubPromise(sinon);
 
 const props = {
   activePeer: {},

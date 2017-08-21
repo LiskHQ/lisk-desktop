@@ -3,12 +3,9 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
 import sinon from 'sinon';
-import sinonStubPromise from 'sinon-stub-promise';
 import Voting from './voting';
 import store from '../../store';
 import * as delegateApi from '../../utils/api/delegate';
-
-sinonStubPromise(sinon);
 
 describe('Voting', () => {
   let wrapper;
