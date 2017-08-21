@@ -35,3 +35,9 @@
 .centerText{
     text-align: center;
 }
+
+@media screen and (max-width: 48em) {
+  .hiddenXs {
+    display: none;
+  }
+}

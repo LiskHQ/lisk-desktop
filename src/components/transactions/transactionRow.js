@@ -14,7 +14,7 @@ const TransactionRow = props => (
           <TooltipTime label={props.value.timestamp}></TooltipTime> :
           <Spinner />}
     </td>
-    <td className={`${props.tableStyle.rowCell} ${styles.centerText}`}>
+    <td className={`${props.tableStyle.rowCell} ${styles.centerText} ${styles.hiddenXs}`}>
         <TooltipWrapper tooltip={`${props.value.confirmations} confirmations`}>{props.value.id}</TooltipWrapper>
     </td>
     <td className={`${props.tableStyle.rowCell} ${styles.centerText}`}>

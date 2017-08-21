@@ -10,7 +10,7 @@ body{
 }
 .body-wrapper {
   flex: 1 1 80%;
-  max-width: 80%;
+  max-width: 100%;
   max-height: 100%;
   box-sizing: border-box;
   margin: 0 auto;
@@ -39,4 +39,8 @@ body{
 }
 :global .hasPaddingRow{
   padding: 0 16px;
+}
+
+:global .verticalScroll {
+  overflow-x: auto;
 }
