@@ -27,8 +27,8 @@ const ForgedBlocks = props => (
             <TableCell><FormattedNumber val={block.height} /></TableCell>
             <TableCell>{block.id}</TableCell>
             <TableCell><TooltipTime label={block.timestamp} /></TableCell>
-            <TableCell><LiskAmount val={block.totalFee} /></TableCell>
-            <TableCell><LiskAmount val={block.reward} /></TableCell>
+            <TableCell><LiskAmount val={block.totalFee} roundTo={2} /></TableCell>
+            <TableCell><LiskAmount val={block.reward} roundTo={2} /></TableCell>
           </TableRow>
         ))}
       </Table>
