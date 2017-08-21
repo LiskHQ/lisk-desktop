@@ -32,15 +32,15 @@ const DelegateStats = props => (
       <div className={`${grid['col-xs-12']} ${grid['col-sm-4']}`} key={cardItem.key}>
         <Card className={style.grayCard}>
           <CardText>
-          <div className={grid['col-xs-12']}>
-            <div className={`${grid.row}  ${grid['between-xs']}`}>
-              <div className={style.circularProgressTitle}> {cardItem.label} </div>
-              <CircularProgressbar
-                percentage={cardItem.percentageTransform(props.delegate[cardItem.key])}
-                textForPercentage={
-                  cardItem.textForPercentage.bind(null, props.delegate[cardItem.key])}/>
+            <div className={grid['col-xs-12']}>
+              <div className={`${grid.row}  ${grid['between-xs']}`}>
+                <div className={style.circularProgressTitle}> {cardItem.label} </div>
+                <CircularProgressbar
+                  percentage={cardItem.percentageTransform(props.delegate[cardItem.key])}
+                  textForPercentage={
+                    cardItem.textForPercentage.bind(null, props.delegate[cardItem.key])}/>
+              </div>
             </div>
-          </div>
           </CardText>
         </Card>
       </div>
