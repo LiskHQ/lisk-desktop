@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Input from 'react-toolbox/lib/input';
-import { alertDialogDisplayed } from '../../actions/dialog';
-import { clearVoteLists, pendingVotesAdded, votePlaced } from '../../actions/voting';
+import { clearVoteLists, votePlaced } from '../../actions/voting';
 import InfoParagraph from '../infoParagraph';
 import ActionBar from '../actionBar';
 import { SYNC_ACTIVE_INTERVAL } from '../../constants/api';
@@ -35,7 +34,7 @@ export class ConfirmVotes extends React.Component {
   }
 
   setSecondPass(name, value) {
-    this.setState({ ...this.state, [name]: value });
+    this.setState({ [name]: value });
   }
 
   render() {
@@ -47,11 +46,11 @@ export class ConfirmVotes extends React.Component {
     return (
       <article>
         <h3>Add vote to</h3>
-        <ul>
+        <ul className='voted-list'>
           {this.props.votedList.map(item => <li key={item.username}>{item.username}</li>)}
         </ul>
         <h3>Remove vote from</h3>
-        <ul>
+        <ul className='unvoted-list'>
           {this.props.unvotedList.map(item => <li key={item.username}>{item.username}</li>)}
         </ul>
 
@@ -89,9 +88,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  showSuccessAlert: data => dispatch(alertDialogDisplayed(data)),
   clearVoteLists: () => dispatch(clearVoteLists()),
-  pendingVotesAdded: () => dispatch(pendingVotesAdded()),
   votePlaced: data => dispatch(votePlaced(data)),
 });
 

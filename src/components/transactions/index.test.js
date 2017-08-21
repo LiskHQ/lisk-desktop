@@ -2,8 +2,6 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
-import sinon from 'sinon';
-import * as transactionsActions from '../../actions/transactions';
 import TransactionsHOC from './index';
 import store from '../../store';
 

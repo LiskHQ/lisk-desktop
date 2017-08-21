@@ -93,7 +93,6 @@ class LoginForm extends React.Component {
     if (this.state.network === 2) {
       network.address = this.state.address;
     }
-    console.log(this.props);
 
     // set active peer
     this.props.activePeerSet({

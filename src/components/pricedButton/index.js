@@ -5,7 +5,7 @@ import { fromRawLsk } from '../../utils/lsk';
 import styles from './pricedButton.css';
 
 export const PricedButtonComponent = ({
-  balance, fee, label, customClassName, onClick, disabled,
+  balance, fee, label, customClassName, onClick, disabled, account,
 }) => {
   const hasFunds = balance >= fee;
   return (
