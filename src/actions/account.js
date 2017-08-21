@@ -2,6 +2,7 @@ import actionTypes from '../constants/actions';
 import { setSecondPassphrase, send } from '../utils/api/account';
 import { registerDelegate } from '../utils/api/delegate';
 import { transactionAdded } from './transactions';
+import { errorAlertDialogDisplayed } from './dialog';
 import Fees from '../constants/fees';
 import { toRawLsk } from '../utils/lsk';
 
@@ -54,6 +55,9 @@ export const secondPassphraseRegistered = ({ activePeer, secondPassphrase, accou
           fee: Fees.setSecondPassphrase,
           type: 1,
         }));
+      }).catch((error) => {
+        const text = (error && error.message) ? error.message : 'An error occurred while registering your second passphrase. Please try again.';
+        dispatch(errorAlertDialogDisplayed({ text }));
       });
   };
 
@@ -74,8 +78,11 @@ export const delegateRegistered = ({ activePeer, account, username, secondPassph
           fee: Fees.registerDelegate,
           type: 2,
         }));
+      })
+      .catch((error) => {
+        const text = error && error.message ? `${error.message}.` : 'An error occurred while registering as delegate.';
+        dispatch(errorAlertDialogDisplayed({ text }));
       });
-      // @todo catch is not handled
   };
 
 /**
@@ -93,5 +100,9 @@ export const sent = ({ activePeer, account, recipientId, amount, passphrase, sec
           amount,
           fee: Fees.send,
         }));
+      })
+      .catch((res) => {
+        const text = res && res.message ? res.message : 'An error occurred while creating the transaction.';
+        dispatch(errorAlertDialogDisplayed({ text }));
       });
   };

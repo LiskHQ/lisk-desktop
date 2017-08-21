@@ -24,7 +24,8 @@ const addedTransactionMiddleware = store => next => (action) => {
         break;
     }
 
-    store.dispatch(successAlertDialogDisplayed({ text }));
+    const newAction = successAlertDialogDisplayed({ text });
+    store.dispatch(newAction);
   }
 };
 
