@@ -51,7 +51,7 @@ const store = configureMockStore([])({
 });
 let props;
 
-describe.only('ConfirmVotes', () => {
+describe('ConfirmVotes', () => {
   let wrapper;
   props = {
     activePeer: {},
