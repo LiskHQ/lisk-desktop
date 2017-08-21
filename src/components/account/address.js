@@ -1,4 +1,5 @@
 import React from 'react';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './account.css';
 
 const Address = (props) => {
@@ -18,9 +19,15 @@ const Address = (props) => {
 
   return (
     <div className={`box ${styles['text-center']}`}>
-      <h3 id="firstBox" className={styles.title}>{title}</h3>
-      <div className={styles['value-wrapper']}>
-        {content}
+      <div className={`${grid.row}`}>
+        <div className={`${grid['col-sm-12']} ${grid['col-xs-4']}`}>
+          <h3 id="firstBox" className={styles.title}>{title}</h3>
+        </div>
+        <div className={`${grid['col-sm-12']} ${grid['col-xs-8']}`}>
+          <div className={styles['value-wrapper']}>
+            {content}
+          </div>
+        </div>
       </div>
     </div>
   );
