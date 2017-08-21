@@ -7,7 +7,6 @@ import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import configureMockStore from 'redux-mock-store';
 import sinonStubPromise from 'sinon-stub-promise';
-import { SYNC_ACTIVE_INTERVAL } from '../../constants/api';
 import ConfirmVotesHOC, { ConfirmVotes } from './confirmVotes';
 // import * as delegateApi from '../../utils/api/delegate';
 
@@ -84,8 +83,6 @@ describe.only('ConfirmVotes', () => {
 
     it('should fire votePlaced action if lists are not empty and account balance is sufficient', () => {
       wrapper.find('ConfirmVotes .primary-button button').simulate('click');
-      const clock = sinon.useFakeTimers();
-      console.log(wrapper.find('ConfirmVotes'.props().clearVoteLists));
 
       expect(props.votePlaced).to.have.been.calledWith({
         account: ordinaryAccount,
@@ -94,8 +91,6 @@ describe.only('ConfirmVotes', () => {
         unvotedList: props.unvotedList,
         votedList: props.votedList,
       });
-      clock.tick(10000);
-      expect(props.clearVoteLists).to.have.been.calledWith();
     });
 
     it('should not fire votePlaced action if lists are empty', () => {
@@ -159,6 +154,5 @@ describe('ConfirmVotes HOC', () => {
     expect(confirmVotesProps.account).to.be.equal(ordinaryAccount);
     expect(confirmVotesProps.activePeer).to.deep.equal({});
     expect(typeof confirmVotesProps.votePlaced).to.be.equal('function');
-    expect(typeof confirmVotesProps.clearVoteLists).to.be.equal('function');
   });
 });

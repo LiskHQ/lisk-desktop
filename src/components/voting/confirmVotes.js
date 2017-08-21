@@ -1,10 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Input from 'react-toolbox/lib/input';
-import { clearVoteLists, votePlaced } from '../../actions/voting';
+import { votePlaced } from '../../actions/voting';
 import InfoParagraph from '../infoParagraph';
 import ActionBar from '../actionBar';
-import { SYNC_ACTIVE_INTERVAL } from '../../constants/api';
 import Fees from '../../constants/fees';
 
 export class ConfirmVotes extends React.Component {
@@ -26,11 +25,6 @@ export class ConfirmVotes extends React.Component {
       unvotedList: this.props.unvotedList,
       secondSecret,
     });
-
-    // fire second action
-    setTimeout(() => {
-      this.props.clearVoteLists();
-    }, SYNC_ACTIVE_INTERVAL);
   }
 
   setSecondPass(name, value) {
@@ -88,7 +82,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  clearVoteLists: () => dispatch(clearVoteLists()),
   votePlaced: data => dispatch(votePlaced(data)),
 });
 

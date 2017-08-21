@@ -2,12 +2,20 @@ import actionTypes from '../constants/actions';
 import { vote } from '../utils/api/delegate';
 import { transactionAdded } from './transactions';
 import Fees from '../constants/fees';
+import { SYNC_ACTIVE_INTERVAL } from '../constants/api';
 
 /**
  * Add pending variable to the list of voted delegates and list of unvoted delegates
  */
 export const pendingVotesAdded = () => ({
   type: actionTypes.pendingVotesAdded,
+});
+
+/**
+ * Remove all data from the list of voted delegates and list of unvoted delegates
+ */
+export const clearVoteLists = () => ({
+  type: actionTypes.votesCleared,
 });
 
 /**
@@ -37,6 +45,11 @@ export const votePlaced = ({ activePeer, account, votedList, unvotedList, second
         fee: Fees.vote,
         type: 3,
       }));
+
+      // fire second action
+      setTimeout(() => {
+        clearVoteLists();
+      }, SYNC_ACTIVE_INTERVAL);
     });
   };
 
@@ -55,11 +68,3 @@ export const removedFromVoteList = data => ({
   type: actionTypes.removedFromVoteList,
   data,
 });
-
-/**
- * Remove all data from the list of voted delegates and list of unvoted delegates
- */
-export const clearVoteLists = () => ({
-  type: actionTypes.votesCleared,
-});
-
