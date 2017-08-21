@@ -24,7 +24,7 @@ module.exports = (env) => {
   return {
     entry: entries,
     output: {
-      path: path.resolve(__dirname, 'dist'),
+      path: path.resolve(__dirname, 'app', 'dist'),
       filename: env.test ? 'bundle.js' : 'bundle.[name].js',
     },
     devServer: {
@@ -37,6 +37,10 @@ module.exports = (env) => {
       new webpack.DefinePlugin({
         PRODUCTION: env.prod,
         TEST: env.test,
+        // because of https://fb.me/react-minification
+        'process.env': {
+          NODE_ENV: env.prod ? JSON.stringify('production') : null,
+        },
       }),
       new ExtractTextPlugin({
         filename: 'styles.css',

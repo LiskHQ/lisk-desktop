@@ -5,7 +5,6 @@ import sinonChai from 'sinon-chai';
 import { mount } from 'enzyme';
 import chaiEnzyme from 'chai-enzyme';
 import { Provider } from 'react-redux';
-import * as accountActions from '../../actions/account';
 import * as transactionsActions from '../../actions/transactions';
 import * as dialogActions from '../../actions/dialog';
 import store from '../../store';
@@ -59,15 +58,14 @@ describe('SecondPassphrase', () => {
   });
 
   describe('SecondPassphraseConnected', () => {
-    let wrapper;
-    let props;
+    let childProps;
     store.getState = () => ({
-      account: { secondSignature: 1 }
+      account: { secondSignature: 1 },
     });
 
     beforeEach(() => {
-      wrapper = mount(<Provider store={store}><SecondPassphraseConnected  /></Provider>);
-      props = wrapper.find(SecondPassphrase).props();
+      wrapper = mount(<Provider store={store}><SecondPassphraseConnected /></Provider>);
+      childProps = wrapper.find(SecondPassphrase).props();
     });
 
     it('should render SecondPassphrase', () => {
@@ -76,21 +74,21 @@ describe('SecondPassphrase', () => {
 
     it('should bind dialogDisplayed action to SecondPassphrase props.setActiveDialog', () => {
       const actionsSpy = sinon.spy(dialogActions, 'dialogDisplayed');
-      props.setActiveDialog({});
+      childProps.setActiveDialog({});
       expect(actionsSpy).to.be.calledWith();
       actionsSpy.restore();
     });
 
     it('should bind successAlertDialogDisplayed action to SecondPassphrase props.showSuccessAlert', () => {
       const actionsSpy = sinon.spy(dialogActions, 'successAlertDialogDisplayed');
-      props.showSuccessAlert({});
+      childProps.showSuccessAlert({});
       expect(actionsSpy).to.be.calledWith();
       actionsSpy.restore();
     });
 
     it('should bind transactionAdded action to SecondPassphrase props.addTransaction', () => {
       const actionsSpy = sinon.spy(transactionsActions, 'transactionAdded');
-      props.addTransaction({});
+      childProps.addTransaction({});
       expect(actionsSpy).to.be.calledWith();
       actionsSpy.restore();
     });
