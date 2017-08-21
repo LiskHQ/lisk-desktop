@@ -1,6 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import LoginForm from './loginForm';
+import LoginInner from './login';
 import styles from './login.css';
 
 
@@ -13,7 +13,7 @@ const Login = () => (
     <div className={`box ${styles.wrapper}`}>
       <div className={`${grid.row} ${grid['center-xs']}`}>
         <div className={grid['col-xs-8']}>
-          <LoginForm />
+          <LoginInner />
         </div>
       </div>
     </div>

@@ -37,23 +37,35 @@ describe('Reducer: transactions(state, action)', () => {
     };
     const action = {
       type: actionTypes.transactionsLoaded,
-      data: [mockTransactions[0]],
+      data: {
+        confirmed: mockTransactions,
+        count: mockTransactions.length,
+      },
+    };
+    const expectedState = {
+      pending: [],
+      confirmed: action.data.confirmed,
+      count: action.data.count,
     };
     const changedState = transactions(state, action);
-    expect(changedState).to.deep.equal({ ...state, confirmed: action.data });
+    expect(changedState).to.deep.equal(expectedState);
   });
 
   it('should prepend newer transactions from action.data to state.confirmed and remove from state.pending if action.type = actionTypes.transactionsUpdated', () => {
     const state = {
       pending: [mockTransactions[0]],
       confirmed: [mockTransactions[1], mockTransactions[2]],
+      count: mockTransactions[1].length + mockTransactions[2].length,
     };
     const action = {
       type: actionTypes.transactionsUpdated,
-      data: mockTransactions,
+      data: {
+        confirmed: mockTransactions,
+        count: mockTransactions.length,
+      },
     };
     const changedState = transactions(state, action);
-    expect(changedState).to.deep.equal({ pending: [], confirmed: mockTransactions });
+    expect(changedState).to.deep.equal({ pending: [], confirmed: mockTransactions, count: mockTransactions.length });
   });
 
   it('should action.data to state.confirmed if state.confirmed is empty and action.type = actionTypes.transactionsUpdated', () => {
@@ -63,9 +75,16 @@ describe('Reducer: transactions(state, action)', () => {
     };
     const action = {
       type: actionTypes.transactionsUpdated,
-      data: mockTransactions,
+      data: {
+        confirmed: mockTransactions,
+        count: 3,
+      },
     };
     const changedState = transactions(state, action);
-    expect(changedState).to.deep.equal({ pending: [], confirmed: mockTransactions });
+    expect(changedState).to.deep.equal({
+      pending: [],
+      confirmed: mockTransactions,
+      count: mockTransactions.length,
+    });
   });
 });

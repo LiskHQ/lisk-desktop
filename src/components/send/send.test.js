@@ -7,7 +7,6 @@ import sinonChai from 'sinon-chai';
 import { Provider } from 'react-redux';
 import store from '../../store';
 import Send from './send';
-import * as accountApi from '../../utils/api/account';
 
 
 chai.use(sinonChai);
@@ -15,27 +14,18 @@ chai.use(chaiEnzyme());
 
 describe('Send', () => {
   let wrapper;
-  let accountApiMock;
   let props;
 
   beforeEach(() => {
-    accountApiMock = sinon.mock(accountApi);
     props = {
       activePeer: {},
       account: {
         balance: 1000e8,
       },
       closeDialog: () => {},
-      showSuccessAlert: sinon.spy(),
-      showErrorAlert: sinon.spy(),
-      addTransaction: sinon.spy(),
+      sent: sinon.spy(),
     };
     wrapper = mount(<Provider store={store}><Send {...props} /></Provider>);
-  });
-
-  afterEach(() => {
-    accountApiMock.verify();
-    accountApiMock.restore();
   });
 
   it('renders two Input components', () => {
@@ -88,34 +78,17 @@ describe('Send', () => {
     expect(wrapper.find('.amount input').props().value).to.equal('999.9');
   });
 
-  it.skip('allows to send a transaction, handles success and adds pending transaction', () => {
-    accountApiMock.expects('send').resolves({ success: true });
-
+  it('allows to send a transaction', () => {
     wrapper.find('.amount input').simulate('change', { target: { value: '120.25' } });
     wrapper.find('.recipient input').simulate('change', { target: { value: '11004588490103196952L' } });
-    wrapper.find('.primary-button').simulate('click');
-    // TODO: this doesn't work for some reason
-    // expect(props.showSuccessAlert).to.have.been.calledWith();
-    // expect(props.addTransaction).to.have.been.calledWith();
-  });
-
-  it.skip('allows to send a transaction and handles error response with message', () => {
-    const response = { message: 'Some server-side error' };
-    accountApiMock.expects('send').rejects(response);
-    wrapper.find('.amount input').simulate('change', { target: { value: '120.25' } });
-    wrapper.find('.recipient input').simulate('change', { target: { value: '11004588490103196952L' } });
-    wrapper.find('.primary-button').simulate('click');
-    // TODO: this doesn't work for some reason
-    // expect(props.showErrorAlert).to.have.been.calledWith({ text: response.message });
-  });
-
-  it.skip('allows to send a transaction and handles error response without message', () => {
-    accountApiMock.expects('send').rejects({ success: false });
-    wrapper.find('.amount input').simulate('change', { target: { value: '120.25' } });
-    wrapper.find('.recipient input').simulate('change', { target: { value: '11004588490103196952L' } });
-    wrapper.find('.primary-button').simulate('click');
-    // TODO: this doesn't work for some reason
-    // expect(props.showErrorAlert).to.have.been.calledWith({
-    //    text: 'An error occurred while creating the transaction.' });
+    wrapper.find('.primary-button button').simulate('click');
+    expect(props.sent).to.have.been.calledWith({
+      account: { balance: 100000000000 },
+      activePeer: {},
+      amount: '120.25',
+      passphrase: undefined,
+      recipientId: '11004588490103196952L',
+      secondPassphrase: null,
+    });
   });
 });

@@ -1,12 +1,13 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
-import RegisterDelegate from './index';
+import { Provider } from 'react-redux';
+import LoginFormHOC from './login';
 
-describe('RegisterDelegate HOC', () => {
-  let wrapper;
+describe('LoginForm HOC', () => {
+  // Mocking store
   const peers = {
     status: {
       online: false,
@@ -19,30 +20,31 @@ describe('RegisterDelegate HOC', () => {
       },
     },
   };
-
   const account = {
     isDelegate: false,
     address: '16313739661670634666L',
     username: 'lisk-nano',
   };
-
   const store = configureMockStore([])({
     peers,
     account,
+    activePeerSet: () => {},
   });
+  let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<Provider store={store}><RegisterDelegate /></Provider>);
+    wrapper = mount(<Provider store={store}>
+      <Router><LoginFormHOC/></Router></Provider>);
   });
 
-  it('should render RegisterDelegate', () => {
-    expect(wrapper.find('RegisterDelegate')).to.have.lengthOf(1);
+  it('should mount LoginForm', () => {
+    expect(wrapper.find('LoginForm')).to.have.lengthOf(1);
   });
 
-  it('should mount registerDelegate with appropriate properties', () => {
-    const props = wrapper.find('RegisterDelegate').props();
+  it('should mount LoginForm with appropriate properties', () => {
+    const props = wrapper.find('LoginForm').props();
     expect(props.peers).to.be.equal(peers);
     expect(props.account).to.be.equal(account);
-    expect(typeof props.delegateRegistered).to.be.equal('function');
+    expect(typeof props.activePeerSet).to.be.equal('function');
   });
 });

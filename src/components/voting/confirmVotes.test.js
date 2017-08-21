@@ -7,7 +7,7 @@ import sinonChai from 'sinon-chai';
 import PropTypes from 'prop-types';
 import sinonStubPromise from 'sinon-stub-promise';
 import store from '../../store';
-import ConfirmVotesContainer, { ConfirmVotes } from './confirmVotes';
+import ConfirmVotesHOC, { ConfirmVotes } from './confirmVotes';
 import * as delegateApi from '../../utils/api/delegate';
 
 sinonStubPromise(sinon);
@@ -42,8 +42,9 @@ const props = {
   clearVoteLists: sinon.spy(),
   pendingVotesAdded: sinon.spy(),
   addTransaction: sinon.spy(),
+  votePlaced: sinon.spy(),
 };
-describe('ConfirmVotesContainer', () => {
+describe('ConfirmVotes HOC', () => {
   it('should render ConfirmVotes', () => {
     store.getState = () => ({
       peers: {},
@@ -53,7 +54,7 @@ describe('ConfirmVotesContainer', () => {
       },
       account: {},
     });
-    const wrapper = mount(<ConfirmVotesContainer {...props} store={store} />, {
+    const wrapper = mount(<ConfirmVotesHOC {...props} store={store} />, {
       context: { store },
       childContextTypes: { store: PropTypes.object.isRequired },
     });
@@ -68,18 +69,6 @@ describe('ConfirmVotes', () => {
       context: { store },
       childContextTypes: { store: PropTypes.object.isRequired },
     });
-  });
-
-  it('should call vote api when confirm button is pressed', () => {
-    const clock = sinon.useFakeTimers();
-    delegateApiMock.returnsPromise().resolves({ success: true });
-    wrapper.instance().confirm();
-    expect(props.pendingVotesAdded).to.have.been.calledWith();
-    expect(props.addTransaction).to.have.been.calledWith();
-    expect(props.showSuccessAlert).to.have.been.calledWith();
-    // it should trigger 'props.clearVoteLists' after 10000 ms
-    clock.tick(10000);
-    expect(props.clearVoteLists).to.have.been.calledWith();
   });
 
   it('should update state when "setSecondPass" is called', () => {

@@ -54,7 +54,7 @@ class RegisterDelegate extends React.Component {
         </InfoParagraph>
         <ActionBar
           secondaryButton={{
-            onClick: this.props.closeDialog.bind(this),
+            onClick: this.props.closeDialog,
           }}
           primaryButton={{
             label: 'Register',

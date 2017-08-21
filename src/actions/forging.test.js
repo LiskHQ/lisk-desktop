@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import actionTypes from '../constants/actions';
-import { updateForgedBlocks, updateForgingStats } from './forging';
+import { forgedBlocksUpdated, forgingStatsUpdated } from './forging';
 
 describe('actions', () => {
   it('should create an action to update forged blocks', () => {
@@ -12,7 +12,7 @@ describe('actions', () => {
       data,
       type: actionTypes.forgedBlocksUpdated,
     };
-    expect(updateForgedBlocks(data)).to.be.deep.equal(expectedAction);
+    expect(forgedBlocksUpdated(data)).to.be.deep.equal(expectedAction);
   });
 
   it('should create an action to update forging stats', () => {
@@ -22,6 +22,6 @@ describe('actions', () => {
       data,
       type: actionTypes.forgingStatsUpdated,
     };
-    expect(updateForgingStats(data)).to.be.deep.equal(expectedAction);
+    expect(forgingStatsUpdated(data)).to.be.deep.equal(expectedAction);
   });
 });

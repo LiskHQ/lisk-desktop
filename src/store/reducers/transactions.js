@@ -32,7 +32,7 @@ const transactions = (state = { pending: [], confirmed: [], count: 0 }, action) 
             transaction => transaction.id === pendingTransaction.id).length === 0),
         // Add any newly confirmed transaction to confirmed
         confirmed: [
-          ...action.data.filter(transaction => transaction.timestamp > startTimestamp),
+          ...action.data.confirmed.filter(transaction => transaction.timestamp > startTimestamp),
           ...state.confirmed,
         ],
         count: action.data.count,
