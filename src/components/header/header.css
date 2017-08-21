@@ -3,11 +3,11 @@
     padding: 8px;
 }
 .logoWrapper {
-    width: 50%;
+    width: 25%;
 }
 .logo{
-    width: 50%;
-    min-width: 128px;
+    width: 100%;
+    min-width: 108px;
     max-width: 200px;
     padding: 8px;
 }
