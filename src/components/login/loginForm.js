@@ -43,7 +43,9 @@ class LoginForm extends React.Component {
 
   componentDidUpdate() {
     if (this.props.account && this.props.account.address) {
-      this.props.history.replace('/main/transactions');
+      const search = this.props.history.location.search;
+      this.props.history.replace(
+        search.indexOf('?referrer') === 0 ? search.replace('?referrer=', '') : '/main/transactions');
       if (this.state.address) {
         Cookies.set('address', this.state.address);
       }

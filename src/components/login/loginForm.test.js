@@ -21,7 +21,7 @@ describe('LoginForm', () => {
   const props = {
     peers: {},
     account,
-    history: [],
+    history: {},
     onAccountUpdated: () => {},
     setActiveDialog: spy(),
     activePeerSet: (network) => {
@@ -73,6 +73,9 @@ describe('LoginForm', () => {
     props.account = { address: 'dummy' };
     props.history = {
       replace: spy(),
+      location: {
+        search: '',
+      },
     };
 
     it('calls this.props.history.replace(\'/main/transactions\')', () => {

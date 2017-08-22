@@ -14,6 +14,7 @@ describe('PrivateRouteRender', () => {
         <div>
           <Route path='/' component={Public} />
           <PrivateRouteRender
+            history={ { location: { pathname: '' } } }
             path='/private'
             render={({ match }) => <Route to={`${match.url}/test`} component={Private}/>}
             isAuthenticated={isAuthenticated} />
