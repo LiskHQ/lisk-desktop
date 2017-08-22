@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const { defineSupportCode } = require('cucumber');
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');

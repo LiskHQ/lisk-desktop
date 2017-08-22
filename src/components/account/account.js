@@ -15,45 +15,57 @@ const Account = ({
   account, peers,
 }) => {
   const status = (peers.status && peers.status.online) ?
-      <i className="material-icons online">check</i>
-      : <i className="material-icons offline">error</i>;
+    <i className="material-icons online">check</i> :
+    <i className="material-icons offline">error</i>;
 
   return (
     <section className={`${grid.row} ${styles.wrapper}`}>
-      <article className={grid['col-xs-4']}>
+      <article className={`${grid['col-sm-4']} ${grid['col-xs-12']}`}>
         <Address {...account}></Address>
       </article>
-      <article className={grid['col-xs-4']}>
+      <article className={`${grid['col-sm-4']} ${grid['col-xs-12']}`}>
         <div className="box">
-          <h3 className={styles.title}>Peer</h3>
-          <div className={styles['value-wrapper']}>
-            <span id="accountStatus" className="status">
-              {status}
-            </span>
-            <p className="inner primary peer-network">
-              {peers.data.options.name}
-            </p>
-            <p className="inner secondary peer">
-              {peers.data.currentPeer}
-              <span> : {peers.data.port}</span>
-            </p>
+          <div className={`${grid.row}`}>
+            <div className={`${grid['col-sm-12']} ${grid['col-xs-4']}`}>
+              <h3 className={styles.title}>Peer</h3>
+            </div>
+            <div className={`${grid['col-sm-12']} ${grid['col-xs-8']}`}>
+              <div className={styles['value-wrapper']}>
+                <span id="accountStatus" className="status">
+                  {status}
+                </span>
+                <p className="inner primary peer-network">
+                  {peers.data.options.name}
+                </p>
+                <p className="inner secondary peer">
+                  {peers.data.currentPeer}
+                  <span> : {peers.data.port}</span>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </article>
-      <article className={`${grid['col-xs-4']} balance`}>
+      <article className={`${grid['col-sm-4']} ${grid['col-xs-12']} balance`}>
         <div className="box">
-          <h3 className={styles.title}>Balance</h3>
-          <ClickToSend
-            rawAmount={Math.max(0, account.balance - toRawLsk(0.1))} >
-            <div className={styles['value-wrapper']}>
-              <p className="inner primary full hasTip balance-value">
-                <LiskAmount val={account.balance} /> LSK
-              </p>
-              <p className="inner secondary tooltip">
-                Click to send all funds
-              </p>
+          <div className={`${grid.row}`}>
+            <div className={`${grid['col-sm-12']} ${grid['col-xs-4']}`}>
+              <h3 className={styles.title}>Balance</h3>
             </div>
-          </ClickToSend>
+            <div className={`${grid['col-sm-12']} ${grid['col-xs-8']}`}>
+              <ClickToSend
+                rawAmount={Math.max(0, account.balance - toRawLsk(0.1))} >
+                <div className={styles['value-wrapper']}>
+                  <p className="inner primary full hasTip balance-value">
+                    <LiskAmount val={account.balance} /> LSK
+                  </p>
+                  <p className="inner secondary tooltip">
+                    Click to send all funds
+                  </p>
+                </div>
+              </ClickToSend>
+            </div>
+          </div>
         </div>
       </article>
     </section>
