@@ -1,15 +1,5 @@
 import { requestToActivePeer } from './peers';
 
-const findDelegateInList = (username, list) => {
-  let existed = false;
-  list.forEach((item) => {
-    if (item.username === username) {
-      existed = true;
-    }
-  });
-  return existed;
-};
-
 export const listAccountDelegates = (activePeer, address) =>
   requestToActivePeer(activePeer, 'accounts/delegates', { address });
 
@@ -37,7 +27,7 @@ export const voteAutocomplete = (activePeer, username, votedList) => {
     listDelegates(activePeer, options)
     .then((response) => {
       resolve(response.delegates.filter(delegate =>
-        !findDelegateInList(delegate.username, votedList),
+        votedList.filter(item => item.username === delegate.username).length === 0,
       ));
     })
     .catch(reject),
