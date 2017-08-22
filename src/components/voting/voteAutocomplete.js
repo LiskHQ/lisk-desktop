@@ -27,6 +27,12 @@ export class VoteAutocomplete extends React.Component {
       this.setState({ [name]: className });
     }, 200);
   }
+  /**
+   * Update state and call a suitable api to create a list of suggestion
+   *
+   * @param {*} name  - name of input in react state
+   * @param {*} value - value that we want save it in react state
+   */
   search(name, value) {
     this.setState({ ...this.state, [name]: value });
     clearTimeout(this.timeout);
@@ -64,22 +70,29 @@ export class VoteAutocomplete extends React.Component {
   unvotedSearchKeyDown(event) {
     this.keyPress(event, 'unvotedSuggestionClass', 'unvotedResult');
   }
+  /**
+   * handle key down event on autocomplete inputs
+   *
+   * @param {object} event - event of javascript
+   * @param {*} className - class name of suggestion box
+   * @param {*} listName - name of the list that we want to use as a suggestion list
+   */
   keyPress(event, className, listName) {
     const selectFunc = listName === 'votedResult' ? 'addToVoted' : 'removeFromVoted';
     const selected = this.state[listName].filter(d => d.hovered);
     switch (event.keyCode) {
-      case 40:
+      case 40: // 40 is keyCode of arrow down key in keyboard
         this.handleArrowDown(this.state[listName], listName);
         return false;
-      case 38:
+      case 38: // 38 is keyCode of arrow up key in keyboard
         this.handleArrowUp(this.state[listName], listName);
         return false;
-      case 27 :
+      case 27 : // 27 is keyCode of enter key in keyboard
         this.setState({
           [className]: styles.hidden,
         });
         return false;
-      case 13 :
+      case 13 : // 27 is keyCode of escape key in keyboard
         if (selected.length > 0) {
           this[selectFunc](selected[0]);
         }
@@ -89,7 +102,12 @@ export class VoteAutocomplete extends React.Component {
     }
     return true;
   }
-
+  /**
+   * move to the next item when arrow down is pressed
+   *
+   * @param {*} list - suggested list
+   * @param {*} className - name of the list that we want to use as a suggestion list in react state
+   */
   handleArrowDown(list, name) {
     const selected = list.filter(d => d.hovered);
     const index = list.indexOf(selected[0]);
@@ -103,6 +121,12 @@ export class VoteAutocomplete extends React.Component {
     this.setState({ [name]: list });
   }
 
+  /**
+   * move to the next item when up down is pressed
+   *
+   * @param {*} list - suggested list
+   * @param {*} className - name of the list that we want to use as a suggestion list in react state
+   */
   handleArrowUp(list, name) {
     const selected = list.filter(d => d.hovered);
     const index = list.indexOf(selected[0]);
@@ -143,7 +167,6 @@ export class VoteAutocomplete extends React.Component {
         <section className={styles.searchContainer}>
           <Input type='text' label='Search by username' name='votedListSearch'
             className='votedListSearch' value={this.state.votedListSearch}
-            // onFocus={this.suggestionStatus.bind(this, true)}
             onBlur={this.suggestionStatus.bind(this, false, 'votedSuggestionClass')}
             onKeyDown={this.votedSearchKeyDown.bind(this)}
             onChange={this.search.bind(this, 'votedListSearch')}/>
@@ -174,7 +197,6 @@ export class VoteAutocomplete extends React.Component {
         <section className={styles.searchContainer}>
           <Input type='text' label='Search by username' name='unvotedListSearch'
             className='unvotedListSearch' value={this.state.unvotedListSearch}
-            // onFocus={this.suggestionStatus.bind(this, true)}
             onBlur={this.suggestionStatus.bind(this, false, 'unvotedSuggestionClass')}
             onKeyDown={this.unvotedSearchKeyDown.bind(this)}
             onChange={this.search.bind(this, 'unvotedListSearch')}/>
