@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
 import { mount } from 'enzyme';

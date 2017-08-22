@@ -65,7 +65,11 @@ describe('Reducer: transactions(state, action)', () => {
       },
     };
     const changedState = transactions(state, action);
-    expect(changedState).to.deep.equal({ pending: [], confirmed: mockTransactions, count: mockTransactions.length });
+    expect(changedState).to.deep.equal({
+      pending: [],
+      confirmed: mockTransactions,
+      count: mockTransactions.length,
+    });
   });
 
   it('should action.data to state.confirmed if state.confirmed is empty and action.type = actionTypes.transactionsUpdated', () => {
