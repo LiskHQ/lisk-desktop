@@ -12,10 +12,11 @@ defineSupportCode(({ When, Then }) => {
   });
 
   When('Search twice for "{searchTerm}" in vote dialog', (searchTerm, callback) => {
-    element.all(by.css('md-autocomplete-wrap input')).get(0).sendKeys(searchTerm);
-    waitForElemAndClickIt('ul.md-autocomplete-suggestions li:nth-child(1) md-autocomplete-parent-scope');
-    element.all(by.css('md-autocomplete-wrap input')).get(0).sendKeys(searchTerm);
-    waitForElemAndClickIt('ul.md-autocomplete-suggestions li:nth-child(1) md-autocomplete-parent-scope', callback);
+    element.all(by.css('.votedListSearch input')).get(0).sendKeys(searchTerm);
+    waitForElemAndClickIt('#votedResult ul li:nth-child(1)');
+    element.all(by.css('.votedListSearch input')).get(0).sendKeys(searchTerm);
+    browser.sleep(500);
+    waitForElemAndClickIt('#votedResult ul li:nth-child(1)', callback);
   });
 
   Then('I should see delegates list with {count} lines', (count, callback) => {
