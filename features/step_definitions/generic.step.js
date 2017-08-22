@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const { defineSupportCode } = require('cucumber');
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -102,6 +103,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     browser.driver.manage().window().setSize(1000, 1000);
     browser.get('http://localhost:8080/');
     browser.manage().addCookie({ name: 'address', value: 'http://localhost:4000' });
+    browser.manage().addCookie({ name: 'network', value: '2' });
     browser.get('http://localhost:8080/');
     waitForElemAndSendKeys('.passphrase input', accounts[accountName].passphrase);
     waitForElemAndClickIt('.login-button', callback);
@@ -113,9 +115,8 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
      * Generates a sequence of random pairs of x,y coordinates on the screen that simulates
      * the movement of mouse to produce a pass phrase.
      */
-    for (let i = 0; i < iterations; i++) {
-      actions
-      .mouseMove(element(by.css('body')), {
+    for (let i = 0; i < iterations; i += 1) {
+      actions.mouseMove(element(by.css('body')), {
         x: 500 + (Math.floor((((i % 2) * 2) - 1) * (249 + (Math.random() * 250)))),
         y: 500 + (Math.floor((((i % 2) * 2) - 1) * (249 + (Math.random() * 250)))),
       });

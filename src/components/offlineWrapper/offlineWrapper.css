@@ -1,0 +1,4 @@
+.isOffline .disableWhenOffline {
+  opacity: 0.5;
+  pointer-events: none;
+}

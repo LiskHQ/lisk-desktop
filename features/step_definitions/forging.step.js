@@ -1,6 +1,6 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const { defineSupportCode } = require('cucumber');
 const { waitForElemAndCheckItsText } = require('../support/util.js');
-
 
 defineSupportCode(({ Then }) => {
   Then('I should see forging center', (callback) => {

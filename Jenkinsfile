@@ -42,15 +42,37 @@ node('lisk-nano-01'){
       }
     }
 
-    stage ('Build Nano') {
+    stage ('Install npm dependencies') {
       try {
         sh '''#!/bin/bash
-        # Install Electron
         npm install
         # Build nano
         cd $WORKSPACE
         npm install
 
+        '''
+      } catch (err) {
+        currentBuild.result = 'FAILURE'
+        milestone 1
+        error('Stopping build, npm install failed')
+      }
+    }
+
+    stage ('Run Eslint') {
+      try {
+        sh '''
+        cd $WORKSPACE
+        npm run eslint
+        '''
+      } catch (err) {
+        currentBuild.result = 'FAILURE'
+        error('Stopping build, Eslint failed')
+      }
+    }
+
+    stage ('Build Nano') {
+      try {
+        sh '''#!/bin/bash
         # Add coveralls config file
         cp ~/.coveralls.yml-nano .coveralls.yml
 
@@ -68,10 +90,6 @@ node('lisk-nano-01'){
       try {
         sh '''
         export ON_JENKINS=true
-
-	# Start xvfb
-        export DISPLAY=:99
-        Xvfb :99 -ac -screen 0 1280x1024x24 &
 
         # Run test
         cd $WORKSPACE
@@ -113,6 +131,9 @@ node('lisk-nano-01'){
         rm -rf /tmp/.X0-lock || true
         pkill -f webpack -9 || true
 
+        # Cleanup - delete all files on success
+        cd $WORKSPACE
+        rm -rf *
         '''
       } catch (err) {
         currentBuild.result = 'FAILURE'

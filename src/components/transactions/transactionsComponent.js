@@ -26,7 +26,7 @@ class Transactions extends React.Component {
 
   render() {
     return (
-      <div className='box noPaddingBox'>
+      <div className='box noPaddingBox verticalScroll'>
         {this.props.transactions.length > 0 ?
           <table className={tableStyle.table}>
           <TransactionsHeader tableStyle={tableStyle}></TransactionsHeader>

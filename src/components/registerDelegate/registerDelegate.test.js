@@ -88,7 +88,7 @@ describe('RegisterDelegate', () => {
     it('allows register as delegate for a non delegate account', () => {
       delegateApiMock.expects('registerDelegate').resolves({ success: true });
       wrapper.find('.username input').simulate('change', { target: { value: 'sample_username' } });
-      wrapper.find('.next-button').simulate('click')
+      wrapper.find('.next-button').simulate('click');
       expect(wrapper.find('.primary-button button').props().disabled).to.not.equal(true);
       // TODO: this doesn't work for some reason
       // expect(props.showSuccessAlert).to.have.been.calledWith();
@@ -98,7 +98,7 @@ describe('RegisterDelegate', () => {
       const message = 'Username already exists';
       delegateApiMock.expects('registerDelegate').rejects({ message });
       wrapper.find('.username input').simulate('change', { target: { value: 'sample_username' } });
-      wrapper.find('.next-button').simulate('click')
+      wrapper.find('.next-button').simulate('click');
       // TODO: this doesn't work for some reason
       // expect(wrapper.find('RegisterDelegate .username').text()).to.contain(message);
     });
@@ -106,7 +106,7 @@ describe('RegisterDelegate', () => {
     it('handles register as delegate failure', () => {
       delegateApiMock.expects('registerDelegate').rejects({ success: false });
       wrapper.find('.username input').simulate('change', { target: { value: 'sample_username' } });
-      wrapper.find('.next-button').simulate('click')
+      wrapper.find('.next-button').simulate('click');
       expect(wrapper.find('.primary-button button').props().disabled).to.not.equal(true);
       // TODO: this doesn't work for some reason
       // expect(props.showErrorAlert).to.have.been.calledWith();
