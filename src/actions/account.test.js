@@ -4,11 +4,13 @@ import sinonStubPromise from 'sinon-stub-promise';
 import actionTypes from '../constants/actions';
 import { accountUpdated, accountLoggedOut,
   secondPassphraseRegistered, delegateRegistered, sent } from './account';
-import { transactionAdded } from './transactions';
+import { transactionAdded, transactionsReset } from './transactions';
 import { errorAlertDialogDisplayed } from './dialog';
 import * as accountApi from '../utils/api/account';
 import * as delegateApi from '../utils/api/delegate';
 import Fees from '../constants/fees';
+import { forgingReset } from './forging';
+import { activePeerReset } from './peers';
 
 sinonStubPromise(sinon);
 
@@ -32,7 +34,16 @@ describe('actions: account', () => {
       const expectedAction = {
         type: actionTypes.accountLoggedOut,
       };
-      expect(accountLoggedOut()).to.be.deep.equal(expectedAction);
+      const actionFunction = accountLoggedOut();
+      const dispatch = sinon.spy();
+
+      actionFunction(dispatch);
+
+      expect(dispatch).to.have.been.calledWith(expectedAction);
+      expect(dispatch).to.have.been.calledWith(forgingReset());
+      expect(dispatch).to.have.been.calledWith(activePeerReset());
+      expect(dispatch).to.have.been.calledWith(transactionsReset());
+      expect(dispatch).to.have.property('callCount', 4);
     });
   });
 

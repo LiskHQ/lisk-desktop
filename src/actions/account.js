@@ -1,8 +1,10 @@
 import actionTypes from '../constants/actions';
 import { setSecondPassphrase, send } from '../utils/api/account';
 import { registerDelegate } from '../utils/api/delegate';
-import { transactionAdded } from './transactions';
+import { transactionAdded, transactionsReset } from './transactions';
 import { errorAlertDialogDisplayed } from './dialog';
+import { forgingReset } from './forging';
+import { activePeerReset } from './peers';
 import Fees from '../constants/fees';
 import { toRawLsk } from '../utils/lsk';
 
@@ -24,9 +26,13 @@ export const accountUpdated = data => ({
  *
  * @returns {Object} - Action object
  */
-export const accountLoggedOut = () => ({
-  type: actionTypes.accountLoggedOut,
-});
+export const accountLoggedOut = () =>
+  (dispatch) => {
+    dispatch(forgingReset());
+    dispatch(activePeerReset());
+    dispatch(transactionsReset());
+    dispatch({ type: actionTypes.accountLoggedOut });
+  };
 
 /**
  * Trigger this action to login to an account

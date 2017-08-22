@@ -37,6 +37,8 @@ const transactions = (state = { pending: [], confirmed: [], count: 0 }, action) 
         ],
         count: action.data.count,
       });
+    case actionTypes.transactionsReset:
+      return { pending: [], confirmed: [], count: 0 };
     default:
       return state;
   }

@@ -28,6 +28,9 @@ const forging = (state = { forgedBlocks: [], statistics: {} }, action) => {
       return Object.assign({}, state, {
         statistics: Object.assign({}, state.statistics, action.data),
       });
+    case actionTypes.forgingReset:
+      console.log('resetting forging');
+      return { forgedBlocks: [], statistics: {} };
     default:
       return state;
   }

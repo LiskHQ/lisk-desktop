@@ -87,4 +87,22 @@ describe('Reducer: transactions(state, action)', () => {
       count: mockTransactions.length,
     });
   });
+
+  it('should reset all data if action.type = actionTypes.transactionsReset', () => {
+    const state = {
+      pending: [{
+        amount: 110000000000,
+        id: '16295820046284152275',
+        timestamp: 33506748,
+      }],
+      confirmed: mockTransactions,
+    };
+    const action = { type: actionTypes.transactionsReset };
+    const changedState = transactions(state, action);
+    expect(changedState).to.deep.equal({
+      pending: [],
+      confirmed: [],
+      count: 0,
+    });
+  });
 });

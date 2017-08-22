@@ -6,13 +6,15 @@ export const forgedBlocksUpdated = data => ({
   type: actionTypes.forgedBlocksUpdated,
 });
 
+export const forgingReset = () => ({
+  type: actionTypes.forgingReset,
+});
+
 export const fetchAndUpdateForgedBlocks = ({ activePeer, limit, offset, generatorPublicKey }) =>
   (dispatch) => {
     getForgedBlocks(activePeer, limit, offset, generatorPublicKey)
     .then(response =>
       dispatch(forgedBlocksUpdated(response.blocks)),
-    ).catch(() =>
-      dispatch(forgedBlocksUpdated({})),
     );
   };
 
@@ -26,8 +28,5 @@ export const fetchAndUpdateForgedStats = ({ activePeer, key, startMoment, genera
     getForgedStats(activePeer, startMoment, generatorPublicKey)
     .then(response =>
       dispatch(forgingStatsUpdated({ [key]: response.forged })),
-    )
-    .catch(() =>
-      dispatch(forgingStatsUpdated({})),
     );
   };

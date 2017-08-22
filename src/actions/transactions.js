@@ -28,6 +28,10 @@ export const transactionsLoaded = data => ({
   type: actionTypes.transactionsLoaded,
 });
 
+export const transactionsReset = () => ({
+  type: actionTypes.transactionsReset,
+});
+
 /**
  *
  *
