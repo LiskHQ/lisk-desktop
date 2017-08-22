@@ -9,6 +9,7 @@ import { isValidPassphrase } from '../../utils/passphrase';
 import networksRaw from './networks';
 import Passphrase from '../passphrase';
 import styles from './login.css';
+import env from '../../constants/env';
 
 /**
  * The container component containing login
@@ -111,6 +112,14 @@ class LoginForm extends React.Component {
       ...this.validators.address(address),
       ...this.validators.passphrase(passphrase),
     });
+
+    // ignore this in coverage as it is hard to test and does not run in production
+    /* istanbul ignore if */
+    if (!env.production && Cookies.get('autologin') && passphrase) {
+      setTimeout(() => {
+        this.onLoginSubmission(passphrase);
+      });
+    }
   }
 
   render() {
