@@ -33,7 +33,7 @@ node('lisk-nano-01'){
       try {
         sh '''#!/bin/bash
           cd ~/lisk-test-nano
-          bash lisk.sh rebuild -0
+          bash lisk.sh rebuild -f /home/lisk/lisk-test-nano/blockchain_explorer.db.gz
           '''
       } catch (err) {
         currentBuild.result = 'FAILURE'
@@ -107,9 +107,6 @@ node('lisk-nano-01'){
     stage ('Start Dev Server and Run Tests') {
       try {
         sh '''
-        # Prepare lisk core for testing
-        bash ./e2e-transactions.sh
-
         # Run Dev build and Build
         cd $WORKSPACE
         export NODE_ENV=

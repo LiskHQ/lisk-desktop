@@ -11,3 +11,4 @@ app/*.map
 app/app.js
 .vscode
 .idea
+blockchain_explorer.db.gz
