@@ -81,7 +81,8 @@ export const delegateRegistered = ({ activePeer, account, username, secondPassph
       })
       .catch((error) => {
         const text = error && error.message ? `${error.message}.` : 'An error occurred while registering as delegate.';
-        dispatch(errorAlertDialogDisplayed({ text }));
+        const actionObj = errorAlertDialogDisplayed({ text });
+        dispatch(actionObj);
       });
   };
 
@@ -101,8 +102,8 @@ export const sent = ({ activePeer, account, recipientId, amount, passphrase, sec
           fee: Fees.send,
         }));
       })
-      .catch((res) => {
-        const text = res && res.message ? res.message : 'An error occurred while creating the transaction.';
+      .catch((error) => {
+        const text = error && error.message ? `${error.message}.` : 'An error occurred while creating the transaction.';
         dispatch(errorAlertDialogDisplayed({ text }));
       });
   };

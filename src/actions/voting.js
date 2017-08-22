@@ -1,6 +1,7 @@
 import actionTypes from '../constants/actions';
 import { vote } from '../utils/api/delegate';
 import { transactionAdded } from './transactions';
+import { errorAlertDialogDisplayed } from './dialog';
 import Fees from '../constants/fees';
 import { SYNC_ACTIVE_INTERVAL } from '../constants/api';
 
@@ -48,8 +49,12 @@ export const votePlaced = ({ activePeer, account, votedList, unvotedList, second
 
       // fire second action
       setTimeout(() => {
-        clearVoteLists();
+        dispatch(clearVoteLists());
       }, SYNC_ACTIVE_INTERVAL);
+    })
+    .catch((error) => {
+      const text = error && error.message ? `${error.message}.` : 'An error occurred while placing your vote.';
+      dispatch(errorAlertDialogDisplayed({ text }));
     });
   };
 
