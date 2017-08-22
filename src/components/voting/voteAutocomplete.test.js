@@ -5,7 +5,7 @@ import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import PropTypes from 'prop-types';
 import sinonStubPromise from 'sinon-stub-promise';
-import store from '../../store';
+import configureMockStore from 'redux-mock-store';
 import * as delegateApi from '../../utils/api/delegate';
 import VoteAutocompleteContainer, { VoteAutocomplete } from './voteAutocomplete';
 
@@ -34,16 +34,18 @@ const props = {
   addedToVoteList: sinon.spy(),
   removedFromVoteList: sinon.spy(),
 };
+
+const store = configureMockStore([])({
+  peers: {},
+  voting: {
+    votedList: [],
+    unvotedList: [],
+  },
+  account: {},
+});
+
 describe('VoteAutocompleteContainer', () => {
   it('should render VoteAutocomplete', () => {
-    store.getState = () => ({
-      peers: {},
-      voting: {
-        votedList: [],
-        unvotedList: [],
-      },
-      account: {},
-    });
     const wrapper = mount(<VoteAutocompleteContainer {...props} store={store} />, {
       context: { store },
       childContextTypes: { store: PropTypes.object.isRequired },
