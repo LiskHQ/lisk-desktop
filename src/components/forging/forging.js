@@ -16,7 +16,7 @@ class Forging extends React.Component {
     });
   }
 
-  loadForgedBlocks(activePeer, limit, offset) {
+  loadForgedBlocks(limit, offset) {
     this.props.onForgedBlocksLoaded({
       activePeer: this.props.peers.data,
       limit,

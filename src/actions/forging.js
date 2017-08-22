@@ -12,7 +12,7 @@ export const fetchAndUpdateForgedBlocks = ({ activePeer, limit, offset, generato
     .then(response =>
       dispatch(forgedBlocksUpdated(response.blocks)),
     ).catch(() =>
-      dispatch(forgedBlocksUpdated()),
+      dispatch(forgedBlocksUpdated({})),
     );
   };
 
@@ -28,6 +28,6 @@ export const fetchAndUpdateForgedStats = ({ activePeer, key, startMoment, genera
       dispatch(forgingStatsUpdated({ [key]: response.forged })),
     )
     .catch(() =>
-      dispatch(forgingStatsUpdated()),
+      dispatch(forgingStatsUpdated({})),
     );
   };
