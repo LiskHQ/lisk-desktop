@@ -84,6 +84,7 @@ class VotingHeader extends React.Component {
               childComponent: Confirm,
               childComponentProps: {
                 addTransaction: this.props.addTransaction,
+                voted: this.props.votedDelegates,
               },
             })}
             label={this.confirmVoteText()} />

@@ -17,7 +17,6 @@ describe('Utils: Peers', () => {
     });
 
     afterEach(() => {
-      activePeerMock.verify();
       activePeerMock.restore();
     });
 

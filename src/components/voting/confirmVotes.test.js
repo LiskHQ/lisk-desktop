@@ -64,9 +64,8 @@ describe('ConfirmVotes', () => {
       expect(wrapper.find('InfoParagraph')).to.have.lengthOf(1);
     });
 
-    it('should render two unordered list of voted and unvoted delegates', () => {
-      expect(wrapper.find('ul.voted-list li')).to.have.lengthOf(props.votedList.length);
-      expect(wrapper.find('ul.unvoted-list li')).to.have.lengthOf(props.unvotedList.length);
+    it('should render Autocomplete', () => {
+      expect(wrapper.find('VoteAutocomplete')).to.have.lengthOf(1);
     });
 
     it('should render an ActionBar', () => {

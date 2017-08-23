@@ -5,6 +5,7 @@ import { votePlaced } from '../../actions/voting';
 import InfoParagraph from '../infoParagraph';
 import ActionBar from '../actionBar';
 import Fees from '../../constants/fees';
+import Autocomplete from './voteAutocomplete';
 
 export class ConfirmVotes extends React.Component {
   constructor() {
@@ -39,20 +40,13 @@ export class ConfirmVotes extends React.Component {
 
     return (
       <article>
-        <h3>Add vote to</h3>
-        <ul className='voted-list'>
-          {this.props.votedList.map(item => <li key={item.username}>{item.username}</li>)}
-        </ul>
-        <h3>Remove vote from</h3>
-        <ul className='unvoted-list'>
-          {this.props.unvotedList.map(item => <li key={item.username}>{item.username}</li>)}
-        </ul>
-
+        <Autocomplete voted={this.props.voted} />
         {secondPassphrase}
 
         <InfoParagraph>
-          You can select up to 33 delegates in one voting turn.
-          <br />
+          <div >
+            You can select up to 33 delegates in one voting turn.
+          </div>
           You can vote for up to 101 delegates in total.
         </InfoParagraph>
 
