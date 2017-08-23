@@ -37,7 +37,7 @@ describe('Reducer: peers(state, action)', () => {
     expect(changedState).to.deep.equal(newState);
   });
 
-  it('should return and empty state object if action is activePeerReset', () => {
+  it('should return and empty state object if action is accountLoggedOut', () => {
     const state = {
       data: {
         currentPeer: 'localhost',
@@ -49,7 +49,7 @@ describe('Reducer: peers(state, action)', () => {
       status: { online: true },
     };
     const action = {
-      type: actionTypes.activePeerReset,
+      type: actionTypes.accountLoggedOut,
     };
 
     const newState = { status: null, data: null };

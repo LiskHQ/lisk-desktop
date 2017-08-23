@@ -14,7 +14,7 @@ const peers = (state = { status: {} }, action) => {
       return Object.assign({}, state, { data: action.data });
     case actionTypes.activePeerUpdate:
       return Object.assign({}, state, { status: action.data });
-    case actionTypes.activePeerReset:
+    case actionTypes.accountLoggedOut:
       return Object.assign({}, state, { data: null, status: null });
     default:
       return state;

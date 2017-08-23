@@ -92,7 +92,7 @@ describe('Reducer: transactions(state, action)', () => {
     });
   });
 
-  it('should reset all data if action.type = actionTypes.transactionsReset', () => {
+  it('should reset all data if action.type = actionTypes.accountLoggedOut', () => {
     const state = {
       pending: [{
         amount: 110000000000,
@@ -101,7 +101,7 @@ describe('Reducer: transactions(state, action)', () => {
       }],
       confirmed: mockTransactions,
     };
-    const action = { type: actionTypes.transactionsReset };
+    const action = { type: actionTypes.accountLoggedOut };
     const changedState = transactions(state, action);
     expect(changedState).to.deep.equal({
       pending: [],

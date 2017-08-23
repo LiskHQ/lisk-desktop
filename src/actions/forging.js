@@ -6,10 +6,6 @@ export const forgedBlocksUpdated = data => ({
   type: actionTypes.forgedBlocksUpdated,
 });
 
-export const forgingReset = () => ({
-  type: actionTypes.forgingReset,
-});
-
 export const fetchAndUpdateForgedBlocks = ({ activePeer, limit, offset, generatorPublicKey }) =>
   (dispatch) => {
     getForgedBlocks(activePeer, limit, offset, generatorPublicKey)
