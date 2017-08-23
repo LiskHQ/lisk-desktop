@@ -1,6 +1,5 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
-import sinonStubPromise from 'sinon-stub-promise';
 import actionTypes from '../constants/actions';
 import {
     addedToVoteList,
@@ -13,8 +12,6 @@ import Fees from '../constants/fees';
 import { transactionAdded } from './transactions';
 import { errorAlertDialogDisplayed } from './dialog';
 import * as delegateApi from '../utils/api/delegate';
-
-sinonStubPromise(sinon);
 
 describe('actions: voting', () => {
   describe('addedToVoteList', () => {

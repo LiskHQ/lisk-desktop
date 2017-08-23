@@ -1,12 +1,9 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
-import sinonStubPromise from 'sinon-stub-promise';
 import actionTypes from '../constants/actions';
 import { transactionAdded, transactionsUpdated,
    transactionsLoaded, transactionsRequested } from './transactions';
 import * as accountApi from '../utils/api/account';
-
-sinonStubPromise(sinon);
 
 describe('actions: transactions', () => {
   describe('transactionAdded', () => {
