@@ -95,13 +95,21 @@ describe('VoteAutocomplete', () => {
     expect(wrapper.state('className').match(/hidden/g)).to.have.lengthOf(1);
   });
 
+  it('should suggestionStatus(true, className) clear value of className in state', () => {
+    const clock = sinon.useFakeTimers();
+    wrapper.instance().suggestionStatus(true, 'className');
+    clock.tick(200);
+    expect(wrapper.state('className')).to.be.equal('');
+  });
+
   it('should search hide suggestion boxes when value is equal to ""', () => {
     sinon.spy(VoteAutocomplete.prototype, 'setState');
     wrapper.instance().search('votedListSearch', '');
     const clock = sinon.useFakeTimers();
-    clock.tick(250);
-
+    clock.tick(500);
+    expect(VoteAutocomplete.prototype.setState).to.have.property('callCount', 1);
     expect(wrapper.state('votedResult')).to.have.lengthOf(0);
+    expect(wrapper.state('unvotedResult')).to.have.lengthOf(0);
     expect(wrapper.state('votedSuggestionClass').match(/hidden/g)).to.have.lengthOf(1);
     expect(wrapper.state('unvotedSuggestionClass').match(/hidden/g)).to.have.lengthOf(1);
     VoteAutocomplete.prototype.setState.restore();
@@ -144,7 +152,7 @@ describe('VoteAutocomplete', () => {
     wrapper.instance().keyPress({ keyCode: 40 }, 'votedSuggestionClass', 'votedResult');
     expect(VoteAutocomplete.prototype.handleArrowDown).to.have.property('callCount', 1);
   });
-  it('should handleArrowDown select first item in list when no one is selected', () => {
+  it('should handleArrowDown select first item in votedResult when no one is selected', () => {
     const list = [
       { address: 'address 0' },
       { address: 'address 1' },
@@ -155,6 +163,16 @@ describe('VoteAutocomplete', () => {
     expect(wrapper.state('votedResult')[0].hovered).to.have.be.equal(true);
   });
 
+  it('should handleArrowDown select first item in unvotedResult when no one is selected', () => {
+    const list = [
+      { address: 'address 0' },
+      { address: 'address 1' },
+      { address: 'address 2' },
+    ];
+    wrapper.setState({ unvotedResult: list });
+    wrapper.instance().handleArrowDown(wrapper.state('unvotedResult'), 'unvotedResult');
+    expect(wrapper.state('unvotedResult')[0].hovered).to.have.be.equal(true);
+  });
   it('should keyPress call "handleArrowUp" when event.keyCode is equal to 38', () => {
     const list = [
       { address: 'address 0' },

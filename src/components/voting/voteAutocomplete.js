@@ -58,6 +58,7 @@ export class VoteAutocomplete extends React.Component {
       } else {
         this.setState({
           votedResult: [],
+          unvotedResult: [],
           votedSuggestionClass: styles.hidden,
           unvotedSuggestionClass: styles.hidden,
         });
