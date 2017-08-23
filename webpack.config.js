@@ -27,6 +27,7 @@ module.exports = (env) => {
       path: path.resolve(__dirname, 'app', 'dist'),
       filename: env.test ? 'bundle.js' : 'bundle.[name].js',
     },
+    devtool: 'source-map',
     devServer: {
       contentBase: 'src',
       inline: true,
