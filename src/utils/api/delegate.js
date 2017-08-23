@@ -20,13 +20,15 @@ export const vote = (activePeer, secret, publicKey, voteList, unvoteList, second
     secondSecret,
   });
 
-export const voteAutocomplete = (activePeer, username, votedDict) => {
+export const voteAutocomplete = (activePeer, username, votedList) => {
   const options = { q: username };
 
   return new Promise((resolve, reject) =>
     listDelegates(activePeer, options)
     .then((response) => {
-      resolve(response.delegates.filter(d => !votedDict[d.username]));
+      resolve(response.delegates.filter(delegate =>
+        votedList.filter(item => item.username === delegate.username).length === 0,
+      ));
     })
     .catch(reject),
   );
