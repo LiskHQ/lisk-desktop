@@ -103,11 +103,11 @@ describe('VoteAutocomplete', () => {
   });
 
   it('should search hide suggestion boxes when value is equal to ""', () => {
+    const clock = sinon.useFakeTimers();
     sinon.spy(VoteAutocomplete.prototype, 'setState');
     wrapper.instance().search('votedListSearch', '');
-    const clock = sinon.useFakeTimers();
-    clock.tick(500);
-    expect(VoteAutocomplete.prototype.setState).to.have.property('callCount', 1);
+    clock.tick(250);
+    expect(VoteAutocomplete.prototype.setState).to.have.property('callCount', 2);
     expect(wrapper.state('votedResult')).to.have.lengthOf(0);
     expect(wrapper.state('unvotedResult')).to.have.lengthOf(0);
     expect(wrapper.state('votedSuggestionClass').match(/hidden/g)).to.have.lengthOf(1);
