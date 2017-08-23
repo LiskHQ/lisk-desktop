@@ -9,6 +9,7 @@ import { isValidPassphrase } from '../../utils/passphrase';
 import networksRaw from './networks';
 import Passphrase from '../passphrase';
 import styles from './login.css';
+import env from '../../constants/env';
 
 /**
  * The container component containing login
@@ -42,7 +43,9 @@ class LoginForm extends React.Component {
 
   componentDidUpdate() {
     if (this.props.account && this.props.account.address) {
-      this.props.history.replace('/main/transactions');
+      const search = this.props.history.location.search;
+      this.props.history.replace(
+        search.indexOf('?referrer') === 0 ? search.replace('?referrer=', '') : '/main/transactions');
       if (this.state.address) {
         Cookies.set('address', this.state.address);
       }
@@ -111,6 +114,14 @@ class LoginForm extends React.Component {
       ...this.validators.address(address),
       ...this.validators.passphrase(passphrase),
     });
+
+    // ignore this in coverage as it is hard to test and does not run in production
+    /* istanbul ignore if */
+    if (!env.production && Cookies.get('autologin') && !this.props.account.afterLogout && passphrase) {
+      setTimeout(() => {
+        this.onLoginSubmission(passphrase);
+      });
+    }
   }
 
   render() {

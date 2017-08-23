@@ -57,7 +57,9 @@ const account = (state = {}, action) => {
     case actionTypes.accountLoggedIn:
       return merge(state, action.data);
     case actionTypes.accountLoggedOut:
-      return {};
+      return {
+        afterLogout: true,
+      };
     default:
       return state;
   }
