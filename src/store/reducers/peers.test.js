@@ -52,7 +52,7 @@ describe('Reducer: peers(state, action)', () => {
       type: actionTypes.accountLoggedOut,
     };
 
-    const newState = { status: null, data: null };
+    const newState = { status: {}, data: {} };
     const changedState = peers(state, action);
     expect(changedState).to.deep.equal(newState);
   });

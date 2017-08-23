@@ -9,7 +9,6 @@ class Transactions extends React.Component {
   constructor() {
     super();
     this.canLoadMore = true;
-    this.transactionsCount = 0;
   }
 
   loadMore() {

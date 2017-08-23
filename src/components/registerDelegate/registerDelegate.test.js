@@ -87,7 +87,6 @@ describe('RegisterDelegate', () => {
       wrapper.find('.username input').simulate('change', { target: { value: 'sample_username' } });
       wrapper.find('.next-button').simulate('click');
       expect(wrapper.find('.primary-button button').props().disabled).to.not.equal(true);
-      // TODO: this doesn't work for some reason
       expect(props.delegateRegistered).to.have.been.calledWith();
     });
 
