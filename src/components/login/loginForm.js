@@ -117,7 +117,7 @@ class LoginForm extends React.Component {
 
     // ignore this in coverage as it is hard to test and does not run in production
     /* istanbul ignore if */
-    if (!env.production && Cookies.get('autologin') && passphrase) {
+    if (!env.production && Cookies.get('autologin') && !this.props.account.afterLogout && passphrase) {
       setTimeout(() => {
         this.onLoginSubmission(passphrase);
       });

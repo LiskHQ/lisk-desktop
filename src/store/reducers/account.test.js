@@ -40,7 +40,7 @@ describe('Reducer: account(state, action)', () => {
       type: actionTypes.accountLoggedOut,
     };
     const changedAccount = account(state, action);
-    expect(changedAccount).to.deep.equal({ });
+    expect(changedAccount).to.deep.equal({ afterLogout: true });
   });
 
   it('should return state if action.type is none of the above', () => {
