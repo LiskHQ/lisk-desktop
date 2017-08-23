@@ -3,8 +3,7 @@ import { spy, stub } from 'sinon';
 import middleware from './account';
 import * as accountApi from '../../utils/api/account';
 import actionTypes from '../../constants/actions';
-import { fetchAndUpdateForgedBlocks } from '../../actions/forging';
-
+// import { fetchAndUpdateForgedBlocks } from '../../actions/forging';
 
 describe('Account middleware', () => {
   let store;
