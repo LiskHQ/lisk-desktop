@@ -131,6 +131,9 @@ node('lisk-nano-01'){
         rm -rf /tmp/.X0-lock || true
         pkill -f webpack -9 || true
 
+        # Cleanup - delete all files on success
+        cd $WORKSPACE
+        rm -rf *
         '''
       } catch (err) {
         currentBuild.result = 'FAILURE'

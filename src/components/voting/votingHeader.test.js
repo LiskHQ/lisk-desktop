@@ -79,7 +79,7 @@ describe('VotingHeader', () => {
     expect(props.search).to.have.been.calledWith('555');
   });
 
-  it('click on #searchIcon should clear vlaue of search input', () => {
+  it('click on #searchIcon should clear value of search input', () => {
     wrapper.instance().search('query', '555');
     wrapper.find('#searchIcon').simulate('click');
     expect(wrapper.state('query')).to.be.equal('');

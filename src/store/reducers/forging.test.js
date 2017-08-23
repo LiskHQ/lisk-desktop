@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import forging from './forging';
 import actionTypes from '../../constants/actions';
 
-
 describe('Reducer: forging(state, action)', () => {
   let state;
   const blocks = [{

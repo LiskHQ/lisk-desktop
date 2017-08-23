@@ -1,8 +1,6 @@
 import { connect } from 'react-redux';
 import RegisterDelegate from './registerDelegate';
-import { accountUpdated } from '../../actions/account';
-import { transactionAdded } from '../../actions/transactions';
-import { successAlertDialogDisplayed, errorAlertDialogDisplayed } from '../../actions/dialog';
+import { delegateRegistered } from '../../actions/account';
 
 const mapStateToProps = state => ({
   account: state.account,
@@ -10,10 +8,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onAccountUpdated: data => dispatch(accountUpdated(data)),
-  showSuccessAlert: data => dispatch(successAlertDialogDisplayed(data)),
-  showErrorAlert: data => dispatch(errorAlertDialogDisplayed(data)),
-  addTransaction: data => dispatch(transactionAdded(data)),
+  delegateRegistered: data => dispatch(delegateRegistered(data)),
 });
 
 export default connect(

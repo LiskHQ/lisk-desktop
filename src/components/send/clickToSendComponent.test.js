@@ -13,7 +13,7 @@ describe('ClickToSendComponent', () => {
     setActiveDialog = sinon.spy();
   });
 
-  it('allows open send modal with prefilled address ', () => {
+  it('allows open send modal with pre-filled address ', () => {
     const wrapper = mount(
       <ClickToSendComponent address='16313739661670634666L'
         setActiveDialog={setActiveDialog}><Dummy /></ClickToSendComponent>);
@@ -22,7 +22,7 @@ describe('ClickToSendComponent', () => {
     expect(wrapper.find('Dummy')).to.have.length(1);
   });
 
-  it('allows open send modal with prefilled rawAmount ', () => {
+  it('allows open send modal with pre-filled rawAmount ', () => {
     const wrapper = mount(
       <ClickToSendComponent rawAmount='100000000'
         setActiveDialog={setActiveDialog}><Dummy /></ClickToSendComponent>);

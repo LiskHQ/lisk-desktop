@@ -1,20 +1,18 @@
 import React from 'react';
 import { expect } from 'chai';
-import sinon from 'sinon';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
-import * as forgingActions from '../../actions/forging';
-import Forging from './';
+import Forging from './index';
 
-
-describe('Forging', () => {
+describe('Forging HOC', () => {
   let wrapper;
+  let store;
 
   beforeEach(() => {
-    const store = configureMockStore([])({
-      account: {},
-      peers: {},
+    store = configureMockStore([])({
+      account: { address: '10171906415056299071L' },
+      peers: { data: {} },
       forging: {
         statistics: {},
         forgedBlocks: [],
@@ -23,19 +21,20 @@ describe('Forging', () => {
     wrapper = mount(<Provider store={store}><Forging /></Provider>);
   });
 
-  it('should render ForgingComponent', () => {
-    expect(wrapper.find('ForgingComponent')).to.have.lengthOf(1);
+  it('should render Forging component', () => {
+    expect(wrapper.find('Forging')).to.have.lengthOf(1);
   });
 
-  it('should bind updateForgedBlocks action to ForgingComponent props.onForgedBlocksLoaded', () => {
-    const actionsSpy = sinon.spy(forgingActions, 'updateForgedBlocks');
-    wrapper.find('ForgingComponent').props().onForgedBlocksLoaded([]);
-    expect(actionsSpy).to.be.calledWith();
-  });
+  it('should render Forging component with expected properties', () => {
+    const props = wrapper.find('Forging').props();
+    const state = store.getState();
 
-  it('should bind updateForgingStats action to ForgingComponent props.onForgingStatsUpdate', () => {
-    const actionsSpy = sinon.spy(forgingActions, 'updateForgingStats');
-    wrapper.find('ForgingComponent').props().onForgingStatsUpdate({});
-    expect(actionsSpy).to.be.calledWith();
+    expect(props.account).to.be.equal(state.account);
+    expect(props.peers).to.be.equal(state.peers);
+    expect(props.statistics).to.be.equal(state.forging.statistics);
+    expect(props.forgedBlocks).to.be.equal(state.forging.forgedBlocks);
+
+    expect(typeof props.onForgedBlocksLoaded).to.be.equal('function');
+    expect(typeof props.onForgingStatsUpdated).to.be.equal('function');
   });
 });

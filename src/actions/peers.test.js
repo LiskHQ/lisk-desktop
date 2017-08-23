@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { spy } from 'sinon';
 import Lisk from 'lisk-js';
 import actionTypes from '../constants/actions';
-import { activePeerSet, activePeerReset, activePeerUpdate } from './peers';
+import { activePeerSet, activePeerUpdate } from './peers';
 
 
 describe('actions: peers', () => {
@@ -19,15 +19,6 @@ describe('actions: peers', () => {
         type: actionTypes.activePeerUpdate,
       };
       expect(activePeerUpdate(data)).to.be.deep.equal(expectedAction);
-    });
-  });
-
-  describe('activePeerReset', () => {
-    it('should create an action to reset the active peer', () => {
-      const expectedAction = {
-        type: actionTypes.activePeerReset,
-      };
-      expect(activePeerReset()).to.be.deep.equal(expectedAction);
     });
   });
 

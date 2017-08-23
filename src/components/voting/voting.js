@@ -159,19 +159,21 @@ class Voting extends React.Component {
           votedDelegates={this.state.votedDelegates}
           search={ value => this.search(value) }
         />
-        <Table selectable={false}>
-          <TableHead displaySelect={false}>
-            <TableCell>Vote</TableCell>
-            <TableCell>Rank</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Lisk Address</TableCell>
-            <TableCell>Uptime</TableCell>
-            <TableCell>Approval</TableCell>
-          </TableHead>
-          {this.state.delegates.map((item, idx) => (
+        <div className='verticalScroll'>
+          <Table selectable={false}>
+            <TableHead displaySelect={false}>
+              <TableCell>Vote</TableCell>
+              <TableCell>Rank</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Lisk Address</TableCell>
+              <TableCell>Uptime</TableCell>
+              <TableCell>Approval</TableCell>
+            </TableHead>
+            {this.state.delegates.map((item, idx) => (
               <VotingRow key={idx} data={item} />
-          ))}
-        </Table>
+            ))}
+          </Table>
+        </div>
         {this.state.notFound}
         <Waypoint onEnter={this.loadMore.bind(this)}></Waypoint>
       </div>

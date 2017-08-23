@@ -5,3 +5,7 @@
   width: 100vw;
   z-index: 201;
 }
+
+.linear {
+  background: rgb(60, 185, 253);
+}

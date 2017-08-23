@@ -10,6 +10,8 @@ const actionTypes = {
   dialogHidden: 'DIALOG_HIDDEN',
   forgedBlocksUpdated: 'FORGED_BLOCKS_UPDATED',
   forgingStatsUpdated: 'FORGING_STATS_UPDATED',
+  forgingReset: 'FORGING_RESET',
+  VotePlaced: 'VOTE_PLACED',
   addedToVoteList: 'ADDED_TO_VOTE_LIST',
   removedFromVoteList: 'REMOVEd_FROM_VOTE_LIST',
   votesCleared: 'VOTES_CLEARED',
@@ -21,6 +23,7 @@ const actionTypes = {
   transactionAdded: 'TRANSACTION_ADDED',
   transactionsUpdated: 'TRANSACTIONS_UPDATED',
   transactionsLoaded: 'TRANSACTIONS_LOADED',
+  transactionsReset: 'TRANSACTIONS_RESET',
 };
 
 export default actionTypes;

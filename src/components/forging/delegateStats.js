@@ -29,7 +29,7 @@ const progressCircleCardList = [
 const DelegateStats = props => (
   <div className={`${grid.row} ${grid['between-xs']}`}>
     {progressCircleCardList.map(cardItem => (
-      <div className={grid['col-xs-4']} key={cardItem.key}>
+      <div className={`${grid['col-xs-12']} ${grid['col-sm-4']}`} key={cardItem.key}>
         <Card className={style.grayCard}>
           <CardText>
           <div className={grid['col-xs-12']}>

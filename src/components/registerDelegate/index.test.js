@@ -2,20 +2,37 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
-import sinon from 'sinon';
-import * as accountActions from '../../actions/account';
-import * as transactionsActions from '../../actions/transactions';
-import * as dialogActions from '../../actions/dialog';
-import store from '../../store';
+import configureMockStore from 'redux-mock-store';
 import RegisterDelegate from './index';
 
 describe('RegisterDelegate HOC', () => {
   let wrapper;
-  let props;
+  const peers = {
+    status: {
+      online: false,
+    },
+    data: {
+      currentPeer: 'localhost',
+      port: 4000,
+      options: {
+        name: 'Custom Node',
+      },
+    },
+  };
+
+  const account = {
+    isDelegate: false,
+    address: '16313739661670634666L',
+    username: 'lisk-nano',
+  };
+
+  const store = configureMockStore([])({
+    peers,
+    account,
+  });
 
   beforeEach(() => {
-    wrapper = mount(<Provider store={store}><RegisterDelegate closeDialog={() => {}} /></Provider>);
-    props = wrapper.find('RegisterDelegate').props();
+    wrapper = mount(<Provider store={store}><RegisterDelegate /></Provider>);
   });
 
   it('should render RegisterDelegate', () => {
@@ -23,34 +40,9 @@ describe('RegisterDelegate HOC', () => {
   });
 
   it('should mount registerDelegate with appropriate properties', () => {
-    expect(typeof props.closeDialog).to.be.equal('function');
-  });
-
-  it('should bind accountUpdated action to AccountComponent props.onAccountUpdated', () => {
-    const actionsSpy = sinon.spy(accountActions, 'accountUpdated');
-    props.onAccountUpdated({});
-    expect(actionsSpy).to.be.calledWith();
-    actionsSpy.restore();
-  });
-
-  it('should bind successAlertDialogDisplayed action to AccountComponent props.showSuccessAlert', () => {
-    const actionsSpy = sinon.spy(dialogActions, 'successAlertDialogDisplayed');
-    props.showSuccessAlert({});
-    expect(actionsSpy).to.be.calledWith();
-    actionsSpy.restore();
-  });
-
-  it('should bind errorAlertDialogDisplayed action to AccountComponent props.showErrorAlert', () => {
-    const actionsSpy = sinon.spy(dialogActions, 'errorAlertDialogDisplayed');
-    props.showErrorAlert({});
-    expect(actionsSpy).to.be.calledWith();
-    actionsSpy.restore();
-  });
-
-  it('should bind transactionAdded action to AccountComponent props.addTransaction', () => {
-    const actionsSpy = sinon.spy(transactionsActions, 'transactionAdded');
-    props.addTransaction({});
-    expect(actionsSpy).to.be.calledWith();
-    actionsSpy.restore();
+    const props = wrapper.find('RegisterDelegate').props();
+    expect(props.peers).to.be.equal(peers);
+    expect(props.account).to.be.equal(account);
+    expect(typeof props.delegateRegistered).to.be.equal('function');
   });
 });
