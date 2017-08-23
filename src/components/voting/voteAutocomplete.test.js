@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import sinonStubPromise from 'sinon-stub-promise';
 import configureMockStore from 'redux-mock-store';
 import * as delegateApi from '../../utils/api/delegate';
+import * as votingActions from '../../actions/voting';
 import VoteAutocompleteContainer, { VoteAutocomplete } from './voteAutocomplete';
 
 sinonStubPromise(sinon);
@@ -34,6 +35,7 @@ const props = {
   addedToVoteList: sinon.spy(),
   removedFromVoteList: sinon.spy(),
 };
+let wrapper;
 
 const store = configureMockStore([])({
   peers: {},
@@ -45,16 +47,28 @@ const store = configureMockStore([])({
 });
 
 describe('VoteAutocompleteContainer', () => {
-  it('should render VoteAutocomplete', () => {
-    const wrapper = mount(<VoteAutocompleteContainer {...props} store={store} />, {
+  beforeEach(() => {
+    wrapper = mount(<VoteAutocompleteContainer {...props} store={store} />, {
       context: { store },
       childContextTypes: { store: PropTypes.object.isRequired },
     });
+  });
+  it('should render VoteAutocomplete', () => {
     expect(wrapper.find('VoteAutocomplete').exists()).to.be.equal(true);
+  });
+  it('should bind addedToVoteList action to ForgingComponent props.addedToVoteList', () => {
+    const actionsSpy = sinon.spy(votingActions, 'addedToVoteList');
+    wrapper.find('VoteAutocomplete').props().addedToVoteList([]);
+    expect(actionsSpy).to.be.calledWith();
+  });
+
+  it('should bind removedFromVoteList action to ForgingComponent props.removedFromVoteList', () => {
+    const actionsSpy = sinon.spy(votingActions, 'removedFromVoteList');
+    wrapper.find('VoteAutocomplete').props().removedFromVoteList([]);
+    expect(actionsSpy).to.be.calledWith();
   });
 });
 describe('VoteAutocomplete', () => {
-  let wrapper;
   let voteAutocompleteApiMock;
   let unvoteAutocompleteApiMock;
   beforeEach(() => {
@@ -81,6 +95,17 @@ describe('VoteAutocomplete', () => {
     expect(wrapper.state('className').match(/hidden/g)).to.have.lengthOf(1);
   });
 
+  it('should search hide suggestion boxes when value is equal to ""', () => {
+    sinon.spy(VoteAutocomplete.prototype, 'setState');
+    wrapper.instance().search('votedListSearch', '');
+    const clock = sinon.useFakeTimers();
+    clock.tick(250);
+
+    expect(wrapper.state('votedResult')).to.have.lengthOf(0);
+    expect(wrapper.state('votedSuggestionClass').match(/hidden/g)).to.have.lengthOf(1);
+    expect(wrapper.state('unvotedSuggestionClass').match(/hidden/g)).to.have.lengthOf(1);
+    VoteAutocomplete.prototype.setState.restore();
+  });
   it('search should call "voteAutocomplete" when name is equal to "votedListSearch"', () => {
     const clock = sinon.useFakeTimers();
     voteAutocompleteApiMock.returnsPromise().resolves({ success: true })
@@ -118,6 +143,16 @@ describe('VoteAutocomplete', () => {
     wrapper.setState({ votedResult: list });
     wrapper.instance().keyPress({ keyCode: 40 }, 'votedSuggestionClass', 'votedResult');
     expect(VoteAutocomplete.prototype.handleArrowDown).to.have.property('callCount', 1);
+  });
+  it('should handleArrowDown select first item in list when no one is selected', () => {
+    const list = [
+      { address: 'address 0' },
+      { address: 'address 1' },
+      { address: 'address 2' },
+    ];
+    wrapper.setState({ votedResult: list });
+    wrapper.instance().handleArrowDown(wrapper.state('votedResult'), 'votedResult');
+    expect(wrapper.state('votedResult')[0].hovered).to.have.be.equal(true);
   });
 
   it('should keyPress call "handleArrowUp" when event.keyCode is equal to 38', () => {
