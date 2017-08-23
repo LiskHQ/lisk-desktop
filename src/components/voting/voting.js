@@ -175,7 +175,8 @@ class Voting extends React.Component {
           </Table>
         </div>
         {this.state.notFound}
-        <Waypoint onEnter={this.loadMore.bind(this)}></Waypoint>
+        <Waypoint bottomOffset="-500px"
+                  onEnter={this.loadMore.bind(this)}></Waypoint>
       </div>
     );
   }
