@@ -13,26 +13,29 @@ const ForgedBlocks = props => (
     <CardTitle>
       Forged Blocks
     </CardTitle>
-    <div className={style.forgedBlocksTableWrapper}>
-      <Table selectable={false}>
-        <TableHead>
-          <TableCell>Block height</TableCell>
-          <TableCell>Block Id</TableCell>
-          <TableCell>Timestamp</TableCell>
-          <TableCell>Total fee</TableCell>
-          <TableCell>Reward</TableCell>
-        </TableHead>
-        {props.forgedBlocks.map((block, idx) => (
-          <TableRow key={idx}>
-            <TableCell><FormattedNumber val={block.height} /></TableCell>
-            <TableCell>{block.id}</TableCell>
-            <TableCell><TooltipTime label={block.timestamp} /></TableCell>
-            <TableCell><LiskAmount val={block.totalFee} roundTo={2} /></TableCell>
-            <TableCell><LiskAmount val={block.reward} roundTo={2} /></TableCell>
-          </TableRow>
-        ))}
-      </Table>
-    </div>
+    { props.forgedBlocks.length ?
+      <div className={style.forgedBlocksTableWrapper}>
+        <Table selectable={false}>
+          <TableHead>
+            <TableCell>Block height</TableCell>
+            <TableCell>Block Id</TableCell>
+            <TableCell>Timestamp</TableCell>
+            <TableCell>Total fee</TableCell>
+            <TableCell>Reward</TableCell>
+          </TableHead>
+          {props.forgedBlocks.map((block, idx) => (
+            <TableRow key={idx}>
+              <TableCell><FormattedNumber val={block.height} /></TableCell>
+              <TableCell>{block.id}</TableCell>
+              <TableCell><TooltipTime label={block.timestamp} /></TableCell>
+              <TableCell><LiskAmount val={block.totalFee} roundTo={2} /></TableCell>
+              <TableCell><LiskAmount val={block.reward} roundTo={2} /></TableCell>
+            </TableRow>
+          ))}
+        </Table>
+      </div> :
+      <p className='hasPaddingRow empty-message'>You have not forged any blocks yet.</p>
+    }
   </Card>
 );
 
