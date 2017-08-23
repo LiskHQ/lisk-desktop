@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import Send from './send';
-import { successAlertDialogDisplayed, errorAlertDialogDisplayed } from '../../actions/dialog';
-import { transactionAdded } from '../../actions/transactions';
+import { sent } from '../../actions/account';
 
 const mapStateToProps = state => ({
   account: state.account,
@@ -9,9 +8,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  showSuccessAlert: data => dispatch(successAlertDialogDisplayed(data)),
-  showErrorAlert: data => dispatch(errorAlertDialogDisplayed(data)),
-  addTransaction: data => dispatch(transactionAdded(data)),
+  sent: data => dispatch(sent(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Send);

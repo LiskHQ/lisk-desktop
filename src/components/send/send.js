@@ -1,8 +1,6 @@
 import React from 'react';
 import Input from 'react-toolbox/lib/input';
 import { IconMenu, MenuItem } from 'react-toolbox/lib/menu';
-
-import { send } from '../../utils/api/account';
 import { fromRawLsk, toRawLsk } from '../../utils/lsk';
 import SecondPassphraseInput from '../secondPassphraseInput';
 import ActionBar from '../actionBar';
@@ -74,27 +72,13 @@ class Send extends React.Component {
   }
 
   send() {
-    send(this.props.activePeer,
-      this.state.recipient.value,
-      toRawLsk(this.state.amount.value),
-      this.props.account.passphrase,
-      this.state.secondPassphrase.value,
-    ).then((data) => {
-      this.props.showSuccessAlert({
-        text: `Your transaction of ${this.state.amount.value} LSK to ${this.state.recipient.value} was accepted and will be processed in a few seconds.`,
-      });
-      this.props.addTransaction({
-        id: data.transactionId,
-        senderPublicKey: this.props.account.publicKey,
-        senderId: this.props.account.address,
-        recipientId: this.state.recipient.value,
-        amount: toRawLsk(this.state.amount.value),
-        fee: toRawLsk(this.fee),
-      });
-    }).catch((res) => {
-      this.props.showErrorAlert({
-        text: res && res.message ? res.message : 'An error occurred while creating the transaction.',
-      });
+    this.props.sent({
+      activePeer: this.props.activePeer,
+      account: this.props.account,
+      recipientId: this.state.recipient.value,
+      amount: this.state.amount.value,
+      passphrase: this.props.account.passphrase,
+      secondPassphrase: this.state.secondPassphrase.value,
     });
   }
 

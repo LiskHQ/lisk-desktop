@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { dialogDisplayed } from '../../actions/dialog';
-import { secondPassphraseRegistered } from '../../actions/account';
-import SecondPassphrase from './secondPassphrase';
+import LoginForm from './loginForm';
+import { activePeerSet } from '../../actions/peers';
 
 /**
- * Injecting store through redux store
+ * Using react-redux connect to pass state and dispatch to LoginForm
  */
 const mapStateToProps = state => ({
   account: state.account,
@@ -12,11 +13,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  activePeerSet: data => dispatch(activePeerSet(data)),
   setActiveDialog: data => dispatch(dialogDisplayed(data)),
-  registerSecondPassphrase: data => dispatch(secondPassphraseRegistered(data)),
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(SecondPassphrase);
+)(withRouter(LoginForm));
