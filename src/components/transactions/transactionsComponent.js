@@ -1,7 +1,6 @@
 import React from 'react';
 import Waypoint from 'react-waypoint';
 import tableStyle from 'react-toolbox/lib/table/theme.css';
-import { transactions } from '../../utils/api/account';
 import TransactionsHeader from './transactionsHeader';
 import TransactionRow from './transactionRow';
 import styles from './transactions.css';
@@ -15,13 +14,23 @@ class Transactions extends React.Component {
   loadMore() {
     if (this.canLoadMore) {
       this.canLoadMore = false;
-      transactions(this.props.activePeer, this.props.address, 20, this.props.transactions.length)
-      .then((res) => {
-        this.canLoadMore = parseInt(res.count, 10) > this.props.transactions.length;
-        this.props.transactionsLoaded(res.transactions);
-      })
-      .catch(error => console.error(error.message)); // eslint-disable-line no-console
+      this.props.transactionsRequested({
+        activePeer: this.props.activePeer,
+        address: this.props.address,
+        limit: 20,
+        offset: this.props.transactions.length,
+      });
     }
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const shouldUpdate = ((nextProps.confirmedCount !== this.props.confirmedCount) ||
+    (nextProps.pendingCount !== this.props.pendingCount));
+    return shouldUpdate;
+  }
+
+  componentDidUpdate() {
+    this.canLoadMore = this.props.count > this.props.transactions.length;
   }
 
   render() {

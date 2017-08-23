@@ -26,8 +26,10 @@ describe('ForgingStats', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<ForgingStats account={account} statistics={statistics}
-              loadStats={loadStats} />);
+    wrapper = mount(<ForgingStats
+      account={account}
+      statistics={statistics}
+      loadStats={loadStats} />);
   });
 
   it('should render 4 Card components', () => {
