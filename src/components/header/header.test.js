@@ -6,12 +6,12 @@ import sinonChai from 'sinon-chai';
 import { Button } from 'react-toolbox/lib/button';
 import sinon from 'sinon';
 import styles from './header.css';
-import HeaderElement from './headerElement';
+import Header from './header';
 import logo from '../../assets/images/LISK-nano.png';
 
 chai.use(sinonChai);
 chai.use(chaiEnzyme()); // Note the invocation at the end
-describe('HeaderElement', () => {
+describe('Header', () => {
   let wrapper;
   let propsMock;
 
@@ -21,7 +21,7 @@ describe('HeaderElement', () => {
       account: {},
     };
     propsMock = sinon.mock(mockInputProps);
-    wrapper = shallow(<HeaderElement {...mockInputProps} />);
+    wrapper = shallow(<Header {...mockInputProps} />);
   });
 
   afterEach(() => {

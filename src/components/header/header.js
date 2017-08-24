@@ -12,7 +12,7 @@ import PrivateWrapper from '../privateWrapper';
 import SecondPassphraseMenu from '../secondPassphrase';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 
-const HeaderElement = props => (
+const Header = props => (
   <header className={`${grid.row} ${grid['between-xs']} ${styles.wrapper}`} >
     <div className={styles.logoWrapper}>
       <img className={styles.logo} src={logo} alt="logo" />
@@ -65,4 +65,4 @@ const HeaderElement = props => (
   </header>
 );
 
-export default HeaderElement;
+export default Header;

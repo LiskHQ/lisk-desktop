@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { dialogDisplayed } from '../../actions/dialog';
 import { accountLoggedOut } from '../../actions/account';
-import HeaderElement from './headerElement';
+import Header from './header';
 
 const mapStateToProps = state => ({
   account: state.account,
@@ -12,9 +12,7 @@ const mapDispatchToProps = dispatch => ({
   logOut: () => dispatch(accountLoggedOut()),
 });
 
-const Header = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(HeaderElement);
-
-export default Header;
+)(Header);

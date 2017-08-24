@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { dialogHidden } from '../../actions/dialog';
-import DialogElement from './dialogElement';
+import Dialog from './dialog';
 
 const mapStateToProps = state => ({
   dialog: state.dialog,
@@ -10,9 +10,7 @@ const mapDispatchToProps = dispatch => ({
   onCancelClick: () => dispatch(dialogHidden()),
 });
 
-const Dialog = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(DialogElement);
-
-export default Dialog;
+)(Dialog);

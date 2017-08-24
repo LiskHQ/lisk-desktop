@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import ToasterComponent from './toasterComponent';
+import Toaster from './toaster';
 import { toastHidden } from '../../actions/toaster';
 
 const mapStateToProps = state => ({
@@ -10,9 +10,7 @@ const mapDispatchToProps = dispatch => ({
   hideToast: data => dispatch(toastHidden(data)),
 });
 
-const Toaster = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ToasterComponent);
-
-export default Toaster;
+)(Toaster);

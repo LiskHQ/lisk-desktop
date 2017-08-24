@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Snackbar } from 'react-toolbox';
 import styles from './toaster.css';
 
-class ToasterComponent extends Component {
+class Toaster extends Component {
   constructor() {
     super();
     this.state = {
@@ -34,4 +34,4 @@ class ToasterComponent extends Component {
   }
 }
 
-export default ToasterComponent;
+export default Toaster;

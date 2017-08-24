@@ -4,11 +4,11 @@ import sinon from 'sinon';
 import { mount } from 'enzyme';
 import chaiEnzyme from 'chai-enzyme';
 import sinonChai from 'sinon-chai';
-import ToasterComponent from './toasterComponent';
+import Toaster from './toaster';
 
 chai.use(sinonChai);
 chai.use(chaiEnzyme()); // Note the invocation at the end
-describe('ToasterComponent', () => {
+describe('Toaster', () => {
   let wrapper;
   const toasts = [{
     label: 'test',
@@ -21,7 +21,7 @@ describe('ToasterComponent', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<ToasterComponent {...toasterProps} />);
+    wrapper = mount(<Toaster {...toasterProps} />);
   });
 
   it('renders <Snackbar /> component from react-toolbox', () => {
