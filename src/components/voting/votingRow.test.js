@@ -9,7 +9,7 @@ describe('VotinRow', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<VotinRow data={{}}></VotinRow>,
+    wrapper = mount(<VotinRow data={{ dirty: true }}></VotinRow>,
       {
         context: { store },
         childContextTypes: { store: PropTypes.object.isRequired },
