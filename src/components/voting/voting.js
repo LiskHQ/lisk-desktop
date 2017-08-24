@@ -169,8 +169,8 @@ class Voting extends React.Component {
               <TableCell>Uptime</TableCell>
               <TableCell>Approval</TableCell>
             </TableHead>
-            {this.state.delegates.map((item, idx) => (
-              <VotingRow key={idx} data={item} />
+            {this.state.delegates.map(item => (
+              <VotingRow key={item.address} data={item} />
             ))}
           </Table>
         </div>
