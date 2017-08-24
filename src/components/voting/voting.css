@@ -50,6 +50,9 @@
         line-height: 24px;
         margin-left: 6px;
     }
+    & :global .disable{
+        color: rgba(0,0,0,0.38);
+    }
 }
 .voted {
     color: #7cb342;
@@ -69,9 +72,18 @@
     overflow: auto !important;
     z-index: 9;
 }
+.info {
+    border-top: 1px solid rgba(0,0,0,0.12);
+    border-bottom: 1px solid rgba(0,0,0,0.12);
+    margin: 10px -24px 20px;
+}
+.autoCompleteTile{
+    margin-bottom: 5px;
+}
 /* react toolbar overwroght */
 .input{
-    margin-top: -15px;
+    margin-top: -10px;
+    padding-bottom: 5px;
 }
 .menuItem{
     flex-direction: row-reverse;
