@@ -40,7 +40,8 @@ const Forging = ({
           <DelegateStats delegate={account.delegate} />
           <br />
           <ForgedBlocks forgedBlocks={forgedBlocks} />
-          <Waypoint bottomOffset="-500px"
+          <Waypoint bottomOffset="-80%"
+                    scrollableAncestor={window}
                     onEnter={() => loadForgedBlocks(20, forgedBlocks.length) } />
         </div> :
         null

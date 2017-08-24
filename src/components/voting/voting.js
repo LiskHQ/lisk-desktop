@@ -160,7 +160,7 @@ class Voting extends React.Component {
           search={ value => this.search(value) }
         />
         <div className='verticalScroll'>
-          <Table selectable={false}>
+          <Table selectable={false} >
             <TableHead displaySelect={false}>
               <TableCell>Vote</TableCell>
               <TableCell>Rank</TableCell>
@@ -175,7 +175,8 @@ class Voting extends React.Component {
           </Table>
         </div>
         {this.state.notFound}
-        <Waypoint bottomOffset="-500px"
+        <Waypoint bottomOffset='-80%'
+                  scrollableAncestor={window}
                   onEnter={this.loadMore.bind(this)}></Waypoint>
       </div>
     );
