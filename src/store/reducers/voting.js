@@ -47,7 +47,7 @@ const voting = (state = { votedList: [], unvotedList: [] }, action) => {
         refresh: false,
         votedList: [
           ...state.votedList,
-          Object.assign(action.data, { selected: true }),
+          Object.assign(action.data, { selected: true, dirty: true }),
         ],
       });
     case actionTypes.removedFromVoteList:
@@ -64,7 +64,7 @@ const voting = (state = { votedList: [], unvotedList: [] }, action) => {
         refresh: false,
         unvotedList: [
           ...state.unvotedList,
-          Object.assign(action.data, { selected: false }),
+          Object.assign(action.data, { selected: false, dirty: true }),
         ],
       });
     case actionTypes.votesCleared:

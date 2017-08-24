@@ -12,9 +12,15 @@ const setRowClass = ({ pending, selected, voted }) => {
   return voted ? styles.downVoteRow : '';
 };
 
-const VotingRow = (props) => {
-  const { data } = props;
-  return (<TableRow {...props} className={`${styles.row} ${setRowClass(data)}`}>
+class VotingRow extends React.Component {
+  shouldComponentUpdate() {
+    return !!this.props.data.dirty;
+  }
+
+  render() {
+    const props = this.props;
+    const { data } = props;
+    return (<TableRow {...props} className={`${styles.row} ${setRowClass(data)}`}>
       <TableCell>
         <Checkbox styles={styles}
           value={data.selected}
@@ -28,7 +34,8 @@ const VotingRow = (props) => {
       <TableCell>{data.productivity} %</TableCell>
       <TableCell>{data.approval} %</TableCell>
     </TableRow>
-  );
-};
+    );
+  }
+}
 
 export default VotingRow;
