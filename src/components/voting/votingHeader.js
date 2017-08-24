@@ -49,9 +49,10 @@ class VotingHeader extends React.Component {
   }
 
   render() {
+    const className = this.props.votedDelegates.length === 0 ? 'disable' : '';
     const button = <div className={styles.votesMenuButton}>
-      <i className="material-icons">visibility</i>
-      <span>my votes ({this.props.votedDelegates.length})</span>
+      <i className={`material-icons ${className}`}>visibility</i>
+      <span className={className}>my votes ({this.props.votedDelegates.length})</span>
     </div>;
     return (
       <header className={`${grid.row} ${grid['between-xs']} hasPaddingRow`}>
