@@ -6,6 +6,7 @@ import InfoParagraph from '../infoParagraph';
 import ActionBar from '../actionBar';
 import Fees from '../../constants/fees';
 import Autocomplete from './voteAutocomplete';
+import styles from './voting.css';
 
 export class ConfirmVotes extends React.Component {
   constructor() {
@@ -42,13 +43,14 @@ export class ConfirmVotes extends React.Component {
       <article>
         <Autocomplete voted={this.props.voted} />
         {secondPassphrase}
-
-        <InfoParagraph>
-          <div >
-            You can select up to 33 delegates in one voting turn.
-          </div>
-          You can vote for up to 101 delegates in total.
-        </InfoParagraph>
+        <article className={styles.info}>
+          <InfoParagraph>
+            <div >
+              You can select up to 33 delegates in one voting turn.
+            </div>
+            You can vote for up to 101 delegates in total.
+          </InfoParagraph>
+        </article>
 
         <ActionBar
           secondaryButton={{

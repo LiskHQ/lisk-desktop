@@ -155,7 +155,7 @@ export class VoteAutocomplete extends React.Component {
   render() {
     return (
       <article>
-        <h3>Add vote to</h3>
+        <h3 className={styles.autoCompleteTile}>Add vote to</h3>
         <div>
           {this.props.votedList.map(
             item => <Chip key={item.username}
@@ -168,6 +168,7 @@ export class VoteAutocomplete extends React.Component {
         <section className={styles.searchContainer}>
           <Input type='text' label='Search by username' name='votedListSearch'
             className='votedListSearch' value={this.state.votedListSearch}
+            theme={styles}
             onBlur={this.suggestionStatus.bind(this, false, 'votedSuggestionClass')}
             onKeyDown={this.votedSearchKeyDown.bind(this)}
             onChange={this.search.bind(this, 'votedListSearch')}/>
@@ -185,7 +186,7 @@ export class VoteAutocomplete extends React.Component {
             </List>
           </Card>
         </section>
-        <h3>Remove vote from</h3>
+        <h3 className={styles.autoCompleteTile}>Remove vote from</h3>
         <div>
           {this.props.unvotedList.map(
             item => <Chip key={item.username}
@@ -198,6 +199,7 @@ export class VoteAutocomplete extends React.Component {
         <section className={styles.searchContainer}>
           <Input type='text' label='Search by username' name='unvotedListSearch'
             className='unvotedListSearch' value={this.state.unvotedListSearch}
+            theme={styles}
             onBlur={this.suggestionStatus.bind(this, false, 'unvotedSuggestionClass')}
             onKeyDown={this.unvotedSearchKeyDown.bind(this)}
             onChange={this.search.bind(this, 'unvotedListSearch')}/>
