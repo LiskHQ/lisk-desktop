@@ -19,8 +19,8 @@ class Notification {
   init() {
     if (PRODUCTION) {
       const { ipc } = window;
-      ipc.on('blur', () => this.isFocused = false);
-      ipc.on('focus', () => this.isFocused = true);
+      ipc.on('blur', () => { this.isFocused = false; });
+      ipc.on('focus', () => { this.isFocused = true; });
     }
     return this;
   }

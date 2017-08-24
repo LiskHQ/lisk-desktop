@@ -30,8 +30,8 @@ class PassphraseGenerator extends React.Component {
 
   seedGenerator({ nativeEvent }) {
     const distance =
-      Math.sqrt(Math.pow(nativeEvent.pageX - this.state.lastCaptured.x, 2) +
-      (Math.pow(nativeEvent.pageY - this.state.lastCaptured.y), 2));
+      Math.sqrt(((nativeEvent.pageX - this.state.lastCaptured.x) ** 2) +
+      ((nativeEvent.pageY - this.state.lastCaptured.y) ** 2));
 
     if (distance > 120 && (!this.state.data || this.state.data.percentage < 100)) {
       this.setState({
