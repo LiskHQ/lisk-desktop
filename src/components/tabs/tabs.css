@@ -9,12 +9,12 @@
   overflow: hidden;
 }
 
-:global .theme__pointer___1xgdB {
+.pointer {
   height: 4px;
   margin-top: -48px;
 }
 
-:global .theme__label___1yb8L.theme__active___2LZ7Z {
+.label.active {
   background: white;
   color: #0288D1;
   margin-bottom: -1px;

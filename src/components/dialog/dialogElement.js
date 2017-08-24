@@ -23,7 +23,8 @@ class DialogElement extends Component {
   render() {
     return (
       <Dialog active={this.props.dialog.childComponent !== undefined && !this.state.hidden}
-         type='fullscreen' className='modal-dialog'>
+        theme={styles}
+        type='fullscreen' className='modal-dialog'>
         <div className={styles.dialog}>
           <AppBar title={this.props.dialog.title} flat={true}
             className={styles[this.props.dialog.type]}>
@@ -36,7 +37,7 @@ class DialogElement extends Component {
               <this.props.dialog.childComponent
                 {...(this.props.dialog.childComponentProps || {})}
                 closeDialog={this.closeDialog.bind(this)}
-                /> :
+              /> :
               null
             }
           </div>
