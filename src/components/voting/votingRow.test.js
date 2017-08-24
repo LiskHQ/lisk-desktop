@@ -21,9 +21,9 @@ describe('VotinRow', () => {
     wrapper.setProps({
       data: { pending: true },
     });
-    const expectedClass = /_pendingRow/g;
-    const html = wrapper.find('tr').html();
-    expect(html.match(expectedClass)).to.have.lengthOf(1);
+    const expectedClass = '_pendingRow';
+    const className = wrapper.find('tr').prop('className');
+    expect(className).to.contain(expectedClass);
   });
 
   it(`should TableRow has class name of "votedRow" when props.data.selected
@@ -31,9 +31,9 @@ describe('VotinRow', () => {
     wrapper.setProps({
       data: { selected: true, voted: true },
     });
-    const expectedClass = /_votedRow/g;
-    const html = wrapper.find('tr').html();
-    expect(html.match(expectedClass)).to.have.lengthOf(1);
+    const expectedClass = '_votedRow';
+    const className = wrapper.find('tr').prop('className');
+    expect(className).to.contain(expectedClass);
   });
 
   it(`should TableRow has class name of "downVoteRow" when props.data.selected
@@ -41,9 +41,9 @@ describe('VotinRow', () => {
     wrapper.setProps({
       data: { selected: false, voted: true },
     });
-    const expectedClass = /_downVoteRow/g;
-    const html = wrapper.find('tr').html();
-    expect(html.match(expectedClass)).to.have.lengthOf(1);
+    const expectedClass = '_downVoteRow';
+    const className = wrapper.find('tr').prop('className');
+    expect(className).to.contain(expectedClass);
   });
 
   it(`should TableRow has class name of "upVoteRow" when props.data.selected
@@ -51,8 +51,8 @@ describe('VotinRow', () => {
     wrapper.setProps({
       data: { selected: true, voted: false },
     });
-    const expectedClass = /_upVoteRow/g;
-    const html = wrapper.find('tr').html();
-    expect(html.match(expectedClass)).to.have.lengthOf(1);
+    const expectedClass = '_upVoteRow';
+    const className = wrapper.find('tr').prop('className');
+    expect(className).to.contain(expectedClass);
   });
 });
