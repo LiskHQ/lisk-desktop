@@ -13,6 +13,7 @@ const setRowClass = ({ pending, selected, voted }) => {
 };
 
 class VotingRow extends React.Component {
+  // eslint-disable-next-line class-methods-use-this
   shouldComponentUpdate(nextProps) {
     return !!nextProps.data.dirty;
   }
