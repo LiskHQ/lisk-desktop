@@ -67,8 +67,13 @@ const voting = (state = { votedList: [], unvotedList: [] }, action) => {
           Object.assign(action.data, { selected: false, dirty: true }),
         ],
       });
-    case actionTypes.votesCleared:
     case actionTypes.accountLoggedOut:
+      return Object.assign({}, state, {
+        votedList: [],
+        unvotedList: [],
+        refresh: true,
+      });
+    case actionTypes.votesCleared:
       return Object.assign({}, state, {
         votedList: state.votedList.filter(item => !item.pending),
         unvotedList: state.unvotedList.filter(item => !item.pending),
