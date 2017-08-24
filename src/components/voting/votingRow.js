@@ -13,8 +13,8 @@ const setRowClass = ({ pending, selected, voted }) => {
 };
 
 class VotingRow extends React.Component {
-  shouldComponentUpdate() {
-    return !!this.props.data.dirty;
+  shouldComponentUpdate(nextProps) {
+    return !!nextProps.data.dirty;
   }
 
   render() {
