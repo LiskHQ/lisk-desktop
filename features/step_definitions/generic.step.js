@@ -4,6 +4,7 @@ const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 const {
   waitForElemAndCheckItsText,
+  waitForElemRemoved,
   waitForElemAndClickIt,
   waitForElemAndSendKeys,
   checkAlertDialog,
@@ -77,9 +78,11 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   });
 
   Then('I should see no "{elementName}"', (elementName, callback) => {
-    browser.sleep(1000);
-    expect(element.all(by.css(`.${elementName.replace(/ /g, '-')}`)).count()).to.eventually.equal(0)
-      .and.notify(callback);
+    const selector = `.${elementName.replace(/ /g, '-')}`;
+    waitForElemRemoved(selector, () => {
+      expect(element.all(by.css(selector)).count()).to.eventually.equal(0)
+        .and.notify(callback);
+    });
   });
 
   Then('I should see "{text}" error message', (text, callback) => {

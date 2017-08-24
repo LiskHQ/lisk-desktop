@@ -26,7 +26,6 @@ const accounts = {
     address: '16422276087748907680L',
   },
   'second passphrase account': {
-    // TODO: register the second passphrase in ./e2e-test-setup.sh
     passphrase: 'awkward service glimpse punch genre calm grow life bullet boil match like',
     secondPassphrase: 'forest around decrease farm vanish permit hotel clay senior matter endorse domain',
     address: '1155682438012955434L',

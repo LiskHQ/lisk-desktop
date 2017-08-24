@@ -14,6 +14,12 @@ function waitForElemAndCheckItsText(selector, text, callback) {
     .and.notify(callback || (() => {}));
 }
 
+function waitForElemRemoved(selector, callback) {
+  const elem = element(by.css(selector));
+  browser.wait(EC.not(EC.presenceOf(elem)), waitTime,
+    `waiting for element '${selector}' not present`).then(callback || (() => {}));
+}
+
 function waitForElemAndClickIt(selector, callback) {
   const elem = element(by.css(selector));
   browser.wait(EC.presenceOf(elem), waitTime, `waiting for element '${selector}'`);
@@ -39,6 +45,7 @@ function checkAlertDialog(title, text, callback) {
 
 module.exports = {
   waitForElemAndCheckItsText,
+  waitForElemRemoved,
   waitForElemAndClickIt,
   waitForElemAndSendKeys,
   checkAlertDialog,
