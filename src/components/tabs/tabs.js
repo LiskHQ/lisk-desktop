@@ -16,6 +16,7 @@ const getIndex = history => (
 
 const Tabs = props => (
   <ToolboxTabs index={getIndex(props.history)}
+    theme={styles}
     onChange={index => props.history.push(`${tabs[index].toLowerCase()}`)}
     className={`${styles.tabs} main-tabs`}>
     {getTabs(props.isDelegate).map((tab, index) =>
