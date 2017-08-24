@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const { NamedModulesPlugin } = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const reactToolboxVariables = {
@@ -54,6 +55,7 @@ module.exports = (env) => {
         })
         : undefined,
       env.analyze ? new BundleAnalyzerPlugin() : undefined,
+      !env.prod ? new NamedModulesPlugin() : undefined,
       env.test
         ? undefined
         : new webpack.optimize.CommonsChunkPlugin({
