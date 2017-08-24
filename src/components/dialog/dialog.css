@@ -31,11 +31,9 @@
   }
 }
 
-:global {
-  @media screen and (min-width: 960px) {
-    & .theme__fullscreen___3tLXQ {
-      width: 75vw;
-    }
+@media screen and (min-width: 960px) {
+  .fullscreen {
+    width: 75vw;
   }
 }
 
