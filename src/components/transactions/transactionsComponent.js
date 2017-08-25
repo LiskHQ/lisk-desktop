@@ -51,7 +51,10 @@ class Transactions extends React.Component {
         </table> :
           <p className={`${styles.empty} hasPaddingRow empty-message`}>No transactions</p>
         }
-        <Waypoint onEnter={() => { this.loadMore(); } }></Waypoint>
+        <Waypoint bottomOffset='-80%'
+                  scrollableAncestor={window}
+                  key={this.props.transactions.length}
+                  onEnter={this.loadMore.bind(this)}></Waypoint>
       </div>
     );
   }

@@ -27,6 +27,7 @@ const Forging = ({
     });
   };
 
+
   return (
     <Card style={{ padding: 8 }}>
       {account && account.isDelegate ?
@@ -40,10 +41,10 @@ const Forging = ({
           <DelegateStats delegate={account.delegate} />
           <br />
           <ForgedBlocks forgedBlocks={forgedBlocks} />
-          <Waypoint onEnter={() => loadForgedBlocks(
-            20,
-            forgedBlocks.length,
-          ) } />
+          <Waypoint bottomOffset='-80%'
+                    scrollableAncestor={window}
+                    key={forgedBlocks.length}
+                    onEnter={() => loadForgedBlocks(20, forgedBlocks.length) } />
         </div> :
         null
       }
