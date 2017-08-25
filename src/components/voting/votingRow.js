@@ -14,9 +14,11 @@ const setRowClass = ({ pending, selected, voted }) => {
 
 const VotingRow = (props) => {
   const { data } = props;
-  return (<TableRow {...props} className={`${styles.row} ${setRowClass(data)}`}>
+  return (<TableRow className={`${styles.row} ${setRowClass(data)}`}>
       <TableCell>
         <Checkbox styles={styles}
+          addToVoteList={props.addToVoteList}
+          removeFromVoteList={props.removeFromVoteList}
           value={data.selected}
           pending={data.pending}
           data={data}

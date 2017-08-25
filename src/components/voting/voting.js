@@ -175,7 +175,10 @@ class Voting extends React.Component {
               <TableCell>Approval</TableCell>
             </TableHead>
             {this.state.delegates.map((item, idx) => (
-              <VotingRow key={idx} data={item} />
+              <VotingRow key={idx} data={item}
+                addToVoteList={this.props.addToVoteList}
+                removeFromVoteList={this.props.removeFromVoteList}
+              />
             ))}
           </Table>
         </div>
