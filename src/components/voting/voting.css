@@ -80,7 +80,6 @@
 /* react toolbar overwroght */
 .input{
     margin-top: -10px;
-    padding-bottom: 5px;
 }
 .menuItem{
     flex-direction: row-reverse;
