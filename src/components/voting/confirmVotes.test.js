@@ -7,6 +7,7 @@ import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import configureMockStore from 'redux-mock-store';
 import sinonStubPromise from 'sinon-stub-promise';
+import * as votingActions from '../../actions/voting';
 import ConfirmVotesHOC, { ConfirmVotes } from './confirmVotes';
 // import * as delegateApi from '../../utils/api/delegate';
 
@@ -60,6 +61,8 @@ describe('ConfirmVotes', () => {
     closeDialog: sinon.spy(),
     clearVoteLists: sinon.spy(),
     votePlaced: sinon.spy(),
+    addedToVoteList: sinon.spy(),
+    removedFromVoteList: sinon.spy(),
   };
 
   describe('Ordinary account', () => {
@@ -153,5 +156,17 @@ describe('ConfirmVotes HOC', () => {
     expect(confirmVotesProps.account).to.be.equal(ordinaryAccount);
     expect(confirmVotesProps.activePeer).to.deep.equal({});
     expect(typeof confirmVotesProps.votePlaced).to.be.equal('function');
+  });
+
+  it('should bind addedToVoteList action to ConfirmVotes props.addedToVoteList', () => {
+    const actionsSpy = sinon.spy(votingActions, 'addedToVoteList');
+    wrapper.find('ConfirmVotes').props().addedToVoteList([]);
+    expect(actionsSpy).to.be.calledWith();
+  });
+
+  it('should bind removedFromVoteList action to ConfirmVotes props.removedFromVoteList', () => {
+    const actionsSpy = sinon.spy(votingActions, 'removedFromVoteList');
+    wrapper.find('ConfirmVotes').props().removedFromVoteList([]);
+    expect(actionsSpy).to.be.calledWith();
   });
 });

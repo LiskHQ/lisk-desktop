@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Input from 'react-toolbox/lib/input';
-import { votePlaced } from '../../actions/voting';
+import { votePlaced, addedToVoteList, removedFromVoteList } from '../../actions/voting';
 import InfoParagraph from '../infoParagraph';
 import ActionBar from '../actionBar';
 import Fees from '../../constants/fees';
@@ -41,7 +41,13 @@ export class ConfirmVotes extends React.Component {
 
     return (
       <article>
-        <Autocomplete voted={this.props.voted} />
+        <Autocomplete
+          voted={this.props.voted}
+          votedList={this.props.votedList}
+          unvotedList={this.props.unvotedList}
+          addedToVoteList={this.props.addedToVoteList}
+          removedFromVoteList={this.props.removedFromVoteList}
+          activePeer={this.props.activePeer} />
         {secondPassphrase}
         <article className={styles.info}>
           <InfoParagraph>
@@ -79,6 +85,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   votePlaced: data => dispatch(votePlaced(data)),
+  addedToVoteList: data => dispatch(addedToVoteList(data)),
+  removedFromVoteList: data => dispatch(removedFromVoteList(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConfirmVotes);
