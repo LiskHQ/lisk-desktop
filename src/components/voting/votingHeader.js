@@ -4,6 +4,7 @@ import { Button } from 'react-toolbox/lib/button';
 import { IconMenu, MenuItem } from 'react-toolbox/lib/menu';
 import Input from 'react-toolbox/lib/input';
 import styles from './voting.css';
+import disableStyle from './disableMenu.css';
 import Confirm from './confirmVotes';
 
 class VotingHeader extends React.Component {
@@ -49,11 +50,12 @@ class VotingHeader extends React.Component {
   }
 
   render() {
-    const className = this.props.votedDelegates.length === 0 ? 'disable' : '';
+    const theme = this.props.votedDelegates.length === 0 ? disableStyle : styles;
     const button = <div className={styles.votesMenuButton}>
-      <i className={`material-icons ${className}`}>visibility</i>
-      <span className={className}>my votes ({this.props.votedDelegates.length})</span>
+      <i className='material-icons'>visibility</i>
+      <span>my votes ({this.props.votedDelegates.length})</span>
     </div>;
+    console.log(theme);
     return (
       <header className={`${grid.row} ${grid['between-xs']} hasPaddingRow`}>
         <div className={`${grid['col-xs-3']} ${styles.searchBox}`}>
@@ -68,7 +70,7 @@ class VotingHeader extends React.Component {
           </i>
         </div>
         <div className={styles.actionBar}>
-          <IconMenu theme={styles} icon={button} position='topLeft'
+          <IconMenu theme={theme} icon={button} position='topLeft'
             iconRipple={false} className='my-votes-button'>
             {this.props.votedDelegates.map(delegate =>
               <MenuItem
