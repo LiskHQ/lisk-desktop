@@ -6,22 +6,22 @@ import copy from 'copy-to-clipboard';
 import sinon from 'sinon';
 import * as toasterActions from '../../actions/toaster';
 import store from '../../store';
+import SignMessageHOC from './index';
 import SignMessage from './signMessage';
-import SignMessageComponent from './signMessageComponent';
 
-describe('SignMessage', () => {
+describe('SignMessageHOC', () => {
   let props;
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<Provider store={store}><SignMessage /></Provider>);
-    props = wrapper.find(SignMessageComponent).props();
+    wrapper = mount(<Provider store={store}><SignMessageHOC /></Provider>);
+    props = wrapper.find(SignMessage).props();
   });
 
-  it('should render the SignMessageComponent with props.successToast and props.copyToClipboard', () => {
-    expect(wrapper.find(SignMessageComponent).exists()).to.equal(true);
-    expect(typeof wrapper.find(SignMessageComponent).props().successToast).to.equal('function');
-    expect(typeof wrapper.find(SignMessageComponent).props().copyToClipboard).to.equal('function');
+  it('should render the SignMessage with props.successToast and props.copyToClipboard', () => {
+    expect(wrapper.find(SignMessage).exists()).to.equal(true);
+    expect(typeof wrapper.find(SignMessage).props().successToast).to.equal('function');
+    expect(typeof wrapper.find(SignMessage).props().copyToClipboard).to.equal('function');
   });
 
   it('should bind successToastDisplayed action to AccountComponent props.successToast', () => {

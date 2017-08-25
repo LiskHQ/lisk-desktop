@@ -5,11 +5,11 @@ import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import { Provider } from 'react-redux';
 import store from '../../store';
-import SignMessageComponent from './signMessageComponent';
+import SignMessage from './signMessage';
 
 chai.use(sinonChai);
 
-describe('SignMessageComponent', () => {
+describe('SignMessage', () => {
   let wrapper;
   let successToastSpy;
   let copyMock;
@@ -34,7 +34,7 @@ ${signature}
     successToastSpy = sinon.spy();
     copyMock = sinon.mock();
 
-    wrapper = mount(<Provider store={store}><SignMessageComponent
+    wrapper = mount(<Provider store={store}><SignMessage
       account={account} successToast={successToastSpy} copyToClipboard={copyMock} /></Provider>);
   });
 

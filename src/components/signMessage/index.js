@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import copy from 'copy-to-clipboard';
 import { successToastDisplayed } from '../../actions/toaster';
-import SignMessageComponent from './signMessageComponent';
+import SignMessage from './signMessage';
 
 const mapDispatchToProps = dispatch => ({
   successToast: data => dispatch(successToastDisplayed(data)),
@@ -11,4 +11,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   null,
   mapDispatchToProps,
-)(SignMessageComponent);
+)(SignMessage);
