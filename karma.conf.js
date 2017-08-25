@@ -23,6 +23,10 @@ module.exports = function (config) {
     coverageReporter: {
       reporters: [
         {
+          type: 'json',
+          dir: 'coverage/',
+        },
+        {
           type: onJenkins ? 'lcov' : 'html',
           dir: 'coverage/',
         },
