@@ -3,7 +3,7 @@ import { spy, stub } from 'sinon';
 import middleware from './account';
 import * as accountApi from '../../utils/api/account';
 import actionTypes from '../../constants/actions';
-// import { fetchAndUpdateForgedBlocks } from '../../actions/forging';
+// import * as forgingActions from '../../actions/forging';
 
 describe('Account middleware', () => {
   let store;
@@ -63,22 +63,17 @@ describe('Account middleware', () => {
     stubTransactions.restore();
   });
 
-  it(`should call store.dispatch(fetchAndUpdateForgedBlocks(...)) on ${actionTypes.metronomeBeat} action if account.balance changes and account.isDelegate`, () => {
+  it(`should call fetchAndUpdateForgedBlocks(...) on ${actionTypes.metronomeBeat} action if account.balance changes and account.isDelegate`, () => {
     state.account.isDelegate = true;
     store.getState = () => (state);
     const stubGetAccount = stub(accountApi, 'getAccount').resolves({ balance: 10e8 });
     const stubGetAccountStatus = stub(accountApi, 'getAccountStatus').resolves(true);
+    // const fetchAndUpdateForgedBlocksSpy = spy(forgingActions, 'fetchAndUpdateForgedBlocks');
 
     middleware(store)(next)({ type: actionTypes.metronomeBeat });
 
-    expect(stubGetAccount).to.have.been.calledWith();
     // TODO why next expect doesn't work despite it being called according to test coverage?
-    // expect(store.dispatch).to.have.been.calledWith(fetchAndUpdateForgedBlocks({
-    //   activePeer: state.peers.data,
-    //   limit: 10,
-    //   offset: 0,
-    //   generatorPublicKey: state.account.publicKey,
-    // }));
+    // expect(fetchAndUpdateForgedBlocksSpy).to.have.been.calledWith();
 
     stubGetAccount.restore();
     stubGetAccountStatus.restore();
