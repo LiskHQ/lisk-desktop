@@ -1,23 +1,23 @@
-import React from 'react';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import LoginInner from './login';
-import styles from './login.css';
-
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+import { dialogDisplayed } from '../../actions/dialog';
+import Login from './login';
+import { activePeerSet } from '../../actions/peers';
 
 /**
- * The container component containing login
- * and create account functionality
+ * Using react-redux connect to pass state and dispatch to Login
  */
-const Login = () => (
-  <section>
-    <div className={`box ${styles.wrapper}`}>
-      <div className={`${grid.row} ${grid['center-xs']}`}>
-        <div className={grid['col-xs-8']}>
-          <LoginInner />
-        </div>
-      </div>
-    </div>
-  </section>
-);
+const mapStateToProps = state => ({
+  account: state.account,
+  peers: state.peers,
+});
 
-export default Login;
+const mapDispatchToProps = dispatch => ({
+  activePeerSet: data => dispatch(activePeerSet(data)),
+  setActiveDialog: data => dispatch(dialogDisplayed(data)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withRouter(Login));
