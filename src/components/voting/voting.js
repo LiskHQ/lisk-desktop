@@ -177,6 +177,7 @@ class Voting extends React.Component {
         {this.state.notFound}
         <Waypoint bottomOffset='-80%'
                   scrollableAncestor={window}
+                  key={this.state.delegates.length}
                   onEnter={this.loadMore.bind(this)}></Waypoint>
       </div>
     );

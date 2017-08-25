@@ -31,7 +31,6 @@ class Transactions extends React.Component {
 
   componentDidUpdate() {
     this.canLoadMore = this.props.count > this.props.transactions.length;
-    console.warn('didupfate', this.canLoadMore);
   }
 
   render() {
@@ -52,8 +51,9 @@ class Transactions extends React.Component {
         </table> :
           <p className={`${styles.empty} hasPaddingRow empty-message`}>No transactions</p>
         }
-        <Waypoint bottomOffset="-80%"
+        <Waypoint bottomOffset='-80%'
                   scrollableAncestor={window}
+                  key={this.props.transactions.length}
                   onEnter={this.loadMore.bind(this)}></Waypoint>
       </div>
     );
