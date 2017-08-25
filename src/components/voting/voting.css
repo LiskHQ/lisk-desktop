@@ -50,9 +50,6 @@
         line-height: 24px;
         margin-left: 6px;
     }
-    & :global .disable{
-        color: rgba(0,0,0,0.38);
-    }
 }
 .voted {
     color: #7cb342;
@@ -91,7 +88,7 @@
 }
 .icon{
     text-align: right;
-    width: auto
+    width: auto;
 }
 .menuInner{
     height: 306px;
