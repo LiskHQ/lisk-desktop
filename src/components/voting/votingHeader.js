@@ -55,7 +55,6 @@ class VotingHeader extends React.Component {
       <i className='material-icons'>visibility</i>
       <span>my votes ({this.props.votedDelegates.length})</span>
     </div>;
-    console.log(theme);
     return (
       <header className={`${grid.row} ${grid['between-xs']} hasPaddingRow`}>
         <div className={`${grid['col-xs-3']} ${styles.searchBox}`}>
