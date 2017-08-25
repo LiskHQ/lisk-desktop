@@ -8,7 +8,7 @@ import sinonChai from 'sinon-chai';
 import configureMockStore from 'redux-mock-store';
 import sinonStubPromise from 'sinon-stub-promise';
 import * as votingActions from '../../actions/voting';
-import ConfirmVotesHOC, { ConfirmVotes } from './confirmVotes';
+import ConfirmVotesHOC, { ConfirmVotes } from './index';
 // import * as delegateApi from '../../utils/api/delegate';
 
 sinonStubPromise(sinon);

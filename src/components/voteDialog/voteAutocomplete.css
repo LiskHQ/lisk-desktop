@@ -1,0 +1,21 @@
+.hidden{
+    display: none !important;
+}
+.searchContainer{
+    position: relative;
+}
+.searchResult{
+    position: absolute;
+    left: 0;
+    top: 52px;
+    width: 300px !important;
+    max-height: 200px;
+    overflow: auto !important;
+    z-index: 9;
+}
+.selectedRow{
+    background: #EEEEEE;
+}
+.autoCompleteTile{
+    margin-bottom: 5px;
+}

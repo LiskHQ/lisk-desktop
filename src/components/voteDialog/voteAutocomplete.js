@@ -4,7 +4,7 @@ import Chip from 'react-toolbox/lib/chip';
 import { Card } from 'react-toolbox/lib/card';
 import { List, ListItem } from 'react-toolbox/lib/list';
 import { voteAutocomplete, unvoteAutocomplete } from '../../utils/api/delegate';
-import styles from './voting.css';
+import styles from './voteAutocomplete.css';
 
 export default class VoteAutocomplete extends React.Component {
   constructor() {
