@@ -69,9 +69,17 @@
     overflow: auto !important;
     z-index: 9;
 }
+.info {
+    border-top: 1px solid rgba(0,0,0,0.12);
+    border-bottom: 1px solid rgba(0,0,0,0.12);
+    margin: 10px -24px 20px;
+}
+.autoCompleteTile{
+    margin-bottom: 5px;
+}
 /* react toolbar overwroght */
 .input{
-    margin-top: -15px;
+    margin-top: -10px;
 }
 .menuItem{
     flex-direction: row-reverse;
@@ -79,7 +87,7 @@
 }
 .icon{
     text-align: right;
-    width: auto
+    width: auto;
 }
 .menuInner{
     height: 306px;
