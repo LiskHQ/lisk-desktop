@@ -6,7 +6,7 @@ import { shallow, mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import store from '../../store';
 import Account from './account';
-import ClickToSend from '../send/clickToSend';
+import ClickToSend from '../clickToSend';
 
 chai.use(sinonChai);
 

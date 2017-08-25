@@ -1,15 +1,12 @@
 import { connect } from 'react-redux';
 import { dialogDisplayed } from '../../actions/dialog';
-import ClickToSendComponent from './clickToSendComponent';
-
+import ClickToSend from './clickToSend';
 
 const mapDispatchToProps = dispatch => ({
   setActiveDialog: data => dispatch(dialogDisplayed(data)),
 });
 
-const ClickToSend = connect(
+export default connect(
   null,
   mapDispatchToProps,
-)(ClickToSendComponent);
-
-export default ClickToSend;
+)(ClickToSend);

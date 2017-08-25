@@ -4,13 +4,13 @@ import { mount } from 'enzyme';
 import chaiEnzyme from 'chai-enzyme';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
-import ClickToSendComponent from './clickToSendComponent';
+import ClickToSend from './clickToSend';
 
 const Dummy = () => (<span />);
 
 chai.use(sinonChai);
 chai.use(chaiEnzyme()); // Note the invocation at the end
-describe('ClickToSendComponent', () => {
+describe('ClickToSend', () => {
   let setActiveDialog;
 
   beforeEach(() => {
@@ -19,8 +19,8 @@ describe('ClickToSendComponent', () => {
 
   it('allows open send modal with pre-filled address ', () => {
     const wrapper = mount(
-      <ClickToSendComponent address='16313739661670634666L'
-        setActiveDialog={setActiveDialog}><Dummy /></ClickToSendComponent>);
+      <ClickToSend address='16313739661670634666L'
+        setActiveDialog={setActiveDialog}><Dummy /></ClickToSend>);
     wrapper.simulate('click');
     expect(setActiveDialog).to.have.been.calledWith();
     expect(wrapper.find('Dummy')).to.have.length(1);
@@ -28,8 +28,8 @@ describe('ClickToSendComponent', () => {
 
   it('allows open send modal with pre-filled rawAmount ', () => {
     const wrapper = mount(
-      <ClickToSendComponent rawAmount='100000000'
-        setActiveDialog={setActiveDialog}><Dummy /></ClickToSendComponent>);
+      <ClickToSend rawAmount='100000000'
+        setActiveDialog={setActiveDialog}><Dummy /></ClickToSend>);
     wrapper.simulate('click');
     expect(setActiveDialog).to.have.been.calledWith();
     expect(wrapper.find('Dummy')).to.have.length(1);
@@ -37,9 +37,9 @@ describe('ClickToSendComponent', () => {
 
   it('should do nothing if props.disabled', () => {
     const wrapper = mount(
-      <ClickToSendComponent disabled={true}
+      <ClickToSend disabled={true}
         setActiveDialog={setActiveDialog}><Dummy />
-      </ClickToSendComponent>);
+      </ClickToSend>);
     wrapper.simulate('click');
     expect(wrapper.find('Dummy')).to.have.length(1);
   });

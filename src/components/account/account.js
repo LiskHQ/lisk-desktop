@@ -3,7 +3,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './account.css';
 import Address from './address';
 import LiskAmount from '../liskAmount';
-import ClickToSend from '../send/clickToSend';
+import ClickToSend from '../clickToSend';
 import { toRawLsk } from '../../utils/lsk';
 
 /**
