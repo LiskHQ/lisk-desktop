@@ -8,7 +8,7 @@ import sinonChai from 'sinon-chai';
 import configureMockStore from 'redux-mock-store';
 import sinonStubPromise from 'sinon-stub-promise';
 import * as votingActions from '../../actions/voting';
-import ConfirmVotesHOC, { ConfirmVotes } from './index';
+import VoteDialogHOC from './index';
 // import * as delegateApi from '../../utils/api/delegate';
 
 sinonStubPromise(sinon);
@@ -20,11 +20,6 @@ const ordinaryAccount = {
   publicKey: 'key',
   secondSignature: 0,
   balance: 10e8,
-};
-const accountWithSecondPassphrase = {
-  passphrase: 'pass',
-  publicKey: 'key',
-  secondSignature: 1,
 };
 const votedList = [
   {
@@ -50,106 +45,19 @@ const store = configureMockStore([])({
   },
   peers: { data: {} },
 });
-let props;
 
-describe('ConfirmVotes', () => {
-  let wrapper;
-  props = {
-    activePeer: {},
-    votedList,
-    unvotedList,
-    closeDialog: sinon.spy(),
-    clearVoteLists: sinon.spy(),
-    votePlaced: sinon.spy(),
-    addedToVoteList: sinon.spy(),
-    removedFromVoteList: sinon.spy(),
-  };
-
-  describe('Ordinary account', () => {
-    beforeEach(() => {
-      wrapper = mount(<Provider store={store}>
-        <ConfirmVotes {...props} account={ordinaryAccount} /></Provider>);
-    });
-
-    it('should render an InfoParagraph', () => {
-      expect(wrapper.find('InfoParagraph')).to.have.lengthOf(1);
-    });
-
-    it('should render Autocomplete', () => {
-      expect(wrapper.find('VoteAutocomplete')).to.have.lengthOf(1);
-    });
-
-    it('should render an ActionBar', () => {
-      expect(wrapper.find('ActionBar')).to.have.lengthOf(1);
-    });
-
-    it('should fire votePlaced action if lists are not empty and account balance is sufficient', () => {
-      wrapper.find('ConfirmVotes .primary-button button').simulate('click');
-
-      expect(props.votePlaced).to.have.been.calledWith({
-        account: ordinaryAccount,
-        activePeer: props.activePeer,
-        secondSecret: null,
-        unvotedList: props.unvotedList,
-        votedList: props.votedList,
-      });
-    });
-
-    it('should not fire votePlaced action if lists are empty', () => {
-      const noVoteProps = {
-        activePeer: {},
-        votedList: [],
-        unvotedList: [],
-        closeDialog: () => {},
-        clearVoteLists: () => {},
-        votePlaced: () => {},
-      };
-      const mounted = mount(<Provider store={store}>
-        <ConfirmVotes {...noVoteProps} account={ordinaryAccount} /></Provider>);
-      const primaryButton = mounted.find('ConfirmVotes .primary-button button');
-
-      expect(primaryButton.props().disabled).to.be.equal(true);
-    });
-  });
-
-  describe('Account with second passphrase', () => {
-    beforeEach(() => {
-      wrapper = mount(<Provider store={store}><ConfirmVotes
-        {...props} account={accountWithSecondPassphrase} /></Provider>);
-    });
-
-    it('should render secondPassphrase input', () => {
-      expect(wrapper.find('.second-passphrase')).to.have.lengthOf(1);
-    });
-
-    it('should fire votePlaced action with the provided secondPassphrase', () => {
-      wrapper.find('ConfirmVotes .second-passphrase input').simulate('change',
-        { target: { value: 'test second passphrase' } });
-      wrapper.find('ConfirmVotes .primary-button button').simulate('click');
-
-      expect(props.votePlaced).to.have.been.calledWith({
-        account: ordinaryAccount,
-        activePeer: props.activePeer,
-        secondSecret: null,
-        unvotedList: props.unvotedList,
-        votedList: props.votedList,
-      });
-    });
-  });
-});
-
-describe('ConfirmVotes HOC', () => {
+describe('VoteDialog HOC', () => {
   let wrapper;
   beforeEach(() => {
-    wrapper = mount(<Provider store={store}><ConfirmVotesHOC /></Provider>);
+    wrapper = mount(<Provider store={store}><VoteDialogHOC /></Provider>);
   });
 
-  it('should render ConfirmVotes', () => {
-    expect(wrapper.find('ConfirmVotes').exists()).to.be.equal(true);
+  it('should render VoteDialog', () => {
+    expect(wrapper.find('VoteDialog').exists()).to.be.equal(true);
   });
 
-  it('should pass appropriate properties to ConfirmVotes', () => {
-    const confirmVotesProps = wrapper.find('ConfirmVotes').props();
+  it('should pass appropriate properties to VoteDialog', () => {
+    const confirmVotesProps = wrapper.find('VoteDialog').props();
 
     expect(confirmVotesProps.votedList).to.be.equal(votedList);
     expect(confirmVotesProps.unvotedList).to.be.equal(unvotedList);
@@ -158,15 +66,15 @@ describe('ConfirmVotes HOC', () => {
     expect(typeof confirmVotesProps.votePlaced).to.be.equal('function');
   });
 
-  it('should bind addedToVoteList action to ConfirmVotes props.addedToVoteList', () => {
+  it('should bind addedToVoteList action to VoteDialog props.addedToVoteList', () => {
     const actionsSpy = sinon.spy(votingActions, 'addedToVoteList');
-    wrapper.find('ConfirmVotes').props().addedToVoteList([]);
+    wrapper.find('VoteDialog').props().addedToVoteList([]);
     expect(actionsSpy).to.be.calledWith();
   });
 
-  it('should bind removedFromVoteList action to ConfirmVotes props.removedFromVoteList', () => {
+  it('should bind removedFromVoteList action to VoteDialog props.removedFromVoteList', () => {
     const actionsSpy = sinon.spy(votingActions, 'removedFromVoteList');
-    wrapper.find('ConfirmVotes').props().removedFromVoteList([]);
+    wrapper.find('VoteDialog').props().removedFromVoteList([]);
     expect(actionsSpy).to.be.calledWith();
   });
 });

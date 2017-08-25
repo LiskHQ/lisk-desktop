@@ -51,11 +51,6 @@
 .unvoted {
     color: #c62828;
 }
-.info {
-    border-top: 1px solid rgba(0,0,0,0.12);
-    border-bottom: 1px solid rgba(0,0,0,0.12);
-    margin: 10px -24px 20px;
-}
 /* react toolbar overwroght */
 .input{
     margin-top: -10px;
