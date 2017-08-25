@@ -6,15 +6,15 @@ import sinon from 'sinon';
 import * as accountActions from '../../actions/account';
 import * as dialogActions from '../../actions/dialog';
 import Header from './header';
-import HeaderContainer from './index';
+import HeaderHOC from './index';
 import store from '../../store';
 
 
-describe('HeaderContainer', () => {
+describe('HeaderHOC', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<Provider store={store}><HeaderContainer /></Provider>);
+    wrapper = mount(<Provider store={store}><HeaderHOC /></Provider>);
   });
 
   it('should render Header', () => {

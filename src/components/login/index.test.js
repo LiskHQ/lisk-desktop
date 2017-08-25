@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import LoginHOC from './index';
 import Login from './login';
 
-describe('Login HOC', () => {
+describe('LoginHOC', () => {
   // Mocking store
   const peers = {
     status: {

@@ -6,7 +6,7 @@ import TransactionsHOC from './index';
 import store from '../../store';
 
 
-describe('Transactions HOC', () => {
+describe('TransactionsHOC', () => {
   let wrapper;
   const confirmed = [];
   const pending = [];

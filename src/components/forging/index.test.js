@@ -4,11 +4,11 @@ import sinonChai from 'sinon-chai';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
-import Forging from './index';
+import ForgingHOC from './index';
 
 chai.use(sinonChai);
 
-describe('Forging HOC', () => {
+describe('ForgingHOC', () => {
   let wrapper;
   let store;
 
@@ -21,7 +21,7 @@ describe('Forging HOC', () => {
         forgedBlocks: [],
       },
     });
-    wrapper = mount(<Provider store={store}><Forging /></Provider>);
+    wrapper = mount(<Provider store={store}><ForgingHOC /></Provider>);
   });
 
   it('should render Forging component', () => {

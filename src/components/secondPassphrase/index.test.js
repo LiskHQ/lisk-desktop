@@ -10,7 +10,7 @@ import SecondPassphraseHOC from './index';
 chai.use(chaiEnzyme());
 chai.use(sinonChai);
 
-describe('SecondPassphrase HOC', () => {
+describe('SecondPassphraseHOC', () => {
   let wrapper;
   const peers = {};
   const account = { secondSignature: 1 };

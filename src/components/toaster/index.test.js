@@ -4,16 +4,16 @@ import sinonChai from 'sinon-chai';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import Toaster from './toaster';
-import ToasterContainer from './index';
+import ToasterHOC from './index';
 import store from '../../store';
 
 chai.use(sinonChai);
 
-describe('ToasterContainer', () => {
+describe('ToasterHOC', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<Provider store={store}><ToasterContainer /></Provider>);
+    wrapper = mount(<Provider store={store}><ToasterHOC /></Provider>);
   });
 
   it('should render Toaster', () => {
