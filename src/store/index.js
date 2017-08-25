@@ -1,19 +1,12 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import * as reducers from './reducers';
 import middleWares from './middlewares';
-import env from '../constants/env';
-
-// Create Logger if not in production mode
-// ignore this in coverage as it is hard to test and does not run in production
-/* istanbul ignore if */
-if (env.development) {
-  const { logger } = require('redux-logger');
-  middleWares.push(logger);
-}
 
 const App = combineReducers(reducers);
 
-const store = createStore(App, applyMiddleware(...middleWares));
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(App, composeEnhancers(applyMiddleware(...middleWares)));
 
 // ignore this in coverage as it is hard to test and does not run in production
 /* istanbul ignore if */
