@@ -10,3 +10,11 @@
 .network ul{
   text-align: left;
 }
+.error {
+  display: inline-block;
+  text-align:left;
+  width: 100%;
+}
+.field {
+  margin-top: 10px;
+}

@@ -137,20 +137,27 @@ class LoginForm extends React.Component {
         />
         {
           this.state.network === 2 &&
-          <Input type='text' label='Node address' name='address' className='address'
-            value={this.state.address} error={this.state.addressValidity}
-            onChange={this.changeHandler.bind(this, 'address')} />
+            <Input type='text'
+              label='Node address'
+              name='address'
+              className='address'
+              theme={styles}
+              value={this.state.address}
+              error={this.state.addressValidity}
+              onChange={this.changeHandler.bind(this, 'address')} />
         }
         <Input type={this.state.showPassphrase ? 'text' : 'password'}
           label='Enter your passphrase' name='passphrase'
           className='passphrase'
+          theme={styles}
           error={this.state.passphraseValidity === 'Invalid passphrase' ? 'Invalid passphrase' : ''}
           value={this.state.passphrase}
           onChange={this.changeHandler.bind(this, 'passphrase')} />
         <Checkbox
           checked={this.state.showPassphrase}
           label="Show passphrase"
-          className={`${grid['start-xs']} show-passphrase`}
+          className={`${grid['start-xs']}`}
+          theme={styles}
           onChange={this.changeHandler.bind(this, 'showPassphrase')}
         />
         <footer className={ `${grid.row} ${grid['center-xs']}` }>
