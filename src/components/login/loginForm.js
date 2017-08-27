@@ -133,7 +133,7 @@ class LoginForm extends React.Component {
           onChange={this.changeHandler.bind(this, 'network')}
           label='Select a network'
           value={this.state.network}
-          className='network'
+          className={styles.network}
         />
         {
           this.state.network === 2 &&
