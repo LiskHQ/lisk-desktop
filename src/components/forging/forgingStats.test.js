@@ -1,10 +1,7 @@
 import React from 'react';
-import chai, { expect } from 'chai';
-import sinonChai from 'sinon-chai';
+import { expect } from 'chai';
 import { mount } from 'enzyme';
 import ForgingStats from './forgingStats';
-
-chai.use(sinonChai);
 
 
 describe('ForgingStats', () => {
@@ -37,18 +34,18 @@ describe('ForgingStats', () => {
   });
 
   it('should render Card component for Last 24 hours', () => {
-    expect(wrapper.find('Card').at(0).text().trim()).to.equal('Last 24 hours 0.00321317 LSK');
+    expect(wrapper.find('Card').at(0).text().trim()).to.equal('Last 24 hours 0 LSK');
   });
 
   it('should render Card component for Last 7 days', () => {
-    expect(wrapper.find('Card').at(1).text().trim()).to.equal('Last 7 days 32.13179124 LSK');
+    expect(wrapper.find('Card').at(1).text().trim()).to.equal('Last 7 days 32.13 LSK');
   });
 
   it('should render Card component for Last 30 days', () => {
-    expect(wrapper.find('Card').at(2).text().trim()).to.equal('Last 30 days 3,213.17912423 LSK');
+    expect(wrapper.find('Card').at(2).text().trim()).to.equal('Last 30 days 3,213.18 LSK');
   });
 
   it('should render Card component for Last 365 days', () => {
-    expect(wrapper.find('Card').at(3).text().trim()).to.equal('Last 365 days 321,317.91242342 LSK');
+    expect(wrapper.find('Card').at(3).text().trim()).to.equal('Last 365 days 321,317.91 LSK');
   });
 });

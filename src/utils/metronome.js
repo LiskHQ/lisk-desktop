@@ -56,8 +56,8 @@ class Metronome {
    */
   _initIntervalToggler() {
     const { ipc } = window;
-    ipc.on('blur', () => this.interval = SYNC_INACTIVE_INTERVAL);
-    ipc.on('focus', () => this.interval = SYNC_ACTIVE_INTERVAL);
+    ipc.on('blur', () => { this.interval = SYNC_INACTIVE_INTERVAL; });
+    ipc.on('focus', () => { this.interval = SYNC_ACTIVE_INTERVAL; });
   }
 
   /**

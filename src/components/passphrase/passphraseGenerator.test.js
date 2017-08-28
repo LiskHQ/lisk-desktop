@@ -1,11 +1,9 @@
 import React from 'react';
-import chai, { expect } from 'chai';
+import { expect } from 'chai';
 import { spy } from 'sinon';
-import sinonChai from 'sinon-chai';
 import { shallow } from 'enzyme';
 import PassphraseGenerator from './passphraseGenerator';
 
-chai.use(sinonChai);
 
 describe('PassphraseConfirmator', () => {
   describe('seedGenerator', () => {

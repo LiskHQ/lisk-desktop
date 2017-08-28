@@ -17,7 +17,7 @@
     "dist:linux": "build --linux --ia32 --x64 --armv7l",
     "copy-files": "mkdir app/dist && cp -r ./src/index.html ./app/dist",
     "clean": "del app/dist -f",
-    "eslint": "eslint ./src/ ./app/ ./features/",
+    "eslint": "eslint ./src/ ./app/main.js ./features/",
     "storybook": "start-storybook -p 6006 -s ./src/",
     "build-storybook": "build-storybook"
   },
@@ -91,6 +91,7 @@
     "karma-jenkins-reporter": "0.0.2",
     "karma-mocha": "=1.3.0",
     "karma-mocha-reporter": "=2.2.3",
+    "karma-sourcemap-loader": "=0.3.7",
     "karma-verbose-reporter": "=0.0.6",
     "karma-webpack": "=2.0.3",
     "mocha": "=3.2.0",

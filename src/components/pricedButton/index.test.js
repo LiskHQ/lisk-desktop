@@ -1,14 +1,10 @@
 import React from 'react';
-import chai, { expect } from 'chai';
-import sinonChai from 'sinon-chai';
+import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
-import chaiEnzyme from 'chai-enzyme';
 import Button from 'react-toolbox/lib/button';
 import { PricedButtonComponent } from './index';
 
-chai.use(sinonChai);
-chai.use(chaiEnzyme());
 
 describe('PricedButton', () => {
   let wrapper;

@@ -1,13 +1,10 @@
 import React from 'react';
-import chai, { expect } from 'chai';
+import { expect } from 'chai';
 import { spy } from 'sinon';
-import sinonChai from 'sinon-chai';
 import { mount, shallow } from 'enzyme';
 import Lisk from 'lisk-js';
 import Cookies from 'js-cookie';
 import LoginForm from './loginForm';
-
-chai.use(sinonChai);
 
 describe('LoginForm', () => {
   let wrapper;

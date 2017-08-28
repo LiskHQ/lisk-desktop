@@ -1,10 +1,7 @@
-import chai, { expect } from 'chai';
-import sinonChai from 'sinon-chai';
+import { expect } from 'chai';
 import dialogs from './dialog';
 import actionTypes from '../../constants/actions';
 
-
-chai.use(sinonChai);
 
 describe('Reducer: dialogs(state, action)', () => {
   let state;

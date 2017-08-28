@@ -1,10 +1,8 @@
 import React from 'react';
-import chai, { expect } from 'chai';
-import sinonChai from 'sinon-chai';
+import { expect } from 'chai';
 import { mount } from 'enzyme';
 import DelegateStats from './delegateStats';
 
-chai.use(sinonChai);
 
 describe('DelegateStats', () => {
   const delegate = {

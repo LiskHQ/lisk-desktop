@@ -1,11 +1,9 @@
 import React from 'react';
-import chai, { expect } from 'chai';
-import sinonChai from 'sinon-chai';
+import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
 import SecondPassphraseInput from './secondPassphraseInput';
 
-chai.use(sinonChai);
 
 describe('SecondPassphraseInput', () => {
   let wrapper;

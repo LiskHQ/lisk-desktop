@@ -1,10 +1,7 @@
 import React from 'react';
-import chai, { expect } from 'chai';
-import sinonChai from 'sinon-chai';
+import { expect } from 'chai';
 import { mount } from 'enzyme';
 import ForgingTitle from './forgingTitle';
-
-chai.use(sinonChai);
 
 
 describe('ForgingTitle', () => {

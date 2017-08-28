@@ -1,10 +1,7 @@
-import chai, { expect } from 'chai';
-import sinonChai from 'sinon-chai';
+import { expect } from 'chai';
 import loading from './loading';
 import actionTypes from '../../constants/actions';
 
-
-chai.use(sinonChai);
 
 describe('Reducer: loading(state, action)', () => {
   let state;
