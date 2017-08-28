@@ -49,9 +49,9 @@ Build package for Windows.
 npm run dist:win
 ```
 
-### Mac OS X
+### macOS
 
-Build package for Mac OS X.
+Build package for macOS.
 
 ```
 npm run dist:mac
