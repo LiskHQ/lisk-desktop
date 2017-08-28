@@ -21,7 +21,7 @@ class ForgingTitle extends React.Component {
               {this.props.account.delegate.username}
             </h2>
             <span>
-              <LiskAmount val={this.props.statistics.total} /> LSK Earned
+              <LiskAmount val={this.props.statistics.total} roundTo={2} /> LSK Earned
             </span>
           </div>
         </CardText>

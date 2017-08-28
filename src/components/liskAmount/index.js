@@ -2,7 +2,16 @@ import React from 'react';
 import { fromRawLsk } from '../../utils/lsk';
 import FormattedNumber from '../formattedNumber';
 
-const LiskValue = props => (<FormattedNumber val={parseFloat(fromRawLsk(props.val))} />);
+const roundTo = (value, places) => {
+  if (!places) {
+    return value;
+  }
+  const x = Math.pow(10, places);
+  return Math.round(value * x) / x;
+};
 
-export default LiskValue;
+const LiskAmount = props => (<FormattedNumber val={
+  roundTo(parseFloat(fromRawLsk(props.val)), props.roundTo)} />);
+
+export default LiskAmount;
 
