@@ -6,7 +6,7 @@ const roundTo = (value, places) => {
   if (!places) {
     return value;
   }
-  const x = Math.pow(10, places);
+  const x = 10 ** places;
   return Math.round(value * x) / x;
 };
 

@@ -136,7 +136,7 @@ class LoginForm extends React.Component {
           onChange={this.changeHandler.bind(this, 'network')}
           label='Select a network'
           value={this.state.network}
-          className={styles.network}
+          className={`${styles.network} network`}
         />
         {
           this.state.network === 2 &&
@@ -159,7 +159,7 @@ class LoginForm extends React.Component {
         <Checkbox
           checked={this.state.showPassphrase}
           label="Show passphrase"
-          className={`${grid['start-xs']}`}
+          className={`${grid['start-xs']} show-passphrase`}
           theme={styles}
           onChange={this.changeHandler.bind(this, 'showPassphrase')}
         />
