@@ -174,7 +174,7 @@ class Voting extends React.Component {
               <TableCell>Uptime</TableCell>
               <TableCell>Approval</TableCell>
             </TableHead>
-            {this.state.delegates.map((item) => (
+            {this.state.delegates.map(item => (
               <VotingRow key={item.address} data={item}
                 addToVoteList={this.props.addToVoteList}
                 removeFromVoteList={this.props.removeFromVoteList}

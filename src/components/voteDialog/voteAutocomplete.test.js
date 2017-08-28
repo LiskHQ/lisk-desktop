@@ -1,15 +1,10 @@
 import React from 'react';
-import chai, { expect } from 'chai';
+import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
-import sinonStubPromise from 'sinon-stub-promise';
 import configureMockStore from 'redux-mock-store';
 import * as delegateApi from '../../utils/api/delegate';
 import VoteAutocomplete from './voteAutocomplete';
-
-sinonStubPromise(sinon);
-chai.use(sinonChai);
 
 const props = {
   activePeer: {},

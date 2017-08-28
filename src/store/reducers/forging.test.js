@@ -1,9 +1,6 @@
-import chai, { expect } from 'chai';
-import sinonChai from 'sinon-chai';
+import { expect } from 'chai';
 import forging from './forging';
 import actionTypes from '../../constants/actions';
-
-chai.use(sinonChai);
 
 describe('Reducer: forging(state, action)', () => {
   let state;

@@ -1,13 +1,9 @@
 import React from 'react';
-import chai, { expect } from 'chai';
+import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
-import chaiEnzyme from 'chai-enzyme';
 import Alert from './alert';
 
-chai.use(sinonChai);
-chai.use(chaiEnzyme()); // Note the invocation at the end
 
 describe('Alert', () => {
   let wrapper;

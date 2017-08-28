@@ -1,13 +1,11 @@
 import React from 'react';
-import chai, { expect } from 'chai';
+import { expect } from 'chai';
 import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import VoteCheckbox from './voteCheckbox';
 import styles from './voting.css';
 
-chai.use(sinonChai);
 const mockStore = configureStore();
 
 describe('VoteCheckbox', () => {

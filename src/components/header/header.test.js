@@ -1,16 +1,12 @@
 import React from 'react';
-import chai, { expect } from 'chai';
+import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import chaiEnzyme from 'chai-enzyme';
-import sinonChai from 'sinon-chai';
 import { Button } from 'react-toolbox/lib/button';
 import sinon from 'sinon';
 import styles from './header.css';
 import Header from './header';
 import logo from '../../assets/images/LISK-nano.png';
 
-chai.use(sinonChai);
-chai.use(chaiEnzyme()); // Note the invocation at the end
 describe('Header', () => {
   let wrapper;
   let propsMock;

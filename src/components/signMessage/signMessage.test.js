@@ -1,13 +1,11 @@
 import React from 'react';
-import chai, { expect } from 'chai';
+import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
 import { Provider } from 'react-redux';
 import store from '../../store';
 import SignMessage from './signMessage';
 
-chai.use(sinonChai);
 
 describe('SignMessage', () => {
   let wrapper;

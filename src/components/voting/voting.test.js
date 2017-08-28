@@ -1,18 +1,11 @@
 import React from 'react';
-import chai, { expect } from 'chai';
+import { expect } from 'chai';
 import { mount } from 'enzyme';
-import chaiEnzyme from 'chai-enzyme';
 import PropTypes from 'prop-types';
 import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
-import sinonStubPromise from 'sinon-stub-promise';
 import Voting from './voting';
 import store from '../../store';
 import * as delegateApi from '../../utils/api/delegate';
-
-sinonStubPromise(sinon);
-chai.use(sinonChai);
-chai.use(chaiEnzyme());
 
 describe('Voting', () => {
   let wrapper;

@@ -1,12 +1,9 @@
-import chai, { expect } from 'chai';
+import { expect } from 'chai';
 import { spy } from 'sinon';
-import sinonChai from 'sinon-chai';
 import Metronome from './metronome';
 import { SYNC_ACTIVE_INTERVAL, SYNC_INACTIVE_INTERVAL } from '../constants/api';
 import env from '../constants/env';
 
-
-chai.use(sinonChai);
 
 describe('Metronome', () => {
   let metronome;

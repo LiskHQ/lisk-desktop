@@ -1,11 +1,9 @@
 import React from 'react';
-import chai, { expect } from 'chai';
+import { expect } from 'chai';
 import { spy } from 'sinon';
-import sinonChai from 'sinon-chai';
 import { mount, shallow } from 'enzyme';
 import PassphraseVerifier from './passphraseVerifier';
 
-chai.use(sinonChai);
 
 describe('PassphraseVerifier', () => {
   const props = {

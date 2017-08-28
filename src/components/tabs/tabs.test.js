@@ -1,12 +1,10 @@
 import React from 'react';
-import chai, { expect } from 'chai';
+import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { Tab, Tabs as ToolboxTabs } from 'react-toolbox';
 import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
 import Tabs from './tabs';
 
-chai.use(sinonChai);
 
 describe('Tabs', () => {
   const history = {

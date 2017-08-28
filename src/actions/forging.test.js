@@ -1,12 +1,9 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
-import sinonStubPromise from 'sinon-stub-promise';
 import actionTypes from '../constants/actions';
 import { forgedBlocksUpdated, forgingStatsUpdated,
   fetchAndUpdateForgedBlocks, fetchAndUpdateForgedStats } from './forging';
 import * as forgingApi from '../utils/api/forging';
-
-sinonStubPromise(sinon);
 
 describe('actions', () => {
   describe('forgedBlocksUpdated', () => {

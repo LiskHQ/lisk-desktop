@@ -1,14 +1,12 @@
 import React from 'react';
-import chai, { expect } from 'chai';
+import { expect } from 'chai';
 import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
 import { shallow, mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import store from '../../store';
 import Account from './account';
 import ClickToSend from '../clickToSend';
 
-chai.use(sinonChai);
 
 describe('Account', () => {
   let props;

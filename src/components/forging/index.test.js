@@ -1,14 +1,11 @@
 import React from 'react';
-import chai, { expect } from 'chai';
-import sinonChai from 'sinon-chai';
+import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import ForgingHOC from './index';
 
-chai.use(sinonChai);
-
-describe('ForgingHOC', () => {
+describe('Forging HOC', () => {
   let wrapper;
   let store;
 
