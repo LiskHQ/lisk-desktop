@@ -40,7 +40,8 @@
       devDependencies: [
         "./src/**/*.test.js",
         "./features/*/*.js",
-        "./src/**/stories.js"
+        "./src/**/stories.js",
+        "./src/tests.js"
         ]
       }
     ],

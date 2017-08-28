@@ -1,14 +1,10 @@
 import React from 'react';
-import chai, { expect } from 'chai';
-import sinonChai from 'sinon-chai';
+import { expect } from 'chai';
 import { mount } from 'enzyme';
-import chaiEnzyme from 'chai-enzyme';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import SecondPassphraseHOC from './index';
 
-chai.use(chaiEnzyme());
-chai.use(sinonChai);
 
 describe('SecondPassphrase HOC', () => {
   let wrapper;

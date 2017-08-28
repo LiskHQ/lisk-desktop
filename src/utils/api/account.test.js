@@ -1,13 +1,8 @@
-import chai, { expect } from 'chai';
+import { expect } from 'chai';
 import { mock } from 'sinon';
-import sinonChai from 'sinon-chai';
-import chaiAsPromised from 'chai-as-promised';
 import { getAccount, setSecondPassphrase, send, transactions,
   extractPublicKey, extractAddress } from './account';
 import { activePeerSet } from '../../actions/peers';
-
-chai.use(chaiAsPromised);
-chai.use(sinonChai);
 
 describe('Utils: Account', () => {
   const address = '1449310910991872227L';
