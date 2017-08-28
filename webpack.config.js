@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const { NamedModulesPlugin } = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const reactToolboxVariables = {
@@ -27,7 +28,7 @@ module.exports = (env) => {
       path: path.resolve(__dirname, 'app', 'dist'),
       filename: env.test ? 'bundle.js' : 'bundle.[name].js',
     },
-    devtool: 'source-map',
+    devtool: env.test ? 'inline-source-map' : 'source-map',
     devServer: {
       contentBase: 'src',
       inline: true,
@@ -54,6 +55,7 @@ module.exports = (env) => {
         })
         : undefined,
       env.analyze ? new BundleAnalyzerPlugin() : undefined,
+      !env.prod ? new NamedModulesPlugin() : undefined,
       env.test
         ? undefined
         : new webpack.optimize.CommonsChunkPlugin({
@@ -72,6 +74,9 @@ module.exports = (env) => {
           test: /\.js$/,
           exclude: /node_modules/,
           loader: 'eslint-loader',
+          options: !env.prod ? {
+            emitWarning: true,
+          } : {},
         },
         {
           test: /\.js$/,

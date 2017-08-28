@@ -17,11 +17,16 @@ module.exports = function (config) {
       { pattern: filePattern, included: false, served: false, watched: false },
     ],
     preprocessors: {
+      '**/*.js': ['sourcemap'],
       [fileRoot]: ['webpack'],
     },
     reporters: ['coverage', 'mocha'],
     coverageReporter: {
       reporters: [
+        {
+          type: 'json',
+          dir: 'coverage/',
+        },
         {
           type: onJenkins ? 'lcov' : 'html',
           dir: 'coverage/',

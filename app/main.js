@@ -153,7 +153,7 @@ function createWindow() {
 
   win.loadURL(`file://${__dirname}/dist/index.html`);
 
-  win.on('closed', () => win = null);
+  win.on('closed', () => { win = null; });
 
   const selectionMenu = Menu.buildFromTemplate([
     { role: 'copy' },

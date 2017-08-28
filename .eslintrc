@@ -34,10 +34,7 @@
     }],
 
     "react/prop-types": "off",
-    "no-loop-func": "off",
     "no-plusplus": "off",
-    "no-restricted-properties": "off",
-    "no-return-assign": "off",
     "no-underscore-dangle": "off",
     "import/no-extraneous-dependencies": ["error", {
       devDependencies: [
