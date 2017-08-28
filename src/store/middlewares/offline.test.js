@@ -38,13 +38,29 @@ describe('Offline middleware', () => {
     expect(next).to.have.been.calledWith(randomAction);
   });
 
-  it(`should dispatch errorToastDisplayed on ${actionType.activePeerUpdate} action if !action.data.online and state.peer.status.online`, () => {
+  it(`should dispatch errorToastDisplayed on ${actionType.activePeerUpdate} action if !action.data.online and state.peer.status.online and action.data.code = "EUNAVAILABLE"`, () => {
     peers.status.online = true;
-    action.data.online = false;
+    action.data = {
+      online: false,
+      code: 'EUNAVAILABLE',
+    };
 
     middleware(store)(next)(action);
     expect(store.dispatch).to.have.been.calledWith(errorToastDisplayed({
       label: `Failed to connect to node ${peers.data.currentPeer}:${peers.data.port}`,
+    }));
+  });
+
+  it(`should dispatch errorToastDisplayed on ${actionType.activePeerUpdate} action if !action.data.online and state.peer.status.online and action.data.code = "EPARSE"`, () => {
+    peers.status.online = true;
+    action.data = {
+      online: false,
+      code: 'EPARSE',
+    };
+
+    middleware(store)(next)(action);
+    expect(store.dispatch).to.have.been.calledWith(errorToastDisplayed({
+      label: 'Make sure that you are using the latest version of Lisk Nano.',
     }));
   });
 
