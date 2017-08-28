@@ -60,10 +60,13 @@ class LoginForm extends React.Component {
       return reg.test(url) ? url : `http://${url}`;
     };
 
+    const isDefaultPort = url => (url.indexOf(':80') || url.indexOf(':443')) !== -1;
+
     let addressValidity = '';
     try {
       const url = new URL(addHttp(value));
-      addressValidity = url && url.port !== '' ? '' : 'URL is invalid';
+      const port = isDefaultPort(value) || url.port !== '';
+      addressValidity = url && port ? '' : 'URL is invalid';
     } catch (e) {
       addressValidity = 'URL is invalid';
     }
