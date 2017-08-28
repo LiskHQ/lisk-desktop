@@ -17,6 +17,7 @@ module.exports = function (config) {
       { pattern: filePattern, included: false, served: false, watched: false },
     ],
     preprocessors: {
+      '**/*.js': ['sourcemap'],
       [fileRoot]: ['webpack'],
     },
     reporters: ['coverage', 'mocha'],
