@@ -26,6 +26,12 @@ class PassphraseGenerator extends React.Component {
       zeroSeed: emptyByte('00'),
       seedDiff: emptyByte(0),
     };
+    this.seedGeneratorBoundToThis = this.seedGenerator.bind(this);
+    document.addEventListener('mousemove', this.seedGeneratorBoundToThis, true);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousemove', this.seedGeneratorBoundToThis, true);
   }
 
   seedGenerator({ nativeEvent }) {
@@ -62,7 +68,7 @@ class PassphraseGenerator extends React.Component {
 
   render() {
     return (
-      <div className={`${grid.row} ${grid['center-xs']}`} onMouseMove={this.seedGenerator.bind(this)}>
+      <div className={`${grid.row} ${grid['center-xs']}`} >
         <div className={grid['col-xs-12']}>
           <p>Move your mouse to generate random bytes</p>
         </div>
