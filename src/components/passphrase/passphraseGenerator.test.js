@@ -11,10 +11,8 @@ describe('PassphraseConfirmator', () => {
       changeHandler: () => {},
     };
     const mockEvent = {
-      nativeEvent: {
-        pageX: 140,
-        pageY: 140,
-      },
+      pageX: 140,
+      pageY: 140,
     };
 
     it('calls setState to setValues locally', () => {
@@ -38,13 +36,11 @@ describe('PassphraseConfirmator', () => {
 
     it('should do nothing if distance is bellow 120', () => {
       const wrapper = shallow(<PassphraseGenerator changeHandler={props.changeHandler}/>);
-      const shortDistanceEvent = {
-        nativeEvent: {
-          pageX: 10,
-          pageY: 10,
-        },
+      const nativeEvent = {
+        pageX: 10,
+        pageY: 10,
       };
-      wrapper.instance().seedGenerator(shortDistanceEvent);
+      wrapper.instance().seedGenerator(nativeEvent);
 
       expect(wrapper.instance().state.data).to.be.equal(undefined);
       expect(wrapper.instance().state.lastCaptured).to.deep.equal({
