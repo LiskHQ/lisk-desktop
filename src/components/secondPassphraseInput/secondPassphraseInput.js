@@ -5,21 +5,18 @@ import { isValidPassphrase } from '../../utils/passphrase';
 class SecondPassphraseInput extends React.Component {
   componentDidMount() {
     if (this.props.hasSecondPassphrase) {
-      this.props.onError(undefined, '');
+      this.props.onChange('');
     }
   }
 
   handleValueChange(value) {
-    this.props.onChange(value);
     let error;
     if (!value) {
       error = 'Required';
     } else if (!isValidPassphrase(value)) {
       error = 'Invalid passphrase';
     }
-    if (error) {
-      this.props.onError(error, value);
-    }
+    this.props.onChange(value, error);
   }
 
   render() {

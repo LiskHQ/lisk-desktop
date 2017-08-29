@@ -40,20 +40,11 @@ class Send extends React.Component {
     this.setState(newState);
   }
 
-  handleChange(name, value) {
+  handleChange(name, value, error) {
     this.setState({
       [name]: {
         value,
-        error: this.validateInput(name, value),
-      },
-    });
-  }
-
-  setErrorAndValue(name, error, value) {
-    this.setState({
-      [name]: {
-        value,
-        error,
+        error: typeof error === 'string' ? error : this.validateInput(name, value),
       },
     });
   }
@@ -107,8 +98,7 @@ class Send extends React.Component {
         <SecondPassphraseInput
           error={this.state.secondPassphrase.error}
           value={this.state.secondPassphrase.value}
-          onChange={this.handleChange.bind(this, 'secondPassphrase')}
-          onError={this.setErrorAndValue.bind(this, 'secondPassphrase')} />
+          onChange={this.handleChange.bind(this, 'secondPassphrase')} />
         <div className={styles.fee}> Fee: {this.fee} LSK</div>
         <IconMenu icon='more_vert' position='topRight' menuRipple className={`${styles.sendAllMenu} transaction-amount`} >
           <MenuItem onClick={this.setMaxAmount.bind(this)}

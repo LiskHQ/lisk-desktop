@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
 import configureMockStore from 'redux-mock-store';
+import PropTypes from 'prop-types';
 import ConfirmVotesHOC, { ConfirmVotes } from './confirmVotes';
 
 const ordinaryAccount = {
@@ -102,26 +103,21 @@ describe('ConfirmVotes', () => {
   });
 
   describe('Account with second passphrase', () => {
-    beforeEach(() => {
-      wrapper = mount(<Provider store={store}><ConfirmVotes
-        {...props} account={accountWithSecondPassphrase} /></Provider>);
-    });
-
-    it('should render secondPassphrase input', () => {
-      expect(wrapper.find('.second-passphrase')).to.have.lengthOf(1);
-    });
-
     it('should fire votePlaced action with the provided secondPassphrase', () => {
-      wrapper.find('ConfirmVotes .second-passphrase input').simulate('change',
-        { target: { value: 'test second passphrase' } });
+      wrapper = mount(<ConfirmVotes {...props} account={accountWithSecondPassphrase} />, {
+        context: { store },
+        childContextTypes: { store: PropTypes.object.isRequired },
+      });
+      const secondPassphrase = 'test second passphrase';
+      wrapper.instance().setSecondPass('secondPassphrase', secondPassphrase);
       wrapper.find('ConfirmVotes .primary-button button').simulate('click');
 
       expect(props.votePlaced).to.have.been.calledWith({
-        account: ordinaryAccount,
         activePeer: props.activePeer,
-        secondSecret: null,
-        unvotedList: props.unvotedList,
+        account: accountWithSecondPassphrase,
         votedList: props.votedList,
+        unvotedList: props.unvotedList,
+        secondSecret: secondPassphrase,
       });
     });
   });
