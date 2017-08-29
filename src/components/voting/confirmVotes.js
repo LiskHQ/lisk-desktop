@@ -52,9 +52,9 @@ export class ConfirmVotes extends React.Component {
         onChange={this.setSecondPass.bind(this, 'secondPassphrase')} />
         <article className={styles.info}>
           <InfoParagraph>
-            <div >
+            <p >
               You can select up to 33 delegates in one voting turn.
-            </div>
+            </p>
             You can vote for up to 101 delegates in total.
           </InfoParagraph>
         </article>
