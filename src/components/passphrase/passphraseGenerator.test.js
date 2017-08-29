@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
-import { spy } from 'sinon';
-import { shallow } from 'enzyme';
+import { spy, mock } from 'sinon';
+import { mount, shallow } from 'enzyme';
 import PassphraseGenerator from './passphraseGenerator';
 
 
@@ -21,6 +21,31 @@ describe('PassphraseConfirmator', () => {
       wrapper.instance().seedGenerator(mockEvent);
       expect(spyFn).to.have.been.calledWith();
       wrapper.instance().setState.restore();
+    });
+
+    it('shows an Input fallback if this.isTouchDevice()', () => {
+      const wrapper = mount(<PassphraseGenerator changeHandler={props.changeHandler}/>);
+      const isTouchDeviceMock = mock(wrapper.instance()).expects('isTouchDevice');
+      isTouchDeviceMock.returns(true);
+      wrapper.instance().setState({}); // to rerender the component
+      expect(wrapper.find('.touch-fallback textarea')).to.have.lengthOf(1);
+    });
+
+    it('shows at least some progress on pressing input if this.isTouchDevice()', () => {
+      const wrapper = mount(<PassphraseGenerator changeHandler={props.changeHandler}/>);
+      const isTouchDeviceMock = mock(wrapper.instance()).expects('isTouchDevice');
+      isTouchDeviceMock.returns(true).twice();
+      wrapper.instance().setState({}); // to rerender the component
+      wrapper.find('.touch-fallback textarea').simulate('change', { target: { value: 'random key presses' } });
+      expect(wrapper.find('ProgressBar').props().value).to.be.at.least(1);
+    });
+
+    it('removes mousemove event listener in componentWillUnmount', () => {
+      const wrapper = mount(<PassphraseGenerator changeHandler={props.changeHandler}/>);
+      const documentSpy = spy(document, 'removeEventListener');
+      wrapper.instance().componentWillUnmount();
+      expect(documentSpy).to.have.be.been.calledWith('mousemove');
+      documentSpy.restore();
     });
 
     it('sets "data" and "lastCaptured" if distance is over 120', () => {
