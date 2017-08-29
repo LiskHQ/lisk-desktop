@@ -56,7 +56,7 @@ class Passphrase extends React.Component {
 
     return (
       <div>
-        <section className={`${styles.templateItem} ${grid['middle-xs']}`}>
+        <section className={`${styles.templateItem} ${grid.row} ${grid['middle-xs']}`}>
           <div className={grid['col-xs-12']}>
             { templates[current] }
           </div>
