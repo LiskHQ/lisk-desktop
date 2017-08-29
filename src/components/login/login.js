@@ -60,10 +60,13 @@ class Login extends React.Component {
       return reg.test(url) ? url : `http://${url}`;
     };
 
+    const isDefaultPort = url => (url.indexOf(':80') || url.indexOf(':443')) !== -1;
+
     let addressValidity = '';
     try {
       const url = new URL(addHttp(value));
-      addressValidity = url && url.port !== '' ? '' : 'URL is invalid';
+      const port = isDefaultPort(value) || url.port !== '';
+      addressValidity = url && port ? '' : 'URL is invalid';
     } catch (e) {
       addressValidity = 'URL is invalid';
     }
@@ -129,52 +132,59 @@ class Login extends React.Component {
       <div className={`box ${styles.wrapper}`}>
         <div className={`${grid.row} ${grid['center-xs']}`}>
           <div className={`${grid['col-xs-12']} ${grid['col-sm-8']}`}>
-      <form>
-        <Dropdown
-          auto={false}
-          source={this.networks}
-          onChange={this.changeHandler.bind(this, 'network')}
-          label='Select a network'
-          value={this.state.network}
-          className='network'
-        />
-        {
-          this.state.network === 2 &&
-          <Input type='text' label='Node address' name='address' className='address'
-            value={this.state.address} error={this.state.addressValidity}
-            onChange={this.changeHandler.bind(this, 'address')} />
-        }
-        <Input type={this.state.showPassphrase ? 'text' : 'password'}
-          label='Enter your passphrase' name='passphrase'
-          className='passphrase'
-          error={this.state.passphraseValidity === 'Invalid passphrase' ? 'Invalid passphrase' : ''}
-          value={this.state.passphrase}
-          onChange={this.changeHandler.bind(this, 'passphrase')} />
-        <Checkbox
-          checked={this.state.showPassphrase}
-          label="Show passphrase"
-          className={`${grid['start-xs']} show-passphrase`}
-          onChange={this.changeHandler.bind(this, 'showPassphrase')}
-        />
-        <footer className={ `${grid.row} ${grid['center-xs']}` }>
-          <div className={grid['col-xs-12']}>
-            <Button label='NEW ACCOUNT' flat primary
-              className={`${styles.newAccount} new-account-button`}
-              onClick={() => this.props.setActiveDialog({
-                title: 'New Account',
-                childComponent: Passphrase,
-                childComponentProps: {
-                  onPassGenerated: this.onLoginSubmission.bind(this),
-                },
-              })} />
-            <Button label='LOGIN' primary raised
-              onClick={this.onLoginSubmission.bind(this, this.state.passphrase)}
-              className='login-button'
-              disabled={(this.state.network === 2 && this.state.addressValidity !== '') ||
-              this.state.passphraseValidity !== ''} />
-          </div>
-        </footer>
-      </form>
+            <form>
+              <Dropdown
+                auto={false}
+                source={this.networks}
+                onChange={this.changeHandler.bind(this, 'network')}
+                label='Select a network'
+                value={this.state.network}
+                className={`${styles.network} network`}
+              />
+              {
+                this.state.network === 2 &&
+                  <Input type='text'
+                    label='Node address'
+                    name='address'
+                    className='address'
+                    theme={styles}
+                    value={this.state.address}
+                    error={this.state.addressValidity}
+                    onChange={this.changeHandler.bind(this, 'address')} />
+              }
+              <Input type={this.state.showPassphrase ? 'text' : 'password'}
+                label='Enter your passphrase' name='passphrase'
+                className='passphrase'
+                theme={styles}
+                error={this.state.passphraseValidity === 'Invalid passphrase' ? 'Invalid passphrase' : ''}
+                value={this.state.passphrase}
+                onChange={this.changeHandler.bind(this, 'passphrase')} />
+              <Checkbox
+                checked={this.state.showPassphrase}
+                label="Show passphrase"
+                className={`${grid['start-xs']} show-passphrase`}
+                theme={styles}
+                onChange={this.changeHandler.bind(this, 'showPassphrase')}
+              />
+              <footer className={ `${grid.row} ${grid['center-xs']}` }>
+                <div className={grid['col-xs-12']}>
+                  <Button label='NEW ACCOUNT' flat primary
+                    className={`${styles.newAccount} new-account-button`}
+                    onClick={() => this.props.setActiveDialog({
+                      title: 'New Account',
+                      childComponent: Passphrase,
+                      childComponentProps: {
+                        onPassGenerated: this.onLoginSubmission.bind(this),
+                      },
+                    })} />
+                  <Button label='LOGIN' primary raised
+                    onClick={this.onLoginSubmission.bind(this, this.state.passphrase)}
+                    className='login-button'
+                    disabled={(this.state.network === 2 && this.state.addressValidity !== '') ||
+                    this.state.passphraseValidity !== ''} />
+                </div>
+              </footer>
+            </form>
           </div>
         </div>
       </div>

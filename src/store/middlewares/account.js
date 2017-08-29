@@ -30,8 +30,8 @@ const updateAccountData = next => (store) => { // eslint-disable-line
 
   return getAccountStatus(peers.data).then(() => {
     next(activePeerUpdate({ online: true }));
-  }).catch(() => {
-    next(activePeerUpdate({ online: false }));
+  }).catch((res) => {
+    next(activePeerUpdate({ online: false, code: res.error.code }));
   });
 };
 
