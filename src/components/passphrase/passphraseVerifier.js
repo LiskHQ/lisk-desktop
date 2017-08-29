@@ -40,7 +40,7 @@ class PassphraseConfirmator extends React.Component {
 
   render() {
     return (
-      <div className={`${grid.row} ${grid['start-xs']}`}>
+      <div className={`passphrase-verifier ${grid.row} ${grid['start-xs']}`}>
         <div className={grid['col-xs-12']}>
           <p>
             <span>{this.state.passphraseParts[0]}</span>
