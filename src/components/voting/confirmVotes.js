@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Input from 'react-toolbox/lib/input';
 import { votePlaced } from '../../actions/voting';
 import InfoParagraph from '../infoParagraph';
 import ActionBar from '../actionBar';
 import Fees from '../../constants/fees';
 import Autocomplete from './voteAutocomplete';
+import SecondPassphraseInput from '../secondPassphraseInput';
 import styles from './voting.css';
 
 export class ConfirmVotes extends React.Component {
@@ -13,11 +13,16 @@ export class ConfirmVotes extends React.Component {
     super();
     this.state = {
       secondSecret: '',
+      secondPassphrase: {
+        value: null,
+      },
     };
   }
 
   confirm() {
-    const secondSecret = this.state.secondSecret.length === 0 ? null : this.state.secondSecret;
+    const secondSecret = this.props.account.secondSignature === 1 ?
+      this.state.secondPassphrase.value :
+      null;
 
     // fire first action
     this.props.votePlaced({
@@ -28,21 +33,28 @@ export class ConfirmVotes extends React.Component {
       secondSecret,
     });
   }
-
-  setSecondPass(name, value) {
-    this.setState({ [name]: value });
+  setSecondPass(name, value, error) {
+    this.setState({
+      [name]: {
+        value,
+        error,
+      },
+    });
   }
 
   render() {
-    const secondPassphrase = this.props.account.secondSignature === 1 ?
-      <Input type='text' label='Second Passphrase' name='secondSecret'
-        className='secondSecret second-passphrase' value={this.state.secondSecret}
-        onChange={this.setSecondPass.bind(this, 'secondSecret')}/> : null;
+    // const secondPassphrase = this.props.account.secondSignature === 1 ?
+    //   <Input type='text' label='Second Passphrase' name='secondSecret'
+    //     className='secondSecret second-passphrase' value={this.state.secondSecret}
+    //     onChange={this.setSecondPass.bind(this, 'secondSecret')}/> : null;
 
     return (
       <article>
         <Autocomplete voted={this.props.voted} />
-        {secondPassphrase}
+        <SecondPassphraseInput
+        error={this.state.secondPassphrase.error}
+        value={this.state.secondPassphrase.value}
+        onChange={this.setSecondPass.bind(this, 'secondPassphrase')} />
         <article className={styles.info}>
           <InfoParagraph>
             <div >
@@ -60,8 +72,11 @@ export class ConfirmVotes extends React.Component {
             label: 'Confirm',
             fee: Fees.vote,
             disabled: (
-              this.props.votedList.length === 0 &&
-              this.props.unvotedList.length === 0),
+              (this.props.votedList.length === 0 &&
+              this.props.unvotedList.length === 0) ||
+              (!!this.state.secondPassphrase.error ||
+              this.state.secondPassphrase.value === '')
+            ),
             onClick: this.confirm.bind(this),
           }} />
       </article>
