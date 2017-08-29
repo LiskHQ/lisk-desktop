@@ -8,9 +8,9 @@ const InfoParagraph = props => (
       <span className={`${layout['layout-padding']} ${layout['layout-margin']}`}>
         <FontIcon className={layout['layout-margin']} value='info' />
       </span>
-      <p className={`${layout['layout-padding']} ${layout['layout-margin']}`}>
+      <div className={`${layout['layout-padding']} ${layout['layout-margin']}`}>
         {props.children}
-      </p>
+      </div>
     </div>
     <hr />
   </div>
