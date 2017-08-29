@@ -16,11 +16,15 @@ const offlineMiddleware = store => next => (action) => {
   const state = store.getState();
   switch (action.type) {
     case actionsType.activePeerUpdate:
-      if (action.data.online === false && state.peers.status.online === true) {
+      if (action.data.online === false &&
+         (state.peers.status.online === true || state.peers.status.online === undefined)) {
         const address = `${state.peers.data.currentPeer}:${state.peers.data.port}`;
         const label = getErrorMessage(action.data.code, address);
         store.dispatch(errorToastDisplayed({ label }));
-        loadingStarted('offline');
+
+        if (typeof state.peers.status.online === 'boolean') {
+          loadingStarted('offline');
+        }
       } else if (action.data.online === true && state.peers.status.online === false) {
         store.dispatch(successToastDisplayed({ label: 'Connection re-established' }));
         loadingFinished('offline');
