@@ -1,9 +1,25 @@
 import React from 'react';
 import AnimateOnChange from 'react-animate-on-change';
 import ProgressBar from 'react-toolbox/lib/progress_bar';
+import Input from 'react-toolbox/lib/input';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { generateSeed, generatePassphrase, emptyByte } from '../../utils/passphrase';
 import styles from './passphrase.css';
+
+/**
+ * Tests useragent with a regexp and defines if the account is mobile device
+ *
+ * @param {String} [agent] - The useragent string, This parameter is used for
+ *  unit testing purpose
+ * @returns {Boolean} - whether the agent represents a mobile device or not
+ */
+const isTouchDevice = (agent) => {
+  let check = false;
+  if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(agent || navigator.userAgent || navigator.vendor || window.opera)) {
+    check = true;
+  }
+  return check;
+};
 
 const Byte = props => (
   <AnimateOnChange
@@ -34,12 +50,18 @@ class PassphraseGenerator extends React.Component {
     document.removeEventListener('mousemove', this.seedGeneratorBoundToThis, true);
   }
 
-  seedGenerator({ nativeEvent }) {
-    const distance =
-      Math.sqrt(((nativeEvent.pageX - this.state.lastCaptured.x) ** 2) +
-      ((nativeEvent.pageY - this.state.lastCaptured.y) ** 2));
+  seedGenerator(nativeEvent) {
+    let shouldTrigger;
+    if (typeof nativeEvent === 'string') {
+      shouldTrigger = true;
+    } else {
+      const distance =
+        Math.sqrt(((nativeEvent.pageX - this.state.lastCaptured.x) ** 2) +
+        ((nativeEvent.pageY - this.state.lastCaptured.y) ** 2));
+      shouldTrigger = distance > 120;
+    }
 
-    if (distance > 120 && (!this.state.data || this.state.data.percentage < 100)) {
+    if (shouldTrigger && (!this.state.data || this.state.data.percentage < 100)) {
       this.setState({
         lastCaptured: {
           x: nativeEvent.pageX,
@@ -70,7 +92,14 @@ class PassphraseGenerator extends React.Component {
     return (
       <div className={`${grid.row} ${grid['center-xs']}`} >
         <div className={grid['col-xs-12']}>
-          <p>Move your mouse to generate random bytes</p>
+          {isTouchDevice() ?
+            <div>
+              <p>Enter text below to generate random bytes</p>
+              <Input onChange={this.seedGeneratorBoundToThis}
+                autoFocus={true} multiline={true} />
+            </div> :
+            <p>Move your mouse to generate random bytes</p>
+          }
         </div>
         <div className={grid['col-xs-12']}>
           <ProgressBar mode='determinate'
