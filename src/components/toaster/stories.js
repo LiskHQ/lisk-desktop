@@ -8,21 +8,30 @@ import Toaster from './toaster';
 storiesOf('Toaster', module)
   .add('default', () => (
     <Toaster
-      label='Test toast'
+      toasts={[{
+        label: 'Test toast',
+        index: 0,
+      }]}
       hideToast={ action('onHide') }
     />
   ))
   .add('success', () => (
     <Toaster
-      label='Success toast'
-      type='success'
+      toasts={[{
+        label: 'Success toast',
+        type: 'success',
+        index: 0,
+      }]}
       hideToast={ action('onHide') }
     />
   ))
   .add('error', () => (
     <Toaster
-      label='Error toast'
-      type='error'
+      toasts={[{
+        label: 'Success toast',
+        type: 'error',
+        index: 0,
+      }]}
       hideToast={ action('onHide') }
     />
   ));
