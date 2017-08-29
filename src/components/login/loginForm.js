@@ -60,10 +60,13 @@ class LoginForm extends React.Component {
       return reg.test(url) ? url : `http://${url}`;
     };
 
+    const isDefaultPort = url => (url.indexOf(':80') || url.indexOf(':443')) !== -1;
+
     let addressValidity = '';
     try {
       const url = new URL(addHttp(value));
-      addressValidity = url && url.port !== '' ? '' : 'URL is invalid';
+      const port = isDefaultPort(value) || url.port !== '';
+      addressValidity = url && port ? '' : 'URL is invalid';
     } catch (e) {
       addressValidity = 'URL is invalid';
     }
@@ -133,17 +136,23 @@ class LoginForm extends React.Component {
           onChange={this.changeHandler.bind(this, 'network')}
           label='Select a network'
           value={this.state.network}
-          className='network'
+          className={`${styles.network} network`}
         />
         {
           this.state.network === 2 &&
-          <Input type='text' label='Node address' name='address' className='address'
-            value={this.state.address} error={this.state.addressValidity}
-            onChange={this.changeHandler.bind(this, 'address')} />
+            <Input type='text'
+              label='Node address'
+              name='address'
+              className='address'
+              theme={styles}
+              value={this.state.address}
+              error={this.state.addressValidity}
+              onChange={this.changeHandler.bind(this, 'address')} />
         }
         <Input type={this.state.showPassphrase ? 'text' : 'password'}
           label='Enter your passphrase' name='passphrase'
           className='passphrase'
+          theme={styles}
           error={this.state.passphraseValidity === 'Invalid passphrase' ? 'Invalid passphrase' : ''}
           value={this.state.passphrase}
           onChange={this.changeHandler.bind(this, 'passphrase')} />
@@ -151,6 +160,7 @@ class LoginForm extends React.Component {
           checked={this.state.showPassphrase}
           label="Show passphrase"
           className={`${grid['start-xs']} show-passphrase`}
+          theme={styles}
           onChange={this.changeHandler.bind(this, 'showPassphrase')}
         />
         <footer className={ `${grid.row} ${grid['center-xs']}` }>

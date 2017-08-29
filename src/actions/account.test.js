@@ -1,6 +1,5 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
-import sinonStubPromise from 'sinon-stub-promise';
 import actionTypes from '../constants/actions';
 import { accountUpdated, accountLoggedOut,
   secondPassphraseRegistered, delegateRegistered, sent } from './account';
@@ -9,8 +8,6 @@ import { errorAlertDialogDisplayed } from './dialog';
 import * as accountApi from '../utils/api/account';
 import * as delegateApi from '../utils/api/delegate';
 import Fees from '../constants/fees';
-
-sinonStubPromise(sinon);
 
 describe('actions: account', () => {
   describe('accountUpdated', () => {

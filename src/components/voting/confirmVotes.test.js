@@ -1,19 +1,11 @@
 import React from 'react';
+import { expect } from 'chai';
 import { Provider } from 'react-redux';
-import chai, { expect } from 'chai';
 import { mount } from 'enzyme';
-import chaiEnzyme from 'chai-enzyme';
 import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
 import configureMockStore from 'redux-mock-store';
-import sinonStubPromise from 'sinon-stub-promise';
 import PropTypes from 'prop-types';
 import ConfirmVotesHOC, { ConfirmVotes } from './confirmVotes';
-// import * as delegateApi from '../../utils/api/delegate';
-
-sinonStubPromise(sinon);
-chai.use(sinonChai);
-chai.use(chaiEnzyme());
 
 const ordinaryAccount = {
   passphrase: 'pass',

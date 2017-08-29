@@ -1,11 +1,9 @@
-import chai, { expect } from 'chai';
+import { expect } from 'chai';
 import { spy } from 'sinon';
 import Lisk from 'lisk-js';
-import sinonChai from 'sinon-chai';
 import actionTypes from '../constants/actions';
 import { activePeerSet, activePeerUpdate } from './peers';
 
-chai.use(sinonChai);
 
 describe('actions: peers', () => {
   const passphrase = 'wagon stock borrow episode laundry kitten salute link globe zero feed marble';

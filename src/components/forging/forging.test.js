@@ -1,11 +1,8 @@
 import React from 'react';
-import chai, { expect } from 'chai';
-import sinonChai from 'sinon-chai';
+import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
 import Forging from './forging';
-
-chai.use(sinonChai);
 
 describe('Forging', () => {
   let wrapper;
