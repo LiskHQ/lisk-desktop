@@ -23,11 +23,11 @@ const isTouchDevice = (agent) => {
 
 const Byte = props => (
   <AnimateOnChange
-      animate={props.diff}
-      baseClassName={styles.stable}
-      animationClassName={styles.bouncing}>
-      <span className={styles.byte}>{ props.value }</span>
-    </AnimateOnChange>
+    animate={props.diff}
+    baseClassName={styles.stable}
+    animationClassName={styles.bouncing}>
+    <span className={styles.byte}>{ props.value }</span>
+  </AnimateOnChange>
 );
 
 class PassphraseGenerator extends React.Component {
