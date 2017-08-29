@@ -2,7 +2,7 @@ import { getAccount, extractAddress, extractPublicKey } from '../../utils/api/ac
 import { getDelegate } from '../../utils/api/delegate';
 import { accountLoggedIn } from '../../actions/account';
 import actionTypes from '../../constants/actions';
-import { activePeerUpdate } from '../../actions/peers';
+import { errorToastDisplayed } from '../../actions/toaster';
 
 const loginMiddleware = store => next => (action) => {
   if (action.type !== actionTypes.activePeerSet) {
@@ -31,7 +31,7 @@ const loginMiddleware = store => next => (action) => {
         store.dispatch(accountLoggedIn(Object.assign({}, accountData, accountBasics,
           { delegate: {}, isDelegate: false })));
       }),
-  ).catch(res => store.dispatch(activePeerUpdate({ online: false, code: res.error.code })));
+  ).catch(() => store.dispatch(errorToastDisplayed({ label: 'Unable to connect to the node' })));
 };
 
 export default loginMiddleware;

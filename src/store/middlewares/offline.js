@@ -2,29 +2,29 @@ import actionsType from '../../constants/actions';
 import { successToastDisplayed, errorToastDisplayed } from '../../actions/toaster';
 import { loadingStarted, loadingFinished } from '../../utils/loading';
 
-const getErrorMessage = (errorCode, optData) => {
+const getErrorMessage = (errorCode, address) => {
+  let message = `Failed to connect to node ${address}`;
   switch (errorCode) {
     case 'EUNAVAILABLE':
-      return `Failed to connect to node ${optData}`;
+      message = `Failed to connect: Node ${address} is not active`;
+      break;
     case 'EPARSE':
-      return 'Make sure that you are using the latest version of Lisk Nano.';
-    default: return '';
+      message += ' Make sure that you are using the latest version of Lisk Nano.';
+      break;
+    default: break;
   }
+  return message;
 };
 
 const offlineMiddleware = store => next => (action) => {
   const state = store.getState();
   switch (action.type) {
     case actionsType.activePeerUpdate:
-      if (action.data.online === false &&
-         (state.peers.status.online === true || state.peers.status.online === undefined)) {
+      if (action.data.online === false && state.peers.status.online === true) {
         const address = `${state.peers.data.currentPeer}:${state.peers.data.port}`;
         const label = getErrorMessage(action.data.code, address);
         store.dispatch(errorToastDisplayed({ label }));
-
-        if (typeof state.peers.status.online === 'boolean') {
-          loadingStarted('offline');
-        }
+        loadingStarted('offline');
       } else if (action.data.online === true && state.peers.status.online === false) {
         store.dispatch(successToastDisplayed({ label: 'Connection re-established' }));
         loadingFinished('offline');
