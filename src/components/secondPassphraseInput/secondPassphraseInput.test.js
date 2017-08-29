@@ -13,7 +13,6 @@ describe('SecondPassphraseInput', () => {
   beforeEach(() => {
     props = {
       onChange: sinon.spy(),
-      onError: sinon.spy(),
     };
   });
 
@@ -42,17 +41,17 @@ describe('SecondPassphraseInput', () => {
     expect(props.onChange).to.have.been.calledWith(passphrase);
   });
 
-  it('should call props.onError(\'Required\') when input value changes to \'\'', () => {
+  it('should call props.onChange(\'Required\') when input value changes to \'\'', () => {
     props.hasSecondPassphrase = true;
     wrapper = mount(<SecondPassphraseInput {...props} />);
     wrapper.find('.second-passphrase input').simulate('change', { target: { value: '' } });
-    expect(props.onError).to.have.been.calledWith('Required', '');
+    expect(props.onChange).to.have.been.calledWith('', 'Required');
   });
 
-  it('should call props.onError(\'Invalid passphrase\') when input value changes to \'test\'', () => {
+  it('should call props.onChange(\'Invalid passphrase\') when input value changes to \'test\'', () => {
     props.hasSecondPassphrase = true;
     wrapper = mount(<SecondPassphraseInput {...props} />);
     wrapper.find('.second-passphrase input').simulate('change', { target: { value: 'test' } });
-    expect(props.onError).to.have.been.calledWith('Invalid passphrase', 'test');
+    expect(props.onChange).to.have.been.calledWith('test', 'Invalid passphrase');
   });
 });

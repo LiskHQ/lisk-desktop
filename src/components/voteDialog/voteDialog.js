@@ -1,21 +1,26 @@
 import React from 'react';
-import Input from 'react-toolbox/lib/input';
 import InfoParagraph from '../infoParagraph';
 import ActionBar from '../actionBar';
 import Fees from '../../constants/fees';
 import Autocomplete from './voteAutocomplete';
 import styles from './voteDialog.css';
+import SecondPassphraseInput from '../secondPassphraseInput';
 
 export default class VoteDialog extends React.Component {
   constructor() {
     super();
     this.state = {
       secondSecret: '',
+      secondPassphrase: {
+        value: null,
+      },
     };
   }
 
   confirm() {
-    const secondSecret = this.state.secondSecret.length === 0 ? null : this.state.secondSecret;
+    const secondSecret = this.props.account.secondSignature === 1 ?
+      this.state.secondPassphrase.value :
+      null;
 
     // fire first action
     this.props.votePlaced({
@@ -26,17 +31,16 @@ export default class VoteDialog extends React.Component {
       secondSecret,
     });
   }
-
-  setSecondPass(name, value) {
-    this.setState({ [name]: value });
+  setSecondPass(name, value, error) {
+    this.setState({
+      [name]: {
+        value,
+        error,
+      },
+    });
   }
 
   render() {
-    const secondPassphrase = this.props.account.secondSignature === 1 ?
-      <Input type='text' label='Second Passphrase' name='secondSecret'
-        className='secondSecret second-passphrase' value={this.state.secondSecret}
-        onChange={this.setSecondPass.bind(this, 'secondSecret')}/> : null;
-
     return (
       <article>
         <Autocomplete
@@ -46,13 +50,15 @@ export default class VoteDialog extends React.Component {
           addedToVoteList={this.props.addedToVoteList}
           removedFromVoteList={this.props.removedFromVoteList}
           activePeer={this.props.activePeer} />
-        {secondPassphrase}
-
+        <SecondPassphraseInput
+          error={this.state.secondPassphrase.error}
+          value={this.state.secondPassphrase.value}
+          onChange={this.setSecondPass.bind(this, 'secondPassphrase')} />
         <article className={styles.info}>
           <InfoParagraph>
-            <div >
+            <p >
               You can select up to 33 delegates in one voting turn.
-            </div>
+            </p>
             You can vote for up to 101 delegates in total.
           </InfoParagraph>
         </article>
@@ -65,8 +71,11 @@ export default class VoteDialog extends React.Component {
             label: 'Confirm',
             fee: Fees.vote,
             disabled: (
-              this.props.votedList.length === 0 &&
-              this.props.unvotedList.length === 0),
+              (this.props.votedList.length === 0 &&
+              this.props.unvotedList.length === 0) ||
+              (!!this.state.secondPassphrase.error ||
+              this.state.secondPassphrase.value === '')
+            ),
             onClick: this.confirm.bind(this),
           }} />
       </article>
