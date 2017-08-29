@@ -43,11 +43,6 @@ export class ConfirmVotes extends React.Component {
   }
 
   render() {
-    // const secondPassphrase = this.props.account.secondSignature === 1 ?
-    //   <Input type='text' label='Second Passphrase' name='secondSecret'
-    //     className='secondSecret second-passphrase' value={this.state.secondSecret}
-    //     onChange={this.setSecondPass.bind(this, 'secondSecret')}/> : null;
-
     return (
       <article>
         <Autocomplete voted={this.props.voted} />
