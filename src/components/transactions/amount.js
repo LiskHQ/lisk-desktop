@@ -13,8 +13,8 @@ const Amount = (props) => {
     params.className = 'inButton';
   } else if (props.value.type !== 0 || props.value.recipientId !== props.address) {
     params.className = 'outButton';
-    params.tooltipText = 'Repeat the transaction';
-    params.clickToSendEnabled = true;
+    params.tooltipText = props.value.type === 0 ? 'Repeat the transaction' : undefined;
+    params.clickToSendEnabled = props.value.type === 0;
   }
   return <TooltipWrapper tooltip={params.tooltipText}>
     <ClickToSend rawAmount={props.value.amount}
