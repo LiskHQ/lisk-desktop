@@ -1,5 +1,4 @@
 import React from 'react';
-import Cookies from 'js-cookie';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Input from 'react-toolbox/lib/input';
 import Dropdown from 'react-toolbox/lib/dropdown';
@@ -47,9 +46,9 @@ class Login extends React.Component {
       this.props.history.replace(
         search.indexOf('?referrer') === 0 ? search.replace('?referrer=', '') : '/main/transactions');
       if (this.state.address) {
-        Cookies.set('address', this.state.address);
+        localStorage.setItem('address', this.state.address);
       }
-      Cookies.set('network', this.state.network);
+      localStorage.setItem('network', this.state.network);
     }
   }
 
@@ -108,9 +107,9 @@ class Login extends React.Component {
   }
 
   devPreFill() {
-    const address = Cookies.get('address');
-    const passphrase = Cookies.get('passphrase');
-    const network = parseInt(Cookies.get('network'), 10) || 0;
+    const address = localStorage.getItem('address') || '';
+    const passphrase = localStorage.getItem('passphrase') || '';
+    const network = parseInt(localStorage.getItem('network'), 10) || 0;
 
     this.setState({
       network,
@@ -120,7 +119,7 @@ class Login extends React.Component {
 
     // ignore this in coverage as it is hard to test and does not run in production
     /* istanbul ignore if */
-    if (!env.production && Cookies.get('autologin') && !this.props.account.afterLogout && passphrase) {
+    if (!env.production && localStorage.getItem('autologin') && !this.props.account.afterLogout && passphrase) {
       setTimeout(() => {
         this.onLoginSubmission(passphrase);
       });
