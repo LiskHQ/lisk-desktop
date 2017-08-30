@@ -6,6 +6,7 @@ import addedTransactionMiddleware from './addedTransaction';
 import loadingBarMiddleware from './loadingBar';
 import offlineMiddleware from './offline';
 import notificationMiddleware from './notification';
+import delegateRegistrationMiddleware from './delegateRegistration';
 
 export default [
   thunk,
@@ -16,4 +17,5 @@ export default [
   loadingBarMiddleware,
   offlineMiddleware,
   notificationMiddleware,
+  delegateRegistrationMiddleware,
 ];
