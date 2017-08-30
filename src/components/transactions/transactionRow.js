@@ -15,7 +15,7 @@ const TransactionRow = props => (
           <Spinner />}
     </td>
     <td className={`${props.tableStyle.rowCell} ${styles.centerText} ${styles.hiddenXs}`}>
-        <TooltipWrapper tooltip={`${props.value.confirmations} confirmation${props.value.confirmations !== 1 ? 's' : ''}`}>{props.value.id}</TooltipWrapper>
+        <TooltipWrapper tooltip={`${props.value.confirmations || 0} confirmation${props.value.confirmations !== 1 ? 's' : ''}`}>{props.value.id}</TooltipWrapper>
     </td>
     <td className={`${props.tableStyle.rowCell} ${styles.centerText}`}>
       <TransactionType {...props.value} address={props.address}></TransactionType>
