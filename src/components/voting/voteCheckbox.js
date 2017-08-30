@@ -1,10 +1,8 @@
 import React from 'react';
 import Checkbox from 'react-toolbox/lib/checkbox';
-import { connect } from 'react-redux';
-import { addedToVoteList, removedFromVoteList } from '../../actions/voting';
 import Spinner from '../spinner';
 
-export class VoteCheckbox extends React.Component {
+export default class VoteCheckbox extends React.Component {
   /**
    * change status of selected row
    * @param {Number} index - index of row that we want to change status of that
@@ -29,11 +27,3 @@ export class VoteCheckbox extends React.Component {
     return template;
   }
 }
-
-const mapDispatchToProps = dispatch => ({
-  addToVoteList: data => dispatch(addedToVoteList(data)),
-  removeFromVoteList: data => dispatch(removedFromVoteList(data)),
-});
-
-export default connect(null, mapDispatchToProps)(VoteCheckbox);
-

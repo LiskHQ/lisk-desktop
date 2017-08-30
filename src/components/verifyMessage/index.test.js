@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import VerifyMessage from './verifyMessage';
+import VerifyMessage from './index';
 
 describe('VerifyMessage', () => {
   let wrapper;

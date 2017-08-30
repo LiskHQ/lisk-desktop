@@ -2,11 +2,9 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
-import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
 import * as delegateApi from '../../utils/api/delegate';
-import * as votingActions from '../../actions/voting';
-import VoteAutocompleteContainer, { VoteAutocomplete } from './voteAutocomplete';
+import VoteAutocomplete from './voteAutocomplete';
 
 const props = {
   activePeer: {},
@@ -41,28 +39,6 @@ const store = configureMockStore([])({
   account: {},
 });
 
-describe('VoteAutocompleteContainer', () => {
-  beforeEach(() => {
-    wrapper = mount(<VoteAutocompleteContainer {...props} store={store} />, {
-      context: { store },
-      childContextTypes: { store: PropTypes.object.isRequired },
-    });
-  });
-  it('should render VoteAutocomplete', () => {
-    expect(wrapper.find('VoteAutocomplete').exists()).to.be.equal(true);
-  });
-  it('should bind addedToVoteList action to ForgingComponent props.addedToVoteList', () => {
-    const actionsSpy = sinon.spy(votingActions, 'addedToVoteList');
-    wrapper.find('VoteAutocomplete').props().addedToVoteList([]);
-    expect(actionsSpy).to.be.calledWith();
-  });
-
-  it('should bind removedFromVoteList action to ForgingComponent props.removedFromVoteList', () => {
-    const actionsSpy = sinon.spy(votingActions, 'removedFromVoteList');
-    wrapper.find('VoteAutocomplete').props().removedFromVoteList([]);
-    expect(actionsSpy).to.be.calledWith();
-  });
-});
 describe('VoteAutocomplete', () => {
   let voteAutocompleteApiMock;
   let unvoteAutocompleteApiMock;

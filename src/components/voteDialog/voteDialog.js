@@ -1,14 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { votePlaced } from '../../actions/voting';
 import InfoParagraph from '../infoParagraph';
 import ActionBar from '../actionBar';
 import Fees from '../../constants/fees';
 import Autocomplete from './voteAutocomplete';
+import styles from './voteDialog.css';
 import SecondPassphraseInput from '../secondPassphraseInput';
-import styles from './voting.css';
 
-export class ConfirmVotes extends React.Component {
+export default class VoteDialog extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -45,11 +43,17 @@ export class ConfirmVotes extends React.Component {
   render() {
     return (
       <article>
-        <Autocomplete voted={this.props.voted} />
+        <Autocomplete
+          voted={this.props.voted}
+          votedList={this.props.votedList}
+          unvotedList={this.props.unvotedList}
+          addedToVoteList={this.props.addedToVoteList}
+          removedFromVoteList={this.props.removedFromVoteList}
+          activePeer={this.props.activePeer} />
         <SecondPassphraseInput
-        error={this.state.secondPassphrase.error}
-        value={this.state.secondPassphrase.value}
-        onChange={this.setSecondPass.bind(this, 'secondPassphrase')} />
+          error={this.state.secondPassphrase.error}
+          value={this.state.secondPassphrase.value}
+          onChange={this.setSecondPass.bind(this, 'secondPassphrase')} />
         <article className={styles.info}>
           <InfoParagraph>
             <p >
@@ -78,17 +82,3 @@ export class ConfirmVotes extends React.Component {
     );
   }
 }
-
-
-const mapStateToProps = state => ({
-  votedList: state.voting.votedList,
-  unvotedList: state.voting.unvotedList,
-  account: state.account,
-  activePeer: state.peers.data,
-});
-
-const mapDispatchToProps = dispatch => ({
-  votePlaced: data => dispatch(votePlaced(data)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ConfirmVotes);

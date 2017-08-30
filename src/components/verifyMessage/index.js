@@ -3,7 +3,7 @@ import Input from 'react-toolbox/lib/input';
 
 import lisk from 'lisk-js';
 import InfoParagraph from '../infoParagraph';
-import SignVerifyResult from './signVerifyResult';
+import SignVerifyResult from '../signVerifyResult';
 
 class VerifyMessage extends React.Component {
 

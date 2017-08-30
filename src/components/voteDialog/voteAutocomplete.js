@@ -1,14 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import Input from 'react-toolbox/lib/input';
 import Chip from 'react-toolbox/lib/chip';
 import { Card } from 'react-toolbox/lib/card';
 import { List, ListItem } from 'react-toolbox/lib/list';
 import { voteAutocomplete, unvoteAutocomplete } from '../../utils/api/delegate';
-import { addedToVoteList, removedFromVoteList } from '../../actions/voting';
-import styles from './voting.css';
+import styles from './voteAutocomplete.css';
 
-export class VoteAutocomplete extends React.Component {
+export default class VoteAutocomplete extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -221,16 +219,3 @@ export class VoteAutocomplete extends React.Component {
     );
   }
 }
-
-const mapStateToProps = state => ({
-  votedList: state.voting.votedList,
-  unvotedList: state.voting.unvotedList,
-  activePeer: state.peers.data,
-});
-
-const mapDispatchToProps = dispatch => ({
-  addedToVoteList: data => dispatch(addedToVoteList(data)),
-  removedFromVoteList: data => dispatch(removedFromVoteList(data)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(VoteAutocomplete);

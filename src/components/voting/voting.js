@@ -6,7 +6,7 @@ import { TableHead, TableCell } from 'react-toolbox/lib/table';
 import TableTheme from 'react-toolbox/lib/table/theme.css';
 import Waypoint from 'react-waypoint';
 import { listAccountDelegates, listDelegates } from '../../utils/api/delegate';
-import Header from './votingHeaderWrapper';
+import Header from './votingHeader';
 import VotingRow from './votingRow';
 
 // Create a new Table component injecting Head and Row
@@ -156,6 +156,11 @@ class Voting extends React.Component {
     return (
       <div className="box noPaddingBox">
         <Header
+          setActiveDialog={this.props.setActiveDialog}
+          addToUnvoted={this.props.addToUnvoted}
+          addTransaction={this.props.addTransaction}
+          votedList={this.props.votedList}
+          unvotedList={this.props.unvotedList}
           votedDelegates={this.state.votedDelegates}
           search={ value => this.search(value) }
         />
@@ -170,7 +175,10 @@ class Voting extends React.Component {
               <TableCell>Approval</TableCell>
             </TableHead>
             {this.state.delegates.map(item => (
-              <VotingRow key={item.address} data={item} />
+              <VotingRow key={item.address} data={item}
+                addToVoteList={this.props.addToVoteList}
+                removeFromVoteList={this.props.removeFromVoteList}
+              />
             ))}
           </Table>
         </div>

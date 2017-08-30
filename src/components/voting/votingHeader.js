@@ -5,7 +5,7 @@ import { IconMenu, MenuItem } from 'react-toolbox/lib/menu';
 import Input from 'react-toolbox/lib/input';
 import styles from './voting.css';
 import disableStyle from './disableMenu.css';
-import Confirm from './confirmVotes';
+import VoteDialog from '../voteDialog';
 
 class VotingHeader extends React.Component {
   constructor() {
@@ -83,7 +83,7 @@ class VotingHeader extends React.Component {
             className='vote-button'
             onClick={() => this.props.setActiveDialog({
               title: 'Vote for delegates',
-              childComponent: Confirm,
+              childComponent: VoteDialog,
               childComponentProps: {
                 addTransaction: this.props.addTransaction,
                 voted: this.props.votedDelegates,

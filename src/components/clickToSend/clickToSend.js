@@ -1,10 +1,9 @@
 import React from 'react';
-import styles from './send.css';
+import styles from './clickToSend.css';
 import Send from '../send';
 import { fromRawLsk } from '../../utils/lsk';
 
-
-const ClickToSendComponent = props => (
+const ClickToSend = props => (
   props.disabled ?
     props.children :
     <span className={`${styles.clickable} ${props.className}`}
@@ -20,4 +19,4 @@ const ClickToSendComponent = props => (
     </span>
 );
 
-export default ClickToSendComponent;
+export default ClickToSend;

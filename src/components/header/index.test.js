@@ -5,31 +5,32 @@ import { Provider } from 'react-redux';
 import sinon from 'sinon';
 import * as accountActions from '../../actions/account';
 import * as dialogActions from '../../actions/dialog';
-import Header from './index';
+import Header from './header';
+import HeaderHOC from './index';
 import store from '../../store';
 
 
-describe('Header', () => {
+describe('HeaderHOC', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<Provider store={store}><Header /></Provider>);
+    wrapper = mount(<Provider store={store}><HeaderHOC /></Provider>);
   });
 
-  it('should render HeaderElement', () => {
-    expect(wrapper.find('HeaderElement')).to.have.lengthOf(1);
+  it('should render Header', () => {
+    expect(wrapper.find(Header)).to.have.lengthOf(1);
   });
 
-  it('should bind accountLoggedOut action to HeaderElement props.logOut', () => {
+  it('should bind accountLoggedOut action to Header props.logOut', () => {
     const actionsSpy = sinon.spy(accountActions, 'accountLoggedOut');
-    wrapper.find('HeaderElement').props().logOut({});
+    wrapper.find(Header).props().logOut({});
     expect(actionsSpy).to.be.calledWith();
     actionsSpy.restore();
   });
 
-  it('should bind dialogDisplayed action to HeaderElement props.setActiveDialog', () => {
+  it('should bind dialogDisplayed action to Header props.setActiveDialog', () => {
     const actionsSpy = sinon.spy(dialogActions, 'dialogDisplayed');
-    wrapper.find('HeaderElement').props().setActiveDialog({});
+    wrapper.find(Header).props().setActiveDialog({});
     expect(actionsSpy).to.be.calledWith();
     actionsSpy.restore();
   });

@@ -2,18 +2,19 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
-import Toaster from './';
+import Toaster from './toaster';
+import ToasterHOC from './index';
 import store from '../../store';
 
 
-describe('Toaster', () => {
+describe('ToasterHOC', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<Provider store={store}><Toaster /></Provider>);
+    wrapper = mount(<Provider store={store}><ToasterHOC /></Provider>);
   });
 
-  it('should render ToasterComponent', () => {
-    expect(wrapper.find('ToasterComponent')).to.have.lengthOf(1);
+  it('should render Toaster', () => {
+    expect(wrapper.find(Toaster)).to.have.lengthOf(1);
   });
 });

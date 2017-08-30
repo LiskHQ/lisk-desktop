@@ -2,7 +2,7 @@ import React from 'react';
 
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import Dialog from './dialogElement';
+import Dialog from './dialog';
 import Alert from './alert';
 
 const dialogContent = () => (<div>Hello</div>);

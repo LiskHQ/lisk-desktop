@@ -2,10 +2,10 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
-import { Dialog } from 'react-toolbox/lib/dialog';
-import DialogElement from '../dialog/dialogElement';
+import { Dialog as ReactToolboxDialog } from 'react-toolbox/lib/dialog';
+import Dialog from './dialog';
 
-describe('DialogElement', () => {
+describe('Dialog', () => {
   let wrapper;
   const Dummy = props => (<div>DUMMY {props.name}</div>);
   const dialogProps = {
@@ -17,20 +17,20 @@ describe('DialogElement', () => {
   };
 
   beforeEach(() => {
-    wrapper = shallow(<DialogElement dialog={dialogProps} onCancelClick={() => {}}/>);
+    wrapper = shallow(<Dialog dialog={dialogProps} onCancelClick={() => {}}/>);
   });
 
   it('renders <Dialog /> component from react-toolbox', () => {
-    expect(wrapper.find(Dialog)).to.have.length(1);
+    expect(wrapper.find(ReactToolboxDialog)).to.have.length(1);
   });
 
   it('renders component passed in props.dialog.childComponent', () => {
-    wrapper = shallow(<DialogElement dialog={{ childComponent: Dummy }} onCancelClick={() => {}}/>);
+    wrapper = shallow(<Dialog dialog={{ childComponent: Dummy }} onCancelClick={() => {}}/>);
     expect(wrapper.find(Dummy)).to.have.length(1);
   });
 
   it('does not render a child component if none passed in props.dialog.childComponent', () => {
-    wrapper = shallow(<DialogElement dialog={{}} />);
+    wrapper = shallow(<Dialog dialog={{}} />);
     expect(wrapper.find(Dummy)).to.have.length(0);
   });
 

@@ -4,10 +4,10 @@ import { mount } from 'enzyme';
 import sinon from 'sinon';
 import { Provider } from 'react-redux';
 import store from '../../store';
-import SignMessageComponent from './signMessageComponent';
+import SignMessage from './signMessage';
 
 
-describe('SignMessageComponent', () => {
+describe('SignMessage', () => {
   let wrapper;
   let successToastSpy;
   let copyMock;
@@ -32,7 +32,7 @@ ${signature}
     successToastSpy = sinon.spy();
     copyMock = sinon.mock();
 
-    wrapper = mount(<Provider store={store}><SignMessageComponent
+    wrapper = mount(<Provider store={store}><SignMessage
       account={account} successToast={successToastSpy} copyToClipboard={copyMock} /></Provider>);
   });
 

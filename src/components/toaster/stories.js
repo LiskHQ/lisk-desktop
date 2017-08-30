@@ -2,7 +2,7 @@ import React from 'react';
 
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import Toaster from './toasterComponent';
+import Toaster from './toaster';
 
 
 storiesOf('Toaster', module)

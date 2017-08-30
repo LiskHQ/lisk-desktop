@@ -2,9 +2,9 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { mount } from 'enzyme';
-import ToasterComponent from './toasterComponent';
+import Toaster from './toaster';
 
-describe('ToasterComponent', () => {
+describe('Toaster', () => {
   let wrapper;
   const toasts = [{
     label: 'test',
@@ -17,7 +17,7 @@ describe('ToasterComponent', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<ToasterComponent {...toasterProps} />);
+    wrapper = mount(<Toaster {...toasterProps} />);
   });
 
   it('renders <Snackbar /> component from react-toolbox', () => {

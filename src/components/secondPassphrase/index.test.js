@@ -6,7 +6,7 @@ import configureMockStore from 'redux-mock-store';
 import SecondPassphraseHOC from './index';
 
 
-describe('SecondPassphrase HOC', () => {
+describe('SecondPassphraseHOC', () => {
   let wrapper;
   const peers = {};
   const account = { secondSignature: 1 };

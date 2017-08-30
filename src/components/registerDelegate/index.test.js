@@ -3,9 +3,9 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
-import RegisterDelegate from './index';
+import RegisterDelegateHOC from './index';
 
-describe('RegisterDelegate HOC', () => {
+describe('RegisterDelegateHOC', () => {
   let wrapper;
   const peers = {
     status: {
@@ -32,7 +32,7 @@ describe('RegisterDelegate HOC', () => {
   });
 
   beforeEach(() => {
-    wrapper = mount(<Provider store={store}><RegisterDelegate /></Provider>);
+    wrapper = mount(<Provider store={store}><RegisterDelegateHOC /></Provider>);
   });
 
   it('should render RegisterDelegate', () => {

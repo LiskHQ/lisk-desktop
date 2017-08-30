@@ -3,34 +3,11 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
-import Checkbox, { VoteCheckbox } from './voteCheckbox';
+import VoteCheckbox from './voteCheckbox';
 import styles from './voting.css';
 
 const mockStore = configureStore();
 
-describe('Checkbox', () => {
-  const props = {
-    store: mockStore({ runtime: {} }),
-    data: {
-      username: 'yashar',
-      address: 'address 1',
-    },
-    styles,
-    pending: false,
-    value: true,
-    addToVoteList: () => true,
-    removeFromVoteList: () => true,
-  };
-  it('it should expose onAccountUpdated as function', () => {
-    const wrapper = mount(<Checkbox {...props} />);
-    expect(typeof wrapper.props().addToVoteList).to.equal('function');
-  });
-
-  it('it should expose removeFromVoteList as function', () => {
-    const wrapper = mount(<Checkbox {...props} />);
-    expect(typeof wrapper.props().removeFromVoteList).to.equal('function');
-  });
-});
 describe('VoteCheckbox', () => {
   let wrapper;
   const props = {

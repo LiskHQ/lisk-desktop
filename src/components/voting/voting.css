@@ -36,12 +36,6 @@
     margin-top: 9px;
     display: inline-block;
 }
-.selectedRow{
-    background: #EEEEEE;
-}
-.hidden{
-    display: none !important;
-}
 .votesMenuButton{
     margin-right: 16px;
     margin-top: 8px;
@@ -56,26 +50,6 @@
 }
 .unvoted {
     color: #c62828;
-}
-.searchContainer{
-    position: relative;
-}
-.searchResult{
-    position: absolute;
-    left: 0;
-    top: 52px;
-    width: 300px !important;
-    max-height: 200px;
-    overflow: auto !important;
-    z-index: 9;
-}
-.info {
-    border-top: 1px solid rgba(0,0,0,0.12);
-    border-bottom: 1px solid rgba(0,0,0,0.12);
-    margin: 10px -24px 20px;
-}
-.autoCompleteTile{
-    margin-bottom: 5px;
 }
 /* react toolbar overwroght */
 .input{

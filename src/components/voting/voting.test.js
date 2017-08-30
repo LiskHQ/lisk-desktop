@@ -28,6 +28,7 @@ describe('Voting', () => {
     address: '16313739661670634666L',
     votedList: [],
     unvotedList: [],
+    addToUnvoted: sinon.spy(),
   };
   beforeEach(() => {
     sinon.spy(Voting.prototype, 'loadVotedDelegates');
@@ -84,7 +85,7 @@ describe('Voting', () => {
   it('should call "loadVotedDelegates" once when "refreshDelegates" is not changed', () => {
     const clock = sinon.useFakeTimers();
     clock.tick(100);
-    wrapper.setProps({ votedList: false });
+    wrapper.setProps({ votedList: [] });
     // it should triger 'wrapper.loadDelegates' after 1 ms
     clock.tick(1);
 

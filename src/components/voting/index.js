@@ -1,4 +1,7 @@
 import { connect } from 'react-redux';
+import { dialogDisplayed } from '../../actions/dialog';
+import { removedFromVoteList, addedToVoteList } from '../../actions/voting';
+import { transactionAdded } from '../../actions/transactions';
 import Voting from './voting';
 
 const mapStateToProps = state => ({
@@ -9,4 +12,12 @@ const mapStateToProps = state => ({
   refreshDelegates: state.voting.refresh,
 });
 
-export default connect(mapStateToProps)(Voting);
+const mapDispatchToProps = dispatch => ({
+  setActiveDialog: data => dispatch(dialogDisplayed(data)),
+  addToUnvoted: data => dispatch(addedToVoteList(data)),
+  addToVoteList: data => dispatch(addedToVoteList(data)),
+  removeFromVoteList: data => dispatch(removedFromVoteList(data)),
+  addTransaction: data => dispatch(transactionAdded(data)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Voting);

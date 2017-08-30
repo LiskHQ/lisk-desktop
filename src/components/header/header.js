@@ -4,15 +4,15 @@ import { IconMenu, MenuItem } from 'react-toolbox/lib/menu';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import logo from '../../assets/images/LISK-nano.png';
 import styles from './header.css';
-import VerifyMessage from '../signVerify/verifyMessage';
-import SignMessage from '../signVerify/signMessage';
+import VerifyMessage from '../verifyMessage';
+import SignMessage from '../signMessage';
 import RegisterDelegate from '../registerDelegate';
 import Send from '../send';
 import PrivateWrapper from '../privateWrapper';
 import SecondPassphraseMenu from '../secondPassphrase';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 
-const HeaderElement = props => (
+const Header = props => (
   <header className={`${grid.row} ${grid['between-xs']} ${styles.wrapper}`} >
     <div className={styles.logoWrapper}>
       <img className={styles.logo} src={logo} alt="logo" />
@@ -65,4 +65,4 @@ const HeaderElement = props => (
   </header>
 );
 
-export default HeaderElement;
+export default Header;

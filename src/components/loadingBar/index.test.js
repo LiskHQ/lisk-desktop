@@ -2,15 +2,15 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
-import LoadingBar from './';
+import LoadingBarHOC from './';
 import store from '../../store';
 
 
-describe('LoadingBar Container', () => {
+describe('LoadingBarHOC', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<Provider store={store}><LoadingBar /></Provider>);
+    wrapper = mount(<Provider store={store}><LoadingBarHOC /></Provider>);
   });
 
   it('should render Send', () => {

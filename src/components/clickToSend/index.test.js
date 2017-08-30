@@ -4,24 +4,24 @@ import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import sinon from 'sinon';
 import * as dialogActions from '../../actions/dialog';
-import ClickToSend from './clickToSend';
+import ClickToSendHOC from './index';
 import store from '../../store';
 
 
-describe('Send Container', () => {
+describe('ClickToSendHOC', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<Provider store={store}><ClickToSend /></Provider>);
+    wrapper = mount(<Provider store={store}><ClickToSendHOC /></Provider>);
   });
 
-  it('should render ClickToSendComponent', () => {
-    expect(wrapper.find('ClickToSendComponent')).to.have.lengthOf(1);
+  it('should render ClickToSend', () => {
+    expect(wrapper.find('ClickToSend')).to.have.lengthOf(1);
   });
 
-  it('should bind dialogDisplayed action to ClickToSendComponent props.setActiveDialog', () => {
+  it('should bind dialogDisplayed action to ClickToSend props.setActiveDialog', () => {
     const actionsSpy = sinon.spy(dialogActions, 'dialogDisplayed');
-    wrapper.find('ClickToSendComponent').props().setActiveDialog({});
+    wrapper.find('ClickToSend').props().setActiveDialog({});
     expect(actionsSpy).to.be.calledWith();
     actionsSpy.restore();
   });

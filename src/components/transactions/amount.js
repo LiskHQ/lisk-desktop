@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './transactions.css';
 import LiskAmount from '../liskAmount';
 import { TooltipWrapper } from '../timestamp';
-import ClickToSend from '../send/clickToSend';
+import ClickToSend from '../clickToSend';
 
 const Amount = (props) => {
   const params = {};

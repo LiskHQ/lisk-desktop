@@ -6,7 +6,7 @@ import SendHOC from './index';
 import store from '../../store';
 
 
-describe('Send HOC', () => {
+describe('SendHOC', () => {
   let wrapper;
   const peers = {
     data: {},

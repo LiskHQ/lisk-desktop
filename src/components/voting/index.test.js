@@ -2,10 +2,10 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
-import Voting from './';
+import VotingHOC from './';
 import store from '../../store';
 
-describe('Voting', () => {
+describe('VotingHOC', () => {
   let wrapper;
 
   beforeEach(() => {
@@ -21,10 +21,10 @@ describe('Voting', () => {
       },
       account: {},
     });
-    wrapper = mount(<Provider store={store}><Voting /></Provider>);
+    wrapper = mount(<Provider store={store}><VotingHOC /></Provider>);
   });
 
-  it('should render VotingComponent', () => {
+  it('should render Voting', () => {
     expect(wrapper.find('Voting')).to.have.lengthOf(1);
   });
 });

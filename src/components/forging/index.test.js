@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
-import Forging from './index';
+import ForgingHOC from './index';
 
 describe('Forging HOC', () => {
   let wrapper;
@@ -18,7 +18,7 @@ describe('Forging HOC', () => {
         forgedBlocks: [],
       },
     });
-    wrapper = mount(<Provider store={store}><Forging /></Provider>);
+    wrapper = mount(<Provider store={store}><ForgingHOC /></Provider>);
   });
 
   it('should render Forging component', () => {

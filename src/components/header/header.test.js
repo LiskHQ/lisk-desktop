@@ -4,10 +4,10 @@ import { shallow } from 'enzyme';
 import { Button } from 'react-toolbox/lib/button';
 import sinon from 'sinon';
 import styles from './header.css';
-import HeaderElement from './headerElement';
+import Header from './header';
 import logo from '../../assets/images/LISK-nano.png';
 
-describe('HeaderElement', () => {
+describe('Header', () => {
   let wrapper;
   let propsMock;
 
@@ -17,7 +17,7 @@ describe('HeaderElement', () => {
       account: {},
     };
     propsMock = sinon.mock(mockInputProps);
-    wrapper = shallow(<HeaderElement {...mockInputProps} />);
+    wrapper = shallow(<Header {...mockInputProps} />);
   });
 
   afterEach(() => {

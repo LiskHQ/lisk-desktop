@@ -5,7 +5,7 @@ import { mount } from 'enzyme';
 import sinon from 'sinon';
 import configureMockStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
-import ConfirmVotesHOC, { ConfirmVotes } from './confirmVotes';
+import VoteDialog from './voteDialog';
 
 const ordinaryAccount = {
   passphrase: 'pass',
@@ -44,7 +44,7 @@ const store = configureMockStore([])({
 });
 let props;
 
-describe('ConfirmVotes', () => {
+describe('VoteDialog', () => {
   let wrapper;
   props = {
     activePeer: {},
@@ -53,12 +53,14 @@ describe('ConfirmVotes', () => {
     closeDialog: sinon.spy(),
     clearVoteLists: sinon.spy(),
     votePlaced: sinon.spy(),
+    addedToVoteList: sinon.spy(),
+    removedFromVoteList: sinon.spy(),
   };
 
   describe('Ordinary account', () => {
     beforeEach(() => {
       wrapper = mount(<Provider store={store}>
-        <ConfirmVotes {...props} account={ordinaryAccount} /></Provider>);
+        <VoteDialog {...props} account={ordinaryAccount} /></Provider>);
     });
 
     it('should render an InfoParagraph', () => {
@@ -74,7 +76,7 @@ describe('ConfirmVotes', () => {
     });
 
     it('should fire votePlaced action if lists are not empty and account balance is sufficient', () => {
-      wrapper.find('ConfirmVotes .primary-button button').simulate('click');
+      wrapper.find('VoteDialog .primary-button button').simulate('click');
 
       expect(props.votePlaced).to.have.been.calledWith({
         account: ordinaryAccount,
@@ -95,8 +97,8 @@ describe('ConfirmVotes', () => {
         votePlaced: () => {},
       };
       const mounted = mount(<Provider store={store}>
-        <ConfirmVotes {...noVoteProps} account={ordinaryAccount} /></Provider>);
-      const primaryButton = mounted.find('ConfirmVotes .primary-button button');
+        <VoteDialog {...noVoteProps} account={ordinaryAccount} /></Provider>);
+      const primaryButton = mounted.find('VoteDialog .primary-button button');
 
       expect(primaryButton.props().disabled).to.be.equal(true);
     });
@@ -104,13 +106,13 @@ describe('ConfirmVotes', () => {
 
   describe('Account with second passphrase', () => {
     it('should fire votePlaced action with the provided secondPassphrase', () => {
-      wrapper = mount(<ConfirmVotes {...props} account={accountWithSecondPassphrase} />, {
+      wrapper = mount(<VoteDialog {...props} account={accountWithSecondPassphrase} />, {
         context: { store },
         childContextTypes: { store: PropTypes.object.isRequired },
       });
       const secondPassphrase = 'test second passphrase';
       wrapper.instance().setSecondPass('secondPassphrase', secondPassphrase);
-      wrapper.find('ConfirmVotes .primary-button button').simulate('click');
+      wrapper.find('.primary-button button').simulate('click');
 
       expect(props.votePlaced).to.have.been.calledWith({
         activePeer: props.activePeer,
@@ -120,26 +122,5 @@ describe('ConfirmVotes', () => {
         secondSecret: secondPassphrase,
       });
     });
-  });
-});
-
-describe('ConfirmVotes HOC', () => {
-  let wrapper;
-  beforeEach(() => {
-    wrapper = mount(<Provider store={store}><ConfirmVotesHOC /></Provider>);
-  });
-
-  it('should render ConfirmVotes', () => {
-    expect(wrapper.find('ConfirmVotes').exists()).to.be.equal(true);
-  });
-
-  it('should pass appropriate properties to ConfirmVotes', () => {
-    const confirmVotesProps = wrapper.find('ConfirmVotes').props();
-
-    expect(confirmVotesProps.votedList).to.be.equal(votedList);
-    expect(confirmVotesProps.unvotedList).to.be.equal(unvotedList);
-    expect(confirmVotesProps.account).to.be.equal(ordinaryAccount);
-    expect(confirmVotesProps.activePeer).to.deep.equal({});
-    expect(typeof confirmVotesProps.votePlaced).to.be.equal('function');
   });
 });
