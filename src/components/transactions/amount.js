@@ -3,18 +3,20 @@ import styles from './transactions.css';
 import LiskAmount from '../liskAmount';
 import { TooltipWrapper } from '../timestamp';
 import ClickToSend from '../clickToSend';
+import transactionTypes from '../../constants/transactionTypes';
 
 const Amount = (props) => {
   const params = {};
-  if (props.value.type === 0 &&
+  if (props.value.type === transactionTypes.send &&
     props.value.senderId === props.value.recipientId) {
     params.className = 'grayButton';
   } else if (props.value.senderId !== props.address) {
     params.className = 'inButton';
-  } else if (props.value.type !== 0 || props.value.recipientId !== props.address) {
+  } else if (props.value.type !== transactionTypes.send ||
+      props.value.recipientId !== props.address) {
     params.className = 'outButton';
-    params.tooltipText = props.value.type === 0 ? 'Repeat the transaction' : undefined;
-    params.clickToSendEnabled = props.value.type === 0;
+    params.tooltipText = props.value.type === transactionTypes.send ? 'Repeat the transaction' : undefined;
+    params.clickToSendEnabled = props.value.type === transactionTypes.send;
   }
   return <TooltipWrapper tooltip={params.tooltipText}>
     <ClickToSend rawAmount={props.value.amount}
