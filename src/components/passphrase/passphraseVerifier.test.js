@@ -38,7 +38,7 @@ describe('PassphraseVerifier', () => {
       const wrapper = shallow(<PassphraseVerifier passphrase={props.passphrase}
       updateAnswer={props.updateAnswer}/>);
 
-      const randomIndex = 0.5;
+      const randomIndex = 0.6;
       const expectedValues = {
         passphraseParts: [
           'survey stereo pool fortune oblige slight',

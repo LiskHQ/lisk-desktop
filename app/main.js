@@ -103,7 +103,7 @@ function createWindow() {
         {
           label: 'Report Issue...',
           click() {
-            electron.shell.openExternal('https://github.com/LiskHQ/lisk-nano/issues/new');
+            electron.shell.openExternal('https://lisk.zendesk.com/hc/en-us/requests/new');
           },
         },
         {

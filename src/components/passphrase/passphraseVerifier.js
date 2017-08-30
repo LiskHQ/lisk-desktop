@@ -20,7 +20,7 @@ class PassphraseConfirmator extends React.Component {
 
   hideRandomWord(rand = Math.random()) {
     const words = this.props.passphrase.trim().split(/\s+/);
-    const index = Math.floor(rand * words.length);
+    const index = Math.floor(rand * (words.length - 1));
 
     this.setState({
       passphraseParts: this.props.passphrase.split(` ${words[index]} `),
@@ -40,7 +40,7 @@ class PassphraseConfirmator extends React.Component {
 
   render() {
     return (
-      <div className={`${grid.row} ${grid['start-xs']}`}>
+      <div className={`passphrase-verifier ${grid.row} ${grid['start-xs']}`}>
         <div className={grid['col-xs-12']}>
           <p>
             <span>{this.state.passphraseParts[0]}</span>

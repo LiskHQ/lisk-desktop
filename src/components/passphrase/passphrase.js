@@ -43,8 +43,10 @@ class Passphrase extends React.Component {
     templates.generate = <PassphraseGenerator
       changeHandler={this.changeHandler.bind(this)} />;
 
-    // step 3: Confirmation, Asks for a random word to make sure the user has copied the passphrase
-    templates.show = <Input type='text' multiline label='Passphrase'
+    // step 3: Confirmation, shows the generated passphrase for user to save it
+    templates.show = <Input type='text' multiline autoFocus={true}
+      className='passphrase'
+      label='Save your passphrase in a safe place'
       value={this.state.passphrase} />;
 
     // step 4: Verification, Asks for a random word to make sure the user has copied the passphrase
@@ -55,7 +57,7 @@ class Passphrase extends React.Component {
 
     return (
       <div>
-        <section className={`${styles.templateItem} ${grid['middle-xs']}`}>
+        <section className={`${styles.templateItem} ${grid.row} ${grid['middle-xs']}`}>
           <div className={grid['col-xs-12']}>
             { templates[current] }
           </div>
