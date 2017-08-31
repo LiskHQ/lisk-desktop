@@ -3,28 +3,38 @@ import Input from 'react-toolbox/lib/input';
 import InfoParagraph from '../infoParagraph';
 import ActionBar from '../actionBar';
 import Fees from '../../constants/fees';
+import AuthInputs from '../authInputs';
+import { handleChange, authStatePrefill } from '../../utils/form';
 
 class RegisterDelegate extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      name: '',
-      nameError: '',
+      name: {
+        value: '',
+      },
+      ...authStatePrefill(),
     };
   }
-
-  changeHandler(name, value) {
-    this.setState({ [name]: value });
+  componentDidMount() {
+    const newState = {
+      name: {
+        value: '',
+      },
+      ...authStatePrefill(this.props.account),
+    };
+    this.setState(newState);
   }
 
-  register(username, secondPassphrase) {
+  register() {
     // @todo I'm not handling this part: this.setState({ nameError: error.message });
     this.props.delegateRegistered({
       activePeer: this.props.peers.data,
       account: this.props.account,
-      username,
-      secondPassphrase,
+      username: this.state.name.value,
+      passphrase: this.state.passphrase.value,
+      secondPassphrase: this.state.secondPassphrase.value,
     });
   }
 
@@ -34,17 +44,13 @@ class RegisterDelegate extends React.Component {
         <Input label='Delegate name' required={true}
           autoFocus={true}
           className='username'
-          onChange={this.changeHandler.bind(this, 'name')}
-          error={this.state.nameError}
-          value={this.state.name} />
-          {
-             this.props.account.secondSignature &&
-              <Input label='Second secret'
-                required={true}
-                className='second-secret second-passphrase'
-                onChange={this.changeHandler.bind(this, 'secondSecret')}
-                value={this.state.secondSecret} />
-          }
+          onChange={handleChange.bind(this, this, 'name')}
+          error={this.state.name.error}
+          value={this.state.name.value} />
+        <AuthInputs
+          passphrase={this.state.passphrase}
+          secondPassphrase={this.state.secondPassphrase}
+          onChange={handleChange.bind(this, this)} />
         <hr/>
         <InfoParagraph>
           Becoming a delegate requires registration. You may choose your own
@@ -60,10 +66,13 @@ class RegisterDelegate extends React.Component {
             label: 'Register',
             fee: Fees.registerDelegate,
             className: 'register-button',
-            disabled: !this.state.name ||
+            disabled: (!this.state.name.value ||
               this.props.account.isDelegate ||
-              (this.props.account.secondSignature && !this.state.secondSecret),
-            onClick: this.register.bind(this, this.state.name, this.state.secondSecret),
+              !!this.state.passphrase.error ||
+              !!this.state.secondPassphrase.error ||
+              this.state.secondPassphrase.value === '' ||
+              !this.state.passphrase.value),
+            onClick: this.register.bind(this),
           }} />
       </div>
     );

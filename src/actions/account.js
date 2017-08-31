@@ -64,9 +64,10 @@ export const secondPassphraseRegistered = ({ activePeer, secondPassphrase, accou
 /**
  *
  */
-export const delegateRegistered = ({ activePeer, account, username, secondPassphrase }) =>
+export const delegateRegistered = ({
+  activePeer, account, passphrase, username, secondPassphrase }) =>
   (dispatch) => {
-    registerDelegate(activePeer, username, account.passphrase, secondPassphrase)
+    registerDelegate(activePeer, username, passphrase, secondPassphrase)
       .then((data) => {
         // dispatch to add to pending transaction
         dispatch(transactionAdded({
