@@ -2,8 +2,9 @@ import React from 'react';
 import Input from 'react-toolbox/lib/input';
 import { IconMenu, MenuItem } from 'react-toolbox/lib/menu';
 import { fromRawLsk, toRawLsk } from '../../utils/lsk';
-import SecondPassphraseInput from '../secondPassphraseInput';
+import AuthInputs from '../authInputs';
 import ActionBar from '../actionBar';
+import { authStatePrefill } from '../../utils/form';
 
 import styles from './send.css';
 
@@ -17,9 +18,7 @@ class Send extends React.Component {
       amount: {
         value: '',
       },
-      secondPassphrase: {
-        value: null,
-      },
+      ...authStatePrefill(),
     };
     this.fee = 0.1;
     this.inputValidationRegexps = {
@@ -36,6 +35,7 @@ class Send extends React.Component {
       amount: {
         value: this.props.amount || '',
       },
+      ...authStatePrefill(this.props.account),
     };
     this.setState(newState);
   }
@@ -68,7 +68,7 @@ class Send extends React.Component {
       account: this.props.account,
       recipientId: this.state.recipient.value,
       amount: this.state.amount.value,
-      passphrase: this.props.account.passphrase,
+      passphrase: this.state.passphrase.value,
       secondPassphrase: this.state.secondPassphrase.value,
     });
   }
@@ -95,10 +95,10 @@ class Send extends React.Component {
           error={this.state.amount.error}
           value={this.state.amount.value}
           onChange={this.handleChange.bind(this, 'amount')} />
-        <SecondPassphraseInput
-          error={this.state.secondPassphrase.error}
-          value={this.state.secondPassphrase.value}
-          onChange={this.handleChange.bind(this, 'secondPassphrase')} />
+        <AuthInputs
+          passphrase={this.state.passphrase}
+          secondPassphrase={this.state.secondPassphrase}
+          onChange={this.handleChange.bind(this)} />
         <div className={styles.fee}> Fee: {this.fee} LSK</div>
         <IconMenu icon='more_vert' position='topRight' menuRipple className={`${styles.sendAllMenu} transaction-amount`} >
           <MenuItem onClick={this.setMaxAmount.bind(this)}
@@ -114,8 +114,10 @@ class Send extends React.Component {
             disabled: (
               !!this.state.recipient.error ||
               !!this.state.amount.error ||
+              !!this.state.passphrase.error ||
               !!this.state.secondPassphrase.error ||
               this.state.secondPassphrase.value === '' ||
+              !this.state.passphrase.value ||
               !this.state.recipient.value ||
               !this.state.amount.value),
             onClick: this.send.bind(this),

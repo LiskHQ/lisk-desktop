@@ -3,20 +3,28 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
 import { Provider } from 'react-redux';
-import store from '../../store';
+import configureStore from 'redux-mock-store';
 import Send from './send';
 
+const fakeStore = configureStore();
 
 describe('Send', () => {
   let wrapper;
   let props;
 
   beforeEach(() => {
+    const account = {
+      balance: 1000e8,
+      passphrase: 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit',
+    };
+
+    const store = fakeStore({
+      account,
+    });
+
     props = {
       activePeer: {},
-      account: {
-        balance: 1000e8,
-      },
+      account,
       closeDialog: () => {},
       sent: sinon.spy(),
     };
@@ -78,10 +86,10 @@ describe('Send', () => {
     wrapper.find('.recipient input').simulate('change', { target: { value: '11004588490103196952L' } });
     wrapper.find('.primary-button button').simulate('click');
     expect(props.sent).to.have.been.calledWith({
-      account: { balance: 100000000000 },
+      account: props.account,
       activePeer: {},
       amount: '120.25',
-      passphrase: undefined,
+      passphrase: props.account.passphrase,
       recipientId: '11004588490103196952L',
       secondPassphrase: null,
     });
