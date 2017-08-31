@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'react-toolbox/lib/button';
-import { IconMenu, MenuItem } from 'react-toolbox/lib/menu';
+import { IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import logo from '../../assets/images/LISK-nano.png';
 import styles from './header.css';
@@ -11,6 +11,7 @@ import Send from '../send';
 import PrivateWrapper from '../privateWrapper';
 import SecondPassphraseMenu from '../secondPassphrase';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
+import SaveAccount from '../saveAccount';
 
 const Header = props => (
   <header className={`${grid.row} ${grid['between-xs']} ${styles.wrapper}`} >
@@ -51,6 +52,14 @@ const Header = props => (
           onClick={() => props.setActiveDialog({
             title: 'Verify message',
             childComponent: VerifyMessage,
+          })}
+        />
+        <MenuDivider />
+        <MenuItem caption="Save this account localy"
+          className='save-account'
+          onClick={() => props.setActiveDialog({
+            title: 'Save this account localy',
+            childComponent: SaveAccount,
           })}
         />
       </IconMenu>
