@@ -34,6 +34,7 @@ export const activePeerSet = (data) => {
   return {
     data: Object.assign({
       passphrase: data.passphrase,
+      publicKey: data.publicKey,
       activePeer: Lisk.api(config),
     }),
     type: actionTypes.activePeerSet,
