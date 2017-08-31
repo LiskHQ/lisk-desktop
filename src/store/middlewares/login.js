@@ -12,8 +12,8 @@ const loginMiddleware = store => next => (action) => {
   next(Object.assign({}, action, { data: action.data.activePeer }));
 
   const { passphrase } = action.data;
-  const publicKey = extractPublicKey(passphrase);
-  const address = extractAddress(passphrase);
+  const publicKey = passphrase ? extractPublicKey(passphrase) : action.data.publicKey;
+  const address = extractAddress(publicKey);
   const accountBasics = {
     passphrase,
     publicKey,

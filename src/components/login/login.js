@@ -37,6 +37,7 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
+    this.autologin();
     // pre-fill passphrase and address if exiting in cookies
     this.devPreFill();
   }
@@ -121,6 +122,23 @@ class Login extends React.Component {
       [name]: value,
       ...validator(value),
     });
+  }
+
+  autologin() {
+    const savedAccounts = localStorage.getItem('accounts');
+    if (savedAccounts && !this.props.account.afterLogout) {
+      const account = JSON.parse(savedAccounts)[0];
+      const network = Object.assign({}, networksRaw[account.network]);
+      if (account.network === 2) {
+        network.address = account.address;
+      }
+
+      // set active peer
+      this.props.activePeerSet({
+        publicKey: account.publicKey,
+        network,
+      });
+    }
   }
 
   onLoginSubmission(passphrase) {
