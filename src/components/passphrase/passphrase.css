@@ -1,28 +1,32 @@
 .byte {
-    display: inline-block;
-    text-align: center;
-    font-size: 140%;
-    margin: 5px;
-    font-family: monospace;
-    transition: all ease 300ms;
+  display: inline-block;
+  text-align: center;
+  font-size: 140%;
+  margin: 5px;
+  font-family: monospace;
+  transition: all ease 300ms;
 }
 
 .missing {
-    padding: 0 5px 0;
-    font-weight: bold;
-    color: #0288d1;
+  padding: 0 5px;
+  font-weight: bold;
+  color: #0288d1;
 }
+
 .stable {
-    transform: scale(1);
-    display: inline-block;
-    transition: all ease 300ms;
+  transform: scale(1);
+  display: inline-block;
+  transition: all ease 300ms;
 }
+
 .bouncing {
-    transform: scale(1.2);
+  transform: scale(1.2);
 }
+
 hr {
-    display: none;
+  display: none;
 }
+
 .templateItem {
-    min-height: 130px;
+  min-height: 130px;
 }

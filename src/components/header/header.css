@@ -1,26 +1,31 @@
-.wrapper{
-    margin: 5px -8px 8px 0;
-    padding: 8px;
+.wrapper {
+  margin: 5px -8px 8px 0;
+  padding: 8px;
 }
+
 .logoWrapper {
-    width: 25%;
+  width: 25%;
 }
-.logo{
-    width: 100%;
-    min-width: 108px;
-    max-width: 200px;
-    padding: 8px;
+
+.logo {
+  width: 100%;
+  min-width: 108px;
+  max-width: 200px;
+  padding: 8px;
 }
-.button, .iconButton{
-    padding: 8px;
-    margin: 6px 8px;
-    height: auto;
-    float: right;
+
+.button,
+.iconButton {
+  padding: 8px;
+  margin: 6px 8px;
+  height: auto;
+  float: right;
 }
-.material-icons{
-    font-size: 24px !important;
+
+.material-icons {
+  font-size: 24px !important;
 }
 
 .menu {
-    right: -8px !important;
+  right: -8px !important;
 }

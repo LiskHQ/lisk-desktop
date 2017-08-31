@@ -10,7 +10,7 @@
 
 :global .CircularProgressbar .CircularProgressbar-path {
   stroke: rgb(2, 136, 209);
-  transition: stroke-dashoffset 0.5s ease 0s;
+  transition: stroke-dashoffset 500ms ease 0ms;
 }
 
 :global .CircularProgressbar .CircularProgressbar-trail {

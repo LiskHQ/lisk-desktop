@@ -2,12 +2,13 @@
 @import '../../assets/fonts/roboto-mono/style.css';
 @import '../../assets/fonts/material-design-icons/style.css';
 
-body{
+body {
   margin: 0;
   padding: 0;
   width: 100%;
   background-color: #eee;
 }
+
 .body-wrapper {
   flex: 1 1 80%;
   max-width: 100%;
@@ -16,16 +17,20 @@ body{
   margin: 0 auto;
   font-family: roboto;
 }
-.hasMarginBottom{
+
+.hasMarginBottom {
   margin-bottom: 20px;
 }
-.text-center{
+
+.text-center {
   text-align: center;
 }
-:global .material-icons{
+
+:global .material-icons {
   font-size: 24px !important;
 }
-:global .box{
+
+:global .box {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -33,11 +38,13 @@ body{
   background-color: #fff;
   padding: 16px;
   box-sizing: border-box;
-  &.noPaddingBox{
+
+  &.noPaddingBox {
     padding: 16px 0;
   }
 }
-:global .hasPaddingRow{
+
+:global .hasPaddingRow {
   padding: 0 16px;
 }
 

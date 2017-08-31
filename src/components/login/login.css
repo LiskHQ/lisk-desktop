@@ -3,18 +3,21 @@
   margin-top: 8px;
   padding-bottom: 24px !important;
 }
+
 .newAccount {
   margin-right: 8px;
 }
 
-.network ul{
+.network ul {
   text-align: left;
 }
+
 .error {
   display: inline-block;
-  text-align:left;
+  text-align: left;
   width: 100%;
 }
+
 .field {
   margin-top: 10px;
 }

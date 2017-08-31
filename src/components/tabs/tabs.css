@@ -9,6 +9,7 @@
   overflow: hidden;
   margin-left: -2px;
 }
+
 .navigationContainer .navigation {
   padding-left: 0;
   box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.12);
@@ -26,6 +27,6 @@
 
 .label.active {
   background: white;
-  color: #0288D1;
+  color: #0288d1;
   margin-bottom: -1px;
 }

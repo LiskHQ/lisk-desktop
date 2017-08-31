@@ -1,74 +1,92 @@
-.table{
-    & :global thead th:first-child{
-        display: none !important;
-    }
+.table {
+  & :global thead th:first-child {
+    display: none !important;
+  }
 }
-.searchBox{
-    position: relative;
+
+.searchBox {
+  position: relative;
 }
-.searchIcon{
-    position: absolute;
-    top: 15px;
-    right: 10px;
-    color: rgba(0, 0, 0, .38);
+
+.searchIcon {
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  color: rgba(0, 0, 0, 0.38);
 }
-.field{
-    margin-bottom: 0 !important;
+
+.field {
+  margin-bottom: 0 !important;
 }
-.row{
-    &:hover{
-        background: #fff;
-    }
+
+.row {
+  &:hover {
+    background: #fff;
+  }
 }
+
 .upVoteRow {
-    background-color: rgb(226, 238, 213) !important;
+  background-color: rgb(226, 238, 213) !important;
 }
+
 .downVoteRow {
-    background-color: rgb(255, 228, 220) !important;
+  background-color: rgb(255, 228, 220) !important;
 }
-.votedRow{
-    background-color: #d6f0ff !important;
+
+.votedRow {
+  background-color: #d6f0ff !important;
 }
+
 .pendingRow {
-    background-color: #eaeae9 !important;
+  background-color: #eaeae9 !important;
 }
-.actionBar{
-    margin-top: 9px;
-    display: inline-block;
+
+.actionBar {
+  margin-top: 9px;
+  display: inline-block;
 }
-.votesMenuButton{
-    margin-right: 16px;
-    margin-top: 8px;
-    & :global span{
-        vertical-align: top;
-        line-height: 24px;
-        margin-left: 6px;
-    }
+
+.votesMenuButton {
+  margin-right: 16px;
+  margin-top: 8px;
+
+  & :global span {
+    vertical-align: top;
+    line-height: 24px;
+    margin-left: 6px;
+  }
 }
+
 .voted {
-    color: #7cb342;
+  color: #7cb342;
 }
+
 .unvoted {
-    color: #c62828;
+  color: #c62828;
 }
+
 /* react toolbar overwroght */
-.input{
-    margin-top: -10px;
+.input {
+  margin-top: -10px;
 }
-.menuItem{
-    flex-direction: row-reverse;
-    width: 241px;
+
+.menuItem {
+  flex-direction: row-reverse;
+  width: 241px;
 }
-.icon{
-    text-align: right;
-    width: auto;
+
+.icon {
+  text-align: right;
+  width: auto;
 }
-.menuInner{
-    height: 306px;
-    overflow-y: auto;
+
+.menuInner {
+  height: 306px;
+  overflow-y: auto;
 }
-.button{
-    width: auto;
-    margin-top: 18px;
-    margin-right: 16px;
+
+.button {
+  width: auto;
+  margin-top: 18px;
+  margin-right: 16px;
 }

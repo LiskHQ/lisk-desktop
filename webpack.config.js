@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { NamedModulesPlugin } = require('webpack');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const reactToolboxVariables = {
@@ -36,6 +37,19 @@ module.exports = (env) => {
       historyApiFallback: true,
     },
     plugins: [
+      new StyleLintPlugin({
+        context: `${path.resolve(__dirname, 'src')}/`,
+        files: '**/*.css',
+        config: {
+          extends: 'stylelint-config-standard',
+          rules: {
+            'selector-pseudo-class-no-unknown': null,
+            'unit-whitelist': ['px', 'deg', '%', 'em', 'ms'],
+            'length-zero-no-unit': null,
+          },
+          ignoreFiles: './node_modules/**/*.css',
+        },
+      }),
       new webpack.DefinePlugin({
         PRODUCTION: env.prod,
         TEST: env.test,
@@ -117,16 +131,14 @@ module.exports = (env) => {
                   sourceComments: !env.prod,
                   /* eslint-disable global-require */
                   plugins: [
+                    require('postcss-partial-import')({ /* options */ }),
                     require('postcss-cssnext')({
                       features: {
                         customProperties: {
                           variables: reactToolboxVariables,
                         },
                       },
-                      plugins: [require('stylelint')({ /* your options */ })],
                     }),
-                    require('postcss-partial-import')({ /* options */ }),
-                    require('postcss-reporter')({ clearMessages: true }),
                     require('postcss-for')({ /* options */ }),
                   ],
                   /* eslint-enable */

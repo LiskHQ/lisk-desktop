@@ -2,25 +2,25 @@
   color: white;
   left: initial;
 }
-
+/* stylelint-disable */
 @for $i from 0 to 10 {
   @keyframes move-$i {
     from {
-      bottom: -50px; 
+      bottom: -50px;
     }
     to {
-      bottom: calc($(i) * 50px + 10px); 
+      bottom: calc($(i) * 50px + 10px);
     }
   }
-  .index-$i { 
-    animation: move-$i 0.5s ease-in;
-    bottom: calc($(i) * 50px + 10px); 
+  .index-$i {
+    animation: move-$i 500ms ease-in;
+    bottom: calc($(i) * 50px + 10px);
   }
 }
-
+/* stylelint-enable */
 
 .error {
-  background-color: #c62828;
+  background-color: #c62b28;
 }
 
 .success {

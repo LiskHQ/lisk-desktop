@@ -1,39 +1,48 @@
-:root{
-    --in: #73C8A9;
-    --out: #F45D4C;
-    --btn: rgb(2,136,209);
+:root {
+  --in: #73c8a9;
+  --out: #f45d4c;
+  --btn: rgb(2, 136, 209);
 }
 
-.grayButton, .inButton, .outButton, .smallButton {
-    background-color: #eee;
-    border-radius: 3px;
-    padding: 6px;
-    text-transform: uppercase;
-    color: #000;
-    display: block;
+.grayButton,
+.inButton,
+.outButton,
+.smallButton {
+  background-color: #eee;
+  border-radius: 3px;
+  padding: 6px;
+  text-transform: uppercase;
+  color: #000;
+  display: block;
 }
-.smallButton{
-    display: inline-block;
+
+.smallButton {
+  display: inline-block;
 }
+
 .inButton {
-    background: color(var(--in) alpha(45%))!important;
+  background: color(var(--in) alpha(45%)) !important;
 }
-.empty{
-    color: #777;
-    text-align: right;
+
+.empty {
+  color: #777;
+  text-align: right;
 }
+
 .outButton {
-    background: color(var(--out) alpha(45%))!important;
+  background: color(var(--out) alpha(45%)) !important;
 }
+
 .in {
-    color: var(--in) !important;
+  color: var(--in) !important;
 }
 
 .out {
-    color: var(--out) !important;
+  color: var(--out) !important;
 }
-.centerText{
-    text-align: center;
+
+.centerText {
+  text-align: center;
 }
 
 @media screen and (max-width: 48em) {
