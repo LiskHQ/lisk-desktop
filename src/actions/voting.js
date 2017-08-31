@@ -21,12 +21,13 @@ export const clearVoteLists = () => ({
 /**
  *
  */
-export const votePlaced = ({ activePeer, account, votedList, unvotedList, secondSecret }) =>
+export const votePlaced = ({
+  activePeer, passphrase, account, votedList, unvotedList, secondSecret }) =>
   (dispatch) => {
     // Make the Api call
     vote(
       activePeer,
-      account.passphrase,
+      passphrase,
       account.publicKey,
       votedList,
       unvotedList,
