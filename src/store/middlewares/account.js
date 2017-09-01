@@ -7,14 +7,14 @@ import { fetchAndUpdateForgedBlocks } from '../../actions/forging';
 import { getDelegate } from '../../utils/api/delegate';
 import transactionTypes from '../../constants/transactionTypes';
 
-const updateAccountData = next => (store) => { // eslint-disable-line
+const updateAccountData = (store) => { // eslint-disable-line
   const { peers, account } = store.getState();
 
   getAccount(peers.data, account.address).then((result) => {
     if (result.balance !== account.balance) {
       const maxBlockSize = 25;
       transactions(peers.data, account.address, maxBlockSize)
-        .then(response => next(transactionsUpdated({
+        .then(response => store.dispatch(transactionsUpdated({
           confirmed: response.transactions,
           count: parseInt(response.count, 10),
         })));
@@ -27,13 +27,13 @@ const updateAccountData = next => (store) => { // eslint-disable-line
         }));
       }
     }
-    next(accountUpdated(result));
+    store.dispatch(accountUpdated(result));
   });
 
   return getAccountStatus(peers.data).then(() => {
-    next(activePeerUpdate({ online: true }));
+    store.dispatch(activePeerUpdate({ online: true }));
   }).catch((res) => {
-    next(activePeerUpdate({ online: false, code: res.error.code }));
+    store.dispatch(activePeerUpdate({ online: false, code: res.error.code }));
   });
 };
 
@@ -53,10 +53,9 @@ const delegateRegistration = (store, action) => {
 
 const accountMiddleware = store => next => (action) => {
   next(action);
-  const update = updateAccountData(next);
   switch (action.type) {
     case actionTypes.metronomeBeat:
-      update(store);
+      updateAccountData(store);
       break;
     case actionTypes.transactionsUpdated:
       delegateRegistration(store, action);
