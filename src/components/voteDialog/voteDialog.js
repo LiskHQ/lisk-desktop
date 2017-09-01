@@ -14,16 +14,7 @@ export default class VoteDialog extends React.Component {
   }
 
   componentDidMount() {
-    const newState = {
-      recipient: {
-        value: this.props.recipient || '',
-      },
-      amount: {
-        value: this.props.amount || '',
-      },
-      ...authStatePrefill(this.props.account),
-    };
-    this.setState(newState);
+    this.setState(authStatePrefill(this.props.account));
   }
 
   confirm() {
