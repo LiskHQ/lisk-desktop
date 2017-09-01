@@ -22,6 +22,7 @@ class SecondPassphraseInput extends React.Component {
   render() {
     return (this.props.hasSecondPassphrase ?
       <Input label='Second Passphrase' required={true}
+        type='password'
         className='second-passphrase'
         error={this.props.error}
         value={this.props.value}
