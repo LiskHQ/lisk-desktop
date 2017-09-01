@@ -32,6 +32,10 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     waitForElemAndSendKeys(`${selectorClass} input, ${selectorClass} textarea`, secondPassphrase, callback);
   });
 
+  When('I wait {seconds} seconds', (seconds, callback) => {
+    browser.sleep(seconds * 1000).then(callback);
+  });
+
 
   Then('I should see "{value}" in "{fieldName}" field', (value, fieldName, callback) => {
     const elem = element(by.css(`.${fieldName.replace(/ /g, '-')} input, .${fieldName.replace(/ /g, '-')} textarea`));

@@ -6,7 +6,7 @@ const Address = (props) => {
   const title = props.isDelegate ? 'Delegate' : 'Address';
   const content = props.isDelegate ?
     (<div>
-      <p className="inner primary">
+      <p className="inner primary delegate-name">
         {props.delegate.username}
       </p>
       <p className="inner secondary address">
