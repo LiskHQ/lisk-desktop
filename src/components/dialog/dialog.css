@@ -1,8 +1,9 @@
 .dialog {
   & .x-button {
     right: -20px;
+
     & span {
-      color: rgba(255,255,255,0.87);
+      color: rgba(255, 255, 255, 0.87);
     }
   }
 
@@ -15,11 +16,11 @@
   & header {
     margin: -24px;
     margin-bottom: 24px;
-    border-radius: 2px 2px 0 0; 
-    color: rgba(255,255,255,0.87);
+    border-radius: 2px 2px 0 0;
+    color: rgba(255, 255, 255, 0.87);
 
     & h1 {
-      color: rgba(255,255,255,0.87);
+      color: rgba(255, 255, 255, 0.87);
       font-weight: normal;
     }
   }
@@ -27,13 +28,13 @@
   & hr {
     border-bottom-width: 0;
     margin: 16px -24px;
-    border-color: rgba(0,0,0,0.12);
+    border-color: rgba(0, 0, 0, 0.12);
   }
 }
 
 @media screen and (min-width: 960px) {
   .fullscreen {
-    width: 75vw;
+    width: 75vw; /* stylelint-disable-line */
   }
 }
 

@@ -4,29 +4,35 @@
   display: inline-block;
 }
 
-.bounce1, .bounce2, .bounce3 {
+.bounce1,
+.bounce2,
+.bounce3 {
   width: 8px;
   height: 8px;
   background-color: #aaa;
-
   border-radius: 100%;
   display: inline-block;
-  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  animation: sk-bouncedelay 1400ms infinite ease-in-out both;
 }
 
 .bounce1 {
-  animation-delay: -0.32s;
+  animation-delay: -320ms;
 }
+
 .bounce2 {
-  animation-delay: -0.16s;
+  animation-delay: -160ms;
 }
 
 @keyframes sk-bouncedelay {
-  0%, 80%, 100% {
+  0%,
+  80%,
+  100% {
     -webkit-transform: scale(0.5);
     transform: scale(0.5);
-  } 40% {
-    -webkit-transform: scale(1.0);
-    transform: scale(1.0);
+  }
+
+  40% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
   }
 }

@@ -2,7 +2,7 @@
   position: fixed;
   top: -11px;
   right: 0;
-  width: 100vw;
+  width: 100vw; /* stylelint-disable-line */
   z-index: 201;
 }
 

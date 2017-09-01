@@ -1,21 +1,25 @@
-.hidden{
-    display: none !important;
+.hidden {
+  display: none !important;
 }
-.searchContainer{
-    position: relative;
+
+.searchContainer {
+  position: relative;
 }
-.searchResult{
-    position: absolute;
-    left: 0;
-    top: 52px;
-    width: 300px !important;
-    max-height: 200px;
-    overflow: auto !important;
-    z-index: 9;
+
+.searchResult {
+  position: absolute;
+  left: 0;
+  top: 52px;
+  width: 300px !important;
+  max-height: 200px;
+  overflow: auto !important;
+  z-index: 9;
 }
-.selectedRow{
-    background: #EEEEEE;
+
+.selectedRow {
+  background: #eee;
 }
-.autoCompleteTile{
-    margin-bottom: 5px;
+
+.autoCompleteTile {
+  margin-bottom: 5px;
 }
