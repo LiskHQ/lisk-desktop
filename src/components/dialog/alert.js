@@ -9,7 +9,7 @@ const Alert = props => (
     <br />
     <section className={`${grid.row} ${grid['between-xs']}`}>
       <span />
-      <Button label='Ok' onClick={props.closeDialog}/>
+      <Button label='Ok' onClick={props.closeDialog} className='ok-button'/>
     </section>
   </div>
 );

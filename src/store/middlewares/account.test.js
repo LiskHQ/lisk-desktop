@@ -2,13 +2,22 @@ import { expect } from 'chai';
 import { spy, stub } from 'sinon';
 import middleware from './account';
 import * as accountApi from '../../utils/api/account';
+import * as delegateApi from '../../utils/api/delegate';
 import actionTypes from '../../constants/actions';
-// import * as forgingActions from '../../actions/forging';
+import transactionTypes from '../../constants/transactionTypes';
 
 describe('Account middleware', () => {
   let store;
   let next;
   let state;
+  const transactionsUpdatedAction = {
+    type: actionTypes.transactionsUpdated,
+    data: {
+      confirmed: [{
+        type: transactionTypes.registerDelegate,
+      }],
+    },
+  };
 
   beforeEach(() => {
     store = stub();
@@ -21,11 +30,11 @@ describe('Account middleware', () => {
         balance: 0,
       },
     };
+    store.getState = () => (state);
     next = spy();
   });
 
   it('should passes the action to next middleware', () => {
-    store.getState = () => (state);
     const expectedAction = {
       type: 'TEST_ACTION',
     };
@@ -35,7 +44,6 @@ describe('Account middleware', () => {
   });
 
   it(`should call account API methods on ${actionTypes.metronomeBeat} action`, () => {
-    store.getState = () => (state);
     const stubGetAccount = stub(accountApi, 'getAccount').resolves({ balance: 0 });
     const stubGetAccountStatus = stub(accountApi, 'getAccountStatus').resolves(true);
 
@@ -49,7 +57,6 @@ describe('Account middleware', () => {
   });
 
   it(`should call transactions API methods on ${actionTypes.metronomeBeat} action if account.balance changes`, () => {
-    store.getState = () => (state);
     const stubGetAccount = stub(accountApi, 'getAccount').resolves({ balance: 10e8 });
     const stubTransactions = stub(accountApi, 'transactions').resolves(true);
 
@@ -77,6 +84,25 @@ describe('Account middleware', () => {
 
     stubGetAccount.restore();
     stubGetAccountStatus.restore();
+  });
+
+  it(`should fetch delegate info on ${actionTypes.transactionsUpdated} action if action.data.confirmed contains delegateRegistration transactions`, () => {
+    const delegateApiMock = stub(delegateApi, 'getDelegate').returnsPromise().resolves({ success: true, delegate: {} });
+
+    middleware(store)(next)(transactionsUpdatedAction);
+    expect(store.dispatch).to.have.been.calledWith();
+
+    delegateApiMock.restore();
+  });
+
+  it(`should not fetch delegate info on ${actionTypes.transactionsUpdated} action if action.data.confirmed does not contain delegateRegistration transactions`, () => {
+    const delegateApiMock = stub(delegateApi, 'getDelegate').returnsPromise().resolves({ success: true, delegate: {} });
+    transactionsUpdatedAction.data.confirmed[0].type = transactionTypes.send;
+
+    middleware(store)(next)(transactionsUpdatedAction);
+    expect(store.dispatch).to.not.have.been.calledWith();
+
+    delegateApiMock.restore();
   });
 });
 
