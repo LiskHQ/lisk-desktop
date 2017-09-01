@@ -1,9 +1,11 @@
+/* eslint-disable */
 const path = require('path');
 const webpack = require('webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { NamedModulesPlugin } = require('webpack');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+/* eslint-enable */
 
 const reactToolboxVariables = {
   'color-primary': '#0288D1',
@@ -129,8 +131,8 @@ module.exports = (env) => {
                 options: {
                   sourceMap: !env.prod,
                   sourceComments: !env.prod,
-                  /* eslint-disable global-require */
                   plugins: [
+                    // eslint-disable-next-line import/no-extraneous-dependencies
                     require('postcss-partial-import')({ /* options */ }),
                     require('postcss-cssnext')({
                       features: {
@@ -139,9 +141,9 @@ module.exports = (env) => {
                         },
                       },
                     }),
+                    // eslint-disable-next-line import/no-extraneous-dependencies
                     require('postcss-for')({ /* options */ }),
                   ],
-                  /* eslint-enable */
                 },
               },
             ],
