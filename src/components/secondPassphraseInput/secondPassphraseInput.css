@@ -1,0 +1,18 @@
+.wrapper {
+  position: relative;
+}
+
+.checkbox {
+  visibility: hidden;
+  position: hidden;
+}
+
+.label {
+  position: absolute;
+  right: 0;
+  bottom: 50%;
+  transform: translateY(50%);
+  line-height: 24px;
+  height: 24px;
+  cursor: pointer;
+}
