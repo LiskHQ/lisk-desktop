@@ -68,15 +68,17 @@ class Login extends React.Component {
       return reg.test(url) ? url : `http://${url}`;
     };
 
-    const isDefaultPort = url => (url.indexOf(':80') || url.indexOf(':443')) !== -1;
+    const errorMessage = 'URL is invalid';
+
+    const isValidLocalhost = url => url.hostname === 'localhost' && url.port.length > 1;
+    const isValidRemote = url => /(([a-z\d]([a-z\d-]*[a-z\d])*)\.)+[a-z]{2,}|((\d{1,3}\.){3}\d{1,3})/.test(url.hostname);
 
     let addressValidity = '';
     try {
       const url = new URL(addHttp(value));
-      const port = isDefaultPort(value) || url.port !== '';
-      addressValidity = url && port ? '' : 'URL is invalid';
+      addressValidity = url && (isValidRemote(url) || isValidLocalhost(url)) ? '' : errorMessage;
     } catch (e) {
-      addressValidity = 'URL is invalid';
+      addressValidity = errorMessage;
     }
 
     const data = { address: value, addressValidity };
