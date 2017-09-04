@@ -42,14 +42,23 @@ class Login extends React.Component {
 
   componentDidUpdate() {
     if (this.props.account && this.props.account.address) {
-      const search = this.props.history.location.search;
-      this.props.history.replace(
-        search.indexOf('?referrer') === 0 ? search.replace('?referrer=', '') : '/main/transactions');
+      this.props.history.replace(this.getReferrerRoute());
       if (this.state.address) {
         localStorage.setItem('address', this.state.address);
       }
       localStorage.setItem('network', this.state.network);
     }
+  }
+
+  getReferrerRoute() {
+    const { isDelegate } = this.props.account;
+    const { search } = this.props.history.location;
+    const transactionRoute = '/main/transactions';
+    const referrerRoute = search.indexOf('?referrer') === 0 ? search.replace('?referrer=', '') : transactionRoute;
+    if (!isDelegate && referrerRoute === '/main/forging') {
+      return transactionRoute;
+    }
+    return referrerRoute;
   }
 
   // eslint-disable-next-line class-methods-use-this

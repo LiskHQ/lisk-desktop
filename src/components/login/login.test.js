@@ -83,6 +83,19 @@ describe('Login', () => {
       expect(props.history.replace).to.have.been.calledWith('/main/transactions');
     });
 
+    it('calls this.props.history.replace with referrer address', () => {
+      props.history.location.search = '?referrer=/main/voting';
+      wrapper = mount(<Login {...props}/>);
+      expect(props.history.replace).to.have.been.calledWith('/main/voting');
+    });
+
+    it('call this.props.history.replace with "/main/transaction" if referrer address is "/main/forging" and account.isDelegate === false', () => {
+      props.history.location.search = '?referrer=/main/forging';
+      props.account.isDelegate = false;
+      wrapper = mount(<Login {...props} />);
+      expect(props.history.replace).to.have.been.calledWith('/main/transactions');
+    });
+
     it('calls localStorage.setItem(\'address\', address) if this.state.address', () => {
       const spyFn = spy(localStorage, 'setItem');
       wrapper = mount(<Login {...props} />);
