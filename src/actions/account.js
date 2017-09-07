@@ -98,8 +98,9 @@ export const sent = ({ activePeer, account, recipientId, amount, passphrase, sec
           senderPublicKey: account.publicKey,
           senderId: account.address,
           recipientId,
-          amount,
+          amount: toRawLsk(amount),
           fee: Fees.send,
+          type: 0,
         }));
       })
       .catch((error) => {
