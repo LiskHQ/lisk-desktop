@@ -3,8 +3,6 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import sinon from 'sinon';
-import { I18nextProvider } from 'react-i18next';
-import i18n from '../../i18n'; // initialized i18next instance
 import * as accountActions from '../../actions/account';
 import * as dialogActions from '../../actions/dialog';
 import Header from './header';
@@ -16,11 +14,7 @@ describe('HeaderHOC', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<Provider store={store}>
-      <I18nextProvider i18n={ i18n }>
-        <HeaderHOC />
-      </I18nextProvider>
-    </Provider>);
+    wrapper = mount(<Provider store={store}><HeaderHOC /></Provider>);
   });
 
   it('should render Header', () => {
