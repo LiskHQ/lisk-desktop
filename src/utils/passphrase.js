@@ -116,3 +116,16 @@ export const levenshteinDistance = (word1, word2) => {
  */
 export const inDictionary = word =>
   mnemonic.Words.ENGLISH.indexOf(word) !== -1;
+
+/**
+ * Find the similar word based on invalid word
+ * @param {string} invalidWord
+ * @returns {string} Similar word
+ */
+export const findSimilarWord = (invalidWord) => {
+  const distances = mnemonic.Words.ENGLISH
+    .map((validWord => levenshteinDistance(invalidWord, validWord)));
+  const minDistance = Math.min(...distances);
+  const index = distances.indexOf(minDistance);
+  return mnemonic.Words.ENGLISH[index];
+};

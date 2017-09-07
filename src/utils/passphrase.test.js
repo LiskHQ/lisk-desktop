@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { generateSeed, generatePassphrase, isValidPassphrase, levenshteinDistance, inDictionary } from './passphrase';
+import { generateSeed, generatePassphrase, isValidPassphrase, levenshteinDistance, inDictionary, findSimilarWord } from './passphrase';
 
 if (global._bitcore) delete global._bitcore;
 const mnemonic = require('bitcore-mnemonic');
@@ -148,6 +148,16 @@ describe('Passphrase', () => {
 
     it('should return false if word not in the dictionary', () => {
       expect(inDictionary('asdfasdf')).to.be.equal(false);
+    });
+  });
+
+  describe('findSimilarWord', () => {
+    it('should return simmilar word based on Levenshtein distance algorithm', () => {
+      expect(findSimilarWord('applu')).to.be.equal('apple');
+    });
+
+    it('should return exactly the same word if they exist in the dictionary', () => {
+      expect(findSimilarWord('zoo')).to.be.equal('zoo');
     });
   });
 });
