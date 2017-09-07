@@ -28,7 +28,11 @@ const Tabs = props => (
     onChange={navigate.bind(this, props.history)}
     className={`${styles.tabs} main-tabs`}>
     {getTabs(props.isDelegate).map((tab, index) =>
-      <Tab key={index} label={tab} className={styles.tab} disabled={isCurrent(props.history, index)} />)}
+      <Tab
+        key={index}
+        label={tab}
+        className={styles.tab}
+        disabled={isCurrent(props.history, index)} />)}
   </ToolboxTabs>
 );
 
