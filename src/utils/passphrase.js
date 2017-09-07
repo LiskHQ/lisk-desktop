@@ -87,3 +87,32 @@ export const isValidPassphrase = (passphrase) => {
   const normalizedValue = passphrase.replace(/ +/g, ' ').trim().toLowerCase();
   return normalizedValue.split(' ').length >= 12 && mnemonic.isValid(normalizedValue);
 };
+
+/**
+ * Calculate Levenshtain distance betwen two words
+ * https://en.wikipedia.org/wiki/Levenshtein_distance
+ *
+ * @param {string} word1
+ * @param {string} word2
+ * @returns {number} The distance between two words
+ */
+export const levenshteinDistance = (word1, word2) => {
+  const calculateDistance = (i, j) => {
+    if (Math.min(i, j) === 0) return Math.max(i, j);
+
+    return Math.min(
+      calculateDistance(i, j - 1) + 1,
+      calculateDistance(i - 1, j) + 1,
+      calculateDistance(i - 1, j - 1) + (word1[i] !== word2[j] ? 1 : 0),
+    );
+  };
+
+  return calculateDistance(word1.length, word2.length);
+};
+
+/**
+ * @param {string} word
+ * @returns {bool}
+ */
+export const inDictionary = word =>
+  mnemonic.Words.ENGLISH.indexOf(word) !== -1;
