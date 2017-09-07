@@ -2,19 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { I18nextProvider } from 'react-i18next';
 import App from './components/app';
 import store from './store';
-import i18n from './i18n'; // initialized i18next instance
 
 const rootElement = document.getElementById('app');
 
 const renderWithRouter = Component =>
   <Provider store={store}>
     <Router>
-      <I18nextProvider i18n={ i18n }>
-        <Component />
-      </I18nextProvider>
+      <Component />
     </Router>
   </Provider>;
 

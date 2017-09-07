@@ -54,13 +54,13 @@ const Header = props => (
           })}
         />
       </IconMenu>
-      <Button className={`${styles.button} logout-button`} raised onClick={props.logOut}>{props.t('logout')}</Button>
+      <Button className={`${styles.button} logout-button`} raised onClick={props.logOut}>logout</Button>
       <Button className={`${styles.button} send-button ${offlineStyle.disableWhenOffline}`}
         raised primary
         onClick={() => props.setActiveDialog({
-          title: props.t('send'),
+          title: 'Send',
           childComponent: Send,
-        })}>{props.t('send')}</Button>
+        })}>Send</Button>
     </PrivateWrapper>
   </header>
 );

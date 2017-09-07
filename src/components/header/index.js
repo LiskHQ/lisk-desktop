@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
 import { dialogDisplayed } from '../../actions/dialog';
 import { accountLoggedOut } from '../../actions/account';
 import Header from './header';
@@ -12,7 +11,8 @@ const mapDispatchToProps = dispatch => ({
   setActiveDialog: data => dispatch(dialogDisplayed(data)),
   logOut: () => dispatch(accountLoggedOut()),
 });
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(translate()(Header));
+)(Header);
