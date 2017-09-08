@@ -4,20 +4,55 @@ import Navigation from 'react-toolbox/lib/navigation';
 import AppBar from 'react-toolbox/lib/app_bar';
 import { IconButton } from 'react-toolbox/lib/button';
 import styles from './dialog.css';
-
+import dialogs from './dialogs';
 
 class DialogElement extends Component {
   constructor() {
     super();
     this.state = {};
+    this.path = {
+      name: '/',
+      list: [],
+    };
   }
 
-  closeDialog() {
+  componentDidMount() {
+    this.checkForDialog(this.props.history.location.pathname);
+  }
+
+  componentDidUpdate() {
+    if (this.path.name !== this.props.history.location.pathname) {
+      this.path.name = this.props.history.location.pathname;
+      this.checkForDialog(this.props.history.location.pathname);
+    }
+  }
+
+  checkForDialog(path) {
+    this.path.list = path.split('/');
+    if (this.path.list.length === 4 && Object.keys(dialogs).includes(this.path.list[3])) {
+      this.routeWithDialog(dialogs[this.path.list[3]]);
+    } else {
+      this.routeWithOutDialog();
+    }
+  }
+
+  routeWithDialog(dialog) {
+    this.props.dialogDisplayed({
+      title: dialog.title,
+      childComponent: dialog.component,
+    });
+  }
+
+  routeWithOutDialog() {
     setTimeout(() => {
-      this.props.onCancelClick();
+      this.props.dialogHidden();
       this.setState({ hidden: false });
     }, 500);
     this.setState({ hidden: true });
+  }
+
+  closeDialog() {
+    this.props.history.push(`/${this.path.list[1]}/${this.path.list[2]}`);
   }
 
   render() {
