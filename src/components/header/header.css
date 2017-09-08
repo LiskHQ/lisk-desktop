@@ -29,3 +29,10 @@
 .menu {
   right: -8px !important;
 }
+
+.menuItem {
+  text-decoration: none;
+  text-align: left;
+  width: 100%;
+  color: rgba(0, 0, 0, 0.87);
+}

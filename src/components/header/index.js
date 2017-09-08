@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { dialogDisplayed } from '../../actions/dialog';
 import { accountLoggedOut } from '../../actions/account';
 import Header from './header';
@@ -12,7 +13,7 @@ const mapDispatchToProps = dispatch => ({
   logOut: () => dispatch(accountLoggedOut()),
 });
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Header);
+)(Header));

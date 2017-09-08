@@ -1,14 +1,15 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import buttonStyle from 'react-toolbox/lib/button/theme.css';
 import Input from 'react-toolbox/lib/input';
 import Dropdown from 'react-toolbox/lib/dropdown';
 import Button from 'react-toolbox/lib/button';
 import Checkbox from 'react-toolbox/lib/checkbox';
 import { isValidPassphrase } from '../../utils/passphrase';
 import networksRaw from './networks';
-import Passphrase from '../passphrase';
 import styles from './login.css';
 import env from '../../constants/env';
+import RelativeLink from '../relativeLink';
 
 /**
  * The container component containing login
@@ -48,6 +49,19 @@ class Login extends React.Component {
       }
       localStorage.setItem('network', this.state.network);
     }
+  }
+
+  onLoginSubmission(passphrase) {
+    const network = Object.assign({}, networksRaw[this.state.network]);
+    if (this.state.network === 2) {
+      network.address = this.state.address;
+    }
+
+    // set active peer
+    this.props.activePeerSet({
+      passphrase,
+      network,
+    });
   }
 
   getReferrerRoute() {
@@ -101,19 +115,6 @@ class Login extends React.Component {
     this.setState({
       [name]: value,
       ...validator(value),
-    });
-  }
-
-  onLoginSubmission(passphrase) {
-    const network = Object.assign({}, networksRaw[this.state.network]);
-    if (this.state.network === 2) {
-      network.address = this.state.address;
-    }
-
-    // set active peer
-    this.props.activePeerSet({
-      passphrase,
-      network,
     });
   }
 
@@ -178,15 +179,8 @@ class Login extends React.Component {
               />
               <footer className={ `${grid.row} ${grid['center-xs']}` }>
                 <div className={grid['col-xs-12']}>
-                  <Button label='NEW ACCOUNT' flat primary
-                    className={`${styles.newAccount} new-account-button`}
-                    onClick={() => this.props.setActiveDialog({
-                      title: 'New Account',
-                      childComponent: Passphrase,
-                      childComponentProps: {
-                        onPassGenerated: this.onLoginSubmission.bind(this),
-                      },
-                    })} />
+                  <RelativeLink to='login/new-account'
+                    className={`${styles.newAccount} ${styles.button} ${buttonStyle.button} ${buttonStyle.primary} ${buttonStyle.flat} new-account-button`}>NEW ACCOUNT</RelativeLink>
                   <Button label='LOGIN' primary raised
                     onClick={this.onLoginSubmission.bind(this, this.state.passphrase)}
                     className='login-button'

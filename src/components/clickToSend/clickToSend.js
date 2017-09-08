@@ -1,22 +1,20 @@
 import React from 'react';
 import styles from './clickToSend.css';
-import Send from '../send';
+import RelativeLink from '../relativeLink';
 import { fromRawLsk } from '../../utils/lsk';
 
-const ClickToSend = props => (
-  props.disabled ?
-    props.children :
-    <span className={`${styles.clickable} ${props.className}`}
-      onClick={() => (props.setActiveDialog({
-        title: 'Send',
-        childComponent: Send,
-        childComponentProps: {
-          amount: props.rawAmount ? fromRawLsk(props.rawAmount) : props.amount,
-          recipient: props.recipient,
-        },
-      }))}>
-      {props.children}
-    </span>
-);
+const ClickToSend = ({ rawAmount, amount, className,
+  recipient, children, disabled }) => {
+  const normalizedAmount = rawAmount ? fromRawLsk(rawAmount) : amount;
+
+  return (
+    disabled ?
+      children :
+      <RelativeLink className={`${styles.clickable} ${className}`}
+        to={`send?amount=${normalizedAmount}&&recipient=${recipient}`}>
+        {children}
+      </RelativeLink>
+  );
+};
 
 export default ClickToSend;
