@@ -2,6 +2,7 @@ import Send from '../send';
 import RegisterDelegate from '../registerDelegate';
 import SignMessage from '../signMessage';
 import VerifyMessage from '../verifyMessage';
+import SecondPassphrase from '../secondPassphrase';
 
 export default {
   send: {
@@ -19,5 +20,9 @@ export default {
   'verify-message': {
     title: 'Verify message',
     component: VerifyMessage,
+  },
+  'register-second-passphrase': {
+    title: 'Register Second Passphrase',
+    component: SecondPassphrase,
   },
 };

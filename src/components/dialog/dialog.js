@@ -17,29 +17,39 @@ class DialogElement extends Component {
   }
 
   componentDidMount() {
-    this.checkForDialog(this.props.history.location.pathname);
+    this.checkForDialog(this.props.history.location);
   }
 
   componentDidUpdate() {
     if (this.path.name !== this.props.history.location.pathname) {
       this.path.name = this.props.history.location.pathname;
-      this.checkForDialog(this.props.history.location.pathname);
+      this.checkForDialog(this.props.history.location);
     }
   }
 
-  checkForDialog(path) {
-    this.path.list = path.split('/');
+  checkForDialog(location) {
+    const parseParams = search => search.replace(/^\?/, '').split('&&').reduce((acc, param) => {
+      const keyValue = param.split('=');
+      if (keyValue[0] !== '' && keyValue[1] !== 'undefined') {
+        acc[keyValue[0]] = keyValue[1];
+      }
+      return acc;
+    }, {});
+
+    this.path.list = location.pathname.split('/');
+
     if (this.path.list.length === 4 && Object.keys(dialogs).includes(this.path.list[3])) {
-      this.routeWithDialog(dialogs[this.path.list[3]]);
+      this.routeWithDialog(dialogs[this.path.list[3]], parseParams(location.search));
     } else {
       this.routeWithOutDialog();
     }
   }
 
-  routeWithDialog(dialog) {
+  routeWithDialog(dialog, childComponentProps) {
     this.props.dialogDisplayed({
       title: dialog.title,
       childComponent: dialog.component,
+      childComponentProps,
     });
   }
 
