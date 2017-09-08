@@ -8,31 +8,32 @@ const tabs = [
   'Forging',
 ];
 
-const getTabs = isDelegate => (tabs.filter(t => t !== 'Forging' || isDelegate));
+const getTabs = isDelegate => tabs.filter(t => t !== 'Forging' || isDelegate);
 
-const getIndex = history => (
+const getIndex = history =>
   tabs.map(t => t.toLowerCase())
-    .indexOf(history.location.pathname.replace('/main/', '')));
+    .indexOf(history.location.pathname.split('/')[2]);
 
-const isCurrent = (history, index) => history.location.pathname.replace('/main/', '') === tabs[index].toLowerCase();
+const isCurrent = (history, index) =>
+  history.location.pathname.indexOf(tabs[index].toLowerCase()) === 6; // after: /main/
 
 const navigate = (history, index) => {
   if (!isCurrent(history, index)) {
-    history.push(`${tabs[index].toLowerCase()}`);
+    history.push(`/main/${tabs[index].toLowerCase()}`);
   }
 };
 
-const Tabs = props => (
-  <ToolboxTabs index={getIndex(props.history)}
+const Tabs = ({ history, isDelegate }) => (
+  <ToolboxTabs index={getIndex(history)}
     theme={styles}
-    onChange={navigate.bind(this, props.history)}
+    onChange={navigate.bind(null, history)}
     className={`${styles.tabs} main-tabs`}>
-    {getTabs(props.isDelegate).map((tab, index) =>
+    {getTabs(isDelegate).map((tab, index) =>
       <Tab
         key={index}
         label={tab}
         className={styles.tab}
-        disabled={isCurrent(props.history, index)} />)}
+        disabled={isCurrent(history, index)} />)}
   </ToolboxTabs>
 );
 
