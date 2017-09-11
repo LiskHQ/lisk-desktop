@@ -103,17 +103,15 @@ class Login extends React.Component {
     }
 
     const invalidWord = mnemonic.find(word => !inDictionary(word));
-    if (invalidWord && (invalidWord.length >= 2 && invalidWord.length <= 8)) {
-      const validWord = findSimilarWord(invalidWord);
-      let message;
-      if (validWord) {
-        message = `Word "${invalidWord}" is not on the passphrase Word List. Most similar word on the list is "${findSimilarWord(invalidWord)}"`;
-      } else {
-        message = `Word "${invalidWord}" is not on the passphrase Word List.`;
+    if (invalidWord) {
+      if (invalidWord.length >= 2 && invalidWord.length <= 8) {
+        const validWord = findSimilarWord(invalidWord);
+        if (validWord) {
+          return `Word "${invalidWord}" is not on the passphrase Word List. Most similar word on the list is "${findSimilarWord(invalidWord)}"`;
+        }
       }
-      return message;
+      return `Word "${invalidWord}" is not on the passphrase Word List.`;
     }
-
     return 'Passphrase is not valid';
   }
 

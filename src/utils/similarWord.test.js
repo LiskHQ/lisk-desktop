@@ -1,3 +1,4 @@
+import mnemonic from 'bitcore-mnemonic';
 import { expect } from 'chai';
 import {
   findSimilarWord,
@@ -6,8 +7,6 @@ import {
   getWordsFromDictByLength,
   reducedDictByWordLength,
 } from './similarWord';
-
-import mnemonic from 'bitcore-mnemonic';
 
 describe('Similar word', () => {
   describe('levenshteinDistance', () => {
