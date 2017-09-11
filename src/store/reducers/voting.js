@@ -1,89 +1,74 @@
 import actionTypes from '../../constants/actions';
-/**
- * remove a gelegate from list of delegates
- *
- * @param {array} list - list for delegates
- * @param {object} item - a delegates that we want to remove it
- */
-const removeFromList = (list, item) => {
-  const address = item.address;
-  return list.filter(delegate => delegate.address !== address);
-};
-/**
- * find index of a gelegate in list of delegates
- *
- * @param {array} list - list for delegates
- * @param {object} item - a delegates that we want to find its index
- */
-const findItemInList = (list, item) => {
-  const address = item.address;
-  let idx = -1;
-  list.forEach((delegate, index) => {
-    if (delegate.address === address) {
-      idx = index;
-    }
-  });
-  return idx;
-};
+
 /**
  * voting reducer
  *
  * @param {Object} state
  * @param {Object} action
  */
-const voting = (state = { votedList: [], unvotedList: [] }, action) => {
+const voting = (state = { votes: {}, delegates: [] }, action) => {
   switch (action.type) {
-    case actionTypes.addedToVoteList:
-      if (action.data.voted) {
-        return Object.assign({}, state, {
-          refresh: false,
-          unvotedList: [...removeFromList(state.unvotedList, action.data)],
-        });
-      }
-      if (findItemInList(state.votedList, action.data) > -1) {
-        return state;
-      }
+    case actionTypes.votesAdded:
       return Object.assign({}, state, {
-        refresh: false,
-        votedList: [
-          ...state.votedList,
-          Object.assign(action.data, { selected: true, dirty: true }),
-        ],
+        votes: action.data.list
+          .reduce((votesDict, delegate) => {
+            votesDict[delegate.username] = { confirmed: true, unconfirmed: true };
+            return votesDict;
+          }, {}),
+        delegates: action.data.list,
       });
-    case actionTypes.removedFromVoteList:
-      if (!action.data.voted) {
-        return Object.assign({}, state, {
-          refresh: false,
-          votedList: [...removeFromList(state.votedList, action.data)],
-        });
-      }
-      if (findItemInList(state.unvotedList, action.data) > -1) {
-        return state;
-      }
+
+    case actionTypes.delegatesAdded:
       return Object.assign({}, state, {
-        refresh: false,
-        unvotedList: [
-          ...state.unvotedList,
-          Object.assign(action.data, { selected: false, dirty: true }),
-        ],
+        delegates: action.data.list,
       });
+
+    case actionTypes.voteToggled:
+      return Object.assign({}, state, {
+        votes: Object.assign({}, state.votes, {
+          [action.data]: {
+            confirmed: state.votes[action.data] ? state.votes[action.data].confirmed : false,
+            unconfirmed: state.votes[action.data] ? !state.votes[action.data].confirmed : true,
+          },
+        }),
+      });
+
+
     case actionTypes.accountLoggedOut:
       return Object.assign({}, state, {
-        votedList: [],
-        unvotedList: [],
+        votes: {},
+        delegates: [],
         refresh: true,
       });
+
     case actionTypes.votesCleared:
       return Object.assign({}, state, {
-        votedList: state.votedList.filter(item => !item.pending),
-        unvotedList: state.unvotedList.filter(item => !item.pending),
+        votes: Object.keys(state.votes).reduce((votesDict, username) => {
+          votesDict[username] = {
+            confirmed: state.votes[username].confirmed,
+            unconfirmed: state.votes[username].confirmed,
+            pending: false,
+          };
+          return votesDict;
+        }, {}),
         refresh: true,
       });
+
     case actionTypes.pendingVotesAdded:
       return Object.assign({}, state, {
-        votedList: state.votedList.map(item => Object.assign(item, { pending: true })),
-        unvotedList: state.unvotedList.map(item => Object.assign(item, { pending: true })),
+        votes: Object.keys(state.votes).reduce((votesDict, username) => {
+          const pending = state.votes[username].confirmed !== state.votes[username].unconfirmed;
+          const { confirmed, unconfirmed } = state.votes[username];
+
+          votesDict[username] = {
+            confirmed: pending ? !confirmed : confirmed,
+            unconfirmed,
+            pending,
+          };
+          return votesDict;
+        }, {}),
       });
+
     default:
       return state;
   }
