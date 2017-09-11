@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { generateSeed, generatePassphrase, isValidPassphrase, levenshteinDistance, inDictionary, findSimilarWord } from './passphrase';
+import { generateSeed, generatePassphrase, isValidPassphrase } from './passphrase';
 
 if (global._bitcore) delete global._bitcore;
 const mnemonic = require('bitcore-mnemonic');
@@ -128,36 +128,6 @@ describe('Passphrase', () => {
     it('recognises an invalid passphrase', () => {
       const passphrase = 'stock borrow episode laundry kitten salute link globe zero feed marble';
       expect(isValidPassphrase(passphrase)).to.be.equal(false);
-    });
-  });
-
-  describe('levenshteinDistance', () => {
-    it('should calculate distance between two words', () => {
-      expect(levenshteinDistance('apple', 'zoo')).to.be.equal(4);
-    });
-
-    it('should the same distance between two words if they are changed their place in the function parameters', () => {
-      expect(levenshteinDistance('apple', 'zoo')).to.be.equal(levenshteinDistance('zoo', 'apple'));
-    });
-  });
-
-  describe('inDictionary', () => {
-    it('should return true if word is in the dictionary', () => {
-      expect(inDictionary('apple')).to.be.equal(true);
-    });
-
-    it('should return false if word not in the dictionary', () => {
-      expect(inDictionary('asdfasdf')).to.be.equal(false);
-    });
-  });
-
-  describe('findSimilarWord', () => {
-    it('should return simmilar word based on Levenshtein distance algorithm', () => {
-      expect(findSimilarWord('applu')).to.be.equal('apple');
-    });
-
-    it('should return exactly the same word if they exist in the dictionary', () => {
-      expect(findSimilarWord('zoo')).to.be.equal('zoo');
     });
   });
 });
