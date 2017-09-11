@@ -158,6 +158,7 @@ class Voting extends React.Component {
         <Header
           setActiveDialog={this.props.setActiveDialog}
           addToUnvoted={this.props.addToUnvoted}
+          addToVoteList={this.props.addToVoteList}
           addTransaction={this.props.addTransaction}
           votedList={this.props.votedList}
           unvotedList={this.props.unvotedList}

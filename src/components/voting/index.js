@@ -14,7 +14,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   setActiveDialog: data => dispatch(dialogDisplayed(data)),
-  addToUnvoted: data => dispatch(addedToVoteList(data)),
+  addToUnvoted: data => dispatch(removedFromVoteList(data)),
   addToVoteList: data => dispatch(addedToVoteList(data)),
   removeFromVoteList: data => dispatch(removedFromVoteList(data)),
   addTransaction: data => dispatch(transactionAdded(data)),

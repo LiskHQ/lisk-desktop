@@ -46,6 +46,7 @@ describe('VotingHeader', () => {
     ],
     setActiveDialog: () => {},
     addToUnvoted: sinon.spy(),
+    addToVoteList: sinon.spy(),
   };
 
   beforeEach(() => {
