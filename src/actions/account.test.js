@@ -8,6 +8,7 @@ import { errorAlertDialogDisplayed } from './dialog';
 import * as accountApi from '../utils/api/account';
 import * as delegateApi from '../utils/api/delegate';
 import Fees from '../constants/fees';
+import { toRawLsk } from '../utils/lsk';
 
 describe('actions: account', () => {
   describe('accountUpdated', () => {
@@ -188,8 +189,9 @@ describe('actions: account', () => {
         senderPublicKey: 'test_public-key',
         senderId: 'test_address',
         recipientId: data.recipientId,
-        amount: data.amount,
+        amount: toRawLsk(data.amount),
         fee: Fees.send,
+        type: 0,
       };
 
       actionFunction(dispatch);

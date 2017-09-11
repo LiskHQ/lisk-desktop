@@ -15,7 +15,6 @@ describe('Header', () => {
     const mockInputProps = {
       setActiveDialog: () => { },
       account: {},
-      t: t => t,
     };
     propsMock = sinon.mock(mockInputProps);
     wrapper = shallow(<Header {...mockInputProps} />);

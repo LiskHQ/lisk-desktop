@@ -8,6 +8,8 @@ export default [
   }, {
     name: 'Testnet',
     testnet: true,
+    ssl: true,
+    port: 443,
   }, {
     name: 'Custom Node',
     custom: true,

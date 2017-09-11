@@ -4,8 +4,6 @@ import { MemoryRouter } from 'react-router';
 import { Provider } from 'react-redux';
 import { expect } from 'chai';
 import configureStore from 'redux-mock-store';
-import { I18nextProvider } from 'react-i18next';
-import i18n from '../../i18n'; // initialized i18next instance
 import App from './';
 import Login from '../login';
 import Transactions from '../transactions';
@@ -18,9 +16,7 @@ const addRouter = Component => (props, path) =>
     mount(
       <Provider {...props}>
         <MemoryRouter initialEntries={path}>
-          <I18nextProvider i18n={ i18n }>
             <Component />
-          </I18nextProvider>
         </MemoryRouter>
       </Provider>,
     );
