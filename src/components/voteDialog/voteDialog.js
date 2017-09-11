@@ -71,10 +71,15 @@ export default class VoteDialog extends React.Component {
             label: 'Confirm',
             fee: Fees.vote,
             disabled: (
+              (this.props.voted.length +
+                (this.props.votedList.length -
+                this.props.unvotedList.length) > 101) ||
+              (this.props.votedList.length +
+                this.props.unvotedList.length > 33) ||
               (this.props.votedList.length === 0 &&
-              this.props.unvotedList.length === 0) ||
+                this.props.unvotedList.length === 0) ||
               (!!this.state.secondPassphrase.error ||
-              this.state.secondPassphrase.value === '')
+                this.state.secondPassphrase.value === '')
             ),
             onClick: this.confirm.bind(this),
           }} />
