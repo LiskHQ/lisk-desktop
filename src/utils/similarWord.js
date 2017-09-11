@@ -1,4 +1,4 @@
-const mnemonic = require('bitcore-mnemonic');
+import mnemonic from 'bitcore-mnemonic';
 
 const MAX_WORD_LENGTH = 8;
 

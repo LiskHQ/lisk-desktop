@@ -62,6 +62,13 @@ describe('Login', () => {
       expect(wrapper.find('.passphrase').text()).to.contain(expectedError);
     });
 
+    it('should show error about incoret word if passphrase is have word not from dictionary', () => {
+      const passphrase = 'sdasd bomb asset salon coil symbol tiger engine assist pact pumpkin visit';
+      const expectedError = 'Word "sdasd" is not on the passphrase Word List.';
+      wrapper.find('.passphrase input').simulate('change', { target: { value: passphrase } });
+      expect(wrapper.find('.passphrase').text()).to.contain(expectedError);
+    });
+
     it('should show error about invalid passhprase if it is incorrect', () => {
       const passphrase = 'recipe bomb asset salon coil symbol apple engine assist pact pumpkin visit';
       const expectedError = 'Passphrase is not valid';

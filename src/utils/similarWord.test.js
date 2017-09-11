@@ -7,7 +7,7 @@ import {
   reducedDictByWordLength,
 } from './similarWord';
 
-const mnemonic = require('bitcore-mnemonic');
+import mnemonic from 'bitcore-mnemonic';
 
 describe('Similar word', () => {
   describe('levenshteinDistance', () => {
