@@ -57,6 +57,6 @@ describe('AuthInputs', () => {
     props.hasSecondPassphrase = true;
     wrapper = mount(<AuthInputs {...props} />);
     wrapper.find('.second-passphrase input').simulate('change', { target: { value: 'test' } });
-    expect(props.onChange).to.have.been.calledWith('secondPassphrase', 'test', 'Invalid passphrase');
+    expect(props.onChange).to.have.been.calledWith('secondPassphrase', 'test', 'Passphrase should have 12 words, entered passphrase has 1');
   });
 });
