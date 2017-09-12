@@ -27,12 +27,12 @@ class PassphraseInput extends React.Component {
 
   // eslint-disable-next-line class-methods-use-this
   getPassphraseValidationError(passphrase) {
-    const mnemonic = passphrase.trim().toLowerCase().split(' ');
+    const mnemonic = passphrase.trim().split(' ');
     if (mnemonic.length < 12) {
       return `Passphrase should have 12 words, entered passphrase has ${mnemonic.length}`;
     }
 
-    const invalidWord = mnemonic.find(word => !inDictionary(word));
+    const invalidWord = mnemonic.find(word => !inDictionary(word.toLowerCase()));
     if (invalidWord) {
       if (invalidWord.length >= 2 && invalidWord.length <= 8) {
         const validWord = findSimilarWord(invalidWord);

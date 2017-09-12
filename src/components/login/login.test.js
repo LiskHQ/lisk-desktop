@@ -1,12 +1,9 @@
 import React from 'react';
-import chai, { expect } from 'chai';
+import { expect } from 'chai';
 import { spy } from 'sinon';
-import sinonChai from 'sinon-chai';
 import { mount, shallow } from 'enzyme';
 import Lisk from 'lisk-js';
 import Login from './login';
-
-chai.use(sinonChai);
 
 describe('Login', () => {
   let wrapper;
@@ -40,12 +37,6 @@ describe('Login', () => {
     it('should render address input if state.network === 2', () => {
       wrapper.setState({ network: 2 });
       expect(wrapper.find('.address')).to.have.lengthOf(1);
-    });
-
-    it('should allow to change passphrase field to type="text"', () => {
-      expect(wrapper.find('.passphrase input').props().type).to.equal('password');
-      wrapper.find('.show-passphrase-toggle').simulate('click');
-      expect(wrapper.find('.passphrase input').props().type).to.equal('text');
     });
 
     it('should show error about passphrase length if passphrase is have wrong length', () => {
@@ -162,42 +153,6 @@ describe('Login', () => {
       const expectedData = {
         address: validURL,
         addressValidity: 'URL is invalid',
-      };
-      expect(data).to.deep.equal(expectedData);
-    });
-  });
-
-  describe('validatePassphrase', () => {
-    beforeEach('', () => {
-      wrapper = shallow(<Login {...props} />);
-    });
-
-    it('should set passphraseValidity="" for a valid passphrase', () => {
-      const passphrase = 'wagon stock borrow episode laundry kitten salute link globe zero feed marble';
-      const data = wrapper.instance().validatePassphrase(passphrase);
-      const expectedData = {
-        passphrase,
-        passphraseValidity: '',
-      };
-      expect(data).to.deep.equal(expectedData);
-    });
-
-    it('should set passphraseValidity="" for an empty string', () => {
-      const passphrase = '';
-      const data = wrapper.instance().validatePassphrase(passphrase);
-      const expectedData = {
-        passphrase,
-        passphraseValidity: '',
-      };
-      expect(data).to.deep.equal(expectedData);
-    });
-
-    it.skip('should set passphraseValidity="Invalid passphrase" for a non-empty invalid passphrase', () => {
-      const passphrase = 'invalid passphrase';
-      const data = wrapper.instance().validatePassphrase(passphrase);
-      const expectedData = {
-        passphrase,
-        passphraseValidity: 'URL is invalid',
       };
       expect(data).to.deep.equal(expectedData);
     });
