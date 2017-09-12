@@ -1,5 +1,5 @@
 import React from 'react';
-import PassphraseInput from './passphraseInput';
+import PassphraseInput from '../passphraseInput';
 
 class AuthInputs extends React.Component {
   componentDidMount() {

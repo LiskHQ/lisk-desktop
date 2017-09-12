@@ -5,7 +5,7 @@ import Dropdown from 'react-toolbox/lib/dropdown';
 import Button from 'react-toolbox/lib/button';
 import networksRaw from './networks';
 import Passphrase from '../passphrase';
-import PassphraseInput from '../authInputs/passphraseInput';
+import PassphraseInput from '../passphraseInput';
 import styles from './login.css';
 import env from '../../constants/env';
 
