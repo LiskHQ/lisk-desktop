@@ -1,5 +1,5 @@
 import actionTypes from '../constants/actions';
-import { vote } from '../utils/api/delegate';
+import { vote, listAccountDelegates, listDelegates } from '../utils/api/delegate';
 import { transactionAdded } from './transactions';
 import { errorAlertDialogDisplayed } from './dialog';
 import Fees from '../constants/fees';
@@ -20,7 +20,25 @@ export const clearVoteLists = () => ({
 });
 
 /**
- *
+ * Add data to the list of voted delegates
+ */
+export const votesAdded = data => ({
+  type: actionTypes.votesAdded,
+  data,
+});
+
+/**
+ * Toggles account's vote for the given delegate
+ */
+export const voteToggled = data => ({
+  type: actionTypes.voteToggled,
+  data,
+});
+
+/**
+ * Makes Api call to register votes
+ * Adds pending state and then after the duration of one round
+ * cleans the pending state
  */
 export const votePlaced = ({ activePeer, account, votedList, unvotedList, secondSecret }) =>
   (dispatch) => {
@@ -59,17 +77,12 @@ export const votePlaced = ({ activePeer, account, votedList, unvotedList, second
   };
 
 /**
- * Add data to the list of voted delegates
+ * Gets the list of delegates current account has voted for
+ *
  */
-export const addedToVoteList = data => ({
-  type: actionTypes.addedToVoteList,
-  data,
-});
-
-/**
- * Remove data from the list of voted delegates
- */
-export const removedFromVoteList = data => ({
-  type: actionTypes.removedFromVoteList,
-  data,
-});
+export const votesFetched = ({ activePeer, address }) =>
+  (dispatch) => {
+    listAccountDelegates(activePeer, address).then(({ delegates }) => {
+      dispatch(votesAdded({ list: delegates }));
+    });
+  };

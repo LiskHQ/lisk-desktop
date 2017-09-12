@@ -2,11 +2,12 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import actionTypes from '../constants/actions';
 import {
-    addedToVoteList,
-    removedFromVoteList,
-    clearVoteLists,
-    pendingVotesAdded,
-    votePlaced,
+  pendingVotesAdded,
+  clearVoteLists,
+  votesAdded,
+  voteToggled,
+  votePlaced,
+  votesFetched,
 } from './voting';
 import Fees from '../constants/fees';
 import { transactionAdded } from './transactions';
@@ -14,31 +15,32 @@ import { errorAlertDialogDisplayed } from './dialog';
 import * as delegateApi from '../utils/api/delegate';
 
 describe('actions: voting', () => {
-  describe('addedToVoteList', () => {
-    it('should create an action to add data to vote list', () => {
+  describe('voteToggled', () => {
+    it('should create an action to add data to toggle the vote status for any given delegate', () => {
       const data = {
         label: 'dummy',
       };
       const expectedAction = {
         data,
-        type: actionTypes.addedToVoteList,
+        type: actionTypes.voteToggled,
       };
 
-      expect(addedToVoteList(data)).to.be.deep.equal(expectedAction);
+      expect(voteToggled(data)).to.be.deep.equal(expectedAction);
     });
   });
 
-  describe('removedFromVoteList', () => {
+  describe('votesAdded', () => {
     it('should create an action to remove data from vote list', () => {
-      const data = {
-        label: 'dummy',
-      };
+      const data = [
+        { username: 'username1', id: '123HG3452245L' },
+        { username: 'username2', id: '123HG3522345L' },
+      ];
       const expectedAction = {
         data,
-        type: actionTypes.removedFromVoteList,
+        type: actionTypes.votesAdded,
       };
 
-      expect(removedFromVoteList(data)).to.be.deep.equal(expectedAction);
+      expect(votesAdded(data)).to.be.deep.equal(expectedAction);
     });
   });
 
@@ -128,6 +130,41 @@ describe('actions: voting', () => {
       actionFunction(dispatch);
       const expectedAction = errorAlertDialogDisplayed({ text: 'An error occurred while placing your vote.' });
       expect(dispatch).to.have.been.calledWith(expectedAction);
+    });
+  });
+
+  describe('votesFetched', () => {
+    let delegateApiMock;
+    const data = {
+      activePeer: {},
+      address: '8096217735672704724L',
+    };
+    const votesList = [
+      { username: 'username1', id: '80962134535672704724L' },
+      { username: 'username2', id: '80962134535672704725L' },
+    ];
+    const actionFunction = votesFetched(data);
+    let dispatch;
+
+    beforeEach(() => {
+      delegateApiMock = sinon.stub(delegateApi, 'setSecondPassphrase');
+      dispatch = sinon.spy();
+    });
+
+    afterEach(() => {
+      delegateApiMock.restore();
+    });
+
+    it('should create an action function', () => {
+      expect(typeof actionFunction).to.be.deep.equal('function');
+    });
+
+    it('should dispatch votesAdded action if resolved', () => {
+      delegateApiMock.returnsPromise().resolves(votesList);
+      const expectedAction = { list: votesList };
+
+      actionFunction(dispatch);
+      expect(dispatch).to.have.been.calledWith(transactionAdded(expectedAction));
     });
   });
 });
