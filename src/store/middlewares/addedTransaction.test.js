@@ -34,13 +34,13 @@ describe('addedTransaction middleware', () => {
       type: actionTypes.transactionAdded,
       data: {
         username: 'test',
-        amount: 100000000,
+        amount: 1e8,
         recipientId: '16313739661670634666L',
       },
     };
 
     const expectedMessages = [
-      'Your transaction of 100000000 LSK to 16313739661670634666L was accepted and will be processed in a few seconds.',
+      'Your transaction of 1 LSK to 16313739661670634666L was accepted and will be processed in a few seconds.',
       'Second passphrase registration was successfully submitted. It can take several seconds before it is processed.',
       'Delegate registration was successfully submitted with username: "test". It can take several seconds before it is processed.',
       'Your votes were successfully submitted. It can take several seconds before they are processed.',
