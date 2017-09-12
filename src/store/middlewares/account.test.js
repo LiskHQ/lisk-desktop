@@ -34,7 +34,7 @@ describe('Account middleware', () => {
     next = spy();
   });
 
-  it('should passes the action to next middleware', () => {
+  it('should pass the action to next middleware', () => {
     const expectedAction = {
       type: 'TEST_ACTION',
     };
