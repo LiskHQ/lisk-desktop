@@ -5,6 +5,7 @@ import Dropdown from 'react-toolbox/lib/dropdown';
 import Button from 'react-toolbox/lib/button';
 import Checkbox from 'react-toolbox/lib/checkbox';
 import { isValidPassphrase } from '../../utils/passphrase';
+import { findSimilarWord, inDictionary } from '../../utils/similarWord';
 import networksRaw from './networks';
 import Passphrase from '../passphrase';
 import styles from './login.css';
@@ -31,7 +32,7 @@ class Login extends React.Component {
 
     this.validators = {
       address: this.validateUrl,
-      passphrase: this.validatePassphrase,
+      passphrase: this.validatePassphrase.bind(this),
     };
   }
 
@@ -85,15 +86,33 @@ class Login extends React.Component {
     return data;
   }
 
-  // eslint-disable-next-line class-methods-use-this
   validatePassphrase(value) {
     const data = { passphrase: value };
-    if (!value || value === '') {
-      data.passphraseValidity = 'Empty passphrase';
-    } else {
-      data.passphraseValidity = isValidPassphrase(value) ? '' : 'Invalid passphrase';
-    }
+    data.passphraseValidity = !isValidPassphrase(value) ? this.getPassphraseValidationError(value) : '';
     return data;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  getPassphraseValidationError(passphrase) {
+    if (!passphrase) {
+      return 'Empty passphrase';
+    }
+    const mnemonic = passphrase.trim().toLowerCase().split(' ');
+    if (mnemonic.length < 12) {
+      return `Passphrase should have 12 words, entered passphrase has ${mnemonic.length}`;
+    }
+
+    const invalidWord = mnemonic.find(word => !inDictionary(word));
+    if (invalidWord) {
+      if (invalidWord.length >= 2 && invalidWord.length <= 8) {
+        const validWord = findSimilarWord(invalidWord);
+        if (validWord) {
+          return `Word "${invalidWord}" is not on the passphrase Word List. Most similar word on the list is "${findSimilarWord(invalidWord)}"`;
+        }
+      }
+      return `Word "${invalidWord}" is not on the passphrase Word List.`;
+    }
+    return 'Passphrase is not valid';
   }
 
   changeHandler(name, value) {
@@ -166,7 +185,7 @@ class Login extends React.Component {
                 label='Enter your passphrase' name='passphrase'
                 className='passphrase'
                 theme={styles}
-                error={this.state.passphraseValidity === 'Invalid passphrase' ? 'Invalid passphrase' : ''}
+                error={this.state.passphraseValidity === 'Empty passphrase' ? '' : this.state.passphraseValidity}
                 value={this.state.passphrase}
                 onChange={this.changeHandler.bind(this, 'passphrase')} />
               <Checkbox
