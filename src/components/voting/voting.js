@@ -5,7 +5,7 @@ import { tableFactory } from 'react-toolbox/lib/table/Table';
 import { TableHead, TableCell } from 'react-toolbox/lib/table';
 import TableTheme from 'react-toolbox/lib/table/theme.css';
 import Waypoint from 'react-waypoint';
-import { listAccountDelegates, listDelegates } from '../../utils/api/delegate';
+import { listDelegates } from '../../utils/api/delegate';
 import Header from './votingHeader';
 import VotingRow from './votingRow';
 
@@ -17,7 +17,6 @@ class Voting extends React.Component {
     super();
     this.state = {
       delegates: [],
-      votedDelegates: [],
       selected: [],
       offset: 0,
       loadMore: false,
@@ -28,16 +27,18 @@ class Voting extends React.Component {
   }
 
   componentWillReceiveProps() {
-    setTimeout(() => {
-      if (this.props.refreshDelegates) {
-        this.loadVotedDelegates(true);
-      } else {
-        const delegates = this.state.delegates.map(delegate => this.setStatus(delegate));
-        this.setState({
-          delegates,
-        });
-      }
-    }, 1);
+    // setTimeout(() => {
+    //   if (this.props.refreshDelegates) {
+    //     console.log('load voted');
+    //     this.loadVotedDelegates(true);
+    //   } else {
+    //     console.log('load the rest');
+    //     const delegates = this.state.delegates.map(delegate => this.setStatus(delegate));
+    //     this.setState({
+    //       delegates,
+    //     });
+    //   }
+    // }, 1);
   }
 
   componentDidMount() {
@@ -45,28 +46,24 @@ class Voting extends React.Component {
   }
 
   loadVotedDelegates(refresh) {
-    listAccountDelegates(this.props.activePeer, this.props.address).then((res) => {
-      if (res.delegates) {
-        const votedDelegates = res.delegates
-          .map(delegate => Object.assign({}, delegate, { voted: true }));
-        this.setState({
-          votedDelegates,
-        });
-      }
-      if (refresh) {
-        setTimeout(() => {
-          const delegates = this.state.delegates.map(delegate => this.setStatus(delegate));
-          this.setState({
-            delegates,
-          });
-        }, 10);
-      } else {
-        this.loadDelegates(this.query);
-      }
-    })
-    .catch(() => {
-      this.loadDelegates(this.query);
-    });
+    this.props.votesFetched({ activePeer: this.props.activePeer,
+      address: this.props.address });
+
+    // listAccountDelegates(this.props.activePeer, this.props.address).then((res) => {
+    //   if (refresh) {
+    //     setTimeout(() => {
+    //       const delegates = this.state.delegates.map(delegate => this.setStatus(delegate));
+    //       this.setState({
+    //         delegates,
+    //       });
+    //     }, 10);
+    //   } else {
+    //     this.loadDelegates(this.query);
+    //   }
+    // })
+    // .catch(() => {
+    //   this.loadDelegates(this.query);
+    // });
   }
 
   /**
@@ -90,7 +87,7 @@ class Voting extends React.Component {
    * Fetches a list of delegates
    *
    * @method loadDelegates
-   * @param {String} search - The search phrase to match with the delegate name
+   * @param {String} query - The search phrase to match with the delegate name
    *  should replace the old delegates list
    * @param {Number} limit - The maximum number of results
    */
@@ -138,13 +135,14 @@ class Voting extends React.Component {
     if (delegateExisted) {
       return delegateExisted;
     }
-    const voted = this.state.votedDelegates
+
+    const voted = this.props.confirmedVotedList
       .filter(row => row.username === delegate.username).length > 0;
     return Object.assign(delegate, { voted }, { selected: voted }, { pending: false });
   }
 
   /**
-   * load more data when scroll bar reachs end of the page
+   * load more data when scroll bar reaches end of the page
    */
   loadMore() {
     if (this.state.loadMore && this.state.length > this.state.offset) {
@@ -157,11 +155,9 @@ class Voting extends React.Component {
       <div className="box noPaddingBox">
         <Header
           setActiveDialog={this.props.setActiveDialog}
-          addToUnvoted={this.props.addToUnvoted}
+          voteToggled={this.props.voteToggled}
           addTransaction={this.props.addTransaction}
-          votedList={this.props.votedList}
-          unvotedList={this.props.unvotedList}
-          votedDelegates={this.state.votedDelegates}
+          votes={this.props.votes}
           search={ value => this.search(value) }
         />
         <div className='verticalScroll'>
@@ -174,10 +170,10 @@ class Voting extends React.Component {
               <TableCell>Uptime</TableCell>
               <TableCell>Approval</TableCell>
             </TableHead>
-            {this.state.delegates.map(item => (
+            {this.props.delegates.map(item => (
               <VotingRow key={item.address} data={item}
-                addToVoteList={this.props.addToVoteList}
-                removeFromVoteList={this.props.removeFromVoteList}
+                voteToggled={this.props.voteToggled}
+                voteStatus={this.props.votes[item.username]}
               />
             ))}
           </Table>

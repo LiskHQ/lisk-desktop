@@ -15,7 +15,7 @@ const setRowClass = ({ pending, selected, voted }) => {
 class VotingRow extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   shouldComponentUpdate(nextProps) {
-    return !!nextProps.data.dirty;
+    return nextProps.voteStatus.unconfirmed !== this.props.voteStatus.unconfirmed;
   }
 
   render() {
@@ -24,10 +24,9 @@ class VotingRow extends React.Component {
     return (<TableRow className={`${styles.row} ${setRowClass(data)}`}>
       <TableCell>
         <Checkbox styles={styles}
-          addToVoteList={props.addToVoteList}
-          removeFromVoteList={props.removeFromVoteList}
+          toggle={props.voteToggled}
           value={data.selected}
-          pending={data.pending}
+          status={props.voteStatus}
           data={data}
         />
       </TableCell>
