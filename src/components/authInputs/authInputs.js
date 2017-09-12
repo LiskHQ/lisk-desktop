@@ -1,6 +1,5 @@
 import React from 'react';
-import Input from 'react-toolbox/lib/input';
-import { isValidPassphrase } from '../../utils/passphrase';
+import PassphraseInput from './passphraseInput';
 
 class AuthInputs extends React.Component {
   componentDidMount() {
@@ -9,31 +8,25 @@ class AuthInputs extends React.Component {
     }
   }
 
-  handleValueChange(name, value) {
-    let error;
-    if (!value) {
-      error = 'Required';
-    } else if (!isValidPassphrase(value)) {
-      error = 'Invalid passphrase';
-    }
+  onChange(name, value, error) {
     this.props.onChange(name, value, error);
   }
 
   render() {
     return <span>
       {(!this.props.hasPassphrase ?
-        <Input label='Passphrase' required={true}
+        <PassphraseInput label='Passphrase'
           className='passphrase'
           error={this.props.passphrase.error}
           value={this.props.passphrase.value}
-          onChange={this.handleValueChange.bind(this, 'passphrase')} /> :
+          onChange={this.onChange.bind(this, 'passphrase')} /> :
         null)}
       {(this.props.hasSecondPassphrase ?
-        <Input label='Second Passphrase' required={true}
+        <PassphraseInput label='Second Passphrase'
           className='second-passphrase'
           error={this.props.secondPassphrase.error}
           value={this.props.secondPassphrase.value}
-          onChange={this.handleValueChange.bind(this, 'secondPassphrase')} /> :
+          onChange={this.onChange.bind(this, 'secondPassphrase')} /> :
         null)}
     </span>;
   }
