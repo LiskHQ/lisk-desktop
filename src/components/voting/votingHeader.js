@@ -81,13 +81,13 @@ class VotingHeader extends React.Component {
                   theme={styles}
                   key={delegate.username}
                   caption={delegate.username}
-                  icon='replay'
+                  icon='add'
                   onClick={this.props.addToVoteList.bind(this, delegate)} /> :
                 <MenuItem
                   theme={styles}
                   key={delegate.username}
                   caption={delegate.username}
-                  icon='close'
+                  icon='clear'
                   onClick={this.props.addToUnvoted.bind(this, delegate)} />),
             )}
           </IconMenu>
