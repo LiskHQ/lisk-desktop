@@ -44,7 +44,7 @@ describe('Login', () => {
 
     it('should allow to change passphrase field to type="text"', () => {
       expect(wrapper.find('.passphrase input').props().type).to.equal('password');
-      wrapper.setState({ showPassphrase: true });
+      wrapper.find('.show-passphrase-toggle').simulate('click');
       expect(wrapper.find('.passphrase input').props().type).to.equal('text');
     });
 
@@ -182,12 +182,12 @@ describe('Login', () => {
       expect(data).to.deep.equal(expectedData);
     });
 
-    it('should set passphraseValidity="Empty passphrase" for an empty string', () => {
+    it('should set passphraseValidity="" for an empty string', () => {
       const passphrase = '';
       const data = wrapper.instance().validatePassphrase(passphrase);
       const expectedData = {
         passphrase,
-        passphraseValidity: 'Empty passphrase',
+        passphraseValidity: '',
       };
       expect(data).to.deep.equal(expectedData);
     });
