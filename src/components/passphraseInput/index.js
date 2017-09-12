@@ -55,7 +55,7 @@ class PassphraseInput extends React.Component {
         <Input label={this.props.label} required={true}
           className={this.props.className}
           error={this.props.error}
-          value={this.props.value}
+          value={this.props.value || ''}
           type={this.state.inputType}
           theme={this.props.theme}
           onChange={this.handleValueChange.bind(this)} />
