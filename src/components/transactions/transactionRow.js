@@ -1,4 +1,5 @@
 import React from 'react';
+import numeral from 'numeral';
 import LiskAmount from '../liskAmount';
 import { TooltipTime, TooltipWrapper } from '../timestamp';
 import TransactionType from './transactionType';
@@ -22,7 +23,7 @@ class TransactionRow extends React.Component {
           <Spinner />}
       </td>
       <td className={`${props.tableStyle.rowCell} ${styles.centerText} ${styles.hiddenXs}`}>
-        <TooltipWrapper tooltip={`${props.value.confirmations || 0} confirmation${props.value.confirmations !== 1 ? 's' : ''}`}>{props.value.id}</TooltipWrapper>
+        <TooltipWrapper tooltip={`${numeral(props.value.confirmations || 0).format('0a')} confirmation${props.value.confirmations !== 1 ? 's' : ''}`}>{props.value.id}</TooltipWrapper>
       </td>
       <td className={`${props.tableStyle.rowCell} ${styles.centerText}`}>
         <TransactionType {...props.value} address={props.address}></TransactionType>
