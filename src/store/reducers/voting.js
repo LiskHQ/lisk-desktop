@@ -20,7 +20,7 @@ const voting = (state = { votes: {}, delegates: [] }, action) => {
 
     case actionTypes.delegatesAdded:
       return Object.assign({}, state, {
-        delegates: action.data.list,
+        delegates: [...state.delegates, ...action.data.list],
       });
 
     case actionTypes.voteToggled:
@@ -28,7 +28,7 @@ const voting = (state = { votes: {}, delegates: [] }, action) => {
         votes: Object.assign({}, state.votes, {
           [action.data]: {
             confirmed: state.votes[action.data] ? state.votes[action.data].confirmed : false,
-            unconfirmed: state.votes[action.data] ? !state.votes[action.data].confirmed : true,
+            unconfirmed: state.votes[action.data] ? !state.votes[action.data].unconfirmed : true,
           },
         }),
       });

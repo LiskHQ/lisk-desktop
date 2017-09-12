@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import actionTypes from '../../constants/actions';
 import voting from './voting';
 
-describe.only('Reducer: voting(state, action)', () => {
+describe('Reducer: voting(state, action)', () => {
   const state = {
     votes: {
       username1: { confirmed: true, unconfirmed: true },
@@ -58,14 +58,16 @@ describe.only('Reducer: voting(state, action)', () => {
         ],
       },
     };
-    const expectedState = {
-      votes: {
-        username1: { confirmed: true, unconfirmed: true },
-        username2: { confirmed: false, unconfirmed: false },
-      },
-      delegates: [{ username: 'username1', id: '123HGJ123234L' }],
+    const oldState = {
+      delegates: [{ username: 'username2', id: '123HGJ123235L' }],
     };
-    const changedState = voting(state, action);
+    const expectedState = {
+      delegates: [
+        { username: 'username2', id: '123HGJ123235L' },
+        { username: 'username1', id: '123HGJ123234L' },
+      ],
+    };
+    const changedState = voting(oldState, action);
 
     expect(changedState).to.be.deep.equal(expectedState);
   });
