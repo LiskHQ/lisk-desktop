@@ -2,6 +2,7 @@ import { getAccountStatus, getAccount, transactions } from '../../utils/api/acco
 import { accountUpdated, accountLoggedIn } from '../../actions/account';
 import { transactionsUpdated } from '../../actions/transactions';
 import { activePeerUpdate } from '../../actions/peers';
+import { clearVoteLists } from '../../actions/voting';
 import actionTypes from '../../constants/actions';
 import { fetchAndUpdateForgedBlocks } from '../../actions/forging';
 import { getDelegate } from '../../utils/api/delegate';
@@ -59,6 +60,15 @@ const delegateRegistration = (store, action) => {
   }
 };
 
+const votePlaced = (store, action) => {
+  const voteTransaction = getRecentTransactionOfType(
+    action.data.confirmed, transactionTypes.vote);
+
+  if (voteTransaction) {
+    store.dispatch(clearVoteLists());
+  }
+};
+
 const accountMiddleware = store => next => (action) => {
   next(action);
   switch (action.type) {
@@ -67,6 +77,7 @@ const accountMiddleware = store => next => (action) => {
       break;
     case actionTypes.transactionsUpdated:
       delegateRegistration(store, action);
+      votePlaced(store, action);
       break;
     default: break;
   }
