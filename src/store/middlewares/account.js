@@ -17,11 +17,17 @@ const updateTransactions = (store, peers, account) => {
     })));
 };
 
+const hasRecentTransactions = state => (
+  state.transactions.confirmed.filter(tx => tx.confirmations < 1000).length !== 0 ||
+  state.transactions.pending.length !== 0
+);
+
 const updateAccountData = (store, action) => { // eslint-disable-line
-  const { peers, account } = store.getState();
+  const state = store.getState();
+  const { peers, account } = state;
 
   getAccount(peers.data, account.address).then((result) => {
-    if (action.data.interval === SYNC_ACTIVE_INTERVAL) {
+    if (action.data.interval === SYNC_ACTIVE_INTERVAL && hasRecentTransactions(state)) {
       updateTransactions(store, peers, account);
     }
     if (result.balance !== account.balance) {

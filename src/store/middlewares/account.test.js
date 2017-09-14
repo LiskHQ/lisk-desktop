@@ -48,6 +48,12 @@ describe('Account middleware', () => {
       account: {
         balance: 0,
       },
+      transactions: {
+        pending: [{
+          id: 12498250891724098,
+        }],
+        confirmed: [],
+      },
     };
     store.getState = () => (state);
 
@@ -103,7 +109,7 @@ describe('Account middleware', () => {
     // expect(stubTransactions).to.have.been.calledWith();
   });
 
-  it(`should call transactions API methods on ${actionTypes.metronomeBeat} action if action.data.interval is SYNC_ACTIVE_INTERVAL`, () => {
+  it(`should call transactions API methods on ${actionTypes.metronomeBeat} action if action.data.interval is SYNC_ACTIVE_INTERVAL and there are recent transactions`, () => {
     stubGetAccount.resolves({ balance: 0 });
 
     middleware(store)(next)(activeBeatAction);
