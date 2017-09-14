@@ -2,6 +2,7 @@ import { getAccountStatus, getAccount, transactions } from '../../utils/api/acco
 import { accountUpdated, accountLoggedIn } from '../../actions/account';
 import { transactionsUpdated } from '../../actions/transactions';
 import { activePeerUpdate } from '../../actions/peers';
+import { clearVoteLists } from '../../actions/voting';
 import actionTypes from '../../constants/actions';
 import { fetchAndUpdateForgedBlocks } from '../../actions/forging';
 import { getDelegate } from '../../utils/api/delegate';
@@ -37,9 +38,17 @@ const updateAccountData = (store) => { // eslint-disable-line
   });
 };
 
+const getRecentTransactionOfType = (transactionsList, type) => (
+  transactionsList.filter(transaction => (
+    transaction.type === type &&
+    // limit the number of confirmations to 5 to not fire each time there is another new transaction
+    // theoretically even less then 5, but just to be on the safe side
+    transaction.confirmations < 5))[0]
+);
+
 const delegateRegistration = (store, action) => {
-  const delegateRegistrationTx = action.data.confirmed.filter(
-    transaction => transaction.type === transactionTypes.registerDelegate)[0];
+  const delegateRegistrationTx = getRecentTransactionOfType(
+    action.data.confirmed, transactionTypes.registerDelegate);
   const state = store.getState();
 
   if (delegateRegistrationTx) {
@@ -51,6 +60,15 @@ const delegateRegistration = (store, action) => {
   }
 };
 
+const votePlaced = (store, action) => {
+  const voteTransaction = getRecentTransactionOfType(
+    action.data.confirmed, transactionTypes.vote);
+
+  if (voteTransaction) {
+    store.dispatch(clearVoteLists());
+  }
+};
+
 const accountMiddleware = store => next => (action) => {
   next(action);
   switch (action.type) {
@@ -59,6 +77,7 @@ const accountMiddleware = store => next => (action) => {
       break;
     case actionTypes.transactionsUpdated:
       delegateRegistration(store, action);
+      votePlaced(store, action);
       break;
     default: break;
   }
