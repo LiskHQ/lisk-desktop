@@ -1,119 +1,205 @@
-import './login.less';
+import React from 'react';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import Input from 'react-toolbox/lib/input';
+import Dropdown from 'react-toolbox/lib/dropdown';
+import Button from 'react-toolbox/lib/button';
+import Checkbox from 'react-toolbox/lib/checkbox';
+import { isValidPassphrase } from '../../utils/passphrase';
+import networksRaw from './networks';
+import Passphrase from '../passphrase';
+import styles from './login.css';
+import env from '../../constants/env';
 
-app.component('login', {
-  template: require('./login.pug')(),
-  controller: class login {
+/**
+ * The container component containing login
+ * and create account functionality
+ */
+class Login extends React.Component {
+  constructor() {
+    super();
 
-    /* eslint no-param-reassign: ["error", { "props": false }] */
+    this.networks = networksRaw.map((network, index) => ({
+      label: network.name,
+      value: index,
+    }));
 
-    constructor($scope, $rootScope, $timeout, $document, $mdMedia,
-      $cookies, $location, Passphrase, $state, Account, Peers) {
-      this.$scope = $scope;
-      this.$rootScope = $rootScope;
-      this.$timeout = $timeout;
-      this.$document = $document;
-      this.$mdMedia = $mdMedia;
-      this.$cookies = $cookies;
-      this.$location = $location;
-      this.$state = $state;
-      this.account = Account;
-      this.peers = Peers;
+    this.state = {
+      passphrase: '',
+      address: '',
+      network: 0,
+    };
 
-      this.Passphrase = Passphrase;
-      this.generatingNewPassphrase = false;
-      this.$rootScope.loggingIn = false;
+    this.validators = {
+      address: this.validateUrl,
+      passphrase: this.validatePassphrase,
+    };
+  }
 
-      this.networks = [{
-        name: 'Mainnet',
-        ssl: true,
-        port: 443,
-      }, {
-        name: 'Testnet',
-        testnet: true,
-      }, {
-        name: 'Custom Node',
-        custom: true,
-        address: 'http://localhost:8000',
-      }];
+  componentDidMount() {
+    // pre-fill passphrase and address if exiting in cookies
+    this.devPreFill();
+  }
 
-      this.network = this.networks[0];
-      try {
-        const network = JSON.parse(this.$cookies.get('network'));
-        if (network.custom) {
-          this.networks[2].address = network.address;
-          this.network = this.networks[2];
-        } else if (network.testnet) {
-          this.network = this.networks[1];
-        }
-      } catch (e) {
-        this.$cookies.remove('network');
+  componentDidUpdate() {
+    if (this.props.account && this.props.account.address) {
+      this.props.history.replace(this.getReferrerRoute());
+      if (this.state.address) {
+        localStorage.setItem('address', this.state.address);
       }
+      localStorage.setItem('network', this.state.network);
+    }
+  }
 
-      this.validity = {
-        url: true,
-      };
+  getReferrerRoute() {
+    const { isDelegate } = this.props.account;
+    const { search } = this.props.history.location;
+    const transactionRoute = '/main/transactions';
+    const referrerRoute = search.indexOf('?referrer') === 0 ? search.replace('?referrer=', '') : transactionRoute;
+    if (!isDelegate && referrerRoute === '/main/forging') {
+      return transactionRoute;
+    }
+    return referrerRoute;
+  }
 
-      this.$scope.$watch('$ctrl.input_passphrase', val => this.validity.passphrase = this.Passphrase.isValidPassphrase(val));
-      this.$scope.$watch('$ctrl.network.address', (val) => {
-        try {
-          // eslint-disable-next-line no-new
-          new URL(val);
-          this.validity.url = true;
-        } catch (e) {
-          this.validity.url = false;
-        }
+  // eslint-disable-next-line class-methods-use-this
+  validateUrl(value) {
+    const addHttp = (url) => {
+      const reg = /^(?:f|ht)tps?:\/\//i;
+      return reg.test(url) ? url : `http://${url}`;
+    };
+
+    const errorMessage = 'URL is invalid';
+
+    const isValidLocalhost = url => url.hostname === 'localhost' && url.port.length > 1;
+    const isValidRemote = url => /(([a-z\d]([a-z\d-]*[a-z\d])*)\.)+[a-z]{2,}|((\d{1,3}\.){3}\d{1,3})/.test(url.hostname);
+
+    let addressValidity = '';
+    try {
+      const url = new URL(addHttp(value));
+      addressValidity = url && (isValidRemote(url) || isValidLocalhost(url)) ? '' : errorMessage;
+    } catch (e) {
+      addressValidity = errorMessage;
+    }
+
+    const data = { address: value, addressValidity };
+    return data;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  validatePassphrase(value) {
+    const data = { passphrase: value };
+    if (!value || value === '') {
+      data.passphraseValidity = 'Empty passphrase';
+    } else {
+      data.passphraseValidity = isValidPassphrase(value) ? '' : 'Invalid passphrase';
+    }
+    return data;
+  }
+
+  changeHandler(name, value) {
+    const validator = this.validators[name] || (() => ({}));
+    this.setState({
+      [name]: value,
+      ...validator(value),
+    });
+  }
+
+  onLoginSubmission(passphrase) {
+    const network = Object.assign({}, networksRaw[this.state.network]);
+    if (this.state.network === 2) {
+      network.address = this.state.address;
+    }
+
+    // set active peer
+    this.props.activePeerSet({
+      passphrase,
+      network,
+    });
+  }
+
+  devPreFill() {
+    const address = localStorage.getItem('address') || '';
+    const passphrase = localStorage.getItem('passphrase') || '';
+    const network = parseInt(localStorage.getItem('network'), 10) || 0;
+
+    this.setState({
+      network,
+      ...this.validators.address(address),
+      ...this.validators.passphrase(passphrase),
+    });
+
+    // ignore this in coverage as it is hard to test and does not run in production
+    /* istanbul ignore if */
+    if (!env.production && localStorage.getItem('autologin') && !this.props.account.afterLogout && passphrase) {
+      setTimeout(() => {
+        this.onLoginSubmission(passphrase);
       });
-
-      this.$timeout(this.devTestAccount.bind(this), 200);
-
-      /**
-       * @todo Move this after creating the dialog service
-       */
-      this.$scope.$watch(() => this.$mdMedia('xs') || this.$mdMedia('sm'), (wantsFullScreen) => {
-        this.$scope.customFullscreen = wantsFullScreen === true;
-      });
     }
+  }
 
-    /**
-     * Called of login/sign-up form submission. this is where we set the active peer.
-     *
-     * @param {String} [_passphrase=this.input_passphrase]
-     */
-    passConfirmSubmit(_passphrase = this.input_passphrase) {
-      this.$rootScope.loggingIn = true;
-      this.$scope.$emit('showLoadingBar');
-      if (this.Passphrase.normalize.constructor === Function) {
-        this.peers.setActive(this.network).then(() => {
-          this.$rootScope.loggingIn = false;
-          this.$scope.$emit('hideLoadingBar');
-          if (this.peers.online) {
-            this.account.set({
-              passphrase: this.Passphrase.normalize(_passphrase),
-              network: this.network,
-            });
-            this.$cookies.put('network', JSON.stringify(this.network));
-            this.$state.go(this.$rootScope.landingUrl || 'main.transactions');
-          }
-        });
-      }
-    }
+  render() {
+    return (
+      <div className={`box ${styles.wrapper}`}>
+        <div className={`${grid.row} ${grid['center-xs']}`}>
+          <div className={`${grid['col-xs-12']} ${grid['col-sm-8']}`}>
+            <form>
+              <Dropdown
+                auto={false}
+                source={this.networks}
+                onChange={this.changeHandler.bind(this, 'network')}
+                label='Select a network'
+                value={this.state.network}
+                className={`${styles.network} network`}
+              />
+              {
+                this.state.network === 2 &&
+                  <Input type='text'
+                    label='Node address'
+                    name='address'
+                    className='address'
+                    theme={styles}
+                    value={this.state.address}
+                    error={this.state.addressValidity}
+                    onChange={this.changeHandler.bind(this, 'address')} />
+              }
+              <Input type={this.state.showPassphrase ? 'text' : 'password'}
+                label='Enter your passphrase' name='passphrase'
+                className='passphrase'
+                theme={styles}
+                error={this.state.passphraseValidity === 'Invalid passphrase' ? 'Invalid passphrase' : ''}
+                value={this.state.passphrase}
+                onChange={this.changeHandler.bind(this, 'passphrase')} />
+              <Checkbox
+                checked={this.state.showPassphrase}
+                label="Show passphrase"
+                className={`${grid['start-xs']} show-passphrase`}
+                theme={styles}
+                onChange={this.changeHandler.bind(this, 'showPassphrase')}
+              />
+              <footer className={ `${grid.row} ${grid['center-xs']}` }>
+                <div className={grid['col-xs-12']}>
+                  <Button label='NEW ACCOUNT' flat primary
+                    className={`${styles.newAccount} new-account-button`}
+                    onClick={() => this.props.setActiveDialog({
+                      title: 'New Account',
+                      childComponent: Passphrase,
+                      childComponentProps: {
+                        onPassGenerated: this.onLoginSubmission.bind(this),
+                      },
+                    })} />
+                  <Button label='LOGIN' primary raised
+                    onClick={this.onLoginSubmission.bind(this, this.state.passphrase)}
+                    className='login-button'
+                    disabled={(this.state.network === 2 && this.state.addressValidity !== '') ||
+                    this.state.passphraseValidity !== ''} />
+                </div>
+              </footer>
+            </form>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
 
-    devTestAccount() {
-      const peerStack = this.$location.search().peerStack || this.$cookies.get('peerStack');
-      if (peerStack === 'localhost') {
-        this.network = this.networks[2];
-        angular.merge(this.network, {
-          address: 'http://localhost:4000',
-          testnet: true,
-          nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
-        });
-      } else if (peerStack === 'testnet') {
-        this.network = this.networks[1];
-      }
-      const passphrase = this.$location.search().passphrase || this.$cookies.get('passphrase');
-      if (passphrase) {
-        this.input_passphrase = passphrase;
-      }
-    }
-  },
-});
+export default Login;

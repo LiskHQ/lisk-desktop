@@ -1,25 +1,14 @@
-import './loadingBar.less';
+import React from 'react';
+import ProgressBar from 'react-toolbox/lib/progress_bar';
+import styles from './loadingBar.css';
 
-app.component('loadingBar', {
-  template: require('./loadingBar.pug')(),
-  controller: class loadingBar {
-
-    constructor($scope, $rootScope) {
-      this.loaders = [];
-      $rootScope.$on('showLoadingBar', (event, name) => {
-        const index = this.loaders.indexOf(name);
-        if (index === -1) {
-          this.loaders.push(name);
-        }
-      });
-
-      $rootScope.$on('hideLoadingBar', (event, name) => {
-        const index = this.loaders.indexOf(name);
-        if (index > -1) {
-          this.loaders.splice(index, 1);
-        }
-      });
+const LoadingBar = props => (
+  <div className={styles.fixedAtTop}>
+    {props.loading && props.loading.length ?
+      <ProgressBar type="linear" mode="indeterminate" theme={styles}/> :
+      null
     }
-  },
-});
+  </div>
+);
 
+export default LoadingBar;

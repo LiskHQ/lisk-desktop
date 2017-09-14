@@ -1,0 +1,47 @@
+.dialog {
+  & .x-button {
+    right: -20px;
+
+    & span {
+      color: rgba(255, 255, 255, 0.87);
+    }
+  }
+
+  & p {
+    color: rgba(0, 0, 0, 0.87);
+    line-height: 1.4em;
+    font-size: 1em;
+  }
+
+  & header {
+    margin: -24px;
+    margin-bottom: 24px;
+    border-radius: 2px 2px 0 0;
+    color: rgba(255, 255, 255, 0.87);
+
+    & h1 {
+      color: rgba(255, 255, 255, 0.87);
+      font-weight: normal;
+    }
+  }
+
+  & hr {
+    border-bottom-width: 0;
+    margin: 16px -24px;
+    border-color: rgba(0, 0, 0, 0.12);
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .fullscreen {
+    width: 75vw; /* stylelint-disable-line */
+  }
+}
+
+.error {
+  background-color: #c62828;
+}
+
+.success {
+  background-color: #7cb342;
+}

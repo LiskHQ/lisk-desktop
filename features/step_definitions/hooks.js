@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const { defineSupportCode } = require('cucumber');
 const fs = require('fs');
 

@@ -1,0 +1,91 @@
+:root {
+  --online: #73cba9;
+  --offline: #f45d4c;
+}
+
+.wrapper {
+  margin: 8px -8px 16px;
+}
+
+:global .online {
+  color: var(--online);
+}
+
+:global .offline {
+  color: var(--offline);
+}
+
+.value-wrapper {
+  position: relative;
+  width: 100%;
+  height: 70px;
+  text-align: center;
+  background: #eee;
+  overflow: hidden;
+
+  & :global .inner {
+    font-size: 100%;
+    color: #5f696e;
+    display: inline-block;
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+
+    &.primary {
+      font-weight: bold;
+      padding: 9px;
+    }
+
+    &.secondary {
+      font-size: 100%;
+    }
+
+    &.full {
+      line-height: 51px;
+      height: 70px;
+    }
+
+    &.tooltip {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      left: 0;
+      top: 100%;
+      transition: all ease 200ms;
+      font-size: 85% !important;
+      z-index: 0;
+    }
+
+    &.hasTip:hover {
+      color: #000;
+    }
+
+    &.hasTip:hover + .tooltip {
+      top: 45px;
+    }
+  }
+
+  & :global .status {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0;
+  margin-top: 0;
+  margin-top: 20px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+@media only screen and (min-width: 48em) {
+  .title {
+    margin-top: 0;
+  }
+}

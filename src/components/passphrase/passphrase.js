@@ -1,74 +1,84 @@
-import './passphrase.less';
+import React from 'react';
+import Input from 'react-toolbox/lib/input';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import styles from './passphrase.css';
+import InfoParagraph from '../infoParagraph';
+import PassphraseGenerator from './passphraseGenerator';
+import PassphraseVerifier from './passphraseVerifier';
+import ActionBar from '../actionBar';
+import stepsConfig from './steps';
 
-app.directive('passphrase', ($rootScope, $document, Passphrase, dialog) => {
-  /* eslint no-param-reassign: ["error", { "props": false }] */
-  const PassphraseLink = function (scope, element, attrs) {
-    const bindEvents = (listener) => {
-      $document.bind('mousemove', listener);
+class Passphrase extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      current: 'info',
+      answer: '',
     };
+  }
 
-    const unbindEvents = (listener) => {
-      $document.unbind('mousemove', listener);
-    };
+  changeHandler(name, value) {
+    this.setState({ [name]: value });
+  }
 
-    scope.$on('$destroy', () => {
-      unbindEvents();
-    });
+  render() {
+    const templates = {};
+    const { current } = this.state;
+    const steps = stepsConfig(this);
 
-    /**
-     * Uses passphrase.generatePassPhrase to generate passphrase from a given seed
-     * Randomly asks for one of the words in passphrase to ensure it's noted down
-     *
-     * @param {string[]} seed - The array of 16 hex numbers in string format
-     * @todo Why we're broadcasting onAfterSignup here?
-     *  Isn't this only related to login component?
-     */
-    const generateAndDoubleCheck = (seed) => {
-      const passphrase = Passphrase.generatePassPhrase(seed);
+    const useCaseNote = 'your passphrase will be required for logging in to your account.';
+    const securityNote = 'This passphrase is not recoverable and if you lose it, you will lose access to your account forever.';
 
-      dialog.modal('save-passphrase', {
-        passphrase,
-        label: attrs.label,
-        fee: attrs.fee,
-        'on-save': scope.onSave,
-      });
-    };
+    // Step 1: Information/introduction
+    templates.info = <InfoParagraph className={styles.noHr}>
+        Please click Next, then move around your mouse randomly to generate a random passphrase.
+        <br />
+        <br />
+        Note: After registration completes, { this.props.useCaseNote || useCaseNote }
+        <br />
+        { this.props.securityNote || securityNote } Please keep it safe!
+      </InfoParagraph>;
 
-    const terminate = (seed) => {
-      unbindEvents(Passphrase.listene);
-      generateAndDoubleCheck(seed);
-    };
+    // step 2: Generator, binds mouse events
+    templates.generate = <PassphraseGenerator
+      changeHandler={this.changeHandler.bind(this)} />;
 
-    scope.simulateMousemove = () => {
-      $document.mousemove();
-    };
+    // step 3: Confirmation, shows the generated passphrase for user to save it
+    templates.show = <Input type='text' multiline autoFocus={true}
+      className='passphrase'
+      label='Save your passphrase in a safe place'
+      value={this.state.passphrase} />;
 
-    /**
-     * Tests useragent with a regexp and defines if the account is mobile device
-     *
-     * @param {String} [agent] - The useragent string, This parameter is used for
-     *  unit testing purpose
-     * @returns {Boolean} - whether the agent represents a mobile device or not
-     */
-    scope.mobileAndTabletcheck = (agent) => {
-      let check = false;
-      if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(agent || navigator.userAgent || navigator.vendor || window.opera)) {
-        check = true;
-      }
-      return check;
-    };
+    // step 4: Verification, Asks for a random word to make sure the user has copied the passphrase
+    templates.confirm = <PassphraseVerifier
+      passphrase={this.state.passphrase}
+      answer={this.state.answer}
+      updateAnswer={this.changeHandler.bind(this, 'answer')} />;
 
-    Passphrase.init();
-    bindEvents(e => Passphrase.listener(e, terminate));
-    scope.progress = Passphrase.progress;
-  };
+    return (
+      <div>
+        <section className={`${styles.templateItem} ${grid.row} ${grid['middle-xs']}`}>
+          <div className={grid['col-xs-12']}>
+            { templates[current] }
+          </div>
+        </section>
 
-  return {
-    link: PassphraseLink,
-    restrict: 'E',
-    scope: {
-      onSave: '=',
-    },
-    template: require('./passphrase.pug')(),
-  };
-});
+        <ActionBar
+          secondaryButton={{
+            label: steps[current].cancelButton.title,
+            onClick: steps[current].cancelButton.onClick.bind(this),
+          }}
+          primaryButton={{
+            label: steps[current].confirmButton.title(),
+            fee: steps[current].confirmButton.fee(),
+            className: 'next-button',
+            disabled: (current === 'generate' && !this.state.passphrase) ||
+              (current === 'confirm' && !this.state.answer),
+            onClick: steps[current].confirmButton.onClick.bind(this),
+          }} />
+      </div>
+    );
+  }
+}
+
+export default Passphrase;

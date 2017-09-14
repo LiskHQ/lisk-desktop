@@ -1,6 +1,6 @@
 # Lisk Nano
 
-[![Build Status](https://jenkins.lisk.io/buildStatus/icon?job=Nano-Pipeline/development)](https://jenkins.lisk.io/job/Nano-Pipeline/development)
+[![Build Status](https://jenkins.lisk.io/buildStatus/icon?job=lisk-nano/development)](https://jenkins.lisk.io/job/lisk-nano/job/development)
 [![Coverage Status](https://coveralls.io/repos/github/LiskHQ/lisk-nano/badge.svg?branch=development)](https://coveralls.io/github/LiskHQ/lisk-nano?branch=development)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
@@ -14,6 +14,16 @@ npm run dev
 ```
 
 Open http://localhost:8080
+
+For ease of development, you can setItem in localStorage to prefill a passphrase, e.g.:
+```
+localStorage.setItem('passphrase', 'wagon stock borrow episode laundry kitten salute link globe zero feed marble')
+```
+
+And then you can setItem in localStorage to login automatically
+```
+localStorage.setItem('autologin', true)
+```
 
 ## Build
 
@@ -39,9 +49,9 @@ Build package for Windows.
 npm run dist:win
 ```
 
-### Mac OS X
+### macOS
 
-Build package for Mac OS X.
+Build package for macOS.
 
 ```
 npm run dist:mac
@@ -71,17 +81,15 @@ npm run test-live
 
 ### Setup
 
-To setup protractor as described on http://www.protractortest.org/#/ run:
+Setup protractor
 
 ```
-npm install -g protractor
-webdriver-manager update
-webdriver-manager start
+./node_modules/protractor/bin/webdriver-manager update
 ```
 
 Setup a lisk test node to run on localhost:4000 as described in https://github.com/LiskHQ/lisk#tests
 
-Make sure that the Lisk version of the node matches version in https://github.com/LiskHQ/lisk-nano/blob/development/src/app/services/peers/peer.js#L16
+And run it with [pm2](http://pm2.keymetrics.io/).
 
 ### Run
 
@@ -98,6 +106,18 @@ Run the protractor tests (replace `~/git/lisk/` with your path to lisk core):
 npm run e2e-test
 ```
 
+## Launch React Storybook
+
+To launch storybook sandbox with components run
+```
+npm run storybook
+```
+and go to
+
+http://localhost:6006/
+
+
+
 ## Authors
 
 - Ricardo Ferro <ricardo.ferro@gmail.com>
@@ -105,6 +125,7 @@ npm run e2e-test
 - Vít Stanislav <vit@lightcurve.io>
 - Tobias Schwarz <tobias@lightcurve.io>
 - Ali Haghighatkhah <ali@lightcurve.io>
+- Yashar Ayari <darkyashi@gmail.com>
 
 ## License
 

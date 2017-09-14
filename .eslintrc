@@ -1,13 +1,19 @@
 {
-  "extends": "airbnb-base",
+  "extends": [
+    "airbnb-base",
+    "plugin:react/recommended"
+  ],
   "plugins": [
     "import"
   ],
   "globals": {
-    "angular": true,
-    "app": true,
+    "describe": true,
+    "it": true,
+    "beforeEach": true,
+    "afterEach": true,
     "ipc": true,
-    "PRODUCTION": true
+    "PRODUCTION": true,
+    "TEST": true,
   },
   "env": {
     "browser": true,
@@ -27,12 +33,18 @@
       ]
     }],
 
-    "no-loop-func": "off",
+    "react/prop-types": "off",
     "no-plusplus": "off",
-    "no-restricted-properties": "off",
-    "no-return-assign": "off",
     "no-underscore-dangle": "off",
-    "import/no-extraneous-dependencies": "off",
+    "import/no-extraneous-dependencies": ["error", {
+      devDependencies: [
+        "./src/**/*.test.js",
+        "./features/*/*.js",
+        "./src/**/stories.js",
+        "./src/tests.js"
+        ]
+      }
+    ],
     "no-param-reassign": "off"
   }
 }

@@ -103,7 +103,7 @@ function createWindow() {
         {
           label: 'Report Issue...',
           click() {
-            electron.shell.openExternal('https://github.com/LiskHQ/lisk-nano/issues/new');
+            electron.shell.openExternal('https://lisk.zendesk.com/hc/en-us/requests/new');
           },
         },
         {
@@ -153,7 +153,7 @@ function createWindow() {
 
   win.loadURL(`file://${__dirname}/dist/index.html`);
 
-  win.on('closed', () => win = null);
+  win.on('closed', () => { win = null; });
 
   const selectionMenu = Menu.buildFromTemplate([
     { role: 'copy' },

@@ -33,7 +33,7 @@ node('lisk-nano-01'){
       try {
         sh '''#!/bin/bash
           cd ~/lisk-test-nano
-          bash lisk.sh rebuild -0
+          bash lisk.sh rebuild -f /home/lisk/lisk-test-nano/blockchain_explorer.db.gz
           '''
       } catch (err) {
         currentBuild.result = 'FAILURE'
@@ -42,15 +42,37 @@ node('lisk-nano-01'){
       }
     }
 
-    stage ('Build Nano') {
+    stage ('Install npm dependencies') {
       try {
         sh '''#!/bin/bash
-        # Install Electron
         npm install
         # Build nano
         cd $WORKSPACE
         npm install
 
+        '''
+      } catch (err) {
+        currentBuild.result = 'FAILURE'
+        milestone 1
+        error('Stopping build, npm install failed')
+      }
+    }
+
+    stage ('Run Eslint') {
+      try {
+        sh '''
+        cd $WORKSPACE
+        npm run eslint
+        '''
+      } catch (err) {
+        currentBuild.result = 'FAILURE'
+        error('Stopping build, Eslint failed')
+      }
+    }
+
+    stage ('Build Nano') {
+      try {
+        sh '''#!/bin/bash
         # Add coveralls config file
         cp ~/.coveralls.yml-nano .coveralls.yml
 
@@ -68,9 +90,13 @@ node('lisk-nano-01'){
       try {
         sh '''
         export ON_JENKINS=true
+
         # Run test
         cd $WORKSPACE
         npm run test
+
+        # Submit coverage to coveralls
+        cat coverage/*/lcov.info | coveralls -v
         '''
       } catch (err) {
         currentBuild.result = 'FAILURE'
@@ -81,9 +107,6 @@ node('lisk-nano-01'){
     stage ('Start Dev Server and Run Tests') {
       try {
         sh '''
-        # Prepare lisk core for testing
-        bash ~/tx.sh
-
         # Run Dev build and Build
         cd $WORKSPACE
         export NODE_ENV=
@@ -94,7 +117,6 @@ node('lisk-nano-01'){
         export DISPLAY=:99
         Xvfb :99 -ac -screen 0 1280x1024x24 &
         ./node_modules/protractor/bin/webdriver-manager update
-        ./node_modules/protractor/bin/webdriver-manager start &
 
         # Run End to End Tests
         npm run e2e-test
@@ -106,6 +128,9 @@ node('lisk-nano-01'){
         rm -rf /tmp/.X0-lock || true
         pkill -f webpack -9 || true
 
+        # Cleanup - delete all files on success
+        cd $WORKSPACE
+        rm -rf *
         '''
       } catch (err) {
         currentBuild.result = 'FAILURE'

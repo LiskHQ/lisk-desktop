@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 
@@ -11,6 +12,12 @@ function waitForElemAndCheckItsText(selector, text, callback) {
   browser.wait(EC.presenceOf(elem), waitTime, `waiting for element '${selector}'`);
   expect(elem.getText()).to.eventually.equal(text, `inside element "${selector}"`)
     .and.notify(callback || (() => {}));
+}
+
+function waitForElemRemoved(selector, callback) {
+  const elem = element(by.css(selector));
+  browser.wait(EC.not(EC.presenceOf(elem)), waitTime,
+    `waiting for element '${selector}' not present`).then(callback || (() => {}));
 }
 
 function waitForElemAndClickIt(selector, callback) {
@@ -30,14 +37,15 @@ function waitForElemAndSendKeys(selector, keys, callback) {
 }
 
 function checkAlertDialog(title, text, callback) {
-  waitForElemAndCheckItsText('md-dialog h2', title);
-  waitForElemAndCheckItsText('md-dialog .md-dialog-content-body', text, () => {
+  waitForElemAndCheckItsText('.modal-dialog h1', title);
+  waitForElemAndCheckItsText('.modal-dialog .modal-dialog-body', text, () => {
     if (callback) callback();
   });
 }
 
 module.exports = {
   waitForElemAndCheckItsText,
+  waitForElemRemoved,
   waitForElemAndClickIt,
   waitForElemAndSendKeys,
   checkAlertDialog,

@@ -1,0 +1,53 @@
+@import '../../assets/fonts/roboto/style.css';
+@import '../../assets/fonts/roboto-mono/style.css';
+@import '../../assets/fonts/material-design-icons/style.css';
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background-color: #eee;
+}
+
+.body-wrapper {
+  flex: 1 1 80%;
+  max-width: 100%;
+  max-height: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+  font-family: roboto;
+}
+
+.hasMarginBottom {
+  margin-bottom: 20px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+:global .material-icons {
+  font-size: 24px !important;
+}
+
+:global .box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+  background-color: #fff;
+  padding: 16px;
+  box-sizing: border-box;
+
+  &.noPaddingBox {
+    padding: 16px 0;
+  }
+}
+
+:global .hasPaddingRow {
+  padding: 0 16px;
+}
+
+:global .verticalScroll {
+  overflow-x: auto;
+}

@@ -1,129 +1,128 @@
-import './send.less';
+import React from 'react';
+import Input from 'react-toolbox/lib/input';
+import { IconMenu, MenuItem } from 'react-toolbox/lib/menu';
+import { fromRawLsk, toRawLsk } from '../../utils/lsk';
+import SecondPassphraseInput from '../secondPassphraseInput';
+import ActionBar from '../actionBar';
 
-/**
- * This component is a form for transferring funds to other accounts.
- *
- * @module app
- * @submodule send
- */
-app.component('send', {
-  template: require('./send.pug')(),
-  bindings: {
-    recipientId: '<',
-    sendAmount: '<',
-  },
-  /**
-   * The send component constructor class
-   *
-   * @class send
-   * @constructor
-   */
-  controller: class send {
-    constructor($scope, lsk, dialog, $mdDialog, $q, $rootScope, Account, AccountApi) {
-      this.$scope = $scope;
-      this.dialog = dialog;
-      this.$mdDialog = $mdDialog;
-      this.$q = $q;
-      this.$rootScope = $rootScope;
-      this.account = Account;
-      this.accountApi = AccountApi;
+import styles from './send.css';
 
-      this.recipient = {
-        regexp: '^[0-9]{1,21}[L|l]$',
-        value: $scope.$ctrl.recipientId,
-      };
+class Send extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      recipient: {
+        value: '',
+      },
+      amount: {
+        value: '',
+      },
+      secondPassphrase: {
+        value: null,
+      },
+    };
+    this.fee = 0.1;
+    this.inputValidationRegexps = {
+      recipient: /^\d{1,21}[L|l]$/,
+      amount: /^\d+(\.\d{1,8})?$/,
+    };
+  }
 
-      this.amount = {
-        regexp: '^[0-9]+(.[0-9]{1,8})?$',
-      };
+  componentDidMount() {
+    const newState = {
+      recipient: {
+        value: this.props.recipient || '',
+      },
+      amount: {
+        value: this.props.amount || '',
+      },
+    };
+    this.setState(newState);
+  }
 
-      /**
-       * @todo Check if it's possible to replace these watchers with filters.
-       */
-      if ($scope.$ctrl.sendAmount) {
-        this.amount.value = parseFloat(lsk.normalize($scope.$ctrl.sendAmount), 10);
-      }
+  handleChange(name, value, error) {
+    this.setState({
+      [name]: {
+        value,
+        error: typeof error === 'string' ? error : this.validateInput(name, value),
+      },
+    });
+  }
 
-      this.$scope.$watch('$ctrl.amount.value', () => {
-        if (lsk.from(this.amount.value) !== this.amount.raw) {
-          this.amount.raw = lsk.from(this.amount.value) || 0;
-        }
-      });
-
-      this.$scope.$watch('$ctrl.account.balance', () => {
-        this.amount.max = lsk.normalize(this.account.get().balance - 10000000);
-      });
-
-      this.$scope.$watch('$ctrl.amount.value', () => {
-        if (this.amount.value) {
-          this.transferForm.amount.$setValidity('max', parseFloat(this.amount.value) <= parseFloat(this.amount.max));
-        }
-      });
+  validateInput(name, value) {
+    if (!value) {
+      return 'Required';
+    } else if (!value.match(this.inputValidationRegexps[name])) {
+      return 'Invalid';
+    } else if (name === 'amount' && value > parseFloat(this.getMaxAmount())) {
+      return 'Insufficient funds';
+    } else if (name === 'amount' && value === '0') {
+      return 'Zero not allowed';
     }
+    return undefined;
+  }
 
-    /**
-     * Resets the values of recipientId and amount
-     *
-     * @method reset
-     */
-    reset() {
-      this.recipient.value = '';
-      this.amount.value = '';
-    }
+  send() {
+    this.props.sent({
+      activePeer: this.props.activePeer,
+      account: this.props.account,
+      recipientId: this.state.recipient.value,
+      amount: this.state.amount.value,
+      passphrase: this.props.account.passphrase,
+      secondPassphrase: this.state.secondPassphrase.value,
+    });
+  }
 
-    /**
-     * Should be called on form submission.
-     * Calls transaction.create to send the specified amount to recipient.
-     *
-     * @method send
-     */
-    send() {
-      this.loading = true;
+  getMaxAmount() {
+    return fromRawLsk(Math.max(0, this.props.account.balance - toRawLsk(this.fee)));
+  }
 
-      this.accountApi.transactions.create(
-        this.recipient.value,
-        this.amount.raw,
-        this.account.get().passphrase,
-        this.secondPassphrase || null,
-      ).then((data) => {
-        const transaction = {
-          id: data.transactionId,
-          senderPublicKey: this.account.get().publicKey,
-          senderId: this.account.get().address,
-          recipientId: this.recipient.value,
-          amount: this.amount.raw,
-          fee: 10000000,
-        };
-        this.$rootScope.$broadcast('transactionCreation', transaction);
-        return this.dialog.successAlert({
-          text: `Your transaction of ${this.amount.value} LSK to ${this.recipient.value} was accepted and will be processed in a few seconds.`,
-        }).then(() => {
-          this.reset();
-        });
-      }).catch((res) => {
-        this.dialog.errorAlert({ text: res && res.message ? res.message : 'An error occurred while creating the transaction.' });
-      }).finally(() => {
-        this.loading = false;
-      });
-    }
+  setMaxAmount() {
+    this.handleChange('amount', this.getMaxAmount());
+  }
 
-    /**
-     * Sets all the funds of the account to the value input field to be transferred.
-     *
-     * @method setMaxAmount
-     */
-    setMaxAmount() {
-      this.amount.value = Math.max(0, this.amount.max);
-    }
+  render() {
+    return (
+      <div className={`${styles.send} send`}>
+        <Input label='Recipient Address' required={true}
+          className='recipient'
+          autoFocus={true}
+          error={this.state.recipient.error}
+          value={this.state.recipient.value}
+          onChange={this.handleChange.bind(this, 'recipient')} />
+        <Input label='Transaction Amount' required={true}
+          className='amount'
+          error={this.state.amount.error}
+          value={this.state.amount.value}
+          onChange={this.handleChange.bind(this, 'amount')} />
+        <SecondPassphraseInput
+          error={this.state.secondPassphrase.error}
+          value={this.state.secondPassphrase.value}
+          onChange={this.handleChange.bind(this, 'secondPassphrase')} />
+        <div className={styles.fee}> Fee: {this.fee} LSK</div>
+        <IconMenu icon='more_vert' position='topRight' menuRipple className={`${styles.sendAllMenu} transaction-amount`} >
+          <MenuItem onClick={this.setMaxAmount.bind(this)}
+            caption='Set maximum amount'
+            className='send-maximum-amount'/>
+        </IconMenu>
+        <ActionBar
+          secondaryButton={{
+            onClick: this.props.closeDialog,
+          }}
+          primaryButton={{
+            label: 'Send',
+            disabled: (
+              !!this.state.recipient.error ||
+              !!this.state.amount.error ||
+              !!this.state.secondPassphrase.error ||
+              this.state.secondPassphrase.value === '' ||
+              !this.state.recipient.value ||
+              !this.state.amount.value),
+            onClick: this.send.bind(this),
+          }} />
+      </div>
+    );
+  }
+}
 
-    /**
-     * Cancels the dialog.
-     *
-     * @method cancel
-     * @todo Should reset the form too.
-     */
-    cancel() {
-      this.$mdDialog.cancel();
-    }
-  },
-});
+export default Send;

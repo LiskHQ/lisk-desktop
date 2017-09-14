@@ -1,0 +1,21 @@
+@import './circularProgressbar.css';
+
+.delegateName {
+  margin: 0;
+  font-weight: normal;
+}
+
+.grayCard {
+  background: #f7f8f9;
+}
+
+.forgedBlocksTableWrapper {
+  margin: 0 -8px;
+  overflow-x: auto;
+}
+
+.circularProgressTitle {
+  text-align: center;
+  padding-bottom: 16px;
+  width: 100%;
+}
