@@ -34,6 +34,7 @@
     "flexboxgrid": "=6.3.1",
     "lisk-js": "=0.4.5",
     "moment": "=2.15.1",
+    "numeral": "=2.0.6",
     "postcss": "=6.0.2",
     "postcss-cssnext": "=2.11.0",
     "prop-types": "=15.5.10",
