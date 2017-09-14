@@ -3,8 +3,8 @@ import { votePlaced, addedToVoteList, removedFromVoteList } from '../../actions/
 import VoteDialog from './voteDialog';
 
 const mapStateToProps = state => ({
-  votedList: state.voting.votedList,
-  unvotedList: state.voting.unvotedList,
+  votedList: state.voting.votedList.filter(item => !item.pending),
+  unvotedList: state.voting.unvotedList.filter(item => !item.pending),
   account: state.account,
   activePeer: state.peers.data,
 });

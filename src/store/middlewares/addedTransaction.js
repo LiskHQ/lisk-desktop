@@ -1,5 +1,6 @@
 import actionTypes from '../../constants/actions';
 import { successAlertDialogDisplayed } from '../../actions/dialog';
+import { fromRawLsk } from '../../utils/lsk';
 
 const addedTransactionMiddleware = store => next => (action) => {
   next(action);
@@ -20,7 +21,7 @@ const addedTransactionMiddleware = store => next => (action) => {
         break;
       default:
         // send: undefined
-        text = `Your transaction of ${action.data.amount} LSK to ${action.data.recipientId} was accepted and will be processed in a few seconds.`;
+        text = `Your transaction of ${fromRawLsk(action.data.amount)} LSK to ${action.data.recipientId} was accepted and will be processed in a few seconds.`;
         break;
     }
 

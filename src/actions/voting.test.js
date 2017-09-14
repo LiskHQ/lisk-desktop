@@ -104,16 +104,6 @@ describe('actions: voting', () => {
       expect(dispatch).to.have.been.calledWith(transactionAdded(expectedAction));
     });
 
-    it('should dispatch clearVoteLists action if resolved', () => {
-      delegateApiMock.returnsPromise().resolves({ transactionId: '15626650747375562521' });
-      const clock = sinon.useFakeTimers();
-
-      actionFunction(dispatch);
-      clock.tick(10000);
-      expect(dispatch).to.have.property('callCount', 3);
-      clock.restore();
-    });
-
     it('should dispatch errorAlertDialogDisplayed action if caught', () => {
       delegateApiMock.returnsPromise().rejects({ message: 'sample message' });
 
