@@ -49,6 +49,10 @@ class VotingHeader extends React.Component {
     return info;
   }
 
+  isOnUnvoteList(delegate) {
+    return this.props.unvotedList.filter(d => d.username === delegate.username).length;
+  }
+
   render() {
     const theme = this.props.votedDelegates.length === 0 ? disableStyle : styles;
     const button = <div className={styles.votesMenuButton}>
@@ -72,12 +76,20 @@ class VotingHeader extends React.Component {
           <IconMenu theme={theme} icon={button} position='topLeft'
             iconRipple={false} className='my-votes-button'>
             {this.props.votedDelegates.map(delegate =>
-              <MenuItem
-                theme={styles}
-                key={delegate.username}
-                caption={delegate.username}
-                icon="close"
-                onClick={this.props.addToUnvoted.bind(this, delegate)} />)}
+              (this.isOnUnvoteList(delegate) ?
+                <MenuItem
+                  theme={styles}
+                  key={delegate.username}
+                  caption={delegate.username}
+                  icon='add'
+                  onClick={this.props.addToVoteList.bind(this, delegate)} /> :
+                <MenuItem
+                  theme={styles}
+                  key={delegate.username}
+                  caption={delegate.username}
+                  icon='clear'
+                  onClick={this.props.addToUnvoted.bind(this, delegate)} />),
+            )}
           </IconMenu>
           <Button icon='done' flat
             className='vote-button'

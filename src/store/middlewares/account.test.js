@@ -6,6 +6,7 @@ import * as delegateApi from '../../utils/api/delegate';
 import actionTypes from '../../constants/actions';
 import transactionTypes from '../../constants/transactionTypes';
 import { SYNC_ACTIVE_INTERVAL, SYNC_INACTIVE_INTERVAL } from '../../constants/api';
+import { clearVoteLists } from '../../actions/voting';
 
 describe('Account middleware', () => {
   let store;
@@ -20,6 +21,7 @@ describe('Account middleware', () => {
     data: {
       confirmed: [{
         type: transactionTypes.registerDelegate,
+        confirmations: 1,
       }],
     },
   };
@@ -160,6 +162,12 @@ describe('Account middleware', () => {
     expect(store.dispatch).to.not.have.been.calledWith();
 
     delegateApiMock.restore();
+  });
+
+  it(`should dispatch clearVoteLists action on ${actionTypes.transactionsUpdated} action if action.data.confirmed contains delegateRegistration transactions`, () => {
+    transactionsUpdatedAction.data.confirmed[0].type = transactionTypes.vote;
+    middleware(store)(next)(transactionsUpdatedAction);
+    expect(store.dispatch).to.have.been.calledWith(clearVoteLists());
   });
 });
 

@@ -47,6 +47,7 @@ let props;
 describe('VoteDialog', () => {
   let wrapper;
   props = {
+    voted: [],
     activePeer: {},
     votedList,
     unvotedList,
@@ -89,12 +90,26 @@ describe('VoteDialog', () => {
 
     it('should not fire votePlaced action if lists are empty', () => {
       const noVoteProps = {
-        activePeer: {},
-        votedList: [],
-        unvotedList: [],
-        closeDialog: () => {},
-        clearVoteLists: () => {},
-        votePlaced: () => {},
+        ...props,
+        ...{
+          votedList: [],
+          unvotedList: [],
+        },
+      };
+      const mounted = mount(<Provider store={store}>
+        <VoteDialog {...noVoteProps} account={ordinaryAccount} /></Provider>);
+      const primaryButton = mounted.find('VoteDialog .primary-button button');
+
+      expect(primaryButton.props().disabled).to.be.equal(true);
+    });
+
+    it('should not fire votePlaced action the combined lenght of votedList and unvotedList is higher than 33', () => {
+      const noVoteProps = {
+        ...props,
+        ...{
+          votedList: Array(20).fill({}).map((obj, key) => ({ username: `standby_${key}` })),
+          unvotedList: Array(14).fill({}).map((obj, key) => ({ username: `genesis_${key}` })),
+        },
       };
       const mounted = mount(<Provider store={store}>
         <VoteDialog {...noVoteProps} account={ordinaryAccount} /></Provider>);

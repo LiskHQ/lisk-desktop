@@ -40,8 +40,8 @@ const unvotedList = [
 const store = configureMockStore([])({
   account: ordinaryAccount,
   voting: {
-    votedList,
-    unvotedList,
+    votedList: [...votedList, { pending: true, username: 'pending' }],
+    unvotedList: [...unvotedList, { pending: true, username: 'pending2' }],
   },
   peers: { data: {} },
 });
@@ -49,7 +49,7 @@ const store = configureMockStore([])({
 describe('VoteDialog HOC', () => {
   let wrapper;
   beforeEach(() => {
-    wrapper = mount(<Provider store={store}><VoteDialogHOC /></Provider>);
+    wrapper = mount(<Provider store={store}><VoteDialogHOC voted={[]} /></Provider>);
   });
 
   it('should render VoteDialog', () => {
@@ -59,8 +59,8 @@ describe('VoteDialog HOC', () => {
   it('should pass appropriate properties to VoteDialog', () => {
     const confirmVotesProps = wrapper.find('VoteDialog').props();
 
-    expect(confirmVotesProps.votedList).to.be.equal(votedList);
-    expect(confirmVotesProps.unvotedList).to.be.equal(unvotedList);
+    expect(confirmVotesProps.votedList).to.be.deep.equal(votedList);
+    expect(confirmVotesProps.unvotedList).to.be.deep.equal(unvotedList);
     expect(confirmVotesProps.account).to.be.equal(ordinaryAccount);
     expect(confirmVotesProps.activePeer).to.deep.equal({});
     expect(typeof confirmVotesProps.votePlaced).to.be.equal('function');
