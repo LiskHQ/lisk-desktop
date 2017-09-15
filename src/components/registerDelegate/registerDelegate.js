@@ -4,7 +4,7 @@ import InfoParagraph from '../infoParagraph';
 import ActionBar from '../actionBar';
 import Fees from '../../constants/fees';
 import AuthInputs from '../authInputs';
-import { handleChange, authStatePrefill } from '../../utils/form';
+import { handleChange, authStatePrefill, authStateIsValid } from '../../utils/form';
 
 class RegisterDelegate extends React.Component {
   constructor() {
@@ -68,10 +68,7 @@ class RegisterDelegate extends React.Component {
             className: 'register-button',
             disabled: (!this.state.name.value ||
               this.props.account.isDelegate ||
-              !!this.state.passphrase.error ||
-              !!this.state.secondPassphrase.error ||
-              this.state.secondPassphrase.value === '' ||
-              !this.state.passphrase.value),
+              !authStateIsValid(this.state)),
             onClick: this.register.bind(this),
           }} />
       </div>

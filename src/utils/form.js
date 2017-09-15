@@ -8,6 +8,13 @@ export const authStatePrefill = account => ({
   },
 });
 
+export const authStateIsValid = state => (
+  !state.passphrase.error &&
+  state.passphrase.value !== '' &&
+  !state.secondPassphrase.error &&
+  state.secondPassphrase.value !== ''
+);
+
 export const handleChange = (component, name, value, error) => {
   component.setState({
     [name]: {

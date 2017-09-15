@@ -4,7 +4,7 @@ import { IconMenu, MenuItem } from 'react-toolbox/lib/menu';
 import { fromRawLsk, toRawLsk } from '../../utils/lsk';
 import AuthInputs from '../authInputs';
 import ActionBar from '../actionBar';
-import { authStatePrefill } from '../../utils/form';
+import { authStatePrefill, authStateIsValid } from '../../utils/form';
 
 import styles from './send.css';
 
@@ -113,13 +113,10 @@ class Send extends React.Component {
             label: 'Send',
             disabled: (
               !!this.state.recipient.error ||
-              !!this.state.amount.error ||
-              !!this.state.passphrase.error ||
-              !!this.state.secondPassphrase.error ||
-              this.state.secondPassphrase.value === '' ||
-              !this.state.passphrase.value ||
               !this.state.recipient.value ||
-              !this.state.amount.value),
+              !!this.state.amount.error ||
+              !this.state.amount.value ||
+              !authStateIsValid(this.state)),
             onClick: this.send.bind(this),
           }} />
       </div>

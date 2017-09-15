@@ -5,7 +5,7 @@ import Fees from '../../constants/fees';
 import Autocomplete from './voteAutocomplete';
 import styles from './voteDialog.css';
 import AuthInputs from '../authInputs';
-import { authStatePrefill } from '../../utils/form';
+import { authStatePrefill, authStateIsValid } from '../../utils/form';
 
 export default class VoteDialog extends React.Component {
   constructor() {
@@ -75,10 +75,7 @@ export default class VoteDialog extends React.Component {
                 this.props.unvotedList.length > 33) ||
               (this.props.votedList.length === 0 &&
                 this.props.unvotedList.length === 0) ||
-              !!this.state.passphrase.error ||
-              !this.state.passphrase.value ||
-              (!!this.state.secondPassphrase.error ||
-                this.state.secondPassphrase.value === '')
+              !authStateIsValid(this.state)
             ),
             onClick: this.confirm.bind(this),
           }} />
