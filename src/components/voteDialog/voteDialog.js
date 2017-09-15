@@ -26,11 +26,11 @@ export default class VoteDialog extends React.Component {
     this.props.votePlaced({
       activePeer: this.props.activePeer,
       account: this.props.account,
-      votedList: this.props.votedList,
-      unvotedList: this.props.unvotedList,
+      votes: this.props.votes,
       secondSecret,
     });
   }
+
   setSecondPass(name, value, error) {
     this.setState({
       [name]: {
@@ -41,14 +41,15 @@ export default class VoteDialog extends React.Component {
   }
 
   render() {
+    const { votes } = this.props;
+    const votesList = Object.keys(votes).filter(delegate =>
+      votes[delegate].confirmed !== votes[delegate].unconfirmed);
     return (
       <article>
         <Autocomplete
-          voted={this.props.voted}
-          votedList={this.props.votedList}
-          unvotedList={this.props.unvotedList}
-          addedToVoteList={this.props.addedToVoteList}
-          removedFromVoteList={this.props.removedFromVoteList}
+          votedDelegates={this.props.delegates}
+          votes={this.props.votes}
+          voteToggled={this.props.voteToggled}
           activePeer={this.props.activePeer} />
         <SecondPassphraseInput
           error={this.state.secondPassphrase.error}
@@ -71,8 +72,7 @@ export default class VoteDialog extends React.Component {
             label: 'Confirm',
             fee: Fees.vote,
             disabled: (
-              (this.props.votedList.length === 0 &&
-              this.props.unvotedList.length === 0) ||
+              votesList.length === 0 ||
               (!!this.state.secondPassphrase.error ||
               this.state.secondPassphrase.value === '')
             ),
