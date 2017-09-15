@@ -25,7 +25,7 @@ export class ReceiveDialog extends React.Component {
         <div className={ `${grid.row} ${grid['center-xs']}` }>
           <span>
             <h3>Address</h3>
-            <h1 className={style.address}>{props.address}</h1>
+            <h1 className={`recieve-modal-address ${style.address}`}>{props.address}</h1>
             <br />
             <QRCode value={props.address} size={300}/>
             <br /><br />

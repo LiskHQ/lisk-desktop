@@ -47,7 +47,7 @@ class Transactions extends React.Component {
           </table> :
           <p className={`${styles.empty} hasPaddingRow empty-message`}>
             There are no transactions, yet. &nbsp;
-            <ReceiveButton label='Receive LSK' primary />
+            <ReceiveButton label='Receive LSK' className='receive-lsk-button' primary />
           </p>
         }
         <Waypoint bottomOffset='-80%'
