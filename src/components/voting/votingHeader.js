@@ -46,10 +46,10 @@ class VotingHeader extends React.Component {
     const unvoted = votesList.filter(item =>
       votes[item].confirmed && !votes[item].unconfirmed).length;
     if (voted > 0 || unvoted > 0) {
-      const seprator = (voted > 0 && unvoted > 0) ? ' / ' : ''; // eslint-disable-line
+      const separator = (voted > 0 && unvoted > 0) ? ' / ' : ''; // eslint-disable-line
       const votedHtml = voted > 0 ? <span className={styles.voted}>+{voted}</span> : '';
       const unvotedHtml = unvoted > 0 ? <span className={styles.unvoted}>-{unvoted}</span> : '';
-      info = <span>VOTE ({votedHtml}{seprator}{unvotedHtml})</span>;
+      info = <span className='vote-button-info'>VOTE ({votedHtml}{separator}{unvotedHtml})</span>;
     }
     return info;
   }
@@ -78,13 +78,16 @@ class VotingHeader extends React.Component {
         <div className={styles.actionBar}>
           <IconMenu theme={theme} icon={button} position='topLeft'
             iconRipple={false} className='my-votes-button'>
-            {votesList.map(delegate =>
+            {votesList.map(username =>
               <MenuItem
                 theme={styles}
-                key={delegate}
-                caption={delegate}
-                icon={(votes[delegate].confirmed === votes[delegate].unconfirmed) ? 'clear' : 'add'}
-                onClick={this.props.voteToggled.bind(this, delegate)} />)}
+                key={username}
+                caption={username}
+                icon={(votes[username].confirmed === votes[username].unconfirmed) ? 'clear' : 'add'}
+                onClick={this.props.voteToggled.bind(this, {
+                  username,
+                  publicKey: votes[username].publicKey,
+                })} />)}
           </IconMenu>
           <Button icon='done' flat
             className='vote-button'

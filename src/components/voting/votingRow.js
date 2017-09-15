@@ -3,30 +3,38 @@ import { TableRow, TableCell } from 'react-toolbox/lib/table';
 import styles from './voting.css';
 import Checkbox from './voteCheckbox';
 
-const setRowClass = ({ pending, selected, voted }) => {
+const setRowClass = (voteStatus) => {
+  if (!voteStatus) {
+    return '';
+  }
+  const { pending, confirmed, unconfirmed } = voteStatus;
   if (pending) {
     return styles.pendingRow;
-  } else if (selected) {
-    return voted ? styles.votedRow : styles.upVoteRow;
+  } else if (confirmed !== unconfirmed) {
+    return confirmed ? styles.downVoteRow : styles.upVoteRow;
   }
-  return voted ? styles.downVoteRow : '';
+  return confirmed ? styles.votedRow : '';
 };
 
 class VotingRow extends React.Component {
   // eslint-disable-next-line class-methods-use-this
-  shouldComponentUpdate(nextProps) {
-    return nextProps.voteStatus.unconfirmed !== this.props.voteStatus.unconfirmed;
+  shouldComponentUpdate({ voteStatus }) {
+    const oldStatus = this.props.voteStatus;
+    return (!oldStatus && !!voteStatus) ||
+      (!!oldStatus && !voteStatus) ||
+      ((!!oldStatus && !!voteStatus) &&
+      (oldStatus.unconfirmed !== voteStatus.unconfirmed ||
+      oldStatus.pending !== voteStatus.pending));
   }
 
   render() {
-    const props = this.props;
-    const { data } = props;
-    return (<TableRow className={`${styles.row} ${setRowClass(data)}`}>
+    const { data, voteStatus, voteToggled } = this.props;
+    return (<TableRow className={`${styles.row} ${setRowClass(voteStatus)}`}>
       <TableCell>
         <Checkbox styles={styles}
-          toggle={props.voteToggled}
+          toggle={voteToggled}
           value={data.selected}
-          status={props.voteStatus}
+          status={voteStatus}
           data={data}
         />
       </TableCell>

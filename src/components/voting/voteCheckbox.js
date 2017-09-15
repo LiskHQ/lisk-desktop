@@ -2,13 +2,14 @@ import React from 'react';
 import Checkbox from 'react-toolbox/lib/checkbox';
 import Spinner from '../spinner';
 
-const VoteCheckbox = (props) => {
-  const template = props.status && props.status.pending ?
+const VoteCheckbox = ({ data, status, styles, toggle }) => {
+  const { username, publicKey } = data;
+  const template = status && status.pending ?
     <Spinner /> :
     <Checkbox
-      className={props.styles.field}
-      checked={props.status.unconfirmed}
-      onChange={props.toggle.bind(null, props.data.username)}
+      className={styles.field}
+      checked={status ? status.unconfirmed : false}
+      onChange={toggle.bind(null, { username, publicKey })}
     />;
   return template;
 };
