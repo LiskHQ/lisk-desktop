@@ -4,22 +4,39 @@ import Lisk from 'lisk-js';
 
 import InfoParagraph from '../infoParagraph';
 import SignVerifyResult from '../signVerifyResult';
+import AuthInputs from '../authInputs';
 import ActionBar from '../actionBar';
+import { authStatePrefill, authStateIsValid } from '../../utils/form';
 
 
 class SignMessageComponent extends React.Component {
-
   constructor() {
     super();
     this.state = {
       message: '',
       result: '',
+      ...authStatePrefill(),
     };
+  }
+
+  componentDidMount() {
+    this.setState({
+      ...authStatePrefill(this.props.account),
+    });
+  }
+
+  handleChange(name, value, error) {
+    this.setState({
+      [name]: {
+        value,
+        error,
+      },
+    });
   }
 
   sign(message) {
     const signedMessage = Lisk.crypto.signMessageWithSecret(message,
-      this.props.account.passphrase);
+      this.state.passphrase);
     const result = Lisk.crypto.printSignedMessage(
       message, signedMessage, this.props.account.publicKey);
     this.setState({ result, resultIsShown: false, message });
@@ -52,6 +69,10 @@ class SignMessageComponent extends React.Component {
               autoFocus={true}
               value={this.state.message}
               onChange={this.sign.bind(this)} />
+            <AuthInputs
+              passphrase={this.state.passphrase}
+              secondPassphrase={this.state.secondPassphrase}
+              onChange={this.handleChange.bind(this)} />
           </section>
           {this.state.resultIsShown ?
             <SignVerifyResult result={this.state.result} title='Result' /> :
@@ -62,7 +83,9 @@ class SignMessageComponent extends React.Component {
               primaryButton={{
                 label: 'Sign and copy result to clipboard',
                 className: 'sign-button',
-                disabled: !this.state.result || this.state.resultIsShown,
+                disabled: (!this.state.result ||
+                  this.state.resultIsShown ||
+                  !authStateIsValid(this.state)),
                 onClick: this.showResult.bind(this),
               }} />
           }
