@@ -14,47 +14,49 @@ describe('AuthInputs', () => {
     props = {
       onChange: sinon.spy(),
       secondPassphrase: { },
-      hasPassphrase: true,
+      account: {
+        passphrase,
+      },
       passphrase: {
         value: passphrase,
       },
     };
   });
 
-  it('should render Input if props.hasSecondPassphrase', () => {
-    props.hasSecondPassphrase = true;
+  it('should render Input if props.account.secondSignature', () => {
+    props.account.secondSignature = true;
     wrapper = mount(<AuthInputs {...props} />);
     expect(wrapper.find('Input')).to.have.lengthOf(1);
   });
 
-  it('should render null if !props.hasSecondPassphrase', () => {
-    props.hasSecondPassphrase = false;
+  it('should render null if !props.account.secondSignature', () => {
+    props.account.secondSignature = false;
     wrapper = mount(<AuthInputs {...props} />);
     expect(wrapper.html()).to.equal('<span></span>');
   });
 
-  it('should render null if !props.hasSecondPassphrase', () => {
-    props.hasSecondPassphrase = false;
+  it('should render null if !props.account.secondSignature', () => {
+    props.account.secondSignature = false;
     wrapper = mount(<AuthInputs {...props} />);
     expect(wrapper.html()).to.equal('<span></span>');
   });
 
   it('should call props.onChange when input value changes', () => {
-    props.hasSecondPassphrase = true;
+    props.account.secondSignature = true;
     wrapper = mount(<AuthInputs {...props} />);
     wrapper.find('.second-passphrase input').simulate('change', { target: { value: passphrase } });
     expect(props.onChange).to.have.been.calledWith('secondPassphrase', passphrase);
   });
 
   it('should call props.onChange(\'secondPassphrase\', \'Required\') when input value changes to \'\'', () => {
-    props.hasSecondPassphrase = true;
+    props.account.secondSignature = true;
     wrapper = mount(<AuthInputs {...props} />);
     wrapper.find('.second-passphrase input').simulate('change', { target: { value: '' } });
     expect(props.onChange).to.have.been.calledWith('secondPassphrase', '', 'Required');
   });
 
   it('should call props.onChange(\'secondPassphrase\', \'Invalid passphrase\') when input value changes to \'test\'', () => {
-    props.hasSecondPassphrase = true;
+    props.account.secondSignature = true;
     wrapper = mount(<AuthInputs {...props} />);
     wrapper.find('.second-passphrase input').simulate('change', { target: { value: 'test' } });
     expect(props.onChange).to.have.been.calledWith('secondPassphrase', 'test', 'Passphrase should have 12 words, entered passphrase has 1');

@@ -3,7 +3,7 @@ import PassphraseInput from '../passphraseInput';
 
 class AuthInputs extends React.Component {
   componentDidMount() {
-    if (this.props.hasSecondPassphrase) {
+    if (this.props.account.secondSignature) {
       this.props.onChange('secondPassphrase', '');
     }
   }
@@ -14,14 +14,14 @@ class AuthInputs extends React.Component {
 
   render() {
     return <span>
-      {(!this.props.hasPassphrase ?
+      {(!this.props.account.passphrase ?
         <PassphraseInput label='Passphrase'
           className='passphrase'
           error={this.props.passphrase.error}
           value={this.props.passphrase.value}
           onChange={this.onChange.bind(this, 'passphrase')} /> :
         null)}
-      {(this.props.hasSecondPassphrase ?
+      {(this.props.account.secondSignature ?
         <PassphraseInput label='Second Passphrase'
           className='second-passphrase'
           error={this.props.secondPassphrase.error}

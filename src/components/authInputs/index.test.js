@@ -12,21 +12,16 @@ describe('AuthInputsHOC', () => {
     onChange: () => {},
     secondPassphrase: {},
   };
+  const account = {
+    secondSignature: 1,
+    passphrase,
+  };
 
-  it('should render AuthInputs with props.hasSecondPassphrase if store.account.secondSignature is truthy', () => {
-    const store = configureMockStore([])({ account: { secondSignature: 1, passphrase } });
+  it('should render AuthInputs with props.account equal to state.account ', () => {
+    const store = configureMockStore([])({ account });
     wrapper = mount(<Provider store={store}>
-      <AuthInputsHOC {...props} />
+      <AuthInputsHOC {...props}/>
     </Provider>);
-    expect(wrapper.find('AuthInputs')).to.have.lengthOf(1);
-    expect(wrapper.find('AuthInputs').props().hasSecondPassphrase).to.equal(true);
-  });
-
-  it('should render AuthInputs with !props.hasSecondPassphrase if store.account.secondSignature is falsy', () => {
-    const store = configureMockStore([])({ account: { secondSignature: 0, passphrase } });
-    wrapper = mount(<Provider store={store}>
-      <AuthInputsHOC {...props} />
-    </Provider>);
-    expect(wrapper.find('AuthInputs').props().hasSecondPassphrase).to.equal(false);
+    expect(wrapper.find('AuthInputs').props().account).to.deep.equal(account);
   });
 });
