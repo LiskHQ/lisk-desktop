@@ -28,6 +28,14 @@ export const votesAdded = data => ({
 });
 
 /**
+ * Add data to the list of all delegates
+ */
+export const delegatesAdded = data => ({
+  type: actionTypes.delegatesAdded,
+  data,
+});
+
+/**
  * Toggles account's vote for the given delegate
  */
 export const voteToggled = data => ({
@@ -40,9 +48,19 @@ export const voteToggled = data => ({
  * Adds pending state and then after the duration of one round
  * cleans the pending state
  */
-export const votePlaced = ({ activePeer, account, votedList, unvotedList, secondSecret }) =>
+export const votePlaced = ({ activePeer, account, votes, secondSecret }) =>
   (dispatch) => {
-    // Make the Api call
+    const votedList = [];
+    const unvotedList = [];
+
+    Object.keys(votes).forEach((username) => {
+      if (!votes[username].confirmed && votes[username].unconfirmed) {
+        votedList.push(votes[username].publicKey);
+      } else if (votes[username].confirmed && !votes[username].unconfirmed) {
+        unvotedList.push(votes[username].publicKey);
+      }
+    });
+
     vote(
       activePeer,
       account.passphrase,
@@ -84,5 +102,21 @@ export const votesFetched = ({ activePeer, address }) =>
   (dispatch) => {
     listAccountDelegates(activePeer, address).then(({ delegates }) => {
       dispatch(votesAdded({ list: delegates }));
+    });
+  };
+
+/**
+ * Gets list of all delegates
+ */
+export const delegatesFetched = ({ activePeer, q, offset, refresh }) =>
+  (dispatch) => {
+    listDelegates(
+      activePeer, {
+        offset,
+        limit: '100',
+        q,
+      },
+    ).then(({ delegates, totalCount }) => {
+      dispatch(delegatesAdded({ list: delegates, totalDelegates: totalCount, refresh }));
     });
   };

@@ -14,7 +14,7 @@ import { transactionAdded } from './transactions';
 import { errorAlertDialogDisplayed } from './dialog';
 import * as delegateApi from '../utils/api/delegate';
 
-describe('actions: voting', () => {
+describe.only('actions: voting', () => {
   describe('voteToggled', () => {
     it('should create an action to add data to toggle the vote status for any given delegate', () => {
       const data = {
@@ -32,8 +32,8 @@ describe('actions: voting', () => {
   describe('votesAdded', () => {
     it('should create an action to remove data from vote list', () => {
       const data = [
-        { username: 'username1', id: '123HG3452245L' },
-        { username: 'username2', id: '123HG3522345L' },
+        { username: 'username1', publicKey: '123HG3452245L' },
+        { username: 'username2', publicKey: '123HG3522345L' },
       ];
       const expectedAction = {
         data,
@@ -69,12 +69,11 @@ describe('actions: voting', () => {
       address: 'test_address',
     };
     const activePeer = {};
-    const votedList = [];
-    const unvotedList = [];
     const secondSecret = null;
+    const votes = {};
 
     const actionFunction = votePlaced({
-      activePeer, account, votedList, unvotedList, secondSecret,
+      activePeer, account, votes, secondSecret,
     });
     let dispatch;
 
@@ -140,14 +139,14 @@ describe('actions: voting', () => {
       address: '8096217735672704724L',
     };
     const votesList = [
-      { username: 'username1', id: '80962134535672704724L' },
-      { username: 'username2', id: '80962134535672704725L' },
+      { username: 'username1', publicKey: '80962134535672704724L' },
+      { username: 'username2', publicKey: '80962134535672704725L' },
     ];
     const actionFunction = votesFetched(data);
     let dispatch;
 
     beforeEach(() => {
-      delegateApiMock = sinon.stub(delegateApi, 'setSecondPassphrase');
+      delegateApiMock = sinon.stub(delegateApi, 'listAccountDelegates');
       dispatch = sinon.spy();
     });
 
