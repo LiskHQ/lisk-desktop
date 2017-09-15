@@ -8,13 +8,15 @@ import {
   voteToggled,
   votePlaced,
   votesFetched,
+  delegatesFetched,
+  delegatesAdded,
 } from './voting';
 import Fees from '../constants/fees';
 import { transactionAdded } from './transactions';
 import { errorAlertDialogDisplayed } from './dialog';
 import * as delegateApi from '../utils/api/delegate';
 
-describe.only('actions: voting', () => {
+describe('actions: voting', () => {
   describe('voteToggled', () => {
     it('should create an action to add data to toggle the vote status for any given delegate', () => {
       const data = {
@@ -70,7 +72,10 @@ describe.only('actions: voting', () => {
     };
     const activePeer = {};
     const secondSecret = null;
-    const votes = {};
+    const votes = {
+      username1: { publicKey: 'sample_key', confirmed: true, unconfirmed: false },
+      username2: { publicKey: 'sample_key', confirmed: false, unconfirmed: true },
+    };
 
     const actionFunction = votePlaced({
       activePeer, account, votes, secondSecret,
@@ -133,37 +138,60 @@ describe.only('actions: voting', () => {
   });
 
   describe('votesFetched', () => {
-    let delegateApiMock;
     const data = {
       activePeer: {},
       address: '8096217735672704724L',
     };
-    const votesList = [
+    const delegates = [
       { username: 'username1', publicKey: '80962134535672704724L' },
       { username: 'username2', publicKey: '80962134535672704725L' },
     ];
     const actionFunction = votesFetched(data);
-    let dispatch;
-
-    beforeEach(() => {
-      delegateApiMock = sinon.stub(delegateApi, 'listAccountDelegates');
-      dispatch = sinon.spy();
-    });
-
-    afterEach(() => {
-      delegateApiMock.restore();
-    });
 
     it('should create an action function', () => {
       expect(typeof actionFunction).to.be.deep.equal('function');
     });
 
-    it('should dispatch votesAdded action if resolved', () => {
-      delegateApiMock.returnsPromise().resolves(votesList);
-      const expectedAction = { list: votesList };
+    it.skip('should dispatch votesAdded action if resolved', () => {
+      const delegateApiMock = sinon.stub(delegateApi, 'listAccountDelegates');
+      const dispatch = sinon.spy();
+
+      delegateApiMock.returnsPromise().resolves({ delegates });
+      const expectedAction = { list: delegates };
 
       actionFunction(dispatch);
-      expect(dispatch).to.have.been.calledWith(transactionAdded(expectedAction));
+      expect(dispatch).to.have.been.calledWith(votesAdded(expectedAction));
+      delegateApiMock.restore();
+    });
+  });
+
+  describe('delegatesFetched', () => {
+    const data = {
+      activePeer: {},
+      q: '',
+      offset: 0,
+      refresh: true,
+    };
+    const delegates = [
+      { username: 'username1', publicKey: '80962134535672704724L' },
+      { username: 'username2', publicKey: '80962134535672704725L' },
+    ];
+    const actionFunction = delegatesFetched(data);
+
+    it('should create an action function', () => {
+      expect(typeof actionFunction).to.be.deep.equal('function');
+    });
+
+    it('should dispatch delegatesAdded action if resolved', () => {
+      const delegateApiMock = sinon.stub(delegateApi, 'listDelegates');
+      const dispatch = sinon.spy();
+
+      delegateApiMock.returnsPromise().resolves({ delegates, totalCount: 10 });
+      const expectedAction = { list: delegates, totalDelegates: 10, refresh: true };
+
+      actionFunction(dispatch);
+      expect(dispatch).to.have.been.calledWith(delegatesAdded(expectedAction));
+      delegateApiMock.restore();
     });
   });
 });

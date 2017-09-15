@@ -54,6 +54,7 @@ export const votePlaced = ({ activePeer, account, votes, secondSecret }) =>
     const unvotedList = [];
 
     Object.keys(votes).forEach((username) => {
+      /* istanbul ignore else */
       if (!votes[username].confirmed && votes[username].unconfirmed) {
         votedList.push(votes[username].publicKey);
       } else if (votes[username].confirmed && !votes[username].unconfirmed) {
