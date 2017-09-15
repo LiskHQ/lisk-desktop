@@ -39,7 +39,7 @@ describe('SaveAccount', () => {
   });
 
   it('should call props.closeDialog, props.successToast and localStorage.setItem on "save button" click', () => {
-    wrapper.find('.save-button').simulate('click');
+    wrapper.find('.save-account-button').simulate('click');
     const componentProps = wrapper.find(SaveAccount).props();
     expect(componentProps.closeDialog).to.have.been.calledWith();
     expect(componentProps.successToast).to.have.been.calledWith({ label: 'Account saved' });

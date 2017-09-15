@@ -43,6 +43,12 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
       .and.notify(callback);
   });
 
+  Then('I should see empty "{fieldName}" field', (fieldName, callback) => {
+    const elem = element(by.css(`.${fieldName.replace(/ /g, '-')} input, .${fieldName.replace(/ /g, '-')} textarea`));
+    expect(elem.getAttribute('value')).to.eventually.equal('')
+      .and.notify(callback);
+  });
+
   When('I click "{elementName}"', (elementName, callback) => {
     const selector = `.${elementName.replace(/\s+/g, '-')}`;
     waitForElemAndClickIt(selector, callback);
@@ -110,6 +116,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     browser.ignoreSynchronization = true;
     browser.driver.manage().window().setSize(1000, 1000);
     browser.get('http://localhost:8080/');
+    localStorage.clear();
     localStorage.setItem('address', 'http://localhost:4000');
     localStorage.setItem('network', 2);
     browser.get('http://localhost:8080/');
@@ -150,6 +157,10 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
         element(by.css('.passphrase-verifier input')).sendKeys(passphraseWords[missingWordIndex]).then(callback);
       });
     });
+  });
+
+  When('I Refresh the page', (callback) => {
+    browser.refresh().then(callback);
   });
 });
 

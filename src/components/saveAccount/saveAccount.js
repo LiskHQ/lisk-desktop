@@ -28,7 +28,7 @@ export default class SaveAccount extends React.Component {
           }}
           primaryButton={{
             label: 'Save account',
-            className: 'save-button',
+            className: 'save-account-button',
             onClick: this.save.bind(this),
           }} />
       </div>
