@@ -14,8 +14,8 @@ export const vote = (activePeer, secret, publicKey, voteList, unvoteList, second
   requestToActivePeer(activePeer, 'accounts/delegates', {
     secret,
     publicKey,
-    delegates: voteList.map(delegate => `+${delegate.publicKey}`).concat(
-      unvoteList.map(delegate => `-${delegate.publicKey}`),
+    delegates: voteList.map(delegate => `+${delegate}`).concat(
+      unvoteList.map(delegate => `-${delegate}`),
     ),
     secondSecret,
   });
@@ -27,7 +27,7 @@ export const voteAutocomplete = (activePeer, username, votedList) => {
     listDelegates(activePeer, options)
     .then((response) => {
       resolve(response.delegates.filter(delegate =>
-        votedList.filter(item => item.username === delegate.username).length === 0,
+        Object.keys(votedList).filter(item => item === delegate.username).length === 0,
       ));
     })
     .catch(reject),
@@ -36,7 +36,10 @@ export const voteAutocomplete = (activePeer, username, votedList) => {
 
 export const unvoteAutocomplete = (username, votedList) =>
   new Promise((resolve) => {
-    resolve(votedList.filter(delegate => delegate.username.indexOf(username) !== -1));
+    resolve(
+      Object.keys(votedList)
+      .filter(delegate => delegate.indexOf(username) !== -1)
+      .map(element => ({ username: element, publicKey: votedList[element].publicKey })));
   });
 
 export const registerDelegate = (activePeer, username, secret, secondSecret = null) => {
