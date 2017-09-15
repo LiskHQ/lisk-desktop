@@ -9,7 +9,7 @@ import style from './receiveButton.css';
 
 export class ReceiveDialog extends React.Component {
   copyAddress() {
-    const copied = this.props.copyToClipboard(this.props.account.address, {
+    const copied = this.props.copyToClipboard(this.props.address, {
       message: 'Press #{key} to copy',
     });
     if (copied) {
@@ -25,9 +25,9 @@ export class ReceiveDialog extends React.Component {
         <div className={ `${grid.row} ${grid['center-xs']}` }>
           <span>
             <h3>Address</h3>
-            <h1 className={style.address}>{props.account.address}</h1>
+            <h1 className={style.address}>{props.address}</h1>
             <br />
-            <QRCode value={props.account.address} size={300}/>
+            <QRCode value={props.address} size={300}/>
             <br /><br />
           </span>
         </div>

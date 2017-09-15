@@ -6,7 +6,7 @@ import { successToastDisplayed } from '../../actions/toaster';
 import ReceiveButton from './receiveButton';
 
 const mapStateToProps = state => ({
-  account: state.account,
+  address: state.account.address,
 });
 
 const mapDispatchToProps = dispatch => ({
