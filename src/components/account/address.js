@@ -1,6 +1,17 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+
+import { TooltipWrapper } from '../timestamp';
 import styles from './account.css';
+
+const getStatusTooltip = (props) => {
+  if (props.secondSignature) {
+    return 'This account is protected by a second passphrase';
+  }
+  return (props.passphrase ?
+    'Passphrase of the acount is saved till the end of the session.' :
+    'Passphrase of the acount will be required to perform any transaction.');
+};
 
 const Address = (props) => {
   const title = props.isDelegate ? 'Delegate' : 'Address';
@@ -26,6 +37,11 @@ const Address = (props) => {
         <div className={`${grid['col-sm-12']} ${grid['col-xs-8']}`}>
           <div className={styles['value-wrapper']}>
             {content}
+            <span className="status">
+              <TooltipWrapper tooltip={getStatusTooltip(props)}>
+                <i className="material-icons">{props.passphrase && !props.secondSignature ? 'lock_open' : 'lock'}</i>
+              </TooltipWrapper>
+            </span>
           </div>
         </div>
       </div>
