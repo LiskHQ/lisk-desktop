@@ -48,7 +48,7 @@ const store = configureMockStore([])({
 describe('VoteDialog HOC', () => {
   let wrapper;
   beforeEach(() => {
-    wrapper = mount(<Provider store={store}><VoteDialogHOC /></Provider>);
+    wrapper = mount(<Provider store={store}><VoteDialogHOC voted={[]} /></Provider>);
   });
 
   it('should render VoteDialog', () => {

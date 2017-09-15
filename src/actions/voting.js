@@ -3,7 +3,6 @@ import { vote, listAccountDelegates, listDelegates } from '../utils/api/delegate
 import { transactionAdded } from './transactions';
 import { errorAlertDialogDisplayed } from './dialog';
 import Fees from '../constants/fees';
-import { SYNC_ACTIVE_INTERVAL } from '../constants/api';
 
 /**
  * Add pending variable to the list of voted delegates and list of unvoted delegates
@@ -83,11 +82,6 @@ export const votePlaced = ({ activePeer, account, votes, secondSecret }) =>
         fee: Fees.vote,
         type: 3,
       }));
-
-      // fire second action
-      setTimeout(() => {
-        dispatch(clearVoteLists());
-      }, SYNC_ACTIVE_INTERVAL);
     })
     .catch((error) => {
       const text = error && error.message ? `${error.message}.` : 'An error occurred while placing your vote.';

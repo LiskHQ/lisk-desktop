@@ -23,12 +23,6 @@ class Transactions extends React.Component {
     }
   }
 
-  shouldComponentUpdate(nextProps) {
-    const shouldUpdate = ((nextProps.confirmedCount !== this.props.confirmedCount) ||
-    (nextProps.pendingCount !== this.props.pendingCount));
-    return shouldUpdate;
-  }
-
   componentDidUpdate() {
     this.canLoadMore = this.props.count > this.props.transactions.length;
   }

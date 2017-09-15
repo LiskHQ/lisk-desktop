@@ -1,6 +1,6 @@
 {
   "name": "lisk-nano",
-  "version": "1.0.0-rc.5",
+  "version": "1.1.0",
   "description": "Lisk Nano",
   "homepage": "https://github.com/LiskHQ/lisk-nano",
   "bugs": "https://github.com/LiskHQ/lisk-nano/issues",
@@ -37,6 +37,7 @@
     "i18next-xhr-backend": "^1.4.2",
     "lisk-js": "=0.4.5",
     "moment": "=2.15.1",
+    "numeral": "=2.0.6",
     "postcss": "=6.0.2",
     "postcss-cssnext": "=2.11.0",
     "prop-types": "=15.5.10",

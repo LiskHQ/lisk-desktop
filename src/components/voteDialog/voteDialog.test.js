@@ -40,6 +40,7 @@ let props;
 describe('VoteDialog', () => {
   let wrapper;
   props = {
+    voted: [],
     activePeer: {},
     votes,
     delegates,
@@ -111,5 +112,18 @@ describe('VoteDialog', () => {
         secondSecret: secondPassphrase,
       });
     });
+  });
+
+  it('should not fire votePlaced action if the number of vote is higher than 33', () => {
+    const extraVotes = {};
+    for (let i = 0; i < 35; i++) {
+      extraVotes[`standby_${i}`] = { confirmed: false, unconfirmed: true, publicKey: `public_key_${i}` };
+    }
+    const noVoteProps = Object.assign({}, props, { votes: extraVotes });
+    const mounted = mount(<Provider store={store}>
+      <VoteDialog {...noVoteProps} account={ordinaryAccount} /></Provider>);
+    const primaryButton = mounted.find('VoteDialog .primary-button button');
+
+    expect(primaryButton.props().disabled).to.be.equal(true);
   });
 });

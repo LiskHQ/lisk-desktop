@@ -42,8 +42,12 @@ export default class VoteDialog extends React.Component {
 
   render() {
     const { votes } = this.props;
-    const votesList = Object.keys(votes).filter(delegate =>
-      votes[delegate].confirmed !== votes[delegate].unconfirmed);
+    let totalVotes = 0;
+    const votesList = [];
+    Object.keys(votes).forEach((item) => {
+      if (votes[item].confirmed || votes[item].unconfirmed) totalVotes++;
+      if (votes[item].confirmed !== votes[item].unconfirmed) votesList.push(item);
+    });
     return (
       <article>
         <Autocomplete
@@ -72,9 +76,11 @@ export default class VoteDialog extends React.Component {
             label: 'Confirm',
             fee: Fees.vote,
             disabled: (
+              totalVotes > 101 ||
               votesList.length === 0 ||
+              votesList.length > 33 ||
               (!!this.state.secondPassphrase.error ||
-              this.state.secondPassphrase.value === '')
+                this.state.secondPassphrase.value === '')
             ),
             onClick: this.confirm.bind(this),
           }} />
