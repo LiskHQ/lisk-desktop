@@ -1,5 +1,6 @@
 import React from 'react';
 import PassphraseInput from '../passphraseInput';
+import { extractPublicKey } from '../../utils/api/account';
 
 class AuthInputs extends React.Component {
   componentDidMount() {
@@ -9,6 +10,17 @@ class AuthInputs extends React.Component {
   }
 
   onChange(name, value, error) {
+    if (!error) {
+      const publicKeyMap = {
+        passphrase: 'publicKey',
+        secondPassphrase: 'secondPublicKey',
+      };
+      const expectedPublicKey = this.props.account[publicKeyMap[name]];
+
+      if (expectedPublicKey && expectedPublicKey !== extractPublicKey(value)) {
+        error = 'Entered passphrase does not belong to the active account';
+      }
+    }
     this.props.onChange(name, value, error);
   }
 

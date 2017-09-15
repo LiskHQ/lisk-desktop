@@ -48,6 +48,15 @@ describe('AuthInputs', () => {
     expect(props.onChange).to.have.been.calledWith('secondPassphrase', passphrase);
   });
 
+  it('should call props.onChange with an error if entered secondPassphrase does not belong to secondPublicKey', () => {
+    const error = 'Entered passphrase does not belong to the active account';
+    props.account.secondSignature = true;
+    props.account.secondPublicKey = 'fab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88';
+    wrapper = mount(<AuthInputs {...props} />);
+    wrapper.find('.second-passphrase input').simulate('change', { target: { value: passphrase } });
+    expect(props.onChange).to.have.been.calledWith('secondPassphrase', passphrase, error);
+  });
+
   it('should call props.onChange(\'secondPassphrase\', \'Required\') when input value changes to \'\'', () => {
     props.account.secondSignature = true;
     wrapper = mount(<AuthInputs {...props} />);
