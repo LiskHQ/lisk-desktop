@@ -24,6 +24,7 @@ const actionTypes = {
   transactionsUpdated: 'TRANSACTIONS_UPDATED',
   transactionsLoaded: 'TRANSACTIONS_LOADED',
   transactionsReset: 'TRANSACTIONS_RESET',
+  passphraseUsed: 'PASSPHRASE_USED',
 };
 
 export default actionTypes;

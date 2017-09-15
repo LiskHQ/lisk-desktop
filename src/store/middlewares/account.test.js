@@ -1,12 +1,14 @@
 import { expect } from 'chai';
 import { spy, stub } from 'sinon';
-import middleware from './account';
-import * as accountApi from '../../utils/api/account';
-import * as delegateApi from '../../utils/api/delegate';
-import actionTypes from '../../constants/actions';
-import transactionTypes from '../../constants/transactionTypes';
+
 import { SYNC_ACTIVE_INTERVAL, SYNC_INACTIVE_INTERVAL } from '../../constants/api';
+import { accountUpdated } from '../../actions/account';
 import { clearVoteLists } from '../../actions/voting';
+import * as accountApi from '../../utils/api/account';
+import actionTypes from '../../constants/actions';
+import * as delegateApi from '../../utils/api/delegate';
+import middleware from './account';
+import transactionTypes from '../../constants/transactionTypes';
 
 describe('Account middleware', () => {
   let store;
@@ -15,6 +17,7 @@ describe('Account middleware', () => {
   let stubGetAccount;
   let stubGetAccountStatus;
   let stubTransactions;
+  const passphrase = 'right cat soul renew under climb middle maid powder churn cram coconut';
 
   const transactionsUpdatedAction = {
     type: actionTypes.transactionsUpdated,
@@ -169,5 +172,23 @@ describe('Account middleware', () => {
     middleware(store)(next)(transactionsUpdatedAction);
     expect(store.dispatch).to.have.been.calledWith(clearVoteLists());
   });
-});
 
+  it(`should dispatch accountUpdated({passphrase}) action on ${actionTypes.passphraseUsed} action if store.account.passphrase is not set`, () => {
+    const action = {
+      type: actionTypes.passphraseUsed,
+      data: passphrase,
+    };
+    middleware(store)(next)(action);
+    expect(store.dispatch).to.have.been.calledWith(accountUpdated({ passphrase }));
+  });
+
+  it(`should not dispatch accountUpdated action on ${actionTypes.passphraseUsed} action if store.account.passphrase is already set`, () => {
+    const action = {
+      type: actionTypes.passphraseUsed,
+      data: passphrase,
+    };
+    store.getState = () => ({ ...state, account: { ...state.account, passphrase } });
+    middleware(store)(next)(action);
+    expect(store.dispatch).to.not.have.been.calledWith();
+  });
+});
