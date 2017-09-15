@@ -36,7 +36,7 @@ class SignMessageComponent extends React.Component {
 
   sign(message) {
     const signedMessage = Lisk.crypto.signMessageWithSecret(message,
-      this.state.passphrase);
+      this.state.passphrase.value);
     const result = Lisk.crypto.printSignedMessage(
       message, signedMessage, this.props.account.publicKey);
     this.setState({ result, resultIsShown: false, message });
