@@ -6,29 +6,40 @@ import actionTypes from '../../constants/actions';
  * @param {Object} state
  * @param {Object} action
  */
-const voting = (state = { votes: {}, delegates: [] }, action) => {
+const voting = (state = { votes: {}, delegates: [], totalDelegates: 0 }, action) => {
   switch (action.type) {
     case actionTypes.votesAdded:
       return Object.assign({}, state, {
         votes: action.data.list
           .reduce((votesDict, delegate) => {
-            votesDict[delegate.username] = { confirmed: true, unconfirmed: true };
+            votesDict[delegate.username] = {
+              confirmed: true,
+              unconfirmed: true,
+              publicKey: delegate.publicKey,
+            };
             return votesDict;
           }, {}),
-        delegates: action.data.list,
+        refresh: false,
       });
 
     case actionTypes.delegatesAdded:
       return Object.assign({}, state, {
-        delegates: [...state.delegates, ...action.data.list],
+        delegates: action.data.refresh ? action.data.list :
+          [...state.delegates, ...action.data.list],
+        totalDelegates: action.data.totalCount,
+        refresh: true,
       });
 
     case actionTypes.voteToggled:
       return Object.assign({}, state, {
+        refresh: false,
         votes: Object.assign({}, state.votes, {
-          [action.data]: {
-            confirmed: state.votes[action.data] ? state.votes[action.data].confirmed : false,
-            unconfirmed: state.votes[action.data] ? !state.votes[action.data].unconfirmed : true,
+          [action.data.username]: {
+            confirmed: state.votes[action.data.username] ?
+              state.votes[action.data.username].confirmed : false,
+            unconfirmed: state.votes[action.data.username] ?
+              !state.votes[action.data.username].unconfirmed : true,
+            publicKey: action.data.publicKey,
           },
         }),
       });
@@ -47,6 +58,7 @@ const voting = (state = { votes: {}, delegates: [] }, action) => {
           votesDict[username] = {
             confirmed: state.votes[username].confirmed,
             unconfirmed: state.votes[username].confirmed,
+            publicKey: state.votes[username].publicKey,
             pending: false,
           };
           return votesDict;
@@ -56,14 +68,16 @@ const voting = (state = { votes: {}, delegates: [] }, action) => {
 
     case actionTypes.pendingVotesAdded:
       return Object.assign({}, state, {
+        refresh: false,
         votes: Object.keys(state.votes).reduce((votesDict, username) => {
           const pending = state.votes[username].confirmed !== state.votes[username].unconfirmed;
-          const { confirmed, unconfirmed } = state.votes[username];
+          const { confirmed, unconfirmed, publicKey } = state.votes[username];
 
           votesDict[username] = {
             confirmed: pending ? !confirmed : confirmed,
             unconfirmed,
             pending,
+            publicKey,
           };
           return votesDict;
         }, {}),

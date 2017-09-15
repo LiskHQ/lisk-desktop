@@ -3,16 +3,42 @@ import actionTypes from '../../constants/actions';
 import voting from './voting';
 
 describe('Reducer: voting(state, action)', () => {
-  const state = {
-    votes: {
-      username1: { confirmed: true, unconfirmed: true },
-      username2: { confirmed: false, unconfirmed: false },
-    },
+  const initialState = { votes: {}, delegates: [], refresh: true };
+  const cleanVotes = {
+    username1: { confirmed: false, unconfirmed: false, publicKey: 'sample_key' },
+    username2: { confirmed: true, unconfirmed: true, publicKey: 'sample_key' },
+    username3: { confirmed: false, unconfirmed: false, publicKey: 'sample_key' },
   };
+  const dirtyVotes = {
+    username1: { confirmed: false, unconfirmed: true, publicKey: 'sample_key' },
+    username2: { confirmed: true, unconfirmed: true, publicKey: 'sample_key' },
+    username3: { confirmed: false, unconfirmed: false, publicKey: 'sample_key' },
+  };
+  const pendingVotes = {
+    username1: { confirmed: true, unconfirmed: true, pending: true, publicKey: 'sample_key' },
+    username2: { confirmed: true, unconfirmed: true, pending: false, publicKey: 'sample_key' },
+    username3: { confirmed: false, unconfirmed: false, pending: false, publicKey: 'sample_key' },
+  };
+  const restoredVotes = {
+    username1: { confirmed: false, unconfirmed: false, pending: false, publicKey: 'sample_key' },
+    username2: { confirmed: true, unconfirmed: true, pending: false, publicKey: 'sample_key' },
+    username3: { confirmed: false, unconfirmed: false, pending: false, publicKey: 'sample_key' },
+  };
+  const delegates1 = [
+    { username: 'username1', publicKey: 'sample_key' },
+    { username: 'username2', publicKey: 'sample_key' },
+  ];
+  const delegates2 = [
+    { username: 'username3', publicKey: 'sample_key' },
+    { username: 'username4', publicKey: 'sample_key' },
+  ];
+  const fullDelegates = [...delegates1, ...delegates2];
+
   it('should return default state if action does not match', () => {
     const action = {
       type: '',
     };
+    const state = { votes: cleanVotes };
     const changedState = voting(state, action);
 
     expect(changedState).to.be.equal(state);
@@ -22,52 +48,72 @@ describe('Reducer: voting(state, action)', () => {
     const action = {
       type: actionTypes.accountLoggedOut,
     };
+    const state = { votes: cleanVotes, delegates: fullDelegates, refresh: false };
     const changedState = voting(state, action);
-    const expectedState = { votes: {}, delegates: [], refresh: true };
 
-    expect(changedState).to.be.deep.equal(expectedState);
+    expect(changedState).to.be.deep.equal(initialState);
   });
 
-  it('should fill delegates list with action: votesAdded', () => {
+  it('should fill votes object with action: votesAdded', () => {
     const action = {
       type: actionTypes.votesAdded,
       data: {
-        list: [
-          { username: 'username1', id: '123HGJ123234L' },
-        ],
+        list: delegates1,
       },
     };
     const expectedState = {
       votes: {
-        username1: { confirmed: true, unconfirmed: true },
+        username1: { confirmed: true, unconfirmed: true, publicKey: 'sample_key' },
+        username2: { confirmed: true, unconfirmed: true, publicKey: 'sample_key' },
       },
-      delegates: [{ username: 'username1', id: '123HGJ123234L' }],
+      delegates: [],
+      refresh: false,
     };
-    const oldState = { votes: {}, delegates: [] };
-    const changedState = voting(oldState, action);
+    const changedState = voting(initialState, action);
 
     expect(changedState).to.be.deep.equal(expectedState);
   });
 
-  it('should fill delegates list with action: delegatesAdded', () => {
+  it('should append to delegates list with action: delegatesAdded, refresh: false', () => {
     const action = {
       type: actionTypes.delegatesAdded,
       data: {
-        list: [
-          { username: 'username1', id: '123HGJ123234L' },
-        ],
+        list: delegates2,
+        totalCount: 100,
+        refresh: false,
       },
     };
-    const oldState = {
-      delegates: [{ username: 'username2', id: '123HGJ123235L' }],
+    const state = {
+      delegates: delegates1,
     };
     const expectedState = {
-      delegates: [
-        { username: 'username2', id: '123HGJ123235L' },
-        { username: 'username1', id: '123HGJ123234L' },
-      ],
+      delegates: fullDelegates,
+      refresh: true,
+      totalDelegates: 100,
     };
-    const changedState = voting(oldState, action);
+    const changedState = voting(state, action);
+
+    expect(changedState.delegates).to.be.deep.equal(expectedState.delegates);
+  });
+
+  it('should replace to delegates list with action: delegatesAdded, refresh: true', () => {
+    const action = {
+      type: actionTypes.delegatesAdded,
+      data: {
+        list: delegates1,
+        totalCount: 100,
+        refresh: true,
+      },
+    };
+    const state = {
+      delegates: delegates2,
+    };
+    const expectedState = {
+      delegates: delegates1,
+      refresh: true,
+      totalDelegates: 100,
+    };
+    const changedState = voting(state, action);
 
     expect(changedState).to.be.deep.equal(expectedState);
   });
@@ -75,13 +121,12 @@ describe('Reducer: voting(state, action)', () => {
   it('should toggle unconfirmed state, with action: voteToggled', () => {
     const action = {
       type: actionTypes.voteToggled,
-      data: 'username1',
+      data: delegates1[0],
     };
+    const state = { votes: cleanVotes };
     const expectedState = {
-      votes: {
-        username1: { confirmed: true, unconfirmed: false },
-        username2: { confirmed: false, unconfirmed: false },
-      },
+      votes: dirtyVotes,
+      refresh: false,
     };
     const changedState = voting(state, action);
 
@@ -91,16 +136,16 @@ describe('Reducer: voting(state, action)', () => {
   it('should add to votes dictionary in not exist, with action: voteToggled', () => {
     const action = {
       type: actionTypes.voteToggled,
-      data: 'username3',
+      data: delegates1[0],
     };
     const expectedState = {
       votes: {
-        username1: { confirmed: true, unconfirmed: true },
-        username2: { confirmed: false, unconfirmed: false },
-        username3: { confirmed: false, unconfirmed: true },
+        [delegates1[0].username]: dirtyVotes[delegates1[0].username],
       },
+      delegates: [],
+      refresh: false,
     };
-    const changedState = voting(state, action);
+    const changedState = voting(initialState, action);
 
     expect(changedState).to.be.deep.equal(expectedState);
   });
@@ -109,24 +154,14 @@ describe('Reducer: voting(state, action)', () => {
     const action = {
       type: actionTypes.pendingVotesAdded,
     };
-    const oldState = {
-      votes: {
-        username1: { confirmed: true, unconfirmed: false },
-        username2: { confirmed: false, unconfirmed: true },
-        username3: { confirmed: true, unconfirmed: true },
-        username4: { confirmed: false, unconfirmed: false },
-      },
+    const state = {
+      votes: dirtyVotes,
     };
     const expectedState = {
-      votes: {
-        username1: { confirmed: false, unconfirmed: false, pending: true },
-        username2: { confirmed: true, unconfirmed: true, pending: true },
-        username3: { confirmed: true, unconfirmed: true, pending: false },
-        username4: { confirmed: false, unconfirmed: false, pending: false },
-      },
+      votes: pendingVotes,
+      refresh: false,
     };
-    const changedState = voting(oldState, action);
-
+    const changedState = voting(state, action);
     expect(changedState).to.be.deep.equal(expectedState);
   });
 
@@ -134,24 +169,15 @@ describe('Reducer: voting(state, action)', () => {
     const action = {
       type: actionTypes.votesCleared,
     };
-    const oldState = {
-      votes: {
-        username1: { confirmed: true, unconfirmed: false },
-        username2: { confirmed: false, unconfirmed: true },
-        username3: { confirmed: true, unconfirmed: true },
-        username4: { confirmed: false, unconfirmed: false },
-      },
+    const state = {
+      votes: dirtyVotes,
     };
+
     const expectedState = {
-      votes: {
-        username1: { confirmed: true, unconfirmed: true, pending: false },
-        username2: { confirmed: false, unconfirmed: false, pending: false },
-        username3: { confirmed: true, unconfirmed: true, pending: false },
-        username4: { confirmed: false, unconfirmed: false, pending: false },
-      },
+      votes: restoredVotes,
       refresh: true,
     };
-    const changedState = voting(oldState, action);
+    const changedState = voting(state, action);
 
     expect(changedState).to.be.deep.equal(expectedState);
   });
