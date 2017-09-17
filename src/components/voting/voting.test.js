@@ -64,13 +64,14 @@ describe('Voting', () => {
 
   it('should define search method to reload delegates based on given query', () => {
     const clock = sinon.useFakeTimers();
+    props.delegatesFetched.reset();
     wrapper.instance().search('query');
     clock.tick(2);
     expect(props.delegatesFetched).to.be.calledWith({
       activePeer: props.activePeer,
       offset: 0,
       q: 'query',
-      refresh: undefined,
+      refresh: true,
     });
     clock.restore();
   });

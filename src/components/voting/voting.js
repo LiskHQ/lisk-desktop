@@ -14,13 +14,8 @@ const Table = themr(TABLE, TableTheme)(tableFactory(TableHead, VotingRow));
 class Voting extends React.Component {
   constructor() {
     super();
-    this.state = {
-      delegates: [],
-      selected: [],
-      length: 1,
-      notFound: '',
-    };
     this.freezeLoading = false;
+    this.isInitial = true;
     this.offset = -1;
     this.query = '';
   }
@@ -35,6 +30,7 @@ class Voting extends React.Component {
       setTimeout(() => {
         this.freezeLoading = false;
         this.offset = nextProps.delegates.length;
+        this.isInitial = false;
       }, 5);
     }
   }
@@ -60,15 +56,9 @@ class Voting extends React.Component {
    */
   search(query) {
     this.query = query;
-    this.setState({
-      offset: 0,
-      delegates: [],
-      length: 1,
-    });
+    this.offset = 0;
     this.freezeLoading = false;
-    setTimeout(() => {
-      this.loadDelegates(this.query);
-    }, 1);
+    this.loadDelegates(query, true);
   }
 
   /**
@@ -79,13 +69,13 @@ class Voting extends React.Component {
    *  should replace the old delegates list
    * @param {Number} limit - The maximum number of results
    */
-  loadDelegates(search = '', refresh) {
+  loadDelegates(q = '', refresh) {
     this.freezeLoading = true;
     this.offset = refresh ? -1 : this.offset;
     this.props.delegatesFetched({
       activePeer: this.props.activePeer,
       offset: this.offset > -1 ? this.offset : 0,
-      q: search || '',
+      q,
       refresh,
     });
   }
@@ -101,7 +91,6 @@ class Voting extends React.Component {
   }
 
   render() {
-    // .log(this.props.votes.cc001);
     return (
       <div className="box noPaddingBox">
         <Header
@@ -129,10 +118,13 @@ class Voting extends React.Component {
             ))}
           </Table>
         </div>
-        {this.state.notFound}
+        {
+          (!this.isInitial && this.props.delegates.length === 0) &&
+          <div className='hasPaddingRow empty-message'>No delegates found</div>
+        }
         <Waypoint bottomOffset='-80%'
           scrollableAncestor={window}
-          key={this.state.delegates.length}
+          key={this.props.delegates.length}
           onEnter={this.loadMore.bind(this)}></Waypoint>
       </div>
     );
