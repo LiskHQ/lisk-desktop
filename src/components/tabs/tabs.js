@@ -8,7 +8,7 @@ const tabs = [
   'Forging',
 ];
 
-const getTabs = isDelegate => (tabs.filter(t => t !== 'Forging' || isDelegate));
+const getTabs = (isDelegate, labels) => (labels.filter((item, idx) => idx !== 2 || isDelegate));
 
 const getIndex = history => (
   tabs.map(t => t.toLowerCase())
@@ -22,18 +22,25 @@ const navigate = (history, index) => {
   }
 };
 
-const Tabs = props => (
-  <ToolboxTabs index={getIndex(props.history)}
-    theme={styles}
-    onChange={navigate.bind(this, props.history)}
-    className={`${styles.tabs} main-tabs`}>
-    {getTabs(props.isDelegate).map((tab, index) =>
-      <Tab
-        key={index}
-        label={tab}
-        className={styles.tab}
-        disabled={isCurrent(props.history, index)} />)}
-  </ToolboxTabs>
-);
+const Tabs = (props) => {
+  const tabsLabel = [
+    props.t('Transactions'),
+    props.t('Voting'),
+    props.t('Forging'),
+  ];
+  return (
+    <ToolboxTabs index={getIndex(props.history)}
+      theme={styles}
+      onChange={navigate.bind(this, props.history)}
+      className={`${styles.tabs} main-tabs`}>
+      {getTabs(props.isDelegate, tabsLabel).map((tab, index) =>
+        <Tab
+          key={index}
+          label={tab}
+          className={styles.tab}
+          disabled={isCurrent(props.history, index)} />)}
+    </ToolboxTabs>
+  );
+};
 
 export default Tabs;
