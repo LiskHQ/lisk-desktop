@@ -10,7 +10,7 @@ describe('Address', () => {
       address: '16313739661670634666L',
       t: key => key,
     };
-    const expectedHeaderValue = 'address';
+    const expectedHeaderValue = 'Address';
     const wrapper = shallow(<Address {...inputValue} />);
     expect(wrapper.find('#firstBox').text()).to.be.equal(expectedHeaderValue);
   });
@@ -24,7 +24,7 @@ describe('Address', () => {
       },
       t: key => key,
     };
-    const expectedHeaderValue = 'delegate';
+    const expectedHeaderValue = 'Delegate';
     const wrapper = shallow(<Address {...inputValue} />);
     expect(wrapper.find('#firstBox').text()).to.be.equal(expectedHeaderValue);
   });
