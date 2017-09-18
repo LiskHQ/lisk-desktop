@@ -86,13 +86,17 @@ export default class VoteAutocomplete extends React.Component {
       case 38: // 38 is keyCode of arrow up key in keyboard
         this.handleArrowUp(this.state[listName], listName);
         return false;
-      case 27 : // 27 is keyCode of enter key in keyboard
+      case 27 : // 27 is keyCode of escape key in keyboard
         this.setState({
           [className]: styles.hidden,
         });
         return false;
-      case 13 : // 27 is keyCode of escape key in keyboard
+      case 13 : // 13 is keyCode of enter key in keyboard
         if (selected.length > 0) {
+          selected[0].hovered = false;
+          this.setState({
+            [listName]: this.state[listName],
+          });
           this[selectFunc](selected[0]);
         }
         return false;
