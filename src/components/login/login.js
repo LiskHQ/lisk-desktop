@@ -147,14 +147,14 @@ class Login extends React.Component {
                 auto={false}
                 source={this.networks}
                 onChange={this.changeHandler.bind(this, 'network')}
-                label='Select a network'
+                label={this.props.t('Select a network')}
                 value={this.state.network}
                 className={`${styles.network} network`}
               />
               {
                 this.state.network === 2 &&
                   <Input type='text'
-                    label='Node address'
+                    label={this.props.t('Node address')}
                     name='address'
                     className='address'
                     theme={styles}
@@ -163,31 +163,32 @@ class Login extends React.Component {
                     onChange={this.changeHandler.bind(this, 'address')} />
               }
               <Input type={this.state.showPassphrase ? 'text' : 'password'}
-                label='Enter your passphrase' name='passphrase'
+                label={this.props.t('Enter your passphrase')} name='passphrase'
                 className='passphrase'
                 theme={styles}
-                error={this.state.passphraseValidity === 'Invalid passphrase' ? 'Invalid passphrase' : ''}
+                error={this.state.passphraseValidity === 'Invalid passphrase' ?
+                this.props.t('Invalid passphrase') : ''}
                 value={this.state.passphrase}
                 onChange={this.changeHandler.bind(this, 'passphrase')} />
               <Checkbox
                 checked={this.state.showPassphrase}
-                label="Show passphrase"
+                label={this.props.t('Show passphrase')}
                 className={`${grid['start-xs']} show-passphrase`}
                 theme={styles}
                 onChange={this.changeHandler.bind(this, 'showPassphrase')}
               />
               <footer className={ `${grid.row} ${grid['center-xs']}` }>
                 <div className={grid['col-xs-12']}>
-                  <Button label='NEW ACCOUNT' flat primary
+                  <Button label={this.props.t('New Account')} flat primary
                     className={`${styles.newAccount} new-account-button`}
                     onClick={() => this.props.setActiveDialog({
-                      title: 'New Account',
+                      title: this.props.t('New Account'),
                       childComponent: Passphrase,
                       childComponentProps: {
                         onPassGenerated: this.onLoginSubmission.bind(this),
                       },
                     })} />
-                  <Button label='LOGIN' primary raised
+                  <Button label={this.props.t('login')} primary raised
                     onClick={this.onLoginSubmission.bind(this, this.state.passphrase)}
                     className='login-button'
                     disabled={(this.state.network === 2 && this.state.addressValidity !== '') ||
