@@ -38,5 +38,12 @@
   "Timestamp": "Timestamp",
   "Total fee": "Total fee",
   "Reward": "Reward",
-  "You have not forged any blocks yet": "You have not forged any blocks yet"
+  "You have not forged any blocks yet": "You have not forged any blocks yet",
+  "Select a network": "Select a network",
+  "Node address": "Node address",
+  "passphrase": "Enter your passphrase",
+  "Invalid passphrase": "Invalid passphrase",
+  "Show passphrase": "Show passphrase",
+  "login": "login",
+  "New Account": "New Account"
 }
