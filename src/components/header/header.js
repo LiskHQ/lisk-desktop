@@ -11,6 +11,7 @@ import Send from '../send';
 import PrivateWrapper from '../privateWrapper';
 import SecondPassphraseMenu from '../secondPassphrase';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
+import i18n from '../../i18n';
 
 const Header = props => (
   <header className={`${grid.row} ${grid['between-xs']} ${styles.wrapper}`} >
@@ -27,29 +28,29 @@ const Header = props => (
       >
         {
           !props.account.isDelegate &&
-            <MenuItem caption="Register as delegate"
+            <MenuItem caption={props.t('Register as delegate')}
               className='register-as-delegate'
               onClick={() => props.setActiveDialog({
-                title: 'Register as delegate',
+                title: props.t('Register as delegate'),
                 childComponent: RegisterDelegate,
               })}
             />
         }
         <SecondPassphraseMenu />
-        <MenuItem caption="Sign message"
+        <MenuItem caption={props.t('Sign message')}
           className='sign-message'
           onClick={() => props.setActiveDialog({
-            title: 'Sign message',
+            title: props.t('Sign message'),
             childComponentProps: {
               account: props.account,
             },
             childComponent: SignMessage,
           })}
         />
-        <MenuItem caption="Verify message"
+        <MenuItem caption={props.t('Verify message')}
           className='verify-message'
           onClick={() => props.setActiveDialog({
-            title: 'Verify message',
+            title: props.t('verify-message'),
             childComponent: VerifyMessage,
           })}
         />
@@ -61,6 +62,12 @@ const Header = props => (
           title: props.t('send'),
           childComponent: Send,
         })}>{props.t('send')}</Button>
+        <IconMenu
+          className={`${styles.iconButton} ${offlineStyle.disableWhenOffline}`}
+          icon='language' position='topRight'>
+          <MenuItem caption='english' onClick={() => i18n.changeLanguage('en')} />
+          <MenuItem caption='deutsch' onClick={() => i18n.changeLanguage('de')} />
+        </IconMenu>
     </PrivateWrapper>
   </header>
 );
