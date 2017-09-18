@@ -1,8 +1,10 @@
 import React from 'react';
 import Waypoint from 'react-waypoint';
 import tableStyle from 'react-toolbox/lib/table/theme.css';
-import TransactionsHeader from './transactionsHeader';
+
+import ReceiveButton from '../receiveButton';
 import TransactionRow from './transactionRow';
+import TransactionsHeader from './transactionsHeader';
 import styles from './transactions.css';
 
 class Transactions extends React.Component {
@@ -32,23 +34,26 @@ class Transactions extends React.Component {
       <div className='box noPaddingBox verticalScroll'>
         {this.props.transactions.length > 0 ?
           <table className={tableStyle.table}>
-          <TransactionsHeader tableStyle={tableStyle}></TransactionsHeader>
-          <tbody>
-            {this.props.transactions.map(transaction => (
-              <TransactionRow address={this.props.address}
-                key={transaction.id}
-                tableStyle={tableStyle}
-                value={transaction}>
-              </TransactionRow>
-            ))}
-          </tbody>
-        </table> :
-          <p className={`${styles.empty} hasPaddingRow empty-message`}>No transactions</p>
+            <TransactionsHeader tableStyle={tableStyle}></TransactionsHeader>
+            <tbody>
+              {this.props.transactions.map(transaction => (
+                <TransactionRow address={this.props.address}
+                  key={transaction.id}
+                  tableStyle={tableStyle}
+                  value={transaction}>
+                </TransactionRow>
+              ))}
+            </tbody>
+          </table> :
+          <p className={`${styles.empty} hasPaddingRow empty-message`}>
+            There are no transactions, yet. &nbsp;
+            <ReceiveButton label='Receive LSK' className='receive-lsk-button' primary />
+          </p>
         }
         <Waypoint bottomOffset='-80%'
-                  scrollableAncestor={window}
-                  key={this.props.transactions.length}
-                  onEnter={this.loadMore.bind(this)}></Waypoint>
+          scrollableAncestor={window}
+          key={this.props.transactions.length}
+          onEnter={this.loadMore.bind(this)}></Waypoint>
       </div>
     );
   }

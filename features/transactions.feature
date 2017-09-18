@@ -23,4 +23,11 @@ Feature: Transactions tab
     Given I'm logged in as "empty account"
     When I click tab number 1
     Then I should see table with 0 lines
-    And I should see text "No transactions" in "empty message" element
+    And I should see text "There are no transactions, yet.  RECEIVE LSK" in "empty message" element
+
+  Scenario: should provide "Receive LSK" modal if there are "No transactions" 
+    Given I'm logged in as "empty account"
+    When I click tab number 1
+    And I click "receive lsk button"
+    And I wait 1 seconds
+    Then I should see text "5932438298200837883L" in "recieve modal address" element
