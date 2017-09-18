@@ -96,12 +96,12 @@ describe('Reducer: voting(state, action)', () => {
     expect(changedState.delegates).to.be.deep.equal(expectedState.delegates);
   });
 
-  it('should replace to delegates list with action: delegatesAdded, refresh: true', () => {
+  it('should replace delegates with the new delegates list with action: delegatesAdded, refresh: true', () => {
     const action = {
       type: actionTypes.delegatesAdded,
       data: {
         list: delegates1,
-        totalCount: 100,
+        totalDelegates: 100,
         refresh: true,
       },
     };
