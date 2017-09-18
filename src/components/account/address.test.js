@@ -8,8 +8,9 @@ describe('Address', () => {
     const inputValue = {
       isDelegate: false,
       address: '16313739661670634666L',
+      t: key => key,
     };
-    const expectedHeaderValue = 'Address';
+    const expectedHeaderValue = 'address';
     const wrapper = shallow(<Address {...inputValue} />);
     expect(wrapper.find('#firstBox').text()).to.be.equal(expectedHeaderValue);
   });
@@ -21,8 +22,9 @@ describe('Address', () => {
       delegate: {
         username: 'lisk-nano',
       },
+      t: key => key,
     };
-    const expectedHeaderValue = 'Delegate';
+    const expectedHeaderValue = 'delegate';
     const wrapper = shallow(<Address {...inputValue} />);
     expect(wrapper.find('#firstBox').text()).to.be.equal(expectedHeaderValue);
   });
@@ -34,6 +36,7 @@ describe('Address', () => {
       delegate: {
         username: 'lisk-nano',
       },
+      t: key => key,
     };
     const expectedValue = 'lisk-nano';
     const wrapper = shallow(<Address {...inputValue} />);

@@ -13,6 +13,9 @@ describe('Account', () => {
 
   beforeEach(() => {
     props = {
+      t: key => key,
+      i18n: {},
+      store: {},
       onActivePeerUpdated: sinon.spy(),
       peers: {
         status: {
