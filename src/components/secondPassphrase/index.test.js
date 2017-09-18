@@ -2,7 +2,9 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
+import { I18nextProvider } from 'react-i18next';
 import configureMockStore from 'redux-mock-store';
+import i18n from '../../i18n';
 import SecondPassphraseHOC from './index';
 
 
@@ -16,7 +18,11 @@ describe('SecondPassphraseHOC', () => {
   });
 
   beforeEach(() => {
-    wrapper = mount(<Provider store={store}><SecondPassphraseHOC /></Provider>);
+    wrapper = mount(<Provider store={store}>
+      <I18nextProvider i18n={ i18n }>
+        <SecondPassphraseHOC />
+      </I18nextProvider>
+    </Provider>);
   });
 
   it('should render SecondPassphrase', () => {
