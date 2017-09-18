@@ -11,7 +11,7 @@ import Send from '../send';
 import PrivateWrapper from '../privateWrapper';
 import SecondPassphraseMenu from '../secondPassphrase';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
-import SaveAccount from '../saveAccount';
+import SaveAccountButton from '../saveAccountButton';
 
 const Header = props => (
   <header className={`${grid.row} ${grid['between-xs']} ${styles.wrapper}`} >
@@ -55,13 +55,7 @@ const Header = props => (
           })}
         />
         <MenuDivider />
-        <MenuItem caption="Save this account localy"
-          className='save-account'
-          onClick={() => props.setActiveDialog({
-            title: 'Save this account localy',
-            childComponent: SaveAccount,
-          })}
-        />
+        <SaveAccountButton />
       </IconMenu>
       <Button className={`${styles.button} logout-button`} raised onClick={props.logOut}>{props.t('logout')}</Button>
       <Button className={`${styles.button} send-button ${offlineStyle.disableWhenOffline}`}

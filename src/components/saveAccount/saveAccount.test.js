@@ -19,6 +19,7 @@ describe('SaveAccount', () => {
     },
     closeDialog: () => {},
     successToast: () => {},
+    done: () => {},
   };
 
   beforeEach(() => {

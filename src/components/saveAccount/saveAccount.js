@@ -1,16 +1,14 @@
 import React from 'react';
 import InfoParagraph from '../infoParagraph';
 import ActionBar from '../actionBar';
+import { setSavedAccount } from '../../utils/saveAccount';
 
 export default class SaveAccount extends React.Component {
   save() {
-    localStorage.setItem('accounts', JSON.stringify([{
-      publicKey: this.props.account.publicKey,
-      network: localStorage.getItem('network'),
-      address: localStorage.getItem('address'),
-    }]));
+    setSavedAccount(this.props.account);
     this.props.closeDialog();
     this.props.successToast({ label: 'Account saved' });
+    this.props.done();
   }
 
   render() {
