@@ -25,5 +25,18 @@
   "Send Lisk to Blockchain Application": "Send Lisk to Blockchain Application",
   "Send Lisk from Blockchain Application": "Send Lisk from Blockchain Application",
   "Send to this address": "Send to this address",
-  "Repeat the transaction": "Repeat the transaction"
+  "Repeat the transaction": "Repeat the transaction",
+  "Earned": "Earned",
+  "Last x days": "Last {{day}} days",
+  "Last 24 hours": "Last 24 hours",
+  "Rank": "Rank",
+  "Productivity": "Productivity",
+  "Approval": "Approval",
+  "Forged Blocks": "Forged Blocks",
+  "Block height": "Block height",
+  "Block Id": "Block Id",
+  "Timestamp": "Timestamp",
+  "Total fee": "Total fee",
+  "Reward": "Reward",
+  "You have not forged any blocks yet": "You have not forged any blocks yet"
 }
