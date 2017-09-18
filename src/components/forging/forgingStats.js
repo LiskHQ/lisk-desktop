@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardText } from 'react-toolbox/lib/card';
 import moment from 'moment';
+import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import LiskAmount from '../liskAmount';
 import style from './forging.css';
@@ -12,15 +13,15 @@ const statCardObjects = [
     startMoment: moment().subtract(1, 'days'),
   }, {
     key: 'last7d',
-    label: 'Last 7 days',
+    label: '7',
     startMoment: moment().subtract(7, 'days'),
   }, {
     key: 'last30d',
-    label: 'Last 30 days',
+    label: '30',
     startMoment: moment().subtract(30, 'days'),
   }, {
     key: 'last365d',
-    label: 'Last 365 days',
+    label: '365',
     startMoment: moment().subtract(365, 'days'),
   },
 ];
@@ -41,9 +42,13 @@ class ForgingStats extends React.Component {
               <CardText>
               <div className={grid['col-xs-12']}>
                 <div className={`${grid.row}  ${grid['between-xs']}`}>
-                  <span className='title'> {cardObj.label} </span>
+                  <span className='title'>
+                    { cardObj.label === 'Last 24 hours' ?
+                      this.props.t(cardObj.label) :
+                      this.props.t('Last x days', { day: cardObj.label }) }
+                  </span>
                   <span>
-                    <LiskAmount val={this.props.statistics[cardObj.key]}
+                   <LiskAmount val={this.props.statistics[cardObj.key]}
                       roundTo={2}
                       /> LSK
                   </span>
@@ -58,4 +63,4 @@ class ForgingStats extends React.Component {
   }
 }
 
-export default ForgingStats;
+export default translate()(ForgingStats);
