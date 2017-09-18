@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 import styles from './transactions.css';
 import LiskAmount from '../liskAmount';
 import { TooltipWrapper } from '../timestamp';
@@ -15,7 +16,7 @@ const Amount = (props) => {
   } else if (props.value.type !== transactionTypes.send ||
       props.value.recipientId !== props.address) {
     params.className = 'outButton';
-    params.tooltipText = props.value.type === transactionTypes.send ? 'Repeat the transaction' : undefined;
+    params.tooltipText = props.value.type === transactionTypes.send ? props.t('Repeat the transaction') : undefined;
     params.clickToSendEnabled = props.value.type === transactionTypes.send;
   }
   return <TooltipWrapper tooltip={params.tooltipText}>
@@ -23,11 +24,11 @@ const Amount = (props) => {
       className='amount'
       recipient={props.value.recipientId}
       disabled={!params.clickToSendEnabled}>
-      <span className={styles[params.className]}>
+      <span id='transactionAmount' className={styles[params.className]}>
         <LiskAmount val={props.value.amount} />
       </span>
     </ClickToSend>
   </TooltipWrapper>;
 };
 // <FormattedNumber val={props.value.fee}></FormattedNumber>
-export default Amount;
+export default translate()(Amount);
