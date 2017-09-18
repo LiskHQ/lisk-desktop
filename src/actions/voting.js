@@ -14,8 +14,9 @@ export const pendingVotesAdded = () => ({
 /**
  * Remove all data from the list of voted delegates and list of unvoted delegates
  */
-export const clearVoteLists = () => ({
-  type: actionTypes.votesCleared,
+export const votesUpdated = data => ({
+  type: actionTypes.votesUpdated,
+  data,
 });
 
 /**
@@ -93,10 +94,14 @@ export const votePlaced = ({ activePeer, account, votes, secondSecret }) =>
  * Gets the list of delegates current account has voted for
  *
  */
-export const votesFetched = ({ activePeer, address }) =>
+export const votesFetched = ({ activePeer, address, type }) =>
   (dispatch) => {
     listAccountDelegates(activePeer, address).then(({ delegates }) => {
-      dispatch(votesAdded({ list: delegates }));
+      if (type === 'update') {
+        dispatch(votesUpdated({ list: delegates }));
+      } else {
+        dispatch(votesAdded({ list: delegates }));
+      }
     });
   };
 

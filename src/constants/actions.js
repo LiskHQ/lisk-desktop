@@ -14,7 +14,7 @@ const actionTypes = {
   VotePlaced: 'VOTE_PLACED',
   voteToggled: 'VOTE_TOGGLED',
   votesAdded: 'VOTES_ADDED',
-  votesCleared: 'VOTES_CLEARED',
+  votesUpdated: 'VOTES_UPDATED',
   delegatesAdded: 'DELEGATES_ADDED',
   pendingVotesAdded: 'PENDING_VOTES_ADDED',
   toastDisplayed: 'TOAST_DISPLAYED',

@@ -3,7 +3,7 @@ import sinon from 'sinon';
 import actionTypes from '../constants/actions';
 import {
   pendingVotesAdded,
-  clearVoteLists,
+  votesUpdated,
   votesAdded,
   voteToggled,
   votePlaced,
@@ -15,6 +15,11 @@ import Fees from '../constants/fees';
 import { transactionAdded } from './transactions';
 import { errorAlertDialogDisplayed } from './dialog';
 import * as delegateApi from '../utils/api/delegate';
+
+const delegateList = [
+  { username: 'username1', publicKey: '123HG3452245L' },
+  { username: 'username2', publicKey: '123HG3522345L' },
+];
 
 describe('actions: voting', () => {
   describe('voteToggled', () => {
@@ -33,10 +38,7 @@ describe('actions: voting', () => {
 
   describe('votesAdded', () => {
     it('should create an action to remove data from vote list', () => {
-      const data = [
-        { username: 'username1', publicKey: '123HG3452245L' },
-        { username: 'username2', publicKey: '123HG3522345L' },
-      ];
+      const data = delegateList;
       const expectedAction = {
         data,
         type: actionTypes.votesAdded,
@@ -46,12 +48,14 @@ describe('actions: voting', () => {
     });
   });
 
-  describe('clearVoteLists', () => {
-    it('should create an action to remove all pending rows from vote list', () => {
+  describe('votesUpdated', () => {
+    it('should create an action to update the votes dictionary', () => {
       const expectedAction = {
-        type: actionTypes.votesCleared,
+        type: actionTypes.votesUpdated,
+        data: { list: delegateList },
       };
-      expect(clearVoteLists()).to.be.deep.equal(expectedAction);
+      const createdAction = votesUpdated({ list: delegateList });
+      expect(createdAction).to.be.deep.equal(expectedAction);
     });
   });
 
@@ -132,10 +136,7 @@ describe('actions: voting', () => {
       activePeer: {},
       address: '8096217735672704724L',
     };
-    const delegates = [
-      { username: 'username1', publicKey: '80962134535672704724L' },
-      { username: 'username2', publicKey: '80962134535672704725L' },
-    ];
+    const delegates = delegateList;
     const actionFunction = votesFetched(data);
 
     it('should create an action function', () => {
@@ -162,10 +163,7 @@ describe('actions: voting', () => {
       offset: 0,
       refresh: true,
     };
-    const delegates = [
-      { username: 'username1', publicKey: '80962134535672704724L' },
-      { username: 'username2', publicKey: '80962134535672704725L' },
-    ];
+    const delegates = delegateList;
     const actionFunction = delegatesFetched(data);
 
     it('should create an action function', () => {
