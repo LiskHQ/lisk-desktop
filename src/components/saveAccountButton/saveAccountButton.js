@@ -14,7 +14,7 @@ export default class SaveAccountButton extends React.Component {
   render() {
     return (getSavedAccount() ?
       <MenuItem caption="Forget this account locally"
-        className='remove-account'
+        className='forget-account'
         onClick={this.removeSavedAccount.bind(this)}
       /> :
       <MenuItem caption="Save this account locally"

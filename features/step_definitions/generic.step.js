@@ -32,6 +32,13 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     waitForElemAndSendKeys(`${selectorClass} input, ${selectorClass} textarea`, secondPassphrase, callback);
   });
 
+  When('I fill in passphrase of "{accountName}" to "{fieldName}" field', (accountName, fieldName, callback) => {
+    const selectorClass = `.${fieldName.replace(/ /g, '-')}`;
+    const passphrase = accounts[accountName].passphrase;
+    browser.sleep(500);
+    waitForElemAndSendKeys(`${selectorClass} input, ${selectorClass} textarea`, passphrase, callback);
+  });
+
   When('I wait {seconds} seconds', (seconds, callback) => {
     browser.sleep(seconds * 1000).then(callback);
   });
