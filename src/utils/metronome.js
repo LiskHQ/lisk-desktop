@@ -17,17 +17,18 @@ class Metronome {
    * @param {Date} lastBeat
    * @param {Date} now
    * @param {Number} factor
+   * @param {Number} interval
    * @memberOf Metronome
    * @private
    */
-  _dispatch(lastBeat, now, factor) {
+  _dispatch(lastBeat, now, factor, interval) {
     this.dispatchFn({
       type: actionsType.metronomeBeat,
-      data: { lastBeat, now, factor },
+      data: { lastBeat, now, factor, interval },
     });
   }
 
-   /**
+  /**
     * We're calling this in framerate.
     * calls broadcast method every SYNC_(IN)ACTIVE_INTERVAL and
     * sends a numeric factor for ease of use as multiples of updateInterval.
@@ -38,7 +39,7 @@ class Metronome {
   _step() {
     const now = new Date();
     if (!this.lastBeat || (now - this.lastBeat >= this.interval)) {
-      this._dispatch(this.lastBeat, now, this.factor);
+      this._dispatch(this.lastBeat, now, this.factor, this.interval);
       this.lastBeat = now;
       this.factor += this.factor < 9 ? 1 : -9;
     }

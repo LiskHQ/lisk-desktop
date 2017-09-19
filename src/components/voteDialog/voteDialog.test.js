@@ -18,27 +18,20 @@ const accountWithSecondPassphrase = {
   publicKey: 'key',
   secondSignature: 1,
 };
-const votedList = [
-  {
-    username: 'yashar',
-  },
-  {
-    username: 'tom',
-  },
+const votes = {
+  username1: { publicKey: 'sample_key', confirmed: true, unconfirmed: false },
+  username2: { publicKey: 'sample_key', confirmed: false, unconfirmed: true },
+};
+const delegates = [
+  { username: 'username1', publicKey: '123HG3452245L' },
+  { username: 'username2', publicKey: '123HG3522345L' },
 ];
-const unvotedList = [
-  {
-    username: 'john',
-  },
-  {
-    username: 'test',
-  },
-];
+
 const store = configureMockStore([])({
   account: ordinaryAccount,
   voting: {
-    votedList,
-    unvotedList,
+    votes,
+    delegates,
   },
   peers: { data: {} },
 });
@@ -47,14 +40,13 @@ let props;
 describe('VoteDialog', () => {
   let wrapper;
   props = {
+    voted: [],
     activePeer: {},
-    votedList,
-    unvotedList,
+    votes,
+    delegates,
     closeDialog: sinon.spy(),
-    clearVoteLists: sinon.spy(),
     votePlaced: sinon.spy(),
-    addedToVoteList: sinon.spy(),
-    removedFromVoteList: sinon.spy(),
+    voteToggled: sinon.spy(),
   };
 
   describe('Ordinary account', () => {
@@ -82,18 +74,17 @@ describe('VoteDialog', () => {
         account: ordinaryAccount,
         activePeer: props.activePeer,
         secondSecret: null,
-        unvotedList: props.unvotedList,
-        votedList: props.votedList,
+        votes,
       });
     });
 
     it('should not fire votePlaced action if lists are empty', () => {
       const noVoteProps = {
         activePeer: {},
-        votedList: [],
-        unvotedList: [],
+        votes: {},
+        delegates: [],
         closeDialog: () => {},
-        clearVoteLists: () => {},
+        voteToggled: () => {},
         votePlaced: () => {},
       };
       const mounted = mount(<Provider store={store}>
@@ -117,10 +108,22 @@ describe('VoteDialog', () => {
       expect(props.votePlaced).to.have.been.calledWith({
         activePeer: props.activePeer,
         account: accountWithSecondPassphrase,
-        votedList: props.votedList,
-        unvotedList: props.unvotedList,
+        votes,
         secondSecret: secondPassphrase,
       });
     });
+  });
+
+  it('should not fire votePlaced action if the number of vote is higher than 33', () => {
+    const extraVotes = {};
+    for (let i = 0; i < 35; i++) {
+      extraVotes[`standby_${i}`] = { confirmed: false, unconfirmed: true, publicKey: `public_key_${i}` };
+    }
+    const noVoteProps = Object.assign({}, props, { votes: extraVotes });
+    const mounted = mount(<Provider store={store}>
+      <VoteDialog {...noVoteProps} account={ordinaryAccount} /></Provider>);
+    const primaryButton = mounted.find('VoteDialog .primary-button button');
+
+    expect(primaryButton.props().disabled).to.be.equal(true);
   });
 });

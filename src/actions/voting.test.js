@@ -2,52 +2,60 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import actionTypes from '../constants/actions';
 import {
-    addedToVoteList,
-    removedFromVoteList,
-    clearVoteLists,
-    pendingVotesAdded,
-    votePlaced,
+  pendingVotesAdded,
+  votesUpdated,
+  votesAdded,
+  voteToggled,
+  votePlaced,
+  votesFetched,
+  delegatesFetched,
+  delegatesAdded,
 } from './voting';
 import Fees from '../constants/fees';
 import { transactionAdded } from './transactions';
 import { errorAlertDialogDisplayed } from './dialog';
 import * as delegateApi from '../utils/api/delegate';
 
+const delegateList = [
+  { username: 'username1', publicKey: '123HG3452245L' },
+  { username: 'username2', publicKey: '123HG3522345L' },
+];
+
 describe('actions: voting', () => {
-  describe('addedToVoteList', () => {
-    it('should create an action to add data to vote list', () => {
+  describe('voteToggled', () => {
+    it('should create an action to add data to toggle the vote status for any given delegate', () => {
       const data = {
         label: 'dummy',
       };
       const expectedAction = {
         data,
-        type: actionTypes.addedToVoteList,
+        type: actionTypes.voteToggled,
       };
 
-      expect(addedToVoteList(data)).to.be.deep.equal(expectedAction);
+      expect(voteToggled(data)).to.be.deep.equal(expectedAction);
     });
   });
 
-  describe('removedFromVoteList', () => {
+  describe('votesAdded', () => {
     it('should create an action to remove data from vote list', () => {
-      const data = {
-        label: 'dummy',
-      };
+      const data = delegateList;
       const expectedAction = {
         data,
-        type: actionTypes.removedFromVoteList,
+        type: actionTypes.votesAdded,
       };
 
-      expect(removedFromVoteList(data)).to.be.deep.equal(expectedAction);
+      expect(votesAdded(data)).to.be.deep.equal(expectedAction);
     });
   });
 
-  describe('clearVoteLists', () => {
-    it('should create an action to remove all pending rows from vote list', () => {
+  describe('votesUpdated', () => {
+    it('should create an action to update the votes dictionary', () => {
       const expectedAction = {
-        type: actionTypes.votesCleared,
+        type: actionTypes.votesUpdated,
+        data: { list: delegateList },
       };
-      expect(clearVoteLists()).to.be.deep.equal(expectedAction);
+      const createdAction = votesUpdated({ list: delegateList });
+      expect(createdAction).to.be.deep.equal(expectedAction);
     });
   });
 
@@ -67,12 +75,14 @@ describe('actions: voting', () => {
       address: 'test_address',
     };
     const activePeer = {};
-    const votedList = [];
-    const unvotedList = [];
     const secondSecret = null;
+    const votes = {
+      username1: { publicKey: 'sample_key', confirmed: true, unconfirmed: false },
+      username2: { publicKey: 'sample_key', confirmed: false, unconfirmed: true },
+    };
 
     const actionFunction = votePlaced({
-      activePeer, account, votedList, unvotedList, secondSecret,
+      activePeer, account, votes, secondSecret,
     });
     let dispatch;
 
@@ -104,16 +114,6 @@ describe('actions: voting', () => {
       expect(dispatch).to.have.been.calledWith(transactionAdded(expectedAction));
     });
 
-    it('should dispatch clearVoteLists action if resolved', () => {
-      delegateApiMock.returnsPromise().resolves({ transactionId: '15626650747375562521' });
-      const clock = sinon.useFakeTimers();
-
-      actionFunction(dispatch);
-      clock.tick(10000);
-      expect(dispatch).to.have.property('callCount', 3);
-      clock.restore();
-    });
-
     it('should dispatch errorAlertDialogDisplayed action if caught', () => {
       delegateApiMock.returnsPromise().rejects({ message: 'sample message' });
 
@@ -128,6 +128,58 @@ describe('actions: voting', () => {
       actionFunction(dispatch);
       const expectedAction = errorAlertDialogDisplayed({ text: 'An error occurred while placing your vote.' });
       expect(dispatch).to.have.been.calledWith(expectedAction);
+    });
+  });
+
+  describe('votesFetched', () => {
+    const data = {
+      activePeer: {},
+      address: '8096217735672704724L',
+    };
+    const delegates = delegateList;
+    const actionFunction = votesFetched(data);
+
+    it('should create an action function', () => {
+      expect(typeof actionFunction).to.be.deep.equal('function');
+    });
+
+    it.skip('should dispatch votesAdded action if resolved', () => {
+      const delegateApiMock = sinon.stub(delegateApi, 'listAccountDelegates');
+      const dispatch = sinon.spy();
+
+      delegateApiMock.returnsPromise().resolves({ delegates });
+      const expectedAction = { list: delegates };
+
+      actionFunction(dispatch);
+      expect(dispatch).to.have.been.calledWith(votesAdded(expectedAction));
+      delegateApiMock.restore();
+    });
+  });
+
+  describe('delegatesFetched', () => {
+    const data = {
+      activePeer: {},
+      q: '',
+      offset: 0,
+      refresh: true,
+    };
+    const delegates = delegateList;
+    const actionFunction = delegatesFetched(data);
+
+    it('should create an action function', () => {
+      expect(typeof actionFunction).to.be.deep.equal('function');
+    });
+
+    it('should dispatch delegatesAdded action if resolved', () => {
+      const delegateApiMock = sinon.stub(delegateApi, 'listDelegates');
+      const dispatch = sinon.spy();
+
+      delegateApiMock.returnsPromise().resolves({ delegates, totalCount: 10 });
+      const expectedAction = { list: delegates, totalDelegates: 10, refresh: true };
+
+      actionFunction(dispatch);
+      expect(dispatch).to.have.been.calledWith(delegatesAdded(expectedAction));
+      delegateApiMock.restore();
     });
   });
 });
