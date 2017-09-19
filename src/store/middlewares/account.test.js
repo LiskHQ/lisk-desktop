@@ -6,7 +6,7 @@ import * as delegateApi from '../../utils/api/delegate';
 import actionTypes from '../../constants/actions';
 import transactionTypes from '../../constants/transactionTypes';
 import { SYNC_ACTIVE_INTERVAL, SYNC_INACTIVE_INTERVAL } from '../../constants/api';
-import { clearVoteLists } from '../../actions/voting';
+import * as votingActions from '../../actions/voting';
 
 describe('Account middleware', () => {
   let store;
@@ -49,6 +49,7 @@ describe('Account middleware', () => {
       },
       account: {
         balance: 0,
+        address: 'sample_address',
       },
       transactions: {
         pending: [{
@@ -164,10 +165,15 @@ describe('Account middleware', () => {
     delegateApiMock.restore();
   });
 
-  it(`should dispatch clearVoteLists action on ${actionTypes.transactionsUpdated} action if action.data.confirmed contains delegateRegistration transactions`, () => {
+  it(`should dispatch ${actionTypes.votesFetched} action on ${actionTypes.transactionsUpdated} action if action.data.confirmed contains delegateRegistration transactions`, () => {
+    const actionSpy = spy(votingActions, 'votesFetched');
     transactionsUpdatedAction.data.confirmed[0].type = transactionTypes.vote;
     middleware(store)(next)(transactionsUpdatedAction);
-    expect(store.dispatch).to.have.been.calledWith(clearVoteLists());
+    expect(actionSpy).to.have.been.calledWith({
+      activePeer: state.peers.data,
+      address: state.account.address,
+      type: 'update',
+    });
   });
 });
 

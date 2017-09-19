@@ -70,15 +70,19 @@ describe('Utils: Delegate', () => {
 
   describe('unvoteAutocomplete', () => {
     it('should return a promise', () => {
-      const votedList = ['genesis_1', 'genesis_2', 'genesis_3'];
+      const voteList = {
+        genesis_1: { confirmed: true, unconfirmed: false, publicKey: 'sample_key' },
+        genesis_2: { confirmed: true, unconfirmed: false, publicKey: 'sample_key' },
+        genesis_3: { confirmed: true, unconfirmed: false, publicKey: 'sample_key' },
+      };
       const nonExistingUsername = 'genesis_4';
-      const promise = unvoteAutocomplete(username, votedList);
+      const promise = unvoteAutocomplete(username, voteList);
       expect(typeof promise.then).to.be.equal('function');
       promise.then((result) => {
         expect(result).to.be.equal(true);
       });
 
-      unvoteAutocomplete(nonExistingUsername, votedList).then((result) => {
+      unvoteAutocomplete(nonExistingUsername, voteList).then((result) => {
         expect(result).to.be.equal(false);
       });
     });
