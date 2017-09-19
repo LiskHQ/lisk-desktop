@@ -30,7 +30,7 @@ Feature: Account management
     And I wait 2 seconds
     And I click "forget account" in main menu
     And I wait 1 seconds
-    Then I should see text "Account forgotten locally." in "toast" element
+    Then I should see text "Account was successfully forgotten." in "toast" element
     And I Refresh the page
     And I should be on login page
 
