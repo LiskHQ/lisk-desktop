@@ -42,8 +42,16 @@
   "Select a network": "Select a network",
   "Node address": "Node address",
   "passphrase": "Enter your passphrase",
-  "Invalid passphrase": "Invalid passphrase",
+  "Empty passphrase": "Empty passphrase",
+  "Passphrase should have 12 words, entered passphrase has length": "Passphrase should have 12 words, entered passphrase has {{length}}",
   "Show passphrase": "Show passphrase",
   "login": "login",
-  "New Account": "New Account"
+  "New Account": "New Account",
+  "my votes": "my votes",
+  "Search": "Search",
+  "Name": "Name",
+  "Lisk Address": "Lisk Address",
+  "Uptime": "Uptime",
+  "Approval": "Approval",
+  "No delegates found": "No delegates found"
 }
