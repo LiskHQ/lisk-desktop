@@ -17,10 +17,10 @@ export default class SaveAccountButton extends React.Component {
         className='forget-account'
         onClick={this.removeSavedAccount.bind(this)}
       /> :
-      <MenuItem caption="Save this account locally"
+      <MenuItem caption="Remember this account"
         className='save-account'
         onClick={() => this.props.setActiveDialog({
-          title: 'Save this account locally',
+          title: 'Remember this account',
           childComponent: SaveAccount,
           childComponentProps: {
             done: this.forceUpdate.bind(this),
