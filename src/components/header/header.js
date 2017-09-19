@@ -45,7 +45,7 @@ const Header = props => (
             to='verify-message'>Verify message</RelativeLink>
         </MenuItem>
       </IconMenu>
-      
+
       <Button className={`${styles.button} logout-button`} raised onClick={props.logOut}>{props.t('logout')}</Button>
       <ReceiveButton className={styles.button} label='Receive' />
       <RelativeLink className={`${styles.button} ${buttonStyle.button} ${buttonStyle.primary} ${buttonStyle.raised} send-button ${offlineStyle.disableWhenOffline}`}

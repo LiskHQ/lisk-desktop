@@ -3,6 +3,7 @@ import RegisterDelegate from '../registerDelegate';
 import SignMessage from '../signMessage';
 import VerifyMessage from '../verifyMessage';
 import SecondPassphrase from '../secondPassphrase';
+import VoteDialog from '../voteDialog';
 
 export default {
   send: {
@@ -24,5 +25,9 @@ export default {
   'register-second-passphrase': {
     title: 'Register Second Passphrase',
     component: SecondPassphrase,
+  },
+  vote: {
+    title: 'Vote for delegates',
+    component: VoteDialog,
   },
 };

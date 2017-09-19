@@ -1,11 +1,11 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { Button } from 'react-toolbox/lib/button';
+import buttonStyle from 'react-toolbox/lib/button/theme.css';
 import { IconMenu, MenuItem } from 'react-toolbox/lib/menu';
 import Input from 'react-toolbox/lib/input';
 import styles from './voting.css';
 import disableStyle from './disableMenu.css';
-import VoteDialog from '../voteDialog';
+import RelativeLink from '../relativeLink';
 
 class VotingHeader extends React.Component {
   constructor() {
@@ -89,13 +89,8 @@ class VotingHeader extends React.Component {
                   publicKey: votes[username].publicKey,
                 })} />)}
           </IconMenu>
-          <Button icon='done' flat
-            className='vote-button'
-            onClick={() => this.props.setActiveDialog({
-              title: 'Vote for delegates',
-              childComponent: VoteDialog,
-            })}
-            label={this.confirmVoteText()} />
+          <RelativeLink className={`${buttonStyle.button} ${buttonStyle.primary} ${buttonStyle.flat} ${styles.voteButton} vote-button`}
+            to='vote'>{this.confirmVoteText()}</RelativeLink>
         </div>
       </header>
     );
