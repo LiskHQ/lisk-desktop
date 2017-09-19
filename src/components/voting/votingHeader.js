@@ -57,10 +57,11 @@ class VotingHeader extends React.Component {
   render() {
     const { votes } = this.props;
     const votesList = Object.keys(votes);
+    const confirmedVotes = Object.keys(votes).filter(username => votes[username].confirmed);
     const theme = votesList.length === 0 ? disableStyle : styles;
     const button = <div className={styles.votesMenuButton}>
       <i className='material-icons'>visibility</i>
-      <span>my votes ({votesList.length})</span>
+      <span>my votes ({confirmedVotes.length})</span>
     </div>;
     return (
       <header className={`${grid.row} ${grid['between-xs']} hasPaddingRow`}>
@@ -78,7 +79,7 @@ class VotingHeader extends React.Component {
         <div className={styles.actionBar}>
           <IconMenu theme={theme} icon={button} position='topLeft'
             iconRipple={false} className='my-votes-button'>
-            {votesList.map(username =>
+            {confirmedVotes.map(username =>
               <MenuItem
                 theme={styles}
                 key={username}
