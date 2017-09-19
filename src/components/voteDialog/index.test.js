@@ -21,27 +21,26 @@ const ordinaryAccount = {
   secondSignature: 0,
   balance: 10e8,
 };
-const votedList = [
+const delegates = [
   {
     username: 'yashar',
+    publicKey: 'sample_key',
   },
   {
     username: 'tom',
+    publicKey: 'sample_key',
   },
 ];
-const unvotedList = [
-  {
-    username: 'john',
-  },
-  {
-    username: 'test',
-  },
-];
+const votes = {
+  john: { confirmed: false, unconfirmed: true, publicKey: 'sample_key' },
+  yashar: { confirmed: true, unconfirmed: false, publicKey: 'sample_key' },
+
+};
 const store = configureMockStore([])({
   account: ordinaryAccount,
   voting: {
-    votedList: [...votedList, { pending: true, username: 'pending' }],
-    unvotedList: [...unvotedList, { pending: true, username: 'pending2' }],
+    votes,
+    delegates,
   },
   peers: { data: {} },
 });
@@ -59,22 +58,16 @@ describe('VoteDialog HOC', () => {
   it('should pass appropriate properties to VoteDialog', () => {
     const confirmVotesProps = wrapper.find('VoteDialog').props();
 
-    expect(confirmVotesProps.votedList).to.be.deep.equal(votedList);
-    expect(confirmVotesProps.unvotedList).to.be.deep.equal(unvotedList);
+    expect(confirmVotesProps.votes).to.be.equal(votes);
+    expect(confirmVotesProps.delegates).to.be.equal(delegates);
     expect(confirmVotesProps.account).to.be.equal(ordinaryAccount);
     expect(confirmVotesProps.activePeer).to.deep.equal({});
-    expect(typeof confirmVotesProps.votePlaced).to.be.equal('function');
+    expect(typeof confirmVotesProps.voteToggled).to.be.equal('function');
   });
 
-  it('should bind addedToVoteList action to VoteDialog props.addedToVoteList', () => {
-    const actionsSpy = sinon.spy(votingActions, 'addedToVoteList');
-    wrapper.find('VoteDialog').props().addedToVoteList([]);
-    expect(actionsSpy).to.be.calledWith();
-  });
-
-  it('should bind removedFromVoteList action to VoteDialog props.removedFromVoteList', () => {
-    const actionsSpy = sinon.spy(votingActions, 'removedFromVoteList');
-    wrapper.find('VoteDialog').props().removedFromVoteList([]);
+  it('should bind voteToggled action to VoteDialog props.voteToggled', () => {
+    const actionsSpy = sinon.spy(votingActions, 'voteToggled');
+    wrapper.find('VoteDialog').props().voteToggled([]);
     expect(actionsSpy).to.be.calledWith();
   });
 });

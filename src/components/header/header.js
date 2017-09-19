@@ -1,17 +1,19 @@
-import React from 'react';
 import { Button } from 'react-toolbox/lib/button';
 import { IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
+import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import logo from '../../assets/images/LISK-nano.png';
-import styles from './header.css';
-import VerifyMessage from '../verifyMessage';
-import SignMessage from '../signMessage';
-import RegisterDelegate from '../registerDelegate';
-import Send from '../send';
+
 import PrivateWrapper from '../privateWrapper';
+import ReceiveButton from '../receiveButton';
+import RegisterDelegate from '../registerDelegate';
 import SecondPassphraseMenu from '../secondPassphrase';
+import Send from '../send';
+import SignMessage from '../signMessage';
+import VerifyMessage from '../verifyMessage';
+import logo from '../../assets/images/LISK-nano.png';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import SaveAccountButton from '../saveAccountButton';
+import styles from './header.css';
 
 const Header = props => (
   <header className={`${grid.row} ${grid['between-xs']} ${styles.wrapper}`} >
@@ -58,6 +60,7 @@ const Header = props => (
         <SaveAccountButton />
       </IconMenu>
       <Button className={`${styles.button} logout-button`} raised onClick={props.logOut}>{props.t('logout')}</Button>
+      <ReceiveButton className={styles.button} label='Receive' />
       <Button className={`${styles.button} send-button ${offlineStyle.disableWhenOffline}`}
         raised primary
         onClick={() => props.setActiveDialog({

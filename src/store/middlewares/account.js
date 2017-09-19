@@ -2,7 +2,7 @@ import { getAccountStatus, getAccount, transactions } from '../../utils/api/acco
 import { accountUpdated, accountLoggedIn } from '../../actions/account';
 import { transactionsUpdated } from '../../actions/transactions';
 import { activePeerUpdate } from '../../actions/peers';
-import { clearVoteLists } from '../../actions/voting';
+import { votesFetched } from '../../actions/voting';
 import actionTypes from '../../constants/actions';
 import { fetchAndUpdateForgedBlocks } from '../../actions/forging';
 import { getDelegate } from '../../utils/api/delegate';
@@ -81,7 +81,14 @@ const votePlaced = (store, action) => {
     action.data.confirmed, transactionTypes.vote);
 
   if (voteTransaction) {
-    store.dispatch(clearVoteLists());
+    const state = store.getState();
+    const { peers, account } = state;
+
+    store.dispatch(votesFetched({
+      activePeer: peers.data,
+      address: account.address,
+      type: 'update',
+    }));
   }
 };
 

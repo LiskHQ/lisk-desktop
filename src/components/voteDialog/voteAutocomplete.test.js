@@ -6,35 +6,27 @@ import configureMockStore from 'redux-mock-store';
 import * as delegateApi from '../../utils/api/delegate';
 import VoteAutocomplete from './voteAutocomplete';
 
+const votes = {
+  username1: { publicKey: 'sample_key', confirmed: true, unconfirmed: false },
+  username2: { publicKey: 'sample_key', confirmed: false, unconfirmed: true },
+};
+const delegates = [
+  { username: 'username1', publicKey: '123HG3452245L' },
+  { username: 'username2', publicKey: '123HG3522345L' },
+];
 const props = {
   activePeer: {},
-  voted: [],
-  votedList: [
-    {
-      username: 'yashar',
-    },
-    {
-      username: 'tom',
-    },
-  ],
-  unvotedList: [
-    {
-      username: 'john',
-    },
-    {
-      username: 'test',
-    },
-  ],
-  addedToVoteList: sinon.spy(),
-  removedFromVoteList: sinon.spy(),
+  votes,
+  delegates,
+  voteToggled: sinon.spy(),
 };
 let wrapper;
 
 const store = configureMockStore([])({
   peers: {},
   voting: {
-    votedList: [],
-    unvotedList: [],
+    votes,
+    delegates,
   },
   account: {},
 });
@@ -167,17 +159,17 @@ describe('VoteAutocomplete', () => {
     wrapper.setState({ votedResult: list });
     const returnValue = wrapper.instance()
       .keyPress({ keyCode: 13 }, 'votedSuggestionClass', 'votedResult');
-    expect(props.addedToVoteList).to.have.property('callCount', 1);
+    expect(props.voteToggled).to.have.property('callCount', 1);
     expect(returnValue).to.be.equal(false);
   });
 
-  it(`should keyPress call "removedFromVoteList" when event.keyCode is equal to 13 and 
+  it(`should keyPress call "voteToggled" when event.keyCode is equal to 13 and 
     list name is equal to unvotedResult`, () => {
     const list = [{ address: 'address 1', hovered: true }];
     wrapper.setState({ unvotedResult: list });
     const returnValue = wrapper.instance()
       .keyPress({ keyCode: 13 }, 'unvotedSuggestionClass', 'unvotedResult');
-    expect(props.removedFromVoteList).to.have.property('callCount', 1);
+    expect(props.voteToggled).to.have.property('callCount', 2);
     expect(returnValue).to.be.equal(false);
   });
 });

@@ -37,7 +37,7 @@ export default class VoteAutocomplete extends React.Component {
     this.timeout = setTimeout(() => {
       if (value.length > 0) {
         if (name === 'votedListSearch') {
-          voteAutocomplete(this.props.activePeer, value, this.props.voted)
+          voteAutocomplete(this.props.activePeer, value, this.props.votes)
             .then((res) => {
               this.setState({
                 votedResult: res,
@@ -45,7 +45,7 @@ export default class VoteAutocomplete extends React.Component {
               });
             });
         } else {
-          unvoteAutocomplete(value, this.props.voted)
+          unvoteAutocomplete(value, this.props.votes)
             .then((res) => {
               this.setState({
                 unvotedResult: res,
@@ -86,13 +86,17 @@ export default class VoteAutocomplete extends React.Component {
       case 38: // 38 is keyCode of arrow up key in keyboard
         this.handleArrowUp(this.state[listName], listName);
         return false;
-      case 27 : // 27 is keyCode of enter key in keyboard
+      case 27 : // 27 is keyCode of escape key in keyboard
         this.setState({
           [className]: styles.hidden,
         });
         return false;
-      case 13 : // 27 is keyCode of escape key in keyboard
+      case 13 : // 13 is keyCode of enter key in keyboard
         if (selected.length > 0) {
+          selected[0].hovered = false;
+          this.setState({
+            [listName]: this.state[listName],
+          });
           this[selectFunc](selected[0]);
         }
         return false;
@@ -136,14 +140,16 @@ export default class VoteAutocomplete extends React.Component {
     this.setState({ [name]: list });
   }
   addToVoted(item) {
-    this.props.addedToVoteList(item);
+    const { username, publicKey } = item;
+    this.props.voteToggled({ username, publicKey });
     this.setState({
       votedListSearch: '',
       votedSuggestionClass: styles.hidden,
     });
   }
   removeFromVoted(item) {
-    this.props.removedFromVoteList(item);
+    const { username, publicKey } = item;
+    this.props.voteToggled({ username, publicKey });
     this.setState({
       unvotedListSearch: '',
       unvotedSuggestionClass: styles.hidden,
@@ -151,15 +157,29 @@ export default class VoteAutocomplete extends React.Component {
   }
 
   render() {
+    const { votes } = this.props;
+    const votedList = [];
+    const unvotedList = [];
+
+    Object.keys(votes).forEach((delegate) => {
+      if (!votes[delegate].confirmed && votes[delegate].unconfirmed) {
+        votedList.push(delegate);
+      } else if (votes[delegate].confirmed && !votes[delegate].unconfirmed) {
+        unvotedList.push(delegate);
+      }
+    });
+
+
     return (
       <article>
         <h3 className={styles.autoCompleteTile}>Add vote to</h3>
         <div>
-          {this.props.votedList.map(
-            item => <Chip key={item.username}
+          {votedList.map(
+            item => <Chip key={item}
               deletable
-              onDeleteClick={this.props.removedFromVoteList.bind(this, item)}>
-                {item.username}
+              onDeleteClick={this.props.voteToggled.bind(this,
+                { username: item, publicKey: votes[item].publicKey })}>
+                {item}
               </Chip>,
           )}
         </div>
@@ -186,11 +206,12 @@ export default class VoteAutocomplete extends React.Component {
         </section>
         <h3 className={styles.autoCompleteTile}>Remove vote from</h3>
         <div>
-          {this.props.unvotedList.map(
-            item => <Chip key={item.username}
+          {unvotedList.map(
+            item => <Chip key={item}
               deletable
-              onDeleteClick={this.props.addedToVoteList.bind(this, item)}>
-                {item.username}
+              onDeleteClick={this.props.voteToggled.bind(this,
+                { username: item, publicKey: votes[item].publicKey })}>
+                {item}
               </Chip>,
           )}
         </div>

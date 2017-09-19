@@ -1,9 +1,9 @@
+import { vote, listAccountDelegates, listDelegates } from '../utils/api/delegate';
+import { transactionAdded } from './transactions';
 import { errorAlertDialogDisplayed } from './dialog';
 import { passphraseUsed } from './account';
-import { transactionAdded } from './transactions';
-import { vote } from '../utils/api/delegate';
-import Fees from '../constants/fees';
 import actionTypes from '../constants/actions';
+import Fees from '../constants/fees';
 
 /**
  * Add pending variable to the list of voted delegates and list of unvoted delegates
@@ -15,17 +15,54 @@ export const pendingVotesAdded = () => ({
 /**
  * Remove all data from the list of voted delegates and list of unvoted delegates
  */
-export const clearVoteLists = () => ({
-  type: actionTypes.votesCleared,
+export const votesUpdated = data => ({
+  type: actionTypes.votesUpdated,
+  data,
 });
 
 /**
- *
+ * Add data to the list of voted delegates
  */
-export const votePlaced = ({
-  activePeer, passphrase, account, votedList, unvotedList, secondSecret }) =>
+export const votesAdded = data => ({
+  type: actionTypes.votesAdded,
+  data,
+});
+
+/**
+ * Add data to the list of all delegates
+ */
+export const delegatesAdded = data => ({
+  type: actionTypes.delegatesAdded,
+  data,
+});
+
+/**
+ * Toggles account's vote for the given delegate
+ */
+export const voteToggled = data => ({
+  type: actionTypes.voteToggled,
+  data,
+});
+
+/**
+ * Makes Api call to register votes
+ * Adds pending state and then after the duration of one round
+ * cleans the pending state
+ */
+export const votePlaced = ({ activePeer, passphrase, account, votes, secondSecret }) =>
   (dispatch) => {
-    // Make the Api call
+    const votedList = [];
+    const unvotedList = [];
+
+    Object.keys(votes).forEach((username) => {
+      /* istanbul ignore else */
+      if (!votes[username].confirmed && votes[username].unconfirmed) {
+        votedList.push(votes[username].publicKey);
+      } else if (votes[username].confirmed && !votes[username].unconfirmed) {
+        unvotedList.push(votes[username].publicKey);
+      }
+    });
+
     vote(
       activePeer,
       passphrase,
@@ -55,17 +92,32 @@ export const votePlaced = ({
   };
 
 /**
- * Add data to the list of voted delegates
+ * Gets the list of delegates current account has voted for
+ *
  */
-export const addedToVoteList = data => ({
-  type: actionTypes.addedToVoteList,
-  data,
-});
+export const votesFetched = ({ activePeer, address, type }) =>
+  (dispatch) => {
+    listAccountDelegates(activePeer, address).then(({ delegates }) => {
+      if (type === 'update') {
+        dispatch(votesUpdated({ list: delegates }));
+      } else {
+        dispatch(votesAdded({ list: delegates }));
+      }
+    });
+  };
 
 /**
- * Remove data from the list of voted delegates
+ * Gets list of all delegates
  */
-export const removedFromVoteList = data => ({
-  type: actionTypes.removedFromVoteList,
-  data,
-});
+export const delegatesFetched = ({ activePeer, q, offset, refresh }) =>
+  (dispatch) => {
+    listDelegates(
+      activePeer, {
+        offset,
+        limit: '100',
+        q,
+      },
+    ).then(({ delegates, totalCount }) => {
+      dispatch(delegatesAdded({ list: delegates, totalDelegates: totalCount, refresh }));
+    });
+  };

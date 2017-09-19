@@ -16,8 +16,12 @@ describe('VotingHOC', () => {
         confirmed: [],
       },
       voting: {
-        votedList: [],
-        unvotedList: [],
+        delegates: [
+          { username: 'username1', publicKey: 'sample_key' },
+        ],
+        votes: {
+          username1: { confirmed: true, unconfirmed: true, publicKey: 'sample_key' },
+        },
       },
       account: {},
     });
