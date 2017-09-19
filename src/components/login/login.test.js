@@ -48,9 +48,32 @@ describe('Login', () => {
       expect(wrapper.find('.passphrase input').props().type).to.equal('text');
     });
 
-    it('should show "Invalid passphrase" error message if passphrase is invalid', () => {
-      wrapper.find('.passphrase input').simulate('change', { target: { value: 'INVALID' } });
-      expect(wrapper.find('.passphrase').text()).to.contain('Invalid passphrase');
+    it('should show error about passphrase length if passphrase is have wrong length', () => {
+      const passphrase = 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin';
+      const expectedError = 'Passphrase should have 12 words, entered passphrase has 11';
+      wrapper.find('.passphrase input').simulate('change', { target: { value: passphrase } });
+      expect(wrapper.find('.passphrase').text()).to.contain(expectedError);
+    });
+
+    it('should show error about incoret word  and show similar word if passphrase is have word not from dictionary', () => {
+      const passphrase = 'rexsipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit';
+      const expectedError = 'Word "rexsipe" is not on the passphrase Word List. Most similar word on the list is "recipe"';
+      wrapper.find('.passphrase input').simulate('change', { target: { value: passphrase } });
+      expect(wrapper.find('.passphrase').text()).to.contain(expectedError);
+    });
+
+    it('should show error about incoret word if passphrase is have word not from dictionary', () => {
+      const passphrase = 'sdasd bomb asset salon coil symbol tiger engine assist pact pumpkin visit';
+      const expectedError = 'Word "sdasd" is not on the passphrase Word List.';
+      wrapper.find('.passphrase input').simulate('change', { target: { value: passphrase } });
+      expect(wrapper.find('.passphrase').text()).to.contain(expectedError);
+    });
+
+    it('should show error about invalid passhprase if it is incorrect', () => {
+      const passphrase = 'recipe bomb asset salon coil symbol apple engine assist pact pumpkin visit';
+      const expectedError = 'Passphrase is not valid';
+      wrapper.find('.passphrase input').simulate('change', { target: { value: passphrase } });
+      expect(wrapper.find('.passphrase').text()).to.contain(expectedError);
     });
 
     it('should show call props.setActiveDialog when "new account" button is clicked', () => {

@@ -90,3 +90,7 @@
   margin-top: 18px;
   margin-right: 16px;
 }
+
+.rotated {
+  transform: rotate(45deg);
+}

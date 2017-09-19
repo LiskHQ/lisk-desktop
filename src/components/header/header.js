@@ -1,6 +1,6 @@
-import React from 'react';
 import { Button } from 'react-toolbox/lib/button';
 import { IconMenu, MenuItem } from 'react-toolbox/lib/menu';
+import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import buttonStyle from 'react-toolbox/lib/button/theme.css';
 import logo from '../../assets/images/LISK-nano.png';
@@ -8,6 +8,7 @@ import styles from './header.css';
 import PrivateWrapper from '../privateWrapper';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import RelativeLink from '../relativeLink';
+import ReceiveButton from '../receiveButton';
 
 const Header = props => (
   <header className={`${grid.row} ${grid['between-xs']} ${styles.wrapper}`} >
@@ -44,9 +45,11 @@ const Header = props => (
             to='verify-message'>Verify message</RelativeLink>
         </MenuItem>
       </IconMenu>
-      <Button className={`${styles.button} logout-button`} raised onClick={props.logOut}>logout</Button>
-      <RelativeLink className={`${styles.button} ${buttonStyle.button} ${buttonStyle.primary} send-button ${offlineStyle.disableWhenOffline}`}
-        to='send'>Send</RelativeLink>
+      
+      <Button className={`${styles.button} logout-button`} raised onClick={props.logOut}>{props.t('logout')}</Button>
+      <ReceiveButton className={styles.button} label='Receive' />
+      <RelativeLink className={`${styles.button} ${buttonStyle.button} ${buttonStyle.primary} ${buttonStyle.raised} send-button ${offlineStyle.disableWhenOffline}`}
+      to='send'>{props.t('send')}</RelativeLink>
     </PrivateWrapper>
   </header>
 );

@@ -6,8 +6,6 @@ import actionTypes from '../../constants/actions';
  * @param {Object} action
  */
 const transactions = (state = { pending: [], confirmed: [], count: 0 }, action) => {
-  let startTimestamp;
-
   switch (action.type) {
     case actionTypes.transactionAdded:
       return Object.assign({}, state, {
@@ -22,9 +20,6 @@ const transactions = (state = { pending: [], confirmed: [], count: 0 }, action) 
         count: action.data.count,
       });
     case actionTypes.transactionsUpdated:
-      startTimestamp = state.confirmed.length ?
-        state.confirmed[0].timestamp :
-        0;
       return Object.assign({}, state, {
         // Filter any newly confirmed transaction from pending
         pending: state.pending.filter(
@@ -32,8 +27,10 @@ const transactions = (state = { pending: [], confirmed: [], count: 0 }, action) 
             transaction => transaction.id === pendingTransaction.id).length === 0),
         // Add any newly confirmed transaction to confirmed
         confirmed: [
-          ...action.data.confirmed.filter(transaction => transaction.timestamp > startTimestamp),
-          ...state.confirmed,
+          ...action.data.confirmed,
+          ...state.confirmed.filter(
+            confirmedTransaction => action.data.confirmed.filter(
+              transaction => transaction.id === confirmedTransaction.id).length === 0),
         ],
         count: action.data.count,
       });
