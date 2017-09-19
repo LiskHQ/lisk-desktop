@@ -51,7 +51,7 @@ describe('Login', () => {
 
     it('should show error about passphrase length if passphrase is have wrong length', () => {
       const passphrase = 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin';
-      const expectedError = 'Passphrase should have 12 words, entered passphrase has 11';
+      const expectedError = 'Passphrase should have 12 words, entered passphrase has length';
       wrapper.find('.passphrase input').simulate('change', { target: { value: passphrase } });
       expect(wrapper.find('.passphrase').text()).to.contain(expectedError);
     });

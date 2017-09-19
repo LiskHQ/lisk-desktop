@@ -95,11 +95,12 @@ class Login extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   getPassphraseValidationError(passphrase) {
     if (!passphrase) {
-      return 'Empty passphrase';
+      return this.props.t('Empty passphrase');
     }
     const mnemonic = passphrase.trim().toLowerCase().split(' ');
     if (mnemonic.length < 12) {
-      return `Passphrase should have 12 words, entered passphrase has ${mnemonic.length}`;
+      return this.props.t('Passphrase should have 12 words, entered passphrase has length',
+        { length: mnemonic.length });
     }
 
     const invalidWord = mnemonic.find(word => !inDictionary(word));
