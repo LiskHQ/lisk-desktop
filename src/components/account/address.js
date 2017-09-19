@@ -7,10 +7,10 @@ import styles from './account.css';
 const getStatusTooltip = (props) => {
   if (props.secondSignature) {
     return 'This account is protected by a second passphrase';
+  } else if (props.passphrase) {
+    return 'Passphrase of the acount is saved till the end of the session.';
   }
-  return (props.passphrase ?
-    'Passphrase of the acount is saved till the end of the session.' :
-    'Passphrase of the acount will be required to perform any transaction.');
+  return 'Passphrase of the acount will be required to perform any transaction.';
 };
 
 const Address = (props) => {

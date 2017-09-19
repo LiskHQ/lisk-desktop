@@ -26,20 +26,18 @@ class AuthInputs extends React.Component {
 
   render() {
     return <span>
-      {(!this.props.account.passphrase ?
+      {(!this.props.account.passphrase &&
         <PassphraseInput label='Passphrase'
           className='passphrase'
           error={this.props.passphrase.error}
           value={this.props.passphrase.value}
-          onChange={this.onChange.bind(this, 'passphrase')} /> :
-        null)}
-      {(this.props.account.secondSignature ?
+          onChange={this.onChange.bind(this, 'passphrase')} />)}
+      {(this.props.account.secondSignature &&
         <PassphraseInput label='Second Passphrase'
           className='second-passphrase'
           error={this.props.secondPassphrase.error}
           value={this.props.secondPassphrase.value}
-          onChange={this.onChange.bind(this, 'secondPassphrase')} /> :
-        null)}
+          onChange={this.onChange.bind(this, 'secondPassphrase')} />)}
     </span>;
   }
 }
