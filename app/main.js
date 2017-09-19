@@ -7,7 +7,19 @@ const { BrowserWindow } = electron;
 const { Menu } = electron;
 
 let win;
+let isUILoaded = false;
+let eventStack = [];
+
 const copyright = `Copyright © 2016 - ${new Date().getFullYear()} Lisk Foundation`;
+const protocolName = 'lisk';
+
+const sendUrlToRouter = (url) => {
+  if (isUILoaded && win && win.webContents) {
+    win.webContents.send('openUrl', url);
+  } else {
+    eventStack.push({ event: 'openUrl', value: url });
+  }
+};
 
 function createWindow() {
   const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;
@@ -25,6 +37,8 @@ function createWindow() {
   win.on('blur', () => win.webContents.send('blur'));
   win.on('focus', () => win.webContents.send('focus'));
 
+  if (process.platform === 'win32') {
+    sendUrlToRouter(process.argv.slice(1));
   }
 
   Menu.setApplicationMenu(buildMenu(app, copyright));
@@ -58,6 +72,15 @@ function createWindow() {
       selectionMenu.popup(win);
     }
   });
+
+  // Resolve all events from stack when dom is ready
+  win.webContents.on('did-finish-load', () => {
+    isUILoaded = true;
+    if (eventStack.length > 0) {
+      eventStack.forEach(({ event, value }) => win.webContents.send(event, value));
+      eventStack = [];
+    }
+  });
 }
 
 app.on('ready', createWindow);
@@ -80,4 +103,30 @@ app.on('activate', () => {
   if (win === null) {
     createWindow();
   }
+});
+
+// Set app protocol
+app.setAsDefaultProtocolClient(protocolName);
+
+// Force single instance application
+const isSecondInstance = app.makeSingleInstance((argv) => {
+  if (process.platform === 'win32') {
+    sendUrlToRouter(argv.slice(1));
+  }
+  if (win) {
+    if (win.isMinimized()) win.restore();
+    win.focus();
+  }
+});
+
+if (isSecondInstance) {
+  app.quit();
+}
+
+app.on('will-finish-launching', () => {
+  // Protocol handler for MacOS
+  app.on('open-url', (event, url) => {
+    event.preventDefault();
+    sendUrlToRouter(url);
+  });
 });
