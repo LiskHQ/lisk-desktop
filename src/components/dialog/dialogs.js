@@ -4,6 +4,7 @@ import SignMessage from '../signMessage';
 import VerifyMessage from '../verifyMessage';
 import SecondPassphrase from '../secondPassphrase';
 import VoteDialog from '../voteDialog';
+import ReceiveDialog from '../receiveDialog';
 
 export default {
   send: {
@@ -29,5 +30,9 @@ export default {
   vote: {
     title: 'Vote for delegates',
     component: VoteDialog,
+  },
+  receive: {
+    title: 'Receive LSK',
+    component: ReceiveDialog,
   },
 };

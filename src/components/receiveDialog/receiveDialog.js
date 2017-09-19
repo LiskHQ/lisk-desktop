@@ -1,11 +1,9 @@
-import { Button } from 'react-toolbox/lib/button';
 import QRCode from 'qrcode.react';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import ActionBar from '../actionBar';
-import offlineStyle from '../offlineWrapper/offlineWrapper.css';
-import style from './receiveButton.css';
+import style from './receiveDialog.css';
 
 export class ReceiveDialog extends React.Component {
   copyAddress() {
@@ -45,15 +43,4 @@ export class ReceiveDialog extends React.Component {
   }
 }
 
-const ReceiveButton = props => (
-  <Button className={`${props.className} receive-button ${offlineStyle.disableWhenOffline}`}
-    raised
-    primary={props.primary}
-    onClick={() => props.setActiveDialog({
-      title: 'Receive LSK',
-      childComponent: ReceiveDialog,
-      childComponentProps: props,
-    })}>{props.label}</Button>
-);
-
-export default ReceiveButton;
+export default ReceiveDialog;
