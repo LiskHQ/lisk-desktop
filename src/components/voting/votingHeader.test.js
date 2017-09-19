@@ -4,7 +4,8 @@ import sinon from 'sinon';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
-import VotingHeader from './votingHeader';
+import i18n from '../../i18n';
+import { VotingHeaderRaw } from './votingHeader';
 import VoteDialog from '../voteDialog';
 
 describe('VotingHeader', () => {
@@ -33,13 +34,17 @@ describe('VotingHeader', () => {
     voteToggled: sinon.spy(),
     addTransaction: sinon.spy(),
     search: sinon.spy(),
+    t: key => key,
   };
 
   describe('Vote and Unvote', () => {
     beforeEach(() => {
-      wrapper = mount(<VotingHeader {...props} votes={votes} />, {
-        context: { store: mockStore },
-        childContextTypes: { store: PropTypes.object.isRequired },
+      wrapper = mount(<VotingHeaderRaw {...props} votes={votes} />, {
+        context: { store: mockStore, i18n },
+        childContextTypes: {
+          store: PropTypes.object.isRequired,
+          i18n: PropTypes.object.isRequired,
+        },
       });
     });
 
@@ -84,33 +89,33 @@ describe('VotingHeader', () => {
 
   describe('Only vote', () => {
     beforeEach(() => {
-      wrapper = mount(<VotingHeader {...props} votes={voteDict} />, {
+      wrapper = mount(<VotingHeaderRaw {...props} votes={voteDict} />, {
         context: { store: mockStore },
         childContextTypes: { store: PropTypes.object.isRequired },
       });
     });
 
     it('should render vote button reflecting only (up)vote', () => {
-      expect(wrapper.find('.vote-button-info').text()).to.be.equal('VOTE (+1)');
+      expect(wrapper.find('.vote-button-info').text()).to.be.equal('Vote (+1)');
     });
   });
 
   describe('Only unvote', () => {
     beforeEach(() => {
-      wrapper = mount(<VotingHeader {...props} votes={unvoteDict} />, {
+      wrapper = mount(<VotingHeaderRaw {...props} votes={unvoteDict} />, {
         context: { store: mockStore },
         childContextTypes: { store: PropTypes.object.isRequired },
       });
     });
 
     it('should render vote button reflecting only unvote', () => {
-      expect(wrapper.find('.vote-button-info').text()).to.be.equal('VOTE (-1)');
+      expect(wrapper.find('.vote-button-info').text()).to.be.equal('Vote (-1)');
     });
   });
 
   describe('Without votes', () => {
     beforeEach(() => {
-      wrapper = mount(<VotingHeader {...props} votes={ {} } />, {
+      wrapper = mount(<VotingHeaderRaw {...props} votes={ {} } />, {
         context: { store: mockStore },
         childContextTypes: { store: PropTypes.object.isRequired },
       });

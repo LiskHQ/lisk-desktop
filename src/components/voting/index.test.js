@@ -2,6 +2,8 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
+import { I18nextProvider } from 'react-i18next';
+import i18n from '../../i18n';
 import VotingHOC from './';
 import store from '../../store';
 
@@ -25,7 +27,11 @@ describe('VotingHOC', () => {
       },
       account: {},
     });
-    wrapper = mount(<Provider store={store}><VotingHOC /></Provider>);
+    wrapper = mount(<Provider store={store}>
+        <I18nextProvider i18n={ i18n }>
+          <VotingHOC />
+        </I18nextProvider>
+      </Provider>);
   });
 
   it('should render Voting', () => {
