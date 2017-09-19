@@ -1,8 +1,9 @@
-import actionTypes from '../constants/actions';
-import { vote } from '../utils/api/delegate';
-import { transactionAdded } from './transactions';
 import { errorAlertDialogDisplayed } from './dialog';
+import { passphraseUsed } from './account';
+import { transactionAdded } from './transactions';
+import { vote } from '../utils/api/delegate';
 import Fees from '../constants/fees';
+import actionTypes from '../constants/actions';
 
 /**
  * Add pending variable to the list of voted delegates and list of unvoted delegates
@@ -21,12 +22,13 @@ export const clearVoteLists = () => ({
 /**
  *
  */
-export const votePlaced = ({ activePeer, account, votedList, unvotedList, secondSecret }) =>
+export const votePlaced = ({
+  activePeer, passphrase, account, votedList, unvotedList, secondSecret }) =>
   (dispatch) => {
     // Make the Api call
     vote(
       activePeer,
-      account.passphrase,
+      passphrase,
       account.publicKey,
       votedList,
       unvotedList,
@@ -45,11 +47,11 @@ export const votePlaced = ({ activePeer, account, votedList, unvotedList, second
         fee: Fees.vote,
         type: 3,
       }));
-    })
-    .catch((error) => {
+    }).catch((error) => {
       const text = error && error.message ? `${error.message}.` : 'An error occurred while placing your vote.';
       dispatch(errorAlertDialogDisplayed({ text }));
     });
+    dispatch(passphraseUsed(account.passphrase));
   };
 
 /**
