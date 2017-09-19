@@ -20,7 +20,7 @@ describe('SaveAccountButton', () => {
     const wrapper = mount(<Provider store={store}><SaveAccountButton {...props} /></Provider>);
     wrapper.find('MenuItem').simulate('click');
     expect(removeSavedAccountSpy).to.have.been.calledWith();
-    expect(successToastSpy).to.have.been.calledWith({ label: 'Account forgotten locally.' });
+    expect(successToastSpy).to.have.been.calledWith({ label: 'Account was successfully forgotten.' });
 
     removeSavedAccountSpy.restore();
     successToastSpy.restore();
