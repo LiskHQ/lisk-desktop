@@ -66,10 +66,14 @@ const Header = props => (
           childComponent: Send,
         })}>{props.t('send')}</Button>
         <IconMenu
+          selectable={true}
+          selected={i18n.language}
           className={`${styles.iconButton} ${offlineStyle.disableWhenOffline}`}
           icon='language' position='topRight'>
-          <MenuItem caption='english' onClick={() => i18n.changeLanguage('en')} />
-          <MenuItem caption='deutsch' onClick={() => i18n.changeLanguage('de')} />
+          <MenuItem value="en" caption='English'
+            onClick={() => i18n.changeLanguage('en')} />
+          <MenuItem value="de" caption='Deutsch'
+            onClick={() => i18n.changeLanguage('de')} />
         </IconMenu>
     </PrivateWrapper>
   </header>
