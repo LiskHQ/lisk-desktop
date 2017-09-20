@@ -1,11 +1,11 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
+import votingConst from '../../constants/voting';
 import style from './votingBar.css';
 
 const VotingBar = ({ votes }) => {
-  const voteMaxCount = 33;
-  const votedMaxCount = 101;
+  const { maxCountOfVotes, maxCountOfVotesInOneTurn } = votingConst;
   const votedList = Object.keys(votes).filter(key => votes[key].confirmed);
   const voteList = Object.keys(votes).filter(
     key => votes[key].unconfirmed && !votes[key].confirmed);
@@ -27,17 +27,17 @@ const VotingBar = ({ votes }) => {
         </span>
         <span className={`${grid['col-sm-3']} ${grid['col-xs-12']} total-new-votes`}>
           <span>Total new votes: </span>
-          <strong className={totalNewVotesCount > voteMaxCount && style.red}>
+          <strong className={totalNewVotesCount > maxCountOfVotesInOneTurn && style.red}>
             {totalNewVotesCount}
           </strong>
-          <span> / {voteMaxCount}</span>
+          <span> / {maxCountOfVotesInOneTurn}</span>
         </span>
         <span className={`${grid['col-sm-3']} ${grid['col-xs-12']} total-votes`}>
           <span>Total votes: </span>
           <strong className={totalVotesCount > 101 && style.red}>
             {totalVotesCount}
           </strong>
-          <span> / {votedMaxCount}</span>
+          <span> / {maxCountOfVotes}</span>
         </span>
       </div>
     </div> :
