@@ -3,7 +3,12 @@ import chai, { expect } from 'chai';
 import { spy } from 'sinon';
 import sinonChai from 'sinon-chai';
 import { mount, shallow } from 'enzyme';
+import { BrowserRouter as Router } from 'react-router-dom';
+import configureMockStore from 'redux-mock-store';
+import { Provider } from 'react-redux';
 import Lisk from 'lisk-js';
+import PropTypes from 'prop-types';
+import history from '../../history';
 import Login from './login';
 
 chai.use(sinonChai);
@@ -16,35 +21,46 @@ describe('Login', () => {
     address: '16313739661670634666L',
     username: 'lisk-nano',
   };
-
-  const props = {
-    peers: {},
+  const peers = { data: {} };
+  const store = configureMockStore([])({
+    peers,
     account,
-    history: {},
+    activePeerSet: () => {},
+  });
+  const props = {
+    peers,
+    account,
     onAccountUpdated: () => {},
     setActiveDialog: spy(),
     activePeerSet: (network) => {
       props.peers.data = Lisk.api(network);
     },
   };
+  const options = {
+    context: { store, history },
+    childContextTypes: {
+      store: PropTypes.object.isRequired,
+      history: PropTypes.object.isRequired,
+    },
+  };
   props.spyActivePeerSet = spy(props.activePeerSet);
 
   describe('Generals', () => {
     beforeEach(() => {
-      wrapper = mount(<Login {...props} />);
+      // wrapper = mount(<Provider store={store}>
+      //   <Router><Login {...props}/></Router>
+      // </Provider>);
+      wrapper = mount(<Router><Login {...props}/></Router>, options);
     });
 
-    it('should render a form tag', () => {
-    });
-
-    it('should render address input if state.network === 2', () => {
-      wrapper.setState({ network: 2 });
-      expect(wrapper.find('.address')).to.have.lengthOf(1);
-    });
+    // it('should render address input if state.network === 2', () => {
+    //   wrapper.find('Login').setState({ network: 2 });
+    //   expect(wrapper.find('.address')).to.have.lengthOf(1);
+    // });
 
     it('should allow to change passphrase field to type="text"', () => {
       expect(wrapper.find('.passphrase input').props().type).to.equal('password');
-      wrapper.setState({ showPassphrase: true });
+      wrapper.find('.show-passphrase input').simulate('click');
       expect(wrapper.find('.passphrase input').props().type).to.equal('text');
     });
 
@@ -55,37 +71,32 @@ describe('Login', () => {
       expect(wrapper.find('.passphrase').text()).to.contain(expectedError);
     });
 
-    it('should show error about incoret word  and show similar word if passphrase is have word not from dictionary', () => {
+    it('should show error about incorrect word  and show similar word if passphrase is have word not from dictionary', () => {
       const passphrase = 'rexsipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit';
       const expectedError = 'Word "rexsipe" is not on the passphrase Word List. Most similar word on the list is "recipe"';
       wrapper.find('.passphrase input').simulate('change', { target: { value: passphrase } });
       expect(wrapper.find('.passphrase').text()).to.contain(expectedError);
     });
 
-    it('should show error about incoret word if passphrase is have word not from dictionary', () => {
-      const passphrase = 'sdasd bomb asset salon coil symbol tiger engine assist pact pumpkin visit';
-      const expectedError = 'Word "sdasd" is not on the passphrase Word List.';
+    it('should show error about incorrect word if passphrase is have word not from dictionary', () => {
+      const passphrase = 'aaaa bomb asset salon coil symbol tiger engine assist pact pumpkin visit';
+      const expectedError = 'Word "aaaa" is not on the passphrase Word List.';
       wrapper.find('.passphrase input').simulate('change', { target: { value: passphrase } });
       expect(wrapper.find('.passphrase').text()).to.contain(expectedError);
     });
 
-    it('should show error about invalid passhprase if it is incorrect', () => {
+    it('should show error about invalid passphrase if it is incorrect', () => {
       const passphrase = 'recipe bomb asset salon coil symbol apple engine assist pact pumpkin visit';
       const expectedError = 'Passphrase is not valid';
       wrapper.find('.passphrase input').simulate('change', { target: { value: passphrase } });
       expect(wrapper.find('.passphrase').text()).to.contain(expectedError);
-    });
-
-    it('should show call props.setActiveDialog when "new account" button is clicked', () => {
-      wrapper.find('.new-account-button').simulate('click');
-      expect(props.setActiveDialog).to.have.been.calledWith();
     });
   });
 
   describe('componentDidMount', () => {
     it('calls devPreFill', () => {
       const spyFn = spy(Login.prototype, 'devPreFill');
-      mount(<Login {...props} />);
+      wrapper = mount(<Router><Login {...props}/></Router>, options);
       expect(spyFn).to.have.been.calledWith();
     });
   });
@@ -101,27 +112,27 @@ describe('Login', () => {
     };
 
     it('calls this.props.history.replace(\'/main/transactions\')', () => {
-      wrapper = mount(<Login {...props} />);
+      wrapper = mount(<Router><Login {...props}/></Router>, options);
       wrapper.setProps(props);
       expect(props.history.replace).to.have.been.calledWith('/main/transactions');
     });
 
     it('calls this.props.history.replace with referrer address', () => {
       props.history.location.search = '?referrer=/main/voting';
-      wrapper = mount(<Login {...props}/>);
+      wrapper = mount(<Router><Login {...props}/></Router>, options);
       expect(props.history.replace).to.have.been.calledWith('/main/voting');
     });
 
     it('call this.props.history.replace with "/main/transaction" if referrer address is "/main/forging" and account.isDelegate === false', () => {
       props.history.location.search = '?referrer=/main/forging';
       props.account.isDelegate = false;
-      wrapper = mount(<Login {...props} />);
+      wrapper = mount(<Router><Login {...props}/></Router>, options);
       expect(props.history.replace).to.have.been.calledWith('/main/transactions');
     });
 
     it('calls localStorage.setItem(\'address\', address) if this.state.address', () => {
       const spyFn = spy(localStorage, 'setItem');
-      wrapper = mount(<Login {...props} />);
+      wrapper = shallow(<Login {...props}/>, options);
       wrapper.setState({ address });
       wrapper.setProps(props);
       expect(spyFn).to.have.been.calledWith('address', address);
@@ -133,7 +144,7 @@ describe('Login', () => {
 
   describe('validateUrl', () => {
     beforeEach('', () => {
-      wrapper = shallow(<Login {...props} />);
+      wrapper = shallow(<Login {...props}/>, options);
     });
 
     it('should set address and addressValidity="" for a valid address', () => {
@@ -169,7 +180,7 @@ describe('Login', () => {
 
   describe('validatePassphrase', () => {
     beforeEach('', () => {
-      wrapper = shallow(<Login {...props} />);
+      wrapper = shallow(<Login {...props}/>, options);
     });
 
     it('should set passphraseValidity="" for a valid passphrase', () => {
@@ -205,7 +216,7 @@ describe('Login', () => {
 
   describe('changeHandler', () => {
     it('call setState with matching data', () => {
-      wrapper = shallow(<Login {...props} />);
+      wrapper = shallow(<Login {...props}/>, options);
       const key = 'network';
       const value = 0;
       const spyFn = spy(Login.prototype, 'setState');
@@ -216,7 +227,7 @@ describe('Login', () => {
 
   describe('onLoginSubmission', () => {
     it.skip('it should call activePeerSet', () => {
-      wrapper = shallow(<Login {...props} />);
+      wrapper = shallow(<Login {...props}/>, options);
       wrapper.instance().onLoginSubmission();
       expect(wrapper.props().spyActivePeerSet).to.have.been.calledWith();
     });

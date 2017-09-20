@@ -1,19 +1,18 @@
 import { Provider } from 'react-redux';
 import React from 'react';
 import copy from 'copy-to-clipboard';
-
+import { BrowserRouter as Router } from 'react-router-dom';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import sinon from 'sinon';
-
-import ReceiveButtonHOC from './index';
+import ReceiveDialogHOC from './index';
 import * as dialogActions from '../../actions/dialog';
 import * as toasterActions from '../../actions/toaster';
 
 const fakeStore = configureStore();
 
-describe('ReceiveButtonHOC', () => {
+describe('ReceiveDialogHOC', () => {
   let wrapper;
   const address = '544792633152563672L';
 
@@ -23,24 +22,24 @@ describe('ReceiveButtonHOC', () => {
         address,
       },
     });
-    wrapper = mount(<Provider store={store}><ReceiveButtonHOC /></Provider>);
+    wrapper = mount(<Provider store={store}><Router><ReceiveDialogHOC /></Router></Provider>);
   });
 
   it('should render ReceiveButton with address', () => {
-    expect(wrapper.find('ReceiveButton')).to.have.lengthOf(1);
-    expect(wrapper.find('ReceiveButton').props().address).to.equal(address);
+    expect(wrapper.find('ReceiveDialog')).to.have.lengthOf(1);
+    expect(wrapper.find('ReceiveDialog').props().address).to.equal(address);
   });
 
   it('should bind dialogDisplayed action to ReceiveButton props.setActiveDialog', () => {
     const actionsSpy = sinon.spy(dialogActions, 'dialogDisplayed');
-    wrapper.find('ReceiveButton').props().setActiveDialog({});
+    wrapper.find('ReceiveDialog').props().setActiveDialog({});
     expect(actionsSpy).to.be.calledWith();
     actionsSpy.restore();
   });
 
   it('should bind successToastDisplayed action to ReceiveButton props.successToast', () => {
     const actionsSpy = sinon.spy(toasterActions, 'successToastDisplayed');
-    wrapper.find('ReceiveButton').props().successToast({});
+    wrapper.find('ReceiveDialog').props().successToast({});
     expect(actionsSpy).to.be.calledWith();
     actionsSpy.restore();
   });
@@ -48,7 +47,7 @@ describe('ReceiveButtonHOC', () => {
   // TODO: this doesn't work for some reason
   it.skip('should bind copy to AccountComponent props.copyToClipboard', () => {
     const actionsSpy = sinon.spy(copy);
-    wrapper.find('ReceiveButton').props().copyToClipboard({});
+    wrapper.find('ReceiveDialog').props().copyToClipboard({});
     expect(actionsSpy).to.be.calledWith();
     actionsSpy.restore();
   });
