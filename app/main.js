@@ -4,6 +4,7 @@ const path = require('path');
 const { app } = electron;
 const { BrowserWindow } = electron;
 const { Menu } = electron;
+const { ipcMain } = electron;
 
 let win;
 const copyright = `Copyright © 2016 - ${new Date().getFullYear()} Lisk Foundation`;
@@ -23,6 +24,8 @@ function createWindow() {
   });
   win.on('blur', () => win.webContents.send('blur'));
   win.on('focus', () => win.webContents.send('focus'));
+
+  win.webContents.openDevTools();
 
   const template = [
     {
@@ -202,4 +205,14 @@ app.on('activate', () => {
   if (win === null) {
     createWindow();
   }
+});
+
+app.on('login', (event, webContents, request, authInfo, callback) => {
+  global.myTempFunction = callback;
+  event.preventDefault();
+  webContents.send('proxyLogin', authInfo);
+});
+
+ipcMain.on('proxyCredentialsEntered', (event, username, password) => {
+  global.myTempFunction(username, password);
 });
