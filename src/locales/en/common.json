@@ -1,5 +1,5 @@
 {
-  "send": "send",
+  "Send": "Send",
   "logout": "logout",
   "Register as delegate": "Register as delegate",
   "Sign message": "Sign message",
@@ -28,8 +28,8 @@
   "Repeat the transaction": "Repeat the transaction",
   "confirmations": "confirmations",
   "confirmation": "confirmation",
-  "Earned": "Earned",
-  "Last x days": "Last {{day}} days",
+  "LSK Earned": "LSK Earned",
+  "Last x days": "Last {{count}} days",
   "Last 24 hours": "Last 24 hours",
   "Rank": "Rank",
   "Productivity": "Productivity",
