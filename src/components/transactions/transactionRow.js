@@ -1,5 +1,6 @@
 import React from 'react';
 import numeral from 'numeral';
+import { translate } from 'react-i18next';
 import LiskAmount from '../liskAmount';
 import { TooltipTime, TooltipWrapper } from '../timestamp';
 import TransactionType from './transactionType';
@@ -24,7 +25,8 @@ class TransactionRow extends React.Component {
       </td>
       <td className={`${props.tableStyle.rowCell} ${styles.centerText} ${styles.hiddenXs}`}>
           <TooltipWrapper
-            tooltip={`${numeral(props.value.confirmations || 0).format('0a')} confirmation${props.value.confirmations !== 1 ? 's' : ''}`}>
+            tooltip={`${numeral(props.value.confirmations || 0).format('0a')} 
+            ${props.value.confirmations !== 1 ? props.t('confirmations') : props.t('confirmation')}`}>
             {props.value.id}
           </TooltipWrapper>
       </td>
@@ -47,4 +49,4 @@ class TransactionRow extends React.Component {
   }
 }
 
-export default TransactionRow;
+export default translate()(TransactionRow);
