@@ -52,7 +52,7 @@ const Header = props => (
         <MenuItem caption={props.t('Verify message')}
           className='verify-message'
           onClick={() => props.setActiveDialog({
-            title: props.t('verify-message'),
+            title: props.t('Verify message'),
             childComponent: VerifyMessage,
           })}
         />
