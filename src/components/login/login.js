@@ -8,6 +8,10 @@ import Passphrase from '../passphrase';
 import PassphraseInput from '../passphraseInput';
 import styles from './login.css';
 import env from '../../constants/env';
+import {
+  inDictionary,
+  findSimilarWord,
+} from '../../utils/similarWord';
 
 /**
  * The container component containing login
