@@ -9,7 +9,6 @@ import i18n from '../../i18n';
 import TransactionRow from './transactionRow';
 
 describe('TransactionRow', () => {
-
   const store = configureMockStore([])({});
   const rowData = {
     id: '1038520263604146911',
