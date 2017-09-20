@@ -5,7 +5,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import ActionBar from '../actionBar';
 import style from './receiveDialog.css';
 
-export class ReceiveDialog extends React.Component {
+class ReceiveDialog extends React.Component {
   copyAddress() {
     const copied = this.props.copyToClipboard(this.props.address, {
       message: 'Press #{key} to copy',
