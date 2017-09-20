@@ -1,6 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
+import configureMockStore from 'redux-mock-store';
 import AccountHOC from './index';
 
 describe('Account HOC', () => {
@@ -23,14 +24,11 @@ describe('Account HOC', () => {
     username: 'lisk-nano',
   };
 
-  const store = {
-    dispatch: () => {},
-    subscribe: () => {},
-    getState: () => ({
-      peers,
-      account,
-    }),
-  };
+  const store = configureMockStore([])({
+    peers,
+    account,
+    activePeerSet: () => {},
+  });
   const options = {
     context: { store },
     // childContextTypes: { store: PropTypes.object.isRequired },
@@ -38,7 +36,7 @@ describe('Account HOC', () => {
   let props;
 
   beforeEach(() => {
-    const mountedAccount = mount(<AccountHOC/>, options);
+    const mountedAccount = shallow(<AccountHOC/>, options);
     props = mountedAccount.find('Account').props();
   });
 

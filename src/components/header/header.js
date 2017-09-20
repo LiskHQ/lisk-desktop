@@ -8,7 +8,6 @@ import styles from './header.css';
 import PrivateWrapper from '../privateWrapper';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import RelativeLink from '../relativeLink';
-import ReceiveButton from '../receiveButton';
 
 const Header = props => (
   <header className={`${grid.row} ${grid['between-xs']} ${styles.wrapper}`} >
