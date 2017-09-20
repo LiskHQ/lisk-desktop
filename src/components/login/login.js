@@ -3,11 +3,9 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Input from 'react-toolbox/lib/input';
 import Dropdown from 'react-toolbox/lib/dropdown';
 import Button from 'react-toolbox/lib/button';
-import Checkbox from 'react-toolbox/lib/checkbox';
-import { isValidPassphrase } from '../../utils/passphrase';
-import { findSimilarWord, inDictionary } from '../../utils/similarWord';
 import networksRaw from './networks';
 import Passphrase from '../passphrase';
+import PassphraseInput from '../passphraseInput';
 import styles from './login.css';
 import env from '../../constants/env';
 
@@ -37,6 +35,7 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
+    this.autologin();
     // pre-fill passphrase and address if exiting in cookies
     this.devPreFill();
   }
@@ -86,9 +85,10 @@ class Login extends React.Component {
     return data;
   }
 
-  validatePassphrase(value) {
+  // eslint-disable-next-line class-methods-use-this
+  validatePassphrase(value, error) {
     const data = { passphrase: value };
-    data.passphraseValidity = !isValidPassphrase(value) ? this.getPassphraseValidationError(value) : '';
+    data.passphraseValidity = error || '';
     return data;
   }
 
@@ -116,12 +116,29 @@ class Login extends React.Component {
     return 'Passphrase is not valid';
   }
 
-  changeHandler(name, value) {
+  changeHandler(name, value, error) {
     const validator = this.validators[name] || (() => ({}));
     this.setState({
       [name]: value,
-      ...validator(value),
+      ...validator(value, error),
     });
+  }
+
+  autologin() {
+    const savedAccounts = localStorage.getItem('accounts');
+    if (savedAccounts && !this.props.account.afterLogout) {
+      const account = JSON.parse(savedAccounts)[0];
+      const network = Object.assign({}, networksRaw[account.network]);
+      if (account.network === 2) {
+        network.address = account.address;
+      }
+
+      // set active peer
+      this.props.activePeerSet({
+        publicKey: account.publicKey,
+        network,
+      });
+    }
   }
 
   onLoginSubmission(passphrase) {
@@ -182,20 +199,12 @@ class Login extends React.Component {
                     error={this.state.addressValidity}
                     onChange={this.changeHandler.bind(this, 'address')} />
               }
-              <Input type={this.state.showPassphrase ? 'text' : 'password'}
-                label={this.props.t('Enter your passphrase')} name='passphrase'
+              <PassphraseInput llabel={this.props.t('Enter your passphrase')}
                 className='passphrase'
                 theme={styles}
-                error={this.state.passphraseValidity === 'Empty passphrase' ? '' : this.state.passphraseValidity}
+                error={this.state.passphraseValidity}
                 value={this.state.passphrase}
                 onChange={this.changeHandler.bind(this, 'passphrase')} />
-              <Checkbox
-                checked={this.state.showPassphrase}
-                label={this.props.t('Show passphrase')}
-                className={`${grid['start-xs']} show-passphrase`}
-                theme={styles}
-                onChange={this.changeHandler.bind(this, 'showPassphrase')}
-              />
               <footer className={ `${grid.row} ${grid['center-xs']}` }>
                 <div className={grid['col-xs-12']}>
                   <Button label={this.props.t('New Account')} flat primary

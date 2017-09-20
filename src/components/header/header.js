@@ -1,8 +1,7 @@
 import { Button } from 'react-toolbox/lib/button';
-import { IconMenu, MenuItem } from 'react-toolbox/lib/menu';
+import { IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-
 import PrivateWrapper from '../privateWrapper';
 import ReceiveButton from '../receiveButton';
 import RegisterDelegate from '../registerDelegate';
@@ -13,6 +12,7 @@ import VerifyMessage from '../verifyMessage';
 import logo from '../../assets/images/LISK-nano.png';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import i18n from '../../i18n';
+import SaveAccountButton from '../saveAccountButton';
 import styles from './header.css';
 
 const Header = props => (
@@ -56,6 +56,8 @@ const Header = props => (
             childComponent: VerifyMessage,
           })}
         />
+        <MenuDivider />
+        <SaveAccountButton />
       </IconMenu>
       <Button className={`${styles.button} logout-button`} raised onClick={props.logOut}>{props.t('logout')}</Button>
       <ReceiveButton className={styles.button} label='Receive' />

@@ -26,7 +26,7 @@ class Toaster extends Component {
           key={toast.index}
           label={toast.label}
           timeout={4000}
-          className={`${styles.toast} ${styles[toast.type]} ${styles[`index-${toast.index}`]}`}
+          className={`toast ${styles.toast} ${styles[toast.type]} ${styles[`index-${toast.index}`]}`}
           onTimeout={this.hideToast.bind(this, toast)}
         />
       ))}
