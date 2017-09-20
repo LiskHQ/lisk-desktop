@@ -8,10 +8,6 @@ import Passphrase from '../passphrase';
 import PassphraseInput from '../passphraseInput';
 import styles from './login.css';
 import env from '../../constants/env';
-import {
-  inDictionary,
-  findSimilarWord,
-} from '../../utils/similarWord';
 
 /**
  * The container component containing login
@@ -94,30 +90,6 @@ class Login extends React.Component {
     const data = { passphrase: value };
     data.passphraseValidity = error || '';
     return data;
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  getPassphraseValidationError(passphrase) {
-    if (!passphrase) {
-      return this.props.t('Empty passphrase');
-    }
-    const mnemonic = passphrase.trim().toLowerCase().split(' ');
-    if (mnemonic.length < 12) {
-      return this.props.t('Passphrase should have 12 words, entered passphrase has length',
-        { length: mnemonic.length });
-    }
-
-    const invalidWord = mnemonic.find(word => !inDictionary(word));
-    if (invalidWord) {
-      if (invalidWord.length >= 2 && invalidWord.length <= 8) {
-        const validWord = findSimilarWord(invalidWord);
-        if (validWord) {
-          return `Word "${invalidWord}" is not on the passphrase Word List. Most similar word on the list is "${findSimilarWord(invalidWord)}"`;
-        }
-      }
-      return `Word "${invalidWord}" is not on the passphrase Word List.`;
-    }
-    return 'Passphrase is not valid';
   }
 
   changeHandler(name, value, error) {
