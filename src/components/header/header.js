@@ -14,6 +14,7 @@ import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import i18n from '../../i18n';
 import SaveAccountButton from '../saveAccountButton';
 import styles from './header.css';
+import languages from '../../constants/languages';
 
 const Header = props => (
   <header className={`${grid.row} ${grid['between-xs']} ${styles.wrapper}`} >
@@ -67,16 +68,16 @@ const Header = props => (
           title: props.t('send'),
           childComponent: Send,
         })}>{props.t('send')}</Button>
-        <IconMenu
-          selectable={true}
-          selected={i18n.language}
-          className={`${styles.iconButton} ${offlineStyle.disableWhenOffline}`}
-          icon='language' position='topRight'>
-          <MenuItem value="en" caption='English'
-            onClick={() => i18n.changeLanguage('en')} />
-          <MenuItem value="de" caption='Deutsch'
-            onClick={() => i18n.changeLanguage('de')} />
-        </IconMenu>
+      <IconMenu
+        selectable={true}
+        selected={i18n.language}
+        className={`${styles.iconButton} ${offlineStyle.disableWhenOffline}`}
+        icon='language' position='topRight'>
+        {Object.keys(languages).map(key => (
+          <MenuItem key={key} value={key} caption={languages[key]}
+            onClick={() => i18n.changeLanguage(key)} />
+        ))}
+      </IconMenu>
     </PrivateWrapper>
   </header>
 );
