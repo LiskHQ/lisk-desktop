@@ -3,6 +3,8 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
 import { Provider } from 'react-redux';
+import { I18nextProvider } from 'react-i18next';
+import i18n from '../../i18n';
 import store from '../../store';
 import SignMessage from './signMessage';
 
@@ -38,7 +40,11 @@ ${signature}
       t: key => key,
     };
 
-    wrapper = mount(<Provider store={store}><SignMessage {...props} /></Provider>);
+    wrapper = mount(<Provider store={store}>
+      <I18nextProvider i18n={ i18n }>
+        <SignMessage {...props} />
+      </I18nextProvider>
+    </Provider>);
   });
 
   it.skip('allows to sign a message, copies sign message result to clipboard and shows success toast', () => {
