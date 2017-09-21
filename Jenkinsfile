@@ -88,16 +88,18 @@ node('lisk-nano-01'){
 
     stage ('Run Tests') {
       try {
-        sh '''
-        export ON_JENKINS=true
+        ansiColor('xterm') {
+          sh '''
+          export ON_JENKINS=true
 
-        # Run test
-        cd $WORKSPACE
-        npm run test
+          # Run test
+          cd $WORKSPACE
+          npm run test
 
-        # Submit coverage to coveralls
-        cat coverage/*/lcov.info | coveralls -v
-        '''
+          # Submit coverage to coveralls
+          cat coverage/*/lcov.info | coveralls -v
+          '''
+      }
       } catch (err) {
         currentBuild.result = 'FAILURE'
         error('Stopping build, Test suite failed')
