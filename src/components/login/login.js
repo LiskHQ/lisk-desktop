@@ -192,7 +192,7 @@ class Login extends React.Component {
                         onPassGenerated: this.onLoginSubmission.bind(this),
                       },
                     })} />
-                  <Button label={this.props.t('login')} primary raised
+                  <Button label={this.props.t('Login')} primary raised
                     onClick={this.onLoginSubmission.bind(this, this.state.passphrase)}
                     className='login-button'
                     disabled={(this.state.network === 2 && this.state.addressValidity !== '') ||

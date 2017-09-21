@@ -1,6 +1,6 @@
 {
   "Send": "Send",
-  "logout": "logout",
+  "Logout": "Logout",
   "Register as delegate": "Register as delegate",
   "Sign message": "Sign message",
   "Verify message": "Verify message",
@@ -47,7 +47,7 @@
   "Empty passphrase": "Empty passphrase",
   "Passphrase should have 12 words, entered passphrase has length": "Passphrase should have 12 words, entered passphrase has {{length}}",
   "Show passphrase": "Show passphrase",
-  "login": "login",
+  "Login": "Login",
   "New Account": "New Account",
   "my votes": "my votes",
   "Search": "Search",

@@ -59,7 +59,7 @@ const Header = props => (
         <MenuDivider />
         <SaveAccountButton />
       </IconMenu>
-      <Button className={`${styles.button} logout-button`} raised onClick={props.logOut}>{props.t('logout')}</Button>
+      <Button className={`${styles.button} logout-button`} raised onClick={props.logOut}>{props.t('Logout')}</Button>
       <ReceiveButton className={styles.button} label='Receive' />
       <Button className={`${styles.button} send-button ${offlineStyle.disableWhenOffline}`}
         raised primary
