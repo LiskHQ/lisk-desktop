@@ -160,14 +160,14 @@ class Login extends React.Component {
                 auto={false}
                 source={this.networks}
                 onChange={this.changeHandler.bind(this, 'network')}
-                label='Select a network'
+                label={this.props.t('Select a network')}
                 value={this.state.network}
                 className={`${styles.network} network`}
               />
               {
                 this.state.network === 2 &&
                   <Input type='text'
-                    label='Node address'
+                    label={this.props.t('Node address')}
                     name='address'
                     className='address'
                     theme={styles}
@@ -175,7 +175,7 @@ class Login extends React.Component {
                     error={this.state.addressValidity}
                     onChange={this.changeHandler.bind(this, 'address')} />
               }
-              <PassphraseInput label='Enter your passphrase'
+              <PassphraseInput llabel={this.props.t('Enter your passphrase')}
                 className='passphrase'
                 theme={styles}
                 error={this.state.passphraseValidity}
@@ -183,16 +183,16 @@ class Login extends React.Component {
                 onChange={this.changeHandler.bind(this, 'passphrase')} />
               <footer className={ `${grid.row} ${grid['center-xs']}` }>
                 <div className={grid['col-xs-12']}>
-                  <Button label='NEW ACCOUNT' flat primary
+                  <Button label={this.props.t('New Account')} flat primary
                     className={`${styles.newAccount} new-account-button`}
                     onClick={() => this.props.setActiveDialog({
-                      title: 'New Account',
+                      title: this.props.t('New Account'),
                       childComponent: Passphrase,
                       childComponentProps: {
                         onPassGenerated: this.onLoginSubmission.bind(this),
                       },
                     })} />
-                  <Button label='LOGIN' primary raised
+                  <Button label={this.props.t('Login')} primary raised
                     onClick={this.onLoginSubmission.bind(this, this.state.passphrase)}
                     className='login-button'
                     disabled={(this.state.network === 2 && this.state.addressValidity !== '') ||

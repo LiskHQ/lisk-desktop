@@ -23,6 +23,7 @@ describe('Login', () => {
     activePeerSet: (network) => {
       props.peers.data = Lisk.api(network);
     },
+    t: key => key,
   };
   props.spyActivePeerSet = spy(props.activePeerSet);
 

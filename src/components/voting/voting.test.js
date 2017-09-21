@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import sinon from 'sinon';
 import Voting from './voting';
 import store from '../../store';
+import i18n from '../../i18n';
 
 describe('Voting', () => {
   let wrapper;
@@ -36,12 +37,16 @@ describe('Voting', () => {
     addTransaction: sinon.spy(),
     votesFetched: sinon.spy(),
     delegatesFetched: sinon.spy(),
+    t: key => key,
   };
   beforeEach(() => {
     wrapper = mount(<Voting {...props}></Voting>,
       {
-        context: { store },
-        childContextTypes: { store: PropTypes.object.isRequired },
+        context: { store, i18n },
+        childContextTypes: {
+          store: PropTypes.object.isRequired,
+          i18n: PropTypes.object.isRequired,
+        },
       },
     );
   });
@@ -51,7 +56,7 @@ describe('Voting', () => {
   });
 
   it('should render VotingHeader', () => {
-    expect(wrapper.find('VotingHeader')).to.have.lengthOf(1);
+    expect(wrapper.find('VotingHeaderRaw')).to.have.lengthOf(1);
   });
 
   it('should render VotingRow', () => {

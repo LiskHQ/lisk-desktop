@@ -1,8 +1,11 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
+import PropTypes from 'prop-types';
+import configureMockStore from 'redux-mock-store';
 import TransactionType from './transactionType';
 import { TooltipWrapper } from '../timestamp';
+import i18n from '../../i18n';
 
 const createTest = (type) => {
   let expectedValue;
@@ -37,7 +40,12 @@ const createTest = (type) => {
       type,
       senderId: '1085993630748340485L',
     };
-    const wrapper = shallow(<TransactionType {...inputValue} />);
+    const wrapper = mount(<TransactionType {...inputValue} />, {
+      context: { i18n },
+      childContextTypes: {
+        i18n: PropTypes.object.isRequired,
+      },
+    });
     expect(wrapper.find('span').text()).to.be.equal(expectedValue);
   });
 };
@@ -48,12 +56,18 @@ describe('TransactionType', () => {
   }
 
   it('sets TransactionType equal the values of "props.sederId"', () => {
+    const store = configureMockStore([])({});
     const inputValue = {
       type: 0,
       senderId: '1085993630748340485L',
     };
-    const expectedValue = `<div class="">${inputValue.senderId}</div>`;
-    const wrapper = shallow(<TransactionType {...inputValue} />);
-    expect(wrapper.find(TooltipWrapper).html()).to.be.equal(expectedValue);
+    const wrapper = mount(<TransactionType {...inputValue} />, {
+      context: { i18n, store },
+      childContextTypes: {
+        i18n: PropTypes.object.isRequired,
+        store: PropTypes.object.isRequired,
+      },
+    });
+    expect(wrapper.find(TooltipWrapper)).to.have.lengthOf(1);
   });
 });

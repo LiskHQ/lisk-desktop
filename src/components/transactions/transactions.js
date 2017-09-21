@@ -1,7 +1,6 @@
 import React from 'react';
 import Waypoint from 'react-waypoint';
 import tableStyle from 'react-toolbox/lib/table/theme.css';
-
 import ReceiveButton from '../receiveButton';
 import TransactionRow from './transactionRow';
 import TransactionsHeader from './transactionsHeader';

@@ -24,6 +24,7 @@ describe('SecondPassphrase', () => {
     peers: {},
     setActiveDialog: () => {},
     registerSecondPassphrase: () => {},
+    t: key => key,
   };
 
   describe('Account with second passphrase', () => {

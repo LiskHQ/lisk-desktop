@@ -4,6 +4,8 @@ import { mount } from 'enzyme';
 import { BrowserRouter as Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
+import { I18nextProvider } from 'react-i18next';
+import i18n from '../../i18n';
 import LoginHOC from './index';
 import Login from './login';
 
@@ -35,7 +37,10 @@ describe('LoginHOC', () => {
 
   beforeEach(() => {
     wrapper = mount(<Provider store={store}>
-      <Router><LoginHOC/></Router></Provider>);
+        <I18nextProvider i18n={ i18n }>
+          <Router><LoginHOC/></Router>
+        </I18nextProvider>
+      </Provider>);
   });
 
   it('should mount Login', () => {

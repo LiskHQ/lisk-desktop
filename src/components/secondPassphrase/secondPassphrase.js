@@ -8,7 +8,7 @@ import styles from './secondPassphrase.css';
 import Fees from '../../constants/fees';
 
 const SecondPassphrase = ({
-  account, peers, setActiveDialog, registerSecondPassphrase,
+  account, peers, setActiveDialog, registerSecondPassphrase, t,
 }) => {
   const onLoginSubmission = (secondPassphrase) => {
     registerSecondPassphrase({
@@ -20,10 +20,10 @@ const SecondPassphrase = ({
 
   return (
     !account.secondSignature ?
-      <MenuItem caption="Register second passphrase"
+      <MenuItem caption={t('Register second passphrase')}
         className='register-second-passphrase'
         onClick={() => setActiveDialog({
-          title: 'Register second passphrase',
+          title: t('Register second passphrase'),
           childComponent: Passphrase,
           childComponentProps: {
             onPassGenerated: onLoginSubmission,

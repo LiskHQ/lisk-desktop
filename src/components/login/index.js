@@ -1,8 +1,18 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { translate } from 'react-i18next';
 import { dialogDisplayed } from '../../actions/dialog';
 import Login from './login';
 import { activePeerSet } from '../../actions/peers';
+
+translate.setDefaults({
+  wait: true,
+  withRef: false,
+  bindI18n: 'languageChanged loaded',
+  bindStore: 'added removed',
+  nsMode: 'default',
+  translateFuncName: 't',
+});
 
 /**
  * Using react-redux connect to pass state and dispatch to Login
@@ -20,4 +30,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withRouter(Login));
+)(withRouter(translate()(Login)));

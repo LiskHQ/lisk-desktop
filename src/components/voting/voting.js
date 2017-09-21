@@ -103,12 +103,12 @@ class Voting extends React.Component {
         <div className='verticalScroll'>
           <Table selectable={false} >
             <TableHead displaySelect={false}>
-              <TableCell>Vote</TableCell>
-              <TableCell>Rank</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Lisk Address</TableCell>
-              <TableCell>Uptime</TableCell>
-              <TableCell>Approval</TableCell>
+              <TableCell>{this.props.t('Vote')}</TableCell>
+              <TableCell>{this.props.t('Rank')}</TableCell>
+              <TableCell>{this.props.t('Name')}</TableCell>
+              <TableCell>{this.props.t('Lisk Address')}</TableCell>
+              <TableCell>{this.props.t('Uptime')}</TableCell>
+              <TableCell>{this.props.t('Approval')}</TableCell>
             </TableHead>
             {this.props.delegates.map(item => (
               <VotingRow key={item.address} data={item}
@@ -120,7 +120,7 @@ class Voting extends React.Component {
         </div>
         {
           (!this.isInitial && this.props.delegates.length === 0) &&
-          <div className='hasPaddingRow empty-message'>No delegates found</div>
+          <div className='hasPaddingRow empty-message'>{this.props.t('No delegates found')}</div>
         }
         <Waypoint bottomOffset='-80%'
           scrollableAncestor={window}
