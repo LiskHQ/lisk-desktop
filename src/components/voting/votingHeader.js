@@ -1,6 +1,5 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import buttonStyle from 'react-toolbox/lib/button/theme.css';
 import { IconMenu, MenuItem } from 'react-toolbox/lib/menu';
 import Input from 'react-toolbox/lib/input';
 import styles from './voting.css';
@@ -90,7 +89,7 @@ class VotingHeader extends React.Component {
                   publicKey: votes[username].publicKey,
                 })} />)}
           </IconMenu>
-          <RelativeLink className={`${buttonStyle.button} ${buttonStyle.primary} ${buttonStyle.flat} ${styles.voteButton} vote-button`}
+          <RelativeLink flat primary className={`${styles.voteButton} vote-button`}
             to='vote'>{this.confirmVoteText()}</RelativeLink>
         </div>
       </header>

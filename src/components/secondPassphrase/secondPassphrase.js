@@ -20,7 +20,7 @@ const SecondPassphrase = ({
       fee={Fees.setSecondPassphrase}
       confirmButton='Register'
       useCaseNote={'your second passphrase will be required for all transactions sent from this account'}
-      securityNote='Losing access to this passphrase will mean no funds can be sent from this account.'/>
+      securityNote={'Losing access to this passphrase will mean no funds can be sent from this account.'}/>
   );
 };
 
