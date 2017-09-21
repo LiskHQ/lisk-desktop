@@ -27,6 +27,7 @@ describe('Send', () => {
       account,
       closeDialog: () => {},
       sent: sinon.spy(),
+      t: key => key,
     };
     wrapper = mount(<Provider store={store}><Send {...props} /></Provider>);
   });
