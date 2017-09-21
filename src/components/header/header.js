@@ -65,9 +65,9 @@ const Header = props => (
       <Button className={`${styles.button} send-button ${offlineStyle.disableWhenOffline}`}
         raised primary
         onClick={() => props.setActiveDialog({
-          title: props.t('send'),
+          title: props.t('Send'),
           childComponent: Send,
-        })}>{props.t('send')}</Button>
+        })}>{props.t('Send')}</Button>
       <IconMenu
         selectable={true}
         selected={i18n.language}
