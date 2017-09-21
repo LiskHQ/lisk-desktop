@@ -72,6 +72,7 @@ describe('VoteDialog', () => {
 
       expect(props.votePlaced).to.have.been.calledWith({
         account: ordinaryAccount,
+        passphrase: ordinaryAccount.passphrase,
         activePeer: props.activePeer,
         secondSecret: null,
         votes,
@@ -102,13 +103,14 @@ describe('VoteDialog', () => {
         childContextTypes: { store: PropTypes.object.isRequired },
       });
       const secondPassphrase = 'test second passphrase';
-      wrapper.instance().setSecondPass('secondPassphrase', secondPassphrase);
+      wrapper.instance().handleChange('secondPassphrase', secondPassphrase);
       wrapper.find('.primary-button button').simulate('click');
 
       expect(props.votePlaced).to.have.been.calledWith({
         activePeer: props.activePeer,
         account: accountWithSecondPassphrase,
         votes,
+        passphrase: accountWithSecondPassphrase.passphrase,
         secondSecret: secondPassphrase,
       });
     });

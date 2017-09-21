@@ -92,6 +92,12 @@ const votePlaced = (store, action) => {
   }
 };
 
+const passphraseUsed = (store, action) => {
+  if (!store.getState().account.passphrase) {
+    store.dispatch(accountUpdated({ passphrase: action.data }));
+  }
+};
+
 const accountMiddleware = store => next => (action) => {
   next(action);
   switch (action.type) {
@@ -101,6 +107,9 @@ const accountMiddleware = store => next => (action) => {
     case actionTypes.transactionsUpdated:
       delegateRegistration(store, action);
       votePlaced(store, action);
+      break;
+    case actionTypes.passphraseUsed:
+      passphraseUsed(store, action);
       break;
     default: break;
   }

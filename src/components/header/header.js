@@ -1,12 +1,12 @@
 import { Button } from 'react-toolbox/lib/button';
-import { IconMenu, MenuItem } from 'react-toolbox/lib/menu';
+import { IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import buttonStyle from 'react-toolbox/lib/button/theme.css';
 import logo from '../../assets/images/LISK-nano.png';
+import offlineStyle from '../offlineWrapper/offlineWrapper.css';
+import SaveAccountButton from '../saveAccountButton';
 import styles from './header.css';
 import PrivateWrapper from '../privateWrapper';
-import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import RelativeLink from '../relativeLink';
 
 const Header = props => (
@@ -43,12 +43,14 @@ const Header = props => (
           <RelativeLink className={styles.menuItem}
             to='verify-message'>Verify message</RelativeLink>
         </MenuItem>
+        <MenuDivider />
+        <SaveAccountButton />
       </IconMenu>
 
       <Button className={`${styles.button} logout-button`} raised onClick={props.logOut}>{props.t('logout')}</Button>
-      <RelativeLink className={`${styles.button} ${buttonStyle.button} ${buttonStyle.primary} ${buttonStyle.raised} receive-button ${offlineStyle.disableWhenOffline}`}
+      <RelativeLink neutral raised className={`${styles.button} receive-button`}
       to='receive'>{props.t('Receive LSK')}</RelativeLink>
-      <RelativeLink className={`${styles.button} ${buttonStyle.button} ${buttonStyle.primary} ${buttonStyle.raised} send-button ${offlineStyle.disableWhenOffline}`}
+      <RelativeLink primary raised disableWhenOffline className={`${styles.button} send-button`}
       to='send'>{props.t('send')}</RelativeLink>
     </PrivateWrapper>
   </header>

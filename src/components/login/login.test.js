@@ -1,7 +1,6 @@
 import React from 'react';
-import chai, { expect } from 'chai';
+import { expect } from 'chai';
 import { spy } from 'sinon';
-import sinonChai from 'sinon-chai';
 import { mount, shallow } from 'enzyme';
 import { BrowserRouter as Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
@@ -10,8 +9,6 @@ import Lisk from 'lisk-js';
 import PropTypes from 'prop-types';
 import history from '../../history';
 import Login from './login';
-
-chai.use(sinonChai);
 
 describe('Login', () => {
   let wrapper;
@@ -57,12 +54,6 @@ describe('Login', () => {
     //   wrapper.find('Login').setState({ network: 2 });
     //   expect(wrapper.find('.address')).to.have.lengthOf(1);
     // });
-
-    it('should allow to change passphrase field to type="text"', () => {
-      expect(wrapper.find('.passphrase input').props().type).to.equal('password');
-      wrapper.find('.show-passphrase input').simulate('click');
-      expect(wrapper.find('.passphrase input').props().type).to.equal('text');
-    });
 
     it('should show error about passphrase length if passphrase is have wrong length', () => {
       const passphrase = 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin';
@@ -178,6 +169,7 @@ describe('Login', () => {
     });
   });
 
+<<<<<<< HEAD
   describe('validatePassphrase', () => {
     beforeEach('', () => {
       wrapper = shallow(<Login {...props}/>, options);
@@ -214,6 +206,8 @@ describe('Login', () => {
     });
   });
 
+=======
+>>>>>>> development
   describe('changeHandler', () => {
     it('call setState with matching data', () => {
       wrapper = shallow(<Login {...props}/>, options);

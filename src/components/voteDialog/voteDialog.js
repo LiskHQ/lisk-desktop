@@ -4,38 +4,34 @@ import ActionBar from '../actionBar';
 import Fees from '../../constants/fees';
 import Autocomplete from './voteAutocomplete';
 import styles from './voteDialog.css';
-import SecondPassphraseInput from '../secondPassphraseInput';
+import AuthInputs from '../authInputs';
+import { authStatePrefill, authStateIsValid } from '../../utils/form';
 
 export default class VoteDialog extends React.Component {
   constructor() {
     super();
-    this.state = {
-      secondSecret: '',
-      secondPassphrase: {
-        value: null,
-      },
-    };
+    this.state = authStatePrefill();
+  }
+
+  componentDidMount() {
+    this.setState(authStatePrefill(this.props.account));
   }
 
   confirm() {
-    const secondSecret = this.props.account.secondSignature === 1 ?
-      this.state.secondPassphrase.value :
-      null;
-
-    // fire first action
     this.props.votePlaced({
       activePeer: this.props.activePeer,
       account: this.props.account,
       votes: this.props.votes,
-      secondSecret,
+      secondSecret: this.state.secondPassphrase.value,
+      passphrase: this.state.passphrase.value,
     });
   }
 
-  setSecondPass(name, value, error) {
+  handleChange(name, value, error) {
     this.setState({
       [name]: {
         value,
-        error,
+        error: typeof error === 'string' ? error : null,
       },
     });
   }
@@ -55,10 +51,10 @@ export default class VoteDialog extends React.Component {
           votes={this.props.votes}
           voteToggled={this.props.voteToggled}
           activePeer={this.props.activePeer} />
-        <SecondPassphraseInput
-          error={this.state.secondPassphrase.error}
-          value={this.state.secondPassphrase.value}
-          onChange={this.setSecondPass.bind(this, 'secondPassphrase')} />
+        <AuthInputs
+          passphrase={this.state.passphrase}
+          secondPassphrase={this.state.secondPassphrase}
+          onChange={this.handleChange.bind(this)} />
         <article className={styles.info}>
           <InfoParagraph>
             <p >
@@ -79,8 +75,7 @@ export default class VoteDialog extends React.Component {
               totalVotes > 101 ||
               votesList.length === 0 ||
               votesList.length > 33 ||
-              (!!this.state.secondPassphrase.error ||
-                this.state.secondPassphrase.value === '')
+              !authStateIsValid(this.state)
             ),
             onClick: this.confirm.bind(this),
           }} />

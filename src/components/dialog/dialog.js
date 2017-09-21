@@ -46,6 +46,8 @@ class DialogElement extends Component {
   }
 
   routeWithDialog(dialog, childComponentProps) {
+    clearTimeout(this.timeout);
+    this.setState({ hidden: false });
     this.props.dialogDisplayed({
       title: dialog.title,
       childComponent: dialog.component,
@@ -54,7 +56,7 @@ class DialogElement extends Component {
   }
 
   routeWithOutDialog() {
-    setTimeout(() => {
+    this.timeout = setTimeout(() => {
       this.props.dialogHidden();
       this.setState({ hidden: false });
     }, 500);

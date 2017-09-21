@@ -40,6 +40,11 @@ export const accountLoggedIn = data => ({
   data,
 });
 
+export const passphraseUsed = data => ({
+  type: actionTypes.passphraseUsed,
+  data,
+});
+
 /**
  *
  */
@@ -59,14 +64,16 @@ export const secondPassphraseRegistered = ({ activePeer, secondPassphrase, accou
         const text = (error && error.message) ? error.message : 'An error occurred while registering your second passphrase. Please try again.';
         dispatch(errorAlertDialogDisplayed({ text }));
       });
+    dispatch(passphraseUsed(account.passphrase));
   };
 
 /**
  *
  */
-export const delegateRegistered = ({ activePeer, account, username, secondPassphrase }) =>
+export const delegateRegistered = ({
+  activePeer, account, passphrase, username, secondPassphrase }) =>
   (dispatch) => {
-    registerDelegate(activePeer, username, account.passphrase, secondPassphrase)
+    registerDelegate(activePeer, username, passphrase, secondPassphrase)
       .then((data) => {
         // dispatch to add to pending transaction
         dispatch(transactionAdded({
@@ -84,6 +91,7 @@ export const delegateRegistered = ({ activePeer, account, username, secondPassph
         const actionObj = errorAlertDialogDisplayed({ text });
         dispatch(actionObj);
       });
+    dispatch(passphraseUsed(passphrase));
   };
 
 /**
@@ -107,4 +115,5 @@ export const sent = ({ activePeer, account, recipientId, amount, passphrase, sec
         const text = error && error.message ? `${error.message}.` : 'An error occurred while creating the transaction.';
         dispatch(errorAlertDialogDisplayed({ text }));
       });
+    dispatch(passphraseUsed(passphrase));
   };

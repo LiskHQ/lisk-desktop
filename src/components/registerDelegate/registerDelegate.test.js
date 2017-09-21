@@ -10,12 +10,14 @@ import * as delegateApi from '../../utils/api/delegate';
 
 
 const normalAccount = {
+  passphrase: 'pass',
   isDelegate: false,
   address: '16313739661670634666L',
   balance: 1000e8,
 };
 
 const delegateAccount = {
+  passphrase: 'pass',
   isDelegate: true,
   address: '16313739661670634666L',
   balance: 1000e8,
@@ -25,6 +27,7 @@ const delegateAccount = {
 };
 
 const withSecondSecretAccount = {
+  passphrase: 'pass',
   address: '16313739661670634666L',
   balance: 1000e8,
   delegate: {
@@ -121,7 +124,7 @@ describe('RegisterDelegate', () => {
 
     it('allows register as delegate for a non delegate account with second secret', () => {
       wrapper.find('.username input').simulate('change', { target: { value: 'sample_username' } });
-      wrapper.find('.second-secret input').simulate('change', { target: { value: 'sample phrase' } });
+      wrapper.find('.second-passphrase input').simulate('change', { target: { value: 'sample phrase' } });
       expect(props.delegateRegistered).to.have.been.calledWith();
     });
   });

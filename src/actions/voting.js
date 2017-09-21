@@ -1,7 +1,8 @@
-import actionTypes from '../constants/actions';
 import { vote, listAccountDelegates, listDelegates } from '../utils/api/delegate';
 import { transactionAdded } from './transactions';
 import { errorAlertDialogDisplayed } from './dialog';
+import { passphraseUsed } from './account';
+import actionTypes from '../constants/actions';
 import Fees from '../constants/fees';
 
 /**
@@ -48,7 +49,7 @@ export const voteToggled = data => ({
  * Adds pending state and then after the duration of one round
  * cleans the pending state
  */
-export const votePlaced = ({ activePeer, account, votes, secondSecret }) =>
+export const votePlaced = ({ activePeer, passphrase, account, votes, secondSecret }) =>
   (dispatch) => {
     const votedList = [];
     const unvotedList = [];
@@ -64,7 +65,7 @@ export const votePlaced = ({ activePeer, account, votes, secondSecret }) =>
 
     vote(
       activePeer,
-      account.passphrase,
+      passphrase,
       account.publicKey,
       votedList,
       unvotedList,
@@ -83,11 +84,11 @@ export const votePlaced = ({ activePeer, account, votes, secondSecret }) =>
         fee: Fees.vote,
         type: 3,
       }));
-    })
-    .catch((error) => {
+    }).catch((error) => {
       const text = error && error.message ? `${error.message}.` : 'An error occurred while placing your vote.';
       dispatch(errorAlertDialogDisplayed({ text }));
     });
+    dispatch(passphraseUsed(account.passphrase));
   };
 
 /**
