@@ -10,9 +10,12 @@ import Passphrase from './passphrase';
 describe('Passphrase Component', () => {
   let wrapper;
   const clock = sinon.useFakeTimers();
+  const props = {
+    t: key => key,
+  };
 
   beforeEach(() => {
-    wrapper = mount(<Provider store={store}><Passphrase /></Provider>);
+    wrapper = mount(<Provider store={store}><Passphrase {...props} /></Provider>);
   });
 
   it('should render 2 buttons', () => {
