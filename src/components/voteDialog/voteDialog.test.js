@@ -47,6 +47,7 @@ describe('VoteDialog', () => {
     closeDialog: sinon.spy(),
     votePlaced: sinon.spy(),
     voteToggled: sinon.spy(),
+    t: key => key,
   };
 
   describe('Ordinary account', () => {
@@ -87,6 +88,7 @@ describe('VoteDialog', () => {
         closeDialog: () => {},
         voteToggled: () => {},
         votePlaced: () => {},
+        t: key => key,
       };
       const mounted = mount(<Provider store={store}>
         <VoteDialog {...noVoteProps} account={ordinaryAccount} /></Provider>);

@@ -69,7 +69,7 @@ export default class VoteDialog extends React.Component {
             onClick: this.props.closeDialog,
           }}
           primaryButton={{
-            label: 'Confirm',
+            label: this.props.t('Confirm'),
             fee: Fees.vote,
             disabled: (
               totalVotes > 101 ||
