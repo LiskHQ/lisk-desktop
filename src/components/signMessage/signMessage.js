@@ -44,10 +44,10 @@ class SignMessageComponent extends React.Component {
 
   showResult() {
     const copied = this.props.copyToClipboard(this.state.result, {
-      message: 'Press #{key} to copy',
+      message: this.props.t('Press #{key} to copy'),
     });
     if (copied) {
-      this.props.successToast({ label: 'Result copied to clipboard' });
+      this.props.successToast({ label: this.props.t('Result copied to clipboard') });
     }
     this.setState({ resultIsShown: true });
   }
@@ -56,16 +56,16 @@ class SignMessageComponent extends React.Component {
     return (
       <div className='sign-message'>
         <InfoParagraph>
-            Signing a message with this tool indicates ownership of a privateKey (secret) and
-            provides a level of proof that you are the owner of the key.
+          {this.props.t(`Signing a message with this tool indicates ownership of a privateKey
+            (secret) and provides a level of proof that you are the owner of the key.
             Its important to bear in mind that this is not a 100% proof as computer systems
             can be compromised, but is still an effective tool for proving ownership
-            of a particular publicKey/address pair.
+            of a particular publicKey/address pair.`)}
           <br />
-            Note: Digital Signatures and signed messages are not encrypted!
+          {this.props.t('Note: Digital Signatures and signed messages are not encrypted!')}
         </InfoParagraph>
         <section>
-          <Input className='message' multiline label='Message'
+          <Input className='message' multiline label={this.props.t('Message')}
             autoFocus={true}
             value={this.state.message}
             onChange={this.sign.bind(this)} />
@@ -75,13 +75,13 @@ class SignMessageComponent extends React.Component {
             onChange={this.handleChange.bind(this)} />
         </section>
         {this.state.resultIsShown ?
-          <SignVerifyResult result={this.state.result} title='Result' /> :
+          <SignVerifyResult result={this.state.result} title={this.props.t('Result')} /> :
           <ActionBar
             secondaryButton={{
               onClick: this.props.closeDialog,
             }}
             primaryButton={{
-              label: 'Sign and copy result to clipboard',
+              label: this.props.t('Sign and copy result to clipboard'),
               className: 'sign-button',
               disabled: (!this.state.result ||
                 this.state.resultIsShown ||

@@ -31,9 +31,14 @@ ${signature}
   beforeEach(() => {
     successToastSpy = sinon.spy();
     copyMock = sinon.mock();
+    const props = {
+      account,
+      successToast: successToastSpy,
+      copyToClipboard: copyMock,
+      t: key => key,
+    };
 
-    wrapper = mount(<Provider store={store}><SignMessage
-      account={account} successToast={successToastSpy} copyToClipboard={copyMock} /></Provider>);
+    wrapper = mount(<Provider store={store}><SignMessage {...props} /></Provider>);
   });
 
   it.skip('allows to sign a message, copies sign message result to clipboard and shows success toast', () => {
