@@ -26,11 +26,11 @@ describe('ForgingStats', () => {
 
   beforeEach(() => {
     wrapper = mount(<I18nextProvider i18n={ i18n }>
-        <ForgingStats
-          account={account}
-          statistics={statistics}
-          loadStats={loadStats} />
-      </I18nextProvider>);
+      <ForgingStats
+        account={account}
+        statistics={statistics}
+        loadStats={loadStats} />
+    </I18nextProvider>);
   });
 
   it('should render 4 Card components', () => {
@@ -38,18 +38,18 @@ describe('ForgingStats', () => {
   });
 
   it('should render Card component for Last 24 hours', () => {
-    expect(wrapper.find('Card').at(0).text().trim()).to.equal('Last 24 hours0 LSK');
+    expect(wrapper.find('Card').at(0).text().trim()).to.equal('Last 24 hours 0 LSK');
   });
 
   it('should render Card component for Last 7 days', () => {
-    expect(wrapper.find('Card').at(1).text().trim()).to.equal('Last x days32.13 LSK');
+    expect(wrapper.find('Card').at(1).text().trim()).to.equal('Last x days 32.13 LSK');
   });
 
   it('should render Card component for Last 30 days', () => {
-    expect(wrapper.find('Card').at(2).text().trim()).to.equal('Last x days3,213.18 LSK');
+    expect(wrapper.find('Card').at(2).text().trim()).to.equal('Last x days 3,213.18 LSK');
   });
 
   it('should render Card component for Last 365 days', () => {
-    expect(wrapper.find('Card').at(3).text().trim()).to.equal('Last x days321,317.91 LSK');
+    expect(wrapper.find('Card').at(3).text().trim()).to.equal('Last x days 321,317.91 LSK');
   });
 });

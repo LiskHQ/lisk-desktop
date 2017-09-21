@@ -9,51 +9,46 @@ import style from './forging.css';
 const statCardObjects = [
   {
     key: 'last24h',
-    label: 'Last 24 hours',
-    startMoment: moment().subtract(1, 'days'),
+    days: 1,
   }, {
     key: 'last7d',
-    label: '7',
-    startMoment: moment().subtract(7, 'days'),
+    days: 7,
   }, {
     key: 'last30d',
-    label: '30',
-    startMoment: moment().subtract(30, 'days'),
+    days: 30,
   }, {
     key: 'last365d',
-    label: '365',
-    startMoment: moment().subtract(365, 'days'),
+    days: 365,
   },
 ];
 
-
 class ForgingStats extends React.Component {
-
   componentDidMount() {
-    statCardObjects.map(obj => this.props.loadStats(obj.key, obj.startMoment));
+    statCardObjects.map(obj => this.props.loadStats(obj.key, moment().subtract(obj.days, 'days')));
   }
 
   render() {
+    statCardObjects[0].label = this.props.t('Last 24 hours');
+    [1, 2, 3].forEach((i) => {
+      statCardObjects[i].label = this.props.t(
+        'Last x days', { day: statCardObjects[i].days });
+    });
+
     return (
       <div className={`${grid.row} ${grid['between-xs']}`}>
         {statCardObjects.map(cardObj => (
           <div className={`${grid['col-xs-12']} ${grid['col-sm-3']}`} key={cardObj.key}>
             <Card className={style.grayCard}>
               <CardText>
-              <div className={grid['col-xs-12']}>
-                <div className={`${grid.row}  ${grid['between-xs']}`}>
-                  <span className='title'>
-                    { cardObj.label === 'Last 24 hours' ?
-                      this.props.t(cardObj.label) :
-                      this.props.t('Last x days', { day: cardObj.label }) }
-                  </span>
-                  <span>
-                   <LiskAmount val={this.props.statistics[cardObj.key]}
-                      roundTo={2}
-                      /> LSK
-                  </span>
+                <div className={grid['col-xs-12']}>
+                  <div className={`${grid.row}  ${grid['between-xs']}`}>
+                    <span className='title'> {cardObj.label} </span>
+                    <span>
+                      <LiskAmount val={this.props.statistics[cardObj.key]}
+                        roundTo={2} /> LSK
+                    </span>
+                  </div>
                 </div>
-              </div>
               </CardText>
             </Card>
           </div>
