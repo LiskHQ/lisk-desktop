@@ -127,10 +127,21 @@ node('lisk-nano-01'){
         pkill -f Xvfb -9 || true
         rm -rf /tmp/.X0-lock || true
         pkill -f webpack -9 || true
+        '''
+      } catch (err) {
+        currentBuild.result = 'FAILURE'
+        milestone 1
+        error('Stopping build, End to End Test suite failed')
+      }
+    }
+
+    stage ('Deploy') {
+      try {
+        sh '''
+        rsync -axl --delete "$WORKSPACE/app/dist/" "jenkins@master-01:/var/www/test/lisk-nano/$BRANCH_NAME/"
 
         # Cleanup - delete all files on success
-        cd $WORKSPACE
-        rm -rf *
+        rm -rf "$WORKSPACE/*"
         '''
       } catch (err) {
         currentBuild.result = 'FAILURE'
