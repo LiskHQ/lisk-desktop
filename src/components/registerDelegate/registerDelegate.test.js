@@ -48,6 +48,7 @@ const props = {
   },
   closeDialog: () => {},
   delegateRegistered: sinon.spy(),
+  t: key => key,
 };
 
 const delegateProps = { ...props, account: delegateAccount };

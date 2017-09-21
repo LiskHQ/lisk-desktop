@@ -41,7 +41,7 @@ class RegisterDelegate extends React.Component {
   render() {
     return (
       <div>
-        <Input label='Delegate name' required={true}
+        <Input label={this.props.t('Delegate name')} required={true}
           autoFocus={true}
           className='username'
           onChange={handleChange.bind(this, this, 'name')}
@@ -53,17 +53,18 @@ class RegisterDelegate extends React.Component {
           onChange={handleChange.bind(this, this)} />
         <hr/>
         <InfoParagraph>
+          {this.props.t(`
           Becoming a delegate requires registration. You may choose your own
           delegate name, which can be used to promote your delegate. Only the
           top 101 delegates are eligible to forge. All fees are shared equally
-          between the top 101 delegates.
+          between the top 101 delegates.`)}
         </InfoParagraph>
         <ActionBar
           secondaryButton={{
             onClick: this.props.closeDialog,
           }}
           primaryButton={{
-            label: 'Register',
+            label: this.props.t('Register'),
             fee: Fees.registerDelegate,
             className: 'register-button',
             disabled: (!this.state.name.value ||
