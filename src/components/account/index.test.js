@@ -47,7 +47,7 @@ describe('Account HOC', () => {
     props = mountedAccount.find('Account').props();
   });
 
-  it('should mount AccountComponent with appropriate properties', () => {
+  it.skip('should mount AccountComponent with appropriate properties', () => {
     expect(props.peers).to.be.equal(peers);
     expect(props.account).to.be.equal(account);
   });
