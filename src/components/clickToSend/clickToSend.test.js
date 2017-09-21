@@ -8,6 +8,7 @@ const Dummy = () => (<span />);
 
 describe('ClickToSend', () => {
   let setActiveDialog;
+  const t = key => key;
 
   beforeEach(() => {
     setActiveDialog = sinon.spy();
@@ -15,7 +16,7 @@ describe('ClickToSend', () => {
 
   it('allows open send modal with pre-filled address ', () => {
     const wrapper = mount(
-      <ClickToSend address='16313739661670634666L'
+      <ClickToSend address='16313739661670634666L' t={t}
         setActiveDialog={setActiveDialog}><Dummy /></ClickToSend>);
     wrapper.simulate('click');
     expect(setActiveDialog).to.have.been.calledWith();
@@ -24,7 +25,7 @@ describe('ClickToSend', () => {
 
   it('allows open send modal with pre-filled rawAmount ', () => {
     const wrapper = mount(
-      <ClickToSend rawAmount='100000000'
+      <ClickToSend rawAmount='100000000' t={t}
         setActiveDialog={setActiveDialog}><Dummy /></ClickToSend>);
     wrapper.simulate('click');
     expect(setActiveDialog).to.have.been.calledWith();
@@ -33,7 +34,7 @@ describe('ClickToSend', () => {
 
   it('should do nothing if props.disabled', () => {
     const wrapper = mount(
-      <ClickToSend disabled={true}
+      <ClickToSend disabled={true} t={t}
         setActiveDialog={setActiveDialog}><Dummy />
       </ClickToSend>);
     wrapper.simulate('click');

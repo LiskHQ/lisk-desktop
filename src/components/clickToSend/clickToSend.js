@@ -8,7 +8,7 @@ const ClickToSend = props => (
     props.children :
     <span className={`${styles.clickable} ${props.className}`}
       onClick={() => (props.setActiveDialog({
-        title: 'Send',
+        title: props.t('Send'),
         childComponent: Send,
         childComponentProps: {
           amount: props.rawAmount ? fromRawLsk(props.rawAmount) : props.amount,
