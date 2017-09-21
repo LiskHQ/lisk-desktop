@@ -17,8 +17,8 @@ class Notification {
    * @memberof Notify
    */
   init() {
-    if (PRODUCTION) {
-      const { ipc } = window;
+    const { ipc } = window;
+    if (ipc) {
       ipc.on('blur', () => { this.isFocused = false; });
       ipc.on('focus', () => { this.isFocused = true; });
     }
