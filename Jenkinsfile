@@ -60,10 +60,12 @@ node('lisk-nano-01'){
 
     stage ('Run Eslint') {
       try {
-        sh '''
-        cd $WORKSPACE
-        npm run eslint
-        '''
+        ansiColor('xterm') {
+          sh '''
+          cd $WORKSPACE
+          npm run eslint
+          '''
+	}
       } catch (err) {
         currentBuild.result = 'FAILURE'
         error('Stopping build, Eslint failed')
@@ -108,28 +110,30 @@ node('lisk-nano-01'){
 
     stage ('Start Dev Server and Run Tests') {
       try {
-        sh '''
-        # Run Dev build and Build
-        cd $WORKSPACE
-        export NODE_ENV=
-        npm run dev &> .lisk-nano.log &
-        sleep 30
+        ansiColor('xterm') {
+          sh '''
+          # Run Dev build and Build
+          cd $WORKSPACE
+          export NODE_ENV=
+          npm run dev &> .lisk-nano.log &
+          sleep 30
 
-        # End to End test configuration
-        export DISPLAY=:99
-        Xvfb :99 -ac -screen 0 1280x1024x24 &
-        ./node_modules/protractor/bin/webdriver-manager update
+          # End to End test configuration
+          export DISPLAY=:99
+          Xvfb :99 -ac -screen 0 1280x1024x24 &
+          ./node_modules/protractor/bin/webdriver-manager update
 
-        # Run End to End Tests
-        npm run e2e-test
+          # Run End to End Tests
+          npm run e2e-test
 
-        cd ~/lisk-test-nano
-        bash lisk.sh stop_node
-        pkill -f selenium -9 || true
-        pkill -f Xvfb -9 || true
-        rm -rf /tmp/.X0-lock || true
-        pkill -f webpack -9 || true
-        '''
+          cd ~/lisk-test-nano
+          bash lisk.sh stop_node
+          pkill -f selenium -9 || true
+          pkill -f Xvfb -9 || true
+          rm -rf /tmp/.X0-lock || true
+          pkill -f webpack -9 || true
+          '''
+        }
       } catch (err) {
         currentBuild.result = 'FAILURE'
         milestone 1
