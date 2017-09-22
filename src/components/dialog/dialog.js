@@ -13,6 +13,7 @@ class DialogElement extends Component {
     this.path = {
       name: '/',
       list: [],
+      dialog: '',
     };
   }
 
@@ -36,10 +37,13 @@ class DialogElement extends Component {
       return acc;
     }, {});
 
-    this.path.list = location.pathname.split('/');
+    this.path.list = location.pathname.replace(/\/$/, '').split('/');
+    this.dialog = this.path.list[3];
 
-    if (this.path.list.length === 4 && Object.keys(dialogs).includes(this.path.list[3])) {
-      this.routeWithDialog(dialogs[this.path.list[3]], parseParams(location.search));
+    if (this.path.list.length === 5) {
+      this.props.history.push(`/${this.path.list[1]}/${this.path.list[2]}/${this.path.list[4]}`);
+    } else if (this.path.list.length === 4 && Object.keys(dialogs).includes(this.dialog)) {
+      this.routeWithDialog(dialogs[this.dialog], parseParams(location.search));
     } else {
       this.routeWithOutDialog();
     }
@@ -64,7 +68,12 @@ class DialogElement extends Component {
   }
 
   closeDialog() {
-    this.props.history.push(`/${this.path.list[1]}/${this.path.list[2]}`);
+    if (this.props.dialog.childComponentProps.noRouter) {
+      this.routeWithOutDialog();
+    } else {
+      const upperRoute = this.path.name.replace(/\/$/, '').replace(this.dialog, '');
+      this.props.history.push(upperRoute);
+    }
   }
 
   render() {

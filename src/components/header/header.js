@@ -25,22 +25,22 @@ const Header = props => (
         {
           !props.account.isDelegate &&
             <MenuItem>
-              <RelativeLink className={styles.menuItem}
+              <RelativeLink className={`register-as-delegate ${styles.menuItem}`}
                 to='register-delegate'>Register as delegate</RelativeLink>
             </MenuItem>
         }
         {
           !props.account.secondSignature &&
             <MenuItem>
-              <RelativeLink className={styles.menuItem}
+              <RelativeLink className={`register-second-passphrase ${styles.menuItem}`}
                 to='register-second-passphrase'>Register second passphrase</RelativeLink>
             </MenuItem>
         }
         <MenuItem>
-          <RelativeLink className={styles.menuItem} to='sign-message'>Sign message</RelativeLink>
+          <RelativeLink className={`sign-message ${styles.menuItem}`} to='sign-message'>Sign message</RelativeLink>
         </MenuItem>
         <MenuItem>
-          <RelativeLink className={styles.menuItem}
+          <RelativeLink className={`verify-message ${styles.menuItem}`}
             to='verify-message'>Verify message</RelativeLink>
         </MenuItem>
         <MenuDivider />

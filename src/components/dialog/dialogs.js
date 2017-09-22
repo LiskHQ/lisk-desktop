@@ -5,6 +5,7 @@ import VerifyMessage from '../verifyMessage';
 import SecondPassphrase from '../secondPassphrase';
 import VoteDialog from '../voteDialog';
 import ReceiveDialog from '../receiveDialog';
+import SaveAccount from '../saveAccount';
 
 export default {
   send: {
@@ -34,5 +35,9 @@ export default {
   receive: {
     title: 'Receive LSK',
     component: ReceiveDialog,
+  },
+  'save-account': {
+    title: 'Remember this account',
+    component: SaveAccount,
   },
 };

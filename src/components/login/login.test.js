@@ -4,7 +4,6 @@ import { spy } from 'sinon';
 import { mount, shallow } from 'enzyme';
 import { BrowserRouter as Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
-import { Provider } from 'react-redux';
 import Lisk from 'lisk-js';
 import PropTypes from 'prop-types';
 import history from '../../history';
@@ -27,6 +26,8 @@ describe('Login', () => {
   const props = {
     peers,
     account,
+    accountsRetrieved: spy(),
+    t: data => data,
     onAccountUpdated: () => {},
     setActiveDialog: spy(),
     activePeerSet: (network) => {
@@ -81,14 +82,6 @@ describe('Login', () => {
       const expectedError = 'Passphrase is not valid';
       wrapper.find('.passphrase input').simulate('change', { target: { value: passphrase } });
       expect(wrapper.find('.passphrase').text()).to.contain(expectedError);
-    });
-  });
-
-  describe('componentDidMount', () => {
-    it('calls devPreFill', () => {
-      const spyFn = spy(Login.prototype, 'devPreFill');
-      wrapper = mount(<Router><Login {...props}/></Router>, options);
-      expect(spyFn).to.have.been.calledWith();
     });
   });
 
@@ -169,45 +162,6 @@ describe('Login', () => {
     });
   });
 
-<<<<<<< HEAD
-  describe('validatePassphrase', () => {
-    beforeEach('', () => {
-      wrapper = shallow(<Login {...props}/>, options);
-    });
-
-    it('should set passphraseValidity="" for a valid passphrase', () => {
-      const passphrase = 'wagon stock borrow episode laundry kitten salute link globe zero feed marble';
-      const data = wrapper.instance().validatePassphrase(passphrase);
-      const expectedData = {
-        passphrase,
-        passphraseValidity: '',
-      };
-      expect(data).to.deep.equal(expectedData);
-    });
-
-    it('should set passphraseValidity="Empty passphrase" for an empty string', () => {
-      const passphrase = '';
-      const data = wrapper.instance().validatePassphrase(passphrase);
-      const expectedData = {
-        passphrase,
-        passphraseValidity: 'Empty passphrase',
-      };
-      expect(data).to.deep.equal(expectedData);
-    });
-
-    it.skip('should set passphraseValidity="Invalid passphrase" for a non-empty invalid passphrase', () => {
-      const passphrase = 'invalid passphrase';
-      const data = wrapper.instance().validatePassphrase(passphrase);
-      const expectedData = {
-        passphrase,
-        passphraseValidity: 'URL is invalid',
-      };
-      expect(data).to.deep.equal(expectedData);
-    });
-  });
-
-=======
->>>>>>> development
   describe('changeHandler', () => {
     it('call setState with matching data', () => {
       wrapper = shallow(<Login {...props}/>, options);
@@ -224,46 +178,6 @@ describe('Login', () => {
       wrapper = shallow(<Login {...props}/>, options);
       wrapper.instance().onLoginSubmission();
       expect(wrapper.props().spyActivePeerSet).to.have.been.calledWith();
-    });
-  });
-
-  describe.skip('devPreFill', () => {
-    it('should call validateUrl', () => {
-      const spyFn = spy(Login.prototype, 'validateUrl');
-
-      mount(<Login {...props} />);
-      expect(spyFn).to.have.been.calledWith();
-    });
-
-    it('should set state with correct network index and passphrase', () => {
-      const spyFn = spy(Login.prototype, 'validateUrl');
-      const passphrase = 'Test Passphrase';
-      localStorage.setItem('address', 'http:localhost:4000');
-      localStorage.setItem('passphrase', passphrase);
-
-      // for invalid address, it should set network to 0
-      mount(<Login {...props} />);
-      expect(spyFn).to.have.been.calledWith({
-        passphrase,
-        network: 0,
-      });
-
-      Login.prototype.validateUrl.restore();
-    });
-
-    it('should set state with correct network index and passphrase', () => {
-      const spyFn = spy(Login.prototype, 'validateUrl');
-      // for valid address should set network to 2
-      const passphrase = 'Test Passphrase';
-      localStorage.setItem('passphrase', passphrase);
-      localStorage.setItem('address', 'http:localhost:4000');
-      mount(<Login {...props} />);
-      expect(spyFn).to.have.been.calledWith({
-        passphrase,
-        network: 2,
-      });
-
-      Login.prototype.validateUrl.restore();
     });
   });
 });

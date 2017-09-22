@@ -10,7 +10,7 @@ describe('Dialog', () => {
   let wrapper;
   const history = {
     location: {
-      path: '/main/transactions/send',
+      pathname: '/main/transactions/send',
       search: '',
     },
     push: sinon.spy(),
@@ -23,8 +23,12 @@ describe('Dialog', () => {
     childComponent: Send,
   };
 
+  const props = {
+    dialogDisplayed: () => {},
+  };
+
   beforeEach(() => {
-    wrapper = shallow(<Dialog dialog={dialogProps} history={history}/>);
+    wrapper = shallow(<Dialog dialog={dialogProps} history={history} {...props}/>);
   });
 
   it('renders Dialog component from react-toolbox', () => {
@@ -37,6 +41,11 @@ describe('Dialog', () => {
 
   it('allows to close the dialog', () => {
     wrapper.find('.x-button').simulate('click');
+    expect(history.push).to.have.been.calledWith();
+  });
+
+  it('should fix the route if there are two dialog names', () => {
+    wrapper.instance().componentDidUpdate();
     expect(history.push).to.have.been.calledWith();
   });
 });

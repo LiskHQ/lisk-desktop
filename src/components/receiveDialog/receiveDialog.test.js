@@ -1,5 +1,5 @@
 import React from 'react';
-import { expect } from 'chai';
+// import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
