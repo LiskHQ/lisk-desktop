@@ -1,6 +1,10 @@
 Feature: Account management
   Scenario: should allow to save account locally, after page reload it should require passphrase to do the first transaction, and remember the passphrase for next transactions
-    Given I'm logged in as "genesis"
+    Given I'm on login page
+    And I select option no. 3 from "network" select
+    When I fill in "http://localhost:4000" to "address" field
+    When I fill in "wagon stock borrow episode laundry kitten salute link globe zero feed marble" to "passphrase" field
+    And I click "login button"
     When I click "save account" in main menu
     And I click "save account button"
     And I wait 1 seconds
