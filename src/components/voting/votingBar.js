@@ -15,8 +15,10 @@ const VotingBar = ({ votes }) => {
   const totalNewVotesCount = voteList.length + unvoteList.length;
 
   return (voteList.length + unvoteList.length ?
-    <div className={`${style.fixedAtBottom} box voting-bar`}>
-      <div className={`${grid.row} ${grid['center-xs']}`}>
+    <div className={`${grid.row} ${style.fixedAtBottom} box voting-bar`}>
+      <div className={
+        `${grid['col-sm-12']} ${grid['col-md-10']} ${grid['col-md-offset-1']}
+          ${grid.row} ${grid['center-xs']} ${grid['middle-xs']}`}>
         <span className={`${grid['col-sm-3']} ${grid['col-xs-12']} upvotes`}>
           <span>Upvotes: </span>
           <strong>{voteList.length}</strong>
