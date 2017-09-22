@@ -1,4 +1,5 @@
 import React from 'react';
+import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux';
 import chai, { expect } from 'chai';
 import { mount } from 'enzyme';
@@ -49,7 +50,11 @@ const store = configureMockStore([])({
 describe('VoteDialog HOC', () => {
   let wrapper;
   beforeEach(() => {
-    wrapper = mount(<Provider store={store}><VoteDialogHOC voted={[]} i18n={i18n} /></Provider>);
+    wrapper = mount(<Provider store={store}>
+      <I18nextProvider i18n={ i18n }>
+        <VoteDialogHOC voted={[]} />
+      </I18nextProvider>
+    </Provider>);
   });
 
   it('should render VoteDialog', () => {

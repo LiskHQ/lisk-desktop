@@ -58,9 +58,11 @@ export default class VoteDialog extends React.Component {
         <article className={styles.info}>
           <InfoParagraph>
             <p >
-              You can select up to 33 delegates in one voting turn.
+              {this.props.t('You can select up to 33 delegates in one voting turn.')}
             </p>
-            You can vote for up to 101 delegates in total.
+            <p >
+              {this.props.t('You can vote for up to 101 delegates in total.')}
+            </p>
           </InfoParagraph>
         </article>
 

@@ -4,7 +4,8 @@ import { mount } from 'enzyme';
 import sinon from 'sinon';
 import configureMockStore from 'redux-mock-store';
 import * as delegateApi from '../../utils/api/delegate';
-import VoteAutocomplete from './voteAutocomplete';
+import i18n from '../../i18n';
+import { VoteAutocompleteRaw as VoteAutocomplete } from './voteAutocomplete';
 
 const votes = {
   username1: { publicKey: 'sample_key', confirmed: true, unconfirmed: false },
@@ -19,6 +20,7 @@ const props = {
   votes,
   delegates,
   voteToggled: sinon.spy(),
+  t: key => key,
 };
 let wrapper;
 
@@ -34,6 +36,7 @@ const store = configureMockStore([])({
 describe('VoteAutocomplete', () => {
   let voteAutocompleteApiMock;
   let unvoteAutocompleteApiMock;
+
   beforeEach(() => {
     sinon.spy(VoteAutocomplete.prototype, 'keyPress');
     sinon.spy(VoteAutocomplete.prototype, 'handleArrowDown');
@@ -41,8 +44,9 @@ describe('VoteAutocomplete', () => {
 
     voteAutocompleteApiMock = sinon.stub(delegateApi, 'voteAutocomplete');
     unvoteAutocompleteApiMock = sinon.stub(delegateApi, 'unvoteAutocomplete');
-    wrapper = mount(<VoteAutocomplete {...props} store={store} />);
+    wrapper = mount(<VoteAutocomplete {...props} store={store} i18n={i18n}/>);
   });
+
   afterEach(() => {
     voteAutocompleteApiMock.restore();
     unvoteAutocompleteApiMock.restore();
