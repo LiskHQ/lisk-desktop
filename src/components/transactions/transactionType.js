@@ -1,9 +1,11 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 import { TooltipWrapper } from '../timestamp';
 import styles from './transactions.css';
 import ClickToSend from '../clickToSend';
 
 const TransactionType = (props) => {
+  const t = props.t;
   let type;
   switch (props.type) {
     case 1:
@@ -33,11 +35,11 @@ const TransactionType = (props) => {
   }
   const address = props.address !== props.senderId ? props.senderId : props.recipientId;
   const template = type ?
-    <span className={styles.smallButton}>{type}</span> :
+    <span className={styles.smallButton}>{t(type)}</span> :
     <ClickToSend recipient={address} className={`from-to ${styles.ordinaryText}`} >
-      <TooltipWrapper tooltip="Send to this address">{address}</TooltipWrapper>
+      <TooltipWrapper tooltip={t('Send to this address')}>{address}</TooltipWrapper>
     </ClickToSend>;
   return template;
 };
 
-export default TransactionType;
+export default translate()(TransactionType);

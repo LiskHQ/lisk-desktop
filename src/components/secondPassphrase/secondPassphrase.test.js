@@ -26,6 +26,7 @@ describe('SecondPassphrase', () => {
     account,
     peers,
     registerSecondPassphrase: spy(),
+    t: key => key,
   };
 
   beforeEach(() => {

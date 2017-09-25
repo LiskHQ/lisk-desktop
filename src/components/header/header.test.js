@@ -3,11 +3,13 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import { Button } from 'react-toolbox/lib/button';
+import PropTypes from 'prop-types';
 import sinon from 'sinon';
 import styles from './header.css';
 import Header from './header';
 import RelativeLink from '../relativeLink';
 import logo from '../../assets/images/LISK-nano.png';
+import i18n from '../../i18n';
 
 describe('Header', () => {
   let wrapper;
@@ -23,12 +25,13 @@ describe('Header', () => {
     const mockInputProps = {
       setActiveDialog: () => { },
       account: {},
-      t: t => t,
+      t: key => key,
     };
     propsMock = sinon.mock(mockInputProps);
     wrapper = shallow(<Header {...mockInputProps} />, {
-      context: { store },
+      context: { store, i18n },
       childContextTypes: {
+        i18n: PropTypes.object.isRequired,
       },
     });
   });

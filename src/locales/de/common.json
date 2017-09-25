@@ -1,4 +1,15 @@
 {
   "send": "senden",
-  "logout": "Ausloggen"
+  "logout": "Ausloggen",
+  "Register as delegate": "Register as delegate",
+  "Sign message": "Sign message",
+  "Verify message": "Verify message",
+  "register-second-passphrase": "Register second passphrase",
+  "peer": "Peer",
+  "balance": "Balance",
+  "address": "Address",
+  "delegate": "Delegate",
+  "transactions": "Transactions",
+  "voting": "Voting 1",
+  "forging": "Forging"
 }

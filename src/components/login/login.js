@@ -5,6 +5,8 @@ import Dropdown from 'react-toolbox/lib/dropdown';
 import Button from 'react-toolbox/lib/button';
 import networksRaw from './networks';
 import PassphraseInput from '../passphraseInput';
+import { isValidPassphrase } from '../../utils/passphrase';
+import { findSimilarWord, inDictionary } from '../../utils/similarWord';
 import styles from './login.css';
 import env from '../../constants/env';
 import Passphrase from '../passphrase';
@@ -40,7 +42,8 @@ class Login extends React.Component {
 
   componentDidUpdate() {
     if (this.props.account && this.props.account.address) {
-      this.props.history.replace(this.getReferrerRoute());
+      const tem = this.getReferrerRoute();
+      this.props.history.replace(tem);
       if (this.state.address) {
         localStorage.setItem('address', this.state.address);
       }
@@ -100,17 +103,40 @@ class Login extends React.Component {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  validatePassphrase(value, error) {
+  validatePassphrase(value) {
     const data = { passphrase: value };
-    data.passphraseValidity = error || '';
+    data.passphraseValidity = !isValidPassphrase(value) ? this.getPassphraseValidationError(value) : '';
     return data;
   }
 
-  changeHandler(name, value, error) {
+  // eslint-disable-next-line class-methods-use-this
+  getPassphraseValidationError(passphrase) {
+    if (!passphrase) {
+      return 'Empty passphrase';
+    }
+    const mnemonic = passphrase.trim().toLowerCase().split(' ');
+    if (mnemonic.length < 12) {
+      return `Passphrase should have 12 words, entered passphrase has ${mnemonic.length}`;
+    }
+
+    const invalidWord = mnemonic.find(word => !inDictionary(word));
+    if (invalidWord) {
+      if (invalidWord.length >= 2 && invalidWord.length <= 8) {
+        const validWord = findSimilarWord(invalidWord);
+        if (validWord) {
+          return `Word "${invalidWord}" is not on the passphrase Word List. Most similar word on the list is "${findSimilarWord(invalidWord)}"`;
+        }
+      }
+      return `Word "${invalidWord}" is not on the passphrase Word List.`;
+    }
+    return 'Passphrase is not valid';
+  }
+
+  changeHandler(name, value) {
     const validator = this.validators[name] || (() => ({}));
     this.setState({
       [name]: value,
-      ...validator(value, error),
+      ...validator(value),
     });
   }
 
@@ -164,14 +190,14 @@ class Login extends React.Component {
                 auto={false}
                 source={this.networks}
                 onChange={this.changeHandler.bind(this, 'network')}
-                label='Select a network'
+                label={this.props.t('Select a network')}
                 value={this.state.network}
                 className={`${styles.network} network`}
               />
               {
                 this.state.network === 2 &&
                   <Input type='text'
-                    label='Node address'
+                    label={this.props.t('Node address')}
                     name='address'
                     className='address'
                     theme={styles}
@@ -179,7 +205,7 @@ class Login extends React.Component {
                     error={this.state.addressValidity}
                     onChange={this.changeHandler.bind(this, 'address')} />
               }
-              <PassphraseInput label='Enter your passphrase'
+              <PassphraseInput llabel={this.props.t('Enter your passphrase')}
                 className='passphrase'
                 theme={styles}
                 error={this.state.passphraseValidity}

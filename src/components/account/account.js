@@ -11,8 +11,9 @@ import { toRawLsk } from '../../utils/lsk';
  *
  * @param {object} props - include properties of component
  */
+
 const Account = ({
-  account, peers,
+  account, peers, t,
 }) => {
   const status = (peers.status && peers.status.online) ?
     <i className="material-icons online">check</i> :
@@ -21,13 +22,15 @@ const Account = ({
   return (
     <section className={`${grid.row} ${styles.wrapper}`}>
       <article className={`${grid['col-sm-4']} ${grid['col-xs-12']}`}>
-        <Address {...account}></Address>
+        <Address t={t} {...account}></Address>
       </article>
       <article className={`${grid['col-sm-4']} ${grid['col-xs-12']}`}>
         <div className="box">
           <div className={`${grid.row}`}>
             <div className={`${grid['col-sm-12']} ${grid['col-xs-4']}`}>
-              <h3 className={styles.title}>Peer</h3>
+              <h3 className={styles.title}>
+                {t('Peer')}
+              </h3>
             </div>
             <div className={`${grid['col-sm-12']} ${grid['col-xs-8']}`}>
               <div className={styles['value-wrapper']}>
@@ -50,7 +53,7 @@ const Account = ({
         <div className="box">
           <div className={`${grid.row}`}>
             <div className={`${grid['col-sm-12']} ${grid['col-xs-4']}`}>
-              <h3 className={styles.title}>Balance</h3>
+              <h3 className={styles.title}>{t('Balance')}</h3>
             </div>
             <div className={`${grid['col-sm-12']} ${grid['col-xs-8']}`}>
               <ClickToSend

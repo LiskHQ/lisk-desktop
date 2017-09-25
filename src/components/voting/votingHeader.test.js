@@ -2,15 +2,15 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { mount } from 'enzyme';
+import configureMockStore from 'redux-mock-store';
 import { BrowserRouter as Router } from 'react-router-dom';
-import configureStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
 import VotingHeader from './votingHeader';
 import history from '../../history';
+import i18n from '../../i18n';
 
 describe('VotingHeader', () => {
   let wrapper;
-  const mockStore = configureStore();
   const voteDict = {
     username3: { confirmed: false, unconfirmed: true, publicKey: 'sample_key3' },
   };
@@ -18,8 +18,18 @@ describe('VotingHeader', () => {
     username1: { confirmed: true, unconfirmed: false, publicKey: 'sample_key1' },
   };
   const votes = Object.assign({}, voteDict, unvoteDict);
+
+  const store = configureMockStore([])({
+    peers: {
+      data: {},
+    },
+    voting: {
+      votes,
+    },
+    account: {},
+  });
+
   const props = {
-    store: mockStore({ runtime: {} }),
     votedDelegates: [
       {
         username: 'username1',
@@ -34,17 +44,21 @@ describe('VotingHeader', () => {
     voteToggled: sinon.spy(),
     addTransaction: sinon.spy(),
     search: sinon.spy(),
+    t: key => key,
+  };
+
+  const options = {
+    context: { store, history, i18n },
+    childContextTypes: {
+      store: PropTypes.object.isRequired,
+      history: PropTypes.object.isRequired,
+      i18n: PropTypes.object.isRequired,
+    },
   };
 
   describe('Vote and Unvote', () => {
     beforeEach(() => {
-      wrapper = mount(<Router><VotingHeader {...props} votes={votes} /></Router>, {
-        context: { store: mockStore, history },
-        childContextTypes: {
-          store: PropTypes.object.isRequired,
-          history: PropTypes.object.isRequired,
-        },
-      });
+      wrapper = mount(<Router><VotingHeader {...props} votes={votes} /></Router>, options);
     });
 
     it('should render an Input, a menuItem and a RelativeLink', () => {
@@ -79,36 +93,27 @@ describe('VotingHeader', () => {
 
   describe('Only vote', () => {
     beforeEach(() => {
-      wrapper = mount(<Router><VotingHeader {...props} votes={voteDict} /></Router>, {
-        context: { store: mockStore },
-        childContextTypes: { store: PropTypes.object.isRequired },
-      });
+      wrapper = mount(<Router><VotingHeader {...props} votes={voteDict} /></Router>, options);
     });
 
     it('should render vote button reflecting only (up)vote', () => {
-      expect(wrapper.find('.vote-button-info').text()).to.be.equal('VOTE (+1)');
+      expect(wrapper.find('.vote-button-info').text()).to.be.equal('Vote (+1)');
     });
   });
 
   describe('Only unvote', () => {
     beforeEach(() => {
-      wrapper = mount(<Router><VotingHeader {...props} votes={unvoteDict} /></Router>, {
-        context: { store: mockStore },
-        childContextTypes: { store: PropTypes.object.isRequired },
-      });
+      wrapper = mount(<Router><VotingHeader {...props} votes={unvoteDict} /></Router>, options);
     });
 
     it('should render vote button reflecting only unvote', () => {
-      expect(wrapper.find('.vote-button-info').text()).to.be.equal('VOTE (-1)');
+      expect(wrapper.find('.vote-button-info').text()).to.be.equal('Vote (-1)');
     });
   });
 
   describe('Without votes', () => {
     beforeEach(() => {
-      wrapper = mount(<Router><VotingHeader {...props} votes={ {} } /></Router>, {
-        context: { store: mockStore },
-        childContextTypes: { store: PropTypes.object.isRequired },
-      });
+      wrapper = mount(<Router><VotingHeader {...props} votes={ {} } /></Router>, options);
     });
 
     it('should disable my votes button', () => {

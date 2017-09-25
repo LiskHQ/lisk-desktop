@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { translate } from 'react-i18next';
 import Account from './account';
 
 /**
@@ -11,4 +12,4 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-)(Account);
+)(translate()(Account));

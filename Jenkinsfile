@@ -1,3 +1,10 @@
+def fail(reason) {
+    slackSend color: 'danger', message: "<${env.BUILD_URL}/console|Build #${env.BUILD_NUMBER}> (by ${env.GIT_AUTHOR_NAME}) of ${env.JOB_NAME} (${env.GIT_BRANCH}) failed.", channel: '#lisk-nano-jenkins'
+    currentBuild.result = 'FAILURE'
+    milestone 1
+    error(${reason})
+}
+
 node('lisk-nano-01'){
   lock(resource: "lisk-nano-01", inversePrecedence: true) {
     stage ('Cleanup Orphaned Processes') {
@@ -12,9 +19,7 @@ node('lisk-nano-01'){
         pkill -f webpack -9 || true
       '''
       } catch (err) {
-        currentBuild.result = 'FAILURE'
-        milestone 1
-        error('Stopping build, installation failed')
+        fail('Stopping build, installation failed')
       }
     }
 
@@ -23,9 +28,7 @@ node('lisk-nano-01'){
         deleteDir()
         checkout scm
       } catch (err) {
-        currentBuild.result = 'FAILURE'
-        milestone 1
-        error('Stopping build, Checkout failed')
+        fail('Stopping build, Checkout failed')
       }
     }
 
@@ -36,9 +39,7 @@ node('lisk-nano-01'){
           bash lisk.sh rebuild -f /home/lisk/lisk-test-nano/blockchain_explorer.db.gz
           '''
       } catch (err) {
-        currentBuild.result = 'FAILURE'
-        milestone 1
-        error('Stopping build, Lisk Core failed to start')
+        fail('Stopping build, Lisk Core failed to start')
       }
     }
 
@@ -52,21 +53,20 @@ node('lisk-nano-01'){
 
         '''
       } catch (err) {
-        currentBuild.result = 'FAILURE'
-        milestone 1
-        error('Stopping build, npm install failed')
+        fail('Stopping build, npm install failed')
       }
     }
 
     stage ('Run Eslint') {
       try {
-        sh '''
-        cd $WORKSPACE
-        npm run eslint
-        '''
+        ansiColor('xterm') {
+          sh '''
+          cd $WORKSPACE
+          npm run eslint
+          '''
+	}
       } catch (err) {
-        currentBuild.result = 'FAILURE'
-        error('Stopping build, Eslint failed')
+        fail('Stopping build, Eslint failed')
       }
     }
 
@@ -80,62 +80,70 @@ node('lisk-nano-01'){
         npm run build
         '''
       } catch (err) {
-        currentBuild.result = 'FAILURE'
-        milestone 1
-        error('Stopping build, Nano build failed')
+        fail('Stopping build, Nano build failed')
       }
     }
 
     stage ('Run Tests') {
       try {
-        sh '''
-        export ON_JENKINS=true
+        ansiColor('xterm') {
+          sh '''
+          export ON_JENKINS=true
 
-        # Run test
-        cd $WORKSPACE
-        npm run test
+          # Run test
+          cd $WORKSPACE
+          npm run test
 
-        # Submit coverage to coveralls
-        cat coverage/*/lcov.info | coveralls -v
-        '''
+          # Submit coverage to coveralls
+          cat coverage/*/lcov.info | coveralls -v
+          '''
+      }
       } catch (err) {
-        currentBuild.result = 'FAILURE'
-        error('Stopping build, Test suite failed')
+        fail('Stopping build, Test suite failed')
       }
     }
 
     stage ('Start Dev Server and Run Tests') {
       try {
+        ansiColor('xterm') {
+          sh '''
+          # Run Dev build and Build
+          cd $WORKSPACE
+          export NODE_ENV=
+          npm run dev &> .lisk-nano.log &
+          sleep 30
+
+          # End to End test configuration
+          export DISPLAY=:99
+          Xvfb :99 -ac -screen 0 1280x1024x24 &
+          ./node_modules/protractor/bin/webdriver-manager update
+
+          # Run End to End Tests
+          npm run e2e-test
+
+          cd ~/lisk-test-nano
+          bash lisk.sh stop_node
+          pkill -f selenium -9 || true
+          pkill -f Xvfb -9 || true
+          rm -rf /tmp/.X0-lock || true
+          pkill -f webpack -9 || true
+          '''
+        }
+      } catch (err) {
+        fail('Stopping build, End to End Test suite failed')
+      }
+    }
+
+    stage ('Deploy') {
+      try {
         sh '''
-        # Run Dev build and Build
-        cd $WORKSPACE
-        export NODE_ENV=
-        npm run dev &> .lisk-nano.log &
-        sleep 30
-
-        # End to End test configuration
-        export DISPLAY=:99
-        Xvfb :99 -ac -screen 0 1280x1024x24 &
-        ./node_modules/protractor/bin/webdriver-manager update
-
-        # Run End to End Tests
-        npm run e2e-test
-
-        cd ~/lisk-test-nano
-        bash lisk.sh stop_node
-        pkill -f selenium -9 || true
-        pkill -f Xvfb -9 || true
-        rm -rf /tmp/.X0-lock || true
-        pkill -f webpack -9 || true
+        rsync -axl --delete "$WORKSPACE/app/dist/" "jenkins@master-01:/var/www/test/lisk-nano/$BRANCH_NAME/"
 
         # Cleanup - delete all files on success
-        cd $WORKSPACE
-        rm -rf *
+        rm -rf "$WORKSPACE/*"
         '''
       } catch (err) {
-        currentBuild.result = 'FAILURE'
-        milestone 1
-        error('Stopping build, End to End Test suite failed')
+        fail('Stopping build, End to End Test suite failed')
       }
     }
 

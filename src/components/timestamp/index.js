@@ -1,8 +1,9 @@
 import React from 'react';
 import moment from 'moment';
 import Tooltip from 'react-toolbox/lib/tooltip';
-// import omit from 'lodash/omit';
 import theme from 'react-toolbox/lib/tooltip/theme.css';
+import { translate } from 'react-i18next';
+import i18n from '../../i18n';
 
 const _fix = value => new Date((((Date.UTC(2016, 4, 24, 17, 0, 0, 0) / 1000) + value) * 1000));
 /**
@@ -42,12 +43,16 @@ export const TooltipWrapper = (props) => {
   return <Div {...props} />;
 };
 
-export const Time = (props) => {
+export const Time = translate()((props) => {
+  moment.locale(i18n.language);
   const time = moment(_fix(props.label));
   return <span>{time.fromNow(true)}</span>;
-};
+});
 
-export const TooltipTime = (props) => {
+export const TooltipTime = translate()((props) => {
+  moment.locale(i18n.language);
   const time = moment(_fix(props.label));
-  return <TooltipWrapper tooltip={time.format('LL LTS')} ><Time label={props.label}></Time></TooltipWrapper>;
-};
+  return (<TooltipWrapper tooltip={time.format('LL LTS')} >
+    <Time label={props.label} lang={props.lang}></Time>
+  </TooltipWrapper>);
+});

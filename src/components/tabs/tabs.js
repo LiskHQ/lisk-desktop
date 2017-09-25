@@ -23,7 +23,7 @@ const navigate = (history, index) => {
   }
 };
 
-const Tabs = ({ history, isDelegate }) => (
+const Tabs = ({ history, isDelegate, t }) => (
   <ToolboxTabs index={getIndex(history)}
     theme={styles}
     onChange={navigate.bind(null, history)}
@@ -31,7 +31,7 @@ const Tabs = ({ history, isDelegate }) => (
     {getTabs(isDelegate).map((tab, index) =>
       <Tab
         key={index}
-        label={tab}
+        label={t(tab)}
         className={styles.tab}
         disabled={isCurrent(history, index)} />)}
   </ToolboxTabs>
