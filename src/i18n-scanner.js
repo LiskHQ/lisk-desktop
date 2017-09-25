@@ -14,11 +14,11 @@ const customHandler = function (key) {
 const files = glob.sync('./src/**/*.js', {});
 files.forEach((file) => {
   const content = fs.readFileSync(file, 'utf-8');
-  parser.parseFuncFromString(content, { list: translationFunctionNames }, customHandler)
+  parser.parseFuncFromString(content, { list: translationFunctionNames }, customHandler);
 });
 
 const translations = parser.get({ sort: true }).en.translation;
 const count = Object.keys(translations).length;
 const outputJSON = JSON.stringify(translations, null, 2);
 fs.writeFileSync(outputFilePath, outputJSON);
-console.log(`${count} translation keys parsed and written to '${outputFilePath}'`);
+process.stdout.write(`${count} translation keys parsed and written to '${outputFilePath}'`);
