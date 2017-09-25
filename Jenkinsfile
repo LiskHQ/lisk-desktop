@@ -1,5 +1,5 @@
 def fail(reason) {
-    slackSend color: 'danger', message: "Build #${env.BUILD_NUMBER} of <${env.BUILD_URL}|${env.JOB_NAME}> (${env.BRANCH_NAME}) failed (<${env.BUILD_URL}/console|console>, <${env.BUILD_URL}/changes|changes>)", channel: '#lisk-nano-jenkins'
+    slackSend color: 'danger', message: "Build #${env.BUILD_NUMBER} of <${env.BUILD_URL}|${env.JOB_NAME}> (${env.BRANCH_NAME}) failed (<${env.BUILD_URL}/console|console>, <${env.BUILD_URL}/changes|changes>)\nCause: ${reason}", channel: '#lisk-nano-jenkins'
     currentBuild.result = 'FAILURE'
     milestone 1
     error(${reason})
