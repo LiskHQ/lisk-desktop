@@ -9,25 +9,25 @@ const TransactionType = (props) => {
   let type;
   switch (props.type) {
     case 1:
-      type = 'Second Signature Creation';
+      type = t('Second Signature Creation');
       break;
     case 2:
-      type = 'Delegate Registration';
+      type = t('Delegate Registration');
       break;
     case 3:
-      type = 'Vote';
+      type = t('Vote');
       break;
     case 4:
-      type = 'Multisignature Creation';
+      type = t('Multisignature Creation');
       break;
     case 5:
-      type = 'Blockchain Application Registration';
+      type = t('Blockchain Application Registration');
       break;
     case 6:
-      type = 'Send Lisk to Blockchain Application';
+      type = t('Send Lisk to Blockchain Application');
       break;
     case 7:
-      type = 'Send Lisk from Blockchain Application';
+      type = t('Send Lisk from Blockchain Application');
       break;
     default:
       type = false;
@@ -35,7 +35,7 @@ const TransactionType = (props) => {
   }
   const address = props.address !== props.senderId ? props.senderId : props.recipientId;
   const template = type ?
-    <span className={styles.smallButton}>{t(type)}</span> :
+    <span className={styles.smallButton}>{type}</span> :
     <ClickToSend recipient={address} className={`from-to ${styles.ordinaryText}`} >
       <TooltipWrapper tooltip={t('Send to this address')}>{address}</TooltipWrapper>
     </ClickToSend>;

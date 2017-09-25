@@ -22,10 +22,12 @@ describe('HeaderHOC', () => {
   });
 
   beforeEach(() => {
-    wrapper = mount(<Provider store={store}><Router>
-      <I18nextProvider i18n={ i18n }>
-        <HeaderHOC />
-      </I18nextProvider></Router>
+    wrapper = mount(<Provider store={store}>
+      <Router>
+        <I18nextProvider i18n={ i18n }>
+          <HeaderHOC />
+        </I18nextProvider>
+      </Router>
     </Provider>);
   });
 

@@ -5,8 +5,6 @@ import Dropdown from 'react-toolbox/lib/dropdown';
 import Button from 'react-toolbox/lib/button';
 import networksRaw from './networks';
 import PassphraseInput from '../passphraseInput';
-import { isValidPassphrase } from '../../utils/passphrase';
-import { findSimilarWord, inDictionary } from '../../utils/similarWord';
 import styles from './login.css';
 import env from '../../constants/env';
 import Passphrase from '../passphrase';
@@ -103,40 +101,17 @@ class Login extends React.Component {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  validatePassphrase(value) {
+  validatePassphrase(value, error) {
     const data = { passphrase: value };
-    data.passphraseValidity = !isValidPassphrase(value) ? this.getPassphraseValidationError(value) : '';
+    data.passphraseValidity = error || '';
     return data;
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  getPassphraseValidationError(passphrase) {
-    if (!passphrase) {
-      return 'Empty passphrase';
-    }
-    const mnemonic = passphrase.trim().toLowerCase().split(' ');
-    if (mnemonic.length < 12) {
-      return `Passphrase should have 12 words, entered passphrase has ${mnemonic.length}`;
-    }
-
-    const invalidWord = mnemonic.find(word => !inDictionary(word));
-    if (invalidWord) {
-      if (invalidWord.length >= 2 && invalidWord.length <= 8) {
-        const validWord = findSimilarWord(invalidWord);
-        if (validWord) {
-          return `Word "${invalidWord}" is not on the passphrase Word List. Most similar word on the list is "${findSimilarWord(invalidWord)}"`;
-        }
-      }
-      return `Word "${invalidWord}" is not on the passphrase Word List.`;
-    }
-    return 'Passphrase is not valid';
-  }
-
-  changeHandler(name, value) {
+  changeHandler(name, value, error) {
     const validator = this.validators[name] || (() => ({}));
     this.setState({
       [name]: value,
-      ...validator(value),
+      ...validator(value, error),
     });
   }
 
@@ -205,7 +180,7 @@ class Login extends React.Component {
                     error={this.state.addressValidity}
                     onChange={this.changeHandler.bind(this, 'address')} />
               }
-              <PassphraseInput llabel={this.props.t('Enter your passphrase')}
+              <PassphraseInput label={this.props.t('Enter your passphrase')}
                 className='passphrase'
                 theme={styles}
                 error={this.state.passphraseValidity}

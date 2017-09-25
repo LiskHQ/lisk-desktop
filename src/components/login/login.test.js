@@ -59,33 +59,9 @@ describe('Login', () => {
     it('should show error about passphrase length if passphrase is have wrong length', () => {
       const passphrase = 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin';
       const expectedError = 'Passphrase should have 12 words, entered passphrase has 11';
-      wrapper.find('.passphrase input').simulate('change', { target: { value: 'wrong pass' } });
+      wrapper.find('.passphrase input').simulate('change', { target: { value: ' ' } });
       wrapper.find('.passphrase input').simulate('change', { target: { value: passphrase } });
-      expect(wrapper.find('.passphrase').text()).to.contain(expectedError);
-    });
-
-    it('should show error about incorrect word  and show similar word if passphrase is have word not from dictionary', () => {
-      const passphrase = 'rexsipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit';
-      const expectedError = 'Word "rexsipe" is not on the passphrase Word List. Most similar word on the list is "recipe"';
-      wrapper.find('.passphrase input').simulate('change', { target: { value: 'wrong pass' } });
-      wrapper.find('.passphrase input').simulate('change', { target: { value: passphrase } });
-      expect(wrapper.find('.passphrase').text()).to.contain(expectedError);
-    });
-
-    it('should show error about incorrect word if passphrase is have word not from dictionary', () => {
-      const passphrase = 'aaaa bomb asset salon coil symbol tiger engine assist pact pumpkin visit';
-      const expectedError = 'Word "aaaa" is not on the passphrase Word List.';
-      wrapper.find('.passphrase input').simulate('change', { target: { value: 'wrong pass' } });
-      wrapper.find('.passphrase input').simulate('change', { target: { value: passphrase } });
-      expect(wrapper.find('.passphrase').text()).to.contain(expectedError);
-    });
-
-    it('should show error about invalid passphrase if it is incorrect', () => {
-      const passphrase = 'recipe bomb asset salon coil symbol apple engine assist pact pumpkin visit';
-      const expectedError = 'Passphrase is not valid';
-      wrapper.find('.passphrase input').simulate('change', { target: { value: 'wrong pass' } });
-      wrapper.find('.passphrase input').simulate('change', { target: { value: passphrase } });
-      expect(wrapper.find('.passphrase').text()).to.contain(expectedError);
+      expect(wrapper.find('.passphrase').html()).to.contain(expectedError);
     });
   });
 
