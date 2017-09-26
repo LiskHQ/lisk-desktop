@@ -8,7 +8,6 @@ import style from './forging.css';
 
 
 class ForgingTitle extends React.Component {
-
   componentDidMount() {
     this.props.loadStats('total', moment('2016-04-24 17:00'));
   }

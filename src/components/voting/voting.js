@@ -40,7 +40,7 @@ class Voting extends React.Component {
   }
 
   loadVotedDelegates(refresh) {
-      /* istanbul-ignore-else */
+    /* istanbul-ignore-else */
     if (!this.freezeLoading) {
       this.props.votesFetched({
         activePeer: this.props.activePeer,
