@@ -4,7 +4,7 @@ import Navigation from 'react-toolbox/lib/navigation';
 import AppBar from 'react-toolbox/lib/app_bar';
 import { IconButton } from 'react-toolbox/lib/button';
 import styles from './dialog.css';
-import dialogs from './dialogs';
+import getDialogs from './dialogs';
 
 class DialogElement extends Component {
   constructor() {
@@ -39,6 +39,7 @@ class DialogElement extends Component {
 
     this.path.list = location.pathname.replace(/\/$/, '').split('/');
     this.dialog = this.path.list[3];
+    const dialogs = getDialogs();
 
     if (this.path.list.length === 5) {
       this.props.history.push(`/${this.path.list[1]}/${this.path.list[2]}/${this.path.list[4]}`);

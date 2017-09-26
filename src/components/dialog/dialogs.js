@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import Send from '../send';
 import RegisterDelegate from '../registerDelegate';
 import SignMessage from '../signMessage';
@@ -7,37 +8,37 @@ import VoteDialog from '../voteDialog';
 import ReceiveDialog from '../receiveDialog';
 import SaveAccount from '../saveAccount';
 
-export default {
+export default () => ({
   send: {
-    title: 'Send',
+    title: i18next.t('Send'),
     component: Send,
   },
   'register-delegate': {
-    title: 'Register as delegate',
+    title: i18next.t('Register as delegate'),
     component: RegisterDelegate,
   },
   'sign-message': {
-    title: 'Sign message',
+    title: i18next.t('Sign message'),
     component: SignMessage,
   },
   'verify-message': {
-    title: 'Verify message',
+    title: i18next.t('Verify message'),
     component: VerifyMessage,
   },
   'register-second-passphrase': {
-    title: 'Register Second Passphrase',
+    title: i18next.t('Register Second Passphrase'),
     component: SecondPassphrase,
   },
   vote: {
-    title: 'Vote for delegates',
+    title: i18next.t('Vote for delegates'),
     component: VoteDialog,
   },
   receive: {
-    title: 'Receive LSK',
+    title: i18next.t('Receive LSK'),
     component: ReceiveDialog,
   },
   'save-account': {
-    title: 'Remember this account',
+    title: i18next.t('Remember this account'),
     component: SaveAccount,
   },
-};
+});
