@@ -114,8 +114,13 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
       .and.notify(callback);
   });
 
-  Then('I should see text "{text}" in "{fieldName}" element', (text, fieldName, callback) => {
-    const selectorClass = `.${fieldName.replace(/ /g, '-')}`;
+  Then('I should see text "{text}" in "{elementName}" element', (text, elementName, callback) => {
+    const selectorClass = `.${elementName.replace(/ /g, '-')}`;
+    waitForElemAndCheckItsText(selectorClass, text, callback);
+  });
+
+  Then('I should see element "{elementName}" that contains text:', (elementName, text, callback) => {
+    const selectorClass = `.${elementName.replace(/ /g, '-')}`;
     waitForElemAndCheckItsText(selectorClass, text, callback);
   });
 
