@@ -140,7 +140,7 @@ node('lisk-nano-01'){
         rsync -axl --delete "$WORKSPACE/app/dist/" "jenkins@master-01:/var/www/test/lisk-nano/$BRANCH_NAME/"
 
         # Cleanup - delete all files on success
-        rm -rf "$WORKSPACE/*"
+        rm -rf "$WORKSPACE/node_modules/"
         '''
       } catch (err) {
         fail('Stopping build, End to End Test suite failed')
