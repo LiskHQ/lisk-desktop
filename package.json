@@ -32,6 +32,7 @@
     "bitcore-mnemonic": "=1.1.1",
     "copy-to-clipboard": "=3.0.6",
     "flexboxgrid": "=6.3.1",
+    "history": "^4.7.2",
     "i18next": "^9.0.0",
     "i18next-localstorage-cache": "^1.1.1",
     "i18next-xhr-backend": "^1.4.2",

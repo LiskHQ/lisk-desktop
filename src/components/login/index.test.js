@@ -3,11 +3,9 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { BrowserRouter as Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
-import { Provider } from 'react-redux';
-import { I18nextProvider } from 'react-i18next';
+import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import LoginHOC from './index';
-import Login from './login';
 
 describe('LoginHOC', () => {
   // Mocking store
@@ -33,22 +31,26 @@ describe('LoginHOC', () => {
     account,
     activePeerSet: () => {},
   });
+  const options = {
+    context: { store, history, i18n },
+    childContextTypes: {
+      store: PropTypes.object.isRequired,
+      history: PropTypes.object.isRequired,
+      i18n: PropTypes.object.isRequired,
+    },
+  };
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<Provider store={store}>
-        <I18nextProvider i18n={ i18n }>
-          <Router><LoginHOC/></Router>
-        </I18nextProvider>
-      </Provider>);
+    wrapper = mount(<Router><LoginHOC store={store}/></Router>, options);
   });
 
   it('should mount Login', () => {
-    expect(wrapper.find(Login)).to.have.lengthOf(1);
+    expect(wrapper.find('Login')).to.have.lengthOf(1);
   });
 
   it('should mount Login with appropriate properties', () => {
-    const props = wrapper.find(Login).props();
+    const props = wrapper.find('Login').props();
     expect(props.peers).to.be.equal(peers);
     expect(props.account).to.be.equal(account);
     expect(typeof props.activePeerSet).to.be.equal('function');

@@ -1,33 +1,17 @@
 import { MenuItem } from 'react-toolbox/lib/menu';
 import React from 'react';
+import RelativeLink from '../relativeLink';
+import styles from './saveAccountButton.css';
 
-import { getSavedAccount, removeSavedAccount } from '../../utils/saveAccount';
-import SaveAccount from '../saveAccount';
+const SaveAccountButton = ({ account, savedAccounts, accountRemoved }) =>
+  (savedAccounts.length > 0 ?
+    <MenuItem caption="Forget this account"
+      className='forget-account'
+      onClick={accountRemoved.bind(null, account.publicKey)}
+    /> :
+    <MenuItem>
+      <RelativeLink className={`${styles.menuItem} save-account`} to='save-account'>Save account</RelativeLink>
+    </MenuItem>
+  );
 
-export default class SaveAccountButton extends React.Component {
-  removeSavedAccount() {
-    removeSavedAccount();
-    this.props.successToast({ label: 'Account was successfully forgotten.' });
-    this.forceUpdate();
-  }
-
-  render() {
-    return (getSavedAccount() ?
-      <MenuItem caption="Forget this account"
-        className='forget-account'
-        onClick={this.removeSavedAccount.bind(this)}
-      /> :
-      <MenuItem caption="Remember this account"
-        className='save-account'
-        onClick={() => this.props.setActiveDialog({
-          title: 'Remember this account',
-          childComponent: SaveAccount,
-          childComponentProps: {
-            done: this.forceUpdate.bind(this),
-          },
-        })}
-      />
-    );
-  }
-}
-
+export default SaveAccountButton;
