@@ -14,7 +14,7 @@ const SaveAccount = ({
     // eslint-disable-next-line arrow-body-style
     const index = networksRaw.map((item, i) => {
       return (item.name === network) ? i : null;
-    }).filter(item => item !== null)[0];
+    }).find(item => item !== null);
     accountSaved({
       network: index,
       address,
