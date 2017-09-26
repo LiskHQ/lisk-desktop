@@ -7,7 +7,7 @@ def fail(reason) {
 
 node('lisk-nano-01'){
   lock(resource: "lisk-nano-01", inversePrecedence: true) {
-    stage ('Cleanup Orphaned Processes') {
+    stage ('Cleanup, Checkout, and Start Lisk Core') {
       try {
       sh '''
         # Clean up old processes
@@ -21,18 +21,14 @@ node('lisk-nano-01'){
       } catch (err) {
         fail('Stopping build, installation failed')
       }
-    }
 
-    stage ('Prepare Workspace') {
       try {
         deleteDir()
         checkout scm
       } catch (err) {
         fail('Stopping build, Checkout failed')
       }
-    }
 
-    stage ('Start Lisk Core') {
       try {
         sh '''#!/bin/bash
           cd ~/lisk-test-nano
@@ -84,7 +80,7 @@ node('lisk-nano-01'){
       }
     }
 
-    stage ('Run Tests') {
+    stage ('Run Unit Tests') {
       try {
         ansiColor('xterm') {
           sh '''
@@ -103,7 +99,7 @@ node('lisk-nano-01'){
       }
     }
 
-    stage ('Start Dev Server and Run Tests') {
+    stage ('Start Dev Server and Run E2E Tests') {
       try {
         ansiColor('xterm') {
           sh '''
@@ -134,7 +130,7 @@ node('lisk-nano-01'){
       }
     }
 
-    stage ('Deploy') {
+    stage ('Deploy and Set milestone') {
       try {
         sh '''
         rsync -axl --delete "$WORKSPACE/app/dist/" "jenkins@master-01:/var/www/test/lisk-nano/$BRANCH_NAME/"
@@ -143,11 +139,8 @@ node('lisk-nano-01'){
         rm -rf "$WORKSPACE/*"
         '''
       } catch (err) {
-        fail('Stopping build, End to End Test suite failed')
+        fail('Stopping build, Deploy failed')
       }
-    }
-
-    stage ('Set milestone') {
       milestone 1
     }
   }
