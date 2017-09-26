@@ -13,9 +13,9 @@ class PassphraseConfirmator extends React.Component {
 
   componentDidMount() {
     this.props.updateAnswer(false);
-    this.state = {
+    this.setState({
       passphraseParts: this.hideRandomWord.call(this),
-    };
+    });
   }
 
   hideRandomWord(rand = Math.random()) {

@@ -50,9 +50,9 @@ const Forging = ({
       }
       {account && account.delegate && !account.isDelegate ?
         <p>
-          You need to become a delegate to start forging.
+          {`You need to become a delegate to start forging.
           If you already registered to become a delegate,
-          your registration hasn't been processed, yet.
+          your registration hasn't been processed, yet.`}
         </p> :
         null
       }
