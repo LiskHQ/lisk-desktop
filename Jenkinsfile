@@ -30,7 +30,7 @@ node('lisk-nano-01'){
       }
 
       try {
-        sh '''#!/bin/bash
+        sh '''
           cd ~/lisk-test-nano
           bash lisk.sh rebuild -f /home/lisk/lisk-test-nano/blockchain_explorer.db.gz
           '''
@@ -41,7 +41,7 @@ node('lisk-nano-01'){
 
     stage ('Install npm dependencies') {
       try {
-        sh '''#!/bin/bash
+        sh '''
         npm install
         # Build nano
         cd $WORKSPACE
@@ -68,7 +68,7 @@ node('lisk-nano-01'){
 
     stage ('Build Nano') {
       try {
-        sh '''#!/bin/bash
+        sh '''
         # Add coveralls config file
         cp ~/.coveralls.yml-nano .coveralls.yml
 
