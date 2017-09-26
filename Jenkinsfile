@@ -1,6 +1,7 @@
 def fail(reason) {
     slackSend color: 'danger', message: "Build #${env.BUILD_NUMBER} of <${env.BUILD_URL}|${env.JOB_NAME}> (${env.BRANCH_NAME}) failed (<${env.BUILD_URL}/console|console>, <${env.BUILD_URL}/changes|changes>)\nCause: ${reason}", channel: '#lisk-nano-jenkins'
     currentBuild.result = 'FAILURE'
+    sh 'rm -rf "$WORKSPACE/node_modules/"'
     milestone 1
     error(${reason})
 }
@@ -140,7 +141,7 @@ node('lisk-nano-01'){
         rsync -axl --delete "$WORKSPACE/app/dist/" "jenkins@master-01:/var/www/test/lisk-nano/$BRANCH_NAME/"
 
         # Cleanup - delete all files on success
-        rm -rf "$WORKSPACE/node_modules/"
+        rm -rf "$WORKSPACE/*"
         '''
       } catch (err) {
         fail('Stopping build, End to End Test suite failed')
