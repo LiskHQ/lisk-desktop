@@ -2,28 +2,10 @@ import i18n from 'i18next';
 import XHR from 'i18next-xhr-backend';
 // import Cache from 'i18next-localstorage-cache';
 
-function loadLocales(url, options, callback) {
-  try {
-    // eslint-disable-next-line import/no-dynamic-require
-    const waitForLocale = require(`bundle-loader!./locales/${url}.json`);
-    waitForLocale((locale) => {
-      console.log('loaded', locale, '#########');
-      callback(locale, { status: '200' });
-    });
-  } catch (e) {
-    callback(null, { status: '404' });
-  }
-}
-
 i18n
   .use(XHR)
   // .use(Cache)
   .init({
-    backend: {
-      loadPath: '{{lng}}',
-      parse: data => data,
-      ajax: loadLocales,
-    },
     fallbackLng: 'en',
     lng: 'en',
     react: {
