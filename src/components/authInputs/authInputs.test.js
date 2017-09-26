@@ -22,6 +22,7 @@ describe('AuthInputs', () => {
       passphrase: {
         value: passphrase,
       },
+      t: key => key,
     };
   });
 

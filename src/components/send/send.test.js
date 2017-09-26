@@ -2,8 +2,9 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
-import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
+import PropTypes from 'prop-types';
+import i18n from '../../i18n';
 import Send from './send';
 
 const fakeStore = configureStore();
@@ -29,7 +30,13 @@ describe('Send', () => {
       sent: sinon.spy(),
       t: key => key,
     };
-    wrapper = mount(<Provider store={store}><Send {...props} /></Provider>);
+    wrapper = mount(<Send {...props} />, {
+      context: { store, i18n },
+      childContextTypes: {
+        store: PropTypes.object.isRequired,
+        i18n: PropTypes.object.isRequired,
+      },
+    });
   });
 
   it('renders two Input components', () => {
