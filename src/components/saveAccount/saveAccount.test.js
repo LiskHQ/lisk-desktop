@@ -18,6 +18,7 @@ describe('SaveAccount', () => {
     },
     closeDialog: () => {},
     accountSaved: () => {},
+    t: key => key,
   };
 
   beforeEach(() => {

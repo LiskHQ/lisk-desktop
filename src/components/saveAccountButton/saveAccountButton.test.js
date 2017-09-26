@@ -14,6 +14,7 @@ describe('SaveAccountButton', () => {
   const props = {
     account,
     accountRemoved: sinon.spy(),
+    t: key => key,
   };
 
 
