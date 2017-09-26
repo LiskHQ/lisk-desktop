@@ -9,21 +9,21 @@ describe('voting middleware', () => {
   let store;
   let next;
   const label = `Maximum of ${votingConst.maxCountOfVotesInOneTurn} votes in one transaction exceeded.`;
+  const label2 = `Maximum of ${votingConst.maxCountOfVotes} votes exceeded.`;
 
-  const generateNVotes = n => (
+  const generateNVotes = (n, vote) => (
     [...Array(n)].map((item, i) => i).reduce(
       (dict, value) => {
-        dict[`genesis_${value}`] = { confirmed: false, unconfirmed: true };
+        dict[`genesis_${value}`] = vote;
         return dict;
       }, {})
   );
 
-  beforeEach(() => {
-    store = stub();
+  const initStoreWithNVotes = (n, vote) => {
     store.getState = () => ({
       voting: {
         votes: {
-          ...generateNVotes(votingConst.maxCountOfVotesInOneTurn + 1),
+          ...generateNVotes(n, vote),
           test2: {
             unconfirmed: false,
             confirmed: false,
@@ -31,6 +31,13 @@ describe('voting middleware', () => {
         },
       },
     });
+  };
+
+  beforeEach(() => {
+    store = stub();
+    initStoreWithNVotes(
+      votingConst.maxCountOfVotesInOneTurn + 1,
+      { confirmed: false, unconfirmed: true });
     store.dispatch = spy();
     next = spy();
   });
@@ -64,5 +71,33 @@ describe('voting middleware', () => {
     };
     middleware(store)(next)(givenAction);
     expect(store.dispatch).to.not.have.been.calledWith(errorToastDisplayed({ label }));
+  });
+
+  it('should dispatch errorToastDisplayed if 102 votes and new vote unconfirmed !== confirmed ', () => {
+    initStoreWithNVotes(
+      votingConst.maxCountOfVotes + 1,
+      { confirmed: true, unconfirmed: true });
+    const givenAction = {
+      type: actionTypes.voteToggled,
+      data: {
+        username: 'test',
+      },
+    };
+    middleware(store)(next)(givenAction);
+    expect(store.dispatch).to.have.been.calledWith(errorToastDisplayed({ label: label2 }));
+  });
+
+  it('should not dispatch errorToastDisplayed if 102 votes and new vote unconfirmed === confirmed ', () => {
+    initStoreWithNVotes(
+      votingConst.maxCountOfVotes + 1,
+      { confirmed: true, unconfirmed: true });
+    const givenAction = {
+      type: actionTypes.voteToggled,
+      data: {
+        username: 'genesis_42',
+      },
+    };
+    middleware(store)(next)(givenAction);
+    expect(store.dispatch).to.not.have.been.calledWith(errorToastDisplayed({ label: label2 }));
   });
 });
