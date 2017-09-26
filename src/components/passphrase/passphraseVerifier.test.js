@@ -26,7 +26,7 @@ describe('PassphraseVerifier', () => {
       const spyFn = spy(props, 'updateAnswer');
       const value = 'sample';
       const wrapper = shallow(<PassphraseVerifier passphrase={props.passphrase}
-      updateAnswer={props.updateAnswer}/>);
+        updateAnswer={props.updateAnswer}/>);
       wrapper.instance().changeHandler(value);
       expect(spyFn).to.have.been.calledWith();
       props.updateAnswer.restore();
@@ -36,7 +36,7 @@ describe('PassphraseVerifier', () => {
   describe('hideRandomWord', () => {
     it('should break passphrase, hide a word and store all in state', () => {
       const wrapper = shallow(<PassphraseVerifier passphrase={props.passphrase}
-      updateAnswer={props.updateAnswer}/>);
+        updateAnswer={props.updateAnswer}/>);
 
       const randomIndex = 0.6;
       const expectedValues = {

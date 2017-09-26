@@ -1,3 +1,10 @@
+def fail(reason) {
+    slackSend color: 'danger', message: "Build #${env.BUILD_NUMBER} of <${env.BUILD_URL}|${env.JOB_NAME}> (${env.BRANCH_NAME}) failed (<${env.BUILD_URL}/console|console>, <${env.BUILD_URL}/changes|changes>)\nCause: ${reason}", channel: '#lisk-nano-jenkins'
+    currentBuild.result = 'FAILURE'
+    milestone 1
+    error(${reason})
+}
+
 node('lisk-nano-01'){
   lock(resource: "lisk-nano-01", inversePrecedence: true) {
     stage ('Cleanup Orphaned Processes') {
@@ -12,9 +19,7 @@ node('lisk-nano-01'){
         pkill -f webpack -9 || true
       '''
       } catch (err) {
-        currentBuild.result = 'FAILURE'
-        milestone 1
-        error('Stopping build, installation failed')
+        fail('Stopping build, installation failed')
       }
     }
 
@@ -23,9 +28,7 @@ node('lisk-nano-01'){
         deleteDir()
         checkout scm
       } catch (err) {
-        currentBuild.result = 'FAILURE'
-        milestone 1
-        error('Stopping build, Checkout failed')
+        fail('Stopping build, Checkout failed')
       }
     }
 
@@ -36,9 +39,7 @@ node('lisk-nano-01'){
           bash lisk.sh rebuild -f /home/lisk/lisk-test-nano/blockchain_explorer.db.gz
           '''
       } catch (err) {
-        currentBuild.result = 'FAILURE'
-        milestone 1
-        error('Stopping build, Lisk Core failed to start')
+        fail('Stopping build, Lisk Core failed to start')
       }
     }
 
@@ -52,9 +53,7 @@ node('lisk-nano-01'){
 
         '''
       } catch (err) {
-        currentBuild.result = 'FAILURE'
-        milestone 1
-        error('Stopping build, npm install failed')
+        fail('Stopping build, npm install failed')
       }
     }
 
@@ -67,8 +66,7 @@ node('lisk-nano-01'){
           '''
 	}
       } catch (err) {
-        currentBuild.result = 'FAILURE'
-        error('Stopping build, Eslint failed')
+        fail('Stopping build, Eslint failed')
       }
     }
 
@@ -82,9 +80,7 @@ node('lisk-nano-01'){
         npm run build
         '''
       } catch (err) {
-        currentBuild.result = 'FAILURE'
-        milestone 1
-        error('Stopping build, Nano build failed')
+        fail('Stopping build, Nano build failed')
       }
     }
 
@@ -103,8 +99,7 @@ node('lisk-nano-01'){
           '''
       }
       } catch (err) {
-        currentBuild.result = 'FAILURE'
-        error('Stopping build, Test suite failed')
+        fail('Stopping build, Test suite failed')
       }
     }
 
@@ -135,9 +130,7 @@ node('lisk-nano-01'){
           '''
         }
       } catch (err) {
-        currentBuild.result = 'FAILURE'
-        milestone 1
-        error('Stopping build, End to End Test suite failed')
+        fail('Stopping build, End to End Test suite failed')
       }
     }
 
@@ -150,9 +143,7 @@ node('lisk-nano-01'){
         rm -rf "$WORKSPACE/*"
         '''
       } catch (err) {
-        currentBuild.result = 'FAILURE'
-        milestone 1
-        error('Stopping build, End to End Test suite failed')
+        fail('Stopping build, End to End Test suite failed')
       }
     }
 

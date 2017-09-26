@@ -1,12 +1,11 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { Button } from 'react-toolbox/lib/button';
 import { IconMenu, MenuItem } from 'react-toolbox/lib/menu';
 import Input from 'react-toolbox/lib/input';
 import { translate } from 'react-i18next';
 import styles from './voting.css';
 import disableStyle from './disableMenu.css';
-import VoteDialog from '../voteDialog';
+import RelativeLink from '../relativeLink';
 
 export class VotingHeaderRaw extends React.Component {
   constructor() {
@@ -58,10 +57,11 @@ export class VotingHeaderRaw extends React.Component {
   render() {
     const { votes, t } = this.props;
     const votesList = Object.keys(votes);
+    const confirmedVotes = Object.keys(votes).filter(username => votes[username].confirmed);
     const theme = votesList.length === 0 ? disableStyle : styles;
     const button = <div className={styles.votesMenuButton}>
       <i className='material-icons'>visibility</i>
-      <span>{t('my votes')} ({votesList.length})</span>
+      <span>t('my votes')} ({confirmedVotes.length})</span>
     </div>;
     return (
       <header className={`${grid.row} ${grid['between-xs']} hasPaddingRow`}>
@@ -81,7 +81,7 @@ export class VotingHeaderRaw extends React.Component {
         <div className={styles.actionBar}>
           <IconMenu theme={theme} icon={button} position='topLeft'
             iconRipple={false} className='my-votes-button'>
-            {votesList.map(username =>
+            {confirmedVotes.map(username =>
               <MenuItem
                 theme={styles}
                 key={username}
@@ -92,13 +92,8 @@ export class VotingHeaderRaw extends React.Component {
                   publicKey: votes[username].publicKey,
                 })} />)}
           </IconMenu>
-          <Button icon='done' flat
-            className='vote-button'
-            onClick={() => this.props.setActiveDialog({
-              title: 'Vote for delegates',
-              childComponent: VoteDialog,
-            })}
-            label={this.confirmVoteText()} />
+          <RelativeLink flat primary className={`${styles.voteButton} vote-button`}
+            to='vote'>{this.confirmVoteText()}</RelativeLink>
         </div>
       </header>
     );

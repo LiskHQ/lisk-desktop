@@ -2,8 +2,11 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
+import PropTypes from 'prop-types';
+import { BrowserRouter as Router } from 'react-router-dom';
 import TransactionsHOC from './index';
 import store from '../../store';
+import history from '../../history';
 
 
 describe('TransactionsHOC', () => {
@@ -24,7 +27,13 @@ describe('TransactionsHOC', () => {
       transactions,
       account,
     });
-    wrapper = mount(<Provider store={store}><TransactionsHOC /></Provider>);
+    wrapper = mount(<Provider store={store}><Router><TransactionsHOC /></Router></Provider>, {
+      context: { store, history },
+      childContextTypes: {
+        store: PropTypes.object.isRequired,
+        history: PropTypes.object.isRequired,
+      },
+    });
   });
 
   it('should render Transactions', () => {

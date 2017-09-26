@@ -8,9 +8,9 @@ const Private = () => <h1>Private</h1>;
 describe('PrivateWrapperComponent', () => {
   const isAuth = isAuthenticated => (
     shallow(
-        <PrivateWrapperComponent isAuthenticated={isAuthenticated}>
-            <Private/ >
-        </PrivateWrapperComponent>,
+      <PrivateWrapperComponent isAuthenticated={isAuthenticated}>
+        <Private/ >
+      </PrivateWrapperComponent>,
     )
   );
   it('should render children components if user is authenticated', () => {
