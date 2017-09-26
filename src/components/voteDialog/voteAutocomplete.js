@@ -174,7 +174,7 @@ export class VoteAutocompleteRaw extends React.Component {
 
     return (
       <article>
-        <h3 className={styles.autoCompleteTile}>Add vote to</h3>
+        <h3 className={styles.autoCompleteTile}>{this.props.t('Add vote to')}</h3>
         <div>
           {votedList.map(
             item => <Chip key={item}
@@ -206,7 +206,7 @@ export class VoteAutocompleteRaw extends React.Component {
             </List>
           </Card>
         </section>
-        <h3 className={styles.autoCompleteTile}>Remove vote from</h3>
+        <h3 className={styles.autoCompleteTile}>{this.props.t('Remove vote from')}</h3>
         <div>
           {unvotedList.map(
             item => <Chip key={item}
@@ -218,7 +218,7 @@ export class VoteAutocompleteRaw extends React.Component {
           )}
         </div>
         <section className={styles.searchContainer}>
-          <Input type='text' label='Search by username' name='unvotedListSearch'
+          <Input type='text' label={this.props.t('Search by username')} name='unvotedListSearch'
             className='unvotedListSearch' value={this.state.unvotedListSearch}
             theme={styles}
             onBlur={this.suggestionStatus.bind(this, false, 'unvotedSuggestionClass')}
