@@ -80,7 +80,7 @@ describe('VoteAutocomplete', () => {
   it('search should call "voteAutocomplete" when name is equal to "votedListSearch"', () => {
     const clock = sinon.useFakeTimers();
     voteAutocompleteApiMock.returnsPromise().resolves({ success: true })
-    .returnsPromise().resolves([]);
+      .returnsPromise().resolves([]);
     // sinon.stub(delegateApi, 'listDelegates').returnsPromise().resolves({ success: true });
     wrapper.instance().search('votedListSearch', 'val');
     clock.tick(250);
@@ -155,21 +155,21 @@ describe('VoteAutocomplete', () => {
 
   it(`should keyPress call "addToVoted" when event.keyCode is equal to 13 and 
     list name is equal to votedResult`, () => {
-    const list = [{ address: 'address 1', hovered: true }];
-    wrapper.setState({ votedResult: list });
-    const returnValue = wrapper.instance()
-      .keyPress({ keyCode: 13 }, 'votedSuggestionClass', 'votedResult');
-    expect(props.voteToggled).to.have.property('callCount', 1);
-    expect(returnValue).to.be.equal(false);
-  });
+      const list = [{ address: 'address 1', hovered: true }];
+      wrapper.setState({ votedResult: list });
+      const returnValue = wrapper.instance()
+        .keyPress({ keyCode: 13 }, 'votedSuggestionClass', 'votedResult');
+      expect(props.voteToggled).to.have.property('callCount', 1);
+      expect(returnValue).to.be.equal(false);
+    });
 
   it(`should keyPress call "voteToggled" when event.keyCode is equal to 13 and 
     list name is equal to unvotedResult`, () => {
-    const list = [{ address: 'address 1', hovered: true }];
-    wrapper.setState({ unvotedResult: list });
-    const returnValue = wrapper.instance()
-      .keyPress({ keyCode: 13 }, 'unvotedSuggestionClass', 'unvotedResult');
-    expect(props.voteToggled).to.have.property('callCount', 2);
-    expect(returnValue).to.be.equal(false);
-  });
+      const list = [{ address: 'address 1', hovered: true }];
+      wrapper.setState({ unvotedResult: list });
+      const returnValue = wrapper.instance()
+        .keyPress({ keyCode: 13 }, 'unvotedSuggestionClass', 'unvotedResult');
+      expect(props.voteToggled).to.have.property('callCount', 2);
+      expect(returnValue).to.be.equal(false);
+    });
 });
