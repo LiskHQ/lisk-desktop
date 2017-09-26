@@ -1,12 +1,14 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
+import configureStore from 'redux-mock-store';
+import PropTypes from 'prop-types';
 import sinon from 'sinon';
-import { Provider } from 'react-redux';
-import ActionBar from './index';
-import store from '../../store';
+import i18n from '../../i18n';
+import { ActionBarRaw as ActionBar } from './index';
 // import * as accountApi from '../../utils/api/account';
 
+const fakeStore = configureStore();
 
 describe('ActionBar', () => {
   let wrapper;
@@ -24,7 +26,18 @@ describe('ActionBar', () => {
         onClick: sinon.spy(),
       },
     };
-    wrapper = mount(<Provider store={store}><ActionBar {...props} /></Provider>);
+    const store = fakeStore({
+      account: {
+        balance: 100e8,
+      },
+    });
+    wrapper = mount(<ActionBar {...props} />, {
+      context: { store, i18n },
+      childContextTypes: {
+        store: PropTypes.object.isRequired,
+        i18n: PropTypes.object.isRequired,
+      },
+    });
   });
 
   it('renders two Button components', () => {

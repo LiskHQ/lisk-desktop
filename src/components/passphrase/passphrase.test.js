@@ -1,11 +1,13 @@
 import React from 'react';
 import { expect } from 'chai';
-import sinon from 'sinon';
-import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
-import store from '../../store';
+import configureStore from 'redux-mock-store';
+import sinon from 'sinon';
+import PropTypes from 'prop-types';
+import i18n from '../../i18n';
 import Passphrase from './passphrase';
 
+const fakeStore = configureStore();
 
 describe('Passphrase Component', () => {
   let wrapper;
@@ -15,7 +17,18 @@ describe('Passphrase Component', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<Provider store={store}><Passphrase {...props} /></Provider>);
+    const store = fakeStore({
+      account: {
+        balance: 100e8,
+      },
+    });
+    wrapper = mount(<Passphrase {...props} />, {
+      context: { store, i18n },
+      childContextTypes: {
+        store: PropTypes.object.isRequired,
+        i18n: PropTypes.object.isRequired,
+      },
+    });
   });
 
   it('should render 2 buttons', () => {
