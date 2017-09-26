@@ -3,7 +3,7 @@ def fail(reason) {
     currentBuild.result = 'FAILURE'
     sh 'rm -rf "$WORKSPACE/node_modules/"'
     milestone 1
-    error(${reason})
+    error("${reason}")
 }
 
 node('lisk-nano-01'){
