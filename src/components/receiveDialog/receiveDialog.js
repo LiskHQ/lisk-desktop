@@ -1,13 +1,11 @@
-import { Button } from 'react-toolbox/lib/button';
 import QRCode from 'qrcode.react';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import ActionBar from '../actionBar';
-import offlineStyle from '../offlineWrapper/offlineWrapper.css';
-import style from './receiveButton.css';
+import style from './receiveDialog.css';
 
-export class ReceiveDialog extends React.Component {
+class ReceiveDialog extends React.Component {
   copyAddress() {
     const copied = this.props.copyToClipboard(this.props.address, {
       message: 'Press #{key} to copy',
@@ -25,7 +23,7 @@ export class ReceiveDialog extends React.Component {
         <div className={ `${grid.row} ${grid['center-xs']}` }>
           <span>
             <h3>Address</h3>
-            <h1 className={`recieve-modal-address ${style.address}`}>{props.address}</h1>
+            <h1 className={`receive-modal-address ${style.address}`}>{props.address}</h1>
             <br />
             <QRCode value={props.address} size={300}/>
             <br /><br />
@@ -45,15 +43,4 @@ export class ReceiveDialog extends React.Component {
   }
 }
 
-const ReceiveButton = props => (
-  <Button className={`${props.className} receive-button ${offlineStyle.disableWhenOffline}`}
-    raised
-    primary={props.primary}
-    onClick={() => props.setActiveDialog({
-      title: 'Receive LSK',
-      childComponent: ReceiveDialog,
-      childComponentProps: props,
-    })}>{props.label}</Button>
-);
-
-export default ReceiveButton;
+export default ReceiveDialog;

@@ -2,8 +2,10 @@ import React from 'react';
 import { expect } from 'chai';
 import { spy } from 'sinon';
 import { mount, shallow } from 'enzyme';
+import { BrowserRouter as Router } from 'react-router-dom';
+import configureMockStore from 'redux-mock-store';
 import Lisk from 'lisk-js';
-import { I18nextProvider } from 'react-i18next';
+import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import Login from './login';
 
@@ -15,107 +17,87 @@ describe('Login', () => {
     address: '16313739661670634666L',
     username: 'lisk-nano',
   };
-
-  const props = {
-    peers: {},
+  const peers = { data: {} };
+  const store = configureMockStore([])({
+    peers,
     account,
-    history: {},
+    activePeerSet: () => {},
+  });
+  const history = {
+    location: {
+      pathname: '',
+      search: '',
+    },
+    replace: spy(),
+  };
+  const props = {
+    peers,
+    account,
+    history,
+    accountsRetrieved: spy(),
+    t: data => data,
     onAccountUpdated: () => {},
     setActiveDialog: spy(),
     activePeerSet: (network) => {
       props.peers.data = Lisk.api(network);
     },
-    t: key => key,
+  };
+  const options = {
+    context: { store, history, i18n },
+    childContextTypes: {
+      store: PropTypes.object.isRequired,
+      history: PropTypes.object.isRequired,
+      i18n: PropTypes.object.isRequired,
+    },
+    lifecycleExperimental: true,
   };
   props.spyActivePeerSet = spy(props.activePeerSet);
 
   describe('Generals', () => {
     beforeEach(() => {
-      wrapper = mount(<I18nextProvider i18n={ i18n }><Login {...props} /></I18nextProvider>);
-    });
-
-    it('should render a form tag', () => {
-    });
-
-    it.skip('should render address input if state.network === 2', () => {
-      wrapper.setState({ network: 2 });
-      expect(wrapper.find('.address')).to.have.lengthOf(1);
+      wrapper = mount(<Router><Login {...props}/></Router>, options);
     });
 
     it('should show error about passphrase length if passphrase is have wrong length', () => {
       const passphrase = 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin';
       const expectedError = 'Passphrase should have 12 words, entered passphrase has 11';
+      wrapper.find('.passphrase input').simulate('change', { target: { value: ' ' } });
       wrapper.find('.passphrase input').simulate('change', { target: { value: passphrase } });
-      expect(wrapper.find('.passphrase').text()).to.contain(expectedError);
-    });
-
-    it('should show error about incoret word  and show similar word if passphrase is have word not from dictionary', () => {
-      const passphrase = 'rexsipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit';
-      const expectedError = 'Word "rexsipe" is not on the passphrase Word List. Most similar word on the list is "recipe"';
-      wrapper.find('.passphrase input').simulate('change', { target: { value: passphrase } });
-      expect(wrapper.find('.passphrase').text()).to.contain(expectedError);
-    });
-
-    it('should show error about incoret word if passphrase is have word not from dictionary', () => {
-      const passphrase = 'sdasd bomb asset salon coil symbol tiger engine assist pact pumpkin visit';
-      const expectedError = 'Word "sdasd" is not on the passphrase Word List.';
-      wrapper.find('.passphrase input').simulate('change', { target: { value: passphrase } });
-      expect(wrapper.find('.passphrase').text()).to.contain(expectedError);
-    });
-
-    it('should show error about invalid passhprase if it is incorrect', () => {
-      const passphrase = 'recipe bomb asset salon coil symbol apple engine assist pact pumpkin visit';
-      const expectedError = 'Passphrase is not valid';
-      wrapper.find('.passphrase input').simulate('change', { target: { value: passphrase } });
-      expect(wrapper.find('.passphrase').text()).to.contain(expectedError);
-    });
-
-    it('should show call props.setActiveDialog when "new account" button is clicked', () => {
-      wrapper.find('.new-account-button').simulate('click');
-      expect(props.setActiveDialog).to.have.been.calledWith();
-    });
-  });
-
-  describe('componentDidMount', () => {
-    it('calls devPreFill', () => {
-      const spyFn = spy(Login.prototype, 'devPreFill');
-      mount(<I18nextProvider i18n={ i18n }><Login {...props} /></I18nextProvider>);
-      expect(spyFn).to.have.been.calledWith();
+      expect(wrapper.find('.passphrase').html()).to.contain(expectedError);
     });
   });
 
   describe('componentDidUpdate', () => {
     const address = 'http:localhost:8080';
     props.account = { address: 'dummy' };
-    props.history = {
-      replace: spy(),
-      location: {
-        search: '',
-      },
-    };
 
     it('calls this.props.history.replace(\'/main/transactions\')', () => {
-      wrapper = mount(<I18nextProvider i18n={ i18n }><Login {...props} /></I18nextProvider>);
+      wrapper = shallow(<Router><Login {...props}/></Router>, options);
       wrapper.setProps(props);
       expect(props.history.replace).to.have.been.calledWith('/main/transactions');
     });
 
-    it('calls this.props.history.replace with referrer address', () => {
-      props.history.location.search = '?referrer=/main/voting';
-      wrapper = mount(<I18nextProvider i18n={ i18n }><Login {...props} /></I18nextProvider>);
+    it.skip('calls this.props.history.replace with referrer address', () => {
+      wrapper = shallow(<Router><Login {...props}/></Router>, options);
+      props.history.replace.reset();
+      history.location.search = '?referrer=/main/voting';
+      wrapper.setProps({ history });
       expect(props.history.replace).to.have.been.calledWith('/main/voting');
     });
 
-    it('call this.props.history.replace with "/main/transaction" if referrer address is "/main/forging" and account.isDelegate === false', () => {
-      props.history.location.search = '?referrer=/main/forging';
-      props.account.isDelegate = false;
-      wrapper = mount(<I18nextProvider i18n={ i18n }><Login {...props} /></I18nextProvider>);
+    it.skip('call this.props.history.replace with "/main/transaction" if referrer address is "/main/forging" and account.isDelegate === false', () => {
+      history.location.search = '';
+      wrapper = shallow(<Router><Login {...props}/></Router>, options);
+      history.location.search = '?referrer=/main/forging';
+      account.isDelegate = false;
+      props.history.replace.reset();
+      wrapper.setProps({ history, account });
       expect(props.history.replace).to.have.been.calledWith('/main/transactions');
     });
 
     it.skip('calls localStorage.setItem(\'address\', address) if this.state.address', () => {
       const spyFn = spy(localStorage, 'setItem');
-      wrapper = mount(<I18nextProvider i18n={ i18n }><Login {...props} /></I18nextProvider>);
+      wrapper = shallow(<Login {...props}/>, options);
       wrapper.setState({ address });
       wrapper.setProps(props);
       expect(spyFn).to.have.been.calledWith('address', address);
@@ -127,7 +109,7 @@ describe('Login', () => {
 
   describe('validateUrl', () => {
     beforeEach('', () => {
-      wrapper = shallow(<Login {...props} />);
+      wrapper = shallow(<Login {...props}/>, options);
     });
 
     it('should set address and addressValidity="" for a valid address', () => {
@@ -163,7 +145,7 @@ describe('Login', () => {
 
   describe('changeHandler', () => {
     it('call setState with matching data', () => {
-      wrapper = shallow(<Login {...props} />);
+      wrapper = shallow(<Login {...props}/>, options);
       const key = 'network';
       const value = 0;
       const spyFn = spy(Login.prototype, 'setState');
@@ -174,49 +156,9 @@ describe('Login', () => {
 
   describe('onLoginSubmission', () => {
     it.skip('it should call activePeerSet', () => {
-      wrapper = shallow(<Login {...props} />);
+      wrapper = shallow(<Login {...props}/>, options);
       wrapper.instance().onLoginSubmission();
       expect(wrapper.props().spyActivePeerSet).to.have.been.calledWith();
-    });
-  });
-
-  describe.skip('devPreFill', () => {
-    it('should call validateUrl', () => {
-      const spyFn = spy(Login.prototype, 'validateUrl');
-
-      mount(<I18nextProvider i18n={ i18n }><Login {...props} /></I18nextProvider>);
-      expect(spyFn).to.have.been.calledWith();
-    });
-
-    it('should set state with correct network index and passphrase', () => {
-      const spyFn = spy(Login.prototype, 'validateUrl');
-      const passphrase = 'Test Passphrase';
-      localStorage.setItem('address', 'http:localhost:4000');
-      localStorage.setItem('passphrase', passphrase);
-
-      // for invalid address, it should set network to 0
-      mount(<I18nextProvider i18n={ i18n }><Login {...props} /></I18nextProvider>);
-      expect(spyFn).to.have.been.calledWith({
-        passphrase,
-        network: 0,
-      });
-
-      Login.prototype.validateUrl.restore();
-    });
-
-    it('should set state with correct network index and passphrase', () => {
-      const spyFn = spy(Login.prototype, 'validateUrl');
-      // for valid address should set network to 2
-      const passphrase = 'Test Passphrase';
-      localStorage.setItem('passphrase', passphrase);
-      localStorage.setItem('address', 'http:localhost:4000');
-      mount(<I18nextProvider i18n={ i18n }><Login {...props} /></I18nextProvider>);
-      expect(spyFn).to.have.been.calledWith({
-        passphrase,
-        network: 2,
-      });
-
-      Login.prototype.validateUrl.restore();
     });
   });
 });

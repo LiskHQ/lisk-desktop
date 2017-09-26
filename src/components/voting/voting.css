@@ -94,3 +94,7 @@
 .rotated {
   transform: rotate(45deg);
 }
+
+.voteButton {
+  color: #000 !important;
+}

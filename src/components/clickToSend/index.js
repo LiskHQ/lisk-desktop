@@ -1,13 +1,20 @@
-import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
-import { dialogDisplayed } from '../../actions/dialog';
-import ClickToSend from './clickToSend';
+import React from 'react';
+import styles from './clickToSend.css';
+import RelativeLink from '../relativeLink';
+import { fromRawLsk } from '../../utils/lsk';
 
-const mapDispatchToProps = dispatch => ({
-  setActiveDialog: data => dispatch(dialogDisplayed(data)),
-});
+const ClickToSend = ({ rawAmount, amount, className,
+  recipient, children, disabled }) => {
+  const normalizedAmount = rawAmount ? fromRawLsk(rawAmount) : amount;
 
-export default connect(
-  null,
-  mapDispatchToProps,
-)(translate()(ClickToSend));
+  return (
+    disabled ?
+      children :
+      <RelativeLink className={`${styles.clickable} ${className}`}
+        to={`send?amount=${normalizedAmount}&&recipient=${recipient}`}>
+        {children}
+      </RelativeLink>
+  );
+};
+
+export default ClickToSend;

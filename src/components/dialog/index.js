@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
-import { dialogHidden } from '../../actions/dialog';
+import { withRouter } from 'react-router';
+import { dialogHidden, dialogDisplayed } from '../../actions/dialog';
 import Dialog from './dialog';
 
 const mapStateToProps = state => ({
@@ -8,9 +9,11 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onCancelClick: () => dispatch(dialogHidden()),
+  dialogDisplayed: options => dispatch(dialogDisplayed(options)),
+  dialogHidden: () => dispatch(dialogHidden()),
 });
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Dialog);
+)(Dialog));

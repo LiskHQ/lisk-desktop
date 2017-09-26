@@ -32,6 +32,7 @@ Feature: Login page
     Then I should be logged in
     And I should see text "Testnet" in "peer network" element
 
+  @ignore
   Scenario: should allow to create a new account
     Given I'm on login page
     When I click "new account button"

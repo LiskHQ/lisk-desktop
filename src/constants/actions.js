@@ -26,6 +26,9 @@ const actionTypes = {
   transactionsLoaded: 'TRANSACTIONS_LOADED',
   transactionsReset: 'TRANSACTIONS_RESET',
   passphraseUsed: 'PASSPHRASE_USED',
+  accountsRetrieved: 'ACCOUNTS_RETRIEVED',
+  accountSaved: 'ACCOUNT_SAVED',
+  accountRemoved: 'ACCOUNT_REMOVED',
 };
 
 export default actionTypes;
