@@ -1,8 +1,13 @@
 def fail(reason) {
-    slackSend color: 'danger', message: "Build #${env.BUILD_NUMBER} of <${env.BUILD_URL}|${env.JOB_NAME}> (${env.BRANCH_NAME}) failed (<${env.BUILD_URL}/console|console>, <${env.BUILD_URL}/changes|changes>)\nCause: ${reason}", channel: '#lisk-nano-jenkins'
-    currentBuild.result = 'FAILURE'
-    milestone 1
-    error(${reason})
+  def pr_branch = ''
+  if (env.CHANGE_BRANCH != null) {
+    pr_branch = " ($BRANCH_NAME)"
+  }
+  slackSend color: 'danger', message: "Build #${env.BUILD_NUMBER} of <${env.BUILD_URL}|${env.JOB_NAME}>${pr_branch} failed (<${env.BUILD_URL}/console|console>, <${env.BUILD_URL}/changes|changes>)\nCause: ${reason}", channel: '#lisk-nano-jenkins'
+  currentBuild.result = 'FAILURE'
+  sh 'rm -rf "$WORKSPACE/node_modules/"'
+  milestone 1
+  error("${reason}")
 }
 
 node('lisk-nano-01'){
