@@ -4,42 +4,48 @@ import sinon from 'sinon';
 import { shallow } from 'enzyme';
 import { Dialog as ReactToolboxDialog } from 'react-toolbox/lib/dialog';
 import Dialog from './dialog';
+import Send from '../send';
 
 describe('Dialog', () => {
   let wrapper;
-  const Dummy = props => (<div>DUMMY {props.name}</div>);
-  const dialogProps = {
-    title: 'Original title',
-    childComponentProps: {
-      name: 'Original name',
+  const history = {
+    location: {
+      pathname: '/main/transactions/send',
+      search: '',
     },
-    childComponent: Dummy,
+    push: sinon.spy(),
+  };
+  const dialogProps = {
+    title: 'Send',
+    childComponentProps: {
+      name: 'send',
+    },
+    childComponent: Send,
+  };
+
+  const props = {
+    dialogDisplayed: () => {},
   };
 
   beforeEach(() => {
-    wrapper = shallow(<Dialog dialog={dialogProps} onCancelClick={() => {}}/>);
+    wrapper = shallow(<Dialog dialog={dialogProps} history={history} {...props}/>);
   });
 
-  it('renders <Dialog /> component from react-toolbox', () => {
+  it('renders Dialog component from react-toolbox', () => {
     expect(wrapper.find(ReactToolboxDialog)).to.have.length(1);
   });
 
-  it('renders component passed in props.dialog.childComponent', () => {
-    wrapper = shallow(<Dialog dialog={{ childComponent: Dummy }} onCancelClick={() => {}}/>);
-    expect(wrapper.find(Dummy)).to.have.length(1);
-  });
-
-  it('does not render a child component if none passed in props.dialog.childComponent', () => {
-    wrapper = shallow(<Dialog dialog={{}} />);
-    expect(wrapper.find(Dummy)).to.have.length(0);
+  it('renders a child component based on the path defined in history', () => {
+    expect(wrapper.find(Send)).to.have.length(1);
   });
 
   it('allows to close the dialog', () => {
-    const clock = sinon.useFakeTimers();
     wrapper.find('.x-button').simulate('click');
-    expect(wrapper.state('hidden')).to.equal(true);
-    clock.tick(510);
-    expect(wrapper.state('hidden')).to.equal(false);
-    clock.restore();
+    expect(history.push).to.have.been.calledWith();
+  });
+
+  it('should fix the route if there are two dialog names', () => {
+    wrapper.instance().componentDidUpdate();
+    expect(history.push).to.have.been.calledWith();
   });
 });

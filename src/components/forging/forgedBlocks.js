@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardTitle } from 'react-toolbox/lib/card';
 import { Table, TableHead, TableRow, TableCell } from 'react-toolbox/lib/table';
+import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { TooltipTime } from '../timestamp';
 import LiskAmount from '../liskAmount';
@@ -17,11 +18,11 @@ const ForgedBlocks = props => (
       <div className={style.forgedBlocksTableWrapper}>
         <Table selectable={false}>
           <TableHead>
-            <TableCell>Block height</TableCell>
-            <TableCell>Block Id</TableCell>
-            <TableCell>Timestamp</TableCell>
-            <TableCell>Total fee</TableCell>
-            <TableCell>Reward</TableCell>
+            <TableCell>{props.t('Block height')}</TableCell>
+            <TableCell>{props.t('Block Id')}</TableCell>
+            <TableCell>{props.t('Timestamp')}</TableCell>
+            <TableCell>{props.t('Total fee')}</TableCell>
+            <TableCell>{props.t('Reward')}</TableCell>
           </TableHead>
           {props.forgedBlocks.map((block, idx) => (
             <TableRow key={idx}>
@@ -34,9 +35,9 @@ const ForgedBlocks = props => (
           ))}
         </Table>
       </div> :
-      <p className='hasPaddingRow empty-message'>You have not forged any blocks yet.</p>
+      <p className='hasPaddingRow empty-message'>{props.t('You have not forged any blocks yet')}.</p>
     }
   </Card>
 );
 
-export default ForgedBlocks;
+export default translate()(ForgedBlocks);

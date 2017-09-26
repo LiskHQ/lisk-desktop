@@ -28,25 +28,25 @@ describe('VotingRow', () => {
 
   it(`should TableRow has class name of "votedRow" when voteStatus.unconfirmed and
     confirmed are true`, () => {
-    const wrapper = mount(<VotingRow {...props} voteStatus={votedStatus}></VotingRow>, options);
-    const expectedClass = '_votedRow';
-    const className = wrapper.find('tr').prop('className');
-    expect(className).to.contain(expectedClass);
-  });
+      const wrapper = mount(<VotingRow {...props} voteStatus={votedStatus}></VotingRow>, options);
+      const expectedClass = '_votedRow';
+      const className = wrapper.find('tr').prop('className');
+      expect(className).to.contain(expectedClass);
+    });
 
   it(`should TableRow has class name of "downVoteRow" when voteStatus.unconfirmed is false
     but confirmed is true`, () => {
-    const wrapper = mount(<VotingRow {...props} voteStatus={unvoteStatus}></VotingRow>, options);
-    const expectedClass = '_downVoteRow';
-    const className = wrapper.find('tr').prop('className');
-    expect(className).to.contain(expectedClass);
-  });
+      const wrapper = mount(<VotingRow {...props} voteStatus={unvoteStatus}></VotingRow>, options);
+      const expectedClass = '_downVoteRow';
+      const className = wrapper.find('tr').prop('className');
+      expect(className).to.contain(expectedClass);
+    });
 
   it(`should TableRow has class name of "upVoteRow" when voteStatus.unconfirmed is false
     but confirmed is true`, () => {
-    const wrapper = mount(<VotingRow {...props} voteStatus={voteStatus}></VotingRow>, options);
-    const expectedClass = '_upVoteRow';
-    const className = wrapper.find('tr').prop('className');
-    expect(className).to.contain(expectedClass);
-  });
+      const wrapper = mount(<VotingRow {...props} voteStatus={voteStatus}></VotingRow>, options);
+      const expectedClass = '_upVoteRow';
+      const className = wrapper.find('tr').prop('className');
+      expect(className).to.contain(expectedClass);
+    });
 });

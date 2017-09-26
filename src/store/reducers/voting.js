@@ -18,7 +18,7 @@ const mergeVotes = (newList, oldDict) => {
     const { confirmed, unconfirmed, pending } = oldDict[username];
     if (// we've voted but it's not in the new list
       (pending && unconfirmed && newDict[username] === undefined) ||
-       // we've un-voted but it still exists in the new list
+    // we've un-voted but it still exists in the new list
       (pending && !unconfirmed && newDict[username] !== undefined) ||
       // dirty, not voted for and not updated in other client
       (!pending && unconfirmed !== confirmed &&

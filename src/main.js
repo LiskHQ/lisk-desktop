@@ -4,8 +4,15 @@ import { HashRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 import App from './components/app';
+// import history from './history';
 import store from './store';
 import i18n from './i18n'; // initialized i18next instance
+import proxyLogin from './utils/proxyLogin';
+import env from './constants/env';
+
+if (env.production) {
+  proxyLogin.init();
+}
 
 const rootElement = document.getElementById('app');
 

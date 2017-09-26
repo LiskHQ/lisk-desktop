@@ -1,41 +1,43 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import { Provider } from 'react-redux';
 import sinon from 'sinon';
-import * as saveAccountUtils from '../../utils/saveAccount';
-import store from '../../store';
+import PropTypes from 'prop-types';
+import configureMockStore from 'redux-mock-store';
+import { BrowserRouter as Router } from 'react-router-dom';
 import SaveAccountButton from './saveAccountButton';
 
 describe('SaveAccountButton', () => {
+  const account = { publicKey: 'sampleKey' };
+  const emptySavedAccounts = [];
+  const savedAccounts = [account];
   const props = {
-    successToast: () => {},
-    setActiveDialog: () => {},
+    account,
+    accountRemoved: sinon.spy(),
   };
 
-  it('Allows to remove saved account from localStorage if accoutn saved already', () => {
-    const removeSavedAccountSpy = sinon.spy(saveAccountUtils, 'removeSavedAccount');
-    const successToastSpy = sinon.spy(props, 'successToast');
 
-    const wrapper = mount(<Provider store={store}><SaveAccountButton {...props} /></Provider>);
+  const store = configureMockStore([])({
+    account,
+    activePeerSet: () => {},
+  });
+  const options = {
+    context: { store },
+    childContextTypes: {
+      store: PropTypes.object.isRequired,
+    },
+  };
+
+  it('fires accountRemoved action if an account is already saved', () => {
+    const wrapper = mount(<Router>
+      <SaveAccountButton {...props} savedAccounts={savedAccounts} /></Router>, options);
     wrapper.find('MenuItem').simulate('click');
-    expect(removeSavedAccountSpy).to.have.been.calledWith();
-    expect(successToastSpy).to.have.been.calledWith({ label: 'Account was successfully forgotten.' });
-
-    removeSavedAccountSpy.restore();
-    successToastSpy.restore();
+    expect(props.accountRemoved).to.have.been.calledWith();
   });
 
   it('Allows to open SaveAccount modal if account not yet saved', () => {
-    const getSavedAccountMock = sinon.mock(saveAccountUtils);
-    getSavedAccountMock.expects('getSavedAccount').returns();
-    const setActiveDialogSpy = sinon.spy(props, 'setActiveDialog');
-
-    const wrapper = mount(<Provider store={store}><SaveAccountButton {...props} /></Provider>);
-    wrapper.find('MenuItem').simulate('click');
-    expect(setActiveDialogSpy).to.have.been.calledWith();
-
-    setActiveDialogSpy.restore();
-    getSavedAccountMock.restore();
+    const wrapper = mount(<Router>
+      <SaveAccountButton {...props} savedAccounts={emptySavedAccounts} /></Router>, options);
+    expect(wrapper.find('RelativeLink').exists()).to.equal(true);
   });
 });

@@ -2,9 +2,7 @@ const electron = require('electron'); // eslint-disable-line import/no-extraneou
 const path = require('path');
 const buildMenu = require('./menu');
 
-const { app } = electron;
-const { BrowserWindow } = electron;
-const { Menu } = electron;
+const { app, BrowserWindow, Menu, ipcMain } = electron;
 
 let win;
 let isUILoaded = false;
@@ -130,3 +128,14 @@ app.on('will-finish-launching', () => {
     sendUrlToRouter(url);
   });
 });
+
+app.on('login', (event, webContents, request, authInfo, callback) => {
+  global.myTempFunction = callback;
+  event.preventDefault();
+  webContents.send('proxyLogin', authInfo);
+});
+
+ipcMain.on('proxyCredentialsEntered', (event, username, password) => {
+  global.myTempFunction(username, password);
+});
+

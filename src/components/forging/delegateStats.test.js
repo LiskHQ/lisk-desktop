@@ -1,6 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
+import { I18nextProvider } from 'react-i18next';
+import i18n from '../../i18n';
 import DelegateStats from './delegateStats';
 
 
@@ -14,7 +16,9 @@ describe('DelegateStats', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<DelegateStats delegate={delegate} />);
+    wrapper = mount(<I18nextProvider i18n={ i18n }>
+      <DelegateStats delegate={delegate} />
+    </I18nextProvider>);
   });
 
   it('should render 3 Card components', () => {

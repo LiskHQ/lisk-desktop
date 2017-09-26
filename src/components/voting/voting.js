@@ -1,11 +1,13 @@
-import React from 'react';
-import { themr } from 'react-css-themr';
 import { TABLE } from 'react-toolbox/lib/identifiers';
-import { tableFactory } from 'react-toolbox/lib/table/Table';
 import { TableHead, TableCell } from 'react-toolbox/lib/table';
+import { tableFactory } from 'react-toolbox/lib/table/Table';
+import { themr } from 'react-css-themr';
+import React from 'react';
 import TableTheme from 'react-toolbox/lib/table/theme.css';
 import Waypoint from 'react-waypoint';
+
 import Header from './votingHeader';
+import VotingBar from './votingBar';
 import VotingRow from './votingRow';
 
 // Create a new Table component injecting Head and Row
@@ -40,7 +42,7 @@ class Voting extends React.Component {
   }
 
   loadVotedDelegates(refresh) {
-      /* istanbul-ignore-else */
+    /* istanbul-ignore-else */
     if (!this.freezeLoading) {
       this.props.votesFetched({
         activePeer: this.props.activePeer,
@@ -103,12 +105,12 @@ class Voting extends React.Component {
         <div className='verticalScroll'>
           <Table selectable={false} >
             <TableHead displaySelect={false}>
-              <TableCell>Vote</TableCell>
-              <TableCell>Rank</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Lisk Address</TableCell>
-              <TableCell>Uptime</TableCell>
-              <TableCell>Approval</TableCell>
+              <TableCell>{this.props.t('Vote')}</TableCell>
+              <TableCell>{this.props.t('Rank')}</TableCell>
+              <TableCell>{this.props.t('Name')}</TableCell>
+              <TableCell>{this.props.t('Lisk Address')}</TableCell>
+              <TableCell>{this.props.t('Uptime')}</TableCell>
+              <TableCell>{this.props.t('Approval')}</TableCell>
             </TableHead>
             {this.props.delegates.map(item => (
               <VotingRow key={item.address} data={item}
@@ -120,12 +122,13 @@ class Voting extends React.Component {
         </div>
         {
           (!this.isInitial && this.props.delegates.length === 0) &&
-          <div className='hasPaddingRow empty-message'>No delegates found</div>
+          <div className='hasPaddingRow empty-message'>{this.props.t('No delegates found')}</div>
         }
         <Waypoint bottomOffset='-80%'
           scrollableAncestor={window}
           key={this.props.delegates.length}
           onEnter={this.loadMore.bind(this)}></Waypoint>
+        <VotingBar votes={this.props.votes} />
       </div>
     );
   }

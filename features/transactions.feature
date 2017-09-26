@@ -30,4 +30,4 @@ Feature: Transactions tab
     When I click tab number 1
     And I click "receive lsk button"
     And I wait 1 seconds
-    Then I should see text "5932438298200837883L" in "recieve modal address" element
+    Then I should see text "5932438298200837883L" in "receive modal address" element

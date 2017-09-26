@@ -6,3 +6,4 @@ export { default as voting } from './voting';
 export { default as loading } from './loading';
 export { default as toaster } from './toaster';
 export { default as transactions } from './transactions';
+export { default as savedAccounts } from './savedAccounts';

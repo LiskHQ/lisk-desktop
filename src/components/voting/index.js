@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { translate } from 'react-i18next';
 import { dialogDisplayed } from '../../actions/dialog';
 import { voteToggled, votesFetched, delegatesFetched } from '../../actions/voting';
 import Voting from './voting';
@@ -19,4 +20,4 @@ const mapDispatchToProps = dispatch => ({
   delegatesFetched: data => dispatch(delegatesFetched(data)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Voting);
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(Voting));

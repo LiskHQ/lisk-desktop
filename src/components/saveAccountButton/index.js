@@ -1,16 +1,15 @@
 import { connect } from 'react-redux';
 
-import { dialogDisplayed } from '../../actions/dialog';
-import { successToastDisplayed } from '../../actions/toaster';
+import { accountRemoved } from '../../actions/savedAccounts';
 import SaveAccountButton from './saveAccountButton';
 
 const mapStateToProps = state => ({
   account: state.account,
+  savedAccounts: state.savedAccounts,
 });
 
 const mapDispatchToProps = dispatch => ({
-  setActiveDialog: data => dispatch(dialogDisplayed(data)),
-  successToast: data => dispatch(successToastDisplayed(data)),
+  accountRemoved: data => dispatch(accountRemoved(data)),
 });
 
 export default connect(

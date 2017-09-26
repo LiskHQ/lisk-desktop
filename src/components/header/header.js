@@ -2,18 +2,14 @@ import { Button } from 'react-toolbox/lib/button';
 import { IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-
 import PrivateWrapper from '../privateWrapper';
-import ReceiveButton from '../receiveButton';
-import RegisterDelegate from '../registerDelegate';
-import SecondPassphraseMenu from '../secondPassphrase';
-import Send from '../send';
-import SignMessage from '../signMessage';
-import VerifyMessage from '../verifyMessage';
 import logo from '../../assets/images/LISK-nano.png';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
+import i18n from '../../i18n';
 import SaveAccountButton from '../saveAccountButton';
 import styles from './header.css';
+import RelativeLink from '../relativeLink';
+import languages from '../../constants/languages';
 
 const Header = props => (
   <header className={`${grid.row} ${grid['between-xs']} ${styles.wrapper}`} >
@@ -30,43 +26,44 @@ const Header = props => (
       >
         {
           !props.account.isDelegate &&
-            <MenuItem caption="Register as delegate"
-              className='register-as-delegate'
-              onClick={() => props.setActiveDialog({
-                title: 'Register as delegate',
-                childComponent: RegisterDelegate,
-              })}
-            />
+            <MenuItem>
+              <RelativeLink className={`register-as-delegate ${styles.menuItem}`}
+                to='register-delegate'>Register as delegate</RelativeLink>
+            </MenuItem>
         }
-        <SecondPassphraseMenu />
-        <MenuItem caption="Sign message"
-          className='sign-message'
-          onClick={() => props.setActiveDialog({
-            title: 'Sign message',
-            childComponentProps: {
-              account: props.account,
-            },
-            childComponent: SignMessage,
-          })}
-        />
-        <MenuItem caption="Verify message"
-          className='verify-message'
-          onClick={() => props.setActiveDialog({
-            title: 'Verify message',
-            childComponent: VerifyMessage,
-          })}
-        />
+        {
+          !props.account.secondSignature &&
+            <MenuItem>
+              <RelativeLink className={`register-second-passphrase ${styles.menuItem}`}
+                to='register-second-passphrase'>Register second passphrase</RelativeLink>
+            </MenuItem>
+        }
+        <MenuItem>
+          <RelativeLink className={`sign-message ${styles.menuItem}`} to='sign-message'>Sign message</RelativeLink>
+        </MenuItem>
+        <MenuItem>
+          <RelativeLink className={`verify-message ${styles.menuItem}`}
+            to='verify-message'>Verify message</RelativeLink>
+        </MenuItem>
         <MenuDivider />
         <SaveAccountButton />
       </IconMenu>
+
       <Button className={`${styles.button} logout-button`} raised onClick={props.logOut}>{props.t('logout')}</Button>
-      <ReceiveButton className={styles.button} label='Receive' />
-      <Button className={`${styles.button} send-button ${offlineStyle.disableWhenOffline}`}
-        raised primary
-        onClick={() => props.setActiveDialog({
-          title: props.t('send'),
-          childComponent: Send,
-        })}>{props.t('send')}</Button>
+      <RelativeLink neutral raised className={`${styles.button} receive-button`}
+        to='receive'>{props.t('Receive LSK')}</RelativeLink>
+      <RelativeLink primary raised disableWhenOffline className={`${styles.button} send-button`}
+        to='send'>{props.t('send')}</RelativeLink>
+      <IconMenu
+        selectable={true}
+        selected={i18n.language}
+        className={`${styles.iconButton} ${offlineStyle.disableWhenOffline}`}
+        icon='language' position='topRight'>
+        {Object.keys(languages).map(key => (
+          <MenuItem key={key} value={key} caption={languages[key]}
+            onClick={() => i18n.changeLanguage(key)} />
+        ))}
+      </IconMenu>
     </PrivateWrapper>
   </header>
 );

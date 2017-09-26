@@ -1,8 +1,29 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
+import PropTypes from 'prop-types';
+import { BrowserRouter as Router } from 'react-router-dom';
+import configureMockStore from 'redux-mock-store';
 import TransactionType from './transactionType';
 import { TooltipWrapper } from '../timestamp';
+import history from '../../history';
+import i18n from '../../i18n';
+
+const store = configureMockStore([])({
+  peers: {
+    data: {},
+  },
+  account: {},
+});
+
+const options = {
+  context: { i18n, store, history },
+  childContextTypes: {
+    store: PropTypes.object.isRequired,
+    i18n: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+  },
+};
 
 const createTest = (type) => {
   let expectedValue;
@@ -32,12 +53,13 @@ const createTest = (type) => {
       expectedValue = false;
       break;
   }
+
   it(`show TransactionType equal to "${expectedValue}" for transaction type ${type}`, () => {
     const inputValue = {
       type,
       senderId: '1085993630748340485L',
     };
-    const wrapper = shallow(<TransactionType {...inputValue} />);
+    const wrapper = mount(<Router><TransactionType {...inputValue} /></Router>, options);
     expect(wrapper.find('span').text()).to.be.equal(expectedValue);
   });
 };
@@ -47,13 +69,12 @@ describe('TransactionType', () => {
     createTest(i);
   }
 
-  it('sets TransactionType equal the values of "props.sederId"', () => {
+  it('sets TransactionType equal the values of "props.senderId"', () => {
     const inputValue = {
       type: 0,
       senderId: '1085993630748340485L',
     };
-    const expectedValue = `<div class="">${inputValue.senderId}</div>`;
-    const wrapper = shallow(<TransactionType {...inputValue} />);
-    expect(wrapper.find(TooltipWrapper).html()).to.be.equal(expectedValue);
+    const wrapper = mount(<Router><TransactionType {...inputValue} /></Router>, options);
+    expect(wrapper.find(TooltipWrapper)).to.have.lengthOf(1);
   });
 });

@@ -2,9 +2,12 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
+import { BrowserRouter as Router } from 'react-router-dom';
 import sinon from 'sinon';
 import Voting from './voting';
 import store from '../../store';
+import history from '../../history';
+import i18n from '../../i18n';
 
 describe('Voting', () => {
   let wrapper;
@@ -36,12 +39,17 @@ describe('Voting', () => {
     addTransaction: sinon.spy(),
     votesFetched: sinon.spy(),
     delegatesFetched: sinon.spy(),
+    t: key => key,
   };
   beforeEach(() => {
-    wrapper = mount(<Voting {...props}></Voting>,
+    wrapper = mount(<Router><Voting {...props}></Voting></Router>,
       {
-        context: { store },
-        childContextTypes: { store: PropTypes.object.isRequired },
+        context: { store, history, i18n },
+        childContextTypes: {
+          store: PropTypes.object.isRequired,
+          history: PropTypes.object.isRequired,
+          i18n: PropTypes.object.isRequired,
+        },
       },
     );
   });
@@ -51,7 +59,7 @@ describe('Voting', () => {
   });
 
   it('should render VotingHeader', () => {
-    expect(wrapper.find('VotingHeader')).to.have.lengthOf(1);
+    expect(wrapper.find('VotingHeaderRaw')).to.have.lengthOf(1);
   });
 
   it('should render VotingRow', () => {
@@ -65,8 +73,8 @@ describe('Voting', () => {
   it('should define search method to reload delegates based on given query', () => {
     const clock = sinon.useFakeTimers();
     props.delegatesFetched.reset();
-    wrapper.instance().search('query');
-    clock.tick(2);
+    wrapper.find('.search input').simulate('change', { target: { value: 'query' } });
+    clock.tick(251);
     expect(props.delegatesFetched).to.be.calledWith({
       activePeer: props.activePeer,
       offset: 0,

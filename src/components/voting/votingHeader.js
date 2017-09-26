@@ -1,13 +1,13 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { Button } from 'react-toolbox/lib/button';
 import { IconMenu, MenuItem } from 'react-toolbox/lib/menu';
 import Input from 'react-toolbox/lib/input';
+import { translate } from 'react-i18next';
 import styles from './voting.css';
 import disableStyle from './disableMenu.css';
-import VoteDialog from '../voteDialog';
+import RelativeLink from '../relativeLink';
 
-class VotingHeader extends React.Component {
+export class VotingHeaderRaw extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -49,23 +49,26 @@ class VotingHeader extends React.Component {
       const separator = (voted > 0 && unvoted > 0) ? ' / ' : ''; // eslint-disable-line
       const votedHtml = voted > 0 ? <span className={styles.voted}>+{voted}</span> : '';
       const unvotedHtml = unvoted > 0 ? <span className={styles.unvoted}>-{unvoted}</span> : '';
-      info = <span className='vote-button-info'>VOTE ({votedHtml}{separator}{unvotedHtml})</span>;
+      info = <span className='vote-button-info'>{this.props.t('Vote')} ({votedHtml}{separator}{unvotedHtml})</span>;
     }
     return info;
   }
 
   render() {
-    const { votes } = this.props;
+    const { votes, t } = this.props;
     const votesList = Object.keys(votes);
+    const confirmedVotes = Object.keys(votes).filter(username => votes[username].confirmed);
     const theme = votesList.length === 0 ? disableStyle : styles;
     const button = <div className={styles.votesMenuButton}>
       <i className='material-icons'>visibility</i>
-      <span>my votes ({votesList.length})</span>
+      <span>t('my votes')} ({confirmedVotes.length})</span>
     </div>;
     return (
       <header className={`${grid.row} ${grid['between-xs']} hasPaddingRow`}>
         <div className={`${grid['col-xs-3']} ${styles.searchBox}`}>
-          <Input type='tel' label='Search' name='query'
+          <Input type='tel'
+            label={t('Search')}
+            name='query'
             className='search'
             theme={styles}
             value={this.state.query}
@@ -78,7 +81,7 @@ class VotingHeader extends React.Component {
         <div className={styles.actionBar}>
           <IconMenu theme={theme} icon={button} position='topLeft'
             iconRipple={false} className='my-votes-button'>
-            {votesList.map(username =>
+            {confirmedVotes.map(username =>
               <MenuItem
                 theme={styles}
                 key={username}
@@ -89,16 +92,11 @@ class VotingHeader extends React.Component {
                   publicKey: votes[username].publicKey,
                 })} />)}
           </IconMenu>
-          <Button icon='done' flat
-            className='vote-button'
-            onClick={() => this.props.setActiveDialog({
-              title: 'Vote for delegates',
-              childComponent: VoteDialog,
-            })}
-            label={this.confirmVoteText()} />
+          <RelativeLink flat primary className={`${styles.voteButton} vote-button`}
+            to='vote'>{this.confirmVoteText()}</RelativeLink>
         </div>
       </header>
     );
   }
 }
-export default VotingHeader;
+export default translate()(VotingHeaderRaw);
