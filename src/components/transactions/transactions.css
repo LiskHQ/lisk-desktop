@@ -45,6 +45,11 @@
   text-align: center;
 }
 
+.ordinaryText {
+  text-decoration: none;
+  color: inherit;
+}
+
 @media screen and (max-width: 48em) {
   .hiddenXs {
     display: none;

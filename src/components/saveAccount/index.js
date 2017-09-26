@@ -1,13 +1,15 @@
 import { connect } from 'react-redux';
-import { successToastDisplayed } from '../../actions/toaster';
+import { accountSaved } from '../../actions/savedAccounts';
 import SaveAccount from './saveAccount';
 
 const mapStateToProps = state => ({
-  account: state.account,
+  address: state.peers.data.options.address,
+  publicKey: state.account.publicKey,
+  network: state.peers.data.options.name,
 });
 
 const mapDispatchToProps = dispatch => ({
-  successToast: data => dispatch(successToastDisplayed(data)),
+  accountSaved: data => dispatch(accountSaved(data)),
 });
 
 export default connect(

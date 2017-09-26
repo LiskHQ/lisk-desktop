@@ -35,8 +35,8 @@ describe('ForgedBlocks', () => {
 
   beforeEach(() => {
     wrapper = mount(<I18nextProvider i18n={ i18n }>
-        <ForgedBlocks forgedBlocks={forgedBlocks} />
-      </I18nextProvider>);
+      <ForgedBlocks forgedBlocks={forgedBlocks} />
+    </I18nextProvider>);
   });
 
   it('should render 1 Table component', () => {

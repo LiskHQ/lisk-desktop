@@ -1,12 +1,10 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { shallow, mount } from 'enzyme';
-import { Provider } from 'react-redux';
+import { shallow } from 'enzyme';
 import store from '../../store';
 import Account from './account';
 import ClickToSend from '../clickToSend';
-
 
 describe('Account', () => {
   let props;
@@ -51,9 +49,11 @@ describe('Account', () => {
   });
 
   it('should render balance with ClickToSend component', () => {
-    const wrapper = mount(<Provider store={store}>
-      <Account {...props} />
-    </Provider>);
+    const wrapper = shallow(<Account {...props} />, {
+      context: { store },
+      childContextTypes: {
+      },
+    });
     expect(wrapper.find('.balance').find(ClickToSend)).to.have.lengthOf(1);
   });
 });

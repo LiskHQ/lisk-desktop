@@ -38,7 +38,7 @@ export default context => ({
       onClick: () => { context.setState({ current: 'show' }); },
     },
     confirmButton: {
-      title: () => (context.props.confirmButton || 'Login'),
+      title: () => context.props.confirmButton,
       fee: () => {},
       onClick: () => {
         context.props.onPassGenerated(context.state.passphrase);

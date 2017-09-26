@@ -24,11 +24,11 @@ class TransactionRow extends React.Component {
           <Spinner />}
       </td>
       <td className={`${props.tableStyle.rowCell} ${styles.centerText} ${styles.hiddenXs}`}>
-          <TooltipWrapper
-            tooltip={`${numeral(props.value.confirmations || 0).format('0a')} 
+        <TooltipWrapper
+          tooltip={`${numeral(props.value.confirmations || 0).format('0a')} 
             ${props.value.confirmations !== 1 ? props.t('confirmations') : props.t('confirmation')}`}>
-            {props.value.id}
-          </TooltipWrapper>
+          {props.value.id}
+        </TooltipWrapper>
       </td>
       <td className={`${props.tableStyle.rowCell} ${styles.centerText}`}>
         <TransactionType {...props.value} address={props.address}></TransactionType>

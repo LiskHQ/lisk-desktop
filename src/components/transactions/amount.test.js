@@ -28,7 +28,7 @@ describe('Amount', () => {
     });
     const html = wrapper.find('#transactionAmount').html();
     expect(html.match(expectedValue))
-        .to.have.lengthOf(1);
+      .to.have.lengthOf(1);
   });
 
   it('should have className "transactions__inButton" for type 1', () => {
@@ -50,7 +50,7 @@ describe('Amount', () => {
     });
     const html = wrapper.find('#transactionAmount').html();
     expect(html.match(expectedValue))
-        .to.have.lengthOf(1);
+      .to.have.lengthOf(1);
   });
 
   it('should have className "transactions__outButton" for outgoing transaction', () => {
@@ -72,6 +72,6 @@ describe('Amount', () => {
     });
     const html = wrapper.find('#transactionAmount').html();
     expect(html.match(expectedValue))
-        .to.have.lengthOf(1);
+      .to.have.lengthOf(1);
   });
 });

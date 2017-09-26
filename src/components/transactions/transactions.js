@@ -1,7 +1,9 @@
 import React from 'react';
 import Waypoint from 'react-waypoint';
 import tableStyle from 'react-toolbox/lib/table/theme.css';
-import ReceiveButton from '../receiveButton';
+import buttonStyle from 'react-toolbox/lib/button/theme.css';
+import offlineStyle from '../offlineWrapper/offlineWrapper.css';
+import RelativeLink from '../relativeLink';
 import TransactionRow from './transactionRow';
 import TransactionsHeader from './transactionsHeader';
 import styles from './transactions.css';
@@ -46,7 +48,8 @@ class Transactions extends React.Component {
           </table> :
           <p className={`${styles.empty} hasPaddingRow empty-message`}>
             There are no transactions, yet. &nbsp;
-            <ReceiveButton label='Receive LSK' className='receive-lsk-button' primary />
+            <RelativeLink className={`${styles.button} ${buttonStyle.button} ${buttonStyle.primary} ${buttonStyle.raised} receive-lsk-button ${offlineStyle.disableWhenOffline}`}
+              to='receive'>Receive LSK</RelativeLink>
           </p>
         }
         <Waypoint bottomOffset='-80%'
