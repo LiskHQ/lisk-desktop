@@ -37,7 +37,7 @@ class Passphrase extends React.Component {
     </InfoParagraph>;
 
     // step 2: Generator, binds mouse events
-    templates.generate = <PassphraseGenerator
+    templates.generate = <PassphraseGenerator t={this.props.t}
       changeHandler={this.changeHandler.bind(this)} />;
 
     // step 3: Confirmation, shows the generated passphrase for user to save it
@@ -48,6 +48,7 @@ class Passphrase extends React.Component {
 
     // step 4: Verification, Asks for a random word to make sure the user has copied the passphrase
     templates.confirm = <PassphraseVerifier
+      t={this.props.t}
       passphrase={this.state.passphrase}
       answer={this.state.answer}
       updateAnswer={this.changeHandler.bind(this, 'answer')} />;
@@ -62,7 +63,7 @@ class Passphrase extends React.Component {
 
         <ActionBar
           secondaryButton={{
-            label: steps[current].cancelButton.title,
+            label: steps[current].cancelButton.title(),
             onClick: steps[current].cancelButton.onClick.bind(this),
           }}
           primaryButton={{
