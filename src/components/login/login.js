@@ -197,12 +197,12 @@ class Login extends React.Component {
                         onPassGenerated: this.onLoginSubmission.bind(this),
                         keepModal: false,
                         noRouter: true,
-                        confirmButton: 'Login',
-                        useCaseNote: 'your passphrase will be required for logging in to your account.',
-                        securityNote: 'This passphrase is not recoverable and if you lose it, you will lose access to your account forever.',
+                        confirmButton: this.props.t('Login'),
+                        useCaseNote: this.props.t('your passphrase will be required for logging in to your account.'),
+                        securityNote: this.props.t('This passphrase is not recoverable and if you lose it, you will lose access to your account forever.'),
                       },
                     })} />
-                  <Button label='LOGIN' primary raised
+                  <Button label={this.props.t('Login')} primary raised
                     onClick={this.onLoginSubmission.bind(this, this.state.passphrase)}
                     className='login-button'
                     disabled={(this.state.network === 2 && this.state.addressValidity !== '') ||
