@@ -147,6 +147,10 @@ node('lisk-nano-01'){
         fail('Stopping build, Deploy failed')
       }
       milestone 1
+      /* notify of success if previous build failed */
+      if (currentBuild.getPreviousBuild().result == 'FAILURE') {
+        slackSend color: 'good', message: "Recovery: build #${env.BUILD_NUMBER} of <${env.BUILD_URL}|${env.JOB_NAME}> was sucessful.", channel: '#lisk-nano-jenkins'
+      }
     }
   }
 }
