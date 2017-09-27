@@ -60,7 +60,7 @@ const Header = props => (
         className={`${styles.iconButton} ${offlineStyle.disableWhenOffline}`}
         icon='language' position='topRight'>
         {Object.keys(languages).map(key => (
-          <MenuItem key={key} value={key} caption={languages[key]}
+          <MenuItem key={key} value={key} caption={languages[key].name}
             onClick={() => i18n.changeLanguage(key)} />
         ))}
       </IconMenu>
