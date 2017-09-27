@@ -3,7 +3,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Input from 'react-toolbox/lib/input';
 import Dropdown from 'react-toolbox/lib/dropdown';
 import Button from 'react-toolbox/lib/button';
-import networksRaw from './networks';
+import getNetworks from './networks';
 import PassphraseInput from '../passphraseInput';
 import styles from './login.css';
 import env from '../../constants/env';
@@ -16,11 +16,6 @@ import Passphrase from '../passphrase';
 class Login extends React.Component {
   constructor() {
     super();
-
-    this.networks = networksRaw.map((network, index) => ({
-      label: network.name,
-      value: index,
-    }));
 
     this.state = {
       passphrase: '',
@@ -35,6 +30,11 @@ class Login extends React.Component {
   }
 
   componentWillMount() {
+    this.networks = getNetworks().map((network, index) => ({
+      label: network.name,
+      value: index,
+    }));
+
     this.props.accountsRetrieved();
   }
 
@@ -53,7 +53,7 @@ class Login extends React.Component {
   }
 
   onLoginSubmission(passphrase) {
-    const network = Object.assign({}, networksRaw[this.state.network]);
+    const network = Object.assign({}, getNetworks()[this.state.network]);
     if (this.state.network === 2) {
       network.address = this.state.address;
     }
@@ -139,7 +139,7 @@ class Login extends React.Component {
     const { savedAccounts } = this.props;
     if (savedAccounts && savedAccounts.length > 0 && !this.props.account.afterLogout) {
       this.account = savedAccounts[0];
-      const network = Object.assign({}, networksRaw[this.account.network]);
+      const network = Object.assign({}, getNetworks()[this.account.network]);
       if (this.account.network === 2) {
         network.address = this.account.address;
       }

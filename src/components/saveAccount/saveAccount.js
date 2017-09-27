@@ -1,7 +1,7 @@
 import React from 'react';
 import InfoParagraph from '../infoParagraph';
 import ActionBar from '../actionBar';
-import networksRaw from '../login/networks';
+import getNetworks from '../login/networks';
 
 const SaveAccount = ({
   network,
@@ -13,7 +13,7 @@ const SaveAccount = ({
 }) => {
   const save = () => {
     // eslint-disable-next-line arrow-body-style
-    const index = networksRaw.map((item, i) => {
+    const index = getNetworks().map((item, i) => {
       return (item.name === network) ? i : null;
     }).find(item => item !== null);
     accountSaved({
