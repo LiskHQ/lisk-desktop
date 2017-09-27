@@ -1,11 +1,12 @@
-import Send from '../send';
+import ReceiveDialog from '../receiveDialog';
 import RegisterDelegate from '../registerDelegate';
+import SaveAccount from '../saveAccount';
+import SecondPassphrase from '../secondPassphrase';
+import Send from '../send';
+import Settings from '../settings';
 import SignMessage from '../signMessage';
 import VerifyMessage from '../verifyMessage';
-import SecondPassphrase from '../secondPassphrase';
 import VoteDialog from '../voteDialog';
-import ReceiveDialog from '../receiveDialog';
-import SaveAccount from '../saveAccount';
 
 export default {
   send: {
@@ -39,5 +40,9 @@ export default {
   'save-account': {
     title: 'Remember this account',
     component: SaveAccount,
+  },
+  settings: {
+    title: 'Settings',
+    component: Settings,
   },
 };
