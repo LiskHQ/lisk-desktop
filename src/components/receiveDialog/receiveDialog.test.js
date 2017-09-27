@@ -23,6 +23,7 @@ describe('ReceiveDialog', () => {
       successToast: () => {},
       closeDialog: () => {},
       copyToClipboard: () => (true),
+      t: key => key,
     };
   });
 
