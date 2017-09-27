@@ -19,6 +19,7 @@
     "clean": "del app/dist -f",
     "eslint": "eslint ./src/ ./app/main.js ./features/",
     "storybook": "start-storybook -p 6006 -s ./src/",
+    "i18n-scanner": "node ./src/i18n-scanner.js",
     "build-storybook": "build-storybook"
   },
   "author": "Lisk Foundation <admin@lisk.io>, lightcurve GmbH <admin@lightcurve.io>",
@@ -88,6 +89,8 @@
     "exports-loader": "=0.6.3",
     "extract-text-webpack-plugin": "=2.1.2",
     "file-loader": "=0.9.0",
+    "glob": "=7.1.2",
+    "i18next-scanner": "=2.0.0",
     "imports-loader": "=0.6.5",
     "js-nacl": "=1.2.2",
     "json-loader": "=0.5.4",

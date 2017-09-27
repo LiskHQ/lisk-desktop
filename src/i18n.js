@@ -24,6 +24,9 @@ i18n
     ns: ['common'],
     defaultNS: 'common',
 
+    keySeparator: '>',
+    nsSeparator: '|',
+
     debug: false,
 
     // cache: {
