@@ -5,8 +5,6 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import PrivateWrapper from '../privateWrapper';
 import SaveAccountButton from '../saveAccountButton';
-import i18n from '../../i18n';
-import languages from '../../constants/languages';
 import logo from '../../assets/images/LISK-nano.png';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import styles from './header.css';
@@ -58,16 +56,6 @@ const Header = props => (
         to='receive'>{props.t('Receive LSK')}</RelativeLink>
       <RelativeLink primary raised disableWhenOffline className={`${styles.button} send-button`}
         to='send'>{props.t('send')}</RelativeLink>
-      <IconMenu
-        selectable={true}
-        selected={i18n.language}
-        className={`${styles.iconButton} ${offlineStyle.disableWhenOffline}`}
-        icon='language' position='topRight'>
-        {Object.keys(languages).map(key => (
-          <MenuItem key={key} value={key} caption={languages[key].name}
-            onClick={() => i18n.changeLanguage(key)} />
-        ))}
-      </IconMenu>
     </PrivateWrapper>
   </header>
 );
