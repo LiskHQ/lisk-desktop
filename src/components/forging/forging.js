@@ -42,9 +42,9 @@ const Forging = ({
           <br />
           <ForgedBlocks forgedBlocks={forgedBlocks} />
           <Waypoint bottomOffset='-80%'
-                    scrollableAncestor={window}
-                    key={forgedBlocks.length}
-                    onEnter={() => loadForgedBlocks(20, forgedBlocks.length) } />
+            scrollableAncestor={window}
+            key={forgedBlocks.length}
+            onEnter={() => loadForgedBlocks(20, forgedBlocks.length) } />
         </div> :
         null
       }

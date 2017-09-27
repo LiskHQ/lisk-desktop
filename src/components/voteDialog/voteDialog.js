@@ -2,10 +2,13 @@ import React from 'react';
 import InfoParagraph from '../infoParagraph';
 import ActionBar from '../actionBar';
 import Fees from '../../constants/fees';
+import votingConst from '../../constants/voting';
 import Autocomplete from './voteAutocomplete';
 import styles from './voteDialog.css';
 import AuthInputs from '../authInputs';
 import { authStatePrefill, authStateIsValid } from '../../utils/form';
+
+const { maxCountOfVotes, maxCountOfVotesInOneTurn } = votingConst;
 
 export default class VoteDialog extends React.Component {
   constructor() {
@@ -58,9 +61,9 @@ export default class VoteDialog extends React.Component {
         <article className={styles.info}>
           <InfoParagraph>
             <p >
-              You can select up to 33 delegates in one voting turn.
+              You can select up to {maxCountOfVotesInOneTurn} delegates in one voting turn.
             </p>
-            You can vote for up to 101 delegates in total.
+            You can vote for up to {maxCountOfVotes} delegates in total.
           </InfoParagraph>
         </article>
 
@@ -72,9 +75,9 @@ export default class VoteDialog extends React.Component {
             label: 'Confirm',
             fee: Fees.vote,
             disabled: (
-              totalVotes > 101 ||
+              totalVotes > maxCountOfVotes ||
               votesList.length === 0 ||
-              votesList.length > 33 ||
+              votesList.length > maxCountOfVotesInOneTurn ||
               !authStateIsValid(this.state)
             ),
             onClick: this.confirm.bind(this),

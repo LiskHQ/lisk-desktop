@@ -26,18 +26,15 @@ class Passphrase extends React.Component {
     const { current } = this.state;
     const steps = stepsConfig(this);
 
-    const useCaseNote = 'your passphrase will be required for logging in to your account.';
-    const securityNote = 'This passphrase is not recoverable and if you lose it, you will lose access to your account forever.';
-
     // Step 1: Information/introduction
     templates.info = <InfoParagraph className={styles.noHr}>
         Please click Next, then move around your mouse randomly to generate a random passphrase.
-        <br />
-        <br />
-        Note: After registration completes, { this.props.useCaseNote || useCaseNote }
-        <br />
-        { this.props.securityNote || securityNote } Please keep it safe!
-      </InfoParagraph>;
+      <br />
+      <br />
+        Note: After registration completes, { this.props.useCaseNote }
+      <br />
+      { this.props.securityNote } Please keep it safe!
+    </InfoParagraph>;
 
     // step 2: Generator, binds mouse events
     templates.generate = <PassphraseGenerator

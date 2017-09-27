@@ -2,6 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { I18nextProvider } from 'react-i18next';
 import i18n from '../../i18n';
 import VotingHOC from './';
@@ -28,10 +29,12 @@ describe('VotingHOC', () => {
       account: {},
     });
     wrapper = mount(<Provider store={store}>
+      <Router>
         <I18nextProvider i18n={ i18n }>
           <VotingHOC />
         </I18nextProvider>
-      </Provider>);
+      </Router>
+    </Provider>);
   });
 
   it('should render Voting', () => {

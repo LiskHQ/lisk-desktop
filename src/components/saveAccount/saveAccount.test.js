@@ -10,42 +10,36 @@ import store from '../../store';
 describe('SaveAccount', () => {
   let wrapper;
   let closeDialogSpy;
-  let successToastSpy;
-  let localStorageSpy;
+  let accountSavedSpy;
 
   const props = {
     account: {
       publicKey: 'fab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88',
     },
     closeDialog: () => {},
-    successToast: () => {},
-    done: () => {},
+    accountSaved: () => {},
   };
 
   beforeEach(() => {
     closeDialogSpy = spy(props, 'closeDialog');
-    successToastSpy = spy(props, 'successToast');
-    localStorageSpy = spy(localStorage, 'setItem');
+    accountSavedSpy = spy(props, 'accountSaved');
     wrapper = mount(<Provider store={store}><SaveAccount {...props} /></Provider>);
   });
 
   afterEach(() => {
     closeDialogSpy.restore();
-    successToastSpy.restore();
-    localStorageSpy.restore();
+    accountSavedSpy.restore();
   });
 
   it('should render ActionBar', () => {
     expect(wrapper.find('ActionBar')).to.have.lengthOf(1);
   });
 
-  it('should call props.closeDialog, props.successToast and localStorage.setItem on "save button" click', () => {
+  it('should call props.closeDialog and props.accountSaved on "save button" click', () => {
     wrapper.find('.save-account-button').simulate('click');
     const componentProps = wrapper.find(SaveAccount).props();
     expect(componentProps.closeDialog).to.have.been.calledWith();
-    expect(componentProps.successToast).to.have.been.calledWith({ label: 'Account saved' });
-    const expectedValue = '[{"publicKey":"fab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88","network":"0","address":null}]';
-    expect(localStorageSpy).to.have.been.calledWith('accounts', expectedValue);
+    expect(componentProps.accountSaved).to.have.been.calledWith();
   });
 });
 

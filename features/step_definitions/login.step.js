@@ -7,7 +7,7 @@ defineSupportCode(({ Given, Then, When }) => {
     browser.ignoreSynchronization = true;
     browser.driver.manage().window().setSize(1000, 1000);
     browser.driver.get('about:blank');
-    browser.get('http://localhost:8080/#/?peerStack=localhost').then(callback);
+    browser.get('http://localhost:8080/#/').then(callback);
   });
 
   When('I refresh the page', (callback) => {

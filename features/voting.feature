@@ -36,6 +36,30 @@ Feature: Voting tab
     Then I should see "Insufficient funds for 1 LSK fee" error message
     And "submit button" should be disabled
 
+  Scenario: should display voting bar with numbers of selected votes if any selected
+    Given I'm logged in as "delegate candidate"
+    When I click tab number 2
+    And I should see no "voting bar"
+    And I click checkbox on table row no. 3
+    Then I should see element "voting bar" that contains text:
+      """
+      Upvotes: 1
+      Downvotes: 0
+      Total new votes: 1 / 33
+      Total votes: 1 / 101
+      """
+    And I click checkbox on table row no. 5
+    And I should see element "voting bar" that contains text:
+      """
+      Upvotes: 2
+      Downvotes: 0
+      Total new votes: 2 / 33
+      Total votes: 2 / 101
+      """
+    And I click checkbox on table row no. 3
+    And I click checkbox on table row no. 5
+    And I should see no "voting bar"
+
   Scenario: should allow to select delegates in the "Voting" tab and vote for them
     Given I'm logged in as "delegate candidate"
     When I click tab number 2

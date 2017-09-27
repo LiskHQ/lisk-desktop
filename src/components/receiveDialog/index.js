@@ -3,7 +3,7 @@ import copy from 'copy-to-clipboard';
 
 import { dialogDisplayed } from '../../actions/dialog';
 import { successToastDisplayed } from '../../actions/toaster';
-import ReceiveButton from './receiveButton';
+import ReceiveDialog from './receiveDialog';
 
 const mapStateToProps = state => ({
   address: state.account.address,
@@ -15,4 +15,4 @@ const mapDispatchToProps = dispatch => ({
   copyToClipboard: (...args) => copy(...args),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReceiveButton);
+export default connect(mapStateToProps, mapDispatchToProps)(ReceiveDialog);

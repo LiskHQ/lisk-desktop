@@ -1,26 +1,10 @@
 import React from 'react';
-import { expect } from 'chai';
+// import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import sinon from 'sinon';
-import ReceiveButton, { ReceiveDialog } from './receiveButton';
-
-describe('ReceiveButton', () => {
-  let setActiveDialog;
-
-  beforeEach(() => {
-    setActiveDialog = sinon.spy();
-  });
-
-  it('allows to open ReceiveDialog ', () => {
-    const wrapper = mount(
-      <ReceiveButton address='16313739661670634666L'
-        setActiveDialog={setActiveDialog} />);
-    wrapper.simulate('click');
-    expect(setActiveDialog).to.have.been.calledWith();
-  });
-});
+import ReceiveDialog from './receiveDialog';
 
 describe('ReceiveDialog', () => {
   let props;
