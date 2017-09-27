@@ -5,7 +5,11 @@ const Parser = require('i18next-scanner').Parser;
 const translationFunctionNames = ['i18next.t', 'props.t', 'this.props.t', 't'];
 const outputFilePath = './src/locales/en/common.json';
 
-const parser = new Parser();
+const parser = new Parser({
+  keySeparator: '>',
+  nsSeparator: '|',
+});
+
 
 const customHandler = function (key, options) {
   const value = key;
