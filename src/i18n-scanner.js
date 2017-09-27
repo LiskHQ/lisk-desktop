@@ -7,8 +7,15 @@ const outputFilePath = './src/locales/en/common.json';
 
 const parser = new Parser();
 
-const customHandler = function (key) {
-  parser.set(key, key);
+const customHandler = function (key, options) {
+  const value = key;
+  if (options.context) {
+    key += `_${options.context}`;
+  }
+  parser.set(key, value);
+  if (options.count !== undefined) {
+    parser.set(`${key}_plural`);
+  }
 };
 
 const files = glob.sync('./src/**/*.js', {});
