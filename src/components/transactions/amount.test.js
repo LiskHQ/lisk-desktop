@@ -53,7 +53,7 @@ describe('Amount', () => {
       .to.have.lengthOf(1);
   });
 
-  it('should have className "transactions__outButton" for outgoing transaction', () => {
+  it('should have className "transactions__grayButton" for outgoing transaction', () => {
     const inputValue = {
       value: {
         type: 1,
@@ -62,7 +62,7 @@ describe('Amount', () => {
       },
       address: 'address',
     };
-    const expectedValue = /transactions__outButton/g;
+    const expectedValue = /transactions__grayButton/g;
     const wrapper = mount(<Amount {...inputValue} />, {
       context: { i18n, store },
       childContextTypes: {
