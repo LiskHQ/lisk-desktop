@@ -29,12 +29,16 @@ const leftPadd = (str, pad, length) => {
 /**
  * Resets previous settings and creates a step with a random length between 1.6% to 3.2%
  */
-const init = (rand = Math.random()) => ({
-  step: (160 + Math.floor(rand * 160)) / 100,
-  percentage: 0,
-  seed: emptyByte('00'),
-  byte: emptyByte(0),
-});
+const init = (rand = Math.random()) => {
+  let step = Math.max((160 + Math.floor(rand * 160)));
+  step = step >= 0.01 ? step : step * 10;
+  return {
+    step,
+    percentage: 0,
+    seed: emptyByte('00'),
+    byte: emptyByte(0),
+  };
+};
 
 /**
  * - From a zero byte:
@@ -49,9 +53,6 @@ const init = (rand = Math.random()) => ({
  * @param {Array} seed - Array of 16 hex numbers in String format
  * @param {Number} percentage
  * @param {Number} step
- *
- * @todo
- * - Set minimum value for steps to make sure 100 iterations is enough
  *
  * @returns {number[]} The input array whose member is pos is set
  */
