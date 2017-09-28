@@ -6,6 +6,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import Lisk from 'lisk-js';
 import PropTypes from 'prop-types';
+import i18n from '../../i18n';
 import Login from './login';
 
 describe('Login', () => {
@@ -42,10 +43,11 @@ describe('Login', () => {
     },
   };
   const options = {
-    context: { store, history },
+    context: { store, history, i18n },
     childContextTypes: {
       store: PropTypes.object.isRequired,
       history: PropTypes.object.isRequired,
+      i18n: PropTypes.object.isRequired,
     },
     lifecycleExperimental: true,
   };

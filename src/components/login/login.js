@@ -7,6 +7,7 @@ import networksRaw from './networks';
 import PassphraseInput from '../passphraseInput';
 import styles from './login.css';
 import env from '../../constants/env';
+import LanguageDropdown from '../languageDropdown';
 import RelativeLink from '../relativeLink';
 
 /**
@@ -158,9 +159,10 @@ class Login extends React.Component {
   render() {
     return (
       <div className={`box ${styles.wrapper}`}>
-        <div className={`${grid.row} ${grid['center-xs']}`}>
-          <div className={`${grid['col-xs-12']} ${grid['col-sm-8']}`}>
+        <div className={grid.row}>
+          <div className={`${grid['col-xs-12']} ${grid['col-sm-8']} ${grid['col-sm-offset-2']}`}>
             <form>
+              <LanguageDropdown />
               <Dropdown
                 auto={false}
                 source={this.networks}
