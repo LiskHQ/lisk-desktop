@@ -29,12 +29,12 @@ class Passphrase extends React.Component {
     // Step 1: Information/introduction
     templates.info = <InfoParagraph className={styles.noHr}>
         Please click Next, then move around your mouse randomly to generate a random passphrase.
-        <br />
-        <br />
+      <br />
+      <br />
         Note: After registration completes, { this.props.useCaseNote }
-        <br />
-        { this.props.securityNote } Please keep it safe!
-      </InfoParagraph>;
+      <br />
+      { this.props.securityNote } Please keep it safe!
+    </InfoParagraph>;
 
     // step 2: Generator, binds mouse events
     templates.generate = <PassphraseGenerator

@@ -188,13 +188,13 @@ class Login extends React.Component {
                 onChange={this.changeHandler.bind(this, 'passphrase')} />
               <footer className={ `${grid.row} ${grid['center-xs']}` }>
                 <div className={grid['col-xs-12']}>
-                <RelativeLink to='register' flat primary
-                  className={`${styles.newAccount} new-account-button`}>{this.props.t('New Account')}</RelativeLink>
-                <Button label='LOGIN' primary raised
-                  onClick={this.onLoginSubmission.bind(this, this.state.passphrase)}
-                  className='login-button'
-                  disabled={(this.state.network === 2 && this.state.addressValidity !== '') ||
-                  this.state.passphraseValidity !== ''} />
+                  <RelativeLink to='register' flat primary
+                    className={`${styles.newAccount} new-account-button`}>{this.props.t('New Account')}</RelativeLink>
+                  <Button label='LOGIN' primary raised
+                    onClick={this.onLoginSubmission.bind(this, this.state.passphrase)}
+                    className='login-button'
+                    disabled={(this.state.network === 2 && this.state.addressValidity !== '') ||
+                    this.state.passphraseValidity !== ''} />
                 </div>
               </footer>
             </form>

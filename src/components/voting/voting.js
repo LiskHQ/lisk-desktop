@@ -1,11 +1,13 @@
-import React from 'react';
-import { themr } from 'react-css-themr';
 import { TABLE } from 'react-toolbox/lib/identifiers';
-import { tableFactory } from 'react-toolbox/lib/table/Table';
 import { TableHead, TableCell } from 'react-toolbox/lib/table';
+import { tableFactory } from 'react-toolbox/lib/table/Table';
+import { themr } from 'react-css-themr';
+import React from 'react';
 import TableTheme from 'react-toolbox/lib/table/theme.css';
 import Waypoint from 'react-waypoint';
+
 import Header from './votingHeader';
+import VotingBar from './votingBar';
 import VotingRow from './votingRow';
 
 // Create a new Table component injecting Head and Row
@@ -40,7 +42,7 @@ class Voting extends React.Component {
   }
 
   loadVotedDelegates(refresh) {
-      /* istanbul-ignore-else */
+    /* istanbul-ignore-else */
     if (!this.freezeLoading) {
       this.props.votesFetched({
         activePeer: this.props.activePeer,
@@ -126,6 +128,7 @@ class Voting extends React.Component {
           scrollableAncestor={window}
           key={this.props.delegates.length}
           onEnter={this.loadMore.bind(this)}></Waypoint>
+        <VotingBar votes={this.props.votes} />
       </div>
     );
   }

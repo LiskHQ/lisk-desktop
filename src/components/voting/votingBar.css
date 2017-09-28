@@ -1,0 +1,9 @@
+.red {
+  color: #c62828;
+}
+
+.fixedAtBottom {
+  position: fixed;
+  bottom: 0;
+  left: 8px;
+}

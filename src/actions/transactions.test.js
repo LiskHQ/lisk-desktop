@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import actionTypes from '../constants/actions';
 import { transactionAdded, transactionsUpdated,
-   transactionsLoaded, transactionsRequested } from './transactions';
+  transactionsLoaded, transactionsRequested } from './transactions';
 import * as accountApi from '../utils/api/account';
 
 describe('actions: transactions', () => {

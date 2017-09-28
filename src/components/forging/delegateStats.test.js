@@ -17,8 +17,8 @@ describe('DelegateStats', () => {
 
   beforeEach(() => {
     wrapper = mount(<I18nextProvider i18n={ i18n }>
-        <DelegateStats delegate={delegate} />
-      </I18nextProvider>);
+      <DelegateStats delegate={delegate} />
+    </I18nextProvider>);
   });
 
   it('should render 3 Card components', () => {

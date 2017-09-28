@@ -23,9 +23,9 @@ describe('ForgingTitle', () => {
 
   beforeEach(() => {
     wrapper = mount(<I18nextProvider i18n={ i18n }>
-        <ForgingTitle
-          account={account} statistics={statistics} loadStats={loadStats}/>
-      </I18nextProvider>);
+      <ForgingTitle
+        account={account} statistics={statistics} loadStats={loadStats}/>
+    </I18nextProvider>);
   });
 
   it('should render 1 Card component', () => {

@@ -49,7 +49,7 @@ class Transactions extends React.Component {
           <p className={`${styles.empty} hasPaddingRow empty-message`}>
             There are no transactions, yet. &nbsp;
             <RelativeLink className={`${styles.button} ${buttonStyle.button} ${buttonStyle.primary} ${buttonStyle.raised} receive-lsk-button ${offlineStyle.disableWhenOffline}`}
-      to='receive'>Receive LSK</RelativeLink>
+              to='receive'>Receive LSK</RelativeLink>
           </p>
         }
         <Waypoint bottomOffset='-80%'
