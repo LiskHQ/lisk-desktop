@@ -27,7 +27,8 @@ class RegisterDelegate extends React.Component {
     this.setState(newState);
   }
 
-  register() {
+  register(event) {
+    event.preventDefault();
     // @todo I'm not handling this part: this.setState({ nameError: error.message });
     this.props.delegateRegistered({
       activePeer: this.props.peers.data,
@@ -41,36 +42,38 @@ class RegisterDelegate extends React.Component {
   render() {
     return (
       <div>
-        <Input label='Delegate name' required={true}
-          autoFocus={true}
-          className='username'
-          onChange={handleChange.bind(this, this, 'name')}
-          error={this.state.name.error}
-          value={this.state.name.value} />
-        <AuthInputs
-          passphrase={this.state.passphrase}
-          secondPassphrase={this.state.secondPassphrase}
-          onChange={handleChange.bind(this, this)} />
-        <hr/>
-        <InfoParagraph>
-          Becoming a delegate requires registration. You may choose your own
-          delegate name, which can be used to promote your delegate. Only the
-          top 101 delegates are eligible to forge. All fees are shared equally
-          between the top 101 delegates.
-        </InfoParagraph>
-        <ActionBar
-          secondaryButton={{
-            onClick: this.props.closeDialog,
-          }}
-          primaryButton={{
-            label: 'Register',
-            fee: Fees.registerDelegate,
-            className: 'register-button',
-            disabled: (!this.state.name.value ||
-              this.props.account.isDelegate ||
-              !authStateIsValid(this.state)),
-            onClick: this.register.bind(this),
-          }} />
+        <form onSubmit={this.register.bind(this)}>
+          <Input label='Delegate name' required={true}
+            autoFocus={true}
+            className='username'
+            onChange={handleChange.bind(this, this, 'name')}
+            error={this.state.name.error}
+            value={this.state.name.value} />
+          <AuthInputs
+            passphrase={this.state.passphrase}
+            secondPassphrase={this.state.secondPassphrase}
+            onChange={handleChange.bind(this, this)} />
+          <hr/>
+          <InfoParagraph>
+            Becoming a delegate requires registration. You may choose your own
+            delegate name, which can be used to promote your delegate. Only the
+            top 101 delegates are eligible to forge. All fees are shared equally
+            between the top 101 delegates.
+          </InfoParagraph>
+          <ActionBar
+            secondaryButton={{
+              onClick: this.props.closeDialog,
+            }}
+            primaryButton={{
+              label: 'Register',
+              fee: Fees.registerDelegate,
+              type: 'submit',
+              className: 'register-button',
+              disabled: (!this.state.name.value ||
+                this.props.account.isDelegate ||
+                !authStateIsValid(this.state)),
+            }} />
+        </form>
       </div>
     );
   }
