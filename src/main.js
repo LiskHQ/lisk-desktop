@@ -8,10 +8,12 @@ import App from './components/app';
 import store from './store';
 import i18n from './i18n'; // initialized i18next instance
 import proxyLogin from './utils/proxyLogin';
+import externalLinks from './utils/externalLinks';
 import env from './constants/env';
 
 if (env.production) {
   proxyLogin.init();
+  externalLinks.init();
 }
 
 const rootElement = document.getElementById('app');
