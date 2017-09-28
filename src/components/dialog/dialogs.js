@@ -1,4 +1,5 @@
 import ReceiveDialog from '../receiveDialog';
+import Register from '../register';
 import RegisterDelegate from '../registerDelegate';
 import SaveAccount from '../saveAccount';
 import SecondPassphrase from '../secondPassphrase';
@@ -36,6 +37,10 @@ export default {
   receive: {
     title: 'Receive LSK',
     component: ReceiveDialog,
+  },
+  register: {
+    title: 'New Account',
+    component: Register,
   },
   'save-account': {
     title: 'Remember this account',

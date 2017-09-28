@@ -1,7 +1,7 @@
 def fail(reason) {
   def pr_branch = ''
   if (env.CHANGE_BRANCH != null) {
-    pr_branch = " ($BRANCH_NAME)"
+    pr_branch = " (${env.CHANGE_BRANCH})"
   }
   slackSend color: 'danger', message: "Build #${env.BUILD_NUMBER} of <${env.BUILD_URL}|${env.JOB_NAME}>${pr_branch} failed (<${env.BUILD_URL}/console|console>, <${env.BUILD_URL}/changes|changes>)\nCause: ${reason}", channel: '#lisk-nano-jenkins'
   currentBuild.result = 'FAILURE'
@@ -147,6 +147,10 @@ node('lisk-nano-01'){
         fail('Stopping build, Deploy failed')
       }
       milestone 1
+      /* notify of success if previous build failed */
+      if (currentBuild.getPreviousBuild().result == 'FAILURE') {
+        slackSend color: 'good', message: "Recovery: build #${env.BUILD_NUMBER} of <${env.BUILD_URL}|${env.JOB_NAME}> was sucessful.", channel: '#lisk-nano-jenkins'
+      }
     }
   }
 }

@@ -31,6 +31,7 @@ const App = () => (
               <Route path={`${match.url}/forging/:dialog?`} component={Forging} />
             </main>
           )} />
+          <Route exact path="/register" component={Login} />
           <Route exact path="/" component={Login} />
         </main>
         <Dialog />
