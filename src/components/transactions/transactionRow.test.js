@@ -42,29 +42,29 @@ describe('TransactionRow', () => {
 
   it('should render 6 "td"', () => {
     const wrapper = mount(<Provider store={store}>
-        <Router>
-          <I18nextProvider i18n={ i18n }>
-            <TransactionRow
-              tableStyle={tableStyle}
-              address={address}
-              value={rowData}
-              ></TransactionRow>
-          </I18nextProvider>
-        </Router>
-      </Provider>, options);
+      <Router>
+        <I18nextProvider i18n={ i18n }>
+          <TransactionRow
+            tableStyle={tableStyle}
+            address={address}
+            value={rowData}
+          ></TransactionRow>
+        </I18nextProvider>
+      </Router>
+    </Provider>, options);
     expect(wrapper.find('td')).to.have.lengthOf(6);
   });
 
   it('should render Spinner if no value.confirmations" ', () => {
     rowData.confirmations = undefined;
     const wrapper = mount(<Provider store={store}>
-        <Router>
-          <I18nextProvider i18n={ i18n }>
-            <TransactionRow tableStyle={tableStyle} address={address} value={rowData}>
-            </TransactionRow>
-          </I18nextProvider>
-          </Router>
-      </Provider>, options);
+      <Router>
+        <I18nextProvider i18n={ i18n }>
+          <TransactionRow tableStyle={tableStyle} address={address} value={rowData}>
+          </TransactionRow>
+        </I18nextProvider>
+      </Router>
+    </Provider>, options);
     expect(wrapper.find('Spinner')).to.have.lengthOf(1);
   });
 });

@@ -81,7 +81,7 @@ export const generateSeed = ({ byte, seed, percentage, step } = init(), rand = M
    */
 export const generatePassphrase = ({ seed }) => (new mnemonic(new Buffer(seed.join(''), 'hex'))).toString();
 
-  /**
+/**
    * Checks if passphrase is valid using mnemonic
    *
    * @param {string} passphrase

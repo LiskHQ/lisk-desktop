@@ -6,6 +6,7 @@ import SecondPassphrase from '../secondPassphrase';
 import VoteDialog from '../voteDialog';
 import ReceiveDialog from '../receiveDialog';
 import SaveAccount from '../saveAccount';
+import Register from '../register';
 
 export default {
   send: {
@@ -35,6 +36,10 @@ export default {
   receive: {
     title: 'Receive LSK',
     component: ReceiveDialog,
+  },
+  register: {
+    title: 'New Account',
+    component: Register,
   },
   'save-account': {
     title: 'Remember this account',

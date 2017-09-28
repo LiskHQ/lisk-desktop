@@ -51,16 +51,16 @@ const Header = props => (
 
       <Button className={`${styles.button} logout-button`} raised onClick={props.logOut}>{props.t('logout')}</Button>
       <RelativeLink neutral raised className={`${styles.button} receive-button`}
-      to='receive'>{props.t('Receive LSK')}</RelativeLink>
+        to='receive'>{props.t('Receive LSK')}</RelativeLink>
       <RelativeLink primary raised disableWhenOffline className={`${styles.button} send-button`}
-      to='send'>{props.t('send')}</RelativeLink>
+        to='send'>{props.t('send')}</RelativeLink>
       <IconMenu
         selectable={true}
         selected={i18n.language}
         className={`${styles.iconButton} ${offlineStyle.disableWhenOffline}`}
         icon='language' position='topRight'>
         {Object.keys(languages).map(key => (
-          <MenuItem key={key} value={key} caption={languages[key]}
+          <MenuItem key={key} value={key} caption={languages[key].name}
             onClick={() => i18n.changeLanguage(key)} />
         ))}
       </IconMenu>
