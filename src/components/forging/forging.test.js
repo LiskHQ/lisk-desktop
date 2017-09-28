@@ -29,8 +29,8 @@ describe('Forging', () => {
       };
 
       wrapper = mount(<I18nextProvider i18n={ i18n }>
-          <Forging {...props} account={account} />
-        </I18nextProvider>);
+        <Forging {...props} account={account} />
+      </I18nextProvider>);
     });
 
     it('should render ForgingTitle', () => {

@@ -179,8 +179,8 @@ export default class VoteAutocomplete extends React.Component {
               deletable
               onDeleteClick={this.props.voteToggled.bind(this,
                 { username: item, publicKey: votes[item].publicKey })}>
-                {item}
-              </Chip>,
+              {item}
+            </Chip>,
           )}
         </div>
         <section className={styles.searchContainer}>
@@ -211,8 +211,8 @@ export default class VoteAutocomplete extends React.Component {
               deletable
               onDeleteClick={this.props.voteToggled.bind(this,
                 { username: item, publicKey: votes[item].publicKey })}>
-                {item}
-              </Chip>,
+              {item}
+            </Chip>,
           )}
         </div>
         <section className={styles.searchContainer}>
