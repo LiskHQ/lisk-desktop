@@ -7,7 +7,7 @@ import networksRaw from './networks';
 import PassphraseInput from '../passphraseInput';
 import styles from './login.css';
 import env from '../../constants/env';
-import Passphrase from '../passphrase';
+import RelativeLink from '../relativeLink';
 
 /**
  * The container component containing login
@@ -188,20 +188,8 @@ class Login extends React.Component {
                 onChange={this.changeHandler.bind(this, 'passphrase')} />
               <footer className={ `${grid.row} ${grid['center-xs']}` }>
                 <div className={grid['col-xs-12']}>
-                <Button label={this.props.t('New Account')} flat primary
-                  className={`${styles.newAccount} new-account-button`}
-                  onClick={() => this.props.setActiveDialog({
-                    title: this.props.t('New Account'),
-                    childComponent: Passphrase,
-                    childComponentProps: {
-                      onPassGenerated: this.onLoginSubmission.bind(this),
-                      keepModal: false,
-                      noRouter: true,
-                      confirmButton: 'Login',
-                      useCaseNote: 'your passphrase will be required for logging in to your account.',
-                      securityNote: 'This passphrase is not recoverable and if you lose it, you will lose access to your account forever.',
-                    },
-                  })} />
+                <RelativeLink to='register' flat primary
+                  className={`${styles.newAccount} new-account-button`}>{this.props.t('New Account')}</RelativeLink>
                 <Button label='LOGIN' primary raised
                   onClick={this.onLoginSubmission.bind(this, this.state.passphrase)}
                   className='login-button'
