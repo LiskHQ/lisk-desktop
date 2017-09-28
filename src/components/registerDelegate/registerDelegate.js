@@ -53,11 +53,7 @@ class RegisterDelegate extends React.Component {
           onChange={handleChange.bind(this, this)} />
         <hr/>
         <InfoParagraph>
-          {this.props.t(`
-          Becoming a delegate requires registration. You may choose your own
-          delegate name, which can be used to promote your delegate. Only the
-          top 101 delegates are eligible to forge. All fees are shared equally
-          between the top 101 delegates.`)}
+          {this.props.t('Becoming a delegate requires registration. You may choose your own delegate name, which can be used to promote your delegate. Only the top 101 delegates are eligible to forge. All fees are shared equally between the top 101 delegates.')}
         </InfoParagraph>
         <ActionBar
           secondaryButton={{

@@ -56,11 +56,7 @@ class SignMessageComponent extends React.Component {
     return (
       <div className='sign-message'>
         <InfoParagraph>
-          {this.props.t(`Signing a message with this tool indicates ownership of a privateKey
-            (secret) and provides a level of proof that you are the owner of the key.
-            Its important to bear in mind that this is not a 100% proof as computer systems
-            can be compromised, but is still an effective tool for proving ownership
-            of a particular publicKey/address pair.`)}
+          {this.props.t('Signing a message with this tool indicates ownership of a privateKey (secret) and provides a level of proof that you are the owner of the key. Its important to bear in mind that this is not a 100% proof as computer systems can be compromised, but is still an effective tool for proving ownership of a particular publicKey/address pair.')}
           <br />
           {this.props.t('Note: Digital Signatures and signed messages are not encrypted!')}
         </InfoParagraph>

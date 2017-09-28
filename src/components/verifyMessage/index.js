@@ -50,11 +50,7 @@ class VerifyMessage extends React.Component {
     return (
       <div className='verify-message'>
         <InfoParagraph>
-          {this.props.t(`When you have the signature, you only need the publicKey of the signer
-          in order to verify that the message came from the right private/publicKey pair.
-          Be aware, everybody knowing the signature and the publicKey can verify the message.
-          If ever there is a dispute, everybody can take the publicKey and signature to a judge
-          and prove that the message is coming from the specific private/publicKey pair.`)}
+          {this.props.t('When you have the signature, you only need the publicKey of the signer in order to verify that the message came from the right private/publicKey pair. Be aware, everybody knowing the signature and the publicKey can verify the message. If ever there is a dispute, everybody can take the publicKey and signature to a judge and prove that the message is coming from the specific private/publicKey pair.')}
         </InfoParagraph>
         <section>
           <Input className='public-key' type='text' label={this.props.t('Public Key')}

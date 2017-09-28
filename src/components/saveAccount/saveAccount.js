@@ -27,10 +27,7 @@ const SaveAccount = ({
   return (
     <div className='save-account'>
       <InfoParagraph>
-        {t(`This will save public key of your account on this device,
-        so next time it will launch without the need to log in.
-        However, you will be prompted to enter the passphrase once
-        you want to do any transaction.`)}
+        {t('This will save public key of your account on this device, so next time it will launch without the need to log in. However, you will be prompted to enter the passphrase once you want to do any transaction.')}
       </InfoParagraph>
       <ActionBar
         secondaryButton={{
