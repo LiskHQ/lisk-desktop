@@ -50,6 +50,9 @@ const init = (rand = Math.random()) => ({
  * @param {Number} percentage
  * @param {Number} step
  *
+ * @todo
+ * - Set minimum value for steps to make sure 100 iterations is enough
+ *
  * @returns {number[]} The input array whose member is pos is set
  */
 export const generateSeed = ({ byte, seed, percentage, step } = init(), rand = Math.random()) => {
