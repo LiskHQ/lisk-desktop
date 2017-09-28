@@ -7,7 +7,7 @@ import getNetworks from './networks';
 import PassphraseInput from '../passphraseInput';
 import styles from './login.css';
 import env from '../../constants/env';
-import Passphrase from '../passphrase';
+import RelativeLink from '../relativeLink';
 
 /**
  * The container component containing login
@@ -188,25 +188,15 @@ class Login extends React.Component {
                 onChange={this.changeHandler.bind(this, 'passphrase')} />
               <footer className={ `${grid.row} ${grid['center-xs']}` }>
                 <div className={grid['col-xs-12']}>
-                  <Button label={this.props.t('New Account')} flat primary
-                    className={`${styles.newAccount} new-account-button`}
-                    onClick={() => this.props.setActiveDialog({
-                      title: this.props.t('New Account'),
-                      childComponent: Passphrase,
-                      childComponentProps: {
-                        onPassGenerated: this.onLoginSubmission.bind(this),
-                        keepModal: false,
-                        noRouter: true,
-                        confirmButton: this.props.t('Login'),
-                        useCaseNote: this.props.t('your passphrase will be required for logging in to your account.'),
-                        securityNote: this.props.t('This passphrase is not recoverable and if you lose it, you will lose access to your account forever.'),
-                      },
-                    })} />
+                  <RelativeLink to='register' flat primary
+                    className={`${styles.newAccount} new-account-button`}>
+                    {this.props.t('New Account')}
+                  </RelativeLink>
                   <Button label={this.props.t('Login')} primary raised
                     onClick={this.onLoginSubmission.bind(this, this.state.passphrase)}
                     className='login-button'
                     disabled={(this.state.network === 2 && this.state.addressValidity !== '') ||
-                  this.state.passphraseValidity !== ''} />
+                    this.state.passphraseValidity !== ''} />
                 </div>
               </footer>
             </form>

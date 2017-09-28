@@ -1,12 +1,14 @@
 import i18next from 'i18next';
-import Send from '../send';
+import ReceiveDialog from '../receiveDialog';
+import Register from '../register';
 import RegisterDelegate from '../registerDelegate';
+import SaveAccount from '../saveAccount';
+import SecondPassphrase from '../secondPassphrase';
+import Send from '../send';
+import Settings from '../settings';
 import SignMessage from '../signMessage';
 import VerifyMessage from '../verifyMessage';
-import SecondPassphrase from '../secondPassphrase';
 import VoteDialog from '../voteDialog';
-import ReceiveDialog from '../receiveDialog';
-import SaveAccount from '../saveAccount';
 
 export default () => ({
   send: {
@@ -37,8 +39,16 @@ export default () => ({
     title: i18next.t('Receive LSK'),
     component: ReceiveDialog,
   },
+  register: {
+    title: i18next.t('New Account'),
+    component: Register,
+  },
   'save-account': {
     title: i18next.t('Remember this account'),
     component: SaveAccount,
+  },
+  settings: {
+    title: i18next.t('Settings'),
+    component: Settings,
   },
 });

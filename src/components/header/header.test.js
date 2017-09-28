@@ -41,12 +41,12 @@ describe('Header', () => {
     propsMock.restore();
   });
 
-  it('renders two Button components', () => {
+  it('renders 1 Button components', () => {
     expect(wrapper.find(Button)).to.have.length(1);
   });
 
-  it('renders two RelativeLink components', () => {
-    expect(wrapper.find(RelativeLink)).to.have.length(6);
+  it('renders 7 RelativeLink components', () => {
+    expect(wrapper.find(RelativeLink)).to.have.length(7);
   });
 
   it('should have an image with srouce of "logo"', () => {
