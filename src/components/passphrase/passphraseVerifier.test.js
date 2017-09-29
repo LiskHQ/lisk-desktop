@@ -41,8 +41,8 @@ describe('PassphraseVerifier', () => {
       const randomIndex = 0.6;
       const expectedValues = {
         passphraseParts: [
-          'survey stereo pool fortune oblige slight',
-          'goddess mistake sentence anchor pool',
+          'survey stereo pool fortune oblige slight ',
+          ' goddess mistake sentence anchor pool',
         ],
         missing: 'gravity',
         answer: '',
