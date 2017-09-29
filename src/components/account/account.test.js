@@ -1,7 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
-import sinon from 'sinon';
 import { shallow } from 'enzyme';
+import sinon from 'sinon';
+import i18n from '../../i18n';
 import store from '../../store';
 import Account from './account';
 import ClickToSend from '../clickToSend';
@@ -50,7 +51,7 @@ describe('Account', () => {
 
   it('should render balance with ClickToSend component', () => {
     const wrapper = shallow(<Account {...props} />, {
-      context: { store },
+      context: { store, i18n },
       childContextTypes: {
       },
     });

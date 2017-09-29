@@ -4,7 +4,7 @@ import Navigation from 'react-toolbox/lib/navigation';
 import AppBar from 'react-toolbox/lib/app_bar';
 import { IconButton } from 'react-toolbox/lib/button';
 import styles from './dialog.css';
-import dialogs from './dialogs';
+import getDialogs from './dialogs';
 import routesReg from '../../utils/routes';
 
 class DialogElement extends Component {
@@ -34,6 +34,7 @@ class DialogElement extends Component {
         item.regex.test(this.props.history.location.pathname));
       this.current.pathname = this.props.history.location.pathname;
       const dialogName = this.props.history.location.pathname.replace(this.current.reg.path, '');
+      const dialogs = getDialogs();
       if (dialogs[dialogName] !== undefined) {
         this.open(this.current.reg, dialogs[dialogName]);
       } else {

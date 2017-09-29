@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import { spy, stub } from 'sinon';
+import i18next from 'i18next';
 import { successAlertDialogDisplayed } from '../../actions/dialog';
 import middleware from './addedTransaction';
 import actionTypes from '../../constants/actions';
@@ -49,7 +50,7 @@ describe('addedTransaction middleware', () => {
     for (let i = 0; i < 4; i++) {
       givenAction.data.type = i;
       middleware(store)(next)(givenAction);
-      const expectedAction = successAlertDialogDisplayed({ text: expectedMessages[i] });
+      const expectedAction = successAlertDialogDisplayed({ text: i18next.t(expectedMessages[i]) });
       expect(store.dispatch).to.have.been.calledWith(expectedAction);
     }
   });

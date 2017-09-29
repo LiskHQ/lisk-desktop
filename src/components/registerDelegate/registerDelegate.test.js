@@ -4,6 +4,8 @@ import { mount } from 'enzyme';
 import sinon from 'sinon';
 import Lisk from 'lisk-js';
 import { Provider } from 'react-redux';
+import { I18nextProvider } from 'react-i18next';
+import i18n from '../../i18n'; // initialized i18next instance
 import store from '../../store';
 import RegisterDelegate from './registerDelegate';
 import * as delegateApi from '../../utils/api/delegate';
@@ -48,6 +50,7 @@ const props = {
   },
   closeDialog: () => {},
   delegateRegistered: sinon.spy(),
+  t: key => key,
 };
 
 const delegateProps = { ...props, account: delegateAccount };
@@ -72,7 +75,11 @@ describe('RegisterDelegate', () => {
       store.getState = () => ({
         account: normalAccount,
       });
-      wrapper = mount(<Provider store={store}><RegisterDelegate {...normalProps} /></Provider>);
+      wrapper = mount(<Provider store={store}>
+        <I18nextProvider i18n={ i18n }>
+          <RegisterDelegate {...normalProps} />
+        </I18nextProvider>
+      </Provider>);
     });
 
     it('renders an InfoParagraph components', () => {
@@ -115,7 +122,10 @@ describe('RegisterDelegate', () => {
         account: withSecondSecretAccount,
       });
       wrapper = mount(<Provider store={store}>
-        <RegisterDelegate {...withSecondSecretProps} /></Provider>);
+        <I18nextProvider i18n={ i18n }>
+          <RegisterDelegate {...withSecondSecretProps} />
+        </I18nextProvider>
+      </Provider>);
     });
 
     it('renders two Input component for a an account with second secret', () => {
@@ -134,7 +144,11 @@ describe('RegisterDelegate', () => {
       store.getState = () => ({
         account: delegateAccount,
       });
-      wrapper = mount(<Provider store={store}><RegisterDelegate {...delegateProps} /></Provider>);
+      wrapper = mount(<Provider store={store}>
+        <I18nextProvider i18n={ i18n }>
+          <RegisterDelegate {...delegateProps} />
+        </I18nextProvider>
+      </Provider>);
     });
 
     it('does not allow register as delegate for a delegate account', () => {

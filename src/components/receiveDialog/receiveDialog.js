@@ -8,10 +8,10 @@ import style from './receiveDialog.css';
 class ReceiveDialog extends React.Component {
   copyAddress() {
     const copied = this.props.copyToClipboard(this.props.address, {
-      message: 'Press #{key} to copy',
+      message: this.props.t('Press #{key} to copy'),
     });
     if (copied) {
-      this.props.successToast({ label: 'Address copied to clipboard' });
+      this.props.successToast({ label: this.props.t('Address copied to clipboard') });
       this.props.closeDialog();
     }
   }
@@ -22,7 +22,7 @@ class ReceiveDialog extends React.Component {
       <div>
         <div className={ `${grid.row} ${grid['center-xs']}` }>
           <span>
-            <h3>Address</h3>
+            <h3>{this.props.t('Address')}</h3>
             <h1 className={`receive-modal-address ${style.address}`}>{props.address}</h1>
             <br />
             <QRCode value={props.address} size={300}/>
@@ -34,7 +34,7 @@ class ReceiveDialog extends React.Component {
             onClick: this.props.closeDialog,
           }}
           primaryButton={{
-            label: 'Copy address to clipboard',
+            label: this.props.t('Copy address to clipboard'),
             className: 'copy-address-button',
             onClick: this.copyAddress.bind(this),
           }} />

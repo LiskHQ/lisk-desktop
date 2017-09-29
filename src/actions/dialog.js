@@ -1,5 +1,6 @@
-import actionTypes from '../constants/actions';
+import i18next from 'i18next';
 import Alert from '../components/dialog/alert';
+import actionTypes from '../constants/actions';
 
 /**
  * An action to dispatch to display a dialog
@@ -28,7 +29,7 @@ export const alertDialogDisplayed = data => dialogDisplayed({
  *
  */
 export const successAlertDialogDisplayed = data => alertDialogDisplayed({
-  title: 'Success',
+  title: i18next.t('Success'),
   text: data.text,
   type: 'success',
 });
@@ -38,7 +39,7 @@ export const successAlertDialogDisplayed = data => alertDialogDisplayed({
  *
  */
 export const errorAlertDialogDisplayed = data => alertDialogDisplayed({
-  title: 'Error',
+  title: i18next.t('Error'),
   text: data.text,
   type: 'error',
 });

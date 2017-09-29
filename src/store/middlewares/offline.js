@@ -1,15 +1,16 @@
+import i18next from 'i18next';
 import actionsType from '../../constants/actions';
 import { successToastDisplayed, errorToastDisplayed } from '../../actions/toaster';
 import { loadingStarted, loadingFinished } from '../../utils/loading';
 
 const getErrorMessage = (errorCode, address) => {
-  let message = `Failed to connect to node ${address}`;
+  let message = i18next.t('Failed to connect to node {{address}}', { address });
   switch (errorCode) {
     case 'EUNAVAILABLE':
-      message = `Failed to connect: Node ${address} is not active`;
+      message = i18next.t('Failed to connect: Node {{address}} is not active', { address });
       break;
     case 'EPARSE':
-      message += ' Make sure that you are using the latest version of Lisk Nano.';
+      message += i18next.t(' Make sure that you are using the latest version of Lisk Nano.');
       break;
     default: break;
   }
@@ -26,7 +27,7 @@ const offlineMiddleware = store => next => (action) => {
         store.dispatch(errorToastDisplayed({ label }));
         loadingStarted('offline');
       } else if (action.data.online === true && state.peers.status.online === false) {
-        store.dispatch(successToastDisplayed({ label: 'Connection re-established' }));
+        store.dispatch(successToastDisplayed({ label: i18next.t('Connection re-established') }));
         loadingFinished('offline');
       }
       if (action.data.online !== state.peers.status.online) {

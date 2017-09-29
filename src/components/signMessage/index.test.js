@@ -4,6 +4,7 @@ import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import copy from 'copy-to-clipboard';
 import sinon from 'sinon';
+import i18n from '../../i18n';
 import * as toasterActions from '../../actions/toaster';
 import store from '../../store';
 import SignMessageHOC from './index';
@@ -14,7 +15,7 @@ describe('SignMessageHOC', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<Provider store={store}><SignMessageHOC /></Provider>);
+    wrapper = mount(<Provider store={store}><SignMessageHOC i18n={i18n}/></Provider>);
     props = wrapper.find(SignMessage).props();
   });
 

@@ -9,13 +9,13 @@ describe('PassphraseVerifier', () => {
   const props = {
     updateAnswer: () => {},
     passphrase: 'survey stereo pool fortune oblige slight gravity goddess mistake sentence anchor pool',
+    t: key => key,
   };
 
   describe('componentDidMount', () => {
     it('should call updateAnswer with "false"', () => {
       const spyFn = spy(props, 'updateAnswer');
-      mount(<PassphraseVerifier passphrase={props.passphrase}
-        updateAnswer={props.updateAnswer} />);
+      mount(<PassphraseVerifier {...props} />);
       expect(spyFn).to.have.been.calledWith();
       props.updateAnswer.restore();
     });
@@ -25,8 +25,7 @@ describe('PassphraseVerifier', () => {
     it('call updateAnswer with received value', () => {
       const spyFn = spy(props, 'updateAnswer');
       const value = 'sample';
-      const wrapper = shallow(<PassphraseVerifier passphrase={props.passphrase}
-        updateAnswer={props.updateAnswer}/>);
+      const wrapper = shallow(<PassphraseVerifier {...props} />);
       wrapper.instance().changeHandler(value);
       expect(spyFn).to.have.been.calledWith();
       props.updateAnswer.restore();
@@ -35,8 +34,7 @@ describe('PassphraseVerifier', () => {
 
   describe('hideRandomWord', () => {
     it('should break passphrase, hide a word and store all in state', () => {
-      const wrapper = shallow(<PassphraseVerifier passphrase={props.passphrase}
-        updateAnswer={props.updateAnswer}/>);
+      const wrapper = shallow(<PassphraseVerifier {...props} />);
 
       const randomIndex = 0.6;
       const expectedValues = {
