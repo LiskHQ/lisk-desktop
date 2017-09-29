@@ -6,11 +6,11 @@ import styles from './account.css';
 
 const getStatusTooltip = (props) => {
   if (props.secondSignature) {
-    return 'This account is protected by a second passphrase';
+    return props.t('This account is protected by a second passphrase');
   } else if (props.passphrase) {
-    return 'Passphrase of the acount is saved till the end of the session.';
+    return props.t('Passphrase of the account is saved till the end of the session.');
   }
-  return 'Passphrase of the acount will be required to perform any transaction.';
+  return props.t('Passphrase of the account will be required to perform any transaction.');
 };
 
 const Address = (props) => {

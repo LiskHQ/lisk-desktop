@@ -1,8 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
+import PropTypes from 'prop-types';
+import i18n from '../../i18n';
 import ForgingHOC from './index';
 
 describe('Forging HOC', () => {
@@ -18,7 +19,14 @@ describe('Forging HOC', () => {
         forgedBlocks: [],
       },
     });
-    wrapper = mount(<Provider store={store}><ForgingHOC /></Provider>);
+    const options = {
+      context: { store, i18n },
+      childContextTypes: {
+        store: PropTypes.object.isRequired,
+        i18n: PropTypes.object.isRequired,
+      },
+    };
+    wrapper = mount(<ForgingHOC />, options);
   });
 
   it('should render Forging component', () => {

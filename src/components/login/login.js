@@ -3,7 +3,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Input from 'react-toolbox/lib/input';
 import Dropdown from 'react-toolbox/lib/dropdown';
 import Button from 'react-toolbox/lib/button';
-import networksRaw from './networks';
+import getNetworks from './networks';
 import PassphraseInput from '../passphraseInput';
 import styles from './login.css';
 import env from '../../constants/env';
@@ -18,11 +18,6 @@ class Login extends React.Component {
   constructor() {
     super();
 
-    this.networks = networksRaw.map((network, index) => ({
-      label: network.name,
-      value: index,
-    }));
-
     this.state = {
       passphrase: '',
       address: '',
@@ -36,6 +31,11 @@ class Login extends React.Component {
   }
 
   componentWillMount() {
+    this.networks = getNetworks().map((network, index) => ({
+      label: network.name,
+      value: index,
+    }));
+
     this.props.accountsRetrieved();
   }
 
@@ -54,7 +54,7 @@ class Login extends React.Component {
   }
 
   onLoginSubmission(passphrase) {
-    const network = Object.assign({}, networksRaw[this.state.network]);
+    const network = Object.assign({}, getNetworks()[this.state.network]);
     if (this.state.network === 2) {
       network.address = this.state.address;
     }
@@ -136,11 +136,16 @@ class Login extends React.Component {
     }
   }
 
+  onFormSubmit(event) {
+    event.preventDefault();
+    this.onLoginSubmission(this.state.passphrase);
+  }
+
   autoLogin() {
     const { savedAccounts } = this.props;
     if (savedAccounts && savedAccounts.length > 0 && !this.props.account.afterLogout) {
       this.account = savedAccounts[0];
-      const network = Object.assign({}, networksRaw[this.account.network]);
+      const network = Object.assign({}, getNetworks()[this.account.network]);
       if (this.account.network === 2) {
         network.address = this.account.address;
       }
@@ -161,7 +166,7 @@ class Login extends React.Component {
       <div className={`box ${styles.wrapper}`}>
         <div className={grid.row}>
           <div className={`${grid['col-xs-12']} ${grid['col-sm-8']} ${grid['col-sm-offset-2']}`}>
-            <form>
+            <form onSubmit={this.onFormSubmit.bind(this)}>
               <LanguageDropdown />
               <Dropdown
                 auto={false}
@@ -191,10 +196,12 @@ class Login extends React.Component {
               <footer className={ `${grid.row} ${grid['center-xs']}` }>
                 <div className={grid['col-xs-12']}>
                   <RelativeLink to='register' flat primary
-                    className={`${styles.newAccount} new-account-button`}>{this.props.t('New Account')}</RelativeLink>
-                  <Button label='LOGIN' primary raised
-                    onClick={this.onLoginSubmission.bind(this, this.state.passphrase)}
+                    className={`${styles.newAccount} new-account-button`}>
+                    {this.props.t('New Account')}
+                  </RelativeLink>
+                  <Button label={this.props.t('Login')} primary raised
                     className='login-button'
+                    type='submit'
                     disabled={(this.state.network === 2 && this.state.addressValidity !== '') ||
                     this.state.passphraseValidity !== ''} />
                 </div>

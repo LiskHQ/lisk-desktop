@@ -1,17 +1,18 @@
+import i18next from 'i18next';
 import env from '../../constants/env';
 
-export default [
+export default () => ([
   {
-    name: 'Mainnet',
+    name: i18next.t('Mainnet'),
     ssl: true,
     port: 443,
   }, {
-    name: 'Testnet',
+    name: i18next.t('Testnet'),
     testnet: true,
     ssl: true,
     port: 443,
   }, {
-    name: 'Custom Node',
+    name: i18next.t('Custom Node'),
     custom: true,
     address: 'http://localhost:4000',
     ...(env.production ? {} : {
@@ -19,4 +20,4 @@ export default [
       nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
     }),
   },
-];
+]);

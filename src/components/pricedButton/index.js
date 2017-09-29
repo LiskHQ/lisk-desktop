@@ -5,7 +5,7 @@ import { fromRawLsk } from '../../utils/lsk';
 import styles from './pricedButton.css';
 
 export const PricedButtonComponent = ({
-  balance, fee, label, customClassName, onClick, disabled,
+  balance, fee, label, customClassName, onClick, disabled, type, t,
 }) => {
   const hasFunds = balance >= fee;
   return (
@@ -14,8 +14,8 @@ export const PricedButtonComponent = ({
         fee &&
           (<span className={`${styles.fee} ${hasFunds ? '' : `${styles.error} error-message`} `}>
             {
-              hasFunds ? `Fee: ${fromRawLsk(fee)} LSK` :
-                `Insufficient funds for ${fromRawLsk(fee)} LSK fee`
+              hasFunds ? t('Fee: {{amount}} LSK', { amount: fromRawLsk(fee) }) :
+                t('Insufficient funds for {{amount}} LSK fee', { amount: fromRawLsk(fee) })
             }
           </span>)
       }
@@ -23,6 +23,7 @@ export const PricedButtonComponent = ({
         label={label}
         primary={true}
         raised={true}
+        type={type || 'button'}
         className={`next-button ${customClassName}`}
         disabled={disabled || (fee && !hasFunds)}
         onClick={onClick} />

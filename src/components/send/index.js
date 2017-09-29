@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
-import Send from './send';
+import { translate } from 'react-i18next';
+
 import { sent } from '../../actions/account';
+import Send from './send';
 
 const mapStateToProps = state => ({
   account: state.account,
@@ -11,5 +13,4 @@ const mapDispatchToProps = dispatch => ({
   sent: data => dispatch(sent(data)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Send);
-
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(Send));

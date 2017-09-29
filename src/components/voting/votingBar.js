@@ -1,10 +1,11 @@
+import { translate } from 'react-i18next';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-import votingConst from '../../constants/voting';
 import style from './votingBar.css';
+import votingConst from '../../constants/voting';
 
-const VotingBar = ({ votes }) => {
+const VotingBar = ({ votes, t }) => {
   const { maxCountOfVotes, maxCountOfVotesInOneTurn } = votingConst;
   const votedList = Object.keys(votes).filter(key => votes[key].confirmed);
   const voteList = Object.keys(votes).filter(
@@ -20,22 +21,22 @@ const VotingBar = ({ votes }) => {
         `${grid['col-sm-12']} ${grid['col-md-10']} ${grid['col-md-offset-1']}
           ${grid.row} ${grid['center-xs']} ${grid['middle-xs']}`}>
         <span className={`${grid['col-sm-3']} ${grid['col-xs-12']} upvotes`}>
-          <span>Upvotes: </span>
+          <span>{t('Upvotes:')} </span>
           <strong>{voteList.length}</strong>
         </span>
         <span className={`${grid['col-sm-3']} ${grid['col-xs-12']} downvotes`}>
-          <span>Downvotes: </span>
+          <span>{t('Downvotes:')} </span>
           <strong>{unvoteList.length}</strong>
         </span>
         <span className={`${grid['col-sm-3']} ${grid['col-xs-12']} total-new-votes`}>
-          <span>Total new votes: </span>
+          <span>{t('Total new votes:')} </span>
           <strong className={totalNewVotesCount > maxCountOfVotesInOneTurn && style.red}>
             {totalNewVotesCount}
           </strong>
           <span> / {maxCountOfVotesInOneTurn}</span>
         </span>
         <span className={`${grid['col-sm-3']} ${grid['col-xs-12']} total-votes`}>
-          <span>Total votes: </span>
+          <span>{t('Total votes:')} </span>
           <strong className={totalVotesCount > 101 && style.red}>
             {totalVotesCount}
           </strong>
@@ -47,4 +48,4 @@ const VotingBar = ({ votes }) => {
   );
 };
 
-export default VotingBar;
+export default translate()(VotingBar);

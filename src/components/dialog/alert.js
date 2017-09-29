@@ -1,17 +1,18 @@
-import React from 'react';
+import { translate } from 'react-i18next';
 import Button from 'react-toolbox/lib/button';
+import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 
-const Alert = props => (
+const Alert = ({ text, closeDialog, t }) => (
   <div>
-    <p>{props.text}</p>
+    <p>{text}</p>
     <br />
     <section className={`${grid.row} ${grid['between-xs']}`}>
       <span />
-      <Button label='Ok' onClick={props.closeDialog} className='ok-button'/>
+      <Button label={t('Ok')} onClick={closeDialog} className='ok-button'/>
     </section>
   </div>
 );
 
-export default Alert;
+export default translate()(Alert);

@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
-import RegisterDelegate from './registerDelegate';
+import { translate } from 'react-i18next';
+
 import { delegateRegistered } from '../../actions/account';
+import RegisterDelegate from './registerDelegate';
 
 const mapStateToProps = state => ({
   account: state.account,
@@ -14,4 +16,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(RegisterDelegate);
+)(translate()(RegisterDelegate));

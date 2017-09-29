@@ -1,9 +1,10 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import sinon from 'sinon';
+import PropTypes from 'prop-types';
+import i18n from '../../i18n';
 import SaveAccountHOC from './index';
 import * as savedAccounts from '../../actions/savedAccounts';
 
@@ -29,7 +30,13 @@ describe('SaveAccountHOC', () => {
   });
 
   beforeEach(() => {
-    wrapper = mount(<Provider store={store}><SaveAccountHOC closeDialog={() => {}} /></Provider>);
+    wrapper = mount(<SaveAccountHOC closeDialog={() => {}} t={(key => key)} />, {
+      context: { store, i18n },
+      childContextTypes: {
+        store: PropTypes.object.isRequired,
+        i18n: PropTypes.object.isRequired,
+      },
+    });
   });
 
   it('should render SaveAccount', () => {

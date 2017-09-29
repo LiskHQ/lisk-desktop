@@ -1,13 +1,23 @@
 const electron = require('electron'); // eslint-disable-line import/no-extraneous-dependencies
 const path = require('path');
+const buildMenu = require('./menu');
 
-const { app } = electron;
-const { BrowserWindow } = electron;
-const { Menu } = electron;
-const { ipcMain } = electron;
+const { app, BrowserWindow, Menu, ipcMain } = electron;
 
 let win;
+let isUILoaded = false;
+let eventStack = [];
+
 const copyright = `Copyright © 2016 - ${new Date().getFullYear()} Lisk Foundation`;
+const protocolName = 'lisk';
+
+const sendUrlToRouter = (url) => {
+  if (isUILoaded && win && win.webContents) {
+    win.webContents.send('openUrl', url);
+  } else {
+    eventStack.push({ event: 'openUrl', value: url });
+  }
+};
 
 function createWindow() {
   const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;
@@ -25,134 +35,11 @@ function createWindow() {
   win.on('blur', () => win.webContents.send('blur'));
   win.on('focus', () => win.webContents.send('focus'));
 
-  win.webContents.openDevTools();
-
-  const template = [
-    {
-      label: 'Edit',
-      submenu: [
-        {
-          role: 'undo',
-        },
-        {
-          role: 'redo',
-        },
-        {
-          type: 'separator',
-        },
-        {
-          role: 'cut',
-        },
-        {
-          role: 'copy',
-        },
-        {
-          role: 'paste',
-        },
-        {
-          role: 'selectall',
-        },
-      ],
-    },
-    {
-      label: 'View',
-      submenu: [
-        {
-          role: 'reload',
-        },
-        {
-          role: 'togglefullscreen',
-        },
-      ],
-    },
-    {
-      label: 'Window',
-      submenu: [
-        {
-          role: 'minimize',
-        },
-      ],
-    },
-    {
-      label: 'Help',
-      submenu: [
-        {
-          label: 'Lisk Website',
-          click() {
-            electron.shell.openExternal('https://lisk.io');
-          },
-        },
-        {
-          label: 'Lisk Chat',
-          click() {
-            electron.shell.openExternal('https://lisk.chat');
-          },
-        },
-        {
-          label: 'Lisk Explorer',
-          click() {
-            electron.shell.openExternal('https://explorer.lisk.io');
-          },
-        },
-        {
-          label: 'Lisk Forum',
-          click() {
-            electron.shell.openExternal('https://forum.lisk.io');
-          },
-        },
-        {
-          type: 'separator',
-        },
-        {
-          label: 'Report Issue...',
-          click() {
-            electron.shell.openExternal('https://lisk.zendesk.com/hc/en-us/requests/new');
-          },
-        },
-        {
-          label: 'What\'s New...',
-          click() {
-            electron.shell.openExternal('https://github.com/LiskHQ/lisk-nano/releases');
-          },
-        },
-      ],
-    },
-  ];
-
-  if (process.platform === 'darwin') {
-    const name = app.getName();
-
-    template.unshift({
-      label: name,
-      submenu: [
-        {
-          role: 'about',
-          label: 'About',
-        },
-        {
-          role: 'quit',
-          label: 'Quit',
-        },
-      ],
-    });
-  } else {
-    template[template.length - 1].submenu.push({
-      label: 'About',
-      click(item, focusedWindow) {
-        if (focusedWindow) {
-          const options = {
-            buttons: ['OK'],
-            icon: `${__dirname}/assets/lisk.png`,
-            message: `Lisk Nano\nVersion ${app.getVersion()}\n${copyright}`,
-          };
-          electron.dialog.showMessageBox(focusedWindow, options, () => {});
-        }
-      },
-    });
+  if (process.platform === 'win32') {
+    sendUrlToRouter(process.argv.slice(1));
   }
 
-  const menu = Menu.buildFromTemplate(template);
-  Menu.setApplicationMenu(menu);
+  Menu.setApplicationMenu(buildMenu(app, copyright));
 
   win.loadURL(`file://${__dirname}/dist/index.html`);
 
@@ -183,6 +70,15 @@ function createWindow() {
       selectionMenu.popup(win);
     }
   });
+
+  // Resolve all events from stack when dom is ready
+  win.webContents.on('did-finish-load', () => {
+    isUILoaded = true;
+    if (eventStack.length > 0) {
+      eventStack.forEach(({ event, value }) => win.webContents.send(event, value));
+      eventStack = [];
+    }
+  });
 }
 
 app.on('ready', createWindow);
@@ -207,6 +103,32 @@ app.on('activate', () => {
   }
 });
 
+// Set app protocol
+app.setAsDefaultProtocolClient(protocolName);
+
+// Force single instance application
+const isSecondInstance = app.makeSingleInstance((argv) => {
+  if (process.platform === 'win32') {
+    sendUrlToRouter(argv.slice(1));
+  }
+  if (win) {
+    if (win.isMinimized()) win.restore();
+    win.focus();
+  }
+});
+
+if (isSecondInstance) {
+  app.quit();
+}
+
+app.on('will-finish-launching', () => {
+  // Protocol handler for MacOS
+  app.on('open-url', (event, url) => {
+    event.preventDefault();
+    sendUrlToRouter(url);
+  });
+});
+
 app.on('login', (event, webContents, request, authInfo, callback) => {
   global.myTempFunction = callback;
   event.preventDefault();
@@ -216,3 +138,4 @@ app.on('login', (event, webContents, request, authInfo, callback) => {
 ipcMain.on('proxyCredentialsEntered', (event, username, password) => {
   global.myTempFunction(username, password);
 });
+

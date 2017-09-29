@@ -1,6 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
+
+import i18n from '../../i18n';
 import VerifyMessage from './index';
 
 describe('VerifyMessage', () => {
@@ -11,7 +13,7 @@ describe('VerifyMessage', () => {
   const message = 'Hello world';
 
   beforeEach(() => {
-    wrapper = mount(<VerifyMessage />);
+    wrapper = mount(<VerifyMessage i18n={i18n} />);
   });
 
   it('allows to verify a message', () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import Passphrase from '../passphrase';
-import networksRaw from '../login/networks';
+import getNetworks from '../login/networks';
 
 const Register = ({
   activePeerSet, closeDialog, t,
@@ -34,7 +34,7 @@ const Register = ({
       NetworkIndex = 0;
     }
 
-    const network = Object.assign({}, networksRaw[NetworkIndex]);
+    const network = Object.assign({}, getNetworks()[NetworkIndex]);
     if (NetworkIndex === 2) {
       network.address = address;
     }

@@ -4,6 +4,7 @@ import { mount } from 'enzyme';
 import { spy } from 'sinon';
 import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
+import i18n from '../../i18n';
 import SecondPassphrase from './secondPassphrase';
 import Fees from '../../constants/fees';
 
@@ -17,9 +18,10 @@ describe('SecondPassphrase', () => {
     activePeerSet: () => {},
   });
   const options = {
-    context: { store },
+    context: { store, i18n },
     childContextTypes: {
       store: PropTypes.object.isRequired,
+      i18n: PropTypes.object.isRequired,
     },
   };
   const prop = {

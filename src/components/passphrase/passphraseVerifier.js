@@ -13,17 +13,15 @@ class PassphraseConfirmator extends React.Component {
 
   componentDidMount() {
     this.props.updateAnswer(false);
-    this.state = {
-      passphraseParts: this.hideRandomWord.call(this),
-    };
+    this.hideRandomWord.call(this);
   }
 
   hideRandomWord(rand = Math.random()) {
-    const words = this.props.passphrase.trim().split(/\s+/);
+    const words = this.props.passphrase.trim().split(/\s+/).filter(item => item.length > 0);
     const index = Math.floor(rand * (words.length - 1));
 
     this.setState({
-      passphraseParts: this.props.passphrase.split(` ${words[index]} `),
+      passphraseParts: this.props.passphrase.split(words[index]),
       missing: words[index],
       answer: '',
     });
@@ -49,7 +47,7 @@ class PassphraseConfirmator extends React.Component {
           </p>
         </div>
         <div className={grid['col-xs-12']}>
-          <Input type='text' label='Enter the missing word'
+          <Input type='text' label={this.props.t('Enter the missing word')}
             autoFocus
             onBlur={this.focus.bind(this)}
             onChange={this.changeHandler.bind(this)} />

@@ -1,9 +1,10 @@
 import React from 'react';
 // import { expect } from 'chai';
 import { mount } from 'enzyme';
-import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
+import PropTypes from 'prop-types';
 import sinon from 'sinon';
+import i18n from '../../i18n';
 import ReceiveDialog from './receiveDialog';
 
 describe('ReceiveDialog', () => {
@@ -22,11 +23,18 @@ describe('ReceiveDialog', () => {
       successToast: () => {},
       closeDialog: () => {},
       copyToClipboard: () => (true),
+      t: key => key,
     };
   });
 
   it('allows to copy address to clipboard ', () => {
-    const wrapper = mount(<Provider store={store}><ReceiveDialog {...props} /></Provider>);
+    const wrapper = mount(<ReceiveDialog {...props} />, {
+      context: { store, i18n },
+      childContextTypes: {
+        store: PropTypes.object.isRequired,
+        i18n: PropTypes.object.isRequired,
+      },
+    });
 
     const successToastSpy = sinon.spy(props, 'successToast');
     const closeDialogSpy = sinon.spy(props, 'closeDialog');

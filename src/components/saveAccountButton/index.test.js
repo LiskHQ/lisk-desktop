@@ -1,9 +1,10 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import { BrowserRouter as Router } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import i18n from '../../i18n';
 import SaveAccountButtonHOC from './index';
 import SaveAccountButton from './saveAccountButton';
 
@@ -24,7 +25,13 @@ describe('SaveAccountButtonHOC', () => {
   });
 
   beforeEach(() => {
-    wrapper = mount(<Provider store={store}><Router><SaveAccountButtonHOC /></Router></Provider>);
+    wrapper = mount(<Router><SaveAccountButtonHOC /></Router>, {
+      context: { store, i18n },
+      childContextTypes: {
+        store: PropTypes.object.isRequired,
+        i18n: PropTypes.object.isRequired,
+      },
+    });
     props = wrapper.find(SaveAccountButton).props();
   });
 

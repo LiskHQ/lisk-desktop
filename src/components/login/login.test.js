@@ -95,7 +95,7 @@ describe('Login', () => {
       expect(props.history.replace).to.have.been.calledWith('/main/transactions');
     });
 
-    it('calls localStorage.setItem(\'address\', address) if this.state.address', () => {
+    it.skip('calls localStorage.setItem(\'address\', address) if this.state.address', () => {
       const spyFn = spy(localStorage, 'setItem');
       wrapper = shallow(<Login {...props}/>, options);
       wrapper.setState({ address });

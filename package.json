@@ -133,6 +133,10 @@
   "build": {
     "appId": "io.lisk.nano",
     "productName": "Lisk Nano",
+    "protocols": {
+      "name": "lisk-nano",
+      "schemes": ["lisk"]
+    },
     "artifactName": "lisk-nano-${os}-${arch}-${version}.${ext}",
     "linux": {
       "target": [
