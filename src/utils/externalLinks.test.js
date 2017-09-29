@@ -2,13 +2,9 @@ import { expect } from 'chai';
 import { spy } from 'sinon';
 import externalLinks from './externalLinks';
 
-describe.only('externalLinks', () => {
+describe('externalLinks', () => {
   const ipc = {
     on: spy(),
-  };
-
-  const history = {
-    push: spy(),
   };
 
   describe('init', () => {
