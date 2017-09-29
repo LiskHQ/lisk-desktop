@@ -1,6 +1,7 @@
+import i18next from 'i18next';
+import { errorToastDisplayed } from '../../actions/toaster';
 import actionTypes from '../../constants/actions';
 import votingConst from '../../constants/voting';
-import { errorToastDisplayed } from '../../actions/toaster';
 
 const votingMiddleware = store => next => (action) => {
   next(action);
@@ -12,7 +13,7 @@ const votingMiddleware = store => next => (action) => {
       key => votes[key].confirmed !== votes[key].unconfirmed).length;
     if (newVoteCount === votingConst.maxCountOfVotesInOneTurn + 1 &&
         currentVote.unconfirmed !== currentVote.confirmed) {
-      const label = `Maximum of ${votingConst.maxCountOfVotesInOneTurn} votes in one transaction exceeded.`;
+      const label = i18next.t('Maximum of {{n}} votes in one transaction exceeded.', { n: votingConst.maxCountOfVotesInOneTurn });
       const newAction = errorToastDisplayed({ label });
       store.dispatch(newAction);
     }
@@ -21,7 +22,7 @@ const votingMiddleware = store => next => (action) => {
       key => (votes[key].confirmed && !votes[key].unconfirmed) || votes[key].unconfirmed).length;
     if (voteCount === votingConst.maxCountOfVotes + 1 &&
         currentVote.unconfirmed !== currentVote.confirmed) {
-      const label = `Maximum of ${votingConst.maxCountOfVotes} votes exceeded.`;
+      const label = i18next.t('Maximum of {{n}} votes exceeded.', { n: votingConst.maxCountOfVotes });
       const newAction = errorToastDisplayed({ label });
       store.dispatch(newAction);
     }
@@ -29,4 +30,3 @@ const votingMiddleware = store => next => (action) => {
 };
 
 export default votingMiddleware;
-

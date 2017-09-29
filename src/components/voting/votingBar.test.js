@@ -1,9 +1,11 @@
+import PropTypes from 'prop-types';
 import React from 'react';
+
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 
 import VotingBar from './votingBar';
-
+import i18n from '../../i18n';
 import styles from './votingBar.css';
 
 describe('VotingBar', () => {
@@ -40,9 +42,15 @@ describe('VotingBar', () => {
         return dict;
       }, {})
   );
+  const options = {
+    context: { i18n },
+    childContextTypes: {
+      i18n: PropTypes.object.isRequired,
+    },
+  };
 
   beforeEach(() => {
-    wrapper = mount(<VotingBar {...props} />);
+    wrapper = mount(<VotingBar {...props} />, options);
   });
 
   it('should render number of upvotes', () => {
@@ -83,4 +91,3 @@ describe('VotingBar', () => {
     expect(wrapper.find(`.total-new-votes .${styles.red}`)).to.have.text('34');
   });
 });
-
