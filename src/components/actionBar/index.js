@@ -12,7 +12,8 @@ export const ActionBarRaw = ({
     <Button
       label={secondaryButton.label || t('Cancel')}
       className={secondaryButton.className || 'cancel-button'}
-      onClick={secondaryButton.onClick} />
+      onClick={secondaryButton.onClick}
+      type={secondaryButton.type || 'button'} />
 
     <PricedButton
       t={t}
@@ -23,6 +24,7 @@ export const ActionBarRaw = ({
       balance={account ? account.balance : 0}
       customClassName={primaryButton.className || 'submit-button'}
       disabled={primaryButton.disabled}
+      type={primaryButton.type}
       onClick={primaryButton.onClick} />
   </section>
 );

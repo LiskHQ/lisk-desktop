@@ -135,6 +135,11 @@ class Login extends React.Component {
     }
   }
 
+  onFormSubmit(event) {
+    event.preventDefault();
+    this.onLoginSubmission(this.state.passphrase);
+  }
+
   autoLogin() {
     const { savedAccounts } = this.props;
     if (savedAccounts && savedAccounts.length > 0 && !this.props.account.afterLogout) {
@@ -160,7 +165,7 @@ class Login extends React.Component {
       <div className={`box ${styles.wrapper}`}>
         <div className={`${grid.row} ${grid['center-xs']}`}>
           <div className={`${grid['col-xs-12']} ${grid['col-sm-8']}`}>
-            <form>
+            <form onSubmit={this.onFormSubmit.bind(this)}>
               <Dropdown
                 auto={false}
                 source={this.networks}
@@ -193,8 +198,8 @@ class Login extends React.Component {
                     {this.props.t('New Account')}
                   </RelativeLink>
                   <Button label={this.props.t('Login')} primary raised
-                    onClick={this.onLoginSubmission.bind(this, this.state.passphrase)}
                     className='login-button'
+                    type='submit'
                     disabled={(this.state.network === 2 && this.state.addressValidity !== '') ||
                     this.state.passphraseValidity !== ''} />
                 </div>

@@ -42,7 +42,8 @@ class SignMessageComponent extends React.Component {
     this.setState({ result, resultIsShown: false, message });
   }
 
-  showResult() {
+  showResult(event) {
+    event.preventDefault();
     const copied = this.props.copyToClipboard(this.state.result, {
       message: this.props.t('Press #{key} to copy'),
     });
@@ -60,31 +61,33 @@ class SignMessageComponent extends React.Component {
           <br />
           {this.props.t('Note: Digital Signatures and signed messages are not encrypted!')}
         </InfoParagraph>
-        <section>
-          <Input className='message' multiline label={this.props.t('Message')}
-            autoFocus={true}
-            value={this.state.message}
-            onChange={this.sign.bind(this)} />
-          <AuthInputs
-            passphrase={this.state.passphrase}
-            secondPassphrase={this.state.secondPassphrase}
-            onChange={this.handleChange.bind(this)} />
-        </section>
-        {this.state.resultIsShown ?
-          <SignVerifyResult result={this.state.result} title={this.props.t('Result')} /> :
-          <ActionBar
-            secondaryButton={{
-              onClick: this.props.closeDialog,
-            }}
-            primaryButton={{
-              label: this.props.t('Sign and copy result to clipboard'),
-              className: 'sign-button',
-              disabled: (!this.state.result ||
-                this.state.resultIsShown ||
-                !authStateIsValid(this.state)),
-              onClick: this.showResult.bind(this),
-            }} />
-        }
+        <form onSubmit={this.showResult.bind(this)}>
+          <section>
+            <Input className='message' multiline label={this.props.t('Message')}
+              autoFocus={true}
+              value={this.state.message}
+              onChange={this.sign.bind(this)} />
+            <AuthInputs
+              passphrase={this.state.passphrase}
+              secondPassphrase={this.state.secondPassphrase}
+              onChange={this.handleChange.bind(this)} />
+          </section>
+          {this.state.resultIsShown ?
+            <SignVerifyResult result={this.state.result} title={this.props.t('Result')} /> :
+            <ActionBar
+              secondaryButton={{
+                onClick: this.props.closeDialog,
+              }}
+              primaryButton={{
+                label: this.props.t('Sign and copy result to clipboard'),
+                className: 'sign-button',
+                type: 'submit',
+                disabled: (!this.state.result ||
+                  this.state.resultIsShown ||
+                  !authStateIsValid(this.state)),
+              }} />
+          }
+        </form>
       </div>
     );
   }
