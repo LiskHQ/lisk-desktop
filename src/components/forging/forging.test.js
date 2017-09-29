@@ -18,6 +18,7 @@ describe('Forging', () => {
     forgedBlocks: [],
     onForgingStatsUpdated: sinon.spy(),
     onForgedBlocksLoaded: sinon.spy(),
+    t: key => key,
   };
   let account;
 
