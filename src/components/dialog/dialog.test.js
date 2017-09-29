@@ -25,6 +25,7 @@ describe('Dialog', () => {
 
   const props = {
     dialogDisplayed: () => {},
+    t: key => key,
   };
 
   beforeEach(() => {

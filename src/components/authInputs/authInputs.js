@@ -18,7 +18,7 @@ class AuthInputs extends React.Component {
       const expectedPublicKey = this.props.account[publicKeyMap[name]];
 
       if (expectedPublicKey && expectedPublicKey !== extractPublicKey(value)) {
-        error = 'Entered passphrase does not belong to the active account';
+        error = this.props.t('Entered passphrase does not belong to the active account');
       }
     }
     this.props.onChange(name, value, error);
@@ -27,13 +27,13 @@ class AuthInputs extends React.Component {
   render() {
     return <span>
       {(!this.props.account.passphrase &&
-        <PassphraseInput label='Passphrase'
+        <PassphraseInput label={this.props.t('Passphrase')}
           className='passphrase'
           error={this.props.passphrase.error}
           value={this.props.passphrase.value}
           onChange={this.onChange.bind(this, 'passphrase')} />)}
       {(this.props.account.secondSignature &&
-        <PassphraseInput label='Second Passphrase'
+        <PassphraseInput label={this.props.t('Second Passphrase')}
           className='second-passphrase'
           error={this.props.secondPassphrase.error}
           value={this.props.secondPassphrase.value}

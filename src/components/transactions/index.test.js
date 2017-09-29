@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Router } from 'react-router-dom';
 import TransactionsHOC from './index';
+import i18n from '../../i18n';
 import store from '../../store';
 import history from '../../history';
 
@@ -28,10 +29,11 @@ describe('TransactionsHOC', () => {
       account,
     });
     wrapper = mount(<Provider store={store}><Router><TransactionsHOC /></Router></Provider>, {
-      context: { store, history },
+      context: { store, history, i18n },
       childContextTypes: {
         store: PropTypes.object.isRequired,
         history: PropTypes.object.isRequired,
+        i18n: PropTypes.object.isRequired,
       },
     });
   });

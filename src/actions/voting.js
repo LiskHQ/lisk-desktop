@@ -4,6 +4,7 @@ import { errorAlertDialogDisplayed } from './dialog';
 import { passphraseUsed } from './account';
 import actionTypes from '../constants/actions';
 import Fees from '../constants/fees';
+import transactionTypes from '../constants/transactionTypes';
 
 /**
  * Add pending variable to the list of voted delegates and list of unvoted delegates
@@ -82,7 +83,7 @@ export const votePlaced = ({ activePeer, passphrase, account, votes, secondSecre
         senderId: account.address,
         amount: 0,
         fee: Fees.vote,
-        type: 3,
+        type: transactionTypes.vote,
       }));
     }).catch((error) => {
       const text = error && error.message ? `${error.message}.` : 'An error occurred while placing your vote.';

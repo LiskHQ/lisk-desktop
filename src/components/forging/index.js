@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { translate } from 'react-i18next';
 import { fetchAndUpdateForgedBlocks, fetchAndUpdateForgedStats } from '../../actions/forging';
 import Forging from './forging';
 
@@ -17,4 +18,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Forging);
+)(translate()(Forging));

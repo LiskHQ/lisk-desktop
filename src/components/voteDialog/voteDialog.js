@@ -20,7 +20,8 @@ export default class VoteDialog extends React.Component {
     this.setState(authStatePrefill(this.props.account));
   }
 
-  confirm() {
+  confirm(event) {
+    event.preventDefault();
     this.props.votePlaced({
       activePeer: this.props.activePeer,
       account: this.props.account,
@@ -49,39 +50,43 @@ export default class VoteDialog extends React.Component {
     });
     return (
       <article>
-        <Autocomplete
-          votedDelegates={this.props.delegates}
-          votes={this.props.votes}
-          voteToggled={this.props.voteToggled}
-          activePeer={this.props.activePeer} />
-        <AuthInputs
-          passphrase={this.state.passphrase}
-          secondPassphrase={this.state.secondPassphrase}
-          onChange={this.handleChange.bind(this)} />
-        <article className={styles.info}>
-          <InfoParagraph>
-            <p >
-              You can select up to {maxCountOfVotesInOneTurn} delegates in one voting turn.
-            </p>
-            You can vote for up to {maxCountOfVotes} delegates in total.
-          </InfoParagraph>
-        </article>
+        <form onSubmit={this.confirm.bind(this)}>
+          <Autocomplete
+            votedDelegates={this.props.delegates}
+            votes={this.props.votes}
+            voteToggled={this.props.voteToggled}
+            activePeer={this.props.activePeer} />
+          <AuthInputs
+            passphrase={this.state.passphrase}
+            secondPassphrase={this.state.secondPassphrase}
+            onChange={this.handleChange.bind(this)} />
+          <article className={styles.info}>
+            <InfoParagraph>
+              <p >
+                {this.props.t('You can select up to {{count}} delegates in one voting turn.', { count: maxCountOfVotesInOneTurn })}
+              </p>
+              <p >
+                {this.props.t('You can vote for up to {{count}} delegates in total.', { count: maxCountOfVotes })}
+              </p>
+            </InfoParagraph>
+          </article>
 
-        <ActionBar
-          secondaryButton={{
-            onClick: this.props.closeDialog,
-          }}
-          primaryButton={{
-            label: 'Confirm',
-            fee: Fees.vote,
-            disabled: (
-              totalVotes > maxCountOfVotes ||
-              votesList.length === 0 ||
-              votesList.length > maxCountOfVotesInOneTurn ||
-              !authStateIsValid(this.state)
-            ),
-            onClick: this.confirm.bind(this),
-          }} />
+          <ActionBar
+            secondaryButton={{
+              onClick: this.props.closeDialog,
+            }}
+            primaryButton={{
+              label: this.props.t('Confirm'),
+              fee: Fees.vote,
+              type: 'submit',
+              disabled: (
+                totalVotes > maxCountOfVotes ||
+                votesList.length === 0 ||
+                votesList.length > maxCountOfVotesInOneTurn ||
+                !authStateIsValid(this.state)
+              ),
+            }} />
+        </form>
       </article>
     );
   }

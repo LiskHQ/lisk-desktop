@@ -4,7 +4,9 @@ import { mount } from 'enzyme';
 import { spy } from 'sinon';
 import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
+import i18n from '../../i18n';
 import Register from './register';
+import getNetworks from '../login/networks';
 
 describe('Register', () => {
   let wrapper;
@@ -16,9 +18,10 @@ describe('Register', () => {
     activePeerSet: () => {},
   });
   const options = {
-    context: { store },
+    context: { store, i18n },
     childContextTypes: {
       store: PropTypes.object.isRequired,
+      i18n: PropTypes.object.isRequired,
     },
   };
   const prop = {
@@ -49,7 +52,7 @@ describe('Register', () => {
     const props = wrapper.find('Passphrase').props();
     props.onPassGenerated('sample passphrase');
     expect(prop.activePeerSet).to.have.been.calledWith({
-      network: { name: 'Mainnet', port: 443, ssl: true },
+      network: getNetworks()[0],
       passphrase: 'sample passphrase',
     });
   });

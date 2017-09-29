@@ -38,7 +38,7 @@ export class VotingHeaderRaw extends React.Component {
   }
 
   confirmVoteText() {
-    let info = 'VOTE';
+    let info = this.props.t('Vote');
     const { votes } = this.props;
     const votesList = Object.keys(votes);
     const voted = votesList.filter(item =>

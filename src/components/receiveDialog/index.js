@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { translate } from 'react-i18next';
 import copy from 'copy-to-clipboard';
 
 import { dialogDisplayed } from '../../actions/dialog';
@@ -15,4 +16,4 @@ const mapDispatchToProps = dispatch => ({
   copyToClipboard: (...args) => copy(...args),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReceiveDialog);
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(ReceiveDialog));

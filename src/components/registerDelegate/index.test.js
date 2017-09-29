@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
+import i18n from '../../i18n';
 import RegisterDelegateHOC from './index';
 
 describe('RegisterDelegateHOC', () => {
@@ -32,7 +33,7 @@ describe('RegisterDelegateHOC', () => {
   });
 
   beforeEach(() => {
-    wrapper = mount(<Provider store={store}><RegisterDelegateHOC /></Provider>);
+    wrapper = mount(<Provider store={store}><RegisterDelegateHOC i18n={i18n} /></Provider>);
   });
 
   it('should render RegisterDelegate', () => {

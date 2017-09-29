@@ -63,7 +63,7 @@ const Account = ({
                     <LiskAmount val={account.balance} /> LSK
                   </p>
                   <p className="inner secondary tooltip">
-                    Click to send all funds
+                    {t('Click to send all funds')}
                   </p>
                 </div>
               </ClickToSend>

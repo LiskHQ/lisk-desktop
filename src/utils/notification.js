@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import { fromRawLsk } from './lsk';
 /**
  * The Notify factory constructor class
@@ -52,8 +53,8 @@ class Notification {
    * @memberof Notify
    */
   _deposit(amount) { // eslint-disable-line
-    const body = `You've received ${fromRawLsk(amount)} LSK.`;
-    new window.Notification('LSK received', { body }); // eslint-disable-line
+    const body = i18next.t('You\'ve received {{value}} LSK.', { value: fromRawLsk(amount) });
+    new window.Notification(i18next.t('LSK received'), { body }); // eslint-disable-line
   }
 }
 

@@ -9,6 +9,7 @@ describe('PassphraseVerifier', () => {
   const props = {
     updateAnswer: () => {},
     passphrase: 'survey stereo pool fortune oblige slight gravity goddess mistake sentence anchor pool',
+    t: key => key,
   };
 
   describe('componentDidMount', () => {

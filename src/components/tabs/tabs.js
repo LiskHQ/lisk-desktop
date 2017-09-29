@@ -2,26 +2,33 @@ import React from 'react';
 import { Tab, Tabs as ToolboxTabs } from 'react-toolbox';
 import styles from './tabs.css';
 
-const getTabs = (isDelegate, tabs) => tabs.filter(t => t !== 'Forging' || isDelegate);
+const getTabs = (isDelegate, tabs) => tabs.filter(t => t.id !== 'forging' || isDelegate);
 
 const getIndex = (history, tabs) =>
-  tabs.map(t => t.toLowerCase())
+  tabs.map(t => t.id)
     .indexOf(history.location.pathname.split('/')[2]);
 
 const isCurrent = (history, index, tabs) =>
-  history.location.pathname.indexOf(tabs[index].toLowerCase()) === 6; // after: /main/
+  history.location.pathname.indexOf(tabs[index].id) === 6; // after: /main/
 
 const navigate = (history, tabs, index) => {
   if (!isCurrent(history, index, tabs)) {
-    history.push(`/main/${tabs[index].toLowerCase()}`);
+    history.push(`/main/${tabs[index].id}`);
   }
 };
 
 const Tabs = ({ history, isDelegate, t }) => {
   const tabs = [
-    t('Transactions'),
-    t('Voting'),
-    t('Forging'),
+    {
+      label: t('Transactions'),
+      id: 'transactions',
+    }, {
+      label: t('Voting'),
+      id: 'voting',
+    }, {
+      label: t('Forging'),
+      id: 'forging',
+    },
   ];
 
   return (
@@ -29,10 +36,10 @@ const Tabs = ({ history, isDelegate, t }) => {
       theme={styles}
       onChange={navigate.bind(null, history, tabs)}
       className={`${styles.tabs} main-tabs`}>
-      {getTabs(isDelegate, tabs).map((tab, index) =>
+      {getTabs(isDelegate, tabs).map(({ label }, index) =>
         <Tab
           key={index}
-          label={tab}
+          label={label}
           className={styles.tab}
           disabled={isCurrent(history, index, tabs)} />)}
     </ToolboxTabs>
