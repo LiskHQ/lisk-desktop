@@ -62,7 +62,8 @@ class Send extends React.Component {
     return undefined;
   }
 
-  send() {
+  send(event) {
+    event.preventDefault();
     this.props.sent({
       activePeer: this.props.activePeer,
       account: this.props.account,
@@ -84,41 +85,43 @@ class Send extends React.Component {
   render() {
     return (
       <div className={`${styles.send} send`}>
-        <Input label='Recipient Address' required={true}
-          className='recipient'
-          autoFocus={true}
-          error={this.state.recipient.error}
-          value={this.state.recipient.value}
-          onChange={this.handleChange.bind(this, 'recipient')} />
-        <Input label='Transaction Amount' required={true}
-          className='amount'
-          error={this.state.amount.error}
-          value={this.state.amount.value}
-          onChange={this.handleChange.bind(this, 'amount')} />
-        <AuthInputs
-          passphrase={this.state.passphrase}
-          secondPassphrase={this.state.secondPassphrase}
-          onChange={this.handleChange.bind(this)} />
-        <div className={styles.fee}> Fee: {this.fee} LSK</div>
-        <IconMenu icon='more_vert' position='topRight' menuRipple className={`${styles.sendAllMenu} transaction-amount`} >
-          <MenuItem onClick={this.setMaxAmount.bind(this)}
-            caption='Set maximum amount'
-            className='send-maximum-amount'/>
-        </IconMenu>
-        <ActionBar
-          secondaryButton={{
-            onClick: this.props.closeDialog,
-          }}
-          primaryButton={{
-            label: 'Send',
-            disabled: (
-              !!this.state.recipient.error ||
-              !this.state.recipient.value ||
-              !!this.state.amount.error ||
-              !this.state.amount.value ||
-              !authStateIsValid(this.state)),
-            onClick: this.send.bind(this),
-          }} />
+        <form onSubmit={this.send.bind(this)}>
+          <Input label='Recipient Address' required={true}
+            className='recipient'
+            autoFocus={true}
+            error={this.state.recipient.error}
+            value={this.state.recipient.value}
+            onChange={this.handleChange.bind(this, 'recipient')} />
+          <Input label='Transaction Amount' required={true}
+            className='amount'
+            error={this.state.amount.error}
+            value={this.state.amount.value}
+            onChange={this.handleChange.bind(this, 'amount')} />
+          <AuthInputs
+            passphrase={this.state.passphrase}
+            secondPassphrase={this.state.secondPassphrase}
+            onChange={this.handleChange.bind(this)} />
+          <div className={styles.fee}> Fee: {this.fee} LSK</div>
+          <IconMenu icon='more_vert' position='topRight' menuRipple className={`${styles.sendAllMenu} transaction-amount`} >
+            <MenuItem onClick={this.setMaxAmount.bind(this)}
+              caption='Set maximum amount'
+              className='send-maximum-amount'/>
+          </IconMenu>
+          <ActionBar
+            secondaryButton={{
+              onClick: this.props.closeDialog,
+            }}
+            primaryButton={{
+              label: 'Send',
+              type: 'submit',
+              disabled: (
+                !!this.state.recipient.error ||
+                !this.state.recipient.value ||
+                !!this.state.amount.error ||
+                !this.state.amount.value ||
+                !authStateIsValid(this.state)),
+            }} />
+        </form>
       </div>
     );
   }
