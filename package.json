@@ -41,7 +41,7 @@
     "moment": "2.18.1",
     "numeral": "=2.0.6",
     "postcss": "6.0.12",
-    "postcss-cssnext": "3.0.2",
+    "postcss-cssnext": "2.11.0",
     "prop-types": "=15.5.10",
     "qrcode.react": "=0.7.1",
     "react": "=15.6.x",
@@ -152,7 +152,8 @@
   "greenkeeper": {
     "ignore": [
       "cucumber",
-      "protractor-cucumber-framework"
+      "protractor-cucumber-framework",
+      "postcss-cssnext"
     ]
   }
 }
