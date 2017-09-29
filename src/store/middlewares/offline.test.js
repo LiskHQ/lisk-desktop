@@ -1,8 +1,11 @@
+import i18next from 'i18next';
+
 import { expect } from 'chai';
 import { spy, stub } from 'sinon';
-import middleware from './offline';
+
 import { successToastDisplayed, errorToastDisplayed } from '../../actions/toaster';
 import actionType from '../../constants/actions';
+import middleware from './offline';
 
 
 describe('Offline middleware', () => {
@@ -60,7 +63,7 @@ describe('Offline middleware', () => {
 
     middleware(store)(next)(action);
     expect(store.dispatch).to.have.been.calledWith(errorToastDisplayed({
-      label: `Failed to connect: Node ${peers.data.currentPeer}:${peers.data.port} is not active`,
+      label: i18next.t('Failed to connect: Node {{address}} is not active', { address: `${peers.data.currentPeer}:${peers.data.port}` }),
     }));
   });
 
@@ -104,4 +107,3 @@ describe('Offline middleware', () => {
     expect(next).to.have.been.calledWith(action);
   });
 });
-

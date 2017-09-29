@@ -1,9 +1,11 @@
-import React from 'react';
-import Input from 'react-toolbox/lib/input';
-import Tooltip from 'react-toolbox/lib/tooltip';
 import { IconButton } from 'react-toolbox/lib/button';
-import { isValidPassphrase } from '../../utils/passphrase';
+import { translate } from 'react-i18next';
+import Input from 'react-toolbox/lib/input';
+import React from 'react';
+import Tooltip from 'react-toolbox/lib/tooltip';
+
 import { findSimilarWord, inDictionary } from '../../utils/similarWord';
+import { isValidPassphrase } from '../../utils/passphrase';
 import styles from './passphraseInput.css';
 
 // eslint-disable-next-line new-cap
@@ -61,12 +63,13 @@ class PassphraseInput extends React.Component {
           onChange={this.handleValueChange.bind(this)} />
         <TooltipIconButton className={`show-passphrase-toggle ${styles.eyeIcon}`}
           tooltipPosition='horizontal'
-          tooltip={this.state.inputType === 'password' ? 'Show passphrase' : 'Hide passphrase'}
+          tooltip={this.state.inputType === 'password' ?
+            this.props.t('Show passphrase') :
+            this.props.t('Hide passphrase')}
           icon={this.state.inputType === 'password' ? 'visibility' : 'visibility_off'}
           onClick={this.toggleInputType.bind(this)}/>
       </div>);
   }
 }
 
-export default PassphraseInput;
-
+export default translate()(PassphraseInput);

@@ -1,8 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import configureMockStore from 'redux-mock-store';
 import sinon from 'sinon';
+import i18n from '../../i18n';
 import ClickToSend from './index';
 import RelativeLink from '../relativeLink';
 
@@ -10,15 +10,10 @@ const Dummy = () => (<span />);
 
 describe('ClickToSend', () => {
   let setActiveDialog;
-  const store = configureMockStore([])({
-    peers: { data: {} },
-    account: {},
-    activePeerSet: () => {},
-  });
   const options = {
-    context: { store },
+    context: { i18n },
     childContextTypes: {
-      store,
+      i18n,
     },
   };
 

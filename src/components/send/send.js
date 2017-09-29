@@ -51,13 +51,13 @@ class Send extends React.Component {
 
   validateInput(name, value) {
     if (!value) {
-      return 'Required';
+      return this.props.t('Required');
     } else if (!value.match(this.inputValidationRegexps[name])) {
-      return 'Invalid';
+      return this.props.t('Invalid');
     } else if (name === 'amount' && value > parseFloat(this.getMaxAmount())) {
-      return 'Insufficient funds';
+      return this.props.t('Insufficient funds');
     } else if (name === 'amount' && value === '0') {
-      return 'Zero not allowed';
+      return this.props.t('Zero not allowed');
     }
     return undefined;
   }
@@ -86,13 +86,13 @@ class Send extends React.Component {
     return (
       <div className={`${styles.send} send`}>
         <form onSubmit={this.send.bind(this)}>
-          <Input label='Recipient Address' required={true}
+          <Input label={this.props.t('Recipient Address')} required={true}
             className='recipient'
             autoFocus={true}
             error={this.state.recipient.error}
             value={this.state.recipient.value}
             onChange={this.handleChange.bind(this, 'recipient')} />
-          <Input label='Transaction Amount' required={true}
+          <Input label={this.props.t('Transaction Amount')} required={true}
             className='amount'
             error={this.state.amount.error}
             value={this.state.amount.value}
@@ -101,10 +101,10 @@ class Send extends React.Component {
             passphrase={this.state.passphrase}
             secondPassphrase={this.state.secondPassphrase}
             onChange={this.handleChange.bind(this)} />
-          <div className={styles.fee}> Fee: {this.fee} LSK</div>
+          <div className={styles.fee}> {this.props.t('Fee: {{fee}} LSK', { fee: this.fee })} </div>
           <IconMenu icon='more_vert' position='topRight' menuRipple className={`${styles.sendAllMenu} transaction-amount`} >
             <MenuItem onClick={this.setMaxAmount.bind(this)}
-              caption='Set maximum amount'
+              caption={this.props.t('Set maximum amount')}
               className='send-maximum-amount'/>
           </IconMenu>
           <ActionBar
@@ -112,7 +112,7 @@ class Send extends React.Component {
               onClick: this.props.closeDialog,
             }}
             primaryButton={{
-              label: 'Send',
+              label: this.props.t('Send'),
               type: 'submit',
               disabled: (
                 !!this.state.recipient.error ||

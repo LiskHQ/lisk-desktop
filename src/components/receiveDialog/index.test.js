@@ -1,11 +1,12 @@
-import { Provider } from 'react-redux';
 import React from 'react';
 import copy from 'copy-to-clipboard';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
+import PropTypes from 'prop-types';
 import sinon from 'sinon';
+import i18n from '../../i18n';
 import ReceiveDialogHOC from './index';
 import * as dialogActions from '../../actions/dialog';
 import * as toasterActions from '../../actions/toaster';
@@ -22,7 +23,13 @@ describe('ReceiveDialogHOC', () => {
         address,
       },
     });
-    wrapper = mount(<Provider store={store}><Router><ReceiveDialogHOC /></Router></Provider>);
+    wrapper = mount(<Router><ReceiveDialogHOC /></Router>, {
+      context: { store, i18n },
+      childContextTypes: {
+        store: PropTypes.object.isRequired,
+        i18n: PropTypes.object.isRequired,
+      },
+    });
   });
 
   it('should render ReceiveButton with address', () => {

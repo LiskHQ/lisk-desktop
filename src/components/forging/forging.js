@@ -7,7 +7,7 @@ import ForgingStats from './forgingStats';
 import ForgedBlocks from './forgedBlocks';
 
 const Forging = ({
-  account, statistics, forgedBlocks, peers, onForgedBlocksLoaded, onForgingStatsUpdated,
+  account, statistics, forgedBlocks, peers, onForgedBlocksLoaded, onForgingStatsUpdated, t,
 }) => {
   const loadStats = (key, startMoment) => {
     onForgingStatsUpdated({
@@ -50,9 +50,7 @@ const Forging = ({
       }
       {account && account.delegate && !account.isDelegate ?
         <p>
-          You need to become a delegate to start forging.
-          If you already registered to become a delegate,
-          your registration hasn't been processed, yet.
+          {t('You need to become a delegate to start forging. If you already registered to become a delegate, your registration hasn\'t been processed, yet.')}
         </p> :
         null
       }

@@ -2,6 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { spy } from 'sinon';
 import { mount } from 'enzyme';
+import i18n from '../../i18n';
 import PassphraseInput from './index';
 
 describe('PassphraseInput', () => {
@@ -14,6 +15,7 @@ describe('PassphraseInput', () => {
       error: '',
       value: '',
       onChange: () => {},
+      i18n,
     };
     onChangeSpy = spy(props, 'onChange');
     wrapper = mount(<PassphraseInput {...props} />);

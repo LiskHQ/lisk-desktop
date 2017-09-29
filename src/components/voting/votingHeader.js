@@ -38,7 +38,7 @@ export class VotingHeaderRaw extends React.Component {
   }
 
   confirmVoteText() {
-    let info = 'VOTE';
+    let info = this.props.t('Vote');
     const { votes } = this.props;
     const votesList = Object.keys(votes);
     const voted = votesList.filter(item =>
@@ -61,7 +61,7 @@ export class VotingHeaderRaw extends React.Component {
     const theme = votesList.length === 0 ? disableStyle : styles;
     const button = <div className={styles.votesMenuButton}>
       <i className='material-icons'>visibility</i>
-      <span>t('my votes')} ({confirmedVotes.length})</span>
+      <span>{t('my votes')} ({confirmedVotes.length})</span>
     </div>;
     return (
       <header className={`${grid.row} ${grid['between-xs']} hasPaddingRow`}>

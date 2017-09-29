@@ -5,6 +5,7 @@ import { transactionAdded } from './transactions';
 import { errorAlertDialogDisplayed } from './dialog';
 import Fees from '../constants/fees';
 import { toRawLsk } from '../utils/lsk';
+import transactionTypes from '../constants/transactionTypes';
 
 /**
  * Trigger this action to update the account object
@@ -58,7 +59,7 @@ export const secondPassphraseRegistered = ({ activePeer, secondPassphrase, accou
           senderId: account.address,
           amount: 0,
           fee: Fees.setSecondPassphrase,
-          type: 1,
+          type: transactionTypes.setSecondPassphrase,
         }));
       }).catch((error) => {
         const text = (error && error.message) ? error.message : 'An error occurred while registering your second passphrase. Please try again.';
@@ -83,7 +84,7 @@ export const delegateRegistered = ({
           username,
           amount: 0,
           fee: Fees.registerDelegate,
-          type: 2,
+          type: transactionTypes.registerDelegate,
         }));
       })
       .catch((error) => {
@@ -108,7 +109,7 @@ export const sent = ({ activePeer, account, recipientId, amount, passphrase, sec
           recipientId,
           amount: toRawLsk(amount),
           fee: Fees.send,
-          type: 0,
+          type: transactionTypes.send,
         }));
       })
       .catch((error) => {
