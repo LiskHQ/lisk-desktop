@@ -15,10 +15,11 @@
     "dist:win": "build --win --ia32 --x64",
     "dist:mac": "build --mac",
     "dist:linux": "build --linux --ia32 --x64 --armv7l",
-    "copy-files": "mkdir app/dist && cp -r ./src/index.html ./app/dist",
+    "copy-files": "mkdir app/dist && cp -r ./src/index.html ./src/assets ./app/dist",
     "clean": "del app/dist -f",
     "eslint": "eslint ./src/ ./app/main.js ./features/",
     "storybook": "start-storybook -p 6006 -s ./src/",
+    "i18n-scanner": "node ./src/i18n-scanner.js",
     "build-storybook": "build-storybook"
   },
   "author": "Lisk Foundation <admin@lisk.io>, lightcurve GmbH <admin@lightcurve.io>",
@@ -88,6 +89,8 @@
     "exports-loader": "0.6.4",
     "extract-text-webpack-plugin": "3.0.0",
     "file-loader": "0.11.2",
+    "glob": "=7.1.2",
+    "i18next-scanner": "=2.0.0",
     "imports-loader": "0.7.1",
     "js-nacl": "=1.2.2",
     "json-loader": "0.5.7",
@@ -129,6 +132,10 @@
   "build": {
     "appId": "io.lisk.nano",
     "productName": "Lisk Nano",
+    "protocols": {
+      "name": "lisk-nano",
+      "schemes": ["lisk"]
+    },
     "artifactName": "lisk-nano-${os}-${arch}-${version}.${ext}",
     "linux": {
       "target": [

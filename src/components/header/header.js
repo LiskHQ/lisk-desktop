@@ -2,14 +2,13 @@ import { Button } from 'react-toolbox/lib/button';
 import { IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+
 import PrivateWrapper from '../privateWrapper';
+import SaveAccountButton from '../saveAccountButton';
 import logo from '../../assets/images/LISK-nano.png';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
-import i18n from '../../i18n';
-import SaveAccountButton from '../saveAccountButton';
 import styles from './header.css';
 import RelativeLink from '../relativeLink';
-import languages from '../../constants/languages';
 
 const Header = props => (
   <header className={`${grid.row} ${grid['between-xs']} ${styles.wrapper}`} >
@@ -47,6 +46,9 @@ const Header = props => (
         </MenuItem>
         <MenuDivider />
         <SaveAccountButton />
+        <MenuItem>
+          <RelativeLink className={`settings ${styles.menuItem}`} to='settings'>{props.t('Settings')}</RelativeLink>
+        </MenuItem>
       </IconMenu>
 
       <Button className={`${styles.button} logout-button`} raised onClick={props.logOut}>{props.t('logout')}</Button>
@@ -54,16 +56,6 @@ const Header = props => (
         to='receive'>{props.t('Receive LSK')}</RelativeLink>
       <RelativeLink primary raised disableWhenOffline className={`${styles.button} send-button`}
         to='send'>{props.t('send')}</RelativeLink>
-      <IconMenu
-        selectable={true}
-        selected={i18n.language}
-        className={`${styles.iconButton} ${offlineStyle.disableWhenOffline}`}
-        icon='language' position='topRight'>
-        {Object.keys(languages).map(key => (
-          <MenuItem key={key} value={key} caption={languages[key]}
-            onClick={() => i18n.changeLanguage(key)} />
-        ))}
-      </IconMenu>
     </PrivateWrapper>
   </header>
 );

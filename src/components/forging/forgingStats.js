@@ -31,7 +31,7 @@ class ForgingStats extends React.Component {
     statCardObjects[0].label = this.props.t('Last 24 hours');
     [1, 2, 3].forEach((i) => {
       statCardObjects[i].label = this.props.t(
-        'Last x days', { day: statCardObjects[i].days });
+        'Last {{count}} days', { count: statCardObjects[i].days });
     });
 
     return (
