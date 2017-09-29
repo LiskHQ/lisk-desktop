@@ -1,5 +1,4 @@
 import i18n from 'i18next';
-import LngDetector from 'i18next-browser-languagedetector';
 import languages from './constants/languages';
 
 const resources = Object.keys(languages).reduce((accumulator, key) => {
@@ -10,7 +9,6 @@ const resources = Object.keys(languages).reduce((accumulator, key) => {
 }, {});
 
 i18n
-  .use(LngDetector)
   .init({
     fallbackLng: 'en',
     resources,
