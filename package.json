@@ -43,7 +43,7 @@
     "postcss": "6.0.12",
     "postcss-cssnext": "2.11.0",
     "prop-types": "=15.5.10",
-    "qrcode.react": "=0.7.1",
+    "qrcode.react": "0.7.2",
     "react": "=15.6.x",
     "react-animate-on-change": "^1.0.0",
     "react-circular-progressbar": "0.2.1",
