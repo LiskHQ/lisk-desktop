@@ -137,11 +137,11 @@ describe('Utils: Delegate', () => {
         { username: 'genesis_42' },
         { username: 'genesis_44' },
       ];
-      const mockedPromise = new Promise((resolve) => { resolve({ success: true, delegates }); });
+      const votedDict = { username: 'genesis_11' };
       peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates/search', { q: username }).returns(Promise.resolve({ success: true, delegates }));
 
-      const returnedPromise = voteAutocomplete(activePeer, username, {});
-      expect(returnedPromise).to.deep.equal(mockedPromise);
+      const returnedPromise = voteAutocomplete(activePeer, username, votedDict);
+      expect(returnedPromise).to.eventually.become({ success: true, delegates });
     });
   });
 });

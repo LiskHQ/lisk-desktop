@@ -53,7 +53,7 @@ describe('Amount', () => {
       .to.have.lengthOf(1);
   });
 
-  it('should have className "transactions__outButton" for outgoing transaction', () => {
+  it('should have className "transactions__grayButton" for outgoing transaction', () => {
     const inputValue = {
       value: {
         type: 1,

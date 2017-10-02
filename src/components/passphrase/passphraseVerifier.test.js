@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import PassphraseVerifier from './passphraseVerifier';
 
 
@@ -25,7 +25,7 @@ describe('PassphraseVerifier', () => {
     it('call updateAnswer with received value', () => {
       const spyFn = spy(props, 'updateAnswer');
       const value = 'sample';
-      const wrapper = mount(<PassphraseVerifier {...props} />);
+      const wrapper = shallow(<PassphraseVerifier {...props} />);
       wrapper.instance().changeHandler(value);
       expect(spyFn).to.have.been.calledWith();
       props.updateAnswer.restore();
@@ -34,7 +34,7 @@ describe('PassphraseVerifier', () => {
 
   describe('hideRandomWord', () => {
     it('should break passphrase, hide a word and store all in state', () => {
-      const wrapper = mount(<PassphraseVerifier {...props} />);
+      const wrapper = shallow(<PassphraseVerifier {...props} />);
 
       const randomIndex = 0.6;
       const expectedValues = {
