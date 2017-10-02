@@ -15,7 +15,7 @@ const RelativeLink = ({
   if (disableWhenOffline !== undefined) style += `${offlineStyle.disableWhenOffline} `;
   if (style !== '') style += ` ${buttonStyle.button}`;
 
-  const path = `${location.pathname}/${to}`.replace('//', '/');
+  const path = location.pathname.indexOf(`/${to}`) < 0 ? `${location.pathname}/${to}`.replace('//', '/') : location.pathname;
   return (
     <Link className={`${className} ${style}`} to={path}>{ children }</Link>
   );
