@@ -138,7 +138,7 @@ node('lisk-nano-01'){
     stage ('Deploy and Set milestone') {
       try {
         sh '''
-        rsync -axl --delete "$WORKSPACE/app/dist/" "jenkins@master-01:/var/www/test/lisk-nano/$BRANCH_NAME/"
+        rsync -axl --delete --rsync-path="mkdir -p '/var/www/test/lisk-nano/$BRANCH_NAME/' && rsync" "$WORKSPACE/app/dist/" "jenkins@master-01:/var/www/test/lisk-nano/$BRANCH_NAME/"
 
         # Cleanup - delete all files on success
         rm -rf "$WORKSPACE/*"
