@@ -62,7 +62,7 @@ describe('Amount', () => {
       },
       address: 'address',
     };
-    const expectedValue = /transactions__grayButton/g;
+    const expectedValue = /transactions__outButton/g;
     const wrapper = mount(<Amount {...inputValue} />, {
       context: { i18n, store },
       childContextTypes: {

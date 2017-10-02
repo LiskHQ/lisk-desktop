@@ -15,7 +15,7 @@ const Amount = (props) => {
     params.className = 'inButton';
   } else if (props.value.type !== transactionTypes.send ||
       props.value.recipientId !== props.address) {
-    params.className = 'grayButton';
+    params.className = 'outButton';
     params.tooltipText = props.value.type === transactionTypes.send ? props.t('Repeat the transaction') : undefined;
     params.clickToSendEnabled = props.value.type === transactionTypes.send;
   }
