@@ -3,16 +3,24 @@ import { IconButton } from 'react-toolbox/lib/button';
 import styles from './transactions.css';
 
 const Status = (props) => {
-  let template = null;
+  let iconProps = {};
   if (props.value.type === 0 &&
     props.value.senderId === props.value.recipientId) {
-    template = <IconButton icon='replay' disabled={true}/>;
+    iconProps = {
+      icon: 'replay',
+    };
   } else if (props.value.senderId !== props.address) {
-    template = <IconButton icon='call_received' className={styles.in} disabled={true}/>;
+    iconProps = {
+      icon: 'call_received',
+      className: styles.in,
+    };
   } else if (props.value.type !== 0 || props.value.recipientId !== props.address) {
-    template = <IconButton icon='call_made' className={styles.out} disabled={true}/>;
+    iconProps = {
+      icon: 'call_made',
+      className: styles.out,
+    };
   }
-  return template;
+  return <IconButton {...iconProps} disabled={true}/>;
 };
 
 export default Status;

@@ -1,6 +1,6 @@
 :root {
   --in: #73c8a9;
-  --out: #f45d4c;
+  --out: #777;
   --btn: rgb(2, 136, 209);
 }
 
@@ -27,10 +27,6 @@
 .empty {
   color: #777;
   text-align: center;
-}
-
-.outButton {
-  background: color(var(--out) alpha(45%)) !important;
 }
 
 .in {
