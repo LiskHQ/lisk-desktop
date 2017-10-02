@@ -5,37 +5,15 @@ import AppBar from 'react-toolbox/lib/app_bar';
 import { IconButton } from 'react-toolbox/lib/button';
 import styles from './dialog.css';
 import getDialogs from './dialogs';
+import routesReg from '../../utils/routes';
 
 class DialogElement extends Component {
   constructor() {
     super();
     this.state = {};
-    this.routesReg = [
-      {
-        regex: /\/main\/transactions(?:\/[^/]*)?$/,
-        path: '/main/transactions/',
-        params: 'dialog',
-        name: 'transactions',
-      }, {
-        regex: /\/main\/voting(?:\/[^/]*)?$/,
-        path: '/main/voting/',
-        params: 'dialog',
-        name: 'voting',
-      }, {
-        regex: /\/main\/forging(?:\/[^/]*)?$/,
-        path: '/main/forging/',
-        params: 'dialog',
-        name: 'forging',
-      }, {
-        regex: /\/(\w+)?$/,
-        path: '/',
-        params: 'dialog',
-        name: 'login',
-      },
-    ];
     this.current = {
       pathname: '/',
-      reg: this.routesReg[3],
+      reg: routesReg[3],
       list: [],
       dialog: '',
     };
@@ -50,8 +28,9 @@ class DialogElement extends Component {
   }
 
   checkForDialog() {
+    // if the dialog is wrong, show a toast
     if (this.current.pathname !== this.props.history.location.pathname) {
-      this.current.reg = this.routesReg.find(item =>
+      this.current.reg = routesReg.find(item =>
         item.regex.test(this.props.history.location.pathname));
       this.current.pathname = this.props.history.location.pathname;
       const dialogName = this.props.history.location.pathname.replace(this.current.reg.path, '');
