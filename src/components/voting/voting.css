@@ -97,4 +97,6 @@
 
 .voteButton {
   color: #000 !important;
+  position: relative;
+  top: 3px;
 }
