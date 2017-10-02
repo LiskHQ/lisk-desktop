@@ -60,7 +60,7 @@
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "3.2.10",
+    "@storybook/addon-actions": "3.3.0-alpha.1",
     "@storybook/react": "3.2.10",
     "babel-core": "6.26.0",
     "babel-loader": "7.1.2",
