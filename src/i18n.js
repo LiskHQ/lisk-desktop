@@ -1,6 +1,5 @@
 import i18n from 'i18next';
 import languages from './constants/languages';
-// import Cache from 'i18next-localstorage-cache';
 
 const resources = Object.keys(languages).reduce((accumulator, key) => {
   accumulator[key] = {
@@ -10,10 +9,8 @@ const resources = Object.keys(languages).reduce((accumulator, key) => {
 }, {});
 
 i18n
-  // .use(Cache)
   .init({
     fallbackLng: 'en',
-    lng: 'en',
     resources,
     react: {
       // wait: true, // globally set to wait for loaded translations in translate hoc
