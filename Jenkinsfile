@@ -119,7 +119,7 @@ node('lisk-nano-01'){
           ./node_modules/protractor/bin/webdriver-manager update
 
           # Run End to End Tests
-          npm run e2e-test
+          npm run e2e-test -- --params.baseURL 'http://localhost:8080/' --params.liskCoreUrl 'http://localhost:4000'
 
           cd ~/lisk-test-nano
           bash lisk.sh stop_node
