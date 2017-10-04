@@ -18,7 +18,6 @@ node('lisk-nano-01'){
         # Clean up old processes
         cd ~/lisk-test-nano
         bash lisk.sh stop_node
-        pkill -f selenium -9 || true
         pkill -f Xvfb -9 || true
         rm -rf /tmp/.X0-lock || true
         pkill -f webpack -9 || true
@@ -124,7 +123,6 @@ node('lisk-nano-01'){
 
           cd ~/lisk-test-nano
           bash lisk.sh stop_node
-          pkill -f selenium -9 || true
           pkill -f Xvfb -9 || true
           rm -rf /tmp/.X0-lock || true
           pkill -f webpack -9 || true
