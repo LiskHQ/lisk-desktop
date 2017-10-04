@@ -35,9 +35,6 @@ export const transactions = (activePeer, address, limit = 20, offset = 0, orderB
     orderBy,
   });
 
-export const getAccountStatus = activePeer =>
-  requestToActivePeer(activePeer, 'loader/status', {});
-
 export const extractPublicKey = passphrase =>
   Lisk.crypto.getKeys(passphrase).publicKey;
 
