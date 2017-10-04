@@ -7,7 +7,7 @@ defineSupportCode(({ Given, Then, When }) => {
     browser.ignoreSynchronization = true;
     browser.driver.manage().window().setSize(1000, 1000);
     browser.driver.get('about:blank');
-    browser.get('http://localhost:8080/#/').then(callback);
+    browser.get(browser.params.baseURL).then(callback);
   });
 
   When('I refresh the page', (callback) => {
