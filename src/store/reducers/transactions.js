@@ -5,7 +5,7 @@ import actionTypes from '../../constants/actions';
  * @param {Array} state
  * @param {Object} action
  */
-const transactions = (state = { pending: [], confirmed: [], count: 0 }, action) => {
+const transactions = (state = { pending: [], confirmed: [], count: null }, action) => {
   switch (action.type) {
     case actionTypes.transactionAdded:
       return Object.assign({}, state, {
