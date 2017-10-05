@@ -42,8 +42,8 @@ describe('VoteAutocomplete', () => {
     sinon.spy(VoteAutocomplete.prototype, 'handleArrowDown');
     sinon.spy(VoteAutocomplete.prototype, 'handleArrowUp');
 
-    voteAutocompleteApiMock = sinon.stub(delegateApi, 'voteAutocomplete');
-    unvoteAutocompleteApiMock = sinon.stub(delegateApi, 'unvoteAutocomplete');
+    voteAutocompleteApiMock = sinon.mock(delegateApi, 'voteAutocomplete');
+    unvoteAutocompleteApiMock = sinon.mock(delegateApi, 'unvoteAutocomplete');
     wrapper = mount(<VoteAutocomplete {...props} store={store} i18n={i18n}/>);
   });
 
@@ -81,24 +81,67 @@ describe('VoteAutocomplete', () => {
     expect(wrapper.state('unvotedSuggestionClass').match(/hidden/g)).to.have.lengthOf(1);
     VoteAutocomplete.prototype.setState.restore();
   });
-  it('search should call "voteAutocomplete" when name is equal to "votedListSearch"', () => {
+  it('search should call "voteAutocomplete" when name is equal to "votedListSearch" when search term exists', () => {
     const clock = sinon.useFakeTimers();
-    voteAutocompleteApiMock.returnsPromise().resolves({ success: true })
-      .returnsPromise().resolves([]);
-    // sinon.stub(delegateApi, 'listDelegates').returnsPromise().resolves({ success: true });
-    wrapper.instance().search('votedListSearch', 'val');
+    const existingSearchTerm = 'username2';
+    const delegateApiMock = sinon.mock(delegateApi).expects('voteAutocomplete');
+
+    delegateApiMock.once().withExactArgs(props.activePeer, existingSearchTerm, props.votes)
+      .returnsPromise().resolves(delegates);
+
+    wrapper.find('.votedListSearch input').simulate('change', { target: { value: existingSearchTerm } });
     clock.tick(250);
     expect(wrapper.state('votedSuggestionClass')).to.be.equal('');
+
+    delegateApiMock.restore();
   });
 
-  it('search should call "unvoteAutocomplete" when name is equal to "unvotedListSearch"', () => {
+  it('search should call "voteAutocomplete" when name is equal to "votedListSearch" when search term does not exist', () => {
     const clock = sinon.useFakeTimers();
-    unvoteAutocompleteApiMock.returnsPromise().resolves([]);
-    wrapper.instance().search('unvotedListSearch', 'val');
+    const nonExistingSearchTerm = 'doesntexist';
+    const delegateApiMock = sinon.mock(delegateApi).expects('voteAutocomplete');
+
+    delegateApiMock.once().withExactArgs(props.activePeer, nonExistingSearchTerm, props.votes)
+      .returnsPromise().resolves([]);
+
+
+    wrapper.find('.votedListSearch input').simulate('change', { target: { value: nonExistingSearchTerm } });
+    clock.tick(250);
+    expect(wrapper.state('votedSuggestionClass').match(/hidden/g)).to.have.lengthOf(1);
+
+    delegateApiMock.restore();
+  });
+
+  it('search should call "unvoteAutocomplete" when name is equal to "unvotedListSearch" when search term exists', () => {
+    const clock = sinon.useFakeTimers();
+    const existingSearchTerm = 'username1';
+    const delegateApiMock = sinon.mock(delegateApi).expects('unvoteAutocomplete');
+
+    delegateApiMock.once().withExactArgs(existingSearchTerm, props.votes)
+      .returnsPromise().resolves(delegates);
+
+    wrapper.find('.unvotedListSearch input').simulate('change', { target: { value: existingSearchTerm } });
     clock.tick(250);
     expect(wrapper.state('unvotedSuggestionClass')).to.be.equal('');
+
+    delegateApiMock.restore();
   });
 
+  it('search should call "unvoteAutocomplete" when name is equal to "unvotedListSearch" when search term does not exists', () => {
+    const clock = sinon.useFakeTimers();
+    const nonExistingSearchTerm = 'username2';
+    const delegateApiMock = sinon.mock(delegateApi).expects('unvoteAutocomplete');
+
+    delegateApiMock.once().withExactArgs(nonExistingSearchTerm, props.votes)
+      .returnsPromise().resolves([]);
+
+    wrapper.find('.unvotedListSearch input').simulate('change', { target: { value: nonExistingSearchTerm } });
+    clock.tick(250);
+    expect(wrapper.state('unvotedSuggestionClass').match(/hidden/g)).to.have.lengthOf(1);
+
+    delegateApiMock.restore();
+  });
+    
   it('should "votedSearchKeydown" call "keyPress"', () => {
     wrapper.instance().votedSearchKeyDown({});
     expect(VoteAutocomplete.prototype.keyPress).to.have.property('callCount', 1);
