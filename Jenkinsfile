@@ -6,6 +6,7 @@ def fail(reason) {
   slackSend color: 'danger', message: "Build #${env.BUILD_NUMBER} of <${env.BUILD_URL}|${env.JOB_NAME}>${pr_branch} failed (<${env.BUILD_URL}/console|console>, <${env.BUILD_URL}/changes|changes>)\nCause: ${reason}", channel: '#lisk-nano-jenkins'
   currentBuild.result = 'FAILURE'
   sh 'rm -rf "$WORKSPACE/node_modules/"'
+  sh 'N=${EXECUTOR_NUMBER:-0}; rm -rf ~/lisk-Linux-x86_64_$N'
   milestone 1
   error("${reason}")
 }
@@ -22,10 +23,13 @@ node('lisk-nano-01'){
     try {
       sh '''
 	N=${EXECUTOR_NUMBER:-0}
-	cp -r ~/lisk-test-nano $WORKSPACE
-	cd "$WORKSPACE/lisk-test-nano"
-	sed -i -r -e "s/^(\\s*\\"port\\":) 4000,/\\1 400$N,/" config.json
-	bash lisk.sh rebuild -f "$WORKSPACE/lisk-test-nano/blockchain_explorer.db.gz"
+	cp -r ~/lisk-Linux-x86_64 ~/lisk-Linux-x86_64_$N
+	cd ~/lisk-Linux-x86_64_$N
+	sed -i -r -e "s/^(.*ort\\":) 4000,/\\1 400$N,/" config.json
+	sed -i -r -e "s/^(\\s*\\"port\\": 543)2,/\\1$N,/" config.json
+	sed -i -r -e "s/^#(port\\s*=\\s*).*/\\1 543$N/" ~/lisk-Linux-x86_64_$N/pgsql/data/postgresql.conf
+	export PGPORT=543$N
+	bash lisk.sh rebuild -f ~/lisk-Linux-x86_64_$N/blockchain_explorer.db.gz
 	'''
     } catch (err) {
       fail('Stopping build, Lisk Core failed to start')
@@ -96,10 +100,11 @@ node('lisk-nano-01'){
       ansiColor('xterm') {
 	sh '''
 	N=${EXECUTOR_NUMBER:-0}
+	export PGPORT=543$N
 	# Run Dev build and Build
 	cd $WORKSPACE
 	export NODE_ENV=
-	npm run dev -- --port 8080 &> .lisk-nano.log &
+	npm run dev -- --port 808$N &> .lisk-nano.log &
 	sleep 30
 
 	# End to End test configuration
@@ -110,7 +115,7 @@ node('lisk-nano-01'){
 	# Run End to End Tests
 	npm run e2e-test -- --params.baseURL "http://localhost:808$N/" --params.liskCoreUrl "http://localhost:400$N"
 
-	cd "$WORKSPACE/lisk-test-nano"
+	cd "~/lisk-Linux-x86_64_$N"
 	bash lisk.sh stop_node
 	pkill -f Xvfb -9 || true
 	rm -rf "/tmp/.X1$N-lock" || true
