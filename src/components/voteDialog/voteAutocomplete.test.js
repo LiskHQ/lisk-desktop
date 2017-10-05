@@ -141,7 +141,6 @@ describe('VoteAutocomplete', () => {
 
     delegateApiMock.restore();
   });
-    
   it('should "votedSearchKeydown" call "keyPress"', () => {
     wrapper.instance().votedSearchKeyDown({});
     expect(VoteAutocomplete.prototype.keyPress).to.have.property('callCount', 1);
