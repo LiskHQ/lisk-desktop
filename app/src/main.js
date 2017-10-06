@@ -1,6 +1,6 @@
-const electron = require('electron'); // eslint-disable-line import/no-extraneous-dependencies
-const path = require('path');
-const buildMenu = require('./menu');
+import electron from 'electron'; // eslint-disable-line import/no-extraneous-dependencies
+import path from 'path';
+import buildMenu from './menu';
 
 const { app, BrowserWindow, Menu, ipcMain } = electron;
 
@@ -29,7 +29,7 @@ function createWindow() {
       // Avoid app throttling when Electron is in background
       backgroundThrottling: false,
       // Specifies a script that will be loaded before other scripts run in the page.
-      preload: path.resolve(__dirname, 'ipc.js'),
+      preload: path.resolve(__dirname, '../src/ipc.js'),
     },
   });
   win.on('blur', () => win.webContents.send('blur'));
@@ -40,8 +40,7 @@ function createWindow() {
   }
 
   Menu.setApplicationMenu(buildMenu(app, copyright));
-
-  win.loadURL(`file://${__dirname}/dist/index.html`);
+  win.loadURL(`file://${__dirname}/index.html`);
 
   win.on('closed', () => { win = null; });
 
