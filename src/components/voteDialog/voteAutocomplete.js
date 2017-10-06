@@ -18,6 +18,9 @@ export class VoteAutocompleteRaw extends React.Component {
       unvotedResult: [],
       votedListSearch: '',
       unvotedListSearch: '',
+      votedSuggestionError: '',
+      unvotedSuggestionError: '',
+
     };
   }
 
@@ -41,24 +44,42 @@ export class VoteAutocompleteRaw extends React.Component {
         if (name === 'votedListSearch') {
           voteAutocomplete(this.props.activePeer, value, this.props.votes)
             .then((res) => {
-              this.setState({
-                votedResult: res,
-                votedSuggestionClass: '',
-              });
+              if (res.length > 0) {
+                this.setState({
+                  votedResult: res,
+                  votedSuggestionClass: '',
+                  votedSuggestionError: '',
+                });
+              } else {
+                this.setState({
+                  votedSuggestionError: this.props.t('No matches'),
+                  votedSuggestionClass: styles.hidden,
+                });
+              }
             });
         } else {
           unvoteAutocomplete(value, this.props.votes)
             .then((res) => {
-              this.setState({
-                unvotedResult: res,
-                unvotedSuggestionClass: '',
-              });
+              if (res.length > 0) {
+                this.setState({
+                  unvotedResult: res,
+                  unvotedSuggestionClass: '',
+                  unvotedSuggestionError: '',
+                });
+              } else {
+                this.setState({
+                  unvotedSuggestionError: this.props.t('No matches'),
+                  unvotedSuggestionClass: styles.hidden,
+                });
+              }
             });
         }
       } else {
         this.setState({
           votedResult: [],
           unvotedResult: [],
+          votedSuggestionError: '',
+          unvotedSuggestionError: '',
           votedSuggestionClass: styles.hidden,
           unvotedSuggestionClass: styles.hidden,
         });
@@ -188,6 +209,7 @@ export class VoteAutocompleteRaw extends React.Component {
         <section className={styles.searchContainer}>
           <Input type='text' label={this.props.t('Search by username')} name='votedListSearch'
             className='votedListSearch' value={this.state.votedListSearch}
+            error={this.state.votedSuggestionError}
             theme={styles}
             onBlur={this.suggestionStatus.bind(this, false, 'votedSuggestionClass')}
             onKeyDown={this.votedSearchKeyDown.bind(this)}
@@ -220,6 +242,7 @@ export class VoteAutocompleteRaw extends React.Component {
         <section className={styles.searchContainer}>
           <Input type='text' label={this.props.t('Search by username')} name='unvotedListSearch'
             className='unvotedListSearch' value={this.state.unvotedListSearch}
+            error={this.state.unvotedSuggestionError}
             theme={styles}
             onBlur={this.suggestionStatus.bind(this, false, 'unvotedSuggestionClass')}
             onKeyDown={this.unvotedSearchKeyDown.bind(this)}
