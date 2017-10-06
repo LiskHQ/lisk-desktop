@@ -50,7 +50,7 @@ export default class VoteDialog extends React.Component {
     });
     return (
       <article>
-        <form>
+        <form id='voteform'>
           <Autocomplete
             votedDelegates={this.props.delegates}
             votes={this.props.votes}

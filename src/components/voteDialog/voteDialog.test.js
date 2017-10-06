@@ -76,7 +76,7 @@ describe('VoteDialog', () => {
     });
 
     it('should not submit form on enter press', () => {
-      wrapper.find('VoteDialog .primary-button button').simulate('submit');
+      wrapper.find('#voteform').simulate('submit');
 
       expect(props.votePlaced).not.to.have.been.calledWith();
     });
