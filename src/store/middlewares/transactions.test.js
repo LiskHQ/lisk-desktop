@@ -2,10 +2,10 @@ import { expect } from 'chai';
 import { spy, stub } from 'sinon';
 import i18next from 'i18next';
 import { successAlertDialogDisplayed } from '../../actions/dialog';
-import middleware from './addedTransaction';
+import middleware from './transactions';
 import actionTypes from '../../constants/actions';
 
-describe('addedTransaction middleware', () => {
+describe('transaction middleware', () => {
   let store;
   let next;
 
