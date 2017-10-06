@@ -19,11 +19,18 @@ class PassphraseInput extends React.Component {
 
   handleValueChange(value) {
     let error;
+    let warning;
+
     if (!value) {
       error = 'Required';
     } else if (!isValidPassphrase(value)) {
       error = this.getPassphraseValidationError(value);
+    } else if (this.hasExtraWhitespace(value)) {
+      const warningMessage = this.getPasshraseWhitespaceWarning(value);
+      warning = warningMessage ? `Warning: ${warningMessage}` : null;
     }
+
+    this.setState({ warning });
     this.props.onChange(value, error);
   }
 
@@ -47,6 +54,25 @@ class PassphraseInput extends React.Component {
     return 'Passphrase is not valid';
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  hasExtraWhitespace(passphrase) {
+    const normalizedValue = passphrase.replace(/ +/g, ' ').trim();
+    return normalizedValue !== passphrase;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  getPasshraseWhitespaceWarning(passphrase) {
+    if (passphrase.replace(/^\s+/, '') !== passphrase) {
+      return 'Passphrase contains unnecessary whitespace at the beginning';
+    } else if (passphrase.replace(/\s+$/, '') !== passphrase) {
+      return 'Passphrase contains unnecessary whitespace at the end';
+    } else if (passphrase.replace(/\s+/g, ' ') !== passphrase) {
+      return 'Passphrase contains extra whitespace between words';
+    }
+
+    return null;
+  }
+
   toggleInputType() {
     this.setState({ inputType: this.state.inputType === 'password' ? 'text' : 'password' });
   }
@@ -56,7 +82,7 @@ class PassphraseInput extends React.Component {
       <div className={styles.wrapper}>
         <Input label={this.props.label} required={true}
           className={this.props.className}
-          error={this.props.error}
+          error={this.props.error || this.state.warning}
           value={this.props.value || ''}
           type={this.state.inputType}
           theme={this.props.theme}
