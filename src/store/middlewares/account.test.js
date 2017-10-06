@@ -3,6 +3,7 @@ import { spy, stub } from 'sinon';
 
 import { SYNC_ACTIVE_INTERVAL, SYNC_INACTIVE_INTERVAL } from '../../constants/api';
 import { accountUpdated } from '../../actions/account';
+import { activePeerUpdate } from '../../actions/peers';
 import * as votingActions from '../../actions/voting';
 import * as accountApi from '../../utils/api/account';
 import actionTypes from '../../constants/actions';
@@ -15,7 +16,6 @@ describe('Account middleware', () => {
   let next;
   let state;
   let stubGetAccount;
-  let stubGetAccountStatus;
   let stubTransactions;
   const passphrase = 'right cat soul renew under climb middle maid powder churn cram coconut';
 
@@ -65,13 +65,11 @@ describe('Account middleware', () => {
 
     next = spy();
     stubGetAccount = stub(accountApi, 'getAccount').returnsPromise();
-    stubGetAccountStatus = stub(accountApi, 'getAccountStatus').returnsPromise();
     stubTransactions = stub(accountApi, 'transactions').returnsPromise().resolves(true);
   });
 
   afterEach(() => {
     stubGetAccount.restore();
-    stubGetAccountStatus.restore();
     stubTransactions.restore();
   });
 
@@ -84,18 +82,27 @@ describe('Account middleware', () => {
     expect(next).to.have.been.calledWith(expectedAction);
   });
 
-  it(`should call account API methods on ${actionTypes.metronomeBeat} action`, () => {
+  it(`should call account API methods on ${actionTypes.metronomeBeat} action when online`, () => {
     stubGetAccount.resolves({ balance: 0 });
 
     middleware(store)(next)(activeBeatAction);
 
     expect(stubGetAccount).to.have.been.calledWith();
-    expect(stubGetAccountStatus).to.have.been.calledWith();
+    expect(store.dispatch).to.have.been.calledWith(activePeerUpdate({ online: true }));
+  });
+
+  it(`should call account API methods on ${actionTypes.metronomeBeat} action when offline`, () => {
+    const errorCode = 'EUNAVAILABLE';
+    stubGetAccount.rejects({ error: { code: errorCode } });
+
+    middleware(store)(next)(activeBeatAction);
+
+    expect(store.dispatch).to.have.been.calledWith(activePeerUpdate(
+      { online: false, code: errorCode }));
   });
 
   it(`should call transactions API methods on ${actionTypes.metronomeBeat} action if account.balance changes`, () => {
     stubGetAccount.resolves({ balance: 10e8 });
-    stubGetAccountStatus.resolves(true);
 
     middleware(store)(next)(activeBeatAction);
 
@@ -106,7 +113,6 @@ describe('Account middleware', () => {
 
   it(`should call transactions API methods on ${actionTypes.metronomeBeat} action if account.balance changes and action.data.interval is SYNC_INACTIVE_INTERVAL`, () => {
     stubGetAccount.resolves({ balance: 10e8 });
-    stubGetAccountStatus.rejects(false);
 
     middleware(store)(next)(inactiveBeatAction);
 
