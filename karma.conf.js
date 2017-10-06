@@ -1,6 +1,6 @@
 // Karma configuration
-const webpackEnv = { test: true };
-const webpackConfig = require('./webpack.config')(webpackEnv);
+const webpackConfig = require('./config/webpack.config.test');
+
 webpackConfig.watch = true;
 
 const filePattern = 'src/**/*.test.js';
