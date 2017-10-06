@@ -75,8 +75,14 @@ describe('VoteDialog', () => {
       expect(wrapper.find('ActionBar')).to.have.lengthOf(1);
     });
 
-    it('should fire votePlaced action if lists are not empty and account balance is sufficient', () => {
+    it('should not submit form on enter press', () => {
       wrapper.find('VoteDialog .primary-button button').simulate('submit');
+
+      expect(props.votePlaced).not.to.have.been.calledWith();
+    });
+
+    it('should fire votePlaced action if lists are not empty and account balance is sufficient', () => {
+      wrapper.find('VoteDialog .primary-button button').simulate('click');
 
       expect(props.votePlaced).to.have.been.calledWith({
         account: ordinaryAccount,
@@ -109,7 +115,7 @@ describe('VoteDialog', () => {
       wrapper = mount(<VoteDialog {...props} account={accountWithSecondPassphrase} />, options);
       const secondPassphrase = 'test second passphrase';
       wrapper.instance().handleChange('secondPassphrase', secondPassphrase);
-      wrapper.find('.primary-button button').simulate('submit');
+      wrapper.find('.primary-button button').simulate('click');
 
       expect(props.votePlaced).to.have.been.calledWith({
         activePeer: props.activePeer,
