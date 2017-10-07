@@ -15,18 +15,20 @@ node('lisk-nano-01') {
 
       try {
         sh '''
-          N=${EXECUTOR_NUMBER:-0}
-          cp -r ~/lisk-Linux-x86_64 ~/lisk-Linux-x86_64_$N
-          cd ~/lisk-Linux-x86_64_$N
-          # change core port
-          sed -i -r -e "s/^(.*ort\\":) 4000,/\\1 400$N,/" config.json
-          # disable redis
-          sed -i -r -e "s/^(\\s*\\"cacheEnabled\\":) true/\\1 false/" config.json
-          # change postgres databse
-          sed -i -r -e "s/^(\\s*\\"database\\": \\"lisk_test)\\",/\\1_$N\\",/" config.json
-          JENKINS_NODE_COOKIE=dontKillMe bash lisk.sh start_db
-          bash lisk.sh rebuild -f blockchain_explorer.db.gz
-          '''
+        N=${EXECUTOR_NUMBER:-0}
+        cd ~/lisk-Linux-x86_64
+        cp config.json config_$N.json
+        # change core port
+        sed -i -r -e "s/^(.*ort\\":) 4000,/\\1 400$N,/" config_$N.json
+        # disable redis
+        sed -i -r -e "s/^(\\s*\\"cacheEnabled\\":) true/\\1 false/" config_$N.json
+        # change postgres databse
+        sed -i -r -e "s/^(\\s*\\"database\\": \\"lisk_test)\\",/\\1_$N\\",/" config_$N.json
+        cp etc/pm2-lisk.json etc/pm2-lisk_$N.json
+        sed -i -r -e "s/config.json/config_$N.json/" etc/pm2-lisk_$N.json
+        JENKINS_NODE_COOKIE=dontKillMe bash lisk.sh start_db -p etc/pm2-lisk_$N.json
+        bash lisk.sh rebuild -p etc/pm2-lisk_$N.json -f blockchain_explorer.db.gz
+        '''
       } catch (err) {
         fail('Stopping build: Lisk Core failed to start')
       }
@@ -43,7 +45,7 @@ node('lisk-nano-01') {
     stage ('Run Eslint') {
       try {
         ansiColor('xterm') {
-	  sh 'npm run eslint'
+          sh 'npm run eslint'
         }
       } catch (err) {
         fail('Stopping build: Eslint failed')
@@ -64,11 +66,11 @@ node('lisk-nano-01') {
     stage ('Run Unit Tests') {
       try {
         ansiColor('xterm') {
-	  sh '''
-	  ON_JENKINS=true npm run test
-	  # Submit coverage to coveralls
-	  cat coverage/*/lcov.info | coveralls -v
-	  '''
+          sh '''
+          ON_JENKINS=true npm run test
+          # Submit coverage to coveralls
+          cat coverage/*/lcov.info | coveralls -v
+          '''
         }
       } catch (err) {
         fail('Stopping build: test suite failed')
@@ -110,10 +112,9 @@ node('lisk-nano-01') {
   } finally {
     sh '''
     N=${EXECUTOR_NUMBER:-0}
-    ( cd ~/lisk-Linux-x86_64_$N && bash lisk.sh stop_node ) || true
+    ( cd ~/lisk-Linux-x86_64 && bash lisk.sh stop_node -p etc/pm2-lisk_$N.json ) || true
     pkill -f "Xvfb :1$N" -9 || true
     pkill -f "webpack.*808$N" -9 || true
-    rm -rf ~/lisk-Linux-x86_64_$N
     rm -rf $WORKSPACE/node_modules/
     '''
 
