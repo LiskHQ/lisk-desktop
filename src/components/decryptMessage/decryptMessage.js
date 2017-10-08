@@ -33,7 +33,7 @@ class DecryptMessage extends React.Component {
       this.state.senderPublicKey.value);
     const result = [
       '-----DECRYPTED MESSAGE-----',
-      decryptedMessage.encryptedMessage,
+      decryptedMessage,
     ].join('\n');
     this.setState({ result/* , resultIsShown: false */ });
   }
