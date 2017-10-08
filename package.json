@@ -19,7 +19,7 @@
     "dist:linux": "build --linux --ia32 --x64 --armv7l",
     "copy-files": "mkdir app/dist && cp -r ./src/index.html ./src/assets ./app/dist",
     "clean": "del app/dist -f",
-    "eslint": "eslint ./src/ ./app/src/ ./features/",
+    "eslint": "eslint ./src/ ./app/src/ ./app/config/ ./features/",
     "storybook": "start-storybook -p 6006 -s ./src/",
     "i18n-scanner": "node ./src/i18n-scanner.js",
     "build-storybook": "build-storybook"

@@ -6,14 +6,8 @@ const { NamedModulesPlugin } = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const baseConfig = require('./webpack.config');
 const reactConfig = require('./webpack.config.react');
+const reactToolboxVariables = require('./reactToolbox.config');
 /* eslint-enable import/no-extraneous-dependencies */
-
-const reactToolboxVariables = {
-  'color-primary': '#0288D1',
-  'color-primary-dark': '#0288D1',
-  'button-border-radius': '3px',
-  'input-text-label-color': 'rgba(0,0,0,0.38)',
-};
 
 module.exports = merge(baseConfig, reactConfig, {
   output: {
