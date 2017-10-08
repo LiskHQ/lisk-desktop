@@ -30,15 +30,15 @@ class EncryptMessage extends React.Component {
   }
 
   encrypt() {
-    const signedMessage = Lisk.crypto.encryptMessageWithSecret(
+    const cryptoResult = Lisk.crypto.encryptMessageWithSecret(
       this.state.message.value,
       this.props.account.passphrase,
       this.state.recipientPublicKey.value);
     const result = [
       '-----ENCRYPTED MESSAGE-----',
-      signedMessage.encryptedMessage,
+      cryptoResult.encryptedMessage,
       '-----NONCE-----',
-      signedMessage.nonce,
+      cryptoResult.nonce,
     ].join('\n');
     this.setState({ result, resultIsShown: false });
   }
