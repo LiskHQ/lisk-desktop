@@ -17,7 +17,8 @@ node('lisk-nano-01') {
         sh '''
         N=${EXECUTOR_NUMBER:-0}
         cd ~/lisk-Linux-x86_64
-        cp config.json config_$N.json
+        # work around core bug: config.json gets overwritten; use backup
+        cp .config.json config_$N.json
         # change core port
         sed -i -r -e "s/^(.*ort\\":) 4000,/\\1 400$N,/" config_$N.json
         # disable redis
@@ -26,6 +27,7 @@ node('lisk-nano-01') {
         sed -i -r -e "s/^(\\s*\\"database\\": \\"lisk_test)\\",/\\1_$N\\",/" config_$N.json
         cp etc/pm2-lisk.json etc/pm2-lisk_$N.json
         sed -i -r -e "s/config.json/config_$N.json/" etc/pm2-lisk_$N.json
+        sed -i -r -e "s/(lisk.app)/\\1_$N/" etc/pm2-lisk_$N.json
         JENKINS_NODE_COOKIE=dontKillMe bash lisk.sh start_db -p etc/pm2-lisk_$N.json
         bash lisk.sh rebuild -p etc/pm2-lisk_$N.json -f blockchain_explorer.db.gz
         '''
@@ -99,8 +101,7 @@ node('lisk-nano-01') {
       }
     }
 
-    stage ('Deploy and Set Milestone') {
-      milestone 1
+    stage ('Deploy') {
       try {
         sh 'rsync -axl --delete --rsync-path="mkdir -p '/var/www/test/lisk-nano/$BRANCH_NAME/' && rsync" "$WORKSPACE/app/dist/" "jenkins@master-01:/var/www/test/lisk-nano/$BRANCH_NAME/"'
       } catch (err) {
