@@ -125,8 +125,10 @@ node('lisk-nano') {
     ( cd ~/lisk-Linux-x86_64 && bash lisk.sh stop_node -p etc/pm2-lisk_$N.json ) || true
     pkill -f "Xvfb :1$N" -9 || true
     pkill -f "webpack.*808$N" -9 || true
-    rm -rf $WORKSPACE/node_modules/
     '''
+    dir('node_modules') {
+      deleteDir()
+    }
 
     def pr_branch = ''
     if (env.CHANGE_BRANCH != null) {
@@ -134,7 +136,7 @@ node('lisk-nano') {
     }
     if (currentBuild.result == 'SUCCESS') {
       /* delete all files on success */
-      sh 'rm -rf $WORKSPACE/*'
+      deleteDir()
       /* notify of success if previous build failed */
       if (previous_build != null && previous_build.result == 'FAILURE') {
         slackSend color: 'good',
