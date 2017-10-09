@@ -1,24 +1,44 @@
 import { expect } from 'chai';
-import { spy, stub } from 'sinon';
+import { spy, stub, mock } from 'sinon';
 import i18next from 'i18next';
+import * as accountApi from '../../utils/api/account';
 import { successAlertDialogDisplayed } from '../../actions/dialog';
+import { transactionsFailed } from '../../actions/transactions';
 import middleware from './transactions';
 import actionTypes from '../../constants/actions';
 
 describe('transaction middleware', () => {
   let store;
   let next;
+  let state;
+  let accountApiMock;
+  const mockTransaction = {
+    username: 'test',
+    amount: 1e8,
+    recipientId: '16313739661670634666L',
+  };
 
   beforeEach(() => {
     store = stub();
-    store.getState = () => ({
+    state = {
       peers: {
         data: {},
       },
-      account: {},
-    });
+      account: {
+        address: '8096217735672704724L',
+      },
+      transactions: {
+        pending: [],
+      },
+    };
+    store.getState = () => (state);
     store.dispatch = spy();
     next = spy();
+    accountApiMock = mock(accountApi);
+  });
+
+  afterEach(() => {
+    accountApiMock.restore();
   });
 
   it('should passes the action to next middleware', () => {
@@ -30,14 +50,10 @@ describe('transaction middleware', () => {
     expect(next).to.have.been.calledWith(givenAction);
   });
 
-  it('fire success dialog action with appropriate text ', () => {
+  it('should fire success dialog action with appropriate text if action.type is transactionAdded', () => {
     const givenAction = {
       type: actionTypes.transactionAdded,
-      data: {
-        username: 'test',
-        amount: 1e8,
-        recipientId: '16313739661670634666L',
-      },
+      data: mockTransaction,
     };
 
     const expectedMessages = [
@@ -53,6 +69,39 @@ describe('transaction middleware', () => {
       const expectedAction = successAlertDialogDisplayed({ text: i18next.t(expectedMessages[i]) });
       expect(store.dispatch).to.have.been.calledWith(expectedAction);
     }
+  });
+
+  it('should do nothing if state.transactions.pending.length === 0 and action.type is transactionsUpdated', () => {
+    const givenAction = {
+      type: actionTypes.transactionsUpdated,
+      data: [mockTransaction],
+    };
+
+    middleware(store)(next)(givenAction);
+    expect(store.dispatch).to.not.have.been.calledWith();
+  });
+
+  it('should call unconfirmedTransactions and then dispatch transactionsFailed if state.transactions.pending.length > 0 and action.type is transactionsUpdated', () => {
+    const transactions = [
+      mockTransaction,
+    ];
+    accountApiMock.expects('unconfirmedTransactions')
+      .withExactArgs(state.peers.data, state.account.address)
+      .returnsPromise().resolves({ transactions });
+    store.getState = () => ({
+      ...state,
+      transactions: {
+        pending: transactions,
+      },
+    });
+    const givenAction = {
+      type: actionTypes.transactionsUpdated,
+      data: [],
+    };
+
+    middleware(store)(next)(givenAction);
+    const expectedAction = transactionsFailed({ failed: [] });
+    expect(store.dispatch).to.have.been.calledWith(expectedAction);
   });
 });
 

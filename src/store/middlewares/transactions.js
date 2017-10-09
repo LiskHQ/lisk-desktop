@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 
 import { fromRawLsk } from '../../utils/lsk';
-import { getUnconfirmedTransactions } from '../../utils/api/account';
+import { unconfirmedTransactions } from '../../utils/api/account';
 import { successAlertDialogDisplayed } from '../../actions/dialog';
 import { transactionsFailed } from '../../actions/transactions';
 import actionTypes from '../../constants/actions';
@@ -24,7 +24,7 @@ const transactionAdded = (store, action) => {
 const transactionsUpdated = (store) => {
   const { transactions, account, peers } = store.getState();
   if (transactions.pending.length) {
-    getUnconfirmedTransactions(peers.data, account.address)
+    unconfirmedTransactions(peers.data, account.address)
       .then(response => store.dispatch(transactionsFailed({
         failed: transactions.pending.filter(tx =>
           response.transactions.filter(unconfirmedTx => tx.id === unconfirmedTx.id).length === 0),
