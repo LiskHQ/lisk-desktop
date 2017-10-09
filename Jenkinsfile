@@ -2,9 +2,7 @@ def fail(reason) {
   if (env.CHANGE_BRANCH != null) {
     pr_branch = " (${env.CHANGE_BRANCH})"
   }
-  slackSend color: 'danger',
-	    message: "Build #${env.BUILD_NUMBER} of <${env.BUILD_URL}|${env.JOB_NAME}>${pr_branch} failed (<${env.BUILD_URL}/console|console>, <${env.BUILD_URL}/changes|changes>)\nCause: ${reason}"
-            channel: '#lisk-nano-jenkins'
+  slackSend color: 'danger', message: "Build #${env.BUILD_NUMBER} of <${env.BUILD_URL}|${env.JOB_NAME}>${pr_branch} failed (<${env.BUILD_URL}/console|console>, <${env.BUILD_URL}/changes|changes>)\nCause: ${reason}", channel: '#lisk-nano-jenkins'
   currentBuild.result = 'FAILURE'
   error("${reason}")
 }
@@ -143,6 +141,7 @@ node('lisk-nano') {
       /* delete all files on success */
       deleteDir()
       /* notify of success if previous build failed */
+      previous_build = currentBuild.getPreviousBuild()
       if (previous_build != null && previous_build.result == 'FAILURE') {
         slackSend color: 'good',
                   message: "Recovery: build #${env.BUILD_NUMBER} of <${env.BUILD_URL}|${env.JOB_NAME}>${pr_branch} was successful.",
