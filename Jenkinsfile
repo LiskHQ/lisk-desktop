@@ -1,4 +1,10 @@
 def fail(reason) {
+  if (env.CHANGE_BRANCH != null) {
+    pr_branch = " (${env.CHANGE_BRANCH})"
+  }
+  slackSend color: 'danger',
+	    message: "Build #${env.BUILD_NUMBER} of <${env.BUILD_URL}|${env.JOB_NAME}>${pr_branch} failed (<${env.BUILD_URL}/console|console>, <${env.BUILD_URL}/changes|changes>)\nCause: ${reason}"
+            channel: '#lisk-nano-jenkins'
   currentBuild.result = 'FAILURE'
   error("${reason}")
 }
@@ -143,10 +149,6 @@ node('lisk-nano') {
                   message: "Recovery: build #${env.BUILD_NUMBER} of <${env.BUILD_URL}|${env.JOB_NAME}>${pr_branch} was successful.",
                   channel: '#lisk-nano-jenkins'
       }
-    } else if (currentBuild.result == 'FAILURE') {
-      slackSend color: 'danger',
-                message: "Build #${env.BUILD_NUMBER} of <${env.BUILD_URL}|${env.JOB_NAME}>${pr_branch} failed (<${env.BUILD_URL}/console|console>, <${env.BUILD_URL}/changes|changes>)",
-                channel: '#lisk-nano-jenkins'
     }
   }
 }
