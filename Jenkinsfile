@@ -10,6 +10,7 @@ node('lisk-nano') {
         deleteDir()
         checkout scm
       } catch (err) {
+        echo "Error: ${err}"
         fail('Stopping build: checkout failed')
       }
 
@@ -32,6 +33,7 @@ node('lisk-nano') {
         bash lisk.sh rebuild -p etc/pm2-lisk_$N.json -f blockchain_explorer.db.gz
         '''
       } catch (err) {
+        echo "Error: ${err}"
         fail('Stopping build: Lisk Core failed to start')
       }
     }
@@ -40,6 +42,7 @@ node('lisk-nano') {
       try {
         sh 'npm install'
       } catch (err) {
+        echo "Error: ${err}"
         fail('Stopping build: npm install failed')
       }
     }
@@ -50,6 +53,7 @@ node('lisk-nano') {
           sh 'npm run eslint'
         }
       } catch (err) {
+        echo "Error: ${err}"
         fail('Stopping build: Eslint failed')
       }
     }
@@ -61,6 +65,7 @@ node('lisk-nano') {
         npm run build
         '''
       } catch (err) {
+        echo "Error: ${err}"
         fail('Stopping build: nano build failed')
       }
     }
@@ -75,6 +80,7 @@ node('lisk-nano') {
           '''
         }
       } catch (err) {
+        echo "Error: ${err}"
         fail('Stopping build: test suite failed')
       }
     }
@@ -97,18 +103,21 @@ node('lisk-nano') {
           '''
         }
       } catch (err) {
+        echo "Error: ${err}"
         fail('Stopping build: end-to-end test suite failed')
       }
     }
 
     stage ('Deploy') {
       try {
-        sh 'rsync -axl --delete --rsync-path="mkdir -p '/var/www/test/lisk-nano/$BRANCH_NAME/' && rsync" "$WORKSPACE/app/dist/" "jenkins@master-01:/var/www/test/lisk-nano/$BRANCH_NAME/"'
+        sh 'rsync -axl --delete --rsync-path="mkdir -p /var/www/test/lisk-nano/$BRANCH_NAME/ && rsync" $WORKSPACE/app/dist/ jenkins@master-01:/var/www/test/lisk-nano/$BRANCH_NAME/'
       } catch (err) {
+        echo "Error: ${err}"
         fail('Stopping build: deploy failed')
       }
     }
   } catch(err) {
+    echo "Error: ${err}"
     fail('Stopping build: unexpected failure')
   } finally {
     sh '''
