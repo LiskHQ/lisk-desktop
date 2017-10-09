@@ -9,6 +9,7 @@ import styles from './login.css';
 import env from '../../constants/env';
 import LanguageDropdown from '../languageDropdown';
 import RelativeLink from '../relativeLink';
+import { validateUrl, getLoginData } from '../../utils/login';
 
 /**
  * The container component containing login
@@ -25,7 +26,7 @@ class Login extends React.Component {
     };
 
     this.validators = {
-      address: this.validateUrl,
+      address: validateUrl,
       passphrase: this.validatePassphrase.bind(this),
     };
   }
@@ -78,30 +79,6 @@ class Login extends React.Component {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  validateUrl(value) {
-    const addHttp = (url) => {
-      const reg = /^(?:f|ht)tps?:\/\//i;
-      return reg.test(url) ? url : `http://${url}`;
-    };
-
-    const errorMessage = 'URL is invalid';
-
-    const isValidLocalhost = url => url.hostname === 'localhost' && url.port.length > 1;
-    const isValidRemote = url => /(([a-z\d]([a-z\d-]*[a-z\d])*)\.)+[a-z]{2,}|((\d{1,3}\.){3}\d{1,3})/.test(url.hostname);
-
-    let addressValidity = '';
-    try {
-      const url = new URL(addHttp(value));
-      addressValidity = url && (isValidRemote(url) || isValidLocalhost(url)) ? '' : errorMessage;
-    } catch (e) {
-      addressValidity = errorMessage;
-    }
-
-    const data = { address: value, addressValidity };
-    return data;
-  }
-
-  // eslint-disable-next-line class-methods-use-this
   validatePassphrase(value, error) {
     const data = { passphrase: value };
     data.passphraseValidity = error || '';
@@ -117,12 +94,10 @@ class Login extends React.Component {
   }
 
   devPreFill() {
-    const address = localStorage.getItem('address') || '';
-    const passphrase = localStorage.getItem('passphrase') || '';
-    const network = parseInt(localStorage.getItem('network'), 10) || 0;
+    const { networkIndex, address, passphrase } = getLoginData();
 
     this.setState({
-      network,
+      networkIndex,
       ...this.validators.address(address),
       ...this.validators.passphrase(passphrase),
     });
