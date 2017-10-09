@@ -3,6 +3,11 @@ import transactions from './transactions';
 import actionTypes from '../../constants/actions';
 
 describe('Reducer: transactions(state, action)', () => {
+  const defaultState = {
+    pending: [],
+    confirmed: [],
+    failed: [],
+  };
   const mockTransactions = [{
     amount: 100000000000,
     id: '16295820046284152875',
@@ -19,8 +24,8 @@ describe('Reducer: transactions(state, action)', () => {
 
   it('should prepend action.data to state.pending if action.type = actionTypes.transactionAdded', () => {
     const state = {
+      ...defaultState,
       pending: [mockTransactions[1]],
-      confirmed: [],
     };
     const action = {
       type: actionTypes.transactionAdded,
@@ -31,10 +36,7 @@ describe('Reducer: transactions(state, action)', () => {
   });
 
   it('should concat action.data to state.confirmed if action.type = actionTypes.transactionsLoaded', () => {
-    const state = {
-      pending: [],
-      confirmed: [],
-    };
+    const state = { ...defaultState };
     const action = {
       type: actionTypes.transactionsLoaded,
       data: {
@@ -43,7 +45,7 @@ describe('Reducer: transactions(state, action)', () => {
       },
     };
     const expectedState = {
-      pending: [],
+      ...defaultState,
       confirmed: action.data.confirmed,
       count: action.data.count,
     };
@@ -53,6 +55,7 @@ describe('Reducer: transactions(state, action)', () => {
 
   it('should prepend newer transactions from action.data to state.confirmed and remove from state.pending if action.type = actionTypes.transactionsUpdated', () => {
     const state = {
+      ...defaultState,
       pending: [mockTransactions[0]],
       confirmed: [mockTransactions[1], mockTransactions[2]],
       count: mockTransactions[1].length + mockTransactions[2].length,
@@ -66,7 +69,7 @@ describe('Reducer: transactions(state, action)', () => {
     };
     const changedState = transactions(state, action);
     expect(changedState).to.deep.equal({
-      pending: [],
+      ...defaultState,
       confirmed: mockTransactions,
       count: mockTransactions.length,
     });
@@ -74,8 +77,7 @@ describe('Reducer: transactions(state, action)', () => {
 
   it('should action.data to state.confirmed if state.confirmed is empty and action.type = actionTypes.transactionsUpdated', () => {
     const state = {
-      pending: [],
-      confirmed: [],
+      ...defaultState,
     };
     const action = {
       type: actionTypes.transactionsUpdated,
@@ -86,7 +88,7 @@ describe('Reducer: transactions(state, action)', () => {
     };
     const changedState = transactions(state, action);
     expect(changedState).to.deep.equal({
-      pending: [],
+      ...defaultState,
       confirmed: mockTransactions,
       count: mockTransactions.length,
     });
@@ -94,6 +96,7 @@ describe('Reducer: transactions(state, action)', () => {
 
   it('should reset all data if action.type = actionTypes.accountLoggedOut', () => {
     const state = {
+      ...defaultState,
       pending: [{
         amount: 110000000000,
         id: '16295820046284152275',
@@ -104,8 +107,7 @@ describe('Reducer: transactions(state, action)', () => {
     const action = { type: actionTypes.accountLoggedOut };
     const changedState = transactions(state, action);
     expect(changedState).to.deep.equal({
-      pending: [],
-      confirmed: [],
+      ...defaultState,
       count: 0,
     });
   });
