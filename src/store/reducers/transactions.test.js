@@ -6,7 +6,6 @@ describe('Reducer: transactions(state, action)', () => {
   const defaultState = {
     pending: [],
     confirmed: [],
-    failed: [],
   };
   const mockTransactions = [{
     amount: 100000000000,

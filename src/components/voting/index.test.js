@@ -17,7 +17,6 @@ describe('VotingHOC', () => {
       transactions: {
         pending: [],
         confirmed: [],
-        failed: [],
       },
       voting: {
         delegates: [
