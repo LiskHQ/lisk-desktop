@@ -51,7 +51,6 @@ describe('Login', () => {
     },
     lifecycleExperimental: true,
   };
-  props.spyActivePeerSet = spy(props.activePeerSet);
 
   describe('Generals', () => {
     beforeEach(() => {
@@ -72,22 +71,22 @@ describe('Login', () => {
     props.account = { address: 'dummy' };
 
     it('calls this.props.history.replace(\'/main/transactions\')', () => {
-      wrapper = shallow(<Router><Login {...props}/></Router>, options);
+      wrapper = shallow(<Login {...props}/>, options);
       wrapper.setProps(props);
       expect(props.history.replace).to.have.been.calledWith('/main/transactions');
     });
 
-    it.skip('calls this.props.history.replace with referrer address', () => {
-      wrapper = shallow(<Router><Login {...props}/></Router>, options);
+    it('calls this.props.history.replace with referrer address', () => {
+      wrapper = shallow(<Login {...props}/>, options);
       props.history.replace.reset();
       history.location.search = '?referrer=/main/voting';
       wrapper.setProps({ history });
       expect(props.history.replace).to.have.been.calledWith('/main/voting');
     });
 
-    it.skip('call this.props.history.replace with "/main/transaction" if referrer address is "/main/forging" and account.isDelegate === false', () => {
+    it('call this.props.history.replace with "/main/transaction" if referrer address is "/main/forging" and account.isDelegate === false', () => {
       history.location.search = '';
-      wrapper = shallow(<Router><Login {...props}/></Router>, options);
+      wrapper = shallow(<Login {...props}/>, options);
       history.location.search = '?referrer=/main/forging';
       account.isDelegate = false;
       props.history.replace.reset();
@@ -95,7 +94,7 @@ describe('Login', () => {
       expect(props.history.replace).to.have.been.calledWith('/main/transactions');
     });
 
-    it.skip('calls localStorage.setItem(\'address\', address) if this.state.address', () => {
+    it('calls localStorage.setItem(\'address\', address) if this.state.address', () => {
       const spyFn = spy(localStorage, 'setItem');
       wrapper = shallow(<Login {...props}/>, options);
       wrapper.setState({ address });
@@ -155,10 +154,12 @@ describe('Login', () => {
   });
 
   describe('onLoginSubmission', () => {
-    it.skip('it should call activePeerSet', () => {
+    it('it should call activePeerSet', () => {
+      const spyActivePeerSet = spy(props, 'activePeerSet');
+
       wrapper = shallow(<Login {...props}/>, options);
       wrapper.instance().onLoginSubmission();
-      expect(wrapper.props().spyActivePeerSet).to.have.been.calledWith();
+      expect(spyActivePeerSet).to.have.been.calledWith();
     });
   });
 });
