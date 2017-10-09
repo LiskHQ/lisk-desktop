@@ -7,6 +7,7 @@ import getNetworks from './networks';
 import PassphraseInput from '../passphraseInput';
 import styles from './login.css';
 import env from '../../constants/env';
+import networks from '../../constants/networks';
 import LanguageDropdown from '../languageDropdown';
 import RelativeLink from '../relativeLink';
 import { validateUrl, getLoginData } from '../../utils/login';
@@ -22,7 +23,7 @@ class Login extends React.Component {
     this.state = {
       passphrase: '',
       address: '',
-      network: 0,
+      network: networks.mainnet,
     };
 
     this.validators = {
@@ -56,7 +57,7 @@ class Login extends React.Component {
 
   onLoginSubmission(passphrase) {
     const network = Object.assign({}, getNetworks()[this.state.network]);
-    if (this.state.network === 2) {
+    if (this.state.network === networks.customNode) {
       network.address = this.state.address;
     }
 
@@ -121,7 +122,7 @@ class Login extends React.Component {
     if (savedAccounts && savedAccounts.length > 0 && !this.props.account.afterLogout) {
       this.account = savedAccounts[0];
       const network = Object.assign({}, getNetworks()[this.account.network]);
-      if (this.account.network === 2) {
+      if (this.account.network === networks.customNode) {
         network.address = this.account.address;
       }
 
@@ -152,7 +153,7 @@ class Login extends React.Component {
                 className={`${styles.network} network`}
               />
               {
-                this.state.network === 2 &&
+                this.state.network === networks.customNode &&
                   <Input type='text'
                     label={this.props.t('Node address')}
                     name='address'
@@ -177,7 +178,7 @@ class Login extends React.Component {
                   <Button label={this.props.t('Login')} primary raised
                     className='login-button'
                     type='submit'
-                    disabled={(this.state.network === 2 && this.state.addressValidity !== '') ||
+                    disabled={(this.state.network === networks.customNode && this.state.addressValidity !== '') ||
                     this.state.passphraseValidity !== ''} />
                 </div>
               </footer>
