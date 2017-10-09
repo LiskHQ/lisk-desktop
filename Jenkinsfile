@@ -6,7 +6,6 @@ def fail(reason) {
 	    message: "Build #${env.BUILD_NUMBER} of <${env.BUILD_URL}|${env.JOB_NAME}>${pr_branch} failed (<${env.BUILD_URL}/console|console>, <${env.BUILD_URL}/changes|changes>)\nCause: ${reason}"
             channel: '#lisk-nano-jenkins'
   currentBuild.result = 'FAILURE'
-  error("${reason}")
 }
 
 node('lisk-nano') {
