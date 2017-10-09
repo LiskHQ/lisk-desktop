@@ -9,6 +9,10 @@ import Status from './status';
 import Amount from './amount';
 import Spinner from '../spinner';
 
+const setRowClass = tx => (
+  tx.failed && styles.failedTransaction
+);
+
 class TransactionRow extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   shouldComponentUpdate(nextProps) {
@@ -17,7 +21,7 @@ class TransactionRow extends React.Component {
 
   render() {
     const props = this.props;
-    return (<tr>
+    return (<tr className={`${setRowClass(props.value)}`}>
       <td className={`${props.tableStyle.rowCell} ${styles.centerText}`}>
         {props.value.confirmations ?
           <TooltipTime label={props.value.timestamp}></TooltipTime> :

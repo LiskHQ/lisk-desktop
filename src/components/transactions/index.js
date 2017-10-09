@@ -6,7 +6,11 @@ import Transactions from './transactions';
 const mapStateToProps = state => ({
   address: state.account.address,
   activePeer: state.peers.data,
-  transactions: [...state.transactions.pending, ...state.transactions.confirmed],
+  transactions: [
+    ...state.transactions.pending,
+    ...state.transactions.failed,
+    ...state.transactions.confirmed,
+  ],
   count: state.transactions.count,
   confirmedCount: state.transactions.confirmed.length,
   pendingCount: state.transactions.pending.length,

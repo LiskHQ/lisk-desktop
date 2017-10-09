@@ -24,6 +24,10 @@
   background: color(var(--in) alpha(45%)) !important;
 }
 
+.failedTransaction {
+  background-color: rgb(255, 228, 220) !important;
+}
+
 .empty {
   color: #777;
   text-align: center;

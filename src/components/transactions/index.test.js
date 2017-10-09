@@ -14,8 +14,10 @@ describe('TransactionsHOC', () => {
   let wrapper;
   const confirmed = [];
   const pending = [];
+  const failed = [];
   const transactions = {
     pending,
+    failed,
     confirmed,
     count: confirmed.length,
   };
@@ -46,7 +48,7 @@ describe('TransactionsHOC', () => {
     const props = wrapper.find('Transactions').props();
     expect(props.address).to.be.equal(account.address);
     expect(props.activePeer).to.be.equal(peers.data);
-    expect(props.transactions).to.deep.equal([...transactions, ...pending]);
+    expect(props.transactions).to.deep.equal([...pending, ...failed, ...confirmed]);
     expect(props.count).to.be.equal(transactions.count);
     expect(props.confirmedCount).to.be.equal(confirmed.length);
     expect(props.pendingCount).to.be.equal(pending.length);
