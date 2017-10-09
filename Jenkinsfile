@@ -124,7 +124,6 @@ node('lisk-nano') {
     }
   } catch(err) {
     echo "Error: ${err}"
-    fail('Stopping build: unexpected failure')
   } finally {
     sh '''
     N=${EXECUTOR_NUMBER:-0}
