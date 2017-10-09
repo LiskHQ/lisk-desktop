@@ -3,7 +3,7 @@ def fail(reason) {
   error("${reason}")
 }
 
-node('lisk-nano-01') {
+node('lisk-nano') {
   try {
     stage ('Cleanup, Checkout and Start Lisk Core') {
       try {
