@@ -1,13 +1,10 @@
 import React from 'react';
 import Input from 'react-toolbox/lib/input';
 import Lisk from 'lisk-js';
-
+import { translate } from 'react-i18next';
 import InfoParagraph from '../infoParagraph';
 import SignVerifyResult from '../signVerifyResult';
-// import AuthInputs from '../authInputs';
 import ActionBar from '../actionBar';
-// import authInputs from '../authInputs/index';
-// import { authStatePrefill, authStateIsValid } from '../../utils/form';
 
 
 class EncryptMessage extends React.Component {
@@ -95,4 +92,4 @@ class EncryptMessage extends React.Component {
   }
 }
 
-export default EncryptMessage;
+export default translate()(EncryptMessage);
