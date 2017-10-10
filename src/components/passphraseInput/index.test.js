@@ -66,6 +66,31 @@ describe('PassphraseInput', () => {
     expect(wrapper.props().onChange).to.have.been.calledWith(passphrase, NOT_VALID_ERROR);
   });
 
+  const WHITE_SPACE_AT_THE_BEGINNING_ERROR = 'Passphrase contains unnecessary whitespace at the beginning';
+  it("should call props.onChange with error='Passphrase contains unnecessary whitespace at the beginning'", () => {
+    const passphrase = ' wagon stock borrow episode laundry kitten salute link globe zero feed marble';
+    wrapper.find('input').simulate('change', { target: { value: passphrase } });
+    expect(wrapper.props().onChange).to.have.been
+      .calledWith(passphrase, WHITE_SPACE_AT_THE_BEGINNING_ERROR);
+  });
+
+  const WHITE_SPACE_AT_THE_END_ERROR = 'Passphrase contains unnecessary whitespace at the end';
+  it("should call props.onChange with error='Passphrase contains unnecessary whitespace at the end'", () => {
+    const passphrase = 'wagon stock borrow episode laundry kitten salute link globe zero feed marble ';
+    wrapper.find('input').simulate('change', { target: { value: passphrase } });
+    expect(wrapper.props().onChange).to.have.been
+      .calledWith(passphrase, WHITE_SPACE_AT_THE_END_ERROR);
+  });
+
+
+  const EXTRA_WHITE_SPACE_ERROR = 'Passphrase contains extra whitespace between words';
+  it("should call props.onChange with error='Passphrase contains extra whitespace between words'", () => {
+    const passphrase = 'wagon  stock borrow episode laundry kitten salute link globe zero feed marble';
+    wrapper.find('input').simulate('change', { target: { value: passphrase } });
+    expect(wrapper.props().onChange).to.have.been
+      .calledWith(passphrase, EXTRA_WHITE_SPACE_ERROR);
+  });
+
   it('should allow to change the input field to type="text" and back', () => {
     expect(wrapper.find('input').props().type).to.equal('password');
     wrapper.find('.show-passphrase-toggle').simulate('click');
