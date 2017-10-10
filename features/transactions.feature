@@ -4,6 +4,13 @@ Feature: Transactions tab
     When I click tab number 1
     Then I should see table with 40 lines
 
+  Scenario: should show more transactions on scroll
+    Given I'm logged in as "genesis"
+    When I click tab number 1
+    Then I should see table with 40 lines
+    When I scroll to the bottom
+    Then I should see table with 60 lines
+
   Scenario: should allow send to address
     Given I'm logged in as "genesis"
     When I click tab number 1
