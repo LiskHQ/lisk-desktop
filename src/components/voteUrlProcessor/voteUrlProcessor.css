@@ -22,3 +22,7 @@
 .chip {
   margin: 6px 1px -8px 1px;
 }
+
+.center {
+  text-align: center;
+}
