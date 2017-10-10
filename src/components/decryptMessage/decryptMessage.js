@@ -1,9 +1,9 @@
 import React from 'react';
 import Input from 'react-toolbox/lib/input';
 import Lisk from 'lisk-js';
+import { translate } from 'react-i18next';
 import SignVerifyResult from '../signVerifyResult';
 import ActionBar from '../actionBar';
-
 
 class DecryptMessage extends React.Component {
   constructor() {
@@ -35,7 +35,7 @@ class DecryptMessage extends React.Component {
       '-----DECRYPTED MESSAGE-----',
       decryptedMessage,
     ].join('\n');
-    this.setState({ result/* , resultIsShown: false */ });
+    this.setState({ result, resultIsShown: false });
   }
 
   showResult(event) {
@@ -58,7 +58,6 @@ class DecryptMessage extends React.Component {
               autoFocus={true}
               value={this.state.senderPublicKey.value}
               onChange={this.handleChange.bind(this, 'senderPublicKey')} />
-
             <Input className='nonce' label={this.props.t('Nonce')}
               autoFocus={true}
               value={this.state.nonce.value}
@@ -89,4 +88,4 @@ class DecryptMessage extends React.Component {
   }
 }
 
-export default DecryptMessage;
+export default translate()(DecryptMessage);
