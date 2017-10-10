@@ -53,7 +53,7 @@ class Transactions extends React.Component {
               to='receive'>{this.props.t('Receive LSK')}</RelativeLink>
           </p>
         }
-        <Waypoint bottomOffset='-100%'
+        <Waypoint bottomOffset='-80%'
           scrollableAncestor={window}
           key={this.props.transactions.length}
           onEnter={this.loadMore.bind(this)}></Waypoint>
