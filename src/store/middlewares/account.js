@@ -65,7 +65,7 @@ const delegateRegistration = (store, action) => {
   const state = store.getState();
 
   if (delegateRegistrationTx) {
-    getDelegate(state.peers.data, state.account.publicKey)
+    getDelegate(state.peers.data, { publicKey: state.account.publicKey })
       .then((delegateData) => {
         store.dispatch(accountLoggedIn(Object.assign({},
           { delegate: delegateData.delegate, isDelegate: true })));
