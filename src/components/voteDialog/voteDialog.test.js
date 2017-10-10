@@ -1,5 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
 import configureMockStore from 'redux-mock-store';
@@ -8,6 +9,8 @@ import i18n from '../../i18n';
 import VoteDialog from './voteDialog';
 import VoteAutocomplete from './voteAutocomplete';
 
+const mountWithRouter = (node, context) => mount(<Router>{node}</Router>, context);
+
 const ordinaryAccount = {
   passphrase: 'pass',
   publicKey: 'key',
@@ -15,9 +18,11 @@ const ordinaryAccount = {
   balance: 10e8,
 };
 const accountWithSecondPassphrase = {
-  passphrase: 'pass',
+  passphrase: 'awkward service glimpse punch genre calm grow life bullet boil match like',
+  secondPassphrase: 'forest around decrease farm vanish permit hotel clay senior matter endorse domain',
   publicKey: 'key',
   secondSignature: 1,
+  balance: 10e8,
 };
 const votes = {
   username1: { publicKey: 'sample_key', confirmed: true, unconfirmed: false },
@@ -28,14 +33,15 @@ const delegates = [
   { username: 'username2', publicKey: '123HG3522345L' },
 ];
 
-const store = configureMockStore([])({
+const state = {
   account: ordinaryAccount,
   voting: {
     votes,
     delegates,
   },
   peers: { data: {} },
-});
+};
+const store = configureMockStore([])(state);
 let props;
 
 describe('VoteDialog', () => {
@@ -60,7 +66,7 @@ describe('VoteDialog', () => {
 
   describe('Ordinary account', () => {
     beforeEach(() => {
-      wrapper = mount(<VoteDialog {...props} account={ordinaryAccount} />, options);
+      wrapper = mountWithRouter(<VoteDialog {...props} account={ordinaryAccount} />, options);
     });
 
     it('should render an InfoParagraph', () => {
@@ -103,7 +109,8 @@ describe('VoteDialog', () => {
         votePlaced: () => {},
         t: key => key,
       };
-      const mounted = mount(<VoteDialog {...noVoteProps} account={ordinaryAccount} />, options);
+      const mounted = mountWithRouter(
+        <VoteDialog {...noVoteProps} account={ordinaryAccount} />, options);
       const primaryButton = mounted.find('VoteDialog .primary-button button');
 
       expect(primaryButton.props().disabled).to.be.equal(true);
@@ -112,9 +119,20 @@ describe('VoteDialog', () => {
 
   describe('Account with second passphrase', () => {
     it('should fire votePlaced action with the provided secondPassphrase', () => {
-      wrapper = mount(<VoteDialog {...props} account={accountWithSecondPassphrase} />, options);
-      const secondPassphrase = 'test second passphrase';
-      wrapper.instance().handleChange('secondPassphrase', secondPassphrase);
+      wrapper = mountWithRouter(
+        <VoteDialog {...props} account={accountWithSecondPassphrase} />,
+        {
+          ...options,
+          context: {
+            ...options.context,
+            store: configureMockStore([])({
+              ...state,
+              account: accountWithSecondPassphrase,
+            }),
+          },
+        });
+
+      wrapper.find('.second-passphrase input').simulate('change', { target: { value: accountWithSecondPassphrase.secondPassphrase } });
       wrapper.find('.primary-button button').simulate('click');
 
       expect(props.votePlaced).to.have.been.calledWith({
@@ -122,7 +140,7 @@ describe('VoteDialog', () => {
         account: accountWithSecondPassphrase,
         votes,
         passphrase: accountWithSecondPassphrase.passphrase,
-        secondSecret: secondPassphrase,
+        secondSecret: accountWithSecondPassphrase.secondPassphrase,
       });
     });
   });
@@ -133,7 +151,8 @@ describe('VoteDialog', () => {
       extraVotes[`standby_${i}`] = { confirmed: false, unconfirmed: true, publicKey: `public_key_${i}` };
     }
     const noVoteProps = Object.assign({}, props, { votes: extraVotes });
-    const mounted = mount(<VoteDialog {...noVoteProps} account={ordinaryAccount} />, options);
+    const mounted = mountWithRouter(
+      <VoteDialog {...noVoteProps} account={ordinaryAccount} />, options);
     const primaryButton = mounted.find('VoteDialog .primary-button button');
 
     expect(primaryButton.props().disabled).to.be.equal(true);
