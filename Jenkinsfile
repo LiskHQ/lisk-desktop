@@ -125,8 +125,12 @@ node('lisk-nano') {
   } finally {
     sh '''
     N=${EXECUTOR_NUMBER:-0}
+    ps ux
     ( cd ~/lisk-Linux-x86_64 && bash lisk.sh stop_node -p etc/pm2-lisk_$N.json ) || true
+    ps ux
+    ps -fp $( pgrep -d, -f "Xvfb :1$N" ) || true;
     pkill -f "Xvfb :1$N" -9 || true
+    ps -fp $( pgrep -d, -f "webpack.*808$N" ) || true
     pkill -f "webpack.*808$N" -9 || true
     '''
     dir('node_modules') {
