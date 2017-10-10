@@ -1,12 +1,15 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import { spy } from 'sinon';
+import { spy, stub } from 'sinon';
 import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
 import i18n from '../../i18n';
+import networks from '../../constants/networks';
 import Register from './register';
 import getNetworks from '../login/networks';
+import * as Utils from '../../utils/login';
+
 
 describe('Register', () => {
   let wrapper;
@@ -55,5 +58,55 @@ describe('Register', () => {
       network: getNetworks()[0],
       passphrase: 'sample passphrase',
     });
+  });
+
+  it('should call activePeerSet with testnet if network index is testnet', () => {
+    const props = wrapper.find('Passphrase').props();
+
+    const loginData = stub(Utils, 'getLoginData');
+    loginData.returns({ address: 'invalid address', networkIndex: networks.testnet });
+
+    props.onPassGenerated('sample passphrase');
+    expect(loginData).to.have.been.calledWith();
+
+    expect(prop.activePeerSet).to.have.been.calledWith({
+      network: getNetworks()[networks.testnet],
+      passphrase: 'sample passphrase',
+    });
+    loginData.restore();
+  });
+
+  it('should call activePeerSet with mainnet if network index is custom node and address is invalid', () => {
+    const props = wrapper.find('Passphrase').props();
+
+    const loginData = stub(Utils, 'getLoginData');
+    loginData.returns({ address: 'invalid address', networkIndex: networks.customNode });
+
+    props.onPassGenerated('sample passphrase');
+    expect(loginData).to.have.been.calledWith();
+
+    expect(prop.activePeerSet).to.have.been.calledWith({
+      network: getNetworks()[networks.mainnet],
+      passphrase: 'sample passphrase',
+    });
+    loginData.restore();
+  });
+
+  it('should call activePeerSet with custom node if network index is custom node and address is valid', () => {
+    const props = wrapper.find('Passphrase').props();
+
+    const loginData = stub(Utils, 'getLoginData');
+    loginData.returns({ address: '127.0.0.1:8080', networkIndex: networks.customNode });
+
+    props.onPassGenerated('sample passphrase');
+    expect(loginData).to.have.been.calledWith();
+
+    const network = getNetworks()[networks.customNode];
+    network.address = '127.0.0.1:8080';
+    expect(prop.activePeerSet).to.have.been.calledWith({
+      network,
+      passphrase: 'sample passphrase',
+    });
+    loginData.restore();
   });
 });
