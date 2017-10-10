@@ -98,7 +98,7 @@ class Login extends React.Component {
     const { networkIndex, address, passphrase } = getLoginData();
 
     this.setState({
-      networkIndex,
+      network: networkIndex,
       ...this.validators.address(address),
       ...this.validators.passphrase(passphrase),
     });
