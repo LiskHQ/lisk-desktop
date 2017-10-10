@@ -1,4 +1,4 @@
-const electron = require('electron'); // eslint-disable-line import/no-extraneous-dependencies
+import electron from 'electron'; // eslint-disable-line import/no-extraneous-dependencies
 
 const { Menu } = electron;
 
@@ -94,7 +94,7 @@ const template = [
   },
 ];
 
-module.exports = (app, copyright) => {
+export default (app, copyright) => {
   if (process.platform === 'darwin') {
     const name = app.getName();
     template.unshift({

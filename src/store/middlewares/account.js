@@ -1,4 +1,4 @@
-import { getAccountStatus, getAccount, transactions } from '../../utils/api/account';
+import { getAccount, transactions } from '../../utils/api/account';
 import { accountUpdated, accountLoggedIn } from '../../actions/account';
 import { transactionsUpdated } from '../../actions/transactions';
 import { activePeerUpdate } from '../../actions/peers';
@@ -45,9 +45,6 @@ const updateAccountData = (store, action) => { // eslint-disable-line
       }
     }
     store.dispatch(accountUpdated(result));
-  });
-
-  return getAccountStatus(peers.data).then(() => {
     store.dispatch(activePeerUpdate({ online: true }));
   }).catch((res) => {
     store.dispatch(activePeerUpdate({ online: false, code: res.error.code }));

@@ -19,11 +19,15 @@ class PassphraseInput extends React.Component {
 
   handleValueChange(value) {
     let error;
+
     if (!value) {
       error = 'Required';
     } else if (!isValidPassphrase(value)) {
       error = this.getPassphraseValidationError(value);
+    } else if (this.hasExtraWhitespace(value)) {
+      error = this.getPassphraseWhitespaceError(value);
     }
+
     this.props.onChange(value, error);
   }
 
@@ -45,6 +49,25 @@ class PassphraseInput extends React.Component {
       return `Word "${invalidWord}" is not on the passphrase Word List.`;
     }
     return 'Passphrase is not valid';
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  hasExtraWhitespace(passphrase) {
+    const normalizedValue = passphrase.replace(/ +/g, ' ').trim();
+    return normalizedValue !== passphrase;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  getPassphraseWhitespaceError(passphrase) {
+    if (passphrase.replace(/^\s+/, '') !== passphrase) {
+      return 'Passphrase contains unnecessary whitespace at the beginning';
+    } else if (passphrase.replace(/\s+$/, '') !== passphrase) {
+      return 'Passphrase contains unnecessary whitespace at the end';
+    } else if (passphrase.replace(/\s+/g, ' ') !== passphrase) {
+      return 'Passphrase contains extra whitespace between words';
+    }
+
+    return null;
   }
 
   toggleInputType() {

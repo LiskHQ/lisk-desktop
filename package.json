@@ -6,18 +6,20 @@
   "bugs": "https://github.com/LiskHQ/lisk-nano/issues",
   "main": "main.js",
   "scripts": {
-    "build": "npm run clean && npm run copy-files && webpack --env.prod",
-    "dev": "webpack-dev-server --env.dev --hot",
+    "build": "npm run clean && npm run copy-files && npm run build-prod && npm run build-electron",
+    "dev": "webpack-dev-server --config ./config/webpack.config.dev --env.dev --hot",
+    "build-prod": "webpack --config ./config/webpack.config.prod --env.prod",
+    "build-electron": "webpack --config ./config/webpack.config.electron",
     "e2e-test": "protractor protractor.conf.js",
     "test": "karma start",
     "test-live": "npm test -- --auto-watch --no-single-run",
-    "start": "electron app",
+    "start": "electron ./app/",
     "dist:win": "build --win --ia32 --x64",
     "dist:mac": "build --mac",
     "dist:linux": "build --linux --ia32 --x64 --armv7l",
     "copy-files": "mkdir app/dist && cp -r ./src/index.html ./src/assets ./app/dist",
     "clean": "del app/dist -f",
-    "eslint": "eslint ./src/ ./app/main.js ./features/",
+    "eslint": "eslint ./src/ ./app/src/ ./app/config/ ./features/",
     "storybook": "start-storybook -p 6006 -s ./src/",
     "i18n-scanner": "node ./src/i18n-scanner.js",
     "build-storybook": "build-storybook"
@@ -57,10 +59,11 @@
     "react-waypoint": "7.1.0",
     "redux": "3.7.2",
     "redux-logger": "=3.0.6",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "webpack-merge": "^4.1.0"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "3.3.0-alpha.1",
+    "@storybook/addon-actions": "3.2.12",
     "@storybook/react": "3.2.10",
     "babel-core": "6.26.0",
     "babel-loader": "7.1.2",
@@ -134,7 +137,9 @@
     "productName": "Lisk Nano",
     "protocols": {
       "name": "lisk-nano",
-      "schemes": ["lisk"]
+      "schemes": [
+        "lisk"
+      ]
     },
     "artifactName": "lisk-nano-${os}-${arch}-${version}.${ext}",
     "linux": {

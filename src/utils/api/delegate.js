@@ -35,12 +35,10 @@ export const voteAutocomplete = (activePeer, username, votedDict) => {
 };
 
 export const unvoteAutocomplete = (username, votedDict) =>
-  new Promise((resolve) => {
-    resolve(
-      Object.keys(votedDict)
-        .filter(delegate => delegate.indexOf(username) !== -1)
-        .map(element => ({ username: element, publicKey: votedDict[element].publicKey })));
-  });
+  new Promise(resolve => resolve(Object.keys(votedDict)
+    .filter(delegate => delegate.indexOf(username) !== -1)
+    .map(element => ({ username: element, publicKey: votedDict[element].publicKey }))),
+  );
 
 export const registerDelegate = (activePeer, username, secret, secondSecret = null) => {
   const data = { username, secret };
