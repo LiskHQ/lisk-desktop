@@ -92,15 +92,15 @@ export default class VoteUrlProcessor extends React.Component {
   }
 
   render() {
-    const errorStates = {
-      notFound: this.props.t('{{count}} delegate names could not be resolved:',
+    const errorMessages = {
+      notFound: this.props.t('{{count}} of entered delegate names could not be resolved:',
         { count: this.state.notFound.length }),
-      alreadyVoted: this.props.t('{{count}} delegate names selected for upvote were already voted for:',
+      alreadyVoted: this.props.t('{{count}} of delegate names selected for upvote were already voted for:',
         { count: this.state.alreadyVoted.length }),
-      notVotedYet: this.props.t('{{count}} delegate names selected for downvote were not voted for:',
+      notVotedYet: this.props.t('{{count}} of delegate names selected for downvote were not voted for:',
         { count: this.state.notVotedYet.length }),
     };
-    const successStates = {
+    const successMessages = {
       upvotes: this.props.t('{{count}} delegate names successfully resolved to add vote to.',
         { count: this.state.upvotes.length }),
       downvotes: this.props.t('{{count}} delegate names successfully resolved to remove vote from.',
@@ -117,19 +117,19 @@ export default class VoteUrlProcessor extends React.Component {
               {this.getProccessedCount()} / {this.voteCount}
             </div>
           </div>) :
-          (<span>{Object.keys(errorStates).map(list => (
+          (<span>{Object.keys(errorMessages).map(list => (
             this.state[list].length ? (
-              <div key={list} className={styles.error}>
-                {errorStates[list]}
+              <div key={list} className={`${styles.error} ${list}-message`}>
+                {errorMessages[list]}
                 {this.state[list].map((username, i) => (
                   <Chip theme={styles} key={i}>{username}</Chip>
                 ))}
               </div>
             ) : null
           ))}
-          {Object.keys(successStates).map(list => (
+          {Object.keys(successMessages).map(list => (
             this.state[list].length ? (
-              <div key={list} className={styles.success}>{successStates[list]}</div>
+              <div key={list} className={`${styles.success} ${list}-message`}>{successMessages[list]}</div>
             ) : null
           ))}</span>)}
       </div>
