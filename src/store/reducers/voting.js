@@ -37,7 +37,12 @@ const mergeVotes = (newList, oldDict) => {
  * @param {Object} state
  * @param {Object} action
  */
-const voting = (state = { votes: {}, delegates: [], totalDelegates: 0 }, action) => {
+const voting = (state = {
+  votes: {},
+  delegates: [],
+  totalDelegates: 0,
+  voteLookupStatus: {},
+}, action) => {
   switch (action.type) {
     case actionTypes.votesAdded:
       return Object.assign({}, state, {
@@ -119,6 +124,21 @@ const voting = (state = { votes: {}, delegates: [], totalDelegates: 0 }, action)
           return votesDict;
         }, {}),
       });
+
+    case actionTypes.voteLookupStatusUpdated:
+      return {
+        ...state,
+        voteLookupStatus: {
+          ...state.voteLookupStatus,
+          [action.data.username]: action.data.status,
+        },
+      };
+
+    case actionTypes.voteLookupStatusCleared:
+      return {
+        ...state,
+        voteLookupStatus: { },
+      };
 
     default:
       return state;

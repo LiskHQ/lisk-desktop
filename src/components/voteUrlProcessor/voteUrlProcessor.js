@@ -2,22 +2,9 @@ import Chip from 'react-toolbox/lib/chip';
 import ProgressBar from 'react-toolbox/lib/progress_bar';
 import React from 'react';
 
-import { getDelegate, listAccountDelegates } from '../../utils/api/delegate';
 import styles from './voteUrlProcessor.css';
 
 export default class VoteUrlProcessor extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      upvotes: [],
-      downvotes: [],
-      notFound: [],
-      alreadyVoted: [],
-      notVotedYet: [],
-    };
-    this.voteCount = 0;
-  }
-
   // eslint-disable-next-line class-methods-use-this
   parseParams(search) {
     return search.replace(/^\?/, '').split('&').reduce((acc, param) => {
@@ -30,107 +17,66 @@ export default class VoteUrlProcessor extends React.Component {
   }
 
   componentDidMount() {
+    this.props.clearVoteLookupStatus();
     const params = this.parseParams(this.props.history.location.search);
     if (params.upvote || params.downvote) {
-      listAccountDelegates(this.props.activePeer, this.props.account.address)
-        .then(({ delegates }) => { this.processUrlVotes(params, delegates); })
-        .catch(() => { this.processUrlVotes(params, []); });
+      const upvotes = params.upvote ? params.upvote.split(',') : [];
+      const downvotes = params.downvote ? params.downvote.split(',') : [];
+      this.props.urlVotesFound({
+        activePeer: this.props.activePeer,
+        upvotes,
+        downvotes,
+        address: this.props.account.address,
+      });
     }
-  }
-  processUrlVotes(params, votes) {
-    this.props.votesAdded({ list: votes });
-    if (params.downvote) {
-      const downvotes = params.downvote.split(',');
-      downvotes.forEach(this.processDownvote.bind(this));
-      this.voteCount += downvotes.length;
-    }
-    if (params.upvote) {
-      const upvotes = params.upvote.split(',');
-      upvotes.forEach(this.processUpvote.bind(this));
-      this.voteCount += upvotes.length;
-    }
-  }
-
-  processUpvote(username) {
-    getDelegate(this.props.activePeer, { username }).then((data) => {
-      const vote = this.props.votes[username];
-      if (!vote || (!vote.confirmed && !vote.unconfirmed)) {
-        this.props.voteToggled({ username, publicKey: data.delegate.publicKey });
-        this.pushLookupResult('upvotes', username);
-      } else {
-        this.pushLookupResult('alreadyVoted', username);
-      }
-    }).catch(() => {
-      this.pushLookupResult('notFound', username);
-    });
-  }
-
-  processDownvote(username) {
-    getDelegate(this.props.activePeer, { username }).then((data) => {
-      const vote = this.props.votes[username];
-      if (vote && vote.confirmed && vote.unconfirmed) {
-        this.props.voteToggled({ username, publicKey: data.delegate.publicKey });
-        this.pushLookupResult('downvotes', username);
-      } else {
-        this.pushLookupResult('notVotedYet', username);
-      }
-    }).catch(() => {
-      this.pushLookupResult('notFound', username);
-    });
-  }
-
-  pushLookupResult(list, username) {
-    this.setState({
-      [list]: [...this.state[list], username],
-    });
   }
 
   getProccessedCount() {
-    return this.state.upvotes.length +
-           this.state.downvotes.length +
-           this.state.notFound.length +
-           this.state.notVotedYet.length +
-           this.state.alreadyVoted.length;
+    return this.props.upvotes.length +
+           this.props.downvotes.length +
+           this.props.notFound.length +
+           this.props.notVotedYet.length +
+           this.props.alreadyVoted.length;
   }
 
   render() {
     const errorMessages = {
       notFound: this.props.t('{{count}} of entered delegate names could not be resolved:',
-        { count: this.state.notFound.length }),
+        { count: this.props.notFound.length }),
       alreadyVoted: this.props.t('{{count}} of delegate names selected for upvote were already voted for:',
-        { count: this.state.alreadyVoted.length }),
+        { count: this.props.alreadyVoted.length }),
       notVotedYet: this.props.t('{{count}} of delegate names selected for downvote were not voted for:',
-        { count: this.state.notVotedYet.length }),
+        { count: this.props.notVotedYet.length }),
     };
     const successMessages = {
       upvotes: this.props.t('{{count}} delegate names successfully resolved to add vote to.',
-        { count: this.state.upvotes.length }),
+        { count: this.props.upvotes.length }),
       downvotes: this.props.t('{{count}} delegate names successfully resolved to remove vote from.',
-        { count: this.state.downvotes.length }),
+        { count: this.props.downvotes.length }),
     };
     return (
       <div>
-        {this.getProccessedCount() < this.voteCount ?
+        {this.getProccessedCount() < this.props.voteCount ?
           (<div>
             <ProgressBar type='linear' mode='determinate'
-              value={this.getProccessedCount()} max={this.voteCount}/>
+              value={this.getProccessedCount()} max={this.props.voteCount}/>
             <div className={styles.center}>
               {this.props.t('Processing delegate names: ')}
-              {this.getProccessedCount()} / {this.voteCount}
+              {this.getProccessedCount()} / {this.props.voteCount}
             </div>
           </div>) :
           (<span>{Object.keys(errorMessages).map(list => (
-            this.state[list].length ? (
+            this.props[list].length ? (
               <div key={list} className={`${styles.error} ${list}-message`}>
                 {errorMessages[list]}
-                {this.state[list].map((username, i) => (
+                {this.props[list].map((username, i) => (
                   <Chip theme={styles} key={i}>{username}</Chip>
                 ))}
               </div>
             ) : null
           ))}
           {Object.keys(successMessages).map(list => (
-            this.state[list].length ? (
+            this.props[list].length ? (
               <div key={list} className={`${styles.success} ${list}-message`}>{successMessages[list]}</div>
             ) : null
           ))}</span>)}
