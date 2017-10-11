@@ -77,7 +77,7 @@ node('lisk-nano') {
     stage ('Deploy') {
       try {
         sh 'rsync -axl --delete --rsync-path="mkdir -p /var/www/test/lisk-nano/$BRANCH_NAME/ && rsync" $WORKSPACE/app/dist/ jenkins@master-01:/var/www/test/lisk-nano/$BRANCH_NAME/'
-        githubNotify context: 'Jenkins test deployment', description: 'Commit was deployed to test', status: 'SUCCESS', targetUrl: "https://${HUDSON_URL}/test/lisk-nano/${BRANCH_NAME}"
+        githubNotify context: 'Jenkins test deployment', description: 'Commit was deployed to test', status: 'SUCCESS', targetUrl: "${HUDSON_URL}test/lisk-nano/${BRANCH_NAME}"
       } catch (err) {
         echo "Error: ${err}"
         fail('Stopping build: deploy failed')
