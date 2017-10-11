@@ -37,7 +37,7 @@ describe('actions: peers', () => {
     });
 
     it('creates active peer config', () => {
-      getNetHash.returnsPromise().resolves({ nethash });
+      getNetHash.returnsPromise();
       const data = {
         passphrase,
         network: {
@@ -50,6 +50,7 @@ describe('actions: peers', () => {
       };
 
       activePeerSet(data)(dispatch);
+      getNetHash.resolves({ nethash });
 
       expect(dispatch).to.have.been.calledWith(match.hasNested('data.activePeer.options', data.network));
     });
@@ -63,13 +64,14 @@ describe('actions: peers', () => {
     });
 
     it('dispatch activePeerSet with nethash from response when the network is a custom node', () => {
-      getNetHash.returnsPromise().resolves({ nethash: 'nethash from response' });
+      getNetHash.returnsPromise();
       const network = {
         address: 'http://localhost:4000',
         custom: true,
       };
 
       activePeerSet({ passphrase, network })(dispatch);
+      getNetHash.resolves({ nethash: 'nethash from response' });
 
       expect(dispatch).to.have.been.calledWith(match.hasNested('data.activePeer.nethash.nethash', 'nethash from response'));
     });
