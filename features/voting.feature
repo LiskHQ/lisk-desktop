@@ -4,6 +4,13 @@ Feature: Voting tab
     When I click tab number 2
     Then I should see table with 100 lines
 
+  Scenario: should allow to view more delegates on scroll
+    Given I'm logged in as "any account"
+    When I click tab number 2
+    Then I should see table with 100 lines
+    When I scroll to the bottom
+    Then I should see table with 200 lines
+
   Scenario: should allow to view delegates with cold account
     Given I'm logged in as "empty account"
     When I click tab number 2

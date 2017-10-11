@@ -174,5 +174,9 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   When('I Refresh the page', (callback) => {
     browser.refresh().then(callback);
   });
+
+  When('I scroll to the bottom', () => {
+    browser.executeScript('window.scrollBy(0, 10000);');
+  });
 });
 
