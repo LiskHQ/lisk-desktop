@@ -2,23 +2,13 @@ import Chip from 'react-toolbox/lib/chip';
 import ProgressBar from 'react-toolbox/lib/progress_bar';
 import React from 'react';
 
+import { parseSearchParams } from '../../utils/searchParams';
 import styles from './voteUrlProcessor.css';
 
 export default class VoteUrlProcessor extends React.Component {
-  // eslint-disable-next-line class-methods-use-this
-  parseParams(search) {
-    return search.replace(/^\?/, '').split('&').reduce((acc, param) => {
-      const keyValue = param.split('=');
-      if (keyValue[0] !== '' && keyValue[1] !== 'undefined') {
-        acc[keyValue[0]] = keyValue[1];
-      }
-      return acc;
-    }, {});
-  }
-
   componentDidMount() {
     this.props.clearVoteLookupStatus();
-    const params = this.parseParams(this.props.history.location.search);
+    const params = parseSearchParams(this.props.history.location.search);
     if (params.upvote || params.downvote) {
       const upvotes = params.upvote ? params.upvote.split(',') : [];
       const downvotes = params.downvote ? params.downvote.split(',') : [];
