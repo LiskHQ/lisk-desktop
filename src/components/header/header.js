@@ -44,6 +44,14 @@ const Header = props => (
           <RelativeLink className={`verify-message ${styles.menuItem}`}
             to='verify-message'>{props.t('Verify message')}</RelativeLink>
         </MenuItem>
+        <MenuItem>
+          <RelativeLink className={`encrypt-message ${styles.menuItem}`}
+            to='encrypt-message'>{props.t('Encrypt message')}</RelativeLink>
+        </MenuItem>
+        <MenuItem>
+          <RelativeLink className={`decrypt-message ${styles.menuItem}`}
+            to='decrypt-message'>{props.t('Decrypt message')}</RelativeLink>
+        </MenuItem>
         <MenuDivider />
         <SaveAccountButton />
         <MenuItem>
