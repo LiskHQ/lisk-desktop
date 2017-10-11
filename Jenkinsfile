@@ -94,7 +94,7 @@ node('lisk-nano') {
         ansiColor('xterm') {
           sh '''
           N=${EXECUTOR_NUMBER:-0}
-          NODE_ENV= npm run dev -- --port 808$N &> .lisk-nano.log &
+          NODE_ENV= npm run dev -- --port 808$N > .lisk-nano.log 2>&1 &
           sleep 30
 
           # End to End test configuration
