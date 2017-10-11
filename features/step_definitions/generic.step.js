@@ -127,11 +127,11 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   Given('I\'m logged in as "{accountName}"', (accountName, callback) => {
     browser.ignoreSynchronization = true;
     browser.driver.manage().window().setSize(1000, 1000);
-    browser.get('http://localhost:8080/');
+    browser.get(browser.params.baseURL);
     localStorage.clear();
-    localStorage.setItem('address', 'http://localhost:4000');
+    localStorage.setItem('address', browser.params.liskCoreURL);
     localStorage.setItem('network', 2);
-    browser.get('http://localhost:8080/');
+    browser.get(browser.params.baseURL);
     waitForElemAndSendKeys('.passphrase input', accounts[accountName].passphrase);
     waitForElemAndClickIt('.login-button', callback);
   });
