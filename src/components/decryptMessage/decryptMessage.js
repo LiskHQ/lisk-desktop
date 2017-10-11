@@ -50,6 +50,7 @@ class DecryptMessage extends React.Component {
       ].join('\n');
       this.setState({ result, resultIsShown: false });
       this.setState({ resultIsShown: true });
+      this.props.successToast({ label: this.props.t('Message is decrypted successfully') });
     }
   }
 
@@ -58,7 +59,7 @@ class DecryptMessage extends React.Component {
       <div className='sign-message'>
         <form onSubmit={this.showResult.bind(this)}>
           <section>
-            <Input className='sender-public-key' label={this.props.t('Sender PublicKey')}
+            <Input className='senderPublicKey' label={this.props.t('Sender PublicKey')}
               autoFocus={true}
               value={this.state.senderPublicKey.value}
               onChange={this.handleChange.bind(this, 'senderPublicKey')} />
