@@ -119,6 +119,11 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     waitForElemAndCheckItsText(selectorClass, text, callback);
   });
 
+  Then('I should see "{elementName}" element with text:', (elementName, text, callback) => {
+    const selectorClass = `.${elementName.replace(/ /g, '-')}`;
+    waitForElemAndCheckItsText(selectorClass, text, callback);
+  });
+
   Then('I should see element "{elementName}" that contains text:', (elementName, text, callback) => {
     const selectorClass = `.${elementName.replace(/ /g, '-')}`;
     waitForElemAndCheckItsText(selectorClass, text, callback);
@@ -134,6 +139,10 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     browser.get(browser.params.baseURL);
     waitForElemAndSendKeys('.passphrase input', accounts[accountName].passphrase);
     waitForElemAndClickIt('.login-button', callback);
+  });
+
+  When('I go to "{url}"', (url, callback) => {
+    browser.get(`http://localhost:8080/#${url}`).then(callback);
   });
 
   When('I {iterations} times move mouse randomly', (iterations, callback) => {

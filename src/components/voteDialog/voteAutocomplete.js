@@ -196,7 +196,7 @@ export class VoteAutocompleteRaw extends React.Component {
     return (
       <article>
         <h3 className={styles.autoCompleteTile}>{this.props.t('Add vote to')}</h3>
-        <div>
+        <div className='vote-list'>
           {votedList.map(
             item => <Chip key={item}
               deletable
@@ -229,7 +229,7 @@ export class VoteAutocompleteRaw extends React.Component {
           </Card>
         </section>
         <h3 className={styles.autoCompleteTile}>{this.props.t('Remove vote from')}</h3>
-        <div>
+        <div className='unvote-list'>
           {unvotedList.map(
             item => <Chip key={item}
               deletable
