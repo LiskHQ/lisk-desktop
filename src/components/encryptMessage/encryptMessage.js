@@ -84,7 +84,7 @@ class EncryptMessage extends React.Component {
               onChange={this.handleChange.bind(this, 'message')} />
           </section>
           {this.state.resultIsShown ?
-            <SignVerifyResult result={this.state.result} title={this.props.t('Result')} /> :
+            <SignVerifyResult id='encryptResult' result={this.state.result} title={this.props.t('Result')} /> :
             <ActionBar
               secondaryButton={{
                 onClick: this.props.closeDialog,
