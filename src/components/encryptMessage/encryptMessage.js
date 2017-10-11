@@ -12,8 +12,12 @@ class EncryptMessage extends React.Component {
     super();
     this.state = {
       result: '',
-      recipientPublicKey: {},
-      message: {},
+      recipientPublicKey: {
+        value: '',
+      },
+      message: {
+        value: '',
+      },
     };
   }
 
@@ -26,22 +30,30 @@ class EncryptMessage extends React.Component {
     });
   }
 
-  encrypt() {
-    const cryptoResult = Lisk.crypto.encryptMessageWithSecret(
-      this.state.message.value,
-      this.props.account.passphrase,
-      this.state.recipientPublicKey.value);
-    const result = [
-      '-----ENCRYPTED MESSAGE-----',
-      cryptoResult.encryptedMessage,
-      '-----NONCE-----',
-      cryptoResult.nonce,
-    ].join('\n');
-    this.setState({ result, resultIsShown: false });
+  encrypt(event) {
+    event.preventDefault();
+    let cryptoResult = null;
+    try {
+      cryptoResult = Lisk.crypto.encryptMessageWithSecret(
+        this.state.message.value,
+        this.props.account.passphrase,
+        this.state.recipientPublicKey.value);
+    } catch (error) {
+      this.props.errorToast({ label: error.message });
+    }
+    if (cryptoResult) {
+      const result = [
+        '-----ENCRYPTED MESSAGE-----',
+        cryptoResult.encryptedMessage,
+        '-----NONCE-----',
+        cryptoResult.nonce,
+      ].join('\n');
+      this.setState({ result, resultIsShown: false });
+      this.showResult();
+    }
   }
 
-  showResult(event) {
-    event.preventDefault();
+  showResult() {
     const copied = this.props.copyToClipboard(this.state.result, {
       message: this.props.t('Press #{key} to copy'),
     });
@@ -54,7 +66,7 @@ class EncryptMessage extends React.Component {
   render() {
     return (
       <div className='sign-message'>
-        <form onSubmit={this.showResult.bind(this)}>
+        <form onSubmit={this.encrypt.bind(this)}>
           <section>
             <InfoParagraph>
               <h3>
@@ -70,7 +82,6 @@ class EncryptMessage extends React.Component {
               autoFocus={true}
               value={this.state.message.value}
               onChange={this.handleChange.bind(this, 'message')} />
-
           </section>
           {this.state.resultIsShown ?
             <SignVerifyResult result={this.state.result} title={this.props.t('Result')} /> :
@@ -82,8 +93,8 @@ class EncryptMessage extends React.Component {
                 label: this.props.t('encrypt'),
                 className: 'sign-button',
                 type: 'submit',
-                // disabled: (this.state.message.value ||  this.state.message.value),
-                onClick: this.encrypt.bind(this),
+                disabled: (this.state.message.value.length === 0 ||
+                  this.state.recipientPublicKey.value.length === 0),
               }} />
           }
         </form>
