@@ -10,9 +10,15 @@ class DecryptMessage extends React.Component {
     super();
     this.state = {
       result: '',
-      nonce: {},
-      message: {},
-      senderPublicKey: {},
+      nonce: {
+        value: '',
+      },
+      message: {
+        value: '',
+      },
+      senderPublicKey: {
+        value: '',
+      },
     };
   }
 
@@ -25,28 +31,26 @@ class DecryptMessage extends React.Component {
     });
   }
 
-  decrypt() {
-    const decryptedMessage = Lisk.crypto.decryptMessageWithSecret(
-      this.state.message.value,
-      this.state.nonce.value,
-      this.props.account.passphrase,
-      this.state.senderPublicKey.value);
-    const result = [
-      '-----DECRYPTED MESSAGE-----',
-      decryptedMessage,
-    ].join('\n');
-    this.setState({ result, resultIsShown: false });
-  }
-
   showResult(event) {
     event.preventDefault();
-    const copied = this.props.copyToClipboard(this.state.result, {
-      message: this.props.t('Press #{key} to copy'),
-    });
-    if (copied) {
-      this.props.successToast({ label: this.props.t('Result copied to clipboard') });
+    let decryptedMessage = null;
+    try {
+      decryptedMessage = Lisk.crypto.decryptMessageWithSecret(
+        this.state.message.value,
+        this.state.nonce.value,
+        this.props.account.passphrase,
+        this.state.senderPublicKey.value);
+    } catch (error) {
+      this.props.errorToast({ label: error.message });
     }
-    this.setState({ resultIsShown: true });
+    if (decryptedMessage) {
+      const result = [
+        '-----DECRYPTED MESSAGE-----',
+        decryptedMessage,
+      ].join('\n');
+      this.setState({ result, resultIsShown: false });
+      this.setState({ resultIsShown: true });
+    }
   }
 
   render() {
@@ -78,8 +82,10 @@ class DecryptMessage extends React.Component {
                 label: this.props.t('decrypt'),
                 className: 'sign-button',
                 type: 'submit',
-                // disabled: (this.state.message.value ||  this.state.message.value),
-                onClick: this.decrypt.bind(this),
+                disabled: (this.state.message.value.length === 0 ||
+                  this.state.senderPublicKey.value.length === 0 ||
+                  this.state.nonce.value.length === 0
+                ),
               }} />
           }
         </form>
