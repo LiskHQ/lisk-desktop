@@ -6,8 +6,10 @@ import {
   votesUpdated,
   votesAdded,
   voteToggled,
+  voteLookupStatusUpdated,
   votePlaced,
   votesFetched,
+  urlVotesFound,
   delegatesFetched,
   delegatesAdded,
 } from './voting';
@@ -33,6 +35,20 @@ describe('actions: voting', () => {
       };
 
       expect(voteToggled(data)).to.be.deep.equal(expectedAction);
+    });
+  });
+
+  describe('voteLookupStatusUpdated', () => {
+    it('should create an action to update lookup status of any given delegate name', () => {
+      const data = {
+        label: 'dummy',
+      };
+      const expectedAction = {
+        data,
+        type: actionTypes.voteLookupStatusUpdated,
+      };
+
+      expect(voteLookupStatusUpdated(data)).to.be.deep.equal(expectedAction);
     });
   });
 
@@ -132,27 +148,45 @@ describe('actions: voting', () => {
   });
 
   describe('votesFetched', () => {
+    let delegateApiMock;
     const data = {
       activePeer: {},
       address: '8096217735672704724L',
     };
     const delegates = delegateList;
-    const actionFunction = votesFetched(data);
+
+    beforeEach(() => {
+      delegateApiMock = sinon.stub(delegateApi, 'listAccountDelegates').returnsPromise();
+    });
+
+    afterEach(() => {
+      delegateApiMock.restore();
+    });
+
 
     it('should create an action function', () => {
+      const actionFunction = votesFetched(data);
       expect(typeof actionFunction).to.be.deep.equal('function');
     });
 
-    it.skip('should dispatch votesAdded action if resolved', () => {
-      const delegateApiMock = sinon.stub(delegateApi, 'listAccountDelegates');
+    it('should dispatch votesAdded action when resolved if type !== \'update\'', () => {
       const dispatch = sinon.spy();
 
-      delegateApiMock.returnsPromise().resolves({ delegates });
+      delegateApiMock.resolves({ delegates });
       const expectedAction = { list: delegates };
 
-      actionFunction(dispatch);
+      votesFetched(data)(dispatch);
       expect(dispatch).to.have.been.calledWith(votesAdded(expectedAction));
-      delegateApiMock.restore();
+    });
+
+    it('should dispatch votesUpdated action when resolved if type === \'update\'', () => {
+      const dispatch = sinon.spy();
+
+      delegateApiMock.resolves({ delegates });
+      const expectedAction = { list: delegates };
+
+      votesFetched({ ...data, type: 'update' })(dispatch);
+      expect(dispatch).to.have.been.calledWith(votesUpdated(expectedAction));
     });
   });
 
@@ -180,6 +214,56 @@ describe('actions: voting', () => {
       actionFunction(dispatch);
       expect(dispatch).to.have.been.calledWith(delegatesAdded(expectedAction));
       delegateApiMock.restore();
+    });
+  });
+
+  describe('urlVotesFound', () => {
+    let delegateApiMock;
+    const data = {
+      activePeer: {},
+      address: '8096217735672704724L',
+      upvotes: [],
+      downvotes: [],
+    };
+    const delegates = delegateList;
+    let expectedAction = {
+      list: delegates,
+      upvotes: [],
+      downvotes: [],
+    };
+
+    beforeEach(() => {
+      delegateApiMock = sinon.stub(delegateApi, 'listAccountDelegates').returnsPromise();
+    });
+
+    afterEach(() => {
+      delegateApiMock.restore();
+    });
+
+    it('should create an action function', () => {
+      expect(typeof urlVotesFound(data)).to.be.deep.equal('function');
+    });
+
+    it('should dispatch votesAdded action when resolved', () => {
+      const dispatch = sinon.spy();
+
+
+      urlVotesFound(data)(dispatch);
+      delegateApiMock.resolves({ delegates });
+      expect(dispatch).to.have.been.calledWith(votesAdded(expectedAction));
+    });
+
+    it('should dispatch votesAdded action when rejected', () => {
+      const dispatch = sinon.spy();
+
+      expectedAction = {
+        ...expectedAction,
+        list: [],
+      };
+
+      urlVotesFound(data)(dispatch);
+      delegateApiMock.rejects();
+      expect(dispatch).to.have.been.calledWith(votesAdded(expectedAction));
     });
   });
 });
