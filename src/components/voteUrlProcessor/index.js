@@ -17,7 +17,8 @@ const filterObjectPropsWithValue = (object = {}, value) => (
 
 const mapStateToProps = state => ({
   votes: state.voting.votes,
-  voteCount: Object.keys(state.voting.voteLookupStatus || {}).length,
+  urlVoteCount: Object.keys(state.voting.voteLookupStatus || {}).length,
+  pending: filterObjectPropsWithValue(state.voting.voteLookupStatus, 'pending'),
   downvotes: filterObjectPropsWithValue(state.voting.voteLookupStatus, 'downvotes'),
   upvotes: filterObjectPropsWithValue(state.voting.voteLookupStatus, 'upvotes'),
   alreadyVoted: filterObjectPropsWithValue(state.voting.voteLookupStatus, 'alreadyVoted'),
