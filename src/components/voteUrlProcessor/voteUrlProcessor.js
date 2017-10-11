@@ -33,19 +33,21 @@ export default class VoteUrlProcessor extends React.Component {
     const params = this.parseParams(this.props.history.location.search);
     if (params.upvote || params.downvote) {
       listAccountDelegates(this.props.activePeer, this.props.account.address)
-        .then(({ delegates }) => {
-          this.props.votesAdded({ list: delegates });
-          if (params.downvote) {
-            const downvotes = params.downvote.split(',');
-            downvotes.forEach(this.processDownvote.bind(this));
-            this.voteCount += downvotes.length;
-          }
-          if (params.upvote) {
-            const upvotes = params.upvote.split(',');
-            upvotes.forEach(this.processUpvote.bind(this));
-            this.voteCount += upvotes.length;
-          }
-        });
+        .then(({ delegates }) => { this.processUrlVotes(params, delegates); })
+        .catch(() => { this.processUrlVotes(params, []); });
+    }
+  }
+  processUrlVotes(params, votes) {
+    this.props.votesAdded({ list: votes });
+    if (params.downvote) {
+      const downvotes = params.downvote.split(',');
+      downvotes.forEach(this.processDownvote.bind(this));
+      this.voteCount += downvotes.length;
+    }
+    if (params.upvote) {
+      const upvotes = params.upvote.split(',');
+      upvotes.forEach(this.processUpvote.bind(this));
+      this.voteCount += upvotes.length;
     }
   }
 
