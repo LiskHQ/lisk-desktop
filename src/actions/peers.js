@@ -2,6 +2,15 @@ import Lisk from 'lisk-js';
 import actionTypes from '../constants/actions';
 import { getNetHash } from './../utils/api/peers';
 
+const peerSet = (data, config) => ({
+  data: Object.assign({
+    passphrase: data.passphrase,
+    publicKey: data.publicKey,
+    activePeer: Lisk.api(config),
+  }),
+  type: actionTypes.activePeerSet,
+});
+
 /**
  * Returns required action object to set
  * the given peer data as active peer
@@ -34,18 +43,16 @@ export const activePeerSet = data =>
       if (network.custom) {
         getNetHash(Lisk.api(config)).then((response) => {
           config.nethash = response.nethash;
+          dispatch(peerSet(data, config));
         });
+      } else {
+        dispatch(peerSet(data, config));
       }
+    } else {
+      dispatch(peerSet(data, config));
     }
-    dispatch({
-      data: Object.assign({
-        passphrase: data.passphrase,
-        publicKey: data.publicKey,
-        activePeer: Lisk.api(config),
-      }),
-      type: actionTypes.activePeerSet,
-    });
   };
+
 
 /**
  * Returns required action object to partially

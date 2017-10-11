@@ -71,7 +71,7 @@ describe('actions: peers', () => {
 
       activePeerSet({ passphrase, network })(dispatch);
 
-      expect(dispatch).to.have.been.calledWith(match.hasNested('data.activePeer.options.nethash', 'nethash from response'));
+      expect(dispatch).to.have.been.calledWith(match.hasNested('data.activePeer.nethash.nethash', 'nethash from response'));
     });
 
     it('dispatch activePeerSet action even if network is undefined', () => {
