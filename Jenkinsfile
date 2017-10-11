@@ -54,7 +54,7 @@ node('lisk-nano') {
     stage ('Run Eslint') {
       try {
         ansiColor('xterm') {
-          sh 'npm run eslint'
+          sh 'npm run --silent eslint'
         }
       } catch (err) {
         echo "Error: ${err}"
@@ -66,7 +66,7 @@ node('lisk-nano') {
       try {
         sh '''
         cp ~/.coveralls.yml-nano .coveralls.yml
-        npm run build
+        npm run --silent build
         '''
       } catch (err) {
         echo "Error: ${err}"
@@ -78,7 +78,7 @@ node('lisk-nano') {
       try {
         ansiColor('xterm') {
           sh '''
-          ON_JENKINS=true npm run test
+          ON_JENKINS=true npm run --silent test
           # Submit coverage to coveralls
           cat coverage/*/lcov.info | coveralls -v
           '''
@@ -94,7 +94,7 @@ node('lisk-nano') {
         ansiColor('xterm') {
           sh '''
           N=${EXECUTOR_NUMBER:-0}
-          NODE_ENV= npm run dev -- --port 808$N &> .lisk-nano.log &
+          NODE_ENV= npm run --silent dev -- --port 808$N > .lisk-nano.log 2>&1 &
           sleep 30
 
           # End to End test configuration
@@ -103,7 +103,7 @@ node('lisk-nano') {
           ./node_modules/protractor/bin/webdriver-manager update
 
           # Run end-to-end tests
-          npm run e2e-test -- --params.baseURL http://localhost:808$N/ --params.liskCoreURL http://localhost:400$N
+          npm run --silent e2e-test -- --params.baseURL http://localhost:808$N/ --params.liskCoreURL http://localhost:400$N
           '''
         }
       } catch (err) {
