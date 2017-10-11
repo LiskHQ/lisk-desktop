@@ -12,31 +12,27 @@ const updateLookupStatus = (store, list, username) => {
   }));
 };
 
-
-const processUpvote = (store, activePeer, username) => {
-  updateLookupStatus(store, 'pending', username);
-  getDelegate(activePeer, { username }).then((data) => {
-    const vote = store.getState().voting.votes[username];
-    if (!vote || (!vote.confirmed && !vote.unconfirmed)) {
-      store.dispatch(voteToggled({ username, publicKey: data.delegate.publicKey }));
-      updateLookupStatus(store, 'upvotes', username);
-    } else {
-      updateLookupStatus(store, 'alreadyVoted', username);
-    }
-  }).catch(() => {
-    updateLookupStatus(store, 'notFound', username);
-  });
+const lookupDelegate = (store, username) => {
+  const state = store.getState();
+  const activePeer = state.peers.data;
+  const delegate = state.voting.delegates.filter(d => d.username === username)[0];
+  if (delegate) {
+    return new Promise((resolve) => {
+      resolve({ delegate });
+    });
+  }
+  return getDelegate(activePeer, { username });
 };
 
-const processDownvote = (store, activePeer, username) => {
+const processVote = (store, options, username) => {
   updateLookupStatus(store, 'pending', username);
-  getDelegate(activePeer, { username }).then((data) => {
+  lookupDelegate(store, username).then((data) => {
     const vote = store.getState().voting.votes[username];
-    if (vote && vote.confirmed && vote.unconfirmed) {
+    if (options.isValid(vote)) {
       store.dispatch(voteToggled({ username, publicKey: data.delegate.publicKey }));
-      updateLookupStatus(store, 'downvotes', username);
+      updateLookupStatus(store, options.successState, username);
     } else {
-      updateLookupStatus(store, 'notVotedYet', username);
+      updateLookupStatus(store, options.invalidState, username);
     }
   }).catch(() => {
     updateLookupStatus(store, 'notFound', username);
@@ -46,9 +42,16 @@ const processDownvote = (store, activePeer, username) => {
 const lookupDelegatesFromUrl = (store, action) => {
   const { upvotes, downvotes } = action.data;
   if (upvotes && downvotes) {
-    const activePeer = store.getState().peers.data;
-    downvotes.forEach(processDownvote.bind(this, store, activePeer));
-    upvotes.forEach(processUpvote.bind(this, store, activePeer));
+    downvotes.forEach(processVote.bind(this, store, {
+      successState: 'downvotes',
+      invalidState: 'notVotedYet',
+      isValid: vote => (vote && vote.confirmed && vote.unconfirmed),
+    }));
+    upvotes.forEach(processVote.bind(this, store, {
+      successState: 'upvotes',
+      invalidState: 'alreadyVoted',
+      isValid: vote => (!vote || (!vote.confirmed && !vote.unconfirmed)),
+    }));
   }
 };
 
