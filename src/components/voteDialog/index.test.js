@@ -79,5 +79,6 @@ describe('VoteDialog HOC', () => {
     const actionsSpy = sinon.spy(votingActions, 'voteToggled');
     wrapper.find('VoteDialog').props().voteToggled([]);
     expect(actionsSpy).to.be.calledWith();
+    actionsSpy.restore();
   });
 });
