@@ -29,7 +29,7 @@ describe('actions: peers', () => {
 
     beforeEach(() => {
       dispatch = spy();
-      getNetHash = stub(peersApi, 'getNetHash');
+      getNetHash = stub(peersApi, 'getNethash');
     });
 
     afterEach(() => {

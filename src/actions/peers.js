@@ -1,6 +1,6 @@
 import Lisk from 'lisk-js';
 import actionTypes from '../constants/actions';
-import { getNetHash } from './../utils/api/peers';
+import { getNethash } from './../utils/api/peers';
 
 const peerSet = (data, config) => ({
   data: Object.assign({
@@ -38,7 +38,7 @@ export const activePeerSet = data =>
       config.testnet = config.port === '7000';
     }
     if (config.custom) {
-      getNetHash(Lisk.api(config)).then((response) => {
+      getNethash(Lisk.api(config)).then((response) => {
         config.nethash = response.nethash;
         dispatch(peerSet(data, config));
       });

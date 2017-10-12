@@ -14,6 +14,6 @@ const requestToActivePeer = (activePeer, path, urlParams) =>
   });
 
 
-const getNetHash = activePeer => (requestToActivePeer(activePeer, 'blocks/getNethash'));
+const getNethash = activePeer => (requestToActivePeer(activePeer, 'blocks/getNethash'));
 
-export { requestToActivePeer, getNetHash };
+export { requestToActivePeer, getNethash };
