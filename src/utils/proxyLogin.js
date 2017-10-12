@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import { dialogDisplayed } from '../actions/dialog';
 import ProxyDialog from '../components/proxyDialog';
 import store from '../store';
@@ -9,7 +10,7 @@ export default {
     if (ipc) {
       ipc.on('proxyLogin', (action, authInfo) => {
         store.dispatch(dialogDisplayed({
-          title: 'Proxy Authentication',
+          title: i18next.t('Proxy Authentication'),
           childComponent: ProxyDialog,
           childComponentProps: {
             authInfo,

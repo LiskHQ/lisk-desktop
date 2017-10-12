@@ -21,7 +21,7 @@ class PassphraseInput extends React.Component {
     let error;
 
     if (!value) {
-      error = 'Required';
+      error = this.props.t('Required');
     } else if (!isValidPassphrase(value)) {
       error = this.getPassphraseValidationError(value);
     } else if (this.hasExtraWhitespace(value)) {
@@ -35,7 +35,7 @@ class PassphraseInput extends React.Component {
   getPassphraseValidationError(passphrase) {
     const mnemonic = passphrase.trim().split(' ');
     if (mnemonic.length < 12) {
-      return `Passphrase should have 12 words, entered passphrase has ${mnemonic.length}`;
+      return this.props.t('Passphrase should have 12 words, entered passphrase has {{length}}', { length: mnemonic.length });
     }
 
     const invalidWord = mnemonic.find(word => !inDictionary(word.toLowerCase()));
@@ -43,12 +43,12 @@ class PassphraseInput extends React.Component {
       if (invalidWord.length >= 2 && invalidWord.length <= 8) {
         const validWord = findSimilarWord(invalidWord);
         if (validWord) {
-          return `Word "${invalidWord}" is not on the passphrase Word List. Most similar word on the list is "${findSimilarWord(invalidWord)}"`;
+          return this.props.t('Word "{{invalidWord}}" is not on the passphrase Word List. Most similar word on the list is "{{similarWord}}"', { invalidWord, similarWord: findSimilarWord(invalidWord) });
         }
       }
-      return `Word "${invalidWord}" is not on the passphrase Word List.`;
+      return this.props.t('Word "{{invalidWord}}" is not on the passphrase Word List.', { invalidWord });
     }
-    return 'Passphrase is not valid';
+    return this.props.t('Passphrase is not valid');
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -60,11 +60,11 @@ class PassphraseInput extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   getPassphraseWhitespaceError(passphrase) {
     if (passphrase.replace(/^\s+/, '') !== passphrase) {
-      return 'Passphrase contains unnecessary whitespace at the beginning';
+      return this.props.t('Passphrase contains unnecessary whitespace at the beginning');
     } else if (passphrase.replace(/\s+$/, '') !== passphrase) {
-      return 'Passphrase contains unnecessary whitespace at the end';
+      return this.props.t('Passphrase contains unnecessary whitespace at the end');
     } else if (passphrase.replace(/\s+/g, ' ') !== passphrase) {
-      return 'Passphrase contains extra whitespace between words';
+      return this.props.t('Passphrase contains extra whitespace between words');
     }
 
     return null;
