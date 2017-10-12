@@ -9,9 +9,9 @@ export default class VoteUrlProcessor extends React.Component {
   componentDidMount() {
     this.props.clearVoteLookupStatus();
     const params = parseSearchParams(this.props.history.location.search);
-    if (params.upvote || params.unvote) {
-      const upvotes = params.upvote ? params.upvote.split(',') : [];
-      const unvotes = params.unvote ? params.unvote.split(',') : [];
+    if (params.votes || params.unvotes) {
+      const upvotes = params.votes ? params.votes.split(',') : [];
+      const unvotes = params.unvotes ? params.unvotes.split(',') : [];
       this.props.urlVotesFound({
         activePeer: this.props.activePeer,
         upvotes,
@@ -29,7 +29,7 @@ export default class VoteUrlProcessor extends React.Component {
     const errorMessages = {
       notFound: this.props.t('{{count}} of entered delegate names could not be resolved:',
         { count: this.props.notFound.length }),
-      alreadyVoted: this.props.t('{{count}} of delegate names selected for upvote were already voted for:',
+      alreadyVoted: this.props.t('{{count}} of delegate names selected for vote were already voted for:',
         { count: this.props.alreadyVoted.length }),
       notVotedYet: this.props.t('{{count}} of delegate names selected for unvote were not voted for:',
         { count: this.props.notVotedYet.length }),
