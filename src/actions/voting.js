@@ -147,10 +147,10 @@ export const delegatesFetched = ({ activePeer, q, offset, refresh }) =>
 /**
  * Get list of delegates current account has voted for and dispatch it with votes from url 
  */
-export const urlVotesFound = ({ activePeer, upvotes, downvotes, address }) =>
+export const urlVotesFound = ({ activePeer, upvotes, unvotes, address }) =>
   (dispatch) => {
     const processUrlVotes = (votes) => {
-      dispatch(votesAdded({ list: votes, upvotes, downvotes }));
+      dispatch(votesAdded({ list: votes, upvotes, unvotes }));
     };
     listAccountDelegates(activePeer, address)
       .then(({ delegates }) => { processUrlVotes(delegates); })

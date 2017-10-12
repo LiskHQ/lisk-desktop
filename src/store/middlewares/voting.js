@@ -40,10 +40,10 @@ const processVote = (store, options, username) => {
 };
 
 const lookupDelegatesFromUrl = (store, action) => {
-  const { upvotes, downvotes } = action.data;
-  if (upvotes && downvotes) {
-    downvotes.forEach(processVote.bind(this, store, {
-      successState: 'downvotes',
+  const { upvotes, unvotes } = action.data;
+  if (upvotes && unvotes) {
+    unvotes.forEach(processVote.bind(this, store, {
+      successState: 'unvotes',
       invalidState: 'notVotedYet',
       isValid: vote => (vote && vote.confirmed && vote.unconfirmed),
     }));

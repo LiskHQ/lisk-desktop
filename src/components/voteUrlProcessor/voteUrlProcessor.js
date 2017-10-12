@@ -9,13 +9,13 @@ export default class VoteUrlProcessor extends React.Component {
   componentDidMount() {
     this.props.clearVoteLookupStatus();
     const params = parseSearchParams(this.props.history.location.search);
-    if (params.upvote || params.downvote) {
+    if (params.upvote || params.unvote) {
       const upvotes = params.upvote ? params.upvote.split(',') : [];
-      const downvotes = params.downvote ? params.downvote.split(',') : [];
+      const unvotes = params.unvote ? params.unvote.split(',') : [];
       this.props.urlVotesFound({
         activePeer: this.props.activePeer,
         upvotes,
-        downvotes,
+        unvotes,
         address: this.props.account.address,
       });
     }
@@ -31,14 +31,14 @@ export default class VoteUrlProcessor extends React.Component {
         { count: this.props.notFound.length }),
       alreadyVoted: this.props.t('{{count}} of delegate names selected for upvote were already voted for:',
         { count: this.props.alreadyVoted.length }),
-      notVotedYet: this.props.t('{{count}} of delegate names selected for downvote were not voted for:',
+      notVotedYet: this.props.t('{{count}} of delegate names selected for unvote were not voted for:',
         { count: this.props.notVotedYet.length }),
     };
     const successMessages = {
       upvotes: this.props.t('{{count}} delegate names successfully resolved to add vote to.',
         { count: this.props.upvotes.length }),
-      downvotes: this.props.t('{{count}} delegate names successfully resolved to remove vote from.',
-        { count: this.props.downvotes.length }),
+      unvotes: this.props.t('{{count}} delegate names successfully resolved to remove vote from.',
+        { count: this.props.unvotes.length }),
     };
     return (
       <div>

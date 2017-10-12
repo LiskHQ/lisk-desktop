@@ -223,13 +223,13 @@ describe('actions: voting', () => {
       activePeer: {},
       address: '8096217735672704724L',
       upvotes: [],
-      downvotes: [],
+      unvotes: [],
     };
     const delegates = delegateList;
     let expectedAction = {
       list: delegates,
       upvotes: [],
-      downvotes: [],
+      unvotes: [],
     };
 
     beforeEach(() => {
