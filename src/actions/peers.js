@@ -25,29 +25,23 @@ export const activePeerSet = data =>
       const reg = /^(?:f|ht)tps?:\/\//i;
       return reg.test(url) ? url : `http://${url}`;
     };
+    const config = data.network || {};
 
-    const { network } = data;
-    let config = {};
-    if (network) {
-      config = network;
-      if (network.address) {
-        const normalizedUrl = new URL(addHttp(network.address));
+    if (config.address) {
+      const { hostname, port, protocol } = new URL(addHttp(config.address));
 
-        config.node = normalizedUrl.hostname;
-        config.port = normalizedUrl.port;
-        config.ssl = normalizedUrl.protocol === 'https';
-      }
-      if (config.testnet === undefined && config.port !== undefined) {
-        config.testnet = config.port === '7000';
-      }
-      if (network.custom) {
-        getNetHash(Lisk.api(config)).then((response) => {
-          config.nethash = response.nethash;
-          dispatch(peerSet(data, config));
-        });
-      } else {
+      config.node = hostname;
+      config.port = port;
+      config.ssl = protocol === 'https';
+    }
+    if (config.testnet === undefined && config.port !== undefined) {
+      config.testnet = config.port === '7000';
+    }
+    if (config.custom) {
+      getNetHash(Lisk.api(config)).then((response) => {
+        config.nethash = response.nethash;
         dispatch(peerSet(data, config));
-      }
+      });
     } else {
       dispatch(peerSet(data, config));
     }
