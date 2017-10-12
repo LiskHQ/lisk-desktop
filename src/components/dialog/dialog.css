@@ -14,8 +14,6 @@
   }
 
   & header {
-    margin: -24px;
-    margin-bottom: 24px;
     border-radius: 2px 2px 0 0;
     color: rgba(255, 255, 255, 0.87);
 
@@ -32,9 +30,26 @@
   }
 }
 
+.body {
+  border-radius: 2px 2px 0 0;
+  padding: 0px;
+}
+
+.innerBody {
+  padding: 24px;
+  max-height: calc(100vh - 64px); /* stylelint-disable-line */
+  overflow: auto;
+}
+
 @media screen and (min-width: 960px) {
   .fullscreen {
     width: 75vw; /* stylelint-disable-line */
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .innerBody {
+    max-height: calc(100vh - 100px); /* stylelint-disable-line */
   }
 }
 
@@ -45,3 +60,4 @@
 .success {
   background-color: #7cb342;
 }
+

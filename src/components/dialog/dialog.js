@@ -78,7 +78,7 @@ class DialogElement extends Component {
               <IconButton className={`${styles['x-button']} x-button`} onClick={this.goBack.bind(this)} icon='close'/>
             </Navigation>
           </AppBar>
-          <div className='modal-dialog-body'>
+          <div className={`modal-dialog-body ${styles.innerBody}`}>
             {this.props.dialog.childComponent ?
               <this.props.dialog.childComponent
                 {...(this.props.dialog.childComponentProps || {})}
