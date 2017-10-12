@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { spy, mock } from 'sinon';
-
+import i18n from '../../i18n';
 import ProxyDialog from './';
 
 describe('ProxyDialog', () => {
@@ -14,6 +14,7 @@ describe('ProxyDialog', () => {
       callback: spy(),
       closeDialog: spy(),
       authInfo: { host: 'someProxy.com' },
+      i18n,
     };
     wrapper = mount(<ProxyDialog {...props} />);
   });
