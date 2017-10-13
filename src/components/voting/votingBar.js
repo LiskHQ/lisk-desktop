@@ -24,7 +24,7 @@ const VotingBar = ({ votes, t }) => {
           <span>{t('Upvotes:')} </span>
           <strong>{voteList.length}</strong>
         </span>
-        <span className={`${grid['col-sm-3']} ${grid['col-xs-12']} downvotes`}>
+        <span className={`${grid['col-sm-3']} ${grid['col-xs-12']} unvotes`}>
           <span>{t('Downvotes:')} </span>
           <strong>{unvoteList.length}</strong>
         </span>

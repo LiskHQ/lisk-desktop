@@ -15,6 +15,8 @@ const actionTypes = {
   voteToggled: 'VOTE_TOGGLED',
   votesAdded: 'VOTES_ADDED',
   votesUpdated: 'VOTES_UPDATED',
+  voteLookupStatusCleared: 'VOTE_LOOKUP_STATUS_CLEARED',
+  voteLookupStatusUpdated: 'VOTE_LOOKUP_STATUS_UPDATED',
   delegatesAdded: 'DELEGATES_ADDED',
   pendingVotesAdded: 'PENDING_VOTES_ADDED',
   toastDisplayed: 'TOAST_DISPLAYED',

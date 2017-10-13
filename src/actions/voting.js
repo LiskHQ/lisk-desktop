@@ -1,9 +1,13 @@
-import { vote, listAccountDelegates, listDelegates } from '../utils/api/delegate';
-import { transactionAdded } from './transactions';
 import { errorAlertDialogDisplayed } from './dialog';
+import {
+  listAccountDelegates,
+  listDelegates,
+  vote,
+} from '../utils/api/delegate';
 import { passphraseUsed } from './account';
-import actionTypes from '../constants/actions';
+import { transactionAdded } from './transactions';
 import Fees from '../constants/fees';
+import actionTypes from '../constants/actions';
 import transactionTypes from '../constants/transactionTypes';
 
 /**
@@ -43,6 +47,22 @@ export const delegatesAdded = data => ({
 export const voteToggled = data => ({
   type: actionTypes.voteToggled,
   data,
+});
+
+
+/**
+ * Updates vote lookup status of the given delegate name
+ */
+export const voteLookupStatusUpdated = data => ({
+  type: actionTypes.voteLookupStatusUpdated,
+  data,
+});
+
+/**
+ * Clears all vote lookup statuses
+ */
+export const voteLookupStatusCleared = () => ({
+  type: actionTypes.voteLookupStatusCleared,
 });
 
 /**
@@ -121,4 +141,18 @@ export const delegatesFetched = ({ activePeer, q, offset, refresh }) =>
     ).then(({ delegates, totalCount }) => {
       dispatch(delegatesAdded({ list: delegates, totalDelegates: totalCount, refresh }));
     });
+  };
+
+
+/**
+ * Get list of delegates current account has voted for and dispatch it with votes from url 
+ */
+export const urlVotesFound = ({ activePeer, upvotes, unvotes, address }) =>
+  (dispatch) => {
+    const processUrlVotes = (votes) => {
+      dispatch(votesAdded({ list: votes, upvotes, unvotes }));
+    };
+    listAccountDelegates(activePeer, address)
+      .then(({ delegates }) => { processUrlVotes(delegates); })
+      .catch(() => { processUrlVotes([]); });
   };

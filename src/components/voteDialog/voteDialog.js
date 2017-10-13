@@ -1,12 +1,13 @@
 import React from 'react';
-import InfoParagraph from '../infoParagraph';
-import ActionBar from '../actionBar';
-import Fees from '../../constants/fees';
-import votingConst from '../../constants/voting';
-import Autocomplete from './voteAutocomplete';
-import styles from './voteDialog.css';
-import AuthInputs from '../authInputs';
 import { authStatePrefill, authStateIsValid } from '../../utils/form';
+import ActionBar from '../actionBar';
+import AuthInputs from '../authInputs';
+import Autocomplete from './voteAutocomplete';
+import Fees from '../../constants/fees';
+import InfoParagraph from '../infoParagraph';
+import VoteUrlProcessor from '../voteUrlProcessor';
+import styles from './voteDialog.css';
+import votingConst from '../../constants/voting';
 
 const { maxCountOfVotes, maxCountOfVotesInOneTurn } = votingConst;
 
@@ -51,6 +52,7 @@ export default class VoteDialog extends React.Component {
     return (
       <article>
         <form id='voteform'>
+          <VoteUrlProcessor />
           <Autocomplete
             votedDelegates={this.props.delegates}
             votes={this.props.votes}

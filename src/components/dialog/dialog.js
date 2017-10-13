@@ -3,6 +3,7 @@ import Dialog from 'react-toolbox/lib/dialog';
 import Navigation from 'react-toolbox/lib/navigation';
 import AppBar from 'react-toolbox/lib/app_bar';
 import { IconButton } from 'react-toolbox/lib/button';
+import { parseSearchParams } from '../../utils/searchParams';
 import styles from './dialog.css';
 import getDialogs from './dialogs';
 import routesReg from '../../utils/routes';
@@ -43,24 +44,13 @@ class DialogElement extends Component {
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  parseParams(search) {
-    return search.replace(/^\?/, '').split('&&').reduce((acc, param) => {
-      const keyValue = param.split('=');
-      if (keyValue[0] !== '' && keyValue[1] !== 'undefined') {
-        acc[keyValue[0]] = keyValue[1];
-      }
-      return acc;
-    }, {});
-  }
-
   open(config, dialog) {
     clearTimeout(this.timeout);
     this.setState({ hidden: false });
     this.props.dialogDisplayed({
       title: dialog.title,
       childComponent: dialog.component,
-      childComponentProps: this.parseParams(this.props.history.location.search),
+      childComponentProps: parseSearchParams(this.props.history.location.search),
     });
   }
 
@@ -88,7 +78,7 @@ class DialogElement extends Component {
               <IconButton className={`${styles['x-button']} x-button`} onClick={this.goBack.bind(this)} icon='close'/>
             </Navigation>
           </AppBar>
-          <div className='modal-dialog-body'>
+          <div className={`modal-dialog-body ${styles.innerBody}`}>
             {this.props.dialog.childComponent ?
               <this.props.dialog.childComponent
                 {...(this.props.dialog.childComponentProps || {})}

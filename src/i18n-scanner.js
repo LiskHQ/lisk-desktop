@@ -5,6 +5,8 @@ const Parser = require('i18next-scanner').Parser;
 const translationFunctionNames = ['i18next.t', 'props.t', 'this.props.t', 't'];
 const outputFilePath = './src/locales/en/common.json';
 
+const translationsSource = JSON.parse(fs.readFileSync(outputFilePath, 'utf8'));
+
 const parser = new Parser({
   keySeparator: '>',
   nsSeparator: '|',
@@ -12,13 +14,14 @@ const parser = new Parser({
 
 
 const customHandler = function (key, options) {
-  const value = key;
+  const value = translationsSource[key] || key;
   if (options.context) {
     key += `_${options.context}`;
   }
   parser.set(key, value);
   if (options.count !== undefined) {
-    parser.set(`${key}_plural`);
+    key = `${key}_plural`;
+    parser.set(key, translationsSource[key] || '');
   }
 };
 
