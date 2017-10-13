@@ -1,10 +1,12 @@
+import i18next from 'i18next';
+
 const validateUrl = (value) => {
   const addHttp = (url) => {
     const reg = /^(?:f|ht)tps?:\/\//i;
     return reg.test(url) ? url : `http://${url}`;
   };
 
-  const errorMessage = 'URL is invalid';
+  const errorMessage = i18next.t('URL is invalid');
 
   const isValidLocalhost = url => url.hostname === 'localhost' && url.port.length > 1;
   const isValidRemote = url => /(([a-z\d]([a-z\d-]*[a-z\d])*)\.)+[a-z]{2,}|((\d{1,3}\.){3}\d{1,3})/.test(url.hostname);
