@@ -44,7 +44,14 @@ node('lisk-nano') {
 
     stage ('Install npm dependencies') {
       try {
-        sh 'npm install'
+        sh '''
+        cp -r ~/cache/development/node_modules ./ || true
+        npm install
+        # cache nightly builds (development) only to save space
+        if [ $BRANCH_NAME = "development" ]; then
+            rsync -axl $WORKSPACE/node_modules/ ~/cache/development/node_modules/ || true
+        fi
+        '''
       } catch (err) {
         echo "Error: ${err}"
         fail('Stopping build: npm install failed')
