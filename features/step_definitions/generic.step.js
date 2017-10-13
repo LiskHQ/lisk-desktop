@@ -142,7 +142,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   });
 
   When('I go to "{url}"', (url, callback) => {
-    browser.get(`http://localhost:8080/#${url}`).then(callback);
+    browser.get(`${browser.params.baseURL}#${url}`).then(callback);
   });
 
   When('I {iterations} times move mouse randomly', (iterations, callback) => {
