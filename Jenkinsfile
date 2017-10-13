@@ -50,7 +50,7 @@ node('lisk-nano') {
         ./node_modules/protractor/bin/webdriver-manager update
         # cache nightly builds (development) only to save space
         if [ $BRANCH_NAME = "development" ]; then
-            rsync -axl $WORKSPACE/node_modules/ ~/cache/development/node_modules/ || true
+            rsync -axl --delete $WORKSPACE/node_modules/ ~/cache/development/node_modules/ || true
         fi
         '''
       } catch (err) {
