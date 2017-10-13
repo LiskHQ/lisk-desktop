@@ -7,6 +7,12 @@ const { app, BrowserWindow, Menu, ipcMain } = electron;
 let win;
 let isUILoaded = false;
 let eventStack = [];
+// @todo change en with the detected lang
+let defaultLng = 'en';
+// replace this with i18next and detect the default/stored language
+const i18n = {
+  t: str => str,
+};
 
 const copyright = `Copyright © 2016 - ${new Date().getFullYear()} Lisk Foundation`;
 const protocolName = 'lisk';
@@ -19,7 +25,22 @@ const sendUrlToRouter = (url) => {
   }
 };
 
+/**
+ * Sends an event to client application
+ * @param {String} locale - the 2 letter name of the local
+ */
+const sendDetectedLang = (locale) => {
+  if (isUILoaded && win && win.webContents) {
+    win.webContents.send('detectedLocale', locale);
+  } else {
+    eventStack.push({ event: 'detectedLocale', value: locale });
+  }
+};
+
 function createWindow() {
+  // set language of the react app
+  sendDetectedLang(defaultLng);
+
   const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;
   win = new BrowserWindow({
     width: width > 2000 ? Math.floor(width * 0.5) : width - 250,
@@ -138,3 +159,11 @@ ipcMain.on('proxyCredentialsEntered', (event, username, password) => {
   global.myTempFunction(username, password);
 });
 
+ipcMain.on('set-locale', (event, locale) => {
+  if (locale.substr(0, 2) !== defaultLng) {
+    // @todo store the locale here for next time app launches
+    defaultLng = locale;
+    Menu.setApplicationMenu(buildMenu(app, copyright, i18n.t));
+    event.returnValue = 'Rebuilt electron menu.';
+  }
+});
