@@ -1,100 +1,111 @@
-import electron from 'electron'; // eslint-disable-line import/no-extraneous-dependencies
+const electron = require('electron'); // eslint-disable-line import/no-extraneous-dependencies
 
 const { Menu } = electron;
 
-const template = [
-  {
-    label: 'Edit',
-    submenu: [
-      {
-        role: 'undo',
-      },
-      {
-        role: 'redo',
-      },
-      {
-        type: 'separator',
-      },
-      {
-        role: 'cut',
-      },
-      {
-        role: 'copy',
-      },
-      {
-        role: 'paste',
-      },
-      {
-        role: 'selectall',
-      },
-    ],
-  },
-  {
-    label: 'View',
-    submenu: [
-      {
-        role: 'reload',
-      },
-      {
-        role: 'togglefullscreen',
-      },
-    ],
-  },
-  {
-    label: 'Window',
-    submenu: [
-      {
-        role: 'minimize',
-      },
-    ],
-  },
-  {
-    label: 'Help',
-    submenu: [
-      {
-        label: 'Lisk Website',
-        click() {
-          electron.shell.openExternal('https://lisk.io');
+const buildTemplate = t =>
+  [
+    {
+      label: t('Edit'),
+      submenu: [
+        {
+          role: 'undo',
+          label: t('Undo'),
         },
-      },
-      {
-        label: 'Lisk Chat',
-        click() {
-          electron.shell.openExternal('https://lisk.chat');
+        {
+          role: 'redo',
+          label: t('Redo'),
         },
-      },
-      {
-        label: 'Lisk Explorer',
-        click() {
-          electron.shell.openExternal('https://explorer.lisk.io');
+        {
+          type: t('separator'),
         },
-      },
-      {
-        label: 'Lisk Forum',
-        click() {
-          electron.shell.openExternal('https://forum.lisk.io');
+        {
+          role: 'cut',
+          label: t('Cut'),
         },
-      },
-      {
-        type: 'separator',
-      },
-      {
-        label: 'Report Issue...',
-        click() {
-          electron.shell.openExternal('https://lisk.zendesk.com/hc/en-us/requests/new');
+        {
+          role: 'copy',
+          label: t('Copy'),
         },
-      },
-      {
-        label: 'What\'s New...',
-        click() {
-          electron.shell.openExternal('https://github.com/LiskHQ/lisk-nano/releases');
+        {
+          role: 'paste',
+          label: t('Paste'),
         },
-      },
-    ],
-  },
-];
+        {
+          role: 'selectall',
+          label: t('Select all'),
+        },
+      ],
+    },
+    {
+      label: t('View'),
+      submenu: [
+        {
+          role: 'reload',
+          label: t('Reload'),
+        },
+        {
+          role: 'togglefullscreen',
+          label: t('Toggle full screen'),
+        },
+      ],
+    },
+    {
+      label: t('Window'),
+      submenu: [
+        {
+          role: 'minimize',
+          label: t('Minimize'),
+        },
+      ],
+    },
+    {
+      label: t('Help'),
+      submenu: [
+        {
+          label: t('Lisk Website'),
+          click() {
+            electron.shell.openExternal('https://lisk.io');
+          },
+        },
+        {
+          label: t('Lisk Chat'),
+          click() {
+            electron.shell.openExternal('https://lisk.chat');
+          },
+        },
+        {
+          label: t('Lisk Explorer'),
+          click() {
+            electron.shell.openExternal('https://explorer.lisk.io');
+          },
+        },
+        {
+          label: t('Lisk Forum'),
+          click() {
+            electron.shell.openExternal('https://forum.lisk.io');
+          },
+        },
+        {
+          type: 'separator',
+        },
+        {
+          label: t('Report Issue...'),
+          click() {
+            electron.shell.openExternal('https://lisk.zendesk.com/hc/en-us/requests/new');
+          },
+        },
+        {
+          label: t('What\'s New...'),
+          click() {
+            electron.shell.openExternal('https://github.com/LiskHQ/lisk-nano/releases');
+          },
+        },
+      ],
+    },
+  ];
 
-export default (app, copyright) => {
+module.exports = (app, copyright, t) => {
+  const template = buildTemplate(t);
   if (process.platform === 'darwin') {
     const name = app.getName();
     template.unshift({
@@ -102,23 +113,23 @@ export default (app, copyright) => {
       submenu: [
         {
           role: 'about',
-          label: 'About',
+          label: t('About'),
         },
         {
           role: 'quit',
-          label: 'Quit',
+          label: t('Quit'),
         },
       ],
     });
   } else {
     template[template.length - 1].submenu.push({
-      label: 'About',
+      label: t('About'),
       click(item, focusedWindow) {
         if (focusedWindow) {
           const options = {
             buttons: ['OK'],
             icon: `${__dirname}/assets/lisk.png`,
-            message: `Lisk Nano\nVersion ${app.getVersion()}\n${copyright}`,
+            message: `${t('Lisk Nano\nVersion')} ${app.getVersion()}\n${copyright}`,
           };
           electron.dialog.showMessageBox(focusedWindow, options, () => {});
         }
