@@ -10,9 +10,11 @@ import i18n from './i18n'; // initialized i18next instance
 import proxyLogin from './utils/proxyLogin';
 import externalLinks from './utils/externalLinks';
 import env from './constants/env';
+import ipcLocale from './utils/ipcLocale';
 
 if (env.production) {
   proxyLogin.init();
+  ipcLocale.init(i18n);
   externalLinks.init();
 }
 
