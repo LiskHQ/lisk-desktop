@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { spy, stub, match } from 'sinon';
 import actionTypes from '../constants/actions';
 import { activePeerSet, activePeerUpdate } from './peers';
-import * as peersApi from './../utils/api/peers';
+import * as nethashApi from './../utils/api/nethash';
 
 
 describe('actions: peers', () => {
@@ -29,7 +29,7 @@ describe('actions: peers', () => {
 
     beforeEach(() => {
       dispatch = spy();
-      getNetHash = stub(peersApi, 'getNethash');
+      getNetHash = stub(nethashApi, 'getNethash');
     });
 
     afterEach(() => {

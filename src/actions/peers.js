@@ -1,6 +1,6 @@
 import Lisk from 'lisk-js';
 import actionTypes from '../constants/actions';
-import { getNethash } from './../utils/api/peers';
+import { getNethash } from './../utils/api/nethash';
 
 const peerSet = (data, config) => ({
   data: Object.assign({

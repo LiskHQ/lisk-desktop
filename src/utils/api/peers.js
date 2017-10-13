@@ -1,6 +1,7 @@
 import { loadingStarted, loadingFinished } from '../../utils/loading';
 
-const requestToActivePeer = (activePeer, path, urlParams) =>
+// eslint-disable-next-line import/prefer-default-export
+export const requestToActivePeer = (activePeer, path, urlParams) =>
   new Promise((resolve, reject) => {
     loadingStarted(path);
     activePeer.sendRequest(path, urlParams, (data) => {
@@ -12,8 +13,3 @@ const requestToActivePeer = (activePeer, path, urlParams) =>
       loadingFinished(path);
     });
   });
-
-
-const getNethash = activePeer => (requestToActivePeer(activePeer, 'blocks/getNethash'));
-
-export { requestToActivePeer, getNethash };
