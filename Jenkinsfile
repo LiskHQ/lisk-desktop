@@ -47,6 +47,7 @@ node('lisk-nano') {
         sh '''
         cp -r ~/cache/development/node_modules ./ || true
         npm install
+        ./node_modules/protractor/bin/webdriver-manager update
         # cache nightly builds (development) only to save space
         if [ $BRANCH_NAME = "development" ]; then
             rsync -axl $WORKSPACE/node_modules/ ~/cache/development/node_modules/ || true
@@ -117,7 +118,6 @@ node('lisk-nano') {
           # End to End test configuration
           export DISPLAY=:1$N
           Xvfb :1$N -ac -screen 0 1280x1024x24 &
-          ./node_modules/protractor/bin/webdriver-manager update
 
           # Run end-to-end tests
           npm run --silent e2e-test -- --params.baseURL http://localhost:808$N/ --params.liskCoreURL http://localhost:400$N
