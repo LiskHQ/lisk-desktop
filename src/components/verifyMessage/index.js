@@ -64,7 +64,7 @@ class VerifyMessage extends React.Component {
             onChange={this.handleChange.bind(this, 'signature')} />
         </section>
         {this.state.result ?
-          <SignVerifyResult result={this.state.result} title='Original Message' /> :
+          <SignVerifyResult result={this.state.result} title={this.props.t('Original Message')} /> :
           null
         }
       </div>

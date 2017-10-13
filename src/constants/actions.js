@@ -24,6 +24,7 @@ const actionTypes = {
   loadingStarted: 'LOADING_STARTED',
   loadingFinished: 'LOADING_FINISHED',
   transactionAdded: 'TRANSACTION_ADDED',
+  transactionsFailed: 'TRANSACTIONS_FAILED',
   transactionsUpdated: 'TRANSACTIONS_UPDATED',
   transactionsLoaded: 'TRANSACTIONS_LOADED',
   transactionsReset: 'TRANSACTIONS_RESET',
