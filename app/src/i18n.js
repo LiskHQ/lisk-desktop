@@ -13,19 +13,14 @@ i18n
     fallbackLng: 'en',
     resources,
     lang: 'en',
-    // have a common namespace used around the full app
     ns: ['common'],
     defaultNS: 'common',
     saveMissing: true,
-    debug: true,
+    debug: false,
   }, (err, t) => {
-    t();
+    t('key');
     // initialized and ready to go!
-    console.log(i18n.t('Undo'));
-    console.log(`Current language used: ${i18n.language}`);
+    console.log(`Current language used: ${i18n.language}`); //eslint-disable-line
   });
 
-// i18n.setLocale('de');
-// const currentLocale = i18n.getLocale();
-// console.log(currentLocale);
 export default i18n;

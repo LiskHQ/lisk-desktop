@@ -161,7 +161,6 @@ ipcMain.on('proxyCredentialsEntered', (event, username, password) => {
 });
 
 ipcMain.on('set-locale', (event, locale) => {
-  console.log(locale);
   if (locale.substr(0, 2) !== defaultLng) {
     // @todo store the locale here for next time app launches
     defaultLng = locale;
