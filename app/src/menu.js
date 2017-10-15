@@ -2,85 +2,85 @@ const electron = require('electron'); // eslint-disable-line import/no-extraneou
 
 const { Menu } = electron;
 
-const buildTemplate = t =>
+const buildTemplate = i18n =>
   [
     {
-      label: t('Edit'),
+      label: i18n.t('Edit'),
       submenu: [
         {
           role: 'undo',
-          label: t('Undo'),
+          label: i18n.t('Undo'),
         },
         {
           role: 'redo',
-          label: t('Redo'),
+          label: i18n.t('Redo'),
         },
         {
-          type: t('separator'),
+          type: i18n.t('separator'),
         },
         {
           role: 'cut',
-          label: t('Cut'),
+          label: i18n.t('Cut'),
         },
         {
           role: 'copy',
-          label: t('Copy'),
+          label: i18n.t('Copy'),
         },
         {
           role: 'paste',
-          label: t('Paste'),
+          label: i18n.t('Paste'),
         },
         {
           role: 'selectall',
-          label: t('Select all'),
+          label: i18n.t('Select all'),
         },
       ],
     },
     {
-      label: t('View'),
+      label: i18n.t('View'),
       submenu: [
         {
           role: 'reload',
-          label: t('Reload'),
+          label: i18n.t('Reload'),
         },
         {
           role: 'togglefullscreen',
-          label: t('Toggle full screen'),
+          label: i18n.t('Toggle full screen'),
         },
       ],
     },
     {
-      label: t('Window'),
+      label: i18n.t('Window'),
       submenu: [
         {
           role: 'minimize',
-          label: t('Minimize'),
+          label: i18n.t('Minimize'),
         },
       ],
     },
     {
-      label: t('Help'),
+      label: i18n.t('Help'),
       submenu: [
         {
-          label: t('Lisk Website'),
+          label: i18n.t('Lisk Website'),
           click() {
             electron.shell.openExternal('https://lisk.io');
           },
         },
         {
-          label: t('Lisk Chat'),
+          label: i18n.t('Lisk Chat'),
           click() {
             electron.shell.openExternal('https://lisk.chat');
           },
         },
         {
-          label: t('Lisk Explorer'),
+          label: i18n.t('Lisk Explorer'),
           click() {
             electron.shell.openExternal('https://explorer.lisk.io');
           },
         },
         {
-          label: t('Lisk Forum'),
+          label: i18n.t('Lisk Forum'),
           click() {
             electron.shell.openExternal('https://forum.lisk.io');
           },
@@ -89,13 +89,13 @@ const buildTemplate = t =>
           type: 'separator',
         },
         {
-          label: t('Report Issue...'),
+          label: i18n.t('Report Issue...'),
           click() {
             electron.shell.openExternal('https://lisk.zendesk.com/hc/en-us/requests/new');
           },
         },
         {
-          label: t('What\'s New...'),
+          label: i18n.t('What\'s New...'),
           click() {
             electron.shell.openExternal('https://github.com/LiskHQ/lisk-nano/releases');
           },
@@ -104,8 +104,8 @@ const buildTemplate = t =>
     },
   ];
 
-module.exports = (app, copyright, t) => {
-  const template = buildTemplate(t);
+module.exports = (app, copyright, i18n) => {
+  const template = buildTemplate(i18n);
   if (process.platform === 'darwin') {
     const name = app.getName();
     template.unshift({
@@ -113,23 +113,23 @@ module.exports = (app, copyright, t) => {
       submenu: [
         {
           role: 'about',
-          label: t('About'),
+          label: i18n.t('About'),
         },
         {
           role: 'quit',
-          label: t('Quit'),
+          label: i18n.t('Quit'),
         },
       ],
     });
   } else {
     template[template.length - 1].submenu.push({
-      label: t('About'),
+      label: i18n.t('About'),
       click(item, focusedWindow) {
         if (focusedWindow) {
           const options = {
             buttons: ['OK'],
             icon: `${__dirname}/assets/lisk.png`,
-            message: `${t('Lisk Nano\nVersion')} ${app.getVersion()}\n${copyright}`,
+            message: `${i18n.t('Lisk Nano\nVersion')} ${app.getVersion()}\n${copyright}`,
           };
           electron.dialog.showMessageBox(focusedWindow, options, () => {});
         }
