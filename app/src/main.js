@@ -1,5 +1,6 @@
 import electron from 'electron'; // eslint-disable-line import/no-extraneous-dependencies
 import path from 'path';
+import i18n from './i18n';
 import buildMenu from './menu';
 
 const { app, BrowserWindow, Menu, ipcMain } = electron;
@@ -10,9 +11,9 @@ let eventStack = [];
 // @todo change en with the detected lang
 let defaultLng = 'en';
 // replace this with i18next and detect the default/stored language
-const i18n = {
-  t: str => str,
-};
+// const i18n = {
+//   t: str => str,
+// };
 
 const copyright = `Copyright © 2016 - ${new Date().getFullYear()} Lisk Foundation`;
 const protocolName = 'lisk';
@@ -60,7 +61,7 @@ function createWindow() {
     sendUrlToRouter(process.argv.slice(1));
   }
 
-  Menu.setApplicationMenu(buildMenu(app, copyright));
+  Menu.setApplicationMenu(buildMenu(app, copyright, i18n));
   win.loadURL(`file://${__dirname}/index.html`);
 
   win.on('closed', () => { win = null; });
@@ -160,10 +161,12 @@ ipcMain.on('proxyCredentialsEntered', (event, username, password) => {
 });
 
 ipcMain.on('set-locale', (event, locale) => {
+  console.log(locale);
   if (locale.substr(0, 2) !== defaultLng) {
     // @todo store the locale here for next time app launches
     defaultLng = locale;
-    Menu.setApplicationMenu(buildMenu(app, copyright, i18n.t));
+    i18n.changeLanguage(locale.substr(0, 2));
+    Menu.setApplicationMenu(buildMenu(app, copyright, i18n));
     event.returnValue = 'Rebuilt electron menu.';
   }
 });
