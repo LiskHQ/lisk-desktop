@@ -36,7 +36,7 @@ export const voteAutocomplete = (activePeer, username, votedDict) => {
 
 export const unvoteAutocomplete = (username, votedDict) =>
   new Promise(resolve => resolve(Object.keys(votedDict)
-    .filter(delegate => delegate.indexOf(username) !== -1)
+    .filter(delegate => delegate.indexOf(username) !== -1 && votedDict[delegate].unconfirmed)
     .map(element => ({ username: element, publicKey: votedDict[element].publicKey }))),
   );
 
