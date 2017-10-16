@@ -1,12 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const { defineSupportCode } = require('cucumber');
-const fs = require('fs');
-
-function writeScreenShot(data, filename) {
-  const stream = fs.createWriteStream(filename);
-  stream.write(new Buffer(data, 'base64'));
-  stream.end();
-}
+const { takeScreenshot } = require('../support/util.js');
 
 function slugify(text) {
   return text.toString().toLowerCase()
@@ -21,13 +15,7 @@ defineSupportCode(({ After }) => {
   After((scenario, callback) => {
     if (scenario.isFailed()) {
       const screnarioSlug = slugify([scenario.scenario.feature.name, scenario.scenario.name].join(' '));
-      browser.takeScreenshot().then((screenshotBuffer) => {
-        if (!fs.existsSync(browser.params.screenshotFolder)) {
-          fs.mkdirSync(browser.params.screenshotFolder);
-        }
-        writeScreenShot(screenshotBuffer, `${browser.params.screenshotFolder}/${screnarioSlug}.png`);
-        callback();
-      });
+      takeScreenshot(screnarioSlug, callback);
     } else {
       callback();
     }
