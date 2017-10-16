@@ -1,11 +1,11 @@
 const languages = {
   en: {
     name: 'English',
-    common: require('../dist/locales/en/common.json'),
+    common: require('../build/locales/en/common.json'),
   },
   de: {
     name: 'Deutsch',
-    common: require('../dist/locales/de/common.json'),
+    common: require('../build/locales/de/common.json'),
   },
 };
 
