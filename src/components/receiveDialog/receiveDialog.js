@@ -25,7 +25,7 @@ class ReceiveDialog extends React.Component {
             <h3>{this.props.t('Address')}</h3>
             <h1 className={`receive-modal-address ${style.address}`}>{props.address}</h1>
             <br />
-            <QRCode value={props.address} size={300}/>
+            <QRCode value={props.address} size={330}/>
             <br /><br />
           </span>
         </div>
