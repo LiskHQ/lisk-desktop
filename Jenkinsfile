@@ -155,6 +155,8 @@ node('lisk-nano') {
                   message: "Recovery: build #${env.BUILD_NUMBER} of <${env.BUILD_URL}|${env.JOB_NAME}>${pr_branch} was successful.",
                   channel: '#lisk-nano-jenkins'
       }
+    } else {
+      archiveArtifacts allowEmptyArchive: true, artifacts: 'e2e-test-screenshots/'
     }
   }
 }
