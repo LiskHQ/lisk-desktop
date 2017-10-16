@@ -14,12 +14,17 @@ function writeScreenShot(data, filename) {
   stream.end();
 }
 
-function takeScreenshot(screnarioSlug) {
+function takeScreenshot(screnarioSlug, callback) {
   browser.takeScreenshot().then((screenshotBuffer) => {
     if (!fs.existsSync(browser.params.screenshotFolder)) {
       fs.mkdirSync(browser.params.screenshotFolder);
     }
-    writeScreenShot(screenshotBuffer, `${browser.params.screenshotFolder}/${screnarioSlug}.png`);
+    const screenshotPath = `${browser.params.screenshotFolder}/${screnarioSlug}.png`;
+    writeScreenShot(screenshotBuffer, screenshotPath);
+    console.log(`Screenshot saved to ${screenshotPath}`);
+    if (callback) {
+      callback();
+    }
   });
 }
 
