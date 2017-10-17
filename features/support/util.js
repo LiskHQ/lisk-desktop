@@ -8,6 +8,15 @@ const expect = chai.expect;
 const EC = protractor.ExpectedConditions;
 const waitTime = 10000;
 
+function slugify(text) {
+  return text.toString().toLowerCase()
+    .replace(/\s+/g, '-') // Replace spaces with -
+    .replace(/[^\w-]+/g, '') // Remove all non-word chars
+    .replace(/--+/g, '-') // Replace multiple - with single -
+    .replace(/^-+/, '') // Trim - from start of text
+    .replace(/-+$/, ''); // Trim - from end of text
+}
+
 function writeScreenShot(data, filename) {
   const stream = fs.createWriteStream(filename);
   stream.write(new Buffer(data, 'base64'));
@@ -30,9 +39,10 @@ function takeScreenshot(screnarioSlug, callback) {
 
 function waitForElem(selector, callback) {
   const elem = element(by.css(selector));
-  browser.wait(EC.presenceOf(elem), waitTime, `waiting for element '${selector}'`)
+  const stepName = `waiting for element '${selector}'`;
+  browser.wait(EC.presenceOf(elem), waitTime, stepName)
     .then(() => { if (callback) { callback(elem); } })
-    .catch(() => { takeScreenshot('TIMEOUT'); });
+    .catch(() => { takeScreenshot(slugify(stepName)); });
 }
 
 function waitForElemAndCheckItsText(selector, text, callback) {
@@ -79,4 +89,5 @@ module.exports = {
   checkAlertDialog,
   waitTime,
   takeScreenshot,
+  slugify,
 };
