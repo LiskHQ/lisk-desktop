@@ -1,4 +1,5 @@
 def fail(reason) {
+  def pr_branch = ''
   if (env.CHANGE_BRANCH != null) {
     pr_branch = " (${env.CHANGE_BRANCH})"
   }
@@ -33,6 +34,10 @@ node('lisk-nano') {
         cp etc/pm2-lisk.json etc/pm2-lisk_$N.json
         sed -i -r -e "s/config.json/config_$N.json/" etc/pm2-lisk_$N.json
         sed -i -r -e "s/(lisk.app)/\\1_$N/" etc/pm2-lisk_$N.json
+        # logs
+        sed -i -r -e "s/lisk.log/lisk_${JOB_BASE_NAME}_${BUILD_ID}.log/" config_$N.json
+        sed -i -r -e "s/lisk.app_$N/lisk.app_$N_${JOB_BASE_NAME}_${BUILD_ID}/" etc/pm2-lisk_$N.json
+        #
         JENKINS_NODE_COOKIE=dontKillMe bash lisk.sh start_db -p etc/pm2-lisk_$N.json
         bash lisk.sh rebuild -p etc/pm2-lisk_$N.json -f blockchain_explorer.db.gz
         '''
@@ -134,8 +139,10 @@ node('lisk-nano') {
     sh '''
     N=${EXECUTOR_NUMBER:-0}
     ( cd ~/lisk-Linux-x86_64 && bash lisk.sh stop_node -p etc/pm2-lisk_$N.json ) || true
-    pkill -f "Xvfb :1$N" -9 || true
-    pkill -f "webpack.*808$N" -9 || true
+    pgrep --list-full -f "Xvfb :1$N" || true
+    pkill --echo -f "Xvfb :1$N" -9 || echo "pkill returned code $?"
+    pgrep --list-full -f "webpack.*808$N" || true
+    pkill --echo -f "webpack.*808$N" -9 || echo "pkill returned code $?"
     '''
     dir('node_modules') {
       deleteDir()
