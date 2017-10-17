@@ -25,8 +25,9 @@ node('lisk-nano') {
         cd ~/lisk-Linux-x86_64
         # work around core bug: config.json gets overwritten; use backup
         cp .config.json config_$N.json
-        # change core port
+        # change core port, listen only on 127.0.0.1
         sed -i -r -e "s/^(.*ort\\":) 4000,/\\1 400$N,/" config_$N.json
+        sed -i -r -e "s/^(.*\\"address\\":) \\"0.0.0.0\\",/\\1 \\"127.0.0.1\\",/" config_$N.json
         # disable redis
         sed -i -r -e "s/^(\\s*\\"cacheEnabled\\":) true/\\1 false/" config_$N.json
         # change postgres databse
@@ -125,7 +126,7 @@ node('lisk-nano') {
           Xvfb :1$N -ac -screen 0 1280x1024x24 &
 
           # Run end-to-end tests
-          npm run --silent e2e-test -- --params.baseURL http://localhost:808$N/ --params.liskCoreURL http://localhost:400$N
+          npm run --silent e2e-test -- --params.baseURL http://127.0.0.1:808$N/ --params.liskCoreURL http://127.0.0.1:400$N
           '''
         }
       } catch (err) {
@@ -138,6 +139,7 @@ node('lisk-nano') {
   } finally {
     sh '''
     N=${EXECUTOR_NUMBER:-0}
+    curl --verbose http://127.0.0.1:400$N/api/blocks/getNethash || true
     ( cd ~/lisk-Linux-x86_64 && bash lisk.sh stop_node -p etc/pm2-lisk_$N.json ) || true
     pgrep --list-full -f "Xvfb :1$N" || true
     pkill --echo -f "Xvfb :1$N" -9 || echo "pkill returned code $?"
