@@ -16,7 +16,7 @@ const buildTemplate = i18n =>
           label: i18n.t('Redo'),
         },
         {
-          type: i18n.t('separator'),
+          type: 'separator',
         },
         {
           role: 'cut',
