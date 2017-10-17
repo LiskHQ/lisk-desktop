@@ -54,8 +54,10 @@ function waitForElemAndCheckItsText(selector, text, callback) {
 
 function waitForElemRemoved(selector, callback) {
   const elem = element(by.css(selector));
-  browser.wait(EC.not(EC.presenceOf(elem)), waitTime,
-    `waiting for element '${selector}' not present`).then(callback || (() => {}));
+  const stepName = `waiting for element '${selector}' not present`;
+  browser.wait(EC.not(EC.presenceOf(elem)), waitTime, stepName)
+    .then(callback || (() => {}))
+    .catch(() => { takeScreenshot(slugify(stepName)); });
 }
 
 function waitForElemAndClickIt(selector, callback) {

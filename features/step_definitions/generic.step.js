@@ -9,6 +9,8 @@ const {
   waitForElemAndSendKeys,
   checkAlertDialog,
   waitTime,
+  takeScreenshot,
+  slugify,
 } = require('../support/util.js');
 const accounts = require('../support/accounts.js');
 const localStorage = require('../support/localStorage.js');
@@ -75,7 +77,8 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     waitForElemAndClickIt(`.${selectName}`);
     browser.sleep(500);
     const optionElem = element.all(by.css(`.${selectName} ul li`)).get(index - 1);
-    browser.wait(EC.presenceOf(optionElem), waitTime);
+    browser.wait(EC.presenceOf(optionElem), waitTime)
+      .catch(() => { takeScreenshot(slugify(selectName)); });
     optionElem.click().then(callback);
   });
 
