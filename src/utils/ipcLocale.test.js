@@ -14,14 +14,17 @@ describe('ipcLocale', () => {
   };
 
   describe('init', () => {
-    it('should be a function', () => {
-      expect(typeof ipcLocale.init).to.be.equal('function');
+    beforeEach(() => {
+      delete window.ipc;
     });
-
     it('calling init when ipc is not on window should do nothing', () => {
       ipcLocale.init();
       expect(ipc.on).to.not.have.been.calledWith();
       expect(ipc.send).to.not.have.been.calledWith();
+    });
+
+    it('should be a function', () => {
+      expect(typeof ipcLocale.init).to.be.equal('function');
     });
 
     it('calling init when ipc is available on window should bind listeners', () => {
