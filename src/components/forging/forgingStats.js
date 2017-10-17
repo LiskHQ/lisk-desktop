@@ -30,8 +30,8 @@ class ForgingStats extends React.Component {
   render() {
     statCardObjects[0].label = this.props.t('Last 24 hours');
     [1, 2, 3].forEach((i) => {
-      statCardObjects[i].label = this.props.t(
-        'Last {{count}} days', { count: statCardObjects[i].days });
+      statCardObjects[i].label = this.props.t('Last {{count}} days',
+        { count: statCardObjects[i].days });
     });
 
     return (

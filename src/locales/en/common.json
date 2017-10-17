@@ -53,6 +53,8 @@
   "LSK received": "LSK received",
   "Language": "Language",
   "Last 24 hours": "Last 24 hours",
+  "Last {{count}} days": "Last {{count}} day",
+  "Last {{count}} days_plural": "Last {{count}} days",
   "Lisk Address": "Lisk Address",
   "Lisk Chat": "Lisk Chat",
   "Lisk Explorer": "Lisk Explorer",
