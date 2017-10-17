@@ -1,6 +1,8 @@
+import i18next from 'i18next';
 import Lisk from 'lisk-js';
 import actionTypes from '../constants/actions';
 import { getNethash } from './../utils/api/nethash';
+import { errorToastDisplayed } from './toaster';
 
 const peerSet = (data, config) => ({
   data: Object.assign({
@@ -41,6 +43,8 @@ export const activePeerSet = data =>
       getNethash(Lisk.api(config)).then((response) => {
         config.nethash = response.nethash;
         dispatch(peerSet(data, config));
+      }).catch(() => {
+        dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node') }));
       });
     } else {
       dispatch(peerSet(data, config));
