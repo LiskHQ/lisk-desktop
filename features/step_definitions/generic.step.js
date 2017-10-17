@@ -129,6 +129,11 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     waitForElemAndCheckItsText(selectorClass, text, callback);
   });
 
+  When('I fill in an incorrect address', () => {
+    browser.executeScript('window.document.querySelector(".address input").value = "";');
+    waitForElemAndSendKeys('.address input, .address textarea', 'http://localhost:4039');
+  });
+
   Given('I\'m logged in as "{accountName}"', (accountName, callback) => {
     browser.ignoreSynchronization = true;
     browser.driver.manage().window().setSize(1000, 1000);
