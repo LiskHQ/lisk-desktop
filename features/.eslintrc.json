@@ -1,12 +1,6 @@
 {
-  "extends": "airbnb-base",
-  "plugins": [
-    "import"
-  ],
+  "extends": "../.eslintrc",
   "env": {
     "protractor": true
-  },
-  "rules": {
-    "no-underscore-dangle": "off"
   }
 }
