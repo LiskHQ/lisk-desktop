@@ -17,10 +17,8 @@ i18n
     defaultNS: 'common',
     saveMissing: true,
     debug: false,
-  }, (err, t) => {
-    t('key');
-    // initialized and ready to go!
-    console.log(`Current language used: ${i18n.language}`); //eslint-disable-line
+    keySeparator: '>',
+    nsSeparator: '|',
   });
 
 export default i18n;
