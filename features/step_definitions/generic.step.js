@@ -129,6 +129,11 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     waitForElemAndCheckItsText(selectorClass, text, callback);
   });
 
+  When('I clear "{elementName}" field', (elementName) => {
+    const selectorClass = `.${elementName.replace(/ /g, '-')}`;
+    browser.executeScript(`window.document.querySelector("${selectorClass} input, ${selectorClass} textarea").value = "";`);
+  });
+
   Given('I\'m logged in as "{accountName}"', (accountName, callback) => {
     browser.ignoreSynchronization = true;
     browser.driver.manage().window().setSize(1000, 1000);
