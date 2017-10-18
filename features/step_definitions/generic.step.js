@@ -129,9 +129,9 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     waitForElemAndCheckItsText(selectorClass, text, callback);
   });
 
-  When('I fill in an incorrect address', () => {
-    browser.executeScript('window.document.querySelector(".address input").value = "";');
-    waitForElemAndSendKeys('.address input, .address textarea', 'http://localhost:4039');
+  When('I clear "{elementName}" field', (elementName) => {
+    const selectorClass = `.${elementName.replace(/ /g, '-')}`;
+    browser.executeScript(`window.document.querySelector("${selectorClass} input, ${selectorClass} textarea").value = "";`);
   });
 
   Given('I\'m logged in as "{accountName}"', (accountName, callback) => {

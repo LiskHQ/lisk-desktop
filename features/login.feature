@@ -9,7 +9,8 @@ Feature: Login page
     Given I'm on login page
     When I fill in "wagon stock borrow episode laundry kitten salute link globe zero feed marble" to "passphrase" field
     And I select option no. 3 from "network" select
-    When I fill in an incorrect address
+    When I clear "address" field
+    And I fill in "http://localhost:4218" to "address" field
     And I click "login button"
     And I wait 1 seconds
     Then I should see text "Unable to connect to the node" in "toast" element
