@@ -30,7 +30,7 @@ function takeScreenshot(screnarioSlug, callback) {
     }
     const screenshotPath = `${browser.params.screenshotFolder}/${screnarioSlug}.png`;
     writeScreenShot(screenshotBuffer, screenshotPath);
-    console.log(`Screenshot saved to ${screenshotPath}`);
+    console.log(`Screenshot saved to ${screenshotPath}`); // eslint-disable-line no-console
     if (callback) {
       callback();
     }
