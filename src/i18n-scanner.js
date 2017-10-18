@@ -26,7 +26,8 @@ const customHandler = function (key, options) {
 };
 
 const files = glob.sync('./src/**/*.js', {});
-files.forEach((file) => {
+const electronFiles = glob.sync('./app/src/**/*.js', {});
+[...files, ...electronFiles].forEach((file) => {
   const content = fs.readFileSync(file, 'utf-8');
   parser.parseFuncFromString(content, { list: translationFunctionNames }, customHandler);
 });
