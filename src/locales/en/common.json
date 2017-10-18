@@ -186,7 +186,6 @@
   "logout": "logout",
   "my votes": "my votes",
   "send": "send",
-  "separator": "separator",
   "your passphrase will be required for logging in to your account.": "your passphrase will be required for logging in to your account.",
   "your second passphrase will be required for all transactions sent from this account": "your second passphrase will be required for all transactions sent from this account",
   "{{count}} delegate names successfully resolved to add vote to.": "{{count}} delegate name successfully resolved to add vote to.",
