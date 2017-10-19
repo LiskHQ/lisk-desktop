@@ -42,6 +42,7 @@ function waitForElem(selector, callback) {
   const stepName = `waiting for element '${selector}'`;
   browser.wait(EC.presenceOf(elem), waitTime, stepName)
     .then(() => { if (callback) { callback(elem); } })
+    // catch to prevent whole test suite to fail - current scenario will timeout
     .catch(() => { });
 }
 
@@ -57,6 +58,7 @@ function waitForElemRemoved(selector, callback) {
   const stepName = `waiting for element '${selector}' not present`;
   browser.wait(EC.not(EC.presenceOf(elem)), waitTime, stepName)
     .then(callback || (() => {}))
+    // catch to prevent whole test suite to fail - current scenario will timeout
     .catch(() => { });
 }
 
