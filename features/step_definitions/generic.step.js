@@ -13,11 +13,11 @@ const {
 } = require('../support/util.js');
 const accounts = require('../support/accounts.js');
 const localStorage = require('../support/localStorage.js');
-const defaultTimeout = 10 * 1000;
 
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 const EC = protractor.ExpectedConditions;
+const defaultTimeout = 10 * 1000;
 
 defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   setDefaultTimeout(defaultTimeout);
@@ -79,7 +79,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     const selector = `.${selectName} ul li`;
     const optionElem = element.all(by.css(selector)).get(index - 1);
     browser.wait(EC.presenceOf(optionElem), waitTime)
-      .catch(error => console.error(`${error}`));
+      .catch(error => console.error(`${error}`)); // eslint-disable-line no-console
     optionElem.click().then(callback);
   });
 

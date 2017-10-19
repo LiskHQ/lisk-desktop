@@ -43,7 +43,7 @@ function waitForElem(selector, callback) {
   browser.wait(EC.presenceOf(elem), waitTime, stepName)
     .then(() => { if (callback) { callback(elem); } })
     // catch to prevent whole test suite to fail - current scenario will timeout
-    .catch(error => console.error(`${error}`));
+    .catch(error => console.error(`${error}`)); // eslint-disable-line no-console
 }
 
 function waitForElemAndCheckItsText(selector, text, callback) {
@@ -59,7 +59,7 @@ function waitForElemRemoved(selector, callback) {
   browser.wait(EC.not(EC.presenceOf(elem)), waitTime, stepName)
     .then(callback || (() => {}))
     // catch to prevent whole test suite to fail - current scenario will timeout
-    .catch(error => console.error(`${error}`));
+    .catch(error => console.error(`${error}`)); // eslint-disable-line no-console
 }
 
 function waitForElemAndClickIt(selector, callback) {
