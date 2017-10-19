@@ -9,6 +9,8 @@ import Settings from '../settings';
 import SignMessage from '../signMessage';
 import VerifyMessage from '../verifyMessage';
 import VoteDialog from '../voteDialog';
+import EncryptMessage from '../encryptMessage';
+import DecryptMessage from '../decryptMessage';
 
 export default () => ({
   send: {
@@ -50,5 +52,13 @@ export default () => ({
   settings: {
     title: i18next.t('Settings'),
     component: Settings,
+  },
+  'encrypt-message': {
+    title: i18next.t('Encrypt message'),
+    component: EncryptMessage,
+  },
+  'decrypt-message': {
+    title: i18next.t('Decrypt message'),
+    component: DecryptMessage,
   },
 });

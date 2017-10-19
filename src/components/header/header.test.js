@@ -45,8 +45,8 @@ describe('Header', () => {
     expect(wrapper.find(Button)).to.have.length(1);
   });
 
-  it('renders 7 RelativeLink components', () => {
-    expect(wrapper.find(RelativeLink)).to.have.length(7);
+  it('renders 9 RelativeLink components', () => {
+    expect(wrapper.find(RelativeLink)).to.have.length(9);
   });
 
   it('should have an image with srouce of "logo"', () => {

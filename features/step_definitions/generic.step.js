@@ -133,7 +133,12 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     waitForElemAndCheckItsText(selectorClass, text, callback);
   });
 
-  Given('I\'m logged in as "{accountName}"'{ timeout: 2 * defaultTimeout }, (accountName, callback) => {
+  When('I clear "{elementName}" field', (elementName) => {
+    const selectorClass = `.${elementName.replace(/ /g, '-')}`;
+    browser.executeScript(`window.document.querySelector("${selectorClass} input, ${selectorClass} textarea").value = "";`);
+  });
+
+  Given('I\'m logged in as "{accountName}"', { timeout: 2 * defaultTimeout }, (accountName, callback) => {
     browser.ignoreSynchronization = true;
     browser.driver.manage().window().setSize(1000, 1000);
     browser.get(browser.params.baseURL);
