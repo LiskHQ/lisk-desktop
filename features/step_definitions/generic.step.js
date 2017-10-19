@@ -19,7 +19,7 @@ const expect = chai.expect;
 const EC = protractor.ExpectedConditions;
 
 defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
-  setDefaultTimeout(20 * 1000);
+  setDefaultTimeout(10 * 1000);
 
   When('I fill in "{value}" to "{fieldName}" field', (value, fieldName, callback) => {
     const selectorClass = `.${fieldName.replace(/ /g, '-')}`;
@@ -40,7 +40,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     waitForElemAndSendKeys(`${selectorClass} input, ${selectorClass} textarea`, passphrase, callback);
   });
 
-  When('I wait {seconds} seconds', (seconds, callback) => {
+  When('I wait {seconds} seconds', { timeout: -1 }, (seconds, callback) => {
     browser.sleep(seconds * 1000).then(callback);
   });
 
@@ -164,7 +164,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     callback();
   });
 
-  When('I remember passphrase, click "{nextButtonSelector}", fill in missing word', (nextButtonSelector, callback) => {
+  When('I remember passphrase, click "{nextButtonSelector}", fill in missing word', { timeout: 20 * 1000 }, (nextButtonSelector, callback) => {
     waitForElemAndCheckItsText('.passphrase label', 'Save your passphrase in a safe place!');
 
     waitForElem('.passphrase textarea', (textareaElem) => {
