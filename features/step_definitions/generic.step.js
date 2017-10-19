@@ -13,13 +13,14 @@ const {
 } = require('../support/util.js');
 const accounts = require('../support/accounts.js');
 const localStorage = require('../support/localStorage.js');
+const defaultTimeout = 10 * 1000;
 
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 const EC = protractor.ExpectedConditions;
 
 defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
-  setDefaultTimeout(10 * 1000);
+  setDefaultTimeout(defaultTimeout);
 
   When('I fill in "{value}" to "{fieldName}" field', (value, fieldName, callback) => {
     const selectorClass = `.${fieldName.replace(/ /g, '-')}`;
@@ -164,7 +165,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     callback();
   });
 
-  When('I remember passphrase, click "{nextButtonSelector}", fill in missing word', { timeout: 20 * 1000 }, (nextButtonSelector, callback) => {
+  When('I remember passphrase, click "{nextButtonSelector}", fill in missing word', { timeout: 2 * defaultTimeout }, (nextButtonSelector, callback) => {
     waitForElemAndCheckItsText('.passphrase label', 'Save your passphrase in a safe place!');
 
     waitForElem('.passphrase textarea', (textareaElem) => {
