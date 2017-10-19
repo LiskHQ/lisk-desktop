@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import actionTypes from '../constants/actions';
 import { setSecondPassphrase, send } from '../utils/api/account';
 import { registerDelegate } from '../utils/api/delegate';
@@ -62,7 +63,7 @@ export const secondPassphraseRegistered = ({ activePeer, secondPassphrase, accou
           type: transactionTypes.setSecondPassphrase,
         }));
       }).catch((error) => {
-        const text = (error && error.message) ? error.message : 'An error occurred while registering your second passphrase. Please try again.';
+        const text = (error && error.message) ? error.message : i18next.t('An error occurred while registering your second passphrase. Please try again.');
         dispatch(errorAlertDialogDisplayed({ text }));
       });
     dispatch(passphraseUsed(account.passphrase));
@@ -88,7 +89,7 @@ export const delegateRegistered = ({
         }));
       })
       .catch((error) => {
-        const text = error && error.message ? `${error.message}.` : 'An error occurred while registering as delegate.';
+        const text = error && error.message ? `${error.message}.` : i18next.t('An error occurred while registering as delegate.');
         const actionObj = errorAlertDialogDisplayed({ text });
         dispatch(actionObj);
       });
@@ -113,7 +114,7 @@ export const sent = ({ activePeer, account, recipientId, amount, passphrase, sec
         }));
       })
       .catch((error) => {
-        const text = error && error.message ? `${error.message}.` : 'An error occurred while creating the transaction.';
+        const text = error && error.message ? `${error.message}.` : i18next.t('An error occurred while creating the transaction.');
         dispatch(errorAlertDialogDisplayed({ text }));
       });
     dispatch(passphraseUsed(passphrase));

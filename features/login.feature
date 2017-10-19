@@ -5,6 +5,16 @@ Feature: Login page
     And I click "login button"
     Then I should be logged in
 
+  Scenario: should show toast when trying to connect to an unavailable custom node
+    Given I'm on login page
+    When I fill in "wagon stock borrow episode laundry kitten salute link globe zero feed marble" to "passphrase" field
+    And I select option no. 3 from "network" select
+    And I clear "address" field
+    And I fill in "http://localhost:4218" to "address" field
+    And I click "login button"
+    And I wait 1 seconds
+    Then I should see text "Unable to connect to the node" in "toast" element
+
   Scenario: should allow to login to Mainnet 
     Given I'm on login page
     When I fill in "wagon stock borrow episode laundry kitten salute link globe zero feed marble" to "passphrase" field

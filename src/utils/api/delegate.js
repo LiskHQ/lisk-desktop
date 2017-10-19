@@ -7,8 +7,8 @@ export const listAccountDelegates = (activePeer, address) =>
 export const listDelegates = (activePeer, options) =>
   requestToActivePeer(activePeer, `delegates/${options.q ? 'search' : ''}`, options);
 
-export const getDelegate = (activePeer, publicKey) =>
-  requestToActivePeer(activePeer, 'delegates/get', { publicKey });
+export const getDelegate = (activePeer, options) =>
+  requestToActivePeer(activePeer, 'delegates/get', options);
 
 export const vote = (activePeer, secret, publicKey, voteList, unvoteList, secondSecret = null) =>
   requestToActivePeer(activePeer, 'accounts/delegates', {
@@ -36,7 +36,7 @@ export const voteAutocomplete = (activePeer, username, votedDict) => {
 
 export const unvoteAutocomplete = (username, votedDict) =>
   new Promise(resolve => resolve(Object.keys(votedDict)
-    .filter(delegate => delegate.indexOf(username) !== -1)
+    .filter(delegate => delegate.indexOf(username) !== -1 && votedDict[delegate].unconfirmed)
     .map(element => ({ username: element, publicKey: votedDict[element].publicKey }))),
   );
 

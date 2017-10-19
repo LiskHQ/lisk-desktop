@@ -11,7 +11,7 @@ const reactToolboxVariables = require('./reactToolbox.config');
 
 module.exports = merge(baseConfig, reactConfig, {
   output: {
-    path: resolve(__dirname, '../app', '../app/dist'),
+    path: resolve(__dirname, '../app', '../app/build'),
     filename: 'bundle.[name].js',
   },
   plugins: [

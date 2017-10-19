@@ -63,7 +63,7 @@ describe('Utils: Delegate', () => {
       const mockedPromise = new Promise((resolve) => { resolve(); });
       peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates/get', options).returns(mockedPromise);
 
-      const returnedPromise = getDelegate(activePeer, options.publicKey);
+      const returnedPromise = getDelegate(activePeer, options);
       expect(returnedPromise).to.equal(mockedPromise);
     });
   });

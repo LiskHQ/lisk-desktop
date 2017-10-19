@@ -119,9 +119,19 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     waitForElemAndCheckItsText(selectorClass, text, callback);
   });
 
+  Then('I should see "{elementName}" element with text:', (elementName, text, callback) => {
+    const selectorClass = `.${elementName.replace(/ /g, '-')}`;
+    waitForElemAndCheckItsText(selectorClass, text, callback);
+  });
+
   Then('I should see element "{elementName}" that contains text:', (elementName, text, callback) => {
     const selectorClass = `.${elementName.replace(/ /g, '-')}`;
     waitForElemAndCheckItsText(selectorClass, text, callback);
+  });
+
+  When('I clear "{elementName}" field', (elementName) => {
+    const selectorClass = `.${elementName.replace(/ /g, '-')}`;
+    browser.executeScript(`window.document.querySelector("${selectorClass} input, ${selectorClass} textarea").value = "";`);
   });
 
   Given('I\'m logged in as "{accountName}"', (accountName, callback) => {
@@ -134,6 +144,10 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     browser.get(browser.params.baseURL);
     waitForElemAndSendKeys('.passphrase input', accounts[accountName].passphrase);
     waitForElemAndClickIt('.login-button', callback);
+  });
+
+  When('I go to "{url}"', (url, callback) => {
+    browser.get(`${browser.params.baseURL}#${url}`).then(callback);
   });
 
   When('I {iterations} times move mouse randomly', (iterations, callback) => {

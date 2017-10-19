@@ -1,0 +1,28 @@
+.error,
+.success {
+  padding: 16px 24px;
+  margin: 0 -24px;
+  color: black;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.error:first-child,
+.success:first-child {
+  margin-top: -24px;
+}
+
+.error {
+  background-color: rgb(255, 228, 220) !important;
+}
+
+.success {
+  background-color: rgb(226, 238, 213) !important;
+}
+
+.chip {
+  margin: 6px 1px -8px 1px;
+}
+
+.center {
+  text-align: center;
+}

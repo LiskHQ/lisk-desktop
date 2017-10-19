@@ -11,6 +11,15 @@ export const transactionAdded = data => ({
 });
 
 /**
+ * An action to dispatch transactionsFailed
+ *
+ */
+export const transactionsFailed = data => ({
+  data,
+  type: actionTypes.transactionsFailed,
+});
+
+/**
  * An action to dispatch transactionsUpdated
  *
  */

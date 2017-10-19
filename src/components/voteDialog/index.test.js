@@ -1,9 +1,9 @@
 import React from 'react';
-import { I18nextProvider } from 'react-i18next';
-import { Provider } from 'react-redux';
 import chai, { expect } from 'chai';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { mount } from 'enzyme';
 import chaiEnzyme from 'chai-enzyme';
+import PropTypes from 'prop-types';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import configureMockStore from 'redux-mock-store';
@@ -49,12 +49,16 @@ const store = configureMockStore([])({
 
 describe('VoteDialog HOC', () => {
   let wrapper;
+  const options = {
+    context: { store, history, i18n },
+    childContextTypes: {
+      store: PropTypes.object.isRequired,
+      history: PropTypes.object.isRequired,
+      i18n: PropTypes.object.isRequired,
+    },
+  };
   beforeEach(() => {
-    wrapper = mount(<Provider store={store}>
-      <I18nextProvider i18n={ i18n }>
-        <VoteDialogHOC voted={[]} />
-      </I18nextProvider>
-    </Provider>);
+    wrapper = mount(<Router><VoteDialogHOC voted={[]} /></Router>, options);
   });
 
   it('should render VoteDialog', () => {
@@ -75,5 +79,6 @@ describe('VoteDialog HOC', () => {
     const actionsSpy = sinon.spy(votingActions, 'voteToggled');
     wrapper.find('VoteDialog').props().voteToggled([]);
     expect(actionsSpy).to.be.calledWith();
+    actionsSpy.restore();
   });
 });

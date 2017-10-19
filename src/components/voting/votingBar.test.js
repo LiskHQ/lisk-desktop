@@ -16,7 +16,7 @@ describe('VotingBar', () => {
         confirmed: true,
         unconfirmed: false,
       },
-      downvote: {
+      unvote: {
         confirmed: true,
         unconfirmed: true,
       },
@@ -57,11 +57,11 @@ describe('VotingBar', () => {
     expect(wrapper.find('.upvotes')).to.have.text('Upvotes: 2');
   });
 
-  it('should render number of downvotes', () => {
-    expect(wrapper.find('.downvotes')).to.have.text('Downvotes: 1');
+  it('should render number of unvotes', () => {
+    expect(wrapper.find('.unvotes')).to.have.text('Downvotes: 1');
   });
 
-  it('should render number of downvotes', () => {
+  it('should render number of unvotes', () => {
     expect(wrapper.find('.total-new-votes')).to.have.text('Total new votes: 3 / 33');
   });
 
@@ -69,7 +69,7 @@ describe('VotingBar', () => {
     expect(wrapper.find('.total-votes')).to.have.text('Total votes: 3 / 101');
   });
 
-  it('should not render if no upvotes or downvotes', () => {
+  it('should not render if no upvotes or unvotes', () => {
     wrapper.setProps({ votes: {} });
     expect(wrapper.html()).to.equal(null);
   });

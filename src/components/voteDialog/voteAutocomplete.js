@@ -196,7 +196,7 @@ export class VoteAutocompleteRaw extends React.Component {
     return (
       <article>
         <h3 className={styles.autoCompleteTile}>{this.props.t('Add vote to')}</h3>
-        <div>
+        <div className='vote-list'>
           {votedList.map(
             item => <Chip key={item}
               deletable
@@ -213,7 +213,8 @@ export class VoteAutocompleteRaw extends React.Component {
             theme={styles}
             onBlur={this.suggestionStatus.bind(this, false, 'votedSuggestionClass')}
             onKeyDown={this.votedSearchKeyDown.bind(this)}
-            onChange={this.search.bind(this, 'votedListSearch')}/>
+            onChange={this.search.bind(this, 'votedListSearch')}
+            autoComplete='off'/>
           <Card id='votedResult' className={`${styles.searchResult} ${this.state.votedSuggestionClass}`}>
             <List>
               {this.state.votedResult.map(
@@ -229,7 +230,7 @@ export class VoteAutocompleteRaw extends React.Component {
           </Card>
         </section>
         <h3 className={styles.autoCompleteTile}>{this.props.t('Remove vote from')}</h3>
-        <div>
+        <div className='unvote-list'>
           {unvotedList.map(
             item => <Chip key={item}
               deletable
@@ -246,7 +247,8 @@ export class VoteAutocompleteRaw extends React.Component {
             theme={styles}
             onBlur={this.suggestionStatus.bind(this, false, 'unvotedSuggestionClass')}
             onKeyDown={this.unvotedSearchKeyDown.bind(this)}
-            onChange={this.search.bind(this, 'unvotedListSearch')}/>
+            onChange={this.search.bind(this, 'unvotedListSearch')}
+            autoComplete='off'/>
           <Card id='unvotedResult' className={`${styles.searchResult} ${this.state.unvotedSuggestionClass}`}>
             <List>
               {this.state.unvotedResult.map(
