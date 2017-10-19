@@ -176,7 +176,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
         waitForElemAndClickIt(`.${nextButtonSelector.replace(/ /g, '-')}`);
 
         waitForElem('.passphrase-verifier p span', (elem) => {
-          elem.get(0).getText().then((firstPartOfPassphrase) => {
+          elem.getText().then((firstPartOfPassphrase) => {
             const missingWordIndex = firstPartOfPassphrase.length ?
               firstPartOfPassphrase.split(' ').length :
               0;
