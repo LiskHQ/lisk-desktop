@@ -21,6 +21,7 @@ Feature: Top right menu
   Scenario: should allow to exit 2nd passphrase registration dialog
     Given I'm logged in as "genesis"
     When I click "register second passphrase" in main menu
+    And I wait 1 seconds
     And I click "cancel button"
     Then I should see no "modal dialog"
 
@@ -49,6 +50,7 @@ Feature: Top right menu
   Scenario: should allow to exit delegate registration dialog
     Given I'm logged in as "genesis"
     When I click "register as delegate" in main menu
+    And I wait 1 seconds
     And I click "cancel button"
     Then I should see no "modal dialog"
 
@@ -78,12 +80,14 @@ Feature: Top right menu
   Scenario: should allow to exit sign message dialog with "cancel button"
     Given I'm logged in as "any account"
     When I click "sign message" in main menu
+    And I wait 1 seconds
     And I click "cancel button"
     Then I should see no "modal dialog"
 
   Scenario: should allow to exit sign message dialog with "x button"
     Given I'm logged in as "any account"
     When I click "sign message" in main menu
+    And I wait 1 seconds
     And I click "x button"
     Then I should see no "modal dialog"
 
@@ -97,5 +101,6 @@ Feature: Top right menu
   Scenario: should allow to exit verify message dialog
     Given I'm logged in as "any account"
     When I click "verify message" in main menu
+    And I wait 1 seconds
     And I click "x button"
     Then I should see no "modal dialog"

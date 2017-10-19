@@ -109,6 +109,7 @@ Feature: Voting tab
     Given I'm logged in as "genesis"
     When I click tab number 2
     And I click "vote button"
+    And I wait 1 seconds
     And I click "cancel button"
     Then I should see no "modal dialog"
 

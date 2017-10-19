@@ -24,6 +24,7 @@ Feature: Send dialog
   Scenario: should allow to exit send dialog
     Given I'm logged in as "any account"
     When I click "send button"
+    And I wait 1 seconds
     And I click "cancel button"
     Then I should see no "modal dialog"
 
