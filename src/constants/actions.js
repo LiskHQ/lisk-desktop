@@ -1,5 +1,7 @@
 const actionTypes = {
-  metronomeBeat: 'METRONOME_BEAT',
+  socketDisconnected: 'SOCKET_DISCONNECTED',
+  socketReconnected: 'SOCKET_RECONNECTED',
+  newBlockCreated: 'NEW_BLOCK_CREATED',
   accountUpdated: 'ACCOUNT_UPDATED',
   accountLoggedOut: 'ACCOUNT_LOGGED_OUT',
   accountLoggedIn: 'ACCOUNT_LOGGED_IN',

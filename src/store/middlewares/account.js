@@ -95,11 +95,24 @@ const passphraseUsed = (store, action) => {
   }
 };
 
+const shouldUpdateAccount = (accountAddress, tx) => {
+  const transaction = tx[tx.length - 1];
+  const sender = transaction ? transaction.senderId : null;
+  const receiver = transaction ? transaction.receiverId : null;
+  return accountAddress === receiver || accountAddress === sender;
+};
+
+const checkTransactionAndUpdateAccount = (store, action) => {
+  if (shouldUpdateAccount(store.getState().account.address, action.data.block.transactions)) {
+    updateAccountData(store, action);
+  }
+};
+
 const accountMiddleware = store => next => (action) => {
   next(action);
   switch (action.type) {
-    case actionTypes.metronomeBeat:
-      updateAccountData(store, action);
+    case actionTypes.newBlockCreated:
+      checkTransactionAndUpdateAccount(store, action);
       break;
     case actionTypes.transactionsUpdated:
       delegateRegistration(store, action);
