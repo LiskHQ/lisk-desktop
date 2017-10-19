@@ -133,7 +133,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     waitForElemAndCheckItsText(selectorClass, text, callback);
   });
 
-  Given('I\'m logged in as "{accountName}"', (accountName, callback) => {
+  Given('I\'m logged in as "{accountName}"'{ timeout: 2 * defaultTimeout }, (accountName, callback) => {
     browser.ignoreSynchronization = true;
     browser.driver.manage().window().setSize(1000, 1000);
     browser.get(browser.params.baseURL);
