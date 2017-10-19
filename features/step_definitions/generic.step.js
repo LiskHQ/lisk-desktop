@@ -7,6 +7,7 @@ const {
   waitForElemRemoved,
   waitForElemAndClickIt,
   waitForElemAndSendKeys,
+  waitForElem,
   checkAlertDialog,
   waitTime,
   takeScreenshot,
@@ -167,18 +168,22 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   When('I remember passphrase, click "{nextButtonSelector}", fill in missing word', (nextButtonSelector, callback) => {
     waitForElemAndCheckItsText('.passphrase label', 'Save your passphrase in a safe place!');
 
-    element(by.css('.passphrase textarea')).getText().then((passphrase) => {
-      // eslint-disable-next-line no-unused-expressions
-      expect(passphrase).to.not.be.undefined;
-      const passphraseWords = passphrase.split(' ');
-      expect(passphraseWords.length).to.equal(12);
-      waitForElemAndClickIt(`.${nextButtonSelector.replace(/ /g, '-')}`);
+    waitForElem('.passphrase textarea', (textareaElem) => {
+      textareaElem.getText().then((passphrase) => {
+        // eslint-disable-next-line no-unused-expressions
+        expect(passphrase).to.not.be.undefined;
+        const passphraseWords = passphrase.split(' ');
+        expect(passphraseWords.length).to.equal(12);
+        waitForElemAndClickIt(`.${nextButtonSelector.replace(/ /g, '-')}`);
 
-      element.all(by.css('.passphrase-verifier p span')).get(0).getText().then((firstPartOfPassphrase) => {
-        const missingWordIndex = firstPartOfPassphrase.length ?
-          firstPartOfPassphrase.split(' ').length :
-          0;
-        element(by.css('.passphrase-verifier input')).sendKeys(passphraseWords[missingWordIndex]).then(callback);
+        waitForElem('.passphrase-verifier p span', (elem) => {
+          elem.get(0).getText().then((firstPartOfPassphrase) => {
+            const missingWordIndex = firstPartOfPassphrase.length ?
+              firstPartOfPassphrase.split(' ').length :
+              0;
+            waitForElemAndSendKeys('.passphrase-verifier input', passphraseWords[missingWordIndex], callback);
+          });
+        });
       });
     });
   });

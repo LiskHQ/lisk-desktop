@@ -92,4 +92,5 @@ module.exports = {
   waitTime,
   takeScreenshot,
   slugify,
+  waitForElem,
 };
