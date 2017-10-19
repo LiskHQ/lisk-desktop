@@ -42,7 +42,7 @@ function waitForElem(selector, callback) {
   const stepName = `waiting for element '${selector}'`;
   browser.wait(EC.presenceOf(elem), waitTime, stepName)
     .then(() => { if (callback) { callback(elem); } })
-    .catch(() => { takeScreenshot(slugify(stepName)); });
+    .catch(() => { });
 }
 
 function waitForElemAndCheckItsText(selector, text, callback) {
@@ -57,7 +57,7 @@ function waitForElemRemoved(selector, callback) {
   const stepName = `waiting for element '${selector}' not present`;
   browser.wait(EC.not(EC.presenceOf(elem)), waitTime, stepName)
     .then(callback || (() => {}))
-    .catch(() => { takeScreenshot(slugify(stepName)); });
+    .catch(() => { });
 }
 
 function waitForElemAndClickIt(selector, callback) {
