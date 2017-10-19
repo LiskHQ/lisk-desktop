@@ -6,7 +6,7 @@ const fs = require('fs');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 const EC = protractor.ExpectedConditions;
-const waitTime = 10000;
+const waitTime = 5000;
 
 function slugify(text) {
   return text.toString().toLowerCase()
