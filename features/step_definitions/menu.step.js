@@ -10,9 +10,9 @@ const expect = chai.expect;
 defineSupportCode(({ When, Then }) => {
   When('I click "{itemSelector}" in main menu', (itemSelector, callback) => {
     waitForElemAndClickIt('.main-menu-icon-button');
-    browser.sleep(500);
+    browser.sleep(1000);
     waitForElemAndClickIt(`.${itemSelector.replace(/ /g, '-')}`);
-    browser.sleep(500).then(callback);
+    browser.sleep(1000).then(callback);
   });
 
   Then('There is no "{itemSelector}" in main menu', (itemSelector, callback) => {
