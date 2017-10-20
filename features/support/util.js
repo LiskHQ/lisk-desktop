@@ -75,7 +75,7 @@ function waitForElemAndClickIt(selector, callback) {
   waitForElem(selector).then((elem) => {
     elem.click().then(() => {
       if (callback) callback();
-    });
+    }).catch(callback);
   }).catch(error => callback && callback(error));
 }
 

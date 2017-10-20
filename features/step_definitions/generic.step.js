@@ -81,7 +81,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     const optionElem = element.all(by.css(selector)).get(index - 1);
     browser.wait(EC.presenceOf(optionElem), waitTime)
       .catch(error => console.error(`${error}`)); // eslint-disable-line no-console
-    optionElem.click().then(callback);
+    optionElem.click().then(callback).catch(callback);
   });
 
   Then('the option "{optionText}" is selected in "{selectName}" select', (optionText, selectName, callback) => {
