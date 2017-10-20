@@ -102,7 +102,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
 
   Then('I should see no "{elementName}"', (elementName, callback) => {
     const selector = `.${elementName.replace(/ /g, '-')}`;
-    waitForElemRemoved(selector, () => {
+    waitForElemRemoved(selector).then(() => {
       expect(element.all(by.css(selector)).count()).to.eventually.equal(0)
         .and.notify(callback);
     });
@@ -174,7 +174,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   When('I remember passphrase, click "{nextButtonSelector}", fill in missing word', { timeout: 2 * defaultTimeout }, (nextButtonSelector, callback) => {
     waitForElemAndCheckItsText('.passphrase label', 'Save your passphrase in a safe place!');
 
-    waitForElem('.passphrase textarea', (textareaElem) => {
+    waitForElem('.passphrase textarea').then((textareaElem) => {
       textareaElem.getText().then((passphrase) => {
         // eslint-disable-next-line no-unused-expressions
         expect(passphrase).to.not.be.undefined;
@@ -182,16 +182,16 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
         expect(passphraseWords.length).to.equal(12);
         waitForElemAndClickIt(`.${nextButtonSelector.replace(/ /g, '-')}`);
 
-        waitForElem('.passphrase-verifier p span', (elem) => {
+        waitForElem('.passphrase-verifier p span').then((elem) => {
           elem.getText().then((firstPartOfPassphrase) => {
             const missingWordIndex = firstPartOfPassphrase.length ?
               firstPartOfPassphrase.split(' ').length :
               0;
             waitForElemAndSendKeys('.passphrase-verifier input', passphraseWords[missingWordIndex], callback);
           });
-        });
+        }).catch(callback);
       });
-    });
+    }).catch(callback);
   });
 
   When('I Refresh the page', (callback) => {

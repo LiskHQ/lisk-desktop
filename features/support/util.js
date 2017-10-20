@@ -37,52 +37,54 @@ function takeScreenshot(screnarioSlug, callback) {
   });
 }
 
-function waitForElem(selector, callback) {
-  const elem = element(by.css(selector));
-  const stepName = `waiting for element '${selector}'`;
-  browser.wait(EC.presenceOf(elem), waitTime, stepName)
-    .then(() => { if (callback) { callback(elem); } })
-    // catch to prevent whole test suite to fail - current scenario will timeout
-    .catch(error => console.error(`${error}`)); // eslint-disable-line no-console
+function waitForElem(selector) {
+  return new Promise((resolve, reject) => {
+    const elem = element(by.css(selector));
+    const stepName = `waiting for element '${selector}'`;
+    browser.wait(EC.presenceOf(elem), waitTime, stepName)
+      .then(() => resolve(elem))
+      .catch(reject);
+  });
 }
 
 function waitForElemAndCheckItsText(selector, text, callback) {
-  waitForElem(selector, (elem) => {
+  waitForElem(selector).then((elem) => {
     expect(elem.getText()).to.eventually.equal(text, `inside element "${selector}"`)
       .and.notify(callback || (() => {}));
-  });
+  }).catch(error => callback && callback(error));
 }
 
 function waitForElemAndMatchItsText(selector, text, callback) {
-  waitForElem(selector, (elem) => {
+  waitForElem(selector).then((elem) => {
     expect(elem.getText()).to.eventually.match(new RegExp(text), `inside element "${selector}"`)
       .and.notify(callback || (() => {}));
-  });
+  }).catch(error => callback && callback(error));
 }
 
-function waitForElemRemoved(selector, callback) {
-  const elem = element(by.css(selector));
-  const stepName = `waiting for element '${selector}' not present`;
-  browser.wait(EC.not(EC.presenceOf(elem)), waitTime, stepName)
-    .then(callback || (() => {}))
-    // catch to prevent whole test suite to fail - current scenario will timeout
-    .catch(error => console.error(`${error}`)); // eslint-disable-line no-console
+function waitForElemRemoved(selector) {
+  return new Promise((resolve, reject) => {
+    const elem = element(by.css(selector));
+    const stepName = `waiting for element '${selector}' not present`;
+    browser.wait(EC.not(EC.presenceOf(elem)), waitTime, stepName)
+      .then(() => resolve(elem))
+      .catch(reject);
+  });
 }
 
 function waitForElemAndClickIt(selector, callback) {
-  waitForElem(selector, (elem) => {
+  waitForElem(selector).then((elem) => {
     elem.click().then(() => {
       if (callback) callback();
     });
-  });
+  }).catch(error => callback && callback(error));
 }
 
 function waitForElemAndSendKeys(selector, keys, callback) {
-  waitForElem(selector, (elem) => {
+  waitForElem(selector).then((elem) => {
     elem.sendKeys(keys).then(() => {
       if (callback) callback();
     });
-  });
+  }).catch(error => callback && callback(error));
 }
 
 function checkAlertDialog(title, text, callback) {
