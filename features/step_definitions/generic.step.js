@@ -13,7 +13,6 @@ const {
   waitTime,
 } = require('../support/util.js');
 const accounts = require('../support/accounts.js');
-const localStorage = require('../support/localStorage.js');
 
 chai.use(chaiAsPromised);
 const expect = chai.expect;
@@ -139,13 +138,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     browser.executeScript(`window.document.querySelector("${selectorClass} input, ${selectorClass} textarea").value = "";`);
   });
 
-  Given('I\'m logged in as "{accountName}"', { timeout: 2 * defaultTimeout }, (accountName, callback) => {
-    browser.ignoreSynchronization = true;
-    browser.driver.manage().window().setSize(1000, 1000);
-    browser.get(browser.params.baseURL);
-    localStorage.clear();
-    localStorage.setItem('address', browser.params.liskCoreURL);
-    localStorage.setItem('network', 2);
+  Given('I\'m logged in as "{accountName}"', (accountName, callback) => {
     browser.get(browser.params.baseURL);
     waitForElemAndSendKeys('.passphrase input', accounts[accountName].passphrase);
     waitForElemAndClickIt('.login-button', callback);

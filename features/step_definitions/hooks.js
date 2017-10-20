@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const { defineSupportCode } = require('cucumber');
 const fs = require('fs');
+const localStorage = require('../support/localStorage.js');
 
 function slugify(text) {
   return text.toString().toLowerCase()
@@ -31,7 +32,17 @@ function takeScreenshot(screnarioSlug, callback) {
   });
 }
 
-defineSupportCode(({ After }) => {
+defineSupportCode(({ Before, After }) => {
+  Before((scenario, callback) => {
+    browser.ignoreSynchronization = true;
+    browser.driver.manage().window().setSize(1000, 1000);
+    browser.get(browser.params.baseURL);
+    localStorage.clear();
+    localStorage.setItem('address', browser.params.liskCoreURL);
+    localStorage.setItem('network', 2);
+    callback();
+  });
+
   After((scenario, callback) => {
     if (scenario.isFailed()) {
       const screnarioSlug = slugify([scenario.scenario.feature.name, scenario.scenario.name].join(' '));
