@@ -119,10 +119,9 @@ Feature: Voting tab
     Then I should see text "3 delegate names were successfully resolved for voting." in "upvotes message" element
     And I should see text "1 of the delegate names selected for unvoting was not currently voted for:standby_33" in "notVotedYet message" element
     And I should see text "1 of the provided delegate names could not be resolved:nonexisting_22" in "notFound message" element
-    And I should see "vote list" element with text:
+    And I should see "vote list" element with text matching regexp:
       """
-      standby_27
-      standby_28
-      standby_29
+      standby_2[789]
+      standby_2[789]
+      standby_2[789]
       """
-

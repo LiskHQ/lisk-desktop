@@ -53,6 +53,13 @@ function waitForElemAndCheckItsText(selector, text, callback) {
   });
 }
 
+function waitForElemAndMatchItsText(selector, text, callback) {
+  waitForElem(selector, (elem) => {
+    expect(elem.getText()).to.eventually.match(new RegExp(text), `inside element "${selector}"`)
+      .and.notify(callback || (() => {}));
+  });
+}
+
 function waitForElemRemoved(selector, callback) {
   const elem = element(by.css(selector));
   const stepName = `waiting for element '${selector}' not present`;
@@ -87,6 +94,7 @@ function checkAlertDialog(title, text, callback) {
 
 module.exports = {
   waitForElemAndCheckItsText,
+  waitForElemAndMatchItsText,
   waitForElemRemoved,
   waitForElemAndClickIt,
   waitForElemAndSendKeys,

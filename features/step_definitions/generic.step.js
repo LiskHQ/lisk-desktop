@@ -4,6 +4,7 @@ const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 const {
   waitForElemAndCheckItsText,
+  waitForElemAndMatchItsText,
   waitForElemRemoved,
   waitForElemAndClickIt,
   waitForElemAndSendKeys,
@@ -123,9 +124,9 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     waitForElemAndCheckItsText(selectorClass, text, callback);
   });
 
-  Then('I should see "{elementName}" element with text:', (elementName, text, callback) => {
+  Then('I should see "{elementName}" element with text matching regexp:', (elementName, text, callback) => {
     const selectorClass = `.${elementName.replace(/ /g, '-')}`;
-    waitForElemAndCheckItsText(selectorClass, text, callback);
+    waitForElemAndMatchItsText(selectorClass, text, callback);
   });
 
   Then('I should see element "{elementName}" that contains text:', (elementName, text, callback) => {
