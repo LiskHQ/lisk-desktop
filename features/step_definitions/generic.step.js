@@ -187,7 +187,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     }).catch(callback);
   });
 
-  When('I Refresh the page', (callback) => {
+  When('I refresh the page', (callback) => {
     browser.refresh().then(callback);
   });
 

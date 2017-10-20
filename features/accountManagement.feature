@@ -5,7 +5,7 @@ Feature: Account management
     And I click "save account button"
     And I wait 1 seconds
     And I should see text "Account saved" in "toast" element
-    And I Refresh the page
+    And I refresh the page
     And I wait 2 seconds
     Then I should be logged in
     And I click "send button"
@@ -26,12 +26,12 @@ Feature: Account management
     Given I'm logged in as "any account"
     When I click "save account" in main menu
     And I click "save account button"
-    And I Refresh the page
+    And I refresh the page
     And I wait 2 seconds
     And I click "forget account" in main menu
     And I wait 1 seconds
     Then I should see text "Account was successfully forgotten." in "toast" element
-    And I Refresh the page
+    And I refresh the page
     And I should be on login page
 
   Scenario: should allow to exit save account dialog with "cancel button"
