@@ -1,41 +1,11 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
-const fs = require('fs');
 
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 const EC = protractor.ExpectedConditions;
 const waitTime = 5000;
-
-function slugify(text) {
-  return text.toString().toLowerCase()
-    .replace(/\s+/g, '-') // Replace spaces with -
-    .replace(/[^\w-]+/g, '') // Remove all non-word chars
-    .replace(/--+/g, '-') // Replace multiple - with single -
-    .replace(/^-+/, '') // Trim - from start of text
-    .replace(/-+$/, ''); // Trim - from end of text
-}
-
-function writeScreenShot(data, filename) {
-  const stream = fs.createWriteStream(filename);
-  stream.write(new Buffer(data, 'base64'));
-  stream.end();
-}
-
-function takeScreenshot(screnarioSlug, callback) {
-  browser.takeScreenshot().then((screenshotBuffer) => {
-    if (!fs.existsSync(browser.params.screenshotFolder)) {
-      fs.mkdirSync(browser.params.screenshotFolder);
-    }
-    const screenshotPath = `${browser.params.screenshotFolder}/${screnarioSlug}.png`;
-    writeScreenShot(screenshotBuffer, screenshotPath);
-    console.log(`Screenshot saved to ${screenshotPath}`); // eslint-disable-line no-console
-    if (callback) {
-      callback();
-    }
-  });
-}
 
 function waitForElem(selector) {
   return new Promise((resolve, reject) => {
@@ -102,7 +72,5 @@ module.exports = {
   waitForElemAndSendKeys,
   checkAlertDialog,
   waitTime,
-  takeScreenshot,
-  slugify,
   waitForElem,
 };
