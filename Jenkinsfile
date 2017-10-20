@@ -1,4 +1,5 @@
 def fail(reason) {
+  def pr_branch = ''
   if (env.CHANGE_BRANCH != null) {
     pr_branch = " (${env.CHANGE_BRANCH})"
   }
@@ -24,8 +25,9 @@ node('lisk-nano') {
         cd ~/lisk-Linux-x86_64
         # work around core bug: config.json gets overwritten; use backup
         cp .config.json config_$N.json
-        # change core port
+        # change core port, listen only on 127.0.0.1
         sed -i -r -e "s/^(.*ort\\":) 4000,/\\1 400$N,/" config_$N.json
+        sed -i -r -e "s/^(.*\\"address\\":) \\"0.0.0.0\\",/\\1 \\"127.0.0.1\\",/" config_$N.json
         # disable redis
         sed -i -r -e "s/^(\\s*\\"cacheEnabled\\":) true/\\1 false/" config_$N.json
         # change postgres databse
@@ -33,6 +35,10 @@ node('lisk-nano') {
         cp etc/pm2-lisk.json etc/pm2-lisk_$N.json
         sed -i -r -e "s/config.json/config_$N.json/" etc/pm2-lisk_$N.json
         sed -i -r -e "s/(lisk.app)/\\1_$N/" etc/pm2-lisk_$N.json
+        # logs
+        sed -i -r -e "s/lisk.log/lisk_${JOB_BASE_NAME}_${BUILD_ID}.log/" config_$N.json
+        sed -i -r -e "s/lisk.app_$N/lisk.app_$N_${JOB_BASE_NAME}_${BUILD_ID}/" etc/pm2-lisk_$N.json
+        #
         JENKINS_NODE_COOKIE=dontKillMe bash lisk.sh start_db -p etc/pm2-lisk_$N.json
         bash lisk.sh rebuild -p etc/pm2-lisk_$N.json -f blockchain_explorer.db.gz
         '''
@@ -120,7 +126,7 @@ node('lisk-nano') {
           Xvfb :1$N -ac -screen 0 1280x1024x24 &
 
           # Run end-to-end tests
-          npm run --silent e2e-test -- --params.baseURL http://localhost:808$N/ --params.liskCoreURL http://localhost:400$N
+          npm run --silent e2e-test -- --params.baseURL http://127.0.0.1:808$N/ --params.liskCoreURL http://127.0.0.1:400$N
           '''
         }
       } catch (err) {
@@ -133,9 +139,12 @@ node('lisk-nano') {
   } finally {
     sh '''
     N=${EXECUTOR_NUMBER:-0}
+    curl --verbose http://127.0.0.1:400$N/api/blocks/getNethash || true
     ( cd ~/lisk-Linux-x86_64 && bash lisk.sh stop_node -p etc/pm2-lisk_$N.json ) || true
-    pkill -f "Xvfb :1$N" -9 || true
-    pkill -f "webpack.*808$N" -9 || true
+    pgrep --list-full -f "Xvfb :1$N" || true
+    pkill --echo -f "Xvfb :1$N" -9 || echo "pkill returned code $?"
+    pgrep --list-full -f "webpack.*808$N" || true
+    pkill --echo -f "webpack.*808$N" -9 || echo "pkill returned code $?"
     '''
     dir('node_modules') {
       deleteDir()
@@ -155,6 +164,8 @@ node('lisk-nano') {
                   message: "Recovery: build #${env.BUILD_NUMBER} of <${env.BUILD_URL}|${env.JOB_NAME}>${pr_branch} was successful.",
                   channel: '#lisk-nano-jenkins'
       }
+    } else {
+      archiveArtifacts allowEmptyArchive: true, artifacts: 'e2e-test-screenshots/'
     }
   }
 }

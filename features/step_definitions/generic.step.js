@@ -7,6 +7,7 @@ const {
   waitForElemRemoved,
   waitForElemAndClickIt,
   waitForElemAndSendKeys,
+  waitForElem,
   checkAlertDialog,
   waitTime,
 } = require('../support/util.js');
@@ -16,9 +17,10 @@ const localStorage = require('../support/localStorage.js');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 const EC = protractor.ExpectedConditions;
+const defaultTimeout = 10 * 1000;
 
 defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
-  setDefaultTimeout(20 * 1000);
+  setDefaultTimeout(defaultTimeout);
 
   When('I fill in "{value}" to "{fieldName}" field', (value, fieldName, callback) => {
     const selectorClass = `.${fieldName.replace(/ /g, '-')}`;
@@ -39,7 +41,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     waitForElemAndSendKeys(`${selectorClass} input, ${selectorClass} textarea`, passphrase, callback);
   });
 
-  When('I wait {seconds} seconds', (seconds, callback) => {
+  When('I wait {seconds} seconds', { timeout: -1 }, (seconds, callback) => {
     browser.sleep(seconds * 1000).then(callback);
   });
 
@@ -74,8 +76,10 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   When('I select option no. {index} from "{selectName}" select', (index, selectName, callback) => {
     waitForElemAndClickIt(`.${selectName}`);
     browser.sleep(500);
-    const optionElem = element.all(by.css(`.${selectName} ul li`)).get(index - 1);
-    browser.wait(EC.presenceOf(optionElem), waitTime);
+    const selector = `.${selectName} ul li`;
+    const optionElem = element.all(by.css(selector)).get(index - 1);
+    browser.wait(EC.presenceOf(optionElem), waitTime)
+      .catch(error => console.error(`${error}`)); // eslint-disable-line no-console
     optionElem.click().then(callback);
   });
 
@@ -134,7 +138,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     browser.executeScript(`window.document.querySelector("${selectorClass} input, ${selectorClass} textarea").value = "";`);
   });
 
-  Given('I\'m logged in as "{accountName}"', (accountName, callback) => {
+  Given('I\'m logged in as "{accountName}"', { timeout: 2 * defaultTimeout }, (accountName, callback) => {
     browser.ignoreSynchronization = true;
     browser.driver.manage().window().setSize(1000, 1000);
     browser.get(browser.params.baseURL);
@@ -166,21 +170,25 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     callback();
   });
 
-  When('I remember passphrase, click "{nextButtonSelector}", fill in missing word', (nextButtonSelector, callback) => {
+  When('I remember passphrase, click "{nextButtonSelector}", fill in missing word', { timeout: 2 * defaultTimeout }, (nextButtonSelector, callback) => {
     waitForElemAndCheckItsText('.passphrase label', 'Save your passphrase in a safe place!');
 
-    element(by.css('.passphrase textarea')).getText().then((passphrase) => {
-      // eslint-disable-next-line no-unused-expressions
-      expect(passphrase).to.not.be.undefined;
-      const passphraseWords = passphrase.split(' ');
-      expect(passphraseWords.length).to.equal(12);
-      waitForElemAndClickIt(`.${nextButtonSelector.replace(/ /g, '-')}`);
+    waitForElem('.passphrase textarea', (textareaElem) => {
+      textareaElem.getText().then((passphrase) => {
+        // eslint-disable-next-line no-unused-expressions
+        expect(passphrase).to.not.be.undefined;
+        const passphraseWords = passphrase.split(' ');
+        expect(passphraseWords.length).to.equal(12);
+        waitForElemAndClickIt(`.${nextButtonSelector.replace(/ /g, '-')}`);
 
-      element.all(by.css('.passphrase-verifier p span')).get(0).getText().then((firstPartOfPassphrase) => {
-        const missingWordIndex = firstPartOfPassphrase.length ?
-          firstPartOfPassphrase.split(' ').length :
-          0;
-        element(by.css('.passphrase-verifier input')).sendKeys(passphraseWords[missingWordIndex]).then(callback);
+        waitForElem('.passphrase-verifier p span', (elem) => {
+          elem.getText().then((firstPartOfPassphrase) => {
+            const missingWordIndex = firstPartOfPassphrase.length ?
+              firstPartOfPassphrase.split(' ').length :
+              0;
+            waitForElemAndSendKeys('.passphrase-verifier input', passphraseWords[missingWordIndex], callback);
+          });
+        });
       });
     });
   });
