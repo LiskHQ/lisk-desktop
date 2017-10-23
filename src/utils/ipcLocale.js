@@ -14,6 +14,14 @@ export default {
           ipc.send('set-locale', locale);
         }
       });
+    } else {
+      const language = i18n.language || window.localStorage.getItem('lang');
+      if (language) i18n.changeLanguage(language);
+      else i18n.changeLanguage('en');
+
+      i18n.on('languageChanged', (locale) => {
+        window.localStorage.setItem('lang', locale);
+      });
     }
   },
 };
