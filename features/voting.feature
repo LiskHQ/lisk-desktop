@@ -115,9 +115,9 @@ Feature: Voting tab
   Scenario: should allow to select delegates by URL
     Given I'm logged in as "delegate candidate"
     When I go to "/main/voting/vote?votes=standby_27,standby_28,standby_29,nonexisting_22&unvotes=standby_33"
-    Then I should see text "3 delegate names successfully resolved to add vote to." in "upvotes message" element
-    And I should see text "1 of delegate names selected for unvote were not voted for:standby_33" in "notVotedYet message" element
-    And I should see text "1 of entered delegate names could not be resolved:nonexisting_22" in "notFound message" element
+    Then I should see text "3 delegate names were successfully resolved for voting." in "upvotes message" element
+    And I should see text "1 of the delegate names selected for unvoting was not currently voted for:standby_33" in "notVotedYet message" element
+    And I should see text "1 of the provided delegate names could not be resolved:nonexisting_22" in "notFound message" element
     And I should see "vote list" element with text:
       """
       standby_27

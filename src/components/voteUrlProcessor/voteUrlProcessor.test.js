@@ -86,7 +86,7 @@ describe('VoteUrlProcessor', () => {
       urlVoteCount: 1,
     });
     expect(wrapper.find('.upvotes-message')).to.have.length(1);
-    expect(wrapper.find('.upvotes-message').text()).to.equal('{{count}} delegate names successfully resolved to add vote to.');
+    expect(wrapper.find('.upvotes-message').text()).to.equal('{{count}} delegate names were successfully resolved for voting.');
   });
 
   it('renders .notFound-message element with a message if props.notFound.length > 0', () => {
@@ -95,7 +95,7 @@ describe('VoteUrlProcessor', () => {
       urlVoteCount: 1,
     });
     expect(wrapper.find('.notFound-message')).to.have.length(1);
-    expect(wrapper.find('.notFound-message').text()).to.equal('{{count}} of entered delegate names could not be resolved:delegate_name');
+    expect(wrapper.find('.notFound-message').text()).to.equal('{{count}} of the provided delegate names could not be resolved:delegate_name');
   });
 });
 
