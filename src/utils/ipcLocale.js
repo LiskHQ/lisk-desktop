@@ -4,6 +4,10 @@ export default {
     let localeInit = false;
 
     if (ipc) {
+      if (!i18n.language) {
+        ipc.send('request-locale');
+      }
+
       ipc.on('detectedLocale', (action, locale) => {
         i18n.changeLanguage(locale);
         localeInit = true;
@@ -16,8 +20,11 @@ export default {
       });
     } else {
       const language = i18n.language || window.localStorage.getItem('lang');
-      if (language) i18n.changeLanguage(language);
-      else i18n.changeLanguage('en');
+      if (language) {
+        i18n.changeLanguage(language);
+      } else {
+        i18n.changeLanguage('en');
+      }
 
       i18n.on('languageChanged', (locale) => {
         window.localStorage.setItem('lang', locale);
