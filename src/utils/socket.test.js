@@ -19,14 +19,14 @@ describe('Socket', () => {
     });
 
     window.ipc = {
-      on: (event, callback) => {
-        ipcCallbacks[event] = callback;
+      on: (type, callback) => {
+        ipcCallbacks[type] = callback;
       },
     };
   });
 
   it(`should dispatch ${actionTypes.newBlockCreated} unless a new block was added`, () => {
-    transactions = { transactions: [{ senderId: '1234', receiverId: '5678' }] };
+    transactions = { transactions: [{ senderId: '1234', recipientId: '5678' }] };
     store = {
       getState: () => ({
         peers: { data: { options: { address: 'localhost:4000' } } },
@@ -44,13 +44,13 @@ describe('Socket', () => {
 
     expect(store.dispatch).to.have.been.calledWith({
       type: actionTypes.newBlockCreated,
-      data: { data: transactions, interval: SYNC_ACTIVE_INTERVAL },
+      data: { block: transactions, interval: SYNC_ACTIVE_INTERVAL },
     });
   });
 
   describe('window.ipc', () => {
     beforeEach(() => {
-      transactions = { transactions: [{ senderId: '1234', receiverId: '5678' }] };
+      transactions = { transactions: [{ senderId: '1234', recipientId: '5678' }] };
       store = {
         getState: () => ({
           peers: { data: { options: { address: 'localhost:4000' } } },
@@ -77,7 +77,7 @@ describe('Socket', () => {
 
       expect(store.dispatch).to.have.been.calledWith({
         type: actionTypes.newBlockCreated,
-        data: { data: transactions, interval: SYNC_INACTIVE_INTERVAL },
+        data: { block: transactions, interval: SYNC_INACTIVE_INTERVAL },
       });
     });
 
@@ -88,7 +88,7 @@ describe('Socket', () => {
 
       expect(store.dispatch).to.have.been.calledWith({
         type: actionTypes.newBlockCreated,
-        data: { data: transactions, interval: SYNC_ACTIVE_INTERVAL },
+        data: { block: transactions, interval: SYNC_ACTIVE_INTERVAL },
       });
     });
   });

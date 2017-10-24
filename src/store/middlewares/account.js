@@ -23,7 +23,7 @@ const hasRecentTransactions = state => (
   state.transactions.pending.length !== 0
 );
 
-const updateAccountData = (store, action) => { // eslint-disable-line
+const updateAccountData = (store, action) => {
   const state = store.getState();
   const { peers, account } = state;
 
@@ -95,15 +95,14 @@ const passphraseUsed = (store, action) => {
   }
 };
 
-const shouldUpdateAccount = (accountAddress, tx) => {
+const checkTransactionAndUpdateAccount = (store, action) => {
+  const tx = action.data.block.transactions;
+  const accountAddress = store.getState().account.address;
   const transaction = tx[tx.length - 1];
   const sender = transaction ? transaction.senderId : null;
-  const receiver = transaction ? transaction.receiverId : null;
-  return accountAddress === receiver || accountAddress === sender;
-};
+  const recipient = transaction ? transaction.recipientId : null;
 
-const checkTransactionAndUpdateAccount = (store, action) => {
-  if (shouldUpdateAccount(store.getState().account.address, action.data.block.transactions)) {
+  if (accountAddress === recipient || accountAddress === sender) {
     updateAccountData(store, action);
   }
 };
