@@ -37,11 +37,15 @@ const sendDetectedLang = (locale) => {
 };
 
 // read config data from JSON file
-storage.get('config', (error, data) => {
-  if (error) throw error;
-  lang = data.lang;
-  sendDetectedLang(lang);
-});
+const getConfig = () => {
+  storage.get('config', (error, data) => {
+    if (error) throw error;
+    lang = data.lang;
+    sendDetectedLang(lang);
+  });
+};
+
+getConfig();
 
 function createWindow() {
   // set language of the react app
@@ -181,4 +185,8 @@ ipcMain.on('set-locale', (event, locale) => {
     Menu.setApplicationMenu(buildMenu(app, copyright, i18n));
     event.returnValue = 'Rebuilt electron menu.';
   }
+});
+
+ipcMain.on('request-locale', () => {
+  getConfig();
 });
