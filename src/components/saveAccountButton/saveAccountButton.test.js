@@ -12,6 +12,10 @@ describe('SaveAccountButton', () => {
   const emptySavedAccounts = [];
   const savedAccounts = [account];
   const props = {
+    theme: {
+      menuLink: 'some class',
+      menuItem: 'some other class',
+    },
     account,
     accountRemoved: sinon.spy(),
     t: key => key,

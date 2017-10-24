@@ -25,29 +25,29 @@ const Header = props => (
       >
         {
           !props.account.isDelegate &&
-            <MenuItem>
-              <RelativeLink className={`register-as-delegate ${styles.menuItem}`}
+            <MenuItem theme={styles}>
+              <RelativeLink className={`register-as-delegate ${styles.menuLink}`}
                 to='register-delegate'>{props.t('Register as delegate')}</RelativeLink>
             </MenuItem>
         }
         {
           !props.account.secondSignature &&
-            <MenuItem>
-              <RelativeLink className={`register-second-passphrase ${styles.menuItem}`}
+            <MenuItem theme={styles}>
+              <RelativeLink className={`register-second-passphrase ${styles.menuLink}`}
                 to='register-second-passphrase'>{props.t('Register second passphrase')}</RelativeLink>
             </MenuItem>
         }
-        <MenuItem>
-          <RelativeLink className={`sign-message ${styles.menuItem}`} to='sign-message'>{props.t('Sign message')}</RelativeLink>
+        <MenuItem theme={styles}>
+          <RelativeLink className={`sign-message ${styles.menuLink}`} to='sign-message'>{props.t('Sign message')}</RelativeLink>
         </MenuItem>
-        <MenuItem>
-          <RelativeLink className={`verify-message ${styles.menuItem}`}
+        <MenuItem theme={styles}>
+          <RelativeLink className={`verify-message ${styles.menuLink}`}
             to='verify-message'>{props.t('Verify message')}</RelativeLink>
         </MenuItem>
         <MenuDivider />
-        <SaveAccountButton />
-        <MenuItem>
-          <RelativeLink className={`settings ${styles.menuItem}`} to='settings'>{props.t('Settings')}</RelativeLink>
+        <SaveAccountButton theme={styles} />
+        <MenuItem theme={styles}>
+          <RelativeLink className={`settings ${styles.menuLink}`} to='settings'>{props.t('Settings')}</RelativeLink>
         </MenuItem>
       </IconMenu>
 
