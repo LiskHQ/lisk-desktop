@@ -1,18 +1,26 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
 import Alert from './alert';
+import i18n from '../../i18n';
 
 
 describe('Alert', () => {
   let wrapper;
   let closeSpy;
   const text = 'some random text';
+  const options = {
+    context: { i18n },
+    childContextTypes: {
+      i18n: PropTypes.object.isRequired,
+    },
+  };
 
   beforeEach(() => {
     closeSpy = sinon.spy();
-    wrapper = mount(<Alert text={text} closeDialog={closeSpy} />);
+    wrapper = mount(<Alert text={text} closeDialog={closeSpy} />, options);
   });
 
   it('renders paragraph with props.text', () => {

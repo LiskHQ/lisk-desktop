@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import actionTypes from '../constants/actions';
 import { setSecondPassphrase, send } from '../utils/api/account';
 import { registerDelegate } from '../utils/api/delegate';
@@ -5,6 +6,7 @@ import { transactionAdded } from './transactions';
 import { errorAlertDialogDisplayed } from './dialog';
 import Fees from '../constants/fees';
 import { toRawLsk } from '../utils/lsk';
+import transactionTypes from '../constants/transactionTypes';
 
 /**
  * Trigger this action to update the account object
@@ -40,6 +42,11 @@ export const accountLoggedIn = data => ({
   data,
 });
 
+export const passphraseUsed = data => ({
+  type: actionTypes.passphraseUsed,
+  data,
+});
+
 /**
  *
  */
@@ -53,20 +60,22 @@ export const secondPassphraseRegistered = ({ activePeer, secondPassphrase, accou
           senderId: account.address,
           amount: 0,
           fee: Fees.setSecondPassphrase,
-          type: 1,
+          type: transactionTypes.setSecondPassphrase,
         }));
       }).catch((error) => {
-        const text = (error && error.message) ? error.message : 'An error occurred while registering your second passphrase. Please try again.';
+        const text = (error && error.message) ? error.message : i18next.t('An error occurred while registering your second passphrase. Please try again.');
         dispatch(errorAlertDialogDisplayed({ text }));
       });
+    dispatch(passphraseUsed(account.passphrase));
   };
 
 /**
  *
  */
-export const delegateRegistered = ({ activePeer, account, username, secondPassphrase }) =>
+export const delegateRegistered = ({
+  activePeer, account, passphrase, username, secondPassphrase }) =>
   (dispatch) => {
-    registerDelegate(activePeer, username, account.passphrase, secondPassphrase)
+    registerDelegate(activePeer, username, passphrase, secondPassphrase)
       .then((data) => {
         // dispatch to add to pending transaction
         dispatch(transactionAdded({
@@ -76,14 +85,15 @@ export const delegateRegistered = ({ activePeer, account, username, secondPassph
           username,
           amount: 0,
           fee: Fees.registerDelegate,
-          type: 2,
+          type: transactionTypes.registerDelegate,
         }));
       })
       .catch((error) => {
-        const text = error && error.message ? `${error.message}.` : 'An error occurred while registering as delegate.';
+        const text = error && error.message ? `${error.message}.` : i18next.t('An error occurred while registering as delegate.');
         const actionObj = errorAlertDialogDisplayed({ text });
         dispatch(actionObj);
       });
+    dispatch(passphraseUsed(passphrase));
   };
 
 /**
@@ -100,11 +110,12 @@ export const sent = ({ activePeer, account, recipientId, amount, passphrase, sec
           recipientId,
           amount: toRawLsk(amount),
           fee: Fees.send,
-          type: 0,
+          type: transactionTypes.send,
         }));
       })
       .catch((error) => {
-        const text = error && error.message ? `${error.message}.` : 'An error occurred while creating the transaction.';
+        const text = error && error.message ? `${error.message}.` : i18next.t('An error occurred while creating the transaction.');
         dispatch(errorAlertDialogDisplayed({ text }));
       });
+    dispatch(passphraseUsed(passphrase));
   };

@@ -26,11 +26,12 @@ const App = () => (
             <main className={offlineStyle.disableWhenOffline}>
               <Account />
               <Tabs />
-              <Route path={`${match.url}/transactions`} component={Transactions} />
-              <Route path={`${match.url}/voting`} component={Voting} />
-              <Route path={`${match.url}/forging`} component={Forging} />
+              <Route path={`${match.url}/transactions/:dialog?`} component={Transactions} />
+              <Route path={`${match.url}/voting/:dialog?`} component={Voting} />
+              <Route path={`${match.url}/forging/:dialog?`} component={Forging} />
             </main>
           )} />
+          <Route exact path="/register" component={Login} />
           <Route exact path="/" component={Login} />
         </main>
         <Dialog />

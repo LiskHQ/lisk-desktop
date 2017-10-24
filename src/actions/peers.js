@@ -1,5 +1,17 @@
+import i18next from 'i18next';
 import Lisk from 'lisk-js';
 import actionTypes from '../constants/actions';
+import { getNethash } from './../utils/api/nethash';
+import { errorToastDisplayed } from './toaster';
+
+const peerSet = (data, config) => ({
+  data: Object.assign({
+    passphrase: data.passphrase,
+    publicKey: data.publicKey,
+    activePeer: Lisk.api(config),
+  }),
+  type: actionTypes.activePeerSet,
+});
 
 /**
  * Returns required action object to set
@@ -9,36 +21,36 @@ import actionTypes from '../constants/actions';
  * @param {Object} data - Active peer data and the passphrase of account
  * @returns {Object} Action object
  */
-export const activePeerSet = (data) => {
-  const addHttp = (url) => {
-    const reg = /^(?:f|ht)tps?:\/\//i;
-    return reg.test(url) ? url : `http://${url}`;
-  };
+export const activePeerSet = data =>
+  (dispatch) => {
+    const addHttp = (url) => {
+      const reg = /^(?:f|ht)tps?:\/\//i;
+      return reg.test(url) ? url : `http://${url}`;
+    };
+    const config = data.network || {};
 
-  const { network } = data;
-  let config = { };
-  if (network) {
-    config = network;
-    if (network.address) {
-      const normalizedUrl = new URL(addHttp(network.address));
+    if (config.address) {
+      const { hostname, port, protocol } = new URL(addHttp(config.address));
 
-      config.node = normalizedUrl.hostname;
-      config.port = normalizedUrl.port;
-      config.ssl = normalizedUrl.protocol === 'https';
+      config.node = hostname;
+      config.port = port;
+      config.ssl = protocol === 'https';
     }
     if (config.testnet === undefined && config.port !== undefined) {
       config.testnet = config.port === '7000';
     }
-  }
-
-  return {
-    data: Object.assign({
-      passphrase: data.passphrase,
-      activePeer: Lisk.api(config),
-    }),
-    type: actionTypes.activePeerSet,
+    if (config.custom) {
+      getNethash(Lisk.api(config)).then((response) => {
+        config.nethash = response.nethash;
+        dispatch(peerSet(data, config));
+      }).catch(() => {
+        dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node') }));
+      });
+    } else {
+      dispatch(peerSet(data, config));
+    }
   };
-};
+
 
 /**
  * Returns required action object to partially

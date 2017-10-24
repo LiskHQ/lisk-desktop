@@ -29,12 +29,16 @@ const leftPadd = (str, pad, length) => {
 /**
  * Resets previous settings and creates a step with a random length between 1.6% to 3.2%
  */
-const init = (rand = Math.random()) => ({
-  step: (160 + Math.floor(rand * 160)) / 100,
-  percentage: 0,
-  seed: emptyByte('00'),
-  byte: emptyByte(0),
-});
+const init = (rand = Math.random()) => {
+  let step = (160 + Math.floor(rand * 160)) / 100;
+  step = step >= 0.01 ? step : 0.1 + (step * 5);
+  return {
+    step,
+    percentage: 0,
+    seed: emptyByte('00'),
+    byte: emptyByte(0),
+  };
+};
 
 /**
  * - From a zero byte:
@@ -77,7 +81,7 @@ export const generateSeed = ({ byte, seed, percentage, step } = init(), rand = M
    */
 export const generatePassphrase = ({ seed }) => (new mnemonic(new Buffer(seed.join(''), 'hex'))).toString();
 
-  /**
+/**
    * Checks if passphrase is valid using mnemonic
    *
    * @param {string} passphrase

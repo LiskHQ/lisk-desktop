@@ -5,10 +5,11 @@ import { mount, shallow } from 'enzyme';
 import PassphraseGenerator from './passphraseGenerator';
 
 
-describe('PassphraseConfirmator', () => {
+describe('PassphraseGenerator', () => {
   describe('seedGenerator', () => {
     const props = {
       changeHandler: () => {},
+      t: key => key,
     };
     const mockEvent = {
       pageX: 140,
@@ -16,7 +17,7 @@ describe('PassphraseConfirmator', () => {
     };
 
     it('calls setState to setValues locally', () => {
-      const wrapper = shallow(<PassphraseGenerator changeHandler={props.changeHandler}/>);
+      const wrapper = shallow(<PassphraseGenerator {...props}/>);
       const spyFn = spy(wrapper.instance(), 'setState');
       wrapper.instance().seedGenerator(mockEvent);
       expect(spyFn).to.have.been.calledWith();
@@ -24,7 +25,7 @@ describe('PassphraseConfirmator', () => {
     });
 
     it('shows an Input fallback if this.isTouchDevice()', () => {
-      const wrapper = mount(<PassphraseGenerator changeHandler={props.changeHandler}/>);
+      const wrapper = mount(<PassphraseGenerator {...props}/>);
       const isTouchDeviceMock = mock(wrapper.instance()).expects('isTouchDevice');
       isTouchDeviceMock.returns(true);
       wrapper.instance().setState({}); // to rerender the component
@@ -32,7 +33,7 @@ describe('PassphraseConfirmator', () => {
     });
 
     it('shows at least some progress on pressing input if this.isTouchDevice()', () => {
-      const wrapper = mount(<PassphraseGenerator changeHandler={props.changeHandler}/>);
+      const wrapper = mount(<PassphraseGenerator {...props}/>);
       const isTouchDeviceMock = mock(wrapper.instance()).expects('isTouchDevice');
       isTouchDeviceMock.returns(true).twice();
       wrapper.instance().setState({}); // to rerender the component
@@ -41,7 +42,7 @@ describe('PassphraseConfirmator', () => {
     });
 
     it('removes mousemove event listener in componentWillUnmount', () => {
-      const wrapper = mount(<PassphraseGenerator changeHandler={props.changeHandler}/>);
+      const wrapper = mount(<PassphraseGenerator {...props}/>);
       const documentSpy = spy(document, 'removeEventListener');
       wrapper.instance().componentWillUnmount();
       expect(documentSpy).to.have.be.been.calledWith('mousemove');
@@ -49,7 +50,7 @@ describe('PassphraseConfirmator', () => {
     });
 
     it('sets "data" and "lastCaptured" if distance is over 120', () => {
-      const wrapper = shallow(<PassphraseGenerator changeHandler={props.changeHandler}/>);
+      const wrapper = shallow(<PassphraseGenerator {...props}/>);
       wrapper.instance().seedGenerator(mockEvent);
 
       expect(wrapper.instance().state.data).to.not.equal(undefined);
@@ -60,7 +61,7 @@ describe('PassphraseConfirmator', () => {
     });
 
     it('should do nothing if distance is bellow 120', () => {
-      const wrapper = shallow(<PassphraseGenerator changeHandler={props.changeHandler}/>);
+      const wrapper = shallow(<PassphraseGenerator {...props}/>);
       const nativeEvent = {
         pageX: 10,
         pageY: 10,
@@ -75,7 +76,7 @@ describe('PassphraseConfirmator', () => {
     });
 
     it('should generate passphrase if seed is completed', () => {
-      const wrapper = shallow(<PassphraseGenerator changeHandler={props.changeHandler}/>);
+      const wrapper = shallow(<PassphraseGenerator {...props}/>);
       // set mock data
       wrapper.instance().setState({
         data: {

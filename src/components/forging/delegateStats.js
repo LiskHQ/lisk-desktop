@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, CardText } from 'react-toolbox/lib/card';
 import CircularProgressbar from 'react-circular-progressbar';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import { translate } from 'react-i18next';
 import style from './forging.css';
 
 const identity = x => (x);
@@ -34,7 +35,7 @@ const DelegateStats = props => (
           <CardText>
             <div className={grid['col-xs-12']}>
               <div className={`${grid.row}  ${grid['between-xs']}`}>
-                <div className={style.circularProgressTitle}> {cardItem.label} </div>
+                <div className={style.circularProgressTitle}> {props.t(cardItem.label)} </div>
                 <CircularProgressbar
                   percentage={cardItem.percentageTransform(props.delegate[cardItem.key])}
                   textForPercentage={
@@ -48,4 +49,4 @@ const DelegateStats = props => (
   </div>
 );
 
-export default DelegateStats;
+export default translate()(DelegateStats);

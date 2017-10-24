@@ -1,10 +1,18 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import tableStyle from 'react-toolbox/lib/table/theme.css';
+import configureMockStore from 'redux-mock-store';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { I18nextProvider } from 'react-i18next';
+import PropTypes from 'prop-types';
+import i18n from '../../i18n';
 import TransactionRow from './transactionRow';
+import history from '../../history';
 
 describe('TransactionRow', () => {
+  const store = configureMockStore([])({});
   const rowData = {
     id: '1038520263604146911',
     height: 5,
@@ -24,20 +32,39 @@ describe('TransactionRow', () => {
   };
   const address = '16313739661670634666L';
 
+  const options = {
+    context: { store, history },
+    childContextTypes: {
+      store: PropTypes.object.isRequired,
+      history: PropTypes.object.isRequired,
+    },
+  };
+
   it('should render 6 "td"', () => {
-    const wrapper = shallow(<TransactionRow
-                              tableStyle={tableStyle}
-                              address={address}
-                              value={rowData}
-                              ></TransactionRow>);
+    const wrapper = mount(<Provider store={store}>
+      <Router>
+        <I18nextProvider i18n={ i18n }>
+          <TransactionRow
+            tableStyle={tableStyle}
+            address={address}
+            value={rowData}
+          ></TransactionRow>
+        </I18nextProvider>
+      </Router>
+    </Provider>, options);
     expect(wrapper.find('td')).to.have.lengthOf(6);
   });
 
   it('should render Spinner if no value.confirmations" ', () => {
     rowData.confirmations = undefined;
-    const wrapper = shallow(
-      <TransactionRow tableStyle={tableStyle} address={address} value={rowData}>
-      </TransactionRow>);
+    const wrapper = mount(<Provider store={store}>
+      <Router>
+        <I18nextProvider i18n={ i18n }>
+          <TransactionRow tableStyle={tableStyle} address={address} value={rowData}>
+          </TransactionRow>
+        </I18nextProvider>
+      </Router>
+    </Provider>, options);
     expect(wrapper.find('Spinner')).to.have.lengthOf(1);
   });
 });

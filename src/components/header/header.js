@@ -1,16 +1,14 @@
-import React from 'react';
 import { Button } from 'react-toolbox/lib/button';
-import { IconMenu, MenuItem } from 'react-toolbox/lib/menu';
+import { IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
+import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import logo from '../../assets/images/LISK-nano.png';
-import styles from './header.css';
-import VerifyMessage from '../verifyMessage';
-import SignMessage from '../signMessage';
-import RegisterDelegate from '../registerDelegate';
-import Send from '../send';
+
 import PrivateWrapper from '../privateWrapper';
-import SecondPassphraseMenu from '../secondPassphrase';
+import SaveAccountButton from '../saveAccountButton';
+import logo from '../../assets/images/LISK-nano.png';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
+import styles from './header.css';
+import RelativeLink from '../relativeLink';
 
 const Header = props => (
   <header className={`${grid.row} ${grid['between-xs']} ${styles.wrapper}`} >
@@ -27,40 +25,37 @@ const Header = props => (
       >
         {
           !props.account.isDelegate &&
-            <MenuItem caption="Register as delegate"
-              className='register-as-delegate'
-              onClick={() => props.setActiveDialog({
-                title: 'Register as delegate',
-                childComponent: RegisterDelegate,
-              })}
-            />
+            <MenuItem theme={styles}>
+              <RelativeLink className={`register-as-delegate ${styles.menuLink}`}
+                to='register-delegate'>{props.t('Register as delegate')}</RelativeLink>
+            </MenuItem>
         }
-        <SecondPassphraseMenu />
-        <MenuItem caption="Sign message"
-          className='sign-message'
-          onClick={() => props.setActiveDialog({
-            title: 'Sign message',
-            childComponentProps: {
-              account: props.account,
-            },
-            childComponent: SignMessage,
-          })}
-        />
-        <MenuItem caption="Verify message"
-          className='verify-message'
-          onClick={() => props.setActiveDialog({
-            title: 'Verify message',
-            childComponent: VerifyMessage,
-          })}
-        />
+        {
+          !props.account.secondSignature &&
+            <MenuItem theme={styles}>
+              <RelativeLink className={`register-second-passphrase ${styles.menuLink}`}
+                to='register-second-passphrase'>{props.t('Register second passphrase')}</RelativeLink>
+            </MenuItem>
+        }
+        <MenuItem theme={styles}>
+          <RelativeLink className={`sign-message ${styles.menuLink}`} to='sign-message'>{props.t('Sign message')}</RelativeLink>
+        </MenuItem>
+        <MenuItem theme={styles}>
+          <RelativeLink className={`verify-message ${styles.menuLink}`}
+            to='verify-message'>{props.t('Verify message')}</RelativeLink>
+        </MenuItem>
+        <MenuDivider />
+        <SaveAccountButton theme={styles} />
+        <MenuItem theme={styles}>
+          <RelativeLink className={`settings ${styles.menuLink}`} to='settings'>{props.t('Settings')}</RelativeLink>
+        </MenuItem>
       </IconMenu>
-      <Button className={`${styles.button} logout-button`} raised onClick={props.logOut}>logout</Button>
-      <Button className={`${styles.button} send-button ${offlineStyle.disableWhenOffline}`}
-        raised primary
-        onClick={() => props.setActiveDialog({
-          title: 'Send',
-          childComponent: Send,
-        })}>Send</Button>
+
+      <Button className={`${styles.button} logout-button`} raised onClick={props.logOut}>{props.t('logout')}</Button>
+      <RelativeLink neutral raised className={`${styles.button} receive-button`}
+        to='receive'>{props.t('Receive LSK')}</RelativeLink>
+      <RelativeLink primary raised disableWhenOffline className={`${styles.button} send-button`}
+        to='send'>{props.t('send')}</RelativeLink>
     </PrivateWrapper>
   </header>
 );

@@ -1,6 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
+import { I18nextProvider } from 'react-i18next';
+import i18n from '../../i18n';
 import ForgingStats from './forgingStats';
 
 
@@ -23,10 +25,12 @@ describe('ForgingStats', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<ForgingStats
-      account={account}
-      statistics={statistics}
-      loadStats={loadStats} />);
+    wrapper = mount(<I18nextProvider i18n={ i18n }>
+      <ForgingStats
+        account={account}
+        statistics={statistics}
+        loadStats={loadStats} />
+    </I18nextProvider>);
   });
 
   it('should render 4 Card components', () => {

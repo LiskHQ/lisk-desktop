@@ -1,6 +1,6 @@
 :root {
   --in: #73c8a9;
-  --out: #f45d4c;
+  --out: #777;
   --btn: rgb(2, 136, 209);
 }
 
@@ -26,11 +26,7 @@
 
 .empty {
   color: #777;
-  text-align: right;
-}
-
-.outButton {
-  background: color(var(--out) alpha(45%)) !important;
+  text-align: center;
 }
 
 .in {
@@ -43,6 +39,11 @@
 
 .centerText {
   text-align: center;
+}
+
+.ordinaryText {
+  text-decoration: none;
+  color: inherit;
 }
 
 @media screen and (max-width: 48em) {

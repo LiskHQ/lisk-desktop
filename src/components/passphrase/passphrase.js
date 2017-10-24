@@ -26,31 +26,29 @@ class Passphrase extends React.Component {
     const { current } = this.state;
     const steps = stepsConfig(this);
 
-    const useCaseNote = 'your passphrase will be required for logging in to your account.';
-    const securityNote = 'This passphrase is not recoverable and if you lose it, you will lose access to your account forever.';
-
     // Step 1: Information/introduction
     templates.info = <InfoParagraph className={styles.noHr}>
-        Please click Next, then move around your mouse randomly to generate a random passphrase.
-        <br />
-        <br />
-        Note: After registration completes, { this.props.useCaseNote || useCaseNote }
-        <br />
-        { this.props.securityNote || securityNote } Please keep it safe!
-      </InfoParagraph>;
+      {this.props.t('Please click Next, then move around your mouse randomly to generate a random passphrase.')}
+      <br />
+      <br />
+      {this.props.t('Note: After registration completes,')} { this.props.useCaseNote }
+      <br />
+      { this.props.securityNote } {this.props.t('Please keep it safe!')}
+    </InfoParagraph>;
 
     // step 2: Generator, binds mouse events
-    templates.generate = <PassphraseGenerator
+    templates.generate = <PassphraseGenerator t={this.props.t}
       changeHandler={this.changeHandler.bind(this)} />;
 
     // step 3: Confirmation, shows the generated passphrase for user to save it
     templates.show = <Input type='text' multiline autoFocus={true}
       className='passphrase'
-      label='Save your passphrase in a safe place'
+      label={this.props.t('Save your passphrase in a safe place')}
       value={this.state.passphrase} />;
 
     // step 4: Verification, Asks for a random word to make sure the user has copied the passphrase
     templates.confirm = <PassphraseVerifier
+      t={this.props.t}
       passphrase={this.state.passphrase}
       answer={this.state.answer}
       updateAnswer={this.changeHandler.bind(this, 'answer')} />;
@@ -65,7 +63,7 @@ class Passphrase extends React.Component {
 
         <ActionBar
           secondaryButton={{
-            label: steps[current].cancelButton.title,
+            label: steps[current].cancelButton.title(),
             onClick: steps[current].cancelButton.onClick.bind(this),
           }}
           primaryButton={{

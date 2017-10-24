@@ -1,8 +1,8 @@
-import { getAccountStatus, getAccount, transactions } from '../../utils/api/account';
+import { getAccount, transactions } from '../../utils/api/account';
 import { accountUpdated, accountLoggedIn } from '../../actions/account';
 import { transactionsUpdated } from '../../actions/transactions';
 import { activePeerUpdate } from '../../actions/peers';
-import { clearVoteLists } from '../../actions/voting';
+import { votesFetched } from '../../actions/voting';
 import actionTypes from '../../constants/actions';
 import { fetchAndUpdateForgedBlocks } from '../../actions/forging';
 import { getDelegate } from '../../utils/api/delegate';
@@ -45,9 +45,6 @@ const updateAccountData = (store, action) => { // eslint-disable-line
       }
     }
     store.dispatch(accountUpdated(result));
-  });
-
-  return getAccountStatus(peers.data).then(() => {
     store.dispatch(activePeerUpdate({ online: true }));
   }).catch((res) => {
     store.dispatch(activePeerUpdate({ online: false, code: res.error.code }));
@@ -68,7 +65,7 @@ const delegateRegistration = (store, action) => {
   const state = store.getState();
 
   if (delegateRegistrationTx) {
-    getDelegate(state.peers.data, state.account.publicKey)
+    getDelegate(state.peers.data, { publicKey: state.account.publicKey })
       .then((delegateData) => {
         store.dispatch(accountLoggedIn(Object.assign({},
           { delegate: delegateData.delegate, isDelegate: true })));
@@ -81,7 +78,20 @@ const votePlaced = (store, action) => {
     action.data.confirmed, transactionTypes.vote);
 
   if (voteTransaction) {
-    store.dispatch(clearVoteLists());
+    const state = store.getState();
+    const { peers, account } = state;
+
+    store.dispatch(votesFetched({
+      activePeer: peers.data,
+      address: account.address,
+      type: 'update',
+    }));
+  }
+};
+
+const passphraseUsed = (store, action) => {
+  if (!store.getState().account.passphrase) {
+    store.dispatch(accountUpdated({ passphrase: action.data }));
   }
 };
 
@@ -94,6 +104,9 @@ const accountMiddleware = store => next => (action) => {
     case actionTypes.transactionsUpdated:
       delegateRegistration(store, action);
       votePlaced(store, action);
+      break;
+    case actionTypes.passphraseUsed:
+      passphraseUsed(store, action);
       break;
     default: break;
   }

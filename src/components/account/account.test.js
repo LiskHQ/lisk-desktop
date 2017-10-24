@@ -1,18 +1,20 @@
 import React from 'react';
 import { expect } from 'chai';
+import { shallow } from 'enzyme';
 import sinon from 'sinon';
-import { shallow, mount } from 'enzyme';
-import { Provider } from 'react-redux';
+import i18n from '../../i18n';
 import store from '../../store';
 import Account from './account';
 import ClickToSend from '../clickToSend';
-
 
 describe('Account', () => {
   let props;
 
   beforeEach(() => {
     props = {
+      t: key => key,
+      i18n: {},
+      store: {},
       onActivePeerUpdated: sinon.spy(),
       peers: {
         status: {
@@ -48,9 +50,11 @@ describe('Account', () => {
   });
 
   it('should render balance with ClickToSend component', () => {
-    const wrapper = mount(<Provider store={store}>
-      <Account {...props} />
-    </Provider>);
+    const wrapper = shallow(<Account {...props} />, {
+      context: { store, i18n },
+      childContextTypes: {
+      },
+    });
     expect(wrapper.find('.balance').find(ClickToSend)).to.have.lengthOf(1);
   });
 });

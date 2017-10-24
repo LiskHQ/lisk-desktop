@@ -90,3 +90,13 @@
   margin-top: 18px;
   margin-right: 16px;
 }
+
+.rotated {
+  transform: rotate(45deg);
+}
+
+.voteButton {
+  color: #000 !important;
+  position: relative;
+  top: 3px;
+}

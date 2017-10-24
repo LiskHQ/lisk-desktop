@@ -1,5 +1,7 @@
 # Lisk Nano
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/LiskHQ/lisk-nano.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://jenkins.lisk.io/buildStatus/icon?job=lisk-nano/development)](https://jenkins.lisk.io/job/lisk-nano/job/development)
 [![Coverage Status](https://coveralls.io/repos/github/LiskHQ/lisk-nano/badge.svg?branch=development)](https://coveralls.io/github/LiskHQ/lisk-nano?branch=development)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
@@ -35,7 +37,20 @@ npm run build
 
 ### Start
 
-Start the Electron client.
+
+Start the Electron client. Before staring you need to make sure the application is built. If you need to built the entire application, run
+
+```
+npm run build
+```
+
+as mentioned before. And if you want to solely build electron app, run
+
+```
+npm run build-electron
+```
+
+Then, in order to launch electron, you can run
 
 ```
 npm run start

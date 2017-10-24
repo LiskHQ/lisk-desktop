@@ -2,6 +2,8 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
+import { I18nextProvider } from 'react-i18next';
+import i18n from '../../i18n';
 import Forging from './forging';
 
 describe('Forging', () => {
@@ -16,6 +18,7 @@ describe('Forging', () => {
     forgedBlocks: [],
     onForgingStatsUpdated: sinon.spy(),
     onForgedBlocksLoaded: sinon.spy(),
+    t: key => key,
   };
   let account;
 
@@ -26,7 +29,9 @@ describe('Forging', () => {
         isDelegate: true,
       };
 
-      wrapper = mount(<Forging {...props} account={account} />);
+      wrapper = mount(<I18nextProvider i18n={ i18n }>
+        <Forging {...props} account={account} />
+      </I18nextProvider>);
     });
 
     it('should render ForgingTitle', () => {

@@ -9,6 +9,7 @@ import * as accountApi from '../utils/api/account';
 import * as delegateApi from '../utils/api/delegate';
 import Fees from '../constants/fees';
 import { toRawLsk } from '../utils/lsk';
+import transactionTypes from '../constants/transactionTypes';
 
 describe('actions: account', () => {
   describe('accountUpdated', () => {
@@ -69,7 +70,7 @@ describe('actions: account', () => {
         senderId: 'test_address',
         amount: 0,
         fee: Fees.setSecondPassphrase,
-        type: 1,
+        type: transactionTypes.setSecondPassphrase,
       };
 
       actionFunction(dispatch);
@@ -129,7 +130,7 @@ describe('actions: account', () => {
         username: data.username,
         amount: 0,
         fee: Fees.registerDelegate,
-        type: 2,
+        type: transactionTypes.registerDelegate,
       };
 
       actionFunction(dispatch);
@@ -191,7 +192,7 @@ describe('actions: account', () => {
         recipientId: data.recipientId,
         amount: toRawLsk(data.amount),
         fee: Fees.send,
-        type: 0,
+        type: transactionTypes.send,
       };
 
       actionFunction(dispatch);

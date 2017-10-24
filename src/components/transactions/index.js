@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
-import Transactions from './transactions';
+import { translate } from 'react-i18next';
 import { transactionsRequested } from '../../actions/transactions';
+import Transactions from './transactions';
 
 const mapStateToProps = state => ({
   address: state.account.address,
@@ -15,5 +16,4 @@ const mapDispatchToProps = dispatch => ({
   transactionsRequested: data => dispatch(transactionsRequested(data)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Transactions);
-
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(Transactions));

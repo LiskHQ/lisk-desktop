@@ -3,56 +3,50 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
 import store from '../../store';
-import VotinRow from './votingRow';
+import VotingRow from './votingRow';
 
-describe('VotinRow', () => {
-  let wrapper;
-
-  beforeEach(() => {
-    wrapper = mount(<VotinRow data={{ dirty: true }}></VotinRow>,
-      {
-        context: { store },
-        childContextTypes: { store: PropTypes.object.isRequired },
-      },
-    );
-  });
+describe('VotingRow', () => {
+  const votedStatus = { confirmed: true, unconfirmed: true, publicKey: 'sample_key' };
+  const voteStatus = { confirmed: false, unconfirmed: true, publicKey: 'sample_key' };
+  const unvoteStatus = { confirmed: true, unconfirmed: false, publicKey: 'sample_key' };
+  const pendingStatus = { confirmed: true, unconfirmed: true, pending: true, publicKey: 'sample_key' };
+  const props = {
+    data: {},
+    voteToggled: () => {},
+  };
+  const options = {
+    context: { store },
+    childContextTypes: { store: PropTypes.object.isRequired },
+  };
 
   it('should TableRow has class name of "pendingRow" when props.data.pending is true', () => {
-    wrapper.setProps({
-      data: { pending: true, dirty: true },
-    });
+    const wrapper = mount(<VotingRow {...props} voteStatus={pendingStatus}></VotingRow>, options);
     const expectedClass = '_pendingRow';
     const className = wrapper.find('tr').prop('className');
     expect(className).to.contain(expectedClass);
   });
 
-  it(`should TableRow has class name of "votedRow" when props.data.selected
-   and props.data.voted are true`, () => {
-    wrapper.setProps({
-      data: { selected: true, voted: true, dirty: true },
+  it(`should TableRow has class name of "votedRow" when voteStatus.unconfirmed and
+    confirmed are true`, () => {
+      const wrapper = mount(<VotingRow {...props} voteStatus={votedStatus}></VotingRow>, options);
+      const expectedClass = '_votedRow';
+      const className = wrapper.find('tr').prop('className');
+      expect(className).to.contain(expectedClass);
     });
-    const expectedClass = '_votedRow';
-    const className = wrapper.find('tr').prop('className');
-    expect(className).to.contain(expectedClass);
-  });
 
-  it(`should TableRow has class name of "downVoteRow" when props.data.selected
-   is false and props.data.voted is true`, () => {
-    wrapper.setProps({
-      data: { selected: false, voted: true, dirty: true },
+  it(`should TableRow has class name of "downVoteRow" when voteStatus.unconfirmed is false
+    but confirmed is true`, () => {
+      const wrapper = mount(<VotingRow {...props} voteStatus={unvoteStatus}></VotingRow>, options);
+      const expectedClass = '_downVoteRow';
+      const className = wrapper.find('tr').prop('className');
+      expect(className).to.contain(expectedClass);
     });
-    const expectedClass = '_downVoteRow';
-    const className = wrapper.find('tr').prop('className');
-    expect(className).to.contain(expectedClass);
-  });
 
-  it(`should TableRow has class name of "upVoteRow" when props.data.selected
-   is true and props.data.voted is false`, () => {
-    wrapper.setProps({
-      data: { selected: true, voted: false, dirty: true },
+  it(`should TableRow has class name of "upVoteRow" when voteStatus.unconfirmed is false
+    but confirmed is true`, () => {
+      const wrapper = mount(<VotingRow {...props} voteStatus={voteStatus}></VotingRow>, options);
+      const expectedClass = '_upVoteRow';
+      const className = wrapper.find('tr').prop('className');
+      expect(className).to.contain(expectedClass);
     });
-    const expectedClass = '_upVoteRow';
-    const className = wrapper.find('tr').prop('className');
-    expect(className).to.contain(expectedClass);
-  });
 });

@@ -12,8 +12,6 @@ exports.config = {
   framework: 'custom',
   frameworkPath: require.resolve('protractor-cucumber-framework'),
 
-  baseURL: 'http://localhost:8080/',
-
   cucumberOpts: {
     require: 'features/step_definitions/*.js',
     tags: '~@ignore',
@@ -24,5 +22,7 @@ exports.config = {
 
   params: {
     screenshotFolder: 'e2e-test-screenshots',
+    baseURL: 'http://localhost:8080/',
+    liskCoreURL: 'http://localhost:4000/',
   },
 };

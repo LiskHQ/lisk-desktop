@@ -4,6 +4,13 @@ Feature: Voting tab
     When I click tab number 2
     Then I should see table with 100 lines
 
+  Scenario: should allow to view more delegates on scroll
+    Given I'm logged in as "any account"
+    When I click tab number 2
+    Then I should see table with 100 lines
+    When I scroll to the bottom
+    Then I should see table with 200 lines
+
   Scenario: should allow to view delegates with cold account
     Given I'm logged in as "empty account"
     When I click tab number 2
@@ -35,6 +42,30 @@ Feature: Voting tab
     And I click "vote button"
     Then I should see "Insufficient funds for 1 LSK fee" error message
     And "submit button" should be disabled
+
+  Scenario: should display voting bar with numbers of selected votes if any selected
+    Given I'm logged in as "delegate candidate"
+    When I click tab number 2
+    And I should see no "voting bar"
+    And I click checkbox on table row no. 3
+    Then I should see element "voting bar" that contains text:
+      """
+      Upvotes: 1
+      Downvotes: 0
+      Total new votes: 1 / 33
+      Total votes: 1 / 101
+      """
+    And I click checkbox on table row no. 5
+    And I should see element "voting bar" that contains text:
+      """
+      Upvotes: 2
+      Downvotes: 0
+      Total new votes: 2 / 33
+      Total votes: 2 / 101
+      """
+    And I click checkbox on table row no. 3
+    And I click checkbox on table row no. 5
+    And I should see no "voting bar"
 
   Scenario: should allow to select delegates in the "Voting" tab and vote for them
     Given I'm logged in as "delegate candidate"
@@ -80,3 +111,17 @@ Feature: Voting tab
     And I click "vote button"
     And I click "cancel button"
     Then I should see no "modal dialog"
+
+  Scenario: should allow to select delegates by URL
+    Given I'm logged in as "delegate candidate"
+    When I go to "/main/voting/vote?votes=standby_27,standby_28,standby_29,nonexisting_22&unvotes=standby_33"
+    Then I should see text "3 delegate names were successfully resolved for voting." in "upvotes message" element
+    And I should see text "1 of the delegate names selected for unvoting was not currently voted for:standby_33" in "notVotedYet message" element
+    And I should see text "1 of the provided delegate names could not be resolved:nonexisting_22" in "notFound message" element
+    And I should see "vote list" element with text:
+      """
+      standby_27
+      standby_28
+      standby_29
+      """
+

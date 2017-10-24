@@ -4,18 +4,22 @@ import { mount } from 'enzyme';
 import sinon from 'sinon';
 import Lisk from 'lisk-js';
 import { Provider } from 'react-redux';
+import { I18nextProvider } from 'react-i18next';
+import i18n from '../../i18n'; // initialized i18next instance
 import store from '../../store';
 import RegisterDelegate from './registerDelegate';
 import * as delegateApi from '../../utils/api/delegate';
 
 
 const normalAccount = {
+  passphrase: 'pass',
   isDelegate: false,
   address: '16313739661670634666L',
   balance: 1000e8,
 };
 
 const delegateAccount = {
+  passphrase: 'pass',
   isDelegate: true,
   address: '16313739661670634666L',
   balance: 1000e8,
@@ -25,6 +29,7 @@ const delegateAccount = {
 };
 
 const withSecondSecretAccount = {
+  passphrase: 'pass',
   address: '16313739661670634666L',
   balance: 1000e8,
   delegate: {
@@ -45,6 +50,7 @@ const props = {
   },
   closeDialog: () => {},
   delegateRegistered: sinon.spy(),
+  t: key => key,
 };
 
 const delegateProps = { ...props, account: delegateAccount };
@@ -69,7 +75,11 @@ describe('RegisterDelegate', () => {
       store.getState = () => ({
         account: normalAccount,
       });
-      wrapper = mount(<Provider store={store}><RegisterDelegate {...normalProps} /></Provider>);
+      wrapper = mount(<Provider store={store}>
+        <I18nextProvider i18n={ i18n }>
+          <RegisterDelegate {...normalProps} />
+        </I18nextProvider>
+      </Provider>);
     });
 
     it('renders an InfoParagraph components', () => {
@@ -82,7 +92,7 @@ describe('RegisterDelegate', () => {
 
     it('allows register as delegate for a non delegate account', () => {
       wrapper.find('.username input').simulate('change', { target: { value: 'sample_username' } });
-      wrapper.find('.next-button').simulate('click');
+      wrapper.find('.next-button').simulate('submit');
       expect(wrapper.find('.primary-button button').props().disabled).to.not.equal(true);
       expect(props.delegateRegistered).to.have.been.calledWith();
     });
@@ -112,7 +122,10 @@ describe('RegisterDelegate', () => {
         account: withSecondSecretAccount,
       });
       wrapper = mount(<Provider store={store}>
-        <RegisterDelegate {...withSecondSecretProps} /></Provider>);
+        <I18nextProvider i18n={ i18n }>
+          <RegisterDelegate {...withSecondSecretProps} />
+        </I18nextProvider>
+      </Provider>);
     });
 
     it('renders two Input component for a an account with second secret', () => {
@@ -121,7 +134,7 @@ describe('RegisterDelegate', () => {
 
     it('allows register as delegate for a non delegate account with second secret', () => {
       wrapper.find('.username input').simulate('change', { target: { value: 'sample_username' } });
-      wrapper.find('.second-secret input').simulate('change', { target: { value: 'sample phrase' } });
+      wrapper.find('.second-passphrase input').simulate('change', { target: { value: 'sample phrase' } });
       expect(props.delegateRegistered).to.have.been.calledWith();
     });
   });
@@ -131,7 +144,11 @@ describe('RegisterDelegate', () => {
       store.getState = () => ({
         account: delegateAccount,
       });
-      wrapper = mount(<Provider store={store}><RegisterDelegate {...delegateProps} /></Provider>);
+      wrapper = mount(<Provider store={store}>
+        <I18nextProvider i18n={ i18n }>
+          <RegisterDelegate {...delegateProps} />
+        </I18nextProvider>
+      </Provider>);
     });
 
     it('does not allow register as delegate for a delegate account', () => {

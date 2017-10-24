@@ -5,7 +5,7 @@ const chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 const EC = protractor.ExpectedConditions;
-const waitTime = 4000;
+const waitTime = 10000;
 
 function waitForElemAndCheckItsText(selector, text, callback) {
   const elem = element(by.css(selector));

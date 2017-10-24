@@ -6,7 +6,7 @@ Feature: Main page top area
 
   Scenario: should show peer
     Given I'm logged in as "any account"
-    Then I should see text "localhost : 4000" in "peer" element
+    Then I should see text "Custom Node" in "peer network" element
 
   Scenario: should show address
     Given I'm logged in as "genesis"

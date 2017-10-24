@@ -1,88 +1,95 @@
 import React from 'react';
-import InfoParagraph from '../infoParagraph';
+import { authStatePrefill, authStateIsValid } from '../../utils/form';
 import ActionBar from '../actionBar';
-import Fees from '../../constants/fees';
+import AuthInputs from '../authInputs';
 import Autocomplete from './voteAutocomplete';
+import Fees from '../../constants/fees';
+import InfoParagraph from '../infoParagraph';
+import VoteUrlProcessor from '../voteUrlProcessor';
 import styles from './voteDialog.css';
-import SecondPassphraseInput from '../secondPassphraseInput';
+import votingConst from '../../constants/voting';
+
+const { maxCountOfVotes, maxCountOfVotesInOneTurn } = votingConst;
 
 export default class VoteDialog extends React.Component {
   constructor() {
     super();
-    this.state = {
-      secondSecret: '',
-      secondPassphrase: {
-        value: null,
-      },
-    };
+    this.state = authStatePrefill();
   }
 
-  confirm() {
-    const secondSecret = this.props.account.secondSignature === 1 ?
-      this.state.secondPassphrase.value :
-      null;
+  componentDidMount() {
+    this.setState(authStatePrefill(this.props.account));
+  }
 
-    // fire first action
+  confirm(event) {
+    event.preventDefault();
     this.props.votePlaced({
       activePeer: this.props.activePeer,
       account: this.props.account,
-      votedList: this.props.votedList,
-      unvotedList: this.props.unvotedList,
-      secondSecret,
+      votes: this.props.votes,
+      secondSecret: this.state.secondPassphrase.value,
+      passphrase: this.state.passphrase.value,
     });
   }
-  setSecondPass(name, value, error) {
+
+  handleChange(name, value, error) {
     this.setState({
       [name]: {
         value,
-        error,
+        error: typeof error === 'string' ? error : null,
       },
     });
   }
 
   render() {
+    const { votes } = this.props;
+    let totalVotes = 0;
+    const votesList = [];
+    Object.keys(votes).forEach((item) => {
+      if (votes[item].confirmed || votes[item].unconfirmed) totalVotes++;
+      if (votes[item].confirmed !== votes[item].unconfirmed) votesList.push(item);
+    });
     return (
       <article>
-        <Autocomplete
-          voted={this.props.voted}
-          votedList={this.props.votedList}
-          unvotedList={this.props.unvotedList}
-          addedToVoteList={this.props.addedToVoteList}
-          removedFromVoteList={this.props.removedFromVoteList}
-          activePeer={this.props.activePeer} />
-        <SecondPassphraseInput
-          error={this.state.secondPassphrase.error}
-          value={this.state.secondPassphrase.value}
-          onChange={this.setSecondPass.bind(this, 'secondPassphrase')} />
-        <article className={styles.info}>
-          <InfoParagraph>
-            <p >
-              You can select up to 33 delegates in one voting turn.
-            </p>
-            You can vote for up to 101 delegates in total.
-          </InfoParagraph>
-        </article>
+        <form id='voteform'>
+          <VoteUrlProcessor />
+          <Autocomplete
+            votedDelegates={this.props.delegates}
+            votes={this.props.votes}
+            voteToggled={this.props.voteToggled}
+            activePeer={this.props.activePeer} />
+          <AuthInputs
+            passphrase={this.state.passphrase}
+            secondPassphrase={this.state.secondPassphrase}
+            onChange={this.handleChange.bind(this)} />
+          <article className={styles.info}>
+            <InfoParagraph>
+              <p >
+                {this.props.t('You can select up to {{count}} delegates in one voting turn.', { count: maxCountOfVotesInOneTurn })}
+              </p>
+              <p >
+                {this.props.t('You can vote for up to {{count}} delegates in total.', { count: maxCountOfVotes })}
+              </p>
+            </InfoParagraph>
+          </article>
 
-        <ActionBar
-          secondaryButton={{
-            onClick: this.props.closeDialog,
-          }}
-          primaryButton={{
-            label: 'Confirm',
-            fee: Fees.vote,
-            disabled: (
-              (this.props.voted.length +
-                (this.props.votedList.length -
-                this.props.unvotedList.length) > 101) ||
-              (this.props.votedList.length +
-                this.props.unvotedList.length > 33) ||
-              (this.props.votedList.length === 0 &&
-                this.props.unvotedList.length === 0) ||
-              (!!this.state.secondPassphrase.error ||
-                this.state.secondPassphrase.value === '')
-            ),
-            onClick: this.confirm.bind(this),
-          }} />
+          <ActionBar
+            secondaryButton={{
+              onClick: this.props.closeDialog,
+            }}
+            primaryButton={{
+              label: this.props.t('Confirm'),
+              onClick: this.confirm.bind(this),
+              fee: Fees.vote,
+              type: 'button',
+              disabled: (
+                totalVotes > maxCountOfVotes ||
+                votesList.length === 0 ||
+                votesList.length > maxCountOfVotesInOneTurn ||
+                !authStateIsValid(this.state)
+              ),
+            }} />
+        </form>
       </article>
     );
   }

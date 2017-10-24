@@ -32,6 +32,13 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     waitForElemAndSendKeys(`${selectorClass} input, ${selectorClass} textarea`, secondPassphrase, callback);
   });
 
+  When('I fill in passphrase of "{accountName}" to "{fieldName}" field', (accountName, fieldName, callback) => {
+    const selectorClass = `.${fieldName.replace(/ /g, '-')}`;
+    const passphrase = accounts[accountName].passphrase;
+    browser.sleep(500);
+    waitForElemAndSendKeys(`${selectorClass} input, ${selectorClass} textarea`, passphrase, callback);
+  });
+
   When('I wait {seconds} seconds', (seconds, callback) => {
     browser.sleep(seconds * 1000).then(callback);
   });
@@ -40,6 +47,12 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   Then('I should see "{value}" in "{fieldName}" field', (value, fieldName, callback) => {
     const elem = element(by.css(`.${fieldName.replace(/ /g, '-')} input, .${fieldName.replace(/ /g, '-')} textarea`));
     expect(elem.getAttribute('value')).to.eventually.equal(value)
+      .and.notify(callback);
+  });
+
+  Then('I should see empty "{fieldName}" field', (fieldName, callback) => {
+    const elem = element(by.css(`.${fieldName.replace(/ /g, '-')} input, .${fieldName.replace(/ /g, '-')} textarea`));
+    expect(elem.getAttribute('value')).to.eventually.equal('')
       .and.notify(callback);
   });
 
@@ -101,20 +114,40 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
       .and.notify(callback);
   });
 
-  Then('I should see text "{text}" in "{fieldName}" element', (text, fieldName, callback) => {
-    const selectorClass = `.${fieldName.replace(/ /g, '-')}`;
+  Then('I should see text "{text}" in "{elementName}" element', (text, elementName, callback) => {
+    const selectorClass = `.${elementName.replace(/ /g, '-')}`;
     waitForElemAndCheckItsText(selectorClass, text, callback);
+  });
+
+  Then('I should see "{elementName}" element with text:', (elementName, text, callback) => {
+    const selectorClass = `.${elementName.replace(/ /g, '-')}`;
+    waitForElemAndCheckItsText(selectorClass, text, callback);
+  });
+
+  Then('I should see element "{elementName}" that contains text:', (elementName, text, callback) => {
+    const selectorClass = `.${elementName.replace(/ /g, '-')}`;
+    waitForElemAndCheckItsText(selectorClass, text, callback);
+  });
+
+  When('I clear "{elementName}" field', (elementName) => {
+    const selectorClass = `.${elementName.replace(/ /g, '-')}`;
+    browser.executeScript(`window.document.querySelector("${selectorClass} input, ${selectorClass} textarea").value = "";`);
   });
 
   Given('I\'m logged in as "{accountName}"', (accountName, callback) => {
     browser.ignoreSynchronization = true;
     browser.driver.manage().window().setSize(1000, 1000);
-    browser.get('http://localhost:8080/');
-    localStorage.setItem('address', 'http://localhost:4000');
+    browser.get(browser.params.baseURL);
+    localStorage.clear();
+    localStorage.setItem('address', browser.params.liskCoreURL);
     localStorage.setItem('network', 2);
-    browser.get('http://localhost:8080/');
+    browser.get(browser.params.baseURL);
     waitForElemAndSendKeys('.passphrase input', accounts[accountName].passphrase);
     waitForElemAndClickIt('.login-button', callback);
+  });
+
+  When('I go to "{url}"', (url, callback) => {
+    browser.get(`${browser.params.baseURL}#${url}`).then(callback);
   });
 
   When('I {iterations} times move mouse randomly', (iterations, callback) => {
@@ -150,6 +183,14 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
         element(by.css('.passphrase-verifier input')).sendKeys(passphraseWords[missingWordIndex]).then(callback);
       });
     });
+  });
+
+  When('I Refresh the page', (callback) => {
+    browser.refresh().then(callback);
+  });
+
+  When('I scroll to the bottom', () => {
+    browser.executeScript('window.scrollBy(0, 10000);');
   });
 });
 

@@ -1,9 +1,14 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
+import PropTypes from 'prop-types';
+import configureMockStore from 'redux-mock-store';
 import Amount from './amount';
+import i18n from '../../i18n';
+
 
 describe('Amount', () => {
+  const store = configureMockStore([])({});
   it('should have className "transactions__grayButton" for type 0', () => {
     const inputValue = {
       value: {
@@ -14,10 +19,16 @@ describe('Amount', () => {
       address: 'address',
     };
     const expectedValue = /transactions__grayButton/g;
-    const wrapper = shallow(<Amount {...inputValue} />);
-    const html = wrapper.find('span').html();
+    const wrapper = mount(<Amount {...inputValue} />, {
+      context: { i18n, store },
+      childContextTypes: {
+        i18n: PropTypes.object.isRequired,
+        store: PropTypes.object.isRequired,
+      },
+    });
+    const html = wrapper.find('#transactionAmount').html();
     expect(html.match(expectedValue))
-        .to.have.lengthOf(1);
+      .to.have.lengthOf(1);
   });
 
   it('should have className "transactions__inButton" for type 1', () => {
@@ -30,13 +41,19 @@ describe('Amount', () => {
       address: 'address',
     };
     const expectedValue = /transactions__inButton/g;
-    const wrapper = shallow(<Amount {...inputValue} />);
-    const html = wrapper.find('span').html();
+    const wrapper = mount(<Amount {...inputValue} />, {
+      context: { i18n, store },
+      childContextTypes: {
+        i18n: PropTypes.object.isRequired,
+        store: PropTypes.object.isRequired,
+      },
+    });
+    const html = wrapper.find('#transactionAmount').html();
     expect(html.match(expectedValue))
-        .to.have.lengthOf(1);
+      .to.have.lengthOf(1);
   });
 
-  it('should have className "transactions__outButton" for outgoing transaction', () => {
+  it('should have className "transactions__grayButton" for outgoing transaction', () => {
     const inputValue = {
       value: {
         type: 1,
@@ -46,9 +63,15 @@ describe('Amount', () => {
       address: 'address',
     };
     const expectedValue = /transactions__outButton/g;
-    const wrapper = shallow(<Amount {...inputValue} />);
-    const html = wrapper.find('span').html();
+    const wrapper = mount(<Amount {...inputValue} />, {
+      context: { i18n, store },
+      childContextTypes: {
+        i18n: PropTypes.object.isRequired,
+        store: PropTypes.object.isRequired,
+      },
+    });
+    const html = wrapper.find('#transactionAmount').html();
     expect(html.match(expectedValue))
-        .to.have.lengthOf(1);
+      .to.have.lengthOf(1);
   });
 });

@@ -1,18 +1,19 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { Button } from 'react-toolbox/lib/button';
 import { IconMenu, MenuItem } from 'react-toolbox/lib/menu';
 import Input from 'react-toolbox/lib/input';
+import { translate } from 'react-i18next';
 import styles from './voting.css';
 import disableStyle from './disableMenu.css';
-import VoteDialog from '../voteDialog';
+import RelativeLink from '../relativeLink';
 
-class VotingHeader extends React.Component {
+export class VotingHeaderRaw extends React.Component {
   constructor() {
     super();
     this.state = {
       query: '',
       searchIcon: 'search',
+      votesList: [],
     };
   }
 
@@ -37,32 +38,37 @@ class VotingHeader extends React.Component {
   }
 
   confirmVoteText() {
-    let info = 'VOTE';
-    const voted = this.props.votedList.filter(item => !item.pending).length;
-    const unvoted = this.props.unvotedList.filter(item => !item.pending).length;
+    let info = this.props.t('Vote');
+    const { votes } = this.props;
+    const votesList = Object.keys(votes);
+    const voted = votesList.filter(item =>
+      !votes[item].confirmed && votes[item].unconfirmed).length;
+    const unvoted = votesList.filter(item =>
+      votes[item].confirmed && !votes[item].unconfirmed).length;
     if (voted > 0 || unvoted > 0) {
-      const seprator = (voted > 0 && unvoted > 0) ? ' / ' : ''; // eslint-disable-line
+      const separator = (voted > 0 && unvoted > 0) ? ' / ' : ''; // eslint-disable-line
       const votedHtml = voted > 0 ? <span className={styles.voted}>+{voted}</span> : '';
       const unvotedHtml = unvoted > 0 ? <span className={styles.unvoted}>-{unvoted}</span> : '';
-      info = <span>VOTE ({votedHtml}{seprator}{unvotedHtml})</span>;
+      info = <span className='vote-button-info'>{this.props.t('Vote')} ({votedHtml}{separator}{unvotedHtml})</span>;
     }
     return info;
   }
 
-  isOnUnvoteList(delegate) {
-    return this.props.unvotedList.filter(d => d.username === delegate.username).length;
-  }
-
   render() {
-    const theme = this.props.votedDelegates.length === 0 ? disableStyle : styles;
+    const { votes, t } = this.props;
+    const votesList = Object.keys(votes);
+    const confirmedVotes = Object.keys(votes).filter(username => votes[username].confirmed);
+    const theme = votesList.length === 0 ? disableStyle : styles;
     const button = <div className={styles.votesMenuButton}>
       <i className='material-icons'>visibility</i>
-      <span>my votes ({this.props.votedDelegates.length})</span>
+      <span>{t('my votes')} ({confirmedVotes.length})</span>
     </div>;
     return (
       <header className={`${grid.row} ${grid['between-xs']} hasPaddingRow`}>
         <div className={`${grid['col-xs-3']} ${styles.searchBox}`}>
-          <Input type='tel' label='Search' name='query'
+          <Input type='tel'
+            label={t('Search')}
+            name='query'
             className='search'
             theme={styles}
             value={this.state.query}
@@ -75,36 +81,22 @@ class VotingHeader extends React.Component {
         <div className={styles.actionBar}>
           <IconMenu theme={theme} icon={button} position='topLeft'
             iconRipple={false} className='my-votes-button'>
-            {this.props.votedDelegates.map(delegate =>
-              (this.isOnUnvoteList(delegate) ?
-                <MenuItem
-                  theme={styles}
-                  key={delegate.username}
-                  caption={delegate.username}
-                  icon='add'
-                  onClick={this.props.addToVoteList.bind(this, delegate)} /> :
-                <MenuItem
-                  theme={styles}
-                  key={delegate.username}
-                  caption={delegate.username}
-                  icon='clear'
-                  onClick={this.props.addToUnvoted.bind(this, delegate)} />),
-            )}
+            {confirmedVotes.map(username =>
+              <MenuItem
+                theme={styles}
+                key={username}
+                caption={username}
+                icon={(votes[username].confirmed === votes[username].unconfirmed) ? 'clear' : 'add'}
+                onClick={this.props.voteToggled.bind(this, {
+                  username,
+                  publicKey: votes[username].publicKey,
+                })} />)}
           </IconMenu>
-          <Button icon='done' flat
-            className='vote-button'
-            onClick={() => this.props.setActiveDialog({
-              title: 'Vote for delegates',
-              childComponent: VoteDialog,
-              childComponentProps: {
-                addTransaction: this.props.addTransaction,
-                voted: this.props.votedDelegates,
-              },
-            })}
-            label={this.confirmVoteText()} />
+          <RelativeLink flat primary className={`${styles.voteButton} vote-button`}
+            to='vote'>{this.confirmVoteText()}</RelativeLink>
         </div>
       </header>
     );
   }
 }
-export default VotingHeader;
+export default translate()(VotingHeaderRaw);

@@ -63,22 +63,26 @@ describe('Utils: Delegate', () => {
       const mockedPromise = new Promise((resolve) => { resolve(); });
       peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates/get', options).returns(mockedPromise);
 
-      const returnedPromise = getDelegate(activePeer, options.publicKey);
+      const returnedPromise = getDelegate(activePeer, options);
       expect(returnedPromise).to.equal(mockedPromise);
     });
   });
 
   describe('unvoteAutocomplete', () => {
     it('should return a promise', () => {
-      const votedList = ['genesis_1', 'genesis_2', 'genesis_3'];
+      const voteList = {
+        genesis_1: { confirmed: true, unconfirmed: false, publicKey: 'sample_key' },
+        genesis_2: { confirmed: true, unconfirmed: false, publicKey: 'sample_key' },
+        genesis_3: { confirmed: true, unconfirmed: false, publicKey: 'sample_key' },
+      };
       const nonExistingUsername = 'genesis_4';
-      const promise = unvoteAutocomplete(username, votedList);
+      const promise = unvoteAutocomplete(username, voteList);
       expect(typeof promise.then).to.be.equal('function');
       promise.then((result) => {
         expect(result).to.be.equal(true);
       });
 
-      unvoteAutocomplete(nonExistingUsername, votedList).then((result) => {
+      unvoteAutocomplete(nonExistingUsername, voteList).then((result) => {
         expect(result).to.be.equal(false);
       });
     });
@@ -133,11 +137,11 @@ describe('Utils: Delegate', () => {
         { username: 'genesis_42' },
         { username: 'genesis_44' },
       ];
-      const mockedPromise = new Promise((resolve) => { resolve({ success: true, delegates }); });
+      const votedDict = { username: 'genesis_11' };
       peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates/search', { q: username }).returns(Promise.resolve({ success: true, delegates }));
 
-      const returnedPromise = voteAutocomplete(activePeer, username, {});
-      expect(returnedPromise).to.deep.equal(mockedPromise);
+      const returnedPromise = voteAutocomplete(activePeer, username, votedDict);
+      expect(returnedPromise).to.eventually.become({ success: true, delegates });
     });
   });
 });

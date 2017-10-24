@@ -11,6 +11,15 @@ export const transactionAdded = data => ({
 });
 
 /**
+ * An action to dispatch transactionsFailed
+ *
+ */
+export const transactionsFailed = data => ({
+  data,
+  type: actionTypes.transactionsFailed,
+});
+
+/**
  * An action to dispatch transactionsUpdated
  *
  */
@@ -35,10 +44,10 @@ export const transactionsLoaded = data => ({
 export const transactionsRequested = ({ activePeer, address, limit, offset }) =>
   (dispatch) => {
     transactions(activePeer, address, limit, offset)
-    .then((response) => {
-      dispatch(transactionsLoaded({
-        count: parseInt(response.count, 10),
-        confirmed: response.transactions,
-      }));
-    });
+      .then((response) => {
+        dispatch(transactionsLoaded({
+          count: parseInt(response.count, 10),
+          confirmed: response.transactions,
+        }));
+      });
   };

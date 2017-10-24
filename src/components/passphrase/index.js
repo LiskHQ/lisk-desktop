@@ -1,7 +1,9 @@
 import { connect } from 'react-redux';
-import Passphrase from './passphrase';
+import { translate } from 'react-i18next';
+
 import { accountUpdated } from '../../actions/account';
 import { activePeerSet } from '../../actions/peers';
+import Passphrase from './passphrase';
 
 /**
  * Using react-redux connect to pass state and dispatch to LoginForm
@@ -19,6 +21,6 @@ const mapDispatchToProps = dispatch => ({
 const PassphraseConnected = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Passphrase);
+)(translate()(Passphrase));
 
 export default PassphraseConnected;

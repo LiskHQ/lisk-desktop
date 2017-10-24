@@ -1,23 +1,23 @@
 import { connect } from 'react-redux';
+import { translate } from 'react-i18next';
 import { dialogDisplayed } from '../../actions/dialog';
-import { removedFromVoteList, addedToVoteList } from '../../actions/voting';
-import { transactionAdded } from '../../actions/transactions';
+import { voteToggled, votesFetched, delegatesFetched } from '../../actions/voting';
 import Voting from './voting';
 
 const mapStateToProps = state => ({
   address: state.account.address,
   activePeer: state.peers.data,
-  votedList: state.voting.votedList,
-  unvotedList: state.voting.unvotedList,
+  votes: state.voting.votes,
+  delegates: state.voting.delegates,
+  totalDelegates: state.voting.totalDelegates,
   refreshDelegates: state.voting.refresh,
 });
 
 const mapDispatchToProps = dispatch => ({
   setActiveDialog: data => dispatch(dialogDisplayed(data)),
-  addToUnvoted: data => dispatch(removedFromVoteList(data)),
-  addToVoteList: data => dispatch(addedToVoteList(data)),
-  removeFromVoteList: data => dispatch(removedFromVoteList(data)),
-  addTransaction: data => dispatch(transactionAdded(data)),
+  voteToggled: data => dispatch(voteToggled(data)),
+  votesFetched: data => dispatch(votesFetched(data)),
+  delegatesFetched: data => dispatch(delegatesFetched(data)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Voting);
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(Voting));

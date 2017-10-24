@@ -1,20 +1,23 @@
 import { expect } from 'chai';
 import { spy, stub } from 'sinon';
-import middleware from './account';
-import * as accountApi from '../../utils/api/account';
-import * as delegateApi from '../../utils/api/delegate';
-import actionTypes from '../../constants/actions';
-import transactionTypes from '../../constants/transactionTypes';
+
 import { SYNC_ACTIVE_INTERVAL, SYNC_INACTIVE_INTERVAL } from '../../constants/api';
-import { clearVoteLists } from '../../actions/voting';
+import { accountUpdated } from '../../actions/account';
+import { activePeerUpdate } from '../../actions/peers';
+import * as votingActions from '../../actions/voting';
+import * as accountApi from '../../utils/api/account';
+import actionTypes from '../../constants/actions';
+import * as delegateApi from '../../utils/api/delegate';
+import middleware from './account';
+import transactionTypes from '../../constants/transactionTypes';
 
 describe('Account middleware', () => {
   let store;
   let next;
   let state;
   let stubGetAccount;
-  let stubGetAccountStatus;
   let stubTransactions;
+  const passphrase = 'right cat soul renew under climb middle maid powder churn cram coconut';
 
   const transactionsUpdatedAction = {
     type: actionTypes.transactionsUpdated,
@@ -49,6 +52,7 @@ describe('Account middleware', () => {
       },
       account: {
         balance: 0,
+        address: 'sample_address',
       },
       transactions: {
         pending: [{
@@ -61,13 +65,11 @@ describe('Account middleware', () => {
 
     next = spy();
     stubGetAccount = stub(accountApi, 'getAccount').returnsPromise();
-    stubGetAccountStatus = stub(accountApi, 'getAccountStatus').returnsPromise();
     stubTransactions = stub(accountApi, 'transactions').returnsPromise().resolves(true);
   });
 
   afterEach(() => {
     stubGetAccount.restore();
-    stubGetAccountStatus.restore();
     stubTransactions.restore();
   });
 
@@ -80,18 +82,27 @@ describe('Account middleware', () => {
     expect(next).to.have.been.calledWith(expectedAction);
   });
 
-  it(`should call account API methods on ${actionTypes.metronomeBeat} action`, () => {
+  it(`should call account API methods on ${actionTypes.metronomeBeat} action when online`, () => {
     stubGetAccount.resolves({ balance: 0 });
 
     middleware(store)(next)(activeBeatAction);
 
     expect(stubGetAccount).to.have.been.calledWith();
-    expect(stubGetAccountStatus).to.have.been.calledWith();
+    expect(store.dispatch).to.have.been.calledWith(activePeerUpdate({ online: true }));
+  });
+
+  it(`should call account API methods on ${actionTypes.metronomeBeat} action when offline`, () => {
+    const errorCode = 'EUNAVAILABLE';
+    stubGetAccount.rejects({ error: { code: errorCode } });
+
+    middleware(store)(next)(activeBeatAction);
+
+    expect(store.dispatch).to.have.been.calledWith(activePeerUpdate(
+      { online: false, code: errorCode }));
   });
 
   it(`should call transactions API methods on ${actionTypes.metronomeBeat} action if account.balance changes`, () => {
     stubGetAccount.resolves({ balance: 10e8 });
-    stubGetAccountStatus.resolves(true);
 
     middleware(store)(next)(activeBeatAction);
 
@@ -102,7 +113,6 @@ describe('Account middleware', () => {
 
   it(`should call transactions API methods on ${actionTypes.metronomeBeat} action if account.balance changes and action.data.interval is SYNC_INACTIVE_INTERVAL`, () => {
     stubGetAccount.resolves({ balance: 10e8 });
-    stubGetAccountStatus.rejects(false);
 
     middleware(store)(next)(inactiveBeatAction);
 
@@ -164,10 +174,33 @@ describe('Account middleware', () => {
     delegateApiMock.restore();
   });
 
-  it(`should dispatch clearVoteLists action on ${actionTypes.transactionsUpdated} action if action.data.confirmed contains delegateRegistration transactions`, () => {
+  it(`should dispatch ${actionTypes.votesFetched} action on ${actionTypes.transactionsUpdated} action if action.data.confirmed contains delegateRegistration transactions`, () => {
+    const actionSpy = spy(votingActions, 'votesFetched');
     transactionsUpdatedAction.data.confirmed[0].type = transactionTypes.vote;
     middleware(store)(next)(transactionsUpdatedAction);
-    expect(store.dispatch).to.have.been.calledWith(clearVoteLists());
+    expect(actionSpy).to.have.been.calledWith({
+      activePeer: state.peers.data,
+      address: state.account.address,
+      type: 'update',
+    });
+  });
+
+  it(`should dispatch accountUpdated({passphrase}) action on ${actionTypes.passphraseUsed} action if store.account.passphrase is not set`, () => {
+    const action = {
+      type: actionTypes.passphraseUsed,
+      data: passphrase,
+    };
+    middleware(store)(next)(action);
+    expect(store.dispatch).to.have.been.calledWith(accountUpdated({ passphrase }));
+  });
+
+  it(`should not dispatch accountUpdated action on ${actionTypes.passphraseUsed} action if store.account.passphrase is already set`, () => {
+    const action = {
+      type: actionTypes.passphraseUsed,
+      data: passphrase,
+    };
+    store.getState = () => ({ ...state, account: { ...state.account, passphrase } });
+    middleware(store)(next)(action);
+    expect(store.dispatch).to.not.have.been.calledWith();
   });
 });
-
