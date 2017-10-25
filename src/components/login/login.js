@@ -34,19 +34,19 @@ class Login extends React.Component {
   }
 
   componentWillMount() {
+    this.getNetworksList();
+    i18next.on('languageChanged', () => {
+      this.getNetworksList();
+    });
+
+    this.props.accountsRetrieved();
+  }
+  
+  getNetworksList() {
     this.networks = getNetworks().map((network, index) => ({
       label: i18next.t(network.name),
       value: index,
     }));
-
-    i18next.on('languageChanged', () => {
-      this.networks = getNetworks().map((network, index) => ({
-        label: i18next.t(network.name),
-        value: index,
-      }));
-    });
-
-    this.props.accountsRetrieved();
   }
 
   componentDidUpdate() {
