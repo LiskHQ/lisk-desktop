@@ -61,7 +61,7 @@ npm run start
 Build package for Windows.
 
 ```
-npm run dist:win
+npm run pack:win
 ```
 
 ### macOS
@@ -69,7 +69,7 @@ npm run dist:win
 Build package for macOS.
 
 ```
-npm run dist:mac
+npm run pack 
 ```
 
 ### Linux
@@ -77,7 +77,7 @@ npm run dist:mac
 Build package for Linux.
 
 ```
-npm run dist:linux
+npm run pack 
 ```
 
 ## Run unit tests
