@@ -3,6 +3,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Input from 'react-toolbox/lib/input';
 import Dropdown from 'react-toolbox/lib/dropdown';
 import Button from 'react-toolbox/lib/button';
+import i18next from 'i18next';
 import getNetworks from './networks';
 import PassphraseInput from '../passphraseInput';
 import styles from './login.css';
@@ -34,9 +35,16 @@ class Login extends React.Component {
 
   componentWillMount() {
     this.networks = getNetworks().map((network, index) => ({
-      label: network.name,
+      label: i18next.t(network.name),
       value: index,
     }));
+
+    i18next.on('languageChanged', () => {
+      this.networks = getNetworks().map((network, index) => ({
+        label: i18next.t(network.name),
+        value: index,
+      }));
+    });
 
     this.props.accountsRetrieved();
   }
