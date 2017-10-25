@@ -41,7 +41,7 @@ class Login extends React.Component {
 
     this.props.accountsRetrieved();
   }
-  
+
   getNetworksList() {
     this.networks = getNetworks().map((network, index) => ({
       label: i18next.t(network.name),
