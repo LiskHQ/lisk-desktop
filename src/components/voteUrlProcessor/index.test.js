@@ -42,20 +42,6 @@ describe('VoteUrlProcessorHOC', () => {
     expect(wrapper.find(VoteUrlProcessor)).to.have.lengthOf(1);
   });
 
-  it('should bind voteToggled action to VoteUrlProcessor props.voteToggled', () => {
-    const actionsSpy = sinon.spy(votingActions, 'voteToggled');
-    wrapper.find(VoteUrlProcessor).props().voteToggled(actionData);
-    expect(actionsSpy).to.be.calledWith(actionData);
-    actionsSpy.restore();
-  });
-
-  it('should bind votesAdded action to VoteUrlProcessor props.votesAdded', () => {
-    const actionsSpy = sinon.spy(votingActions, 'votesAdded');
-    wrapper.find(VoteUrlProcessor).props().votesAdded(actionData);
-    expect(actionsSpy).to.be.calledWith(actionData);
-    actionsSpy.restore();
-  });
-
   it('should bind urlVotesFound action to VoteUrlProcessor props.urlVotesFound', () => {
     const actionMock = sinon.mock(votingActions);
     actionMock.expects('urlVotesFound').withExactArgs(actionData).returns({ type: 'DUMMY' });
