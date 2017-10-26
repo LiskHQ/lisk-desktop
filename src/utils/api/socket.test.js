@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import io from './socketShim';
-import actionTypes from './../constants/actions';
-import { SYNC_ACTIVE_INTERVAL, SYNC_INACTIVE_INTERVAL } from './../constants/api';
+import io from '../socketShim';
+import actionTypes from '../../constants/actions';
+import { SYNC_ACTIVE_INTERVAL, SYNC_INACTIVE_INTERVAL } from '../../constants/api';
 import { socketSetup } from './socket';
 
 describe('Socket', () => {

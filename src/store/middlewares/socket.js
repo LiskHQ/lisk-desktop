@@ -1,5 +1,5 @@
 import actionTypes from '../../constants/actions';
-import { socketSetup, closeConnection } from '../../utils/socket';
+import { socketSetup, closeConnection } from '../../utils/api/socket';
 
 const socketMiddleware = store => (
   next => (action) => {

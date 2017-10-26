@@ -1,7 +1,7 @@
-import io from './socketShim';
-import { activePeerUpdate } from './../actions/peers';
-import actionTypes from './../constants/actions';
-import { SYNC_ACTIVE_INTERVAL, SYNC_INACTIVE_INTERVAL } from './../constants/api';
+import io from '../socketShim';
+import { activePeerUpdate } from '../../actions/peers';
+import actionTypes from '../../constants/actions';
+import { SYNC_ACTIVE_INTERVAL, SYNC_INACTIVE_INTERVAL } from '../../constants/api';
 
 let connection;
 
@@ -12,7 +12,7 @@ export const socketSetup = (store) => {
     ipc.on('blur', () => { interval = SYNC_INACTIVE_INTERVAL; });
     ipc.on('focus', () => { interval = SYNC_ACTIVE_INTERVAL; });
   }
-  connection = io.connect(`ws://${store.getState().peers.data.options.address}`);
+  connection = io.connect(`ws://${store.getState().peers.data.currentPeer}:${store.getState().peers.data.port}`);
   connection.on('blocks/change', (block) => {
     store.dispatch({
       type: actionTypes.newBlockCreated,

@@ -110,6 +110,9 @@ const checkTransactionAndUpdateAccount = (store, action) => {
 const accountMiddleware = store => next => (action) => {
   next(action);
   switch (action.type) {
+    case actionTypes.accountLoggedIn:
+      updateAccountData(store, action);
+      break;
     case actionTypes.newBlockCreated:
       checkTransactionAndUpdateAccount(store, action);
       break;

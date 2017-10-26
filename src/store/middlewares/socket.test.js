@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { spy, stub } from 'sinon';
 import middleware from './socket';
-import * as socket from '../../utils/socket';
+import * as socket from '../../utils/api/socket';
 import actionTypes from '../../constants/actions';
 
 describe('Socket middleware', () => {
