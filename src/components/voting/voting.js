@@ -23,11 +23,10 @@ class Voting extends React.Component {
   }
 
   componentWillUpdate(nextProps) {
-    setTimeout(() => {
-      if (this.props.refreshDelegates) {
-        this.loadVotedDelegates(true);
-      }
-    }, 1);
+    if (!this.props.refreshDelegates && nextProps.refreshDelegates) {
+      this.loadVotedDelegates(true);
+    }
+
     if (this.props.delegates.length < nextProps.delegates.length) {
       setTimeout(() => {
         this.freezeLoading = false;

@@ -58,7 +58,7 @@ npm run start
 
 ### Windows
 
-Build package for Windows.
+Build package for Windows (on Windows in [Git BASH](https://git-for-windows.github.io/)).
 
 ```
 npm run pack:win
@@ -66,7 +66,7 @@ npm run pack:win
 
 ### macOS
 
-Build package for macOS.
+Build package for macOS (on macOs)
 
 ```
 npm run pack 
@@ -74,7 +74,7 @@ npm run pack
 
 ### Linux
 
-Build package for Linux.
+Build package for Linux (on Linux).
 
 ```
 npm run pack 

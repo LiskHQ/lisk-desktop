@@ -3,6 +3,7 @@ import Lisk from 'lisk-js';
 import actionTypes from '../constants/actions';
 import { getNethash } from './../utils/api/nethash';
 import { errorToastDisplayed } from './toaster';
+import netHashes from '../constants/netHashes';
 
 const peerSet = (data, config) => ({
   data: Object.assign({
@@ -33,15 +34,18 @@ export const activePeerSet = data =>
       const { hostname, port, protocol } = new URL(addHttp(config.address));
 
       config.node = hostname;
-      config.port = port;
-      config.ssl = protocol === 'https';
+      config.ssl = protocol === 'https:';
+      config.port = port || (config.ssl ? 443 : 80);
     }
     if (config.testnet === undefined && config.port !== undefined) {
       config.testnet = config.port === '7000';
     }
     if (config.custom) {
       getNethash(Lisk.api(config)).then((response) => {
-        config.nethash = response.nethash;
+        config.testnet = response.nethash === netHashes.testnet;
+        if (!config.testnet && response.nethash !== netHashes.mainnet) {
+          config.nethash = response.nethash;
+        }
         dispatch(peerSet(data, config));
       }).catch(() => {
         dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node') }));

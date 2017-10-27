@@ -5,6 +5,7 @@ import { getDelegate } from '../../utils/api/delegate';
 import { voteLookupStatusUpdated, voteToggled } from '../../actions/voting';
 import actionTypes from '../../constants/actions';
 import votingConst from '../../constants/voting';
+import { getTotalVotesCount } from './../../utils/voting';
 
 const updateLookupStatus = (store, list, username) => {
   store.dispatch(voteLookupStatusUpdated({
@@ -68,8 +69,7 @@ const checkVoteLimits = (store, action) => {
     store.dispatch(newAction);
   }
 
-  const voteCount = Object.keys(votes).filter(
-    key => (votes[key].confirmed && !votes[key].unconfirmed) || votes[key].unconfirmed).length;
+  const voteCount = getTotalVotesCount(votes);
   if (voteCount === votingConst.maxCountOfVotes + 1 &&
         currentVote.unconfirmed !== currentVote.confirmed) {
     const label = i18next.t('Maximum of {{n}} votes exceeded.', { n: votingConst.maxCountOfVotes });
