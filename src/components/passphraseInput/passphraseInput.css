@@ -16,3 +16,7 @@
   height: 24px;
   cursor: pointer;
 }
+
+.inputWrapper input {
+  padding-right: 35px;
+}

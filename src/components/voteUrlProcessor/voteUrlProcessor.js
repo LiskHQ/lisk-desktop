@@ -21,34 +21,34 @@ export default class VoteUrlProcessor extends React.Component {
     }
   }
 
-  getProccessedCount() {
+  getProcessedCount() {
     return this.props.urlVoteCount - this.props.pending.length;
   }
 
   render() {
     const errorMessages = {
-      notFound: this.props.t('{{count}} of entered delegate names could not be resolved:',
+      notFound: this.props.t('{{count}} of the provided delegate names could not be resolved:',
         { count: this.props.notFound.length }),
-      alreadyVoted: this.props.t('{{count}} of delegate names selected for vote were already voted for:',
+      alreadyVoted: this.props.t('{{count}} of the delegate names selected for voting was already voted for for:',
         { count: this.props.alreadyVoted.length }),
-      notVotedYet: this.props.t('{{count}} of delegate names selected for unvote were not voted for:',
+      notVotedYet: this.props.t('{{count}} of the delegate names selected for unvoting was not currently voted for:',
         { count: this.props.notVotedYet.length }),
     };
     const successMessages = {
-      upvotes: this.props.t('{{count}} delegate names successfully resolved to add vote to.',
+      upvotes: this.props.t('{{count}} delegate names were successfully resolved for voting.',
         { count: this.props.upvotes.length }),
-      unvotes: this.props.t('{{count}} delegate names successfully resolved to remove vote from.',
+      unvotes: this.props.t('{{count}} delegate names were successfully resolved for unvoting.',
         { count: this.props.unvotes.length }),
     };
     return (
       <div>
-        {this.getProccessedCount() < this.props.urlVoteCount ?
+        {this.getProcessedCount() < this.props.urlVoteCount ?
           (<div>
             <ProgressBar type='linear' mode='determinate'
-              value={this.getProccessedCount()} max={this.props.urlVoteCount}/>
+              value={this.getProcessedCount()} max={this.props.urlVoteCount}/>
             <div className={styles.center}>
               {this.props.t('Processing delegate names: ')}
-              {this.getProccessedCount()} / {this.props.urlVoteCount}
+              {this.getProcessedCount()} / {this.props.urlVoteCount}
             </div>
           </div>) :
           (<span>{Object.keys(errorMessages).map(list => (

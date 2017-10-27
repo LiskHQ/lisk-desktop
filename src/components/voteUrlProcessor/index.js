@@ -5,8 +5,6 @@ import { withRouter } from 'react-router';
 import {
   urlVotesFound,
   voteLookupStatusCleared,
-  voteToggled,
-  votesAdded,
 } from '../../actions/voting';
 import VoteUrlProcessor from './voteUrlProcessor';
 
@@ -28,8 +26,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  voteToggled: data => dispatch(voteToggled(data)),
-  votesAdded: data => dispatch(votesAdded(data)),
   urlVotesFound: data => dispatch(urlVotesFound(data)),
   clearVoteLookupStatus: () => dispatch(voteLookupStatusCleared()),
 });

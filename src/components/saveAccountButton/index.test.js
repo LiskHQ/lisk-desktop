@@ -25,7 +25,7 @@ describe('SaveAccountButtonHOC', () => {
   });
 
   beforeEach(() => {
-    wrapper = mount(<Router><SaveAccountButtonHOC /></Router>, {
+    wrapper = mount(<Router><SaveAccountButtonHOC theme={{}} /></Router>, {
       context: { store, i18n },
       childContextTypes: {
         store: PropTypes.object.isRequired,
