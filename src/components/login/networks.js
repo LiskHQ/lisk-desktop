@@ -1,17 +1,15 @@
-import i18next from 'i18next';
-
 export default () => ([
-  {
-    name: i18next.t('Mainnet'),
+  {// network name translation t('Mainnet');
+    name: 'Mainnet',
     ssl: true,
     port: 443,
-  }, {
-    name: i18next.t('Testnet'),
+  }, {// network name translation t('Testnet');
+    name: 'Testnet',
     testnet: true,
     ssl: true,
     port: 443,
-  }, {
-    name: i18next.t('Custom Node'),
+  }, {// network name translation t('Custom Node');
+    name: 'Custom Node',
     custom: true,
     address: 'http://localhost:4000',
   },

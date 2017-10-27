@@ -62,7 +62,7 @@ node('lisk-nano') {
     stage ('Run Eslint') {
       try {
         ansiColor('xterm') {
-          sh 'npm run --silent clean && npm run --silent copy-files && npm run --silent eslint'
+          sh 'npm run --silent clean-build && npm run --silent copy-files && npm run --silent eslint'
         }
       } catch (err) {
         echo "Error: ${err}"

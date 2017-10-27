@@ -4,15 +4,13 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import style from './votingBar.css';
 import votingConst from '../../constants/voting';
+import { getTotalVotesCount, getVoteList, getUnvoteList } from './../../utils/voting';
 
 const VotingBar = ({ votes, t }) => {
   const { maxCountOfVotes, maxCountOfVotesInOneTurn } = votingConst;
-  const votedList = Object.keys(votes).filter(key => votes[key].confirmed);
-  const voteList = Object.keys(votes).filter(
-    key => votes[key].unconfirmed && !votes[key].confirmed);
-  const unvoteList = Object.keys(votes).filter(
-    key => !votes[key].unconfirmed && votes[key].confirmed);
-  const totalVotesCount = (votedList.length - unvoteList.length) + voteList.length;
+  const voteList = getVoteList(votes);
+  const unvoteList = getUnvoteList(votes);
+  const totalVotesCount = getTotalVotesCount(votes);
   const totalNewVotesCount = voteList.length + unvoteList.length;
 
   return (voteList.length + unvoteList.length ?
