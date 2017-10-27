@@ -4,6 +4,7 @@ import { activePeerUpdate } from '../../actions/peers';
 import { SYNC_ACTIVE_INTERVAL, SYNC_INACTIVE_INTERVAL } from '../../constants/api';
 
 let connection;
+let forcedClosing = false;
 
 const socketSetup = (store) => {
   let interval = SYNC_ACTIVE_INTERVAL;
@@ -20,7 +21,9 @@ const socketSetup = (store) => {
     });
   });
   connection.on('disconnect', () => {
-    store.dispatch(activePeerUpdate({ online: false }));
+    if (!forcedClosing) {
+      store.dispatch(activePeerUpdate({ online: false }));
+    }
   });
   connection.on('reconnect', () => {
     store.dispatch(activePeerUpdate({ online: true }));
@@ -28,7 +31,9 @@ const socketSetup = (store) => {
 };
 const closeConnection = () => {
   if (connection) {
+    forcedClosing = true;
     connection.close();
+    forcedClosing = false;
   }
 };
 
