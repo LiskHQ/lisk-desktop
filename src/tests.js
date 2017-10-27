@@ -4,12 +4,19 @@ import chaiEnzyme from 'chai-enzyme';
 import chaiAsPromised from 'chai-as-promised';
 import sinon from 'sinon';
 import sinonStubPromise from 'sinon-stub-promise';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+Enzyme.configure({ adapter: new Adapter() });
 
 chai.use(sinonChai);
 chai.use(chaiEnzyme());
 chai.use(chaiAsPromised);
 sinonStubPromise(sinon);
 
+
+import './test.js'; // eslint-disable-line
+// require('./components/account/account.test.js');
+
 // load all tests into one bundle
-const testsContext = require.context('.', true, /\.test\.js$/);
-testsContext.keys().forEach(testsContext);
+// const testsContext = require.context('.', true, /\.test\.js$/);
+// testsContext.keys().forEach(testsContext);
