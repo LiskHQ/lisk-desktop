@@ -10,4 +10,8 @@ const getVoteList = votes => (Object.keys(votes).filter(
 const getTotalVotesCount = votes => ((getVotedList(votes).length - getUnvoteList(votes).length)
   + getVoteList(votes).length);
 
-export { getTotalVotesCount, getVotedList, getVoteList, getUnvoteList };
+const getNewVotesCount = votes => (Object.keys(votes).filter(
+  key => ((votes[key].confirmed !== votes[key].unconfirmed)),
+)).length;
+
+export { getNewVotesCount, getTotalVotesCount, getVotedList, getVoteList, getUnvoteList };
