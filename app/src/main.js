@@ -70,8 +70,8 @@ function createWindow() {
   win.on('blur', () => win.webContents.send('blur'));
   win.on('focus', () => win.webContents.send('focus'));
 
-  if (process.platform === 'win32') {
-    sendUrlToRouter(process.argv.slice(1));
+  if (process.platform !== 'darwin') {
+    sendUrlToRouter(process.argv[1] || '/');
   }
 
   Menu.setApplicationMenu(buildMenu(app, copyright, i18n));
@@ -142,8 +142,8 @@ app.setAsDefaultProtocolClient(protocolName);
 
 // Force single instance application
 const isSecondInstance = app.makeSingleInstance((argv) => {
-  if (process.platform === 'win32') {
-    sendUrlToRouter(argv.slice(1));
+  if (process.platform !== 'darwin') {
+    sendUrlToRouter(argv[1] || '/');
   }
   if (win) {
     if (win.isMinimized()) win.restore();
