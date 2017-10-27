@@ -24,13 +24,9 @@ const hasRecentTransactions = state => (
 );
 
 const updateAccountData = (store, action) => {
-  const state = store.getState();
-  const { peers, account } = state;
+  const { peers, account } = store.getState();
 
   getAccount(peers.data, account.address).then((result) => {
-    if (action.data.interval === SYNC_ACTIVE_INTERVAL && hasRecentTransactions(state)) {
-      updateTransactions(store, peers, account);
-    }
     if (result.balance !== account.balance) {
       if (action.data.interval === SYNC_INACTIVE_INTERVAL) {
         updateTransactions(store, peers, account);
@@ -95,14 +91,23 @@ const passphraseUsed = (store, action) => {
   }
 };
 
-const checkTransactionAndUpdateAccount = (store, action) => {
-  const tx = action.data.block.transactions;
-  const accountAddress = store.getState().account.address;
-  const transaction = tx[tx.length - 1];
-  const sender = transaction ? transaction.senderId : null;
-  const recipient = transaction ? transaction.recipientId : null;
+const checkTransactionsAndUpdateAccount = (store, action) => {
+  const state = store.getState();
+  const { peers, account } = state;
 
-  if (accountAddress === recipient || accountAddress === sender) {
+  if (action.data.interval === SYNC_ACTIVE_INTERVAL && hasRecentTransactions(state)) {
+    updateTransactions(store, peers, account);
+  }
+
+  const tx = action.data.block.transactions;
+  const accountAddress = state.account.address;
+  const blockContainsRelevantTransaction = tx.filter((transaction) => {
+    const sender = transaction ? transaction.senderId : null;
+    const recipient = transaction ? transaction.recipientId : null;
+    return accountAddress === recipient || accountAddress === sender;
+  }).length > 0;
+
+  if (blockContainsRelevantTransaction) {
     updateAccountData(store, action);
   }
 };
@@ -110,11 +115,14 @@ const checkTransactionAndUpdateAccount = (store, action) => {
 const accountMiddleware = store => next => (action) => {
   next(action);
   switch (action.type) {
+    // update on login because the 'save account' button
+    // depends on a rerendering of the page
+    // TODO: fix the 'save account' path problem, so we can remove this
     case actionTypes.accountLoggedIn:
       updateAccountData(store, action);
       break;
     case actionTypes.newBlockCreated:
-      checkTransactionAndUpdateAccount(store, action);
+      checkTransactionsAndUpdateAccount(store, action);
       break;
     case actionTypes.transactionsUpdated:
       delegateRegistration(store, action);
