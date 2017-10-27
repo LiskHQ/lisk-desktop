@@ -128,7 +128,7 @@ module.exports = (app, copyright, i18n) => {
         if (focusedWindow) {
           const options = {
             buttons: ['OK'],
-            icon: `${__dirname}/assets/images/lisk.png`,
+            icon: `${__dirname}/assets/images/LISK.png`,
             message: `${i18n.t('Lisk Nano')}\n${i18n.t('Version')} ${app.getVersion()}\n${copyright}`,
           };
           electron.dialog.showMessageBox(focusedWindow, options, () => {});
