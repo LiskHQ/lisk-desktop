@@ -1,0 +1,1 @@
+require('./components/voting/voting.test.js');
