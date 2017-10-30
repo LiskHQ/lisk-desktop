@@ -25,12 +25,12 @@ describe('VerifyMessage', () => {
   it('recognizes invalid public key', () => {
     wrapper.find('.public-key input').simulate('change', { target: { value: publicKey.substr(3) } });
     wrapper.find('.signature textarea').simulate('change', { target: { value: signature } });
-    expect(wrapper.find('.public-key').text()).to.contain('Invalid');
+    expect(wrapper.find('Input.public-key').text()).to.contain('Invalid');
   });
 
   it('recognizes invalid signature', () => {
     wrapper.find('.public-key input').simulate('change', { target: { value: publicKey } });
     wrapper.find('.signature textarea').simulate('change', { target: { value: signature.substr(3) } });
-    expect(wrapper.find('.signature').text()).to.contain('Invalid');
+    expect(wrapper.find('Input.signature').text()).to.contain('Invalid');
   });
 });

@@ -50,7 +50,7 @@ describe('SaveAccount', () => {
   });
 
   it('should call props.closeDialog and props.accountSaved on "save button" click', () => {
-    wrapper.find('.save-account-button').simulate('click');
+    wrapper.find('button.save-account-button').simulate('click');
     const componentProps = wrapper.find(SaveAccount).props();
     expect(componentProps.closeDialog).to.have.been.calledWith();
     expect(componentProps.accountSaved).to.have.been.calledWith();

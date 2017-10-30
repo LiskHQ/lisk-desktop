@@ -62,7 +62,7 @@ describe('Login', () => {
       const expectedError = 'Passphrase should have 12 words, entered passphrase has 11';
       wrapper.find('.passphrase input').simulate('change', { target: { value: ' ' } });
       wrapper.find('.passphrase input').simulate('change', { target: { value: passphrase } });
-      expect(wrapper.find('.passphrase').html()).to.contain(expectedError);
+      expect(wrapper.find('.passphrase')).to.contain(expectedError);
     });
   });
 
