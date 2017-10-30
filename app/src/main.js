@@ -1,8 +1,10 @@
 import electron from 'electron'; // eslint-disable-line import/no-extraneous-dependencies
+import electronLocalshortcut from 'electron-localshortcut'; // eslint-disable-line import/no-extraneous-dependencies
 import path from 'path';
 import storage from 'electron-json-storage'; // eslint-disable-line import/no-extraneous-dependencies
 import i18n from './i18n';
 import buildMenu from './menu';
+
 
 const { app, BrowserWindow, Menu, ipcMain } = electron;
 
@@ -76,6 +78,12 @@ function createWindow() {
 
   Menu.setApplicationMenu(buildMenu(app, copyright, i18n));
   win.loadURL(`file://${__dirname}/index.html`);
+
+  // Enables DevTools
+  win.devtools = true;
+  electronLocalshortcut.register(win, 'CmdOrCtrl+Shift+I', () => {
+    win.webContents.toggleDevTools();
+  });
 
   win.on('closed', () => { win = null; });
 
