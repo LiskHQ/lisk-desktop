@@ -25,9 +25,10 @@ describe('Toaster', () => {
   });
 
   describe('hideToast', () => {
-    // ToDo : re-enable this one after sinon.useFakeTimers bug is solved
-    it.skip('hides the toast and after the animation ends calls this.props.hideToast()', () => {
-      const clock = sinon.useFakeTimers();
+    it('hides the toast and after the animation ends calls this.props.hideToast()', () => {
+      const clock = sinon.useFakeTimers({
+        toFake: ['setTimeout', 'clearTimeout', 'Date'],
+      });
       wrapper.instance().hideToast(toasts[0]);
       expect(wrapper.state('hidden')).to.deep.equal({ [toasts[0].index]: true });
       clock.tick(510);

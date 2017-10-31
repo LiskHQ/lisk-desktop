@@ -70,9 +70,10 @@ describe('Voting', () => {
     expect(wrapper.find('Table')).to.have.lengthOf(1);
   });
 
-  // ToDo : re-enable this one after sinon.useFakeTimers bug is solved
-  it.skip('should define search method to reload delegates based on given query', () => {
-    const clock = sinon.useFakeTimers();
+  it('should define search method to reload delegates based on given query', () => {
+    const clock = sinon.useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
     props.delegatesFetched.reset();
     wrapper.find('.search input').simulate('change', { target: { value: 'query' } });
     clock.tick(251);

@@ -77,9 +77,10 @@ describe('VotingHeader', () => {
       expect(wrapper.find('#searchIcon').text()).to.be.equal('close');
     });
 
-    // ToDo : re-enable this one after sinon.useFakeTimers bug is solved
-    it.skip('should this.props.search when this.search is called', () => {
-      const clock = sinon.useFakeTimers();
+    it('should this.props.search when this.search is called', () => {
+      const clock = sinon.useFakeTimers({
+        toFake: ['setTimeout', 'clearTimeout', 'Date'],
+      });
       wrapper.find('.search input').simulate('change', { target: { value: '555' } });
       clock.tick(250);
       expect(props.search).to.have.been.calledWith('555');
@@ -88,9 +89,10 @@ describe('VotingHeader', () => {
     it('click on #searchIcon should clear value of search input', () => {
       wrapper.find('Input.search input').simulate('change', { target: { value: '555' } });
       wrapper.update();
+      expect(wrapper.find('Input.search input').props().value).to.be.equal('555');
       wrapper.find('i#searchIcon').simulate('click');
       wrapper.update();
-      expect(wrapper.find('Input.search input').get(0)).to.be.equal('');
+      expect(wrapper.find('Input.search input').props().value).to.be.equal('');
     });
   });
 

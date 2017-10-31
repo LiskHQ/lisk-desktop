@@ -55,25 +55,28 @@ describe('VoteAutocomplete', () => {
     VoteAutocomplete.prototype.handleArrowUp.restore();
   });
 
-  // ToDo : re-enable this one after sinon.useFakeTimers bug is solved
-  it.skip('should suggestionStatus(false, className) change value of className in state', () => {
-    const clock = sinon.useFakeTimers();
+  it('should suggestionStatus(false, className) change value of className in state', () => {
+    const clock = sinon.useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
     wrapper.instance().suggestionStatus(false, 'className');
     clock.tick(200);
     expect(wrapper.state('className').match(/hidden/g)).to.have.lengthOf(1);
   });
 
-  // ToDo : re-enable this one after sinon.useFakeTimers bug is solved
-  it.skip('should suggestionStatus(true, className) clear value of className in state', () => {
-    const clock = sinon.useFakeTimers();
+  it('should suggestionStatus(true, className) clear value of className in state', () => {
+    const clock = sinon.useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
     wrapper.instance().suggestionStatus(true, 'className');
     clock.tick(200);
     expect(wrapper.state('className')).to.be.equal('');
   });
 
-  // ToDo : re-enable this one after sinon.useFakeTimers bug is solved
-  it.skip('should search hide suggestion boxes when value is equal to ""', () => {
-    const clock = sinon.useFakeTimers();
+  it('should search hide suggestion boxes when value is equal to ""', () => {
+    const clock = sinon.useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
     sinon.spy(VoteAutocomplete.prototype, 'setState');
     wrapper.instance().search('votedListSearch', '');
     clock.tick(250);
@@ -84,9 +87,10 @@ describe('VoteAutocomplete', () => {
     expect(wrapper.state('unvotedSuggestionClass').match(/hidden/g)).to.have.lengthOf(1);
     VoteAutocomplete.prototype.setState.restore();
   });
-  // ToDo : re-enable this one after sinon.useFakeTimers bug is solved
-  it.skip('search should call "voteAutocomplete" when name is equal to "votedListSearch" when search term exists', () => {
-    const clock = sinon.useFakeTimers();
+  it('search should call "voteAutocomplete" when name is equal to "votedListSearch" when search term exists', () => {
+    const clock = sinon.useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
     const existingSearchTerm = 'username2';
     const delegateApiMock = sinon.mock(delegateApi).expects('voteAutocomplete');
 
@@ -100,9 +104,10 @@ describe('VoteAutocomplete', () => {
     delegateApiMock.restore();
   });
 
-  // ToDo : re-enable this one after sinon.useFakeTimers bug is solved
-  it.skip('search should call "voteAutocomplete" when name is equal to "votedListSearch" when search term does not exist', () => {
-    const clock = sinon.useFakeTimers();
+  it('search should call "voteAutocomplete" when name is equal to "votedListSearch" when search term does not exist', () => {
+    const clock = sinon.useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
     const nonExistingSearchTerm = 'doesntexist';
     const delegateApiMock = sinon.mock(delegateApi).expects('voteAutocomplete');
 
@@ -117,9 +122,10 @@ describe('VoteAutocomplete', () => {
     delegateApiMock.restore();
   });
 
-  // ToDo : re-enable this one after sinon.useFakeTimers bug is solved
-  it.skip('search should call "unvoteAutocomplete" when name is equal to "unvotedListSearch" when search term exists', () => {
-    const clock = sinon.useFakeTimers();
+  it('search should call "unvoteAutocomplete" when name is equal to "unvotedListSearch" when search term exists', () => {
+    const clock = sinon.useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
     const existingSearchTerm = 'username1';
     const delegateApiMock = sinon.mock(delegateApi).expects('unvoteAutocomplete');
 
@@ -133,9 +139,10 @@ describe('VoteAutocomplete', () => {
     delegateApiMock.restore();
   });
 
-  // ToDo : re-enable this one after sinon.useFakeTimers bug is solved
-  it.skip('search should call "unvoteAutocomplete" when name is equal to "unvotedListSearch" when search term does not exists', () => {
-    const clock = sinon.useFakeTimers();
+  it('search should call "unvoteAutocomplete" when name is equal to "unvotedListSearch" when search term does not exists', () => {
+    const clock = sinon.useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
     const nonExistingSearchTerm = 'username2';
     const delegateApiMock = sinon.mock(delegateApi).expects('unvoteAutocomplete');
 

@@ -11,7 +11,9 @@ const fakeStore = configureStore();
 
 describe('Passphrase Component', () => {
   let wrapper;
-  const clock = sinon.useFakeTimers();
+  const clock = sinon.useFakeTimers({
+    toFake: ['setTimeout', 'clearTimeout', 'Date'],
+  });
   const props = {
     t: key => key,
   };

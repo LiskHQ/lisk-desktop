@@ -6,7 +6,10 @@ import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import { Time, TooltipTime, TooltipWrapper } from './index';
 
-sinon.useFakeTimers(new Date(2017, 1, 15).getTime());
+sinon.useFakeTimers({
+  now: new Date(2017, 1, 15).getTime(),
+  toFake: ['setTimeout', 'clearTimeout', 'Date'],
+});
 describe('Time', () => {
   it('shows "5 months" for the equivalent timestamp (35929631)', () => {
     const inputValue = 35929631;
