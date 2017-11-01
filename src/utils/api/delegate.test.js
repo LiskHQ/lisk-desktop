@@ -38,53 +38,55 @@ describe('Utils: Delegate', () => {
   describe('listDelegates', () => {
     it('should return requestToActivePeer(activePeer, `delegates/`, options) if options = {}', () => {
       const options = {};
-      const mockedPromise = new Promise((resolve) => { resolve(); });
-      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates/', options).returns(mockedPromise);
+      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates/', options)
+        .returnsPromise().resolves('resolved promise');
 
       const returnedPromise = listDelegates(activePeer, options);
-      expect(returnedPromise).to.equal(mockedPromise);
+      return expect(returnedPromise).to.eventually.equal('resolved promise');
     });
 
     it('should return requestToActivePeer(activePeer, `delegates/search`, options) if options.q is set', () => {
-      const options = {
-        q: 'genesis_1',
-      };
-      const mockedPromise = new Promise((resolve) => { resolve(); });
-      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates/search', options).returns(mockedPromise);
+      const options = { q: 'genesis_1' };
+      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates/search', options)
+        .returnsPromise().resolves('resolved promise');
 
       const returnedPromise = listDelegates(activePeer, options);
-      expect(returnedPromise).to.equal(mockedPromise);
+      return expect(returnedPromise).to.eventually.equal('resolved promise');
     });
   });
 
   describe('getDelegate', () => {
     it('should return requestToActivePeer(activePeer, `delegates/get`, options)', () => {
       const options = { publicKey: '"86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19"' };
-      const mockedPromise = new Promise((resolve) => { resolve(); });
-      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates/get', options).returns(mockedPromise);
+      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates/get', options)
+        .returnsPromise().resolves('resolved promise');
 
       const returnedPromise = getDelegate(activePeer, options);
-      expect(returnedPromise).to.equal(mockedPromise);
+      return expect(returnedPromise).to.eventually.equal('resolved promise');
     });
   });
 
   describe('unvoteAutocomplete', () => {
-    it('should return a promise', () => {
+    it('should return a promise that resolves an empty array when trying to unvote a non-existing user name', () => {
       const voteList = {
         genesis_1: { confirmed: true, unconfirmed: false, publicKey: 'sample_key' },
         genesis_2: { confirmed: true, unconfirmed: false, publicKey: 'sample_key' },
         genesis_3: { confirmed: true, unconfirmed: false, publicKey: 'sample_key' },
       };
-      const nonExistingUsername = 'genesis_4';
-      const promise = unvoteAutocomplete(username, voteList);
-      expect(typeof promise.then).to.be.equal('function');
-      promise.then((result) => {
-        expect(result).to.be.equal(true);
-      });
 
-      unvoteAutocomplete(nonExistingUsername, voteList).then((result) => {
-        expect(result).to.be.equal(false);
-      });
+      const nonExistingUsername = 'genesis_4';
+      return expect(unvoteAutocomplete(nonExistingUsername, voteList)).to.eventually.eql([]);
+    });
+
+    it('should return a promise that resolves an array when trying to unvote an existing user name', () => {
+      const voteList = {
+        genesis_1: { confirmed: true, unconfirmed: true, publicKey: 'sample_key' },
+        genesis_2: { confirmed: true, unconfirmed: false, publicKey: 'sample_key' },
+        genesis_3: { confirmed: true, unconfirmed: false, publicKey: 'sample_key' },
+      };
+
+      const expectedResult = [{ username: 'genesis_1', publicKey: 'sample_key' }];
+      return expect(unvoteAutocomplete(username, voteList)).to.eventually.eql(expectedResult);
     });
   });
 
@@ -95,12 +97,12 @@ describe('Utils: Delegate', () => {
         secret: 'wagon dens',
         secondSecret: 'wagon dens',
       };
-      const mockedPromise = new Promise((resolve) => { resolve(); });
-      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates', data).returns(mockedPromise);
+      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates', data)
+        .returnsPromise().resolves('resolved promise');
 
       const returnedPromise = registerDelegate(
         activePeer, data.username, data.secret, data.secondSecret);
-      expect(returnedPromise).to.equal(mockedPromise);
+      return expect(returnedPromise).to.eventually.equal('resolved promise');
     });
 
     it('should return requestToActivePeer(activePeer, `delegates`, data) even if no secondSecret specified', () => {
@@ -108,11 +110,11 @@ describe('Utils: Delegate', () => {
         username: 'test',
         secret: 'wagon dens',
       };
-      const mockedPromise = new Promise((resolve) => { resolve(); });
-      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates', data).returns(mockedPromise);
+      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates', data)
+        .returnsPromise().resolves('resolved promise');
 
       const returnedPromise = registerDelegate(activePeer, data.username, data.secret);
-      expect(returnedPromise).to.equal(mockedPromise);
+      return expect(returnedPromise).to.eventually.equal('resolved promise');
     });
   });
 
@@ -137,11 +139,12 @@ describe('Utils: Delegate', () => {
         { username: 'genesis_42' },
         { username: 'genesis_44' },
       ];
-      const votedDict = { username: 'genesis_11' };
-      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates/search', { q: username }).returns(Promise.resolve({ success: true, delegates }));
+      const votedDict = { genesis_3: { confirmed: true, unconfirmed: false, publicKey: 'sample_key' } };
+      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates/search', { q: username })
+        .returnsPromise().resolves({ success: true, delegates });
 
       const returnedPromise = voteAutocomplete(activePeer, username, votedDict);
-      expect(returnedPromise).to.eventually.become({ success: true, delegates });
+      return expect(returnedPromise).to.eventually.eql(delegates);
     });
   });
 });
