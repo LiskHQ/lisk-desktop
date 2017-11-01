@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { spy, stub, match } from 'sinon';
 import actionTypes from '../constants/actions';
+import netHashes from '../constants/netHashes';
 import { activePeerSet, activePeerUpdate } from './peers';
 import * as nethashApi from './../utils/api/nethash';
 
@@ -63,7 +64,7 @@ describe('actions: peers', () => {
       expect(dispatch).to.have.been.calledWith(match.hasNested('data.activePeer.options.address', 'localhost:8000'));
     });
 
-    it('dispatch activePeerSet with nethash from response when the network is a custom node', () => {
+    it('dispatch activePeerSet with testnet config set to true when the network is a custom node and nethash is testnet', () => {
       getNetHash.returnsPromise();
       const network = {
         address: 'http://localhost:4000',
@@ -71,9 +72,22 @@ describe('actions: peers', () => {
       };
 
       activePeerSet({ passphrase, network })(dispatch);
-      getNetHash.resolves({ nethash: 'nethash from response' });
+      getNetHash.resolves({ nethash: netHashes.testnet });
 
-      expect(dispatch).to.have.been.calledWith(match.hasNested('data.activePeer.nethash.nethash', 'nethash from response'));
+      expect(dispatch).to.have.been.calledWith(match.hasNested('data.activePeer.testnet', true));
+    });
+
+    it('dispatch activePeerSet with testnet config set to false when the network is a custom node and nethash is testnet', () => {
+      getNetHash.returnsPromise();
+      const network = {
+        address: 'http://localhost:4000',
+        custom: true,
+      };
+
+      activePeerSet({ passphrase, network })(dispatch);
+      getNetHash.resolves({ nethash: 'some other nethash' });
+
+      expect(dispatch).to.have.been.calledWith(match.hasNested('data.activePeer.testnet', false));
     });
 
     it('dispatch activePeerSet action even if network is undefined', () => {

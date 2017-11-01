@@ -21,7 +21,7 @@ export default class VoteUrlProcessor extends React.Component {
     }
   }
 
-  getProccessedCount() {
+  getProcessedCount() {
     return this.props.urlVoteCount - this.props.pending.length;
   }
 
@@ -42,13 +42,13 @@ export default class VoteUrlProcessor extends React.Component {
     };
     return (
       <div>
-        {this.getProccessedCount() < this.props.urlVoteCount ?
+        {this.getProcessedCount() < this.props.urlVoteCount ?
           (<div>
             <ProgressBar type='linear' mode='determinate'
-              value={this.getProccessedCount()} max={this.props.urlVoteCount}/>
+              value={this.getProcessedCount()} max={this.props.urlVoteCount}/>
             <div className={styles.center}>
               {this.props.t('Processing delegate names: ')}
-              {this.getProccessedCount()} / {this.props.urlVoteCount}
+              {this.getProcessedCount()} / {this.props.urlVoteCount}
             </div>
           </div>) :
           (<span>{Object.keys(errorMessages).map(list => (
