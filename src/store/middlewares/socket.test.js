@@ -3,8 +3,6 @@ import { spy, stub } from 'sinon';
 import io from './../../utils/socketShim';
 import middleware from './socket';
 import actionTypes from '../../constants/actions';
-import { SYNC_ACTIVE_INTERVAL, SYNC_INACTIVE_INTERVAL } from '../../constants/api';
-
 
 describe('Socket middleware', () => {
   let store;
@@ -49,7 +47,7 @@ describe('Socket middleware', () => {
 
     expect(store.dispatch).to.have.been.calledWith({
       type: actionTypes.newBlockCreated,
-      data: { block: transactions, interval: SYNC_ACTIVE_INTERVAL },
+      data: { block: transactions, windowIsFocused: true },
     });
   });
 
@@ -107,25 +105,25 @@ describe('Socket middleware', () => {
       expect(window.ipc.on).to.have.been.calledWith('focus');
     });
 
-    it('should set window.ipc to set the interval to SYNC_INACTIVE_INTERVAL on blur', () => {
+    it('should register window focus changes', () => {
       middleware(store)(next)({ type: actionTypes.accountLoggedIn });
       ipcCallbacks.blur();
       socketCallbacks['blocks/change'](transactions);
 
       expect(store.dispatch).to.have.been.calledWith({
         type: actionTypes.newBlockCreated,
-        data: { block: transactions, interval: SYNC_INACTIVE_INTERVAL },
+        data: { block: transactions, windowIsFocused: false },
       });
     });
 
-    it('should set window.ipc to set the interval to SYNC_ACTIVE_INTERVAL on focus', () => {
+    it('should register window focus changes', () => {
       middleware(store)(next)({ type: actionTypes.accountLoggedIn });
       ipcCallbacks.focus();
       socketCallbacks['blocks/change'](transactions);
 
       expect(store.dispatch).to.have.been.calledWith({
         type: actionTypes.newBlockCreated,
-        data: { block: transactions, interval: SYNC_ACTIVE_INTERVAL },
+        data: { block: transactions, windowIsFocused: true },
       });
     });
   });

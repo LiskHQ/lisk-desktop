@@ -7,7 +7,6 @@ import actionTypes from '../../constants/actions';
 import { fetchAndUpdateForgedBlocks } from '../../actions/forging';
 import { getDelegate } from '../../utils/api/delegate';
 import transactionTypes from '../../constants/transactionTypes';
-import { SYNC_ACTIVE_INTERVAL, SYNC_INACTIVE_INTERVAL } from '../../constants/api';
 
 const updateTransactions = (store, peers, account) => {
   const maxBlockSize = 25;
@@ -28,7 +27,7 @@ const updateAccountData = (store, action) => {
 
   getAccount(peers.data, account.address).then((result) => {
     if (result.balance !== account.balance) {
-      if (action.data.interval === SYNC_INACTIVE_INTERVAL) {
+      if (!action.data.windowIsFocused) {
         updateTransactions(store, peers, account);
       }
       if (account.isDelegate) {
@@ -95,7 +94,7 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
   const state = store.getState();
   const { peers, account } = state;
 
-  if (action.data.interval === SYNC_ACTIVE_INTERVAL && hasRecentTransactions(state)) {
+  if (action.data.windowIsFocused && hasRecentTransactions(state)) {
     updateTransactions(store, peers, account);
   }
 

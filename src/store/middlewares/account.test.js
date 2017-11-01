@@ -1,7 +1,5 @@
 import { expect } from 'chai';
 import { spy, stub } from 'sinon';
-
-import { SYNC_ACTIVE_INTERVAL, SYNC_INACTIVE_INTERVAL } from '../../constants/api';
 import { accountUpdated } from '../../actions/account';
 import { activePeerUpdate } from '../../actions/peers';
 import * as votingActions from '../../actions/voting';
@@ -35,7 +33,7 @@ describe('Account middleware', () => {
   const newBlockCreated = {
     type: actionTypes.newBlockCreated,
     data: {
-      interval: SYNC_ACTIVE_INTERVAL,
+      windowIsFocused: true,
       block: transactions,
     },
   };
@@ -43,7 +41,7 @@ describe('Account middleware', () => {
   const inactiveNewBlockCreated = {
     type: actionTypes.newBlockCreated,
     data: {
-      interval: SYNC_INACTIVE_INTERVAL,
+      windowIsFocused: false,
       block: transactions,
     },
   };
@@ -112,7 +110,7 @@ describe('Account middleware', () => {
     expect(stubTransactions).to.have.been.calledWith();
   });
 
-  it(`should call transactions API methods on ${actionTypes.newBlockCreated} action if account.balance changes and action.data.interval is SYNC_INACTIVE_INTERVAL`, () => {
+  it(`should call transactions API methods on ${actionTypes.newBlockCreated} action if account.balance changes and the window is in blur`, () => {
     stubGetAccount.resolves({ balance: 10e8 });
 
     middleware(store)(next)(inactiveNewBlockCreated);
@@ -121,7 +119,7 @@ describe('Account middleware', () => {
     expect(stubTransactions).to.have.been.calledWith();
   });
 
-  it(`should call transactions API methods on ${actionTypes.newBlockCreated} action if action.data.interval is SYNC_ACTIVE_INTERVAL and there are recent transactions`, () => {
+  it(`should call transactions API methods on ${actionTypes.newBlockCreated} action if the window is in focus and there are recent transactions`, () => {
     stubGetAccount.resolves({ balance: 0 });
 
     middleware(store)(next)(newBlockCreated);

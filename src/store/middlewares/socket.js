@@ -1,23 +1,22 @@
 import io from '../../utils/socketShim';
 import actionTypes from '../../constants/actions';
 import { activePeerUpdate } from '../../actions/peers';
-import { SYNC_ACTIVE_INTERVAL, SYNC_INACTIVE_INTERVAL } from '../../constants/api';
 
 let connection;
 let forcedClosing = false;
 
 const socketSetup = (store) => {
-  let interval = SYNC_ACTIVE_INTERVAL;
+  let windowIsFocused = true;
   const { ipc } = window;
   if (ipc) {
-    ipc.on('blur', () => { interval = SYNC_INACTIVE_INTERVAL; });
-    ipc.on('focus', () => { interval = SYNC_ACTIVE_INTERVAL; });
+    ipc.on('blur', () => { windowIsFocused = false; });
+    ipc.on('focus', () => { windowIsFocused = true; });
   }
   connection = io.connect(`ws://${store.getState().peers.data.currentPeer}:${store.getState().peers.data.port}`);
   connection.on('blocks/change', (block) => {
     store.dispatch({
       type: actionTypes.newBlockCreated,
-      data: { block, interval },
+      data: { block, windowIsFocused },
     });
   });
   connection.on('disconnect', () => {
