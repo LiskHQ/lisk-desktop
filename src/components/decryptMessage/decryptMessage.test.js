@@ -35,7 +35,7 @@ describe('DecryptMessage', () => {
     const props = {
       account,
       successToast: successToastSpy,
-      errorToast: sinon.spy(),
+      errorToast: errorSpy,
       copyToClipboard: copyMock,
       t: key => key,
     };
@@ -51,20 +51,18 @@ describe('DecryptMessage', () => {
     decryptMessageMock.restore();
   });
 
-  // ToDo find the problem with this test
-  it.skip('shows error toast when couldn\'t decrypt a message', () => {
-    decryptMessageMock.returnsPromise().rejects({ message: 'couldn\'t decrypt the message' });
+  it('shows error toast when couldn\'t decrypt a message', () => {
+    decryptMessageMock.throws({ message: 'couldn\'t decrypt the message' });
     wrapper.find('.message textarea').simulate('change', { target: { value: message } });
     wrapper.find('.senderPublicKey input').simulate('change', { target: { value: senderPublicKey } });
     wrapper.find('.nonce input').simulate('change', { target: { value: nonce } });
     wrapper.find('form').simulate('submit');
-    expect(errorSpy).to.have.been.calledOnce();
     expect(errorSpy).to.have.been.calledWith({ label: 'couldn\'t decrypt the message' });
   });
 
   it('allows to decrypt a message, copies encrypted message result to clipboard and shows success toast', () => {
     copyMock.returns(true);
-    decryptMessageMock.returnsPromise().resolves(decryptedMessage);
+    decryptMessageMock.returns(decryptedMessage);
     wrapper.find('.message textarea').simulate('change', { target: { value: message } });
     wrapper.find('.senderPublicKey input').simulate('change', { target: { value: senderPublicKey } });
     wrapper.find('.nonce input').simulate('change', { target: { value: nonce } });

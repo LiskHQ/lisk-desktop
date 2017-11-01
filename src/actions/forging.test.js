@@ -4,6 +4,7 @@ import actionTypes from '../constants/actions';
 import { forgedBlocksUpdated, forgingStatsUpdated,
   fetchAndUpdateForgedBlocks, fetchAndUpdateForgedStats } from './forging';
 import * as forgingApi from '../utils/api/forging';
+import { errorAlertDialogDisplayed } from './dialog';
 
 describe('actions', () => {
   describe('forgedBlocksUpdated', () => {
@@ -64,12 +65,12 @@ describe('actions', () => {
       expect(dispatch).to.have.been.calledWith(forgedBlocksUpdated('value'));
     });
 
-    it.skip('should dispatch errorAlertDialogDisplayed action if caught', () => {
+    it('should dispatch errorAlertDialogDisplayed action if caught', () => {
       forgingApiMock.returnsPromise().rejects({ message: 'sample message' });
 
-      // actionFunction(dispatch);
-      // const expectedAction = errorAlertDialogDisplayed({ text: 'sample message' });
-      // expect(dispatch).to.have.been.calledWith(expectedAction);
+      actionFunction(dispatch);
+      const expectedAction = errorAlertDialogDisplayed({ text: 'sample message' });
+      expect(dispatch).to.have.been.calledWith(expectedAction);
     });
   });
 
@@ -105,12 +106,12 @@ describe('actions', () => {
       expect(dispatch).to.have.been.calledWith(forgingStatsUpdated({ [key]: 'value' }));
     });
 
-    it.skip('should dispatch errorAlertDialogDisplayed action if caught', () => {
+    it('should dispatch errorAlertDialogDisplayed action if caught', () => {
       forgingApiMock.returnsPromise().rejects({ message: 'sample message' });
 
-      // actionFunction(dispatch);
-      // const expectedAction = errorAlertDialogDisplayed({ text: 'sample message' });
-      // expect(dispatch).to.have.been.calledWith(expectedAction);
+      actionFunction(dispatch);
+      const expectedAction = errorAlertDialogDisplayed({ text: 'sample message' });
+      expect(dispatch).to.have.been.calledWith(expectedAction);
     });
   });
 });
