@@ -38,8 +38,8 @@ describe('Utils: Delegate', () => {
   describe('listDelegates', () => {
     it('should return requestToActivePeer(activePeer, `delegates/`, options) if options = {}', () => {
       const options = {};
-      const mockedPromise = new Promise((resolve) => { resolve('resolved promise'); });
-      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates/', options).returns(mockedPromise);
+      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates/', options)
+        .returnsPromise().resolves('resolved promise');
 
       const returnedPromise = listDelegates(activePeer, options);
       return expect(returnedPromise).to.eventually.equal('resolved promise');
@@ -47,8 +47,8 @@ describe('Utils: Delegate', () => {
 
     it('should return requestToActivePeer(activePeer, `delegates/search`, options) if options.q is set', () => {
       const options = { q: 'genesis_1' };
-      const mockedPromise = new Promise((resolve) => { resolve('resolved promise'); });
-      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates/search', options).returns(mockedPromise);
+      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates/search', options)
+        .returnsPromise().resolves('resolved promise');
 
       const returnedPromise = listDelegates(activePeer, options);
       return expect(returnedPromise).to.eventually.equal('resolved promise');
@@ -58,8 +58,8 @@ describe('Utils: Delegate', () => {
   describe('getDelegate', () => {
     it('should return requestToActivePeer(activePeer, `delegates/get`, options)', () => {
       const options = { publicKey: '"86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19"' };
-      const mockedPromise = new Promise((resolve) => { resolve('resolved promise'); });
-      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates/get', options).returns(mockedPromise);
+      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates/get', options)
+        .returnsPromise().resolves('resolved promise');
 
       const returnedPromise = getDelegate(activePeer, options);
       return expect(returnedPromise).to.eventually.equal('resolved promise');
@@ -97,8 +97,8 @@ describe('Utils: Delegate', () => {
         secret: 'wagon dens',
         secondSecret: 'wagon dens',
       };
-      const mockedPromise = new Promise((resolve) => { resolve('resolved promise'); });
-      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates', data).returns(mockedPromise);
+      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates', data)
+        .returnsPromise().resolves('resolved promise');
 
       const returnedPromise = registerDelegate(
         activePeer, data.username, data.secret, data.secondSecret);
@@ -110,8 +110,8 @@ describe('Utils: Delegate', () => {
         username: 'test',
         secret: 'wagon dens',
       };
-      const mockedPromise = new Promise((resolve) => { resolve('resolved promise'); });
-      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates', data).returns(mockedPromise);
+      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates', data)
+        .returnsPromise().resolves('resolved promise');
 
       const returnedPromise = registerDelegate(activePeer, data.username, data.secret);
       return expect(returnedPromise).to.eventually.equal('resolved promise');
@@ -141,7 +141,7 @@ describe('Utils: Delegate', () => {
       ];
       const votedDict = { genesis_3: { confirmed: true, unconfirmed: false, publicKey: 'sample_key' } };
       peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates/search', { q: username })
-        .returns(Promise.resolve({ success: true, delegates }));
+        .returnsPromise().resolves({ success: true, delegates });
 
       const returnedPromise = voteAutocomplete(activePeer, username, votedDict);
       return expect(returnedPromise).to.eventually.eql(delegates);
