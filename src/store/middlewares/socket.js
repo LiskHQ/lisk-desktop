@@ -12,7 +12,11 @@ const socketSetup = (store) => {
     ipc.on('blur', () => { windowIsFocused = false; });
     ipc.on('focus', () => { windowIsFocused = true; });
   }
-  connection = io.connect(`ws://${store.getState().peers.data.currentPeer}:${store.getState().peers.data.port}`);
+
+  const ssl = store.getState().peers.data.options.ssl;
+  const protocol = ssl ? 'https' : 'http';
+
+  connection = io.connect(`${protocol}://${store.getState().peers.data.currentPeer}:${store.getState().peers.data.port}`);
   connection.on('blocks/change', (block) => {
     store.dispatch({
       type: actionTypes.newBlockCreated,
