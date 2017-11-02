@@ -56,7 +56,7 @@ function waitForElemAndSendKeys(selector, keys, callback = emptyFn) {
 
 function checkAlertDialog(title, text, callback = emptyFn) {
   waitForElemAndCheckItsText('.modal-dialog h1', title);
-  waitForElemAndCheckItsText('.modal-dialog .modal-dialog-body', text, callback);
+  waitForElemAndCheckItsText('.modal-dialog .alert-dialog-message', text, callback);
 }
 
 module.exports = {
