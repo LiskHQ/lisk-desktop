@@ -1,4 +1,4 @@
-import { getAccount, transactions } from '../../utils/api/account';
+import { getAccount, transactions as getTransactions } from '../../utils/api/account';
 import { accountUpdated, accountLoggedIn } from '../../actions/account';
 import { transactionsUpdated } from '../../actions/transactions';
 import { activePeerUpdate } from '../../actions/peers';
@@ -10,16 +10,16 @@ import transactionTypes from '../../constants/transactionTypes';
 
 const updateTransactions = (store, peers, account) => {
   const maxBlockSize = 25;
-  transactions(peers.data, account.address, maxBlockSize)
+  getTransactions(peers.data, account.address, maxBlockSize)
     .then(response => store.dispatch(transactionsUpdated({
       confirmed: response.transactions,
       count: parseInt(response.count, 10),
     })));
 };
 
-const hasRecentTransactions = state => (
-  state.transactions.confirmed.filter(tx => tx.confirmations < 1000).length !== 0 ||
-  state.transactions.pending.length !== 0
+const hasRecentTransactions = txs => (
+  txs.confirmed.filter(tx => tx.confirmations < 1000).length !== 0 ||
+  txs.pending.length !== 0
 );
 
 const updateAccountData = (store, action) => {
@@ -92,9 +92,9 @@ const passphraseUsed = (store, action) => {
 
 const checkTransactionsAndUpdateAccount = (store, action) => {
   const state = store.getState();
-  const { peers, account } = state;
+  const { peers, account, transactions } = state;
 
-  if (action.data.windowIsFocused && hasRecentTransactions(state)) {
+  if (action.data.windowIsFocused && hasRecentTransactions(transactions)) {
     updateTransactions(store, peers, account);
   }
 

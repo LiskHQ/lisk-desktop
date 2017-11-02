@@ -5,6 +5,21 @@ import { activePeerUpdate } from '../../actions/peers';
 let connection;
 let forcedClosing = false;
 
+const openConnection = (state) => {
+  const ssl = state.peers.data.options.ssl;
+  const protocol = ssl ? 'https' : 'http';
+
+  return io.connect(`${protocol}://${state.peers.data.currentPeer}:${state.peers.data.port}`);
+};
+
+const closeConnection = () => {
+  if (connection) {
+    forcedClosing = true;
+    connection.close();
+    forcedClosing = false;
+  }
+};
+
 const socketSetup = (store) => {
   let windowIsFocused = true;
   const { ipc } = window;
@@ -13,10 +28,7 @@ const socketSetup = (store) => {
     ipc.on('focus', () => { windowIsFocused = true; });
   }
 
-  const ssl = store.getState().peers.data.options.ssl;
-  const protocol = ssl ? 'https' : 'http';
-
-  connection = io.connect(`${protocol}://${store.getState().peers.data.currentPeer}:${store.getState().peers.data.port}`);
+  connection = openConnection(store.getState());
   connection.on('blocks/change', (block) => {
     store.dispatch({
       type: actionTypes.newBlockCreated,
@@ -31,13 +43,6 @@ const socketSetup = (store) => {
   connection.on('reconnect', () => {
     store.dispatch(activePeerUpdate({ online: true }));
   });
-};
-const closeConnection = () => {
-  if (connection) {
-    forcedClosing = true;
-    connection.close();
-    forcedClosing = false;
-  }
 };
 
 const socketMiddleware = store => (

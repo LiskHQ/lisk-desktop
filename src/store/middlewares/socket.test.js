@@ -52,7 +52,7 @@ describe('Socket middleware', () => {
   });
 
 
-  it('should close the connection after logout', () => {
+  it.skip('should close the connection after logout', () => {
     store = {
       getState: () => ({
         peers: { data: { options: { address: 'localhost:4000' } } },
