@@ -1,7 +1,7 @@
 import React from 'react';
 import Passphrase from '../passphrase';
 import networks from '../../constants/networks';
-import getNetworks from '../login/networks';
+import getNetworks from '../../constants/getNetworks';
 import { validateUrl, getLoginData } from '../../utils/login';
 
 const Register = ({

@@ -7,7 +7,7 @@ import configureMockStore from 'redux-mock-store';
 import i18n from '../../i18n';
 import networks from '../../constants/networks';
 import Register from './register';
-import getNetworks from '../login/networks';
+import getNetworks from '../../constants/getNetworks';
 import * as Utils from '../../utils/login';
 
 
