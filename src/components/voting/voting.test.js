@@ -71,7 +71,9 @@ describe('Voting', () => {
   });
 
   it('should define search method to reload delegates based on given query', () => {
-    const clock = sinon.useFakeTimers();
+    const clock = sinon.useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
     props.delegatesFetched.reset();
     wrapper.find('.search input').simulate('change', { target: { value: 'query' } });
     clock.tick(251);

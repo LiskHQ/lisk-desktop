@@ -26,7 +26,9 @@ describe('Toaster', () => {
 
   describe('hideToast', () => {
     it('hides the toast and after the animation ends calls this.props.hideToast()', () => {
-      const clock = sinon.useFakeTimers();
+      const clock = sinon.useFakeTimers({
+        toFake: ['setTimeout', 'clearTimeout', 'Date'],
+      });
       wrapper.instance().hideToast(toasts[0]);
       expect(wrapper.state('hidden')).to.deep.equal({ [toasts[0].index]: true });
       clock.tick(510);

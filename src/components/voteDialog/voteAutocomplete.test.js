@@ -56,21 +56,27 @@ describe('VoteAutocomplete', () => {
   });
 
   it('should suggestionStatus(false, className) change value of className in state', () => {
-    const clock = sinon.useFakeTimers();
+    const clock = sinon.useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
     wrapper.instance().suggestionStatus(false, 'className');
     clock.tick(200);
     expect(wrapper.state('className').match(/hidden/g)).to.have.lengthOf(1);
   });
 
   it('should suggestionStatus(true, className) clear value of className in state', () => {
-    const clock = sinon.useFakeTimers();
+    const clock = sinon.useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
     wrapper.instance().suggestionStatus(true, 'className');
     clock.tick(200);
     expect(wrapper.state('className')).to.be.equal('');
   });
 
   it('should search hide suggestion boxes when value is equal to ""', () => {
-    const clock = sinon.useFakeTimers();
+    const clock = sinon.useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
     sinon.spy(VoteAutocomplete.prototype, 'setState');
     wrapper.instance().search('votedListSearch', '');
     clock.tick(250);
@@ -82,7 +88,9 @@ describe('VoteAutocomplete', () => {
     VoteAutocomplete.prototype.setState.restore();
   });
   it('search should call "voteAutocomplete" when name is equal to "votedListSearch" when search term exists', () => {
-    const clock = sinon.useFakeTimers();
+    const clock = sinon.useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
     const existingSearchTerm = 'username2';
     const delegateApiMock = sinon.mock(delegateApi).expects('voteAutocomplete');
 
@@ -97,7 +105,9 @@ describe('VoteAutocomplete', () => {
   });
 
   it('search should call "voteAutocomplete" when name is equal to "votedListSearch" when search term does not exist', () => {
-    const clock = sinon.useFakeTimers();
+    const clock = sinon.useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
     const nonExistingSearchTerm = 'doesntexist';
     const delegateApiMock = sinon.mock(delegateApi).expects('voteAutocomplete');
 
@@ -113,7 +123,9 @@ describe('VoteAutocomplete', () => {
   });
 
   it('search should call "unvoteAutocomplete" when name is equal to "unvotedListSearch" when search term exists', () => {
-    const clock = sinon.useFakeTimers();
+    const clock = sinon.useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
     const existingSearchTerm = 'username1';
     const delegateApiMock = sinon.mock(delegateApi).expects('unvoteAutocomplete');
 
@@ -128,7 +140,9 @@ describe('VoteAutocomplete', () => {
   });
 
   it('search should call "unvoteAutocomplete" when name is equal to "unvotedListSearch" when search term does not exists', () => {
-    const clock = sinon.useFakeTimers();
+    const clock = sinon.useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
     const nonExistingSearchTerm = 'username2';
     const delegateApiMock = sinon.mock(delegateApi).expects('unvoteAutocomplete');
 

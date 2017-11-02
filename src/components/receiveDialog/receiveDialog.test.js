@@ -40,7 +40,7 @@ describe('ReceiveDialog', () => {
     const closeDialogSpy = sinon.spy(props, 'closeDialog');
     const copyToClipboardSpy = sinon.spy(props, 'copyToClipboard');
 
-    wrapper.find('.copy-address-button').simulate('click');
+    wrapper.find('button.copy-address-button').simulate('click');
 
     // TODO figure out why this doesn't work even though test coverage shows it's been called
     // expect(successToastSpy).to.have.been.calledWith();

@@ -29,7 +29,8 @@ describe('PassphraseGenerator', () => {
       const isTouchDeviceMock = mock(wrapper.instance()).expects('isTouchDevice');
       isTouchDeviceMock.returns(true);
       wrapper.instance().setState({}); // to rerender the component
-      expect(wrapper.find('.touch-fallback textarea')).to.have.lengthOf(1);
+      wrapper.update();
+      expect(wrapper.find('Input.touch-fallback textarea')).to.have.lengthOf(1);
     });
 
     it('shows at least some progress on pressing input if this.isTouchDevice()', () => {
@@ -37,7 +38,8 @@ describe('PassphraseGenerator', () => {
       const isTouchDeviceMock = mock(wrapper.instance()).expects('isTouchDevice');
       isTouchDeviceMock.returns(true).twice();
       wrapper.instance().setState({}); // to rerender the component
-      wrapper.find('.touch-fallback textarea').simulate('change', { target: { value: 'random key presses' } });
+      wrapper.update();
+      wrapper.find('Input.touch-fallback textarea').simulate('change', { target: { value: 'random key presses' } });
       expect(wrapper.find('ProgressBar').props().value).to.be.at.least(1);
     });
 

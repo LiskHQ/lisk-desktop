@@ -78,16 +78,21 @@ describe('VotingHeader', () => {
     });
 
     it('should this.props.search when this.search is called', () => {
-      const clock = sinon.useFakeTimers();
+      const clock = sinon.useFakeTimers({
+        toFake: ['setTimeout', 'clearTimeout', 'Date'],
+      });
       wrapper.find('.search input').simulate('change', { target: { value: '555' } });
       clock.tick(250);
       expect(props.search).to.have.been.calledWith('555');
     });
 
     it('click on #searchIcon should clear value of search input', () => {
-      wrapper.find('.search input').simulate('change', { target: { value: '555' } });
-      wrapper.find('#searchIcon').simulate('click');
-      expect(wrapper.find('.search input').get(0).value).to.be.equal('');
+      wrapper.find('Input.search input').simulate('change', { target: { value: '555' } });
+      wrapper.update();
+      expect(wrapper.find('Input.search input').props().value).to.be.equal('555');
+      wrapper.find('i#searchIcon').simulate('click');
+      wrapper.update();
+      expect(wrapper.find('Input.search input').props().value).to.be.equal('');
     });
   });
 
