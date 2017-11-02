@@ -4,7 +4,7 @@ import Input from 'react-toolbox/lib/input';
 import Dropdown from 'react-toolbox/lib/dropdown';
 import Button from 'react-toolbox/lib/button';
 import i18next from 'i18next';
-import getNetworks from './networks';
+import getNetworks from '../../constants/getNetworks';
 import PassphraseInput from '../passphraseInput';
 import styles from './login.css';
 import env from '../../constants/env';
