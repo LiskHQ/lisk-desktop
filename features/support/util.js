@@ -6,6 +6,7 @@ chai.use(chaiAsPromised);
 const expect = chai.expect;
 const EC = protractor.ExpectedConditions;
 const waitTime = 5000;
+const emptyFn = () => {};
 
 function waitForElem(selector) {
   return new Promise((resolve, reject) => {
@@ -17,18 +18,18 @@ function waitForElem(selector) {
   });
 }
 
-function waitForElemAndCheckItsText(selector, text, callback) {
+function waitForElemAndCheckItsText(selector, text, callback = emptyFn) {
   waitForElem(selector).then((elem) => {
     expect(elem.getText()).to.eventually.equal(text, `inside element "${selector}"`)
-      .and.notify(callback || (() => {}));
-  }).catch(error => callback && callback(error));
+      .and.notify(callback);
+  }).catch(callback);
 }
 
-function waitForElemAndMatchItsText(selector, text, callback) {
+function waitForElemAndMatchItsText(selector, text, callback = emptyFn) {
   waitForElem(selector).then((elem) => {
     expect(elem.getText()).to.eventually.match(new RegExp(text), `inside element "${selector}"`)
-      .and.notify(callback || (() => {}));
-  }).catch(error => callback && callback(error));
+      .and.notify(callback);
+  }).catch(callback);
 }
 
 function waitForElemRemoved(selector) {
@@ -41,27 +42,21 @@ function waitForElemRemoved(selector) {
   });
 }
 
-function waitForElemAndClickIt(selector, callback) {
+function waitForElemAndClickIt(selector, callback = emptyFn) {
   waitForElem(selector).then((elem) => {
-    elem.click().then(() => {
-      if (callback) callback();
-    }).catch(callback);
-  }).catch(error => callback && callback(error));
+    elem.click().then(callback).catch(callback);
+  }).catch(callback);
 }
 
-function waitForElemAndSendKeys(selector, keys, callback) {
+function waitForElemAndSendKeys(selector, keys, callback = emptyFn) {
   waitForElem(selector).then((elem) => {
-    elem.sendKeys(keys).then(() => {
-      if (callback) callback();
-    });
-  }).catch(error => callback && callback(error));
+    elem.sendKeys(keys).then(callback).catch(callback);
+  }).catch(callback);
 }
 
-function checkAlertDialog(title, text, callback) {
+function checkAlertDialog(title, text, callback = emptyFn) {
   waitForElemAndCheckItsText('.modal-dialog h1', title);
-  waitForElemAndCheckItsText('.modal-dialog .modal-dialog-body', text, () => {
-    if (callback) callback();
-  });
+  waitForElemAndCheckItsText('.modal-dialog .modal-dialog-body', text, callback);
 }
 
 module.exports = {
