@@ -23,6 +23,7 @@ Feature: Transactions tab
     Given I'm logged in as "genesis"
     When I click tab number 1
     And I click "amount" element on table row no. 1
+    And I wait 1 seconds
     And I click "submit button"
     Then I should see alert dialog with title "Success" and text "Your transaction of 1 LSK to 537318935439898807L was accepted and will be processed in a few seconds."
 
