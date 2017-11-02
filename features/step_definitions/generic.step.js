@@ -138,7 +138,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     browser.executeScript(`window.document.querySelector("${selectorClass} input, ${selectorClass} textarea").value = "";`);
   });
 
-  Given('I\'m logged in as "{accountName}"', (accountName, callback) => {
+  Given('I\'m logged in as "{accountName}"', { timeout: 2 * defaultTimeout }, (accountName, callback) => {
     browser.get(browser.params.baseURL);
     waitForElemAndSendKeys('.passphrase input', accounts[accountName].passphrase);
     waitForElemAndClickIt('.login-button', callback);
