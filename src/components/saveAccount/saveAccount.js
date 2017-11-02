@@ -1,7 +1,7 @@
 import React from 'react';
 import InfoParagraph from '../infoParagraph';
 import ActionBar from '../actionBar';
-import getNetworks from '../login/networks';
+import getNetworks from '../../constants/getNetworks';
 
 const SaveAccount = ({
   network,
