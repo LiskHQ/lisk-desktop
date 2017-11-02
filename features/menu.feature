@@ -29,7 +29,7 @@ Feature: Top right menu
     When I click "register as delegate" in main menu
     And I fill in "test" to "username" field
     And I click "register button"
-    Then I should see alert dialog with title "Success" and text "Delegate registration was successfully submitted. It can take several seconds before it is processed."
+    Then I should see alert dialog with title "Success" and text "Delegate registration was successfully submitted with username: "test". It can take several seconds before it is processed."
     And I click "ok button"
     And I wait 15 seconds
     And I should see text "test" in "delegate name" element 
@@ -44,7 +44,7 @@ Feature: Top right menu
     And I fill in "test2" to "username" field
     And I fill in second passphrase of "second passphrase account" to "second passphrase" field
     And I click "register button"
-    Then I should see alert dialog with title "Success" and text "Delegate registration was successfully submitted. It can take several seconds before it is processed."
+    Then I should see alert dialog with title "Success" and text "Delegate registration was successfully submitted with username: "test2". It can take several seconds before it is processed."
 
   Scenario: should allow to exit delegate registration dialog
     Given I'm logged in as "genesis"
