@@ -118,15 +118,13 @@ node('lisk-nano') {
         ansiColor('xterm') {
           sh '''
           N=${EXECUTOR_NUMBER:-0}
-          NODE_ENV= npm run --silent dev -- --port 808$N > .lisk-nano.log 2>&1 &
-          sleep 30
 
           # End to End test configuration
           export DISPLAY=:1$N
           Xvfb :1$N -ac -screen 0 1280x1024x24 &
 
           # Run end-to-end tests
-          npm run --silent e2e-test -- --params.baseURL http://127.0.0.1:808$N/ --params.liskCoreURL http://127.0.0.1:400$N
+          npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL http://127.0.0.1:400$N
           '''
         }
       } catch (err) {
@@ -143,8 +141,6 @@ node('lisk-nano') {
     ( cd ~/lisk-Linux-x86_64 && bash lisk.sh stop_node -p etc/pm2-lisk_$N.json ) || true
     pgrep --list-full -f "Xvfb :1$N" || true
     pkill --echo -f "Xvfb :1$N" -9 || echo "pkill returned code $?"
-    pgrep --list-full -f "webpack.*808$N" || true
-    pkill --echo -f "webpack.*808$N" -9 || echo "pkill returned code $?"
     '''
     dir('node_modules') {
       deleteDir()
