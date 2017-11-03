@@ -16,6 +16,9 @@ export const setSavedAccount = ({ publicKey, network, address }) => {
   }]));
 };
 
-export const removeSavedAccount = () => {
-  localStorage.removeItem('accounts');
+export const removeSavedAccount = (publicKey) => {
+  let accounts = localStorage.getItem('accounts');
+  accounts = JSON.parse(accounts);
+  accounts = accounts.filter(account => account.publicKey !== publicKey);
+  localStorage.setItem('accounts', JSON.stringify(accounts));
 };
