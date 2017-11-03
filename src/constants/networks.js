@@ -1,4 +1,4 @@
-export const networksDetail = {
+export default {
   mainnet: { // network name translation t('Mainnet');
     name: 'Mainnet',
     ssl: true,
@@ -18,14 +18,4 @@ export const networksDetail = {
     address: 'http://localhost:4000',
     code: 2,
   },
-};
-
-export const getNetwork = (code) => {
-  let network;
-  Object.keys(networksDetail).forEach((key) => {
-    if (networksDetail[key].code === code) {
-      network = networksDetail[key];
-    }
-  }, this);
-  return network;
 };
