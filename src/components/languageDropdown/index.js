@@ -3,7 +3,7 @@ import { translate } from 'react-i18next';
 import React from 'react';
 
 import i18n from '../../i18n';
-import languages from '../../constants/languages';
+import languages from '../../../i18n/languages';
 
 const languagesSource = Object.keys(languages).map(key => ({
   value: key,
