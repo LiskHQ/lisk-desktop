@@ -41,9 +41,10 @@ const sendDetectedLang = (locale) => {
 // read config data from JSON file
 const getConfig = () => {
   storage.get('config', (error, data) => {
-    if (error) throw error;
-    lang = data.lang;
-    sendDetectedLang(lang);
+    if (!error) {
+      lang = data.lang;
+      sendDetectedLang(lang);
+    }
   });
 };
 

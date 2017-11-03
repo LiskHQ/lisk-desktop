@@ -1,4 +1,4 @@
-import { getAccount, transactions } from '../../utils/api/account';
+import { getAccount, transactions as getTransactions } from '../../utils/api/account';
 import { accountUpdated, accountLoggedIn } from '../../actions/account';
 import { transactionsUpdated } from '../../actions/transactions';
 import { activePeerUpdate } from '../../actions/peers';
@@ -7,32 +7,27 @@ import actionTypes from '../../constants/actions';
 import { fetchAndUpdateForgedBlocks } from '../../actions/forging';
 import { getDelegate } from '../../utils/api/delegate';
 import transactionTypes from '../../constants/transactionTypes';
-import { SYNC_ACTIVE_INTERVAL, SYNC_INACTIVE_INTERVAL } from '../../constants/api';
 
 const updateTransactions = (store, peers, account) => {
   const maxBlockSize = 25;
-  transactions(peers.data, account.address, maxBlockSize)
+  getTransactions(peers.data, account.address, maxBlockSize)
     .then(response => store.dispatch(transactionsUpdated({
       confirmed: response.transactions,
       count: parseInt(response.count, 10),
     })));
 };
 
-const hasRecentTransactions = state => (
-  state.transactions.confirmed.filter(tx => tx.confirmations < 1000).length !== 0 ||
-  state.transactions.pending.length !== 0
+const hasRecentTransactions = txs => (
+  txs.confirmed.filter(tx => tx.confirmations < 1000).length !== 0 ||
+  txs.pending.length !== 0
 );
 
-const updateAccountData = (store, action) => { // eslint-disable-line
-  const state = store.getState();
-  const { peers, account } = state;
+const updateAccountData = (store, action) => {
+  const { peers, account } = store.getState();
 
   getAccount(peers.data, account.address).then((result) => {
-    if (action.data.interval === SYNC_ACTIVE_INTERVAL && hasRecentTransactions(state)) {
-      updateTransactions(store, peers, account);
-    }
     if (result.balance !== account.balance) {
-      if (action.data.interval === SYNC_INACTIVE_INTERVAL) {
+      if (!action.data.windowIsFocused) {
         updateTransactions(store, peers, account);
       }
       if (account.isDelegate) {
@@ -95,11 +90,38 @@ const passphraseUsed = (store, action) => {
   }
 };
 
+const checkTransactionsAndUpdateAccount = (store, action) => {
+  const state = store.getState();
+  const { peers, account, transactions } = state;
+
+  if (action.data.windowIsFocused && hasRecentTransactions(transactions)) {
+    updateTransactions(store, peers, account);
+  }
+
+  const tx = action.data.block.transactions;
+  const accountAddress = state.account.address;
+  const blockContainsRelevantTransaction = tx.filter((transaction) => {
+    const sender = transaction ? transaction.senderId : null;
+    const recipient = transaction ? transaction.recipientId : null;
+    return accountAddress === recipient || accountAddress === sender;
+  }).length > 0;
+
+  if (blockContainsRelevantTransaction) {
+    updateAccountData(store, action);
+  }
+};
+
 const accountMiddleware = store => next => (action) => {
   next(action);
   switch (action.type) {
-    case actionTypes.metronomeBeat:
+    // update on login because the 'save account' button
+    // depends on a rerendering of the page
+    // TODO: fix the 'save account' path problem, so we can remove this
+    case actionTypes.accountLoggedIn:
       updateAccountData(store, action);
+      break;
+    case actionTypes.newBlockCreated:
+      checkTransactionsAndUpdateAccount(store, action);
       break;
     case actionTypes.transactionsUpdated:
       delegateRegistration(store, action);
