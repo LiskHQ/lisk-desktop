@@ -11,6 +11,8 @@ import Login from './login';
 
 describe('Login', () => {
   let wrapper;
+  const address = 'http:localhost:8080';
+  const passphrase = 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin';
   // Mocking store
   const account = {
     isDelegate: false,
@@ -58,7 +60,6 @@ describe('Login', () => {
     });
 
     it('should show error about passphrase length if passphrase is have wrong length', () => {
-      const passphrase = 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin';
       const expectedError = 'Passphrase should have 12 words, entered passphrase has 11';
       wrapper.find('.passphrase input').simulate('change', { target: { value: ' ' } });
       wrapper.find('.passphrase input').simulate('change', { target: { value: passphrase } });
@@ -66,8 +67,7 @@ describe('Login', () => {
     });
   });
 
-  describe('componentDidUpdate', () => {
-    const address = 'http:localhost:8080';
+  describe('History management', () => {
     props.account = { address: 'dummy' };
 
     it('calls this.props.history.replace(\'/main/transactions\')', () => {
@@ -96,8 +96,13 @@ describe('Login', () => {
 
     it('calls localStorage.setItem(\'address\', address) if this.state.address', () => {
       const spyFn = spy(localStorage, 'setItem');
-      wrapper = shallow(<Login {...props}/>, options);
-      wrapper.setState({ address });
+      wrapper = mount(<Router><Login {...props}/></Router>, options);
+      // set the network dropdown
+      wrapper.find('div.network').simulate('click');
+      // select custom node
+      wrapper.find('div.network ul li').at(2).simulate('click');
+      // fill the address
+      wrapper.find('Input.address input').simulate('change', { target: { value: address } });
       wrapper.setProps(props);
       expect(spyFn).to.have.been.calledWith('address', address);
 
@@ -106,23 +111,17 @@ describe('Login', () => {
     });
   });
 
-  describe('changeHandler', () => {
-    it('call setState with matching data', () => {
-      wrapper = shallow(<Login {...props}/>, options);
-      const key = 'network';
-      const value = 0;
-      const spyFn = spy(Login.prototype, 'setState');
-      wrapper.instance().changeHandler(key, value);
-      expect(spyFn).to.have.been.calledWith({ [key]: value });
-    });
-  });
-
-  describe('onLoginSubmission', () => {
+  describe('After submission', () => {
     it('it should call activePeerSet', () => {
       const spyActivePeerSet = spy(props, 'activePeerSet');
 
-      wrapper = shallow(<Login {...props}/>, options);
-      wrapper.instance().onLoginSubmission();
+      wrapper = mount(<Router><Login {...props}/></Router>, options);
+      // Filling the login form
+      wrapper.find('div.network').simulate('click');
+      wrapper.find('div.network ul li').at(2).simulate('click');
+      wrapper.find('Input.address input').simulate('change', { target: { value: address } });
+      wrapper.find('Input.passphrase input').simulate('change', { target: { value: passphrase } });
+      wrapper.find('form').simulate('submit');
       expect(spyActivePeerSet).to.have.been.calledWith();
     });
   });
