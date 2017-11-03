@@ -61,7 +61,7 @@ class SignMessageComponent extends React.Component {
           <br />
           {this.props.t('Note: Digital Signatures and signed messages are not encrypted!')}
         </InfoParagraph>
-        <form onSubmit={this.showResult.bind(this)}>
+        <form onSubmit={this.showResult.bind(this)} id='signMessageForm'>
           <section>
             <Input className='message' multiline label={this.props.t('Message')}
               autoFocus={true}

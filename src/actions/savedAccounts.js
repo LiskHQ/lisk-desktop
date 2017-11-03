@@ -15,10 +15,6 @@ export const accountSaved = (data) => {
 
 /**
  * An action to dispatch accountRemoved
- *
- * @todo Currently the utility removed the entire array from localStorage.
- *   it should remove only one item
- *
  */
 export const accountRemoved = (publicKey) => {
   removeSavedAccount(publicKey);

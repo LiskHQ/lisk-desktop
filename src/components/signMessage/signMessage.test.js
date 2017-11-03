@@ -47,11 +47,11 @@ ${signature}
     </Provider>);
   });
 
-  it.skip('allows to sign a message, copies sign message result to clipboard and shows success toast', () => {
+  it('allows to sign a message, copies sign message result to clipboard and shows success toast', () => {
     copyMock.returns(true);
     wrapper.find('.message textarea').simulate('change', { target: { value: message } });
-    wrapper.find('.primary-button').simulate('click');
-    expect(wrapper.find('.result textarea').text()).to.equal(result);
+    wrapper.find('#signMessageForm').simulate('submit');
+    expect(wrapper.find('.result Input').text()).to.equal(result);
     expect(successToastSpy).to.have.been.calledWith({ label: 'Result copied to clipboard' });
   });
 
