@@ -3,6 +3,7 @@ import { spy, stub } from 'sinon';
 import io from './../../utils/socketShim';
 import middleware from './socket';
 import actionTypes from '../../constants/actions';
+import { activePeerUpdate } from '../../actions/peers';
 
 describe('Socket middleware', () => {
   let store;
@@ -14,7 +15,6 @@ describe('Socket middleware', () => {
 
   beforeEach(() => {
     next = spy();
-    store = stub();
     closeSpy = spy();
 
     io.connect = () => ({
@@ -29,17 +29,18 @@ describe('Socket middleware', () => {
         ipcCallbacks[type] = callback;
       },
     };
-  });
 
-  it(`should dispatch ${actionTypes.newBlockCreated}, on login action, unless a new block was added`, () => {
-    transactions = { transactions: [{ senderId: '1234', recipientId: '5678' }] };
     store = {
       getState: () => ({
         peers: { data: { options: { address: 'localhost:4000' } } },
         account: { address: '1234' },
       }),
-      dispatch: stub(),
+      dispatch: spy(),
     };
+  });
+
+  it(`should dispatch ${actionTypes.newBlockCreated}, on login action, unless a new block was added`, () => {
+    transactions = { transactions: [{ senderId: '1234', recipientId: '5678' }] };
 
     expect(store.dispatch).to.not.have.been.calledWith();
 
@@ -55,30 +56,26 @@ describe('Socket middleware', () => {
 
 
   it('should close the connection after logout', () => {
-    store = {
-      getState: () => ({
-        peers: { data: { options: { address: 'localhost:4000' } } },
-        account: { address: '1234' },
-      }),
-      dispatch: spy(),
-    };
-
     middleware(store)(next)({ type: actionTypes.accountLoggedIn });
     expect(io.connect().close).to.not.have.been.calledWith();
     middleware(store)(next)({ type: actionTypes.accountLoggedOut });
     expect(io.connect().close).to.have.been.calledWith();
+    expect(store.dispatch).to.not.have.been.calledWith(activePeerUpdate({ online: false }));
   });
 
+  it('should dispatch online event on reconnect', () => {
+    middleware(store)(next)({ type: actionTypes.accountLoggedIn });
+    socketCallbacks.reconnect();
+    expect(store.dispatch).to.have.been.calledWith(activePeerUpdate({ online: true }));
+  });
+
+  it('should dispatch offline event on disconnect', () => {
+    middleware(store)(next)({ type: actionTypes.accountLoggedIn });
+    socketCallbacks.disconnect();
+    expect(store.dispatch).to.have.been.calledWith(activePeerUpdate({ online: false }));
+  });
 
   it('should passes the action to next middleware', () => {
-    store = {
-      getState: () => ({
-        peers: { data: { options: { address: 'localhost:4000' } } },
-        account: { address: '1234' },
-      }),
-      dispatch: spy(),
-    };
-
     middleware(store)(next)({ type: actionTypes.accountLoggedIn });
     expect(next).to.have.been.calledWith();
   });
@@ -86,13 +83,6 @@ describe('Socket middleware', () => {
   describe('window.ipc', () => {
     beforeEach(() => {
       transactions = { transactions: [{ senderId: '1234', recipientId: '5678' }] };
-      store = {
-        getState: () => ({
-          peers: { data: { options: { address: 'localhost:4000' } } },
-          account: { address: '1234' },
-        }),
-        dispatch: spy(),
-      };
     });
 
     it('should call window.ipc.on(\'blur\') and window.ipc.on(\'focus\')', () => {
