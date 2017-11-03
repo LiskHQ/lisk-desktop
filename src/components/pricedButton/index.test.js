@@ -13,7 +13,7 @@ describe('PricedButton', () => {
   const props = {
     fee: 5e8,
     onClick: sinon.spy(),
-    t: key => i18n.t(key),
+    t: (key, options) => i18n.t(key, options),
   };
   const insufficientBalance = 4.9999e8;
   const sufficientBalance = 6e8;
@@ -29,8 +29,7 @@ describe('PricedButton', () => {
     });
 
     it('renders a span saying "Fee: 5 LSK"', () => {
-      // TODO the text should actually contain 5 but in tests it doesn't
-      expect(wrapper.find(`.${styles.fee}`).text()).to.be.equal(i18n.t('Fee: LSK'));
+      expect(wrapper.find(`.${styles.fee}`).text()).to.be.equal(i18n.t('Fee: 5 LSK'));
     });
 
     it('allows to click on Button', () => {
@@ -45,8 +44,7 @@ describe('PricedButton', () => {
     });
 
     it('renders a span saying "Insufficient funds for 5 LSK fee"', () => {
-      // TODO the text should actually contain 5 but in tests it doesn't
-      expect(wrapper.find(`.${styles.fee}`).text()).to.be.equal('Insufficient funds for  LSK fee');
+      expect(wrapper.find(`.${styles.fee}`).text()).to.be.equal('Insufficient funds for 5 LSK fee');
     });
 
     it('sets the disabled attribute of the button', () => {
