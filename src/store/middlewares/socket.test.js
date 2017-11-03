@@ -8,18 +8,20 @@ describe('Socket middleware', () => {
   let store;
   let next;
   let transactions;
+  let closeSpy;
   const ipcCallbacks = {};
   const socketCallbacks = {};
 
   beforeEach(() => {
     next = spy();
     store = stub();
+    closeSpy = spy();
 
     io.connect = () => ({
       on: (event, callback) => {
         socketCallbacks[event] = callback;
       },
-      close: spy(),
+      close: closeSpy,
     });
 
     window.ipc = {
@@ -52,7 +54,7 @@ describe('Socket middleware', () => {
   });
 
 
-  it.skip('should close the connection after logout', () => {
+  it('should close the connection after logout', () => {
     store = {
       getState: () => ({
         peers: { data: { options: { address: 'localhost:4000' } } },
@@ -64,8 +66,7 @@ describe('Socket middleware', () => {
     middleware(store)(next)({ type: actionTypes.accountLoggedIn });
     expect(io.connect().close).to.not.have.been.calledWith();
     middleware(store)(next)({ type: actionTypes.accountLoggedOut });
-    // TODO: figure out why spy wasn't called
-    // expect(io.connect().close).to.have.been.calledWith();
+    expect(io.connect().close).to.have.been.calledWith();
   });
 
 
