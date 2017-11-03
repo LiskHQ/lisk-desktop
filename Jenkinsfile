@@ -8,6 +8,8 @@ def fail(reason) {
   error("${reason}")
 }
 
+/* comment out the next line to allow concurrent builds on the same branch */
+properties([disableConcurrentBuilds(), pipelineTriggers([])])
 node('lisk-nano') {
   try {
     stage ('Cleanup, Checkout and Start Lisk Core') {
