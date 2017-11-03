@@ -1,5 +1,5 @@
 const actionTypes = {
-  metronomeBeat: 'METRONOME_BEAT',
+  newBlockCreated: 'NEW_BLOCK_CREATED',
   accountUpdated: 'ACCOUNT_UPDATED',
   accountLoggedOut: 'ACCOUNT_LOGGED_OUT',
   accountLoggedIn: 'ACCOUNT_LOGGED_IN',
