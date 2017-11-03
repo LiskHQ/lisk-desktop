@@ -4,11 +4,10 @@ import Input from 'react-toolbox/lib/input';
 import Dropdown from 'react-toolbox/lib/dropdown';
 import Button from 'react-toolbox/lib/button';
 import i18next from 'i18next';
-import getNetworks from '../../constants/getNetworks';
 import PassphraseInput from '../passphraseInput';
 import styles from './login.css';
 import env from '../../constants/env';
-import networks from '../../constants/networks';
+import { networksDetail, getNetwork } from '../../constants/networks';
 import LanguageDropdown from '../languageDropdown';
 import RelativeLink from '../relativeLink';
 import { validateUrl, getLoginData } from '../../utils/login';
@@ -24,7 +23,7 @@ class Login extends React.Component {
     this.state = {
       passphrase: '',
       address: '',
-      network: networks.mainnet,
+      network: networksDetail.mainnet.code,
     };
 
     this.validators = {
@@ -43,8 +42,8 @@ class Login extends React.Component {
   }
 
   getNetworksList() {
-    this.networks = getNetworks().map((network, index) => ({
-      label: i18next.t(network.name),
+    this.networks = Object.keys(networksDetail).map((network, index) => ({
+      label: i18next.t(networksDetail[network].name),
       value: index,
     }));
   }
@@ -64,8 +63,8 @@ class Login extends React.Component {
   }
 
   onLoginSubmission(passphrase) {
-    const network = Object.assign({}, getNetworks()[this.state.network]);
-    if (this.state.network === networks.customNode) {
+    const network = Object.assign({}, getNetwork(this.state.network));
+    if (this.state.network === networksDetail.customNode.code) {
       network.address = this.state.address;
     }
 
@@ -129,8 +128,8 @@ class Login extends React.Component {
     const { savedAccounts } = this.props;
     if (savedAccounts && savedAccounts.length > 0 && !this.props.account.afterLogout) {
       this.account = savedAccounts[0];
-      const network = Object.assign({}, getNetworks()[this.account.network]);
-      if (this.account.network === networks.customNode) {
+      const network = Object.assign({}, networksDetail[this.account.network]);
+      if (this.account.network === networksDetail.customNode.code) {
         network.address = this.account.address;
       }
 
@@ -161,7 +160,7 @@ class Login extends React.Component {
                 className={`${styles.network} network`}
               />
               {
-                this.state.network === networks.customNode &&
+                this.state.network === networksDetail.customNode.code &&
                   <Input type='text'
                     label={this.props.t('Node address')}
                     name='address'
@@ -186,7 +185,7 @@ class Login extends React.Component {
                   <Button label={this.props.t('Login')} primary raised
                     className='login-button'
                     type='submit'
-                    disabled={(this.state.network === networks.customNode && this.state.addressValidity !== '') ||
+                    disabled={(this.state.network === networksDetail.customNode.code && this.state.addressValidity !== '') ||
                     this.state.passphraseValidity !== ''} />
                 </div>
               </footer>
