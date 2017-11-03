@@ -10,7 +10,7 @@ describe('LoadingBar Container', () => {
     expect(wrapper.find('ProgressBar')).to.have.lengthOf(1);
   });
 
-  it('should not show ProgresBar if props.loading.length is 0', () => {
+  it('should not show ProgressBar if props.loading.length is 0', () => {
     const wrapper = mount(<LoadingBar loading={[]} />);
     expect(wrapper.find('ProgressBar')).to.have.lengthOf(0);
   });
