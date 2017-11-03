@@ -154,7 +154,7 @@ node('lisk-nano') {
     if (env.CHANGE_BRANCH != null) {
       pr_branch = " (${env.CHANGE_BRANCH})"
     }
-    if (currentBuild.result == 'SUCCESS') {
+    if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
       /* delete all files on success */
       deleteDir()
       /* notify of success if previous build failed */
