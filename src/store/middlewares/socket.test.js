@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { spy, stub } from 'sinon';
+import { spy } from 'sinon';
 import io from './../../utils/socketShim';
 import middleware from './socket';
 import actionTypes from '../../constants/actions';
