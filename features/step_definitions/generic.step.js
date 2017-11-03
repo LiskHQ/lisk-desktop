@@ -140,8 +140,9 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
 
   Given('I\'m logged in as "{accountName}"', { timeout: 2 * defaultTimeout }, (accountName, callback) => {
     browser.get(browser.params.baseURL);
-    waitForElemAndSendKeys('.passphrase input', accounts[accountName].passphrase);
-    waitForElemAndClickIt('.login-button', callback);
+    waitForElemAndSendKeys('.passphrase input', accounts[accountName].passphrase, () => {
+      waitForElemAndClickIt('.login-button', callback);
+    });
   });
 
   When('I go to "{url}"', (url, callback) => {
