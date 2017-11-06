@@ -11,12 +11,13 @@ defineSupportCode(({ When, Then }) => {
   When('I click "{itemSelector}" in main menu', (itemSelector, callback) => {
     waitForElemAndClickIt('.main-menu-icon-button');
     browser.sleep(1000);
-    waitForElemAndClickIt(`.${itemSelector.replace(/ /g, '-')}`, callback);
+    waitForElemAndClickIt(`.${itemSelector.replace(/ /g, '-')}`);
+    browser.sleep(1000).then(callback);
   });
 
   Then('There is no "{itemSelector}" in main menu', (itemSelector, callback) => {
     waitForElemAndClickIt('.main-menu-icon-button');
-    browser.sleep(1000);
+    browser.sleep(500);
     expect(element.all(by.css(`md-menu-item .md-button.${itemSelector.replace(/ /g, '-')}`)).count()).to.eventually.equal(0)
       .and.notify(callback);
   });

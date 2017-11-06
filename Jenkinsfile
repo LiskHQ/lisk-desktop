@@ -8,6 +8,8 @@ def fail(reason) {
   error("${reason}")
 }
 
+/* comment out the next line to allow concurrent builds on the same branch */
+properties([disableConcurrentBuilds(), pipelineTriggers([])])
 node('lisk-nano') {
   try {
     stage ('Cleanup, Checkout and Start Lisk Core') {
@@ -54,10 +56,6 @@ node('lisk-nano') {
         cp -r ~/cache/development/node_modules ./ || true
         npm install
         ./node_modules/protractor/bin/webdriver-manager update
-        # cache nightly builds (development) only to save space
-        if [ $BRANCH_NAME = "development" ]; then
-            rsync -axl --delete $WORKSPACE/node_modules/ ~/cache/development/node_modules/ || true
-        fi
         '''
       } catch (err) {
         echo "Error: ${err}"
@@ -118,15 +116,13 @@ node('lisk-nano') {
         ansiColor('xterm') {
           sh '''
           N=${EXECUTOR_NUMBER:-0}
-          NODE_ENV= npm run --silent dev -- --port 808$N > .lisk-nano.log 2>&1 &
-          sleep 30
 
           # End to End test configuration
           export DISPLAY=:1$N
           Xvfb :1$N -ac -screen 0 1280x1024x24 &
 
           # Run end-to-end tests
-          npm run --silent e2e-test -- --params.baseURL http://127.0.0.1:808$N/ --params.liskCoreURL http://127.0.0.1:400$N
+          npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL http://127.0.0.1:400$N
           '''
         }
       } catch (err) {
@@ -143,8 +139,11 @@ node('lisk-nano') {
     ( cd ~/lisk-Linux-x86_64 && bash lisk.sh stop_node -p etc/pm2-lisk_$N.json ) || true
     pgrep --list-full -f "Xvfb :1$N" || true
     pkill --echo -f "Xvfb :1$N" -9 || echo "pkill returned code $?"
-    pgrep --list-full -f "webpack.*808$N" || true
-    pkill --echo -f "webpack.*808$N" -9 || echo "pkill returned code $?"
+
+    # cache nightly builds (development) only to save space
+    if [ $BRANCH_NAME = "development" ]; then
+        rsync -axl --delete $WORKSPACE/node_modules/ ~/cache/development/node_modules/ || true
+    fi
     '''
     dir('node_modules') {
       deleteDir()
@@ -154,7 +153,7 @@ node('lisk-nano') {
     if (env.CHANGE_BRANCH != null) {
       pr_branch = " (${env.CHANGE_BRANCH})"
     }
-    if (currentBuild.result == 'SUCCESS') {
+    if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
       /* delete all files on success */
       deleteDir()
       /* notify of success if previous build failed */

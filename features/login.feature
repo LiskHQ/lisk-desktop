@@ -36,6 +36,7 @@ Feature: Login page
     When I fill in "wagon stock borrow episode laundry kitten salute link globe zero feed marble" to "passphrase" field
     And I select option no. 2 from "network" select
     And I click "login button"
+    And I wait 2 seconds
     And I refresh the page
     And I fill in "wagon stock borrow episode laundry kitten salute link globe zero feed marble" to "passphrase" field
     And I click "login button"
@@ -45,6 +46,7 @@ Feature: Login page
   Scenario: should allow to create a new account
     Given I'm on login page
     When I click "new account button"
+    And I wait 1 seconds
     And I click "next button"
     And I 250 times move mouse randomly
     And I remember passphrase, click "next button", fill in missing word

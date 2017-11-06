@@ -7,7 +7,6 @@ import configureMockStore from 'redux-mock-store';
 import i18n from '../../i18n';
 import networks from '../../constants/networks';
 import Register from './register';
-import getNetworks from '../login/networks';
 import * as Utils from '../../utils/login';
 
 
@@ -60,11 +59,11 @@ describe('Register', () => {
   it('should call activePeerSet if props.onPassGenerated is called', () => {
     const props = wrapper.find('Passphrase').props();
 
-    loginData.returns({ address: 'some address', networkIndex: networks.mainnet });
-
+    loginData.returns({ address: 'some address', networkIndex: networks.mainnet.code });
     props.onPassGenerated('sample passphrase');
+
     expect(prop.activePeerSet).to.have.been.calledWith({
-      network: getNetworks()[networks.mainnet],
+      network: networks.mainnet,
       passphrase: 'sample passphrase',
     });
   });
@@ -72,13 +71,13 @@ describe('Register', () => {
   it('should call activePeerSet with testnet if network index is testnet', () => {
     const props = wrapper.find('Passphrase').props();
 
-    loginData.returns({ address: 'invalid address', networkIndex: networks.testnet });
+    loginData.returns({ address: 'invalid address', networkIndex: networks.testnet.code });
 
     props.onPassGenerated('sample passphrase');
     expect(loginData).to.have.been.calledWith();
 
     expect(prop.activePeerSet).to.have.been.calledWith({
-      network: getNetworks()[networks.testnet],
+      network: networks.testnet,
       passphrase: 'sample passphrase',
     });
   });
@@ -86,13 +85,13 @@ describe('Register', () => {
   it('should call activePeerSet with mainnet if network index is custom node and address is invalid', () => {
     const props = wrapper.find('Passphrase').props();
 
-    loginData.returns({ address: 'invalid address', networkIndex: networks.customNode });
+    loginData.returns({ address: 'invalid address', networkIndex: networks.customNode.code });
 
     props.onPassGenerated('sample passphrase');
     expect(loginData).to.have.been.calledWith();
 
     expect(prop.activePeerSet).to.have.been.calledWith({
-      network: getNetworks()[networks.mainnet],
+      network: networks.mainnet,
       passphrase: 'sample passphrase',
     });
   });
@@ -100,12 +99,12 @@ describe('Register', () => {
   it('should call activePeerSet with custom node if network index is custom node and address is valid', () => {
     const props = wrapper.find('Passphrase').props();
 
-    loginData.returns({ address: '127.0.0.1:8080', networkIndex: networks.customNode });
+    loginData.returns({ address: '127.0.0.1:8080', networkIndex: networks.customNode.code });
 
     props.onPassGenerated('sample passphrase');
     expect(loginData).to.have.been.calledWith();
 
-    const network = getNetworks()[networks.customNode];
+    const network = networks.customNode;
     network.address = '127.0.0.1:8080';
     expect(prop.activePeerSet).to.have.been.calledWith({
       network,

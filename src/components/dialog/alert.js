@@ -6,7 +6,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 const Alert = ({ text, closeDialog, t }) => (
   <div>
-    <p>{text}</p>
+    <p className='alert-dialog-message'>{text}</p>
     <br />
     <section className={`${grid.row} ${grid['between-xs']}`}>
       <span />

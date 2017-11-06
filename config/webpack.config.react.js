@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const I18nScannerPlugin = require('../src/i18n-scanner');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 /* eslint-enable import/no-extraneous-dependencies */
 
 const entries = {
@@ -46,5 +47,6 @@ module.exports = {
         './app/src/**/*.js',
       ],
     }),
+    new HardSourceWebpackPlugin(),
   ],
 };

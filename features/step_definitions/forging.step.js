@@ -4,7 +4,7 @@ const { waitForElemAndCheckItsText } = require('../support/util.js');
 
 defineSupportCode(({ Then }) => {
   Then('I should see forging center', (callback) => {
-    waitForElemAndCheckItsText('.delegate-name', 'genesis_17', callback);
+    waitForElemAndCheckItsText('.delegate-name', 'genesis_17');
     waitForElemAndCheckItsText('.forged-blocks h5', 'Forged Blocks', callback);
   });
 });
