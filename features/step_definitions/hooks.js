@@ -32,6 +32,21 @@ function takeScreenshot(screnarioSlug, callback) {
   });
 }
 
+const getNetworkType = (browser) => {
+  if (browser.params.testnetPassphrase && browser.params.testnetCustomNode) return 'customTestnet';
+  if (browser.params.testnetPassphrase) return 'testnet';
+
+  return 'custom';
+};
+const setNetwork = {
+  custom: () => { localStorage.setItem('network', 2); },
+  testnet: () => { localStorage.setItem('network', 1); },
+  customTestnet: () => {
+    localStorage.setItem('address', 'https://testnet.lisk.io');
+    localStorage.setItem('network', 2);
+  },
+};
+
 defineSupportCode(({ Before, After }) => {
   Before((scenario, callback) => {
     browser.ignoreSynchronization = true;
@@ -39,7 +54,7 @@ defineSupportCode(({ Before, After }) => {
     browser.get(browser.params.baseURL);
     localStorage.clear();
     localStorage.setItem('address', browser.params.liskCoreURL);
-    localStorage.setItem('network', 2);
+    setNetwork[getNetworkType(browser)]();
     callback();
   });
 
