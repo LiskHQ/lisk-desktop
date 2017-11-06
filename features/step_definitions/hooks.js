@@ -33,8 +33,8 @@ function takeScreenshot(screnarioSlug, callback) {
 }
 
 const getNetworkType = (browser) => {
-  if (browser.params.testnetPassphrase && browser.params.testnetCustomNode) return 'customTestnet';
-  if (browser.params.testnetPassphrase) return 'testnet';
+  if (browser.params.testnetCustomNode) return 'customTestnet';
+  if (browser.params.testnet) return 'testnet';
 
   return 'custom';
 };

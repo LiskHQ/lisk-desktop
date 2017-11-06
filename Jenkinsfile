@@ -120,15 +120,15 @@ node('lisk-nano') {
         ansiColor('xterm') {
           sh '''
           N=${EXECUTOR_NUMBER:-0}
-          passphrase=${env.TESTNET_PASSPHRASE}
 
           # End to End test configuration
           export DISPLAY=:1$N
           Xvfb :1$N -ac -screen 0 1280x1024x24 &
 
           # Run end-to-end tests
-          npm run --silent e2e-test:testnet:custom -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL http://127.0.0.1:400$N  --params.testnetPassphrase $passphrase --params.testnetCustomNode true
-          npm run --silent e2e-test:testnet -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL http://127.0.0.1:400$N --params.testnetPassphrase $passphrase
+
+          npm run --silent e2e-test:testnet:custom -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL http://127.0.0.1:400$N --params.testnetCustomNode true
+          npm run --silent e2e-test:testnet -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL http://127.0.0.1:400$N $TESTNET_PASSPHRASE
           npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL http://127.0.0.1:400$N
           '''
         }
