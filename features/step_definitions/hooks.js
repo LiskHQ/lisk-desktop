@@ -43,6 +43,10 @@ defineSupportCode(({ Before, After }) => {
     callback();
   });
 
+  Before('@pending', (scenario, callback) => {
+    callback(null, 'pending');
+  });
+
   After((scenario, callback) => {
     if (scenario.isFailed()) {
       const screnarioSlug = slugify([scenario.scenario.feature.name, scenario.scenario.name].join(' '));
