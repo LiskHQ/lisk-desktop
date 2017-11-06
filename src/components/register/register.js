@@ -1,7 +1,7 @@
 import React from 'react';
 import Passphrase from '../passphrase';
 import networks from '../../constants/networks';
-import getNetworks from '../login/networks';
+import getNetwork from '../../utils/getNetwork';
 import { validateUrl, getLoginData } from '../../utils/login';
 
 const Register = ({
@@ -12,12 +12,14 @@ const Register = ({
 
     let index = networkIndex;
 
-    if (!index || (index === networks.customNode && validateUrl(address).addressValidity !== '')) {
-      index = networks.mainnet;
+    // if (!index || (index === networksCode.customNode && 
+    // validateUrl(address).addressValidity !== '')) {
+    if (!index || (index === networks.customNode.code && validateUrl(address).addressValidity !== '')) {
+      index = networks.mainnet.code;
     }
 
-    const network = Object.assign({}, getNetworks()[index]);
-    if (index === networks.customNode) { network.address = address; }
+    const network = Object.assign({}, getNetwork(index));
+    if (index === networks.customNode.code) { network.address = address; }
 
     // set active peer
     activePeerSet({
