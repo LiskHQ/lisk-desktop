@@ -46,7 +46,7 @@ function i18nScanner(params) {
   }
 }
 
-class HelloWorldPlugin {
+class I18nScannerPlugin {
   constructor(options) {
     this.options = options;
   }
@@ -59,4 +59,4 @@ class HelloWorldPlugin {
   }
 }
 
-module.exports = HelloWorldPlugin;
+module.exports = I18nScannerPlugin;
