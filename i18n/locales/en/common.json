@@ -40,7 +40,6 @@
   "Failed to connect to node {{address}}": "Failed to connect to node {{address}}",
   "Failed to connect: Node {{address}} is not active": "Failed to connect: Node {{address}} is not active",
   "Fee": "Fee",
-  "Fee: LSK": "Fee: LSK",
   "Fee: {{amount}} LSK": "Fee: {{amount}} LSK",
   "Fee: {{fee}} LSK": "Fee: {{fee}} LSK",
   "Forget this account": "Forget this account",

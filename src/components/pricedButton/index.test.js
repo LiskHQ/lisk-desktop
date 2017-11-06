@@ -29,7 +29,7 @@ describe('PricedButton', () => {
     });
 
     it('renders a span saying "Fee: 5 LSK"', () => {
-      expect(wrapper.find(`.${styles.fee}`).text()).to.be.equal(i18n.t('Fee: 5 LSK'));
+      expect(wrapper.find(`.${styles.fee}`).text()).to.be.equal(i18n.t('Fee: {{fee}} LSK', { fee: 5 }));
     });
 
     it('allows to click on Button', () => {
