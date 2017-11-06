@@ -8,6 +8,8 @@ def fail(reason) {
   error("${reason}")
 }
 
+/* comment out the next line to allow concurrent builds on the same branch */
+properties([disableConcurrentBuilds(), pipelineTriggers([])])
 node('lisk-nano') {
   try {
     stage ('Cleanup, Checkout and Start Lisk Core') {
@@ -154,7 +156,7 @@ node('lisk-nano') {
     if (env.CHANGE_BRANCH != null) {
       pr_branch = " (${env.CHANGE_BRANCH})"
     }
-    if (currentBuild.result == 'SUCCESS') {
+    if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
       /* delete all files on success */
       deleteDir()
       /* notify of success if previous build failed */
