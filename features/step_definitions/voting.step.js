@@ -2,7 +2,10 @@
 const { defineSupportCode } = require('cucumber');
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
-const { waitForElemAndClickIt } = require('../support/util.js');
+const {
+  waitForElemAndClickIt,
+  waitForElemAndSendKeys,
+} = require('../support/util.js');
 
 chai.use(chaiAsPromised);
 const expect = chai.expect;
@@ -13,11 +16,12 @@ defineSupportCode(({ When, Then }) => {
   });
 
   When('Search twice for "{searchTerm}" in vote dialog', (searchTerm, callback) => {
-    element.all(by.css('.votedListSearch input')).get(0).sendKeys(searchTerm);
-    waitForElemAndClickIt('#votedResult ul li:nth-child(1)', () => {
-      element.all(by.css('.votedListSearch input')).get(0).sendKeys(searchTerm);
-      browser.sleep(500);
-      waitForElemAndClickIt('#votedResult ul li:nth-child(1)', callback);
+    waitForElemAndSendKeys('.votedListSearch input', searchTerm, () => {
+      waitForElemAndClickIt('#votedResult ul li:nth-child(1)', () => {
+        element.all(by.css('.votedListSearch input')).get(0).sendKeys(searchTerm);
+        browser.sleep(500);
+        waitForElemAndClickIt('#votedResult ul li:nth-child(1)', callback);
+      });
     });
   });
 
