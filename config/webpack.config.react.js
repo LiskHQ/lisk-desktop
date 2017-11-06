@@ -3,6 +3,7 @@ const { resolve } = require('path');
 const webpack = require('webpack');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 /* eslint-enable import/no-extraneous-dependencies */
 
 const entries = {
@@ -37,5 +38,6 @@ module.exports = {
       filename: 'styles.css',
       allChunks: true,
     }),
+    new HardSourceWebpackPlugin(),
   ],
 };

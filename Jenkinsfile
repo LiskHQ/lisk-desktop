@@ -56,10 +56,6 @@ node('lisk-nano') {
         cp -r ~/cache/development/node_modules ./ || true
         npm install
         ./node_modules/protractor/bin/webdriver-manager update
-        # cache nightly builds (development) only to save space
-        if [ $BRANCH_NAME = "development" ]; then
-            rsync -axl --delete $WORKSPACE/node_modules/ ~/cache/development/node_modules/ || true
-        fi
         '''
       } catch (err) {
         echo "Error: ${err}"
@@ -143,6 +139,11 @@ node('lisk-nano') {
     ( cd ~/lisk-Linux-x86_64 && bash lisk.sh stop_node -p etc/pm2-lisk_$N.json ) || true
     pgrep --list-full -f "Xvfb :1$N" || true
     pkill --echo -f "Xvfb :1$N" -9 || echo "pkill returned code $?"
+
+    # cache nightly builds (development) only to save space
+    if [ $BRANCH_NAME = "development" ]; then
+        rsync -axl --delete $WORKSPACE/node_modules/ ~/cache/development/node_modules/ || true
+    fi
     '''
     dir('node_modules') {
       deleteDir()
