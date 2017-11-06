@@ -2,13 +2,12 @@ const fs = require('fs');
 const glob = require('glob');
 const Parser = require('i18next-scanner').Parser;
 
-const parser = new Parser({
-  keySeparator: '>',
-  nsSeparator: '|',
-});
-
-
 function i18nScanner(params) {
+  const parser = new Parser({
+    keySeparator: '>',
+    nsSeparator: '|',
+  });
+
   const sourceJSON = fs.readFileSync(params.outputFilePath, 'utf8');
   let translationsSource;
   try {
