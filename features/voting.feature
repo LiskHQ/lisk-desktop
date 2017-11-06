@@ -74,6 +74,7 @@ Feature: Voting tab
     And I click checkbox on table row no. 5
     And I click checkbox on table row no. 8
     And I click "vote button"
+    And I wait 1 seconds
     And I click "submit button"
     Then I should see alert dialog with title "Success" and text "Your votes were successfully submitted. It can take several seconds before they are processed."
 
@@ -102,6 +103,7 @@ Feature: Voting tab
     And I click checkbox on table row no. 3
     And I click checkbox on table row no. 5
     And I click "vote button"
+    And I wait 1 seconds
     And I click "submit button"
     Then I should see alert dialog with title "Success" and text "Your votes were successfully submitted. It can take several seconds before they are processed."
 
@@ -109,19 +111,20 @@ Feature: Voting tab
     Given I'm logged in as "genesis"
     When I click tab number 2
     And I click "vote button"
+    And I wait 1 seconds
     And I click "cancel button"
     Then I should see no "modal dialog"
 
   Scenario: should allow to select delegates by URL
     Given I'm logged in as "delegate candidate"
     When I go to "/main/voting/vote?votes=standby_27,standby_28,standby_29,nonexisting_22&unvotes=standby_33"
+    And I wait 3 seconds
     Then I should see text "3 delegate names were successfully resolved for voting." in "upvotes message" element
     And I should see text "1 of the delegate names selected for unvoting was not currently voted for:standby_33" in "notVotedYet message" element
     And I should see text "1 of the provided delegate names could not be resolved:nonexisting_22" in "notFound message" element
-    And I should see "vote list" element with text:
+    And I should see "vote list" element with text matching regexp:
       """
-      standby_27
-      standby_28
-      standby_29
+      standby_2[789]
+      standby_2[789]
+      standby_2[789]
       """
-

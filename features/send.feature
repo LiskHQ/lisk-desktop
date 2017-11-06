@@ -24,6 +24,7 @@ Feature: Send dialog
   Scenario: should allow to exit send dialog
     Given I'm logged in as "any account"
     When I click "send button"
+    And I wait 1 seconds
     And I click "cancel button"
     Then I should see no "modal dialog"
 
@@ -33,7 +34,7 @@ Feature: Send dialog
     And I fill in "537318935439898807L" to "recipient" field
     And I click "send maximum amount" in "transaction amount" menu
     And I click "submit button"
-    Then I should see alert dialog with title "Success" and text "Your transaction of 101 LSK to 537318935439898807L was accepted and will be processed in a few seconds."
+    Then I should see alert dialog with title "Success" and text "Your transaction of 100 LSK to 537318935439898807L was accepted and will be processed in a few seconds."
 
   Scenario: should allow to send with second passphrase
     Given I'm logged in as "second passphrase account"

@@ -4,6 +4,7 @@ const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 const {
   waitForElemAndCheckItsText,
+  waitForElemAndMatchItsText,
   waitForElemRemoved,
   waitForElemAndClickIt,
   waitForElemAndSendKeys,
@@ -12,7 +13,6 @@ const {
   waitTime,
 } = require('../support/util.js');
 const accounts = require('../support/accounts.js');
-const localStorage = require('../support/localStorage.js');
 
 chai.use(chaiAsPromised);
 const expect = chai.expect;
@@ -75,12 +75,12 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
 
   When('I select option no. {index} from "{selectName}" select', (index, selectName, callback) => {
     waitForElemAndClickIt(`.${selectName}`);
-    browser.sleep(500);
+    browser.sleep(1000);
     const selector = `.${selectName} ul li`;
     const optionElem = element.all(by.css(selector)).get(index - 1);
     browser.wait(EC.presenceOf(optionElem), waitTime)
       .catch(error => console.error(`${error}`)); // eslint-disable-line no-console
-    optionElem.click().then(callback);
+    optionElem.click().then(callback).catch(callback);
   });
 
   Then('the option "{optionText}" is selected in "{selectName}" select', (optionText, selectName, callback) => {
@@ -101,7 +101,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
 
   Then('I should see no "{elementName}"', (elementName, callback) => {
     const selector = `.${elementName.replace(/ /g, '-')}`;
-    waitForElemRemoved(selector, () => {
+    waitForElemRemoved(selector).then(() => {
       expect(element.all(by.css(selector)).count()).to.eventually.equal(0)
         .and.notify(callback);
     });
@@ -123,9 +123,9 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     waitForElemAndCheckItsText(selectorClass, text, callback);
   });
 
-  Then('I should see "{elementName}" element with text:', (elementName, text, callback) => {
+  Then('I should see "{elementName}" element with text matching regexp:', (elementName, text, callback) => {
     const selectorClass = `.${elementName.replace(/ /g, '-')}`;
-    waitForElemAndCheckItsText(selectorClass, text, callback);
+    waitForElemAndMatchItsText(selectorClass, text, callback);
   });
 
   Then('I should see element "{elementName}" that contains text:', (elementName, text, callback) => {
@@ -139,15 +139,10 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   });
 
   Given('I\'m logged in as "{accountName}"', { timeout: 2 * defaultTimeout }, (accountName, callback) => {
-    browser.ignoreSynchronization = true;
-    browser.driver.manage().window().setSize(1000, 1000);
     browser.get(browser.params.baseURL);
-    localStorage.clear();
-    localStorage.setItem('address', browser.params.liskCoreURL);
-    localStorage.setItem('network', 2);
-    browser.get(browser.params.baseURL);
-    waitForElemAndSendKeys('.passphrase input', accounts[accountName].passphrase);
-    waitForElemAndClickIt('.login-button', callback);
+    waitForElemAndSendKeys('.passphrase input', accounts[accountName].passphrase, () => {
+      waitForElemAndClickIt('.login-button', callback);
+    });
   });
 
   When('I go to "{url}"', (url, callback) => {
@@ -171,29 +166,29 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   });
 
   When('I remember passphrase, click "{nextButtonSelector}", fill in missing word', { timeout: 2 * defaultTimeout }, (nextButtonSelector, callback) => {
-    waitForElemAndCheckItsText('.passphrase label', 'Save your passphrase in a safe place!');
-
-    waitForElem('.passphrase textarea', (textareaElem) => {
-      textareaElem.getText().then((passphrase) => {
-        // eslint-disable-next-line no-unused-expressions
-        expect(passphrase).to.not.be.undefined;
-        const passphraseWords = passphrase.split(' ');
-        expect(passphraseWords.length).to.equal(12);
-        waitForElemAndClickIt(`.${nextButtonSelector.replace(/ /g, '-')}`);
-
-        waitForElem('.passphrase-verifier p span', (elem) => {
-          elem.getText().then((firstPartOfPassphrase) => {
-            const missingWordIndex = firstPartOfPassphrase.length ?
-              firstPartOfPassphrase.split(' ').length :
-              0;
-            waitForElemAndSendKeys('.passphrase-verifier input', passphraseWords[missingWordIndex], callback);
+    waitForElemAndCheckItsText('.passphrase label', 'Save your passphrase in a safe place!', () => {
+      waitForElem('.passphrase textarea').then((textareaElem) => {
+        textareaElem.getText().then((passphrase) => {
+          // eslint-disable-next-line no-unused-expressions
+          expect(passphrase).to.not.be.undefined;
+          const passphraseWords = passphrase.split(' ');
+          expect(passphraseWords.length).to.equal(12);
+          waitForElemAndClickIt(`.${nextButtonSelector.replace(/ /g, '-')}`, () => {
+            waitForElem('.passphrase-verifier p span').then((elem) => {
+              elem.getText().then((firstPartOfPassphrase) => {
+                const missingWordIndex = firstPartOfPassphrase.length ?
+                  firstPartOfPassphrase.split(' ').length :
+                  0;
+                waitForElemAndSendKeys('.passphrase-verifier input', passphraseWords[missingWordIndex], callback);
+              }).catch(callback);
+            }).catch(callback);
           });
-        });
-      });
+        }).catch(callback);
+      }).catch(callback);
     });
   });
 
-  When('I Refresh the page', (callback) => {
+  When('I refresh the page', (callback) => {
     browser.refresh().then(callback);
   });
 
