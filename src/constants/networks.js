@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   mainnet: { // network name translation t('Mainnet');
     name: 'Mainnet',
     ssl: true,

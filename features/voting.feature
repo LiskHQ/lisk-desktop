@@ -67,6 +67,7 @@ Feature: Voting tab
     And I click checkbox on table row no. 5
     And I should see no "voting bar"
 
+  @testnet
   Scenario: should allow to select delegates in the "Voting" tab and vote for them
     Given I'm logged in as "delegate candidate"
     When I click tab number 2

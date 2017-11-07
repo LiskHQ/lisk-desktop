@@ -14,7 +14,7 @@ exports.config = {
 
   cucumberOpts: {
     require: 'features/step_definitions/*.js',
-    tags: '~@ignore',
+    tags: [],
     format: 'pretty',
     profile: false,
     'no-source': true,
@@ -25,7 +25,7 @@ exports.config = {
     baseURL: 'http://localhost:8080/',
     liskCoreURL: 'http://localhost:4000/',
     testnetPassphrase: process.env.TESTNET_PASSPHRASE,
-    testnetCustomNode: false,
-    testnet: false,
+    useTestnetPassphrase: false,
+    network: 'customNode',
   },
 };

@@ -19,18 +19,6 @@ const expect = chai.expect;
 const EC = protractor.ExpectedConditions;
 const defaultTimeout = 10 * 1000;
 
-const getNetworkType = (browser) => {
-  if (browser.params.testnetCustomNode) return 'customTestnet';
-  if (browser.params.testnet) return 'testnet';
-
-  return 'custom';
-};
-const getPassphrase = (browser, accountName) => ({
-  customTestnet: () => browser.params.testnetPassphrase,
-  testnet: () => browser.params.testnetPassphrase,
-  custom: () => accounts[accountName].passphrase,
-}[getNetworkType(browser)]);
-
 defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   setDefaultTimeout(defaultTimeout);
 
@@ -152,7 +140,11 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
 
   Given('I\'m logged in as "{accountName}"', { timeout: 2 * defaultTimeout }, (accountName, callback) => {
     browser.get(browser.params.baseURL);
-    waitForElemAndSendKeys('.passphrase input', (getPassphrase(browser)()), () => {
+    const passphrase = browser.params.useTestnetPassphrase
+      ? browser.params.testnetPassphrase
+      : accounts[accountName].passphrase;
+
+    waitForElemAndSendKeys('.passphrase input', passphrase, () => {
       waitForElemAndClickIt('.login-button', callback);
     });
   });

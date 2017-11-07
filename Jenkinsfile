@@ -118,19 +118,21 @@ node('lisk-nano') {
     stage ('Start Dev Server and Run E2E Tests') {
       try {
         ansiColor('xterm') {
-          sh '''
-          N=${EXECUTOR_NUMBER:-0}
+          withCredentials([string(credentialsId: 'lisk-nano-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
+            sh '''
+            N=${EXECUTOR_NUMBER:-0}
 
-          # End to End test configuration
-          export DISPLAY=:1$N
-          Xvfb :1$N -ac -screen 0 1280x1024x24 &
+            # End to End test configuration
+            export DISPLAY=:1$N
+            Xvfb :1$N -ac -screen 0 1280x1024x24 &
 
-          # Run end-to-end tests
+            # Run end-to-end tests
 
-          npm run --silent e2e-test:testnet:custom -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL http://127.0.0.1:400$N --params.testnetCustomNode true
-          npm run --silent e2e-test:testnet -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL http://127.0.0.1:400$N $TESTNET_PASSPHRASE
-          npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL http://127.0.0.1:400$N
-          '''
+            npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL https://testnet.lisk.io --cucumberOpts.tags @testnet --params.useTestnetPassphrase true
+            npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL http://127.0.0.1:400$N --cucumberOpts.tags @testnet --params.useTestnetPassphrase true --params.network testnet
+            npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL http://127.0.0.1:400$N
+            '''
+          }
         }
       } catch (err) {
         echo "Error: ${err}"

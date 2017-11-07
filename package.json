@@ -11,8 +11,6 @@
     "build-prod": "webpack --config ./config/webpack.config.prod --env.prod",
     "build-electron": "webpack --config ./config/webpack.config.electron",
     "e2e-test": "protractor protractor.conf.js",
-    "e2e-test:testnet": "protractor protractor.conf.js \"--specs=features/send.feature:2:17,features/voting.feature:70\" \"--params.testnet=true\"",
-    "e2e-test:testnet:custom": "protractor protractor.conf.js \"--specs=features/send.feature:2:17,features/voting.feature:70\" \"--params.testnetCustomNode=true\"",
     "test": "karma start",
     "test-live": "npm test -- --auto-watch --no-single-run",
     "start": "electron ./app/",
