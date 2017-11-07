@@ -1,6 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const { resolve } = require('path');
-const webpack = require('webpack');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const I18nScannerPlugin = require('../src/i18n-scanner');
