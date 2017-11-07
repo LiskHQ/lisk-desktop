@@ -27,6 +27,12 @@ const props = {
   t: key => key,
 };
 let wrapper;
+const keyCodes = {
+  arrowDown: 40,
+  arrowUp: 38,
+  enter: 13,
+  escape: 27,
+};
 
 const store = configureMockStore([])({
   peers: {},
@@ -40,8 +46,12 @@ const store = configureMockStore([])({
 describe('VoteAutocomplete', () => {
   let voteAutocompleteApiMock;
   let unvoteAutocompleteApiMock;
+  let clock;
 
   beforeEach(() => {
+    clock = sinon.useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
     sinon.spy(VoteAutocomplete.prototype, 'keyPress');
     sinon.spy(VoteAutocomplete.prototype, 'handleArrowDown');
     sinon.spy(VoteAutocomplete.prototype, 'handleArrowUp');
@@ -52,6 +62,7 @@ describe('VoteAutocomplete', () => {
   });
 
   afterEach(() => {
+    clock.restore();
     voteAutocompleteApiMock.restore();
     unvoteAutocompleteApiMock.restore();
     VoteAutocomplete.prototype.keyPress.restore();
@@ -60,22 +71,16 @@ describe('VoteAutocomplete', () => {
   });
 
   it('should suggest with full username if finds a non-voted delegate with a username starting with given string', () => {
-    const clock = sinon.useFakeTimers({
-      toFake: ['setTimeout', 'clearTimeout', 'Date'],
-    });
     const voteAutocompleteApiStub = sinon.stub(delegateApi, 'voteAutocomplete');
-    voteAutocompleteApiStub.returnsPromise().resolves([{ username: 'username3' }]);
+    voteAutocompleteApiStub.returnsPromise().resolves([unvotedDelegate[0]]);
     wrapper.find('.votedListSearch.vote-auto-complete input').simulate('change', { target: { value: 'user' } });
 
     clock.tick(300);
-    expect(wrapper.find('Card .vote-auto-complete-list ul').html().indexOf('username3')).to.be.greaterThan(-1);
+    expect(wrapper.find('Card .vote-auto-complete-list ul').html().indexOf(unvotedDelegate[0].username)).to.be.greaterThan(-1);
     voteAutocompleteApiStub.restore();
   });
 
   it('should suggest with full username if dows not find a non-voted delegate with a username starting with given string', () => {
-    const clock = sinon.useFakeTimers({
-      toFake: ['setTimeout', 'clearTimeout', 'Date'],
-    });
     const voteAutocompleteApiStub = sinon.stub(delegateApi, 'voteAutocomplete');
     voteAutocompleteApiStub.returnsPromise().rejects([]);
     wrapper.find('.votedListSearch.vote-auto-complete input').simulate('change', { target: { value: 'user' } });
@@ -87,9 +92,6 @@ describe('VoteAutocomplete', () => {
   });
 
   it('search should call "voteAutocomplete" when name is equal to "votedListSearch" when search term exists', () => {
-    const clock = sinon.useFakeTimers({
-      toFake: ['setTimeout', 'clearTimeout', 'Date'],
-    });
     const existingSearchTerm = 'username2';
     const delegateApiMock = sinon.mock(delegateApi).expects('voteAutocomplete');
 
@@ -104,9 +106,6 @@ describe('VoteAutocomplete', () => {
   });
 
   it('search should call "voteAutocomplete" when name is equal to "votedListSearch" when search term does not exist', () => {
-    const clock = sinon.useFakeTimers({
-      toFake: ['setTimeout', 'clearTimeout', 'Date'],
-    });
     const nonExistingSearchTerm = 'doesntexist';
     const delegateApiMock = sinon.mock(delegateApi).expects('voteAutocomplete');
 
@@ -122,9 +121,6 @@ describe('VoteAutocomplete', () => {
   });
 
   it('search should call "unvoteAutocomplete" when name is equal to "unvotedListSearch" when search term exists', () => {
-    const clock = sinon.useFakeTimers({
-      toFake: ['setTimeout', 'clearTimeout', 'Date'],
-    });
     const existingSearchTerm = 'username1';
     const delegateApiMock = sinon.mock(delegateApi).expects('unvoteAutocomplete');
 
@@ -139,9 +135,6 @@ describe('VoteAutocomplete', () => {
   });
 
   it('search should call "unvoteAutocomplete" when name is equal to "unvotedListSearch" when search term does not exists', () => {
-    const clock = sinon.useFakeTimers({
-      toFake: ['setTimeout', 'clearTimeout', 'Date'],
-    });
     const nonExistingSearchTerm = 'username2';
     const delegateApiMock = sinon.mock(delegateApi).expects('unvoteAutocomplete');
 
@@ -156,9 +149,6 @@ describe('VoteAutocomplete', () => {
   });
 
   it('should let you choose one of the options by arrow down', () => {
-    const clock = sinon.useFakeTimers({
-      toFake: ['setTimeout', 'clearTimeout', 'Date'],
-    });
     const voteAutocompleteApiStub = sinon.stub(delegateApi, 'voteAutocomplete');
     voteAutocompleteApiStub.returnsPromise().resolves(unvotedDelegate);
     // write a username
@@ -166,9 +156,9 @@ describe('VoteAutocomplete', () => {
     clock.tick(400);
 
     // select it with arrow down
-    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: 40 });
+    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: keyCodes.arrowDown });
     clock.tick(200);
-    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: 13 });
+    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: keyCodes.enter });
     voteAutocompleteApiStub.restore();
     expect(props.voteToggled).to.have.been.calledWith({
       publicKey: unvotedDelegate[0].publicKey,
@@ -177,9 +167,6 @@ describe('VoteAutocomplete', () => {
   });
 
   it('should let you navigate and choose one of the options by arrow up/down', () => {
-    const clock = sinon.useFakeTimers({
-      toFake: ['setTimeout', 'clearTimeout', 'Date'],
-    });
     const voteAutocompleteApiStub = sinon.stub(delegateApi, 'voteAutocomplete');
     voteAutocompleteApiStub.returnsPromise().resolves(unvotedDelegate);
     // write a username
@@ -187,13 +174,13 @@ describe('VoteAutocomplete', () => {
     clock.tick(400);
 
     // Arrow down
-    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: 40 });
+    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: keyCodes.arrowDown });
     // Arrow down
-    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: 40 });
+    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: keyCodes.arrowDown });
     // Arrow up
-    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: 38 });
+    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: keyCodes.arrowUp });
     // Hit enter
-    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: 13 });
+    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: keyCodes.enter });
     voteAutocompleteApiStub.restore();
     expect(props.voteToggled).to.have.been.calledWith({
       publicKey: unvotedDelegate[0].publicKey,
@@ -202,9 +189,6 @@ describe('VoteAutocomplete', () => {
   });
 
   it('should let you navigate and then escape the suggestion list', () => {
-    const clock = sinon.useFakeTimers({
-      toFake: ['setTimeout', 'clearTimeout', 'Date'],
-    });
     const voteAutocompleteApiStub = sinon.stub(delegateApi, 'voteAutocomplete');
     voteAutocompleteApiStub.returnsPromise().resolves(unvotedDelegate);
     // write a username
@@ -212,13 +196,13 @@ describe('VoteAutocomplete', () => {
     clock.tick(400);
 
     // Arrow down
-    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: 40 });
+    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: keyCodes.arrowDown });
     // Arrow down
-    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: 40 });
+    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: keyCodes.arrowDown });
     // Arrow up
-    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: 38 });
+    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: keyCodes.arrowUp });
     // Hit enter
-    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: 27 });
+    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: keyCodes.escape });
     voteAutocompleteApiStub.restore();
     clock.tick(400);
     const reg = /><\/ul>/;
@@ -226,9 +210,6 @@ describe('VoteAutocomplete', () => {
   });
 
   it('should remove suggestion list if you clean the input', () => {
-    const clock = sinon.useFakeTimers({
-      toFake: ['setTimeout', 'clearTimeout', 'Date'],
-    });
     const voteAutocompleteApiStub = sinon.stub(delegateApi, 'voteAutocomplete');
     voteAutocompleteApiStub.returnsPromise().resolves(unvotedDelegate);
     // write a username
@@ -243,9 +224,6 @@ describe('VoteAutocomplete', () => {
   });
 
   it('should hide suggestion list if you blur the input', () => {
-    const clock = sinon.useFakeTimers({
-      toFake: ['setTimeout', 'clearTimeout', 'Date'],
-    });
     const voteAutocompleteApiStub = sinon.stub(delegateApi, 'voteAutocomplete');
     voteAutocompleteApiStub.returnsPromise().resolves(unvotedDelegate);
     // write a username
@@ -260,9 +238,6 @@ describe('VoteAutocomplete', () => {
   });
 
   it('should suggest with full username to unvote if finds a voted delegate with a username starting with given string', () => {
-    const clock = sinon.useFakeTimers({
-      toFake: ['setTimeout', 'clearTimeout', 'Date'],
-    });
     const unvoteAutocompleteApiStub = sinon.stub(delegateApi, 'unvoteAutocomplete');
     unvoteAutocompleteApiStub.returnsPromise().resolves([delegates[1]]);
     wrapper.find('.unvotedListSearch input').simulate('change', { target: { value: 'user' } });
@@ -274,9 +249,6 @@ describe('VoteAutocomplete', () => {
   });
 
   it('should let you navigate and choose one of the options by arrow up/down', () => {
-    const clock = sinon.useFakeTimers({
-      toFake: ['setTimeout', 'clearTimeout', 'Date'],
-    });
     const unvoteAutocompleteApiStub = sinon.stub(delegateApi, 'unvoteAutocomplete');
     unvoteAutocompleteApiStub.returnsPromise().resolves([delegates[1]]);
     // write a username
@@ -284,9 +256,9 @@ describe('VoteAutocomplete', () => {
     clock.tick(400);
 
     // Arrow down
-    wrapper.find('.unvotedListSearch input').simulate('keyDown', { keyCode: 40 });
+    wrapper.find('.unvotedListSearch input').simulate('keyDown', { keyCode: keyCodes.arrowDown });
     // Hit enter
-    wrapper.find('.unvotedListSearch input').simulate('keyDown', { keyCode: 13 });
+    wrapper.find('.unvotedListSearch input').simulate('keyDown', { keyCode: keyCodes.enter });
     unvoteAutocompleteApiStub.restore();
     expect(props.voteToggled).to.have.been.calledWith({
       publicKey: delegates[1].publicKey,
