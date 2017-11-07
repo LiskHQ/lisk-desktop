@@ -8,12 +8,16 @@ import i18n from '../../i18n';
 import { VoteAutocompleteRaw as VoteAutocomplete } from './voteAutocomplete';
 
 const votes = {
-  username1: { publicKey: 'sample_key', confirmed: true, unconfirmed: false },
-  username2: { publicKey: 'sample_key', confirmed: false, unconfirmed: true },
+  username1: { publicKey: 'sample_key_1', confirmed: true, unconfirmed: false },
+  username2: { publicKey: 'sample_key_2', confirmed: false, unconfirmed: true },
 };
 const delegates = [
   { username: 'username1', publicKey: '123HG3452245L' },
   { username: 'username2', publicKey: '123HG3522345L' },
+];
+const unvotedDelegate = [
+  { username: 'username3', publicKey: '123HG3522445L' },
+  { username: 'username4', publicKey: '123HG3522545L' },
 ];
 const props = {
   activePeer: {},
@@ -55,38 +59,33 @@ describe('VoteAutocomplete', () => {
     VoteAutocomplete.prototype.handleArrowUp.restore();
   });
 
-  it('should suggestionStatus(false, className) change value of className in state', () => {
+  it('should suggest with full username if finds a non-voted delegate with a username starting with given string', () => {
     const clock = sinon.useFakeTimers({
       toFake: ['setTimeout', 'clearTimeout', 'Date'],
     });
-    wrapper.instance().suggestionStatus(false, 'className');
-    clock.tick(200);
-    expect(wrapper.state('className').match(/hidden/g)).to.have.lengthOf(1);
+    const voteAutocompleteApiStub = sinon.stub(delegateApi, 'voteAutocomplete');
+    voteAutocompleteApiStub.returnsPromise().resolves([{ username: 'username3' }]);
+    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('change', { target: { value: 'user' } });
+
+    clock.tick(300);
+    expect(wrapper.find('Card .vote-auto-complete-list ul').html().indexOf('username3')).to.be.greaterThan(-1);
+    voteAutocompleteApiStub.restore();
   });
 
-  it('should suggestionStatus(true, className) clear value of className in state', () => {
+  it('should suggest with full username if dows not find a non-voted delegate with a username starting with given string', () => {
     const clock = sinon.useFakeTimers({
       toFake: ['setTimeout', 'clearTimeout', 'Date'],
     });
-    wrapper.instance().suggestionStatus(true, 'className');
-    clock.tick(200);
-    expect(wrapper.state('className')).to.be.equal('');
+    const voteAutocompleteApiStub = sinon.stub(delegateApi, 'voteAutocomplete');
+    voteAutocompleteApiStub.returnsPromise().rejects([]);
+    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('change', { target: { value: 'user' } });
+
+    clock.tick(400);
+    const reg = /><\/ul>/;
+    expect(reg.test(wrapper.find('Card .vote-auto-complete-list ul').html())).to.be.equal(true);
+    voteAutocompleteApiStub.restore();
   });
 
-  it('should search hide suggestion boxes when value is equal to ""', () => {
-    const clock = sinon.useFakeTimers({
-      toFake: ['setTimeout', 'clearTimeout', 'Date'],
-    });
-    sinon.spy(VoteAutocomplete.prototype, 'setState');
-    wrapper.instance().search('votedListSearch', '');
-    clock.tick(250);
-    expect(VoteAutocomplete.prototype.setState).to.have.property('callCount', 2);
-    expect(wrapper.state('votedResult')).to.have.lengthOf(0);
-    expect(wrapper.state('unvotedResult')).to.have.lengthOf(0);
-    expect(wrapper.state('votedSuggestionClass').match(/hidden/g)).to.have.lengthOf(1);
-    expect(wrapper.state('unvotedSuggestionClass').match(/hidden/g)).to.have.lengthOf(1);
-    VoteAutocomplete.prototype.setState.restore();
-  });
   it('search should call "voteAutocomplete" when name is equal to "votedListSearch" when search term exists', () => {
     const clock = sinon.useFakeTimers({
       toFake: ['setTimeout', 'clearTimeout', 'Date'],
@@ -155,81 +154,143 @@ describe('VoteAutocomplete', () => {
 
     delegateApiMock.restore();
   });
-  it('should "votedSearchKeydown" call "keyPress"', () => {
-    wrapper.instance().votedSearchKeyDown({});
-    expect(VoteAutocomplete.prototype.keyPress).to.have.property('callCount', 1);
-  });
 
-  it('should "unvotedSearchKeydown" call "keyPress"', () => {
-    wrapper.instance().unvotedSearchKeyDown({});
-    expect(VoteAutocomplete.prototype.keyPress).to.have.property('callCount', 1);
-  });
-
-  it('should keyPress call "handleArrowDown" when event.keyCode is equal to 40', () => {
-    const list = [
-      { address: 'address 0' },
-      { address: 'address 1', hovered: true },
-      { address: 'address 2' },
-    ];
-    wrapper.setState({ votedResult: list });
-    wrapper.instance().keyPress({ keyCode: 40 }, 'votedSuggestionClass', 'votedResult');
-    expect(VoteAutocomplete.prototype.handleArrowDown).to.have.property('callCount', 1);
-  });
-  it('should handleArrowDown select first item in votedResult when no one is selected', () => {
-    const list = [
-      { address: 'address 0' },
-      { address: 'address 1' },
-      { address: 'address 2' },
-    ];
-    wrapper.setState({ votedResult: list });
-    wrapper.instance().handleArrowDown(wrapper.state('votedResult'), 'votedResult');
-    expect(wrapper.state('votedResult')[0].hovered).to.have.be.equal(true);
-  });
-
-  it('should handleArrowDown select first item in unvotedResult when no one is selected', () => {
-    const list = [
-      { address: 'address 0' },
-      { address: 'address 1' },
-      { address: 'address 2' },
-    ];
-    wrapper.setState({ unvotedResult: list });
-    wrapper.instance().handleArrowDown(wrapper.state('unvotedResult'), 'unvotedResult');
-    expect(wrapper.state('unvotedResult')[0].hovered).to.have.be.equal(true);
-  });
-  it('should keyPress call "handleArrowUp" when event.keyCode is equal to 38', () => {
-    const list = [
-      { address: 'address 0' },
-      { address: 'address 1', hovered: true },
-    ];
-    wrapper.setState({ votedResult: list });
-    wrapper.instance().keyPress({ keyCode: 38 }, 'votedSuggestionClass', 'votedResult');
-    expect(VoteAutocomplete.prototype.handleArrowUp).to.have.property('callCount', 1);
-  });
-
-  it('should keyPress hide suggestions when event.keyCode is equal to 27', () => {
-    const returnValue = wrapper.instance()
-      .keyPress({ keyCode: 27 }, 'votedSuggestionClass', 'votedResult');
-    expect(wrapper.state('votedSuggestionClass').match(/hidden/g)).to.have.lengthOf(1);
-    expect(returnValue).to.be.equal(false);
-  });
-
-  it(`should keyPress call "addToVoted" when event.keyCode is equal to 13 and 
-    list name is equal to votedResult`, () => {
-      const list = [{ address: 'address 1', hovered: true }];
-      wrapper.setState({ votedResult: list });
-      const returnValue = wrapper.instance()
-        .keyPress({ keyCode: 13 }, 'votedSuggestionClass', 'votedResult');
-      expect(props.voteToggled).to.have.property('callCount', 1);
-      expect(returnValue).to.be.equal(false);
+  it('should let you choose one of the options by arrow down', () => {
+    const clock = sinon.useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
     });
+    const voteAutocompleteApiStub = sinon.stub(delegateApi, 'voteAutocomplete');
+    voteAutocompleteApiStub.returnsPromise().resolves(unvotedDelegate);
+    // write a username
+    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('change', { target: { value: 'user' } });
+    clock.tick(400);
 
-  it(`should keyPress call "voteToggled" when event.keyCode is equal to 13 and 
-    list name is equal to unvotedResult`, () => {
-      const list = [{ address: 'address 1', hovered: true }];
-      wrapper.setState({ unvotedResult: list });
-      const returnValue = wrapper.instance()
-        .keyPress({ keyCode: 13 }, 'unvotedSuggestionClass', 'unvotedResult');
-      expect(props.voteToggled).to.have.property('callCount', 2);
-      expect(returnValue).to.be.equal(false);
+    // select it with arrow down
+    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: 40 });
+    clock.tick(200);
+    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: 13 });
+    voteAutocompleteApiStub.restore();
+    expect(props.voteToggled).to.have.been.calledWith({
+      publicKey: unvotedDelegate[0].publicKey,
+      username: unvotedDelegate[0].username,
     });
+  });
+
+  it('should let you navigate and choose one of the options by arrow up/down', () => {
+    const clock = sinon.useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
+    const voteAutocompleteApiStub = sinon.stub(delegateApi, 'voteAutocomplete');
+    voteAutocompleteApiStub.returnsPromise().resolves(unvotedDelegate);
+    // write a username
+    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('change', { target: { value: 'user' } });
+    clock.tick(400);
+
+    // Arrow down
+    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: 40 });
+    // Arrow down
+    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: 40 });
+    // Arrow up
+    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: 38 });
+    // Hit enter
+    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: 13 });
+    voteAutocompleteApiStub.restore();
+    expect(props.voteToggled).to.have.been.calledWith({
+      publicKey: unvotedDelegate[0].publicKey,
+      username: unvotedDelegate[0].username,
+    });
+  });
+
+  it('should let you navigate and then escape the suggestion list', () => {
+    const clock = sinon.useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
+    const voteAutocompleteApiStub = sinon.stub(delegateApi, 'voteAutocomplete');
+    voteAutocompleteApiStub.returnsPromise().resolves(unvotedDelegate);
+    // write a username
+    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('change', { target: { value: 'user' } });
+    clock.tick(400);
+
+    // Arrow down
+    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: 40 });
+    // Arrow down
+    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: 40 });
+    // Arrow up
+    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: 38 });
+    // Hit enter
+    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: 27 });
+    voteAutocompleteApiStub.restore();
+    clock.tick(400);
+    const reg = /><\/ul>/;
+    expect(reg.test(wrapper.find('Card .vote-auto-complete-list ul').html())).to.be.equal(true);
+  });
+
+  it('should remove suggestion list if you clean the input', () => {
+    const clock = sinon.useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
+    const voteAutocompleteApiStub = sinon.stub(delegateApi, 'voteAutocomplete');
+    voteAutocompleteApiStub.returnsPromise().resolves(unvotedDelegate);
+    // write a username
+    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('change', { target: { value: 'user' } });
+    clock.tick(400);
+    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('change', { target: { value: '' } });
+    clock.tick(400);
+    voteAutocompleteApiStub.restore();
+    clock.tick(400);
+    const reg = /><\/ul>/;
+    expect(reg.test(wrapper.find('Card .vote-auto-complete-list ul').html())).to.be.equal(true);
+  });
+
+  it('should hide suggestion list if you blur the input', () => {
+    const clock = sinon.useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
+    const voteAutocompleteApiStub = sinon.stub(delegateApi, 'voteAutocomplete');
+    voteAutocompleteApiStub.returnsPromise().resolves(unvotedDelegate);
+    // write a username
+    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('change', { target: { value: 'user' } });
+    clock.tick(400);
+    wrapper.find('.votedListSearch.vote-auto-complete input').simulate('blur', {});
+    clock.tick(400);
+    voteAutocompleteApiStub.restore();
+    clock.tick(400);
+    const reg = /><\/ul>/;
+    expect(reg.test(wrapper.find('Card .vote-auto-complete-list ul').html())).to.be.equal(true);
+  });
+
+  it('should suggest with full username to unvote if finds a voted delegate with a username starting with given string', () => {
+    const clock = sinon.useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
+    const unvoteAutocompleteApiStub = sinon.stub(delegateApi, 'unvoteAutocomplete');
+    unvoteAutocompleteApiStub.returnsPromise().resolves([delegates[1]]);
+    wrapper.find('.unvotedListSearch input').simulate('change', { target: { value: 'user' } });
+
+    clock.tick(300);
+    expect(wrapper.find('Card .unvote-auto-complete-list ul').html()
+      .indexOf(delegates[1].username)).to.be.greaterThan(-1);
+    unvoteAutocompleteApiStub.restore();
+  });
+
+  it('should let you navigate and choose one of the options by arrow up/down', () => {
+    const clock = sinon.useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
+    const unvoteAutocompleteApiStub = sinon.stub(delegateApi, 'unvoteAutocomplete');
+    unvoteAutocompleteApiStub.returnsPromise().resolves([delegates[1]]);
+    // write a username
+    wrapper.find('.unvotedListSearch input').simulate('change', { target: { value: 'user' } });
+    clock.tick(400);
+
+    // Arrow down
+    wrapper.find('.unvotedListSearch input').simulate('keyDown', { keyCode: 40 });
+    // Hit enter
+    wrapper.find('.unvotedListSearch input').simulate('keyDown', { keyCode: 13 });
+    unvoteAutocompleteApiStub.restore();
+    expect(props.voteToggled).to.have.been.calledWith({
+      publicKey: delegates[1].publicKey,
+      username: delegates[1].username,
+    });
+  });
 });
