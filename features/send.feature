@@ -1,4 +1,5 @@
 Feature: Send dialog
+  @testnet
   Scenario: should allow to send when enough funds and correct address form
     Given I'm logged in as "genesis"
     When I click "send button"
