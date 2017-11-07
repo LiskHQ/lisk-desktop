@@ -86,8 +86,7 @@ describe('VoteAutocomplete', () => {
     wrapper.find('.votedListSearch.vote-auto-complete input').simulate('change', { target: { value: 'user' } });
 
     clock.tick(400);
-    const reg = /><\/ul>/;
-    expect(reg.test(wrapper.find('Card .vote-auto-complete-list ul').html())).to.be.equal(true);
+    expect(wrapper.find('Card .vote-auto-complete-list ul')).to.be.blank();
     voteAutocompleteApiStub.restore();
   });
 
@@ -166,7 +165,7 @@ describe('VoteAutocomplete', () => {
     });
   });
 
-  it('should let you navigate and choose one of the options by arrow up/down', () => {
+  it('should let you navigate and choose one of the options in voteList using arrow up/down', () => {
     const voteAutocompleteApiStub = sinon.stub(delegateApi, 'voteAutocomplete');
     voteAutocompleteApiStub.returnsPromise().resolves(unvotedDelegate);
     // write a username
@@ -205,8 +204,7 @@ describe('VoteAutocomplete', () => {
     wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: keyCodes.escape });
     voteAutocompleteApiStub.restore();
     clock.tick(400);
-    const reg = /><\/ul>/;
-    expect(reg.test(wrapper.find('Card .vote-auto-complete-list ul').html())).to.be.equal(true);
+    expect(wrapper.find('Card .vote-auto-complete-list').at(0).prop('className')).to.include('hidden');
   });
 
   it('should remove suggestion list if you clean the input', () => {
@@ -215,12 +213,12 @@ describe('VoteAutocomplete', () => {
     // write a username
     wrapper.find('.votedListSearch.vote-auto-complete input').simulate('change', { target: { value: 'user' } });
     clock.tick(400);
+    wrapper.update();
     wrapper.find('.votedListSearch.vote-auto-complete input').simulate('change', { target: { value: '' } });
-    clock.tick(400);
     voteAutocompleteApiStub.restore();
     clock.tick(400);
-    const reg = /><\/ul>/;
-    expect(reg.test(wrapper.find('Card .vote-auto-complete-list ul').html())).to.be.equal(true);
+    wrapper.update();
+    expect(wrapper.find('Card .vote-auto-complete-list ul')).to.be.blank();
   });
 
   it('should hide suggestion list if you blur the input', () => {
@@ -230,11 +228,10 @@ describe('VoteAutocomplete', () => {
     wrapper.find('.votedListSearch.vote-auto-complete input').simulate('change', { target: { value: 'user' } });
     clock.tick(400);
     wrapper.find('.votedListSearch.vote-auto-complete input').simulate('blur', {});
-    clock.tick(400);
     voteAutocompleteApiStub.restore();
-    clock.tick(400);
-    const reg = /><\/ul>/;
-    expect(reg.test(wrapper.find('Card .vote-auto-complete-list ul').html())).to.be.equal(true);
+    clock.tick(200);
+    wrapper.update();
+    expect(wrapper.find('Card .vote-auto-complete-list').at(0).prop('className')).to.include('hidden');
   });
 
   it('should suggest with full username to unvote if finds a voted delegate with a username starting with given string', () => {
@@ -243,12 +240,11 @@ describe('VoteAutocomplete', () => {
     wrapper.find('.unvotedListSearch input').simulate('change', { target: { value: 'user' } });
 
     clock.tick(300);
-    expect(wrapper.find('Card .unvote-auto-complete-list ul').html()
-      .indexOf(delegates[1].username)).to.be.greaterThan(-1);
+    expect(wrapper.find('Card .unvote-auto-complete-list ul').html()).to.include(delegates[1].username);
     unvoteAutocompleteApiStub.restore();
   });
 
-  it('should let you navigate and choose one of the options by arrow up/down', () => {
+  it('should let you navigate and choose one of the options in unvoteList using arrow up/down', () => {
     const unvoteAutocompleteApiStub = sinon.stub(delegateApi, 'unvoteAutocomplete');
     unvoteAutocompleteApiStub.returnsPromise().resolves([delegates[1]]);
     // write a username
