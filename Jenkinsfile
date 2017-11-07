@@ -12,7 +12,7 @@ def fail(reason) {
 properties([disableConcurrentBuilds(), pipelineTriggers([])])
 node('lisk-nano') {
   try {
-    stage ('Cleanup, Checkout and Start Lisk Core') {
+    stage ('Checkout and Start Lisk Core') {
       try {
         deleteDir()
         checkout scm
@@ -111,7 +111,7 @@ node('lisk-nano') {
       }
     }
 
-    stage ('Start Dev Server and Run E2E Tests') {
+    stage ('Run E2E Tests') {
       try {
         ansiColor('xterm') {
           withCredentials([string(credentialsId: 'lisk-nano-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
