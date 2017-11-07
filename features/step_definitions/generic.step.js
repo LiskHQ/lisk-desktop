@@ -199,5 +199,9 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   When('I scroll to the bottom', () => {
     browser.executeScript('window.scrollBy(0, 10000);');
   });
+
+  Then('I should be logged in', (callback) => {
+    waitForElemAndCheckItsText('.logout-button', 'LOGOUT', callback);
+  });
 });
 

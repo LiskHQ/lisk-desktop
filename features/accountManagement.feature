@@ -45,3 +45,60 @@ Feature: Account management
     When I click "save account" in main menu
     And I click "x button"
     Then I should see no "modal dialog"
+
+  @pending
+  Scenario: should allow to save second account
+    Given I'm logged in as "genesis"
+    When I click "save account" in main menu
+    And I click "save account button"
+    And I click "x button"
+    And I log out
+    And I log in as "delegate"
+    And I click "save account" in main menu
+    And I click "save account button"
+    Then I should see table with 2 lines
+    And I refresh the page
+    And I wait 2 seconds
+    And I should be logged in as "genesis" account
+
+  @pending
+  Scenario: should allow to forget second account
+    Given I'm logged in as "genesis"
+    When I click "save account" in main menu
+    And I click "save account button"
+    And I click "x button"
+    And I log out
+    And I log in as "delegate"
+    And I click "save account" in main menu
+    And I click "save account button"
+    And I should see table with 2 lines
+    And I click "forget account button"
+    Then I should see table with 1 lines
+
+  @pending
+  Scenario: should allow to switch account
+    Given I'm logged in as "genesis"
+    When I click "save account" in main menu
+    And I click "save account button"
+    And I log out
+    And I log in as "delegate"
+    And I click "save account" in main menu
+    And I click "save account button"
+    And I click "x button"
+    And I select option no. 1 from "account" select
+    And I should be logged in as "delegate" account
+
+  @pending
+  Scenario: should allow to set default account
+    Given I'm logged in as "genesis"
+    When I click "save account" in main menu
+    And I click "save account button"
+    And I click "x button"
+    And I log out
+    And I log in as "delegate"
+    And I click "save account" in main menu
+    And I click "save account button"
+    And I click "set as default button"
+    And I select option no. 1 from "account" select
+    And I refresh the page
+    And I should be logged in as "genesis" account
