@@ -86,6 +86,7 @@ Feature: Voting tab
     Then I should see alert dialog with title "Success" and text "Your votes were successfully submitted. It can take several seconds before they are processed."
 
   @integration
+  @pending
   Scenario: should allow to select delegates in the "Vote" dialog and vote for them
     Given I'm logged in as "delegate candidate"
     When I click tab number 2
