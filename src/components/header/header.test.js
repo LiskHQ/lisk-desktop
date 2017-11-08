@@ -49,7 +49,7 @@ describe('Header', () => {
     expect(wrapper.find(RelativeLink)).to.have.length(9);
   });
 
-  it('should have an image with srouce of "logo"', () => {
+  it('should have an image with source of "logo"', () => {
     expect(wrapper.contains(<img className={styles.logo} src={logo} alt="logo" />))
       .to.be.equal(true);
   });

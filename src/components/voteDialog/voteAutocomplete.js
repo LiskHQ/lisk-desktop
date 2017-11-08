@@ -208,14 +208,14 @@ export class VoteAutocompleteRaw extends React.Component {
         </div>
         <section className={styles.searchContainer}>
           <Input type='text' label={this.props.t('Search by username')} name='votedListSearch'
-            className='votedListSearch' value={this.state.votedListSearch}
+            className='votedListSearch vote-auto-complete' value={this.state.votedListSearch}
             error={this.state.votedSuggestionError}
             theme={styles}
             onBlur={this.suggestionStatus.bind(this, false, 'votedSuggestionClass')}
             onKeyDown={this.votedSearchKeyDown.bind(this)}
             onChange={this.search.bind(this, 'votedListSearch')}
             autoComplete='off'/>
-          <Card id='votedResult' className={`${styles.searchResult} ${this.state.votedSuggestionClass}`}>
+          <Card id='votedResult' className={`vote-auto-complete-list ${styles.searchResult} ${this.state.votedSuggestionClass}`}>
             <List>
               {this.state.votedResult.map(
                 item => <ListItem
@@ -249,7 +249,7 @@ export class VoteAutocompleteRaw extends React.Component {
             onKeyDown={this.unvotedSearchKeyDown.bind(this)}
             onChange={this.search.bind(this, 'unvotedListSearch')}
             autoComplete='off'/>
-          <Card id='unvotedResult' className={`${styles.searchResult} ${this.state.unvotedSuggestionClass}`}>
+          <Card id='unvotedResult' className={`unvote-auto-complete-list ${styles.searchResult} ${this.state.unvotedSuggestionClass}`}>
             <List>
               {this.state.unvotedResult.map(
                 item => <ListItem

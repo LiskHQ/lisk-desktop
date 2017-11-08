@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import PassphraseVerifier from './passphraseVerifier';
 
 
@@ -11,44 +11,50 @@ describe('PassphraseVerifier', () => {
     passphrase: 'survey stereo pool fortune oblige slight gravity goddess mistake sentence anchor pool',
     t: key => key,
   };
+  let updateAnswerSpy;
 
-  describe('componentDidMount', () => {
-    it('should call updateAnswer with "false"', () => {
-      const spyFn = spy(props, 'updateAnswer');
-      mount(<PassphraseVerifier {...props} />);
-      expect(spyFn).to.have.been.calledWith();
-      props.updateAnswer.restore();
-    });
+  let wrapper;
+
+  beforeEach(() => {
+    updateAnswerSpy = spy(props, 'updateAnswer');
+    wrapper = mount(<PassphraseVerifier {...props} randomIndex={0.47} />);
   });
 
-  describe('changeHandler', () => {
-    it('call updateAnswer with received value', () => {
-      const spyFn = spy(props, 'updateAnswer');
-      const value = 'sample';
-      const wrapper = shallow(<PassphraseVerifier {...props} />);
-      wrapper.instance().changeHandler(value);
-      expect(spyFn).to.have.been.calledWith();
-      props.updateAnswer.restore();
-    });
+  afterEach(() => {
+    updateAnswerSpy.restore();
   });
 
-  describe('hideRandomWord', () => {
-    it('should break passphrase, hide a word and store all in state', () => {
-      const wrapper = shallow(<PassphraseVerifier {...props} />);
+  it('should initially call updateAnswer with "false"', () => {
+    expect(updateAnswerSpy).to.have.been.calledWith(false);
+  });
 
-      const randomIndex = 0.6;
-      const expectedValues = {
-        passphraseParts: [
-          'survey stereo pool fortune oblige slight ',
-          ' goddess mistake sentence anchor pool',
-        ],
-        missing: 'gravity',
-        answer: '',
-      };
-      const spyFn = spy(wrapper.instance(), 'setState');
+  it('should call updateAnswer every time the input has changed', () => {
+    const value = 'sample value';
 
-      wrapper.instance().hideRandomWord(randomIndex);
-      expect(spyFn).to.have.been.calledWith(expectedValues);
+    updateAnswerSpy.restore();
+    wrapper.find('input').simulate('change', { target: { value } });
+    expect(updateAnswerSpy.callCount).to.be.equal(2);
+  });
+
+  it('should refocus if use blurs the input', () => {
+    const focusSpy = spy();
+    wrapper.find('input').simulate('blur', {
+      nativeEvent: { target: { focus: focusSpy } },
     });
+
+    expect(focusSpy.callCount).to.be.equal(1);
+  });
+
+  it('should break passphrase, hide a word and show it', () => {
+    const expectedValues = [
+      'survey stereo pool fortune oblige ',
+      '-----',
+      ' gravity goddess mistake sentence anchor pool',
+    ];
+    const spanTags = wrapper.find('.passphrase-holder span');
+
+    expect(spanTags.at(0).text()).to.be.equal(expectedValues[0]);
+    expect(spanTags.at(1).text()).to.be.equal(expectedValues[1]);
+    expect(spanTags.at(2).text()).to.be.equal(expectedValues[2]);
   });
 });

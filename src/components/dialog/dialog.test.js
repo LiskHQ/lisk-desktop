@@ -46,7 +46,10 @@ describe('Dialog', () => {
   });
 
   it('should fix the route if there are two dialog names', () => {
-    wrapper.instance().componentDidUpdate();
+    const newProps = Object.assign({}, { dialog: dialogProps, history }, props);
+    newProps.dialog.title = 'Send1';
+    // trying to update the component
+    wrapper.setProps(newProps);
     expect(history.push).to.have.been.calledWith();
   });
 });

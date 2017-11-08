@@ -13,7 +13,8 @@ class PassphraseConfirmator extends React.Component {
 
   componentDidMount() {
     this.props.updateAnswer(false);
-    this.hideRandomWord.call(this);
+    // this.props.randomIndex is used in unit teasing
+    this.hideRandomWord.call(this, this.props.randomIndex);
   }
 
   hideRandomWord(rand = Math.random()) {
@@ -40,7 +41,7 @@ class PassphraseConfirmator extends React.Component {
     return (
       <div className={`passphrase-verifier ${grid.row} ${grid['start-xs']}`}>
         <div className={grid['col-xs-12']}>
-          <p>
+          <p className='passphrase-holder'>
             <span>{this.state.passphraseParts[0]}</span>
             <span className={styles.missing}>-----</span>
             <span>{this.state.passphraseParts[1]}</span>
