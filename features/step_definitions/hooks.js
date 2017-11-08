@@ -41,6 +41,7 @@ defineSupportCode(({ Before, After }) => {
     localStorage.clear();
     localStorage.setItem('address', browser.params.liskCoreURL);
     localStorage.setItem('network', networks[browser.params.network].code);
+    browser.get(browser.params.baseURL);
     callback();
   });
 

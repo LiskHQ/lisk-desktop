@@ -36,7 +36,7 @@ const SaveAccount = ({
           {t('This will save public key of your account on this device, so next time it will launch without the need to log in. However, you will be prompted to enter the passphrase once you want to do any transaction.')}
         </InfoParagraph> :
         <div style={{ margin: '-24px -24px 24px -24px' }} >
-          <Table selectable={false}>
+          <Table selectable={false} className='saved-accounts-table'>
             <TableHead>
               <TableCell style={{ width: 20 }} >{t('Switch')}</TableCell>
               <TableCell>{t('Address')}</TableCell>

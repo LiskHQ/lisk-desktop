@@ -99,6 +99,13 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
       .and.notify(callback);
   });
 
+  Then('I should see "{elementName}" table with {lineCount} lines', (elementName, lineCount, callback) => {
+    browser.sleep(500);
+    expect(element.all(by.css(`table.${elementName.replace(/ /g, '-')} tbody tr`)).count()).to.eventually.equal(parseInt(lineCount, 10))
+      .and.notify(callback);
+  });
+
+
   Then('I should see no "{elementName}"', (elementName, callback) => {
     const selector = `.${elementName.replace(/ /g, '-')}`;
     waitForElemRemoved(selector).then(() => {
@@ -139,7 +146,6 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   });
 
   Given('I\'m logged in as "{accountName}"', { timeout: 2 * defaultTimeout }, (accountName, callback) => {
-    browser.get(browser.params.baseURL);
     const passphrase = browser.params.useTestnetPassphrase
       ? browser.params.testnetPassphrase
       : accounts[accountName].passphrase;
@@ -202,6 +208,10 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
 
   Then('I should be logged in', (callback) => {
     waitForElemAndCheckItsText('.logout-button', 'LOGOUT', callback);
+  });
+
+  Then('I should be logged in as "{accountName}" account', (accountName, callback) => {
+    waitForElemAndCheckItsText('.full.address', accounts[accountName].address, callback);
   });
 });
 

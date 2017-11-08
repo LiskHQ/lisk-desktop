@@ -53,7 +53,7 @@ const Header = props => (
         </MenuItem>
         <MenuDivider />
         <MenuItem theme={styles}>
-          <RelativeLink className={`${styles.menuLink} save-account`}
+          <RelativeLink className={`${styles.menuLink} saved-accounts`}
             to='saved-accounts'>{props.t('Saved accounts')}</RelativeLink>
         </MenuItem>
         <MenuItem theme={styles}>

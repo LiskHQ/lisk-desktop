@@ -1,8 +1,9 @@
 Feature: Account management
   Scenario: should allow to save account locally, after page reload it should require passphrase to do the first transaction, and remember the passphrase for next transactions
     Given I'm logged in as "genesis"
-    When I click "save account" in main menu
-    And I click "save account button"
+    When I click "saved accounts" in main menu
+    And I click "add active account button"
+    And I click "x button"
     And I wait 1 seconds
     And I should see text "Account saved" in "toast" element
     And I refresh the page
@@ -22,83 +23,59 @@ Feature: Account management
     And I click "submit button"
     And I should see alert dialog with title "Success" and text "Your transaction of 2 LSK to 537318935439898807L was accepted and will be processed in a few seconds."
 
-  Scenario: should allow to forget locally saved account
-    Given I'm logged in as "any account"
-    When I click "save account" in main menu
-    And I click "save account button"
-    And I refresh the page
-    And I wait 2 seconds
-    And I click "forget account" in main menu
-    And I wait 1 seconds
-    Then I should see text "Account was successfully forgotten." in "toast" element
-    And I refresh the page
-    And I should be on login page
-
-  Scenario: should allow to exit save account dialog with "cancel button"
-    Given I'm logged in as "any account"
-    When I click "save account" in main menu
-    And I click "cancel button"
-    Then I should see no "modal dialog"
-
-  Scenario: should allow to exit save account dialog with "x button"
-    Given I'm logged in as "any account"
-    When I click "save account" in main menu
-    And I click "x button"
-    Then I should see no "modal dialog"
-
-  @pending
   Scenario: should allow to save second account
     Given I'm logged in as "genesis"
-    When I click "save account" in main menu
-    And I click "save account button"
+    When I click "saved accounts" in main menu
+    And I click "add active account button"
     And I click "x button"
-    And I log out
-    And I log in as "delegate"
-    And I click "save account" in main menu
-    And I click "save account button"
-    Then I should see table with 2 lines
+    And I wait 1 seconds
+    And I click "logout button"
+    And I'm logged in as "delegate"
+    And I click "saved accounts" in main menu
+    And I click "add active account button"
+    Then I should see "saved accounts table" table with 2 lines
     And I refresh the page
     And I wait 2 seconds
     And I should be logged in as "genesis" account
 
-  @pending
   Scenario: should allow to forget second account
     Given I'm logged in as "genesis"
-    When I click "save account" in main menu
-    And I click "save account button"
+    When I click "saved accounts" in main menu
+    And I click "add active account button"
     And I click "x button"
-    And I log out
-    And I log in as "delegate"
-    And I click "save account" in main menu
-    And I click "save account button"
-    And I should see table with 2 lines
-    And I click "forget account button"
-    Then I should see table with 1 lines
+    And I wait 1 seconds
+    And I click "logout button"
+    And I'm logged in as "delegate"
+    And I click "saved accounts" in main menu
+    And I click "add active account button"
+    And I should see "saved accounts table" table with 2 lines
+    And I click "forget button"
+    Then I should see "saved accounts table" table with 1 lines
 
-  @pending
   Scenario: should allow to switch account
     Given I'm logged in as "genesis"
-    When I click "save account" in main menu
-    And I click "save account button"
-    And I log out
-    And I log in as "delegate"
-    And I click "save account" in main menu
-    And I click "save account button"
+    When I click "saved accounts" in main menu
+    And I click "add active account button"
     And I click "x button"
-    And I select option no. 1 from "account" select
-    And I should be logged in as "delegate" account
+    And I wait 1 seconds
+    And I click "logout button"
+    And I'm logged in as "delegate"
+    And I click "saved accounts" in main menu
+    And I click "add active account button"
+    And I click "switch button"
+    And I wait 1 seconds
+    And I should be logged in as "genesis" account
 
   @pending
-  Scenario: should allow to set default account
+  Scenario: should login to last active saved account
     Given I'm logged in as "genesis"
-    When I click "save account" in main menu
-    And I click "save account button"
+    When I click "saved accounts" in main menu
+    And I click "add active account button"
     And I click "x button"
-    And I log out
-    And I log in as "delegate"
-    And I click "save account" in main menu
-    And I click "save account button"
-    And I click "set as default button"
-    And I select option no. 1 from "account" select
+    And I wait 1 seconds
+    And I click "logout button"
+    And I'm logged in as "delegate"
+    And I click "saved accounts" in main menu
+    And I click "add active account button"
     And I refresh the page
-    And I should be logged in as "genesis" account
+    And I should be logged in as "delegate" account
