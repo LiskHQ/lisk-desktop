@@ -15,7 +15,9 @@ const savedAccounts = (state = [], action) => {
         action.data,
       ];
     case actionTypes.accountRemoved:
-      return state.filter(account => account.publicKey !== action.data);
+      return state.filter(account =>
+        !(account.publicKey === action.data.publicKey &&
+        account.network === action.data.network));
     default:
       return state;
   }
