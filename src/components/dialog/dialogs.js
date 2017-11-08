@@ -45,8 +45,8 @@ export default () => ({
     title: i18next.t('New Account'),
     component: Register,
   },
-  'save-account': {
-    title: i18next.t('Remember this account'),
+  'saved-accounts': {
+    title: i18next.t('Saved accounts'),
     component: SaveAccount,
   },
   settings: {
