@@ -18,7 +18,7 @@ describe('actions: savedAccount', () => {
 
   describe('accountsRetrieved', () => {
     it('should create an action to retrieved the saved accounts list', () => {
-      sinon.stub(saveAccountUtils, 'getSavedAccount').returns([data]);
+      sinon.stub(saveAccountUtils, 'getSavedAccounts').returns([data]);
       const expectedAction = {
         data: [data],
         type: actionTypes.accountsRetrieved,

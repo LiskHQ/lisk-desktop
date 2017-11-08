@@ -20,6 +20,11 @@ describe('SaveAccount', () => {
     },
     closeDialog: () => {},
     accountSaved: () => {},
+    accountRemoved: () => {},
+    accountSwitched: () => {},
+    networkOptions: {},
+    publicKey: [],
+    savedAccounts: [],
     t: key => key,
   };
 
@@ -49,10 +54,9 @@ describe('SaveAccount', () => {
     expect(wrapper.find('ActionBar')).to.have.lengthOf(1);
   });
 
-  it('should call props.closeDialog and props.accountSaved on "save button" click', () => {
-    wrapper.find('button.save-account-button').simulate('click');
+  it('should call props.accountSaved on "save button" click', () => {
+    wrapper.find('button.add-active-account-button').simulate('click');
     const componentProps = wrapper.find(SaveAccount).props();
-    expect(componentProps.closeDialog).to.have.been.calledWith();
     expect(componentProps.accountSaved).to.have.been.calledWith();
   });
 });

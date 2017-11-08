@@ -1,16 +1,18 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import { accountSaved } from '../../actions/savedAccounts';
+import { accountSaved, accountRemoved, accountSwitched } from '../../actions/savedAccounts';
 import SaveAccount from './saveAccount';
 
 const mapStateToProps = state => ({
-  address: state.peers.data.options.address,
   publicKey: state.account.publicKey,
-  network: state.peers.data.options.name,
+  networkOptions: state.peers.options,
+  savedAccounts: state.savedAccounts,
 });
 
 const mapDispatchToProps = dispatch => ({
   accountSaved: data => dispatch(accountSaved(data)),
+  accountRemoved: data => dispatch(accountRemoved(data)),
+  accountSwitched: data => dispatch(accountSwitched(data)),
 });
 
 export default connect(

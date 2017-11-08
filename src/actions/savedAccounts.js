@@ -1,5 +1,5 @@
 import actionTypes from '../constants/actions';
-import { getSavedAccount, setSavedAccount, removeSavedAccount } from '../utils/saveAccount';
+import { getSavedAccounts, setSavedAccount, removeSavedAccount, setLastActiveAccount } from '../utils/saveAccount';
 
 /**
  * An action to dispatch accountSaved
@@ -7,6 +7,7 @@ import { getSavedAccount, setSavedAccount, removeSavedAccount } from '../utils/s
  */
 export const accountSaved = (data) => {
   setSavedAccount(data);
+  setLastActiveAccount(data);
   return {
     data,
     type: actionTypes.accountSaved,
@@ -16,10 +17,10 @@ export const accountSaved = (data) => {
 /**
  * An action to dispatch accountRemoved
  */
-export const accountRemoved = (publicKey) => {
-  removeSavedAccount(publicKey);
+export const accountRemoved = (account) => {
+  removeSavedAccount(account);
   return {
-    data: publicKey,
+    data: account,
     type: actionTypes.accountRemoved,
   };
 };
@@ -43,7 +44,7 @@ export const accountSwitched = (account) => {
  *
  */
 export const accountsRetrieved = () => {
-  const accounts = getSavedAccount();
+  const accounts = getSavedAccounts();
   const data = accounts !== undefined ? accounts : [];
   return {
     data,
