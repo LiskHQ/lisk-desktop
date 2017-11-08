@@ -19,3 +19,5 @@ const testsContext = require.context('.', true, /\.test\.js$/);
 testsContext.keys().forEach(testsContext);
 const integrationContext = require.context('../test/integration/', true, /\.test\.js$/);
 integrationContext.keys().forEach(integrationContext);
+const electronTestsContext = require.context('../app', true, /\.test\.js$/);
+electronTestsContext.keys().forEach(electronTestsContext);
