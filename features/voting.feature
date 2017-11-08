@@ -1,10 +1,5 @@
 Feature: Voting tab
-  Scenario: should allow to view delegates
-    Given I'm logged in as "any account"
-    When I click tab number 2
-    Then I should see table with 100 lines
-
-  Scenario: should allow to view more delegates on scroll
+  Scenario: should allow to view delegates and more on scroll
     Given I'm logged in as "any account"
     When I click tab number 2
     Then I should see table with 100 lines
@@ -21,12 +16,9 @@ Feature: Voting tab
     When I click tab number 2
     And I fill in "genesis_42" to "search" field
     Then I should see table with 1 lines
-
-  Scenario: search delegates should provide "no results" message
-    Given I'm logged in as "any account"
-    When I click tab number 2
+    And I clear "search" field
     And I fill in "doesntexist" to "search" field
-    Then I should see table with 0 lines
+    And I should see table with 0 lines
     And I should see text "No delegates found" in "empty message" element
 
   Scenario: should allow to view my votes

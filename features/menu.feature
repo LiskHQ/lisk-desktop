@@ -33,10 +33,7 @@ Feature: Top right menu
     And I click "ok button"
     And I wait 15 seconds
     And I should see text "test" in "delegate name" element 
-
-  Scenario: should not allow to register a delegate again
-    Given I'm logged in as "delegate"
-    Then There is no "register as delegate" in main menu
+    And There is no "register as delegate" in main menu
 
   Scenario: should allow to register a delegate with second passphrase
     Given I'm logged in as "second passphrase account"
