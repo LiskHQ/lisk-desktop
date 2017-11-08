@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { accountSaved, accountRemoved, accountSwitched } from '../../actions/savedAccounts';
-import SaveAccount from './saveAccount';
+import SavedAccounts from './savedAccounts';
 
 const mapStateToProps = state => ({
   publicKey: state.account.publicKey,
@@ -18,4 +18,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(translate()(SaveAccount));
+)(translate()(SavedAccounts));

@@ -1,4 +1,4 @@
-Feature: Account management
+Feature: Saved Accounts 
   Scenario: should allow to save account locally, after page reload it should require passphrase to do the first transaction, and remember the passphrase for next transactions
     Given I'm logged in as "genesis"
     When I click "saved accounts" in main menu

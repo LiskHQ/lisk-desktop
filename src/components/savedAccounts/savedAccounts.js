@@ -7,7 +7,7 @@ import networks from '../../constants/networks';
 import getNetwork from '../../utils/getNetwork';
 import { extractAddress } from '../../utils/api/account';
 
-const SaveAccount = ({
+const SavedAccounts = ({
   networkOptions,
   publicKey,
   closeDialog,
@@ -85,4 +85,4 @@ const SaveAccount = ({
   );
 };
 
-export default SaveAccount;
+export default SavedAccounts;

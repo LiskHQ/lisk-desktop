@@ -5,11 +5,11 @@ import { spy } from 'sinon';
 import configureStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n';
-import SaveAccount from './saveAccount';
+import SavedAccounts from './savedAccounts';
 
 const fakeStore = configureStore();
 
-describe('SaveAccount', () => {
+describe('SavedAccounts', () => {
   let wrapper;
   let closeDialogSpy;
   let accountSavedSpy;
@@ -36,7 +36,7 @@ describe('SaveAccount', () => {
         balance: 100e8,
       },
     });
-    wrapper = mount(<SaveAccount {...props} />, {
+    wrapper = mount(<SavedAccounts {...props} />, {
       context: { store, i18n },
       childContextTypes: {
         store: PropTypes.object.isRequired,
@@ -56,7 +56,7 @@ describe('SaveAccount', () => {
 
   it('should call props.accountSaved on "save button" click', () => {
     wrapper.find('button.add-active-account-button').simulate('click');
-    const componentProps = wrapper.find(SaveAccount).props();
+    const componentProps = wrapper.find(SavedAccounts).props();
     expect(componentProps.accountSaved).to.have.been.calledWith();
   });
 });

@@ -2,7 +2,7 @@ import i18next from 'i18next';
 import ReceiveDialog from '../receiveDialog';
 import Register from '../register';
 import RegisterDelegate from '../registerDelegate';
-import SaveAccount from '../saveAccount';
+import SavedAccounts from '../savedAccounts';
 import SecondPassphrase from '../secondPassphrase';
 import Send from '../send';
 import Settings from '../settings';
@@ -47,7 +47,7 @@ export default () => ({
   },
   'saved-accounts': {
     title: i18next.t('Saved accounts'),
-    component: SaveAccount,
+    component: SavedAccounts,
   },
   settings: {
     title: i18next.t('Settings'),

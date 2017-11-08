@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
 import actionTypes from '../constants/actions';
-import * as saveAccountUtils from '../utils/saveAccount';
+import * as savedAccountsUtils from '../utils/savedAccounts';
 import {
   accountSaved,
   accountRemoved,
@@ -18,7 +18,7 @@ describe('actions: savedAccount', () => {
 
   describe('accountsRetrieved', () => {
     it('should create an action to retrieved the saved accounts list', () => {
-      sinon.stub(saveAccountUtils, 'getSavedAccounts').returns([data]);
+      sinon.stub(savedAccountsUtils, 'getSavedAccounts').returns([data]);
       const expectedAction = {
         data: [data],
         type: actionTypes.accountsRetrieved,

@@ -1,5 +1,5 @@
 import actionTypes from '../constants/actions';
-import { getSavedAccounts, setSavedAccount, removeSavedAccount, setLastActiveAccount } from '../utils/saveAccount';
+import { getSavedAccounts, setSavedAccount, removeSavedAccount, setLastActiveAccount } from '../utils/savedAccounts';
 
 /**
  * An action to dispatch accountSaved

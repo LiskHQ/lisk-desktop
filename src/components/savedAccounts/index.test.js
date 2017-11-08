@@ -5,11 +5,11 @@ import configureMockStore from 'redux-mock-store';
 import sinon from 'sinon';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n';
-import SaveAccountHOC from './index';
+import SavedAccountsHOC from './index';
 import * as savedAccounts from '../../actions/savedAccounts';
 
 
-describe('SaveAccountHOC', () => {
+describe('SavedAccountsHOC', () => {
   let wrapper;
 
   const account = {
@@ -30,7 +30,7 @@ describe('SaveAccountHOC', () => {
   });
 
   beforeEach(() => {
-    wrapper = mount(<SaveAccountHOC closeDialog={() => {}} t={(key => key)} />, {
+    wrapper = mount(<SavedAccountsHOC closeDialog={() => {}} t={(key => key)} />, {
       context: { store, i18n },
       childContextTypes: {
         store: PropTypes.object.isRequired,
@@ -39,13 +39,13 @@ describe('SaveAccountHOC', () => {
     });
   });
 
-  it('should render SaveAccount', () => {
-    expect(wrapper.find('SaveAccount')).to.have.lengthOf(1);
+  it('should render SavedAccounts', () => {
+    expect(wrapper.find('SavedAccounts')).to.have.lengthOf(1);
   });
 
-  it('should bind accountSaved action to SaveAccount props.accountSaved', () => {
+  it('should bind accountSaved action to SavedAccounts props.accountSaved', () => {
     const actionsSpy = sinon.spy(savedAccounts, 'accountSaved');
-    wrapper.find('SaveAccount button.add-active-account-button').simulate('click');
+    wrapper.find('SavedAccounts button.add-active-account-button').simulate('click');
     expect(actionsSpy).to.be.calledWith();
     actionsSpy.restore();
   });
