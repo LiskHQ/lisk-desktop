@@ -4,10 +4,10 @@ import * as locales from 'numeral/locales'; // eslint-disable-line
 import { translate } from 'react-i18next';
 import i18n from '../../i18n';
 
-const FormattedNumber = (props) => {
+const FormattedNumber = ({ val }) => {
   // set numeral language
   numeral.locale(i18n.language);
-  const formatedNumber = numeral(props.val).format('0,0.[0000000000000]');
+  const formatedNumber = numeral(val).format('0,0.[0000000000000]');
   return <span>{formatedNumber}</span>;
 };
 

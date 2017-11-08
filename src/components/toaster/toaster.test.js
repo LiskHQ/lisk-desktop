@@ -5,7 +5,6 @@ import { mount } from 'enzyme';
 import Toaster from './toaster';
 
 describe('Toaster', () => {
-  let wrapper;
   const toasts = [{
     label: 'test',
     type: 'success',
@@ -16,25 +15,33 @@ describe('Toaster', () => {
     hideToast: sinon.spy(),
   };
 
-  beforeEach(() => {
-    wrapper = mount(<Toaster {...toasterProps} />);
-  });
-
   it('renders <Snackbar /> component from react-toolbox', () => {
+    const wrapper = mount(<Toaster {...toasterProps} />);
     expect(wrapper.find('Snackbar')).to.have.length(1);
   });
 
   describe('hideToast', () => {
     it('hides the toast and after the animation ends calls this.props.hideToast()', () => {
+      document.body.prepend(document.createElement('div'));
       const clock = sinon.useFakeTimers({
         toFake: ['setTimeout', 'clearTimeout', 'Date'],
       });
-      wrapper.instance().hideToast(toasts[0]);
-      expect(wrapper.state('hidden')).to.deep.equal({ [toasts[0].index]: true });
-      clock.tick(510);
-      expect(wrapper.state('hidden')).to.deep.equal({ [toasts[0].index]: false });
-      clock.restore();
+      mount(<Toaster {...toasterProps} />, { attachTo: document.body.firstChild });
+      let toastElement = document.getElementsByClassName('toast');
+
+      // check if the toast is activated
+      expect(toastElement.length > 0 &&
+        toastElement[0].className.indexOf('active') > 0)
+        .to.equal(true);
+
+      clock.tick(4510);
+
+      // check if the toast is deactivated
+      toastElement = document.getElementsByClassName('toast');
+
+      // check if hideToast is called
       expect(toasterProps.hideToast).to.have.been.calledWith(toasts[0]);
+      clock.restore();
     });
   });
 });
