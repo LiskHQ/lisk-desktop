@@ -25,6 +25,17 @@ export const accountRemoved = (publicKey) => {
 };
 
 /**
+ * An action to dispatch accountSwitched
+ */
+export const accountSwitched = (account) => {
+  setLastActiveAccount(account);
+  return {
+    data: account,
+    type: actionTypes.accountSwitched,
+  };
+};
+
+/**
  * The action to initiate savedAccounts store with the retrieved accounts
  *
  * @todo since the utility returns only one item, this action puts it in the array

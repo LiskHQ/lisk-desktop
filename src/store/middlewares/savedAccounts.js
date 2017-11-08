@@ -1,6 +1,9 @@
 import i18next from 'i18next';
 import actionTypes from '../../constants/actions';
 import { successToastDisplayed } from '../../actions/toaster';
+import { accountLoggedOut } from '../../actions/account';
+import { activePeerSet } from '../../actions/peers';
+import getNetwork from '../../utils/getNetwork';
 
 const savedAccountsMiddleware = store => next => (action) => {
   next(action);
@@ -10,6 +13,13 @@ const savedAccountsMiddleware = store => next => (action) => {
       break;
     case actionTypes.accountRemoved:
       store.dispatch(successToastDisplayed({ label: i18next.t('Account was successfully forgotten.') }));
+      break;
+    case actionTypes.accountSwitched:
+      store.dispatch(accountLoggedOut());
+      store.dispatch(activePeerSet({
+        publicKey: action.data.publicKey,
+        network: getNetwork(action.data.network),
+      }));
       break;
     default:
       break;
