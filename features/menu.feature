@@ -12,12 +12,14 @@ Feature: Top right menu
     Given I'm logged in as "second passphrase account"
     Then There is no "register second passphrase" in main menu
 
+  @integration
   Scenario: should not allow to set 2nd passphrase if not enough funds for the fee
     Given I'm logged in as "empty account"
     When I click "register second passphrase" in main menu
     Then I should see "Insufficient funds for 5 LSK fee" error message
     And "next button" should be disabled
 
+  @integration
   Scenario: should allow to exit 2nd passphrase registration dialog
     Given I'm logged in as "genesis"
     When I click "register second passphrase" in main menu
@@ -43,12 +45,14 @@ Feature: Top right menu
     And I click "register button"
     Then I should see alert dialog with title "Success" and text "Delegate registration was successfully submitted with username: "test2". It can take several seconds before it is processed."
 
+  @integration
   Scenario: should allow to exit delegate registration dialog
     Given I'm logged in as "genesis"
     When I click "register as delegate" in main menu
     And I click "cancel button"
     Then I should see no "modal dialog"
 
+  @integration
   Scenario: should not allow to register delegate if not enough funds for the fee
     Given I'm logged in as "empty account"
     When I click "register as delegate" in main menu
@@ -72,12 +76,14 @@ Feature: Top right menu
          -----END LISK SIGNED MESSAGE-----
          """
 
+  @integration
   Scenario: should allow to exit sign message dialog with "cancel button"
     Given I'm logged in as "any account"
     When I click "sign message" in main menu
     And I click "cancel button"
     Then I should see no "modal dialog"
 
+  @integration
   Scenario: should allow to exit sign message dialog with "x button"
     Given I'm logged in as "any account"
     When I click "sign message" in main menu
@@ -91,6 +97,7 @@ Feature: Top right menu
     And  I fill in "079331d868678fd5f272f09d6dc8792fb21335aec42af7f11caadbfbc17d4707e7d7f343854b0c619b647b81ba3f29b23edb4eaf382a47c534746bad4529560b48656c6c6f20776f726c64" to "signature" field
     Then I should see "Hello world" in "result" field
 
+  @integration
   Scenario: should allow to exit verify message dialog
     Given I'm logged in as "any account"
     When I click "verify message" in main menu

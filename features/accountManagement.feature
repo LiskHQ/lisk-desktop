@@ -34,12 +34,14 @@ Feature: Account management
     And I refresh the page
     And I should be on login page
 
+  @integration
   Scenario: should allow to exit save account dialog with "cancel button"
     Given I'm logged in as "any account"
     When I click "save account" in main menu
     And I click "cancel button"
     Then I should see no "modal dialog"
 
+  @integration
   Scenario: should allow to exit save account dialog with "x button"
     Given I'm logged in as "any account"
     When I click "save account" in main menu

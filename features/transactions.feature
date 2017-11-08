@@ -6,6 +6,7 @@ Feature: Transactions tab
     When I scroll to the bottom
     Then I should see table with 60 lines
 
+  @integration
   Scenario: should allow send to address
     Given I'm logged in as "genesis"
     When I click tab number 1
@@ -14,6 +15,7 @@ Feature: Transactions tab
     And I click "submit button"
     Then I should see alert dialog with title "Success" and text "Your transaction of 1 LSK to 537318935439898807L was accepted and will be processed in a few seconds."
 
+  @integration
   @pending
   Scenario: should allow to repeat the transaction
     Given I'm logged in as "genesis"
