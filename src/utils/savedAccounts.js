@@ -1,11 +1,12 @@
 export const getSavedAccounts = () => {
   const savedAccounts = localStorage.getItem('accounts');
-  let accounts = [];
   if (savedAccounts) {
-    accounts = JSON.parse(savedAccounts);
+    const accounts = JSON.parse(savedAccounts);
+    if (accounts instanceof Array) {
+      return accounts;
+    }
   }
-
-  return accounts;
+  return [];
 };
 
 export const getLastActiveAccount = () => (
@@ -21,17 +22,20 @@ export const setLastActiveAccount = ({ publicKey, network, address }) => {
   if (lastActiveAccountIndex > -1) {
     localStorage.setItem('lastActiveAccountIndex', lastActiveAccountIndex);
   }
+  return lastActiveAccountIndex;
 };
 
 export const setSavedAccount = ({ publicKey, network, address }) => {
-  localStorage.setItem('accounts', JSON.stringify([
+  const savedAccounts = [
     ...getSavedAccounts(),
     {
       publicKey,
       network,
       address,
     },
-  ]));
+  ];
+  localStorage.setItem('accounts', JSON.stringify(savedAccounts));
+  return savedAccounts;
 };
 
 export const removeSavedAccount = ({ network, publicKey }) => {
