@@ -18,12 +18,19 @@ describe('actions: savedAccount', () => {
 
   describe('accountsRetrieved', () => {
     it('should create an action to retrieved the saved accounts list', () => {
-      sinon.stub(savedAccountsUtils, 'getSavedAccounts').returns([data]);
+      const getSavedAccountsStub = sinon.stub(savedAccountsUtils, 'getSavedAccounts').returns([data]);
+      const getLastActiveAccountStub = sinon.stub(savedAccountsUtils, 'getLastActiveAccount').returns(data);
       const expectedAction = {
-        data: [data],
+        data: {
+          accounts: [data],
+          lastActive: data,
+        },
         type: actionTypes.accountsRetrieved,
       };
       expect(accountsRetrieved()).to.be.deep.equal(expectedAction);
+
+      getSavedAccountsStub.restore();
+      getLastActiveAccountStub.restore();
     });
   });
 

@@ -26,7 +26,7 @@ describe('SavedAccountsHOC', () => {
     peers,
     account,
     activePeerSet: () => {},
-    savedAccounts: [],
+    savedAccounts: { accounts: [] },
   });
 
   beforeEach(() => {

@@ -6,7 +6,7 @@ import SavedAccounts from './savedAccounts';
 const mapStateToProps = state => ({
   publicKey: state.account.publicKey,
   networkOptions: state.peers.options,
-  savedAccounts: state.savedAccounts,
+  savedAccounts: state.savedAccounts.accounts,
 });
 
 const mapDispatchToProps = dispatch => ({

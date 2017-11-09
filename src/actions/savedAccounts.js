@@ -1,5 +1,11 @@
 import actionTypes from '../constants/actions';
-import { getSavedAccounts, setSavedAccount, removeSavedAccount, setLastActiveAccount } from '../utils/savedAccounts';
+import {
+  getSavedAccounts,
+  setSavedAccount,
+  removeSavedAccount,
+  setLastActiveAccount,
+  getLastActiveAccount,
+} from '../utils/savedAccounts';
 
 /**
  * An action to dispatch accountSaved
@@ -43,11 +49,10 @@ export const accountSwitched = (account) => {
  * eventually it should receive an array and return that to reducer
  *
  */
-export const accountsRetrieved = () => {
-  const accounts = getSavedAccounts();
-  const data = accounts !== undefined ? accounts : [];
-  return {
-    data,
-    type: actionTypes.accountsRetrieved,
-  };
-};
+export const accountsRetrieved = () => ({
+  data: {
+    accounts: getSavedAccounts() || [],
+    lastActive: getLastActiveAccount(),
+  },
+  type: actionTypes.accountsRetrieved,
+});
