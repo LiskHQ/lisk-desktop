@@ -1,0 +1,13 @@
+.tableWrapper {
+  margin: -24px -24px 24px -24px;
+}
+
+.iconCell {
+  width: 24px;
+  text-align: right;
+}
+
+.isActive {
+  background-color: #d6f0ff !important;
+  font-weight: bold;
+}

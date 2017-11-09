@@ -7,6 +7,8 @@ import networks from '../../constants/networks';
 import getNetwork from '../../utils/getNetwork';
 import { extractAddress } from '../../utils/api/account';
 
+import styles from './savedAccounts.css';
+
 const SavedAccounts = ({
   networkOptions,
   publicKey,
@@ -35,18 +37,18 @@ const SavedAccounts = ({
         <InfoParagraph>
           {t('This will save public key of your account on this device, so next time it will launch without the need to log in. However, you will be prompted to enter the passphrase once you want to do any transaction.')}
         </InfoParagraph> :
-        <div style={{ margin: '-24px -24px 24px -24px' }} >
+        <div className={styles.tableWrapper} >
           <Table selectable={false} className='saved-accounts-table'>
             <TableHead>
-              <TableCell style={{ width: 20 }} >{t('Switch')}</TableCell>
+              <TableCell className={styles.iconCell} >{t('Switch')}</TableCell>
               <TableCell>{t('Address')}</TableCell>
               <TableCell>{t('Network')}</TableCell>
-              <TableCell style={{ 'text-align': 'right' }}>{t('Forget')}</TableCell>
+              <TableCell className={styles.iconCell} >{t('Forget')}</TableCell>
             </TableHead>
             {savedAccounts.map(account => (
               <TableRow key={account.publicKey + account.network}
-                style={{ 'font-weight': (isActive(account) ? 'bold' : 'normal') }}>
-                <TableCell style={{ width: 20 }} >
+                className={(isActive(account) ? styles.isActive : null)}>
+                <TableCell className={styles.iconCell} >
                   <IconButton icon='exit_to_app'
                     disabled={isActive(account)}
                     className='switch-button'
@@ -60,7 +62,7 @@ const SavedAccounts = ({
                     account.address :
                     t((getNetwork(account.network) || {}).name)}
                 </TableCell>
-                <TableCell style={{ 'text-align': 'right' }}>
+                <TableCell className={styles.iconCell} >
                   <IconButton icon='clear' className='forget-button'
                     onClick={accountRemoved.bind(this, account)} />
                 </TableCell>
