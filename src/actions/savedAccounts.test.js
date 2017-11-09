@@ -4,6 +4,7 @@ import actionTypes from '../constants/actions';
 import * as savedAccountsUtils from '../utils/savedAccounts';
 import {
   accountSaved,
+  accountSwitched,
   accountRemoved,
   accountsRetrieved,
 } from './savedAccounts';
@@ -41,6 +42,16 @@ describe('actions: savedAccount', () => {
         type: actionTypes.accountSaved,
       };
       expect(accountSaved(data)).to.be.deep.equal(expectedAction);
+    });
+  });
+
+  describe('accountSwitched', () => {
+    it('should create an action to save account', () => {
+      const expectedAction = {
+        data,
+        type: actionTypes.accountSwitched,
+      };
+      expect(accountSwitched(data)).to.be.deep.equal(expectedAction);
     });
   });
 

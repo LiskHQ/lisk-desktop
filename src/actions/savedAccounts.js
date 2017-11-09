@@ -51,7 +51,7 @@ export const accountSwitched = (account) => {
  */
 export const accountsRetrieved = () => ({
   data: {
-    accounts: getSavedAccounts() || [],
+    accounts: getSavedAccounts(),
     lastActive: getLastActiveAccount(),
   },
   type: actionTypes.accountsRetrieved,
