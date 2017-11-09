@@ -30,13 +30,13 @@ Feature: Saved Accounts
     And I click "x button"
     And I wait 1 seconds
     And I click "logout button"
-    And I'm logged in as "delegate"
+    And I'm logged in as "empty account"
     And I click "saved accounts" in main menu
     And I click "add active account button"
     Then I should see "saved accounts table" table with 2 lines
     And I refresh the page
     And I wait 2 seconds
-    And I should be logged in as "genesis" account
+    And I should be logged in as "empty account" account
 
   Scenario: should allow to forget second account
     Given I'm logged in as "genesis"
