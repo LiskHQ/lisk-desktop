@@ -1,35 +1,18 @@
 import React from 'react';
-import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { step } from 'mocha-steps';
-import { HashRouter as Router } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { I18nextProvider } from 'react-i18next';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
-import thunk from 'redux-thunk';
-// import Lisk from 'lisk-js';
+import { prepareStore, renderWithRouter } from '../../utils/ApplicationInit';
 import actionTypes from '../../constants/actions';
-import i18n from '../../i18n'; // initialized i18next instance
 import accountReducer from '../../store/reducers/account';
 import votingReducer from '../../store/reducers/voting';
 import peersReducer from '../../store/reducers/peers';
 import { accountLoggedIn } from '../../actions/account';
 import { delegatesAdded } from '../../actions/voting';
 import * as delegateApi from '../../utils/api/delegate';
-// import { activePeerSet } from '../../actions/peers';
 import VoteDialog from './index';
 
-const App = combineReducers({
-  account: accountReducer,
-  voting: votingReducer,
-  peers: peersReducer,
-});
-
-// const votes = {
-//   username1: { publicKey: 'sample_key', confirmed: true, unconfirmed: false },
-//   username2: { publicKey: 'sample_key', confirmed: false, unconfirmed: true },
-// };
 const delegates = [
   { username: 'username1', publicKey: '123HG3452245L' },
   { username: 'username2', publicKey: '123HG3522345L' },
@@ -46,9 +29,13 @@ const keyCodes = {
   escape: 27,
 };
 
-const store = createStore(App, applyMiddleware(thunk));
+const store = prepareStore({
+    account: accountReducer,
+    voting: votingReducer,
+    peers: peersReducer,
+  });
 
-describe.only('@integration test', () => {
+describe.only('VoteDialog integration test', () => {
   const realAccount = {
     address: '16313739661670634666L',
     balance: '346215336704',
@@ -96,23 +83,12 @@ describe.only('@integration test', () => {
     },
   };
 
-  const renderWithRouter = Component =>
-    <Provider store={ store }>
-      <Router>
-        <I18nextProvider i18n={ i18n }>
-          <Component />
-        </I18nextProvider>
-      </Router>
-    </Provider>;
-
   store.dispatch(accountLoggedIn(realAccount));
   store.dispatch({
     data: peers,
     type: actionTypes.activePeerSet,
   });
-  const component = renderWithRouter(VoteDialog);
-  const wrapper = mount(component);
-
+  const wrapper = mount(renderWithRouter(VoteDialog, store));
 
   const clock = sinon.useFakeTimers({
     toFake: ['setTimeout', 'clearTimeout', 'Date'],
@@ -124,11 +100,11 @@ describe.only('@integration test', () => {
     expect(store.getState().peers).to.be.an('Object');
   });
 
-  step('Should confirm button be disable', () => {
+  step('Should confirm button be disabled when there is no item in voteList', () => {
     expect(wrapper.find('.primary-button button').props().disabled).to.be.equal(true);
   });
 
-  step('Should confirm button be enabled', () => {
+  step('Should confirm button become enabled when an item added to voteList', () => {
     store.dispatch(delegatesAdded({
       list: delegates,
       totalDelegates: 100,
@@ -148,5 +124,11 @@ describe.only('@integration test', () => {
     wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: keyCodes.enter });
     wrapper.update();
     expect(wrapper.find('.primary-button button').props().disabled).to.be.equal(false);
+  });
+
+  step('Should confirm button become disabled when the only item voteList is deleted', () => {
+    wrapper.find('.vote-list span').last().simulate('click');
+    wrapper.update();
+    expect(wrapper.find('.primary-button button').props().disabled).to.be.equal(true);
   });
 });
