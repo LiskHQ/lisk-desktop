@@ -8,7 +8,6 @@ import i18n from '../../i18n';
 import SavedAccountsHOC from './index';
 import * as savedAccounts from '../../actions/savedAccounts';
 
-
 describe('SavedAccountsHOC', () => {
   let wrapper;
 
@@ -45,7 +44,21 @@ describe('SavedAccountsHOC', () => {
 
   it('should bind accountSaved action to SavedAccounts props.accountSaved', () => {
     const actionsSpy = sinon.spy(savedAccounts, 'accountSaved');
-    wrapper.find('SavedAccounts button.add-active-account-button').simulate('click');
+    wrapper.find('SavedAccounts').props().accountSaved({});
+    expect(actionsSpy).to.be.calledWith();
+    actionsSpy.restore();
+  });
+
+  it('should bind accountRemoved action to SavedAccounts props.accountRemoved', () => {
+    const actionsSpy = sinon.spy(savedAccounts, 'accountRemoved');
+    wrapper.find('SavedAccounts').props().accountRemoved({});
+    expect(actionsSpy).to.be.calledWith();
+    actionsSpy.restore();
+  });
+
+  it('should bind accountSwitched action to SavedAccounts props.accountSwitched', () => {
+    const actionsSpy = sinon.spy(savedAccounts, 'accountSwitched');
+    wrapper.find('SavedAccounts').props().accountSwitched({});
     expect(actionsSpy).to.be.calledWith();
     actionsSpy.restore();
   });
