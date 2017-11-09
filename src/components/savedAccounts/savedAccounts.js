@@ -60,7 +60,7 @@ const SavedAccounts = ({
                 <TableCell>
                   {account.network === networks.customNode.code ?
                     account.address :
-                    t((getNetwork(account.network) || {}).name)}
+                    t(getNetwork(account.network).name)}
                 </TableCell>
                 <TableCell className={styles.iconCell} >
                   <IconButton icon='clear' className='forget-button'

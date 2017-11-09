@@ -13,17 +13,32 @@ describe('SavedAccounts', () => {
   let wrapper;
   let closeDialogSpy;
   let accountSavedSpy;
+  const publicKey = 'fab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88';
+  const savedAccounts = [
+    {
+      publicKey: 'hab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88',
+      network: 0,
+    },
+    {
+      network: 2,
+      publicKey,
+      address: 'http://localhost:4000',
+    },
+    {
+      network: 0,
+      publicKey,
+    },
+  ];
 
   const props = {
-    account: {
-      publicKey: 'fab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88',
-    },
     closeDialog: () => {},
     accountSaved: () => {},
     accountRemoved: () => {},
     accountSwitched: () => {},
-    networkOptions: {},
-    publicKey: [],
+    networkOptions: {
+      code: 0,
+    },
+    publicKey,
     savedAccounts: [],
     t: key => key,
   };
@@ -58,6 +73,20 @@ describe('SavedAccounts', () => {
     wrapper.find('button.add-active-account-button').simulate('click');
     const componentProps = wrapper.find(SavedAccounts).props();
     expect(componentProps.accountSaved).to.have.been.calledWith();
+  });
+
+  it('should render InfoParagraph', () => {
+    wrapper.find('button.add-active-account-button').simulate('click');
+    expect(wrapper.find('InfoParagraph')).to.have.lengthOf(1);
+  });
+
+  it('should render savedAccounts.length table rows', () => {
+    wrapper.find('button.add-active-account-button').simulate('click');
+    wrapper.setProps({
+      ...props,
+      savedAccounts,
+    });
+    expect(wrapper.find('TableRow')).to.have.lengthOf(savedAccounts.length);
   });
 });
 
