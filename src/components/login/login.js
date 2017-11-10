@@ -127,7 +127,6 @@ class Login extends React.Component {
 
   autoLogin() {
     const { savedAccounts } = this.props;
-    console.log('dass', savedAccounts);
     if (savedAccounts && savedAccounts.lastActive && !this.props.account.afterLogout) {
       this.account = savedAccounts.lastActive;
       const network = Object.assign({}, getNetwork(this.account.network));
