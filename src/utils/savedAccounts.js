@@ -48,8 +48,11 @@ export const setSavedAccount = ({ publicKey, network, address }) => {
   return savedAccounts;
 };
 
-export const removeSavedAccount = ({ network, publicKey }) => {
+export const removeSavedAccount = ({ publicKey, network, address }) => {
   const accounts = getSavedAccounts().filter(account =>
-    !(account.publicKey === publicKey && account.network === network));
+    !(account.publicKey === publicKey &&
+      account.network === network &&
+      account.address === address));
   localStorage.setItem('accounts', JSON.stringify(accounts));
+  return accounts;
 };
