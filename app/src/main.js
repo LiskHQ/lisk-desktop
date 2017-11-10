@@ -200,4 +200,4 @@ ipcMain.on('request-locale', () => {
   getConfig();
 });
 
-autoUpdater(app, win);
+autoUpdater(app);

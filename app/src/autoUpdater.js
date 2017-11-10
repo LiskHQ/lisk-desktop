@@ -1,7 +1,7 @@
 import { autoUpdater, dialog } from 'electron'; // eslint-disable-line import/no-extraneous-dependencies
 import i18n from './i18n';
 
-export default (app, win) => {
+export default (app) => {
   try {
     const feedUrl = `https://nuts.lisk.io/update/${process.platform}/${app.getVersion()}`;
     autoUpdater.setFeedURL(feedUrl);
@@ -11,20 +11,19 @@ export default (app, win) => {
       autoUpdater.checkForUpdates();
     }, 24 * 60 * 60 * 1000);
 
-    autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName, releaseDate, updateUrl, quitAndUpdate) => {
-      const index = dialog.showMessageBox(win, {
+    autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
+      const dialogOpts = {
         type: 'info',
         buttons: [i18n.t('Restart'), i18n.t('Later')],
-        title: i18n.t('Lisk Nano'),
-        message: i18n.t('The new version has been downloaded. Please restart the application to apply the updates.'),
-        detail: `${releaseName}\n\n${releaseNotes}`,
+        title: i18n.t('New version of Lisk Nano available'),
+        message: i18n.t('Version {{version}} has been downloaded. Please restart the application to apply the updates.', { version: releaseName }),
+      };
+
+      dialog.showMessageBox(dialogOpts, (pressedButtonIndex) => {
+        if (pressedButtonIndex === 0) {
+          autoUpdater.quitAndInstall();
+        }
       });
-
-      if (index === 1) {
-        return;
-      }
-
-      quitAndUpdate();
     });
 
     autoUpdater.on('error', (message) => {
