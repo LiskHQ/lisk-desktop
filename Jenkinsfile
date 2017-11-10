@@ -45,7 +45,7 @@ node('lisk-nano') {
 
       try {
         sh '''
-        N=${EXECUTOR_NUMBER:-0}
+        N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
         cd ~/lisk-Linux-x86_64
         # work around core bug: config.json gets overwritten; use backup
         cp .config.json config_$N.json
@@ -138,7 +138,7 @@ node('lisk-nano') {
         ansiColor('xterm') {
           withCredentials([string(credentialsId: 'lisk-nano-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
             sh '''
-            N=${EXECUTOR_NUMBER:-0}
+            N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
 
             # End to End test configuration
             export DISPLAY=:1$N
@@ -161,7 +161,7 @@ node('lisk-nano') {
     echo "Error: ${err}"
   } finally {
     sh '''
-    N=${EXECUTOR_NUMBER:-0}
+    N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
     curl --verbose http://127.0.0.1:400$N/api/blocks/getNethash || true
     ( cd ~/lisk-Linux-x86_64 && bash lisk.sh stop_node -p etc/pm2-lisk_$N.json ) || true
     pgrep --list-full -f "Xvfb :1$N" || true
