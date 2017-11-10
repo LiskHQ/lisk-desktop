@@ -1,10 +1,5 @@
 Feature: Voting tab
-  Scenario: should allow to view delegates
-    Given I'm logged in as "any account"
-    When I click tab number 2
-    Then I should see table with 100 lines
-
-  Scenario: should allow to view more delegates on scroll
+  Scenario: should allow to view delegates and more on scroll
     Given I'm logged in as "any account"
     When I click tab number 2
     Then I should see table with 100 lines
@@ -21,20 +16,19 @@ Feature: Voting tab
     When I click tab number 2
     And I fill in "genesis_42" to "search" field
     Then I should see table with 1 lines
-
-  Scenario: search delegates should provide "no results" message
-    Given I'm logged in as "any account"
-    When I click tab number 2
+    And I clear "search" field
     And I fill in "doesntexist" to "search" field
-    Then I should see table with 0 lines
+    And I should see table with 0 lines
     And I should see text "No delegates found" in "empty message" element
 
+  @integration
   Scenario: should allow to view my votes
     Given I'm logged in as "genesis"
     When I click tab number 2
     And I click "my votes button"
     Then I should see delegates list with 101 lines
 
+  @integration
   Scenario: should not allow to vote if not enough funds for the fee
     Given I'm logged in as "empty account"
     When I click tab number 2
@@ -43,6 +37,7 @@ Feature: Voting tab
     Then I should see "Insufficient funds for 1 LSK fee" error message
     And "submit button" should be disabled
 
+  @integration
   Scenario: should display voting bar with numbers of selected votes if any selected
     Given I'm logged in as "delegate candidate"
     When I click tab number 2
@@ -90,6 +85,8 @@ Feature: Voting tab
     And I click "submit button"
     Then I should see alert dialog with title "Success" and text "Your votes were successfully submitted. It can take several seconds before they are processed."
 
+  @integration
+  @pending
   Scenario: should allow to select delegates in the "Vote" dialog and vote for them
     Given I'm logged in as "delegate candidate"
     When I click tab number 2
@@ -98,6 +95,7 @@ Feature: Voting tab
     And I click "submit button"
     Then I should see alert dialog with title "Success" and text "Your votes were successfully submitted. It can take several seconds before they are processed."
 
+  @integration
   Scenario: should allow to remove votes form delegates
     Given I'm logged in as "genesis"
     When I click tab number 2
@@ -108,6 +106,7 @@ Feature: Voting tab
     And I click "submit button"
     Then I should see alert dialog with title "Success" and text "Your votes were successfully submitted. It can take several seconds before they are processed."
 
+  @integration
   Scenario: should allow to exit vote dialog
     Given I'm logged in as "genesis"
     When I click tab number 2
