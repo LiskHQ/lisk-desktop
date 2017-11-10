@@ -1,9 +1,8 @@
-import React from 'react';
 import { step } from 'mocha-steps';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
-import { prepareStore, renderWithRouter } from '../../utils/ApplicationInit';
+import { prepareStore, renderWithRouter } from '../../utils/applicationInit';
 import actionTypes from '../../constants/actions';
 import accountReducer from '../../store/reducers/account';
 import votingReducer from '../../store/reducers/voting';
@@ -30,10 +29,10 @@ const keyCodes = {
 };
 
 const store = prepareStore({
-    account: accountReducer,
-    voting: votingReducer,
-    peers: peersReducer,
-  });
+  account: accountReducer,
+  voting: votingReducer,
+  peers: peersReducer,
+});
 
 describe.only('VoteDialog integration test', () => {
   const realAccount = {
@@ -94,17 +93,17 @@ describe.only('VoteDialog integration test', () => {
     toFake: ['setTimeout', 'clearTimeout', 'Date'],
   });
 
-  step('should account exist in store', () => {
+  step('user is login in', () => {
     expect(store.getState().account).to.be.an('Object');
     expect(store.getState().voting).to.be.an('Object');
     expect(store.getState().peers).to.be.an('Object');
   });
 
-  step('Should confirm button be disabled when there is no item in voteList', () => {
+  step('when he doesn\'t vote to any delegates confirm button should be disabled', () => {
     expect(wrapper.find('.primary-button button').props().disabled).to.be.equal(true);
   });
 
-  step('Should confirm button become enabled when an item added to voteList', () => {
+  step('Then user add an item to voteList and confirm button should become enabled', () => {
     store.dispatch(delegatesAdded({
       list: delegates,
       totalDelegates: 100,
@@ -126,9 +125,10 @@ describe.only('VoteDialog integration test', () => {
     expect(wrapper.find('.primary-button button').props().disabled).to.be.equal(false);
   });
 
-  step('Should confirm button become disabled when the only item voteList is deleted', () => {
+  step('When user deletes all items form voteList confirm button should become disabled', () => {
     wrapper.find('.vote-list span').last().simulate('click');
     wrapper.update();
     expect(wrapper.find('.primary-button button').props().disabled).to.be.equal(true);
+    clock.restore();
   });
 });
