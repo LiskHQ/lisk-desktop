@@ -16,7 +16,7 @@ export const renderWithRouter = (Component, store) =>
   <Provider store={ store }>
     <Router>
       <I18nextProvider i18n={ i18n }>
-      <Component />
+        <Component />
       </I18nextProvider>
     </Router>
   </Provider>;
