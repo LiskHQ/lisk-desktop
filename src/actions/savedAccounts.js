@@ -11,11 +11,11 @@ import {
  * An action to dispatch accountSaved
  *
  */
-export const accountSaved = (data) => {
-  setSavedAccount(data);
-  setLastActiveAccount(data);
+export const accountSaved = (account) => {
+  setSavedAccount(account);
+  setLastActiveAccount(account);
   return {
-    data,
+    data: account,
     type: actionTypes.accountSaved,
   };
 };
