@@ -4,7 +4,7 @@ import path from 'path';
 import storage from 'electron-json-storage'; // eslint-disable-line import/no-extraneous-dependencies
 import i18n from './i18n';
 import buildMenu from './menu';
-
+import autoUpdater from './autoUpdater';
 
 const { app, BrowserWindow, Menu, ipcMain } = electron;
 
@@ -199,3 +199,5 @@ ipcMain.on('set-locale', (event, locale) => {
 ipcMain.on('request-locale', () => {
   getConfig();
 });
+
+autoUpdater(app, win);
