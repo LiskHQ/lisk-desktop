@@ -1,12 +1,22 @@
-export const getSavedAccounts = () => {
-  const savedAccounts = localStorage.getItem('accounts');
-  if (savedAccounts) {
-    const accounts = JSON.parse(savedAccounts);
-    if (accounts instanceof Array) {
-      return accounts;
-    }
+import { validateUrl } from './login';
+import { extractAddress } from './api/account';
+
+const isValidSavedAccount = ({ publicKey, network, address }) => {
+  try {
+    return extractAddress(publicKey) &&
+      network >= 0 && network <= 2 &&
+      (validateUrl(address).addressValidity === '' || network !== 2);
+  } catch (e) {
+    return false;
   }
-  return [];
+};
+
+export const getSavedAccounts = () => {
+  try {
+    return JSON.parse(localStorage.getItem('accounts')).filter(isValidSavedAccount);
+  } catch (e) {
+    return [];
+  }
 };
 
 export const getLastActiveAccount = () => (
