@@ -2,7 +2,7 @@
 const { defineSupportCode } = require('cucumber');
 const fs = require('fs');
 const localStorage = require('../support/localStorage.js');
-const networks = require('./../../src/constants/networks');
+const networks = require('./../../../src/constants/networks');
 
 function slugify(text) {
   return text.toString().toLowerCase()
