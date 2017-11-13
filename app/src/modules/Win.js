@@ -1,8 +1,10 @@
+import LocaleHandler from './LocaleHandler';
 import EventStack from './EventStack';
+import buildMenu from './../menu';
 
 const win = {
   browser: null,
-  init: ({ electron, path }) => {
+  init: ({ electron, path, electronLocalshortcut }) => {
     const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;
     const { BrowserWindow } = electron;
     win.browser = new BrowserWindow({
@@ -16,6 +18,60 @@ const win = {
         preload: path.resolve(__dirname, '../src/ipc.js'),
       },
     });
+
+    // Enables DevTools
+    win.browser.devtools = true;
+    electronLocalshortcut.register(win.browser, 'CmdOrCtrl+Shift+I', () => {
+      win.browser.webContents.toggleDevTools();
+    });
+
+    win.browser.loadURL(`file://${__dirname}/index.html`);
+  },
+
+
+  create: ({ electron, path, electronLocalshortcut, storage }) => {
+    const { app, Menu } = electron;
+
+    win.init({ electron, path, electronLocalshortcut });
+    LocaleHandler.send({ storage });
+
+    win.browser.on('blur', () => win.webContents.send('blur'));
+    win.browser.on('focus', () => win.webContents.send('focus'));
+
+    if (process.platform !== 'darwin') {
+      win.send({ event: 'openUrl', value: process.argv[1] || '/' });
+    }
+
+    Menu.setApplicationMenu(buildMenu(app));
+
+    const selectionMenu = Menu.buildFromTemplate([
+      { role: 'copy' },
+      { type: 'separator' },
+      { role: 'selectall' },
+    ]);
+
+    const inputMenu = Menu.buildFromTemplate([
+      { role: 'undo' },
+      { role: 'redo' },
+      { type: 'separator' },
+      { role: 'cut' },
+      { role: 'copy' },
+      { role: 'paste' },
+      { type: 'separator' },
+      { role: 'selectall' },
+    ]);
+
+    win.browser.webContents.on('context-menu', (e, props) => {
+      menuPopup({ props, selectionMenu, inputMenu }); // eslint-disable-line no-use-before-define
+    });
+
+    // Resolve all events from stack when dom is ready
+    win.browser.webContents.on('did-finish-load', () => {
+      win.isUILoaded = true;
+      sendEventsFromEventStack(); // eslint-disable-line no-use-before-define
+    });
+
+    win.browser.on('closed', () => { win.browser = null; });
   },
 
   send: ({ event, value }) => {
@@ -26,6 +82,28 @@ const win = {
     }
   },
 };
+
+const menuPopup = ({ props, inputMenu, selectionMenu }) => {
+  console.log('menupop');
+  const { selectionText, isEditable } = props;
+  if (isEditable) {
+    inputMenu.popup(win.browser);
+  } else if (selectionText && selectionText.trim() !== '') {
+    selectionMenu.popup(win.browser);
+  }
+};
+
+const sendEventsFromEventStack = () => {
+  if (EventStack.length > 0) {
+    EventStack.forEach(({ event, value }) => {
+      win.browser.webContents.send(event, value);
+    },
+    );
+  }
+
+  return [];
+};
+
 
 export default win;
 

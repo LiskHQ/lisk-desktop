@@ -1,8 +1,10 @@
+import i18n from './i18n';
+
 const electron = require('electron'); // eslint-disable-line import/no-extraneous-dependencies
 
 const { Menu } = electron;
 
-const buildTemplate = i18n =>
+const buildTemplate = () =>
   [
     {
       label: i18n.t('Edit'),
@@ -104,7 +106,8 @@ const buildTemplate = i18n =>
     },
   ];
 
-module.exports = (app, copyright, i18n) => {
+module.exports = (app) => {
+  const copyright = `Copyright © 2016 - ${new Date().getFullYear()} Lisk Foundation`;
   const template = buildTemplate(i18n);
   if (process.platform === 'darwin') {
     const name = app.getName();
