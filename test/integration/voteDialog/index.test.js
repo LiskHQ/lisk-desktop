@@ -80,7 +80,7 @@ const peers = {
     port: 443,
   },
 };
-   
+
 store.dispatch(accountLoggedIn(realAccount));
 store.dispatch({
   data: peers,
