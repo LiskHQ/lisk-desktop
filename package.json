@@ -21,7 +21,7 @@
     "copy-files": "cpx \"./src/{index.html,assets/**/*}\" ./app/build/",
     "clean-build": "rm -rf app/build",
     "clean-dist": "rm -rf dist",
-    "eslint": "eslint ./src/ ./app/src/ ./app/config/ ./features/",
+    "eslint": "eslint ./src/ ./app/src/ ./app/config/ ./test/",
     "pack": "npm install && npm run build && npm run clean-dist && npm run dist",
     "pack:win": "cmd /c npm install && npm run clean-build && npm run copy-files && npm run build-prod && npm run build-electron && npm run clean-dist && npm run dist:win",
     "storybook": "start-storybook -p 6006 -s ./src/",
