@@ -30,7 +30,7 @@ const win = {
 
 
   create: ({ electron, path, electronLocalshortcut, storage }) => {
-    const { app, Menu } = electron;
+    const { Menu } = electron;
 
     win.init({ electron, path, electronLocalshortcut });
     LocaleHandler.send({ storage });
@@ -42,7 +42,7 @@ const win = {
       win.send({ event: 'openUrl', value: process.argv[1] || '/' });
     }
 
-    Menu.setApplicationMenu(buildMenu(app));
+    Menu.setApplicationMenu(buildMenu({ electron }));
 
     const selectionMenu = Menu.buildFromTemplate([
       { role: 'copy' },
@@ -84,7 +84,6 @@ const win = {
 };
 
 const menuPopup = ({ props, inputMenu, selectionMenu }) => {
-  console.log('menupop');
   const { selectionText, isEditable } = props;
   if (isEditable) {
     inputMenu.popup(win.browser);
@@ -97,11 +96,10 @@ const sendEventsFromEventStack = () => {
   if (EventStack.length > 0) {
     EventStack.forEach(({ event, value }) => {
       win.browser.webContents.send(event, value);
-    },
-    );
+    });
   }
 
-  return [];
+  EventStack.length = 0;
 };
 
 

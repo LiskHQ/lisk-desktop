@@ -3,8 +3,8 @@ import buildMenu from './../menu';
 import Win from './Win';
 
 const rebuildMenu = ({ electron, event }) => {
-  const { Menu, app } = electron;
-  Menu.setApplicationMenu(buildMenu(app));
+  const { Menu } = electron;
+  Menu.setApplicationMenu(buildMenu({ electron }));
   event.returnValue = 'Rebuilt electron menu.';
 };
 

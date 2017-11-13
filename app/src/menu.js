@@ -1,10 +1,6 @@
 import i18n from './i18n';
 
-const electron = require('electron'); // eslint-disable-line import/no-extraneous-dependencies
-
-const { Menu } = electron;
-
-const buildTemplate = () =>
+const buildTemplate = electron =>
   [
     {
       label: i18n.t('Edit'),
@@ -106,11 +102,11 @@ const buildTemplate = () =>
     },
   ];
 
-module.exports = (app) => {
+module.exports = ({ electron }) => {
   const copyright = `Copyright © 2016 - ${new Date().getFullYear()} Lisk Foundation`;
   const template = buildTemplate(i18n);
   if (process.platform === 'darwin') {
-    const name = app.getName();
+    const name = electron.app.getName();
     template.unshift({
       label: name,
       submenu: [
@@ -132,12 +128,12 @@ module.exports = (app) => {
           const options = {
             buttons: ['OK'],
             icon: `${__dirname}/assets/images/LISK.png`,
-            message: `${i18n.t('Lisk Nano')}\n${i18n.t('Version')} ${app.getVersion()}\n${copyright}`,
+            message: `${i18n.t('Lisk Nano')}\n${i18n.t('Version')} ${electron.app.getVersion()}\n${copyright}`,
           };
           electron.dialog.showMessageBox(focusedWindow, options, () => {});
         }
       },
     });
   }
-  return Menu.buildFromTemplate(template);
+  return electron.Menu.buildFromTemplate(template);
 };
