@@ -102,38 +102,45 @@ const buildTemplate = electron =>
     },
   ];
 
-module.exports = ({ electron }) => {
+const addAboutMenuForMac = ({ template, name }) => {
+  template.unshift({
+    label: name,
+    submenu: [
+      {
+        role: 'about',
+        label: i18n.t('About'),
+      },
+      {
+        role: 'quit',
+        label: i18n.t('Quit'),
+      },
+    ],
+  });
+};
+
+const addAboutMenuForNonMac = ({ template, electron }) => {
   const copyright = `Copyright © 2016 - ${new Date().getFullYear()} Lisk Foundation`;
+  template[template.length - 1].submenu.push({
+    label: i18n.t('About'),
+    click(item, focusedWindow) {
+      if (focusedWindow) {
+        const options = {
+          buttons: ['OK'],
+          icon: `${__dirname}/assets/images/LISK.png`,
+          message: `${i18n.t('Lisk Nano')}\n${i18n.t('Version')} ${electron.app.getVersion()}\n${copyright}`,
+        };
+        electron.dialog.showMessageBox(focusedWindow, options, () => {});
+      }
+    },
+  });
+};
+
+module.exports = ({ electron }) => {
   const template = buildTemplate(i18n);
   if (process.platform === 'darwin') {
-    const name = electron.app.getName();
-    template.unshift({
-      label: name,
-      submenu: [
-        {
-          role: 'about',
-          label: i18n.t('About'),
-        },
-        {
-          role: 'quit',
-          label: i18n.t('Quit'),
-        },
-      ],
-    });
+    addAboutMenuForMac({ template, name: electron.app.getName() });
   } else {
-    template[template.length - 1].submenu.push({
-      label: i18n.t('About'),
-      click(item, focusedWindow) {
-        if (focusedWindow) {
-          const options = {
-            buttons: ['OK'],
-            icon: `${__dirname}/assets/images/LISK.png`,
-            message: `${i18n.t('Lisk Nano')}\n${i18n.t('Version')} ${electron.app.getVersion()}\n${copyright}`,
-          };
-          electron.dialog.showMessageBox(focusedWindow, options, () => {});
-        }
-      },
-    });
+    addAboutMenuForNonMac({ template, electron });
   }
   return electron.Menu.buildFromTemplate(template);
 };

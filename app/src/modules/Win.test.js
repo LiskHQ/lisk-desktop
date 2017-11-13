@@ -114,7 +114,7 @@ describe('Electron Browser Window Wrapper', () => {
         buildFromTemplate: () => (electron.Menu),
         popup: spy(),
       },
-      app: { getName: () => ('some name'), getVersion: () => ('some version') },
+      app: { getName: () => ('Lisk Nano'), getVersion: () => ('some version') },
     };
 
     afterEach(() => {
