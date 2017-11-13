@@ -2,24 +2,24 @@ import i18n from './../i18n';
 import buildMenu from './../menu';
 import Win from './Win';
 
-const rebuildMenu = ({ electron, event }) => {
-  const { Menu } = electron;
-  Menu.setApplicationMenu(buildMenu({ electron }));
-  event.returnValue = 'Rebuilt electron menu.';
-};
+const handler = {
+  rebuildMenu: ({ electron, event }) => {
+    const { Menu } = electron;
+    Menu.setApplicationMenu(buildMenu({ electron }));
+    event.returnValue = 'Rebuilt electron menu.';
+  },
 
-const changeLocale = ({ langCode, storage }) => {
-  i18n.changeLanguage(langCode);
-  // write selected lang on JSON file
-  storage.set('config', { lang: langCode }, (error) => {
-    if (error) throw error;
-  });
-};
+  changeLocale: ({ langCode, storage }) => {
+    i18n.changeLanguage(langCode);
+    // write selected lang on JSON file
+    storage.set('config', { lang: langCode }, (error) => {
+      if (error) throw error;
+    });
+  },
 
-export default {
   update: ({ electron, event, langCode, storage }) => {
-    changeLocale({ langCode, storage });
-    rebuildMenu({ electron, event });
+    handler.changeLocale({ langCode, storage });
+    handler.rebuildMenu({ electron, event });
   },
 
   send: ({ storage }) => {
@@ -30,3 +30,5 @@ export default {
     });
   },
 };
+
+export default handler;

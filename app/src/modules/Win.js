@@ -35,8 +35,8 @@ const win = {
     win.init({ electron, path, electronLocalshortcut });
     LocaleHandler.send({ storage });
 
-    win.browser.on('blur', () => win.webContents.send('blur'));
-    win.browser.on('focus', () => win.webContents.send('focus'));
+    win.browser.on('blur', () => win.browser.webContents.send('blur'));
+    win.browser.on('focus', () => win.browser.webContents.send('focus'));
 
     if (process.platform !== 'darwin') {
       win.send({ event: 'openUrl', value: process.argv[1] || '/' });
