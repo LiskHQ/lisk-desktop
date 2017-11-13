@@ -1,9 +1,31 @@
-def fail(reason) {
-  def pr_branch = ''
+def get_build_info() {
+  pr_branch = ''
   if (env.CHANGE_BRANCH != null) {
     pr_branch = " (${env.CHANGE_BRANCH})"
   }
-  slackSend color: 'danger', message: "Build #${env.BUILD_NUMBER} of <${env.BUILD_URL}|${env.JOB_NAME}>${pr_branch} failed (<${env.BUILD_URL}/console|console>, <${env.BUILD_URL}/changes|changes>)\nCause: ${reason}", channel: '#lisk-nano-jenkins'
+  build_info = "#${env.BUILD_NUMBER} of <${env.BUILD_URL}|${env.JOB_NAME}>${pr_branch}"
+  return build_info
+}
+
+def slack_send(color, message) {
+  /* Slack channel names are limited to 21 characters */
+  CHANNEL_MAX_LEN = 21
+  CHANNEL_SUFFIX = '-jenkins'
+
+  channel = "${env.JOB_NAME}".tokenize('/')[0]
+  channel_len = CHANNEL_MAX_LEN - CHANNEL_SUFFIX.size()
+  if ( channel.size() > channel_len ) {
+     channel = channel.substring(0, channel_len)
+  }
+  channel += CHANNEL_SUFFIX
+  echo "[slack_send] channel: ${channel} "
+
+  slackSend color: "${color}", message: "${message}", channel: "${channel}"
+}
+
+def fail(reason) {
+  build_info = get_build_info()
+  slack_send('danger', "Build ${build_info} failed (<${env.BUILD_URL}/console|console>, <${env.BUILD_URL}/changes|changes>)\nCause: ${reason}")
   currentBuild.result = 'FAILURE'
   error("${reason}")
 }
@@ -23,7 +45,7 @@ node('lisk-nano') {
 
       try {
         sh '''
-        N=${EXECUTOR_NUMBER:-0}
+        N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
         cd ~/lisk-Linux-x86_64
         # work around core bug: config.json gets overwritten; use backup
         cp .config.json config_$N.json
@@ -88,8 +110,8 @@ node('lisk-nano') {
 
     stage ('Deploy') {
       try {
-        sh 'rsync -axl --delete --rsync-path="mkdir -p /var/www/test/lisk-nano/$BRANCH_NAME/ && rsync" $WORKSPACE/app/build/ jenkins@master-01:/var/www/test/lisk-nano/$BRANCH_NAME/'
-        githubNotify context: 'Jenkins test deployment', description: 'Commit was deployed to test', status: 'SUCCESS', targetUrl: "${HUDSON_URL}test/lisk-nano/${BRANCH_NAME}"
+        sh 'rsync -axl --delete --rsync-path="mkdir -p /var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/ && rsync" $WORKSPACE/app/build/ jenkins@master-01:/var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/'
+        githubNotify context: 'Jenkins test deployment', description: 'Commit was deployed to test', status: 'SUCCESS', targetUrl: "${HUDSON_URL}test/" + "${JOB_NAME}".tokenize('/')[0] + "/${BRANCH_NAME}"
       } catch (err) {
         echo "Error: ${err}"
         fail('Stopping build: deploy failed')
@@ -116,7 +138,7 @@ node('lisk-nano') {
         ansiColor('xterm') {
           withCredentials([string(credentialsId: 'lisk-nano-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
             sh '''
-            N=${EXECUTOR_NUMBER:-0}
+            N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
 
             # End to End test configuration
             export DISPLAY=:1$N
@@ -139,7 +161,7 @@ node('lisk-nano') {
     echo "Error: ${err}"
   } finally {
     sh '''
-    N=${EXECUTOR_NUMBER:-0}
+    N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
     curl --verbose http://127.0.0.1:400$N/api/blocks/getNethash || true
     ( cd ~/lisk-Linux-x86_64 && bash lisk.sh stop_node -p etc/pm2-lisk_$N.json ) || true
     pgrep --list-full -f "Xvfb :1$N" || true
@@ -154,19 +176,14 @@ node('lisk-nano') {
       deleteDir()
     }
 
-    def pr_branch = ''
-    if (env.CHANGE_BRANCH != null) {
-      pr_branch = " (${env.CHANGE_BRANCH})"
-    }
     if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
       /* delete all files on success */
       deleteDir()
       /* notify of success if previous build failed */
       previous_build = currentBuild.getPreviousBuild()
       if (previous_build != null && previous_build.result == 'FAILURE') {
-        slackSend color: 'good',
-                  message: "Recovery: build #${env.BUILD_NUMBER} of <${env.BUILD_URL}|${env.JOB_NAME}>${pr_branch} was successful.",
-                  channel: '#lisk-nano-jenkins'
+        build_info = get_build_info()
+        slack_send('good', "Recovery: build ${build_info} was successful.")
       }
     } else {
       archiveArtifacts allowEmptyArchive: true, artifacts: 'e2e-test-screenshots/'

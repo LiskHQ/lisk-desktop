@@ -2,7 +2,7 @@
 const { defineSupportCode } = require('cucumber');
 const fs = require('fs');
 const localStorage = require('../support/localStorage.js');
-const networks = require('./../../../src/constants/networks');
+const networks = require('../../../src/constants/networks');
 
 function slugify(text) {
   return text.toString().toLowerCase()
@@ -41,6 +41,7 @@ defineSupportCode(({ Before, After }) => {
     localStorage.clear();
     localStorage.setItem('address', browser.params.liskCoreURL);
     localStorage.setItem('network', networks[browser.params.network].code);
+    browser.get(browser.params.baseURL);
     callback();
   });
 

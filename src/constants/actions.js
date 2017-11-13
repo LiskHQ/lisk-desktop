@@ -32,6 +32,7 @@ const actionTypes = {
   accountsRetrieved: 'ACCOUNTS_RETRIEVED',
   accountSaved: 'ACCOUNT_SAVED',
   accountRemoved: 'ACCOUNT_REMOVED',
+  accountSwitched: 'ACCOUNT_SWITCHED',
 };
 
 export default actionTypes;
