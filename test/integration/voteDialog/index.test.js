@@ -2,15 +2,15 @@ import { step } from 'mocha-steps';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
-import { prepareStore, renderWithRouter } from '../../utils/applicationInit';
-import actionTypes from '../../constants/actions';
-import accountReducer from '../../store/reducers/account';
-import votingReducer from '../../store/reducers/voting';
-import peersReducer from '../../store/reducers/peers';
-import { accountLoggedIn } from '../../actions/account';
-import { delegatesAdded } from '../../actions/voting';
-import * as delegateApi from '../../utils/api/delegate';
-import VoteDialog from './index';
+import { prepareStore, renderWithRouter } from '../../../src/utils/applicationInit';
+import actionTypes from '../../../src/constants/actions';
+import accountReducer from '../../../src/store/reducers/account';
+import votingReducer from '../../../src/store/reducers/voting';
+import peersReducer from '../../../src/store/reducers/peers';
+import { accountLoggedIn } from '../../../src/actions/account';
+import { delegatesAdded } from '../../../src/actions/voting';
+import * as delegateApi from '../../../src/utils/api/delegate';
+import VoteDialog from '../../../src/components/voteDialog';
 
 const delegates = [
   { username: 'username1', publicKey: '123HG3452245L' },
@@ -80,7 +80,7 @@ const peers = {
     port: 443,
   },
 };
-
+   
 store.dispatch(accountLoggedIn(realAccount));
 store.dispatch({
   data: peers,
