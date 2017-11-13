@@ -4,39 +4,35 @@ import path from 'path';
 import storage from 'electron-json-storage'; // eslint-disable-line import/no-extraneous-dependencies
 import i18n from './i18n';
 import buildMenu from './menu';
+import Win from './modules/Win';
 import {
   sendEventsFromEventStack,
-  createNewBrowserWindow,
   sendUrlToRouter,
   sendLanguage,
   menuPopup,
 } from './utils';
 
-const { app, Menu, ipcMain, BrowserWindow } = electron;
+const { app, Menu, ipcMain } = electron;
 const copyright = `Copyright © 2016 - ${new Date().getFullYear()} Lisk Foundation`;
-let eventStack = [];
-let win;
 
 const createWindow = () => {
-  sendLanguage({ storage, win, eventStack });
+  Win.init({ electron, path });
+  sendLanguage({ storage });
 
-  const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;
-  win = createNewBrowserWindow({ width, height, BrowserWindow, path });
-
-  win.on('blur', () => win.webContents.send('blur'));
-  win.on('focus', () => win.webContents.send('focus'));
+  Win.browser.on('blur', () => Win.webContents.send('blur'));
+  Win.browser.on('focus', () => Win.webContents.send('focus'));
 
   if (process.platform !== 'darwin') {
-    sendUrlToRouter({ url: process.argv[1] || '/', win, eventStack });
+    sendUrlToRouter({ url: process.argv[1] || '/' });
   }
 
   Menu.setApplicationMenu(buildMenu(app, copyright, i18n));
-  win.loadURL(`file://${__dirname}/index.html`);
+  Win.browser.loadURL(`file://${__dirname}/index.html`);
 
   // Enables DevTools
-  win.devtools = true;
-  electronLocalshortcut.register(win, 'CmdOrCtrl+Shift+I', () => {
-    win.webContents.toggleDevTools();
+  Win.browser.devtools = true;
+  electronLocalshortcut.register(Win.browser, 'CmdOrCtrl+Shift+I', () => {
+    Win.browser.webContents.toggleDevTools();
   });
 
   const selectionMenu = Menu.buildFromTemplate([
@@ -56,15 +52,15 @@ const createWindow = () => {
     { role: 'selectall' },
   ]);
 
-  win.webContents.on('context-menu', (e, props) => { menuPopup({ props, selectionMenu, inputMenu, win }); });
+  Win.browser.webContents.on('context-menu', (e, props) => { menuPopup({ props, selectionMenu, inputMenu }); });
 
   // Resolve all events from stack when dom is ready
-  win.webContents.on('did-finish-load', () => {
-    win.isUILoaded = true;
-    eventStack = sendEventsFromEventStack({ eventStack, win });
+  Win.browser.webContents.on('did-finish-load', () => {
+    Win.isUILoaded = true;
+    sendEventsFromEventStack();
   });
 
-  win.on('closed', () => { win = null; });
+  Win.on('closed', () => { Win.browser = null; });
 };
 
 app.on('ready', createWindow);
@@ -81,7 +77,7 @@ if (process.platform === 'darwin') {
 }
 
 app.on('activate', () => {
-  if (win === null) { createWindow(); }
+  if (Win.browser === null) { createWindow(); }
 });
 
 // Set app protocol
@@ -90,11 +86,11 @@ app.setAsDefaultProtocolClient('lisk');
 // Force single instance application
 const isSecondInstance = app.makeSingleInstance((argv) => {
   if (process.platform !== 'darwin') {
-    sendUrlToRouter({ url: argv[1] || '/', win, eventStack });
+    sendUrlToRouter({ url: argv[1] || '/' });
   }
-  if (win) {
-    if (win.isMinimized()) win.restore();
-    win.focus();
+  if (Win.browser) {
+    if (Win.browser.isMinimized()) Win.browser.restore();
+    Win.browser.focus();
   }
 });
 
@@ -106,7 +102,7 @@ app.on('will-finish-launching', () => {
   // Protocol handler for MacOS
   app.on('open-url', (event, url) => {
     event.preventDefault();
-    sendUrlToRouter({ url, win, eventStack });
+    sendUrlToRouter({ url });
   });
 });
 
@@ -133,4 +129,4 @@ ipcMain.on('set-locale', (event, locale) => {
   }
 });
 
-ipcMain.on('request-locale', () => { sendLanguage({ storage, win, eventStack }); });
+ipcMain.on('request-locale', () => { sendLanguage({ storage }); });
