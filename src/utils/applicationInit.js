@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { HashRouter as Router } from 'react-router-dom';
