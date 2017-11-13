@@ -13,8 +13,7 @@
     "afterEach": true,
     "ipc": true,
     "PRODUCTION": true,
-    "TEST": true,
-    "step": true
+    "TEST": true
   },
   "env": {
     "browser": true,
