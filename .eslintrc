@@ -38,9 +38,9 @@
     "no-plusplus": "off",
     "no-underscore-dangle": "off",
     "import/no-extraneous-dependencies": ["error", {
-      devDependencies: [
+      "devDependencies": [
         "./src/**/*.test.js",
-        "./features/*/*.js",
+        "./test/**/*.js",
         "./src/**/stories.js",
         "./src/tests.js",
         "./src/i18n-scanner.js"
