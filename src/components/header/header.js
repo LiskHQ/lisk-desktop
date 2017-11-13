@@ -4,7 +4,6 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import PrivateWrapper from '../privateWrapper';
-import SaveAccountButton from '../saveAccountButton';
 import logo from '../../assets/images/LISK-nano.png';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import styles from './header.css';
@@ -53,7 +52,10 @@ const Header = props => (
             to='decrypt-message'>{props.t('Decrypt message')}</RelativeLink>
         </MenuItem>
         <MenuDivider />
-        <SaveAccountButton theme={styles} />
+        <MenuItem theme={styles}>
+          <RelativeLink className={`${styles.menuLink} saved-accounts`}
+            to='saved-accounts'>{props.t('Saved accounts')}</RelativeLink>
+        </MenuItem>
         <MenuItem theme={styles}>
           <RelativeLink className={`settings ${styles.menuLink}`} to='settings'>{props.t('Settings')}</RelativeLink>
         </MenuItem>

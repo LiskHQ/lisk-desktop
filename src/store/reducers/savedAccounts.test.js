@@ -13,36 +13,38 @@ describe('Reducer: savedAccounts(state, action)', () => {
     network: 'Custom node',
     address: 'http://localhost:4000',
   };
+
   it('should return action.data if action.type = actionTypes.accountsRetrieved', () => {
-    const state = [];
+    const state = { accounts: [] };
     const action = {
       type: actionTypes.accountsRetrieved,
-      data: [account, account2],
+      data: {
+        accounts: [account, account2],
+        lastActive: account2,
+      },
     };
-    const expectedSate = [account, account2];
     const changedState = savedAccounts(state, action);
-    expect(changedState).to.deep.equal(expectedSate);
+    expect(changedState).to.deep.equal(action.data);
   });
 
   it('should return action.data with address if action.type = actionTypes.accountSaved', () => {
-    const state = [];
+    const state = { accounts: [] };
     const action = {
       type: actionTypes.accountSaved,
       data: account,
     };
     const changedState = savedAccounts(state, action);
-    expect(changedState).to.deep.equal([action.data]);
+    expect(changedState).to.deep.equal({ accounts: [action.data] });
   });
 
   it('should return array without given account if action.type = actionTypes.accountRemoved', () => {
-    const publicKey = 'sample_key_1';
-    const state = [account];
+    const state = { accounts: [account, account2] };
     const action = {
       type: actionTypes.accountRemoved,
-      data: publicKey,
+      data: account,
     };
     const changedState = savedAccounts(state, action);
-    expect(changedState).to.deep.equal([]);
+    expect(changedState).to.deep.equal({ accounts: [account2] });
   });
 });
 
