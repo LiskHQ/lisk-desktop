@@ -34,72 +34,77 @@ const store = prepareStore({
   peers: peersReducer,
 });
 
-describe.only('VoteDialog integration test', () => {
-  const realAccount = {
-    address: '16313739661670634666L',
-    balance: '346215336704',
-    delegate: {},
-    multisignatures: [],
-    passphrase: 'wagon stock borrow episode laundry kitten salute link globe zero feed marble',
-    publicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
-    u_multisignatures: [],
-    unconfirmedBalance: '0',
-  };
+const realAccount = {
+  address: '16313739661670634666L',
+  balance: '346215336704',
+  delegate: {},
+  multisignatures: [],
+  passphrase: 'wagon stock borrow episode laundry kitten salute link globe zero feed marble',
+  publicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
+  u_multisignatures: [],
+  unconfirmedBalance: '0',
+};
 
-  const peers = {
-    defaultPeers: [
-      'node01.lisk.io',
-      'node02.lisk.io',
-    ],
-    defaultSSLPeers: [
-      'node01.lisk.io',
-      'node02.lisk.io',
-    ],
-    defaultTestnetPeers: [
-      'testnet.lisk.io',
-    ],
-    options: {
-      name: 'Testnet',
-      testnet: true,
-      ssl: true,
-      port: 443,
-      code: 1,
-    },
-    ssl: true,
-    randomPeer: true,
+const peers = {
+  defaultPeers: [
+    'node01.lisk.io',
+    'node02.lisk.io',
+  ],
+  defaultSSLPeers: [
+    'node01.lisk.io',
+    'node02.lisk.io',
+  ],
+  defaultTestnetPeers: [
+    'testnet.lisk.io',
+  ],
+  options: {
+    name: 'Testnet',
     testnet: true,
-    bannedPeers: [],
-    currentPeer: 'testnet.lisk.io',
+    ssl: true,
     port: 443,
-    nethash: {
-      'Content-Type': 'application/json',
-      nethash: 'da3ed6a45429278bac2666961289ca17ad86595d33b31037615d4b8e8f158bba',
-      broadhash: 'da3ed6a45429278bac2666961289ca17ad86595d33b31037615d4b8e8f158bba',
-      os: 'lisk-js-api',
-      version: '1.0.0',
-      minVersion: '>=0.5.0',
-      port: 443,
-    },
-  };
+    code: 1,
+  },
+  ssl: true,
+  randomPeer: true,
+  testnet: true,
+  bannedPeers: [],
+  currentPeer: 'testnet.lisk.io',
+  port: 443,
+  nethash: {
+    'Content-Type': 'application/json',
+    nethash: 'da3ed6a45429278bac2666961289ca17ad86595d33b31037615d4b8e8f158bba',
+    broadhash: 'da3ed6a45429278bac2666961289ca17ad86595d33b31037615d4b8e8f158bba',
+    os: 'lisk-js-api',
+    version: '1.0.0',
+    minVersion: '>=0.5.0',
+    port: 443,
+  },
+};
 
-  store.dispatch(accountLoggedIn(realAccount));
-  store.dispatch({
-    data: peers,
-    type: actionTypes.activePeerSet,
+store.dispatch(accountLoggedIn(realAccount));
+store.dispatch({
+  data: peers,
+  type: actionTypes.activePeerSet,
+});
+const wrapper = mount(renderWithRouter(VoteDialog, store));
+let clock;
+describe('@integration test of VoteDialog', () => {
+  beforeEach(() => {
+    clock = sinon.useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
   });
-  const wrapper = mount(renderWithRouter(VoteDialog, store));
-
-  const clock = sinon.useFakeTimers({
-    toFake: ['setTimeout', 'clearTimeout', 'Date'],
+  afterEach(() => {
+    clock.restore();
   });
 
-  step('user is login in', () => {
+  step('Given user is login in', () => {
     expect(store.getState().account).to.be.an('Object');
     expect(store.getState().voting).to.be.an('Object');
     expect(store.getState().peers).to.be.an('Object');
   });
 
-  step('when he doesn\'t vote to any delegates confirm button should be disabled', () => {
+  step('When user doesn\'t vote to any delegates confirm button should be disabled', () => {
     expect(wrapper.find('.primary-button button').props().disabled).to.be.equal(true);
   });
 
@@ -119,16 +124,16 @@ describe.only('VoteDialog integration test', () => {
 
     // select it with arrow down
     wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: keyCodes.arrowDown });
-    clock.tick(200);
+    clock.tick(400);
     wrapper.find('.votedListSearch.vote-auto-complete input').simulate('keyDown', { keyCode: keyCodes.enter });
     wrapper.update();
     expect(wrapper.find('.primary-button button').props().disabled).to.be.equal(false);
+    voteAutocompleteApiStub.restore();
   });
 
   step('When user deletes all items form voteList confirm button should become disabled', () => {
     wrapper.find('.vote-list span').last().simulate('click');
     wrapper.update();
     expect(wrapper.find('.primary-button button').props().disabled).to.be.equal(true);
-    clock.restore();
   });
 });
