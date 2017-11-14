@@ -1,7 +1,7 @@
 import { expect } from 'chai'; // eslint-disable-line import/no-extraneous-dependencies
 import { spy } from 'sinon'; // eslint-disable-line import/no-extraneous-dependencies
-import Win from './Win';
-import EventStack from './EventStack';
+import win from './win';
+import EventStack from './eventStack';
 
 describe('Electron Browser Window Wrapper', () => {
   let electron;
@@ -31,49 +31,49 @@ describe('Electron Browser Window Wrapper', () => {
   const path = { resolve: () => ('test') };
 
   afterEach(() => {
-    Win.browser = null;
-    Win.isUILoaded = false;
+    win.browser = null;
+    win.isUILoaded = false;
     EventStack.length = 0;
   });
 
   describe('Init', () => {
     it('Creates the window and sets webPreferences and other settings', () => {
-      Win.init({ electron, path, electronLocalshortcut });
-      expect(Win.browser.webPreferences.backgroundThrottling).to.equal(false);
-      expect(Win.browser.webPreferences.preload).to.equal('test');
-      expect(Win.browser.center).to.equal(true);
-      expect(Win.browser.devtools).to.equal(true);
-      expect(Win.browser.loadURL).to.have.been.calledWith(`file://${__dirname}/index.html`);
+      win.init({ electron, path, electronLocalshortcut });
+      expect(win.browser.webPreferences.backgroundThrottling).to.equal(false);
+      expect(win.browser.webPreferences.preload).to.equal('test');
+      expect(win.browser.center).to.equal(true);
+      expect(win.browser.devtools).to.equal(true);
+      expect(win.browser.loadURL).to.have.been.calledWith(`file://${__dirname}/index.html`);
     });
 
     it('Creates the window and knows how to adjust the size', () => {
-      Win.init({ electron, path, electronLocalshortcut });
-      expect(Win.browser.height).to.equal(850);
-      expect(Win.browser.width).to.equal(1750);
+      win.init({ electron, path, electronLocalshortcut });
+      expect(win.browser.height).to.equal(850);
+      expect(win.browser.width).to.equal(1750);
     });
 
     it('Creates the window and knows how to adjust the size', () => {
       electron.screen.getPrimaryDisplay = () => ({ workAreaSize: { width: 2001, height: 1001 } });
-      Win.init({ electron, path, electronLocalshortcut });
-      expect(Win.browser.height).to.equal(700);
-      expect(Win.browser.width).to.equal(1000);
+      win.init({ electron, path, electronLocalshortcut });
+      expect(win.browser.height).to.equal(700);
+      expect(win.browser.width).to.equal(1000);
     });
   });
 
   describe('Sending events', () => {
     it('Saves events in event stack', () => {
       expect(EventStack.length).to.equal(0);
-      Win.send({ event: 'openUrl', value: 'someurl' });
-      expect(Win.browser).to.equal(null);
+      win.send({ event: 'openUrl', value: 'someurl' });
+      expect(win.browser).to.equal(null);
       expect(EventStack.length).to.equal(1);
     });
 
     it('Sends events', () => {
-      Win.init({ electron, path, electronLocalshortcut });
-      Win.browser.webContents = { send: spy() };
-      Win.isUILoaded = true;
-      Win.send({ event: 'openUrl', value: 'someurl' });
-      expect(Win.browser.webContents.send).to.have.been.calledWith('openUrl', 'someurl');
+      win.init({ electron, path, electronLocalshortcut });
+      win.browser.webContents = { send: spy() };
+      win.isUILoaded = true;
+      win.send({ event: 'openUrl', value: 'someurl' });
+      expect(win.browser.webContents.send).to.have.been.calledWith('openUrl', 'someurl');
       expect(EventStack.length).to.equal(0);
     });
   });
@@ -124,9 +124,9 @@ describe('Electron Browser Window Wrapper', () => {
     it('Creates the window with menu when platform is "darwin"', () => {
       process.platform = 'darwin';
 
-      expect(Win.browser).to.equal(null);
-      Win.create({ electron, path, electronLocalshortcut, storage });
-      expect(Win.browser).to.not.equal(null);
+      expect(win.browser).to.equal(null);
+      win.create({ electron, path, electronLocalshortcut, storage });
+      expect(win.browser).to.not.equal(null);
 
       // detect the locale
       callbacks.config(null, { lang: 'de' });
@@ -140,7 +140,7 @@ describe('Electron Browser Window Wrapper', () => {
 
       // todo: think of a way to differentiate between 'inputMenu' and 'selectionMenu' in the test
       callbacks['context-menu'](null, { isEditable: true });
-      expect(electron.Menu.popup).to.have.been.calledWith(Win.browser);
+      expect(electron.Menu.popup).to.have.been.calledWith(win.browser);
 
       // fire finish load event
       expect(events.length).to.equal(0);
@@ -151,15 +151,15 @@ describe('Electron Browser Window Wrapper', () => {
       expect(events[0].value).to.equal('de');
 
       callbacks.closed();
-      expect(Win.browser).to.equal(null);
+      expect(win.browser).to.equal(null);
     });
 
     it('Creates the window with menu when platform is not "darwin"', () => {
       process.platform = 'not darwin';
 
-      expect(Win.browser).to.equal(null);
-      Win.create({ electron, path, electronLocalshortcut, storage });
-      expect(Win.browser).to.not.equal(null);
+      expect(win.browser).to.equal(null);
+      win.create({ electron, path, electronLocalshortcut, storage });
+      expect(win.browser).to.not.equal(null);
 
       // detect the locale
       callbacks.config(null, { lang: 'de' });
@@ -175,7 +175,7 @@ describe('Electron Browser Window Wrapper', () => {
 
       // todo: think of a way to differentiate between 'inputMenu' and 'selectionMenu' in the test
       callbacks['context-menu'](null, { selectionText: 'some text' });
-      expect(electron.Menu.popup).to.have.been.calledWith(Win.browser);
+      expect(electron.Menu.popup).to.have.been.calledWith(win.browser);
 
       // fire finish load event
       expect(events.length).to.equal(0);
@@ -188,7 +188,7 @@ describe('Electron Browser Window Wrapper', () => {
       expect(events[1].value).to.equal('de');
 
       callbacks.closed();
-      expect(Win.browser).to.equal(null);
+      expect(win.browser).to.equal(null);
     });
   });
 });

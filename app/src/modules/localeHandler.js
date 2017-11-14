@@ -1,6 +1,6 @@
 import i18n from './../i18n';
 import buildMenu from './../menu';
-import Win from './Win';
+import win from './win';
 
 const handler = {
   rebuildMenu: ({ electron, event }) => {
@@ -25,7 +25,7 @@ const handler = {
   send: ({ storage }) => {
     storage.get('config', (error, data) => {
       if (!error) {
-        Win.send({ event: 'detectedLocale', value: data.lang || 'en' });
+        win.send({ event: 'detectedLocale', value: data.lang || 'en' });
       }
     });
   },

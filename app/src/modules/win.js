@@ -1,5 +1,5 @@
-import LocaleHandler from './LocaleHandler';
-import EventStack from './EventStack';
+import localeHandler from './localeHandler';
+import eventStack from './eventStack';
 import buildMenu from './../menu';
 
 const win = {
@@ -33,7 +33,7 @@ const win = {
     const { Menu } = electron;
 
     win.init({ electron, path, electronLocalshortcut });
-    LocaleHandler.send({ storage });
+    localeHandler.send({ storage });
 
     win.browser.on('blur', () => win.browser.webContents.send('blur'));
     win.browser.on('focus', () => win.browser.webContents.send('focus'));
@@ -78,7 +78,7 @@ const win = {
     if (win.browser && win.browser.webContents && win.isUILoaded) {
       win.browser.webContents.send(event, value);
     } else {
-      EventStack.push({ event, value });
+      eventStack.push({ event, value });
     }
   },
 };
@@ -93,13 +93,13 @@ const menuPopup = ({ props, inputMenu, selectionMenu }) => {
 };
 
 const sendEventsFromEventStack = () => {
-  if (EventStack.length > 0) {
-    EventStack.forEach(({ event, value }) => {
+  if (eventStack.length > 0) {
+    eventStack.forEach(({ event, value }) => {
       win.browser.webContents.send(event, value);
     });
   }
 
-  EventStack.length = 0;
+  eventStack.length = 0;
 };
 
 
