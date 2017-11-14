@@ -34,10 +34,13 @@ describe('localeHandler', () => {
     eventStack.length = 0;
   });
 
-  it('Changes the locale', () => {
-    localeHandler.changeLocale({ langCode: 'de', storage });
+  it('Changes the locale and rebuilds the menu', () => {
+    const event = {};
+    localeHandler.update({ electron, event, langCode: 'de', storage });
     expect(i18n.language).to.equal('de');
     expect(options[0].lang).to.equal('de');
+    expect(electron.Menu.setApplicationMenu).to.have.been.calledWith(electron.Menu);
+    expect(event.returnValue).to.equal('Rebuilt electron menu.');
   });
 
   it('Sends the detected language', () => {
@@ -51,12 +54,5 @@ describe('localeHandler', () => {
     expect(eventStack[0].value).to.equal('de');
 
     sendSpy.restore();
-  });
-
-  it('Rebuilds electron menu', () => {
-    const event = {};
-    localeHandler.rebuildMenu({ electron, event });
-    expect(electron.Menu.setApplicationMenu).to.have.been.calledWith(electron.Menu);
-    expect(event.returnValue).to.equal('Rebuilt electron menu.');
   });
 });

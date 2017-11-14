@@ -1,6 +1,6 @@
 import localeHandler from './localeHandler';
 import eventStack from './eventStack';
-import buildMenu from './../menu';
+import menu from './../menu';
 
 const win = {
   browser: null,
@@ -42,7 +42,7 @@ const win = {
       win.send({ event: 'openUrl', value: process.argv[1] || '/' });
     }
 
-    Menu.setApplicationMenu(buildMenu({ electron }));
+    Menu.setApplicationMenu(menu.build(electron));
 
     const selectionMenu = Menu.buildFromTemplate([
       { role: 'copy' },
