@@ -13,3 +13,4 @@ app/app.js
 .vscode
 .idea
 blockchain_explorer.db.gz
+package-lock.json
