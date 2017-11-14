@@ -1,10 +1,10 @@
 import { TABLE } from 'react-toolbox/lib/identifiers';
-import { TableHead, TableCell } from 'react-toolbox/lib/table';
 import { tableFactory } from 'react-toolbox/lib/table/Table';
 import { themr } from 'react-css-themr';
 import React from 'react';
 import TableTheme from 'react-toolbox/lib/table/theme.css';
 import Waypoint from 'react-waypoint';
+import { TableHead, TableCell } from './../toolbox/table';
 
 import Header from './votingHeader';
 import VotingBar from './votingBar';

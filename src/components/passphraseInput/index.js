@@ -1,8 +1,8 @@
-import { IconButton } from 'react-toolbox/lib/button';
 import { translate } from 'react-i18next';
-import Input from 'react-toolbox/lib/input';
 import React from 'react';
 import Tooltip from 'react-toolbox/lib/tooltip';
+import { IconButton } from './../toolbox/button';
+import Input from './../toolbox/input';
 
 import { findSimilarWord, inDictionary } from '../../utils/similarWord';
 import { isValidPassphrase } from '../../utils/passphrase';

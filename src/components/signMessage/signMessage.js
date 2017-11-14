@@ -1,6 +1,6 @@
 import React from 'react';
-import Input from 'react-toolbox/lib/input';
 import Lisk from 'lisk-js';
+import Input from './../toolbox/input';
 
 import InfoParagraph from '../infoParagraph';
 import SignVerifyResult from '../signVerifyResult';
