@@ -2,7 +2,6 @@ import { expect } from 'chai'; // eslint-disable-line import/no-extraneous-depen
 import { spy } from 'sinon'; // eslint-disable-line import/no-extraneous-dependencies
 import win from './win';
 import localeHandler from './localeHandler';
-import eventStack from './eventStack';
 import i18n from './../i18n';
 
 describe('localeHandler', () => {
@@ -31,7 +30,7 @@ describe('localeHandler', () => {
   });
 
   afterEach(() => {
-    eventStack.length = 0;
+    win.eventStack.length = 0;
   });
 
   it('Changes the locale and rebuilds the menu', () => {
@@ -49,9 +48,9 @@ describe('localeHandler', () => {
     callbacks.config(null, { lang: 'de' });
 
     expect(sendSpy).to.have.been.calledWith({ event: 'detectedLocale', value: 'de' });
-    expect(eventStack.length).to.equal(1);
-    expect(eventStack[0].event).to.equal('detectedLocale');
-    expect(eventStack[0].value).to.equal('de');
+    expect(win.eventStack.length).to.equal(1);
+    expect(win.eventStack[0].event).to.equal('detectedLocale');
+    expect(win.eventStack[0].value).to.equal('de');
 
     sendSpy.restore();
   });

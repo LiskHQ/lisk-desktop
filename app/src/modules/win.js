@@ -1,9 +1,9 @@
 import localeHandler from './localeHandler';
-import eventStack from './eventStack';
 import menu from './../menu';
 
 const win = {
   browser: null,
+  eventStack: [],
   init: ({ electron, path, electronLocalshortcut }) => {
     const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;
     const { BrowserWindow } = electron;
@@ -78,7 +78,7 @@ const win = {
     if (win.browser && win.browser.webContents && win.isUILoaded) {
       win.browser.webContents.send(event, value);
     } else {
-      eventStack.push({ event, value });
+      win.eventStack.push({ event, value });
     }
   },
 };
@@ -93,13 +93,13 @@ const menuPopup = ({ props, inputMenu, selectionMenu }) => {
 };
 
 const sendEventsFromEventStack = () => {
-  if (eventStack.length > 0) {
-    eventStack.forEach(({ event, value }) => {
+  if (win.eventStack.length > 0) {
+    win.eventStack.forEach(({ event, value }) => {
       win.browser.webContents.send(event, value);
     });
   }
 
-  eventStack.length = 0;
+  win.eventStack.length = 0;
 };
 
 

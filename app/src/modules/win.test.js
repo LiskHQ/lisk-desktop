@@ -1,7 +1,6 @@
 import { expect } from 'chai'; // eslint-disable-line import/no-extraneous-dependencies
 import { spy } from 'sinon'; // eslint-disable-line import/no-extraneous-dependencies
 import win from './win';
-import EventStack from './eventStack';
 
 describe('Electron Browser Window Wrapper', () => {
   let electron;
@@ -33,7 +32,7 @@ describe('Electron Browser Window Wrapper', () => {
   afterEach(() => {
     win.browser = null;
     win.isUILoaded = false;
-    EventStack.length = 0;
+    win.eventStack.length = 0;
   });
 
   describe('Init', () => {
@@ -62,10 +61,10 @@ describe('Electron Browser Window Wrapper', () => {
 
   describe('Sending events', () => {
     it('Saves events in event stack', () => {
-      expect(EventStack.length).to.equal(0);
+      expect(win.eventStack.length).to.equal(0);
       win.send({ event: 'openUrl', value: 'someurl' });
       expect(win.browser).to.equal(null);
-      expect(EventStack.length).to.equal(1);
+      expect(win.eventStack.length).to.equal(1);
     });
 
     it('Sends events', () => {
@@ -74,7 +73,7 @@ describe('Electron Browser Window Wrapper', () => {
       win.isUILoaded = true;
       win.send({ event: 'openUrl', value: 'someurl' });
       expect(win.browser.webContents.send).to.have.been.calledWith('openUrl', 'someurl');
-      expect(EventStack.length).to.equal(0);
+      expect(win.eventStack.length).to.equal(0);
     });
   });
 
@@ -130,9 +129,9 @@ describe('Electron Browser Window Wrapper', () => {
 
       // detect the locale
       callbacks.config(null, { lang: 'de' });
-      expect(EventStack.length).to.equal(1);
-      expect(EventStack[0].event).to.equal('detectedLocale');
-      expect(EventStack[0].value).to.equal('de');
+      expect(win.eventStack.length).to.equal(1);
+      expect(win.eventStack[0].event).to.equal('detectedLocale');
+      expect(win.eventStack[0].value).to.equal('de');
 
       // check the menu gets build
       // todo: think of a better way to test this? don't actually execute 'buildMenu'
@@ -145,7 +144,7 @@ describe('Electron Browser Window Wrapper', () => {
       // fire finish load event
       expect(events.length).to.equal(0);
       callbacks['did-finish-load']();
-      expect(EventStack.length).to.equal(0);
+      expect(win.eventStack.length).to.equal(0);
       expect(events.length).to.equal(1);
       expect(events[0].event).to.equal('detectedLocale');
       expect(events[0].value).to.equal('de');
@@ -163,11 +162,11 @@ describe('Electron Browser Window Wrapper', () => {
 
       // detect the locale
       callbacks.config(null, { lang: 'de' });
-      expect(EventStack.length).to.equal(2);
-      expect(EventStack[0].event).to.equal('openUrl');
-      expect(EventStack[0].value).to.equal('/');
-      expect(EventStack[1].event).to.equal('detectedLocale');
-      expect(EventStack[1].value).to.equal('de');
+      expect(win.eventStack.length).to.equal(2);
+      expect(win.eventStack[0].event).to.equal('openUrl');
+      expect(win.eventStack[0].value).to.equal('/');
+      expect(win.eventStack[1].event).to.equal('detectedLocale');
+      expect(win.eventStack[1].value).to.equal('de');
 
       // check the menu gets build
       // todo: think of a better way to test this? don't actually execute 'buildMenu'
@@ -180,7 +179,7 @@ describe('Electron Browser Window Wrapper', () => {
       // fire finish load event
       expect(events.length).to.equal(0);
       callbacks['did-finish-load']();
-      expect(EventStack.length).to.equal(0);
+      expect(win.eventStack.length).to.equal(0);
       expect(events.length).to.equal(2);
       expect(events[0].event).to.equal('openUrl');
       expect(events[0].value).to.equal('/');
