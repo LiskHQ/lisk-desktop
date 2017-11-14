@@ -28,12 +28,6 @@ const keyCodes = {
   escape: 27,
 };
 
-const store = prepareStore({
-  account: accountReducer,
-  voting: votingReducer,
-  peers: peersReducer,
-});
-
 const realAccount = {
   address: '16313739661670634666L',
   balance: '346215336704',
@@ -81,14 +75,11 @@ const peers = {
   },
 };
 
-store.dispatch(accountLoggedIn(realAccount));
-store.dispatch({
-  data: peers,
-  type: actionTypes.activePeerSet,
-});
-const wrapper = mount(renderWithRouter(VoteDialog, store));
-let clock;
-describe('@integration test of VoteDialog', () => {
+describe.only('@integration test of VoteDialog', () => {
+  let store;
+  let wrapper;
+  let clock;
+
   beforeEach(() => {
     clock = sinon.useFakeTimers({
       toFake: ['setTimeout', 'clearTimeout', 'Date'],
@@ -99,6 +90,18 @@ describe('@integration test of VoteDialog', () => {
   });
 
   step('Given user is login in', () => {
+    store = prepareStore({
+      account: accountReducer,
+      voting: votingReducer,
+      peers: peersReducer,
+    });
+
+    store.dispatch(accountLoggedIn(realAccount));
+    store.dispatch({
+      data: peers,
+      type: actionTypes.activePeerSet,
+    });
+    wrapper = mount(renderWithRouter(VoteDialog, store));
     expect(store.getState().account).to.be.an('Object');
     expect(store.getState().voting).to.be.an('Object');
     expect(store.getState().peers).to.be.an('Object');
