@@ -75,7 +75,7 @@ const peers = {
   },
 };
 
-describe.only('@integration test of VoteDialog', () => {
+describe('@integration test of VoteDialog', () => {
   let store;
   let wrapper;
   let clock;
