@@ -2,8 +2,8 @@ import { Card } from 'react-toolbox/lib/card';
 import { List, ListItem } from 'react-toolbox/lib/list';
 import { translate } from 'react-i18next';
 import Chip from 'react-toolbox/lib/chip';
-import Input from 'react-toolbox/lib/input';
 import React from 'react';
+import Input from './../toolbox/input';
 
 import { voteAutocomplete, unvoteAutocomplete } from '../../utils/api/delegate';
 import styles from './voteAutocomplete.css';

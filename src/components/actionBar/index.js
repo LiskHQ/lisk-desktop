@@ -1,7 +1,7 @@
 import { translate } from 'react-i18next';
-import Button from 'react-toolbox/lib/button';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import Button from './../toolbox/button';
 import PricedButton from '../pricedButton';
 import styles from './actionBar.css';
 

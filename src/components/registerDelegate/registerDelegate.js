@@ -1,5 +1,5 @@
 import React from 'react';
-import Input from 'react-toolbox/lib/input';
+import Input from './../toolbox/input';
 import InfoParagraph from '../infoParagraph';
 import ActionBar from '../actionBar';
 import Fees from '../../constants/fees';
