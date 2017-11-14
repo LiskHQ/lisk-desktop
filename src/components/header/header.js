@@ -1,7 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import { IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
 import Button from './../toolbox/button';
-import { IconMenu, MenuItem, MenuDivider } from './../toolbox/menu';
 
 import PrivateWrapper from '../privateWrapper';
 import logo from '../../assets/images/LISK-nano.png';

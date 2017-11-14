@@ -1,11 +1,11 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import { IconMenu, MenuItem } from 'react-toolbox/lib/menu';
 import { translate } from 'react-i18next';
 import Input from './../toolbox/input';
 import styles from './voting.css';
 import disableStyle from './disableMenu.css';
 import RelativeLink from '../relativeLink';
-import { IconMenu, MenuItem } from './../toolbox/menu';
 
 export class VotingHeaderRaw extends React.Component {
   constructor() {

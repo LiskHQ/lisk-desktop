@@ -1,6 +1,6 @@
 import React from 'react';
+import { IconMenu, MenuItem } from 'react-toolbox/lib/menu';
 import Input from './../toolbox/input';
-import { IconMenu, MenuItem } from './../toolbox/menu';
 import { fromRawLsk, toRawLsk } from '../../utils/lsk';
 import AuthInputs from '../authInputs';
 import ActionBar from '../actionBar';
