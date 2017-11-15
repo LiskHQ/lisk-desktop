@@ -17,7 +17,7 @@ describe('Reducer: peers(state, action)', () => {
       },
     };
 
-    const newState = { data: action.data };
+    const newState = { data: action.data, options: action.data.options };
     const changedState = peers(state, action);
     expect(changedState).to.deep.equal(newState);
   });
@@ -49,7 +49,7 @@ describe('Reducer: peers(state, action)', () => {
       type: actionTypes.accountLoggedOut,
     };
 
-    const newState = { status: {}, data: {} };
+    const newState = { status: {}, data: {}, options: {} };
     const changedState = peers(state, action);
     expect(changedState).to.deep.equal(newState);
   });
