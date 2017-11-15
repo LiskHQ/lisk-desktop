@@ -4,7 +4,7 @@ import ActionBar from '../actionBar';
 import Fees from '../../constants/fees';
 import AuthInputs from '../authInputs';
 import { handleChange, authStatePrefill, authStateIsValid } from '../../utils/form';
-import Input from './../toolbox/input';
+import ToolBoxInput from './../toolbox/input';
 
 class RegisterDelegate extends React.Component {
   constructor() {
@@ -43,7 +43,7 @@ class RegisterDelegate extends React.Component {
     return (
       <div>
         <form onSubmit={this.register.bind(this)}>
-          <Input label={this.props.t('Delegate name')} required={true}
+          <ToolBoxInput label={this.props.t('Delegate name')} required={true}
             autoFocus={true}
             className='username'
             onChange={handleChange.bind(this, this, 'name')}

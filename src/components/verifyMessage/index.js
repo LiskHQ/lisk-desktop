@@ -1,7 +1,7 @@
 import { translate } from 'react-i18next';
 import React from 'react';
 import lisk from 'lisk-js';
-import Input from './../toolbox/input';
+import ToolBoxInput from './../toolbox/input';
 
 import InfoParagraph from '../infoParagraph';
 import SignVerifyResult from '../signVerifyResult';
@@ -53,12 +53,12 @@ class VerifyMessage extends React.Component {
           {this.props.t('When you have the signature, you only need the publicKey of the signer in order to verify that the message came from the right private/publicKey pair. Be aware, everybody knowing the signature and the publicKey can verify the message. If ever there is a dispute, everybody can take the publicKey and signature to a judge and prove that the message is coming from the specific private/publicKey pair.')}
         </InfoParagraph>
         <section>
-          <Input className='public-key' type='text' label={this.props.t('Public Key')}
+          <ToolBoxInput className='public-key' type='text' label={this.props.t('Public Key')}
             autoFocus="true"
             value={this.state.publicKey.value}
             error={this.state.publicKey.error}
             onChange={this.handleChange.bind(this, 'publicKey')} />
-          <Input className='signature' multiline label={this.props.t('Signature')}
+          <ToolBoxInput className='signature' multiline label={this.props.t('Signature')}
             value={this.state.signature.value}
             error={this.state.signature.error}
             onChange={this.handleChange.bind(this, 'signature')} />

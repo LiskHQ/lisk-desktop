@@ -3,7 +3,7 @@ import Lisk from 'lisk-js';
 import { translate } from 'react-i18next';
 import SignVerifyResult from '../signVerifyResult';
 import ActionBar from '../actionBar';
-import Input from './../toolbox/input';
+import ToolBoxInput from './../toolbox/input';
 
 class DecryptMessage extends React.Component {
   constructor() {
@@ -59,15 +59,15 @@ class DecryptMessage extends React.Component {
       <div className='sign-message'>
         <form onSubmit={this.showResult.bind(this)}>
           <section>
-            <Input className='senderPublicKey' label={this.props.t('Sender PublicKey')}
+            <ToolBoxInput className='senderPublicKey' label={this.props.t('Sender PublicKey')}
               autoFocus={true}
               value={this.state.senderPublicKey.value}
               onChange={this.handleChange.bind(this, 'senderPublicKey')} />
-            <Input className='nonce' label={this.props.t('Nonce')}
+            <ToolBoxInput className='nonce' label={this.props.t('Nonce')}
               autoFocus={true}
               value={this.state.nonce.value}
               onChange={this.handleChange.bind(this, 'nonce')} />
-            <Input className='message' multiline label={this.props.t('Message')}
+            <ToolBoxInput className='message' multiline label={this.props.t('Message')}
               autoFocus={true}
               value={this.state.message.value}
               onChange={this.handleChange.bind(this, 'message')} />

@@ -1,6 +1,6 @@
 import React from 'react';
 import Lisk from 'lisk-js';
-import Input from './../toolbox/input';
+import ToolBoxInput from './../toolbox/input';
 
 import InfoParagraph from '../infoParagraph';
 import SignVerifyResult from '../signVerifyResult';
@@ -63,7 +63,7 @@ class SignMessageComponent extends React.Component {
         </InfoParagraph>
         <form onSubmit={this.showResult.bind(this)} id='signMessageForm'>
           <section>
-            <Input className='message' multiline label={this.props.t('Message')}
+            <ToolBoxInput className='message' multiline label={this.props.t('Message')}
               autoFocus={true}
               value={this.state.message}
               onChange={this.sign.bind(this)} />

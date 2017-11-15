@@ -1,6 +1,6 @@
 import Chip from 'react-toolbox/lib/chip';
 import React from 'react';
-import ProgressBar from './../toolbox/progress_ bar';
+import ToolboxProgressBar from './../toolbox/progress_ bar';
 
 import { parseSearchParams } from '../../utils/searchParams';
 import styles from './voteUrlProcessor.css';
@@ -44,7 +44,7 @@ export default class VoteUrlProcessor extends React.Component {
       <div>
         {this.getProcessedCount() < this.props.urlVoteCount ?
           (<div>
-            <ProgressBar type='linear' mode='determinate'
+            <ToolboxProgressBar type='linear' mode='determinate'
               value={this.getProcessedCount()} max={this.props.urlVoteCount}/>
             <div className={styles.center}>
               {this.props.t('Processing delegate names: ')}

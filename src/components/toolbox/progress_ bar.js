@@ -1,8 +1,6 @@
 import React from 'react';
-import { ProgressBar as ToolBoxProgressBar } from 'react-toolbox/lib/progress_bar';
+import ProgressBar from 'react-toolbox/lib/progress_bar';
 
-const ProgressBar = props => <ToolBoxProgressBar {...props} />;
+const ToolBoxProgressBar = props => <ProgressBar {...props} />;
 
-export default ProgressBar;
-export { ProgressBar };
-
+export default ToolBoxProgressBar;

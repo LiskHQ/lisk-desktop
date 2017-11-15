@@ -5,7 +5,7 @@ import { translate } from 'react-i18next';
 import styles from './voting.css';
 import disableStyle from './disableMenu.css';
 import RelativeLink from '../relativeLink';
-import Input from './../toolbox/input';
+import ToolBoxInput from './../toolbox/input';
 
 export class VotingHeaderRaw extends React.Component {
   constructor() {
@@ -66,7 +66,7 @@ export class VotingHeaderRaw extends React.Component {
     return (
       <header className={`${grid.row} ${grid['between-xs']} hasPaddingRow`}>
         <div className={`${grid['col-xs-3']} ${styles.searchBox}`}>
-          <Input type='tel'
+          <ToolBoxInput type='tel'
             label={t('Search')}
             name='query'
             className='search'

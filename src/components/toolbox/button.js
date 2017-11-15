@@ -1,9 +1,19 @@
 import React from 'react';
+import { themr } from 'react-css-themr';
 import { Button as ToolBoxButton, IconButton as ToolBoxIconButton } from 'react-toolbox/lib/button';
+import primaryButtonTheme from './primaryButton.css';
 
-const Button = props => <ToolBoxButton {...props} />;
+class Button extends React.Component {
+  render() {
+    return <ToolBoxButton {...this.props} theme={this.props.theme}/>;
+  }
+}
 
-const IconButton = props => <ToolBoxIconButton {...props} />;
+class IconButton extends React.Component {
+  render() {
+    return <ToolBoxIconButton {...this.props} theme={this.props.theme} />;
+  }
+}
 
-export default Button;
-export { Button, IconButton };
+export { IconButton };
+export default themr('primaryButton', primaryButtonTheme)(Button);

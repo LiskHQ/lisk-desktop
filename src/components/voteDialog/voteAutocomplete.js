@@ -3,7 +3,7 @@ import { Card } from 'react-toolbox/lib/card';
 import { List, ListItem } from 'react-toolbox/lib/list';
 import { translate } from 'react-i18next';
 import Chip from 'react-toolbox/lib/chip';
-import Input from './../toolbox/input';
+import ToolBoxInput from './../toolbox/input';
 
 import { voteAutocomplete, unvoteAutocomplete } from '../../utils/api/delegate';
 import styles from './voteAutocomplete.css';
@@ -207,7 +207,7 @@ export class VoteAutocompleteRaw extends React.Component {
           )}
         </div>
         <section className={styles.searchContainer}>
-          <Input type='text' label={this.props.t('Search by username')} name='votedListSearch'
+          <ToolBoxInput type='text' label={this.props.t('Search by username')} name='votedListSearch'
             className='votedListSearch vote-auto-complete' value={this.state.votedListSearch}
             error={this.state.votedSuggestionError}
             theme={styles}
@@ -241,7 +241,7 @@ export class VoteAutocompleteRaw extends React.Component {
           )}
         </div>
         <section className={styles.searchContainer}>
-          <Input type='text' label={this.props.t('Search by username')} name='unvotedListSearch'
+          <ToolBoxInput type='text' label={this.props.t('Search by username')} name='unvotedListSearch'
             className='unvotedListSearch' value={this.state.unvotedListSearch}
             error={this.state.unvotedSuggestionError}
             theme={styles}

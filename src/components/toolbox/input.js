@@ -1,7 +1,6 @@
 import React from 'react';
-import { Input as ToolBoxInput } from 'react-toolbox/lib/input';
+import Input from 'react-toolbox/lib/input';
 
-const Input = props => <ToolBoxInput {...props} />;
+const ToolBoxInput = props => <Input {...props} />;
 
-export default Input;
-export { Input };
+export default ToolBoxInput;

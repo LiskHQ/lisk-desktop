@@ -4,7 +4,7 @@ import { translate } from 'react-i18next';
 import InfoParagraph from '../infoParagraph';
 import SignVerifyResult from '../signVerifyResult';
 import ActionBar from '../actionBar';
-import Input from './../toolbox/input';
+import ToolBoxInput from './../toolbox/input';
 
 
 class EncryptMessage extends React.Component {
@@ -74,11 +74,11 @@ class EncryptMessage extends React.Component {
               </h3>
               {this.props.account.publicKey}
             </InfoParagraph>
-            <Input className='recipientPublicKey' label={this.props.t('Recipient PublicKey')}
+            <ToolBoxInput className='recipientPublicKey' label={this.props.t('Recipient PublicKey')}
               autoFocus={true}
               value={this.state.recipientPublicKey.value}
               onChange={this.handleChange.bind(this, 'recipientPublicKey')} />
-            <Input className='message' multiline label={this.props.t('Message')}
+            <ToolBoxInput className='message' multiline label={this.props.t('Message')}
               autoFocus={true}
               value={this.state.message.value}
               onChange={this.handleChange.bind(this, 'message')} />

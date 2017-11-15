@@ -12,4 +12,4 @@ const TableCell = props => <ToolBoxTableCell {...props} />;
 const TableHead = props => <ToolBoxTableHead {...props} />;
 
 export default Table;
-export { Table, TableRow, TableCell, TableHead };
+export { TableRow, TableCell, TableHead };
