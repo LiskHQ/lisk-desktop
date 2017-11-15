@@ -22,7 +22,6 @@ describe('autoUpdater', () => {
     callbacks = {};
     electron = {
       autoUpdater: {
-        setFeedURL: spy(),
         checkForUpdates: spy(),
         on: (name, callback) => {
           callbacks[name] = callback;
@@ -45,15 +44,13 @@ describe('autoUpdater', () => {
     clock.restore();
   });
 
-  it('should call electron.autoUpdater.setFeedURL and electron.autoUpdater.checkForUpdates', () => {
+  it('should call electron.autoUpdater.checkForUpdates', () => {
     autoUpdater(electron, win, process);
-    expect(electron.autoUpdater.setFeedURL).to.have.been.calledWithExactly('https://nuts.lisk.io/update/mac/VERSION_NUMBER');
     expect(electron.autoUpdater.checkForUpdates).to.have.been.calledWithExactly();
   });
 
   it('should call electron.autoUpdater.checkForUpdates every 24 hours', () => {
     autoUpdater(electron, win, process);
-    expect(electron.autoUpdater.setFeedURL).to.have.been.calledWith('https://nuts.lisk.io/update/mac/VERSION_NUMBER');
     expect(electron.autoUpdater.checkForUpdates).to.have.callCount(1);
     clock.tick(24 * 60 * 60 * 1000);
     expect(electron.autoUpdater.checkForUpdates).to.have.callCount(2);
@@ -106,7 +103,7 @@ describe('autoUpdater', () => {
 
   it('should console.log if electron.autoUpdater throws error due to unsigned package', () => {
     const error = new Error('Error: Could not get code signature for running application');
-    electron.autoUpdater.setFeedURL = () => {
+    electron.autoUpdater.checkForUpdates = () => {
       throw error;
     };
     const consoleSpy = spy(console, 'log');
