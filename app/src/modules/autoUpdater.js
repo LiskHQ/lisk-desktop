@@ -26,11 +26,14 @@ export default (electron, app, process) => {
     });
 
     electron.autoUpdater.on('error', (message) => {
+      // eslint-ignore-next-line no-console
       console.error('There was a problem updating the application');
+      // eslint-ignore-next-line no-console
       console.error(message);
     });
   } catch (e) {
-  // because electron.autoUpdater doesn't work if the build is not signed
+    // because electron.autoUpdater doesn't work if the build is not signed
+    // eslint-ignore-next-line no-console
     console.log(e);
   }
 };
