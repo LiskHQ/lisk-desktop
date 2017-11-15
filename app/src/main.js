@@ -4,7 +4,7 @@ import path from 'path';
 import storage from 'electron-json-storage'; // eslint-disable-line import/no-extraneous-dependencies
 import win from './modules/win';
 import localeHandler from './modules/localeHandler';
-import autoUpdater from './autoUpdater';
+import autoUpdater from './modules/autoUpdater';
 
 const { app, ipcMain } = electron;
 
@@ -75,4 +75,4 @@ ipcMain.on('request-locale', () => {
   localeHandler.send({ storage });
 });
 
-autoUpdater(app);
+autoUpdater(electron, app, process);
