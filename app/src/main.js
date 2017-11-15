@@ -1,10 +1,11 @@
 import electron from 'electron'; // eslint-disable-line import/no-extraneous-dependencies
 import electronLocalshortcut from 'electron-localshortcut'; // eslint-disable-line import/no-extraneous-dependencies
+import { autoUpdater } from 'electron-updater'; // eslint-disable-line import/no-extraneous-dependencies
 import path from 'path';
 import storage from 'electron-json-storage'; // eslint-disable-line import/no-extraneous-dependencies
 import win from './modules/win';
 import localeHandler from './modules/localeHandler';
-import autoUpdater from './modules/autoUpdater';
+import customAutoUpdater from './modules/autoUpdater';
 
 const { app, ipcMain } = electron;
 
@@ -75,4 +76,4 @@ ipcMain.on('request-locale', () => {
   localeHandler.send({ storage });
 });
 
-autoUpdater(electron, app, process);
+customAutoUpdater({ autoUpdater, dialog: electron.dialog }, app, process);
