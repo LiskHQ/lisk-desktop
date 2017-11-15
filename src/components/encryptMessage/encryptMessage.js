@@ -1,10 +1,10 @@
 import React from 'react';
-import Input from 'react-toolbox/lib/input';
 import Lisk from 'lisk-js';
 import { translate } from 'react-i18next';
 import InfoParagraph from '../infoParagraph';
 import SignVerifyResult from '../signVerifyResult';
 import ActionBar from '../actionBar';
+import Input from './../toolbox/input';
 
 
 class EncryptMessage extends React.Component {

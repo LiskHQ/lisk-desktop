@@ -1,12 +1,12 @@
 import React from 'react';
 import { Card, CardTitle } from 'react-toolbox/lib/card';
-import { Table, TableHead, TableRow, TableCell } from 'react-toolbox/lib/table';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { TooltipTime } from '../timestamp';
 import LiskAmount from '../liskAmount';
 import FormattedNumber from '../formattedNumber';
 import style from './forging.css';
+import { Table, TableHead, TableRow, TableCell } from './../toolbox/table';
 
 
 const ForgedBlocks = props => (

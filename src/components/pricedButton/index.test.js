@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
-import Button from 'react-toolbox/lib/button';
+import Button from './../toolbox/button';
 import { PricedButtonComponent } from './index';
 import i18n from '../../i18n';
 import styles from './pricedButton.css';

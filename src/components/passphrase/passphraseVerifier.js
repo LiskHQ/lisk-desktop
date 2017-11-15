@@ -1,7 +1,7 @@
 import React from 'react';
-import Input from 'react-toolbox/lib/input';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './passphrase.css';
+import Input from './../toolbox/input';
 
 class PassphraseConfirmator extends React.Component {
   constructor() {

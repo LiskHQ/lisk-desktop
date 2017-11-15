@@ -1,9 +1,9 @@
 import { translate } from 'react-i18next';
-import Button from 'react-toolbox/lib/button';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import PricedButton from '../pricedButton';
 import styles from './actionBar.css';
+import Button from './../toolbox/button';
 
 export const ActionBarRaw = ({
   secondaryButton, primaryButton, account, t,

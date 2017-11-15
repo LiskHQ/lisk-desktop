@@ -1,6 +1,6 @@
-import { Table, TableHead, TableRow, TableCell } from 'react-toolbox/lib/table';
 import React from 'react';
-import { IconButton } from 'react-toolbox/lib/button';
+import { Table, TableHead, TableRow, TableCell } from './../toolbox/table';
+import { IconButton } from './../toolbox/button';
 import ActionBar from '../actionBar';
 import InfoParagraph from '../infoParagraph';
 import networks from '../../constants/networks';

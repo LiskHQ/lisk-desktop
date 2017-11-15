@@ -1,10 +1,10 @@
 import React from 'react';
 import AnimateOnChange from 'react-animate-on-change';
-import ProgressBar from 'react-toolbox/lib/progress_bar';
-import Input from 'react-toolbox/lib/input';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { generateSeed, generatePassphrase, emptyByte } from '../../utils/passphrase';
 import styles from './passphrase.css';
+import Input from './../toolbox/input';
+import ProgressBar from './../toolbox/progress_ bar';
 
 
 const Byte = props => (
