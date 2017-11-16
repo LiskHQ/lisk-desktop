@@ -6,7 +6,7 @@ import { TooltipTime } from '../timestamp';
 import LiskAmount from '../liskAmount';
 import FormattedNumber from '../formattedNumber';
 import style from './forging.css';
-import { Table, TableHead, TableRow, TableCell } from './../toolbox/table';
+import { Table, TableHead, TableRow, TableCell } from '../toolbox/tables/table';
 
 
 const ForgedBlocks = props => (

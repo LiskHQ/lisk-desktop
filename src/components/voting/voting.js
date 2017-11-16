@@ -4,7 +4,7 @@ import { themr } from 'react-css-themr';
 import React from 'react';
 import TableTheme from 'react-toolbox/lib/table/theme.css';
 import Waypoint from 'react-waypoint';
-import { TableHead, TableCell } from './../toolbox/table';
+import { TableHead, TableCell } from '../toolbox/tables/table';
 
 import Header from './votingHeader';
 import VotingBar from './votingBar';

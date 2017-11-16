@@ -2,8 +2,8 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Dropdown from 'react-toolbox/lib/dropdown';
 import i18next from 'i18next';
-import ToolBoxInput from './../toolbox/input';
-import Button from './../toolbox/button';
+import Input from '../toolbox/inputs/input';
+import Button from '../toolbox/buttons/button';
 import PassphraseInput from '../passphraseInput';
 import styles from './login.css';
 import env from '../../constants/env';
@@ -162,7 +162,7 @@ class Login extends React.Component {
               />
               {
                 this.state.network === networks.customNode.code &&
-                  <ToolBoxInput type='text'
+                  <Input type='text'
                     label={this.props.t('Node address')}
                     name='address'
                     className='address'

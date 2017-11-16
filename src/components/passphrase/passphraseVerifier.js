@@ -1,7 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './passphrase.css';
-import ToolBoxInput from './../toolbox/input';
+import Input from '../toolbox/inputs/input';
 
 class PassphraseConfirmator extends React.Component {
   constructor() {
@@ -48,7 +48,7 @@ class PassphraseConfirmator extends React.Component {
           </p>
         </div>
         <div className={grid['col-xs-12']}>
-          <ToolBoxInput type='text' label={this.props.t('Enter the missing word')}
+          <Input type='text' label={this.props.t('Enter the missing word')}
             autoFocus
             onBlur={this.focus.bind(this)}
             onChange={this.changeHandler.bind(this)} />

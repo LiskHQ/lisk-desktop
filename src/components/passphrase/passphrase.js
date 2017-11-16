@@ -6,7 +6,7 @@ import PassphraseGenerator from './passphraseGenerator';
 import PassphraseVerifier from './passphraseVerifier';
 import ActionBar from '../actionBar';
 import stepsConfig from './steps';
-import Input from './../toolbox/input';
+import Input from '../toolbox/inputs/input';
 
 class Passphrase extends React.Component {
   constructor() {

@@ -4,7 +4,7 @@ import { fromRawLsk, toRawLsk } from '../../utils/lsk';
 import AuthInputs from '../authInputs';
 import ActionBar from '../actionBar';
 import { authStatePrefill, authStateIsValid } from '../../utils/form';
-import ToolBoxInput from './../toolbox/input';
+import Input from '../toolbox/inputs/input';
 
 import styles from './send.css';
 
@@ -86,13 +86,13 @@ class Send extends React.Component {
     return (
       <div className={`${styles.send} send`}>
         <form onSubmit={this.send.bind(this)}>
-          <ToolBoxInput label={this.props.t('Recipient Address')} required={true}
+          <Input label={this.props.t('Recipient Address')} required={true}
             className='recipient'
             autoFocus={true}
             error={this.state.recipient.error}
             value={this.state.recipient.value}
             onChange={this.handleChange.bind(this, 'recipient')} />
-          <ToolBoxInput label={this.props.t('Transaction Amount')} required={true}
+          <Input label={this.props.t('Transaction Amount')} required={true}
             className='amount'
             error={this.state.amount.error}
             value={this.state.amount.value}

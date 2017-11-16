@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Dialog from 'react-toolbox/lib/dialog';
 import Navigation from 'react-toolbox/lib/navigation';
 import AppBar from 'react-toolbox/lib/app_bar';
-import { IconButton } from './../toolbox/button';
+import IconButton from '../toolbox/buttons/icon_button';
 import { parseSearchParams } from '../../utils/searchParams';
 import styles from './dialog.css';
 import getDialogs from './dialogs';

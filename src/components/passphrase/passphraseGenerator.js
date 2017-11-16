@@ -3,8 +3,8 @@ import AnimateOnChange from 'react-animate-on-change';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { generateSeed, generatePassphrase, emptyByte } from '../../utils/passphrase';
 import styles from './passphrase.css';
-import ToolBoxInput from './../toolbox/input';
-import ToolboxProgressBar from './../toolbox/progress_ bar';
+import Input from '../toolbox/inputs/input';
+import ProgressBar from '../toolbox/progressBar/progress_bar';
 
 
 const Byte = props => (
@@ -95,14 +95,14 @@ class PassphraseGenerator extends React.Component {
           {isTouch ?
             <div>
               <p>Enter text below to generate random bytes</p>
-              <ToolBoxInput onChange={this.seedGeneratorBoundToThis}
+              <Input onChange={this.seedGeneratorBoundToThis}
                 className='touch-fallback' autoFocus={true} multiline={true} />
             </div> :
             <p>{this.props.t('Move your mouse to generate random bytes')}</p>
           }
         </div>
         <div className={grid['col-xs-12']}>
-          <ToolboxProgressBar mode='determinate'
+          <ProgressBar mode='determinate'
             value={this.state.data ? this.state.data.percentage : 0} />
         </div>
         <div className={grid['col-xs-12']}>

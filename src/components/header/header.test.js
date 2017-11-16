@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
 import sinon from 'sinon';
-import { Button } from './../toolbox/button';
+import { Button } from '../toolbox/buttons/button';
 import styles from './header.css';
 import Header from './header';
 import RelativeLink from '../relativeLink';

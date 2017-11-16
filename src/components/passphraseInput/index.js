@@ -1,8 +1,8 @@
 import { translate } from 'react-i18next';
 import React from 'react';
 import Tooltip from 'react-toolbox/lib/tooltip';
-import ToolBoxInput from './../toolbox/input';
-import { IconButton } from './../toolbox/button';
+import Input from '../toolbox/inputs/input';
+import IconButton from '../toolbox/buttons/icon_button';
 
 import { findSimilarWord, inDictionary } from '../../utils/similarWord';
 import { isValidPassphrase } from '../../utils/passphrase';
@@ -77,7 +77,7 @@ class PassphraseInput extends React.Component {
   render() {
     return (
       <div className={styles.wrapper}>
-        <ToolBoxInput label={this.props.label} required={true}
+        <Input label={this.props.label} required={true}
           className={`${this.props.className} ${styles.inputWrapper}`}
           error={this.props.error}
           value={this.props.value || ''}

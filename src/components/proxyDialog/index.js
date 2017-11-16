@@ -1,7 +1,7 @@
 import React from 'react';
 import { translate } from 'react-i18next';
-import ToolBoxInput from './../toolbox/input';
-import { Button } from './../toolbox/button';
+import Input from '../toolbox/inputs/input';
+import { Button } from '../toolbox/buttons/button';
 
 class ProxyDialog extends React.Component {
   constructor() {
@@ -40,12 +40,12 @@ class ProxyDialog extends React.Component {
           To connect to Lisk network, you need to enter a username and password for proxy
           <b> {this.props.authInfo.host} </b>
         </p>
-        <ToolBoxInput label={this.props.t('Username')} required
+        <Input label={this.props.t('Username')} required
           className='username'
           onChange={this.handleChange.bind(this, 'username')}
           error={this.state.username.error}
           value={this.state.username.value}/>
-        <ToolBoxInput label={this.props.t('Password')} required type='password'
+        <Input label={this.props.t('Password')} required type='password'
           className='password'
           onChange={this.handleChange.bind(this, 'password')}
           error={this.state.password.error}

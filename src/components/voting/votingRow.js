@@ -1,5 +1,5 @@
 import React from 'react';
-import { TableRow, TableCell } from './../toolbox/table';
+import { TableRow, TableCell } from '../toolbox/tables/table';
 import styles from './voting.css';
 import Checkbox from './voteCheckbox';
 

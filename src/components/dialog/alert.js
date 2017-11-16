@@ -1,7 +1,7 @@
 import { translate } from 'react-i18next';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import Button from './../toolbox/button';
+import Button from '../toolbox/buttons/button';
 
 const Alert = ({ text, closeDialog, t }) => (
   <div>

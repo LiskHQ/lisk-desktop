@@ -3,7 +3,7 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import PricedButton from '../pricedButton';
 import styles from './actionBar.css';
-import Button from './../toolbox/button';
+import Button from '../toolbox/buttons/button';
 
 export const ActionBarRaw = ({
   secondaryButton, primaryButton, account, t,
