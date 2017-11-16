@@ -3,9 +3,7 @@ import sinon, { spy } from 'sinon'; // eslint-disable-line import/no-extraneous-
 import autoUpdater from './autoUpdater';
 
 describe('autoUpdater', () => {
-  const event = {};
-  const releaseNotes = '';
-  const releaseName = '1.2.3';
+  const version = '1.2.3';
   let params;
   let callbacks;
   let clock;
@@ -60,14 +58,14 @@ describe('autoUpdater', () => {
     const dialogSpy = spy(params.dialog, 'showMessageBox');
 
     autoUpdater(params);
-    callbacks['update-downloaded'](event, releaseNotes, releaseName);
+    callbacks['update-downloaded']({ version });
 
     expect(dialogSpy).to.have.been.calledWith();
   });
 
   it('should params.autoUpdater.quitAndInstall() in params.dialog.showMessageBox callback if the first button was pressed', () => {
     autoUpdater(params);
-    callbacks['update-downloaded'](event, releaseNotes, releaseName);
+    callbacks['update-downloaded']({ version });
     callbacks.dialog(0);
 
     expect(params.autoUpdater.quitAndInstall).to.have.been.calledWithExactly();
@@ -75,7 +73,7 @@ describe('autoUpdater', () => {
 
   it('should not params.autoUpdater.quitAndInstall() in params.dialog.showMessageBox callback if the second button was pressed', () => {
     autoUpdater(params);
-    callbacks['update-downloaded'](event, releaseNotes, releaseName);
+    callbacks['update-downloaded']({ version });
     callbacks.dialog(1);
 
     expect(params.autoUpdater.quitAndInstall).to.not.have.been.calledWith();

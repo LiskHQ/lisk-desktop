@@ -7,12 +7,12 @@ export default ({ autoUpdater, dialog }) => {
       autoUpdater.checkForUpdates();
     }, 24 * 60 * 60 * 1000);
 
-    autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
+    autoUpdater.on('update-downloaded', ({ version }) => {
       const dialogOpts = {
         type: 'info',
-        buttons: [i18n.t('Restart'), i18n.t('Later')],
+        buttons: [i18n.t('Update'), i18n.t('Later')],
         title: i18n.t('New version of Lisk Nano available'),
-        message: i18n.t('Version {{version}} has been downloaded. Please restart the application to apply the updates.', { version: releaseName }),
+        message: i18n.t('Version {{version}} has been downloaded. To install the update and restart the application, click "{{buttonLabel}}" button.', { version, buttonLabel: i18n.t('Update') }),
       };
 
       dialog.showMessageBox(dialogOpts, (pressedButtonIndex) => {
