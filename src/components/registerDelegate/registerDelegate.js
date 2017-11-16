@@ -17,6 +17,7 @@ class RegisterDelegate extends React.Component {
       ...authStatePrefill(),
     };
   }
+
   componentDidMount() {
     const newState = {
       name: {
@@ -40,6 +41,16 @@ class RegisterDelegate extends React.Component {
   }
 
   render() {
+    if (this.props.account.isDelegate) {
+      return (
+        <div>
+          <InfoParagraph>
+            {this.props.t('You have already registered as a delegate.')}
+          </InfoParagraph>
+        </div>
+      );
+    }
+
     return (
       <div>
         <form onSubmit={this.register.bind(this)}>

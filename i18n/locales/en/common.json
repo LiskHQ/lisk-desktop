@@ -183,6 +183,7 @@
   "You can select up to {{count}} delegates in one voting turn._plural": "You can select up to {{count}} delegates in one voting turn.",
   "You can vote for up to {{count}} delegates in total.": "You can vote for up to {{count}} delegates in total.",
   "You can vote for up to {{count}} delegates in total._plural": "You can vote for up to {{count}} delegates in total.",
+  "You have already registered as a delegate.": "You have already registered as a delegate.",
   "You have not forged any blocks yet": "You have not forged any blocks yet",
   "You need to become a delegate to start forging. If you already registered to become a delegate, your registration hasn't been processed, yet.": "You need to become a delegate to start forging. If you already registered to become a delegate, your registration hasn't been processed, yet.",
   "You've received {{value}} LSK.": "You've received {{value}} LSK.",
