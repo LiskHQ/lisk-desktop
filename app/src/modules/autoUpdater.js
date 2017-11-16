@@ -1,6 +1,6 @@
 import i18n from './../i18n';
 
-export default ({ autoUpdater, dialog }, app, process) => { // eslint-disable-line no-unused-vars
+export default ({ autoUpdater, dialog }) => {
   try {
     autoUpdater.checkForUpdates();
     setInterval(() => {

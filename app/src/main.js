@@ -76,4 +76,4 @@ ipcMain.on('request-locale', () => {
   localeHandler.send({ storage });
 });
 
-customAutoUpdater({ autoUpdater, dialog: electron.dialog }, app, process);
+customAutoUpdater({ autoUpdater, dialog: electron.dialog });
