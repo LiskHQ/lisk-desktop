@@ -5,7 +5,7 @@ import primaryButtonTheme from './css/primaryButton.css';
 import importantButtonTheme from './css/importantButton.css';
 import lightButtonTheme from './css/lightButton.css';
 
-class Button extends React.Component {
+class TBButton extends React.Component {
   render() {
     return <ToolBoxButton {...this.props} theme={this.props.theme}/>;
   }
@@ -25,6 +25,7 @@ class TBLightButton extends React.Component {
 
 const ImportantButton = themr('importantButton', importantButtonTheme)(TBImportantButton);
 const LightButton = themr('lightButton', lightButtonTheme)(TBLightButton);
+const Button = themr('primaryButton', primaryButtonTheme)(TBButton);
 
-export { ImportantButton, LightButton };
-export default themr('primaryButton', primaryButtonTheme)(Button);
+export { Button, ImportantButton, LightButton };
+export default Button;

@@ -42,6 +42,7 @@ describe('Header', () => {
   });
 
   it('renders 1 Button components', () => {
+    console.log(wrapper.find(Button));
     expect(wrapper.find(Button)).to.have.length(1);
   });
 

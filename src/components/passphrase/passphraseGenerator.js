@@ -4,7 +4,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { generateSeed, generatePassphrase, emptyByte } from '../../utils/passphrase';
 import styles from './passphrase.css';
 import Input from '../toolbox/inputs/input';
-import ProgressBar from '../toolbox/progressBar/progress_bar';
+import ProgressBar from '../toolbox/progressBar/progressBar';
 
 
 const Byte = props => (

@@ -1,5 +1,5 @@
 import React from 'react';
-import ProgressBar from '../toolbox/progressBar/progress_bar';
+import ProgressBar from '../toolbox/progressBar/progressBar';
 import styles from './loadingBar.css';
 
 const LoadingBar = props => (

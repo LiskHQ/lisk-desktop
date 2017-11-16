@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, TableHead, TableRow, TableCell } from '../toolbox/tables/table';
+import { Table, TBTableHead, TBTableRow, TBTableCell } from '../toolbox/tables/table';
 import IconButton from '../toolbox/buttons/icon_button';
 import ActionBar from '../actionBar';
 import InfoParagraph from '../infoParagraph';
@@ -39,34 +39,34 @@ const SavedAccounts = ({
         </InfoParagraph> :
         <div className={styles.tableWrapper} >
           <Table selectable={false} className='saved-accounts-table'>
-            <TableHead>
-              <TableCell className={styles.iconCell} >{t('Switch')}</TableCell>
-              <TableCell>{t('Address')}</TableCell>
-              <TableCell>{t('Network')}</TableCell>
-              <TableCell className={styles.iconCell} >{t('Forget')}</TableCell>
-            </TableHead>
+            <TBTableHead>
+              <TBTableCell className={styles.iconCell} >{t('Switch')}</TBTableCell>
+              <TBTableCell>{t('Address')}</TBTableCell>
+              <TBTableCell>{t('Network')}</TBTableCell>
+              <TBTableCell className={styles.iconCell} >{t('Forget')}</TBTableCell>
+            </TBTableHead>
             {savedAccounts.map(account => (
-              <TableRow key={account.publicKey + account.network}
+              <TBTableRow key={account.publicKey + account.network}
                 className={(isActive(account) ? styles.isActive : null)}>
-                <TableCell className={styles.iconCell} >
+                <TBTableCell className={styles.iconCell} >
                   <IconButton icon='exit_to_app'
                     disabled={isActive(account)}
                     className='switch-button'
                     onClick={accountSwitched.bind(this, account)} />
-                </TableCell>
-                <TableCell>
+                </TBTableCell>
+                <TBTableCell>
                   {extractAddress(account.publicKey)}
-                </TableCell>
-                <TableCell>
+                </TBTableCell>
+                <TBTableCell>
                   {account.network === networks.customNode.code ?
                     account.address :
                     t(getNetwork(account.network).name)}
-                </TableCell>
-                <TableCell className={styles.iconCell} >
+                </TBTableCell>
+                <TBTableCell className={styles.iconCell} >
                   <IconButton icon='clear' className='forget-button'
                     onClick={accountRemoved.bind(this, account)} />
-                </TableCell>
-              </TableRow>
+                </TBTableCell>
+              </TBTableRow>
             ))}
           </Table>
         </div>
