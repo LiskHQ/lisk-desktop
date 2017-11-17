@@ -22,6 +22,7 @@ describe('autoUpdater', () => {
         showMessageBox: (options, callback) => {
           callbacks.dialog = callback;
         },
+        showErrorBox: spy(),
       },
     };
 
@@ -84,7 +85,7 @@ describe('autoUpdater', () => {
     const consoleSpy = spy(console, 'error');
 
     autoUpdater(params);
-    callbacks.error(null, error);
+    callbacks.error(error);
 
     expect(consoleSpy).to.have.been.calledWith('There was a problem updating the application');
     expect(consoleSpy).to.have.been.calledWith(error);

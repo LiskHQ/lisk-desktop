@@ -5,11 +5,15 @@ import path from 'path';
 import storage from 'electron-json-storage'; // eslint-disable-line import/no-extraneous-dependencies
 import win from './modules/win';
 import localeHandler from './modules/localeHandler';
-import customAutoUpdater from './modules/autoUpdater';
+import updateChecker from './modules/autoUpdater';
+
+const checkForUpdates = updateChecker({ autoUpdater, dialog: electron.dialog });
 
 const { app, ipcMain } = electron;
 
-app.on('ready', () => { win.create({ electron, path, electronLocalshortcut, storage }); });
+app.on('ready', () => {
+  win.create({ electron, path, electronLocalshortcut, storage, checkForUpdates });
+});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -25,7 +29,7 @@ if (process.platform === 'darwin') {
 
 app.on('activate', () => {
   if (win.browser === null) {
-    win.create({ electron, path, electronLocalshortcut, storage });
+    win.create({ electron, path, electronLocalshortcut, storage, checkForUpdates });
   }
 });
 
@@ -68,12 +72,10 @@ ipcMain.on('proxyCredentialsEntered', (event, username, password) => {
 ipcMain.on('set-locale', (event, locale) => {
   const langCode = locale.substr(0, 2);
   if (langCode) {
-    localeHandler.update({ langCode, electron, storage, event });
+    localeHandler.update({ langCode, electron, storage, event, checkForUpdates });
   }
 });
 
 ipcMain.on('request-locale', () => {
   localeHandler.send({ storage });
 });
-
-customAutoUpdater({ autoUpdater, dialog: electron.dialog });

@@ -34,8 +34,8 @@ const addAboutMenuForNonMac = ({ template, electron }) => {
 };
 
 const menu = {
-  build: (electron) => {
-    const template = menu.buildTemplate(electron);
+  build: (electron, checkForUpdates) => {
+    const template = menu.buildTemplate(electron, checkForUpdates);
     if (process.platform === 'darwin') {
       addAboutMenuForMac({ template, name: electron.app.getName() });
     } else {
@@ -46,7 +46,7 @@ const menu = {
   onClickLink: (electron, url) => {
     electron.shell.openExternal(url);
   },
-  buildTemplate: electron =>
+  buildTemplate: (electron, checkForUpdates) =>
     ([
       {
         label: i18n.t('Edit'),
@@ -131,6 +131,10 @@ const menu = {
           {
             label: i18n.t('What\'s New...'),
             click: menu.onClickLink.bind(null, electron, 'https://github.com/LiskHQ/lisk-nano/releases'),
+          },
+          {
+            label: i18n.t('Check for updates...'),
+            click: checkForUpdates,
           },
         ],
       },
