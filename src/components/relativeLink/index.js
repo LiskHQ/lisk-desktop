@@ -30,7 +30,7 @@ const RelativeLink = ({
 };
 
 const mapStateToProps = state => ({
-  dialogTitle: state.dialog.title,
+  dialog: state.dialog,
 });
 
 export default withRouter(connect(mapStateToProps)(RelativeLink));
