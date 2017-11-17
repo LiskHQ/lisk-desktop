@@ -17,7 +17,10 @@ export default ({ autoUpdater, dialog, win }) => {
     // eslint-disable-next-line no-console
     console.error(error);
     // eslint-disable-next-line max-len
-    // dialog.showErrorBox('Error: ', error == null ? 'unknown' : (error.stack || error).toString());
+    if (updater.error !== error) {
+      updater.error = error;
+      dialog.showErrorBox('Error: ', error == null ? 'unknown' : error.toString());
+    }
   });
 
   autoUpdater.on('download-progress', (progressObj) => {
@@ -30,6 +33,7 @@ export default ({ autoUpdater, dialog, win }) => {
   });
 
   autoUpdater.on('update-available', ({ version }) => {
+    updater.error = undefined;
     dialog.showMessageBox({
       type: 'info',
       title: i18n.t('New version available'),
@@ -38,10 +42,14 @@ export default ({ autoUpdater, dialog, win }) => {
     }, (buttonIndex) => {
       if (buttonIndex === 0) {
         autoUpdater.downloadUpdate();
-        dialog.showMessageBox({
-          title: i18n.t('Dowload started'),
-          message: i18n.t('The download was started. Depending on your internet speed it can take up to several minutes. You will be informed then it is finished and prompted to restart the app.'),
-        });
+        setTimeout(() => {
+          if (!updater.error) {
+            dialog.showMessageBox({
+              title: i18n.t('Dowload started'),
+              message: i18n.t('The download was started. Depending on your internet speed it can take up to several minutes. You will be informed then it is finished and prompted to restart the app.'),
+            });
+          }
+        }, 500);
       } else {
         updater.menuItem.enabled = true;
       }
