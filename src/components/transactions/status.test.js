@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import IconButton from '../toolbox/buttons/icon_button';
+import IconButton from '../toolbox/buttons/iconButton';
 import Status from './status';
 
 describe('Status', () => {

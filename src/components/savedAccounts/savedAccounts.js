@@ -1,5 +1,5 @@
 import React from 'react';
-import IconButton from '../toolbox/buttons/icon_button';
+import IconButton from '../toolbox/buttons/iconButton';
 import ActionBar from '../actionBar';
 import InfoParagraph from '../infoParagraph';
 import networks from '../../constants/networks';
