@@ -1,11 +1,10 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
+import configureMockStore from 'redux-mock-store';
 import sinon from 'sinon';
-import { Provider } from 'react-redux';
-import { I18nextProvider } from 'react-i18next';
+import PropTypes from 'prop-types';
 import i18n from '../../i18n';
-import store from '../../store';
 import SignMessage from './signMessage';
 
 
@@ -13,6 +12,9 @@ describe('SignMessage', () => {
   let wrapper;
   let successToastSpy;
   let copyMock;
+  let props;
+  let store;
+  let options;
   const publicKey = 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f';
   const signature = '079331d868678fd5f272f09d6dc8792fb21335aec42af7f11caadbfbc17d4707e7' +
     'd7f343854b0c619b647b81ba3f29b23edb4eaf382a47c534746bad4529560b48656c6c6f20776f726c64';
@@ -33,18 +35,24 @@ ${signature}
   beforeEach(() => {
     successToastSpy = sinon.spy();
     copyMock = sinon.mock();
-    const props = {
+    props = {
       account,
       successToast: successToastSpy,
       copyToClipboard: copyMock,
       t: key => key,
     };
+    store = configureMockStore([])({
+      account,
+    });
+    options = {
+      context: { store, i18n },
+      childContextTypes: {
+        store: PropTypes.object.isRequired,
+        i18n: PropTypes.object.isRequired,
+      },
+    };
 
-    wrapper = mount(<Provider store={store}>
-      <I18nextProvider i18n={ i18n }>
-        <SignMessage {...props} />
-      </I18nextProvider>
-    </Provider>);
+    wrapper = mount(<SignMessage {...props} />, options);
   });
 
   it('allows to sign a message, copies sign message result to clipboard and shows success toast', () => {
@@ -53,6 +61,35 @@ ${signature}
     wrapper.find('#signMessageForm').simulate('submit');
     expect(wrapper.find('.result Input').text()).to.equal(result);
     expect(successToastSpy).to.have.been.calledWith({ label: 'Result copied to clipboard' });
+  });
+
+  it('allows to sign a message with a locked account', () => {
+    copyMock.returns(true);
+
+    store = configureMockStore([])({
+      account: {
+        ...account,
+        passphrase: undefined,
+      },
+    });
+
+    wrapper = mount(<SignMessage {...props} />, {
+      ...options,
+      context: { store, i18n },
+    });
+
+    wrapper.setProps({
+      ...props,
+      account: {
+        ...account,
+        passphrase: undefined,
+      },
+    });
+
+    wrapper.find('.message textarea').simulate('change', { target: { value: message } });
+    wrapper.find('.passphrase input').simulate('change', { target: { value: account.passphrase } });
+    wrapper.find('#signMessageForm').simulate('submit');
+    expect(wrapper.find('.result Input').text()).to.equal(result);
   });
 
   it('does not show success toast if copy-to-clipboard failed', () => {

@@ -15,8 +15,8 @@ export const authStateIsValid = state => (
   state.secondPassphrase.value !== ''
 );
 
-export const handleChange = (component, name, value, error) => {
-  component.setState({
+export const handleChange = function (name, value, error) {
+  this.setState({
     [name]: {
       value,
       error: typeof error === 'string' ? error : undefined,

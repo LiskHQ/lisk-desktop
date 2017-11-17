@@ -12,6 +12,19 @@ Feature: Register second passphrase
     Given I'm logged in as "second passphrase account"
     Then There is no "register second passphrase" in main menu
 
+  Scenario: should ask for passphrase for saved account
+  Given I'm logged in as "empty account"
+    When I click "saved accounts" in main menu
+    And I click "add active account button"
+    And I click "x button"
+    And I wait 1 seconds
+    And I refresh the page
+    When I click "register second passphrase" in main menu
+    And I fill in passphrase of "empty account" to "passphrase" field
+    And I click "authenticate button"
+    Then I should see "Insufficient funds for 5 LSK fee" error message
+    And "next button" should be disabled
+
   @integration
   Scenario: should not allow to set 2nd passphrase if not enough funds for the fee
     Given I'm logged in as "empty account"
