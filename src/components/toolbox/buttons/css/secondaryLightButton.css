@@ -1,6 +1,7 @@
 @import '../../../../app/buttonStyles.css';
 
 .button {
-@mixin buttonBasics;
-@mixin buttonPrimary;
+  @mixin buttonBasics;
+  @mixin buttonSecondary--light;
 }
+

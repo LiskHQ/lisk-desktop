@@ -1,0 +1,52 @@
+@define-mixin buttonBasics {
+  min-width: 250px;
+  border-radius: 3px;
+  font-size: 18px;
+  text-transform: capitalize;
+
+  &:disabled {
+    background: none !important;
+    color: #bac0cb !important;
+    box-shadow: 0 0 0 2px #bac0cb;
+  }
+}
+
+@define-mixin buttonSecondary--blue {
+  min-height: 55px;
+  background: none !important;
+  color: #2a73b9 !important;
+  box-shadow: 0 0 0 2px #2a73b9;
+
+
+  &:hover {
+    color: white !important;
+    background: #2a73b9 !important;
+ }
+}
+
+@define-mixin buttonPrimary {
+  min-height: 55px;
+  color: white !important;
+  background: #c80039; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(left, #c80039, #ff6236); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(right, #c80039, #ff6236); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(right, #c80039, #ff6236); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to right, #c80039, #ff6236); /* Standard syntax */
+
+  &:hover {
+    background: #ed4537 !important;
+  }
+}
+
+@define-mixin buttonSecondary--light {
+  min-height: 55px;
+  background: none !important;
+  color: white !important;
+  box-shadow: 0 0 0 2px white;
+
+  &:disabled {
+    color: #bac0cb !important;
+    box-shadow: 0 0 0 2px #bac0cb;
+  }
+
+}
