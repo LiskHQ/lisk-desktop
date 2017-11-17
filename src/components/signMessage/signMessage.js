@@ -13,7 +13,7 @@ class SignMessageComponent extends React.Component {
   constructor() {
     super();
     this.state = {
-      message: '',
+      message: { value: '' },
       result: '',
       ...authStatePrefill(),
     };
@@ -39,12 +39,12 @@ class SignMessageComponent extends React.Component {
       this.state.passphrase.value);
     const result = Lisk.crypto.printSignedMessage(
       message, signedMessage, this.props.account.publicKey);
-    this.setState({ result, resultIsShown: false, message });
+    this.setState({ result, resultIsShown: false });
   }
 
   showResult(event) {
     event.preventDefault();
-    this.sign(this.state.message);
+    this.sign(this.state.message.value);
     const copied = this.props.copyToClipboard(this.state.result, {
       message: this.props.t('Press #{key} to copy'),
     });
@@ -66,8 +66,8 @@ class SignMessageComponent extends React.Component {
           <section>
             <Input className='message' multiline label={this.props.t('Message')}
               autoFocus={true}
-              value={this.state.message}
-              onChange={this.sign.bind(this)} />
+              value={this.state.message.value}
+              onChange={this.handleChange.bind(this, 'message')} />
             <AuthInputs
               passphrase={this.state.passphrase}
               secondPassphrase={this.state.secondPassphrase}
@@ -83,7 +83,7 @@ class SignMessageComponent extends React.Component {
                 label: this.props.t('Sign and copy result to clipboard'),
                 className: 'sign-button',
                 type: 'submit',
-                disabled: (!this.state.result ||
+                disabled: (!this.state.message.value ||
                   this.state.resultIsShown ||
                   !authStateIsValid(this.state)),
               }} />
