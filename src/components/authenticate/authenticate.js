@@ -47,7 +47,7 @@ class Authenticate extends React.Component {
         <AuthInputs
           passphrase={this.state.passphrase}
           secondPassphrase={this.state.secondPassphrase}
-          onChange={handleChange.bind(this, this)} />
+          onChange={handleChange.bind(this)} />
 
         <ActionBar
           secondaryButton={{
