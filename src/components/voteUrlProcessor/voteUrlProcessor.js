@@ -1,6 +1,6 @@
 import Chip from 'react-toolbox/lib/chip';
-import ProgressBar from 'react-toolbox/lib/progress_bar';
 import React from 'react';
+import ProgressBar from '../toolbox/progressBar/progressBar';
 
 import { parseSearchParams } from '../../utils/searchParams';
 import styles from './voteUrlProcessor.css';

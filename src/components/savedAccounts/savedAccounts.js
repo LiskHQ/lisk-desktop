@@ -1,11 +1,11 @@
-import { Table, TableHead, TableRow, TableCell } from 'react-toolbox/lib/table';
 import React from 'react';
-import { IconButton } from 'react-toolbox/lib/button';
+import IconButton from '../toolbox/buttons/iconButton';
 import ActionBar from '../actionBar';
 import InfoParagraph from '../infoParagraph';
 import networks from '../../constants/networks';
 import getNetwork from '../../utils/getNetwork';
 import { extractAddress } from '../../utils/api/account';
+import { TBTable, TBTableHead, TBTableRow, TBTableCell } from '../toolbox/tables/table';
 
 import styles from './savedAccounts.css';
 
@@ -38,37 +38,37 @@ const SavedAccounts = ({
           {t('This will save public key of your account on this device, so next time it will launch without the need to log in. However, you will be prompted to enter the passphrase once you want to do any transaction.')}
         </InfoParagraph> :
         <div className={styles.tableWrapper} >
-          <Table selectable={false} className='saved-accounts-table'>
-            <TableHead>
-              <TableCell className={styles.iconCell} >{t('Switch')}</TableCell>
-              <TableCell>{t('Address')}</TableCell>
-              <TableCell>{t('Network')}</TableCell>
-              <TableCell className={styles.iconCell} >{t('Forget')}</TableCell>
-            </TableHead>
+          <TBTable selectable={false} className='saved-accounts-table'>
+            <TBTableHead>
+              <TBTableCell className={styles.iconCell} >{t('Switch')}</TBTableCell>
+              <TBTableCell>{t('Address')}</TBTableCell>
+              <TBTableCell>{t('Network')}</TBTableCell>
+              <TBTableCell className={styles.iconCell} >{t('Forget')}</TBTableCell>
+            </TBTableHead>
             {savedAccounts.map(account => (
-              <TableRow key={account.publicKey + account.network}
+              <TBTableRow key={account.publicKey + account.network}
                 className={(isActive(account) ? styles.isActive : null)}>
-                <TableCell className={styles.iconCell} >
+                <TBTableCell className={styles.iconCell} >
                   <IconButton icon='exit_to_app'
                     disabled={isActive(account)}
                     className='switch-button'
                     onClick={accountSwitched.bind(this, account)} />
-                </TableCell>
-                <TableCell>
+                </TBTableCell>
+                <TBTableCell>
                   {extractAddress(account.publicKey)}
-                </TableCell>
-                <TableCell>
+                </TBTableCell>
+                <TBTableCell>
                   {account.network === networks.customNode.code ?
                     account.address :
                     t(getNetwork(account.network).name)}
-                </TableCell>
-                <TableCell className={styles.iconCell} >
+                </TBTableCell>
+                <TBTableCell className={styles.iconCell} >
                   <IconButton icon='clear' className='forget-button'
                     onClick={accountRemoved.bind(this, account)} />
-                </TableCell>
-              </TableRow>
+                </TBTableCell>
+              </TBTableRow>
             ))}
-          </Table>
+          </TBTable>
         </div>
       }
       <ActionBar

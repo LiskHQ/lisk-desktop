@@ -1,5 +1,5 @@
 import React from 'react';
-import Input from 'react-toolbox/lib/input';
+import Input from '../toolbox/inputs/input';
 import styles from './signVerifyResult.css';
 
 const SignVerifyResult = props => (

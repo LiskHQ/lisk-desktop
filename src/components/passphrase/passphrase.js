@@ -1,5 +1,4 @@
 import React from 'react';
-import Input from 'react-toolbox/lib/input';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './passphrase.css';
 import InfoParagraph from '../infoParagraph';
@@ -7,6 +6,7 @@ import PassphraseGenerator from './passphraseGenerator';
 import PassphraseVerifier from './passphraseVerifier';
 import ActionBar from '../actionBar';
 import stepsConfig from './steps';
+import Input from '../toolbox/inputs/input';
 
 class Passphrase extends React.Component {
   constructor() {

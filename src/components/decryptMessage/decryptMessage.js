@@ -1,9 +1,9 @@
 import React from 'react';
-import Input from 'react-toolbox/lib/input';
 import Lisk from 'lisk-js';
 import { translate } from 'react-i18next';
 import SignVerifyResult from '../signVerifyResult';
 import ActionBar from '../actionBar';
+import Input from '../toolbox/inputs/input';
 
 class DecryptMessage extends React.Component {
   constructor() {

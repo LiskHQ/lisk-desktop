@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconButton } from 'react-toolbox/lib/button';
+import IconButton from '../toolbox/buttons/iconButton';
 import styles from './transactions.css';
 
 const Status = (props) => {

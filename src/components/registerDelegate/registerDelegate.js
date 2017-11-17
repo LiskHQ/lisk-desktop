@@ -1,10 +1,10 @@
 import React from 'react';
-import Input from 'react-toolbox/lib/input';
 import InfoParagraph from '../infoParagraph';
 import ActionBar from '../actionBar';
 import Fees from '../../constants/fees';
 import AuthInputs from '../authInputs';
 import { handleChange, authStatePrefill, authStateIsValid } from '../../utils/form';
+import Input from '../toolbox/inputs/input';
 
 class RegisterDelegate extends React.Component {
   constructor() {
