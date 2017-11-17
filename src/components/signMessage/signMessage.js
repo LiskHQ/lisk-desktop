@@ -44,6 +44,7 @@ class SignMessageComponent extends React.Component {
 
   showResult(event) {
     event.preventDefault();
+    this.sign(this.state.message);
     const copied = this.props.copyToClipboard(this.state.result, {
       message: this.props.t('Press #{key} to copy'),
     });
