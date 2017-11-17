@@ -1,7 +1,7 @@
 import React from 'react';
 import { TableHead, TableRow, TableCell } from 'react-toolbox/lib/table';
 import Table from '../toolbox/tables/table';
-import IconButton from '../toolbox/buttons/icon_button';
+import IconButton from '../toolbox/buttons/iconButton';
 import ActionBar from '../actionBar';
 import InfoParagraph from '../infoParagraph';
 import networks from '../../constants/networks';

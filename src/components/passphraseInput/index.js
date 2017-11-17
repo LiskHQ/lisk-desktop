@@ -2,7 +2,7 @@ import { translate } from 'react-i18next';
 import React from 'react';
 import Tooltip from 'react-toolbox/lib/tooltip';
 import Input from '../toolbox/inputs/input';
-import IconButton from '../toolbox/buttons/icon_button';
+import IconButton from '../toolbox/buttons/iconButton';
 
 import { findSimilarWord, inDictionary } from '../../utils/similarWord';
 import { isValidPassphrase } from '../../utils/passphrase';

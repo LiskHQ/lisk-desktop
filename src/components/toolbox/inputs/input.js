@@ -5,5 +5,4 @@ import inputTheme from './input.css';
 
 const ToolBoxInput = props => <Input {...props} theme={props.theme}/>;
 
-// export default ToolBoxInput;
-export default themr('input1', inputTheme)(ToolBoxInput);
+export default themr('TBInput', inputTheme)(ToolBoxInput);
