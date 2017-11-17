@@ -1,12 +1,13 @@
 import React from 'react';
 import { Card, CardTitle } from 'react-toolbox/lib/card';
+import { TableHead, TableRow, TableCell } from 'react-toolbox/lib/table';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { TooltipTime } from '../timestamp';
 import LiskAmount from '../liskAmount';
 import FormattedNumber from '../formattedNumber';
 import style from './forging.css';
-import { Table, TBTableHead, TBTableRow, TBTableCell } from '../toolbox/tables/table';
+import Table from '../toolbox/tables/table';
 
 
 const ForgedBlocks = props => (
@@ -17,21 +18,21 @@ const ForgedBlocks = props => (
     { props.forgedBlocks.length ?
       <div className={style.forgedBlocksTableWrapper}>
         <Table selectable={false}>
-          <TBTableHead>
-            <TBTableCell>{props.t('Block height')}</TBTableCell>
-            <TBTableCell>{props.t('Block Id')}</TBTableCell>
-            <TBTableCell>{props.t('Timestamp')}</TBTableCell>
-            <TBTableCell>{props.t('Total fee')}</TBTableCell>
-            <TBTableCell>{props.t('Reward')}</TBTableCell>
-          </TBTableHead>
+          <TableHead>
+            <TableCell>{props.t('Block height')}</TableCell>
+            <TableCell>{props.t('Block Id')}</TableCell>
+            <TableCell>{props.t('Timestamp')}</TableCell>
+            <TableCell>{props.t('Total fee')}</TableCell>
+            <TableCell>{props.t('Reward')}</TableCell>
+          </TableHead>
           {props.forgedBlocks.map((block, idx) => (
-            <TBTableRow key={idx}>
-              <TBTableCell><FormattedNumber val={block.height} /></TBTableCell>
-              <TBTableCell>{block.id}</TBTableCell>
-              <TBTableCell><TooltipTime label={block.timestamp} /></TBTableCell>
-              <TBTableCell><LiskAmount val={block.totalFee} roundTo={2} /></TBTableCell>
-              <TBTableCell><LiskAmount val={block.reward} roundTo={2} /></TBTableCell>
-            </TBTableRow>
+            <TableRow key={idx}>
+              <TableCell><FormattedNumber val={block.height} /></TableCell>
+              <TableCell>{block.id}</TableCell>
+              <TableCell><TooltipTime label={block.timestamp} /></TableCell>
+              <TableCell><LiskAmount val={block.totalFee} roundTo={2} /></TableCell>
+              <TableCell><LiskAmount val={block.reward} roundTo={2} /></TableCell>
+            </TableRow>
           ))}
         </Table>
       </div> :

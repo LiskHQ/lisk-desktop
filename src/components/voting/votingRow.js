@@ -1,5 +1,5 @@
 import React from 'react';
-import { TBTableRow, TBTableCell } from '../toolbox/tables/table';
+import { TableRow, TableCell } from 'react-toolbox/lib/table';
 import styles from './voting.css';
 import Checkbox from './voteCheckbox';
 
@@ -29,21 +29,21 @@ class VotingRow extends React.Component {
 
   render() {
     const { data, voteStatus, voteToggled } = this.props;
-    return (<TBTableRow className={`${styles.row} ${setRowClass(voteStatus)}`}>
-      <TBTableCell>
+    return (<TableRow className={`${styles.row} ${setRowClass(voteStatus)}`}>
+      <TableCell>
         <Checkbox styles={styles}
           toggle={voteToggled}
           value={data.selected}
           status={voteStatus}
           data={data}
         />
-      </TBTableCell>
-      <TBTableCell>{data.rank}</TBTableCell>
-      <TBTableCell>{data.username}</TBTableCell>
-      <TBTableCell>{data.address}</TBTableCell>
-      <TBTableCell>{data.productivity} %</TBTableCell>
-      <TBTableCell>{data.approval} %</TBTableCell>
-    </TBTableRow>
+      </TableCell>
+      <TableCell>{data.rank}</TableCell>
+      <TableCell>{data.username}</TableCell>
+      <TableCell>{data.address}</TableCell>
+      <TableCell>{data.productivity} %</TableCell>
+      <TableCell>{data.approval} %</TableCell>
+    </TableRow>
     );
   }
 }

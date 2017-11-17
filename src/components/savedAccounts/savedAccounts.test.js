@@ -86,7 +86,7 @@ describe('SavedAccounts', () => {
       ...props,
       savedAccounts,
     });
-    expect(wrapper.find('TBTableRow')).to.have.lengthOf(savedAccounts.length);
+    expect(wrapper.find('TableRow')).to.have.lengthOf(savedAccounts.length);
   });
 });
 

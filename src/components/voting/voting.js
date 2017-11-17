@@ -1,17 +1,17 @@
 import { TABLE } from 'react-toolbox/lib/identifiers';
+import { TableHead, TableCell } from 'react-toolbox/lib/table';
 import { tableFactory } from 'react-toolbox/lib/table/Table';
 import { themr } from 'react-css-themr';
 import React from 'react';
 import TableTheme from 'react-toolbox/lib/table/theme.css';
 import Waypoint from 'react-waypoint';
-import { TBTableHead, TBTableCell } from '../toolbox/tables/table';
 
 import Header from './votingHeader';
 import VotingBar from './votingBar';
 import VotingRow from './votingRow';
 
 // Create a new Table component injecting Head and Row
-const Table = themr(TABLE, TableTheme)(tableFactory(TBTableHead, VotingRow));
+const Table = themr(TABLE, TableTheme)(tableFactory(TableHead, VotingRow));
 
 class Voting extends React.Component {
   constructor() {
@@ -103,14 +103,14 @@ class Voting extends React.Component {
         />
         <div className='verticalScroll'>
           <Table selectable={false} >
-            <TBTableHead displaySelect={false}>
-              <TBTableCell>{this.props.t('Vote')}</TBTableCell>
-              <TBTableCell>{this.props.t('Rank')}</TBTableCell>
-              <TBTableCell>{this.props.t('Name')}</TBTableCell>
-              <TBTableCell>{this.props.t('Lisk Address')}</TBTableCell>
-              <TBTableCell>{this.props.t('Uptime')}</TBTableCell>
-              <TBTableCell>{this.props.t('Approval')}</TBTableCell>
-            </TBTableHead>
+            <TableHead displaySelect={false}>
+              <TableCell>{this.props.t('Vote')}</TableCell>
+              <TableCell>{this.props.t('Rank')}</TableCell>
+              <TableCell>{this.props.t('Name')}</TableCell>
+              <TableCell>{this.props.t('Lisk Address')}</TableCell>
+              <TableCell>{this.props.t('Uptime')}</TableCell>
+              <TableCell>{this.props.t('Approval')}</TableCell>
+            </TableHead>
             {this.props.delegates.map(item => (
               <VotingRow key={item.address} data={item}
                 voteToggled={this.props.voteToggled}

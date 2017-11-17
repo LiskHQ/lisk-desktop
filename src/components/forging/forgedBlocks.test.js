@@ -44,11 +44,11 @@ describe('ForgedBlocks', () => {
   });
 
   it('should render TableHead component with 5 TBTableCell componenets', () => {
-    expect(wrapper.find('TBTableHead')).to.have.lengthOf(1);
-    expect(wrapper.find('TBTableHead').find('TBTableCell')).to.have.lengthOf(5);
+    expect(wrapper.find('TableHead')).to.have.lengthOf(1);
+    expect(wrapper.find('TableHead').find('TableCell')).to.have.lengthOf(5);
   });
 
   it('should render 3 TableRow components', () => {
-    expect(wrapper.find('TBTableRow')).to.have.lengthOf(3);
+    expect(wrapper.find('TableRow')).to.have.lengthOf(3);
   });
 });

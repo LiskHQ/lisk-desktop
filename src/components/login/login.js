@@ -3,7 +3,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Dropdown from 'react-toolbox/lib/dropdown';
 import i18next from 'i18next';
 import Input from '../toolbox/inputs/input';
-import Button from '../toolbox/buttons/button';
+import { Button } from '../toolbox/buttons/button';
 import PassphraseInput from '../passphraseInput';
 import styles from './login.css';
 import env from '../../constants/env';
