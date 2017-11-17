@@ -1,6 +1,6 @@
 import i18n from './../i18n';
 
-export default ({ autoUpdater, dialog }) => {
+export default ({ autoUpdater, dialog, win }) => {
   const updater = {
     menuItem: { enabled: true },
   };
@@ -26,6 +26,7 @@ export default ({ autoUpdater, dialog }) => {
     logMessage = `${logMessage} (${progressObj.transferred}/${progressObj.total})`;
     // eslint-disable-next-line no-console
     console.log(logMessage);
+    win.browser.setProgressBar(progressObj.transferred / progressObj.total);
   });
 
   autoUpdater.on('update-available', ({ version }) => {
@@ -37,6 +38,10 @@ export default ({ autoUpdater, dialog }) => {
     }, (buttonIndex) => {
       if (buttonIndex === 0) {
         autoUpdater.downloadUpdate();
+        dialog.showMessageBox({
+          title: i18n.t('Dowload started'),
+          message: i18n.t('The download was started. Depending on your internet speed it can take up to several minutes. You will be informed then it is finished and prompted to restart the app.'),
+        });
       } else {
         updater.menuItem.enabled = true;
       }
@@ -56,7 +61,7 @@ export default ({ autoUpdater, dialog }) => {
   autoUpdater.on('update-downloaded', () => {
     dialog.showMessageBox({
       title: i18n.t('Install Updates'),
-      message: i18n.t('Updates downloaded, application will be quit for update...'),
+      message: i18n.t('Updates downloaded, application will be restarted and updated.'),
     }, () => {
       setImmediate(() => autoUpdater.quitAndInstall());
     });
