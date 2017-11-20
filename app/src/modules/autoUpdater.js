@@ -68,10 +68,13 @@ export default ({ autoUpdater, dialog, win }) => {
 
   autoUpdater.on('update-downloaded', () => {
     dialog.showMessageBox({
-      title: i18n.t('Install Updates'),
-      message: i18n.t('Updates downloaded, application will be restarted and updated.'),
-    }, () => {
-      setImmediate(() => autoUpdater.quitAndInstall());
+      title: i18n.t('Update download finished'),
+      buttons: [i18n.t('Restart now'), i18n.t('Later')],
+      message: i18n.t('Updates downloaded, application has to be restarted to apply the update.'),
+    }, (buttonIndex) => {
+      if (buttonIndex === 0) {
+        autoUpdater.quitAndInstall();
+      }
     });
   });
 
