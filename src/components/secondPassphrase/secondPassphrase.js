@@ -25,7 +25,7 @@ const SecondPassphrase = ({
         useCaseNote={t('your second passphrase will be required for all transactions sent from this account')}
         securityNote={t('Losing access to this passphrase will mean no funds can be sent from this account.')}/>
       :
-      <Authenticate nextAction='set second passphrase'/>);
+      <Authenticate nextAction={t('set second passphrase')} />);
 };
 
 export default SecondPassphrase;
