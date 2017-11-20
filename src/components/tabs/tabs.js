@@ -4,7 +4,6 @@ import styles from './tabs.css';
 import logo from '../../assets/images/Lisk-Logo.svg';
 import * as menuLogos from '../../assets/images/sidebar-icons/*.svg'; //eslint-disable-line
 
-console.log(menuLogos);
 const getTabs = (isDelegate, tabs) => tabs.filter(t => t.id !== 'forging' || isDelegate);
 
 const getIndex = (history, tabs) =>
