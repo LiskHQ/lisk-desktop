@@ -175,6 +175,7 @@
   "You can vote for up to {{count}} delegates in total.": "Du kannst insgesamt für {{count}} Delegierte stimmen.",
   "You can vote for up to {{count}} delegates in total._plural": "Bis zu {{count}} Delegierte können insgesamt von einem Konto gewählt werden.",
   "You have not forged any blocks yet": "Du hast noch keine Blöcke geforged",
+  "You have already registered as a delegate.": "Du hast bereits als Delegierter registriert.",
   "You need to become a delegate to start forging. If you already registered to become a delegate, your registration hasn't been processed, yet.": "Um Blöcke forgen (erstellen) zu können, musst du Delegierter werden. Wenn du dich schon als Delegierter registriert hast, wurde deine Registrierung noch nicht verarbeitet.",
   "You've received {{value}} LSK.": "Du hast {{value}} LSK erhalten.",
   "Your transaction of {{amount}} LSK to {{recipientAddress}} was accepted and will be processed in a few seconds.": "Deine Transaktion von {{amount}} LSK zu {{recipientAddress}} wurde akzeptiert und wird in wenigen Sekunden verarbeitet.",
