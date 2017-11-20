@@ -39,7 +39,7 @@ export default ({ autoUpdater, dialog, win, process }) => {
     dialog.showMessageBox({
       type: 'info',
       title: i18n.t('New version available'),
-      message: i18n.t('There is a new version ({{version}}) available, do you want update now?', { version }),
+      message: i18n.t('There is a new version ({{version}}) available, do you want to update now?', { version }),
       buttons: [i18n.t('Update now'), i18n.t('Later')],
     }, (buttonIndex) => {
       if (buttonIndex === 0) {
@@ -72,7 +72,7 @@ export default ({ autoUpdater, dialog, win, process }) => {
     dialog.showMessageBox({
       title: i18n.t('Update download finished'),
       buttons: [i18n.t('Restart now'), i18n.t('Later')],
-      message: i18n.t('Updates downloaded, application has to be restarted to apply the update.'),
+      message: i18n.t('Updates downloaded, application has to be restarted to apply the updates.'),
     }, (buttonIndex) => {
       if (buttonIndex === 0) {
         autoUpdater.quitAndInstall();
