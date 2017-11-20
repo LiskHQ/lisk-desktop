@@ -17,6 +17,20 @@ import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 
 const App = () => (
   <OfflineWrapper>
+    <div className={styles.stageStripes}>
+      <span className={styles.stageStripe}></span>
+      <span className={styles.stageStripe}></span>
+      <span className={styles.stageStripe}></span>
+      <span className={styles.stageStripe}></span>
+      <span className={styles.stageStripe}></span>
+      <span className={styles.stageStripe}></span>
+      <span className={styles.stageStripe}></span>
+      <span className={styles.stageStripe}></span>
+      <span className={styles.stageStripe}></span>
+      <span className={styles.stageStripe}></span>
+      <span className={styles.stageStripe}></span>
+      <span className={styles.stageStripe}></span>
+    </div>
     <main className={`${styles.bodyWrapper}`}>
       <aside>
         <Tabs />
