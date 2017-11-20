@@ -1,10 +1,12 @@
 {
+  "parser": "babel-eslint",
   "extends": [
     "airbnb-base",
     "plugin:react/recommended"
   ],
   "plugins": [
-    "import"
+    "import",
+    "babel"
   ],
   "globals": {
     "describe": true,

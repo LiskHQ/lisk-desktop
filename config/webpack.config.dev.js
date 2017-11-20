@@ -51,6 +51,7 @@ module.exports = merge(baseConfig, reactConfig, {
             {
               loader: 'postcss-loader',
               options: {
+                ident: 'postcss',
                 sourceMap: true,
                 sourceComments: true,
                 plugins: [

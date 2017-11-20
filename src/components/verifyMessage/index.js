@@ -1,7 +1,7 @@
 import { translate } from 'react-i18next';
-import Input from 'react-toolbox/lib/input';
 import React from 'react';
 import lisk from 'lisk-js';
+import Input from '../toolbox/inputs/input';
 
 import InfoParagraph from '../infoParagraph';
 import SignVerifyResult from '../signVerifyResult';

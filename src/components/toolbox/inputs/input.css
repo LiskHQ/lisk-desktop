@@ -1,0 +1,12 @@
+input {
+  border-bottom: solid 1px yellow;
+  color: green;
+}
+
+input:focus {
+  border-bottom-color: green;
+}
+
+input::placeholder {
+  color: pink;
+}

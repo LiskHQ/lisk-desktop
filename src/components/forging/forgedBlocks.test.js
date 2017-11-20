@@ -43,7 +43,7 @@ describe('ForgedBlocks', () => {
     expect(wrapper.find('Table')).to.have.lengthOf(1);
   });
 
-  it('should render TableHead component with 5 TableCell componenets', () => {
+  it('should render TableHead component with 5 TBTableCell componenets', () => {
     expect(wrapper.find('TableHead')).to.have.lengthOf(1);
     expect(wrapper.find('TableHead').find('TableCell')).to.have.lengthOf(5);
   });
