@@ -29,7 +29,7 @@ const win = {
   },
 
 
-  create: ({ electron, path, electronLocalshortcut, storage }) => {
+  create: ({ electron, path, electronLocalshortcut, storage, checkForUpdates }) => {
     const { Menu } = electron;
 
     win.init({ electron, path, electronLocalshortcut });
@@ -42,7 +42,7 @@ const win = {
       win.send({ event: 'openUrl', value: process.argv[1] || '/' });
     }
 
-    Menu.setApplicationMenu(menu.build(electron));
+    Menu.setApplicationMenu(menu.build(electron, checkForUpdates));
 
     const selectionMenu = Menu.buildFromTemplate([
       { role: 'copy' },
