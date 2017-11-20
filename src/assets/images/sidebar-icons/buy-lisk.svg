@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="47px" height="50px" viewBox="0 0 47 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>buy lisk</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="19.4762866%" y1="88.4126955%" x2="86.0468234%" y2="18.4958616%" id="linearGradient-1">
+            <stop stop-color="#004AFF" offset="0%"></stop>
+            <stop stop-color="#93F4FE" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Design_Ecosystem" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="buy-lisk" fill="url(#linearGradient-1)">
+            <g id="Group-7">
+                <polygon id="Path-3" opacity="0.6" transform="translate(19.417642, 20.098296) rotate(-345.000000) translate(-19.417642, -20.098296) " points="3.86341821 3.81554591 3.86341821 36.381047 34.9718662 3.81554591"></polygon>
+                <ellipse id="Oval-5" opacity="0.5" cx="26.1890179" cy="29.7202714" rx="20.4801845" ry="20.1361553"></ellipse>
+                <path d="M14.3735268,45.9081609 C9.13306289,42.2856374 5.70883337,36.297185 5.70883337,29.5228581 C5.70883337,22.7485311 9.13306289,16.7600788 14.3735268,13.1375552 C19.6139907,16.7600788 23.0382203,22.7485311 23.0382203,29.5228581 C23.0382203,36.297185 19.6139907,42.2856374 14.3735268,45.9081609 Z" id="Combined-Shape" opacity="0.6"></path>
+            </g>
+        </g>
+    </g>
+</svg>

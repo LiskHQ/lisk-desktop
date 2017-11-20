@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="66px" height="49px" viewBox="0 0 66 49" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>sidechains</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="19.4762866%" y1="88.4126955%" x2="86.0468234%" y2="18.4958616%" id="linearGradient-1">
+            <stop stop-color="#004AFF" offset="0%"></stop>
+            <stop stop-color="#93F4FE" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Design_Ecosystem" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.6">
+        <g id="sidechains" fill="url(#linearGradient-1)">
+            <g id="Group-13" transform="translate(-1.000000, 0.000000)">
+                <rect id="Rectangle-2-Copy" transform="translate(17.148641, 28.417092) rotate(-330.000000) translate(-17.148641, -28.417092) " x="9.2706342" y="9.68179745" width="15.7560132" height="37.4705882"></rect>
+                <rect id="Rectangle-2-Copy-2" transform="translate(34.453844, 24.299445) rotate(-330.000000) translate(-34.453844, -24.299445) " x="26.5758371" y="5.56415039" width="15.7560132" height="37.4705882"></rect>
+                <rect id="Rectangle-2-Copy-3" transform="translate(50.763548, 20.181797) rotate(-330.000000) translate(-50.763548, -20.181797) " x="42.885541" y="1.44650333" width="15.7560132" height="37.4705882"></rect>
+            </g>
+        </g>
+    </g>
+</svg>
