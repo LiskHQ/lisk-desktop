@@ -18,7 +18,7 @@ module.exports = {
         loader: 'babel-loader',
         options: {
           presets: ['es2015', 'react', 'stage-3'],
-          plugins: ['syntax-trailing-function-commas'],
+          plugins: ['syntax-trailing-function-commas', 'import-glob'],
           env: {
             test: {
               plugins: ['istanbul'],
