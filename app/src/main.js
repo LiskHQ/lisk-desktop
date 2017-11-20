@@ -7,7 +7,7 @@ import win from './modules/win';
 import localeHandler from './modules/localeHandler';
 import updateChecker from './modules/autoUpdater';
 
-const checkForUpdates = updateChecker({ autoUpdater, dialog: electron.dialog, win });
+const checkForUpdates = updateChecker({ autoUpdater, dialog: electron.dialog, win, process });
 
 const { app, ipcMain } = electron;
 

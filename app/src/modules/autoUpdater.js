@@ -1,15 +1,17 @@
 import i18n from './../i18n';
 
-export default ({ autoUpdater, dialog, win }) => {
+export default ({ autoUpdater, dialog, win, process }) => {
   const updater = {
     menuItem: { enabled: true },
   };
   autoUpdater.autoDownload = false;
 
-  autoUpdater.checkForUpdates();
-  setInterval(() => {
+  if (process.platform !== 'linux') {
     autoUpdater.checkForUpdates();
-  }, 24 * 60 * 60 * 1000);
+    setInterval(() => {
+      autoUpdater.checkForUpdates();
+    }, 24 * 60 * 60 * 1000);
+  }
 
   autoUpdater.on('error', (error) => {
     // eslint-disable-next-line no-console

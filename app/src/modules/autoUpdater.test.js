@@ -11,6 +11,9 @@ describe('autoUpdater', () => {
   beforeEach(() => {
     callbacks = {};
     params = {
+      process: {
+        platform: 'darwin',
+      },
       autoUpdater: {
         checkForUpdates: spy(),
         on: (name, callback) => {
