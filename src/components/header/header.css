@@ -25,13 +25,17 @@
 }
 
 .primary {
+  line-height: 40px;
+
   @mixin buttonBasics;
   @mixin buttonPrimary;
 }
 
 .secondaryBlue {
-@mixin buttonBasics;
-@mixin buttonSecondary--blue;
+  line-height: 39px;
+
+  @mixin buttonBasics;
+  @mixin buttonSecondary--blue;
 }
 
 .material-icons {

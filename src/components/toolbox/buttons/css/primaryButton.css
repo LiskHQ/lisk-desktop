@@ -1,6 +1,8 @@
 @import '../../../../app/buttonStyles.css';
 
 .button {
-@mixin buttonBasics;
-@mixin buttonPrimary;
+  min-height: 56px;
+
+  @mixin buttonBasics;
+  @mixin buttonPrimary;
 }
