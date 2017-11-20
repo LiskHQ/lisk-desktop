@@ -89,5 +89,13 @@ export const generatePassphrase = ({ seed }) => (new mnemonic(new Buffer(seed.jo
    */
 export const isValidPassphrase = (passphrase) => {
   const normalizedValue = passphrase.replace(/ +/g, ' ').trim().toLowerCase();
-  return normalizedValue.split(' ').length >= 12 && mnemonic.isValid(normalizedValue);
+  let isValid;
+  try {
+    isValid = normalizedValue.split(' ').length >= 12 && mnemonic.isValid(normalizedValue);
+  } catch (e) {
+    // If the mnemonic check throws an error, we assume that the
+    // passphrase being entered isn't valid
+    isValid = false;
+  }
+  return isValid;
 };

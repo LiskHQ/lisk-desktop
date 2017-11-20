@@ -129,5 +129,10 @@ describe('Passphrase', () => {
       const passphrase = 'stock borrow episode laundry kitten salute link globe zero feed marble';
       expect(isValidPassphrase(passphrase)).to.be.equal(false);
     });
+
+    it('recognises an invalid passphrase', () => {
+      const passphrase = 'stock borrow episode laundry kitten salute link globe zero feed marble tow fee';
+      expect(isValidPassphrase(passphrase)).to.be.equal(false);
+    });
   });
 });
