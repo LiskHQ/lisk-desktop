@@ -1,0 +1,99 @@
+/*****************************************
+
+Please Read the guide line
+before adding any rules here
+
+# No component specific rule
+This file is inteded to solely include
+global/common variables, every rule added here
+must be used at least in 2 different
+components.
+
+# Usecases
+Try to isolate these variables with another
+variable in the component specific stylesheet
+in order to make component-wide changes
+faster and consistent.
+
+# Avoid rules and mixins
+Please avoid defining any rules here
+In addition, mixins have their own files,
+Please prefer only variables here.
+
+# Use with :global
+Please do not define any variables ourside
+the :root scope, since then it won't be
+available application wide
+
+# naming
+variable names should correspond to the
+role of the value not th presentation
+for example, a color name can include
+the css rule it belongs to e.g. color
+or "background-color" and "primary/secondary"
+or "warn/action" ineastd of "red/green"
+
+****************************************/
+
+:root {
+  /*************************
+        Font Sizes
+  *************************/
+  --font-size-h1: 6.854em;
+  --font-size-h2: 4.236em;
+  --font-size-h3: 2.618em;
+  --font-size-h4: 1.618em;
+  --font-size-h5: 1.32em;
+  --font-size-h6: 1em;
+  --font-size-small: 0.85em;
+
+  /*************************
+        Sizes
+  *************************/
+  --sidebar-width: 192px;
+  --main-box-width: 1291px;
+  --main-box-height: 788px;
+  --border-radius-normal: 3px;
+
+  /*************************
+        Colors
+  *************************/
+  --main-body-color: #013165;
+  --tx-color-primary-light: #2475b9;
+  --tx-color-primary-dark: #3c5068;
+  --tx-color-secondary-dark: #000;
+  --tx-color-secondary-md: #bac0cb;
+  --tx-color-secondary-light: #fff;
+  --tx-color-action-dark: #c80039;
+  --tx-color-action-md: #ed4537;
+  --tx-color-action-light: #ff6236;
+  --tx-color-success-dark: #008722;
+
+  /*************************
+        Z-Indexes
+  *************************/
+  --normal-index: 1;
+
+  /*************************
+        Margins
+  *************************/
+  --box-overflow-y: -23px;
+
+  /*************************
+        Paddings
+  *************************/
+  --box-padding: 16px;
+
+  /*************************
+        Box props
+  *************************/
+  --normal-shadow: 0 22px 22px 0 rgba(0, 0, 0, 0.22);
+
+  /*************************
+        Media Queries
+  *************************/
+  @custom-media --desktop-viewport (max-width: 1200px);
+  @custom-media --tablet-viewport (max-width: 1024px);
+  @custom-media --mini-viewport (max-width: 768px);
+  @custom-media --mobile-viewport (max-width: 480px);
+}
