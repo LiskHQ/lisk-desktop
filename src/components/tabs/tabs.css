@@ -1,3 +1,11 @@
+:root {
+  --menu-background-color: #fff;
+  --menu-item-hover-gradient: linear-gradient(-27deg, #004aff 4%, #57afff 61%, #93f4fe 100%);
+  --menu-item-hover-border-width: 7px;
+  --setting-menu-color: #74869b;
+  --setting-menu-border-color: #d0d9e3;
+}
+
 .sideBarWrapper {
   text-align: center;
 }
@@ -6,8 +14,18 @@
   margin: 40px 0;
 }
 
+.setting {
+  color: var(--setting-menu-color) !important;
+  border-top: 1px solid var(--setting-menu-border-color) !important;
+  position: fixed !important;
+  width: 192px;
+  left: 0;
+  bottom: 0;
+  padding: 30px 0;
+}
+
 .tab {
-  background: #fff;
+  background: var(--menu-background-color);
   text-align: center;
   text-transform: capitalize;
   box-shadow: none;
@@ -37,7 +55,7 @@
 
 .navigationContainer .navigation {
   padding-left: 0;
-  box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.12);
+  box-shadow: none;
   margin-left: 2px;
   display: flex;
   flex-direction: column;
@@ -65,13 +83,13 @@
 
   &::before {
     position: absolute;
-    width: 7px;
+    width: var(--menu-item-hover-border-width);
     height: 100%;
     top: 0;
     right: 0;
     content: '';
     display: block;
     opacity: 0.8;
-    background-image: linear-gradient(-27deg, #004aff 4%, #57afff 61%, #93f4fe 100%);
+    background-image: var(--menu-item-hover-gradient);
   }
 }
