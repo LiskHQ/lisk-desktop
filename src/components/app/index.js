@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import PrivateRoutes from '../privateRoute';
-// import Account from '../account';
 import Header from '../header';
 import Login from '../login';
 import Transactions from '../transactions';
