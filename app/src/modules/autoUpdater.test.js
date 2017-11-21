@@ -2,7 +2,7 @@ import { expect } from 'chai'; // eslint-disable-line import/no-extraneous-depen
 import sinon, { spy } from 'sinon'; // eslint-disable-line import/no-extraneous-dependencies
 import autoUpdater from './autoUpdater';
 
-describe.only('autoUpdater', () => {
+describe('autoUpdater', () => {
   const version = '1.2.3';
   let params;
   let callbacks;

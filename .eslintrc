@@ -4,7 +4,8 @@
     "plugin:react/recommended"
   ],
   "plugins": [
-    "import"
+    "import",
+    "mocha"
   ],
   "globals": {
     "describe": true,
@@ -20,6 +21,7 @@
     "node": true
   },
   "rules": {
+    "mocha/no-exclusive-tests": "error",
     "func-names": "off",
     "global-require": "off",
     "new-cap": ["error", {
@@ -48,5 +50,10 @@
     ],
     "linebreak-style": 0,
     "no-param-reassign": "off"
+  },
+  "settings": {
+    "mocha/additionalTestFunctions": [
+      "describeModule"
+    ]
   }
 }
