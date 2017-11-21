@@ -1,0 +1,52 @@
+/*****************************************
+
+Please Read the guide line
+before adding any rules here
+
+# No component specific rule
+This file is inteded to solely include
+global/common rules, every rule added here
+must be used at least in 2 different
+components.
+
+# Usecases
+Rules defined here must be related
+to positioning and visibility or the overal
+behaviour of the application e.g. scrolling
+or text selection color.
+
+# Avoid !important
+Please avoid using !important since it will
+result in many compoulsory !imporant usages
+all over the application
+
+# Use with :global
+As name of the file suggests, The rules
+defined here must initiate with :global in
+order to be available application wide
+
+****************************************/
+:global .box {
+  width: 100%;
+  height: var(--main-box-height);
+  display: flex;
+  box-sizing: border-box;
+  background: #fff;
+  box-shadow: var(--normal-shadow);
+  border-radius: 3px;
+  padding: var(--box-padding);
+  max-height: 100%;
+}
+
+:global .hasNoPadding {
+  padding: 0;
+}
+
+:global .verticalScroll {
+  overflow-x: auto;
+}
+
+:global .hidden {
+  position: absolute;
+  visibility: hidden;
+}
