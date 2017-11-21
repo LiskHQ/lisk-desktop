@@ -4,41 +4,26 @@
   --btn: rgb(2, 136, 209);
 }
 
-.grayButton,
-.inButton,
-.outButton,
-.smallButton {
-  background-color: #eee;
-  border-radius: 3px;
-  padding: 6px;
-  text-transform: uppercase;
-  color: #000;
-  display: block;
+.address {
+  font-weight: 500;
 }
 
 .smallButton {
   display: inline-block;
 }
 
-.inButton {
-  background: color(var(--in) alpha(45%)) !important;
-}
 
 .empty {
   color: #777;
   text-align: center;
 }
 
-.in {
-  color: var(--in) !important;
+.leftText {
+  text-align: left;
 }
 
-.out {
-  color: var(--out) !important;
-}
-
-.centerText {
-  text-align: center;
+.rightText {
+  text-align: right;
 }
 
 .ordinaryText {
@@ -50,4 +35,8 @@
   .hiddenXs {
     display: none;
   }
+}
+
+a {
+  color: #2475b9;
 }

@@ -13,6 +13,10 @@ tr:nth-child(odd) {
   background: #fff;
 }
 
+tr {
+  line-height: 50px;
+}
+
 table thead tr th {
   color: #000 !important;
   font-weight: bold !important;
