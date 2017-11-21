@@ -62,9 +62,9 @@ const Header = props => (
       </IconMenu>
 
       <Button className={`${styles.button} logout-button`} raised onClick={props.logOut}>{props.t('logout')}</Button>
-      <RelativeLink neutral raised className={`${styles.button} receive-button`}
+      <RelativeLink raised className={`${styles.button} ${styles.secondaryBlue} receive-button`}
         to='receive'>{props.t('Receive LSK')}</RelativeLink>
-      <RelativeLink primary raised disableWhenOffline className={`${styles.button} send-button`}
+      <RelativeLink raised disableWhenOffline className={`${styles.button} ${styles.primary} send-button`}
         to='send'>{props.t('send')}</RelativeLink>
     </PrivateWrapper>
   </header>

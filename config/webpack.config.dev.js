@@ -57,6 +57,8 @@ module.exports = merge(baseConfig, reactConfig, {
                 plugins: [
                   // eslint-disable-next-line import/no-extraneous-dependencies
                   require('postcss-partial-import')({}),
+                  // eslint-disable-next-line import/no-extraneous-dependencies
+                  require('postcss-mixins')({}),
                   require('postcss-cssnext')({
                     features: {
                       customProperties: {
@@ -66,6 +68,7 @@ module.exports = merge(baseConfig, reactConfig, {
                   }),
                   // eslint-disable-next-line import/no-extraneous-dependencies
                   require('postcss-for')({}),
+
                 ],
               },
             },

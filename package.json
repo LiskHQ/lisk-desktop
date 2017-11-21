@@ -124,6 +124,7 @@
     "mocha-steps": "1.1.0",
     "postcss-for": "=2.1.1",
     "postcss-loader": "=2.0.6",
+    "postcss-mixins": "6.2.0",
     "postcss-partial-import": "=4.1.0",
     "postcss-reporter": "5.0.0",
     "protractor": "5.1.2",
