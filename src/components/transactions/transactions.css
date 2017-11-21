@@ -12,7 +12,6 @@
   display: inline-block;
 }
 
-
 .empty {
   color: #777;
   text-align: center;
@@ -24,6 +23,10 @@
 
 .rightText {
   text-align: right;
+}
+
+.centerText {
+  text-align: center;
 }
 
 .ordinaryText {
@@ -39,4 +42,46 @@
 
 a {
   color: #2475b9;
+}
+
+.rows:nth-of-type(even) {
+  background: linear-gradient(to right, #fff, #f5f8fc);
+}
+
+.rows:nth-of-type(odd) {
+  background: #fff;
+}
+
+.rows {
+  color: #3c5068;
+  font-size: 1em;
+  border-bottom: 0;
+  border-top: 0;
+}
+
+.rows:hover {
+  background: #e8f0fa;
+}
+
+.rows:first-child {
+  color: #000;
+  font-weight: bold;
+  font-size: 0.9em;
+  line-height: 60px;
+}
+
+.mainRow {
+  line-height: 70px;
+}
+
+.subRow {
+  min-height: 50px;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.turnArrow {
+  transform: scaleY(-1);
 }
