@@ -30,9 +30,8 @@ module.exports = {
           'selector-pseudo-class-no-unknown': null,
           'unit-whitelist': ['px', 'deg', '%', 'em', 'ms'],
           'length-zero-no-unit': null,
-          'at-rule-no-unknown': false,
+          'at-rule-no-unknown': null,
         },
-        ignoreFiles: './node_modules/**/*.css',
       },
     }),
     new ExtractTextPlugin({
