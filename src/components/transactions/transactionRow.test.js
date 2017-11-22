@@ -40,7 +40,7 @@ describe('TransactionRow', () => {
     },
   };
 
-  it('should render 6 "td"', () => {
+  it('should render 4 columns', () => {
     const wrapper = mount(<Provider store={store}>
       <Router>
         <I18nextProvider i18n={ i18n }>
@@ -52,7 +52,10 @@ describe('TransactionRow', () => {
         </I18nextProvider>
       </Router>
     </Provider>, options);
-    expect(wrapper.find('td')).to.have.lengthOf(6);
+
+    const expectedValue = /flexboxgrid__col/g;
+    const html = wrapper.find('#transactionsRow').html();
+    expect(html.match(expectedValue)).to.have.lengthOf(4);
   });
 
   it('should render Spinner if no value.confirmations" ', () => {

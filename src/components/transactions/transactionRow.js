@@ -30,7 +30,7 @@ class TransactionRow extends React.Component {
     const day = moment(_convertTimeFromFirstBlock(props.value.timestamp));
 
     return (
-      <div className={`${grid.row} ${styles.rows} ${styles.paddingLeft}`}>
+      <div className={`${grid.row} ${styles.rows} ${styles.paddingLeft}`} id="transactionsRow">
         <div className={`${styles.leftText} ${grid['col-xs-6']}`}>
           <div className={`${styles.mainRow} ${styles.address}`}>
             <TransactionType {...props.value} address={props.address}></TransactionType>
