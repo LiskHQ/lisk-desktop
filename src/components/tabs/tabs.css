@@ -11,7 +11,22 @@
 }
 
 .logo {
-  margin: 40px 0;
+  position: relative;
+
+  & img {
+    margin: 40px 0;
+  }
+
+  & span {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    line-height: 20px;
+  }
 }
 
 .setting {
