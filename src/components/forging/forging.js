@@ -1,6 +1,6 @@
 import React from 'react';
-import { Card } from 'react-toolbox/lib/card';
 import Waypoint from 'react-waypoint';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import ForgingTitle from './forgingTitle';
 import DelegateStats from './delegateStats';
 import ForgingStats from './forgingStats';
@@ -29,9 +29,9 @@ const Forging = ({
 
 
   return (
-    <Card style={{ padding: 8 }}>
+    <section className="box">
       {account && account.isDelegate ?
-        <div>
+        <div className={grid['col-xs-12']}>
           <ForgingTitle account={account} statistics={statistics}
             loadStats={loadStats} />
           <br />
@@ -42,7 +42,7 @@ const Forging = ({
           <br />
           <ForgedBlocks forgedBlocks={forgedBlocks} />
           <Waypoint bottomOffset='-80%'
-            scrollableAncestor={window}
+            // scrollableAncestor={window}
             key={forgedBlocks.length}
             onEnter={() => loadForgedBlocks(20, forgedBlocks.length) } />
         </div> :
@@ -54,7 +54,7 @@ const Forging = ({
         </p> :
         null
       }
-    </Card>
+    </section>
   );
 };
 
