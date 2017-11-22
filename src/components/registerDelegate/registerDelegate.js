@@ -17,6 +17,7 @@ class RegisterDelegate extends React.Component {
       ...authStatePrefill(),
     };
   }
+
   componentDidMount() {
     const newState = {
       name: {
@@ -40,19 +41,29 @@ class RegisterDelegate extends React.Component {
   }
 
   render() {
+    if (this.props.account.isDelegate) {
+      return (
+        <div>
+          <InfoParagraph>
+            {this.props.t('You have already registered as a delegate.')}
+          </InfoParagraph>
+        </div>
+      );
+    }
+
     return (
       <div>
         <form onSubmit={this.register.bind(this)}>
           <Input label={this.props.t('Delegate name')} required={true}
             autoFocus={true}
             className='username'
-            onChange={handleChange.bind(this, this, 'name')}
+            onChange={handleChange.bind(this, 'name')}
             error={this.state.name.error}
             value={this.state.name.value} />
           <AuthInputs
             passphrase={this.state.passphrase}
             secondPassphrase={this.state.secondPassphrase}
-            onChange={handleChange.bind(this, this)} />
+            onChange={handleChange.bind(this)} />
           <hr/>
           <InfoParagraph>
             {this.props.t('Becoming a delegate requires registration. You may choose your own delegate name, which can be used to promote your delegate. Only the top 101 delegates are eligible to forge. All fees are shared equally between the top 101 delegates.')}

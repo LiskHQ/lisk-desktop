@@ -9,6 +9,7 @@ import SecondPassphrase from './secondPassphrase';
  */
 const mapStateToProps = state => ({
   account: state.account,
+  passphrase: state.account.passphrase,
   peers: state.peers,
 });
 
