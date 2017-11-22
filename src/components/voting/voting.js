@@ -101,30 +101,27 @@ class Voting extends React.Component {
           votes={this.props.votes}
           search={ value => this.search(value) }
         />
-        <div className='verticalScroll'>
-          <Table selectable={false} >
-            <TableHead displaySelect={false}>
-              <TableCell>{this.props.t('Vote')}</TableCell>
-              <TableCell>{this.props.t('Rank')}</TableCell>
-              <TableCell>{this.props.t('Name')}</TableCell>
-              <TableCell>{this.props.t('Lisk Address')}</TableCell>
-              <TableCell>{this.props.t('Uptime')}</TableCell>
-              <TableCell>{this.props.t('Approval')}</TableCell>
-            </TableHead>
-            {this.props.delegates.map(item => (
-              <VotingRow key={item.address} data={item}
-                voteToggled={this.props.voteToggled}
-                voteStatus={this.props.votes[item.username]}
-              />
-            ))}
-          </Table>
-        </div>
+        <Table selectable={false} >
+          <TableHead displaySelect={false}>
+            <TableCell>{this.props.t('Vote')}</TableCell>
+            <TableCell>{this.props.t('Rank')}</TableCell>
+            <TableCell>{this.props.t('Name')}</TableCell>
+            <TableCell>{this.props.t('Lisk Address')}</TableCell>
+            <TableCell>{this.props.t('Uptime')}</TableCell>
+            <TableCell>{this.props.t('Approval')}</TableCell>
+          </TableHead>
+          {this.props.delegates.map(item => (
+            <VotingRow key={item.address} data={item}
+              voteToggled={this.props.voteToggled}
+              voteStatus={this.props.votes[item.username]}
+            />
+          ))}
+        </Table>
         {
           (!this.isInitial && this.props.delegates.length === 0) &&
           <div className='hasPaddingRow empty-message'>{this.props.t('No delegates found')}</div>
         }
         <Waypoint bottomOffset='-80%'
-          scrollableAncestor={window}
           key={this.props.delegates.length}
           onEnter={this.loadMore.bind(this)}></Waypoint>
         <VotingBar votes={this.props.votes} />
