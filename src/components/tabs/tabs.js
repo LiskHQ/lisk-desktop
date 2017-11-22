@@ -57,10 +57,6 @@ const Tabs = ({ history, isDelegate, t }) => {
       id: 'butLisk',
       image: menuLogos.buyLisk,
     }, {
-      label: t('Delegates'),
-      id: 'voting',
-      image: menuLogos.delegates,
-    }, {
       label: t('Sidechains'),
       id: 'sidechains',
       image: menuLogos.sidechains,
@@ -68,10 +64,6 @@ const Tabs = ({ history, isDelegate, t }) => {
       label: t('Search'),
       id: 'search',
       image: menuLogos.search,
-    }, {
-      label: t('Forging'),
-      id: 'forging',
-      image: menuLogos.sidechains,
     }, {
       label: t('Setting'),
       id: 'setting',
