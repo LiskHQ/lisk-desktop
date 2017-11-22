@@ -1,12 +1,21 @@
-input {
-  border-bottom: solid 1px yellow;
-  color: green;
+.input input:focus {
+  border-bottom: solid 1px #2475b9;
+  color: #2475b9;
 }
 
-input:focus {
-  border-bottom-color: green;
+.label {
+  color: #3c5068;
+  font-weight: 500;
 }
 
-input::placeholder {
-  color: pink;
+.input input:not(:focus) {
+  border-bottom: solid 1px #3c5068;
+  color: #3c5068;
+}
+
+.error {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 30px;
+  color: #da1d00;
 }

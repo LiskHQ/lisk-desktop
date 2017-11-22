@@ -33,9 +33,19 @@ const addAboutMenuForNonMac = ({ template, electron }) => {
   });
 };
 
+const addCheckForUpdates = ({ template, checkForUpdates }) => {
+  template[template.length - 1].submenu.push({
+    label: i18n.t('Check for updates...'),
+    click: checkForUpdates,
+  });
+};
+
 const menu = {
-  build: (electron) => {
+  build: (electron, checkForUpdates) => {
     const template = menu.buildTemplate(electron);
+    if (process.platform !== 'linux') {
+      addCheckForUpdates({ template, checkForUpdates });
+    }
     if (process.platform === 'darwin') {
       addAboutMenuForMac({ template, name: electron.app.getName() });
     } else {

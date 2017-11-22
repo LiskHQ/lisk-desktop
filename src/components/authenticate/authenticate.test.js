@@ -2,6 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
+import i18next from 'i18next';
 import PropTypes from 'prop-types';
 import { spy } from 'sinon';
 import ActionBar from '../actionBar';
@@ -40,7 +41,7 @@ describe('Authenticate', () => {
     props = {
       account,
       peers,
-      t: str => str,
+      t: (str, opts) => i18next.t(str, opts),
       nextAction: 'perform a sample action',
       closeDialog: spy(),
       accountUpdated: spy(),

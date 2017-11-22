@@ -1,31 +1,31 @@
 import React from 'react';
 import { themr } from 'react-css-themr';
 import { Button as ToolBoxButton } from 'react-toolbox/lib/button';
+import secondaryBlueButtonTheme from './css/secondaryBlueButton.css';
+import secondaryLightButtonTheme from './css/secondaryLightButton.css';
 import primaryButtonTheme from './css/primaryButton.css';
-import importantButtonTheme from './css/importantButton.css';
-import lightButtonTheme from './css/lightButton.css';
 
-class TBButton extends React.Component {
+class TBSecondaryBlueButton extends React.Component {
   render() {
     return <ToolBoxButton {...this.props} theme={this.props.theme}/>;
   }
 }
 
-class TBImportantButton extends React.Component {
+class TBPrimaryButton extends React.Component {
   render() {
     return <ToolBoxButton {...this.props} theme={this.props.theme}/>;
   }
 }
 
-class TBLightButton extends React.Component {
+class TBSecondaryLightButton extends React.Component {
   render() {
     return <ToolBoxButton {...this.props} theme={this.props.theme}/>;
   }
 }
 
-const ImportantButton = themr('importantButton', importantButtonTheme)(TBImportantButton);
-const LightButton = themr('lightButton', lightButtonTheme)(TBLightButton);
-const Button = themr('primaryButton', primaryButtonTheme)(TBButton);
+const PrimaryButton = themr('importantButton', primaryButtonTheme)(TBPrimaryButton);
+const SecondaryLightButton = themr('lightButton', secondaryLightButtonTheme)(TBSecondaryLightButton);
+const Button = themr('button', secondaryBlueButtonTheme)(TBSecondaryBlueButton);
 
-export { Button, ImportantButton, LightButton };
+export { Button, PrimaryButton, SecondaryLightButton };
 export default Button;
