@@ -76,7 +76,7 @@ const Tabs = ({ history, isDelegate, t, peers }) => {
       <div className={styles.logo}>
         <img src={logo} />
         {
-          (peers && peers.data) ?
+          (peers && peers.data && peers.data.options) ?
             <span className='peer-network'>{t(peers.data.options.name)}</span> : ''
         }
       </div>
