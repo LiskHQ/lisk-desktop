@@ -61,16 +61,16 @@ const Tabs = ({ history, isDelegate, t, peers }) => {
       id: 'search',
       image: menuLogos.search,
     }, {
-      label: t('Setting'),
-      id: 'setting',
-      image: menuLogos.search,
-    }, {
       label: t('Forging'),
       id: 'forging',
       image: menuLogos.sidechains,
+    }, {
+      label: t('Setting'),
+      id: 'setting',
+      image: menuLogos.search,
     },
   ];
-
+  const filterTabs = getTabs(isDelegate, tabs);
   return (
     <div className={styles.sideBarWrapper}>
       <div className={styles.logo}>
@@ -85,17 +85,18 @@ const Tabs = ({ history, isDelegate, t, peers }) => {
         onChange={navigate.bind(null, history, tabs)}
         disableAnimatedBottomBorder={true}
         className={`${styles.tabs} main-tabs`}>
-        {getTabs(isDelegate, tabs).filter((item, index) => index < tabs.length - 2)
-          .map(({ label, image }, index) =>
+        {filterTabs.filter((item, index) => index < filterTabs.length - 1)
+          .map(({ label, image, id }, index) =>
             <Tab
               key={index}
               label={<TabTemplate label={label} img={image} />}
               className={styles.tab}
+              id={id}
               disabled={isCurrent(history, index, tabs)} />)}
         <Tab
-          key={tabs[tabs.length - 2].index}
+          key={tabs[tabs.length - 1].index}
           className={`${styles.tab} ${styles.setting}`}
-          label={<Setting label={tabs[tabs.length - 2].label} />} />
+          label={<Setting label={tabs[tabs.length - 1].label} />} />
       </ToolboxTabs>
     </div>
   );
