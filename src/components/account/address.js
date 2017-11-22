@@ -1,8 +1,5 @@
 import React from 'react';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
-
 import { TooltipWrapper } from '../timestamp';
-import styles from './account.css';
 
 const getStatusTooltip = (props) => {
   if (props.secondSignature) {
@@ -17,25 +14,25 @@ const Address = (props) => {
   const title = props.isDelegate ? props.t('Delegate') : props.t('Address');
   const content = props.isDelegate ?
     (<div>
-      <p className="inner primary delegate-name">
+      <span className="inner primary delegate-name">
         {props.delegate.username}
-      </p>
-      <p className="inner secondary address">
+      </span>
+      <span className="inner secondary address">
         <span>{props.address}</span>
-      </p>
+      </span>
     </div>)
-    : (<p className="inner primary full address">
+    : (<span className="inner primary full address">
       {props.address}
-    </p>);
+    </span>);
 
   return (
-    <div className={`box ${styles['text-center']}`}>
-      <div className={`${grid.row}`}>
-        <div className={`${grid['col-sm-12']} ${grid['col-xs-4']}`}>
-          <h3 id="firstBox" className={styles.title}>{title}</h3>
+    <div>
+      <div>
+        <div>
+          <h3 id="firstBox">{title}</h3>
         </div>
-        <div className={`${grid['col-sm-12']} ${grid['col-xs-8']}`}>
-          <div className={styles['value-wrapper']}>
+        <div>
+          <div>
             {content}
             <span className="status">
               <TooltipWrapper tooltip={getStatusTooltip(props)}>
