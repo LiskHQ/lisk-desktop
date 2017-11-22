@@ -119,6 +119,17 @@ describe('Account middleware', () => {
     expect(stubTransactions).to.have.been.calledWith();
   });
 
+  it(`should call transactions API methods on ${actionTypes.newBlockCreated} action if account.balance changes the user has no transactions yet`, () => {
+    stubGetAccount.resolves({ balance: 10e8 });
+
+    state.transactions.count = 0;
+    middleware(store)(next)(newBlockCreated);
+
+    expect(stubGetAccount).to.have.been.calledWith();
+    // eslint-disable-next-line no-unused-expressions
+    expect(stubTransactions).to.have.been.calledTwice;
+  });
+
   it(`should call transactions API methods on ${actionTypes.newBlockCreated} action if the window is in focus and there are recent transactions`, () => {
     stubGetAccount.resolves({ balance: 0 });
 
