@@ -1,7 +1,5 @@
 {
   " Make sure that you are using the latest version of Lisk Nano.": " Make sure that you are using the latest version of Lisk Nano.",
-  "Vote_noun": "Vote",
-  "Vote_verb": "Vote",
   "About": "About",
   "Account saved": "Account saved",
   "Account was successfully forgotten.": "Account was successfully forgotten.",
@@ -184,8 +182,9 @@
   "Verify message": "Verify message",
   "Version": "Version",
   "View": "View",
-  "Vote": "Vote",
   "Vote for delegates": "Vote for delegates",
+  "Vote_noun": "Vote",
+  "Vote_verb": "Vote",
   "Voting": "Voting",
   "What's New...": "What's New...",
   "When you have the signature, you only need the publicKey of the signer in order to verify that the message came from the right private/publicKey pair. Be aware, everybody knowing the signature and the publicKey can verify the message. If ever there is a dispute, everybody can take the publicKey and signature to a judge and prove that the message is coming from the specific private/publicKey pair.": "When you have the signature, you only need the publicKey of the signer in order to verify that the message came from the right private/publicKey pair. Be aware, everybody knowing the signature and the publicKey can verify the message. If ever there is a dispute, everybody can take the publicKey and signature to a judge and prove that the message is coming from the specific private/publicKey pair.",

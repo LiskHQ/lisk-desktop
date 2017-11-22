@@ -104,7 +104,7 @@ class Voting extends React.Component {
         <div className='verticalScroll'>
           <Table selectable={false} >
             <TableHead displaySelect={false}>
-              <TableCell>{this.props.t('Vote')}</TableCell>
+              <TableCell>{this.props.t('Vote', { context: 'verb' })}</TableCell>
               <TableCell>{this.props.t('Rank')}</TableCell>
               <TableCell>{this.props.t('Name')}</TableCell>
               <TableCell>{this.props.t('Lisk Address')}</TableCell>
