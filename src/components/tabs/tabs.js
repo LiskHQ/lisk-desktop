@@ -34,7 +34,7 @@ const TabTemplate = ({ img, label }) => (
 );
 
 
-const Tabs = ({ history, isDelegate, t, peers }) => {
+const Tabs = ({ history, isDelegate, t }) => {
   const tabs = [
     {
       label: t('Dashboard'),
@@ -73,13 +73,7 @@ const Tabs = ({ history, isDelegate, t, peers }) => {
   const filterTabs = getTabs(isDelegate, tabs);
   return (
     <div className={styles.sideBarWrapper}>
-      <div className={styles.logo}>
-        <img src={logo} />
-        {
-          (peers && peers.data) ?
-            <span className='peer-network'>{t(peers.data.options.name)}</span> : ''
-        }
-      </div>
+      <img src={logo} className={styles.logo} />
       <ToolboxTabs index={getIndex(history, tabs)}
         theme={styles}
         onChange={navigate.bind(null, history, tabs)}

@@ -5,7 +5,6 @@ import Tabs from './tabs';
 
 const mapStateToProps = state => ({
   isDelegate: state.account.isDelegate,
-  peers: state.peers,
 });
 
 export default withRouter(connect(mapStateToProps)(translate()(Tabs)));
