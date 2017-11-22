@@ -37,9 +37,9 @@ describe('Account', () => {
     };
   });
 
-  it('should render 3 article tags', () => {
+  it('should Address component', () => {
     const wrapper = shallow(<Account {...props} />);
-    expect(wrapper.find('article')).to.have.lengthOf(3);
+    expect(wrapper.find('Address')).to.have.lengthOf(1);
   });
 
   it('depicts being online when peers.status.online is true', () => {
