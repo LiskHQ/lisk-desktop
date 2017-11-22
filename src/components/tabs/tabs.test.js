@@ -21,12 +21,12 @@ describe('Tabs', () => {
     expect(wrapper.find(ToolboxTabs).exists()).to.equal(true);
   });
 
-  it('should render 3 Tab components if props.isDelegate', () => {
+  it('should render 3 Button components if props.isDelegate', () => {
     const wrapper = mount(<Tabs isDelegate={true} history={history} t={t} />);
-    expect(wrapper.find(Tab)).to.have.lengthOf(3);
+    expect(wrapper.find(Tab)).to.have.lengthOf(7);
   });
 
-  it('should render 2 Tab components if !props.isDelegate', () => {
+  it.skip('should render 2 Tab components if !props.isDelegate', () => {
     const wrapper = mount(<Tabs isDelegate={false} history={history} t={t} />);
     expect(wrapper.find(Tab)).to.have.lengthOf(2);
   });
