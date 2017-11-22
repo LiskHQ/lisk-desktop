@@ -27,7 +27,7 @@ const updateAccountData = (store, action) => {
 
   getAccount(peers.data, account.address).then((result) => {
     if (result.balance !== account.balance) {
-      if (!action.data.windowIsFocused || transactions.count === 0) {
+      if (!action.data.windowIsFocused || !hasRecentTransactions(transactions)) {
         updateTransactions(store, peers, account);
       }
       if (account.isDelegate) {

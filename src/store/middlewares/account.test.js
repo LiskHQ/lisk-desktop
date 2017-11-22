@@ -127,7 +127,7 @@ describe('Account middleware', () => {
 
     expect(stubGetAccount).to.have.been.calledWith();
     // eslint-disable-next-line no-unused-expressions
-    expect(stubTransactions).to.have.been.calledTwice;
+    expect(stubTransactions).to.have.been.calledOnce;
   });
 
   it(`should call transactions API methods on ${actionTypes.newBlockCreated} action if the window is in focus and there are recent transactions`, () => {
