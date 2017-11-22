@@ -5,10 +5,8 @@ import configureMockStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
 import sinon from 'sinon';
 import { Button } from '../toolbox/buttons/button';
-import styles from './header.css';
 import Header from './header';
 import RelativeLink from '../relativeLink';
-import logo from '../../assets/images/LISK-nano.png';
 import i18n from '../../i18n';
 
 describe('Header', () => {
@@ -47,10 +45,5 @@ describe('Header', () => {
 
   it('renders 10 RelativeLink components', () => {
     expect(wrapper.find(RelativeLink)).to.have.length(10);
-  });
-
-  it('should have an image with source of "logo"', () => {
-    expect(wrapper.contains(<img className={styles.logo} src={logo} alt="logo" />))
-      .to.be.equal(true);
   });
 });
