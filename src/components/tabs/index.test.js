@@ -49,7 +49,7 @@ describe('LoginHOC', () => {
     expect(wrapper.find('Tabs')).to.have.lengthOf(2);
   });
 
-  it('should mount 8 Tab inside Tabs', () => {
-    expect(wrapper.find('Tab')).to.have.lengthOf(8);
+  it('should mount 7 Tab inside Tabs', () => {
+    expect(wrapper.find('Tab')).to.have.lengthOf(7);
   });
 });
