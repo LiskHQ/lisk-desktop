@@ -1,5 +1,7 @@
 {
   " Make sure that you are using the latest version of Lisk Nano.": "Stelle sicher, dass du die neuste Version von Lisk Nano benutzt.",
+  "Vote_noun": "Abstimmung",
+  "Vote_verb": "Abstimmen",
   "About": "Über",
   "Account saved": "Konto gespeichert",
   "Account was successfully forgotten.": "Das Konto wurde erfolgreich vergessen.",
@@ -184,7 +186,7 @@
   "View": "Ansicht",
   "Vote": "Abstimmen",
   "Vote for delegates": "Für Delegierte stimmen",
-  "Voting": "Abstimmung",
+  "Voting": "Abstimmen",
   "What's New...": "Neues...",
   "When you have the signature, you only need the publicKey of the signer in order to verify that the message came from the right private/publicKey pair. Be aware, everybody knowing the signature and the publicKey can verify the message. If ever there is a dispute, everybody can take the publicKey and signature to a judge and prove that the message is coming from the specific private/publicKey pair.": "Wenn du eine Signatur hast, brauchst du nur noch den öffentlichen Schlüssel des Unterzeichners, um zu überprüfen, ob die Nachricht von dem korrekten privaten/öffentlichen Schlüssel-Paar kommt. Bedenke dass jeder, der den öffentlichen Schlüssel besitzt, die Nachricht verifizieren kann. Wenn es eine Streitigkeit geben sollte, kann jeder den öffentlichen Schlüssel und die Signatur zu einem Richter bringen und dort beweisen, dass die Nachricht von diesem speziellen privaten/öffentlichen Schlüssel-Paar kommt.",
   "Window": "Fenster",
