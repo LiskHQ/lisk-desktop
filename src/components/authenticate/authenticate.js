@@ -22,7 +22,7 @@ class Authenticate extends React.Component {
 
   componentWillUpdate(props) {
     const { nextAction, t } = props;
-    this.message = `${t('You are looking into a saved account. In order to')} ${t(nextAction)} ${t('you need to enter your passphrase.')}`;
+    this.message = `${t('You are looking into a saved account. In order to {{nextAction}} you need to enter your passphrase.', { nextAction })}`;
   }
 
   update(e) {

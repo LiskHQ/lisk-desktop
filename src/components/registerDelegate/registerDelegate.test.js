@@ -151,9 +151,12 @@ describe('RegisterDelegate', () => {
       </Provider>);
     });
 
-    it('does not allow register as delegate for a delegate account', () => {
-      wrapper.find('.username input').simulate('change', { target: { value: 'sample_username' } });
-      expect(wrapper.find('.primary-button button').props().disabled).to.be.equal(true);
+    it('renders an InfoParagraph component', () => {
+      expect(wrapper.find('InfoParagraph')).to.have.length(1);
+    });
+
+    it('does not render the delegate registration form for registering', () => {
+      expect(wrapper.find('form')).to.have.length(0);
     });
   });
 });
