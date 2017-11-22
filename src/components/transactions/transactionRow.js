@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { translate } from 'react-i18next';
 import TransactionType from './transactionType';
@@ -7,7 +6,7 @@ import styles from './transactions.css';
 import LiskAmount from '../liskAmount';
 import Amount from './amount';
 import Spinner from '../spinner';
-import { _convertTimeFromFirstBlock } from './../timestamp/index';
+import { TimeFromTimestamp, DateFromTimestamp } from './../timestamp/index';
 import angle from './../../assets/images/darkblue_angle_down.svg';
 
 class TransactionRow extends React.Component {
@@ -29,8 +28,6 @@ class TransactionRow extends React.Component {
 
   render() {
     const props = this.props;
-    const day = moment(_convertTimeFromFirstBlock(props.value.timestamp));
-
     return (
       <div className={`${grid.row} ${styles.rows} ${styles.paddingLeft}`} id="transactionsRow">
         <div className={`${styles.leftText} ${grid['col-xs-6']}`}>
@@ -41,9 +38,10 @@ class TransactionRow extends React.Component {
         </div>
         <div className={`${styles.rightText} ${grid['col-xs-2']}`}>
           <div className={styles.mainRow}>
-            {props.value.confirmations ? day.format('ll') : <Spinner />}
+            {props.value.confirmations ? <DateFromTimestamp time={props.value.timestamp} />
+              : <Spinner />}
           </div>
-          {this.state.isOpen ? <div className={styles.subRow}>{day.format('LTS')}</div> : ''}
+          {this.state.isOpen ? <div className={styles.subRow}><TimeFromTimestamp time={props.value.timestamp}/></div> : ''}
         </div>
         <div className={`${styles.rightText} ${grid['col-xs-2']}`}>
           <div className={styles.mainRow}><Amount {...props}></Amount></div>

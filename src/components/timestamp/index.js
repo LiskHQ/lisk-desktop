@@ -50,6 +50,18 @@ export const Time = translate()((props) => {
   return <span>{time.fromNow(true)}</span>;
 });
 
+export const DateFromTimestamp = translate()((props) => {
+  moment.locale(i18n.language);
+  const day = moment(_convertTimeFromFirstBlock(props.time));
+  return (<span>{day.format('ll')}</span>);
+});
+
+export const TimeFromTimestamp = translate()((props) => {
+  moment.locale(i18n.language);
+  const day = moment(_convertTimeFromFirstBlock(props.time));
+  return (<span>{day.format('LTS')}</span>);
+});
+
 export const TooltipTime = translate()((props) => {
   moment.locale(i18n.language);
   const time = moment(_convertTimeFromFirstBlock(props.label));
