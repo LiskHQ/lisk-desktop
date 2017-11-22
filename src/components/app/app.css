@@ -23,7 +23,7 @@ body {
   display: flex;
   font-family: roboto;
 
-  & section {
+  & > section {
     width: 100%;
     padding-left: var(--sidebar-width);
   }
