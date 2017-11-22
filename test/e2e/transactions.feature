@@ -1,7 +1,7 @@
 Feature: Transactions tab
   Scenario: should show transactions and more on scroll
     Given I'm logged in as "genesis"
-    When I click transactions tab
+    When I click "transactions" tab
     Then I should see table with 40 lines
     When I scroll to the bottom of "box"
     Then I should see table with 60 lines
@@ -9,7 +9,7 @@ Feature: Transactions tab
   @integration
   Scenario: should allow send to address
     Given I'm logged in as "genesis"
-    When I click transactions tab
+    When I click "transactions" tab
     And I click "from-to" element on table row no. 1
     And I fill in "1" to "amount" field
     And I click "submit button"
@@ -19,7 +19,7 @@ Feature: Transactions tab
   @pending
   Scenario: should allow to repeat the transaction
     Given I'm logged in as "genesis"
-    When I click transactions tab
+    When I click "transactions" tab
     And I click "amount" element on table row no. 1
     And I wait 1 seconds
     And I click "submit button"
@@ -27,7 +27,7 @@ Feature: Transactions tab
 
   Scenario: should provide "Receive LSK" modal if there are "No transactions" 
     Given I'm logged in as "empty account"
-    When I click transactions tab
+    When I click "transactions" tab
     And I should see table with 0 lines
     And I should see text "There are no transactions, yet.  RECEIVE LSK" in "empty message" element
     And I click "receive lsk button"
