@@ -3,4 +3,9 @@
   --sidebar-width: 192px;
   --main-box-width: 1291px;
   --main-box-height: 788px;
+  --menu-background-color: #fff;
+  --menu-item-hover-gradient: linear-gradient(-27deg, #004aff 4%, #57afff 61%, #93f4fe 100%);
+  --menu-item-hover-border-width: 7px;
+  --setting-menu-color: #74869b;
+  --setting-menu-border-color: #d0d9e3;
 }
