@@ -23,11 +23,11 @@ const hasRecentTransactions = txs => (
 );
 
 const updateAccountData = (store, action) => {
-  const { peers, account } = store.getState();
+  const { peers, account, transactions } = store.getState();
 
   getAccount(peers.data, account.address).then((result) => {
     if (result.balance !== account.balance) {
-      if (!action.data.windowIsFocused) {
+      if (!action.data.windowIsFocused || !hasRecentTransactions(transactions)) {
         updateTransactions(store, peers, account);
       }
       if (account.isDelegate) {
