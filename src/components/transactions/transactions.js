@@ -1,6 +1,5 @@
 import React from 'react';
 import Waypoint from 'react-waypoint';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import tableStyle from 'react-toolbox/lib/table/theme.css';
 import buttonStyle from 'react-toolbox/lib/button/theme.css';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
@@ -36,12 +35,12 @@ class Transactions extends React.Component {
     return (
       <div className='box noPaddingBox'>
         {this.props.transactions.length > 0 ?
-          <div className={grid.container}>
+          <div>
             <TransactionsHeader tableStyle={tableStyle}></TransactionsHeader>
             {this.props.transactions.map(transaction => (
               <TransactionRow address={this.props.address}
                 key={transaction.id}
-                tableStyle={tableStyle}
+                t={this.props.t}
                 value={transaction}>
               </TransactionRow>
             ))}

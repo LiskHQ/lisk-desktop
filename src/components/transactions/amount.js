@@ -9,17 +9,18 @@ const Amount = (props) => {
   const params = {};
   if (props.value.type === transactionTypes.send &&
     props.value.senderId === props.value.recipientId) {
-    params.className = 'grayButton';
+    params.className = 'greyLabel';
+    params.pre = '+-';
   } else if (props.value.senderId !== props.address) {
-    params.className = 'inButton';
+    params.className = 'greenLabel';
     params.pre = '+';
-  } else if (props.value.type !== transactionTypes.send ||
-      props.value.recipientId !== props.address) {
+  } else if ((props.value.type !== transactionTypes.send ||
+      props.value.recipientId !== props.address) && props.value.amount !== 0) {
     params.pre = '-';
-    params.className = 'outButton';
-    params.tooltipText = props.value.type === transactionTypes.send ? props.t('Repeat the transaction') : undefined;
+    params.className = 'greyLabel';
     params.clickToSendEnabled = props.value.type === transactionTypes.send;
   }
+
   return <ClickToSend rawAmount={props.value.amount}
     className='amount'
     recipient={props.value.recipientId}

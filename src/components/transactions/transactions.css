@@ -1,11 +1,26 @@
 :root {
-  --in: #73c8a9;
-  --out: #777;
-  --btn: rgb(2, 136, 209);
+  --black: #000;
+  --green: #008722;
+  --grey: #3b5068;
+  --blue: #2475b9;
+  --lightBlue: #e8f0fa;
+  --lightGrey: #f5f8fc;
+  --white: #fff;
+  --fontWeightBold: 500;
+}
+
+.greyLabel {
+  font-weight: var(--fontWeightBold);
+  color: var(--grey);
+}
+
+.greenLabel {
+  font-weight: var(--fontWeightBold);
+  color: var(--green);
 }
 
 .address {
-  font-weight: 500;
+  font-weight: var(--fontWeightBold);
 }
 
 .smallButton {
@@ -41,30 +56,30 @@
 }
 
 a {
-  color: #2475b9;
+  color: var(--blue);
 }
 
 .rows:nth-of-type(even) {
-  background: linear-gradient(to right, #fff, #f5f8fc);
+  background: linear-gradient(to right, var(--white), var(--lightGrey));
 }
 
 .rows:nth-of-type(odd) {
-  background: #fff;
+  background: var(--white);
 }
 
 .rows {
-  color: #3c5068;
+  color: var(--grey);
   font-size: 1em;
   border-bottom: 0;
   border-top: 0;
 }
 
 .rows:hover {
-  background: #e8f0fa;
+  background: var(--lightBlue);
 }
 
 .rows:first-child {
-  color: #000;
+  color: var(--black);
   font-weight: bold;
   font-size: 0.9em;
   line-height: 60px;
@@ -84,4 +99,8 @@ a {
 
 .turnArrow {
   transform: scaleY(-1);
+}
+
+.paddingLeft {
+  padding-left: 30px;
 }
