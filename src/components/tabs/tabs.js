@@ -41,6 +41,14 @@ const Tabs = ({ history, isDelegate, t }) => {
       id: 'transactions',
       image: menuLogos.dashboard,
     }, {
+      label: t('Delegates'),
+      id: 'voting',
+      image: menuLogos.delegates,
+    }, {
+      label: t('Forging'),
+      id: 'forging',
+      image: menuLogos.sidechains,
+    }, {
       label: t('Wallet'),
       id: 'wallet',
       image: menuLogos.wallet,

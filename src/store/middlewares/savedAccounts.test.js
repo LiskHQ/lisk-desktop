@@ -1,7 +1,8 @@
 import { expect } from 'chai';
-import { spy, mock } from 'sinon';
+import { spy, mock, match } from 'sinon';
 
 import { accountLoggedOut } from '../../actions/account';
+import * as peersActions from '../../actions/peers';
 import { successToastDisplayed } from '../../actions/toaster';
 import actionTypes from '../../constants/actions';
 import middleware from './savedAccounts';
@@ -9,6 +10,8 @@ import middleware from './savedAccounts';
 describe('SavedAccounts middleware', () => {
   let store;
   let next;
+  const address = 'https://testnet.lisk.io';
+  const publicKey = 'fab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88';
 
   beforeEach(() => {
     store = mock();
@@ -50,11 +53,35 @@ describe('SavedAccounts middleware', () => {
     const action = {
       type: actionTypes.accountSwitched,
       data: {
-        publicKey: '',
+        publicKey,
         network: 0,
       },
     };
     middleware(store)(next)(action);
     expect(store.dispatch).to.have.been.calledWith(accountLoggedOut());
+  });
+
+  it(`should call activePeerSet action on ${actionTypes.accountSwitched} action`, () => {
+    const code = 2;
+    const peersActionsMock = mock(peersActions);
+    peersActionsMock.expects('activePeerSet').withExactArgs(match({
+      network: {
+        address,
+        code,
+      },
+      publicKey,
+    }));
+
+    const action = {
+      type: actionTypes.accountSwitched,
+      data: {
+        publicKey,
+        network: code,
+        address,
+      },
+    };
+    middleware(store)(next)(action);
+
+    peersActionsMock.verify();
   });
 });

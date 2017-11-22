@@ -52,7 +52,6 @@ Feature: Saved Accounts
     And I click "forget button"
     Then I should see "saved accounts table" table with 1 lines
 
-  @pending
   Scenario: should allow to switch account
     Given I'm logged in as "genesis"
     When I click "saved accounts" in main menu

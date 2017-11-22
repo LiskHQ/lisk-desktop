@@ -3,7 +3,7 @@ import menu from './../menu';
 import win from './win';
 
 const handler = {
-  update: ({ electron, event, langCode, storage }) => {
+  update: ({ electron, event, langCode, storage, checkForUpdates }) => {
     // change locale
     i18n.changeLanguage(langCode);
     // write selected lang on JSON file
@@ -13,7 +13,7 @@ const handler = {
 
     // rebuild menu
     const { Menu } = electron;
-    Menu.setApplicationMenu(menu.build(electron));
+    Menu.setApplicationMenu(menu.build(electron, checkForUpdates));
     event.returnValue = 'Rebuilt electron menu.';
   },
 
