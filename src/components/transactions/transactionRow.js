@@ -23,6 +23,7 @@ class TransactionRow extends React.Component {
 
   toggleRow() {
     this.setState({ isOpen: !this.state.isOpen });
+    this.forceUpdate();
   }
 
   render() {
