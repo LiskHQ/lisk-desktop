@@ -58,20 +58,21 @@ or "warn/action" ineastd of "red/green"
   /*************************
         Colors
   *************************/
-  --color-primary-1: #001a3e;
-  --color-primary-2: #2475b9;
-  --color-primary-3: #008bff;
-  --color-grayscale-1: #000;
-  --color-grayscale-2: #3c5068;
-  --color-grayscale-3: #74869b;
-  --color-grayscale-4: #ccd9e4;
-  --color-grayscale-5: #fff;
-  --color-action-1: #c80039;
-  --color-action-2: #ed4537;
-  --color-action-3: #ff6236;
-  --color-sucess-1: #008722;
-  --gradient-theme: linear-gradient(-27deg, #17499b 0%, var(--color-grayscale-4) 100%);
-  --gradient-action: linear-gradient(-27deg, var(--color-action-1) 0%, var(--color-action-3) 100%);
+  --color-primary-dark: #001a3e;
+  --color-primary-semi-dark: #013165;
+  --color-primary-medium: #2475b9;
+  --color-primary-light: #008bff;
+  --color-black: #000;
+  --color-grayscale-dark: #3c5068;
+  --color-grayscale-medium: #74869b;
+  --color-grayscale-light: #ccd9e4;
+  --color-white: #fff;
+  --color-action-dark: #c80039;
+  --color-action-medium: #ed4537;
+  --color-action-light: #ff6236;
+  --color-sucess-dark: #008722;
+  --gradient-theme: linear-gradient(-27deg, #17499b 0%, var(--color-grayscale-light) 100%);
+  --gradient-action: linear-gradient(-27deg, var(--color-action-dark) 0%, var(--color-action-light) 100%);
 
   /*************************
         Z-Indexes
@@ -100,6 +101,6 @@ or "warn/action" ineastd of "red/green"
   @custom-media --large-viewport (max-width: 1400px);
   @custom-media --medium-viewport (max-width: 1000px);
   @custom-media --small-viewport (max-width: 768px);
-  @custom-media --xSmall-viewport (max-width: 480px);
+  @custom-media --xSmall-viewport (max-width: 414px);
   @custom-media --xxSmall-viewport (max-width: 320px);
 }

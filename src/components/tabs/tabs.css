@@ -1,11 +1,11 @@
 @import '../app/variables.css';
 
 :root {
-  --menu-background-color: var(--color-grayscale-5);
+  --menu-background-color: var(--color-white);
   --menu-item-active-gradient: var(--gradient-theme);
   --menu-item-active-border-width: 7px;
-  --setting-menu-color: var(--color-grayscale-4);
-  --setting-menu-border-color: var(--color-grayscale-3);
+  --setting-menu-color: var(--color-grayscale-light);
+  --setting-menu-border-color: var(--color-grayscale-medium);
 }
 
 .sideBarWrapper {
@@ -47,7 +47,7 @@
   padding: 25px 10px;
   font-family: Gilroy-Bold;
   font-size: 18px;
-  color: var(--color-grayscale-1);
+  color: var(--color-black);
   letter-spacing: 0;
 
   & > .rippleWrapper {
@@ -78,7 +78,7 @@
 .label.active {
   position: relative;
   background: white;
-  color: var(--color-grayscale-1);
+  color: var(--color-black);
   margin-bottom: -1px;
   opacity: 1;
   border-width: 0;

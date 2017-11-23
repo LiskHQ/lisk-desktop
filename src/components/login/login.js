@@ -148,7 +148,7 @@ class Login extends React.Component {
   render() {
     return (
       <div className={`box ${styles.wrapper}`}>
-        <div className={grid.row}>
+        <section className={grid.row}>
           <div className={`${grid['col-xs-12']} ${grid['col-sm-8']} ${grid['col-sm-offset-2']}`}>
             <form onSubmit={this.onFormSubmit.bind(this)}>
               <LanguageDropdown />
@@ -192,7 +192,7 @@ class Login extends React.Component {
               </footer>
             </form>
           </div>
-        </div>
+        </section>
       </div>
     );
   }

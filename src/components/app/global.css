@@ -31,11 +31,17 @@ order to be available application wide
   height: var(--main-box-height);
   display: flex;
   box-sizing: border-box;
-  background: var(--color-grayscale-5);
+  background: var(--color-white);
   box-shadow: var(--normal-shadow);
   border-radius: 3px;
   padding: var(--box-padding);
   max-height: 100%;
+  flex-direction: column;
+  overflow: auto;
+}
+
+:global .material-icons {
+  font-size: 24px !important;
 }
 
 :global .hasNoPadding {
