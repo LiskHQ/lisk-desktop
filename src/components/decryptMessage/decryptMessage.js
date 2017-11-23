@@ -42,7 +42,9 @@ class DecryptMessage extends React.Component {
         this.props.account.passphrase,
         this.state.senderPublicKey.value);
     } catch (error) {
-      this.props.errorToast({ label: error.message });
+      this.props.errorToast({
+        label: this.props.t('There was an error when trying to decrypt the message'),
+      });
     }
     if (decryptedMessage) {
       this.setState({ result: decryptedMessage });
