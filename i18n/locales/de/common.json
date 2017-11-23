@@ -1,5 +1,7 @@
 {
   " Make sure that you are using the latest version of Lisk Nano.": "Stelle sicher, dass du die neuste Version von Lisk Nano benutzt.",
+  "Vote_noun": "Abstimmung",
+  "Vote_verb": "Abstimmen",
   "About": "Über",
   "Account saved": "Konto gespeichert",
   "Account was successfully forgotten.": "Das Konto wurde erfolgreich vergessen.",
@@ -182,7 +184,7 @@
   "Verify message": "Nachricht verifizieren",
   "Version": "Version",
   "View": "Ansicht",
-  "Vote": "Stimme",
+  "Vote": "Abstimmen",
   "Vote for delegates": "Für Delegierte stimmen",
   "Voting": "Abstimmung",
   "What's New...": "Neues...",

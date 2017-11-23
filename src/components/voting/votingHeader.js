@@ -38,7 +38,7 @@ export class VotingHeaderRaw extends React.Component {
   }
 
   confirmVoteText() {
-    let info = this.props.t('Vote');
+    let info = this.props.t('Vote', { context: 'verb' });
     const { votes } = this.props;
     const votesList = Object.keys(votes);
     const voted = votesList.filter(item =>
@@ -49,7 +49,7 @@ export class VotingHeaderRaw extends React.Component {
       const separator = (voted > 0 && unvoted > 0) ? ' / ' : ''; // eslint-disable-line
       const votedHtml = voted > 0 ? <span className={styles.voted}>+{voted}</span> : '';
       const unvotedHtml = unvoted > 0 ? <span className={styles.unvoted}>-{unvoted}</span> : '';
-      info = <span className='vote-button-info'>{this.props.t('Vote')} ({votedHtml}{separator}{unvotedHtml})</span>;
+      info = <span className='vote-button-info'>{this.props.t('Vote', { context: 'verb' })} ({votedHtml}{separator}{unvotedHtml})</span>;
     }
     return info;
   }

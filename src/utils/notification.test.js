@@ -39,5 +39,12 @@ describe('Notification', () => {
       expect(mockNotification).to.have.been.not.calledWith();
       mockNotification.reset();
     });
+
+    it('should do nothing if an unhandled notification is supplied', () => {
+      notify.isFocused = false;
+      notify.about('unhandled_notification');
+      expect(mockNotification).to.have.been.not.calledWith();
+      mockNotification.reset();
+    });
   });
 });
