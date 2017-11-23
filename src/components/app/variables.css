@@ -58,18 +58,20 @@ or "warn/action" ineastd of "red/green"
   /*************************
         Colors
   *************************/
-  --main-body-color: #013165;
-  --tx-color-primary-dark: #3c5068;
-  --tx-color-primary-light: #2475b9;
-  --tx-color-secondary-dark: #000;
-  --tx-color-secondary-md: #74869b;
-  --tx-color-secondary-ml: #bac0cb;
-  --tx-color-secondary-light: #fff;
-  --tx-color-action-dark: #c80039;
-  --tx-color-action-md: #ed4537;
-  --tx-color-action-light: #ff6236;
-  --tx-color-success-dark: #008722;
-  --gradient-theme-1: linear-gradient(-27deg, #004aff 4%,  #93f4fe 100%);
+  --color-primary-1: #001a3e;
+  --color-primary-2: #2475b9;
+  --color-primary-3: #008bff;
+  --color-grayscale-1: #000;
+  --color-grayscale-2: #3c5068;
+  --color-grayscale-3: #74869b;
+  --color-grayscale-4: #ccd9e4;
+  --color-grayscale-5: #fff;
+  --color-action-1: #c80039;
+  --color-action-2: #ed4537;
+  --color-action-3: #ff6236;
+  --color-sucess-1: #008722;
+  --gradient-theme: linear-gradient(-27deg, #17499b 0%, var(--color-grayscale-4) 100%);
+  --gradient-action: linear-gradient(-27deg, var(--color-action-1) 0%, var(--color-action-3) 100%);
 
   /*************************
         Z-Indexes
@@ -94,8 +96,10 @@ or "warn/action" ineastd of "red/green"
   /*************************
         Media Queries
   *************************/
-  @custom-media --desktop-viewport (max-width: 1200px);
-  @custom-media --tablet-viewport (max-width: 1024px);
-  @custom-media --mini-viewport (max-width: 768px);
-  @custom-media --mobile-viewport (max-width: 480px);
+  @custom-media --xLarge-viewport (max-width: 1920px);
+  @custom-media --large-viewport (max-width: 1400px);
+  @custom-media --medium-viewport (max-width: 1000px);
+  @custom-media --small-viewport (max-width: 768px);
+  @custom-media --xSmall-viewport (max-width: 480px);
+  @custom-media --xxSmall-viewport (max-width: 320px);
 }
