@@ -1,6 +1,6 @@
 {
   "name": "lisk-nano",
-  "version": "1.2.1",
+  "version": "1.3.0-rc.1",
   "description": "Lisk Nano",
   "main": "./build/main.js",
   "author":{

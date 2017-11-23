@@ -33,7 +33,7 @@ class Transactions extends React.Component {
 
   render() {
     return (
-      <div className='box noPaddingBox verticalScroll'>
+      <div className='box noPaddingBox'>
         {this.props.transactions.length > 0 ?
           <table className={tableStyle.table}>
             <TransactionsHeader tableStyle={tableStyle}></TransactionsHeader>
@@ -54,7 +54,6 @@ class Transactions extends React.Component {
           </p>
         }
         <Waypoint bottomOffset='-80%'
-          scrollableAncestor={window}
           key={this.props.transactions.length}
           onEnter={this.loadMore.bind(this)}></Waypoint>
       </div>

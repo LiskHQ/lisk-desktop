@@ -51,11 +51,13 @@ module.exports = merge(baseConfig, reactConfig, {
             {
               loader: 'postcss-loader',
               options: {
+                ident: 'postcss',
                 sourceMap: false,
                 sourceComments: false,
                 plugins: [
-                  // eslint-disable-next-line import/no-extraneous-dependencies
+                  /* eslint-disable import/no-extraneous-dependencies */
                   require('postcss-partial-import')({}),
+                  require('postcss-mixins')({}),
                   require('postcss-cssnext')({
                     features: {
                       customProperties: {
@@ -63,8 +65,13 @@ module.exports = merge(baseConfig, reactConfig, {
                       },
                     },
                   }),
-                  // eslint-disable-next-line import/no-extraneous-dependencies
+                  require('postcss-functions')({
+                    functions: {
+                      rem: px => `${(px / 10)}rem`,
+                    },
+                  }),
                   require('postcss-for')({}),
+                  /* eslint-enable import/no-extraneous-dependencies */
                 ],
               },
             },

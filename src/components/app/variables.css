@@ -59,15 +59,17 @@ or "warn/action" ineastd of "red/green"
         Colors
   *************************/
   --main-body-color: #013165;
-  --tx-color-primary-light: #2475b9;
   --tx-color-primary-dark: #3c5068;
+  --tx-color-primary-light: #2475b9;
   --tx-color-secondary-dark: #000;
-  --tx-color-secondary-md: #bac0cb;
+  --tx-color-secondary-md: #74869b;
+  --tx-color-secondary-ml: #bac0cb;
   --tx-color-secondary-light: #fff;
   --tx-color-action-dark: #c80039;
   --tx-color-action-md: #ed4537;
   --tx-color-action-light: #ff6236;
   --tx-color-success-dark: #008722;
+  --gradient-theme-1: linear-gradient(-27deg, #004aff 4%,  #93f4fe 100%);
 
   /*************************
         Z-Indexes

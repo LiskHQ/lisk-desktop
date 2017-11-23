@@ -29,7 +29,8 @@ describe('Address', () => {
     expect(wrapper.find('#firstBox').text()).to.be.equal(expectedHeaderValue);
   });
 
-  it('when value of "isDelegate" is "true" expect text of "p.secondary" to be equal expectedValue', () => {
+  const delegateNameElement = '.delegate-name';
+  it(`when value of "isDelegate" is "true" expect text of ${delegateNameElement} to be equal expectedValue`, () => {
     const inputValue = {
       isDelegate: true,
       address: '16313739661670634666L',
@@ -40,6 +41,6 @@ describe('Address', () => {
     };
     const expectedValue = 'lisk-nano';
     const wrapper = shallow(<Address {...inputValue} />);
-    expect(wrapper.find('p.primary').text()).to.be.equal(expectedValue);
+    expect(wrapper.find(delegateNameElement).text()).to.be.equal(expectedValue);
   });
 });

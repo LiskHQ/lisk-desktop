@@ -12,7 +12,7 @@ Feature: Login page
     And I clear "address" field
     And I fill in "http://localhost:4218" to "address" field
     And I click "login button"
-    And I wait 1 seconds
+    And I wait 2 seconds
     Then I should see text "Unable to connect to the node" in "toast" element
 
   Scenario: should allow to login to Mainnet 

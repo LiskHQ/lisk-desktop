@@ -1,6 +1,13 @@
+@import '../../app/buttonStyles.css';
+
 .wrapper {
   margin: 5px -8px 8px 0;
   padding: 8px;
+
+  /* @todo please remove this by #13 */
+  width: 420px;
+  float: right;
+  margin-top: 50px;
 }
 
 .logoWrapper {
@@ -20,6 +27,20 @@
   margin: 6px 8px;
   height: auto;
   float: right;
+}
+
+.primary {
+  line-height: 40px;
+
+  @mixin buttonBasics;
+  @mixin buttonPrimary;
+}
+
+.secondaryBlue {
+  line-height: 39px;
+
+  @mixin buttonBasics;
+  @mixin buttonSecondary--blue;
 }
 
 .material-icons {

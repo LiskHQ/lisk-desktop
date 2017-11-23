@@ -63,8 +63,8 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     waitForElemAndClickIt(selector, callback);
   });
 
-  When('I click tab number {index}', (index, callback) => {
-    waitForElemAndClickIt(`.main-tabs *:nth-child(${index})`, callback);
+  When('I click "{id}" tab', (id, callback) => {
+    waitForElemAndClickIt(`.main-tabs #${id}`, callback);
   });
 
   When('I click "{elementName}" in "{menuName}" menu', (elementName, menuName, callback) => {
@@ -202,8 +202,8 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     browser.refresh().then(callback);
   });
 
-  When('I scroll to the bottom', () => {
-    browser.executeScript('window.scrollBy(0, 10000);');
+  When('I scroll to the bottom of "{box}"', (box) => {
+    browser.executeScript(`document.getElementsByClassName('${box}')[0].scrollTop = 10000;`);
   });
 
   Then('I should be logged in', (callback) => {

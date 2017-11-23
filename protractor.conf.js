@@ -27,5 +27,7 @@ exports.config = {
     testnetPassphrase: process.env.TESTNET_PASSPHRASE,
     useTestnetPassphrase: false,
     network: 'customNode',
+    screenWidth: 1400,
+    screenHeight: 1300,
   },
 };

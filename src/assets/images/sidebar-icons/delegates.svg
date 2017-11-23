@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="49px" height="52px" viewBox="0 0 49 52" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>delegates</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="19.4762866%" y1="88.4126955%" x2="86.0468234%" y2="18.4958616%" id="linearGradient-1">
+            <stop stop-color="#004AFF" offset="0%"></stop>
+            <stop stop-color="#93F4FE" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Design_Ecosystem" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.6">
+        <g id="delegates" fill="url(#linearGradient-1)">
+            <g id="Group-10">
+                <rect id="Rectangle-2" x="19.5048544" y="0.231404959" width="29.0194175" height="43.6198347"></rect>
+                <rect id="Rectangle-2-Copy" transform="translate(19.742718, 26.834711) rotate(-15.000000) translate(-19.742718, -26.834711) " x="5.23300971" y="5.02479339" width="29.0194175" height="43.6198347"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

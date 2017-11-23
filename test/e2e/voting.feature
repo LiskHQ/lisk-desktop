@@ -1,19 +1,19 @@
 Feature: Voting tab
   Scenario: should allow to view delegates and more on scroll
     Given I'm logged in as "any account"
-    When I click tab number 2
+    When I click "voting" tab
     Then I should see table with 100 lines
-    When I scroll to the bottom
+    When I scroll to the bottom of "box"
     Then I should see table with 200 lines
 
   Scenario: should allow to view delegates with cold account
     Given I'm logged in as "empty account"
-    When I click tab number 2
+    When I click "voting" tab
     Then I should see table with 100 lines
 
   Scenario: should allow to search delegates
     Given I'm logged in as "any account"
-    When I click tab number 2
+    When I click "voting" tab
     And I fill in "genesis_42" to "search" field
     Then I should see table with 1 lines
     And I clear "search" field
@@ -24,14 +24,14 @@ Feature: Voting tab
   @integration
   Scenario: should allow to view my votes
     Given I'm logged in as "genesis"
-    When I click tab number 2
+    When I click "voting" tab
     And I click "my votes button"
     Then I should see delegates list with 101 lines
 
   @integration
   Scenario: should not allow to vote if not enough funds for the fee
     Given I'm logged in as "empty account"
-    When I click tab number 2
+    When I click "voting" tab
     And I click checkbox on table row no. 3
     And I click "vote button"
     Then I should see "Insufficient funds for 1 LSK fee" error message
@@ -40,7 +40,7 @@ Feature: Voting tab
   @integration
   Scenario: should display voting bar with numbers of selected votes if any selected
     Given I'm logged in as "delegate candidate"
-    When I click tab number 2
+    When I click "voting" tab
     And I should see no "voting bar"
     And I click checkbox on table row no. 3
     Then I should see element "voting bar" that contains text:
@@ -65,7 +65,7 @@ Feature: Voting tab
   @testnet
   Scenario: should allow to select delegates in the "Voting" tab and vote for them
     Given I'm logged in as "delegate candidate"
-    When I click tab number 2
+    When I click "voting" tab
     And I click checkbox on table row no. 3
     And I click checkbox on table row no. 5
     And I click checkbox on table row no. 8
@@ -76,7 +76,7 @@ Feature: Voting tab
 
   Scenario: should allow to vote with second passphrase account
     Given I'm logged in as "second passphrase account"
-    When I click tab number 2
+    When I click "voting" tab
     And I click checkbox on table row no. 3
     And I click checkbox on table row no. 5
     And I click checkbox on table row no. 8
@@ -89,7 +89,7 @@ Feature: Voting tab
   @pending
   Scenario: should allow to select delegates in the "Vote" dialog and vote for them
     Given I'm logged in as "delegate candidate"
-    When I click tab number 2
+    When I click "voting" tab
     And I click "vote button"
     And Search twice for "genesis_7" in vote dialog
     And I click "submit button"
@@ -98,7 +98,7 @@ Feature: Voting tab
   @integration
   Scenario: should allow to remove votes form delegates
     Given I'm logged in as "genesis"
-    When I click tab number 2
+    When I click "voting" tab
     And I click checkbox on table row no. 3
     And I click checkbox on table row no. 5
     And I click "vote button"
@@ -109,7 +109,7 @@ Feature: Voting tab
   @integration
   Scenario: should allow to exit vote dialog
     Given I'm logged in as "genesis"
-    When I click tab number 2
+    When I click "voting" tab
     And I click "vote button"
     And I wait 1 seconds
     And I click "cancel button"

@@ -1,8 +1,41 @@
+@import '../app/variables.css';
+
+:root {
+  --menu-background-color: var(--tx-color-secondary-light);
+  --menu-item-hover-gradient: var(--gradient-theme-1);
+  --menu-item-hover-border-width: 7px;
+  --setting-menu-color: var(--tx-color-secondary-md);
+  --setting-menu-border-color: var(--tx-color-secondary-ml);
+}
+
+.sideBarWrapper {
+  text-align: center;
+}
+
+.logo {
+  margin: 40px 0;
+}
+
+.setting {
+  color: var(--setting-menu-color) !important;
+  border-top: 1px solid var(--setting-menu-border-color) !important;
+  position: fixed !important;
+  width: 192px;
+  left: 0;
+  bottom: 0;
+  padding: 30px 0;
+}
+
 .tab {
-  background: #f4f4f4;
-  box-shadow: inset 0px -1px 1px -1px rgba(0, 0, 0, 0.12);
-  padding-right: 24px;
-  padding-left: 24px;
+  background: var(--menu-background-color);
+  text-align: center;
+  text-transform: capitalize;
+  box-shadow: none;
+
+  & span {
+    display: block;
+    margin: 10px 0 0;
+  }
 }
 
 .navigationContainer {
@@ -10,10 +43,24 @@
   margin-left: -2px;
 }
 
+.label {
+  padding: 25px 10px;
+  font-family: Gilroy-Bold;
+  font-size: 18px;
+  color: #000;
+  letter-spacing: 0;
+
+  & > .rippleWrapper {
+    display: none;
+  }
+}
+
 .navigationContainer .navigation {
   padding-left: 0;
-  box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.12);
+  box-shadow: none;
   margin-left: 2px;
+  display: flex;
+  flex-direction: column;
 }
 
 .tabs nav {
@@ -21,13 +68,30 @@
 }
 
 .pointer {
-  height: 4px;
-  margin-top: -48px;
+  display: none;
+}
+
+.arrowContainer {
+  display: none;
 }
 
 .label.active {
+  position: relative;
   background: white;
-  color: #0288d1;
+  color: #000;
   margin-bottom: -1px;
   opacity: 1;
+  border-width: 0;
+
+  &::before {
+    position: absolute;
+    width: var(--menu-item-hover-border-width);
+    height: 100%;
+    top: 0;
+    right: 0;
+    content: '';
+    display: block;
+    opacity: 0.8;
+    background-image: var(--menu-item-hover-gradient);
+  }
 }
