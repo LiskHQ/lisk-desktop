@@ -21,7 +21,7 @@ describe('Tabs', () => {
     expect(wrapper.find(ToolboxTabs).exists()).to.equal(true);
   });
 
-  it('should render 7 Button components if props.isDelegate', () => {
+  it('should render 8 Button components if props.isDelegate', () => {
     const wrapper = mount(<Tabs isDelegate={true} history={history} t={t} />);
     expect(wrapper.find(Tab)).to.have.lengthOf(8);
   });

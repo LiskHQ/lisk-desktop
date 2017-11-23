@@ -57,7 +57,7 @@ const Header = props => (
         </MenuItem>
       </IconMenu>
 
-      <Button className={`${styles.button} logout-button`} raised onClick={props.logOut}>{props.t('logout')}</Button>
+      <Button className={`${styles.button} logout-button`} raised onClick={props.logOut}>{props.t('LOGOUT')}</Button>
       <RelativeLink raised className={`${styles.button} ${styles.secondaryBlue} receive-button`}
         to='receive'>{props.t('Receive LSK')}</RelativeLink>
       <RelativeLink raised disableWhenOffline className={`${styles.button} ${styles.primary} send-button`}
