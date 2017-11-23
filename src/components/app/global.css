@@ -31,7 +31,7 @@ order to be available application wide
   height: var(--main-box-height);
   display: flex;
   box-sizing: border-box;
-  background: #fff;
+  background: var(--color-grayscale-5);
   box-shadow: var(--normal-shadow);
   border-radius: 3px;
   padding: var(--box-padding);

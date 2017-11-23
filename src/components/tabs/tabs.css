@@ -1,11 +1,11 @@
 @import '../app/variables.css';
 
 :root {
-  --menu-background-color: var(--tx-color-secondary-light);
-  --menu-item-hover-gradient: var(--gradient-theme-1);
-  --menu-item-hover-border-width: 7px;
-  --setting-menu-color: var(--tx-color-secondary-md);
-  --setting-menu-border-color: var(--tx-color-secondary-ml);
+  --menu-background-color: var(--color-grayscale-5);
+  --menu-item-active-gradient: var(--gradient-theme);
+  --menu-item-active-border-width: 7px;
+  --setting-menu-color: var(--color-grayscale-4);
+  --setting-menu-border-color: var(--color-grayscale-3);
 }
 
 .sideBarWrapper {
@@ -47,7 +47,7 @@
   padding: 25px 10px;
   font-family: Gilroy-Bold;
   font-size: 18px;
-  color: #000;
+  color: var(--color-grayscale-1);
   letter-spacing: 0;
 
   & > .rippleWrapper {
@@ -78,20 +78,20 @@
 .label.active {
   position: relative;
   background: white;
-  color: #000;
+  color: var(--color-grayscale-1);
   margin-bottom: -1px;
   opacity: 1;
   border-width: 0;
 
   &::before {
     position: absolute;
-    width: var(--menu-item-hover-border-width);
+    width: var(--menu-item-active-border-width);
     height: 100%;
     top: 0;
     right: 0;
     content: '';
     display: block;
     opacity: 0.8;
-    background-image: var(--menu-item-hover-gradient);
+    background-image: var(--menu-item-active-gradient);
   }
 }

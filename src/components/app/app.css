@@ -4,13 +4,14 @@
 @import './variables.css';
 @import './global.css';
 @import './type.css';
+@import './mixin.css';
 
 body {
   font-size: 10px;
   margin: 0;
   padding: 0;
   width: 100%;
-  background-color: var(--main-body-color);
+  background-color: var(--color-primary-1);
 }
 
 @mixin backgroundMaker 1.5, #f00, 21deg;
