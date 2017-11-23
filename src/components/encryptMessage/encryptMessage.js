@@ -2,7 +2,6 @@ import React from 'react';
 import Input from 'react-toolbox/lib/input';
 import Lisk from 'lisk-js';
 import { translate } from 'react-i18next';
-import InfoParagraph from '../infoParagraph';
 import SignVerifyResult from '../signVerifyResult';
 import ActionBar from '../actionBar';
 
@@ -43,10 +42,14 @@ class EncryptMessage extends React.Component {
     }
     if (cryptoResult) {
       const result = [
+        '-----BEGIN LISK ENCRYPTED MESSAGE-----',
+        '-----SENDER PUBLIC KEY-----',
+        this.props.account.publicKey,
         '-----ENCRYPTED MESSAGE-----',
         cryptoResult.encryptedMessage,
         '-----NONCE-----',
         cryptoResult.nonce,
+        '-----END LISK ENCRYPTED MESSAGE-----',
       ].join('\n');
       this.setState({ result, resultIsShown: false });
       this.showResult();
@@ -68,12 +71,6 @@ class EncryptMessage extends React.Component {
       <div className='sign-message'>
         <form onSubmit={this.encrypt.bind(this)}>
           <section>
-            <InfoParagraph>
-              <h3>
-                {this.props.t('Public key : ')}
-              </h3>
-              {this.props.account.publicKey}
-            </InfoParagraph>
             <Input className='recipientPublicKey' label={this.props.t('Recipient PublicKey')}
               autoFocus={true}
               value={this.state.recipientPublicKey.value}
