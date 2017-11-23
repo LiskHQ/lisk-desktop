@@ -32,7 +32,6 @@ module.exports = {
           'length-zero-no-unit': null,
           'at-rule-no-unknown': null,
         },
-        ignoreFiles: './node_modules/**/*.css',
       },
     }),
     new ExtractTextPlugin({

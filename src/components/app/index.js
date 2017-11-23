@@ -1,8 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import PrivateRoutes from '../privateRoute';
 import Account from '../account';
+import PrivateRoutes from '../privateRoute';
 import Header from '../header';
 import Login from '../login';
 import Transactions from '../transactions';
@@ -18,14 +17,30 @@ import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 
 const App = () => (
   <OfflineWrapper>
-    <section className={`${grid.row} ${styles['body-wrapper']}`}>
-      <div className={`${grid['col-xs-12']} ${grid['col-sm-12']} ${grid['col-md-10']} ${grid['col-md-offset-1']}`}>
-        <Header />
-        <main>
+    <div className={styles.stageStripes}>
+      <span className={styles.stageStripe}></span>
+      <span className={styles.stageStripe}></span>
+      <span className={styles.stageStripe}></span>
+      <span className={styles.stageStripe}></span>
+      <span className={styles.stageStripe}></span>
+      <span className={styles.stageStripe}></span>
+      <span className={styles.stageStripe}></span>
+      <span className={styles.stageStripe}></span>
+      <span className={styles.stageStripe}></span>
+      <span className={styles.stageStripe}></span>
+      <span className={styles.stageStripe}></span>
+      <span className={styles.stageStripe}></span>
+    </div>
+    <main className={`${styles.bodyWrapper}`}>
+      <aside>
+        <Tabs />
+      </aside>
+      <section>
+        <div className={styles.mainBox}>
+          <Header />
           <PrivateRoutes path='/main' render={ ({ match }) => (
             <main className={offlineStyle.disableWhenOffline}>
               <Account />
-              <Tabs />
               <Route path={`${match.url}/transactions/:dialog?`} component={Transactions} />
               <Route path={`${match.url}/voting/:dialog?`} component={Voting} />
               <Route path={`${match.url}/forging/:dialog?`} component={Forging} />
@@ -33,12 +48,12 @@ const App = () => (
           )} />
           <Route exact path="/register" component={Login} />
           <Route exact path="/" component={Login} />
-        </main>
+        </div>
         <Dialog />
         <Toaster />
         <LoadingBar />
-      </div>
-    </section>
+      </section>
+    </main>
   </OfflineWrapper>
 );
 

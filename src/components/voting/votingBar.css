@@ -6,4 +6,5 @@
   position: fixed;
   bottom: 0;
   left: 8px;
+  height: auto !important;
 }

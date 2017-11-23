@@ -4,16 +4,12 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Button } from '../toolbox/buttons/button';
 
 import PrivateWrapper from '../privateWrapper';
-import logo from '../../assets/images/LISK-nano.png';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import styles from './header.css';
 import RelativeLink from '../relativeLink';
 
 const Header = props => (
   <header className={`${grid.row} ${grid['between-xs']} ${styles.wrapper}`} >
-    <div className={styles.logoWrapper}>
-      <img className={styles.logo} src={logo} alt="logo" />
-    </div>
     <PrivateWrapper>
       <IconMenu
         className={`${styles.iconButton} main-menu-icon-button ${offlineStyle.disableWhenOffline}`}
@@ -61,7 +57,7 @@ const Header = props => (
         </MenuItem>
       </IconMenu>
 
-      <Button className={`${styles.button} logout-button`} raised onClick={props.logOut}>{props.t('logout')}</Button>
+      <Button className={`${styles.button} logout-button`} raised onClick={props.logOut}>{props.t('LOGOUT')}</Button>
       <RelativeLink raised className={`${styles.button} ${styles.secondaryBlue} receive-button`}
         to='receive'>{props.t('Receive LSK')}</RelativeLink>
       <RelativeLink raised disableWhenOffline className={`${styles.button} ${styles.primary} send-button`}

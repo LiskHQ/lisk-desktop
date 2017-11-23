@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import styles from './offlineWrapper.css';
 
 export const OfflineWrapperComponent = props => (
-  <span className={!props.offline ? '' : styles.isOffline}>
+  <section className={!props.offline ? '' : styles.isOffline}>
     { props.children }
-  </span>
+  </section>
 );
 
 

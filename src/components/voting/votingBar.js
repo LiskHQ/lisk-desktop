@@ -14,7 +14,7 @@ const VotingBar = ({ votes, t }) => {
   const totalNewVotesCount = voteList.length + unvoteList.length;
 
   return (voteList.length + unvoteList.length ?
-    <div className={`${grid.row} ${style.fixedAtBottom} box voting-bar`}>
+    <div className={`${grid.row} ${style.fixedAtBottom} box voting-bar boxAutoHeight`}>
       <div className={
         `${grid['col-sm-12']} ${grid['col-md-10']} ${grid['col-md-offset-1']}
           ${grid.row} ${grid['center-xs']} ${grid['middle-xs']}`}>

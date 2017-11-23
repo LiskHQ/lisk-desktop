@@ -85,6 +85,12 @@
   text-align: center;
 }
 
+/* @todo please remove this by #13 */
+.temp {
+  width: 350px;
+  float: right;
+}
+
 @media only screen and (min-width: 48em) {
   .title {
     margin-top: 0;
