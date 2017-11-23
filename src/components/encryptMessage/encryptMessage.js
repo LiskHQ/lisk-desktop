@@ -2,8 +2,9 @@ import React from 'react';
 import Input from 'react-toolbox/lib/input';
 import Lisk from 'lisk-js';
 import { translate } from 'react-i18next';
-import SignVerifyResult from '../signVerifyResult';
 import ActionBar from '../actionBar';
+import Authenticate from '../authenticate';
+import SignVerifyResult from '../signVerifyResult';
 
 
 class EncryptMessage extends React.Component {
@@ -67,7 +68,7 @@ class EncryptMessage extends React.Component {
   }
 
   render() {
-    return (
+    return (typeof this.props.account.passphrase === 'string' && this.props.account.passphrase.length > 0 ?
       <div className='sign-message'>
         <form onSubmit={this.encrypt.bind(this)}>
           <section>
@@ -95,7 +96,8 @@ class EncryptMessage extends React.Component {
               }} />
           }
         </form>
-      </div>
+      </div> :
+      <Authenticate nextAction={this.props.t('encrypt message')}/>
     );
   }
 }

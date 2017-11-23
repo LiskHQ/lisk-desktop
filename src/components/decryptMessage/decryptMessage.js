@@ -2,8 +2,9 @@ import React from 'react';
 import Input from 'react-toolbox/lib/input';
 import Lisk from 'lisk-js';
 import { translate } from 'react-i18next';
-import SignVerifyResult from '../signVerifyResult';
 import ActionBar from '../actionBar';
+import Authenticate from '../authenticate';
+import SignVerifyResult from '../signVerifyResult';
 
 class DecryptMessage extends React.Component {
   constructor() {
@@ -53,7 +54,7 @@ class DecryptMessage extends React.Component {
   }
 
   render() {
-    return (
+    return (typeof this.props.account.passphrase === 'string' && this.props.account.passphrase.length > 0 ?
       <div className='decrypt-message'>
         <form onSubmit={this.showResult.bind(this)}>
           <section>
@@ -87,7 +88,8 @@ class DecryptMessage extends React.Component {
               }} />
           }
         </form>
-      </div>
+      </div> :
+      <Authenticate nextAction={this.props.t('decrypt message')}/>
     );
   }
 }
