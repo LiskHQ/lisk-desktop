@@ -26,6 +26,7 @@ class EncryptMessage extends React.Component {
         value,
         error,
       },
+      result: null,
     });
   }
 
@@ -51,7 +52,7 @@ class EncryptMessage extends React.Component {
         cryptoResult.nonce,
         '-----END LISK ENCRYPTED MESSAGE-----',
       ].join('\n');
-      this.setState({ result, resultIsShown: false });
+      this.setState({ result });
       this.showResult();
     }
   }
@@ -63,7 +64,6 @@ class EncryptMessage extends React.Component {
     if (copied) {
       this.props.successToast({ label: this.props.t('Result copied to clipboard') });
     }
-    this.setState({ resultIsShown: true });
   }
 
   render() {
@@ -80,7 +80,7 @@ class EncryptMessage extends React.Component {
               value={this.state.message.value}
               onChange={this.handleChange.bind(this, 'message')} />
           </section>
-          {this.state.resultIsShown ?
+          {this.state.result ?
             <SignVerifyResult id='encryptResult' result={this.state.result} title={this.props.t('Result')} /> :
             <ActionBar
               secondaryButton={{
