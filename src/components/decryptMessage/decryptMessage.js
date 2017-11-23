@@ -10,13 +10,13 @@ class DecryptMessage extends React.Component {
     super();
     this.state = {
       result: '',
-      nonce: {
+      senderPublicKey: {
         value: '',
       },
       message: {
         value: '',
       },
-      senderPublicKey: {
+      nonce: {
         value: '',
       },
     };
@@ -28,6 +28,7 @@ class DecryptMessage extends React.Component {
         value,
         error,
       },
+      result: '',
     });
   }
 
@@ -44,36 +45,30 @@ class DecryptMessage extends React.Component {
       this.props.errorToast({ label: error.message });
     }
     if (decryptedMessage) {
-      const result = [
-        '-----DECRYPTED MESSAGE-----',
-        decryptedMessage,
-      ].join('\n');
-      this.setState({ result, resultIsShown: false });
-      this.setState({ resultIsShown: true });
+      this.setState({ result: decryptedMessage });
       this.props.successToast({ label: this.props.t('Message is decrypted successfully') });
     }
   }
 
   render() {
     return (
-      <div className='sign-message'>
+      <div className='decrypt-message'>
         <form onSubmit={this.showResult.bind(this)}>
           <section>
             <Input className='senderPublicKey' label={this.props.t('Sender PublicKey')}
               autoFocus={true}
               value={this.state.senderPublicKey.value}
               onChange={this.handleChange.bind(this, 'senderPublicKey')} />
+            <Input className='message' multiline label={this.props.t('Encrypted Message')}
+              autoFocus={true}
+              value={this.state.message.value}
+              onChange={this.handleChange.bind(this, 'message')} />
             <Input className='nonce' label={this.props.t('Nonce')}
               autoFocus={true}
               value={this.state.nonce.value}
               onChange={this.handleChange.bind(this, 'nonce')} />
-            <Input className='message' multiline label={this.props.t('Message')}
-              autoFocus={true}
-              value={this.state.message.value}
-              onChange={this.handleChange.bind(this, 'message')} />
-
           </section>
-          {this.state.resultIsShown ?
+          {this.state.result ?
             <SignVerifyResult result={this.state.result} title={this.props.t('Result')} /> :
             <ActionBar
               secondaryButton={{
@@ -81,7 +76,7 @@ class DecryptMessage extends React.Component {
               }}
               primaryButton={{
                 label: this.props.t('decrypt'),
-                className: 'sign-button',
+                className: 'decrypt-button',
                 type: 'submit',
                 disabled: (this.state.message.value.length === 0 ||
                   this.state.senderPublicKey.value.length === 0 ||
