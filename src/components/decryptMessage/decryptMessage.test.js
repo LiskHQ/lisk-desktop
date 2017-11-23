@@ -57,7 +57,7 @@ describe('DecryptMessage', () => {
     wrapper.find('.senderPublicKey input').simulate('change', { target: { value: senderPublicKey } });
     wrapper.find('.nonce input').simulate('change', { target: { value: nonce } });
     wrapper.find('form').simulate('submit');
-    expect(errorSpy).to.have.been.calledWith({ label: 'There was an error when trying to decrypt the message' });
+    expect(errorSpy).to.have.been.calledWith({ label: 'Message decryption failed' });
   });
 
   it('allows to decrypt a message, copies encrypted message result to clipboard and shows success toast', () => {

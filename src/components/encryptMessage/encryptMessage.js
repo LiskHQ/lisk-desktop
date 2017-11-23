@@ -40,7 +40,7 @@ class EncryptMessage extends React.Component {
         this.props.account.passphrase,
         this.state.recipientPublicKey.value);
     } catch (error) {
-      this.props.errorToast({ label: error.message });
+      this.props.errorToast({ label: this.props.t('Message encryption failed') });
     }
     if (cryptoResult) {
       const result = [

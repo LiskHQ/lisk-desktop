@@ -73,7 +73,7 @@ describe('EncryptMessage', () => {
     expect(encryptMessageSpy).to.have.been.calledWith(
       message, account.passphrase, invalidPublicKey);
     expect(props.errorToast).to.have.been.calledWith(
-      { label: 'nacl_raw._crypto_box signalled an error' });
+      { label: 'Message encryption failed' });
   });
 
   it('does not show success toast if copy-to-clipboard failed', () => {
