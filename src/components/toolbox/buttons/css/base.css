@@ -1,0 +1,46 @@
+@import '../../../app/variables.css';
+
+@define-mixin buttonBasics {
+  min-width: 250px;
+  border-radius: 3px;
+  font-size: 18px;
+  text-transform: capitalize;
+  transition: none !important;
+
+  &:disabled {
+    background: none !important;
+    color: var(--color-grayscale-4) !important;
+    box-shadow: 0 0 0 2px var(--color-grayscale-4);
+  }
+}
+
+@define-mixin buttonSecondary--blue {
+  background: none !important;
+  color: var(--color-primary-2) !important;
+  box-shadow: 0 0 0 2px var(--color-primary-2);
+
+  &:hover {
+    color: var(--color-grayscale-5) !important;
+    background: var(--color-primary-2) !important;
+  }
+}
+
+@define-mixin buttonPrimary {
+  color: var(--color-grayscale-5) !important;
+  background: var(--gradient-action);
+
+  &:hover {
+    background: var(--color-action-2) !important;
+  }
+}
+
+@define-mixin buttonSecondary--light {
+  background: none !important;
+  color: var(--color-grayscale-5) !important;
+  box-shadow: 0 0 0 2px var(--color-grayscale-5);
+
+  &:disabled {
+    color: var(--color-grayscale-4) !important;
+    box-shadow: 0 0 0 2px var(--color-grayscale-4);
+  }
+}

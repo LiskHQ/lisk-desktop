@@ -1,4 +1,4 @@
-@import '../../../../app/buttonStyles.css';
+@import './base.css';
 
 .button {
   min-height: 55px;
