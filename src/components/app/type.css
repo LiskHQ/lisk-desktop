@@ -1,3 +1,57 @@
+/*****************************************
+
+Please Read the guide line
+before adding any rules here
+
+# No component specific rule
+This file is inteded to solely include
+rules defines against tag names and global
+test styling, no component specific rule
+blongs to this file
+
+# Usecases
+Prefered is to use the HTML tag semantically
+but you can use @apply in any rules
+
+# class names
+Try not use nested rules and also prefer
+using classnames with :global to make them
+avaialble application-wide
+
+****************************************/
+
 h1 {
-  font-size: 30px;
+  font-size: var(--font-size-h1);
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+}
+
+h3 {
+  font-size: var(--font-size-h3);
+}
+
+h4 {
+  font-size: var(--font-size-h4);
+}
+
+h5 {
+  font-size: var(--font-size-h5);
+}
+
+h6 {
+  font-size: var(--font-size-h6);
+}
+
+p,
+a,
+b,
+i,
+strong {
+  font-size: var(--font-size-h6);
+}
+
+small {
+  font-size: var(--font-size-small);
 }

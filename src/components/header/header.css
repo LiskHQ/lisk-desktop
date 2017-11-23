@@ -1,4 +1,4 @@
-@import '../../app/buttonStyles.css';
+@import '../toolbox/buttons/css/base.css';
 
 .wrapper {
   margin: 5px -8px 8px 0;

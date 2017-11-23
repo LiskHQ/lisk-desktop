@@ -1,11 +1,106 @@
+/*****************************************
+
+Please Read the guide line
+before adding any rules here
+
+# No component specific rule
+This file is inteded to solely include
+global/common variables, every rule added here
+must be used at least in 2 different
+components.
+
+# Usecases
+Try to isolate these variables with another
+variable in the component specific stylesheet
+in order to make component-wide changes
+faster and consistent.
+
+# Avoid rules and mixins
+Please avoid defining any rules here
+In addition, mixins have their own files,
+Please prefer only variables here.
+
+# Use with :global
+Please do not define any variables ourside
+the :root scope, since then it won't be
+available application wide
+
+# naming
+variable names should correspond to the
+role of the value not th presentation
+for example, a color name can include
+the css rule it belongs to e.g. color
+or "background-color" and "primary/secondary"
+or "warn/action" ineastd of "red/green"
+
+****************************************/
+
 :root {
-  --main-body-color: #013165;
+  /*************************
+        Font Sizes
+  *************************/
+  --font-size-h1: 6.854em;
+  --font-size-h2: 4.236em;
+  --font-size-h3: 2.618em;
+  --font-size-h4: 1.618em;
+  --font-size-h5: 1.32em;
+  --font-size-h6: 1em;
+  --font-size-small: 0.85em;
+
+  /*************************
+        Sizes
+  *************************/
   --sidebar-width: 192px;
   --main-box-width: 1291px;
   --main-box-height: 788px;
-  --menu-background-color: #fff;
-  --menu-item-hover-gradient: linear-gradient(-27deg, #004aff 4%, #57afff 61%, #93f4fe 100%);
-  --menu-item-hover-border-width: 7px;
-  --setting-menu-color: #74869b;
-  --setting-menu-border-color: #d0d9e3;
+  --border-radius-normal: 3px;
+
+  /*************************
+        Colors
+  *************************/
+  --color-primary-dark: #001a3e;
+  --color-primary-semi-dark: #013165;
+  --color-primary-medium: #2475b9;
+  --color-primary-light: #008bff;
+  --color-black: #000;
+  --color-grayscale-dark: #3c5068;
+  --color-grayscale-medium: #74869b;
+  --color-grayscale-light: #ccd9e4;
+  --color-white: #fff;
+  --color-action-dark: #c80039;
+  --color-action-medium: #ed4537;
+  --color-action-light: #ff6236;
+  --color-sucess-dark: #008722;
+  --gradient-theme: linear-gradient(-27deg, #17499b 0%, var(--color-grayscale-light) 100%);
+  --gradient-action: linear-gradient(-27deg, var(--color-action-dark) 0%, var(--color-action-light) 100%);
+
+  /*************************
+        Z-Indexes
+  *************************/
+  --normal-index: 1;
+
+  /*************************
+        Margins
+  *************************/
+  --box-overflow-y: -23px;
+
+  /*************************
+        Paddings
+  *************************/
+  --box-padding: 16px;
+
+  /*************************
+        Box props
+  *************************/
+  --normal-shadow: 0 22px 22px 0 rgba(0, 0, 0, 0.22);
+
+  /*************************
+        Media Queries
+  *************************/
+  @custom-media --xLarge-viewport (max-width: 1920px);
+  @custom-media --large-viewport (max-width: 1400px);
+  @custom-media --medium-viewport (max-width: 1000px);
+  @custom-media --small-viewport (max-width: 768px);
+  @custom-media --xSmall-viewport (max-width: 414px);
+  @custom-media --xxSmall-viewport (max-width: 320px);
 }

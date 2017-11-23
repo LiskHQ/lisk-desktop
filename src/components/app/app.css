@@ -2,16 +2,19 @@
 @import '../../assets/fonts/roboto-mono/style.css';
 @import '../../assets/fonts/material-design-icons/style.css';
 @import './variables.css';
+@import './global.css';
+@import './type.css';
 @import './mixin.css';
 
 body {
+  font-size: 10px;
   margin: 0;
   padding: 0;
   width: 100%;
-  background-color: var(--main-body-color);
+  background-color: var(--color-primary-semi-dark);
 }
 
-@mixin backgroundMaker 1.5, #f00, 21deg;
+@mixin backgroundMaker 1.5, var(--color-primary-semi-dark), 21deg;
 
 .bodyWrapper {
   position: absolute;
@@ -28,13 +31,13 @@ body {
     padding-left: var(--sidebar-width);
   }
 
-  & aside {
+  & > aside {
     position: fixed;
     width: var(--sidebar-width);
     height: 100%;
     top: 0;
     left: 0;
-    background: #fff;
+    background: var(--color-white);
   }
 }
 
@@ -49,30 +52,4 @@ body {
 .mainBox {
   margin: 0 auto;
   width: var(--main-box-width);
-}
-
-:global .material-icons {
-  font-size: 24px !important;
-}
-
-:global .box {
-  width: 100%;
-  height: var(--main-box-height);
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  background: #fff;
-  box-shadow: 0 22px 22px 0 rgba(0, 0, 0, 0.22);
-  border-radius: 3px;
-  padding: 16px;
-  max-height: 100%;
-  overflow: auto;
-}
-
-:global .hasNoPadding {
-  padding: 0;
-}
-
-:global .verticalScroll {
-  overflow-x: auto;
 }
