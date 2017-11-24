@@ -33,7 +33,7 @@ class Transactions extends React.Component {
 
   render() {
     return (
-      <div className='box noPaddingBox'>
+      <div className={`${styles.noPadding} box`}>
         {this.props.transactions.length > 0 ?
           <div>
             <TransactionsHeader tableStyle={tableStyle}></TransactionsHeader>

@@ -62,6 +62,7 @@ or "warn/action" ineastd of "red/green"
   --color-primary-semi-dark: #013165;
   --color-primary-medium: #2475b9;
   --color-primary-light: #008bff;
+  --color-primary-very-light: #e8f0fa;
   --color-black: #000;
   --color-grayscale-dark: #3c5068;
   --color-grayscale-medium: #74869b;
@@ -70,9 +71,10 @@ or "warn/action" ineastd of "red/green"
   --color-action-dark: #c80039;
   --color-action-medium: #ed4537;
   --color-action-light: #ff6236;
-  --color-sucess-dark: #008722;
+  --color-success-dark: #008722;
   --gradient-theme: linear-gradient(-27deg, #17499b 0%, var(--color-grayscale-light) 100%);
   --gradient-action: linear-gradient(-27deg, var(--color-action-dark) 0%, var(--color-action-light) 100%);
+  --gradient-greyscale: linear-gradient(to right, var(--row-background-color), #f5f8fc);
 
   /*************************
         Z-Indexes
