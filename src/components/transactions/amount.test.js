@@ -9,7 +9,7 @@ import i18n from '../../i18n';
 
 describe('Amount', () => {
   const store = configureMockStore([])({});
-  it('should have className "transactions__grayButton" for type 0', () => {
+  it('should have className "transactions__greyLabel" for type 0', () => {
     const inputValue = {
       value: {
         type: 0,
@@ -18,7 +18,7 @@ describe('Amount', () => {
       },
       address: 'address',
     };
-    const expectedValue = /transactions__grayButton/g;
+    const expectedValue = /transactions__greyLabel/g;
     const wrapper = mount(<Amount {...inputValue} />, {
       context: { i18n, store },
       childContextTypes: {
@@ -31,7 +31,7 @@ describe('Amount', () => {
       .to.have.lengthOf(1);
   });
 
-  it('should have className "transactions__inButton" for type 1', () => {
+  it('should have className "transactions__greenLabel" for type 1', () => {
     const inputValue = {
       value: {
         type: 1,
@@ -40,7 +40,7 @@ describe('Amount', () => {
       },
       address: 'address',
     };
-    const expectedValue = /transactions__inButton/g;
+    const expectedValue = /transactions__greenLabel/g;
     const wrapper = mount(<Amount {...inputValue} />, {
       context: { i18n, store },
       childContextTypes: {
@@ -53,7 +53,7 @@ describe('Amount', () => {
       .to.have.lengthOf(1);
   });
 
-  it('should have className "transactions__grayButton" for outgoing transaction', () => {
+  it('should have className "transactions__greyLabel" for outgoing transaction', () => {
     const inputValue = {
       value: {
         type: 1,
@@ -62,7 +62,7 @@ describe('Amount', () => {
       },
       address: 'address',
     };
-    const expectedValue = /transactions__outButton/g;
+    const expectedValue = /transactions__greyLabel/g;
     const wrapper = mount(<Amount {...inputValue} />, {
       context: { i18n, store },
       childContextTypes: {

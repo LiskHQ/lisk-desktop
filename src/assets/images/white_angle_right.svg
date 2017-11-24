@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="38px" viewBox="0 0 22 38" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>icons/angle-right/white</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="03_Wallet-✅" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Wallet-Dashboard-Random-Lisk-XL" transform="translate(-696.000000, -595.000000)" fill-rule="nonzero" fill="#FFFFFF">
+            <g id="Group-17" transform="translate(274.000000, 194.000000)">
+                <g id="Group-6" transform="translate(48.000000, 377.000000)">
+                    <g id="Group-4" transform="translate(374.000000, 24.000000)">
+                        <g id="Group-11">
+                            <g id="icons/angle-right/white">
+                                <g id="angle-right">
+                                    <path d="M22,19 C22,19.3299933 21.8739977,19.6219105 21.6219931,19.8757515 L4.00687285,37.6192385 C3.75486827,37.8730795 3.465063,38 3.13745704,38 C2.80985109,38 2.52004582,37.8730795 2.26804124,37.6192385 L0.378006873,35.7154309 C0.126002291,35.4615898 0,35.1696727 0,34.8396794 C0,34.509686 0.126002291,34.2177689 0.378006873,33.9639279 L15.233677,19 L0.378006873,4.03607214 C0.126002291,3.78223113 0,3.49031396 0,3.16032064 C0,2.83032732 0.126002291,2.53841015 0.378006873,2.28456914 L2.26804124,0.380761523 C2.52004582,0.126920508 2.80985109,0 3.13745704,0 C3.465063,0 3.75486827,0.126920508 4.00687285,0.380761523 L21.6219931,18.1242485 C21.8739977,18.3780895 22,18.6700067 22,19 Z" id="Shape"></path>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

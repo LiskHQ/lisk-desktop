@@ -1,27 +1,43 @@
+@import '../app/variables.css';
+
 :root {
-  --in: #73c8a9;
-  --out: #777;
-  --btn: rgb(2, 136, 209);
+  --grid-header-color: var(--color-black);
+  --amount-positive-color: var(--color-success-dark);
+  --amount-negative-color: var(--color-grayscale-dark);
+  --blue: var(--color-primary-medium);
+  --link-color: var(--color-primary-very-light);
+  --row-background-color: var(--color-white);
+  --filter-list-color: var(--color-grayscale-medium);
+  --font-weight-bold: 500;
+  --list-line-height: 30px;
+  --grid-header-line-height: 60px;
+  --main-row-line-height: 70px;
+  --sub-row-height: 50px;
+  --grid-padding-left: 30px;
+  --header-line-height: 36px;
+  --main-header-font-size: 3.2em;
+  --sub-header-font-size: 1.8em;
+  --main-header-unit-font-size: 2em;
+  --grid-header-font-size: 1.5em;
+  --grid-body-font-size: 1.6em;
 }
 
-.grayButton,
-.inButton,
-.outButton,
-.smallButton {
-  background-color: #eee;
-  border-radius: 3px;
-  padding: 6px;
-  text-transform: uppercase;
-  color: #000;
-  display: block;
+.greyLabel {
+  font-weight: var(--font-weight-bold);
+  color: var(--amount-negative-color);
+}
+
+.greenLabel {
+  font-weight: var(--font-weight-bold);
+  color: var(--amount-positive-color);
+}
+
+.address {
+  font-weight: var(--font-weight-bold);
 }
 
 .smallButton {
   display: inline-block;
-}
-
-.inButton {
-  background: color(var(--in) alpha(45%)) !important;
 }
 
 .empty {
@@ -29,12 +45,12 @@
   text-align: center;
 }
 
-.in {
-  color: var(--in) !important;
+.leftText {
+  text-align: left;
 }
 
-.out {
-  color: var(--out) !important;
+.rightText {
+  text-align: right;
 }
 
 .centerText {
@@ -50,4 +66,118 @@
   .hiddenXs {
     display: none;
   }
+}
+
+a {
+  color: var(--blue);
+}
+
+.rows:nth-of-type(even) {
+  background: var(--gradient-greyscale);
+}
+
+.rows:nth-of-type(odd) {
+  background: var(--row-background-color);
+}
+
+.rows {
+  color: var(--amount-negative-color);
+  font-size: var(--grid-header-font-size);
+  border-bottom: 0;
+  border-top: 0;
+}
+
+.rows:hover {
+  background: var(--link-color);
+}
+
+.rows:first-child {
+  color: var(--grid-header-color);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--grid-body-font-size);
+  line-height: var(--grid-header-line-height);
+}
+
+.rows__copyIcon {
+  vertical-align: bottom;
+  padding-left: 5px;
+  cursor: pointer;
+}
+
+.transaction_list {
+  color: var(--filter-list-color);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--grid-header-font-size);
+  line-height: var(--list-line-height);
+  list-style: none;
+  padding: 0px 0px 20px 30px;
+}
+
+.transaction_list_item {
+  display: inline-block;
+  cursor: pointer;
+
+  &:not(:last-of-type) {
+    margin-right: 50px;
+  }
+}
+
+.active {
+  border-bottom: 2px solid var(--amount-negative-color);
+  color: var(--amount-negative-color);
+}
+
+.mainRow {
+  line-height: var(--main-row-line-height);
+}
+
+.subRow {
+  min-height: var(--sub-row-height);
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.turnArrow {
+  transform: rotate(180deg);
+}
+
+.paddingLeft {
+  padding-left: var(--grid-padding-left);
+}
+
+.noPadding {
+  padding: 0 !important;
+}
+
+.header__wrapper {
+  padding: 40px 30px 20px;
+  line-height: var(--header-line-height);
+}
+
+.header__mainSection {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--main-header-font-size);
+  float: left;
+}
+
+.header__accountSection {
+  float: right;
+}
+
+.header__balance {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--main-header-font-size);
+}
+
+.header__balanceUnit {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--main-header-unit-font-size);
+}
+
+.header__address {
+  font-size: var(--sub-header-font-size);
+  text-align: right;
+  cursor: pointer;
 }

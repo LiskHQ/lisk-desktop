@@ -1,6 +1,5 @@
 import React from 'react';
 import { translate } from 'react-i18next';
-import { TooltipWrapper } from '../timestamp';
 import styles from './transactions.css';
 import ClickToSend from '../clickToSend';
 
@@ -37,7 +36,7 @@ const TransactionType = (props) => {
   const template = type ?
     <span className={styles.smallButton}>{type}</span> :
     <ClickToSend recipient={address} className={`from-to ${styles.ordinaryText}`} >
-      <TooltipWrapper tooltip={t('Send to this address')}>{address}</TooltipWrapper>
+      {address}
     </ClickToSend>;
   return template;
 };
