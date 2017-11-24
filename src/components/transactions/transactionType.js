@@ -1,6 +1,5 @@
 import React from 'react';
 import { translate } from 'react-i18next';
-import { TooltipWrapper } from '../timestamp';
 import styles from './transactions.css';
 import ClickToSend from '../clickToSend';
 

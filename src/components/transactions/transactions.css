@@ -7,27 +7,31 @@
   --blue: var(--color-primary-medium);
   --link-color: var(--color-primary-very-light);
   --row-background-color: var(--color-white);
-  --fontWeightBold: 500;
+  --font-weight-bold: 500;
   --grid-header-line-height: 60px;
   --main-row-line-height: 70px;
   --sub-row-height: 50px;
   --grid-padding-left: 30px;
+  --header-line-height: 36px;
+  --main-header-font-size: 3.2em;
+  --sub-header-font-size: 1.8em;
+  --main-header-unit-font-size: 2em;
   --grid-header-font-size: 1.5em;
   --grid-body-font-size: 1.6em;
 }
 
 .greyLabel {
-  font-weight: var(--fontWeightBold);
+  font-weight: var(--font-weight-bold);
   color: var(--amount-negative-color);
 }
 
 .greenLabel {
-  font-weight: var(--fontWeightBold);
+  font-weight: var(--font-weight-bold);
   color: var(--amount-positive-color);
 }
 
 .address {
-  font-weight: var(--fontWeightBold);
+  font-weight: var(--font-weight-bold);
 }
 
 .smallButton {
@@ -92,6 +96,11 @@ a {
   line-height: var(--grid-header-line-height);
 }
 
+.rows__copyIcon {
+  vertical-align: bottom;
+  padding-left: 5px;
+}
+
 .mainRow {
   line-height: var(--main-row-line-height);
 }
@@ -114,4 +123,34 @@ a {
 
 .noPadding {
   padding: 0 !important;
+}
+
+.header__wrapper {
+  padding: 40px 30px;
+  line-height: var(--header-line-height);
+}
+
+.header__mainSection {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--main-header-font-size);
+  float: left;
+}
+
+.header__accountSection {
+  float: right;
+}
+
+.header__balance {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--main-header-font-size);
+}
+
+.header__balanceUnit {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--main-header-unit-font-size);
+}
+
+.header__address {
+  font-size: var(--sub-header-font-size);
+  text-align: right;
 }

@@ -6,7 +6,9 @@ import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import RelativeLink from '../relativeLink';
 import TransactionRow from './transactionRow';
 import TransactionsHeader from './transactionsHeader';
+import LiskAmount from '../liskAmount';
 import styles from './transactions.css';
+import copy from './../../assets/images/icons/copy.svg';
 
 class Transactions extends React.Component {
   constructor() {
@@ -34,6 +36,14 @@ class Transactions extends React.Component {
   render() {
     return (
       <div className={`${styles.noPadding} box`}>
+        <div className={styles.header__wrapper}>
+          <div className={styles.header__mainSection}>Transactions</div>
+          <div className={styles.header__accountSection}>
+            <span className={styles.header__balance}><LiskAmount val={this.props.balance} /> </span>
+            <span className={styles.header__balanceUnit}>LSK</span>
+            <div className={styles.header__address}><img src={copy} /> {this.props.address}</div>
+          </div>
+        </div>
         {this.props.transactions.length > 0 ?
           <div>
             <TransactionsHeader tableStyle={tableStyle}></TransactionsHeader>
