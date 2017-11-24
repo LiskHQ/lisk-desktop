@@ -7,7 +7,9 @@
   --blue: var(--color-primary-medium);
   --link-color: var(--color-primary-very-light);
   --row-background-color: var(--color-white);
+  --filter-list-color: var(--color-grayscale-medium);
   --font-weight-bold: 500;
+  --list-line-height: 30px;
   --grid-header-line-height: 60px;
   --main-row-line-height: 70px;
   --sub-row-height: 50px;
@@ -91,7 +93,7 @@ a {
 
 .rows:first-child {
   color: var(--grid-header-color);
-  font-weight: bold;
+  font-weight: var(--font-weight-bold);
   font-size: var(--grid-body-font-size);
   line-height: var(--grid-header-line-height);
 }
@@ -99,6 +101,29 @@ a {
 .rows__copyIcon {
   vertical-align: bottom;
   padding-left: 5px;
+}
+
+.transaction_list {
+  color: var(--filter-list-color);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--grid-header-font-size);
+  line-height: var(--list-line-height);
+  list-style: none;
+  padding: 0px 0px 20px 30px;
+}
+
+.transaction_list_item {
+  display: inline-block;
+  cursor: pointer;
+
+  &:not(:last-of-type) {
+    margin-right: 50px;
+  }
+}
+
+.active {
+  border-bottom: 2px solid var(--amount-negative-color);
+  color: var(--amount-negative-color);
 }
 
 .mainRow {
@@ -126,7 +151,7 @@ a {
 }
 
 .header__wrapper {
-  padding: 40px 30px;
+  padding: 40px 30px 20px;
   line-height: var(--header-line-height);
 }
 

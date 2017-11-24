@@ -44,6 +44,14 @@ class Transactions extends React.Component {
             <div className={styles.header__address}><img src={copy} /> {this.props.address}</div>
           </div>
         </div>
+
+        <ul className={styles.transaction_list}>
+          <li className={`${styles.transaction_list_item} ${styles.active}`}>All</li>
+          <li className={styles.transaction_list_item}>Incoming</li>
+          <li className={styles.transaction_list_item}>Outgoing</li>
+          <li className={styles.transaction_list_item}>Other</li>
+        </ul>
+
         {this.props.transactions.length > 0 ?
           <div>
             <TransactionsHeader tableStyle={tableStyle}></TransactionsHeader>
