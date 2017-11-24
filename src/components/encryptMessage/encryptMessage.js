@@ -54,12 +54,12 @@ class EncryptMessage extends React.Component {
         '-----END LISK ENCRYPTED MESSAGE-----',
       ].join('\n');
       this.setState({ result });
-      this.showResult();
+      this.showResult(result);
     }
   }
 
-  showResult() {
-    const copied = this.props.copyToClipboard(this.state.result, {
+  showResult(result) {
+    const copied = this.props.copyToClipboard(result, {
       message: this.props.t('Press #{key} to copy'),
     });
     if (copied) {
