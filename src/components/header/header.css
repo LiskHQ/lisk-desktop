@@ -1,4 +1,12 @@
 @import '../toolbox/buttons/css/base.css';
+@import '../app/variables.css';
+
+:root {
+  --avatar-height: 69px;
+  --menu-icon-height: 39px;
+  --font-size-normal: 1.6em;
+  --font-size-small: 1.3em;
+}
 
 .wrapper {
   padding: 8px;
@@ -71,8 +79,10 @@
 
 .account__avatar {
   display: inline-block;
-  height: 69px;
-  width: 69px;
+  height: var(--avatar-height);
+  width: var(--avatar-height);
+
+  /* background will be replaced with avatar */
   background: linear-gradient(-44deg, #fff 1%, #93f4fe 98%);
   border-radius: 100%;
   margin-right: 10px;
@@ -83,31 +93,31 @@
   vertical-align: top;
   line-height: 25px;
   padding-right: 20px;
-  height: 69px;
+  height: var(--avatar-height);
 }
 
 .account__information__balance {
-  font-size: 1.6em;
-  color: #fff;
+  font-size: var(--font-size-normal);
+  color: var(--color-white);
 }
 
 .account__information__address {
-  font-size: 1.6em;
-  color: #74869b;
+  font-size: var(--font-size-normal);
+  color: var(--color-grayscale-medium);
 }
 
 .account__information__timer {
-  font-size: 1.3em;
-  color: #74869b;
+  font-size: var(--font-size-small);
+  color: var(--color-grayscale-medium);
 }
 
 .account__menuIcon {
   position: absolute;
   bottom: -10px;
   right: 0px;
-  background: #fff;
+  background: var(--color-white);
   border-radius: 100%;
-  height: 39px;
-  width: 39px;
+  height: var(--menu-icon-height);
+  width: var(--menu-icon-height);
   box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.62);
 }

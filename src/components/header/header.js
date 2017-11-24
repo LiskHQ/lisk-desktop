@@ -3,6 +3,7 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Button } from '../toolbox/buttons/button';
 
+import LiskAmount from '../liskAmount';
 import PrivateWrapper from '../privateWrapper';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import styles from './header.css';
@@ -18,7 +19,9 @@ const Header = props => (<header className={`${grid.row} ${grid['between-xs']} $
   <PrivateWrapper>
     <div className={styles.account__wrapper}>
       <div className={styles.account__information} align="right">
-        <div className={styles.account__information__balance}>{props.account.balance} LSK</div>
+        <div className={styles.account__information__balance}>
+          <LiskAmount val={props.account.balance}/> LSK
+        </div>
         <div className={styles.account__information__address}>{props.account.address}</div>
         <div className={styles.account__information__timer}>
           <img src={lock} /> Address timeout in 09:32</div>
