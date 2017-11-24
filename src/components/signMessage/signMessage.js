@@ -40,12 +40,13 @@ class SignMessageComponent extends React.Component {
     const result = Lisk.crypto.printSignedMessage(
       message, signedMessage, this.props.account.publicKey);
     this.setState({ result, resultIsShown: false });
+    return result;
   }
 
   showResult(event) {
     event.preventDefault();
-    this.sign(this.state.message.value);
-    const copied = this.props.copyToClipboard(this.state.result, {
+    const result = this.sign(this.state.message.value);
+    const copied = this.props.copyToClipboard(result, {
       message: this.props.t('Press #{key} to copy'),
     });
     if (copied) {
