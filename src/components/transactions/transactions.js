@@ -28,6 +28,10 @@ class Transactions extends React.Component {
     }
   }
 
+  copyAddress() {
+    this.props.copyToClipboard(this.props.address);
+  }
+
   componentDidUpdate() {
     const { count, transactions } = this.props;
     this.canLoadMore = count === null || count > transactions.length;
@@ -41,7 +45,8 @@ class Transactions extends React.Component {
           <div className={styles.header__accountSection}>
             <span className={styles.header__balance}><LiskAmount val={this.props.balance} /> </span>
             <span className={styles.header__balanceUnit}>LSK</span>
-            <div className={styles.header__address}><img src={copy} /> {this.props.address}</div>
+            <div onClick={this.copyAddress.bind(this)} className={styles.header__address}>
+              <img src={copy} /> {this.props.address}</div>
           </div>
         </div>
 
@@ -59,7 +64,8 @@ class Transactions extends React.Component {
               <TransactionRow address={this.props.address}
                 key={transaction.id}
                 t={this.props.t}
-                value={transaction}>
+                value={transaction}
+                copy={this.props.copyToClipboard}>
               </TransactionRow>
             ))}
           </div> :

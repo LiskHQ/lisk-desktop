@@ -101,6 +101,7 @@ a {
 .rows__copyIcon {
   vertical-align: bottom;
   padding-left: 5px;
+  cursor: pointer;
 }
 
 .transaction_list {
@@ -178,4 +179,5 @@ a {
 .header__address {
   font-size: var(--sub-header-font-size);
   text-align: right;
+  cursor: pointer;
 }

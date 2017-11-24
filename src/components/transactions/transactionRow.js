@@ -27,6 +27,10 @@ class TransactionRow extends React.Component {
     this.forceUpdate();
   }
 
+  copyTransactionID() {
+    this.props.copy(this.props.value.id);
+  }
+
   render() {
     const props = this.props;
     return (
@@ -36,7 +40,8 @@ class TransactionRow extends React.Component {
             <TransactionType {...props.value} address={props.address}></TransactionType>
           </div>
           {this.state.isOpen ? <div className={styles.subRow}> {props.t('Transaction ID: ')}
-            <a href="#">{props.value.id} <img src={copy} className={styles.rows__copyIcon} /></a></div> : ''}
+            <a href="#">{props.value.id}</a>
+            <img onClick={this.copyTransactionID.bind(this)} src={copy} className={styles.rows__copyIcon} /></div> : ''}
         </div>
         <div className={`${styles.rightText} ${grid['col-xs-2']}`}>
           <div className={styles.mainRow}>
