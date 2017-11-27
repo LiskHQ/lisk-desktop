@@ -130,6 +130,10 @@ a {
 
 .subRow {
   min-height: var(--sub-row-height);
+
+  & a {
+    text-decoration: none;
+  }
 }
 
 .clickable {
