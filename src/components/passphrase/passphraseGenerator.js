@@ -6,16 +6,6 @@ import styles from './passphrase.css';
 import Input from '../toolbox/inputs/input';
 import ProgressBar from '../toolbox/progressBar/progressBar';
 
-
-const Byte = props => (
-  <AnimateOnChange
-    animate={props.diff}
-    baseClassName={styles.stable}
-    animationClassName={styles.bouncing}>
-    <span className={styles.byte}>{ props.value }</span>
-  </AnimateOnChange>
-);
-
 class PassphraseGenerator extends React.Component {
   constructor() {
     super();
@@ -102,16 +92,8 @@ class PassphraseGenerator extends React.Component {
           }
         </div>
         <div className={grid['col-xs-12']}>
-          <ProgressBar mode='determinate'
+          <ProgressBar mode='determinate' theme={styles}
             value={this.state.data ? this.state.data.percentage : 0} />
-        </div>
-        <div className={grid['col-xs-12']}>
-          {
-            (this.state.data ? this.state.data.seed : this.state.zeroSeed)
-              .map((byte, index) => (
-                <Byte value={byte} key={index} diff={this.state.seedDiff.indexOf(index) >= 0} />
-              ))
-          }
         </div>
       </div>
     );

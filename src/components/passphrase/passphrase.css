@@ -30,3 +30,19 @@ hr {
 .templateItem {
   min-height: 130px;
 }
+
+.value {
+  background-color: #0288d1;
+  background-image: linear-gradient(-90deg, #0792ff 0%, #def4ff 94%);
+}
+
+.linear {
+  background: transparent !important;
+  position: absolute !important;
+  bottom: 0;
+  left: 0;
+  display: inline-block;
+  height: 8px !important;
+  overflow: hidden;
+  width: 100%;
+}
