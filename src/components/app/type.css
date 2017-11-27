@@ -115,6 +115,10 @@ strong {
   font-size: var(--font-size-h6);
 }
 
+strong {
+  font-weight: bolder;
+}
+
 small {
   font-size: var(--font-size-small);
 }

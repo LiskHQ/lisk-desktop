@@ -41,14 +41,16 @@ class Transactions extends React.Component {
     return (
       <div className={`${styles.noPadding} box`}>
         <header className={styles.header}>
-          <div className={styles.title}><h3>{this.props.t('Transactions')}</h3></div>
+          <div className={styles.title}>
+            <h2>{this.props.t('Transactions')}</h2>
+          </div>
           <div className={styles.account}>
-            <h3>
+            <h2>
               <span>
                 <LiskAmount val={this.props.balance} />&nbsp;
               </span>
               <small className={styles.balanceUnit}>LSK</small>
-            </h3>
+            </h2>
             <div onClick={this.copyAddress.bind(this)} className={styles.address}>
               <img src={copy} />&nbsp;
               <span>{this.props.address}</span>

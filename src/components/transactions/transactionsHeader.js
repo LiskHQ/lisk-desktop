@@ -5,9 +5,9 @@ import styles from './transactions.css';
 
 const TransactionsHeader = ({ t }) => (
   <div className={`${grid.row}  ${styles.rows} ${styles.paddingLeft}`} id="transactionsHeader">
-    <div className={`${styles.leftText} ${grid['col-xs-6']}`}>{t('Address')}</div>
-    <div className={`${styles.rightText} ${grid['col-xs-2']}`}>{t('Date')}</div>
-    <div className={`${styles.rightText} ${grid['col-xs-3']}`}>{t('Amount (LSK)')}</div>
+    <div className={`${styles.leftText} ${grid['col-xs-6']}`}><strong>{t('Address')}</strong></div>
+    <div className={`${styles.rightText} ${grid['col-xs-2']}`}><strong>{t('Date')}</strong></div>
+    <div className={`${styles.rightText} ${grid['col-xs-3']}`}><strong>{t('Amount (LSK)')}</strong></div>
     <div className={`${grid['col-xs-1']}`}></div>
   </div>);
 

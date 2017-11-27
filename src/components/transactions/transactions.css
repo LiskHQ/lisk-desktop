@@ -159,18 +159,21 @@ a {
   & .title {
     font-weight: var(--font-weight-bold);
     float: left;
+    font-size: 0.4727em;
   }
 
   & .account {
     float: right;
+    font-size: 0.472em;
+  }
+
+  & h2 {
+    margin-bottom: 0;
   }
 
   & h3 {
-    margin-bottom: 0;
-
-    & span {
-      font-weight: var(--font-weight-bold);
-    }
+    display: inline-block;
+    margin: 0;
   }
 
   & .balanceUnit {
@@ -180,6 +183,6 @@ a {
   & .address {
     text-align: right;
     cursor: pointer;
-    font-size: 1.125em;
+    font-size: 2.39em;
   }
 }
