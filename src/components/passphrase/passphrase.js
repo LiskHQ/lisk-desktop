@@ -12,7 +12,7 @@ class Passphrase extends React.Component {
   constructor() {
     super();
     this.state = {
-      current: 'info',
+      current: 'generate',
       answer: '',
     };
   }
@@ -25,16 +25,6 @@ class Passphrase extends React.Component {
     const templates = {};
     const { current } = this.state;
     const steps = stepsConfig(this);
-
-    // Step 1: Information/introduction
-    templates.info = <InfoParagraph className={styles.noHr}>
-      {this.props.t('Please click Next, then move around your mouse randomly to generate a random passphrase.')}
-      <br />
-      <br />
-      {this.props.t('Note: After registration completes,')} { this.props.useCaseNote }
-      <br />
-      { this.props.securityNote } {this.props.t('Please keep it safe!')}
-    </InfoParagraph>;
 
     // step 2: Generator, binds mouse events
     templates.generate = <PassphraseGenerator t={this.props.t}
@@ -54,7 +44,7 @@ class Passphrase extends React.Component {
       updateAnswer={this.changeHandler.bind(this, 'answer')} />;
 
     return (
-      <div>
+      <div className="box">
         <section className={`${styles.templateItem} ${grid.row} ${grid['middle-xs']}`}>
           <div className={grid['col-xs-12']}>
             { templates[current] }
