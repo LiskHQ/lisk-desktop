@@ -41,7 +41,7 @@ class TransactionRow extends React.Component {
           </div>
           {this.state.isOpen ? <div className={styles.subRow}> {props.t('Transaction ID: ')}
             <a href="#">{props.value.id}</a>
-            <img onClick={this.copyTransactionID.bind(this)} src={copy} className={styles.rows__copyIcon} /></div> : ''}
+            <img onClick={this.copyTransactionID.bind(this)} src={copy} className={styles.copyIcon} /></div> : ''}
         </div>
         <div className={`${styles.rightText} ${grid['col-xs-2']}`}>
           <div className={styles.mainRow}>

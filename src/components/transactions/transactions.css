@@ -82,43 +82,40 @@ a {
 
 .rows {
   color: var(--amount-negative-color);
-  font-size: var(--grid-header-font-size);
   border-bottom: 0;
   border-top: 0;
+
+  &:hover {
+    background: var(--link-color);
+  }
+
+  &:first-child {
+    color: var(--grid-header-color);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--grid-header-line-height);
+  }
+
+  & .copyIcon {
+    vertical-align: bottom;
+    padding-left: 5px;
+    cursor: pointer;
+  }
 }
 
-.rows:hover {
-  background: var(--link-color);
-}
-
-.rows:first-child {
-  color: var(--grid-header-color);
-  font-weight: var(--font-weight-bold);
-  font-size: var(--grid-body-font-size);
-  line-height: var(--grid-header-line-height);
-}
-
-.rows__copyIcon {
-  vertical-align: bottom;
-  padding-left: 5px;
-  cursor: pointer;
-}
-
-.transaction_list {
+.list {
   color: var(--filter-list-color);
   font-weight: var(--font-weight-bold);
-  font-size: var(--grid-header-font-size);
   line-height: var(--list-line-height);
   list-style: none;
   padding: 0px 0px 20px 30px;
-}
 
-.transaction_list_item {
-  display: inline-block;
-  cursor: pointer;
+  & .item {
+    display: inline-block;
+    cursor: pointer;
 
-  &:not(:last-of-type) {
-    margin-right: 50px;
+    &:not(:last-of-type) {
+      margin-right: 50px;
+    }
   }
 }
 
@@ -151,33 +148,34 @@ a {
   padding: 0 !important;
 }
 
-.header__wrapper {
-  padding: 40px 30px 20px;
+.header {
+  padding: 20px 30px;
   line-height: var(--header-line-height);
-}
 
-.header__mainSection {
-  font-weight: var(--font-weight-bold);
-  font-size: var(--main-header-font-size);
-  float: left;
-}
+  & .title {
+    font-weight: var(--font-weight-bold);
+    float: left;
+  }
 
-.header__accountSection {
-  float: right;
-}
+  & .account {
+    float: right;
+  }
 
-.header__balance {
-  font-weight: var(--font-weight-bold);
-  font-size: var(--main-header-font-size);
-}
+  & h3 {
+    margin-bottom: 0;
 
-.header__balanceUnit {
-  font-weight: var(--font-weight-bold);
-  font-size: var(--main-header-unit-font-size);
-}
+    & span {
+      font-weight: var(--font-weight-bold);
+    }
+  }
 
-.header__address {
-  font-size: var(--sub-header-font-size);
-  text-align: right;
-  cursor: pointer;
+  & .balanceUnit {
+    font-weight: var(--font-weight-bold);
+  }
+
+  & .address {
+    text-align: right;
+    cursor: pointer;
+    font-size: 1.125em;
+  }
 }

@@ -40,21 +40,27 @@ class Transactions extends React.Component {
   render() {
     return (
       <div className={`${styles.noPadding} box`}>
-        <div className={styles.header__wrapper}>
-          <div className={styles.header__mainSection}>Transactions</div>
-          <div className={styles.header__accountSection}>
-            <span className={styles.header__balance}><LiskAmount val={this.props.balance} /> </span>
-            <span className={styles.header__balanceUnit}>LSK</span>
-            <div onClick={this.copyAddress.bind(this)} className={styles.header__address}>
-              <img src={copy} /> {this.props.address}</div>
+        <header className={styles.header}>
+          <div className={styles.title}><h3>{this.props.t('Transactions')}</h3></div>
+          <div className={styles.account}>
+            <h3>
+              <span>
+                <LiskAmount val={this.props.balance} />&nbsp;
+              </span>
+              <small className={styles.balanceUnit}>LSK</small>
+            </h3>
+            <div onClick={this.copyAddress.bind(this)} className={styles.address}>
+              <img src={copy} />&nbsp;
+              <span>{this.props.address}</span>
+            </div>
           </div>
-        </div>
+        </header>
 
-        <ul className={styles.transaction_list}>
-          <li className={`${styles.transaction_list_item} ${styles.active}`}>All</li>
-          <li className={styles.transaction_list_item}>Incoming</li>
-          <li className={styles.transaction_list_item}>Outgoing</li>
-          <li className={styles.transaction_list_item}>Other</li>
+        <ul className={styles.list}>
+          <li className={`${styles.item} ${styles.active}`}>All</li>
+          <li className={styles.item}>Incoming</li>
+          <li className={styles.item}>Outgoing</li>
+          <li className={styles.item}>Other</li>
         </ul>
 
         {this.props.transactions.length > 0 ?
