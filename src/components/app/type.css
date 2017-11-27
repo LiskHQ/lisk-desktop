@@ -20,6 +20,67 @@ avaialble application-wide
 
 ****************************************/
 
+@font-face {
+  font-family: 'gilroy';
+  src:
+    url('../../assets/fonts/gilroy/gilroy-bold.woff2') format('woff2'),
+    url('../../assets/fonts/gilroy/gilroy-bold.woff') format('woff'),
+    url('../../assets/fonts/gilroy/gilroy-bold.ttf')  format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'gilroy';
+  src:
+    url('../../assets/fonts/gilroy/gilroy-extra-bold.woff2') format('woff2'),
+    url('../../assets/fonts/gilroy/gilroy-extra-bold.woff') format('woff'),
+    url('../../assets/fonts/gilroy/gilroy-extra-bold.ttf')  format('truetype');
+  font-weight: bolder;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'openSans';
+  src:
+    url('../../assets/fonts/open-sans/open-sans-regular.woff2') format('woff2'),
+    url('../../assets/fonts/open-sans/open-sans-regular.woff') format('woff'),
+    url('../../assets/fonts/open-sans/open-sans-regular.ttf')  format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'openSans';
+  src:
+    url('../../assets/fonts/open-sans/open-sans-semibold.woff2') format('woff2'),
+    url('../../assets/fonts/open-sans/open-sans-semibold.woff') format('woff'),
+    url('../../assets/fonts/open-sans/open-sans-semibold.ttf')  format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'openSans';
+  src:
+    url('../../assets/fonts/open-sans/open-sans-bold.woff2') format('woff2'),
+    url('../../assets/fonts/open-sans/open-sans-bold.woff') format('woff'),
+    url('../../assets/fonts/open-sans/open-sans-bold.ttf')  format('truetype');
+  font-weight: bolder;
+  font-style: normal;
+}
+
+body {
+  font-family: 'openSans', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'gilroy', 'openSans', sans-serif;
+}
+
 h1 {
   font-size: var(--font-size-h1);
 }
