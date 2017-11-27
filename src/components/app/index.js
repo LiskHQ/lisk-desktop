@@ -11,6 +11,7 @@ import styles from './app.css';
 import Dialog from '../dialog';
 import Toaster from '../toaster';
 import Tabs from '../tabs';
+import Register from '../register';
 import LoadingBar from '../loadingBar';
 import OfflineWrapper from '../offlineWrapper';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
@@ -46,7 +47,7 @@ const App = () => (
               <Route path={`${match.url}/forging/:dialog?`} component={Forging} />
             </main>
           )} />
-          <Route exact path="/register" component={Login} />
+          <Route exact path="/register" component={Register} />
           <Route exact path="/" component={Login} />
         </div>
         <Dialog />
