@@ -73,11 +73,11 @@
   padding-right: 16px;
 }
 
-.account__wrapper {
+.accountWrapper {
   position: relative;
 }
 
-.account__avatar {
+.accountAvatar {
   display: inline-block;
   height: var(--avatar-height);
   width: var(--avatar-height);
@@ -88,7 +88,7 @@
   margin-right: 10px;
 }
 
-.account__information {
+.accountInformation {
   display: inline-block;
   vertical-align: top;
   line-height: 25px;
@@ -96,22 +96,22 @@
   height: var(--avatar-height);
 }
 
-.account__information__balance {
+.accountInformationBalance {
   font-size: var(--font-size-normal);
   color: var(--color-white);
 }
 
-.account__information__address {
+.accountInformationAddress {
   font-size: var(--font-size-normal);
   color: var(--color-grayscale-medium);
 }
 
-.account__information__timer {
+.accountInformationTimer {
   font-size: var(--font-size-small);
   color: var(--color-grayscale-medium);
 }
 
-.account__menuIcon {
+.accountMenuIcon {
   position: absolute;
   bottom: -10px;
   right: 0px;
