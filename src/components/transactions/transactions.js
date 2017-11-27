@@ -1,5 +1,6 @@
 import React from 'react';
 import Waypoint from 'react-waypoint';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import tableStyle from 'react-toolbox/lib/table/theme.css';
 import buttonStyle from 'react-toolbox/lib/button/theme.css';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
@@ -9,11 +10,13 @@ import TransactionsHeader from './transactionsHeader';
 import LiskAmount from '../liskAmount';
 import styles from './transactions.css';
 import copy from './../../assets/images/icons/copy.svg';
+import Transfer from './transfer';
 
 class Transactions extends React.Component {
   constructor() {
     super();
     this.canLoadMore = true;
+    this.activeTab = 'send';
   }
 
   loadMore() {
@@ -37,55 +40,73 @@ class Transactions extends React.Component {
     this.canLoadMore = count === null || count > transactions.length;
   }
 
+  setActive(tab) {
+    this.activeTab = tab;
+    this.forceUpdate();
+  }
+
   render() {
     return (
-      <div className={`${styles.noPadding} box`}>
-        <header className={styles.header}>
-          <div className={styles.title}>
-            <h2>{this.props.t('Transactions')}</h2>
-          </div>
-          <div className={styles.account}>
-            <h2>
-              <span>
-                <LiskAmount val={this.props.balance} />&nbsp;
-              </span>
-              <small className={styles.balanceUnit}>LSK</small>
-            </h2>
-            <div onClick={this.copyAddress.bind(this)} className={styles.address}>
-              <img src={copy} />&nbsp;
-              <span>{this.props.address}</span>
+      <div className={grid.row} style={{ width: '100%' }}>
+        <div className={`${grid['col-xs-4']} ${styles.padding} box`}>
+          <h3 style={{ color: 'black' }}>Transfer</h3>
+          <h4 style={{ color: '#3C5068' }}>Quickly send and request LSK token</h4>
+          <div className={`${grid.row} ${styles.tab} `}>
+            <div className={`${grid['col-xs-6']} ${this.activeTab === 'send' ? styles.tabActive : styles.tabInactive}`}
+              style={{ cursor: 'pointer' }}
+              onClick={this.setActive.bind(this, 'send')}>
+              Send
+            </div>
+            <div className={`${grid['col-xs-6']} ${this.activeTab === 'receive' ? styles.tabActive : styles.tabInactive}`}
+              style={{ cursor: 'pointer' }}
+              onClick={this.setActive.bind(this, 'receive')}>
+              Request
             </div>
           </div>
-        </header>
+          <Transfer activeTab={this.activeTab} />
+        </div>
+        <div className={`${grid['col-xs-1']}`}></div>
+        <div className={`${styles.noPadding} ${grid['col-xs-7']} box`}>
+          <div className={styles.header__wrapper}>
+            <div className={styles.header__mainSection}>Transactions</div>
+            <div className={styles.header__accountSection}>
+              <span className={styles.header__balance}>
+                <LiskAmount val={this.props.balance} /> </span>
+              <span className={styles.header__balanceUnit}>LSK</span>
+              <div onClick={this.copyAddress.bind(this)} className={styles.header__address}>
+                <img src={copy} /> {this.props.address}</div>
+            </div>
+          </div>
 
-        <ul className={styles.list}>
-          <li className={`${styles.item} ${styles.active}`}>All</li>
-          <li className={styles.item}>Incoming</li>
-          <li className={styles.item}>Outgoing</li>
-          <li className={styles.item}>Other</li>
-        </ul>
+          <ul className={styles.transaction_list}>
+            <li className={`${styles.transaction_list_item} ${styles.active}`}>All</li>
+            <li className={styles.transaction_list_item}>Incoming</li>
+            <li className={styles.transaction_list_item}>Outgoing</li>
+            <li className={styles.transaction_list_item}>Other</li>
+          </ul>
 
-        {this.props.transactions.length > 0 ?
-          <div>
-            <TransactionsHeader tableStyle={tableStyle}></TransactionsHeader>
-            {this.props.transactions.map(transaction => (
-              <TransactionRow address={this.props.address}
-                key={transaction.id}
-                t={this.props.t}
-                value={transaction}
-                copy={this.props.copyToClipboard}>
-              </TransactionRow>
-            ))}
-          </div> :
-          <p className={`${styles.empty} hasPaddingRow empty-message`}>
-            {this.props.t('There are no transactions, yet.')} &nbsp;
-            <RelativeLink className={`${styles.button} ${buttonStyle.button} ${buttonStyle.primary} ${buttonStyle.raised} receive-lsk-button ${offlineStyle.disableWhenOffline}`}
-              to='receive'>{this.props.t('Receive LSK')}</RelativeLink>
-          </p>
-        }
-        <Waypoint bottomOffset='-80%'
-          key={this.props.transactions.length}
-          onEnter={this.loadMore.bind(this)}></Waypoint>
+          {this.props.transactions.length > 0 ?
+            <div>
+              <TransactionsHeader tableStyle={tableStyle}></TransactionsHeader>
+              {this.props.transactions.map(transaction => (
+                <TransactionRow address={this.props.address}
+                  key={transaction.id}
+                  t={this.props.t}
+                  value={transaction}
+                  copy={this.props.copyToClipboard}>
+                </TransactionRow>
+              ))}
+            </div> :
+            <p className={`${styles.empty} hasPaddingRow empty-message`}>
+              {this.props.t('There are no transactions, yet.')} &nbsp;
+              <RelativeLink className={`${styles.button} ${buttonStyle.button} ${buttonStyle.primary} ${buttonStyle.raised} receive-lsk-button ${offlineStyle.disableWhenOffline}`}
+                to='receive'>{this.props.t('Receive LSK')}</RelativeLink>
+            </p>
+          }
+          <Waypoint bottomOffset='-80%'
+            key={this.props.transactions.length}
+            onEnter={this.loadMore.bind(this)}></Waypoint>
+        </div>
       </div>
     );
   }

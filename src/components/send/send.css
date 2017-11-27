@@ -1,3 +1,5 @@
+@import '../app/variables.css';
+
 .send {
   position: relative;
 }
@@ -15,4 +17,30 @@
   font-size: 12px;
   line-height: 14px;
   color: grey;
+}
+
+.tab {
+  margin: 40px 0px;
+  font-size: 1.8em;
+  vertical-align: middle;
+  text-align: center;
+  line-height: 60px;
+  font-weight: 500;
+}
+
+.tabActive {
+  color: white;
+  background: linear-gradient(45deg, #17499b 0%, #3c7fb4 100%);
+  border-radius: 3px 0 0 3px;
+}
+
+.tabInactive {
+  color: #3c5068;
+  border: 2px solid #3c5068;
+  border-radius: 0 3px 3px 0;
+}
+
+.actionSection {
+  text-align: center;
+  margin-top: 100px;
 }

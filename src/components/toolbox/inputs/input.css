@@ -18,4 +18,9 @@
   font-weight: 500;
   line-height: 30px;
   color: #da1d00;
+
+  .label {
+    color: #3c5068;
+    font-weight: 500;
+  }
 }
