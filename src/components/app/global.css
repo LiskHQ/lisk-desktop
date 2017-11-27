@@ -27,6 +27,7 @@ order to be available application wide
 
 ****************************************/
 :global .box {
+  position: relative;
   width: 100%;
   height: var(--main-box-height);
   display: flex;
