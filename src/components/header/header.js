@@ -24,7 +24,7 @@ const Header = props => (
             <div className={styles.accountInformationBalance}>
               <LiskAmount val={props.account.balance}/> LSK
             </div>
-            <div className={styles.accountInformationAddress}>{props.account.address}</div>
+            <div className={`${styles.accountInformationAddress} account-information-address`}>{props.account.address}</div>
             <div className={styles.accountInformationTimer}>
               <img src={lock} /> Address timeout in 09:32</div>
           </div>

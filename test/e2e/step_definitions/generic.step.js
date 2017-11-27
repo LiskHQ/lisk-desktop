@@ -211,7 +211,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   });
 
   Then('I should be logged in as "{accountName}" account', (accountName, callback) => {
-    waitForElemAndCheckItsText('.full.address', accounts[accountName].address, callback);
+    waitForElemAndCheckItsText('.account-information-address', accounts[accountName].address, callback);
   });
 
   When('I click "{itemSelector}" in main menu', (itemSelector, callback) => {
