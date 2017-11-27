@@ -3,4 +3,4 @@ Feature: Settings dialog
     Given I'm logged in as "any account"
     When I click "settings" in main menu
     And I select option no. 2 from "language" select
-    Then I should see text "SENDEN" in "send button" element
+    Then I should see text "Senden" in "send button" element

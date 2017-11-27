@@ -1,7 +1,9 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
+const chaiString = require('chai-string');
 
+chai.use(chaiString);
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 const EC = protractor.ExpectedConditions;
@@ -20,7 +22,7 @@ function waitForElem(selector) {
 
 function waitForElemAndCheckItsText(selector, text, callback = emptyFn) {
   waitForElem(selector).then((elem) => {
-    expect(elem.getText()).to.eventually.equal(text, `inside element "${selector}"`)
+    expect(elem.getText()).to.eventually.equalIgnoreCase(text.toLowerCase(), `inside element "${selector}"`)
       .and.notify(callback);
   }).catch(callback);
 }

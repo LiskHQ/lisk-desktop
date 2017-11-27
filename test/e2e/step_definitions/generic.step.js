@@ -207,7 +207,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   });
 
   Then('I should be logged in', (callback) => {
-    waitForElemAndCheckItsText('.logout-button', 'LOGOUT', callback);
+    waitForElemAndCheckItsText('.logout-button', 'logout', callback);
   });
 
   Then('I should be logged in as "{accountName}" account', (accountName, callback) => {
