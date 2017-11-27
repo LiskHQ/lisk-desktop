@@ -38,10 +38,12 @@ h4 {
 
 h5 {
   font-size: var(--font-size-h5);
+  font-weight: normal;
 }
 
 h6 {
   font-size: var(--font-size-h6);
+  font-weight: normal;
 }
 
 p,
