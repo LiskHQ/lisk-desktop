@@ -37,7 +37,7 @@ or "warn/action" ineastd of "red/green"
 
 :root {
   /*************************
-        Font Sizes
+        Font
   *************************/
   --font-size-h1: 6.854em;
   --font-size-h2: 4.236em;
@@ -46,6 +46,9 @@ or "warn/action" ineastd of "red/green"
   --font-size-h5: 1.32em;
   --font-size-h6: 1em;
   --font-size-small: 0.85em;
+
+  --heading-font: 'gilroy', 'openSans', sans-serif;
+  --content-font: 'openSans', sans-serif;
 
   /*************************
         Sizes

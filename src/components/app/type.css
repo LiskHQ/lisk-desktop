@@ -71,14 +71,14 @@ avaialble application-wide
 }
 
 body {
-  font-family: 'openSans', sans-serif;
+  font-family: var(--content-font);
 }
 
 h1,
 h2,
 h3,
 h4 {
-  font-family: 'gilroy', 'openSans', sans-serif;
+  font-family: var(--heading-font);
 }
 
 h1 {

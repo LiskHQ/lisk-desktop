@@ -49,7 +49,7 @@
   color: var(--color-black);
   letter-spacing: 0;
   font-weight: 700;
-  font-family: 'gilroy', 'openSans', sans-serif;
+  font-family: var(--heading-font);
 
   & > .rippleWrapper {
     display: none;
