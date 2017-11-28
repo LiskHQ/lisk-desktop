@@ -1,26 +1,31 @@
+
 .input input:focus {
   border-bottom: solid 1px #2475b9;
-  color: #2475b9;
+  color: #3c5068;
+  font-weight: 600;
 }
 
-.label {
-  color: #3c5068;
-  font-weight: 500;
+.input {
+  font-weight: 500 !important;
+}
+
+label {
+  color: #3c5068 !important;
+  font-size: 1.4em !important;
 }
 
 .input input:not(:focus) {
   border-bottom: solid 1px #3c5068;
   color: #3c5068;
+  font-weight: 600;
 }
 
 .error {
   font-size: 14px;
-  font-weight: 500;
   line-height: 30px;
   color: #da1d00;
 
   .label {
     color: #3c5068;
-    font-weight: 500;
   }
 }

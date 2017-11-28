@@ -194,18 +194,21 @@ a {
   text-align: center;
   line-height: 60px;
   font-weight: 500;
+  border: 3px solid transparent;
+  border-radius: 6px;
+  background: linear-gradient(45deg, #17499b 0%, #3c7fb4 100%);
+  background-clip: padding-box;
+  padding: 2px;
 }
 
 .tabActive {
   color: white;
   background: linear-gradient(45deg, #17499b 0%, #3c7fb4 100%);
-  border-radius: 3px 0 0 3px;
 }
 
 .tabInactive {
-  color: #3c5068;
-  border: 2px solid #3c5068;
-  border-radius: 0 3px 3px 0;
+  color: #3c7fb4;
+  background: white;
 }
 
 .padding {

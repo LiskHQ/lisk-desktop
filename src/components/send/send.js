@@ -1,12 +1,13 @@
 import React from 'react';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { fromRawLsk, toRawLsk } from '../../utils/lsk';
 import AuthInputs from '../authInputs';
-import ActionBar from '../actionBar';
-import { Button } from './../toolbox/buttons/button';
+import { Button, PrimaryButton } from './../toolbox/buttons/button';
 import { authStatePrefill, authStateIsValid } from '../../utils/form';
 import Input from '../toolbox/inputs/input';
 
 import styles from './send.css';
+import inputTheme from './input.css';
 
 class Send extends React.Component {
   constructor() {
@@ -21,7 +22,6 @@ class Send extends React.Component {
       tabs: {
         active: 'send',
       },
-      isEditable: true,
       ...authStatePrefill(),
     };
     this.fee = 0.1;
@@ -78,6 +78,12 @@ class Send extends React.Component {
     });
   }
 
+  showAvatar() {
+    return this.state.recipient.value.length
+      && !this.state.recipient.error
+      && this.props.isEditable;
+  }
+
   getMaxAmount() {
     return fromRawLsk(Math.max(0, this.props.account.balance - toRawLsk(this.fee)));
   }
@@ -86,55 +92,83 @@ class Send extends React.Component {
     this.handleChange('amount', this.getMaxAmount());
   }
 
-  next() {
-    this.setState({ isEditable: false });
-  }
-
-  back() {
-    this.setState({ isEditable: true });
-  }
-
   render() {
     return (
       <div className={`${styles.send} send`}>
         <form onSubmit={this.send.bind(this)}>
-          <Input label={this.props.t('Send to Address')} required={true}
+          {this.showAvatar()
+            ? <img className={styles.smallAvatar}></img>
+            : ''
+          }
+          <Input label={this.props.t('Send to Address')}
             className='recipient'
             autoFocus={true}
             error={this.state.recipient.error}
             value={this.state.recipient.value}
             onChange={this.handleChange.bind(this, 'recipient')}
-            readOnly={!this.state.isEditable}
+            readOnly={!this.props.isEditable}
+            theme={this.showAvatar() ? inputTheme : {}}
           />
-          <Input label={this.props.t('Amount (LSK)')} required={true}
-            className='amount'
-            error={this.state.amount.error}
-            value={this.state.amount.value}
-            readOnly={!this.state.isEditable}
-            onChange={this.handleChange.bind(this, 'amount')} />
-          <AuthInputs
-            passphrase={this.state.passphrase}
-            secondPassphrase={this.state.secondPassphrase}
-            onChange={this.handleChange.bind(this)} />
-          <div className={styles.fee}> {this.props.t('Fee: {{fee}} LSK', { fee: this.fee })} </div>
+
+          {this.props.isEditable
+            ?
+            <div style={{ height: '150px' }}>
+              <Input label={this.props.t('Amount (LSK)')}
+                className='amount'
+                error={this.state.amount.error}
+                value={this.state.amount.value}
+                theme={styles}
+                onChange={this.handleChange.bind(this, 'amount')} />
+              <div className={styles.fee}> {this.props.t('Fee: {{fee}} LSK', { fee: this.fee })} </div>
+            </div>
+            :
+            <div style={{ height: '150px' }}>
+              <Input label={this.props.t('Total incl. 0.1 LSK Fee')}
+                className='amount'
+                error={this.state.amount.error}
+                value={this.state.amount.value + this.fee}
+                readOnly='true'
+                theme={styles}
+                onChange={this.handleChange.bind(this, 'amount')} />
+              <AuthInputs
+                passphrase={this.state.passphrase}
+                secondPassphrase={this.state.secondPassphrase}
+                onChange={this.handleChange.bind(this)}
+              />
+            </div>
+          }
           <div className={styles.actionSection}>
-            {this.state.isEditable
+            {this.props.isEditable
               ?
-              <Button onClick={this.next.bind(this)}>Next</Button>
+              <div>
+                <Button onClick={this.props.next}
+                  disabled={(!!this.state.recipient.error ||
+                          !this.state.recipient.value ||
+                          !!this.state.amount.error ||
+                          !this.state.amount.value)}
+                >Next</Button>
+                <div className={styles.subTitle}>Confirmation in the next step.</div>
+              </div>
               :
-              <ActionBar
-                secondaryButton={{
-                  onClick: this.back.bind(this),
-                }}
-                primaryButton={{
-                  label: this.props.t('Send'),
-                  type: 'submit',
-                  disabled: (!!this.state.recipient.error ||
-                            !this.state.recipient.value ||
-                            !!this.state.amount.error ||
-                            !this.state.amount.value ||
-                            !authStateIsValid(this.state)),
-                }} />
+              <section className={grid.row} >
+                <div className={grid['col-xs-4']}>
+                  <Button
+                    label={this.props.t('Cancel')}
+                    onClick={this.props.back}
+                    type='button'
+                    theme={styles}
+                  />
+                </div>
+                <div className={grid['col-xs-8']}>
+                  <PrimaryButton
+                    label={this.props.t('Send')}
+                    type='submit'
+                    theme={styles}
+                    disabled={!authStateIsValid(this.state)}
+                  />
+                  <div className={styles.subTitle}>Transactions can’t be reversed.</div>
+                </div>
+              </section>
             }
           </div>
         </form>

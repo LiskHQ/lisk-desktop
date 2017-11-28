@@ -42,5 +42,28 @@
 
 .actionSection {
   text-align: center;
-  margin-top: 100px;
+  margin-top: 50px;
+
+  & .subTitle {
+    margin-top: 20px;
+    font-size: 1.6em;
+    color: #3c5068;
+  }
+}
+
+input:read-only {
+  border-bottom: solid 1px #fff !important;
+}
+
+.button {
+  min-width: 0;
+  width: 100%;
+}
+
+.smallAvatar {
+  height: 50px;
+  width: 50px;
+  background: linear-gradient(90deg, #3023ae 0%, #53a0fd 48%, #b4ec51 100%);
+  position: absolute;
+  border-radius: 100%;
 }
