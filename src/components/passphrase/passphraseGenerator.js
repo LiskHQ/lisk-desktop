@@ -99,7 +99,11 @@ class PassphraseGenerator extends React.Component {
               <Input onChange={this.seedGeneratorBoundToThis}
                 className='touch-fallback' autoFocus={true} multiline={true} />
             </div> :
-            <h2 className={styles.generatorHeader}>{this.props.t('Create your Lisk ID by moving your mouse.')}</h2>
+            <h2 className={styles.generatorHeader}>
+              {this.props.t('Create your Lisk ID')}
+              <br/>
+              {this.props.t('by moving your mouse.')}
+            </h2>
           }
         </div>
         <div className={grid['col-xs-12']}>
