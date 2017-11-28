@@ -1,13 +1,109 @@
-.tableWrapper {
-  margin: -24px -24px 24px -24px;
+@import '../app/variables.css';
+
+:root {
+  --font-size-card-h2: 2em;
 }
 
-.iconCell {
-  width: 24px;
-  text-align: right;
+.wrapper {
+  margin: -24px -24px -24px -24px;
+  background: #013165;
+
+  /* TODO this is temporary */
+  font-size: 16px;
+
+  & > h1 {
+    color: #fff;
+    text-align: center;
+    padding: 85px;
+    margin: 0;
+  }
 }
 
-.isActive {
-  background-color: #d6f0ff !important;
+.cardsWrapper {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 0 24px 48px 232px;
+}
+
+.card {
+  position: relative;
+  display: inline-block;
+  width: 347px;
+  height: 436px;
+  border-radius: 3px;
+  background: #fff;
+  box-shadow: 0 22px 22px 0 rgba(0, 0, 0, 0.22);
+  margin: 24px;
+  text-align: center;
+  cursor: pointer;
+  overflow: hidden;
+
+  & > h2 {
+    font-size: var(--font-size-card-h2);
+    color: var(--color-black);
+  }
+}
+
+.addNew {
+  opacity: 0.95;
+  background-image: linear-gradient(-134deg, #93f4fe 1%, #004aff 98%);
+
+  & > h2 {
+    color: #fff;
+    text-align: center;
+  }
+}
+
+.address {
+  margin-bottom: 20px;
+}
+
+.cardIcon {
+  width: 175px;
+  height: 175px;
+  margin: 78px 78px 32px;
+  position: relative;
+}
+
+.plusShapeIcon {
+  width: 134px;
+  height: 134px;
+  margin: 24px;
+}
+
+.accountVisualPlaceholder,
+.accountVisualPlaceholder2 {
+  position: absolute;
+  width: 126px;
+  height: 84px;
+  top: 40px;
+  left: 24px;
+  opacity: 0.9;
+  background-image: linear-gradient(-134deg, #3023ae 0%, #c86dd7 100%);
+}
+
+.accountVisualPlaceholder2 {
+  top: 40px;
+  left: 24px;
+}
+
+.unlocked {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 24px;
+  color: #3c5068;
   font-weight: bold;
+}
+
+.closeButton {
+  box-shadow: 0 20px 20px 0 rgba(0, 32, 68, 0.25);
+  position: absolute;
+  top: 85px;
+  right: 85px;
+}
+
+.removeButton {
+  background-color: #fff;
 }

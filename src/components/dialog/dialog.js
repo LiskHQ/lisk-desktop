@@ -72,12 +72,14 @@ class DialogElement extends Component {
         theme={styles}
         type='fullscreen' className='modal-dialog'>
         <div className={styles.dialog}>
-          <AppBar title={this.props.dialog.title} flat={true}
-            className={styles[this.props.dialog.type]}>
-            <Navigation type='horizontal'>
-              <IconButton className={`${styles['x-button']} x-button`} onClick={this.goBack.bind(this)} icon='close'/>
-            </Navigation>
-          </AppBar>
+          { this.props.dialog.title ?
+            <AppBar title={this.props.dialog.title} flat={true}
+              className={styles[this.props.dialog.type]}>
+              <Navigation type='horizontal'>
+                <IconButton className={`${styles['x-button']} x-button`} onClick={this.goBack.bind(this)} icon='close'/>
+              </Navigation>
+            </AppBar> :
+            null }
           <div className={`modal-dialog-body ${styles.innerBody}`}>
             {this.props.dialog.childComponent ?
               <this.props.dialog.childComponent

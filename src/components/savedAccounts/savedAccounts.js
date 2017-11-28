@@ -1,88 +1,79 @@
+import { Button as ToolBoxButton } from 'react-toolbox/lib/button';
+import FontIcon from 'react-toolbox/lib/font_icon';
 import React from 'react';
-import IconButton from '../toolbox/buttons/iconButton';
-import ActionBar from '../actionBar';
-import InfoParagraph from '../infoParagraph';
-import networks from '../../constants/networks';
-import getNetwork from '../../utils/getNetwork';
 import { extractAddress } from '../../utils/api/account';
-import { TBTable, TBTableHead, TBTableRow, TBTableCell } from '../toolbox/tables/table';
+import { Button } from '../toolbox/buttons/button';
+import LiskAmount from '../liskAmount';
+import plusShapeIcon from '../../assets/images/plus-shape.svg';
 
 import styles from './savedAccounts.css';
+import mainStyles from '../app/app.css';
+
 
 const SavedAccounts = ({
   networkOptions,
   publicKey,
   closeDialog,
-  accountSaved,
   accountRemoved,
   accountSwitched,
+  accountLoggedOut,
   savedAccounts,
   t,
 }) => {
-  const save = () => {
-    accountSaved({
-      network: networkOptions.code,
-      address: networkOptions.address,
-      publicKey,
-    });
-  };
-
   const isActive = account => (
     account.publicKey === publicKey &&
     account.network === networkOptions.code);
 
   return (
-    <div className='save-account'>
-      { savedAccounts.length === 0 ?
-        <InfoParagraph>
-          {t('This will save public key of your account on this device, so next time it will launch without the need to log in. However, you will be prompted to enter the passphrase once you want to do any transaction.')}
-        </InfoParagraph> :
-        <div className={styles.tableWrapper} >
-          <TBTable selectable={false} className='saved-accounts-table'>
-            <TBTableHead>
-              <TBTableCell className={styles.iconCell} >{t('Switch')}</TBTableCell>
-              <TBTableCell>{t('Address')}</TBTableCell>
-              <TBTableCell>{t('Network')}</TBTableCell>
-              <TBTableCell className={styles.iconCell} >{t('Forget')}</TBTableCell>
-            </TBTableHead>
-            {savedAccounts.map(account => (
-              <TBTableRow key={account.publicKey + account.network}
-                className={(isActive(account) ? styles.isActive : null)}>
-                <TBTableCell className={styles.iconCell} >
-                  <IconButton icon='exit_to_app'
-                    disabled={isActive(account)}
-                    className='switch-button'
-                    onClick={accountSwitched.bind(this, account)} />
-                </TBTableCell>
-                <TBTableCell>
-                  {extractAddress(account.publicKey)}
-                </TBTableCell>
-                <TBTableCell>
-                  {account.network === networks.customNode.code ?
-                    account.address :
-                    t(getNetwork(account.network).name)}
-                </TBTableCell>
-                <TBTableCell className={styles.iconCell} >
-                  <IconButton icon='clear' className='forget-button'
-                    onClick={accountRemoved.bind(this, account)} />
-                </TBTableCell>
-              </TBTableRow>
-            ))}
-          </TBTable>
+    <div className={`${styles.wrapper} save-account`}>
+      <div className={mainStyles.stageStripes}>
+        <span className={mainStyles.stageStripe}></span>
+        <span className={mainStyles.stageStripe}></span>
+        <span className={mainStyles.stageStripe}></span>
+        <span className={mainStyles.stageStripe}></span>
+        <span className={mainStyles.stageStripe}></span>
+        <span className={mainStyles.stageStripe}></span>
+        <span className={mainStyles.stageStripe}></span>
+        <span className={mainStyles.stageStripe}></span>
+        <span className={mainStyles.stageStripe}></span>
+        <span className={mainStyles.stageStripe}></span>
+        <span className={mainStyles.stageStripe}></span>
+        <span className={mainStyles.stageStripe}></span>
+      </div>
+      <ToolBoxButton icon='close' floating onClick={closeDialog} className={styles.closeButton} />
+      <h1>{t('Your favorite Lisk IDs')}</h1>
+      <div className={styles.cardsWrapper} >
+        <div className={`${styles.card} ${styles.addNew}`} onClick={accountLoggedOut} >
+          <div className={styles.cardIcon}>
+            <img src={plusShapeIcon} className={styles.plusShapeIcon} />
+          </div>
+          <h2 className={styles.addTittle} >{t('Add a Lisk ID')}</h2>
         </div>
-      }
-      <ActionBar
-        secondaryButton={{
-          onClick: closeDialog,
-          label: t('Close'),
-          className: 'close-button',
-        }}
-        primaryButton={{
-          label: t('Add active account'),
-          className: 'add-active-account-button',
-          disabled: savedAccounts.filter(isActive).length !== 0,
-          onClick: save.bind(this),
-        }} />
+        {savedAccounts.map(account => (
+          <div className={`switch-button ${styles.card}`}
+            key={account.publicKey + account.network}
+            onClick={accountSwitched.bind(this, account)} >
+            {(isActive(account) ?
+              <span className={styles.unlocked}>
+                <FontIcon value='lock_open' />
+                {t('Unlocked')}
+              </span> :
+              null)}
+            <div className={styles.cardIcon}>
+              <div className={styles.accountVisualPlaceholder}></div>
+              <div className={styles.accountVisualPlaceholder2}></div>
+            </div>
+            <h2>
+              <LiskAmount val={18000e8} /> <small>LSK</small>
+            </h2>
+            <div className={styles.address} >{extractAddress(account.publicKey)}</div>
+            <Button className='remove-button'
+              theme={{ button: styles.removeButton }}
+              onClick={accountRemoved}
+              label={t('Remove from Favorites')}/>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

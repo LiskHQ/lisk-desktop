@@ -46,7 +46,6 @@ export default () => ({
     component: Register,
   },
   'saved-accounts': {
-    title: i18next.t('Saved accounts'),
     component: SavedAccounts,
   },
   settings: {
