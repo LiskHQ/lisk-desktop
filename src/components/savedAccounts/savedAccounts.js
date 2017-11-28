@@ -80,7 +80,7 @@ const SavedAccounts = ({
             <div className={styles.address} >{extractAddress(account.publicKey)}</div>
             <Button className='remove-button'
               theme={{ button: styles.removeButton }}
-              onClick={accountRemoved}
+              onClick={accountRemoved.bind(null, account)}
               label={t('Remove from Favorites')}/>
           </div>
         ))}

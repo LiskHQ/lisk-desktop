@@ -42,7 +42,7 @@
   margin: 24px;
   text-align: center;
   cursor: pointer;
-  overflow: hidden;
+  vertical-align: top;
 
   & > h2 {
     position: relative;
@@ -61,7 +61,7 @@
 }
 
 .address {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .cardIcon {
@@ -143,6 +143,15 @@
   right: 85px;
 }
 
+.removeButton:hover,
 .removeButton {
-  background-color: var(--color-white);
+  background-color: var(--color-white) !important;
+  color: var(--color-grayscale-dark) !important;
+  border: none;
+  box-shadow: var(--normal-shadow);
+  text-transform: none;
+}
+
+.removeButton:hover {
+  color: var(--color-primary-medium) !important;
 }
