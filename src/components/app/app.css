@@ -24,7 +24,6 @@ body {
   top: 0;
   align-items: center;
   display: flex;
-  font-family: roboto;
 
   & > section {
     width: 100%;
@@ -45,6 +44,7 @@ body {
   margin-bottom: 20px;
 }
 
+/* move to type */
 .text-center {
   text-align: center;
 }

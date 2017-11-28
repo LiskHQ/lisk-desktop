@@ -1,23 +1,82 @@
+@import '../app/variables';
+
 .wrapper {
-  padding-top: 50px !important;
-  margin-top: 8px;
-  padding-bottom: 24px !important;
+  overflow: visible !important;
 }
 
-.newAccount {
-  margin-right: 8px;
+.wrapper,
+.login,
+.signup {
+  height: 100%;
+  transition: all ease 300ms;
 }
 
-.network ul {
-  text-align: left;
+.login {
+  padding: 0 56px;
+
+  & h1 {
+    color: var(--color-primary-medium);
+  }
+
+  & .backButton {
+    color: var(--color-primary-dark);
+    font-size: var(--font-size-h2);
+
+  }
+  & .backButton .icon {
+    font-size: var(--font-size-h6) !important;
+  }
+
+  & .backButton .icon,
+  & .backButton span:not(.icon) {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  & .backButton span:not(.icon) {
+    font-size: 0.4em !important;
+  }
 }
 
-.error {
-  display: inline-block;
-  text-align: left;
+.signUp {
+  position: relative;
+  height: calc(100% + 78px);
+  /* Currently: -39px 8px -39px -8px */
+  margin:
+    calc(var(--box-overflow-y) - var(--box-padding))
+    calc(var(--box-padding) / 2)
+    calc(var(--box-overflow-y) - var(--box-padding))
+    calc(var(--box-padding) / -2);
+  background: linear-gradient(45deg, rgba(0, 74, 255, 1) 0%, rgba(147, 244, 254, 1) 100%);
+
+  & h1 {
+    color: var(--color-white);
+  }
+
+  & h4,
+  & a,
+  & .singUpArrow {
+    color: var(--color-grayscale-light);
+    vertical-align: middle;
+  }
+
+  & a {
+    text-decoration: none;
+  }
+
+  & .singUpArrow {
+    font-size: 1em !important;
+  }
+}
+
+
+.table {
+  display: table;
   width: 100%;
-}
+  height: 100%;
 
-.field {
-  margin-top: 10px;
+  & .tableCell {
+    display: table-cell;
+    vertical-align: middle;
+  }
 }

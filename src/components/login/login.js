@@ -1,6 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Dropdown from 'react-toolbox/lib/dropdown';
+import { FontIcon } from 'react-toolbox/lib/font_icon';
 import i18next from 'i18next';
 import Input from '../toolbox/inputs/input';
 import { Button } from '../toolbox/buttons/button';
@@ -147,9 +148,16 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div className={`box ${styles.wrapper}`}>
-        <section className={grid.row}>
-          <div className={`${grid['col-xs-12']} ${grid['col-sm-8']} ${grid['col-sm-offset-2']}`}>
+      <div className={`box ${grid.row} ${styles.wrapper}`}>
+        <section className={`${grid['col-sm-5']} ${styles.login}`}>
+          <header>
+            <a className={styles.backButton} href='https://list.io' target='_blank' rel='noopener noreferrer'>
+              <FontIcon className={styles.icon}>chevron_left</FontIcon>
+              <span>Back to lisk.io</span>
+            </a>
+          </header>
+          <section>
+            <h1>{this.props.t('Sign In')}</h1>
             <form onSubmit={this.onFormSubmit.bind(this)}>
               <LanguageDropdown />
               <Dropdown
@@ -179,10 +187,6 @@ class Login extends React.Component {
                 onChange={this.changeHandler.bind(this, 'passphrase')} />
               <footer className={ `${grid.row} ${grid['center-xs']}` }>
                 <div className={grid['col-xs-12']}>
-                  <RelativeLink to='register' flat primary
-                    className={`${styles.newAccount} new-account-button`}>
-                    {this.props.t('New Account')}
-                  </RelativeLink>
                   <Button label={this.props.t('Login')} primary raised
                     className='login-button'
                     type='submit'
@@ -191,6 +195,20 @@ class Login extends React.Component {
                 </div>
               </footer>
             </form>
+          </section>
+        </section>
+        <section className={`${grid['col-sm-7']} ${styles.signUp}`}>
+          <div className={styles.table}>
+            <div className={`${styles.tableCell} text-center`}>
+              <h1>
+                <RelativeLink to='register' className='new-account-button'>
+                  {this.props.t('Get Access')}
+                </RelativeLink>
+                <FontIcon className={styles.singUpArrow}>chevron_right</FontIcon>
+              </h1>
+
+              <h4>Create an address as a gateway<br />to all Lisk Services.</h4>
+            </div>
           </div>
         </section>
       </div>
