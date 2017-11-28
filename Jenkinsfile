@@ -146,9 +146,17 @@ node('lisk-nano') {
 
             # Run end-to-end tests
 
-            npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL https://testnet.lisk.io --cucumberOpts.tags @testnet --params.useTestnetPassphrase true
-            npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL http://127.0.0.1:400$N --cucumberOpts.tags @testnet --params.useTestnetPassphrase true --params.network testnet
+            if [ -z $CHANGE_BRANCH ]; then
+              npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL https://testnet.lisk.io --cucumberOpts.tags @testnet --params.useTestnetPassphrase true
+            else
+              echo "Skipping @testnet end-to-end tests because we're not on 'development' branch"
+            fi
             npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL http://127.0.0.1:400$N
+            if [ -z $CHANGE_BRANCH ]; then
+              npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --cucumberOpts.tags @testnet --params.useTestnetPassphrase true --params.network testnet
+            else
+              echo "Skipping @testnet end-to-end tests because we're not on 'development' branch"
+            fi
             '''
           }
         }
