@@ -52,12 +52,12 @@ describe('DecryptMessage', () => {
   });
 
   it('shows error toast when couldn\'t decrypt a message', () => {
-    decryptMessageMock.throws({ message: 'couldn\'t decrypt the message' });
+    decryptMessageMock.throws(new Error('couldn\'t decrypt the message'));
     wrapper.find('.message textarea').simulate('change', { target: { value: message } });
     wrapper.find('.senderPublicKey input').simulate('change', { target: { value: senderPublicKey } });
     wrapper.find('.nonce input').simulate('change', { target: { value: nonce } });
     wrapper.find('form').simulate('submit');
-    expect(errorSpy).to.have.been.calledWith({ label: 'couldn\'t decrypt the message' });
+    expect(errorSpy).to.have.been.calledWith({ label: 'Message decryption failed' });
   });
 
   it('allows to decrypt a message, copies encrypted message result to clipboard and shows success toast', () => {

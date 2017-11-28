@@ -31,6 +31,7 @@ class SignMessageComponent extends React.Component {
         value,
         error,
       },
+      result: undefined,
     });
   }
 
@@ -39,19 +40,19 @@ class SignMessageComponent extends React.Component {
       this.state.passphrase.value);
     const result = Lisk.crypto.printSignedMessage(
       message, signedMessage, this.props.account.publicKey);
-    this.setState({ result, resultIsShown: false });
+    this.setState({ result });
+    return result;
   }
 
   showResult(event) {
     event.preventDefault();
-    this.sign(this.state.message.value);
-    const copied = this.props.copyToClipboard(this.state.result, {
+    const result = this.sign(this.state.message.value);
+    const copied = this.props.copyToClipboard(result, {
       message: this.props.t('Press #{key} to copy'),
     });
     if (copied) {
       this.props.successToast({ label: this.props.t('Result copied to clipboard') });
     }
-    this.setState({ resultIsShown: true });
   }
 
   render() {
@@ -73,7 +74,7 @@ class SignMessageComponent extends React.Component {
               secondPassphrase={this.state.secondPassphrase}
               onChange={this.handleChange.bind(this)} />
           </section>
-          {this.state.resultIsShown ?
+          {this.state.result ?
             <SignVerifyResult result={this.state.result} title={this.props.t('Result')} /> :
             <ActionBar
               secondaryButton={{
@@ -84,7 +85,7 @@ class SignMessageComponent extends React.Component {
                 className: 'sign-button',
                 type: 'submit',
                 disabled: (!this.state.message.value ||
-                  this.state.resultIsShown ||
+                  this.state.result ||
                   !authStateIsValid(this.state)),
               }} />
           }
