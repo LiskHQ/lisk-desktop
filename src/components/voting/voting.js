@@ -93,7 +93,7 @@ class Voting extends React.Component {
 
   render() {
     return (
-      <div className="box noPaddingBox">
+      <div className='box noPaddingBox'>
         <Header
           setActiveDialog={this.props.setActiveDialog}
           voteToggled={this.props.voteToggled}

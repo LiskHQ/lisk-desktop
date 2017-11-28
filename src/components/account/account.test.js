@@ -2,10 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
-import i18n from '../../i18n';
-import store from '../../store';
 import Account from './account';
-import ClickToSend from '../clickToSend';
 
 describe('Account', () => {
   let props;
@@ -37,7 +34,9 @@ describe('Account', () => {
     };
   });
 
-  it('should Address component', () => {
+  // Should be updated once we know what happens with this component
+  // Maybe it should be merged with the avatar or sidebar part, we don't know yet
+  it.skip('should Address component', () => {
     const wrapper = shallow(<Account {...props} />);
     expect(wrapper.find('Address')).to.have.lengthOf(1);
   });
@@ -47,14 +46,5 @@ describe('Account', () => {
     const wrapper = shallow(<Account {...props} />);
     const expectedValue = 'check';
     expect(wrapper.find('.material-icons').text()).to.be.equal(expectedValue);
-  });
-
-  it('should render balance with ClickToSend component', () => {
-    const wrapper = shallow(<Account {...props} />, {
-      context: { store, i18n },
-      childContextTypes: {
-      },
-    });
-    expect(wrapper.find('.balance').find(ClickToSend)).to.have.lengthOf(1);
   });
 });

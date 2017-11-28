@@ -20,6 +20,39 @@ avaialble application-wide
 
 ****************************************/
 
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
+
+@font-face {
+  font-family: 'gilroy';
+  src:
+    url('../../assets/fonts/gilroy/gilroy-bold.woff2') format('woff2'),
+    url('../../assets/fonts/gilroy/gilroy-bold.woff') format('woff'),
+    url('../../assets/fonts/gilroy/gilroy-bold.ttf')  format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'gilroy';
+  src:
+    url('../../assets/fonts/gilroy/gilroy-extra-bold.woff2') format('woff2'),
+    url('../../assets/fonts/gilroy/gilroy-extra-bold.woff') format('woff'),
+    url('../../assets/fonts/gilroy/gilroy-extra-bold.ttf')  format('truetype');
+  font-weight: bolder;
+  font-style: normal;
+}
+
+body {
+  font-family: var(--content-font);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--heading-font);
+}
+
 h1 {
   font-size: var(--font-size-h1);
 }
@@ -38,10 +71,12 @@ h4 {
 
 h5 {
   font-size: var(--font-size-h5);
+  font-weight: normal;
 }
 
 h6 {
   font-size: var(--font-size-h6);
+  font-weight: normal;
 }
 
 p,
@@ -50,6 +85,10 @@ b,
 i,
 strong {
   font-size: var(--font-size-h6);
+}
+
+strong {
+  font-weight: bolder;
 }
 
 small {
