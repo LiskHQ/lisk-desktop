@@ -6,7 +6,9 @@ import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import RelativeLink from '../relativeLink';
 import TransactionRow from './transactionRow';
 import TransactionsHeader from './transactionsHeader';
+import LiskAmount from '../liskAmount';
 import styles from './transactions.css';
+import copy from './../../assets/images/icons/copy.svg';
 
 class Transactions extends React.Component {
   constructor() {
@@ -26,6 +28,10 @@ class Transactions extends React.Component {
     }
   }
 
+  copyAddress() {
+    this.props.copyToClipboard(this.props.address);
+  }
+
   componentDidUpdate() {
     const { count, transactions } = this.props;
     this.canLoadMore = count === null || count > transactions.length;
@@ -33,20 +39,44 @@ class Transactions extends React.Component {
 
   render() {
     return (
-      <div className='box noPaddingBox'>
+      <div className={`${styles.noPadding} box`}>
+        <header className={styles.header}>
+          <div className={styles.title}>
+            <h2>{this.props.t('Transactions')}</h2>
+          </div>
+          <div className={styles.account}>
+            <h2>
+              <span>
+                <LiskAmount val={this.props.balance} />&nbsp;
+              </span>
+              <small className={styles.balanceUnit}>LSK</small>
+            </h2>
+            <div onClick={this.copyAddress.bind(this)} className={styles.address}>
+              <img src={copy} />&nbsp;
+              <span>{this.props.address}</span>
+            </div>
+          </div>
+        </header>
+
+        <ul className={styles.list}>
+          <li className={`${styles.item} ${styles.active}`}>All</li>
+          <li className={styles.item}>Incoming</li>
+          <li className={styles.item}>Outgoing</li>
+          <li className={styles.item}>Other</li>
+        </ul>
+
         {this.props.transactions.length > 0 ?
-          <table className={tableStyle.table}>
+          <div>
             <TransactionsHeader tableStyle={tableStyle}></TransactionsHeader>
-            <tbody>
-              {this.props.transactions.map(transaction => (
-                <TransactionRow address={this.props.address}
-                  key={transaction.id}
-                  tableStyle={tableStyle}
-                  value={transaction}>
-                </TransactionRow>
-              ))}
-            </tbody>
-          </table> :
+            {this.props.transactions.map(transaction => (
+              <TransactionRow address={this.props.address}
+                key={transaction.id}
+                t={this.props.t}
+                value={transaction}
+                copy={this.props.copyToClipboard}>
+              </TransactionRow>
+            ))}
+          </div> :
           <p className={`${styles.empty} hasPaddingRow empty-message`}>
             {this.props.t('There are no transactions, yet.')} &nbsp;
             <RelativeLink className={`${styles.button} ${buttonStyle.button} ${buttonStyle.primary} ${buttonStyle.raised} receive-lsk-button ${offlineStyle.disableWhenOffline}`}

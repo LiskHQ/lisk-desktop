@@ -1,10 +1,10 @@
 import React from 'react';
 import Lisk from 'lisk-js';
 import { translate } from 'react-i18next';
-import InfoParagraph from '../infoParagraph';
-import SignVerifyResult from '../signVerifyResult';
 import ActionBar from '../actionBar';
+import Authenticate from '../authenticate';
 import Input from '../toolbox/inputs/input';
+import SignVerifyResult from '../signVerifyResult';
 
 
 class EncryptMessage extends React.Component {
@@ -27,6 +27,7 @@ class EncryptMessage extends React.Component {
         value,
         error,
       },
+      result: null,
     });
   }
 
@@ -39,41 +40,38 @@ class EncryptMessage extends React.Component {
         this.props.account.passphrase,
         this.state.recipientPublicKey.value);
     } catch (error) {
-      this.props.errorToast({ label: error.message });
+      this.props.errorToast({ label: this.props.t('Message encryption failed') });
     }
     if (cryptoResult) {
       const result = [
+        '-----BEGIN LISK ENCRYPTED MESSAGE-----',
+        '-----SENDER PUBLIC KEY-----',
+        this.props.account.publicKey,
         '-----ENCRYPTED MESSAGE-----',
         cryptoResult.encryptedMessage,
         '-----NONCE-----',
         cryptoResult.nonce,
+        '-----END LISK ENCRYPTED MESSAGE-----',
       ].join('\n');
-      this.setState({ result, resultIsShown: false });
-      this.showResult();
+      this.setState({ result });
+      this.showResult(result);
     }
   }
 
-  showResult() {
-    const copied = this.props.copyToClipboard(this.state.result, {
+  showResult(result) {
+    const copied = this.props.copyToClipboard(result, {
       message: this.props.t('Press #{key} to copy'),
     });
     if (copied) {
       this.props.successToast({ label: this.props.t('Result copied to clipboard') });
     }
-    this.setState({ resultIsShown: true });
   }
 
   render() {
-    return (
+    return (typeof this.props.account.passphrase === 'string' && this.props.account.passphrase.length > 0 ?
       <div className='sign-message'>
         <form onSubmit={this.encrypt.bind(this)}>
           <section>
-            <InfoParagraph>
-              <h3>
-                {this.props.t('Public key : ')}
-              </h3>
-              {this.props.account.publicKey}
-            </InfoParagraph>
             <Input className='recipientPublicKey' label={this.props.t('Recipient PublicKey')}
               autoFocus={true}
               value={this.state.recipientPublicKey.value}
@@ -83,7 +81,7 @@ class EncryptMessage extends React.Component {
               value={this.state.message.value}
               onChange={this.handleChange.bind(this, 'message')} />
           </section>
-          {this.state.resultIsShown ?
+          {this.state.result ?
             <SignVerifyResult id='encryptResult' result={this.state.result} title={this.props.t('Result')} /> :
             <ActionBar
               secondaryButton={{
@@ -98,7 +96,8 @@ class EncryptMessage extends React.Component {
               }} />
           }
         </form>
-      </div>
+      </div> :
+      <Authenticate nextAction={this.props.t('encrypt message')}/>
     );
   }
 }

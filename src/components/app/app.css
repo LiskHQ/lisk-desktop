@@ -7,7 +7,6 @@
 @import './mixin.css';
 
 body {
-  font-size: 10px;
   margin: 0;
   padding: 0;
   width: 100%;
@@ -24,7 +23,6 @@ body {
   top: 0;
   align-items: center;
   display: flex;
-  font-family: roboto;
 
   & > section {
     width: 100%;

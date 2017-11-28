@@ -1,11 +1,16 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const { defineSupportCode } = require('cucumber');
-const { waitForElemAndClickIt } = require('../support/util.js');
+const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
 
-defineSupportCode(({ When }) => {
-  When('I click "{elementName}" element on table row no. {index}', (elementName, index, callback) => {
-    const selectorClass = `.${elementName.replace(/ /g, '-')}`;
-    waitForElemAndClickIt(`table tr:nth-child(${index}) ${selectorClass}`, callback);
+chai.use(chaiAsPromised);
+const expect = chai.expect;
+
+
+defineSupportCode(({ Then }) => {
+  Then('I should see {lineCount} rows', (lineCount, callback) => {
+    browser.sleep(500);
+    expect(element.all(by.css('.transactionsRow')).count()).to.eventually.equal(parseInt(lineCount, 10))
+      .and.notify(callback);
   });
 });
-

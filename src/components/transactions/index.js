@@ -1,9 +1,11 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
+import copy from 'copy-to-clipboard';
 import { transactionsRequested } from '../../actions/transactions';
 import Transactions from './transactions';
 
 const mapStateToProps = state => ({
+  balance: state.account.balance,
   address: state.account.address,
   activePeer: state.peers.data,
   transactions: [...state.transactions.pending, ...state.transactions.confirmed],
@@ -14,6 +16,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   transactionsRequested: data => dispatch(transactionsRequested(data)),
+  copyToClipboard: (...args) => copy(...args),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(Transactions));

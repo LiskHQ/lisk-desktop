@@ -5,7 +5,8 @@ import theme from 'react-toolbox/lib/tooltip/theme.css';
 import { translate } from 'react-i18next';
 import i18n from '../../i18n';
 
-const _fix = value => new Date((((Date.UTC(2016, 4, 24, 17, 0, 0, 0) / 1000) + value) * 1000));
+const _convertTimeFromFirstBlock = value =>
+  new Date((((Date.UTC(2016, 4, 24, 17, 0, 0, 0) / 1000) + value) * 1000));
 /**
  * Remove an array of keys from object
  * @param {object} obj - an object that we want to remove some properties from that
@@ -45,13 +46,25 @@ export const TooltipWrapper = (props) => {
 
 export const Time = translate()((props) => {
   moment.locale(i18n.language);
-  const time = moment(_fix(props.label));
+  const time = moment(_convertTimeFromFirstBlock(props.label));
   return <span>{time.fromNow(true)}</span>;
+});
+
+export const DateFromTimestamp = translate()((props) => {
+  moment.locale(i18n.language);
+  const day = moment(_convertTimeFromFirstBlock(props.time));
+  return (<span>{day.format('ll')}</span>);
+});
+
+export const TimeFromTimestamp = translate()((props) => {
+  moment.locale(i18n.language);
+  const day = moment(_convertTimeFromFirstBlock(props.time));
+  return (<span>{day.format('LTS')}</span>);
 });
 
 export const TooltipTime = translate()((props) => {
   moment.locale(i18n.language);
-  const time = moment(_fix(props.label));
+  const time = moment(_convertTimeFromFirstBlock(props.label));
   return (<TooltipWrapper tooltip={time.format('LL LTS')} >
     <Time label={props.label} lang={props.lang}></Time>
   </TooltipWrapper>);
