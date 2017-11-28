@@ -4,7 +4,13 @@ import React from 'react';
 import { extractAddress } from '../../utils/api/account';
 import { Button } from '../toolbox/buttons/button';
 import LiskAmount from '../liskAmount';
+
 import plusShapeIcon from '../../assets/images/plus-shape.svg';
+import circleImage from '../../assets/images/add-id-oval.svg';
+import rectangleOnTheRight from '../../assets/images/add-id-rectangle-1.svg';
+import rectangleImage2 from '../../assets/images/add-id-rectangle-2.svg';
+import rectangleImage3 from '../../assets/images/add-id-rectangle-2.svg';
+import triangleImage from '../../assets/images/add-id-triangle.svg';
 
 import styles from './savedAccounts.css';
 import mainStyles from '../app/app.css';
@@ -47,6 +53,11 @@ const SavedAccounts = ({
           <div className={styles.cardIcon}>
             <img src={plusShapeIcon} className={styles.plusShapeIcon} />
           </div>
+          <img src={rectangleOnTheRight} className={styles.rectangleOnTheRight} />
+          <img src={rectangleImage2} className={styles.rectangleImage2} />
+          <img src={rectangleImage3} className={styles.rectangleImage3} />
+          <img src={triangleImage} className={styles.triangleImage} />
+          <img src={circleImage} className={styles.circleImage} />
           <h2 className={styles.addTittle} >{t('Add a Lisk ID')}</h2>
         </div>
         {savedAccounts.map(account => (

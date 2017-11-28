@@ -41,13 +41,13 @@
   overflow: hidden;
 
   & > h2 {
+    position: relative;
     font-size: var(--font-size-card-h2);
     color: var(--color-black);
   }
 }
 
 .addNew {
-  opacity: 0.95;
   background-image: linear-gradient(-134deg, #93f4fe 1%, #004aff 98%);
 
   & > h2 {
@@ -71,6 +71,40 @@
   width: 134px;
   height: 134px;
   margin: 24px;
+}
+
+.rectangleOnTheRight,
+.rectangleImage2,
+.rectangleImage3,
+.triangleImage,
+.circleImage {
+  position: absolute;
+  opacity: 0.8;
+}
+
+.circleImage {
+  right: 0px;
+  bottom: 64px;
+}
+
+.rectangleOnTheRight {
+  right: 0px;
+  bottom: 60px;
+}
+
+.rectangleImage2 {
+  left: 50px;
+  bottom: 0px;
+}
+
+.rectangleImage3 {
+  left: 0px;
+  bottom: 0px;
+}
+
+.triangleImage {
+  left: 54px;
+  bottom: 92px;
 }
 
 .accountVisualPlaceholder,
