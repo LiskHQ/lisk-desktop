@@ -1,3 +1,46 @@
+@define-mixin shape $left, $top {
+  position: absolute;
+  left: $left;
+  top: $top;
+  z-index: 0;
+}
+
+.circle {
+  @mixin shape 1117px, 376px;
+}
+
+.smallCircle {
+  @mixin shape 152px, 660px;
+}
+
+.triangle {
+  @mixin shape 1040px, 540px;
+}
+
+.smallTriangle {
+  @mixin shape 1010px, 598px;
+}
+
+.rightRectangle {
+  @mixin shape 850px, 530px;
+}
+
+.leftRectangle {
+  @mixin shape 48px, 454px;
+}
+
+.circleOutline {
+  @mixin shape 379px, 630px;
+}
+
+.stripe {
+  @mixin shape 455px, 585px;
+}
+
+.smallStripe {
+  @mixin shape 829px, 657px;
+}
+
 .byte {
   display: inline-block;
   text-align: center;
@@ -5,6 +48,11 @@
   margin: 5px;
   font-family: monospace;
   transition: all ease 300ms;
+}
+
+.wrapper {
+  flex-direction: row;
+  height: 100%;
 }
 
 .missing {
@@ -19,6 +67,13 @@
   transition: all ease 300ms;
 }
 
+.generatorHeader {
+  position: relative;
+  z-index: 1;
+  width: 580px;
+  margin: 0 auto;
+}
+
 .bouncing {
   transform: scale(1.2);
 }
@@ -29,6 +84,7 @@ hr {
 
 .templateItem {
   min-height: 130px;
+  height: 100%;
 }
 
 .value {

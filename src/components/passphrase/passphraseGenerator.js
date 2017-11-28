@@ -1,10 +1,10 @@
 import React from 'react';
-import AnimateOnChange from 'react-animate-on-change';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { generateSeed, generatePassphrase, emptyByte } from '../../utils/passphrase';
 import styles from './passphrase.css';
 import Input from '../toolbox/inputs/input';
 import ProgressBar from '../toolbox/progressBar/progressBar';
+import * as shapes from '../../assets/images/register-shapes/*.svg'; //eslint-disable-line
 
 class PassphraseGenerator extends React.Component {
   constructor() {
@@ -23,6 +23,7 @@ class PassphraseGenerator extends React.Component {
   }
 
   componentWillUnmount() {
+    // const container = document.getElementById('generatorContainer')
     document.removeEventListener('mousemove', this.seedGeneratorBoundToThis, true);
   }
 
@@ -80,15 +81,25 @@ class PassphraseGenerator extends React.Component {
   render() {
     const isTouch = this.isTouchDevice(this.props.agent);
     return (
-      <div className={`${grid.row} ${grid['center-xs']}`} >
+      <div className={`${grid.row} ${grid['center-xs']} ${styles.wrapper}`} >
         <div className={grid['col-xs-12']}>
+          <img className={styles.circle} src={shapes.circle} />
+          <img className={styles.smallCircle} src={shapes.smallCircle} />
+          <img className={styles.triangle} src={shapes.triangle} />
+          <img className={styles.smallTriangle} src={shapes.smallTriangle} />
+          <img className={styles.circleOutline} src={shapes.circleOutline} />
+          <img className={styles.stripe} src={shapes.stripe} />
+          <img className={styles.smallStripe} src={shapes.smallStripe} />
+          <img className={styles.rightRectangle} src={shapes.rightRectangle} />
+          <img className={styles.leftRectangle} src={shapes.leftRectangle} />
+
           {isTouch ?
             <div>
               <p>Enter text below to generate random bytes</p>
               <Input onChange={this.seedGeneratorBoundToThis}
                 className='touch-fallback' autoFocus={true} multiline={true} />
             </div> :
-            <p>{this.props.t('Move your mouse to generate random bytes')}</p>
+            <h2 className={styles.generatorHeader}>{this.props.t('Create your Lisk ID by moving your mouse.')}</h2>
           }
         </div>
         <div className={grid['col-xs-12']}>

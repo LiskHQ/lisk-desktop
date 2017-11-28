@@ -1,11 +1,10 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './passphrase.css';
-import InfoParagraph from '../infoParagraph';
 import PassphraseGenerator from './passphraseGenerator';
 import PassphraseVerifier from './passphraseVerifier';
-import ActionBar from '../actionBar';
-import stepsConfig from './steps';
+// import ActionBar from '../actionBar';
+// import stepsConfig from './steps';
 import Input from '../toolbox/inputs/input';
 
 class Passphrase extends React.Component {
@@ -24,7 +23,7 @@ class Passphrase extends React.Component {
   render() {
     const templates = {};
     const { current } = this.state;
-    const steps = stepsConfig(this);
+    // const steps = stepsConfig(this);
 
     // step 2: Generator, binds mouse events
     templates.generate = <PassphraseGenerator t={this.props.t}
@@ -43,6 +42,19 @@ class Passphrase extends React.Component {
       answer={this.state.answer}
       updateAnswer={this.changeHandler.bind(this, 'answer')} />;
 
+    // <ActionBar
+    // secondaryButton={{
+    //   label: steps[current].cancelButton.title(),
+    //   onClick: steps[current].cancelButton.onClick.bind(this),
+    // }}
+    // primaryButton={{
+    //   label: steps[current].confirmButton.title(),
+    //   fee: steps[current].confirmButton.fee(),
+    //   className: 'next-button',
+    //   disabled: (current === 'generate' && !this.state.passphrase) ||
+    //     (current === 'confirm' && !this.state.answer),
+    //   onClick: steps[current].confirmButton.onClick.bind(this),
+    // }} />
     return (
       <div className="box">
         <section className={`${styles.templateItem} ${grid.row} ${grid['middle-xs']}`}>
@@ -50,20 +62,6 @@ class Passphrase extends React.Component {
             { templates[current] }
           </div>
         </section>
-
-        <ActionBar
-          secondaryButton={{
-            label: steps[current].cancelButton.title(),
-            onClick: steps[current].cancelButton.onClick.bind(this),
-          }}
-          primaryButton={{
-            label: steps[current].confirmButton.title(),
-            fee: steps[current].confirmButton.fee(),
-            className: 'next-button',
-            disabled: (current === 'generate' && !this.state.passphrase) ||
-              (current === 'confirm' && !this.state.answer),
-            onClick: steps[current].confirmButton.onClick.bind(this),
-          }} />
       </div>
     );
   }
