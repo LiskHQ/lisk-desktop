@@ -20,6 +20,8 @@ avaialble application-wide
 
 ****************************************/
 
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
+
 @font-face {
   font-family: 'gilroy';
   src:
@@ -39,8 +41,6 @@ avaialble application-wide
   font-weight: bolder;
   font-style: normal;
 }
-
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
 
 body {
   font-family: var(--content-font);
