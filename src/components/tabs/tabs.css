@@ -4,7 +4,7 @@
   --menu-background-color: var(--color-white);
   --menu-item-active-gradient: var(--gradient-theme);
   --menu-item-active-border-width: 7px;
-  --setting-menu-color: var(--color-grayscale-light);
+  --setting-menu-color: var(--color-grayscale-medium);
   --setting-menu-border-color: var(--color-grayscale-medium);
 }
 
@@ -45,10 +45,10 @@
 
 .label {
   padding: 25px 10px;
-  font-family: Gilroy-Bold;
-  font-size: 18px;
+  font-size: 1.125em;
   color: var(--color-black);
-  letter-spacing: 0;
+  font-weight: bold;
+  font-family: var(--heading-font);
 
   & > .rippleWrapper {
     display: none;
