@@ -9,7 +9,7 @@ import plusShapeIcon from '../../assets/images/plus-shape.svg';
 import circleImage from '../../assets/images/add-id-oval.svg';
 import rectangleOnTheRight from '../../assets/images/add-id-rectangle-1.svg';
 import rectangleImage2 from '../../assets/images/add-id-rectangle-2.svg';
-import rectangleImage3 from '../../assets/images/add-id-rectangle-2.svg';
+import rectangleImage3 from '../../assets/images/add-id-rectangle-3.svg';
 import triangleImage from '../../assets/images/add-id-triangle.svg';
 
 import styles from './savedAccounts.css';
@@ -65,17 +65,17 @@ const SavedAccounts = ({
             key={account.publicKey + account.network}
             onClick={accountSwitched.bind(this, account)} >
             {(isActive(account) ?
-              <span className={styles.unlocked}>
+              <strong className={styles.unlocked}>
                 <FontIcon value='lock_open' />
                 {t('Unlocked')}
-              </span> :
+              </strong> :
               null)}
             <div className={styles.cardIcon}>
               <div className={styles.accountVisualPlaceholder}></div>
               <div className={styles.accountVisualPlaceholder2}></div>
             </div>
             <h2>
-              <LiskAmount val={18000e8} /> <small>LSK</small>
+              <LiskAmount val={account.balance} /> <small>LSK</small>
             </h2>
             <div className={styles.address} >{extractAddress(account.publicKey)}</div>
             <Button className='remove-button'
