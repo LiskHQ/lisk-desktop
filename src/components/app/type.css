@@ -40,35 +40,7 @@ avaialble application-wide
   font-style: normal;
 }
 
-@font-face {
-  font-family: 'openSans';
-  src:
-    url('../../assets/fonts/open-sans/open-sans-regular.woff2') format('woff2'),
-    url('../../assets/fonts/open-sans/open-sans-regular.woff') format('woff'),
-    url('../../assets/fonts/open-sans/open-sans-regular.ttf')  format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'openSans';
-  src:
-    url('../../assets/fonts/open-sans/open-sans-semibold.woff2') format('woff2'),
-    url('../../assets/fonts/open-sans/open-sans-semibold.woff') format('woff'),
-    url('../../assets/fonts/open-sans/open-sans-semibold.ttf')  format('truetype');
-  font-weight: bold;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'openSans';
-  src:
-    url('../../assets/fonts/open-sans/open-sans-bold.woff2') format('woff2'),
-    url('../../assets/fonts/open-sans/open-sans-bold.woff') format('woff'),
-    url('../../assets/fonts/open-sans/open-sans-bold.ttf')  format('truetype');
-  font-weight: bolder;
-  font-style: normal;
-}
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
 
 body {
   font-family: var(--content-font);
