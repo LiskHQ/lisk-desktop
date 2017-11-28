@@ -1,6 +1,6 @@
 1. Define class names in camelCase. 
 2. For the styling purpose, prefer class names to IDs. 
-3. Prefer defining variables for all CSS values describing a certain presentational behaviour and used in multiple places (we use ‘css-next’ variables. read [this](http://cssnext.io/features/#custom-properties-var) for more information. 
+3. Prefer defining variables for all CSS values describing a certain presentational behaviour and used in multiple places (we use ‘css-next’ variables). read [this](http://cssnext.io/features/#custom-properties-var) for more information. 
 4. There is common css file in app component and if you use a class Name in more than one components, Add it to this file (don’t use this for child and depend components) . 
 5. Vendor prefixes are not needed since autoprefixer performs this. Read [docs](https://github.com/postcss/autoprefixer) for more information. 
 6. Please ensure cross browser compatibility for all major browsers. 
