@@ -11,7 +11,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   successToast: data => dispatch(successToastDisplayed(data)),
-  copyToClipboard: (...args) => copy(...args),
+  copyToClipboard: (message, options) => copy(message, options),
 });
 
 export default connect(

@@ -54,7 +54,7 @@ class Authenticate extends React.Component {
             onClick: this.props.closeDialog,
           }}
           primaryButton={{
-            label: this.props.t('Submit'),
+            label: this.props.t('Unlock account'),
             onClick: this.update.bind(this),
             className: 'authenticate-button',
             disabled: (!authStateIsValid(this.state)),
