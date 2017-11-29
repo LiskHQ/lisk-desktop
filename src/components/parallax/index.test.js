@@ -1,16 +1,16 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import Parallaxer from './index';
+import Parallax from './index';
 
-describe('Parallaxer', () => {
+describe.only('Parallax', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<Parallaxer className='parent'>
+    wrapper = mount(<Parallax className='parent'>
       <div className='child'>Child 1</div>
       <div className='child'>Child 2</div>
-    </Parallaxer>);
+    </Parallax>);
   });
 
   it('should mount its children', () => {

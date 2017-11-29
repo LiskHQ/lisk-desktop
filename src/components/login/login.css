@@ -1,63 +1,179 @@
 @import '../app/variables';
 
+:root {
+  --gradient: linear-gradient(45deg, rgba(0, 74, 255, 1) 0%, rgba(147, 244, 254, 1) 100%);
+  --transition: all ease 300ms;
+}
+
 .wrapper {
   overflow: visible !important;
+  display: block !important;
 }
 
 .wrapper,
-.login,
-.signup {
+.login {
   height: 100%;
-  transition: all ease 300ms;
+}
+
+.login,
+.signUp {
+  transition: var(--transition);
+  padding: 0 40px;
+  position: relative;
+  box-sizing: border-box;
+  float: left;
 }
 
 .login {
-  padding: 0 56px;
+  width: 42%;
 
-  & h1 {
+  & .table {
+    position: relative;
+  }
+
+  & h2 {
     color: var(--color-primary-medium);
+    margin-bottom: 0.2em;
   }
 
-  & .backButton {
-    color: var(--color-primary-dark);
-    font-size: var(--font-size-h2);
-
-  }
-  & .backButton .icon {
-    font-size: var(--font-size-h6) !important;
+  & form button {
+    display: none;
+    transition: var(--transition);
+    animation: fadeIn 300ms forwards;
   }
 
-  & .backButton .icon,
-  & .backButton span:not(.icon) {
-    display: inline-block;
-    vertical-align: middle;
+  & header {
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    & .backButton {
+      color: var(--color-grayscale-dark);
+      font-size: var(--font-size-h3);
+
+      & .icon {
+        font-size: var(--font-size-h6) !important;
+      }
+
+      & .icon,
+      & b {
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      & b {
+        font-size: 0.36em !important;
+      }
+    }
   }
 
-  & .backButton span:not(.icon) {
-    font-size: 0.4em !important;
+  /* @todo remove these with #3 */
+
+  & .outTaken {
+    top: 100px;
+
+    & + .outTaken {
+      top: 150px;
+
+      & + .outTaken {
+        top: 200px;
+      }
+    }
+  }
+
+  &.focused {
+    transform: translateZ(0);
+    width: 75%;
+
+    & form button {
+      display: inline-block;
+    }
   }
 }
 
 .signUp {
-  position: relative;
   height: calc(100% + 78px);
-  /* Currently: -39px 8px -39px -8px */
-  margin:
-    calc(var(--box-overflow-y) - var(--box-padding))
-    calc(var(--box-padding) / 2)
-    calc(var(--box-overflow-y) - var(--box-padding))
-    calc(var(--box-padding) / -2);
-  background: linear-gradient(45deg, rgba(0, 74, 255, 1) 0%, rgba(147, 244, 254, 1) 100%);
+  width: 58%;
+  margin-top: -40px;
 
-  & h1 {
+  & .bg,
+  & .shapes,
+  & .shapes > div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+  }
+
+  & .bg {
+    z-index: 0;
+    opacity: 0.94;
+    background: var(--gradient);
+  }
+
+  & .shapes {
+    z-index: 1;
+  }
+
+  & .shape {
+    position: absolute !important;
+
+    &.reactA {
+      left: 5% !important;
+      top: 15% !important;
+      width: 200px;
+    }
+
+    &.reactB {
+      left: 10% !important;
+      top: 18% !important;
+      width: 200px;
+    }
+
+    &.reactC {
+      right: 20% !important;
+      top: 25% !important;
+      left: auto !important;
+      z-index: 2;
+      width: 200px;
+    }
+
+    &.circle {
+      right: 10% !important;
+      bottom: 7% !important;
+      left: auto !important;
+      top: auto !important;
+      width: 150px;
+    }
+
+    &.square {
+      right: 10% !important;
+      left: auto !important;
+      top: 20% !important;
+      width: 150px;
+    }
+  }
+
+  & .table {
+    position: relative;
+    z-index: 2;
+  }
+
+  & h2 {
     color: var(--color-white);
   }
 
-  & h4,
+  & h5,
   & a,
   & .singUpArrow {
-    color: var(--color-grayscale-light);
+    color: var(--color-white);
     vertical-align: middle;
+    transition: var(--transition);
+  }
+
+  & h5 {
+    max-width: 320px;
   }
 
   & a {
@@ -67,8 +183,29 @@
   & .singUpArrow {
     font-size: 1em !important;
   }
-}
 
+  & .shapes {
+    position: absolute;
+    z-index: 1;
+  }
+
+  &.focused {
+    width: 25%;
+    transform: translateZ(0);
+
+    & h2 {
+      font-size: 2.1em;
+    }
+
+    & .singUpArrow {
+      font-size: 1.32em;
+    }
+
+    & h5 {
+      font-size: 1em;
+    }
+  }
+}
 
 .table {
   display: table;
@@ -79,4 +216,13 @@
     display: table-cell;
     vertical-align: middle;
   }
+}
+
+.outTaken {
+  position: absolute;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

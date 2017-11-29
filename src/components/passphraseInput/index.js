@@ -83,6 +83,8 @@ class PassphraseInput extends React.Component {
           value={this.props.value || ''}
           type={this.state.inputType}
           theme={this.props.theme}
+          onFocus={typeof this.props.onFocus === 'function' ? this.props.onFocus : undefined}
+          onBlur={typeof this.props.onBlur === 'function' ? this.props.onBlur : undefined}
           onChange={this.handleValueChange.bind(this)} />
         <TooltipIconButton className={`show-passphrase-toggle ${styles.eyeIcon}`}
           tooltipPosition='horizontal'
