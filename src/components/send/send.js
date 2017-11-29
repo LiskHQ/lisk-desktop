@@ -94,7 +94,7 @@ class Send extends React.Component {
 
   render() {
     return (
-      <div className={`${styles.send} send`}>
+      <div className={`${styles.send} boxPadding send`}>
         <form onSubmit={this.send.bind(this)}>
           {this.showAvatar()
             ? <img className={styles.smallAvatar}></img>

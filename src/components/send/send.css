@@ -21,7 +21,7 @@
 
 .tab {
   margin: 40px 0px;
-  font-size: 1.8em;
+  font-size: 1.125em;
   vertical-align: middle;
   text-align: center;
   line-height: 60px;
@@ -46,7 +46,7 @@
 
   & .subTitle {
     margin-top: 20px;
-    font-size: 1.6em;
+    font-size: 1em;
     color: #3c5068;
   }
 }

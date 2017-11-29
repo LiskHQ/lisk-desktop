@@ -54,7 +54,7 @@ class TransactionRow extends React.Component {
           <div className={styles.mainRow}><Amount {...props}></Amount></div>
           {this.state.isOpen ? <div className={styles.subRow}> {props.t('Additional fee:')} <LiskAmount val={props.value.fee} /></div> : ''}
         </div>
-        <div className={`${styles.centerText} ${grid['col-xs-1']}`}>
+        <div className={`${styles.rightText} ${grid['col-xs-1']}`}>
           <div className={`${styles.mainRow} ${styles.clickable}`} onClick={this.toggleRow.bind(this)}>
             <img src={angle} className={this.state.isOpen ? styles.turnArrow : ''}/>
           </div>

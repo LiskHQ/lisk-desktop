@@ -34,7 +34,6 @@ order to be available application wide
   background: var(--color-white);
   box-shadow: var(--normal-shadow);
   border-radius: 3px;
-  padding: var(--box-padding);
   max-height: 100%;
   flex-direction: column;
   overflow: auto;
@@ -51,4 +50,8 @@ order to be available application wide
 :global .hidden {
   position: absolute;
   visibility: hidden;
+}
+
+:global .boxPadding {
+  padding: 0px 30px;
 }

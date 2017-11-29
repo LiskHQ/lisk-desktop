@@ -43,28 +43,33 @@ class Transactions extends React.Component {
     return (
       <div className={grid.row} style={{ width: '100%' }}>
         <div className={`${grid['col-xs-4']}`}>
-          <div className={`${styles.padding} box`}>
+          <div className='box'>
             <Transfer />
           </div>
         </div>
         <div className={`${grid['col-xs-8']}`}>
           <div className={`${styles.noPadding} box`}>
-            <div className={styles.header__wrapper}>
-              <div className={styles.header__mainSection}>Transactions</div>
-              <div className={styles.header__accountSection}>
-                <span className={styles.header__balance}>
-                  <LiskAmount val={this.props.balance} /> </span>
-                <span className={styles.header__balanceUnit}>LSK</span>
-                <div onClick={this.copyAddress.bind(this)} className={styles.header__address}>
-                  <img src={copy} /> {this.props.address}</div>
+            <header>
+              <h2 className={styles.title}>{this.props.t('Transactions')}</h2>
+              <div className={styles.account}>
+                <h2>
+                  <span>
+                    <LiskAmount val={this.props.balance} />&nbsp;
+                  </span>
+                  <small className={styles.balanceUnit}>LSK</small>
+                </h2>
+                <div onClick={this.copyAddress.bind(this)} className={`${styles.subTitle} ${styles.address}`}>
+                  <img src={copy} />&nbsp;
+                  <span>{this.props.address}</span>
+                </div>
               </div>
-            </div>
+            </header>
 
-            <ul className={styles.transaction_list}>
-              <li className={`${styles.transaction_list_item} ${styles.active}`}>All</li>
-              <li className={styles.transaction_list_item}>Incoming</li>
-              <li className={styles.transaction_list_item}>Outgoing</li>
-              <li className={styles.transaction_list_item}>Other</li>
+            <ul className={styles.list}>
+              <li className={`${styles.item} ${styles.active}`}>All</li>
+              <li className={styles.item}>Incoming</li>
+              <li className={styles.item}>Outgoing</li>
+              <li className={styles.item}>Other</li>
             </ul>
 
             {this.props.transactions.length > 0 ?

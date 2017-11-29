@@ -11,7 +11,7 @@
 
 label {
   color: #3c5068 !important;
-  font-size: 1.4em !important;
+  font-size: 0.875em !important;
 }
 
 .input input:not(:focus) {
@@ -21,7 +21,7 @@ label {
 }
 
 .error {
-  font-size: 14px;
+  font-size: 0.875em;
   line-height: 30px;
   color: #da1d00;
 

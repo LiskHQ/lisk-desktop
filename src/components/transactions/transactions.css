@@ -53,10 +53,6 @@
   text-align: right;
 }
 
-.centerText {
-  text-align: center;
-}
-
 .ordinaryText {
   text-decoration: none;
   color: inherit;
@@ -145,30 +141,29 @@ a {
 }
 
 .paddingLeft {
-  padding-left: var(--grid-padding-left);
+  padding: 0px var(--grid-padding-left);
 }
 
-.noPadding {
-  padding: 0 !important;
-}
-
-.header {
+header {
   padding: 20px 30px;
   line-height: var(--header-line-height);
 
   & .title {
-    font-weight: var(--font-weight-bold);
     float: left;
-    font-size: 0.4727em;
+  }
+
+  & .subTitle {
+    font-size: 1.125em;
   }
 
   & .account {
     float: right;
-    font-size: 0.472em;
   }
 
   & h2 {
+    font-weight: var(--font-weight-bold);
     margin-bottom: 0;
+    font-size: 2em;
   }
 
   & h3 {
@@ -183,13 +178,16 @@ a {
   & .address {
     text-align: right;
     cursor: pointer;
-    font-size: 2.39em;
+  }
+
+  & .transfer {
+   color: #3c5068;
   }
 }
 
 .tab {
   margin: 40px 0px;
-  font-size: 1.8em;
+  font-size: 1.125em;
   vertical-align: middle;
   text-align: center;
   line-height: 60px;
@@ -209,8 +207,4 @@ a {
 .tabInactive {
   color: #3c7fb4;
   background: white;
-}
-
-.padding {
-  padding: 30px !important;
 }
