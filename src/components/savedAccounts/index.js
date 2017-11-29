@@ -5,7 +5,7 @@ import { accountSaved, accountRemoved, accountSwitched } from '../../actions/sav
 import SavedAccounts from './savedAccounts';
 
 const mapStateToProps = state => ({
-  publicKey: state.account.publicKey,
+  activeAccount: state.account,
   networkOptions: state.peers.options,
   savedAccounts: state.savedAccounts.accounts,
 });

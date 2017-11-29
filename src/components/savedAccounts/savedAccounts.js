@@ -18,17 +18,27 @@ import mainStyles from '../app/app.css';
 
 const SavedAccounts = ({
   networkOptions,
-  publicKey,
+  activeAccount,
   closeDialog,
   accountRemoved,
   accountSwitched,
   accountLoggedOut,
   savedAccounts,
+  accountSaved,
   t,
 }) => {
   const isActive = account => (
-    account.publicKey === publicKey &&
+    account.publicKey === activeAccount.publicKey &&
     account.network === networkOptions.code);
+
+  const save = () => {
+    accountSaved({
+      network: networkOptions.code,
+      address: networkOptions.address,
+      publicKey: activeAccount.publicKey,
+      balance: activeAccount.balance,
+    });
+  };
 
   return (
     <div className={`${styles.wrapper} save-account`}>
@@ -85,6 +95,11 @@ const SavedAccounts = ({
           </div>
         ))}
       </div>
+      <Button className='add-active-account-button'
+        theme={{ button: styles.addAcctiveAccountButton }}
+        disabled={savedAccounts.filter(isActive).length !== 0}
+        onClick={save.bind(this)}
+        label={t('Add active account')}/>
     </div>
   );
 };

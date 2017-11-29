@@ -62,6 +62,8 @@
 
 .address {
   margin-bottom: 40px;
+  color: var(--color-grayscale-dark);
+  font-size: 1.125em;
 }
 
 .cardIcon {
@@ -134,6 +136,18 @@
   padding: 24px;
   color: var(--color-grayscale-dark);
   font-weight: bold;
+}
+
+.addAcctiveAccountButton {
+  box-shadow: 0 0 0 2px var(--color-white);
+  color: var(--color-white) !important;
+  margin: 20px auto;
+  display: block;
+}
+
+.addAcctiveAccountButton:hover {
+  color: var(--color-black) !important;
+  background-color: var(--color-white) !important;
 }
 
 .closeButton {
