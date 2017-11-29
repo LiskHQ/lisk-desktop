@@ -4,6 +4,7 @@ import React from 'react';
 import { extractAddress } from '../../utils/api/account';
 import { SecondaryLightButton } from '../toolbox/buttons/button';
 import LiskAmount from '../liskAmount';
+import BackgroundMaker from '../backgroundMaker';
 
 import plusShapeIcon from '../../assets/images/plus-shape.svg';
 import circleImage from '../../assets/images/add-id-oval.svg';
@@ -13,7 +14,6 @@ import rectangleImage3 from '../../assets/images/add-id-rectangle-3.svg';
 import triangleImage from '../../assets/images/add-id-triangle.svg';
 
 import styles from './savedAccounts.css';
-import mainStyles from '../app/app.css';
 
 
 const SavedAccounts = ({
@@ -42,20 +42,7 @@ const SavedAccounts = ({
 
   return (
     <div className={`${styles.wrapper} save-account`}>
-      <div className={mainStyles.stageStripes}>
-        <span className={mainStyles.stageStripe}></span>
-        <span className={mainStyles.stageStripe}></span>
-        <span className={mainStyles.stageStripe}></span>
-        <span className={mainStyles.stageStripe}></span>
-        <span className={mainStyles.stageStripe}></span>
-        <span className={mainStyles.stageStripe}></span>
-        <span className={mainStyles.stageStripe}></span>
-        <span className={mainStyles.stageStripe}></span>
-        <span className={mainStyles.stageStripe}></span>
-        <span className={mainStyles.stageStripe}></span>
-        <span className={mainStyles.stageStripe}></span>
-        <span className={mainStyles.stageStripe}></span>
-      </div>
+      <BackgroundMaker />
       <ToolBoxButton icon='close' floating onClick={closeDialog} className={`x-button ${styles.closeButton}`} />
       <h1>{t('Your favorite Lisk IDs')}</h1>
       <div className={styles.cardsWrapper} >
