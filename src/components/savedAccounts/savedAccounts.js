@@ -2,7 +2,7 @@ import { Button as ToolBoxButton } from 'react-toolbox/lib/button';
 import FontIcon from 'react-toolbox/lib/font_icon';
 import React from 'react';
 import { extractAddress } from '../../utils/api/account';
-import { Button } from '../toolbox/buttons/button';
+import { SecondaryLightButton } from '../toolbox/buttons/button';
 import LiskAmount from '../liskAmount';
 
 import plusShapeIcon from '../../assets/images/plus-shape.svg';
@@ -88,14 +88,14 @@ const SavedAccounts = ({
               <LiskAmount val={account.balance} /> <small>LSK</small>
             </h2>
             <div className={styles.address} >{extractAddress(account.publicKey)}</div>
-            <Button className='remove-button'
+            <SecondaryLightButton className='remove-button'
               theme={{ button: styles.removeButton }}
               onClick={accountRemoved.bind(null, account)}
               label={t('Remove from Favorites')}/>
           </div>
         ))}
       </div>
-      <Button className='add-active-account-button'
+      <SecondaryLightButton className='add-active-account-button'
         theme={{ button: styles.addAcctiveAccountButton }}
         disabled={savedAccounts.filter(isActive).length !== 0}
         onClick={save.bind(this)}

@@ -43,4 +43,9 @@
     color: var(--color-grayscale-light) !important;
     box-shadow: 0 0 0 2px var(--color-grayscale-light);
   }
+
+  &:hover {
+    color: var(--color-black) !important;
+    background-color: var(--color-white) !important;
+  }
 }

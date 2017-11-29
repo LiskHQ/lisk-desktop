@@ -148,15 +148,8 @@
 }
 
 .addAcctiveAccountButton {
-  box-shadow: 0 0 0 2px var(--color-white);
-  color: var(--color-white) !important;
   margin: 20px auto;
   display: block;
-}
-
-.addAcctiveAccountButton:hover {
-  color: var(--color-black) !important;
-  background-color: var(--color-white) !important;
 }
 
 .closeButton {
@@ -166,15 +159,15 @@
   right: 85px;
 }
 
-.removeButton:hover,
 .removeButton {
   background-color: var(--color-white) !important;
   color: var(--color-grayscale-dark) !important;
   border: none;
   box-shadow: var(--normal-shadow);
   text-transform: none;
+
+  &:hover {
+    color: var(--color-primary-medium) !important;
+  }
 }
 
-.removeButton:hover {
-  color: var(--color-primary-medium) !important;
-}
