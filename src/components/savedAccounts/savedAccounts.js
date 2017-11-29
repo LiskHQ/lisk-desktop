@@ -77,7 +77,10 @@ const SavedAccounts = ({
             <div className={styles.address} >{extractAddress(account.publicKey)}</div>
             <SecondaryLightButton className='remove-button'
               theme={{ button: styles.removeButton }}
-              onClick={accountRemoved.bind(null, account)}
+              onClick={(e) => {
+                accountRemoved(account);
+                e.stopPropagation();
+              }}
               label={t('Remove from Favorites')}/>
           </div>
         ))}
