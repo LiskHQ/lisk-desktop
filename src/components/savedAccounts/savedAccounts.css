@@ -4,21 +4,24 @@
   --font-size-ids-h1: 4em;
   --font-size-card-h2: 2em;
   --close-button-shadow: 0 20px 20px 0 rgba(0, 32, 68, 0.25);
+  --h1-padding: 85px;
+  --add-button-margin: 200px;
+  --card-width: 347;
+  --card-height: 436px;
+  --add-button-margin: 240px;
 }
 
 .wrapper {
   margin: -24px -24px -24px -24px;
   background: #013165;
-
-  /* TODO this is temporary */
-  font-size: 16px;
+  overflow-y: auto;
 
   & > h1 {
     position: relative;
     color: var(--color-white);
     font-size: var(--font-size-ids-h1);
     text-align: center;
-    padding: 85px;
+    padding: var(--h1-padding);
     margin: 0 auto;
     max-width: 600px;
   }
@@ -26,16 +29,20 @@
 
 .cardsWrapper {
   display: block;
-  overflow-x: auto;
+  overflow: auto;
   white-space: nowrap;
-  padding: 0 24px 48px 232px;
+  padding: 48px 232px;
+  text-align: center;
+  height: calc(100vh - 154px -  2 * var(--h1-padding)); /* stylelint-disable-line */
+  min-height: calc(var(--card-height) + 2 * var(--add-button-margin));
+  position: relative;
 }
 
 .card {
   position: relative;
   display: inline-block;
-  width: 347px;
-  height: 436px;
+  width: var(--card-width);
+  height: var(--card-height);
   border-radius: var(--border-radius-normal);
   background-color: var(--color-white);
   box-shadow: var(--normal-shadow);
@@ -148,7 +155,7 @@
 }
 
 .addAcctiveAccountButton {
-  margin: 20px auto;
+  margin: -var(--add-button-margin) auto var(--add-button-margin);
   display: block;
 }
 
@@ -170,4 +177,3 @@
     color: var(--color-primary-medium) !important;
   }
 }
-

@@ -68,9 +68,13 @@ class DialogElement extends Component {
   }
 
   render() {
+    const theme = {
+      ...styles,
+      ...(this.props.dialog.theme || {}),
+    };
     return (
       <Dialog active={this.props.dialog.childComponent !== undefined && !this.state.hidden}
-        theme={{ ...styles, ...(this.props.dialog.theme || {}) }}
+        theme={theme}
         type='fullscreen' className='modal-dialog'>
         <div className={styles.dialog}>
           { this.props.dialog.title ?
@@ -81,7 +85,7 @@ class DialogElement extends Component {
               </Navigation>
             </AppBar> :
             null }
-          <div className={`modal-dialog-body ${styles.innerBody}`}>
+          <div className={`modal-dialog-body ${theme.innerBody}`}>
             {this.props.dialog.childComponent ?
               <this.props.dialog.childComponent
                 {...(this.props.dialog.childComponentProps || {})}

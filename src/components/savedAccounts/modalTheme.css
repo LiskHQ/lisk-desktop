@@ -6,3 +6,14 @@
   border-radius: 0;
   background: #013165;
 }
+
+.innerBody {
+  padding: 24px;
+  max-height: auto;
+}
+
+@media screen and (min-width: 600px) {
+  .innerBody {
+    max-height: auto;
+  }
+}
