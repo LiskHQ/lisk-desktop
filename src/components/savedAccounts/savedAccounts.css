@@ -48,6 +48,10 @@
     position: relative;
     font-size: var(--font-size-card-h2);
     color: var(--color-black);
+
+    & > small {
+      font-size: 0.6875em;
+    }
   }
 }
 
@@ -130,12 +134,17 @@
 }
 
 .unlocked {
+  font-size: 1em;
   position: absolute;
   left: 0;
   top: 0;
   padding: 24px;
   color: var(--color-grayscale-dark);
   font-weight: bold;
+
+  & > * {
+    vertical-align: bottom;
+  }
 }
 
 .addAcctiveAccountButton {

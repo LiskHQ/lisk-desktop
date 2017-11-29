@@ -74,7 +74,7 @@ const SavedAccounts = ({
           <div className={`switch-button saved-account-card ${styles.card}`}
             key={account.publicKey + account.network}
             onClick={accountSwitched.bind(this, account)} >
-            {(isActive(account) ?
+            {(isActive(account) && activeAccount.passphrase ?
               <strong className={styles.unlocked}>
                 <FontIcon value='lock_open' />
                 {t('Unlocked')}
