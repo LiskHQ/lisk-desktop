@@ -1,0 +1,8 @@
+.dialog.fullscreen {
+  width: 100vw; /* stylelint-disable-line */
+  height: 100vh; /* stylelint-disable-line */
+  max-width: 100vw; /* stylelint-disable-line */
+  max-height: 100vh; /* stylelint-disable-line */
+  border-radius: 0;
+  background: #013165;
+}

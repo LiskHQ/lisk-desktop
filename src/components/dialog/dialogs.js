@@ -3,6 +3,7 @@ import ReceiveDialog from '../receiveDialog';
 import Register from '../register';
 import RegisterDelegate from '../registerDelegate';
 import SavedAccounts from '../savedAccounts';
+import savedAccountsTheme from '../savedAccounts/modalTheme.css';
 import SecondPassphrase from '../secondPassphrase';
 import Send from '../send';
 import Settings from '../settings';
@@ -47,6 +48,7 @@ export default () => ({
   },
   'saved-accounts': {
     component: SavedAccounts,
+    theme: savedAccountsTheme,
   },
   settings: {
     title: i18next.t('Settings'),

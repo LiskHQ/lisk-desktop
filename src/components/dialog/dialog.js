@@ -49,6 +49,7 @@ class DialogElement extends Component {
     this.setState({ hidden: false });
     this.props.dialogDisplayed({
       title: dialog.title,
+      theme: dialog.theme,
       childComponent: dialog.component,
       childComponentProps: parseSearchParams(this.props.history.location.search),
     });
@@ -69,7 +70,7 @@ class DialogElement extends Component {
   render() {
     return (
       <Dialog active={this.props.dialog.childComponent !== undefined && !this.state.hidden}
-        theme={styles}
+        theme={{ ...styles, ...(this.props.dialog.theme || {}) }}
         type='fullscreen' className='modal-dialog'>
         <div className={styles.dialog}>
           { this.props.dialog.title ?
