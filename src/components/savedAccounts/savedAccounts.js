@@ -59,7 +59,7 @@ const SavedAccounts = ({
       <ToolBoxButton icon='close' floating onClick={closeDialog} className={`x-button ${styles.closeButton}`} />
       <h1>{t('Your favorite Lisk IDs')}</h1>
       <div className={styles.cardsWrapper} >
-        <div className={`${styles.card} ${styles.addNew}`} onClick={accountLoggedOut} >
+        <div className={`add-lisk-id-card ${styles.card} ${styles.addNew}`} onClick={accountLoggedOut} >
           <div className={styles.cardIcon}>
             <img src={plusShapeIcon} className={styles.plusShapeIcon} />
           </div>

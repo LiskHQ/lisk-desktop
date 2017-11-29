@@ -38,7 +38,9 @@ describe('SavedAccounts', () => {
     networkOptions: {
       code: 0,
     },
-    publicKey,
+    activeAccount: {
+      publicKey,
+    },
     savedAccounts: [],
     t: key => key,
   };
@@ -65,28 +67,24 @@ describe('SavedAccounts', () => {
     accountSavedSpy.restore();
   });
 
-  it.skip('should render ActionBar', () => {
-    expect(wrapper.find('ActionBar')).to.have.lengthOf(1);
-  });
-
   it('should call props.accountSaved on "save button" click', () => {
     wrapper.find('button.add-active-account-button').simulate('click');
     const componentProps = wrapper.find(SavedAccounts).props();
     expect(componentProps.accountSaved).to.have.been.calledWith();
   });
 
-  it('should render InfoParagraph', () => {
+  it('should render "Add a LIsk Id" card', () => {
     wrapper.find('button.add-active-account-button').simulate('click');
-    expect(wrapper.find('InfoParagraph')).to.have.lengthOf(1);
+    expect(wrapper.find('.add-lisk-id-card')).to.have.lengthOf(1);
   });
 
-  it('should render savedAccounts.length table rows', () => {
+  it('should render savedAccounts.length of save account cards', () => {
     wrapper.find('button.add-active-account-button').simulate('click');
     wrapper.setProps({
       ...props,
       savedAccounts,
     });
-    expect(wrapper.find('TableRow')).to.have.lengthOf(savedAccounts.length);
+    expect(wrapper.find('.saved-account-card')).to.have.lengthOf(savedAccounts.length);
   });
 });
 
