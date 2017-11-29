@@ -37,6 +37,23 @@ order to be available application wide
   max-height: 100%;
   flex-direction: column;
   overflow: auto;
+  position: relative;
+
+  & footer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    padding: 50px 30px 20px;
+    text-align: center;
+
+    & .subTitle {
+      margin-top: 20px;
+      font-size: 1em;
+      color: #3c5068;
+      height: 22px;
+    }
+  }
 }
 
 :global .hasNoPadding {

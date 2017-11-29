@@ -1,9 +1,5 @@
 @import '../app/variables.css';
 
-.send {
-  position: relative;
-}
-
 .sendAllMenu {
   position: absolute !important;
   right: 0;
@@ -38,17 +34,6 @@
   color: #3c5068;
   border: 2px solid #3c5068;
   border-radius: 0 3px 3px 0;
-}
-
-.actionSection {
-  text-align: center;
-  margin-top: 50px;
-
-  & .subTitle {
-    margin-top: 20px;
-    font-size: 1em;
-    color: #3c5068;
-  }
 }
 
 input:read-only {

@@ -92,6 +92,10 @@ class Send extends React.Component {
     this.handleChange('amount', this.getMaxAmount());
   }
 
+  transactionIsPending() {
+    return this.props.pendingTransactions.length > 0;
+  }
+
   render() {
     return (
       <div className={`${styles.send} boxPadding send`}>
@@ -137,7 +141,7 @@ class Send extends React.Component {
               />
             </div>
           }
-          <div className={styles.actionSection}>
+          <footer>
             {this.props.isEditable
               ?
               <div>
@@ -147,7 +151,7 @@ class Send extends React.Component {
                           !!this.state.amount.error ||
                           !this.state.amount.value)}
                 >Next</Button>
-                <div className={styles.subTitle}>Confirmation in the next step.</div>
+                <div className='subTitle'>Confirmation in the next step.</div>
               </div>
               :
               <section className={grid.row} >
@@ -164,13 +168,13 @@ class Send extends React.Component {
                     label={this.props.t('Send')}
                     type='submit'
                     theme={styles}
-                    disabled={!authStateIsValid(this.state)}
+                    disabled={!authStateIsValid(this.state) || this.transactionIsPending()}
                   />
-                  <div className={styles.subTitle}>Transactions can’t be reversed.</div>
+                  <div className='subTitle'>Transactions can’t be reversed.</div>
                 </div>
               </section>
             }
-          </div>
+          </footer>
         </form>
       </div>
     );
