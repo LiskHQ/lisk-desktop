@@ -56,7 +56,7 @@ const SavedAccounts = ({
         <span className={mainStyles.stageStripe}></span>
         <span className={mainStyles.stageStripe}></span>
       </div>
-      <ToolBoxButton icon='close' floating onClick={closeDialog} className={styles.closeButton} />
+      <ToolBoxButton icon='close' floating onClick={closeDialog} className={`x-button ${styles.closeButton}`} />
       <h1>{t('Your favorite Lisk IDs')}</h1>
       <div className={styles.cardsWrapper} >
         <div className={`${styles.card} ${styles.addNew}`} onClick={accountLoggedOut} >
@@ -71,7 +71,7 @@ const SavedAccounts = ({
           <h2 className={styles.addTittle} >{t('Add a Lisk ID')}</h2>
         </div>
         {savedAccounts.map(account => (
-          <div className={`switch-button ${styles.card}`}
+          <div className={`switch-button saved-account-card ${styles.card}`}
             key={account.publicKey + account.network}
             onClick={accountSwitched.bind(this, account)} >
             {(isActive(account) ?
