@@ -122,15 +122,15 @@
   position: absolute;
   width: 126px;
   height: 84px;
-  top: 40px;
+  top: 20px;
   left: 24px;
   opacity: 0.9;
-  background-image: linear-gradient(-134deg, #3023ae 0%, #c86dd7 100%);
+  background-image: linear-gradient(124deg, #3023ae 0%, #c86dd7 100%);
 }
 
 .accountVisualPlaceholder2 {
-  top: 40px;
-  left: 24px;
+  top: 70px;
+  left: 44px;
 }
 
 .unlocked {
