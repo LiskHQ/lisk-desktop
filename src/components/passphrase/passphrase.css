@@ -1,8 +1,64 @@
+@import '../app/variables';
+
+:root {
+  --address-color: var(--color-primary-medium);
+  --address-animation-delay: 1500ms;
+  --address-animation-duration: 1000ms;
+}
+
 @define-mixin shape $left, $top {
   position: absolute;
   left: $left;
   top: $top;
   z-index: 0;
+}
+
+@keyframes addressAnimationFrames {
+  0% {
+    opacity: 0;
+    transform: translate(0px, -25px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(1px, -1px);
+  }
+}
+
+@keyframes buttonAnimationFrames {
+  0% {
+    opacity: 0;
+    transform: translate(0px, 25px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(1px, -1px);
+  }
+}
+
+@keyframes firstHeadingAnimationFrames {
+  0% {
+    opacity: 1;
+    transform: translate(0px, -150px);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-20px, -150px);
+  }
+}
+
+@keyframes secondHeadingAnimationFrames {
+  0% {
+    opacity: 0;
+    transform: translate(20px, -150px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0px, -150px);
+  }
 }
 
 .circle {
@@ -64,13 +120,63 @@
 .stable {
   transform: scale(1);
   display: inline-block;
-  transition: all ease 300ms;
+  transition: all ease 500ms;
 }
 
 .generatorHeader {
-  position: relative;
-  z-index: 1;
+  position: absolute;
+  width: 100%;
   text-align: center;
+  transition: all cubic-bezier(0.01, 0.54, 0.32, 0.96) 1000ms;
+  top: 30%;
+}
+
+.firstHeading {
+  transition-duration: 0ms;
+  animation: firstHeadingAnimationFrames ease 450ms;
+  animation-delay: 0;
+  animation-iteration-count: 1;
+  transform-origin: 50% 50%;
+  animation-fill-mode: forwards;
+}
+
+.secondHeading {
+  transition-duration: 0ms;
+  opacity: 0;
+  animation: secondHeadingAnimationFrames ease 450ms;
+  animation-delay: 1000ms;
+  animation-iteration-count: 1;
+  transform-origin: 50% 50%;
+  animation-fill-mode: forwards;
+}
+
+.goToTop {
+  transform: translateY(-150px);
+}
+
+.addressContainer {
+  margin-top: 730px;
+  position: relative;
+}
+
+.address {
+  color: var(--address-color);
+  animation: secondHeadingAnimationFrames ease var(--address-animation-duration);
+  animation-delay: var(--address-animation-delay);
+  animation-iteration-count: 1;
+  transform-origin: 50% 50%;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+
+.button {
+  animation: secondHeadingAnimationFrames ease var(--address-animation-duration);
+  animation-delay: var(--address-animation-delay);
+  animation-iteration-count: 1;
+  transform-origin: 50% 50%;
+  animation-fill-mode: forwards;
+  opacity: 0;
+  margin-top: 24px;
 }
 
 .bouncing {
