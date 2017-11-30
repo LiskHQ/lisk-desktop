@@ -1,6 +1,8 @@
 import i18next from 'i18next';
+import { accountSaved } from '../../actions/savedAccounts';
 import { getAccount, extractAddress, extractPublicKey } from '../../utils/api/account';
 import { getDelegate } from '../../utils/api/delegate';
+import { getIndexOfSavedAccount } from '../../utils/savedAccounts';
 import { accountLoggedIn } from '../../actions/account';
 import actionTypes from '../../constants/actions';
 import { errorToastDisplayed } from '../../actions/toaster';
@@ -23,7 +25,7 @@ const loginMiddleware = store => next => (action) => {
   const { activePeer } = action.data;
 
   // redirect to main/transactions
-  return getAccount(activePeer, address).then(accountData =>
+  return getAccount(activePeer, address).then((accountData) => {
     getDelegate(activePeer, { publicKey })
       .then((delegateData) => {
         store.dispatch(accountLoggedIn(Object.assign({}, accountData, accountBasics,
@@ -32,7 +34,17 @@ const loginMiddleware = store => next => (action) => {
         store.dispatch(accountLoggedIn(Object.assign({}, accountData, accountBasics,
           { delegate: {}, isDelegate: false })));
       }),
-  ).catch(() => store.dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node') })));
+    const networkOptions = store.getState().peers.options;
+    const accountToSave = {
+      balance: accountData.balance,
+      publicKey: accountBasics.publicKey,
+      network: networkOptions.code,
+      address: networkOptions.address,
+    };
+    if (getIndexOfSavedAccount(accountToSave) === -1) {
+      store.dispatch(accountSaved(accountToSave));
+    }
+  }).catch(() => store.dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node') })));
 };
 
 export default loginMiddleware;
