@@ -24,11 +24,17 @@ const SavedAccounts = ({
   accountRemoved,
   accountSwitched,
   savedAccounts,
+  history,
   t,
 }) => {
   const isActive = account => (
     account.publicKey === activeAccount.publicKey &&
     account.network === networkOptions.code);
+
+  const switchAccount = (account) => {
+    accountSwitched(account);
+    history.push('/main/transactions/');
+  };
 
   return (
     <div className={`${styles.wrapper} save-account`}>
@@ -50,33 +56,31 @@ const SavedAccounts = ({
           </div>
         </Link>
         {savedAccounts.map(account => (
-          <Link to='/main/transactions/'
-            key={account.publicKey + account.network}>
-            <div className={`switch-button saved-account-card ${styles.card}`}
-              onClick={accountSwitched.bind(this, account)} >
-              {(isActive(account) && activeAccount.passphrase ?
-                <strong className={styles.unlocked}>
-                  <FontIcon value='lock_open' />
-                  {t('Unlocked')}
-                </strong> :
-                null)}
-              <div className={styles.cardIcon}>
-                <div className={styles.accountVisualPlaceholder}></div>
-                <div className={styles.accountVisualPlaceholder2}></div>
-              </div>
-              <h2>
-                <LiskAmount val={account.balance} /> <small>LSK</small>
-              </h2>
-              <div className={styles.address} >{extractAddress(account.publicKey)}</div>
-              <SecondaryLightButton className='remove-button'
-                theme={{ button: styles.removeButton }}
-                onClick={(e) => {
-                  accountRemoved(account);
-                  e.stopPropagation();
-                }}
-                label={t('Remove from Favorites')}/>
+          <div className={`switch-button saved-account-card ${styles.card}`}
+            key={account.publicKey + account.network}
+            onClick={switchAccount.bind(null, account)} >
+            {(isActive(account) && activeAccount.passphrase ?
+              <strong className={styles.unlocked}>
+                <FontIcon value='lock_open' />
+                {t('Unlocked')}
+              </strong> :
+              null)}
+            <div className={styles.cardIcon}>
+              <div className={styles.accountVisualPlaceholder}></div>
+              <div className={styles.accountVisualPlaceholder2}></div>
             </div>
-          </Link>
+            <h2>
+              <LiskAmount val={account.balance} /> <small>LSK</small>
+            </h2>
+            <div className={styles.address} >{extractAddress(account.publicKey)}</div>
+            <SecondaryLightButton className='remove-button'
+              theme={{ button: styles.removeButton }}
+              onClick={(e) => {
+                accountRemoved(account);
+                e.stopPropagation();
+              }}
+              label={t('Remove from Favorites')}/>
+          </div>
         ))}
       </div>
       <SecondaryLightButton className='edit-button'
