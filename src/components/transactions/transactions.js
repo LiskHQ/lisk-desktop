@@ -41,12 +41,13 @@ class Transactions extends React.Component {
 
   render() {
     return (
-      <div className={grid.row} style={{ width: '100%' }}>
+      <div className={`${grid.row} ${styles.wrapper}`}>
         <div className={`${grid['col-xs-4']}`}>
           <div className='box'>
             <Transfer pending={this.props.pending}
               transactions={this.props.confirmed}
               copy={this.props.copyToClipboard}
+              t={this.props.t}
             />
           </div>
         </div>

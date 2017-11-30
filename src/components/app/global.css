@@ -1,10 +1,12 @@
+@import '../app/variables.css';
+
 /*****************************************
 
 Please Read the guide line
 before adding any rules here
 
 # No component specific rule
-This file is inteded to solely include
+This file is intended to solely include
 global/common rules, every rule added here
 must be used at least in 2 different
 components.
@@ -17,7 +19,7 @@ or text selection color.
 
 # Avoid !important
 Please avoid using !important since it will
-result in many compoulsory !imporant usages
+result in many compulsory !important usages
 all over the application
 
 # Use with :global
@@ -50,7 +52,7 @@ order to be available application wide
     & .subTitle {
       margin-top: 20px;
       font-size: 1em;
-      color: #3c5068;
+      color: var(--color-grayscale-dark);
       height: 22px;
     }
   }

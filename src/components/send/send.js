@@ -101,7 +101,7 @@ class Send extends React.Component {
       <div className={`${styles.send} boxPadding send`}>
         <form onSubmit={this.send.bind(this)}>
           {this.showAvatar()
-            ? <img className={styles.smallAvatar}></img>
+            ? <img className={styles.temporarySmallAvatar}></img>
             : ''
           }
           <Input label={this.props.t('Send to Address')}
@@ -116,7 +116,7 @@ class Send extends React.Component {
 
           {this.props.isEditable
             ?
-            <div style={{ height: '150px' }}>
+            <div>
               <Input label={this.props.t('Amount (LSK)')}
                 className='amount'
                 error={this.state.amount.error}
@@ -126,7 +126,7 @@ class Send extends React.Component {
               <div className={styles.fee}> {this.props.t('Fee: {{fee}} LSK', { fee: this.fee })} </div>
             </div>
             :
-            <div style={{ height: '150px' }}>
+            <div>
               <Input label={this.props.t('Total incl. 0.1 LSK Fee')}
                 className='amount'
                 error={this.state.amount.error}
@@ -150,14 +150,14 @@ class Send extends React.Component {
                           !this.state.recipient.value ||
                           !!this.state.amount.error ||
                           !this.state.amount.value)}
-                >Next</Button>
-                <div className='subTitle'>Confirmation in the next step.</div>
+                >{this.props.t('Next')}</Button>
+                <div className='subTitle'>{this.props.t('Confirmation in the next step.')}</div>
               </div>
               :
               <section className={grid.row} >
                 <div className={grid['col-xs-4']}>
                   <Button
-                    label={this.props.t('Cancel')}
+                    label={this.props.t('Back')}
                     onClick={this.props.back}
                     type='button'
                     theme={styles}
@@ -170,7 +170,7 @@ class Send extends React.Component {
                     theme={styles}
                     disabled={!authStateIsValid(this.state) || this.transactionIsPending()}
                   />
-                  <div className='subTitle'>Transactions can’t be reversed.</div>
+                  <div className='subTitle'>{this.props.t('Transactions can’t be reversed')}.</div>
                 </div>
               </section>
             }

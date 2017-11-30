@@ -1,5 +1,9 @@
 @import '../app/variables.css';
 
+:root {
+  --tab-inactive-color: --color-grayscale-dark;
+}
+
 .sendAllMenu {
   position: absolute !important;
   right: 0;
@@ -15,29 +19,8 @@
   color: grey;
 }
 
-.tab {
-  margin: 40px 0px;
-  font-size: 1.125em;
-  vertical-align: middle;
-  text-align: center;
-  line-height: 60px;
-  font-weight: 500;
-}
-
-.tabActive {
-  color: white;
-  background: linear-gradient(45deg, #17499b 0%, #3c7fb4 100%);
-  border-radius: 3px 0 0 3px;
-}
-
-.tabInactive {
-  color: #3c5068;
-  border: 2px solid #3c5068;
-  border-radius: 0 3px 3px 0;
-}
-
 input:read-only {
-  border-bottom: solid 1px #fff !important;
+  border-bottom: solid 1px var(--color-white) !important;
 }
 
 .button {
@@ -45,7 +28,8 @@ input:read-only {
   width: 100%;
 }
 
-.smallAvatar {
+.temporarySmallAvatar {
+  /* values are not saved as variable since this will be deleted anyway */
   height: 50px;
   width: 50px;
   background: linear-gradient(90deg, #3023ae 0%, #53a0fd 48%, #b4ec51 100%);
