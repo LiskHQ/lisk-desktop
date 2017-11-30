@@ -3,7 +3,6 @@ import { spy, mock, match } from 'sinon';
 
 import { accountLoggedOut } from '../../actions/account';
 import * as peersActions from '../../actions/peers';
-import { successToastDisplayed } from '../../actions/toaster';
 import actionTypes from '../../constants/actions';
 import middleware from './savedAccounts';
 
@@ -29,24 +28,6 @@ describe('SavedAccounts middleware', () => {
 
     middleware(store)(next)(randomAction);
     expect(next).to.have.been.calledWith(randomAction);
-  });
-
-  it(`should dispatch successToastDisplayed action on ${actionTypes.accountSaved} action`, () => {
-    const action = {
-      type: actionTypes.accountSaved,
-      data: {},
-    };
-    middleware(store)(next)(action);
-    expect(store.dispatch).to.have.been.calledWith(successToastDisplayed({ label: 'Account saved' }));
-  });
-
-  it(`should dispatch successToastDisplayed action on ${actionTypes.accountRemoved} action`, () => {
-    const action = {
-      type: actionTypes.accountRemoved,
-      data: {},
-    };
-    middleware(store)(next)(action);
-    expect(store.dispatch).to.have.been.calledWith(successToastDisplayed({ label: 'Account was successfully forgotten.' }));
   });
 
   it(`should dispatch accountLoggedOut action on ${actionTypes.accountSwitched} action`, () => {
