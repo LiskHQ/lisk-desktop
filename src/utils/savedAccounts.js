@@ -35,13 +35,16 @@ export const setLastActiveAccount = ({ publicKey, network, address }) => {
   return lastActiveAccountIndex;
 };
 
-export const setSavedAccount = ({ publicKey, network, address }) => {
+export const setSavedAccount = ({
+  publicKey, network, address, balance,
+}) => {
   const savedAccounts = [
     ...getSavedAccounts(),
     {
       publicKey,
       network,
       address,
+      balance,
     },
   ];
   localStorage.setItem('accounts', JSON.stringify(savedAccounts));
