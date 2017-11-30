@@ -43,7 +43,6 @@ describe('SavedAccounts', () => {
 
   const props = {
     closeDialog: () => {},
-    accountSaved: spy(),
     accountRemoved: spy(),
     accountSwitched: () => {},
     networkOptions: {
@@ -66,16 +65,6 @@ describe('SavedAccounts', () => {
         store: PropTypes.object.isRequired,
         i18n: PropTypes.object.isRequired,
       },
-    });
-  });
-
-  it('should call props.accountSaved on "save button" click', () => {
-    wrapper.find('button.add-active-account-button').simulate('click');
-    expect(props.accountSaved).to.have.been.calledWith({
-      network: props.networkOptions.code,
-      address: undefined,
-      publicKey: props.activeAccount.publicKey,
-      balance: props.activeAccount.balance,
     });
   });
 

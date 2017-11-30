@@ -45,13 +45,6 @@ describe('SavedAccountsHOC', () => {
     expect(wrapper.find('SavedAccounts')).to.have.lengthOf(1);
   });
 
-  it('should bind accountSaved action to SavedAccounts props.accountSaved', () => {
-    const actionsSpy = sinon.spy(savedAccounts, 'accountSaved');
-    wrapper.find('SavedAccounts').props().accountSaved({});
-    expect(actionsSpy).to.be.calledWith();
-    actionsSpy.restore();
-  });
-
   it('should bind accountRemoved action to SavedAccounts props.accountRemoved', () => {
     const actionsSpy = sinon.spy(savedAccounts, 'accountRemoved');
     wrapper.find('SavedAccounts').props().accountRemoved({});

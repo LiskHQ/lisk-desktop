@@ -24,21 +24,11 @@ const SavedAccounts = ({
   accountRemoved,
   accountSwitched,
   savedAccounts,
-  accountSaved,
   t,
 }) => {
   const isActive = account => (
     account.publicKey === activeAccount.publicKey &&
     account.network === networkOptions.code);
-
-  const save = () => {
-    accountSaved({
-      network: networkOptions.code,
-      address: networkOptions.address,
-      publicKey: activeAccount.publicKey,
-      balance: activeAccount.balance,
-    });
-  };
 
   return (
     <div className={`${styles.wrapper} save-account`}>
@@ -89,11 +79,11 @@ const SavedAccounts = ({
           </Link>
         ))}
       </div>
-      <SecondaryLightButton className='add-active-account-button'
+      <SecondaryLightButton className='edit-button'
+        icon='edit'
         theme={{ button: styles.addAcctiveAccountButton }}
-        disabled={savedAccounts.filter(isActive).length !== 0}
-        onClick={save.bind(this)}
-        label={t('Add active account')}/>
+        disabled={true}
+        label={t('Edit')}/>
     </div>
   );
 };

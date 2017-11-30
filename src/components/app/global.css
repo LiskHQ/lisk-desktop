@@ -40,10 +40,6 @@ order to be available application wide
   overflow: auto;
 }
 
-:global .material-icons {
-  font-size: 24px !important;
-}
-
 :global .hasNoPadding {
   padding: 0;
 }
