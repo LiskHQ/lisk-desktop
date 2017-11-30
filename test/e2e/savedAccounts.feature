@@ -1,11 +1,7 @@
 Feature: Saved Accounts 
-  Scenario: should allow to save account locally, after page reload it should require passphrase to do the first transaction, and remember the passphrase for next transactions
+  Scenario: should save account locally, after page reload it should require passphrase to do the first transaction, and remember the passphrase for next transactions
     Given I'm logged in as "genesis"
-    When I click "saved accounts" in main menu
-    And I click "add active account button"
-    And I click "x button"
     And I wait 1 seconds
-    And I should see text "Account saved" in "toast" element
     And I refresh the page
     And I wait 2 seconds
     Then I should be logged in
@@ -25,57 +21,35 @@ Feature: Saved Accounts
 
   Scenario: should allow to save second account
     Given I'm logged in as "genesis"
-    When I click "saved accounts" in main menu
-    And I click "add active account button"
-    And I click "x button"
-    And I wait 1 seconds
     And I click "logout button"
     And I'm logged in as "empty account"
     And I click "saved accounts" in main menu
-    And I click "add active account button"
     Then I should see 2 instances of "saved account card"
-    When I refresh the page
+    And I refresh the page
     And I wait 2 seconds
-    Then I should be logged in as "empty account" account
+    And I should be logged in as "empty account" account
 
-  Scenario: should allow to remove second account
+  Scenario: should allow to remove a saved account
     Given I'm logged in as "genesis"
-    When I click "saved accounts" in main menu
-    And I click "add active account button"
-    And I click "x button"
-    And I wait 1 seconds
     And I click "logout button"
     And I'm logged in as "delegate"
     And I click "saved accounts" in main menu
-    And I click "add active account button"
     Then I should see 2 instances of "saved account card"
     When I click "remove button"
     Then I should see 1 instances of "saved account card"
 
   Scenario: should allow to switch account
     Given I'm logged in as "genesis"
-    When I click "saved accounts" in main menu
-    And I click "add active account button"
-    And I click "x button"
-    And I wait 1 seconds
     And I click "logout button"
     And I'm logged in as "delegate"
     And I click "saved accounts" in main menu
-    And I click "add active account button"
     And I click "switch button"
     And I wait 1 seconds
     And I should be logged in as "genesis" account
 
   Scenario: should login to last active saved account
     Given I'm logged in as "genesis"
-    When I click "saved accounts" in main menu
-    And I click "add active account button"
-    And I click "x button"
-    And I wait 1 seconds
     And I click "logout button"
     And I'm logged in as "empty account"
-    And I click "saved accounts" in main menu
-    And I click "add active account button"
-    And I click "x button"
     And I refresh the page
     And I should be logged in as "empty account" account

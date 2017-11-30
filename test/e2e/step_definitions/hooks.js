@@ -51,6 +51,7 @@ defineSupportCode(({ Before, After }) => {
   });
 
   After((scenario, callback) => {
+    localStorage.clear();
     if (scenario.isFailed()) {
       const screnarioSlug = slugify([scenario.scenario.feature.name, scenario.scenario.name].join(' '));
       takeScreenshot(screnarioSlug, callback);
