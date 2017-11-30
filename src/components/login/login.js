@@ -16,6 +16,7 @@ import RelativeLink from '../relativeLink';
 // eslint-disable-next-line import/no-unresolved
 import * as shapes from '../../assets/images/*.svg';
 import { validateUrl, getLoginData } from '../../utils/login';
+import { parseSearchParams } from '../../utils/searchParams';
 
 /**
  * The container component containing login
@@ -54,7 +55,10 @@ class Login extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.props.account && this.props.account.address) {
+    const search = parseSearchParams(this.props.history.location.search);
+    if (this.props.account &&
+        this.props.account.address &&
+        (!search.activeAddress || search.activeAddress !== this.props.account.address)) {
       const tem = this.getReferrerRoute();
       this.props.history.replace(tem);
       if (this.state.address) {
@@ -82,9 +86,9 @@ class Login extends React.Component {
 
   getReferrerRoute() {
     const { isDelegate } = this.props.account;
-    const { search } = this.props.history.location;
+    const search = parseSearchParams(this.props.history.location.search);
     const transactionRoute = '/main/transactions';
-    const referrerRoute = search.indexOf('?referrer') === 0 ? search.replace('?referrer=', '') : transactionRoute;
+    const referrerRoute = search.referrer ? search.referrer : transactionRoute;
     if (!isDelegate && referrerRoute === '/main/forging') {
       return transactionRoute;
     }
