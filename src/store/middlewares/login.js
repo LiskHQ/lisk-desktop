@@ -28,12 +28,18 @@ const loginMiddleware = store => next => (action) => {
   return getAccount(activePeer, address).then((accountData) => {
     getDelegate(activePeer, { publicKey })
       .then((delegateData) => {
-        store.dispatch(accountLoggedIn(Object.assign({}, accountData, accountBasics,
-          { delegate: delegateData.delegate, isDelegate: true })));
+        store.dispatch(accountLoggedIn({
+          ...accountData,
+          ...accountBasics,
+          ...{ delegate: delegateData.delegate, isDelegate: true },
+        }));
       }).catch(() => {
-        store.dispatch(accountLoggedIn(Object.assign({}, accountData, accountBasics,
-          { delegate: {}, isDelegate: false })));
-      }),
+        store.dispatch(accountLoggedIn({
+          ...accountData,
+          ...accountBasics,
+          ...{ delegate: {}, isDelegate: false },
+        }));
+      });
     const networkOptions = store.getState().peers.options;
     const accountToSave = {
       balance: accountData.balance,
