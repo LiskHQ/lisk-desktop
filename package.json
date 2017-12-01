@@ -183,6 +183,20 @@
       "target": "nsis"
     }
   },
+  "bundlesize": [
+    {
+      "path": "./app/build/bundle.app.js",
+      "maxSize": "920 kB"
+    },
+    {
+      "path": "./app/build/bundle.vendor.js",
+      "maxSize": "60 kB"
+    },
+    {
+      "path": "./app/build/styles.css",
+      "maxSize": "1.50 MB"
+    }
+  ],
   "greenkeeper": {
     "ignore": [
       "cucumber",
