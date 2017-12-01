@@ -5,7 +5,7 @@ import AuthInputs from '../authInputs';
 import { Button, PrimaryButton } from './../toolbox/buttons/button';
 import { authStatePrefill, authStateIsValid } from '../../utils/form';
 import Input from '../toolbox/inputs/input';
-
+import fees from './../../constants/fees';
 import styles from './send.css';
 import inputTheme from './input.css';
 
@@ -24,7 +24,7 @@ class Send extends React.Component {
       },
       ...authStatePrefill(),
     };
-    this.fee = 0.1;
+    this.fee = fees.send;
     this.inputValidationRegexps = {
       recipient: /^\d{1,21}[L|l]$/,
       amount: /^\d+(\.\d{1,8})?$/,
@@ -85,7 +85,7 @@ class Send extends React.Component {
   }
 
   getMaxAmount() {
-    return fromRawLsk(Math.max(0, this.props.account.balance - toRawLsk(this.fee)));
+    return fromRawLsk(Math.max(0, this.props.account.balance - this.fee));
   }
 
   setMaxAmount() {
@@ -94,6 +94,10 @@ class Send extends React.Component {
 
   transactionIsPending() {
     return this.props.pendingTransactions.length > 0;
+  }
+
+  addAmountAndFee() {
+    return fromRawLsk(toRawLsk(this.state.amount.value) + this.fee);
   }
 
   render() {
@@ -123,14 +127,14 @@ class Send extends React.Component {
                 value={this.state.amount.value}
                 theme={styles}
                 onChange={this.handleChange.bind(this, 'amount')} />
-              <div className={styles.fee}> {this.props.t('Fee: {{fee}} LSK', { fee: this.fee })} </div>
+              <div className={styles.fee}> {this.props.t('Fee: {{fee}} LSK', { fee: fromRawLsk(this.fee) })} </div>
             </div>
             :
             <div>
               <Input label={this.props.t('Total incl. 0.1 LSK Fee')}
                 className='amount'
                 error={this.state.amount.error}
-                value={this.state.amount.value + this.fee}
+                value={this.addAmountAndFee()}
                 readOnly='true'
                 theme={styles}
                 onChange={this.handleChange.bind(this, 'amount')} />
