@@ -26,6 +26,7 @@ describe('Send', () => {
     props = {
       activePeer: {},
       account,
+      pendingTransactions: [],
       closeDialog: () => {},
       sent: sinon.spy(),
       t: key => key,
@@ -83,16 +84,10 @@ describe('Send', () => {
     expect(wrapper.find('Input.recipient').text()).to.contain('Invalid');
   });
 
-  it('allows to set maximum amount', () => {
-    wrapper.find('IconMenu.transaction-amount').simulate('click');
-    wrapper.find('MenuItem.send-maximum-amount').simulate('click');
-    expect(wrapper.find('Input.amount input').props().value).to.equal('999.9');
-  });
-
   it('allows to send a transaction', () => {
     wrapper.find('.amount input').simulate('change', { target: { value: '120.25' } });
     wrapper.find('.recipient input').simulate('change', { target: { value: '11004588490103196952L' } });
-    wrapper.find('.primary-button button').simulate('submit');
+    wrapper.find('.send-button button').simulate('submit');
     expect(props.sent).to.have.been.calledWith({
       account: props.account,
       activePeer: {},

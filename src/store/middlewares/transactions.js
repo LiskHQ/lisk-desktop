@@ -31,9 +31,12 @@ const transactionsUpdated = (store) => {
 
 const transactionsMiddleware = store => next => (action) => {
   next(action);
+  const transactionType = action.data ? action.data.type : null;
   switch (action.type) {
-    case (actionTypes.transactionAdded && !actionTypes.send):
-      transactionAdded(store, action);
+    case (actionTypes.transactionAdded):
+      if (transactionType !== transactionTypes.send) {
+        transactionAdded(store, action);
+      }
       break;
     case actionTypes.transactionsUpdated:
       transactionsUpdated(store, action);

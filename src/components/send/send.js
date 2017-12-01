@@ -88,10 +88,6 @@ class Send extends React.Component {
     return fromRawLsk(Math.max(0, this.props.account.balance - this.fee));
   }
 
-  setMaxAmount() {
-    this.handleChange('amount', this.getMaxAmount());
-  }
-
   transactionIsPending() {
     return this.props.pendingTransactions.length > 0;
   }
@@ -154,6 +150,7 @@ class Send extends React.Component {
                           !this.state.recipient.value ||
                           !!this.state.amount.error ||
                           !this.state.amount.value)}
+                  className='next-button'
                 >{this.props.t('Next')}</Button>
                 <div className='subTitle'>{this.props.t('Confirmation in the next step.')}</div>
               </div>
@@ -169,6 +166,7 @@ class Send extends React.Component {
                 </div>
                 <div className={grid['col-xs-8']}>
                   <PrimaryButton
+                    className='send-button'
                     label={this.props.t('Send')}
                     type='submit'
                     theme={styles}

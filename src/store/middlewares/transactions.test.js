@@ -50,27 +50,6 @@ describe('transaction middleware', () => {
     expect(next).to.have.been.calledWith(givenAction);
   });
 
-  it('should fire success dialog action with appropriate text if action.type is transactionAdded', () => {
-    const givenAction = {
-      type: actionTypes.transactionAdded,
-      data: mockTransaction,
-    };
-
-    const expectedMessages = [
-      'Your transaction of 1 LSK to 16313739661670634666L was accepted and will be processed in a few seconds.',
-      'Second passphrase registration was successfully submitted. It can take several seconds before it is processed.',
-      'Delegate registration was successfully submitted with username: "test". It can take several seconds before it is processed.',
-      'Your votes were successfully submitted. It can take several seconds before they are processed.',
-    ];
-
-    for (let i = 0; i < 4; i++) {
-      givenAction.data.type = i;
-      middleware(store)(next)(givenAction);
-      const expectedAction = successAlertDialogDisplayed({ text: i18next.t(expectedMessages[i]) });
-      expect(store.dispatch).to.have.been.calledWith(expectedAction);
-    }
-  });
-
   it('should do nothing if state.transactions.pending.length === 0 and action.type is transactionsUpdated', () => {
     const givenAction = {
       type: actionTypes.transactionsUpdated,

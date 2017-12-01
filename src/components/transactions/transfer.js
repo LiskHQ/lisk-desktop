@@ -88,7 +88,7 @@ class Transfer extends React.Component {
           <header>
             <h2>{this.props.t('Thank you')}</h2>
           </header>
-          <p>
+          <p className='success-message'>
             {this.props.t('Transaction is being processed and will be confirmed. ' +
               'It may take up to 15 minutes to be secured in the blockchain.')}
           </p>
@@ -98,7 +98,7 @@ class Transfer extends React.Component {
           </div>
 
           <footer>
-            <Button onClick={location.reload.bind(location)}>{this.props.t('Okay')}</Button>
+            <Button className='okay-button' onClick={location.reload.bind(location)}>{this.props.t('Okay')}</Button>
             <div className='subTitle'></div>
           </footer>
 
