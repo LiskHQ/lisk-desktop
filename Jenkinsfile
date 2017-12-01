@@ -102,6 +102,9 @@ node('lisk-nano') {
         cp ~/.coveralls.yml-nano .coveralls.yml
         npm run --silent build
         '''
+        withCredentials([string(credentialsId: 'lisk-nano-bundlesize-github-token', variable: 'BUNDLESIZE_GITHUB_TOKEN')]) {
+          sh 'npm run bundlesize'
+        }
       } catch (err) {
         echo "Error: ${err}"
         fail('Stopping build: nano build failed')
