@@ -58,10 +58,9 @@
   box-shadow: var(--normal-shadow);
   margin: 24px;
   text-align: center;
-  cursor: pointer;
   vertical-align: top;
 
-  & > h2 {
+  & h2 {
     position: relative;
     font-size: var(--font-size-card-h2);
     color: var(--color-black);
@@ -70,6 +69,10 @@
       font-size: 0.6875em;
     }
   }
+}
+
+.clickable {
+  cursor: pointer;
 }
 
 .addNew {
@@ -179,13 +182,40 @@
 }
 
 .removeButton {
-  background-color: var(--color-white) !important;
+  background: var(--color-white) !important;
   color: var(--color-grayscale-dark) !important;
   border: none;
   box-shadow: var(--normal-shadow);
   text-transform: none;
 
   &:hover {
+    background: var(--color-white) !important;
     color: var(--color-primary-medium) !important;
+  }
+}
+
+.darkBackground {
+  background-color: var(--lisk-color-primary-dark);
+}
+
+.removeConfirm {
+  position: absolute;
+  top: 0px;
+  background-color: var(--lisk-color-primary-dark);
+  color: var(--color-white);
+  border-radius: var(--border-radius-normal);
+  height: var(--card-height);
+
+  & h2 {
+    white-space: normal;
+    color: var(--color-white);
+    margin: 155px 45px 24px;
+  }
+
+  & a {
+    color: var(--color-white);
+    text-decoration: underline;
+    margin: 20px 40px 200px;
+    cursor: pointer;
   }
 }

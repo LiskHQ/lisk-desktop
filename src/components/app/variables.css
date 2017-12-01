@@ -61,7 +61,12 @@ or "warn/action" ineastd of "red/green"
   /*************************
         Colors
   *************************/
+
+  /* TODO --color-primary-dark gets overriten by variable from react-toolbox
+   * either figure out how to make our overide it or add lisk prefix to all our vars
+   * */
   --color-primary-dark: #001a3e;
+  --lisk-color-primary-dark: #001a3e;
   --color-primary-semi-dark: #013165;
   --color-primary-medium: #3c7fb4;
   --color-primary-standard: #2475b9;

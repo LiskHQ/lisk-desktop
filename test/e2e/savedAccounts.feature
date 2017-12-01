@@ -38,6 +38,8 @@ Feature: Saved Accounts
     And I'm logged in as "delegate"
     And I click "saved accounts" in main menu
     Then I should see 2 instances of "saved account card"
+    When I click "edit button"
+    When I click "remove button"
     When I click "remove button"
     Then I should see 1 instances of "saved account card"
 
@@ -46,7 +48,7 @@ Feature: Saved Accounts
     And I click "logout button"
     And I'm logged in as "delegate"
     And I click "saved accounts" in main menu
-    And I click "switch button"
+    And I click "saved account card"
     And I wait 1 seconds
     And I should be logged in as "genesis" account
 
