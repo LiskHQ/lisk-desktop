@@ -101,6 +101,7 @@ node('lisk-nano') {
         sh '''
         cp ~/.coveralls.yml-nano .coveralls.yml
         npm run --silent build
+        npm run --silent bundlesize
         '''
       } catch (err) {
         echo "Error: ${err}"

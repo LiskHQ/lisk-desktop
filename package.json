@@ -12,6 +12,7 @@
     "build-electron": "webpack --config ./config/webpack.config.electron",
     "e2e-test": "protractor protractor.conf.js",
     "test": "karma start",
+    "bundlesize": "bundlesize",
     "test-live": "npm test -- --auto-watch --no-single-run",
     "start": "electron ./app/",
     "dist": "build --ia32 --x64 --armv7l --publish onTag",
@@ -81,6 +82,7 @@
     "babel-preset-es2015": "6.24.1",
     "babel-preset-react": "6.24.1",
     "babel-preset-stage-3": "=6.24.1",
+    "bundlesize": "0.15.3",
     "chai": "4.1.2",
     "chai-as-promised": "7.1.1",
     "chai-enzyme": "=1.0.0-beta.0",
@@ -180,6 +182,20 @@
       "target": "nsis"
     }
   },
+  "bundlesize": [
+    {
+      "path": "./app/build/bundle.app.js",
+      "maxSize": "820 kB"
+    },
+    {
+      "path": "./app/build/bundle.vendor.js",
+      "maxSize": "50 kB"
+    },
+    {
+      "path": "./app/build/styles.css",
+      "maxSize": "1.25 MB"
+    }
+  ],
   "greenkeeper": {
     "ignore": [
       "cucumber",
