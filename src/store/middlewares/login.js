@@ -1,8 +1,6 @@
 import i18next from 'i18next';
-import { accountSaved } from '../../actions/savedAccounts';
 import { getAccount, extractAddress, extractPublicKey } from '../../utils/api/account';
 import { getDelegate } from '../../utils/api/delegate';
-import { getIndexOfSavedAccount } from '../../utils/savedAccounts';
 import { accountLoggedIn } from '../../actions/account';
 import actionTypes from '../../constants/actions';
 import { errorToastDisplayed } from '../../actions/toaster';
@@ -40,16 +38,6 @@ const loginMiddleware = store => next => (action) => {
           ...{ delegate: {}, isDelegate: false },
         }));
       });
-    const networkOptions = store.getState().peers.options;
-    const accountToSave = {
-      balance: accountData.balance,
-      publicKey: accountBasics.publicKey,
-      network: networkOptions.code,
-      address: networkOptions.address,
-    };
-    if (getIndexOfSavedAccount(accountToSave) === -1) {
-      store.dispatch(accountSaved(accountToSave));
-    }
   }).catch(() => store.dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node') })));
 };
 

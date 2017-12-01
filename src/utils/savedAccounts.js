@@ -23,15 +23,18 @@ export const getLastActiveAccount = () => (
   getSavedAccounts()[localStorage.getItem('lastActiveAccountIndex') || 0]
 );
 
-export const getIndexOfSavedAccount = ({ publicKey, network, address }) =>
-  getSavedAccounts().findIndex(account => (
+export const getIndexOfSavedAccount = (savedAccounts, { publicKey, network, address }) =>
+  savedAccounts.findIndex(account => (
     account.publicKey === publicKey &&
     account.network === network &&
     account.address === address
   ));
 
 export const setLastActiveAccount = ({ publicKey, network, address }) => {
-  const lastActiveAccountIndex = getIndexOfSavedAccount({ publicKey, network, address });
+  const lastActiveAccountIndex = getIndexOfSavedAccount(
+    getSavedAccounts(),
+    { publicKey, network, address },
+  );
   if (lastActiveAccountIndex > -1) {
     localStorage.setItem('lastActiveAccountIndex', lastActiveAccountIndex);
   }
