@@ -4,29 +4,37 @@ const gradientSpecs = [
   {
     id: 'purpleGradient',
     colors: ['#3023AE', '#C86DD7'],
-  },
-  {
+  }, {
     id: 'lightBlueGradient',
     colors: ['#DBD4FF', '#0792FF'],
-  },
-  {
+  }, {
     id: 'darkBlueGradient',
     colors: ['#DBD4FF', '#519AEC'],
-  },
-  {
+  }, {
     id: 'greenBlueGradient',
     colors: ['#3023AE', '#53A0FD', '#B4EC51'],
-  },
-  {
+  }, {
     id: 'redPurpleGradient',
     colors: ['#FF3537', '#4D04AD'],
+  }, {
+    id: 'orangeGradient',
+    colors: ['#C80039', '#FF6236'],
+  }, {
+    id: 'blueOrangeGradient',
+    colors: ['#3023AE', '#FF6236'],
+  }, {
+    id: 'greenPurpleGradient',
+    colors: ['#B4EC51', '#3023AE'],
+  }, {
+    id: 'bluePurpleRedGradient',
+    colors: ['#DBD4FF', '#4D04AD', '#FF3537'],
+  }, {
+    id: 'orangeGreenGradient',
+    colors: ['#C80039', '#FF6236', '#B4EC51'],
   },
 ];
 
-export const gradientIds = [
-  ...gradientSpecs.map(spec => `url(#${spec.id})`),
-  ...gradientSpecs.map(spec => `url(#${spec.id})`),
-];
+export const gradientIds = gradientSpecs.map(spec => `url(#${spec.id})`);
 
 export const Gradients = () => (
   <defs>
