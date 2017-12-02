@@ -17,6 +17,7 @@ import MenuBar from '../menuBar';
 import LoadingBar from '../loadingBar';
 import OfflineWrapper from '../offlineWrapper';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
+import AccountVisualDemo from '../accountVisual/demo';
 
 const App = () => (
   <OfflineWrapper>
@@ -31,6 +32,7 @@ const App = () => (
           <PrivateRoutes path='/main' render={ ({ match }) => (
             <main className={offlineStyle.disableWhenOffline}>
               <Account />
+              <Route path={`${match.url}/account-visual-demo/:dialog?`} component={AccountVisualDemo} />
               <Route path={`${match.url}/transactions/:dialog?`} component={TransactionDashboard} />
               <Route path={`${match.url}/voting/:dialog?`} component={Voting} />
               <Route path={`${match.url}/forging/:dialog?`} component={Forging} />
