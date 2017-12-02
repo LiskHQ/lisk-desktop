@@ -44,7 +44,6 @@ const AccountVisualDemo = () => {
 
   return (
     <div className='box'>
-      <h2> Account visual demo </h2>
       <div style={{ whiteSpace: 'no-break' }}>
         {accounts.map(account => (
           <div key={account}
@@ -53,6 +52,7 @@ const AccountVisualDemo = () => {
               overflow: 'hidden',
               width: size,
               padding: 20,
+              fontSize: 14,
             }}>
             {account}
             <AccountVisual address={account} size={size} />
