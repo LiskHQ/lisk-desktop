@@ -1,36 +1,38 @@
 import React from 'react';
 
-const gradients = [
-  'url(#purpleGradient)',
-  'url(#lightBlueGradient)',
-  'url(#darkBlueGradient)',
-  'url(#greenBlueGradient)',
-  'url(#redPurpleGradient)',
+const gradientSpecs = [
+  {
+    id: 'purpleGradient',
+    colors: ['#3023AE', '#C86DD7'],
+  },
+  {
+    id: 'lightBlueGradient',
+    colors: ['#DBD4FF', '#0792FF'],
+  },
+  {
+    id: 'darkBlueGradient',
+    colors: ['#DBD4FF', '#519AEC'],
+  },
+  {
+    id: 'greenBlueGradient',
+    colors: ['#3023AE', '#53A0FD', '#B4EC51'],
+  },
+  {
+    id: 'redPurpleGradient',
+    colors: ['#FF3537', '#4D04AD'],
+  },
 ];
+const gradients = gradientSpecs.map(spec => `url(#${spec.id})`);
 
-const Gradients = () => (
+const Gradients = ({ specs }) => (
   <defs>
-    <linearGradient id="purpleGradient">
-      <stop stopColor="#3023AE" offset="0%"/>
-      <stop stopColor="#C86DD7" offset="100%"/>
-    </linearGradient>
-    <linearGradient id="lightBlueGradient">
-      <stop stopColor="#DBD4FF" offset="0%"/>
-      <stop stopColor="#0792FF" offset="100%"/>
-    </linearGradient>
-    <linearGradient id="darkBlueGradient">
-      <stop stopColor="#3023AE" offset="0%"/>
-      <stop stopColor="#519AEC" offset="100%"/>
-    </linearGradient>
-    <linearGradient id="greenBlueGradient">
-      <stop stopColor="#3023AE" offset="0%"/>
-      <stop stopColor="#53A0FD" offset="50%"/>
-      <stop stopColor="#B4EC51" offset="100%"/>
-    </linearGradient>
-    <linearGradient id="redPurpleGradient">
-      <stop stopColor="#FF3537" offset="0%"/>
-      <stop stopColor="#4D04AD" offset="100%"/>
-    </linearGradient>
+    {specs.map(spec => (
+      <linearGradient id={spec.id} key={spec.id}>
+        {spec.colors.map((color, i) => (
+          <stop stopColor={color} offset={`${i * (100 / (spec.colors.length - 1))}%`} key={i}/>
+        ))}
+      </linearGradient>
+    ))}
   </defs>
 );
 
@@ -94,7 +96,7 @@ const AccountVisual = ({ address, size = 200 }) => {
   };
   return (
     <svg height={size} width={size}>
-      <Gradients />
+      <Gradients specs={gradientSpecs} />
       <circle {...props.circle} />
       <polygon {...computeTriangle(props.triangle)} />
       <rect {...props.square} />
