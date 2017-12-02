@@ -21,11 +21,32 @@ const computeTriangle = props => (
   }
 );
 
+const computePentagon = props => (
+  {
+    points: [{
+      x: props.x + (props.size / 2),
+      y: props.y,
+    }, {
+      x: props.x + props.size,
+      y: props.y + (props.size / 2.5),
+    }, {
+      x: props.x + (props.size - (props.size / 5)),
+      y: props.y + props.size,
+    }, {
+      x: props.x + (props.size / 5),
+      y: props.y + props.size,
+    }, {
+      x: props.x,
+      y: props.y + (props.size / 2.5),
+    },
+    ].map(({ x, y }) => (`${x},${y}`)).join(' '),
+  }
+);
+
 const getShape = (chunk, size, gradients) => {
   const shapeNames = [
-    'circle', 'triangle', 'square', 'rect',
-    'circle', 'triangle', 'square', 'rect',
-    'circle', 'triangle',
+    'circle', 'triangle', 'square', 'rect', 'pentagon',
+    'circle', 'triangle', 'square', 'rect', 'pentagon',
   ];
 
   const sizes = [
@@ -62,6 +83,14 @@ const getShape = (chunk, size, gradients) => {
     triangle: {
       component: Polygon,
       props: computeTriangle({
+        x: sizes[chunk[1]],
+        y: sizes[chunk[2]],
+        size: sizes[chunk[3]],
+      }),
+    },
+    pentagon: {
+      component: Polygon,
+      props: computePentagon({
         x: sizes[chunk[1]],
         y: sizes[chunk[2]],
         size: sizes[chunk[3]],
