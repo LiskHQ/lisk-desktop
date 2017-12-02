@@ -4,6 +4,7 @@ import { gradientIds, Gradients } from './gradients';
 const computeTriangle = props => (
   {
     fill: props.fill,
+    transform: props.transform,
     points: [{
       x: props.x + (props.size / 2),
       y: props.y,
@@ -26,10 +27,10 @@ const AccountVisual = ({ address, size = 200 }) => {
 
   const shapes = {
     circle: {
-      cx: sizes[address[0]] + (size / 4),
-      cy: sizes[address[1]] + (size / 4),
-      r: sizes[address[2]] / 2,
-      fill: gradientIds[address[3]],
+      cx: sizes[address[1]] + (size / 4),
+      cy: sizes[address[2]] + (size / 4),
+      r: sizes[address[3]] / 2,
+      fill: gradientIds[address[4]],
     },
     square: {
       x: sizes[address[5]],
@@ -37,29 +38,32 @@ const AccountVisual = ({ address, size = 200 }) => {
       height: sizes[address[7]],
       width: sizes[address[7]],
       fill: gradientIds[address[8]],
+      // transform: `rotate(${sizes[address[9]]} ${size / 2} ${size / 2})`,
     },
     rect: {
       x: sizes[address[10]],
-      y: sizes[address[11]] * 5,
-      height: sizes[address[12]] / 5,
+      y: sizes[address[11]],
+      height: sizes[address[14]],
       width: sizes[address[12]],
       fill: gradientIds[address[13]],
+      // transform: `rotate(${sizes[address[14]]} ${size / 2} ${size / 2})`,
     },
     triangle: computeTriangle({
       x: sizes[address[15]],
-      y: sizes[address[15]],
-      size: sizes[address[16]],
-      fill: gradientIds[address[17]],
+      y: sizes[address[16]],
+      size: sizes[address[17]],
+      fill: gradientIds[address[18]],
+      // transform: `rotate(${sizes[address[19]]} ${size / 2} ${size / 2})`,
     }),
   };
 
   return (
     <svg height={size} width={size}>
       <Gradients />
+      <rect {...shapes.rect} />
+      <rect {...shapes.square} />
       <circle {...shapes.circle} />
       <polygon {...shapes.triangle} />
-      <rect {...shapes.square} />
-      <rect {...shapes.rect} />
     </svg>
   );
 };
