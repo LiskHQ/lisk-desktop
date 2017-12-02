@@ -23,7 +23,10 @@ const gradientSpecs = [
   },
 ];
 
-export const gradientIds = gradientSpecs.map(spec => `url(#${spec.id})`);
+export const gradientIds = [
+  ...gradientSpecs.map(spec => `url(#${spec.id})`),
+  ...gradientSpecs.map(spec => `url(#${spec.id})`),
+];
 
 export const Gradients = () => (
   <defs>
