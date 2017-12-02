@@ -36,8 +36,8 @@ const Gradients = ({ specs }) => (
   </defs>
 );
 
-const pickOne = (items, address, bit) => {
-  const index = address[bit] % items.length;
+const pickOne = (items, address, relevantIndex) => {
+  const index = address.padStart(20, '0')[relevantIndex] % items.length;
   return items[index];
 };
 
@@ -66,41 +66,41 @@ const AccountVisual = ({ address, size = 200 }) => {
     2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
   ].map(x => x * (size / 20));
 
-  const props = {
+  const shapes = {
     circle: {
-      r: pickOne(sizes, address, 0) / 2,
-      cx: pickOne(sizes, address, 1) + (size / 4),
-      cy: pickOne(sizes, address, 2) + (size / 4),
+      cx: pickOne(sizes, address, 0) + (size / 4),
+      cy: pickOne(sizes, address, 1) + (size / 4),
+      r: pickOne(sizes, address, 2) / 2,
       fill: pickOne(gradients, address, 3),
     },
     square: {
-      x: pickOne(sizes, address, 4),
-      y: pickOne(sizes, address, 5),
-      height: pickOne(sizes, address, 6),
-      width: pickOne(sizes, address, 6),
-      fill: pickOne(gradients, address, 7),
+      x: pickOne(sizes, address, 5),
+      y: pickOne(sizes, address, 6),
+      height: pickOne(sizes, address, 7),
+      width: pickOne(sizes, address, 7),
+      fill: pickOne(gradients, address, 8),
     },
     rect: {
-      x: pickOne(sizes, address, 8),
-      y: pickOne(sizes, address, 9) * 5,
-      height: pickOne(sizes, address, 10) / 5,
-      width: pickOne(sizes, address, 10),
-      fill: pickOne(gradients, address, 12),
+      x: pickOne(sizes, address, 10),
+      y: pickOne(sizes, address, 11) * 5,
+      height: pickOne(sizes, address, 12) / 5,
+      width: pickOne(sizes, address, 12),
+      fill: pickOne(gradients, address, 13),
     },
-    triangle: {
-      x: pickOne(sizes, address, 13),
-      y: pickOne(sizes, address, 14),
-      size: pickOne(sizes, address, 15),
-      fill: pickOne(gradients, address, 16),
-    },
+    triangle: computeTriangle({
+      x: pickOne(sizes, address, 15),
+      y: pickOne(sizes, address, 15),
+      size: pickOne(sizes, address, 16),
+      fill: pickOne(gradients, address, 17),
+    }),
   };
   return (
     <svg height={size} width={size}>
       <Gradients specs={gradientSpecs} />
-      <circle {...props.circle} />
-      <polygon {...computeTriangle(props.triangle)} />
-      <rect {...props.square} />
-      <rect {...props.rect} />
+      <circle {...shapes.circle} />
+      <polygon {...shapes.triangle} />
+      <rect {...shapes.square} />
+      <rect {...shapes.rect} />
     </svg>
   );
 };
