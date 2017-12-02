@@ -1,10 +1,12 @@
 import React from 'react';
 import { gradientIds, Gradients } from './gradients';
 
+const Rect = props => <rect {...props} />;
+const Circle = props => <circle {...props} />;
+const Polygon = props => <polygon {...props} />;
+
 const computeTriangle = props => (
   {
-    fill: props.fill,
-    transform: props.transform,
     points: [{
       x: props.x + (props.size / 2),
       y: props.y,
@@ -19,51 +21,75 @@ const computeTriangle = props => (
   }
 );
 
-const AccountVisual = ({ address, size = 200 }) => {
-  address = address.padStart(20, '0');
+const getShape = (chunk, size, gradients) => {
+  const shapeNames = [
+    'circle', 'triangle', 'square', 'rect',
+    'circle', 'triangle', 'square', 'rect',
+    'circle', 'triangle',
+  ];
+
   const sizes = [
     2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
   ].map(x => x * (size / 20));
 
   const shapes = {
     circle: {
-      cx: sizes[address[1]] + (size / 4),
-      cy: sizes[address[2]] + (size / 4),
-      r: sizes[address[3]] / 2,
-      fill: gradientIds[address[4]],
+      component: Circle,
+      props: {
+        cx: sizes[chunk[1]] + (size / 4),
+        cy: sizes[chunk[2]] + (size / 4),
+        r: sizes[chunk[3]] / 2,
+      },
     },
     square: {
-      x: sizes[address[5]],
-      y: sizes[address[6]],
-      height: sizes[address[7]],
-      width: sizes[address[7]],
-      fill: gradientIds[address[8]],
-      // transform: `rotate(${sizes[address[9]]} ${size / 2} ${size / 2})`,
+      component: Rect,
+      props: {
+        x: sizes[chunk[1]],
+        y: sizes[chunk[2]],
+        height: sizes[chunk[3]],
+        width: sizes[chunk[3]],
+      },
     },
     rect: {
-      x: sizes[address[10]],
-      y: sizes[address[11]],
-      height: sizes[address[14]],
-      width: sizes[address[12]],
-      fill: gradientIds[address[13]],
-      // transform: `rotate(${sizes[address[14]]} ${size / 2} ${size / 2})`,
+      component: Rect,
+      props: {
+        x: sizes[chunk[1]],
+        y: sizes[chunk[2]],
+        height: sizes[chunk[3]],
+        width: sizes[chunk[4]],
+      },
     },
-    triangle: computeTriangle({
-      x: sizes[address[15]],
-      y: sizes[address[16]],
-      size: sizes[address[17]],
-      fill: gradientIds[address[18]],
-      // transform: `rotate(${sizes[address[19]]} ${size / 2} ${size / 2})`,
-    }),
+    triangle: {
+      component: Polygon,
+      props: computeTriangle({
+        x: sizes[chunk[1]],
+        y: sizes[chunk[2]],
+        size: sizes[chunk[3]],
+      }),
+    },
   };
+
+  return {
+    component: shapes[shapeNames[chunk[0]]].component,
+    props: {
+      ...shapes[shapeNames[chunk[0]]].props,
+      fill: gradients[chunk[4]],
+    },
+  };
+};
+
+const AccountVisual = ({ address, size = 200 }) => {
+  const addressChunks = address.padStart(21, '0').match(/\d{5}/g);
+  const shapes = addressChunks.map(chunk => (
+    getShape(chunk, size, gradientIds)
+  ));
 
   return (
     <svg height={size} width={size}>
       <Gradients />
-      <rect {...shapes.rect} />
-      <rect {...shapes.square} />
-      <circle {...shapes.circle} />
-      <polygon {...shapes.triangle} />
+      {shapes.map((shape, i) => (
+        <shape.component {...shape.props} key={i} />
+      ))}
     </svg>
   );
 };
