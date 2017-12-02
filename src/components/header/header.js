@@ -3,6 +3,7 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Countdown from 'react-countdown-now';
 import { FontIcon } from '../fontIcon';
+import AccountVisual from '../accountVisual';
 import CountDownTemplate from './countDownTemplate';
 import LiskAmount from '../liskAmount';
 import logo from '../../assets/images/Lisk-Logo.svg';
@@ -37,7 +38,9 @@ const Header = props => (
             </div>
           </div>
           <RelativeLink to='saved-accounts'>
-            <div className={styles.avatar}></div>
+            <div className={styles.accountAvatar}>
+              <AccountVisual address={props.account.address} size={69} />
+            </div>
           </RelativeLink>
           <div className={styles.menu}>
             <figure className={styles.iconCircle}>
