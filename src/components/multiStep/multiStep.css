@@ -1,3 +1,44 @@
+@import '../app/variables';
+
 .navigation {
-  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  max-width: 50%;
+  margin: 0 auto;
+
+  & > li {
+    display: flex;
+    color: var(--color-primary-medium);
+    opacity: 0.4;
+
+    &.dash b {
+      width: 50px;
+      height: 0;
+      border-bottom: solid 2px var(--color-primary-medium);
+      opacity: 0.5;
+      font-size: 0;
+      padding-top: 25%;
+    }
+
+    & .icon,
+    & b {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    & .icon {
+      font-family: 'Material Icons';
+      font-size: 1.4em;
+      padding: 0 0.5em;
+    }
+
+    &.current {
+      opacity: 1;
+    }
+  }
+}
+
+.hidden {
+  display: none;
 }
