@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './multiStep.css';
+import MultiStepNav from './multiStepNav';
 
 /**
  *
@@ -25,35 +25,29 @@ class MultiStep extends React.Component {
 
     this.state = {
       step: {
-        count: 1,
-        cb: (data) => {
+        nextStep: (data) => {
           this.next(data);
         },
-        data: {},
+        prevStep: (data) => {
+          this.prev(data);
+        },
+        data: [{}],
         current: 0,
       },
     };
   }
 
-  componentWillMount() {
-    const newState = Object.assign({}, this.state);
-    newState.step.count = this.props.children.length;
-    this.setState(newState);
-  }
-
   next(data) {
     const newState = Object.assign({}, this.state);
-    newState.step.data = data;
     newState.step.current++;
+    newState.step.data[newState.step.current] = data;
     this.setState(newState);
   }
 
-  // Checks if all titles are defined and showNav is not false
-  validateTitles() {
-    const titlesAreValid = this.props.children.reduce((acc, child) =>
-      (acc && typeof child.props.title === 'string' && child.props.title.length > 0)
-      , true);
-    return this.props.showNav !== false && titlesAreValid;
+  prev() {
+    const newState = Object.assign({}, this.state);
+    newState.step.current--;
+    this.setState(newState);
   }
 
   render() {
@@ -61,18 +55,14 @@ class MultiStep extends React.Component {
     const { step } = this.state;
 
     return (<section className={className}>
+      <MultiStepNav steps={children} showNav={this.props.showNav} />
       {
-        this.validateTitles() ?
-          <nav className={styles.navigation}>
-            {
-              children.map(child => <li key={child.props.title}>
-                { child.props.title }
-              </li>)
-            }
-          </nav> : null
-      }
-      {
-        React.cloneElement(children[step.current], { cb: step.cb, ...step.data })
+        React.cloneElement(children[step.current],
+          {
+            nextStep: step.nextStep,
+            prevStep: step.prevStep,
+            ...step.data[step.current],
+          })
       }
     </section>);
   }
