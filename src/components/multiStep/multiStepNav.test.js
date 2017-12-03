@@ -19,9 +19,11 @@ describe('MultiStep Navigation', () => {
     const wrapperWithNav = mount(<MultiStepNav steps={steps} />);
 
     expect(wrapperWithNav.find('nav')).to.have.lengthOf(1);
-    expect(wrapperWithNav.find('li').at(0).text()).to.be.equal('Title 1');
-    expect(wrapperWithNav.find('li').at(1).text()).to.be.equal('Title 2');
-    expect(wrapperWithNav.find('li').at(2).text()).to.be.equal('Title 3');
+    expect(wrapperWithNav.find('li')).to.have.lengthOf(5);
+    expect(wrapperWithNav.find('li.title')).to.have.lengthOf(3);
+    expect(wrapperWithNav.find('li.title').at(0).text()).to.be.equal('Title 1');
+    expect(wrapperWithNav.find('li.title').at(1).text()).to.be.equal('Title 2');
+    expect(wrapperWithNav.find('li.title').at(2).text()).to.be.equal('Title 3');
   });
 
   it('Should render no nav if showNav is false', () => {

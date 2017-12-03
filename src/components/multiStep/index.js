@@ -55,7 +55,7 @@ class MultiStep extends React.Component {
     const { step } = this.state;
 
     return (<section className={className}>
-      <MultiStepNav steps={children} showNav={this.props.showNav} />
+      <MultiStepNav steps={children} showNav={this.props.showNav} current={step.current} />
       {
         React.cloneElement(children[step.current],
           {
