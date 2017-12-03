@@ -28,7 +28,7 @@ const MultiStepNav = ({ steps, showNav, current }) => {
     <nav className={styles.navigation}>
       {
         dashedSteps().map((step, index) =>
-          <li key={step.props.title} className={`${current === index ? styles.current : ''} ${step.dash ? styles.dash : 'title'}`}>
+          <li key={step.props.title} className={`${current === (index / 2) ? styles.current : ''} ${step.dash ? styles.dash : 'title'}`}>
             {
               step.props.icon ?
                 <FontIcon className={styles.icon}> {step.props.icon}</FontIcon> : null
