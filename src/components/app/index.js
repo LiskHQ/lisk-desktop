@@ -5,7 +5,7 @@ import PrivateRoutes from '../privateRoute';
 import Header from '../header';
 import Login from '../login';
 import Register from '../register';
-import Transactions from '../transactions';
+import Transactions from '../transactionDashboard';
 import Voting from '../voting';
 import Forging from '../forging';
 import styles from './app.css';

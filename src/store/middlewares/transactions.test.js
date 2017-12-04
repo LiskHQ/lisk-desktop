@@ -1,8 +1,6 @@
 import { expect } from 'chai';
 import { spy, stub, mock } from 'sinon';
-import i18next from 'i18next';
 import * as accountApi from '../../utils/api/account';
-import { successAlertDialogDisplayed } from '../../actions/dialog';
 import { transactionsFailed } from '../../actions/transactions';
 import middleware from './transactions';
 import actionTypes from '../../constants/actions';

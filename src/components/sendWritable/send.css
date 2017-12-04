@@ -116,20 +116,6 @@ header {
   }
 }
 
-.wrapper {
-  width: 100%;
-}
-
 .header {
   height: 300px;
-}
-
-.temporaryAvatar {
-  /* values are not saved as variable since this will be deleted anyway */
-  opacity: 0.8;
-  background-image: linear-gradient(90deg, #3023ae 0%, #53a0fd 48%, #b4ec51 100%);
-  height: 150px;
-  width: 150px;
-  border-radius: 100%;
-  margin: 13px 0px;
 }

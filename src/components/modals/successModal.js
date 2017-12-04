@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '../toolbox/buttons/button';
-import styles from '../send/send.css';
+import styles from '../sendWritable/send.css';
 import copy from '../../assets/images/icons/copy.svg';
 
 class SuccessModal extends React.Component {
@@ -38,7 +38,7 @@ class SuccessModal extends React.Component {
         </div>
 
         <footer>
-          <Button className='okay-button' onClick={({ jump, reset }) => this.props.prevStep({ jump, reset })}>{this.props.t('Okay')}</Button>
+          <Button className='okay-button' onClick={() => this.props.prevStep({ reset: true })}>{this.props.t('Okay')}</Button>
           <div className='subTitle'></div>
         </footer>
       </div>

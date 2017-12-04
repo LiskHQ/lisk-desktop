@@ -145,7 +145,7 @@ a {
   padding: 0px var(--grid-padding-left);
 }
 
-header {
+.transactions header {
   padding: 20px 30px;
   line-height: var(--header-line-height);
 

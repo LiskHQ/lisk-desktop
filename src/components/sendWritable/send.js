@@ -75,7 +75,7 @@ class Send extends React.Component {
         <div className={styles.header}>
           <header>
             <h2>Transfer</h2>
-            <span className={`${styles.subTitle} ${styles.transfer}`}>{this.props.t('Quickly send and request LSK token')}</span>
+            <span className={`${styles.subTitle} ${styles.transfer}`}>{this.props.t('Quickly sendWritable and request LSK token')}</span>
           </header>
         </div>
         <form>
