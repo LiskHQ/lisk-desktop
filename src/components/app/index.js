@@ -8,6 +8,7 @@ import Transactions from '../transactions';
 import Voting from '../voting';
 import Forging from '../forging';
 import styles from './app.css';
+import BackgroundMaker from '../backgroundMaker';
 import Dialog from '../dialog';
 import Toaster from '../toaster';
 import Tabs from '../tabs';
@@ -17,20 +18,7 @@ import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 
 const App = () => (
   <OfflineWrapper>
-    <div className={styles.stageStripes}>
-      <span className={styles.stageStripe}></span>
-      <span className={styles.stageStripe}></span>
-      <span className={styles.stageStripe}></span>
-      <span className={styles.stageStripe}></span>
-      <span className={styles.stageStripe}></span>
-      <span className={styles.stageStripe}></span>
-      <span className={styles.stageStripe}></span>
-      <span className={styles.stageStripe}></span>
-      <span className={styles.stageStripe}></span>
-      <span className={styles.stageStripe}></span>
-      <span className={styles.stageStripe}></span>
-      <span className={styles.stageStripe}></span>
-    </div>
+    <BackgroundMaker />
     <main className={`${styles.bodyWrapper}`}>
       <aside>
         <Tabs />

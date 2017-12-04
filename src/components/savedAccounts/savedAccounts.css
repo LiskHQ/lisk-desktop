@@ -1,13 +1,179 @@
-.tableWrapper {
-  margin: -24px -24px 24px -24px;
+@import '../app/variables.css';
+
+:root {
+  --font-size-ids-h1: 4em;
+  --font-size-card-h2: 2em;
+  --close-button-shadow: 0 20px 20px 0 rgba(0, 32, 68, 0.25);
+  --h1-padding: 85px;
+  --add-button-margin: 200px;
+  --card-width: 347;
+  --card-height: 436px;
+  --add-button-margin: 240px;
 }
 
-.iconCell {
-  width: 24px;
-  text-align: right;
+.wrapper {
+  margin: -24px -24px -24px -24px;
+  background: #013165;
+  overflow-y: auto;
+
+  & > h1 {
+    position: relative;
+    color: var(--color-white);
+    font-size: var(--font-size-ids-h1);
+    text-align: center;
+    padding: var(--h1-padding);
+    margin: 0 auto;
+    max-width: 600px;
+  }
 }
 
-.isActive {
-  background-color: #d6f0ff !important;
+.cardsWrapper {
+  display: block;
+  overflow: auto;
+  white-space: nowrap;
+  padding: 48px 232px;
+  text-align: center;
+  height: calc(100vh - 154px -  2 * var(--h1-padding)); /* stylelint-disable-line */
+  min-height: calc(var(--card-height) + 2 * var(--add-button-margin));
+  position: relative;
+}
+
+.card {
+  position: relative;
+  display: inline-block;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: var(--border-radius-normal);
+  background-color: var(--color-white);
+  box-shadow: var(--normal-shadow);
+  margin: 24px;
+  text-align: center;
+  cursor: pointer;
+  vertical-align: top;
+
+  & > h2 {
+    position: relative;
+    font-size: var(--font-size-card-h2);
+    color: var(--color-black);
+
+    & > small {
+      font-size: 0.6875em;
+    }
+  }
+}
+
+.addNew {
+  background-image: linear-gradient(-134deg, #93f4fe 1%, #004aff 98%);
+
+  & > h2 {
+    color: var(--color-white);
+    text-align: center;
+  }
+}
+
+.address {
+  margin-bottom: 40px;
+  color: var(--color-grayscale-dark);
+  font-size: 1.125em;
+}
+
+.cardIcon {
+  width: 175px;
+  height: 175px;
+  margin: 78px 78px 32px;
+  position: relative;
+}
+
+.plusShapeIcon {
+  width: 134px;
+  height: 134px;
+  margin: 24px;
+}
+
+.rectangleOnTheRight,
+.rectangleImage2,
+.rectangleImage3,
+.triangleImage,
+.circleImage {
+  position: absolute;
+  opacity: 0.8;
+}
+
+.circleImage {
+  right: 0px;
+  bottom: 64px;
+}
+
+.rectangleOnTheRight {
+  right: 0px;
+  bottom: 60px;
+}
+
+.rectangleImage2 {
+  left: 50px;
+  bottom: 0px;
+}
+
+.rectangleImage3 {
+  left: 0px;
+  bottom: 0px;
+}
+
+.triangleImage {
+  left: 54px;
+  bottom: 92px;
+}
+
+.accountVisualPlaceholder,
+.accountVisualPlaceholder2 {
+  position: absolute;
+  width: 126px;
+  height: 84px;
+  top: 20px;
+  left: 24px;
+  opacity: 0.9;
+  background-image: linear-gradient(124deg, #3023ae 0%, #c86dd7 100%);
+}
+
+.accountVisualPlaceholder2 {
+  top: 70px;
+  left: 44px;
+}
+
+.unlocked {
+  font-size: 1em;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 24px;
+  color: var(--color-grayscale-dark);
   font-weight: bold;
+
+  & > * {
+    vertical-align: bottom;
+  }
+}
+
+.addAcctiveAccountButton {
+  margin: -var(--add-button-margin) auto var(--add-button-margin);
+  display: block;
+}
+
+.closeButton {
+  box-shadow: var(--close-button-shadow);
+  position: absolute;
+  top: 85px;
+  right: 85px;
+}
+
+.removeButton {
+  background-color: var(--color-white) !important;
+  color: var(--color-grayscale-dark) !important;
+  border: none;
+  box-shadow: var(--normal-shadow);
+  text-transform: none;
+
+  &:hover {
+    color: var(--color-primary-medium) !important;
+  }
 }

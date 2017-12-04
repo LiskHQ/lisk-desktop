@@ -1,0 +1,19 @@
+.dialog.fullscreen {
+  width: 100vw; /* stylelint-disable-line */
+  height: 100vh; /* stylelint-disable-line */
+  max-width: 100vw; /* stylelint-disable-line */
+  max-height: 100vh; /* stylelint-disable-line */
+  border-radius: 0;
+  background: #013165;
+}
+
+.innerBody {
+  padding: 24px;
+  max-height: auto;
+}
+
+@media screen and (min-width: 600px) {
+  .innerBody {
+    max-height: auto;
+  }
+}

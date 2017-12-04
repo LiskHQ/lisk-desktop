@@ -33,12 +33,12 @@ Feature: Saved Accounts
     And I'm logged in as "empty account"
     And I click "saved accounts" in main menu
     And I click "add active account button"
-    Then I should see "saved accounts table" table with 2 lines
-    And I refresh the page
+    Then I should see 2 instances of "saved account card"
+    When I refresh the page
     And I wait 2 seconds
-    And I should be logged in as "empty account" account
+    Then I should be logged in as "empty account" account
 
-  Scenario: should allow to forget second account
+  Scenario: should allow to remove second account
     Given I'm logged in as "genesis"
     When I click "saved accounts" in main menu
     And I click "add active account button"
@@ -48,9 +48,9 @@ Feature: Saved Accounts
     And I'm logged in as "delegate"
     And I click "saved accounts" in main menu
     And I click "add active account button"
-    And I should see "saved accounts table" table with 2 lines
-    And I click "forget button"
-    Then I should see "saved accounts table" table with 1 lines
+    Then I should see 2 instances of "saved account card"
+    When I click "remove button"
+    Then I should see 1 instances of "saved account card"
 
   Scenario: should allow to switch account
     Given I'm logged in as "genesis"
