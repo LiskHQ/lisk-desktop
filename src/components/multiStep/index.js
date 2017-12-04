@@ -44,9 +44,17 @@ class MultiStep extends React.Component {
     this.setState(newState);
   }
 
-  prev() {
+  prev({ jump, reset }) {
+    let dec = 1;
+    if (typeof jump === 'number' && jump <= this.state.step.current) {
+      dec = Math.abs(Math.floor(jump));
+    } else if (reset === true) {
+      dec = this.state.step.current;
+    }
+
     const newState = Object.assign({}, this.state);
-    newState.step.current--;
+    newState.step.current -= dec;
+
     this.setState(newState);
   }
 

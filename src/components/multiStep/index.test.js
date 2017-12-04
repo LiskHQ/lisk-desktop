@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import MultiStep from './index';
 
-describe('MultiStep', () => {
+describe.only('MultiStep', () => {
   let wrapper;
 
   const Child1 = ({ children, nextStep, prevStep }) => (<div className='child1'
@@ -13,7 +13,7 @@ describe('MultiStep', () => {
     onClick={() => nextStep({ value: 'called from child2' })}
     onMouseEnter={() => prevStep()}>{children}</div>);
   const Child3 = ({ children, prevStep }) => (<div className='child3'
-    onMouseEnter={() => prevStep()}>{children}</div>);
+    onMouseEnter={({ jump, reset }) => prevStep({ jump, reset })}>{children}</div>);
 
   beforeEach(() => {
     wrapper = mount(<MultiStep>
@@ -69,5 +69,35 @@ describe('MultiStep', () => {
     child3.simulate('mouseEnter', { target: {} });
     child2 = wrapper.find('Child2');
     expect(child2.props().value).to.be.equal('called from child1');
+  });
+
+  it('should allow to skip multiple steps backward', () => {
+    // FF to steps 3
+    let child1 = wrapper.find('Child1');
+    expect(typeof child1.props().nextStep).to.be.equal('function');
+    child1.simulate('click');
+    const child2 = wrapper.find('Child2');
+    child2.simulate('click');
+    const child3 = wrapper.find('Child3');
+
+    // Now prev to step 2
+    child3.simulate('mouseEnter', { jump: 2 });
+    child1 = wrapper.find('Child1');
+    expect(child1).to.have.lengthOf(1);
+  });
+
+  it('should allow to reset to first step', () => {
+    // FF to steps 3
+    let child1 = wrapper.find('Child1');
+    expect(typeof child1.props().nextStep).to.be.equal('function');
+    child1.simulate('click');
+    const child2 = wrapper.find('Child2');
+    child2.simulate('click');
+    const child3 = wrapper.find('Child3');
+
+    // Now prev to step 2
+    child3.simulate('mouseEnter', { reset: true });
+    child1 = wrapper.find('Child1');
+    expect(child1).to.have.lengthOf(1);
   });
 });
