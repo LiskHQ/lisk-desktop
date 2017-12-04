@@ -1,23 +1,231 @@
+@import '../app/variables';
+
+:root {
+  --gradient: linear-gradient(45deg, rgba(0, 74, 255, 1) 0%, rgba(147, 244, 254, 1) 100%);
+  --transition: all ease 300ms;
+}
+
 .wrapper {
-  padding-top: 50px !important;
-  margin-top: 8px;
-  padding-bottom: 24px !important;
+  overflow: visible !important;
+  display: block !important;
 }
 
-.newAccount {
-  margin-right: 8px;
+.wrapper,
+.login {
+  height: 100%;
 }
 
-.network ul {
-  text-align: left;
+.login,
+.signUp {
+  transition: var(--transition);
+  padding: 0 40px;
+  position: relative;
+  box-sizing: border-box;
+  float: left;
 }
 
-.error {
-  display: inline-block;
-  text-align: left;
+.login {
+  width: 42%;
+
+  & .table {
+    position: relative;
+  }
+
+  & h2 {
+    color: var(--color-primary-medium);
+    margin-bottom: 0.2em;
+  }
+
+  & form button {
+    display: none;
+    transition: var(--transition);
+    animation: fadeIn 300ms forwards;
+  }
+
+  & header {
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    & .backButton {
+      color: var(--color-grayscale-dark);
+      font-size: var(--font-size-h3);
+
+      & .icon {
+        font-size: var(--font-size-h6) !important;
+      }
+
+      & .icon,
+      & b {
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      & b {
+        font-size: 0.36em !important;
+      }
+    }
+  }
+
+  /* @todo remove these with #3 */
+
+  & .outTaken {
+    top: 100px;
+
+    & + .outTaken {
+      top: 150px;
+
+      & + .outTaken {
+        top: 200px;
+      }
+    }
+  }
+
+  &.focused {
+    transform: translateZ(0);
+    width: 75%;
+
+    & form button {
+      display: inline-block;
+    }
+  }
+}
+
+.signUp {
+  height: calc(100% + 78px);
+  width: 58%;
+  margin-top: -40px;
+
+  & .bg,
+  & .shapes,
+  & .shapes > div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+  }
+
+  & .bg {
+    z-index: 0;
+    opacity: 0.94;
+    background: var(--gradient);
+  }
+
+  & .shapes {
+    z-index: 1;
+  }
+
+  & .shape {
+    position: absolute !important;
+
+    &.rectA {
+      right: 20% !important;
+      top: 20% !important;
+      left: auto !important;
+      width: 200px;
+    }
+
+    &.rectB {
+      left: 10% !important;
+      bottom: 18% !important;
+      top: auto !important;
+      width: 200px;
+    }
+
+    &.rectC {
+      right: 20% !important;
+      bottom: 25% !important;
+      top: auto !important;
+      left: auto !important;
+      z-index: 2;
+      width: 200px;
+    }
+
+    &.circle {
+      right: 10% !important;
+      bottom: 7% !important;
+      left: auto !important;
+      top: auto !important;
+      width: 150px;
+    }
+
+    &.triangle {
+      right: 10% !important;
+      left: auto !important;
+      top: 10% !important;
+      width: 250px;
+    }
+  }
+
+  & .table {
+    position: relative;
+    z-index: 2;
+  }
+
+  & h2 {
+    color: var(--color-white);
+  }
+
+  & h5,
+  & a,
+  & .singUpArrow {
+    color: var(--color-white);
+    vertical-align: middle;
+    transition: var(--transition);
+  }
+
+  & h5 {
+    max-width: 320px;
+  }
+
+  & a {
+    text-decoration: none;
+  }
+
+  & .singUpArrow {
+    font-size: 1em !important;
+  }
+
+  & .shapes {
+    position: absolute;
+    z-index: 1;
+  }
+
+  &.focused {
+    width: 25%;
+    transform: translateZ(0);
+
+    & h2 {
+      font-size: 2.1em;
+    }
+
+    & .singUpArrow {
+      font-size: 1.32em;
+    }
+
+    & h5 {
+      font-size: 1em;
+    }
+  }
+}
+
+.table {
+  display: table;
   width: 100%;
+  height: 100%;
+
+  & .tableCell {
+    display: table-cell;
+    vertical-align: middle;
+  }
 }
 
-.field {
-  margin-top: 10px;
+.outTaken {
+  position: absolute;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

@@ -1,9 +1,11 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Dropdown from 'react-toolbox/lib/dropdown';
+import { FontIcon } from 'react-toolbox/lib/font_icon';
 import i18next from 'i18next';
+import Parallax from '../parallax';
 import Input from '../toolbox/inputs/input';
-import { Button } from '../toolbox/buttons/button';
+import { PrimaryButton } from '../toolbox/buttons/button';
 import PassphraseInput from '../passphraseInput';
 import styles from './login.css';
 import env from '../../constants/env';
@@ -11,6 +13,8 @@ import networks from '../../constants/networks';
 import getNetwork from '../../utils/getNetwork';
 import LanguageDropdown from '../languageDropdown';
 import RelativeLink from '../relativeLink';
+// eslint-disable-next-line import/no-unresolved
+import * as shapes from '../../assets/images/*.svg';
 import { validateUrl, getLoginData } from '../../utils/login';
 
 /**
@@ -145,52 +149,88 @@ class Login extends React.Component {
     }
   }
 
+  passFocused() {
+    this.setState({
+      passInputState: 'focused',
+    });
+  }
+
   render() {
     return (
       <div className={`box ${styles.wrapper}`}>
-        <section className={grid.row}>
-          <div className={`${grid['col-xs-12']} ${grid['col-sm-8']} ${grid['col-sm-offset-2']}`}>
-            <form onSubmit={this.onFormSubmit.bind(this)}>
-              <LanguageDropdown />
-              <Dropdown
-                auto={false}
-                source={this.networks}
-                onChange={this.changeHandler.bind(this, 'network')}
-                label={this.props.t('Select a network')}
-                value={this.state.network}
-                className={`${styles.network} network`}
-              />
-              {
-                this.state.network === networks.customNode.code &&
-                  <Input type='text'
-                    label={this.props.t('Node address')}
-                    name='address'
-                    className='address'
-                    theme={styles}
-                    value={this.state.address}
-                    error={this.state.addressValidity}
-                    onChange={this.changeHandler.bind(this, 'address')} />
-              }
-              <PassphraseInput label={this.props.t('Enter your passphrase')}
-                className='passphrase'
-                theme={styles}
-                error={this.state.passphraseValidity}
-                value={this.state.passphrase}
-                onChange={this.changeHandler.bind(this, 'passphrase')} />
-              <footer className={ `${grid.row} ${grid['center-xs']}` }>
-                <div className={grid['col-xs-12']}>
-                  <RelativeLink to='register' flat primary
-                    className={`${styles.newAccount} new-account-button`}>
-                    {this.props.t('New Account')}
-                  </RelativeLink>
-                  <Button label={this.props.t('Login')} primary raised
-                    className='login-button'
-                    type='submit'
-                    disabled={(this.state.network === networks.customNode.code && this.state.addressValidity !== '') ||
-                    this.state.passphraseValidity !== ''} />
-                </div>
-              </footer>
-            </form>
+        <section className={`${styles.login} ${styles[this.state.passInputState]}`}>
+          <section className={styles.table}>
+            <header>
+              <a className={styles.backButton} href='https://list.io' target='_blank' rel='noopener noreferrer'>
+                <FontIcon className={styles.icon}>chevron_left</FontIcon>
+                <b>Back to lisk.io</b>
+              </a>
+            </header>
+            <div className={`${styles.tableCell} text-left`}>
+              <h2>{this.props.t('Sign In')}</h2>
+              <form onSubmit={this.onFormSubmit.bind(this)}>
+                <LanguageDropdown className={styles.outTaken} />
+                <Dropdown
+                  auto={false}
+                  source={this.networks}
+                  onChange={this.changeHandler.bind(this, 'network')}
+                  label={this.props.t('Select a network')}
+                  value={this.state.network}
+                  className={`${styles.network} network ${styles.outTaken}`}
+                />
+                {
+                  this.state.network === networks.customNode.code &&
+                    <Input type='text'
+                      label={this.props.t('Node address')}
+                      name='address'
+                      className={`address ${styles.outTaken}`}
+                      theme={styles}
+                      value={this.state.address}
+                      error={this.state.addressValidity}
+                      onChange={this.changeHandler.bind(this, 'address')} />
+                }
+                <PassphraseInput label={this.props.t('Enter your passphrase')}
+                  className='passphrase'
+                  onFocus={this.passFocused.bind(this)}
+                  theme={styles}
+                  error={this.state.passphraseValidity}
+                  value={this.state.passphrase}
+                  onChange={this.changeHandler.bind(this, 'passphrase')} />
+                <footer className={ `${grid.row} ${grid['center-xs']}` }>
+                  <div className={grid['col-xs-12']}>
+                    <PrimaryButton label={this.props.t('Login')}
+                      className='login-button'
+                      type='submit'
+                      disabled={(this.state.network === networks.customNode.code && this.state.addressValidity !== '') ||
+                      this.state.passphraseValidity !== '' || this.state.passphrase === ''} />
+                  </div>
+                </footer>
+              </form>
+            </div>
+          </section>
+        </section>
+        <section className={`${styles.signUp} ${styles[this.state.passInputState]}`}>
+          <section className={styles.table}>
+            <div className={`${styles.tableCell} text-left`}>
+              <h2>
+                <RelativeLink to='register' className='new-account-button'>
+                  {this.props.t('Get Access')}
+                </RelativeLink>
+                <FontIcon className={styles.singUpArrow}>chevron_right</FontIcon>
+              </h2>
+
+              <h5>Create an address as a gateway to all Lisk Services.</h5>
+            </div>
+          </section>
+          <div className={styles.bg}></div>
+          <div className={styles.shapes}>
+            <Parallax bgWidth='200px' bgHeight='10px'>
+              <img src={shapes.circle} alt='circle' className={`${styles.circle} ${styles.shape}`} data-depth='0.5'/>
+              <img src={shapes.triangle} alt='triangle' className={`${styles.triangle} ${styles.shape}`} data-depth='0.6'/>
+              <img src={shapes.rect} alt='rect A' className={`${styles.rectA} ${styles.shape}`} data-depth='0.2'/>
+              <img src={shapes.rect} alt='rect B' className={`${styles.rectB} ${styles.shape}`} data-depth='0.4'/>
+              <img src={shapes.rect} alt='rect C' className={`${styles.rectC} ${styles.shape}`} data-depth='0.4'/>
+            </Parallax>
           </div>
         </section>
       </div>

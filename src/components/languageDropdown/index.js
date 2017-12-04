@@ -21,10 +21,10 @@ const customItem = item => (
   </div>
 );
 
-const LanguageDropdown = ({ t }) => (
+const LanguageDropdown = ({ t, className }) => (
   <Dropdown
     auto={false}
-    className='language'
+    className={`language ${className}`}
     label={t('Language')}
     source={languagesSource}
     value={i18n.language}
