@@ -44,11 +44,11 @@ class MultiStep extends React.Component {
     this.setState(newState);
   }
 
-  prev({ jump, reset }) {
+  prev(config) {
     let dec = 1;
-    if (typeof jump === 'number' && jump <= this.state.step.current) {
-      dec = Math.abs(Math.floor(jump));
-    } else if (reset === true) {
+    if (!!config && typeof config.jump === 'number' && config.jump <= this.state.step.current) {
+      dec = Math.abs(Math.floor(config.jump));
+    } else if (!!config && config.reset === true) {
       dec = this.state.step.current;
     }
 
