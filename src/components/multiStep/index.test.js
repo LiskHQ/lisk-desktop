@@ -3,17 +3,17 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import MultiStep from './index';
 
-describe('MultiStep', () => {
+describe.only('MultiStep', () => {
   let wrapper;
 
   const Child1 = ({ children, nextStep, prevStep }) => (<div className='child1'
     onClick={() => nextStep({ value: 'called from child1' })}
-    onMouseEnter={() => prevStep()}>{children}</div>);
+    onMouseEnter={data => prevStep(data.config)}>{children}</div>);
   const Child2 = ({ children, nextStep, prevStep }) => (<div className='child2'
     onClick={() => nextStep({ value: 'called from child2' })}
-    onMouseEnter={() => prevStep()}>{children}</div>);
+    onMouseEnter={data => prevStep(data.config)}>{children}</div>);
   const Child3 = ({ children, prevStep }) => (<div className='child3'
-    onMouseEnter={({ jump, reset }) => prevStep({ jump, reset })}>{children}</div>);
+    onMouseEnter={data => prevStep(data.config)}>{children}</div>);
 
   beforeEach(() => {
     wrapper = mount(<MultiStep>
@@ -66,7 +66,7 @@ describe('MultiStep', () => {
     const child3 = wrapper.find('Child3');
 
     // Now prev to step 2
-    child3.simulate('mouseEnter', { target: {} });
+    child3.simulate('mouseEnter', {});
     child2 = wrapper.find('Child2');
     expect(child2.props().value).to.be.equal('called from child1');
   });
@@ -81,7 +81,7 @@ describe('MultiStep', () => {
     const child3 = wrapper.find('Child3');
 
     // Now prev to step 2
-    child3.simulate('mouseEnter', { jump: 2 });
+    child3.simulate('mouseEnter', { config: { jump: 2 } });
     child1 = wrapper.find('Child1');
     expect(child1).to.have.lengthOf(1);
   });
@@ -96,7 +96,7 @@ describe('MultiStep', () => {
     const child3 = wrapper.find('Child3');
 
     // Now prev to step 2
-    child3.simulate('mouseEnter', { reset: true });
+    child3.simulate('mouseEnter', { config: { reset: true } });
     child1 = wrapper.find('Child1');
     expect(child1).to.have.lengthOf(1);
   });
