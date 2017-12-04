@@ -202,7 +202,7 @@ class Login extends React.Component {
                       className='login-button'
                       type='submit'
                       disabled={(this.state.network === networks.customNode.code && this.state.addressValidity !== '') ||
-                      this.state.passphraseValidity !== ''} />
+                      this.state.passphraseValidity !== '' || this.state.passphrase === ''} />
                   </div>
                 </footer>
               </form>
@@ -226,10 +226,10 @@ class Login extends React.Component {
           <div className={styles.shapes}>
             <Parallax bgWidth='200px' bgHeight='10px'>
               <img src={shapes.circle} alt='circle' className={`${styles.circle} ${styles.shape}`} data-depth='0.5'/>
-              <img src={shapes.square} alt='square' className={`${styles.square} ${styles.shape}`} data-depth='0.6'/>
-              <img src={shapes.rect} alt='rect A' className={`${styles.reactA} ${styles.shape}`} data-depth='0.2'/>
-              <img src={shapes.rect} alt='rect B' className={`${styles.reactB} ${styles.shape}`} data-depth='0.4'/>
-              <img src={shapes.rect} alt='rect C' className={`${styles.reactC} ${styles.shape}`} data-depth='0.4'/>
+              <img src={shapes.triangle} alt='triangle' className={`${styles.triangle} ${styles.shape}`} data-depth='0.6'/>
+              <img src={shapes.rect} alt='rect A' className={`${styles.rectA} ${styles.shape}`} data-depth='0.2'/>
+              <img src={shapes.rect} alt='rect B' className={`${styles.rectB} ${styles.shape}`} data-depth='0.4'/>
+              <img src={shapes.rect} alt='rect C' className={`${styles.rectC} ${styles.shape}`} data-depth='0.4'/>
             </Parallax>
           </div>
         </section>

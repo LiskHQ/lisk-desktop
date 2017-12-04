@@ -119,21 +119,24 @@
   & .shape {
     position: absolute !important;
 
-    &.reactA {
-      left: 5% !important;
-      top: 15% !important;
-      width: 200px;
-    }
-
-    &.reactB {
-      left: 10% !important;
-      top: 18% !important;
-      width: 200px;
-    }
-
-    &.reactC {
+    &.rectA {
       right: 20% !important;
-      top: 25% !important;
+      top: 20% !important;
+      left: auto !important;
+      width: 200px;
+    }
+
+    &.rectB {
+      left: 10% !important;
+      bottom: 18% !important;
+      top: auto !important;
+      width: 200px;
+    }
+
+    &.rectC {
+      right: 20% !important;
+      bottom: 25% !important;
+      top: auto !important;
       left: auto !important;
       z-index: 2;
       width: 200px;
@@ -147,11 +150,11 @@
       width: 150px;
     }
 
-    &.square {
+    &.triangle {
       right: 10% !important;
       left: auto !important;
-      top: 20% !important;
-      width: 150px;
+      top: 10% !important;
+      width: 250px;
     }
   }
 
