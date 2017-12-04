@@ -10,7 +10,10 @@ import TransactionsHeader from './transactionsHeader';
 import LiskAmount from '../liskAmount';
 import styles from './transactions.css';
 import copy from './../../assets/images/icons/copy.svg';
-import Transfer from './transfer';
+import SendWritable from './../send';
+import SendReadable from './../sendReadable';
+import SuccessModal from '../modals';
+import MultipStep from './../multiStep';
 
 class Transactions extends React.Component {
   constructor() {
@@ -44,11 +47,11 @@ class Transactions extends React.Component {
       <div className={`${grid.row} ${styles.wrapper}`}>
         <div className={`${grid['col-xs-4']}`}>
           <div className='box'>
-            <Transfer pending={this.props.pending}
-              transactions={this.props.confirmed}
-              copy={this.props.copyToClipboard}
-              t={this.props.t}
-            />
+            <MultipStep>
+              <SendWritable/>
+              <SendReadable />
+              <SuccessModal />
+            </MultipStep>
           </div>
         </div>
         <div className={`${grid['col-xs-8']}`}>

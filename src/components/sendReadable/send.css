@@ -1,11 +1,7 @@
 @import '../app/variables.css';
 
 :root {
-  --tab-inactive-color: var(--color-grayscale-dark);
-  --grid-padding-left: 30px;
-  --header-line-height: 36px;
-  --header-subtitle-font-size: var(--font-size-medium);
-  --font-weight-bold: 500;
+  --tab-inactive-color: --color-grayscale-dark;
 }
 
 .sendAllMenu {

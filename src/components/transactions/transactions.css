@@ -21,11 +21,6 @@
   --main-header-unit-font-size: 2em;
   --grid-header-font-size: 1.5em;
   --grid-body-font-size: 1.6em;
-  --tab-font-size: var(--font-size-medium);
-  --tab-inactive-color: var(--color-primary-medium);
-  --tab-active-color: var(--color-white);
-  --tab-inactive-background: var(--color-white);
-  --tab-active-background: var(--gradient-secondary);
 }
 
 .greyLabel {
@@ -191,31 +186,6 @@ header {
   }
 }
 
-.tab {
-  margin: 40px 0px;
-  padding: 2px;
-  font-size: var(--tab-font-size);
-  font-weight: 600;
-  line-height: 60px;
-  vertical-align: middle;
-  text-align: center;
-  border: 3px solid transparent;
-  border-radius: 6px;
-  background: var(--tab-active-background);
-  background-clip: padding-box;
-  cursor: pointer;
-}
-
-.tabActive {
-  color: var(--tab-active-color);
-  background: var(--tab-active-background);
-}
-
-.tabInactive {
-  color: var(--tab-inactive-color);
-  background: white;
-}
-
 .wrapper {
   width: 100%;
 }
@@ -233,34 +203,3 @@ header {
   border-radius: 100%;
   margin: 13px 0px;
 }
-
-/* this part will be refactored in the next issue */
-.modal {
-  text-align: center;
-
-  & .header {
-    height: 270px;
-    position: relative;
-  }
-
-  & p {
-    font-size: 1.125em;
-    color: var(--color-grayscale-dark);
-    line-height: 36px;
-  }
-
-  & .copy {
-    color: var(--color-primary-dark);
-    cursor: pointer;
-  }
-}
-
-.temporarySuccessCheck {
-  /* values are not saved as variable since this will be deleted anyway */
-  position: absolute;
-  bottom: -20px;
-  left: 155px;
-  font-size: 3em;
-  color: #ff6236;
-}
-
