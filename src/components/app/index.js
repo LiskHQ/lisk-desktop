@@ -4,6 +4,7 @@ import Account from '../account';
 import PrivateRoutes from '../privateRoute';
 import Header from '../header';
 import Login from '../login';
+import Register from '../register';
 import Transactions from '../transactions';
 import Voting from '../voting';
 import Forging from '../forging';
@@ -34,7 +35,7 @@ const App = () => (
               <Route path={`${match.url}/forging/:dialog?`} component={Forging} />
             </main>
           )} />
-          <Route exact path="/register" component={Login} />
+          <Route exact path="/register" component={Register} />
           <Route exact path="/" component={Login} />
         </div>
         <Dialog />
