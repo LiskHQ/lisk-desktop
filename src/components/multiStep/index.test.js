@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import MultiStep from './index';
 
-describe.only('MultiStep', () => {
+describe('MultiStep', () => {
   let wrapper;
 
   const Child1 = ({ children, nextStep, prevStep }) => (<div className='child1'
