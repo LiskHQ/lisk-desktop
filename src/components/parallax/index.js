@@ -1,8 +1,8 @@
 import React from 'react';
-import Parallax from 'parallax-js';
+import ParallaxJs from 'parallax-js';
 import options from './options';
 
-class Parallaxer extends React.Component {
+class Parallax extends React.Component {
   constructor() {
     super();
 
@@ -17,7 +17,7 @@ class Parallaxer extends React.Component {
       }
     });
 
-    this.parallaxInstance = new Parallax(this.wrapper, settings);
+    this.parallaxInstance = new ParallaxJs(this.wrapper, settings);
   }
 
   render() {
@@ -27,4 +27,4 @@ class Parallaxer extends React.Component {
   }
 }
 
-export default Parallaxer;
+export default Parallax;
