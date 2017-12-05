@@ -1,39 +1,72 @@
 import React from 'react';
 import { expect } from 'chai';
 import { spy } from 'sinon';
+import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
+import configureStore from 'redux-mock-store';
+import ActionBar from '../actionBar';
 import PassphraseVerifier from './passphraseVerifier';
+import i18n from '../../i18n';
 
 
 describe('PassphraseVerifier', () => {
-  const props = {
-    updateAnswer: () => {},
-    passphrase: 'survey stereo pool fortune oblige slight gravity goddess mistake sentence anchor pool',
-    t: key => key,
-  };
-  let updateAnswerSpy;
-
   let wrapper;
+  const account = {
+    balance: 1000e8,
+    passphrase: 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit',
+  };
+  const props = {
+    t: key => key,
+    passphrase: account.passphrase,
+    prevStep: () => {},
+    finalCallback: () => {},
+  };
+  const fakeStore = configureStore();
+  const store = fakeStore({
+    account,
+  });
+
+  const options = {
+    context: { i18n, store },
+    childContextTypes: {
+      i18n: PropTypes.object.isRequired,
+      store: PropTypes.object.isRequired,
+    },
+  };
 
   beforeEach(() => {
-    updateAnswerSpy = spy(props, 'updateAnswer');
-    wrapper = mount(<PassphraseVerifier {...props} randomIndex={0.47} />);
+    spy(props, 'prevStep');
+    spy(props, 'finalCallback');
+    wrapper = mount(<PassphraseVerifier {...props} />, options);
   });
 
   afterEach(() => {
-    updateAnswerSpy.restore();
+    props.prevStep.restore();
+    props.finalCallback.restore();
   });
 
-  it('should initially call updateAnswer with "false"', () => {
-    expect(updateAnswerSpy).to.have.been.calledWith(false);
+  it('renders an Input component', () => {
+    expect(wrapper.find('Input')).to.have.lengthOf(1);
   });
 
-  it('should call updateAnswer every time the input has changed', () => {
-    const value = 'sample value';
+  it('renders an ActionBar component', () => {
+    expect(wrapper.find(ActionBar)).to.have.lengthOf(1);
+  });
 
-    updateAnswerSpy.restore();
-    wrapper.find('input').simulate('change', { target: { value } });
-    expect(updateAnswerSpy.callCount).to.be.equal(2);
+  it('should call prevStep if Cancel button clicked', () => {
+    wrapper.find('button.cancel-button').simulate('click');
+    expect(props.prevStep).to.have.been.calledWith();
+  });
+
+  it('should disable Next button if answer is not entered', () => {
+    const wrapperProps = wrapper.find('button.next-button').props();
+    expect(wrapperProps.disabled).to.be.equal(true);
+  });
+
+  it('should disable Next button if answer is incorrect', () => {
+    wrapper.find('input').simulate('change', { target: { value: 'wrong' } });
+    const wrapperProps = wrapper.find('button.next-button').props();
+    expect(wrapperProps.disabled).to.be.equal(true);
   });
 
   it('should refocus if use blurs the input', () => {
@@ -45,16 +78,21 @@ describe('PassphraseVerifier', () => {
     expect(focusSpy.callCount).to.be.equal(1);
   });
 
-  it('should break passphrase, hide a word and show it', () => {
-    const expectedValues = [
-      'survey stereo pool fortune oblige ',
-      '-----',
-      ' gravity goddess mistake sentence anchor pool',
-    ];
-    const spanTags = wrapper.find('.passphrase-holder span');
+  it('should enable Next button if answer is correct', () => {
+    const wordsList = props.passphrase.split(' ');
+    const missingWordIndex = wrapper.find('p.passphrase-holder span').at(0).text().split(' ').length;
 
-    expect(spanTags.at(0).text()).to.be.equal(expectedValues[0]);
-    expect(spanTags.at(1).text()).to.be.equal(expectedValues[1]);
-    expect(spanTags.at(2).text()).to.be.equal(expectedValues[2]);
+    wrapper.find('input').simulate('change', { target: { value: wordsList[missingWordIndex - 1] } });
+    const wrapperProps = wrapper.find('button.next-button').props();
+    expect(wrapperProps.disabled).to.not.be.equal(true);
+  });
+
+  it('should call finalCallback if Next button clicked', () => {
+    const wordsList = props.passphrase.split(' ');
+    const missingWordIndex = wrapper.find('p.passphrase-holder span').at(0).text().split(' ').length;
+
+    wrapper.find('input').simulate('change', { target: { value: wordsList[missingWordIndex - 1] } });
+    wrapper.find('button.next-button').simulate('click');
+    expect(props.finalCallback).to.have.been.calledWith(account.passphrase);
   });
 });

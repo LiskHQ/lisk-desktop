@@ -69,7 +69,7 @@ class PassphraseValidator extends React.Component {
             className: 'next-button',
             disabled: this.state.answer !== this.state.missing,
             onClick: () => {
-              this.props.onPassGenerated(this.props.passphrase);
+              this.props.finalCallback(this.props.passphrase);
             },
           }} />
       </div>

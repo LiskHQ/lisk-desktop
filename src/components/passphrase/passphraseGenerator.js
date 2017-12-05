@@ -98,6 +98,7 @@ class PassphraseGenerator extends React.Component {
 
   render() {
     const isTouch = this.isTouchDevice(this.props.agent);
+    const { t, prevStep } = this.props;
 
     return (
       <div>
@@ -106,11 +107,11 @@ class PassphraseGenerator extends React.Component {
             <div className={grid['col-xs-12']}>
               {isTouch ?
                 <div>
-                  <p>{this.props.t('Enter text below to generate random bytes')}</p>
+                  <p>{t('Enter text below to generate random bytes')}</p>
                   <Input onChange={this.seedGeneratorBoundToThis}
                     className='touch-fallback' autoFocus={true} multiline={true} />
                 </div> :
-                <p>{this.props.t('Move your mouse to generate random bytes')}</p>
+                <p>{t('Move your mouse to generate random bytes')}</p>
               }
             </div>
             <div className={grid['col-xs-12']}>
@@ -130,11 +131,11 @@ class PassphraseGenerator extends React.Component {
         </PassphraseTheme>
         <ActionBar
           secondaryButton={{
-            label: this.props.t('Back'),
-            onClick: this.props.prevStep,
+            label: t('Back'),
+            onClick: prevStep,
           }}
           primaryButton={{
-            label: this.props.t('Next'),
+            label: t('Next'),
             fee: null,
             className: 'next-button',
             disabled: true,
