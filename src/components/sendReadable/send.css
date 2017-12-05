@@ -4,12 +4,6 @@
   --tab-inactive-color: --color-grayscale-dark;
 }
 
-.sendAllMenu {
-  position: absolute !important;
-  right: 0;
-  top: 86px;
-}
-
 .fee {
   text-align: right;
   margin-top: -12px;

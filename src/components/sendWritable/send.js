@@ -7,7 +7,7 @@ import fees from './../../constants/fees';
 import styles from './send.css';
 import inputTheme from './input.css';
 
-class Send extends React.Component {
+class SendWritable extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -71,18 +71,14 @@ class Send extends React.Component {
 
   render() {
     return (
-      <div className='boxPadding send'>
+      <div className='boxPadding'>
         <div className={styles.header}>
           <header>
             <h2>Transfer</h2>
-            <span className={`${styles.subTitle} ${styles.transfer}`}>{this.props.t('Quickly sendWritable and request LSK token')}</span>
+            <span className={`${styles.subTitle} ${styles.transfer}`}>{this.props.t('Quickly send and request LSK token')}</span>
           </header>
         </div>
         <form>
-          {this.showAvatar()
-            ? <img className={styles.temporarySmallAvatar}></img>
-            : ''
-          }
           <Input label={this.props.t('Send to Address')}
             className='recipient'
             autoFocus={true}
@@ -90,7 +86,15 @@ class Send extends React.Component {
             value={this.state.recipient.value}
             onChange={this.handleChange.bind(this, 'recipient')}
             theme={this.showAvatar() ? inputTheme : {}}
-          />
+          >
+            {this.showAvatar()
+              ?
+              <figure className={styles.temporarySmallAvatar}>
+                <img src='' alt=''></img>
+              </figure>
+              : ''
+            }
+          </Input>
 
           <Input label={this.props.t('Amount (LSK)')}
             className='amount'
@@ -109,7 +113,7 @@ class Send extends React.Component {
                           !this.state.recipient.value ||
                           !!this.state.amount.error ||
                           !this.state.amount.value)}
-            className='next-button'
+            className='send-next-button'
             >{this.props.t('Next')}</Button>
             <div className='subTitle'>{this.props.t('Confirmation in the next step.')}</div>
           </footer>
@@ -119,4 +123,4 @@ class Send extends React.Component {
   }
 }
 
-export default Send;
+export default SendWritable;

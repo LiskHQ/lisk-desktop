@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import i18n from '../../i18n';
 import SendHOC from './index';
 
-describe('SendWritableHOC', () => {
+describe('SendReadableHOC', () => {
   let wrapper;
   const store = {};
   const peers = {
@@ -26,11 +26,11 @@ describe('SendWritableHOC', () => {
   });
 
   it('should render Send', () => {
-    expect(wrapper.find('SendWritable')).to.have.lengthOf(1);
+    expect(wrapper.find('SendReadable')).to.have.lengthOf(1);
   });
 
   it('should mount Send with appropriate properties', () => {
-    const props = wrapper.find('SendWritable').props();
+    const props = wrapper.find('SendReadable').props();
     expect(props.activePeer).to.be.equal(peers.data);
     expect(props.account).to.be.equal(account);
     expect(typeof props.sent).to.be.equal('function');

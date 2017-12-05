@@ -8,12 +8,6 @@
   --font-weight-bold: 500;
 }
 
-.sendAllMenu {
-  position: absolute !important;
-  right: 0;
-  top: 86px;
-}
-
 .fee {
   text-align: right;
   margin-top: -12px;
@@ -39,6 +33,8 @@ input:read-only {
   background: linear-gradient(90deg, #3023ae 0%, #53a0fd 48%, #b4ec51 100%);
   position: absolute;
   border-radius: 100%;
+  left: -40px;
+  top: -15px;
 }
 
 /* this part will be refactored in the next issue */

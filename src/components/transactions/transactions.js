@@ -40,7 +40,7 @@ class Transactions extends React.Component {
   render() {
     return (
       <div>
-        <div className={`${styles.noPadding} box ${styles.transactions} `}>
+        <div className={`transactions box ${styles.transactions} `}>
           <header>
             <h2 className={styles.title}>{this.props.t('Transactions')}</h2>
             <div className={styles.account}>
@@ -77,7 +77,7 @@ class Transactions extends React.Component {
               ))}
             </div> :
             <p className={`${styles.empty} hasPaddingRow empty-message`}>
-              {this.props.t('There are no transactionDashboard, yet.')} &nbsp;
+              {this.props.t('There are no transactions, yet.')} &nbsp;
               <RelativeLink className={`${styles.button} ${buttonStyle.button} ${buttonStyle.primary} ${buttonStyle.raised} receive-lsk-button ${offlineStyle.disableWhenOffline}`}
                 to='receive'>{this.props.t('Receive LSK')}</RelativeLink>
             </p>

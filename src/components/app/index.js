@@ -5,7 +5,7 @@ import PrivateRoutes from '../privateRoute';
 import Header from '../header';
 import Login from '../login';
 import Register from '../register';
-import Transactions from '../transactionDashboard';
+import TransactionDashboard from '../transactionDashboard';
 import Voting from '../voting';
 import Forging from '../forging';
 import styles from './app.css';
@@ -30,7 +30,7 @@ const App = () => (
           <PrivateRoutes path='/main' render={ ({ match }) => (
             <main className={offlineStyle.disableWhenOffline}>
               <Account />
-              <Route path={`${match.url}/transactions/:dialog?`} component={Transactions} />
+              <Route path={`${match.url}/transactions/:dialog?`} component={TransactionDashboard} />
               <Route path={`${match.url}/voting/:dialog?`} component={Voting} />
               <Route path={`${match.url}/forging/:dialog?`} component={Forging} />
               <Route path={`${match.url}/add-account/:dialog?`} component={Login} />

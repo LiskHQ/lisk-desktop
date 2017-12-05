@@ -25,7 +25,7 @@ class AuthInputs extends React.Component {
   }
 
   render() {
-    return <span style={{ visibility: this.props.visibility }}>
+    return <span>
       {(!this.props.account.passphrase &&
         <PassphraseInput label={this.props.t('Enter your 1st passphrase to confirm')}
           className='passphrase'

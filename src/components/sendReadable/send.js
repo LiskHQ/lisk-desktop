@@ -93,14 +93,12 @@ class SendReadable extends React.Component {
 
   render() {
     return (
-      <div className={`${styles.send} boxPadding send`}>
+      <div className='boxPadding send'>
         <div className={styles.header}>
           <header>
             <h2>{this.props.t('Confirm transfer')}</h2>
           </header>
-          <div className='boxPadding'>
-            <div className={styles.temporaryAvatar}></div>
-          </div>
+          <figure className={styles.temporaryAvatar}><img src='' alt='' /></figure>
         </div>
         <form onSubmit={this.send.bind(this)}>
           <Input label={this.props.t('Send to Address')}
@@ -138,7 +136,7 @@ class SendReadable extends React.Component {
                   label={this.props.t('Send')}
                   type='submit'
                   theme={styles}
-                  disabled={!authStateIsValid(this.state) || this.loading}
+                  disabled={!authStateIsValid(this.state) || this.state.loading}
                 />
                 <div className='subTitle'>{this.props.t('Transactions can’t be reversed')}</div>
               </div>

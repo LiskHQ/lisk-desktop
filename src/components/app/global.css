@@ -39,7 +39,6 @@ order to be available application wide
   max-height: 100%;
   flex-direction: column;
   overflow: auto;
-  position: relative;
 
   & footer {
     position: absolute;

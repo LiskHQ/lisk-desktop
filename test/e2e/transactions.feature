@@ -3,7 +3,7 @@ Feature: Transactions tab
     Given I'm logged in as "genesis"
     When I click "transactions" tab
     Then I should see 20 rows
-    When I scroll to the bottom of "box"
+    When I scroll to the bottom of "transactions box"
     Then I should see 40 rows
 
   Scenario: should provide "Receive LSK" modal if there are "No transactions" 

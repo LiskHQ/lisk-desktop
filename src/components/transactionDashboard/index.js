@@ -4,18 +4,18 @@ import Transactions from './../transactions';
 import SendWritable from '../sendWritable';
 import SendReadable from './../sendReadable';
 import SuccessModal from '../modals';
-import MultipStep from './../multiStep';
+import MultiStep from './../multiStep';
 import styles from './styles.css';
 
 const TransactionsDashboard = () => (
   <div className={`${grid.row} ${styles.wrapper}`} >
     <div className={`${grid['col-xs-4']}`}>
-      <div className='box'>
-        <MultipStep>
+      <div className={`box ${styles.send}`}>
+        <MultiStep>
           <SendWritable/>
           <SendReadable />
           <SuccessModal />
-        </MultipStep>
+        </MultiStep>
       </div>
     </div>
     <div className={`${grid['col-xs-8']}`}>

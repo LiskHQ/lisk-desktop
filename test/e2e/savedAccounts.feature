@@ -7,17 +7,19 @@ Feature: Saved Accounts
     Then I should be logged in
     And I fill in "1" to "amount" field
     And I fill in "537318935439898807L" to "recipient" field
-    And I click "next button"
+    And I click "send next button"
     And I should see empty "passphrase" field
     And I fill in passphrase of "genesis" to "passphrase" field
     And I click "send button"
-    And I wait 4 seconds
+    And I wait 1 seconds
     Then I should see "Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain." success message
     And I click "okay button"
     And I wait 1 seconds
     And I fill in "2" to "amount" field
     And I fill in "537318935439898807L" to "recipient" field
-    And I click "next button"
+    And I click "send next button"
+    And I click "send button"
+    And I wait 1 seconds
     Then I should see "Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain." success message
 
   Scenario: should allow to save second account

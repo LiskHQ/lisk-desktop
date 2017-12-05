@@ -5,16 +5,19 @@
   --input-focus-color: var(--color-primary-standard);
   --input-color: var(--color-grayscale-dark);
   --label-font-size: var(--font-size-small);
+  --input-font-size: 1.06066em;
 }
 
 .input input:focus {
   border-bottom: solid 1px var(--input-focus-border-color);
   color: var(--input-focus-color);
   font-weight: 600;
+  font-size: var(--input-font-size);
 }
 
 .input {
   font-weight: 500;
+  font-size: var(--input-font-size);
 }
 
 .inputElement:focus:not([disabled]):not([readonly]) ~ .label:not(.fixed),
@@ -25,11 +28,13 @@
 
 .label {
   color: var(--input-color);
+  font-size: var(--input-font-size);
 }
 
 .input input:not(:focus) {
   border-bottom: solid 1px var(--input-color);
   color: var(--input-color);
+  font-size: var(--input-font-size);
   font-weight: 600;
 }
 
