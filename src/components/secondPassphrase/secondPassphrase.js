@@ -10,7 +10,7 @@ import PassphraseShow from '../passphrase/passphraseShow';
 const SecondPassphrase = ({
   passphrase, account, peers, registerSecondPassphrase, closeDialog, t,
 }) => {
-  const onLoginSubmission = (secondPassphrase) => {
+  const onPassphraseRegister = (secondPassphrase) => {
     registerSecondPassphrase({
       activePeer: peers.data,
       secondPassphrase,
@@ -23,13 +23,12 @@ const SecondPassphrase = ({
 
   return (
     typeof passphrase === 'string' && passphrase.length > 0 ?
-      <MultiStep showNav={false}>
+      <MultiStep showNav={false} finalCallback={onPassphraseRegister}>
         <PassphraseInfo title='Info' t={t} icon='bookmark_border' fee={Fees.setSecondPassphrase}
           useCaseNote={useCaseNote} securityNote={securityNote} backButtonFn={closeDialog} />
         <PassphraseGenerator title='Create' t={t} icon='vpn_key' />
         <PassphraseShow title='Safekeeping' t={t} icon='done' />
-        <PassphraseVerifier title='Confirm' t={t} confirmButton='Register'
-          onPassGenerated={onLoginSubmission} icon='launch' />
+        <PassphraseVerifier title='Confirm' t={t} confirmButton='Register' icon='launch' />
       </MultiStep> :
       <Authenticate nextAction={t('set second passphrase')} />);
 };

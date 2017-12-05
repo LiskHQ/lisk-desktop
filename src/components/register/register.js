@@ -12,7 +12,7 @@ import { validateUrl, getLoginData } from '../../utils/login';
 const Register = ({
   activePeerSet, t,
 }) => {
-  const onLoginSubmission = (passphrase) => {
+  const onRegister = (passphrase) => {
     const { networkIndex, address } = getLoginData();
 
     let index = networkIndex;
@@ -33,13 +33,12 @@ const Register = ({
   const useCaseNote = t('your passphrase will be required for logging in to your account.');
   const securityNote = t('This passphrase is not recoverable and if you lose it, you will lose access to your account forever.');
 
-  return (<MultiStep>
+  return (<MultiStep finalCallback={onRegister}>
     <PassphraseInfo title='Info' t={t} icon='bookmark_border'
       useCaseNote={useCaseNote} securityNote={securityNote} backButtonFn={() => {}} />
     <PassphraseGenerator title='Create' t={t} icon='vpn_key' />
     <PassphraseShow title='Safekeeping' t={t} icon='done' />
-    <PassphraseVerifier title='Confirm' t={t} confirmButton='Login'
-      onPassGenerated={onLoginSubmission} icon='launch' />
+    <PassphraseVerifier title='Confirm' t={t} confirmButton='Login' icon='launch' />
   </MultiStep>);
 };
 
