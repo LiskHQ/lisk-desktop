@@ -48,7 +48,7 @@ describe('Register', () => {
   it('should call activePeerSet with network and passphrase', () => {
     wrapper.find('MultiStep').props().finalCallback(account.passphrase);
     expect(prop.activePeerSet).to.have.been.calledWith({
-      network: { code: 0, name: "Mainnet", port: 443, ssl: true },
+      network: { code: 0, name: 'Mainnet', port: 443, ssl: true },
       passphrase: account.passphrase,
     });
   });
