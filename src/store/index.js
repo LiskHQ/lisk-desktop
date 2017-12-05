@@ -1,4 +1,7 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import throttle from 'lodash.throttle';
+
+import { setSavedAccounts, setLastActiveAccount } from '../utils/savedAccounts';
 import * as reducers from './reducers';
 import middleWares from './middlewares';
 
@@ -16,5 +19,13 @@ if (module.hot) {
     store.replaceReducer(nextReducer);
   });
 }
+
+store.subscribe(throttle(() => {
+  const savedAccounts = store.getState();
+  if (savedAccounts && savedAccounts.lastActive) {
+    setSavedAccounts(savedAccounts.accounts);
+    setLastActiveAccount(savedAccounts.lastActive);
+  }
+}, 1000));
 
 export default store;
