@@ -14,8 +14,8 @@ Feature: Register second passphrase
 
   Scenario: should ask for passphrase for saved account
   Given I'm logged in as "empty account"
-    When I refresh the page
-    And I wait 2 seconds
+    When I click "logout button"
+    And I refresh the page
     And I click "register second passphrase" in main menu
     And I fill in passphrase of "empty account" to "passphrase" field
     And I click "authenticate button"
