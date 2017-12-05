@@ -42,10 +42,29 @@ class SendReadable extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.state.loading && this.props.pendingTransactions.length > 0) {
+    if (this.state.loading &&
+      (this.props.pendingTransactions.length > 0 || this.props.failedTransactions)) {
+      const data = this.getTransactionState();
+      this.props.nextStep({ data, pendingTransactions: this.props.pendingTransactions });
       this.setState({ loading: false });
-      this.props.nextStep({ success: true, pendingTransactions: this.props.pendingTransactions });
     }
+  }
+
+  getTransactionState() {
+    const success = this.props.pendingTransactions.length > 0 && !this.props.failedTransactions;
+    const successMessage = this.props.t('Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain.');
+    const failureMessage = this.props.failedTransactions ? this.props.failedTransactions.errorMessage : '';
+    const copy = success ? {
+      title: this.props.t('Copy Transaction-ID to clipboard'),
+      value: this.props.pendingTransactions[0].id,
+    } : null;
+    return {
+      title: success ? this.props.t('Thank you') : this.props.t('Sorry'),
+      body: success ? successMessage : failureMessage,
+      callback: this.props.prevStep.bind(null, { reset: true }),
+      copy,
+      success,
+    };
   }
 
   handleChange(name, value, error) {

@@ -37,36 +37,6 @@ input:read-only {
   top: -15px;
 }
 
-/* this part will be refactored in the next issue */
-.modal {
-  text-align: center;
-
-  & .header {
-    height: 270px;
-    position: relative;
-  }
-
-  & p {
-    font-size: 1.125em;
-    color: var(--color-grayscale-dark);
-    line-height: 36px;
-  }
-
-  & .copy {
-    color: var(--color-primary-dark);
-    cursor: pointer;
-  }
-}
-
-.temporarySuccessCheck {
-  /* values are not saved as variable since this will be deleted anyway */
-  position: absolute;
-  bottom: -20px;
-  left: 155px;
-  font-size: 3em;
-  color: #ff6236;
-}
-
 .paddingLeft {
   padding: 0px var(--grid-padding-left);
 }
