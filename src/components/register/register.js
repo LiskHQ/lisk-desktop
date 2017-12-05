@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
 import MultiStep from '../multiStep';
 import PassphraseInfo from '../passphrase/passphraseInfo';
@@ -10,7 +11,7 @@ import getNetwork from '../../utils/getNetwork';
 import { validateUrl, getLoginData } from '../../utils/login';
 
 const Register = ({
-  activePeerSet, t,
+  activePeerSet, t, history,
 }) => {
   const onRegister = (passphrase) => {
     const { networkIndex, address } = getLoginData();
@@ -30,17 +31,21 @@ const Register = ({
     });
   };
 
+  const backToLogin = () => {
+    history.push('/');
+  };
+
   const useCaseNote = t('your passphrase will be required for logging in to your account.');
   const securityNote = t('This passphrase is not recoverable and if you lose it, you will lose access to your account forever.');
 
   return (<MultiStep finalCallback={onRegister}>
     <PassphraseInfo title='Info' t={t} icon='bookmark_border'
-      useCaseNote={useCaseNote} securityNote={securityNote} backButtonFn={() => {}} />
+      useCaseNote={useCaseNote} securityNote={securityNote} backButtonFn={backToLogin} />
     <PassphraseGenerator title='Create' t={t} icon='vpn_key' />
     <PassphraseShow title='Safekeeping' t={t} icon='done' />
     <PassphraseVerifier title='Confirm' t={t} confirmButton='Login' icon='launch' />
   </MultiStep>);
 };
 
-export default translate()(Register);
+export default withRouter(translate()(Register));
 

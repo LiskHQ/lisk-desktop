@@ -1,6 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { spy } from 'sinon';
 import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
@@ -8,7 +10,7 @@ import i18n from '../../i18n';
 import Register from './register';
 
 
-describe('Register', () => {
+describe.only('Register', () => {
   let wrapper;
   const peers = { data: {} };
   const account = {
@@ -34,7 +36,11 @@ describe('Register', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<Register {...prop} />, options);
+    wrapper = mount(<Provider store={store}>
+      <Router>
+        <Register {...prop} />
+      </Router>
+    </Provider>, options);
   });
 
   it('renders MultiStep component', () => {
@@ -43,6 +49,12 @@ describe('Register', () => {
 
   it('initially renders PassphraseInfo', () => {
     expect(wrapper.find('PassphraseInfo')).to.have.length(1);
+  });
+
+  it('should return to Login page if Cancel clicked in first step', () => {
+    expect(wrapper.find('Register').props().history.location.pathname).to.not.be.equal('/');
+    wrapper.find('button.cancel-button').simulate('click');
+    expect(wrapper.find('Register').props().history.location.pathname).to.be.equal('/');
   });
 
   it('should call activePeerSet with network and passphrase', () => {
