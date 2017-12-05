@@ -2,7 +2,7 @@ import i18next from 'i18next';
 import actionTypes from '../constants/actions';
 import { setSecondPassphrase, send } from '../utils/api/account';
 import { registerDelegate } from '../utils/api/delegate';
-import { transactionAdded } from './transactions';
+import { transactionAdded, transactionFailed } from './transactions';
 import { errorAlertDialogDisplayed } from './dialog';
 import Fees from '../constants/fees';
 import { toRawLsk } from '../utils/lsk';
@@ -115,7 +115,7 @@ export const sent = ({ activePeer, account, recipientId, amount, passphrase, sec
       })
       .catch((error) => {
         const text = error && error.message ? `${error.message}.` : i18next.t('An error occurred while creating the transaction.');
-        dispatch(errorAlertDialogDisplayed({ text }));
+        dispatch(transactionFailed({ text }));
       });
     dispatch(passphraseUsed(passphrase));
   };

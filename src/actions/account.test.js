@@ -3,7 +3,7 @@ import sinon from 'sinon';
 import actionTypes from '../constants/actions';
 import { accountUpdated, accountLoggedOut,
   secondPassphraseRegistered, delegateRegistered, sent } from './account';
-import { transactionAdded } from './transactions';
+import { transactionAdded, transactionFailed } from './transactions';
 import { errorAlertDialogDisplayed } from './dialog';
 import * as accountApi from '../utils/api/account';
 import * as delegateApi from '../utils/api/delegate';
@@ -199,19 +199,19 @@ describe('actions: account', () => {
       expect(dispatch).to.have.been.calledWith(transactionAdded(expectedAction));
     });
 
-    it('should dispatch errorAlertDialogDisplayed action if caught', () => {
+    it('should dispatch transactionFailed action if caught', () => {
       accountApiMock.returnsPromise().rejects({ message: 'sample message' });
 
       actionFunction(dispatch);
-      const expectedAction = errorAlertDialogDisplayed({ text: 'sample message.' });
+      const expectedAction = transactionFailed({ text: 'sample message.' });
       expect(dispatch).to.have.been.calledWith(expectedAction);
     });
 
-    it('should dispatch errorAlertDialogDisplayed action if caught but no message returned', () => {
+    it('should dispatch transactionFailed action if caught but no message returned', () => {
       accountApiMock.returnsPromise().rejects({});
 
       actionFunction(dispatch);
-      const expectedAction = errorAlertDialogDisplayed({ text: 'An error occurred while creating the transaction.' });
+      const expectedAction = transactionFailed({ text: 'An error occurred while creating the transaction.' });
       expect(dispatch).to.have.been.calledWith(expectedAction);
     });
   });

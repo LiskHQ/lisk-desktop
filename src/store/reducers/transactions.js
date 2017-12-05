@@ -11,6 +11,10 @@ const transactions = (state = { pending: [], confirmed: [], count: null }, actio
       return Object.assign({}, state, {
         pending: [action.data, ...state.pending],
       });
+    case actionTypes.transactionFailed:
+      return Object.assign({}, state, {
+        failed: { text: action.data.text },
+      });
     case actionTypes.transactionsFailed:
       return Object.assign({}, state, {
         // Filter any failed transaction from pending

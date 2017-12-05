@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
 import actionTypes from '../constants/actions';
-import { transactionAdded, transactionsUpdated, transactionsFailed,
+import { transactionAdded, transactionsUpdated, transactionFailed, transactionsFailed,
   transactionsLoaded, transactionsRequested } from './transactions';
 import * as accountApi from '../utils/api/account';
 
@@ -17,6 +17,20 @@ describe('actions: transactions', () => {
       };
 
       expect(transactionAdded(data)).to.be.deep.equal(expectedAction);
+    });
+  });
+
+  describe('transactionFailed', () => {
+    it('should create an action to transactionFailed', () => {
+      const data = {
+        text: 'Your transaction failed',
+      };
+      const expectedAction = {
+        data,
+        type: actionTypes.transactionFailed,
+      };
+
+      expect(transactionFailed(data)).to.be.deep.equal(expectedAction);
     });
   });
 
