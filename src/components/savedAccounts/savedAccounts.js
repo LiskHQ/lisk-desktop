@@ -1,4 +1,5 @@
 import { Button as ToolBoxButton } from 'react-toolbox/lib/button';
+import { Link } from 'react-router-dom';
 import FontIcon from 'react-toolbox/lib/font_icon';
 import React from 'react';
 import { extractAddress } from '../../utils/api/account';
@@ -22,45 +23,41 @@ const SavedAccounts = ({
   closeDialog,
   accountRemoved,
   accountSwitched,
-  accountLoggedOut,
   savedAccounts,
-  accountSaved,
+  history,
   t,
 }) => {
   const isActive = account => (
     account.publicKey === activeAccount.publicKey &&
     account.network === networkOptions.code);
 
-  const save = () => {
-    accountSaved({
-      network: networkOptions.code,
-      address: networkOptions.address,
-      publicKey: activeAccount.publicKey,
-      balance: activeAccount.balance,
-    });
+  const switchAccount = (account) => {
+    accountSwitched(account);
+    history.push('/main/transactions/');
   };
 
   return (
     <div className={`${styles.wrapper} save-account`}>
       <BackgroundMaker />
-      <ToolBoxButton icon='close' floating onClick={closeDialog} className={`x-button ${styles.closeButton}`} />
       <h1>{t('Your favorite Lisk IDs')}</h1>
       <div className={styles.cardsWrapper} >
-        <div className={`add-lisk-id-card ${styles.card} ${styles.addNew}`} onClick={accountLoggedOut} >
-          <div className={styles.cardIcon}>
-            <img src={plusShapeIcon} className={styles.plusShapeIcon} />
+        <Link to={`/main/add-account/?referrer=/main/transactions/saved-accounts&activeAddress=${activeAccount.address}`} >
+          <div className={`add-lisk-id-card ${styles.card} ${styles.addNew}`} >
+            <div className={styles.cardIcon}>
+              <img src={plusShapeIcon} className={styles.plusShapeIcon} />
+            </div>
+            <img src={rectangleOnTheRight} className={styles.rectangleOnTheRight} />
+            <img src={rectangleImage2} className={styles.rectangleImage2} />
+            <img src={rectangleImage3} className={styles.rectangleImage3} />
+            <img src={triangleImage} className={styles.triangleImage} />
+            <img src={circleImage} className={styles.circleImage} />
+            <h2 className={styles.addTittle} >{t('Add a Lisk ID')}</h2>
           </div>
-          <img src={rectangleOnTheRight} className={styles.rectangleOnTheRight} />
-          <img src={rectangleImage2} className={styles.rectangleImage2} />
-          <img src={rectangleImage3} className={styles.rectangleImage3} />
-          <img src={triangleImage} className={styles.triangleImage} />
-          <img src={circleImage} className={styles.circleImage} />
-          <h2 className={styles.addTittle} >{t('Add a Lisk ID')}</h2>
-        </div>
+        </Link>
         {savedAccounts.map(account => (
           <div className={`switch-button saved-account-card ${styles.card}`}
             key={account.publicKey + account.network}
-            onClick={accountSwitched.bind(this, account)} >
+            onClick={switchAccount.bind(null, account)} >
             {(isActive(account) && activeAccount.passphrase ?
               <strong className={styles.unlocked}>
                 <FontIcon value='lock_open' />
@@ -85,11 +82,12 @@ const SavedAccounts = ({
           </div>
         ))}
       </div>
-      <SecondaryLightButton className='add-active-account-button'
+      <SecondaryLightButton className='edit-button'
+        icon='edit'
         theme={{ button: styles.addAcctiveAccountButton }}
-        disabled={savedAccounts.filter(isActive).length !== 0}
-        onClick={save.bind(this)}
-        label={t('Add active account')}/>
+        disabled={true}
+        label={t('Edit')}/>
+      <ToolBoxButton icon='close' floating onClick={closeDialog} className={`x-button ${styles.closeButton}`} />
     </div>
   );
 };

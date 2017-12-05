@@ -1,59 +1,65 @@
 import React from 'react';
 import { expect } from 'chai';
+import { MemoryRouter as Router } from 'react-router-dom';
 import { mount } from 'enzyme';
 import { spy } from 'sinon';
 import configureStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n';
+import networks from '../../constants/networks';
 import SavedAccounts from './savedAccounts';
 
+const mountWithRouter = (node, options) => mount(<Router>{node}</Router>, options);
 const fakeStore = configureStore();
 
 describe('SavedAccounts', () => {
   let wrapper;
-  let closeDialogSpy;
-  let accountSavedSpy;
   const publicKey = 'fab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88';
+  const activeAccount = {
+    passsphrase: 'dolphin inhale planet talk insect release maze engine guilt loan attend lawn',
+    publicKey: 'ecf6a5cc0b7168c7948ccfaa652cce8a41256bdac1be62eb52f68cde2fb69f2d',
+    balance: 0,
+  };
+
   const savedAccounts = [
     {
       publicKey: 'hab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88',
-      network: 0,
+      network: networks.mainnet.code,
     },
     {
-      network: 2,
+      network: networks.customNode.code,
       publicKey,
       address: 'http://localhost:4000',
     },
     {
-      network: 0,
+      network: networks.mainnet.code,
       publicKey,
+    },
+    {
+      network: networks.testnet.code,
+      publicKey: activeAccount.publicKey,
     },
   ];
 
   const props = {
     closeDialog: () => {},
-    accountSaved: () => {},
-    accountRemoved: () => {},
+    accountRemoved: spy(),
     accountSwitched: () => {},
     networkOptions: {
-      code: 0,
+      code: networks.mainnet.code,
     },
-    activeAccount: {
-      publicKey,
-    },
-    savedAccounts: [],
+    activeAccount,
+    savedAccounts,
     t: key => key,
   };
 
   beforeEach(() => {
-    closeDialogSpy = spy(props, 'closeDialog');
-    accountSavedSpy = spy(props, 'accountSaved');
     const store = fakeStore({
       account: {
         balance: 100e8,
       },
     });
-    wrapper = mount(<SavedAccounts {...props} />, {
+    wrapper = mountWithRouter(<SavedAccounts {...props} />, {
       context: { store, i18n },
       childContextTypes: {
         store: PropTypes.object.isRequired,
@@ -62,29 +68,17 @@ describe('SavedAccounts', () => {
     });
   });
 
-  afterEach(() => {
-    closeDialogSpy.restore();
-    accountSavedSpy.restore();
-  });
-
-  it('should call props.accountSaved on "save button" click', () => {
-    wrapper.find('button.add-active-account-button').simulate('click');
-    const componentProps = wrapper.find(SavedAccounts).props();
-    expect(componentProps.accountSaved).to.have.been.calledWith();
-  });
-
   it('should render "Add a LIsk Id" card', () => {
-    wrapper.find('button.add-active-account-button').simulate('click');
     expect(wrapper.find('.add-lisk-id-card')).to.have.lengthOf(1);
   });
 
   it('should render savedAccounts.length of save account cards', () => {
-    wrapper.find('button.add-active-account-button').simulate('click');
-    wrapper.setProps({
-      ...props,
-      savedAccounts,
-    });
     expect(wrapper.find('.saved-account-card')).to.have.lengthOf(savedAccounts.length);
+  });
+
+  it('should call props.accountRemoved on "remove button" click', () => {
+    wrapper.find('button.remove-button').at(1).simulate('click');
+    expect(props.accountRemoved).to.have.been.calledWith(savedAccounts[1]);
   });
 });
 

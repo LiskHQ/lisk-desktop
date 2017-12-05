@@ -8,6 +8,7 @@
 .wrapper {
   overflow: visible !important;
   display: block !important;
+  clear: both;
 }
 
 .wrapper,

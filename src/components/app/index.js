@@ -32,6 +32,7 @@ const App = () => (
               <Route path={`${match.url}/transactions/:dialog?`} component={Transactions} />
               <Route path={`${match.url}/voting/:dialog?`} component={Voting} />
               <Route path={`${match.url}/forging/:dialog?`} component={Forging} />
+              <Route path={`${match.url}/add-account/:dialog?`} component={Login} />
             </main>
           )} />
           <Route exact path="/register" component={Login} />

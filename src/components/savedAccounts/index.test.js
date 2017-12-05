@@ -1,5 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
+import { MemoryRouter as Router } from 'react-router-dom';
 import { mount } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import sinon from 'sinon';
@@ -7,6 +8,8 @@ import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import SavedAccountsHOC from './index';
 import * as savedAccounts from '../../actions/savedAccounts';
+
+const mountWithRouter = (node, options) => mount(<Router>{node}</Router>, options);
 
 describe('SavedAccountsHOC', () => {
   let wrapper;
@@ -29,7 +32,7 @@ describe('SavedAccountsHOC', () => {
   });
 
   beforeEach(() => {
-    wrapper = mount(<SavedAccountsHOC closeDialog={() => {}} t={(key => key)} />, {
+    wrapper = mountWithRouter(<SavedAccountsHOC closeDialog={() => {}} t={(key => key)} />, {
       context: { store, i18n },
       childContextTypes: {
         store: PropTypes.object.isRequired,
@@ -40,13 +43,6 @@ describe('SavedAccountsHOC', () => {
 
   it('should render SavedAccounts', () => {
     expect(wrapper.find('SavedAccounts')).to.have.lengthOf(1);
-  });
-
-  it('should bind accountSaved action to SavedAccounts props.accountSaved', () => {
-    const actionsSpy = sinon.spy(savedAccounts, 'accountSaved');
-    wrapper.find('SavedAccounts').props().accountSaved({});
-    expect(actionsSpy).to.be.calledWith();
-    actionsSpy.restore();
   });
 
   it('should bind accountRemoved action to SavedAccounts props.accountRemoved', () => {

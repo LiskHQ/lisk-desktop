@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
-import { accountLoggedOut } from '../../actions/account';
-import { accountSaved, accountRemoved, accountSwitched } from '../../actions/savedAccounts';
+import { accountRemoved, accountSwitched } from '../../actions/savedAccounts';
 import SavedAccounts from './savedAccounts';
 
 const mapStateToProps = state => ({
@@ -11,13 +11,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  accountSaved: data => dispatch(accountSaved(data)),
   accountRemoved: data => dispatch(accountRemoved(data)),
   accountSwitched: data => dispatch(accountSwitched(data)),
-  accountLoggedOut: () => dispatch(accountLoggedOut()),
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(translate()(SavedAccounts));
+)(withRouter(translate()(SavedAccounts)));
