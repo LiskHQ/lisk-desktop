@@ -39,7 +39,6 @@ const SavedAccounts = ({
   return (
     <div className={`${styles.wrapper} save-account`}>
       <BackgroundMaker />
-      <ToolBoxButton icon='close' floating onClick={closeDialog} className={`x-button ${styles.closeButton}`} />
       <h1>{t('Your favorite Lisk IDs')}</h1>
       <div className={styles.cardsWrapper} >
         <Link to={`/main/add-account/?referrer=/main/transactions/saved-accounts&activeAddress=${activeAccount.address}`} >
@@ -88,6 +87,7 @@ const SavedAccounts = ({
         theme={{ button: styles.addAcctiveAccountButton }}
         disabled={true}
         label={t('Edit')}/>
+      <ToolBoxButton icon='close' floating onClick={closeDialog} className={`x-button ${styles.closeButton}`} />
     </div>
   );
 };

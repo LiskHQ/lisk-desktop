@@ -7,7 +7,7 @@
   --h1-padding: 85px;
   --h1-width: 600px;
   --add-button-margin: 200px;
-  --card-width: 347;
+  --card-width: 347px;
   --card-height: 436px;
   --add-button-margin: 240px;
   --wrapper-margin: -24px;
@@ -36,12 +36,16 @@
   vertical-align: middle;
   overflow: auto;
   white-space: nowrap;
-  padding: 48px 232px;
+  padding: 0 232px;
   text-align: center;
   height: 100vh; /* stylelint-disable-line */
   width: 100vw; /* stylelint-disable-line */
   max-width: 100vw; /* stylelint-disable-line */
   position: relative;
+
+  & > a {
+    display: inline-block;
+  }
 }
 
 .card {
@@ -52,7 +56,7 @@
   border-radius: var(--border-radius-normal);
   background-color: var(--color-white);
   box-shadow: var(--normal-shadow);
-  margin: 200px 24px;
+  margin: 24px;
   text-align: center;
   cursor: pointer;
   vertical-align: top;
