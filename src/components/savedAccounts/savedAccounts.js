@@ -89,9 +89,11 @@ class SavedAccounts extends React.Component {
             </div>
           </Link>
           {savedAccounts.map(account => (
-            <div className={`saved-account-card ${styles.card} ${this.state.editing ? styles.darkBackground : styles.clickable}`}
-              key={account.publicKey + account.network}
-              onClick={ switchAccount.bind(null, account)} >
+            <div className={`saved-account-card ${styles.card}
+              ${this.state.editing ? null : styles.clickable}
+              ${this.isSelectedForRemove(account) ? styles.darkBackground : null}`}
+            key={account.publicKey + account.network}
+            onClick={ switchAccount.bind(null, account)} >
               {(isActive(account) && activeAccount.passphrase ?
                 <strong className={styles.unlocked}>
                   <FontIcon value='lock_open' />
