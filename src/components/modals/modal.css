@@ -6,8 +6,8 @@
   --paragraph-line-height: 36px;
 }
 
-.temporarySuccessCheck {
-  /* values are not saved as variable since this will be deleted anyway */
+.icon {
+  /* values are not saved as variable since this will be deleted/modified anyway */
   position: absolute;
   bottom: -20px;
   left: 165px;

@@ -5,10 +5,10 @@ import copy from '../../assets/images/icons/copy.svg';
 
 class Modal extends React.Component {
   showCopyElement() {
-    if (this.props.data.copy) {
-      return <div onClick={this.props.copyToClipboard.bind(this, this.props.data.copy.value)}
+    if (this.props.copy) {
+      return <div onClick={this.props.copyToClipboard.bind(this, this.props.copy.value)}
         className={`${styles.copy}`}>
-        <img src={copy}/> <span>{this.props.data.copy.title}</span>
+        <img src={copy}/> <span className='copy-title'>{this.props.copy.title}</span>
       </div>;
     }
     return null;
@@ -18,23 +18,23 @@ class Modal extends React.Component {
     return (
       <div className={`${styles.modal} boxPadding`}>
         <div className={styles.header}>
-          {this.props.data.success
-            ? <i className={`${styles.temporarySuccessCheck} material-icons`}>check</i>
-            : <i className={`${styles.temporarySuccessCheck} material-icons`}>clear</i>
+          {this.props.success
+            ? <i className={`${styles.icon} material-icons`}>check</i>
+            : <i className={`${styles.icon} material-icons`}>clear</i>
           }
         </div>
         <header>
-          <h2>{this.props.data.title}</h2>
+          <h2>{this.props.title}</h2>
         </header>
         <p className='modal-message'>
-          {this.props.data.body}
+          {this.props.body}
         </p>
 
         {this.showCopyElement()}
 
         <footer>
-          <Button className='okay-button' onClick={() => { this.props.data.callback(); } }>{this.props.t('Okay')}</Button>
-          <div className='subTitle'>{this.props.data.subTitle}</div>
+          <Button className='okay-button' onClick={() => { this.props.callback(); } }>{this.props.t('Okay')}</Button>
+          <div className='subTitle'>{this.props.subTitle}</div>
         </footer>
       </div>
 

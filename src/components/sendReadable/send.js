@@ -45,7 +45,7 @@ class SendReadable extends React.Component {
     if (this.state.loading &&
       (this.props.pendingTransactions.length > 0 || this.props.failedTransactions)) {
       const data = this.getTransactionState();
-      this.props.nextStep({ data, pendingTransactions: this.props.pendingTransactions });
+      this.props.nextStep(data);
       this.setState({ loading: false });
     }
   }
