@@ -24,17 +24,20 @@ Feature: Saved Accounts
 
   Scenario: should allow to save second account
     Given I'm logged in as "genesis"
-    And I click "logout button"
+    And I click "saved accounts" in main menu
+    And I click "add lisk id card"
     And I'm logged in as "empty account"
     And I click "saved accounts" in main menu
     Then I should see 2 instances of "saved account card"
+    And I wait 1 seconds
     And I refresh the page
     And I wait 2 seconds
     And I should be logged in as "empty account" account
 
   Scenario: should allow to remove a saved account
     Given I'm logged in as "genesis"
-    And I click "logout button"
+    And I click "saved accounts" in main menu
+    And I click "add lisk id card"
     And I'm logged in as "delegate"
     And I click "saved accounts" in main menu
     Then I should see 2 instances of "saved account card"
@@ -45,7 +48,8 @@ Feature: Saved Accounts
 
   Scenario: should allow to switch account
     Given I'm logged in as "genesis"
-    And I click "logout button"
+    And I click "saved accounts" in main menu
+    And I click "add lisk id card"
     And I'm logged in as "delegate"
     And I click "saved accounts" in main menu
     And I click "saved account card"
@@ -56,5 +60,6 @@ Feature: Saved Accounts
     Given I'm logged in as "genesis"
     And I click "logout button"
     And I'm logged in as "empty account"
+    And I wait 1 seconds
     And I refresh the page
     And I should be logged in as "empty account" account
