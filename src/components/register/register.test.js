@@ -13,9 +13,8 @@ import Register from './register';
 describe('Register', () => {
   let wrapper;
   const peers = { data: {} };
-  const account = {
-    passphrase: 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit',
-  };
+  const passphrase = 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit';
+  const account = {};
   const store = configureMockStore([])({
     peers,
     account,
@@ -58,10 +57,10 @@ describe('Register', () => {
   });
 
   it('should call activePeerSet with network and passphrase', () => {
-    wrapper.find('MultiStep').props().finalCallback(account.passphrase);
+    wrapper.find('MultiStep').props().finalCallback(passphrase);
     expect(prop.activePeerSet).to.have.been.calledWith({
       network: { code: 0, name: 'Mainnet', port: 443, ssl: true },
-      passphrase: account.passphrase,
+      passphrase,
     });
   });
 });
