@@ -10,7 +10,7 @@ import i18n from '../../i18n';
 import Register from './register';
 
 
-describe.only('Register', () => {
+describe('Register', () => {
   let wrapper;
   const peers = { data: {} };
   const account = {
