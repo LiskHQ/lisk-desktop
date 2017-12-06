@@ -1,13 +1,13 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import Modal from './modal';
+import ResultBox from './resultBox';
 
-describe('Modal', () => {
+describe('Result Box', () => {
   let wrapper;
   let props;
 
-  it('renders modal with success template', () => {
+  it('renders result box with success template', () => {
     const title = 'Thank you';
     const body = 'Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain.';
     const copy = {
@@ -24,15 +24,16 @@ describe('Modal', () => {
       t: () => {},
     };
 
-    wrapper = mount(<Modal {...props} />);
+    wrapper = mount(<ResultBox {...props} />);
 
     expect(wrapper.find('h2').text()).to.contain(title);
-    expect(wrapper.find('.modal-message').text()).to.contain(body);
-    expect(wrapper.find('.material-icons').text()).to.contain('check');
+    expect(wrapper.find('.result-box-message').text()).to.contain(body);
+    expect(wrapper.find('.material-icons')).to.have.length(0);
+    expect(wrapper.find('img')).to.have.length(2);
     expect(wrapper.find('.copy-title').text()).to.contain(copy.title);
   });
 
-  it('renders modal with failure template', () => {
+  it('renders result box with failure template', () => {
     const title = 'Sorry';
     const body = 'An error occurred while creating the transaction.';
     props = {
@@ -45,11 +46,12 @@ describe('Modal', () => {
       t: () => {},
     };
 
-    wrapper = mount(<Modal {...props} />);
+    wrapper = mount(<ResultBox {...props} />);
 
     expect(wrapper.find('h2').text()).to.contain(title);
-    expect(wrapper.find('.modal-message').text()).to.contain(body);
-    expect(wrapper.find('.material-icons').text()).to.contain('clear');
+    expect(wrapper.find('.result-box-message').text()).to.contain(body);
+    expect(wrapper.find('.material-icons')).to.have.length(1);
+    expect(wrapper.find('img')).to.have.length(0);
     expect(wrapper.find('.copy-title')).to.have.length(0);
   });
 });

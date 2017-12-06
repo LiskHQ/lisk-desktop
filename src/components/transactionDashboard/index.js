@@ -3,7 +3,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Transactions from './../transactions';
 import SendWritable from '../sendWritable';
 import SendReadable from './../sendReadable';
-import Modal from '../modals';
+import ResultBox from '../resultBox';
 import MultiStep from './../multiStep';
 import styles from './styles.css';
 
@@ -14,7 +14,7 @@ const TransactionsDashboard = () => (
         <MultiStep>
           <SendWritable/>
           <SendReadable />
-          <Modal />
+          <ResultBox />
         </MultiStep>
       </div>
     </div>

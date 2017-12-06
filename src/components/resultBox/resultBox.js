@@ -1,9 +1,10 @@
 import React from 'react';
 import { Button } from '../toolbox/buttons/button';
-import styles from './modal.css';
+import styles from './resultBox.css';
 import copy from '../../assets/images/icons/copy.svg';
+import check from '../../assets/images/icons/check.svg';
 
-class Modal extends React.Component {
+class ResultBox extends React.Component {
   showCopyElement() {
     if (this.props.copy) {
       return <div onClick={this.props.copyToClipboard.bind(this, this.props.copy.value)}
@@ -16,17 +17,17 @@ class Modal extends React.Component {
 
   render() {
     return (
-      <div className={`${styles.modal} boxPadding`}>
+      <div className={`${styles.resultBox} boxPadding`}>
         <div className={styles.header}>
           {this.props.success
-            ? <i className={`${styles.icon} material-icons`}>check</i>
+            ? <img src={check} className={styles.icon}/>
             : <i className={`${styles.icon} material-icons`}>clear</i>
           }
         </div>
         <header>
           <h2>{this.props.title}</h2>
         </header>
-        <p className='modal-message'>
+        <p className='result-box-message'>
           {this.props.body}
         </p>
 
@@ -42,4 +43,4 @@ class Modal extends React.Component {
   }
 }
 
-export default Modal;
+export default ResultBox;
