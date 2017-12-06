@@ -1,10 +1,12 @@
+@import '../app/variables.css';
+
 /*****************************************
 
 Please Read the guide line
 before adding any rules here
 
 # No component specific rule
-This file is inteded to solely include
+This file is intended to solely include
 global/common rules, every rule added here
 must be used at least in 2 different
 components.
@@ -17,7 +19,7 @@ or text selection color.
 
 # Avoid !important
 Please avoid using !important since it will
-result in many compoulsory !imporant usages
+result in many compulsory !important usages
 all over the application
 
 # Use with :global
@@ -35,18 +37,33 @@ order to be available application wide
   background: var(--color-white);
   box-shadow: var(--normal-shadow);
   border-radius: 3px;
-  padding: var(--box-padding);
   max-height: 100%;
   flex-direction: column;
   overflow: auto;
-}
 
-:global .material-icons {
-  font-size: 24px !important;
+  & footer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    padding: 50px 30px 20px;
+    text-align: center;
+
+    & .subTitle {
+      margin-top: 20px;
+      font-size: 1em;
+      color: var(--color-grayscale-dark);
+      height: 22px;
+    }
+  }
 }
 
 :global .hasNoPadding {
   padding: 0;
+}
+
+:global .hasPadding {
+  padding-top: var(--box-padding-top);
 }
 
 :global .verticalScroll {
@@ -56,4 +73,8 @@ order to be available application wide
 :global .hidden {
   position: absolute;
   visibility: hidden;
+}
+
+:global .boxPadding {
+  padding: 0px 30px;
 }

@@ -127,6 +127,7 @@ class PassphraseGenerator extends React.Component {
   }
 
   render() {
+    const { t, nextStep } = this.props;
     const isTouch = this.isTouchDevice(this.props.agent);
     const percentage = this.state.data ? this.state.data.percentage : 0;
     return (
@@ -151,21 +152,25 @@ class PassphraseGenerator extends React.Component {
             <header>
               <h2 className={`${styles.generatorHeader} ${this.state.headingClass} ${this.state.firstHeadingClass}`}
                 id="generatorHeader" >
-                {this.props.t('Create your Lisk ID')}
+                {t('Create your Lisk ID')}
                 <br/>
-                {this.props.t('by moving your mouse.')}
+                {t('by moving your mouse.')}
               </h2>
               <h2
                 className={`${styles.generatorHeader} ${this.state.headingClass} ${this.state.secondHeadingClass}`}
                 id="generatorHeader" >
-                {this.props.t('Create your Lisk ID')}
+                {t('Create your Lisk ID')}
               </h2>
             </header>
           }
           {this.state.address ?
             <div className={styles.addressContainer}>
               <h4 className={styles.address}>{this.state.address}</h4>
-              <PrimaryButton theme={styles} label='Get passphrase' />
+              <PrimaryButton
+                theme={styles}
+                label='Get passphrase'
+                onClick={() => nextStep({ passphrase: this.state.passphrase })}
+              />
             </div>
             : ''}
         </div>

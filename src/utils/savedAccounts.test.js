@@ -15,15 +15,18 @@ describe('savedAccounts', () => {
     {
       publicKey: 'hab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88',
       network: 0,
+      balance: 0,
     },
     {
       publicKey,
       network: 0,
+      balance: 0,
     },
     {
       publicKey,
       network: 2,
       address: 'http://localhost:4000',
+      balance: 0,
     },
   ];
 

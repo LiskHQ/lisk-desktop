@@ -2,8 +2,8 @@
 const { resolve } = require('path');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const reactToolboxVariables = require('./reactToolbox.config');
 const I18nScannerPlugin = require('../src/i18n-scanner');
-const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 /* eslint-enable import/no-extraneous-dependencies */
 
 const entries = {
@@ -46,6 +46,54 @@ module.exports = {
         './app/src/**/*.js',
       ],
     }),
-    new HardSourceWebpackPlugin(),
   ],
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: ['css-hot-loader'].concat(ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true,
+                modules: true,
+                importLoaders: 1,
+                localIdentName: '[name]__[local]___[hash:base64:5]',
+              },
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                ident: 'postcss',
+                sourceMap: true,
+                sourceComments: true,
+                plugins: [
+                  /* eslint-disable import/no-extraneous-dependencies */
+                  require('postcss-partial-import')({}),
+                  require('postcss-mixins')({}),
+                  require('postcss-nesting')({}),
+                  require('postcss-cssnext')({
+                    features: {
+                      customProperties: {
+                        variables: reactToolboxVariables,
+                      },
+                    },
+                  }),
+                  require('postcss-functions')({
+                    functions: {
+                      rem: px => `${(px / 10)}rem`,
+                    },
+                  }),
+                  require('postcss-for')({}),
+                  /* eslint-enable import/no-extraneous-dependencies */
+                ],
+              },
+            },
+          ],
+        })),
+      },
+    ],
+  },
 };

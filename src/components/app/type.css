@@ -94,3 +94,10 @@ strong {
 small {
   font-size: var(--font-size-small);
 }
+
+/********************
+    Directions
+********************/
+:global .text-center {
+  text-align: center;
+}

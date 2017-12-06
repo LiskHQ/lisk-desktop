@@ -12,6 +12,7 @@
     "build-electron": "webpack --config ./config/webpack.config.electron",
     "e2e-test": "protractor protractor.conf.js",
     "test": "karma start",
+    "bundlesize": "bundlesize",
     "test-live": "npm test -- --auto-watch --no-single-run",
     "start": "electron ./app/",
     "dist": "build --ia32 --x64 --armv7l --publish onTag",
@@ -47,6 +48,7 @@
     "lisk-js": "0.5.0",
     "moment": "2.18.1",
     "numeral": "=2.0.6",
+    "parallax-js": "3.1.0",
     "postcss": "6.0.12",
     "postcss-cssnext": "2.11.0",
     "prop-types": "=15.5.10",
@@ -83,6 +85,7 @@
     "babel-preset-es2015": "6.24.1",
     "babel-preset-react": "6.24.1",
     "babel-preset-stage-3": "=6.24.1",
+    "bundlesize": "0.15.3",
     "chai": "4.1.2",
     "chai-as-promised": "7.1.1",
     "chai-enzyme": "=1.0.0-beta.0",
@@ -133,6 +136,7 @@
     "postcss-functions": "3.0.0",
     "postcss-loader": "=2.0.6",
     "postcss-mixins": "6.2.0",
+    "postcss-nesting": "4.2.1",
     "postcss-partial-import": "=4.1.0",
     "postcss-reporter": "5.0.0",
     "protractor": "5.1.2",
@@ -184,6 +188,20 @@
       "target": "nsis"
     }
   },
+  "bundlesize": [
+    {
+      "path": "./app/build/bundle.app.js",
+      "maxSize": "920 kB"
+    },
+    {
+      "path": "./app/build/bundle.vendor.js",
+      "maxSize": "60 kB"
+    },
+    {
+      "path": "./app/build/styles.css",
+      "maxSize": "1.50 MB"
+    }
+  ],
   "greenkeeper": {
     "ignore": [
       "cucumber",

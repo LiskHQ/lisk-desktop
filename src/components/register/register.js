@@ -1,19 +1,26 @@
 import React from 'react';
-import Passphrase from '../passphrase';
+import { withRouter } from 'react-router';
+import { translate } from 'react-i18next';
+import MultiStep from '../multiStep';
+import PassphraseGenerator from '../passphrase/passphraseGenerator';
+import PassphraseVerifier from '../passphrase/passphraseVerifier';
+import PassphraseShow from '../passphrase/passphraseShow';
 import networks from '../../constants/networks';
 import getNetwork from '../../utils/getNetwork';
 import { validateUrl, getLoginData } from '../../utils/login';
 
-const Register = ({
-  activePeerSet, closeDialog, t,
-}) => {
-  const onLoginSubmission = (passphrase) => {
+
+class Register extends React.Component {
+  componentDidUpdate() {
+    if (this.props.account.passphrase !== undefined) {
+      this.props.history.push('/main/transactions');
+    }
+  }
+
+  onRegister(passphrase) {
     const { networkIndex, address } = getLoginData();
 
     let index = networkIndex;
-
-    // if (!index || (index === networksCode.customNode && 
-    // validateUrl(address).addressValidity !== '')) {
     if (!index || (index === networks.customNode.code && validateUrl(address).addressValidity !== '')) {
       index = networks.mainnet.code;
     }
@@ -22,21 +29,30 @@ const Register = ({
     if (index === networks.customNode.code) { network.address = address; }
 
     // set active peer
-    activePeerSet({
+    this.props.activePeerSet({
       passphrase,
       network,
     });
-  };
+  }
 
-  return (
-    <Passphrase
-      onPassGenerated={onLoginSubmission}
-      keepModal={false}
-      closeDialog={closeDialog}
-      confirmButton={'Login'}
-      useCaseNote={t('your passphrase will be required for logging in to your account.')}
-      securityNote={t('This passphrase is not recoverable and if you lose it, you will lose access to your account forever.')}/>
-  );
-};
+  backToLogin() {
+    this.props.history.push('/');
+  }
 
-export default Register;
+  render() {
+    const { t } = this.props;
+    const useCaseNote = t('your passphrase will be required for logging in to your account.');
+    const securityNote = t('This passphrase is not recoverable and if you lose it, you will lose access to your account forever.');
+
+    return (<div className='box hasPadding'>
+      <MultiStep finalCallback={this.onRegister.bind(this)}>
+        <PassphraseGenerator title='Create' t={t} icon='vpn_key' />
+        <PassphraseShow title='Safekeeping' t={t} icon='done' />
+        <PassphraseVerifier title='Confirm' t={t} confirmButton='Login' icon='launch' />
+      </MultiStep>
+    </div>);
+  }
+}
+
+export default withRouter(translate()(Register));
+

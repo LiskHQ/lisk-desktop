@@ -58,14 +58,14 @@
     & :nth-child(5) {
       background-image: linear-gradient(243deg, rgba(0, 28, 86, 0) 6%, rgba(0, 36, 88, 0.18) 43%, #0b3b67 73%, #005ea0 99%);
       opacity: 1;
-      top: rem($height-factor * 413));
+      top: rem(calc($height-factor * 413));
       height: rem(calc($height-factor * 230));
       width: calc($height-factor * 71%);
       left: -1.66666%;
     }
 
     & :nth-child(6) {
-      background-image: linear-gradient(243deg, rgba(#001c57, 0) 6%, #002e5b 64%, rgba(#00315e, 0) 77%, rgba(#00629c, 0) 98%);
+      background-image: linear-gradient(243deg, rgba(0, 0, 0, 0) 6%, #002e5b 64%, rgba(0, 0, 0, 0) 77%, rgba(0, 0, 0, 0) 98%);
       opacity: 0.8;
       top: rem(calc($height-factor * 454));
       height: rem(calc($height-factor * 190));
@@ -74,7 +74,7 @@
     }
 
     & :nth-child(7) {
-      background-image: linear-gradient(-120deg, #003767 19%, #002e5d 30%, #00285a 45%, rgba(#002667, 0.3) 90%);
+      background-image: linear-gradient(-120deg, #003767 19%, #002e5d 30%, #00285a 45%, rgba(0, 38, 103, 0.3) 90%);
       opacity: 1;
       top: rem(calc($height-factor * 433));
       height: rem(calc($height-factor * 4));
@@ -83,7 +83,7 @@
     }
 
     & :nth-child(8) {
-      background-image: linear-gradient(-120deg, #003767 19%, #002e5d 30%, #00285a 45%, rgba(#002667, 0.3) 90%);
+      background-image: linear-gradient(-120deg, #003767 19%, #002e5d 30%, #00285a 45%, rgba(0, 38, 103, 0.3) 90%);
       opacity: 1;
       top: rem(calc($height-factor * 533));
       height: rem(calc($height-factor * 4));
@@ -92,7 +92,7 @@
     }
 
     & :nth-child(9) {
-      background-image: linear-gradient(180deg, rgba(#00538c, 0.3) 11%, #00266f 87%);
+      background-image: linear-gradient(180deg, rgba(0, 83, 140, 0.3) 11%, #00266f 87%);
       opacity: 0.6;
       top: rem(calc($height-factor * 780));
       height: rem(calc($height-factor * 220));
@@ -101,7 +101,7 @@
     }
 
     & :nth-child(10) {
-      background-image: linear-gradient(106deg, rgba(#00609c, 0.3) 11%, #004880 19%, rgba(#00266f, 0) 87%);
+      background-image: linear-gradient(106deg, rgba(0, 96, 156, 0.3) 11%, #004880 19%, rgba(0, 0, 0, 0) 87%);
       opacity: 0.8;
       top: rem(calc($height-factor * 780));
       height: rem(calc($height-factor * 60));
@@ -110,7 +110,7 @@
     }
 
     & :nth-child(11) {
-      background-image: linear-gradient(29deg, #007dbb 15%, #00417c 38%, #003372 66%, rgba(#00246a, 0) 100%);
+      background-image: linear-gradient(29deg, #007dbb 15%, #00417c 38%, #003372 66%, rgba(0, 0, 0, 0) 100%);
       opacity: 0.8;
       top: rem(calc($height-factor * 870));
       height: rem(calc($height-factor * 10));
@@ -119,7 +119,7 @@
     }
 
     & :nth-child(12) {
-      background-image: linear-gradient(16deg, rgba(#005c97, 0) 19%, #004780 29%, #00437d 39%, #003877 61%, #005c97 100%);
+      background-image: linear-gradient(16deg, rgba(0, 0, 0, 0) 19%, #004780 29%, #00437d 39%, #003877 61%, #005c97 100%);
       opacity: 0.8;
       top: rem(calc($height-factor * 800));
       height: rem(calc($height-factor * 5));
@@ -128,3 +128,4 @@
     }
   }
 }
+

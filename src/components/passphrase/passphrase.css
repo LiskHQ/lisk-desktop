@@ -40,12 +40,12 @@
 @keyframes firstHeadingAnimationFrames {
   0% {
     opacity: 1;
-    transform: translate(0px, -150px);
+    transform: translate(0px, -102px);
   }
 
   100% {
     opacity: 0;
-    transform: translate(-20px, -150px);
+    transform: translate(-20px, -102px);
   }
 }
 
@@ -155,7 +155,7 @@
 }
 
 .addressContainer {
-  margin-top: 730px;
+  margin-top: 600px;
   position: relative;
 }
 

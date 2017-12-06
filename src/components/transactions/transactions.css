@@ -15,6 +15,7 @@
   --sub-row-height: 50px;
   --grid-padding-left: 30px;
   --header-line-height: 36px;
+  --header-subtitle-font-size: var(--font-size-medium);
   --main-header-font-size: 3.2em;
   --sub-header-font-size: 1.8em;
   --main-header-unit-font-size: 2em;
@@ -51,10 +52,6 @@
 
 .rightText {
   text-align: right;
-}
-
-.centerText {
-  text-align: center;
 }
 
 .ordinaryText {
@@ -145,30 +142,29 @@ a {
 }
 
 .paddingLeft {
-  padding-left: var(--grid-padding-left);
+  padding: 0px var(--grid-padding-left);
 }
 
-.noPadding {
-  padding: 0 !important;
-}
-
-.header {
+.transactions header {
   padding: 20px 30px;
   line-height: var(--header-line-height);
 
   & .title {
-    font-weight: var(--font-weight-bold);
     float: left;
-    font-size: 0.4727em;
+  }
+
+  & .subTitle {
+    font-size: var(--header-subtitle-font-size);
   }
 
   & .account {
     float: right;
-    font-size: 0.472em;
   }
 
   & h2 {
+    font-weight: var(--font-weight-bold);
     margin-bottom: 0;
+    font-size: 2em;
   }
 
   & h3 {
@@ -183,6 +179,17 @@ a {
   & .address {
     text-align: right;
     cursor: pointer;
-    font-size: 2.39em;
   }
+
+  & .transfer {
+    color: var(--color-grayscale-dark);
+  }
+}
+
+.wrapper {
+  width: 100%;
+}
+
+.header {
+  height: 300px;
 }

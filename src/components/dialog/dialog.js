@@ -49,6 +49,7 @@ class DialogElement extends Component {
     this.setState({ hidden: false });
     this.props.dialogDisplayed({
       title: dialog.title,
+      theme: dialog.theme,
       childComponent: dialog.component,
       childComponentProps: parseSearchParams(this.props.history.location.search),
     });
@@ -67,18 +68,24 @@ class DialogElement extends Component {
   }
 
   render() {
+    const theme = {
+      ...styles,
+      ...(this.props.dialog.theme || {}),
+    };
     return (
       <Dialog active={this.props.dialog.childComponent !== undefined && !this.state.hidden}
-        theme={styles}
+        theme={theme}
         type='fullscreen' className='modal-dialog'>
         <div className={styles.dialog}>
-          <AppBar title={this.props.dialog.title} flat={true}
-            className={styles[this.props.dialog.type]}>
-            <Navigation type='horizontal'>
-              <IconButton className={`${styles['x-button']} x-button`} onClick={this.goBack.bind(this)} icon='close'/>
-            </Navigation>
-          </AppBar>
-          <div className={`modal-dialog-body ${styles.innerBody}`}>
+          { this.props.dialog.title ?
+            <AppBar title={this.props.dialog.title} flat={true}
+              className={styles[this.props.dialog.type]}>
+              <Navigation type='horizontal'>
+                <IconButton className={`${styles['x-button']} x-button`} onClick={this.goBack.bind(this)} icon='close'/>
+              </Navigation>
+            </AppBar> :
+            null }
+          <div className={`modal-dialog-body ${theme.innerBody}`}>
             {this.props.dialog.childComponent ?
               <this.props.dialog.childComponent
                 {...(this.props.dialog.childComponentProps || {})}

@@ -99,6 +99,12 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
       .and.notify(callback);
   });
 
+  Then('I should see {count} instances of "{elementName}"', (count, elementName, callback) => {
+    browser.sleep(500);
+    expect(element.all(by.css(`.${elementName.replace(/ /g, '-')}`)).count()).to.eventually.equal(parseInt(count, 10))
+      .and.notify(callback);
+  });
+
   Then('I should see "{elementName}" table with {lineCount} lines', (elementName, lineCount, callback) => {
     browser.sleep(500);
     expect(element.all(by.css(`table.${elementName.replace(/ /g, '-')} tbody tr`)).count()).to.eventually.equal(parseInt(lineCount, 10))
@@ -117,6 +123,11 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   Then('I should see "{text}" error message', (text, callback) => {
     browser.sleep(500);
     waitForElemAndCheckItsText('.error-message, .theme__error___2k5Jz', text, callback);
+  });
+
+  Then('I should see "{text}" success message', (text, callback) => {
+    browser.sleep(500);
+    waitForElemAndCheckItsText('.success-message', text, callback);
   });
 
   Then('"{elementName}" should be disabled', (elementName, callback) => {

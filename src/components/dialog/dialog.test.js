@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { shallow } from 'enzyme';
 import { Dialog as ReactToolboxDialog } from 'react-toolbox/lib/dialog';
 import Dialog from './dialog';
-import Send from '../send';
+import Send from '../sendWritable';
 
 describe('Dialog', () => {
   let wrapper;

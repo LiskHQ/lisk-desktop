@@ -28,14 +28,14 @@ const VotingBar = ({ votes, t }) => {
         </span>
         <span className={`${grid['col-sm-3']} ${grid['col-xs-12']} total-new-votes`}>
           <span>{t('Total new votes:')} </span>
-          <strong className={totalNewVotesCount > maxCountOfVotesInOneTurn && style.red}>
+          <strong className={totalNewVotesCount > maxCountOfVotesInOneTurn ? style.red : ''}>
             {totalNewVotesCount}
           </strong>
           <span> / {maxCountOfVotesInOneTurn}</span>
         </span>
         <span className={`${grid['col-sm-3']} ${grid['col-xs-12']} total-votes`}>
           <span>{t('Total votes:')} </span>
-          <strong className={totalVotesCount > 101 && style.red}>
+          <strong className={totalVotesCount > 101 ? style.red : ''}>
             {totalVotesCount}
           </strong>
           <span> / {maxCountOfVotes}</span>

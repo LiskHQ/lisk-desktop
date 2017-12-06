@@ -4,7 +4,6 @@
 @import './variables.css';
 @import './global.css';
 @import './type.css';
-@import './mixin.css';
 
 body {
   margin: 0;
@@ -12,8 +11,6 @@ body {
   width: 100%;
   background-color: var(--color-primary-semi-dark);
 }
-
-@mixin backgroundMaker 1.5, var(--color-primary-semi-dark), 21deg;
 
 .bodyWrapper {
   position: absolute;
@@ -43,6 +40,7 @@ body {
   margin-bottom: 20px;
 }
 
+/* move to type */
 .text-center {
   text-align: center;
 }

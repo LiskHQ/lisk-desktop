@@ -5,11 +5,11 @@ import sinon from 'sinon';
 import configureStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n';
-import Send from './send';
+import SendWritable from './send';
 
 const fakeStore = configureStore();
 
-describe('Send', () => {
+describe('Send Writable Component', () => {
   let wrapper;
   let props;
 
@@ -26,11 +26,13 @@ describe('Send', () => {
     props = {
       activePeer: {},
       account,
+      pendingTransactions: [],
       closeDialog: () => {},
       sent: sinon.spy(),
       t: key => key,
+      nextStep: () => {},
     };
-    wrapper = mount(<Send {...props} />, {
+    wrapper = mount(<SendWritable {...props} />, {
       context: { store, i18n },
       childContextTypes: {
         store: PropTypes.object.isRequired,
@@ -43,8 +45,8 @@ describe('Send', () => {
     expect(wrapper.find('Input')).to.have.length(2);
   });
 
-  it('renders two Button components', () => {
-    expect(wrapper.find('Button')).to.have.length(2);
+  it('renders one Button component', () => {
+    expect(wrapper.find('Button')).to.have.length(1);
   });
 
   it('accepts valid amount', () => {
@@ -81,25 +83,5 @@ describe('Send', () => {
   it('recognizes invalid recipient', () => {
     wrapper.find('.recipient input').simulate('change', { target: { value: '11004588490103196952' } });
     expect(wrapper.find('Input.recipient').text()).to.contain('Invalid');
-  });
-
-  it('allows to set maximum amount', () => {
-    wrapper.find('IconMenu.transaction-amount').simulate('click');
-    wrapper.find('MenuItem.send-maximum-amount').simulate('click');
-    expect(wrapper.find('Input.amount input').props().value).to.equal('999.9');
-  });
-
-  it('allows to send a transaction', () => {
-    wrapper.find('.amount input').simulate('change', { target: { value: '120.25' } });
-    wrapper.find('.recipient input').simulate('change', { target: { value: '11004588490103196952L' } });
-    wrapper.find('.primary-button button').simulate('submit');
-    expect(props.sent).to.have.been.calledWith({
-      account: props.account,
-      activePeer: {},
-      amount: '120.25',
-      passphrase: props.account.passphrase,
-      recipientId: '11004588490103196952L',
-      secondPassphrase: null,
-    });
   });
 });

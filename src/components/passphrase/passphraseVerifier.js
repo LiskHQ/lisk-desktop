@@ -2,8 +2,10 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './passphrase.css';
 import Input from '../toolbox/inputs/input';
+import ActionBar from '../actionBar';
+import PassphraseTheme from './passphraseTheme';
 
-class PassphraseConfirmator extends React.Component {
+class PassphraseValidator extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -12,7 +14,6 @@ class PassphraseConfirmator extends React.Component {
   }
 
   componentDidMount() {
-    this.props.updateAnswer(false);
     // this.props.randomIndex is used in unit teasing
     this.hideRandomWord.call(this, this.props.randomIndex);
   }
@@ -28,8 +29,8 @@ class PassphraseConfirmator extends React.Component {
     });
   }
 
-  changeHandler(value) {
-    this.props.updateAnswer(value === this.state.missing);
+  changeHandler(answer) {
+    this.setState({ answer });
   }
 
   // eslint-disable-next-line
@@ -39,23 +40,41 @@ class PassphraseConfirmator extends React.Component {
 
   render() {
     return (
-      <div className={`passphrase-verifier ${grid.row} ${grid['start-xs']}`}>
-        <div className={grid['col-xs-12']}>
-          <p className='passphrase-holder'>
-            <span>{this.state.passphraseParts[0]}</span>
-            <span className={styles.missing}>-----</span>
-            <span>{this.state.passphraseParts[1]}</span>
-          </p>
-        </div>
-        <div className={grid['col-xs-12']}>
-          <Input type='text' label={this.props.t('Enter the missing word')}
-            autoFocus
-            onBlur={this.focus.bind(this)}
-            onChange={this.changeHandler.bind(this)} />
-        </div>
+      <div>
+        <PassphraseTheme>
+          <div className={`passphrase-verifier ${grid.row} ${grid['start-xs']}`}>
+            <div className={grid['col-xs-12']}>
+              <p className='passphrase-holder'>
+                <span>{this.state.passphraseParts[0]}</span>
+                <span className={styles.missing}>-----</span>
+                <span>{this.state.passphraseParts[1]}</span>
+              </p>
+            </div>
+            <div className={grid['col-xs-12']}>
+              <Input type='text' label={this.props.t('Enter the missing word')}
+                autoFocus
+                onBlur={this.focus.bind(this)}
+                onChange={this.changeHandler.bind(this)} />
+            </div>
+          </div>
+        </PassphraseTheme>
+
+        <ActionBar
+          secondaryButton={{
+            label: this.props.t('Back'),
+            onClick: this.props.prevStep,
+          }}
+          primaryButton={{
+            label: this.props.t(this.props.confirmButton),
+            className: 'next-button',
+            disabled: this.state.answer !== this.state.missing,
+            onClick: () => {
+              this.props.finalCallback(this.props.passphrase);
+            },
+          }} />
       </div>
     );
   }
 }
 
-export default PassphraseConfirmator;
+export default PassphraseValidator;

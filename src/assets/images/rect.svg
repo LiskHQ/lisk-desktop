@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="189px" height="62px" viewBox="0 0 189 62" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>Rectangle</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="0%" y1="50%" x2="94.0204156%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#DEF4FF" offset="0%"></stop>
+            <stop stop-color="#0792FF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="01_Get-Access-✅" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Get-Access-Sign-In-Dashboard-1-D-Lisk-XL" transform="translate(-1327.000000, -266.000000)" fill="url(#linearGradient-1)">
+            <g id="Group-4" transform="translate(315.000000, 123.000000)">
+                <g id="Group-11" transform="translate(963.000000, 0.000000)">
+                    <g id="Group-3">
+                        <g id="Group-5" transform="translate(1.000000, 19.000000)">
+                            <g id="Group">
+                                <rect id="Rectangle" transform="translate(142.025375, 154.897421) rotate(-15.000000) translate(-142.025375, -154.897421) " x="46.3876528" y="148.536107" width="191.275445" height="12.7226276"></rect>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
