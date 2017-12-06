@@ -114,8 +114,8 @@ export const sent = ({ activePeer, account, recipientId, amount, passphrase, sec
         }));
       })
       .catch((error) => {
-        const text = error && error.message ? `${error.message}.` : i18next.t('An error occurred while creating the transaction.');
-        dispatch(transactionFailed({ text }));
+        const errorMessage = error && error.message ? `${error.message}.` : i18next.t('An error occurred while creating the transaction.');
+        dispatch(transactionFailed({ errorMessage }));
       });
     dispatch(passphraseUsed(passphrase));
   };

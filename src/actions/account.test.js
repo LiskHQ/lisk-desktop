@@ -203,7 +203,7 @@ describe('actions: account', () => {
       accountApiMock.returnsPromise().rejects({ message: 'sample message' });
 
       actionFunction(dispatch);
-      const expectedAction = transactionFailed({ text: 'sample message.' });
+      const expectedAction = transactionFailed({ errorMessage: 'sample message.' });
       expect(dispatch).to.have.been.calledWith(expectedAction);
     });
 
@@ -211,7 +211,7 @@ describe('actions: account', () => {
       accountApiMock.returnsPromise().rejects({});
 
       actionFunction(dispatch);
-      const expectedAction = transactionFailed({ text: 'An error occurred while creating the transaction.' });
+      const expectedAction = transactionFailed({ errorMessage: 'An error occurred while creating the transaction.' });
       expect(dispatch).to.have.been.calledWith(expectedAction);
     });
   });

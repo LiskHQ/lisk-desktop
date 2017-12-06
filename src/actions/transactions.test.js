@@ -22,15 +22,13 @@ describe('actions: transactions', () => {
 
   describe('transactionFailed', () => {
     it('should create an action to transactionFailed', () => {
-      const data = {
-        text: 'Your transaction failed',
-      };
+      const errorMessage = 'Your transaction failed';
       const expectedAction = {
-        data,
+        data: { errorMessage },
         type: actionTypes.transactionFailed,
       };
 
-      expect(transactionFailed(data)).to.be.deep.equal(expectedAction);
+      expect(transactionFailed({ errorMessage })).to.be.deep.equal(expectedAction);
     });
   });
 

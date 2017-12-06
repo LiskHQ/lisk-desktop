@@ -13,7 +13,7 @@ const transactions = (state = { pending: [], confirmed: [], count: null }, actio
       });
     case actionTypes.transactionFailed:
       return Object.assign({}, state, {
-        failed: { text: action.data.text },
+        failed: { errorMessage: action.data.errorMessage },
       });
     case actionTypes.transactionsFailed:
       return Object.assign({}, state, {

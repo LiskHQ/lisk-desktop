@@ -14,8 +14,8 @@ export const transactionAdded = data => ({
  * An action to dispatch transactionFailed
  *
  */
-export const transactionFailed = data => ({
-  data,
+export const transactionFailed = ({ errorMessage }) => ({
+  data: { errorMessage },
   type: actionTypes.transactionFailed,
 });
 
