@@ -13,6 +13,7 @@ describe('SavedAccounts middleware', () => {
   let next;
   let state;
   const address = 'https://testnet.lisk.io';
+  const passphrase = 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit';
   const publicKey = 'fab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88';
   const balance = 10e8;
 
@@ -96,27 +97,17 @@ describe('SavedAccounts middleware', () => {
       data: {
         publicKey: publicKey2,
         balance,
+        passphrase,
       },
     };
     middleware(store)(next)(action);
     expect(store.dispatch).to.have.been.calledWith(accountSaved({
+      passphrase,
       address: undefined,
       balance,
       network: networks.mainnet.code,
       publicKey: publicKey2,
     }));
-  });
-
-  it(`should not dispatch accountSaved action on ${actionTypes.accountLoggedIn} action if given account is already saved`, () => {
-    const action = {
-      type: actionTypes.accountLoggedIn,
-      data: {
-        publicKey,
-        balance,
-      },
-    };
-    middleware(store)(next)(action);
-    expect(store.dispatch).to.not.have.been.calledWith();
   });
 
   it(`should dispatch accountSaved action on ${actionTypes.activeAccountSaved} action if given account is not saved yet`, () => {
@@ -136,14 +127,5 @@ describe('SavedAccounts middleware', () => {
       network: networks.mainnet.code,
       publicKey: publicKey2,
     }));
-  });
-
-  it(`should not dispatch accountSaved action on ${actionTypes.activeAccountSaved} action if given account is already saved`, () => {
-    store.getState = () => state;
-    const action = {
-      type: actionTypes.activeAccountSaved,
-    };
-    middleware(store)(next)(action);
-    expect(store.dispatch).to.not.have.been.calledWith();
   });
 });
