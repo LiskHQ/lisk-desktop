@@ -41,9 +41,6 @@ class Register extends React.Component {
 
   render() {
     const { t } = this.props;
-    const useCaseNote = t('your passphrase will be required for logging in to your account.');
-    const securityNote = t('This passphrase is not recoverable and if you lose it, you will lose access to your account forever.');
-
     return (<div className='box hasPadding'>
       <MultiStep finalCallback={this.onRegister.bind(this)}>
         <PassphraseGenerator title='Create' t={t} icon='vpn_key' />
