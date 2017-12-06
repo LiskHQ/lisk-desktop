@@ -20,6 +20,11 @@ export const getSavedAccounts = () => {
 };
 
 export const setSavedAccounts = (accounts) => {
+  accounts = accounts.map(({
+    publicKey, network, address, balance,
+  }) => ({
+    publicKey, network, address, balance,
+  }));
   localStorage.setItem('accounts', JSON.stringify(accounts));
   return accounts;
 };
