@@ -77,7 +77,7 @@ class PassphraseInput extends React.Component {
   render() {
     return (
       <div className={styles.wrapper}>
-        <Input label={this.props.label} required={true}
+        <Input label={this.props.label}
           className={`${this.props.className} ${styles.inputWrapper}`}
           error={this.props.error}
           value={this.props.value || ''}

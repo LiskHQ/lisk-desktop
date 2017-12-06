@@ -45,7 +45,8 @@ or "warn/action" ineastd of "red/green"
   --font-size-h4: 1.618em;
   --font-size-h5: 1.32em;
   --font-size-h6: 1em;
-  --font-size-small: 0.85em;
+  --font-size-small: 0.875em;
+  --font-size-medium: 1.125em;
   --heading-font: 'gilroy', 'Open Sans', sans-serif;
   --content-font: 'Open Sans', sans-serif;
 
@@ -62,7 +63,8 @@ or "warn/action" ineastd of "red/green"
   *************************/
   --color-primary-dark: #001a3e;
   --color-primary-semi-dark: #013165;
-  --color-primary-medium: #2475b9;
+  --color-primary-medium: #3c7fb4;
+  --color-primary-standard: #2475b9;
   --color-primary-light: #008bff;
   --color-primary-very-light: #e8f0fa;
   --color-black: #000;
@@ -70,13 +72,15 @@ or "warn/action" ineastd of "red/green"
   --color-grayscale-medium: #74869b;
   --color-grayscale-light: #ccd9e4;
   --color-white: #fff;
+  --color-error: #da1d00;
   --color-action-dark: #c80039;
   --color-action-medium: #ed4537;
   --color-action-light: #ff6236;
   --color-success-dark: #008722;
-  --gradient-theme: linear-gradient(-27deg, #17499b 0%, var(--color-grayscale-light) 100%);
+  --gradient-theme: linear-gradient(27deg, #17499b 0%, var(--color-grayscale-light) 100%);
   --gradient-action: linear-gradient(-27deg, var(--color-action-dark) 0%, var(--color-action-light) 100%);
   --gradient-greyscale: linear-gradient(to right, var(--row-background-color), #f5f8fc);
+  --gradient-secondary: linear-gradient(45deg, #17499b 0%, var(--color-primary-medium) 100%);
 
   /*************************
         Z-Indexes

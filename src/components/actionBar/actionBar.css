@@ -1,3 +1,4 @@
-.wrapper {
-  margin: 0;
+.button {
+  min-width: 0;
+  width: 100%;
 }

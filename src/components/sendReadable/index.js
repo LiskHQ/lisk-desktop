@@ -7,6 +7,7 @@ import Send from './send';
 const mapStateToProps = state => ({
   account: state.account,
   activePeer: state.peers.data,
+  pendingTransactions: state.transactions.pending,
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -1,6 +1,5 @@
 import i18next from 'i18next';
 
-import { fromRawLsk } from '../../utils/lsk';
 import { unconfirmedTransactions } from '../../utils/api/account';
 import { successAlertDialogDisplayed } from '../../actions/dialog';
 import { transactionsFailed } from '../../actions/transactions';
@@ -13,8 +12,6 @@ const transactionAdded = (store, action) => {
     [transactionTypes.registerDelegate]: i18next.t('Delegate registration was successfully submitted with username: "{{username}}". It can take several seconds before it is processed.',
       { username: action.data.username }),
     [transactionTypes.vote]: i18next.t('Your votes were successfully submitted. It can take several seconds before they are processed.'),
-    [transactionTypes.send]: i18next.t('Your transaction of {{amount}} LSK to {{recipientAddress}} was accepted and will be processed in a few seconds.',
-      { amount: fromRawLsk(action.data.amount), recipientAddress: action.data.recipientId }),
   };
   const text = texts[action.data.type];
   const newAction = successAlertDialogDisplayed({ text });
@@ -34,9 +31,12 @@ const transactionsUpdated = (store) => {
 
 const transactionsMiddleware = store => next => (action) => {
   next(action);
+  const transactionType = action.data ? action.data.type : null;
   switch (action.type) {
-    case actionTypes.transactionAdded:
-      transactionAdded(store, action);
+    case (actionTypes.transactionAdded):
+      if (transactionType !== transactionTypes.send) {
+        transactionAdded(store, action);
+      }
       break;
     case actionTypes.transactionsUpdated:
       transactionsUpdated(store, action);
