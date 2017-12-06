@@ -1,6 +1,5 @@
 import i18next from 'i18next';
 import ReceiveDialog from '../receiveDialog';
-import Register from '../register';
 import RegisterDelegate from '../registerDelegate';
 import SavedAccounts from '../savedAccounts';
 import savedAccountsTheme from '../savedAccounts/modalTheme.css';
@@ -41,10 +40,6 @@ export default () => ({
   receive: {
     title: i18next.t('Receive LSK'),
     component: ReceiveDialog,
-  },
-  register: {
-    title: i18next.t('New Account'),
-    component: Register,
   },
   'saved-accounts': {
     component: SavedAccounts,

@@ -3,7 +3,9 @@ import AnimateOnChange from 'react-animate-on-change';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { generateSeed, generatePassphrase, emptyByte } from '../../utils/passphrase';
 import styles from './passphrase.css';
+import PassphraseTheme from './passphraseTheme';
 import Input from '../toolbox/inputs/input';
+import ActionBar from '../actionBar';
 import ProgressBar from '../toolbox/progressBar/progressBar';
 
 
@@ -28,12 +30,20 @@ class PassphraseGenerator extends React.Component {
       zeroSeed: emptyByte('00'),
       seedDiff: emptyByte(0),
     };
+
     this.seedGeneratorBoundToThis = this.seedGenerator.bind(this);
-    document.addEventListener('mousemove', this.seedGeneratorBoundToThis, true);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('mousemove', this.seedGeneratorBoundToThis, true);
+    if (!this.isTouchDevice(this.props.agent)) {
+      document.removeEventListener('mousemove', this.seedGeneratorBoundToThis, true);
+    }
+  }
+
+  componentDidMount() {
+    if (!this.isTouchDevice(this.props.agent)) {
+      document.addEventListener('mousemove', this.seedGeneratorBoundToThis, true);
+    }
   }
 
   /**
@@ -82,39 +92,56 @@ class PassphraseGenerator extends React.Component {
       this.setState({
         passphrase: phrase,
       });
-      this.props.changeHandler('passphrase', phrase);
-      this.props.changeHandler('current', 'show');
+      this.props.nextStep({ passphrase: phrase });
     }
   }
 
   render() {
     const isTouch = this.isTouchDevice(this.props.agent);
+    const { t, prevStep } = this.props;
+
     return (
-      <div className={`${grid.row} ${grid['center-xs']}`} >
-        <div className={grid['col-xs-12']}>
-          {isTouch ?
-            <div>
-              <p>Enter text below to generate random bytes</p>
-              <Input onChange={this.seedGeneratorBoundToThis}
-                className='touch-fallback' autoFocus={true} multiline={true} />
-            </div> :
-            <p>{this.props.t('Move your mouse to generate random bytes')}</p>
-          }
-        </div>
-        <div className={grid['col-xs-12']}>
-          <ProgressBar mode='determinate'
-            value={this.state.data ? this.state.data.percentage : 0} />
-        </div>
-        <div className={grid['col-xs-12']}>
-          {
-            (this.state.data ? this.state.data.seed : this.state.zeroSeed)
-              .map((byte, index) => (
-                <Byte value={byte} key={index} diff={this.state.seedDiff.indexOf(index) >= 0} />
-              ))
-          }
-        </div>
-      </div>
-    );
+      <div>
+        <PassphraseTheme>
+          <div className={`${grid.row} ${grid['center-xs']}`} >
+            <div className={grid['col-xs-12']}>
+              {isTouch ?
+                <div>
+                  <p>{t('Enter text below to generate random bytes')}</p>
+                  <Input onChange={this.seedGeneratorBoundToThis}
+                    className='touch-fallback' autoFocus={true} multiline={true} />
+                </div> :
+                <p>{t('Move your mouse to generate random bytes')}</p>
+              }
+            </div>
+            <div className={grid['col-xs-12']}>
+              <ProgressBar mode='determinate'
+                value={this.state.data ? this.state.data.percentage : 0} />
+            </div>
+            <div className={grid['col-xs-12']}>
+              {
+                (this.state.data ? this.state.data.seed : this.state.zeroSeed)
+                  .map((byte, index) => (
+                    <Byte value={byte} key={index}
+                      diff={this.state.seedDiff.indexOf(index) >= 0} />
+                  ))
+              }
+            </div>
+          </div>
+        </PassphraseTheme>
+        <ActionBar
+          secondaryButton={{
+            label: t('Back'),
+            onClick: prevStep,
+          }}
+          primaryButton={{
+            label: t('Next'),
+            fee: null,
+            className: 'next-button',
+            disabled: true,
+            onClick: () => {},
+          }} />
+      </div>);
   }
 }
 

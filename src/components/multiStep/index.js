@@ -60,19 +60,24 @@ class MultiStep extends React.Component {
 
 
   render() {
-    const { children, className } = this.props;
+    const { children, className, finalCallback } = this.props;
     const { step } = this.state;
+    const extraProps = {
+      nextStep: step.nextStep,
+      prevStep: step.prevStep,
+      ...step.data[step.current],
+    };
+
+    if (step.current === (children.length - 1) && typeof finalCallback === 'function') {
+      extraProps.finalCallback = finalCallback;
+    } else {
+      extraProps.prevState = Object.assign({}, step.data[step.current + 1]);
+    }
 
     return (<section className={className}>
       <MultiStepNav steps={children} showNav={this.props.showNav} current={step.current} />
       {
-        React.cloneElement(children[step.current],
-          {
-            nextStep: step.nextStep,
-            prevStep: step.prevStep,
-            ...step.data[step.current],
-            prevState: Object.assign({}, step.data[step.current + 1]),
-          })
+        React.cloneElement(children[step.current], extraProps)
       }
     </section>);
   }
