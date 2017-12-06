@@ -75,7 +75,7 @@ class SavedAccounts extends React.Component {
         <BackgroundMaker />
         <h1>{t('Your favorite Lisk IDs')}</h1>
         <div className={styles.cardsWrapper} >
-          <Link to={`/main/add-account/?referrer=/main/transactions/saved-accounts&activeAddress=${activeAccount.address}`} >
+          <Link to='/main/add-account/?referrer=/main/transactions/saved-accounts' >
             <div className={`add-lisk-id-card ${styles.card} ${styles.addNew}`} >
               <div className={styles.cardIcon}>
                 <img src={plusShapeIcon} className={styles.plusShapeIcon} />
@@ -134,7 +134,7 @@ class SavedAccounts extends React.Component {
           theme={{ button: styles.addAcctiveAccountButton }}
           label={this.state.editing ? t('Done') : t('Edit')}/>
         <ToolBoxButton icon='close' floating onClick={closeDialog} className={`x-button ${styles.closeButton}`} />
-    </div>
+      </div>
     );
   }
 }
