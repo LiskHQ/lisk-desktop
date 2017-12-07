@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="44px" height="33px" viewBox="0 0 44 33" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="74.3470982%" y1="23.2700893%" x2="0%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#FF6236" offset="0%"></stop>
+            <stop stop-color="#C80039" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="03_01_Send-✅" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Send-Process" transform="translate(-4397.000000, -357.000000)" fill-rule="nonzero" fill="url(#linearGradient-1)">
+            <g id="Group-6-Copy-2" transform="translate(4174.000000, 59.000000)">
+                <g id="Group-2" transform="translate(48.000000, 298.000000)">
+                    <g id="Group-7">
+                        <path d="M219,6.44444444 C219,7.18518519 218.735054,7.81481481 218.205161,8.33333333 L197.652903,28.4444444 L193.792258,32.2222222 C193.262366,32.7407407 192.618925,33 191.861935,33 C191.104946,33 190.461505,32.7407407 189.931613,32.2222222 L186.070968,28.4444444 L175.794839,18.3888889 C175.264946,17.8703704 175,17.2407407 175,16.5 C175,15.7592593 175.264946,15.1296296 175.794839,14.6111111 L179.655484,10.8333333 C180.185376,10.3148148 180.828817,10.0555556 181.585806,10.0555556 C182.342796,10.0555556 182.986237,10.3148148 183.516129,10.8333333 L191.861935,19.0277778 L210.483871,0.777777778 C211.013763,0.259259259 211.657204,0 212.414194,0 C213.171183,0 213.814624,0.259259259 214.344516,0.777777778 L218.205161,4.55555556 C218.735054,5.07407407 219,5.7037037 219,6.44444444 Z" id="Shape"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

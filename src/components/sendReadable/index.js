@@ -8,6 +8,7 @@ const mapStateToProps = state => ({
   account: state.account,
   activePeer: state.peers.data,
   pendingTransactions: state.transactions.pending,
+  failedTransactions: state.transactions.failed,
 });
 
 const mapDispatchToProps = dispatch => ({

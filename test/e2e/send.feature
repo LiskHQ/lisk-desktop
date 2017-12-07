@@ -7,7 +7,7 @@ Feature: Send dialog
     And I click "send next button"
     And I click "send button"
     And I wait 1 seconds
-    Then I should see "Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain." success message
+    Then I should see text "Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain." in "result box message" element
 
   @integration
   Scenario: should not allow to send when not enough funds
@@ -25,4 +25,4 @@ Feature: Send dialog
     And I fill in second passphrase of "second passphrase account" to "second passphrase" field
     When I click "send button"
     And I wait 1 seconds
-    Then I should see "Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain." success message
+    Then I should see text "Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain." in "result box message" element

@@ -125,11 +125,6 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     waitForElemAndCheckItsText('.error-message, .theme__error___2k5Jz', text, callback);
   });
 
-  Then('I should see "{text}" success message', (text, callback) => {
-    browser.sleep(500);
-    waitForElemAndCheckItsText('.success-message', text, callback);
-  });
-
   Then('"{elementName}" should be disabled', (elementName, callback) => {
     expect(element(by.css(`.${elementName.replace(/ /g, '-')}`)).getAttribute('disabled'))
       .to.eventually.equal('true')
