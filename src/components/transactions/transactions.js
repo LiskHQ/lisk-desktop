@@ -65,7 +65,7 @@ class Transactions extends React.Component {
           </ul>
 
           {this.props.transactions.length > 0 ?
-            <div>
+            <div className={styles.results}>
               <TransactionsHeader tableStyle={tableStyle}></TransactionsHeader>
               {this.props.transactions.map(transaction => (
                 <TransactionRow address={this.props.address}
@@ -75,6 +75,9 @@ class Transactions extends React.Component {
                   copy={this.props.copyToClipboard}>
                 </TransactionRow>
               ))}
+              <Waypoint bottomOffset='-80%'
+                key={this.props.transactions.length}
+                onEnter={this.loadMore.bind(this)}></Waypoint>
             </div> :
             <p className={`${styles.empty} hasPaddingRow empty-message`}>
               {this.props.t('There are no transactions, yet.')} &nbsp;
@@ -82,9 +85,6 @@ class Transactions extends React.Component {
                 to='receive'>{this.props.t('Receive LSK')}</RelativeLink>
             </p>
           }
-          <Waypoint bottomOffset='-80%'
-            key={this.props.transactions.length}
-            onEnter={this.loadMore.bind(this)}></Waypoint>
         </div>
       </div>
     );
