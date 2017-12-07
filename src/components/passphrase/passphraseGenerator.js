@@ -1,13 +1,27 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { generateSeed, emptyByte, generatePassphrase } from '../../utils/passphrase';
+import { generateSeed, generatePassphrase } from '../../utils/passphrase';
 import { extractAddress } from '../../utils/api/account';
 import styles from './passphrase.css';
-import Input from '../toolbox/inputs/input';
 import ProgressBar from '../toolbox/progressBar/progressBar';
-import * as shapes from '../../assets/images/register-shapes/*.svg'; //eslint-disable-line
-import AnimateShape from './animateShape';
+import * as shapesSrc from '../../assets/images/register-shapes/*.svg'; //eslint-disable-line
+import MovableShape from './animateShape';
 import { PrimaryButton } from '../toolbox/buttons/button';
+
+const hideSomeShapeRandomly = (list) => {
+  let resualt = []; // eslint-disable-line
+  const min = 0;
+  const max = 9;
+  let randomNumber;
+  while (resualt.length < 4) {
+    randomNumber = Math.floor((Math.random() * (max - min)) + min);
+    if (resualt.indexOf(randomNumber) === -1) {
+      resualt.push(randomNumber);
+    }
+  }
+  resualt.forEach((item) => { list[item] = 0; });
+  return list;
+};
 
 class PassphraseGenerator extends React.Component {
   constructor() {
@@ -19,47 +33,32 @@ class PassphraseGenerator extends React.Component {
         x: 0,
         y: 0,
       },
+      shapes: [1, 1, 1, 1, 1, 1, 1, 1, 1],
       firstHeadingClass: '',
       secondHeadingClass: '',
       headingClass: '',
-      zeroSeed: emptyByte('00'),
-      seedDiff: emptyByte(0),
     };
-    this.shapes = [];
   }
 
   componentDidMount() {
     this.container = document.getElementById('generatorContainer');
     this.seedGeneratorBoundToThis = this.seedGenerator.bind(this);
     this.container.addEventListener('mousemove', this.seedGeneratorBoundToThis, true);
-
-    this.shapes.push(new AnimateShape({ x: 550, y: 50 }, '#rCircle', true));
-    this.shapes.push(new AnimateShape({ x: 450, y: 230 }, '#rTriangle', true));
-    this.shapes.push(new AnimateShape({ x: 450, y: 180 }, '#rSmallTriangle', true));
-    this.shapes.push(new AnimateShape({ x: 300, y: 220 }, '#rRightRectangle', true));
-    this.shapes.push(new AnimateShape({ x: 250, y: 350 }, '#rCircleOutline', false));
-    this.shapes.push(new AnimateShape({ x: 100, y: 200 }, '#rStripe', false));
-    this.shapes.push(new AnimateShape({ x: 280, y: 315 }, '#rSmallStripe', true));
-    this.shapes.push(new AnimateShape({ x: 500, y: 240 }, '#rSmallCircle', false));
-    this.shapes.push(new AnimateShape({ x: 530, y: 150 }, '#rLeftRectangle', false));
   }
 
-  updateShapes() {
+  moveTitle() {
     setTimeout(() => {
-      const { data } = this.state;
-      if (data.percentage % 20 > 17 && data.percentage % 20 !== 0) {
+      const { percentage } = this.state.data;
+      if (percentage > 15 && percentage < 18) {
         this.setState({
           headingClass: styles.goToTop,
-        });
-        this.shapes.forEach((shape) => {
-          shape.startMovement(data.percentage);
         });
       }
     }, 10);
   }
 
-  componentDidUpdate(nextProps, nextState) {
-    this.updateShapes(nextState.data);
+  componentDidUpdate() {
+    this.moveTitle();
   }
 
   componentWillUnmount() {
@@ -100,12 +99,8 @@ class PassphraseGenerator extends React.Component {
 
       // defining diffSeed to use for animating HEX numbers
       // note: in the first iteration data is undefined
-      const oldSeed = this.state.data ? this.state.data.seed : this.state.zeroSeed;
       const data = generateSeed(this.state.data);
-      const seedDiff = oldSeed.map((item, index) =>
-        ((item !== data.seed[index]) ? index : null))
-        .filter(item => item !== null);
-      this.setState({ data, seedDiff });
+      this.setState({ data });
       // this.circle.startMovement(this.state.data.percentage);
     } else if (this.state.data && this.state.data.percentage >= 100 && !this.state.passphrase) {
       // also change the step here
@@ -113,56 +108,101 @@ class PassphraseGenerator extends React.Component {
       const address = extractAddress(phrase);
       this.setState({
         passphrase: phrase,
-        firstHeadingClass: styles.firstHeading,
-        secondHeadingClass: styles.secondHeading,
+        firstHeadingClass: styles.firstHeadingAnimation,
+        secondHeadingClass: styles.secondHeadingAnimation,
         address,
       });
-      // this.props.changeHandler('passphrase', phrase);
-      // this.props.changeHandler('current', 'show');
-      console.log(extractAddress(phrase));
-      this.shapes[4].css('opacity', 0);
-      this.shapes[8].css('opacity', 0);
-      this.shapes[3].css('opacity', 0);
+
+      const shapes = hideSomeShapeRandomly(this.state.shapes);
+      // update state
+      this.setState({
+        shapes,
+      });
     }
   }
 
   render() {
     const { t, nextStep } = this.props;
-    const isTouch = this.isTouchDevice(this.props.agent);
+    const { shapes } = this.state;
     const percentage = this.state.data ? this.state.data.percentage : 0;
     return (
       <div className={`${grid.row} ${grid['center-xs']} ${styles.wrapper}`} id="generatorContainer" >
         <div className={grid['col-xs-12']}>
-          <img className={styles.circle} id="rCircle" src={shapes.circle} />
-          <img className={styles.smallCircle} id="rSmallCircle" src={shapes.smallCircle} />
-          <img className={styles.triangle} id="rTriangle" src={shapes.triangle} />
-          <img className={styles.smallTriangle} id="rSmallTriangle" src={shapes.smallTriangle} />
-          <img className={styles.circleOutline} id="rCircleOutline" src={shapes.circleOutline} />
-          <img className={styles.stripe} id="rStripe" src={shapes.stripe} />
-          <img className={styles.smallStripe} id="rSmallStripe" src={shapes.smallStripe} />
-          <img className={styles.rightRectangle} id="rRightRectangle" src={shapes.rightRectangle} />
-          <img className={styles.leftRectangle} id="rLeftRectangle" src={shapes.leftRectangle} />
-
-          {isTouch ?
-            <div>
-              <p>Enter text below to generate random bytes</p>
-              <Input onChange={this.seedGeneratorBoundToThis}
-                className='touch-fallback' autoFocus={true} multiline={true} />
-            </div> :
-            <header>
-              <h2 className={`${styles.generatorHeader} ${this.state.headingClass} ${this.state.firstHeadingClass}`}
-                id="generatorHeader" >
-                {t('Create your Lisk ID')}
-                <br/>
-                {t('by moving your mouse.')}
-              </h2>
-              <h2
-                className={`${styles.generatorHeader} ${this.state.headingClass} ${this.state.secondHeadingClass}`}
-                id="generatorHeader" >
-                {t('Create your Lisk ID')}
-              </h2>
-            </header>
-          }
+          <MovableShape
+            hidden={shapes[0]}
+            src={shapesSrc.circle}
+            className={styles.circle}
+            percentage={percentage}
+            reverse={true}
+            end={{ x: 550, y: 50 }}/>
+          <MovableShape
+            hidden={shapes[1]}
+            src={shapesSrc.smallCircle}
+            className={styles.smallCircle}
+            percentage={percentage}
+            reverse={false}
+            end={{ x: 500, y: 240 }}/>
+          <MovableShape
+            hidden={shapes[2]}
+            src={shapesSrc.triangle}
+            className={styles.triangle}
+            percentage={percentage}
+            reverse={true}
+            end={{ x: 450, y: 230 }}/>
+          <MovableShape
+            hidden={shapes[3]}
+            src={shapesSrc.smallTriangle}
+            className={styles.smallTriangle}
+            percentage={percentage}
+            reverse={true}
+            end={{ x: 450, y: 180 }}/>
+          <MovableShape
+            hidden={shapes[5]}
+            src={shapesSrc.circleOutline}
+            className={styles.circleOutline}
+            percentage={percentage}
+            reverse={false}
+            end={{ x: 250, y: 350 }}/>
+          <MovableShape
+            hidden={shapes[6]}
+            src={shapesSrc.stripe}
+            className={styles.stripe}
+            percentage={percentage}
+            reverse={false}
+            end={{ x: 100, y: 200 }}/>
+          <MovableShape
+            hidden={shapes[7]}
+            src={shapesSrc.smallStripe}
+            className={styles.smallStripe}
+            percentage={percentage}
+            reverse={true}
+            end={{ x: 280, y: 315 }}/>
+          <MovableShape
+            hidden={shapes[4]}
+            src={shapesSrc.rightRectangle}
+            className={styles.rightRectangle}
+            percentage={percentage}
+            reverse={true}
+            end={{ x: 300, y: 220 }}/>
+          <MovableShape
+            hidden={shapes[8]}
+            src={shapesSrc.leftRectangle}
+            className={styles.leftRectangle}
+            percentage={percentage}
+            reverse={false}
+            end={{ x: 530, y: 150 }}/>
+          <header>
+            <h2 className={`${styles.generatorHeader} ${this.state.headingClass} ${this.state.firstHeadingClass}`}
+              id="generatorHeader" >
+              {this.props.t('Create your Lisk ID')}
+              <br/>
+              {this.props.t('by moving your mouse.')}
+            </h2>
+            <h2 className={`${styles.secondHeading} ${this.state.headingClass} ${this.state.secondHeadingClass}`}>
+              {t('Create your Lisk ID')}
+              <small>{t('This is your Lisk-ID consisting of an address and avatar.')}</small>
+            </h2>
+          </header>
           {this.state.address ?
             <div className={styles.addressContainer}>
               <h4 className={styles.address}>{this.state.address}</h4>
