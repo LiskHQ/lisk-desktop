@@ -164,6 +164,7 @@
   "There are no transactions, yet.": "There are no transactions, yet.",
   "There is a new version ({{version}}) available, do you want to update now?": "There is a new version ({{version}}) available, do you want to update now?",
   "This account is protected by a second passphrase": "This account is protected by a second passphrase",
+  "This is your Lisk-ID consisting of an address and avatar.": "This is your Lisk-ID consisting of an address and avatar.",
   "Timestamp": "Timestamp",
   "Toggle full screen": "Toggle full screen",
   "Total fee": "Total fee",
