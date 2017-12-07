@@ -113,11 +113,13 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
 
 const accountMiddleware = store => next => (action) => {
   next(action);
+  const { peers, account } = store.getState();
   switch (action.type) {
     // update on login because the 'save account' button
     // depends on a rerendering of the page
     // TODO: fix the 'save account' path problem, so we can remove this
     case actionTypes.accountLoggedIn:
+      updateTransactions(store, peers, account);
       updateAccountData(store, action);
       break;
     case actionTypes.newBlockCreated:
