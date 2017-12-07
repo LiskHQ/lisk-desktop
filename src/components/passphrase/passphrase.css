@@ -1,9 +1,13 @@
 @import '../app/variables';
 
 :root {
+  --sub-title-color: var(--color-grayscale-dark);
   --address-color: var(--color-primary-medium);
-  --address-animation-delay: 1500ms;
+  --address-animation-delay: 1200ms;
   --address-animation-duration: 1000ms;
+
+  --header-animation-duration: 450ms;
+  --second-header-animation-delay: 1000ms;
 }
 
 @define-mixin shape $left, $top {
@@ -97,15 +101,6 @@
   @mixin shape 829px, 657px;
 }
 
-.byte {
-  display: inline-block;
-  text-align: center;
-  font-size: 140%;
-  margin: 5px;
-  font-family: monospace;
-  transition: all ease 300ms;
-}
-
 .wrapper {
   flex-direction: row;
   height: 100%;
@@ -131,9 +126,9 @@
   top: 30%;
 }
 
-.firstHeading {
+.firstHeadingAnimation {
   transition-duration: 0ms;
-  animation: firstHeadingAnimationFrames ease 450ms;
+  animation: firstHeadingAnimationFrames ease var(--header-animation-duration);
   animation-delay: 0;
   animation-iteration-count: 1;
   transform-origin: 50% 50%;
@@ -141,10 +136,28 @@
 }
 
 .secondHeading {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  opacity: 0;
+  transform: translate(20px, -150px);
+  top: 30%;
+
+  & small {
+    font-size: 18px;
+    font-weight: normal;
+    font-family: 'Open Sans', sans-serif;
+    color: var(--sub-title-color);
+    line-height: 36px;
+    display: block;
+  }
+}
+
+.secondHeadingAnimation {
   transition-duration: 0ms;
   opacity: 0;
-  animation: secondHeadingAnimationFrames ease 450ms;
-  animation-delay: 1000ms;
+  animation: secondHeadingAnimationFrames ease var(--header-animation-duration);
+  animation-delay: var(--second-header-animation-delay);
   animation-iteration-count: 1;
   transform-origin: 50% 50%;
   animation-fill-mode: forwards;
