@@ -56,7 +56,9 @@ class Login extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (!this.alreadyLoggedWithThisAddress(prevProps.account.address, prevProps.peers.options)) {
+    if (this.props.account &&
+      this.props.account.address &&
+      !this.alreadyLoggedWithThisAddress(prevProps.account.address, prevProps.peers.options)) {
       this.redirectToReferrer();
     }
     if (!this.account) {
