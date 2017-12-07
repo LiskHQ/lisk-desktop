@@ -181,14 +181,14 @@ class Login extends React.Component {
               <form onSubmit={this.onFormSubmit.bind(this)}>
                 <LanguageDropdown className={styles.outTaken} />
                 {this.showNetworkOptions()
-                  ? <div>
+                  ? <div className={styles.outTaken}>
                     <Dropdown
                       auto={false}
                       source={this.networks}
                       onChange={this.changeHandler.bind(this, 'network')}
                       label={this.props.t('Select a network')}
                       value={this.state.network}
-                      className={`${styles.network} network ${styles.outTaken}`}
+                      className='network'
                     />
                     {
                       this.state.network === networks.customNode.code &&
