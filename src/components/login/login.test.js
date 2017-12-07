@@ -109,6 +109,22 @@ describe('Login', () => {
       spyFn.restore();
       localStorage.removeItem('address');
     });
+
+
+    it('hides network options by default', () => {
+      wrapper = shallow(<Login {...props}/>, options);
+      props.history.replace.reset();
+      wrapper.setProps({ history });
+      expect(wrapper.find('.network')).to.have.length(0);
+    });
+
+    it('shows network options when url param showNetwork is true', () => {
+      wrapper = shallow(<Login {...props}/>, options);
+      props.history.replace.reset();
+      history.location.search = '?showNetwork=true';
+      wrapper.setProps({ history });
+      expect(wrapper.find('.network')).to.have.length(1);
+    });
   });
 
   describe('After submission', () => {
