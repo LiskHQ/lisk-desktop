@@ -94,23 +94,6 @@ describe('Login', () => {
       expect(props.history.replace).to.have.been.calledWith('/main/transactions');
     });
 
-    it('calls localStorage.setItem(\'address\', address) if this.state.address', () => {
-      const spyFn = spy(localStorage, 'setItem');
-      wrapper = mount(<Router><Login {...props}/></Router>, options);
-      // set the network dropdown
-      wrapper.find('div.network').simulate('click');
-      // select custom node
-      wrapper.find('div.network ul li').at(2).simulate('click');
-      // fill the address
-      wrapper.find('Input.address input').simulate('change', { target: { value: address } });
-      wrapper.setProps(props);
-      expect(spyFn).to.have.been.calledWith('address', address);
-
-      spyFn.restore();
-      localStorage.removeItem('address');
-    });
-
-
     it('hides network options by default', () => {
       wrapper = shallow(<Login {...props}/>, options);
       props.history.replace.reset();
@@ -124,6 +107,25 @@ describe('Login', () => {
       history.location.search = '?showNetwork=true';
       wrapper.setProps({ history });
       expect(wrapper.find('.network')).to.have.length(1);
+    });
+
+    it('calls localStorage.setItem(\'address\', address) if this.state.address', () => {
+      const spyFn = spy(localStorage, 'setItem');
+      wrapper = mount(<Router><Login {...props}/></Router>, options);
+      // enable the network dropdown
+      history.location.search = '?showNetwork=true';
+      wrapper.setProps({ history });
+      // set the network dropdown
+      wrapper.find('div.network').simulate('click');
+      // select custom node
+      wrapper.find('div.network ul li').at(2).simulate('click');
+      // fill the address
+      wrapper.find('Input.address input').simulate('change', { target: { value: address } });
+      wrapper.setProps(props);
+      expect(spyFn).to.have.been.calledWith('address', address);
+
+      spyFn.restore();
+      localStorage.removeItem('address');
     });
   });
 
