@@ -43,12 +43,12 @@
 @keyframes firstHeadingAnimationFrames {
   0% {
     opacity: 1;
-    transform: translate(0px, -102px);
+    transform: translate(0px, -150px);
   }
 
   100% {
     opacity: 0;
-    transform: translate(-20px, -102px);
+    transform: translate(-20px, -150px);
   }
 }
 
@@ -163,7 +163,7 @@
 }
 
 .goToTop {
-  transform: translateY(-102px);
+  transform: translateY(-150px);
 }
 
 .addressContainer {
