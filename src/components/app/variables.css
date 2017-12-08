@@ -96,6 +96,7 @@ or "warn/action" ineastd of "red/green"
         Paddings
   *************************/
   --box-padding: 16px;
+  --box-padding-top: 50px;
 
   /*************************
         Box props

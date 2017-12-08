@@ -1,10 +1,108 @@
-.byte {
-  display: inline-block;
-  text-align: center;
-  font-size: 140%;
-  margin: 5px;
-  font-family: monospace;
-  transition: all ease 300ms;
+@import '../app/variables';
+
+:root {
+  --sub-title-color: var(--color-grayscale-dark);
+  --address-color: var(--color-primary-medium);
+  --address-animation-delay: 1200ms;
+  --address-animation-duration: 1000ms;
+  --header-animation-duration: 450ms;
+  --second-header-animation-delay: 1000ms;
+}
+
+@define-mixin shape $left, $top {
+  position: absolute;
+  left: $left;
+  top: $top;
+  z-index: 0;
+}
+
+@keyframes addressAnimationFrames {
+  0% {
+    opacity: 0;
+    transform: translate(0px, -25px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(1px, -1px);
+  }
+}
+
+@keyframes buttonAnimationFrames {
+  0% {
+    opacity: 0;
+    transform: translate(0px, 25px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(1px, -1px);
+  }
+}
+
+@keyframes firstHeadingAnimationFrames {
+  0% {
+    opacity: 1;
+    transform: translate(0px, -150px);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-20px, -150px);
+  }
+}
+
+@keyframes secondHeadingAnimationFrames {
+  0% {
+    opacity: 0;
+    transform: translate(20px, -150px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0px, -150px);
+  }
+}
+
+.circle {
+  @mixin shape 1117px, 376px;
+}
+
+.smallCircle {
+  @mixin shape 152px, 660px;
+}
+
+.triangle {
+  @mixin shape 1040px, 540px;
+}
+
+.smallTriangle {
+  @mixin shape 1010px, 598px;
+}
+
+.rightRectangle {
+  @mixin shape 850px, 530px;
+}
+
+.leftRectangle {
+  @mixin shape 48px, 454px;
+}
+
+.circleOutline {
+  @mixin shape 379px, 630px;
+}
+
+.stripe {
+  @mixin shape 455px, 585px;
+}
+
+.smallStripe {
+  @mixin shape 829px, 657px;
+}
+
+.wrapper {
+  flex-direction: row;
+  height: 100%;
 }
 
 .missing {
@@ -16,7 +114,81 @@
 .stable {
   transform: scale(1);
   display: inline-block;
-  transition: all ease 300ms;
+  transition: all ease 500ms;
+}
+
+.generatorHeader {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  transition: all cubic-bezier(0.01, 0.54, 0.32, 0.96) 1000ms;
+  top: 30%;
+}
+
+.firstHeadingAnimation {
+  transition-duration: 0ms;
+  animation: firstHeadingAnimationFrames ease var(--header-animation-duration);
+  animation-delay: 0;
+  animation-iteration-count: 1;
+  transform-origin: 50% 50%;
+  animation-fill-mode: forwards;
+}
+
+.secondHeading {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  opacity: 0;
+  transform: translate(20px, -150px);
+  top: 30%;
+
+  & small {
+    font-size: 18px;
+    font-weight: normal;
+    font-family: 'Open Sans', sans-serif;
+    color: var(--sub-title-color);
+    line-height: 36px;
+    display: block;
+  }
+}
+
+.secondHeadingAnimation {
+  transition-duration: 0ms;
+  opacity: 0;
+  animation: secondHeadingAnimationFrames ease var(--header-animation-duration);
+  animation-delay: var(--second-header-animation-delay);
+  animation-iteration-count: 1;
+  transform-origin: 50% 50%;
+  animation-fill-mode: forwards;
+}
+
+.goToTop {
+  transform: translateY(-150px);
+}
+
+.addressContainer {
+  margin-top: 600px;
+  position: relative;
+}
+
+.address {
+  color: var(--address-color);
+  animation: secondHeadingAnimationFrames ease var(--address-animation-duration);
+  animation-delay: var(--address-animation-delay);
+  animation-iteration-count: 1;
+  transform-origin: 50% 50%;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+
+.button {
+  animation: secondHeadingAnimationFrames ease var(--address-animation-duration);
+  animation-delay: var(--address-animation-delay);
+  animation-iteration-count: 1;
+  transform-origin: 50% 50%;
+  animation-fill-mode: forwards;
+  opacity: 0;
+  margin-top: 24px;
 }
 
 .bouncing {
@@ -29,4 +201,21 @@ hr {
 
 .templateItem {
   min-height: 130px;
+  height: 100%;
+}
+
+.value {
+  background-color: #0288d1;
+  background-image: linear-gradient(-90deg, #0792ff 0%, #def4ff 94%);
+}
+
+.linear {
+  background: transparent !important;
+  position: absolute !important;
+  bottom: 0;
+  left: 0;
+  display: inline-block;
+  height: 8px !important;
+  overflow: hidden;
+  width: 100%;
 }

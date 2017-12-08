@@ -114,7 +114,7 @@ class SendReadable extends React.Component {
     return (
       <div className='boxPadding send'>
         <div className={styles.header}>
-          <header>
+          <header className={styles.headerWrapper}>
             <h2>{this.props.t('Confirm transfer')}</h2>
           </header>
           <figure className={styles.temporaryAvatar}><img src='' alt='' /></figure>

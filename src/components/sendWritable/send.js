@@ -73,7 +73,7 @@ class SendWritable extends React.Component {
     return (
       <div className='boxPadding'>
         <div className={styles.header}>
-          <header>
+          <header className={styles.headerWrapper}>
             <h2>Transfer</h2>
             <span className={`${styles.subTitle} ${styles.transfer}`}>{this.props.t('Quickly send and request LSK token')}</span>
           </header>

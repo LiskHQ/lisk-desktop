@@ -1,48 +1,73 @@
 import React from 'react';
-import AnimateOnChange from 'react-animate-on-change';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { generateSeed, generatePassphrase, emptyByte } from '../../utils/passphrase';
+import { Input } from 'react-toolbox/lib/input';
+import { generateSeed, generatePassphrase } from '../../utils/passphrase';
+import { extractAddress } from '../../utils/api/account';
 import styles from './passphrase.css';
-import PassphraseTheme from './passphraseTheme';
-import Input from '../toolbox/inputs/input';
-import ActionBar from '../actionBar';
 import ProgressBar from '../toolbox/progressBar/progressBar';
-
-
-const Byte = props => (
-  <AnimateOnChange
-    animate={props.diff}
-    baseClassName={styles.stable}
-    animationClassName={styles.bouncing}>
-    <span className={styles.byte}>{ props.value }</span>
-  </AnimateOnChange>
-);
+import * as shapesSrc from '../../assets/images/register-shapes/*.svg'; //eslint-disable-line
+import MovableShape from './movableShape';
+import { PrimaryButton } from '../toolbox/buttons/button';
 
 class PassphraseGenerator extends React.Component {
   constructor() {
     super();
     this.state = {
       step: 'info',
+      address: null,
       lastCaptured: {
         x: 0,
         y: 0,
       },
-      zeroSeed: emptyByte('00'),
-      seedDiff: emptyByte(0),
+      shapes: [1, 1, 1, 1, 1, 1, 1, 1, 1],
+      firstHeadingClass: '',
+      secondHeadingClass: '',
+      headingClass: '',
     };
-
     this.seedGeneratorBoundToThis = this.seedGenerator.bind(this);
+  }
+
+  componentDidMount() {
+    this.container = document.getElementById('generatorContainer');
+    if (!this.isTouchDevice(this.props.agent)) {
+      document.addEventListener('mousemove', this.seedGeneratorBoundToThis, true);
+    }
+  }
+
+  moveTitle() {
+    setTimeout(() => {
+      const { percentage } = this.state.data;
+      if (percentage > 15 && percentage < 18) {
+        this.setState({
+          headingClass: styles.goToTop,
+        });
+      }
+    }, 10);
+  }
+
+
+  hideShapeRandomly(list) {// eslint-disable-line
+    let result = []; // eslint-disable-line
+    const min = 0;
+    const max = 9;
+    let randomNumber;
+    while (result.length < 4) {
+      randomNumber = Math.floor((Math.random() * (max - min)) + min);
+      if (result.indexOf(randomNumber) === -1) {
+        result.push(randomNumber);
+      }
+    }
+    result.forEach((item) => { list[item] = 0; });
+    return list;
+  }
+
+  componentDidUpdate() {
+    this.moveTitle();
   }
 
   componentWillUnmount() {
     if (!this.isTouchDevice(this.props.agent)) {
       document.removeEventListener('mousemove', this.seedGeneratorBoundToThis, true);
-    }
-  }
-
-  componentDidMount() {
-    if (!this.isTouchDevice(this.props.agent)) {
-      document.addEventListener('mousemove', this.seedGeneratorBoundToThis, true);
     }
   }
 
@@ -80,68 +105,135 @@ class PassphraseGenerator extends React.Component {
 
       // defining diffSeed to use for animating HEX numbers
       // note: in the first iteration data is undefined
-      const oldSeed = this.state.data ? this.state.data.seed : this.state.zeroSeed;
       const data = generateSeed(this.state.data);
-      const seedDiff = oldSeed.map((item, index) =>
-        ((item !== data.seed[index]) ? index : null))
-        .filter(item => item !== null);
-      this.setState({ data, seedDiff });
+      this.setState({ data });
     } else if (this.state.data && this.state.data.percentage >= 100 && !this.state.passphrase) {
       // also change the step here
       const phrase = generatePassphrase(this.state.data);
+      const address = extractAddress(phrase);
       this.setState({
         passphrase: phrase,
+        firstHeadingClass: styles.firstHeadingAnimation,
+        secondHeadingClass: styles.secondHeadingAnimation,
+        address,
       });
-      this.props.nextStep({ passphrase: phrase });
+
+      const shapes = this.hideShapeRandomly(this.state.shapes);
+      // update state
+      this.setState({
+        shapes,
+      });
     }
   }
 
   render() {
     const isTouch = this.isTouchDevice(this.props.agent);
-    const { t, prevStep } = this.props;
-
+    const { t, nextStep } = this.props;
+    const { shapes } = this.state;
+    const percentage = this.state.data ? this.state.data.percentage : 0;
     return (
-      <div>
-        <PassphraseTheme>
-          <div className={`${grid.row} ${grid['center-xs']}`} >
-            <div className={grid['col-xs-12']}>
-              {isTouch ?
-                <div>
-                  <p>{t('Enter text below to generate random bytes')}</p>
-                  <Input onChange={this.seedGeneratorBoundToThis}
-                    className='touch-fallback' autoFocus={true} multiline={true} />
-                </div> :
-                <p>{t('Move your mouse to generate random bytes')}</p>
-              }
+      <div className={`${grid.row} ${grid['center-xs']} ${styles.wrapper}`} id="generatorContainer" >
+        <div className={grid['col-xs-12']}>
+          <MovableShape
+            hidden={shapes[0]}
+            src={shapesSrc.circle}
+            className={styles.circle}
+            percentage={percentage}
+            reverse={true}
+            end={{ x: 550, y: 50 }}/>
+          <MovableShape
+            hidden={shapes[1]}
+            src={shapesSrc.smallCircle}
+            className={styles.smallCircle}
+            percentage={percentage}
+            reverse={false}
+            end={{ x: 500, y: 240 }}/>
+          <MovableShape
+            hidden={shapes[2]}
+            src={shapesSrc.triangle}
+            className={styles.triangle}
+            percentage={percentage}
+            reverse={true}
+            end={{ x: 450, y: 230 }}/>
+          <MovableShape
+            hidden={shapes[3]}
+            src={shapesSrc.smallTriangle}
+            className={styles.smallTriangle}
+            percentage={percentage}
+            reverse={true}
+            end={{ x: 450, y: 180 }}/>
+          <MovableShape
+            hidden={shapes[5]}
+            src={shapesSrc.circleOutline}
+            className={styles.circleOutline}
+            percentage={percentage}
+            reverse={false}
+            end={{ x: 250, y: 350 }}/>
+          <MovableShape
+            hidden={shapes[6]}
+            src={shapesSrc.stripe}
+            className={styles.stripe}
+            percentage={percentage}
+            reverse={false}
+            end={{ x: 100, y: 200 }}/>
+          <MovableShape
+            hidden={shapes[7]}
+            src={shapesSrc.smallStripe}
+            className={styles.smallStripe}
+            percentage={percentage}
+            reverse={true}
+            end={{ x: 280, y: 315 }}/>
+          <MovableShape
+            hidden={shapes[4]}
+            src={shapesSrc.rightRectangle}
+            className={styles.rightRectangle}
+            percentage={percentage}
+            reverse={true}
+            end={{ x: 300, y: 220 }}/>
+          <MovableShape
+            hidden={shapes[8]}
+            src={shapesSrc.leftRectangle}
+            className={styles.leftRectangle}
+            percentage={percentage}
+            reverse={false}
+            end={{ x: 530, y: 150 }}/>
+          <header>
+            {isTouch ?
+              <div>
+                <p>{t('Enter text below to generate random bytes')}</p>
+                <Input onChange={this.seedGeneratorBoundToThis}
+                  className='touch-fallback' autoFocus={true} multiline={true} />
+              </div> :
+              <h2 className={`${styles.generatorHeader} ${this.state.headingClass} ${this.state.firstHeadingClass}`}
+                id="generatorHeader" >
+                {this.props.t('Create your Lisk ID')}
+                <br/>
+                {this.props.t('by moving your mouse.')}
+              </h2>
+            }
+            <h2 className={`${styles.secondHeading} ${this.state.headingClass} ${this.state.secondHeadingClass}`}>
+              {t('Create your Lisk ID')}
+              <small>{t('This is your Lisk-ID consisting of an address and avatar.')}</small>
+            </h2>
+          </header>
+          {this.state.address ?
+            <div className={styles.addressContainer}>
+              <h4 className={styles.address}>{this.state.address}</h4>
+              <PrimaryButton
+                theme={styles}
+                label='Get passphrase'
+                className="next-button"
+                onClick={() => nextStep({ passphrase: this.state.passphrase })}
+              />
             </div>
-            <div className={grid['col-xs-12']}>
-              <ProgressBar mode='determinate'
-                value={this.state.data ? this.state.data.percentage : 0} />
-            </div>
-            <div className={grid['col-xs-12']}>
-              {
-                (this.state.data ? this.state.data.seed : this.state.zeroSeed)
-                  .map((byte, index) => (
-                    <Byte value={byte} key={index}
-                      diff={this.state.seedDiff.indexOf(index) >= 0} />
-                  ))
-              }
-            </div>
-          </div>
-        </PassphraseTheme>
-        <ActionBar
-          secondaryButton={{
-            label: t('Back'),
-            onClick: prevStep,
-          }}
-          primaryButton={{
-            label: t('Next'),
-            fee: null,
-            className: 'next-button',
-            disabled: true,
-            onClick: () => {},
-          }} />
-      </div>);
+            : ''}
+        </div>
+        <div className={grid['col-xs-12']}>
+          <ProgressBar mode='determinate' theme={styles}
+            value={percentage} />
+        </div>
+      </div>
+    );
   }
 }
 

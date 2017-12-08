@@ -41,7 +41,7 @@ input:read-only {
   padding: 0px var(--grid-padding-left);
 }
 
-header {
+.headerWrapper {
   padding: 20px 0px;
   line-height: var(--header-line-height);
 
