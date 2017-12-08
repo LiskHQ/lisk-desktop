@@ -29,8 +29,8 @@ Feature: Login page
     Given I'm on login page
     When I click "new account button"
     And I wait 1 seconds
-    And I click "next button"
     And I 250 times move mouse randomly
+    And I click "next button"
     And I remember passphrase, click "next button", fill in missing word
     And I click "next button"
     Then I should be logged in
