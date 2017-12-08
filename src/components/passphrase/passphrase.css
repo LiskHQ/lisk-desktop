@@ -5,7 +5,6 @@
   --address-color: var(--color-primary-medium);
   --address-animation-delay: 1200ms;
   --address-animation-duration: 1000ms;
-
   --header-animation-duration: 450ms;
   --second-header-animation-delay: 1000ms;
 }
