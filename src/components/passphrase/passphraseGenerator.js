@@ -9,21 +9,6 @@ import * as shapesSrc from '../../assets/images/register-shapes/*.svg'; //eslint
 import MovableShape from './movableShape';
 import { PrimaryButton } from '../toolbox/buttons/button';
 
-const hideSomeShapeRandomly = (list) => {
-  let resualt = []; // eslint-disable-line
-  const min = 0;
-  const max = 9;
-  let randomNumber;
-  while (resualt.length < 4) {
-    randomNumber = Math.floor((Math.random() * (max - min)) + min);
-    if (resualt.indexOf(randomNumber) === -1) {
-      resualt.push(randomNumber);
-    }
-  }
-  resualt.forEach((item) => { list[item] = 0; });
-  return list;
-};
-
 class PassphraseGenerator extends React.Component {
   constructor() {
     super();
@@ -58,6 +43,22 @@ class PassphraseGenerator extends React.Component {
         });
       }
     }, 10);
+  }
+
+
+  hideShapeRandomly(list) {// eslint-disable-line
+    let result = []; // eslint-disable-line
+    const min = 0;
+    const max = 9;
+    let randomNumber;
+    while (result.length < 4) {
+      randomNumber = Math.floor((Math.random() * (max - min)) + min);
+      if (result.indexOf(randomNumber) === -1) {
+        result.push(randomNumber);
+      }
+    }
+    result.forEach((item) => { list[item] = 0; });
+    return list;
   }
 
   componentDidUpdate() {
@@ -117,7 +118,7 @@ class PassphraseGenerator extends React.Component {
         address,
       });
 
-      const shapes = hideSomeShapeRandomly(this.state.shapes);
+      const shapes = this.hideShapeRandomly(this.state.shapes);
       // update state
       this.setState({
         shapes,
