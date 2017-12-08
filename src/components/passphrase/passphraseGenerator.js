@@ -1,11 +1,12 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import { Input } from 'react-toolbox/lib/input';
 import { generateSeed, generatePassphrase } from '../../utils/passphrase';
 import { extractAddress } from '../../utils/api/account';
 import styles from './passphrase.css';
 import ProgressBar from '../toolbox/progressBar/progressBar';
 import * as shapesSrc from '../../assets/images/register-shapes/*.svg'; //eslint-disable-line
-import MovableShape from './animateShape';
+import MovableShape from './movableShape';
 import { PrimaryButton } from '../toolbox/buttons/button';
 
 const hideSomeShapeRandomly = (list) => {
@@ -38,12 +39,14 @@ class PassphraseGenerator extends React.Component {
       secondHeadingClass: '',
       headingClass: '',
     };
+    this.seedGeneratorBoundToThis = this.seedGenerator.bind(this);
   }
 
   componentDidMount() {
     this.container = document.getElementById('generatorContainer');
-    this.seedGeneratorBoundToThis = this.seedGenerator.bind(this);
-    this.container.addEventListener('mousemove', this.seedGeneratorBoundToThis, true);
+    if (!this.isTouchDevice(this.props.agent)) {
+      document.addEventListener('mousemove', this.seedGeneratorBoundToThis, true);
+    }
   }
 
   moveTitle() {
@@ -62,7 +65,9 @@ class PassphraseGenerator extends React.Component {
   }
 
   componentWillUnmount() {
-    this.container.removeEventListener('mousemove', this.seedGeneratorBoundToThis, true);
+    if (!this.isTouchDevice(this.props.agent)) {
+      document.removeEventListener('mousemove', this.seedGeneratorBoundToThis, true);
+    }
   }
 
   /**
@@ -101,7 +106,6 @@ class PassphraseGenerator extends React.Component {
       // note: in the first iteration data is undefined
       const data = generateSeed(this.state.data);
       this.setState({ data });
-      // this.circle.startMovement(this.state.data.percentage);
     } else if (this.state.data && this.state.data.percentage >= 100 && !this.state.passphrase) {
       // also change the step here
       const phrase = generatePassphrase(this.state.data);
@@ -122,6 +126,7 @@ class PassphraseGenerator extends React.Component {
   }
 
   render() {
+    const isTouch = this.isTouchDevice(this.props.agent);
     const { t, nextStep } = this.props;
     const { shapes } = this.state;
     const percentage = this.state.data ? this.state.data.percentage : 0;
@@ -192,12 +197,19 @@ class PassphraseGenerator extends React.Component {
             reverse={false}
             end={{ x: 530, y: 150 }}/>
           <header>
-            <h2 className={`${styles.generatorHeader} ${this.state.headingClass} ${this.state.firstHeadingClass}`}
-              id="generatorHeader" >
-              {this.props.t('Create your Lisk ID')}
-              <br/>
-              {this.props.t('by moving your mouse.')}
-            </h2>
+            {isTouch ?
+              <div>
+                <p>{t('Enter text below to generate random bytes')}</p>
+                <Input onChange={this.seedGeneratorBoundToThis}
+                  className='touch-fallback' autoFocus={true} multiline={true} />
+              </div> :
+              <h2 className={`${styles.generatorHeader} ${this.state.headingClass} ${this.state.firstHeadingClass}`}
+                id="generatorHeader" >
+                {this.props.t('Create your Lisk ID')}
+                <br/>
+                {this.props.t('by moving your mouse.')}
+              </h2>
+            }
             <h2 className={`${styles.secondHeading} ${this.state.headingClass} ${this.state.secondHeadingClass}`}>
               {t('Create your Lisk ID')}
               <small>{t('This is your Lisk-ID consisting of an address and avatar.')}</small>
@@ -209,6 +221,7 @@ class PassphraseGenerator extends React.Component {
               <PrimaryButton
                 theme={styles}
                 label='Get passphrase'
+                className="next-button"
                 onClick={() => nextStep({ passphrase: this.state.passphrase })}
               />
             </div>
