@@ -11,19 +11,20 @@
   position: hidden;
 }
 
-.icon {
-  font-size: var(--icon-font-size);
-  margin-top: -3px;
-}
 
-.eyeIcon {
+.inputTypeToggle {
   position: absolute;
   right: 0;
-  bottom: 50%;
-  transform: translateY(50%);
-  line-height: 24px;
-  height: 24px;
   cursor: pointer;
+  font-weight: 600;
+  color: #2475b9;
+  top: -70px;
+
+  & .eyeIcon {
+    transform: translateY(50%);
+    line-height: 24px;
+    height: 24px;
+  }
 }
 
 .inputWrapper input {

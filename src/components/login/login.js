@@ -118,6 +118,7 @@ class Login extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   validatePassphrase(value, error) {
     const data = { passphrase: value };
+    this.setState({ passphraseValidity: error });
     data.passphraseValidity = error || '';
     return data;
   }
@@ -226,11 +227,9 @@ class Login extends React.Component {
                   : ''
                 }
                 <PassphraseInput label={this.props.t('Enter your passphrase')}
-                  className='passphrase'
                   onFocus={this.passFocused.bind(this)}
                   theme={styles}
                   error={this.state.passphraseValidity}
-                  value={this.state.passphrase}
                   onChange={this.changeHandler.bind(this, 'passphrase')} />
                 <footer className={ `${grid.row} ${grid['center-xs']}` }>
                   <div className={grid['col-xs-12']}>
