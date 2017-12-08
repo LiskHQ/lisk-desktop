@@ -1,0 +1,146 @@
+@import '../../app/variables';
+
+:root {
+  --gradient-button: var(--gradient-action);
+}
+
+.sliderInput {
+  user-select: none;
+
+  & span,
+  & label,
+  & div {
+    user-select: none;
+  }
+
+  & div {
+    padding-left: 44px;
+    transition: all ease 300ms;
+    /* big slider */
+    text-align: left;
+    display: table;
+    position: relative;
+
+    &:before {
+      content: '';
+      display: none;
+      position: absolute;
+      z-index: 1;
+      background: linear-gradient(to right, rgba(19, 67, 129, 0), #001e45);
+      height: 62px;
+      width: calc(100% - 62px);
+    }
+
+    &:after {
+      content: 'chevron_right chevron_right chevron_right chevron_right chevron_right chevron_right chevron_right';
+      display: none;
+      vertical-align: middle;
+      overflow: hidden;
+      letter-spacing: 8px;
+      text-indent: 20px;
+      font-size: 32px;
+      white-space: nowrap !important;
+      font-family: 'Material Icons';
+      position: relative;
+      z-index: 0;
+    }
+
+    &.hasArrows {
+      &:before {
+        display: block;
+      }
+      &:after {
+        display: table-cell;
+      }
+    }
+  }
+
+  & label {
+    height: 62px;
+    line-height: 62px;
+    padding: 0 0 0 31px;
+    width: 189px;
+    margin: 40px auto;
+    border-radius: 31px;
+    background: linear-gradient(to right, #134381, #001e45);
+    color: var(--color-white);
+    display: block;
+    position: relative;
+    cursor: grab;
+  }
+
+  & span.circle {
+    position: absolute;
+    width: 62px;
+    height: 62px;
+    display: block;
+    text-align: center;
+    border-radius: 31px;
+    top: 0;
+    transition: all ease 300ms;
+
+    &.button {
+      left: 0;
+      z-index: 3;
+      background: var(--gradient-button);
+
+      &[style] {
+        cursor: grabbing;
+        transition: all ease 50ms;
+
+        & + div {
+          opacity: 0.5;
+        }
+      }
+    }
+
+    &.lock {
+      background: gray;
+      right: 0;
+      z-index: 2;
+    }
+
+    & i {
+      width: 100%;
+      line-height: 62px !important;
+      position: absolute;
+      left: 0;
+      top: 0;
+      transition: all ease 300ms;
+
+      &.checkMark {
+        opacity: 0;
+        font-size: 40px;
+      }
+
+      &.arrowRight {
+        opacity: 1;
+        font-size: 48px;
+      }
+    }
+  }
+
+  & input[type='radio'],
+  & input[type='checkbox'] {
+    position: absolute;
+    visibility: hidden;
+
+    &:checked + label {
+      & .button {
+        left: calc(100% - 62px);
+
+        & i.checkMark {
+          opacity: 1;
+        }
+
+        & i.arrowRight {
+          opacity: 0;
+        }
+      }
+
+      & > div {
+        opacity: 0;
+      }
+    }
+  }
+}
