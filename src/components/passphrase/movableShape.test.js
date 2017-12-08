@@ -38,6 +38,5 @@ describe('MovableShape', () => {
   it("When props.hidden is equal to '1' opacity of img should be equal '1'", () => {
     expect(wrapper.find('img').props().style.opacity).to.be.equal(1);
   });
-
 });
 
