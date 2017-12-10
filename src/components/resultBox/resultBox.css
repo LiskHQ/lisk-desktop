@@ -1,0 +1,36 @@
+@import '../app/variables.css';
+
+:root {
+  --copy-color: var(--color-primary-dark);
+  --paragraph-color: var(--color-grayscale-dark);
+  --paragraph-line-height: 36px;
+}
+
+.icon {
+  /* values are not saved as variable since this will be deleted/modified anyway */
+  position: absolute;
+  bottom: -20px;
+  left: 165px;
+  font-size: 3em;
+  color: #ff6236;
+}
+
+.resultBox {
+  text-align: center;
+
+  & .header {
+    height: 270px;
+    position: relative;
+  }
+
+  & p {
+    font-size: 1.125em;
+    color: var(--paragraph-color);
+    line-height: var(--paragraph-line-height);
+  }
+
+  & .copy {
+    color: var(--copy-color);
+    cursor: pointer;
+  }
+}

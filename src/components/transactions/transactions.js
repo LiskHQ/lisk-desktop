@@ -39,53 +39,53 @@ class Transactions extends React.Component {
 
   render() {
     return (
-      <div className={`${styles.noPadding} box`}>
-        <header className={styles.header}>
-          <div className={styles.title}>
-            <h2>{this.props.t('Transactions')}</h2>
-          </div>
-          <div className={styles.account}>
-            <h2>
-              <span>
-                <LiskAmount val={this.props.balance} />&nbsp;
-              </span>
-              <small className={styles.balanceUnit}>LSK</small>
-            </h2>
-            <div onClick={this.copyAddress.bind(this)} className={styles.address}>
-              <img src={copy} />&nbsp;
-              <span>{this.props.address}</span>
+      <div>
+        <div className={`transactions box ${styles.transactions} `}>
+          <header>
+            <h2 className={styles.title}>{this.props.t('Transactions')}</h2>
+            <div className={styles.account}>
+              <h2>
+                <span>
+                  <LiskAmount val={this.props.balance} />&nbsp;
+                </span>
+                <small className={styles.balanceUnit}>LSK</small>
+              </h2>
+              <div onClick={this.copyAddress.bind(this)} className={`${styles.subTitle} ${styles.address}`}>
+                <img src={copy} />&nbsp;
+                <span>{this.props.address}</span>
+              </div>
             </div>
-          </div>
-        </header>
+          </header>
 
-        <ul className={styles.list}>
-          <li className={`${styles.item} ${styles.active}`}>All</li>
-          <li className={styles.item}>Incoming</li>
-          <li className={styles.item}>Outgoing</li>
-          <li className={styles.item}>Other</li>
-        </ul>
+          <ul className={styles.list}>
+            <li className={`${styles.item} ${styles.active}`}>All</li>
+            <li className={styles.item}>Incoming</li>
+            <li className={styles.item}>Outgoing</li>
+            <li className={styles.item}>Other</li>
+          </ul>
 
-        {this.props.transactions.length > 0 ?
-          <div>
-            <TransactionsHeader tableStyle={tableStyle}></TransactionsHeader>
-            {this.props.transactions.map(transaction => (
-              <TransactionRow address={this.props.address}
-                key={transaction.id}
-                t={this.props.t}
-                value={transaction}
-                copy={this.props.copyToClipboard}>
-              </TransactionRow>
-            ))}
-          </div> :
-          <p className={`${styles.empty} hasPaddingRow empty-message`}>
-            {this.props.t('There are no transactions, yet.')} &nbsp;
-            <RelativeLink className={`${styles.button} ${buttonStyle.button} ${buttonStyle.primary} ${buttonStyle.raised} receive-lsk-button ${offlineStyle.disableWhenOffline}`}
-              to='receive'>{this.props.t('Receive LSK')}</RelativeLink>
-          </p>
-        }
-        <Waypoint bottomOffset='-80%'
-          key={this.props.transactions.length}
-          onEnter={this.loadMore.bind(this)}></Waypoint>
+          {this.props.transactions.length > 0 ?
+            <div>
+              <TransactionsHeader tableStyle={tableStyle}></TransactionsHeader>
+              {this.props.transactions.map(transaction => (
+                <TransactionRow address={this.props.address}
+                  key={transaction.id}
+                  t={this.props.t}
+                  value={transaction}
+                  copy={this.props.copyToClipboard}>
+                </TransactionRow>
+              ))}
+            </div> :
+            <p className={`${styles.empty} hasPaddingRow empty-message`}>
+              {this.props.t('There are no transactions, yet.')} &nbsp;
+              <RelativeLink className={`${styles.button} ${buttonStyle.button} ${buttonStyle.primary} ${buttonStyle.raised} receive-lsk-button ${offlineStyle.disableWhenOffline}`}
+                to='receive'>{this.props.t('Receive LSK')}</RelativeLink>
+            </p>
+          }
+          <Waypoint bottomOffset='-80%'
+            key={this.props.transactions.length}
+            onEnter={this.loadMore.bind(this)}></Waypoint>
+        </div>
       </div>
     );
   }

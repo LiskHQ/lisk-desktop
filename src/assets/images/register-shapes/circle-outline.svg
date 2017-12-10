@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>circle-outline</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="100%" y1="53.8352251%" x2="0%" y2="53.8352273%" id="linearGradient-1">
+            <stop stop-color="#CBDDFF" offset="0%"></stop>
+            <stop stop-color="#55CDFF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="01_Get-Access-✅" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Get-Access-Dashboard-2-Lisk-XL" transform="translate(-694.000000, -776.000000)" fill="url(#linearGradient-1)">
+            <g id="Group" transform="translate(315.000000, 146.000000)">
+                <path d="M429,730 C401.385763,730 379,707.614237 379,680 C379,652.385763 401.385763,630 429,630 C456.614237,630 479,652.385763 479,680 C479,707.614237 456.614237,730 429,730 Z M429,718 C449.98682,718 467,700.98682 467,680 C467,659.01318 449.98682,642 429,642 C408.01318,642 391,659.01318 391,680 C391,700.98682 408.01318,718 429,718 Z" id="circle-outline"></path>
+            </g>
+        </g>
+    </g>
+</svg>

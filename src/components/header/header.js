@@ -15,10 +15,6 @@ const Header = props => (
     <PrivateWrapper>
       <div className={grid.row}>
         <Button className={`${styles.button} logout-button`} raised onClick={props.logOut}>{props.t('LOGOUT')}</Button>
-        <RelativeLink raised className={`${styles.button} ${styles.secondaryBlue} receive-button`}
-          to='receive'>{props.t('Receive LSK')}</RelativeLink>
-        <RelativeLink raised disableWhenOffline className={`${styles.button} ${styles.primary} send-button`}
-          to='send'>{props.t('send')}</RelativeLink>
         <div className={styles.accountWrapper}>
           <div className={styles.accountInformation} align="right">
             <div className={styles.accountInformationBalance}>

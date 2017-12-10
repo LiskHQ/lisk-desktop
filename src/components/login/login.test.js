@@ -94,9 +94,27 @@ describe('Login', () => {
       expect(props.history.replace).to.have.been.calledWith('/main/transactions');
     });
 
+    it('hides network options by default', () => {
+      wrapper = shallow(<Login {...props}/>, options);
+      props.history.replace.reset();
+      wrapper.setProps({ history });
+      expect(wrapper.find('.network')).to.have.length(0);
+    });
+
+    it('shows network options when url param showNetwork is true', () => {
+      wrapper = shallow(<Login {...props}/>, options);
+      props.history.replace.reset();
+      history.location.search = '?showNetwork=true';
+      wrapper.setProps({ history });
+      expect(wrapper.find('.network')).to.have.length(1);
+    });
+
     it('calls localStorage.setItem(\'address\', address) if this.state.address', () => {
       const spyFn = spy(localStorage, 'setItem');
       wrapper = mount(<Router><Login {...props}/></Router>, options);
+      // enable the network dropdown
+      history.location.search = '?showNetwork=true';
+      wrapper.setProps({ history });
       // set the network dropdown
       wrapper.find('div.network').simulate('click');
       // select custom node

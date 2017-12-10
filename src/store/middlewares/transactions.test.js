@@ -57,14 +57,13 @@ describe('transaction middleware', () => {
     };
 
     const expectedMessages = [
-      'Your transaction of 1 LSK to 16313739661670634666L was accepted and will be processed in a few seconds.',
       'Second passphrase registration was successfully submitted. It can take several seconds before it is processed.',
       'Delegate registration was successfully submitted with username: "test". It can take several seconds before it is processed.',
       'Your votes were successfully submitted. It can take several seconds before they are processed.',
     ];
 
-    for (let i = 0; i < 4; i++) {
-      givenAction.data.type = i;
+    for (let i = 0; i < 3; i++) {
+      givenAction.data.type = i + 1;
       middleware(store)(next)(givenAction);
       const expectedAction = successAlertDialogDisplayed({ text: i18next.t(expectedMessages[i]) });
       expect(store.dispatch).to.have.been.calledWith(expectedAction);

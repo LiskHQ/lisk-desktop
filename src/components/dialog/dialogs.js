@@ -4,7 +4,7 @@ import RegisterDelegate from '../registerDelegate';
 import SavedAccounts from '../savedAccounts';
 import savedAccountsTheme from '../savedAccounts/modalTheme.css';
 import SecondPassphrase from '../secondPassphrase';
-import Send from '../send';
+import Send from '../sendWritable';
 import Settings from '../settings';
 import SignMessage from '../signMessage';
 import VerifyMessage from '../verifyMessage';

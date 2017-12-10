@@ -1,0 +1,125 @@
+@import '../app/variables.css';
+
+:root {
+  --tab-inactive-color: --color-grayscale-dark;
+}
+
+.fee {
+  text-align: right;
+  margin-top: -12px;
+  margin-bottom: 24px;
+  font-size: 12px;
+  line-height: 14px;
+  color: grey;
+}
+
+input:read-only {
+  border-bottom: solid 1px var(--color-white) !important;
+}
+
+.button {
+  min-width: 0;
+  width: 100%;
+}
+
+.temporarySmallAvatar {
+  /* values are not saved as variable since this will be deleted anyway */
+  height: 50px;
+  width: 50px;
+  background: linear-gradient(90deg, #3023ae 0%, #53a0fd 48%, #b4ec51 100%);
+  position: absolute;
+  border-radius: 100%;
+}
+
+/* this part will be refactored in the next issue */
+.modal {
+  text-align: center;
+
+  & .header {
+    height: 270px;
+    position: relative;
+  }
+
+  & p {
+    font-size: 1.125em;
+    color: var(--color-grayscale-dark);
+    line-height: 36px;
+  }
+
+  & .copy {
+    color: var(--color-primary-dark);
+    cursor: pointer;
+  }
+}
+
+.temporarySuccessCheck {
+  /* values are not saved as variable since this will be deleted anyway */
+  position: absolute;
+  bottom: -20px;
+  left: 155px;
+  font-size: 3em;
+  color: #ff6236;
+}
+
+.paddingLeft {
+  padding: 0px var(--grid-padding-left);
+}
+
+.headerWrapper {
+  padding: 20px 0px;
+  line-height: var(--header-line-height);
+
+  & .title {
+    float: left;
+  }
+
+  & .subTitle {
+    font-size: var(--header-subtitle-font-size);
+  }
+
+  & .account {
+    float: right;
+  }
+
+  & h2 {
+    font-weight: var(--font-weight-bold);
+    margin-bottom: 0;
+    font-size: 2em;
+  }
+
+  & h3 {
+    display: inline-block;
+    margin: 0;
+  }
+
+  & .balanceUnit {
+    font-weight: var(--font-weight-bold);
+  }
+
+  & .address {
+    text-align: right;
+    cursor: pointer;
+  }
+
+  & .transfer {
+    color: var(--color-grayscale-dark);
+  }
+}
+
+.wrapper {
+  width: 100%;
+}
+
+.header {
+  height: 300px;
+}
+
+.temporaryAvatar {
+  /* values are not saved as variable since this will be deleted anyway */
+  opacity: 0.8;
+  background-image: linear-gradient(90deg, #3023ae 0%, #53a0fd 48%, #b4ec51 100%);
+  height: 150px;
+  width: 150px;
+  border-radius: 100%;
+  margin: 13px 0px;
+}

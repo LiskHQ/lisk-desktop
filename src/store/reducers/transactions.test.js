@@ -34,6 +34,22 @@ describe('Reducer: transactions(state, action)', () => {
     expect(changedState).to.deep.equal({ ...state, pending: [action.data, ...state.pending] });
   });
 
+  it('should add property `failed` with error message if action.type = actionTypes.transactionFailed', () => {
+    const state = {
+      ...defaultState,
+    };
+
+    const errorMessage = 'transaction failed';
+
+    const action = {
+      data: { errorMessage },
+      type: actionTypes.transactionFailed,
+    };
+    const changedState = transactions(state, action);
+    expect(changedState).to.deep.equal({ ...state, failed: { errorMessage } });
+  });
+
+
   it('should concat action.data to state.confirmed if action.type = actionTypes.transactionsLoaded', () => {
     const state = { ...defaultState };
     const action = {

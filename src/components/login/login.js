@@ -11,12 +11,12 @@ import styles from './login.css';
 import env from '../../constants/env';
 import networks from '../../constants/networks';
 import getNetwork from '../../utils/getNetwork';
+import { parseSearchParams } from './../../utils/searchParams';
 import LanguageDropdown from '../languageDropdown';
 import RelativeLink from '../relativeLink';
 // eslint-disable-next-line import/no-unresolved
 import * as shapes from '../../assets/images/*.svg';
 import { validateUrl, getLoginData } from '../../utils/login';
-import { parseSearchParams } from '../../utils/searchParams';
 
 /**
  * The container component containing login
@@ -159,6 +159,12 @@ class Login extends React.Component {
     });
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  showNetworkOptions() {
+    const params = parseSearchParams(this.props.history.location.search);
+    return params.showNetwork === 'true';
+  }
+
   render() {
     return (
       <div className={`box ${styles.wrapper}`}>
@@ -174,24 +180,29 @@ class Login extends React.Component {
               <h2>{this.props.t('Sign In')}</h2>
               <form onSubmit={this.onFormSubmit.bind(this)}>
                 <LanguageDropdown className={styles.outTaken} />
-                <Dropdown
-                  auto={false}
-                  source={this.networks}
-                  onChange={this.changeHandler.bind(this, 'network')}
-                  label={this.props.t('Select a network')}
-                  value={this.state.network}
-                  className={`${styles.network} network ${styles.outTaken}`}
-                />
-                {
-                  this.state.network === networks.customNode.code &&
-                    <Input type='text'
-                      label={this.props.t('Node address')}
-                      name='address'
-                      className={`address ${styles.outTaken}`}
-                      theme={styles}
-                      value={this.state.address}
-                      error={this.state.addressValidity}
-                      onChange={this.changeHandler.bind(this, 'address')} />
+                {this.showNetworkOptions()
+                  ? <div className={styles.outTaken}>
+                    <Dropdown
+                      auto={false}
+                      source={this.networks}
+                      onChange={this.changeHandler.bind(this, 'network')}
+                      label={this.props.t('Select a network')}
+                      value={this.state.network}
+                      className='network'
+                    />
+                    {
+                      this.state.network === networks.customNode.code &&
+                      <Input type='text'
+                        label={this.props.t('Node address')}
+                        name='address'
+                        className={`address ${styles.outTaken}`}
+                        theme={styles}
+                        value={this.state.address}
+                        error={this.state.addressValidity}
+                        onChange={this.changeHandler.bind(this, 'address')}/>
+                    }
+                  </div>
+                  : ''
                 }
                 <PassphraseInput label={this.props.t('Enter your passphrase')}
                   className='passphrase'
