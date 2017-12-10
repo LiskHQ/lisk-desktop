@@ -39,6 +39,15 @@ class SliderCheckbox extends React.Component {
     this.shape.removeAttribute('style');
     this.direction = this.input.checked ? -1 : 1;
     this.maxMovement = this.parent.offsetWidth - (this.shape.offsetWidth * this.direction);
+
+    if (typeof this.props.onChange === 'function' &&
+      this.props.input instanceof Object &&
+      !(this.props.input instanceof Array)) {
+      this.props.onChange({
+        checked: this.input.checked,
+        value: this.props.input.value,
+      });
+    }
   }
 
   revert() {

@@ -30,3 +30,104 @@ hr {
 .templateItem {
   min-height: 130px;
 }
+
+.safekeeping {
+  text-align: center;
+
+  & header {
+    font-size: 0.959em;
+
+    & h2,
+    & h5 {
+      max-width: 750px;
+      margin: 0 auto;
+      display: none;
+    }
+  }
+
+  & > section {
+    & > section {
+      display: none;
+    }
+
+    & h5 {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    & .introduction {
+      background: #f6f8fb;
+    }
+
+    & .revealing {
+      & .input {
+        & input,
+        & textarea {
+          text-shadow: 0px 0px 15px rgba(0, 0, 0, 1);
+          color: rgba(0, 0, 0, 0.0);
+          font-size: 32px;
+          line-height: 80px;
+          height: 80px;
+          border: none;
+          word-spacing: 10px;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  /* Steps */
+  &.introduction {
+    & > section,
+    & > header {
+      & .introduction {
+        display: block;
+      }
+    }
+  }
+
+  &.revealing,
+  &.revealed {
+    & > section,
+    & > header {
+      & .revealing {
+        display: block;
+      }
+    }
+  }
+
+  &.revealed {
+    & .bigSlider {
+      display: none !important;
+    }
+
+    & .input {
+      & input,
+      & textarea {
+        color: #000 !important;
+        text-shadow: none !important;
+      }
+    }
+  }
+}
+.bigSlider label {
+  width: 575px !important;
+
+  & i:last-child {
+    font-size: 24px !important;
+  }
+
+  & div {
+    text-align: left;
+
+    & span {
+      padding-left: 44px;
+    }
+  }
+}
+
+.verifier {
+  & .missing {
+    border-bottom: solid 2px black;
+  }
+}
