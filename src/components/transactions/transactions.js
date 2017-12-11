@@ -3,12 +3,12 @@ import Waypoint from 'react-waypoint';
 import tableStyle from 'react-toolbox/lib/table/theme.css';
 import buttonStyle from 'react-toolbox/lib/button/theme.css';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
+import CopyToClipboard from '../copyToClipboard';
 import RelativeLink from '../relativeLink';
 import TransactionRow from './transactionRow';
 import TransactionsHeader from './transactionsHeader';
 import LiskAmount from '../liskAmount';
 import styles from './transactions.css';
-import copy from './../../assets/images/icons/copy.svg';
 
 class Transactions extends React.Component {
   constructor() {
@@ -26,10 +26,6 @@ class Transactions extends React.Component {
         offset: this.props.transactions.length,
       });
     }
-  }
-
-  copyAddress() {
-    this.props.copyToClipboard(this.props.address);
   }
 
   componentDidUpdate() {
@@ -50,10 +46,8 @@ class Transactions extends React.Component {
                 </span>
                 <small className={styles.balanceUnit}>LSK</small>
               </h2>
-              <div onClick={this.copyAddress.bind(this)} className={`${styles.subTitle} ${styles.address}`}>
-                <img src={copy} />&nbsp;
-                <span>{this.props.address}</span>
-              </div>
+              <CopyToClipboard value={this.props.address}
+                className={`${styles.subTitle} ${styles.address}`} />
             </div>
           </header>
 
@@ -71,9 +65,7 @@ class Transactions extends React.Component {
                 <TransactionRow address={this.props.address}
                   key={transaction.id}
                   t={this.props.t}
-                  value={transaction}
-                  copy={this.props.copyToClipboard}>
-                </TransactionRow>
+                  value={transaction} />
               ))}
             </div> :
             <p className={`${styles.empty} hasPaddingRow empty-message`}>
