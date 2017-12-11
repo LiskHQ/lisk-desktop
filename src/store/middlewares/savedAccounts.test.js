@@ -11,6 +11,7 @@ import networks from '../../constants/networks';
 describe('SavedAccounts middleware', () => {
   let store;
   let next;
+  let state;
   const address = 'https://testnet.lisk.io';
   const publicKey = 'fab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88';
   const balance = 10e8;
@@ -18,7 +19,7 @@ describe('SavedAccounts middleware', () => {
   beforeEach(() => {
     store = mock();
     store.dispatch = spy();
-    store.getState = () => ({
+    state = {
       peers: {
         options: {
           code: networks.mainnet.code,
@@ -32,7 +33,12 @@ describe('SavedAccounts middleware', () => {
           },
         ],
       },
-    });
+      account: {
+        balance,
+        publicKey,
+      },
+    };
+    store.getState = () => state;
 
     next = spy();
   });
@@ -108,6 +114,34 @@ describe('SavedAccounts middleware', () => {
         publicKey,
         balance,
       },
+    };
+    middleware(store)(next)(action);
+    expect(store.dispatch).to.not.have.been.calledWith();
+  });
+
+  it(`should dispatch accountSaved action on ${actionTypes.activeAccountSaved} action if given account is not saved yet`, () => {
+    const publicKey2 = 'hab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88';
+    state.account = {
+      publicKey: publicKey2,
+      balance,
+    };
+    store.getState = () => state;
+    const action = {
+      type: actionTypes.activeAccountSaved,
+    };
+    middleware(store)(next)(action);
+    expect(store.dispatch).to.have.been.calledWith(accountSaved({
+      address: undefined,
+      balance,
+      network: networks.mainnet.code,
+      publicKey: publicKey2,
+    }));
+  });
+
+  it(`should not dispatch accountSaved action on ${actionTypes.activeAccountSaved} action if given account is already saved`, () => {
+    store.getState = () => state;
+    const action = {
+      type: actionTypes.activeAccountSaved,
     };
     middleware(store)(next)(action);
     expect(store.dispatch).to.not.have.been.calledWith();

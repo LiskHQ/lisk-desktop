@@ -6,6 +6,7 @@ import i18next from 'i18next';
 import Parallax from '../parallax';
 import Input from '../toolbox/inputs/input';
 import { PrimaryButton } from '../toolbox/buttons/button';
+import { extractAddress } from '../../utils/api/account';
 import PassphraseInput from '../passphraseInput';
 import styles from './login.css';
 import env from '../../constants/env';
@@ -54,34 +55,53 @@ class Login extends React.Component {
     }));
   }
 
-  componentDidUpdate() {
-    const search = parseSearchParams(this.props.history.location.search);
+  componentDidUpdate(prevProps) {
     if (this.props.account &&
-        this.props.account.address &&
-        (!search.activeAddress || search.activeAddress !== this.props.account.address)) {
-      const tem = this.getReferrerRoute();
-      this.props.history.replace(tem);
-      if (this.state.address) {
-        localStorage.setItem('address', this.state.address);
-      }
-      localStorage.setItem('network', this.state.network);
+      this.props.account.address &&
+      !this.alreadyLoggedWithThisAddress(prevProps.account.address, prevProps.peers.options)) {
+      this.redirectToReferrer();
     }
     if (!this.account) {
       this.autoLogin();
     }
   }
 
-  onLoginSubmission(passphrase) {
+  redirectToReferrer() {
+    const tem = this.getReferrerRoute();
+    this.props.history.replace(tem);
+    if (this.state.address) {
+      localStorage.setItem('address', this.state.address);
+    }
+    localStorage.setItem('network', this.state.network);
+  }
+
+  alreadyLoggedWithThisAddress(address, network) {
+    return this.props.account &&
+      this.props.peers.options &&
+      this.props.account.address === address &&
+      this.props.peers.options.code === network.code &&
+      this.props.peers.options.address === network.address;
+  }
+
+  getNetwork() {
     const network = Object.assign({}, getNetwork(this.state.network));
     if (this.state.network === networks.customNode.code) {
       network.address = this.state.address;
     }
+    return network;
+  }
 
-    // set active peer
-    this.props.activePeerSet({
-      passphrase,
-      network,
-    });
+  onLoginSubmission(passphrase) {
+    const network = this.getNetwork();
+    if (this.alreadyLoggedWithThisAddress(extractAddress(passphrase), network)) {
+      this.redirectToReferrer();
+      this.props.activeAccountSaved();
+    } else {
+      this.props.activePeerSet({
+        passphrase,
+        network,
+      });
+    }
   }
 
   getReferrerRoute() {

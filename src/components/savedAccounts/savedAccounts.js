@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import FontIcon from 'react-toolbox/lib/font_icon';
 import React from 'react';
 import { extractAddress } from '../../utils/api/account';
-import { SecondaryLightButton } from '../toolbox/buttons/button';
+import { PrimaryButton, SecondaryLightButton } from '../toolbox/buttons/button';
 import LiskAmount from '../liskAmount';
 import BackgroundMaker from '../backgroundMaker';
 
@@ -17,79 +17,126 @@ import triangleImage from '../../assets/images/add-id-triangle.svg';
 import styles from './savedAccounts.css';
 
 
-const SavedAccounts = ({
-  networkOptions,
-  activeAccount,
-  closeDialog,
-  accountRemoved,
-  accountSwitched,
-  savedAccounts,
-  history,
-  t,
-}) => {
-  const isActive = account => (
-    account.publicKey === activeAccount.publicKey &&
+class SavedAccounts extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+    };
+  }
+
+  toggleEdit() {
+    this.setState({
+      editing: !this.state.editing,
+      accountSelectedForRemove: null,
+    });
+  }
+
+  selectForRemove(account) {
+    this.setState({ accountSelectedForRemove: account });
+  }
+
+  isSelectedForRemove(account) {
+    return account === this.state.accountSelectedForRemove;
+  }
+
+  handleRemove(account, e) {
+    if (this.isSelectedForRemove(account)) {
+      this.props.accountRemoved(account);
+    } else {
+      this.selectForRemove(account);
+    }
+    e.stopPropagation();
+  }
+
+  render() {
+    const {
+      networkOptions,
+      activeAccount,
+      closeDialog,
+      accountSwitched,
+      savedAccounts,
+      history,
+      t,
+    } = this.props;
+    const isActive = account => (
+      account.publicKey === activeAccount.publicKey &&
     account.network === networkOptions.code);
 
-  const switchAccount = (account) => {
-    accountSwitched(account);
-    history.push('/main/transactions/');
-  };
+    const switchAccount = (account) => {
+      if (!this.state.editing) {
+        accountSwitched(account);
+        history.push('/main/transactions/');
+      }
+    };
 
-  return (
-    <div className={`${styles.wrapper} save-account`}>
-      <BackgroundMaker />
-      <h1>{t('Your favorite Lisk IDs')}</h1>
-      <div className={styles.cardsWrapper} >
-        <Link to={`/main/add-account/?referrer=/main/transactions/saved-accounts&activeAddress=${activeAccount.address}`} >
-          <div className={`add-lisk-id-card ${styles.card} ${styles.addNew}`} >
-            <div className={styles.cardIcon}>
-              <img src={plusShapeIcon} className={styles.plusShapeIcon} />
+    return (
+      <div className={`${styles.wrapper} save-account`}>
+        <BackgroundMaker />
+        <h1>{t('Your favorite Lisk IDs')}</h1>
+        <div className={styles.cardsWrapper} >
+          <Link to='/main/add-account/?referrer=/main/transactions/saved-accounts' >
+            <div className={`add-lisk-id-card ${styles.card} ${styles.addNew}`} >
+              <div className={styles.cardIcon}>
+                <img src={plusShapeIcon} className={styles.plusShapeIcon} />
+              </div>
+              <img src={rectangleOnTheRight} className={styles.rectangleOnTheRight} />
+              <img src={rectangleImage2} className={styles.rectangleImage2} />
+              <img src={rectangleImage3} className={styles.rectangleImage3} />
+              <img src={triangleImage} className={styles.triangleImage} />
+              <img src={circleImage} className={styles.circleImage} />
+              <h2 className={styles.addTittle} >{t('Add a Lisk ID')}</h2>
             </div>
-            <img src={rectangleOnTheRight} className={styles.rectangleOnTheRight} />
-            <img src={rectangleImage2} className={styles.rectangleImage2} />
-            <img src={rectangleImage3} className={styles.rectangleImage3} />
-            <img src={triangleImage} className={styles.triangleImage} />
-            <img src={circleImage} className={styles.circleImage} />
-            <h2 className={styles.addTittle} >{t('Add a Lisk ID')}</h2>
-          </div>
-        </Link>
-        {savedAccounts.map(account => (
-          <div className={`switch-button saved-account-card ${styles.card}`}
+          </Link>
+          {savedAccounts.map(account => (
+            <div className={`saved-account-card ${styles.card}
+              ${this.state.editing ? null : styles.clickable}
+              ${this.isSelectedForRemove(account) ? styles.darkBackground : null}`}
             key={account.publicKey + account.network}
-            onClick={switchAccount.bind(null, account)} >
-            {(isActive(account) && activeAccount.passphrase ?
-              <strong className={styles.unlocked}>
-                <FontIcon value='lock_open' />
-                {t('Unlocked')}
-              </strong> :
-              null)}
-            <div className={styles.cardIcon}>
-              <div className={styles.accountVisualPlaceholder}></div>
-              <div className={styles.accountVisualPlaceholder2}></div>
+            onClick={ switchAccount.bind(null, account)} >
+              {(isActive(account) && activeAccount.passphrase ?
+                <strong className={styles.unlocked}>
+                  <FontIcon value='lock_open' />
+                  {t('Unlocked')}
+                </strong> :
+                null)}
+              <div className={styles.cardIcon}>
+                <div className={styles.accountVisualPlaceholder}></div>
+                <div className={styles.accountVisualPlaceholder2}></div>
+              </div>
+              <h2>
+                <LiskAmount val={account.balance} /> <small>LSK</small>
+              </h2>
+              <div className={styles.address} >{extractAddress(account.publicKey)}</div>
+              { this.isSelectedForRemove(account) ?
+                <div className={styles.removeConfirm}>
+                  <h2>{t('You can always get it back.')}</h2>
+                  <a onClick={this.selectForRemove.bind(this)}>{t('Keep it')}</a>
+                </div> :
+                null
+              }
+              { this.state.editing ?
+                <PrimaryButton className='remove-button'
+                  theme={ this.isSelectedForRemove(account) ?
+                    {} :
+                    { button: styles.removeButton }
+                  }
+                  onClick={this.handleRemove.bind(this, account)}
+                  label={t('Remove from Favorites')}/> :
+                null
+              }
             </div>
-            <h2>
-              <LiskAmount val={account.balance} /> <small>LSK</small>
-            </h2>
-            <div className={styles.address} >{extractAddress(account.publicKey)}</div>
-            <SecondaryLightButton className='remove-button'
-              theme={{ button: styles.removeButton }}
-              onClick={(e) => {
-                accountRemoved(account);
-                e.stopPropagation();
-              }}
-              label={t('Remove from Favorites')}/>
-          </div>
-        ))}
+          ))}
+        </div>
+        <SecondaryLightButton className='edit-button'
+          onClick={this.toggleEdit.bind(this)}
+          icon={this.state.editing ? 'check' : 'edit'}
+          theme={{ button: styles.addAcctiveAccountButton }}
+          label={this.state.editing ? t('Done') : t('Edit')}/>
+        <ToolBoxButton icon='close' floating onClick={closeDialog} className={`x-button ${styles.closeButton}`} />
       </div>
-      <SecondaryLightButton className='edit-button'
-        icon='edit'
-        theme={{ button: styles.addAcctiveAccountButton }}
-        disabled={true}
-        label={t('Edit')}/>
-      <ToolBoxButton icon='close' floating onClick={closeDialog} className={`x-button ${styles.closeButton}`} />
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default SavedAccounts;
