@@ -49,7 +49,8 @@ describe('AuthInputs', () => {
   it('should call props.onChange when input value changes', () => {
     props.account.secondSignature = true;
     wrapper = mount(<I18nextProvider i18n={ i18n }><AuthInputs {...props} /></I18nextProvider>);
-    wrapper.find('.second-passphrase input').simulate('change', { target: { value: passphrase } });
+    wrapper.find('.second-passphrase input').first().simulate('click');
+    wrapper.find('.second-passphrase input').first().simulate('change', { target: { value: passphrase } });
     expect(props.onChange).to.have.been.calledWith('secondPassphrase', passphrase);
   });
 
@@ -58,20 +59,24 @@ describe('AuthInputs', () => {
     props.account.secondSignature = true;
     props.account.secondPublicKey = 'fab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88';
     wrapper = mount(<I18nextProvider i18n={ i18n }><AuthInputs {...props} /></I18nextProvider>);
-    wrapper.find('.second-passphrase input').simulate('change', { target: { value: passphrase } });
+    wrapper.find('.second-passphrase input').first().simulate('click');
+    wrapper.find('.second-passphrase input').first().simulate('change', { target: { value: passphrase } });
     expect(props.onChange).to.have.been.calledWith('secondPassphrase', passphrase, error);
   });
 
   it('should call props.onChange(\'secondPassphrase\', \'Required\') when input value changes to \'\'', () => {
     props.account.secondSignature = true;
-    wrapper = mount(<I18nextProvider i18n={ i18n }><AuthInputs {...props} /></I18nextProvider>); wrapper.find('.second-passphrase input').simulate('change', { target: { value: '' } });
+    wrapper = mount(<I18nextProvider i18n={ i18n }><AuthInputs {...props} /></I18nextProvider>);
+    wrapper.find('.second-passphrase input').first().simulate('click');
+    wrapper.find('.second-passphrase input').first().simulate('change', { target: { value: '' } });
     expect(props.onChange).to.have.been.calledWith('secondPassphrase', '', 'Required');
   });
 
   it('should call props.onChange(\'secondPassphrase\', \'Invalid passphrase\') when input value changes to \'test\'', () => {
     props.account.secondSignature = true;
     wrapper = mount(<I18nextProvider i18n={ i18n }><AuthInputs {...props} /></I18nextProvider>);
-    wrapper.find('.second-passphrase input').simulate('change', { target: { value: 'test' } });
+    wrapper.find('.second-passphrase input').first().simulate('click');
+    wrapper.find('.second-passphrase input').first().simulate('change', { target: { value: 'test' } });
     expect(props.onChange).to.have.been.calledWith('secondPassphrase', 'test', 'Passphrase should have 12 words, entered passphrase has 1');
   });
 });

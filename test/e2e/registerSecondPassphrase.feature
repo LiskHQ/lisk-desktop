@@ -19,6 +19,7 @@ Feature: Register second passphrase
     When I click "logout button"
     And I refresh the page
     And I click "register second passphrase" in main menu
+    And I click "passphrase"
     And I fill in passphrase of "empty account" to "passphrase" field
     And I click "authenticate button"
     Then I should see "Insufficient funds for 5 LSK fee" error message

@@ -48,9 +48,9 @@ class PassphraseInput extends React.Component {
   render() {
     return (<Input
       autoFocus={this.props.index === 0}
-      placeHolder={this.props.index === 0 ? 'start here' : ''}
+      placeholder={this.props.index === 0 ? 'start here' : ''}
       onPaste={this.handlePaste.bind(this)}
-      className='passphrase'
+      className={this.props.className}
       value={this.props.partialValue || this.state.value}
       type={this.props.type}
       theme={this.props.theme}

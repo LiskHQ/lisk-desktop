@@ -227,6 +227,7 @@ class Login extends React.Component {
                   : ''
                 }
                 <PassphraseInput label={this.props.t('Enter your passphrase')}
+                  className='passphrase'
                   onFocus={this.passFocused.bind(this)}
                   theme={styles}
                   error={this.state.passphraseValidity}

@@ -81,6 +81,7 @@ Feature: Voting tab
     And I click checkbox on table row no. 5
     And I click checkbox on table row no. 8
     And I click "vote button"
+    And I click "second passphrase"
     And I fill in second passphrase of "second passphrase account" to "second passphrase" field
     And I click "submit button"
     Then I should see alert dialog with title "Success" and text "Your votes were successfully submitted. It can take several seconds before they are processed."

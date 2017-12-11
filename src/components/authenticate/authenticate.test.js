@@ -75,12 +75,14 @@ describe('Authenticate', () => {
 
   it('should activate primary button if correct passphrase entered', () => {
     expect(wrapper.find('button.authenticate-button').props().disabled).to.equal(true);
-    wrapper.find('.passphrase input').simulate('change', { target: { value: passphrase } });
+    wrapper.find('.passphrase input').first().simulate('click');
+    wrapper.find('.passphrase input').first().simulate('change', { target: { value: passphrase } });
     expect(wrapper.find('button.authenticate-button').props().disabled).to.equal(false);
   });
 
   it('should call accountUpdated if entered passphrase and clicked submit', () => {
-    wrapper.find('.passphrase input').simulate('change', { target: { value: passphrase } });
+    wrapper.find('.passphrase input').first().simulate('click');
+    wrapper.find('.passphrase input').first().simulate('change', { target: { value: passphrase } });
     wrapper.update();
     wrapper.find('Button.authenticate-button').simulate('click');
     wrapper.update();

@@ -2,6 +2,7 @@ Feature: Login page
   @pending
   Scenario: should allow to login
     Given I'm on login page
+    And I click "passphrase"
     When I fill in "wagon stock borrow episode laundry kitten salute link globe zero feed marble" to "passphrase" field
     And I click "login button"
     Then I should be logged in
@@ -9,6 +10,7 @@ Feature: Login page
   @integration
   Scenario: should show toast when trying to connect to an unavailable custom node
     Given I'm on login page
+    And I click "passphrase"
     When I fill in "wagon stock borrow episode laundry kitten salute link globe zero feed marble" to "passphrase" field
     And I select option no. 3 from "network" select
     And I clear "address" field
@@ -19,6 +21,7 @@ Feature: Login page
 
   Scenario: should allow to login to Mainnet 
     Given I'm on login page
+    And I click "passphrase"
     When I fill in "wagon stock borrow episode laundry kitten salute link globe zero feed marble" to "passphrase" field
     And I select option no. 1 from "network" select
     And I click "login button"
@@ -27,6 +30,7 @@ Feature: Login page
 
   Scenario: should allow to create a new account
     Given I'm on login page
+    And I click "passphrase"
     When I click "new account button"
     And I wait 1 seconds
     And I 250 times move mouse randomly

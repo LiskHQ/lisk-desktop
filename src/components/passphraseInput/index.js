@@ -94,6 +94,7 @@ class PassphraseInput extends React.Component {
             partialValue={this.state.value[i]}
             onChange={this.handleValueChange.bind(this)}
             index={i}
+            className={this.props.className}
           />
         </div>);
     }
