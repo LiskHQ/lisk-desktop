@@ -1,20 +1,11 @@
 import React from 'react';
 import { Button } from '../toolbox/buttons/button';
+import CopyToClipboard from '../copyToClipboard';
+
 import styles from './resultBox.css';
-import copy from '../../assets/images/icons/copy.svg';
 import check from '../../assets/images/icons/check.svg';
 
 class ResultBox extends React.Component {
-  showCopyElement() {
-    if (this.props.copy) {
-      return <div onClick={this.props.copyToClipboard.bind(this, this.props.copy.value)}
-        className={`${styles.copy}`}>
-        <img src={copy}/> <span className='copy-title'>{this.props.copy.title}</span>
-      </div>;
-    }
-    return null;
-  }
-
   render() {
     return (
       <div className={`${styles.resultBox} boxPadding`}>
@@ -31,7 +22,12 @@ class ResultBox extends React.Component {
           {this.props.body}
         </p>
 
-        {this.showCopyElement()}
+        {this.props.copy ?
+          <CopyToClipboard value={this.props.copy.value}
+            text={this.props.copy.title}
+            className={`${styles.copy}`} /> :
+          null
+        }
 
         <footer>
           <Button className='okay-button' onClick={() => { this.props.callback(); } }>{this.props.t('Okay')}</Button>
