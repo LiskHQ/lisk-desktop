@@ -7,7 +7,7 @@ import getNetwork from '../../utils/getNetwork';
 
 const savedAccountsMiddleware = store => next => (action) => {
   next(action);
-  const { peers, savedAccounts } = store.getState();
+  const { peers, savedAccounts, account } = store.getState();
   let accountToSave;
   switch (action.type) {
     case actionTypes.accountSwitched:
@@ -19,6 +19,17 @@ const savedAccountsMiddleware = store => next => (action) => {
           address: action.data.address,
         },
       }));
+      break;
+    case actionTypes.activeAccountSaved:
+      accountToSave = {
+        balance: account.balance,
+        publicKey: account.publicKey,
+        network: peers.options.code,
+        address: peers.options.address,
+      };
+      if (getIndexOfSavedAccount(savedAccounts.accounts, accountToSave) === -1) {
+        store.dispatch(accountSaved(accountToSave));
+      }
       break;
     case actionTypes.accountLoggedIn:
       accountToSave = {

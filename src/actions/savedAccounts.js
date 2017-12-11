@@ -56,3 +56,10 @@ export const accountsRetrieved = () => ({
   },
   type: actionTypes.accountsRetrieved,
 });
+
+/**
+ * An action to dispatch activeAccountSaved
+ */
+export const activeAccountSaved = () => ({
+  type: actionTypes.activeAccountSaved,
+});

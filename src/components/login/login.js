@@ -95,6 +95,7 @@ class Login extends React.Component {
     const network = this.getNetwork();
     if (this.alreadyLoggedWithThisAddress(extractAddress(passphrase), network)) {
       this.redirectToReferrer();
+      this.props.activeAccountSaved();
     } else {
       this.props.activePeerSet({
         passphrase,
