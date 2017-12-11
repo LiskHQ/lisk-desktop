@@ -2,6 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
+import accounts from '../../../test/constants/accounts';
 import VoteUrlProcessor from './voteUrlProcessor';
 
 describe('VoteUrlProcessor', () => {
@@ -9,11 +10,7 @@ describe('VoteUrlProcessor', () => {
   let props;
 
   beforeEach(() => {
-    const account = {
-      balance: 1000e8,
-      address: '16313739661670634666L',
-      passphrase: 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit',
-    };
+    const account = accounts.delegate;
 
     props = {
       activePeer: {},

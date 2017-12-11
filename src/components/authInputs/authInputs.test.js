@@ -3,6 +3,8 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
 import { I18nextProvider } from 'react-i18next';
+
+import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n'; // initialized i18next instance
 import AuthInputs from './authInputs';
 
@@ -10,7 +12,7 @@ import AuthInputs from './authInputs';
 describe('AuthInputs', () => {
   let wrapper;
   let props;
-  const passphrase = 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit';
+  const { passphrase } = accounts.delegate;
 
   beforeEach(() => {
     props = {
