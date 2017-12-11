@@ -14,16 +14,15 @@
 
 .inputTypeToggle {
   position: absolute;
-  right: 0;
+  right: 100px;
   cursor: pointer;
   font-weight: 600;
-  color: #2475b9;
-  top: -70px;
+  color: #2475b9 !important;
+  top: -60px;
 
-  & .eyeIcon {
-    transform: translateY(50%);
-    line-height: 24px;
-    height: 24px;
+  & label {
+    text-transform: capitalize;
+    vertical-align: inherit;
   }
 }
 

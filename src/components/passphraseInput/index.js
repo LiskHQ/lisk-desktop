@@ -84,7 +84,7 @@ class PassphraseInput extends React.Component {
     const indents = [];
     for (let i = 0; i < 12; i++) {
       indents.push(
-        <div className={`${grid['col-xs-6']} ${grid['col-sm-2']} ${grid['col-md-1']}`} key={i}>
+        <div className={`${grid['col-xs-6']} ${grid['col-sm-2']} ${grid['col-md-2']}`} key={i}>
           <PassphrasePartial
             type={this.state.inputType}
             theme={this.props.theme}
@@ -111,22 +111,22 @@ class PassphraseInput extends React.Component {
               {this.renderFields()}
             </div>
             <div className='error' style={{ color: '#DA1D00', fontSize: '14px', height: '20px', fontWeight: '600' }}>{this.props.error}</div>
-            <div className={styles.inputTypeToggle} onClick={this.toggleInputType.bind(this)}>
-              <TooltipIconButton className={`show-passphrase-toggle ${styles.eyeIcon}`}
+            <div >
+              <TooltipIconButton
                 tooltipPosition='horizontal'
                 tooltip={this.state.inputType === 'password' ? this.props.t('Show passphrase') : this.props.t('Hide passphrase')}
                 icon={this.state.inputType === 'password' ? 'visibility' : 'visibility_off'}
-              /><label>{this.state.inputType === 'password' ? 'Show' : 'Hide' } Passphrase</label>
+                className={`show-passphrase-toggle ${styles.inputTypeToggle}`}
+                onClick={this.toggleInputType.bind(this)}
+              > <label>{this.state.inputType === 'password' ? 'Show' : 'Hide' } Passphrase</label></TooltipIconButton>
             </div>
           </div>
           :
-          <div>
-            <Input label={this.props.label}
-              className={`${this.props.className} ${styles.inputWrapper}`}
-              type={this.state.inputType}
-              theme={this.props.theme}
-            />
-          </div>
+          <Input label={this.props.label}
+            className={`${this.props.className} ${styles.inputWrapper}`}
+            type={this.state.inputType}
+            theme={this.props.theme}
+          />
         }
       </div>);
   }
