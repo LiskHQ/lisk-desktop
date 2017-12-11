@@ -101,7 +101,8 @@ describe('Utils: Delegate', () => {
       peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates', data)
         .returnsPromise().resolves('resolved promise');
 
-      const returnedPromise = registerDelegate(activePeer, data.username, data.secret, data.secondSecret);
+      const returnedPromise = registerDelegate(
+        activePeer, data.username, data.secret, data.secondSecret);
       return expect(returnedPromise).to.eventually.equal('resolved promise');
     });
 
