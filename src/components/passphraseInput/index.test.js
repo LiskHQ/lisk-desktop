@@ -104,6 +104,7 @@ describe('PassphraseInput', () => {
 
   it('should allow to change the input field to type="text" and back', () => {
     expect(wrapper.find('input').first().props().type).to.equal('password');
+    wrapper.find('input').first().simulate('click');
     wrapper.find('button.show-passphrase-toggle').simulate('click');
     expect(wrapper.find('input').first().props().type).to.equal('text');
     wrapper.find('button.show-passphrase-toggle').simulate('click');

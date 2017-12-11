@@ -2,8 +2,6 @@ import { translate } from 'react-i18next';
 import React from 'react';
 import Input from '../toolbox/inputs/input';
 
-// import styles from './passphraseInput.css';
-
 class PassphraseInput extends React.Component {
   constructor() {
     super();
@@ -38,7 +36,7 @@ class PassphraseInput extends React.Component {
   doNext(event) {
     if (event.which === 32) {
       event.preventDefault();
-      const nextEl = document.querySelectorAll('.passphrase')[this.props.index + 1];
+      const nextEl = document.querySelectorAll(`.${this.props.className}`)[this.props.index + 1];
       if (nextEl && nextEl.focus) {
         nextEl.firstElementChild.focus();
       }
