@@ -4,6 +4,8 @@ import { mount } from 'enzyme';
 import sinon from 'sinon';
 import PropTypes from 'prop-types';
 import Lisk from 'lisk-js';
+
+import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
 import store from '../../store';
 import Authenticate from '../authenticate';
@@ -14,13 +16,10 @@ describe('EncryptMessage', () => {
   let wrapper;
   let encryptMessageSpy;
   let props;
-  const recipientPublicKey = '164a0580cd2b430bc3496f82adf51b799546a3a4658bb9dca550a0e20cb579c8';
+  const recipientPublicKey = accounts.delegate.publicKey;
   const message = 'Hello world';
-  const publicKey = '164a0580cd2b430bc3496f82adf51b799546a3a4658bb9dca550a0e20cb579c8';
-  const account = {
-    passphrase: 'wagon stock borrow episode laundry kitten salute link globe zero feed marble',
-    publicKey,
-  };
+  const account = accounts.genesis;
+  const { publicKey } = account;
 
   beforeEach(() => {
     encryptMessageSpy = sinon.spy(Lisk.crypto, 'encryptMessageWithSecret');

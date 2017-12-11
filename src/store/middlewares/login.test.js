@@ -1,6 +1,7 @@
 import Lisk from 'lisk-js';
 import { expect } from 'chai';
 import { spy, stub } from 'sinon';
+import accounts from '../../../test/constants/accounts';
 import middleware from './login';
 import actionTypes from '../../constants/actions';
 import * as accountApi from '../../utils/api/account';
@@ -9,7 +10,7 @@ import * as delegateApi from '../../utils/api/delegate';
 describe('Login middleware', () => {
   let store;
   let next;
-  const passphrase = 'wagon stock borrow episode laundry kitten salute link globe zero feed marble';
+  const { passphrase } = accounts.genesis;
   const activePeer = Lisk.api({
     name: 'Custom Node',
     custom: true,

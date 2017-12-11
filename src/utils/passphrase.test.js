@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import { generateSeed, generatePassphrase, isValidPassphrase } from './passphrase';
+import accounts from '../../test/constants/accounts';
 
 if (global._bitcore) delete global._bitcore;
 const mnemonic = require('bitcore-mnemonic');
@@ -121,7 +122,7 @@ describe('Passphrase', () => {
 
   describe('isValidPassphrase', () => {
     it('recognises a valid passphrase', () => {
-      const passphrase = 'wagon stock borrow episode laundry kitten salute link globe zero feed marble';
+      const { passphrase } = accounts.genesis;
       expect(isValidPassphrase(passphrase)).to.be.equal(true);
     });
 
