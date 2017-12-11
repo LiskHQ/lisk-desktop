@@ -65,7 +65,7 @@ class Transactions extends React.Component {
           </ul>
 
           {this.props.transactions.length > 0 ?
-            <div className={styles.results}>
+            <div className={`${styles.results} transaction-results`}>
               <TransactionsHeader tableStyle={tableStyle}></TransactionsHeader>
               {this.props.transactions.map(transaction => (
                 <TransactionRow address={this.props.address}

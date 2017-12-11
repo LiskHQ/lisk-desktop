@@ -160,7 +160,7 @@
     }
 
     & .account {
-      float: right;
+      text-align: right;
     }
 
     & h2 {

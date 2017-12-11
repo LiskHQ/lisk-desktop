@@ -209,7 +209,8 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   });
 
   When('I scroll to the bottom of "{box}"', (box) => {
-    browser.executeScript(`document.getElementsByClassName('${box}')[0].scrollTop = 10000;`);
+    const element = box.replace(/ /g, '-');
+    browser.executeScript(`document.getElementsByClassName('${element}')[0].scrollTop = 10000;`);
   });
 
   Then('I should be logged in', (callback) => {
