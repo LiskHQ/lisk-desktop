@@ -1,3 +1,7 @@
+:root {
+  --icon-font-size: 32px;
+}
+
 .wrapper {
   position: relative;
 }
@@ -5,6 +9,11 @@
 .checkbox {
   visibility: hidden;
   position: hidden;
+}
+
+.icon {
+  font-size: var(--icon-font-size);
+  margin-top: -3px;
 }
 
 .eyeIcon {
