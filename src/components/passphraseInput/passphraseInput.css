@@ -1,5 +1,9 @@
+@import '../app/variables.css';
+
 :root {
   --icon-font-size: 32px;
+  --tab-inactive-color: --color-grayscale-dark;
+  --error-font-size: 14px;
 }
 
 .wrapper {
@@ -14,18 +18,33 @@
 
 .inputTypeToggle {
   position: absolute;
-  right: 100px;
-  cursor: pointer;
+  right: 0;
   font-weight: 600;
   color: #2475b9 !important;
-  top: -60px;
+  top: -30%;
+
 
   & label {
     text-transform: capitalize;
-    vertical-align: inherit;
+    vertical-align: middle;
+    cursor: pointer;
+  }
+
+  & .eyeIcon {
+    vertical-align: middle;
+    cursor: pointer;
+    font-size: var(--icon-font-size);
   }
 }
 
 .inputWrapper input {
   padding-right: 35px;
+}
+
+.errorMessage {
+  color: var(--color-error);
+  font-size: var(--error-font-size);
+  height: 20px;
+  font-weight: 600;
+  padding-top: 10px;
 }

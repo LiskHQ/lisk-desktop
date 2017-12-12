@@ -31,13 +31,24 @@ class AuthInputs extends React.Component {
           className='passphrase'
           error={this.props.passphrase.error}
           value={this.props.passphrase.value}
-          onChange={this.onChange.bind(this, 'passphrase')} />)}
+          onChange={this.onChange.bind(this, 'passphrase')}
+          mdColumnSize={this.props.mdColumnSize}
+          smColumnSize={this.props.smColumnSize}
+          xsColumnSize={this.props.xsColumnSize}
+          theme={this.props.theme}
+        />)}
       {(this.props.account.secondSignature &&
         <PassphraseInput label={this.props.t('Enter your 2nd passphrase to confirm')}
           className='second-passphrase'
           error={this.props.secondPassphrase.error}
           value={this.props.secondPassphrase.value}
-          onChange={this.onChange.bind(this, 'secondPassphrase')} />)}
+          onChange={this.onChange.bind(this, 'secondPassphrase')}
+          columnSize={this.props.columnSize}
+          mdColumnSize={this.props.mdColumnSize}
+          smColumnSize={this.props.smColumnSize}
+          xsColumnSize={this.props.xsColumnSize}
+          theme={this.props.theme}
+        />)}
     </span>;
   }
 }

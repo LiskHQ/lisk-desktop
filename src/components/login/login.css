@@ -3,6 +3,7 @@
 :root {
   --gradient: linear-gradient(45deg, rgba(0, 74, 255, 1) 0%, rgba(147, 244, 254, 1) 100%);
   --transition: all ease 300ms;
+  --header-focused-font-size: 32px;
 }
 
 .wrapper {
@@ -34,8 +35,7 @@
   }
 
   & h2 {
-    color: var(--color-primary-medium);
-    margin-bottom: 0.2em;
+    color: var(--color-black);
   }
 
   & form button {
@@ -89,6 +89,11 @@
 
     & form button {
       display: inline-block;
+    }
+
+    & h2 {
+      font-size: var(--header-focused-font-size);
+      margin-top: 4em;
     }
   }
 }
@@ -201,7 +206,7 @@
     transform: translateZ(0);
 
     & h2 {
-      font-size: 2.1em;
+      font-size: var(--header-focused-font-size);
     }
 
     & .singUpArrow {

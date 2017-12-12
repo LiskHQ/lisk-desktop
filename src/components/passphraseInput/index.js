@@ -7,7 +7,6 @@ import PassphrasePartial from './../passphrasePartial';
 import { inDictionary } from '../../utils/similarWord';
 import { isValidPassphrase } from '../../utils/passphrase';
 import styles from './passphraseInput.css';
-import { TooltipWrapper } from '../timestamp';
 
 class PassphraseInput extends React.Component {
   constructor() {
@@ -16,7 +15,6 @@ class PassphraseInput extends React.Component {
       inputType: 'password',
       isFocused: false,
       value: [],
-      indents: [],
       partialPassphraseError: [],
     };
   }
@@ -82,9 +80,13 @@ class PassphraseInput extends React.Component {
 
   renderFields() {
     const indents = [];
+    const mdSize = this.props.mdColumnSize ? `col-md-${this.props.mdColumnSize}` : 'col-md-2';
+    const smSize = this.props.mdColumnSize ? `col-sm-${this.props.smColumnSize}` : 'col-sm-2';
+    const xsSize = this.props.mdColumnSize ? `col-xs-${this.props.xsColumnSize}` : 'col-xs-6';
+
     for (let i = 0; i < 12; i++) {
       indents.push(
-        <div className={`${grid['col-xs-6']} ${grid['col-sm-2']} ${grid['col-md-2']}`} key={i}>
+        <div className={`${grid[xsSize]} ${grid[smSize]} ${grid[mdSize]}`} key={i}>
           <PassphrasePartial
             type={this.state.inputType}
             theme={this.props.theme}
@@ -111,20 +113,18 @@ class PassphraseInput extends React.Component {
             <div className={grid.row}>
               {this.renderFields()}
             </div>
-            <div className='error' style={{ color: '#DA1D00', fontSize: '14px', height: '20px', fontWeight: '600' }}>{this.props.error}</div>
-            <div >
-              <TooltipIconButton
-                icon={this.state.inputType === 'password' ? 'visibility' : 'visibility_off'}
-                className={`show-passphrase-toggle ${styles.inputTypeToggle}`}
-                onClick={this.toggleInputType.bind(this)}
-              > <label>{this.state.inputType === 'password' ? 'Show' : 'Hide' } Passphrase</label></TooltipIconButton>
+            <div className={styles.errorMessage}>{this.props.error}</div>
+            <div
+              className={`show-passphrase-toggle ${styles.inputTypeToggle}`}
+              onClick={this.toggleInputType.bind(this)}>
+              <FontIcon className={styles.eyeIcon} value={this.state.inputType === 'password' ? 'hide' : 'show'}
+              /> <label>{this.state.inputType === 'password' ? 'Show' : 'Hide' } Passphrase</label>
             </div>
           </div>
           :
           <Input label={this.props.label}
             className={`${this.props.className} ${styles.inputWrapper}`}
             type={this.state.inputType}
-            theme={this.props.theme}
           />
         }
       </div>);
