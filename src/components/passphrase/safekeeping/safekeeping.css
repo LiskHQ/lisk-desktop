@@ -33,7 +33,7 @@
   }
 
   & > header {
-    height: calc(50% - 22px);
+    height: 50%;
   }
 
   & header {
@@ -68,6 +68,10 @@
 
       & h5 {
         max-width: 500px;
+        margin: 0 auto;
+      }
+
+      & .smallSlider {
         margin: 0 auto;
       }
     }
@@ -121,12 +125,11 @@
       position: absolute;
       top: 50%;
       left: 50%;
+      width: 575px !important;
       transform: translateX(-50%) translateY(calc(-50% - 58px));
       z-index: 2;
 
       & label {
-        width: 575px !important;
-
         & i:last-child {
           font-size: 24px !important;
         }

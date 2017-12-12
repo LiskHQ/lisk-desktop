@@ -151,11 +151,9 @@ class Confirm extends React.Component {
           <div className={styles.tableCell}>
             <h2 className={styles.verify}>Choose the correct phrases to confirm.</h2>
             <h2 className={styles.done}>Awesome!<br />You’re all set.</h2>
-            {
-              !this.state.formValidity ?
-                <h5 className={styles.verify}>Please go back and check your passphrase again.</h5>
-                : null
-            }
+            <h5 className={`${styles.verify} ${!this.state.formValidity ? styles.visible : ''}`}>
+              Please go back and check your passphrase again.
+            </h5>
           </div>
         </header>
         <section className={`${styles.table} ${styles.verify}`}>

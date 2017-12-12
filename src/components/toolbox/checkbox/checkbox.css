@@ -6,6 +6,7 @@
 
 .sliderInput {
   user-select: none;
+  width: 190px;
 
   & span,
   & label,
@@ -61,7 +62,7 @@
     height: 62px;
     line-height: 62px;
     padding: 0 0 0 31px;
-    width: 189px;
+    width: 100%;
     margin: 40px auto;
     border-radius: 31px;
     background: linear-gradient(to right, #134381, #001e45);

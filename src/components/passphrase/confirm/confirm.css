@@ -33,7 +33,7 @@
   }
 
   & > header {
-    height: calc(50% - 22px);
+    height: 50%;
   }
 
   & header {
@@ -85,7 +85,7 @@
         border-radius: 3px;
         padding: 0 5px;
         line-height: 50px;
-        font-size: 26px;
+        font-size: 22px;
         margin: 8px 0;
         cursor: pointer;
       }
@@ -95,8 +95,8 @@
         position: absolute;
 
         &:checked + label {
-          border-color: green;
-          color: green;
+          background-color: #2a73b9;
+          color: #fff;
         }
       }
     }
@@ -106,6 +106,16 @@
     & header .done,
     & > section.done {
       display: none;
+    }
+
+    & h5 {
+      opacity: 0;
+      font-size: 18px;
+      color: red;
+
+      &.visible {
+        opacity: 1;
+      }
     }
   }
 

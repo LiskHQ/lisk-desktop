@@ -37,6 +37,7 @@ class PassphraseShow extends React.Component {
             <h5>I am responsible for keeping my passphrase safe.
             No one can restore it, not even Lisk.</h5>
             <SliderCheckbox
+              className={`${styles.smallSlider} i-understand-checkbox`}
               label='I understand'
               icons={{
                 done: 'done',
@@ -57,7 +58,7 @@ class PassphraseShow extends React.Component {
               }}
               hasSlidingArrows={true}
               onChange={this.next.bind(this)}
-              className={styles.bigSlider}
+              className={`${styles.bigSlider} reveal-checkbox`}
               input={{
                 value: 'revealing-step',
               }}/>
