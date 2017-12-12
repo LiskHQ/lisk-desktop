@@ -4,12 +4,13 @@
   --copy-color: var(--color-primary-dark);
   --paragraph-color: var(--color-grayscale-dark);
   --paragraph-line-height: 36px;
+  --title-font-size: 32px;
 }
 
 .icon {
   /* values are not saved as variable since this will be deleted/modified anyway */
   position: absolute;
-  bottom: -20px;
+  bottom: 0;
   left: 165px;
   font-size: 3em;
   color: #ff6236;
@@ -27,6 +28,10 @@
     font-size: 1.125em;
     color: var(--paragraph-color);
     line-height: var(--paragraph-line-height);
+  }
+
+  & h2 {
+    font-size: var(--title-font-size);
   }
 
   & .copy {

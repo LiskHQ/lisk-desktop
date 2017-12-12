@@ -4,8 +4,8 @@
 :root {
   --avatar-height: 69px;
   --menu-icon-height: 39px;
-  --font-size-normal: 1.6em;
-  --font-size-small: 1.3em;
+  --font-size-normal: 16px;
+  --font-size-small: 13px;
 }
 
 .wrapper {
@@ -25,15 +25,11 @@
   padding: 8px;
 }
 
-.button {
+.logoutButton {
   padding: 8px;
   margin: 6px 8px;
   height: auto;
   float: right;
-}
-
-.iconButton {
-  padding: 2px;
 }
 
 .primary {
@@ -54,70 +50,72 @@
   font-size: 24px !important;
 }
 
-.menu {
-  right: -8px !important;
-}
-
-.menuItem {
-  padding: 0;
-}
-
-.menuLink {
-  text-decoration: none;
-  text-align: left;
-  width: 100%;
-  height: 100%;
-  line-height: 48px;
-  color: rgba(0, 0, 0, 0.87);
-  padding-left: 16px;
-  padding-right: 16px;
-}
-
-.accountWrapper {
+.account {
   position: relative;
-}
+  padding-left: 50px;
 
-.accountAvatar {
-  display: inline-block;
-  height: var(--avatar-height);
-  width: var(--avatar-height);
+  & .avatar {
+    display: inline-block;
+    height: var(--avatar-height);
+    width: var(--avatar-height);
 
-  /* background will be replaced with avatar */
-  background: linear-gradient(-44deg, #fff 1%, #93f4fe 98%);
-  border-radius: 100%;
-  margin-right: 10px;
-}
+    /* background will be replaced with avatar */
+    background: linear-gradient(-44deg, #fff 1%, #93f4fe 98%);
+    border-radius: 100%;
+    margin-right: 30px;
+  }
 
-.accountInformation {
-  display: inline-block;
-  vertical-align: top;
-  line-height: 25px;
-  padding-right: 20px;
-  height: var(--avatar-height);
-}
+  & .information {
+    display: inline-block;
+    vertical-align: top;
+    line-height: 25px;
+    padding-right: 20px;
+    height: var(--avatar-height);
 
-.accountInformationBalance {
-  font-size: var(--font-size-normal);
-  color: var(--color-white);
-}
+    & .balance {
+      font-size: var(--font-size-normal);
+      color: var(--color-white);
+    }
 
-.accountInformationAddress {
-  font-size: var(--font-size-normal);
-  color: var(--color-grayscale-medium);
-}
+    & .address {
+      font-size: var(--font-size-normal);
+      color: var(--color-grayscale-medium);
+    }
 
-.accountInformationTimer {
-  font-size: var(--font-size-small);
-  color: var(--color-grayscale-medium);
-}
+    & .timer {
+      font-size: var(--font-size-small);
+      color: var(--color-grayscale-medium);
+    }
+  }
 
-.accountMenuIcon {
-  position: absolute;
-  bottom: -10px;
-  right: 0px;
-  background: var(--color-white);
-  border-radius: 100%;
-  height: var(--menu-icon-height);
-  width: var(--menu-icon-height);
-  box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.62);
+  & .menu {
+    & .item {
+      padding: 0;
+    }
+
+    & .link {
+      text-decoration: none;
+      text-align: left;
+      width: 100%;
+      height: 100%;
+      line-height: 48px;
+      color: rgba(0, 0, 0, 0.87);
+      padding-left: 16px;
+    }
+
+    & .iconCircle {
+      position: absolute;
+      bottom: -24px;
+      right: -24px;
+      background: var(--color-white);
+      border-radius: 100%;
+      height: var(--menu-icon-height);
+      width: var(--menu-icon-height);
+      box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.62);
+
+      & .button {
+        padding: 2px;
+      }
+    }
+  }
 }
