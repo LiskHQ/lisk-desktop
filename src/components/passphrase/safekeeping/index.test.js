@@ -42,7 +42,11 @@ describe('Passphrase: Safekeeping', () => {
     props.nextStep.restore();
   });
 
-  it('renders an Input component', () => {
+  it('renders 2 SliderCheckbox components', () => {
+    expect(wrapper.find('SliderCheckbox')).to.have.lengthOf(2);
+  });
+
+  it('renders an Input to show the passphrase in', () => {
     expect(wrapper.find('Input')).to.have.lengthOf(1);
   });
 
@@ -50,9 +54,17 @@ describe('Passphrase: Safekeeping', () => {
     expect(wrapper.find(ActionBar)).to.have.lengthOf(1);
   });
 
-  it('should call prevStep if Cancel button clicked', () => {
-    wrapper.find('button.cancel-button').simulate('click');
-    expect(props.prevStep).to.have.been.calledWith();
+  /**
+   * @todo simulate doesn't trigger onChange
+   */
+  it.skip('should change the state to revealing if the first SliderCheckbox checked', () => {
+    wrapper.find('SliderCheckbox').at(0).find('input[type="checkbox"]')
+      .simulate('change', { target: { checked: true } });
+    wrapper.update();
+
+    const className = wrapper.find('section').at(0).props().className;
+    expect(className).to.not.include('introduction-step');
+    expect(className).to.include('revealing-step');
   });
 
   it('should call nextStep if Next button clicked', () => {

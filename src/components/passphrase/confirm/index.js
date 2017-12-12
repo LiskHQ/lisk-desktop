@@ -143,8 +143,10 @@ class Confirm extends React.Component {
 
   render() {
     let missingWordIndex = -1;
+    const { missing, answers, words, wordOptions, formValidity, step } = this.state;
+
     return (
-      <section className={`passphrase-verifier ${styles.verifier} ${styles[this.state.step]}`}>
+      <section className={`passphrase-verifier ${styles.verifier} ${styles[step]}`}>
         <header className={styles.table}>
           <div className={styles.tableCell}>
             <h2 className={styles.verify}>Choose the correct phrases to confirm.</h2>
@@ -160,16 +162,16 @@ class Confirm extends React.Component {
           <div className={styles.tableCell}>
             <form className={`passphrase-holder ${styles.passphrase}`}>
               {
-                this.state.wordOptions ?
-                  this.state.words.map((word, index) => {
-                    if (!this.state.missing.includes(index)) {
+                wordOptions ?
+                  words.map((word, index) => {
+                    if (!missing.includes(index)) {
                       return (<span key={word} className={styles.word}>{word}</span>);
                     }
                     missingWordIndex++;
                     return (
                       <fieldset key={word}>
                         {
-                          this.state.wordOptions[missingWordIndex].map(wd =>
+                          wordOptions[missingWordIndex].map(wd =>
                             <div key={wd}>
                               <input
                                 name={`answer${missingWordIndex}`}
@@ -195,9 +197,10 @@ class Confirm extends React.Component {
             <h4 className={styles.address}>{this.address}</h4>
             <PrimaryButton
               theme={styles}
+              disabled={(answers.length < missing.length) || !formValidity}
               label='Get to your Dashboard'
               className="next-button"
-              onClick={() => this.props.finalCallback({ passphrase: this.state.words.join(' ') })}
+              onClick={() => this.props.finalCallback({ passphrase: words.join(' ') })}
             />
           </div>
         </section>
