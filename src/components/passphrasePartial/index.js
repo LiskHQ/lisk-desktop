@@ -6,58 +6,27 @@ import styles from './passphrasePartial.css';
 class PassphraseInput extends React.Component {
   constructor() {
     super();
+    this.input = [];
     this.state = {
       inputType: 'password',
-      value: '',
     };
   }
 
   handleValueChange(value) {
-    this.setState({ value });
-    this.props.value[this.props.index] = value;
-    const passphrase = this.props.value.join(' ');
-    this.props.onChange(passphrase);
-  }
-
-  handlePaste(e) {
-    e.preventDefault();
-    const clipBoardText = e.clipboardData.getData('Text');
-    let value = clipBoardText;
-
-    const passphraseArray = clipBoardText.split(' ');
-    if (passphraseArray.length > 1) {
-      for (let i = 0; i < 12; i++) {
-        this.props.value[i] = passphraseArray[i];
-      }
-      value = passphraseArray[this.props.index];
-    }
-    this.handleValueChange(value);
-  }
-
-  doNext(event) {
-    if (event.which === 32) {
-      event.preventDefault();
-      const nextEl = document.querySelectorAll(`.${this.props.className}`)[this.props.index + 1];
-      if (nextEl && nextEl.focus) {
-        nextEl.firstElementChild.focus();
-      }
-    }
+    this.props.onChange(value, this.props.index);
   }
 
   render() {
     return (<Input
-      autoFocus={this.props.index === 0}
       placeholder={this.props.index === 0 ? 'start here' : ''}
-      onPaste={this.handlePaste.bind(this)}
-      className={`${this.props.className} ${this.props.error ? styles.error : ''}`}
-      value={this.props.partialValue || this.state.value}
+      className={`${this.props.className} ${styles.partial} ${this.props.error ? styles.error : ''}`}
+      value={this.props.partialValue}
       type={this.props.type}
       theme={this.props.theme}
-      onFocus={typeof this.props.onFocus === 'function' ? this.props.onFocus : undefined}
-      onBlur={typeof this.props.onBlur === 'function' ? this.props.onBlur : undefined}
+      onFocus={this.props.index === 0 && typeof this.props.onFocus === 'function' ? this.props.onFocus : undefined}
       onChange={this.handleValueChange.bind(this)}
-      style={{ textAlign: 'center' }}
-      onKeyPress={this.doNext.bind(this)}
+      onKeyPress={(event) => { this.props.doNext({ event, index: this.props.index }); }}
+      onKeyDown={(event) => { this.props.doDelete({ event, index: this.props.index }); }}
     />);
   }
 }

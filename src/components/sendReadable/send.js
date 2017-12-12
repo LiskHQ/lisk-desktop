@@ -140,9 +140,7 @@ class SendReadable extends React.Component {
             secondPassphrase={this.state.secondPassphrase}
             onChange={this.handleChange.bind(this)}
             theme={inputStyles}
-            mdColumnSize={4}
-            smColumnSize={4}
-            xsColumnSize={4}
+            columns={{ xs: 4, sm: 4, md: 4 }}
           />
           <footer>
             <section className={grid.row} >

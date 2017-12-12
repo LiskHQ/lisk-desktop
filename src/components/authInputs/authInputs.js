@@ -32,9 +32,7 @@ class AuthInputs extends React.Component {
           error={this.props.passphrase.error}
           value={this.props.passphrase.value}
           onChange={this.onChange.bind(this, 'passphrase')}
-          mdColumnSize={this.props.mdColumnSize}
-          smColumnSize={this.props.smColumnSize}
-          xsColumnSize={this.props.xsColumnSize}
+          columns={this.props.columns}
           theme={this.props.theme}
         />)}
       {(this.props.account.secondSignature &&
@@ -43,10 +41,7 @@ class AuthInputs extends React.Component {
           error={this.props.secondPassphrase.error}
           value={this.props.secondPassphrase.value}
           onChange={this.onChange.bind(this, 'secondPassphrase')}
-          columnSize={this.props.columnSize}
-          mdColumnSize={this.props.mdColumnSize}
-          smColumnSize={this.props.smColumnSize}
-          xsColumnSize={this.props.xsColumnSize}
+          columns={this.props.columns}
           theme={this.props.theme}
         />)}
     </span>;

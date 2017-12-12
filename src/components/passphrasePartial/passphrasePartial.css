@@ -3,3 +3,7 @@
 .error input {
   color: var(--color-error) !important;
 }
+
+.partial {
+  text-align: center;
+}
