@@ -16,12 +16,13 @@
   & div {
     padding-left: 44px;
     transition: all ease 300ms;
+
     /* big slider */
     text-align: left;
     display: table;
     position: relative;
 
-    &:before {
+    &::before {
       content: '';
       display: none;
       position: absolute;
@@ -31,7 +32,7 @@
       width: calc(100% - 62px);
     }
 
-    &:after {
+    &::after {
       content: 'chevron_right chevron_right chevron_right chevron_right chevron_right chevron_right chevron_right';
       display: none;
       vertical-align: middle;
@@ -46,10 +47,11 @@
     }
 
     &.hasArrows {
-      &:before {
+      &::before {
         display: block;
       }
-      &:after {
+
+      &::after {
         display: table-cell;
       }
     }
