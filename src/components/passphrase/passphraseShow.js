@@ -8,15 +8,15 @@ class PassphraseShow extends React.Component {
   constructor() {
     super();
     this.state = {
-      step: 'introduction',
+      step: 'introduction-step',
     };
   }
 
   next(e) {
-    if (e.value === 'introduction' && e.checked) {
-      this.setState({ step: 'revealing' });
-    } else if (e.value === 'revealing' && e.checked) {
-      this.setState({ step: 'revealed' });
+    if (e.value === 'introduction-step' && e.checked) {
+      this.setState({ step: 'revealing-step' });
+    } else if (e.value === 'revealing-step' && e.checked) {
+      this.setState({ step: 'revealed-step' });
     }
   }
 
@@ -24,16 +24,18 @@ class PassphraseShow extends React.Component {
     const { t, passphrase, nextStep, prevStep } = this.props;
 
     return (
-      <div className={`${styles.safekeeping} ${styles[this.state.step]}`}>
-        <header>
-          <h2 className={styles.introduction}>Your passphrase is used to access your Lisk ID.</h2>
-          <h2 className={styles.revealing}>Carefully write it down.</h2>
-          <h5 className={styles.revealing}>Make sure to keep it safe.</h5>
+      <section className={`${styles.safekeeping} ${styles[this.state.step]}`}>
+        <header className={styles.table}>
+          <div className={styles.tableCell}>
+            <h2 className={styles.introduction}>Your passphrase is used to access your Lisk ID.</h2>
+            <h2 className={styles.revealing}>Carefully write it down.</h2>
+            <h5 className={styles.revealing}>Make sure to keep it safe.</h5>
+          </div>
         </header>
-        <section>
-          <section className={styles.introduction}>
-            <h6>I am responsible for keeping my passphrase safe.
-            No one can restore it, not even Lisk.</h6>
+        <section className={`${styles.introduction} ${styles.table}`}>
+          <div className={styles.tableCell}>
+            <h5>I am responsible for keeping my passphrase safe.
+            No one can restore it, not even Lisk.</h5>
             <SliderCheckbox
               label='I understand'
               icons={{
@@ -41,10 +43,12 @@ class PassphraseShow extends React.Component {
               }}
               onChange={this.next.bind(this)}
               input={{
-                value: 'introduction',
+                value: 'introduction-step',
               }}/>
-          </section>
-          <section className={styles.revealing}>
+          </div>
+        </section>
+        <section className={`${styles.revealing} ${styles.table}`}>
+          <div className={styles.tableCell}>
             <SliderCheckbox
               label='Drag to reveal'
               icons={{
@@ -55,14 +59,16 @@ class PassphraseShow extends React.Component {
               onChange={this.next.bind(this)}
               className={styles.bigSlider}
               input={{
-                value: 'revealing',
+                value: 'revealing-step',
               }}/>
             <Input type='text' multiline autoFocus={true}
               className={`${styles.input} passphrase`}
               value={passphrase} />
             <ActionBar
+              className={styles.actionBar}
               secondaryButton={{
                 label: t('Back'),
+                className: styles.hidden,
                 onClick: () => prevStep({ jump: 2 }),
               }}
               primaryButton={{
@@ -70,9 +76,9 @@ class PassphraseShow extends React.Component {
                 className: 'next-button',
                 onClick: () => nextStep({ passphrase }),
               }} />
-          </section>
+          </div>
         </section>
-      </div>);
+      </section>);
   }
 }
 
