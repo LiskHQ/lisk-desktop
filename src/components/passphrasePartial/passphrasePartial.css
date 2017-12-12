@@ -1,0 +1,5 @@
+@import '../app/variables.css';
+
+.error input {
+  color: var(--color-error) !important;
+}

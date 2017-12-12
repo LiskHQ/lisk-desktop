@@ -1,6 +1,7 @@
 import { translate } from 'react-i18next';
 import React from 'react';
 import Input from '../toolbox/inputs/input';
+import styles from './passphrasePartial.css';
 
 class PassphraseInput extends React.Component {
   constructor() {
@@ -48,7 +49,7 @@ class PassphraseInput extends React.Component {
       autoFocus={this.props.index === 0}
       placeholder={this.props.index === 0 ? 'start here' : ''}
       onPaste={this.handlePaste.bind(this)}
-      className={this.props.className}
+      className={`${this.props.className} ${this.props.error ? styles.error : ''}`}
       value={this.props.partialValue || this.state.value}
       type={this.props.type}
       theme={this.props.theme}

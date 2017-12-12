@@ -49,21 +49,15 @@ describe('PassphraseInput', () => {
     expect(wrapper.props().onChange).to.have.been.calledWith(passphrase, ONLY_ONE_WORD_ERROR);
   });
 
-  const INVALID_WORD = 'INVALID_WORD';
-  const INVALID_WORD_ERROR = `Word "${INVALID_WORD}" is not on the passphrase Word List.`;
-  it(`should call props.onChange with error='${INVALID_WORD_ERROR}' if a passphrase with an invalid word is entered`, () => {
-    const passphrase = `${INVALID_WORD} stock borrow episode laundry kitten salute link globe zero feed marble`;
+  it('should highlight invalid words if a passphrase with an invalid word is entered', () => {
+    const errorMessage = 'Please check the highlighted words';
+    let passphrase = 'wagon stock borrow episode laundry kitten salute link globe zero feed marble';
     wrapper.find('input').first().simulate('click');
     wrapper.find('input').first().simulate('change', { target: { value: passphrase } });
-    expect(wrapper.props().onChange).to.have.been.calledWith(passphrase, INVALID_WORD_ERROR);
-  });
-
-  const SIMILAR_WORD_ERROR = 'Word "wagot" is not on the passphrase Word List. Most similar word on the list is "wagon"';
-  it(`should call props.onChange with error='${SIMILAR_WORD_ERROR}' if an passphrase with a typo is entered`, () => {
-    const passphrase = 'wagot stock borrow episode laundry kitten salute link globe zero feed marble';
-    wrapper.find('input').first().simulate('click');
+    expect(wrapper.props().onChange).to.not.have.been.calledWith(passphrase, errorMessage);
+    passphrase = 'wagonn stock borrow episode laundry kitten salute link globe zero feed marble';
     wrapper.find('input').first().simulate('change', { target: { value: passphrase } });
-    expect(wrapper.props().onChange).to.have.been.calledWith(passphrase, SIMILAR_WORD_ERROR);
+    expect(wrapper.props().onChange).to.have.been.calledWith(passphrase, errorMessage);
   });
 
   const NOT_VALID_ERROR = 'Passphrase is not valid';

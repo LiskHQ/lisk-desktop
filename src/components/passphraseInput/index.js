@@ -4,7 +4,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { FontIcon } from '../fontIcon';
 import Input from '../toolbox/inputs/input';
 import PassphrasePartial from './../passphrasePartial';
-import { findSimilarWord, inDictionary } from '../../utils/similarWord';
+import { inDictionary } from '../../utils/similarWord';
 import { isValidPassphrase } from '../../utils/passphrase';
 import styles from './passphraseInput.css';
 import { TooltipWrapper } from '../timestamp';
@@ -17,12 +17,14 @@ class PassphraseInput extends React.Component {
       isFocused: false,
       value: [],
       indents: [],
+      partialPassphraseError: [],
     };
   }
 
   handleValueChange(value) {
     let error;
 
+    this.setState({ partialPassphraseError: [] });
     if (!value) {
       error = this.props.t('Required');
     } else if (!isValidPassphrase(value)) {
@@ -40,17 +42,15 @@ class PassphraseInput extends React.Component {
       return this.props.t('Passphrase should have 12 words, entered passphrase has {{length}}', { length: mnemonic.length });
     }
 
-    const invalidWord = mnemonic.find(word => !inDictionary(word.toLowerCase()));
-    if (invalidWord) {
-      if (invalidWord.length >= 2 && invalidWord.length <= 8) {
-        const validWord = findSimilarWord(invalidWord);
-        if (validWord) {
-          return this.props.t('Word "{{invalidWord}}" is not on the passphrase Word List. Most similar word on the list is "{{similarWord}}"', { invalidWord, similarWord: findSimilarWord(invalidWord) });
-        }
-      }
-      return this.props.t('Word "{{invalidWord}}" is not on the passphrase Word List.', { invalidWord });
-    }
-    return this.props.t('Passphrase is not valid');
+    const partialPassphraseError = this.state.partialPassphraseError.slice();
+    const invalidWords = mnemonic.filter((word) => {
+      const isNotInDictionary = !inDictionary(word.toLowerCase());
+      partialPassphraseError[mnemonic.indexOf(word)] = isNotInDictionary;
+      return isNotInDictionary;
+    });
+    this.setState({ partialPassphraseError });
+
+    return invalidWords.length > 0 ? this.props.t('Please check the highlighted words') : this.props.t('Passphrase is not valid');
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -95,6 +95,7 @@ class PassphraseInput extends React.Component {
             onChange={this.handleValueChange.bind(this)}
             index={i}
             className={this.props.className}
+            error={this.state.partialPassphraseError[i]}
           />
         </div>);
     }
@@ -113,8 +114,6 @@ class PassphraseInput extends React.Component {
             <div className='error' style={{ color: '#DA1D00', fontSize: '14px', height: '20px', fontWeight: '600' }}>{this.props.error}</div>
             <div >
               <TooltipIconButton
-                tooltipPosition='horizontal'
-                tooltip={this.state.inputType === 'password' ? this.props.t('Show passphrase') : this.props.t('Hide passphrase')}
                 icon={this.state.inputType === 'password' ? 'visibility' : 'visibility_off'}
                 className={`show-passphrase-toggle ${styles.inputTypeToggle}`}
                 onClick={this.toggleInputType.bind(this)}
