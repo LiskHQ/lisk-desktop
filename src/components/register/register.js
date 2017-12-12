@@ -8,6 +8,7 @@ import PassphraseShow from '../passphrase/passphraseShow';
 import networks from '../../constants/networks';
 import getNetwork from '../../utils/getNetwork';
 import { validateUrl, getLoginData } from '../../utils/login';
+import styles from './register.css';
 
 
 class Register extends React.Component {
@@ -41,7 +42,7 @@ class Register extends React.Component {
 
   render() {
     const { t } = this.props;
-    return (<div className='box hasPadding'>
+    return (<div className={`box hasPadding ${styles.register}`}>
       <MultiStep finalCallback={this.onRegister.bind(this)}>
         <PassphraseGenerator title='Create' t={t} icon='vpn_key' />
         <PassphraseShow title='Safekeeping' t={t} icon='done' />

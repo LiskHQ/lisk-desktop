@@ -1,3 +1,5 @@
-.hidden {
-  display: none;
+.register {
+  & > section {
+    height: 100%;
+  }
 }
