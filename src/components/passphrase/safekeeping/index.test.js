@@ -4,12 +4,12 @@ import { spy } from 'sinon';
 import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
-import ActionBar from '../actionBar';
-import PassphraseShow from './passphraseShow';
-import i18n from '../../i18n';
+import ActionBar from '../../actionBar';
+import Safekeeping from './index';
+import i18n from '../../../i18n';
 
 
-describe('PassphraseShow', () => {
+describe('Safekeeping', () => {
   let wrapper;
   const props = {
     t: key => key,
@@ -36,7 +36,7 @@ describe('PassphraseShow', () => {
   beforeEach(() => {
     spy(props, 'prevStep');
     spy(props, 'nextStep');
-    wrapper = mount(<PassphraseShow {...props} />, options);
+    wrapper = mount(<Safekeeping {...props} />, options);
   });
 
   afterEach(() => {

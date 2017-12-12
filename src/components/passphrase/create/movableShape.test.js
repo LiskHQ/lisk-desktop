@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { spy, useFakeTimers } from 'sinon';
 import { mount } from 'enzyme';
 import MovableShape from './movableShape';
-import styles from './passphrase.css';
+import styles from './create.css';
 // import * as shapesSrc from '../../assets/images/register-shapes/*.svg'; //eslint-disable-line
 
 describe('MovableShape', () => {

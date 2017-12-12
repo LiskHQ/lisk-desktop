@@ -1,11 +1,11 @@
 import React from 'react';
 import fillWordsList from 'bitcore-mnemonic/lib/words/english';
-import styles from './passphrase.css';
-import { PrimaryButton } from '../toolbox/buttons/button';
-import circle from '../../assets/images/circle.svg';
-import { extractAddress } from '../../utils/api/account';
+import styles from './confirm.css';
+import { PrimaryButton } from '../../toolbox/buttons/button';
+import circle from '../../../assets/images/circle.svg';
+import { extractAddress } from '../../../utils/api/account';
 
-class PassphraseValidator extends React.Component {
+class Confirm extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -25,7 +25,7 @@ class PassphraseValidator extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.state.formValidity && this.state.answers.length === this.state.missing.length) {
+    if (this.state.step === 'verify' && this.state.formValidity && this.state.answers.length === this.state.missing.length) {
       this.next();
     }
   }
@@ -206,4 +206,4 @@ class PassphraseValidator extends React.Component {
   }
 }
 
-export default PassphraseValidator;
+export default Confirm;

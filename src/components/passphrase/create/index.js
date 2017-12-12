@@ -1,15 +1,15 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Input } from 'react-toolbox/lib/input';
-import { generateSeed, generatePassphrase } from '../../utils/passphrase';
-import { extractAddress } from '../../utils/api/account';
-import styles from './passphrase.css';
-import ProgressBar from '../toolbox/progressBar/progressBar';
-import * as shapesSrc from '../../assets/images/register-shapes/*.svg'; //eslint-disable-line
+import { generateSeed, generatePassphrase } from '../../../utils/passphrase';
+import { extractAddress } from '../../../utils/api/account';
+import styles from './create.css';
+import ProgressBar from '../../toolbox/progressBar/progressBar';
+import * as shapesSrc from '../../../assets/images/register-shapes/*.svg'; //eslint-disable-line
 import MovableShape from './movableShape';
-import { PrimaryButton } from '../toolbox/buttons/button';
+import { PrimaryButton } from '../../toolbox/buttons/button';
 
-class PassphraseGenerator extends React.Component {
+class Create extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -237,4 +237,4 @@ class PassphraseGenerator extends React.Component {
   }
 }
 
-export default PassphraseGenerator;
+export default Create;

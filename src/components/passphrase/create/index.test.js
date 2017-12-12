@@ -4,9 +4,9 @@ import { spy } from 'sinon';
 import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
-import PassphraseGenerator from './passphraseGenerator';
-import * as passphraseUtil from '../../utils/passphrase';
-import i18n from '../../i18n';
+import PassphraseGenerator from './create';
+import * as passphraseUtil from '../../../utils/passphrase';
+import i18n from '../../../i18n';
 
 
 describe('PassphraseGenerator', () => {

@@ -1,8 +1,8 @@
 import React from 'react';
-import Input from '../toolbox/inputs/input';
-import ActionBar from '../actionBar';
-import styles from './passphrase.css';
-import SliderCheckbox from '../toolbox/checkbox';
+import Input from '../../toolbox/inputs/input';
+import ActionBar from '../../actionBar';
+import styles from './safekeeping.css';
+import SliderCheckbox from '../../toolbox/checkbox';
 
 class PassphraseShow extends React.Component {
   constructor() {

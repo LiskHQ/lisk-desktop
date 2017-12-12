@@ -4,12 +4,12 @@ import { spy } from 'sinon';
 import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
-import ActionBar from '../actionBar';
-import PassphraseVerifier from './passphraseVerifier';
-import i18n from '../../i18n';
+import ActionBar from '../../actionBar';
+import Confirm from './index';
+import i18n from '../../../i18n';
 
 
-describe('PassphraseVerifier', () => {
+describe('Confirm', () => {
   let wrapper;
   const account = {
     balance: 1000e8,
@@ -37,7 +37,7 @@ describe('PassphraseVerifier', () => {
   beforeEach(() => {
     spy(props, 'prevStep');
     spy(props, 'finalCallback');
-    wrapper = mount(<PassphraseVerifier {...props} />, options);
+    wrapper = mount(<Confirm {...props} />, options);
   });
 
   afterEach(() => {
