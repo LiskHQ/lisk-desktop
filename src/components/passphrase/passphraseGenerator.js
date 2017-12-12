@@ -45,9 +45,9 @@ class PassphraseGenerator extends React.Component {
     }, 10);
   }
 
-
-  hideShapeRandomly(list) {// eslint-disable-line
-    let result = []; // eslint-disable-line
+  // eslint-disable-next-line class-methods-use-this
+  hideShapeRandomly(list) {
+    const result = [];
     const min = 0;
     const max = 9;
     let randomNumber;
@@ -132,7 +132,7 @@ class PassphraseGenerator extends React.Component {
     const { shapes } = this.state;
     const percentage = this.state.data ? this.state.data.percentage : 0;
     return (
-      <div className={`${grid.row} ${grid['center-xs']} ${styles.wrapper}`} id="generatorContainer" >
+      <section className={`${grid.row} ${grid['center-xs']} ${styles.wrapper} ${styles.generation}`} id="generatorContainer" >
         <div className={grid['col-xs-12']}>
           <MovableShape
             hidden={shapes[0]}
@@ -228,11 +228,11 @@ class PassphraseGenerator extends React.Component {
             </div>
             : ''}
         </div>
-        <div className={grid['col-xs-12']}>
+        <footer className={grid['col-xs-12']}>
           <ProgressBar mode='determinate' theme={styles}
             value={percentage} />
-        </div>
-      </div>
+        </footer>
+      </section>
     );
   }
 }
