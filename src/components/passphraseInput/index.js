@@ -1,15 +1,12 @@
 import { translate } from 'react-i18next';
 import React from 'react';
-import Tooltip from 'react-toolbox/lib/tooltip';
 import Input from '../toolbox/inputs/input';
-import IconButton from '../toolbox/buttons/iconButton';
+import { FontIcon } from '../fontIcon';
 
 import { findSimilarWord, inDictionary } from '../../utils/similarWord';
 import { isValidPassphrase } from '../../utils/passphrase';
 import styles from './passphraseInput.css';
-
-// eslint-disable-next-line new-cap
-const TooltipIconButton = Tooltip(IconButton);
+import { TooltipWrapper } from '../timestamp';
 
 class PassphraseInput extends React.Component {
   constructor() {
@@ -86,13 +83,16 @@ class PassphraseInput extends React.Component {
           onFocus={typeof this.props.onFocus === 'function' ? this.props.onFocus : undefined}
           onBlur={typeof this.props.onBlur === 'function' ? this.props.onBlur : undefined}
           onChange={this.handleValueChange.bind(this)} />
-        <TooltipIconButton className={`show-passphrase-toggle ${styles.eyeIcon}`}
+        <TooltipWrapper className={`show-passphrase-toggle ${styles.eyeIcon}`}
           tooltipPosition='horizontal'
           tooltip={this.state.inputType === 'password' ?
             this.props.t('Show passphrase') :
             this.props.t('Hide passphrase')}
-          icon={this.state.inputType === 'password' ? 'visibility' : 'visibility_off'}
-          onClick={this.toggleInputType.bind(this)}/>
+          onClick={this.toggleInputType.bind(this)} >
+          <FontIcon
+            className={styles.icon}
+            value={this.state.inputType === 'password' ? 'hide' : 'show'} />
+        </TooltipWrapper>
       </div>);
   }
 }

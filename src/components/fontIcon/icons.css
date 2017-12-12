@@ -1,0 +1,107 @@
+
+@font-face {
+  font-family: "icons";
+  src:
+    url("../../assets/fonts/iconfont/icons.woff") format("woff"),
+    url("../../assets/fonts/iconfont/icons.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.icon {
+  font-family: "icons";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1 !important;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  vertical-align: middle;
+  speak: none;
+  text-decoration: none;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.add::before {
+  content: "\f101";
+}
+
+.angle-down::before {
+  content: "\f102";
+}
+
+.arrow-left::before {
+  content: "\f103";
+}
+
+.arrow-right::before {
+  content: "\f104";
+}
+
+.arrow-up::before {
+  content: "\f105";
+}
+
+.buy-tokens::before {
+  content: "\f106";
+}
+
+.checkmark::before {
+  content: "\f107";
+}
+
+.close::before {
+  content: "\f108";
+}
+
+.copy-to-clipboard::before {
+  content: "\f109";
+}
+
+.edit::before {
+  content: "\f10a";
+}
+
+.hide::before {
+  content: "\f10b";
+}
+
+.locked::before {
+  content: "\f10c";
+}
+
+.login::before {
+  content: "\f10d";
+}
+
+.more::before {
+  content: "\f10e";
+}
+
+.overview::before {
+  content: "\f10f";
+}
+
+.request-token::before {
+  content: "\f110";
+}
+
+.send-token::before {
+  content: "\f111";
+}
+
+.show::before {
+  content: "\f112";
+}
+
+.unlocked::before {
+  content: "\f113";
+}

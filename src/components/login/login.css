@@ -9,6 +9,7 @@
   overflow: visible !important;
   display: block !important;
   clear: both;
+  padding-right: 16px;
 }
 
 .wrapper,
@@ -53,7 +54,7 @@
       font-size: var(--font-size-h3);
 
       & .icon {
-        font-size: var(--font-size-h6) !important;
+        font-size: 32px;
       }
 
       & .icon,
@@ -93,9 +94,10 @@
 }
 
 .signUp {
-  height: calc(100% + 78px);
+  height: calc(100% + 46px);
   width: 58%;
-  margin-top: -40px;
+  margin-top: -23px;
+  border-radius: 3px;
 
   & .bg,
   & .shapes,
@@ -111,6 +113,7 @@
     z-index: 0;
     opacity: 0.94;
     background: var(--gradient);
+    border-radius: 3px;
   }
 
   & .shapes {
@@ -185,7 +188,7 @@
   }
 
   & .singUpArrow {
-    font-size: 1em !important;
+    font-size: 55px;
   }
 
   & .shapes {
@@ -202,7 +205,7 @@
     }
 
     & .singUpArrow {
-      font-size: 1.32em;
+      font-size: 34px;
     }
 
     & h5 {

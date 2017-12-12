@@ -1,8 +1,8 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Dropdown from 'react-toolbox/lib/dropdown';
-import { FontIcon } from 'react-toolbox/lib/font_icon';
 import i18next from 'i18next';
+import { FontIcon } from '../fontIcon';
 import Parallax from '../parallax';
 import Input from '../toolbox/inputs/input';
 import { PrimaryButton } from '../toolbox/buttons/button';
@@ -192,7 +192,7 @@ class Login extends React.Component {
           <section className={styles.table}>
             <header>
               <a className={styles.backButton} href='https://list.io' target='_blank' rel='noopener noreferrer'>
-                <FontIcon className={styles.icon}>chevron_left</FontIcon>
+                <FontIcon className={styles.icon}>arrow-left</FontIcon>
                 <b>Back to lisk.io</b>
               </a>
             </header>
@@ -251,7 +251,7 @@ class Login extends React.Component {
                 <RelativeLink to='register' className='new-account-button'>
                   {this.props.t('Get Access')}
                 </RelativeLink>
-                <FontIcon className={styles.singUpArrow}>chevron_right</FontIcon>
+                <FontIcon className={styles.singUpArrow} value='arrow-right' />
               </h2>
 
               <h5>Create an address as a gateway to all Lisk Services.</h5>
