@@ -1,9 +1,10 @@
 import { IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { Button } from '../toolbox/buttons/button';
 
+import { Button } from '../toolbox/buttons/button';
 import LiskAmount from '../liskAmount';
+import logo from '../../assets/images/Lisk-Logo.svg';
 import PrivateWrapper from '../privateWrapper';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import styles from './header.css';
@@ -12,13 +13,15 @@ import lock from './../../assets/images/lock-open.svg';
 
 const Header = props => (
   <header className={`${grid.row} ${grid['between-xs']} ${styles.wrapper}`}>
+    <img src={logo} className={styles.logo} />
     <PrivateWrapper>
       <div className={grid.row}>
         <Button className={`${styles.logoutButton} logout-button`} raised onClick={props.logOut}>{props.t('LOGOUT')}</Button>
         <div className={styles.account}>
           <div className={styles.information} align="right">
             <div className={styles.balance}>
-              <LiskAmount val={props.account.balance}/> LSK
+              <LiskAmount val={props.account.balance}/>
+              <small> LSK</small>
             </div>
             <div className={`${styles.address} account-information-address`}>{props.account.address}</div>
             <div className={styles.timer}>

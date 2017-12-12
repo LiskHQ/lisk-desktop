@@ -57,6 +57,9 @@ or "warn/action" ineastd of "red/green"
   --main-box-width: 1291px;
   --main-box-height: 788px;
   --border-radius-normal: 3px;
+  --m-menu-bar-height: 72px;
+  --m-top-bar-height: 90px;
+  --s-top-bar-height: 57px;
 
   /*************************
         Colors

@@ -3,6 +3,7 @@
 
 :root {
   --avatar-height: 69px;
+  --avatar-height-s: 40px;
   --menu-icon-height: 39px;
   --font-size-normal: 16px;
   --font-size-small: 13px;
@@ -19,10 +20,7 @@
 }
 
 .logo {
-  width: 100%;
-  min-width: 108px;
-  max-width: 200px;
-  padding: 8px;
+  display: none;
 }
 
 .logoutButton {
@@ -30,24 +28,6 @@
   margin: 6px 8px;
   height: auto;
   float: right;
-}
-
-.primary {
-  line-height: 40px;
-
-  @mixin buttonBasics;
-  @mixin buttonPrimary;
-}
-
-.secondaryBlue {
-  line-height: 39px;
-
-  @mixin buttonBasics;
-  @mixin buttonSecondary--blue;
-}
-
-.material-icons {
-  font-size: 24px !important;
 }
 
 .account {
@@ -115,6 +95,79 @@
 
       & .button {
         padding: 2px;
+      }
+    }
+  }
+}
+
+@media (--medium-viewport) {
+  .wrapper {
+    margin: 0px;
+    box-shadow: 0 2px 4px 0 rgba(60, 80, 104, 0.14), 0 8px 10px 0 rgba(60, 80, 104, 0.1);
+    width: 100%;
+    position: fixed;
+    top: 0;
+    background-color: var(--color-white);
+    z-index: 1;
+    height: var(--m-top-bar-height);
+  }
+
+  .logo {
+    display: inline-block;
+    height: calc(100% - 8px);
+    padding: 4px;
+  }
+
+  .logoutButton {
+    display: none;
+  }
+
+  .account {
+    & .information {
+      & .balance {
+        color: var(--color-black);
+      }
+
+      & .timer {
+        display: none;
+      }
+    }
+  }
+}
+
+@media (--small-viewport) {
+  .wrapper {
+    height: var(--s-top-bar-height);
+  }
+
+  .account {
+    & .avatar {
+      height: var(--avatar-height-s);
+      width: var(--avatar-height-s);
+    }
+
+    & .information {
+      height: var(--avatar-height-s);
+
+      & .balance {
+        font-size: 18px;
+        font-weight: bold;
+        margin: 10px 0;
+
+        & small {
+          font-size: 10px;
+        }
+      }
+
+      & .address {
+        display: none;
+      }
+    }
+
+    & .menu {
+      & .iconCircle {
+        bottom: -36px;
+        right: -36px;
       }
     }
   }
