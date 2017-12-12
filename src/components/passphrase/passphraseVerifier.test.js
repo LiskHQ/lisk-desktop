@@ -4,6 +4,8 @@ import { spy } from 'sinon';
 import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
+
+import accounts from '../../../test/constants/accounts';
 import ActionBar from '../actionBar';
 import PassphraseVerifier from './passphraseVerifier';
 import i18n from '../../i18n';
@@ -11,10 +13,7 @@ import i18n from '../../i18n';
 
 describe('PassphraseVerifier', () => {
   let wrapper;
-  const account = {
-    balance: 1000e8,
-    passphrase: 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit',
-  };
+  const account = accounts.delegate;
   const props = {
     t: key => key,
     passphrase: account.passphrase,

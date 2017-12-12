@@ -4,6 +4,7 @@ import { mount } from 'enzyme';
 import sinon from 'sinon';
 import configureStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
+import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
 import SendWritable from './send';
 
@@ -14,10 +15,7 @@ describe('Send Writable Component', () => {
   let props;
 
   beforeEach(() => {
-    const account = {
-      balance: 1000e8,
-      passphrase: 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit',
-    };
+    const account = accounts.delegate;
 
     const store = fakeStore({
       account,

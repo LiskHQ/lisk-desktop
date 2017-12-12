@@ -5,6 +5,8 @@ import sinon from 'sinon';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 import Lisk from 'lisk-js';
+
+import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
 import store from '../../store';
 import DecryptMessage from './decryptMessage';
@@ -16,15 +18,10 @@ describe('DecryptMessage', () => {
   let errorSpy;
   let copyMock;
   let decryptMessageMock;
-  const senderPublicKey = '164a0580cd2b430bc3496f82adf51b799546a3a4658bb9dca550a0e20cb579c8';
+  const senderPublicKey = accounts.delegate.publicKey;
   const message = 'Hello world';
   const decryptedMessage = 'Decrypted Hello world';
   const nonce = 'this is nonce';
-  const publicKey = '164a0580cd2b430bc3496f82adf51b799546a3a4658bb9dca550a0e20cb579c8';
-  const account = {
-    passphrase: 'wagon stock borrow episode laundry kitten salute link globe zero feed marble',
-    publicKey,
-  };
 
   beforeEach(() => {
     successToastSpy = sinon.spy();
@@ -33,7 +30,7 @@ describe('DecryptMessage', () => {
     decryptMessageMock = sinon.stub(Lisk.crypto, 'decryptMessageWithSecret');
     // decryptMessageSpy = sinon.spy(Lisk.crypto, 'decryptMessageWithSecret');
     const props = {
-      account,
+      account: accounts.genesis,
       successToast: successToastSpy,
       errorToast: errorSpy,
       copyToClipboard: copyMock,

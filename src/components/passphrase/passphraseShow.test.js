@@ -4,6 +4,8 @@ import { spy } from 'sinon';
 import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
+
+import accounts from '../../../test/constants/accounts';
 import ActionBar from '../actionBar';
 import PassphraseShow from './passphraseShow';
 import i18n from '../../i18n';
@@ -16,10 +18,7 @@ describe('PassphraseShow', () => {
     prevStep: () => {},
     nextStep: () => {},
   };
-  const account = {
-    balance: 1000e8,
-    passphrase: 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit',
-  };
+  const account = accounts.delegate;
   const fakeStore = configureStore();
   const store = fakeStore({
     account,

@@ -8,6 +8,7 @@ import { listAccountDelegates,
   unvoteAutocomplete,
   registerDelegate } from './delegate';
 import * as peers from './peers';
+import accounts from '../../../test/constants/accounts';
 
 const username = 'genesis_1';
 const secret = 'sample_secret';
@@ -57,7 +58,7 @@ describe('Utils: Delegate', () => {
 
   describe('getDelegate', () => {
     it('should return requestToActivePeer(activePeer, `delegates/get`, options)', () => {
-      const options = { publicKey: '"86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19"' };
+      const options = { publicKey: `"${accounts.delegate.publicKey}"` };
       peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates/get', options)
         .returnsPromise().resolves('resolved promise');
 

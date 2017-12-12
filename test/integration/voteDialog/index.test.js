@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
 import { prepareStore, renderWithRouter } from '../../../src/utils/applicationInit';
+import accounts from '../../constants/accounts';
 import actionTypes from '../../../src/constants/actions';
 import accountReducer from '../../../src/store/reducers/account';
 import votingReducer from '../../../src/store/reducers/voting';
@@ -29,12 +30,9 @@ const keyCodes = {
 };
 
 const realAccount = {
-  address: '16313739661670634666L',
-  balance: '346215336704',
+  ...accounts.genesis,
   delegate: {},
   multisignatures: [],
-  passphrase: 'wagon stock borrow episode laundry kitten salute link globe zero feed marble',
-  publicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
   u_multisignatures: [],
   unconfirmedBalance: '0',
 };

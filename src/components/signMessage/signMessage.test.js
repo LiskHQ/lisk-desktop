@@ -4,6 +4,8 @@ import { mount } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import sinon from 'sinon';
 import PropTypes from 'prop-types';
+
+import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
 import SignMessage from './signMessage';
 
@@ -15,17 +17,14 @@ describe('SignMessage', () => {
   let props;
   let store;
   let options;
-  const publicKey = 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f';
+  const { publicKey } = accounts.genesis;
   const signature1 = '079331d868678fd5f272f09d6dc8792fb21335aec42af7f11caadbfbc17d4707e7' +
     'd7f343854b0c619b647b81ba3f29b23edb4eaf382a47c534746bad4529560b48656c6c6f20776f726c64';
   const signature2 = '40f339db0d00f7909ab3818a1181e1fcb4139c9cb092c56aa88108b821eb6769bb' +
     '970a99edf2ec60729612fb04a4470cc190786fcb5142b72a6b2a0100e7f90148656c6c6f203220776f726c6473';
   const message1 = 'Hello world';
   const message2 = 'Hello 2 worlds';
-  const account = {
-    passphrase: 'wagon stock borrow episode laundry kitten salute link globe zero feed marble',
-    publicKey,
-  };
+  const account = accounts.genesis;
   const getResult = (message, signature) => (`-----BEGIN LISK SIGNED MESSAGE-----
 -----MESSAGE-----
 ${message}
