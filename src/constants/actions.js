@@ -32,6 +32,7 @@ const actionTypes = {
   passphraseUsed: 'PASSPHRASE_USED',
   accountsRetrieved: 'ACCOUNTS_RETRIEVED',
   accountSaved: 'ACCOUNT_SAVED',
+  activeAccountSaved: 'ACTIVE_ACCOUNT_SAVED',
   accountRemoved: 'ACCOUNT_REMOVED',
   accountSwitched: 'ACCOUNT_SWITCHED',
 };

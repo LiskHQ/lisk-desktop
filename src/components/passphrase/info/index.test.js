@@ -7,19 +7,17 @@ import configureStore from 'redux-mock-store';
 import ActionBar from '../../actionBar';
 import Info from './index';
 import i18n from '../../../i18n';
+import accounts from '../../../../test/constants/accounts';
 
 
-describe('Info', () => {
+describe('Passphrase: Info', () => {
   let wrapper;
   const props = {
     t: key => key,
     nextStep: () => {},
     backButtonFn: () => {},
   };
-  const account = {
-    balance: 1000e8,
-    passphrase: 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit',
-  };
+  const account = accounts.delegate;
   const fakeStore = configureStore();
   const store = fakeStore({
     account,

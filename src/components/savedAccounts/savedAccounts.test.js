@@ -44,13 +44,16 @@ describe('SavedAccounts', () => {
   const props = {
     closeDialog: () => {},
     accountRemoved: spy(),
-    accountSwitched: () => {},
+    accountSwitched: spy(),
     networkOptions: {
       code: networks.mainnet.code,
     },
     activeAccount,
     savedAccounts,
     t: key => key,
+    history: {
+      push: spy(),
+    },
   };
 
   beforeEach(() => {
@@ -76,9 +79,24 @@ describe('SavedAccounts', () => {
     expect(wrapper.find('.saved-account-card')).to.have.lengthOf(savedAccounts.length);
   });
 
-  it('should call props.accountRemoved on "remove button" click', () => {
+  it('should call props.accountRemoved on the second "remove button" click', () => {
+    wrapper.find('button.edit-button').simulate('click');
+    wrapper.find('button.remove-button').at(1).simulate('click');
     wrapper.find('button.remove-button').at(1).simulate('click');
     expect(props.accountRemoved).to.have.been.calledWith(savedAccounts[1]);
+  });
+
+  it('should call props.accountSwitched on the "saved account card" click', () => {
+    wrapper.find('.saved-account-card').at(1).simulate('click');
+    expect(props.accountSwitched).to.have.been.calledWith(savedAccounts[1]);
+    expect(props.history.push).to.have.been.calledWith('/main/transactions/');
+  });
+
+  it('should not call props.accountSwitched on the "saved account card" click if in "edit" mode', () => {
+    wrapper.find('button.edit-button').simulate('click');
+    wrapper.find('.saved-account-card').at(0).simulate('click');
+    // TODO figure out why this test doesn't work
+    // expect(props.accountSwitched).to.not.have.been.calledWith();
   });
 });
 

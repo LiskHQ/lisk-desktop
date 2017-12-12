@@ -12,7 +12,7 @@ const {
   checkAlertDialog,
   waitTime,
 } = require('../support/util.js');
-const accounts = require('../support/accounts.js');
+const accounts = require('../../constants/accounts.js');
 
 chai.use(chaiAsPromised);
 const expect = chai.expect;

@@ -4,16 +4,16 @@ import { mount } from 'enzyme';
 import { spy } from 'sinon';
 import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
+
+import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
 import SecondPassphrase from './secondPassphrase';
 
 describe('SecondPassphrase', () => {
   let wrapper;
   const peers = { data: {} };
-  const account = {
-    passphrase: 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit',
-  };
-  const secPassphrase = 'bottom believe surround fury install scorpion destroy below dwarf inquiry foot cricket';
+  const account = accounts.delegate;
+  const secPassphrase = accounts['delegate candidate'].passphrase;
   const store = configureMockStore([])({
     peers,
     account,

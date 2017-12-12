@@ -5,6 +5,7 @@ import { activePeerUpdate } from '../../actions/peers';
 import * as votingActions from '../../actions/voting';
 import * as forgingActions from '../../actions/forging';
 import * as accountApi from '../../utils/api/account';
+import accounts from '../../../test/constants/accounts';
 import actionTypes from '../../constants/actions';
 import * as delegateApi from '../../utils/api/delegate';
 import middleware from './account';
@@ -16,7 +17,7 @@ describe('Account middleware', () => {
   let state;
   let stubGetAccount;
   let stubTransactions;
-  const passphrase = 'right cat soul renew under climb middle maid powder churn cram coconut';
+  const { passphrase } = accounts.genesis;
 
   const transactions = { transactions: [{ senderId: 'sample_address', receiverId: 'some_address' }] };
 

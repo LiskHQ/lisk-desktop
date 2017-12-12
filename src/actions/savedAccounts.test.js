@@ -7,6 +7,7 @@ import {
   accountSwitched,
   accountRemoved,
   accountsRetrieved,
+  activeAccountSaved,
 } from './savedAccounts';
 
 
@@ -63,6 +64,16 @@ describe('actions: savedAccount', () => {
       };
 
       expect(accountRemoved(data.publicKey)).to.be.deep.equal(expectedAction);
+    });
+  });
+
+  describe('activeAccountSaved', () => {
+    it('should create an action to remove account', () => {
+      const expectedAction = {
+        type: actionTypes.activeAccountSaved,
+      };
+
+      expect(activeAccountSaved()).to.be.deep.equal(expectedAction);
     });
   });
 });

@@ -1,6 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { translate } from 'react-i18next';
+import CopyToClipboard from '../copyToClipboard';
 import TransactionType from './transactionType';
 import styles from './transactions.css';
 import LiskAmount from '../liskAmount';
@@ -8,7 +9,6 @@ import Amount from './amount';
 import Spinner from '../spinner';
 import { TimeFromTimestamp, DateFromTimestamp } from './../timestamp/index';
 import angle from './../../assets/images/darkblue_angle_down.svg';
-import copy from './../../assets/images/icons/copy.svg';
 
 class TransactionRow extends React.Component {
   constructor() {
@@ -27,12 +27,8 @@ class TransactionRow extends React.Component {
     this.forceUpdate();
   }
 
-  copyTransactionID() {
-    this.props.copy(this.props.value.id);
-  }
-
   render() {
-    const props = this.props;
+    const { props } = this;
     return (
       <div className={`${grid.row} ${styles.rows} ${styles.paddingLeft} transactionsRow`}>
         <div className={`${styles.leftText} ${grid['col-xs-6']}`}>
@@ -41,7 +37,8 @@ class TransactionRow extends React.Component {
           </div>
           {this.state.isOpen ? <div className={styles.subRow}> {props.t('Transaction ID: ')}
             <a href="#">{props.value.id}</a>
-            <img onClick={this.copyTransactionID.bind(this)} src={copy} className={styles.copyIcon} /></div> : ''}
+            <CopyToClipboard value={props.value.id} text=' ' className={styles.copyIcon}/>
+          </div> : ''}
         </div>
         <div className={`${styles.rightText} ${grid['col-xs-2']}`}>
           <div className={styles.mainRow}>

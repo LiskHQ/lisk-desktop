@@ -5,6 +5,7 @@ import configureStore from 'redux-mock-store';
 import i18next from 'i18next';
 import PropTypes from 'prop-types';
 import { spy } from 'sinon';
+import accounts from '../../../test/constants/accounts';
 import ActionBar from '../actionBar';
 import i18n from '../../i18n';
 import Authenticate from './authenticate';
@@ -31,11 +32,11 @@ describe('Authenticate', () => {
 
   const account = {
     isDelegate: false,
-    publicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
-    address: '16313739661670634666L',
+    publicKey: accounts.genesis.publicKey,
+    address: accounts.genesis.address,
   };
 
-  const passphrase = 'wagon stock borrow episode laundry kitten salute link globe zero feed marble';
+  const { passphrase } = accounts.genesis;
 
   beforeEach(() => {
     props = {

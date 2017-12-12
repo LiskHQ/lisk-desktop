@@ -6,6 +6,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { spy } from 'sinon';
 import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
+
+import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
 import Register from './register';
 
@@ -13,8 +15,8 @@ import Register from './register';
 describe('Register', () => {
   let wrapper;
   const peers = { data: {} };
-  const passphrase = 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit';
   const account = {};
+  const { passphrase } = accounts.delegate;
   const store = configureMockStore([])({
     peers,
     account,

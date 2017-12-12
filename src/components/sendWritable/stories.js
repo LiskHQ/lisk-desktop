@@ -5,13 +5,10 @@ import { storiesOf } from '@storybook/react';
 
 import Send from './send';
 
+import accounts from '../../../test/constants/accounts';
 import store from '../../store';
 
-const account = {
-  passphrase: 'wagon stock borrow episode laundry kitten salute link globe zero feed marble',
-  address: '16313739661670634666L',
-  balance: 1000e8,
-};
+const account = accounts.genesis;
 
 storiesOf('Send', module)
   .addDecorator(getStory => (

@@ -2,6 +2,8 @@ import React from 'react';
 import { expect } from 'chai';
 import { spy } from 'sinon';
 import { mount } from 'enzyme';
+
+import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
 import PassphraseInput from './index';
 
@@ -26,7 +28,7 @@ describe('PassphraseInput', () => {
   });
 
   it('should call props.onChange with error=undefined if a valid passphrase is entered', () => {
-    const passphrase = 'wagon stock borrow episode laundry kitten salute link globe zero feed marble';
+    const { passphrase } = accounts.genesis;
     wrapper.find('input').simulate('change', { target: { value: passphrase } });
     expect(wrapper.props().onChange).to.have.been.calledWith(passphrase, undefined);
   });
@@ -68,7 +70,7 @@ describe('PassphraseInput', () => {
 
   const WHITE_SPACE_AT_THE_BEGINNING_ERROR = 'Passphrase contains unnecessary whitespace at the beginning';
   it("should call props.onChange with error='Passphrase contains unnecessary whitespace at the beginning'", () => {
-    const passphrase = ' wagon stock borrow episode laundry kitten salute link globe zero feed marble';
+    const passphrase = ` ${accounts.genesis.passphrase}`;
     wrapper.find('input').simulate('change', { target: { value: passphrase } });
     expect(wrapper.props().onChange).to.have.been
       .calledWith(passphrase, WHITE_SPACE_AT_THE_BEGINNING_ERROR);
@@ -76,7 +78,7 @@ describe('PassphraseInput', () => {
 
   const WHITE_SPACE_AT_THE_END_ERROR = 'Passphrase contains unnecessary whitespace at the end';
   it("should call props.onChange with error='Passphrase contains unnecessary whitespace at the end'", () => {
-    const passphrase = 'wagon stock borrow episode laundry kitten salute link globe zero feed marble ';
+    const passphrase = `${accounts.genesis.passphrase} `;
     wrapper.find('input').simulate('change', { target: { value: passphrase } });
     expect(wrapper.props().onChange).to.have.been
       .calledWith(passphrase, WHITE_SPACE_AT_THE_END_ERROR);

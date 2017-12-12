@@ -7,14 +7,12 @@ import configureStore from 'redux-mock-store';
 import ActionBar from '../../actionBar';
 import Confirm from './index';
 import i18n from '../../../i18n';
+import accounts from '../../../../test/constants/accounts';
 
 
-describe('Confirm', () => {
+describe('Passphrase: Confirm', () => {
   let wrapper;
-  const account = {
-    balance: 1000e8,
-    passphrase: 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit',
-  };
+  const account = accounts.delegate;
   const props = {
     t: key => key,
     passphrase: account.passphrase,
