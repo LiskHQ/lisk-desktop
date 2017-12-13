@@ -3,6 +3,7 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import { Button } from '../toolbox/buttons/button';
+import { FontIcon } from '../fontIcon';
 import LiskAmount from '../liskAmount';
 import logo from '../../assets/images/Lisk-Logo.svg';
 import PrivateWrapper from '../privateWrapper';
@@ -27,12 +28,14 @@ const Header = props => (
             <div className={styles.timer}>
               <img src={lock} /> Address timeout in 09:32</div>
           </div>
-          <div className={styles.avatar}></div>
+          <RelativeLink to='saved-accounts'>
+            <div className={styles.avatar}></div>
+          </RelativeLink>
           <div className={styles.menu}>
             <figure className={styles.iconCircle}>
               <IconMenu
                 className={`${styles.button} main-menu-icon-button ${offlineStyle.disableWhenOffline}`}
-                icon="favorite"
+                icon={<FontIcon value='more' />}
                 position="topRight"
                 menuRipple
                 theme={styles}

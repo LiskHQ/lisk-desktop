@@ -126,9 +126,16 @@
     & .information {
       & .balance {
         color: var(--color-black);
+        font-family: var(--heading-font);
       }
 
       & .timer {
+        display: none;
+      }
+    }
+
+    & .menu {
+      & .iconCircle {
         display: none;
       }
     }
@@ -161,13 +168,6 @@
 
       & .address {
         display: none;
-      }
-    }
-
-    & .menu {
-      & .iconCircle {
-        bottom: -36px;
-        right: -36px;
       }
     }
   }
