@@ -59,6 +59,7 @@
     "react-animate-on-change": "=1.0.0",
     "react-circular-progressbar": "0.2.1",
     "react-copy-to-clipboard": "5.0.1",
+    "react-countdown-now": "1.2.0",
     "react-css-themr": "=2.1.2",
     "react-dom": "=16.0.0",
     "react-i18next": "=6.0.6",
