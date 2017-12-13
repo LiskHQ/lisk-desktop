@@ -3,7 +3,8 @@
 
 :root {
   --avatar-height: 69px;
-  --avatar-height-s: 40px;
+  --avatar-height-m: 40px;
+  --avatar-height-s: 33px;
   --menu-icon-height: 39px;
   --font-size-normal: 16px;
   --font-size-small: 13px;
@@ -123,10 +124,29 @@
   }
 
   .account {
+    & .avatar {
+      margin-top: 14px;
+      height: var(--avatar-height-m);
+      width: var(--avatar-height-m);
+    }
+
     & .information {
+      margin-top: 14px;
+      height: var(--avatar-height-m);
+
       & .balance {
+        font-size: 20px;
         color: var(--color-black);
         font-family: var(--heading-font);
+        margin-bottom: -8px;
+
+        & small {
+          font-size: 12px;
+        }
+      }
+
+      & .address {
+        font-size: 12px;
       }
 
       & .timer {
@@ -136,7 +156,9 @@
 
     & .menu {
       & .iconCircle {
-        display: none;
+        bottom: -12px;
+        right: -34px;
+        box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.12), 0 -2px 24px 0 rgba(0, 0, 0, 0.24);
       }
     }
   }
@@ -167,6 +189,12 @@
       }
 
       & .address {
+        display: none;
+      }
+    }
+
+    & .menu {
+      & .iconCircle {
         display: none;
       }
     }
