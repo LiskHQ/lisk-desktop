@@ -7,6 +7,7 @@
   --address-animation-duration: 1000ms;
   --header-animation-duration: 450ms;
   --second-header-animation-delay: 1000ms;
+  --steps-nav-height: 22px;
 }
 
 .table {
@@ -26,7 +27,7 @@
 
 .verifier {
   text-align: center;
-  height: calc(100% - 22px);
+  height: calc(100% - var(--steps-nav-height));
 
   & > section {
     height: 50%;
@@ -76,12 +77,19 @@
     border: 0;
     display: inline;
     vertical-align: top;
-    padding-top: 80px;
+    padding-top: 42px;
+
+    & .placeholder {
+      border-top: solid 2px var(--color-black);
+      width: 100%;
+      height: 32px;
+      display: block;
+    }
 
     & div {
       & label {
         display: block;
-        border: solid 2px #2a73b9;
+        border: solid 2px var(--color-primary-standard);
         border-radius: 3px;
         padding: 0 5px;
         line-height: 50px;
@@ -95,8 +103,8 @@
         position: absolute;
 
         &:checked + label {
-          background-color: #2a73b9;
-          color: #fff;
+          background-color: var(--color-primary-standard);
+          color: var(--color-white);
         }
       }
     }
@@ -111,7 +119,7 @@
     & h5 {
       opacity: 0;
       font-size: 18px;
-      color: red;
+      color: var(--color-error);
 
       &.visible {
         opacity: 1;

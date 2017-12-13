@@ -1,12 +1,17 @@
 @import '../../app/variables';
 
 :root {
-  --gradient-button: var(--gradient-action);
+  --action-button-bg: var(--gradient-action);
+  --secondary-button-bg: gray;
+  --gradient-bg: linear-gradient(to right, #134381, #001e45);
+  --element-width: 100%;
+  --element-height: 62px;
+  --label-font-size: 16px;
 }
 
 .sliderInput {
   user-select: none;
-  width: 190px;
+  width: var(--element-width);
 
   & span,
   & label,
@@ -15,27 +20,28 @@
   }
 
   & div {
-    padding-left: 44px;
     transition: all ease 300ms;
-
-    /* big slider */
-    text-align: left;
-    display: table;
+    width: calc(100% - calc(var(--element-height) / 2));
     position: relative;
+    text-indent: calc(var(--element-height) / 3);
+    flex-flow: row wrap;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
 
     &::before {
       content: '';
-      display: none;
+      display: block;
       position: absolute;
       z-index: 1;
       background: linear-gradient(to right, rgba(19, 67, 129, 0), #001e45);
       height: 62px;
-      width: calc(100% - 62px);
+      right: 0;
+      width: 100%;
     }
 
     &::after {
       content: 'chevron_right chevron_right chevron_right chevron_right chevron_right chevron_right chevron_right';
-      display: none;
       vertical-align: middle;
       overflow: hidden;
       letter-spacing: 8px;
@@ -45,27 +51,30 @@
       font-family: 'Material Icons';
       position: relative;
       z-index: 0;
+      flex: 3 0px;
     }
 
-    &.hasArrows {
-      &::before {
-        display: block;
-      }
+    & span {
+      text-indent: calc(var(--element-height) + 20px);
+      flex: 0 auto;
+      width: auto;
+      font-size: var(--label-font-size);
+    }
 
-      &::after {
-        display: table-cell;
+    &:not(.hasArrows) {
+      &::after,
+      &::before {
+        display: none !important;
       }
     }
   }
 
   & label {
-    height: 62px;
-    line-height: 62px;
-    padding: 0 0 0 31px;
+    height: var(--element-height);
+    line-height: var(--element-height);
     width: 100%;
-    margin: 40px auto;
-    border-radius: 31px;
-    background: linear-gradient(to right, #134381, #001e45);
+    border-radius: calc(var(--element-height) / 2);
+    background: var(--gradient-bg);
     color: var(--color-white);
     display: block;
     position: relative;
@@ -74,18 +83,18 @@
 
   & span.circle {
     position: absolute;
-    width: 62px;
-    height: 62px;
+    width: var(--element-height);
+    height: var(--element-height);
     display: block;
     text-align: center;
-    border-radius: 31px;
+    border-radius: calc(var(--element-height) / 2);
     top: 0;
     transition: all ease 300ms;
 
     &.button {
       left: 0;
       z-index: 3;
-      background: var(--gradient-button);
+      background: var(--action-button-bg);
 
       &[style] {
         cursor: grabbing;
@@ -98,14 +107,14 @@
     }
 
     &.lock {
-      background: gray;
+      background: var(--secondary-button-bg);
       right: 0;
       z-index: 2;
     }
 
     & i {
       width: 100%;
-      line-height: 62px !important;
+      line-height: var(--element-height) !important;
       position: absolute;
       left: 0;
       top: 0;
@@ -130,7 +139,7 @@
 
     &:checked + label {
       & .button {
-        left: calc(100% - 62px);
+        left: calc(100% - var(--element-height));
 
         & i.checkMark {
           opacity: 1;

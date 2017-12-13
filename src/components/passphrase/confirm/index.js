@@ -168,6 +168,7 @@ class Confirm extends React.Component {
                     missingWordIndex++;
                     return (
                       <fieldset key={word}>
+                        <span className={styles.placeholder}></span>
                         {
                           wordOptions[missingWordIndex].map(wd =>
                             <div key={wd}>

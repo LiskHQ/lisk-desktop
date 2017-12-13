@@ -101,3 +101,9 @@ small {
 :global .text-center {
   text-align: center;
 }
+
+input,
+textarea,
+select {
+  font-family: var(--content-font);
+}

@@ -72,7 +72,8 @@
       }
 
       & .smallSlider {
-        margin: 0 auto;
+        margin: 40px auto;
+        width: 220px;
       }
     }
   }
@@ -108,6 +109,7 @@
         border: none;
         word-spacing: 10px;
         text-align: center;
+        resize: none;
       }
     }
 
@@ -132,14 +134,6 @@
       & label {
         & i:last-child {
           font-size: 24px !important;
-        }
-
-        & div {
-          text-align: left;
-
-          & span {
-            padding-left: 44px;
-          }
         }
       }
     }
