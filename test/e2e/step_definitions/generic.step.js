@@ -258,8 +258,8 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
       .mouseDown(element(by.css(selector)))
       .mouseMove({ x: 100, y: 0 })
       .mouseUp()
-      .perform();
-    callback();
+      .perform()
+      .then(callback());
   });
 });
 

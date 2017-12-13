@@ -34,11 +34,10 @@ class PassphraseShow extends React.Component {
         </header>
         <section className={`${styles.introduction} ${styles.table}`}>
           <div className={styles.tableCell}>
-            <h5>I am responsible for keeping my passphrase safe.
-            No one can restore it, not even Lisk.</h5>
+            <h5>{t('I am responsible for keeping my passphrase safe. No one can restore it, not even Lisk.')}</h5>
             <SliderCheckbox
               className={`${styles.smallSlider} i-understand-checkbox`}
-              label='I understand'
+              label={t('I understand')}
               icons={{
                 done: 'done',
               }}
@@ -51,7 +50,7 @@ class PassphraseShow extends React.Component {
         <section className={`${styles.revealing} ${styles.table}`}>
           <div className={styles.tableCell}>
             <SliderCheckbox
-              label='Drag to reveal'
+              label={t('Drag to reveal')}
               icons={{
                 goal: 'lock',
                 done: 'vpn_key',

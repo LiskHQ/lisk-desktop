@@ -51,11 +51,6 @@ describe('Passphrase: Confirm', () => {
     expect(wrapper.find(PrimaryButton)).to.have.lengthOf(1);
   });
 
-  it('should disable Next button if answer is not entered', () => {
-    const wrapperProps = wrapper.find('button.next-button').props();
-    expect(wrapperProps.disabled).to.be.equal(true);
-  });
-
   /**
    * @todo change simulation doesn't work
    */

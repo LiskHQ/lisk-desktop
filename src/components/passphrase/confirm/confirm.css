@@ -45,6 +45,10 @@
       max-width: 750px;
       margin: 0 auto;
     }
+
+    & h2.done {
+      max-width: 450px;
+    }
   }
 
   & .word {

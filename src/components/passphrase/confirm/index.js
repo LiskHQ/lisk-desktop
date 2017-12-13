@@ -14,7 +14,6 @@ class Confirm extends React.Component {
       words: [],
       missing: [],
       answers: [],
-      formValidity: true,
     };
   }
 
@@ -25,7 +24,8 @@ class Confirm extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.state.step === 'verify' && this.state.formValidity && this.state.answers.length === this.state.missing.length) {
+    const status = this.formStatus(this.state.answers);
+    if (this.state.step === 'verify' && status.filled && status.valid) {
       this.next();
     }
   }
@@ -38,14 +38,20 @@ class Confirm extends React.Component {
       validity: e.nativeEvent.target.value === this.state.words[this.state.missing[index]],
     };
 
-    const formValidity = this.formValidator(answers);
+    const formValidity = this.formStatus(answers).valid;
     this.setState({ answers, formValidity });
   }
 
-  // eslint-disable-next-line  class-methods-use-this
-  formValidator(answers) {
-    return answers.reduce((isValid, answer) =>
-      isValid && answer.validity, true);
+  // eslint-disable-next-line class-methods-use-this
+  formStatus(answers) {
+    const formStatus = answers.reduce((status, answer) =>
+      // eslint-disable-next-line eqeqeq
+      ({
+        valid: (status.valid && answer instanceof Object && answer.validity === true),
+        filled: answer instanceof Object ? status.filled + 1 : status.filled,
+      }), { valid: true, filled: 0 });
+    formStatus.filled = formStatus.filled === this.state.missing.length;
+    return formStatus;
   }
 
   next() {
@@ -143,16 +149,17 @@ class Confirm extends React.Component {
 
   render() {
     let missingWordIndex = -1;
-    const { missing, answers, words, wordOptions, formValidity, step } = this.state;
+    const { missing, words, wordOptions, step, answers } = this.state;
+    const formStatus = this.formStatus(answers);
 
     return (
       <section className={`passphrase-verifier ${styles.verifier} ${styles[step]}`}>
         <header className={styles.table}>
           <div className={styles.tableCell}>
-            <h2 className={styles.verify}>Choose the correct phrases to confirm.</h2>
-            <h2 className={styles.done}>Awesome!<br />You’re all set.</h2>
-            <h5 className={`${styles.verify} ${!this.state.formValidity ? styles.visible : ''}`}>
-              Please go back and check your passphrase again.
+            <h2 className={styles.verify}>{this.props.t('Choose the correct phrases to confirm.')}</h2>
+            <h2 className={styles.done}>{this.props.t('Awesome! You’re all set.')}</h2>
+            <h5 className={`${styles.verify} ${(formStatus.filled && !formStatus.valid) ? styles.visible : ''}`}>
+              {this.props.t('Please go back and check your passphrase again.')}
             </h5>
           </div>
         </header>
@@ -196,8 +203,7 @@ class Confirm extends React.Component {
             <h4 className={styles.address}>{this.address}</h4>
             <PrimaryButton
               theme={styles}
-              disabled={(answers.length < missing.length) || !formValidity}
-              label='Get to your Dashboard'
+              label={this.props.t('Get to your Dashboard')}
               className="next-button"
               onClick={() => this.props.finalCallback({ passphrase: words.join(' ') })}
             />
