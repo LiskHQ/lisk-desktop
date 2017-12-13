@@ -1,9 +1,6 @@
 import actionTypes from '../constants/actions';
 import {
   getSavedAccounts,
-  setSavedAccount,
-  removeSavedAccount,
-  setLastActiveAccount,
   getLastActiveAccount,
 } from '../utils/savedAccounts';
 
@@ -11,36 +8,26 @@ import {
  * An action to dispatch accountSaved
  *
  */
-export const accountSaved = (account) => {
-  setSavedAccount(account);
-  setLastActiveAccount(account);
-  return {
-    data: account,
-    type: actionTypes.accountSaved,
-  };
-};
+export const accountSaved = account => ({
+  data: account,
+  type: actionTypes.accountSaved,
+});
 
 /**
  * An action to dispatch accountRemoved
  */
-export const accountRemoved = (account) => {
-  removeSavedAccount(account);
-  return {
-    data: account,
-    type: actionTypes.accountRemoved,
-  };
-};
+export const accountRemoved = account => ({
+  data: account,
+  type: actionTypes.accountRemoved,
+});
 
 /**
  * An action to dispatch accountSwitched
  */
-export const accountSwitched = (account) => {
-  setLastActiveAccount(account);
-  return {
-    data: account,
-    type: actionTypes.accountSwitched,
-  };
-};
+export const accountSwitched = account => ({
+  data: account,
+  type: actionTypes.accountSwitched,
+});
 
 /**
  * The action to initiate savedAccounts store with the retrieved accounts

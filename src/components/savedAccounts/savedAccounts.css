@@ -153,10 +153,10 @@
   left: 44px;
 }
 
+.network,
 .unlocked {
   font-size: 1em;
   position: absolute;
-  left: 0;
   top: 0;
   padding: 24px;
   color: var(--color-grayscale-dark);
@@ -165,6 +165,15 @@
   & > * {
     vertical-align: bottom;
   }
+}
+
+.unlocked {
+  left: 0;
+}
+
+.network {
+  padding-top: 30px;
+  right: 0;
 }
 
 .addAcctiveAccountButton {

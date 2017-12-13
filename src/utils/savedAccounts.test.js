@@ -4,8 +4,7 @@ import {
   getSavedAccounts,
   getLastActiveAccount,
   setLastActiveAccount,
-  setSavedAccount,
-  removeSavedAccount,
+  setSavedAccounts,
 } from './savedAccounts';
 
 describe('savedAccounts', () => {
@@ -95,19 +94,10 @@ describe('savedAccounts', () => {
     });
   });
 
-  describe('setSavedAccount', () => {
+  describe('setSavedAccounts', () => {
     it('sets accounts in localStorage with appended passed account and also returns it', () => {
-      localStorageMock.expects('getItem').withExactArgs('accounts').returns(JSON.stringify(accounts.slice(0, 2)));
-      localStorageMock.expects('setItem').withExactArgs('accounts', JSON.stringify(accounts));
-      expect(setSavedAccount(accounts[2])).to.deep.equal(accounts);
-    });
-  });
-
-  describe('removeSavedAccount', () => {
-    it('sets accounts in localStorage with removed  passed account and also returns it', () => {
-      localStorageMock.expects('getItem').withExactArgs('accounts').returns(JSON.stringify(accounts));
-      localStorageMock.expects('setItem').withExactArgs('accounts', JSON.stringify(accounts.slice(0, 2)));
-      expect(removeSavedAccount(accounts[2])).to.deep.equal(accounts.slice(0, 2));
+      localStorageMock.expects('setItem').withExactArgs('accounts', JSON.stringify([accounts[2]]));
+      expect(setSavedAccounts([accounts[2]])).to.deep.equal([accounts[2]]);
     });
   });
 });

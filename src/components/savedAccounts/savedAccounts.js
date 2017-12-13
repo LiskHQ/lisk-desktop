@@ -6,6 +6,8 @@ import { extractAddress } from '../../utils/api/account';
 import { PrimaryButton, SecondaryLightButton } from '../toolbox/buttons/button';
 import LiskAmount from '../liskAmount';
 import BackgroundMaker from '../backgroundMaker';
+import networks from '../../constants/networks';
+import getNetwork from '../../utils/getNetwork';
 
 import plusShapeIcon from '../../assets/images/plus-shape.svg';
 import circleImage from '../../assets/images/add-id-oval.svg';
@@ -98,6 +100,11 @@ class SavedAccounts extends React.Component {
                 <strong className={styles.unlocked}>
                   <FontIcon value='lock_open' />
                   {t('Unlocked')}
+                </strong> :
+                null)}
+              {(account.network !== networks.mainnet.code ?
+                <strong className={styles.network}>
+                  {account.address ? account.address : t(getNetwork(account.network).name)}
                 </strong> :
                 null)}
               <div className={styles.cardIcon}>

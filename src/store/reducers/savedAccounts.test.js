@@ -34,7 +34,7 @@ describe('Reducer: savedAccounts(state, action)', () => {
       data: account,
     };
     const changedState = savedAccounts(state, action);
-    expect(changedState).to.deep.equal({ accounts: [action.data] });
+    expect(changedState).to.deep.equal({ accounts: [action.data], lastActive: action.data });
   });
 
   it('should return array without given account if action.type = actionTypes.accountRemoved', () => {
