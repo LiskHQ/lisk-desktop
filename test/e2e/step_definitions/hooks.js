@@ -40,6 +40,7 @@ defineSupportCode(({ Before, After }) => {
       .setSize(browser.params.screenWidth, browser.params.screenHeight);
     browser.get(browser.params.baseURL);
     localStorage.clear();
+    localStorage.setItem('showNetwork', 'true');
     localStorage.setItem('address', browser.params.liskCoreURL);
     localStorage.setItem('network', networks[browser.params.network].code);
     browser.get(browser.params.baseURL);
