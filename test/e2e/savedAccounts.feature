@@ -12,7 +12,7 @@ Feature: Saved Accounts
     And I fill in passphrase of "genesis" to "passphrase" field
     And I click "send button"
     And I wait 1 seconds
-    Then I should see "Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain." success message
+    Then I should see text "Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain." in "result box message" element
     And I click "okay button"
     And I wait 1 seconds
     And I fill in "2" to "amount" field
@@ -20,7 +20,7 @@ Feature: Saved Accounts
     And I click "send next button"
     And I click "send button"
     And I wait 1 seconds
-    Then I should see "Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain." success message
+    Then I should see text "Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain." in "result box message" element
 
   Scenario: should allow to save second account
     Given I'm logged in as "genesis"
