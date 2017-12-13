@@ -34,7 +34,7 @@ const setChangedItem = (account, changes, property, value) =>
 const merge = (account, info) => {
   const keys = Object.keys(info);
   let changes = {};
-  const updatedAccount = Object.assign({}, account);
+  const updatedAccount = Object.assign({}, account, { lastActivated: 600000 });
 
   keys.forEach((key) => {
     if (info[key]) {
