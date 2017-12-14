@@ -35,6 +35,7 @@ const actionTypes = {
   activeAccountSaved: 'ACTIVE_ACCOUNT_SAVED',
   accountRemoved: 'ACCOUNT_REMOVED',
   accountSwitched: 'ACCOUNT_SWITCHED',
+  removePassphrase: 'REMOVE_PASSPHRASE',
 };
 
 export default actionTypes;
