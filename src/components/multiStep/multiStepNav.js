@@ -2,7 +2,7 @@ import React from 'react';
 import { FontIcon } from 'react-toolbox/lib/font_icon';
 import styles from './multiStep.css';
 
-const MultiStepNav = ({ steps, showNav, current }) => {
+const MultiStepNav = ({ steps, showNav, current, prev }) => {
   // Checks if all titles are defined and showNav is not false
   const validateTitles = () => {
     const titlesAreValid = steps.reduce((acc, step) =>
@@ -28,7 +28,9 @@ const MultiStepNav = ({ steps, showNav, current }) => {
     <nav className={styles.navigation}>
       {
         dashedSteps().map((step, index) =>
-          <li key={step.props.title} className={`${current === (index / 2) ? styles.current : ''} ${step.dash ? styles.dash : 'title'}`}>
+          <li key={step.props.title}
+            onClick={prev({ goto: index })}
+            className={`${current === (index / 2) ? styles.current : ''} ${step.dash ? styles.dash : 'title'}`}>
             {
               step.props.icon ?
                 <FontIcon className={styles.icon}> {step.props.icon}</FontIcon> : null
