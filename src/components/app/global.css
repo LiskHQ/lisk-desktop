@@ -1,4 +1,4 @@
-@import '../app/variables.css';
+@import './variables.css';
 
 /*****************************************
 
@@ -77,4 +77,12 @@ order to be available application wide
 
 :global .boxPadding {
   padding: 0px 30px;
+}
+
+@media (--medium-viewport) {
+  :global .box {
+    height: auto;
+    background-color: var(--color-grayscale-mobile-background);
+    box-shadow: unset;
+  }
 }

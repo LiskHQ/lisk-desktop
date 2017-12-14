@@ -1,0 +1,47 @@
+@import '../app/variables.css';
+
+:root {
+  --menu-bar-padding: 20px;
+}
+
+.menuBar {
+  display: none;
+}
+
+@media (--medium-viewport) {
+  .menuBar {
+    position: fixed;
+    display: block;
+    height: var(--m-menu-bar-height);
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.12), 0 -2px 24px 0 rgba(0, 0, 0, 0.24);
+    font-weight: bold;
+    font-size: 24px;
+    font-family: var(--heading-font);
+    background-color: var(--color-white);
+  }
+
+  .menuButton {
+    float: right;
+  }
+
+  .menuItem {
+    display: inline-block;
+    padding: var(--menu-bar-padding);
+    cursor: pointer;
+
+    & > * {
+      font-size: inherit;
+      vertical-align: middle;
+    }
+  }
+}
+
+@media (--small-viewport) {
+  .menuBar {
+    height: var(--s-menu-bar-height);
+    font-size: 18px;
+  }
+}
