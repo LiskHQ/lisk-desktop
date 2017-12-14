@@ -46,8 +46,6 @@ class Login extends React.Component {
     i18next.on('languageChanged', () => {
       this.getNetworksList();
     });
-
-    this.props.accountsRetrieved();
   }
 
   getNetworksList() {
