@@ -35,11 +35,14 @@ const Header = (props) => {
               <div className={`${styles.address} account-information-address`}>{props.account.address}</div>
               <div className={styles.timer}>
                 <img src={lock} /> Address timeout in <i> </i>
-                <Countdown
-                  date={finalTime}
-                  renderer={renderer}
-                  onComplete={() => console.log('finished')}
-                />
+                {lastActivated === 0 ?
+                  '00:00' :
+                  <Countdown
+                    date={finalTime}
+                    renderer={renderer}
+                    onComplete={() => props.removePassphrase()}
+                  />
+                }
               </div>
             </div>
             <div className={styles.avatar}></div>
