@@ -9,6 +9,15 @@ import { toRawLsk } from '../utils/lsk';
 import transactionTypes from '../constants/transactionTypes';
 
 /**
+ * Trigger this action to remove passphrase from account object
+ *
+ * @returns {Object} - Action object
+ */
+export const removePassphrase = () => ({
+  type: actionTypes.removePassphrase,
+});
+
+/**
  * Trigger this action to update the account object
  * while already logged in
  *
