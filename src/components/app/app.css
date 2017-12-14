@@ -70,7 +70,7 @@ body {
   }
 }
 
-@media (--medium-viewport) {
+@media (--small-viewport) {
   body {
     margin-top: var(--s-top-bar-height);
   }

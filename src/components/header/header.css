@@ -171,11 +171,13 @@
 
   .account {
     & .avatar {
+      margin-top: 4px;
       height: var(--avatar-height-s);
       width: var(--avatar-height-s);
     }
 
     & .information {
+      margin-top: 0;
       height: var(--avatar-height-s);
 
       & .balance {
