@@ -31,6 +31,8 @@ Feature: Login page
     And I wait 1 seconds
     And I 250 times move mouse randomly
     And I click "next button"
-    And I remember passphrase, click "next button", fill in missing word
+    And I swipe "i understand checkbox" to right
+    And I swipe "reveal checkbox" to right
+    And I remember passphrase, click "next button", choose missing words
     And I click "next button"
     Then I should be logged in
