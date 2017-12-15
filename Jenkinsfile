@@ -127,8 +127,6 @@ node('lisk-nano') {
           # Submit coverage to coveralls
           cat coverage/*/lcov.info | coveralls -v
           '''
-          junit 'reports/junit_report.xml'
-          cobertura autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: 'coverage/*/cobertura-coverage.xml', conditionalCoverageTargets: '80, 0, 0', failUnhealthy: false, failUnstable: false, lineCoverageTargets: '90, 0, 0', maxNumberOfBuilds: 0, methodCoverageTargets: '85, 0, 0', onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false
 
         }
       } catch (err) {
@@ -156,14 +154,12 @@ node('lisk-nano') {
               echo "Skipping @testnet end-to-end tests because we're not on 'development' branch"
             fi
             npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL http://127.0.0.1:400$N
-            cat reports/cucumber_report.json | ./node_modules/.bin/cucumber-junit > reports/cucumber_report.xml
             if [ -z $CHANGE_BRANCH ]; then
               npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --cucumberOpts.tags @testnet --params.useTestnetPassphrase true --params.network testnet
             else
               echo "Skipping @testnet end-to-end tests because we're not on 'development' branch"
             fi
             '''
-            junit 'reports/cucumber_report.xml'
           }
         }
       } catch (err) {
@@ -185,7 +181,13 @@ node('lisk-nano') {
     if [ $BRANCH_NAME = "development" ]; then
         rsync -axl --delete $WORKSPACE/node_modules/ ~/cache/development/node_modules/ || true
     fi
+    cat reports/cucumber_report.json | ./node_modules/.bin/cucumber-junit > reports/cucumber_report.xml
     '''
+
+    cobertura autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: 'coverage/*/cobertura-coverage.xml', conditionalCoverageTargets: '80, 0, 0', failUnhealthy: false, failUnstable: false, lineCoverageTargets: '90, 0, 0', maxNumberOfBuilds: 0, methodCoverageTargets: '85, 0, 0', onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false
+    junit 'reports/junit_report.xml'
+    junit 'reports/cucumber_report.xml'
+
     dir('node_modules') {
       deleteDir()
     }
