@@ -3,25 +3,16 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Countdown from 'react-countdown-now';
 import { Button } from '../toolbox/buttons/button';
-
+import { FontIcon } from '../fontIcon';
+import CountDownTemplate from './countDownTemplate';
 import LiskAmount from '../liskAmount';
 import PrivateWrapper from '../privateWrapper';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import styles from './header.css';
 import RelativeLink from '../relativeLink';
-import lock from './../../assets/images/lock-open.svg';
-
-// Renderer callback with condition 
-const renderer = ({ minutes, seconds }) => {
-  // Render a countdown 
-  const min = minutes < 10 ? `0${minutes}` : minutes;
-  const sec = seconds < 10 ? `0${seconds}` : seconds;
-  return <span>{min}:{sec}</span>;
-};
 
 const Header = (props) => {
   const { lastActivated } = props.account;
-  const finalTime = Date.now() + lastActivated;
   return (
     <header className={`${grid.row} ${grid['between-xs']} ${styles.wrapper}`}>
       <PrivateWrapper>
@@ -34,12 +25,12 @@ const Header = (props) => {
               </div>
               <div className={`${styles.address} account-information-address`}>{props.account.address}</div>
               <div className={styles.timer}>
-                <img src={lock} /> Address timeout in <i> </i>
-                {lastActivated === 0 ?
+                <FontIcon value='locked' className={styles.lock}/> Address timeout in <i> </i>
+                {(!lastActivated || lastActivated === 0) ?
                   '00:00' :
                   <Countdown
-                    date={finalTime}
-                    renderer={renderer}
+                    date={lastActivated}
+                    renderer={CountDownTemplate}
                     onComplete={() => props.removePassphrase()}
                   />
                 }
