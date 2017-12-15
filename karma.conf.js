@@ -34,7 +34,7 @@ module.exports = function (config) {
       ].concat(onJenkins ? { type: 'text' } : []),
     },
     junitReporter: {
-      outputFile: 'junit_report.xml',
+      outputFile: 'reports/junit_report.xml',
       useBrowserName: false,
     },
     webpack: webpackConfig,

@@ -128,7 +128,7 @@ node('lisk-nano') {
           # Submit coverage to coveralls
           cat coverage/*/lcov.info | coveralls -v
           '''
-          junit 'junit_report.xml'
+          junit 'reports/junit_report.xml'
         }
       } catch (err) {
         echo "Error: ${err}"
