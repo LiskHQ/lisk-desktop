@@ -35,7 +35,7 @@ module.exports = function (config) {
           type: onJenkins ? 'lcov' : 'html',
           dir: 'coverage/',
         },
-      ].concat(onJenkins ? { type: 'text' } : []),
+      ],
     },
     junitReporter: {
       outputFile: 'reports/junit_report.xml',
