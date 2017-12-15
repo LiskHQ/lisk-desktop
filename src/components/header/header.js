@@ -26,14 +26,16 @@ const Header = props => (
             </div>
             <div className={`${styles.address} account-information-address`}>{props.account.address}</div>
             <div className={styles.timer}>
-              <FontIcon value='locked' className={styles.lock}/> Address timeout in <i> </i>
               {(!props.account.lastActivated || props.account.lastActivated === 0) ?
-                '00:00' :
-                <Countdown
-                  date={props.account.lastActivated}
-                  renderer={CountDownTemplate}
-                  onComplete={() => props.removePassphrase()}
-                />}
+                <span><FontIcon value='locked' className={styles.lock}/> {props.t('Account locked!')}</span> :
+                <div>
+                  <FontIcon value='unlocked' className={styles.lock}/> {props.t('Address timeout in')} <i> </i>
+                  <Countdown
+                    date={props.account.lastActivated}
+                    renderer={CountDownTemplate}
+                    onComplete={() => props.removePassphrase()}
+                  />
+                </div>}
             </div>
           </div>
           <RelativeLink to='saved-accounts'>
