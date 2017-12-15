@@ -124,9 +124,11 @@ node('lisk-nano') {
         ansiColor('xterm') {
           sh '''
           ON_JENKINS=true npm run --silent test
+          # Submit junit to jenkins
           # Submit coverage to coveralls
           cat coverage/*/lcov.info | coveralls -v
           '''
+          junit 'junit_report.xml'
         }
       } catch (err) {
         echo "Error: ${err}"

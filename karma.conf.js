@@ -20,7 +20,7 @@ module.exports = function (config) {
       '**/*.js': ['sourcemap'],
       [fileRoot]: ['webpack'],
     },
-    reporters: ['coverage', 'mocha'],
+    reporters: ['coverage', 'mocha', 'junit'],
     coverageReporter: {
       reporters: [
         {
@@ -32,6 +32,10 @@ module.exports = function (config) {
           dir: 'coverage/',
         },
       ].concat(onJenkins ? { type: 'text' } : []),
+    },
+    junitReporter: {
+      outputFile: 'junit_report.xml',
+      useBrowserName: false,
     },
     webpack: webpackConfig,
     webpackMiddleware: {
