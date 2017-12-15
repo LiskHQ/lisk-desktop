@@ -26,10 +26,10 @@ class MultiStep extends React.Component {
     this.state = {
       step: {
         nextStep: (data) => {
-          this.next(data);
+          this.next.call(this, data);
         },
         prevStep: (data) => {
-          this.prev(data);
+          this.prev.call(this, data);
         },
         data: [{}],
         current: 0,
@@ -44,23 +44,36 @@ class MultiStep extends React.Component {
     this.setState(newState);
   }
 
+  /**
+   *
+   * @param {Object} config
+   * @param {Number} config.jump - The number of steps to jump back
+   * @param {Boolean} config.reset - Should return to first step,
+   *    this overrides all other configurations
+   * @param {Number} config.to - The index of the step to go to
+   * @memberOf MultiStep
+   *
+   */
   prev(config) {
-    let dec = 1;
-    if (!!config && !config.reset && typeof config.jump === 'number' && config.jump <= this.state.step.current) {
-      dec = Math.abs(Math.floor(config.jump));
-    } else if (!!config && config.reset === true) {
-      dec = this.state.step.current;
-    }
+    const getTarget = (current) => {
+      if (current === 0) return current;
+      else if (!config) return current - 1;
+      else if (config.reset) return 0;
+      else if (config.jump <= current) return current - Math.abs(Math.floor(config.jump));
+      else if (config.to <= current) return Math.abs(Math.floor(config.to));
+      return current;
+    };
 
     const newState = Object.assign({}, this.state);
-    newState.step.current -= dec;
+    newState.step.current = getTarget(this.state.step.current);
 
     this.setState(newState);
   }
 
 
   render() {
-    const { children, className, finalCallback } = this.props;
+    const { children, className, finalCallback,
+      browsable, backButtonLabel, prevPage } = this.props;
     const { step } = this.state;
     const extraProps = {
       nextStep: step.nextStep,
@@ -76,6 +89,8 @@ class MultiStep extends React.Component {
 
     return (<section className={className}>
       <MultiStepNav steps={children} showNav={this.props.showNav}
+        prevPage={prevPage}
+        browsable={browsable} backButtonLabel={backButtonLabel}
         current={step.current} prevStep={step.prevStep} />
       {
         React.cloneElement(children[step.current], extraProps)

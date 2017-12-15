@@ -1,8 +1,9 @@
 import React from 'react';
-import { FontIcon } from 'react-toolbox/lib/font_icon';
+import { FontIcon } from '../fontIcon';
 import styles from './multiStep.css';
 
-const MultiStepNav = ({ steps, showNav, current, prev }) => {
+const MultiStepNav = ({ steps, showNav, current, prevStep,
+  browsable, backButtonLabel, prevPage }) => {
   // Checks if all titles are defined and showNav is not false
   const validateTitles = () => {
     const titlesAreValid = steps.reduce((acc, step) =>
@@ -24,20 +25,37 @@ const MultiStepNav = ({ steps, showNav, current, prev }) => {
     return elements;
   };
 
+  const backButtonFn = () => {
+    if (current === 0) {
+      prevPage();
+    } else {
+      prevStep();
+    }
+  };
+
   return (validateTitles() ?
     <nav className={styles.navigation}>
       {
-        dashedSteps().map((step, index) =>
-          <li key={step.props.title}
-            onClick={prev({ goto: index })}
-            className={`${current === (index / 2) ? styles.current : ''} ${step.dash ? styles.dash : 'title'}`}>
-            {
-              step.props.icon ?
-                <FontIcon className={styles.icon}> {step.props.icon}</FontIcon> : null
-            }
-            <b>{ step.props.title }</b>
-          </li>)
+        typeof backButtonLabel === 'string' ?
+          <a onClick={backButtonFn} className={styles.backButton}>
+            <FontIcon className={styles.icon}>arrow-left</FontIcon>
+            <span className={styles.label}>{backButtonLabel}</span>
+          </a> : null
       }
+      <section>
+        {
+          dashedSteps().map((step, index) =>
+            <div key={step.props.title}
+              onClick={() => { if (browsable) { prevStep({ to: (index / 2) }); } } }
+              className={`${current === (index / 2) ? styles.current : ''} ${styles.navEl} ${step.dash ? styles.dash : 'title'}`}>
+              {
+                step.props.icon ?
+                  <FontIcon className={styles.icon}>{step.props.icon}</FontIcon> : null
+              }
+              <b className={styles.label}>{ step.props.title }</b>
+            </div>)
+        }
+      </section>
     </nav> : <div className={styles.hidden}></div>);
 };
 
