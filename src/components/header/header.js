@@ -37,10 +37,8 @@ const Header = props => (
                 </div>}
             </div>
           </div>
-          <RelativeLink to='saved-accounts'>
-            <div className={styles.accountAvatar}>
-              <AccountVisual address={props.account.address} size={69} />
-            </div>
+          <RelativeLink to='saved-accounts' className={styles.avatar}>
+            <AccountVisual address={props.account.address} size={69} />
           </RelativeLink>
           <div className={styles.menu}>
             <figure className={styles.iconCircle}>
