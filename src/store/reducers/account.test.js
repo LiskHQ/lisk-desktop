@@ -21,7 +21,7 @@ describe('Reducer: account(state, action)', () => {
     };
   });
 
-  it('should return account obejct with changes if action.type = actionTypes.accountUpdated', () => {
+  it('should return account object with changes if action.type = actionTypes.accountUpdated', () => {
     const action = {
       type: actionTypes.accountUpdated,
       data: {
@@ -38,12 +38,20 @@ describe('Reducer: account(state, action)', () => {
     });
   });
 
-  it('should return empty account obejct if action.type = actionTypes.accountLoggedOut', () => {
+  it('should return empty account object if action.type = actionTypes.accountLoggedOut', () => {
     const action = {
       type: actionTypes.accountLoggedOut,
     };
     const changedAccount = account(state, action);
     expect(changedAccount).to.deep.equal({ afterLogout: true });
+  });
+
+  it('should return remove passphrase from account object if actionTypes.removePassphrase is called', () => {
+    const action = {
+      type: actionTypes.removePassphrase,
+    };
+    const changedAccount = account(state, action);
+    expect(changedAccount.passphrase).to.be.equal(null);
   });
 
   it('should return state if action.type is none of the above', () => {
