@@ -96,26 +96,18 @@ node('lisk-nano') {
       }
     }
 
-    stage ('Build Nano') {
+    stage ('Build and Deploy') {
       try {
         sh '''
         cp ~/.coveralls.yml-nano .coveralls.yml
         npm run --silent build
+        rsync -axl --delete --rsync-path="mkdir -p /var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/ && rsync" $WORKSPACE/app/build/ jenkins@master-01:/var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/
         npm run --silent bundlesize
         '''
-      } catch (err) {
-        echo "Error: ${err}"
-        fail('Stopping build: nano build failed')
-      }
-    }
-
-    stage ('Deploy') {
-      try {
-        sh 'rsync -axl --delete --rsync-path="mkdir -p /var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/ && rsync" $WORKSPACE/app/build/ jenkins@master-01:/var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/'
         githubNotify context: 'Jenkins test deployment', description: 'Commit was deployed to test', status: 'SUCCESS', targetUrl: "${HUDSON_URL}test/" + "${JOB_NAME}".tokenize('/')[0] + "/${BRANCH_NAME}"
       } catch (err) {
         echo "Error: ${err}"
-        fail('Stopping build: deploy failed')
+        fail('Stopping build: build or deploy failed')
       }
     }
 
