@@ -129,6 +129,8 @@ node('lisk-nano') {
           cat coverage/*/lcov.info | coveralls -v
           '''
           junit 'reports/junit_report.xml'
+          cobertura autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: 'coverage/*/cobertura-coverage.xml', conditionalCoverageTargets: '80, 0, 0', failUnhealthy: false, failUnstable: false, lineCoverageTargets: '90, 0, 0', maxNumberOfBuilds: 0, methodCoverageTargets: '85, 0, 0', onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false
+
         }
       } catch (err) {
         echo "Error: ${err}"

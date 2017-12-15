@@ -28,6 +28,10 @@ module.exports = function (config) {
           dir: 'coverage/',
         },
         {
+          type: 'cobertura',
+          dir: 'coverage/',
+        },
+        {
           type: onJenkins ? 'lcov' : 'html',
           dir: 'coverage/',
         },
