@@ -27,14 +27,7 @@
     "func-names": "off",
     "global-require": "off",
     "new-cap": ["error", {
-      "newIsCapExceptions": ["mnemonic"],
-      "capIsNewExceptions" : [
-        "When",
-        "Then",
-        "Given",
-        "After",
-        "Before"
-      ]
+      "newIsCapExceptions": ["mnemonic"]
     }],
 
     "react/prop-types": "off",
