@@ -311,3 +311,46 @@
     transform: translate3d(-15%, 10%, 0) rotateZ(0deg);
   }
 }
+
+@media (--medium-viewport) {
+  .wrapper {
+    overflow: hidden !important;
+  }
+
+  .login {
+    height: calc(100vh - var(--m-top-bar-height) - var(--m-menu-bar-height)); /* stylelint-disable-line */
+  }
+
+  .signUp {
+    margin-top: 0;
+    margin-right: -33px;
+    border-radius: 0px;
+    width: 60%;
+    height: calc(100vh - var(--m-top-bar-height) - var(--m-menu-bar-height)); /* stylelint-disable-line */
+    overflow: hidden;
+  }
+}
+
+@media (--small-viewport) {
+  .login {
+    height: calc(50vh - var(--s-top-bar-height)); /* stylelint-disable-line */
+    width: 100%;
+
+    &.focused {
+      width: 100%;
+      height: calc(70vh - var(--s-top-bar-height)); /* stylelint-disable-line */
+    }
+  }
+
+  .signUp {
+    margin-right: 0;
+    border-radius: 0px;
+    width: 100vw; /* stylelint-disable-line */
+    height: calc(50vh - var(--s-menu-bar-height)); /* stylelint-disable-line */
+
+    &.focused {
+      width: 100vw; /* stylelint-disable-line */
+      height: calc(30vh - var(--s-menu-bar-height)); /* stylelint-disable-line */
+    }
+  }
+}
