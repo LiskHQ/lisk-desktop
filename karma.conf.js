@@ -14,7 +14,12 @@ module.exports = function (config) {
     frameworks: ['mocha', 'chai'],
     files: [
       fileRoot,
-      { pattern: filePattern, included: false, served: false, watched: false },
+      {
+        pattern: filePattern,
+        included: false,
+        served: false,
+        watched: false,
+      },
     ],
     preprocessors: {
       '**/*.js': ['sourcemap'],
