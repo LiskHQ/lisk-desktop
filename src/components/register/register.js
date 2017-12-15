@@ -43,10 +43,13 @@ class Register extends React.Component {
   render() {
     const { t } = this.props;
     return (<div className={`box hasPadding ${styles.register}`}>
-      <MultiStep finalCallback={this.onRegister.bind(this)}>
-        <Create title='Create' t={t} icon='vpn_key' />
-        <Safekeeping title='Safekeeping' t={t} icon='done' />
-        <Confirm title='Confirm' t={t} confirmButton='Login' icon='launch' />
+      <MultiStep
+        prevPage={this.backToLogin.bind(this)}
+        finalCallback={this.onRegister.bind(this)}
+        backButtonLabel={t('Back')}>
+        <Create title='Create' t={t} icon='add' />
+        <Safekeeping title='Safekeeping' t={t} icon='checkmark' />
+        <Confirm title='Confirm' t={t} confirmButton='Login' icon='login' />
       </MultiStep>
     </div>);
   }

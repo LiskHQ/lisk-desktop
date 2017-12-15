@@ -1,36 +1,60 @@
 @import '../app/variables';
 
-.navigation {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  max-width: 50%;
-  margin: 0 auto;
+:root {
+  --link-color: var(--color-primary-medium);
+  --back-button-color: var(--color-grayscale-dark);
+  --nav-line-height: 32px;
+}
 
-  & > li {
+.navigation {
+  position: relative;
+  height: var(--nav-line-height);
+
+  & > section {
     display: flex;
-    color: var(--color-primary-medium);
+    flex-direction: row;
+    justify-content: space-around;
+    max-width: 50%;
+    margin: 0 auto;
+  }
+
+  & .icon,
+  & .label,
+  & .navEl {
+    vertical-align: middle;
+    display: inline-block;
+    line-height: var(--nav-line-height);
+  }
+
+  & .backButton {
+    position: absolute;
+    top: 0;
+    left: 40px;
+    z-index: 2;
+    cursor: pointer;
+
+    & .icon {
+      font-size: 32px;
+    }
+  }
+
+  & .navEl {
+    display: flex;
+    color: var(--link-color);
     opacity: 0.4;
 
     &.dash b {
       width: 50px;
       height: 0;
-      border-bottom: solid 2px var(--color-primary-medium);
+      border-bottom: solid 2px var(--link-color);
       opacity: 0.5;
       font-size: 0;
       padding-top: 25%;
     }
 
-    & .icon,
-    & b {
-      display: inline-block;
-      vertical-align: middle;
-    }
-
     & .icon {
-      font-family: 'Material Icons';
-      font-size: 1.4em;
-      padding: 0 0.5em;
+      font-size: 32px;
+      padding: 0 5px;
     }
 
     &.current {
