@@ -19,6 +19,16 @@ export const getSavedAccounts = () => {
   }
 };
 
+export const setSavedAccounts = (accounts) => {
+  accounts = accounts.map(({
+    publicKey, network, address, balance,
+  }) => ({
+    publicKey, network, address, balance,
+  }));
+  localStorage.setItem('accounts', JSON.stringify(accounts));
+  return accounts;
+};
+
 export const getLastActiveAccount = () => (
   getSavedAccounts()[localStorage.getItem('lastActiveAccountIndex') || 0]
 );
@@ -39,29 +49,4 @@ export const setLastActiveAccount = ({ publicKey, network, address }) => {
     localStorage.setItem('lastActiveAccountIndex', lastActiveAccountIndex);
   }
   return lastActiveAccountIndex;
-};
-
-export const setSavedAccount = ({
-  publicKey, network, address, balance,
-}) => {
-  const savedAccounts = [
-    ...getSavedAccounts(),
-    {
-      publicKey,
-      network,
-      address,
-      balance,
-    },
-  ];
-  localStorage.setItem('accounts', JSON.stringify(savedAccounts));
-  return savedAccounts;
-};
-
-export const removeSavedAccount = ({ publicKey, network, address }) => {
-  const accounts = getSavedAccounts().filter(account =>
-    !(account.publicKey === publicKey &&
-      account.network === network &&
-      account.address === address));
-  localStorage.setItem('accounts', JSON.stringify(accounts));
-  return accounts;
 };

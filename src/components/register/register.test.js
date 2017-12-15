@@ -48,8 +48,8 @@ describe('Register', () => {
     expect(wrapper.find('MultiStep')).to.have.length(1);
   });
 
-  it('initially renders PassphraseGenerator', () => {
-    expect(wrapper.find('PassphraseGenerator')).to.have.length(1);
+  it('initially renders Create component', () => {
+    expect(wrapper.find('Create')).to.have.length(1);
   });
 
   it.skip('should return to Login page if Cancel clicked in first step', () => {

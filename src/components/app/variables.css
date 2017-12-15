@@ -57,11 +57,14 @@ or "warn/action" ineastd of "red/green"
   --main-box-width: 1291px;
   --main-box-height: 788px;
   --border-radius-normal: 3px;
+  --m-menu-bar-height: 72px;
+  --s-menu-bar-height: 62px;
+  --m-top-bar-height: 90px;
+  --s-top-bar-height: 57px;
 
   /*************************
         Colors
   *************************/
-
   --color-primary-dark: #001a3e;
   --color-primary-semi-dark: #013165;
   --color-primary-medium: #3c7fb4;
@@ -72,6 +75,7 @@ or "warn/action" ineastd of "red/green"
   --color-grayscale-dark: #3c5068;
   --color-grayscale-medium: #74869b;
   --color-grayscale-light: #ccd9e4;
+  --color-grayscale-mobile-background: #f9fbfd;
   --color-white: #fff;
   --color-error: #da1d00;
   --color-action-dark: #c80039;

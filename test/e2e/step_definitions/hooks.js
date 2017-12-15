@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const { defineSupportCode } = require('cucumber');
 const fs = require('fs');
+const util = require('util');
 const localStorage = require('../support/localStorage.js');
 const networks = require('../../../src/constants/networks');
 
@@ -40,6 +41,7 @@ defineSupportCode(({ Before, After }) => {
       .setSize(browser.params.screenWidth, browser.params.screenHeight);
     browser.get(browser.params.baseURL);
     localStorage.clear();
+    localStorage.setItem('showNetwork', 'true');
     localStorage.setItem('address', browser.params.liskCoreURL);
     localStorage.setItem('network', networks[browser.params.network].code);
     browser.get(browser.params.baseURL);
@@ -55,6 +57,9 @@ defineSupportCode(({ Before, After }) => {
     if (scenario.isFailed()) {
       const screnarioSlug = slugify([scenario.scenario.feature.name, scenario.scenario.name].join(' '));
       takeScreenshot(screnarioSlug, callback);
+      browser.manage().logs().get('browser').then((browserLog) => {
+        console.log(`BROWSER LOG: ${util.inspect(browserLog)}`);
+      });
     } else {
       callback();
     }

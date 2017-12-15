@@ -2,16 +2,17 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
+import configureMockStore from 'redux-mock-store';
 import sinon from 'sinon';
 import i18n from '../../i18n';
 import * as toasterActions from '../../actions/toaster';
-import store from '../../store';
 import DecryptMessageHOC from './index';
 import DecryptMessage from './decryptMessage';
 
 describe('DecryptMessageHOC', () => {
   let props;
   let wrapper;
+  const store = configureMockStore([])({ account: {} });
 
   beforeEach(() => {
     wrapper = mount(<Provider store={store}><DecryptMessageHOC i18n={i18n}/></Provider>);

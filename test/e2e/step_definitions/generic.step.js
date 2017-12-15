@@ -181,27 +181,37 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     callback();
   });
 
-  When('I remember passphrase, click "{nextButtonSelector}", fill in missing word', { timeout: 2 * defaultTimeout }, (nextButtonSelector, callback) => {
-    waitForElemAndCheckItsText('.passphrase label', 'Save your passphrase in a safe place!', () => {
-      waitForElem('.passphrase textarea').then((textareaElem) => {
-        textareaElem.getText().then((passphrase) => {
-          // eslint-disable-next-line no-unused-expressions
-          expect(passphrase).to.not.be.undefined;
-          const passphraseWords = passphrase.split(' ');
-          expect(passphraseWords.length).to.equal(12);
-          waitForElemAndClickIt(`.${nextButtonSelector.replace(/ /g, '-')}`, () => {
-            waitForElem('.passphrase-verifier p span').then((elem) => {
-              elem.getText().then((firstPartOfPassphrase) => {
-                const missingWordIndex = firstPartOfPassphrase.length ?
-                  firstPartOfPassphrase.split(' ').length :
-                  0;
-                waitForElemAndSendKeys('.passphrase-verifier input', passphraseWords[missingWordIndex], callback);
-              }).catch(callback);
-            }).catch(callback);
-          });
-        }).catch(callback);
+  When('I remember passphrase, click "{nextButtonSelector}", choose missing words', { timeout: 2 * defaultTimeout }, (nextButtonSelector, callback) => {
+    waitForElem('.passphrase textarea').then((textareaElem) => {
+      textareaElem.getText().then((passphrase) => {
+        // eslint-disable-next-line no-unused-expressions
+        expect(passphrase).to.not.be.undefined;
+        const passphraseWords = passphrase.split(' ');
+        expect(passphraseWords.length).to.equal(12);
+        waitForElemAndClickIt(`.${nextButtonSelector.replace(/ /g, '-')}`, () => {
+          waitForElem('form.passphrase-holder').then(() => {
+            const labels = element.all(by.css('.passphrase-holder label'));
+            let checkedButtons = 0;
+
+            for (let i = 0; i < 6; i++) {
+              const label = labels.get(i);
+
+              // eslint-disable-next-line no-loop-func
+              label.getText().then((text) => {
+                if (passphraseWords.includes(text)) {
+                  checkedButtons++;
+                  label.click().then(() => {
+                    if (checkedButtons === 2) {
+                      callback();
+                    }
+                  }).catch(callback);
+                }
+              });
+            }
+          }).catch(callback);
+        });
       }).catch(callback);
-    });
+    }).catch(callback);
   });
 
   When('I refresh the page', (callback) => {
@@ -239,6 +249,18 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     const elem = element(by.css(`.${fieldName.replace(/ /g, '-')} textarea`));
     expect(elem.getAttribute('value')).to.eventually.equal(value)
       .and.notify(callback);
+  });
+
+  When('I swipe "{elementName}" to right', (elementName, callback) => {
+    const actions = browser.actions();
+    const selector = `.${elementName.replace(/ /g, '-')}`;
+
+    actions
+      .mouseDown(element(by.css(selector)))
+      .mouseMove({ x: 100, y: 0 })
+      .mouseUp()
+      .perform()
+      .then(callback());
   });
 });
 

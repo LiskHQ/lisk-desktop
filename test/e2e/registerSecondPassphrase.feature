@@ -14,7 +14,8 @@ Feature: Register second passphrase
     Then There is no "register second passphrase" in main menu
 
   Scenario: should ask for passphrase for saved account
-  Given I'm logged in as "empty account"
+    Given I'm logged in as "empty account"
+    And I wait 1 seconds
     When I click "logout button"
     And I refresh the page
     And I click "register second passphrase" in main menu

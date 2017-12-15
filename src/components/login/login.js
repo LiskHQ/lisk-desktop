@@ -182,7 +182,8 @@ class Login extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   showNetworkOptions() {
     const params = parseSearchParams(this.props.history.location.search);
-    return params.showNetwork === 'true';
+    const showNetwork = localStorage.getItem('showNetwork');
+    return params.showNetwork === 'true' || (showNetwork && params.showNetwork !== 'false');
   }
 
   render() {

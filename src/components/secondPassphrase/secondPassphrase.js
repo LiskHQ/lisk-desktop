@@ -2,10 +2,10 @@ import React from 'react';
 import Fees from '../../constants/fees';
 import Authenticate from '../authenticate';
 import MultiStep from '../multiStep';
-import PassphraseInfo from '../passphrase/passphraseInfo';
-import PassphraseGenerator from '../passphrase/passphraseGenerator';
-import PassphraseVerifier from '../passphrase/passphraseVerifier';
-import PassphraseShow from '../passphrase/passphraseShow';
+import Info from '../passphrase/info';
+import Create from '../passphrase/create';
+import Safekeeping from '../passphrase/safekeeping';
+import Confirm from '../passphrase/confirm';
 
 const SecondPassphrase = ({
   passphrase, account, peers, registerSecondPassphrase, closeDialog, t,
@@ -24,11 +24,11 @@ const SecondPassphrase = ({
   return (
     typeof passphrase === 'string' && passphrase.length > 0 ?
       <MultiStep showNav={false} finalCallback={onPassphraseRegister}>
-        <PassphraseInfo title='Info' t={t} icon='bookmark_border' fee={Fees.setSecondPassphrase}
+        <Info title='Info' t={t} icon='bookmark_border' fee={Fees.setSecondPassphrase}
           useCaseNote={useCaseNote} securityNote={securityNote} backButtonFn={closeDialog} />
-        <PassphraseGenerator title='Create' t={t} icon='vpn_key' />
-        <PassphraseShow title='Safekeeping' t={t} icon='done' />
-        <PassphraseVerifier title='Confirm' t={t} confirmButton='Register' icon='launch' />
+        <Create title='Create' t={t} icon='vpn_key' />
+        <Safekeeping title='Safekeeping' t={t} icon='done' />
+        <Confirm title='Confirm' t={t} confirmButton='Register' icon='launch' />
       </MultiStep> :
       <Authenticate nextAction={t('set second passphrase')} />);
 };

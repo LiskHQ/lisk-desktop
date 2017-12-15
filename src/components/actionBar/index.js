@@ -6,9 +6,9 @@ import styles from './actionBar.css';
 import { Button } from '../toolbox/buttons/button';
 
 export const ActionBarRaw = ({
-  secondaryButton, primaryButton, account, t,
+  secondaryButton, primaryButton, account, t, className,
 }) => (
-  <section className={`${grid.row} ${grid['between-xs']} ${styles.wrapper}`} >
+  <section className={`${grid.row} ${grid['between-xs']} ${styles.wrapper} ${className}`} >
     <Button
       label={secondaryButton.label || t('Cancel')}
       className={secondaryButton.className || 'cancel-button'}

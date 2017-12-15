@@ -44,7 +44,7 @@ describe('SecondPassphrase', () => {
     });
 
     it('initially renders PassphraseInfo', () => {
-      expect(wrapper.find('PassphraseInfo')).to.have.length(1);
+      expect(wrapper.find('Info')).to.have.length(1);
     });
 
     it('should call activePeerSet with network and passphrase', () => {

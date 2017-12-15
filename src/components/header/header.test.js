@@ -43,7 +43,7 @@ describe('Header', () => {
     expect(wrapper.find(Button)).to.have.length(1);
   });
 
-  it('renders 8 RelativeLink components', () => {
-    expect(wrapper.find(RelativeLink)).to.have.length(8);
+  it('renders 9 RelativeLink components', () => {
+    expect(wrapper.find(RelativeLink)).to.have.length(9);
   });
 });

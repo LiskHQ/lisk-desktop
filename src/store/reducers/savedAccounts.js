@@ -16,6 +16,12 @@ const savedAccounts = (state = { accounts: [] }, action) => {
           ...state.accounts,
           action.data,
         ],
+        lastActive: action.data,
+      };
+    case actionTypes.accountSwitched:
+      return {
+        ...state,
+        lastActive: action.data,
       };
     case actionTypes.accountRemoved:
       return {
