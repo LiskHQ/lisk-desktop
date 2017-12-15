@@ -205,7 +205,7 @@ describe('Account middleware', () => {
     };
     middleware(store)(next)(action);
     expect(store.dispatch).to.have.been
-      .calledWith(accountUpdated({ passphrase, lastActivated: clock.now + lockDuration }));
+      .calledWith(accountUpdated({ passphrase, expireTime: clock.now + lockDuration }));
   });
 
   it(`should not dispatch accountUpdated action on ${actionTypes.passphraseUsed} action if store.account.passphrase is already set`, () => {
@@ -214,10 +214,10 @@ describe('Account middleware', () => {
       data: passphrase,
     };
     store.getState = () => ({ ...state,
-      account: { ...state.account, passphrase, lastActivated: clock.now + lockDuration },
+      account: { ...state.account, passphrase, expireTime: clock.now + lockDuration },
     });
     middleware(store)(next)(action);
     expect(store.dispatch).to.have.been
-      .calledWith(accountUpdated({ lastActivated: clock.now + lockDuration }));
+      .calledWith(accountUpdated({ expireTime: clock.now + lockDuration }));
   });
 });

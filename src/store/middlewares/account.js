@@ -90,9 +90,9 @@ const votePlaced = (store, action) => {
 const passphraseUsed = (store, action) => {
   if (!store.getState().account.passphrase) {
     store.dispatch(accountUpdated({ passphrase: action.data,
-      lastActivated: Date.now() + lockDuration }));
+      expireTime: Date.now() + lockDuration }));
   } else {
-    store.dispatch(accountUpdated({ lastActivated: Date.now() + lockDuration }));
+    store.dispatch(accountUpdated({ expireTime: Date.now() + lockDuration }));
   }
 };
 

@@ -54,7 +54,7 @@ const merge = (account, info) => {
 const account = (state = {}, action) => {
   switch (action.type) {
     case actionTypes.removePassphrase:
-      return Object.assign({}, state, { passphrase: null, lastActivated: 0 });
+      return Object.assign({}, state, { passphrase: null, expireTime: 0 });
     case actionTypes.accountUpdated:
     case actionTypes.accountLoggedIn:
       return merge(state, action.data);

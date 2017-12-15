@@ -26,12 +26,12 @@ const Header = props => (
             </div>
             <div className={`${styles.address} account-information-address`}>{props.account.address}</div>
             <div className={styles.timer}>
-              {(!props.account.lastActivated || props.account.lastActivated === 0) ?
+              {(!props.account.expireTime || props.account.expireTime === 0) ?
                 <span><FontIcon value='locked' className={styles.lock}/> {props.t('Account locked!')}</span> :
                 <div>
                   <FontIcon value='unlocked' className={styles.lock}/> {props.t('Address timeout in')} <i> </i>
                   <Countdown
-                    date={props.account.lastActivated}
+                    date={props.account.expireTime}
                     renderer={CountDownTemplate}
                     onComplete={() => props.removePassphrase()}
                   />

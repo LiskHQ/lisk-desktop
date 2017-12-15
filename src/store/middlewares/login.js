@@ -32,13 +32,13 @@ const loginMiddleware = store => next => (action) => {
         store.dispatch(accountLoggedIn({
           ...accountData,
           ...accountBasics,
-          ...{ delegate: delegateData.delegate, isDelegate: true, lastActivated: duration },
+          ...{ delegate: delegateData.delegate, isDelegate: true, expireTime: duration },
         }));
       }).catch(() => {
         store.dispatch(accountLoggedIn({
           ...accountData,
           ...accountBasics,
-          ...{ delegate: {}, isDelegate: false, lastActivated: duration },
+          ...{ delegate: {}, isDelegate: false, expireTime: duration },
         }));
       });
   }).catch(() => store.dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node') })));
