@@ -32,6 +32,14 @@
   float: right;
 }
 
+.lock {
+  font-size: 19px;
+  height: auto;
+  vertical-align: top;
+  line-height: 24px !important;
+  margin-right: 5px;
+}
+
 .primary {
   line-height: 40px;
 
