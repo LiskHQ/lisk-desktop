@@ -155,12 +155,14 @@ node('lisk-nano') {
               echo "Skipping @testnet end-to-end tests because we're not on 'development' branch"
             fi
             npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL http://127.0.0.1:400$N
+            cat reports/cucumber_report.json | ./node_modules/.bin/cucumber-junit > reports/cucumber_report.xml
             if [ -z $CHANGE_BRANCH ]; then
               npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --cucumberOpts.tags @testnet --params.useTestnetPassphrase true --params.network testnet
             else
               echo "Skipping @testnet end-to-end tests because we're not on 'development' branch"
             fi
             '''
+            junit 'reports/cucumber_report.xml'
           }
         }
       } catch (err) {
