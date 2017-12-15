@@ -4,9 +4,12 @@ import { transactionsUpdated } from '../../actions/transactions';
 import { activePeerUpdate } from '../../actions/peers';
 import { votesFetched } from '../../actions/voting';
 import actionTypes from '../../constants/actions';
+import accountConfig from '../../constants/account';
 import { fetchAndUpdateForgedBlocks } from '../../actions/forging';
 import { getDelegate } from '../../utils/api/delegate';
 import transactionTypes from '../../constants/transactionTypes';
+
+const { lockDuration } = accountConfig;
 
 const updateTransactions = (store, peers, account) => {
   const maxBlockSize = 25;
@@ -86,7 +89,10 @@ const votePlaced = (store, action) => {
 
 const passphraseUsed = (store, action) => {
   if (!store.getState().account.passphrase) {
-    store.dispatch(accountUpdated({ passphrase: action.data }));
+    store.dispatch(accountUpdated({ passphrase: action.data,
+      lastActivated: Date.now() + lockDuration }));
+  } else {
+    store.dispatch(accountUpdated({ lastActivated: Date.now() + lockDuration }));
   }
 };
 
