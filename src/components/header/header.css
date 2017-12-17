@@ -31,6 +31,32 @@
   float: right;
 }
 
+.lock {
+  font-size: 19px;
+  height: auto;
+  vertical-align: top;
+  line-height: 24px !important;
+  margin-right: 5px;
+}
+
+.primary {
+  line-height: 40px;
+
+  @mixin buttonBasics;
+  @mixin buttonPrimary;
+}
+
+.secondaryBlue {
+  line-height: 39px;
+
+  @mixin buttonBasics;
+  @mixin buttonSecondary--blue;
+}
+
+.material-icons {
+  font-size: 24px !important;
+}
+
 .account {
   position: relative;
   padding-left: 50px;

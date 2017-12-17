@@ -1,6 +1,7 @@
 import { expect } from 'chai';
-import { spy, stub } from 'sinon';
+import { spy, stub, useFakeTimers } from 'sinon';
 import { accountUpdated } from '../../actions/account';
+import accountConfig from '../../constants/account';
 import { activePeerUpdate } from '../../actions/peers';
 import * as votingActions from '../../actions/voting';
 import * as forgingActions from '../../actions/forging';
@@ -12,6 +13,7 @@ import middleware from './account';
 import transactionTypes from '../../constants/transactionTypes';
 
 describe('Account middleware', () => {
+  const { lockDuration } = accountConfig;
   let store;
   let next;
   let state;
@@ -47,7 +49,10 @@ describe('Account middleware', () => {
     },
   };
 
+  let clock;
+
   beforeEach(() => {
+    clock = useFakeTimers(new Date('2017-12-29').getTime());
     store = stub();
     store.dispatch = spy();
     state = {
@@ -75,6 +80,7 @@ describe('Account middleware', () => {
   afterEach(() => {
     stubGetAccount.restore();
     stubTransactions.restore();
+    clock.restore();
   });
 
   it('should pass the action to next middleware', () => {
@@ -198,7 +204,8 @@ describe('Account middleware', () => {
       data: passphrase,
     };
     middleware(store)(next)(action);
-    expect(store.dispatch).to.have.been.calledWith(accountUpdated({ passphrase }));
+    expect(store.dispatch).to.have.been
+      .calledWith(accountUpdated({ passphrase, expireTime: clock.now + lockDuration }));
   });
 
   it(`should not dispatch accountUpdated action on ${actionTypes.passphraseUsed} action if store.account.passphrase is already set`, () => {
@@ -206,8 +213,11 @@ describe('Account middleware', () => {
       type: actionTypes.passphraseUsed,
       data: passphrase,
     };
-    store.getState = () => ({ ...state, account: { ...state.account, passphrase } });
+    store.getState = () => ({ ...state,
+      account: { ...state.account, passphrase, expireTime: clock.now + lockDuration },
+    });
     middleware(store)(next)(action);
-    expect(store.dispatch).to.not.have.been.calledWith();
+    expect(store.dispatch).to.have.been
+      .calledWith(accountUpdated({ expireTime: clock.now + lockDuration }));
   });
 });

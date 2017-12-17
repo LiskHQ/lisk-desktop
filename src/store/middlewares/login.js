@@ -3,8 +3,10 @@ import { getAccount, extractAddress, extractPublicKey } from '../../utils/api/ac
 import { getDelegate } from '../../utils/api/delegate';
 import { accountLoggedIn } from '../../actions/account';
 import actionTypes from '../../constants/actions';
+import accountConfig from '../../constants/account';
 import { errorToastDisplayed } from '../../actions/toaster';
 
+const { lockDuration } = accountConfig;
 const loginMiddleware = store => next => (action) => {
   if (action.type !== actionTypes.activePeerSet) {
     return next(action);
@@ -23,22 +25,23 @@ const loginMiddleware = store => next => (action) => {
   const { activePeer } = action.data;
 
   // redirect to main/transactions
-  return getAccount(activePeer, address).then(accountData =>
-    getDelegate(activePeer, { publicKey })
+  return getAccount(activePeer, address).then((accountData) => {
+    const duration = passphrase ? Date.now() + lockDuration : 0;
+    return getDelegate(activePeer, { publicKey })
       .then((delegateData) => {
         store.dispatch(accountLoggedIn({
           ...accountData,
           ...accountBasics,
-          ...{ delegate: delegateData.delegate, isDelegate: true },
+          ...{ delegate: delegateData.delegate, isDelegate: true, expireTime: duration },
         }));
       }).catch(() => {
         store.dispatch(accountLoggedIn({
           ...accountData,
           ...accountBasics,
-          ...{ delegate: {}, isDelegate: false },
+          ...{ delegate: {}, isDelegate: false, expireTime: duration },
         }));
-      }),
-  ).catch(() => store.dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node') })));
+      });
+  }).catch(() => store.dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node') })));
 };
 
 export default loginMiddleware;

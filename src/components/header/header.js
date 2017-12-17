@@ -1,16 +1,16 @@
 import { IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-
+import Countdown from 'react-countdown-now';
 import { Button } from '../toolbox/buttons/button';
 import { FontIcon } from '../fontIcon';
+import CountDownTemplate from './countDownTemplate';
 import LiskAmount from '../liskAmount';
 import logo from '../../assets/images/Lisk-Logo.svg';
 import PrivateWrapper from '../privateWrapper';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import styles from './header.css';
 import RelativeLink from '../relativeLink';
-import lock from './../../assets/images/lock-open.svg';
 
 const Header = props => (
   <header className={`${grid.row} ${grid['between-xs']} ${styles.wrapper}`}>
@@ -26,7 +26,17 @@ const Header = props => (
             </div>
             <div className={`${styles.address} account-information-address`}>{props.account.address}</div>
             <div className={styles.timer}>
-              <img src={lock} /> Address timeout in 09:32</div>
+              {(!props.account.expireTime || props.account.expireTime === 0) ?
+                <span><FontIcon value='locked' className={styles.lock}/> {props.t('Account locked!')}</span> :
+                <div>
+                  <FontIcon value='unlocked' className={styles.lock}/> {props.t('Address timeout in')} <i> </i>
+                  <Countdown
+                    date={props.account.expireTime}
+                    renderer={CountDownTemplate}
+                    onComplete={() => props.removePassphrase()}
+                  />
+                </div>}
+            </div>
           </div>
           <RelativeLink to='saved-accounts'>
             <div className={styles.avatar}></div>
@@ -82,7 +92,6 @@ const Header = props => (
           </div>
         </div>
       </div>
-
     </PrivateWrapper>
   </header>
 );

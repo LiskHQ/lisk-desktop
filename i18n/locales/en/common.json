@@ -1,11 +1,13 @@
 {
   " Make sure that you are using the latest version of Lisk Nano.": " Make sure that you are using the latest version of Lisk Nano.",
   "About": "About",
+  "Account locked!": "Account locked!",
   "Add a Lisk ID": "Add a Lisk ID",
   "Add vote to": "Add vote to",
   "Additional fee:": "Additional fee:",
   "Address": "Address",
   "Address copied to clipboard": "Address copied to clipboard",
+  "Address timeout in": "Address timeout in",
   "Amount (LSK)": "Amount (LSK)",
   "An error occurred while creating the transaction.": "An error occurred while creating the transaction.",
   "An error occurred while registering as delegate.": "An error occurred while registering as delegate.",

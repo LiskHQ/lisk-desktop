@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
 import { dialogDisplayed } from '../../actions/dialog';
-import { accountLoggedOut } from '../../actions/account';
+import { accountLoggedOut, removePassphrase } from '../../actions/account';
 import Header from './header';
 
 const mapStateToProps = state => ({
@@ -12,6 +12,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   setActiveDialog: data => dispatch(dialogDisplayed(data)),
   logOut: () => dispatch(accountLoggedOut()),
+  removePassphrase: () => dispatch(removePassphrase()),
 });
 export default withRouter(connect(
   mapStateToProps,
