@@ -48,8 +48,6 @@ class PassphraseInput extends React.Component {
       error = this.props.t('Required');
     } else if (!isValidPassphrase(passphrase)) {
       error = this.getPassphraseValidationError(passphrase);
-    } else if (this.hasExtraWhitespace(passphrase)) {
-      error = this.getPassphraseWhitespaceError(passphrase);
     }
     this.props.onChange(passphrase, error);
   }
@@ -75,25 +73,6 @@ class PassphraseInput extends React.Component {
     }
 
     return this.props.t('Passphrase is not valid');
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  hasExtraWhitespace(passphrase) {
-    const normalizedValue = passphrase.replace(/ +/g, ' ').trim();
-    return normalizedValue !== passphrase;
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  getPassphraseWhitespaceError(passphrase) {
-    if (passphrase.replace(/^\s+/, '') !== passphrase) {
-      return this.props.t('Passphrase contains unnecessary whitespace at the beginning');
-    } else if (passphrase.replace(/\s+$/, '') !== passphrase) {
-      return this.props.t('Passphrase contains unnecessary whitespace at the end');
-    } else if (passphrase.replace(/\s+/g, ' ') !== passphrase) {
-      return this.props.t('Passphrase contains extra whitespace between words');
-    }
-
-    return null;
   }
 
   toggleInputType() {
@@ -147,13 +126,13 @@ class PassphraseInput extends React.Component {
   }
 
   setFocused() {
-    this.props.onFocus();
+    if (this.props.onFocus) this.props.onFocus();
     this.setState({ isFocused: true });
   }
 
   focusAndPaste(value) {
     this.setFocused();
-    this.handleValueChange(value);
+    this.handleValueChange(value, 0);
   }
 
   render() {

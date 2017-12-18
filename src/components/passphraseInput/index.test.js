@@ -29,14 +29,12 @@ describe('PassphraseInput', () => {
 
   it('should call props.onChange with error=undefined if a valid passphrase is entered', () => {
     const { passphrase } = accounts.genesis;
-    wrapper.find('input').first().simulate('click');
     wrapper.find('input').first().simulate('change', { target: { value: passphrase } });
     expect(wrapper.props().onChange).to.have.been.calledWith(passphrase, undefined);
   });
 
   it('should call props.onChange with error="Required" if an empty passphrase is entered', () => {
     const passphrase = '';
-    wrapper.find('input').first().simulate('click');
     wrapper.find('input').first().simulate('change', { target: { value: passphrase } });
     expect(wrapper.props().onChange).to.have.been.calledWith(passphrase, 'Required');
   });
@@ -44,7 +42,6 @@ describe('PassphraseInput', () => {
   const ONLY_ONE_WORD_ERROR = 'Passphrase should have 12 words, entered passphrase has 1';
   it(`should call props.onChange with error="${ONLY_ONE_WORD_ERROR}" if an "test" passphrase is entered`, () => {
     const passphrase = 'test';
-    wrapper.find('input').first().simulate('click');
     wrapper.find('input').first().simulate('change', { target: { value: passphrase } });
     expect(wrapper.props().onChange).to.have.been.calledWith(passphrase, ONLY_ONE_WORD_ERROR);
   });
@@ -52,7 +49,6 @@ describe('PassphraseInput', () => {
   it('should highlight invalid words if a passphrase with an invalid word is entered', () => {
     const errorMessage = 'Please check the highlighted words';
     let passphrase = 'wagon stock borrow episode laundry kitten salute link globe zero feed marble';
-    wrapper.find('input').first().simulate('click');
     wrapper.find('input').first().simulate('change', { target: { value: passphrase } });
     expect(wrapper.props().onChange).to.not.have.been.calledWith(passphrase, errorMessage);
     passphrase = 'wagonn stock borrow episode laundry kitten salute link globe zero feed marble';
@@ -63,37 +59,8 @@ describe('PassphraseInput', () => {
   const NOT_VALID_ERROR = 'Passphrase is not valid';
   it(`should call props.onChange with error="${NOT_VALID_ERROR}" if an otherwise invalid passphrase is entered`, () => {
     const passphrase = 'stock wagon borrow episode laundry kitten salute link globe zero feed marble';
-    wrapper.find('input').first().simulate('click');
     wrapper.find('input').first().simulate('change', { target: { value: passphrase } });
     expect(wrapper.props().onChange).to.have.been.calledWith(passphrase, NOT_VALID_ERROR);
-  });
-
-  const WHITE_SPACE_AT_THE_BEGINNING_ERROR = 'Passphrase contains unnecessary whitespace at the beginning';
-  it("should call props.onChange with error='Passphrase contains unnecessary whitespace at the beginning'", () => {
-    const passphrase = ` ${accounts.genesis.passphrase}`;
-    wrapper.find('input').first().simulate('click');
-    wrapper.find('input').first().simulate('change', { target: { value: passphrase } });
-    expect(wrapper.props().onChange).to.have.been
-      .calledWith(passphrase, WHITE_SPACE_AT_THE_BEGINNING_ERROR);
-  });
-
-  const WHITE_SPACE_AT_THE_END_ERROR = 'Passphrase contains unnecessary whitespace at the end';
-  it("should call props.onChange with error='Passphrase contains unnecessary whitespace at the end'", () => {
-    const passphrase = `${accounts.genesis.passphrase} `;
-    wrapper.find('input').first().simulate('click');
-    wrapper.find('input').first().simulate('change', { target: { value: passphrase } });
-    expect(wrapper.props().onChange).to.have.been
-      .calledWith(passphrase, WHITE_SPACE_AT_THE_END_ERROR);
-  });
-
-
-  const EXTRA_WHITE_SPACE_ERROR = 'Passphrase contains extra whitespace between words';
-  it("should call props.onChange with error='Passphrase contains extra whitespace between words'", () => {
-    const passphrase = 'wagon  stock borrow episode laundry kitten salute link globe zero feed marble';
-    wrapper.find('input').first().simulate('click');
-    wrapper.find('input').first().simulate('change', { target: { value: passphrase } });
-    expect(wrapper.props().onChange).to.have.been
-      .calledWith(passphrase, EXTRA_WHITE_SPACE_ERROR);
   });
 
   it('should allow to change the input field to type="text" and back', () => {

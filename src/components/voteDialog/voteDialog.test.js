@@ -132,7 +132,6 @@ describe('VoteDialog', () => {
           },
         });
 
-      wrapper.find('.second-passphrase input').first().simulate('click');
       wrapper.find('.second-passphrase input').first().simulate('change', { target: { value: accountWithSecondPassphrase.secondPassphrase } });
       wrapper.find('.primary-button button').simulate('click');
 
