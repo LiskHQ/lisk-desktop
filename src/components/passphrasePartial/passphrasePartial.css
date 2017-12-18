@@ -4,6 +4,6 @@
   color: var(--color-error) !important;
 }
 
-.partial {
+.partial input {
   text-align: center;
 }

@@ -18,15 +18,20 @@ class PassphraseInput extends React.Component {
 
   render() {
     return (<Input
+      shouldfocus={this.props.shouldfocus}
       placeholder={this.props.index === 0 ? 'start here' : ''}
       className={`${this.props.className} ${styles.partial} ${this.props.error ? styles.error : ''}`}
       value={this.props.partialValue}
       type={this.props.type}
       theme={this.props.theme}
-      onFocus={this.props.index === 0 && typeof this.props.onFocus === 'function' ? this.props.onFocus : undefined}
+      onFocus={typeof this.props.onFocus === 'function' ? this.props.onFocus : undefined}
       onChange={this.handleValueChange.bind(this)}
-      onKeyPress={(event) => { this.props.doNext({ event, index: this.props.index }); }}
-      onKeyDown={(event) => { this.props.doDelete({ event, index: this.props.index }); }}
+      onKeyPress={(event) => {
+        this.props.doNext({ event, index: this.props.index });
+      }}
+      onKeyDown={(event) => {
+        this.props.doDelete({ event, index: this.props.index, value: this.props.partialValue });
+      }}
     />);
   }
 }

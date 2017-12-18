@@ -15,14 +15,12 @@
   position: hidden;
 }
 
-
 .inputTypeToggle {
   position: absolute;
   right: 0;
   font-weight: 600;
   color: #2475b9 !important;
   top: -30%;
-
 
   & label {
     text-transform: capitalize;

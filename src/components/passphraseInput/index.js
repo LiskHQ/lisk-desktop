@@ -12,22 +12,15 @@ class PassphraseInput extends React.Component {
   constructor() {
     super();
     this.state = {
-      inputFields: [],
       inputType: 'password',
       isFocused: false,
       partialPassphraseError: [],
+      focus: 0,
     };
   }
 
-
-  setInputFields() {
-    return new Promise((resolve) => {
-      if (this.state.isFocused && this.state.inputFields.length === 0) {
-        const inputFields = document.querySelectorAll(`.${this.props.className}`);
-        this.setState({ inputFields });
-        resolve();
-      }
-    });
+  handleFocus(field) {
+    this.setState({ focus: field });
   }
 
   handleValueChange(value, index) {
@@ -39,7 +32,7 @@ class PassphraseInput extends React.Component {
       for (let i = 0; i < 12; i++) {
         if (insertedValueAsArray[i]) {
           passphrase[i] = insertedValueAsArray[i];
-          this.state.inputFields[i].firstElementChild.focus();
+          this.setState({ focus: i });
         }
       }
       insertedValue = insertedValueAsArray[index];
@@ -107,33 +100,6 @@ class PassphraseInput extends React.Component {
     this.setState({ inputType: this.state.inputType === 'password' ? 'text' : 'password' });
   }
 
-  setFocused() {
-    return new Promise((resolve) => {
-      this.setState({ isFocused: true });
-      resolve();
-    });
-  }
-
-  doNext({ event, index }) {
-    if (event.which === 32) {
-      event.preventDefault();
-      const nextElement = this.state.inputFields[index + 1];
-      if (nextElement && nextElement.focus) {
-        nextElement.firstElementChild.focus();
-      }
-    }
-  }
-
-  doDelete({ event, index }) {
-    if (event.which === 8) {
-      const currentElement = this.state.inputFields[index];
-      const previousElement = this.state.inputFields[index - 1];
-      if (previousElement && previousElement.focus && !currentElement.childNodes[0].value) {
-        previousElement.firstElementChild.focus();
-      }
-    }
-  }
-
   renderFields() {
     const propsColumns = this.props.columns;
     const xs = `col-xs-${propsColumns && propsColumns.xs ? propsColumns.xs : '6'}`;
@@ -147,7 +113,8 @@ class PassphraseInput extends React.Component {
       indents.push(
         <div className={`${grid[xs]} ${grid[sm]} ${grid[md]}`} key={i}>
           <PassphrasePartial
-            onFocus={this.props.onFocus}
+            shouldfocus={this.state.focus === i}
+            onFocus={this.handleFocus.bind(this, i)}
             type={this.state.inputType}
             theme={this.props.theme}
             value={value}
@@ -165,13 +132,28 @@ class PassphraseInput extends React.Component {
     return indents;
   }
 
+
+  doNext({ event, index }) {
+    if (event.which === 32) {
+      event.preventDefault();
+      this.setState({ focus: index + 1 });
+    }
+  }
+
+  doDelete({ event, index, value }) {
+    if (event.which === 8 && value.length === 0) {
+      this.setState({ focus: index - 1 });
+    }
+  }
+
+  setFocused() {
+    this.props.onFocus();
+    this.setState({ isFocused: true });
+  }
+
   focusAndPaste(value) {
-    // will fix this in next ticket
-    this.setFocused().then(() => {
-      this.setInputFields().then(() => {
-        this.handleValueChange(value);
-      });
-    });
+    this.setFocused();
+    this.handleValueChange(value);
   }
 
   render() {
