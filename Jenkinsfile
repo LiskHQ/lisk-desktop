@@ -63,8 +63,8 @@ node('lisk-nano') {
         sed -i -r -e "s/lisk.log/lisk_${JOB_BASE_NAME}_${BUILD_ID}.log/" config_$N.json
         sed -i -r -e "s/lisk.app_$N/lisk.app_$N_${JOB_BASE_NAME}_${BUILD_ID}/" etc/pm2-lisk_$N.json
         #
-        JENKINS_NODE_COOKIE=dontKillMe bash -x lisk.sh start_db -p etc/pm2-lisk_$N.json
-        bash -x lisk.sh rebuild -p etc/pm2-lisk_$N.json -f blockchain_explorer.db.gz
+        JENKINS_NODE_COOKIE=dontKillMe bash lisk.sh start_db -p etc/pm2-lisk_$N.json
+        bash lisk.sh rebuild -p etc/pm2-lisk_$N.json -f blockchain_explorer.db.gz
         '''
       } catch (err) {
         echo "Error: ${err}"
@@ -172,7 +172,7 @@ node('lisk-nano') {
     sh '''
     N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
     curl --verbose http://127.0.0.1:400$N/api/blocks/getNethash || true
-    ( cd ~/lisk-Linux-x86_64 && bash -x lisk.sh stop_node -p etc/pm2-lisk_$N.json ) || true
+    ( cd ~/lisk-Linux-x86_64 && bash lisk.sh stop_node -p etc/pm2-lisk_$N.json ) || true
     pgrep --list-full -f "Xvfb :1$N" || true
     pkill --echo -f "Xvfb :1$N" -9 || echo "pkill returned code $?"
 
