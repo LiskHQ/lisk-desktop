@@ -11,13 +11,8 @@
     height: 100%;
     width: 100%;
     pointer-events: none;
-    transform: skewY($skew);
+    transform: skewY($skew) translate3d(0, 0, 0);
     transform-origin: right top;
-
-    html.is-safari &,
-    html.is-mobile-safari & {
-      transform: skewY($skew) translate3d(0, 0, 0);
-    }
 
     & :nth-child(1) {
       background-image: linear-gradient(4deg, #002759 5%, #002667 87%);
