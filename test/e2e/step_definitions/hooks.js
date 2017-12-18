@@ -1,9 +1,12 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const { defineSupportCode } = require('cucumber');
+const Cucumber = require('cucumber');
 const fs = require('fs');
 const util = require('util');
 const localStorage = require('../support/localStorage.js');
 const networks = require('../../../src/constants/networks');
+
+const jsonFormatter = new Cucumber.JsonFormatter();
 
 function slugify(text) {
   return text.toString().toLowerCase()
@@ -34,7 +37,7 @@ function takeScreenshot(screnarioSlug, callback) {
   });
 }
 
-defineSupportCode(({ Before, After }) => {
+defineSupportCode(({ Before, After, registerListener }) => {
   Before((scenario, callback) => {
     browser.ignoreSynchronization = true;
     browser.driver.manage().window()
@@ -64,4 +67,19 @@ defineSupportCode(({ Before, After }) => {
       callback();
     }
   });
+
+  jsonFormatter.log = function (string) {
+    if (!fs.existsSync(browser.params.reportDir)) {
+      fs.mkdirSync(browser.params.reportDir);
+    }
+
+    const targetJsonPath = `${browser.params.reportDir}${browser.params.reportFile}`;
+    fs.writeFile(targetJsonPath, string, (err) => {
+      if (err) {
+        console.log('Failed to save cucumber test results to json file.');
+        console.log(err);
+      }
+    });
+  };
+  registerListener(jsonFormatter);
 });
