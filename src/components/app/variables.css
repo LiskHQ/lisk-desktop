@@ -50,6 +50,14 @@ or "warn/action" ineastd of "red/green"
   --heading-font: 'gilroy', 'Open Sans', sans-serif;
   --content-font: 'Open Sans', sans-serif;
 
+  /* Font m breakpoint */
+  --font-size-h2-m: 45px;
+  --font-size-h5-m: 16px;
+
+  /* Font s breakpoint */
+  --font-size-h2-s: 25px;
+  --font-size-h5-s: 16px;
+
   /*************************
         Sizes
   *************************/

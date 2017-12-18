@@ -42,5 +42,10 @@
 @media (--small-viewport) {
   .wrapper {
     min-height: calc(100vh - var(--s-menu-bar-height) - var(--s-menu-bar-height: 62px)); /* stylelint-disable-line */
+
+    & footer {
+      position: relative;
+      padding: 20px 0;
+    }
   }
 }

@@ -4,6 +4,7 @@
   --gradient: linear-gradient(45deg, rgba(0, 74, 255, 1) 0%, rgba(147, 244, 254, 1) 100%);
   --transition: all ease 300ms;
   --header-focused-font-size: 32px;
+  --rect-width: 200px;
 }
 
 .wrapper {
@@ -133,7 +134,7 @@
       right: 20% !important;
       top: 20% !important;
       left: auto !important;
-      width: 200px;
+      width: var(--rect-width);
 
       & img {
         animation: wave 20s 0.1s infinite linear; /* stylelint-disable-line */
@@ -142,9 +143,9 @@
 
     &.rectB {
       left: 10% !important;
-      bottom: 18% !important;
+      bottom: 25% !important;
       top: auto !important;
-      width: 200px;
+      width: var(--rect-width);
 
       & img {
         animation: wave 16s 0.1s infinite linear; /* stylelint-disable-line */
@@ -153,11 +154,11 @@
 
     &.rectC {
       right: 20% !important;
-      bottom: 25% !important;
+      bottom: 20% !important;
       top: auto !important;
       left: auto !important;
       z-index: 2;
-      width: 200px;
+      width: var(--rect-width);
 
       & img {
         animation: wave 12s 0.1s infinite linear; /* stylelint-disable-line */
@@ -211,10 +212,6 @@
 
   & a {
     text-decoration: none;
-  }
-
-  & .singUpArrow {
-    font-size: 55px;
   }
 
   & .shapes {
@@ -313,10 +310,6 @@
 }
 
 @media (--medium-viewport) {
-  .wrapper {
-    overflow: hidden !important;
-  }
-
   .login {
     height: calc(100vh - var(--m-top-bar-height) - var(--m-menu-bar-height)); /* stylelint-disable-line */
   }
@@ -327,18 +320,59 @@
     border-radius: 0px;
     width: 60%;
     height: calc(100vh - var(--m-top-bar-height) - var(--m-menu-bar-height)); /* stylelint-disable-line */
-    overflow: hidden;
   }
 }
 
 @media (--small-viewport) {
+  .wrapper {
+    padding-right: 0;
+  }
+
+  .login,
+  .signUp {
+    padding: 0 20px;
+  }
+
+  .table {
+    display: block;
+    position: relative;
+
+    & .tableCell {
+      display: block;
+      vertical-align: initial;
+    }
+  }
+
   .login {
     height: calc(50vh - var(--s-top-bar-height)); /* stylelint-disable-line */
     width: 100%;
 
     &.focused {
       width: 100%;
-      height: calc(70vh - var(--s-top-bar-height)); /* stylelint-disable-line */
+      height: auto;
+
+      & h2 {
+        margin-top: 24px;
+      }
+
+      & form button {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+
+    & .outTaken {
+      right: 0;
+      top: 0;
+
+      & + .outTaken {
+        top: 50px;
+      }
+
+      & > .outTaken {
+        top: 50px;
+      }
     }
   }
 
@@ -350,7 +384,41 @@
 
     &.focused {
       width: 100vw; /* stylelint-disable-line */
-      height: calc(30vh - var(--s-menu-bar-height)); /* stylelint-disable-line */
+    }
+
+    & .shape {
+      position: absolute !important;
+
+      &.rectA {
+        right: 10% !important;
+        top: 10% !important;
+        width: calc(0.5 * var(--rect-width));
+      }
+
+      &.rectB {
+        right: 8% !important;
+        top: 15% !important;
+        left: auto !important;
+        width: calc(0.5 * var(--rect-width));
+      }
+
+      &.rectC {
+        display: none;
+        width: 0;
+      }
+
+      &.circle {
+        right: auto !important;
+        left: 10% !important;
+        bottom: 7% !important;
+        width: calc(0.75 * var(--rect-width));
+      }
+
+      &.triangle {
+        right: -5% !important;
+        top: 3% !important;
+        width: calc(0.75 * var(--rect-width));
+      }
     }
   }
 }
