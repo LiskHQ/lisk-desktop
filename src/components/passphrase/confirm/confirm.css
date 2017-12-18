@@ -100,6 +100,7 @@
         font-size: 22px;
         margin: 8px 0;
         cursor: pointer;
+        transition: all ease 200ms;
       }
 
       & input {
@@ -114,25 +115,30 @@
     }
   }
 
+  & .validForm {
+    & input:checked + label {
+      background-color: var(--color-success-dark);
+      border-color: var(--color-success-dark);
+    }
+  }
+
   &.verify {
-    & header .done,
     & > section.done {
       display: none;
     }
 
     & h5 {
-      opacity: 0;
+      visibility: hidden;
       font-size: 18px;
       color: var(--color-error);
 
       &.visible {
-        opacity: 1;
+        visibility: visible;
       }
     }
   }
 
   &.done {
-    & > header .verify,
     & > section.verify {
       display: none;
     }
