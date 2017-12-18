@@ -102,8 +102,7 @@ class PassphraseInput extends React.Component {
             index={i}
             className={this.props.className}
             error={this.state.partialPassphraseError[i]}
-            doNext={this.doNext.bind(this)}
-            doDelete={this.doDelete.bind(this)}
+            keyAction={this.keyAction.bind(this)}
           />
         </div>);
     }
@@ -112,15 +111,13 @@ class PassphraseInput extends React.Component {
   }
 
 
-  doNext({ event, index }) {
-    if (event.which === 32) {
+  keyAction({ event, index, value }) {
+    if (event.which === 32 || event.which === 39) {
       event.preventDefault();
       this.setState({ focus: index + 1 });
     }
-  }
 
-  doDelete({ event, index, value }) {
-    if (event.which === 8 && value.length === 0) {
+    if ((event.which === 8 && !value) || event.which === 37) {
       this.setState({ focus: index - 1 });
     }
   }
@@ -149,7 +146,7 @@ class PassphraseInput extends React.Component {
               className={`show-passphrase-toggle ${styles.inputTypeToggle}`}
               onClick={this.toggleInputType.bind(this)}>
               <FontIcon className={styles.eyeIcon} value={this.state.inputType === 'password' ? 'hide' : 'show'}
-              /> <label>{this.state.inputType === 'password' ? 'Show' : 'Hide' } Passphrase</label>
+              /> <label>{this.state.inputType === 'password' ? this.props.t('Show Passphrase') : this.props.t('Hide Passphrase') }</label>
             </div>
           </div>
           :

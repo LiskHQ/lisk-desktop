@@ -26,11 +26,8 @@ class PassphraseInput extends React.Component {
       theme={this.props.theme}
       onFocus={typeof this.props.onFocus === 'function' ? this.props.onFocus : undefined}
       onChange={this.handleValueChange.bind(this)}
-      onKeyPress={(event) => {
-        this.props.doNext({ event, index: this.props.index });
-      }}
       onKeyDown={(event) => {
-        this.props.doDelete({ event, index: this.props.index, value: this.props.partialValue });
+        this.props.keyAction({ event, index: this.props.index, value: this.props.partialValue });
       }}
     />);
   }
