@@ -28,47 +28,6 @@ defined here must initiate with :global in
 order to be available application wide
 
 ****************************************/
-:global .box {
-  position: relative;
-  width: 100%;
-  height: var(--main-box-height);
-  display: flex;
-  box-sizing: border-box;
-  background: var(--color-white);
-  box-shadow: var(--normal-shadow);
-  border-radius: 3px;
-  max-height: 100%;
-  flex-direction: column;
-  overflow: auto;
-
-  & footer {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    padding: 50px 30px 20px;
-    text-align: center;
-
-    & .subTitle {
-      margin-top: 20px;
-      font-size: 1em;
-      color: var(--color-grayscale-dark);
-      height: 22px;
-    }
-  }
-}
-
-:global .hasNoPadding {
-  padding: 0;
-}
-
-:global .hasPadding {
-  padding-top: var(--box-padding-top);
-}
-
-:global .verticalScroll {
-  overflow-x: auto;
-}
 
 :global .hidden {
   position: absolute;
@@ -79,10 +38,3 @@ order to be available application wide
   padding: 0px 30px;
 }
 
-@media (--medium-viewport) {
-  :global .box {
-    height: auto;
-    background-color: var(--color-grayscale-mobile-background);
-    box-shadow: unset;
-  }
-}
