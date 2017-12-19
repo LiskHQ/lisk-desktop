@@ -5,6 +5,7 @@ import ForgingTitle from './forgingTitle';
 import DelegateStats from './delegateStats';
 import ForgingStats from './forgingStats';
 import ForgedBlocks from './forgedBlocks';
+import Box from '../box';
 
 const Forging = ({
   account, statistics, forgedBlocks, peers, onForgedBlocksLoaded, onForgingStatsUpdated, t,
@@ -29,7 +30,7 @@ const Forging = ({
 
 
   return (
-    <section className="box">
+    <Box>
       {account && account.isDelegate ?
         <div className={grid['col-xs-12']}>
           <ForgingTitle account={account} statistics={statistics}
@@ -54,7 +55,7 @@ const Forging = ({
         </p> :
         null
       }
-    </section>
+    </Box>
   );
 };
 
