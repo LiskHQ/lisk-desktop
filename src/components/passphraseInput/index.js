@@ -7,6 +7,7 @@ import PassphrasePartial from './../passphrasePartial';
 import { inDictionary } from '../../utils/similarWord';
 import { isValidPassphrase } from '../../utils/passphrase';
 import styles from './passphraseInput.css';
+import keyCodes from './../../constants/keyCodes';
 
 class PassphraseInput extends React.Component {
   constructor() {
@@ -112,12 +113,12 @@ class PassphraseInput extends React.Component {
 
 
   keyAction({ event, index, value }) {
-    if (event.which === 32 || event.which === 39) {
+    if (event.which === keyCodes.space || event.which === keyCodes.arrowRight) {
       event.preventDefault();
       this.setState({ focus: index + 1 });
     }
 
-    if ((event.which === 8 && !value) || event.which === 37) {
+    if ((event.which === keyCodes.delete && !value) || event.which === keyCodes.arrowLeft) {
       this.setState({ focus: index - 1 });
     }
   }
