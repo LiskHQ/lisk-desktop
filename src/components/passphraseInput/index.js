@@ -97,7 +97,7 @@ class PassphraseInput extends React.Component {
       indents.push(
         <div className={`${grid[xs]} ${grid[sm]} ${grid[md]}`} key={i}>
           <PassphrasePartial
-            shouldfocus={this.state.focus === i}
+            shouldfocus={this.state.focus === i ? 1 : 0}
             onFocus={this.handleFocus.bind(this, i)}
             onBlur={this.handleBlur.bind(this)}
             type={this.state.inputType}
@@ -117,14 +117,14 @@ class PassphraseInput extends React.Component {
   }
 
 
-  keyAction({ event, value }) {
+  keyAction({ event, value, index }) {
     if (event.which === keyCodes.space || event.which === keyCodes.arrowRight) {
       event.preventDefault();
-      this.setState({ focus: this.state.focus + 1 });
+      this.setState({ focus: index + 1 });
     }
 
     if ((event.which === keyCodes.delete && !value) || event.which === keyCodes.arrowLeft) {
-      this.setState({ focus: this.state.focus - 1 });
+      this.setState({ focus: index - 1 });
     }
   }
 

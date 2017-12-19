@@ -14,7 +14,6 @@ Feature: Register delegate
     Given I'm logged in as "second passphrase account"
     When I click "register as delegate" in main menu
     And I fill in "test2" to "username" field
-    And I click "second passphrase"
     And I fill in second passphrase of "second passphrase account" to "second passphrase" field
     And I click "register button"
     Then I should see alert dialog with title "Success" and text "Delegate registration was successfully submitted with username: "test2". It can take several seconds before it is processed."

@@ -3,15 +3,7 @@ import React from 'react';
 import Input from '../toolbox/inputs/input';
 import styles from './passphrasePartial.css';
 
-class PassphraseInput extends React.Component {
-  constructor() {
-    super();
-    this.input = [];
-    this.state = {
-      inputType: 'password',
-    };
-  }
-
+class PassphrasePartial extends React.Component {
   handleValueChange(value) {
     this.props.onChange(value, this.props.index);
   }
@@ -27,9 +19,11 @@ class PassphraseInput extends React.Component {
       onFocus={typeof this.props.onFocus === 'function' ? this.props.onFocus : undefined}
       onBlur={typeof this.props.onBlur === 'function' ? this.props.onBlur : undefined}
       onChange={this.handleValueChange.bind(this)}
-      onKeyDown={(event) => { this.props.keyAction({ event, value: this.props.partialValue }); }}
+      onKeyDown={(event) => {
+        this.props.keyAction({ event, value: this.props.partialValue, index: this.props.index });
+      }}
     />);
   }
 }
 
-export default translate()(PassphraseInput);
+export default translate()(PassphrasePartial);

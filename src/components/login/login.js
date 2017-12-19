@@ -230,9 +230,8 @@ class Login extends React.Component {
                   onFocus={this.passFocused.bind(this)}
                   theme={styles}
                   error={this.state.passphraseValidity}
-                  onChange={this.changeHandler.bind(this, 'passphrase')}
                   value={this.state.passphrase}
-                />
+                  onChange={this.changeHandler.bind(this, 'passphrase')} />
                 <footer className={ `${grid.row} ${grid['center-xs']}` }>
                   <div className={grid['col-xs-12']}>
                     <PrimaryButton label={this.props.t('Login')}

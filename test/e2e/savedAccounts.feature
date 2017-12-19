@@ -9,7 +9,6 @@ Feature: Saved Accounts
     And I fill in "537318935439898807L" to "recipient" field
     And I click "send next button"
     And I should see empty "passphrase" field
-    And I click "passphrase"
     And I fill in passphrase of "genesis" to "passphrase" field
     And I click "send button"
     And I wait 1 seconds

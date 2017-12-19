@@ -156,13 +156,9 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
       ? browser.params.testnetPassphrase
       : accounts[accountName].passphrase;
 
-    waitForElem('.passphrase input').then(() => {
-      waitForElemAndClickIt('.passphrase input', () => {
-        waitForElemAndSendKeys('.passphrase input', passphrase, () => {
-          waitForElemAndClickIt('.login-button', callback);
-        });
-      });
-    }).catch(callback);
+    waitForElemAndSendKeys('.passphrase input', passphrase, () => {
+      waitForElemAndClickIt('.login-button', callback);
+    });
   });
 
   When('I go to "{url}"', (url, callback) => {
