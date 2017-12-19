@@ -5,7 +5,7 @@ import { themr } from 'react-css-themr';
 import React from 'react';
 import TableTheme from 'react-toolbox/lib/table/theme.css';
 import Waypoint from 'react-waypoint';
-
+import Box from '../box';
 import Header from './votingHeader';
 import VotingBar from './votingBar';
 import VotingRow from './votingRow';
@@ -93,7 +93,7 @@ class Voting extends React.Component {
 
   render() {
     return (
-      <div className='box noPaddingBox'>
+      <Box>
         <Header
           setActiveDialog={this.props.setActiveDialog}
           voteToggled={this.props.voteToggled}
@@ -125,7 +125,7 @@ class Voting extends React.Component {
           key={this.props.delegates.length}
           onEnter={this.loadMore.bind(this)}></Waypoint>
         <VotingBar votes={this.props.votes} />
-      </div>
+      </Box>
     );
   }
 }
