@@ -5,7 +5,7 @@ import styles from './passphrasePartial.css';
 
 class PassphrasePartial extends React.Component {
   handleValueChange(value) {
-    this.props.onChange(value, this.props.index);
+    this.props.onChange(value);
   }
 
   render() {
