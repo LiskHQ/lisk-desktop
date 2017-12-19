@@ -131,7 +131,7 @@
       width: 200px;
 
       & img {
-        animation: wave 20s 0.1s infinite linear;
+        animation: wave 20s 0.1s infinite linear; /* stylelint-disable-line */
       }
     }
 
@@ -142,7 +142,7 @@
       width: 200px;
 
       & img {
-        animation: wave 16s 0.1s infinite linear;
+        animation: wave 16s 0.1s infinite linear; /* stylelint-disable-line */
       }
     }
 
@@ -155,7 +155,7 @@
       width: 200px;
 
       & img {
-        animation: wave 12s 0.1s infinite linear;
+        animation: wave 12s 0.1s infinite linear; /* stylelint-disable-line */
       }
     }
 
@@ -167,7 +167,7 @@
       width: 150px;
 
       & img {
-        animation: wander 16s 0.1s infinite alternate cubic-bezier(0.455, 0.03, 0.515, 0.955);
+        animation: wander 16s 0.1s infinite alternate cubic-bezier(0.455, 0.03, 0.515, 0.955); /* stylelint-disable-line */
       }
     }
 
@@ -178,7 +178,7 @@
       width: 250px;
 
       & img {
-        animation: somersault 20s 0.1s infinite alternate cubic-bezier(0.455, 0.03, 0.515, 0.955);
+        animation: somersault 20s 0.1s infinite alternate cubic-bezier(0.455, 0.03, 0.515, 0.955); /* stylelint-disable-line */
       }
     }
   }
@@ -269,21 +269,21 @@
   0% {
     transform: rotateX(-30deg);
   }
-  
+
   25% {
-    transform: rotateX( 30deg);
+    transform: rotateX(30deg);
   }
-  
+
   50% {
     transform: rotateY(-30deg);
   }
-  
+
   75% {
-    transform: rotateY( 30deg);
+    transform: rotateY(30deg);
   }
-  
+
   100% {
-    transform: rotateZ( 20deg);
+    transform: rotateZ(20deg);
   }
 }
 
