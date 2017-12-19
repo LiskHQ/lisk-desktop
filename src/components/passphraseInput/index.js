@@ -24,6 +24,10 @@ class PassphraseInput extends React.Component {
     this.setState({ focus: field });
   }
 
+  handleBlur() {
+    this.setState({ focus: null });
+  }
+
   handleValueChange(value, index) {
     let insertedValue = value;
     const insertedValueAsArray = insertedValue.split(' ');
@@ -95,6 +99,7 @@ class PassphraseInput extends React.Component {
           <PassphrasePartial
             shouldfocus={this.state.focus === i}
             onFocus={this.handleFocus.bind(this, i)}
+            onBlur={this.handleBlur.bind(this)}
             type={this.state.inputType}
             theme={this.props.theme}
             value={value}
@@ -112,14 +117,14 @@ class PassphraseInput extends React.Component {
   }
 
 
-  keyAction({ event, index, value }) {
+  keyAction({ event, value }) {
     if (event.which === keyCodes.space || event.which === keyCodes.arrowRight) {
       event.preventDefault();
-      this.setState({ focus: index + 1 });
+      this.setState({ focus: this.state.focus + 1 });
     }
 
     if ((event.which === keyCodes.delete && !value) || event.which === keyCodes.arrowLeft) {
-      this.setState({ focus: index - 1 });
+      this.setState({ focus: this.state.focus - 1 });
     }
   }
 
