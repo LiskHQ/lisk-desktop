@@ -15,6 +15,7 @@ import getNetwork from '../../utils/getNetwork';
 import { parseSearchParams } from './../../utils/searchParams';
 import LanguageDropdown from '../languageDropdown';
 import RelativeLink from '../relativeLink';
+import Box from '../box';
 // eslint-disable-next-line import/no-unresolved
 import * as shapes from '../../assets/images/*.svg';
 import { validateUrl, getLoginData } from '../../utils/login';
@@ -188,7 +189,7 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div className={`box ${styles.wrapper}`}>
+      <Box className={styles.wrapper}>
         <section className={`${styles.login} ${styles[this.state.passInputState]}`}>
           <section className={styles.table}>
             <header>
@@ -269,7 +270,7 @@ class Login extends React.Component {
             </Parallax>
           </div>
         </section>
-      </div>
+      </Box>
     );
   }
 }
