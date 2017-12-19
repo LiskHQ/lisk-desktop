@@ -67,8 +67,8 @@ describe('Login', () => {
   describe('Generals', () => {
     it('should show error about passphrase length if passphrase is have wrong length', () => {
       const expectedError = 'Passphrase should have 12 words, entered passphrase has 11';
-      wrapper.find('.passphrase input').simulate('change', { target: { value: ' ' } });
-      wrapper.find('.passphrase input').simulate('change', { target: { value: passphrase } });
+      wrapper.find('.passphrase input').first().simulate('change', { target: { value: ' ' } });
+      wrapper.find('.passphrase input').first().simulate('change', { target: { value: passphrase } });
       expect(wrapper.find('.passphrase')).to.contain(expectedError);
     });
   });

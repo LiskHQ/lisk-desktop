@@ -6,6 +6,7 @@
   --input-color: var(--color-grayscale-dark);
   --label-font-size: var(--font-size-small);
   --input-font-size: 1.06066em;
+  --placeholder-color: var(--color-grayscale-light);
 }
 
 .input input:focus {
@@ -18,6 +19,10 @@
 .input {
   font-weight: 500;
   font-size: var(--input-font-size);
+}
+
+.input input::placeholder {
+  color: var(--placeholder-color);
 }
 
 .inputElement:focus:not([disabled]):not([readonly]) ~ .label:not(.fixed),
