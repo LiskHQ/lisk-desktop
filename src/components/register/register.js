@@ -7,6 +7,7 @@ import Safekeeping from '../passphrase/safekeeping';
 import Confirm from '../passphrase/confirm';
 import networks from '../../constants/networks';
 import getNetwork from '../../utils/getNetwork';
+import Box from '../box';
 import { validateUrl, getLoginData } from '../../utils/login';
 import styles from './register.css';
 
@@ -42,7 +43,7 @@ class Register extends React.Component {
 
   render() {
     const { t } = this.props;
-    return (<div className={`box hasPadding ${styles.register}`}>
+    return (<Box className={`${styles.hasPaddingTop} ${styles.register}`}>
       <MultiStep
         prevPage={this.backToLogin.bind(this)}
         finalCallback={this.onRegister.bind(this)}
@@ -51,7 +52,7 @@ class Register extends React.Component {
         <Safekeeping title='Safekeeping' t={t} icon='checkmark' />
         <Confirm title='Confirm' t={t} confirmButton='Login' icon='login' />
       </MultiStep>
-    </div>);
+    </Box>);
   }
 }
 
