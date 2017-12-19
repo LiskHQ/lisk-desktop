@@ -2,15 +2,22 @@ import React from 'react';
 import { expect } from 'chai';
 import { spy } from 'sinon';
 import { mount } from 'enzyme';
+import PropTypes from 'prop-types';
 
 import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
-import PassphraseInput from './index';
+import { PassphraseInput } from './index';
 
 describe('PassphraseInput', () => {
   let wrapper;
   let props;
   let onChangeSpy;
+  const keyCodes = {
+    arrowRight: 39,
+    arrowLeft: 37,
+    space: 32,
+    delete: 8,
+  };
 
   beforeEach('', () => {
     props = {
@@ -18,9 +25,18 @@ describe('PassphraseInput', () => {
       value: '',
       onChange: () => {},
       i18n,
+      t: key => key,
     };
     onChangeSpy = spy(props, 'onChange');
-    wrapper = mount(<PassphraseInput {...props} />);
+
+    const options = {
+      context: { i18n },
+      childContextTypes: {
+        i18n: PropTypes.object.isRequired,
+      },
+    };
+
+    wrapper = mount(<PassphraseInput {...props} />, options);
   });
 
   afterEach('', () => {
@@ -53,6 +69,7 @@ describe('PassphraseInput', () => {
     expect(wrapper.props().onChange).to.not.have.been.calledWith(passphrase, errorMessage);
     passphrase = 'wagonn stock borrow episode laundry kitten salute link globe zero feed marble';
     wrapper.find('input').first().simulate('change', { target: { value: passphrase } });
+    expect(wrapper.state('partialPassphraseError')[0]).to.equal(true);
     expect(wrapper.props().onChange).to.have.been.calledWith(passphrase, errorMessage);
   });
 

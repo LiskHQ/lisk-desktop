@@ -228,6 +228,7 @@
   "encrypt message": "encrypt message",
   "my votes": "my votes",
   "set second passphrase": "set second passphrase",
+  "start here": "start here",
   "your second passphrase will be required for all transactions sent from this account": "your second passphrase will be required for all transactions sent from this account",
   "{{count}} delegate names were successfully resolved for unvoting.": "{{count}} delegate name successfully resolved to remove vote from.",
   "{{count}} delegate names were successfully resolved for unvoting._plural": "{{count}} delegate names were successfully resolved for unvoting.",

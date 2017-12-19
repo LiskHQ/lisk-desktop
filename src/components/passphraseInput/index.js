@@ -3,7 +3,6 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { FontIcon } from '../fontIcon';
 import Input from '../toolbox/inputs/input';
-import PassphrasePartial from './../passphrasePartial';
 import { inDictionary } from '../../utils/similarWord';
 import { isValidPassphrase } from '../../utils/passphrase';
 import styles from './passphraseInput.css';
@@ -28,7 +27,7 @@ class PassphraseInput extends React.Component {
     this.setState({ focus: null });
   }
 
-  handleValueChange(value, index) {
+  handleValueChange(index, value) {
     let insertedValue = value;
     const insertedValueAsArray = insertedValue.split(' ');
     let passphrase = this.props.value.split(' ');
@@ -84,39 +83,6 @@ class PassphraseInput extends React.Component {
     this.setState({ inputType: this.state.inputType === 'password' ? 'text' : 'password' });
   }
 
-  renderFields() {
-    const propsColumns = this.props.columns;
-    const xs = `col-xs-${propsColumns && propsColumns.xs ? propsColumns.xs : '6'}`;
-    const sm = `col-sm-${propsColumns && propsColumns.sm ? propsColumns.sm : '2'}`;
-    const md = `col-md-${propsColumns && propsColumns.md ? propsColumns.md : '2'}`;
-
-    const value = this.props.value.split(' ');
-    const indents = [];
-
-    for (let i = 0; i < 12; i++) {
-      indents.push(
-        <div className={`${grid[xs]} ${grid[sm]} ${grid[md]}`} key={i}>
-          <PassphrasePartial
-            shouldfocus={this.state.focus === i ? 1 : 0}
-            onFocus={this.handleFocus.bind(this, i)}
-            onBlur={this.handleBlur.bind(this)}
-            type={this.state.inputType}
-            theme={this.props.theme}
-            value={value}
-            partialValue={value[i]}
-            onChange={this.handleValueChange.bind(this)}
-            index={i}
-            className={this.props.className}
-            error={this.state.partialPassphraseError[i]}
-            keyAction={this.keyAction.bind(this)}
-          />
-        </div>);
-    }
-
-    return indents;
-  }
-
-
   keyAction({ event, value, index }) {
     if (event.which === keyCodes.space || event.which === keyCodes.arrowRight) {
       event.preventDefault();
@@ -135,17 +101,42 @@ class PassphraseInput extends React.Component {
 
   focusAndPaste(value) {
     this.setFocused();
-    this.handleValueChange(value, 0);
+    this.handleValueChange(0, value);
   }
 
   render() {
+    const propsColumns = this.props.columns;
+    const xs = `col-xs-${propsColumns && propsColumns.xs ? propsColumns.xs : '6'}`;
+    const sm = `col-sm-${propsColumns && propsColumns.sm ? propsColumns.sm : '2'}`;
+    const md = `col-md-${propsColumns && propsColumns.md ? propsColumns.md : '2'}`;
+
+    const value = this.props.value.split(' ');
     return (
       <div className={styles.wrapper} onClick={this.setFocused.bind(this)}>
         {this.state.isFocused
           ?
           <div>
             <div className={grid.row}>
-              {this.renderFields()}
+              {[...Array(12)].map((x, i) =>
+                <div className={`${grid[xs]} ${grid[sm]} ${grid[md]}`} key={i}>
+                  <Input
+                    shouldfocus={this.state.focus === i ? 1 : 0}
+                    placeholder={this.props.index === 0 ? this.props.t('start here') : ''}
+                    className={`${this.props.className} ${styles.partial} ${this.state.partialPassphraseError[i] ? styles.error : ''}`}
+                    value={value[i]}
+                    type={this.state.inputType}
+                    theme={this.props.theme}
+                    onFocus={this.handleFocus.bind(this, i)}
+                    onBlur={this.handleBlur.bind(this)}
+                    onChange={(val) => {
+                      this.handleValueChange(i, val);
+                    }}
+                    onKeyDown={(event) => {
+                      this.keyAction({ event, value: value[i], index: i });
+                    }}
+                  />
+                </div>,
+              )}
             </div>
             <div className={styles.errorMessage}>{this.props.error}</div>
             <div
@@ -166,4 +157,6 @@ class PassphraseInput extends React.Component {
   }
 }
 
+export { PassphraseInput };
+// eslint-disable-next-line import/no-named-as-default
 export default translate()(PassphraseInput);
