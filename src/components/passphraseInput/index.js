@@ -3,8 +3,7 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { FontIcon } from '../fontIcon';
 import Input from '../toolbox/inputs/input';
-import { inDictionary } from '../../utils/similarWord';
-import { isValidPassphrase } from '../../utils/passphrase';
+import { isValidPassphrase, getPassphraseValidationErrors } from '../../utils/passphrase';
 import styles from './passphraseInput.css';
 import keyCodes from './../../constants/keyCodes';
 
@@ -58,25 +57,10 @@ class PassphraseInput extends React.Component {
 
   // eslint-disable-next-line class-methods-use-this
   getPassphraseValidationError(passphrase) {
-    const mnemonic = passphrase.trim().split(' ');
-
-    const partialPassphraseError = this.state.partialPassphraseError.slice();
-    const invalidWords = mnemonic.filter((word) => {
-      const isNotInDictionary = !inDictionary(word.toLowerCase());
-      partialPassphraseError[mnemonic.indexOf(word)] = isNotInDictionary;
-      return isNotInDictionary;
-    });
+    const { partialPassphraseError, validationError } = getPassphraseValidationErrors(passphrase);
     this.setState({ partialPassphraseError });
 
-    if (invalidWords.length > 0) {
-      return this.props.t('Please check the highlighted words');
-    }
-
-    if (mnemonic.length < 12) {
-      return this.props.t('Passphrase should have 12 words, entered passphrase has {{length}}', { length: mnemonic.length });
-    }
-
-    return this.props.t('Passphrase is not valid');
+    return validationError;
   }
 
   toggleInputType() {
