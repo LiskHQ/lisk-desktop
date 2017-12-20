@@ -262,11 +262,21 @@ class Login extends React.Component {
           <div className={styles.bg}></div>
           <div className={styles.shapes}>
             <Parallax bgWidth='200px' bgHeight='10px'>
-              <img src={shapes.circle} alt='circle' className={`${styles.circle} ${styles.shape}`} data-depth='0.5'/>
-              <img src={shapes.triangle} alt='triangle' className={`${styles.triangle} ${styles.shape}`} data-depth='0.6'/>
-              <img src={shapes.rect} alt='rect A' className={`${styles.rectA} ${styles.shape}`} data-depth='0.2'/>
-              <img src={shapes.rect} alt='rect B' className={`${styles.rectB} ${styles.shape}`} data-depth='0.4'/>
-              <img src={shapes.rect} alt='rect C' className={`${styles.rectC} ${styles.shape}`} data-depth='0.4'/>
+              <figure className={`${styles.shape} ${styles.circle}`} data-depth='0.5'>
+                <img src={shapes.circle} alt='circle'/>
+              </figure>
+              <figure className={`${styles.shape} ${styles.triangle}`} data-depth='0.6'>
+                <img src={shapes.triangle} alt='triangle'/>
+              </figure>
+              <figure className={`${styles.shape} ${styles.rectA}`} data-depth='0.2'>
+                <img src={shapes.rect} alt='rect A'/>
+              </figure>
+              <figure className={`${styles.shape} ${styles.rectB}`} data-depth='0.8'>
+                <img src={shapes.rect} alt='rect B'/>
+              </figure>
+              <figure className={`${styles.shape} ${styles.rectC}`} data-depth='1.5'>
+                <img src={shapes.rect} alt='rect C' />
+              </figure>
             </Parallax>
           </div>
         </section>

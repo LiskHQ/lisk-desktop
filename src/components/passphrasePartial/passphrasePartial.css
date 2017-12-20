@@ -1,0 +1,9 @@
+@import '../app/variables.css';
+
+.error input {
+  color: var(--color-error) !important;
+}
+
+.partial input {
+  text-align: center;
+}
