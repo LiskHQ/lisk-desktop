@@ -7,6 +7,7 @@ import Parallax from '../parallax';
 import Input from '../toolbox/inputs/input';
 import { PrimaryButton } from '../toolbox/buttons/button';
 import { extractAddress } from '../../utils/api/account';
+// eslint-disable-next-line import/no-named-as-default
 import PassphraseInput from '../passphraseInput';
 import styles from './login.css';
 import env from '../../constants/env';

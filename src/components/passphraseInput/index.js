@@ -121,7 +121,7 @@ class PassphraseInput extends React.Component {
                 <div className={`${grid[xs]} ${grid[sm]} ${grid[md]}`} key={i}>
                   <Input
                     shouldfocus={this.state.focus === i ? 1 : 0}
-                    placeholder={this.props.index === 0 ? this.props.t('start here') : ''}
+                    placeholder={i === 0 ? this.props.t('start here') : ''}
                     className={`${this.props.className} ${styles.partial} ${this.state.partialPassphraseError[i] ? styles.error : ''}`}
                     value={value[i]}
                     type={this.state.inputType}

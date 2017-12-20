@@ -13,7 +13,8 @@ describe('AuthInputsHOC', () => {
   let wrapper;
   const props = {
     onChange: () => {},
-    secondPassphrase: {},
+    secondPassphrase: { value: '' },
+    passphrase: { value: '' },
   };
   const account = {
     secondSignature: 1,
