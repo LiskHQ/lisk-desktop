@@ -5,18 +5,19 @@ import SendWritable from '../sendWritable';
 import SendReadable from './../sendReadable';
 import ResultBox from '../resultBox';
 import MultiStep from './../multiStep';
+import Box from '../box';
 import styles from './styles.css';
 
 const TransactionsDashboard = () => (
   <div className={`${grid.row} ${styles.wrapper}`} >
     <div className={`${grid['col-xs-4']}`}>
-      <div className={`box ${styles.send}`}>
+      <Box className={`${styles.send}`}>
         <MultiStep>
           <SendWritable/>
           <SendReadable />
           <ResultBox />
         </MultiStep>
-      </div>
+      </Box>
     </div>
     <div className={`${grid['col-xs-8']}`}>
       <Transactions></Transactions>

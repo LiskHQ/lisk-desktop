@@ -3,7 +3,7 @@ Feature: Voting tab
     Given I'm logged in as "any account"
     When I click "voting" tab
     Then I should see table with 100 lines
-    When I scroll to the bottom of "box"
+    When I scroll to the bottom of "voting"
     Then I should see table with 200 lines
 
   Scenario: should allow to view delegates with cold account

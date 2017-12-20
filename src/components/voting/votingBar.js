@@ -1,7 +1,7 @@
 import { translate } from 'react-i18next';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-
+import Box from '../box';
 import style from './votingBar.css';
 import votingConst from '../../constants/voting';
 import { getTotalVotesCount, getVoteList, getUnvoteList } from './../../utils/voting';
@@ -14,7 +14,7 @@ const VotingBar = ({ votes, t }) => {
   const totalNewVotesCount = voteList.length + unvoteList.length;
 
   return (voteList.length + unvoteList.length ?
-    <div className={`${grid.row} ${style.fixedAtBottom} box voting-bar boxAutoHeight`}>
+    <Box className={`${grid.row} ${style.fixedAtBottom} voting-bar`}>
       <div className={
         `${grid['col-sm-12']} ${grid['col-md-10']} ${grid['col-md-offset-1']}
           ${grid.row} ${grid['center-xs']} ${grid['middle-xs']}`}>
@@ -41,7 +41,7 @@ const VotingBar = ({ votes, t }) => {
           <span> / {maxCountOfVotes}</span>
         </span>
       </div>
-    </div> :
+    </Box> :
     null
   );
 };

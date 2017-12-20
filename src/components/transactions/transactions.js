@@ -9,6 +9,7 @@ import TransactionRow from './transactionRow';
 import TransactionsHeader from './transactionsHeader';
 import LiskAmount from '../liskAmount';
 import styles from './transactions.css';
+import Box from '../box';
 
 class Transactions extends React.Component {
   constructor() {
@@ -36,7 +37,7 @@ class Transactions extends React.Component {
   render() {
     return (
       <div>
-        <div className={`transactions box ${styles.transactions} `}>
+        <Box className={`transactions ${styles.transactions} `}>
           <header>
             <h2 className={styles.title}>{this.props.t('Transactions')}</h2>
             <div className={styles.account}>
@@ -77,7 +78,7 @@ class Transactions extends React.Component {
                 to='receive'>{this.props.t('Receive LSK')}</RelativeLink>
             </p>
           }
-        </div>
+        </Box>
       </div>
     );
   }

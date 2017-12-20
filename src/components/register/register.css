@@ -1,6 +1,12 @@
+@import '../app/variables.css';
+
 .register {
   & > section {
     height: 100%;
     overflow: hidden;
   }
+}
+
+.hasPaddingTop {
+  padding-top: var(--box-padding-top);
 }

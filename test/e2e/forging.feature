@@ -4,6 +4,6 @@ Feature: Forging tab
     When I click "forging" tab
     Then I should see forging center
     And I should see table with 20 lines
-    And I scroll to the bottom of "box"
+    And I scroll to the bottom of "forging"
     And I should see table with 40 lines
 
