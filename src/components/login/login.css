@@ -103,6 +103,7 @@
   width: 58%;
   margin-top: -23px;
   border-radius: 3px;
+  overflow: hidden;
 
   & .bg,
   & .shapes,
@@ -133,6 +134,10 @@
       top: 20% !important;
       left: auto !important;
       width: 200px;
+
+      & img {
+        animation: wave 20s 0.1s infinite linear; /* stylelint-disable-line */
+      }
     }
 
     &.rectB {
@@ -140,6 +145,10 @@
       bottom: 18% !important;
       top: auto !important;
       width: 200px;
+
+      & img {
+        animation: wave 16s 0.1s infinite linear; /* stylelint-disable-line */
+      }
     }
 
     &.rectC {
@@ -149,6 +158,10 @@
       left: auto !important;
       z-index: 2;
       width: 200px;
+
+      & img {
+        animation: wave 12s 0.1s infinite linear; /* stylelint-disable-line */
+      }
     }
 
     &.circle {
@@ -157,6 +170,10 @@
       left: auto !important;
       top: auto !important;
       width: 150px;
+
+      & img {
+        animation: wander 16s 0.1s infinite alternate cubic-bezier(0.455, 0.03, 0.515, 0.955); /* stylelint-disable-line */
+      }
     }
 
     &.triangle {
@@ -164,6 +181,10 @@
       left: auto !important;
       top: 10% !important;
       width: 250px;
+
+      & img {
+        animation: somersault 20s 0.1s infinite alternate cubic-bezier(0.455, 0.03, 0.515, 0.955); /* stylelint-disable-line */
+      }
     }
   }
 
@@ -237,4 +258,56 @@
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+@keyframes somersault {
+  0% {
+    transform: translate3d(15%, 0, 0) rotateZ(10deg);
+  }
+
+  100% {
+    transform: translate3d(-15%, 0, 0) rotateZ(-10deg);
+  }
+}
+
+@keyframes tilt {
+  0% {
+    transform: rotateX(-30deg);
+  }
+
+  25% {
+    transform: rotateX(30deg);
+  }
+
+  50% {
+    transform: rotateY(-30deg);
+  }
+
+  75% {
+    transform: rotateY(30deg);
+  }
+
+  100% {
+    transform: rotateZ(20deg);
+  }
+}
+
+@-webkit-keyframes wave {
+  0% {
+    transform: rotateZ(0deg) translate3d(0, 10%, 0) rotateZ(0deg);
+  }
+
+  100% {
+    transform: rotateZ(360deg) translate3d(0, 10%, 0) rotateZ(-360deg);
+  }
+}
+
+@-webkit-keyframes wander {
+  0% {
+    transform: translate3d(0, 0, 0) rotateZ(0deg);
+  }
+
+  100% {
+    transform: translate3d(-15%, 10%, 0) rotateZ(0deg);
+  }
 }
