@@ -177,8 +177,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
         y: 500 + (Math.floor((((i % 2) * 2) - 1) * (249 + (Math.random() * 250)))),
       });
     }
-    actions.perform();
-    callback();
+    actions.perform().then(callback());
   });
 
   When('I remember passphrase, click "{nextButtonSelector}", choose missing words', { timeout: 2 * defaultTimeout }, (nextButtonSelector, callback) => {
