@@ -30,7 +30,7 @@ const Forging = ({
 
 
   return (
-    <Box>
+    <Box className='forging'>
       {account && account.isDelegate ?
         <div className={grid['col-xs-12']}>
           <ForgingTitle account={account} statistics={statistics}
