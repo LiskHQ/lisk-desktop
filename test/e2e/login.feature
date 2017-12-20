@@ -30,6 +30,7 @@ Feature: Login page
     When I click "new account button"
     And I wait 1 seconds
     And I 250 times move mouse randomly
+    And I wait 2 seconds
     And I click "next button"
     And I swipe "i understand checkbox" to right
     And I swipe "reveal checkbox" to right
