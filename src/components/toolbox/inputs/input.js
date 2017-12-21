@@ -11,11 +11,6 @@ const ToolBoxInput = props => <Input
       ref.focus();
     }
   }}
-  onFocus={(e) => {
-    const val = e.target.value;
-    e.target.value = '';
-    e.target.value = val;
-  }}
 />;
 
 export default themr('TBInput', inputTheme)(ToolBoxInput);

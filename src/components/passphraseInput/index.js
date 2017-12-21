@@ -18,12 +18,8 @@ class PassphraseInput extends React.Component {
     };
   }
 
-  handleFocus(field) {
+  setFocusedField(field) {
     this.setState({ focus: field });
-  }
-
-  handleBlur() {
-    this.setState({ focus: null });
   }
 
   handleValueChange(index, value) {
@@ -110,14 +106,21 @@ class PassphraseInput extends React.Component {
                     value={value[i]}
                     type={this.state.inputType}
                     theme={this.props.theme}
-                    onFocus={this.handleFocus.bind(this, i)}
-                    onBlur={this.handleBlur.bind(this)}
+                    onFocus={(e) => {
+                      const val = e.target.value;
+                      e.target.value = '';
+                      e.target.value = val;
+
+                      this.setFocusedField(i);
+                    }}
+                    onBlur={this.setFocusedField.bind(this, null)}
                     onChange={(val) => {
                       this.handleValueChange(i, val);
                     }}
                     onKeyDown={(event) => {
                       this.keyAction({ event, value: value[i], index: i });
                     }}
+                    index={i}
                   />
                 </div>,
               )}

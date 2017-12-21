@@ -176,5 +176,13 @@ describe('PassphraseInput', () => {
       expect(wrapper.find('input').at(1).props().placeholder).to.equal('');
       expect(wrapper.find('input').at(0).props().value).to.equal('');
     });
+
+    it('should change focused element on focus and blur', () => {
+      wrapper.find('input').first().simulate('click');
+      wrapper.find('input').at(1).simulate('focus');
+      expect(wrapper.find('input').at(1).props().shouldfocus).to.equal(1);
+      wrapper.find('input').at(1).simulate('blur');
+      expect(wrapper.find('input').at(1).props().shouldfocus).to.equal(0);
+    });
   });
 });
