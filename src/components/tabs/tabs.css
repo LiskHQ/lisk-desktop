@@ -2,7 +2,7 @@
 
 :root {
   --menu-background-color: var(--color-white);
-  --menu-item-active-gradient: var(--gradient-theme);
+  --menu-item-active-gradient: linear-gradient(-27deg, #004aff 4%, #57afff 61%, #93f4fe 100%);
   --menu-item-active-border-width: 7px;
   --setting-menu-color: var(--color-grayscale-medium);
   --setting-menu-border-color: var(--color-grayscale-medium);
@@ -17,30 +17,52 @@
 }
 
 .setting {
-  color: var(--setting-menu-color) !important;
-  border-top: 1px solid var(--setting-menu-border-color) !important;
+  color: var(--setting-menu-color);
+  border-top: 1px solid var(--setting-menu-border-color);
+  background: var(--menu-background-color);
   position: fixed !important;
   width: 192px;
   left: 0;
   bottom: 0;
-  padding: 30px 0;
+  padding: 20px 0 30px;
+  cursor: pointer;
 }
 
 .tab {
   background: var(--menu-background-color);
   text-align: center;
-  text-transform: capitalize;
   box-shadow: none;
-
-  & span {
-    display: block;
-    margin: 10px 0 0;
-  }
+  width: 100% !important;
+  border: none !important;
 }
 
 .navigationContainer {
   overflow: hidden;
   margin-left: -2px;
+  flex: 0 1 auto;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.drawer {
+  width: 480px;
+  background: #fff;
+}
+
+.header {
+  align-items: center;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.close {
+  font-size: 35px;
+  display: flex;
+  width: auto;
+  cursor: pointer;
+  color: var(--setting-menu-color);
 }
 
 .label {
@@ -49,6 +71,35 @@
   color: var(--color-black);
   font-weight: bold;
   font-family: var(--heading-font);
+  display: flex;
+  flex: 0 0 auto;
+  width: 50%;
+  text-align: center;
+  flex-grow: 1;
+  text-transform: capitalize;
+  border-right: 1px solid var(--setting-menu-color);
+  border-bottom: 1px solid var(--setting-menu-color);
+
+  &:nth-child(2n) {
+    border-right: none !important;
+  }
+
+  &:nth-child(1) {
+    border-top: 1px solid var(--setting-menu-color);
+  }
+
+  &:nth-child(2) {
+    border-top: 1px solid var(--setting-menu-color);
+  }
+
+  & > div {
+    width: 100%;
+  }
+
+  & span {
+    display: block;
+    margin: 10px 0 0;
+  }
 
   & > .rippleWrapper {
     display: none;
@@ -60,7 +111,8 @@
   box-shadow: none;
   margin-left: 2px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .tabs nav {
@@ -81,7 +133,6 @@
   color: var(--color-black);
   margin-bottom: -1px;
   opacity: 1;
-  border-width: 0;
 
   &::before {
     position: absolute;
@@ -94,4 +145,16 @@
     opacity: 0.8;
     background-image: var(--menu-item-active-gradient);
   }
+}
+
+.readMoreText {
+  font-size: 17px;
+  font-weight: bold;
+  text-transform: capitalize;
+  font-family: 'gilroy', 'Open Sans', sans-serif;
+}
+
+.readMoreIcon {
+  font-size: 65px;
+  width: 100%;
 }
