@@ -49,23 +49,18 @@
     position: absolute;
     left: 0;
     top: 0;
+    margin-top: 10px;
 
     & .backButton {
-      color: var(--color-grayscale-dark);
-      font-size: var(--font-size-h3);
+      color: var(--color-primary-standard);
+      text-decoration: initial;
+      font-family: var(--heading-font);
+      font-size: 16px;
+      font-weight: normal;
 
       & .icon {
-        font-size: 32px;
-      }
-
-      & .icon,
-      & b {
-        display: inline-block;
-        vertical-align: middle;
-      }
-
-      & b {
-        font-size: 0.36em !important;
+        font-size: 1.4em;
+        margin-right: 5px;
       }
     }
   }
@@ -347,12 +342,20 @@
     height: calc(50vh - var(--s-top-bar-height)); /* stylelint-disable-line */
     width: 100%;
 
+    & header {
+      position: relative;
+      left: -5px;
+      font-size: 14px;
+    }
+
     &.focused {
       width: 100%;
       height: auto;
 
       & h2 {
-        margin-top: 24px;
+        font-size: var(--font-size-h2-s);
+        margin-top: 20px;
+        margin-bottom: 10px;
       }
 
       & form button {
@@ -381,6 +384,11 @@
     border-radius: 0px;
     width: 100vw; /* stylelint-disable-line */
     height: calc(50vh - var(--s-menu-bar-height)); /* stylelint-disable-line */
+
+    & h2 {
+      margin-top: 40px;
+      font-size: var(--font-size-h2-s);
+    }
 
     &.focused {
       width: 100vw; /* stylelint-disable-line */
