@@ -8,20 +8,23 @@
   --link-color: var(--color-primary-very-light);
   --row-background-color: var(--color-white);
   --filter-list-color: var(--color-grayscale-medium);
-  --font-weight-bold: 600;
-  --result-address-font-weight: var(--font-weight-bold);
+  --font-weight-bold: 500;
+  --font-weight-very-bold: 600;
+  --result-address-font-weight: var(--font-weight-very-bold);
+  --detail-label-font-weight: var(--font-weight-bold);
   --header-address-font-weight: 500;
-  --list-line-height: 30px;
+  --list-line-height: 25px;
   --grid-header-line-height: 60px;
   --main-row-line-height: 70px;
   --sub-row-height: 50px;
-  --grid-padding-left: 30px;
+  --grid-padding-left: 48px;
   --header-line-height: 36px;
   --header-subtitle-font-size: 18px;
   --main-header-font-size: 32px;
   --main-header-unit-font-size: 20px;
   --grid-header-font-size: 15px;
   --grid-body-font-size: 16px;
+  --back-font-size: 15px;
 }
 
 .smallButton {
@@ -61,126 +64,160 @@
 }
 
 .transactions {
-  & .list {
-    color: var(--filter-list-color);
-    line-height: var(--list-line-height);
-    list-style: none;
-    padding: 0px 0px 20px 30px;
+  & .activity {
+    & .list {
+      color: var(--filter-list-color);
+      line-height: var(--list-line-height);
+      list-style: none;
+      padding: 0px 0px 20px 48px;
 
-    & .item {
-      display: inline-block;
-      cursor: pointer;
+      & .item {
+        display: inline-block;
+        cursor: pointer;
 
-      &:not(:last-of-type) {
-        margin-right: 50px;
+        &:not(:last-of-type) {
+          margin-right: 50px;
+        }
+      }
+
+      & .active {
+        border-bottom: 2px solid var(--amount-negative-color);
+        color: var(--amount-negative-color);
       }
     }
 
-    & .active {
-      border-bottom: 2px solid var(--amount-negative-color);
-      color: var(--amount-negative-color);
+    & .results {
+      overflow-x: hidden;
+      overflow-y: auto;
+
+      & .rows:nth-of-type(even) {
+        background: var(--gradient-greyscale);
+      }
+
+      & .rows:nth-of-type(odd) {
+        background: var(--row-background-color);
+      }
+
+      & .rows {
+        color: var(--amount-negative-color);
+        border-bottom: 0;
+        border-top: 0;
+
+        &:hover {
+          background: var(--link-color);
+        }
+
+        &:first-child {
+          color: var(--grid-header-color);
+          line-height: var(--grid-header-line-height);
+        }
+
+        & .copyIcon {
+          vertical-align: bottom;
+          padding-left: 5px;
+          cursor: pointer;
+        }
+      }
+
+      & .turnArrow {
+        transform: rotate(180deg);
+      }
+
+      & .mainRow {
+        line-height: var(--main-row-line-height);
+      }
+
+      & .subRow {
+        min-height: var(--sub-row-height);
+
+        & a {
+          text-decoration: none;
+          color: var(--blue);
+        }
+      }
+
+      & .address {
+        font-weight: var(--result-address-font-weight);
+      }
+    }
+
+    & header {
+      padding: 20px 48px;
+      line-height: var(--header-line-height);
+
+      & .title {
+        float: left;
+      }
+
+      & .subTitle {
+        font-size: var(--header-subtitle-font-size);
+      }
+
+      & .account {
+        text-align: right;
+      }
+
+      & h2 {
+        margin-bottom: 0;
+        font-size: var(--main-header-font-size);
+        font-weight: 500;
+      }
+
+      & h3 {
+        display: inline-block;
+        margin: 0;
+      }
+
+      & .address {
+        text-align: right;
+        cursor: pointer;
+      }
+
+      & .transfer {
+        color: var(--color-grayscale-dark);
+      }
+
+      & .balanceUnit {
+        font-weight: 500;
+        font-size: 20px;
+      }
     }
   }
 
-  & .results {
-    overflow-x: hidden;
-    overflow-y: auto;
+  & .details {
+    line-height: var(--list-line-height);
+    padding: 0px 0px 20px 48px;
+    color: #3c5068;
 
-    & .rows:nth-of-type(even) {
-      background: var(--gradient-greyscale);
+    & .row {
+      padding-bottom: 48px;
     }
 
-    & .rows:nth-of-type(odd) {
-      background: var(--row-background-color);
+    & .label {
+      font-weight: 700;
     }
 
-    & .rows {
-      color: var(--amount-negative-color);
-      border-bottom: 0;
-      border-top: 0;
+    & header {
+      padding-left: 0px;
+      line-height: var(--header-line-height);
+      margin-bottom: 89px;
 
-      &:hover {
-        background: var(--link-color);
-      }
-
-      &:first-child {
-        color: var(--grid-header-color);
-        line-height: var(--grid-header-line-height);
-      }
-
-      & .copyIcon {
-        vertical-align: bottom;
-        padding-left: 5px;
+      & small {
+        font-size: var(--back-font-size);
+        font-weight: var(--detail-label-font-weight);
+        margin-left: -6px;
         cursor: pointer;
       }
     }
-
-    & .turnArrow {
-      transform: rotate(180deg);
-    }
-
-    & .mainRow {
-      line-height: var(--main-row-line-height);
-    }
-
-    & .subRow {
-      min-height: var(--sub-row-height);
-
-      & a {
-        text-decoration: none;
-        color: var(--blue);
-      }
-    }
-
-    & .address {
-      font-weight: var(--result-address-font-weight);
-    }
-
-    & .greyLabel {
-      font-weight: var(--font-weight-bold);
-      color: var(--amount-negative-color);
-    }
-
-    & .greenLabel {
-      font-weight: var(--font-weight-bold);
-      color: var(--amount-positive-color);
-    }
   }
 
-  & header {
-    padding: 20px 30px;
-    line-height: var(--header-line-height);
+  & .greyLabel {
+    font-weight: var(--font-weight-very-bold);
+    color: var(--amount-negative-color);
+  }
 
-    & .title {
-      float: left;
-    }
-
-    & .subTitle {
-      font-size: var(--header-subtitle-font-size);
-    }
-
-    & .account {
-      text-align: right;
-    }
-
-    & h2 {
-      margin-bottom: 0;
-      font-size: var(--main-header-font-size);
-    }
-
-    & h3 {
-      display: inline-block;
-      margin: 0;
-    }
-
-    & .address {
-      text-align: right;
-      cursor: pointer;
-      font-weight: var(--header-address-font-weight);
-    }
-
-    & .transfer {
-      color: var(--color-grayscale-dark);
-    }
+  & .greenLabel {
+    font-weight: var(--font-weight-very-bold);
+    color: var(--amount-positive-color);
   }
 }
