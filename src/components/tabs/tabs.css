@@ -40,8 +40,7 @@
   overflow: hidden;
   margin-left: -2px;
   flex: 0 1 auto;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
 }
 
 .drawer {
@@ -111,8 +110,7 @@
   box-shadow: none;
   margin-left: 2px;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
 }
 
 .tabs nav {
