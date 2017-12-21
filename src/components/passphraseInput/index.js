@@ -3,9 +3,7 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { FontIcon } from '../fontIcon';
 import Input from '../toolbox/inputs/input';
-import PassphrasePartial from './../passphrasePartial';
-import { inDictionary } from '../../utils/similarWord';
-import { isValidPassphrase } from '../../utils/passphrase';
+import { isValidPassphrase, getPassphraseValidationErrors } from '../../utils/passphrase';
 import styles from './passphraseInput.css';
 import keyCodes from './../../constants/keyCodes';
 
@@ -20,15 +18,11 @@ class PassphraseInput extends React.Component {
     };
   }
 
-  handleFocus(field) {
+  setFocusedField(field) {
     this.setState({ focus: field });
   }
 
-  handleBlur() {
-    this.setState({ focus: null });
-  }
-
-  handleValueChange(value, index) {
+  handleValueChange(index, value) {
     let insertedValue = value;
     const insertedValueAsArray = insertedValue.split(' ');
     let passphrase = this.props.value.split(' ');
@@ -59,63 +53,15 @@ class PassphraseInput extends React.Component {
 
   // eslint-disable-next-line class-methods-use-this
   getPassphraseValidationError(passphrase) {
-    const mnemonic = passphrase.trim().split(' ');
-
-    const partialPassphraseError = this.state.partialPassphraseError.slice();
-    const invalidWords = mnemonic.filter((word) => {
-      const isNotInDictionary = !inDictionary(word.toLowerCase());
-      partialPassphraseError[mnemonic.indexOf(word)] = isNotInDictionary;
-      return isNotInDictionary;
-    });
+    const { partialPassphraseError, validationError } = getPassphraseValidationErrors(passphrase);
     this.setState({ partialPassphraseError });
 
-    if (invalidWords.length > 0) {
-      return this.props.t('Please check the highlighted words');
-    }
-
-    if (mnemonic.length < 12) {
-      return this.props.t('Passphrase should have 12 words, entered passphrase has {{length}}', { length: mnemonic.length });
-    }
-
-    return this.props.t('Passphrase is not valid');
+    return validationError;
   }
 
   toggleInputType() {
     this.setState({ inputType: this.state.inputType === 'password' ? 'text' : 'password' });
   }
-
-  renderFields() {
-    const propsColumns = this.props.columns;
-    const xs = `col-xs-${propsColumns && propsColumns.xs ? propsColumns.xs : '6'}`;
-    const sm = `col-sm-${propsColumns && propsColumns.sm ? propsColumns.sm : '2'}`;
-    const md = `col-md-${propsColumns && propsColumns.md ? propsColumns.md : '2'}`;
-
-    const value = this.props.value.split(' ');
-    const indents = [];
-
-    for (let i = 0; i < 12; i++) {
-      indents.push(
-        <div className={`${grid[xs]} ${grid[sm]} ${grid[md]}`} key={i}>
-          <PassphrasePartial
-            shouldfocus={this.state.focus === i ? 1 : 0}
-            onFocus={this.handleFocus.bind(this, i)}
-            onBlur={this.handleBlur.bind(this)}
-            type={this.state.inputType}
-            theme={this.props.theme}
-            value={value}
-            partialValue={value[i]}
-            onChange={this.handleValueChange.bind(this)}
-            index={i}
-            className={this.props.className}
-            error={this.state.partialPassphraseError[i]}
-            keyAction={this.keyAction.bind(this)}
-          />
-        </div>);
-    }
-
-    return indents;
-  }
-
 
   keyAction({ event, value, index }) {
     if (event.which === keyCodes.space || event.which === keyCodes.arrowRight) {
@@ -135,17 +81,49 @@ class PassphraseInput extends React.Component {
 
   focusAndPaste(value) {
     this.setFocused();
-    this.handleValueChange(value, 0);
+    this.handleValueChange(0, value);
   }
 
   render() {
+    const propsColumns = this.props.columns;
+    const xs = `col-xs-${propsColumns && propsColumns.xs ? propsColumns.xs : '6'}`;
+    const sm = `col-sm-${propsColumns && propsColumns.sm ? propsColumns.sm : '2'}`;
+    const md = `col-md-${propsColumns && propsColumns.md ? propsColumns.md : '2'}`;
+
+    const value = this.props.value.split(' ');
     return (
       <div className={styles.wrapper} onClick={this.setFocused.bind(this)}>
         {this.state.isFocused
           ?
           <div>
             <div className={grid.row}>
-              {this.renderFields()}
+              {[...Array(12)].map((x, i) =>
+                <div className={`${grid[xs]} ${grid[sm]} ${grid[md]}`} key={i}>
+                  <Input
+                    shouldfocus={this.state.focus === i ? 1 : 0}
+                    placeholder={i === 0 ? this.props.t('start here') : ''}
+                    className={`${this.props.className} ${styles.partial} ${this.state.partialPassphraseError[i] ? styles.error : ''}`}
+                    value={value[i]}
+                    type={this.state.inputType}
+                    theme={this.props.theme}
+                    onFocus={(e) => {
+                      const val = e.target.value;
+                      e.target.value = '';
+                      e.target.value = val;
+
+                      this.setFocusedField(i);
+                    }}
+                    onBlur={this.setFocusedField.bind(this, null)}
+                    onChange={(val) => {
+                      this.handleValueChange(i, val);
+                    }}
+                    onKeyDown={(event) => {
+                      this.keyAction({ event, value: value[i], index: i });
+                    }}
+                    index={i}
+                  />
+                </div>,
+              )}
             </div>
             <div className={styles.errorMessage}>{this.props.error}</div>
             <div
@@ -166,4 +144,6 @@ class PassphraseInput extends React.Component {
   }
 }
 
+export { PassphraseInput };
+// eslint-disable-next-line import/no-named-as-default
 export default translate()(PassphraseInput);

@@ -1,4 +1,5 @@
 import React from 'react';
+// eslint-disable-next-line import/no-named-as-default
 import PassphraseInput from '../passphraseInput';
 import { extractPublicKey } from '../../utils/api/account';
 
