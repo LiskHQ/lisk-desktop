@@ -53,13 +53,13 @@ class Tabs extends React.Component {
         id: 'wallet',
         image: menuLogos.wallet,
       }, {
-        label: t('Delegates'),
-        id: 'voting',
-        image: menuLogos.delegates,
-      }, {
         label: t('Buy Lisk'),
         id: 'butLisk',
         image: menuLogos.buyLisk,
+      }, {
+        label: t('Delegates'),
+        id: 'voting',
+        image: menuLogos.delegates,
       }, {
         label: t('Forging'),
         id: 'forging',
