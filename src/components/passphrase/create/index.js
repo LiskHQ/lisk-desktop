@@ -222,7 +222,7 @@ class Create extends React.Component {
               <PrimaryButton
                 theme={styles}
                 label='Get passphrase'
-                className="next-button"
+                className="get-passphrase-button"
                 onClick={() => nextStep({ passphrase: this.state.passphrase })}
               />
             </div>

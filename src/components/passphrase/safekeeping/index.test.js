@@ -68,7 +68,7 @@ describe('Passphrase: Safekeeping', () => {
   });
 
   it('should call nextStep if Next button clicked', () => {
-    wrapper.find('button.next-button').simulate('click');
+    wrapper.find('button.yes-its-safe-button').simulate('click');
     expect(props.nextStep).to.have.been.calledWith();
   });
 });

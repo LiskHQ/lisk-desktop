@@ -73,7 +73,7 @@ class PassphraseShow extends React.Component {
               }}
               primaryButton={{
                 label: t('Yes! It\'s safe'),
-                className: 'next-button',
+                className: 'yes-its-safe-button',
                 onClick: () => nextStep({ passphrase }),
               }} />
           </div>
