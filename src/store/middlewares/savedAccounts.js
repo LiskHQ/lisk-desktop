@@ -5,7 +5,9 @@ import { activePeerSet } from '../../actions/peers';
 import getNetwork from '../../utils/getNetwork';
 
 const savedAccountsMiddleware = (store) => {
-  store.dispatch(accountsRetrieved());
+  setImmediate(() => {
+    store.dispatch(accountsRetrieved());
+  });
   return next => (action) => {
     next(action);
     const { peers, account } = store.getState();
