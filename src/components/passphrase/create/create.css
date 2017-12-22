@@ -191,8 +191,12 @@ hr {
   }
 
   & .addressContainer {
-    margin-top: 600px;
+    margin-top: 200px;
     position: relative;
+
+    & figure {
+      height: 200px;
+    }
   }
 
   & .address {
@@ -203,6 +207,7 @@ hr {
     transform-origin: 50% 50%;
     animation-fill-mode: forwards;
     opacity: 0;
+    margin-top: 200px;
   }
 
   & .button {

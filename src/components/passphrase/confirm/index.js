@@ -2,8 +2,8 @@ import React from 'react';
 import fillWordsList from 'bitcore-mnemonic/lib/words/english';
 import styles from './confirm.css';
 import { PrimaryButton } from '../../toolbox/buttons/button';
-import circle from '../../../assets/images/circle.svg';
 import { extractAddress } from '../../../utils/api/account';
+import AccountVisual from '../../accountVisual';
 
 class Confirm extends React.Component {
   constructor() {
@@ -198,7 +198,7 @@ class Confirm extends React.Component {
         <section className={`${styles.table} ${styles.done}`}>
           <div className={styles.tableCell}>
             <figure>
-              <img src={circle} alt='Address avatar' />
+              <AccountVisual address={this.getAddress()} size={200} />
             </figure>
             <h4 className={styles.address}>{this.address}</h4>
             <PrimaryButton
