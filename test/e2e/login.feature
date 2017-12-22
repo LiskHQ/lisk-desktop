@@ -22,8 +22,8 @@ Feature: Login page
     When I fill in "wagon stock borrow episode laundry kitten salute link globe zero feed marble" to "passphrase" field
     And I select option no. 1 from "network" select
     And I click "login button"
-    Then I should be logged in
-    And I should see text "Mainnet" in "peer network" element
+    Then I should be logged in as "genesis" account
+    And I should see no "peer network"
 
   Scenario: should allow to create a new account
     Given I'm on login page
