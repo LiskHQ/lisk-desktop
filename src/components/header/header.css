@@ -143,6 +143,7 @@
     display: inline-block;
     height: calc(100% - 8px);
     padding: 4px;
+    margin-left: 30px;
   }
 
   .logoutButton {
@@ -150,6 +151,8 @@
   }
 
   .account {
+    margin-right: 20px;
+
     & .avatar {
       margin-top: 14px;
       height: var(--avatar-height-m);
@@ -196,6 +199,8 @@
   }
 
   .account {
+    margin-right: 0;
+
     & .avatar {
       margin-top: 4px;
       height: var(--avatar-height-s);
@@ -226,5 +231,9 @@
         display: none;
       }
     }
+  }
+
+  .logo {
+    margin-left: 10px;
   }
 }

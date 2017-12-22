@@ -1,3 +1,5 @@
+@import '../app/variables';
+
 :root {
   --online: #73cba9;
   --offline: #f45d4c;
@@ -85,12 +87,18 @@
   text-align: center;
 }
 
-/* @todo please remove this by #13 */
+/* @todo please remove .temp by #13 */
 .temp {
   width: 350px;
   float: right;
   position: relative;
   bottom: -100px;
+}
+
+@media (--medium-viewport) {
+  .temp {
+    display: none;
+  }
 }
 
 @media only screen and (min-width: 48em) {

@@ -20,7 +20,7 @@
   right: 0;
   font-weight: 600;
   color: #2475b9 !important;
-  top: -30%;
+  top: -55px;
 
   & label {
     text-transform: capitalize;
@@ -53,4 +53,10 @@
 
 .partial input {
   text-align: center;
+}
+
+@media (--small-viewport) {
+  .inputTypeToggle {
+    top: -40px;
+  }
 }

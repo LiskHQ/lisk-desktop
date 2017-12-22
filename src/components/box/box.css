@@ -33,7 +33,19 @@
 @media (--medium-viewport) {
   .wrapper {
     height: auto;
+    min-height: calc(100vh - var(--m-menu-bar-height) - var(--m-menu-bar-height: 62px)); /* stylelint-disable-line */
     background-color: var(--color-grayscale-mobile-background);
     box-shadow: unset;
+  }
+}
+
+@media (--small-viewport) {
+  .wrapper {
+    min-height: calc(100vh - var(--s-menu-bar-height) - var(--s-menu-bar-height: 62px)); /* stylelint-disable-line */
+
+    & footer {
+      position: relative;
+      padding: 20px 0;
+    }
   }
 }
