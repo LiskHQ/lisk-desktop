@@ -29,7 +29,7 @@ describe('Result Box', () => {
     expect(wrapper.find('h2').text()).to.contain(title);
     expect(wrapper.find('.result-box-message').text()).to.contain(body);
     expect(wrapper.find('.material-icons')).to.have.length(0);
-    expect(wrapper.find('img')).to.have.length(2);
+    expect(wrapper.find('img')).to.have.length(1);
     expect(wrapper.find('.copy-title').text()).to.contain(copy.title);
   });
 
