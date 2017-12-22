@@ -138,7 +138,7 @@ class SavedAccounts extends React.Component {
             value={this.state.editing ? 'checkmark' : 'edit'} />
           {this.state.editing ? t('Done') : t('Edit')}
         </SecondaryLightButton>
-        <ToolBoxButton icon='close' floating onClick={closeDialog} className={`x-button ${styles.closeButton}`} />
+        <ToolBoxButton icon={<FontIcon value='close' />} floating onClick={closeDialog} className={`x-button ${styles.closeButton}`} />
       </div>
     );
   }
