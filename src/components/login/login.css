@@ -399,9 +399,13 @@
 
   .signUp {
     margin-right: 0;
-    border-radius: 0px;
+    border-radius: 0;
     width: 100vw; /* stylelint-disable-line */
     height: calc(50vh - var(--s-menu-bar-height)); /* stylelint-disable-line */
+
+    & .bg {
+      border-radius: 0;
+    }
 
     & h2 {
       margin-top: 40px;
