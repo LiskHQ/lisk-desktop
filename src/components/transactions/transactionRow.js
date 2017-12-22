@@ -8,7 +8,7 @@ import LiskAmount from '../liskAmount';
 import Amount from './amount';
 import Spinner from '../spinner';
 import { TimeFromTimestamp, DateFromTimestamp } from './../timestamp/index';
-import angle from './../../assets/images/darkblue_angle_down.svg';
+import { FontIcon } from '../fontIcon';
 
 class TransactionRow extends React.Component {
   constructor() {
@@ -53,7 +53,7 @@ class TransactionRow extends React.Component {
         </div>
         <div className={`${styles.rightText} ${grid['col-xs-1']}`}>
           <div className={`${styles.mainRow} ${styles.clickable}`} onClick={this.toggleRow.bind(this)}>
-            <img src={angle} className={this.state.isOpen ? styles.turnArrow : ''}/>
+            <FontIcon value='arrow-down' className={this.state.isOpen ? styles.turnArrow : ''}/>
           </div>
         </div>
       </div>
