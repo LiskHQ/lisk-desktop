@@ -49,18 +49,18 @@
     position: absolute;
     left: 0;
     top: 0;
-    margin-top: 10px;
+    margin-top: 50px;
 
     & .backButton {
       color: var(--color-primary-standard);
       text-decoration: initial;
-      font-family: var(--heading-font);
+      font-family: var(--content-font);
       font-size: 16px;
       font-weight: normal;
 
       & .icon {
+        vertical-align: text-bottom;
         font-size: 1.4em;
-        margin-right: 5px;
       }
     }
   }
@@ -201,6 +201,10 @@
     transition: var(--transition);
   }
 
+  & .singUpArrow {
+    font-size: 1.2em;
+  }
+
   & h5 {
     max-width: 320px;
   }
@@ -220,10 +224,6 @@
 
     & h2 {
       font-size: var(--header-focused-font-size);
-    }
-
-    & .singUpArrow {
-      font-size: 34px;
     }
 
     & h5 {
@@ -316,6 +316,15 @@
     width: 60%;
     height: calc(100vh - var(--m-top-bar-height) - var(--m-menu-bar-height)); /* stylelint-disable-line */
   }
+
+  .login,
+  .signUp {
+    & .focused {
+      & h2 {
+        font-size: var(--font-size-h3-m);
+      }
+    }
+  }
 }
 
 @media (--small-viewport) {
@@ -326,6 +335,10 @@
   .login,
   .signUp {
     padding: 0 20px;
+
+    & h2 {
+      font-size: var(--font-size-h2-s);
+    }
   }
 
   .table {
@@ -353,7 +366,6 @@
       height: auto;
 
       & h2 {
-        font-size: var(--font-size-h2-s);
         margin-top: 20px;
         margin-bottom: 10px;
       }
@@ -387,7 +399,6 @@
 
     & h2 {
       margin-top: 40px;
-      font-size: var(--font-size-h2-s);
     }
 
     &.focused {
