@@ -29,14 +29,14 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
 
   When('I fill in second passphrase of "{accountName}" to "{fieldName}" field', (accountName, fieldName, callback) => {
     const selectorClass = `.${fieldName.replace(/ /g, '-')}`;
-    const secondPassphrase = accounts[accountName].secondPassphrase;
+    const { secondPassphrase } = accounts[accountName];
     browser.sleep(500);
     waitForElemAndSendKeys(`${selectorClass} input, ${selectorClass} textarea`, secondPassphrase, callback);
   });
 
   When('I fill in passphrase of "{accountName}" to "{fieldName}" field', (accountName, fieldName, callback) => {
     const selectorClass = `.${fieldName.replace(/ /g, '-')}`;
-    const passphrase = accounts[accountName].passphrase;
+    const { passphrase } = accounts[accountName];
     browser.sleep(500);
     waitForElemAndSendKeys(`${selectorClass} input, ${selectorClass} textarea`, passphrase, callback);
   });
