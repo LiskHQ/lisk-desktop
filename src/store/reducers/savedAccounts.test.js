@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import savedAccounts from './savedAccounts';
 import actionTypes from '../../constants/actions';
+import accounts from '../../../test/constants/accounts';
 
 describe('Reducer: savedAccounts(state, action)', () => {
   const account = {
@@ -12,6 +13,7 @@ describe('Reducer: savedAccounts(state, action)', () => {
     publicKey: 'sample_key_2',
     network: 'Custom node',
     address: 'http://localhost:4000',
+    passphrase: accounts.genesis.passphrase,
   };
 
   it('should return action.data if action.type = actionTypes.accountsRetrieved', () => {
@@ -45,6 +47,17 @@ describe('Reducer: savedAccounts(state, action)', () => {
     };
     const changedState = savedAccounts(state, action);
     expect(changedState).to.deep.equal({ accounts: [account2] });
+  });
+
+  it('should return array same accounts without passphrase if action.type = actionTypes.removePassphrase', () => {
+    const state = { accounts: [account, account2] };
+    const action = {
+      type: actionTypes.removePassphrase,
+    };
+    const changedState = savedAccounts(state, action);
+    const account2WithoutPassphrase = { ...account2 };
+    delete account2WithoutPassphrase.passphrase;
+    expect(changedState).to.deep.equal({ accounts: [account, account2WithoutPassphrase] });
   });
 });
 

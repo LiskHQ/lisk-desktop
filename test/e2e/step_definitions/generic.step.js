@@ -29,14 +29,14 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
 
   When('I fill in second passphrase of "{accountName}" to "{fieldName}" field', (accountName, fieldName, callback) => {
     const selectorClass = `.${fieldName.replace(/ /g, '-')}`;
-    const secondPassphrase = accounts[accountName].secondPassphrase;
+    const { secondPassphrase } = accounts[accountName];
     browser.sleep(500);
     waitForElemAndSendKeys(`${selectorClass} input, ${selectorClass} textarea`, secondPassphrase, callback);
   });
 
   When('I fill in passphrase of "{accountName}" to "{fieldName}" field', (accountName, fieldName, callback) => {
     const selectorClass = `.${fieldName.replace(/ /g, '-')}`;
-    const passphrase = accounts[accountName].passphrase;
+    const { passphrase } = accounts[accountName];
     browser.sleep(500);
     waitForElemAndSendKeys(`${selectorClass} input, ${selectorClass} textarea`, passphrase, callback);
   });
@@ -223,7 +223,11 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   });
 
   Then('I should be logged in', (callback) => {
-    waitForElemAndCheckItsText('.logout-button', 'logout', callback);
+    const selector = '.account';
+    waitForElem(selector).then(() => {
+      expect(element.all(by.css(selector)).count()).to.eventually.equal(1)
+        .and.notify(callback);
+    }).catch(callback);
   });
 
   Then('I should be logged in as "{accountName}" account', (accountName, callback) => {

@@ -2,14 +2,14 @@ Feature: Login page
   @pending
   Scenario: should allow to login
     Given I'm on login page
-    When I fill in "wagon stock borrow episode laundry kitten salute link globe zero feed marble" to "passphrase" field
+    When I fill in passphrase of "genesis" to "passphrase" field
     And I click "login button"
-    Then I should be logged in
+    Then I should be logged in as "genesis" account
 
   @integration
   Scenario: should show toast when trying to connect to an unavailable custom node
     Given I'm on login page
-    When I fill in "wagon stock borrow episode laundry kitten salute link globe zero feed marble" to "passphrase" field
+    When I fill in passphrase of "genesis" to "passphrase" field
     And I select option no. 3 from "network" select
     And I clear "address" field
     And I fill in "http://localhost:4218" to "address" field
@@ -19,11 +19,11 @@ Feature: Login page
 
   Scenario: should allow to login to Mainnet 
     Given I'm on login page
-    When I fill in "wagon stock borrow episode laundry kitten salute link globe zero feed marble" to "passphrase" field
+    When I fill in passphrase of "genesis" to "passphrase" field
     And I select option no. 1 from "network" select
     And I click "login button"
-    Then I should be logged in
-    And I should see text "Mainnet" in "peer network" element
+    Then I should be logged in as "genesis" account
+    And I should see no "peer network"
 
   Scenario: should allow to create a new account
     Given I'm on login page

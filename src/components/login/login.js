@@ -46,8 +46,6 @@ class Login extends React.Component {
     i18next.on('languageChanged', () => {
       this.getNetworksList();
     });
-
-    this.props.accountsRetrieved();
   }
 
   getNetworksList() {
@@ -194,9 +192,9 @@ class Login extends React.Component {
         <section className={`${styles.login} ${styles[this.state.passInputState]}`}>
           <section className={styles.table}>
             <header>
-              <a className={styles.backButton} href='https://list.io' target='_blank' rel='noopener noreferrer'>
+              <a className={styles.backButton} href='https://lisk.io' target='_blank' rel='noopener noreferrer'>
                 <FontIcon className={styles.icon}>arrow-left</FontIcon>
-                <b>Back to lisk.io</b>
+                {this.props.t('Back to lisk.io')}
               </a>
             </header>
             <div className={`${styles.tableCell} text-left`}>

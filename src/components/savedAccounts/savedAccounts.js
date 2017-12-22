@@ -53,17 +53,12 @@ class SavedAccounts extends React.Component {
 
   render() {
     const {
-      networkOptions,
-      activeAccount,
       closeDialog,
       accountSwitched,
       savedAccounts,
       history,
       t,
     } = this.props;
-    const isActive = account => (
-      account.publicKey === activeAccount.publicKey &&
-    account.network === networkOptions.code);
 
     const switchAccount = (account) => {
       if (!this.state.editing) {
@@ -96,7 +91,7 @@ class SavedAccounts extends React.Component {
               ${this.isSelectedForRemove(account) ? styles.darkBackground : null}`}
             key={account.publicKey + account.network}
             onClick={ switchAccount.bind(null, account)} >
-              {(isActive(account) && activeAccount.passphrase ?
+              {(account.passphrase ?
                 <strong className={styles.unlocked}>
                   <FontIcon value='lock_open' />
                   {t('Unlocked')}
