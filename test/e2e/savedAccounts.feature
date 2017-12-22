@@ -58,7 +58,8 @@ Feature: Saved Accounts
 
   Scenario: should login to last active saved account
     Given I'm logged in as "genesis"
-    And I click "logout button"
+    And I click "saved accounts" in main menu
+    And I click "add lisk id card"
     And I'm logged in as "empty account"
     And I wait 1 seconds
     And I refresh the page

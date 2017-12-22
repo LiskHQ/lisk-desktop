@@ -2,7 +2,6 @@ import { IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Countdown from 'react-countdown-now';
-import { Button } from '../toolbox/buttons/button';
 import { FontIcon } from '../fontIcon';
 import CountDownTemplate from './countDownTemplate';
 import LiskAmount from '../liskAmount';
@@ -17,8 +16,7 @@ const Header = props => (
     <img src={logo} className={styles.logo} />
     <PrivateWrapper>
       <div className={grid.row}>
-        <Button className={`${styles.logoutButton} logout-button`} raised onClick={props.logOut}>{props.t('LOGOUT')}</Button>
-        <div className={styles.account}>
+        <div className={`account ${styles.account}`}>
           <div className={styles.information} align="right">
             <div className={styles.balance}>
               <LiskAmount val={props.account.balance}/>

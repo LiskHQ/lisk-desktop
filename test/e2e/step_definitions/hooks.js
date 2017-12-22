@@ -57,12 +57,14 @@ defineSupportCode(({ Before, After, registerListener }) => {
 
   After((scenario, callback) => {
     localStorage.clear();
+
+    browser.manage().logs().get('browser').then((browserLog) => {
+      console.log(`BROWSER LOG: ${util.inspect(browserLog)}`); // eslint-disable-line no-console
+    });
+
     if (scenario.isFailed()) {
       const screnarioSlug = slugify([scenario.scenario.feature.name, scenario.scenario.name].join(' '));
       takeScreenshot(screnarioSlug, callback);
-      browser.manage().logs().get('browser').then((browserLog) => {
-        console.log(`BROWSER LOG: ${util.inspect(browserLog)}`);
-      });
     } else {
       callback();
     }
@@ -76,8 +78,8 @@ defineSupportCode(({ Before, After, registerListener }) => {
     const targetJsonPath = `${browser.params.reportDir}${browser.params.reportFile}`;
     fs.writeFile(targetJsonPath, string, (err) => {
       if (err) {
-        console.log('Failed to save cucumber test results to json file.');
-        console.log(err);
+        console.error('Failed to save cucumber test results to json file.'); // eslint-disable-line no-console
+        console.error(err); // eslint-disable-line no-console
       }
     });
   };
