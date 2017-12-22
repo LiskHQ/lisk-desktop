@@ -16,7 +16,7 @@ const Header = props => (
     <img src={logo} className={styles.logo} />
     <PrivateWrapper>
       <div className={grid.row}>
-        <div className={styles.account}>
+        <div className={`account ${styles.account}`}>
           <div className={styles.information} align="right">
             <div className={styles.balance}>
               <LiskAmount val={props.account.balance}/>
