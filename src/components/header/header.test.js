@@ -4,7 +4,6 @@ import { shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
 import sinon from 'sinon';
-import { Button } from '../toolbox/buttons/button';
 import Header from './header';
 import RelativeLink from '../relativeLink';
 import i18n from '../../i18n';
@@ -37,10 +36,6 @@ describe('Header', () => {
   afterEach(() => {
     propsMock.verify();
     propsMock.restore();
-  });
-
-  it('renders 1 Button components', () => {
-    expect(wrapper.find(Button)).to.have.length(1);
   });
 
   it('renders 9 RelativeLink components', () => {
