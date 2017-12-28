@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n';
@@ -21,6 +21,13 @@ describe('LoginHOC', () => {
       },
     },
   };
+  // const history = {
+  //   location: {
+  //     pathname: '',
+  //     search: '',
+  //   },
+  //   replace: i => i,
+  // };
   const account = {
     isDelegate: false,
     address: '16313739661670634666L',
@@ -32,17 +39,17 @@ describe('LoginHOC', () => {
     activePeerSet: () => {},
   });
   const options = {
-    context: { store, history, i18n },
+    context: { store, i18n },
     childContextTypes: {
       store: PropTypes.object.isRequired,
-      history: PropTypes.object.isRequired,
       i18n: PropTypes.object.isRequired,
     },
   };
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<Router><LoginHOC store={store}/></Router>, options);
+    wrapper = mount(<MemoryRouter><LoginHOC store={store}/></MemoryRouter>,
+      options);
   });
 
   it('should mount Login', () => {
