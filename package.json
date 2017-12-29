@@ -13,6 +13,7 @@
     "e2e-test": "protractor protractor.conf.js",
     "test": "karma start",
     "bundlesize": "bundlesize",
+    "analyze-bundles": "webpack  --config ./config/webpack.config.analyze",
     "test-live": "npm test -- --auto-watch --no-single-run",
     "start": "electron ./app/",
     "dist": "build --ia32 --x64 --armv7l --publish onTag",
