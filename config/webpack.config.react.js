@@ -60,7 +60,7 @@ module.exports = {
         './app/src/**/*.js',
       ],
     }),
-    new ContextReplacementPlugin(/moment[\/\\]locale$/, new RegExp(langRegex)),
+    new ContextReplacementPlugin(/moment[/\\]locale$/, new RegExp(langRegex)),
   ],
   module: {
     rules: [
