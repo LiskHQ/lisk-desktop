@@ -1,5 +1,9 @@
+@import '../app/variables.css';
+
 :root {
   --icon-font-size: 32px;
+  --tab-inactive-color: --color-grayscale-dark;
+  --error-font-size: 14px;
 }
 
 .wrapper {
@@ -11,21 +15,48 @@
   position: hidden;
 }
 
-.icon {
-  font-size: var(--icon-font-size);
-  margin-top: -3px;
-}
-
-.eyeIcon {
+.inputTypeToggle {
   position: absolute;
   right: 0;
-  bottom: 50%;
-  transform: translateY(50%);
-  line-height: 24px;
-  height: 24px;
-  cursor: pointer;
+  font-weight: 600;
+  color: #2475b9 !important;
+  top: -55px;
+
+  & label {
+    text-transform: capitalize;
+    vertical-align: middle;
+    cursor: pointer;
+  }
+
+  & .eyeIcon {
+    vertical-align: middle;
+    cursor: pointer;
+    font-size: var(--icon-font-size);
+  }
 }
 
 .inputWrapper input {
   padding-right: 35px;
+}
+
+.errorMessage {
+  color: var(--color-error);
+  font-size: var(--error-font-size);
+  height: 20px;
+  font-weight: 600;
+  padding-top: 10px;
+}
+
+.error input {
+  color: var(--color-error) !important;
+}
+
+.partial input {
+  text-align: center;
+}
+
+@media (--small-viewport) {
+  .inputTypeToggle {
+    top: -40px;
+  }
 }

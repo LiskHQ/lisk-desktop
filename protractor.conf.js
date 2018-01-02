@@ -29,5 +29,7 @@ exports.config = {
     network: 'customNode',
     screenWidth: 1400,
     screenHeight: 1300,
+    reportDir: './reports/',
+    reportFile: 'cucumber_report.json',
   },
 };

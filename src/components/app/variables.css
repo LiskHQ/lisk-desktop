@@ -50,6 +50,15 @@ or "warn/action" ineastd of "red/green"
   --heading-font: 'gilroy', 'Open Sans', sans-serif;
   --content-font: 'Open Sans', sans-serif;
 
+  /* Font m breakpoint */
+  --font-size-h2-m: 45px;
+  --font-size-h3-m: 30px;
+  --font-size-h5-m: 16px;
+
+  /* Font s breakpoint */
+  --font-size-h2-s: 25px;
+  --font-size-h5-s: 16px;
+
   /*************************
         Sizes
   *************************/
@@ -113,7 +122,7 @@ or "warn/action" ineastd of "red/green"
   *************************/
   @custom-media --xLarge-viewport (max-width: 1920px);
   @custom-media --large-viewport (max-width: 1400px);
-  @custom-media --medium-viewport (max-width: 1000px);
+  @custom-media --medium-viewport (max-width: 1024px);
   @custom-media --small-viewport (max-width: 768px);
   @custom-media --xSmall-viewport (max-width: 414px);
   @custom-media --xxSmall-viewport (max-width: 320px);

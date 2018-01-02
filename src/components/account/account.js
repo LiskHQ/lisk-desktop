@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './account.css';
+import networks from '../../constants/networks';
 
 /**
  * Contains some of the important and basic information about the account
@@ -12,7 +13,7 @@ const Account = ({ peers, t }) => {
     <i className="material-icons online">check</i> :
     <i className="material-icons offline">error</i>;
 
-  return (
+  return (peers.data.options.code !== networks.mainnet.code ?
     <section className={styles.temp}>
       <span className={styles.title}>
         {t('Peer')}
@@ -27,7 +28,8 @@ const Account = ({ peers, t }) => {
         {peers.data.currentPeer}
         <span> : {peers.data.port}</span>
       </span>
-    </section>
+    </section> :
+    null
   );
 };
 

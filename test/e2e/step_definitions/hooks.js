@@ -1,9 +1,12 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const { defineSupportCode } = require('cucumber');
+const Cucumber = require('cucumber');
 const fs = require('fs');
 const util = require('util');
 const localStorage = require('../support/localStorage.js');
 const networks = require('../../../src/constants/networks');
+
+const jsonFormatter = new Cucumber.JsonFormatter();
 
 function slugify(text) {
   return text.toString().toLowerCase()
@@ -34,7 +37,7 @@ function takeScreenshot(screnarioSlug, callback) {
   });
 }
 
-defineSupportCode(({ Before, After }) => {
+defineSupportCode(({ Before, After, registerListener }) => {
   Before((scenario, callback) => {
     browser.ignoreSynchronization = true;
     browser.driver.manage().window()
@@ -54,14 +57,31 @@ defineSupportCode(({ Before, After }) => {
 
   After((scenario, callback) => {
     localStorage.clear();
+
+    browser.manage().logs().get('browser').then((browserLog) => {
+      console.log(`BROWSER LOG: ${util.inspect(browserLog)}`); // eslint-disable-line no-console
+    });
+
     if (scenario.isFailed()) {
       const screnarioSlug = slugify([scenario.scenario.feature.name, scenario.scenario.name].join(' '));
       takeScreenshot(screnarioSlug, callback);
-      browser.manage().logs().get('browser').then((browserLog) => {
-        console.log(`BROWSER LOG: ${util.inspect(browserLog)}`);
-      });
     } else {
       callback();
     }
   });
+
+  jsonFormatter.log = function (string) {
+    if (!fs.existsSync(browser.params.reportDir)) {
+      fs.mkdirSync(browser.params.reportDir);
+    }
+
+    const targetJsonPath = `${browser.params.reportDir}${browser.params.reportFile}`;
+    fs.writeFile(targetJsonPath, string, (err) => {
+      if (err) {
+        console.error('Failed to save cucumber test results to json file.'); // eslint-disable-line no-console
+        console.error(err); // eslint-disable-line no-console
+      }
+    });
+  };
+  registerListener(jsonFormatter);
 });

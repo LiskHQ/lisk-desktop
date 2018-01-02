@@ -14,13 +14,18 @@ module.exports = function (config) {
     frameworks: ['mocha', 'chai'],
     files: [
       fileRoot,
-      { pattern: filePattern, included: false, served: false, watched: false },
+      {
+        pattern: filePattern,
+        included: false,
+        served: false,
+        watched: false,
+      },
     ],
     preprocessors: {
       '**/*.js': ['sourcemap'],
       [fileRoot]: ['webpack'],
     },
-    reporters: ['coverage', 'mocha'],
+    reporters: ['coverage', 'mocha', 'junit'],
     coverageReporter: {
       reporters: [
         {
@@ -28,10 +33,18 @@ module.exports = function (config) {
           dir: 'coverage/',
         },
         {
+          type: 'cobertura',
+          dir: 'coverage/',
+        },
+        {
           type: onJenkins ? 'lcov' : 'html',
           dir: 'coverage/',
         },
-      ].concat(onJenkins ? { type: 'text' } : []),
+      ],
+    },
+    junitReporter: {
+      outputFile: 'reports/junit_report.xml',
+      useBrowserName: false,
     },
     webpack: webpackConfig,
     webpackMiddleware: {

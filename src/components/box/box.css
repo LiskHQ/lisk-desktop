@@ -1,0 +1,51 @@
+@import '../app//variables.css';
+
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: var(--main-box-height);
+  display: flex;
+  box-sizing: border-box;
+  background: var(--color-white);
+  box-shadow: var(--normal-shadow);
+  border-radius: 3px;
+  max-height: 100%;
+  flex-direction: column;
+  overflow: auto;
+
+  & footer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    padding: 50px 30px 20px;
+    text-align: center;
+
+    & :global .subTitle {
+      margin-top: 20px;
+      font-size: 1em;
+      color: var(--color-grayscale-dark);
+      height: 22px;
+    }
+  }
+}
+
+@media (--medium-viewport) {
+  .wrapper {
+    height: auto;
+    min-height: calc(100vh - var(--m-menu-bar-height) - var(--m-menu-bar-height: 62px)); /* stylelint-disable-line */
+    background-color: var(--color-grayscale-mobile-background);
+    box-shadow: unset;
+  }
+}
+
+@media (--small-viewport) {
+  .wrapper {
+    min-height: calc(100vh - var(--s-menu-bar-height) - var(--s-menu-bar-height: 62px)); /* stylelint-disable-line */
+
+    & footer {
+      position: relative;
+      padding: 20px 0;
+    }
+  }
+}

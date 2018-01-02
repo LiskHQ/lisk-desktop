@@ -1,5 +1,5 @@
 import { getAccount, transactions as getTransactions } from '../../utils/api/account';
-import { accountUpdated, accountLoggedIn } from '../../actions/account';
+import { accountUpdated } from '../../actions/account';
 import { transactionsUpdated } from '../../actions/transactions';
 import { activePeerUpdate } from '../../actions/peers';
 import { votesFetched } from '../../actions/voting';
@@ -65,7 +65,7 @@ const delegateRegistration = (store, action) => {
   if (delegateRegistrationTx) {
     getDelegate(state.peers.data, { publicKey: state.account.publicKey })
       .then((delegateData) => {
-        store.dispatch(accountLoggedIn(Object.assign({},
+        store.dispatch(accountUpdated(Object.assign({},
           { delegate: delegateData.delegate, isDelegate: true })));
       });
   }

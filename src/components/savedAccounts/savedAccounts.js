@@ -1,6 +1,6 @@
 import { Button as ToolBoxButton } from 'react-toolbox/lib/button';
 import { Link } from 'react-router-dom';
-import FontIcon from 'react-toolbox/lib/font_icon';
+// import FontIcon from 'react-toolbox/lib/font_icon';
 import React from 'react';
 import { extractAddress } from '../../utils/api/account';
 import { PrimaryButton, SecondaryLightButton } from '../toolbox/buttons/button';
@@ -15,6 +15,7 @@ import rectangleOnTheRight from '../../assets/images/add-id-rectangle-1.svg';
 import rectangleImage2 from '../../assets/images/add-id-rectangle-2.svg';
 import rectangleImage3 from '../../assets/images/add-id-rectangle-3.svg';
 import triangleImage from '../../assets/images/add-id-triangle.svg';
+import { FontIcon } from '../fontIcon';
 
 import styles from './savedAccounts.css';
 
@@ -53,17 +54,12 @@ class SavedAccounts extends React.Component {
 
   render() {
     const {
-      networkOptions,
-      activeAccount,
       closeDialog,
       accountSwitched,
       savedAccounts,
       history,
       t,
     } = this.props;
-    const isActive = account => (
-      account.publicKey === activeAccount.publicKey &&
-    account.network === networkOptions.code);
 
     const switchAccount = (account) => {
       if (!this.state.editing) {
@@ -96,9 +92,9 @@ class SavedAccounts extends React.Component {
               ${this.isSelectedForRemove(account) ? styles.darkBackground : null}`}
             key={account.publicKey + account.network}
             onClick={ switchAccount.bind(null, account)} >
-              {(isActive(account) && activeAccount.passphrase ?
+              {(account.passphrase ?
                 <strong className={styles.unlocked}>
-                  <FontIcon value='lock_open' />
+                  <FontIcon value='unlocked' />
                   {t('Unlocked')}
                 </strong> :
                 null)}
@@ -137,10 +133,12 @@ class SavedAccounts extends React.Component {
         </div>
         <SecondaryLightButton className='edit-button'
           onClick={this.toggleEdit.bind(this)}
-          icon={this.state.editing ? 'check' : 'edit'}
-          theme={{ button: styles.addAcctiveAccountButton }}
-          label={this.state.editing ? t('Done') : t('Edit')}/>
-        <ToolBoxButton icon='close' floating onClick={closeDialog} className={`x-button ${styles.closeButton}`} />
+          theme={{ button: styles.addAcctiveAccountButton }}>
+          <FontIcon className={styles.editIcon}
+            value={this.state.editing ? 'checkmark' : 'edit'} />
+          {this.state.editing ? t('Done') : t('Edit')}
+        </SecondaryLightButton>
+        <ToolBoxButton icon={<FontIcon value='close' />} floating onClick={closeDialog} className={`x-button ${styles.closeButton}`} />
       </div>
     );
   }

@@ -7,6 +7,7 @@ import Parallax from '../parallax';
 import Input from '../toolbox/inputs/input';
 import { PrimaryButton } from '../toolbox/buttons/button';
 import { extractAddress } from '../../utils/api/account';
+// eslint-disable-next-line import/no-named-as-default
 import PassphraseInput from '../passphraseInput';
 import styles from './login.css';
 import env from '../../constants/env';
@@ -15,6 +16,7 @@ import getNetwork from '../../utils/getNetwork';
 import { parseSearchParams } from './../../utils/searchParams';
 import LanguageDropdown from '../languageDropdown';
 import RelativeLink from '../relativeLink';
+import Box from '../box';
 // eslint-disable-next-line import/no-unresolved
 import * as shapes from '../../assets/images/*.svg';
 import { validateUrl, getLoginData } from '../../utils/login';
@@ -44,8 +46,6 @@ class Login extends React.Component {
     i18next.on('languageChanged', () => {
       this.getNetworksList();
     });
-
-    this.props.accountsRetrieved();
   }
 
   getNetworksList() {
@@ -188,13 +188,13 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div className={`box ${styles.wrapper}`}>
+      <Box className={styles.wrapper}>
         <section className={`${styles.login} ${styles[this.state.passInputState]}`}>
           <section className={styles.table}>
             <header>
-              <a className={styles.backButton} href='https://list.io' target='_blank' rel='noopener noreferrer'>
+              <a className={styles.backButton} href='https://lisk.io' target='_blank' rel='noopener noreferrer'>
                 <FontIcon className={styles.icon}>arrow-left</FontIcon>
-                <b>Back to lisk.io</b>
+                {this.props.t('Back to lisk.io')}
               </a>
             </header>
             <div className={`${styles.tableCell} text-left`}>
@@ -261,15 +261,25 @@ class Login extends React.Component {
           <div className={styles.bg}></div>
           <div className={styles.shapes}>
             <Parallax bgWidth='200px' bgHeight='10px'>
-              <img src={shapes.circle} alt='circle' className={`${styles.circle} ${styles.shape}`} data-depth='0.5'/>
-              <img src={shapes.triangle} alt='triangle' className={`${styles.triangle} ${styles.shape}`} data-depth='0.6'/>
-              <img src={shapes.rect} alt='rect A' className={`${styles.rectA} ${styles.shape}`} data-depth='0.2'/>
-              <img src={shapes.rect} alt='rect B' className={`${styles.rectB} ${styles.shape}`} data-depth='0.4'/>
-              <img src={shapes.rect} alt='rect C' className={`${styles.rectC} ${styles.shape}`} data-depth='0.4'/>
+              <figure className={`${styles.shape} ${styles.circle}`} data-depth='0.5'>
+                <img src={shapes.circle} alt='circle'/>
+              </figure>
+              <figure className={`${styles.shape} ${styles.triangle}`} data-depth='0.6'>
+                <img src={shapes.triangle} alt='triangle'/>
+              </figure>
+              <figure className={`${styles.shape} ${styles.rectA}`} data-depth='0.2'>
+                <img src={shapes.rect} alt='rect A'/>
+              </figure>
+              <figure className={`${styles.shape} ${styles.rectB}`} data-depth='0.8'>
+                <img src={shapes.rect} alt='rect B'/>
+              </figure>
+              <figure className={`${styles.shape} ${styles.rectC}`} data-depth='1.5'>
+                <img src={shapes.rect} alt='rect C' />
+              </figure>
             </Parallax>
           </div>
         </section>
-      </div>
+      </Box>
     );
   }
 }

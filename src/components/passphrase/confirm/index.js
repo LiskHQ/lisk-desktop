@@ -213,7 +213,7 @@ class Confirm extends React.Component {
             <PrimaryButton
               theme={styles}
               label={this.props.t('Get to your Dashboard')}
-              className="next-button"
+              className="get-to-your-dashboard-button"
               onClick={() => this.props.finalCallback({ passphrase: words.join(' ') })}
             />
           </div>

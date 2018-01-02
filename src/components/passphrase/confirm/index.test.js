@@ -65,7 +65,7 @@ describe('Passphrase: Confirm', () => {
     });
     wrapper.update();
 
-    const wrapperProps = wrapper.find('button.next-button').props();
+    const wrapperProps = wrapper.find('button.get-to-your-dashboard-button').props();
     expect(wrapperProps.disabled).to.be.equal(true);
   });
 
@@ -83,7 +83,7 @@ describe('Passphrase: Confirm', () => {
     });
     wrapper.update();
 
-    const wrapperProps = wrapper.find('button.next-button').props();
+    const wrapperProps = wrapper.find('button.get-to-your-dashboard-button').props();
     expect(wrapperProps.disabled).to.not.be.equal(true);
   });
 });

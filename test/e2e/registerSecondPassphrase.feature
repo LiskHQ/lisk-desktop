@@ -4,9 +4,11 @@ Feature: Register second passphrase
     When I click "register second passphrase" in main menu
     And I click "next button"
     And I 250 times move mouse randomly
-    And I click "next button"
-    And I remember passphrase, click "next button", fill in missing word
-    And I click "next button"
+    And I click "get passphrase button"
+    And I swipe "i understand checkbox" to right
+    And I swipe "reveal checkbox" to right
+    And I remember passphrase, click "yes its safe button", choose missing words
+    And I click "get to your dashboard button"
     Then I should see alert dialog with title "Success" and text "Second passphrase registration was successfully submitted. It can take several seconds before it is processed."
 
   Scenario: should not allow to set 2nd passphrase again
@@ -16,9 +18,9 @@ Feature: Register second passphrase
   Scenario: should ask for passphrase for saved account
     Given I'm logged in as "empty account"
     And I wait 1 seconds
-    When I click "logout button"
     And I refresh the page
-    And I click "register second passphrase" in main menu
+    And I wait 2 seconds
+    When I click "register second passphrase" in main menu
     And I fill in passphrase of "empty account" to "passphrase" field
     And I click "authenticate button"
     Then I should see "Insufficient funds for 5 LSK fee" error message

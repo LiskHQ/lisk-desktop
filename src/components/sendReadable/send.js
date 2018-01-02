@@ -7,6 +7,7 @@ import { authStatePrefill, authStateIsValid } from '../../utils/form';
 import Input from '../toolbox/inputs/input';
 import fees from './../../constants/fees';
 import styles from './send.css';
+import inputStyles from './input.css';
 
 class SendReadable extends React.Component {
   constructor() {
@@ -138,6 +139,8 @@ class SendReadable extends React.Component {
             passphrase={this.state.passphrase}
             secondPassphrase={this.state.secondPassphrase}
             onChange={this.handleChange.bind(this)}
+            theme={inputStyles}
+            columns={{ xs: 4, sm: 4, md: 4 }}
           />
           <footer>
             <section className={grid.row} >

@@ -96,26 +96,18 @@ node('lisk-nano') {
       }
     }
 
-    stage ('Build Nano') {
+    stage ('Build and Deploy') {
       try {
         sh '''
         cp ~/.coveralls.yml-nano .coveralls.yml
         npm run --silent build
+        rsync -axl --delete --rsync-path="mkdir -p /var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/ && rsync" $WORKSPACE/app/build/ jenkins@master-01:/var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/
         npm run --silent bundlesize
         '''
-      } catch (err) {
-        echo "Error: ${err}"
-        fail('Stopping build: nano build failed')
-      }
-    }
-
-    stage ('Deploy') {
-      try {
-        sh 'rsync -axl --delete --rsync-path="mkdir -p /var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/ && rsync" $WORKSPACE/app/build/ jenkins@master-01:/var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/'
         githubNotify context: 'Jenkins test deployment', description: 'Commit was deployed to test', status: 'SUCCESS', targetUrl: "${HUDSON_URL}test/" + "${JOB_NAME}".tokenize('/')[0] + "/${BRANCH_NAME}"
       } catch (err) {
         echo "Error: ${err}"
-        fail('Stopping build: deploy failed')
+        fail('Stopping build: build or deploy failed')
       }
     }
 
@@ -127,6 +119,7 @@ node('lisk-nano') {
           # Submit coverage to coveralls
           cat coverage/*/lcov.info | coveralls -v
           '''
+
         }
       } catch (err) {
         echo "Error: ${err}"
@@ -180,7 +173,13 @@ node('lisk-nano') {
     if [ $BRANCH_NAME = "development" ]; then
         rsync -axl --delete $WORKSPACE/node_modules/ ~/cache/development/node_modules/ || true
     fi
+    cat reports/cucumber_report.json | ./node_modules/.bin/cucumber-junit > reports/cucumber_report.xml
     '''
+
+    cobertura autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: 'coverage/*/cobertura-coverage.xml', conditionalCoverageTargets: '80, 0, 0', failUnhealthy: false, failUnstable: false, lineCoverageTargets: '90, 0, 0', maxNumberOfBuilds: 0, methodCoverageTargets: '85, 0, 0', onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false
+    junit 'reports/junit_report.xml'
+    junit 'reports/cucumber_report.xml'
+
     dir('node_modules') {
       deleteDir()
     }
