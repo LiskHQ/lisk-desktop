@@ -22,7 +22,7 @@ const getLocales = (url) => {
 const langRegex = getLocales('../i18n/languages.js');
 const entries = {
   app: `${resolve(__dirname, '../src')}/main.js`,
-  vendor: ['react', 'redux', 'react-dom', 'react-toolbox', 'react-redux'],
+  vendor: ['react', 'redux', 'react-dom', 'react-redux'],
 };
 
 module.exports = {
