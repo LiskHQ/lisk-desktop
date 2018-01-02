@@ -1,5 +1,10 @@
 export default [
   {
+    regex: /\/main\/account-visual-demo(?:\/[^/]*)?$/,
+    path: '/main/account-visual-demo/',
+    params: 'dialog',
+    name: 'account-visual-demo',
+  }, {
     regex: /\/main\/transactions(?:\/[^/]*)?$/,
     path: '/main/transactions/',
     params: 'dialog',
