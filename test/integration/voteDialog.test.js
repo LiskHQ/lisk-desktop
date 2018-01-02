@@ -2,7 +2,7 @@ import { step } from 'mocha-steps';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
-import { prepareStore, renderWithRouter } from '../../src/utils/applicationInit';
+import { prepareStore, renderWithRouter } from '../utils/applicationInit';
 import accounts from '../constants/accounts';
 import actionTypes from '../../src/constants/actions';
 import accountReducer from '../../src/store/reducers/account';

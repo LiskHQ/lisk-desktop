@@ -3,10 +3,10 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { HashRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
-import i18n from '../i18n'; // initialized i18next instance
+import i18n from '../../src/i18n'; // initialized i18next instance
 
 export const prepareStore = (reducers, Middlewares) => {
-  const ApplyedMiddlewares = Middlewares ? applyMiddleware(Middlewares) : {};
+  const ApplyedMiddlewares = Middlewares ? applyMiddleware(...Middlewares) : {};
   const App = combineReducers(reducers, ApplyedMiddlewares);
   return createStore(App, ApplyedMiddlewares);
 };
