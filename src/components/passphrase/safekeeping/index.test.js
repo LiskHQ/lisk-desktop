@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { spy } from 'sinon';
+import { spy, useFakeTimers } from 'sinon';
 import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
@@ -68,7 +68,14 @@ describe('Passphrase: Safekeeping', () => {
   });
 
   it('should call nextStep if Next button clicked', () => {
+    const clock = useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
     wrapper.find('button.yes-its-safe-button').simulate('click');
+
+    clock.tick(501);
     expect(props.nextStep).to.have.been.calledWith();
+
+    clock.restore();
   });
 });

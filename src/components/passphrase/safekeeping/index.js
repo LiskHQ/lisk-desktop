@@ -5,7 +5,7 @@ import styles from './safekeeping.css';
 import SliderCheckbox from '../../toolbox/checkbox';
 import TransitionWrapper from '../../toolbox/transitionWrapper';
 
-class PassphraseShow extends React.Component {
+class SafeKeeping extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -108,4 +108,4 @@ class PassphraseShow extends React.Component {
 }
 
 
-export default PassphraseShow;
+export default SafeKeeping;
