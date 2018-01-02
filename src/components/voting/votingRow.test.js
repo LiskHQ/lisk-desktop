@@ -11,7 +11,11 @@ describe('VotingRow', () => {
   const unvoteStatus = { confirmed: true, unconfirmed: false, publicKey: 'sample_key' };
   const pendingStatus = { confirmed: true, unconfirmed: true, pending: true, publicKey: 'sample_key' };
   const props = {
-    data: {},
+    data: {
+      rank: 12,
+      username: 'sample_username',
+      address: 'sample_address',
+    },
     voteToggled: () => {},
   };
   const options = {
