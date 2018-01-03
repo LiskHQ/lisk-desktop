@@ -5,65 +5,65 @@ import styles from './transactions.css';
 import { FontIcon } from '../fontIcon';
 import LiskAmount from '../liskAmount';
 import Amount from './amount';
+import Box from '../box';
 
 class TransactionsDetailView extends React.Component {
   render() {
     return (
-      <div className={`${styles.details}`}>
+      <Box className={`transactions ${styles.details}`}>
         <header>
-          <small>
-            <FontIcon value='arrow-left' onClick={() => this.props.prevStep()}/> Back to overview
-          </small>
+          <h3>
+            <small className={`${styles.backButton}`} onClick={() => { this.props.prevStep(); }}>
+              <FontIcon className={`${styles.arrow}`} value='arrow-left'/>
+              <span className={`${styles.text}`}>{this.props.t('Back to overview')}</span>
+            </small>
+          </h3>
         </header>
         <div>
           <div className={`${grid.row} ${styles.row}`}>
-            <div className={`${grid['col-xs-6']} ${grid['col-sm-4']} ${grid['col-md-4']}`}>
-              <div className={styles.label}>Sender</div>
-              <div style={{ fontWeight: '500' }}>{this.props.value.senderId}</div>
+            <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']}`}>
+              <div className={styles.label}>{this.props.t('Sender')}</div>
+              <div className={`${styles.value} ${styles.sender} `}>{this.props.value.senderId}</div>
             </div>
-            <div className={`${grid['col-xs-6']} ${grid['col-sm-4']} ${grid['col-md-4']}`}>
-              <div className={styles.label}>Recipient</div>
-              <div>{this.props.value.recipientId ? this.props.value.recipientId : '-'}</div>
+            <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']}`}>
+              <div className={styles.label}>{this.props.t('Recipient')}</div>
+              <div className={styles.value}>{this.props.value.recipientId ? this.props.value.recipientId : '-'}</div>
             </div>
-            <div className={`${grid['col-xs-6']} ${grid['col-sm-4']} ${grid['col-md-4']}`}>
-              <div className={styles.label}>Date</div>
-              <div>
+          </div>
+          <div className={`${grid.row} ${styles.row}`}>
+            <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']}`}>
+              <div className={styles.label}>{this.props.t('Date')}</div>
+              <div className={styles.value}>
                 <DateFromTimestamp
                   time={this.props.value.timestamp} /> - <TimeFromTimestamp
                   time={this.props.value.timestamp}/>
               </div>
             </div>
-          </div>
-          <div className={`${grid.row} ${styles.row}`}>
-            <div className={`${grid['col-md-4']}`}>
-              <div className={styles.label}>Amount (LSK)</div>
-              <div><Amount {...this.props}></Amount></div>
-            </div>
-            <div className={`${grid['col-md-4']}`}>
-              <div className={styles.label}>Additional fee</div>
-              <div><LiskAmount val={this.props.value.fee} /></div>
-            </div>
-            <div className={`${grid['col-md-4']}`}>
-              <div className={styles.label}>Confirmations</div>
-              <div>{this.props.value.confirmations}</div>
+            <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']}`}>
+              <div className={styles.label}>{this.props.t('Amount (LSK)')}</div>
+              <div className={styles.value}><Amount {...this.props}></Amount></div>
             </div>
           </div>
           <div className={`${grid.row} ${styles.row}`}>
-            <div className={`${grid['col-md-4']}`}>
-              <div className={styles.label}>Transaction ID</div>
-              <div>{this.props.value.id}</div>
+            <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']}`}>
+              <div className={styles.label}>{this.props.t('Additional fee')}</div>
+              <div className={styles.value}><LiskAmount val={this.props.value.fee} /></div>
             </div>
-            <div className={`${grid['col-md-4']}`}>
-              <div className={styles.label}></div>
-              <div></div>
+            <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']}`}>
+              <div className={styles.label}>{this.props.t('Confirmations')}</div>
+              <div className={styles.value}>{this.props.value.confirmations}</div>
             </div>
-            <div className={`${grid['col-md-4']}`}>
-              <div className={styles.label}></div>
-              <div></div>
+          </div>
+          <div className={`${grid.row} ${styles.row}`}>
+            <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']}`}>
+              <div className={styles.label}>{this.props.t('Transaction ID')}</div>
+              <div className={styles.value}>{this.props.value.id}</div>
+            </div>
+            <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']}`}>
             </div>
           </div>
         </div>
-      </div>
+      </Box>
     );
   }
 }

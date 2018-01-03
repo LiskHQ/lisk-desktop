@@ -8,6 +8,7 @@ import RelativeLink from '../relativeLink';
 import TransactionRow from './transactionRow';
 import TransactionsHeader from './transactionsHeader';
 import LiskAmount from '../liskAmount';
+import Box from '../box';
 import styles from './transactions.css';
 
 class Transactions extends React.Component {
@@ -35,7 +36,7 @@ class Transactions extends React.Component {
 
   render() {
     return (
-      <div className={styles.activity}>
+      <Box className={`transactions ${styles.activity}`}>
         <header>
           <h2 className={styles.title}>{this.props.t('Activity')}</h2>
           <div className={styles.account}>
@@ -60,9 +61,9 @@ class Transactions extends React.Component {
         {this.props.transactions.length > 0 ?
           <div className={`${styles.results} transaction-results`}>
             <TransactionsHeader tableStyle={tableStyle}></TransactionsHeader>
-            {this.props.transactions.map(transaction => (
+            {this.props.transactions.map((transaction, i) => (
               <TransactionRow address={this.props.address}
-                key={transaction.id}
+                key={i}
                 t={this.props.t}
                 value={transaction}
                 nextStep={this.props.nextStep.bind(this)}
@@ -70,7 +71,10 @@ class Transactions extends React.Component {
             ))}
             <Waypoint bottomOffset='-80%'
               key={this.props.transactions.length}
-              onEnter={this.loadMore.bind(this)}></Waypoint>
+              onEnter={() => {
+                console.log('yoyo');
+                this.loadMore();
+              }}></Waypoint>
           </div> :
           <p className={`${styles.empty} hasPaddingRow empty-message`}>
             {this.props.t('There are no transactions, yet.')} &nbsp;
@@ -78,7 +82,7 @@ class Transactions extends React.Component {
               to='receive'>{this.props.t('Receive LSK')}</RelativeLink>
           </p>
         }
-      </div>
+      </Box>
     );
   }
 }

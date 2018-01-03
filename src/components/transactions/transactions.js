@@ -1,7 +1,6 @@
 import React from 'react';
 import MultiStep from './../multiStep';
 import styles from './transactions.css';
-import Box from '../box';
 import TransactionOverview from './transactionOverview';
 import TransactionDetailView from './transactionDetailView';
 
@@ -30,12 +29,10 @@ class Transactions extends React.Component {
 
   render() {
     return (
-      <Box className={`transactions ${styles.transactions} `}>
-        <MultiStep>
-          <TransactionOverview {...this.props} />
-          <TransactionDetailView />
-        </MultiStep>
-      </Box>
+      <MultiStep className={styles.transactions}>
+        <TransactionOverview {...this.props} />
+        <TransactionDetailView />
+      </MultiStep>
     );
   }
 }
