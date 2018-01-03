@@ -65,9 +65,8 @@
     display: inline-block;
     height: var(--avatar-height);
     width: var(--avatar-height);
-
-    /* background will be replaced with avatar */
-    background: linear-gradient(-44deg, #fff 1%, #93f4fe 98%);
+    overflow: hidden;
+    background: var(--color-white);
     border-radius: 100%;
     margin-right: 30px;
   }

@@ -51,7 +51,7 @@ describe('Login', () => {
     };
     options = {
       context: {
-        store, history, i18n, router: { route: history },
+        store, history, i18n, router: { route: history, history },
       },
       childContextTypes: {
         store: PropTypes.object.isRequired,
@@ -148,3 +148,4 @@ describe('Login', () => {
     });
   });
 });
+

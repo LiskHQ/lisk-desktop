@@ -1,14 +1,28 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const { resolve } = require('path');
+const { ContextReplacementPlugin } = require('webpack');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const reactToolboxVariables = require('./reactToolbox.config');
 const I18nScannerPlugin = require('../src/i18n-scanner');
+const fs = require('fs');
+const path = require('path');
+
+const getLocales = (url) => {
+  const file = fs.readFileSync(path.join(__dirname, url));
+  const str = [];
+  const langs = file.toString().match(/.*:\s{\n/g);
+  langs.forEach((item) => {
+    str.push(item.match(/[a-z]{2}/g)[0]);
+  });
+  return str.join('|');
+};
 /* eslint-enable import/no-extraneous-dependencies */
 
+const langRegex = getLocales('../i18n/languages.js');
 const entries = {
   app: `${resolve(__dirname, '../src')}/main.js`,
-  vendor: ['react', 'redux', 'react-dom'],
+  vendor: ['react', 'redux', 'react-dom', 'react-redux'],
 };
 
 module.exports = {
@@ -46,6 +60,7 @@ module.exports = {
         './app/src/**/*.js',
       ],
     }),
+    new ContextReplacementPlugin(/moment[/\\]locale$/, new RegExp(langRegex)),
   ],
   module: {
     rules: [

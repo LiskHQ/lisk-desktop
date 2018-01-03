@@ -13,6 +13,7 @@
     "e2e-test": "protractor protractor.conf.js",
     "test": "karma start",
     "bundlesize": "bundlesize",
+    "analyze-bundles": "webpack  --config ./config/webpack.config.analyze",
     "test-live": "npm test -- --auto-watch --no-single-run",
     "start": "electron ./app/",
     "dist": "build --ia32 --x64 --armv7l --publish onTag",
@@ -196,11 +197,11 @@
   "bundlesize": [
     {
       "path": "./app/build/bundle.app.js",
-      "maxSize": "920 kB"
+      "maxSize": "820 kB"
     },
     {
       "path": "./app/build/bundle.vendor.js",
-      "maxSize": "60 kB"
+      "maxSize": "150 kB"
     },
     {
       "path": "./app/build/styles.css",

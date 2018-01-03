@@ -17,11 +17,13 @@ describe('Voting', () => {
       address: 'address 1',
       username: 'username1',
       publicKey: 'sample_key',
+      rank: 12,
     },
     {
       address: 'address 2',
       username: 'username2',
       publicKey: 'sample_key',
+      rank: 23,
     },
   ];
   const votes = {
