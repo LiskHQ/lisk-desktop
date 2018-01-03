@@ -15,13 +15,13 @@ import savedAccountsMiddleware from '../../src/store/middlewares/savedAccounts';
 import savedAccountsReducer from '../../src/store/reducers/savedAccounts';
 import SavedAccounts from '../../src/components/savedAccounts';
 import * as accountApi from '../../src/utils/api/account';
-import * as delegateApi from '../../src/utils/api/delegate';
+import * as peers from '../../src/utils/api/peers';
 
 describe('@integration: Account switch', () => {
   let store;
   let wrapper;
   let getAccountStub;
-  let getDelegateStub;
+  let requestToActivePeerStub;
   let localStorageStub;
 
   const savedAccounts = [{
@@ -45,8 +45,8 @@ describe('@integration: Account switch', () => {
     getAccountStub.withArgs(match.any, accounts.delegate.address)
       .returnsPromise().resolves(accounts.delegate);
 
-    getDelegateStub = stub(delegateApi, 'getDelegate');
-    getDelegateStub.returnsPromise().rejects({});
+    requestToActivePeerStub = stub(peers, 'requestToActivePeer');
+    requestToActivePeerStub.withArgs(match.any, 'delegates/get', match.any).returnsPromise().rejects({});
 
     localStorageStub = stub(localStorage, 'getItem');
     localStorageStub.withArgs('accounts').returns(JSON.stringify(savedAccounts));
@@ -55,7 +55,7 @@ describe('@integration: Account switch', () => {
 
   afterEach(() => {
     getAccountStub.restore();
-    getDelegateStub.restore();
+    requestToActivePeerStub.restore();
     localStorageStub.restore();
   });
 
