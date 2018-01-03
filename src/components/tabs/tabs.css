@@ -158,3 +158,32 @@
   font-size: 65px;
   width: 100%;
 }
+
+.carousel {
+  background: var(--setting-menu-color);
+  color: #fff;
+}
+
+.carouselNav {
+  display: block;
+  width: 100%;
+  margin: 5px 0;
+  text-align: center;
+  list-style: none;
+  padding: 0;
+
+  & li {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    opacity: 0.3;
+    margin: 4px;
+    border-radius: 100%;
+    background: #3c506b;
+    cursor: pointer;
+  }
+}
+
+.activeSlide {
+  opacity: 1 !important;
+}

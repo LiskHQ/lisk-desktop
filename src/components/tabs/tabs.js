@@ -1,5 +1,6 @@
 import React from 'react';
-import { Tab, Tabs as ToolboxTabs, Drawer } from 'react-toolbox';
+import { Tab, Tabs as ToolboxTabs, Drawer, Switch } from 'react-toolbox';
+import ReactSwipe from 'react-swipe';
 import styles from './tabs.css';
 import logo from '../../assets/images/Lisk-Logo.svg';
 import * as menuLogos from '../../assets/images/sidebar-icons/*.svg'; //eslint-disable-line
@@ -27,6 +28,7 @@ class Tabs extends React.Component {
     super();
     this.state = {
       active: false,
+      activeSlide: 0,
     };
   }
 
@@ -39,6 +41,12 @@ class Tabs extends React.Component {
       this.setState({ active: false });
       history.push(`/main/${tabs[index].id}`);
     }
+  }
+
+  changeSlide(i) {
+    this.setState({
+      activeSlide: i,
+    });
   }
 
   render() {
@@ -91,7 +99,7 @@ class Tabs extends React.Component {
               id={id}
               disabled={isCurrent(history, index, tabs)} />)}
         </ToolboxTabs>
-        <div onClick={this.menuToggle.bind(this)} id="moreMenu" className={styles.setting}>
+        <div onClick={this.menuToggle.bind(this)} id='moreMenu' className={styles.setting}>
           <FontIcon value='more' className={styles.readMoreIcon} />
           <span className={styles.readMoreText}>{t('more')}</span>
         </div>
@@ -115,6 +123,33 @@ class Tabs extends React.Component {
                 id={id}
                 disabled={isCurrent(history, index, tabs)} />)}
           </ToolboxTabs>
+          <ReactSwipe
+            className={styles.carousel}
+            ref={(reactSwipe) => { this.reactSwipe = reactSwipe; }}
+            swipeOptions={{
+              stopPropagation: true,
+              continuous: false,
+              transitionEnd: index => this.changeSlide(index),
+            }}>
+            <div>
+              <Switch
+                label='Nothing, thanks'
+                onChange={() => console.log('checked')}
+              />
+            </div>
+            <div>PANE 2</div>
+            <div>PANE 3</div>
+          </ReactSwipe>
+          <ul className={ styles.carouselNav }>
+            {[...Array(3)].map((x, i) =>
+              <li
+                key={i}
+                className={(i === this.state.activeSlide) ? styles.activeSlide : ''}
+                onClick={() => this.reactSwipe.slide(i)}>
+              </li>,
+            )}
+          </ul>
+          {this.state.activeSlide}
         </Drawer>
       </div>
     );
