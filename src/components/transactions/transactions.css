@@ -14,21 +14,30 @@
   --result-address-font-weight: var(--font-weight-bold);
   --detail-label-font-weight: var(--font-weight-very-bold);
   --header-address-font-weight: var(--font-weight-semi-bold);
+  --header-balance-unit-font-size-XL: 20px;
+  --header-balance-unit-font-size-L: 18px;
+  --header-subtitle-font-size-XL: 18px;
+  --header-subtitle-font-size-L: 16px;
+  --main-header-font-size-XL: 32px;
+  --main-header-font-size-L: 28px;
+  --grid-padding-XL: 48px;
+  --grid-padding-L: 32px;
   --list-line-height: 25px;
   --grid-header-line-height: 60px;
   --main-row-line-height: 70px;
   --sub-row-height: 50px;
-  --grid-padding-left: 32px;
   --header-line-height: 36px;
-  --header-subtitle-font-size: 18px;
-  --main-header-font-size: 32px;
   --main-header-unit-font-size: 20px;
   --grid-header-font-size: 15px;
   --details-font-color: var(--color-grayscale-dark);
-  --details-label-font-size: 12px;
-  --details-value-font-size: 15px;
-  --back-button-font-size: 12px;
-  --back-button-arrow-font-size: 16px;
+  --details-label-font-size-XL: 15px;
+  --details-label-font-size-L: 12px;
+  --details-value-font-size-XL: 16px;
+  --details-value-font-size-L: 15px;
+  --back-button-font-size-XL: 15px;
+  --back-button-font-size-L: 12px;
+  --back-button-arrow-font-size-XL: 16px;
+  --back-button-arrow-font-size-L: 16px;
 }
 
 .smallButton {
@@ -63,17 +72,13 @@
   cursor: pointer;
 }
 
-.paddingLeft {
-  padding: 0px var(--grid-padding-left);
-}
-
 .transactions {
   & .activity {
     & .list {
+      font-weight: var(--font-weight-bold);
       color: var(--filter-list-color);
       line-height: var(--list-line-height);
       list-style: none;
-      padding: 0px 0px 20px var(--grid-padding-left);
 
       & .item {
         display: inline-block;
@@ -94,6 +99,12 @@
       overflow-x: hidden;
       overflow-y: auto;
 
+      & .header {
+        color: var(--grid-header-color);
+        line-height: var(--grid-header-line-height);
+        font-weight: var(--font-weight-very-bold);
+      }
+
       & .rows:nth-of-type(even) {
         background: var(--gradient-greyscale);
       }
@@ -109,11 +120,6 @@
 
         &:hover {
           background: var(--link-color);
-        }
-
-        &:first-child {
-          color: var(--grid-header-color);
-          line-height: var(--grid-header-line-height);
         }
 
         & .copyIcon {
@@ -146,15 +152,10 @@
     }
 
     & header {
-      padding: 20px var(--grid-padding-left);
       line-height: var(--header-line-height);
 
       & .title {
         float: left;
-      }
-
-      & .subTitle {
-        font-size: var(--header-subtitle-font-size);
       }
 
       & .account {
@@ -163,7 +164,6 @@
 
       & h2 {
         margin-bottom: 0;
-        font-size: var(--main-header-font-size);
         font-weight: var(--font-weight-semi-bold);
       }
 
@@ -175,6 +175,7 @@
       & .address {
         text-align: right;
         cursor: pointer;
+        color: var(--color-grayscale-dark);
       }
 
       & .transfer {
@@ -183,14 +184,12 @@
 
       & .balanceUnit {
         font-weight: var(--font-weight-semi-bold);
-        font-size: 20px;
       }
     }
   }
 
   & .details {
     line-height: var(--list-line-height);
-    padding: 0px 0px 20px var(--grid-padding-left);
     color: var(--details-font-color);
 
     & .row {
@@ -199,11 +198,6 @@
 
     & .label {
       font-weight: var(--font-weight-very-bold);
-      font-size: var(--details-label-font-size);
-    }
-
-    & .value {
-      font-size: var(--details-value-font-size);
     }
 
     & .sender {
@@ -218,7 +212,6 @@
         font-family: var(--content-font);
 
         & small {
-          font-size: var(--back-button-font-size);
           font-weight: var(--detail-label-font-weight);
           margin-left: -6px;
           cursor: pointer;
@@ -226,7 +219,6 @@
 
         & .backButton {
           & .arrow {
-            font-size: var(--back-button-arrow-font-size);
             vertical-align: middle;
           }
 
@@ -246,5 +238,125 @@
   & .greenLabel {
     font-weight: var(--font-weight-bold);
     color: var(--amount-positive-color);
+  }
+}
+
+@media (--xLarge-viewport) {
+  .transactions {
+    & .activity {
+      & header {
+        padding: 20px var(--grid-padding-XL);
+
+        & h2 {
+          font-size: var(--main-header-font-size-XL);
+
+          & .balanceUnit {
+            font-size: var(--header-balance-unit-font-size-XL);
+          }
+        }
+
+        & .address {
+          font-size: var(--header-subtitle-font-size-XL);
+        }
+      }
+
+      & .list {
+        padding: 0px 0px 20px var(--grid-padding-XL);
+      }
+
+      & .results {
+        & .header {
+          font-size: 15px;
+        }
+
+        & .rows {
+          padding: 0px var(--grid-padding-XL);
+        }
+      }
+    }
+
+    & .details {
+      padding: 0px 0px 20px var(--grid-padding-XL);
+
+      & .label {
+        font-size: var(--details-label-font-size-XL);
+      }
+
+      & .value {
+        font-size: var(--details-value-font-size-XL);
+      }
+
+      & header {
+        & small {
+          font-size: var(--back-button-font-size-XL);
+        }
+
+        & .backButton {
+          & .arrow {
+            font-size: var(--back-button-arrow-font-size-XL);
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (--large-viewport) {
+  .transactions {
+    & .activity {
+      & header {
+        padding: 20px var(--grid-padding-L);
+
+        & h2 {
+          font-size: var(--main-header-font-size-L);
+
+          & .balanceUnit {
+            font-size: var(--header-balance-unit-font-size-L) !important;
+          }
+        }
+
+        & .address {
+          font-size: var(--header-subtitle-font-size-L) !important;
+        }
+      }
+
+      & .list {
+        padding: 0px 0px 20px var(--grid-padding-L) !important;
+      }
+
+      & .results {
+        & .header {
+          font-size: 12px !important;
+        }
+
+        & .rows {
+          padding: 0px var(--grid-padding-L) !important;
+        }
+      }
+    }
+
+    & .details {
+      padding: 0px 0px 20px var(--grid-padding-L) !important;
+
+      & .label {
+        font-size: var(--details-label-font-size-L);
+      }
+
+      & .value {
+        font-size: var(--details-value-font-size-L);
+      }
+
+      & header {
+        & small {
+          font-size: var(--back-button-font-size-L);
+        }
+
+        & .backButton {
+          & .arrow {
+            font-size: var(--back-button-arrow-font-size-L);
+          }
+        }
+      }
+    }
   }
 }
