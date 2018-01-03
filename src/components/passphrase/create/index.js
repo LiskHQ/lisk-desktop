@@ -3,6 +3,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Input } from 'react-toolbox/lib/input';
 import { generateSeed, generatePassphrase } from '../../../utils/passphrase';
 import { extractAddress } from '../../../utils/api/account';
+import AccountVisual from '../../accountVisual';
 import styles from './create.css';
 import ProgressBar from '../../toolbox/progressBar/progressBar';
 import * as shapesSrc from '../../../assets/images/register-shapes/*.svg'; //eslint-disable-line
@@ -134,69 +135,74 @@ class Create extends React.Component {
     return (
       <section className={`${grid.row} ${grid['center-xs']} ${styles.wrapper} ${styles.generation}`} id="generatorContainer" >
         <div className={grid['col-xs-12']}>
-          <MovableShape
-            hidden={shapes[0]}
-            src={shapesSrc.circle}
-            className={styles.circle}
-            percentage={percentage}
-            reverse={true}
-            end={{ x: 550, y: 50 }}/>
-          <MovableShape
-            hidden={shapes[1]}
-            src={shapesSrc.smallCircle}
-            className={styles.smallCircle}
-            percentage={percentage}
-            reverse={false}
-            end={{ x: 500, y: 240 }}/>
-          <MovableShape
-            hidden={shapes[2]}
-            src={shapesSrc.triangle}
-            className={styles.triangle}
-            percentage={percentage}
-            reverse={true}
-            end={{ x: 450, y: 230 }}/>
-          <MovableShape
-            hidden={shapes[3]}
-            src={shapesSrc.smallTriangle}
-            className={styles.smallTriangle}
-            percentage={percentage}
-            reverse={true}
-            end={{ x: 450, y: 180 }}/>
-          <MovableShape
-            hidden={shapes[5]}
-            src={shapesSrc.circleOutline}
-            className={styles.circleOutline}
-            percentage={percentage}
-            reverse={false}
-            end={{ x: 250, y: 350 }}/>
-          <MovableShape
-            hidden={shapes[6]}
-            src={shapesSrc.stripe}
-            className={styles.stripe}
-            percentage={percentage}
-            reverse={false}
-            end={{ x: 100, y: 200 }}/>
-          <MovableShape
-            hidden={shapes[7]}
-            src={shapesSrc.smallStripe}
-            className={styles.smallStripe}
-            percentage={percentage}
-            reverse={true}
-            end={{ x: 280, y: 315 }}/>
-          <MovableShape
-            hidden={shapes[4]}
-            src={shapesSrc.rightRectangle}
-            className={styles.rightRectangle}
-            percentage={percentage}
-            reverse={true}
-            end={{ x: 300, y: 220 }}/>
-          <MovableShape
-            hidden={shapes[8]}
-            src={shapesSrc.leftRectangle}
-            className={styles.leftRectangle}
-            percentage={percentage}
-            reverse={false}
-            end={{ x: 530, y: 150 }}/>
+          {!this.state.address ?
+            <div>
+              <MovableShape
+                hidden={shapes[0]}
+                src={shapesSrc.circle}
+                className={styles.circle}
+                percentage={percentage}
+                reverse={true}
+                end={{ x: 550, y: 50 }}/>
+              <MovableShape
+                hidden={shapes[1]}
+                src={shapesSrc.smallCircle}
+                className={styles.smallCircle}
+                percentage={percentage}
+                reverse={false}
+                end={{ x: 500, y: 240 }}/>
+              <MovableShape
+                hidden={shapes[2]}
+                src={shapesSrc.triangle}
+                className={styles.triangle}
+                percentage={percentage}
+                reverse={true}
+                end={{ x: 450, y: 230 }}/>
+              <MovableShape
+                hidden={shapes[3]}
+                src={shapesSrc.smallTriangle}
+                className={styles.smallTriangle}
+                percentage={percentage}
+                reverse={true}
+                end={{ x: 450, y: 180 }}/>
+              <MovableShape
+                hidden={shapes[5]}
+                src={shapesSrc.circleOutline}
+                className={styles.circleOutline}
+                percentage={percentage}
+                reverse={false}
+                end={{ x: 250, y: 350 }}/>
+              <MovableShape
+                hidden={shapes[6]}
+                src={shapesSrc.stripe}
+                className={styles.stripe}
+                percentage={percentage}
+                reverse={false}
+                end={{ x: 100, y: 200 }}/>
+              <MovableShape
+                hidden={shapes[7]}
+                src={shapesSrc.smallStripe}
+                className={styles.smallStripe}
+                percentage={percentage}
+                reverse={true}
+                end={{ x: 280, y: 315 }}/>
+              <MovableShape
+                hidden={shapes[4]}
+                src={shapesSrc.rightRectangle}
+                className={styles.rightRectangle}
+                percentage={percentage}
+                reverse={true}
+                end={{ x: 300, y: 220 }}/>
+              <MovableShape
+                hidden={shapes[8]}
+                src={shapesSrc.leftRectangle}
+                className={styles.leftRectangle}
+                percentage={percentage}
+                reverse={false}
+                end={{ x: 530, y: 150 }}/>
+            </div> :
+            null
+          }
           <header>
             {isTouch ?
               <div>
@@ -218,6 +224,9 @@ class Create extends React.Component {
           </header>
           {this.state.address ?
             <div className={styles.addressContainer}>
+              <figure>
+                <AccountVisual address={this.state.address} size={200} />
+              </figure>
               <h4 className={styles.address}>{this.state.address}</h4>
               <PrimaryButton
                 theme={styles}
