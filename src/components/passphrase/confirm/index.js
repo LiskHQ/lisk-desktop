@@ -3,6 +3,7 @@ import fillWordsList from 'bitcore-mnemonic/lib/words/english';
 import styles from './confirm.css';
 import { PrimaryButton } from '../../toolbox/buttons/button';
 import { extractAddress } from '../../../utils/api/account';
+import TransitionWrapper from '../../toolbox/transitionWrapper';
 import AccountVisual from '../../accountVisual';
 
 class Confirm extends React.Component {
@@ -55,7 +56,9 @@ class Confirm extends React.Component {
   }
 
   next() {
-    this.setState({ step: 'done' });
+    setTimeout(() => {
+      this.setState({ step: 'done' });
+    }, 500);
   }
 
   hideRandomWord() {
@@ -156,16 +159,22 @@ class Confirm extends React.Component {
       <section className={`passphrase-verifier ${styles.verifier} ${styles[step]}`}>
         <header className={styles.table}>
           <div className={styles.tableCell}>
-            <h2 className={styles.verify}>{this.props.t('Choose the correct phrases to confirm.')}</h2>
-            <h2 className={styles.done}>{this.props.t('Awesome! You’re all set.')}</h2>
-            <h5 className={`${styles.verify} ${(formStatus.filled && !formStatus.valid) ? styles.visible : ''}`}>
-              {this.props.t('Please go back and check your passphrase again.')}
-            </h5>
+            <TransitionWrapper current={this.state.step} step='verify'>
+              <h2 className={styles.verify}>{this.props.t('Choose the correct phrases to confirm.')}</h2>
+            </TransitionWrapper>
+            <TransitionWrapper current={this.state.step} step='done'>
+              <h2 className={styles.done}>{this.props.t('Awesome! You’re all set.')}</h2>
+            </TransitionWrapper>
+            <TransitionWrapper current={this.state.step} step='verify'>
+              <h5 className={`${styles.verify} ${(formStatus.filled && !formStatus.valid) ? styles.visible : ''}`}>
+                {this.props.t('Please go back and check your passphrase again.')}
+              </h5>
+            </TransitionWrapper>
           </div>
         </header>
         <section className={`${styles.table} ${styles.verify}`}>
           <div className={styles.tableCell}>
-            <form className={`passphrase-holder ${styles.passphrase}`}>
+            <form className={`passphrase-holder ${(formStatus.filled && formStatus.valid) ? styles.validForm : ''}`}>
               {
                 wordOptions ?
                   words.map((word, index) => {

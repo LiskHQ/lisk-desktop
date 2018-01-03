@@ -4,10 +4,15 @@ Feature: Register second passphrase
     When I click "register second passphrase" in main menu
     And I click "next button"
     And I 250 times move mouse randomly
+    And I wait 1 seconds
     And I click "get passphrase button"
+    And I wait 1 seconds
     And I swipe "i understand checkbox" to right
+    And I wait 1 seconds
     And I swipe "reveal checkbox" to right
+    And I wait 1 seconds
     And I remember passphrase, click "yes its safe button", choose missing words
+    And I wait 1 seconds
     And I click "get to your dashboard button"
     Then I should see alert dialog with title "Success" and text "Second passphrase registration was successfully submitted. It can take several seconds before it is processed."
 
