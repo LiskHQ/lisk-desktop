@@ -22,6 +22,7 @@ describe('@integration: Account switch', () => {
   let wrapper;
   let getAccountStub;
   let getDelegateStub;
+  let localStorageStub;
 
   const savedAccounts = [{
     network: networks.mainnet.code,
@@ -37,9 +38,28 @@ describe('@integration: Account switch', () => {
     balance: accounts['empty account'].balance,
   }];
 
+  beforeEach(() => {
+    getAccountStub = stub(accountApi, 'getAccount');
+    getAccountStub.withArgs(match.any, accounts.genesis.address)
+      .returnsPromise().resolves(accounts.genesis);
+    getAccountStub.withArgs(match.any, accounts.delegate.address)
+      .returnsPromise().resolves(accounts.delegate);
+
+    getDelegateStub = stub(delegateApi, 'getDelegate');
+    getDelegateStub.returnsPromise().rejects({});
+
+    localStorageStub = stub(localStorage, 'getItem');
+    localStorageStub.withArgs('accounts').returns(JSON.stringify(savedAccounts));
+    localStorageStub.withArgs('lastActiveAccountIndex').returns(0);
+  });
+
+  afterEach(() => {
+    getAccountStub.restore();
+    getDelegateStub.restore();
+    localStorageStub.restore();
+  });
+
   const setupStep = () => {
-    localStorage.setItem('accounts', JSON.stringify(savedAccounts));
-    localStorage.setItem('lastActiveAccountIndex', 0);
     store = prepareStore({
       savedAccounts: savedAccountsReducer,
       account: accountReducer,
@@ -54,22 +74,6 @@ describe('@integration: Account switch', () => {
     store.dispatch(accountsRetrieved());
     wrapper.update();
   };
-
-  beforeEach(() => {
-    getAccountStub = stub(accountApi, 'getAccount');
-    getAccountStub.withArgs(match.any, accounts.genesis.address)
-      .returnsPromise().resolves(accounts.genesis);
-    getAccountStub.withArgs(match.any, accounts.delegate.address)
-      .returnsPromise().resolves(accounts.delegate);
-
-    getDelegateStub = stub(delegateApi, 'getDelegate');
-    getDelegateStub.returnsPromise().rejects({});
-  });
-
-  afterEach(() => {
-    getAccountStub.restore();
-    getDelegateStub.restore();
-  });
 
   const clickStep = (elementName) => {
     const selector = `.${elementName.replace(/ /g, '-')}`;
