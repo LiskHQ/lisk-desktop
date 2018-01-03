@@ -50,6 +50,7 @@ describe('TransactionRow', () => {
             tableStyle={tableStyle}
             address={address}
             value={rowData}
+            nextStep={() => {}}
           ></TransactionRow>
         </I18nextProvider>
       </Router>
@@ -65,7 +66,11 @@ describe('TransactionRow', () => {
     const wrapper = mount(<Provider store={store}>
       <Router>
         <I18nextProvider i18n={ i18n }>
-          <TransactionRow tableStyle={tableStyle} address={address} value={rowData}>
+          <TransactionRow
+            tableStyle={tableStyle}
+            address={address}
+            value={rowData}
+            nextStep={() => {}}>
           </TransactionRow>
         </I18nextProvider>
       </Router>

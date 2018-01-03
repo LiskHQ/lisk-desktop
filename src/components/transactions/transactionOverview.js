@@ -71,10 +71,7 @@ class Transactions extends React.Component {
             ))}
             <Waypoint bottomOffset='-80%'
               key={this.props.transactions.length}
-              onEnter={() => {
-                console.log('yoyo');
-                this.loadMore();
-              }}></Waypoint>
+              onEnter={() => { this.loadMore(); }}></Waypoint>
           </div> :
           <p className={`${styles.empty} hasPaddingRow empty-message`}>
             {this.props.t('There are no transactions, yet.')} &nbsp;

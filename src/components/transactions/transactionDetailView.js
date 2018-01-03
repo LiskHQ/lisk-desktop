@@ -10,10 +10,10 @@ import Box from '../box';
 class TransactionsDetailView extends React.Component {
   render() {
     return (
-      <Box className={`transactions ${styles.details}`}>
+      <Box className={`${styles.details}`}>
         <header>
           <h3>
-            <small className={`${styles.backButton}`} onClick={() => { this.props.prevStep(); }}>
+            <small className={`${styles.backButton}`} onClick={() => { this.props.prevStep(); }} id='transactionDetailsBackButton'>
               <FontIcon className={`${styles.arrow}`} value='arrow-left'/>
               <span className={`${styles.text}`}>{this.props.t('Back to overview')}</span>
             </small>
