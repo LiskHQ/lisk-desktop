@@ -47,9 +47,12 @@ class TransactionRow extends React.Component {
           {this.state.isOpen ? <div className={styles.subRow}> {props.t('Additional fee:')} <LiskAmount val={props.value.fee} /></div> : ''}
         </div>
         <div className={`${styles.rightText} ${grid['col-xs-1']}`}>
-          <div className={`${styles.mainRow} ${styles.clickable}`} onClick={props.nextStep.bind(this, { ...props })}>
-            <FontIcon value='arrow-right'/>
-          </div>
+          { props.nextStep ?
+            <div className={`${styles.mainRow} ${styles.clickable}`} onClick={props.nextStep.bind(this, { ...props })}>
+              <FontIcon value='arrow-right'/>
+            </div> :
+            null
+          }
         </div>
       </div>
     );

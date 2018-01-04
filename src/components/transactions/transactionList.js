@@ -18,7 +18,7 @@ class TransactionsList extends React.Component {
             key={i}
             t={this.props.t}
             value={transaction}
-            nextStep={this.props.nextStep.bind(this)}
+            nextStep={this.props.nextStep}
           />
         ))}
         <Waypoint bottomOffset='-80%'

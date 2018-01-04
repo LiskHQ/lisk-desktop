@@ -28,7 +28,7 @@ const Dashboard = ({ t, transactions }) => (
             </Link>
           </h2>
         </header>
-        <TransactionList {...{ transactions, t }} loadMore={() => {}} nextStep={() => {}} />
+        <TransactionList {...{ transactions, t }} loadMore={() => {}} />
       </Box>
     </div>
     <div className={`${grid['col-md-4']} ${styles.sendWrapper}`}>
@@ -44,7 +44,7 @@ const Dashboard = ({ t, transactions }) => (
 );
 
 const mapStateToProps = state => ({
-  transactions: [...state.transactions.pending, ...state.transactions.confirmed].slice(0, 5),
+  transactions: [...state.transactions.pending, ...state.transactions.confirmed].slice(0, 3),
 });
 
 export default connect(mapStateToProps)(translate()(Dashboard));
