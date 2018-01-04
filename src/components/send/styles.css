@@ -1,0 +1,66 @@
+@import '../app/variables';
+
+.send {
+  position: relative;
+}
+
+.mobileMenu,
+.mobileClose {
+  display: none;
+}
+
+@media (--medium-viewport) {
+  .send {
+    position: fixed;
+    bottom: -100vh; /* stylelint-disable-line */
+    right: 0;
+    height: calc(100vh - var(--m-top-bar-height)); /* stylelint-disable-line */
+    transition: bottom 300ms ease-in-out;
+    z-index: 10;
+
+    &.isActive {
+      bottom: 0;
+    }
+  }
+
+  .mobileClose {
+    display: block;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .mobileMenu {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+
+    &.isHidden {
+      display: none;
+    }
+  }
+
+  .mobileMenuItem {
+    display: inline-block;
+    padding: 20px;
+    font-weight: 600;
+    font-family: var(--heading-font);
+    cursor: pointer;
+    font-size: 24px;
+  }
+}
+
+@media (--small-viewport) {
+  .send {
+    height: calc(100vh - var(--s-top-bar-height)); /* stylelint-disable-line */
+  }
+
+  .mobileMenuItem {
+    font-size: 18px;
+  }
+}

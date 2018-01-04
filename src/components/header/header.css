@@ -134,7 +134,7 @@
     position: fixed;
     top: 0;
     background-color: var(--color-white);
-    z-index: 1;
+    z-index: 20;
     height: var(--m-top-bar-height);
   }
 
