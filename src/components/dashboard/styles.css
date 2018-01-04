@@ -32,6 +32,10 @@
 }
 
 @media (--medium-viewport) {
+  .wrapper {
+    width: calc(100% + 16px);
+  }
+
   .sendWrapper {
     display: none;
   }
@@ -44,5 +48,19 @@
 
   .latestActivity {
     height: auto;
+  }
+}
+
+@media (--small-viewport) {
+  .wrapper {
+    & h2 {
+      font-size: 24px;
+    }
+  }
+
+  .seeAllLink {
+    display: block;
+    margin-top: 16px;
+    margin-left: 0;
   }
 }
