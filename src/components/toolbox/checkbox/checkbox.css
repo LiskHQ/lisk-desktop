@@ -90,11 +90,11 @@
     border-radius: calc(var(--element-height) / 2);
     top: 0;
     transition: all ease 300ms;
+    background: var(--action-button-bg);
 
     &.button {
       left: 0;
       z-index: 3;
-      background: var(--action-button-bg);
 
       &[style] {
         cursor: grabbing;
@@ -112,22 +112,21 @@
       z-index: 2;
     }
 
-    & i {
+    & span {
       width: 100%;
       line-height: var(--element-height) !important;
       position: absolute;
       left: 0;
       top: 0;
       transition: all ease 300ms;
+      font-size: 30px;
 
       &.checkMark {
         opacity: 0;
-        font-size: 40px;
       }
 
       &.arrowRight {
         opacity: 1;
-        font-size: 48px;
       }
     }
   }
@@ -141,11 +140,11 @@
       & .button {
         left: calc(100% - var(--element-height));
 
-        & i.checkMark {
+        & .checkMark {
           opacity: 1;
         }
 
-        & i.arrowRight {
+        & .arrowRight {
           opacity: 0;
         }
       }
