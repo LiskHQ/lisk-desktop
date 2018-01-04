@@ -1,7 +1,15 @@
+@import '../app/variables.css';
+
 .wrapper {
-  width: 100%;
+  min-width: 100%;
 }
 
 .send {
   position: relative;
+}
+
+@media (--xSmall-viewport) {
+  .send {
+    display: none;
+  }
 }

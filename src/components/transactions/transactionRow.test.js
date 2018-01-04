@@ -56,7 +56,7 @@ describe('TransactionRow', () => {
       </Router>
     </Provider>, options);
 
-    const expectedValue = /flexboxgrid__col/g;
+    const expectedValue = /mainRow/g;
     const html = wrapper.find('.transactionsRow').html();
     expect(html.match(expectedValue)).to.have.lengthOf(4);
   });

@@ -20,8 +20,10 @@
   --header-subtitle-font-size-L: 16px;
   --main-header-font-size-XL: 32px;
   --main-header-font-size-L: 28px;
+  --main-header-font-size-XS: 24px;
   --grid-padding-XL: 48px;
   --grid-padding-L: 32px;
+  --grid-padding-XS: 19px;
   --list-line-height: 25px;
   --grid-header-line-height: 60px;
   --main-row-line-height: 70px;
@@ -32,8 +34,6 @@
   --details-font-color: var(--color-grayscale-dark);
   --details-label-font-size-XL: 15px;
   --details-label-font-size-L: 12px;
-  --details-value-font-size-XL: 16px;
-  --details-value-font-size-L: 15px;
   --back-button-font-size-XL: 15px;
   --back-button-font-size-L: 12px;
   --back-button-arrow-font-size-XL: 16px;
@@ -74,6 +74,78 @@
 
 .transactions {
   & .activity {
+    & .list {
+      font-weight: var(--font-weight-bold);
+      color: var(--filter-list-color);
+      line-height: var(--list-line-height);
+      list-style: none;
+
+      & .item {
+        display: inline-block;
+        cursor: pointer;
+
+        &:not(:last-of-type) {
+          margin-right: 50px;
+        }
+      }
+
+      & .active {
+        border-bottom: 2px solid var(--amount-negative-color);
+        color: var(--amount-negative-color);
+      }
+    }
+
+    & .results {
+      overflow-x: hidden;
+      overflow-y: auto;
+
+      & .header {
+        color: var(--grid-header-color);
+        line-height: var(--grid-header-line-height);
+        font-weight: var(--font-weight-very-bold);
+      }
+
+      & .rows:nth-of-type(even) {
+        background: var(--gradient-greyscale);
+      }
+
+      & .rows:nth-of-type(odd) {
+        background: var(--row-background-color);
+      }
+
+      & .rows {
+        color: var(--amount-negative-color);
+        border-bottom: 0;
+        border-top: 0;
+
+        &:hover {
+          background: var(--link-color);
+        }
+
+        & .copyIcon {
+          vertical-align: bottom;
+          padding-left: 5px;
+          cursor: pointer;
+        }
+      }
+
+      & .turnArrow {
+        transform: rotate(180deg);
+      }
+
+      & .mainRow {
+        line-height: var(--main-row-line-height);
+        white-space: nowrap;
+      }
+
+      & .address {
+        font-weight: var(--result-address-font-weight);
+        text-overflow: ellipsis;
+        overflow: hidden;
+        width: 135%;
+      }
+    }
+
     & header {
       line-height: var(--header-line-height);
 
@@ -268,10 +340,6 @@
         font-size: var(--details-label-font-size-XL);
       }
 
-      & .value {
-        font-size: var(--details-value-font-size-XL);
-      }
-
       & header {
         & small {
           font-size: var(--back-button-font-size-XL);
@@ -328,8 +396,80 @@
         font-size: var(--details-label-font-size-L);
       }
 
-      & .value {
-        font-size: var(--details-value-font-size-L);
+      & header {
+        & small {
+          font-size: var(--back-button-font-size-L);
+        }
+
+        & .backButton {
+          & .arrow {
+            font-size: var(--back-button-arrow-font-size-L);
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (--xSmall-viewport) {
+  .transactions {
+    & .activity {
+      & header {
+        padding: 20px var(--grid-padding-XS);
+
+        & h2 {
+          font-size: var(--main-header-font-size-XS);
+        }
+
+        & .account {
+          display: none;
+        }
+      }
+
+      & .list {
+        padding: 0px 0px 0px var(--grid-padding-XS);
+
+        & .item {
+          &:not(:last-of-type) {
+            margin-right: 24px;
+          }
+        }
+      }
+
+      & .results {
+        padding-bottom: 100px;
+
+        & .header {
+          font-size: 12px;
+        }
+
+        & .rows {
+          padding: 0px var(--grid-padding-XS);
+        }
+
+        & .rows:nth-of-type(even) {
+          background: var(--gradient-greyscale-mobile);
+        }
+
+        & .rows:nth-of-type(odd) {
+          background: var(--color-grayscale-mobile-background);
+        }
+      }
+    }
+
+    & .details {
+      padding: 0px 0px 20px var(--grid-padding-XS);
+
+      & .row {
+        padding-bottom: 0px;
+      }
+
+      & .column {
+        padding-bottom: 20px;
+      }
+
+      & .label {
+        font-size: var(--details-label-font-size-L);
       }
 
       & header {

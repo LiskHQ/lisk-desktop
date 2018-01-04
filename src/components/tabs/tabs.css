@@ -13,6 +13,12 @@
   text-align: center;
 }
 
+@media (--xSmall-viewport) {
+  .sideBarWrapper {
+    display: none;
+  }
+}
+
 .logo {
   margin: 40px 0;
 }
