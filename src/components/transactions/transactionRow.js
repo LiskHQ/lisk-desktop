@@ -25,7 +25,7 @@ class TransactionRow extends React.Component {
   render() {
     const { props } = this;
     return (
-      <div className={`${grid.row} ${styles.rows} ${styles.paddingLeft} transactionsRow`}>
+      <div className={`${grid.row} ${styles.rows} transactionsRow`}>
         <div className={`${styles.leftText} ${grid['col-xs-6']}`}>
           <div className={`${styles.mainRow} ${styles.address}`}>
             <TransactionType {...props.value} address={props.address}></TransactionType>
