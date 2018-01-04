@@ -2,6 +2,20 @@
 
 .wrapper {
   width: 100%;
+
+  & h2 {
+    margin: 40px 32px 20px;
+    font-size: 28px;
+  }
+}
+
+.seeAllLink {
+  font-size: 16px;
+  color: var(--color-primary-standard);
+  margin-left: 40px;
+  text-decoration: none;
+  font-family: var(--content-font);
+  font-weight: 400;
 }
 
 .send {
@@ -9,7 +23,7 @@
 }
 
 .graph {
-  height: calc(70% - 40px);
+  height: calc(70% - 20px);
   margin-bottom: 20px;
 }
 
