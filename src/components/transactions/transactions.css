@@ -311,32 +311,32 @@
           font-size: var(--main-header-font-size-L);
 
           & .balanceUnit {
-            font-size: var(--header-balance-unit-font-size-L) !important;
+            font-size: var(--header-balance-unit-font-size-L);
           }
         }
 
         & .address {
-          font-size: var(--header-subtitle-font-size-L) !important;
+          font-size: var(--header-subtitle-font-size-L);
         }
       }
 
       & .list {
-        padding: 0px 0px 20px var(--grid-padding-L) !important;
+        padding: 0px 0px 20px var(--grid-padding-L);
       }
 
       & .results {
         & .header {
-          font-size: 12px !important;
+          font-size: 12px;
         }
 
         & .rows {
-          padding: 0px var(--grid-padding-L) !important;
+          padding: 0px var(--grid-padding-L);
         }
       }
     }
 
     & .details {
-      padding: 0px 0px 20px var(--grid-padding-L) !important;
+      padding: 0px 0px 20px var(--grid-padding-L);
 
       & .label {
         font-size: var(--details-label-font-size-L);
