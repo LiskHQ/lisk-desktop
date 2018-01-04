@@ -162,6 +162,8 @@
 .carousel {
   background: var(--setting-menu-color);
   color: #fff;
+  height: 200px;
+  text-align: center;
 }
 
 .carouselNav {
@@ -186,4 +188,35 @@
 
 .activeSlide {
   opacity: 1 !important;
+}
+
+.sliderInput {
+  & input[type='radio'],
+  & input[type='checkbox'] {
+    &:checked + label {
+      & .button {
+        left: calc(100% - 48px);
+      }
+    }
+  }
+
+  & label {
+    height: 48px;
+    line-height: 48px;
+    width: 93px;
+    background: #3c506b;
+    display: inline-block;
+  }
+
+  & span.circle {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    background: #001a3e;
+
+    & span {
+      width: 100%;
+      line-height: 48px !important;
+    }
+  }
 }
