@@ -1,5 +1,7 @@
 import React from 'react';
+import { themr } from 'react-css-themr';
 import styles from './checkbox.css';
+import { FontIcon } from '../../fontIcon';
 
 class SliderCheckbox extends React.Component {
   constructor() {
@@ -67,10 +69,10 @@ class SliderCheckbox extends React.Component {
   }
 
   render() {
-    const { label, input, icons, className, hasSlidingArrows } = this.props;
-
-    return (<div className={`${styles.sliderInput} ${className}`}>
-      <input type='checkbox' value={input.value}
+    const { label, input, className, hasSlidingArrows, theme, clickable } = this.props;
+    const icons = this.props.icons ? this.props.icons : {};
+    return (<div className={`${theme.sliderInput} ${className}`}>
+      <input type='checkbox' value={input.value} checked={input.checked}
         ref={(el) => { this.input = el; }}/>
       <label ref={(el) => { this.parent = el; }}
         onMouseDown={this.startTracking.bind(this)}
@@ -78,18 +80,26 @@ class SliderCheckbox extends React.Component {
         onMouseLeave={this.stopTracking.bind(this)}
         onMouseUp={this.stopTracking.bind(this)}>
         <span
-          className={`${styles.circle} ${styles.button}`}
+          onClick= {clickable ?
+            this.change.bind(this) :
+            null
+          }
+          className={`${theme.circle} ${theme.button}`}
           ref={(el) => { this.shape = el; }}>
-          <i className={`material-icons ${styles.icon} ${styles.arrowRight}`}>chevron_right</i>
-          <i className={`material-icons ${styles.icon} ${styles.checkMark}`}>{icons.done}</i>
+          <FontIcon className={`${theme.icon} ${theme.arrowRight}`}>
+            {icons.start || 'arrow-right'}
+          </FontIcon>
+          <FontIcon className={`${theme.icon} ${theme.checkMark}`}>
+            {icons.done || 'checkmark'}
+          </FontIcon>
         </span>
-        <div className={hasSlidingArrows ? styles.hasArrows : ''}>
+        {label ? <div className={hasSlidingArrows ? theme.hasArrows : ''}>
           <span>{label}</span>
-        </div>
+        </div> : ''}
         {
           typeof icons.goal === 'string' ?
-            <span className={`${styles.circle} ${styles.lock}`}>
-              <i className={`material-icons ${styles.icon} ${styles.arrowRight}`}>{icons.goal}</i>
+            <span className={`${theme.circle} ${theme.lock}`}>
+              <FontIcon className={`${theme.icon} ${theme.arrowRight}`}>{icons.goal}</FontIcon>
             </span> : null
         }
       </label>
@@ -97,4 +107,4 @@ class SliderCheckbox extends React.Component {
   }
 }
 
-export default SliderCheckbox;
+export default themr('sliderCheckbox', styles)(SliderCheckbox);
