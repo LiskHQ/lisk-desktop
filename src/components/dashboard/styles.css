@@ -2,11 +2,6 @@
 
 .wrapper {
   width: 100%;
-
-  & h2 {
-    margin: 40px 32px 20px;
-    font-size: 28px;
-  }
 }
 
 .seeAllLink {
@@ -29,6 +24,11 @@
 
 .latestActivity {
   height: 30%;
+
+  & h2 {
+    margin: 40px 32px 20px;
+    font-size: 28px;
+  }
 }
 
 @media (--medium-viewport) {
@@ -52,7 +52,7 @@
 }
 
 @media (--small-viewport) {
-  .wrapper {
+  .latestActivity {
     & h2 {
       font-size: 24px;
     }
