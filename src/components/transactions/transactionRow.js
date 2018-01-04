@@ -22,11 +22,6 @@ class TransactionRow extends React.Component {
     return nextProps.value.confirmations <= 1000;
   }
 
-  toggleRow() {
-    this.setState({ isOpen: !this.state.isOpen });
-    this.forceUpdate();
-  }
-
   render() {
     const { props } = this;
     return (
@@ -52,8 +47,8 @@ class TransactionRow extends React.Component {
           {this.state.isOpen ? <div className={styles.subRow}> {props.t('Additional fee:')} <LiskAmount val={props.value.fee} /></div> : ''}
         </div>
         <div className={`${styles.rightText} ${grid['col-xs-1']}`}>
-          <div className={`${styles.mainRow} ${styles.clickable}`} onClick={this.toggleRow.bind(this)}>
-            <FontIcon value='arrow-down' className={this.state.isOpen ? styles.turnArrow : ''}/>
+          <div className={`${styles.mainRow} ${styles.clickable}`} onClick={props.nextStep.bind(this, { ...props })}>
+            <FontIcon value='arrow-right'/>
           </div>
         </div>
       </div>

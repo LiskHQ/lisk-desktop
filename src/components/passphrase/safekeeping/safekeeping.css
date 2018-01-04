@@ -48,8 +48,8 @@
 
   /* Steps */
   &.introduction-step {
-    & .revealed,
-    & .revealing {
+    & section.revealed,
+    & section.revealing {
       display: none;
     }
 
@@ -79,8 +79,9 @@
   }
 
   &.revealing-step,
+  &.done-step,
   &.revealed-step {
-    & .introduction {
+    & section.introduction {
       display: none;
     }
 
@@ -139,6 +140,7 @@
     }
   }
 
+  &.done-step,
   &.revealed-step {
     & .bigSlider {
       display: none !important;

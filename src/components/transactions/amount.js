@@ -26,7 +26,7 @@ const Amount = (props) => {
     recipient={props.value.recipientId}
     disabled={!params.clickToSendEnabled}>
     <span id='transactionAmount' className={styles[params.className]}>
-      { params.pre } <LiskAmount val={props.value.amount} />
+      { params.pre }<LiskAmount val={props.value.amount} />
     </span>
   </ClickToSend>;
 };

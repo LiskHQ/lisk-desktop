@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import React from 'react';
 import { extractAddress } from '../../utils/api/account';
 import { PrimaryButton, SecondaryLightButton } from '../toolbox/buttons/button';
+import AccountVisual from '../accountVisual';
 import LiskAmount from '../liskAmount';
 import BackgroundMaker from '../backgroundMaker';
 import networks from '../../constants/networks';
@@ -104,8 +105,7 @@ class SavedAccounts extends React.Component {
                 </strong> :
                 null)}
               <div className={styles.cardIcon}>
-                <div className={styles.accountVisualPlaceholder}></div>
-                <div className={styles.accountVisualPlaceholder2}></div>
+                <AccountVisual address={extractAddress(account.publicKey)} size={155} />
               </div>
               <h2>
                 <LiskAmount val={account.balance} /> <small>LSK</small>
