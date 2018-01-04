@@ -1,10 +1,11 @@
 import React from 'react';
-import { Tab, Tabs as ToolboxTabs, Drawer, Switch } from 'react-toolbox';
+import { Tab, Tabs as ToolboxTabs, Drawer } from 'react-toolbox';
 import ReactSwipe from 'react-swipe';
 import styles from './tabs.css';
 import logo from '../../assets/images/Lisk-Logo.svg';
 import * as menuLogos from '../../assets/images/sidebar-icons/*.svg'; //eslint-disable-line
 import { FontIcon } from '../fontIcon';
+import SliderCheckbox from '../toolbox/checkbox';
 
 const getTabs = (isDelegate, tabs) => tabs.filter(t => t.id !== 'forging' || isDelegate);
 
@@ -111,18 +112,6 @@ class Tabs extends React.Component {
             <img src={logo} className={styles.logo} />
             <FontIcon value='close' className={styles.close} onClick={this.menuToggle.bind(this)} />
           </header>
-          <ToolboxTabs index={getIndex(history, tabs)}
-            theme={styles}
-            onChange={this.navigate.bind(this, history, filterTabs)}
-            disableAnimatedBottomBorder={true}
-            className={`${styles.tabs} main-tabs`}>
-            {filterTabs.map(({ label, image, id }, index) =>
-              <Tab
-                key={index}
-                label={<TabTemplate label={label} img={image} />}
-                id={id}
-                disabled={isCurrent(history, index, tabs)} />)}
-          </ToolboxTabs>
           <ReactSwipe
             className={styles.carousel}
             ref={(reactSwipe) => { this.reactSwipe = reactSwipe; }}
@@ -132,10 +121,15 @@ class Tabs extends React.Component {
               transitionEnd: index => this.changeSlide(index),
             }}>
             <div>
-              <Switch
-                label='Nothing, thanks'
-                onChange={() => console.log('checked')}
-              />
+              <SliderCheckbox
+                theme={styles}
+                className={`${styles.smallSlider} i-understand-checkbox`}
+                onChange={e => console.log(e.checked)}
+                clickable={true}
+                input={{
+                  value: true,
+                  checked: true,
+                }}/>
             </div>
             <div>PANE 2</div>
             <div>PANE 3</div>
@@ -149,7 +143,6 @@ class Tabs extends React.Component {
               </li>,
             )}
           </ul>
-          {this.state.activeSlide}
         </Drawer>
       </div>
     );
