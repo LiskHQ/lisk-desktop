@@ -74,83 +74,6 @@
 
 .transactions {
   & .activity {
-    & .list {
-      font-weight: var(--font-weight-bold);
-      color: var(--filter-list-color);
-      line-height: var(--list-line-height);
-      list-style: none;
-
-      & .item {
-        display: inline-block;
-        cursor: pointer;
-
-        &:not(:last-of-type) {
-          margin-right: 50px;
-        }
-      }
-
-      & .active {
-        border-bottom: 2px solid var(--amount-negative-color);
-        color: var(--amount-negative-color);
-      }
-    }
-
-    & .results {
-      overflow-x: hidden;
-      overflow-y: auto;
-
-      & .header {
-        color: var(--grid-header-color);
-        line-height: var(--grid-header-line-height);
-        font-weight: var(--font-weight-very-bold);
-      }
-
-      & .rows:nth-of-type(even) {
-        background: var(--gradient-greyscale);
-      }
-
-      & .rows:nth-of-type(odd) {
-        background: var(--row-background-color);
-      }
-
-      & .rows {
-        color: var(--amount-negative-color);
-        border-bottom: 0;
-        border-top: 0;
-
-        &:hover {
-          background: var(--link-color);
-        }
-
-        & .copyIcon {
-          vertical-align: bottom;
-          padding-left: 5px;
-          cursor: pointer;
-        }
-      }
-
-      & .turnArrow {
-        transform: rotate(180deg);
-      }
-
-      & .mainRow {
-        line-height: var(--main-row-line-height);
-      }
-
-      & .subRow {
-        min-height: var(--sub-row-height);
-
-        & a {
-          text-decoration: none;
-          color: var(--blue);
-        }
-      }
-
-      & .address {
-        font-weight: var(--result-address-font-weight);
-      }
-    }
-
     & header {
       line-height: var(--header-line-height);
 
@@ -241,6 +164,83 @@
   }
 }
 
+.list {
+  font-weight: var(--font-weight-bold);
+  color: var(--filter-list-color);
+  line-height: var(--list-line-height);
+  list-style: none;
+
+  & .item {
+    display: inline-block;
+    cursor: pointer;
+
+    &:not(:last-of-type) {
+      margin-right: 50px;
+    }
+  }
+
+  & .active {
+    border-bottom: 2px solid var(--amount-negative-color);
+    color: var(--amount-negative-color);
+  }
+}
+
+.results {
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  & .header {
+    color: var(--grid-header-color);
+    line-height: var(--grid-header-line-height);
+    font-weight: var(--font-weight-very-bold);
+  }
+
+  & .rows:nth-of-type(even) {
+    background: var(--gradient-greyscale);
+  }
+
+  & .rows:nth-of-type(odd) {
+    background: var(--row-background-color);
+  }
+
+  & .rows {
+    color: var(--amount-negative-color);
+    border-bottom: 0;
+    border-top: 0;
+
+    &:hover {
+      background: var(--link-color);
+    }
+
+    & .copyIcon {
+      vertical-align: bottom;
+      padding-left: 5px;
+      cursor: pointer;
+    }
+  }
+
+  & .turnArrow {
+    transform: rotate(180deg);
+  }
+
+  & .mainRow {
+    line-height: var(--main-row-line-height);
+  }
+
+  & .subRow {
+    min-height: var(--sub-row-height);
+
+    & a {
+      text-decoration: none;
+      color: var(--blue);
+    }
+  }
+
+  & .address {
+    font-weight: var(--result-address-font-weight);
+  }
+}
+
 @media (--xLarge-viewport) {
   .transactions {
     & .activity {
@@ -257,20 +257,6 @@
 
         & .address {
           font-size: var(--header-subtitle-font-size-XL);
-        }
-      }
-
-      & .list {
-        padding: 0px 0px 20px var(--grid-padding-XL);
-      }
-
-      & .results {
-        & .header {
-          font-size: 15px;
-        }
-
-        & .rows {
-          padding: 0px var(--grid-padding-XL);
         }
       }
     }
@@ -299,6 +285,20 @@
       }
     }
   }
+
+  .list {
+    padding: 0px 0px 20px var(--grid-padding-XL);
+  }
+
+  .results {
+    & .header {
+      font-size: 15px;
+    }
+
+    & .rows {
+      padding: 0px var(--grid-padding-XL);
+    }
+  }
 }
 
 @media (--large-viewport) {
@@ -317,20 +317,6 @@
 
         & .address {
           font-size: var(--header-subtitle-font-size-L);
-        }
-      }
-
-      & .list {
-        padding: 0px 0px 20px var(--grid-padding-L);
-      }
-
-      & .results {
-        & .header {
-          font-size: 12px;
-        }
-
-        & .rows {
-          padding: 0px var(--grid-padding-L);
         }
       }
     }
@@ -357,6 +343,20 @@
           }
         }
       }
+    }
+  }
+
+  .list {
+    padding: 0px 0px 20px var(--grid-padding-L);
+  }
+
+  .results {
+    & .header {
+      font-size: 12px;
+    }
+
+    & .rows {
+      padding: 0px var(--grid-padding-L);
     }
   }
 }

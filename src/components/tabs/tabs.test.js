@@ -33,7 +33,7 @@ describe('Tabs', () => {
 
   it('should allow to change active tab', () => {
     const wrapper = mount(<Tabs isDelegate={false} history={history} t={t} />);
-    wrapper.find(Tab).at(0).simulate('click');
+    wrapper.find(Tab).at(1).simulate('click');
     expect(history.push).to.have.been.calledWith('/main/transactions');
   });
 

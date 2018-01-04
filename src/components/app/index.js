@@ -2,6 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import Account from '../account';
 import PrivateRoutes from '../privateRoute';
+import Dashboard from '../dashboard';
 import Header from '../header';
 import Login from '../login';
 import Register from '../register';
@@ -31,6 +32,7 @@ const App = () => (
           <PrivateRoutes path='/main' render={ ({ match }) => (
             <main className={offlineStyle.disableWhenOffline}>
               <Account />
+              <Route path={`${match.url}/dashboard/:dialog?`} component={Dashboard} />
               <Route path={`${match.url}/transactions/:dialog?`} component={TransactionDashboard} />
               <Route path={`${match.url}/voting/:dialog?`} component={Voting} />
               <Route path={`${match.url}/forging/:dialog?`} component={Forging} />

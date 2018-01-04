@@ -65,7 +65,7 @@ class SavedAccounts extends React.Component {
     const switchAccount = (account) => {
       if (!this.state.editing) {
         accountSwitched(account);
-        history.push('/main/transactions/');
+        history.push('/main/dashboard/');
       }
     };
 
@@ -74,7 +74,7 @@ class SavedAccounts extends React.Component {
         <BackgroundMaker />
         <h1>{t('Your favorite Lisk IDs')}</h1>
         <div className={styles.cardsWrapper} >
-          <Link to='/main/add-account/?referrer=/main/transactions/saved-accounts' >
+          <Link to='/main/add-account/?referrer=/main/dashboard/' >
             <div className={`add-lisk-id-card ${styles.card} ${styles.addNew}`} >
               <div className={styles.cardIcon}>
                 <img src={plusShapeIcon} className={styles.plusShapeIcon} />

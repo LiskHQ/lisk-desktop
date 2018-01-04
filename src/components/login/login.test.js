@@ -74,10 +74,10 @@ describe('Login', () => {
   });
 
   describe('History management', () => {
-    it('calls this.props.history.replace(\'/main/transactions\')', () => {
+    it('calls this.props.history.replace(\'/main/dashboard\')', () => {
       wrapper = shallow(<Login {...props}/>, options);
       wrapper.setProps({ account: { address: 'dummy' } });
-      expect(props.history.replace).to.have.been.calledWith('/main/transactions');
+      expect(props.history.replace).to.have.been.calledWith('/main/dashboard');
     });
 
     it('calls this.props.history.replace with referrer address', () => {
@@ -94,7 +94,7 @@ describe('Login', () => {
       history.location.search = '?referrer=/main/forging';
       props.history.replace.reset();
       wrapper.setProps({ history, account: { address: 'dummy', isDelegate: false } });
-      expect(props.history.replace).to.have.been.calledWith('/main/transactions');
+      expect(props.history.replace).to.have.been.calledWith('/main/dashboard');
     });
 
     it('hides network options by default', () => {

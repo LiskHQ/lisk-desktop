@@ -107,10 +107,10 @@ class Login extends React.Component {
   getReferrerRoute() {
     const { isDelegate } = this.props.account;
     const search = parseSearchParams(this.props.history.location.search);
-    const transactionRoute = '/main/transactions';
-    const referrerRoute = search.referrer ? search.referrer : transactionRoute;
+    const dashboardRoute = '/main/dashboard';
+    const referrerRoute = search.referrer ? search.referrer : dashboardRoute;
     if (!isDelegate && referrerRoute === '/main/forging') {
-      return transactionRoute;
+      return dashboardRoute;
     }
     return referrerRoute;
   }

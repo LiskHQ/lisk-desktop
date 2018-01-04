@@ -1,12 +1,6 @@
 import React from 'react';
-import Waypoint from 'react-waypoint';
-import tableStyle from 'react-toolbox/lib/table/theme.css';
-import buttonStyle from 'react-toolbox/lib/button/theme.css';
-import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import CopyToClipboard from '../copyToClipboard';
-import RelativeLink from '../relativeLink';
-import TransactionRow from './transactionRow';
-import TransactionsHeader from './transactionsHeader';
+import TransactionList from './transactionList';
 import LiskAmount from '../liskAmount';
 import Box from '../box';
 import styles from './transactions.css';
@@ -56,28 +50,11 @@ class Transactions extends React.Component {
           <li className={styles.item}>Outgoing</li>
           <li className={styles.item}>Other</li>
         </ul>
-
-        {this.props.transactions.length > 0 ?
-          <div className={`${styles.results} transaction-results`}>
-            <TransactionsHeader tableStyle={tableStyle}></TransactionsHeader>
-            {this.props.transactions.map((transaction, i) => (
-              <TransactionRow address={this.props.address}
-                key={i}
-                t={this.props.t}
-                value={transaction}
-                nextStep={this.props.nextStep.bind(this)}
-              />
-            ))}
-            <Waypoint bottomOffset='-80%'
-              key={this.props.transactions.length}
-              onEnter={() => { this.loadMore(); }}></Waypoint>
-          </div> :
-          <p className={`${styles.empty} hasPaddingRow empty-message`}>
-            {this.props.t('There are no transactions, yet.')} &nbsp;
-            <RelativeLink className={`${styles.button} ${buttonStyle.button} ${buttonStyle.primary} ${buttonStyle.raised} receive-lsk-button ${offlineStyle.disableWhenOffline}`}
-              to='receive'>{this.props.t('Receive LSK')}</RelativeLink>
-          </p>
-        }
+        <TransactionList
+          transactions={this.props.transactions}
+          loadMore={this.loadMore.bind(this)}
+          nextStep={this.props.nextStep}
+          t={this.props.t} />
       </Box>
     );
   }
