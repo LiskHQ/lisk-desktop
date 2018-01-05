@@ -62,6 +62,9 @@ class Transactions extends React.Component {
           nextStep={this.props.nextStep}
           t={this.props.t} />
         {
+          // the whole transactions box should be scrollable on XS
+          // otherwise only the transaction list should be scrollable
+          // (see transactionList.js)
           this.isSmallScreen()
             ? <Waypoint bottomOffset='-80%' key={this.props.transactions.length}
               onEnter={() => { this.loadMore(); }}></Waypoint>

@@ -27,6 +27,9 @@ class TransactionsList extends React.Component {
           />
         ))}
         {
+          // the transaction list should be scrollable on a large screen
+          // otherwise (XS) the whole transaction box will be scrollable
+          // (see transactionOverview.js)
           this.isLargeScreen()
             ? <Waypoint bottomOffset='-80%'
               key={this.props.transactions.length}

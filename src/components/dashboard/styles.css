@@ -24,6 +24,7 @@
 
 .latestActivity {
   height: 30%;
+  margin: 0px;
 
   & h2 {
     margin: 40px 32px 20px;

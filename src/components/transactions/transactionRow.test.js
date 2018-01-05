@@ -56,7 +56,7 @@ describe('TransactionRow', () => {
       </Router>
     </Provider>, options);
 
-    expect(wrapper.find('.transactions-row')).to.have.lengthOf(4);
+    expect(wrapper.find('.transactions-cell')).to.have.lengthOf(4);
   });
 
   it('should render Spinner if no value.confirmations" ', () => {

@@ -13,6 +13,7 @@
   flex-direction: column;
   overflow: auto;
   overflow-x: hidden;
+  margin: 0px;
 
   & footer {
     position: absolute;
