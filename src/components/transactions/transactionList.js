@@ -9,6 +9,11 @@ import TransactionsHeader from './transactionsHeader';
 import styles from './transactions.css';
 
 class TransactionsList extends React.Component {
+  // eslint-disable-next-line class-methods-use-this
+  isLargeScreen() {
+    return window.innerWidth > 768;
+  }
+
   render() {
     return this.props.transactions.length > 0 ?
       <div className={`${styles.results} transaction-results`}>
@@ -21,9 +26,13 @@ class TransactionsList extends React.Component {
             nextStep={this.props.nextStep}
           />
         ))}
-        <Waypoint bottomOffset='-80%'
-          key={this.props.transactions.length}
-          onEnter={() => { this.props.loadMore(); }}></Waypoint>
+        {
+          this.isLargeScreen()
+            ? <Waypoint bottomOffset='-80%'
+              key={this.props.transactions.length}
+              onEnter={() => { this.props.loadMore(); }}></Waypoint>
+            : null
+        }
       </div> :
       <p className={`${styles.empty} hasPaddingRow empty-message`}>
         {this.props.t('There are no transactions, yet.')} &nbsp;

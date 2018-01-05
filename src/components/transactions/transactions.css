@@ -189,8 +189,7 @@
 }
 
 .results {
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: initial;
 
   & .header {
     color: var(--grid-header-color);
@@ -285,6 +284,8 @@
   }
 
   .results {
+    overflow-y: auto;
+
     & .header {
       font-size: 15px;
     }
@@ -341,12 +342,39 @@
   }
 
   .results {
+    overflow-y: auto;
+
     & .header {
       font-size: 12px;
     }
 
     & .rows {
       padding: 0px var(--grid-padding-L);
+    }
+  }
+}
+
+@media (--medium-viewport) {
+  .transactions {
+    & .results {
+      overflow-y: initial;
+      padding-bottom: 100px;
+
+      & .header {
+        font-size: 12px;
+      }
+
+      & .rows {
+        padding: 0px var(--grid-padding-XS);
+      }
+
+      & .rows:nth-of-type(even) {
+        background: var(--gradient-greyscale-mobile);
+      }
+
+      & .rows:nth-of-type(odd) {
+        background: var(--color-grayscale-mobile-background);
+      }
     }
   }
 }
@@ -394,35 +422,15 @@
         }
       }
     }
-  }
 
-  & .list {
-    padding: 0px 0px 0px var(--grid-padding-XS);
+    & .list {
+      padding: 0px 0px 0px var(--grid-padding-XS);
 
-    & .item {
-      &:not(:last-of-type) {
-        margin-right: 24px;
+      & .item {
+        &:not(:last-of-type) {
+          margin-right: 24px;
+        }
       }
-    }
-  }
-
-  & .results {
-    padding-bottom: 100px;
-
-    & .header {
-      font-size: 12px;
-    }
-
-    & .rows {
-      padding: 0px var(--grid-padding-XS);
-    }
-
-    & .rows:nth-of-type(even) {
-      background: var(--gradient-greyscale-mobile);
-    }
-
-    & .rows:nth-of-type(odd) {
-      background: var(--color-grayscale-mobile-background);
     }
   }
 }

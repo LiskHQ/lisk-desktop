@@ -12,6 +12,7 @@
   max-height: 100%;
   flex-direction: column;
   overflow: auto;
+  overflow-x: hidden;
 
   & footer {
     position: absolute;

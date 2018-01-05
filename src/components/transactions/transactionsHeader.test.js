@@ -16,8 +16,6 @@ describe('TransactionsHeader', () => {
         },
       });
 
-    const expectedValue = /header/g;
-    const html = wrapper.find('#transactionsHeader').html();
-    expect(html.match(expectedValue)).to.have.lengthOf(3);
+    expect(wrapper.find('.transactions-header')).to.have.lengthOf(3);
   });
 });
