@@ -24,23 +24,25 @@ class Send extends React.Component {
   render() {
     const { t } = this.props;
     return (
-      <Box className={`send-box ${styles.send} ${this.state.sendIsActive ? styles.isActive : ''}`}>
-        <span className={`${styles.mobileMenu} ${this.state.sendIsActive ? styles.isHidden : ''}`}>
+      <div>
+        <span className={styles.mobileMenu}>
           <span className={`send-menu-item ${styles.mobileMenuItem}`}
             onClick={this.setSendIsActive.bind(this, true)}>
             {t('Send')}
           </span>
         </span>
-        <span className={`mobile-close-button ${styles.mobileClose}`}
-          onClick={this.setSendIsActive.bind(this, false)}>
-          {t('Close')} <FontIcon value='close' />
-        </span>
-        <MultiStep finalCallback={this.setSendIsActive.bind(this, false)}>
-          <SendWritable/>
-          <SendReadable />
-          <ResultBox />
-        </MultiStep>
-      </Box>
+        <Box className={`send-box ${styles.send} ${this.state.sendIsActive ? styles.isActive : ''}`}>
+          <span className={`mobile-close-button ${styles.mobileClose}`}
+            onClick={this.setSendIsActive.bind(this, false)}>
+            {t('Close')} <FontIcon value='close' />
+          </span>
+          <MultiStep finalCallback={this.setSendIsActive.bind(this, false)}>
+            <SendWritable/>
+            <SendReadable />
+            <ResultBox />
+          </MultiStep>
+        </Box>
+      </div>
     );
   }
 }
