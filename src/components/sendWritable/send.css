@@ -85,3 +85,19 @@ input:read-only {
 .header {
   height: 300px;
 }
+
+@media (--small-viewport) {
+  .headerWrapper {
+    display: none;
+  }
+
+  .header {
+    height: 50px;
+  }
+}
+
+@media (--xSmall-viewport) {
+  .nextButton {
+    width: 100%;
+  }
+}

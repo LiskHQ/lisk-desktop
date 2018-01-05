@@ -39,3 +39,17 @@
     cursor: pointer;
   }
 }
+
+@media (--small-viewport) {
+  .resultBox {
+    & .header {
+      height: 60px;
+    }
+  }
+
+  .icon {
+    position: relative;
+    margin-top: 40px;
+    left: initial;
+  }
+}

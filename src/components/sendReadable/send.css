@@ -123,3 +123,19 @@ input:read-only {
   border-radius: 100%;
   margin: 13px 0px;
 }
+
+@media (--small-viewport) {
+  .headerWrapper {
+    display: none;
+  }
+
+  .header {
+    height: 60px;
+  }
+
+  .temporaryAvatar {
+    height: 60px;
+    width: 60px;
+    margin: 24px 0;
+  }
+}

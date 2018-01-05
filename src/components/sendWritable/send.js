@@ -113,7 +113,7 @@ class SendWritable extends React.Component {
                           !this.state.recipient.value ||
                           !!this.state.amount.error ||
                           !this.state.amount.value)}
-            className='send-next-button'
+            className={`send-next-button ${styles.nextButton}`}
             >{this.props.t('Next')}</Button>
             <div className='subTitle'>{this.props.t('Confirmation in the next step.')}</div>
           </footer>
