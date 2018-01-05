@@ -87,7 +87,7 @@ class MultiStep extends React.Component {
       extraProps.prevState = Object.assign({}, step.data[step.current + 1]);
     }
 
-    return (<section className={className}>
+    return (<div className={className}>
       <MultiStepNav steps={children} showNav={this.props.showNav}
         prevPage={prevPage}
         browsable={browsable} backButtonLabel={backButtonLabel}
@@ -95,7 +95,7 @@ class MultiStep extends React.Component {
       {
         React.cloneElement(children[step.current], extraProps)
       }
-    </section>);
+    </div>);
   }
 }
 

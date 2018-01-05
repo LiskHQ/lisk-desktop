@@ -56,9 +56,7 @@ describe('TransactionRow', () => {
       </Router>
     </Provider>, options);
 
-    const expectedValue = /flexboxgrid__col/g;
-    const html = wrapper.find('.transactionsRow').html();
-    expect(html.match(expectedValue)).to.have.lengthOf(4);
+    expect(wrapper.find('.transactions-cell')).to.have.lengthOf(4);
   });
 
   it('should render Spinner if no value.confirmations" ', () => {

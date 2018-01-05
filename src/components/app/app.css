@@ -87,3 +87,9 @@ body {
     font-size: 15px;
   }
 }
+
+@media (--xSmall-viewport) {
+  body {
+    font-size: 14px;
+  }
+}

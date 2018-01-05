@@ -1,4 +1,5 @@
 import React from 'react';
+import Waypoint from 'react-waypoint';
 import CopyToClipboard from '../copyToClipboard';
 import TransactionList from './transactionList';
 import LiskAmount from '../liskAmount';
@@ -23,6 +24,11 @@ class Transactions extends React.Component {
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  isSmallScreen() {
+    return window.innerWidth <= 768;
+  }
+
   componentDidUpdate() {
     const { count, transactions } = this.props;
     this.canLoadMore = count === null || count > transactions.length;
@@ -45,16 +51,25 @@ class Transactions extends React.Component {
         </header>
 
         <ul className={styles.list}>
-          <li className={`${styles.item} ${styles.active}`}>All</li>
-          <li className={styles.item}>Incoming</li>
-          <li className={styles.item}>Outgoing</li>
-          <li className={styles.item}>Other</li>
+          <li className={`${styles.item} ${styles.active}`}>{this.props.t('All')}</li>
+          <li className={styles.item}>{this.isSmallScreen() ? this.props.t('In') : this.props.t('Incoming')}</li>
+          <li className={styles.item}>{this.isSmallScreen() ? this.props.t('Out') : this.props.t('Outgoing')}</li>
+          <li className={styles.item}>{this.props.t('Other')}</li>
         </ul>
         <TransactionList
           transactions={this.props.transactions}
           loadMore={this.loadMore.bind(this)}
           nextStep={this.props.nextStep}
           t={this.props.t} />
+        {
+          // the whole transactions box should be scrollable on XS
+          // otherwise only the transaction list should be scrollable
+          // (see transactionList.js)
+          this.isSmallScreen()
+            ? <Waypoint bottomOffset='-80%' key={this.props.transactions.length}
+              onEnter={() => { this.loadMore(); }}></Waypoint>
+            : null
+        }
       </Box>
     );
   }

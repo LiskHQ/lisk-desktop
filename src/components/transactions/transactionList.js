@@ -9,6 +9,11 @@ import TransactionsHeader from './transactionsHeader';
 import styles from './transactions.css';
 
 class TransactionsList extends React.Component {
+  // eslint-disable-next-line class-methods-use-this
+  isLargeScreen() {
+    return window.innerWidth > 768;
+  }
+
   render() {
     return this.props.transactions.length > 0 ?
       <div className={`${styles.results} transaction-results`}>
@@ -21,9 +26,16 @@ class TransactionsList extends React.Component {
             nextStep={this.props.nextStep}
           />
         ))}
-        <Waypoint bottomOffset='-80%'
-          key={this.props.transactions.length}
-          onEnter={() => { this.props.loadMore(); }}></Waypoint>
+        {
+          // the transaction list should be scrollable on a large screen
+          // otherwise (XS) the whole transaction box will be scrollable
+          // (see transactionOverview.js)
+          this.isLargeScreen()
+            ? <Waypoint bottomOffset='-80%'
+              key={this.props.transactions.length}
+              onEnter={() => { this.props.loadMore(); }}></Waypoint>
+            : null
+        }
       </div> :
       <p className={`${styles.empty} hasPaddingRow empty-message`}>
         {this.props.t('There are no transactions, yet.')} &nbsp;

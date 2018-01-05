@@ -7,7 +7,7 @@ import i18n from '../../i18n';
 import TransactionsHeader from './transactionsHeader';
 
 describe('TransactionsHeader', () => {
-  it('should have 4 columns', () => {
+  it('should have 3 header columns', () => {
     const wrapper = mount(<TransactionsHeader tableStyle={tableStyle}></TransactionsHeader>,
       {
         context: { i18n },
@@ -16,8 +16,6 @@ describe('TransactionsHeader', () => {
         },
       });
 
-    const expectedValue = /flexboxgrid__col/g;
-    const html = wrapper.find('#transactionsHeader').html();
-    expect(html.match(expectedValue)).to.have.lengthOf(4);
+    expect(wrapper.find('.transactions-header')).to.have.lengthOf(3);
   });
 });

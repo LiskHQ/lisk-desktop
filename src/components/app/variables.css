@@ -85,6 +85,7 @@ or "warn/action" ineastd of "red/green"
   --color-grayscale-medium: #74869b;
   --color-grayscale-light: #ccd9e4;
   --color-grayscale-mobile-background: #f9fbfd;
+  --color-grayscale-darker-mobile-background: #eff4f9;
   --color-white: #fff;
   --color-error: #da1d00;
   --color-action-dark: #c80039;
@@ -94,6 +95,7 @@ or "warn/action" ineastd of "red/green"
   --gradient-theme: linear-gradient(27deg, #17499b 0%, var(--color-grayscale-light) 100%);
   --gradient-action: linear-gradient(-27deg, var(--color-action-dark) 0%, var(--color-action-light) 100%);
   --gradient-greyscale: linear-gradient(to right, var(--row-background-color), #f5f8fc);
+  --gradient-greyscale-mobile: linear-gradient(to right, var(--color-grayscale-mobile-background), var(--color-grayscale-darker-mobile-background));
   --gradient-secondary: linear-gradient(45deg, #17499b 0%, var(--color-primary-medium) 100%);
 
   /*************************
