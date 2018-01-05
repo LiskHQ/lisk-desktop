@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 
 import { FontIcon } from '../fontIcon';
 import Box from '../box';
@@ -17,21 +18,22 @@ class Send extends React.Component {
   }
 
   setSendIsActive(sendIsActive) {
-    console.log('setSendIsActive', sendIsActive);
     this.setState({ sendIsActive });
   }
 
   render() {
+    const { t } = this.props;
     return (
-      <Box className={`${styles.send} ${this.state.sendIsActive ? styles.isActive : ''}`}>
+      <Box className={`send-box ${styles.send} ${this.state.sendIsActive ? styles.isActive : ''}`}>
         <span className={`${styles.mobileMenu} ${this.state.sendIsActive ? styles.isHidden : ''}`}>
-          <span className={styles.mobileMenuItem}
+          <span className={`send-menu-item ${styles.mobileMenuItem}`}
             onClick={this.setSendIsActive.bind(this, true)}>
-            {('Send')}
+            {t('Send')}
           </span>
         </span>
-        <span className={styles.mobileClose} onClick={this.setSendIsActive.bind(this, false)}>
-          {('Close')} <FontIcon value='close' />
+        <span className={`mobile-close-button ${styles.mobileClose}`}
+          onClick={this.setSendIsActive.bind(this, false)}>
+          {t('Close')} <FontIcon value='close' />
         </span>
         <MultiStep finalCallback={this.setSendIsActive.bind(this, false)}>
           <SendWritable/>
@@ -43,5 +45,5 @@ class Send extends React.Component {
   }
 }
 
-export default Send;
+export default translate()(Send);
 
