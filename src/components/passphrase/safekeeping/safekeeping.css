@@ -96,22 +96,22 @@
       position: relative;
     }
 
-    & .input {
+    & textarea {
+      width: 100%;
+      height: 80px;
       background: transparent;
       padding: 0;
-
-      & input,
-      & textarea {
-        text-shadow: 0px 0px 15px rgba(0, 0, 0, 1);
-        color: rgba(0, 0, 0, 0);
-        font-size: 26px;
-        line-height: 80px;
-        height: 80px;
-        border: none;
-        word-spacing: 10px;
-        text-align: center;
-        resize: none;
-      }
+      text-shadow: 0px 0px 15px rgba(0, 0, 0, 1);
+      color: rgba(0, 0, 0, 0);
+      font-size: 26px;
+      line-height: 80px;
+      border: none;
+      word-spacing: 10px;
+      text-align: center;
+      resize: none;
+      outline: none !important;
+      transition: all ease 400ms;
+      transition-delay: 300ms;
     }
 
     & section.actionBar {
@@ -146,14 +146,10 @@
       display: none !important;
     }
 
-    & .input {
+    & textarea {
       background: #f1f1f1;
-
-      & input,
-      & textarea {
-        color: #000 !important;
-        text-shadow: none !important;
-      }
+      color: #000 !important;
+      text-shadow: none !important;
     }
 
     & section.actionBar {
