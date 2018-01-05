@@ -37,6 +37,10 @@
     min-height: calc(100vh - var(--m-menu-bar-height) - var(--m-menu-bar-height: 62px)); /* stylelint-disable-line */
     background-color: var(--color-grayscale-mobile-background);
     box-shadow: unset;
+
+    & footer {
+      padding-bottom: 70px;
+    }
   }
 }
 
@@ -46,7 +50,7 @@
 
     & footer {
       position: relative;
-      padding: 20px 0;
+      padding: 20px 0 40px;
     }
   }
 }
