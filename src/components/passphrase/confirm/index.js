@@ -14,20 +14,43 @@ class Confirm extends React.Component {
       numberOfOptions: 3,
       words: [],
       missing: [],
-      answers: [],
+      answers: new Array(2),
+      trials: 0,
+      showError: false,
+      formStatus: styles.clean,
     };
   }
 
   componentDidMount() {
     // this.props.randomIndex is used in unit teasing
-    this.hideRandomWord.call(this);
+    this.resetForm.call(this);
     this.address = this.getAddress();
   }
 
-  componentDidUpdate() {
-    const status = this.formStatus(this.state.answers);
-    if (this.state.step === 'verify' && status.filled && status.valid) {
-      this.next();
+  componentWillUnmount() {
+    clearTimeout(this.timeout);
+  }
+
+  updateState(answers) {
+    switch (this.formStatus(answers)) {
+      case 'valid':
+        this.setState({
+          formStatus: styles.valid,
+          answers,
+        });
+        this.next();
+        break;
+      case 'invalid':
+        this.setState({ formStatus: styles.invalid });
+        this.timeout = setTimeout(() => {
+          this.resetForm.call(this);
+        }, 800);
+        break;
+      case 'out of trials':
+        this.setState({ formStatus: styles.outOfTrials, answers });
+        break;
+      default:
+        this.setState({ answers });
     }
   }
 
@@ -39,29 +62,31 @@ class Confirm extends React.Component {
       validity: e.nativeEvent.target.value === this.state.words[this.state.missing[index]],
     };
 
-    const formValidity = this.formStatus(answers).valid;
-    this.setState({ answers, formValidity });
+    this.updateState(answers);
   }
 
   // eslint-disable-next-line class-methods-use-this
   formStatus(answers) {
-    const formStatus = answers.reduce((status, answer) =>
-      // eslint-disable-next-line eqeqeq
-      ({
-        valid: (status.valid && answer instanceof Object && answer.validity === true),
-        filled: answer instanceof Object ? status.filled + 1 : status.filled,
-      }), { valid: true, filled: 0 });
-    formStatus.filled = formStatus.filled === this.state.missing.length;
-    return formStatus;
+    // eslint-disable-next-line eqeqeq
+    if (!answers.reduce((acc, current) => (acc && current != undefined), true)) {
+      return 'not filled';
+    }
+    if (answers.reduce((acc, current) => (acc && current && current.validity), true)) {
+      return 'valid';
+    }
+    if (this.state.trials < 3) {
+      return 'invalid';
+    }
+    return 'out of trials';
   }
 
   next() {
     setTimeout(() => {
       this.setState({ step: 'done' });
-    }, 500);
+    }, 800);
   }
 
-  hideRandomWord() {
+  resetForm() {
     const words = this.props.passphrase.match(/\w+/g);
     const indexByRand = num => Math.floor(num * (words.length - 1));
 
@@ -102,6 +127,9 @@ class Confirm extends React.Component {
       words,
       missing,
       wordOptions,
+      formStatus: styles.clean,
+      answers: new Array(2),
+      trials: this.state.trials + 1,
     });
   }
 
@@ -152,8 +180,9 @@ class Confirm extends React.Component {
 
   render() {
     let missingWordIndex = -1;
-    const { missing, words, wordOptions, step, answers } = this.state;
-    const formStatus = this.formStatus(answers);
+    const { missing, words, wordOptions, step } = this.state;
+    const errorTitleVisibility = (this.state.formStatus === styles.outOfTrials ||
+      this.state.formStatus === styles.invalid) ? styles.visible : '';
 
     return (
       <section className={`passphrase-verifier ${styles.verifier} ${styles[step]}`}>
@@ -165,16 +194,14 @@ class Confirm extends React.Component {
             <TransitionWrapper current={this.state.step} step='done'>
               <h2 className={styles.done}>{this.props.t('Awesome! You’re all set.')}</h2>
             </TransitionWrapper>
-            <TransitionWrapper current={this.state.step} step='verify'>
-              <h5 className={`${styles.verify} ${(formStatus.filled && !formStatus.valid) ? styles.visible : ''}`}>
-                {this.props.t('Please go back and check your passphrase again.')}
-              </h5>
-            </TransitionWrapper>
+            <h5 className={`${styles.verify} ${errorTitleVisibility}`}>
+              {this.props.t('Please go back and check your passphrase again.')}
+            </h5>
           </div>
         </header>
         <section className={`${styles.table} ${styles.verify}`}>
           <div className={styles.tableCell}>
-            <form className={`passphrase-holder ${(formStatus.filled && formStatus.valid) ? styles.validForm : ''}`}>
+            <form className={`passphrase-holder ${this.state.formStatus}`}>
               {
                 wordOptions ?
                   words.map((word, index) => {
@@ -190,11 +217,12 @@ class Confirm extends React.Component {
                             <div key={wd}>
                               <input
                                 name={`answer${missingWordIndex}`}
+                                className={styles.option}
                                 answer={missingWordIndex}
                                 type='radio' value={wd}
                                 id={wd}
                                 onChange={this.onWordSelected.bind(this)} />
-                              <label htmlFor={wd}>{wd}</label>
+                              <label className={styles.option} htmlFor={wd}>{wd}</label>
                             </div>)
                         }
                       </fieldset>
@@ -214,7 +242,7 @@ class Confirm extends React.Component {
               theme={styles}
               label={this.props.t('Get to your Dashboard')}
               className="get-to-your-dashboard-button"
-              onClick={() => this.props.finalCallback({ passphrase: words.join(' ') })}
+              onClick={() => this.props.finalCallback(words.join(' '))}
             />
           </div>
         </section>
