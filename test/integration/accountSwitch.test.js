@@ -90,7 +90,7 @@ describe('@integration: Account switch', () => {
   };
 
   describe('Scenario: should allow to remove a saved account', () => {
-    step('Given I\'m on "account switcher" with accounts: "gensis,delegate,empty account"', setupStep);
+    step('Given I\'m on "account switcher" with accounts: "genesis,delegate,empty account"', setupStep);
     step('Then I should see 3 instances of "saved account card"', shouldSeeCountInstancesOf.bind(null, 3, 'saved account card'));
     step('When I click "edit button"', clickStep.bind(null, 'edit button'));
     step('When I click "remove button"', clickStep.bind(null, 'remove button'));
@@ -99,7 +99,7 @@ describe('@integration: Account switch', () => {
   });
 
   describe('Scenario: should allow to switch account', () => {
-    step('Given I\'m on "account switcher" with accounts: "gensis,delegate,empty account"', setupStep);
+    step('Given I\'m on "account switcher" with accounts: "genesis,delegate,empty account"', setupStep);
     step('When I click "saved account card"', clickStep.bind(null, 'saved account card'));
     step('Then I should be logged in as "genesis" account', shouldBeLoggedInAs.bind(null, 'genesis'));
   });

@@ -16,7 +16,7 @@ const loginMiddleware = store => next => (action) => {
 
   const { passphrase } = action.data;
   const publicKey = passphrase ? extractPublicKey(passphrase) : action.data.publicKey;
-  const address = extractAddress(passphrase);
+  const address = extractAddress(publicKey);
   const accountBasics = {
     passphrase,
     publicKey,
