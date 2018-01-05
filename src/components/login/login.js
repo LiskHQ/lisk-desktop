@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Dropdown from 'react-toolbox/lib/dropdown';
 import i18next from 'i18next';
@@ -15,7 +16,6 @@ import networks from '../../constants/networks';
 import getNetwork from '../../utils/getNetwork';
 import { parseSearchParams } from './../../utils/searchParams';
 import LanguageDropdown from '../languageDropdown';
-import RelativeLink from '../relativeLink';
 import Box from '../box';
 // eslint-disable-next-line import/no-unresolved
 import * as shapes from '../../assets/images/*.svg';
@@ -249,9 +249,9 @@ class Login extends React.Component {
           <section className={styles.table}>
             <div className={`${styles.tableCell} text-left`}>
               <h2>
-                <RelativeLink to='register' className='new-account-button'>
+                <Link className='new-account-button' to='/register'>
                   {this.props.t('Get Access')}
-                </RelativeLink>
+                </Link>
                 <FontIcon className={styles.singUpArrow} value='arrow-right' />
               </h2>
 
