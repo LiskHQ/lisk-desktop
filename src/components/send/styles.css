@@ -12,14 +12,14 @@
 @media (--medium-viewport) {
   .send {
     position: fixed;
-    bottom: -100vh; /* stylelint-disable-line */
+    top: 100vh; /* stylelint-disable-line */
     right: 0;
-    height: calc(100vh - var(--m-top-bar-height)); /* stylelint-disable-line */
-    transition: bottom 300ms ease-in-out;
+    height: 100vh; /* stylelint-disable-line */
+    transition: top 300ms ease-in-out;
     z-index: 10;
 
     &.isActive {
-      bottom: 0;
+      top: var(--m-top-bar-height);
     }
   }
 
@@ -57,7 +57,11 @@
 
 @media (--small-viewport) {
   .send {
-    height: calc(100vh - var(--s-top-bar-height)); /* stylelint-disable-line */
+    height: 100vh; /* stylelint-disable-line */
+
+    &.isActive {
+      top: var(--s-top-bar-height);
+    }
   }
 
   .mobileMenuItem {
