@@ -33,7 +33,7 @@ class Send extends React.Component {
         <span className={styles.mobileClose} onClick={this.setSendIsActive.bind(this, false)}>
           {('Close')} <FontIcon value='close' />
         </span>
-        <MultiStep>
+        <MultiStep finalCallback={this.setSendIsActive.bind(this, false)}>
           <SendWritable/>
           <SendReadable />
           <ResultBox />
