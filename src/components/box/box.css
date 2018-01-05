@@ -1,4 +1,4 @@
-@import '../app//variables.css';
+@import '../app/variables.css';
 
 .wrapper {
   position: relative;
@@ -32,7 +32,6 @@
 
 @media (--medium-viewport) {
   .wrapper {
-    height: auto;
     min-height: calc(100vh - var(--m-menu-bar-height) - var(--m-menu-bar-height: 62px)); /* stylelint-disable-line */
     background-color: var(--color-grayscale-mobile-background);
     box-shadow: unset;
