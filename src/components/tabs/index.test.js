@@ -1,13 +1,13 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import TabsHOC from './index';
 
-describe('LoginHOC', () => {
+describe('TabsHOC', () => {
   // Mocking store
   const peers = {
     status: {
@@ -42,7 +42,7 @@ describe('LoginHOC', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<Router><TabsHOC store={store}/></Router>, options);
+    wrapper = mount(<MemoryRouter><TabsHOC store={store}/></MemoryRouter>, options);
   });
 
   it('should mount Tabs', () => {
