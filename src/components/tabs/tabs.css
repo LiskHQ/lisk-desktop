@@ -48,6 +48,7 @@
 .drawer {
   width: 480px;
   background: #fff;
+  max-width: 100%;
 }
 
 .header {
@@ -157,66 +158,4 @@
 .readMoreIcon {
   font-size: 65px;
   width: 100%;
-}
-
-.carousel {
-  background: var(--setting-menu-color);
-  color: #fff;
-  height: 200px;
-  text-align: center;
-}
-
-.carouselNav {
-  display: block;
-  width: 100%;
-  margin: 5px 0;
-  text-align: center;
-  list-style: none;
-  padding: 0;
-
-  & li {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    opacity: 0.3;
-    margin: 4px;
-    border-radius: 100%;
-    background: #3c506b;
-    cursor: pointer;
-  }
-}
-
-.activeSlide {
-  opacity: 1 !important;
-}
-
-.sliderInput {
-  & input[type='radio'],
-  & input[type='checkbox'] {
-    &:checked + label {
-      & .button {
-        left: calc(100% - 48px);
-      }
-    }
-  }
-
-  & label {
-    height: 48px;
-    line-height: 48px;
-    width: 93px;
-    background: #3c506b;
-    display: inline-block;
-  }
-
-  & span.circle {
-    position: absolute;
-    width: 48px;
-    height: 48px;
-    background: #001a3e;
-
-    & span {
-      width: 100%;
-      line-height: 48px !important;
-    }
-  }
 }
