@@ -48,3 +48,9 @@
     margin-top: 40px;
   }
 }
+
+@media (--xSmall-viewport) {
+  .okButton {
+    width: 100%;
+  }
+}

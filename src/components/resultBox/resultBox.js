@@ -30,7 +30,7 @@ class ResultBox extends React.Component {
         }
 
         <footer>
-          <Button className='okay-button' onClick={() => { this.props.callback(); this.props.finalCallback(); } }>{this.props.t('Okay')}</Button>
+          <Button className={`okay-button ${styles.okButton}`} onClick={() => { this.props.callback(); this.props.finalCallback(); } }>{this.props.t('Okay')}</Button>
           <div className='subTitle'>{this.props.subTitle}</div>
         </footer>
       </div>
