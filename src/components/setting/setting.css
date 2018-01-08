@@ -6,6 +6,7 @@
   --secondPassphrase-color: var(--color-primary-dark);
   --carousel-nav-background-color: #3c506b;
   --slide-header-font: var(--heading-font);
+  --secured-account-color: var(--color-success-dark);
 }
 
 .carousel {
@@ -83,6 +84,11 @@
     height: 48px;
     background: #001a3e;
 
+    &.goal,
+    &.begin {
+      background: transparent;
+    }
+
     & span {
       width: 100%;
       line-height: 48px !important;
@@ -102,4 +108,9 @@
   position: relative;
   cursor: pointer;
   text-decoration: none;
+}
+
+.secured {
+  margin-top: -5px;
+  color: var(--secured-account-color);
 }

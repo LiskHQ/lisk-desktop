@@ -3,6 +3,8 @@ import ReactSwipe from 'react-swipe';
 import styles from './setting.css';
 import SliderCheckbox from '../toolbox/checkbox';
 import RelativeLink from '../relativeLink';
+import i18n from '../../i18n';
+import { FontIcon } from '../fontIcon';
 
 class Setting extends React.Component {
   constructor() {
@@ -13,13 +15,23 @@ class Setting extends React.Component {
   }
 
   changeSlide(i) {
+    this.reactSwipe.slide(i);
     this.setState({
       activeSlide: i,
     });
   }
 
+  changeLanguage(e) {//eslint-disable-line
+    if (e.checked) {
+      i18n.changeLanguage('de');
+    } else {
+      i18n.changeLanguage('en');
+    }
+  }
+
   render() {
-    const { t } = this.props;
+    this.language = (i18n.language === 'de');
+    const { t, hasSecondPassphrase } = this.props;
     return <footer>
       <ReactSwipe
         className={styles.carousel}
@@ -33,14 +45,13 @@ class Setting extends React.Component {
           <SliderCheckbox
             theme={styles}
             className={`${styles.smallSlider}`}
-            onChange={e => console.log(e.checked)}
             clickable={true}
             input={{
               value: true,
               checked: true,
             }}/>
           <article>
-            <h5>{t('Auto-Lock')}</h5>
+            <h5>{i18n.language} - {t('Auto-Lock')}</h5>
             <p>{t('Lock ID’s automatically after 10 minutes.')}</p>
           </article>
         </div>
@@ -48,7 +59,6 @@ class Setting extends React.Component {
           <SliderCheckbox
             theme={styles}
             className={`${styles.smallSlider}`}
-            onChange={e => console.log(e.checked)}
             clickable={true}
             input={{
               value: true,
@@ -59,23 +69,52 @@ class Setting extends React.Component {
           </article>
         </div>
         <div>
-          <RelativeLink
-            className={`register-second-passphrase ${styles.secondPassphrase}`}
-            to='register-second-passphrase'>
-            {t('Add')}
-          </RelativeLink>
+          <SliderCheckbox
+            theme={styles}
+            className={`${styles.smallSlider} language-switcher`}
+            onChange={this.changeLanguage.bind(this)}
+            clickable={true}
+            textAsIcon={true}
+            icons={{
+              start: 'EN',
+              done: 'DE',
+              goal: 'DE',
+              begin: 'EN',
+            }}
+            input={{
+              value: 'true',
+              checked: this.language,
+            }}/>
+          <article>
+            <h5>{t('Language')}</h5>
+            <p>{t('Currently we speaking english and german.')}</p>
+          </article>
+        </div>
+        <div>
+          {!hasSecondPassphrase ?
+            <RelativeLink
+              className={`register-second-passphrase ${styles.secondPassphrase}`}
+              to='register-second-passphrase'>
+              {t('Add')}
+            </RelativeLink> :
+            <span
+              className={`register-second-passphrase ${styles.secondPassphrase}`}>
+              <FontIcon className={styles.secured}>checkmark</FontIcon>
+              Secured
+            </span>
+          }
           <article>
             <h5>{t('Security')}</h5>
             <p>{t('Register 2nd passphrase')}</p>
           </article>
         </div>
       </ReactSwipe>
-      <ul className={ styles.carouselNav }>
-        {[...Array(3)].map((x, i) =>
+      <ul className={ styles.carouselNav } id='carouselNav'>
+        {[...Array(4)].map((x, i) =>
           <li
             key={i}
             className={(i === this.state.activeSlide) ? styles.activeSlide : ''}
-            onClick={() => this.reactSwipe.slide(i)}>
+            onClick={this.changeSlide.bind(this, i)}>
           </li>,
         )}
       </ul>
