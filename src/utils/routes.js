@@ -5,6 +5,11 @@ export default [
     params: 'dialog',
     name: 'account-visual-demo',
   }, {
+    regex: /\/main\/dashboard(?:\/[^/]*)?$/,
+    path: '/main/dashboard/',
+    params: 'dialog',
+    name: 'dashboard',
+  }, {
     regex: /\/main\/transactions(?:\/[^/]*)?$/,
     path: '/main/transactions/',
     params: 'dialog',

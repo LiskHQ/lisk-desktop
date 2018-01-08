@@ -1,0 +1,67 @@
+@import '../app/variables';
+
+.wrapper {
+  width: 100%;
+}
+
+.seeAllLink {
+  font-size: 16px;
+  color: var(--color-primary-standard);
+  margin-left: 40px;
+  text-decoration: none;
+  font-family: var(--content-font);
+  font-weight: 400;
+}
+
+.send {
+  position: relative;
+}
+
+.graph {
+  height: calc(70% - 20px);
+  margin-bottom: 20px;
+}
+
+.latestActivity {
+  height: 30%;
+  margin: 0px;
+
+  & h2 {
+    margin: 40px 32px 20px;
+    font-size: 28px;
+  }
+}
+
+@media (--medium-viewport) {
+  .wrapper {
+    width: calc(100% + 16px);
+  }
+
+  .sendWrapper {
+    display: none;
+  }
+
+  .graph {
+    height: 30%;
+    min-height: auto;
+    margin-bottom: 0;
+  }
+
+  .latestActivity {
+    height: auto;
+  }
+}
+
+@media (--small-viewport) {
+  .latestActivity {
+    & h2 {
+      font-size: 24px;
+    }
+  }
+
+  .seeAllLink {
+    display: block;
+    margin-top: 16px;
+    margin-left: 0;
+  }
+}

@@ -47,11 +47,11 @@ class Tabs extends React.Component {
     const tabs = [
       {
         label: t('Dashboard'),
-        id: 'transactions',
+        id: 'dashboard',
         image: menuLogos.dashboard,
       }, {
         label: t('Wallet'),
-        id: 'wallet',
+        id: 'transactions',
         image: menuLogos.wallet,
       }, {
         label: t('Buy Lisk'),

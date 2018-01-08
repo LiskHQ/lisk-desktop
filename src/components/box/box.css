@@ -1,4 +1,4 @@
-@import '../app//variables.css';
+@import '../app/variables.css';
 
 .wrapper {
   position: relative;
@@ -12,6 +12,8 @@
   max-height: 100%;
   flex-direction: column;
   overflow: auto;
+  overflow-x: hidden;
+  margin: 0px;
 
   & footer {
     position: absolute;
@@ -32,7 +34,6 @@
 
 @media (--medium-viewport) {
   .wrapper {
-    height: auto;
     min-height: calc(100vh - var(--m-menu-bar-height) - var(--m-menu-bar-height: 62px)); /* stylelint-disable-line */
     background-color: var(--color-grayscale-mobile-background);
     box-shadow: unset;

@@ -15,7 +15,7 @@ import styles from './register.css';
 class Register extends React.Component {
   componentDidUpdate() {
     if (this.props.account.passphrase !== undefined) {
-      this.props.history.push('/main/transactions');
+      this.props.history.push('/main/dashboard');
     }
   }
 

@@ -89,7 +89,7 @@ describe('SavedAccounts', () => {
   it('should call props.accountSwitched on the "saved account card" click', () => {
     wrapper.find('.saved-account-card').at(1).simulate('click');
     expect(props.accountSwitched).to.have.been.calledWith(savedAccounts[1]);
-    expect(props.history.push).to.have.been.calledWith('/main/transactions/');
+    expect(props.history.push).to.have.been.calledWith('/main/dashboard/');
   });
 
   it('should not call props.accountSwitched on the "saved account card" click if in "edit" mode', () => {

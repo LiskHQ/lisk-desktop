@@ -75,3 +75,21 @@ body {
     margin-top: var(--s-top-bar-height);
   }
 }
+
+@media (--xLarge-viewport) {
+  body {
+    font-size: 16px;
+  }
+}
+
+@media (--large-viewport) {
+  body {
+    font-size: 15px;
+  }
+}
+
+@media (--xSmall-viewport) {
+  body {
+    font-size: 14px;
+  }
+}
