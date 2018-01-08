@@ -38,6 +38,6 @@ Feature: Login page
     And I swipe "reveal checkbox" to right
     And I wait 0.5 seconds
     And I remember passphrase, click "yes its safe button", choose missing words
-    And I wait 0.5 seconds
+    And I wait 1 seconds
     And I click "get to your dashboard button"
     Then I should be logged in

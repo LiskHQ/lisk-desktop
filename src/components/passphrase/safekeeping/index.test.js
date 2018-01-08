@@ -46,8 +46,8 @@ describe('Passphrase: Safekeeping', () => {
     expect(wrapper.find('SliderCheckbox')).to.have.lengthOf(2);
   });
 
-  it('renders an Input to show the passphrase in', () => {
-    expect(wrapper.find('Input')).to.have.lengthOf(1);
+  it('renders a textarea element to show the passphrase in', () => {
+    expect(wrapper.find('textarea')).to.have.lengthOf(1);
   });
 
   it('renders an ActionBar component', () => {

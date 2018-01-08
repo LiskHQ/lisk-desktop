@@ -51,6 +51,9 @@ export const extractPublicKey = passphrase =>
  * @param {String} data - passphrase or public key
  */
 export const extractAddress = (data) => {
+  if (!data) {
+    return false;
+  }
   if (data.indexOf(' ') < 0) {
     return Lisk.crypto.getAddress(data);
   }

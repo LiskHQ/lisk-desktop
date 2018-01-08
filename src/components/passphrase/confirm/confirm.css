@@ -90,35 +90,53 @@
       display: block;
     }
 
-    & div {
-      & label {
-        display: block;
-        border: solid 2px var(--color-primary-standard);
-        border-radius: 3px;
-        padding: 0 5px;
-        line-height: 50px;
-        font-size: 22px;
-        margin: 8px 0;
-        cursor: pointer;
-        transition: all ease 200ms;
-      }
+    & label.option {
+      display: block;
+      color: var(--color-primary-standard);
+      border: solid 2px var(--color-primary-standard);
+      border-radius: 3px;
+      padding: 0 15px;
+      line-height: 50px;
+      font-size: 22px;
+      margin: 8px 0;
+      cursor: pointer;
+      transition: all ease 200ms;
+    }
 
-      & input {
-        visibility: hidden;
-        position: absolute;
-
-        &:checked + label {
-          background-color: var(--color-primary-standard);
-          color: var(--color-white);
-        }
-      }
+    & input.option {
+      visibility: hidden;
+      position: absolute;
     }
   }
 
-  & .validForm {
+  & .clean {
+    & input:checked + label {
+      background-color: var(--color-primary-standard);
+      color: var(--color-white);
+    }
+  }
+
+  & .invalid {
+    & input:checked + label {
+      background-color: var(--color-action-dark);
+      border-color: var(--color-action-dark);
+      color: var(--color-white);
+    }
+  }
+
+  & .outOfTrials {
+    & input + label {
+      opacity: 0.2;
+      cursor: auto;
+      pointer-events: none;
+    }
+  }
+
+  & .valid {
     & input:checked + label {
       background-color: var(--color-success-dark);
       border-color: var(--color-success-dark);
+      color: var(--color-white);
     }
   }
 
@@ -129,11 +147,15 @@
 
     & h5 {
       visibility: hidden;
+      opacity: 0;
       font-size: 18px;
       color: var(--color-error);
+      transition: all ease 500ms;
 
       &.visible {
         visibility: visible;
+        opacity: 1;
+        transition-delay: 500ms;
       }
     }
   }

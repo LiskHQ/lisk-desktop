@@ -1,5 +1,4 @@
 import React from 'react';
-import Input from '../../toolbox/inputs/input';
 import ActionBar from '../../actionBar';
 import styles from './safekeeping.css';
 import SliderCheckbox from '../../toolbox/checkbox';
@@ -86,9 +85,9 @@ class SafeKeeping extends React.Component {
                   value: 'revealing-step',
                 }}/>
             </TransitionWrapper>
-            <Input type='text' multiline autoFocus={true}
+            <textarea type='text' autoFocus={true}
               className={`${styles.input} passphrase`}
-              value={passphrase} />
+              defaultValue={passphrase}></textarea>
             <ActionBar
               className={styles.actionBar}
               secondaryButton={{
