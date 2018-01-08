@@ -69,11 +69,11 @@ class SliderCheckbox extends React.Component {
   }
 
   render() {
-    const { label, input, className, hasSlidingArrows, theme, clickable } = this.props;
+    const { label, input, className, hasSlidingArrows, theme, clickable, textAsIcon } = this.props;
     const icons = this.props.icons ? this.props.icons : {};
     return (<div className={`${theme.sliderInput} ${className}`}>
       <input type='checkbox' value={input.value} checked={input.checked}
-        ref={(el) => { this.input = el; }}/>
+        ref={(el) => { this.input = el; }} onChange={this.change.bind(this)}/>
       <label ref={(el) => { this.parent = el; }}
         onMouseDown={this.startTracking.bind(this)}
         onMouseMove={this.track.bind(this)}
@@ -84,22 +84,53 @@ class SliderCheckbox extends React.Component {
             this.change.bind(this) :
             null
           }
-          className={`${theme.circle} ${theme.button}`}
+          className={`${theme.circle} ${theme.button} circle`}
           ref={(el) => { this.shape = el; }}>
-          <FontIcon className={`${theme.icon} ${theme.arrowRight}`}>
-            {icons.start || 'arrow-right'}
-          </FontIcon>
-          <FontIcon className={`${theme.icon} ${theme.checkMark}`}>
-            {icons.done || 'checkmark'}
-          </FontIcon>
+          <span className={theme.arrowRight}>
+            {textAsIcon ?
+              <span className={theme.text}>{icons.start}</span> :
+              <FontIcon className={theme.icon}>
+                {icons.start || 'arrow-right'}
+              </FontIcon>
+            }
+          </span>
+
+          <span className={theme.checkMark}>
+            {textAsIcon ?
+              <span className={theme.text}>{icons.done}</span> :
+              <FontIcon className={theme.icon}>
+                {icons.done || 'checkmark'}
+              </FontIcon>
+            }
+          </span>
         </span>
         {label ? <div className={hasSlidingArrows ? theme.hasArrows : ''}>
           <span>{label}</span>
         </div> : ''}
         {
+          typeof icons.begin === 'string' ?
+            <span
+              onClick= {clickable ?
+                this.change.bind(this) :
+                null
+              }
+              className={`${theme.circle} ${theme.begin}`}>
+              {textAsIcon ? icons.goal :
+                <FontIcon className={`${theme.icon} ${theme.arrowRight}`}>{icons.goal}</FontIcon>
+              }
+            </span> : null
+        }
+        {
           typeof icons.goal === 'string' ?
-            <span className={`${theme.circle} ${theme.lock}`}>
-              <FontIcon className={`${theme.icon} ${theme.arrowRight}`}>{icons.goal}</FontIcon>
+            <span
+              onClick= {clickable ?
+                this.change.bind(this) :
+                null
+              }
+              className={`${theme.circle} ${theme.goal}`}>
+              {textAsIcon ? icons.goal :
+                <FontIcon className={`${theme.icon} ${theme.arrowRight}`}>{icons.goal}</FontIcon>
+              }
             </span> : null
         }
       </label>
