@@ -59,4 +59,8 @@
   .inputTypeToggle {
     top: -40px;
   }
+
+  .wrapper {
+    margin-top: 50px;
+  }
 }
