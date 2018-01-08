@@ -128,17 +128,17 @@ class SendReadable extends React.Component {
         </div>
         <form onSubmit={this.send.bind(this)}>
           <Input label={this.props.t('Send to Address')}
-            className='recipient'
+            className={`recipient ${styles.disabledInput}`}
             value={this.props.recipient}
             onChange={this.handleChange.bind(this, 'recipient')}
-            readOnly='true'
+            disabled={true}
           />
 
           <Input label={this.props.t('Total incl. 0.1 LSK Fee')}
-            className='amount'
+            className={`amount ${styles.disabledInput}`}
             error={this.state.amount.error}
             value={this.addAmountAndFee()}
-            readOnly='true'
+            disabled={true}
             theme={styles}
             onChange={this.handleChange.bind(this, 'amount')} />
           <AuthInputs

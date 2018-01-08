@@ -82,7 +82,7 @@ class SendWritable extends React.Component {
         <form>
           <Input label={this.props.t('Send to Address')}
             className='recipient'
-            autoFocus={true}
+            autoFocus={this.props.autoFocus}
             error={this.state.recipient.error}
             value={this.state.recipient.value}
             onChange={this.handleChange.bind(this, 'recipient')}

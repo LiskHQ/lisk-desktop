@@ -122,6 +122,10 @@ input:read-only {
   display: none;
 }
 
+.disabledInput input:disabled {
+  opacity: 1;
+}
+
 @media (--small-viewport) {
   .headerWrapper {
     display: none;
