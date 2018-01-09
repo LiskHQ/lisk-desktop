@@ -5,29 +5,17 @@ import { MemoryRouter } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n';
-import TabsHOC from './index';
+import SettingHOC from './index';
 
-describe('TabsHOC', () => {
+describe('SettingHOC', () => {
   // Mocking store
-  const peers = {
-    status: {
-      online: false,
-    },
-    data: {
-      currentPeer: 'localhost',
-      port: 4000,
-      options: {
-        name: 'Custom Node',
-      },
-    },
-  };
   const account = {
     isDelegate: false,
     address: '16313739661670634666L',
     username: 'lisk-nano',
+    secondSignature: 1,
   };
   const store = configureMockStore([])({
-    peers,
     account,
     activePeerSet: () => {},
   });
@@ -42,14 +30,10 @@ describe('TabsHOC', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<MemoryRouter><TabsHOC store={store}/></MemoryRouter>, options);
+    wrapper = mount(<MemoryRouter><SettingHOC store={store}/></MemoryRouter>, options);
   });
 
-  it('should mount Tabs', () => {
-    expect(wrapper.find('Tabs')).to.have.lengthOf(2);
-  });
-
-  it('should mount 7 Tab inside Tabs', () => {
-    expect(wrapper.find('Tab')).to.have.lengthOf(6);
+  it('should mount Setting', () => {
+    expect(wrapper.find('Setting')).to.have.lengthOf(1);
   });
 });

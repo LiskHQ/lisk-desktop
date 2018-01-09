@@ -7,6 +7,7 @@
   --element-width: 100%;
   --element-height: 62px;
   --label-font-size: 16px;
+  --icon-text-font: var(--heading-font);
 }
 
 .sliderInput {
@@ -90,11 +91,16 @@
     border-radius: calc(var(--element-height) / 2);
     top: 0;
     transition: all ease 300ms;
+    background: var(--action-button-bg);
+
+    & .text {
+      font-size: var(--label-font-size);
+      font-family: var(--icon-text-font);
+    }
 
     &.button {
       left: 0;
       z-index: 3;
-      background: var(--action-button-bg);
 
       &[style] {
         cursor: grabbing;
@@ -106,28 +112,35 @@
       }
     }
 
-    &.lock {
+    &.goal {
       background: var(--secondary-button-bg);
       right: 0;
       z-index: 2;
+      font-family: var(--icon-text-font);
     }
 
-    & i {
+    &.begin {
+      background: var(--secondary-button-bg);
+      left: 0;
+      z-index: 2;
+      font-family: var(--icon-text-font);
+    }
+
+    & span {
       width: 100%;
       line-height: var(--element-height) !important;
       position: absolute;
       left: 0;
       top: 0;
       transition: all ease 300ms;
+      font-size: 30px;
 
       &.checkMark {
         opacity: 0;
-        font-size: 40px;
       }
 
       &.arrowRight {
         opacity: 1;
-        font-size: 48px;
       }
     }
   }
@@ -141,11 +154,11 @@
       & .button {
         left: calc(100% - var(--element-height));
 
-        & i.checkMark {
+        & .checkMark {
           opacity: 1;
         }
 
-        & i.arrowRight {
+        & .arrowRight {
           opacity: 0;
         }
       }

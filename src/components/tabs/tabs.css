@@ -54,6 +54,22 @@
 .drawer {
   width: 480px;
   background: #fff;
+  max-width: 100%;
+
+  &.left {
+    border-right: none;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: #74869b;
+  }
+}
+
+@media (max-height: 920px) {
+  .drawer.left {
+    display: block;
+  }
 }
 
 .header {
@@ -62,6 +78,7 @@
   display: flex;
   justify-content: space-between;
   padding: 0 40px 0 60px;
+  background: #fff;
 }
 
 .close {
@@ -86,6 +103,7 @@
   text-transform: capitalize;
   border-right: 1px solid var(--offcanvas-menu-border-color);
   border-bottom: 1px solid var(--offcanvas-menu-border-color);
+  background: #fff;
 
   &:nth-child(2n) {
     border-right: none !important;
@@ -137,7 +155,6 @@
   position: relative;
   background: white;
   color: var(--color-black);
-  margin-bottom: -1px;
   opacity: 1;
 
   &::before {
