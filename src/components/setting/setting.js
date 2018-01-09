@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactSwipe from 'react-swipe';
 import styles from './setting.css';
+import languageSwitcherTheme from './languageSwitcher.css';
 import SliderCheckbox from '../toolbox/checkbox';
 import RelativeLink from '../relativeLink';
 import i18n from '../../i18n';
@@ -32,7 +33,7 @@ class Setting extends React.Component {
   render() {
     this.language = (i18n.language === 'de');
     const { t, hasSecondPassphrase } = this.props;
-    return <footer>
+    return <footer className={styles.wrapper}>
       <ReactSwipe
         className={styles.carousel}
         ref={(reactSwipe) => { this.reactSwipe = reactSwipe; }}
@@ -51,7 +52,7 @@ class Setting extends React.Component {
               checked: true,
             }}/>
           <article>
-            <h5>{i18n.language} - {t('Auto-Lock')}</h5>
+            <h5>{t('Auto-Lock')}</h5>
             <p>{t('Lock ID’s automatically after 10 minutes.')}</p>
           </article>
         </div>
@@ -70,7 +71,7 @@ class Setting extends React.Component {
         </div>
         <div>
           <SliderCheckbox
-            theme={styles}
+            theme={languageSwitcherTheme}
             className={`${styles.smallSlider} language-switcher`}
             onChange={this.changeLanguage.bind(this)}
             clickable={true}
@@ -98,9 +99,8 @@ class Setting extends React.Component {
               {t('Add')}
             </RelativeLink> :
             <span
-              className={`register-second-passphrase ${styles.secondPassphrase}`}>
-              <FontIcon className={styles.secured}>checkmark</FontIcon>
-              Secured
+              className={`register-second-passphrase ${styles.secondPassphraseEnabled}`}>
+              <FontIcon>checkmark</FontIcon>
             </span>
           }
           <article>
