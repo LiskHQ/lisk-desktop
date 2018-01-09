@@ -9,6 +9,10 @@
   --secured-account-color: var(--color-success-dark);
 }
 
+.wrapper {
+  position: relative;
+}
+
 .carousel {
   background: var(--setting-background-color);
   color: #fff;
@@ -40,9 +44,9 @@
   text-align: center;
   list-style: none;
   padding: 0;
-  position: relative;
+  position: absolute;
   z-index: 9;
-  margin-top: -50px;
+  bottom: 30px;
 
   & li {
     display: inline-block;
@@ -96,7 +100,8 @@
   }
 }
 
-.secondPassphrase {
+.secondPassphrase,
+.secondPassphraseEnabled {
   height: 48px;
   line-height: 48px;
   width: 93px;
@@ -110,7 +115,8 @@
   text-decoration: none;
 }
 
-.secured {
-  margin-top: -5px;
-  color: var(--secured-account-color);
+.secondPassphraseEnabled {
+  color: var(--secondPassphrase-background-color);
+  background: var(--secondPassphrase-color);
 }
+
