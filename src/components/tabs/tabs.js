@@ -100,22 +100,24 @@ class Tabs extends React.Component {
           className='drawer'
           active={this.state.active}
           onOverlayClick={this.menuToggle.bind(this)}>
-          <header className={styles.header}>
-            <img src={logo} className={styles.logo} />
-            <FontIcon value='close' className={styles.close} onClick={this.menuToggle.bind(this)} />
-          </header>
-          <ToolboxTabs index={getIndex(history, tabs)}
-            theme={styles}
-            onChange={this.navigate.bind(this, history, filterTabs)}
-            disableAnimatedBottomBorder={true}
-            className={`${styles.tabs} main-tabs`}>
-            {filterTabs.map(({ label, image, id }, index) =>
-              <Tab
-                key={index}
-                label={<TabTemplate label={label} img={image} />}
-                id={id}
-                disabled={isCurrent(history, index, tabs)} />)}
-          </ToolboxTabs>
+          <div>
+            <header className={styles.header}>
+              <img src={logo} className={styles.logo} />
+              <FontIcon value='close' className={styles.close} onClick={this.menuToggle.bind(this)} />
+            </header>
+            <ToolboxTabs index={getIndex(history, tabs)}
+              theme={styles}
+              onChange={this.navigate.bind(this, history, filterTabs)}
+              disableAnimatedBottomBorder={true}
+              className={`${styles.tabs} main-tabs`}>
+              {filterTabs.map(({ label, image, id }, index) =>
+                <Tab
+                  key={index}
+                  label={<TabTemplate label={label} img={image} />}
+                  id={id}
+                  disabled={isCurrent(history, index, tabs)} />)}
+            </ToolboxTabs>
+          </div>
           <Setting />
         </Drawer>
       </div>
