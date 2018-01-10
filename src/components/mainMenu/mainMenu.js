@@ -1,5 +1,6 @@
 import React from 'react';
-import { Tab, Tabs as ToolboxTabs, Drawer } from 'react-toolbox';
+import { Tab, Tabs as ToolboxTabs } from 'react-toolbox/lib/tabs';
+import Drawer from 'react-toolbox/lib/drawer';
 import styles from './mainMenu.css';
 import logo from '../../assets/images/Lisk-Logo.svg';
 import * as menuLogos from '../../assets/images/main-menu-icons/*.svg'; //eslint-disable-line
