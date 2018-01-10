@@ -115,7 +115,7 @@ class SliderCheckbox extends React.Component {
                 null
               }
               className={`${theme.circle} ${theme.begin}`}>
-              {textAsIcon ? icons.goal :
+              {textAsIcon ? icons.begin :
                 <FontIcon className={`${theme.icon} ${theme.arrowRight}`}>{icons.goal}</FontIcon>
               }
             </span> : null
