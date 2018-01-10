@@ -1,5 +1,5 @@
 .willTransition {
-  &:not(.fadeIn):not(.fadeOut)&:not(.slideIn):not(.slideOut) {
+  &:not(.fadeIn):not(.fadeOut):not(.slideIn):not(.slideOut) {
     display: none;
   }
 

@@ -1,7 +1,7 @@
 @import '../app/variables.css';
 
 .register {
-  & > section {
+  & > div {
     height: 100%;
     overflow: hidden;
   }

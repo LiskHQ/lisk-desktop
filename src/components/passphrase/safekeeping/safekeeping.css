@@ -24,6 +24,26 @@
   display: none;
 }
 
+.smallSlider {
+  margin: 40px auto;
+  width: 220px !important;
+}
+
+.bigSlider {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 575px !important;
+  transform: translateX(-50%) translateY(calc(-50% - 58px));
+  z-index: 2;
+
+  & label {
+    & i:last-child {
+      font-size: 24px !important;
+    }
+  }
+}
+
 .safekeeping {
   text-align: center;
   height: calc(100% - 22px);
@@ -69,11 +89,6 @@
       & h5 {
         max-width: 500px;
         margin: 0 auto;
-      }
-
-      & .smallSlider {
-        margin: 40px auto;
-        width: 220px;
       }
     }
   }
@@ -121,21 +136,6 @@
 
       & > div {
         margin: 60px auto 0;
-      }
-    }
-
-    & .bigSlider {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 575px !important;
-      transform: translateX(-50%) translateY(calc(-50% - 58px));
-      z-index: 2;
-
-      & label {
-        & i:last-child {
-          font-size: 24px !important;
-        }
       }
     }
   }
