@@ -1,0 +1,23 @@
+@import '../app/variables';
+
+.wrapper {
+  height: calc(70% - 20px);
+
+  & h2 {
+    margin: 40px 32px 20px;
+    font-size: 28px;
+  }
+}
+
+.chartWrapper {
+  height: calc(100% + 50px);
+  width: calc(100% + 50px);
+  margin: 85px -25px -160px;
+}
+
+@media (--medium-viewport) {
+  .chartWrapper {
+    height: calc(100% + 30px);
+    margin: 0 -25px 20px;
+  }
+}

@@ -38,6 +38,7 @@
   "dependencies": {
     "bignumber.js": "4.0.4",
     "bitcore-mnemonic": "1.2.5",
+    "chart.js": "2.7.1",
     "copy-to-clipboard": "3.0.8",
     "electron-localshortcut": "=2.0.2",
     "flexboxgrid": "=6.3.1",
@@ -59,6 +60,7 @@
     "qrcode.react": "0.7.2",
     "react": "=16.0.0",
     "react-animate-on-change": "=1.0.0",
+    "react-chartjs-2": "2.6.4",
     "react-circular-progressbar": "0.2.1",
     "react-copy-to-clipboard": "5.0.1",
     "react-countdown-now": "1.2.0",
