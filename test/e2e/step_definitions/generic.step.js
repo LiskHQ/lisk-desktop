@@ -63,7 +63,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     waitForElemAndClickIt(selector, callback);
   });
 
-  When('I click "{id}" tab', (id, callback) => {
+  When('I click "{id}" menu', (id, callback) => {
     waitForElemAndClickIt(`.main-tabs #${id}`, callback);
   });
 
