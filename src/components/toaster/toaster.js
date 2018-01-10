@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Snackbar } from 'react-toolbox';
+import Snackbar from 'react-toolbox/lib/snackbar';
 import styles from './toaster.css';
 
 class Toaster extends Component {
