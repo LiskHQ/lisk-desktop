@@ -11,7 +11,6 @@ import { extractAddress } from '../../utils/api/account';
 // eslint-disable-next-line import/no-named-as-default
 import PassphraseInput from '../passphraseInput';
 import styles from './login.css';
-import env from '../../constants/env';
 import networks from '../../constants/networks';
 import getNetwork from '../../utils/getNetwork';
 import { parseSearchParams } from './../../utils/searchParams';
@@ -19,7 +18,7 @@ import LanguageDropdown from '../languageDropdown';
 import Box from '../box';
 // eslint-disable-next-line import/no-unresolved
 import * as shapes from '../../assets/images/*.svg';
-import { validateUrl, getLoginData } from '../../utils/login';
+import { validateUrl } from '../../utils/login';
 
 /**
  * The container component containing login
@@ -69,10 +68,6 @@ class Login extends React.Component {
   redirectToReferrer() {
     const tem = this.getReferrerRoute();
     this.props.history.replace(tem);
-    if (this.state.address) {
-      localStorage.setItem('address', this.state.address);
-    }
-    localStorage.setItem('network', this.state.network);
   }
 
   alreadyLoggedWithThisAddress(address, network) {
@@ -130,24 +125,6 @@ class Login extends React.Component {
     });
   }
 
-  devPreFill() {
-    const { networkIndex, address, passphrase } = getLoginData();
-
-    this.setState({
-      network: networkIndex,
-      ...this.validators.address(address),
-      ...this.validators.passphrase(passphrase),
-    });
-
-    // ignore this in coverage as it is hard to test and does not run in production
-    /* istanbul ignore if */
-    if (!env.production && localStorage.getItem('autologin') && !this.props.account.afterLogout && passphrase) {
-      setTimeout(() => {
-        this.onLoginSubmission(passphrase);
-      });
-    }
-  }
-
   onFormSubmit(event) {
     event.preventDefault();
     this.onLoginSubmission(this.state.passphrase);
@@ -169,7 +146,6 @@ class Login extends React.Component {
       });
     } else {
       this.account = 'not-saved';
-      this.devPreFill();
     }
   }
 
