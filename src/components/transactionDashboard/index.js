@@ -1,23 +1,13 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Transactions from './../transactions';
-import SendWritable from '../sendWritable';
-import SendReadable from './../sendReadable';
-import ResultBox from '../resultBox';
-import MultiStep from './../multiStep';
-import Box from '../box';
+import Send from '../send';
 import styles from './styles.css';
 
 const TransactionsDashboard = () => (
   <div className={`${grid.row} ${styles.wrapper}`} >
-    <div className={`${grid['col-xs-0']} ${grid['col-sm-4']}`}>
-      <Box className={`${styles.send}`}>
-        <MultiStep>
-          <SendWritable/>
-          <SendReadable />
-          <ResultBox />
-        </MultiStep>
-      </Box>
+    <div className={`${grid['col-md-4']}`}>
+      <Send />
     </div>
     <div className={`${grid['col-xs-12']} ${styles.transactions} ${grid['col-sm-8']}`}>
       <Transactions></Transactions>

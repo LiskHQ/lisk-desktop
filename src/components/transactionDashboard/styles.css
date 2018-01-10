@@ -3,23 +3,3 @@
 .wrapper {
   min-width: 100%;
 }
-
-.send {
-  position: relative;
-}
-
-@media (--medium-viewport) {
-  .wrapper {
-    margin: 0px;
-  }
-
-  .transactions {
-    padding: 0px;
-  }
-}
-
-@media (--xSmall-viewport) {
-  .send {
-    display: none;
-  }
-}

@@ -114,12 +114,36 @@ input:read-only {
   height: 300px;
 }
 
-.temporaryAvatar {
-  /* values are not saved as variable since this will be deleted anyway */
-  opacity: 0.8;
-  background-image: linear-gradient(90deg, #3023ae 0%, #53a0fd 48%, #b4ec51 100%);
-  height: 150px;
-  width: 150px;
-  border-radius: 100%;
+.accountVisual {
   margin: 13px 0px;
+}
+
+.mobileVisible {
+  display: none;
+}
+
+.disabledInput input:disabled {
+  opacity: 1;
+}
+
+@media (--small-viewport) {
+  .headerWrapper {
+    display: none;
+  }
+
+  .header {
+    height: 60px;
+  }
+
+  .accountVisual {
+    margin: 24px 0;
+  }
+
+  .mobileHidden {
+    display: none;
+  }
+
+  .mobileVisible {
+    display: block;
+  }
 }

@@ -6,11 +6,8 @@ import React from 'react';
 
 import { FontIcon } from '../fontIcon';
 import Box from '../box';
-import MultiStep from './../multiStep';
 import TransactionList from './../transactions/transactionList';
-import SendWritable from '../sendWritable';
-import SendReadable from './../sendReadable';
-import ResultBox from '../resultBox';
+import Send from '../send';
 import styles from './styles.css';
 
 const Dashboard = ({ t, transactions }) => (
@@ -32,13 +29,7 @@ const Dashboard = ({ t, transactions }) => (
       </Box>
     </div>
     <div className={`${grid['col-md-4']} ${styles.sendWrapper}`}>
-      <Box className={`${styles.send}`}>
-        <MultiStep>
-          <SendWritable/>
-          <SendReadable />
-          <ResultBox />
-        </MultiStep>
-      </Box>
+      <Send />
     </div>
   </div>
 );
