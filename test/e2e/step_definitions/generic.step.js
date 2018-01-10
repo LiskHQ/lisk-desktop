@@ -10,13 +10,12 @@ const {
   waitForElemAndSendKeys,
   waitForElem,
   checkAlertDialog,
-  waitTime,
 } = require('../support/util.js');
 const accounts = require('../../constants/accounts.js');
 
 chai.use(chaiAsPromised);
 const expect = chai.expect;
-const EC = protractor.ExpectedConditions;
+// const EC = protractor.ExpectedConditions;
 const defaultTimeout = 10 * 1000;
 
 defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
@@ -73,15 +72,17 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     waitForElemAndClickIt(`.${elementName.replace(/ /g, '-')}`, callback);
   });
 
-  When('I select option no. {index} from "{selectName}" select', (index, selectName, callback) => {
+  const clickOnOptionInList = (index, selectName, callback) => {
     waitForElemAndClickIt(`.${selectName}`);
     browser.sleep(1000);
     const selector = `.${selectName} ul li`;
-    const optionElem = element.all(by.css(selector)).get(index - 1);
-    browser.wait(EC.presenceOf(optionElem), waitTime)
-      .catch(error => console.error(`${error}`)); // eslint-disable-line no-console
-    optionElem.click().then(callback).catch(callback);
-  });
+    // const optionElem = element.all(by.css(selector)).get(index - 1);
+    element.all(by.css(selector)).then((children) => {
+      children[index - 1].click().then(callback).catch(callback);
+    });
+  };
+
+  When('I select option no. {index} from "{selectName}" select', clickOnOptionInList);
 
   Then('the option "{optionText}" is selected in "{selectName}" select', (optionText, selectName, callback) => {
     const elem = element(by.css(`.${selectName} input`));
@@ -155,9 +156,17 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     const passphrase = browser.params.useTestnetPassphrase
       ? browser.params.testnetPassphrase
       : accounts[accountName].passphrase;
-
-    waitForElemAndSendKeys('.passphrase input', passphrase, () => {
-      waitForElemAndClickIt('.login-button', callback);
+    const networkIndex = browser.params.network === 'customNode' ? 3 : 2;
+    clickOnOptionInList(networkIndex, 'network', () => {
+      waitForElemAndSendKeys('.passphrase input', passphrase, () => {
+        if (browser.params.network === 'customNode') {
+          waitForElemAndSendKeys('.address input', browser.params.liskCoreURL, () => {
+            waitForElemAndClickIt('.login-button', callback);
+          });
+        } else {
+          waitForElemAndClickIt('.login-button', callback);
+        }
+      });
     });
   });
 
