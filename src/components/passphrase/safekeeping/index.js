@@ -1,6 +1,7 @@
 import React from 'react';
 import ActionBar from '../../actionBar';
 import styles from './safekeeping.css';
+// eslint-disable-next-line import/no-named-as-default
 import SliderCheckbox from '../../toolbox/checkbox';
 import TransitionWrapper from '../../toolbox/transitionWrapper';
 

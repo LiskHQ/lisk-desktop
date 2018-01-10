@@ -76,6 +76,7 @@ describe('Setting', () => {
   it('should second click on "languageSwitcher" change the language to "en"', () => {
     wrapper.find('.language-switcher .circle').simulate('click');
     wrapper.update();
+    expect(i18n.language).to.be.equal('de');
     wrapper.find('.language-switcher .circle').simulate('click');
     wrapper.update();
     expect(i18n.language).to.be.equal('en');
