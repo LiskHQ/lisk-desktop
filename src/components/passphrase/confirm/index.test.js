@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { spy } from 'sinon';
+import { spy, useFakeTimers } from 'sinon';
 import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
@@ -10,7 +10,7 @@ import i18n from '../../../i18n';
 import accounts from '../../../../test/constants/accounts';
 
 
-describe('Passphrase: Confirm', () => {
+describe.only('Passphrase: Confirm', () => {
   let wrapper;
   const account = accounts.delegate;
   const props = {
@@ -51,10 +51,7 @@ describe('Passphrase: Confirm', () => {
     expect(wrapper.find(PrimaryButton)).to.have.lengthOf(1);
   });
 
-  /**
-   * @todo change simulation doesn't work
-   */
-  it.skip('should disable Next button if answer is incorrect', () => {
+  it('should disable Next button if answer is incorrect', () => {
     // for each fieldset, checks the input if its value doesn't exist in passphrase
     wrapper.find('fieldset').forEach((fieldset) => {
       fieldset.find('input').forEach((input) => {
@@ -69,10 +66,10 @@ describe('Passphrase: Confirm', () => {
     expect(wrapperProps.disabled).to.be.equal(true);
   });
 
-  /**
-   * @todo change simulation doesn't work
-   */
-  it.skip('should enable Next button if answer is correct', () => {
+  it('should enable Next button if answer is correct', () => {
+    const clock = useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
+    });
     // for each fieldset, checks the input if its value exist in passphrase
     wrapper.find('fieldset').forEach((fieldset) => {
       fieldset.find('input').forEach((input) => {
@@ -81,9 +78,11 @@ describe('Passphrase: Confirm', () => {
         }
       });
     });
+    clock.tick(1500);
     wrapper.update();
 
     const wrapperProps = wrapper.find('button.get-to-your-dashboard-button').props();
     expect(wrapperProps.disabled).to.not.be.equal(true);
+    clock.restore();
   });
 });
