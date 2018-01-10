@@ -80,6 +80,16 @@ body {
   body {
     font-size: 16px;
   }
+  .bodyWrapper{
+    & > section {
+      padding-left: calc(var(--sidebar-width-xl) + 24px);
+    }
+
+    & > aside {
+      width: var(--sidebar-width-xl);
+    }
+  }
+    
 }
 
 @media (--large-viewport) {
