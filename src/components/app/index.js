@@ -13,7 +13,7 @@ import styles from './app.css';
 import BackgroundMaker from '../backgroundMaker';
 import Dialog from '../dialog';
 import Toaster from '../toaster';
-import Tabs from '../tabs';
+import MainMenu from '../mainMenu';
 import MenuBar from '../menuBar';
 import LoadingBar from '../loadingBar';
 import OfflineWrapper from '../offlineWrapper';
@@ -24,7 +24,7 @@ const App = () => (
     <BackgroundMaker />
     <main className={`${styles.bodyWrapper}`}>
       <aside>
-        <Tabs />
+        <MainMenu />
       </aside>
       <section>
         <div className={styles.mainBox}>

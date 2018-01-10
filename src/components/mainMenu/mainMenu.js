@@ -1,8 +1,8 @@
 import React from 'react';
 import { Tab, Tabs as ToolboxTabs, Drawer } from 'react-toolbox';
-import styles from './tabs.css';
+import styles from './mainMenu.css';
 import logo from '../../assets/images/Lisk-Logo.svg';
-import * as menuLogos from '../../assets/images/sidebar-icons/*.svg'; //eslint-disable-line
+import * as menuLogos from '../../assets/images/main-menu-icons/*.svg'; //eslint-disable-line
 import { FontIcon } from '../fontIcon';
 import Setting from '../setting';
 
@@ -23,7 +23,7 @@ const TabTemplate = ({ img, label }) => (
 );
 
 
-class Tabs extends React.Component {
+class MainMenu extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -92,7 +92,7 @@ class Tabs extends React.Component {
               id={id}
               disabled={isCurrent(history, index, tabs)} />)}
         </ToolboxTabs>
-        <div onClick={this.menuToggle.bind(this)} id='moreMenu' className={styles.setting}>
+        <div onClick={this.menuToggle.bind(this)} id='moreMenu' className={styles.more}>
           <FontIcon value='more' className={styles.readMoreIcon} />
           <span className={styles.readMoreText}>{t('more')}</span>
         </div>
@@ -125,4 +125,4 @@ class Tabs extends React.Component {
   }
 }
 
-export default Tabs;
+export default MainMenu;

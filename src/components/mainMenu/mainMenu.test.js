@@ -7,10 +7,10 @@ import configureMockStore from 'redux-mock-store';
 import sinon from 'sinon';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n';
-import Tabs from './tabs';
+import MainMenu from './mainMenu';
 
 
-describe('Tabs', () => {
+describe('MainMenu', () => {
   // Mocking store
   const peers = {
     status: {
@@ -67,28 +67,28 @@ describe('Tabs', () => {
 
   it('should render react toolbox Tabs component', () => {
     const wrapper = mount(<MemoryRouter>
-      <Tabs store={store} history={history} t={t} />
+      <MainMenu store={store} history={history} t={t} />
     </MemoryRouter>, options);
     expect(wrapper.find(ToolboxTabs).exists()).to.equal(true);
   });
 
   it('should render 8 Button components if props.isDelegate', () => {
     const wrapper = mount(<MemoryRouter>
-      <Tabs store={store} isDelegate={true} history={history} t={t} />
+      <MainMenu store={store} isDelegate={true} history={history} t={t} />
     </MemoryRouter>, options);
     expect(wrapper.find(Tab)).to.have.lengthOf(7);
   });
 
   it('should render 7 Tab components if !props.isDelegate', () => {
     const wrapper = mount(<MemoryRouter>
-      <Tabs store={store} isDelegate={false} history={history} t={t} />
+      <MainMenu store={store} isDelegate={false} history={history} t={t} />
     </MemoryRouter>, options);
     expect(wrapper.find(Tab)).to.have.lengthOf(6);
   });
 
   it('should allow to change active tab', () => {
     const wrapper = mount(<MemoryRouter>
-      <Tabs store={store} isDelegate={false} history={history} t={t} />
+      <MainMenu store={store} isDelegate={false} history={history} t={t} />
     </MemoryRouter>, options);
     wrapper.find(Tab).at(1).simulate('click');
     expect(history.push).to.have.been.calledWith('/main/transactions');
@@ -96,7 +96,7 @@ describe('Tabs', () => {
 
   it('should click on more activate the drawer', () => {
     const wrapper = mount(<MemoryRouter>
-      <Tabs store={store} isDelegate={false} history={history} t={t} />
+      <MainMenu store={store} isDelegate={false} history={history} t={t} />
     </MemoryRouter>, options);
     wrapper.find('#moreMenu').simulate('click');
     clock.tick(100);

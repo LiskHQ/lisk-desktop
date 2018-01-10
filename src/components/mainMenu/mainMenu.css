@@ -4,9 +4,9 @@
   --menu-background-color: var(--color-white);
   --menu-item-active-gradient: linear-gradient(-27deg, #004aff 4%, #57afff 61%, #93f4fe 100%);
   --menu-item-active-border-width: 7px;
-  --setting-menu-color: var(--color-grayscale-medium);
+  --more-menu-color: var(--color-grayscale-medium);
   --offcanvas-menu-border-color: var(--color-grayscale-light);
-  --setting-menu-border-color: var(--color-grayscale-medium);
+  --more-menu-border-color: var(--color-grayscale-medium);
 }
 
 .sideBarWrapper {
@@ -23,9 +23,9 @@
   margin: 40px 0;
 }
 
-.setting {
-  color: var(--setting-menu-color);
-  border-top: 1px solid var(--setting-menu-border-color);
+.more {
+  color: var(--more-menu-color);
+  border-top: 1px solid var(--more-menu-border-color);
   background: var(--menu-background-color);
   position: fixed !important;
   width: 192px;
@@ -86,7 +86,7 @@
   display: flex;
   width: auto;
   cursor: pointer;
-  color: var(--setting-menu-color);
+  color: var(--more-menu-color);
 }
 
 .label {
