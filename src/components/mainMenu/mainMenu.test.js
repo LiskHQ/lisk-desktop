@@ -79,14 +79,14 @@ describe('MainMenu', () => {
     expect(wrapper.find(Tab)).to.have.lengthOf(7);
   });
 
-  it('should render 7 Tab components if !props.isDelegate', () => {
+  it('should render 7 menu item components if !props.isDelegate', () => {
     const wrapper = mount(<MemoryRouter>
       <MainMenu store={store} isDelegate={false} history={history} t={t} />
     </MemoryRouter>, options);
     expect(wrapper.find(Tab)).to.have.lengthOf(6);
   });
 
-  it('should allow to change active tab', () => {
+  it('should allow to change active menu item', () => {
     const wrapper = mount(<MemoryRouter>
       <MainMenu store={store} isDelegate={false} history={history} t={t} />
     </MemoryRouter>, options);
