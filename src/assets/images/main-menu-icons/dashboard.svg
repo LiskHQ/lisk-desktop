@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="60" viewBox="0 0 80 60">
+  <defs>
+    <linearGradient id="dashboard_export-a" x1="100%" x2="10.267%" y1="0%" y2="120.152%">
+      <stop offset="0%" stop-color="#FFFFFFFD47FF"/>
+      <stop offset="54.063%" stop-color="#4FA6FF"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+    <linearGradient id="dashboard_export-b" x1="46.556%" x2="46.556%" y1="-63.748%" y2="100%">
+      <stop offset="0%" stop-color="#FFF" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#82F0FC"/>
+    </linearGradient>
+    <linearGradient id="dashboard_export-c" x1="19.476%" x2="86.047%" y1="88.413%" y2="18.496%">
+      <stop offset="0%" stop-color="#004AFF"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" fill-rule="evenodd" transform="translate(8 7)">
+    <rect width="30" height="44" x="20" y="-7" fill="url(#dashboard_export-a)" opacity=".3" transform="rotate(-90 35 15)"/>
+    <rect width="30" height="44" x="7" y="1" fill="url(#dashboard_export-b)" transform="rotate(-90 22 23)"/>
+    <rect width="30" height="44" x="28" y="9" fill="url(#dashboard_export-c)" opacity=".7" transform="rotate(-90 43 31)"/>
+  </g>
+</svg>
