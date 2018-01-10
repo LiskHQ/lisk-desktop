@@ -41,6 +41,7 @@
   .resultBox {
     & .header {
       height: 60px;
+      background-color: var(--color-grayscale-mobile-background);
     }
   }
 
