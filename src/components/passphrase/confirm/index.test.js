@@ -10,7 +10,7 @@ import i18n from '../../../i18n';
 import accounts from '../../../../test/constants/accounts';
 
 
-describe.only('Passphrase: Confirm', () => {
+describe('Passphrase: Confirm', () => {
   let wrapper;
   const account = accounts.delegate;
   const props = {
