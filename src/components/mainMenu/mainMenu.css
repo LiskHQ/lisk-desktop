@@ -27,8 +27,8 @@
   color: var(--more-menu-color);
   border-top: 1px solid var(--more-menu-border-color);
   background: var(--menu-background-color);
-  position: fixed !important;
-  width: 192px;
+  position: absolute;
+  width: 100%;
   left: 0;
   bottom: 0;
   padding: 20px 0 30px;
