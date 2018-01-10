@@ -10,6 +10,7 @@ const {
   waitForElemAndSendKeys,
   waitForElem,
   checkAlertDialog,
+  clickOnOptionInList,
 } = require('../support/util.js');
 const accounts = require('../../constants/accounts.js');
 
@@ -72,16 +73,6 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     waitForElemAndClickIt(`.${elementName.replace(/ /g, '-')}`, callback);
   });
 
-  const clickOnOptionInList = (index, selectName, callback) => {
-    waitForElemAndClickIt(`.${selectName}`);
-    browser.sleep(1000);
-    const selector = `.${selectName} ul li`;
-    // const optionElem = element.all(by.css(selector)).get(index - 1);
-    element.all(by.css(selector)).then((children) => {
-      children[index - 1].click().then(callback).catch(callback);
-    });
-  };
-
   When('I select option no. {index} from "{selectName}" select', clickOnOptionInList);
 
   Then('the option "{optionText}" is selected in "{selectName}" select', (optionText, selectName, callback) => {
@@ -111,7 +102,6 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     expect(element.all(by.css(`table.${elementName.replace(/ /g, '-')} tbody tr`)).count()).to.eventually.equal(parseInt(lineCount, 10))
       .and.notify(callback);
   });
-
 
   Then('I should see no "{elementName}"', (elementName, callback) => {
     const selector = `.${elementName.replace(/ /g, '-')}`;
