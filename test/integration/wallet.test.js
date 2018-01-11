@@ -178,22 +178,20 @@ describe('@integration: Wallet', () => {
 
       let transactions = new Array(25);
       transactions.fill({ senderId: 'sample_address', receiverId: 'some_address' });
-      transactions.count = 25;
       requestToActivePeerStub.withArgs(match.any, match.any, match({ limit: 25 }))
-        .returnsPromise().resolves({ transactions });
+        .returnsPromise().resolves({ transactions, count: 1000 });
 
-      transactions = new Array(45);
+      transactions = new Array(20);
       transactions.fill({ senderId: 'sample_address', receiverId: 'some_address' });
-      transactions.count = 45;
       requestToActivePeerStub.withArgs(match.any, match.any, match({ limit: 20 }))
-        .returnsPromise().resolves({ transactions });
+        .returnsPromise().resolves({ transactions, count: 1000 });
     });
 
     afterEach(() => {
       requestToActivePeerStub.restore();
     });
 
-    describe.only('Scenario: should allow to view transactions', () => {
+    describe('Scenario: should allow to view transactions', () => {
       step('Given I\'m on "wallet" as "genesis" account', setupStep.bind(null, 'genesis'));
       step('Then I should see 25 rows', () => {
         expect(wrapper.find('TransactionRow')).to.have.length(25);
