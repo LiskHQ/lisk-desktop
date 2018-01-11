@@ -202,7 +202,7 @@
   "bundlesize": [
     {
       "path": "./app/build/bundle.app.js",
-      "maxSize": "820 kB"
+      "maxSize": "890 kB"
     },
     {
       "path": "./app/build/bundle.vendor.js",
