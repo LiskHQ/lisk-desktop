@@ -1,4 +1,4 @@
-import { Dropdown } from 'react-toolbox';
+import Dropdown from 'react-toolbox/lib/dropdown';
 import { translate } from 'react-i18next';
 import React from 'react';
 
