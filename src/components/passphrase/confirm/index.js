@@ -67,7 +67,7 @@ class Confirm extends React.Component {
 
   // eslint-disable-next-line class-methods-use-this
   formStatus(answers) {
-    // eslint-disable-next-line
+    // eslint-disable-next-line eqeqeq
     if (!answers.reduce((acc, current) => (acc && current != undefined), true)) {
       return 'not filled';
     }

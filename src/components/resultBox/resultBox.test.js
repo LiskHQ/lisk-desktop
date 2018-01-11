@@ -22,6 +22,7 @@ describe('Result Box', () => {
       success: true,
       callback: spy(),
       copyToClipboard: () => {},
+      finalCallback: () => {},
       t: () => {},
     };
 
