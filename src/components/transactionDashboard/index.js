@@ -9,7 +9,7 @@ const TransactionsDashboard = () => (
     <div className={`${grid['col-md-4']}`}>
       <Send />
     </div>
-    <div className={`${grid['col-xs-12']} ${styles.transactions} ${grid['col-sm-8']}`}>
+    <div className={`${grid['col-sm-12']} ${styles.transactions} ${grid['col-md-8']}`}>
       <Transactions></Transactions>
     </div>
   </div>
