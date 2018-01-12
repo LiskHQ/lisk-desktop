@@ -1,9 +1,8 @@
-@import '../app/variables.css';
+@import './../app/variables.css';
 
 .wrapper {
   position: relative;
   width: 100%;
-  height: var(--main-box-height);
   display: flex;
   box-sizing: border-box;
   background: var(--color-white);
@@ -29,6 +28,18 @@
       color: var(--color-grayscale-dark);
       height: 22px;
     }
+  }
+}
+
+@media (--xLarge-viewport) {
+  .wrapper {
+    height: var(--main-box-height-XL);
+  }
+}
+
+@media (--large-viewport) {
+  .wrapper {
+    height: var(--main-box-height-L);
   }
 }
 
