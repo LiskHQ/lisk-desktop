@@ -12,7 +12,7 @@
 .chartWrapper {
   height: calc(100% + 50px);
   width: calc(100% + 50px);
-  margin: 85px -25px -160px;
+  margin: 90px -25px -170px;
 }
 
 @media (--medium-viewport) {

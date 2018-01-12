@@ -52,7 +52,7 @@ const chartOptions = {
         return `BTC ${tooltipItem[0].yLabel}`;
       },
       label(tooltipItem) {
-        return moment(tooltipItem.xLabel).format('DD MMM           h:mm:ss');
+        return moment(tooltipItem.xLabel).format('DD MMM             HH:mm:ss').replace(' 0', '  ');
       },
     },
     backgroundColor: 'rgba(255, 255, 255, 0.9)',
