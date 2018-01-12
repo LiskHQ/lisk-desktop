@@ -5,7 +5,6 @@ import SavedAccounts from '../savedAccounts';
 import savedAccountsTheme from '../savedAccounts/modalTheme.css';
 import SecondPassphrase from '../secondPassphrase';
 import Send from '../sendWritable';
-import Settings from '../settings';
 import SignMessage from '../signMessage';
 import VerifyMessage from '../verifyMessage';
 import VoteDialog from '../voteDialog';
@@ -44,10 +43,6 @@ export default () => ({
   'saved-accounts': {
     component: SavedAccounts,
     theme: savedAccountsTheme,
-  },
-  settings: {
-    title: i18next.t('Settings'),
-    component: Settings,
   },
   'encrypt-message': {
     title: i18next.t('Encrypt message'),

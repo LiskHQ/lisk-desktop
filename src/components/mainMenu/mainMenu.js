@@ -93,7 +93,8 @@ class MainMenu extends React.Component {
               id={id}
               disabled={isCurrent(history, index, tabs)} />)}
         </ToolboxTabs>
-        <div onClick={this.menuToggle.bind(this)} id='moreMenu' className={styles.more}>
+        <div onClick={this.menuToggle.bind(this)}
+          className={`${styles.more} more-menu`}>
           <FontIcon value='more' className={styles.readMoreIcon} />
           <span className={styles.readMoreText}>{t('more')}</span>
         </div>

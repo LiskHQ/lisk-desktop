@@ -56,13 +56,6 @@ const Header = props => (
                   to='register-delegate'>{props.t('Register as delegate')}</RelativeLink>
               </MenuItem>
                 }
-                {
-                  !props.account.secondSignature &&
-              <MenuItem theme={styles}>
-                <RelativeLink className={`register-second-passphrase ${styles.link}`}
-                  to='register-second-passphrase'>{props.t('Register second passphrase')}</RelativeLink>
-              </MenuItem>
-                }
                 <MenuItem theme={styles}>
                   <RelativeLink className={`sign-message ${styles.link}`} to='sign-message'>{props.t('Sign message')}</RelativeLink>
                 </MenuItem>
@@ -82,9 +75,6 @@ const Header = props => (
                 <MenuItem theme={styles}>
                   <RelativeLink className={`${styles.link} saved-accounts`}
                     to='saved-accounts'>{props.t('Saved accounts')}</RelativeLink>
-                </MenuItem>
-                <MenuItem theme={styles}>
-                  <RelativeLink className={`settings ${styles.link}`} to='settings'>{props.t('Settings')}</RelativeLink>
                 </MenuItem>
               </IconMenu>
             </figure>

@@ -73,14 +73,8 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     waitForElemAndClickIt(`.${elementName.replace(/ /g, '-')}`, callback);
   });
 
-  When('I select option no. {index} from "{selectName}" select', (index, selectName, callback) => {
-    waitForElemAndClickIt(`.${selectName}`);
-    browser.sleep(1000);
-    const selector = `.${selectName} ul li`;
-    const optionElem = element.all(by.css(selector)).get(index - 1);
-    browser.wait(EC.presenceOf(optionElem), waitTime)
-      .catch(error => console.error(`${error}`)); // eslint-disable-line no-console
-    optionElem.click().then(callback).catch(callback);
+  When('I change the language to German', (callback) => {
+    waitForElemAndClickIt('.language-switcher .circle', callback);
   });
 
   Then('the option "{optionText}" is selected in "{selectName}" select', (optionText, selectName, callback) => {
@@ -264,6 +258,14 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
       .mouseUp()
       .perform()
       .then(callback());
+  });
+
+  Then('I click {index} item in setting carousel', (index, callback) => {
+    browser.sleep(500);
+    const optionElem = element.all(by.css('#carouselNav li')).get(index - 1);
+    browser.wait(EC.presenceOf(optionElem), waitTime)
+      .catch(error => console.error(`${error}`)); // eslint-disable-line no-console
+    optionElem.click().then(callback).catch(callback);
   });
 });
 
