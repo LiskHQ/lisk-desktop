@@ -13,6 +13,7 @@
   overflow: auto;
   overflow-x: hidden;
   margin: 0px;
+  height: var(--main-box-height);
 
   & footer {
     position: absolute;
@@ -28,18 +29,6 @@
       color: var(--color-grayscale-dark);
       height: 22px;
     }
-  }
-}
-
-@media (--xLarge-viewport) {
-  .wrapper {
-    height: var(--main-box-height-XL);
-  }
-}
-
-@media (--large-viewport) {
-  .wrapper {
-    height: var(--main-box-height-L);
   }
 }
 
