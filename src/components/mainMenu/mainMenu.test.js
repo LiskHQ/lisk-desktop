@@ -98,7 +98,7 @@ describe('MainMenu', () => {
     const wrapper = mount(<MemoryRouter>
       <MainMenu store={store} isDelegate={false} history={history} t={t} />
     </MemoryRouter>, options);
-    wrapper.find('#moreMenu').simulate('click');
+    wrapper.find('.more-menu').simulate('click');
     clock.tick(100);
     wrapper.update();
     expect(wrapper.find('Drawer').props().active).to.be.equal(true);
