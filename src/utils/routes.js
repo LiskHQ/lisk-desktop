@@ -20,6 +20,11 @@ export default [
     params: 'dialog',
     name: 'voting',
   }, {
+    regex: /\/main\/sidechains(?:\/[^/]*)?$/,
+    path: '/main/sidechains/',
+    params: 'dialog',
+    name: 'sidechains',
+  }, {
     regex: /\/main\/forging(?:\/[^/]*)?$/,
     path: '/main/forging/',
     params: 'dialog',
