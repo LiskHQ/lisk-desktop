@@ -210,7 +210,7 @@
     border-bottom: 0;
     border-top: 0;
 
-    &:hover {
+    &:hover:not(:first-child) {
       background: var(--link-color);
     }
 
