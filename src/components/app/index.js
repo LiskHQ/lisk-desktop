@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 import Account from '../account';
 import PrivateRoutes from '../privateRoute';
 import Dashboard from '../dashboard';
+import Sidechains from '../sidechains';
 import Header from '../header';
 import Login from '../login';
 import Register from '../register';
@@ -35,6 +36,7 @@ const App = () => (
               <Route path={`${match.url}/dashboard/:dialog?`} component={Dashboard} />
               <Route path={`${match.url}/transactions/:dialog?`} component={TransactionDashboard} />
               <Route path={`${match.url}/voting/:dialog?`} component={Voting} />
+              <Route path={`${match.url}/sidechains/:dialog?`} component={Sidechains} />
               <Route path={`${match.url}/forging/:dialog?`} component={Forging} />
               <Route path={`${match.url}/add-account/:dialog?`} component={Login} />
             </main>
