@@ -51,6 +51,32 @@ describe('Passphrase: Confirm', () => {
     expect(wrapper.find(PrimaryButton)).to.have.lengthOf(1);
   });
 
+  it('should adjust styles depending on form state', () => {
+    wrapper.find('fieldset').forEach((fieldset) => {
+      fieldset.find('input').forEach((input) => {
+        if (!account.passphrase.includes(input.props().value)) {
+          input.simulate('change', { target: { checked: true } });
+        }
+      });
+    });
+    wrapper.update();
+    let expectedClass = '_invalid';
+    let className = wrapper.find('form').prop('className');
+    expect(className).to.contain(expectedClass);
+
+    wrapper.find('fieldset').forEach((fieldset) => {
+      fieldset.find('input').forEach((input) => {
+        if (account.passphrase.includes(input.props().value)) {
+          input.simulate('change', { target: { checked: true } });
+        }
+      });
+    });
+    wrapper.update();
+    expectedClass = '_valid';
+    className = wrapper.find('form').prop('className');
+    expect(className).to.contain(expectedClass);
+  });
+
   it('should disable Next button if answer is incorrect', () => {
     // for each fieldset, checks the input if its value doesn't exist in passphrase
     wrapper.find('fieldset').forEach((fieldset) => {

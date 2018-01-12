@@ -2,6 +2,7 @@ import React from 'react';
 import ReactSwipe from 'react-swipe';
 import styles from './setting.css';
 import languageSwitcherTheme from './languageSwitcher.css';
+// eslint-disable-next-line import/no-named-as-default
 import SliderCheckbox from '../toolbox/checkbox';
 import RelativeLink from '../relativeLink';
 import i18n from '../../i18n';

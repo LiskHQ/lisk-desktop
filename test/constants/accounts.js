@@ -39,6 +39,8 @@ const accounts = {
     publicKey: 'fab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88',
     secondPassphrase: 'forest around decrease farm vanish permit hotel clay senior matter endorse domain',
     address: '1155682438012955434L',
+    balance: 1000e8,
+    secondSignature: 1,
   },
 };
 accounts['any account'] = accounts.genesis;

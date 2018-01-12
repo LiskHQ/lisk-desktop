@@ -16,6 +16,7 @@ import savedAccountsReducer from '../../src/store/reducers/savedAccounts';
 import SavedAccounts from '../../src/components/savedAccounts';
 import * as accountApi from '../../src/utils/api/account';
 import * as peers from '../../src/utils/api/peers';
+import { click } from './steps';
 
 describe('@integration: Account switch', () => {
   let store;
@@ -76,8 +77,7 @@ describe('@integration: Account switch', () => {
   };
 
   const clickStep = (elementName) => {
-    const selector = `.${elementName.replace(/ /g, '-')}`;
-    wrapper.find(selector).first().simulate('click');
+    click(wrapper, elementName);
   };
 
   const shouldSeeCountInstancesOf = (count, elementName) => {

@@ -24,10 +24,6 @@ class SendReadable extends React.Component {
       ...authStatePrefill(),
     };
     this.fee = fees.send;
-    this.inputValidationRegexps = {
-      recipient: /^\d{1,21}[L|l]$/,
-      amount: /^\d+(\.\d{1,8})?$/,
-    };
   }
 
   componentDidMount() {
@@ -73,22 +69,9 @@ class SendReadable extends React.Component {
     this.setState({
       [name]: {
         value,
-        error: typeof error === 'string' ? error : this.validateInput(name, value),
+        error: typeof error === 'string' ? error : '',
       },
     });
-  }
-
-  validateInput(name, value) {
-    if (!value) {
-      return this.props.t('Required');
-    } else if (!value.match(this.inputValidationRegexps[name])) {
-      return this.props.t('Invalid');
-    } else if (name === 'amount' && value > parseFloat(this.getMaxAmount())) {
-      return this.props.t('Insufficient funds');
-    } else if (name === 'amount' && value === '0') {
-      return this.props.t('Zero not allowed');
-    }
-    return undefined;
   }
 
   send(event) {
@@ -102,10 +85,6 @@ class SendReadable extends React.Component {
       passphrase: this.state.passphrase.value,
       secondPassphrase: this.state.secondPassphrase.value,
     });
-  }
-
-  getMaxAmount() {
-    return fromRawLsk(Math.max(0, this.props.account.balance - this.fee));
   }
 
   addAmountAndFee() {

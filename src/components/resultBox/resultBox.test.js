@@ -1,6 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
+import { spy } from 'sinon';
 import ResultBox from './resultBox';
 
 describe('Result Box', () => {
@@ -19,8 +20,9 @@ describe('Result Box', () => {
       title,
       body,
       success: true,
-      callback: () => {},
+      callback: spy(),
       copyToClipboard: () => {},
+      finalCallback: () => {},
       t: () => {},
     };
 
@@ -31,6 +33,9 @@ describe('Result Box', () => {
     expect(wrapper.find('.material-icons')).to.have.length(0);
     expect(wrapper.find('img')).to.have.length(1);
     expect(wrapper.find('.copy-title').text()).to.contain(copy.title);
+
+    wrapper.find('Button').simulate('click');
+    expect(props.callback).to.have.been.calledWith();
   });
 
   it('renders result box with failure template', () => {
