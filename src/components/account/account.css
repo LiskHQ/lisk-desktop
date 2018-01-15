@@ -92,7 +92,7 @@
 .peer {
   font-size: 16px;
   float: left;
-  margin: 50px 0px;
+  margin: 5vh 0px;
 }
 
 @media (--medium-viewport) {
