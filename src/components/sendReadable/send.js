@@ -93,7 +93,7 @@ class SendReadable extends React.Component {
 
   render() {
     return (
-      <div className='boxPadding send'>
+      <div className={`${styles.wrapper} send`}>
         <div className={styles.header}>
           <header className={styles.headerWrapper}>
             <h2>{this.props.t('Confirm transfer')}</h2>
@@ -105,7 +105,7 @@ class SendReadable extends React.Component {
             <AccountVisual address={this.state.recipient.value} size={60} />
           </figure>
         </div>
-        <form onSubmit={this.send.bind(this)}>
+        <form>
           <Input label={this.props.t('Send to Address')}
             className={`recipient ${styles.disabledInput}`}
             value={this.props.recipient}
@@ -127,29 +127,30 @@ class SendReadable extends React.Component {
             theme={inputStyles}
             columns={{ xs: 6, sm: 4, md: 4 }}
           />
-          <footer>
-            <section className={grid.row} >
-              <div className={grid['col-xs-4']}>
-                <Button
-                  label={this.props.t('Back')}
-                  onClick={() => this.props.prevStep()}
-                  type='button'
-                  theme={styles}
-                />
-              </div>
-              <div className={grid['col-xs-8']}>
-                <PrimaryButton
-                  className='send-button'
-                  label={this.props.t('Send')}
-                  type='submit'
-                  theme={styles}
-                  disabled={!authStateIsValid(this.state) || this.state.loading}
-                />
-                <div className='subTitle'>{this.props.t('Transactions can’t be reversed')}</div>
-              </div>
-            </section>
-          </footer>
         </form>
+        <footer>
+          <section className={grid.row} >
+            <div className={grid['col-xs-4']}>
+              <Button
+                label={this.props.t('Back')}
+                onClick={() => this.props.prevStep()}
+                type='button'
+                theme={styles}
+              />
+            </div>
+            <div className={grid['col-xs-8']}>
+              <PrimaryButton
+                className='send-button'
+                label={this.props.t('Send')}
+                type='submit'
+                theme={styles}
+                onClick={this.send.bind(this)}
+                disabled={!authStateIsValid(this.state) || this.state.loading}
+              />
+              <div className='subTitle'>{this.props.t('Transactions can’t be reversed')}</div>
+            </div>
+          </section>
+        </footer>
       </div>
     );
   }

@@ -4,6 +4,16 @@
   --tab-inactive-color: --color-grayscale-dark;
 }
 
+.wrapper {
+  padding: 0px 30px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  overflow-y: hidden;
+  box-sizing: border-box;
+}
+
 .fee {
   text-align: right;
   margin-top: -12px;

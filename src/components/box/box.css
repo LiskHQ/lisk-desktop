@@ -16,11 +16,7 @@
   height: var(--main-box-height);
 
   & footer {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    padding: 50px 30px 20px;
+    padding: 50px 0px;
     text-align: center;
 
     & :global .subTitle {

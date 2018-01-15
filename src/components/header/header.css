@@ -13,7 +13,7 @@
 .wrapper {
   padding: 0px 8px;
   float: right;
-  margin: 5vh 0px;
+  margin: 5vh 0px;  /* stylelint-disable-line */
 }
 
 .logoWrapper {
