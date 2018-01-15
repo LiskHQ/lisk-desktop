@@ -3,3 +3,9 @@
 .wrapper {
   min-width: 100%;
 }
+
+@media (max-width: 1025px) {
+  .transactions {
+    width: 100%;
+  }
+}
