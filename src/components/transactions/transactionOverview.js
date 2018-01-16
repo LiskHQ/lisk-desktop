@@ -57,6 +57,7 @@ class Transactions extends React.Component {
           <li className={styles.item}>{this.props.t('Other')}</li>
         </ul>
         <TransactionList
+          address={this.props.address}
           transactions={this.props.transactions}
           loadMore={this.loadMore.bind(this)}
           nextStep={this.props.nextStep}
