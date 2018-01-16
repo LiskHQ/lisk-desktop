@@ -101,7 +101,7 @@ describe('Passphrase: Confirm', () => {
     // for each fieldset, checks the input if its value exist in passphrase
     wrapper.find('fieldset').forEach((fieldset) => {
       fieldset.find('input').forEach((input) => {
-        if (account.passphrase.indexOf(input.props().value) > 0) {
+        if (account.passphrase.indexOf(input.props().value) > -1) {
           input.simulate('change', { target: { checked: true } });
         }
       });
