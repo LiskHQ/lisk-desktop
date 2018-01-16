@@ -3,7 +3,7 @@ Feature: Forging page
     Given I'm logged in as "delegate"
     When I click "forging" menu
     Then I should see forging center
-    And I should see table with 20 lines
-    And I scroll to the bottom of "forging"
     And I should see table with 40 lines
+    And I scroll to the bottom of "forging"
+    And I should see table with 60 lines
 
