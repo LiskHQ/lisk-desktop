@@ -13,6 +13,7 @@ const mapStateToProps = state => ({
   pendingCount: state.transactions.pending.length,
   confirmed: state.transactions.confirmed,
   pending: state.transactions.pending,
+  activeFilter: state.transactions.filter,
 });
 
 const mapDispatchToProps = dispatch => ({
