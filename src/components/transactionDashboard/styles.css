@@ -4,22 +4,8 @@
   min-width: 100%;
 }
 
-.send {
-  position: relative;
-}
-
-@media (--medium-viewport) {
-  .wrapper {
-    margin: 0px;
-  }
-
+@media (max-width: 1025px) {
   .transactions {
-    padding: 0px;
-  }
-}
-
-@media (--xSmall-viewport) {
-  .send {
-    display: none;
+    width: 100%;
   }
 }

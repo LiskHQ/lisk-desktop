@@ -14,19 +14,13 @@ const Account = ({ peers, t }) => {
     <i className="material-icons offline">error</i>;
 
   return (peers.data.options.code !== networks.mainnet.code ?
-    <section className={styles.temp}>
-      <span className={styles.title}>
-        {t('Peer')}
-      </span>
-      <span id="accountStatus" className="status">
-        {status}
-      </span>
-      <span className="inner primary peer-network">
-        {t(peers.data.options.name)}
-      </span>
-      <span className="inner secondary peer">
+    <section className={styles.peer}>
+      <div className={`${styles.title} inner primary peer-network`}>{t(peers.data.options.name)} <span id="accountStatus" className={`${styles.status} status`}>{status}</span>
+      </div>
+
+      <span className={`${styles.current} inner secondary peer`}>
         {peers.data.currentPeer}
-        <span> : {peers.data.port}</span>
+        <span>:{peers.data.port}</span>
       </span>
     </section> :
     null

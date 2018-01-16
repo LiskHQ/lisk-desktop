@@ -1,0 +1,47 @@
+@import '../app/variables.css';
+
+:root {
+  --box-padding-XL: 48px;
+  --box-padding-L: 32px;
+  --box-padding-XS: 19px;
+}
+
+.wrapper {
+  text-align: center;
+
+  & .header {
+    margin: auto 0px;
+  }
+
+  /* this will be updated soon */
+  & .subHeader {
+    font-size: 18px;
+    font-weight: normal;
+    color: var(--color-grayscale-dark);
+    line-height: 36px;
+  }
+}
+
+@media (--xLarge-viewport) {
+  .subHeader {
+    padding: 0px var(--box-padding-XL);
+  }
+}
+
+@media (--small-viewport) {
+  .wrapper {
+    height: 0px;
+  }
+}
+
+@media (--large-viewport) {
+  .subHeader {
+    padding: 0px var(--box-padding-L);
+  }
+}
+
+@media (--xSmall-viewport) {
+  .subHeader {
+    padding: 0px var(--box-padding-XS);
+  }
+}

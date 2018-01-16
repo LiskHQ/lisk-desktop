@@ -38,3 +38,8 @@ order to be available application wide
   padding: 0px 30px;
 }
 
+@media (--small-viewport) {
+  :global .boxPadding {
+    padding: 0px 20px;
+  }
+}

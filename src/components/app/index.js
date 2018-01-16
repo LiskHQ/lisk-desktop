@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 import Account from '../account';
 import PrivateRoutes from '../privateRoute';
 import Dashboard from '../dashboard';
+import Sidechains from '../sidechains';
 import Header from '../header';
 import Login from '../login';
 import Register from '../register';
@@ -13,7 +14,7 @@ import styles from './app.css';
 import BackgroundMaker from '../backgroundMaker';
 import Dialog from '../dialog';
 import Toaster from '../toaster';
-import Tabs from '../tabs';
+import MainMenu from '../mainMenu';
 import MenuBar from '../menuBar';
 import LoadingBar from '../loadingBar';
 import OfflineWrapper from '../offlineWrapper';
@@ -24,7 +25,7 @@ const App = () => (
     <BackgroundMaker />
     <main className={`${styles.bodyWrapper}`}>
       <aside>
-        <Tabs />
+        <MainMenu />
       </aside>
       <section>
         <div className={styles.mainBox}>
@@ -35,6 +36,7 @@ const App = () => (
               <Route path={`${match.url}/dashboard/:dialog?`} component={Dashboard} />
               <Route path={`${match.url}/transactions/:dialog?`} component={TransactionDashboard} />
               <Route path={`${match.url}/voting/:dialog?`} component={Voting} />
+              <Route path={`${match.url}/sidechains/:dialog?`} component={Sidechains} />
               <Route path={`${match.url}/forging/:dialog?`} component={Forging} />
               <Route path={`${match.url}/add-account/:dialog?`} component={Login} />
             </main>

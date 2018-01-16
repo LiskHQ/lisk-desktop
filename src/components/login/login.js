@@ -14,7 +14,6 @@ import styles from './login.css';
 import networks from '../../constants/networks';
 import getNetwork from '../../utils/getNetwork';
 import { parseSearchParams } from './../../utils/searchParams';
-import LanguageDropdown from '../languageDropdown';
 import Box from '../box';
 // eslint-disable-next-line import/no-unresolved
 import * as shapes from '../../assets/images/*.svg';
@@ -176,7 +175,6 @@ class Login extends React.Component {
             <div className={`${styles.tableCell} text-left`}>
               <h2>{this.props.t('Sign In')}</h2>
               <form onSubmit={this.onFormSubmit.bind(this)}>
-                <LanguageDropdown className={styles.outTaken} />
                 {this.showNetworkOptions()
                   ? <div className={styles.outTaken}>
                     <Dropdown

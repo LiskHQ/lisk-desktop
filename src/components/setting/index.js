@@ -1,11 +1,10 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
-import Tabs from './tabs';
+import Setting from './setting';
 
 const mapStateToProps = state => ({
-  isDelegate: state.account.isDelegate,
+  hasSecondPassphrase: state.account.secondSignature,
 });
 
-export default withRouter(connect(mapStateToProps)(translate()(Tabs)));
-
+export default withRouter(connect(mapStateToProps)(translate()(Setting)));

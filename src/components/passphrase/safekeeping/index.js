@@ -1,6 +1,7 @@
 import React from 'react';
 import ActionBar from '../../actionBar';
 import styles from './safekeeping.css';
+// eslint-disable-next-line import/no-named-as-default
 import SliderCheckbox from '../../toolbox/checkbox';
 import TransitionWrapper from '../../toolbox/transitionWrapper';
 
@@ -60,7 +61,7 @@ class SafeKeeping extends React.Component {
                 className={`${styles.smallSlider} i-understand-checkbox`}
                 label={t('I understand')}
                 icons={{
-                  done: 'done',
+                  done: 'checkmark',
                 }}
                 onChange={this.next.bind(this)}
                 input={{
@@ -75,8 +76,8 @@ class SafeKeeping extends React.Component {
               <SliderCheckbox
                 label={t('Drag to reveal')}
                 icons={{
-                  goal: 'lock',
-                  done: 'vpn_key',
+                  goal: 'locked',
+                  done: 'checkmark',
                 }}
                 hasSlidingArrows={true}
                 onChange={this.next.bind(this)}
@@ -85,7 +86,7 @@ class SafeKeeping extends React.Component {
                   value: 'revealing-step',
                 }}/>
             </TransitionWrapper>
-            <textarea type='text' autoFocus={true}
+            <textarea type='text' autoFocus={true} readOnly
               className={`${styles.input} passphrase`}
               defaultValue={passphrase}></textarea>
             <ActionBar

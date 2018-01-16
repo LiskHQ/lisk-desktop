@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { spy } from 'sinon';
+import { spy, useFakeTimers } from 'sinon';
 import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
@@ -12,6 +12,7 @@ import accounts from '../../../../test/constants/accounts';
 
 describe('Passphrase: Confirm', () => {
   let wrapper;
+  let clock;
   const account = accounts.delegate;
   const props = {
     t: key => key,
@@ -36,11 +37,15 @@ describe('Passphrase: Confirm', () => {
     spy(props, 'prevStep');
     spy(props, 'finalCallback');
     wrapper = mount(<Confirm {...props} />, options);
+    clock = useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
+    });
   });
 
   afterEach(() => {
     props.prevStep.restore();
     props.finalCallback.restore();
+    clock.restore();
   });
 
   it('renders an input component', () => {
@@ -51,10 +56,33 @@ describe('Passphrase: Confirm', () => {
     expect(wrapper.find(PrimaryButton)).to.have.lengthOf(1);
   });
 
-  /**
-   * @todo change simulation doesn't work
-   */
-  it.skip('should disable Next button if answer is incorrect', () => {
+  it('should adjust styles depending on form state', () => {
+    wrapper.find('fieldset').forEach((fieldset) => {
+      fieldset.find('input').forEach((input) => {
+        if (!account.passphrase.includes(input.props().value)) {
+          input.simulate('change', { target: { checked: true } });
+        }
+      });
+    });
+    wrapper.update();
+    let expectedClass = '_invalid';
+    let className = wrapper.find('form').prop('className');
+    expect(className).to.contain(expectedClass);
+
+    wrapper.find('fieldset').forEach((fieldset) => {
+      fieldset.find('input').forEach((input) => {
+        if (account.passphrase.includes(input.props().value)) {
+          input.simulate('change', { target: { checked: true } });
+        }
+      });
+    });
+    wrapper.update();
+    expectedClass = '_valid';
+    className = wrapper.find('form').prop('className');
+    expect(className).to.contain(expectedClass);
+  });
+
+  it('should disable Next button if answer is incorrect', () => {
     // for each fieldset, checks the input if its value doesn't exist in passphrase
     wrapper.find('fieldset').forEach((fieldset) => {
       fieldset.find('input').forEach((input) => {
@@ -69,21 +97,19 @@ describe('Passphrase: Confirm', () => {
     expect(wrapperProps.disabled).to.be.equal(true);
   });
 
-  /**
-   * @todo change simulation doesn't work
-   */
-  it.skip('should enable Next button if answer is correct', () => {
+  it('should enable Next button if answer is correct', () => {
     // for each fieldset, checks the input if its value exist in passphrase
     wrapper.find('fieldset').forEach((fieldset) => {
       fieldset.find('input').forEach((input) => {
-        if (account.passphrase.indexOf(input.props().value) > 0) {
+        if (account.passphrase.indexOf(input.props().value) > -1) {
           input.simulate('change', { target: { checked: true } });
         }
       });
     });
+    clock.tick(1500);
     wrapper.update();
 
-    const wrapperProps = wrapper.find('button.get-to-your-dashboard-button').props();
-    expect(wrapperProps.disabled).to.not.be.equal(true);
+    const buttonWrapper = wrapper.find('button.get-to-your-dashboard-button');
+    expect(buttonWrapper).to.not.have.prop('disabled', true);
   });
 });

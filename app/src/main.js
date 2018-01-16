@@ -11,7 +11,11 @@ const checkForUpdates = updateChecker({ autoUpdater, dialog: electron.dialog, wi
 
 const { app, ipcMain } = electron;
 
+let appIsReady = false;
+
+
 app.on('ready', () => {
+  appIsReady = true;
   win.create({ electron, path, electronLocalshortcut, storage, checkForUpdates });
 });
 
@@ -28,7 +32,9 @@ if (process.platform === 'darwin') {
 }
 
 app.on('activate', () => {
-  if (win.browser === null) {
+  // sometimes, the event is triggered before app.on('ready', ...)
+  // then creating new windows will fail
+  if (win.browser === null && appIsReady) {
     win.create({ electron, path, electronLocalshortcut, storage, checkForUpdates });
   }
 });

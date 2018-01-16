@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="60" viewBox="0 0 80 60">
+  <defs>
+    <linearGradient id="wallet_export-a" x1="10.938%" x2="90.352%" y1="91.367%" y2="0%">
+      <stop offset="0%" stop-color="#FFF" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#82F0FC"/>
+    </linearGradient>
+    <linearGradient id="wallet_export-b" x1="100%" x2="10.267%" y1="0%" y2="120.152%">
+      <stop offset="0%" stop-color="#FFFFFFFD47FF"/>
+      <stop offset="54.063%" stop-color="#4FA6FF"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+    <linearGradient id="wallet_export-c" x1="19.476%" x2="86.047%" y1="88.413%" y2="18.496%">
+      <stop offset="0%" stop-color="#004AFF"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" fill-rule="evenodd" transform="translate(13 3)">
+    <circle cx="28" cy="20" r="20" fill="url(#wallet_export-a)"/>
+    <polygon fill="url(#wallet_export-b)" points="-1.036 3.036 32.345 3.036 49.036 51.036 15.655 51.036" opacity=".4" transform="rotate(-90 24 27.036)"/>
+    <rect width="36" height="55" x="9.5" y="8.5" fill="url(#wallet_export-c)" opacity=".6" transform="rotate(-90 27.5 36)"/>
+  </g>
+</svg>

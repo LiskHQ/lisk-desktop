@@ -1,5 +1,7 @@
 import React from 'react';
+import { themr } from 'react-css-themr';
 import styles from './checkbox.css';
+import { FontIcon } from '../../fontIcon';
 
 class SliderCheckbox extends React.Component {
   constructor() {
@@ -17,7 +19,10 @@ class SliderCheckbox extends React.Component {
     this.trackable = true;
     this.xOffset = e.nativeEvent.clientX;
     this.direction = this.input.checked ? -1 : 1;
-    this.maxMovement = this.parent.offsetWidth - this.shape.offsetWidth;
+    this.setState({
+      maxMovement: this.parent.getBoundingClientRect().width -
+      this.shape.getBoundingClientRect().width,
+    });
   }
 
   stopTracking() {
@@ -38,7 +43,6 @@ class SliderCheckbox extends React.Component {
     this.input.checked = !this.input.checked;
     this.shape.removeAttribute('style');
     this.direction = this.input.checked ? -1 : 1;
-    this.maxMovement = this.parent.offsetWidth - (this.shape.offsetWidth * this.direction);
 
     if (typeof this.props.onChange === 'function' &&
       this.props.input instanceof Object &&
@@ -57,39 +61,80 @@ class SliderCheckbox extends React.Component {
   track(e) {
     if (this.trackable) {
       this.delta = e.nativeEvent.clientX - this.xOffset;
-      const left = this.direction > 0 ? this.delta : (this.maxMovement - Math.abs(this.delta));
+      const left = this.direction > 0
+        ? this.delta
+        : (this.state.maxMovement - Math.abs(this.delta));
 
       if ((this.direction * this.delta) > 0 &&
-        Math.abs(this.delta) < this.maxMovement) {
+        Math.abs(this.delta) < this.state.maxMovement) {
         this.shape.setAttribute('style', `left: ${left}px`);
       }
     }
   }
 
   render() {
-    const { label, input, icons, className, hasSlidingArrows } = this.props;
-
-    return (<div className={`${styles.sliderInput} ${className}`}>
-      <input type='checkbox' value={input.value}
-        ref={(el) => { this.input = el; }}/>
+    const { label, input, className, hasSlidingArrows, theme, clickable, textAsIcon } = this.props;
+    const icons = this.props.icons ? this.props.icons : {};
+    return (<div className={`${theme.sliderInput} ${className}`}>
+      <input type='checkbox' value={input.value} checked={input.checked}
+        ref={(el) => { this.input = el; }} onChange={this.change.bind(this)}/>
       <label ref={(el) => { this.parent = el; }}
         onMouseDown={this.startTracking.bind(this)}
         onMouseMove={this.track.bind(this)}
         onMouseLeave={this.stopTracking.bind(this)}
         onMouseUp={this.stopTracking.bind(this)}>
         <span
-          className={`${styles.circle} ${styles.button}`}
+          onClick= {clickable ?
+            this.change.bind(this) :
+            null
+          }
+          className={`${theme.circle} ${theme.button} circle`}
           ref={(el) => { this.shape = el; }}>
-          <i className={`material-icons ${styles.icon} ${styles.arrowRight}`}>chevron_right</i>
-          <i className={`material-icons ${styles.icon} ${styles.checkMark}`}>{icons.done}</i>
+          <span className={theme.arrowRight}>
+            {textAsIcon ?
+              <span className={theme.text}>{icons.start}</span> :
+              <FontIcon className={theme.icon}>
+                {icons.start || 'arrow-right'}
+              </FontIcon>
+            }
+          </span>
+
+          <span className={theme.checkMark}>
+            {textAsIcon ?
+              <span className={theme.text}>{icons.done}</span> :
+              <FontIcon className={theme.icon}>
+                {icons.done || 'checkmark'}
+              </FontIcon>
+            }
+          </span>
         </span>
-        <div className={hasSlidingArrows ? styles.hasArrows : ''}>
+        {label ? <div className={hasSlidingArrows ? theme.hasArrows : ''}>
           <span>{label}</span>
-        </div>
+        </div> : ''}
+        {
+          typeof icons.begin === 'string' ?
+            <span
+              onClick= {clickable ?
+                this.change.bind(this) :
+                null
+              }
+              className={`${theme.circle} ${theme.begin}`}>
+              {textAsIcon ? icons.begin :
+                <FontIcon className={`${theme.icon} ${theme.arrowRight}`}>{icons.goal}</FontIcon>
+              }
+            </span> : null
+        }
         {
           typeof icons.goal === 'string' ?
-            <span className={`${styles.circle} ${styles.lock}`}>
-              <i className={`material-icons ${styles.icon} ${styles.arrowRight}`}>{icons.goal}</i>
+            <span
+              onClick= {clickable ?
+                this.change.bind(this) :
+                null
+              }
+              className={`${theme.circle} ${theme.goal}`}>
+              {textAsIcon ? icons.goal :
+                <FontIcon className={`${theme.icon} ${theme.arrowRight}`}>{icons.goal}</FontIcon>
+              }
             </span> : null
         }
       </label>
@@ -97,4 +142,5 @@ class SliderCheckbox extends React.Component {
   }
 }
 
-export default SliderCheckbox;
+export { SliderCheckbox };
+export default themr('sliderCheckbox', styles)(SliderCheckbox);

@@ -10,13 +10,14 @@ const {
   waitForElemAndSendKeys,
   waitForElem,
   checkAlertDialog,
+  waitTime,
   clickOnOptionInList,
 } = require('../support/util.js');
 const accounts = require('../../constants/accounts.js');
 
 chai.use(chaiAsPromised);
 const expect = chai.expect;
-// const EC = protractor.ExpectedConditions;
+const EC = protractor.ExpectedConditions;
 const defaultTimeout = 10 * 1000;
 
 defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
@@ -63,7 +64,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     waitForElemAndClickIt(selector, callback);
   });
 
-  When('I click "{id}" tab', (id, callback) => {
+  When('I click "{id}" menu', (id, callback) => {
     waitForElemAndClickIt(`.main-tabs #${id}`, callback);
   });
 
@@ -73,7 +74,9 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     waitForElemAndClickIt(`.${elementName.replace(/ /g, '-')}`, callback);
   });
 
-  When('I select option no. {index} from "{selectName}" select', clickOnOptionInList);
+  When('I change the language to German', (callback) => {
+    waitForElemAndClickIt('.language-switcher .circle', callback);
+  });
 
   Then('the option "{optionText}" is selected in "{selectName}" select', (optionText, selectName, callback) => {
     const elem = element(by.css(`.${selectName} input`));
@@ -147,6 +150,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
       ? browser.params.testnetPassphrase
       : accounts[accountName].passphrase;
     const networkIndex = browser.params.network === 'customNode' ? 3 : 2;
+    browser.sleep(100);
     clickOnOptionInList(networkIndex, 'network', () => {
       waitForElemAndSendKeys('.passphrase input', passphrase, () => {
         if (browser.params.network === 'customNode') {
@@ -263,6 +267,14 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
       .mouseUp()
       .perform()
       .then(callback());
+  });
+
+  Then('I click {index} item in setting carousel', (index, callback) => {
+    browser.sleep(500);
+    const optionElem = element.all(by.css('#carouselNav li')).get(index - 1);
+    browser.wait(EC.presenceOf(optionElem), waitTime)
+      .catch(error => console.error(`${error}`)); // eslint-disable-line no-console
+    optionElem.click().then(callback).catch(callback);
   });
 });
 

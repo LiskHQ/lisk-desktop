@@ -92,10 +92,10 @@ class PassphraseInput extends React.Component {
 
     const value = this.props.value.split(' ');
     return (
-      <div className={styles.wrapper} onClick={this.setFocused.bind(this)}>
+      <div onClick={this.setFocused.bind(this)}>
         {this.state.isFocused
           ?
-          <div>
+          <div className={styles.wrapper}>
             <div className={grid.row}>
               {[...Array(12)].map((x, i) =>
                 <div className={`${grid[xs]} ${grid[sm]} ${grid[md]}`} key={i}>

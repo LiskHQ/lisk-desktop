@@ -2,6 +2,7 @@ import React from 'react';
 import { fromRawLsk } from '../../utils/lsk';
 import { Button } from './../toolbox/buttons/button';
 import { authStatePrefill } from '../../utils/form';
+import AccountVisual from '../accountVisual';
 import Input from '../toolbox/inputs/input';
 import fees from './../../constants/fees';
 import styles from './send.css';
@@ -61,7 +62,7 @@ class SendWritable extends React.Component {
     return undefined;
   }
 
-  showAvatar() {
+  showAccountVisual() {
     return this.state.recipient.value.length && !this.state.recipient.error;
   }
 
@@ -81,16 +82,15 @@ class SendWritable extends React.Component {
         <form>
           <Input label={this.props.t('Send to Address')}
             className='recipient'
-            autoFocus={true}
+            autoFocus={this.props.autoFocus}
             error={this.state.recipient.error}
             value={this.state.recipient.value}
             onChange={this.handleChange.bind(this, 'recipient')}
-            theme={this.showAvatar() ? inputTheme : {}}
+            theme={this.showAccountVisual() ? inputTheme : {}}
           >
-            {this.showAvatar()
-              ?
-              <figure className={styles.temporarySmallAvatar}>
-                <img src='' alt=''></img>
+            {this.showAccountVisual() ?
+              <figure className={styles.accountVisual}>
+                <AccountVisual address={this.state.recipient.value} size={50} />
               </figure>
               : ''
             }
@@ -113,7 +113,7 @@ class SendWritable extends React.Component {
                           !this.state.recipient.value ||
                           !!this.state.amount.error ||
                           !this.state.amount.value)}
-            className='send-next-button'
+            className={`send-next-button ${styles.nextButton}`}
             >{this.props.t('Next')}</Button>
             <div className='subTitle'>{this.props.t('Confirmation in the next step.')}</div>
           </footer>

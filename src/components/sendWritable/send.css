@@ -26,13 +26,8 @@ input:read-only {
   width: 100%;
 }
 
-.temporarySmallAvatar {
-  /* values are not saved as variable since this will be deleted anyway */
-  height: 50px;
-  width: 50px;
-  background: linear-gradient(90deg, #3023ae 0%, #53a0fd 48%, #b4ec51 100%);
+.accountVisual {
   position: absolute;
-  border-radius: 100%;
   left: -40px;
   top: -15px;
 }
@@ -84,4 +79,20 @@ input:read-only {
 
 .header {
   height: 300px;
+}
+
+@media (--small-viewport) {
+  .headerWrapper {
+    display: none;
+  }
+
+  .header {
+    height: 50px;
+  }
+}
+
+@media (--xSmall-viewport) {
+  .nextButton {
+    width: 100%;
+  }
 }

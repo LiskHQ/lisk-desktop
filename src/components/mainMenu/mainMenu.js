@@ -1,9 +1,11 @@
 import React from 'react';
-import { Tab, Tabs as ToolboxTabs, Drawer } from 'react-toolbox';
-import styles from './tabs.css';
+import { Tab, Tabs as ToolboxTabs } from 'react-toolbox/lib/tabs';
+import Drawer from 'react-toolbox/lib/drawer';
+import styles from './mainMenu.css';
 import logo from '../../assets/images/Lisk-Logo.svg';
-import * as menuLogos from '../../assets/images/sidebar-icons/*.svg'; //eslint-disable-line
+import * as menuLogos from '../../assets/images/main-menu-icons/*.svg'; //eslint-disable-line
 import { FontIcon } from '../fontIcon';
+import Setting from '../setting';
 
 const getTabs = (isDelegate, tabs) => tabs.filter(t => t.id !== 'forging' || isDelegate);
 
@@ -22,7 +24,7 @@ const TabTemplate = ({ img, label }) => (
 );
 
 
-class Tabs extends React.Component {
+class MainMenu extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -91,7 +93,8 @@ class Tabs extends React.Component {
               id={id}
               disabled={isCurrent(history, index, tabs)} />)}
         </ToolboxTabs>
-        <div onClick={this.menuToggle.bind(this)} id="moreMenu" className={styles.setting}>
+        <div onClick={this.menuToggle.bind(this)}
+          className={`${styles.more} more-menu`}>
           <FontIcon value='more' className={styles.readMoreIcon} />
           <span className={styles.readMoreText}>{t('more')}</span>
         </div>
@@ -99,26 +102,29 @@ class Tabs extends React.Component {
           className='drawer'
           active={this.state.active}
           onOverlayClick={this.menuToggle.bind(this)}>
-          <header className={styles.header}>
-            <img src={logo} className={styles.logo} />
-            <FontIcon value='close' className={styles.close} onClick={this.menuToggle.bind(this)} />
-          </header>
-          <ToolboxTabs index={getIndex(history, tabs)}
-            theme={styles}
-            onChange={this.navigate.bind(this, history, filterTabs)}
-            disableAnimatedBottomBorder={true}
-            className={`${styles.tabs} main-tabs`}>
-            {filterTabs.map(({ label, image, id }, index) =>
-              <Tab
-                key={index}
-                label={<TabTemplate label={label} img={image} />}
-                id={id}
-                disabled={isCurrent(history, index, tabs)} />)}
-          </ToolboxTabs>
+          <div>
+            <header className={styles.header}>
+              <img src={logo} className={styles.logo} />
+              <FontIcon value='close' className={styles.close} onClick={this.menuToggle.bind(this)} />
+            </header>
+            <ToolboxTabs index={getIndex(history, tabs)}
+              theme={styles}
+              onChange={this.navigate.bind(this, history, filterTabs)}
+              disableAnimatedBottomBorder={true}
+              className={`${styles.tabs} main-tabs`}>
+              {filterTabs.map(({ label, image, id }, index) =>
+                <Tab
+                  key={index}
+                  label={<TabTemplate label={label} img={image} />}
+                  id={id}
+                  disabled={isCurrent(history, index, tabs)} />)}
+            </ToolboxTabs>
+          </div>
+          <Setting />
         </Drawer>
       </div>
     );
   }
 }
 
-export default Tabs;
+export default MainMenu;

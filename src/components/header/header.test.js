@@ -39,6 +39,6 @@ describe('Header', () => {
   });
 
   it('renders 9 RelativeLink components', () => {
-    expect(wrapper.find(RelativeLink)).to.have.length(9);
+    expect(wrapper.find(RelativeLink)).to.have.length(7);
   });
 });

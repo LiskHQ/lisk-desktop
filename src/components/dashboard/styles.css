@@ -37,10 +37,6 @@
     width: calc(100% + 16px);
   }
 
-  .sendWrapper {
-    display: none;
-  }
-
   .graph {
     height: 30%;
     min-height: auto;
