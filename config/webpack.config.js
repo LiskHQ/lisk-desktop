@@ -27,7 +27,16 @@ module.exports = {
         },
       },
       {
-        test: /\.(eot|svg|ttf|woff|woff2|png)$/,
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        exclude: [/images/],
+        options: {
+          name: '[path][name].[ext]',
+        },
+        loader: 'file-loader',
+      },
+      {
+        test: /\.(png|svg)$/,
+        exclude: [/fonts/],
         loader: 'url-loader',
       },
       {
