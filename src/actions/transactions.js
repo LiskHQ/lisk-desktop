@@ -46,13 +46,18 @@ export const transactionsLoaded = data => ({
   type: actionTypes.transactionsLoaded,
 });
 
+export const transactionsReset = data => ({
+  data,
+  type: actionTypes.transactionsReset,
+});
+
 /**
  *
  *
  */
-export const transactionsRequested = ({ activePeer, address, limit, offset }) =>
+export const transactionsRequested = ({ activePeer, address, limit, offset, filter }) =>
   (dispatch) => {
-    transactions(activePeer, address, limit, offset)
+    transactions({ activePeer, address, limit, offset, filter })
       .then((response) => {
         dispatch(transactionsLoaded({
           count: parseInt(response.count, 10),
