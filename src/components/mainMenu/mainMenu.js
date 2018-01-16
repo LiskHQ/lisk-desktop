@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Tab, Tabs as ToolboxTabs } from 'react-toolbox/lib/tabs';
 import Drawer from 'react-toolbox/lib/drawer';
+import MenuBar from '../menuBar';
 import styles from './mainMenu.css';
 import logo from '../../assets/images/Lisk-Logo.svg';
 import * as menuLogos from '../../assets/images/main-menu-icons/*.svg'; //eslint-disable-line
@@ -78,35 +79,10 @@ class MainMenu extends React.Component {
     ];
     const filterTabs = getTabs(isDelegate, tabs);
     return (
-      <div className={styles.sideBarWrapper}>
-        <img src={logo} className={styles.logo} />
-        <ToolboxTabs index={getIndex(history, tabs)}
-          theme={styles}
-          onChange={this.navigate.bind(this, history, filterTabs)}
-          disableAnimatedBottomBorder={true}
-          className={`${styles.tabs} main-tabs`}>
-          {filterTabs.map(({ label, image, id }, index) =>
-            <Tab
-              key={index}
-              label={<TabTemplate label={label} img={image} />}
-              className={styles.tab}
-              id={id}
-              disabled={isCurrent(history, index, tabs)} />)}
-        </ToolboxTabs>
-        <div onClick={this.menuToggle.bind(this)}
-          className={`${styles.more} more-menu`}>
-          <FontIcon value='more' className={styles.readMoreIcon} />
-          <span className={styles.readMoreText}>{t('more')}</span>
-        </div>
-        <Drawer theme={styles}
-          className='drawer'
-          active={this.state.active}
-          onOverlayClick={this.menuToggle.bind(this)}>
-          <div>
-            <header className={styles.header}>
-              <img src={logo} className={styles.logo} />
-              <FontIcon value='close' className={styles.close} onClick={this.menuToggle.bind(this)} />
-            </header>
+      <Fragment>
+        <aside>
+          <div className={styles.sideBarWrapper}>
+            <img src={logo} className={styles.logo} />
             <ToolboxTabs index={getIndex(history, tabs)}
               theme={styles}
               onChange={this.navigate.bind(this, history, filterTabs)}
@@ -116,13 +92,43 @@ class MainMenu extends React.Component {
                 <Tab
                   key={index}
                   label={<TabTemplate label={label} img={image} />}
+                  className={styles.tab}
                   id={id}
                   disabled={isCurrent(history, index, tabs)} />)}
             </ToolboxTabs>
+            <div onClick={this.menuToggle.bind(this)}
+              className={`${styles.more} more-menu`}>
+              <FontIcon value='more' className={styles.readMoreIcon} />
+              <span className={styles.readMoreText}>{t('more')}</span>
+            </div>
+            <Drawer theme={styles}
+              className='drawer'
+              active={this.state.active}
+              onOverlayClick={this.menuToggle.bind(this)}>
+              <div>
+                <header className={styles.header}>
+                  <img src={logo} className={styles.logo} />
+                  <FontIcon value='close' className={styles.close} onClick={this.menuToggle.bind(this)} />
+                </header>
+                <ToolboxTabs index={getIndex(history, tabs)}
+                  theme={styles}
+                  onChange={this.navigate.bind(this, history, filterTabs)}
+                  disableAnimatedBottomBorder={true}
+                  className={`${styles.tabs} main-tabs`}>
+                  {filterTabs.map(({ label, image, id }, index) =>
+                    <Tab
+                      key={index}
+                      label={<TabTemplate label={label} img={image} />}
+                      id={id}
+                      disabled={isCurrent(history, index, tabs)} />)}
+                </ToolboxTabs>
+              </div>
+              <Setting />
+            </Drawer>
           </div>
-          <Setting />
-        </Drawer>
-      </div>
+        </aside>
+        <MenuBar />
+      </Fragment>
     );
   }
 }

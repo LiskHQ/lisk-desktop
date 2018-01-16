@@ -15,7 +15,6 @@ import BackgroundMaker from '../backgroundMaker';
 import Dialog from '../dialog';
 import Toaster from '../toaster';
 import MainMenu from '../mainMenu';
-import MenuBar from '../menuBar';
 import LoadingBar from '../loadingBar';
 import OfflineWrapper from '../offlineWrapper';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
@@ -24,9 +23,7 @@ const App = () => (
   <OfflineWrapper>
     <BackgroundMaker />
     <main className={`${styles.bodyWrapper}`}>
-      <aside>
-        <MainMenu />
-      </aside>
+      <MainMenu />
       <section>
         <div className={styles.mainBox}>
           <Header />
@@ -47,7 +44,6 @@ const App = () => (
         <Dialog />
         <Toaster />
         <LoadingBar />
-        <MenuBar />
       </section>
     </main>
   </OfflineWrapper>
