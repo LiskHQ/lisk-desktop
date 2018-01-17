@@ -2,13 +2,21 @@
 
 :root {
   --font-size-ids-h1: 4em;
+  --font-size-ids-h1-m: 3em;
+  --font-size-ids-h1-s: 2.5em;
   --font-size-card-h2: 2em;
+  --font-size-card-h2-m: 1.5em;
   --close-button-shadow: 0 20px 20px 0 rgba(0, 32, 68, 0.25);
   --h1-padding: 85px;
+  --h1-padding-m: 25px;
   --h1-width: 600px;
+  --h1-width-m: 400px;
+  --h1-width-s: 300px;
   --add-button-margin: 200px;
   --card-width: 347px;
   --card-height: 436px;
+  --card-width-m: 267px;
+  --card-height-m: 336px;
   --add-button-margin: 240px;
   --wrapper-margin: -24px;
 }
@@ -232,4 +240,74 @@
 .editIcon {
   margin-right: 5px;
   margin-top: -5px;
+}
+
+@media (--medium-viewport) {
+  .wrapper {
+    & > h1 {
+      font-size: var(--font-size-ids-h1-m);
+      padding: var(--h1-padding-m);
+      width: var(--h1-width-m);
+    }
+  }
+
+  .cardsWrapper {
+    padding: 0 40px;
+  }
+
+  .card {
+    width: var(--card-width-m);
+    height: var(--card-height-m);
+
+    & h2 {
+      font-size: var(--font-size-card-h2-m);
+    }
+  }
+
+  .removeConfirm {
+    height: var(--card-height-m);
+  }
+
+  .cardIcon {
+    width: 175px;
+    height: 175px;
+    margin: 38px 48px 32px;
+  }
+
+  .closeButton {
+    top: 35px;
+    right: 35px;
+  }
+
+  .addAcctiveAccountButton {
+    bottom: 60px;
+  }
+
+  .address {
+    margin-bottom: 20px;
+  }
+}
+
+@media (--small-viewport) {
+  .wrapper {
+    & > h1 {
+      font-size: var(--font-size-ids-h1-s);
+      width: var(--h1-width-s);
+    }
+  }
+
+  .cardsWrapper {
+    padding: 0;
+  }
+
+  .addAcctiveAccountButton {
+    bottom: 40px;
+  }
+}
+
+@media (--xSmall-viewport) {
+  .closeButton {
+    top: 15px;
+    right: 15px;
+  }
 }
