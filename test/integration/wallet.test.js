@@ -26,6 +26,7 @@ describe('@integration: Wallet', () => {
 
   beforeEach(() => {
     requestToActivePeerStub = stub(peers, 'requestToActivePeer');
+    const transactionExample = { senderId: 'sample_address', receiverId: 'some_address' };
 
     requestToActivePeerStub.withArgs(match.any, 'transactions', match({
       recipientId: '537318935439898807L',
@@ -35,13 +36,25 @@ describe('@integration: Wallet', () => {
     }))
       .returnsPromise().resolves({ transactionId: 'Some ID' });
     let transactions = new Array(25);
-    transactions.fill({ senderId: 'sample_address', receiverId: 'some_address' });
+    transactions.fill(transactionExample);
     requestToActivePeerStub.withArgs(match.any, 'transactions', match({ limit: 25 }))
       .returnsPromise().resolves({ transactions, count: 1000 });
 
     transactions = new Array(20);
-    transactions.fill({ senderId: 'sample_address', receiverId: 'some_address' });
+    transactions.fill(transactionExample);
     requestToActivePeerStub.withArgs(match.any, 'transactions', match({ limit: 20 }))
+      .returnsPromise().resolves({ transactions, count: 1000 });
+
+    // incoming transaction result
+    transactions = new Array(15);
+    transactions.fill(transactionExample);
+    requestToActivePeerStub.withArgs(match.any, 'transactions', match({ senderId: undefined }))
+      .returnsPromise().resolves({ transactions, count: 1000 });
+
+    // outgoing transaction result
+    transactions = new Array(5);
+    transactions.fill(transactionExample);
+    requestToActivePeerStub.withArgs(match.any, 'transactions', match({ recipientId: undefined }))
       .returnsPromise().resolves({ transactions, count: 1000 });
   });
 
@@ -89,6 +102,17 @@ describe('@integration: Wallet', () => {
 
   const checkRowCount = (length) => {
     expect(wrapper.find('TransactionRow')).to.have.length(length);
+  };
+
+  const checkSelectedFilter = (filter) => {
+    const expectedClass = '_active';
+
+    const activeFilter = wrapper.find('.transaction-filter-item').filterWhere((item) => {
+      const className = item.prop('className');
+      return className.includes(expectedClass);
+    });
+
+    expect(activeFilter.text().toLowerCase()).to.equal(filter);
   };
 
   describe('Send', () => {
@@ -168,7 +192,17 @@ describe('@integration: Wallet', () => {
       step('Then I should see 45 rows', checkRowCount.bind(null, 45));
     });
 
-    describe.skip('Scenario: should allow to filter transactions');
+    describe('Scenario: should allow to filter transactions', () => {
+      step('Given I\'m on "wallet" as "genesis" account', setupStep.bind(null, 'genesis'));
+      step('Then the "All" filter should be selected by default', checkSelectedFilter.bind(null, 'all'));
+      step('When I click on the "Outgoing" filter', clickStep.bind(null, 'filter out'));
+      step('Then I expect to see the results for "Outgoing"', checkRowCount.bind(null, 5));
+      step('When I click on the "Incoming" filter', clickStep.bind(null, 'filter in'));
+      step('Then I expect to see the results for "Incoming"', checkRowCount.bind(null, 15));
+      step('When I click again on the "All" filter', clickStep.bind(null, 'filter all'));
+      step('Then I expect to see the results for "All"', checkRowCount.bind(null, 20));
+    });
+
     describe.skip('Scenario: should allow to search transactions');
   });
 });

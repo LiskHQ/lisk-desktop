@@ -59,14 +59,17 @@ class Transactions extends React.Component {
       {
         name: this.props.t('All'),
         value: txFilters.all,
+        className: 'filter-all',
       },
       {
         name: this.isSmallScreen() ? this.props.t('In') : this.props.t('Incoming'),
         value: txFilters.incoming,
+        className: 'filter-in',
       },
       {
         name: this.isSmallScreen() ? this.props.t('Out') : this.props.t('Outgoing'),
         value: txFilters.outgoing,
+        className: 'filter-out',
       },
     ];
 
@@ -87,7 +90,7 @@ class Transactions extends React.Component {
 
         <ul className={styles.list}>
           {filters.map((filter, i) => (
-            <li key={i} className={`${styles.item} ${this.isActiveFilter(filter.value) ? styles.active : ''}`}
+            <li key={i} className={`transaction-filter-item ${filter.className} ${styles.item} ${this.isActiveFilter(filter.value) ? styles.active : ''}`}
               onClick={this.setActiveFilter.bind(this, filter.value)}>{filter.name}</li>
           ))}
         </ul>
