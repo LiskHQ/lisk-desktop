@@ -59,9 +59,6 @@ class Login extends React.Component {
       !this.alreadyLoggedWithThisAddress(prevProps.account.address, prevProps.peers.options)) {
       this.redirectToReferrer();
     }
-    if (!this.account) {
-      this.autoLogin();
-    }
   }
 
   redirectToReferrer() {
@@ -127,25 +124,6 @@ class Login extends React.Component {
   onFormSubmit(event) {
     event.preventDefault();
     this.onLoginSubmission(this.state.passphrase);
-  }
-
-  autoLogin() {
-    const { savedAccounts } = this.props;
-    if (savedAccounts && savedAccounts.lastActive && !this.props.account.afterLogout) {
-      this.account = savedAccounts.lastActive;
-      const network = Object.assign({}, getNetwork(this.account.network));
-      if (this.account.network === networks.customNode.code) {
-        network.address = this.account.address;
-      }
-
-      // set active peer
-      this.props.activePeerSet({
-        publicKey: this.account.publicKey,
-        network,
-      });
-    } else {
-      this.account = 'not-saved';
-    }
   }
 
   passFocused() {
