@@ -15,7 +15,7 @@
 @media (--medium-viewport) {
   .menuBar {
     position: fixed;
-    display: block;
+    display: flex;
     height: var(--m-menu-bar-height);
     width: 100%;
     bottom: 0;
@@ -26,16 +26,21 @@
     font-family: var(--heading-font);
     background-color: var(--color-white);
     z-index: 1;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+
+    &.openSetting {
+      color: #fff;
+      background: var(--color-grayscale-medium);
+      box-shadow: none;
+    }
   }
 
   .menuButton {
-    float: right;
-  }
-
-  .menuItem {
-    display: inline-block;
+    display: flex;
     padding: var(--menu-bar-padding);
     cursor: pointer;
+    user-select: none;
 
     & > * {
       font-size: inherit;
