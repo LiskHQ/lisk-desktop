@@ -308,6 +308,16 @@
   }
 }
 
+.wrapper.loading {
+  text-align: center;
+  padding: 20px;
+
+  & .login,
+  & .signUp {
+    display: none;
+  }
+}
+
 @media (--medium-viewport) {
   .login {
     height: calc(100vh - var(--m-top-bar-height) - var(--m-menu-bar-height)); /* stylelint-disable-line */

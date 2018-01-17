@@ -1,5 +1,5 @@
 import actionTypes from '../../constants/actions';
-import { accountLoggedOut } from '../../actions/account';
+import { accountLoading } from '../../actions/account';
 import { accountsRetrieved, accountSaved } from '../../actions/savedAccounts';
 import { activePeerSet } from '../../actions/peers';
 import getNetwork from '../../utils/getNetwork';
@@ -13,7 +13,7 @@ const savedAccountsMiddleware = (store) => {
     const { peers, account } = store.getState();
     switch (action.type) {
       case actionTypes.accountSwitched:
-        store.dispatch(accountLoggedOut());
+        store.dispatch(accountLoading());
         store.dispatch(activePeerSet({
           publicKey: action.data.publicKey,
           passphrase: action.data.passphrase,
