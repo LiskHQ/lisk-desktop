@@ -11,6 +11,12 @@ class Transactions extends React.Component {
   constructor(props) {
     super(props);
     this.canLoadMore = true;
+
+    this.props.history.listen((location) => {
+      if (location.pathname === '/main/dashboard') {
+        this.setActiveFilter(txFilters.all);
+      }
+    });
   }
 
   loadTransactions(filter, offset) {
@@ -38,10 +44,6 @@ class Transactions extends React.Component {
   componentDidUpdate() {
     const { count, transactions } = this.props;
     this.canLoadMore = count === null || count > transactions.length;
-  }
-
-  componentWillUnmount() {
-    this.setActiveFilter(txFilters.all);
   }
 
   setActiveFilter(filter) {

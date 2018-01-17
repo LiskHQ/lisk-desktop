@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
 import { transactionsRequested, transactionsReset } from '../../actions/transactions';
 import Transactions from './transactions';
@@ -21,4 +22,5 @@ const mapDispatchToProps = dispatch => ({
   transactionsReset: data => dispatch(transactionsReset(data)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(Transactions));
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translate()(Transactions)));
