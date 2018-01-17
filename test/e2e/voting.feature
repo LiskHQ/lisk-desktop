@@ -86,16 +86,6 @@ Feature: Voting page
     Then I should see alert dialog with title "Success" and text "Your votes were successfully submitted. It can take several seconds before they are processed."
 
   @integration
-  @pending
-  Scenario: should allow to select delegates in the "Vote" dialog and vote for them
-    Given I'm logged in as "delegate candidate"
-    When I click "voting" menu
-    And I click "vote button"
-    And Search twice for "genesis_7" in vote dialog
-    And I click "submit button"
-    Then I should see alert dialog with title "Success" and text "Your votes were successfully submitted. It can take several seconds before they are processed."
-
-  @integration
   Scenario: should allow to remove votes form delegates
     Given I'm logged in as "genesis"
     When I click "voting" menu
@@ -128,3 +118,13 @@ Feature: Voting page
       standby_2[789]
       standby_2[789]
       """
+
+  @integration
+  @pending
+  Scenario: should allow to select delegates in the "Vote" dialog and vote for them
+    Given I'm logged in as "delegate candidate"
+    When I click "voting" menu
+    And I click "vote button"
+    And Search twice for "genesis_7" in vote dialog
+    And I click "submit button"
+    Then I should see alert dialog with title "Success" and text "Your votes were successfully submitted. It can take several seconds before they are processed."

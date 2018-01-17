@@ -11,6 +11,7 @@ const {
   waitForElem,
   checkAlertDialog,
   waitTime,
+  clickOnOptionInList,
 } = require('../support/util.js');
 const accounts = require('../../constants/accounts.js');
 
@@ -105,7 +106,6 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
       .and.notify(callback);
   });
 
-
   Then('I should see no "{elementName}"', (elementName, callback) => {
     const selector = `.${elementName.replace(/ /g, '-')}`;
     waitForElemRemoved(selector).then(() => {
@@ -149,9 +149,18 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     const passphrase = browser.params.useTestnetPassphrase
       ? browser.params.testnetPassphrase
       : accounts[accountName].passphrase;
-
-    waitForElemAndSendKeys('.passphrase input', passphrase, () => {
-      waitForElemAndClickIt('.login-button', callback);
+    const networkIndex = browser.params.network === 'customNode' ? 3 : 2;
+    browser.sleep(100);
+    clickOnOptionInList(networkIndex, 'network', () => {
+      waitForElemAndSendKeys('.passphrase input', passphrase, () => {
+        if (browser.params.network === 'customNode') {
+          waitForElemAndSendKeys('.address input', browser.params.liskCoreURL, () => {
+            waitForElemAndClickIt('.login-button', callback);
+          });
+        } else {
+          waitForElemAndClickIt('.login-button', callback);
+        }
+      });
     });
   });
 

@@ -1,6 +1,7 @@
 import i18next from 'i18next';
 
-const validateUrl = (value) => {
+// eslint-disable-next-line import/prefer-default-export
+export const validateUrl = (value) => {
   const addHttp = (url) => {
     const reg = /^(?:f|ht)tps?:\/\//i;
     return reg.test(url) ? url : `http://${url}`;
@@ -21,13 +22,3 @@ const validateUrl = (value) => {
 
   return { address: value, addressValidity };
 };
-
-const getLoginData = () => {
-  const address = localStorage.getItem('address') || '';
-  const passphrase = localStorage.getItem('passphrase') || '';
-  const networkIndex = parseInt(localStorage.getItem('network'), 10) || 0;
-
-  return { address, networkIndex, passphrase };
-};
-
-export { validateUrl, getLoginData };

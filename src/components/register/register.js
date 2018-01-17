@@ -8,7 +8,6 @@ import Confirm from '../passphrase/confirm';
 import networks from '../../constants/networks';
 import getNetwork from '../../utils/getNetwork';
 import Box from '../box';
-import { validateUrl, getLoginData } from '../../utils/login';
 import styles from './register.css';
 
 
@@ -20,15 +19,7 @@ class Register extends React.Component {
   }
 
   onRegister(passphrase) {
-    const { networkIndex, address } = getLoginData();
-
-    let index = networkIndex;
-    if (!index || (index === networks.customNode.code && validateUrl(address).addressValidity !== '')) {
-      index = networks.mainnet.code;
-    }
-
-    const network = Object.assign({}, getNetwork(index));
-    if (index === networks.customNode.code) { network.address = address; }
+    const network = Object.assign({}, getNetwork(networks.mainnet.code));
 
     // set active peer
     this.props.activePeerSet({
