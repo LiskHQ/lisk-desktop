@@ -30,11 +30,13 @@ class MainMenu extends React.Component {
     super();
     this.state = {
       active: false,
+      setting: false,
     };
   }
 
   menuToggle() {
-    this.setState({ active: !this.state.active });
+    const setting = !this.state.active ? false : this.state.setting;
+    this.setState({ active: !this.state.active, setting });
   }
 
   navigate(history, tabs, index) {
@@ -42,6 +44,12 @@ class MainMenu extends React.Component {
       this.setState({ active: false });
       history.push(`/main/${tabs[index].id}`);
     }
+  }
+
+  settingToggle() {
+    this.setState({
+      setting: !this.state.setting,
+    });
   }
 
   render() {
@@ -56,17 +64,9 @@ class MainMenu extends React.Component {
         id: 'transactions',
         image: menuLogos.wallet,
       }, {
-        label: t('Buy Lisk'),
-        id: 'butLisk',
-        image: menuLogos.buyLisk,
-      }, {
         label: t('Delegates'),
         id: 'voting',
         image: menuLogos.delegates,
-      }, {
-        label: t('Forging'),
-        id: 'forging',
-        image: menuLogos.sidechains,
       }, {
         label: t('Sidechains'),
         id: 'sidechains',
@@ -123,11 +123,15 @@ class MainMenu extends React.Component {
                       disabled={isCurrent(history, index, tabs)} />)}
                 </ToolboxTabs>
               </div>
-              <Setting />
+              <Setting showSetting={this.state.setting} />
             </Drawer>
           </div>
         </aside>
-        <MenuBar menu={this.menuToggle.bind(this)} />
+        <MenuBar
+          menuToggle={this.menuToggle.bind(this)}
+          settingToggle={this.settingToggle.bind(this)}
+          menuStatus={this.state.active}
+          settingStatus={this.state.setting} />
       </Fragment>
     );
   }

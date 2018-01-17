@@ -13,12 +13,6 @@
   text-align: center;
 }
 
-@media (--xSmall-viewport) {
-  .sideBarWrapper {
-    display: none;
-  }
-}
-
 .logo {
   margin: 40px 0;
 }
@@ -68,6 +62,8 @@
 @media (max-height: 920px) {
   .drawer.left {
     display: block;
+    overflow: hidden;
+    height: 100%;
   }
 }
 
@@ -86,6 +82,20 @@
   width: auto;
   cursor: pointer;
   color: var(--more-menu-color);
+}
+
+@media (--medium-viewport) {
+  .header {
+    padding: 0;
+  }
+
+  .close {
+    display: none;
+  }
+
+  .logo {
+    margin: 20px auto;
+  }
 }
 
 .label {
@@ -179,4 +189,21 @@
 .readMoreIcon {
   font-size: 65px;
   width: 100%;
+}
+
+@media (--xSmall-viewport) {
+  .sideBarWrapper {
+    display: none;
+  }
+
+  .label {
+    padding: 25px 10px;
+  }
+
+  .label.active::before {
+    top: auto;
+    width: 100%;
+    bottom: 0;
+    height: 5px;
+  }
 }
