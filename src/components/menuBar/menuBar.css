@@ -8,6 +8,10 @@
   display: none;
 }
 
+.openMenu {
+  z-index: 1000 !important;
+}
+
 @media (--medium-viewport) {
   .menuBar {
     position: fixed;
