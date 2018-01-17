@@ -303,6 +303,18 @@
   .addAcctiveAccountButton {
     bottom: 40px;
   }
+
+  .deviceIos {
+    & .addAcctiveAccountButton {
+      bottom: 180px;
+    }
+  }
+
+  .deviceAndroid {
+    & .addAcctiveAccountButton {
+      bottom: 120px;
+    }
+  }
 }
 
 @media (--xSmall-viewport) {
