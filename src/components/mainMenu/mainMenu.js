@@ -127,7 +127,7 @@ class MainMenu extends React.Component {
             </Drawer>
           </div>
         </aside>
-        <MenuBar />
+        <MenuBar menu={this.menuToggle.bind(this)} />
       </Fragment>
     );
   }
