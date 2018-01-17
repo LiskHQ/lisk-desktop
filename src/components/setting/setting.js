@@ -1,12 +1,9 @@
 import React from 'react';
 import ReactSwipe from 'react-swipe';
 import styles from './setting.css';
-import languageSwitcherTheme from './languageSwitcher.css';
 // eslint-disable-next-line import/no-named-as-default
 import SliderCheckbox from '../toolbox/checkbox';
-import RelativeLink from '../relativeLink';
 import i18n from '../../i18n';
-import { FontIcon } from '../fontIcon';
 
 class Setting extends React.Component {
   constructor() {
@@ -33,7 +30,7 @@ class Setting extends React.Component {
 
   render() {
     this.language = (i18n.language === 'de');
-    const { t, hasSecondPassphrase } = this.props;
+    const { t } = this.props;
     return <footer className={styles.wrapper}>
       <ReactSwipe
         className={styles.carousel}
@@ -70,6 +67,7 @@ class Setting extends React.Component {
             <p>{t('Delegate section will be displayed.')}</p>
           </article>
         </div>
+        {/* TODO: will be re-enabled when the functionality is updated
         <div>
           <SliderCheckbox
             theme={languageSwitcherTheme}
@@ -109,9 +107,10 @@ class Setting extends React.Component {
             <p>{t('Register 2nd passphrase')}</p>
           </article>
         </div>
+        */}
       </ReactSwipe>
       <ul className={ styles.carouselNav } id='carouselNav'>
-        {[...Array(4)].map((x, i) =>
+        {[...Array(2)].map((x, i) =>
           <li
             key={i}
             className={(i === this.state.activeSlide) ? styles.activeSlide : ''}

@@ -49,13 +49,6 @@ const Header = props => (
                 menuRipple
                 theme={styles}
               >
-                {
-                  !props.account.isDelegate &&
-              <MenuItem theme={styles}>
-                <RelativeLink className={`register-as-delegate ${styles.link}`}
-                  to='register-delegate'>{props.t('Register as delegate')}</RelativeLink>
-              </MenuItem>
-                }
                 <MenuItem theme={styles}>
                   <RelativeLink className={`sign-message ${styles.link}`} to='sign-message'>{props.t('Sign message')}</RelativeLink>
                 </MenuItem>
