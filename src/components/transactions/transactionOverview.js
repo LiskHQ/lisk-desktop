@@ -5,34 +5,19 @@ import TransactionList from './transactionList';
 import LiskAmount from '../liskAmount';
 import Box from '../box';
 import styles from './transactions.css';
+import { setFilterAndReload, loadTransactions } from './../../utils/transactions';
 import txFilters from './../../constants/transactionFilters';
 
 class Transactions extends React.Component {
   constructor(props) {
     super(props);
     this.canLoadMore = true;
-
-    this.props.history.listen((location) => {
-      if (location.pathname === '/main/dashboard') {
-        this.setActiveFilter(txFilters.all);
-      }
-    });
-  }
-
-  loadTransactions(filter, offset) {
-    this.props.transactionsRequested({
-      activePeer: this.props.activePeer,
-      address: this.props.address,
-      limit: 20,
-      offset,
-      filter,
-    });
   }
 
   loadMore() {
     if (this.canLoadMore) {
       this.canLoadMore = false;
-      this.loadTransactions(this.props.activeFilter, this.props.transactions.length);
+      loadTransactions({ filter: this.props.activeFilter, offset: this.props.transactions.length });
     }
   }
 
@@ -44,11 +29,6 @@ class Transactions extends React.Component {
   componentDidUpdate() {
     const { count, transactions } = this.props;
     this.canLoadMore = count === null || count > transactions.length;
-  }
-
-  setActiveFilter(filter) {
-    this.props.transactionsReset({ filter });
-    this.loadTransactions(filter);
   }
 
   isActiveFilter(filter) {
@@ -93,15 +73,20 @@ class Transactions extends React.Component {
         <ul className={styles.list}>
           {filters.map((filter, i) => (
             <li key={i} className={`transaction-filter-item ${filter.className} ${styles.item} ${this.isActiveFilter(filter.value) ? styles.active : ''}`}
-              onClick={this.setActiveFilter.bind(this, filter.value)}>{filter.name}</li>
+              onClick={setFilterAndReload.bind(this, { filter: filter.value })}>{filter.name}</li>
           ))}
         </ul>
-        <TransactionList
-          address={this.props.address}
-          transactions={this.props.transactions}
-          loadMore={this.loadMore.bind(this)}
-          nextStep={this.props.nextStep}
-          t={this.props.t} />
+        {
+          // temporary solution until we have proper loaders
+          !this.props.loading.length
+            ? <TransactionList
+              address={this.props.address}
+              transactions={this.props.transactions}
+              loadMore={this.loadMore.bind(this)}
+              nextStep={this.props.nextStep}
+              t={this.props.t}/>
+            : null
+        }
         {
           // the whole transactions box should be scrollable on XS
           // otherwise only the transaction list should be scrollable

@@ -46,9 +46,9 @@ export const transactionsLoaded = data => ({
   type: actionTypes.transactionsLoaded,
 });
 
-export const transactionsReset = data => ({
+export const transactionsFilterSet = data => ({
   data,
-  type: actionTypes.transactionsReset,
+  type: actionTypes.transactionsFilterSet,
 });
 
 /**

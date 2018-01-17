@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
-import { transactionsRequested, transactionsReset } from '../../actions/transactions';
+import { transactionsRequested } from '../../actions/transactions';
 import Transactions from './transactions';
 
 const mapStateToProps = state => ({
@@ -15,12 +14,12 @@ const mapStateToProps = state => ({
   confirmed: state.transactions.confirmed,
   pending: state.transactions.pending,
   activeFilter: state.transactions.filter,
+  loading: state.loading,
 });
 
 const mapDispatchToProps = dispatch => ({
   transactionsRequested: data => dispatch(transactionsRequested(data)),
-  transactionsReset: data => dispatch(transactionsReset(data)),
 });
 
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translate()(Transactions)));
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(Transactions));
