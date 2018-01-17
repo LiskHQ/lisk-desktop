@@ -72,7 +72,7 @@ class SendWritable extends React.Component {
 
   render() {
     return (
-      <div className='boxPadding'>
+      <div className={`${styles.sendWrapper} boxPadding`}>
         <div className={styles.header}>
           <header className={styles.headerWrapper}>
             <h2>Transfer</h2>
@@ -103,21 +103,20 @@ class SendWritable extends React.Component {
             theme={styles}
             onChange={this.handleChange.bind(this, 'amount')} />
           <div className={styles.fee}> {this.props.t('Fee: {{fee}} LSK', { fee: fromRawLsk(this.fee) })} </div>
-
-          <footer>
-            <Button onClick={() => this.props.nextStep({
-              recipient: this.state.recipient.value,
-              amount: this.state.amount.value,
-            })}
-            disabled={(!!this.state.recipient.error ||
-                          !this.state.recipient.value ||
-                          !!this.state.amount.error ||
-                          !this.state.amount.value)}
-            className={`send-next-button ${styles.nextButton}`}
-            >{this.props.t('Next')}</Button>
-            <div className='subTitle'>{this.props.t('Confirmation in the next step.')}</div>
-          </footer>
         </form>
+        <footer>
+          <Button onClick={() => this.props.nextStep({
+            recipient: this.state.recipient.value,
+            amount: this.state.amount.value,
+          })}
+          disabled={(!!this.state.recipient.error ||
+                    !this.state.recipient.value ||
+                    !!this.state.amount.error ||
+                    !this.state.amount.value)}
+          className={`send-next-button ${styles.nextButton}`}
+          >{this.props.t('Next')}</Button>
+          <div className='subTitle'>{this.props.t('Confirmation in the next step.')}</div>
+        </footer>
       </div>
     );
   }

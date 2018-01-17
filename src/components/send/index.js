@@ -36,7 +36,8 @@ class Send extends React.Component {
             onClick={this.setSendIsActive.bind(this, false)}>
             {t('Close')} <FontIcon value='close' />
           </span>
-          <MultiStep finalCallback={this.setSendIsActive.bind(this, false)}>
+          <MultiStep finalCallback={this.setSendIsActive.bind(this, false)}
+            className={styles.wrapper}>
             <SendWritable autoFocus={this.state.sendIsActive || window.innerWidth > 1024}/>
             <SendReadable />
             <ResultBox />

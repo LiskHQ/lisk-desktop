@@ -51,7 +51,7 @@ describe('Send Readable Component', () => {
   it('allows to send a transaction', () => {
     wrapper.find('.amount input').simulate('change', { target: { value: '120.25' } });
     wrapper.find('.recipient input').simulate('change', { target: { value: '11004588490103196952L' } });
-    wrapper.find('.send-button button').simulate('submit');
+    wrapper.find('.send-button button').simulate('click');
     expect(props.sent).to.have.been.calledWith({
       account: props.account,
       activePeer: {},

@@ -1,9 +1,8 @@
-@import '../app/variables.css';
+@import './../app/variables.css';
 
 .wrapper {
   position: relative;
   width: 100%;
-  height: var(--main-box-height);
   display: flex;
   box-sizing: border-box;
   background: var(--color-white);
@@ -14,13 +13,10 @@
   overflow: auto;
   overflow-x: hidden;
   margin: 0px;
+  height: var(--main-box-height);
 
   & footer {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    padding: 50px 30px 20px;
+    padding: 50px 0px;
     text-align: center;
 
     & :global .subTitle {
