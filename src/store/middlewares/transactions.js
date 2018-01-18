@@ -34,7 +34,7 @@ const filterTransactions = (store, action) => {
   getTransactions({
     activePeer: store.getState().peers.data,
     address: store.getState().account.address,
-    limit: 20,
+    limit: 25,
     filter: action.data.filter })
     .then((response) => {
       store.dispatch(transactionsFiltered({

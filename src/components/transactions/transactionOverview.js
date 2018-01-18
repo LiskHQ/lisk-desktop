@@ -19,7 +19,7 @@ class Transactions extends React.Component {
       this.props.transactionsRequested({
         activePeer: this.props.activePeer,
         address: this.props.address,
-        limit: 20,
+        limit: 25,
         offset: this.props.transactions.length,
         filter: this.props.activeFilter,
       });
