@@ -1,10 +1,20 @@
-@import '../app/variables';
+@import './../app/variables.css';
 
 :root {
   --gradient: linear-gradient(45deg, rgba(0, 74, 255, 1) 0%, rgba(147, 244, 254, 1) 100%);
   --transition: all ease 300ms;
   --header-focused-font-size: 32px;
   --rect-width: 200px;
+  --login-box-padding-L: 48px;
+  --login-box-padding-XL: 56px;
+  --signup-box-padding-L: 48px;
+  --signup-box-padding-XL: 72px;
+  --focused-signup-box-padding-XL: 31px;
+  --focused-signup-box-padding-L: 24px;
+}
+
+footer {
+  padding-bottom: 0px;
 }
 
 @keyframes delayedFadeIn {
@@ -28,7 +38,6 @@
 .login,
 .signUp {
   transition: var(--transition);
-  padding: 0 40px;
   position: relative;
   box-sizing: border-box;
   float: left;
@@ -43,6 +52,8 @@
 
   & h2 {
     color: var(--color-black);
+    margin-top: 102px;
+    margin-bottom: 20px;
   }
 
   & form button {
@@ -87,7 +98,6 @@
 
   &.focused {
     transform: translateZ(0);
-    width: 75%;
 
     & form button {
       display: inline-block;
@@ -95,7 +105,7 @@
 
     & h2 {
       font-size: var(--header-focused-font-size);
-      margin-top: 4em;
+      margin-top: 8em;
     }
   }
 }
@@ -170,8 +180,8 @@
     }
 
     &.circle {
-      right: 10% !important;
-      bottom: 7% !important;
+      right: 5% !important;
+      bottom: 0% !important;
       left: auto !important;
       top: auto !important;
       width: 150px;
@@ -202,9 +212,11 @@
 
   & h2 {
     color: var(--color-white);
+    margin-top: 0px;
+    margin-bottom: 24px;
   }
 
-  & h5,
+  & .subTitle,
   & a,
   & .singUpArrow {
     color: var(--color-white);
@@ -216,8 +228,9 @@
     font-size: 1.2em;
   }
 
-  & h5 {
-    max-width: 320px;
+  & .subTitle {
+    max-width: 275px;
+    line-height: 28px;
   }
 
   & a {
@@ -230,15 +243,20 @@
   }
 
   &.focused {
-    width: 25%;
     transform: translateZ(0);
 
     & h2 {
       font-size: var(--header-focused-font-size);
     }
 
-    & h5 {
+    & .subTitle {
       font-size: 1em;
+    }
+
+    & .shape {
+      &.triangle {
+        right: -25% !important;
+      }
     }
   }
 }
@@ -323,9 +341,73 @@
   clear: both;
 }
 
+@media (--xLarge-viewport) {
+  .login {
+    padding: 0 var(--login-box-padding-XL);
+
+    &.focused {
+      width: 75%;
+    }
+  }
+
+  .signUp,
+  .login {
+    & h2 {
+      font-size: 65px;
+    }
+  }
+
+  .signUp {
+    padding: 0 var(--signup-box-padding-XL);
+
+    & .subTitle {
+      font-size: 18px;
+    }
+
+    &.focused {
+      width: 25%;
+      padding: 0 var(--focused-signup-box-padding-XL);
+    }
+  }
+}
+
+@media (--large-viewport) {
+  .login {
+    padding: 0 var(--login-box-padding-L);
+
+    &.focused {
+      width: 68%;
+    }
+  }
+
+  .signUp,
+  .login {
+    & h2 {
+      font-size: 50px;
+    }
+  }
+
+  .signUp {
+    padding: 0 var(--signup-box-padding-L);
+
+    & .subTitle {
+      font-size: 16px;
+    }
+
+    &.focused {
+      width: 32%;
+      padding: 0 var(--focused-signup-box-padding-L);
+    }
+  }
+}
+
 @media (--medium-viewport) {
   .login {
     height: calc(100vh - var(--m-top-bar-height) - var(--m-menu-bar-height)); /* stylelint-disable-line */
+
+    & h2 {
+      margin-top: 122px;
+    }
   }
 
   .signUp {

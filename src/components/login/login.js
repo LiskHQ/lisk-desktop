@@ -152,7 +152,7 @@ class Login extends React.Component {
               </a>
             </header>
             <div className={`${styles.tableCell} text-left`}>
-              <h2>{this.props.t('Sign In')}</h2>
+              <h2>{this.props.t('Sign in')}</h2>
               <form onSubmit={this.onFormSubmit.bind(this)}>
                 {this.showNetworkOptions()
                   ? <div className={styles.outTaken}>
@@ -187,7 +187,7 @@ class Login extends React.Component {
                   onChange={this.changeHandler.bind(this, 'passphrase')} />
                 <footer className={ `${grid.row} ${grid['center-xs']}` }>
                   <div className={grid['col-xs-12']}>
-                    <PrimaryButton label={this.props.t('Login')}
+                    <PrimaryButton label={this.props.t('Log in')}
                       className='login-button'
                       type='submit'
                       disabled={(this.state.network === networks.customNode.code && this.state.addressValidity !== '') ||
@@ -203,12 +203,14 @@ class Login extends React.Component {
             <div className={`${styles.tableCell} text-left`}>
               <h2>
                 <Link className='new-account-button' to='/register'>
-                  {this.props.t('Get Access')}
+                  {this.props.t('Get access')}
                 </Link>
                 <FontIcon className={styles.singUpArrow} value='arrow-right' />
               </h2>
 
-              <h5>Create an address as a gateway to all Lisk Services.</h5>
+              <div className={styles.subTitle}>
+                Create an address as a gateway to all Lisk Services.
+              </div>
             </div>
           </section>
           <div className={styles.bg}></div>

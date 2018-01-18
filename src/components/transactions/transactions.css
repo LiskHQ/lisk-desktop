@@ -1,9 +1,6 @@
 @import '../app/variables.css';
 
 :root {
-  --font-weight-semi-bold: 500;
-  --font-weight-bold: 600;
-  --font-weight-very-bold: 700;
   --grid-header-color: var(--color-black);
   --amount-positive-color: var(--color-success-dark);
   --amount-negative-color: var(--color-grayscale-dark);

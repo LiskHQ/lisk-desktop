@@ -1,9 +1,10 @@
 @import '../app/variables.css';
 
 :root {
-  --icon-font-size: 32px;
+  --icon-font-size: 22px;
   --tab-inactive-color: --color-grayscale-dark;
-  --error-font-size: 14px;
+  --error-font-size-XL: 16px;
+  --error-font-size-L: 14px;
 }
 
 .wrapper {
@@ -18,19 +19,17 @@
 .inputTypeToggle {
   position: absolute;
   right: 0;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: var(--font-weight-semi-bold);
   color: #2475b9 !important;
-  top: -55px;
+  top: -45px;
+  cursor: pointer;
 
   & label {
     text-transform: capitalize;
-    vertical-align: middle;
-    cursor: pointer;
   }
 
   & .eyeIcon {
-    vertical-align: middle;
-    cursor: pointer;
     font-size: var(--icon-font-size);
   }
 }
@@ -41,9 +40,8 @@
 
 .errorMessage {
   color: var(--color-error);
-  font-size: var(--error-font-size);
   height: 20px;
-  font-weight: 600;
+  font-weight: var(--font-weight-semi-bold);
   padding-top: 10px;
 }
 
@@ -57,10 +55,22 @@
 
 @media (--small-viewport) {
   .inputTypeToggle {
-    top: -40px;
+    top: -80px;
   }
 
   .wrapper {
     margin-top: 50px;
+  }
+}
+
+@media (--large-viewport) {
+  .errorMessage {
+    font-size: var(--error-font-size-L);
+  }
+}
+
+@media (--xLarge-viewport) {
+  .errorMessage {
+    font-size: var(--error-font-size-XL);
   }
 }
