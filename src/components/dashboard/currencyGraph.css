@@ -1,7 +1,8 @@
 @import '../app/variables';
 
 .wrapper {
-  height: calc(70% - 20px);
+  height: 100%;
+  position: relative;
 
   & h2 {
     margin: 40px 32px 20px;
@@ -10,9 +11,12 @@
 }
 
 .chartWrapper {
-  height: calc(100% + 50px);
+  height: calc(80% + 50px);
   width: calc(100% + 50px);
-  margin: 90px -25px -170px;
+  margin: 10px -25px 0px;
+  position: absolute;
+  bottom: -10px;
+  left: 0;
 }
 
 @media (--medium-viewport) {

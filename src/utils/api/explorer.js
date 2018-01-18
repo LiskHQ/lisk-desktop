@@ -1,9 +1,12 @@
 
 const explorerApi = {
-  getCurrencyGrapData: () => explorerApi.getCandles().candles.map(c => ({
-    x: new Date(c.date),
-    y: c.high,
-  })),
+  getCurrencyGrapData: () => {
+    const { candles } = explorerApi.getCandles();
+    return candles.slice(Math.max(candles.length - 8, 1)).map(c => ({
+      x: new Date(c.date),
+      y: c.high,
+    }));
+  },
   getCandles: () => ({
     success: true,
     timeframe: 'hour',
@@ -68,6 +71,20 @@ const explorerApi = {
       {
         timestamp: 1507744800,
         date: '2017-10-11T18:00:00.000Z',
+        high: '0.00111569',
+        low: '0.00111250',
+        open: '0.00111569',
+        close: '0.00111250',
+        liskVolume: '178.00000000',
+        btcVolume: '0.19853540',
+        firstTrade: 3712832,
+        lastTrade: 3712834,
+        nextEnd: 1507740994,
+        numTrades: 3,
+      },
+      {
+        timestamp: 1507744800,
+        date: '2017-10-11T19:00:00.000Z',
         high: '0.00111569',
         low: '0.00111250',
         open: '0.00111569',

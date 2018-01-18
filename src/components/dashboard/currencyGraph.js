@@ -1,4 +1,4 @@
-import { Line as LineChart } from 'react-chartjs-2';
+import { Line as LineChart, Chart } from 'react-chartjs-2';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import moment from 'moment';
@@ -6,6 +6,8 @@ import React from 'react';
 import explorerApi from '../../utils/api/explorer';
 
 import styles from './currencyGraph.css';
+
+const bottomPadding = 15;
 
 const chartOptions = {
   maintainAspectRatio: false,
@@ -18,7 +20,17 @@ const chartOptions = {
   scales: {
     xAxes: [{
       type: 'time',
+      time: {
+        displayFormats: {
+          minute: 'H:mm',
+        },
+      },
       distribution: 'series',
+      ticks: {
+        fontColor: '#204F9F',
+        fontSize: 14,
+        fontFamily: '\'Open Sans\', sans-serif',
+      },
       gridLines: {
         display: false,
       },
@@ -35,7 +47,7 @@ const chartOptions = {
       left: 0,
       right: 0,
       top: 80,
-      bottom: 0,
+      bottom: bottomPadding,
     },
   },
   elements: {
@@ -71,12 +83,18 @@ const chartOptions = {
   },
 };
 
-const chartData = (canvas) => {
-  const ctx = canvas.getContext('2d');
+const getGradient = (ctx) => {
   const gradient = ctx.createLinearGradient(0, 0, 800, 0);
   gradient.addColorStop(0, '#004AFF');
   gradient.addColorStop(0.5, '#57AFFF');
   gradient.addColorStop(1, '#93F4FE');
+  return gradient;
+};
+
+const chartData = (canvas) => {
+  const ctx = canvas.getContext('2d');
+  const gradient = getGradient(ctx);
+
   return {
     datasets: [{
       data: explorerApi.getCurrencyGrapData(),
@@ -87,14 +105,39 @@ const chartData = (canvas) => {
   };
 };
 
-const CurrencyGraph = ({ t }) => (
-  <div className={`${styles.wrapper}`} >
-    <h2>{t('LSK/BTC')}</h2>
-    <div className={`${styles.chartWrapper}`} >
-      <LineChart data={chartData} options={chartOptions}/>
+const CurrencyGraph = ({ t }) => {
+  Chart.pluginService.register({
+    beforeDraw(chartInstance) {
+      const { ctx } = chartInstance.chart;
+      const gradient = getGradient(ctx);
+
+      ctx.fillStyle = gradient;
+      ctx.fillRect(
+        0, chartInstance.chart.height - bottomPadding - 35,
+        chartInstance.chart.width, 50,
+      );
+    },
+    afterDraw(chartInstance) {
+      const { ctx } = chartInstance.chart;
+      const gradient = getGradient(ctx);
+
+      ctx.fillStyle = gradient;
+      ctx.fillRect(
+        0, chartInstance.chart.height - bottomPadding - 32,
+        chartInstance.chart.width, 5,
+      );
+    },
+  });
+
+  return (
+    <div className={`${styles.wrapper}`} >
+      <h2>{t('LSK/BTC')}</h2>
+      <div className={`${styles.chartWrapper}`} >
+        <LineChart data={chartData} options={chartOptions}/>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const mapStateToProps = state => ({
   transactions: [...state.transactions.pending, ...state.transactions.confirmed].slice(0, 3),
