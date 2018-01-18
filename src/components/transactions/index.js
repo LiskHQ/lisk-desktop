@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import { transactionsRequested } from '../../actions/transactions';
+import { transactionsRequested, transactionsFilterSet } from '../../actions/transactions';
 import Transactions from './transactions';
 
 const mapStateToProps = state => ({
@@ -19,6 +19,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   transactionsRequested: data => dispatch(transactionsRequested(data)),
+  transactionsFilterSet: data => dispatch(transactionsFilterSet(data)),
 });
 
 

@@ -11,6 +11,7 @@ import transactionReducer from '../../src/store/reducers/transactions';
 import peersReducer from '../../src/store/reducers/peers';
 import loginMiddleware from '../../src/store/middlewares/login';
 import accountMiddleware from '../../src/store/middlewares/account';
+import transactionsMiddleware from '../../src/store/middlewares/transactions';
 import { accountLoggedIn } from '../../src/actions/account';
 import Wallet from '../../src/components/transactionDashboard';
 import accounts from '../constants/accounts';
@@ -72,6 +73,7 @@ describe('@integration: Wallet', () => {
       thunk,
       accountMiddleware,
       loginMiddleware,
+      transactionsMiddleware,
     ]);
 
     const passphrase = isLocked ? undefined : accounts[accountType].passphrase;

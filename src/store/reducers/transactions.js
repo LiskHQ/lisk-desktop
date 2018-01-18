@@ -45,10 +45,11 @@ const transactions = (state = { pending: [], confirmed: [], count: null }, actio
         ],
         count: action.data.count,
       });
-    case (actionTypes.transactionsFilterSet):
+    case (actionTypes.transactionsFiltered):
       return Object.assign({}, state, {
-        confirmed: [], count: 0, filter: action.data.filter },
-      );
+        confirmed: action.data.confirmed,
+        count: action.data.count,
+        filter: action.data.filter });
     case (actionTypes.accountLoggedOut):
       return { pending: [], confirmed: [], count: 0 };
     default:

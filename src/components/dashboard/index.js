@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import React from 'react';
-import { setFilterAndReload } from './../../utils/transactions';
+import { transactionsFilterSet } from '../../actions/transactions';
 import txFilters from './../../constants/transactionFilters';
 import { FontIcon } from '../fontIcon';
 import Box from '../box';
@@ -15,7 +15,7 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     if (this.props.transactions.filter !== txFilters.all) {
-      setFilterAndReload({ filter: txFilters.all });
+      this.props.transactionsFilterSet({ filter: txFilters.all });
     }
   }
 
@@ -49,4 +49,9 @@ const mapStateToProps = state => ({
   transactions: [...state.transactions.pending, ...state.transactions.confirmed].slice(0, 3),
 });
 
-export default connect(mapStateToProps)(translate()(Dashboard));
+const mapDispatchToProps = dispatch => ({
+  transactionsFilterSet: data => dispatch(transactionsFilterSet(data)),
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(Dashboard));

@@ -51,6 +51,11 @@ export const transactionsFilterSet = data => ({
   type: actionTypes.transactionsFilterSet,
 });
 
+export const transactionsFiltered = data => ({
+  data,
+  type: actionTypes.transactionsFiltered,
+});
+
 /**
  *
  *
