@@ -4,7 +4,7 @@ Feature: Transactions page
     When I click "transactions" menu
     Then I should see 25 rows
     When I scroll to the bottom of "transaction results"
-    Then I should see 45 rows
+    Then I should see 50 rows
 
   Scenario: should provide "Receive LSK" modal if there are "No transactions" 
     Given I'm logged in as "empty account"
