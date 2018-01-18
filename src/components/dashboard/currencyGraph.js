@@ -105,27 +105,30 @@ const chartData = (canvas) => {
   };
 };
 
+const drawGradientRectangle = (chartInstance, { bottomPosition, height }) => {
+  const { ctx } = chartInstance.chart;
+  const gradient = getGradient(ctx);
+
+  ctx.fillStyle = gradient;
+  ctx.fillRect(
+    0, chartInstance.chart.height - bottomPosition,
+    chartInstance.chart.width, height,
+  );
+};
+
 const CurrencyGraph = ({ t }) => {
   Chart.pluginService.register({
     beforeDraw(chartInstance) {
-      const { ctx } = chartInstance.chart;
-      const gradient = getGradient(ctx);
-
-      ctx.fillStyle = gradient;
-      ctx.fillRect(
-        0, chartInstance.chart.height - bottomPadding - 35,
-        chartInstance.chart.width, 50,
-      );
+      drawGradientRectangle(chartInstance, {
+        bottomPosition: bottomPadding + 35,
+        height: 50,
+      });
     },
     afterDraw(chartInstance) {
-      const { ctx } = chartInstance.chart;
-      const gradient = getGradient(ctx);
-
-      ctx.fillStyle = gradient;
-      ctx.fillRect(
-        0, chartInstance.chart.height - bottomPadding - 32,
-        chartInstance.chart.width, 5,
-      );
+      drawGradientRectangle(chartInstance, {
+        bottomPosition: bottomPadding + 32,
+        height: 5,
+      });
     },
   });
 
