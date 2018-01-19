@@ -47,6 +47,7 @@
   position: absolute;
   z-index: 9;
   bottom: 30px;
+  left: 0;
 
   & li {
     display: inline-block;
@@ -120,7 +121,7 @@
   background: var(--secondPassphrase-color);
 }
 
-@media (--xSmall-viewport) {
+@media (--medium-viewport) {
   .wrapper {
     position: absolute;
     width: 100%;
