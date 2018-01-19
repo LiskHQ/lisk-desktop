@@ -22,7 +22,6 @@ Feature: Register second passphrase
     And I click "get to your dashboard button"
     Then I should see alert dialog with title "Success" and text "Second passphrase registration was successfully submitted. It can take several seconds before it is processed."
 
-
   # TODO: will be re-enabled when the functionality is re-enabled
   @pending
   Scenario: should not allow to set 2nd passphrase again
