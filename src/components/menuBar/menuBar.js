@@ -7,13 +7,12 @@ import styles from './menuBar.css';
 const MenuBar = (props) => {
   const { t, menuStatus, settingStatus, menuToggle, settingToggle } = props;
   const menuClass = menuStatus ? styles.openMenu : '';
-  const openSetting = (menuStatus && settingStatus) ? styles.openSetting : '';
   return (
-    <section className={`${styles.menuBar} ${menuClass} ${openSetting}`}>
+    <section className={`${styles.menuBar} ${menuClass}`}>
       {!menuStatus ?
         <span className={styles.menuButton}
           onClick={() => menuToggle()}>
-          {t('Menu')}<MaterialIcon value='menu' />
+          {t('Menu')}<MaterialIcon className={styles.icon} value='menu' />
         </span>
         : <span className={styles.menuButton}
           onClick={() => menuToggle()}>
@@ -29,7 +28,7 @@ const MenuBar = (props) => {
             </span> :
             <span className={styles.menuButton}
               onClick={() => settingToggle()}>
-              <FontIcon value='arrow-left' /> {t('Main menu')}
+              <FontIcon className={styles.icon} value='arrow-left' /> {t('Main menu')}
             </span>
           }
         </Fragment>
