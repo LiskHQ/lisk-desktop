@@ -102,7 +102,7 @@
 
 .wrapper {
   flex-direction: row;
-  height: 100%;
+  height: calc(100% - 22px);
 }
 
 .missing {
@@ -186,8 +186,8 @@ hr {
     animation-fill-mode: forwards;
   }
 
-  & .goToTop {
-    transform: translateY(-150px);
+  & .goToTop h2 {
+    top: 10%;
   }
 
   & .addressContainer {
@@ -239,5 +239,29 @@ hr {
     height: 8px !important;
     overflow: hidden;
     width: 100%;
+  }
+}
+
+@media (--medium-viewport) {
+  .generation {
+    & h2 {
+      font-size: 45px;
+    }
+  }
+}
+
+@media (--small-viewport) {
+  .generation {
+    & .generatorHeader {
+      /* top: 5%; */
+    }
+
+    & .addressContainer {
+      margin-top: 150px;
+    }
+
+    & .goToTop h2 {
+      top: 8%;
+    }
   }
 }

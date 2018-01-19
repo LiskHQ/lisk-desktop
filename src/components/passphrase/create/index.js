@@ -1,6 +1,5 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { Input } from 'react-toolbox/lib/input';
 import { generateSeed, generatePassphrase } from '../../../utils/passphrase';
 import { extractAddress } from '../../../utils/api/account';
 import AccountVisual from '../../accountVisual';
@@ -9,31 +8,38 @@ import ProgressBar from '../../toolbox/progressBar/progressBar';
 import * as shapesSrc from '../../../assets/images/register-shapes/*.svg'; //eslint-disable-line
 import MovableShape from './movableShape';
 import { PrimaryButton } from '../../toolbox/buttons/button';
+import TransitionWrapper from '../../toolbox/transitionWrapper';
 
 class Create extends React.Component {
   constructor() {
     super();
     this.state = {
-      step: 'info',
+      step: 'generate',
       address: null,
       lastCaptured: {
         x: 0,
         y: 0,
       },
       shapes: [1, 1, 1, 1, 1, 1, 1, 1, 1],
-      firstHeadingClass: '',
-      secondHeadingClass: '',
       headingClass: '',
     };
-    this.seedGeneratorBoundToThis = this.seedGenerator.bind(this);
+    this.isTouchDevice = false;
+    this.lastCaptured = {
+      x: 0,
+      y: 0,
+      time: new Date(),
+    };
+    this.eventNormalizer = this._eventNormalizer.bind(this);
   }
 
   componentDidMount() {
     this.container = document.getElementById('generatorContainer');
-    if (!this.isTouchDevice(this.props.agent)) {
-      document.addEventListener('mousemove', this.seedGeneratorBoundToThis, true);
-    }
+    this.isTouchDevice = this.checkDevice(this.props.agent);
+    const eventName = this.isTouchDevice ? 'devicemotion' : 'mousemove';
+
+    window.addEventListener(eventName, this.eventNormalizer, true);
   }
+
 
   moveTitle() {
     setTimeout(() => {
@@ -67,9 +73,8 @@ class Create extends React.Component {
   }
 
   componentWillUnmount() {
-    if (!this.isTouchDevice(this.props.agent)) {
-      document.removeEventListener('mousemove', this.seedGeneratorBoundToThis, true);
-    }
+    const eventName = this.isTouchDevice ? 'devicemotion' : 'mousemove';
+    document.removeEventListener(eventName, this.seedGeneratorBoundToThis, true);
   }
 
   /**
@@ -81,26 +86,43 @@ class Create extends React.Component {
    * @returns {Boolean} - whether the agent represents a mobile device or not
    */
   // eslint-disable-next-line class-methods-use-this
-  isTouchDevice(agent) {
+  checkDevice(agent) {
     return (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(agent || navigator.userAgent || navigator.vendor || window.opera));
   }
 
-  seedGenerator(nativeEvent) {
-    let shouldTrigger;
-    if (typeof nativeEvent === 'string') {
-      shouldTrigger = true;
-    } else {
-      const distance =
-        Math.sqrt(((nativeEvent.pageX - this.state.lastCaptured.x) ** 2) +
-        ((nativeEvent.pageY - this.state.lastCaptured.y) ** 2));
-      shouldTrigger = distance > 120;
-    }
+  _eventNormalizer(e) {
+    let x = 0;
+    let y = 0;
+    if (this.isTouchDevice) {
+      x = e.acceleration.x * 10;
+      y = e.acceleration.y * 10;
 
-    if (shouldTrigger && (!this.state.data || this.state.data.percentage < 100)) {
+      const deltaX = Math.abs(x - this.lastCaptured.x);
+      const deltaY = Math.abs(y - this.lastCaptured.y);
+      const time = new Date();
+
+      if (deltaX < 4 && deltaY < 4 && (deltaX > 0.5 || deltaY > 0.5)
+        && (time - this.lastCaptured.time > Math.random() * 200)) {
+        this.lastCaptured = { x, y, time };
+        this.seedGenerator.call(this, x, y);
+      }
+    } else {
+      x = e.pageX;
+      y = e.pageY;
+
+      if (typeof nativeEvent === 'string' || Math.sqrt(((x - this.state.lastCaptured.x) ** 2) +
+        ((y - this.state.lastCaptured.y) ** 2)) > 120) {
+        this.seedGenerator.call(this, x, y);
+      }
+    }
+  }
+
+  seedGenerator(pageX, pageY) {
+    if (!this.state.data || this.state.data.percentage < 100) {
       this.setState({
         lastCaptured: {
-          x: nativeEvent.pageX,
-          y: nativeEvent.pageY,
+          x: pageX,
+          y: pageY,
         },
       });
 
@@ -114,8 +136,7 @@ class Create extends React.Component {
       const address = extractAddress(phrase);
       this.setState({
         passphrase: phrase,
-        firstHeadingClass: styles.firstHeadingAnimation,
-        secondHeadingClass: styles.secondHeadingAnimation,
+        step: 'info',
         address,
       });
 
@@ -128,13 +149,17 @@ class Create extends React.Component {
   }
 
   render() {
-    const isTouch = this.isTouchDevice(this.props.agent);
     const { t, nextStep } = this.props;
     const { shapes } = this.state;
     const percentage = this.state.data ? this.state.data.percentage : 0;
+    const pageCenter = {
+      x: this.pageRoot ? this.pageRoot.clientWidth / 2 : 500,
+      y: this.pageRoot ? this.pageRoot.clientHeight / 2 : 300,
+    };
     return (
       <section className={`${grid.row} ${grid['center-xs']} ${styles.wrapper} ${styles.generation}`} id="generatorContainer" >
-        <div className={grid['col-xs-12']}>
+        <div className={`${grid['col-xs-12']} ${styles.shapesWrapper}`}
+          ref={ (pageRoot) => { this.pageRoot = pageRoot; } }>
           {!this.state.address ?
             <div>
               <MovableShape
@@ -143,84 +168,81 @@ class Create extends React.Component {
                 className={styles.circle}
                 percentage={percentage}
                 reverse={true}
-                end={{ x: 550, y: 50 }}/>
+                end={pageCenter}/>
               <MovableShape
                 hidden={shapes[1]}
                 src={shapesSrc.smallCircle}
                 className={styles.smallCircle}
                 percentage={percentage}
                 reverse={false}
-                end={{ x: 500, y: 240 }}/>
+                end={pageCenter}/>
               <MovableShape
                 hidden={shapes[2]}
                 src={shapesSrc.triangle}
                 className={styles.triangle}
                 percentage={percentage}
                 reverse={true}
-                end={{ x: 450, y: 230 }}/>
+                end={pageCenter}/>
               <MovableShape
                 hidden={shapes[3]}
                 src={shapesSrc.smallTriangle}
                 className={styles.smallTriangle}
                 percentage={percentage}
                 reverse={true}
-                end={{ x: 450, y: 180 }}/>
+                end={pageCenter}/>
               <MovableShape
                 hidden={shapes[5]}
                 src={shapesSrc.circleOutline}
                 className={styles.circleOutline}
                 percentage={percentage}
                 reverse={false}
-                end={{ x: 250, y: 350 }}/>
+                end={pageCenter}/>
               <MovableShape
                 hidden={shapes[6]}
                 src={shapesSrc.stripe}
                 className={styles.stripe}
                 percentage={percentage}
                 reverse={false}
-                end={{ x: 100, y: 200 }}/>
+                end={pageCenter}/>
               <MovableShape
                 hidden={shapes[7]}
                 src={shapesSrc.smallStripe}
                 className={styles.smallStripe}
                 percentage={percentage}
                 reverse={true}
-                end={{ x: 280, y: 315 }}/>
+                end={pageCenter}/>
               <MovableShape
                 hidden={shapes[4]}
                 src={shapesSrc.rightRectangle}
                 className={styles.rightRectangle}
                 percentage={percentage}
                 reverse={true}
-                end={{ x: 300, y: 220 }}/>
+                end={pageCenter}/>
               <MovableShape
                 hidden={shapes[8]}
                 src={shapesSrc.leftRectangle}
                 className={styles.leftRectangle}
                 percentage={percentage}
                 reverse={false}
-                end={{ x: 530, y: 150 }}/>
+                end={pageCenter}/>
             </div> :
             null
           }
-          <header>
-            {isTouch ?
-              <div>
-                <p>{t('Enter text below to generate random bytes')}</p>
-                <Input onChange={this.seedGeneratorBoundToThis}
-                  className='touch-fallback' autoFocus={true} multiline={true} />
-              </div> :
-              <h2 className={`${styles.generatorHeader} ${this.state.headingClass} ${this.state.firstHeadingClass}`}
+          <header className={this.state.headingClass}>
+            <TransitionWrapper current={this.state.step} step='generate'>
+              <h2 className={`${styles.generatorHeader}`}
                 id="generatorHeader" >
                 {this.props.t('Create your Lisk ID')}
                 <br/>
                 {this.props.t('by moving your mouse.')}
               </h2>
-            }
-            <h2 className={`${styles.secondHeading} ${this.state.headingClass} ${this.state.secondHeadingClass}`}>
-              {t('Create your Lisk ID')}
-              <small>{t('This is your Lisk-ID consisting of an address and avatar.')}</small>
-            </h2>
+            </TransitionWrapper>
+            <TransitionWrapper current={this.state.step} step='info'>
+              <h2 className={`${styles.secondHeading}`}>
+                {t('Create your Lisk ID')}
+                <small>{t('This is your Lisk-ID consisting of an address and avatar.')}</small>
+              </h2>
+            </TransitionWrapper>
           </header>
           {this.state.address ?
             <div className={styles.addressContainer}>
