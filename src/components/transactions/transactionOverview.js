@@ -71,7 +71,7 @@ class Transactions extends React.Component {
               </span>
               <small className={styles.balanceUnit}>LSK</small>
             </h2>
-            <CopyToClipboard value={this.props.address} className={`${styles.address}`} />
+            <CopyToClipboard value={this.props.address} className={`${styles.address}`} copyClassName={styles.copy} />
           </div>
         </header>
 

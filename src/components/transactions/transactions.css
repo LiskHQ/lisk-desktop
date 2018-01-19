@@ -8,7 +8,7 @@
   --link-color: var(--color-primary-very-light);
   --row-background-color: var(--color-white);
   --filter-list-color: var(--color-grayscale-medium);
-  --result-address-font-weight: var(--font-weight-bold);
+  --result-address-font-weight: var(--font-weight-semi-bold);
   --detail-label-font-weight: var(--font-weight-very-bold);
   --header-address-font-weight: var(--font-weight-semi-bold);
   --header-balance-unit-font-size-XL: 20px;
@@ -77,6 +77,10 @@
     & header {
       line-height: var(--header-line-height);
 
+      & .copy {
+        color: var(--color-grayscale-medium);
+      }
+
       & .title {
         float: left;
       }
@@ -114,6 +118,10 @@
   & .details {
     line-height: var(--list-line-height);
     color: var(--details-font-color);
+
+    & .copy {
+      color: var(--color-primary-standard);
+    }
 
     & .row {
       padding-bottom: 48px;
@@ -154,12 +162,12 @@
   }
 
   & .greyLabel {
-    font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-semi-bold);
     color: var(--amount-negative-color);
   }
 
   & .greenLabel {
-    font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-semi-bold);
     color: var(--amount-positive-color);
   }
 }
