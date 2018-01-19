@@ -41,6 +41,28 @@ module.exports = function (config) {
           dir: 'coverage/',
         },
       ],
+      check: {
+        global: {
+          statements: 80,
+          branches: 80,
+          functions: 80,
+          lines: 80,
+        },
+        each: {
+          statements: 80,
+          branches: 80,
+          functions: 80,
+          lines: 80,
+          excludes: [
+            'other/directory/**/*.js',
+          ],
+          overrides: {
+            'src/store/**/*.js': {
+              statements: 98,
+            },
+          },
+        },
+      },
     },
     junitReporter: {
       outputFile: 'reports/junit_report.xml',
