@@ -11,6 +11,13 @@
   --signup-box-padding-XL: 72px;
   --focused-signup-box-padding-XL: 31px;
   --focused-signup-box-padding-L: 24px;
+  --back-button-icon-margin-XL: -6px;
+  --back-button-icon-margin-L: -6px;
+  --back-button-icon-margin-XS: 0px;
+  --back-button-label-font-size-XL: 15px;
+  --back-button-label-font-size-L: 12px;
+  --back-button-icon-font-size-XL: 24px;
+  --back-button-icon-font-size-L: 16px;
 }
 
 footer {
@@ -72,12 +79,14 @@ footer {
       color: var(--color-primary-standard);
       text-decoration: initial;
       font-family: var(--content-font);
-      font-size: 16px;
-      font-weight: normal;
+      font-weight: var(--font-weight-bold);
+
+      & .label {
+        vertical-align: middle;
+      }
 
       & .icon {
-        vertical-align: text-bottom;
-        font-size: 1.4em;
+        vertical-align: middle;
       }
     }
   }
@@ -348,6 +357,20 @@ footer {
     &.focused {
       width: 75%;
     }
+
+    & header {
+      & .backButton {
+        margin-left: var(--back-button-icon-margin-XL);
+
+        & .label {
+          font-size: var(--back-button-label-font-size-XL);
+        }
+
+        & .icon {
+          font-size: var(--back-button-icon-font-size-XL);
+        }
+      }
+    }
   }
 
   .signUp,
@@ -377,6 +400,20 @@ footer {
 
     &.focused {
       width: 68%;
+    }
+
+    & header {
+      & .backButton {
+        margin-left: var(--back-button-icon-margin-L);
+
+        & .label {
+          font-size: var(--back-button-label-font-size-L);
+        }
+
+        & .icon {
+          font-size: var(--back-button-icon-font-size-L);
+        }
+      }
     }
   }
 
@@ -467,6 +504,12 @@ footer {
         width: 100%;
         max-width: 100%;
       }
+
+      & header {
+        & .backButton {
+          margin-left: var(--back-button-icon-margin-XS);
+        }
+      }
     }
 
     & .outTaken {
@@ -550,3 +593,8 @@ footer {
     }
   }
 }
+
+.input {
+  padding-bottom: 0px;
+}
+

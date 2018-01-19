@@ -148,7 +148,7 @@ class Login extends React.Component {
             <header>
               <a className={styles.backButton} href='https://lisk.io' target='_blank' rel='noopener noreferrer'>
                 <FontIcon className={styles.icon}>arrow-left</FontIcon>
-                {this.props.t('Back to lisk.io')}
+                <span className={styles.label}>{this.props.t('Back to lisk.io')}</span>
               </a>
             </header>
             <div className={`${styles.tableCell} text-left`}>

@@ -130,7 +130,7 @@ class PassphraseInput extends React.Component {
               className={`show-passphrase-toggle ${styles.inputTypeToggle}`}
               onClick={this.toggleInputType.bind(this)}>
               <FontIcon className={styles.eyeIcon} value={this.state.inputType === 'password' ? 'hide' : 'show'}
-              /> <label>{this.state.inputType === 'password' ? this.props.t('Show Passphrase') : this.props.t('Hide Passphrase') }</label>
+              /> <label>{this.state.inputType === 'password' ? this.props.t('Show passphrase') : this.props.t('Hide passphrase') }</label>
             </div>
           </div>
           :
