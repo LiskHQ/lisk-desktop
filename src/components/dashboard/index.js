@@ -9,6 +9,7 @@ import { FontIcon } from '../fontIcon';
 import Box from '../box';
 import TransactionList from './../transactions/transactionList';
 import Send from '../send';
+import CurrencyGraph from './currencyGraph';
 import styles from './styles.css';
 
 class Dashboard extends React.Component {
@@ -24,6 +25,7 @@ class Dashboard extends React.Component {
     return <div className={`${grid.row} ${styles.wrapper}`}>
       <div className={`${grid['col-md-8']} ${grid['col-xs-12']}`}>
         <Box className={`${styles.graph}`}>
+          <CurrencyGraph />
         </Box>
         <Box className={`${styles.latestActivity}`}>
           <header>
