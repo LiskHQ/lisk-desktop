@@ -1,30 +1,103 @@
 @import '../app/variables.css';
 
 :root {
-  --box-padding-XL: 48px;
-  --box-padding-L: 32px;
-  --box-padding-XS: 19px;
+  --header-font-size-L: 48px;
+  --sub-header-width: 450px;
+  --sub-header-padding-XS: 19px;
+}
+
+.bigGraphic {
+  display: inline-block;
+  position: relative;
+
+  & .application {
+    position: absolute;
+    top: 190px;
+    left: 40px;
+  }
+
+  & .hosts {
+    position: absolute;
+    top: 100px;
+    left: 250px;
+  }
+
+  & .register {
+    position: absolute;
+    top: -30px;
+    left: 550px;
+  }
+
+  & .bootstrap {
+    position: absolute;
+    top: 105px;
+    left: 750px;
+  }
+}
+
+.smallGraphic {
+  display: none;
+  width: 106px;
 }
 
 .wrapper {
   text-align: center;
+  margin: auto 0px;
 
   & .header {
     margin: auto 0px;
-  }
+    padding-top: 20%;
 
-  /* this will be updated soon */
-  & .subHeader {
-    font-size: 18px;
-    font-weight: normal;
-    color: var(--color-grayscale-dark);
-    line-height: 36px;
+    & h2 {
+      font-size: var(--header-font-size-L);
+    }
+
+    & .subHeader {
+      color: var(--color-grayscale-dark);
+      max-width: var(--sub-header-width);
+      line-height: 26px;
+      margin: 0px auto;
+    }
   }
 }
 
 @media (--xLarge-viewport) {
-  .subHeader {
-    padding: 0px var(--box-padding-XL);
+  .header {
+    & h2 {
+      margin-bottom: 25px;
+    }
+  }
+}
+
+@media (--large-viewport) {
+  .header {
+    & h2 {
+      margin-bottom: 20px;
+    }
+  }
+}
+
+@media (--medium-viewport) {
+  .bigGraphic {
+    display: none;
+  }
+
+  .smallGraphic {
+    display: inline-block;
+  }
+
+  .wrapper {
+    & .header {
+      margin: 0px;
+
+      & h2 {
+        font-size: 24px;
+      }
+
+      & .subHeader {
+        padding-bottom: 15px;
+      }
+    }
   }
 }
 
@@ -34,14 +107,8 @@
   }
 }
 
-@media (--large-viewport) {
-  .subHeader {
-    padding: 0px var(--box-padding-L);
-  }
-}
-
 @media (--xSmall-viewport) {
   .subHeader {
-    padding: 0px var(--box-padding-XS);
+    padding: 0px var(--sub-header-padding-XS);
   }
 }
