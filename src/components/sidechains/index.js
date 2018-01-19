@@ -20,8 +20,9 @@ class Sidechains extends React.Component {
       </div>
       <div className={styles.header}>
         <h2>{t('Coming soon.')}</h2>
-        <div className={styles.subHeader}>{t('Sidechains will revolutionize the way decentralised apps are developed. ' +
-          'Here you will be able to find hosts, and monitor your sidechains soon.')}</div>
+        <div className={styles.subHeader}>
+          {t('Sidechains will revolutionize the way decentralised apps are developed. Here you will be able to find hosts, and monitor your sidechains soon.')}
+        </div>
         <img src={application} className={styles.smallGraphic}/>
       </div>
     </Box>);
