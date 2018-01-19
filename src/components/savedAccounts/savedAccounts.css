@@ -12,12 +12,10 @@
   --h1-width: 600px;
   --h1-width-m: 400px;
   --h1-width-s: 300px;
-  --add-button-margin: 200px;
   --card-width: 347px;
   --card-height: 436px;
   --card-width-m: 267px;
   --card-height-m: 336px;
-  --add-button-margin: 240px;
   --wrapper-margin: -24px;
 }
 
@@ -75,6 +73,19 @@
 
     & > small {
       font-size: 0.6875em;
+    }
+  }
+
+  & .removeButton {
+    background: var(--color-white) !important;
+    color: var(--color-grayscale-dark) !important;
+    border: none;
+    box-shadow: var(--normal-shadow);
+    text-transform: none;
+
+    &:hover {
+      background: var(--color-white) !important;
+      color: var(--color-primary-medium) !important;
     }
   }
 }
@@ -198,19 +209,6 @@
   right: 85px;
 }
 
-.removeButton {
-  background: var(--color-white) !important;
-  color: var(--color-grayscale-dark) !important;
-  border: none;
-  box-shadow: var(--normal-shadow);
-  text-transform: none;
-
-  &:hover {
-    background: var(--color-white) !important;
-    color: var(--color-primary-medium) !important;
-  }
-}
-
 .darkBackground {
   background-color: var(--color-primary-dark);
 }
@@ -305,12 +303,20 @@
   }
 
   .deviceIos {
+    & .cardsWrapper {
+      padding-bottom: 80px;
+    }
+
     & .addAcctiveAccountButton {
       bottom: 180px;
     }
   }
 
   .deviceAndroid {
+    & .cardsWrapper {
+      padding-bottom: 50px;
+    }
+
     & .addAcctiveAccountButton {
       bottom: 120px;
     }
