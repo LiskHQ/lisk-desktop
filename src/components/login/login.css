@@ -7,7 +7,14 @@
   --rect-width: 200px;
 }
 
+@keyframes delayedFadeIn {
+  0% { opacity: 0; }
+  75% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
 .wrapper {
+  animation: delayedFadeIn 300ms;
   overflow: visible !important;
   display: block !important;
   clear: both;
@@ -308,14 +315,12 @@
   }
 }
 
-.wrapper.loading {
+.loading {
   text-align: center;
   padding: 20px;
-
-  & .login,
-  & .signUp {
-    display: none;
-  }
+  color: var(--color-grayscale-medium);
+  padding-top: 200px;
+  clear: both;
 }
 
 @media (--medium-viewport) {
