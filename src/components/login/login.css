@@ -309,8 +309,14 @@
 }
 
 @media (--medium-viewport) {
+  .wrapper {
+    height: 100%;
+    padding-right: 0;
+  }
+
   .login {
     height: calc(100vh - var(--m-top-bar-height) - var(--m-menu-bar-height)); /* stylelint-disable-line */
+    width: 40%;
   }
 
   .signUp {
@@ -334,6 +340,7 @@
 @media (--small-viewport) {
   .wrapper {
     padding-right: 0;
+    height: 100%;
   }
 
   .login,
