@@ -6,13 +6,13 @@
 
 @media (--xLarge-viewport) {
   .gridPadding {
-    padding-right: 2em;
+    padding-right: 37px;
   }
 }
 
 @media (--large-viewport) {
   .gridPadding {
-    padding-right: 1em;
+    padding-right: 24px;
   }
 }
 
