@@ -38,6 +38,7 @@
   --back-button-arrow-font-size-XL: 16px;
   --back-button-arrow-font-size-L: 16px;
   --back-button-arrow-font-size-XS: 16px;
+  --float-animation-distance: 10px;
 }
 
 .smallButton {
@@ -245,6 +246,38 @@
   }
 }
 
+@keyframes float {
+  0% {
+    margin-top: 0px;
+    margin-bottom: var(--float-animation-distance);
+  }
+
+  100% {
+    margin-top: var(--float-animation-distance);
+    margin-bottom: 0px;
+  }
+}
+
+.emptyTransactions {
+  max-width: 230px;
+  margin: 150px auto;
+  text-align: center;
+
+  & img {
+    animation: float 1500ms 0ms infinite alternate ease-in-out;
+  }
+
+  & h2 {
+    font-size: 24px;
+    margin: 10px;
+  }
+
+  & p {
+    font-size: 14px;
+    line-height: 26px;
+  }
+}
+
 @media (--xLarge-viewport) {
   .transactions {
     & .activity {
@@ -383,6 +416,12 @@
         background: var(--color-grayscale-mobile-background);
       }
     }
+  }
+}
+
+@media (--small-viewport) {
+  .emptyTransactions {
+    margin: 50px auto;
   }
 }
 
