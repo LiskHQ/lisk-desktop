@@ -59,9 +59,6 @@ class Login extends React.Component {
       !this.alreadyLoggedWithThisAddress(prevProps.account.address, prevProps.peers.options)) {
       this.redirectToReferrer();
     }
-    if (!this.account) {
-      this.autoLogin();
-    }
   }
 
   redirectToReferrer() {
@@ -129,25 +126,6 @@ class Login extends React.Component {
     this.onLoginSubmission(this.state.passphrase);
   }
 
-  autoLogin() {
-    const { savedAccounts } = this.props;
-    if (savedAccounts && savedAccounts.lastActive && !this.props.account.afterLogout) {
-      this.account = savedAccounts.lastActive;
-      const network = Object.assign({}, getNetwork(this.account.network));
-      if (this.account.network === networks.customNode.code) {
-        network.address = this.account.address;
-      }
-
-      // set active peer
-      this.props.activePeerSet({
-        publicKey: this.account.publicKey,
-        network,
-      });
-    } else {
-      this.account = 'not-saved';
-    }
-  }
-
   passFocused() {
     this.setState({
       passInputState: 'focused',
@@ -162,7 +140,8 @@ class Login extends React.Component {
   }
 
   render() {
-    return (
+    return (this.props.account.loading ?
+      <div className={styles.loading} > {this.props.t('Loading...')}</div> :
       <Box className={styles.wrapper}>
         <section className={`${styles.login} ${styles[this.state.passInputState]}`}>
           <section className={styles.table}>

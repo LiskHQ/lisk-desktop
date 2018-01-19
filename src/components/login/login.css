@@ -7,7 +7,14 @@
   --rect-width: 200px;
 }
 
+@keyframes delayedFadeIn {
+  0% { opacity: 0; }
+  75% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
 .wrapper {
+  animation: delayedFadeIn 300ms;
   overflow: visible !important;
   display: block !important;
   clear: both;
@@ -306,6 +313,14 @@
   100% {
     transform: translate3d(-15%, 10%, 0) rotateZ(0deg);
   }
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: var(--color-grayscale-medium);
+  padding-top: 200px;
+  clear: both;
 }
 
 @media (--medium-viewport) {
