@@ -37,6 +37,10 @@ function takeScreenshot(screnarioSlug, callback) {
 }
 
 defineSupportCode(({ Before, After, registerListener }) => {
+  Before('@pending', (scenario, callback) => {
+    callback(null, 'pending');
+  });
+
   Before((scenario, callback) => {
     browser.ignoreSynchronization = true;
     browser.driver.manage().window()
@@ -44,12 +48,7 @@ defineSupportCode(({ Before, After, registerListener }) => {
     browser.get(browser.params.baseURL);
     localStorage.clear();
     localStorage.setItem('showNetwork', 'true');
-    browser.get(browser.params.baseURL);
-    callback();
-  });
-
-  Before('@pending', (scenario, callback) => {
-    callback(null, 'pending');
+    browser.get(browser.params.baseURL).then(callback);
   });
 
   After((scenario, callback) => {
