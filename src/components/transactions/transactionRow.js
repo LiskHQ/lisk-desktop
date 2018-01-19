@@ -11,7 +11,7 @@ import { FontIcon } from '../fontIcon';
 class TransactionRow extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   shouldComponentUpdate(nextProps) {
-    return nextProps.value.confirmations <= 1000;
+    return nextProps.value.id !== this.props.value.id;
   }
 
   render() {

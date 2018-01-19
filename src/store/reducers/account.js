@@ -56,11 +56,16 @@ const account = (state = {}, action) => {
     case actionTypes.removePassphrase:
       return Object.assign({}, state, { passphrase: null, expireTime: 0 });
     case actionTypes.accountUpdated:
-    case actionTypes.accountLoggedIn:
       return merge(state, action.data);
+    case actionTypes.accountLoggedIn:
+      return action.data;
     case actionTypes.accountLoggedOut:
       return {
         afterLogout: true,
+      };
+    case actionTypes.accountLoading:
+      return {
+        loading: true,
       };
     default:
       return state;

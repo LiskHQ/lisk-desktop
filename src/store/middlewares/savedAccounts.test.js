@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { spy, mock, match } from 'sinon';
 
-import { accountLoggedOut } from '../../actions/account';
+import { accountLoading } from '../../actions/account';
 import { accountSaved } from '../../actions/savedAccounts';
 import * as peersActions from '../../actions/peers';
 import actionTypes from '../../constants/actions';
@@ -54,7 +54,7 @@ describe('SavedAccounts middleware', () => {
     expect(next).to.have.been.calledWith(randomAction);
   });
 
-  it(`should dispatch accountLoggedOut action on ${actionTypes.accountSwitched} action`, () => {
+  it(`should dispatch accountLoading action on ${actionTypes.accountSwitched} action`, () => {
     const action = {
       type: actionTypes.accountSwitched,
       data: {
@@ -63,7 +63,7 @@ describe('SavedAccounts middleware', () => {
       },
     };
     middleware(store)(next)(action);
-    expect(store.dispatch).to.have.been.calledWith(accountLoggedOut());
+    expect(store.dispatch).to.have.been.calledWith(accountLoading());
   });
 
   it(`should call activePeerSet action on ${actionTypes.accountSwitched} action`, () => {

@@ -4,7 +4,6 @@ const Cucumber = require('cucumber');
 const fs = require('fs');
 const util = require('util');
 const localStorage = require('../support/localStorage.js');
-const networks = require('../../../src/constants/networks');
 
 const jsonFormatter = new Cucumber.JsonFormatter();
 
@@ -38,6 +37,10 @@ function takeScreenshot(screnarioSlug, callback) {
 }
 
 defineSupportCode(({ Before, After, registerListener }) => {
+  Before('@pending', (scenario, callback) => {
+    callback(null, 'pending');
+  });
+
   Before((scenario, callback) => {
     browser.ignoreSynchronization = true;
     browser.driver.manage().window()
@@ -45,14 +48,7 @@ defineSupportCode(({ Before, After, registerListener }) => {
     browser.get(browser.params.baseURL);
     localStorage.clear();
     localStorage.setItem('showNetwork', 'true');
-    localStorage.setItem('address', browser.params.liskCoreURL);
-    localStorage.setItem('network', networks[browser.params.network].code);
-    browser.get(browser.params.baseURL);
-    callback();
-  });
-
-  Before('@pending', (scenario, callback) => {
-    callback(null, 'pending');
+    browser.get(browser.params.baseURL).then(callback);
   });
 
   After((scenario, callback) => {

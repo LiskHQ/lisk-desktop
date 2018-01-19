@@ -12,8 +12,8 @@ import transactionTypes from '../../constants/transactionTypes';
 const { lockDuration } = accountConfig;
 
 const updateTransactions = (store, peers, account) => {
-  const maxBlockSize = 25;
-  getTransactions(peers.data, account.address, maxBlockSize)
+  const filter = store.getState().transactions.filter;
+  getTransactions({ activePeer: peers.data, address: account.address, limit: 25, filter })
     .then(response => store.dispatch(transactionsUpdated({
       confirmed: response.transactions,
       count: parseInt(response.count, 10),

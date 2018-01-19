@@ -77,8 +77,13 @@ input:read-only {
   }
 }
 
-.header {
-  height: 300px;
+.sendWrapper {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 @media (--small-viewport) {

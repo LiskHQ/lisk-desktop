@@ -61,6 +61,16 @@ function checkAlertDialog(title, text, callback = emptyFn) {
   waitForElemAndCheckItsText('.modal-dialog .alert-dialog-message', text, callback);
 }
 
+function clickOnOptionInList(index, selectName, callback) {
+  waitForElemAndClickIt(`.${selectName}`);
+  browser.sleep(1000);
+  const selector = `.${selectName} ul li`;
+  // const optionElem = element.all(by.css(selector)).get(index - 1);
+  element.all(by.css(selector)).then((children) => {
+    children[index - 1].click().then(callback).catch(callback);
+  });
+}
+
 module.exports = {
   waitForElemAndCheckItsText,
   waitForElemAndMatchItsText,
@@ -70,4 +80,5 @@ module.exports = {
   checkAlertDialog,
   waitTime,
   waitForElem,
+  clickOnOptionInList,
 };

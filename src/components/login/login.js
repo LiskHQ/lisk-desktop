@@ -11,14 +11,13 @@ import { extractAddress } from '../../utils/api/account';
 // eslint-disable-next-line import/no-named-as-default
 import PassphraseInput from '../passphraseInput';
 import styles from './login.css';
-import env from '../../constants/env';
 import networks from '../../constants/networks';
 import getNetwork from '../../utils/getNetwork';
 import { parseSearchParams } from './../../utils/searchParams';
 import Box from '../box';
 // eslint-disable-next-line import/no-unresolved
 import * as shapes from '../../assets/images/*.svg';
-import { validateUrl, getLoginData } from '../../utils/login';
+import { validateUrl } from '../../utils/login';
 
 /**
  * The container component containing login
@@ -60,18 +59,11 @@ class Login extends React.Component {
       !this.alreadyLoggedWithThisAddress(prevProps.account.address, prevProps.peers.options)) {
       this.redirectToReferrer();
     }
-    if (!this.account) {
-      this.autoLogin();
-    }
   }
 
   redirectToReferrer() {
     const tem = this.getReferrerRoute();
     this.props.history.replace(tem);
-    if (this.state.address) {
-      localStorage.setItem('address', this.state.address);
-    }
-    localStorage.setItem('network', this.state.network);
   }
 
   alreadyLoggedWithThisAddress(address, network) {
@@ -129,47 +121,9 @@ class Login extends React.Component {
     });
   }
 
-  devPreFill() {
-    const { networkIndex, address, passphrase } = getLoginData();
-
-    this.setState({
-      network: networkIndex,
-      ...this.validators.address(address),
-      ...this.validators.passphrase(passphrase),
-    });
-
-    // ignore this in coverage as it is hard to test and does not run in production
-    /* istanbul ignore if */
-    if (!env.production && localStorage.getItem('autologin') && !this.props.account.afterLogout && passphrase) {
-      setTimeout(() => {
-        this.onLoginSubmission(passphrase);
-      });
-    }
-  }
-
   onFormSubmit(event) {
     event.preventDefault();
     this.onLoginSubmission(this.state.passphrase);
-  }
-
-  autoLogin() {
-    const { savedAccounts } = this.props;
-    if (savedAccounts && savedAccounts.lastActive && !this.props.account.afterLogout) {
-      this.account = savedAccounts.lastActive;
-      const network = Object.assign({}, getNetwork(this.account.network));
-      if (this.account.network === networks.customNode.code) {
-        network.address = this.account.address;
-      }
-
-      // set active peer
-      this.props.activePeerSet({
-        publicKey: this.account.publicKey,
-        network,
-      });
-    } else {
-      this.account = 'not-saved';
-      this.devPreFill();
-    }
   }
 
   passFocused() {
@@ -186,18 +140,19 @@ class Login extends React.Component {
   }
 
   render() {
-    return (
+    return (this.props.account.loading ?
+      <div className={styles.loading} > {this.props.t('Loading...')}</div> :
       <Box className={styles.wrapper}>
         <section className={`${styles.login} ${styles[this.state.passInputState]}`}>
           <section className={styles.table}>
             <header>
               <a className={styles.backButton} href='https://lisk.io' target='_blank' rel='noopener noreferrer'>
                 <FontIcon className={styles.icon}>arrow-left</FontIcon>
-                {this.props.t('Back to lisk.io')}
+                <span className={styles.label}>{this.props.t('Back to lisk.io')}</span>
               </a>
             </header>
             <div className={`${styles.tableCell} text-left`}>
-              <h2>{this.props.t('Sign In')}</h2>
+              <h2>{this.props.t('Sign in')}</h2>
               <form onSubmit={this.onFormSubmit.bind(this)}>
                 {this.showNetworkOptions()
                   ? <div className={styles.outTaken}>
@@ -232,7 +187,7 @@ class Login extends React.Component {
                   onChange={this.changeHandler.bind(this, 'passphrase')} />
                 <footer className={ `${grid.row} ${grid['center-xs']}` }>
                   <div className={grid['col-xs-12']}>
-                    <PrimaryButton label={this.props.t('Login')}
+                    <PrimaryButton label={this.props.t('Log in')}
                       className='login-button'
                       type='submit'
                       disabled={(this.state.network === networks.customNode.code && this.state.addressValidity !== '') ||
@@ -248,12 +203,14 @@ class Login extends React.Component {
             <div className={`${styles.tableCell} text-left`}>
               <h2>
                 <Link className='new-account-button' to='/register'>
-                  {this.props.t('Get Access')}
+                  {this.props.t('Get access')}
                 </Link>
                 <FontIcon className={styles.singUpArrow} value='arrow-right' />
               </h2>
 
-              <h5>Create an address as a gateway to all Lisk Services.</h5>
+              <div className={styles.subTitle}>
+                Create an address as a gateway to all Lisk Services.
+              </div>
             </div>
           </section>
           <div className={styles.bg}></div>

@@ -64,17 +64,33 @@ class MainMenu extends React.Component {
         id: 'transactions',
         image: menuLogos.wallet,
       }, {
+      /* TODO: uncomment when the page is created
+        label: t('Buy Lisk'),
+        id: 'butLisk',
+        image: menuLogos.buyLisk,
+      }, {
+      */
+      /* TODO: uncomment when the page is updated
         label: t('Delegates'),
         id: 'voting',
         image: menuLogos.delegates,
       }, {
+      */
+      /* TODO: uncomment when the page is updated
+        label: t('Forging'),
+        id: 'forging',
+        image: menuLogos.sidechains,
+      }, {
+      */
         label: t('Sidechains'),
         id: 'sidechains',
         image: menuLogos.sidechains,
+      /* TODO: uncomment when the page is created
       }, {
         label: t('Search'),
         id: 'search',
         image: menuLogos.search,
+      */
       },
     ];
     const filterTabs = getTabs(isDelegate, tabs);

@@ -12,6 +12,7 @@ import accounts from '../../../../test/constants/accounts';
 
 describe('Passphrase: Confirm', () => {
   let wrapper;
+  let clock;
   const account = accounts.delegate;
   const props = {
     t: key => key,
@@ -36,11 +37,15 @@ describe('Passphrase: Confirm', () => {
     spy(props, 'prevStep');
     spy(props, 'finalCallback');
     wrapper = mount(<Confirm {...props} />, options);
+    clock = useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
+    });
   });
 
   afterEach(() => {
     props.prevStep.restore();
     props.finalCallback.restore();
+    clock.restore();
   });
 
   it('renders an input component', () => {
@@ -93,13 +98,10 @@ describe('Passphrase: Confirm', () => {
   });
 
   it('should enable Next button if answer is correct', () => {
-    const clock = useFakeTimers({
-      toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
-    });
     // for each fieldset, checks the input if its value exist in passphrase
     wrapper.find('fieldset').forEach((fieldset) => {
       fieldset.find('input').forEach((input) => {
-        if (account.passphrase.indexOf(input.props().value) > 0) {
+        if (account.passphrase.indexOf(input.props().value) > -1) {
           input.simulate('change', { target: { checked: true } });
         }
       });
@@ -107,8 +109,7 @@ describe('Passphrase: Confirm', () => {
     clock.tick(1500);
     wrapper.update();
 
-    const wrapperProps = wrapper.find('button.get-to-your-dashboard-button').props();
-    expect(wrapperProps.disabled).to.not.be.equal(true);
-    clock.restore();
+    const buttonWrapper = wrapper.find('button.get-to-your-dashboard-button');
+    expect(buttonWrapper).to.not.have.prop('disabled', true);
   });
 });
