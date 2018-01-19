@@ -1,4 +1,6 @@
 Feature: Sign message
+  # TODO: will be removed when the functionality is removed
+  @pending
   Scenario: should allow to sign message
     Given I'm logged in as "any account"
     When I click "sign message" in main menu

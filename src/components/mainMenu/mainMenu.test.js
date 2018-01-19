@@ -72,18 +72,18 @@ describe('MainMenu', () => {
     expect(wrapper.find(ToolboxTabs).exists()).to.equal(true);
   });
 
-  it('should render 8 Button components if props.isDelegate', () => {
+  it('should render 3 Button components if props.isDelegate', () => {
     const wrapper = mount(<MemoryRouter>
       <MainMenu store={store} isDelegate={true} history={history} t={t} />
     </MemoryRouter>, options);
-    expect(wrapper.find(Tab)).to.have.lengthOf(7);
+    expect(wrapper.find(Tab)).to.have.lengthOf(3);
   });
 
-  it('should render 7 menu item components if !props.isDelegate', () => {
+  it('should render 3 menu item components if !props.isDelegate', () => {
     const wrapper = mount(<MemoryRouter>
       <MainMenu store={store} isDelegate={false} history={history} t={t} />
     </MemoryRouter>, options);
-    expect(wrapper.find(Tab)).to.have.lengthOf(6);
+    expect(wrapper.find(Tab)).to.have.lengthOf(3);
   });
 
   it('should allow to change active menu item', () => {

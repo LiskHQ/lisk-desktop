@@ -38,7 +38,7 @@ describe('Header', () => {
     propsMock.restore();
   });
 
-  it('renders 9 RelativeLink components', () => {
-    expect(wrapper.find(RelativeLink)).to.have.length(7);
+  it('renders 6 RelativeLink components', () => {
+    expect(wrapper.find(RelativeLink)).to.have.length(6);
   });
 });

@@ -59,21 +59,23 @@ describe('Setting', () => {
   });
 
   it('should click on #carouselNav li change the slider', () => {
-    wrapper.find('#carouselNav li').at(2).simulate('click');
+    wrapper.find('#carouselNav li').at(1).simulate('click');
     wrapper.update();
     clock.tick(500);
     wrapper.update();
-    expect(wrapper.find('#carouselNav li').at(2).props().className).to.be.include('activeSlide');
+    expect(wrapper.find('#carouselNav li').at(1).props().className).to.be.include('activeSlide');
   });
 
-  it('should click on "languageSwitcher" change the language to "de"', () => {
+  // TODO: will be re-enabled when the functionality is re-enabled
+  it.skip('should click on "languageSwitcher" change the language to "de"', () => {
     // const languageSpy = sinon.spy(i18n, 'changeLanguage');
     wrapper.find('.language-switcher .circle').simulate('click');
     wrapper.update();
     expect(i18n.language).to.be.equal('de');
   });
 
-  it('should second click on "languageSwitcher" change the language to "en"', () => {
+  // TODO: will be re-enabled when the functionality is re-enabled
+  it.skip('should second click on "languageSwitcher" change the language to "en"', () => {
     wrapper.find('.language-switcher .circle').simulate('click');
     wrapper.update();
     expect(i18n.language).to.be.equal('de');
