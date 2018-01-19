@@ -3,15 +3,26 @@ import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
 import Box from '../box';
 import styles from './sidechains.css';
+import application from './../../assets/images/sidechains/graphic-application.svg';
+import bootstrap from './../../assets/images/sidechains/graphic-bootstrap.svg';
+import hosts from './../../assets/images/sidechains/graphic-hosts.svg';
+import register from './../../assets/images/sidechains/graphic-register.svg';
 
 class Sidechains extends React.Component {
   render() {
     const { t } = this.props;
     return (<Box className={styles.wrapper}>
+      <div className={styles.bigGraphic}>
+        <img src={application} className={styles.application}/>
+        <img src={hosts} className={styles.hosts}/>
+        <img src={register} className={styles.register}/>
+        <img src={bootstrap} className={styles.bootstrap}/>
+      </div>
       <div className={styles.header}>
         <h2>{t('Coming soon.')}</h2>
-        <div className={styles.subHeader}>{t('Register your application name in the Lisk mainchain. ' +
-          'Find hosts for your sidechain in the delegate marketplace. Monitor and maintain your sidechains.')}</div>
+        <div className={styles.subHeader}>{t('Sidechains will revolutionize the way decentralised apps are developed. ' +
+          'Here you will be able to find hosts, and monitor your sidechains soon.')}</div>
+        <img src={application} className={styles.smallGraphic}/>
       </div>
     </Box>);
   }
