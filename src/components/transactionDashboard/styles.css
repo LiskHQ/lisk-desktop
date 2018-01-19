@@ -4,6 +4,24 @@
   min-width: 100%;
 }
 
+@media (--xLarge-viewport) {
+  .gridPadding {
+    padding-right: 37px;
+  }
+}
+
+@media (--large-viewport) {
+  .gridPadding {
+    padding-right: 24px;
+  }
+}
+
+@media (--medium-viewport) {
+  .gridPadding {
+    padding-right: 0;
+  }
+}
+
 @media (max-width: 1025px) {
   .transactions {
     width: 100%;

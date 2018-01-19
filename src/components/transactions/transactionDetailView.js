@@ -1,6 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { TimeFromTimestamp, DateFromTimestamp } from './../timestamp/index';
+import CopyToClipboard from '../copyToClipboard';
 import styles from './transactions.css';
 import { FontIcon } from '../fontIcon';
 import LiskAmount from '../liskAmount';
@@ -57,7 +58,10 @@ class TransactionsDetailView extends React.Component {
           <div className={`${grid.row} ${styles.row}`}>
             <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']} ${styles.column}`}>
               <div className={styles.label}>{this.props.t('Transaction ID')}</div>
-              <div className={styles.value}>{this.props.value.id}</div>
+              <div className={styles.value}><CopyToClipboard
+                value={this.props.value.id}
+                text={this.props.value.id}
+                copyClassName={`${styles.copy}`} /></div>
             </div>
             <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']} ${styles.column}`}>
             </div>

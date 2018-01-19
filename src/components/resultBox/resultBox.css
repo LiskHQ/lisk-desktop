@@ -1,7 +1,7 @@
 @import '../app/variables.css';
 
 :root {
-  --copy-color: var(--color-primary-dark);
+  --copy-color: var(--color-primary-standard);
   --paragraph-color: var(--color-grayscale-dark);
   --paragraph-line-height: 36px;
   --title-font-size: 32px;
