@@ -56,6 +56,7 @@ const MultiStepNav = ({ steps, showNav, current, prevStep,
             </div>)
         }
       </section>
+      <span className={styles.backButtonShadow}></span>
     </nav> : <div className={styles.hidden}></div>);
 };
 

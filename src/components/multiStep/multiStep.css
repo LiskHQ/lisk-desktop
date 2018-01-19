@@ -4,18 +4,25 @@
   --link-color: var(--color-primary-medium);
   --back-button-color: var(--color-grayscale-dark);
   --nav-line-height: 32px;
+  --back-button-width-l: 75px;
+  --back-button-width-s: 65px;
+  --nav-size: 490px;
 }
 
 .navigation {
-  position: relative;
   height: var(--nav-line-height);
+  padding: 0 45px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
 
   & > section {
+    align-self: flex-end;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    max-width: 50%;
-    margin: 0 auto;
+    width: var(--nav-size);
   }
 
   & .icon,
@@ -27,19 +34,21 @@
   }
 
   & .backButton {
-    position: absolute;
-    top: 0;
-    left: 40px;
-    z-index: 2;
+    width: var(--back-button-width-l); /* to have equal width with its shadow */
     cursor: pointer;
 
     & .icon {
       font-size: 32px;
+      margin-left: -8px; /* conpensate the icon-font white space */
     }
   }
 
+  & .backButtonShadow {
+    width: var(--back-button-width-l);
+    display: inline-block;
+  }
+
   & .navEl {
-    display: flex;
     color: var(--link-color);
     opacity: 0.4;
 
@@ -49,7 +58,6 @@
       border-bottom: solid 2px var(--link-color);
       opacity: 0.5;
       font-size: 0;
-      padding-top: 25%;
     }
 
     & .icon {
@@ -59,6 +67,48 @@
 
     &.current {
       opacity: 1;
+    }
+  }
+}
+
+@media (--small-viewport) {
+  .navigation {
+    counter-reset: section;
+    padding: 0 18px;
+
+    & .backButtonShadow {
+      display: none;
+    }
+
+    & section {
+      width: 100px;
+    }
+  }
+
+
+  .navEl:not(.dash) {
+    & .icon,
+    & .label {
+      display: none;
+    }
+
+    &::after {
+      counter-increment: section;
+      content: counter(section);
+    }
+
+    &.current {
+      opacity: 1;
+
+      &::after {
+        font-weight: bold;
+      }
+    }
+  }
+
+  .navEl.dash {
+    & b {
+      width: 20px !important;
     }
   }
 }
