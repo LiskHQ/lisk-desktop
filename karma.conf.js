@@ -54,6 +54,7 @@ module.exports = function (config) {
           functions: 80,
           lines: 80,
           excludes: [
+            'src/components/menuBar/menuBar.js',
             'src/store/reducers/forging.js',
             'src/store/reducers/voting.js',
             'src/store/reducers/transactions.js',
