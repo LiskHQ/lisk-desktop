@@ -147,3 +147,29 @@
     bottom: 70px;
   }
 }
+
+@media (--small-viewport) {
+  .wrapper {
+    position: relative;
+    margin-bottom: 62px;
+    left: 0;
+    height: 250px;
+  }
+
+  .carouselNav {
+    bottom: 20px;
+  }
+}
+
+@media (--xSmall-viewport) {
+  .wrapper {
+    position: absolute;
+    margin-bottom: 62px;
+    left: -100%;
+    height: 100%;
+  }
+
+  .carouselNav {
+    bottom: 70px;
+  }
+}
