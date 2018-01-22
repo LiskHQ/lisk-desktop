@@ -214,6 +214,8 @@
     color: var(--amount-negative-color);
     border-bottom: 0;
     border-top: 0;
+    margin-right: 0;
+    margin-left: 0;
 
     &:hover:not(:first-child) {
       background: var(--link-color);
