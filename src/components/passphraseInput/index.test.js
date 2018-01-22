@@ -168,7 +168,7 @@ describe('PassphraseInput', () => {
 
       expect(wrapper.find('input').at(0).props().shouldfocus).to.equal(1);
       expect(wrapper.find('input').at(0).props().type).to.equal('password');
-      expect(wrapper.find('input').at(0).props().placeholder).to.equal('start here');
+      expect(wrapper.find('input').at(0).props().placeholder.toLowerCase()).to.equal('start here');
       expect(wrapper.find('input').at(0).props().value).to.equal('');
 
       expect(wrapper.find('input').at(1).props().shouldfocus).to.equal(0);

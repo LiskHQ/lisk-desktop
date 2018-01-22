@@ -59,9 +59,6 @@ class Login extends React.Component {
       !this.alreadyLoggedWithThisAddress(prevProps.account.address, prevProps.peers.options)) {
       this.redirectToReferrer();
     }
-    if (!this.account) {
-      this.autoLogin();
-    }
   }
 
   redirectToReferrer() {
@@ -129,25 +126,6 @@ class Login extends React.Component {
     this.onLoginSubmission(this.state.passphrase);
   }
 
-  autoLogin() {
-    const { savedAccounts } = this.props;
-    if (savedAccounts && savedAccounts.lastActive && !this.props.account.afterLogout) {
-      this.account = savedAccounts.lastActive;
-      const network = Object.assign({}, getNetwork(this.account.network));
-      if (this.account.network === networks.customNode.code) {
-        network.address = this.account.address;
-      }
-
-      // set active peer
-      this.props.activePeerSet({
-        publicKey: this.account.publicKey,
-        network,
-      });
-    } else {
-      this.account = 'not-saved';
-    }
-  }
-
   passFocused() {
     this.setState({
       passInputState: 'focused',
@@ -162,18 +140,19 @@ class Login extends React.Component {
   }
 
   render() {
-    return (
+    return (this.props.account.loading ?
+      <div className={styles.loading} > {this.props.t('Loading...')}</div> :
       <Box className={styles.wrapper}>
         <section className={`${styles.login} ${styles[this.state.passInputState]}`}>
           <section className={styles.table}>
             <header>
               <a className={styles.backButton} href='https://lisk.io' target='_blank' rel='noopener noreferrer'>
                 <FontIcon className={styles.icon}>arrow-left</FontIcon>
-                {this.props.t('Back to lisk.io')}
+                <span className={styles.label}>{this.props.t('Back to lisk.io')}</span>
               </a>
             </header>
             <div className={`${styles.tableCell} text-left`}>
-              <h2>{this.props.t('Sign In')}</h2>
+              <h2>{this.props.t('Sign in')}</h2>
               <form onSubmit={this.onFormSubmit.bind(this)}>
                 {this.showNetworkOptions()
                   ? <div className={styles.outTaken}>
@@ -208,7 +187,7 @@ class Login extends React.Component {
                   onChange={this.changeHandler.bind(this, 'passphrase')} />
                 <footer className={ `${grid.row} ${grid['center-xs']}` }>
                   <div className={grid['col-xs-12']}>
-                    <PrimaryButton label={this.props.t('Login')}
+                    <PrimaryButton label={this.props.t('Log in')}
                       className='login-button'
                       type='submit'
                       disabled={(this.state.network === networks.customNode.code && this.state.addressValidity !== '') ||
@@ -224,12 +203,14 @@ class Login extends React.Component {
             <div className={`${styles.tableCell} text-left`}>
               <h2>
                 <Link className='new-account-button' to='/register'>
-                  {this.props.t('Get Access')}
+                  {this.props.t('Get access')}
                 </Link>
                 <FontIcon className={styles.singUpArrow} value='arrow-right' />
               </h2>
 
-              <h5>Create an address as a gateway to all Lisk Services.</h5>
+              <div className={styles.subTitle}>
+                Create an address as a gateway to all Lisk Services.
+              </div>
             </div>
           </section>
           <div className={styles.bg}></div>

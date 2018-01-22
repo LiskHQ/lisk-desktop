@@ -6,7 +6,7 @@ import styles from './styles.css';
 
 const TransactionsDashboard = () => (
   <div className={`${grid.row} ${styles.wrapper}`} >
-    <div className={`${grid['col-md-4']}`}>
+    <div className={`${grid['col-md-4']} ${styles.gridPadding}`}>
       <Send />
     </div>
     <div className={`${grid['col-sm-12']} ${styles.transactions} ${grid['col-md-8']}`}>

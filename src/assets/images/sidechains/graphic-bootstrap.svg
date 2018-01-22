@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="171" height="168" viewBox="0 0 171 168">
+  <defs>
+    <linearGradient id="graphic-bootstrap-a" x1="-52.506%" y1="-9.548%" y2="95.048%">
+      <stop offset="0%" stop-color="#00457D"/>
+      <stop offset="100%" stop-color="#001A56"/>
+    </linearGradient>
+    <linearGradient id="graphic-bootstrap-c" x1="0%" x2="72.088%" y1="100%" y2="0%">
+      <stop offset="0%" stop-color="#021755" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0097FF"/>
+    </linearGradient>
+    <polygon id="graphic-bootstrap-b" points="85.5 0 171 49.339 171 118.661 85.5 168 0 118.661 0 49.339"/>
+    <linearGradient id="graphic-bootstrap-d" x1="-22.013%" x2="158.606%" y1="81.316%" y2="21.606%">
+      <stop offset="0%" stop-color="#021755" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0097FF"/>
+    </linearGradient>
+    <linearGradient id="graphic-bootstrap-e" x1="167.504%" x2="0%" y1="90.604%" y2="32.848%">
+      <stop offset="0%" stop-color="#021755" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0097FF"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <use fill="url(#graphic-bootstrap-a)" xlink:href="#graphic-bootstrap-b"/>
+    <use fill="url(#graphic-bootstrap-c)" xlink:href="#graphic-bootstrap-b"/>
+    <polygon fill="url(#graphic-bootstrap-d)" points="86 102.126 86 168 0 118.692 0 50" opacity=".379"/>
+    <polygon fill="url(#graphic-bootstrap-e)" fill-opacity=".52" points="86 167 86 101.144 171 51 171 118.22"/>
+  </g>
+</svg>

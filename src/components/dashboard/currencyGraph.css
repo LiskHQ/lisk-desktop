@@ -1,0 +1,27 @@
+@import '../app/variables';
+
+.wrapper {
+  height: 100%;
+  position: relative;
+
+  & h2 {
+    margin: 40px 32px 20px;
+    font-size: 28px;
+  }
+}
+
+.chartWrapper {
+  height: calc(80% + 50px);
+  width: calc(100% + 50px);
+  margin: 10px -25px 0px;
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+}
+
+@media (--medium-viewport) {
+  .chartWrapper {
+    height: calc(100% + 30px);
+    margin: 0 -25px 20px;
+  }
+}

@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import { getAccount, extractAddress, extractPublicKey } from '../../utils/api/account';
 import { getDelegate } from '../../utils/api/delegate';
-import { accountLoggedIn } from '../../actions/account';
+import { accountLoggedIn, accountLoading } from '../../actions/account';
 import actionTypes from '../../constants/actions';
 import accountConfig from '../../constants/account';
 import { errorToastDisplayed } from '../../actions/toaster';
@@ -23,6 +23,8 @@ const loginMiddleware = store => next => (action) => {
     address,
   };
   const { activePeer } = action.data;
+
+  store.dispatch(accountLoading());
 
   // redirect to main/transactions
   return getAccount(activePeer, address).then((accountData) => {

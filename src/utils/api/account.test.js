@@ -64,7 +64,7 @@ describe('Utils: Account', () => {
 
   describe('transactions', () => {
     it('should return a promise', () => {
-      const promise = transactions();
+      const promise = transactions({ activePeer: {} });
       expect(typeof promise.then).to.be.equal('function');
     });
   });

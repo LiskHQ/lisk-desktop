@@ -51,6 +51,10 @@ export const accountLoggedIn = data => ({
   data,
 });
 
+export const accountLoading = () => ({
+  type: actionTypes.accountLoading,
+});
+
 export const passphraseUsed = data => ({
   type: actionTypes.passphraseUsed,
   data,

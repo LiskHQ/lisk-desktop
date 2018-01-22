@@ -38,6 +38,7 @@
   "dependencies": {
     "bignumber.js": "4.0.4",
     "bitcore-mnemonic": "1.2.5",
+    "chart.js": "2.7.1",
     "copy-to-clipboard": "3.0.8",
     "electron-localshortcut": "=2.0.2",
     "flexboxgrid": "=6.3.1",
@@ -57,13 +58,14 @@
     "postcss-cssnext": "2.11.0",
     "prop-types": "=15.5.10",
     "qrcode.react": "0.7.2",
-    "react": "=16.0.0",
+    "react": "=16.2.0",
     "react-animate-on-change": "=1.0.0",
+    "react-chartjs-2": "2.6.4",
     "react-circular-progressbar": "0.2.1",
     "react-copy-to-clipboard": "5.0.1",
     "react-countdown-now": "1.2.0",
     "react-css-themr": "=2.1.2",
-    "react-dom": "=16.0.0",
+    "react-dom": "=16.2.0",
     "react-i18next": "=6.0.6",
     "react-redux": "5.0.6",
     "react-router": "4.2.0",
@@ -119,7 +121,7 @@
     "eslint-plugin-react": "7.4.0",
     "exports-loader": "0.6.4",
     "extract-text-webpack-plugin": "3.0.0",
-    "file-loader": "1.1.0",
+    "file-loader": "1.1.6",
     "glob": "=7.1.2",
     "i18next-scanner": "=2.0.0",
     "imports-loader": "0.7.1",
@@ -138,8 +140,6 @@
     "karma-webpack": "2.0.4",
     "mocha": "3.5.3",
     "mocha-steps": "1.1.0",
-    "popmotion": "7.8.2",
-    "popmotion-react": "1.1.1",
     "postcss-for": "=2.1.1",
     "postcss-functions": "3.0.0",
     "postcss-loader": "=2.0.6",
@@ -200,7 +200,7 @@
   "bundlesize": [
     {
       "path": "./app/build/bundle.app.js",
-      "maxSize": "820 kB"
+      "maxSize": "890 kB"
     },
     {
       "path": "./app/build/bundle.vendor.js",

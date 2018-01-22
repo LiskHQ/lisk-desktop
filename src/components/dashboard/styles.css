@@ -20,6 +20,7 @@
 .graph {
   height: calc(70% - 20px);
   margin-bottom: 20px;
+  overflow: hidden;
 }
 
 .latestActivity {

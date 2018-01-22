@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactSwipe from 'react-swipe';
 import styles from './setting.css';
-import languageSwitcherTheme from './languageSwitcher.css';
-// eslint-disable-next-line import/no-named-as-default
-import SliderCheckbox from '../toolbox/checkbox';
-import RelativeLink from '../relativeLink';
+import Checkbox from '../toolbox/checkbox';
 import i18n from '../../i18n';
-import { FontIcon } from '../fontIcon';
+// TODO: will be re-enabled when the functionality is updated
+// import RelativeLink from '../relativeLink';
+// import languageSwitcherTheme from './languageSwitcher.css';
 
 class Setting extends React.Component {
   constructor() {
@@ -33,8 +32,9 @@ class Setting extends React.Component {
 
   render() {
     this.language = (i18n.language === 'de');
-    const { t, hasSecondPassphrase } = this.props;
-    return <footer className={styles.wrapper}>
+    const showSetting = this.props.showSetting ? styles.active : '';
+    const { t } = this.props;
+    return <footer className={`${styles.wrapper} ${showSetting}`}>
       <ReactSwipe
         className={styles.carousel}
         ref={(reactSwipe) => { this.reactSwipe = reactSwipe; }}
@@ -44,7 +44,7 @@ class Setting extends React.Component {
           transitionEnd: index => this.changeSlide(index),
         }}>
         <div>
-          <SliderCheckbox
+          <Checkbox
             theme={styles}
             className={`${styles.smallSlider}`}
             clickable={true}
@@ -58,7 +58,7 @@ class Setting extends React.Component {
           </article>
         </div>
         <div>
-          <SliderCheckbox
+          <Checkbox
             theme={styles}
             className={`${styles.smallSlider}`}
             clickable={true}
@@ -70,8 +70,9 @@ class Setting extends React.Component {
             <p>{t('Delegate section will be displayed.')}</p>
           </article>
         </div>
+        {/* TODO: will be re-enabled when the functionality is updated
         <div>
-          <SliderCheckbox
+          <Checkbox
             theme={languageSwitcherTheme}
             className={`${styles.smallSlider} language-switcher`}
             onChange={this.changeLanguage.bind(this)}
@@ -109,9 +110,10 @@ class Setting extends React.Component {
             <p>{t('Register 2nd passphrase')}</p>
           </article>
         </div>
+        */}
       </ReactSwipe>
       <ul className={ styles.carouselNav } id='carouselNav'>
-        {[...Array(4)].map((x, i) =>
+        {[...Array(2)].map((x, i) =>
           <li
             key={i}
             className={(i === this.state.activeSlide) ? styles.activeSlide : ''}
