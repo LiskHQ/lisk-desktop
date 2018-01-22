@@ -138,8 +138,6 @@
     "karma-webpack": "2.0.4",
     "mocha": "3.5.3",
     "mocha-steps": "1.1.0",
-    "popmotion": "7.8.2",
-    "popmotion-react": "1.1.1",
     "postcss-for": "=2.1.1",
     "postcss-functions": "3.0.0",
     "postcss-loader": "=2.0.6",
