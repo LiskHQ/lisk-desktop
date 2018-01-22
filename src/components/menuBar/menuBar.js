@@ -5,7 +5,7 @@ import { FontIcon } from 'react-toolbox/lib/font_icon';
 import styles from './menuBar.css';
 
 const MenuBar = ({ t }) => (
-  <section className={styles.menuBar}>
+  <section className={`${styles.menuBar} menuBar`}>
     <span className={`${styles.menuItem} ${styles.menuButton}`}>
       {t('Menu')} <FontIcon value='menu' />
     </span>

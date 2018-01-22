@@ -13,7 +13,7 @@ import styles from './header.css';
 import RelativeLink from '../relativeLink';
 
 const Header = props => (
-  <header className={`${grid.row} ${grid['between-xs']} ${styles.wrapper}`}>
+  <header className={`${grid.row} ${grid['between-xs']} ${styles.wrapper} mainHeader`}>
     <img src={logo} className={styles.logo} />
     <PrivateWrapper>
       <div className={grid.row}>

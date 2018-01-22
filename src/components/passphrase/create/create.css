@@ -256,8 +256,9 @@ hr {
 
 @media (--small-viewport) {
   .generation {
+    & .secondHeading,
     & .generatorHeader {
-      /* top: 5%; */
+      font-size: 40px;
     }
 
     & .addressContainer {

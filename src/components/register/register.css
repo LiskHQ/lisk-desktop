@@ -10,3 +10,10 @@
 .hasPaddingTop {
   padding-top: var(--box-padding-top);
 }
+
+@media (--small-viewport) {
+  .hasPaddingTop {
+    height: 100vh;
+    padding-top: var(--box-padding);
+  }
+}

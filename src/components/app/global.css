@@ -42,4 +42,13 @@ order to be available application wide
   :global .boxPadding {
     padding: 0px 20px;
   }
+
+  :global body.contentFocused {
+    margin-top: 0;
+
+    & .menuBar,
+    & .mainHeader {
+      display: none;
+    }
+  }
 }
