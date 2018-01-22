@@ -6,16 +6,22 @@
 
 .menuBar {
   display: none;
-  z-index: 10 !important;
+  z-index: 4 !important;
 }
 
 .openMenu {
   z-index: 1000 !important;
+  box-shadow: none !important;
 }
 
 .icon {
+  font-size: 25px !important;
   margin-top: 2px;
   margin-left: 5px;
+
+  &.goBack {
+    margin-left: -5px;
+  }
 }
 
 @media (--medium-viewport) {
@@ -53,5 +59,9 @@
   .menuBar {
     height: var(--s-menu-bar-height);
     font-size: 18px;
+  }
+
+  .icon {
+    margin-top: -2px;
   }
 }
