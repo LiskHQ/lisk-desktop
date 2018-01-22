@@ -61,7 +61,17 @@
     font-size: 18px;
   }
 
+  .setting {
+    display: none;
+  }
+
   .icon {
     margin-top: -2px;
+  }
+}
+
+@media (--xSmall-viewport) {
+  .setting {
+    display: flex;
   }
 }

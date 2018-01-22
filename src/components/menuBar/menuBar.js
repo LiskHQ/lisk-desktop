@@ -22,11 +22,11 @@ const MenuBar = (props) => {
       {menuStatus ?
         <Fragment>
           {!settingStatus ?
-            <span className={styles.menuButton}
+            <span className={`${styles.menuButton} ${styles.setting}`}
               onClick={() => settingToggle()}>
               {t('Settings')}
             </span> :
-            <span className={styles.menuButton}
+            <span className={`${styles.menuButton} ${styles.setting}`}
               onClick={() => settingToggle()}>
               <FontIcon className={`${styles.icon} ${styles.goBack}`} value='arrow-left' /> {t('Main menu')}
             </span>
