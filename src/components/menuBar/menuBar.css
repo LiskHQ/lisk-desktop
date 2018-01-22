@@ -6,12 +6,28 @@
 
 .menuBar {
   display: none;
+  z-index: 4 !important;
+}
+
+.openMenu {
+  z-index: 1000 !important;
+  box-shadow: none !important;
+}
+
+.icon {
+  font-size: 25px !important;
+  margin-top: 2px;
+  margin-left: 5px;
+
+  &.goBack {
+    margin-left: -5px;
+  }
 }
 
 @media (--medium-viewport) {
   .menuBar {
     position: fixed;
-    display: block;
+    display: flex;
     height: var(--m-menu-bar-height);
     width: 100%;
     bottom: 0;
@@ -22,16 +38,15 @@
     font-family: var(--heading-font);
     background-color: var(--color-white);
     z-index: 1;
+    flex-direction: row-reverse;
+    justify-content: space-between;
   }
 
   .menuButton {
-    float: right;
-  }
-
-  .menuItem {
-    display: inline-block;
+    display: flex;
     padding: var(--menu-bar-padding);
     cursor: pointer;
+    user-select: none;
 
     & > * {
       font-size: inherit;
@@ -44,5 +59,19 @@
   .menuBar {
     height: var(--s-menu-bar-height);
     font-size: 18px;
+  }
+
+  .setting {
+    display: none;
+  }
+
+  .icon {
+    margin-top: -2px;
+  }
+}
+
+@media (--xSmall-viewport) {
+  .setting {
+    display: flex;
   }
 }
