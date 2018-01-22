@@ -31,6 +31,8 @@ const actionTypes = {
   transactionsLoaded: 'TRANSACTIONS_LOADED',
   transactionsFilterSet: 'TRANSACTIONS_FILTER_SET',
   transactionsFiltered: 'TRANSACTIONS_FILTERED',
+  transactionsAddressSet: 'TRANSACTIONS_ADDRESS_SET',
+  transactionsWithAddress: 'TRANSACTIONS_WITH_ADDRESS',
   passphraseUsed: 'PASSPHRASE_USED',
   accountsRetrieved: 'ACCOUNTS_RETRIEVED',
   accountSaved: 'ACCOUNT_SAVED',

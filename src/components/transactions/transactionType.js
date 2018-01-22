@@ -1,7 +1,8 @@
 import React from 'react';
 import { translate } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import styles from './transactions.css';
-import ClickToSend from '../clickToSend';
+import routes from './../../constants/routes';
 
 const TransactionType = (props) => {
   const t = props.t;
@@ -35,9 +36,9 @@ const TransactionType = (props) => {
   const address = props.address !== props.senderId ? props.senderId : props.recipientId;
   const template = type ?
     <span className={styles.smallButton}>{type}</span> :
-    <ClickToSend recipient={address} className={`from-to ${styles.ordinaryText}`} >
+    <Link className={`${styles.clickable} ${styles.ordinaryText}`} to={`${routes.account.long}/${address}`}>
       {address}
-    </ClickToSend>;
+    </Link>;
   return template;
 };
 
