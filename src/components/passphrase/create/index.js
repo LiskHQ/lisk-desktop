@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { generateSeed, generatePassphrase } from '../../../utils/passphrase';
 import { extractAddress } from '../../../utils/api/account';
@@ -161,7 +161,7 @@ class Create extends React.Component {
         <div className={`${grid['col-xs-12']} ${styles.shapesWrapper}`}
           ref={ (pageRoot) => { this.pageRoot = pageRoot; } }>
           {!this.state.address ?
-            <div>
+            <Fragment>
               <MovableShape
                 hidden={shapes[0]}
                 src={shapesSrc.circle}
@@ -225,7 +225,7 @@ class Create extends React.Component {
                 percentage={percentage}
                 reverse={false}
                 end={pageCenter}/>
-            </div> :
+            </Fragment> :
             null
           }
           <header className={this.state.headingClass}>

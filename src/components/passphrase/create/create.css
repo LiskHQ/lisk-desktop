@@ -136,6 +136,10 @@
   }
 }
 
+.shapesWrapper {
+  height: 100%;
+}
+
 hr {
   display: none;
 }
