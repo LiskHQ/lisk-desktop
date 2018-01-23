@@ -2,17 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Transactions from './../transactions';
-import { transactionsFilterSet } from '../../actions/transactions';
+import { transactionsAddressSet } from '../../actions/transactions';
 import Send from '../send';
-import txFilters from './../../constants/transactionFilters';
 import styles from './styles.css';
 
 class TransactionsDashboard extends React.Component {
   constructor(props) {
     super(props);
-    if (this.props.transactions.filter !== txFilters.all) {
-      this.props.transactionsFilterSet({ filter: txFilters.all });
-    }
+    this.props.transactionsAddressSet({ address: this.props.accountAddress });
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -29,12 +26,12 @@ class TransactionsDashboard extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  transactions: [...state.transactions.pending, ...state.transactions.confirmed],
+  accountAddress: state.account.address,
 });
 
 
 const mapDispatchToProps = dispatch => ({
-  transactionsFilterSet: data => dispatch(transactionsFilterSet(data)),
+  transactionsAddressSet: data => dispatch(transactionsAddressSet(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TransactionsDashboard);

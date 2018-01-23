@@ -1,5 +1,5 @@
 import actionTypes from '../../constants/actions';
-
+import txFilter from '../../constants/transactionFilters';
 /**
  *
  * @param {Array} state
@@ -51,15 +51,12 @@ const transactions = (state = { pending: [], confirmed: [], count: null }, actio
         count: action.data.count,
         filter: action.data.filter,
       });
-    case actionTypes.transactionsFilterSet:
-      return Object.assign({}, state, {
-        filter: action.data.filter,
-      });
     case actionTypes.transactionsWithAddress:
       return Object.assign({}, state, {
         confirmed: action.data.confirmed,
         count: action.data.count,
         address: action.data.address,
+        filter: txFilter.all,
       });
     case (actionTypes.accountLoggedOut):
       return { pending: [], confirmed: [], count: 0 };

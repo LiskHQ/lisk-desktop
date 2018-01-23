@@ -33,7 +33,7 @@ const transactionsUpdated = (store) => {
 const filterTransactions = (store, action) => {
   getTransactions({
     activePeer: store.getState().peers.data,
-    address: store.getState().account.address,
+    address: store.getState().transactions.address,
     limit: 25,
     filter: action.data.filter })
     .then((response) => {

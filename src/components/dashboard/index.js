@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import React from 'react';
-import { transactionsFilterSet } from '../../actions/transactions';
-import txFilters from './../../constants/transactionFilters';
+import { transactionsAddressSet } from '../../actions/transactions';
 import { FontIcon } from '../fontIcon';
 import Box from '../box';
 import TransactionList from './../transactions/transactionList';
@@ -15,9 +14,7 @@ import styles from './styles.css';
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
-    if (this.props.transactions.filter !== txFilters.all) {
-      this.props.transactionsFilterSet({ filter: txFilters.all });
-    }
+    this.props.transactionsAddressSet({ address: this.props.accountAddress });
   }
 
   render() {
@@ -49,10 +46,11 @@ class Dashboard extends React.Component {
 
 const mapStateToProps = state => ({
   transactions: [...state.transactions.pending, ...state.transactions.confirmed].slice(0, 3),
+  accountAddress: state.account.address,
 });
 
 const mapDispatchToProps = dispatch => ({
-  transactionsFilterSet: data => dispatch(transactionsFilterSet(data)),
+  transactionsAddressSet: data => dispatch(transactionsAddressSet(data)),
 });
 
 

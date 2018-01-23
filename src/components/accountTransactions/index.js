@@ -10,9 +10,17 @@ import styles from './accountTransactions.css';
 class accountTransactions extends React.Component {
   constructor(props) {
     super(props);
-    this.props.transactionsAddressSet({
-      address: this.props.match.params.address,
-    });
+    this.setAddressAndLoadTransactions(this.props.match.params.address);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.match.params.address !== this.props.match.params.address) {
+      this.setAddressAndLoadTransactions(nextProps.match.params.address);
+    }
+  }
+
+  setAddressAndLoadTransactions(address) {
+    this.props.transactionsAddressSet({ address });
   }
 
   // eslint-disable-next-line class-methods-use-this
