@@ -1,6 +1,6 @@
 import actionsType from '../../constants/actions';
 
-const saveSettingsMiddleware = store => next => (action) => {
+const savedSettingsMiddleware = store => next => (action) => {
   next(action);
   const Settings = store.getState().settings;
   if (action.type === actionsType.autoLogChanged ||
@@ -9,4 +9,4 @@ const saveSettingsMiddleware = store => next => (action) => {
   }
 };
 
-export default saveSettingsMiddleware;
+export default savedSettingsMiddleware;
