@@ -152,80 +152,68 @@ class Create extends React.Component {
     const { t, nextStep } = this.props;
     const { shapes } = this.state;
     const percentage = this.state.data ? this.state.data.percentage : 0;
-    const pageCenter = {
-      x: this.pageRoot ? this.pageRoot.clientWidth / 2 : 500,
-      y: this.pageRoot ? this.pageRoot.clientHeight / 2 : 300,
-    };
+
     return (
       <section className={`${grid.row} ${grid['center-xs']} ${styles.wrapper} ${styles.generation}`} id="generatorContainer" >
-        <div className={`${grid['col-xs-12']} ${styles.shapesWrapper}`}
+        <div className={grid['col-xs-12']}
           ref={ (pageRoot) => { this.pageRoot = pageRoot; } }>
           {!this.state.address ?
-            <Fragment>
+            <div className={styles.shapesWrapper}>
               <MovableShape
                 hidden={shapes[0]}
                 src={shapesSrc.circle}
                 className={styles.circle}
                 percentage={percentage}
-                reverse={true}
-                end={pageCenter}/>
+                initial={['92%', '20%']} />
               <MovableShape
                 hidden={shapes[1]}
                 src={shapesSrc.smallCircle}
                 className={styles.smallCircle}
                 percentage={percentage}
-                reverse={false}
-                end={pageCenter}/>
+                initial={['62%', '-2%']} />
               <MovableShape
                 hidden={shapes[2]}
                 src={shapesSrc.triangle}
                 className={styles.triangle}
                 percentage={percentage}
-                reverse={true}
-                end={pageCenter}/>
+                initial={['80%', '-2%']} />
               <MovableShape
                 hidden={shapes[3]}
                 src={shapesSrc.smallTriangle}
                 className={styles.smallTriangle}
                 percentage={percentage}
-                reverse={true}
-                end={pageCenter}/>
+                initial={['30%', '-2%']} />
               <MovableShape
                 hidden={shapes[5]}
                 src={shapesSrc.circleOutline}
                 className={styles.circleOutline}
                 percentage={percentage}
-                reverse={false}
-                end={pageCenter}/>
+                initial={['-2%', '10%']} />
               <MovableShape
                 hidden={shapes[6]}
                 src={shapesSrc.stripe}
                 className={styles.stripe}
                 percentage={percentage}
-                reverse={false}
-                end={pageCenter}/>
+                initial={['-4%', '5%']} />
               <MovableShape
                 hidden={shapes[7]}
                 src={shapesSrc.smallStripe}
                 className={styles.smallStripe}
                 percentage={percentage}
-                reverse={true}
-                end={pageCenter}/>
+                initial={['20%', '4%']} />
               <MovableShape
                 hidden={shapes[4]}
                 src={shapesSrc.rightRectangle}
                 className={styles.rightRectangle}
                 percentage={percentage}
-                reverse={true}
-                end={pageCenter}/>
+                initial={['40%', '-1%']} />
               <MovableShape
                 hidden={shapes[8]}
                 src={shapesSrc.leftRectangle}
                 className={styles.leftRectangle}
                 percentage={percentage}
-                reverse={false}
-                end={pageCenter}/>
-            </Fragment> :
+                initial={['70%', '-5%']} />
+            </div> :
             null
           }
           <header className={this.state.headingClass}>
@@ -245,7 +233,7 @@ class Create extends React.Component {
             </TransitionWrapper>
           </header>
           {this.state.address ?
-            <div className={styles.addressContainer}>
+            <Fragment>
               <figure>
                 <AccountVisual address={this.state.address} size={200} />
               </figure>
@@ -256,7 +244,7 @@ class Create extends React.Component {
                 className="get-passphrase-button"
                 onClick={() => nextStep({ passphrase: this.state.passphrase })}
               />
-            </div>
+            </Fragment>
             : ''}
         </div>
         <footer className={grid['col-xs-12']}>
