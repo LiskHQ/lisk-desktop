@@ -13,9 +13,10 @@
   height: var(--nav-line-height);
   padding: 0 45px;
   display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
+  flex-flow: row nowrap;
   justify-content: space-between;
+  position: relative;
+  z-index: 999;
 
   & > section {
     align-self: flex-end;
@@ -84,7 +85,6 @@
       width: 100px;
     }
   }
-
 
   .navEl:not(.dash) {
     & .icon,
