@@ -24,18 +24,23 @@ const Header = props => (
               <small> LSK</small>
             </div>
             <div className={`${styles.address} account-information-address`}>{props.account.address}</div>
-            <div className={styles.timer}>
-              {(!props.account.expireTime || props.account.expireTime === 0) ?
-                <span><FontIcon value='locked' className={styles.lock}/> {props.t('Account locked!')}</span> :
-                <div>
-                  <FontIcon value='unlocked' className={styles.lock}/> {props.t('Address timeout in')} <i> </i>
-                  <Countdown
-                    date={props.account.expireTime}
-                    renderer={CountDownTemplate}
-                    onComplete={() => props.removePassphrase()}
-                  />
-                </div>}
-            </div>
+            {props.autoLog ?
+              <div className={styles.timer}>
+                {((!props.account.expireTime || props.account.expireTime === 0)) ?
+                  <span><FontIcon value='locked' className={styles.lock}/> {props.t('Account locked!')}</span> :
+                  <div>
+                    <FontIcon value='unlocked' className={styles.lock}/> {props.t('Address timeout in')} <i> </i>
+                    <Countdown
+                      date={props.account.expireTime}
+                      renderer={CountDownTemplate}
+                      onComplete={() => props.removePassphrase()}
+                    />
+                  </div>}
+              </div>
+              : <div className={styles.timer}>
+                <span><FontIcon value='unlocked' className={styles.lock}/> {props.t('Account unlocked!')}</span>
+              </div>
+            }
           </div>
           <RelativeLink to='saved-accounts' className={styles.avatar}>
             <AccountVisual address={props.account.address} size={69} />
