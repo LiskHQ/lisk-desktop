@@ -13,7 +13,7 @@
 
 @media (--small-viewport) {
   .hasPaddingTop {
-    height: 100vh;
+    height: 100vh; /* stylelint-disable-line */
     padding-top: var(--box-padding);
   }
 }
