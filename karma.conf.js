@@ -78,6 +78,7 @@ module.exports = function (config) {
             'src/components/secondPassphrase/index.js',
             'src/components/authenticate/index.js',
             'src/components/authenticate/authenticate.js',
+            'src/components/menuBar/menuBar.js',
             'src/components/multiStep/index.js',
             'src/components/passphrase/info/index.js',
             'src/components/passphrase/create/index.js',
