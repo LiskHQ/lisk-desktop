@@ -33,7 +33,7 @@ class Setting extends React.Component {
   render() {
     this.language = (i18n.language === 'de');
     const showSetting = this.props.showSetting ? styles.active : '';
-    const { t } = this.props;
+    const { t, settings, changeAutoLog, changeAdvancedMode } = this.props;
     return <footer className={`${styles.wrapper} ${showSetting}`}>
       <ReactSwipe
         className={styles.carousel}
@@ -48,9 +48,10 @@ class Setting extends React.Component {
             theme={styles}
             className={`${styles.smallSlider}`}
             clickable={true}
+            onChange={() => changeAutoLog(!settings.autoLog)}
             input={{
               value: true,
-              checked: true,
+              checked: settings.autoLog,
             }}/>
           <article>
             <h5>{t('Auto-Lock')}</h5>
@@ -62,8 +63,10 @@ class Setting extends React.Component {
             theme={styles}
             className={`${styles.smallSlider}`}
             clickable={true}
+            onChange={() => changeAdvancedMode(!settings.advancedMode)}
             input={{
               value: true,
+              checked: settings.advancedMode,
             }}/>
           <article>
             <h5>{t('Advanced features')}</h5>
