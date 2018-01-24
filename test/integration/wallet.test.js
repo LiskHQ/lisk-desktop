@@ -86,7 +86,7 @@ describe('@integration: Wallet', () => {
   };
 
   const fillInputField = (value, field) => {
-    wrapper.find(`.${field} input`).simulate('change', { target: { value } });
+    wrapper.find(`.${field} input`).first().simulate('change', { target: { value } });
   };
 
   const clickStep = (elementName) => {
@@ -153,6 +153,7 @@ describe('@integration: Wallet', () => {
       step('And I fill in "537318935439898807L" to "recipient" field', fillInputField.bind(null, '537318935439898807L', 'recipient'));
       step('And I click "send next button"', clickStep.bind(null, 'send next button'));
       step('And I fill in passphrase of "genesis" to "passphrase" field', fillInputField.bind(null, passphrase, 'passphrase'));
+      step('When I click "next button"', () => { wrapper.find('.first-passphrase-next button').simulate('click'); });
       step('When I click "send button"', () => { wrapper.find('.send-button button').simulate('click'); });
       step(`Then I should see text ${successMessage} in "result box message" element`, shouldContainMessage.bind(this, 'result box message', successMessage));
     });
@@ -164,6 +165,7 @@ describe('@integration: Wallet', () => {
       step('And I fill in "537318935439898807L" to "recipient" field', fillInputField.bind(null, '537318935439898807L', 'recipient'));
       step('And I click "send next button"', clickStep.bind(null, 'send next button'));
       step('And I fill in second passphrase of "second passphrase account" to "second passphrase" field', fillInputField.bind(null, secondPassphrase, 'second-passphrase'));
+      step('When I click "next button"', () => { wrapper.find('.second-passphrase-next button').simulate('click'); });
       step('When I click "send button"', () => { wrapper.find('.send-button button').simulate('click'); });
       step(`Then I should see text ${successMessage} in "result box message" element`, shouldContainMessage.bind(this, 'result box message', successMessage));
     });
@@ -175,7 +177,9 @@ describe('@integration: Wallet', () => {
       step('And I fill in "537318935439898807L" to "recipient" field', fillInputField.bind(null, '537318935439898807L', 'recipient'));
       step('And I click "send next button"', clickStep.bind(null, 'send next button'));
       step('And I fill in passphrase of "second passphrase account" to "passphrase" field', fillInputField.bind(null, passphrase, 'passphrase'));
+      step('When I click "next button"', () => { wrapper.find('.first-passphrase-next button').simulate('click'); });
       step('And I fill in second passphrase of "second passphrase account" to "second passphrase" field', fillInputField.bind(null, secondPassphrase, 'second-passphrase'));
+      step('When I click "next button"', () => { wrapper.find('.second-passphrase-next button').simulate('click'); });
       step('When I click "send button"', () => { wrapper.find('.send-button button').simulate('click'); });
       step(`Then I should see text ${successMessage} in "result box message" element`, shouldContainMessage.bind(this, 'result box message', successMessage));
     });

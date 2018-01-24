@@ -26,6 +26,8 @@ describe('Send Readable Component', () => {
       activePeer: {},
       account,
       pendingTransactions: [],
+      passphrase: { value: account.passphrase },
+      secondPassphrase: { value: null },
       closeDialog: () => {},
       sent: sinon.spy(),
       t: key => key,

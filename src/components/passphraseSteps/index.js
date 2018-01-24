@@ -10,15 +10,15 @@ import { passphraseIsValid, authStatePrefill } from '../../utils/form';
 import styles from './passphraseSteps.css';
 
 class PassphraseSteps extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       done: {
         passphrase: false,
         secondPassphrase: false,
       },
-      ...authStatePrefill(),
+      ...authStatePrefill(this.props.account),
     };
   }
 

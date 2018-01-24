@@ -12,7 +12,7 @@ class PassphraseInput extends React.Component {
     super(props);
     this.state = {
       inputType: 'password',
-      isFocused: this.props.isFocused,
+      isFocused: this.props.isFocused || false,
       partialPassphraseError: [],
       focus: 0,
     };
