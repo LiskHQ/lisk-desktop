@@ -42,6 +42,11 @@ class Transactions extends React.Component {
       (this.props.activeFilter === filter);
   }
 
+  shouldShowEmtpyState() {
+    return this.props.transactions.length === 0 &&
+      (!this.props.activeFilter || this.props.activeFilter === txFilters.all);
+  }
+
   render() {
     const filters = [
       {
@@ -75,40 +80,41 @@ class Transactions extends React.Component {
             <CopyToClipboard value={this.props.address} className={`${styles.address}`} copyClassName={styles.copy} />
           </div>
         </header>
-        {this.props.transactions.length === 0 &&
-          (!this.props.activeFilter ||
-            this.props.activeFilter === txFilters.all) ?
+        {this.shouldShowEmtpyState() ?
           <div className={styles.emptyTransactions}>
             <img src={cubeImage} />
             <h2>{this.props.t('No activity yet')}</h2>
             <p>{this.props.t('The Wallet will show your recent transactions.')}</p>
-          </div> :
-          <div>
-            <ul className={styles.list}>
-              {filters.map((filter, i) => (
-                <li key={i} className={`transaction-filter-item ${filter.className} ${styles.item} ${this.isActiveFilter(filter.value) ? styles.active : ''}`}
-                  onClick={() => { this.props.transactionsFilterSet({ filter: filter.value }); }}>
-                  {filter.name}
-                </li>
-              ))}
-            </ul>
-            <TransactionList
-              filter={filters[this.props.activeFilter]}
-              address={this.props.address}
-              transactions={this.props.transactions}
-              loadMore={this.loadMore.bind(this)}
-              nextStep={this.props.nextStep}
-              t={this.props.t}/>
-            {
-              // the whole transactions box should be scrollable on XS
-              // otherwise only the transaction list should be scrollable
-              // (see transactionList.js)
-              this.isSmallScreen()
-                ? <Waypoint bottomOffset='-80%' key={this.props.transactions.length}
-                  onEnter={() => { this.loadMore(); }}></Waypoint>
-                : null
-            }
-          </div>
+          </div> : null }
+        {this.shouldShowEmtpyState() ?
+          null :
+          <ul className={styles.list}>
+            {filters.map((filter, i) => (
+              <li key={i} className={`transaction-filter-item ${filter.className} ${styles.item} ${this.isActiveFilter(filter.value) ? styles.active : ''}`}
+                onClick={() => { this.props.transactionsFilterSet({ filter: filter.value }); }}>
+                {filter.name}
+              </li>
+            ))}
+          </ul>
+        }
+        {this.shouldShowEmtpyState() ?
+          null :
+          <TransactionList
+            filter={filters[this.props.activeFilter]}
+            address={this.props.address}
+            transactions={this.props.transactions}
+            loadMore={this.loadMore.bind(this)}
+            nextStep={this.props.nextStep}
+            t={this.props.t}/>
+        }
+        {
+          // the whole transactions box should be scrollable on XS
+          // otherwise only the transaction list should be scrollable
+          // (see transactionList.js)
+          this.isSmallScreen()
+            ? <Waypoint bottomOffset='-80%' key={this.props.transactions.length}
+              onEnter={() => { this.loadMore(); }}></Waypoint>
+            : null
         }
       </Box>
     );
