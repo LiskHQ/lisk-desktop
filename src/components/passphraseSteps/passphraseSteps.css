@@ -3,7 +3,7 @@
 .wrapper {
   padding: 0px 30px 20px;
   display: flex;
-  flex-direction: column;
+  flex-flow: column wrap;
   justify-content: space-between;
   width: 100%;
   overflow-y: hidden;
@@ -19,18 +19,10 @@
   padding: 20px 0px;
 
   & h2 {
-    font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-semi-bold);
     margin-bottom: 0;
     font-size: 2em;
   }
-}
-
-.wrapper {
-  width: 100%;
-}
-
-.header {
-  padding-bottom: 60px;
 }
 
 .input {

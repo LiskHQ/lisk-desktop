@@ -36,6 +36,7 @@ class PassphraseSteps extends React.Component {
       this.props.nextStep({
         ...this.props,
         ...authStatePrefill(this.props.account),
+        skipped: true,
       });
     }
   }
@@ -53,6 +54,7 @@ class PassphraseSteps extends React.Component {
     if (this.hasCorrectPassphrases()) {
       this.props.nextStep({
         ...this.props,
+        skipped: false,
         passphrase: this.state.passphrase,
         secondPassphrase: this.state.secondPassphrase,
       });
@@ -86,97 +88,68 @@ class PassphraseSteps extends React.Component {
     this.setState({ done });
   }
 
-  shouldShowSecondPassphraseInput() {
-    return this.props.account.secondSignature &&
-      (this.state.done.passphrase || this.props.account.passphrase);
-  }
+  getCurrentStep() {
+    if (this.props.account.secondSignature &&
+      (this.state.done.passphrase || this.props.account.passphrase)) {
+      return 'secondPassphrase';
+    }
 
-  shouldShowFirstPassphraseInput() {
-    return !this.props.account.passphrase && !this.state.done.passphrase;
+    return 'passphrase';
   }
 
   render() {
-    return <div className='boxPadding send'>
-      {this.shouldShowFirstPassphraseInput()
-        ? <div>
-          <div className={styles.header}>
-            <header className={styles.headerWrapper}>
-              <h2>{this.props.t('Enter your 1st passphrase')}</h2>
-            </header>
+    const values = {
+      passphrase: {
+        key: 'passphrase',
+        header: this.props.t('Enter your 1st passphrase'),
+        state: this.state.passphrase,
+        className: 'passphrase',
+        buttonClassName: 'first-passphrase-next',
+      },
+      secondPassphrase: {
+        key: 'secondPassphrase',
+        header: this.props.t('Enter your 2nd passphrase'),
+        state: this.state.secondPassphrase,
+        className: 'second-passphrase',
+        buttonClassName: 'second-passphrase-next',
+      },
+    };
+
+    return <div className={`${styles.wrapper} boxPadding`}>
+      <header className={styles.headerWrapper}>
+        <h2>{values[this.getCurrentStep()].header}</h2>
+      </header>
+      <PassphraseInput
+        className={values[this.getCurrentStep()].className}
+        error={values[this.getCurrentStep()].state.error}
+        value={values[this.getCurrentStep()].state.value}
+        onChange={this.onChange.bind(this, values[this.getCurrentStep()].key)}
+        columns={{ xs: 6, sm: 4, md: 6 }}
+        theme={styles}
+        isFocused={true}
+      />
+      <footer>
+        <section className={grid.row} >
+          <div className={grid['col-xs-4']}>
+            <Button
+              label={this.props.t('Back')}
+              onClick={() => this.props.prevStep()}
+              type='button'
+              theme={styles}
+            />
           </div>
-          <PassphraseInput
-            className='passphrase'
-            error={this.state.passphrase.error}
-            value={this.state.passphrase.value}
-            onChange={this.onChange.bind(this, 'passphrase')}
-            columns={{ xs: 6, sm: 4, md: 6 }}
-            theme={styles}
-            isFocused={true}
-          />
-          <footer>
-            <section className={grid.row} >
-              <div className={grid['col-xs-4']}>
-                <Button
-                  label={this.props.t('Back')}
-                  onClick={() => this.props.prevStep()}
-                  type='button'
-                  theme={styles}
-                />
-              </div>
-              <div className={grid['col-xs-8']}>
-                <Button
-                  className='first-passphrase-next'
-                  label={this.props.t('Next')}
-                  theme={styles}
-                  onClick={this.setDone.bind(this, 'passphrase')}
-                  disabled={!passphraseIsValid(this.state.passphrase)}
-                />
-              </div>
-            </section>
-          </footer>
-        </div>
-        : null
-      }
-      {this.shouldShowSecondPassphraseInput()
-        ? <div>
-          <div className={styles.header}>
-            <header className={styles.headerWrapper}>
-              <h2>{this.props.t('Enter your 2nd passphrase')}</h2>
-            </header>
+          <div className={grid['col-xs-8']}>
+            <Button
+              className={values[this.getCurrentStep()].buttonClassName}
+              label={this.props.t('Next')}
+              theme={styles}
+              onClick={this.setDone.bind(this, values[this.getCurrentStep()].key)}
+              disabled={!passphraseIsValid(values[this.getCurrentStep()].state)}
+            />
+            <div className='subTitle'>{this.props.subTitle}</div>
           </div>
-          <PassphraseInput
-            className='second-passphrase'
-            error={this.state.secondPassphrase.error}
-            value={this.state.secondPassphrase.value}
-            onChange={this.onChange.bind(this, 'secondPassphrase')}
-            columns={{ xs: 6, sm: 4, md: 6 }}
-            theme={styles}
-            isFocused={true}
-          />
-          <footer>
-            <section className={grid.row} >
-              <div className={grid['col-xs-4']}>
-                <Button
-                  label={this.props.t('Back')}
-                  onClick={() => this.props.prevStep()}
-                  type='button'
-                  theme={styles}
-                />
-              </div>
-              <div className={grid['col-xs-8']}>
-                <Button
-                  className='second-passphrase-next'
-                  label={this.props.t('Next')}
-                  theme={styles}
-                  onClick={this.setDone.bind(this, 'secondPassphrase')}
-                  disabled={!passphraseIsValid(this.state.secondPassphrase)}
-                />
-              </div>
-            </section>
-          </footer>
-        </div>
-        : null
-      }
+        </section>
+      </footer>
     </div>;
   }
 }

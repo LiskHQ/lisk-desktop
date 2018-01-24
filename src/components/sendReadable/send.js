@@ -121,7 +121,7 @@ class SendReadable extends React.Component {
             <div className={grid['col-xs-4']}>
               <Button
                 label={this.props.t('Back')}
-                onClick={() => this.props.prevStep()}
+                onClick={() => { this.props.prevStep({ reset: this.props.skipped }); } }
                 type='button'
                 theme={styles}
               />
