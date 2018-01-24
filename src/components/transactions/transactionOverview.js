@@ -83,7 +83,7 @@ class Transactions extends React.Component {
         {this.shouldShowEmtpyState() ?
           <div className={styles.emptyTransactions}>
             <img src={cubeImage} />
-            <h2>{this.props.t('No activity yet')}</h2>
+            <h2 className='empty-message'>{this.props.t('No activity yet')}</h2>
             <p>{this.props.t('The Wallet will show your recent transactions.')}</p>
           </div> : null }
         {this.shouldShowEmtpyState() ?

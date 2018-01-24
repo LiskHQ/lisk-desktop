@@ -6,11 +6,9 @@ Feature: Transactions page
     When I scroll to the bottom of "transaction results"
     Then I should see 50 rows
 
-  Scenario: should provide "Receive LSK" modal if there are "No transactions" 
+  @integration
+  Scenario: should provide a message if there are "No transactions" 
     Given I'm logged in as "empty account"
     When I click "transactions" menu
     And I should see 0 rows
-    And I should see text "There are no transactions, yet.  RECEIVE LSK" in "empty message" element
-    And I click "receive lsk button"
-    And I wait 1 seconds
-    Then I should see text "5932438298200837883L" in "receive modal address" element
+    Then I should see text "No activity yet" in "empty message" element
