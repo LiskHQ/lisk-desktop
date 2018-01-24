@@ -105,6 +105,7 @@ hr {
 
     & figure {
       height: 200px;
+      margin: 0;
     }
   }
 
@@ -158,10 +159,6 @@ hr {
 
 @media (--xxSmall-viewport) {
   .generation {
-    & figure {
-      margin: 0;
-    }
-
     & .secondHeading,
     & .generatorHeader {
       font-size: 32px;

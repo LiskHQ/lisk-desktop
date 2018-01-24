@@ -29,6 +29,7 @@ class Create extends React.Component {
       y: 0,
       time: new Date(),
     };
+    this.count = 0;
     this.eventNormalizer = this._eventNormalizer.bind(this);
   }
 
@@ -94,17 +95,19 @@ class Create extends React.Component {
     let x = 0;
     let y = 0;
     if (this.isTouchDevice) {
-      x = e.acceleration.x * 10;
-      y = e.acceleration.y * 10;
+      x = e.rotationRate.alpha;
+      y = e.rotationRate.beta;
+
+      this.count += 1;
 
       const deltaX = Math.abs(x - this.lastCaptured.x);
       const deltaY = Math.abs(y - this.lastCaptured.y);
       const time = new Date();
 
-      if (deltaX < 4 && deltaY < 4 && (deltaX > 0.5 || deltaY > 0.5)
-        && (time - this.lastCaptured.time > Math.random() * 200)) {
+      if ((Math.abs(x) > 10 || Math.abs(y)) && (deltaX > 10 || deltaY > 10)
+        && (time - this.lastCaptured.time > Math.random() * 500)) {
         this.lastCaptured = { x, y, time };
-        this.seedGenerator.call(this, x, y);
+        this.seedGenerator.call(this, x / 10, y / 10);
       }
     } else {
       x = e.pageX;
