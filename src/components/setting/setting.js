@@ -33,7 +33,7 @@ class Setting extends React.Component {
   render() {
     this.language = (i18n.language === 'de');
     const showSetting = this.props.showSetting ? styles.active : '';
-    const { t, settings, changeAutoLog, changeAdvancedMode } = this.props;
+    const { t, settings, settingsUpdated } = this.props;
     return <footer className={`${styles.wrapper} ${showSetting}`}>
       <ReactSwipe
         className={styles.carousel}
@@ -48,7 +48,7 @@ class Setting extends React.Component {
             theme={styles}
             className={`${styles.smallSlider}`}
             clickable={true}
-            onChange={() => changeAutoLog(!settings.autoLog)}
+            onChange={() => settingsUpdated({ autoLog: !settings.autoLog })}
             input={{
               value: true,
               checked: settings.autoLog,
@@ -63,7 +63,7 @@ class Setting extends React.Component {
             theme={styles}
             className={`${styles.smallSlider}`}
             clickable={true}
-            onChange={() => changeAdvancedMode(!settings.advancedMode)}
+            onChange={() => settingsUpdated({ advancedMode: !settings.advancedMode })}
             input={{
               value: true,
               checked: settings.advancedMode,
