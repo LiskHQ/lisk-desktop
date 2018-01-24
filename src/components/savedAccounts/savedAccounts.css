@@ -77,6 +77,19 @@
       font-size: 0.6875em;
     }
   }
+
+  & .removeButton {
+    background: var(--color-white) !important;
+    color: var(--color-grayscale-dark) !important;
+    border: none;
+    box-shadow: var(--normal-shadow);
+    text-transform: none;
+
+    &:hover {
+      background: var(--color-white) !important;
+      color: var(--color-primary-medium) !important;
+    }
+  }
 }
 
 .clickable {
@@ -198,19 +211,6 @@
   right: 85px;
 }
 
-.removeButton {
-  background: var(--color-white) !important;
-  color: var(--color-grayscale-dark) !important;
-  border: none;
-  box-shadow: var(--normal-shadow);
-  text-transform: none;
-
-  &:hover {
-    background: var(--color-white) !important;
-    color: var(--color-primary-medium) !important;
-  }
-}
-
 .darkBackground {
   background-color: var(--color-primary-dark);
 }
@@ -302,6 +302,26 @@
 
   .addAcctiveAccountButton {
     bottom: 40px;
+  }
+
+  .deviceIos {
+    & .cardsWrapper {
+      padding-bottom: 80px;
+    }
+
+    & .addAcctiveAccountButton {
+      bottom: 180px;
+    }
+  }
+
+  .deviceAndroid {
+    & .cardsWrapper {
+      padding-bottom: 50px;
+    }
+
+    & .addAcctiveAccountButton {
+      bottom: 120px;
+    }
   }
 }
 
