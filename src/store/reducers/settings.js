@@ -13,10 +13,13 @@ const initialState = JSON.parse(localStorage.getItem('settings')) || {
  */
 const settings = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.advancedModeChanged:
-      return Object.assign({}, state, { advancedMode: action.data });
-    case actionTypes.autoLogChanged:
-      return Object.assign({}, state, { autoLog: action.data });
+    case actionTypes.settingsUpdated:
+      return Object.assign({}, state, action.data);
+    case actionTypes.settingsReset:
+      return Object.assign({}, state, {
+        advancedMode: false,
+        autoLog: true,
+      });
     default:
       return state;
   }
