@@ -1,19 +1,18 @@
 import actionTypes from '../constants/actions';
 
 /**
- * An action to dispatch autoLogChanged
+ * An action to dispatch settingsUpdated
  *
  */
-export const autoLogChanged = data => ({
+export const settingsUpdated = data => ({
   data,
-  type: actionTypes.autoLogChanged,
+  type: actionTypes.settingsUpdated,
 });
 
 /**
- * An action to dispatch advanceModeChanged
+ * An action to dispatch settingsReset
  *
  */
-export const advanceModeChanged = data => ({
-  data,
-  type: actionTypes.advancedModeChanged,
+export const settingsReset = () => ({
+  type: actionTypes.settingsReset,
 });
