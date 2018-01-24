@@ -2,13 +2,10 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { fromRawLsk, toRawLsk } from '../../utils/lsk';
 import AccountVisual from '../accountVisual';
-import AuthInputs from '../authInputs';
 import { Button, PrimaryButton } from './../toolbox/buttons/button';
-import { authStatePrefill, authStateIsValid } from '../../utils/form';
 import Input from '../toolbox/inputs/input';
 import fees from './../../constants/fees';
 import styles from './send.css';
-import inputStyles from './input.css';
 
 class SendReadable extends React.Component {
   constructor() {
@@ -21,7 +18,6 @@ class SendReadable extends React.Component {
         value: '',
       },
       loading: false,
-      ...authStatePrefill(),
     };
     this.fee = fees.send;
   }
@@ -34,7 +30,6 @@ class SendReadable extends React.Component {
       amount: {
         value: this.props.amount || '',
       },
-      ...authStatePrefill(this.props.account),
     };
     this.setState(newState);
   }
@@ -82,8 +77,8 @@ class SendReadable extends React.Component {
       account: this.props.account,
       recipientId: this.state.recipient.value,
       amount: this.state.amount.value,
-      passphrase: this.state.passphrase.value,
-      secondPassphrase: this.state.secondPassphrase.value,
+      passphrase: this.props.passphrase.value,
+      secondPassphrase: this.props.secondPassphrase.value,
     });
   }
 
@@ -120,13 +115,6 @@ class SendReadable extends React.Component {
             disabled={true}
             theme={styles}
             onChange={this.handleChange.bind(this, 'amount')} />
-          <AuthInputs
-            passphrase={this.state.passphrase}
-            secondPassphrase={this.state.secondPassphrase}
-            onChange={this.handleChange.bind(this)}
-            theme={inputStyles}
-            columns={{ xs: 6, sm: 4, md: 4 }}
-          />
         </form>
         <footer>
           <section className={grid.row} >
@@ -145,7 +133,7 @@ class SendReadable extends React.Component {
                 type='submit'
                 theme={styles}
                 onClick={this.send.bind(this)}
-                disabled={!authStateIsValid(this.state) || this.state.loading}
+                disabled={this.state.loading}
               />
               <div className='subTitle'>{this.props.t('Transactions can’t be reversed')}</div>
             </div>
