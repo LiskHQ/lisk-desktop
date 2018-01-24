@@ -187,6 +187,7 @@
 
 @media (--small-viewport) {
   .safekeeping {
+    &.done-step,
     &.revealing-step,
     &.revealed-step {
       overflow-y: scroll;
