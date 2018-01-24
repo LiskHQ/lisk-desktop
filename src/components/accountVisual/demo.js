@@ -2,6 +2,7 @@ import React from 'react';
 import { generatePassphrase } from '../../utils/passphrase';
 import { extractAddress } from '../../utils/api/account';
 import AccountVisual from '../accountVisual';
+import Box from '../box';
 
 const AccountVisualDemo = () => {
   const bytes = [
@@ -43,7 +44,7 @@ const AccountVisualDemo = () => {
   const size = 150;
 
   return (
-    <div className='box'>
+    <Box>
       <div style={{ whiteSpace: 'no-break' }}>
         {accounts.map(account => (
           <div key={account}
@@ -59,7 +60,7 @@ const AccountVisualDemo = () => {
           </div>
         ))}
       </div>
-    </div>
+    </Box>
   );
 };
 
