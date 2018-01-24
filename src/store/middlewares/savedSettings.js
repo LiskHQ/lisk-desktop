@@ -3,9 +3,14 @@ import actionsType from '../../constants/actions';
 const savedSettingsMiddleware = store => next => (action) => {
   next(action);
   const Settings = store.getState().settings;
-  if (action.type === actionsType.autoLogChanged ||
-    action.type === actionsType.advancedModeChanged) {
-    localStorage.setItem('settings', JSON.stringify(Settings));
+  switch (action.type) {
+    case actionsType.settingsUpdated:
+      localStorage.setItem('settings', JSON.stringify(Settings));
+      break;
+    case actionsType.settingsReset:
+      localStorage.removeItem('settings');
+      break;
+    default: break;
   }
 };
 
