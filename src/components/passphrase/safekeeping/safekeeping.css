@@ -111,7 +111,7 @@
       position: relative;
     }
 
-    & textarea {
+    & .textarea {
       width: 100%;
       height: 80px;
       background: transparent;
@@ -121,12 +121,29 @@
       font-size: 26px;
       line-height: 80px;
       border: none;
-      word-spacing: 10px;
       text-align: center;
       resize: none;
       outline: none !important;
       transition: all ease 400ms;
       transition-delay: 300ms;
+      counter-reset: section;
+
+      & .word {
+        padding: 0 5px;
+        position: relative;
+
+        &::after {
+          opacity: 0;
+          position: absolute;
+          top: 150%;
+          left: 50%;
+          color: var(--color-grayscale-light);
+          font-size: 15px;
+          counter-increment: section;
+          content: counter(section);
+          transition: all ease 400ms;
+        }
+      }
     }
 
     & section.actionBar {
@@ -146,10 +163,14 @@
       display: none !important;
     }
 
-    & textarea {
+    & .textarea {
       background: #f1f1f1;
       color: #000 !important;
       text-shadow: none !important;
+
+      & .word::after {
+        opacity: 1;
+      }
     }
 
     & section.actionBar {
