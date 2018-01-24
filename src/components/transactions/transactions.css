@@ -46,8 +46,10 @@
 }
 
 .empty {
-  color: #777;
   text-align: center;
+  font-weight: var(--font-weight-semi-bold);
+  padding-top: 25px;
+  color: var(--color-grayscale-dark);
 }
 
 .leftText {
