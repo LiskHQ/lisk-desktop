@@ -14,8 +14,8 @@ const gradientSpecs = [
     colors: ['#DBD4FF', '#519AEC'],
     rotate: 20,
   }, {
-    id: 'greenBlueGradient',
-    colors: ['#3023AE', '#53A0FD', '#B4EC51'],
+    id: 'greenGradient',
+    colors: ['#D4FFF5', '#B4EC51'],
     rotate: 30,
   }, {
     id: 'redPurpleGradient',
@@ -30,16 +30,16 @@ const gradientSpecs = [
     colors: ['#3023AE', '#FF6236'],
     rotate: 60,
   }, {
-    id: 'greenPurpleGradient',
-    colors: ['#B4EC51', '#3023AE'],
+    id: 'yellowGradient',
+    colors: ['#ffd952', '#ffe49c'],
     rotate: 70,
   }, {
     id: 'bluePurpleRedGradient',
     colors: ['#DBD4FF', '#4D04AD', '#FF3537'],
     rotate: 80,
   }, {
-    id: 'orangeGreenGradient',
-    colors: ['#C80039', '#FF6236', '#B4EC51'],
+    id: 'orangeRedGradient',
+    colors: ['#C80039', '#FF6236'],
     rotate: 90,
   },
 ];
