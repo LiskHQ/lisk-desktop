@@ -5,11 +5,7 @@ import SavedAccounts from '../savedAccounts';
 import savedAccountsTheme from '../savedAccounts/modalTheme.css';
 import SecondPassphrase from '../secondPassphrase';
 import Send from '../sendWritable';
-import SignMessage from '../signMessage';
-import VerifyMessage from '../verifyMessage';
 import VoteDialog from '../voteDialog';
-import EncryptMessage from '../encryptMessage';
-import DecryptMessage from '../decryptMessage';
 
 export default () => ({
   send: {
@@ -19,14 +15,6 @@ export default () => ({
   'register-delegate': {
     title: i18next.t('Register as delegate'),
     component: RegisterDelegate,
-  },
-  'sign-message': {
-    title: i18next.t('Sign message'),
-    component: SignMessage,
-  },
-  'verify-message': {
-    title: i18next.t('Verify message'),
-    component: VerifyMessage,
   },
   'register-second-passphrase': {
     title: i18next.t('Register Second Passphrase'),
@@ -43,13 +31,5 @@ export default () => ({
   'saved-accounts': {
     component: SavedAccounts,
     theme: savedAccountsTheme,
-  },
-  'encrypt-message': {
-    title: i18next.t('Encrypt message'),
-    component: EncryptMessage,
-  },
-  'decrypt-message': {
-    title: i18next.t('Decrypt message'),
-    component: DecryptMessage,
   },
 });

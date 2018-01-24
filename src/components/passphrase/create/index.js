@@ -142,64 +142,55 @@ class Create extends React.Component {
                 src={shapesSrc.circle}
                 className={styles.circle}
                 percentage={percentage}
-                reverse={true}
-                end={{ x: 550, y: 50 }}/>
+                initial={['92%', '20%']} />
               <MovableShape
                 hidden={shapes[1]}
                 src={shapesSrc.smallCircle}
                 className={styles.smallCircle}
                 percentage={percentage}
-                reverse={false}
-                end={{ x: 500, y: 240 }}/>
+                initial={['62%', '-2%']} />
               <MovableShape
                 hidden={shapes[2]}
                 src={shapesSrc.triangle}
                 className={styles.triangle}
                 percentage={percentage}
-                reverse={true}
-                end={{ x: 450, y: 230 }}/>
+                initial={['80%', '-2%']} />
               <MovableShape
                 hidden={shapes[3]}
                 src={shapesSrc.smallTriangle}
                 className={styles.smallTriangle}
                 percentage={percentage}
-                reverse={true}
-                end={{ x: 450, y: 180 }}/>
+                initial={['30%', '-2%']} />
               <MovableShape
                 hidden={shapes[5]}
                 src={shapesSrc.circleOutline}
                 className={styles.circleOutline}
                 percentage={percentage}
-                reverse={false}
-                end={{ x: 250, y: 350 }}/>
+                initial={['-2%', '10%']} />
               <MovableShape
                 hidden={shapes[6]}
                 src={shapesSrc.stripe}
                 className={styles.stripe}
                 percentage={percentage}
-                reverse={false}
-                end={{ x: 100, y: 200 }}/>
+                initial={['-4%', '5%']} />
               <MovableShape
                 hidden={shapes[7]}
                 src={shapesSrc.smallStripe}
                 className={styles.smallStripe}
                 percentage={percentage}
-                reverse={true}
-                end={{ x: 280, y: 315 }}/>
+                initial={['20%', '4%']} />
               <MovableShape
                 hidden={shapes[4]}
                 src={shapesSrc.rightRectangle}
                 className={styles.rightRectangle}
                 percentage={percentage}
-                reverse={true}
-                end={{ x: 300, y: 220 }}/>
+                initial={['40%', '-1%']} />
               <MovableShape
                 hidden={shapes[8]}
                 src={shapesSrc.leftRectangle}
                 className={styles.leftRectangle}
                 percentage={percentage}
-                reverse={false}
-                end={{ x: 530, y: 150 }}/>
+                initial={['70%', '-5%']} />
             </div> :
             null
           }

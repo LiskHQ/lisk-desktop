@@ -54,6 +54,7 @@ module.exports = function (config) {
           functions: 80,
           lines: 80,
           excludes: [
+            'src/components/menuBar/menuBar.js',
             'src/store/reducers/forging.js',
             'src/store/reducers/voting.js',
             'src/store/reducers/transactions.js',
@@ -77,6 +78,7 @@ module.exports = function (config) {
             'src/components/secondPassphrase/index.js',
             'src/components/authenticate/index.js',
             'src/components/authenticate/authenticate.js',
+            'src/components/menuBar/menuBar.js',
             'src/components/multiStep/index.js',
             'src/components/passphrase/info/index.js',
             'src/components/passphrase/create/index.js',

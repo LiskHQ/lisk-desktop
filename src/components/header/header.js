@@ -1,4 +1,3 @@
-import { IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Countdown from 'react-countdown-now';
@@ -8,7 +7,6 @@ import CountDownTemplate from './countDownTemplate';
 import LiskAmount from '../liskAmount';
 import logo from '../../assets/images/Lisk-Logo.svg';
 import PrivateWrapper from '../privateWrapper';
-import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import styles from './header.css';
 import RelativeLink from '../relativeLink';
 
@@ -47,34 +45,8 @@ const Header = props => (
           </RelativeLink>
           <div className={styles.menu}>
             <figure className={styles.iconCircle}>
-              <IconMenu
-                className={`${styles.button} main-menu-icon-button ${offlineStyle.disableWhenOffline}`}
-                icon={<FontIcon value='more' />}
-                position="topRight"
-                menuRipple
-                theme={styles}
-              >
-                <MenuItem theme={styles}>
-                  <RelativeLink className={`sign-message ${styles.link}`} to='sign-message'>{props.t('Sign message')}</RelativeLink>
-                </MenuItem>
-                <MenuItem theme={styles}>
-                  <RelativeLink className={`verify-message ${styles.link}`}
-                    to='verify-message'>{props.t('Verify message')}</RelativeLink>
-                </MenuItem>
-                <MenuItem theme={styles}>
-                  <RelativeLink className={`encrypt-message ${styles.link}`}
-                    to='encrypt-message'>{props.t('Encrypt message')}</RelativeLink>
-                </MenuItem>
-                <MenuItem theme={styles}>
-                  <RelativeLink className={`decrypt-message ${styles.link}`}
-                    to='decrypt-message'>{props.t('Decrypt message')}</RelativeLink>
-                </MenuItem>
-                <MenuDivider />
-                <MenuItem theme={styles}>
-                  <RelativeLink className={`${styles.link} saved-accounts`}
-                    to='saved-accounts'>{props.t('Saved accounts')}</RelativeLink>
-                </MenuItem>
-              </IconMenu>
+              <RelativeLink className={`${styles.link} saved-accounts`}
+                to='saved-accounts'><FontIcon value='more' /></RelativeLink>
             </figure>
           </div>
         </div>
