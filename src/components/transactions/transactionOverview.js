@@ -93,6 +93,7 @@ class Transactions extends React.Component {
               ))}
             </ul>
             <TransactionList
+              filter={filters[this.props.activeFilter]}
               address={this.props.address}
               transactions={this.props.transactions}
               loadMore={this.loadMore.bind(this)}
