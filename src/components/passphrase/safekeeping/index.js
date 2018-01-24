@@ -90,7 +90,7 @@ class SafeKeeping extends React.Component {
             </TransitionWrapper>
             <p className={`${styles.input} ${styles.textarea} passphrase`}>
               {
-                passphrase.split(' ').map(word => <span className={styles.word} key={`wrapper-${word}`}>{ word }</span>)
+                passphrase.split(' ').map(word => <span className={styles.word} key={`wrapper-${word}`}>{ word } </span>)
               }
             </p>
             <ActionBar
