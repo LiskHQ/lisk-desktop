@@ -8,11 +8,11 @@ import styles from './passphraseInput.css';
 import keyCodes from './../../constants/keyCodes';
 
 class PassphraseInput extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       inputType: 'password',
-      isFocused: false,
+      isFocused: this.props.isFocused || false,
       partialPassphraseError: [],
       focus: 0,
     };
