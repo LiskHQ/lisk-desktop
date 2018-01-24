@@ -1,5 +1,6 @@
 import React from 'react';
 import { gradientIds, Gradients } from './gradients';
+import styles from './accountVisual.css';
 
 const Rect = props => <rect {...props} />;
 const Circle = props => <circle {...props} />;
@@ -43,13 +44,17 @@ const computePentagon = props => (
   }
 );
 
-const getShape = (chunk, size, gradients) => {
+const getShape = (chunk, size, gradients, sizeScale = 1) => {
   const shapeNames = [
     'circle', 'triangle', 'square', 'rect', 'pentagon',
     'circle', 'triangle', 'square', 'rect', 'pentagon',
   ];
 
   const sizes = [
+    12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+  ].map(x => x * (size / 90) * sizeScale);
+
+  const coordinates = [
     2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
   ].map(x => x * (size / 20));
 
@@ -57,16 +62,16 @@ const getShape = (chunk, size, gradients) => {
     circle: {
       component: Circle,
       props: {
-        cx: sizes[chunk[1]] + (size / 4),
-        cy: sizes[chunk[2]] + (size / 4),
+        cx: coordinates[chunk[1]] + (sizes[chunk[3]] / 2),
+        cy: coordinates[chunk[2]] + (sizes[chunk[3]] / 2),
         r: sizes[chunk[3]] / 2,
       },
     },
     square: {
       component: Rect,
       props: {
-        x: sizes[chunk[1]],
-        y: sizes[chunk[2]],
+        x: coordinates[chunk[1]],
+        y: coordinates[chunk[2]],
         height: sizes[chunk[3]],
         width: sizes[chunk[3]],
       },
@@ -74,8 +79,8 @@ const getShape = (chunk, size, gradients) => {
     rect: {
       component: Rect,
       props: {
-        x: sizes[chunk[1]],
-        y: sizes[chunk[2]],
+        x: coordinates[chunk[1]],
+        y: coordinates[chunk[2]],
         height: sizes[chunk[3]],
         width: sizes[chunk[4]],
       },
@@ -83,16 +88,16 @@ const getShape = (chunk, size, gradients) => {
     triangle: {
       component: Polygon,
       props: computeTriangle({
-        x: sizes[chunk[1]],
-        y: sizes[chunk[2]],
+        x: coordinates[chunk[1]],
+        y: coordinates[chunk[2]],
         size: sizes[chunk[3]],
       }),
     },
     pentagon: {
       component: Polygon,
       props: computePentagon({
-        x: sizes[chunk[1]],
-        y: sizes[chunk[2]],
+        x: coordinates[chunk[1]],
+        y: coordinates[chunk[2]],
         size: sizes[chunk[3]],
       }),
     },
@@ -107,14 +112,32 @@ const getShape = (chunk, size, gradients) => {
   };
 };
 
+const getBackgroundCircle = (chunk, size, gradients) => ({
+  component: Circle,
+  props: {
+    cx: (size / 2),
+    cy: (size / 2),
+    r: (size / 2),
+    fill: gradients[chunk[4]],
+  },
+});
+
+const getDominantShape = (chunk, size, gradients) => (
+  getShape(chunk, size, gradients, 8)
+);
+
 const AccountVisual = ({ address, size = 200 }) => {
   const addressChunks = address.padStart(21, '0').match(/\d{5}/g);
-  const shapes = addressChunks.map(chunk => (
-    getShape(chunk, size, gradientIds)
-  ));
+  const shapes = [
+    getBackgroundCircle(addressChunks[0], size, gradientIds),
+    getDominantShape(addressChunks[1], size, gradientIds),
+    ...addressChunks.slice(2).map(chunk => (
+      getShape(chunk, size, gradientIds)
+    )),
+  ];
 
   return (
-    <svg height={size} width={size}>
+    <svg height={size} width={size} className={styles.wrapper}>
       <Gradients />
       {shapes.map((shape, i) => (
         <shape.component {...shape.props} key={i} />
