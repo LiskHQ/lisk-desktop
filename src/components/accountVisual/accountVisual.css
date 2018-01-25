@@ -1,4 +1,30 @@
 .wrapper {
+  transition: transform ease-in-out 500ms;
+}
+
+.wrapper:hover {
+  transform: rotate(360deg) scale(1.1);
+  transform-origin: 50%;
+  cursor: pointer;
+}
+
+.accountVisual {
   border-radius: 50%;
   overflow: hidden;
+  display: inline-block;
+  animation-name: float;
+  animation-duration: 4000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  animation-direction: alternate;
+}
+
+@keyframes float {
+  from {
+    transform: rotate(5deg);
+  }
+
+  to {
+    transform: rotate(-5deg);
+  }
 }

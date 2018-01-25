@@ -137,12 +137,14 @@ const AccountVisual = ({ address, size = 200 }) => {
   ];
 
   return (
-    <svg height={size} width={size} className={styles.wrapper}>
-      <Gradients />
-      {shapes.map((shape, i) => (
-        <shape.component {...shape.props} key={i} />
-      ))}
-    </svg>
+    <div styles={{ height: size, width: size }} className={styles.wrapper}>
+      <svg height={size} width={size} className={styles.accountVisual}>
+        <Gradients scheme={gradientScheme}/>
+        {shapes.map((shape, i) => (
+          <shape.component {...shape.props} key={i} />
+        ))}
+      </svg>
+    </div>
   );
 };
 
