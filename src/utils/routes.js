@@ -13,7 +13,7 @@ export default [
     name: 'dashboard',
   }, {
     regex: /\/main\/transactions(?:\/[^/]*)?$/,
-    path: routes.wallet.long,
+    path: `${routes.wallet.long}/`,
     params: 'dialog',
     name: 'transactions',
   }, {
@@ -37,8 +37,8 @@ export default [
     params: 'dialog',
     name: 'add-account',
   }, {
-    regex: /\/main\/accounts(?:\/[^/]*)?$/,
-    path: routes.account.long,
+    regex: /\/main\/accounts\/\d{1,21}[L|l](?:\/[^/]*)?$/,
+    path: new RegExp(`${routes.account.long}/\\d{1,21}[L|l]/`),
     params: 'address',
     name: 'accounts',
   }, {
