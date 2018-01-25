@@ -51,7 +51,7 @@ const transactions = (state = { pending: [], confirmed: [], count: null }, actio
         count: action.data.count,
         filter: action.data.filter,
       });
-    case actionTypes.transactionsWithAddress:
+    case actionTypes.transactionsInit:
       return Object.assign({}, state, {
         confirmed: action.data.confirmed,
         count: action.data.count,

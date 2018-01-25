@@ -42,7 +42,7 @@ class Transactions extends React.Component {
       (this.props.activeFilter === filter);
   }
 
-  shouldShowEmtpyState() {
+  shouldShowEmptyState() {
     return this.props.transactions.length === 0 &&
       (!this.props.activeFilter || this.props.activeFilter === txFilters.all);
   }
@@ -80,13 +80,13 @@ class Transactions extends React.Component {
             <CopyToClipboard value={this.props.address} className={`${styles.address}`} copyClassName={styles.copy} />
           </div>
         </header>
-        {this.shouldShowEmtpyState() ?
+        {this.shouldShowEmptyState() ?
           <div className={styles.emptyTransactions}>
             <img src={cubeImage} />
             <h2 className='empty-message'>{this.props.t('No activity yet')}</h2>
             <p>{this.props.t('The Wallet will show your recent transactions.')}</p>
           </div> : null }
-        {this.shouldShowEmtpyState() ?
+        {this.shouldShowEmptyState() ?
           null :
           <ul className={styles.list}>
             {filters.map((filter, i) => (
@@ -97,16 +97,14 @@ class Transactions extends React.Component {
             ))}
           </ul>
         }
-        {this.shouldShowEmtpyState() ?
-          null :
-          <TransactionList
-            filter={filters[this.props.activeFilter]}
-            address={this.props.address}
-            transactions={this.props.transactions}
-            loadMore={this.loadMore.bind(this)}
-            nextStep={this.props.nextStep}
-            t={this.props.t}/>
-        }
+        <TransactionList
+          filter={filters[this.props.activeFilter]}
+          address={this.props.address}
+          transactions={this.props.transactions}
+          loadMore={this.loadMore.bind(this)}
+          nextStep={this.props.nextStep}
+          t={this.props.t}
+        />
         {
           // the whole transactions box should be scrollable on XS
           // otherwise only the transaction list should be scrollable

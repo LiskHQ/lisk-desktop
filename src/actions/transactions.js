@@ -56,14 +56,14 @@ export const transactionsFiltered = data => ({
   type: actionTypes.transactionsFiltered,
 });
 
-export const transactionsAddressSet = data => ({
+export const transactionsRequestInit = data => ({
   data,
-  type: actionTypes.transactionsAddressSet,
+  type: actionTypes.transactionsRequestInit,
 });
 
-export const transactionsWithAddress = data => ({
+export const transactionsInit = data => ({
   data,
-  type: actionTypes.transactionsWithAddress,
+  type: actionTypes.transactionsInit,
 });
 
 /**
@@ -77,6 +77,8 @@ export const transactionsRequested = ({ activePeer, address, limit, offset, filt
         dispatch(transactionsLoaded({
           count: parseInt(response.count, 10),
           confirmed: response.transactions,
+          address,
+          filter,
         }));
       });
   };

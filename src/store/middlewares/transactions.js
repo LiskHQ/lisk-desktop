@@ -2,7 +2,7 @@ import i18next from 'i18next';
 
 import { unconfirmedTransactions, transactions as getTransactions } from '../../utils/api/account';
 import { successAlertDialogDisplayed } from '../../actions/dialog';
-import { transactionsFailed, transactionsFiltered, transactionsWithAddress } from '../../actions/transactions';
+import { transactionsFailed, transactionsFiltered, transactionsInit } from '../../actions/transactions';
 
 import actionTypes from '../../constants/actions';
 import transactionTypes from '../../constants/transactionTypes';
@@ -46,13 +46,13 @@ const filterTransactions = (store, action) => {
 };
 
 
-const transactionsForAddress = (store, action) => {
+const initTransactions = (store, action) => {
   getTransactions({
     activePeer: store.getState().peers.data,
     address: action.data.address,
     limit: 25,
   }).then((response) => {
-    store.dispatch(transactionsWithAddress({
+    store.dispatch(transactionsInit({
       confirmed: response.transactions,
       count: parseInt(response.count, 10),
       address: action.data.address,
@@ -75,8 +75,8 @@ const transactionsMiddleware = store => next => (action) => {
     case actionTypes.transactionsFilterSet:
       filterTransactions(store, action);
       break;
-    case actionTypes.transactionsAddressSet:
-      transactionsForAddress(store, action);
+    case actionTypes.transactionsRequestInit:
+      initTransactions(store, action);
       break;
     default: break;
   }
