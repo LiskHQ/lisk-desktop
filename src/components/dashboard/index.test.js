@@ -29,6 +29,7 @@ describe('Dashboard', () => {
           data: {},
           options: {},
         },
+        account: { address: 'some address' },
       },
     };
     wrapper = mountWithContext(<Dashboard/>, context);

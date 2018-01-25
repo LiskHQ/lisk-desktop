@@ -81,8 +81,8 @@ describe('@integration: Wallet', () => {
       passphrase,
     };
 
-    wrapper = mount(renderWithRouter(Wallet, store));
     store.dispatch(accountLoggedIn(account));
+    wrapper = mount(renderWithRouter(Wallet, store));
   };
 
   const fillInputField = (value, field) => {

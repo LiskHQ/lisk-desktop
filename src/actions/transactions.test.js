@@ -81,6 +81,7 @@ describe('actions: transactions', () => {
       address: '15626650747375562521',
       limit: 20,
       offset: 0,
+      filter: 0,
     };
     const actionFunction = transactionsRequested(data);
     let dispatch;
@@ -103,6 +104,8 @@ describe('actions: transactions', () => {
       const expectedAction = {
         count: 0,
         confirmed: [],
+        address: data.address,
+        filter: 0,
       };
 
       actionFunction(dispatch);
