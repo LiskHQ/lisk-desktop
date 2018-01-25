@@ -22,13 +22,13 @@ class Setting extends React.Component {
     });
   }
 
-  changeLanguage(e) {//eslint-disable-line
-    if (e.checked) {
-      i18n.changeLanguage('de');
-    } else {
-      i18n.changeLanguage('en');
-    }
-  }
+  // changeLanguage(e) {//eslint-disable-line
+  //   if (e.checked) {
+  //     i18n.changeLanguage('de');
+  //   } else {
+  //     i18n.changeLanguage('en');
+  //   }
+  // }
 
   render() {
     this.language = (i18n.language === 'de');
@@ -46,7 +46,7 @@ class Setting extends React.Component {
         <div>
           <Checkbox
             theme={styles}
-            className={`${styles.smallSlider}`}
+            className={`${styles.smallSlider} autoLog`}
             clickable={true}
             onChange={() => settingsUpdated({ autoLog: !settings.autoLog })}
             input={{
@@ -61,7 +61,7 @@ class Setting extends React.Component {
         <div>
           <Checkbox
             theme={styles}
-            className={`${styles.smallSlider}`}
+            className={`${styles.smallSlider} advancedMode`}
             clickable={true}
             onChange={() => settingsUpdated({ advancedMode: !settings.advancedMode })}
             input={{
