@@ -124,7 +124,7 @@ const getBackgroundCircle = (size, gradient) => ({
 
 const AccountVisual = ({ address, size = 200 }) => {
   const addressChunks = address.padStart(21, '0').match(/\d{5}/g);
-  const gradientScheme = gradientSchemes[address.substr(1, 2) % gradientSchemes.length];
+  const gradientScheme = gradientSchemes[addressChunks[0].substr(1, 2) % gradientSchemes.length];
   const shapes = [
     getBackgroundCircle(size, gradientScheme.primary),
     getShape(addressChunks[1], size, gradientScheme.secondary, 8),
@@ -132,16 +132,16 @@ const AccountVisual = ({ address, size = 200 }) => {
       addressChunks[2],
       size,
       gradientScheme.additional[
-        (addressChunks[2].substr(3, 2) - 1) % gradientScheme.additional.length
+        addressChunks[2].substr(3, 2) % gradientScheme.additional.length
       ],
       2,
     ),
     getShape(
       addressChunks[3], size,
       gradientScheme.additional[
-        (addressChunks[2].substr(3, 2) - 2) % gradientScheme.additional.length
+        ((addressChunks[2].substr(3, 2) - 0) + 1) % gradientScheme.additional.length
       ],
-      1,
+      1.5,
     ),
   ];
 
