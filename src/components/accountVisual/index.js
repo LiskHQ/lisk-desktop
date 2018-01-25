@@ -44,7 +44,7 @@ const computePentagon = props => (
   }
 );
 
-const getShape = (chunk, size, gradients, sizeScale = 1) => {
+const getShape = (chunk, size, gradient, sizeScale = 1) => {
   const shapeNames = [
     'circle', 'triangle', 'square',
   ];
@@ -106,7 +106,7 @@ const getShape = (chunk, size, gradients, sizeScale = 1) => {
     component: shapes[shapeNames[chunk.substr(0, 2) % shapeNames.length]].component,
     props: {
       ...shapes[shapeNames[chunk.substr(0, 2) % shapeNames.length]].props,
-      fill: gradients[chunk.substr(3, 2) % gradients.length].url,
+      fill: gradient.url,
       transform: `rotate(${chunk.substr(1, 2) * 3.6}, ${size / 2}, ${size / 2})`,
     },
   };
@@ -127,9 +127,22 @@ const AccountVisual = ({ address, size = 200 }) => {
   const gradientScheme = gradientSchemes[address.substr(1, 2) % gradientSchemes.length];
   const shapes = [
     getBackgroundCircle(size, gradientScheme.primary),
-    getShape(addressChunks[1], size, [gradientScheme.secondary], 8),
-    getShape(addressChunks[2], size, gradientScheme.additional, 2),
-    getShape(addressChunks[3], size, gradientScheme.additional, 1),
+    getShape(addressChunks[1], size, gradientScheme.secondary, 8),
+    getShape(
+      addressChunks[2],
+      size,
+      gradientScheme.additional[
+        (addressChunks[2].substr(3, 2) - 1) % gradientScheme.additional.length
+      ],
+      2,
+    ),
+    getShape(
+      addressChunks[3], size,
+      gradientScheme.additional[
+        (addressChunks[2].substr(3, 2) - 2) % gradientScheme.additional.length
+      ],
+      1,
+    ),
   ];
 
   return (
