@@ -37,6 +37,10 @@ describe('LoginHOC', () => {
     peers,
     account,
     activePeerSet: () => {},
+    settings: {
+      autoLog: true,
+      advancedMode: true,
+    },
   });
   const options = {
     context: { store, i18n },
