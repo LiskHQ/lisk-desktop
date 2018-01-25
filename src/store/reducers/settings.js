@@ -1,6 +1,6 @@
 import actionTypes from '../../constants/actions';
 
-// load setting data from localStrage if it exists
+// load setting data from localStorage if it exists
 const initialState = JSON.parse(localStorage.getItem('settings')) || {
   advancedMode: false,
   autoLog: true,
