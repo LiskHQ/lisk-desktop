@@ -9,13 +9,13 @@ const Polygon = props => <polygon {...props} />;
 const computeTriangle = props => (
   {
     points: [{
-      x: props.x + (props.size / 2),
+      x: props.x,
       y: props.y,
     }, {
       x: props.x + props.size,
-      y: props.y + props.size,
+      y: props.y + (props.size / 4),
     }, {
-      x: props.x,
+      x: props.x + (props.size / 4),
       y: props.y + props.size,
     },
     ].map(({ x, y }) => (`${x},${y}`)).join(' '),
@@ -47,9 +47,6 @@ const computePentagon = props => (
 const getShape = (chunk, size, gradients, sizeScale = 1) => {
   const shapeNames = [
     'circle', 'triangle', 'square',
-    'circle', 'triangle', 'square',
-    'circle', 'triangle', 'square',
-    'square',
   ];
 
   const sizes = [
@@ -57,8 +54,8 @@ const getShape = (chunk, size, gradients, sizeScale = 1) => {
   ].map(x => x * (size / 90) * sizeScale);
 
   const coordinates = [
-    2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
-  ].map(x => x * (size / 20));
+    5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+  ].map(x => x * (size / 40));
 
   const shapes = {
     circle: {
@@ -106,15 +103,16 @@ const getShape = (chunk, size, gradients, sizeScale = 1) => {
   };
 
   return {
-    component: shapes[shapeNames[chunk[0]]].component,
+    component: shapes[shapeNames[chunk.substr(0, 2) % shapeNames.length]].component,
     props: {
-      ...shapes[shapeNames[chunk[0]]].props,
-      fill: gradients[chunk[4] % gradients.length].url,
+      ...shapes[shapeNames[chunk.substr(0, 2) % shapeNames.length]].props,
+      fill: gradients[chunk.substr(3, 2) % gradients.length].url,
+      transform: `rotate(${chunk.substr(1, 2) * 3.6}, ${size / 2}, ${size / 2})`,
     },
   };
 };
 
-const getBackgroundCircle = (chunk, size, gradient) => ({
+const getBackgroundCircle = (size, gradient) => ({
   component: Circle,
   props: {
     cx: (size / 2),
@@ -124,16 +122,12 @@ const getBackgroundCircle = (chunk, size, gradient) => ({
   },
 });
 
-const getDominantShape = (chunk, size, gradient) => (
-  getShape(chunk, size, [gradient], 6)
-);
-
 const AccountVisual = ({ address, size = 200 }) => {
   const addressChunks = address.padStart(21, '0').match(/\d{5}/g);
-  const gradientScheme = gradientSchemes[addressChunks[0][2] % gradientSchemes.length];
+  const gradientScheme = gradientSchemes[address.substr(1, 2) % gradientSchemes.length];
   const shapes = [
-    getBackgroundCircle(addressChunks[0], size, gradientScheme.primary),
-    getDominantShape(addressChunks[1], size, gradientScheme.secondary),
+    getBackgroundCircle(size, gradientScheme.primary),
+    getShape(addressChunks[1], size, [gradientScheme.secondary], 8),
     getShape(addressChunks[2], size, gradientScheme.additional, 2),
     getShape(addressChunks[3], size, gradientScheme.additional, 1),
   ];

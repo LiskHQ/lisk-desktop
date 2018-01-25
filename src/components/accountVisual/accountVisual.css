@@ -1,4 +1,6 @@
 .wrapper {
+  display: inline-block;
+  border-radius: 100%;
   transition: transform ease-in-out 500ms;
 }
 
@@ -9,7 +11,7 @@
 }
 
 .accountVisual {
-  border-radius: 50%;
+  border-radius: 100%;
   overflow: hidden;
   display: inline-block;
   animation-name: float;
