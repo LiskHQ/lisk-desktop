@@ -8,7 +8,7 @@ const MenuBar = (props) => {
   const { t, menuStatus, settingStatus, menuToggle, settingToggle } = props;
   const menuClass = menuStatus ? styles.openMenu : '';
   return (
-    <section className={`${styles.menuBar} ${menuClass}`}>
+    <section className={`${styles.menuBar} ${menuClass} menuBar`}>
       {!menuStatus ?
         <span className={styles.menuButton}
           onClick={() => menuToggle()}>

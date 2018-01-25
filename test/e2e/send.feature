@@ -23,6 +23,7 @@ Feature: Send dialog
     And I fill in "537318935439898807L" to "recipient" field
     And I click "send next button"
     And I fill in second passphrase of "second passphrase account" to "second passphrase" field
+    And I click "second passphrase next"
     When I click "send button"
     And I wait 1 seconds
     Then I should see text "Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain." in "result box message" element

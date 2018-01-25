@@ -9,99 +9,23 @@
   --second-header-animation-delay: 1000ms;
 }
 
-@define-mixin shape {
+.circle,
+.smallCircle,
+.triangle,
+.smallTriangle,
+.rightRectangle,
+.leftRectangle,
+.circleOutline,
+.stripe,
+.smallStripe {
   position: absolute;
   z-index: 0;
   transform: translateX(-50%) translateY(50%);
 }
 
-@keyframes addressAnimationFrames {
-  0% {
-    opacity: 0;
-    transform: translate(0px, -25px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translate(1px, -1px);
-  }
-}
-
-@keyframes buttonAnimationFrames {
-  0% {
-    opacity: 0;
-    transform: translate(0px, 25px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translate(1px, -1px);
-  }
-}
-
-@keyframes firstHeadingAnimationFrames {
-  0% {
-    opacity: 1;
-    transform: translate(0px, -150px);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translate(-20px, -150px);
-  }
-}
-
-@keyframes secondHeadingAnimationFrames {
-  0% {
-    opacity: 0;
-    transform: translate(20px, -150px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translate(0px, -150px);
-  }
-}
-
-.circle {
-  @mixin shape;
-}
-
-.smallCircle {
-  @mixin shape;
-}
-
-.triangle {
-  @mixin shape;
-}
-
-.smallTriangle {
-  @mixin shape;
-}
-
-.rightRectangle {
-  @mixin shape;
-}
-
-.leftRectangle {
-  @mixin shape;
-}
-
-.circleOutline {
-  @mixin shape;
-}
-
-.stripe {
-  @mixin shape;
-}
-
-.smallStripe {
-  @mixin shape;
-}
-
 .wrapper {
   flex-direction: row;
-  height: 100%;
+  height: calc(100% - 22px);
 }
 
 .missing {
@@ -149,31 +73,23 @@ hr {
 }
 
 .generation {
-  & .generatorHeader {
-    position: absolute;
-    width: 100%;
-    text-align: center;
-    transition: all cubic-bezier(0.01, 0.54, 0.32, 0.96) 1000ms;
-    top: 30%;
+  & > div {
+    height: 100%;
+    padding: 3vh 0 5vh; /* stylelint-disable-line */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
-  & .firstHeadingAnimation {
-    transition-duration: 0ms;
-    animation: firstHeadingAnimationFrames ease var(--header-animation-duration);
-    animation-delay: 0;
-    animation-iteration-count: 1;
-    transform-origin: 50% 50%;
-    animation-fill-mode: forwards;
+  & .secondHeading,
+  & .generatorHeader {
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+    transition: all cubic-bezier(0.01, 0.54, 0.32, 0.96) 1000ms;
   }
 
   & .secondHeading {
-    position: absolute;
-    width: 100%;
-    text-align: center;
-    opacity: 0;
-    transform: translate(20px, -150px);
-    top: 30%;
-
     & small {
       font-size: 18px;
       font-weight: normal;
@@ -184,48 +100,22 @@ hr {
     }
   }
 
-  & .secondHeadingAnimation {
-    transition-duration: 0ms;
-    opacity: 0;
-    animation: secondHeadingAnimationFrames ease var(--header-animation-duration);
-    animation-delay: var(--second-header-animation-delay);
-    animation-iteration-count: 1;
-    transform-origin: 50% 50%;
-    animation-fill-mode: forwards;
-  }
-
-  & .goToTop {
-    transform: translateY(-150px);
-  }
-
   & .addressContainer {
-    margin-top: 200px;
     position: relative;
 
     & figure {
       height: 200px;
+      margin: 0;
     }
   }
 
   & .address {
     color: var(--address-color);
-    animation: secondHeadingAnimationFrames ease var(--address-animation-duration);
-    animation-delay: var(--address-animation-delay);
-    animation-iteration-count: 1;
-    transform-origin: 50% 50%;
-    animation-fill-mode: forwards;
-    opacity: 0;
-    margin-top: 200px;
   }
 
   & .button {
-    animation: secondHeadingAnimationFrames ease var(--address-animation-duration);
-    animation-delay: var(--address-animation-delay);
-    animation-iteration-count: 1;
-    transform-origin: 50% 50%;
-    animation-fill-mode: forwards;
-    opacity: 0;
-    margin-top: 24px;
+    max-width: 300px;
+    margin: 0 auto;
   }
 
   & .templateItem {
@@ -247,5 +137,31 @@ hr {
     height: 8px !important;
     overflow: hidden;
     width: 100%;
+  }
+}
+
+@media (--medium-viewport) {
+  .generation {
+    & h2 {
+      font-size: 45px;
+    }
+  }
+}
+
+@media (--small-viewport) {
+  .generation {
+    & .secondHeading,
+    & .generatorHeader {
+      font-size: 40px;
+    }
+  }
+}
+
+@media (--xxSmall-viewport) {
+  .generation {
+    & .secondHeading,
+    & .generatorHeader {
+      font-size: 32px;
+    }
   }
 }
