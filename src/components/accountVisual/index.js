@@ -1,5 +1,5 @@
 import React from 'react';
-import { gradientIds, Gradients } from './gradients';
+import { Gradients, gradientSchemes } from './gradients';
 import styles from './accountVisual.css';
 
 const Rect = props => <rect {...props} />;
@@ -46,8 +46,10 @@ const computePentagon = props => (
 
 const getShape = (chunk, size, gradients, sizeScale = 1) => {
   const shapeNames = [
-    'circle', 'triangle', 'square', 'rect', 'pentagon',
-    'circle', 'triangle', 'square', 'rect', 'pentagon',
+    'circle', 'triangle', 'square',
+    'circle', 'triangle', 'square',
+    'circle', 'triangle', 'square',
+    'square',
   ];
 
   const sizes = [
@@ -107,33 +109,33 @@ const getShape = (chunk, size, gradients, sizeScale = 1) => {
     component: shapes[shapeNames[chunk[0]]].component,
     props: {
       ...shapes[shapeNames[chunk[0]]].props,
-      fill: gradients[chunk[4]],
+      fill: gradients[chunk[4] % gradients.length].url,
     },
   };
 };
 
-const getBackgroundCircle = (chunk, size, gradients) => ({
+const getBackgroundCircle = (chunk, size, gradient) => ({
   component: Circle,
   props: {
     cx: (size / 2),
     cy: (size / 2),
     r: (size / 2),
-    fill: gradients[chunk[4]],
+    fill: gradient.url,
   },
 });
 
-const getDominantShape = (chunk, size, gradients) => (
-  getShape(chunk, size, gradients, 8)
+const getDominantShape = (chunk, size, gradient) => (
+  getShape(chunk, size, [gradient], 6)
 );
 
 const AccountVisual = ({ address, size = 200 }) => {
   const addressChunks = address.padStart(21, '0').match(/\d{5}/g);
+  const gradientScheme = gradientSchemes[addressChunks[0][2] % gradientSchemes.length];
   const shapes = [
-    getBackgroundCircle(addressChunks[0], size, gradientIds),
-    getDominantShape(addressChunks[1], size, gradientIds),
-    ...addressChunks.slice(2).map(chunk => (
-      getShape(chunk, size, gradientIds)
-    )),
+    getBackgroundCircle(addressChunks[0], size, gradientScheme.primary),
+    getDominantShape(addressChunks[1], size, gradientScheme.secondary),
+    getShape(addressChunks[2], size, gradientScheme.additional, 2),
+    getShape(addressChunks[3], size, gradientScheme.additional, 1),
   ];
 
   return (
