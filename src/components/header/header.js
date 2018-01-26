@@ -31,12 +31,16 @@ const Header = props => (
                     <Countdown
                       date={props.account.expireTime}
                       renderer={CountDownTemplate}
-                      onComplete={() => props.removePassphrase()}
+                      onComplete={() => { console.log('done'); return props.removePassphrase(); }}
                     />
                   </div>}
               </div>
               : <div className={styles.timer}>
-                <span><FontIcon value='unlocked' className={styles.lock}/> {props.t('Account unlocked!')}</span>
+                {props.account.passphrase ? '' :
+                  <span>
+                    <FontIcon value='locked' className={styles.lock}/> {props.t('Account locked!')}
+                  </span>
+                }
               </div>
             }
           </div>
