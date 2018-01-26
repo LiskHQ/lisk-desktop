@@ -30,15 +30,15 @@ describe('SliderCheckbox without HOC', () => {
 
   it('checks the checkbox after dragging (more than 50%)', () => {
     expect(wrapper.find('input').instance().checked).to.equal(false);
-    wrapper.find('label').props().onMouseDown({ nativeEvent: { clientX: 870 } });
+    wrapper.find('label').props().onMouseDown({ nativeEvent: { pageX: 870 } });
     wrapper.setState({ maxMovement: 158 });
 
     // When I start dragging the arrow
-    wrapper.find('label').props().onMouseMove({ nativeEvent: { clientX: 900 } });
+    wrapper.find('label').props().onMouseMove({ nativeEvent: { pageX: 900 } });
     expect(wrapper.find('.circle span').first().instance().style.left).to.equal('30px');
 
     // And I keep dragging a bit more
-    wrapper.find('label').props().onMouseMove({ nativeEvent: { clientX: 1000 } });
+    wrapper.find('label').props().onMouseMove({ nativeEvent: { pageX: 1000 } });
     expect(wrapper.find('.circle span').first().instance().style.left).to.equal('130px');
 
     // Then the box should not be checked yet
@@ -53,11 +53,11 @@ describe('SliderCheckbox without HOC', () => {
 
   it('does not check the checkbox after dragging (less than 50%)', () => {
     expect(wrapper.find('input').instance().checked).to.equal(false);
-    wrapper.find('label').props().onMouseDown({ nativeEvent: { clientX: 870 } });
+    wrapper.find('label').props().onMouseDown({ nativeEvent: { pageX: 870 } });
     wrapper.setState({ maxMovement: 158 });
 
     // When I start dragging the arrow
-    wrapper.find('label').props().onMouseMove({ nativeEvent: { clientX: 900 } });
+    wrapper.find('label').props().onMouseMove({ nativeEvent: { pageX: 900 } });
     expect(wrapper.find('.circle span').first().instance().style.left).to.equal('30px');
 
     // When I then 'drop' the arrow
