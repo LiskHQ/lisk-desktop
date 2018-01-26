@@ -73,11 +73,9 @@ class SliderCheckbox extends React.Component {
 
   render() {
     const { label, input, className, hasSlidingArrows, theme, clickable, textAsIcon } = this.props;
-    const responsiveFB = styles[this.props.responsiveFB] ?
-      styles[this.props.responsiveFB] : styles.vertical;
     const icons = this.props.icons ? this.props.icons : {};
 
-    return (<div className={`${theme.sliderInput} ${className} ${responsiveFB}`}>
+    return (<div className={`${theme.sliderInput} ${className}`}>
       <input type='checkbox' value={input.value}
         disabled={this.props.disabled} checked={input.checked}
         ref={(el) => { this.input = el; }} onChange={this.change.bind(this)}/>
@@ -87,8 +85,8 @@ class SliderCheckbox extends React.Component {
         onMouseMove={this.track.bind(this)}
         onTouchMove={this.track.bind(this)}
         onMouseLeave={this.stopTracking.bind(this)}
-        onTouchEnd={this.stopTracking.bind(this)}
-        onMouseUp={this.stopTracking.bind(this)}>
+        onMouseUp={this.stopTracking.bind(this)}
+        onTouchEnd={this.stopTracking.bind(this)}>
         <span
           onClick= {clickable ?
             this.change.bind(this) :

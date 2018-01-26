@@ -155,7 +155,8 @@
 
     &:checked + label {
       & .button {
-        left: calc(100% - var(--element-height));
+        left: 100%;
+        transform: translateX(calc(-1 * var(--element-height)));
 
         & .checkMark {
           opacity: 1;
@@ -182,6 +183,13 @@
 
     & span.circle {
       width: var(--element-height-small);
+    }
+
+    & input[type='radio'],
+    & input[type='checkbox'] {
+      &:checked + label .button {
+        transform: translateX(calc(-1 * var(--element-height-small)));
+      }
     }
 
     & div {
