@@ -50,8 +50,8 @@ const getShape = (chunk, size, gradient, sizeScale = 1) => {
   ];
 
   const sizes = [
-    12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
-  ].map(x => x * (size / 90) * sizeScale);
+    1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0, 2.1,
+  ].map(x => x * size * sizeScale);
 
   const coordinates = [
     5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
@@ -122,27 +122,23 @@ const getBackgroundCircle = (size, gradient) => ({
   },
 });
 
+const pickTwo = (chunk, options) => ([
+  options[chunk.substr(0, 2) % options.length],
+  options[(
+    (chunk.substr(0, 2) - 0) + 1 + (chunk.substr(2, 2) % (options.length - 1))
+  ) % options.length],
+]);
+
 const AccountVisual = ({ address, size = 200 }) => {
   const addressChunks = address.padStart(21, '0').match(/\d{5}/g);
   const gradientScheme = gradientSchemes[addressChunks[0].substr(1, 2) % gradientSchemes.length];
+  const primaryGradients = pickTwo(addressChunks[1], gradientScheme.primary);
+  const secondaryGradients = pickTwo(addressChunks[2], gradientScheme.secondary);
   const shapes = [
-    getBackgroundCircle(size, gradientScheme.primary),
-    getShape(addressChunks[1], size, gradientScheme.secondary, 8),
-    getShape(
-      addressChunks[2],
-      size,
-      gradientScheme.additional[
-        addressChunks[2].substr(3, 2) % gradientScheme.additional.length
-      ],
-      2,
-    ),
-    getShape(
-      addressChunks[3], size,
-      gradientScheme.additional[
-        ((addressChunks[2].substr(3, 2) - 0) + 1) % gradientScheme.additional.length
-      ],
-      1.5,
-    ),
+    getBackgroundCircle(size, primaryGradients[0]),
+    getShape(addressChunks[1], size, primaryGradients[1], 1),
+    getShape(addressChunks[2], size, secondaryGradients[0], 0.23),
+    getShape(addressChunks[3], size, secondaryGradients[1], 0.18),
   ];
 
   return (
