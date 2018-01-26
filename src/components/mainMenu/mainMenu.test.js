@@ -33,6 +33,10 @@ describe('MainMenu', () => {
     peers,
     account,
     activePeerSet: () => {},
+    settings: {
+      autoLog: true,
+      advancedMode: true,
+    },
   });
 
   const history = {

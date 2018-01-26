@@ -7,6 +7,7 @@ import Header from './header';
 
 const mapStateToProps = state => ({
   account: state.account,
+  autoLog: state.settings.autoLog,
 });
 
 const mapDispatchToProps = dispatch => ({

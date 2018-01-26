@@ -28,7 +28,8 @@ const loginMiddleware = store => next => (action) => {
 
   // redirect to main/transactions
   return getAccount(activePeer, address).then((accountData) => {
-    const duration = passphrase ? Date.now() + lockDuration : 0;
+    const duration = (passphrase && store.getState().settings.autoLog) ?
+      Date.now() + lockDuration : 0;
     return getDelegate(activePeer, { publicKey })
       .then((delegateData) => {
         store.dispatch(accountLoggedIn({

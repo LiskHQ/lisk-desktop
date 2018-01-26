@@ -38,6 +38,8 @@ const actionTypes = {
   accountRemoved: 'ACCOUNT_REMOVED',
   accountSwitched: 'ACCOUNT_SWITCHED',
   removePassphrase: 'REMOVE_PASSPHRASE',
+  settingsUpdated: 'SETTINGS_UPDATED',
+  settingsReset: 'SETTINGS_RESET',
 };
 
 export default actionTypes;

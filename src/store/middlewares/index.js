@@ -8,6 +8,7 @@ import notificationMiddleware from './notification';
 import votingMiddleware from './voting';
 import savedAccountsMiddleware from './savedAccounts';
 import socketMiddleware from './socket';
+import savedSettingsMiddleware from './savedSettings';
 
 export default [
   thunk,
@@ -20,4 +21,5 @@ export default [
   notificationMiddleware,
   votingMiddleware,
   savedAccountsMiddleware,
+  savedSettingsMiddleware,
 ];
