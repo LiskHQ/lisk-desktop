@@ -29,7 +29,7 @@ class SliderCheckbox extends React.Component {
     if (this.trackable) {
       this.trackable = false;
 
-      if (Math.abs(this.delta) > 50) {
+      if (Math.abs(this.delta) > 50 && !this.props.disabled) {
         this.change();
       } else {
         this.revert();
@@ -39,7 +39,6 @@ class SliderCheckbox extends React.Component {
   }
 
   change() {
-    // this.shape.setAttribute('style', `left: ${this.maxMovement}px`);
     this.input.checked = !this.input.checked;
     this.shape.removeAttribute('style');
     this.direction = this.input.checked ? -1 : 1;
