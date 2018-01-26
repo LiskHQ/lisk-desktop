@@ -3,6 +3,7 @@ import ReactSwipe from 'react-swipe';
 import styles from './setting.css';
 import Checkbox from '../toolbox/checkbox';
 import i18n from '../../i18n';
+import accountConfig from '../../constants/account';
 // TODO: will be re-enabled when the functionality is updated
 // import RelativeLink from '../relativeLink';
 // import languageSwitcherTheme from './languageSwitcher.css';
@@ -30,6 +31,15 @@ class Setting extends React.Component {
   //   }
   // }
 
+  toggleAutoLog(state) {
+    const { account, settings, settingsUpdated, accountUpdated } = this.props;
+    if (state && account.passphrase) {
+      const date = Date.now() + accountConfig.lockDuration;
+      accountUpdated({ expireTime: date });
+    }
+    settingsUpdated({ autoLog: !settings.autoLog });
+  }
+
   render() {
     this.language = (i18n.language === 'de');
     const showSetting = this.props.showSetting ? styles.active : '';
@@ -48,7 +58,7 @@ class Setting extends React.Component {
             theme={styles}
             className={`${styles.smallSlider} autoLog`}
             clickable={true}
-            onChange={() => settingsUpdated({ autoLog: !settings.autoLog })}
+            onChange={() => this.toggleAutoLog(!settings.autoLog)}
             input={{
               value: true,
               checked: settings.autoLog,
