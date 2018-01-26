@@ -5,6 +5,7 @@ import tableStyle from 'react-toolbox/lib/table/theme.css';
 import TransactionRow from './transactionRow';
 import TransactionsHeader from './transactionsHeader';
 import { transactionsRequestInit } from '../../actions/transactions';
+import txFilters from './../../constants/transactionFilters';
 import styles from './transactions.css';
 
 class TransactionsList extends React.Component {
@@ -45,7 +46,7 @@ class TransactionsList extends React.Component {
       return <p className={`${styles.empty} hasPaddingRow empty-message`}>
         {this.props.t('There are no transactions yet.')}
       </p>;
-    } else if (!this.props.filter || this.props.filter === 0) {
+    } else if (!this.props.filter || this.props.filter === txFilters.all) {
       return null;
     }
     return <p className={`${styles.empty} hasPaddingRow empty-message`}>
