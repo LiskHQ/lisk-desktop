@@ -17,7 +17,7 @@ class SliderCheckbox extends React.Component {
 
   startTracking(e) {
     this.trackable = true;
-    this.xOffset = e.nativeEvent.clientX;
+    this.xOffset = e.nativeEvent.pageX;
     this.direction = this.input.checked ? -1 : 1;
     this.setState({
       maxMovement: this.parent.getBoundingClientRect().width -
@@ -59,7 +59,7 @@ class SliderCheckbox extends React.Component {
 
   track(e) {
     if (this.trackable) {
-      this.delta = e.nativeEvent.clientX - this.xOffset;
+      this.delta = e.nativeEvent.pageX - this.xOffset;
       const left = this.direction > 0
         ? this.delta
         : (this.state.maxMovement - Math.abs(this.delta));
