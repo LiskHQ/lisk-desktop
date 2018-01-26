@@ -2,6 +2,37 @@ import React from 'react';
 import { Gradients, gradientSchemes } from './gradients';
 import styles from './accountVisual.css';
 
+/*
+ * Account Visual
+ *
+ * The account visual is an svg image generated based on account address.
+ *
+ * The account visual randomly selects one of 8 color schemes defined in ./gradients
+ * Each color scheme consists of
+ * - 2 primary colors for the 2 big shapes,
+ * - 4 secondary colors for the 2 small shapes
+ *
+ *
+ * It contains 4 shapes (in this order from background to foreground):
+ * - Circle of size 1 and random primary color
+ * - A random shape of base size 1 of primary color other then previous
+ * - A random shape of base size 0.23 and one secondary color
+ * - A random shape of base size 0.18 and other secondary color
+ *
+ * The base size of random shapes is multiplied by a random scale factor
+ * from range 1.2, 1.3, ..., 2.0, 2.1
+ *
+ * Possible shapes are: Square, Triangle, Circle
+ *
+ * Each shape is randomly rotated around the center of the account visual.
+ *
+ * Randomness of each step is defined by a part of address.
+ * If there are 10 options to choose from then 1 digit is used.
+ * If there are 3 or 4 options to choose from then 2 digits is used
+ * to give more even distribution, because e.g. with 1 digit and 3 options
+ * the first option has 4/10 chance and each of other two has 3/10 chance.
+ */
+
 const Rect = props => <rect {...props} />;
 const Circle = props => <circle {...props} />;
 const Polygon = props => <polygon {...props} />;
