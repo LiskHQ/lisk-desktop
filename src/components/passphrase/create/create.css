@@ -73,6 +73,10 @@ hr {
 }
 
 .generation {
+  & h2 {
+    font-size: 48px;
+  }
+
   & > div {
     height: 100%;
     padding: 3vh 0 5vh; /* stylelint-disable-line */

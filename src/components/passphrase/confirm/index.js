@@ -10,6 +10,7 @@ class Confirm extends React.Component {
   constructor() {
     super();
     this.state = {
+      selectedFieldset: -1,
       step: 'verify',
       numberOfOptions: 3,
       words: [],
@@ -41,10 +42,10 @@ class Confirm extends React.Component {
         this.next();
         break;
       case 'invalid':
-        this.setState({ formStatus: styles.invalid });
+        this.setState({ formStatus: styles.invalid, answers });
         this.timeout = setTimeout(() => {
           this.resetForm.call(this);
-        }, 800);
+        }, 3800);
         break;
       case 'out of trials':
         this.setState({ formStatus: styles.outOfTrials, answers });
@@ -126,6 +127,7 @@ class Confirm extends React.Component {
     this.setState({
       words,
       missing,
+      selectedFieldset: -1,
       wordOptions,
       formStatus: styles.clean,
       answers: new Array(2),
@@ -169,6 +171,10 @@ class Confirm extends React.Component {
     this.setState({ answer });
   }
 
+  selectFieldset(index) {
+    this.setState({ selectedFieldset: index });
+  }
+
   // eslint-disable-next-line  class-methods-use-this
   focus({ nativeEvent }) {
     nativeEvent.target.focus();
@@ -180,7 +186,7 @@ class Confirm extends React.Component {
 
   render() {
     let missingWordIndex = -1;
-    const { missing, words, wordOptions, step } = this.state;
+    const { missing, words, wordOptions, step, answers, selectedFieldset } = this.state;
     const errorTitleVisibility = (this.state.formStatus === styles.outOfTrials ||
       this.state.formStatus === styles.invalid) ? styles.visible : '';
 
@@ -192,7 +198,7 @@ class Confirm extends React.Component {
               <h2 className={styles.verify}>{this.props.t('Choose the correct phrases to confirm.')}</h2>
             </TransitionWrapper>
             <TransitionWrapper current={this.state.step} step='done'>
-              <h2 className={styles.done}>{this.props.t('Awesome! You’re all set.')}</h2>
+              <h2 className={styles.done}>{this.props.t('Perfect! You’re all set.')}</h2>
             </TransitionWrapper>
             <h5 className={`${styles.verify} ${errorTitleVisibility}`}>
               {this.props.t('Please go back and check your passphrase again.')}
@@ -209,9 +215,13 @@ class Confirm extends React.Component {
                       return (<span key={word} className={styles.word}>{word}</span>);
                     }
                     missingWordIndex++;
+                    const validity = answers[missingWordIndex] && answers[missingWordIndex].validity ? 'valid' : 'invalid';
+
                     return (
                       <fieldset key={word}>
-                        <span className={styles.placeholder}></span>
+                        <span onClick={this.selectFieldset.bind(this, missingWordIndex)}
+                          className={`${styles.placeholder} ${selectedFieldset === missingWordIndex ?
+                            styles.selected : ''} ${answers[missingWordIndex] ? styles[validity] : ''}`}>{answers[missingWordIndex] ? answers[missingWordIndex].value : ''}</span>
                         {
                           wordOptions[missingWordIndex].map(wd =>
                             <div key={wd}>
