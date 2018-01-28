@@ -5,6 +5,7 @@ import MainMenu from './mainMenu';
 
 const mapStateToProps = state => ({
   isDelegate: state.account.isDelegate,
+  showDelegate: state.settings.advancedMode,
 });
 
 export default withRouter(connect(mapStateToProps)(translate()(MainMenu)));

@@ -7,6 +7,7 @@ import MultiStep from './../multiStep';
 import ResultBox from '../resultBox';
 import SendWritable from '../sendWritable';
 import SendReadable from './../sendReadable';
+import PassphraseSteps from './../passphraseSteps';
 import styles from './styles.css';
 
 class Send extends React.Component {
@@ -39,6 +40,7 @@ class Send extends React.Component {
           <MultiStep finalCallback={this.setSendIsActive.bind(this, false)}
             className={styles.wrapper}>
             <SendWritable autoFocus={this.state.sendIsActive || window.innerWidth > 1024}/>
+            <PassphraseSteps />
             <SendReadable />
             <ResultBox />
           </MultiStep>

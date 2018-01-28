@@ -19,6 +19,10 @@ describe('HeaderHOC', () => {
     peers: { data: {} },
     account: {},
     activePeerSet: () => {},
+    settings: {
+      autoLog: true,
+      advancedMode: true,
+    },
   });
 
   beforeEach(() => {

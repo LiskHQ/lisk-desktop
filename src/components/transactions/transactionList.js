@@ -1,9 +1,6 @@
 import React from 'react';
 import Waypoint from 'react-waypoint';
 import tableStyle from 'react-toolbox/lib/table/theme.css';
-import buttonStyle from 'react-toolbox/lib/button/theme.css';
-import offlineStyle from '../offlineWrapper/offlineWrapper.css';
-import RelativeLink from '../relativeLink';
 import TransactionRow from './transactionRow';
 import TransactionsHeader from './transactionsHeader';
 import styles from './transactions.css';
@@ -38,9 +35,9 @@ class TransactionsList extends React.Component {
         }
       </div> :
       <p className={`${styles.empty} hasPaddingRow empty-message`}>
-        {this.props.t('There are no transactions, yet.')} &nbsp;
-        <RelativeLink className={`${styles.button} ${buttonStyle.button} ${buttonStyle.primary} ${buttonStyle.raised} receive-lsk-button ${offlineStyle.disableWhenOffline}`}
-          to='receive'>{this.props.t('Receive LSK')}</RelativeLink>
+        {this.props.t('There are no {{filterName}} transactions.', {
+          filterName: this.props.filter && this.props.filter.name ? this.props.filter.name.toLowerCase() : '',
+        })}
       </p>;
   }
 }

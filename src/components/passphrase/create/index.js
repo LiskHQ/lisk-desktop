@@ -87,16 +87,26 @@ class Create extends React.Component {
    * @returns {Boolean} - whether the agent represents a mobile device or not
    */
   // eslint-disable-next-line class-methods-use-this
-  checkDevice(agent) {
-    return (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(agent || navigator.userAgent || navigator.vendor || window.opera));
+  checkDevice(agent, os) {
+    let reg = /iPad|iPhone|iPod/i;
+    if (!os) {
+      reg = /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i;
+    } else if (os === 'android') {
+      reg = /android/i;
+    }
+    return (reg.test(agent || navigator.userAgent || navigator.vendor || window.opera));
   }
 
   _eventNormalizer(e) {
     let x = 0;
     let y = 0;
+    let ratio = 1;
     if (this.isTouchDevice) {
-      x = e.rotationRate.alpha;
-      y = e.rotationRate.beta;
+      if (this.checkDevice(this.props.agent, 'android')) {
+        ratio = 10;
+      }
+      x = e.rotationRate.alpha * ratio;
+      y = e.rotationRate.beta * ratio;
 
       this.count += 1;
 

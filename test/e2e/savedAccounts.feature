@@ -10,7 +10,8 @@ Feature: Saved Accounts
     And I click "send next button"
     And I should see empty "passphrase" field
     And I fill in passphrase of "genesis" to "passphrase" field
-    And I click "send button"
+    And I click "first passphrase next"
+    Then I click "send button"
     And I wait 1 seconds
     Then I should see text "Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain." in "result box message" element
     When I click "okay button"

@@ -28,7 +28,9 @@ class SliderCheckbox extends React.Component {
   stopTracking() {
     if (this.trackable) {
       this.trackable = false;
-
+      if (this.delta === 0 && this.props.clickable) {
+        this.change();
+      }
       if (Math.abs(this.delta) > 50) {
         this.change();
       } else {
@@ -43,7 +45,6 @@ class SliderCheckbox extends React.Component {
     this.input.checked = !this.input.checked;
     this.shape.removeAttribute('style');
     this.direction = this.input.checked ? -1 : 1;
-
     if (typeof this.props.onChange === 'function' &&
       this.props.input instanceof Object &&
       !(this.props.input instanceof Array)) {
@@ -76,7 +77,7 @@ class SliderCheckbox extends React.Component {
     const { label, input, className, hasSlidingArrows, theme, clickable, textAsIcon } = this.props;
     const icons = this.props.icons ? this.props.icons : {};
     return (<div className={`${theme.sliderInput} ${className}`}>
-      <input type='checkbox' value={input.value} checked={input.checked}
+      <input type='checkbox' value={input.checked} checked={input.checked}
         ref={(el) => { this.input = el; }} onChange={this.change.bind(this)}/>
       <label ref={(el) => { this.parent = el; }}
         onMouseDown={this.startTracking.bind(this)}
@@ -84,10 +85,6 @@ class SliderCheckbox extends React.Component {
         onMouseLeave={this.stopTracking.bind(this)}
         onMouseUp={this.stopTracking.bind(this)}>
         <span
-          onClick= {clickable ?
-            this.change.bind(this) :
-            null
-          }
           className={`${theme.circle} ${theme.button} circle`}
           ref={(el) => { this.shape = el; }}>
           <span className={theme.arrowRight}>

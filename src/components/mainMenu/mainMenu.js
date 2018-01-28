@@ -53,7 +53,7 @@ class MainMenu extends React.Component {
   }
 
   render() {
-    const { history, isDelegate, t } = this.props;
+    const { history, isDelegate, t, showDelegate } = this.props;
     const tabs = [
       {
         label: t('Dashboard'),
@@ -93,6 +93,14 @@ class MainMenu extends React.Component {
       */
       },
     ];
+
+    if (showDelegate) {
+      tabs.push({
+        label: t('Delegates'),
+        id: 'voting',
+        image: menuLogos.delegates,
+      });
+    }
     const filterTabs = getTabs(isDelegate, tabs);
     return (
       <Fragment>
