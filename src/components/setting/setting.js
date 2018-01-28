@@ -57,7 +57,6 @@ class Setting extends React.Component {
           <Checkbox
             theme={styles}
             className={`${styles.smallSlider} autoLog`}
-            clickable={true}
             onChange={() => this.toggleAutoLog(!settings.autoLog)}
             input={{
               value: true,
@@ -72,7 +71,6 @@ class Setting extends React.Component {
           <Checkbox
             theme={styles}
             className={`${styles.smallSlider} advancedMode`}
-            clickable={true}
             onChange={() => settingsUpdated({ advancedMode: !settings.advancedMode })}
             input={{
               value: true,
@@ -89,7 +87,6 @@ class Setting extends React.Component {
             theme={languageSwitcherTheme}
             className={`${styles.smallSlider} language-switcher`}
             onChange={this.changeLanguage.bind(this)}
-            clickable={true}
             textAsIcon={true}
             icons={{
               start: 'EN',
