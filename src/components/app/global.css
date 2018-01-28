@@ -38,11 +38,7 @@ order to be available application wide
   padding: 0px 30px;
 }
 
-@media (--small-viewport) {
-  :global .boxPadding {
-    padding: 0px 20px;
-  }
-
+@media (--medium-viewport) {
   :global body.contentFocused {
     margin-top: 0;
 
@@ -50,5 +46,11 @@ order to be available application wide
     & .mainHeader {
       display: none;
     }
+  }
+}
+
+@media (--small-viewport) {
+  :global .boxPadding {
+    padding: 0px 20px;
   }
 }
