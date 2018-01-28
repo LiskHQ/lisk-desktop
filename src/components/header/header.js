@@ -31,7 +31,7 @@ const Header = props => (
                     <Countdown
                       date={props.account.expireTime}
                       renderer={CountDownTemplate}
-                      onComplete={() => { console.log('done'); return props.removePassphrase(); }}
+                      onComplete={() => props.removePassphrase()}
                     />
                   </div>}
               </div>

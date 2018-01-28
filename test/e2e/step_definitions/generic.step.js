@@ -184,7 +184,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   });
 
   When('I remember passphrase, click "{nextButtonSelector}", choose missing words', { timeout: 2 * defaultTimeout }, (nextButtonSelector, callback) => {
-    waitForElem('textarea.passphrase').then((textareaElem) => {
+    waitForElem('.passphrase').then((textareaElem) => {
       textareaElem.getText().then((passphrase) => {
         // eslint-disable-next-line no-unused-expressions
         expect(passphrase).to.not.be.undefined;

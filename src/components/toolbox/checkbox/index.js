@@ -50,7 +50,6 @@ class SliderCheckbox extends React.Component {
   }
 
   change(type) {
-    console.log(!this.props.swipeOnly, type === 'swiped');
     if (!this.props.swipeOnly || type === 'swiped') {
       this.input.checked = !this.input.checked;
       this.shape.removeAttribute('style');

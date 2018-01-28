@@ -12,7 +12,9 @@ import accounts from '../../../../test/constants/accounts';
 
 describe('Passphrase: Safekeeping', () => {
   let wrapper;
+  const passphrase = 'stock wagon borrow episode laundry kitten salute link globe zero feed marble';
   const props = {
+    passphrase,
     t: key => key,
     prevStep: () => {},
     nextStep: () => {},
@@ -46,8 +48,8 @@ describe('Passphrase: Safekeeping', () => {
     expect(wrapper.find('SliderCheckbox')).to.have.lengthOf(2);
   });
 
-  it('renders a textarea element to show the passphrase in', () => {
-    expect(wrapper.find('textarea')).to.have.lengthOf(1);
+  it('renders a 12 .word elements to show the passphrase in', () => {
+    expect(wrapper.find('.passphrase span')).to.have.lengthOf(12);
   });
 
   it('renders an ActionBar component', () => {
