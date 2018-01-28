@@ -45,7 +45,7 @@ class Confirm extends React.Component {
         this.setState({ formStatus: styles.invalid, answers });
         this.timeout = setTimeout(() => {
           this.resetForm.call(this);
-        }, 3800);
+        }, 800);
         break;
       case 'out of trials':
         this.setState({ formStatus: styles.outOfTrials, answers });

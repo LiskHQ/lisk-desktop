@@ -204,6 +204,7 @@
     -webkit-overflow-scrolling: touch;
 
     & h2 {
+      width: 260px;
       font-size: 40px !important;
     }
 
