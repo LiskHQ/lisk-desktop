@@ -3,6 +3,7 @@ import ReactSwipe from 'react-swipe';
 import styles from './setting.css';
 import Checkbox from '../toolbox/checkbox';
 import i18n from '../../i18n';
+import accountConfig from '../../constants/account';
 // TODO: will be re-enabled when the functionality is updated
 // import RelativeLink from '../relativeLink';
 // import languageSwitcherTheme from './languageSwitcher.css';
@@ -22,18 +23,27 @@ class Setting extends React.Component {
     });
   }
 
-  changeLanguage(e) {//eslint-disable-line
-    if (e.checked) {
-      i18n.changeLanguage('de');
-    } else {
-      i18n.changeLanguage('en');
+  // changeLanguage(e) {//eslint-disable-line
+  //   if (e.checked) {
+  //     i18n.changeLanguage('de');
+  //   } else {
+  //     i18n.changeLanguage('en');
+  //   }
+  // }
+
+  toggleAutoLog(state) {
+    const { account, settings, settingsUpdated, accountUpdated } = this.props;
+    if (state && account.passphrase) {
+      const date = Date.now() + accountConfig.lockDuration;
+      accountUpdated({ expireTime: date });
     }
+    settingsUpdated({ autoLog: !settings.autoLog });
   }
 
   render() {
     this.language = (i18n.language === 'de');
     const showSetting = this.props.showSetting ? styles.active : '';
-    const { t } = this.props;
+    const { t, settings, settingsUpdated } = this.props;
     return <footer className={`${styles.wrapper} ${showSetting}`}>
       <ReactSwipe
         className={styles.carousel}
@@ -46,11 +56,11 @@ class Setting extends React.Component {
         <div>
           <Checkbox
             theme={styles}
-            className={`${styles.smallSlider}`}
-            clickable={true}
+            className={`${styles.smallSlider} autoLog`}
+            onChange={() => this.toggleAutoLog(!settings.autoLog)}
             input={{
               value: true,
-              checked: true,
+              checked: settings.autoLog,
             }}/>
           <article>
             <h5>{t('Auto-Lock')}</h5>
@@ -60,10 +70,11 @@ class Setting extends React.Component {
         <div>
           <Checkbox
             theme={styles}
-            className={`${styles.smallSlider}`}
-            clickable={true}
+            className={`${styles.smallSlider} advancedMode`}
+            onChange={() => settingsUpdated({ advancedMode: !settings.advancedMode })}
             input={{
               value: true,
+              checked: settings.advancedMode,
             }}/>
           <article>
             <h5>{t('Advanced features')}</h5>
@@ -76,7 +87,6 @@ class Setting extends React.Component {
             theme={languageSwitcherTheme}
             className={`${styles.smallSlider} language-switcher`}
             onChange={this.changeLanguage.bind(this)}
-            clickable={true}
             textAsIcon={true}
             icons={{
               start: 'EN',

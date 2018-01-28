@@ -18,6 +18,10 @@ describe('SettingHOC', () => {
   const store = configureMockStore([])({
     account,
     activePeerSet: () => {},
+    settings: {
+      autoLog: true,
+      advancedMode: true,
+    },
   });
   const options = {
     context: { store, history, i18n },

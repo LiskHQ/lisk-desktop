@@ -42,6 +42,10 @@ describe('App', () => {
       account: {},
       dialog: {},
       peers: {},
+      settings: {
+        autoLog: true,
+        advancedMode: true,
+      },
     });
     publicComponent.forEach(({ route, component }) => {
       it(`should render ${component.name} component at "${route}" route`, () => {

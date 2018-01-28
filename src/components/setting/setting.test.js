@@ -16,6 +16,10 @@ describe('Setting', () => {
     },
     push: sinon.spy(),
   };
+  const settings = {
+    autoLog: true,
+    advancedMode: true,
+  };
 
   const account = {
     isDelegate: false,
@@ -25,6 +29,7 @@ describe('Setting', () => {
   const store = configureMockStore([])({
     account,
     activePeerSet: () => {},
+    settings,
   });
 
   const options = {
@@ -41,9 +46,12 @@ describe('Setting', () => {
 
   const t = key => key;
   let wrapper;
+  const settingsUpdated = sinon.spy();
 
   beforeEach(() => {
-    wrapper = mount(<MemoryRouter><Setting store={store} t={t}/></MemoryRouter>, options);
+    wrapper = mount(<MemoryRouter>
+      <Setting store={store} settingsUpdated={settingsUpdated} settings={settings} t={t}/>
+    </MemoryRouter>, options);
     clock = sinon.useFakeTimers({
       toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
     });
@@ -64,6 +72,17 @@ describe('Setting', () => {
     clock.tick(500);
     wrapper.update();
     expect(wrapper.find('#carouselNav li').at(1).props().className).to.be.include('activeSlide');
+  });
+
+  it.skip('should click on .autoLog update the setting', () => {
+    wrapper.find('.autoLog input').simulate('click');
+    clock.tick(100);
+    wrapper.find('.autoLog label').simulate('click');
+    wrapper.update();
+    clock.tick(500);
+    wrapper.update();
+
+    expect(settingsUpdated).to.have.been.calledOnce();
   });
 
   // TODO: will be re-enabled when the functionality is re-enabled
