@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Account from '../account';
 import PrivateRoutes from '../privateRoute';
 import Dashboard from '../dashboard';
@@ -16,6 +16,7 @@ import Dialog from '../dialog';
 import Toaster from '../toaster';
 import MainMenu from '../mainMenu';
 import LoadingBar from '../loadingBar';
+import NotFound from '../notFound';
 import OfflineWrapper from '../offlineWrapper';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 
@@ -27,19 +28,25 @@ const App = () => (
       <section>
         <div className={styles.mainBox}>
           <Header />
-          <PrivateRoutes path='/main' render={ ({ match }) => (
-            <main className={offlineStyle.disableWhenOffline}>
-              <Account />
-              <Route path={`${match.url}/dashboard/:dialog?`} component={Dashboard} />
-              <Route path={`${match.url}/transactions/:dialog?`} component={TransactionDashboard} />
-              <Route path={`${match.url}/voting/:dialog?`} component={Voting} />
-              <Route path={`${match.url}/sidechains/:dialog?`} component={Sidechains} />
-              <Route path={`${match.url}/forging/:dialog?`} component={Forging} />
-              <Route path={`${match.url}/add-account/:dialog?`} component={Login} />
-            </main>
-          )} />
-          <Route exact path="/register" component={Register} />
-          <Route exact path="/" component={Login} />
+          <Switch>
+            <PrivateRoutes path='/main' render={ ({ match }) => (
+              <main className={offlineStyle.disableWhenOffline}>
+                <Account />
+                <Switch>
+                  <Route path={`${match.url}/dashboard/:dialog?`} component={Dashboard} />
+                  <Route path={`${match.url}/transactions/:dialog?`} component={TransactionDashboard} />
+                  <Route path={`${match.url}/voting/:dialog?`} component={Voting} />
+                  <Route path={`${match.url}/sidechains/:dialog?`} component={Sidechains} />
+                  <Route path={`${match.url}/forging/:dialog?`} component={Forging} />
+                  <Route path={`${match.url}/add-account/:dialog?`} component={Login} />
+                  <Route path='*' component={NotFound} />
+                </Switch>
+              </main>
+            )} />
+            <Route exact path='/register' component={Register} />
+            <Route exact path='/' component={Login} />
+            <Route path='*' component={NotFound} />
+          </Switch>
         </div>
         <Dialog />
         <Toaster />
