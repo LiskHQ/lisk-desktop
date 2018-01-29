@@ -16,6 +16,7 @@ import Dialog from '../dialog';
 import Toaster from '../toaster';
 import MainMenu from '../mainMenu';
 import LoadingBar from '../loadingBar';
+import NotFound from '../notFound';
 import OfflineWrapper from '../offlineWrapper';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 
@@ -40,6 +41,7 @@ const App = () => (
           )} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/" component={Login} />
+          <Route path="*" component={NotFound} />
         </div>
         <Dialog />
         <Toaster />

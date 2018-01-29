@@ -44,5 +44,10 @@ export default [
     path: '/',
     params: 'dialog',
     name: 'login',
+  }, {
+    regex: /./,
+    path: '/',
+    params: 'notFound',
+    name: 'not-found',
   },
 ];
