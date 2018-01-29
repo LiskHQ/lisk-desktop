@@ -3,7 +3,6 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Router } from 'react-router-dom';
-import sinon from 'sinon';
 import Voting from './voting';
 import store from '../../store';
 import history from '../../history';
@@ -34,13 +33,6 @@ describe('Voting', () => {
     delegates,
     totalDelegates: 10,
     votes,
-    activePeer: {},
-    address: '16313739661670634666L',
-    setActiveDialog: sinon.spy(),
-    voteToggled: sinon.spy(),
-    addTransaction: sinon.spy(),
-    votesFetched: sinon.spy(),
-    delegatesFetched: sinon.spy(),
     t: key => key,
   };
   beforeEach(() => {
@@ -60,32 +52,12 @@ describe('Voting', () => {
     // Voting.prototype.setStatus.restore();
   });
 
-  it('should render VotingHeader', () => {
-    expect(wrapper.find('VotingHeaderRaw')).to.have.lengthOf(1);
+  it('should render VotesPreview', () => {
+    expect(wrapper.find('VotesPreview')).to.have.lengthOf(1);
   });
 
-  it('should render VotingRow', () => {
-    expect(wrapper.find('VotingRow')).to.have.lengthOf(delegates.length);
-  });
-
-  it('should render Table', () => {
-    expect(wrapper.find('Table')).to.have.lengthOf(1);
-  });
-
-  it('should define search method to reload delegates based on given query', () => {
-    const clock = sinon.useFakeTimers({
-      toFake: ['setTimeout', 'clearTimeout', 'Date'],
-    });
-    props.delegatesFetched.reset();
-    wrapper.find('.search input').simulate('change', { target: { value: 'query' } });
-    clock.tick(251);
-    expect(props.delegatesFetched).to.be.calledWith({
-      activePeer: props.activePeer,
-      offset: 0,
-      q: 'query',
-      refresh: true,
-    });
-    clock.restore();
+  it('should render DelegateList', () => {
+    expect(wrapper.find('DelegateList')).to.have.lengthOf(1);
   });
 });
 
