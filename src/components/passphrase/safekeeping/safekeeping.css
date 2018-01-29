@@ -64,6 +64,10 @@
       max-width: 750px;
       margin: 0 auto;
     }
+
+    & h2 {
+      font-size: 48px;
+    }
   }
 
   /* Steps */
@@ -185,12 +189,25 @@
   }
 }
 
+@media (--medium-viewport) {
+  .safekeeping {
+    & .word {
+      font-size: 22px !important;
+    }
+  }
+}
+
 @media (--small-viewport) {
   .safekeeping {
+    & h2 {
+      font-size: 40px !important;
+    }
+
     &.done-step,
     &.revealing-step,
     &.revealed-step {
       overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
 
       & > header {
         height: auto;

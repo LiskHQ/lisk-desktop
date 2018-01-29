@@ -77,7 +77,7 @@ describe('Passphrase: Safekeeping', () => {
 
     clock.tick(501);
     expect(props.nextStep).to.have.been.calledWith();
-
+    wrapper.unmount();
     clock.restore();
   });
 });

@@ -95,6 +95,7 @@ describe('Passphrase: Confirm', () => {
 
     const wrapperProps = wrapper.find('button.get-to-your-dashboard-button').props();
     expect(wrapperProps.disabled).to.be.equal(true);
+    wrapper.unmount();
   });
 
   it('should enable Next button if answer is correct', () => {

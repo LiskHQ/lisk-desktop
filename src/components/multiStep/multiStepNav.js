@@ -52,7 +52,7 @@ const MultiStepNav = ({ steps, showNav, current, prevStep,
                 step.props.icon ?
                   <FontIcon className={styles.icon}>{step.props.icon}</FontIcon> : null
               }
-              <b className={styles.label}>{ step.props.title }</b>
+              <b className={styles.label}><small>{ step.props.title }</small></b>
             </div>)
         }
       </section>
