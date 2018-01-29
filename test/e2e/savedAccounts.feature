@@ -6,6 +6,7 @@ Feature: Saved Accounts
     And I refresh the page
     And I wait 2 seconds
     Then I should be logged in
+    I wait 0.5 seconds
     When I fill in "1" to "amount" field
     And I fill in "537318935439898807L" to "recipient" field
     And I click "send next button"
