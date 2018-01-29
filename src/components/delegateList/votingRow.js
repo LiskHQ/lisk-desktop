@@ -1,6 +1,6 @@
 import React from 'react';
 import { TableRow, TableCell } from 'react-toolbox/lib/table';
-import styles from './voting.css';
+import styles from './delegateList.css';
 import Checkbox from './voteCheckbox';
 
 const setRowClass = (voteStatus) => {
