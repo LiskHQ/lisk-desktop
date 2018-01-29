@@ -1,5 +1,6 @@
 Feature: Saved Accounts 
   Scenario: should save account locally, after page reload it should require passphrase to do the first transaction, and remember the passphrase for next transactions
+    When I go to "main/add-account/"
     Given I'm logged in as "genesis"
     When I wait 1 seconds
     And I refresh the page
