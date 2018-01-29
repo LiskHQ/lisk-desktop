@@ -4,6 +4,7 @@ import { transactionsRequested, transactionsFilterSet } from '../../actions/tran
 import Transactions from './transactions';
 
 const mapStateToProps = state => ({
+  accountAddress: state.account.address,
   balance: state.account.balance,
   activePeer: state.peers.data,
   transactions: [...state.transactions.pending, ...state.transactions.confirmed],

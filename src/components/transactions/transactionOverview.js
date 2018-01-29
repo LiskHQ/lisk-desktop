@@ -47,6 +47,10 @@ class Transactions extends React.Component {
       (!this.props.activeFilter || this.props.activeFilter === txFilters.all);
   }
 
+  shouldShowAccountInformation() {
+    return this.props.accountAddress === this.props.address;
+  }
+
   render() {
     const filters = [
       {
@@ -70,6 +74,7 @@ class Transactions extends React.Component {
       <Box className={`transactions ${styles.activity}`}>
         <header>
           <h2 className={styles.title}>{this.props.t('Activity')}</h2>
+          {this.shouldShowAccountInformation() &&
           <div className={styles.account}>
             <h2>
               <span>
@@ -79,6 +84,7 @@ class Transactions extends React.Component {
             </h2>
             <CopyToClipboard value={this.props.address} className={`${styles.address}`} copyClassName={styles.copy} />
           </div>
+          }
         </header>
         {this.shouldShowEmptyState() ?
           <div className={styles.emptyTransactions}>
