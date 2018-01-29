@@ -3,6 +3,7 @@ const keyCodes = {
   arrowLeft: 37,
   space: 32,
   delete: 8,
+  enter: 13,
 };
 
 export default keyCodes;

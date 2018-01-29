@@ -7,6 +7,7 @@ import Sidechains from '../sidechains';
 import Header from '../header';
 import Login from '../login';
 import Register from '../register';
+import Search from '../search';
 import TransactionDashboard from '../transactionDashboard';
 import accountTransactions from '../accountTransactions';
 import Voting from '../voting';
@@ -47,6 +48,7 @@ const App = () => (
                 </Switch>
               </main>
             )} />
+            <Route path={'/explorer'} component={Search} />
             <Route path={`${routes.account.short}/:address?`} component={accountTransactions} />
             <Route exact path='/register' component={Register} />
             <Route exact path='/' component={Login} />

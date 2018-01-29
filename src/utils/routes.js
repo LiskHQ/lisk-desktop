@@ -42,6 +42,10 @@ export default [
     params: 'address',
     name: 'accounts',
   }, {
+    regex: /\/main\/explorer/,
+    path: '/main/explorer/',
+    name: 'explorer',
+  }, {
     regex: /register(\/)?$/,
     path: '/',
     params: 'dialog',

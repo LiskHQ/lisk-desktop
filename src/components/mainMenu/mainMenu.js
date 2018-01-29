@@ -85,12 +85,10 @@ class MainMenu extends React.Component {
         label: t('Sidechains'),
         id: 'sidechains',
         image: menuLogos.sidechains,
-      /* TODO: uncomment when the page is created
       }, {
         label: t('Search'),
-        id: 'search',
+        id: 'explorer',
         image: menuLogos.search,
-      */
       },
     ];
 
