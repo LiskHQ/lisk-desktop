@@ -60,35 +60,29 @@
 
 @font-face {
 	font-family:"icons";
-	src:url("./icons.eot?ee57311756a4427898348a3425de00ca");
+	src:url("./icons.eot?305e36904edd664b441bd845b9c1cd1e");
 	src:url("./icons.eot?#iefix") format("embedded-opentype"),
-		url("./icons.woff?ee57311756a4427898348a3425de00ca") format("woff"),
-		url("./icons.ttf?ee57311756a4427898348a3425de00ca") format("truetype");
+		url("./icons.woff?305e36904edd664b441bd845b9c1cd1e") format("woff"),
+		url("./icons.ttf?305e36904edd664b441bd845b9c1cd1e") format("truetype");
 	font-weight:normal;
 	font-style:normal;
 }
 
 .icon {
-	font-family: "icons";
-    font-weight: normal;
-    font-style: normal;
-    font-size: 24px;
-    display: inline-block;
-    width: 1em;
-    height: 1em;
-    line-height: 1 !important;
-    text-transform: none;
-    letter-spacing: normal;
-    word-wrap: normal;
-    white-space: nowrap;
-	direction: ltr;
+	
+		font-family:"icons";
+	
+	display:inline-block;
 	vertical-align:middle;
-	speak: none;
-	text-decoration: inherit;
-	text-transform: none;
-	text-rendering: auto;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+	line-height:1;
+	font-weight:normal;
+	font-style:normal;
+	speak:none;
+	text-decoration:inherit;
+	text-transform:none;
+	text-rendering:auto;
+	-webkit-font-smoothing:antialiased;
+	-moz-osx-font-smoothing:grayscale;
 }
 
 
@@ -125,68 +119,123 @@
 }
 
 
-.checkmark:before {
+.checkmark-check:before {
 	content:"\f107";
 }
 
 
-.close:before {
+.checkmark-uncheck:before {
 	content:"\f108";
 }
 
 
-.copy-to-clipboard:before {
+.checkmark:before {
 	content:"\f109";
 }
 
 
-.edit:before {
+.close:before {
 	content:"\f10a";
 }
 
 
-.hide:before {
+.copy-to-clipboard:before {
 	content:"\f10b";
 }
 
 
-.locked:before {
+.dropdown:before {
 	content:"\f10c";
 }
 
 
-.login:before {
+.edit:before {
 	content:"\f10d";
 }
 
 
-.more:before {
+.error:before {
 	content:"\f10e";
 }
 
 
-.overview:before {
+.hide:before {
 	content:"\f10f";
 }
 
 
-.request-token:before {
+.info:before {
 	content:"\f110";
 }
 
 
-.send-token:before {
+.internet:before {
 	content:"\f111";
 }
 
 
-.show:before {
+.locked:before {
 	content:"\f112";
 }
 
 
-.unlocked:before {
+.login:before {
 	content:"\f113";
+}
+
+
+.logo-icon:before {
+	content:"\f114";
+}
+
+
+.logo-text:before {
+	content:"\f115";
+}
+
+
+.menu:before {
+	content:"\f116";
+}
+
+
+.more:before {
+	content:"\f117";
+}
+
+
+.overview:before {
+	content:"\f118";
+}
+
+
+.profile:before {
+	content:"\f119";
+}
+
+
+.request-token:before {
+	content:"\f11a";
+}
+
+
+.search:before {
+	content:"\f11b";
+}
+
+
+.send-token:before {
+	content:"\f11c";
+}
+
+
+.show:before {
+	content:"\f11d";
+}
+
+
+.unlocked:before {
+	content:"\f11e";
 }
 
 		</style>
@@ -208,25 +257,47 @@
 			
 				<div class="icons__item" data-name="buy-tokens"><i class="icon buy-tokens"></i> buy-tokens</div>
 			
+				<div class="icons__item" data-name="checkmark-check"><i class="icon checkmark-check"></i> checkmark-check</div>
+			
+				<div class="icons__item" data-name="checkmark-uncheck"><i class="icon checkmark-uncheck"></i> checkmark-uncheck</div>
+			
 				<div class="icons__item" data-name="checkmark"><i class="icon checkmark"></i> checkmark</div>
 			
 				<div class="icons__item" data-name="close"><i class="icon close"></i> close</div>
 			
 				<div class="icons__item" data-name="copy-to-clipboard"><i class="icon copy-to-clipboard"></i> copy-to-clipboard</div>
 			
+				<div class="icons__item" data-name="dropdown"><i class="icon dropdown"></i> dropdown</div>
+			
 				<div class="icons__item" data-name="edit"><i class="icon edit"></i> edit</div>
 			
+				<div class="icons__item" data-name="error"><i class="icon error"></i> error</div>
+			
 				<div class="icons__item" data-name="hide"><i class="icon hide"></i> hide</div>
+			
+				<div class="icons__item" data-name="info"><i class="icon info"></i> info</div>
+			
+				<div class="icons__item" data-name="internet"><i class="icon internet"></i> internet</div>
 			
 				<div class="icons__item" data-name="locked"><i class="icon locked"></i> locked</div>
 			
 				<div class="icons__item" data-name="login"><i class="icon login"></i> login</div>
 			
+				<div class="icons__item" data-name="logo-icon"><i class="icon logo-icon"></i> logo-icon</div>
+			
+				<div class="icons__item" data-name="logo-text"><i class="icon logo-text"></i> logo-text</div>
+			
+				<div class="icons__item" data-name="menu"><i class="icon menu"></i> menu</div>
+			
 				<div class="icons__item" data-name="more"><i class="icon more"></i> more</div>
 			
 				<div class="icons__item" data-name="overview"><i class="icon overview"></i> overview</div>
 			
+				<div class="icons__item" data-name="profile"><i class="icon profile"></i> profile</div>
+			
 				<div class="icons__item" data-name="request-token"><i class="icon request-token"></i> request-token</div>
+			
+				<div class="icons__item" data-name="search"><i class="icon search"></i> search</div>
 			
 				<div class="icons__item" data-name="send-token"><i class="icon send-token"></i> send-token</div>
 			
@@ -239,8 +310,7 @@
 		
 
 		<h1>Usage</h1>
-		<pre><code>&lt;FontIcon&gt;name&lt;/FontIcon&gt;</code> or 
-<code>&lt;FontIcon value=&quot;<span id="name">name</span>&quot;/&gt;</code></pre>
+		<pre><code>&lt;i class=&quot;icon <span id="name">name</span>&quot;&gt;&lt;/i&gt;</code></pre>
 		
 
 		<footer>Generated by <a href="https://github.com/sapegin/grunt-webfont">grunt-webfont</a>.</footer>
