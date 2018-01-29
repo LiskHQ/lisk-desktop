@@ -55,7 +55,7 @@ const transactions = (state = { pending: [], confirmed: [], count: null }, actio
       return Object.assign({}, state, {
         confirmed: action.data.confirmed,
         count: action.data.count,
-        address: action.data.address,
+        account: { address: action.data.address, balance: action.data.balance },
         filter: txFilter.all,
       });
     case (actionTypes.accountLoggedOut):

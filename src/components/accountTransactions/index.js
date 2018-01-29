@@ -21,7 +21,7 @@ class accountTransactions extends React.Component {
         <Send/>
       </div>
       <div className={`${grid['col-sm-12']} ${styles.transactions} ${grid['col-md-8']}`}>
-        <Transactions address={this.props.match.params.address}></Transactions>
+        <Transactions address={this.props.match.params.address} />
       </div>
     </div>;
   }

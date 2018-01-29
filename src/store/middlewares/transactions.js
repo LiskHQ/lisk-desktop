@@ -1,6 +1,6 @@
 import i18next from 'i18next';
 
-import { unconfirmedTransactions, transactions as getTransactions } from '../../utils/api/account';
+import { unconfirmedTransactions, transactions as getTransactions, getAccount } from '../../utils/api/account';
 import { successAlertDialogDisplayed } from '../../actions/dialog';
 import { transactionsFailed, transactionsFiltered, transactionsInit } from '../../actions/transactions';
 
@@ -33,7 +33,7 @@ const transactionsUpdated = (store) => {
 const filterTransactions = (store, action) => {
   getTransactions({
     activePeer: store.getState().peers.data,
-    address: store.getState().transactions.address,
+    address: store.getState().transactions.account.address,
     limit: 25,
     filter: action.data.filter })
     .then((response) => {
@@ -47,17 +47,22 @@ const filterTransactions = (store, action) => {
 
 
 const initTransactions = (store, action) => {
-  getTransactions({
-    activePeer: store.getState().peers.data,
-    address: action.data.address,
-    limit: 25,
-  }).then((response) => {
-    store.dispatch(transactionsInit({
-      confirmed: response.transactions,
-      count: parseInt(response.count, 10),
-      address: action.data.address,
-    }));
-  });
+  const activePeer = store.getState().peers.data;
+  const address = action.data.address;
+
+  getTransactions({ activePeer, address, limit: 25 })
+    .then((txResponse) => {
+      const { transactions, count } = txResponse;
+      getAccount(activePeer, address)
+        .then((accountResponse) => {
+          store.dispatch(transactionsInit({
+            confirmed: transactions,
+            count: parseInt(count, 10),
+            balance: accountResponse.balance,
+            address,
+          }));
+        });
+    });
 };
 
 const transactionsMiddleware = store => next => (action) => {

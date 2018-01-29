@@ -13,7 +13,7 @@ class TransactionsDashboard extends React.Component {
         <Send/>
       </div>
       <div className={`${grid['col-sm-12']} ${styles.transactions} ${grid['col-md-8']}`}>
-        <Transactions address={this.props.accountAddress}></Transactions>
+        <Transactions address={this.props.accountAddress} />
       </div>
     </div>;
   }
