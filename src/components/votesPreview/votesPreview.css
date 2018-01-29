@@ -1,0 +1,13 @@
+.red {
+  color: #c62828;
+}
+
+.progress {
+  & :global .CircularProgressbar-path {
+    stroke: url('#grad') !important;
+  }
+
+  & :global .CircularProgressbar-trail {
+    stroke: #3c5068 !important;
+  }
+}
