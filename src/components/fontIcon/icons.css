@@ -30,6 +30,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.add::before {
+  content: "\f101";
+}
+
 .arrow-down::before {
   content: "\f102";
 }
