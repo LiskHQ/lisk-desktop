@@ -108,9 +108,14 @@ hr {
       cursor: pointer;
     }
 
+    & .hidden {
+      visibility: hidden;
+    }
+
     & span {
       vertical-align: middle;
       margin-top: -3px;
+      padding-right: 4px;
     }
   }
 
@@ -125,7 +130,7 @@ hr {
     width: 50%;
     max-width: 270px;
     padding-top: 150px;
-    padding-left: 175px;
+    margin-left: 175px;
     left: 50%;
     top: 50%;
     transform: translateY(-60%);
@@ -139,6 +144,7 @@ hr {
     }
 
     & button {
+      margin-top: 40%;
       display: none;
     }
 
@@ -221,6 +227,7 @@ hr {
       max-width: none;
       z-index: 23;
       text-align: center;
+      margin: 0;
 
       & p {
         margin-bottom: 1em !important;

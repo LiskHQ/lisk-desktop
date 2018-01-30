@@ -247,7 +247,7 @@ class Create extends React.Component {
             <TransitionWrapper current={this.state.step} step='info'>
               <h2 className={`${styles.secondHeading}`}>
                 {t('This is your Lisk ID')}
-                <small onClick={this.showHint.bind(this)}>
+                <small onClick={this.showHint.bind(this)} className={this.state.showHint ? styles.hidden : ''}>
                   <FontIcon value='info'></FontIcon>
                   {t('What is Lisk ID?')}
                 </small>
