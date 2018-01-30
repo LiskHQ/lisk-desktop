@@ -11,6 +11,7 @@ import TransactionDashboard from '../transactionDashboard';
 import accountTransactions from '../accountTransactions';
 import Voting from '../voting';
 import Forging from '../forging';
+import SingleTransaction from './../singleTransaction';
 import styles from './app.css';
 import BackgroundMaker from '../backgroundMaker';
 import Dialog from '../dialog';
@@ -49,6 +50,7 @@ const App = () => (
               <main>
                 <Route path={`${match.url}${routes.search.short}/:dialog?`} component={Search} />
                 <Route path={`${match.url}${routes.account.short}/:address?`} component={accountTransactions} />
+                <Route path={`${match.url}${routes.transaction.short}/:id`} component={SingleTransaction} />
               </main>
             )} />
             <Route exact path={routes.register.url} component={Register} />

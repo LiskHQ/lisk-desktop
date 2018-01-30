@@ -1,5 +1,5 @@
-import { unconfirmedTransactions, transactions as getTransactions, getAccount } from '../../utils/api/account';
-import { transactionsFailed, transactionsFiltered, transactionsInit } from '../../actions/transactions';
+import { unconfirmedTransactions, transactions as getTransactions, getAccount, transaction } from '../../utils/api/account';
+import { transactionsFailed, transactionsFiltered, transactionsInit, transactionLoaded } from '../../actions/transactions';
 
 import actionTypes from '../../constants/actions';
 
@@ -49,6 +49,13 @@ const initTransactions = (store, action) => {
     });
 };
 
+const loadTransaction = (store, action) => {
+  transaction({ activePeer: store.getState().peers.data, id: action.data.id })
+    .then((response) => {
+      store.dispatch(transactionLoaded({ ...response }));
+    });
+};
+
 const transactionsMiddleware = store => next => (action) => {
   next(action);
   switch (action.type) {
@@ -60,6 +67,9 @@ const transactionsMiddleware = store => next => (action) => {
       break;
     case actionTypes.transactionsRequestInit:
       initTransactions(store, action);
+      break;
+    case actionTypes.transactionLoadRequested:
+      loadTransaction(store, action);
       break;
     default: break;
   }

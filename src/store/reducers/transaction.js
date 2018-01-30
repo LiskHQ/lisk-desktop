@@ -1,0 +1,12 @@
+import actionTypes from '../../constants/actions';
+
+const transaction = (state = [], action) => {
+  switch (action.type) {
+    case actionTypes.transactionLoaded:
+      return { success: action.data.success, ...action.data.transaction };
+    default:
+      return state;
+  }
+};
+
+export default transaction;

@@ -3,7 +3,6 @@ import Waypoint from 'react-waypoint';
 import CopyToClipboard from '../copyToClipboard';
 import TransactionList from './transactionList';
 import LiskAmount from '../liskAmount';
-import Box from '../box';
 import styles from './transactions.css';
 import txFilters from './../../constants/transactionFilters';
 import cubeImage from '../../assets/images/dark-blue-cube.svg';
@@ -67,7 +66,7 @@ class Transactions extends React.Component {
     ];
 
     return (
-      <Box className={`transactions ${styles.activity}`}>
+      <div className={`transactions ${styles.activity}`}>
         <header>
           <h2 className={styles.title}>{this.props.t('Activity')}</h2>
           <div className={styles.account}>
@@ -114,7 +113,7 @@ class Transactions extends React.Component {
               onEnter={() => { this.loadMore(); }}></Waypoint>
             : null
         }
-      </Box>
+      </div>
     );
   }
 }

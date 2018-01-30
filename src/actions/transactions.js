@@ -66,6 +66,16 @@ export const transactionsInit = data => ({
   type: actionTypes.transactionsInit,
 });
 
+export const transactionLoadRequested = data => ({
+  data,
+  type: actionTypes.transactionLoadRequested,
+});
+
+export const transactionLoaded = data => ({
+  data,
+  type: actionTypes.transactionLoaded,
+});
+
 /**
  *
  *
