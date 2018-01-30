@@ -259,7 +259,7 @@ class Create extends React.Component {
                 Every Lisk ID has one unique avatar.</p>
               <p>The <b>ID</b> is unique and can’t be changed. It’s yours.</p>
               <Button
-                label={t('Got it!')}
+                label={t('Got it')}
                 onClick={this.showHint.bind(this)}
                 type={'button'} />
             </aside>
