@@ -89,6 +89,13 @@
       width: 100%;
     }
   }
+
+  & input[type='radio'],
+  & input[type='checkbox'] {
+    &:checked + label .button {
+      transform: translateX(calc(-1 * var(--check-box-height)));
+    }
+  }
 }
 
 .secondPassphrase,
