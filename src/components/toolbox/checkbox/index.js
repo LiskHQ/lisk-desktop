@@ -31,8 +31,14 @@ class SliderCheckbox extends React.Component {
     this.xOffset = this.getXOffset(e);
     this.direction = this.input.checked ? -1 : 1;
     const sliderWidth = this.parent.getBoundingClientRect().width;
-    this.buttonWidth = this.shape.getBoundingClientRect().width;
-    this.maxMovement = sliderWidth - this.buttonWidth;
+    const buttonWidth = this.shape.getBoundingClientRect().width;
+    if (buttonWidth > 0 && sliderWidth > buttonWidth) {
+      this.buttonWidth = buttonWidth;
+      this.maxMovement = sliderWidth - buttonWidth;
+    } else {
+      this.buttonWidth = this.props.buttonWidth;
+      this.maxMovement = this.props.maxMovement;
+    }
   }
 
   track(e) {
