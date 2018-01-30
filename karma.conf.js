@@ -100,8 +100,8 @@ module.exports = function (config) {
             'src/components/transactions/transactionOverview.js',
             'src/components/transactions/transactionDetailView.js',
             'src/components/voting/index.js',
-            'src/components/voting/index.js',
-            'src/components/voting/voting.js',
+            'src/components/delegateList/index.js',
+            'src/components/delegateList/delegateList.js',
             'src/components/forging/index.js',
             'src/components/forging/forging.js',
             'src/components/dialog/index.js',
@@ -115,6 +115,7 @@ module.exports = function (config) {
             'app/src/modules/autoUpdater.js',
             'app/src/modules/win.js',
             'app/src/modules/localeHandler.js',
+            'src/components/votesPreview/index.js',
           ],
           overrides: {
             'src/store/**/*.js': {
