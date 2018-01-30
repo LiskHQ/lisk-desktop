@@ -5,7 +5,6 @@ import { extractAddress } from '../../../utils/api/account';
 import AccountVisual from '../../accountVisual';
 import styles from './create.css';
 import { FontIcon } from '../../fontIcon';
-import ProgressBar from '../../toolbox/progressBar/progressBar';
 import * as shapesSrc from '../../../assets/images/register-shapes/*.svg'; //eslint-disable-line
 import MovableShape from './movableShape';
 import { PrimaryButton, Button } from '../../toolbox/buttons/button';
@@ -279,10 +278,6 @@ class Create extends React.Component {
             </Fragment>
             : ''}
         </div>
-        <footer className={grid['col-xs-12']}>
-          <ProgressBar mode='determinate' theme={styles}
-            value={percentage} />
-        </footer>
       </section>
     );
   }

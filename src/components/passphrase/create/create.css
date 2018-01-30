@@ -31,7 +31,7 @@
 .missing {
   padding: 0 5px;
   font-weight: bold;
-  color: #0288d1;
+  color: var(--color-primary-standard);
 }
 
 .stable {
@@ -73,12 +73,16 @@ hr {
 }
 
 .generation {
+  justify-content: space-around;
+  align-items: center;
+
   & h2 {
     font-size: 48px;
   }
 
   & > div {
     height: 100%;
+    max-height: 800px;
     padding: 3vh 0 5vh; /* stylelint-disable-line */
     display: flex;
     flex-direction: column;
@@ -112,20 +116,26 @@ hr {
 
   & aside.description {
     position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 30%;
+    max-height: 350px;
     width: 50%;
     max-width: 270px;
-    padding-top: 100px;
+    padding-top: 150px;
+    padding-left: 175px;
     left: 50%;
     top: 50%;
     transform: translateY(-60%);
     transition: all ease 250ms;
-    padding-left: 175px;
     text-align: left;
     visibility: hidden;
     opacity: 0;
 
-    & p:first-child {
-      margin-bottom: 60%;
+    & p {
+      color: var(--color-grayscale-dark);
     }
 
     & button {
@@ -223,6 +233,15 @@ hr {
     }
   }
 }
+
+@media (max-height: 920px) {
+  .drawer.left {
+    display: block;
+    overflow: hidden;
+    height: 100%;
+  }
+}
+
 
 @media (--xxSmall-viewport) {
   .generation {

@@ -92,6 +92,7 @@
       width: 100%;
       height: 32px;
       display: block;
+      font-size: 0;
     }
 
     & label.option {
