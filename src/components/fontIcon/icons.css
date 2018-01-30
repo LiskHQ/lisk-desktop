@@ -54,54 +54,98 @@
   content: "\f106";
 }
 
-.checkmark::before {
+.checkmark-check::before {
   content: "\f107";
 }
 
-.close::before {
+.checkmark-uncheck::before {
   content: "\f108";
 }
 
-.copy-to-clipboard::before {
+.checkmark::before {
   content: "\f109";
 }
 
-.edit::before {
+.close::before {
   content: "\f10a";
 }
 
-.hide::before {
+.copy-to-clipboard::before {
   content: "\f10b";
 }
 
-.locked::before {
+.dropdown::before {
   content: "\f10c";
 }
 
-.login::before {
+.edit::before {
   content: "\f10d";
 }
 
-.more::before {
+.error::before {
   content: "\f10e";
 }
 
-.overview::before {
+.hide::before {
   content: "\f10f";
 }
 
-.request-token::before {
+.info::before {
   content: "\f110";
 }
 
-.send-token::before {
+.internet::before {
   content: "\f111";
 }
 
-.show::before {
+.locked::before {
   content: "\f112";
 }
 
-.unlocked::before {
+.login::before {
   content: "\f113";
+}
+
+.logo-icon::before {
+  content: "\f114";
+}
+
+.logo-text::before {
+  content: "\f115";
+}
+
+.menu::before {
+  content: "\f116";
+}
+
+.more::before {
+  content: "\f117";
+}
+
+.overview::before {
+  content: "\f118";
+}
+
+.profile::before {
+  content: "\f119";
+}
+
+.request-token::before {
+  content: "\f11a";
+}
+
+.search::before {
+  content: "\f11b";
+}
+
+.send-token::before {
+  content: "\f11c";
+}
+
+.show::before {
+  content: "\f11d";
+}
+
+.unlocked::before {
+  content: "\f11e";
 }

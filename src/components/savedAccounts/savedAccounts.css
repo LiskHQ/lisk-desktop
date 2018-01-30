@@ -206,7 +206,7 @@
 
 .closeButton {
   box-shadow: var(--close-button-shadow);
-  position: absolute;
+  position: absolute !important;
   top: 85px;
   right: 85px;
 }

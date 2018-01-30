@@ -13,6 +13,8 @@ describe('SliderCheckbox without HOC', () => {
     theme: {
       sliderInput: 'sliderInput',
     },
+    buttonWidth: 40,
+    maxMovement: 60,
   };
 
   beforeEach(() => {
@@ -29,18 +31,17 @@ describe('SliderCheckbox without HOC', () => {
   // 1000 a bit more than 50% dragged
 
   // To-do : enable this one when you fix the bug of sliderCheckbox
-  it.skip('checks the checkbox after dragging (more than 50%)', () => {
+  it('checks the checkbox after dragging (more than 50%)', () => {
     expect(wrapper.find('input').instance().checked).to.equal(false);
     wrapper.find('label').props().onMouseDown({ nativeEvent: { pageX: 870 } });
-    wrapper.setState({ maxMovement: 158 });
 
     // When I start dragging the arrow
-    wrapper.find('label').props().onMouseMove({ nativeEvent: { pageX: 900 } });
-    expect(wrapper.find('.circle span').first().instance().style.left).to.equal('30px');
+    wrapper.find('label').props().onMouseMove({ nativeEvent: { pageX: 870 } });
 
     // And I keep dragging a bit more
-    wrapper.find('label').props().onMouseMove({ nativeEvent: { pageX: 1000 } });
-    expect(wrapper.find('.circle span').first().instance().style.left).to.equal('130px');
+    wrapper.find('label').props().onMouseMove({ nativeEvent: { pageX: 921 } });
+    wrapper.update();
+    expect(wrapper.find('.circle span').first().instance().style.left).to.equal('51px');
 
     // Then the box should not be checked yet
     expect(wrapper.find('input').instance().checked).to.equal(false);
@@ -55,7 +56,6 @@ describe('SliderCheckbox without HOC', () => {
   it('does not check the checkbox after dragging (less than 50%)', () => {
     expect(wrapper.find('input').instance().checked).to.equal(false);
     wrapper.find('label').props().onMouseDown({ nativeEvent: { pageX: 870 } });
-    wrapper.setState({ maxMovement: 158 });
 
     // When I start dragging the arrow
     wrapper.find('label').props().onMouseMove({ nativeEvent: { pageX: 900 } });
