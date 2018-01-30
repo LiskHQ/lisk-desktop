@@ -16,7 +16,7 @@
   flex-flow: row nowrap;
   justify-content: space-between;
   position: relative;
-  z-index: 999;
+  z-index: 9;
 
   & > section {
     align-self: flex-end;
