@@ -30,10 +30,25 @@ class SliderCheckbox extends React.Component {
     this.trackable = true;
     this.xOffset = this.getXOffset(e);
     this.direction = this.input.checked ? -1 : 1;
-    this.setState({
-      maxMovement: this.parent.getBoundingClientRect().width -
-      this.shape.getBoundingClientRect().width,
-    });
+    const sliderWidth = this.parent.getBoundingClientRect().width;
+    this.buttonWidth = this.shape.getBoundingClientRect().width;
+    this.maxMovement = sliderWidth - this.buttonWidth;
+  }
+
+  track(e) {
+    if (this.trackable) {
+      const pageX = this.getXOffset(e);
+
+      this.delta = pageX - this.xOffset;
+      const left = this.direction > 0
+        ? this.delta
+        : ((this.maxMovement + this.buttonWidth) - Math.abs(this.delta));
+
+      if ((this.direction * this.delta) > 0 &&
+        Math.abs(this.delta) < this.maxMovement) {
+        this.shape.setAttribute('style', `left: ${left}px`);
+      }
+    }
   }
 
   stopTracking() {
@@ -67,22 +82,6 @@ class SliderCheckbox extends React.Component {
 
   revert() {
     this.shape.removeAttribute('style');
-  }
-
-  track(e) {
-    if (this.trackable) {
-      const pageX = this.getXOffset(e);
-
-      this.delta = pageX - this.xOffset;
-      const left = this.direction > 0
-        ? this.delta
-        : (this.state.maxMovement - Math.abs(this.delta));
-
-      if ((this.direction * this.delta) > 0 &&
-        Math.abs(this.delta) < this.state.maxMovement) {
-        this.shape.setAttribute('style', `left: ${left}px`);
-      }
-    }
   }
 
   render() {
