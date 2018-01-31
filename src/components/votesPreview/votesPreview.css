@@ -1,13 +1,94 @@
-.red {
-  color: #c62828;
+@import '../app/variables.css';
+
+:root {
+  --danger-color: var(--color-error);
+  --link-color: #0077bd;
+  --header-font-size: 28px;
+  --link-font-size: 15px;
+  --progress-bar-text-font-size: 13px;
+  --progress-bar-header-font-size: 54px;
 }
 
-.progress {
-  & :global .CircularProgressbar-path {
-    stroke: url('#grad') !important;
-  }
+.wrapper {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: space-between;
 
-  & :global .CircularProgressbar-trail {
-    stroke: #3c5068 !important;
+  & header {
+    width: 100%;
+    margin-left: 30px;
+    margin-top: 40px;
+
+    & h3 {
+      font-size: var(--header-font-size);
+      margin: 0;
+    }
+
+    & a {
+      font-size: var(--link-font-size);
+      color: var(--link-color);
+      margin-top: 16px;
+      display: block;
+      font-weight: 600;
+      text-decoration: none;
+    }
   }
 }
+
+.button {
+  margin: 0 51px 76px;
+}
+
+.progressWrapper {
+  text-align: center;
+  width: 100%;
+  font-family: var(--heading-font);
+  position: relative;
+  margin-bottom: 40px;
+
+  &.red {
+    & h4 {
+      color: var(--danger-color);
+    }
+
+    & :global .CircularProgressbar {
+      & :global .CircularProgressbar-path {
+        stroke: url('#danger') !important;
+      }
+    }
+  }
+
+  & article {
+    font-size: var(--progress-bar-text-font-size);
+    position: absolute;
+    z-index: 1;
+    text-align: center;
+    width: 100%;
+    top: 42px;
+    letter-spacing: 1px;
+
+    & h4 {
+      font-size: var(--progress-bar-header-font-size);
+      line-height: var(--progress-bar-header-font-size);
+      margin: 15px 0px;
+    }
+  }
+
+  & :global .CircularProgressbar {
+    width: 200px;
+
+    & :global .CircularProgressbar-path {
+      stroke: url('#grad');
+    }
+
+    & :global .CircularProgressbar-trail {
+      stroke: #3c5068;
+    }
+
+    & :global .CircularProgressbar-text {
+      font-size: 54px;
+    }
+  }
+}
+
