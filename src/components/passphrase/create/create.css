@@ -108,10 +108,6 @@ hr {
       cursor: pointer;
     }
 
-    & .hidden {
-      visibility: hidden;
-    }
-
     & span {
       vertical-align: middle;
       margin-top: -3px;
@@ -216,6 +212,12 @@ hr {
       font-size: 40px;
     }
 
+    & .secondHeading {
+      & .hidden {
+        visibility: hidden;
+      }
+    }
+
     & aside.description {
       width: 90%;
       height: 50%;
@@ -248,7 +250,6 @@ hr {
     height: 100%;
   }
 }
-
 
 @media (--xxSmall-viewport) {
   .generation {
