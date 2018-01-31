@@ -98,7 +98,8 @@ or "warn/action" ineastd of "red/green"
   --color-action-light: #ff6236;
   --color-success-dark: #008722;
   --gradient-theme: linear-gradient(27deg, #17499b 0%, var(--color-grayscale-light) 100%);
-  --gradient-action: linear-gradient(-27deg, var(--color-action-dark) 0%, var(--color-action-light) 100%);
+  --gradient-action-orange: linear-gradient(-27deg, var(--color-action-dark) 0%, var(--color-action-light) 100%);
+  --gradient-action-blue: linear-gradient(44deg, #004aff 1%, #93f4fe 98%);
   --gradient-greyscale: linear-gradient(to right, var(--row-background-color), #f5f8fc);
   --gradient-greyscale-mobile: linear-gradient(to right, var(--color-grayscale-mobile-background), var(--color-grayscale-darker-mobile-background));
   --gradient-secondary: linear-gradient(45deg, #17499b 0%, var(--color-primary-medium) 100%);
