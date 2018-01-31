@@ -31,7 +31,7 @@
 .missing {
   padding: 0 5px;
   font-weight: bold;
-  color: #0288d1;
+  color: var(--color-primary-standard);
 }
 
 .stable {
@@ -73,12 +73,16 @@ hr {
 }
 
 .generation {
+  justify-content: space-around;
+  align-items: center;
+
   & h2 {
     font-size: 48px;
   }
 
   & > div {
     height: 100%;
+    max-height: 800px;
     padding: 3vh 0 5vh; /* stylelint-disable-line */
     display: flex;
     flex-direction: column;
@@ -98,9 +102,52 @@ hr {
       font-size: 18px;
       font-weight: normal;
       font-family: 'Open Sans', sans-serif;
-      color: var(--sub-title-color);
+      color: var(--color-primary-standard);
       line-height: 36px;
       display: block;
+      cursor: pointer;
+    }
+
+    & span {
+      vertical-align: middle;
+      margin-top: -3px;
+      padding-right: 4px;
+    }
+  }
+
+  & aside.description {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 30%;
+    max-height: 350px;
+    width: 50%;
+    max-width: 270px;
+    padding-top: 150px;
+    margin-left: 175px;
+    left: 50%;
+    top: 50%;
+    transform: translateY(-60%);
+    transition: all ease 250ms;
+    text-align: left;
+    visibility: hidden;
+    opacity: 0;
+
+    & p {
+      color: var(--color-grayscale-dark);
+    }
+
+    & button {
+      margin-top: 40%;
+      display: none;
+    }
+
+    &.fadeIn {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(-50%);
     }
   }
 
@@ -144,6 +191,12 @@ hr {
   }
 }
 
+@media (--large-viewport) {
+  .generation aside.description {
+    padding-top: 150px;
+  }
+}
+
 @media (--medium-viewport) {
   .generation {
     & h2 {
@@ -158,6 +211,43 @@ hr {
     & .generatorHeader {
       font-size: 40px;
     }
+
+    & .secondHeading {
+      & .hidden {
+        visibility: hidden;
+      }
+    }
+
+    & aside.description {
+      width: 90%;
+      height: 50%;
+      background: rgba(249, 251, 253, 0.95);
+      left: 0;
+      top: 30%;
+      padding: 20% 5%;
+      transform: none !important;
+      max-width: none;
+      z-index: 23;
+      text-align: center;
+      margin: 0;
+
+      & p {
+        margin-bottom: 1em !important;
+        font-size: 16px;
+      }
+
+      & button {
+        display: inline-block;
+      }
+    }
+  }
+}
+
+@media (max-height: 920px) {
+  .drawer.left {
+    display: block;
+    overflow: hidden;
+    height: 100%;
   }
 }
 

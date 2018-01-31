@@ -4,10 +4,10 @@ import { generateSeed, generatePassphrase } from '../../../utils/passphrase';
 import { extractAddress } from '../../../utils/api/account';
 import AccountVisual from '../../accountVisual';
 import styles from './create.css';
-import ProgressBar from '../../toolbox/progressBar/progressBar';
+import { FontIcon } from '../../fontIcon';
 import * as shapesSrc from '../../../assets/images/register-shapes/*.svg'; //eslint-disable-line
 import MovableShape from './movableShape';
-import { PrimaryButton } from '../../toolbox/buttons/button';
+import { PrimaryButton, Button } from '../../toolbox/buttons/button';
 import TransitionWrapper from '../../toolbox/transitionWrapper';
 
 class Create extends React.Component {
@@ -15,6 +15,7 @@ class Create extends React.Component {
     super();
     this.state = {
       step: 'generate',
+      showHint: false,
       address: null,
       lastCaptured: {
         x: 0,
@@ -161,10 +162,15 @@ class Create extends React.Component {
     }
   }
 
+  showHint() {
+    this.setState({ showHint: !this.state.showHint });
+  }
+
   render() {
     const { t, nextStep } = this.props;
     const { shapes } = this.state;
     const percentage = this.state.data ? this.state.data.percentage : 0;
+    const hintTitle = this.isTouchDevice ? 'by tilting you device.' : 'by moving your mouse.';
 
     return (
       <section className={`${grid.row} ${grid['center-xs']} ${styles.wrapper} ${styles.generation}`} id="generatorContainer" >
@@ -235,15 +241,27 @@ class Create extends React.Component {
                 id="generatorHeader" >
                 {this.props.t('Create your Lisk ID')}
                 <br/>
-                {this.props.t('by moving your mouse.')}
+                {this.props.t(hintTitle)}
               </h2>
             </TransitionWrapper>
             <TransitionWrapper current={this.state.step} step='info'>
               <h2 className={`${styles.secondHeading}`}>
-                {t('Create your Lisk ID')}
-                <small>{t('This is your Lisk-ID consisting of an address and avatar.')}</small>
+                {t('This is your Lisk ID')}
+                <small onClick={this.showHint.bind(this)} className={this.state.showHint ? styles.hidden : ''}>
+                  <FontIcon value='info'></FontIcon>
+                  {t('What is Lisk ID?')}
+                </small>
               </h2>
             </TransitionWrapper>
+            <aside className={`${styles.description} ${this.state.step === 'info' && this.state.showHint ? styles.fadeIn : ''}`}>
+              <p>The <b>Avatar</b> represents the ID making it easy to recognize.
+                Every Lisk ID has one unique avatar.</p>
+              <p>The <b>ID</b> is unique and can’t be changed. It’s yours.</p>
+              <Button
+                label={t('Got it')}
+                onClick={this.showHint.bind(this)}
+                type={'button'} />
+            </aside>
           </header>
           {this.state.address ?
             <Fragment>
@@ -260,10 +278,6 @@ class Create extends React.Component {
             </Fragment>
             : ''}
         </div>
-        <footer className={grid['col-xs-12']}>
-          <ProgressBar mode='determinate' theme={styles}
-            value={percentage} />
-        </footer>
       </section>
     );
   }
