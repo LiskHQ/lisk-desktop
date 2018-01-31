@@ -5,6 +5,7 @@ import { mount } from 'enzyme';
 import { stub, match } from 'sinon';
 
 import * as peers from '../../src/utils/api/peers';
+import * as accountAPI from '../../src/utils/api/account';
 import { prepareStore, renderWithRouter } from '../utils/applicationInit';
 import accountReducer from '../../src/store/reducers/account';
 import transactionReducer from '../../src/store/reducers/transactions';
@@ -21,12 +22,15 @@ describe('@integration: Wallet', () => {
   let store;
   let wrapper;
   let requestToActivePeerStub;
+  let accountAPIStub;
 
   const successMessage = 'Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain.';
   const errorMessage = 'An error occurred while creating the transaction.';
 
   beforeEach(() => {
     requestToActivePeerStub = stub(peers, 'requestToActivePeer');
+    accountAPIStub = stub(accountAPI, 'getAccount');
+
     const transactionExample = { senderId: 'sample_address', receiverId: 'some_address' };
 
     requestToActivePeerStub.withArgs(match.any, 'transactions', match({
@@ -56,6 +60,7 @@ describe('@integration: Wallet', () => {
 
   afterEach(() => {
     requestToActivePeerStub.restore();
+    accountAPIStub.restore();
     wrapper.update();
   });
 
@@ -80,6 +85,8 @@ describe('@integration: Wallet', () => {
       unconfirmedBalance: '0',
       passphrase,
     };
+
+    accountAPIStub.withArgs(match.any, match.any).returnsPromise().resolves({ ...account });
 
     store.dispatch(accountLoggedIn(account));
     wrapper = mount(renderWithRouter(Wallet, store));
