@@ -8,6 +8,7 @@ import Header from '../header';
 import Login from '../login';
 import Register from '../register';
 import TransactionDashboard from '../transactionDashboard';
+import accountTransactions from '../accountTransactions';
 import Voting from '../voting';
 import Forging from '../forging';
 import styles from './app.css';
@@ -19,6 +20,7 @@ import LoadingBar from '../loadingBar';
 import NotFound from '../notFound';
 import OfflineWrapper from '../offlineWrapper';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
+import routes from '../../constants/routes';
 
 const App = () => (
   <OfflineWrapper>
@@ -34,11 +36,12 @@ const App = () => (
                 <Account />
                 <Switch>
                   <Route path={`${match.url}/dashboard/:dialog?`} component={Dashboard} />
-                  <Route path={`${match.url}/transactions/:dialog?`} component={TransactionDashboard} />
+                  <Route path={`${match.url}${routes.wallet.short}/:dialog?`} component={TransactionDashboard} />
                   <Route path={`${match.url}/voting/:dialog?`} component={Voting} />
                   <Route path={`${match.url}/sidechains/:dialog?`} component={Sidechains} />
                   <Route path={`${match.url}/forging/:dialog?`} component={Forging} />
                   <Route path={`${match.url}/add-account/:dialog?`} component={Login} />
+                  <Route path={`${match.url}${routes.account.short}/:address?`} component={accountTransactions} />
                   <Route path='*' component={NotFound} />
                 </Switch>
               </main>

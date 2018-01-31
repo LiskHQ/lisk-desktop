@@ -11,9 +11,10 @@ import transactionTypes from '../../constants/transactionTypes';
 
 const { lockDuration } = accountConfig;
 
-const updateTransactions = (store, peers, account) => {
+const updateTransactions = (store, peers) => {
   const filter = store.getState().transactions.filter;
-  getTransactions({ activePeer: peers.data, address: account.address, limit: 25, filter })
+  const address = store.getState().transactions.address;
+  getTransactions({ activePeer: peers.data, address, limit: 25, filter })
     .then(response => store.dispatch(transactionsUpdated({
       confirmed: response.transactions,
       count: parseInt(response.count, 10),
@@ -119,13 +120,11 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
 
 const accountMiddleware = store => next => (action) => {
   next(action);
-  const { peers, account } = store.getState();
   switch (action.type) {
     // update on login because the 'save account' button
     // depends on a rerendering of the page
     // TODO: fix the 'save account' path problem, so we can remove this
     case actionTypes.accountLoggedIn:
-      updateTransactions(store, peers, account);
       updateAccountData(store, action);
       break;
     case actionTypes.newBlockCreated:

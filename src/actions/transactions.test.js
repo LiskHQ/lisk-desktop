@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
 import actionTypes from '../constants/actions';
+import txFilters from './../constants/transactionFilters';
 import { transactionAdded, transactionsUpdated, transactionFailed, transactionsFailed,
   transactionsLoaded, transactionsRequested } from './transactions';
 import * as accountApi from '../utils/api/account';
@@ -81,6 +82,7 @@ describe('actions: transactions', () => {
       address: '15626650747375562521',
       limit: 20,
       offset: 0,
+      filter: txFilters.all,
     };
     const actionFunction = transactionsRequested(data);
     let dispatch;
@@ -103,6 +105,8 @@ describe('actions: transactions', () => {
       const expectedAction = {
         count: 0,
         confirmed: [],
+        address: data.address,
+        filter: data.filter,
       };
 
       actionFunction(dispatch);

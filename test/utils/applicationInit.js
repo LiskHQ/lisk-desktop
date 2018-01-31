@@ -11,11 +11,11 @@ export const prepareStore = (reducers, middlewares) => {
   return createStore(App, ApplyedMiddlewares);
 };
 
-export const renderWithRouter = (Component, store) =>
+export const renderWithRouter = (Component, store, props) =>
   <Provider store={ store }>
     <Router>
       <I18nextProvider i18n={ i18n }>
-        <Component />
+        <Component { ...props }/>
       </I18nextProvider>
     </Router>
   </Provider>;

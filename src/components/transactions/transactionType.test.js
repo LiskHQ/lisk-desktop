@@ -2,10 +2,9 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Link } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import TransactionType from './transactionType';
-import ClickToSend from '../clickToSend';
 import history from '../../history';
 import i18n from '../../i18n';
 
@@ -75,6 +74,7 @@ describe('TransactionType', () => {
       senderId: '1085993630748340485L',
     };
     const wrapper = mount(<Router><TransactionType {...inputValue} /></Router>, options);
-    expect(wrapper.find(ClickToSend)).to.have.lengthOf(1);
+    expect(wrapper.find(Link)).to.have.lengthOf(1);
+    expect(wrapper.find(Link).text()).to.equal(inputValue.senderId);
   });
 });

@@ -56,6 +56,16 @@ export const transactionsFiltered = data => ({
   type: actionTypes.transactionsFiltered,
 });
 
+export const transactionsRequestInit = data => ({
+  data,
+  type: actionTypes.transactionsRequestInit,
+});
+
+export const transactionsInit = data => ({
+  data,
+  type: actionTypes.transactionsInit,
+});
+
 /**
  *
  *
@@ -67,6 +77,8 @@ export const transactionsRequested = ({ activePeer, address, limit, offset, filt
         dispatch(transactionsLoaded({
           count: parseInt(response.count, 10),
           confirmed: response.transactions,
+          address,
+          filter,
         }));
       });
   };
