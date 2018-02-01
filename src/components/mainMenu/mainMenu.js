@@ -87,7 +87,7 @@ class MainMenu extends React.Component {
         image: menuLogos.sidechains,
       }, {
         label: t('Search'),
-        id: 'explorer',
+        id: 'explorer/search',
         image: menuLogos.search,
       },
     ];

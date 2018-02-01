@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Account from '../account';
 import PrivateRoutes from '../privateRoute';
 import Dashboard from '../dashboard';
 import Sidechains from '../sidechains';
@@ -35,7 +34,6 @@ const App = () => (
           <Switch>
             <PrivateRoutes path='/main' render={ ({ match }) => (
               <main className={offlineStyle.disableWhenOffline}>
-                <Account />
                 <Switch>
                   <Route path={`${match.url}/account-visual-demo/:dialog?`} component={AccountVisualDemo} />
                   <Route path={`${match.url}/dashboard/:dialog?`} component={Dashboard} />
@@ -48,8 +46,12 @@ const App = () => (
                 </Switch>
               </main>
             )} />
-            <Route path={'/explorer'} component={Search} />
-            <Route path={`${routes.account.short}/:address?`} component={accountTransactions} />
+            <Route path='/explorer' render={ ({ match }) => (
+              <main>
+                <Route path={`${match.url}${routes.search.short}/:dialog?`} component={Search} />
+                <Route path={`${match.url}${routes.account.short}/:address?`} component={accountTransactions} />
+              </main>
+            )} />
             <Route exact path='/register' component={Register} />
             <Route exact path='/' component={Login} />
             <Route path='*' component={NotFound} />

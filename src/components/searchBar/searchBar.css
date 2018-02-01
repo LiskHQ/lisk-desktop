@@ -1,0 +1,31 @@
+@import './../app/variables.css';
+
+.search {
+  & .wrapper {
+    & .input {
+      border: none;
+      background: #002449;
+      line-height: 56px;
+      width: 558px;
+      font-size: 16px;
+      color: #74869b;
+      padding-left: 24px;
+      border-radius: 3px;
+    }
+
+    & .input:focus {
+      outline: none;
+    }
+
+    & .input::placeholder {
+      color: #74869b;
+      font-weight: 200;
+      letter-spacing: 0;
+    }
+
+    & .subTitle {
+      line-height: 26px;
+      color: var(--color-grayscale-medium);
+    }
+  }
+}

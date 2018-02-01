@@ -42,8 +42,8 @@ export default [
     params: 'address',
     name: 'accounts',
   }, {
-    regex: /\/main\/explorer/,
-    path: '/main/explorer/',
+    regex: /explorer\/search(?:\/[^/]*)?$/,
+    path: `${routes.account.long}/`,
     name: 'explorer',
   }, {
     regex: /register(\/)?$/,

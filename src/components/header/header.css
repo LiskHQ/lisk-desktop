@@ -11,8 +11,6 @@
 }
 
 .wrapper {
-  padding: 0px 8px;
-  float: right;
   margin: 5vh 0px;  /* stylelint-disable-line */
 }
 
@@ -57,9 +55,15 @@
   font-size: 24px !important;
 }
 
+.actionButton {
+  text-align: right;
+  display: block;
+}
+
 .account {
   position: relative;
   padding-left: 50px;
+  text-align: right;
 
   & .avatar {
     display: inline-block;

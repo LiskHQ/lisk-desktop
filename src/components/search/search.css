@@ -2,18 +2,9 @@
 
 .search {
   text-align: center;
-  position: relative;
-  height: 100%;
-  height: -moz-available;
-  height: -webkit-fill-available;
+  margin-top: 35vh; /* stylelint-disable-line */
 
   & .wrapper {
-    position: absolute;
-    right: 0;
-    left: 0;
-    top: 50%;
-    bottom: 50%;
-
     & .input {
       border: none;
       background: none;
