@@ -11,9 +11,12 @@
 
 .wrapper {
   display: flex;
-  width: 100%;
-  height: 100%;
+  flex-flow: column wrap;
   justify-content: space-between;
+  width: 100%;
+  overflow-y: hidden;
+  box-sizing: border-box;
+  height: 100%;
 
   & header {
     width: 100%;
@@ -65,18 +68,22 @@
     z-index: 1;
     text-align: center;
     width: 100%;
-    top: 42px;
+    top: 30px;
     letter-spacing: 1px;
+
+    &.totalWrapper {
+      margin-bottom: 0;
+    }
 
     & h4 {
       font-size: var(--progress-bar-header-font-size);
       line-height: var(--progress-bar-header-font-size);
-      margin: 15px 0px;
+      margin: 6px 0px;
     }
   }
 
   & :global .CircularProgressbar {
-    width: 200px;
+    width: 152px;
 
     & :global .CircularProgressbar-path {
       stroke: url('#grad');
@@ -92,3 +99,18 @@
   }
 }
 
+@media (min-height: 1000px) {
+  .progressWrapper {
+    & :global .CircularProgressbar {
+      width: 200px;
+    }
+
+    & article {
+      top: 42px;
+
+      & h4 {
+        margin: 15px 0px;
+      }
+    }
+  }
+}
