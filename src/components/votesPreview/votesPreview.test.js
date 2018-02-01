@@ -4,12 +4,11 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 
-import votesPreview from './index';
+import VotesPreview from './index';
 import i18n from '../../i18n';
-import styles from './votesPreview.css';
 
 // To-do enable this tests when votesPreview is implemented 
-describe.skip('votesPreview', () => {
+describe('votesPreview', () => {
   let wrapper;
   const props = {
     votes: {
@@ -51,44 +50,37 @@ describe.skip('votesPreview', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<votesPreview {...props} />, options);
+    wrapper = mount(<VotesPreview {...props} />, options);
   });
 
-  it('should render number of upvotes', () => {
-    expect(wrapper.find('.upvotes')).to.have.text('Upvotes: 2');
-  });
 
-  it('should render number of unvotes', () => {
-    expect(wrapper.find('.unvotes')).to.have.text('Downvotes: 1');
-  });
-
-  it('should render number of unvotes', () => {
-    expect(wrapper.find('.total-new-votes')).to.have.text('Total new votes: 3 / 33');
+  it('should render number of selection', () => {
+    expect(wrapper.find('article.selection h4')).to.have.text('3');
   });
 
   it('should render number of total votes', () => {
-    expect(wrapper.find('.total-votes')).to.have.text('Total votes: 3 / 101');
-  });
-
-  it('should not render if no upvotes or unvotes', () => {
-    wrapper.setProps({ votes: {} });
-    expect(wrapper.html()).to.equal(null);
+    expect(wrapper.find('article.total h4')).to.have.text('3');
   });
 
   it('should render number of total votes in red if 101 exceeded', () => {
+    let className = wrapper.find('.total-wrapper').props().className;
+    expect(className.match(/red/g)).to.be.equal(null);
     const votes = generateNVotes(102);
-
-    expect(wrapper.find(`.total-votes .${styles.red}`)).to.be.not.present();
     wrapper.setProps({ votes });
-    expect(wrapper.find('.total-votes')).to.have.text('Total votes: 102 / 101');
-    expect(wrapper.find(`.total-votes .${styles.red}`)).to.have.text('102');
+    wrapper.update();
+    expect(wrapper.find('article.total h4')).to.have.text('102');
+    className = wrapper.find('.total-wrapper').props().className;
+    expect(className.match(/red/g)).to.have.lengthOf(1);
   });
 
-  it('should render number of total new votes in red if 33 exceeded', () => {
+  it('should render number of selection votes in red if 33 exceeded', () => {
+    let className = wrapper.find('.selection-wrapper').props().className;
+    expect(className.match(/red/g)).to.be.equal(null);
     const votes = generateNVotes(34);
-    expect(wrapper.find(`.total-new-votes .${styles.red}`)).to.be.not.present();
     wrapper.setProps({ votes });
-    expect(wrapper.find('.total-new-votes')).to.have.text('Total new votes: 34 / 33');
-    expect(wrapper.find(`.total-new-votes .${styles.red}`)).to.have.text('34');
+    wrapper.update();
+    expect(wrapper.find('article.selection h4')).to.have.text('34');
+    className = wrapper.find('.selection-wrapper').props().className;
+    expect(className.match(/red/g)).to.have.lengthOf(1);
   });
 });
