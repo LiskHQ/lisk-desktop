@@ -8,6 +8,7 @@
   width: 100%;
   overflow-y: hidden;
   box-sizing: border-box;
+  height: 100%;
 }
 
 .button {
