@@ -56,6 +56,6 @@
   min-width: 140px;
 
   &:hover {
-    background: #004aff !important;
+    background: var(--color-action-medium-2) !important;
   }
 }

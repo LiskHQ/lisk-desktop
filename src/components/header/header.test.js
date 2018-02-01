@@ -25,6 +25,7 @@ describe('Header', () => {
       setActiveDialog: () => { },
       account: {},
       t: key => key,
+      location: { pathname: '/register' },
     };
     propsMock = sinon.mock(mockInputProps);
     wrapper = mountWithRouter(<Header {...mockInputProps} />, {
@@ -41,7 +42,7 @@ describe('Header', () => {
     propsMock.restore();
   });
 
-  it('renders 1 Link component', () => {
+  it('renders 1 Link component if not logged in', () => {
     expect(wrapper.find('Link')).to.have.length(1);
   });
 });

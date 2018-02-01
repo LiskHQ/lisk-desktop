@@ -7,7 +7,7 @@ import { getSavedAccounts } from '../../utils/savedAccounts';
 const peersMiddleware = store => next => (action) => {
   next(action);
 
-  const network = Object.assign({}, getNetwork(networks.testnet.code));
+  const network = Object.assign({}, getNetwork(networks.mainnet.code));
   const hasNoAccounts = !getSavedAccounts().length;
 
   switch (action.type) {
