@@ -56,6 +56,10 @@ class MainMenu extends React.Component {
     const { history, isDelegate, t, showDelegate } = this.props;
     const tabs = [
       {
+        label: t('Search'),
+        id: '/explorer/search',
+        image: menuLogos.search,
+      }, {
         label: t('Dashboard'),
         id: '/main/dashboard',
         image: menuLogos.dashboard,
@@ -85,10 +89,6 @@ class MainMenu extends React.Component {
         label: t('Sidechains'),
         id: '/main/sidechains',
         image: menuLogos.sidechains,
-      }, {
-        label: t('Search'),
-        id: '/explorer/search',
-        image: menuLogos.search,
       },
     ];
 

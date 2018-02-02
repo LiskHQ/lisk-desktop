@@ -7,7 +7,7 @@
   --sub-title-line-height: 26px;
 }
 
-.search {
+.searchBar {
   & .wrapper {
     & .input {
       background: var(--color-primary-less-dark);
