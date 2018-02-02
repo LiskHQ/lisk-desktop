@@ -1,4 +1,5 @@
 const actionTypes = {
+  storeCreated: 'STORE_CREATED',
   newBlockCreated: 'NEW_BLOCK_CREATED',
   accountUpdated: 'ACCOUNT_UPDATED',
   accountLoggedOut: 'ACCOUNT_LOGGED_OUT',

@@ -41,11 +41,11 @@ const App = () => (
                   <Route path={`${match.url}/sidechains/:dialog?`} component={Sidechains} />
                   <Route path={`${match.url}/forging/:dialog?`} component={Forging} />
                   <Route path={`${match.url}/add-account/:dialog?`} component={Login} />
-                  <Route path={`${match.url}${routes.account.short}/:address?`} component={accountTransactions} />
                   <Route path='*' component={NotFound} />
                 </Switch>
               </main>
             )} />
+            <Route path={`${routes.account.short}/:address?`} component={accountTransactions} />
             <Route exact path='/register' component={Register} />
             <Route exact path='/' component={Login} />
             <Route path='*' component={NotFound} />

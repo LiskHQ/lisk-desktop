@@ -27,7 +27,7 @@
 
 @define-mixin buttonPrimary {
   color: var(--color-white) !important;
-  background: var(--gradient-action);
+  background: var(--gradient-action-orange);
 
   &:hover {
     background: var(--color-action-medium) !important;
@@ -47,5 +47,15 @@
   &:hover {
     color: var(--color-black) !important;
     background-color: var(--color-white) !important;
+  }
+}
+
+@define-mixin buttonAction {
+  color: var(--color-white) !important;
+  background: var(--gradient-action-blue);
+  min-width: 140px;
+
+  &:hover {
+    background: var(--color-action-medium-2) !important;
   }
 }

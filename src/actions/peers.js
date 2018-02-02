@@ -10,6 +10,7 @@ const peerSet = (data, config) => ({
     passphrase: data.passphrase,
     publicKey: data.publicKey,
     activePeer: Lisk.api(config),
+    noSavedAccounts: data.noSavedAccounts,
   }),
   type: actionTypes.activePeerSet,
 });
@@ -48,7 +49,9 @@ export const activePeerSet = data =>
         }
         dispatch(peerSet(data, config));
       }).catch(() => {
-        dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node') }));
+        if (!data.noSavedAccounts) {
+          dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node') }));
+        }
       });
     } else {
       dispatch(peerSet(data, config));

@@ -1,7 +1,7 @@
 @import '../../app/variables';
 
 :root {
-  --action-button-bg: var(--gradient-action);
+  --action-button-bg: var(--gradient-action-orange);
   --secondary-button-bg: gray;
   --gradient-bg: linear-gradient(to right, #134381, #001e45);
   --element-width: 100%;

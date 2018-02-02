@@ -1,16 +1,18 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallow } from 'enzyme';
+import { MemoryRouter as Router } from 'react-router-dom';
+import { mount } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
 import sinon from 'sinon';
 import Header from './header';
-import RelativeLink from '../relativeLink';
 import i18n from '../../i18n';
 
 describe('Header', () => {
   let wrapper;
   let propsMock;
+
+  const mountWithRouter = (node, options) => mount(<Router>{node}</Router>, options);
 
   const store = configureMockStore([])({
     peers: { data: {} },
@@ -23,11 +25,13 @@ describe('Header', () => {
       setActiveDialog: () => { },
       account: {},
       t: key => key,
+      location: { pathname: '/register' },
     };
     propsMock = sinon.mock(mockInputProps);
-    wrapper = shallow(<Header {...mockInputProps} />, {
+    wrapper = mountWithRouter(<Header {...mockInputProps} />, {
       context: { store, i18n },
       childContextTypes: {
+        store: PropTypes.object.isRequired,
         i18n: PropTypes.object.isRequired,
       },
     });
@@ -38,7 +42,7 @@ describe('Header', () => {
     propsMock.restore();
   });
 
-  it('renders 6 RelativeLink components', () => {
-    expect(wrapper.find(RelativeLink)).to.have.length(2);
+  it('renders 1 Link component if not logged in', () => {
+    expect(wrapper.find('Link')).to.have.length(1);
   });
 });
