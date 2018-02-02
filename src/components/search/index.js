@@ -6,7 +6,9 @@ import styles from './search.css';
 
 const Search = ({ history, t }) => (<div className={styles.search}>
   <div className={styles.wrapper}>
-    <input onKeyUp={(e) => { keyAction(e, history); } }
+    <input
+      autoFocus
+      onKeyUp={(e) => { keyAction(e, history); } }
       className={styles.input} type="text"
       placeholder={t('Search for Lisk ID or Transaction ID')}
     />
