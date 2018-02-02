@@ -76,18 +76,18 @@ describe('MainMenu', () => {
     expect(wrapper.find(ToolboxTabs).exists()).to.equal(true);
   });
 
-  it('should render 3 Button components if props.isDelegate', () => {
+  it('should render 4 Button components if props.isDelegate', () => {
     const wrapper = mount(<MemoryRouter>
       <MainMenu store={store} isDelegate={true} history={history} t={t} />
     </MemoryRouter>, options);
-    expect(wrapper.find(Tab)).to.have.lengthOf(3);
+    expect(wrapper.find(Tab)).to.have.lengthOf(4);
   });
 
-  it('should render 3 menu item components if !props.isDelegate', () => {
+  it('should render 4 menu item components if !props.isDelegate', () => {
     const wrapper = mount(<MemoryRouter>
       <MainMenu store={store} isDelegate={false} history={history} t={t} />
     </MemoryRouter>, options);
-    expect(wrapper.find(Tab)).to.have.lengthOf(3);
+    expect(wrapper.find(Tab)).to.have.lengthOf(4);
   });
 
   it('should allow to change active menu item', () => {
@@ -95,7 +95,7 @@ describe('MainMenu', () => {
       <MainMenu store={store} isDelegate={false} history={history} t={t} />
     </MemoryRouter>, options);
     wrapper.find(Tab).at(1).simulate('click');
-    expect(history.push).to.have.been.calledWith('/main/transactions');
+    expect(history.push).to.have.been.calledWith('/main/dashboard');
   });
 
   it('should click on more activate the drawer', () => {

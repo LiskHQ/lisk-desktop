@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Countdown from 'react-countdown-now';
@@ -23,7 +22,7 @@ const Header = (props) => {
   return (
     <header className={`${grid.row} ${styles.wrapper} mainHeader`}>
       <div className={`${grid['col-lg-6']} ${grid['col-md-6']} ${grid['col-xs-12']} ${styles.noPadding}`}>
-        {shouldShowSearchBar() ? <SearchBar /> : <Account />}
+        {shouldShowSearchBar() ? <SearchBar /> : <Account peers={props.peers} t={props.t}/>}
       </div>
       <div className={`${grid['col-lg-6']} ${grid['col-md-6']} ${grid['col-xs-12']} ${styles.noPadding}`}>
         <div className={`${grid.row} ${grid['between-xs']}`}>
@@ -77,8 +76,4 @@ const Header = (props) => {
   );
 };
 
-const mapStateToProps = state => ({
-  isAuthenticated: !!state.account.publicKey,
-});
-
-export default connect(mapStateToProps)(Header);
+export default Header;

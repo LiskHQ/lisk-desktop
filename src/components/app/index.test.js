@@ -9,6 +9,7 @@ import i18n from '../../i18n'; // initialized i18next instance
 import App from './';
 import Login from '../login';
 import Transactions from '../transactionDashboard';
+import Search from '../search';
 import Voting from '../voting';
 import Forging from '../forging';
 
@@ -27,6 +28,7 @@ const addRouter = Component => (props, path) =>
 
 const publicComponent = [
   { route: '/', component: Login },
+  { route: '/explorer/search', component: Search },
 ];
 
 const privateComponent = [
@@ -41,7 +43,7 @@ describe('App', () => {
     const store = fakeStore({
       account: {},
       dialog: {},
-      peers: {},
+      peers: { data: { options: {} } },
       settings: {
         autoLog: true,
         advancedMode: true,

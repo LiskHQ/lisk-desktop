@@ -13,7 +13,7 @@ const Account = ({ peers, t }) => {
     <i className="material-icons online">check</i> :
     <i className="material-icons offline">error</i>;
 
-  return (peers.data.options.code !== networks.mainnet.code ?
+  return (peers.data && peers.data.options.code !== networks.mainnet.code ?
     <section className={styles.peer}>
       <div className={`${styles.title} inner primary peer-network`}>{t(peers.data.options.name)} <span id="accountStatus" className={`${styles.status} status`}>{status}</span>
       </div>

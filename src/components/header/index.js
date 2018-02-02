@@ -8,6 +8,8 @@ import Header from './header';
 const mapStateToProps = state => ({
   account: state.account,
   autoLog: state.settings.autoLog,
+  isAuthenticated: !!state.account.publicKey,
+  peers: state.peers,
 });
 
 const mapDispatchToProps = dispatch => ({
