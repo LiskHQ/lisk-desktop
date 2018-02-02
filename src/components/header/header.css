@@ -12,6 +12,10 @@
 
 .wrapper {
   margin: 5vh 0px;  /* stylelint-disable-line */
+
+  & .noPadding {
+    padding: 0px;
+  }
 }
 
 .logoWrapper {
@@ -191,6 +195,11 @@
         box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.12), 0 -2px 24px 0 rgba(0, 0, 0, 0.24);
       }
     }
+  }
+
+  .actionButton {
+    /* temporarily and fixed in #263 */
+    display: none;
   }
 }
 
