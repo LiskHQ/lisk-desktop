@@ -42,7 +42,7 @@ class MainMenu extends React.Component {
   navigate(history, tabs, index) {
     if (!isCurrent(history, index, tabs)) {
       this.setState({ active: false });
-      history.push(`/main/${tabs[index].id}`);
+      history.push(tabs[index].id);
     }
   }
 
@@ -57,37 +57,37 @@ class MainMenu extends React.Component {
     const tabs = [
       {
         label: t('Dashboard'),
-        id: 'dashboard',
+        id: '/main/dashboard',
         image: menuLogos.dashboard,
       }, {
         label: t('Wallet'),
-        id: 'transactions',
+        id: '/main/transactions',
         image: menuLogos.wallet,
       }, {
       /* TODO: uncomment when the page is created
         label: t('Buy Lisk'),
-        id: 'butLisk',
+        id: '/main/buyLisk',
         image: menuLogos.buyLisk,
       }, {
       */
       /* TODO: uncomment when the page is updated
         label: t('Delegates'),
-        id: 'voting',
+        id: '/main/voting',
         image: menuLogos.delegates,
       }, {
       */
       /* TODO: uncomment when the page is updated
         label: t('Forging'),
-        id: 'forging',
+        id: '/main/forging',
         image: menuLogos.sidechains,
       }, {
       */
         label: t('Sidechains'),
-        id: 'sidechains',
+        id: '/main/sidechains',
         image: menuLogos.sidechains,
       }, {
         label: t('Search'),
-        id: 'explorer/search',
+        id: '/explorer/search',
         image: menuLogos.search,
       },
     ];
