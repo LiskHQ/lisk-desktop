@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 
-import { votePlaced, voteToggled } from '../../actions/voting';
+import { votePlaced } from '../../actions/voting';
 import ConfirmVotes from './confirmVotes';
 
 const mapStateToProps = state => ({
@@ -13,7 +13,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   votePlaced: data => dispatch(votePlaced(data)),
-  voteToggled: data => dispatch(voteToggled(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(ConfirmVotes));
