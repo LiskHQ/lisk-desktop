@@ -2,17 +2,16 @@ import { activePeerSet } from '../../actions/peers';
 import actionTypes from '../../constants/actions';
 import networks from './../../constants/networks';
 import getNetwork from './../../utils/getNetwork';
-import { getSavedAccounts } from '../../utils/savedAccounts';
 
 const peersMiddleware = store => next => (action) => {
   next(action);
 
   const network = Object.assign({}, getNetwork(networks.mainnet.code));
-  const hasNoAccounts = !getSavedAccounts().length;
+  const hasNoSavedAccounts = !JSON.parse(localStorage.getItem('accounts')).length;
 
   switch (action.type) {
     case actionTypes.storeCreated:
-      if (hasNoAccounts) {
+      if (hasNoSavedAccounts) {
         store.dispatch(activePeerSet({ network, noSavedAccounts: true }));
       }
       break;
