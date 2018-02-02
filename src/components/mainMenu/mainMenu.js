@@ -11,11 +11,11 @@ import Setting from '../setting';
 const getTabs = (isDelegate, tabs) => tabs.filter(t => t.id !== 'forging' || isDelegate);
 
 const getIndex = (history, tabs) =>
-  tabs.map(t => t.id)
+  tabs.map(t => t.route)
     .indexOf(history.location.pathname.split('/')[2]);
 
 const isCurrent = (history, index, tabs) =>
-  history.location.pathname.indexOf(tabs[index].id) === 6; // after: /main/
+  history.location.pathname.indexOf(tabs[index].route) === 6; // after: /main/
 
 const TabTemplate = ({ img, label }) => (
   <div>
@@ -42,7 +42,7 @@ class MainMenu extends React.Component {
   navigate(history, tabs, index) {
     if (!isCurrent(history, index, tabs)) {
       this.setState({ active: false });
-      history.push(tabs[index].id);
+      history.push(tabs[index].route);
     }
   }
 
@@ -57,37 +57,44 @@ class MainMenu extends React.Component {
     const tabs = [
       {
         label: t('Search'),
-        id: '/explorer/search',
+        route: '/explorer/search',
+        id: 'explorer',
         image: menuLogos.search,
       }, {
         label: t('Dashboard'),
-        id: '/main/dashboard',
+        route: '/main/dashboard',
+        id: 'dashboard',
         image: menuLogos.dashboard,
       }, {
         label: t('Wallet'),
-        id: '/main/transactions',
+        route: '/main/transactions',
+        id: 'transactions',
         image: menuLogos.wallet,
       }, {
       /* TODO: uncomment when the page is created
         label: t('Buy Lisk'),
-        id: '/main/buyLisk',
+        route: '/main/buyLisk',
+        id: 'buyLisk',
         image: menuLogos.buyLisk,
       }, {
       */
       /* TODO: uncomment when the page is updated
         label: t('Delegates'),
-        id: '/main/voting',
+        route: '/main/voting',
+        id: 'voting',
         image: menuLogos.delegates,
       }, {
       */
       /* TODO: uncomment when the page is updated
         label: t('Forging'),
-        id: '/main/forging',
+        route: '/main/forging',
+        id: 'forging',
         image: menuLogos.sidechains,
       }, {
       */
         label: t('Sidechains'),
-        id: '/main/sidechains',
+        route: '/main/sidechains',
+        id: 'sidechains',
         image: menuLogos.sidechains,
       },
     ];
