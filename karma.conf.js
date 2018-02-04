@@ -64,6 +64,7 @@ module.exports = function (config) {
             'src/store/middlewares/account.js',
             'src/store/middlewares/login.js',
             'src/utils/notification.js',
+            'src/store/middlewares/peers.js',
             'src/store/middlewares/savedAccounts.js',
             'src/store/middlewares/socket.js',
             'src/components/account/account.js',
