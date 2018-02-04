@@ -29,6 +29,18 @@
       color: var(--color-grayscale-medium);
     }
   }
+
+  & .recent {
+    padding: 0px;
+    opacity: 0.3;
+    font-size: 16px;
+    line-height: 32px;
+    color: var(--color-grayscale-light);
+
+    & .item {
+      list-style: none;
+    }
+  }
 }
 
 @media (--xLarge-viewport) {
