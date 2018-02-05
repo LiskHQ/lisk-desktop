@@ -20,7 +20,7 @@ describe('Result Box', () => {
       title,
       body,
       success: true,
-      callback: spy(),
+      reset: spy(),
       copyToClipboard: () => {},
       finalCallback: () => {},
       t: () => {},
@@ -35,7 +35,7 @@ describe('Result Box', () => {
     expect(wrapper.find('.copy-title').text()).to.contain(copy.title);
 
     wrapper.find('Button').simulate('click');
-    expect(props.callback).to.have.been.calledWith();
+    expect(props.reset).to.have.been.calledWith();
   });
 
   it('renders result box with failure template', () => {
@@ -46,7 +46,7 @@ describe('Result Box', () => {
       title,
       body,
       success: false,
-      callback: () => {},
+      reset: () => {},
       copyToClipboard: () => {},
       t: () => {},
     };

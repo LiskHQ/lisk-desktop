@@ -28,6 +28,7 @@ Feature: Register second passphrase
     Given I'm logged in as "second passphrase account"
     Then There is no "register second passphrase" in main menu
 
+  @pending
   Scenario: should ask for passphrase for saved account
     Given I'm logged in as "empty account"
     And I wait 1 seconds
@@ -40,6 +41,7 @@ Feature: Register second passphrase
     And "next button" should be disabled
 
   @integration
+  @pending
   Scenario: should not allow to set 2nd passphrase if not enough funds for the fee
     Given I'm logged in as "empty account"
     When I go to "main/dashboard/register-second-passphrase"
@@ -47,6 +49,7 @@ Feature: Register second passphrase
     And "next button" should be disabled
 
   @integration
+  @pending
   Scenario: should allow to exit 2nd passphrase registration dialog
     Given I'm logged in as "genesis"
     When I go to "main/dashboard/register-second-passphrase"

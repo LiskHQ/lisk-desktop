@@ -1,0 +1,28 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-around;
+}
+
+.content {
+  display: flex;
+  padding: 0 51px;
+  flex-direction: column;
+  text-align: center;
+
+  & h2 {
+    font-size: 32px;
+    margin: 0;
+  }
+
+  & p {
+    font-size: 18px;
+    line-height: 36px;
+    margin: 32px 0;
+  }
+}
+
+.confirmButton {
+  margin-bottom: 24px;
+}

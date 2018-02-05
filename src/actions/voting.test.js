@@ -15,7 +15,6 @@ import {
 } from './voting';
 import Fees from '../constants/fees';
 import { transactionAdded } from './transactions';
-import { errorAlertDialogDisplayed } from './dialog';
 import * as delegateApi from '../utils/api/delegate';
 
 const delegateList = [
@@ -97,14 +96,17 @@ describe('actions: voting', () => {
       username2: { publicKey: 'sample_key', confirmed: false, unconfirmed: true },
     };
 
-    const actionFunction = votePlaced({
-      activePeer, account, votes, secondSecret,
-    });
     let dispatch;
+    let goToNextStep;
+    let actionFunction;
 
     beforeEach(() => {
       delegateApiMock = sinon.stub(delegateApi, 'vote');
       dispatch = sinon.spy();
+      goToNextStep = sinon.spy();
+      actionFunction = votePlaced({
+        activePeer, account, votes, secondSecret, goToNextStep,
+      });
     });
 
     afterEach(() => {
@@ -130,20 +132,19 @@ describe('actions: voting', () => {
       expect(dispatch).to.have.been.calledWith(transactionAdded(expectedAction));
     });
 
-    it('should dispatch errorAlertDialogDisplayed action if caught', () => {
+    it('should call goToNextStep with "success: false" if caught an error', () => {
       delegateApiMock.returnsPromise().rejects({ message: 'sample message' });
 
       actionFunction(dispatch);
-      const expectedAction = errorAlertDialogDisplayed({ text: 'sample message.' });
-      expect(dispatch).to.have.been.calledWith(expectedAction);
+      const expectedAction = { success: false, text: 'sample message.' };
+      expect(goToNextStep).to.have.been.calledWith(expectedAction);
     });
 
-    it('should dispatch errorAlertDialogDisplayed action if caught but no message returned', () => {
+    it('should call goToNextStep with "success: false" and default message if caught an error but no message returned', () => {
       delegateApiMock.returnsPromise().rejects({});
-
       actionFunction(dispatch);
-      const expectedAction = errorAlertDialogDisplayed({ text: 'An error occurred while placing your vote.' });
-      expect(dispatch).to.have.been.calledWith(expectedAction);
+      const expectedAction = { success: false, text: 'An error occurred while placing your vote.' };
+      expect(goToNextStep).to.have.been.calledWith(expectedAction);
     });
   });
 

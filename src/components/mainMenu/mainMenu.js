@@ -103,6 +103,7 @@ class MainMenu extends React.Component {
       tabs.push({
         label: t('Delegates'),
         id: 'voting',
+        route: '/main/voting',
         image: menuLogos.delegates,
       });
     }
