@@ -7,7 +7,6 @@ import check from '../../assets/images/icons/check.svg';
 
 class ResultBox extends React.Component {
   render() {
-    console.log(this.props);
     return (
       <div className={`${styles.resultBox} boxPadding`}>
         <div className={styles.header}>
