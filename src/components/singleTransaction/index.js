@@ -16,13 +16,10 @@ class SingleTransaction extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.peers.data !== this.props.peers.data) {
-      this.props.transactionLoadRequested({ id: this.props.match.params.id });
+    if (nextProps.peers.data !== this.props.peers.data
+      || nextProps.match.params.id !== this.props.match.params.id) {
+      this.props.transactionLoadRequested({ id: nextProps.match.params.id });
     }
-  }
-
-  shouldComponentUpdate(nextProps) {
-    return nextProps.transaction !== this.props.transaction;
   }
 
   render() {
@@ -35,11 +32,11 @@ class SingleTransaction extends React.Component {
           className={styles.copyLabel}
           copyClassName={`${styles.copyIcon}`} />
       </header>
-      {this.props.transaction.id
+      {this.props.transaction.id && !this.props.transaction.error
         ? <div className={styles.detailsWrapper}>
-          <TransactionDetails value={this.props.transaction} t={this.props.t}/>
+          <TransactionDetails value={this.props.transaction} t={this.props.t} />
         </div>
-        : <small style={{ textAlign: 'center' }}>Transaction not found</small>
+        : <small style={{ textAlign: 'center' }}>{this.props.transaction.error}</small>
       }
     </Box>;
   }

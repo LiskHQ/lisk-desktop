@@ -76,6 +76,10 @@ export const transactionLoaded = data => ({
   type: actionTypes.transactionLoaded,
 });
 
+export const transactionLoadFailed = data => ({
+  data,
+  type: actionTypes.transactionLoadFailed,
+});
 /**
  *
  *

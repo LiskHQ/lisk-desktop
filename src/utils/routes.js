@@ -46,8 +46,8 @@ export default [
     path: `${routes.search.long}/`,
     name: 'explorer',
   }, {
-    regex: /\/explorer\/transactions\/[0-9]+(?:\/[^/]*)?$/,
-    path: new RegExp(`${routes.transaction.long}/\\d[0-9]+/`),
+    regex: /\/explorer\/transactions\/d+(?:\/[^/]*)?$/,
+    path: new RegExp(`${routes.transaction.long}/\\d+/`),
     params: 'id',
     name: 'explorer-transaction',
   }, {

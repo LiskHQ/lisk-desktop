@@ -1,5 +1,11 @@
 import { unconfirmedTransactions, transactions as getTransactions, getAccount, transaction } from '../../utils/api/account';
-import { transactionsFailed, transactionsFiltered, transactionsInit, transactionLoaded } from '../../actions/transactions';
+import {
+  transactionsFailed,
+  transactionsFiltered,
+  transactionsInit,
+  transactionLoaded,
+  transactionLoadFailed,
+} from '../../actions/transactions';
 
 import actionTypes from '../../constants/actions';
 
@@ -53,7 +59,10 @@ const loadTransaction = (store, action) => {
   transaction({ activePeer: store.getState().peers.data, id: action.data.id })
     .then((response) => {
       store.dispatch(transactionLoaded({ ...response }));
-    });
+    }).catch((error) => {
+      store.dispatch(transactionLoadFailed({ error }));
+    })
+  ;
 };
 
 const transactionsMiddleware = store => next => (action) => {
