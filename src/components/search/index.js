@@ -18,7 +18,7 @@ const Search = ({ history, t }) => {
       />
       {getRecentSearches().length
         ? <ul className={styles.recent}>
-          <li>Latest search</li>
+          <li className={styles.item}>{t('Latest search')}</li>
           {getRecentSearches().map((search, i) =>
             (<li key={i} className={styles.item}>{search}</li>))}
         </ul>
