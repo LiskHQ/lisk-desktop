@@ -10,7 +10,19 @@ import styles from './transaction.css';
 class SingleTransaction extends React.Component {
   constructor(props) {
     super(props);
-    this.props.transactionLoadRequested({ id: this.props.match.params.id });
+    if (props.peers.data) {
+      this.props.transactionLoadRequested({ id: this.props.match.params.id });
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.peers.data !== this.props.peers.data) {
+      this.props.transactionLoadRequested({ id: this.props.match.params.id });
+    }
+  }
+
+  shouldComponentUpdate(nextProps) {
+    return nextProps.transaction !== this.props.transaction;
   }
 
   render() {
@@ -23,7 +35,7 @@ class SingleTransaction extends React.Component {
           className={styles.copyLabel}
           copyClassName={`${styles.copyIcon}`} />
       </header>
-      {this.props.transaction.length
+      {this.props.transaction.id
         ? <div className={styles.detailsWrapper}>
           <TransactionDetails value={this.props.transaction} t={this.props.t}/>
         </div>
@@ -35,6 +47,7 @@ class SingleTransaction extends React.Component {
 
 const mapStateToProps = state => ({
   transaction: state.transaction,
+  peers: state.peers,
 });
 
 const mapDispatchToProps = dispatch => ({

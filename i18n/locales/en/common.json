@@ -136,7 +136,7 @@
   "Please go back and check your passphrase again.": "Please go back and check your passphrase again.",
   "Please keep it safe!": "Please keep it safe!",
   "Press #{key} to copy": "Press #{key} to copy",
-  "Press enter to search": "Press enter to search",
+  "Press ↲ enter to search": "Press ↲ enter to search",
   "Processing delegate names: ": "Processing delegate names: ",
   "Proxy Authentication": "Proxy Authentication",
   "Quickly send and request LSK token": "Quickly send and request LSK token",
