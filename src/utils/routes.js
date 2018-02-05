@@ -32,8 +32,8 @@ export default [
     params: 'dialog',
     name: 'forging',
   }, {
-    regex: /\/main\/add-account(?:\/[^/]*)?$/,
-    path: '/main/add-account/',
+    regex: /\/add-account(?:\/[^/]*)?$/,
+    path: '/add-account/',
     params: 'dialog',
     name: 'add-account',
   }, {
