@@ -6,9 +6,15 @@ import regex from './../../utils/regex';
 const saveSearch = (search) => {
   if (search.length === 0) return;
 
-  const recent = localJSONStorage.get('searches') || [];
-  const updated = [search].concat(recent.filter(term => term !== search)).slice(0, 3);
+  let recent;
 
+  try {
+    recent = localJSONStorage.get('searches');
+  } catch (e) {
+    recent = [];
+  }
+
+  const updated = [search].concat(recent.filter(term => term !== search)).slice(0, 3);
   localJSONStorage.set('searches', updated);
 };
 
