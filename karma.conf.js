@@ -55,6 +55,7 @@ module.exports = function (config) {
           lines: 80,
           excludes: [
             'src/components/confirmVotes/index.js',
+            'src/components/confirmVotes/confirmVotes.js',
             'src/components/delegateSidebar/index.js',
             'src/components/setting/index.js',
             'src/components/setting/setting.js',
