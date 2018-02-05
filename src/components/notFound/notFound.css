@@ -1,0 +1,21 @@
+.emptyTransactions {
+  max-width: 230px;
+  margin: auto;
+  text-align: center;
+
+  & img {
+    animation: float 1500ms 0ms infinite alternate ease-in-out;
+  }
+
+  & h2 {
+    font-weight: var(--font-weight-semi-bold);
+    font-size: 24px;
+    margin: 10px;
+  }
+
+  & p {
+    font-size: 14px;
+    line-height: 26px;
+    color: var(--color-grayscale-dark);
+  }
+}

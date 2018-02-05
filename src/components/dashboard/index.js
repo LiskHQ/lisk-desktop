@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import React from 'react';
-import { transactionsFilterSet } from '../../actions/transactions';
-import txFilters from './../../constants/transactionFilters';
 import { FontIcon } from '../fontIcon';
 import Box from '../box';
 import TransactionList from './../transactions/transactionList';
@@ -13,13 +11,6 @@ import CurrencyGraph from './currencyGraph';
 import styles from './styles.css';
 
 class Dashboard extends React.Component {
-  constructor(props) {
-    super(props);
-    if (this.props.transactions.filter !== txFilters.all) {
-      this.props.transactionsFilterSet({ filter: txFilters.all });
-    }
-  }
-
   render() {
     const { transactions, t } = this.props;
     return <div className={`${grid.row} ${styles.wrapper}`}>
@@ -37,7 +28,7 @@ class Dashboard extends React.Component {
               </Link>
             </h2>
           </header>
-          <TransactionList {...{ transactions, t }} loadMore={() => {}}/>
+          <TransactionList {...{ transactions, t, address: this.props.accountAddress }} />
         </Box>
       </div>
       <div className={`${grid['col-md-4']} ${styles.sendWrapper}`}>
@@ -49,11 +40,7 @@ class Dashboard extends React.Component {
 
 const mapStateToProps = state => ({
   transactions: [...state.transactions.pending, ...state.transactions.confirmed].slice(0, 3),
+  accountAddress: state.account.address,
 });
 
-const mapDispatchToProps = dispatch => ({
-  transactionsFilterSet: data => dispatch(transactionsFilterSet(data)),
-});
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(Dashboard));
+export default connect(mapStateToProps)(translate()(Dashboard));

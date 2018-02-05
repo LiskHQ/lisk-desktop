@@ -22,7 +22,7 @@
     position: absolute;
     width: 48px;
     height: 48px;
-    background: var(--gradient-action);
+    background: var(--gradient-action-orange);
 
     &.goal,
     &.begin {

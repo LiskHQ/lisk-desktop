@@ -30,6 +30,10 @@ describe('MainMenuHOC', () => {
     peers,
     account,
     activePeerSet: () => {},
+    settings: {
+      autoLog: true,
+      advancedMode: true,
+    },
   });
   const options = {
     context: { store, history, i18n },
@@ -50,6 +54,6 @@ describe('MainMenuHOC', () => {
   });
 
   it('should mount 3 Tab inside MainMenu', () => {
-    expect(wrapper.find('Tab')).to.have.lengthOf(3);
+    expect(wrapper.find('Tab')).to.have.lengthOf(4);
   });
 });

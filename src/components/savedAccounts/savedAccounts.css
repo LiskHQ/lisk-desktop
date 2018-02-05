@@ -12,10 +12,12 @@
   --h1-width: 600px;
   --h1-width-m: 400px;
   --h1-width-s: 300px;
+  --add-button-margin: 200px;
   --card-width: 347px;
   --card-height: 436px;
   --card-width-m: 267px;
   --card-height-m: 336px;
+  --add-button-margin: 240px;
   --wrapper-margin: -24px;
 }
 
@@ -204,7 +206,7 @@
 
 .closeButton {
   box-shadow: var(--close-button-shadow);
-  position: absolute;
+  position: absolute !important;
   top: 85px;
   right: 85px;
 }

@@ -84,6 +84,7 @@ describe('VotingHeader', () => {
       wrapper.find('.search input').simulate('change', { target: { value: '555' } });
       clock.tick(250);
       expect(props.search).to.have.been.calledWith('555');
+      clock.restore();
     });
 
     it('click on #searchIcon should clear value of search input', () => {
@@ -122,7 +123,9 @@ describe('VotingHeader', () => {
     });
 
     it('should disable my votes button', () => {
-      expect(wrapper.find('.my-votes-button button').hasClass('disableMenu__icon___2NDu1')).to.equal(true);
+      const query = wrapper.find('.my-votes-button button').props().className;
+      const reg = new RegExp(/icon/g);
+      expect(reg.test(query)).to.equal(true);
     });
   });
 });

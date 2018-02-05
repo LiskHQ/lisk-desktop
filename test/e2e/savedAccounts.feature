@@ -1,16 +1,20 @@
 Feature: Saved Accounts 
   Scenario: should save account locally, after page reload it should require passphrase to do the first transaction, and remember the passphrase for next transactions
+    When I go to "main/add-account/"
     Given I'm logged in as "genesis"
     When I wait 1 seconds
     And I refresh the page
     And I wait 2 seconds
     Then I should be logged in
+    And I wait 0.5 seconds
+    Then I go to "main/transactions"
     When I fill in "1" to "amount" field
     And I fill in "537318935439898807L" to "recipient" field
     And I click "send next button"
     And I should see empty "passphrase" field
     And I fill in passphrase of "genesis" to "passphrase" field
-    And I click "send button"
+    And I click "first passphrase next"
+    Then I click "send button"
     And I wait 1 seconds
     Then I should see text "Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain." in "result box message" element
     When I click "okay button"

@@ -7,6 +7,8 @@
   --carousel-nav-background-color: #3c506b;
   --slide-header-font: var(--heading-font);
   --secured-account-color: var(--color-success-dark);
+  --check-box-height: 48px;
+  --check-box-width: 95px;
 }
 
 .wrapper {
@@ -15,7 +17,7 @@
 
 .carousel {
   background: var(--setting-background-color);
-  color: #fff;
+  color: var(--color-white);
   text-align: center;
 
   & > div {
@@ -25,7 +27,7 @@
     & h5 {
       font-family: var(--slide-header-font);
       font-size: 16px;
-      color: #fff;
+      color: var(--color-white);
       letter-spacing: 0;
       margin: 26px 0 0;
     }
@@ -66,28 +68,17 @@
 }
 
 .sliderInput {
-  & input[type='radio'],
-  & input[type='checkbox'] {
-    &:checked + label {
-      & .button {
-        left: calc(100% - 48px);
-      }
-    }
-  }
-
   & label {
-    height: 48px;
-    line-height: 48px;
-    width: 93px;
-    background: #3c506b;
+    height: var(--check-box-height);
+    line-height: var(--check-box-height);
+    width: var(--check-box-width);
+    background: var(--color-grayscale-dark);
     display: inline-block;
   }
 
   & span.circle {
-    position: absolute;
-    width: 48px;
-    height: 48px;
-    background: #001a3e;
+    background: var(--color-primary-dark);
+    width: var(--check-box-height);
 
     &.goal,
     &.begin {
@@ -96,16 +87,22 @@
 
     & span {
       width: 100%;
-      line-height: 48px !important;
+    }
+  }
+
+  & input[type='radio'],
+  & input[type='checkbox'] {
+    &:checked + label .button {
+      transform: translateX(calc(-1 * var(--check-box-height)));
     }
   }
 }
 
 .secondPassphrase,
 .secondPassphraseEnabled {
-  height: 48px;
-  line-height: 48px;
-  width: 93px;
+  height: var(--check-box-height);
+  line-height: var(--check-box-height);
+  width: var(--check-box-width);
   background: var(--secondPassphrase-background-color);
   display: inline-block;
   border-radius: 31px;

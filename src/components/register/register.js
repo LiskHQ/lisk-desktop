@@ -12,10 +12,20 @@ import styles from './register.css';
 
 
 class Register extends React.Component {
+  // eslint-disable-next-line class-methods-use-this
+  componentDidMount() {
+    document.body.classList.add('contentFocused');
+  }
+
   componentDidUpdate() {
     if (this.props.account.passphrase !== undefined) {
       this.props.history.push('/main/dashboard');
     }
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  componentWillUnmount() {
+    document.body.classList.remove('contentFocused');
   }
 
   onRegister(passphrase) {

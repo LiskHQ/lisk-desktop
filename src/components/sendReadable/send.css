@@ -71,13 +71,8 @@ input:read-only {
   color: #ff6236;
 }
 
-.paddingLeft {
-  padding: 0px var(--grid-padding-left);
-}
-
 .headerWrapper {
   padding: 20px 0px;
-  line-height: var(--header-line-height);
 
   & .title {
     float: left;

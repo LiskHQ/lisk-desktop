@@ -1,11 +1,12 @@
 @import '../../app/variables';
 
 :root {
-  --action-button-bg: var(--gradient-action);
+  --action-button-bg: var(--gradient-action-orange);
   --secondary-button-bg: gray;
   --gradient-bg: linear-gradient(to right, #134381, #001e45);
   --element-width: 100%;
   --element-height: 62px;
+  --element-height-small: 48px;
   --label-font-size: 16px;
   --icon-text-font: var(--heading-font);
 }
@@ -36,7 +37,7 @@
       position: absolute;
       z-index: 1;
       background: linear-gradient(to right, rgba(19, 67, 129, 0), #001e45);
-      height: 62px;
+      height: inherit;
       right: 0;
       width: 100%;
     }
@@ -85,10 +86,11 @@
   & span.circle {
     position: absolute;
     width: var(--element-height);
-    height: var(--element-height);
+    height: inherit;
+    line-height: inherit;
     display: block;
     text-align: center;
-    border-radius: calc(var(--element-height) / 2);
+    border-radius: 50%;
     top: 0;
     transition: all ease 300ms;
     background: var(--action-button-bg);
@@ -128,7 +130,7 @@
 
     & span {
       width: 100%;
-      line-height: var(--element-height) !important;
+      line-height: inherit !important;
       position: absolute;
       left: 0;
       top: 0;
@@ -152,7 +154,8 @@
 
     &:checked + label {
       & .button {
-        left: calc(100% - var(--element-height));
+        left: 100%;
+        transform: translateX(calc(-1 * var(--element-height)));
 
         & .checkMark {
           opacity: 1;
@@ -165,6 +168,36 @@
 
       & > div {
         opacity: 0;
+      }
+    }
+  }
+}
+
+@media (--small-viewport) {
+  .sliderInput {
+    & label {
+      height: var(--element-height-small) !important;
+      line-height: var(--element-height-small) !important;
+    }
+
+    & span.circle {
+      width: var(--element-height-small);
+    }
+
+    & input[type='radio'],
+    & input[type='checkbox'] {
+      &:checked + label .button {
+        transform: translateX(calc(-1 * var(--element-height-small)));
+      }
+    }
+
+    & div {
+      & span {
+        text-indent: calc(var(--element-height-small) + 20px);
+      }
+
+      &::after {
+        letter-spacing: -5px;
       }
     }
   }

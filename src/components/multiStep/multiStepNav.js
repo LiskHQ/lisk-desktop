@@ -50,12 +50,13 @@ const MultiStepNav = ({ steps, showNav, current, prevStep,
               className={`${current === (index / 2) ? styles.current : ''} ${styles.navEl} ${step.dash ? styles.dash : 'title'}`}>
               {
                 step.props.icon ?
-                  <FontIcon className={styles.icon}>{step.props.icon}</FontIcon> : null
+                  <FontIcon className={styles.icon} value={step.props.icon} /> : null
               }
-              <b className={styles.label}>{ step.props.title }</b>
+              <b className={styles.label}><small>{ step.props.title }</small></b>
             </div>)
         }
       </section>
+      <span className={styles.backButtonShadow}></span>
     </nav> : <div className={styles.hidden}></div>);
 };
 

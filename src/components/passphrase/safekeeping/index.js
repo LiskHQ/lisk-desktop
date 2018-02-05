@@ -63,6 +63,7 @@ class SafeKeeping extends React.Component {
                 icons={{
                   done: 'checkmark',
                 }}
+                clickable={true}
                 onChange={this.next.bind(this)}
                 input={{
                   value: 'introduction-step',
@@ -79,6 +80,7 @@ class SafeKeeping extends React.Component {
                   goal: 'locked',
                   done: 'checkmark',
                 }}
+                clickable={true}
                 hasSlidingArrows={true}
                 onChange={this.next.bind(this)}
                 className={`${styles.bigSlider} reveal-checkbox`}
@@ -86,9 +88,11 @@ class SafeKeeping extends React.Component {
                   value: 'revealing-step',
                 }}/>
             </TransitionWrapper>
-            <textarea type='text' autoFocus={true} readOnly
-              className={`${styles.input} passphrase`}
-              defaultValue={passphrase}></textarea>
+            <p className={`${styles.input} ${styles.textarea} passphrase`}>
+              {
+                passphrase.split(' ').map(word => <span className={styles.word} key={`wrapper-${word}`}>{ word } </span>)
+              }
+            </p>
             <ActionBar
               className={styles.actionBar}
               secondaryButton={{

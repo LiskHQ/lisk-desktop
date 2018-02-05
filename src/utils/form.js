@@ -15,6 +15,8 @@ export const authStateIsValid = state => (
   state.secondPassphrase.value !== ''
 );
 
+export const passphraseIsValid = passphrase => (!passphrase.error && passphrase.value !== '');
+
 export const handleChange = function (name, value, error) {
   this.setState({
     [name]: {

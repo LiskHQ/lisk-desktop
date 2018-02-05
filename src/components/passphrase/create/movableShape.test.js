@@ -4,7 +4,6 @@ import { spy, useFakeTimers } from 'sinon';
 import { mount } from 'enzyme';
 import MovableShape from './movableShape';
 import styles from './create.css';
-// import * as shapesSrc from '../../assets/images/register-shapes/*.svg'; //eslint-disable-line
 
 describe('MovableShape', () => {
   const props = {
@@ -44,6 +43,26 @@ describe('MovableShape', () => {
     const wrapper = mount(<MovableShape {...rightProps} />);
     expect(wrapper.find('img').props().style.left).to.be.equal(initial[0]);
     expect(wrapper.find('img').props().style.bottom).to.be.equal(initial[1]);
+  });
+
+  it('moves when percentage increased', () => {
+    const wrapper = mount(<MovableShape {...props} />);
+    const initialLeft = wrapper.find('img').props().style.left;
+    wrapper.setProps({ percentage: 1 });
+    clock.tick(300);
+    wrapper.update();
+    expect(wrapper.find('img').props().style.left).to.be.equal(initialLeft);
+  });
+
+  it('should not render if hidden is 0', () => {
+    const hiddenProps = Object.assign({}, props, { hidden: 0 });
+    const wrapper = mount(<MovableShape {...hiddenProps} />);
+    const initialLeft = wrapper.find('img').props().style.left;
+    wrapper.setProps({ percentage: 1 });
+    wrapper.update();
+    clock.tick(300);
+    wrapper.update();
+    expect(wrapper.find('img').props().style.left).to.be.equal(initialLeft);
   });
 });
 

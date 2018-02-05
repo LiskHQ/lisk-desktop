@@ -8,7 +8,7 @@ import { errorToastDisplayed } from '../../actions/toaster';
 
 const { lockDuration } = accountConfig;
 const loginMiddleware = store => next => (action) => {
-  if (action.type !== actionTypes.activePeerSet) {
+  if (action.type !== actionTypes.activePeerSet || action.data.noSavedAccounts) {
     return next(action);
   }
 
@@ -28,7 +28,8 @@ const loginMiddleware = store => next => (action) => {
 
   // redirect to main/transactions
   return getAccount(activePeer, address).then((accountData) => {
-    const duration = passphrase ? Date.now() + lockDuration : 0;
+    const duration = (passphrase && store.getState().settings.autoLog) ?
+      Date.now() + lockDuration : 0;
     return getDelegate(activePeer, { publicKey })
       .then((delegateData) => {
         store.dispatch(accountLoggedIn({

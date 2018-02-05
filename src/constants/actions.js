@@ -1,4 +1,5 @@
 const actionTypes = {
+  storeCreated: 'STORE_CREATED',
   newBlockCreated: 'NEW_BLOCK_CREATED',
   accountUpdated: 'ACCOUNT_UPDATED',
   accountLoggedOut: 'ACCOUNT_LOGGED_OUT',
@@ -31,6 +32,8 @@ const actionTypes = {
   transactionsLoaded: 'TRANSACTIONS_LOADED',
   transactionsFilterSet: 'TRANSACTIONS_FILTER_SET',
   transactionsFiltered: 'TRANSACTIONS_FILTERED',
+  transactionsRequestInit: 'TRANSACTIONS_REQUEST_INIT',
+  transactionsInit: 'TRANSACTIONS_INIT',
   passphraseUsed: 'PASSPHRASE_USED',
   accountsRetrieved: 'ACCOUNTS_RETRIEVED',
   accountSaved: 'ACCOUNT_SAVED',
@@ -38,6 +41,8 @@ const actionTypes = {
   accountRemoved: 'ACCOUNT_REMOVED',
   accountSwitched: 'ACCOUNT_SWITCHED',
   removePassphrase: 'REMOVE_PASSPHRASE',
+  settingsUpdated: 'SETTINGS_UPDATED',
+  settingsReset: 'SETTINGS_RESET',
 };
 
 export default actionTypes;

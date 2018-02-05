@@ -1,3 +1,5 @@
+import routes from './../constants/routes';
+
 export default [
   {
     regex: /\/main\/account-visual-demo(?:\/[^/]*)?$/,
@@ -11,7 +13,7 @@ export default [
     name: 'dashboard',
   }, {
     regex: /\/main\/transactions(?:\/[^/]*)?$/,
-    path: '/main/transactions/',
+    path: `${routes.wallet.long}/`,
     params: 'dialog',
     name: 'transactions',
   }, {
@@ -35,6 +37,11 @@ export default [
     params: 'dialog',
     name: 'add-account',
   }, {
+    regex: /accounts\/\d{1,21}[L|l](?:\/[^/]*)?$/,
+    path: new RegExp(`${routes.account.long}/\\d{1,21}[L|l]/`),
+    params: 'address',
+    name: 'accounts',
+  }, {
     regex: /register(\/)?$/,
     path: '/',
     params: 'dialog',
@@ -44,5 +51,10 @@ export default [
     path: '/',
     params: 'dialog',
     name: 'login',
+  }, {
+    regex: /./,
+    path: '/',
+    params: 'notFound',
+    name: 'not-found',
   },
 ];

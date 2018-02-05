@@ -1,6 +1,4 @@
 import React, { Fragment } from 'react';
-
-import { FontIcon as MaterialIcon } from 'react-toolbox/lib/font_icon';
 import { FontIcon } from '../fontIcon';
 import styles from './menuBar.css';
 
@@ -8,11 +6,11 @@ const MenuBar = (props) => {
   const { t, menuStatus, settingStatus, menuToggle, settingToggle } = props;
   const menuClass = menuStatus ? styles.openMenu : '';
   return (
-    <section className={`${styles.menuBar} ${menuClass}`}>
+    <section className={`${styles.menuBar} ${menuClass} menuBar`}>
       {!menuStatus ?
         <span className={styles.menuButton}
           onClick={() => menuToggle()}>
-          {t('Menu')}<MaterialIcon className={styles.icon} value='menu' />
+          {t('Menu')}<FontIcon className={styles.icon} value='menu' />
         </span>
         : <span className={styles.menuButton}
           onClick={() => menuToggle()}>

@@ -1,5 +1,9 @@
 @import '../app/variables.css';
 
+:root {
+  --padding-top: 40px;
+}
+
 .register {
   & > div {
     height: 100%;
@@ -8,5 +12,17 @@
 }
 
 .hasPaddingTop {
-  padding-top: var(--box-padding-top);
+  padding-top: var(--padding-top);
+}
+
+@media (--medium-viewport) {
+  .hasPaddingTop {
+    height: 100vh; /* stylelint-disable-line */
+  }
+}
+
+@media (--small-viewport) {
+  .hasPaddingTop {
+    padding-top: var(--box-padding);
+  }
 }
