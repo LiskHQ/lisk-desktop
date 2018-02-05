@@ -1,4 +1,5 @@
 Feature: Register delegate
+  @pending
   Scenario: should allow to register a delegate
     Given I'm logged in as "delegate candidate"
     When I go to "main/dashboard/register-delegate"
@@ -9,7 +10,7 @@ Feature: Register delegate
     And I wait 15 seconds
     # And I should see text "test" in "delegate name" element 
     And There is no "register as delegate" in main menu
-
+  @pending
   Scenario: should allow to register a delegate with second passphrase
     Given I'm logged in as "second passphrase account"
     When I go to "main/dashboard/register-delegate"
@@ -19,6 +20,7 @@ Feature: Register delegate
     Then I should see alert dialog with title "Success" and text "Delegate registration was successfully submitted with username: "test2". It can take several seconds before it is processed."
 
   @integration
+  @pending
   Scenario: should allow to exit delegate registration dialog
     Given I'm logged in as "genesis"
     When I go to "main/dashboard/register-delegate"
@@ -26,6 +28,7 @@ Feature: Register delegate
     Then I should see no "modal dialog"
 
   @integration
+  @pending
   Scenario: should not allow to register delegate if not enough funds for the fee
     Given I'm logged in as "empty account"
     When I go to "main/dashboard/register-delegate"
