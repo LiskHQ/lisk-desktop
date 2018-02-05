@@ -91,8 +91,6 @@
 
 .peer {
   font-size: 16px;
-  float: left;
-  margin: 5vh 0px;  /* stylelint-disable-line */
 }
 
 @media (--medium-viewport) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { spy } from 'sinon';
+import { spy, stub } from 'sinon';
 import { mount, shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import { MemoryRouter } from 'react-router-dom';
@@ -18,8 +18,13 @@ describe('Login', () => {
   let options;
   const address = 'http:localhost:8080';
   const passphrase = 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin';
+  let localStorageStub;
+
   // Mocking store
   beforeEach(() => {
+    localStorageStub = stub(localStorage, 'getItem');
+    localStorageStub.withArgs('showNetwork').returns(JSON.stringify(undefined));
+
     account = {
       isDelegate: false,
       address: '16313739661670634666L',
@@ -63,6 +68,11 @@ describe('Login', () => {
       lifecycleExperimental: true,
     };
     wrapper = mount(<MemoryRouter><Login {...props}/></MemoryRouter>, options);
+  });
+
+
+  afterEach(() => {
+    localStorageStub.restore();
   });
 
   describe('Generals', () => {

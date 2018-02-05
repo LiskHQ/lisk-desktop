@@ -8,7 +8,7 @@ import { errorToastDisplayed } from '../../actions/toaster';
 
 const { lockDuration } = accountConfig;
 const loginMiddleware = store => next => (action) => {
-  if (action.type !== actionTypes.activePeerSet) {
+  if (action.type !== actionTypes.activePeerSet || action.data.noSavedAccounts) {
     return next(action);
   }
 

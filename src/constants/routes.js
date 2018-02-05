@@ -1,4 +1,5 @@
 export default {
-  account: { long: '/main/accounts', short: '/accounts' },
   wallet: { long: '/main/transactions', short: '/transactions' },
+  account: { long: '/explorer/accounts', short: '/accounts' },
+  search: { long: '/explorer/search', short: '/search' },
 };
