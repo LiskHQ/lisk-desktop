@@ -16,7 +16,12 @@ import RelativeLink from '../relativeLink';
 import routes from './../../constants/routes';
 
 const Header = (props) => {
-  const shouldShowActionButton = () => !props.isAuthenticated && props.location.pathname !== '/';
+  const shouldShowActionButton = () => (
+    !props.isAuthenticated &&
+    props.location.pathname !== routes.login.url &&
+    props.location.pathname !== routes.register.url &&
+    !props.account.loading
+  );
   const shouldShowSearchBar = () => props.location.pathname.includes('explorer') && !props.location.pathname.includes(routes.search.long);
 
   return (
