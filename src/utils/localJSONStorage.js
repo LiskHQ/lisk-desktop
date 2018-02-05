@@ -3,8 +3,12 @@ export default {
     window.localStorage.setItem(key, JSON.stringify(value));
   },
 
-  get(key) {
-    return JSON.parse(window.localStorage.getItem(key));
+  get(key, backup) {
+    try {
+      return JSON.parse(window.localStorage.getItem(key)) || backup;
+    } catch (e) {
+      return backup;
+    }
   },
 
   remove(key) {

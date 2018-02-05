@@ -6,7 +6,7 @@ import localJSONStorage from './../../utils/localJSONStorage';
 import styles from './search.css';
 
 const Search = ({ history, t }) => {
-  const getRecentSearches = () => localJSONStorage.get('searches');
+  const getRecentSearches = () => (localJSONStorage.get('searches') || []);
 
   return (<div className={styles.search}>
     <div className={styles.wrapper}>

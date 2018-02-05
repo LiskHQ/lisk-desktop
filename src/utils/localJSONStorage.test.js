@@ -17,6 +17,12 @@ describe('localJSONStorage', () => {
     expect(localJSONStorage.get('item')).to.eql(item);
   });
 
+  it('returns the backup in case of no result', () => {
+    localJSONStorage.set('existingButNull', null);
+    expect(localJSONStorage.get('existingButNull', [])).to.eql([]);
+    expect(localJSONStorage.get('notExisting', '')).to.eql('');
+  });
+
   it('sets and deletes the item', () => {
     localJSONStorage.set('item', item);
     localJSONStorage.remove('item');

@@ -1,8 +1,9 @@
 import { expect } from 'chai';
-import { spy } from 'sinon';
+import { spy, stub } from 'sinon';
 import ipcLocale from './ipcLocale';
 
 describe('ipcLocale', () => {
+  let localStorageStub;
   const ipc = {
     on: spy(),
     send: spy(),
@@ -17,6 +18,12 @@ describe('ipcLocale', () => {
     beforeEach(() => {
       delete window.ipc;
       i18n.language = '';
+
+      localStorageStub = stub(localStorage, 'getItem');
+    });
+
+    afterEach(() => {
+      localStorageStub.restore();
     });
 
     it('calling init when ipc is not on window does not call ipc', () => {
@@ -26,7 +33,7 @@ describe('ipcLocale', () => {
     });
 
     it('calling init when ipc is not on window saves locale in browser when there is no locale in i18n', () => {
-      window.localStorage.getItem = () => 'en';
+      localStorageStub.withArgs('lang').returns('en');
 
       ipcLocale.init(i18n);
       expect(ipc.on).to.not.have.been.calledWith();
@@ -36,7 +43,7 @@ describe('ipcLocale', () => {
     });
 
     it('calling init when ipc is not on window saves locale in browser when there is no locale in localStorage', () => {
-      window.localStorage.getItem = () => '';
+      localStorageStub.withArgs('lang').returns('');
       i18n.language = 'de';
 
       ipcLocale.init(i18n);
@@ -44,7 +51,7 @@ describe('ipcLocale', () => {
     });
 
     it('calling init when ipc is not on window saves locale in browser when there is no locale saved at all', () => {
-      window.localStorage.getItem = () => '';
+      localStorageStub.withArgs('lang').returns('');
 
       ipcLocale.init(i18n);
       expect(i18n.changeLanguage).to.have.been.calledWith('en');

@@ -17,7 +17,7 @@ import routes from './../../constants/routes';
 
 const Header = (props) => {
   const shouldShowActionButton = () => !props.isAuthenticated && props.location.pathname !== '/';
-  const shouldShowSearchBar = () => props.location.pathname.includes('explorer') && props.location.pathname !== routes.search.long;
+  const shouldShowSearchBar = () => props.location.pathname.includes('explorer') && !props.location.pathname.includes(routes.search.long);
 
   return (
     <header className={`${grid.row} ${styles.wrapper} mainHeader`}>
