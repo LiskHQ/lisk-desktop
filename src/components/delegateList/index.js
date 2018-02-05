@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import { dialogDisplayed } from '../../actions/dialog';
 import { voteToggled, votesFetched, delegatesFetched } from '../../actions/voting';
 import DelegateList from './delegateList';
 
@@ -14,7 +13,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setActiveDialog: data => dispatch(dialogDisplayed(data)),
   voteToggled: data => dispatch(voteToggled(data)),
   votesFetched: data => dispatch(votesFetched(data)),
   delegatesFetched: data => dispatch(delegatesFetched(data)),
