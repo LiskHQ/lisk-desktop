@@ -20,6 +20,7 @@ import LoadingBar from '../loadingBar';
 import NotFound from '../notFound';
 import OfflineWrapper from '../offlineWrapper';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
+import AccountVisualDemo from '../accountVisual/demo';
 import routes from '../../constants/routes';
 
 const App = () => (
@@ -35,6 +36,7 @@ const App = () => (
               <main className={offlineStyle.disableWhenOffline}>
                 <Account />
                 <Switch>
+                  <Route path={`${match.url}/account-visual-demo/:dialog?`} component={AccountVisualDemo} />
                   <Route path={`${match.url}/dashboard/:dialog?`} component={Dashboard} />
                   <Route path={`${match.url}${routes.wallet.short}/:dialog?`} component={TransactionDashboard} />
                   <Route path={`${match.url}/voting/:dialog?`} component={Voting} />

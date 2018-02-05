@@ -65,9 +65,6 @@
     display: inline-block;
     height: var(--avatar-height);
     width: var(--avatar-height);
-    overflow: hidden;
-    background: var(--color-white);
-    border-radius: 100%;
     margin-right: 30px;
   }
 
