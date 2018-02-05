@@ -15,7 +15,7 @@ describe('Header', () => {
   const mountWithRouter = (node, options) => mount(<Router>{node}</Router>, options);
 
   const store = configureMockStore([])({
-    peers: { data: {} },
+    peers: { data: { options: {} } },
     account: {},
     activePeerSet: () => {},
   });
@@ -25,7 +25,8 @@ describe('Header', () => {
       setActiveDialog: () => { },
       account: {},
       t: key => key,
-      location: { pathname: '/register' },
+      location: { pathname: '/explorer/search' },
+      isAuthenticated: false,
     };
     propsMock = sinon.mock(mockInputProps);
     wrapper = mountWithRouter(<Header {...mockInputProps} />, {

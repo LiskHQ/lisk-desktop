@@ -11,11 +11,11 @@ import Setting from '../setting';
 const getTabs = (isDelegate, tabs) => tabs.filter(t => t.id !== 'forging' || isDelegate);
 
 const getIndex = (history, tabs) =>
-  tabs.map(t => t.id)
+  tabs.map(t => t.route)
     .indexOf(history.location.pathname.split('/')[2]);
 
 const isCurrent = (history, index, tabs) =>
-  history.location.pathname.indexOf(tabs[index].id) === 6; // after: /main/
+  history.location.pathname.indexOf(tabs[index].route) === 6; // after: /main/
 
 const TabTemplate = ({ img, label }) => (
   <div>
@@ -42,7 +42,7 @@ class MainMenu extends React.Component {
   navigate(history, tabs, index) {
     if (!isCurrent(history, index, tabs)) {
       this.setState({ active: false });
-      history.push(`/main/${tabs[index].id}`);
+      history.push(tabs[index].route);
     }
   }
 
@@ -56,41 +56,46 @@ class MainMenu extends React.Component {
     const { history, isDelegate, t, showDelegate } = this.props;
     const tabs = [
       {
+        label: t('Search'),
+        route: '/explorer/search',
+        id: 'explorer',
+        image: menuLogos.search,
+      }, {
         label: t('Dashboard'),
+        route: '/main/dashboard',
         id: 'dashboard',
         image: menuLogos.dashboard,
       }, {
         label: t('Wallet'),
+        route: '/main/transactions',
         id: 'transactions',
         image: menuLogos.wallet,
       }, {
       /* TODO: uncomment when the page is created
         label: t('Buy Lisk'),
-        id: 'butLisk',
+        route: '/main/buyLisk',
+        id: 'buyLisk',
         image: menuLogos.buyLisk,
       }, {
       */
       /* TODO: uncomment when the page is updated
         label: t('Delegates'),
+        route: '/main/voting',
         id: 'voting',
         image: menuLogos.delegates,
       }, {
       */
       /* TODO: uncomment when the page is updated
         label: t('Forging'),
+        route: '/main/forging',
         id: 'forging',
         image: menuLogos.sidechains,
       }, {
       */
         label: t('Sidechains'),
+        route: '/main/sidechains',
         id: 'sidechains',
         image: menuLogos.sidechains,
-      /* TODO: uncomment when the page is created
-      }, {
-        label: t('Search'),
-        id: 'search',
-        image: menuLogos.search,
-      */
       },
     ];
 
@@ -98,6 +103,7 @@ class MainMenu extends React.Component {
       tabs.push({
         label: t('Delegates'),
         id: 'voting',
+        route: '/main/voting',
         image: menuLogos.delegates,
       });
     }

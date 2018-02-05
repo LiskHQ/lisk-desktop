@@ -70,6 +70,9 @@ class MultiStep extends React.Component {
     this.setState(newState);
   }
 
+  reset() {
+    this.prev({ reset: true });
+  }
 
   render() {
     const { children, className, finalCallback,
@@ -81,8 +84,11 @@ class MultiStep extends React.Component {
       ...step.data[step.current],
     };
 
-    if (step.current === (children.length - 1) && typeof finalCallback === 'function') {
-      extraProps.finalCallback = finalCallback;
+    if (step.current === (children.length - 1)) {
+      if (typeof finalCallback === 'function') {
+        extraProps.finalCallback = finalCallback;
+      }
+      extraProps.reset = this.reset.bind(this);
     } else {
       extraProps.prevState = Object.assign({}, step.data[step.current + 1]);
     }

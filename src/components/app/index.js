@@ -1,12 +1,12 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Account from '../account';
 import PrivateRoutes from '../privateRoute';
 import Dashboard from '../dashboard';
 import Sidechains from '../sidechains';
 import Header from '../header';
 import Login from '../login';
 import Register from '../register';
+import Search from '../search';
 import TransactionDashboard from '../transactionDashboard';
 import accountTransactions from '../accountTransactions';
 import Voting from '../voting';
@@ -20,6 +20,7 @@ import LoadingBar from '../loadingBar';
 import NotFound from '../notFound';
 import OfflineWrapper from '../offlineWrapper';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
+import AccountVisualDemo from '../accountVisual/demo';
 import routes from '../../constants/routes';
 
 const App = () => (
@@ -33,21 +34,26 @@ const App = () => (
           <Switch>
             <PrivateRoutes path='/main' render={ ({ match }) => (
               <main className={offlineStyle.disableWhenOffline}>
-                <Account />
                 <Switch>
+                  <Route path={`${match.url}/account-visual-demo/:dialog?`} component={AccountVisualDemo} />
                   <Route path={`${match.url}/dashboard/:dialog?`} component={Dashboard} />
                   <Route path={`${match.url}${routes.wallet.short}/:dialog?`} component={TransactionDashboard} />
                   <Route path={`${match.url}/voting/:dialog?`} component={Voting} />
                   <Route path={`${match.url}/sidechains/:dialog?`} component={Sidechains} />
                   <Route path={`${match.url}/forging/:dialog?`} component={Forging} />
-                  <Route path={`${match.url}/add-account/:dialog?`} component={Login} />
                   <Route path='*' component={NotFound} />
                 </Switch>
               </main>
             )} />
-            <Route path={`${routes.account.short}/:address?`} component={accountTransactions} />
-            <Route exact path='/register' component={Register} />
-            <Route exact path='/' component={Login} />
+            <Route path='/explorer' render={ ({ match }) => (
+              <main>
+                <Route path={`${match.url}${routes.search.short}/:dialog?`} component={Search} />
+                <Route path={`${match.url}${routes.account.short}/:address?`} component={accountTransactions} />
+              </main>
+            )} />
+            <Route exact path={routes.register.url} component={Register} />
+            <Route path={`${routes.addAccount.url}:dialog?`} component={Login} />
+            <Route exact path={routes.login.url} component={Login} />
             <Route path='*' component={NotFound} />
           </Switch>
         </div>

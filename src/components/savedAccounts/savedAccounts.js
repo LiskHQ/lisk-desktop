@@ -9,6 +9,7 @@ import LiskAmount from '../liskAmount';
 import BackgroundMaker from '../backgroundMaker';
 import networks from '../../constants/networks';
 import getNetwork from '../../utils/getNetwork';
+import routes from '../../constants/routes';
 
 import plusShapeIcon from '../../assets/images/plus-shape.svg';
 import circleImage from '../../assets/images/add-id-oval.svg';
@@ -77,7 +78,7 @@ class SavedAccounts extends React.Component {
         <BackgroundMaker />
         <h1>{t('Your favorite Lisk IDs')}</h1>
         <div className={styles.cardsWrapper} >
-          <Link to='/main/add-account/?referrer=/main/dashboard/' >
+          <Link to={`${routes.addAccount.url}?referrer=/main/dashboard/`} >
             <div className={`add-lisk-id-card ${styles.card} ${styles.addNew}`} >
               <div className={styles.cardIcon}>
                 <img src={plusShapeIcon} className={styles.plusShapeIcon} />

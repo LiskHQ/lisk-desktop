@@ -12,8 +12,12 @@ import transactionReducer from '../../src/store/reducers/transactions';
 import peersReducer from '../../src/store/reducers/peers';
 import loginMiddleware from '../../src/store/middlewares/login';
 import accountMiddleware from '../../src/store/middlewares/account';
+import peerMiddleware from '../../src/store/middlewares/peers';
 import transactionsMiddleware from '../../src/store/middlewares/transactions';
 import { accountLoggedIn } from '../../src/actions/account';
+import { activePeerSet } from '../../src/actions/peers';
+import networks from './../../src/constants/networks';
+import getNetwork from './../../src/utils/getNetwork';
 import Wallet from '../../src/components/transactionDashboard';
 import accounts from '../constants/accounts';
 import { click, containsMessage } from './steps';
@@ -23,6 +27,7 @@ describe('@integration: Wallet', () => {
   let wrapper;
   let requestToActivePeerStub;
   let accountAPIStub;
+  let localStorageStub;
 
   const successMessage = 'Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain.';
   const errorMessage = 'An error occurred while creating the transaction.';
@@ -30,6 +35,9 @@ describe('@integration: Wallet', () => {
   beforeEach(() => {
     requestToActivePeerStub = stub(peers, 'requestToActivePeer');
     accountAPIStub = stub(accountAPI, 'getAccount');
+
+    localStorageStub = stub(localStorage, 'getItem');
+    localStorageStub.withArgs('accounts').returns(JSON.stringify([{}, {}]));
 
     const transactionExample = { senderId: 'sample_address', receiverId: 'some_address' };
 
@@ -61,6 +69,7 @@ describe('@integration: Wallet', () => {
   afterEach(() => {
     requestToActivePeerStub.restore();
     accountAPIStub.restore();
+    localStorageStub.restore();
     wrapper.update();
   });
 
@@ -74,6 +83,7 @@ describe('@integration: Wallet', () => {
       accountMiddleware,
       loginMiddleware,
       transactionsMiddleware,
+      peerMiddleware,
     ]);
 
     const passphrase = isLocked ? undefined : accounts[accountType].passphrase;
@@ -86,8 +96,9 @@ describe('@integration: Wallet', () => {
       passphrase,
     };
 
-    accountAPIStub.withArgs(match.any, match.any).returnsPromise().resolves({ ...account });
-
+    accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
+    store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
+    accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
     store.dispatch(accountLoggedIn(account));
     wrapper = mount(renderWithRouter(Wallet, store));
   };

@@ -1,8 +1,6 @@
 import { translate } from 'react-i18next';
 import React, { Fragment } from 'react';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import CircularProgressbar from 'react-circular-progressbar';
-import Box from '../box';
 import styles from './votesPreview.css';
 import votingConst from '../../constants/voting';
 import GradientSVG from './gradientSVG';
@@ -10,7 +8,7 @@ import { FontIcon } from '../fontIcon';
 import { Button } from '../toolbox/buttons/button';
 import { getTotalVotesCount, getVoteList, getUnvoteList } from './../../utils/voting';
 
-const VotesPreview = ({ votes, t }) => {
+const VotesPreview = ({ votes, t, nextStep }) => {
   const { maxCountOfVotes, maxCountOfVotesInOneTurn } = votingConst;
   const voteList = getVoteList(votes);
   const unvoteList = getUnvoteList(votes);
@@ -22,7 +20,7 @@ const VotesPreview = ({ votes, t }) => {
   const createPercentage = (count, total) => Math.ceil((count / total) * 100);
 
   return (<Fragment>
-    <Box className={`${grid.row} ${styles.wrapper} votes-preview`}>
+    <section className={`${styles.wrapper} votes-preview`}>
       <header>
         <h3>{t('Votes')}</h3>
         <a target='_blank' href='http://lisk.io' rel='noopener noreferrer'>
@@ -41,7 +39,7 @@ const VotesPreview = ({ votes, t }) => {
             <span>/ {maxCountOfVotesInOneTurn}</span>
           </article>
         </div>
-        <div className={`${styles.progressWrapper} ${totalClass} total-wrapper`}>
+        <div className={`${styles.progressWrapper} ${totalClass} ${styles.totalWrapper} total-wrapper`}>
           <CircularProgressbar
             className={styles.progress}
             percentage={createPercentage(totalVotesCount, maxCountOfVotes)}
@@ -56,10 +54,11 @@ const VotesPreview = ({ votes, t }) => {
       <Button label={t('Next')}
         className={`${styles.button} next`}
         type='button'
+        onClick={() => nextStep({})}
         disabled={(totalNewVotesCount === 0 ||
           totalNewVotesCount > maxCountOfVotesInOneTurn ||
           totalVotesCount > 101)} />
-    </Box>
+    </section>
     <GradientSVG
       id='grad'
       rotation={0}

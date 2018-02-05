@@ -6,6 +6,7 @@ import AccountVisual from '../accountVisual';
 import Input from '../toolbox/inputs/input';
 import fees from './../../constants/fees';
 import styles from './send.css';
+import regex from './../../utils/regex';
 import inputTheme from './input.css';
 
 class SendWritable extends React.Component {
@@ -22,8 +23,8 @@ class SendWritable extends React.Component {
     };
     this.fee = fees.send;
     this.inputValidationRegexps = {
-      recipient: /^\d{1,21}[L|l]$/,
-      amount: /^\d+(\.\d{1,8})?$/,
+      recipient: regex.address,
+      amount: regex.amount,
     };
   }
 

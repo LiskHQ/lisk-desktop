@@ -3,17 +3,16 @@ import { spy, stub } from 'sinon';
 import middleware from './peers';
 import actionTypes from '../../constants/actions';
 import { activePeerSet } from '../../actions/peers';
-import * as savedAccounts from '../../utils/savedAccounts';
 
 describe('Peer middleware', () => {
   let store;
   let next;
-  let savedAccountsStub;
+  let localStorageStub;
 
   beforeEach(() => {
     next = spy();
     store = stub();
-    savedAccountsStub = stub(savedAccounts, 'getSavedAccounts');
+    localStorageStub = stub(localStorage, 'get');
 
     store.getState = () => ({
       peers: {
@@ -25,11 +24,11 @@ describe('Peer middleware', () => {
   });
 
   afterEach(() => {
-    savedAccountsStub.restore();
+    localStorageStub.restore();
   });
 
   it('should just pass action along', () => {
-    savedAccountsStub.returns([]);
+    localStorageStub.returns(JSON.stringify([]));
 
     const sampleAction = {
       type: 'SAMPLE_TYPE',
@@ -41,14 +40,14 @@ describe('Peer middleware', () => {
 
   it('should dispatch activePeerSet if there are no saved accounts', () => {
     const storeCreated = { type: actionTypes.storeCreated };
-    savedAccountsStub.returns([]);
+    localStorageStub.returns(JSON.stringify([]));
     middleware(store)(next)(storeCreated);
     expect(store.dispatch).to.have.been.calledWith();
   });
 
   it('should not dispatch activePeerSet if there are saved accounts', () => {
     const storeCreated = { type: actionTypes.storeCreated };
-    savedAccountsStub.returns([{}, {}]);
+    localStorageStub.returns(JSON.stringify([{}, {}]));
     middleware(store)(next)(storeCreated);
     expect(store.dispatch).to.not.have.been.calledWith(activePeerSet());
   });

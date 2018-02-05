@@ -54,7 +54,6 @@ class SendReadable extends React.Component {
     return {
       title: success ? this.props.t('Thank you') : this.props.t('Sorry'),
       body: success ? successMessage : failureMessage,
-      callback: this.props.prevStep.bind(null, { reset: true }),
       copy,
       success,
     };
