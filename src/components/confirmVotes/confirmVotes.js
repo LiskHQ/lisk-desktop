@@ -41,9 +41,9 @@ class ConfirmVotes extends React.Component {
             {t('We will take care of your transaction as soon as you are online again.')}
           </p>
           <PrimaryButton
-            className={styles.confirmButton}
+            className={`${styles.confirmButton} confirm`}
             onClick={() => { votePlaced(data); }}>{t('Confirm (Fee: 1 LSK)')}</PrimaryButton>
-          <Button onClick={() => prevStep()}>{t('Back')}</Button>
+          <Button className='back' onClick={() => prevStep()}>{t('Back')}</Button>
         </article>
       </div>
     );
