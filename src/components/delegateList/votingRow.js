@@ -42,7 +42,6 @@ class VotingRow extends React.Component {
       <TableCell>{data.username}</TableCell>
       <TableCell>{data.address}</TableCell>
       <TableCell>{data.productivity} %</TableCell>
-      <TableCell>{data.approval} %</TableCell>
     </TableRow>
     );
   }

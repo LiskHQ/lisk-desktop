@@ -23,14 +23,14 @@ describe('VotingRow', () => {
     childContextTypes: { store: PropTypes.object.isRequired },
   };
 
-  it('should TableRow has class name of "pendingRow" when props.data.pending is true', () => {
+  it('should have a TableRow with class name of "pendingRow" when props.data.pending is true', () => {
     const wrapper = mount(<VotingRow {...props} voteStatus={pendingStatus}></VotingRow>, options);
     const expectedClass = '_pendingRow';
     const className = wrapper.find('tr').prop('className');
     expect(className).to.contain(expectedClass);
   });
 
-  it.skip(`should TableRow has class name of "votedRow" when voteStatus.unconfirmed and
+  it.skip(`should have a TableRow with class name of "votedRow" when voteStatus.unconfirmed and
     confirmed are true`, () => {
       const wrapper = mount(<VotingRow {...props} voteStatus={votedStatus}></VotingRow>, options);
       const expectedClass = '_votedRow';
@@ -38,7 +38,7 @@ describe('VotingRow', () => {
       expect(className).to.contain(expectedClass);
     });
 
-  it(`should TableRow has class name of "downVoteRow" when voteStatus.unconfirmed is false
+  it(`should have a TableRow with class name of "downVoteRow" when voteStatus.unconfirmed is false
     but confirmed is true`, () => {
       const wrapper = mount(<VotingRow {...props} voteStatus={unvoteStatus}></VotingRow>, options);
       const expectedClass = '_downVoteRow';
@@ -46,7 +46,7 @@ describe('VotingRow', () => {
       expect(className).to.contain(expectedClass);
     });
 
-  it(`should TableRow has class name of "upVoteRow" when voteStatus.unconfirmed is false
+  it(`should have a TableRow with class name of "upVoteRow" when voteStatus.unconfirmed is false
     but confirmed is true`, () => {
       const wrapper = mount(<VotingRow {...props} voteStatus={voteStatus}></VotingRow>, options);
       const expectedClass = '_upVoteRow';
