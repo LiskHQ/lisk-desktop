@@ -51,9 +51,9 @@ const App = () => (
                 <Route path={`${match.url}${routes.account.short}/:address?`} component={accountTransactions} />
               </main>
             )} />
-            <Route exact path='/register' component={Register} />
-            <Route exact path='/' component={Login} />
+            <Route exact path={routes.register.url} component={Register} />
             <Route path={`${routes.addAccount.url}:dialog?`} component={Login} />
+            <Route exact path={routes.login.url} component={Login} />
             <Route path='*' component={NotFound} />
           </Switch>
         </div>
