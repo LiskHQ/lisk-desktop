@@ -116,15 +116,44 @@ const drawGradientRectangle = (chartInstance, { bottomPosition, height }) => {
   );
 };
 
+const steps = [
+  {
+    title: '24h',
+    span: 'hour',
+    length: 12,
+  },
+  {
+    title: '7d',
+    span: 'day',
+    length: 7,
+  },
+  {
+    title: '1m',
+    span: 'day',
+    length: 30,
+  },
+];
+
 class CurrencyGraph extends React.Component {
   constructor() {
     super();
-    this.state = {};
-    explorerApi.getCurrencyGrapData('hour').then((data) => {
+    this.state = {
+      step: steps[0],
+    };
+    this.updateData(this.state.step);
+  }
+
+  updateData(step) {
+    explorerApi.getCurrencyGrapData(step).then((data) => {
       this.setState({ data });
     }).catch((error) => {
       this.setState({ error });
     });
+  }
+
+  setStep(step) {
+    this.setState({ step, data: undefined });
+    this.updateData(step);
   }
 
   render() {
@@ -145,6 +174,15 @@ class CurrencyGraph extends React.Component {
 
     return (
       <div className={`${styles.wrapper}`} >
+        <div className={styles.stepSwitchWrapper}>
+          {steps.map(step => (
+            <span key={step.title}
+              className={`${styles.stepSwitch} ${this.state.step === step ? styles.active : null}`}
+              onClick={this.setStep.bind(this, step)}>
+              {step.title}
+            </span>
+          ))}
+        </div>
         <h2>{this.props.t('LSK/BTC')}</h2>
         <div className={`${styles.chartWrapper}`} >
           {this.state.data ?
