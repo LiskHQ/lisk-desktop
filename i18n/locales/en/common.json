@@ -62,6 +62,7 @@
   "Enter your passphrase": "Enter your passphrase",
   "Entered passphrase does not belong to the active account": "Entered passphrase does not belong to the active account",
   "Error": "Error",
+  "Explorer": "Explorer",
   "Failed to connect to node {{address}}": "Failed to connect to node {{address}}",
   "Failed to connect: Node {{address}} is not active": "Failed to connect: Node {{address}} is not active",
   "Fee: {{amount}} LSK": "Fee: {{amount}} LSK",
