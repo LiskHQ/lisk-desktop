@@ -21,4 +21,15 @@ describe('Reducer: transaction(state, action)', () => {
     const changedState = transaction(state, action);
     expect(changedState).to.deep.equal({ success: true, ...mockTransaction.transaction });
   });
+
+  it('should return error if action.type = actionTypes.transactionLoadFailed', () => {
+    const state = [];
+    const error = { success: false, error: 'Transaction not found' };
+    const action = {
+      type: actionTypes.transactionLoadFailed,
+      data: { error },
+    };
+    const changedState = transaction(state, action);
+    expect(changedState).to.deep.equal({ ...error });
+  });
 });
