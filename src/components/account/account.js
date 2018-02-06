@@ -1,4 +1,5 @@
 import React from 'react';
+import { FontIcon } from '../fontIcon';
 import styles from './account.css';
 import networks from '../../constants/networks';
 
@@ -10,8 +11,8 @@ import networks from '../../constants/networks';
 
 const Account = ({ peers, t }) => {
   const status = (peers.status && peers.status.online) ?
-    <i className="material-icons online">check</i> :
-    <i className="material-icons offline">error</i>;
+    <FontIcon className='online' value='checkmark' /> :
+    <FontIcon className='offline' value='error' />;
 
   return (peers.data && peers.data.options.code !== networks.mainnet.code ?
     <section className={styles.peer}>
