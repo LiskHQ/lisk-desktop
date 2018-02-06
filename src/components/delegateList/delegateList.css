@@ -251,7 +251,7 @@
   }
 
   & .row {
-    background: linear-gradient(-90deg, var(--color-white) 0%, #f5f8fc 82%);
+    background: linear-gradient(90deg, var(--color-white) 0%, #f5f8fc 82%);
 
     & td:first-child {
       padding-left: var(--grid-padding-XL);
