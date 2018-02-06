@@ -25,7 +25,7 @@ const chartOptions = {
           minute: 'H:mm',
         },
       },
-      distribution: 'series',
+      distribution: 'linear',
       ticks: {
         fontColor: '#204F9F',
         fontSize: 14,
@@ -91,13 +91,13 @@ const getGradient = (ctx) => {
   return gradient;
 };
 
-const chartData = (canvas) => {
+const chartData = (data, canvas) => {
   const ctx = canvas.getContext('2d');
   const gradient = getGradient(ctx);
 
   return {
     datasets: [{
-      data: explorerApi.getCurrencyGrapData(),
+      data,
       backgroundColor: gradient,
       borderColor: gradient,
       borderWidth: 0,
@@ -116,31 +116,48 @@ const drawGradientRectangle = (chartInstance, { bottomPosition, height }) => {
   );
 };
 
-const CurrencyGraph = ({ t }) => {
-  Chart.pluginService.register({
-    beforeDraw(chartInstance) {
-      drawGradientRectangle(chartInstance, {
-        bottomPosition: bottomPadding + 35,
-        height: 50,
-      });
-    },
-    afterDraw(chartInstance) {
-      drawGradientRectangle(chartInstance, {
-        bottomPosition: bottomPadding + 32,
-        height: 5,
-      });
-    },
-  });
+class CurrencyGraph extends React.Component {
+  constructor() {
+    super();
+    this.state = {};
+    explorerApi.getCurrencyGrapData('hour').then((data) => {
+      this.setState({ data });
+    }).catch((error) => {
+      this.setState({ error });
+    });
+  }
 
-  return (
-    <div className={`${styles.wrapper}`} >
-      <h2>{t('LSK/BTC')}</h2>
-      <div className={`${styles.chartWrapper}`} >
-        <LineChart data={chartData} options={chartOptions}/>
+  render() {
+    Chart.pluginService.register({
+      beforeDraw(chartInstance) {
+        drawGradientRectangle(chartInstance, {
+          bottomPosition: bottomPadding + 35,
+          height: 50,
+        });
+      },
+      afterDraw(chartInstance) {
+        drawGradientRectangle(chartInstance, {
+          bottomPosition: bottomPadding + 32,
+          height: 5,
+        });
+      },
+    });
+
+    return (
+      <div className={`${styles.wrapper}`} >
+        <h2>{this.props.t('LSK/BTC')}</h2>
+        <div className={`${styles.chartWrapper}`} >
+          {this.state.data ?
+            <LineChart data={chartData.bind(null, this.state.data)} options={chartOptions}/> :
+            null}
+          {this.state.error ?
+            <div className={`${styles.errorMessage}`} >{this.props.t('Loading price data failed.')}</div> :
+            null}
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 const mapStateToProps = state => ({
   transactions: [...state.transactions.pending, ...state.transactions.confirmed].slice(0, 3),
