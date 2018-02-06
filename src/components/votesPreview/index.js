@@ -8,7 +8,7 @@ import { FontIcon } from '../fontIcon';
 import { Button } from '../toolbox/buttons/button';
 import { getTotalVotesCount, getVoteList, getUnvoteList } from './../../utils/voting';
 
-const VotesPreview = ({ votes, t, nextStep }) => {
+const VotesPreview = ({ votes, t, nextStep, updateList }) => {
   const { maxCountOfVotes, maxCountOfVotesInOneTurn } = votingConst;
   const voteList = getVoteList(votes);
   const unvoteList = getUnvoteList(votes);
@@ -54,7 +54,7 @@ const VotesPreview = ({ votes, t, nextStep }) => {
       <Button label={t('Next')}
         className={`${styles.button} next`}
         type='button'
-        onClick={() => nextStep({})}
+        onClick={() => { updateList(); nextStep({}); }}
         disabled={(totalNewVotesCount === 0 ||
           totalNewVotesCount > maxCountOfVotesInOneTurn ||
           totalVotesCount > 101)} />

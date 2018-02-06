@@ -7,10 +7,10 @@ import PassphraseSteps from './../passphraseSteps';
 import styles from './delegateSidebar.css';
 import ResultBox from '../resultBox';
 
-const DelegateSidebar = ({ votes }) => (
+const DelegateSidebar = ({ votes, updateList }) => (
   <Box className='confirm-votes'>
-    <MultiStep className={styles.wrapper} finalCallback={() => true}>
-      <VotesPreview votes={votes} />
+    <MultiStep className={styles.wrapper} finalCallback={() => updateList()}>
+      <VotesPreview votes={votes} updateList={() => updateList()}/>
       <PassphraseSteps />
       <ConfirmVotes />
       <ResultBox />
