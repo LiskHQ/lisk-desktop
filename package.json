@@ -40,6 +40,7 @@
     "bitcore-mnemonic": "1.2.5",
     "chart.js": "2.7.1",
     "copy-to-clipboard": "3.0.8",
+    "detect-browser": "2.0.0",
     "electron-localshortcut": "=2.0.2",
     "flexboxgrid": "=6.3.1",
     "hard-source-webpack-plugin": "0.4.11",

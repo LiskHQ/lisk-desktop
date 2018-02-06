@@ -10,7 +10,7 @@ export class VotingHeaderRaw extends React.Component {
     this.state = {
       query: '',
       votesList: [],
-      activeFilter: 0,
+      activeFilter: voteFilters.all,
     };
   }
 
@@ -88,7 +88,6 @@ export class VotingHeaderRaw extends React.Component {
               <input type='text'
                 name='query'
                 className={`search ${this.state.query.length > 0 ? styles.dirty : ''} `}
-                theme={styles}
                 value={this.state.query}
                 onChange={this.search.bind(this)}
                 placeholder={t('Search for a delegate')}/>

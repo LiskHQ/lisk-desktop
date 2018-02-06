@@ -57,6 +57,16 @@ describe('MainMenu', () => {
   };
   let clock;
 
+  const t = key => key;
+
+  const props = {
+    showDelegate: false,
+    t,
+    account,
+    store,
+    history,
+  };
+
   beforeEach(() => {
     clock = sinon.useFakeTimers({
       toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
@@ -67,32 +77,38 @@ describe('MainMenu', () => {
     clock.restore();
   });
 
-  const t = key => key;
-
   it('should render react toolbox Tabs component', () => {
     const wrapper = mount(<MemoryRouter>
-      <MainMenu store={store} history={history} t={t} />
+      <MainMenu {...props} />
     </MemoryRouter>, options);
     expect(wrapper.find(ToolboxTabs).exists()).to.equal(true);
   });
 
-  it('should render 4 Button components if props.isDelegate', () => {
+  it('should render 5 Button components if props.showDelegate', () => {
     const wrapper = mount(<MemoryRouter>
-      <MainMenu store={store} isDelegate={true} history={history} t={t} />
+      <MainMenu {...props} showDelegate={true}/>
     </MemoryRouter>, options);
-    expect(wrapper.find(Tab)).to.have.lengthOf(4);
+    expect(wrapper.find(Tab)).to.have.lengthOf(5);
   });
 
   it('should render 4 menu item components if !props.isDelegate', () => {
     const wrapper = mount(<MemoryRouter>
-      <MainMenu store={store} isDelegate={false} history={history} t={t} />
+      <MainMenu {...props} />
     </MemoryRouter>, options);
     expect(wrapper.find(Tab)).to.have.lengthOf(4);
   });
 
+  it('should all Tab be disabled except search if !props.account.address', () => {
+    const wrapper = mount(<MemoryRouter>
+      <MainMenu {...props} account={{}} />
+    </MemoryRouter>, options);
+    expect(wrapper.find(Tab).at(0).props().disabled).to.be.equal(false);
+    expect(wrapper.find(Tab).at(1).props().disabled).to.be.equal(true);
+  });
+
   it('should allow to change active menu item', () => {
     const wrapper = mount(<MemoryRouter>
-      <MainMenu store={store} isDelegate={false} history={history} t={t} />
+      <MainMenu {...props} />
     </MemoryRouter>, options);
     wrapper.find(Tab).at(1).simulate('click');
     expect(history.push).to.have.been.calledWith('/main/dashboard');
@@ -100,7 +116,7 @@ describe('MainMenu', () => {
 
   it('should click on more activate the drawer', () => {
     const wrapper = mount(<MemoryRouter>
-      <MainMenu store={store} isDelegate={false} history={history} t={t} />
+      <MainMenu {...props} />
     </MemoryRouter>, options);
     wrapper.find('.more-menu').simulate('click');
     clock.tick(100);

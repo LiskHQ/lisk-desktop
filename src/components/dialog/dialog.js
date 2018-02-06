@@ -64,7 +64,9 @@ class DialogElement extends Component {
   }
 
   goBack() {
-    this.props.history.push(this.current.reg.path);
+    this.props.history.push((this.current.reg.path instanceof RegExp) ?
+      this.props.history.location.pathname.match(this.current.reg.path)[0] :
+      this.current.reg.path);
   }
 
   render() {
