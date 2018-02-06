@@ -24,12 +24,12 @@ export class VotingHeaderRaw extends React.Component {
       {
         name: this.props.t('Voted'),
         value: voteFilters.voted,
-        className: 'filter-in',
+        className: 'filter-voted',
       },
       {
         name: this.props.t('Not voted'),
         value: voteFilters.notVoted,
-        className: 'filter-out',
+        className: 'filter-not-voted',
       },
     ];
   }
@@ -83,7 +83,7 @@ export class VotingHeaderRaw extends React.Component {
                 {filter.name}
               </li>
             ))}
-            <li className={`${styles.search} ${styles.filter}`}>
+            <li className={`${styles.search} ${styles.filter} search`}>
               <FontIcon className={styles.search} value='search' id='searchIcon'/>
               <input type='text'
                 name='query'

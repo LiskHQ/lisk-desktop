@@ -159,7 +159,7 @@ class DelegateList extends React.Component {
           votes={this.props.votes}
           search={ value => this.search(value) }
         />
-        <section className={styles.delegatesList}>
+        <section className={`${styles.delegatesList} delegate-list`}>
           <Table selectable={false} >
             <TableHead displaySelect={false}>
               <TableCell>{this.props.t('Vote', { context: 'verb' })}</TableCell>
