@@ -3,7 +3,7 @@ Feature: Voting page
     Given I'm logged in as "any account"
     When I go to "main/voting/"
     Then I should see table with 100 lines
-    When I scroll to the bottom of "voting"
+    When I scroll to the bottom of "delegate list"
     Then I should see table with 200 lines
 
   Scenario: should allow to view delegates with cold account
@@ -19,14 +19,14 @@ Feature: Voting page
     And I clear "search" field
     And I fill in "doesntexist" to "search" field
     And I should see table with 0 lines
-    And I should see text "No delegates found" in "empty message" element
+    And I should see text "No delegates found." in "empty message" element
 
   @integration
   Scenario: should allow to view my votes
     Given I'm logged in as "genesis"
     When I go to "main/voting/"
-    And I click "my votes button"
-    Then I should see delegates list with 101 lines
+    And I click "filter voted"
+    Then I should see table with 100 lines
 
   @testnet
   Scenario: should allow to select delegates in the "Voting" tab and vote for them

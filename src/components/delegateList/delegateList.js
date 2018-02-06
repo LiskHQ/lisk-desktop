@@ -8,6 +8,8 @@ import Waypoint from 'react-waypoint';
 import Box from '../box';
 import Header from './votingHeader';
 import VotingRow from './votingRow';
+import styles from './delegateList.css';
+import voteFilters from './../../constants/voteFilters';
 
 // Create a new Table component injecting Head and Row
 const Table = themr(TABLE, TableTheme)(tableFactory(TableHead, VotingRow));
@@ -18,6 +20,10 @@ class DelegateList extends React.Component {
     this.isInitial = true;
     this.offset = -1;
     this.query = '';
+    this.state = {
+      activeFilter: voteFilters.all,
+      showChangeSummery: false,
+    };
   }
 
   componentWillUpdate(nextProps) {
@@ -31,6 +37,12 @@ class DelegateList extends React.Component {
         this.offset = nextProps.delegates.length;
         this.isInitial = false;
       }, 5);
+    }
+
+    if (this.props.showChangeSummery !== nextProps.showChangeSummery) {
+      this.setState({
+        showChangeSummery: nextProps.showChangeSummery,
+      });
     }
   }
 
@@ -89,39 +101,85 @@ class DelegateList extends React.Component {
     }
   }
 
+  setActiveFilter(filter) {
+    this.setState({
+      activeFilter: filter,
+    });
+  }
+
+  filter(delegates) {
+    const { votes } = this.props;
+    switch (this.state.activeFilter) {
+      case 1:
+        return delegates.filter(delegate =>
+          (votes[delegate.username] && votes[delegate.username].confirmed));
+      case 2:
+        return delegates.filter(delegate =>
+          (!votes[delegate.username] || !votes[delegate.username].confirmed));
+      default:
+        return delegates;
+    }
+  }
+
+  getEmptyStateMessage(filteredList) {
+    let message = '';
+
+    if (!this.isInitial && this.props.delegates.length === 0) {
+      message = 'No delegates found.';
+    } else if (this.state.filter === voteFilters.voted &&
+      Object.keys(this.props.votes).length === 0) {
+      message = 'You have not voted yet.';
+    } else if (this.query !== '' && Object.keys(filteredList).length === 0) {
+      message = 'No search result in given criteria.';
+    }
+
+    return message;
+  }
+
+  getList(filteredList) {
+    return filteredList.map(item => (
+      <VotingRow key={item.address} data={item}
+        voteToggled={this.props.voteToggled}
+        voteStatus={this.props.votes[item.username]}
+      />
+    ));
+  }
+
   render() {
+    const showChangeSummery = this.state.showChangeSummery ?
+      styles.showChangeSummery : '';
+    const filteredList = this.filter(this.props.delegates);
     return (
-      <Box className='voting'>
+      <Box className={`voting ${showChangeSummery}`}>
         <Header
-          setActiveDialog={this.props.setActiveDialog}
+          setActiveFilter={this.setActiveFilter.bind(this)}
+          showChangeSummery={this.state.showChangeSummery}
           voteToggled={this.props.voteToggled}
           addTransaction={this.props.addTransaction}
           votes={this.props.votes}
           search={ value => this.search(value) }
         />
-        <Table selectable={false} >
-          <TableHead displaySelect={false}>
-            <TableCell>{this.props.t('Vote', { context: 'verb' })}</TableCell>
-            <TableCell>{this.props.t('Rank')}</TableCell>
-            <TableCell>{this.props.t('Name')}</TableCell>
-            <TableCell>{this.props.t('Lisk Address')}</TableCell>
-            <TableCell>{this.props.t('Uptime')}</TableCell>
-            <TableCell>{this.props.t('Approval')}</TableCell>
-          </TableHead>
-          {this.props.delegates.map(item => (
-            <VotingRow key={item.address} data={item}
-              voteToggled={this.props.voteToggled}
-              voteStatus={this.props.votes[item.username]}
-            />
-          ))}
-        </Table>
-        {
-          (!this.isInitial && this.props.delegates.length === 0) &&
-          <div className='hasPaddingRow empty-message'>{this.props.t('No delegates found')}</div>
-        }
-        <Waypoint bottomOffset='-80%'
-          key={this.props.delegates.length}
-          onEnter={this.loadMore.bind(this)}></Waypoint>
+        <section className={`${styles.delegatesList} delegate-list`}>
+          <Table selectable={false} >
+            <TableHead displaySelect={false}>
+              <TableCell>{this.props.t('Vote', { context: 'verb' })}</TableCell>
+              <TableCell>{this.props.t('Rank')}</TableCell>
+              <TableCell>{this.props.t('Name')}</TableCell>
+              <TableCell>{this.props.t('Lisk ID')}</TableCell>
+              <TableCell>{this.props.t('Productivity')}</TableCell>
+            </TableHead>
+            { this.getList(filteredList) }
+          </Table>
+          {
+            (filteredList.length === 0) ?
+              <div className={`empty-message ${styles.emptyMessage}`}>
+                {this.props.t(this.getEmptyStateMessage(filteredList))}
+              </div> : null
+          }
+          <Waypoint bottomOffset='-80%'
+            key={this.props.delegates.length}
+            onEnter={this.loadMore.bind(this)}></Waypoint>
+        </section>
       </Box>
     );
   }

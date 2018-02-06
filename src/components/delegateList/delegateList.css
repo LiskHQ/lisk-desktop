@@ -1,3 +1,47 @@
+@import '../app/variables.css';
+
+:root {
+  --grid-header-color: var(--color-black);
+  --amount-positive-color: var(--color-success-dark);
+  --amount-negative-color: var(--color-grayscale-dark);
+  --blue: var(--color-primary-medium);
+  --link-color: var(--color-primary-very-light);
+  --row-background-color: var(--color-white);
+  --filter-list-color: var(--color-grayscale-medium);
+  --result-address-font-weight: var(--font-weight-semi-bold);
+  --detail-label-font-weight: var(--font-weight-very-bold);
+  --header-address-font-weight: var(--font-weight-semi-bold);
+  --header-balance-unit-font-size-XL: 20px;
+  --header-balance-unit-font-size-L: 18px;
+  --header-subtitle-font-size-XL: 18px;
+  --header-subtitle-font-size-L: 16px;
+  --main-header-font-size-XL: 32px;
+  --main-header-font-size-L: 28px;
+  --main-header-font-size-XS: 24px;
+  --grid-padding-XL: 32px;
+  --grid-padding-L: 32px;
+  --grid-padding-XS: 19px;
+  --list-line-height: 25px;
+  --grid-header-line-height: 60px;
+  --main-row-line-height: 70px;
+  --sub-row-height: 50px;
+  --header-line-height: 36px;
+  --main-header-unit-font-size: 20px;
+  --grid-header-font-size: 15px;
+  --details-font-color: var(--color-grayscale-dark);
+  --details-label-font-size-XL: 15px;
+  --details-label-font-size-L: 12px;
+  --details-label-font-size-XS: 12px;
+  --back-button-font-size-XL: 15px;
+  --back-button-font-size-L: 12px;
+  --back-button-font-size-XS: 12px;
+  --back-button-arrow-font-size-XL: 16px;
+  --back-button-arrow-font-size-L: 16px;
+  --back-button-arrow-font-size-XS: 16px;
+  --float-animation-distance: 10px;
+  --even-row-background: #f5f8fc;
+}
+
 .wrapper {
   width: 100%;
 }
@@ -8,37 +52,12 @@
   }
 }
 
-.searchBox {
-  position: relative;
-}
-
-.searchIcon {
-  position: absolute;
-  top: 15px;
-  right: 10px;
-  color: rgba(0, 0, 0, 0.38);
-}
-
-.field {
-  margin-bottom: 0 !important;
-}
-
-.row {
-  &:hover {
-    background: #fff;
-  }
-}
-
 .upVoteRow {
-  background-color: rgb(226, 238, 213) !important;
+  background: #caf8ff !important;
 }
 
 .downVoteRow {
-  background-color: rgb(255, 228, 220) !important;
-}
-
-.votedRow {
-  background-color: #d6f0ff !important;
+  background: #fed9d9 !important;
 }
 
 .pendingRow {
@@ -69,11 +88,6 @@
   color: #c62828;
 }
 
-/* react toolbar overwroght */
-.input {
-  margin-top: -10px;
-}
-
 .menuItem {
   flex-direction: row-reverse;
   width: 241px;
@@ -100,7 +114,209 @@
 }
 
 .voteButton {
-  color: #000 !important;
+  color: var(--color-black) !important;
   position: relative;
   top: 3px;
+}
+
+.header {
+  line-height: var(--header-line-height);
+  padding: 20px var(--grid-padding-XL);
+
+  & h2 {
+    margin-bottom: 0;
+    font-weight: 400;
+    padding-bottom: 60px;
+    font-size: var(--main-header-font-size-XL);
+  }
+
+  & h3 {
+    display: inline-block;
+    margin: 0;
+  }
+}
+
+.filters {
+  font-weight: var(--font-weight-bold);
+  color: var(--filter-list-color);
+  line-height: var(--list-line-height);
+  list-style: none;
+  padding: 0;
+
+  & .filter {
+    display: inline-block;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    vertical-align: middle;
+
+    &:not(:last-of-type) {
+      margin-right: 50px;
+    }
+  }
+
+  & .active {
+    border-bottom: 2px solid var(--amount-negative-color);
+    color: var(--amount-negative-color);
+  }
+}
+
+.search {
+  position: relative;
+
+  & input {
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: var(--color-grayscale-medium);
+    padding-left: 30px;
+    padding-right: 20px;
+    vertical-align: middle;
+    border-bottom: solid 1px var(--color-white);
+    transition: all ease 250ms;
+
+    &.dirty {
+      border-bottom-color: var(--color-grayscale-dark);
+
+      & ~ .clean {
+        visibility: visible;
+      }
+    }
+  }
+
+  & .clean,
+  & .search {
+    color: rgba(0, 0, 0, 0.38);
+  }
+
+  & .search {
+    font-size: 22px;
+    margin-right: -28px;
+    vertical-align: middle;
+  }
+
+  & .clean {
+    visibility: hidden;
+    margin-left: -20px;
+    font-size: 16px;
+  }
+}
+
+.checkbox {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  position: relative;
+
+  & input {
+    visibility: hidden;
+    position: absolute;
+  }
+
+  & span {
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    &.checked {
+      display: none;
+    }
+
+    &.unchecked {
+      display: block;
+    }
+  }
+
+  & input:checked {
+    & ~ .checked {
+      display: block;
+    }
+
+    & ~ .unchecked {
+      display: none;
+    }
+  }
+}
+
+.delegatesList {
+  overflow-y: auto;
+
+  & .titles th {
+    color: var(--color-grayscale-dark) !important;
+    font-size: 15px !important;
+
+    & td:first-child {
+      padding-left: var(--grid-padding-XL);
+    }
+  }
+
+  & .row {
+    background: linear-gradient(-90deg, var(--color-white) 0%, #f5f8fc 82%);
+
+    & td:first-child {
+      padding-left: var(--grid-padding-XL);
+    }
+
+    &:nth-child(2n) {
+      background: var(--color-white);
+    }
+
+    & td {
+      color: var(--color-grayscale-dark);
+      font-size: 16px;
+      font-weight: 500;
+    }
+  }
+}
+
+:global(.safari) .delegatesList .row {
+  background: var(--even-row-background);
+
+  &:nth-child(2n) {
+    background: var(--color-white);
+  }
+}
+
+.showChangeSummery {
+  & .filters .filter:not(.search) {
+    display: none;
+  }
+
+  & .delegatesList {
+    & .input,
+    & .row:not(.upVoteRow):not(.downVoteRow) {
+      display: none;
+    }
+  }
+}
+
+.emptyMessage {
+  text-align: center;
+  color: var(--color-grayscale-dark);
+  padding: 23px 0;
+  font-weight: 500;
+}
+
+@media (--large-viewport) {
+  .header {
+    padding: 20px var(--grid-padding-L);
+
+    & h2 {
+      font-size: var(--main-header-font-size-L);
+    }
+  }
+}
+
+@media (--xSmall-viewport) {
+  .header {
+    padding: 20px var(--grid-padding-XS);
+
+    & h2 {
+      font-size: var(--main-header-font-size-XS);
+    }
+
+    & .account {
+      display: none;
+    }
+  }
 }

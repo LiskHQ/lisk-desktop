@@ -76,6 +76,7 @@ module.exports = function (config) {
             'src/components/account/index.js',
             'src/components/accountVisual/demo.js',
             'src/components/accountTransactions/index.js',
+            'src/components/delegateList/votingHeader.js',
             'src/components/app/index.js',
             'src/components/dashboard/index.js',
             'src/components/transactions/transactionList.js',

@@ -30,7 +30,7 @@ describe('VotingRow', () => {
     expect(className).to.contain(expectedClass);
   });
 
-  it(`should TableRow has class name of "votedRow" when voteStatus.unconfirmed and
+  it.skip(`should TableRow has class name of "votedRow" when voteStatus.unconfirmed and
     confirmed are true`, () => {
       const wrapper = mount(<VotingRow {...props} voteStatus={votedStatus}></VotingRow>, options);
       const expectedClass = '_votedRow';

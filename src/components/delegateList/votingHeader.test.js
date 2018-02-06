@@ -56,76 +56,42 @@ describe('VotingHeader', () => {
     },
   };
 
+  const searchButton = '#searchIcon';
+  const clearButton = '#cleanIcon';
+
   describe('Vote and Unvote', () => {
     beforeEach(() => {
       wrapper = mount(<Router><VotingHeader {...props} votes={votes} /></Router>, options);
     });
 
-    it('should render an Input, a menuItem and a RelativeLink', () => {
-      expect(wrapper.find('Input')).to.have.lengthOf(1);
-      expect(wrapper.find('MenuItem')).to.have.lengthOf(1);
-      expect(wrapper.find('RelativeLink')).to.have.lengthOf(1);
+    it('should render an input, a unordered list', () => {
+      expect(wrapper.find('input')).to.have.lengthOf(1);
+      expect(wrapper.find('ul')).to.have.lengthOf(1);
     });
 
-    it('should render i#searchIcon with text of "search" when this.search is not called', () => {
+    it('should render a clean icon and a search icon', () => {
       // expect(wrapper.find('i.material-icons')).to.have.lengthOf(1);
-      expect(wrapper.find('#searchIcon').text()).to.be.equal('search');
-    });
-
-    it('should render i#searchIcon with text of "close" when this.search is called', () => {
-      wrapper.find('.search input').simulate('change', { target: { value: '555' } });
-      expect(wrapper.find('#searchIcon').text()).to.be.equal('close');
+      expect(wrapper.find(searchButton).exists()).to.be.equal(true);
+      expect(wrapper.find(clearButton).exists()).to.be.equal(true);
     });
 
     it('should this.props.search when this.search is called', () => {
       const clock = sinon.useFakeTimers({
         toFake: ['setTimeout', 'clearTimeout', 'Date'],
       });
-      wrapper.find('.search input').simulate('change', { target: { value: '555' } });
+      wrapper.find('input').simulate('change', { nativeEvent: { target: { value: '555' } } });
       clock.tick(250);
       expect(props.search).to.have.been.calledWith('555');
       clock.restore();
     });
 
-    it('click on #searchIcon should clear value of search input', () => {
-      wrapper.find('Input.search input').simulate('change', { target: { value: '555' } });
+    it(`click on ${clearButton} should clear value of search input`, () => {
+      wrapper.find('input').simulate('change', { nativeEvent: { target: { value: '555' } } });
       wrapper.update();
-      expect(wrapper.find('Input.search input').props().value).to.be.equal('555');
-      wrapper.find('i#searchIcon').simulate('click');
+      expect(wrapper.find('input').props().value).to.be.equal('555');
+      wrapper.find(clearButton).at(0).simulate('click');
       wrapper.update();
-      expect(wrapper.find('Input.search input').props().value).to.be.equal('');
-    });
-  });
-
-  describe('Only vote', () => {
-    beforeEach(() => {
-      wrapper = mount(<Router><VotingHeader {...props} votes={voteDict} /></Router>, options);
-    });
-
-    it('should render vote button reflecting only (up)vote', () => {
-      expect(wrapper.find('.vote-button-info').text()).to.be.equal('Vote (+1)');
-    });
-  });
-
-  describe('Only unvote', () => {
-    beforeEach(() => {
-      wrapper = mount(<Router><VotingHeader {...props} votes={unvoteDict} /></Router>, options);
-    });
-
-    it('should render vote button reflecting only unvote', () => {
-      expect(wrapper.find('.vote-button-info').text()).to.be.equal('Vote (-1)');
-    });
-  });
-
-  describe('Without votes', () => {
-    beforeEach(() => {
-      wrapper = mount(<Router><VotingHeader {...props} votes={ {} } /></Router>, options);
-    });
-
-    it('should disable my votes button', () => {
-      const query = wrapper.find('.my-votes-button button').props().className;
-      const reg = new RegExp(/icon/g);
-      expect(reg.test(query)).to.equal(true);
+      expect(wrapper.find('input').props().value).to.be.equal('');
     });
   });
 });
