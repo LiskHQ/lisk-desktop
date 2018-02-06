@@ -160,7 +160,7 @@ const pickTwo = (chunk, options) => ([
   ) % options.length],
 ]);
 
-const AccountVisual = ({ address, size = 200 }) => {
+const AccountVisual = ({ address, size = 200, className }) => {
   const addressChunks = address.padStart(21, '0').match(/\d{5}/g);
   const gradientScheme = gradientSchemes[addressChunks[0].substr(1, 2) % gradientSchemes.length];
   const primaryGradients = pickTwo(addressChunks[1], gradientScheme.primary);
@@ -173,7 +173,7 @@ const AccountVisual = ({ address, size = 200 }) => {
   ];
 
   return (
-    <div styles={{ height: size, width: size }} className={styles.wrapper}>
+    <div style={{ height: size, width: size }} className={`${styles.wrapper} ${className}`}>
       <svg height={size} width={size} className={styles.accountVisual}>
         <Gradients scheme={gradientScheme}/>
         {shapes.map((shape, i) => (

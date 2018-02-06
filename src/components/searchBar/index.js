@@ -5,12 +5,10 @@ import keyAction from './../search/keyAction';
 import styles from './searchBar.css';
 
 const Search = ({ history, t }) => (<div className={styles.searchBar}>
-  <div className={styles.wrapper}>
-    <input onKeyUp={(e) => { keyAction(e, history); }}
-      className={styles.input} type="text"
-      placeholder={t('Search for Lisk ID or Transaction ID')}
-    />
-  </div>
+  <input onKeyUp={(e) => { keyAction(e, history); }}
+    className={styles.input} type="text"
+    placeholder={t('Search for Lisk ID or Transaction ID')}
+  />
 </div>);
 
 export default withRouter(translate()(Search));
