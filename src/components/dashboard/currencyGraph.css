@@ -47,7 +47,13 @@
 
 @media (--medium-viewport) {
   .chartWrapper {
-    height: calc(100% + 30px);
+    height: calc(100% - 90px);
     margin: 0 -25px 20px;
+  }
+}
+
+@media (--small-viewport) {
+  .stepSwitchWrapper {
+    margin: 45px 0;
   }
 }
