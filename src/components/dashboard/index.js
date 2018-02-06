@@ -28,7 +28,12 @@ class Dashboard extends React.Component {
               </Link>
             </h2>
           </header>
-          <TransactionList {...{ transactions, t, address: this.props.accountAddress }} />
+          <TransactionList {...{
+            transactions,
+            t,
+            address: this.props.accountAddress,
+            loadMore: () => {},
+          }} />
         </Box>
       </div>
       <div className={`${grid['col-md-4']} ${styles.sendWrapper}`}>
