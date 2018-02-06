@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { spy, stub, mock } from 'sinon';
 import * as accountApi from '../../utils/api/account';
-import { transactionsFailed } from '../../actions/transactions';
+import { transactionsFailed, transactionLoaded, transactionLoadFailed } from '../../actions/transactions';
 import middleware from './transactions';
 import actionTypes from '../../constants/actions';
 
@@ -56,6 +56,31 @@ describe('transaction middleware', () => {
 
     middleware(store)(next)(givenAction);
     expect(store.dispatch).to.not.have.been.calledWith();
+  });
+
+  it('should load one transaction action.type is transactionLoadRequested', () => {
+    accountApiMock.expects('transaction').returnsPromise().resolves(mockTransaction);
+
+    const givenAction = {
+      type: actionTypes.transactionLoadRequested,
+      data: { id: '1345' },
+    };
+
+    middleware(store)(next)(givenAction);
+    expect(store.dispatch).to.have.been.calledWith(transactionLoaded({ ...mockTransaction }));
+  });
+
+  it('should catch if transaction was not found', () => {
+    const error = { success: false, error: 'Transaction not found' };
+    accountApiMock.expects('transaction').returnsPromise().rejects(error);
+
+    const givenAction = {
+      type: actionTypes.transactionLoadRequested,
+      data: { id: '1345' },
+    };
+
+    middleware(store)(next)(givenAction);
+    expect(store.dispatch).to.have.been.calledWith(transactionLoadFailed({ error }));
   });
 
   it('should call unconfirmedTransactions and then dispatch transactionsFailed if state.transactions.pending.length > 0 and action.type is transactionsUpdated', () => {
