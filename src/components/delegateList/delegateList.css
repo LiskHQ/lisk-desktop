@@ -165,8 +165,10 @@
   position: relative;
 
   & input {
+    height: 25px;
     border: none;
     outline: none;
+    margin: 0;
     font-size: 15px;
     color: var(--color-grayscale-dark);
     font-weight: 400;
@@ -178,6 +180,18 @@
     transition: all ease 250ms;
 
     &::-webkit-input-placeholder {
+      font-weight: 400;
+      color: var(--color-grayscale-medium);
+      font-size: 15px;
+    }
+
+    &::-moz-placeholder {
+      font-weight: 400;
+      color: var(--color-grayscale-medium);
+      font-size: 15px;
+    }
+
+    &:-moz-placeholder {
       font-weight: 400;
       color: var(--color-grayscale-medium);
       font-size: 15px;
@@ -195,19 +209,21 @@
   & .clean,
   & .search {
     color: rgba(0, 0, 0, 0.38);
+    position: absolute;
   }
 
   & .search {
     font-size: 20px;
     vertical-align: middle;
-    margin-right: -28px;
-    margin-bottom: -1px;
+    top: 4px;
+    left: 4px;
     color: var(--color-grayscale-dark);
   }
 
   & .clean {
     visibility: hidden;
-    margin-left: -20px;
+    top: 6px;
+    right: 0;
     font-size: 16px;
   }
 }
