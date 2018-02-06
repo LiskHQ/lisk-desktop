@@ -55,7 +55,7 @@ class MainMenu extends React.Component {
     const { history, t, showDelegate, account } = this.props;
     const tabs = [
       {
-        label: t('Search'),
+        label: t('Explorer'),
         route: '/explorer/search',
         id: 'explorer',
         image: menuLogos.search,
