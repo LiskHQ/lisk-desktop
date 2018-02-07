@@ -2,13 +2,23 @@
 
 :root {
   --search-box-max-width: 558px;
+  --search-box-width: 32vw; /* stylelint-disable-line */
   --search-box-font-size: 16px;
   --search-box-line-height: 56px;
   --sub-title-line-height: 26px;
 }
 
 .searchBar {
-  width: 32vw; /* stylelint-disable-line */
+  position: relative;
+  width: var(--search-box-width);
+
+  & .icon {
+    position: absolute;
+    right: 0;
+    top: 25%;
+    color: var(--color-white);
+    font-size: 28px;
+  }
 
   & .input {
     background: var(--color-primary-less-dark);
@@ -41,6 +51,10 @@
 @media (--medium-viewport) {
   .searchBar {
     width: 100%;
+
+    & .icon {
+      right: 20px;
+    }
 
     & .input {
       border-radius: 0px;

@@ -66,12 +66,23 @@
   font-size: 24px !important;
 }
 
-.actionButton {
+.login {
   text-align: right;
-  display: block;
+  text-decoration: none;
+
+  & .button {
+    display: block;
+  }
+
+  & .link {
+    display: none;
+    font-size: 15px;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary-standard);
+  }
 }
 
-.rightSide {
+.loginInfo {
   display: inline-block;
   width: 32vw; /* stylelint-disable-line */
 }
@@ -145,7 +156,7 @@
 }
 
 @media (--medium-viewport) {
-  .rightSide {
+  .loginInfo {
     width: 100%;
     float: none;
   }
@@ -222,9 +233,19 @@
     }
   }
 
-  .actionButton {
-    /* temporarily and fixed in #263 */
-    display: none;
+  .login {
+    & .button {
+      display: none;
+    }
+
+    & .link {
+      display: block;
+      vertical-align: middle;
+      margin-right: 26px;
+      margin-top: 23px;
+      margin-bottom: 23px;
+      line-height: 54px;
+    }
   }
 }
 
@@ -234,7 +255,7 @@
   }
 
   .account {
-    margin-left: 20px;
+    margin-right: 20px;
     margin-top: 10px;
     height: auto;
 
@@ -272,5 +293,14 @@
     margin-left: 20px;
     margin-top: 10px;
     margin-bottom: 10px;
+  }
+
+  .login {
+    & .link {
+      margin-right: 20px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      line-height: 46px;
+    }
   }
 }

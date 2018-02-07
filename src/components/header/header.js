@@ -35,7 +35,7 @@ class Header extends React.Component {
   render() {
     return (
       <header className={`${styles.wrapper} mainHeader`}>
-        <div className={`${styles.rightSide}`}>
+        <div className={`${styles.loginInfo}`}>
           <div>
             <div style={{ display: 'inline-block', float: 'left' }}>
               <img src={logo} className={`${styles.logo}`}/>
@@ -83,8 +83,14 @@ class Header extends React.Component {
                   </div>
                 </div>
               </PrivateWrapper>
-              {this.shouldShowActionButton() && <Link className={styles.actionButton}
-                to='/'><ActionButton>{this.props.t('Use Lisk-App')}</ActionButton></Link>}
+              {this.shouldShowActionButton() && <Link className={styles.login}
+                to='/'>
+                <ActionButton className={styles.button}>{this.props.t('Use Lisk-App')}</ActionButton>
+                <span className={styles.link}>
+                  {this.props.t('Use Lisk-App')} <FontIcon value='arrow-right'/>
+                </span>
+              </Link>
+              }
             </div>
           </div>
         </div>

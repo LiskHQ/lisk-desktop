@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
+import { FontIcon } from '../fontIcon';
 import keyAction from './../search/keyAction';
 import styles from './searchBar.css';
 
@@ -14,6 +15,7 @@ class Search extends React.Component {
 
   render() {
     return (<div className={styles.searchBar}>
+      <FontIcon value='search' className={styles.icon}/>
       <input onKeyUp={(e) => { keyAction(e, this.props.history); }}
         className={styles.input} type="text"
         placeholder={this.props.t('Search for Lisk ID or Transaction ID')}
