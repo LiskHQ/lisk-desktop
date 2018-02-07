@@ -144,7 +144,12 @@ class CurrencyGraph extends React.Component {
   }
 
   updateData(step) {
-    explorerApi.getCurrencyGrapData(step).then((data) => {
+    explorerApi.getCurrencyGrapData(step).then((response) => {
+      const { candles } = response;
+      const data = candles.slice(Math.max(candles.length - step.length, 1)).map(c => ({
+        x: new Date(c.date),
+        y: c.high,
+      }));
       this.setState({ data });
     }).catch((error) => {
       this.setState({ error });
