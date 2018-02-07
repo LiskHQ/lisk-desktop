@@ -4,11 +4,24 @@ import { translate } from 'react-i18next';
 import keyAction from './../search/keyAction';
 import styles from './searchBar.css';
 
-const Search = ({ history, t }) => (<div className={styles.searchBar}>
-  <input onKeyUp={(e) => { keyAction(e, history); }}
-    className={styles.input} type="text"
-    placeholder={t('Search for Lisk ID or Transaction ID')}
-  />
-</div>);
+class Search extends React.Component {
+  constructor(props) {
+    super(props);
+    const regex = new RegExp('/explorer/(?:[^/]*)/?');
+    const searchItem = this.props.history.location.pathname.replace(regex, '');
+    this.state = { searchItem };
+  }
+
+  render() {
+    return (<div className={styles.searchBar}>
+      <input onKeyUp={(e) => { keyAction(e, this.props.history); }}
+        className={styles.input} type="text"
+        placeholder={this.props.t('Search for Lisk ID or Transaction ID')}
+        value={this.state.searchItem}
+        onChange={(e) => { this.setState({ searchItem: e.target.value }); }}
+      />
+    </div>);
+  }
+}
 
 export default withRouter(translate()(Search));
