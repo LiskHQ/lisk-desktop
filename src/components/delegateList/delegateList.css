@@ -314,6 +314,11 @@
       display: none;
     }
   }
+
+  & td:first-child,
+  & th:first-child {
+    display: none !important;
+  }
 }
 
 .emptyMessage {
