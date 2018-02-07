@@ -9,7 +9,7 @@ import styles from './currencyGraph.css';
 
 const bottomPadding = 15;
 
-const chartOptions = {
+const chartOptions = step => ({
   maintainAspectRatio: false,
   gridLines: {
     display: false,
@@ -20,11 +20,7 @@ const chartOptions = {
   scales: {
     xAxes: [{
       type: 'time',
-      time: {
-        displayFormats: {
-          minute: 'H:mm',
-        },
-      },
+      time: step.timeFormat,
       distribution: 'linear',
       ticks: {
         fontColor: '#204F9F',
@@ -81,7 +77,7 @@ const chartOptions = {
     cornerRadius: 0,
     caretSize: 15,
   },
-};
+});
 
 const getGradient = (ctx) => {
   const gradient = ctx.createLinearGradient(0, 0, 800, 0);
@@ -121,16 +117,28 @@ const steps = [
     title: '24h',
     span: 'hour',
     length: 12,
+    timeFormat: {
+      displayFormats: {
+        hour: 'H:mm',
+      },
+      minUnit: 'hour',
+    },
   },
   {
     title: '7d',
     span: 'day',
     length: 7,
+    timeFormat: {
+      minUnit: 'day',
+    },
   },
   {
     title: '1m',
     span: 'day',
     length: 30,
+    timeFormat: {
+      minUnit: 'day',
+    },
   },
 ];
 
@@ -191,7 +199,9 @@ class CurrencyGraph extends React.Component {
         <h2>{this.props.t('LSK/BTC')}</h2>
         <div className={`${styles.chartWrapper}`} >
           {this.state.data ?
-            <LineChart data={chartData.bind(null, this.state.data)} options={chartOptions}/> :
+            <LineChart
+              data={chartData.bind(null, this.state.data)}
+              options={chartOptions(this.state.step)}/> :
             null}
           {this.state.error ?
             <div className={`${styles.errorMessage}`} >{this.props.t('Loading price data failed.')}</div> :
