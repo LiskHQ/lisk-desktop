@@ -44,7 +44,6 @@ describe('TransactionsHOC', () => {
 
   it('should mount Transactions with appropriate properties', () => {
     const props = wrapper.find('Transactions').first().props();
-    expect(props.accountAddress).to.be.equal(account.address);
     expect(props.activePeer).to.be.equal(peers.data);
     expect(props.transactions).to.deep.equal([...transactions, ...pending]);
     expect(props.count).to.be.equal(transactions.count);
