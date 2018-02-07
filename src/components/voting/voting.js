@@ -13,7 +13,6 @@ class Voting extends React.Component {
   }
 
   toggleSummery() {
-    console.log(this.state.showChangeSummery);
     this.setState({
       showChangeSummery: !this.state.showChangeSummery,
     });

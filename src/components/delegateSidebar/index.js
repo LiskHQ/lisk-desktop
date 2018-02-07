@@ -9,10 +9,10 @@ import ResultBox from '../resultBox';
 
 const DelegateSidebar = ({ votes, updateList }) => (
   <Box className='confirm-votes'>
-    <MultiStep className={styles.wrapper} finalCallback={() => updateList()}>
+    <MultiStep className={styles.wrapper} finalCallback={() => true}>
       <VotesPreview votes={votes} updateList={() => updateList()}/>
       <PassphraseSteps />
-      <ConfirmVotes />
+      <ConfirmVotes updateList={() => updateList()} />
       <ResultBox />
     </MultiStep>
   </Box>
