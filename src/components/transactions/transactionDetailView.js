@@ -2,7 +2,6 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
 import { TimeFromTimestamp, DateFromTimestamp } from './../timestamp/index';
-import CopyToClipboard from '../copyToClipboard';
 import AccountVisual from '../accountVisual';
 import styles from './transactions.css';
 import { FontIcon } from '../fontIcon';
@@ -87,10 +86,13 @@ class TransactionsDetailView extends React.Component {
           <div className={`${grid.row} ${styles.row}`}>
             {this.props.prevStep && <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']} ${styles.column}`}>
               <div className={styles.label}>{this.props.t('Transaction ID')}</div>
-              <div className={styles.value}><CopyToClipboard
-                value={this.props.value.id}
-                text={this.props.value.id}
-                copyClassName={`${styles.copy}`} /></div>
+              <div className={styles.value}>
+                {this.props.prevStep ?
+                  <Link className={`${styles.addressLink} ${styles.clickable}`}
+                    to={`${routes.transaction.long}/${this.props.value.id}`}>
+                    {this.props.value.id}
+                  </Link> : null }
+              </div>
             </div>}
             <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']} ${styles.column}`}>
             </div>
