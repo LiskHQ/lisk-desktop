@@ -100,6 +100,7 @@ or "warn/action" ineastd of "red/green"
   --color-success-dark: #008722;
   --color-action-light-2: #93f4fe;
   --color-action-medium-2: #004aff;
+  --color-link: #0077bd;
   --gradient-theme: linear-gradient(27deg, #17499b 0%, var(--color-grayscale-light) 100%);
   --gradient-action-orange: linear-gradient(-27deg, var(--color-action-dark) 0%, var(--color-action-light) 100%);
   --gradient-action-blue: linear-gradient(44deg, var(--color-action-medium-2) 1%, var(--color-action-light-2) 98%);

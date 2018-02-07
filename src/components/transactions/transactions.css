@@ -296,6 +296,12 @@
   }
 }
 
+.addressLink {
+  color: var(--color-link);
+  font-weight: 600;
+  text-decoration: none;
+}
+
 @media (--xLarge-viewport) {
   .transactions {
     & .activity {

@@ -1,5 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import { Link } from 'react-router-dom';
 import { TimeFromTimestamp, DateFromTimestamp } from './../timestamp/index';
 import CopyToClipboard from '../copyToClipboard';
 import AccountVisual from '../accountVisual';
@@ -7,6 +8,7 @@ import styles from './transactions.css';
 import { FontIcon } from '../fontIcon';
 import LiskAmount from '../liskAmount';
 import Amount from './amount';
+import routes from './../../constants/routes';
 
 class TransactionsDetailView extends React.Component {
   showAvatar(address) {
@@ -35,14 +37,27 @@ class TransactionsDetailView extends React.Component {
                 <AccountVisual address={this.props.value.senderId} size={43} />
               </figure>}
               </div>
-              <div className={`${styles.value} ${styles.sender} `}>{this.props.value.senderId}</div>
+              <div className={`${styles.value} ${styles.sender} `}>
+                <Link className={`${styles.addressLink} ${styles.clickable}`}
+                  to={`${routes.account.long}/${this.props.value.senderId}`}>
+                  {this.props.value.senderId}
+                </Link>
+              </div>
             </div>
             <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']} ${styles.column}`}>
               <div className={styles.label}>{this.props.t('Recipient')} {this.showAvatar(this.props.value.recipientId) &&
               <figure className={styles.accountVisual}>
                 <AccountVisual address={this.props.value.recipientId} size={43} />
               </figure>}</div>
-              <div className={styles.value}>{this.props.value.recipientId ? this.props.value.recipientId : '-'}</div>
+              <div className={styles.value}>
+                {this.props.value.recipientId ?
+                  <Link className={`${styles.addressLink} ${styles.clickable}`}
+                    to={`${routes.account.long}/${this.props.value.recipientId}`}>
+                    {this.props.value.recipientId}
+                  </Link> :
+                  '-'
+                }
+              </div>
             </div>
           </div>
           <div className={`${grid.row} ${styles.row}`}>
