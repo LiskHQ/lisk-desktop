@@ -5,8 +5,7 @@
   position: relative;
 
   & h2 {
-    margin: 40px 32px 20px;
-    font-size: 28px;
+    margin: 45px 32px 20px;
   }
 }
 
@@ -19,9 +18,42 @@
   left: 0;
 }
 
+.errorMessage {
+  margin: 40px;
+  font-size: 14px;
+  color: #3c5068;
+  text-align: center;
+}
+
+.stepSwitchWrapper {
+  float: right;
+  margin: 50px;
+}
+
+.stepSwitch {
+  padding: 10px 16px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-grayscale-medium);
+
+  &.active {
+    color: var(--color-white);
+    background: var(--gradient-tertiary);
+    border-radius: var(--border-radius-normal);
+    font-weight: 300;
+  }
+}
+
 @media (--medium-viewport) {
   .chartWrapper {
-    height: calc(100% + 30px);
+    height: calc(100% - 90px);
     margin: 0 -25px 20px;
+  }
+}
+
+@media (--small-viewport) {
+  .stepSwitchWrapper {
+    margin: 45px 0;
   }
 }
