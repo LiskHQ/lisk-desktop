@@ -54,6 +54,12 @@ or "warn/action" ineastd of "red/green"
   --font-weight-bold: 600;
   --font-weight-very-bold: 700;
 
+  /* Font xl breakpoint */
+  --font-size-h2-xl: 32px;
+
+  /* Font l breakpoint */
+  --font-size-h2-l: 28px;
+
   /* Font m breakpoint */
   --font-size-h2-m: 45px;
   --font-size-h3-m: 30px;
