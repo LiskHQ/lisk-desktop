@@ -1,5 +1,4 @@
 import { Line as LineChart, Chart } from 'react-chartjs-2';
-import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import moment from 'moment';
 import React from 'react';
@@ -190,7 +189,7 @@ class CurrencyGraph extends React.Component {
         <div className={styles.stepSwitchWrapper}>
           {steps.map(step => (
             <span key={step.title}
-              className={`${styles.stepSwitch} ${this.state.step === step ? styles.active : null}`}
+              className={`${styles.stepSwitch} ${this.state.step === step ? styles.active : null} step`}
               onClick={this.setStep.bind(this, step)}>
               {step.title}
             </span>
@@ -212,8 +211,4 @@ class CurrencyGraph extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  transactions: [...state.transactions.pending, ...state.transactions.confirmed].slice(0, 3),
-});
-
-export default connect(mapStateToProps)(translate()(CurrencyGraph));
+export default translate()(CurrencyGraph);
