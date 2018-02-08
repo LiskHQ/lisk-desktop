@@ -17,7 +17,7 @@ const ConfirmVotes = ({ t, prevStep, votePlaced, activePeer, skipped, updateList
         body: t('You’re votes are being processed and will be confirmed. It may take up to 10 minutes to be secured in the blockchain.'),
       };
     }
-    updateList();
+    updateList(false);
     nextStep(message);
   };
 
