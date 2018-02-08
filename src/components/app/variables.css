@@ -54,6 +54,12 @@ or "warn/action" ineastd of "red/green"
   --font-weight-bold: 600;
   --font-weight-very-bold: 700;
 
+  /* Font xl breakpoint */
+  --font-size-h2-xl: 32px;
+
+  /* Font l breakpoint */
+  --font-size-h2-l: 28px;
+
   /* Font m breakpoint */
   --font-size-h2-m: 45px;
   --font-size-h3-m: 30px;
@@ -101,12 +107,14 @@ or "warn/action" ineastd of "red/green"
   --color-action-light-2: #93f4fe;
   --color-action-medium-2: #004aff;
   --color-link: #0077bd;
+  --color-tertiary-medium: #17499b;
   --gradient-theme: linear-gradient(27deg, #17499b 0%, var(--color-grayscale-light) 100%);
   --gradient-action-orange: linear-gradient(-27deg, var(--color-action-dark) 0%, var(--color-action-light) 100%);
   --gradient-action-blue: linear-gradient(44deg, var(--color-action-medium-2) 1%, var(--color-action-light-2) 98%);
   --gradient-greyscale: linear-gradient(to right, var(--row-background-color), #f5f8fc);
   --gradient-greyscale-mobile: linear-gradient(to right, var(--color-grayscale-mobile-background), var(--color-grayscale-darker-mobile-background));
   --gradient-secondary: linear-gradient(45deg, #17499b 0%, var(--color-primary-medium) 100%);
+  --gradient-tertiary: linear-gradient(45deg, var(--color-tertiary-medium) 0%, var(--color-primary-medium) 100%);
 
   /*************************
         Z-Indexes
