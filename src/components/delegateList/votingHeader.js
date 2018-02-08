@@ -1,4 +1,5 @@
 import React from 'react';
+import Waypoint from 'react-waypoint';
 import { translate } from 'react-i18next';
 import styles from './delegateList.css';
 import { FontIcon } from '../fontIcon';
@@ -67,13 +68,18 @@ export class VotingHeaderRaw extends React.Component {
     this.props.setActiveFilter(filter.value);
   }
 
+  markOnOffCanvas(value) {
+    this.setState({ headerPosition: value });
+  }
+
   render() {
     const { t } = this.props;
     const title = this.props.showChangeSummery ? 'Your selection' : 'Delegate List';
     return (
-      <header className={`${styles.header}`}>
+      <header className={`${styles.header} ${styles[this.state.headerPosition]}`}>
         <div>
-          <h2>{t(title)}</h2>
+          <h2 className={styles.desktopTitle}>{t(title)}</h2>
+          <h2 className={styles.mobileTitle}>{t('Voting')}</h2>
         </div>
         <div>
           <ul className={styles.filters}>
@@ -95,6 +101,8 @@ export class VotingHeaderRaw extends React.Component {
             </li>
           </ul>
         </div>
+        <Waypoint onLeave={this.markOnOffCanvas.bind(this, 'offCanvas')} threshold={200}
+          onEnter={this.markOnOffCanvas.bind(this, 'onCanvas')} />
       </header>
     );
   }

@@ -150,7 +150,7 @@ class DelegateList extends React.Component {
       styles.showChangeSummery : '';
     const filteredList = this.filter(this.props.delegates);
     return (
-      <Box className={`voting ${showChangeSummery}`}>
+      <Box className={`voting ${showChangeSummery} ${styles.box}`}>
         <Header
           setActiveFilter={this.setActiveFilter.bind(this)}
           showChangeSummery={this.state.showChangeSummery}
