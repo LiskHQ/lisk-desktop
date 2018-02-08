@@ -1,4 +1,5 @@
 import React from 'react';
+import { MemoryRouter as Router } from 'react-router-dom';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
@@ -22,7 +23,7 @@ describe('SendWritableHOC', () => {
     });
     store.subscribe = () => {};
     store.dispatch = () => {};
-    wrapper = mount(<Provider store={store}><SendHOC i18n={i18n} /></Provider>);
+    wrapper = mount(<Router><Provider store={store}><SendHOC i18n={i18n} /></Provider></Router>);
   });
 
   it('should render Send', () => {
