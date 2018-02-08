@@ -17,6 +17,7 @@
   padding: 9.2vh 42px; /* stylelint-disable-line */
   text-align: center;
   line-height: 36px;
+  display: block;
 
   & .account {
     margin-bottom: 8.5vh; /* stylelint-disable-line */
@@ -39,12 +40,17 @@
     }
   }
 
+  & .sendButton {
+    margin: auto 0px;
+  }
+
   & .button {
     font-weight: var(--font-weight-bold);
     font-size: 16px;
     letter-spacing: 0;
     line-height: 18px;
     text-transform: none;
+    width: 100%;
   }
 }
 
@@ -86,6 +92,20 @@
     min-height: 1px;
     height: auto;
     background: var(--color-grayscale-darker-mobile-background);
+    display: flex;
+
+    & .account {
+      margin: auto 0px;
+      text-align: left;
+
+      & h2 {
+        margin: 0px;
+      }
+    }
+
+    .sendButton {
+      margin: auto 0px;
+    }
   }
 }
 
@@ -104,4 +124,3 @@
     }
   }
 }
-
