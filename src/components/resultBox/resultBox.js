@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '../toolbox/buttons/button';
+import { FontIcon } from '../fontIcon';
 import CopyToClipboard from '../copyToClipboard';
 
 import styles from './resultBox.css';
@@ -12,7 +13,7 @@ class ResultBox extends React.Component {
         <div className={styles.header}>
           {this.props.success
             ? <img src={check} className={styles.icon}/>
-            : <i className={`${styles.icon} material-icons`}>clear</i>
+            : <FontIcon value='error' className={styles.icon}/>
           }
         </div>
         <header>

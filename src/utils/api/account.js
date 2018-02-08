@@ -39,6 +39,8 @@ export const transactions = ({ activePeer, address, limit = 20, offset = 0, orde
   return requestToActivePeer(activePeer, 'transactions', params);
 };
 
+export const transaction = ({ activePeer, id }) => requestToActivePeer(activePeer, 'transactions/get', { id });
+
 export const unconfirmedTransactions = (activePeer, address, limit = 20, offset = 0, orderBy = 'timestamp:desc') =>
   requestToActivePeer(activePeer, 'transactions/unconfirmed', {
     senderId: address,

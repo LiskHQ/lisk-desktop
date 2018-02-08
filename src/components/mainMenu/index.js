@@ -4,7 +4,7 @@ import { translate } from 'react-i18next';
 import MainMenu from './mainMenu';
 
 const mapStateToProps = state => ({
-  isDelegate: state.account.isDelegate,
+  account: state.account,
   showDelegate: state.settings.advancedMode,
 });
 

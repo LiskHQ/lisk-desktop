@@ -3,7 +3,9 @@
 :root {
   --danger-color: var(--color-error);
   --link-color: #0077bd;
-  --header-font-size: 28px;
+  --main-header-font-size-XL: 32px;
+  --main-header-font-size-L: 28px;
+  --main-header-font-size-XS: 24px;
   --link-font-size: 15px;
   --progress-bar-text-font-size: 13px;
   --progress-bar-header-font-size: 54px;
@@ -23,9 +25,10 @@
     margin-left: 30px;
     margin-top: 40px;
 
-    & h3 {
-      font-size: var(--header-font-size);
+    & h2 {
+      font-weight: 400;
       margin: 0;
+      font-size: var(--main-header-font-size-XL);
     }
 
     & a {
@@ -115,6 +118,14 @@
   }
 }
 
+@media (--large-viewport) {
+  .wrapper {
+    & header h2 {
+      font-size: var(--main-header-font-size-L);
+    }
+  }
+}
+
 @media (--small-viewport) {
   .wrapper {
     overflow: visible;
@@ -176,6 +187,14 @@
   .hasChanges {
     & section {
       bottom: 55px;
+    }
+  }
+}
+
+@media (--xSmall-viewport) {
+  .wrapper {
+    & header h2 {
+      font-size: var(--main-header-font-size-XS);
     }
   }
 }

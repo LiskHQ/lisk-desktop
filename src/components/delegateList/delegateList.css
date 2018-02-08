@@ -129,12 +129,12 @@
     padding-bottom: 60px;
     font-size: var(--main-header-font-size-XL);
 
-    & .desktopTitle {
-      display: none;
+    &.desktopTitle {
+      display: block;
     }
 
-    & .mobileTitle {
-      display: block;
+    &.mobileTitle {
+      display: none;
     }
   }
 
@@ -311,6 +311,11 @@
     & .row:not(.upVoteRow):not(.downVoteRow) {
       display: none;
     }
+  }
+
+  & td:first-child,
+  & th:first-child {
+    display: none !important;
   }
 }
 

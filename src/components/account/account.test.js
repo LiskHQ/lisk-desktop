@@ -44,7 +44,6 @@ describe('Account', () => {
   it('depicts being online when peers.status.online is true', () => {
     props.peers.status.online = true;
     const wrapper = shallow(<Account {...props} />);
-    const expectedValue = 'check';
-    expect(wrapper.find('.material-icons').text()).to.be.equal(expectedValue);
+    expect(wrapper.find('.status FontIcon')).to.have.className('online');
   });
 });

@@ -1,0 +1,63 @@
+@import '../app/variables.css';
+
+:root {
+  --header-subtitle-font-size-XL: 18px;
+  --header-subtitle-font-size-L: 16px;
+  --main-header-font-size-XL: 32px;
+  --main-header-font-size-L: 28px;
+  --main-header-font-size-XS: 24px;
+  --grid-padding-XL: 48px;
+  --grid-padding-L: 32px;
+  --grid-padding-XS: 19px;
+}
+
+.copyLabel {
+  color: var(--color-grayscale-dark);
+  line-height: 26px;
+}
+
+.copyIcon {
+  color: var(--color-primary-standard);
+}
+
+.detailsWrapper {
+  margin: auto 0px auto 20%;
+}
+
+@media (--xLarge-viewport) {
+  .transaction {
+    & header {
+      padding: 20px var(--grid-padding-XL);
+
+      & h2 {
+        font-size: var(--main-header-font-size-XL);
+        margin-bottom: 7px;
+      }
+    }
+  }
+}
+
+@media (--large-viewport) {
+  .transaction {
+    & header {
+      padding: 20px var(--grid-padding-L);
+
+      & h2 {
+        font-size: var(--main-header-font-size-L);
+        margin-bottom: 5px;
+      }
+    }
+  }
+}
+
+@media (--xSmall-viewport) {
+  .transaction {
+    & header {
+      padding: 20px var(--grid-padding-XS);
+
+      & h2 {
+        font-size: var(--main-header-font-size-XS);
+      }
+    }
+  }
+}

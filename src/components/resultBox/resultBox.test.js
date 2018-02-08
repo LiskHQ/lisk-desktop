@@ -2,7 +2,9 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { spy } from 'sinon';
+import { FontIcon } from '../fontIcon';
 import ResultBox from './resultBox';
+import styles from './resultBox.css';
 
 describe('Result Box', () => {
   let wrapper;
@@ -30,7 +32,7 @@ describe('Result Box', () => {
 
     expect(wrapper.find('h2').text()).to.contain(title);
     expect(wrapper.find('.result-box-message').text()).to.contain(body);
-    expect(wrapper.find('.material-icons')).to.have.length(0);
+    expect(wrapper.find(`.${styles.header}`).find(FontIcon)).to.be.not.present();
     expect(wrapper.find('img')).to.have.length(1);
     expect(wrapper.find('.copy-title').text()).to.contain(copy.title);
 
@@ -55,7 +57,7 @@ describe('Result Box', () => {
 
     expect(wrapper.find('h2').text()).to.contain(title);
     expect(wrapper.find('.result-box-message').text()).to.contain(body);
-    expect(wrapper.find('.material-icons')).to.have.length(1);
+    expect(wrapper.find(`.${styles.header}`).find(FontIcon)).to.be.present();
     expect(wrapper.find('img')).to.have.length(0);
     expect(wrapper.find('.copy-title')).to.have.length(0);
   });

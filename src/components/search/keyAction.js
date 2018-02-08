@@ -21,8 +21,7 @@ export default (event, history) => {
     }
 
     if (value.match(regex.transactionId)) {
-      // TODO: will be implemented in #246
-      history.push('/');
+      history.push(`${routes.transaction.long}/${value}`);
     }
 
     // TODO: case of no match

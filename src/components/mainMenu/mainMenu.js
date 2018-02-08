@@ -8,11 +8,9 @@ import * as menuLogos from '../../assets/images/main-menu-icons/*.svg'; //eslint
 import { FontIcon } from '../fontIcon';
 import Setting from '../setting';
 
-const getTabs = (isDelegate, tabs) => tabs.filter(t => t.id !== 'forging' || isDelegate);
-
 const getIndex = (history, tabs) =>
   tabs.map(t => t.route)
-    .indexOf(history.location.pathname.split('/')[2]);
+    .indexOf(history.location.pathname);
 
 const isCurrent = (history, index, tabs) =>
   history.location.pathname.indexOf(tabs[index].route) === 6; // after: /main/
@@ -31,6 +29,7 @@ class MainMenu extends React.Component {
     this.state = {
       active: false,
       setting: false,
+      index: 0,
     };
   }
 
@@ -41,7 +40,7 @@ class MainMenu extends React.Component {
 
   navigate(history, tabs, index) {
     if (!isCurrent(history, index, tabs)) {
-      this.setState({ active: false });
+      this.setState({ active: false, index });
       history.push(tabs[index].route);
     }
   }
@@ -53,10 +52,10 @@ class MainMenu extends React.Component {
   }
 
   render() {
-    const { history, isDelegate, t, showDelegate } = this.props;
+    const { history, t, showDelegate, account } = this.props;
     const tabs = [
       {
-        label: t('Search'),
+        label: t('Explorer'),
         route: '/explorer/search',
         id: 'explorer',
         image: menuLogos.search,
@@ -107,7 +106,6 @@ class MainMenu extends React.Component {
         image: menuLogos.delegates,
       });
     }
-    const filterTabs = getTabs(isDelegate, tabs);
     return (
       <Fragment>
         <aside>
@@ -115,16 +113,17 @@ class MainMenu extends React.Component {
             <img src={logo} className={styles.logo} />
             <ToolboxTabs index={getIndex(history, tabs)}
               theme={styles}
-              onChange={this.navigate.bind(this, history, filterTabs)}
+              onChange={this.navigate.bind(this, history, tabs)}
               disableAnimatedBottomBorder={true}
               className={`${styles.tabs} main-tabs`}>
-              {filterTabs.map(({ label, image, id }, index) =>
+              {tabs.map(({ label, image, id }, index) =>
                 <Tab
                   key={index}
                   label={<TabTemplate label={label} img={image} />}
                   className={styles.tab}
                   id={id}
-                  disabled={isCurrent(history, index, tabs)} />)}
+                  disabled={(isCurrent(history, index, tabs) || !account.address) && index > 0 }
+                />)}
             </ToolboxTabs>
             <div onClick={this.menuToggle.bind(this)}
               className={`${styles.more} more-menu`}>
@@ -142,15 +141,16 @@ class MainMenu extends React.Component {
                 </header>
                 <ToolboxTabs index={getIndex(history, tabs)}
                   theme={styles}
-                  onChange={this.navigate.bind(this, history, filterTabs)}
+                  onChange={this.navigate.bind(this, history, tabs)}
                   disableAnimatedBottomBorder={true}
                   className={`${styles.tabs} main-tabs`}>
-                  {filterTabs.map(({ label, image, id }, index) =>
+                  {tabs.map(({ label, image, id }, index) =>
                     <Tab
                       key={index}
                       label={<TabTemplate label={label} img={image} />}
                       id={id}
-                      disabled={isCurrent(history, index, tabs)} />)}
+                      disabled={(isCurrent(history, index, tabs) || !account.address) && index > 0 }
+                    />)}
                 </ToolboxTabs>
               </div>
               <Setting showSetting={this.state.setting} />
