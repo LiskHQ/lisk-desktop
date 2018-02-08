@@ -12,13 +12,15 @@ import transactionTypes from '../../constants/transactionTypes';
 const { lockDuration } = accountConfig;
 
 const updateTransactions = (store, peers) => {
-  const filter = store.getState().transactions.filter;
-  const address = store.getState().transactions.address;
-  getTransactions({ activePeer: peers.data, address, limit: 25, filter })
-    .then(response => store.dispatch(transactionsUpdated({
-      confirmed: response.transactions,
-      count: parseInt(response.count, 10),
-    })));
+  const state = store.getState();
+  const { filter } = state.transactions;
+  const address = state.transactions.address ? state.transactions.address : state.account.address;
+  getTransactions({
+    activePeer: peers.data, address, limit: 25, filter,
+  }).then(response => store.dispatch(transactionsUpdated({
+    confirmed: response.transactions,
+    count: parseInt(response.count, 10),
+  })));
 };
 
 const hasRecentTransactions = txs => (
