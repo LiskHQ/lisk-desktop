@@ -31,7 +31,7 @@
 }
 
 .stepSwitch {
-  padding: 8px 16px;
+  padding: 10px 16px;
   cursor: pointer;
   font-size: 15px;
   font-weight: 500;
@@ -39,8 +39,9 @@
 
   &.active {
     color: var(--color-white);
-    background: var(--gradient-action-blue);
+    background: var(--gradient-tertiary);
     border-radius: var(--border-radius-normal);
+    font-weight: 300;
   }
 }
 
