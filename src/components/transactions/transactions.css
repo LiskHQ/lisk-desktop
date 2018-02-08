@@ -337,7 +337,7 @@
   }
 
   .details {
-    padding: 0px 0px 0px var(--grid-padding-XL);
+    padding: 0px var(--grid-padding-XL);
 
     & .label {
       font-size: var(--details-label-font-size-XL);
@@ -395,7 +395,7 @@
   }
 
   .details {
-    padding: 0px 0px 0px var(--grid-padding-L);
+    padding: 0px var(--grid-padding-L);
 
     & .label {
       font-size: var(--details-label-font-size-L);
@@ -490,7 +490,7 @@
   }
 
   .details {
-    padding: 0px 0px 20px var(--grid-padding-XS);
+    padding: 0px var(--grid-padding-XS);
 
     & .row {
       padding-bottom: 0px;
