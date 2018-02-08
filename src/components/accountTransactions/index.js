@@ -21,15 +21,20 @@ class accountTransactions extends React.Component {
         <Send/>
       </div>
       <div className={`${grid['col-sm-12']} ${styles.transactions} ${grid['col-md-8']}`}>
-        <Transactions address={this.props.match.params.address} />
+        <Transactions
+          address={this.props.match.params.address}
+          balance={this.props.balance} />
       </div>
     </div>;
   }
 }
 
+const mapStateToProps = state => ({
+  balance: state.transactions.account ? state.transactions.account.balance : null,
+});
+
 const mapDispatchToProps = dispatch => ({
   transactionsRequestInit: data => dispatch(transactionsRequestInit(data)),
 });
 
-
-export default connect(null, mapDispatchToProps)(translate()(accountTransactions));
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(accountTransactions));
