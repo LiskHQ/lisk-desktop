@@ -7,6 +7,7 @@
   --link-font-size: 15px;
   --progress-bar-text-font-size: 13px;
   --progress-bar-header-font-size: 54px;
+  --progres-bar-height-mobile: 40px;
 }
 
 .wrapper {
@@ -110,6 +111,71 @@
       & h4 {
         margin: 15px 0px;
       }
+    }
+  }
+}
+
+@media (--small-viewport) {
+  .wrapper {
+    overflow: visible;
+
+    & header {
+      display: none;
+    }
+
+    & section {
+      width: 100%;
+      position: absolute;
+      height: var(--progres-bar-height-mobile);
+      bottom: 0;
+      background-color: var(--color-white);
+      transition: all ease 300ms;
+    }
+
+    & .progressWrapper {
+      margin-bottom: 0;
+      top: auto;
+      width: 50%;
+      float: left;
+      height: var(--progres-bar-height-mobile);
+
+      & article {
+        top: 0;
+        position: relative;
+
+        & h4,
+        & span {
+          font-size: 14px;
+          display: inline;
+          margin: 0;
+          line-height: var(--progres-bar-height-mobile);
+          font-family: Roboto, Helvetica, Arial, sans-serif;
+          font-weight: 500;
+        }
+      }
+
+      & svg {
+        display: none;
+      }
+    }
+
+    & .button {
+      width: 100%;
+      margin: 0;
+      color: var(--color-white) !important;
+      background-color: var(--color-primary-standard) !important;
+      z-index: 3;
+      position: relative;
+
+      &:disabled {
+        background-color: var(--color-grayscale-light) !important;
+      }
+    }
+  }
+
+  .hasChanges {
+    & section {
+      bottom: 55px;
     }
   }
 }

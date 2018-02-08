@@ -1,3 +1,39 @@
+@import '../app/variables.css';
+
+:root {
+  --submit-button-height: 55px;
+  --header-height: 58px;
+  --filters-height: 55px;
+  --footer-height: 62px;
+}
+
 .wrapper {
   width: 100%;
+}
+
+@media (--small-viewport) {
+  .wrapper {
+    margin: 0;
+
+    & > section {
+      width: 100%;
+      height: calc(100vh - var(--submit-button-height) - var(--header-height) - var(--footer-height)); /* stylelint-disable-line */
+      position: relative;
+    }
+
+    & > aside {
+      position: fixed;
+      z-index: 2;
+      left: 0;
+      bottom: var(--footer-height);
+      width: 100%;
+      height: auto;
+
+      & > div {
+        height: 100%;
+        min-height: 100%;
+        overflow: visible;
+      }
+    }
+  }
 }

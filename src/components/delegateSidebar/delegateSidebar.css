@@ -1,7 +1,21 @@
+@import '../app/variables.css';
+
 .wrapper {
   display: flex;
   height: 100%;
   justify-content: space-between;
   width: 100%;
   flex-direction: column;
+}
+
+@media (--small-viewport) {
+  .wrapper {
+    & > div footer {
+      padding-bottom: 0;
+    }
+
+    & div :global(.show-passphrase-toggle) {
+      top: -35px;
+    }
+  }
 }

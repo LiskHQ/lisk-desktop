@@ -1,6 +1,6 @@
 import { translate } from 'react-i18next';
 import React, { Fragment } from 'react';
-import CircularProgressbar from 'react-circular-progressbar';
+import CircularProgressBar from 'react-circular-progressbar';
 import styles from './votesPreview.css';
 import votingConst from '../../constants/voting';
 import GradientSVG from './gradientSVG';
@@ -18,9 +18,12 @@ const VotesPreview = ({ votes, t, nextStep }) => {
   const totalClass = totalVotesCount > 101 ? styles.red : '';
 
   const createPercentage = (count, total) => Math.ceil((count / total) * 100);
+  const surpassedVoteLimit = totalNewVotesCount > maxCountOfVotesInOneTurn ||
+    totalVotesCount > 101;
 
   return (<Fragment>
-    <section className={`${styles.wrapper} votes-preview`}>
+    <section className={`${styles.wrapper} votes-preview ${surpassedVoteLimit ? styles.surpassed : ''}
+      ${totalNewVotesCount > 0 ? styles.hasChanges : ''}`}>
       <header>
         <h3>{t('Votes')}</h3>
         <a target='_blank' href='http://lisk.io' rel='noopener noreferrer'>
@@ -29,7 +32,7 @@ const VotesPreview = ({ votes, t, nextStep }) => {
       </header>
       <section>
         <div className={`${styles.progressWrapper} ${selectionClass} selection-wrapper`}>
-          <CircularProgressbar
+          <CircularProgressBar
             className={styles.progress}
             percentage={createPercentage(totalNewVotesCount, maxCountOfVotesInOneTurn)}
             textForPercentage={() => ''}/>
@@ -40,7 +43,7 @@ const VotesPreview = ({ votes, t, nextStep }) => {
           </article>
         </div>
         <div className={`${styles.progressWrapper} ${totalClass} ${styles.totalWrapper} total-wrapper`}>
-          <CircularProgressbar
+          <CircularProgressBar
             className={styles.progress}
             percentage={createPercentage(totalVotesCount, maxCountOfVotes)}
             textForPercentage={() => ''}/>
@@ -55,9 +58,7 @@ const VotesPreview = ({ votes, t, nextStep }) => {
         className={`${styles.button} next`}
         type='button'
         onClick={() => nextStep({})}
-        disabled={(totalNewVotesCount === 0 ||
-          totalNewVotesCount > maxCountOfVotesInOneTurn ||
-          totalVotesCount > 101)} />
+        disabled={totalNewVotesCount === 0 || surpassedVoteLimit} />
     </section>
     <GradientSVG
       id='grad'
