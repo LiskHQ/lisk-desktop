@@ -82,6 +82,8 @@
 }
 
 .transactions {
+  height: var(--main-box-height);
+
   & .activity {
     display: flex;
     flex-direction: column;
@@ -163,6 +165,14 @@
 .details {
   line-height: var(--list-line-height);
   color: var(--details-font-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100%;
+
+  & footer {
+    padding-bottom: 92px;
+  }
 
   & .copy {
     color: var(--color-primary-standard);
@@ -170,6 +180,10 @@
 
   & .row {
     padding-bottom: 48px;
+
+    &:last-child {
+      padding-bottom: 0px;
+    }
   }
 
   & .column {
@@ -186,7 +200,6 @@
 
   & header {
     padding-left: 0px;
-    margin-bottom: 80px;
 
     & h3 {
       font-family: var(--content-font);
@@ -296,6 +309,12 @@
   }
 }
 
+.addressLink {
+  color: var(--color-link);
+  font-weight: 600;
+  text-decoration: none;
+}
+
 @media (--xLarge-viewport) {
   .transactions {
     & .activity {
@@ -318,7 +337,7 @@
   }
 
   .details {
-    padding: 0px 0px 20px var(--grid-padding-XL);
+    padding: 0px var(--grid-padding-XL);
 
     & .label {
       font-size: var(--details-label-font-size-XL);
@@ -376,7 +395,7 @@
   }
 
   .details {
-    padding: 0px 0px 20px var(--grid-padding-L);
+    padding: 0px var(--grid-padding-L);
 
     & .label {
       font-size: var(--details-label-font-size-L);
@@ -471,7 +490,7 @@
   }
 
   .details {
-    padding: 0px 0px 20px var(--grid-padding-XS);
+    padding: 0px var(--grid-padding-XS);
 
     & .row {
       padding-bottom: 0px;

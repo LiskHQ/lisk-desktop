@@ -79,7 +79,7 @@ input:read-only {
 
 .sendWrapper {
   display: flex;
-  flex-flow: column wrap;
+  flex-direction: column;
   justify-content: space-between;
   width: 100%;
   height: 100%;

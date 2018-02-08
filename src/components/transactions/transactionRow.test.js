@@ -59,6 +59,22 @@ describe('TransactionRow', () => {
     expect(wrapper.find('.transactions-cell')).to.have.lengthOf(4);
   });
 
+  it('should not cause any error on click if props.nextStep is not defined', () => {
+    const wrapper = mount(<Provider store={store}>
+      <Router>
+        <I18nextProvider i18n={ i18n }>
+          <TransactionRow
+            tableStyle={tableStyle}
+            address={address}
+            value={rowData}
+          ></TransactionRow>
+        </I18nextProvider>
+      </Router>
+    </Provider>, options);
+
+    wrapper.find('.transactions-cell').at(0).simulate('click');
+  });
+
   it('should render Spinner if no value.confirmations" ', () => {
     rowData.confirmations = undefined;
     const wrapper = mount(<Provider store={store}>
