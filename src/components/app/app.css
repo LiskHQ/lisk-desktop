@@ -45,6 +45,7 @@ body {
 .mainBox {
   margin: 0 auto;
   max-width: var(--main-box-width);
+  height: -webkit-fill-available;
 }
 
 @media (--medium-viewport) {

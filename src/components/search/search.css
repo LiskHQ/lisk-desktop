@@ -1,10 +1,14 @@
 @import './../app/variables.css';
 
 .search {
+  margin-top: 25vh; /* stylelint-disable-line */
   text-align: center;
-  margin-top: 35vh; /* stylelint-disable-line */
+  display: flex;
+  flex-direction: row;
 
   & .wrapper {
+    width: 100%;
+
     & .input {
       border: none;
       background: none;

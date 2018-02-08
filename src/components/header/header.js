@@ -33,7 +33,6 @@ class Header extends React.Component {
   }
 
   resizeWindow() {
-    console.log('here');
     this.setState({ isMobile: window.innerWidth < 1024 });
   }
 

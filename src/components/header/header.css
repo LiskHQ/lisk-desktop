@@ -2,6 +2,10 @@
 @import '../app/variables.css';
 
 :root {
+  --header-margin-right-left-M: 26px;
+  --header-margin-top-bottom-M: 23px;
+  --header-margin-right-left-S: 20px;
+  --header-margin-top-bottom-S: 10px;
   --avatar-height: 69px;
   --avatar-height-m: 40px;
   --avatar-height-s: 33px;
@@ -84,7 +88,6 @@
 
 .loginInfo {
   display: inline-block;
-  width: 32vw; /* stylelint-disable-line */
 }
 
 .account {
@@ -180,9 +183,7 @@
     display: inline-block;
     height: 42px;
     padding: 4px;
-    margin-left: 26px;
-    margin-top: 23px;
-    margin-bottom: 23px;
+    margin: var(--header-margin-top-bottom-M) 0px  var(--header-margin-top-bottom-M) var(--header-margin-right-left-M);
   }
 
   .logoutButton {
@@ -190,8 +191,7 @@
   }
 
   .account {
-    margin-right: 26px;
-    margin-top: 23px;
+    margin: var(--header-margin-top-bottom-M) var(--header-margin-right-left-M) 0px 0px;
     height: 72px;
 
     & .avatar {
@@ -241,9 +241,7 @@
     & .link {
       display: block;
       vertical-align: middle;
-      margin-right: 26px;
-      margin-top: 23px;
-      margin-bottom: 23px;
+      margin: var(--header-margin-top-bottom-M) var(--header-margin-right-left-M) var(--header-margin-top-bottom-M) 0px;
       line-height: 54px;
     }
   }
@@ -255,8 +253,7 @@
   }
 
   .account {
-    margin-right: 20px;
-    margin-top: 10px;
+    margin: var(--header-margin-top-bottom-S) var(--header-margin-right-left-S) 0px 0px;
     height: auto;
 
     & .avatar {
@@ -273,7 +270,7 @@
 
       & .balance {
         font-size: 18px;
-        font-weight: bold;
+        font-weight: 300;
 
         & small {
           font-size: 10px;
@@ -290,16 +287,12 @@
 
   .logo {
     height: 35px;
-    margin-left: 20px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin: var(--header-margin-top-bottom-S) 0px var(--header-margin-top-bottom-S) var(--header-margin-right-left-S);
   }
 
   .login {
     & .link {
-      margin-right: 20px;
-      margin-top: 10px;
-      margin-bottom: 10px;
+      margin: var(--header-margin-top-bottom-S) var(--header-margin-right-left-S) var(--header-margin-top-bottom-S) 0px;
       line-height: 46px;
     }
   }
