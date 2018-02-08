@@ -1,6 +1,7 @@
 Feature: Voting page
   Scenario: should allow to view delegates and more on scroll
     Given I'm logged in as "any account"
+    And I wait 0.1 seconds
     When I go to "main/voting/"
     Then I should see table with 100 lines
     When I scroll to the bottom of "delegate list"
@@ -8,11 +9,13 @@ Feature: Voting page
 
   Scenario: should allow to view delegates with cold account
     Given I'm logged in as "empty account"
+    And I wait 0.1 seconds
     When I go to "main/voting/"
     Then I should see table with 100 lines
 
   Scenario: should allow to search delegates
     Given I'm logged in as "any account"
+    And I wait 0.1 seconds
     When I go to "main/voting/"
     And I fill in "genesis_42" to "search" field
     Then I should see table with 1 lines
@@ -24,6 +27,7 @@ Feature: Voting page
   @integration
   Scenario: should allow to view my votes
     Given I'm logged in as "genesis"
+    And I wait 0.1 seconds
     When I go to "main/voting/"
     And I click "filter voted"
     Then I should see table with 100 lines
@@ -31,6 +35,7 @@ Feature: Voting page
   @testnet
   Scenario: should allow to select delegates in the "Voting" tab and vote for them
     Given I'm logged in as "delegate candidate"
+    And I wait 0.1 seconds
     When I go to "main/voting/"
     And I click checkbox on table row no. 3
     And I click checkbox on table row no. 5
@@ -42,6 +47,7 @@ Feature: Voting page
 
   Scenario: should allow to vote with second passphrase account
     Given I'm logged in as "second passphrase account"
+    And I wait 0.1 seconds
     When I go to "main/voting/"
     And I click checkbox on table row no. 3
     And I click checkbox on table row no. 5
@@ -56,6 +62,7 @@ Feature: Voting page
   @integration
   Scenario: should allow to remove votes form delegates
     Given I'm logged in as "genesis"
+    And I wait 0.1 seconds
     When I go to "main/voting/"
     And I click checkbox on table row no. 3
     And I click checkbox on table row no. 5

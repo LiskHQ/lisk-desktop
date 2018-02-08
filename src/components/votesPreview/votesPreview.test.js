@@ -11,6 +11,7 @@ import i18n from '../../i18n';
 describe('votesPreview', () => {
   let wrapper;
   const props = {
+    updateList: key => key,
     votes: {
       voted: {
         confirmed: true,

@@ -45,6 +45,7 @@ describe('ConfirmVotes', () => {
     t: key => key,
     prevStep: sinon.spy(),
     nextStep: sinon.spy(),
+    updateList: sinon.spy(),
     votePlaced: (data) => {
       data.goToNextStep({ success: true });
     },
