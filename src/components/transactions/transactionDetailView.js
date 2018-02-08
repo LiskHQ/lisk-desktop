@@ -1,6 +1,8 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
+
+import { Button } from './../toolbox/buttons/button';
 import { TimeFromTimestamp, DateFromTimestamp } from './../timestamp/index';
 import CopyToClipboard from '../copyToClipboard';
 import AccountVisual from '../accountVisual';
@@ -96,6 +98,14 @@ class TransactionsDetailView extends React.Component {
             </div>
           </div>
         </div>
+        <footer>
+          {this.props.prevStep ?
+            <Link to={`${routes.transaction.long}/${this.props.value.id}`}>
+              <Button className={styles.button} >
+                {this.props.t('Show transaction page')}
+              </Button>
+            </Link> : null }
+        </footer>
       </div>
     );
   }
