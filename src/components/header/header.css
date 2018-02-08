@@ -2,19 +2,30 @@
 @import '../app/variables.css';
 
 :root {
+  --header-margin-right-left-M: 26px;
+  --header-margin-top-bottom-M: 23px;
+  --header-margin-right-left-S: 20px;
+  --header-margin-top-bottom-S: 10px;
   --avatar-height: 69px;
   --avatar-height-m: 40px;
   --avatar-height-s: 33px;
-  --menu-icon-height: 39px;
+  --menu-icon-height-XL: 39px;
+  --menu-icon-height-M: 34px;
   --font-size-normal: 16px;
   --font-size-small: 13px;
 }
 
 .wrapper {
   margin: 5vh 0px;  /* stylelint-disable-line */
+  text-align: right;
 
   & .noPadding {
     padding: 0px;
+  }
+
+  & .searchBar {
+    display: inline-block;
+    float: left;
   }
 }
 
@@ -59,18 +70,33 @@
   font-size: 24px !important;
 }
 
-.actionButton {
+.login {
   text-align: right;
-  display: block;
+  text-decoration: none;
+
+  & .button {
+    display: block;
+  }
+
+  & .link {
+    display: none;
+    font-size: 15px;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary-standard);
+  }
+}
+
+.loginInfo {
+  display: inline-block;
 }
 
 .account {
   position: relative;
-  padding-left: 50px;
-  text-align: right;
+  height: 80px;
 
   & .avatar {
     display: inline-block;
+    vertical-align: middle;
     height: var(--avatar-height);
     width: var(--avatar-height);
     margin-right: 30px;
@@ -78,7 +104,7 @@
 
   & .information {
     display: inline-block;
-    vertical-align: top;
+    vertical-align: middle;
     line-height: 25px;
     padding-right: 20px;
     height: var(--avatar-height);
@@ -116,12 +142,12 @@
 
     & .iconCircle {
       position: absolute;
-      bottom: -24px;
+      bottom: -14px;
       right: -24px;
       background: var(--color-white);
       border-radius: 100%;
-      height: var(--menu-icon-height);
-      width: var(--menu-icon-height);
+      height: var(--menu-icon-height-XL);
+      width: var(--menu-icon-height-XL);
       box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.62);
       text-align: center;
 
@@ -133,6 +159,11 @@
 }
 
 @media (--medium-viewport) {
+  .loginInfo {
+    width: 100%;
+    float: none;
+  }
+
   .wrapper {
     margin: 0px;
     box-shadow: 0 2px 4px 0 rgba(60, 80, 104, 0.14), 0 8px 10px 0 rgba(60, 80, 104, 0.1);
@@ -141,14 +172,18 @@
     top: 0;
     background-color: var(--color-white);
     z-index: 20;
-    height: var(--m-top-bar-height);
+    height: auto;
+
+    & .searchBar {
+      width: 100%;
+    }
   }
 
   .logo {
     display: inline-block;
-    height: calc(100% - 8px);
+    height: 42px;
     padding: 4px;
-    margin-left: 30px;
+    margin: var(--header-margin-top-bottom-M) 0px  var(--header-margin-top-bottom-M) var(--header-margin-right-left-M);
   }
 
   .logoutButton {
@@ -156,23 +191,21 @@
   }
 
   .account {
-    margin-right: 20px;
+    margin: var(--header-margin-top-bottom-M) var(--header-margin-right-left-M) 0px 0px;
+    height: 72px;
 
     & .avatar {
-      margin-top: 14px;
       height: var(--avatar-height-m);
       width: var(--avatar-height-m);
     }
 
     & .information {
-      margin-top: 14px;
       height: var(--avatar-height-m);
 
       & .balance {
         font-size: 20px;
         color: var(--color-black);
         font-family: var(--heading-font);
-        margin-bottom: -8px;
 
         & small {
           font-size: 12px;
@@ -181,6 +214,7 @@
 
       & .address {
         font-size: 12px;
+        font-weight: 400;
       }
 
       & .timer {
@@ -190,27 +224,37 @@
 
     & .menu {
       & .iconCircle {
-        bottom: -12px;
-        right: -34px;
+        bottom: 20px;
+        right: -32px;
         box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.12), 0 -2px 24px 0 rgba(0, 0, 0, 0.24);
+        height: var(--menu-icon-height-M);
+        width: var(--menu-icon-height-M);
       }
     }
   }
 
-  .actionButton {
-    /* temporarily and fixed in #263 */
-    display: none;
+  .login {
+    & .button {
+      display: none;
+    }
+
+    & .link {
+      display: block;
+      vertical-align: middle;
+      margin: var(--header-margin-top-bottom-M) var(--header-margin-right-left-M) var(--header-margin-top-bottom-M) 0px;
+      line-height: 54px;
+    }
   }
 }
 
 @media (--small-viewport) {
   .wrapper {
-    height: var(--s-top-bar-height);
+    height: auto;
   }
 
   .account {
-    margin-left: 0;
-    padding-left: 0;
+    margin: var(--header-margin-top-bottom-S) var(--header-margin-right-left-S) 0px 0px;
+    height: auto;
 
     & .avatar {
       margin-top: 4px;
@@ -222,19 +266,15 @@
     & .information {
       margin-top: 0;
       height: var(--avatar-height-s);
+      line-height: 20px;
 
       & .balance {
         font-size: 18px;
-        font-weight: bold;
-        margin: 10px 0;
+        font-weight: 300;
 
         & small {
           font-size: 10px;
         }
-      }
-
-      & .address {
-        display: none;
       }
     }
 
@@ -246,6 +286,14 @@
   }
 
   .logo {
-    margin-left: 10px;
+    height: 35px;
+    margin: var(--header-margin-top-bottom-S) 0px var(--header-margin-top-bottom-S) var(--header-margin-right-left-S);
+  }
+
+  .login {
+    & .link {
+      margin: var(--header-margin-top-bottom-S) var(--header-margin-right-left-S) var(--header-margin-top-bottom-S) 0px;
+      line-height: 46px;
+    }
   }
 }
