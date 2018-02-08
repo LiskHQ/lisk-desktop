@@ -8,7 +8,11 @@ const explorerApi = {
     popsicle.get(`${explorerUrl}/api/exchanges/getCandles?e=poloniex&d=${span}`)
       .use(popsicle.plugins.parse('json'))
       .then((response) => {
-        resolve(response.body);
+        if (response.body && response.body.candles && response.body.candles.length > 0) {
+          resolve(response.body);
+        } else {
+          reject(response.body);
+        }
       }).catch(reject);
   }),
 };
