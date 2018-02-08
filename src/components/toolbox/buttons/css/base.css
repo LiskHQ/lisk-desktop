@@ -3,8 +3,8 @@
 @define-mixin buttonBasics {
   min-width: 250px;
   border-radius: 3px;
-  font-size: 18px;
   text-transform: capitalize;
+  font-weight: var(--font-weight-bold);
   font-family: var(--content-font) !important;
   transition: none !important;
 
