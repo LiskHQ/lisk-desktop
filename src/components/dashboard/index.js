@@ -32,7 +32,6 @@ class Dashboard extends React.Component {
             transactions,
             t,
             address: this.props.accountAddress,
-            loadMore: () => {},
           }} />
         </Box>
       </div>
