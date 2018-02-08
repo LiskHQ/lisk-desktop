@@ -17,7 +17,7 @@ import routes from './../../constants/routes';
 class Header extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { largeScreen: window.innerWidth >= 1024 };
+    this.state = { isMobile: window.innerWidth < 1024 };
   }
 
   shouldShowActionButton() {
@@ -30,6 +30,19 @@ class Header extends React.Component {
 
   shouldShowSearchBar() {
     return this.props.location.pathname.includes('explorer') && !this.props.location.pathname.includes(routes.search.long);
+  }
+
+  resizeWindow() {
+    console.log('here');
+    this.setState({ isMobile: window.innerWidth < 1024 });
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.resizeWindow.bind(this));
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.resizeWindow.bind(this));
   }
 
   render() {
@@ -72,7 +85,7 @@ class Header extends React.Component {
                   <RelativeLink to='saved-accounts' className={styles.avatar}>
                     <AccountVisual
                       address={this.props.account.address}
-                      size={this.state.largeScreen ? 69 : 40}
+                      size={this.state.isMobile ? 40 : 69}
                     />
                   </RelativeLink>
                   <div className={styles.menu}>
