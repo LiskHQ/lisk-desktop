@@ -7,6 +7,7 @@ import Header from '../header';
 import Login from '../login';
 import Register from '../register';
 import Search from '../search';
+import SearchResult from '../search/searchResult';
 import TransactionDashboard from '../transactionDashboard';
 import AccountTransactions from '../accountTransactions';
 import Voting from '../voting';
@@ -49,6 +50,7 @@ const App = () => (
             <Route path='/explorer' render={ ({ match }) => (
               <main>
                 <Route path={`${match.url}${routes.search.short}/:dialog?`} component={Search} />
+                <Route path={`${match.url}${routes.searchResult.short}/:query?`} component={SearchResult} />
                 <Route path={`${match.url}${routes.account.short}/:address?`} component={AccountTransactions} />
                 <Route path={`${match.url}${routes.transaction.short}/:id`} component={SingleTransaction} />
               </main>
