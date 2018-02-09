@@ -155,4 +155,8 @@
       color: var(--color-grayscale-medium);
     }
   }
+
+  .resultWrapper {
+    padding-top: var(--s-top-bar-height);
+  }
 }

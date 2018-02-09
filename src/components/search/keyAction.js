@@ -14,10 +14,10 @@ const saveSearch = (search) => {
 export const visit = (value, history) => {
   if (value.match(regex.address)) {
     history.push(`${routes.account.long}/${value}`);
-  }
-
-  if (value.match(regex.transactionId)) {
+  } else if (value.match(regex.transactionId)) {
     history.push(`${routes.transaction.long}/${value}`);
+  } else {
+    history.push(`${routes.searchResult.long}/${value}`);
   }
 };
 
