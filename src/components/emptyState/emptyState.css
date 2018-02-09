@@ -17,7 +17,7 @@
 }
 
 .emptyState {
-  max-width: 230px;
+  max-width: 255px;
   margin: auto;
   text-align: center;
 
@@ -26,13 +26,11 @@
   }
 
   & h2 {
-    font-weight: var(--font-weight-semi-bold);
-    font-size: 24px;
     margin: 10px;
   }
 
   & p {
-    font-size: 14px;
+    font-size: 16px;
     line-height: 26px;
     color: var(--color-grayscale-dark);
   }
@@ -41,6 +39,10 @@
 @media (--small-viewport) {
   .emptyState {
     margin: 50px auto;
+
+    & p {
+      font-size: 14px;
+    }
   }
 }
 

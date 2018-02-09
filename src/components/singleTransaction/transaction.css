@@ -60,24 +60,20 @@
 
 @media (--medium-viewport) {
   .transaction {
-    & header {
-      padding: calc(20px + var(--title-bar-extra-padding-M)) var(--grid-padding-L);
-    }
-  }
-}
+    margin-top: var(--title-bar-extra-padding-M);
 
-@media (--medium-viewport) {
-  .transaction {
     & header {
-      padding: calc(20px + var(--title-bar-extra-padding-XS)) var(--grid-padding-XS);
+      padding: 20px  var(--grid-padding-L) calc(20px + var(--title-bar-extra-padding-M)) var(--grid-padding-L);
     }
   }
 }
 
 @media (--xSmall-viewport) {
   .transaction {
+    margin-top: var(--title-bar-extra-padding-XS);
+
     & header {
-      padding: calc(20px + var(--title-bar-extra-padding-XS)) var(--grid-padding-XS);
+      padding: 20px  var(--grid-padding-XS) calc(20px + var(--title-bar-extra-padding-XS)) var(--grid-padding-XS);
 
       & h2 {
         font-size: var(--main-header-font-size-XS);
