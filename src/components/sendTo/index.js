@@ -11,26 +11,10 @@ import routes from './../../constants/routes';
 import styles from './sendTo.css';
 
 class SendTo extends React.Component {
-  constructor() {
-    super();
-    this.state = { isMobile: window.innerWidth < 1024 };
+  shouldComponentUpdate(nextProps) {
+    return nextProps.address !== this.props.address;
   }
 
-  shouldComponentUpdate(nextProps, state) {
-    return nextProps.address !== this.props.address || this.state.isMobile !== state.isMobile;
-  }
-
-  resizeWindow() {
-    this.setState({ isMobile: window.innerWidth < 1024 });
-  }
-
-  componentDidMount() {
-    window.addEventListener('resize', this.resizeWindow.bind(this));
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.resizeWindow.bind(this));
-  }
   render() {
     return (<Box className={`${styles.wrapper} ${grid.row}`}>
       <section className={styles.content}>
@@ -51,7 +35,7 @@ class SendTo extends React.Component {
           ${grid['col-lg-12']}
           ${grid['middle-sm']}
           `}
-            size={this.state.isMobile ? 90 : 144} />
+            size={144} mobileSize={90}/>
           <div className={`${styles.account}
         ${grid['col-xs-8']}
         ${grid['col-sm-8']}

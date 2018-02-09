@@ -14,7 +14,7 @@
 }
 
 .wrapper {
-  padding: 0px 42px; /* stylelint-disable-line */
+  padding: 9.2vh 42px; /* stylelint-disable-line */
   text-align: center;
   line-height: 36px;
   height: 100%;
@@ -100,7 +100,7 @@
 
     & .content {
       display: flex;
-      width: 100%
+      width: 100%;
     }
 
     & .account {
@@ -120,7 +120,7 @@
 
 @media (--small-viewport) {
   .wrapper {
-    padding: 3.3vh 24px; /* stylelint-disable-line */
+    padding: 5.3vh 24px; /* stylelint-disable-line */
 
     & .content {
       display: block;
