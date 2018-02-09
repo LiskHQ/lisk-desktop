@@ -7,7 +7,7 @@
   --header-balance-unit-font-size-XS: 18px;
   --header-subtitle-font-size-XL: 18px;
   --header-subtitle-font-size-L: 16px;
-  --header-subtitle-font-size-XS: 16px;
+  --header-subtitle-font-size-XS: 14px;
   --main-header-font-size-XL: 32px;
   --main-header-font-size-L: 28px;
   --main-header-font-size-XS: 24px;
@@ -103,7 +103,7 @@
       }
     }
 
-    .sendButton {
+    & .sendButton {
       margin: auto 0px;
     }
   }
@@ -111,6 +111,8 @@
 
 @media (--small-viewport) {
   .wrapper {
+    padding: 3.3vh 24px; /* stylelint-disable-line */
+
     & h2 {
       font-size: var(--main-header-font-size-XS);
 
@@ -121,6 +123,10 @@
 
     & .address {
       font-size: var(--header-subtitle-font-size-XS);
+    }
+
+    & .sendButton {
+      margin-top: 3.2vh; /* stylelint-disable-line */
     }
   }
 }

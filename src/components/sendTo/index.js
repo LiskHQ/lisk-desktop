@@ -38,12 +38,26 @@ class SendTo extends React.Component {
       ${grid['col-xs-12']}
       ${grid['col-sm-6']}
       ${grid['col-md-12']}
-      ${grid['col-lg-12']} ${grid.row}`}>
+      ${grid['col-lg-12']}
+      ${grid['middle-sm']}
+      ${grid.row}
+      `}>
         <AccountVisual
           address={this.props.address}
-          className={`${grid['col-xs-6']} ${grid['col-sm-6']} ${grid['col-md-12']} ${grid['col-lg-12']}`}
+          className={`
+          ${grid['col-xs-4']}
+          ${grid['col-sm-4']}
+          ${grid['col-md-12']}
+          ${grid['col-lg-12']}
+          ${grid['middle-sm']}
+          `}
           size={this.state.isMobile ? 90 : 144} />
-        <div className={`${styles.account} ${grid['col-xs-6']} ${grid['col-sm-6']} ${grid['col-md-12']} ${grid['col-lg-12']}`}>
+        <div className={`${styles.account}
+        ${grid['col-xs-8']}
+        ${grid['col-sm-8']}
+        ${grid['col-md-12']}
+        ${grid['col-lg-12']}
+        `}>
           <h2>
             <span>
               <LiskAmount val={this.props.balance}/>
@@ -57,6 +71,7 @@ class SendTo extends React.Component {
       ${grid['col-sm-6']}
       ${grid['col-md-12']}
       ${grid['col-lg-12']}
+      ${grid['middle-sm']}
       ${styles.sendButton}
       `}>
         <Link
