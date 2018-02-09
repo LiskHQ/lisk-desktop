@@ -1,6 +1,7 @@
 import { expect } from 'chai';
-import { visitAndSaveSearch } from './keyAction';
+import { visitAndSaveSearch, visit } from './keyAction';
 import keyCodes from './../../constants/keyCodes';
+import routes from './../../constants/routes';
 import localJSONStorage from './../../utils/localJSONStorage';
 
 describe('Search KeyAction', () => {
@@ -31,5 +32,26 @@ describe('Search KeyAction', () => {
     });
 
     expect(localJSONStorage.get('searches')).to.eql(expectedOutcome);
+  });
+
+  it('visits appropriate url when searched for term', () => {
+    const history = [];
+    const testValues = [
+      '811299173602533L',
+      '382923358293526',
+      'sdfghjkjhgfdsfg',
+    ];
+
+    const expectedHistory = [
+      `${routes.account.long}/${testValues[0]}`,
+      `${routes.transaction.long}/${testValues[1]}`,
+      `${routes.searchResult.long}/${testValues[2]}`,
+    ];
+
+    testValues.forEach((value) => {
+      visit(value, history);
+    });
+
+    expect(history).to.eql(expectedHistory);
   });
 });
