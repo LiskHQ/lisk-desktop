@@ -9,6 +9,11 @@
   overflow-y: hidden;
   box-sizing: border-box;
   height: 100%;
+
+  & footer {
+    width: 100%;
+    padding: 0 0 50px;
+  }
 }
 
 .button {
@@ -28,4 +33,16 @@
 
 .input {
   padding: 5px !important;
+}
+
+@media (--small-viewport) {
+  .wrapper {
+    padding: 0px 30px 80px;
+    flex-direction: row;
+
+    & footer {
+      padding: 0;
+      margin-bottom: 30px;
+    }
+  }
 }
