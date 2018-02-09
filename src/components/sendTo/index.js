@@ -1,5 +1,4 @@
 import React from 'react';
-import { translate } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { TertiaryButton } from './../toolbox/buttons/button';
@@ -74,9 +73,7 @@ class SendTo extends React.Component {
       ${grid['middle-sm']}
       ${styles.sendButton}
       `}>
-        <Link
-          to={`${routes.wallet.long}?address=${this.props.address}`}
-        >
+        <Link to={`${routes.wallet.long}?address=${this.props.address}`}>
           <TertiaryButton className={styles.button} >
             <FontIcon value={'send-token'}/> {this.props.t('Send to this address')}
           </TertiaryButton>
@@ -87,4 +84,4 @@ class SendTo extends React.Component {
   }
 }
 
-export default (translate()(SendTo));
+export default SendTo;
