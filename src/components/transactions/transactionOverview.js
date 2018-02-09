@@ -1,11 +1,11 @@
 import React from 'react';
 import Waypoint from 'react-waypoint';
 import CopyToClipboard from '../copyToClipboard';
+import EmptyState from '../emptyState';
 import TransactionList from './transactionList';
 import LiskAmount from '../liskAmount';
 import styles from './transactions.css';
 import txFilters from './../../constants/transactionFilters';
-import cubeImage from '../../assets/images/dark-blue-cube.svg';
 
 class Transactions extends React.Component {
   constructor(props) {
@@ -80,11 +80,9 @@ class Transactions extends React.Component {
           </div>
         </header>
         {this.shouldShowEmptyState() ?
-          <div className={styles.emptyTransactions}>
-            <img src={cubeImage} />
-            <h2 className='empty-message'>{this.props.t('No activity yet')}</h2>
-            <p>{this.props.t('The Wallet will show your recent transactions.')}</p>
-          </div> : null }
+          <EmptyState title={this.props.t('No activity yet')}
+            message={this.props.t('The Wallet will show your recent transactions.')} /> :
+          null }
         {this.shouldShowEmptyState() ?
           null :
           <ul className={styles.list}>
