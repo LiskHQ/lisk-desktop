@@ -4,7 +4,7 @@ import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { transactionsRequestInit } from '../../actions/transactions';
 import Transactions from './../transactions';
-import Send from '../send';
+import SendTo from '../sendTo';
 import styles from './accountTransactions.css';
 
 class accountTransactions extends React.Component {
@@ -17,8 +17,12 @@ class accountTransactions extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   render() {
     return <div className={`${grid.row} ${styles.wrapper}`}>
-      <div className={`${grid['col-md-4']} ${styles.gridPadding}`}>
-        <Send/>
+      <div className={`${grid['col-md-4']} ${styles.gridPadding} ${styles.sendTo}`}>
+        <SendTo
+          balance={this.props.balance}
+          address={this.props.match.params.address}
+          t={this.props.t}
+        />
       </div>
       <div className={`${grid['col-sm-12']} ${styles.transactions} ${grid['col-md-8']}`}>
         <Transactions

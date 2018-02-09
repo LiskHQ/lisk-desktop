@@ -90,6 +90,11 @@
   display: inline-block;
 }
 
+.rightSide {
+  display: inline-block;
+  width: 32vw; /* stylelint-disable-line */
+}
+
 .account {
   position: relative;
   height: 80px;

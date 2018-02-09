@@ -3,8 +3,9 @@
 @define-mixin buttonBasics {
   min-width: 250px;
   border-radius: 3px;
-  font-size: 18px;
   text-transform: capitalize;
+  font-weight: var(--font-weight-bold);
+  font-family: var(--content-font) !important;
   transition: none !important;
 
   &:disabled {
@@ -47,6 +48,15 @@
   &:hover {
     color: var(--color-black) !important;
     background-color: var(--color-white) !important;
+  }
+}
+
+@define-mixin buttonTertiary {
+  color: var(--color-white) !important;
+  background: var(--gradient-tertiary);
+
+  &:hover {
+    background: var(--color-tertiary-medium) !important;
   }
 }
 

@@ -15,11 +15,6 @@ import RelativeLink from '../relativeLink';
 import routes from './../../constants/routes';
 
 class Header extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { isMobile: window.innerWidth < 1024 };
-  }
-
   shouldShowActionButton() {
     return !this.props.isAuthenticated &&
       this.props.location.pathname !== routes.login.url &&
@@ -30,18 +25,6 @@ class Header extends React.Component {
 
   shouldShowSearchBar() {
     return this.props.location.pathname.includes('explorer') && !this.props.location.pathname.includes(routes.search.long);
-  }
-
-  resizeWindow() {
-    this.setState({ isMobile: window.innerWidth < 1024 });
-  }
-
-  componentDidMount() {
-    window.addEventListener('resize', this.resizeWindow.bind(this));
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.resizeWindow.bind(this));
   }
 
   render() {
@@ -84,7 +67,7 @@ class Header extends React.Component {
                   <RelativeLink to='saved-accounts' className={styles.avatar}>
                     <AccountVisual
                       address={this.props.account.address}
-                      size={this.state.isMobile ? 40 : 69}
+                      size={69} mobileSize={40}
                     />
                   </RelativeLink>
                   <div className={styles.menu}>
