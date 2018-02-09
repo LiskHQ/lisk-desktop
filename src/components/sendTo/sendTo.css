@@ -14,10 +14,12 @@
 }
 
 .wrapper {
-  padding: 9.2vh 42px; /* stylelint-disable-line */
+  padding: 0px 42px; /* stylelint-disable-line */
   text-align: center;
   line-height: 36px;
-  display: block;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
 
   & .account {
     margin-bottom: 8.5vh; /* stylelint-disable-line */
@@ -29,6 +31,7 @@
     & h2 {
       margin-bottom: 0;
       font-weight: var(--font-weight-semi-bold);
+      white-space: nowrap;
 
       & .balanceUnit {
         font-weight: var(--font-weight-semi-bold);
@@ -37,6 +40,7 @@
 
     & .address {
       color: var(--color-grayscale-dark);
+      white-space: nowrap;
     }
   }
 
@@ -94,6 +98,11 @@
     background: var(--color-grayscale-darker-mobile-background);
     display: flex;
 
+    & .content {
+      display: flex;
+      width: 100%
+    }
+
     & .account {
       margin: auto 0px;
       text-align: left;
@@ -112,6 +121,10 @@
 @media (--small-viewport) {
   .wrapper {
     padding: 3.3vh 24px; /* stylelint-disable-line */
+
+    & .content {
+      display: block;
+    }
 
     & h2 {
       font-size: var(--main-header-font-size-XS);

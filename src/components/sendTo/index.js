@@ -33,7 +33,8 @@ class SendTo extends React.Component {
   }
   render() {
     return (<Box className={`${styles.wrapper} ${grid.row}`}>
-      <div className={`
+      <section className={styles.content}>
+        <div className={`
       ${grid['col-xs-12']}
       ${grid['col-sm-6']}
       ${grid['col-md-12']}
@@ -41,31 +42,31 @@ class SendTo extends React.Component {
       ${grid['middle-sm']}
       ${grid.row}
       `}>
-        <AccountVisual
-          address={this.props.address}
-          className={`
+          <AccountVisual
+            address={this.props.address}
+            className={`
           ${grid['col-xs-4']}
           ${grid['col-sm-4']}
           ${grid['col-md-12']}
           ${grid['col-lg-12']}
           ${grid['middle-sm']}
           `}
-          size={this.state.isMobile ? 90 : 144} />
-        <div className={`${styles.account}
+            size={this.state.isMobile ? 90 : 144} />
+          <div className={`${styles.account}
         ${grid['col-xs-8']}
         ${grid['col-sm-8']}
         ${grid['col-md-12']}
         ${grid['col-lg-12']}
         `}>
-          <h2>
-            <span>
-              <LiskAmount val={this.props.balance}/>
-            </span> <small className={styles.balanceUnit}>LSK</small>
-          </h2>
-          <CopyToClipboard value={this.props.address} className={`${styles.address}`} copyClassName={styles.copy} />
+            <h2>
+              <span>
+                <LiskAmount val={this.props.balance}/>
+              </span> <small className={styles.balanceUnit}>LSK</small>
+            </h2>
+            <CopyToClipboard value={this.props.address} className={`${styles.address}`} copyClassName={styles.copy} />
+          </div>
         </div>
-      </div>
-      <div className={`
+        <div className={`
       ${grid['col-xs-12']}
       ${grid['col-sm-6']}
       ${grid['col-md-12']}
@@ -73,12 +74,13 @@ class SendTo extends React.Component {
       ${grid['middle-sm']}
       ${styles.sendButton}
       `}>
-        <Link to={`${routes.wallet.long}?address=${this.props.address}`}>
-          <TertiaryButton className={styles.button} >
-            <FontIcon value={'send-token'}/> {this.props.t('Send to this address')}
-          </TertiaryButton>
-        </Link>
-      </div>
+          <Link to={`${routes.wallet.long}?address=${this.props.address}`}>
+            <TertiaryButton className={styles.button} >
+              <FontIcon value={'send-token'}/> {this.props.t('Send to this address')}
+            </TertiaryButton>
+          </Link>
+        </div>
+      </section>
     </Box>
     );
   }
