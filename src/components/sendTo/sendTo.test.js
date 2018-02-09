@@ -7,10 +7,8 @@ import routes from './../../constants/routes';
 describe('SendTo Component', () => {
   let wrapper;
   let props;
-  const eventStorage = {};
 
   beforeEach(() => {
-    window.addEventListener = (key, callback) => { eventStorage[key] = callback; };
     props = {
       address: '12345L',
       balance: 0,
@@ -23,17 +21,8 @@ describe('SendTo Component', () => {
     expect(wrapper.find('Link').prop('to')).to.equal(`${routes.wallet.long}?address=${props.address}`);
   });
 
-  it('resizes the avatar based on the window size', () => {
-    // set mobile size
-    window.innerWidth = 1023;
-    eventStorage.resize();
-    wrapper.update();
-    expect(wrapper.find('AccountVisual').prop('size')).to.equal(90);
-
-    // set desktop sizeka
-    window.innerWidth = 1024;
-    eventStorage.resize();
-    wrapper.update();
-    expect(wrapper.find('AccountVisual').prop('size')).to.equal(144);
+  it('updates when address changes', () => {
+    wrapper.setProps({ address: '9876L' });
+    expect(wrapper.find('Link').prop('to')).to.equal(`${routes.wallet.long}?address=9876L`);
   });
 });
