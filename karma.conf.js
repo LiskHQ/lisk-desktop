@@ -96,8 +96,6 @@ module.exports = function (config) {
             'src/components/toolbox/checkbox/index.js',
             'src/components/toolbox/transitionWrapper/index.js',
             'src/components/searchBar/index.js',
-            'src/components/search/index.js',
-            'src/components/search/keyAction.js',
             'src/components/sendWritable/index.js',
             'src/components/signMessage/index.js',
             'src/components/signMessage/index.js',
