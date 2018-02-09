@@ -30,8 +30,9 @@ class SingleTransaction extends React.Component {
           <header>
             <h2>{this.props.t('Transaction ID')}</h2>
             <CopyToClipboard
+              id='transaction-id'
               value={this.props.match.params.id}
-              text={this.props.transaction.id}
+              text={this.props.match.params.id}
               className={styles.copyLabel}
               copyClassName={`${styles.copyIcon}`} />
           </header>

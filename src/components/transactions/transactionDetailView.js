@@ -40,7 +40,7 @@ class TransactionsDetailView extends React.Component {
               </figure>}
               </div>
               <div className={`${styles.value} ${styles.sender} `}>
-                <Link className={`${styles.addressLink} ${styles.clickable}`}
+                <Link className={`${styles.addressLink} ${styles.clickable}`} id='sender-address'
                   to={`${routes.account.long}/${this.props.value.senderId}`}>
                   {this.props.value.senderId}
                 </Link>
@@ -53,7 +53,7 @@ class TransactionsDetailView extends React.Component {
               </figure>}</div>
               <div className={styles.value}>
                 {this.props.value.recipientId ?
-                  <Link className={`${styles.addressLink} ${styles.clickable}`}
+                  <Link className={`${styles.addressLink} ${styles.clickable}`} id='receiver-address'
                     to={`${routes.account.long}/${this.props.value.recipientId}`}>
                     {this.props.value.recipientId}
                   </Link> :

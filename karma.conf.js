@@ -98,7 +98,6 @@ module.exports = function (config) {
             'src/components/sendWritable/index.js',
             'src/components/signMessage/index.js',
             'src/components/signMessage/index.js',
-            'src/components/singleTransaction/index.js',
             'src/components/voteDialog/index.js',
             'src/components/sidechains/index.js',
             'src/components/header/header.js',
