@@ -12,14 +12,14 @@ describe('MenuBuilder', () => {
         setApplicationMenu: spy(),
         buildFromTemplate: template => (template),
       },
-      app: { getName: () => ('Lisk Nano'), getVersion: () => ('some version') },
+      app: { getName: () => ('Lisk Hub'), getVersion: () => ('some version') },
     };
   });
 
   it('Builds the electron about menu when os is mac', () => {
     process.platform = 'darwin';
     const template = menu.build(electron);
-    expect(template[0].label).to.equal('Lisk Nano');
+    expect(template[0].label).to.equal('Lisk Hub');
     expect(template[0].submenu[0].role).to.equal('about');
     expect(template[0].submenu[0].label).to.equal('About');
     expect(template[0].submenu[1].role).to.equal('quit');
@@ -37,7 +37,7 @@ describe('MenuBuilder', () => {
     expect(submenu[submenu.length - 1].label).to.equal('About');
 
     // make sure the mac about menu was not added
-    expect(template[0].label).to.not.equal('Lisk Nano');
+    expect(template[0].label).to.not.equal('Lisk Hub');
   });
 
   it('Should open link on click', () => {

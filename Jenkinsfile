@@ -32,7 +32,7 @@ def fail(reason) {
 
 /* comment out the next line to allow concurrent builds on the same branch */
 properties([disableConcurrentBuilds(), pipelineTriggers([])])
-node('lisk-nano') {
+node('lisk-hub') {
   try {
     stage ('Checkout and Start Lisk Core') {
       try {
@@ -99,7 +99,7 @@ node('lisk-nano') {
     stage ('Build and Deploy') {
       try {
         sh '''
-        cp ~/.coveralls.yml-nano .coveralls.yml
+        cp ~/.coveralls.yml-hub .coveralls.yml
         npm run --silent build
         rsync -axl --delete --rsync-path="mkdir -p /var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/ && rsync" $WORKSPACE/app/build/ jenkins@master-01:/var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/
         npm run --silent bundlesize
@@ -130,7 +130,7 @@ node('lisk-nano') {
     stage ('Run E2E Tests') {
       try {
         ansiColor('xterm') {
-          withCredentials([string(credentialsId: 'lisk-nano-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
+          withCredentials([string(credentialsId: 'lisk-hub-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
             sh '''
             N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
 

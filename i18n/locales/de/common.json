@@ -1,5 +1,5 @@
 {
-  " Make sure that you are using the latest version of Lisk Nano.": "Stelle sicher, dass du die neuste Version von Lisk Nano benutzt.",
+  " Make sure that you are using the latest version of Lisk Hub.": "Stelle sicher, dass du die neuste Version von Lisk Hub benutzt.",
   "Vote_noun": "Abstimmung",
   "Vote_verb": "Abstimmen",
   "About": "Über",
@@ -69,7 +69,7 @@
   "Lisk Chat": "Lisk Chat",
   "Lisk Explorer": "Lisk Explorer",
   "Lisk Forum": "Lisk Forum",
-  "Lisk Nano": "Lisk Nano",
+  "Lisk Hub": "Lisk Hub",
   "Lisk Website": "Lisk Webseite",
   "Login": "Einloggen",
   "Losing access to this passphrase will mean no funds can be sent from this account.": "Das Verlieren der Passphrase führt dazu, dass kein Geld mehr von diesem Konto versendet werden kann.",
