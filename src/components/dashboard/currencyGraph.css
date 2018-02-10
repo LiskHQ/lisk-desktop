@@ -19,10 +19,7 @@
 }
 
 .errorMessage {
-  margin: 40px;
-  font-size: 14px;
-  color: #3c5068;
-  text-align: center;
+  margin-top: 70px;
 }
 
 .stepSwitchWrapper {
