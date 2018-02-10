@@ -78,6 +78,13 @@
     }
   }
 
+  &:hover {
+    & .accountVisual {
+      transform: scale(1.1);
+      transform-origin: 50%;
+    }
+  }
+
   & .removeButton {
     background: var(--color-white) !important;
     color: var(--color-grayscale-dark) !important;

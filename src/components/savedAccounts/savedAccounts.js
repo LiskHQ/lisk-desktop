@@ -109,7 +109,8 @@ class SavedAccounts extends React.Component {
                 </strong> :
                 null)}
               <div className={styles.cardIcon}>
-                <AccountVisual address={extractAddress(account.publicKey)} size={155} />
+                <AccountVisual address={extractAddress(account.publicKey)} size={155}
+                  className={styles.accountVisual} />
               </div>
               <h2>
                 <LiskAmount val={account.balance} /> <small>LSK</small>
