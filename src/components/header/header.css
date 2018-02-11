@@ -105,6 +105,12 @@
     height: var(--avatar-height);
     width: var(--avatar-height);
     margin-right: 30px;
+    transition: transform ease-in-out 500ms;
+
+    &:hover {
+      transform: scale(1.1);
+      transform-origin: 50%;
+    }
   }
 
   & .information {
@@ -131,6 +137,8 @@
   }
 
   & .menu {
+    cursor: pointer;
+
     & .item {
       padding: 0;
     }

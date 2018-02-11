@@ -4,12 +4,6 @@
   transition: transform ease-in-out 500ms;
 }
 
-.wrapper:hover {
-  transform: scale(1.1);
-  transform-origin: 50%;
-  cursor: pointer;
-}
-
 .accountVisual {
   border-radius: 100%;
   overflow: hidden;
