@@ -3,19 +3,43 @@
 .wrapper {
   display: flex;
   height: 100%;
-  justify-content: space-between;
+  justify-content: space-around;
   width: 100%;
   flex-direction: column;
 }
 
 @media (--small-viewport) {
+  .box {
+    height: 100%;
+    min-height: 100%;
+    background-color: var(--color-white);
+  }
+
   .wrapper {
-    & > div footer {
-      padding-bottom: 0;
+    & > div {
+      height: auto;
+
+      & footer {
+        padding-bottom: 0;
+      }
     }
 
     & div :global(.show-passphrase-toggle) {
       top: -35px;
     }
+
+  }
+
+  .layover {
+    display: block;
+    /* padding-top: 58px; */
+    flex-direction: unset;
+    position: relative;
+    top: 0;
+    /* padding-bottom: 62px; */
+    overflow-y: scroll;
+    max-height: 100vh;
+    height: calc(100vh - 58px - 62px);
+    background-color: transparent;
   }
 }

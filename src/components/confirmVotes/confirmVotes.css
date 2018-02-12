@@ -1,3 +1,5 @@
+@import '../app/variables.css';
+
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -23,6 +25,49 @@
   }
 }
 
+.checkbox {
+  display: none;
+}
+
 .confirmButton {
   margin-bottom: 24px;
+}
+
+@media (--small-viewport) {
+  .confirmButton {
+    display: none;
+  }
+
+  .checkbox {
+    display: inline-block;
+  }
+
+  .content {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background: var(--color-white);
+    position: relative;
+    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
+
+    & h2,
+    & p {
+      display: none;
+    }
+
+    & .back {
+      box-shadow: none;
+      display: inline;
+      min-width: 40px;
+      padding: 0;
+      width: 50px;
+      min-height: 36px;
+      position: absolute;
+      top: 26px;
+      left: 14px;
+    }
+
+    & .checkbox {
+      padding-left: 40px;
+    }
+  }
 }

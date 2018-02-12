@@ -119,6 +119,17 @@
   top: 3px;
 }
 
+.table {
+  & ul {
+    list-style-type: none;
+    line-height: 48px;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: var(--grid-padding-L);
+    padding-right: var(--grid-padding-L);
+  }
+}
+
 .header {
   line-height: var(--header-line-height);
   padding: 20px var(--grid-padding-XL);
@@ -265,39 +276,24 @@
 .delegatesList {
   overflow-y: auto;
 
-  & .titles th {
+  & .titles .tableHead li {
     color: var(--color-grayscale-dark) !important;
     font-size: 15px !important;
-
-    & td:first-child {
-      padding-left: var(--grid-padding-XL);
-    }
+    transition: all ease 200ms;
   }
 
   & .row {
     background: linear-gradient(90deg, var(--color-white) 0%, #f5f8fc 82%);
 
-    & td:first-child {
-      padding-left: var(--grid-padding-XL);
-    }
-
     &:nth-child(2n) {
       background: var(--color-white);
     }
 
-    & td {
+    & li {
       color: var(--color-grayscale-dark);
       font-size: 16px;
       font-weight: 500;
     }
-  }
-}
-
-:global(.safari) .delegatesList .row {
-  background: var(--even-row-background);
-
-  &:nth-child(2n) {
-    background: var(--color-white);
   }
 }
 
@@ -313,8 +309,8 @@
     }
   }
 
-  & td:first-child,
-  & th:first-child {
+  & .row li:first-child,
+  & .tableHead li:first-child {
     display: none !important;
   }
 }
@@ -343,23 +339,26 @@
     min-height: 100%;
   }
 
-  .box {
-    height: 100%;
-    min-height: 100%;
-  }
-
   .header {
     padding: 0 19px !important;
 
+    & .table .tableHead li {
+      padding: 0 0 12px 12px;
+    }
+
     &.offCanvas ~ .delegatesList {
-      & table thead {
+      & .table .tableHead {
         width: 100%;
         position: fixed;
-        top: 50px;
-        left: 0;
+        top: 57px;
+        left: 8px;
         z-index: 2;
         background: var(--color-white);
         box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.5);
+
+        & li {
+          padding-bottom: 0;
+        }
       }
     }
 
@@ -390,15 +389,23 @@
   .delegatesList {
     height: auto;
     overflow-y: visible;
+    padding-bottom: 60px;
 
-    & th:nth-child(4),
-    & .row td:nth-child(4) {
-      display: none;
+    & .row,
+    & .tableHead {
+      padding-left: var(--grid-padding-XS);
+      padding-right: var(--grid-padding-XS);
     }
 
-    & th:first-child,
-    & .row td:first-child {
-      padding-left: 19px;
+    & .tableHead li:nth-child(4),
+    & .row li:nth-child(4) {
+      display: none;
+    }
+  }
+
+  .showChangeSummery {
+    & .filters .search {
+      display: none;
     }
   }
 }
