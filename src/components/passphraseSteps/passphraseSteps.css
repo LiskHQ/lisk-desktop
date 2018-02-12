@@ -39,6 +39,8 @@
   .wrapper {
     padding: 0px 30px 80px;
     flex-direction: row;
+    max-height: 100%;
+    overflow: scroll;
 
     & footer {
       padding: 0;
