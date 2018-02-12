@@ -48,7 +48,7 @@
 
 @media (--medium-viewport) {
   .searchBar {
-    width: 100%;
+    display: none;
 
     & .icon {
       right: 20px;
@@ -57,5 +57,10 @@
     & .input {
       border-radius: 0px;
     }
+  }
+
+  .searchBar.show {
+    display: block;
+    width: 100%;
   }
 }

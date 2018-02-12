@@ -3,6 +3,7 @@ import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
 import { FontIcon } from '../fontIcon';
 import { visitAndSaveSearch } from './../search/keyAction';
+import routes from './../../constants/routes';
 import styles from './searchBar.css';
 
 const getSearchItem = (location) => {
@@ -25,8 +26,13 @@ class Search extends React.Component {
     }
   }
 
+  shouldShowSearchBarOnMobile() {
+    const { pathname } = this.props.location;
+    return pathname.includes('explorer') && !pathname.includes(routes.search.long);
+  }
+
   render() {
-    return (<div className={styles.searchBar}>
+    return (<div className={`${styles.searchBar} ${this.shouldShowSearchBarOnMobile() ? styles.show : null}`}>
       <FontIcon value='search' className={styles.icon}/>
       <input onKeyUp={(e) => { visitAndSaveSearch(e, this.props.history); }}
         className={styles.input} type="text"
