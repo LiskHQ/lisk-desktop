@@ -58,6 +58,15 @@
       line-height: 26px;
       margin: 0px auto;
     }
+
+    & a {
+      font-size: 18px;
+      color: var(--color-link);
+      margin: 16px;
+      display: block;
+      font-weight: 600;
+      text-decoration: none;
+    }
   }
 }
 

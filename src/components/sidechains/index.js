@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
+import { FontIcon } from '../fontIcon';
 import Box from '../box';
 import styles from './sidechains.css';
 import application from './../../assets/images/sidechains/graphic-application.svg';
@@ -23,6 +24,9 @@ class Sidechains extends React.Component {
         <div className={styles.subHeader}>
           {t('Sidechains will revolutionize the way decentralised apps are developed. Here you will be able to find hosts, and monitor your sidechains soon.')}
         </div>
+        <a target='_blank' href='http://www.help.lisk.io/faq#sidechains' rel='noopener noreferrer'>
+          {t('Learn more about Lisk sidechains')}&nbsp;<FontIcon>arrow-right</FontIcon>
+        </a>
         <img src={application} className={styles.smallGraphic}/>
       </div>
     </Box>);
