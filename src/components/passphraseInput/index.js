@@ -96,6 +96,12 @@ class PassphraseInput extends React.Component {
         {this.state.isFocused
           ?
           <div className={styles.wrapper}>
+            <div
+              className={`show-passphrase-toggle ${styles.inputTypeToggle}`}
+              onClick={this.toggleInputType.bind(this)}>
+              <FontIcon className={styles.eyeIcon} value={this.state.inputType === 'password' ? 'hide' : 'show'}
+              /> <label>{this.state.inputType === 'password' ? this.props.t('Show passphrase') : this.props.t('Hide passphrase') }</label>
+            </div>
             <div className={grid.row}>
               {[...Array(12)].map((x, i) =>
                 <div className={`${grid[xs]} ${grid[sm]} ${grid[md]}`} key={i}>
@@ -126,12 +132,6 @@ class PassphraseInput extends React.Component {
               )}
             </div>
             <div className={styles.errorMessage}>{this.props.error}</div>
-            <div
-              className={`show-passphrase-toggle ${styles.inputTypeToggle}`}
-              onClick={this.toggleInputType.bind(this)}>
-              <FontIcon className={styles.eyeIcon} value={this.state.inputType === 'password' ? 'hide' : 'show'}
-              /> <label>{this.state.inputType === 'password' ? this.props.t('Show passphrase') : this.props.t('Hide passphrase') }</label>
-            </div>
           </div>
           :
           <Input label={this.props.label}
