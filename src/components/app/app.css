@@ -65,10 +65,6 @@ body {
     & > section {
       padding: 0;
     }
-
-    & aside {
-      display: none;
-    }
   }
 }
 

@@ -85,6 +85,10 @@
 }
 
 @media (--medium-viewport) {
+  .aside {
+    display: none;
+  }
+
   .header {
     padding: 0;
   }
