@@ -1,16 +1,16 @@
-# Lisk Nano
+# Lisk Hub
 
-[![Build Status](https://jenkins.lisk.io/buildStatus/icon?job=lisk-nano/development)](https://jenkins.lisk.io/job/lisk-nano/job/development)
-[![Coverage Status](https://coveralls.io/repos/github/LiskHQ/lisk-nano/badge.svg?branch=development)](https://coveralls.io/github/LiskHQ/lisk-nano?branch=development)
+[![Build Status](https://jenkins.lisk.io/buildStatus/icon?job=lisk-hub/development)](https://jenkins.lisk.io/job/lisk-hub/job/development)
+[![Coverage Status](https://coveralls.io/repos/github/LiskHQ/lisk-hub/badge.svg?branch=development)](https://coveralls.io/github/LiskHQ/lisk-hub?branch=development)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 [![Join the chat at https://gitter.im/LiskHQ/lisk](https://badges.gitter.im/LiskHQ/lisk.svg)](https://gitter.im/LiskHQ/lisk?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![devDependencies Status](https://david-dm.org/liskHQ/lisk-nano/dev-status.svg)](https://david-dm.org/liskHQ/lisk-nano?type=dev)
+[![devDependencies Status](https://david-dm.org/liskHQ/lisk-hub/dev-status.svg)](https://david-dm.org/liskHQ/lisk-hub?type=dev)
 
 ## Development
 
 ```
-git clone https://github.com/LiskHQ/lisk-nano.git
-cd lisk-nano
+git clone https://github.com/LiskHQ/lisk-hub.git
+cd lisk-hub
 npm install
 npm run dev
 ```
@@ -108,7 +108,7 @@ And run it with [pm2](http://pm2.keymetrics.io/).
 
 ### Run
 
-Start the development version of lisk-nano:
+Start the development version of lisk-hub:
 
 ```
 npm run dev
@@ -150,7 +150,7 @@ This program is free software: you can redistribute it and/or modify it under th
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-You should have received a copy of the [GNU General Public License](https://github.com/LiskHQ/lisk-nano/tree/master/LICENSE) along with this program.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the [GNU General Public License](https://github.com/LiskHQ/lisk-hub/tree/master/LICENSE) along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ***
 

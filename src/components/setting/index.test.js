@@ -12,7 +12,7 @@ describe('SettingHOC', () => {
   const account = {
     isDelegate: false,
     address: '16313739661670634666L',
-    username: 'lisk-nano',
+    username: 'lisk-hub',
     secondSignature: 1,
   };
   const store = configureMockStore([])({

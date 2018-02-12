@@ -17,7 +17,7 @@ describe('SavedAccountsHOC', () => {
   const account = {
     isDelegate: false,
     publicKey: 'sample_key',
-    username: 'lisk-nano',
+    username: 'lisk-hub',
   };
   const options = {
     address: 'http://localhost:4000',

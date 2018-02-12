@@ -25,7 +25,7 @@ const addAboutMenuForNonMac = ({ template, electron }) => {
         const options = {
           buttons: ['OK'],
           icon: `${__dirname}/assets/images/LISK.png`,
-          message: `${i18n.t('Lisk Nano')}\n${i18n.t('Version')} ${electron.app.getVersion()}\n${copyright}`,
+          message: `${i18n.t('Lisk Hub')}\n${i18n.t('Version')} ${electron.app.getVersion()}\n${copyright}`,
         };
         electron.dialog.showMessageBox(focusedWindow, options, () => {});
       }
@@ -140,7 +140,7 @@ const menu = {
           },
           {
             label: i18n.t('What\'s New...'),
-            click: menu.onClickLink.bind(null, electron, 'https://github.com/LiskHQ/lisk-nano/releases'),
+            click: menu.onClickLink.bind(null, electron, 'https://github.com/LiskHQ/lisk-hub/releases'),
           },
         ],
       },
