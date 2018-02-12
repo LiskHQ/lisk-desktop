@@ -13,11 +13,11 @@
 .smallCircle,
 .triangle,
 .smallTriangle,
-.rightRectangle,
-.leftRectangle,
-.circleOutline,
-.stripe,
-.smallStripe {
+.squareLeft,
+.squareRight,
+.triangleLeft,
+.verySmallCircle,
+.circleLeft {
   position: absolute;
   z-index: 0;
   transform: translateX(-50%) translateY(50%);
