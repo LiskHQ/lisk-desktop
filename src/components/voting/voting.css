@@ -2,7 +2,7 @@
 
 :root {
   --submit-button-height: 55px;
-  --header-height: 58px;
+  --header-height: 67px;
   --filters-height: 55px;
   --footer-height: 62px;
 }
@@ -38,7 +38,7 @@
     }
 
     & aside {
-      height: calc(100% - var(--header-height));
+      height: calc(100% - var(--header-height) - var(--footer-height));
     }
   }
 }
