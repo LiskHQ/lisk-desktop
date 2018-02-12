@@ -1,15 +1,16 @@
 import { Line as LineChart, Chart } from 'react-chartjs-2';
-import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import moment from 'moment';
 import React from 'react';
+
+import EmptyState from '../emptyState';
 import explorerApi from '../../utils/api/explorer';
 
 import styles from './currencyGraph.css';
 
 const bottomPadding = 15;
 
-const chartOptions = {
+const chartOptions = step => ({
   maintainAspectRatio: false,
   gridLines: {
     display: false,
@@ -20,12 +21,8 @@ const chartOptions = {
   scales: {
     xAxes: [{
       type: 'time',
-      time: {
-        displayFormats: {
-          minute: 'H:mm',
-        },
-      },
-      distribution: 'series',
+      time: step.timeFormat,
+      distribution: 'linear',
       ticks: {
         fontColor: '#204F9F',
         fontSize: 14,
@@ -81,7 +78,7 @@ const chartOptions = {
     cornerRadius: 0,
     caretSize: 15,
   },
-};
+});
 
 const getGradient = (ctx) => {
   const gradient = ctx.createLinearGradient(0, 0, 800, 0);
@@ -91,13 +88,13 @@ const getGradient = (ctx) => {
   return gradient;
 };
 
-const chartData = (canvas) => {
+const chartData = (data, canvas) => {
   const ctx = canvas.getContext('2d');
   const gradient = getGradient(ctx);
 
   return {
     datasets: [{
-      data: explorerApi.getCurrencyGrapData(),
+      data,
       backgroundColor: gradient,
       borderColor: gradient,
       borderWidth: 0,
@@ -116,34 +113,105 @@ const drawGradientRectangle = (chartInstance, { bottomPosition, height }) => {
   );
 };
 
-const CurrencyGraph = ({ t }) => {
-  Chart.pluginService.register({
-    beforeDraw(chartInstance) {
-      drawGradientRectangle(chartInstance, {
-        bottomPosition: bottomPadding + 35,
-        height: 50,
-      });
+const steps = [
+  {
+    title: '24h',
+    span: 'hour',
+    length: 12,
+    timeFormat: {
+      displayFormats: {
+        hour: 'H:mm',
+      },
+      minUnit: 'hour',
     },
-    afterDraw(chartInstance) {
-      drawGradientRectangle(chartInstance, {
-        bottomPosition: bottomPadding + 32,
-        height: 5,
-      });
+  },
+  {
+    title: '7d',
+    span: 'day',
+    length: 7,
+    timeFormat: {
+      minUnit: 'day',
     },
-  });
+  },
+  {
+    title: '1m',
+    span: 'day',
+    length: 30,
+    timeFormat: {
+      minUnit: 'day',
+    },
+  },
+];
 
-  return (
-    <div className={`${styles.wrapper}`} >
-      <h2>{t('LSK/BTC')}</h2>
-      <div className={`${styles.chartWrapper}`} >
-        <LineChart data={chartData} options={chartOptions}/>
+class CurrencyGraph extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      step: steps[0],
+    };
+    this.updateData(this.state.step);
+  }
+
+  updateData(step) {
+    explorerApi.getCurrencyGrapData(step).then((response) => {
+      const { candles } = response;
+      const data = candles.slice(Math.max(candles.length - step.length, 1)).map(c => ({
+        x: new Date(c.date),
+        y: c.high,
+      }));
+      this.setState({ data });
+    }).catch((error) => {
+      this.setState({ error });
+    });
+  }
+
+  setStep(step) {
+    this.setState({ step, data: undefined });
+    this.updateData(step);
+  }
+
+  render() {
+    Chart.pluginService.register({
+      beforeDraw(chartInstance) {
+        drawGradientRectangle(chartInstance, {
+          bottomPosition: bottomPadding + 35,
+          height: 50,
+        });
+      },
+      afterDraw(chartInstance) {
+        drawGradientRectangle(chartInstance, {
+          bottomPosition: bottomPadding + 32,
+          height: 5,
+        });
+      },
+    });
+
+    return (
+      <div className={`${styles.wrapper}`} >
+        <div className={styles.stepSwitchWrapper}>
+          {steps.map(step => (
+            <span key={step.title}
+              className={`${styles.stepSwitch} ${this.state.step === step ? styles.active : null} step`}
+              onClick={this.setStep.bind(this, step)}>
+              {step.title}
+            </span>
+          ))}
+        </div>
+        <h2>{this.props.t('LSK/BTC')}</h2>
+        <div className={`${styles.chartWrapper}`} >
+          {this.state.data ?
+            <LineChart
+              data={chartData.bind(null, this.state.data)}
+              options={chartOptions(this.state.step)}/> :
+            null}
+          {this.state.error ?
+            <EmptyState className={styles.errorMessage}
+              message={this.props.t('Price data currently not available')} /> :
+            null}
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
-const mapStateToProps = state => ({
-  transactions: [...state.transactions.pending, ...state.transactions.confirmed].slice(0, 3),
-});
-
-export default connect(mapStateToProps)(translate()(CurrencyGraph));
+export default translate()(CurrencyGraph);

@@ -195,6 +195,12 @@
   width: 100%;
 }
 
+@media (--medium-viewport) {
+  .sideBarWrapper {
+    display: none;
+  }
+}
+
 @media (--xSmall-viewport) {
   .sideBarWrapper {
     display: none;

@@ -7,12 +7,12 @@ import i18n from '../../src/i18n';
 
 
 // eslint-disable-next-line import/prefer-default-export
-export const mountWithContext = (component, { storeState, location }) => {
+export const mountWithContext = (component, { storeState = {}, location = {} }) => {
   const store = configureMockStore([])(storeState);
   const history = {
     location: {
-      pathname: (location && location.pathname) || '',
-      search: (location && location.search) || '',
+      pathname: location.pathname || '',
+      search: location.search || '',
     },
     replace: spy(),
     createHref: spy(),

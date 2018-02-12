@@ -1,7 +1,16 @@
 @import '../app/variables.css';
 
+:root {
+  --title-bar-extra-padding-M: 58px;
+  --title-bar-extra-padding-S: 52px;
+}
+
 .wrapper {
   min-width: 100%;
+
+  & .sendTo {
+    width: 100%;
+  }
 }
 
 @media (--xLarge-viewport) {
@@ -17,8 +26,22 @@
 }
 
 @media (--medium-viewport) {
-  .gridPadding {
-    padding-right: 0;
+  .wrapper {
+    padding-top: var(--title-bar-extra-padding-M);
+
+    & .gridPadding {
+      padding-right: 0;
+    }
+  }
+}
+
+@media (--small-viewport) {
+  .wrapper {
+    padding-top: var(--title-bar-extra-padding-S);
+
+    & .gridPadding {
+      padding-right: 0;
+    }
   }
 }
 

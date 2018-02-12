@@ -5,14 +5,14 @@
     <desc>Created with Sketch.</desc>
     <defs>
         <linearGradient x1="0%" y1="50%" x2="94.0204156%" y2="50%" id="linearGradient-1">
-            <stop stop-color="#DEF4FF" offset="0%"></stop>
-            <stop stop-color="#0792FF" offset="100%"></stop>
+            <stop stop-color="#3023AE" offset="0%"></stop>
+            <stop stop-color="#C86DD7" offset="100%"></stop>
         </linearGradient>
     </defs>
     <g id="01_Get-Access-✅" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="Get-Access-Dashboard-2-Lisk-XL" transform="translate(-363.000000, -600.000000)" fill="url(#linearGradient-1)">
             <g id="Group" transform="translate(315.000000, 146.000000)">
-                <rect id="shape-1" transform="translate(120.124210, 526.124210) rotate(-45.000000) translate(-120.124210, -526.124210) " x="24.4864878" y="519.762896" width="191.275445" height="12.7226276"></rect>
+                <rect id="shape-1" transform="translate(120.124210, 526.124210) rotate(-45.000000) translate(-120.124210, -526.124210) " x="90" y="470" width="60" height="60"></rect>
             </g>
         </g>
     </g>

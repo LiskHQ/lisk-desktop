@@ -13,14 +13,15 @@ class TransactionsDashboard extends React.Component {
         <Send/>
       </div>
       <div className={`${grid['col-sm-12']} ${styles.transactions} ${grid['col-md-8']}`}>
-        <Transactions address={this.props.accountAddress} />
+        <Transactions {...this.props} />
       </div>
     </div>;
   }
 }
 
 const mapStateToProps = state => ({
-  accountAddress: state.account.address,
+  address: state.account.address,
+  balance: state.account.balance,
 });
 
 export default connect(mapStateToProps)(TransactionsDashboard);

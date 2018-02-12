@@ -11,18 +11,21 @@ const saveSearch = (search) => {
   localJSONStorage.set('searches', updated);
 };
 
-export default (event, history) => {
+export const visit = (value, history) => {
+  if (value.match(regex.address)) {
+    history.push(`${routes.account.long}/${value}`);
+  } else if (value.match(regex.transactionId)) {
+    history.push(`${routes.transaction.long}/${value}`);
+  } else {
+    history.push(`${routes.searchResult.long}/${value}`);
+  }
+};
+
+export const visitAndSaveSearch = (event, history) => {
   if (event.which === keyCodes.enter) {
     const value = event.target.value.trim();
     saveSearch(value);
-
-    if (value.match(regex.address)) {
-      history.push(`${routes.account.long}/${value}`);
-    }
-
-    if (value.match(regex.transactionId)) {
-      history.push(`${routes.transaction.long}/${value}`);
-    }
+    visit(value, history);
 
     // TODO: case of no match
   }

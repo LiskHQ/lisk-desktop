@@ -160,28 +160,54 @@ const pickTwo = (chunk, options) => ([
   ) % options.length],
 ]);
 
-const AccountVisual = ({ address, size = 200 }) => {
-  const addressChunks = address.padStart(21, '0').match(/\d{5}/g);
-  const gradientScheme = gradientSchemes[addressChunks[0].substr(1, 2) % gradientSchemes.length];
-  const primaryGradients = pickTwo(addressChunks[1], gradientScheme.primary);
-  const secondaryGradients = pickTwo(addressChunks[2], gradientScheme.secondary);
-  const shapes = [
-    getBackgroundCircle(size, primaryGradients[0]),
-    getShape(addressChunks[1], size, primaryGradients[1], 1),
-    getShape(addressChunks[2], size, secondaryGradients[0], 0.23),
-    getShape(addressChunks[3], size, secondaryGradients[1], 0.18),
-  ];
+class AccountVisual extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { isMobile: window.innerWidth < 1024 };
+  }
 
-  return (
-    <div styles={{ height: size, width: size }} className={styles.wrapper}>
-      <svg height={size} width={size} className={styles.accountVisual}>
-        <Gradients scheme={gradientScheme}/>
-        {shapes.map((shape, i) => (
-          <shape.component {...shape.props} key={i} />
-        ))}
-      </svg>
-    </div>
-  );
-};
+  shouldComponentUpdate(nextProps, state) {
+    return this.state.isMobile !== state.isMobile;
+  }
+
+  resizeWindow() {
+    this.setState({ isMobile: window.innerWidth < 1024 });
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.resizeWindow.bind(this));
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.resizeWindow.bind(this));
+  }
+
+  render() {
+    const { address, size, mobileSize, className } = this.props;
+    const desktopSize = size || 200;
+    const newSize = this.state.isMobile && mobileSize ? mobileSize : desktopSize;
+
+    const addressChunks = address.padStart(21, '0').match(/\d{5}/g);
+    const gradientScheme = gradientSchemes[addressChunks[0].substr(1, 2) % gradientSchemes.length];
+    const primaryGradients = pickTwo(addressChunks[1], gradientScheme.primary);
+    const secondaryGradients = pickTwo(addressChunks[2], gradientScheme.secondary);
+    const shapes = [
+      getBackgroundCircle(newSize, primaryGradients[0]),
+      getShape(addressChunks[1], newSize, primaryGradients[1], 1),
+      getShape(addressChunks[2], newSize, secondaryGradients[0], 0.23),
+      getShape(addressChunks[3], newSize, secondaryGradients[1], 0.18),
+    ];
+    return (
+      <div style={{ height: newSize, width: newSize }} className={`${styles.wrapper} ${className}`}>
+        <svg height={newSize} width={newSize} className={styles.accountVisual}>
+          <Gradients scheme={gradientScheme}/>
+          {shapes.map((shape, i) => (
+            <shape.component {...shape.props} key={i}/>
+          ))}
+        </svg>
+      </div>
+    );
+  }
+}
 
 export default AccountVisual;

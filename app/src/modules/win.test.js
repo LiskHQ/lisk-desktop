@@ -5,7 +5,7 @@ import win from './win';
 describe('Electron Browser Window Wrapper', () => {
   let electron;
   electron = {
-    screen: { getPrimaryDisplay: () => ({ workAreaSize: { width: 2000, height: 1000 } }) },
+    screen: { getPrimaryDisplay: () => ({ workAreaSize: { width: 1400, height: 900 } }) },
     BrowserWindow: ({ width, height, center, webPreferences }) =>
       ({
         width,
@@ -45,17 +45,17 @@ describe('Electron Browser Window Wrapper', () => {
       expect(win.browser.loadURL).to.have.been.calledWith(`file://${__dirname}/index.html`);
     });
 
-    it('Creates the window and knows how to adjust the size', () => {
+    it('Creates the window of maximum size possible size on < 1680X1050 display', () => {
       win.init({ electron, path, electronLocalshortcut });
-      expect(win.browser.height).to.equal(850);
-      expect(win.browser.width).to.equal(1750);
+      expect(win.browser.height).to.equal(900);
+      expect(win.browser.width).to.equal(1400);
     });
 
-    it('Creates the window and knows how to adjust the size', () => {
-      electron.screen.getPrimaryDisplay = () => ({ workAreaSize: { width: 2001, height: 1001 } });
+    it('Creates the window of maximum 1680X1050 on a bigger than that display', () => {
+      electron.screen.getPrimaryDisplay = () => ({ workAreaSize: { width: 2001, height: 1051 } });
       win.init({ electron, path, electronLocalshortcut });
-      expect(win.browser.height).to.equal(700);
-      expect(win.browser.width).to.equal(1000);
+      expect(win.browser.height).to.equal(1050);
+      expect(win.browser.width).to.equal(1680);
     });
   });
 
@@ -88,7 +88,7 @@ describe('Electron Browser Window Wrapper', () => {
     };
 
     electron = {
-      screen: { getPrimaryDisplay: () => ({ workAreaSize: { width: 2000, height: 1000 } }) },
+      screen: { getPrimaryDisplay: () => ({ workAreaSize: { width: 1400, height: 900 } }) },
       BrowserWindow: ({ width, height, center, webPreferences }) =>
         ({
           width,
@@ -113,7 +113,7 @@ describe('Electron Browser Window Wrapper', () => {
         buildFromTemplate: () => (electron.Menu),
         popup: spy(),
       },
-      app: { getName: () => ('Lisk Nano'), getVersion: () => ('some version') },
+      app: { getName: () => ('Lisk Hub'), getVersion: () => ('some version') },
     };
 
     afterEach(() => {

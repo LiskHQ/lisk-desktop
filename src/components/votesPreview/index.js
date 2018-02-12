@@ -34,8 +34,8 @@ class VotesPreview extends React.Component {
         ${totalNewVotesCount > 0 ? styles.hasChanges : ''}`}>
         <header>
           <h2>{t('Votes')}</h2>
-          <a target='_blank' href='http://lisk.io' rel='noopener noreferrer'>
-            {t('Learn how Voting works')} <FontIcon>arrow-right</FontIcon>
+          <a target='_blank' href='http://www.help.lisk.io/voting-and-delegates' rel='noopener noreferrer'>
+            {t('Learn how voting works')} <FontIcon>arrow-right</FontIcon>
           </a>
         </header>
         <section>

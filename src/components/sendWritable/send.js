@@ -1,5 +1,6 @@
 import React from 'react';
 import { fromRawLsk } from '../../utils/lsk';
+import { parseSearchParams } from './../../utils/searchParams';
 import { Button } from './../toolbox/buttons/button';
 import { authStatePrefill } from '../../utils/form';
 import AccountVisual from '../accountVisual';
@@ -10,11 +11,12 @@ import regex from './../../utils/regex';
 import inputTheme from './input.css';
 
 class SendWritable extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    const { address } = parseSearchParams(props.history.location.search);
     this.state = {
       recipient: {
-        value: '',
+        value: address || '',
       },
       amount: {
         value: '',
@@ -31,7 +33,7 @@ class SendWritable extends React.Component {
   componentDidMount() {
     const newState = {
       recipient: {
-        value: this.props.recipient || '',
+        value: this.props.recipient || this.state.recipient.value,
       },
       amount: {
         value: this.props.amount || '',

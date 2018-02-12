@@ -6,6 +6,7 @@
   --main-header-font-size-XL: 32px;
   --main-header-font-size-L: 28px;
   --main-header-font-size-XS: 24px;
+  --header-font-size: 28px;
   --link-font-size: 15px;
   --progress-bar-text-font-size: 13px;
   --progress-bar-header-font-size: 54px;
@@ -33,7 +34,7 @@
 
     & a {
       font-size: var(--link-font-size);
-      color: var(--link-color);
+      color: var(--color-link);
       margin-top: 16px;
       display: block;
       font-weight: 600;
