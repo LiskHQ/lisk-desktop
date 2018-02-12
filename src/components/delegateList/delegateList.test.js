@@ -68,8 +68,8 @@ describe('DelegateList', () => {
     expect(wrapper.find('VotingRow')).to.have.lengthOf(delegates.length);
   });
 
-  it('should render Table', () => {
-    expect(wrapper.find('Table')).to.have.lengthOf(1);
+  it('should render delegate-list section', () => {
+    expect(wrapper.find('section.delegate-list')).to.have.lengthOf(1);
   });
 
   it('should define search method to reload delegates based on given query', () => {

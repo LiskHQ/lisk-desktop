@@ -52,8 +52,8 @@ describe('Voting', () => {
     // Voting.prototype.setStatus.restore();
   });
 
-  it('should render VotesPreview', () => {
-    expect(wrapper.find('VotesPreview')).to.have.lengthOf(1);
+  it('should render DelegateSidebar', () => {
+    expect(wrapper.find('DelegateSidebar')).to.have.lengthOf(1);
   });
 
   it('should render DelegateList', () => {
