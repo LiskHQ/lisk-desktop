@@ -39,7 +39,7 @@ describe('Search KeyAction', () => {
     const testValues = [
       '811299173602533L',
       '382923358293526',
-      'sdfghjkjhgfdsfg',
+      'some string',
     ];
 
     const expectedHistory = [

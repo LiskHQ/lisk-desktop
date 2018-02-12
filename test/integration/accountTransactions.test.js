@@ -81,7 +81,7 @@ describe('@integration: Account Transactions', () => {
     accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
     store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
     accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
-    store.dispatch(accountLoggedIn(account));
+    if (accountType) { store.dispatch(accountLoggedIn(account)); }
     wrapper = mount(renderWithRouter(AccountTransactions, store,
       { match: { params: { address } } }));
   };
@@ -119,5 +119,10 @@ describe('@integration: Account Transactions', () => {
     step('Then I expect to see the results for "Incoming"', checkRowCount.bind(null, 15));
     step('When I click again on the "All" filter', clickStep.bind(null, 'filter all'));
     step('Then I expect to see the results for "All"', checkRowCount.bind(null, 20));
+  });
+
+  describe('Scenario: allows to view transactions without login', () => {
+    step('Given I\'m on "accounts/123L" with no account', setupStep.bind(null, { address: '123L' }));
+    step('Then I should see 20 transaction rows as result of the address 123L', checkRowCount.bind(null, 20));
   });
 });

@@ -65,7 +65,7 @@ describe('@integration: Single Transaction', () => {
     accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
     store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
     accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
-    store.dispatch(accountLoggedIn(account));
+    if (accountType) { store.dispatch(accountLoggedIn(account)); }
     wrapper = mount(renderWithRouter(SingleTransaction, store,
       { match: { params: { id } } }));
   };
@@ -78,6 +78,11 @@ describe('@integration: Single Transaction', () => {
 
   describe('Scenario: should allow to view transactions of any account', () => {
     step('Given I\'m on "transactions/123456789" as "genesis" account', setupStep.bind(null, { accountType: 'genesis', id: '123456789' }));
+    step('Then I should see the transaction details of 123456789', checkTxDetails);
+  });
+
+  describe('Scenario: should allow to view transactions of any account without login', () => {
+    step('Given I\'m on "transactions/123456789" as "genesis" account', setupStep.bind(null, { id: '123456789' }));
     step('Then I should see the transaction details of 123456789', checkTxDetails);
   });
 });
