@@ -8,6 +8,7 @@ import CopyToClipboard from '../copyToClipboard';
 import AccountVisual from '../accountVisual';
 import styles from './transactions.css';
 import { FontIcon } from '../fontIcon';
+import TransactionType from './transactionType';
 import LiskAmount from '../liskAmount';
 import Amount from './amount';
 import routes from './../../constants/routes';
@@ -72,8 +73,16 @@ class TransactionsDetailView extends React.Component {
               </div>
             </div>
             <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']} ${styles.column}`}>
-              <div className={styles.label}>{this.props.t('Amount (LSK)')}</div>
-              <div className={styles.value}><Amount {...this.props}></Amount></div>
+              {this.props.value.type === 0
+                ? <div><div className={styles.label}>{this.props.t('Amount (LSK)')}</div>
+                  <div className={styles.value}><Amount {...this.props}></Amount></div>
+                </div>
+                : <div><div className={styles.label}>{this.props.t('Type')}</div>
+                  <div className={styles.value}>
+                    <TransactionType {...this.props.value} address={this.props.value.senderId} />
+                  </div>
+                </div>
+              }
             </div>
           </div>
           <div className={`${grid.row} ${styles.row}`}>

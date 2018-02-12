@@ -201,6 +201,7 @@
   "Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain.": "Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain.",
   "Transactions can’t be reversed": "Transactions can’t be reversed",
   "Try using menu for navigation.": "Try using menu for navigation.",
+  "Type": "Type",
   "URL is invalid": "URL is invalid",
   "Unable to connect to the node": "Unable to connect to the node",
   "Undo": "Undo",
