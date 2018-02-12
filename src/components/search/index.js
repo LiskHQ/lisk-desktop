@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
-import keyAction from './keyAction';
+import { visitAndSaveSearch, visit } from './keyAction';
 import localJSONStorage from './../../utils/localJSONStorage';
 import styles from './search.css';
 
@@ -21,11 +21,12 @@ class Search extends React.Component {
   }
 
   render() {
+    const { history, t } = this.props;
     return (<div className={styles.search}>
       <div className={styles.wrapper}>
         <input
           autoFocus
-          onKeyUp={(e) => { keyAction(e, this.props.history); }}
+          onKeyUp={(e) => { visitAndSaveSearch(e, history); }}
           onChange={(event) => { this.setState({ inputValue: event.target.value }); }}
           className={styles.input} type="text"
           placeholder={this.props.t('Search for Lisk ID or Transaction ID')}
@@ -33,13 +34,18 @@ class Search extends React.Component {
         {
           this.showRecentSearches()
             ? <ul className={styles.recent}>
-              <li className={styles.item}>{this.props.t('Latest search')}</li>
+              <li className={styles.item}>{t('Latest search')}</li>
               {this.getRecentSearches().map((search, i) =>
-                (<li key={i} className={styles.item}>{search}</li>))}
+                (<li key={i}
+                  className={`${styles.item} ${styles.clickable}`}
+                  onClick={() => { visit(search, history); }}
+                >
+                  {search}
+                </li>))}
             </ul>
             : null
         }
-        {this.state.inputValue.length > 0 && <div className={styles.subTitle}>{this.props.t('Press \u21B2 enter to search')}</div>}
+        {this.state.inputValue.length > 0 && <div className={styles.subTitle}>{t('Press \u21B2 enter to search')}</div>}
       </div>
     </div>);
   }

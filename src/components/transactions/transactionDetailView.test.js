@@ -1,9 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import { mount } from 'enzyme';
-import PropTypes from 'prop-types';
-import i18n from '../../i18n';
+import { mountWithContext } from '../../../test/utils/mountHelpers';
 import TransactionDetailView from './transactionDetailView';
 
 describe('TransactionDetailView', () => {
@@ -20,13 +18,7 @@ describe('TransactionDetailView', () => {
         id: '',
       },
     };
-    const wrapper = mount(<TransactionDetailView {...props} />,
-      {
-        context: { i18n },
-        childContextTypes: {
-          i18n: PropTypes.object.isRequired,
-        },
-      });
+    const wrapper = mountWithContext(<TransactionDetailView {...props} />, { });
 
     const expectedValue = /flexboxgrid__row/g;
     const html = wrapper.html();

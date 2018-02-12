@@ -78,10 +78,6 @@ input:read-only {
     float: left;
   }
 
-  & .subTitle {
-    font-size: var(--header-subtitle-font-size);
-  }
-
   & .account {
     float: right;
   }

@@ -52,6 +52,7 @@ h2,
 h3,
 h4 {
   font-family: var(--heading-font);
+  font-weight: 500;
 }
 
 h1 {
@@ -107,6 +108,18 @@ input,
 textarea,
 select {
   font-family: var(--content-font);
+}
+
+@media (--xLarge-viewport) {
+  h2 {
+    font-size: var(--font-size-h2-xl);
+  }
+}
+
+@media (--large-viewport) {
+  h2 {
+    font-size: var(--font-size-h2-l);
+  }
 }
 
 @media (--medium-viewport) {

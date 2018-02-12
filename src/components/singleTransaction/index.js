@@ -5,6 +5,7 @@ import { transactionLoadRequested } from '../../actions/transactions';
 import TransactionDetails from './../transactions/transactionDetailView';
 import CopyToClipboard from '../copyToClipboard';
 import Box from '../box';
+import EmptyState from '../emptyState';
 import styles from './transaction.css';
 
 class SingleTransaction extends React.Component {
@@ -24,19 +25,22 @@ class SingleTransaction extends React.Component {
 
   render() {
     return <Box className={styles.transaction}>
-      <header>
-        <h2>Transaction ID</h2>
-        <CopyToClipboard
-          value={this.props.match.params.id}
-          text={this.props.transaction.id}
-          className={styles.copyLabel}
-          copyClassName={`${styles.copyIcon}`} />
-      </header>
-      {this.props.transaction.id && !this.props.transaction.error
-        ? <div className={styles.detailsWrapper}>
-          <TransactionDetails value={this.props.transaction} t={this.props.t} />
-        </div>
-        : <small style={{ textAlign: 'center' }}>{this.props.transaction.error}</small>
+      { this.props.transaction.id && !this.props.transaction.error ?
+        <div>
+          <header>
+            <h2>{this.props.t('Transaction ID')}</h2>
+            <CopyToClipboard
+              value={this.props.match.params.id}
+              text={this.props.transaction.id}
+              className={styles.copyLabel}
+              copyClassName={`${styles.copyIcon}`} />
+          </header>
+          <div className={styles.detailsWrapper}>
+            <TransactionDetails value={this.props.transaction} t={this.props.t} />
+          </div>
+        </div> :
+        <EmptyState title={this.props.t('No results')}
+          message={this.props.t('Search for Lisk ID or Transaction ID')} />
       }
     </Box>;
   }

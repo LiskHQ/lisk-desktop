@@ -29,6 +29,7 @@ describe('Send Writable Component', () => {
       sent: sinon.spy(),
       t: key => key,
       nextStep: () => {},
+      history: { location: { search: '' } },
     };
     wrapper = mount(<SendWritable {...props} />, {
       context: { store, i18n },

@@ -1,11 +1,9 @@
 import React from 'react';
 import { translate } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import styles from './transactions.css';
-import routes from './../../constants/routes';
 
 const TransactionType = (props) => {
-  const t = props.t;
+  const { t } = props;
   let type;
   switch (props.type) {
     case 1:
@@ -36,9 +34,7 @@ const TransactionType = (props) => {
   const address = props.address !== props.senderId ? props.senderId : props.recipientId;
   const template = type ?
     <span className={styles.smallButton}>{type}</span> :
-    <Link className={`${styles.clickable} ${styles.ordinaryText}`} to={`${routes.account.long}/${address}`}>
-      {address}
-    </Link>;
+    <span className={styles.ordinaryText}>{address}</span>;
   return template;
 };
 
