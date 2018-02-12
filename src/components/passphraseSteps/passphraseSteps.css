@@ -22,7 +22,7 @@
 }
 
 .headerWrapper {
-  padding: 20px 0px;
+  padding: 20px 0px 0;
 
   & h2 {
     font-weight: var(--font-weight-semi-bold);

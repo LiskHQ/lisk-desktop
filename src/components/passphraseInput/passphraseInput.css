@@ -40,7 +40,7 @@
 
 .errorMessage {
   color: var(--color-error);
-  height: 20px;
+  height: auto;
   font-weight: var(--font-weight-semi-bold);
   padding-top: 10px;
 }
@@ -58,6 +58,10 @@
     top: 10px;
     width: 100%;
     text-align: center;
+  }
+
+  .errorMessage {
+    padding-bottom: 10px;
   }
 
   .wrapper {
