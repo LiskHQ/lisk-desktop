@@ -31,10 +31,14 @@
     }
   }
 
-  :global(.hasLayover) {
-    & > section > div {
+  .hasLayover {
+    & :global(.delegate-list-box) {
       overflow: hidden;
       opacity: 0;
+    }
+
+    & aside {
+      height: calc(100% - var(--header-height));
     }
   }
 }
