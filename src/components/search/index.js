@@ -1,5 +1,4 @@
 import React from 'react';
-import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
 import { visitAndSaveSearch, visit } from './keyAction';
 import localJSONStorage from './../../utils/localJSONStorage';
@@ -29,6 +28,7 @@ class Search extends React.Component {
           onKeyUp={(e) => { visitAndSaveSearch(e, history); }}
           onChange={(event) => { this.setState({ inputValue: event.target.value }); }}
           className={styles.input} type="text"
+          value={this.state.inputValue}
           placeholder={this.props.t('Search for Lisk ID or Transaction ID')}
         />
         {
@@ -51,4 +51,4 @@ class Search extends React.Component {
   }
 }
 
-export default withRouter(translate()(Search));
+export default translate()(Search);

@@ -26,7 +26,5 @@ export const visitAndSaveSearch = (event, history) => {
     const value = event.target.value.trim();
     saveSearch(value);
     visit(value, history);
-
-    // TODO: case of no match
   }
 };
