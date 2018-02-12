@@ -39,6 +39,10 @@ class PassphraseSteps extends React.Component {
         skipped: true,
       });
     }
+
+    if (typeof this.props.onMount === 'function') {
+      this.props.onMount(true, 'PassphraseSteps');
+    }
   }
 
   hasCorrectPassphrases() {

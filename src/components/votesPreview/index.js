@@ -11,6 +11,9 @@ import { getTotalVotesCount, getVoteList, getUnvoteList } from './../../utils/vo
 class VotesPreview extends React.Component {
   componentDidMount() {
     this.props.updateList(false);
+    if (typeof this.props.onMount === 'function') {
+      this.props.onMount(false, 'VotesPreview');
+    }
   }
   render() {
     const { votes, t, nextStep, updateList } = this.props;

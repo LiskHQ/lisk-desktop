@@ -74,12 +74,13 @@ export class VotingHeaderRaw extends React.Component {
 
   render() {
     const { t } = this.props;
-    const title = this.props.showChangeSummery ? 'Your selection' : 'Delegate List';
+    const titleDesktop = this.props.showChangeSummery ? 'Your selection' : 'Delegate List';
+    const titleMobile = this.props.showChangeSummery ? 'Your selection' : 'Voting';
     return (
       <header className={`${styles.header} ${styles[this.state.headerPosition]}`}>
         <div>
-          <h2 className={styles.desktopTitle}>{t(title)}</h2>
-          <h2 className={styles.mobileTitle}>{t('Voting')}</h2>
+          <h2 className={styles.desktopTitle}>{t(titleDesktop)}</h2>
+          <h2 className={styles.mobileTitle}>{t(titleMobile)}</h2>
         </div>
         <div>
           <ul className={styles.filters}>

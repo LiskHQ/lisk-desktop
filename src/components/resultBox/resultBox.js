@@ -7,6 +7,11 @@ import styles from './resultBox.css';
 import check from '../../assets/images/icons/check.svg';
 
 class ResultBox extends React.Component {
+  componentDidMount() {
+    if (typeof this.props.onMount === 'function') {
+      this.props.onMount(true, 'ResultBox');
+    }
+  }
   render() {
     return (
       <div className={`${styles.resultBox} boxPadding`}>
