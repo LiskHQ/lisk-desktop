@@ -24,7 +24,7 @@ class Header extends React.Component {
   }
 
   shouldShowSearchBar() {
-    return this.props.location.pathname.includes('explorer') && !this.props.location.pathname.includes(routes.search.long);
+    return !this.props.location.pathname.includes(routes.search.long);
   }
 
   render() {
