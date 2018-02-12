@@ -1,15 +1,18 @@
 @import './../app/variables.css';
 
 :root {
-  --search-box-width: 32vw; /* stylelint-disable-line */
+  --search-box-width: 30vw; /* stylelint-disable-line */
   --search-box-font-size: 16px;
   --search-box-line-height: 56px;
   --sub-title-line-height: 26px;
 }
 
 .searchBar {
+  vertical-align: top;
+  display: inline-block;
   position: relative;
   width: var(--search-box-width);
+  margin-right: 50px;
 
   & .icon {
     position: absolute;
