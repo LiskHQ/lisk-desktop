@@ -41,11 +41,10 @@
 
 @media (--small-viewport) {
   .resultBox {
-    height: calc(100vh - 58px - 62px);
+    height: calc(100vh - 58px - 62px); /* stylelint-disable-line */
 
     & .header {
       height: 60px;
-      /* background-color: var(--color-grayscale-mobile-background); */
     }
   }
 

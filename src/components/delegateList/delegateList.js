@@ -41,10 +41,6 @@ class DelegateList extends React.Component {
     }
   }
 
-  componentDidMount() {
-    this.loadVotedDelegates(true);
-  }
-
   loadVotedDelegates(refresh) {
     /* istanbul-ignore-else */
     if (!this.freezeLoading) {
@@ -146,13 +142,12 @@ class DelegateList extends React.Component {
       styles.showChangeSummery : '';
     const filteredList = this.filter(this.props.delegates);
     return (
-      <Box className={`voting ${showChangeSummery} ${styles.box}`}>
+      <Box className={`voting delegate-list-box ${showChangeSummery} ${styles.box}`}>
         <Header
           setActiveFilter={this.setActiveFilter.bind(this)}
           showChangeSummery={this.state.showChangeSummery}
           voteToggled={this.props.voteToggled}
           addTransaction={this.props.addTransaction}
-          votes={this.props.votes}
           search={ value => this.search(value) }
         />
         <section className={`${styles.delegatesList} delegate-list`}>

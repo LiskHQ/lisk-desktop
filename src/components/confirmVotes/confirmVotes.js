@@ -8,14 +8,12 @@ import { fromRawLsk } from '../../utils/lsk';
 class ConfirmVotes extends React.Component {
   componentDidMount() {
     if (typeof this.props.onMount === 'function') {
-      console.log('ConfirmVotes mounted');
       this.props.onMount(false, 'ConfirmVotes');
     }
   }
 
   goToNextStep({ success, text }) {
     const { t, updateList, nextStep } = this.props;
-    console.log('Props:', Object.keys(this.props));
     let message = {
       title: t('Error'),
       success: false,

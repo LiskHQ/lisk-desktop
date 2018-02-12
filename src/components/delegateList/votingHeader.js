@@ -53,11 +53,6 @@ export class VotingHeaderRaw extends React.Component {
     this.search({ nativeEvent: { target: { value: '' } } });
   }
 
-  componentDidUpdate() {
-    const { count, votes } = this.props;
-    this.canLoadMore = count === null || count > votes.length;
-  }
-
   shouldShowEmptyState() {
     return this.props.transactions.length === 0 &&
       (!this.props.activeFilter || this.props.activeFilter === voteFilters.all);

@@ -15,6 +15,7 @@ class VotesPreview extends React.Component {
       this.props.onMount(false, 'VotesPreview');
     }
   }
+
   render() {
     const { votes, t, nextStep, updateList } = this.props;
     const { maxCountOfVotes, maxCountOfVotesInOneTurn } = votingConst;
