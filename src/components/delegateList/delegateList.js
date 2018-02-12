@@ -21,6 +21,10 @@ class DelegateList extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.loadVotedDelegates(true);
+  }
+
   componentWillUpdate(nextProps) {
     if (!this.props.refreshDelegates && nextProps.refreshDelegates) {
       this.loadVotedDelegates(true);

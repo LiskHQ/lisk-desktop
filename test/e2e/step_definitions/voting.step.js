@@ -11,8 +11,8 @@ chai.use(chaiAsPromised);
 const expect = chai.expect;
 
 defineSupportCode(({ When, Then }) => {
-  When('I click checkbox on table row no. {index}', (index, callback) => {
-    waitForElemAndClickIt(`table tr:nth-child(${index}) td label`, callback);
+  When('I click checkbox on list item no. {index}', (index, callback) => {
+    waitForElemAndClickIt(`.delegate-list ul:nth-child(${parseInt(index, 10) + 1}) label`, callback);
   });
 
   When('Search twice for "{searchTerm}" in vote dialog', (searchTerm, callback) => {
