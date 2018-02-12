@@ -9,7 +9,7 @@ const Amount = (props) => {
   if (props.value.type === transactionTypes.send &&
     props.value.senderId === props.value.recipientId) {
     params.className = 'greyLabel';
-    params.pre = '+-';
+    params.pre = '';
   } else if (props.value.senderId !== props.address) {
     params.className = 'greenLabel';
     params.pre = '+';
