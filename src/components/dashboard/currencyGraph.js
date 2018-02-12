@@ -2,6 +2,8 @@ import { Line as LineChart, Chart } from 'react-chartjs-2';
 import { translate } from 'react-i18next';
 import moment from 'moment';
 import React from 'react';
+
+import EmptyState from '../emptyState';
 import explorerApi from '../../utils/api/explorer';
 
 import styles from './currencyGraph.css';
@@ -203,7 +205,8 @@ class CurrencyGraph extends React.Component {
               options={chartOptions(this.state.step)}/> :
             null}
           {this.state.error ?
-            <div className={`${styles.errorMessage}`} >{this.props.t('Loading price data failed.')}</div> :
+            <EmptyState className={styles.errorMessage}
+              message={this.props.t('Price data currently not available')} /> :
             null}
         </div>
       </div>
