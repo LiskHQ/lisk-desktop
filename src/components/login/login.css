@@ -52,6 +52,7 @@ footer {
 
 .login {
   width: 42%;
+  overflow: scroll;
 
   & .table {
     position: relative;
@@ -59,7 +60,7 @@ footer {
 
   & h2 {
     color: var(--color-black);
-    margin-top: 102px;
+    margin-top: 30vh; /* stylelint-disable-line */
     margin-bottom: 20px;
   }
 
@@ -114,7 +115,6 @@ footer {
 
     & h2 {
       font-size: var(--header-focused-font-size);
-      margin-top: 8em;
     }
   }
 }
@@ -221,7 +221,7 @@ footer {
 
   & h2 {
     color: var(--color-white);
-    margin-top: 0px;
+    margin-top: 32vh; /* stylelint-disable-line */
     margin-bottom: 24px;
   }
 
@@ -274,11 +274,6 @@ footer {
   display: table;
   width: 100%;
   height: 100%;
-
-  & .tableCell {
-    display: table-cell;
-    vertical-align: middle;
-  }
 }
 
 .outTaken {
@@ -447,9 +442,12 @@ footer {
   .login {
     height: calc(100vh - var(--m-top-bar-height) - var(--m-menu-bar-height)); /* stylelint-disable-line */
     width: 40%;
+  }
 
+  .login,
+  .signUp {
     & h2 {
-      margin-top: 122px;
+      margin-top: 28vh; /* stylelint-disable-line */
     }
   }
 
@@ -483,6 +481,7 @@ footer {
 
     & h2 {
       font-size: var(--font-size-h2-s);
+      margin-top: 12vh; /* stylelint-disable-line */
     }
   }
 
@@ -502,7 +501,6 @@ footer {
       height: auto;
 
       & h2 {
-        margin-top: 20px;
         margin-bottom: 10px;
       }
 
@@ -553,10 +551,6 @@ footer {
       border-radius: 0;
     }
 
-    & h2 {
-      margin-top: 40px;
-    }
-
     &.focused {
       width: 100vw; /* stylelint-disable-line */
     }
@@ -597,6 +591,15 @@ footer {
         top: 5px !important;
         width: 40%;
       }
+    }
+  }
+}
+
+@media (--xSmall-viewport) {
+  .login,
+  .signUp {
+    & h2 {
+      margin-top: 8vh; /* stylelint-disable-line */
     }
   }
 }
