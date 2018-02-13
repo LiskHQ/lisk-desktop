@@ -167,7 +167,8 @@ class AccountVisual extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, state) {
-    return this.state.isMobile !== state.isMobile;
+    return this.state.isMobile !== state.isMobile
+      || nextProps.address !== this.props.address;
   }
 
   resizeWindow() {
