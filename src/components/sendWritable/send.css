@@ -9,13 +9,19 @@
   --fee-color: var(--color-grayscale-dark);
 }
 
+.form {
+  position: relative;
+}
+
 .fee {
   text-align: right;
-  margin-top: -12px;
   margin-bottom: 24px;
   font-size: 14px;
   line-height: 14px;
   font-weight: 600;
+  position: absolute;
+  right: 0;
+  top: 152px;
   color: var(--fee-color);
 }
 
@@ -86,6 +92,11 @@ input:read-only {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
+}
+
+.error {
+  display: block;
+  padding-right: 85px;
 }
 
 @media (--small-viewport) {

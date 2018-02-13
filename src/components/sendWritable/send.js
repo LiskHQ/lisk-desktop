@@ -82,7 +82,7 @@ class SendWritable extends React.Component {
             <span className={`${styles.subTitle} ${styles.transfer}`}>{this.props.t('Quickly send and request LSK token')}</span>
           </header>
         </div>
-        <form>
+        <form className={styles.form}>
           <Input label={this.props.t('Send to address')}
             className='recipient'
             autoFocus={this.props.autoFocus}
