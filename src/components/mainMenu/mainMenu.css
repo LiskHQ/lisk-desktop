@@ -62,7 +62,6 @@
 @media (max-height: 920px) {
   .drawer.left {
     display: block;
-    overflow: hidden;
     height: 100%;
   }
 }
@@ -103,7 +102,7 @@
 }
 
 .label {
-  padding: 45px 10px;
+  padding: 4.5vh 10px; /* stylelint-disable-line */
   font-size: 1.125em;
   color: var(--color-black);
   font-weight: bold;

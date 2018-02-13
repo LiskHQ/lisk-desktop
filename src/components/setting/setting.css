@@ -22,7 +22,7 @@
 
   & > div {
     min-height: 200px;
-    padding: 48px 0;
+    padding: 4vh 0; /* stylelint-disable-line */
 
     & h5 {
       font-family: var(--slide-header-font);
