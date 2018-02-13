@@ -68,6 +68,68 @@
       display: none;
     }
 
+    & .backButton {
+      box-shadow: none;
+      display: inline;
+      min-width: 40px;
+      padding: 0;
+      width: 50px;
+      min-height: 36px;
+      position: absolute;
+      top: 26px;
+      left: 14px;
+    }
+
+    & .checkbox {
+      padding-left: 40px;
+      box-sizing: border-box;
+    }
+  }
+}
+
+@media (--xxSmall-viewport) {
+  .checkbox {
+    & div span {
+      line-height: 20px;
+      text-align: center;
+      text-indent: 0;
+      padding: 4px 0 4px 60px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+  }
+}
+
+@media (--small-viewport) {
+  .confirmButton {
+    display: none;
+  }
+
+  .checkbox {
+    display: inline-block;
+
+    & div span {
+      height: 48px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 15px;
+      font-weight: 400;
+      text-indent: 58px;
+    }
+  }
+
+  .content {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background: var(--color-white);
+    position: relative;
+    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
+
+    & h2,
+    & p {
+      display: none;
+    }
+
     & .back {
       box-shadow: none;
       display: inline;
