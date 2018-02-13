@@ -66,7 +66,7 @@ describe('MultiStep', () => {
     const child3 = wrapper.find('Child3');
 
     // Now prev to step 2
-    child3.simulate('mouseEnter', {});
+    child3.simulate('mouseEnter', { config: { jump: 1 } });
     child2 = wrapper.find('Child2');
     expect(child2.props().value).to.be.equal('called from child1');
   });
@@ -81,7 +81,7 @@ describe('MultiStep', () => {
     const child3 = wrapper.find('Child3');
 
     // Now prev to step 2
-    child3.simulate('mouseEnter', { config: { jump: 2 } });
+    child3.simulate('mouseEnter', { config: { reset: true } });
     child1 = wrapper.find('Child1');
     expect(child1).to.have.lengthOf(1);
   });
@@ -96,7 +96,7 @@ describe('MultiStep', () => {
     const child3 = wrapper.find('Child3');
 
     // Now prev to step 2
-    child3.simulate('mouseEnter', { config: { reset: true } });
+    child3.simulate('mouseEnter', { config: { reset: true, jump: 2 } });
     child1 = wrapper.find('Child1');
     expect(child1).to.have.lengthOf(1);
   });
