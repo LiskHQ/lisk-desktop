@@ -135,8 +135,8 @@ describe('@integration: Wallet', () => {
       step('Given I\'m on "wallet" as "empty account"', setupStep.bind(null, 'empty account'));
       step('And I fill in "1" to "amount" field', fillInputField.bind(null, '1', 'amount'));
       step('And I fill in "537318935439898807L" to "recipient" field', fillInputField.bind(null, '537318935439898807L', 'recipient'));
-      step('Then I should see "Insufficient funds" error message', () => {
-        expect(wrapper.find('Input').at(1).html()).to.contain('Insufficient funds');
+      step('Then I should see "Not enough LSK" error message', () => {
+        expect(wrapper.find('Input').at(1).html()).to.contain('Not enough LSK');
       });
       step('And "send next button" should be disabled', () => {
         expect(wrapper.find('.send-next-button button').filterWhere(item => item.prop('disabled') === true)).to.have.lengthOf(1);
