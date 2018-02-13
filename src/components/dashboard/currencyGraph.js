@@ -43,7 +43,7 @@ const chartOptions = step => ({
     padding: {
       left: 0,
       right: 0,
-      top: 80,
+      top: 0,
       bottom: bottomPadding,
     },
   },
@@ -117,7 +117,7 @@ const steps = [
   {
     title: '24h',
     span: 'hour',
-    length: 12,
+    length: 24,
     timeFormat: {
       displayFormats: {
         hour: 'H:mm',
@@ -157,7 +157,7 @@ class CurrencyGraph extends React.Component {
       const { candles } = response;
       const data = candles.slice(Math.max(candles.length - step.length, 1)).map(c => ({
         x: new Date(c.date),
-        y: c.high,
+        y: (parseFloat(c.high) + parseFloat(c.low)) / 2,
       }));
       this.setState({ data });
     }).catch((error) => {
