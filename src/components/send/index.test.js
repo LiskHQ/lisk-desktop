@@ -27,10 +27,11 @@ describe('Send', () => {
     context = {
       storeState,
     };
-    wrapper = mountWithContext(<Send/>, context);
+    wrapper = mountWithContext(<Send search={''}/>, context);
   });
 
   it('should render MultiStep component ', () => {
+    console.log(wrapper.debug());
     expect(wrapper.find(MultiStep)).to.have.lengthOf(1);
   });
 
