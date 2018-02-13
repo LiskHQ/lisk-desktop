@@ -117,7 +117,7 @@ const steps = [
   {
     title: '24h',
     span: 'hour',
-    length: 12,
+    length: 24,
     timeFormat: {
       displayFormats: {
         hour: 'H:mm',
