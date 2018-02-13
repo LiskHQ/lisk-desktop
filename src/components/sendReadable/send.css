@@ -125,6 +125,7 @@ input:read-only {
 
 .disabledInput input:disabled {
   opacity: 1;
+  border: none;
 }
 
 @media (--small-viewport) {
