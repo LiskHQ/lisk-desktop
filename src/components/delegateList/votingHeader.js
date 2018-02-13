@@ -89,10 +89,16 @@ export class VotingHeaderRaw extends React.Component {
               <FontIcon className={styles.search} value='search' id='searchIcon'/>
               <input type='text'
                 name='query'
-                className={`search ${this.state.query.length > 0 ? styles.dirty : ''} `}
+                className={`search ${styles.desktopInput} ${this.state.query.length > 0 ? styles.dirty : ''} `}
                 value={this.state.query}
                 onChange={this.search.bind(this)}
                 placeholder={t('Search for a delegate')}/>
+              <input type='text'
+                name='query'
+                className={`${styles.mobileInput} ${this.state.query.length > 0 ? styles.dirty : ''} `}
+                value={this.state.query}
+                onChange={this.search.bind(this)}
+                placeholder={t('Search')}/>
               <FontIcon id='cleanIcon' className={styles.clean} value='close' onClick={ this.clearSearch.bind(this) }/>
             </li>
           </ul>

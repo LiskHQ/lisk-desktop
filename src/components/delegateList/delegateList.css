@@ -206,6 +206,14 @@
       font-size: 15px;
     }
 
+    &.desktopInput {
+      display: inline-block;
+    }
+
+    &.mobileInput {
+      display: none;
+    }
+
     &.dirty {
       border-bottom-color: var(--color-grayscale-dark);
 
@@ -276,10 +284,11 @@
 .delegatesList {
   overflow-y: auto;
 
-  & .titles .tableHead li {
+  & .tableHead li {
     color: var(--color-grayscale-dark) !important;
     font-size: 15px !important;
     transition: all ease 200ms;
+    font-weight: 500;
   }
 
   & .row {
@@ -292,7 +301,11 @@
     & li {
       color: var(--color-grayscale-dark);
       font-size: 16px;
-      font-weight: 500;
+      font-weight: 400;
+
+      &:last-child {
+        font-weight: 300;
+      }
     }
   }
 }
@@ -309,9 +322,16 @@
     }
   }
 
-  & .row li:first-child,
-  & .tableHead li:first-child {
-    display: none !important;
+  & .row li,
+  & .tableHead li {
+    &:first-child {
+      display: none !important;
+    }
+
+    &:nth-child(3) {
+      flex-basis: 58.3% !important;
+      max-width: 58.3% !important;
+    }
   }
 }
 
@@ -350,7 +370,7 @@
       & .table .tableHead {
         width: 100%;
         position: fixed;
-        top: 57px;
+        top: 67px;
         left: 8px;
         z-index: 2;
         background: var(--color-white);
@@ -401,11 +421,26 @@
     & .row li:nth-child(4) {
       display: none;
     }
+
+    & .tableHead li {
+      font-size: 12px !important;
+      font-weight: 700;
+    }
   }
 
   .showChangeSummery {
     & .filters .search {
       display: none;
+    }
+  }
+
+  .search input {
+    &.desktopInput {
+      display: none;
+    }
+
+    &.mobileInput {
+      display: inline-block;
     }
   }
 }
