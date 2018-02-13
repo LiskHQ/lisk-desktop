@@ -157,7 +157,7 @@ class CurrencyGraph extends React.Component {
       const { candles } = response;
       const data = candles.slice(Math.max(candles.length - step.length, 1)).map(c => ({
         x: new Date(c.date),
-        y: c.high,
+        y: (parseFloat(c.high) + parseFloat(c.low)) / 2,
       }));
       this.setState({ data });
     }).catch((error) => {
