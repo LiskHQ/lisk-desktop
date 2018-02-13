@@ -77,7 +77,7 @@ describe('DelegateList', () => {
       toFake: ['setTimeout', 'clearTimeout', 'Date'],
     });
     props.delegatesFetched.reset();
-    wrapper.find('.search input').simulate('change', { nativeEvent: { target: { value: 'query' } } });
+    wrapper.find('.search input').at(0).simulate('change', { nativeEvent: { target: { value: 'query' } } });
     clock.tick(251);
     expect(props.delegatesFetched).to.be.calledWith({
       activePeer: props.activePeer,
