@@ -26,6 +26,12 @@
   padding-top: 10px;
 }
 
+@media (--medium-viewport) {
+  .errorMessage {
+    display: none;
+  }
+}
+
 @media (--large-viewport) {
   .errorMessage {
     font-size: var(--error-font-size-L);
@@ -69,10 +75,12 @@
   }
 }
 
-.button {
+.bla {
   margin: 0 51px 56px;
   text-align: center;
+}
 
+.button {
   & span:last-child {
     font-size: 16px;
     display: none;
@@ -222,9 +230,12 @@
       }
     }
 
+    & .bla {
+      margin: 0;
+    }
+
     & .button {
       width: 100%;
-      margin: 0;
       color: var(--color-white) !important;
       background-color: var(--color-primary-standard) !important;
       z-index: 3;

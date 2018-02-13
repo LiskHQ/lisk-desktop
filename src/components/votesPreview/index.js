@@ -39,8 +39,11 @@ class VotesPreview extends React.Component {
     const createPercentage = (count, total) => Math.ceil((count / total) * 100);
     const surpassedVoteLimit = totalNewVotesCount > maxCountOfVotesInOneTurn ||
       totalVotesCount > 101;
-    const surpassMessage = totalVotesCount > 101 ? 'Maximum of 101 votes in total' : `Maximum of ${maxCountOfVotesInOneTurn} votes at a time`;
     const insufficientFunds = this.props.account.balance - fees.vote < 0;
+    const surpassMessage = () => {
+      if (insufficientFunds) return 'Insufficient funds';
+      return totalVotesCount > 101 ? 'Maximum of 101 votes in total' : `Maximum of ${maxCountOfVotesInOneTurn} votes at a time`;
+    };
 
     return (<Fragment>
       <section className={`${styles.wrapper} votes-preview ${surpassedVoteLimit ? styles.surpassed : ''}
@@ -75,21 +78,23 @@ class VotesPreview extends React.Component {
             </article>
           </div>
         </section>
-        <footer className={`${styles.surpassMessage} ${surpassedVoteLimit && !this.state.surpassMessageDismissed ? styles.visible : ''}`}>
-          <span>{t(surpassMessage)}</span>
+        <footer className={`${styles.surpassMessage} ${(surpassedVoteLimit || insufficientFunds) && !this.state.surpassMessageDismissed ? styles.visible : ''}`}>
+          <span>{t(surpassMessage())}</span>
           <FontIcon value='close' onClick={this.dismissSurpassMessage.bind(this)} />
         </footer>
-        <section className={styles.button}>
+        <div className={styles.bla}>
           <Button
-            className='next'
+            className={`${styles.button} next`}
             type='button'
             onClick={() => { updateList(true); nextStep({}); }}
             disabled={totalNewVotesCount === 0 || surpassedVoteLimit || insufficientFunds}>
             <span>{t('Next')}</span>
             <FontIcon value='arrow-right' />
           </Button>
-          <div className={styles.errorMessage}>{insufficientFunds ? t('Insufficient funds') : null}</div>
-        </section>
+          <div className={styles.errorMessage}>
+            {surpassedVoteLimit || insufficientFunds ? t(surpassMessage()) : null}
+          </div>
+        </div>
       </section>
       <GradientSVG
         id='grad'
