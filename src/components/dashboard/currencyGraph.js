@@ -43,7 +43,7 @@ const chartOptions = step => ({
     padding: {
       left: 0,
       right: 0,
-      top: 80,
+      top: 0,
       bottom: bottomPadding,
     },
   },
