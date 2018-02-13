@@ -2,6 +2,7 @@ import React from 'react';
 import { translate } from 'react-i18next';
 import { visitAndSaveSearch, visit } from './keyAction';
 import localJSONStorage from './../../utils/localJSONStorage';
+import Box from '../box';
 import styles from './search.css';
 
 class Search extends React.Component {
@@ -21,7 +22,7 @@ class Search extends React.Component {
 
   render() {
     const { history, t } = this.props;
-    return (<div className={styles.search}>
+    return (<Box className={styles.search}>
       <div className={styles.wrapper}>
         <input
           autoFocus
@@ -47,7 +48,7 @@ class Search extends React.Component {
         }
         {this.state.inputValue.length > 0 && <div className={styles.subTitle}>{t('Press \u21B2 enter to search')}</div>}
       </div>
-    </div>);
+    </Box>);
   }
 }
 
