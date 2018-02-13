@@ -40,6 +40,15 @@
 
   .checkbox {
     display: inline-block;
+
+    & div span {
+      height: 48px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 15px;
+      font-weight: 400;
+      text-indent: 58px;
+    }
   }
 
   .content {
@@ -69,6 +78,19 @@
     & .checkbox {
       padding-left: 40px;
       box-sizing: border-box;
+    }
+  }
+}
+
+@media (--xxSmall-viewport) {
+  .checkbox {
+    & div span {
+      line-height: 20px;
+      text-align: center;
+      text-indent: 0;
+      padding: 4px 0 4px 60px;
+      box-sizing: border-box;
+      font-size: 14px;
     }
   }
 }
