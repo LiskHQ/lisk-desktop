@@ -14,7 +14,7 @@ Feature: Send dialog
     Given I'm logged in as "empty account"
     And I fill in "1" to "amount" field
     And I fill in "537318935439898807L" to "recipient" field
-    Then I should see "Insufficient funds" error message
+    Then I should see "Not enough LSK" error message
     And "send next button" should be disabled
 
   Scenario: should allow to send with second passphrase
