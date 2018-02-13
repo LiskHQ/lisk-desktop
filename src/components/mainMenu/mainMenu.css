@@ -15,6 +15,7 @@
 
 .logo {
   margin: 40px 0;
+  height: 50px;
 }
 
 .more {
@@ -95,6 +96,7 @@
 
   .logo {
     margin: 20px auto;
+    height: 42px;
   }
 }
 
