@@ -1,5 +1,6 @@
 import React from 'react';
 import { Gradients, gradientSchemes } from './gradients';
+import breakpoints from './../../constants/breakpoints';
 import styles from './accountVisual.css';
 
 /*
@@ -163,7 +164,7 @@ const pickTwo = (chunk, options) => ([
 class AccountVisual extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { isMobile: window.innerWidth < 1024 };
+    this.state = { isMobile: window.innerWidth < breakpoints.m };
   }
 
   shouldComponentUpdate(nextProps, state) {
@@ -171,7 +172,7 @@ class AccountVisual extends React.Component {
   }
 
   resizeWindow() {
-    this.setState({ isMobile: window.innerWidth < 1024 });
+    this.setState({ isMobile: window.innerWidth < breakpoints.m });
   }
 
   componentDidMount() {

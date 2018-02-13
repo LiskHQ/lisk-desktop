@@ -9,6 +9,7 @@ import SendWritable from '../sendWritable';
 import SendReadable from './../sendReadable';
 import PassphraseSteps from './../passphraseSteps';
 import { parseSearchParams } from './../../utils/searchParams';
+import breakpoints from './../../constants/breakpoints';
 import styles from './styles.css';
 
 class Send extends React.Component {
@@ -16,7 +17,7 @@ class Send extends React.Component {
     super(props);
     this.address = parseSearchParams(props.search).address;
     this.state = {
-      sendIsActive: !!this.address || false,
+      sendIsActive: !!this.address,
     };
   }
 
@@ -42,7 +43,7 @@ class Send extends React.Component {
           <MultiStep finalCallback={this.setSendIsActive.bind(this, false)}
             className={styles.wrapper}>
             <SendWritable
-              autoFocus={this.state.sendIsActive || window.innerWidth > 1024}
+              autoFocus={this.state.sendIsActive || window.innerWidth > breakpoints.m}
               address={this.address}
             />
             <PassphraseSteps />
