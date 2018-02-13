@@ -44,6 +44,7 @@
 
 .button {
   margin: 0 51px 76px;
+  width: auto;
 }
 
 .progressWrapper {
