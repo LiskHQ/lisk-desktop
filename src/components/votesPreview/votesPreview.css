@@ -11,6 +11,10 @@
   --progress-bar-text-font-size: 13px;
   --progress-bar-header-font-size: 54px;
   --progres-bar-height-mobile: 40px;
+  --submit-button-height: 55px;
+  --footer-height: 62px;
+  --message-line-height: 25px;
+  --button-box-shadow: 0 -1px 6px 0 rgba(60, 80, 104, 0.26);
 }
 
 .wrapper {
@@ -103,6 +107,24 @@
   }
 }
 
+.surpassMessage {
+  display: none !important;
+  position: fixed !important;
+  width: 100%;
+  height: var(--submit-button-height);
+  bottom: 0px;
+  background-color: var(--color-error);
+  color: var(--color-white);
+  z-index: 4;
+  font-size: 16px;
+  padding: 15px 24px !important;
+  box-sizing: border-box;
+  line-height: var(--message-line-height);
+  justify-content: space-between;
+  flex-direction: row;
+  transition: all ease 300ms;
+}
+
 @media (min-height: 1000px) {
   .progressWrapper {
     & :global .CircularProgressbar {
@@ -142,6 +164,7 @@
       bottom: 0;
       background-color: var(--color-white);
       transition: all ease 300ms;
+      box-shadow: var(--button-box-shadow);
     }
 
     & .progressWrapper {
@@ -157,12 +180,12 @@
 
         & h4,
         & span {
-          font-size: 14px;
+          font-size: 12px;
           display: inline;
           margin: 0;
           line-height: var(--progres-bar-height-mobile);
-          font-family: Roboto, Helvetica, Arial, sans-serif;
-          font-weight: 500;
+          font-family: var(--content-font);
+          font-weight: 600;
         }
       }
 
@@ -178,6 +201,7 @@
       background-color: var(--color-primary-standard) !important;
       z-index: 3;
       position: relative;
+      border-radius: 0;
 
       &:disabled {
         background-color: var(--color-grayscale-light) !important;
@@ -186,10 +210,26 @@
   }
 
   .hasChanges {
-    padding-top: 40px;
+    padding-top: 46px;
 
     & section {
       bottom: 55px;
+    }
+  }
+
+  .progressWrapper {
+    &.red {
+      & h4 + span {
+        color: var(--danger-color);
+      }
+    }
+  }
+
+  .surpassMessage {
+    display: flex !important;
+
+    &.visible {
+      bottom: var(--footer-height);
     }
   }
 }

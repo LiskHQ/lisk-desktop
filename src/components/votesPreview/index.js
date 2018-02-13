@@ -9,11 +9,20 @@ import { Button } from '../toolbox/buttons/button';
 import { getTotalVotesCount, getVoteList, getUnvoteList } from './../../utils/voting';
 
 class VotesPreview extends React.Component {
+  constructor() {
+    super();
+    this.state = { surpassMessageDismissed: false };
+  }
+
   componentDidMount() {
     this.props.updateList(false);
     if (typeof this.props.onMount === 'function') {
       this.props.onMount(false, 'VotesPreview');
     }
+  }
+
+  dismissSurpassMessage() {
+    this.setState({ surpassMessageDismissed: true });
   }
 
   render() {
@@ -28,6 +37,7 @@ class VotesPreview extends React.Component {
     const createPercentage = (count, total) => Math.ceil((count / total) * 100);
     const surpassedVoteLimit = totalNewVotesCount > maxCountOfVotesInOneTurn ||
       totalVotesCount > 101;
+    const surpassMessage = totalVotesCount > 101 ? 'Maximum of 101 votes in total' : `Maximum of ${maxCountOfVotesInOneTurn} votes at a time`;
 
     return (<Fragment>
       <section className={`${styles.wrapper} votes-preview ${surpassedVoteLimit ? styles.surpassed : ''}
@@ -62,6 +72,10 @@ class VotesPreview extends React.Component {
             </article>
           </div>
         </section>
+        <footer className={`${styles.surpassMessage} ${surpassedVoteLimit && !this.state.surpassMessageDismissed ? styles.visible : ''}`}>
+          <span>{t(surpassMessage)}</span>
+          <FontIcon value='close' onClick={this.dismissSurpassMessage.bind(this)} />
+        </footer>
         <Button label={t('Next')}
           className={`${styles.button} next`}
           type='button'
