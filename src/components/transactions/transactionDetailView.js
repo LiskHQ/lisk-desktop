@@ -13,111 +13,115 @@ import LiskAmount from '../liskAmount';
 import Amount from './amount';
 import routes from './../../constants/routes';
 
-class TransactionsDetailView extends React.Component {
-  showAvatar(address) {
-    return address && !this.props.prevStep;
-  }
-
-  render() {
-    return (
-      <div className={`${styles.details}`}>
-        {this.props.prevStep &&
+const TransactionsDetailView = props => (
+  <div className={`${styles.details}`}>
+    {
+      props.prevStep ?
         <header>
           <h3>
-            <small className={`${styles.backButton}`} onClick={() => { this.props.prevStep(); }} id='transactionDetailsBackButton'>
+            <small className={`${styles.backButton}`} onClick={() => { props.prevStep(); }} id='transactionDetailsBackButton'>
               <FontIcon className={`${styles.arrow}`} value='arrow-left'/>
-              <span className={`${styles.text}`}>{this.props.t('Back to overview')}</span>
+              <span className={`${styles.text}`}>{props.t('Back to overview')}</span>
             </small>
           </h3>
-        </header>
-        }
-        <div>
-          <div className={`${grid.row} ${styles.row}`}>
-            <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']} ${styles.column}`}>
-              <div className={styles.label}>
-                {this.props.t('Sender')} {this.showAvatar(this.props.value.senderId) &&
+        </header> : null
+    }
+    <div>
+      <div className={`${grid.row} ${styles.row}`}>
+        <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']} ${styles.column}`}>
+          <div className={styles.label}>{props.t('Sender')}</div>
+          {
+            props.value.senderId ?
               <figure className={styles.accountVisual}>
-                <AccountVisual address={this.props.value.senderId} size={43} />
-              </figure>}
-              </div>
-              <div className={`${styles.value} ${styles.sender} `}>
-                <Link className={`${styles.addressLink} ${styles.clickable}`} id='sender-address'
-                  to={`${routes.account.long}/${this.props.value.senderId}`}>
-                  {this.props.value.senderId}
-                </Link>
-              </div>
-            </div>
-            <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']} ${styles.column}`}>
-              <div className={styles.label}>{this.props.t('Recipient')} {this.showAvatar(this.props.value.recipientId) &&
-              <figure className={styles.accountVisual}>
-                <AccountVisual address={this.props.value.recipientId} size={43} />
-              </figure>}</div>
-              <div className={styles.value}>
-                {this.props.value.recipientId ?
-                  <Link className={`${styles.addressLink} ${styles.clickable}`} id='receiver-address'
-                    to={`${routes.account.long}/${this.props.value.recipientId}`}>
-                    {this.props.value.recipientId}
-                  </Link> :
-                  '-'
-                }
-              </div>
-            </div>
-          </div>
-          <div className={`${grid.row} ${styles.row}`}>
-            <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']} ${styles.column}`}>
-              <div className={styles.label}>{this.props.t('Date')}</div>
-              <div className={styles.value}>
-                <DateFromTimestamp
-                  time={this.props.value.timestamp} /> - <TimeFromTimestamp
-                  time={this.props.value.timestamp}/>
-              </div>
-            </div>
-            <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']} ${styles.column}`}>
-              {this.props.value.type === 0
-                ? <div><div className={styles.label}>{this.props.t('Amount (LSK)')}</div>
-                  <div className={styles.value}><Amount {...this.props}></Amount></div>
-                </div>
-                : <div><div className={styles.label}>{this.props.t('Type')}</div>
-                  <div className={styles.value}>
-                    <TransactionType {...this.props.value} address={this.props.value.senderId} />
-                  </div>
-                </div>
-              }
-            </div>
-          </div>
-          <div className={`${grid.row} ${styles.row}`}>
-            <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']} ${styles.column}`}>
-              <div className={styles.label}>{this.props.t('Additional fee')}</div>
-              <div className={styles.value}><LiskAmount val={this.props.value.fee} /></div>
-            </div>
-            <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']} ${styles.column}`}>
-              <div className={styles.label}>{this.props.t('Confirmations')}</div>
-              <div className={styles.value}>{this.props.value.confirmations}</div>
-            </div>
-          </div>
-          <div className={`${grid.row} ${styles.row}`}>
-            {this.props.prevStep && <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']} ${styles.column}`}>
-              <div className={styles.label}>{this.props.t('Transaction ID')}</div>
-              <div className={styles.value}><CopyToClipboard
-                value={this.props.value.id}
-                text={this.props.value.id}
-                copyClassName={`${styles.copy}`} /></div>
-            </div>}
-            <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']} ${styles.column}`}>
-            </div>
+                <AccountVisual address={props.value.senderId} size={43} />
+              </figure> : null
+          }
+          <div className={`${styles.value} ${styles.sender} `}>
+            <Link className={`${styles.addressLink} ${styles.clickable}`} id='sender-address'
+              to={`${routes.account.long}/${props.value.senderId}`}>
+              {props.value.senderId}
+            </Link>
           </div>
         </div>
-        <footer>
-          {this.props.prevStep ?
-            <Link to={`${routes.transaction.long}/${this.props.value.id}`}>
-              <Button className={styles.button} >
-                {this.props.t('Show transaction page')}
-              </Button>
-            </Link> : null }
-        </footer>
+        <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']} ${styles.column}`}>
+          <div className={styles.label}>{props.t('Recipient')}</div>
+          {
+            props.value.recipientId ?
+              <figure className={styles.accountVisual}>
+                <AccountVisual address={props.value.recipientId} size={43} />
+              </figure> : null
+          }
+          <div className={styles.value}>
+            {
+              props.value.recipientId ?
+                <Link className={`${styles.addressLink} ${styles.clickable}`} id='receiver-address'
+                  to={`${routes.account.long}/${props.value.recipientId}`}>
+                  {props.value.recipientId}
+                </Link> : '-'
+            }
+          </div>
+        </div>
       </div>
-    );
-  }
-}
+      <div className={`${grid.row} ${styles.row}`}>
+        <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']} ${styles.column}`}>
+          <div className={styles.label}>{props.t('Date')}</div>
+          <div className={styles.value}>
+            <DateFromTimestamp
+              time={props.value.timestamp} /> - <TimeFromTimestamp
+              time={props.value.timestamp}/>
+          </div>
+        </div>
+        <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']} ${styles.column}`}>
+          {
+            props.value.type === 0 ?
+              <div>
+                <div className={styles.label}>{props.t('Amount (LSK)')}</div>
+                <div className={`${styles.value} ${styles.amount}`}><Amount {...this.props}></Amount></div>
+              </div> :
+              <div>
+                <div className={styles.label}>{props.t('Type')}</div>
+                <div className={styles.value}>
+                  <TransactionType {...props.value} address={props.value.senderId} />
+                </div>
+              </div>
+          }
+        </div>
+      </div>
+      <div className={`${grid.row} ${styles.row}`}>
+        <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']} ${styles.column}`}>
+          <div className={styles.label}>{props.t('Additional fee')}</div>
+          <div className={styles.value}><LiskAmount val={props.value.fee} /></div>
+        </div>
+        <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']} ${styles.column}`}>
+          <div className={styles.label}>{props.t('Confirmations')}</div>
+          <div className={styles.value}>
+            <span>{props.value.confirmations}</span>
+          </div>
+        </div>
+      </div>
+      <div className={`${grid.row} ${styles.row}`}>
+        {props.prevStep && <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']} ${styles.column}`}>
+          <div className={styles.label}>{props.t('Transaction ID')}</div>
+          <div className={styles.value}><CopyToClipboard
+            value={props.value.id}
+            text={props.value.id}
+            copyClassName={`${styles.copy}`} /></div>
+        </div>}
+        <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']} ${styles.column}`}>
+        </div>
+      </div>
+    </div>
+    <footer>
+      {
+        props.prevStep ?
+          <Link to={`${routes.transaction.long}/${props.value.id}`}>
+            <Button className={styles.button} >
+              {props.t('Show transaction page')}
+            </Button>
+          </Link> : null
+      }
+    </footer>
+  </div>
+);
 
 export default TransactionsDetailView;
