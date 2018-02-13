@@ -49,6 +49,11 @@
 
 .button {
   margin: 0 51px 76px;
+
+  & span:last-child {
+    font-size: 16px;
+    display: none;
+  }
 }
 
 .progressWrapper {
@@ -164,7 +169,6 @@
       bottom: 0;
       background-color: var(--color-white);
       transition: all ease 300ms;
-      box-shadow: var(--button-box-shadow);
     }
 
     & .progressWrapper {
@@ -203,6 +207,10 @@
       position: relative;
       border-radius: 0;
 
+      & span:last-child {
+        display: inline-block;
+      }
+
       &:disabled {
         background-color: var(--color-grayscale-light) !important;
       }
@@ -210,7 +218,7 @@
   }
 
   .hasChanges {
-    padding-top: 46px;
+    padding-top: 40px;
 
     & section {
       bottom: 55px;

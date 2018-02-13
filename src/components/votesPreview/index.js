@@ -76,11 +76,14 @@ class VotesPreview extends React.Component {
           <span>{t(surpassMessage)}</span>
           <FontIcon value='close' onClick={this.dismissSurpassMessage.bind(this)} />
         </footer>
-        <Button label={t('Next')}
+        <Button
           className={`${styles.button} next`}
           type='button'
           onClick={() => { updateList(true); nextStep({}); }}
-          disabled={totalNewVotesCount === 0 || surpassedVoteLimit} />
+          disabled={totalNewVotesCount === 0 || surpassedVoteLimit}>
+          <span>{t('Next')}</span>
+          <FontIcon value='arrow-right' />
+        </Button>
       </section>
       <GradientSVG
         id='grad'
