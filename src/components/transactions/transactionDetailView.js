@@ -76,7 +76,7 @@ const TransactionsDetailView = props => (
             props.value.type === 0 ?
               <div>
                 <div className={styles.label}>{props.t('Amount (LSK)')}</div>
-                <div className={`${styles.value} ${styles.amount}`}><Amount {...this.props}></Amount></div>
+                <div className={`${styles.value} ${styles.amount}`}><Amount {...props}></Amount></div>
               </div> :
               <div>
                 <div className={styles.label}>{props.t('Type')}</div>
