@@ -31,16 +31,18 @@ class SendWritable extends React.Component {
   }
 
   componentDidMount() {
-    const newState = {
-      recipient: {
-        value: this.props.recipient || this.state.recipient.value,
-      },
-      amount: {
-        value: this.props.amount || '',
-      },
-      ...authStatePrefill(this.props.account),
-    };
-    this.setState(newState);
+    if (this.props.prevState) {
+      const newState = {
+        recipient: {
+          value: this.props.prevState.recipient || this.state.recipient.value,
+        },
+        amount: {
+          value: this.props.prevState.amount || '',
+        },
+        ...authStatePrefill(this.props.account),
+      };
+      this.setState(newState);
+    }
   }
 
   handleChange(name, value, error) {
@@ -56,9 +58,9 @@ class SendWritable extends React.Component {
     if (!value) {
       return this.props.t('Required');
     } else if (!value.match(this.inputValidationRegexps[name])) {
-      return this.props.t('Invalid');
+      return this.props.t('Invalid address. Please check again');
     } else if (name === 'amount' && value > parseFloat(this.getMaxAmount())) {
-      return this.props.t('Insufficient funds');
+      return this.props.t('Not enough LSK');
     } else if (name === 'amount' && value === '0') {
       return this.props.t('Zero not allowed');
     }
@@ -78,12 +80,12 @@ class SendWritable extends React.Component {
       <div className={`${styles.sendWrapper} boxPadding`}>
         <div className={styles.header}>
           <header className={styles.headerWrapper}>
-            <h2>Transfer</h2>
+            <h2>{this.props.t('Transfer')}</h2>
             <span className={`${styles.subTitle} ${styles.transfer}`}>{this.props.t('Quickly send and request LSK token')}</span>
           </header>
         </div>
         <form>
-          <Input label={this.props.t('Send to Address')}
+          <Input label={this.props.t('Send to address')}
             className='recipient'
             autoFocus={this.props.autoFocus}
             error={this.state.recipient.error}
