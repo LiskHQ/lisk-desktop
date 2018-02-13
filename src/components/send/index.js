@@ -1,6 +1,5 @@
 import React from 'react';
 import { translate } from 'react-i18next';
-import { withRouter } from 'react-router-dom';
 
 import { FontIcon } from '../fontIcon';
 import Box from '../box';
@@ -15,7 +14,7 @@ import styles from './styles.css';
 class Send extends React.Component {
   constructor(props) {
     super(props);
-    this.address = parseSearchParams(props.location.search).address;
+    this.address = parseSearchParams(props.search).address;
     this.state = {
       sendIsActive: !!this.address || false,
     };
@@ -56,5 +55,5 @@ class Send extends React.Component {
   }
 }
 
-export default withRouter(translate()(Send));
+export default translate()(Send);
 
