@@ -9,6 +9,11 @@
   overflow-y: hidden;
   box-sizing: border-box;
   height: 100%;
+
+  & footer {
+    width: 100%;
+    padding: 0 0 50px;
+  }
 }
 
 .button {
@@ -17,7 +22,7 @@
 }
 
 .headerWrapper {
-  padding: 20px 0px;
+  padding: 20px 0px 0;
 
   & h2 {
     font-weight: var(--font-weight-semi-bold);
@@ -28,4 +33,18 @@
 
 .input {
   padding: 5px !important;
+}
+
+@media (--small-viewport) {
+  .wrapper {
+    padding: 0px 30px 80px;
+    flex-direction: row;
+    max-height: 100%;
+    overflow: scroll;
+
+    & footer {
+      padding: 0;
+      margin-bottom: 30px;
+    }
+  }
 }

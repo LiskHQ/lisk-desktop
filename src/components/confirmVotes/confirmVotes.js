@@ -1,10 +1,19 @@
 import React from 'react';
 import { Button, PrimaryButton } from '../toolbox/buttons/button';
 import styles from './confirmVotes.css';
+import Checkbox from '../toolbox/checkbox';
+import fees from '../../constants/fees';
+import { fromRawLsk } from '../../utils/lsk';
 
-const ConfirmVotes = ({ t, prevStep, votePlaced, activePeer, skipped, updateList,
-  votes, account, secondPassphrase, passphrase, nextStep }) => {
-  const goToNextStep = ({ success, text }) => {
+class ConfirmVotes extends React.Component {
+  componentDidMount() {
+    if (typeof this.props.onMount === 'function') {
+      this.props.onMount(false, 'ConfirmVotes');
+    }
+  }
+
+  goToNextStep({ success, text }) {
+    const { t, updateList, nextStep } = this.props;
     let message = {
       title: t('Error'),
       success: false,
@@ -19,35 +28,48 @@ const ConfirmVotes = ({ t, prevStep, votePlaced, activePeer, skipped, updateList
     }
     updateList(false);
     nextStep(message);
-  };
+  }
 
+  render() {
+    const { t, prevStep, votePlaced, activePeer, skipped,
+      votes, account, secondPassphrase, passphrase } = this.props;
+    const data = {
+      activePeer,
+      account,
+      votes,
+      passphrase: passphrase.value,
+      secondSecret: secondPassphrase.value,
+      goToNextStep: this.goToNextStep.bind(this),
+    };
 
-  const data = {
-    activePeer,
-    account,
-    votes,
-    passphrase: passphrase.value,
-    secondSecret: secondPassphrase.value,
-    goToNextStep,
-  };
-
-  return (
-    <div className={styles.wrapper}>
-      <article className={styles.content}>
-        <h2 className={styles.header}>{t('Final confirmation')}</h2>
-        <p className={styles.message}>
-          {t('Are you sure to confirm this selection?')}
-        </p>
-        <PrimaryButton
-          className={`${styles.confirmButton} confirm`}
-          onClick={() => { votePlaced(data); }}>{t('Confirm (Fee: 1 LSK)')}</PrimaryButton>
-        <Button
-          className={`${styles.backButton} back`}
-          onClick={() => prevStep({ reset: skipped })}>{t('Back')}</Button>
-      </article>
-    </div>
-  );
-};
+    return (
+      <div className={styles.wrapper}>
+        <article className={styles.content}>
+          <h2 className={styles.header}>{t('Final confirmation')}</h2>
+          <p className={styles.message}>
+            {t('Are you sure to confirm this selection?')}
+          </p>
+          <PrimaryButton
+            className={`${styles.confirmButton} confirm`}
+            onClick={() => { votePlaced(data); }}>{t('Confirm (Fee: 1 LSK)')}</PrimaryButton>
+          <Button
+            className={`${styles.backButton} back`}
+            onClick={() => prevStep({ reset: skipped })}>{t('Back')}</Button>
+          <Checkbox
+            className={styles.checkbox}
+            label={t(`Confirm (Fee: ${fromRawLsk(fees.vote)} LSK)`)}
+            icons={{
+              done: 'checkmark',
+            }}
+            onChange={() => { votePlaced(data); }}
+            input={{
+              value: 'confirm-vote',
+            }}/>
+        </article>
+      </div>
+    );
+  }
+}
 
 export default ConfirmVotes;
 

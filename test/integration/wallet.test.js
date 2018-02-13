@@ -100,7 +100,7 @@ describe('@integration: Wallet', () => {
     store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
     accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
     store.dispatch(accountLoggedIn(account));
-    wrapper = mount(renderWithRouter(Wallet, store));
+    wrapper = mount(renderWithRouter(Wallet, store, { location: { search: '' } }));
   };
 
   const fillInputField = (value, field) => {

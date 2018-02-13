@@ -23,7 +23,7 @@ const delegateAccount = {
   address: '16313739661670634666L',
   balance: 1000e8,
   delegate: {
-    username: 'lisk-nano',
+    username: 'lisk-hub',
   },
 };
 
@@ -32,7 +32,7 @@ const withSecondSecretAccount = {
   address: '16313739661670634666L',
   balance: 1000e8,
   delegate: {
-    username: 'lisk-nano',
+    username: 'lisk-hub',
   },
   secondSignature: 1,
 };

@@ -7,13 +7,17 @@ import PassphraseSteps from './../passphraseSteps';
 import styles from './delegateSidebar.css';
 import ResultBox from '../resultBox';
 
-const DelegateSidebar = ({ votes, updateList }) => (
-  <Box className='confirm-votes'>
+const DelegateSidebar = props => (
+  <Box className={`confirm-votes ${styles.box}`}>
     <MultiStep className={styles.wrapper} finalCallback={() => true}>
-      <VotesPreview votes={votes} updateList={(value) => { updateList(value); }}/>
-      <PassphraseSteps />
-      <ConfirmVotes updateList={(value) => { updateList(value); }} />
-      <ResultBox />
+      <VotesPreview votes={props.votes}
+        updateList={(value) => { props.updateList(value); }}
+        onMount={props.setLayover}/>
+      <PassphraseSteps onMount={props.setLayover} />
+      <ConfirmVotes
+        updateList={(value) => { props.updateList(value); }}
+        onMount={props.setLayover}/>
+      <ResultBox onMount={props.setLayover}/>
     </MultiStep>
   </Box>
 );

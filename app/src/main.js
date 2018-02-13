@@ -28,7 +28,7 @@ app.on('window-all-closed', () => {
 // This will override the values defined in the app’s .plist file (macOS)
 if (process.platform === 'darwin') {
   const copyright = `Copyright © 2016 - ${new Date().getFullYear()} Lisk Foundation`;
-  app.setAboutPanelOptions({ applicationName: 'Lisk Nano', copyright });
+  app.setAboutPanelOptions({ applicationName: 'Lisk Hub', copyright });
 }
 
 app.on('activate', () => {

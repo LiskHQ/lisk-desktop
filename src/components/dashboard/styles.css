@@ -18,13 +18,13 @@
 }
 
 .graph {
-  height: calc(70% - 20px);
+  height: calc(60% - 20px);
   margin-bottom: 20px;
   overflow: hidden;
 }
 
 .latestActivity {
-  height: 30%;
+  height: 40%;
   margin: 0px;
 
   & h2 {
@@ -35,7 +35,11 @@
 
 @media (--medium-viewport) {
   .wrapper {
-    width: calc(100% + 16px);
+    & .colHack {
+      padding: 0;
+    }
+
+    margin: 0;
   }
 
   .graph {

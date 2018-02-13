@@ -36,7 +36,7 @@ describe('CurrencyGraph', () => {
     expect(wrapper.find(LineChart)).not.to.be.present();
     explorereApiMock.rejects({ });
     expect(wrapper.find(LineChart)).not.to.be.present();
-    expect(wrapper.text()).to.contain('Loading price data failed.');
+    expect(wrapper.text()).to.contain('Price data currently not available');
   });
 
   it('should allow to change step', () => {

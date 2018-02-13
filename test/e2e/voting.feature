@@ -3,25 +3,25 @@ Feature: Voting page
     Given I'm logged in as "any account"
     And I wait 0.1 seconds
     When I go to "main/voting/"
-    Then I should see table with 100 lines
+    Then I should see 100 instances of "delegate row"
     When I scroll to the bottom of "delegate list"
-    Then I should see table with 200 lines
+    Then I should see 200 instances of "delegate row"
 
   Scenario: should allow to view delegates with cold account
     Given I'm logged in as "empty account"
     And I wait 0.1 seconds
     When I go to "main/voting/"
-    Then I should see table with 100 lines
+    Then I should see 100 instances of "delegate row"
 
   Scenario: should allow to search delegates
     Given I'm logged in as "any account"
     And I wait 0.1 seconds
     When I go to "main/voting/"
     And I fill in "genesis_42" to "search" field
-    Then I should see table with 1 lines
+    Then I should see 1 instances of "delegate row"
     And I clear "search" field
     And I fill in "doesntexist" to "search" field
-    And I should see table with 0 lines
+    Then I should see 0 instances of "delegate row"
     And I should see text "No delegates found." in "empty message" element
 
   @integration
@@ -30,16 +30,16 @@ Feature: Voting page
     And I wait 0.1 seconds
     When I go to "main/voting/"
     And I click "filter voted"
-    Then I should see table with 100 lines
+    Then I should see 100 instances of "delegate row"
 
   @testnet
   Scenario: should allow to select delegates in the "Voting" tab and vote for them
     Given I'm logged in as "delegate candidate"
-    And I wait 0.1 seconds
+    And I wait 0.5 seconds
     When I go to "main/voting/"
-    And I click checkbox on table row no. 3
-    And I click checkbox on table row no. 5
-    And I click checkbox on table row no. 8
+    And I click checkbox on list item no. 3
+    And I click checkbox on list item no. 5
+    And I click checkbox on list item no. 8
     And I click "next"
     And I click "confirm"
     And I wait 0.5 seconds
@@ -49,9 +49,9 @@ Feature: Voting page
     Given I'm logged in as "second passphrase account"
     And I wait 0.1 seconds
     When I go to "main/voting/"
-    And I click checkbox on table row no. 3
-    And I click checkbox on table row no. 5
-    And I click checkbox on table row no. 8
+    And I click checkbox on list item no. 3
+    And I click checkbox on list item no. 5
+    And I click checkbox on list item no. 8
     And I click "next"
     And I fill in second passphrase of "second passphrase account" to "second passphrase" field
     And I click "second passphrase next"
@@ -64,8 +64,8 @@ Feature: Voting page
     Given I'm logged in as "genesis"
     And I wait 0.1 seconds
     When I go to "main/voting/"
-    And I click checkbox on table row no. 3
-    And I click checkbox on table row no. 5
+    And I click checkbox on list item no. 3
+    And I click checkbox on list item no. 5
     And I click "next"
     And I click "confirm"
     And I wait 0.5 seconds
@@ -100,7 +100,7 @@ Feature: Voting page
   Scenario: should not allow to vote if not enough funds for the fee
     Given I'm logged in as "empty account"
     When I go to "main/voting/"
-    And I click checkbox on table row no. 3
+    And I click checkbox on list item no. 3
     And I click "vote button"
     Then I should see "Insufficient funds for 1 LSK fee" error message
     And "submit button" should be disabled

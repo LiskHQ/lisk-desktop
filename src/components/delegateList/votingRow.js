@@ -1,5 +1,5 @@
 import React from 'react';
-import { TableRow, TableCell } from 'react-toolbox/lib/table';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './delegateList.css';
 import Checkbox from './voteCheckbox';
 
@@ -29,20 +29,20 @@ class VotingRow extends React.Component {
 
   render() {
     const { data, voteStatus, voteToggled } = this.props;
-    return (<TableRow className={`${styles.row} ${setRowClass(voteStatus)}`}>
-      <TableCell>
+    return (<ul className={`delegate-row ${styles.row} ${grid.row} ${setRowClass(voteStatus)}`}>
+      <li className={`${grid['col-lg-1']} ${grid['col-xs-2']}`}>
         <Checkbox styles={styles}
           toggle={voteToggled}
           value={data.selected}
           status={voteStatus}
           data={data}
         />
-      </TableCell>
-      <TableCell>{data.rank}</TableCell>
-      <TableCell>{data.username}</TableCell>
-      <TableCell>{data.address}</TableCell>
-      <TableCell>{data.productivity} %</TableCell>
-    </TableRow>
+      </li>
+      <li className={`${grid['col-lg-1']} ${grid['col-xs-2']}`}>{data.rank}</li>
+      <li className={`${grid['col-lg-3']} ${grid['col-xs-5']}`}>{data.username}</li>
+      <li className={`${grid['col-lg-5']}`}>{data.address}</li>
+      <li className={`${grid['col-lg-2']} ${grid['col-xs-3']}`}>{data.productivity} %</li>
+    </ul>
     );
   }
 }

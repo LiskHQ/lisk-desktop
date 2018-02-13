@@ -20,13 +20,21 @@ class Voting extends React.Component {
     }
   }
 
+  setLayover(isLayover) {
+    if (isLayover && this.root) {
+      this.root.classList.add(styles.hasLayover);
+    } else if (!isLayover && this.root) {
+      this.root.classList.remove(styles.hasLayover);
+    }
+  }
+
   render() {
-    const { votes } = this.props;
     return (
-      <div className={`${grid.row} ${styles.wrapper}`} >
-        <aside className={`${grid['col-md-4']}`}>
-          {this.state.showChangeSummery}
-          <DelegateSidebar votes={votes} updateList={(value) => { this.toggleSummery(value); }} />
+      <div className={`${grid.row} ${styles.wrapper}`} ref={(el) => { this.root = el; }}>
+        <aside className={grid['col-md-4']}>
+          <DelegateSidebar votes={this.props.votes}
+            setLayover={this.setLayover.bind(this)}
+            updateList={(value) => { this.toggleSummery(value); }} />
         </aside>
         <section className={`${grid['col-sm-12']} ${grid['col-md-8']}`}>
           <DelegateList showChangeSummery={this.state.showChangeSummery} />

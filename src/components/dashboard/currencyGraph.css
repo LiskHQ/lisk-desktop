@@ -10,19 +10,16 @@
 }
 
 .chartWrapper {
-  height: calc(80% + 50px);
+  height: calc(100% - 70px);
   width: calc(100% + 50px);
-  margin: 10px -25px 0px;
+  margin: 0 -25px;
   position: absolute;
   bottom: -10px;
   left: 0;
 }
 
 .errorMessage {
-  margin: 40px;
-  font-size: 14px;
-  color: #3c5068;
-  text-align: center;
+  margin-top: 70px;
 }
 
 .stepSwitchWrapper {
@@ -42,13 +39,6 @@
     background: var(--gradient-tertiary);
     border-radius: var(--border-radius-normal);
     font-weight: 300;
-  }
-}
-
-@media (--medium-viewport) {
-  .chartWrapper {
-    height: calc(100% - 90px);
-    margin: 0 -25px 20px;
   }
 }
 

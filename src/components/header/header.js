@@ -24,7 +24,9 @@ class Header extends React.Component {
   }
 
   shouldShowSearchBar() {
-    return this.props.location.pathname.includes('explorer') && !this.props.location.pathname.includes(routes.search.long);
+    const { pathname } = this.props.location;
+    return ![routes.search.long, routes.register.url, routes.addAccount.url]
+      .some(el => pathname.includes(el)) && pathname !== routes.login.url;
   }
 
   render() {
@@ -90,9 +92,8 @@ class Header extends React.Component {
           </div>
         </div>
         <div className={`${styles.searchBar}`}>
-          {this.shouldShowSearchBar()
-            ? <SearchBar/>
-            : <Account peers={this.props.peers} t={this.props.t}/>}
+          {this.shouldShowSearchBar() && <SearchBar/>}
+          <Account peers={this.props.peers} t={this.props.t}/>
         </div>
       </header>
     );

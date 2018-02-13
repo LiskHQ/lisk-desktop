@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { detect } from 'detect-browser';
 import { I18nextProvider } from 'react-i18next';
 import { applyDeviceClass } from './utils/applyDeviceClass';
 import App from './components/app';
@@ -20,9 +19,7 @@ if (env.production) {
   externalLinks.init();
 }
 
-const browser = detect();
 const rootElement = document.getElementById('app');
-rootElement.setAttribute('class', browser.name);
 
 const renderWithRouter = Component =>
   <Provider store={store}>

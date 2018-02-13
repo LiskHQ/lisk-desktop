@@ -3,18 +3,36 @@ import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
 import { FontIcon } from '../fontIcon';
 import { visitAndSaveSearch } from './../search/keyAction';
+import routes from './../../constants/routes';
 import styles from './searchBar.css';
+
+const getSearchItem = (location) => {
+  const regex = new RegExp('/explorer/(?:[^/]*)/?');
+
+  return location.pathname.includes('explorer')
+    ? location.pathname.replace(regex, '')
+    : '';
+};
 
 class Search extends React.Component {
   constructor(props) {
     super(props);
-    const regex = new RegExp('/explorer/(?:[^/]*)/?');
-    const searchItem = this.props.history.location.pathname.replace(regex, '');
-    this.state = { searchItem };
+    this.state = { searchItem: getSearchItem(props.location) };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.location !== this.props.location) {
+      this.setState({ searchItem: getSearchItem(nextProps.location) });
+    }
+  }
+
+  shouldShowSearchBarOnMobile() {
+    const { pathname } = this.props.location;
+    return pathname.includes('explorer') && !pathname.includes(routes.search.long);
   }
 
   render() {
-    return (<div className={styles.searchBar}>
+    return (<div className={`${styles.searchBar} ${this.shouldShowSearchBarOnMobile() ? styles.show : null}`}>
       <FontIcon value='search' className={styles.icon}/>
       <input onKeyUp={(e) => { visitAndSaveSearch(e, this.props.history); }}
         className={styles.input} type="text"

@@ -27,7 +27,7 @@ describe('Send', () => {
     context = {
       storeState,
     };
-    wrapper = mountWithContext(<Send/>, context);
+    wrapper = mountWithContext(<Send search={''}/>, context);
   });
 
   it('should render MultiStep component ', () => {

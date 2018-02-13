@@ -2,6 +2,8 @@ import { Line as LineChart, Chart } from 'react-chartjs-2';
 import { translate } from 'react-i18next';
 import moment from 'moment';
 import React from 'react';
+
+import EmptyState from '../emptyState';
 import explorerApi from '../../utils/api/explorer';
 
 import styles from './currencyGraph.css';
@@ -41,7 +43,7 @@ const chartOptions = step => ({
     padding: {
       left: 0,
       right: 0,
-      top: 80,
+      top: 0,
       bottom: bottomPadding,
     },
   },
@@ -115,7 +117,7 @@ const steps = [
   {
     title: '24h',
     span: 'hour',
-    length: 12,
+    length: 24,
     timeFormat: {
       displayFormats: {
         hour: 'H:mm',
@@ -155,7 +157,7 @@ class CurrencyGraph extends React.Component {
       const { candles } = response;
       const data = candles.slice(Math.max(candles.length - step.length, 1)).map(c => ({
         x: new Date(c.date),
-        y: c.high,
+        y: (parseFloat(c.high) + parseFloat(c.low)) / 2,
       }));
       this.setState({ data });
     }).catch((error) => {
@@ -203,7 +205,8 @@ class CurrencyGraph extends React.Component {
               options={chartOptions(this.state.step)}/> :
             null}
           {this.state.error ?
-            <div className={`${styles.errorMessage}`} >{this.props.t('Loading price data failed.')}</div> :
+            <EmptyState className={styles.errorMessage}
+              message={this.props.t('Price data currently not available')} /> :
             null}
         </div>
       </div>
