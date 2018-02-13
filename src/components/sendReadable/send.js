@@ -48,7 +48,7 @@ class SendReadable extends React.Component {
     const successMessage = this.props.t('Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain.');
     const failureMessage = this.props.failedTransactions ? this.props.failedTransactions.errorMessage : '';
     const copy = success ? {
-      title: this.props.t('Copy Transaction-ID to clipboard'),
+      title: this.props.t('Copy Transaction ID to clipboard'),
       value: this.props.pendingTransactions[0].id,
     } : null;
     return {
@@ -120,7 +120,11 @@ class SendReadable extends React.Component {
             <div className={grid['col-xs-4']}>
               <Button
                 label={this.props.t('Back')}
-                onClick={() => { this.props.prevStep({ reset: this.props.skipped }); } }
+                onClick={() => this.props.prevStep({
+                  reset: this.props.skipped,
+                  recipient: this.props.recipient,
+                  amount: this.props.amount,
+                }) }
                 type='button'
                 theme={styles}
               />
