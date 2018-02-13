@@ -1,5 +1,6 @@
 import React from 'react';
 import { translate } from 'react-i18next';
+import { withRouter } from 'react-router-dom';
 
 import { FontIcon } from '../fontIcon';
 import Box from '../box';
@@ -8,13 +9,15 @@ import ResultBox from '../resultBox';
 import SendWritable from '../sendWritable';
 import SendReadable from './../sendReadable';
 import PassphraseSteps from './../passphraseSteps';
+import { parseSearchParams } from './../../utils/searchParams';
 import styles from './styles.css';
 
 class Send extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.address = parseSearchParams(props.location.search).address;
     this.state = {
-      sendIsActive: false,
+      sendIsActive: !!this.address || false,
     };
   }
 
@@ -39,7 +42,10 @@ class Send extends React.Component {
           </span>
           <MultiStep finalCallback={this.setSendIsActive.bind(this, false)}
             className={styles.wrapper}>
-            <SendWritable autoFocus={this.state.sendIsActive || window.innerWidth > 1024}/>
+            <SendWritable
+              autoFocus={this.state.sendIsActive || window.innerWidth > 1024}
+              address={this.address}
+            />
             <PassphraseSteps />
             <SendReadable />
             <ResultBox />
@@ -50,5 +56,5 @@ class Send extends React.Component {
   }
 }
 
-export default translate()(Send);
+export default withRouter(translate()(Send));
 
