@@ -25,4 +25,9 @@
 
 .confirmButton {
   margin-bottom: 24px;
+  width: auto;
+}
+
+.backButton {
+  width: auto;
 }

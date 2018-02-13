@@ -41,7 +41,9 @@ const ConfirmVotes = ({ t, prevStep, votePlaced, activePeer, skipped, updateList
         <PrimaryButton
           className={`${styles.confirmButton} confirm`}
           onClick={() => { votePlaced(data); }}>{t('Confirm (Fee: 1 LSK)')}</PrimaryButton>
-        <Button className='back' onClick={() => prevStep({ reset: skipped })}>{t('Back')}</Button>
+        <Button
+          className={`${styles.backButton} back`}
+          onClick={() => prevStep({ reset: skipped })}>{t('Back')}</Button>
       </article>
     </div>
   );
