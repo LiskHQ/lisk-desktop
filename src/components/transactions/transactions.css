@@ -76,8 +76,9 @@
 
 .accountVisual {
   position: absolute;
-  left: -85px;
-  top: -10px;
+  left: 0px;
+  top: 3px;
+  margin: 0;
 }
 
 .transactions {
@@ -137,7 +138,7 @@
 
 .greenLabel {
   font-weight: var(--font-weight-semi-bold);
-  color: var(--amount-positive-color);
+  color: var(--amount-positive-color) !important;
 }
 
 .list {
@@ -174,7 +175,7 @@
   }
 
   & .copy {
-    color: var(--color-primary-standard);
+    color: var(--color-primary-standard) !important;
   }
 
   & .row {
@@ -187,6 +188,7 @@
 
   & .column {
     position: relative;
+    padding-left: 50px;
   }
 
   & .label {
@@ -305,7 +307,32 @@
     padding: 0px var(--grid-padding-XL);
 
     & .label {
-      font-size: var(--details-label-font-size-XL);
+      font-size: var(--details-label-font-size-L);
+    }
+
+    & .value {
+      & a,
+      & span {
+        font-size: 15px;
+        font-weight: 500;
+
+        & span {
+          color: inherit;
+        }
+      }
+
+      & span {
+        color: var(--details-font-color);
+      }
+
+      & .copy {
+        font-size: 24px;
+        vertical-align: top;
+      }
+
+      &.sender a {
+        font-weight: 600;
+      }
     }
 
     & header {
