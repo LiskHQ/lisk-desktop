@@ -53,6 +53,14 @@
     & h2.done {
       max-width: 320px;
     }
+
+    & h5 {
+      visibility: hidden;
+      opacity: 0;
+      font-size: 18px;
+      color: var(--color-error);
+      transition: all ease 500ms;
+    }
   }
 
   & .word {
@@ -151,12 +159,6 @@
     }
 
     & h5 {
-      visibility: hidden;
-      opacity: 0;
-      font-size: 18px;
-      color: var(--color-error);
-      transition: all ease 500ms;
-
       &.visible {
         visibility: visible;
         opacity: 1;
