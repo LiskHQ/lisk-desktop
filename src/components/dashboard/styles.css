@@ -35,7 +35,11 @@
 
 @media (--medium-viewport) {
   .wrapper {
-    width: calc(100% + 16px);
+    & .colHack {
+      padding: 0;
+    }
+
+    margin: 0;
   }
 
   .graph {
