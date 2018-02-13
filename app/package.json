@@ -6,5 +6,6 @@
   "author": {
     "name": "Lisk Foundation",
     "email": "admin@lisk.io"
-  }
+  },
+  "homepage": "."
 }

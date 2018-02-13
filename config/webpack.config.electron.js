@@ -8,6 +8,7 @@ module.exports = merge(baseConfig, {
   entry: `${resolve(__dirname, '../app/src')}/main.js`,
   output: {
     path: resolve(__dirname, '../app/build'),
+    // publicPath: resolve(__dirname, '../app/build/'),
     filename: 'main.js',
   },
   target: 'electron-renderer',

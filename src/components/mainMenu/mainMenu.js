@@ -23,7 +23,7 @@ const getIndex = (history, tabs) => {
 };
 
 const isCurrent = (history, index, tabs) =>
-  history.location.pathname.indexOf(tabs[index].route) === 6; // after: /main/
+  history.location.pathname.indexOf(tabs[index].route) === 0; // after: /main/
 
 const TabTemplate = ({ img, label }) => (
   <div>
