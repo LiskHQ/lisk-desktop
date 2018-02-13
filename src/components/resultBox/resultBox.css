@@ -14,6 +14,9 @@
 
 .resultBox {
   text-align: center;
+  justify-content: space-around;
+  flex-flow: column;
+  display: flex;
 
   & .header {
     position: relative;
