@@ -1,10 +1,6 @@
 import React from 'react';
-import { TABLE } from 'react-toolbox/lib/identifiers';
-import { TableHead, TableCell } from 'react-toolbox/lib/table';
-import { tableFactory } from 'react-toolbox/lib/table/Table';
-import { themr } from 'react-css-themr';
-import TableTheme from 'react-toolbox/lib/table/theme.css';
 import Waypoint from 'react-waypoint';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Box from '../box';
 import Header from './votingHeader';
 import VotingRow from './votingRow';
@@ -12,7 +8,6 @@ import styles from './delegateList.css';
 import voteFilters from './../../constants/voteFilters';
 
 // Create a new Table component injecting Head and Row
-const Table = themr(TABLE, TableTheme)(tableFactory(TableHead, VotingRow));
 class DelegateList extends React.Component {
   constructor() {
     super();
@@ -24,6 +19,10 @@ class DelegateList extends React.Component {
       activeFilter: voteFilters.all,
       showChangeSummery: false,
     };
+  }
+
+  componentDidMount() {
+    this.loadVotedDelegates(true);
   }
 
   componentWillUpdate(nextProps) {
@@ -44,10 +43,6 @@ class DelegateList extends React.Component {
         showChangeSummery: nextProps.showChangeSummery,
       });
     }
-  }
-
-  componentDidMount() {
-    this.loadVotedDelegates(true);
   }
 
   loadVotedDelegates(refresh) {
@@ -96,7 +91,8 @@ class DelegateList extends React.Component {
    */
   loadMore() {
     /* istanbul-ignore-else */
-    if (!this.freezeLoading && this.props.totalDelegates > this.offset) {
+    if (!this.state.showChangeSummery && !this.freezeLoading
+      && this.props.totalDelegates > this.offset) {
       this.loadDelegates(this.query);
     }
   }
@@ -150,26 +146,25 @@ class DelegateList extends React.Component {
       styles.showChangeSummery : '';
     const filteredList = this.filter(this.props.delegates);
     return (
-      <Box className={`voting ${showChangeSummery}`}>
+      <Box className={`voting delegate-list-box ${showChangeSummery} ${styles.box}`}>
         <Header
           setActiveFilter={this.setActiveFilter.bind(this)}
           showChangeSummery={this.state.showChangeSummery}
           voteToggled={this.props.voteToggled}
           addTransaction={this.props.addTransaction}
-          votes={this.props.votes}
           search={ value => this.search(value) }
         />
         <section className={`${styles.delegatesList} delegate-list`}>
-          <Table selectable={false} >
-            <TableHead displaySelect={false}>
-              <TableCell>{this.props.t('Vote', { context: 'verb' })}</TableCell>
-              <TableCell>{this.props.t('Rank')}</TableCell>
-              <TableCell>{this.props.t('Name')}</TableCell>
-              <TableCell>{this.props.t('Lisk ID')}</TableCell>
-              <TableCell>{this.props.t('Productivity')}</TableCell>
-            </TableHead>
+          <div className={styles.table}>
+            <ul className={`${styles.tableHead} ${grid.row}`}>
+              <li className={`${grid['col-lg-1']} ${grid['col-xs-2']}`}>{this.props.t('Vote', { context: 'verb' })}</li>
+              <li className={`${grid['col-lg-1']} ${grid['col-xs-2']}`}>{this.props.t('Rank')}</li>
+              <li className={`${grid['col-lg-3']} ${grid['col-xs-5']}`}>{this.props.t('Name')}</li>
+              <li className={`${grid['col-lg-5']}}`}>{this.props.t('Lisk ID')}</li>
+              <li className={`${grid['col-lg-2']} ${grid['col-xs-3']}`}>{this.props.t('Productivity')}</li>
+            </ul>
             { this.getList(filteredList) }
-          </Table>
+          </div>
           {
             (filteredList.length === 0) ?
               <div className={`empty-message ${styles.emptyMessage}`}>

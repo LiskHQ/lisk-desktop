@@ -119,6 +119,17 @@
   top: 3px;
 }
 
+.table {
+  & ul {
+    list-style-type: none;
+    line-height: 48px;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: var(--grid-padding-L);
+    padding-right: var(--grid-padding-L);
+  }
+}
+
 .header {
   line-height: var(--header-line-height);
   padding: 20px var(--grid-padding-XL);
@@ -128,6 +139,14 @@
     font-weight: 400;
     padding-bottom: 60px;
     font-size: var(--main-header-font-size-XL);
+
+    &.desktopTitle {
+      display: block;
+    }
+
+    &.mobileTitle {
+      display: none;
+    }
   }
 
   & h3 {
@@ -179,22 +198,20 @@
     border-bottom: solid 1px transparent;
     transition: all ease 250ms;
 
+    &:-moz-placeholder,
+    &::-moz-placeholder,
     &::-webkit-input-placeholder {
       font-weight: 400;
       color: var(--color-grayscale-medium);
       font-size: 15px;
     }
 
-    &::-moz-placeholder {
-      font-weight: 400;
-      color: var(--color-grayscale-medium);
-      font-size: 15px;
+    &.desktopInput {
+      display: inline-block;
     }
 
-    &:-moz-placeholder {
-      font-weight: 400;
-      color: var(--color-grayscale-medium);
-      font-size: 15px;
+    &.mobileInput {
+      display: none;
     }
 
     &.dirty {
@@ -267,39 +284,29 @@
 .delegatesList {
   overflow-y: auto;
 
-  & .titles th {
+  & .tableHead li {
     color: var(--color-grayscale-dark) !important;
     font-size: 15px !important;
-
-    & td:first-child {
-      padding-left: var(--grid-padding-XL);
-    }
+    transition: all ease 200ms;
+    font-weight: 500;
   }
 
   & .row {
     background: linear-gradient(90deg, var(--color-white) 0%, #f5f8fc 82%);
 
-    & td:first-child {
-      padding-left: var(--grid-padding-XL);
-    }
-
     &:nth-child(2n) {
       background: var(--color-white);
     }
 
-    & td {
+    & li {
       color: var(--color-grayscale-dark);
       font-size: 16px;
-      font-weight: 500;
+      font-weight: 400;
+
+      &:last-child {
+        font-weight: 300;
+      }
     }
-  }
-}
-
-:global(.safari) .delegatesList .row {
-  background: var(--even-row-background);
-
-  &:nth-child(2n) {
-    background: var(--color-white);
   }
 }
 
@@ -315,9 +322,16 @@
     }
   }
 
-  & td:first-child,
-  & th:first-child {
-    display: none !important;
+  & .row li,
+  & .tableHead li {
+    &:first-child {
+      display: none !important;
+    }
+
+    &:nth-child(3) {
+      flex-basis: 58.3% !important;
+      max-width: 58.3% !important;
+    }
   }
 }
 
@@ -339,6 +353,45 @@
 }
 
 @media (--small-viewport) {
+  .wrapper {
+    overflow: scroll;
+    height: 100%;
+    min-height: 100%;
+  }
+
+  .header {
+    padding: 0 19px !important;
+
+    & .table .tableHead li {
+      padding: 0 0 12px 12px;
+    }
+
+    &.offCanvas ~ .delegatesList {
+      & .table .tableHead {
+        width: 100%;
+        position: fixed;
+        top: 67px;
+        left: 8px;
+        z-index: 2;
+        background: var(--color-white);
+        box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.5);
+
+        & li {
+          padding-bottom: 0;
+        }
+      }
+    }
+
+    & h2.desktopTitle {
+      display: none;
+    }
+
+    & h2.mobileTitle {
+      display: block;
+      padding: 0;
+    }
+  }
+
   .filters {
     display: flex;
     flex-direction: row;
@@ -354,14 +407,40 @@
   }
 
   .delegatesList {
-    & th:nth-child(4),
-    & .row td:nth-child(4) {
+    height: auto;
+    overflow-y: visible;
+    padding-bottom: 60px;
+
+    & .row,
+    & .tableHead {
+      padding-left: var(--grid-padding-XS);
+      padding-right: var(--grid-padding-XS);
+    }
+
+    & .tableHead li:nth-child(4),
+    & .row li:nth-child(4) {
       display: none;
     }
 
-    & th:first-child,
-    & .row td:first-child {
-      padding-left: 19px;
+    & .tableHead li {
+      font-size: 12px !important;
+      font-weight: 700;
+    }
+  }
+
+  .showChangeSummery {
+    & .filters .search {
+      display: none;
+    }
+  }
+
+  .search input {
+    &.desktopInput {
+      display: none;
+    }
+
+    &.mobileInput {
+      display: inline-block;
     }
   }
 }

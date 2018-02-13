@@ -68,8 +68,8 @@ describe('DelegateList', () => {
     expect(wrapper.find('VotingRow')).to.have.lengthOf(delegates.length);
   });
 
-  it('should render Table', () => {
-    expect(wrapper.find('Table')).to.have.lengthOf(1);
+  it('should render delegate-list section', () => {
+    expect(wrapper.find('section.delegate-list')).to.have.lengthOf(1);
   });
 
   it('should define search method to reload delegates based on given query', () => {
@@ -77,7 +77,7 @@ describe('DelegateList', () => {
       toFake: ['setTimeout', 'clearTimeout', 'Date'],
     });
     props.delegatesFetched.reset();
-    wrapper.find('.search input').simulate('change', { nativeEvent: { target: { value: 'query' } } });
+    wrapper.find('.search input').at(0).simulate('change', { nativeEvent: { target: { value: 'query' } } });
     clock.tick(251);
     expect(props.delegatesFetched).to.be.calledWith({
       activePeer: props.activePeer,

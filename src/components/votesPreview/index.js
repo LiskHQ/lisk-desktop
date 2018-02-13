@@ -1,6 +1,6 @@
 import { translate } from 'react-i18next';
 import React, { Fragment } from 'react';
-import CircularProgressbar from 'react-circular-progressbar';
+import CircularProgressBar from 'react-circular-progressbar';
 import styles from './votesPreview.css';
 import votingConst from '../../constants/voting';
 import GradientSVG from './gradientSVG';
@@ -9,9 +9,22 @@ import { Button } from '../toolbox/buttons/button';
 import { getTotalVotesCount, getVoteList, getUnvoteList } from './../../utils/voting';
 
 class VotesPreview extends React.Component {
+  constructor() {
+    super();
+    this.state = { surpassMessageDismissed: false };
+  }
+
   componentDidMount() {
     this.props.updateList(false);
+    if (typeof this.props.onMount === 'function') {
+      this.props.onMount(false, 'VotesPreview');
+    }
   }
+
+  dismissSurpassMessage() {
+    this.setState({ surpassMessageDismissed: true });
+  }
+
   render() {
     const { votes, t, nextStep, updateList } = this.props;
     const { maxCountOfVotes, maxCountOfVotesInOneTurn } = votingConst;
@@ -22,9 +35,13 @@ class VotesPreview extends React.Component {
     const selectionClass = totalNewVotesCount > maxCountOfVotesInOneTurn ? styles.red : '';
     const totalClass = totalVotesCount > 101 ? styles.red : '';
     const createPercentage = (count, total) => Math.ceil((count / total) * 100);
+    const surpassedVoteLimit = totalNewVotesCount > maxCountOfVotesInOneTurn ||
+      totalVotesCount > 101;
+    const surpassMessage = totalVotesCount > 101 ? 'Maximum of 101 votes in total' : `Maximum of ${maxCountOfVotesInOneTurn} votes at a time`;
 
     return (<Fragment>
-      <section className={`${styles.wrapper} votes-preview`}>
+      <section className={`${styles.wrapper} votes-preview ${surpassedVoteLimit ? styles.surpassed : ''}
+        ${totalNewVotesCount > 0 ? styles.hasChanges : ''}`}>
         <header>
           <h2>{t('Votes')}</h2>
           <a target='_blank' href='http://www.help.lisk.io/voting-and-delegates' rel='noopener noreferrer'>
@@ -33,7 +50,7 @@ class VotesPreview extends React.Component {
         </header>
         <section>
           <div className={`${styles.progressWrapper} ${selectionClass} selection-wrapper`}>
-            <CircularProgressbar
+            <CircularProgressBar
               className={styles.progress}
               percentage={createPercentage(totalNewVotesCount, maxCountOfVotesInOneTurn)}
               textForPercentage={() => ''}/>
@@ -44,7 +61,7 @@ class VotesPreview extends React.Component {
             </article>
           </div>
           <div className={`${styles.progressWrapper} ${totalClass} ${styles.totalWrapper} total-wrapper`}>
-            <CircularProgressbar
+            <CircularProgressBar
               className={styles.progress}
               percentage={createPercentage(totalVotesCount, maxCountOfVotes)}
               textForPercentage={() => ''}/>
@@ -55,13 +72,18 @@ class VotesPreview extends React.Component {
             </article>
           </div>
         </section>
-        <Button label={t('Next')}
+        <footer className={`${styles.surpassMessage} ${surpassedVoteLimit && !this.state.surpassMessageDismissed ? styles.visible : ''}`}>
+          <span>{t(surpassMessage)}</span>
+          <FontIcon value='close' onClick={this.dismissSurpassMessage.bind(this)} />
+        </footer>
+        <Button
           className={`${styles.button} next`}
           type='button'
           onClick={() => { updateList(true); nextStep({}); }}
-          disabled={(totalNewVotesCount === 0 ||
-            totalNewVotesCount > maxCountOfVotesInOneTurn ||
-            totalVotesCount > 101)} />
+          disabled={totalNewVotesCount === 0 || surpassedVoteLimit}>
+          <span>{t('Next')}</span>
+          <FontIcon value='arrow-right' />
+        </Button>
       </section>
       <GradientSVG
         id='grad'

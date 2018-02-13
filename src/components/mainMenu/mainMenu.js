@@ -108,7 +108,7 @@ class MainMenu extends React.Component {
     }
     return (
       <Fragment>
-        <aside>
+        <aside className={styles.aside}>
           <div className={styles.sideBarWrapper}>
             <img src={logo} className={styles.logo} />
             <ToolboxTabs index={getIndex(history, tabs)}

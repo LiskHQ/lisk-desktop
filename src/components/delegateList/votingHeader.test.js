@@ -65,7 +65,7 @@ describe('VotingHeader', () => {
     });
 
     it('should render an input, a unordered list', () => {
-      expect(wrapper.find('input')).to.have.lengthOf(1);
+      expect(wrapper.find('input')).to.have.lengthOf(2);
       expect(wrapper.find('ul')).to.have.lengthOf(1);
     });
 
@@ -79,19 +79,19 @@ describe('VotingHeader', () => {
       const clock = sinon.useFakeTimers({
         toFake: ['setTimeout', 'clearTimeout', 'Date'],
       });
-      wrapper.find('input').simulate('change', { nativeEvent: { target: { value: '555' } } });
+      wrapper.find('input').at(0).simulate('change', { nativeEvent: { target: { value: '555' } } });
       clock.tick(250);
       expect(props.search).to.have.been.calledWith('555');
       clock.restore();
     });
 
     it(`click on ${clearButton} should clear value of search input`, () => {
-      wrapper.find('input').simulate('change', { nativeEvent: { target: { value: '555' } } });
+      wrapper.find('input').at(0).simulate('change', { nativeEvent: { target: { value: '555' } } });
       wrapper.update();
-      expect(wrapper.find('input').props().value).to.be.equal('555');
+      expect(wrapper.find('input').at(0).props().value).to.be.equal('555');
       wrapper.find(clearButton).at(0).simulate('click');
       wrapper.update();
-      expect(wrapper.find('input').props().value).to.be.equal('');
+      expect(wrapper.find('input').at(0).props().value).to.be.equal('');
     });
   });
 });

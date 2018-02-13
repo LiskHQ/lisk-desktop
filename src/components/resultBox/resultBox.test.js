@@ -61,4 +61,21 @@ describe('Result Box', () => {
     expect(wrapper.find('img')).to.have.length(0);
     expect(wrapper.find('.copy-title')).to.have.length(0);
   });
+
+  it('calls props.onMount if it is a function', () => {
+    props = {
+      copy: null,
+      title: 'Sorry',
+      body: 'An error occurred while creating the transaction.',
+      success: false,
+      reset: () => {},
+      copyToClipboard: () => {},
+      t: () => {},
+      onMount: spy(),
+    };
+
+    wrapper = mount(<ResultBox {...props} />);
+
+    expect(props.onMount).to.have.been.calledWith(true, 'ResultBox');
+  });
 });

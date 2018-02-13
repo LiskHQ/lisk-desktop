@@ -1,4 +1,5 @@
 import React from 'react';
+import Waypoint from 'react-waypoint';
 import { translate } from 'react-i18next';
 import styles from './delegateList.css';
 import { FontIcon } from '../fontIcon';
@@ -52,11 +53,6 @@ export class VotingHeaderRaw extends React.Component {
     this.search({ nativeEvent: { target: { value: '' } } });
   }
 
-  componentDidUpdate() {
-    const { count, votes } = this.props;
-    this.canLoadMore = count === null || count > votes.length;
-  }
-
   shouldShowEmptyState() {
     return this.props.transactions.length === 0 &&
       (!this.props.activeFilter || this.props.activeFilter === voteFilters.all);
@@ -67,13 +63,19 @@ export class VotingHeaderRaw extends React.Component {
     this.props.setActiveFilter(filter.value);
   }
 
+  markOnOffCanvas(value) {
+    this.setState({ headerPosition: value });
+  }
+
   render() {
     const { t } = this.props;
-    const title = this.props.showChangeSummery ? 'Your selection' : 'Delegate List';
+    const titleDesktop = this.props.showChangeSummery ? 'Your selection' : 'Delegate List';
+    const titleMobile = this.props.showChangeSummery ? 'Your selection' : 'Voting';
     return (
-      <header className={`${styles.header}`}>
+      <header className={`${styles.header} ${styles[this.state.headerPosition]}`}>
         <div>
-          <h2>{t(title)}</h2>
+          <h2 className={styles.desktopTitle}>{t(titleDesktop)}</h2>
+          <h2 className={styles.mobileTitle}>{t(titleMobile)}</h2>
         </div>
         <div>
           <ul className={styles.filters}>
@@ -87,14 +89,22 @@ export class VotingHeaderRaw extends React.Component {
               <FontIcon className={styles.search} value='search' id='searchIcon'/>
               <input type='text'
                 name='query'
-                className={`search ${this.state.query.length > 0 ? styles.dirty : ''} `}
+                className={`search ${styles.desktopInput} ${this.state.query.length > 0 ? styles.dirty : ''} `}
                 value={this.state.query}
                 onChange={this.search.bind(this)}
                 placeholder={t('Search for a delegate')}/>
+              <input type='text'
+                name='query'
+                className={`${styles.mobileInput} ${this.state.query.length > 0 ? styles.dirty : ''} `}
+                value={this.state.query}
+                onChange={this.search.bind(this)}
+                placeholder={t('Search')}/>
               <FontIcon id='cleanIcon' className={styles.clean} value='close' onClick={ this.clearSearch.bind(this) }/>
             </li>
           </ul>
         </div>
+        <Waypoint onLeave={this.markOnOffCanvas.bind(this, 'offCanvas')} threshold={200}
+          onEnter={this.markOnOffCanvas.bind(this, 'onCanvas')} />
       </header>
     );
   }
