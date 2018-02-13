@@ -41,8 +41,10 @@ class VotesPreview extends React.Component {
       totalVotesCount > 101;
     const insufficientFunds = this.props.account.balance - fees.vote < 0;
     const surpassMessage = () => {
-      if (insufficientFunds) return 'Insufficient funds';
-      return totalVotesCount > 101 ? 'Maximum of 101 votes in total' : `Maximum of ${maxCountOfVotesInOneTurn} votes at a time`;
+      if (insufficientFunds) return t('Insufficient funds');
+      return totalVotesCount > 101
+        ? t('Maximum of 101 votes in total')
+        : t('Maximum of {{maxcount}} votes at a time', { maxcount: maxCountOfVotesInOneTurn });
     };
 
     return (<Fragment>
@@ -79,7 +81,7 @@ class VotesPreview extends React.Component {
           </div>
         </section>
         <footer className={`${styles.surpassMessage} ${(surpassedVoteLimit || insufficientFunds) && !this.state.surpassMessageDismissed ? styles.visible : ''}`}>
-          <span>{t(surpassMessage())}</span>
+          <span>{surpassMessage()}</span>
           <FontIcon value='close' onClick={this.dismissSurpassMessage.bind(this)} />
         </footer>
         <div className={styles.bla}>
@@ -92,7 +94,7 @@ class VotesPreview extends React.Component {
             <FontIcon value='arrow-right' />
           </Button>
           <div className={styles.errorMessage}>
-            {surpassedVoteLimit || insufficientFunds ? t(surpassMessage()) : null}
+            {surpassedVoteLimit || insufficientFunds ? surpassMessage() : null}
           </div>
         </div>
       </section>

@@ -107,6 +107,8 @@
   "Losing access to this passphrase will mean no funds can be sent from this account.": "Losing access to this passphrase will mean no funds can be sent from this account.",
   "Main menu": "Main menu",
   "Mainnet": "Mainnet",
+  "Maximum of 101 votes in total": "Maximum of 101 votes in total",
+  "Maximum of {{maxcount}} votes at a time": "Maximum of {{maxcount}} votes at a time",
   "Maximum of {{n}} votes exceeded.": "Maximum of {{n}} votes exceeded.",
   "Maximum of {{n}} votes in one transaction exceeded.": "Maximum of {{n}} votes in one transaction exceeded.",
   "Menu": "Menu",
