@@ -51,7 +51,7 @@
   overflow: scroll;
 
   & footer {
-    padding-top: 7vh /* stylelint-disable-line */;
+    padding-top: 7vh; /* stylelint-disable-line */
   }
 
   & .table {
