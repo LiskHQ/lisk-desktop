@@ -20,14 +20,16 @@ class CopyToClipboard extends React.Component {
       this.setState({
         copied: false,
       });
-    }, 1000);
+    }, 3000);
   }
 
   render() {
     const { value, t, className, text, copyClassName } = this.props;
     return (
       <ReactCopyToClipboard text={value} onCopy={() => this.textIsCopied()}>
-        {this.state.copied ? <span className='copied'>{t('Copied!')}</span> :
+        {this.state.copied ? <span className={`${className} copied`}>
+          {t('Copied!')} <FontIcon value='copy-to-clipboard' className={copyClassName}></FontIcon>
+        </span> :
           <span className={`${className} ${styles.clickable} default`}>
             <span className='copy-title'>{text || value}</span>
             <FontIcon value='copy-to-clipboard' className={copyClassName}></FontIcon>&nbsp;

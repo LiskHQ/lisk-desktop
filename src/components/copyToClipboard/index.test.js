@@ -28,17 +28,17 @@ describe('CopyToClipboard', () => {
   });
 
   it('should click on span.default render "Copied!"', () => {
-    const expectValue = 'Copied!';
+    const expectValue = 'Copied! ';
     wrapper.find('span.default').simulate('click');
     expect(wrapper.find('span.copied').text()).to.be.equal(expectValue);
   });
 
-  it('should span.copied be gone after 1000ms', () => {
+  it('should span.copied be gone after 3000ms', () => {
     const clock = sinon.useFakeTimers({
       toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
     });
     wrapper.find('span.default').simulate('click');
-    clock.tick(1010);
+    clock.tick(3010);
     expect(wrapper.find('span.copied')).to.have.lengthOf(1);
     clock.restore();
   });
