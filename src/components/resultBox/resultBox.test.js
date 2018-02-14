@@ -2,13 +2,22 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { spy } from 'sinon';
+import PropTypes from 'prop-types';
 import { FontIcon } from '../fontIcon';
 import ResultBox from './resultBox';
 import styles from './resultBox.css';
+import i18n from '../../i18n';
 
 describe('Result Box', () => {
   let wrapper;
   let props;
+
+  const options = {
+    context: { i18n },
+    childContextTypes: {
+      i18n: PropTypes.object.isRequired,
+    },
+  };
 
   it('renders result box with success template', () => {
     const title = 'Thank you';
@@ -28,7 +37,7 @@ describe('Result Box', () => {
       t: () => {},
     };
 
-    wrapper = mount(<ResultBox {...props} />);
+    wrapper = mount(<ResultBox {...props} />, options);
 
     expect(wrapper.find('h2').text()).to.contain(title);
     expect(wrapper.find('.result-box-message').text()).to.contain(body);
@@ -53,7 +62,7 @@ describe('Result Box', () => {
       t: () => {},
     };
 
-    wrapper = mount(<ResultBox {...props} />);
+    wrapper = mount(<ResultBox {...props} />, options);
 
     expect(wrapper.find('h2').text()).to.contain(title);
     expect(wrapper.find('.result-box-message').text()).to.contain(body);
@@ -74,7 +83,7 @@ describe('Result Box', () => {
       onMount: spy(),
     };
 
-    wrapper = mount(<ResultBox {...props} />);
+    wrapper = mount(<ResultBox {...props} />, options);
 
     expect(props.onMount).to.have.been.calledWith(true, 'ResultBox');
   });
