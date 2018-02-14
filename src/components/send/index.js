@@ -10,7 +10,7 @@ import SendReadable from './../sendReadable';
 import PassphraseSteps from './../passphraseSteps';
 import { parseSearchParams } from './../../utils/searchParams';
 import breakpoints from './../../constants/breakpoints';
-import styles from './styles.css';
+import styles from './send.css';
 
 class Send extends React.Component {
   constructor(props) {

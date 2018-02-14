@@ -5,7 +5,7 @@ import { authStatePrefill } from '../../utils/form';
 import AccountVisual from '../accountVisual';
 import Input from '../toolbox/inputs/input';
 import fees from './../../constants/fees';
-import styles from './send.css';
+import styles from './sendWritable.css';
 import regex from './../../utils/regex';
 import inputTheme from './input.css';
 

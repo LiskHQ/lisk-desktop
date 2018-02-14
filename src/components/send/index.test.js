@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import { mountWithContext } from '../../../test/utils/mountHelpers';
 import MultiStep from '../multiStep';
 import Send from './index';
-import styles from './styles.css';
+import styles from './send.css';
 
 describe('Send', () => {
   let wrapper;

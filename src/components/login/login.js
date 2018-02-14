@@ -200,7 +200,7 @@ class Login extends React.Component {
         </section>
         <section className={`${styles.signUp} ${styles[this.state.passInputState]}`}>
           <section className={styles.table}>
-            <div className={`${styles.tableCell} text-left`}>
+            <div className='text-left'>
               <h2>
                 <Link className='new-account-button' to='/register'>
                   {this.props.t('Get access')}
