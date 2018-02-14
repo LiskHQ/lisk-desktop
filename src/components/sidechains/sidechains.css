@@ -47,6 +47,7 @@
   & .header {
     margin: auto 0px;
     padding-top: 20%;
+    z-index: 1;
 
     & h2 {
       font-size: var(--header-font-size-L);

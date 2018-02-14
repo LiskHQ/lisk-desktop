@@ -20,10 +20,6 @@
   --back-button-icon-font-size-L: 16px;
 }
 
-footer {
-  padding-bottom: 0px;
-}
-
 @keyframes delayedFadeIn {
   0% { opacity: 0; }
   75% { opacity: 0; }
@@ -53,6 +49,10 @@ footer {
 .login {
   width: 42%;
   overflow: scroll;
+
+  & footer {
+    padding-top: 7vh /* stylelint-disable-line */;
+  }
 
   & .table {
     position: relative;
