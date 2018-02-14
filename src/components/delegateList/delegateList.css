@@ -168,7 +168,7 @@
     vertical-align: middle;
 
     &:not(:last-of-type) {
-      margin-right: 50px;
+      margin-right: 40px;
     }
   }
 
