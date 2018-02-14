@@ -44,9 +44,9 @@ describe('Reducer: voting(state, action)', () => {
     expect(changedState).to.be.equal(state);
   });
 
-  it('should clean up with action: accountLoggedOut', () => {
+  it('should clean up with action: accountLoading', () => {
     const action = {
-      type: actionTypes.accountLoggedOut,
+      type: actionTypes.accountLoading,
     };
     const state = { votes: cleanVotes, delegates: fullDelegates, refresh: false };
     const changedState = voting(state, action);
