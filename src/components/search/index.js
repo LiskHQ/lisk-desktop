@@ -1,3 +1,4 @@
+import Input from '../toolbox/inputs/input';
 import React from 'react';
 import { translate } from 'react-i18next';
 import { visitAndSaveSearch, visit } from './keyAction';
@@ -24,13 +25,14 @@ class Search extends React.Component {
     const { history, t } = this.props;
     return (<Box className={styles.search}>
       <div className={styles.wrapper}>
-        <input
-          autoFocus
-          onKeyUp={(e) => { visitAndSaveSearch(e, history); }}
-          onChange={(event) => { this.setState({ inputValue: event.target.value }); }}
-          className={styles.input} type="text"
-          value={this.state.inputValue}
+        <Input
+          className={styles.input}
+          autoFocus={true}
           placeholder={this.props.t('Search for Lisk ID or Transaction ID')}
+          onKeyUp={(e) => { visitAndSaveSearch(e, history); }}
+          onChange={(event) => { this.setState({ inputValue: event }); }}
+          value={this.state.inputValue}
+          theme={styles}
         />
         {
           this.showRecentSearches()

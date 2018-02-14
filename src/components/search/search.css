@@ -2,30 +2,15 @@
 
 .search {
   text-align: center;
+  padding: 0px 15vh; /* stylelint-disable-line */
 
   & .wrapper {
     margin: auto;
-    height: 220px;
+    height: 100px;
     width: 100%;
 
     & .input {
-      border: none;
-      background: none;
-      width: 100%;
-      color: var(--color-primary-standard);
-      font-family: var(--heading-font);
-      text-align: center;
-    }
-
-    & .input:focus {
-      outline: none;
-    }
-
-    & .input::placeholder {
-      font-family: var(--content-font);
-      color: var(--color-grayscale-medium);
-      font-weight: 200;
-      letter-spacing: 0;
+      margin-bottom: 40px;
     }
 
     & .subTitle {
@@ -48,39 +33,28 @@
       cursor: pointer;
     }
   }
+
+  & input {
+    font-size: 32px !important;
+    color: var(--color-primary-standard);
+    font-family: var(--heading-font);
+    text-align: center;
+    line-height: 32px;
+  }
+
+  & input::placeholder {
+    font-size: 30px;
+    font-family: var(--content-font);
+    color: var(--color-grayscale-medium);
+    font-weight: 200;
+    letter-spacing: 0;
+    line-height: 30px;
+  }
 }
 
 @media (--xLarge-viewport) {
   .search {
     & .wrapper {
-      & .input {
-        font-size: 32px;
-        margin-bottom: 40px;
-      }
-
-      & .input::placeholder {
-        font-size: 30px;
-      }
-
-      & .subTitle {
-        font-size: 16px;
-      }
-    }
-  }
-}
-
-@media (--large-viewport) {
-  .search {
-    & .wrapper {
-      & .input {
-        font-size: 32px;
-        margin-bottom: 40px;
-      }
-
-      & .input::placeholder {
-        font-size: 30px;
-      }
-
       & .subTitle {
         font-size: 16px;
       }
@@ -90,36 +64,16 @@
 
 @media (--medium-viewport) {
   .search {
-    & .wrapper {
-      & .input {
-        font-size: 32px;
-        margin-bottom: 40px;
-      }
-
-      & .input::placeholder {
-        font-size: 30px;
-      }
-
-      & .subTitle {
-        font-size: 16px;
-      }
-    }
+    padding: 0px 6vh; /* stylelint-disable-line */
   }
 }
 
+
 @media (--small-viewport) {
   .search {
-    padding: 0px 20px;
+    padding: 0px 4vh; /* stylelint-disable-line */
 
     & .wrapper {
-      & .input {
-        font-size: 24px;
-      }
-
-      & .input::placeholder {
-        font-size: 16px;
-      }
-
       & .subTitle {
         font-size: 14px;
       }
@@ -127,6 +81,14 @@
 
     & .recent {
       font-size: 14px;
+    }
+
+    & input {
+      font-size: 24px !important;
+    }
+
+    & input::placeholder {
+      font-size: 16px;
     }
   }
 
