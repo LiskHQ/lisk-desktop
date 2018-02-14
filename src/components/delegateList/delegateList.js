@@ -122,7 +122,7 @@ class DelegateList extends React.Component {
 
     if (!this.isInitial && this.props.delegates.length === 0) {
       message = 'No delegates found.';
-    } else if (this.state.filter === voteFilters.voted &&
+    } else if (this.state.activeFilter === voteFilters.voted &&
       Object.keys(this.props.votes).length === 0) {
       message = 'You have not voted yet.';
     } else if (this.query !== '' && Object.keys(filteredList).length === 0) {
