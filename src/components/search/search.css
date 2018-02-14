@@ -5,6 +5,7 @@
 
   & .wrapper {
     margin: auto;
+    height: 220px;
     width: 100%;
 
     & .input {
