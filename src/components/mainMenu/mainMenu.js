@@ -8,9 +8,10 @@ import * as menuLogos from '../../assets/images/main-menu-icons/*.svg'; //eslint
 import { FontIcon } from '../fontIcon';
 import Setting from '../setting';
 
-const getIndex = (history, tabs) =>
-  tabs.map(t => t.route)
-    .indexOf(history.location.pathname);
+const getIndex = (history, tabs) => {
+  if (history.location.pathname.includes('explorer')) return tabs.length - 1;
+  return tabs.map(t => t.route).indexOf(history.location.pathname);
+};
 
 const isCurrent = (history, index, tabs) =>
   history.location.pathname.indexOf(tabs[index].route) === 6; // after: /main/
@@ -55,11 +56,6 @@ class MainMenu extends React.Component {
     const { history, t, showDelegate, account } = this.props;
     const tabs = [
       {
-        label: t('Explorer'),
-        route: '/explorer/search',
-        id: 'explorer',
-        image: menuLogos.search,
-      }, {
         label: t('Dashboard'),
         route: '/main/dashboard',
         id: 'dashboard',
@@ -95,11 +91,16 @@ class MainMenu extends React.Component {
         route: '/main/sidechains',
         id: 'sidechains',
         image: menuLogos.sidechains,
+      }, {
+        label: t('Explorer'),
+        route: '/explorer/search',
+        id: 'explorer',
+        image: menuLogos.search,
       },
     ];
 
     if (showDelegate) {
-      tabs.push({
+      tabs.splice(tabs.length - 1, 0, {
         label: t('Delegates'),
         id: 'voting',
         route: '/main/voting',
