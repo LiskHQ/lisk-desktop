@@ -75,15 +75,12 @@
   }
 }
 
-.bla {
+.footerWrapper {
   margin: 0 51px 56px;
   text-align: center;
 }
 
 .button {
-  margin: 0 51px 76px;
-  width: auto;
-
   & span:last-child {
     font-size: 16px;
     display: none;
@@ -233,7 +230,7 @@
       }
     }
 
-    & .bla {
+    & .footerWrapper {
       margin: 0;
     }
 

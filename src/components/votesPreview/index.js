@@ -87,7 +87,7 @@ class VotesPreview extends React.Component {
           <span>{surpassMessage()}</span>
           <FontIcon value='close' onClick={this.dismissSurpassMessage.bind(this)} />
         </footer>
-        <div className={styles.bla}>
+        <div className={styles.footerWrapper}>
           <Button
             className={`${styles.button} next`}
             type='button'
