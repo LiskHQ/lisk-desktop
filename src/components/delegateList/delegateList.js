@@ -161,7 +161,7 @@ class DelegateList extends React.Component {
               <li className={`${grid['col-md-1']} ${grid['col-xs-2']}`}>{this.props.t('Rank')}</li>
               <li className={`${grid['col-md-3']} ${grid['col-xs-5']}`}>{this.props.t('Name')}</li>
               <li className={`${grid['col-md-5']}`}>{this.props.t('Lisk ID')}</li>
-              <li className={`${grid['col-md-2']} ${grid['col-xs-3']}`}>{this.props.t('Productivity')}</li>
+              <li className={`${grid['col-md-2']} ${grid['col-xs-3']} ${styles.productivity}`}>{this.props.t('Productivity')}</li>
             </ul>
             { this.getList(filteredList) }
           </div>

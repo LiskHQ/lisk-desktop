@@ -166,9 +166,10 @@
     font-size: 15px;
     font-weight: 500;
     vertical-align: middle;
+    margin-left: 10px;
 
     &:not(:last-of-type) {
-      margin-right: 40px;
+      margin-right: 24px;
     }
   }
 
@@ -176,6 +177,10 @@
     border-bottom: 2px solid var(--amount-negative-color);
     color: var(--amount-negative-color);
   }
+}
+
+.productivity {
+  text-align: right;
 }
 
 .search {
@@ -291,6 +296,10 @@
       transition: all ease 200ms;
       font-weight: 700;
     }
+
+    & .productivity {
+      direction: rtl;
+    }
   }
 
   & .row {
@@ -379,7 +388,7 @@
         width: 100%;
         position: fixed;
         top: 67px;
-        left: 8px;
+        left: 0;
         z-index: 2;
         background: var(--color-white);
         box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.5);
