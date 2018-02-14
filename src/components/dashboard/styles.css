@@ -1,16 +1,16 @@
-@import '../app/variables';
+@import '../app/variables.css';
 
 .wrapper {
   width: 100%;
 }
 
 .seeAllLink {
-  font-size: 16px;
+  font-size: 15px;
   color: var(--color-primary-standard);
   margin-left: 40px;
   text-decoration: none;
   font-family: var(--content-font);
-  font-weight: 400;
+  font-weight: var(--font-weight-bold);
 }
 
 .send {
