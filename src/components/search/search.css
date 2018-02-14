@@ -21,7 +21,6 @@
 
   & .recent {
     padding: 0px;
-    font-size: 16px;
     line-height: 32px;
     color: var(--color-grayscale-medium);
     width: max-content;
@@ -33,6 +32,7 @@
 
     & .clickable {
       cursor: pointer;
+      color: var(--color-primary-standard);
     }
   }
 
