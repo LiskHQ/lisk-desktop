@@ -1,19 +1,41 @@
 import React from 'react';
 import { CopyToClipboard as ReactCopyToClipboard } from 'react-copy-to-clipboard';
+import { translate } from 'react-i18next';
 import { FontIcon } from '../fontIcon';
 import styles from './copy.css';
 
 class CopyToClipboard extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      copied: false,
+    };
+  }
+
+  textIsCopied() {
+    this.setState({
+      copied: true,
+    });
+    setTimeout(() => {
+      this.setState({
+        copied: false,
+      });
+    }, 1000);
+  }
+
   render() {
+    const { value, t, className, text, copyClassName } = this.props;
     return (
-      <ReactCopyToClipboard text={this.props.value} >
-        <span className={`${this.props.className} ${styles.clickable}`}>
-          <span className='copy-title'>{this.props.text ? this.props.text : this.props.value}</span>
-          <FontIcon value='copy-to-clipboard' className={this.props.copyClassName}></FontIcon>&nbsp;
-        </span>
+      <ReactCopyToClipboard text={value} onCopy={() => this.textIsCopied()}>
+        {this.state.copied ? <span className='copied'>{t('Copied!')}</span> :
+          <span className={`${className} ${styles.clickable} default`}>
+            <span className='copy-title'>{text || value}</span>
+            <FontIcon value='copy-to-clipboard' className={copyClassName}></FontIcon>&nbsp;
+          </span>
+        }
       </ReactCopyToClipboard>
     );
   }
 }
 
-export default CopyToClipboard;
+export default (translate()(CopyToClipboard));
