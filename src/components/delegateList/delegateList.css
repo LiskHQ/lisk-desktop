@@ -327,11 +327,6 @@
     &:first-child {
       display: none !important;
     }
-
-    &:nth-child(3) {
-      flex-basis: 58.3% !important;
-      max-width: 58.3% !important;
-    }
   }
 }
 
@@ -431,6 +426,14 @@
   .showChangeSummery {
     & .filters .search {
       display: none;
+    }
+
+    & .delegatesList {
+      & .row li:nth-child(3),
+      & .tableHead li:nth-child(3) {
+        flex-basis: 58.3% !important;
+        max-width: 58.3% !important;
+      }
     }
   }
 

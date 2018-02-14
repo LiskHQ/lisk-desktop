@@ -71,7 +71,9 @@ class Create extends React.Component {
   }
 
   componentDidUpdate() {
-    this.moveTitle();
+    if (this.state.data) {
+      this.moveTitle();
+    }
   }
 
   componentWillUnmount() {
