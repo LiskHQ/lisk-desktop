@@ -102,8 +102,8 @@ describe('MainMenu', () => {
     const wrapper = mount(<MemoryRouter>
       <MainMenu {...props} account={{}} />
     </MemoryRouter>, options);
-    expect(wrapper.find(Tab).at(0).props().disabled).to.be.equal(false);
-    expect(wrapper.find(Tab).at(1).props().disabled).to.be.equal(true);
+    expect(wrapper.find(Tab).at(0).props().disabled).to.be.equal(true);
+    expect(wrapper.find(Tab).at(3).props().disabled).to.be.equal(false);
   });
 
   it('should allow to change active menu item', () => {
@@ -111,7 +111,7 @@ describe('MainMenu', () => {
       <MainMenu {...props} />
     </MemoryRouter>, options);
     wrapper.find(Tab).at(1).simulate('click');
-    expect(history.push).to.have.been.calledWith('/main/dashboard');
+    expect(history.push).to.have.been.calledWith('/main/transactions');
   });
 
   it('should click on more activate the drawer', () => {

@@ -8,9 +8,17 @@ import * as menuLogos from '../../assets/images/main-menu-icons/*.svg'; //eslint
 import { FontIcon } from '../fontIcon';
 import Setting from '../setting';
 
-const getIndex = (history, tabs) =>
-  tabs.map(t => t.route)
-    .indexOf(history.location.pathname);
+const getIndex = (history, tabs) => {
+  if (history.location.pathname.includes('explorer')) return tabs.length - 1;
+
+  let index = -1;
+  tabs.map(t => new RegExp(`${t.route}(\\/?)`)).forEach((item, i) => {
+    if (history.location.pathname.match(item)) {
+      index = i;
+    }
+  });
+  return index;
+};
 
 const isCurrent = (history, index, tabs) =>
   history.location.pathname.indexOf(tabs[index].route) === 6; // after: /main/
@@ -55,11 +63,6 @@ class MainMenu extends React.Component {
     const { history, t, showDelegate, account } = this.props;
     const tabs = [
       {
-        label: t('Explorer'),
-        route: '/explorer/search',
-        id: 'explorer',
-        image: menuLogos.search,
-      }, {
         label: t('Dashboard'),
         route: '/main/dashboard',
         id: 'dashboard',
@@ -78,13 +81,6 @@ class MainMenu extends React.Component {
       }, {
       */
       /* TODO: uncomment when the page is updated
-        label: t('Delegates'),
-        route: '/main/voting',
-        id: 'voting',
-        image: menuLogos.delegates,
-      }, {
-      */
-      /* TODO: uncomment when the page is updated
         label: t('Forging'),
         route: '/main/forging',
         id: 'forging',
@@ -95,11 +91,16 @@ class MainMenu extends React.Component {
         route: '/main/sidechains',
         id: 'sidechains',
         image: menuLogos.sidechains,
+      }, {
+        label: t('Explorer'),
+        route: '/explorer/search',
+        id: 'explorer',
+        image: menuLogos.search,
       },
     ];
 
     if (showDelegate) {
-      tabs.push({
+      tabs.splice(tabs.length - 1, 0, {
         label: t('Delegates'),
         id: 'voting',
         route: '/main/voting',
@@ -122,7 +123,9 @@ class MainMenu extends React.Component {
                   label={<TabTemplate label={label} img={image} />}
                   className={styles.tab}
                   id={id}
-                  disabled={(isCurrent(history, index, tabs) || !account.address) && index > 0 }
+                  disabled={
+                    (isCurrent(history, index, tabs) || !account.address) && index < tabs.length - 1
+                  }
                 />)}
             </ToolboxTabs>
             <div onClick={this.menuToggle.bind(this)}
