@@ -1,8 +1,8 @@
-import Input from '../toolbox/inputs/input';
 import React from 'react';
 import { translate } from 'react-i18next';
 import { visitAndSaveSearch, visit } from './keyAction';
 import localJSONStorage from './../../utils/localJSONStorage';
+import Input from '../toolbox/inputs/input';
 import Box from '../box';
 import styles from './search.css';
 

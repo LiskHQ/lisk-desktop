@@ -24,6 +24,8 @@
     font-size: 16px;
     line-height: 32px;
     color: var(--color-grayscale-medium);
+    width: max-content;
+    margin: auto;
 
     & .item {
       list-style: none;
@@ -67,7 +69,6 @@
     padding: 0px 6vh; /* stylelint-disable-line */
   }
 }
-
 
 @media (--small-viewport) {
   .search {
