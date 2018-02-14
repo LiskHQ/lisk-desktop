@@ -68,6 +68,12 @@
   }
 }
 
+@media (--small-viewport) {
+  .detailsWrapper {
+    margin: 0 auto;
+  }
+}
+
 @media (--xSmall-viewport) {
   .transaction {
     margin-top: var(--title-bar-extra-padding-XS);

@@ -448,6 +448,20 @@
   }
 }
 
+@media (--small-viewport) {
+  .details {
+    & .row {
+      margin-right: 0;
+      margin-left: 0;
+      padding-bottom: 0;
+    }
+
+    & .column {
+      padding-bottom: 30px;
+    }
+  }
+}
+
 @media (--xSmall-viewport) {
   .transactions {
     & .activity {
