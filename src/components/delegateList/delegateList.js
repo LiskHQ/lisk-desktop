@@ -122,7 +122,7 @@ class DelegateList extends React.Component {
 
     if (!this.isInitial && this.props.delegates.length === 0) {
       message = 'No delegates found.';
-    } else if (this.state.filter === voteFilters.voted &&
+    } else if (this.state.activeFilter === voteFilters.voted &&
       Object.keys(this.props.votes).length === 0) {
       message = 'You have not voted yet.';
     } else if (this.query !== '' && Object.keys(filteredList).length === 0) {
@@ -157,11 +157,11 @@ class DelegateList extends React.Component {
         <section className={`${styles.delegatesList} delegate-list`}>
           <div className={styles.table}>
             <ul className={`${styles.tableHead} ${grid.row}`}>
-              <li className={`${grid['col-lg-1']} ${grid['col-xs-2']}`}>{this.props.t('Vote', { context: 'verb' })}</li>
-              <li className={`${grid['col-lg-1']} ${grid['col-xs-2']}`}>{this.props.t('Rank')}</li>
-              <li className={`${grid['col-lg-3']} ${grid['col-xs-5']}`}>{this.props.t('Name')}</li>
-              <li className={`${grid['col-lg-5']}}`}>{this.props.t('Lisk ID')}</li>
-              <li className={`${grid['col-lg-2']} ${grid['col-xs-3']}`}>{this.props.t('Productivity')}</li>
+              <li className={`${grid['col-md-1']} ${grid['col-xs-2']}`}>{this.props.t('Vote', { context: 'verb' })}</li>
+              <li className={`${grid['col-md-1']} ${grid['col-xs-2']}`}>{this.props.t('Rank')}</li>
+              <li className={`${grid['col-md-3']} ${grid['col-xs-5']}`}>{this.props.t('Name')}</li>
+              <li className={`${grid['col-md-5']}`}>{this.props.t('Lisk ID')}</li>
+              <li className={`${grid['col-md-2']} ${grid['col-xs-3']} ${styles.productivity}`}>{this.props.t('Productivity')}</li>
             </ul>
             { this.getList(filteredList) }
           </div>

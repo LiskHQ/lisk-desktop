@@ -30,7 +30,7 @@ class VotingRow extends React.Component {
   render() {
     const { data, voteStatus, voteToggled } = this.props;
     return (<ul className={`delegate-row ${styles.row} ${grid.row} ${setRowClass(voteStatus)}`}>
-      <li className={`${grid['col-lg-1']} ${grid['col-xs-2']}`}>
+      <li className={`${grid['col-md-1']} ${grid['col-xs-2']}`}>
         <Checkbox styles={styles}
           toggle={voteToggled}
           value={data.selected}
@@ -38,10 +38,10 @@ class VotingRow extends React.Component {
           data={data}
         />
       </li>
-      <li className={`${grid['col-lg-1']} ${grid['col-xs-2']}`}>{data.rank}</li>
-      <li className={`${grid['col-lg-3']} ${grid['col-xs-5']}`}>{data.username}</li>
-      <li className={`${grid['col-lg-5']}`}>{data.address}</li>
-      <li className={`${grid['col-lg-2']} ${grid['col-xs-3']}`}>{data.productivity} %</li>
+      <li className={`${grid['col-md-1']} ${grid['col-xs-2']}`}>{data.rank}</li>
+      <li className={`${grid['col-md-3']} ${grid['col-xs-5']} ${styles.username}`}>{data.username}</li>
+      <li className={`${grid['col-md-5']}`}>{data.address}</li>
+      <li className={`${grid['col-md-2']} ${grid['col-xs-3']} ${styles.productivity}`}>{data.productivity} %</li>
     </ul>
     );
   }

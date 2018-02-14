@@ -81,7 +81,7 @@ const voting = (state = {
       });
 
 
-    case actionTypes.accountLoggedOut:
+    case actionTypes.accountLoading:
       return Object.assign({}, state, {
         votes: {},
         delegates: [],
