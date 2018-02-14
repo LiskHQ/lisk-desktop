@@ -111,7 +111,7 @@ describe('MainMenu', () => {
       <MainMenu {...props} />
     </MemoryRouter>, options);
     wrapper.find(Tab).at(1).simulate('click');
-    expect(history.push).to.have.been.calledWith('/main/dashboard');
+    expect(history.push).to.have.been.calledWith('/main/transactions');
   });
 
   it('should click on more activate the drawer', () => {

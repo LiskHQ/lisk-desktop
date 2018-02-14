@@ -74,13 +74,6 @@ class MainMenu extends React.Component {
       }, {
       */
       /* TODO: uncomment when the page is updated
-        label: t('Delegates'),
-        route: '/main/voting',
-        id: 'voting',
-        image: menuLogos.delegates,
-      }, {
-      */
-      /* TODO: uncomment when the page is updated
         label: t('Forging'),
         route: '/main/forging',
         id: 'forging',
