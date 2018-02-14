@@ -17,15 +17,16 @@ npm run dev
 
 Open http://localhost:8080
 
-For ease of development, you can setItem in localStorage to prefill a passphrase, e.g.:
+For ease of development, you can `setItem` in `localStorage` to see network options:
 ```
-localStorage.setItem('passphrase', 'wagon stock borrow episode laundry kitten salute link globe zero feed marble')
+localStorage.setItem('showNetwork', true)
 ```
 
-And then you can setItem in localStorage to login automatically
+You can also pass the same key-value pair as query string:
 ```
-localStorage.setItem('autologin', true)
+http://localhost:8080/#/?showNetwork=true
 ```
+
 
 ## Build
 
@@ -127,24 +128,18 @@ To launch storybook sandbox with components run
 ```
 npm run storybook
 ```
-and go to
+and navigate to
 
 http://localhost:6006/
 
 
 
-## Authors
-
-- Ricardo Ferro <ricardo.ferro@gmail.com>
-- Oliver Beddows <oliver@lightcurve.io>
-- Vít Stanislav <vit@lightcurve.io>
-- Tobias Schwarz <tobias@lightcurve.io>
-- Ali Haghighatkhah <ali@lightcurve.io>
-- Yashar Ayari <darkyashi@gmail.com>
+## Contributors
+See [contributors section](https://github.com/LiskHQ/lisk-hub/graphs/contributors).
 
 ## License
 
-Copyright © 2016-2017 Lisk Foundation
+Copyright © 2016-2018 Lisk Foundation
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
