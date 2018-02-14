@@ -49,6 +49,7 @@
 
 .button {
   margin: 0 51px 76px;
+  width: auto;
 
   & span:last-child {
     font-size: 16px;
