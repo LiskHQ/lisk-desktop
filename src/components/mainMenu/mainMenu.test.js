@@ -102,8 +102,8 @@ describe('MainMenu', () => {
     const wrapper = mount(<MemoryRouter>
       <MainMenu {...props} account={{}} />
     </MemoryRouter>, options);
-    expect(wrapper.find(Tab).at(0).props().disabled).to.be.equal(false);
-    expect(wrapper.find(Tab).at(1).props().disabled).to.be.equal(true);
+    expect(wrapper.find(Tab).at(0).props().disabled).to.be.equal(true);
+    expect(wrapper.find(Tab).at(3).props().disabled).to.be.equal(false);
   });
 
   it('should allow to change active menu item', () => {
