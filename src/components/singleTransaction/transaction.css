@@ -11,6 +11,8 @@
   --grid-padding-XL: 48px;
   --grid-padding-L: 32px;
   --grid-padding-XS: 19px;
+  --details-wrapper-max-width-s: 800px;
+  --details-wrapper-max-width-m: 650px;
 }
 
 .copyLabel {
@@ -22,13 +24,24 @@
   color: var(--color-primary-standard);
 }
 
-.detailsWrapper {
-  margin: auto 0px auto 20%;
-}
-
 .transaction {
-  & h2 {
-    font-weight: var(--font-weight-semi-bold);
+  & header {
+    & h2 {
+      font-weight: var(--font-weight-semi-bold);
+    }
+  }
+
+  & .content {
+    display: flex;
+    height: 100%;
+    flex-flow: column;
+    justify-content: center;
+
+    & .detailsWrapper {
+      margin: 0 auto;
+      max-width: var(--details-wrapper-max-width-s);
+      width: 90%;
+    }
   }
 }
 
@@ -65,6 +78,12 @@
     & header {
       padding: 20px  var(--grid-padding-L) calc(20px + var(--title-bar-extra-padding-M)) var(--grid-padding-L);
     }
+
+    & .content {
+      & .detailsWrapper {
+        max-width: var(--details-wrapper-max-width-m);
+      }
+    }
   }
 }
 
@@ -78,6 +97,10 @@
       & h2 {
         font-size: var(--main-header-font-size-XS);
       }
+    }
+
+    & .content {
+      display: block;
     }
   }
 }

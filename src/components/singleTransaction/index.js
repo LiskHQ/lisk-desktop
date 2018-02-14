@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { transactionLoadRequested } from '../../actions/transactions';
@@ -26,7 +26,7 @@ class SingleTransaction extends React.Component {
   render() {
     return <Box className={styles.transaction}>
       { this.props.transaction.id && !this.props.transaction.error ?
-        <div>
+        <Fragment>
           <header>
             <h2>{this.props.t('Transaction ID')}</h2>
             <CopyToClipboard
@@ -36,10 +36,12 @@ class SingleTransaction extends React.Component {
               className={styles.copyLabel}
               copyClassName={`${styles.copyIcon}`} />
           </header>
-          <div className={styles.detailsWrapper}>
-            <TransactionDetails value={this.props.transaction} t={this.props.t} />
+          <div className={styles.content}>
+            <div className={styles.detailsWrapper}>
+              <TransactionDetails value={this.props.transaction} t={this.props.t} />
+            </div>
           </div>
-        </div> :
+        </Fragment> :
         <EmptyState title={this.props.t('No results')}
           message={this.props.t('Search for Lisk ID or Transaction ID')} />
       }
