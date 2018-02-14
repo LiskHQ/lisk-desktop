@@ -67,6 +67,6 @@
   min-width: 140px;
 
   &:hover {
-    background: var(--color-action-medium-2) !important;
+    background: var(--gradient-action-blue-hover) !important;
   }
 }
