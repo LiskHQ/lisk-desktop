@@ -27,8 +27,8 @@ const TransactionsDetailView = props => (
         </header> : null
     }
     <div>
-      <div className={`${grid.row} ${styles.row}`}>
-        <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']} ${styles.column}`}>
+      <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
+        <div className={`${grid['col-xs-12']} ${grid['col-sm-4']} ${grid['col-md-4']} ${styles.column}`}>
           <div className={styles.label}>{props.t('Sender')}</div>
           {
             props.value.senderId ?
@@ -43,7 +43,7 @@ const TransactionsDetailView = props => (
             </Link>
           </div>
         </div>
-        <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']} ${styles.column}`}>
+        <div className={`${grid['col-xs-12']} ${grid['col-sm-4']} ${grid['col-md-4']} ${styles.column}`}>
           <div className={styles.label}>{props.t('Recipient')}</div>
           {
             props.value.recipientId ?
@@ -62,8 +62,8 @@ const TransactionsDetailView = props => (
           </div>
         </div>
       </div>
-      <div className={`${grid.row} ${styles.row}`}>
-        <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']} ${styles.column}`}>
+      <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
+        <div className={`${grid['col-xs-12']} ${grid['col-sm-4']} ${grid['col-md-4']} ${styles.column}`}>
           <div className={styles.label}>{props.t('Date')}</div>
           <div className={styles.value}>
             <DateFromTimestamp
@@ -71,7 +71,7 @@ const TransactionsDetailView = props => (
               time={props.value.timestamp}/>
           </div>
         </div>
-        <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']} ${styles.column}`}>
+        <div className={`${grid['col-xs-12']} ${grid['col-sm-4']} ${grid['col-md-4']} ${styles.column}`}>
           {
             props.value.type === 0 ?
               <div>
@@ -87,27 +87,27 @@ const TransactionsDetailView = props => (
           }
         </div>
       </div>
-      <div className={`${grid.row} ${styles.row}`}>
-        <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']} ${styles.column}`}>
+      <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
+        <div className={`${grid['col-xs-12']} ${grid['col-sm-4']} ${grid['col-md-4']} ${styles.column}`}>
           <div className={styles.label}>{props.t('Additional fee')}</div>
           <div className={styles.value}><LiskAmount val={props.value.fee} /></div>
         </div>
-        <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']} ${styles.column}`}>
+        <div className={`${grid['col-xs-12']} ${grid['col-sm-4']} ${grid['col-md-4']} ${styles.column}`}>
           <div className={styles.label}>{props.t('Confirmations')}</div>
           <div className={styles.value}>
             <span>{props.value.confirmations}</span>
           </div>
         </div>
       </div>
-      <div className={`${grid.row} ${styles.row}`}>
-        {props.prevStep && <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']} ${styles.column}`}>
+      <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
+        {props.prevStep && <div className={`${grid['col-xs-12']} ${grid['col-sm-4']} ${grid['col-md-4']} ${styles.column}`}>
           <div className={styles.label}>{props.t('Transaction ID')}</div>
           <div className={styles.value}><CopyToClipboard
             value={props.value.id}
             text={props.value.id}
             copyClassName={`${styles.copy}`} /></div>
         </div>}
-        <div className={`${grid['col-xs-12']} ${grid['col-sm-6']} ${grid['col-md-6']} ${styles.column}`}>
+        <div className={`${grid['col-xs-12']} ${grid['col-sm-4']} ${grid['col-md-4']} ${styles.column}`}>
         </div>
       </div>
     </div>
