@@ -45,22 +45,22 @@ class TransactionsList extends React.Component {
           this.isLargeScreen()
             ? <Waypoint bottomOffset='-80%'
               key={this.props.transactions.length}
-              onEnter={() => { this.props.loadMore(); }}></Waypoint>
+              onEnter={() => {
+                if (this.props.loadMore) {
+                  this.props.loadMore();
+                }
+              }}></Waypoint>
             : null
         }
       </div>;
-    } else if (!this.props.loadMore) {
+    } else if (!this.props.filter || this.props.filter.value !== txFilters.all) {
       return <p className={`${styles.empty} hasPaddingRow empty-message`}>
-        {this.props.t('There are no transactions yet.')}
+        {this.props.t('There are no {{filterName}} transactions.', {
+          filterName: this.props.filter && this.props.filter.name ? this.props.filter.name.toLowerCase() : '',
+        })}
       </p>;
-    } else if (!this.props.filter || this.props.filter === txFilters.all) {
-      return null;
     }
-    return <p className={`${styles.empty} hasPaddingRow empty-message`}>
-      {this.props.t('There are no {{filterName}} transactions.', {
-        filterName: this.props.filter && this.props.filter.name ? this.props.filter.name.toLowerCase() : '',
-      })}
-    </p>;
+    return null;
   }
 }
 
