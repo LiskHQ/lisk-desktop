@@ -1,12 +1,14 @@
 import { translate } from 'react-i18next';
+import { connect } from 'react-redux';
 import React, { Fragment } from 'react';
 import CircularProgressBar from 'react-circular-progressbar';
-import styles from './votesPreview.css';
 import votingConst from '../../constants/voting';
+import fees from './../../constants/fees';
 import GradientSVG from './gradientSVG';
 import { FontIcon } from '../fontIcon';
 import { Button } from '../toolbox/buttons/button';
 import { getTotalVotesCount, getVoteList, getUnvoteList } from './../../utils/voting';
+import styles from './votesPreview.css';
 
 class VotesPreview extends React.Component {
   constructor() {
@@ -37,7 +39,13 @@ class VotesPreview extends React.Component {
     const createPercentage = (count, total) => Math.ceil((count / total) * 100);
     const surpassedVoteLimit = totalNewVotesCount > maxCountOfVotesInOneTurn ||
       totalVotesCount > 101;
-    const surpassMessage = totalVotesCount > 101 ? 'Maximum of 101 votes in total' : `Maximum of ${maxCountOfVotesInOneTurn} votes at a time`;
+    const insufficientFunds = this.props.account.balance - fees.vote < 0;
+    const surpassMessage = () => {
+      if (insufficientFunds) return t('Insufficient funds');
+      return totalVotesCount > 101
+        ? t('Maximum of 101 votes in total')
+        : t('Maximum of {{maxcount}} votes at a time', { maxcount: maxCountOfVotesInOneTurn });
+    };
 
     return (<Fragment>
       <section className={`${styles.wrapper} votes-preview ${surpassedVoteLimit ? styles.surpassed : ''}
@@ -72,18 +80,23 @@ class VotesPreview extends React.Component {
             </article>
           </div>
         </section>
-        <footer className={`${styles.surpassMessage} ${surpassedVoteLimit && !this.state.surpassMessageDismissed ? styles.visible : ''}`}>
-          <span>{t(surpassMessage)}</span>
+        <footer className={`${styles.surpassMessage} ${(surpassedVoteLimit || insufficientFunds) && !this.state.surpassMessageDismissed ? styles.visible : ''}`}>
+          <span>{surpassMessage()}</span>
           <FontIcon value='close' onClick={this.dismissSurpassMessage.bind(this)} />
         </footer>
-        <Button
-          className={`${styles.button} next`}
-          type='button'
-          onClick={() => { updateList(true); nextStep({}); }}
-          disabled={totalNewVotesCount === 0 || surpassedVoteLimit}>
-          <span>{t('Next')}</span>
-          <FontIcon value='arrow-right' />
-        </Button>
+        <div className={styles.bla}>
+          <Button
+            className={`${styles.button} next`}
+            type='button'
+            onClick={() => { updateList(true); nextStep({}); }}
+            disabled={totalNewVotesCount === 0 || surpassedVoteLimit || insufficientFunds}>
+            <span>{t('Next')}</span>
+            <FontIcon value='arrow-right' />
+          </Button>
+          <div className={styles.errorMessage}>
+            {surpassedVoteLimit || insufficientFunds ? surpassMessage() : null}
+          </div>
+        </div>
       </section>
       <GradientSVG
         id='grad'
@@ -99,4 +112,8 @@ class VotesPreview extends React.Component {
   }
 }
 
-export default translate()(VotesPreview);
+const mapStateToProps = state => ({
+  account: state.account,
+});
+
+export default connect(mapStateToProps)(translate()(VotesPreview));

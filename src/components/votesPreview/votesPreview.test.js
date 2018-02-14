@@ -1,11 +1,8 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 
 import { expect } from 'chai';
-import { mount } from 'enzyme';
-
+import { mountWithContext } from './../../../test/utils/mountHelpers';
 import VotesPreview from './index';
-import i18n from '../../i18n';
 
 // To-do enable this tests when votesPreview is implemented 
 describe('votesPreview', () => {
@@ -43,15 +40,10 @@ describe('votesPreview', () => {
         return dict;
       }, {})
   );
-  const options = {
-    context: { i18n },
-    childContextTypes: {
-      i18n: PropTypes.object.isRequired,
-    },
-  };
 
   beforeEach(() => {
-    wrapper = mount(<VotesPreview {...props} />, options);
+    const storeState = { account: { balance: 100e8 } };
+    wrapper = mountWithContext(<VotesPreview {...props} />, { storeState });
   });
 
 

@@ -31,7 +31,6 @@ describe('Send', () => {
   });
 
   it('should render MultiStep component ', () => {
-    console.log(wrapper.debug());
     expect(wrapper.find(MultiStep)).to.have.lengthOf(1);
   });
 

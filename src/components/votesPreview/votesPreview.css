@@ -15,11 +15,38 @@
   --footer-height: 62px;
   --message-line-height: 25px;
   --button-box-shadow: 0 -1px 6px 0 rgba(60, 80, 104, 0.26);
+  --error-font-size-XL: 16px;
+  --error-font-size-L: 14px;
+}
+
+.errorMessage {
+  color: var(--color-error);
+  height: 20px;
+  font-weight: var(--font-weight-semi-bold);
+  padding-top: 10px;
+}
+
+@media (--medium-viewport) {
+  .errorMessage {
+    display: none;
+  }
+}
+
+@media (--large-viewport) {
+  .errorMessage {
+    font-size: var(--error-font-size-L);
+  }
+}
+
+@media (--xLarge-viewport) {
+  .errorMessage {
+    font-size: var(--error-font-size-XL);
+  }
 }
 
 .wrapper {
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: column;
   justify-content: space-between;
   width: 100%;
   overflow-y: hidden;
@@ -29,6 +56,7 @@
   & header {
     margin-left: 30px;
     margin-top: 40px;
+    margin-bottom: 4vh; /* stylelint-disable-line */
 
     & h2 {
       font-weight: 400;
@@ -45,6 +73,11 @@
       text-decoration: none;
     }
   }
+}
+
+.bla {
+  margin: 0 51px 56px;
+  text-align: center;
 }
 
 .button {
@@ -78,6 +111,7 @@
 
   & article {
     font-size: var(--progress-bar-text-font-size);
+    color: var(--color-grayscale-dark);
     position: absolute;
     z-index: 1;
     text-align: center;
@@ -199,9 +233,12 @@
       }
     }
 
+    & .bla {
+      margin: 0;
+    }
+
     & .button {
       width: 100%;
-      margin: 0;
       color: var(--color-white) !important;
       background-color: var(--color-primary-standard) !important;
       z-index: 3;
