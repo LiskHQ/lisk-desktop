@@ -32,7 +32,7 @@ class CopyToClipboard extends React.Component {
         </span> :
           <span className={`${className} ${styles.clickable} default`}>
             <span className='copy-title'>{text || value}</span>
-            <FontIcon value='copy-to-clipboard' className={copyClassName}></FontIcon>&nbsp;
+            <FontIcon value='copy-to-clipboard' className={copyClassName}></FontIcon>
           </span>
         }
       </ReactCopyToClipboard>
