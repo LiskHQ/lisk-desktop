@@ -62,7 +62,7 @@
     "react": "=16.2.0",
     "react-animate-on-change": "=1.0.0",
     "react-chartjs-2": "2.6.4",
-    "react-circular-progressbar": "0.2.1",
+    "react-circular-progressbar": "0.8.0",
     "react-copy-to-clipboard": "5.0.1",
     "react-countdown-now": "1.2.0",
     "react-css-themr": "=2.1.2",

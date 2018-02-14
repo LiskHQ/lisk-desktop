@@ -28,7 +28,9 @@ class VotesPreview extends React.Component {
   }
 
   render() {
-    const { votes, t, nextStep, updateList } = this.props;
+    const {
+      votes, t, nextStep, updateList,
+    } = this.props;
     const { maxCountOfVotes, maxCountOfVotesInOneTurn } = votingConst;
     const voteList = getVoteList(votes);
     const unvoteList = getUnvoteList(votes);
@@ -36,7 +38,7 @@ class VotesPreview extends React.Component {
     const totalNewVotesCount = voteList.length + unvoteList.length;
     const selectionClass = totalNewVotesCount > maxCountOfVotesInOneTurn ? styles.red : '';
     const totalClass = totalVotesCount > 101 ? styles.red : '';
-    const createPercentage = (count, total) => Math.ceil((count / total) * 100);
+    const createPercentage = (count, total) => ((count / total) * 100);
     const surpassedVoteLimit = totalNewVotesCount > maxCountOfVotesInOneTurn ||
       totalVotesCount > 101;
     const insufficientFunds = this.props.account.balance - fees.vote < 0;
@@ -46,6 +48,7 @@ class VotesPreview extends React.Component {
         ? t('Maximum of 101 votes in total')
         : t('Maximum of {{maxcount}} votes at a time', { maxcount: maxCountOfVotesInOneTurn });
     };
+    const progressBarStyles = { path: { strokeLinecap: 'round' } };
 
     return (<Fragment>
       <section className={`${styles.wrapper} votes-preview ${surpassedVoteLimit ? styles.surpassed : ''}
@@ -59,7 +62,7 @@ class VotesPreview extends React.Component {
         <section>
           <div className={`${styles.progressWrapper} ${selectionClass} selection-wrapper`}>
             <CircularProgressBar
-              className={styles.progress}
+              styles={progressBarStyles}
               percentage={createPercentage(totalNewVotesCount, maxCountOfVotesInOneTurn)}
               textForPercentage={() => ''}/>
             <article className='selection'>
@@ -70,7 +73,7 @@ class VotesPreview extends React.Component {
           </div>
           <div className={`${styles.progressWrapper} ${totalClass} ${styles.totalWrapper} total-wrapper`}>
             <CircularProgressBar
-              className={styles.progress}
+              styles={progressBarStyles}
               percentage={createPercentage(totalVotesCount, maxCountOfVotes)}
               textForPercentage={() => ''}/>
             <article className='total'>
