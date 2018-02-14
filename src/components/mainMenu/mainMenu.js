@@ -10,7 +10,14 @@ import Setting from '../setting';
 
 const getIndex = (history, tabs) => {
   if (history.location.pathname.includes('explorer')) return tabs.length - 1;
-  return tabs.map(t => t.route).indexOf(history.location.pathname);
+
+  let index = -1;
+  tabs.map(t => new RegExp(`${t.route}(\\/?)`)).forEach((item, i) => {
+    if (history.location.pathname.match(item)) {
+      index = i;
+    }
+  });
+  return index;
 };
 
 const isCurrent = (history, index, tabs) =>
@@ -116,7 +123,9 @@ class MainMenu extends React.Component {
                   label={<TabTemplate label={label} img={image} />}
                   className={styles.tab}
                   id={id}
-                  disabled={(isCurrent(history, index, tabs) || !account.address) && index > 0 }
+                  disabled={
+                    (isCurrent(history, index, tabs) || !account.address) && index < tabs.length - 1
+                  }
                 />)}
             </ToolboxTabs>
             <div onClick={this.menuToggle.bind(this)}
