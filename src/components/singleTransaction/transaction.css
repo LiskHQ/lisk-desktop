@@ -25,7 +25,6 @@
 }
 
 .transaction {
-
   & header {
     & h2 {
       font-weight: var(--font-weight-semi-bold);
