@@ -13,6 +13,7 @@ class SliderCheckbox extends React.Component {
 
     this.xOffset = 0;
     this.delta = 0;
+    this.arrows = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -129,8 +130,14 @@ class SliderCheckbox extends React.Component {
           </span>
         </span>
         { label ?
-          <div className={hasSlidingArrows ? theme.hasArrows : ''}>
+          <div>
             <span>{label}</span>
+            {
+              hasSlidingArrows ?
+                <span className={styles.arrows}>
+                  { this.arrows.map(key => <FontIcon key={key} value='arrow-right' />) }
+                </span> : null
+            }
           </div> : ''
         }
         {

@@ -24,9 +24,10 @@
   & div {
     transition: all ease 300ms;
     width: calc(100% - calc(var(--element-height) / 2));
+    height: 100%;
     position: relative;
     text-indent: calc(var(--element-height) / 3);
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
     font-weight: bold;
     text-align: center;
     display: flex;
@@ -42,28 +43,30 @@
       width: 100%;
     }
 
-    &::after {
-      content: 'chevron_right chevron_right chevron_right chevron_right chevron_right chevron_right chevron_right';
-      vertical-align: middle;
-      overflow: hidden;
-      letter-spacing: 8px;
-      text-indent: 20px;
-      font-size: 32px;
-      white-space: nowrap !important;
-      font-family: 'Material Icons';
-      position: relative;
-      z-index: 0;
-      flex: 3 0px;
-    }
-
-    & span {
-      text-indent: calc(var(--element-height) + 20px);
+    & > span {
+      text-indent: var(--element-height);
       flex: 0 auto;
       width: auto;
       font-size: var(--label-font-size);
     }
 
-    &:not(.hasArrows) {
+    & > span.arrows {
+      display: block;
+      text-indent: 0;
+      height: 100%;
+      overflow: hidden;
+
+      & span {
+        padding-left: 15px;
+        font-size: 20px;
+      }
+    }
+
+    & > span:not(.arrows) {
+      word-break: keep-all;
+      min-width: 200px;
+      z-index: 2;
+
       &::after,
       &::before {
         display: none !important;
