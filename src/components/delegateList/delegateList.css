@@ -18,8 +18,7 @@
   --main-header-font-size-XL: 32px;
   --main-header-font-size-L: 28px;
   --main-header-font-size-XS: 24px;
-  --grid-padding-XL: 32px;
-  --grid-padding-L: 32px;
+  --grid-padding-L: 24px;
   --grid-padding-XS: 19px;
   --list-line-height: 25px;
   --grid-header-line-height: 60px;
@@ -123,8 +122,7 @@
   & ul {
     list-style-type: none;
     line-height: 48px;
-    margin-top: 0;
-    margin-bottom: 0;
+    margin: 0;
     padding-left: var(--grid-padding-L);
     padding-right: var(--grid-padding-L);
   }
@@ -132,7 +130,7 @@
 
 .header {
   line-height: var(--header-line-height);
-  padding: 20px var(--grid-padding-XL);
+  padding: 20px var(--grid-padding-L);
 
   & h2 {
     margin-bottom: 0;
@@ -284,15 +282,20 @@
 .delegatesList {
   overflow-y: auto;
 
-  & .tableHead li {
-    color: var(--color-grayscale-dark) !important;
-    font-size: 15px !important;
-    transition: all ease 200ms;
-    font-weight: 500;
+  & .tableHead {
+    flex-wrap: nowrap;
+
+    & li {
+      color: var(--color-grayscale-dark) !important;
+      font-size: 15px !important;
+      transition: all ease 200ms;
+      font-weight: 700;
+    }
   }
 
   & .row {
     background: linear-gradient(90deg, var(--color-white) 0%, #f5f8fc 82%);
+    flex-wrap: nowrap;
 
     &:nth-child(2n) {
       background: var(--color-white);
@@ -308,6 +311,11 @@
       }
     }
   }
+}
+
+.username {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .showChangeSummery {
@@ -424,7 +432,6 @@
 
     & .tableHead li {
       font-size: 12px !important;
-      font-weight: 700;
     }
   }
 
