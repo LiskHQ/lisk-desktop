@@ -103,10 +103,6 @@ input:read-only {
   .headerWrapper {
     display: none;
   }
-
-  .header {
-    height: 50px;
-  }
 }
 
 @media (--xSmall-viewport) {

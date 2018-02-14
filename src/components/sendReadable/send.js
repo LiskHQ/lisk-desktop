@@ -5,7 +5,7 @@ import AccountVisual from '../accountVisual';
 import { Button, PrimaryButton } from './../toolbox/buttons/button';
 import Input from '../toolbox/inputs/input';
 import fees from './../../constants/fees';
-import styles from './send.css';
+import styles from './sendReadable.css';
 
 class SendReadable extends React.Component {
   constructor() {

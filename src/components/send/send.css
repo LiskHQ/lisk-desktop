@@ -20,6 +20,10 @@
 
     &.isActive {
       top: var(--m-top-bar-height);
+
+      & .wrapper {
+        padding-bottom: 100px;
+      }
     }
   }
 
@@ -57,6 +61,10 @@
 
     &.isActive {
       top: var(--s-top-bar-height);
+
+      & .wrapper {
+        padding-bottom: 50px;
+      }
     }
   }
 

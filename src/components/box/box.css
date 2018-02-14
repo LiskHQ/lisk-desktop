@@ -17,7 +17,7 @@
   -webkit-overflow-scrolling: touch;
 
   & footer {
-    padding: 50px 0px;
+    padding: 0 0 50px;
     text-align: center;
 
     & :global .subTitle {
@@ -34,10 +34,6 @@
     min-height: calc(100vh - var(--m-menu-bar-height) - var(--m-menu-bar-height)); /* stylelint-disable-line */
     background-color: var(--color-grayscale-mobile-background);
     box-shadow: unset;
-
-    & footer {
-      padding-bottom: 70px;
-    }
   }
 }
 
@@ -47,7 +43,6 @@
 
     & footer {
       position: relative;
-      padding: 20px 0 40px;
     }
   }
 }
