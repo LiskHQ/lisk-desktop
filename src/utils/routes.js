@@ -42,6 +42,11 @@ export default [
     params: 'address',
     name: 'accounts',
   }, {
+    regex: /\/explorer\/result\/([0-9]+|[a-z]+)(?:\/[^/]*)?$/,
+    path: new RegExp(`${routes.searchResult.long}/([0-9]+|[a-z]+)/`),
+    params: 'query',
+    name: 'result',
+  }, {
     regex: /\/explorer\/search(?:\/[^/]*)?$/,
     path: `${routes.search.long}/`,
     name: 'explorer',
