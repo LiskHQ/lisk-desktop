@@ -292,7 +292,7 @@
       width: 330px !important;
       top: calc(50vh - 48px); /* stylelint-disable-line */
 
-      & div span {
+      & div > span:first-child {
         display: none;
       }
     }
