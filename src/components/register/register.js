@@ -29,7 +29,7 @@ class Register extends React.Component {
   }
 
   onRegister(passphrase) {
-    const network = Object.assign({}, getNetwork(networks.mainnet.code));
+    const network = Object.assign({}, getNetwork(networks.default.code));
 
     // set active peer
     this.props.activePeerSet({

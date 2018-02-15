@@ -30,7 +30,7 @@ class Login extends React.Component {
     this.state = {
       passphrase: '',
       address: '',
-      network: networks.mainnet.code,
+      network: networks.default.code,
     };
 
     this.validators = {

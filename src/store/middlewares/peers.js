@@ -7,7 +7,7 @@ import localJSONStorage from './../../utils/localJSONStorage';
 const peersMiddleware = store => next => (action) => {
   next(action);
 
-  const network = Object.assign({}, getNetwork(networks.mainnet.code));
+  const network = Object.assign({}, getNetwork(networks.default.code));
   const hasNoSavedAccounts = !localJSONStorage.get('accounts', []).length;
 
   switch (action.type) {

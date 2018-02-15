@@ -1,4 +1,6 @@
-module.exports = {
+import env from './env';
+
+const networks = {
   mainnet: { // network name translation t('Mainnet');
     name: 'Mainnet',
     ssl: true,
@@ -19,3 +21,7 @@ module.exports = {
     code: 2,
   },
 };
+
+networks.default = networks[env.defaultNetwork];
+
+module.exports = networks;
