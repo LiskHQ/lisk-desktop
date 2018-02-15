@@ -108,8 +108,6 @@
   "Mainnet": "Mainnet",
   "Maximum of 101 votes in total": "Maximum of 101 votes in total",
   "Maximum of {{maxcount}} votes at a time": "Maximum of {{maxcount}} votes at a time",
-  "Maximum of {{n}} votes exceeded.": "Maximum of {{n}} votes exceeded.",
-  "Maximum of {{n}} votes in one transaction exceeded.": "Maximum of {{n}} votes in one transaction exceeded.",
   "Menu": "Menu",
   "Minimize": "Minimize",
   "Multisignature Creation": "Multisignature Creation",
