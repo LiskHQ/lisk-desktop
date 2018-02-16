@@ -2,6 +2,7 @@
 
 .wrapper {
   height: 100%;
+  min-height: 200px;
   position: relative;
 
   & h2 {
@@ -11,6 +12,7 @@
 
 .chartWrapper {
   height: calc(100% - 70px);
+  min-height: 130px;
   width: calc(100% + 50px);
   margin: 0 -25px;
   position: absolute;
@@ -19,7 +21,7 @@
 }
 
 .errorMessage {
-  margin-top: 70px;
+  margin-top: 60px;
 }
 
 .stepSwitchWrapper {
@@ -39,6 +41,20 @@
     background: var(--gradient-tertiary);
     border-radius: var(--border-radius-normal);
     font-weight: 300;
+  }
+}
+
+@media (--medium-viewport) {
+  .wrapper {
+    min-height: 300px;
+  }
+
+  .chartWrapper {
+    min-height: 230px;
+  }
+
+  .errorMessage {
+    margin-top: 30px;
   }
 }
 
