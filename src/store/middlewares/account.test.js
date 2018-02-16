@@ -137,15 +137,6 @@ describe('Account middleware', () => {
     expect(stubTransactions).to.have.been.calledOnce;
   });
 
-  it(`should call transactions API methods on ${actionTypes.newBlockCreated} action if the window is in focus and there are recent transactions`, () => {
-    stubGetAccount.resolves({ balance: 0 });
-
-    middleware(store)(next)(newBlockCreated);
-
-    expect(stubGetAccount).to.have.been.calledWith();
-    expect(stubTransactions).to.have.been.calledWith();
-  });
-
   it(`should fetch delegate info on ${actionTypes.newBlockCreated} action if account.balance changes and account.isDelegate`, () => {
     const delegateApiMock = stub(delegateApi, 'getDelegate').returnsPromise().resolves({ success: true, delegate: {} });
     stubGetAccount.resolves({ balance: 10e8 });
