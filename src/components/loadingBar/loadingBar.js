@@ -19,10 +19,6 @@ class LoadingBar extends React.Component {
       const animationDuration = 1000;
       this.timeout = setTimeout(() => {
         this.setState({ visible: false });
-        if (!this.markedAsLoaded && typeof this.props.markAsLoaded === 'function') {
-          this.markedAsLoaded = true;
-          this.props.markAsLoaded();
-        }
       }, animationDuration - (timeDiff % animationDuration));
     }
   }

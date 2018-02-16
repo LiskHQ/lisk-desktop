@@ -46,4 +46,11 @@ describe('LoadingBar Container', () => {
     wrapper.update();
     expect(wrapper.find('ProgressBar')).not.to.be.present();
   });
+
+  it('should call markAsLoaded after LoadingBar mounted', () => {
+    const markAsLoaded = sinon.spy();
+    mount(<LoadingBar loading={[]} markAsLoaded={markAsLoaded} />);
+    clock.tick(101);
+    expect(markAsLoaded).to.have.been.calledWith();
+  });
 });
