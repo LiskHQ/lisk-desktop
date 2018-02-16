@@ -13,6 +13,18 @@
   text-align: center;
 }
 
+.aside {
+  transform: translateX(-100%);
+  opacity: 0.5;
+  transition: all ease 300ms;
+  transition-delay: 200ms;
+}
+
+:global(.appLoaded) .aside {
+  opacity: 1;
+  transform: translateX(0);
+}
+
 .logo {
   margin: 40px 0;
   height: 50px;

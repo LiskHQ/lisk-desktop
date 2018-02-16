@@ -4,11 +4,279 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width,user-scalable=no">
         <title>Lisk Hub</title>
-        <link rel="stylesheet" href="./styles.css">
+        <style>
+            body {
+                background-color: #013165;
+            }
+
+            .splash-screen {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                left: 0;
+                top: 0;
+                z-index: -1;
+                overflow: hidden;
+            }
+
+            .background-stripes {
+                background-color: #013165;
+                background-image: linear-gradient(109deg,#00335d,#001a56);
+                overflow: hidden;
+                height: 100%;
+                width: 100%;
+                pointer-events: none;
+                -webkit-transform: skewY(21deg) translateZ(0);
+                transform: skewY(21deg) translateZ(0);
+                -webkit-transform-origin: right top;
+                transform-origin: right top;
+            }
+
+            .background-stripes,
+            .stripe {
+                position: absolute;
+            }
+
+            .stripe:first-child {
+                background-image:linear-gradient(4deg,#002759 5%,#002667 87%);
+                opacity:1;
+                top:23.7rem;
+                height:.45rem;
+                width:61.5%;
+                right:-1.66666%;
+            }
+
+            .stripe:nth-child(2) {
+                background-image:linear-gradient(180deg,#003986 1%,#00305c 95%);
+                opacity:.8;
+                top:37.5rem;
+                height:6rem;
+                width:152.49999%;
+                right:-1.66666%;
+            }
+
+            .stripe:nth-child(3) {
+                background-image:linear-gradient(-44deg,#0057b8,#003061 98%);
+                opacity:1;
+                top:43.5rem;
+                height:.45rem;
+                width:106.5%;
+                right:-1.66666%;
+            }
+
+            .stripe:nth-child(4) {
+                background-image:linear-gradient(180deg,#003986 1%,#00305c 95%);
+                opacity:.8;
+                top:43.95rem;
+                height:6rem;
+                width:152.49999%;
+                right:-1.66666%;
+            }
+
+            .stripe:nth-child(5) {
+                background-image:linear-gradient(243deg,rgba(0,28,86,0) 6%,rgba(0,36,88,.18) 43%,#0b3b67 73%,#005ea0 99%);
+                opacity:1;
+                top:61.95rem;
+                height:34.5rem;
+                width:106.5%;
+                left:-1.66666%;
+            }
+
+            .stripe:nth-child(6) {
+                background-image:linear-gradient(243deg,transparent 6%,#002e5b 64%,transparent 77%,transparent 98%);
+                opacity:.8;
+                top:68.1rem;
+                height:28.5rem;
+                width:99%;
+                left:-1.66666%;
+            }
+
+            .stripe:nth-child(7) {
+                top:64.95rem;
+                width:46.5%;
+            }
+
+            .stripe:nth-child(7) ,.stripe:nth-child(8) {
+                background-image:linear-gradient(-120deg,#003767 19%,#002e5d 30%,#00285a 45%,rgba(0,38,103,.3) 90%);
+                opacity:1;
+                height:.6rem;
+                right:-1.66666%;
+            }
+
+            .stripe:nth-child(8) {
+                top:79.95rem;
+                width:51%;
+            }
+
+            .stripe:nth-child(9) {
+                background-image:linear-gradient(180deg,rgba(0,83,140,.3) 11%,#00266f 87%);
+                opacity:.6;
+                top:117rem;
+                height:33rem;
+                width:152.49999%;
+                left:-1.66666%;
+            }
+
+            .stripe:nth-child(10) {
+                background-image:linear-gradient(106deg,rgba(0,96,156,.3) 11%,#004880 19%,transparent 87%);
+                opacity:.8;
+                top:117rem;
+                height:9rem;
+                width:61.5%;
+                left:-1.66666%;
+            }
+
+            .stripe:nth-child(11) {
+                background-image:linear-gradient(29deg,#007dbb 15%,#00417c 38%,#003372 66%,transparent);
+                opacity:.8;
+                top:130.5rem;
+                height:1.5rem;
+                width:76.5%;
+                left:-1.66666%;
+            }
+
+            .stripe:nth-child(12) {
+                background-image:linear-gradient(16deg,transparent 19%,#004780 29%,#00437d 39%,#003877 61%,#005c97);
+                opacity:.8;
+                top:120rem;
+                height:.75rem;
+                width:76.5%;
+                right:-1.66666%;
+            }
+
+            .splash-screen .logo {
+                position: absolute;
+                width: 70px;
+                height: 70px;
+                left: 50%;
+                top: 50%;
+                margin: 0;
+                transform: translateX(-50%) translateY(-50%);
+            }
+
+            .splash-screen .logo img {
+                transition: all ease 0.1s;
+                position: absolute;
+                opacity: 0.3;
+                animation-timing-function: ease;
+                animation-duration: 1.2s;
+                animation-iteration-count: infinite;
+            }
+
+            @keyframes fadeIn4 {
+                0% { opacity: 0.3; }
+                40% { opacity: 1; }
+                60% { opacity: 1; }
+                100% { opacity: 0.3 }
+            }
+
+            @keyframes fadeIn5 {
+                0% { opacity: 0.3; }
+                8.33% { opacity: 0.3; }
+                48.33% { opacity: 1; }
+                68.33% { opacity: 1; }
+                100% { opacity: 0.3; }
+            }
+
+            @keyframes fadeIn1 {
+                0% { opacity: 0.3; }
+                16.67% { opacity: 0.3; }
+                56.67% { opacity: 1; }
+                76.67% { opacity: 1; }
+                100% { opacity: 0.3; }
+            }
+
+            @keyframes fadeIn2 {
+                0% { opacity: 0.3; }
+                25% { opacity: 0.3; }
+                65% { opacity: 1; }
+                85% { opacity: 1; }
+                100% { opacity: 0.3; }
+            }
+
+            @keyframes fadeIn3 {
+                0% { opacity: 0.3; }
+                33.33% { opacity: 0.3; }
+                73.33% { opacity: 1; }
+                93.33% { opacity: 1; }
+                100% { opacity: 0.3; }
+            }
+
+            .splash-screen .part-1 {
+                bottom: 7px;
+                left: 21px;
+                animation-name: fadeIn1;
+            }
+
+            .splash-screen .part-2 {
+                bottom: 7px;
+                left: 6px;
+                animation: fadeIn2;
+            }
+
+            .splash-screen .part-3 {
+                left: 6px;
+                bottom: 23px;
+                animation: fadeIn3;
+            }
+
+            .splash-screen .part-4 {
+                left: 27px;
+                top: 0px;
+                animation: fadeIn4;
+            }
+
+            .splash-screen .part-5 {
+                right: 11px;
+                bottom: 7px;
+                animation: fadeIn5;
+            }
+
+            @media (max-width: 1024px) {
+                body {
+                    background-color: #f9fbfd;
+                }
+
+                .splash-screen .background-stripes {
+                    display: none;
+                }
+
+                .splash-screen figure {
+                    background: #013165;
+                    border: solid 10px #013165;
+                    border-radius: 10px;
+                }
+            }
+
+        </style>
         <link rel="icon" type="image/png" href="./assets/images/LISK.png" />
     </head>
     <body>
         <div id="app"></div>
+        <div class='splash-screen'>
+        <div class='background-stripes'>
+            <span class='stripe'></span>
+            <span class='stripe'></span>
+            <span class='stripe'></span>
+            <span class='stripe'></span>
+            <span class='stripe'></span>
+            <span class='stripe'></span>
+            <span class='stripe'></span>
+            <span class='stripe'></span>
+            <span class='stripe'></span>
+            <span class='stripe'></span>
+            <span class='stripe'></span>
+            <span class='stripe'></span>
+        </div>
+        <figure class='logo'>
+            <img alt='logo-part-1' class='part-1' src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSI5IiB2aWV3Qm94PSIwIDAgMTMgOSI+ICA8bWV0YWRhdGE+PD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz48eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzE0MCA3OS4xNjA0NTEsIDIwMTcvMDUvMDYtMDE6MDg6MjEgICAgICAgICI+ICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+ICAgPC9yZGY6UkRGPjwveDp4bXBtZXRhPjw/eHBhY2tldCBlbmQ9InciPz48L21ldGFkYXRhPjxkZWZzPiAgICA8c3R5bGU+ICAgICAgLmNscy0xIHsgICAgICAgIGZpbGw6ICNmZmY7ICAgICAgICBmaWxsLXJ1bGU6IGV2ZW5vZGQ7ICAgICAgfSAgICA8L3N0eWxlPiAgPC9kZWZzPiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNiw5bDctOUg1TDAsOUg2WiIvPjwvc3ZnPg==' />
+            <img alt='logo-part-2' class='part-2' src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIxNyIgdmlld0JveD0iMCAwIDIwIDE3Ij4gIDxtZXRhZGF0YT48P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/Pjx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQwIDc5LjE2MDQ1MSwgMjAxNy8wNS8wNi0wMTowODoyMSAgICAgICAgIj4gICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiLz4gICA8L3JkZjpSREY+PC94OnhtcG1ldGE+PD94cGFja2V0IGVuZD0idyI/PjwvbWV0YWRhdGE+PGRlZnM+ICAgIDxzdHlsZT4gICAgICAuY2xzLTEgeyAgICAgICAgZmlsbDogI2ZmZjsgICAgICAgIGZpbGwtcnVsZTogZXZlbm9kZDsgICAgICB9ICAgIDwvc3R5bGU+ICA8L2RlZnM+ICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yMCw4bC01LDlMMCwxLDEyLDBaIi8+PC9zdmc+' />
+            <img alt='logo-part-3' class='part-3' src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDI0IDMyIj4gIDxtZXRhZGF0YT48P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/Pjx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQwIDc5LjE2MDQ1MSwgMjAxNy8wNS8wNi0wMTowODoyMSAgICAgICAgIj4gICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiLz4gICA8L3JkZjpSREY+PC94OnhtcG1ldGE+PD94cGFja2V0IGVuZD0idyI/PjwvbWV0YWRhdGE+PGRlZnM+ICAgIDxzdHlsZT4gICAgICAuY2xzLTEgeyAgICAgICAgZmlsbDogI2ZmZjsgICAgICAgIGZpbGwtcnVsZTogZXZlbm9kZDsgICAgICB9ICAgIDwvc3R5bGU+ICA8L2RlZnM+ICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xMiwzMUwwLDMyLDE5LDBsNSw5WiIvPjwvc3ZnPg==' />
+            <img alt='logo-part-4' class='part-4' src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSI0NSIgdmlld0JveD0iMCAwIDMyIDQ1Ij4gIDxtZXRhZGF0YT48P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/Pjx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQwIDc5LjE2MDQ1MSwgMjAxNy8wNS8wNi0wMTowODoyMSAgICAgICAgIj4gICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiLz4gICA8L3JkZjpSREY+PC94OnhtcG1ldGE+PD94cGFja2V0IGVuZD0idyI/PjwvbWV0YWRhdGE+PGRlZnM+ICAgIDxzdHlsZT4gICAgICAuY2xzLTEgeyAgICAgICAgZmlsbDogI2ZmZjsgICAgICAgIGZpbGwtcnVsZTogZXZlbm9kZDsgICAgICB9ICAgIDwvc3R5bGU+ICA8L2RlZnM+ICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0wLDEwTDUsMCwzMiw0NSwyMCw0NFoiLz48L3N2Zz4=' />
+            <img alt='logo-part-5' class='part-5' src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyOCIgaGVpZ2h0PSIxOSIgdmlld0JveD0iMCAwIDI4IDE5Ij4gIDxtZXRhZGF0YT48P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/Pjx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQwIDc5LjE2MDQ1MSwgMjAxNy8wNS8wNi0wMTowODoyMSAgICAgICAgIj4gICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiLz4gICA8L3JkZjpSREY+PC94OnhtcG1ldGE+PD94cGFja2V0IGVuZD0idyI/PjwvbWV0YWRhdGE+PGRlZnM+ICAgIDxzdHlsZT4gICAgICAuY2xzLTEgeyAgICAgICAgZmlsbDogI2ZmZjsgICAgICAgIGZpbGwtcnVsZTogZXZlbm9kZDsgICAgICB9ICAgIDwvc3R5bGU+ICA8L2RlZnM+ICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yOCwxTDEzLDE5SDBMMTYsMFoiLz48L3N2Zz4=' />
+        </figure>
+        </div>
+        <link rel="stylesheet" href="./styles.css">
         <script src="./bundle.vendor.js"></script>
         <script src="./bundle.app.js"></script>
     </body>
