@@ -30,7 +30,7 @@ class Login extends React.Component {
     this.state = {
       passphrase: '',
       address: '',
-      network: networks.mainnet.code,
+      network: networks.default.code,
     };
 
     this.validators = {
@@ -47,10 +47,12 @@ class Login extends React.Component {
   }
 
   getNetworksList() {
-    this.networks = Object.keys(networks).map((network, index) => ({
-      label: i18next.t(networks[network].name),
-      value: index,
-    }));
+    this.networks = Object.keys(networks)
+      .filter(network => network !== 'default')
+      .map((network, index) => ({
+        label: i18next.t(networks[network].name),
+        value: index,
+      }));
   }
 
   componentDidUpdate(prevProps) {
