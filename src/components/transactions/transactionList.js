@@ -6,6 +6,7 @@ import TransactionRow from './transactionRow';
 import TransactionsHeader from './transactionsHeader';
 import { transactionsRequestInit } from '../../actions/transactions';
 import txFilters from './../../constants/transactionFilters';
+import txTypes from './../../constants/transactionTypes';
 import styles from './transactions.css';
 
 class TransactionsList extends React.Component {
@@ -27,8 +28,12 @@ class TransactionsList extends React.Component {
   }
 
   render() {
-    const isNonSendAndFilterIncoming = transactionType =>
-      (this.props.filter && this.props.filter.value === 1 && transactionType !== 0);
+    const isNonSendAndFilterIncoming = transactionType => (
+      this.props.filter
+        && this.props.filter.value === txFilters.incoming
+        && transactionType
+        !== txTypes.send
+    );
 
     if (this.props.transactions.length > 0) {
       return <div className={`${styles.results} transaction-results`}>
