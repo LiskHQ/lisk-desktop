@@ -1,6 +1,7 @@
 import React from 'react';
 import { translate } from 'react-i18next';
-import { visitAndSaveSearch, visit } from './keyAction';
+import { FontIcon } from '../fontIcon';
+import { visitAndSaveSearch, visitAndSaveSearchOnEnter, visit } from './keyAction';
 import localJSONStorage from './../../utils/localJSONStorage';
 import Input from '../toolbox/inputs/input';
 import Box from '../box';
@@ -29,11 +30,15 @@ class Search extends React.Component {
           className={styles.input}
           autoFocus={true}
           placeholder={this.props.t('Search for Lisk ID or Transaction ID')}
-          onKeyUp={(e) => { visitAndSaveSearch(e, history); }}
+          onKeyUp={(e) => { visitAndSaveSearchOnEnter(e, history); }}
           onChange={(event) => { this.setState({ inputValue: event }); }}
           value={this.state.inputValue}
           theme={styles}
-        />
+        >
+          <span
+            onClick={() => { visitAndSaveSearch(this.state.inputValue, history); }}
+            className={styles.button}>Search <FontIcon className={styles.icon} value='arrow-right'/></span>
+        </Input>
         {
           this.showRecentSearches()
             ? <ul className={styles.recent}>

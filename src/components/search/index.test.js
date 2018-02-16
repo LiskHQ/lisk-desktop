@@ -12,7 +12,7 @@ describe('Search Component', () => {
   let visitSpy;
 
   beforeEach(() => {
-    visitSpy = spy(keyAction, 'visitAndSaveSearch');
+    visitSpy = spy(keyAction, 'visitAndSaveSearchOnEnter');
     props = {
       history: { push: spy() },
       t: key => key,
