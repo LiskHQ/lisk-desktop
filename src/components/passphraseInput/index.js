@@ -112,6 +112,7 @@ class PassphraseInput extends React.Component {
                     value={value[i] || ''}
                     type={this.state.inputType}
                     theme={this.props.theme}
+                    autoComplete="off"
                     onFocus={(e) => {
                       const val = e.target.value;
                       e.target.value = '';
