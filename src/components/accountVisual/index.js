@@ -1,7 +1,10 @@
+import BigNumber from 'bignumber.js';
 import React from 'react';
+import sha256 from 'js-sha256';
 import { Gradients, gradientSchemes } from './gradients';
 import breakpoints from './../../constants/breakpoints';
 import styles from './accountVisual.css';
+
 
 /*
  * Account Visual
@@ -27,7 +30,7 @@ import styles from './accountVisual.css';
  *
  * Each shape is randomly rotated around the center of the account visual.
  *
- * Randomness of each step is defined by a part of address.
+ * Randomness of each step is defined by a part of decimal represendation of sha256 hash of address.
  * If there are 10 options to choose from then 1 digit is used.
  * If there are 3 or 4 options to choose from then 2 digits is used
  * to give more even distribution, because e.g. with 1 digit and 3 options
@@ -161,6 +164,12 @@ const pickTwo = (chunk, options) => ([
   ) % options.length],
 ]);
 
+const getHashChunks = (address) => {
+  const addressHash = new BigNumber(`0x${sha256(address)}`).toString().substr(3);
+  console.log(address, new BigNumber(`0x${sha256(address)}`), addressHash);
+  return addressHash.match(/\d{5}/g);
+};
+
 class AccountVisual extends React.Component {
   constructor(props) {
     super(props);
@@ -185,19 +194,22 @@ class AccountVisual extends React.Component {
   }
 
   render() {
-    const { address, size, mobileSize, className } = this.props;
+    const {
+      address, size, mobileSize, className,
+    } = this.props;
     const desktopSize = size || 200;
     const newSize = this.state.isMobile && mobileSize ? mobileSize : desktopSize;
 
-    const addressChunks = address.padStart(21, '0').match(/\d{5}/g);
-    const gradientScheme = gradientSchemes[addressChunks[0].substr(1, 2) % gradientSchemes.length];
-    const primaryGradients = pickTwo(addressChunks[1], gradientScheme.primary);
-    const secondaryGradients = pickTwo(addressChunks[2], gradientScheme.secondary);
+    const addressHashChunks = getHashChunks(address);
+    const gradientScheme = gradientSchemes[
+      addressHashChunks[0].substr(1, 2) % gradientSchemes.length];
+    const primaryGradients = pickTwo(addressHashChunks[1], gradientScheme.primary);
+    const secondaryGradients = pickTwo(addressHashChunks[2], gradientScheme.secondary);
     const shapes = [
       getBackgroundCircle(newSize, primaryGradients[0]),
-      getShape(addressChunks[1], newSize, primaryGradients[1], 1),
-      getShape(addressChunks[2], newSize, secondaryGradients[0], 0.23),
-      getShape(addressChunks[3], newSize, secondaryGradients[1], 0.18),
+      getShape(addressHashChunks[1], newSize, primaryGradients[1], 1),
+      getShape(addressHashChunks[2], newSize, secondaryGradients[0], 0.23),
+      getShape(addressHashChunks[3], newSize, secondaryGradients[1], 0.18),
     ];
     return (
       <div style={{ height: newSize, width: newSize }} className={`${styles.wrapper} ${className}`}>
