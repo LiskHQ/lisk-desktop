@@ -21,6 +21,7 @@
     top: 25%;
     color: var(--color-white);
     font-size: 28px;
+    cursor: pointer;
   }
 
   & .input {

@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
 import { FontIcon } from '../fontIcon';
-import { visitAndSaveSearch } from './../search/keyAction';
+import { visitAndSaveSearchOnEnter, visitAndSaveSearch } from './../search/keyAction';
 import routes from './../../constants/routes';
 import styles from './searchBar.css';
 
@@ -33,8 +33,10 @@ class Search extends React.Component {
 
   render() {
     return (<div className={`${styles.searchBar} ${this.shouldShowSearchBarOnMobile() ? styles.show : null}`}>
-      <FontIcon value='search' className={styles.icon}/>
-      <input onKeyUp={(e) => { visitAndSaveSearch(e, this.props.history); }}
+      <FontIcon
+        onClick={() => { visitAndSaveSearch(this.state.searchItem, this.props.history); }}
+        value='search' className={styles.icon}/>
+      <input onKeyUp={(e) => { visitAndSaveSearchOnEnter(e, this.props.history); }}
         className={styles.input} type="text"
         placeholder={this.props.t('Search for Lisk ID or Transaction ID')}
         value={this.state.searchItem}
