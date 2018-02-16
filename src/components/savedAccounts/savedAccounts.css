@@ -1,13 +1,14 @@
 @import '../app/variables.css';
 
 :root {
-  --font-size-ids-h1: 4em;
-  --font-size-ids-h1-m: 3em;
+  --font-size-ids-h1-xl: 4em;
+  --font-size-ids-h1-l: 3em;
   --font-size-ids-h1-s: 2.5em;
   --font-size-card-h2: 2em;
-  --font-size-card-h2-m: 1.5em;
+  --font-size-card-h2-s: 1.5em;
   --close-button-shadow: 0 20px 20px 0 rgba(0, 32, 68, 0.25);
-  --h1-padding: 85px;
+  --h1-padding-xl: 85px;
+  --h1-padding-l: 40px;
   --h1-padding-m: 25px;
   --h1-width: 600px;
   --h1-width-m: 400px;
@@ -29,9 +30,9 @@
   & > h1 {
     position: absolute;
     color: var(--color-white);
-    font-size: var(--font-size-ids-h1);
+    font-size: var(--font-size-ids-h1-l);
     text-align: center;
-    padding: var(--h1-padding);
+    padding-top: var(--h1-padding-l);
     margin: 0;
     width: var(--h1-width);
     left: 50%;
@@ -249,10 +250,19 @@
   margin-top: -5px;
 }
 
+@media (min-height: 1000px) {
+  .wrapper {
+    & > h1 {
+      font-size: var(--font-size-ids-h1-xl);
+      padding-top: var(--h1-padding-xl);
+    }
+  }
+}
+
 @media (--medium-viewport) {
   .wrapper {
     & > h1 {
-      font-size: var(--font-size-ids-h1-m);
+      font-size: var(--font-size-ids-h1-l);
       padding: var(--h1-padding-m);
       width: var(--h1-width-m);
     }
@@ -267,7 +277,7 @@
     height: var(--card-height-m);
 
     & h2 {
-      font-size: var(--font-size-card-h2-m);
+      font-size: var(--font-size-card-h2);
     }
   }
 
