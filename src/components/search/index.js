@@ -37,6 +37,7 @@ class Search extends React.Component {
           theme={styles}
         >
           <span
+            id='input-search-button'
             onClick={() => { visitAndSaveSearch(this.state.inputValue, history); }}
             className={styles.button}>Search <FontIcon className={styles.icon} value='arrow-right'/></span>
         </Input>
@@ -55,6 +56,7 @@ class Search extends React.Component {
             : null
         }
         {this.state.inputValue.length > 0 && <ActionButton
+          id='search-button'
           onClick={() => { visitAndSaveSearch(this.state.inputValue, history); }}
           className={styles.button}>{t('Search')}</ActionButton>}
         {this.state.inputValue.length > 0 && <div className={styles.subTitle}>{t('You can also press \u21B2 enter to search')}</div>}

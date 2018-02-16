@@ -66,6 +66,7 @@
 
   .searchBar.show {
     display: block;
+    max-width: none;
     width: 100%;
   }
 }
