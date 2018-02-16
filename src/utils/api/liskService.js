@@ -1,11 +1,11 @@
 // import popsicle from 'popsicle'; // doesn't work
 const popsicle = require('popsicle');
 
-const explorerUrl = 'https://explorer.lisk.io';
+const liskServiceUrl = 'https://service.lisk.io';
 
-const explorerApi = {
+const liskServiceApi = {
   getCurrencyGrapData: ({ span }) => new Promise((resolve, reject) => {
-    popsicle.get(`${explorerUrl}/api/exchanges/getCandles?e=poloniex&d=${span}`)
+    popsicle.get(`${liskServiceUrl}/api/exchanges/getCandles?e=bittrex&d=${span}`)
       .use(popsicle.plugins.parse('json'))
       .then((response) => {
         if (response.body && response.body.candles && response.body.candles.length > 0) {
@@ -17,4 +17,4 @@ const explorerApi = {
   }),
 };
 
-export default explorerApi;
+export default liskServiceApi;

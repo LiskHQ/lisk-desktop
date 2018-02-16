@@ -3,7 +3,7 @@ import { Line as LineChart } from 'react-chartjs-2';
 import sinon from 'sinon';
 import React from 'react';
 
-import explorerApi from '../../utils/api/explorer';
+import liskServiceApi from '../../utils/api/liskService';
 import { mountWithContext } from '../../../test/utils/mountHelpers';
 import CurrencyGraph from './currencyGraph';
 
@@ -12,7 +12,7 @@ describe('CurrencyGraph', () => {
   let wrapper;
 
   beforeEach(() => {
-    explorereApiMock = sinon.stub(explorerApi, 'getCurrencyGrapData').returnsPromise();
+    explorereApiMock = sinon.stub(liskServiceApi, 'getCurrencyGrapData').returnsPromise();
     wrapper = mountWithContext(<CurrencyGraph/>, {});
   });
 
