@@ -155,80 +155,81 @@
             }
 
             .splash-screen .logo img {
+                transition: all ease 0.1s;
                 position: absolute;
                 opacity: 0.3;
+                animation-timing-function: ease;
+                animation-duration: 1.2s;
+                animation-iteration-count: infinite;
+            }
+
+            @keyframes fadeIn4 {
+                0% { opacity: 0.3; }
+                40% { opacity: 1; }
+                60% { opacity: 1; }
+                100% { opacity: 0.3 }
+            }
+
+            @keyframes fadeIn5 {
+                0% { opacity: 0.3; }
+                8.33% { opacity: 0.3; }
+                48.33% { opacity: 1; }
+                68.33% { opacity: 1; }
+                100% { opacity: 0.3; }
             }
 
             @keyframes fadeIn1 {
                 0% { opacity: 0.3; }
-                10% { opacity: 1; }
-                50% { opacity: 1; }
-                60% { opacity: 0.3; }
+                16.67% { opacity: 0.3; }
+                56.67% { opacity: 1; }
+                76.67% { opacity: 1; }
                 100% { opacity: 0.3; }
             }
 
             @keyframes fadeIn2 {
                 0% { opacity: 0.3; }
-                10% { opacity: 0.3; }
-                20% { opacity: 1; }
-                60% { opacity: 1; }
-                70% { opacity: 0.3; }
+                25% { opacity: 0.3; }
+                65% { opacity: 1; }
+                85% { opacity: 1; }
                 100% { opacity: 0.3; }
             }
 
             @keyframes fadeIn3 {
                 0% { opacity: 0.3; }
-                20% { opacity: 0.3; }
-                30% { opacity: 1; }
-                70% { opacity: 1; }
-                80% { opacity: 0.3; }
+                33.33% { opacity: 0.3; }
+                73.33% { opacity: 1; }
+                93.33% { opacity: 1; }
                 100% { opacity: 0.3; }
-            }
-
-            @keyframes fadeIn4 {
-                0% { opacity: 0.3; }
-                40% { opacity: 0.3; }
-                50% { opacity: 1; }
-                80% { opacity: 1; }
-                90% { opacity: 0.3; }
-                100% { opacity: 0.3; }
-            }
-
-            @keyframes fadeIn5 {
-                0% { opacity: 0.3; }
-                50% { opacity: 0.3; }
-                60% { opacity: 1; }
-                100% { opacity: 1; }
             }
 
             .splash-screen .part-1 {
                 bottom: 7px;
                 left: 21px;
-                animation: fadeIn1 1s infinite;
+                animation-name: fadeIn1;
             }
 
             .splash-screen .part-2 {
                 bottom: 7px;
                 left: 6px;
-                animation: fadeIn2 1s infinite;
+                animation: fadeIn2;
             }
 
             .splash-screen .part-3 {
                 left: 6px;
                 bottom: 23px;
-                animation: fadeIn3 1s infinite;
+                animation: fadeIn3;
             }
 
             .splash-screen .part-4 {
                 left: 27px;
                 top: 0px;
-                animation: fadeIn4 1s infinite;
+                animation: fadeIn4;
             }
 
             .splash-screen .part-5 {
                 right: 11px;
                 bottom: 7px;
-                animation: fadeIn5 1s infinite;
+                animation: fadeIn5;
             }
 
         </style>
