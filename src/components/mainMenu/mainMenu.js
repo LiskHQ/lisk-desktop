@@ -9,7 +9,7 @@ import { FontIcon } from '../fontIcon';
 import Setting from '../setting';
 
 const getIndex = (history, tabs) => {
-  if (history.location.pathname.includes('explorer')) return tabs.length - 1;
+  if (history.location.pathname.includes('explorer')) return 2;
 
   let index = -1;
   tabs.map(t => new RegExp(`${t.route}(\\/?)`)).forEach((item, i) => {
@@ -87,15 +87,15 @@ class MainMenu extends React.Component {
         image: menuLogos.sidechains,
       }, {
       */
-        label: t('Sidechains'),
-        route: '/main/sidechains',
-        id: 'sidechains',
-        image: menuLogos.sidechains,
-      }, {
         label: t('Explorer'),
         route: '/explorer/search',
         id: 'explorer',
         image: menuLogos.search,
+      }, {
+        label: t('Sidechains'),
+        route: '/main/sidechains',
+        id: 'sidechains',
+        image: menuLogos.sidechains,
       },
     ];
 
@@ -124,7 +124,7 @@ class MainMenu extends React.Component {
                   className={styles.tab}
                   id={id}
                   disabled={
-                    (isCurrent(history, index, tabs) || !account.address) && index < tabs.length - 1
+                    (isCurrent(history, index, tabs) || !account.address) && index !== 2
                   }
                 />)}
             </ToolboxTabs>
@@ -152,7 +152,8 @@ class MainMenu extends React.Component {
                       key={index}
                       label={<TabTemplate label={label} img={image} />}
                       id={id}
-                      disabled={(isCurrent(history, index, tabs) || !account.address) && index > 0 }
+                      disabled={(isCurrent(history, index, tabs) || !account.address) &&
+                        index !== 2 }
                     />)}
                 </ToolboxTabs>
               </div>

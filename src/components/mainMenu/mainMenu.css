@@ -35,6 +35,7 @@
   text-align: center;
   box-shadow: none;
   width: 100% !important;
+  max-width: 100% !important;
   border: none !important;
   padding: 20px 10px !important;
 }
@@ -118,6 +119,7 @@
   border-right: 1px solid var(--offcanvas-menu-border-color);
   border-bottom: 1px solid var(--offcanvas-menu-border-color);
   background: #fff;
+  max-width: 50%;
 
   &:nth-child(2n) {
     border-right: none !important;
