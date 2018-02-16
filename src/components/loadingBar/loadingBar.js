@@ -6,6 +6,7 @@ class LoadingBar extends React.Component {
   constructor() {
     super();
     this.state = {};
+    this.markedAsLoaded = false;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -18,6 +19,10 @@ class LoadingBar extends React.Component {
       const animationDuration = 1000;
       this.timeout = setTimeout(() => {
         this.setState({ visible: false });
+        if (!this.markedAsLoaded) {
+          this.markedAsLoaded = true;
+          this.props.markAsLoaded();
+        }
       }, animationDuration - (timeDiff % animationDuration));
     }
   }
