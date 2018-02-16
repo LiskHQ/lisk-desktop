@@ -16,7 +16,7 @@
 }
 
 .wrapper {
-  margin: 5vh 0px;  /* stylelint-disable-line */
+  margin: 0 0 30px;
   text-align: right;
 
   & .noPadding {
