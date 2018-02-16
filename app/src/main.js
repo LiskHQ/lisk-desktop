@@ -57,6 +57,7 @@ if (isSecondInstance) {
   app.exit();
 }
 
+// ToDo - enable this feature when it is implemented in the new design
 // app.on('will-finish-launching', () => {
 //   // Protocol handler for MacOS
 //   app.on('open-url', (event, url) => {
@@ -75,6 +76,7 @@ ipcMain.on('proxyCredentialsEntered', (event, username, password) => {
   global.myTempFunction(username, password);
 });
 
+// ToDo - enable this feature when it is implemented in the new design
 // ipcMain.on('set-locale', (event, locale) => {
 //   const langCode = locale.substr(0, 2);
 //   if (langCode) {
