@@ -29,6 +29,10 @@
       }
     }
 
+    & .button {
+      display: none;
+    }
+
     & .subTitle {
       line-height: 26px;
       color: var(--color-grayscale-medium);
@@ -93,10 +97,19 @@
     padding: 0px 4vh; /* stylelint-disable-line */
 
     & .wrapper {
+      height: unset;
+
       & .input {
         & .button {
           display: none;
         }
+      }
+
+      & .button {
+        display: block;
+        margin: 0px auto 15px;
+        width: 100%;
+        max-width: 300px;
       }
 
       & .subTitle {

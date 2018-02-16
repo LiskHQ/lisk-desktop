@@ -3,6 +3,7 @@ import { translate } from 'react-i18next';
 import { FontIcon } from '../fontIcon';
 import { visitAndSaveSearch, visitAndSaveSearchOnEnter, visit } from './keyAction';
 import localJSONStorage from './../../utils/localJSONStorage';
+import { ActionButton } from './../toolbox/buttons/button';
 import Input from '../toolbox/inputs/input';
 import Box from '../box';
 import styles from './search.css';
@@ -53,7 +54,10 @@ class Search extends React.Component {
             </ul>
             : null
         }
-        {this.state.inputValue.length > 0 && <div className={styles.subTitle}>{t('Press \u21B2 enter to search')}</div>}
+        {this.state.inputValue.length > 0 && <ActionButton
+          onClick={() => { visitAndSaveSearch(this.state.inputValue, history); }}
+          className={styles.button}>{t('Search')}</ActionButton>}
+        {this.state.inputValue.length > 0 && <div className={styles.subTitle}>{t('You can also press \u21B2 enter to search')}</div>}
       </div>
     </Box>);
   }
