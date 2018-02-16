@@ -76,7 +76,10 @@ class SavedAccounts extends React.Component {
     return (
       <div className={`${styles.wrapper} save-account`}>
         <BackgroundMaker />
-        <h1>{t('Your favorite Lisk IDs')}</h1>
+        <h1>
+          {t('Your favorite')}
+          <div>{t('Lisk IDs')}</div>
+        </h1>
         <div className={styles.cardsWrapper} >
           <Link to={`${routes.addAccount.url}?referrer=/main/dashboard/`} >
             <div className={`add-lisk-id-card ${styles.card} ${styles.addNew}`} >
