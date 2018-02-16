@@ -27,17 +27,21 @@ class TransactionsList extends React.Component {
   }
 
   render() {
+    const isNonSendAndFilterIncoming = transactionType =>
+      (this.props.filter && this.props.filter.value === 1 && transactionType !== 0);
+
     if (this.props.transactions.length > 0) {
       return <div className={`${styles.results} transaction-results`}>
         <TransactionsHeader tableStyle={tableStyle}></TransactionsHeader>
         {this.props.transactions.map((transaction, i) => (
-          <TransactionRow address={this.props.address}
-            key={i}
-            t={this.props.t}
-            value={transaction}
-            nextStep={this.props.nextStep}
-          />
-        ))}
+          !isNonSendAndFilterIncoming(transaction.type)
+            ? <TransactionRow address={this.props.address}
+              key={i}
+              t={this.props.t}
+              value={transaction}
+              nextStep={this.props.nextStep}
+            />
+            : null))}
         {
           // the transaction list should be scrollable on a large screen
           // otherwise (XS) the whole transaction box will be scrollable
