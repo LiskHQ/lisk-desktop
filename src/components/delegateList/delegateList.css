@@ -364,7 +364,7 @@
   }
 }
 
-@media (--small-viewport) {
+@media (--medium-viewport) {
   .wrapper {
     overflow: scroll;
     height: 100%;
@@ -382,7 +382,7 @@
       & .table .tableHead {
         width: 100%;
         position: fixed;
-        top: 67px;
+        top: var(--header-height-m);
         left: 0;
         z-index: 2;
         background: var(--color-white);
@@ -461,6 +461,12 @@
     &.mobileInput {
       display: inline-block;
     }
+  }
+}
+
+@media (--small-viewport) {
+  .header.offCanvas ~ .delegatesList .table .tableHead {
+    top: var(--header-height-s);
   }
 }
 
