@@ -23,12 +23,19 @@ const updateTransactions = (store, peers) => {
   })));
 };
 
-const updateAccountData = (store) => {
-  const { peers, account } = store.getState();
+const hasRecentTransactions = txs => (
+  txs.confirmed.filter(tx => tx.confirmations < 1000).length !== 0 ||
+  txs.pending.length !== 0
+);
+
+const updateAccountData = (store, action) => {
+  const { peers, account, transactions } = store.getState();
 
   getAccount(peers.data, account.address).then((result) => {
     if (result.balance !== account.balance) {
-      updateTransactions(store, peers, account);
+      if (!action.data.windowIsFocused || !hasRecentTransactions(transactions)) {
+        updateTransactions(store, peers, account);
+      }
       if (account.isDelegate) {
         store.dispatch(fetchAndUpdateForgedBlocks({
           activePeer: peers.data,
@@ -94,6 +101,12 @@ const passphraseUsed = (store, action) => {
 
 const checkTransactionsAndUpdateAccount = (store, action) => {
   const state = store.getState();
+  const { peers, account, transactions } = state;
+
+  if (action.data.windowIsFocused && hasRecentTransactions(transactions)) {
+    updateTransactions(store, peers, account);
+  }
+
   const tx = action.data.block.transactions;
   const accountAddress = state.account.address;
   const blockContainsRelevantTransaction = tx.filter((transaction) => {
