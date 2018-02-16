@@ -4,7 +4,7 @@ import moment from 'moment';
 import React from 'react';
 
 import EmptyState from '../emptyState';
-import explorerApi from '../../utils/api/explorer';
+import liskServiceApi from '../../utils/api/liskService';
 
 import styles from './currencyGraph.css';
 
@@ -153,7 +153,7 @@ class CurrencyGraph extends React.Component {
   }
 
   updateData(step) {
-    explorerApi.getCurrencyGrapData(step).then((response) => {
+    liskServiceApi.getCurrencyGrapData(step).then((response) => {
       const { candles } = response;
       const data = candles.slice(Math.max(candles.length - step.length, 1)).map(c => ({
         x: new Date(c.date),
