@@ -22,6 +22,12 @@ body {
     width: 100%;
     padding-left: calc(var(--sidebar-width) + 24px);
     padding-right: 24px;
+    /* opacity: 0; */
+    transition: all ease 250ms;
+  }
+
+  &.loaded > section {
+    opacity: 1;
   }
 
   & > aside {
