@@ -11,10 +11,6 @@ import routes from './../../constants/routes';
 import styles from './sendTo.css';
 
 class SendTo extends React.Component {
-  shouldComponentUpdate(nextProps) {
-    return nextProps.address !== this.props.address;
-  }
-
   render() {
     return (<Box className={`${styles.wrapper} ${grid.row}`}>
       <section className={styles.content}>
