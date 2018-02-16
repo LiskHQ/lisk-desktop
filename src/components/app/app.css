@@ -6,7 +6,6 @@ body {
   margin: 0;
   padding: 0;
   width: 100%;
-  background-color: var(--color-primary-semi-dark);
 }
 
 .bodyWrapper {
@@ -22,7 +21,7 @@ body {
     width: 100%;
     padding-left: calc(var(--sidebar-width) + 24px);
     padding-right: 24px;
-    /* opacity: 0; */
+    opacity: 0;
     transition: all ease 250ms;
   }
 

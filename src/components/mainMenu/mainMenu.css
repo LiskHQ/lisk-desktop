@@ -14,8 +14,8 @@
 }
 
 .aside {
-  /* transform: translateX(-100%); */
-  /* opacity: 0.5; */
+  transform: translateX(-100%);
+  opacity: 0.5;
   transition: all ease 300ms;
   transition-delay: 200ms;
 }
