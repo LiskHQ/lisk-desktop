@@ -15,6 +15,7 @@ import accountMiddleware from '../../src/store/middlewares/account';
 import transactionsMiddleware from '../../src/store/middlewares/transactions';
 import { activePeerSet } from '../../src/actions/peers';
 import networks from './../../src/constants/networks';
+import txTypes from './../../src/constants/transactionTypes';
 import getNetwork from './../../src/utils/getNetwork';
 import { accountLoggedIn } from '../../src/actions/account';
 import AccountTransactions from './../../src/components/accountTransactions';
@@ -31,7 +32,7 @@ describe('@integration: Account Transactions', () => {
     requestToActivePeerStub = stub(peers, 'requestToActivePeer');
     accountAPIStub = stub(accountAPI, 'getAccount');
 
-    const transactionExample = { senderId: '456L', receiverId: '456L' };
+    const transactionExample = { senderId: '456L', receiverId: '456L', type: txTypes.send };
 
     // specific address
     let transactions = new Array(20);
@@ -42,6 +43,7 @@ describe('@integration: Account Transactions', () => {
     // incoming transaction result
     transactions = new Array(15);
     transactions.fill(transactionExample);
+    transactions.push({ senderId: 'sample_address', receiverId: 'some_address', type: txTypes.vote });
     requestToActivePeerStub.withArgs(match.any, 'transactions', match({ senderId: undefined }))
       .returnsPromise().resolves({ transactions, count: 1000 });
 
