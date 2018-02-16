@@ -17,6 +17,7 @@ import transactionsMiddleware from '../../src/store/middlewares/transactions';
 import { accountLoggedIn } from '../../src/actions/account';
 import { activePeerSet } from '../../src/actions/peers';
 import networks from './../../src/constants/networks';
+import txTypes from './../../src/constants/transactionTypes';
 import getNetwork from './../../src/utils/getNetwork';
 import Wallet from '../../src/components/transactionDashboard';
 import accounts from '../constants/accounts';
@@ -39,7 +40,7 @@ describe('@integration: Wallet', () => {
     localStorageStub = stub(localStorage, 'getItem');
     localStorageStub.withArgs('accounts').returns(JSON.stringify([{}, {}]));
 
-    const transactionExample = { senderId: 'sample_address', receiverId: 'some_address' };
+    const transactionExample = { senderId: 'sample_address', receiverId: 'some_address', type: txTypes.send };
 
     requestToActivePeerStub.withArgs(match.any, 'transactions', match({
       recipientId: '537318935439898807L',
@@ -56,6 +57,7 @@ describe('@integration: Wallet', () => {
     // incoming transaction result
     transactions = new Array(15);
     transactions.fill(transactionExample);
+    transactions.push({ senderId: 'sample_address', receiverId: 'some_address', type: txTypes.vote });
     requestToActivePeerStub.withArgs(match.any, 'transactions', match({ senderId: undefined }))
       .returnsPromise().resolves({ transactions, count: 1000 });
 

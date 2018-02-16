@@ -1,5 +1,4 @@
 import i18next from 'i18next';
-import ReceiveDialog from '../receiveDialog';
 import RegisterDelegate from '../registerDelegate';
 import SavedAccounts from '../savedAccounts';
 import savedAccountsTheme from '../savedAccounts/modalTheme.css';
@@ -23,10 +22,6 @@ export default () => ({
   vote: {
     title: i18next.t('Vote for delegates'),
     component: VoteDialog,
-  },
-  receive: {
-    title: i18next.t('Receive LSK'),
-    component: ReceiveDialog,
   },
   'saved-accounts': {
     component: SavedAccounts,

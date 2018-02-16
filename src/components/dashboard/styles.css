@@ -19,6 +19,7 @@
 
 .graph {
   height: calc(60% - 20px);
+  min-height: 200px;
   margin-bottom: 20px;
   overflow: hidden;
 }
@@ -37,6 +38,8 @@
   .wrapper {
     & .colHack {
       padding: 0;
+      max-width: 100%;
+      flex-basis: 100%;
     }
 
     margin: 0;
@@ -44,7 +47,7 @@
 
   .graph {
     height: 60%;
-    min-height: auto;
+    min-height: 300px;
     margin-bottom: 0;
   }
 
