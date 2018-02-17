@@ -21,10 +21,14 @@ export const visit = (value, history) => {
   }
 };
 
-export const visitAndSaveSearch = (event, history) => {
+export const visitAndSaveSearch = (value, history) => {
+  value = value.trim();
+  saveSearch(value);
+  visit(value, history);
+};
+
+export const visitAndSaveSearchOnEnter = (event, history) => {
   if (event.which === keyCodes.enter) {
-    const value = event.target.value.trim();
-    saveSearch(value);
-    visit(value, history);
+    visitAndSaveSearch(event.target.value, history);
   }
 };

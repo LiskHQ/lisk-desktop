@@ -11,6 +11,26 @@
 
     & .input {
       margin-bottom: 40px;
+      position: relative;
+
+      & .button {
+        display: block;
+        position: absolute;
+        right: 0;
+        top: 34px;
+        color: var(--color-primary-standard);
+        font-weight: var(--font-weight-bold);
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+      & .icon {
+        font-size: 29px;
+      }
+    }
+
+    & .button {
+      display: none;
     }
 
     & .subTitle {
@@ -42,6 +62,8 @@
     font-family: var(--heading-font);
     text-align: center;
     line-height: 32px;
+    padding-right: 90px;
+    padding-left: 90px;
   }
 
   & input::placeholder {
@@ -75,6 +97,21 @@
     padding: 0px 4vh; /* stylelint-disable-line */
 
     & .wrapper {
+      height: unset;
+
+      & .input {
+        & .button {
+          display: none;
+        }
+      }
+
+      & .button {
+        display: block;
+        margin: 0px auto 15px;
+        width: 100%;
+        max-width: 300px;
+      }
+
       & .subTitle {
         font-size: 14px;
       }
@@ -86,6 +123,8 @@
 
     & input {
       font-size: 24px !important;
+      padding-right: 0px;
+      padding-left: 0px;
     }
 
     & input::placeholder {

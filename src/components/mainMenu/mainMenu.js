@@ -107,6 +107,10 @@ class MainMenu extends React.Component {
         image: menuLogos.delegates,
       });
     }
+
+    const itemShouldBeDisabled = index =>
+      (isCurrent(history, index, tabs) || !account.address) && index !== 2;
+
     return (
       <Fragment>
         <aside className={styles.aside}>
@@ -123,9 +127,7 @@ class MainMenu extends React.Component {
                   label={<TabTemplate label={label} img={image} />}
                   className={styles.tab}
                   id={id}
-                  disabled={
-                    (isCurrent(history, index, tabs) || !account.address) && index !== 2
-                  }
+                  disabled={itemShouldBeDisabled(index)}
                 />)}
             </ToolboxTabs>
             <div onClick={this.menuToggle.bind(this)}
@@ -152,8 +154,7 @@ class MainMenu extends React.Component {
                       key={index}
                       label={<TabTemplate label={label} img={image} />}
                       id={id}
-                      disabled={(isCurrent(history, index, tabs) || !account.address) &&
-                        index !== 2 }
+                      disabled={itemShouldBeDisabled(index)}
                     />)}
                 </ToolboxTabs>
               </div>

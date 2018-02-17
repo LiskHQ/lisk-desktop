@@ -16,11 +16,12 @@ import routes from './../../constants/routes';
 
 class Header extends React.Component {
   shouldShowActionButton() {
-    return !this.props.isAuthenticated &&
-      this.props.location.pathname !== routes.login.url &&
-      this.props.location.pathname !== routes.register.url &&
-      !this.props.account.loading
-    ;
+    const { pathname } = this.props.location;
+    return !this.props.isAuthenticated
+      && !this.props.account.loading
+      && pathname !== routes.login.url
+      && ![routes.register.url, routes.addAccount.url]
+        .some(el => pathname.includes(el));
   }
 
   shouldShowSearchBar() {

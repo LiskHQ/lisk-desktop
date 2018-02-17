@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { visitAndSaveSearch, visit } from './keyAction';
+import { visitAndSaveSearchOnEnter, visit } from './keyAction';
 import keyCodes from './../../constants/keyCodes';
 import routes from './../../constants/routes';
 import localJSONStorage from './../../utils/localJSONStorage';
@@ -28,7 +28,7 @@ describe('Search KeyAction', () => {
     ];
 
     testValues.forEach((value) => {
-      visitAndSaveSearch({ which: keyCodes.enter, target: { value } }, []);
+      visitAndSaveSearchOnEnter({ which: keyCodes.enter, target: { value } }, []);
     });
 
     expect(localJSONStorage.get('searches')).to.eql(expectedOutcome);
