@@ -52,6 +52,7 @@
 
 .partial input {
   text-align: center;
+  border-radius: 0;
 }
 
 @media (--small-viewport) {
