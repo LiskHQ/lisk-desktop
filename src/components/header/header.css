@@ -170,6 +170,10 @@
   }
 }
 
+.beta {
+  display: none;
+}
+
 @media (--medium-viewport) {
   .loginInfo {
     width: 100%;
@@ -196,6 +200,14 @@
     height: 42px;
     padding: 4px;
     margin: var(--header-margin-top-bottom-M) 0px  var(--header-margin-top-bottom-M) var(--header-margin-right-left-M);
+  }
+
+  .beta {
+    display: block;
+    color: var(--color-logo);
+    font-weight: 700;
+    margin: -31px 5px 0;
+    font-size: 16px;
   }
 
   .logoutButton {
@@ -286,6 +298,11 @@
   .logo {
     height: 35px;
     margin: var(--header-margin-top-bottom-S) 0px var(--header-margin-top-bottom-S) var(--header-margin-right-left-S);
+  }
+
+  .beta {
+    margin: -20px 5px 0;
+    font-size: 14px;
   }
 
   .login {

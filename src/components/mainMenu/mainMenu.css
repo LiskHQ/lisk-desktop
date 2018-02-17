@@ -214,6 +214,14 @@
   width: 100%;
 }
 
+.beta {
+  display: block;
+  color: var(--color-logo);
+  font-weight: 700;
+  margin: -43px 0px 43px 5px;
+  font-size: 16px;
+}
+
 @media (--medium-viewport) {
   .sideBarWrapper {
     display: none;

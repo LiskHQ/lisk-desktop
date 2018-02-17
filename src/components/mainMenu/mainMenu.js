@@ -116,6 +116,7 @@ class MainMenu extends React.Component {
         <aside className={styles.aside}>
           <div className={styles.sideBarWrapper}>
             <img src={logo} className={styles.logo} />
+            <span className={styles.beta}>{t('Beta')}</span>
             <ToolboxTabs index={getIndex(history, tabs)}
               theme={styles}
               onChange={this.navigate.bind(this, history, tabs)}
