@@ -121,7 +121,7 @@ class Confirm extends React.Component {
       return missing.sort((a, b) => a > b);
     };
 
-    const missing = chooseRandomWords(2);
+    const missing = chooseRandomWords(2).sort();
     const wordOptions = this.assembleWordOptions(words, missing);
 
     this.setState({
@@ -149,7 +149,7 @@ class Confirm extends React.Component {
 
     const mixWithMissingWords = (options) => {
       options.forEach((list, listIndex) => {
-        const rand = Math.floor(Math.random() * list.length);
+        const rand = Math.floor(Math.random() * 0.99 * list.length);
         list[rand] = passphraseWords[missingWords[listIndex]];
       });
 
