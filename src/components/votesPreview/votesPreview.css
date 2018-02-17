@@ -78,12 +78,12 @@
 .footerWrapper {
   margin: 0 51px 56px;
   text-align: center;
-}
 
-.button {
-  & span:last-child {
-    font-size: 16px;
-    display: none;
+  & .button {
+    & .arrow {
+      font-size: 16px;
+      display: none;
+    }
   }
 }
 
@@ -232,22 +232,22 @@
 
     & .footerWrapper {
       margin: 0;
-    }
 
-    & .button {
-      width: 100%;
-      color: var(--color-white) !important;
-      background-color: var(--color-primary-standard) !important;
-      z-index: 3;
-      position: relative;
-      border-radius: 0;
+      & .button {
+        width: 100%;
+        color: var(--color-white) !important;
+        background-color: var(--color-primary-standard) !important;
+        z-index: 3;
+        position: relative;
+        border-radius: 0;
 
-      & span:last-child {
-        display: inline-block;
-      }
+        & .arrow {
+          display: inline-block;
+        }
 
-      &:disabled {
-        background-color: var(--color-grayscale-light) !important;
+        &:disabled {
+          background-color: var(--color-grayscale-light) !important;
+        }
       }
     }
   }
