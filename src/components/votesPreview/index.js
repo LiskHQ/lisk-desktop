@@ -94,7 +94,7 @@ class VotesPreview extends React.Component {
             onClick={() => { updateList(true); nextStep({}); }}
             disabled={totalNewVotesCount === 0 || surpassedVoteLimit || insufficientFunds}>
             <span>{t('Next')}</span>
-            <FontIcon value='arrow-right' />
+            <FontIcon value='arrow-right' className={styles.arrow} />
           </Button>
           <div className={styles.errorMessage}>
             {surpassedVoteLimit || insufficientFunds ? surpassMessage() : null}
