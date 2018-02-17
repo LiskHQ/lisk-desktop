@@ -36,6 +36,7 @@
 
 .inputWrapper input {
   padding-right: 35px;
+  border-radius: 0;
 }
 
 .errorMessage {
@@ -51,6 +52,7 @@
 
 .partial input {
   text-align: center;
+  border-radius: 0;
 }
 
 @media (--small-viewport) {
