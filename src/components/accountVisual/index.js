@@ -166,7 +166,6 @@ const pickTwo = (chunk, options) => ([
 
 const getHashChunks = (address) => {
   const addressHash = new BigNumber(`0x${sha256(address)}`).toString().substr(3);
-  console.log(address, new BigNumber(`0x${sha256(address)}`), addressHash);
   return addressHash.match(/\d{5}/g);
 };
 
