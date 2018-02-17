@@ -36,6 +36,7 @@
 
 .inputWrapper input {
   padding-right: 35px;
+  border-radius: 0;
 }
 
 .errorMessage {

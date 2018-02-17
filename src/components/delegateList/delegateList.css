@@ -414,6 +414,7 @@
 
       & input {
         width: 70px;
+        line-height: 16px;
       }
     }
   }

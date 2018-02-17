@@ -64,6 +64,7 @@
     line-height: 32px;
     padding-right: 90px;
     padding-left: 90px;
+    border-radius: 0;
   }
 
   & input::placeholder {
