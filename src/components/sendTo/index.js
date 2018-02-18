@@ -16,7 +16,7 @@ class SendTo extends React.Component {
       <section className={styles.content}>
         <div className={`
       ${grid['col-xs-12']}
-      ${grid['col-sm-6']}
+      ${grid['col-sm-7']}
       ${grid['col-md-12']}
       ${grid['col-lg-12']}
       ${grid['middle-sm']}
@@ -26,7 +26,7 @@ class SendTo extends React.Component {
             address={this.props.address}
             className={`
           ${grid['col-xs-4']}
-          ${grid['col-sm-4']}
+          ${grid['col-sm-5']}
           ${grid['col-md-12']}
           ${grid['col-lg-12']}
           ${grid['middle-sm']}
@@ -34,7 +34,7 @@ class SendTo extends React.Component {
             size={144} sizeS={90}/>
           <div className={`${styles.account}
         ${grid['col-xs-8']}
-        ${grid['col-sm-8']}
+        ${grid['col-sm-7']}
         ${grid['col-md-12']}
         ${grid['col-lg-12']}
         `}>
@@ -48,7 +48,7 @@ class SendTo extends React.Component {
         </div>
         <div className={`
       ${grid['col-xs-12']}
-      ${grid['col-sm-6']}
+      ${grid['col-sm-5']}
       ${grid['col-md-12']}
       ${grid['col-lg-12']}
       ${grid['middle-sm']}
