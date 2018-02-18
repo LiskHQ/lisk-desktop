@@ -31,7 +31,7 @@ class SendTo extends React.Component {
           ${grid['col-lg-12']}
           ${grid['middle-sm']}
           `}
-            size={144} mobileSize={90}/>
+            size={144} sizeS={90}/>
           <div className={`${styles.account}
         ${grid['col-xs-8']}
         ${grid['col-sm-8']}
