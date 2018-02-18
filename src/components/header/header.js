@@ -94,7 +94,9 @@ class Header extends React.Component {
         </div>
         <div className={`${styles.searchBar}`}>
           {this.shouldShowSearchBar() && <SearchBar/>}
-          <Account peers={this.props.peers} t={this.props.t}/>
+          {this.props.account.loading ?
+            null :
+            <Account peers={this.props.peers} t={this.props.t}/>}
         </div>
       </header>
     );
