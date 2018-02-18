@@ -77,7 +77,7 @@ class Setting extends React.Component {
               checked: settings.advancedMode,
             }}/>
           <article>
-            <h5>{t('Advanced features')}</h5>
+            <h5>{t('Delegate features')}</h5>
             <p>{t('Delegate section will be displayed.')}</p>
           </article>
         </div>
