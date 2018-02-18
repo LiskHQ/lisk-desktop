@@ -172,16 +172,16 @@ const getHashChunks = (address) => {
 class AccountVisual extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { isMobile: window.innerWidth < breakpoints.m };
+    this.state = { isSBreakpoint: window.innerWidth < breakpoints.s };
   }
 
   shouldComponentUpdate(nextProps, state) {
-    return this.state.isMobile !== state.isMobile
+    return this.state.isSBreakpoint !== state.isSBreakpoint
       || nextProps.address !== this.props.address;
   }
 
   resizeWindow() {
-    this.setState({ isMobile: window.innerWidth < breakpoints.m });
+    this.setState({ isSBreakpoint: window.innerWidth < breakpoints.s });
   }
 
   componentDidMount() {
@@ -194,10 +194,10 @@ class AccountVisual extends React.Component {
 
   render() {
     const {
-      address, size, mobileSize, className,
+      address, size, sizeS, className,
     } = this.props;
-    const desktopSize = size || 200;
-    const newSize = this.state.isMobile && mobileSize ? mobileSize : desktopSize;
+    const sizeL = size || 200;
+    const newSize = this.state.isSBreakpoint && sizeS ? sizeS : sizeL;
 
     const addressHashChunks = getHashChunks(address);
     const gradientScheme = gradientSchemes[

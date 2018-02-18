@@ -2,12 +2,11 @@
 @import '../app/variables.css';
 
 :root {
-  --header-margin-right-left-M: 26px;
+  --header-margin-right-left-M: 20px;
   --header-margin-top-bottom-M: 23px;
   --header-margin-right-left-S: 20px;
   --header-margin-top-bottom-S: 10px;
   --avatar-height: 69px;
-  --avatar-height-m: 40px;
   --avatar-height-s: 33px;
   --menu-icon-height-XL: 39px;
   --menu-icon-height-M: 34px;
@@ -204,17 +203,14 @@
   }
 
   .account {
-    margin: var(--header-margin-top-bottom-M) var(--header-margin-right-left-M) 0px 0px;
+    margin: 13px 13px 0;
     height: 72px;
 
     & .avatar {
-      height: var(--avatar-height-m);
-      width: var(--avatar-height-m);
+      margin-right: 0;
     }
 
     & .information {
-      height: var(--avatar-height-m);
-
       & .balance {
         font-size: 20px;
         color: var(--color-black);
@@ -229,19 +225,11 @@
         font-size: 12px;
         font-weight: 400;
       }
-
-      & .timer {
-        display: none;
-      }
     }
 
     & .menu {
       & .iconCircle {
-        bottom: 20px;
-        right: -32px;
-        box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.12), 0 -2px 24px 0 rgba(0, 0, 0, 0.24);
-        height: var(--menu-icon-height-M);
-        width: var(--menu-icon-height-M);
+        display: none;
       }
     }
   }
@@ -271,7 +259,6 @@
 
     & .avatar {
       margin-top: 4px;
-      margin-right: 0;
       height: var(--avatar-height-s);
       width: var(--avatar-height-s);
     }
@@ -289,10 +276,8 @@
           font-size: 10px;
         }
       }
-    }
 
-    & .menu {
-      & .iconCircle {
+      & .timer {
         display: none;
       }
     }

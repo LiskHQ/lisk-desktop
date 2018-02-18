@@ -113,10 +113,6 @@ input:read-only {
   margin: 13px 0px;
 }
 
-.mobileVisible {
-  display: none;
-}
-
 .disabledInput input:disabled {
   opacity: 1;
   border: none;
@@ -133,13 +129,5 @@ input:read-only {
 
   .accountVisual {
     margin: 24px 0;
-  }
-
-  .mobileHidden {
-    display: none;
-  }
-
-  .mobileVisible {
-    display: block;
   }
 }
