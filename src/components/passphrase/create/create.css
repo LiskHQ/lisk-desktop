@@ -26,6 +26,9 @@
 .wrapper {
   flex-direction: row;
   height: calc(100% - 22px);
+  margin-right: 0px;
+  margin-left: 0px;
+  overflow-y: auto;
 }
 
 .missing {
@@ -167,7 +170,7 @@ hr {
 
   & .button {
     max-width: 300px;
-    margin: 0 auto;
+    margin: 0 auto 50px;
   }
 
   & .templateItem {

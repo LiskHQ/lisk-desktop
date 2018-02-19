@@ -28,6 +28,9 @@
 .verifier {
   text-align: center;
   height: calc(100% - var(--steps-nav-height));
+  margin-right: 0px;
+  margin-left: 0px;
+  overflow-y: auto;
 
   & h2 {
     font-size: 48px;
@@ -38,7 +41,7 @@
   }
 
   & > header {
-    height: 45%;
+    height: 30%;
   }
 
   & header {
@@ -183,11 +186,13 @@
     }
 
     & figure {
-      margin-top: -50px;
-
       & img {
         height: 200px;
       }
+    }
+
+    & .button {
+      margin-bottom: 50px;
     }
   }
 }

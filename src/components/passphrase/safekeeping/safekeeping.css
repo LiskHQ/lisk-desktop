@@ -47,6 +47,9 @@
 .safekeeping {
   text-align: center;
   height: calc(100% - 22px);
+  margin-right: 0px;
+  margin-left: 0px;
+  overflow-y: auto;
 
   & > section {
     height: 50%;
@@ -161,7 +164,7 @@
       text-align: center;
 
       & > div {
-        margin: 60px auto 0;
+        margin: 60px auto 50px;
       }
     }
   }
