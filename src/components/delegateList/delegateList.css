@@ -390,7 +390,7 @@
 
 @media (--medium-viewport) {
   .wrapper {
-    overflow: scroll;
+    overflow: auto;
     height: 100%;
     min-height: 100%;
   }
