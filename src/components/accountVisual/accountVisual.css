@@ -10,6 +10,7 @@
   display: inline-block;
   animation-name: float;
   animation-duration: 4000ms;
+  animation-delay: 30000ms;
   animation-iteration-count: infinite;
   animation-timing-function: ease-in-out;
   animation-direction: alternate;
@@ -17,10 +18,10 @@
 
 @keyframes float {
   from {
-    transform: rotate(5deg);
+    transform: rotate(0deg);
   }
 
   to {
-    transform: rotate(-5deg);
+    transform: rotate(10deg);
   }
 }

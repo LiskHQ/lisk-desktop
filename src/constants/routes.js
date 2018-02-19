@@ -5,6 +5,6 @@ export default {
   searchResult: { long: '/explorer/result', short: '/result' },
   transaction: { long: '/explorer/transactions', short: '/transactions' },
   login: { url: '/' },
-  addAccount: { url: '/add-account/' },
+  addAccount: { url: '/add-account' },
   register: { url: '/register' },
 };

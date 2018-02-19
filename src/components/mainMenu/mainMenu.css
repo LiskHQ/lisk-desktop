@@ -13,6 +13,18 @@
   text-align: center;
 }
 
+.aside {
+  transform: translateX(-100%);
+  opacity: 0.5;
+  transition: all ease 300ms;
+  transition-delay: 200ms;
+}
+
+:global(.appLoaded) .aside {
+  opacity: 1;
+  transform: translateX(0);
+}
+
 .logo {
   margin: 40px 0;
   height: 50px;
@@ -35,6 +47,7 @@
   text-align: center;
   box-shadow: none;
   width: 100% !important;
+  max-width: 100% !important;
   border: none !important;
   padding: 20px 10px !important;
 }
@@ -118,6 +131,7 @@
   border-right: 1px solid var(--offcanvas-menu-border-color);
   border-bottom: 1px solid var(--offcanvas-menu-border-color);
   background: #fff;
+  max-width: 50%;
 
   &:nth-child(2n) {
     border-right: none !important;

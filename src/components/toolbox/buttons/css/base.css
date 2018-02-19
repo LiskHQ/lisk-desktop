@@ -64,7 +64,7 @@
 @define-mixin buttonAction {
   color: var(--color-white) !important;
   background: var(--gradient-action-blue);
-  min-width: 140px;
+  width: 140px;
 
   &:hover {
     background: var(--gradient-action-blue-hover) !important;

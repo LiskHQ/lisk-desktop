@@ -10,9 +10,12 @@ describe('Search Component', () => {
   let wrapper;
   let props;
   let visitSpy;
+  let visitOnEnterSpy;
 
   beforeEach(() => {
+    visitOnEnterSpy = spy(keyAction, 'visitAndSaveSearchOnEnter');
     visitSpy = spy(keyAction, 'visitAndSaveSearch');
+
     props = {
       history: { push: spy() },
       t: key => key,
@@ -20,7 +23,12 @@ describe('Search Component', () => {
     wrapper = mountWithContext(<Search {...props} />, {});
   });
 
-  it('performs a search', () => {
+  afterEach(() => {
+    visitOnEnterSpy.restore();
+    visitSpy.restore();
+  });
+
+  it('performs a search on enter', () => {
     expect(wrapper.find('input').props().value).to.equal('');
     wrapper.find('input').simulate('change', { target: { value: '1234567L' } });
     expect(wrapper.find('input').props().value).to.equal('1234567L');
@@ -29,6 +37,16 @@ describe('Search Component', () => {
       which: keyCodes.enter,
       target: { value: '1234567L' },
     });
-    expect(visitSpy).to.have.been.calledWith();
+    expect(visitOnEnterSpy).to.have.been.calledWith();
+  });
+
+  it('performs a search by clicking the buttons', () => {
+    wrapper.find('input').simulate('change', { target: { value: '123L' } });
+    wrapper.find('#search-button').first().simulate('click');
+    expect(visitSpy).to.have.been.calledWith('123L', props.history);
+    visitSpy.reset();
+    wrapper.find('input').simulate('change', { target: { value: '987L' } });
+    wrapper.find('#input-search-button').first().simulate('click');
+    expect(visitSpy).to.have.been.calledWith('987L', props.history);
   });
 });

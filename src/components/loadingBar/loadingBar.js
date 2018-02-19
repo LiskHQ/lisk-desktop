@@ -6,6 +6,7 @@ class LoadingBar extends React.Component {
   constructor() {
     super();
     this.state = {};
+    this.markedAsLoaded = false;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -20,6 +21,20 @@ class LoadingBar extends React.Component {
         this.setState({ visible: false });
       }, animationDuration - (timeDiff % animationDuration));
     }
+  }
+
+  componentDidMount() {
+    this.mountingTimeout = setTimeout(() => {
+      if (!this.markedAsLoaded && typeof this.props.markAsLoaded === 'function') {
+        this.markedAsLoaded = true;
+        this.props.markAsLoaded();
+      }
+    }, 100);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.mountingTimeout);
+    clearTimeout(this.timeout);
   }
 
   render() {
