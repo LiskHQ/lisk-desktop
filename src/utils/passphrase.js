@@ -90,7 +90,7 @@ export const generatePassphrase = ({ seed }) => (new mnemonic(new Buffer(seed.jo
    * @returns {bool} isValidPassphrase
    */
 export const isValidPassphrase = (passphrase) => {
-  const normalizedValue = passphrase.replace(/ +/g, ' ').trim().toLowerCase();
+  const normalizedValue = passphrase.replace(/ +/g, ' ').trim();
   let isValid;
   try {
     isValid = normalizedValue.split(' ').length >= 12 && mnemonic.isValid(normalizedValue);
@@ -107,7 +107,7 @@ export const getPassphraseValidationErrors = (passphrase) => {
 
   const partialPassphraseError = [];
   const invalidWords = passphraseArray.filter((word) => {
-    const isNotInDictionary = !inDictionary(word.toLowerCase());
+    const isNotInDictionary = !inDictionary(word);
     partialPassphraseError[passphraseArray.indexOf(word)] = isNotInDictionary;
     return isNotInDictionary;
   });
