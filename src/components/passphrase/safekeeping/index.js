@@ -89,6 +89,9 @@ class SafeKeeping extends React.Component {
                 }}/>
             </TransitionWrapper>
             <p className={`${styles.input} ${styles.textarea} passphrase`}>
+              <textarea type='text' autoFocus={true} readOnly
+                className={`${styles.hiddenInput}`}
+                defaultValue={passphrase}></textarea>
               {
                 passphrase.split(' ').map(word => <span className={styles.word} key={`wrapper-${word}`}>{ word } </span>)
               }
