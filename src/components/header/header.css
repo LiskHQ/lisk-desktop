@@ -3,7 +3,7 @@
 
 :root {
   --header-margin-right-left-M: 20px;
-  --header-margin-top-bottom-M: 23px;
+  --header-margin-top-bottom-M: 10px;
   --header-margin-right-left-S: 20px;
   --header-margin-top-bottom-S: 10px;
   --avatar-height: 69px;
@@ -170,6 +170,10 @@
   }
 }
 
+.beta {
+  display: none;
+}
+
 @media (--medium-viewport) {
   .loginInfo {
     width: 100%;
@@ -193,9 +197,17 @@
 
   .logo {
     display: inline-block;
-    height: 42px;
+    height: 48px;
     padding: 4px;
     margin: var(--header-margin-top-bottom-M) 0px  var(--header-margin-top-bottom-M) var(--header-margin-right-left-M);
+  }
+
+  .beta {
+    display: block;
+    color: var(--color-logo);
+    font-weight: 700;
+    margin: -19px 9px 0;
+    font-size: 16px;
   }
 
   .logoutButton {
@@ -203,7 +215,7 @@
   }
 
   .account {
-    margin: 13px 13px 0;
+    margin: var(--header-margin-top-bottom-M);
     height: 72px;
 
     & .avatar {
@@ -285,7 +297,12 @@
 
   .logo {
     height: 35px;
-    margin: var(--header-margin-top-bottom-S) 0px var(--header-margin-top-bottom-S) var(--header-margin-right-left-S);
+    margin: calc(var(--header-margin-top-bottom-S) - 5px) 0px calc(var(--header-margin-top-bottom-S) + 5px) var(--header-margin-right-left-S);
+  }
+
+  .beta {
+    margin: -25px 5px 5px;
+    font-size: 14px;
   }
 
   .login {

@@ -37,6 +37,7 @@ class Header extends React.Component {
           <div>
             <div style={{ display: 'inline-block', float: 'left' }}>
               <img src={logo} className={`${styles.logo}`}/>
+              <span className={styles.beta}>{this.props.t('Beta')}</span>
             </div>
             <div style={{ display: 'inline-block' }}>
               <PrivateWrapper>
