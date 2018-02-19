@@ -9,7 +9,7 @@ class TransactionsDashboard extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   render() {
     return <div className={`${grid.row} ${styles.wrapper}`}>
-      <div className={`${grid['col-md-4']} ${styles.gridPadding}`}>
+      <div className={`${grid['col-md-4']}`}>
         <Send search={this.props.location.search}/>
       </div>
       <div className={`${grid['col-sm-12']} ${styles.transactions} ${grid['col-md-8']}`}>
