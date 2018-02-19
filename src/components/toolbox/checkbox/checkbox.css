@@ -66,6 +66,7 @@
       word-break: keep-all;
       min-width: 200px;
       z-index: 2;
+      position: relative;
 
       &::after,
       &::before {

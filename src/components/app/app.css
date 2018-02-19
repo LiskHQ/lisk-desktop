@@ -56,7 +56,7 @@ body {
 @media (--medium-viewport) {
   body {
     background-color: var(--color-grayscale-mobile-background);
-    margin-top: var(--m-top-bar-height);
+    margin-top: var(--header-height-m);
   }
 
   .bodyWrapper {
@@ -69,12 +69,6 @@ body {
     & > section {
       padding: 0;
     }
-  }
-}
-
-@media (--small-viewport) {
-  body {
-    margin-top: var(--s-top-bar-height);
   }
 }
 
@@ -97,6 +91,12 @@ body {
 @media (--large-viewport) {
   body {
     font-size: 15px;
+  }
+}
+
+@media (--small-viewport) {
+  body {
+    margin-top: var(--header-height-s);
   }
 }
 

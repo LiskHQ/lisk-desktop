@@ -18,6 +18,8 @@
   --main-header-font-size-XL: 32px;
   --main-header-font-size-L: 28px;
   --main-header-font-size-XS: 24px;
+  --tabel-header-padding-m: 27px;
+  --tabel-header-padding-s: 19px;
   --grid-padding-L: 24px;
   --grid-padding-XS: 19px;
   --list-line-height: 25px;
@@ -39,6 +41,8 @@
   --back-button-arrow-font-size-XS: 16px;
   --float-animation-distance: 10px;
   --even-row-background: #f5f8fc;
+  --list-bottom-padding-m: 120px;
+  --list-bottom-padding-s: 90px;
 }
 
 .wrapper {
@@ -364,7 +368,7 @@
   }
 }
 
-@media (--small-viewport) {
+@media (--medium-viewport) {
   .wrapper {
     overflow: scroll;
     height: 100%;
@@ -382,11 +386,13 @@
       & .table .tableHead {
         width: 100%;
         position: fixed;
-        top: 67px;
+        top: var(--header-height-m);
         left: 0;
         z-index: 2;
         background: var(--color-white);
         box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.5);
+        padding-left: var(--tabel-header-padding-m);
+        padding-right: var(--tabel-header-padding-m);
 
         & li {
           padding-bottom: 0;
@@ -422,7 +428,7 @@
   .delegatesList {
     height: auto;
     overflow-y: visible;
-    padding-bottom: 60px;
+    padding-bottom: var(--list-bottom-padding-m);
 
     & .row,
     & .tableHead {
@@ -462,6 +468,18 @@
     &.mobileInput {
       display: inline-block;
     }
+  }
+}
+
+@media (--small-viewport) {
+  .header.offCanvas ~ .delegatesList .table .tableHead {
+    top: var(--header-height-s);
+    padding-left: var(--tabel-header-padding-s);
+    padding-right: var(--tabel-header-padding-s);
+  }
+
+  .delegatesList {
+    padding-bottom: var(--list-bottom-padding-s);
   }
 }
 

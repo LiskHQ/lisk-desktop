@@ -2,22 +2,20 @@
 
 :root {
   --submit-button-height: 55px;
-  --header-height: 67px;
   --filters-height: 55px;
-  --footer-height: 62px;
 }
 
 .wrapper {
   width: 100%;
 }
 
-@media (--small-viewport) {
+@media (--medium-viewport) {
   .wrapper {
     margin: 0;
 
     & > section {
       width: 100%;
-      height: calc(100vh - var(--submit-button-height) - var(--header-height) - var(--footer-height)); /* stylelint-disable-line */
+      height: calc(100vh - var(--submit-button-height) - var(--header-height-m) - var(--footer-height-m)); /* stylelint-disable-line */
       position: relative;
     }
 
@@ -25,9 +23,10 @@
       position: fixed;
       z-index: 2;
       left: 0;
-      bottom: var(--footer-height);
+      bottom: var(--footer-height-m);
       width: 100%;
       max-height: 100%;
+      height: 95px;
     }
   }
 
@@ -38,7 +37,28 @@
     }
 
     & aside {
-      height: calc(100% - var(--header-height) - var(--footer-height));
+      height: 100%;
+      height: calc(100% - var(--header-height-m) - var(--footer-height-m));
     }
+  }
+
+  .wrapper:not(.hasLayover) aside > div {
+    background-color: transparent;
+  }
+}
+
+@media (--small-viewport) {
+  .wrapper {
+    & > section {
+      height: calc(100vh - var(--submit-button-height) - var(--header-height-s) - var(--footer-height-s)); /* stylelint-disable-line */
+    }
+
+    & > aside {
+      bottom: var(--footer-height-s);
+    }
+  }
+
+  .hasLayover aside {
+    height: calc(100% - var(--header-height-s) - var(--footer-height-s));
   }
 }

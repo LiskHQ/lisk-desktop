@@ -12,6 +12,10 @@ class ConfirmVotes extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    clearTimeout(this.timeout);
+  }
+
   goToNextStep({ success, text }) {
     const { t, updateList, nextStep } = this.props;
     let message = {
@@ -28,6 +32,12 @@ class ConfirmVotes extends React.Component {
     }
     updateList(false);
     nextStep(message);
+  }
+
+  votePlacedDelayed(value) {
+    this.timeout = setTimeout(() => {
+      this.props.votePlaced(value);
+    }, 120);
   }
 
   render() {
@@ -61,7 +71,7 @@ class ConfirmVotes extends React.Component {
             icons={{
               done: 'checkmark',
             }}
-            onChange={() => { votePlaced(data); }}
+            onChange={this.votePlacedDelayed.bind(this, data)}
             input={{
               value: 'confirm-vote',
             }}/>

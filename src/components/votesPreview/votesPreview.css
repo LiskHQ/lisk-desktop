@@ -12,11 +12,11 @@
   --progress-bar-header-font-size: 54px;
   --progres-bar-height-mobile: 40px;
   --submit-button-height: 55px;
-  --footer-height: 62px;
   --message-line-height: 25px;
   --button-box-shadow: 0 -1px 6px 0 rgba(60, 80, 104, 0.26);
   --error-font-size-XL: 16px;
   --error-font-size-L: 14px;
+  --button-height: 55px;
 }
 
 .errorMessage {
@@ -186,9 +186,10 @@
   }
 }
 
-@media (--small-viewport) {
+@media (--medium-viewport) {
   .wrapper {
     overflow: visible;
+    padding-top: 40px;
 
     & header {
       display: none;
@@ -240,6 +241,7 @@
         z-index: 3;
         position: relative;
         border-radius: 0;
+        box-shadow: none;
 
         & .arrow {
           display: inline-block;
@@ -256,7 +258,7 @@
     padding-top: 40px;
 
     & section {
-      bottom: 55px;
+      bottom: var(--button-height);
     }
   }
 
@@ -272,8 +274,14 @@
     display: flex !important;
 
     &.visible {
-      bottom: var(--footer-height);
+      bottom: var(--footer-height-m);
     }
+  }
+}
+
+@media (--small-viewport) {
+  .surpassMessage.visible {
+    bottom: var(--footer-height-s);
   }
 }
 
