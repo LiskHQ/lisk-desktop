@@ -172,7 +172,7 @@ const getHashChunks = (address) => {
 class AccountVisual extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { isSBreakpoint: window.innerWidth < breakpoints.s };
+    this.state = { isSBreakpoint: window.innerWidth <= breakpoints.s };
   }
 
   shouldComponentUpdate(nextProps, state) {
