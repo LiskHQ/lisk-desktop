@@ -109,7 +109,7 @@ class DelegateList extends React.Component {
       case voteFilters.voted:
         return delegates.filter(delegate =>
           (votes[delegate.username] && votes[delegate.username].confirmed));
-      case voteFilters.unvoted:
+      case voteFilters.notVoted:
         return delegates.filter(delegate =>
           (!votes[delegate.username] || !votes[delegate.username].confirmed));
       default:

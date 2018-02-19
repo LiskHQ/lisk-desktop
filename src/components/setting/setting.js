@@ -56,6 +56,20 @@ class Setting extends React.Component {
         <div>
           <Checkbox
             theme={styles}
+            className={`${styles.smallSlider} advancedMode`}
+            onChange={() => settingsUpdated({ advancedMode: !settings.advancedMode })}
+            input={{
+              value: true,
+              checked: settings.advancedMode,
+            }}/>
+          <article>
+            <h5>{t('Delegate features')}</h5>
+            <p>{t('Delegate section will be displayed.')}</p>
+          </article>
+        </div>
+        <div>
+          <Checkbox
+            theme={styles}
             className={`${styles.smallSlider} autoLog`}
             onChange={() => this.toggleAutoLog(!settings.autoLog)}
             input={{
@@ -65,20 +79,6 @@ class Setting extends React.Component {
           <article>
             <h5>{t('Auto-Lock')}</h5>
             <p>{t('Lock ID’s automatically after 10 minutes.')}</p>
-          </article>
-        </div>
-        <div>
-          <Checkbox
-            theme={styles}
-            className={`${styles.smallSlider} advancedMode`}
-            onChange={() => settingsUpdated({ advancedMode: !settings.advancedMode })}
-            input={{
-              value: true,
-              checked: settings.advancedMode,
-            }}/>
-          <article>
-            <h5>{t('Advanced features')}</h5>
-            <p>{t('Delegate section will be displayed.')}</p>
           </article>
         </div>
         {/* TODO: will be re-enabled when the functionality is updated

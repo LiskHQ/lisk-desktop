@@ -55,7 +55,7 @@ class VotesPreview extends React.Component {
         ${totalNewVotesCount > 0 ? styles.hasChanges : ''}`}>
         <header>
           <h2>{t('Votes')}</h2>
-          <a target='_blank' href='http://www.help.lisk.io/voting-and-delegates' rel='noopener noreferrer'>
+          <a target='_blank' href='http://help.lisk.io/voting-and-delegates' rel='noopener noreferrer'>
             {t('Learn how voting works')} <FontIcon>arrow-right</FontIcon>
           </a>
         </header>
@@ -94,7 +94,7 @@ class VotesPreview extends React.Component {
             onClick={() => { updateList(true); nextStep({}); }}
             disabled={totalNewVotesCount === 0 || surpassedVoteLimit || insufficientFunds}>
             <span>{t('Next')}</span>
-            <FontIcon value='arrow-right' />
+            <FontIcon value='arrow-right' className={styles.arrow} />
           </Button>
           <div className={styles.errorMessage}>
             {surpassedVoteLimit || insufficientFunds ? surpassMessage() : null}

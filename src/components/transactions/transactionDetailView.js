@@ -1,8 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
-
-import { Button } from './../toolbox/buttons/button';
 import { TimeFromTimestamp, DateFromTimestamp } from './../timestamp/index';
 import CopyToClipboard from '../copyToClipboard';
 import AccountVisual from '../accountVisual';
@@ -112,14 +110,6 @@ const TransactionsDetailView = props => (
       </div>
     </div>
     <footer>
-      {
-        props.prevStep ?
-          <Link to={`${routes.transaction.long}/${props.value.id}`}>
-            <Button className={styles.button} >
-              {props.t('Show transaction page')}
-            </Button>
-          </Link> : null
-      }
     </footer>
   </div>
 );
