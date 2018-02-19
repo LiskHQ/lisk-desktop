@@ -37,15 +37,15 @@ class Search extends React.Component {
   }
 
   render() {
-    return (<div className={`${styles.searchBar} ${this.shouldShowSearchBarOnMobile() ? styles.show : null}`}>
+    return (<div className={`${styles.searchBar} search-bar-input ${this.shouldShowSearchBarOnMobile() ? styles.show : null}`}>
       <FontIcon
         onClick={() => { visitAndSaveSearch(this.state.searchItem, this.props.history); }}
-        value='search' className={styles.icon}/>
+        value='search' className={`${styles.icon} search-bar-button`}/>
       <input
         ref={(el) => { this.searchInput = el; }}
         onFocus={this.select.bind(this)}
         onKeyUp={(e) => { visitAndSaveSearchOnEnter(e, this.props.history); }}
-        className={styles.input} type="text"
+        className={`${styles.input}`} type="text"
         placeholder={this.props.t('Search for Lisk ID or Transaction ID')}
         value={this.state.searchItem}
         onChange={(e) => { this.setState({ searchItem: e.target.value }); }}
