@@ -31,12 +31,12 @@ class Voting extends React.Component {
   render() {
     return (
       <div className={`${grid.row} ${styles.wrapper}`} ref={(el) => { this.root = el; }}>
-        <aside className={grid['col-md-4']}>
+        <aside className={`${grid['col-sm-12']} ${grid['col-md-12']} ${grid['col-lg-4']}`}>
           <DelegateSidebar votes={this.props.votes}
             setLayover={this.setLayover.bind(this)}
             updateList={(value) => { this.toggleSummery(value); }} />
         </aside>
-        <section className={`${grid['col-sm-12']} ${grid['col-md-8']}`}>
+        <section className={`${grid['col-sm-12']} ${grid['col-md-12']} ${grid['col-lg-8']}`}>
           <DelegateList showChangeSummery={this.state.showChangeSummery} />
         </section>
       </div>
