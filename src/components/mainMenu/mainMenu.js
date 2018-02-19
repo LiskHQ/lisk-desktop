@@ -3,7 +3,7 @@ import { Tab, Tabs as ToolboxTabs } from 'react-toolbox/lib/tabs';
 import Drawer from 'react-toolbox/lib/drawer';
 import MenuBar from '../menuBar';
 import styles from './mainMenu.css';
-import logo from '../../assets/images/Lisk-Logo.svg';
+import logo from '../../assets/images/logo-beta.svg';
 import * as menuLogos from '../../assets/images/main-menu-icons/*.svg'; //eslint-disable-line
 import { FontIcon } from '../fontIcon';
 import Setting from '../setting';
