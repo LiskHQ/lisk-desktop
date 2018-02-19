@@ -6,6 +6,7 @@ import { activePeerSet, activePeerUpdate } from './peers';
 import { errorToastDisplayed } from './toaster';
 import * as nethashApi from './../utils/api/nethash';
 import accounts from '../../test/constants/accounts';
+import networks from '../constants/networks';
 
 
 describe('actions: peers', () => {
@@ -64,6 +65,17 @@ describe('actions: peers', () => {
       activePeerSet({ passphrase, network })(dispatch);
 
       expect(dispatch).to.have.been.calledWith(match.hasNested('data.activePeer.options.address', 'localhost:8000'));
+    });
+
+    it('dispatch activePeerSet action with hubXX.lisk.io node address if mainnet', () => {
+      const network = networks.mainnet;
+
+      activePeerSet({ passphrase, network })(dispatch);
+
+      expect(dispatch).to.have.been.calledWith(match.hasNested(
+        'data.activePeer.options.address',
+        match(new RegExp('https://hub[23][1-8].lisk.io')),
+      ));
     });
 
     it('dispatch activePeerSet with testnet config set to true when the network is a custom node and nethash is testnet', () => {
