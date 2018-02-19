@@ -4,7 +4,7 @@ import { successToastDisplayed, errorToastDisplayed } from '../../actions/toaste
 import { loadingStarted, loadingFinished } from '../../actions/loading';
 
 const getErrorMessage = (errorCode, address) => {
-  let message = i18next.t('Failed to connect to node {{address}}', { address });
+  let message = i18next.t('Failed to connect to node');
   switch (errorCode) {
     case 'EUNAVAILABLE':
       message = i18next.t('Failed to connect: Node {{address}} is not active', { address });
