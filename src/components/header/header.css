@@ -193,9 +193,8 @@
 
   .logo {
     display: inline-block;
-    height: 42px;
-    padding: 4px;
-    margin: var(--header-margin-top-bottom-M) 0px  var(--header-margin-top-bottom-M) var(--header-margin-right-left-M);
+    height: 50px;
+    padding: 20px;
   }
 
   .logoutButton {
@@ -284,8 +283,8 @@
   }
 
   .logo {
-    height: 35px;
-    margin: var(--header-margin-top-bottom-S) 0px var(--header-margin-top-bottom-S) var(--header-margin-right-left-S);
+    height: 40px;
+    padding: 10px 10px 7px 20px;
   }
 
   .login {
