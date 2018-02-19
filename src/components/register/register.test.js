@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { spy } from 'sinon';
+import { spy, match } from 'sinon';
 import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
 
@@ -60,9 +60,9 @@ describe('Register', () => {
 
   it('should call activePeerSet with network and passphrase', () => {
     wrapper.find('MultiStep').props().finalCallback(passphrase);
-    expect(prop.activePeerSet).to.have.been.calledWith({
+    expect(prop.activePeerSet).to.have.been.calledWith(match({
       network: { code: 0, name: 'Mainnet', port: 443, ssl: true },
       passphrase,
-    });
+    }));
   });
 });
