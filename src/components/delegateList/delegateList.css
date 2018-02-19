@@ -20,8 +20,9 @@
   --main-header-font-size-XS: 24px;
   --tabel-header-padding-m: 27px;
   --tabel-header-padding-s: 19px;
-  --grid-padding-L: 24px;
-  --grid-padding-XS: 19px;
+  --grid-padding-L: var(--box-padding-left-L);
+  --grid-padding-M: var(--box-padding-left-M);
+  --grid-padding-XS: var(--box-padding-left-M);
   --list-line-height: 25px;
   --grid-header-line-height: 60px;
   --main-row-line-height: 70px;
@@ -43,6 +44,11 @@
   --even-row-background: #f5f8fc;
   --list-bottom-padding-m: 120px;
   --list-bottom-padding-s: 90px;
+}
+
+.leftText {
+  text-align: left;
+  padding-left: 0px;
 }
 
 .wrapper {
@@ -170,7 +176,7 @@
     font-size: 15px;
     font-weight: 500;
     vertical-align: middle;
-    margin-left: 10px;
+    margin-right: 10px;
 
     &:not(:last-of-type) {
       margin-right: 24px;
@@ -358,12 +364,26 @@
   font-weight: 500;
 }
 
+@media (--xLarge-viewport) {
+  .delegatesList {
+    & .row {
+      padding: 0px var(--grid-padding-L);
+    }
+  }
+}
+
 @media (--large-viewport) {
   .header {
     padding: 20px var(--grid-padding-L);
 
     & h2 {
       font-size: var(--main-header-font-size-L);
+    }
+  }
+
+  .delegatesList {
+    & .row {
+      padding: 0px var(--grid-padding-L);
     }
   }
 }
@@ -432,8 +452,8 @@
 
     & .row,
     & .tableHead {
-      padding-left: var(--grid-padding-XS);
-      padding-right: var(--grid-padding-XS);
+      padding-left: var(--grid-padding-M);
+      padding-right: var(--grid-padding-M);
     }
 
     & .tableHead li:nth-child(4),
