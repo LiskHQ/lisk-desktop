@@ -49,7 +49,7 @@ describe('Passphrase: Safekeeping', () => {
   });
 
   it('renders a 12 .word elements to show the passphrase in', () => {
-    expect(wrapper.find('.passphrase span')).to.have.lengthOf(12);
+    expect(wrapper.find('.passphrase-wrapper span')).to.have.lengthOf(12);
   });
 
   it('renders an ActionBar component', () => {
