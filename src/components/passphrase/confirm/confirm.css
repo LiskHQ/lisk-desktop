@@ -41,7 +41,7 @@
   }
 
   & > header {
-    height: 45%;
+    height: 30%;
   }
 
   & header {
@@ -186,8 +186,6 @@
     }
 
     & figure {
-      margin-top: -50px;
-
       & img {
         height: 200px;
       }
