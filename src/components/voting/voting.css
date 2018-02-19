@@ -62,3 +62,10 @@
     height: calc(100% - var(--header-height-s) - var(--footer-height-s));
   }
 }
+
+@media (max-width: 1025px) {
+  .votingBox {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+}
