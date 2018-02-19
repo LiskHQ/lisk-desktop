@@ -41,7 +41,7 @@
 
 .errorMessage {
   color: var(--color-error);
-  height: auto;
+  height: 20px;
   font-weight: var(--font-weight-semi-bold);
   padding-top: 10px;
 }
