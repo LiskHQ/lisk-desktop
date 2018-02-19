@@ -92,11 +92,8 @@ class SendReadable extends React.Component {
           <header className={styles.headerWrapper}>
             <h2>{this.props.t('Confirm transfer')}</h2>
           </header>
-          <figure className={`${styles.accountVisual} ${styles.mobileHidden}`}>
-            <AccountVisual address={this.state.recipient.value} size={150} />
-          </figure>
-          <figure className={`${styles.accountVisual} ${styles.mobileVisible}`}>
-            <AccountVisual address={this.state.recipient.value} size={60} />
+          <figure className={styles.accountVisual}>
+            <AccountVisual address={this.state.recipient.value} size={150} sizeS={60} />
           </figure>
         </div>
         <form>

@@ -70,7 +70,7 @@ class Header extends React.Component {
                   <RelativeLink to='saved-accounts' className={styles.avatar}>
                     <AccountVisual
                       address={this.props.account.address}
-                      size={69} mobileSize={40}
+                      size={69} sizeS={40}
                     />
                   </RelativeLink>
                   <div className={styles.menu}>
@@ -94,7 +94,9 @@ class Header extends React.Component {
         </div>
         <div className={`${styles.searchBar}`}>
           {this.shouldShowSearchBar() && <SearchBar/>}
-          <Account peers={this.props.peers} t={this.props.t}/>
+          {this.props.account.loading ?
+            null :
+            <Account peers={this.props.peers} t={this.props.t}/>}
         </div>
       </header>
     );

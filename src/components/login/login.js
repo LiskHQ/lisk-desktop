@@ -205,13 +205,13 @@ class Login extends React.Component {
             <div className='text-left'>
               <h2>
                 <Link className='new-account-button' to='/register'>
-                  {this.props.t('Get access')}
+                  {this.props.t('Create Lisk ID')}
                 </Link>
                 <FontIcon className={styles.singUpArrow} value='arrow-right' />
               </h2>
 
               <div className={styles.subTitle}>
-                Create an address as a gateway to all Lisk Services.
+                {this.props.t('Create a Lisk ID to gain access to all services.')}
               </div>
             </div>
           </section>

@@ -11,6 +11,10 @@
 
 .form {
   position: relative;
+
+  & input {
+    border-radius: 0;
+  }
 }
 
 .fee {

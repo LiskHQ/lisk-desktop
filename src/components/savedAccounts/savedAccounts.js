@@ -133,7 +133,7 @@ class SavedAccounts extends React.Component {
                     { button: styles.removeButton }
                   }
                   onClick={this.handleRemove.bind(this, account)}
-                  label={t('Remove from Favorites')}/> :
+                  label={this.isSelectedForRemove(account) ? t('Confirm') : t('Remove from Favorites')}/> :
                 null
               }
             </div>

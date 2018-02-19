@@ -54,7 +54,7 @@ class SafeKeeping extends React.Component {
         <section className={`${styles.introduction} ${styles.table}`}>
           <div className={styles.tableCell}>
             <TransitionWrapper current={this.state.step} step='introduction-step'>
-              <h5>{t('I am responsible for keeping my passphrase safe. No one can restore it, not even Lisk.')}</h5>
+              <h5>{t('I am responsible for keeping my passphrase safe. No one can reset it, not even Lisk.')}</h5>
             </TransitionWrapper>
             <TransitionWrapper current={this.state.step} step='introduction-step' animationName='fade'>
               <SliderCheckbox
