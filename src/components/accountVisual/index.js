@@ -181,7 +181,7 @@ class AccountVisual extends React.Component {
   }
 
   resizeWindow() {
-    this.setState({ isSBreakpoint: window.innerWidth < breakpoints.s });
+    this.setState({ isSBreakpoint: window.innerWidth <= breakpoints.s });
   }
 
   componentDidMount() {
