@@ -21,11 +21,10 @@
   text-align: right;
   margin-bottom: 24px;
   font-size: 14px;
-  line-height: 14px;
   font-weight: 600;
   position: absolute;
   right: 0;
-  top: 152px;
+  top: 70px;
   color: var(--fee-color);
 }
 

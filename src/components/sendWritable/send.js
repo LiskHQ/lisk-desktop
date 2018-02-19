@@ -56,7 +56,7 @@ class SendWritable extends React.Component {
     if (!value) {
       return this.props.t('Required');
     } else if (!value.match(this.inputValidationRegexps[name])) {
-      return name === 'amount' ? this.props.t('Invalid amount.') : this.props.t('Invalid address.');
+      return name === 'amount' ? this.props.t('Invalid amount') : this.props.t('Invalid address');
     } else if (name === 'amount' && value > parseFloat(this.getMaxAmount())) {
       return this.props.t('Not enough LSK');
     } else if (name === 'amount' && value === '0') {
