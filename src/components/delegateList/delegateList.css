@@ -41,6 +41,8 @@
   --back-button-arrow-font-size-XS: 16px;
   --float-animation-distance: 10px;
   --even-row-background: #f5f8fc;
+  --list-bottom-padding-m: 120px;
+  --list-bottom-padding-s: 90px;
 }
 
 .wrapper {
@@ -426,7 +428,7 @@
   .delegatesList {
     height: auto;
     overflow-y: visible;
-    padding-bottom: 60px;
+    padding-bottom: var(--list-bottom-padding-m);
 
     & .row,
     & .tableHead {
@@ -474,6 +476,10 @@
     top: var(--header-height-s);
     padding-left: var(--tabel-header-padding-s);
     padding-right: var(--tabel-header-padding-s);
+  }
+
+  .delegatesList {
+    padding-bottom: var(--list-bottom-padding-s);
   }
 }
 
