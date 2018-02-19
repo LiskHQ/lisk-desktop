@@ -31,12 +31,20 @@ class Search extends React.Component {
     return pathname.includes('explorer') && !pathname.includes(routes.search.long);
   }
 
+
+  select() {
+    this.searchInput.select();
+  }
+
   render() {
     return (<div className={`${styles.searchBar} ${this.shouldShowSearchBarOnMobile() ? styles.show : null}`}>
       <FontIcon
         onClick={() => { visitAndSaveSearch(this.state.searchItem, this.props.history); }}
         value='search' className={styles.icon}/>
-      <input onKeyUp={(e) => { visitAndSaveSearchOnEnter(e, this.props.history); }}
+      <input
+        ref={(el) => { this.searchInput = el; }}
+        onFocus={this.select.bind(this)}
+        onKeyUp={(e) => { visitAndSaveSearchOnEnter(e, this.props.history); }}
         className={styles.input} type="text"
         placeholder={this.props.t('Search for Lisk ID or Transaction ID')}
         value={this.state.searchItem}
