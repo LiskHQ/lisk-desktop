@@ -7,7 +7,7 @@ import SearchBar from '../searchBar';
 import CountDownTemplate from './countDownTemplate';
 import LiskAmount from '../liskAmount';
 import Account from '../account';
-import logo from '../../assets/images/Lisk-Logo.svg';
+import logo from '../../assets/images/logo-beta.svg';
 import PrivateWrapper from '../privateWrapper';
 import { ActionButton } from './../toolbox/buttons/button';
 import styles from './header.css';
