@@ -189,6 +189,7 @@
 @media (--medium-viewport) {
   .wrapper {
     overflow: visible;
+    padding-top: 40px;
 
     & header {
       display: none;
