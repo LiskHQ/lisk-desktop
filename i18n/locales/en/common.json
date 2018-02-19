@@ -131,6 +131,7 @@
   "Passphrase should have 12 words, entered passphrase has {{length}}": "Passphrase should have 12 words, entered passphrase has {{length}}",
   "Password": "Password",
   "Paste": "Paste",
+  "Pending": "Pending",
   "Perfect! You’re all set.": "Perfect! You’re all set.",
   "Please check the highlighted words": "Please check the highlighted words",
   "Please click Next, then move around your mouse randomly to generate a random passphrase.": "Please click Next, then move around your mouse randomly to generate a random passphrase.",
