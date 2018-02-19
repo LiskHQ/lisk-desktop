@@ -50,12 +50,12 @@ describe('Send Writable Component', () => {
 
   it('accepts valid amount', () => {
     wrapper.find('.amount input').simulate('change', { target: { value: '120.25' } });
-    expect(wrapper.find('Input.amount').text()).to.not.contain('Invalid address. Please check again');
+    expect(wrapper.find('Input.amount').text()).to.not.contain('Invalid amount');
   });
 
   it('recognizes invalid amount', () => {
     wrapper.find('.amount input').simulate('change', { target: { value: '120 INVALID' } });
-    expect(wrapper.find('Input.amount').text()).to.contain('Invalid address. Please check again');
+    expect(wrapper.find('Input.amount').text()).to.contain('Invalid amount');
   });
 
   it('recognizes zero amount', () => {
@@ -76,11 +76,11 @@ describe('Send Writable Component', () => {
 
   it('accepts valid recipient', () => {
     wrapper.find('.recipient input').simulate('change', { target: { value: '11004588490103196952L' } });
-    expect(wrapper.find('Input.recipient').text()).to.not.contain('Invalid address. Please check again');
+    expect(wrapper.find('Input.recipient').text()).to.not.contain('Invalid address');
   });
 
   it('recognizes invalid recipient', () => {
     wrapper.find('.recipient input').simulate('change', { target: { value: '11004588490103196952' } });
-    expect(wrapper.find('Input.recipient').text()).to.contain('Invalid address. Please check again');
+    expect(wrapper.find('Input.recipient').text()).to.contain('Invalid address');
   });
 });

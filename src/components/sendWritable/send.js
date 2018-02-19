@@ -56,7 +56,7 @@ class SendWritable extends React.Component {
     if (!value) {
       return this.props.t('Required');
     } else if (!value.match(this.inputValidationRegexps[name])) {
-      return this.props.t('Invalid address. Please check again');
+      return name === 'amount' ? this.props.t('Invalid amount') : this.props.t('Invalid address');
     } else if (name === 'amount' && value > parseFloat(this.getMaxAmount())) {
       return this.props.t('Not enough LSK');
     } else if (name === 'amount' && value === '0') {
@@ -104,8 +104,9 @@ class SendWritable extends React.Component {
             error={this.state.amount.error}
             value={this.state.amount.value}
             theme={styles}
-            onChange={this.handleChange.bind(this, 'amount')} />
-          <div className={styles.fee}> {this.props.t('Fee: {{fee}} LSK', { fee: fromRawLsk(this.fee) })} </div>
+            onChange={this.handleChange.bind(this, 'amount')} >
+            <div className={styles.fee}> {this.props.t('Fee: {{fee}} LSK', { fee: fromRawLsk(this.fee) })} </div>
+          </Input>
         </form>
         <footer>
           <Button onClick={() => this.props.nextStep({
