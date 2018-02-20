@@ -134,7 +134,7 @@ describe('@integration: Wallet', () => {
 
   describe('Send', () => {
     describe('Scenario: should not allow to send when not enough funds', () => {
-      step('Given I\'m on "wallet" as "empty account"', setupStep.bind(null, 'empty account'));
+      step('Given I\'m on "wallet" as "empty account"', setupStep.bind(null, 'empty account', false));
       step('And I fill in "1" to "amount" field', fillInputField.bind(null, '1', 'amount'));
       step('And I fill in "537318935439898807L" to "recipient" field', fillInputField.bind(null, '537318935439898807L', 'recipient'));
       step('Then I should see "Not enough LSK" error message', () => {
@@ -146,7 +146,7 @@ describe('@integration: Wallet', () => {
     });
 
     describe('Scenario: should give and error message when sending fails', () => {
-      step('Given I\'m on "wallet" as "genesis" account', setupStep.bind(null, 'genesis'));
+      step('Given I\'m on "wallet" as "genesis" account', setupStep.bind(null, 'genesis', false));
       step('And I fill in "1" to "amount" field', fillInputField.bind(null, '1', 'amount'));
       step('And I fill in "537318935439898807L" to "recipient" field', fillInputField.bind(null, '537318935439898807L', 'recipient'));
       step('And I click "send next button"', clickStep.bind(null, 'send next button'));
@@ -158,7 +158,7 @@ describe('@integration: Wallet', () => {
     });
 
     describe('Scenario: should allow to send LSK from unlocked account', () => {
-      step('Given I\'m on "wallet" as "genesis" account', setupStep.bind(null, 'genesis'));
+      step('Given I\'m on "wallet" as "genesis" account', setupStep.bind(null, 'genesis', false));
       step('And I fill in "1" to "amount" field', fillInputField.bind(null, '1', 'amount'));
       step('And I fill in "537318935439898807L" to "recipient" field', fillInputField.bind(null, '537318935439898807L', 'recipient'));
       step('And I click "send next button"', clickStep.bind(null, 'send next button'));
@@ -180,7 +180,7 @@ describe('@integration: Wallet', () => {
 
     describe('Scenario: should allow to send LSK from unlocked account with 2nd passphrase', () => {
       const { secondPassphrase } = accounts['second passphrase account'];
-      step('Given I\'m on "wallet" as "second passphrase account"', setupStep.bind(null, 'second passphrase account'));
+      step('Given I\'m on "wallet" as "second passphrase account"', setupStep.bind(null, 'second passphrase account', false));
       step('And I fill in "1" to "amount" field', fillInputField.bind(null, '1', 'amount'));
       step('And I fill in "537318935439898807L" to "recipient" field', fillInputField.bind(null, '537318935439898807L', 'recipient'));
       step('And I click "send next button"', clickStep.bind(null, 'send next button'));
@@ -207,14 +207,14 @@ describe('@integration: Wallet', () => {
 
   describe('transactions', () => {
     describe('Scenario: should allow to view transactions', () => {
-      step('Given I\'m on "wallet" as "genesis" account', setupStep.bind(null, 'genesis'));
+      step('Given I\'m on "wallet" as "genesis" account', setupStep.bind(null, 'genesis', false));
       step('Then I should see 25 rows', checkRowCount.bind(null, 25));
       step('When I scroll to the bottom of "transactions box"', () => { wrapper.find('Waypoint').props().onEnter(); });
       step('Then I should see 50 rows', checkRowCount.bind(null, 50));
     });
 
     describe('Scenario: should allow to filter transactions', () => {
-      step('Given I\'m on "wallet" as "genesis" account', setupStep.bind(null, 'genesis'));
+      step('Given I\'m on "wallet" as "genesis" account', setupStep.bind(null, 'genesis', false));
       step('Then the "All" filter should be selected by default', checkSelectedFilter.bind(null, 'all'));
       step('When I click on the "Outgoing" filter', clickStep.bind(null, 'filter out'));
       step('Then I expect to see the results for "Outgoing"', checkRowCount.bind(null, 5));
