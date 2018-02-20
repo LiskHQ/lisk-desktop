@@ -33,14 +33,19 @@ describe('@integration: Wallet', () => {
   const successMessage = 'Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain.';
   const errorMessage = 'An error occurred while creating the transaction.';
 
+  const generateTransactions = (n) => {
+    const transactionExample = { senderId: 'sample_address', receiverId: 'some_address', type: txTypes.send };
+    const transactions = new Array(n);
+    transactions.fill(transactionExample);
+    return transactions;
+  };
+
   beforeEach(() => {
     requestToActivePeerStub = stub(peers, 'requestToActivePeer');
     accountAPIStub = stub(accountAPI, 'getAccount');
 
     localStorageStub = stub(localStorage, 'getItem');
     localStorageStub.withArgs('accounts').returns(JSON.stringify([{}, {}]));
-
-    const transactionExample = { senderId: 'sample_address', receiverId: 'some_address', type: txTypes.send };
 
     requestToActivePeerStub.withArgs(match.any, 'transactions', match({
       recipientId: '537318935439898807L',
@@ -49,23 +54,18 @@ describe('@integration: Wallet', () => {
       secondSecret: match.any,
     }))
       .returnsPromise().resolves({ transactionId: 'Some ID' });
-    let transactions = new Array(25);
-    transactions.fill(transactionExample);
-    requestToActivePeerStub.withArgs(match.any, 'transactions', match({ limit: 25 }))
-      .returnsPromise().resolves({ transactions, count: 1000 });
+    requestToActivePeerStub.withArgs(match.any, 'transactions', match({ limit: 25, senderId: match.defined, recipientId: match.defined }))
+      .returnsPromise().resolves({ transactions: generateTransactions(25), count: 1000 });
 
     // incoming transaction result
-    transactions = new Array(15);
-    transactions.fill(transactionExample);
+    const transactions = generateTransactions(15);
     transactions.push({ senderId: 'sample_address', receiverId: 'some_address', type: txTypes.vote });
-    requestToActivePeerStub.withArgs(match.any, 'transactions', match({ senderId: undefined }))
+    requestToActivePeerStub.withArgs(match.any, 'transactions', match({ recipientId: accounts.genesis.address, senderId: undefined }))
       .returnsPromise().resolves({ transactions, count: 1000 });
 
     // outgoing transaction result
-    transactions = new Array(5);
-    transactions.fill(transactionExample);
-    requestToActivePeerStub.withArgs(match.any, 'transactions', match({ recipientId: undefined }))
-      .returnsPromise().resolves({ transactions, count: 1000 });
+    requestToActivePeerStub.withArgs(match.any, 'transactions', match({ senderId: accounts.genesis.address, recipientId: undefined }))
+      .returnsPromise().resolves({ transactions: generateTransactions(5), count: 1000 });
   });
 
   afterEach(() => {
@@ -214,12 +214,21 @@ describe('@integration: Wallet', () => {
     });
 
     describe('Scenario: should allow to filter transactions', () => {
+      beforeEach(() => {
+        // TODO: this beforeEach block a hack because otherwise the test fails with:
+        // When I click on the "Outgoing" filter
+        // Error: Timeout of 2000ms exceeded. For async tests and hooks, ensure "done()" is called;
+        // if returning a Promise, ensure it resolves.
+        requestToActivePeerStub.withArgs(match.any, 'transactions', match.any)
+          .returnsPromise().resolves({ transactions: generateTransactions(25), count: 1000 });
+      });
+
       step('Given I\'m on "wallet" as "genesis" account', setupStep.bind(null, 'genesis', false));
       step('Then the "All" filter should be selected by default', checkSelectedFilter.bind(null, 'all'));
       step('When I click on the "Outgoing" filter', clickStep.bind(null, 'filter out'));
-      step('Then I expect to see the results for "Outgoing"', checkRowCount.bind(null, 5));
+      step('Then I expect to see the results for "Outgoing"', checkRowCount.bind(null, 25));
       step('When I click on the "Incoming" filter', clickStep.bind(null, 'filter in'));
-      step('Then I expect to see the results for "Incoming"', checkRowCount.bind(null, 15));
+      step('Then I expect to see the results for "Incoming"', checkRowCount.bind(null, 25));
       step('When I click again on the "All" filter', clickStep.bind(null, 'filter all'));
       step('Then I expect to see the results for "All"', checkRowCount.bind(null, 25));
     });
