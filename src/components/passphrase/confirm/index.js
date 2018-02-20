@@ -121,7 +121,7 @@ class Confirm extends React.Component {
       return missing.sort((a, b) => a > b);
     };
 
-    const missing = chooseRandomWords(2).sort();
+    const missing = chooseRandomWords(2).sort((a, b) => a - b);
     const wordOptions = this.assembleWordOptions(words, missing);
 
     this.setState({
@@ -186,7 +186,7 @@ class Confirm extends React.Component {
 
   render() {
     let missingWordIndex = -1;
-    const { missing, words, wordOptions, step, answers, selectedFieldset } = this.state;
+    const { missing, words, wordOptions, step, answers, selectedFieldset, trials } = this.state;
     const errorTitleVisibility = (this.state.formStatus === styles.outOfTrials ||
       this.state.formStatus === styles.invalid) ? styles.visible : '';
 
@@ -218,21 +218,22 @@ class Confirm extends React.Component {
                     const validity = answers[missingWordIndex] && answers[missingWordIndex].validity ? 'valid' : 'invalid';
 
                     return (
-                      <fieldset key={word}>
+                      <fieldset key={`${word}-${missingWordIndex}-${trials}`}>
                         <span onClick={this.selectFieldset.bind(this, missingWordIndex)}
                           className={`${styles.placeholder} ${selectedFieldset === missingWordIndex ?
                             styles.selected : ''} ${answers[missingWordIndex] ? styles[validity] : ''}`}>{answers[missingWordIndex] ? answers[missingWordIndex].value : ''}</span>
                         {
                           wordOptions[missingWordIndex].map(wd =>
-                            <div key={wd}>
+                            <div key={`${wd}-${missingWordIndex}-${trials}`}>
                               <input
                                 name={`answer${missingWordIndex}`}
                                 className={styles.option}
                                 answer={missingWordIndex}
-                                type='radio' value={wd}
-                                id={wd}
+                                type='radio'
+                                value={wd}
+                                id={`${wd}-${missingWordIndex}-${trials}`}
                                 onChange={this.onWordSelected.bind(this)} />
-                              <label className={styles.option} htmlFor={wd}>{wd}</label>
+                              <label className={styles.option} htmlFor={`${wd}-${missingWordIndex}-${trials}`}>{wd}</label>
                             </div>)
                         }
                       </fieldset>

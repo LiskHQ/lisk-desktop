@@ -31,11 +31,11 @@
 
 .bigSlider {
   position: absolute;
-  top: 50%;
+  top: 100px;
   left: 50%;
   width: 575px !important;
-  transform: translateX(-50%) translateY(calc(-50% - 58px));
-  z-index: 2;
+  transform: translateX(-50%) translateY(-50%);
+  z-index: 3;
 
   & label {
     & i:last-child {
@@ -123,17 +123,13 @@
       height: 80px;
       background: transparent;
       padding: 0;
-      text-shadow: 0px 0px 15px rgba(0, 0, 0, 1);
-      color: rgba(0, 0, 0, 0);
+      color: transparent;
       font-size: 0;
       line-height: 0;
       border: none;
       text-align: center;
-      resize: none;
-      outline: none !important;
-      transition: all ease 400ms;
-      transition-delay: 300ms;
       counter-reset: section;
+      position: relative;
 
       & .word {
         padding: 0 5px;
@@ -142,6 +138,7 @@
         margin-top: 23px;
         display: inline-block;
         line-height: 30px;
+        user-select: none;
 
         &::after {
           opacity: 0;
@@ -152,10 +149,33 @@
           font-size: 15px;
           counter-increment: section;
           content: counter(section);
+          transform: translateX(-50%);
           transition: all ease 400ms;
           -webkit-user-select: none;
         }
       }
+    }
+
+    & .hiddenInput {
+      position: absolute;
+      user-select: none;
+      text-align: center;
+      width: 100%;
+      padding: 25px 0;
+      line-height: 30px;
+      height: 30px;
+      left: 0;
+      top: 0;
+      z-index: 2;
+      resize: none;
+      border: none;
+      background: transparent;
+      font-size: 26px;
+      text-shadow: 0px 0px 15px rgba(0, 0, 0, 1);
+      color: rgba(0, 0, 0, 0);
+      outline: none !important;
+      transition: all ease 400ms;
+      transition-delay: 300ms;
     }
 
     & section.actionBar {
@@ -175,14 +195,15 @@
       display: none !important;
     }
 
-    & .textarea {
+    & .hiddenInput {
       background: #f1f1f1;
       color: #000 !important;
       text-shadow: none !important;
+      user-select: auto;
+    }
 
-      & .word::after {
-        opacity: 1;
-      }
+    & .textarea .word::after {
+      opacity: 1;
     }
 
     & section.actionBar {
@@ -192,10 +213,11 @@
   }
 }
 
-@media (--medium-viewport) {
-  .safekeeping {
-    & .word {
-      font-size: 22px !important;
+@media (max-width: 1200px) {
+  .safekeeping .revealing {
+    & .textarea .word,
+    & .hiddenInput {
+      font-size: 20px;
     }
   }
 }
@@ -271,6 +293,13 @@
           left: 180px !important;
           top: auto !important;
         }
+      }
+
+      & .hiddenInput {
+        height: 100%;
+        word-spacing: 200px;
+        line-height: 60px;
+        padding: 0;
       }
     }
 

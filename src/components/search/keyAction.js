@@ -22,9 +22,13 @@ export const visit = (value, history) => {
 };
 
 export const visitAndSaveSearch = (value, history) => {
-  value = value.trim();
-  saveSearch(value);
-  visit(value, history);
+  if (value.length === 0) {
+    history.push(routes.search.long);
+  } else {
+    value = value.trim();
+    saveSearch(value);
+    visit(value, history);
+  }
 };
 
 export const visitAndSaveSearchOnEnter = (event, history) => {

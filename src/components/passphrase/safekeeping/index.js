@@ -88,7 +88,10 @@ class SafeKeeping extends React.Component {
                   value: 'revealing-step',
                 }}/>
             </TransitionWrapper>
-            <p className={`${styles.input} ${styles.textarea} passphrase`}>
+            <p className={`${styles.input} ${styles.textarea} passphrase-wrapper`}>
+              <textarea type='text' autoFocus={true} readOnly
+                className={`${styles.hiddenInput} passphrase`}
+                defaultValue={passphrase}></textarea>
               {
                 passphrase.split(' ').map(word => <span className={styles.word} key={`wrapper-${word}`}>{ word } </span>)
               }
