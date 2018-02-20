@@ -67,14 +67,14 @@ describe('actions: peers', () => {
       expect(dispatch).to.have.been.calledWith(match.hasNested('data.activePeer.options.address', 'localhost:8000'));
     });
 
-    it('dispatch activePeerSet action with hubXX.lisk.io node address if mainnet', () => {
+    it('dispatch activePeerSet action with hubXX.lisk.io node if mainnet', () => {
       const network = networks.mainnet;
 
       activePeerSet({ passphrase, network })(dispatch);
 
       expect(dispatch).to.have.been.calledWith(match.hasNested(
-        'data.activePeer.options.address',
-        match(new RegExp('https://hub[23][1-8].lisk.io')),
+        'data.activePeer.options.node',
+        match(new RegExp('hub[23][1-8].lisk.io')),
       ));
     });
 
