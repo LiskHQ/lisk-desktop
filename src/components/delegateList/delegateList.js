@@ -157,7 +157,7 @@ class DelegateList extends React.Component {
         <section className={`${styles.delegatesList} delegate-list`}>
           <div className={styles.table}>
             <ul className={`${styles.tableHead} ${grid.row}`}>
-              <li className={`${grid['col-md-1']} ${grid['col-xs-2']}`}>{this.props.t('Vote', { context: 'verb' })}</li>
+              <li className={`${grid['col-md-1']} ${grid['col-xs-2']} ${styles.leftText}`}>{this.props.t('Vote', { context: 'verb' })}</li>
               <li className={`${grid['col-md-1']} ${grid['col-xs-2']}`}>{this.props.t('Rank')}</li>
               <li className={`${grid['col-md-3']} ${grid['col-xs-5']}`}>{this.props.t('Name')}</li>
               <li className={`${grid['col-md-5']}`}>{this.props.t('Lisk ID')}</li>

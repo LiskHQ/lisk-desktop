@@ -58,7 +58,7 @@ const transactions = (state = { pending: [], confirmed: [], count: null }, actio
         account: { address: action.data.address, balance: action.data.balance },
         filter: txFilter.all,
       });
-    case (actionTypes.accountLoggedOut):
+    case (actionTypes.accountSwitched):
       return { pending: [], confirmed: [], count: 0 };
     default:
       return state;

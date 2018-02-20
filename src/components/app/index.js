@@ -59,7 +59,7 @@ class App extends React.Component {
                     <Route path={`${match.url}${routes.transaction.short}/:id`} component={SingleTransaction} />
                   </main>
                 )} />
-                <Route exact path={routes.register.url} component={Register} />
+                <Route path={`${routes.register.url}:dialog?`} component={Register} />
                 <Route path={`${routes.addAccount.url}:dialog?`} component={Login} />
                 <Route exact path={routes.login.url} component={Login} />
                 <Route path='*' component={NotFound} />

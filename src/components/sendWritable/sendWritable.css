@@ -11,6 +11,7 @@
 
 .form {
   position: relative;
+  margin-bottom: 15px;
 
   & input {
     border-radius: 0;
@@ -66,7 +67,6 @@ input:read-only {
   & h2 {
     font-weight: var(--font-weight-bold);
     margin-bottom: 0;
-    font-size: 2em;
   }
 
   & h3 {
@@ -100,6 +100,22 @@ input:read-only {
 .error {
   display: block;
   padding-right: 85px;
+}
+
+@media (--xLarge-viewport) {
+  .headerWrapper {
+    & h2 {
+      font-size: var(--font-size-h2-xl);
+    }
+  }
+}
+
+@media (--large-viewport) {
+  .headerWrapper {
+    & h2 {
+      font-size: var(--font-size-h2-l);
+    }
+  }
 }
 
 @media (--small-viewport) {

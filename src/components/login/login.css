@@ -48,7 +48,7 @@
 
 .login {
   width: 42%;
-  overflow: scroll;
+  overflow: auto;
 
   & footer {
     padding-top: 7vh; /* stylelint-disable-line */

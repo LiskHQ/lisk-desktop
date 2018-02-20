@@ -64,9 +64,14 @@ const TransactionsDetailView = props => (
         <div className={`${grid['col-xs-12']} ${grid['col-sm-4']} ${grid['col-md-4']} ${styles.column}`}>
           <div className={styles.label}>{props.t('Date')}</div>
           <div className={styles.value}>
-            <DateFromTimestamp
-              time={props.value.timestamp} /> - <TimeFromTimestamp
-              time={props.value.timestamp}/>
+            { props.value.timestamp ?
+              <span>
+                <DateFromTimestamp
+                  time={props.value.timestamp} /> - <TimeFromTimestamp
+                  time={props.value.timestamp}/>
+              </span> :
+              <span>{props.t('Pending')}</span>
+            }
           </div>
         </div>
         <div className={`${grid['col-xs-12']} ${grid['col-sm-4']} ${grid['col-md-4']} ${styles.column}`}>

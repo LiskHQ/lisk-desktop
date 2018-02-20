@@ -54,8 +54,7 @@
   height: 100%;
 
   & header {
-    margin-left: 30px;
-    margin-top: 40px;
+    margin-top: 45px;
     margin-bottom: 4vh; /* stylelint-disable-line */
 
     & h2 {
@@ -178,10 +177,22 @@
   }
 }
 
+@media (--xLarge-viewport) {
+  .wrapper {
+    & header {
+      margin-left: var(--box-padding-left-L);
+    }
+  }
+}
+
 @media (--large-viewport) {
   .wrapper {
-    & header h2 {
-      font-size: var(--main-header-font-size-L);
+    & header {
+      margin-left: var(--box-padding-left-L);
+
+      & h2 {
+        font-size: var(--main-header-font-size-L);
+      }
     }
   }
 }
