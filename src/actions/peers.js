@@ -18,22 +18,22 @@ const peerSet = (data, config) => ({
 
 const pickMainnetNode = () => {
   const nodes = [
-    'https://hub21.lisk.io',
-    'https://hub22.lisk.io',
-    'https://hub23.lisk.io',
-    'https://hub24.lisk.io',
-    'https://hub25.lisk.io',
-    'https://hub26.lisk.io',
-    'https://hub27.lisk.io',
-    'https://hub28.lisk.io',
-    'https://hub31.lisk.io',
-    'https://hub32.lisk.io',
-    'https://hub33.lisk.io',
-    'https://hub34.lisk.io',
-    'https://hub35.lisk.io',
-    'https://hub36.lisk.io',
-    'https://hub37.lisk.io',
-    'https://hub38.lisk.io',
+    'hub21.lisk.io',
+    'hub22.lisk.io',
+    'hub23.lisk.io',
+    'hub24.lisk.io',
+    'hub25.lisk.io',
+    'hub26.lisk.io',
+    'hub27.lisk.io',
+    'hub28.lisk.io',
+    'hub31.lisk.io',
+    'hub32.lisk.io',
+    'hub33.lisk.io',
+    'hub34.lisk.io',
+    'hub35.lisk.io',
+    'hub36.lisk.io',
+    'hub37.lisk.io',
+    'hub38.lisk.io',
   ];
   return nodes[Math.floor(Math.random() * nodes.length) % nodes.length];
 };
@@ -54,8 +54,9 @@ export const activePeerSet = data =>
     };
     const config = data.network || {};
     if (config.code === networks.mainnet.code) {
-      config.address = pickMainnetNode();
+      config.node = pickMainnetNode();
     }
+
 
     if (config.address) {
       const { hostname, port, protocol } = new URL(addHttp(config.address));
