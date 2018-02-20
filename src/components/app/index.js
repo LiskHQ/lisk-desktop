@@ -26,7 +26,8 @@ import routes from '../../constants/routes';
 
 class App extends React.Component {
   markAsLoaded() {
-    this.main.classList.add(styles.loaded, 'appLoaded');
+    this.main.classList.add(styles.loaded);
+    this.main.classList.add('appLoaded');
   }
 
   render() {
