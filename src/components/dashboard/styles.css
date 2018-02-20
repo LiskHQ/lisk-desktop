@@ -27,10 +27,23 @@
 .latestActivity {
   height: 40%;
   margin: 0px;
+}
 
-  & h2 {
-    margin: 40px 32px 20px;
-    font-size: 28px;
+@media (--xLarge-viewport) {
+  .latestActivity {
+    & h2 {
+      font-size: var(--font-size-h2-xl);
+      margin: 45px var(--box-padding-left-L) 20px;
+    }
+  }
+}
+
+@media (--large-viewport) {
+  .latestActivity {
+    & h2 {
+      font-size: var(--font-size-h2-l);
+      margin: 45px var(--box-padding-left-L) 20px;
+    }
   }
 }
 
@@ -53,13 +66,18 @@
 
   .latestActivity {
     height: auto;
+
+    & h2 {
+      font-size: var(--font-size-h2-l);
+      margin: 45px var(--box-padding-left-M) 20px;
+    }
   }
 }
 
 @media (--small-viewport) {
   .latestActivity {
     & h2 {
-      font-size: 24px;
+      font-size: var(--font-size-h2-s);
     }
   }
 

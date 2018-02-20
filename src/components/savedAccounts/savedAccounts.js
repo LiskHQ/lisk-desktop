@@ -77,25 +77,26 @@ class SavedAccounts extends React.Component {
       <div className={`${styles.wrapper} save-account`}>
         <BackgroundMaker />
         <h1>
-          {t('Your favorite')}
-          <div>{t('Lisk IDs')}</div>
+          {t('Your favorite Lisk IDs')}
         </h1>
-        <div className={styles.cardsWrapper} >
-          <Link to={`${routes.addAccount.url}?referrer=/main/dashboard/`} >
-            <div className={`add-lisk-id-card ${styles.card} ${styles.addNew}`} >
-              <div className={styles.cardIcon}>
-                <img src={plusShapeIcon} className={styles.plusShapeIcon} />
+        <ul className={styles.cardsWrapper} >
+          <li>
+            <Link to={`${routes.addAccount.url}?referrer=/main/dashboard/`} >
+              <div className={`add-lisk-id-card ${styles.card} ${styles.addNew}`} >
+                <div className={styles.cardIcon}>
+                  <img src={plusShapeIcon} className={styles.plusShapeIcon} />
+                </div>
+                <img src={rectangleOnTheRight} className={styles.rectangleOnTheRight} />
+                <img src={rectangleImage2} className={styles.rectangleImage2} />
+                <img src={rectangleImage3} className={styles.rectangleImage3} />
+                <img src={triangleImage} className={styles.triangleImage} />
+                <img src={circleImage} className={styles.circleImage} />
+                <h2 className={styles.addTittle} >{t('Add a Lisk ID')}</h2>
               </div>
-              <img src={rectangleOnTheRight} className={styles.rectangleOnTheRight} />
-              <img src={rectangleImage2} className={styles.rectangleImage2} />
-              <img src={rectangleImage3} className={styles.rectangleImage3} />
-              <img src={triangleImage} className={styles.triangleImage} />
-              <img src={circleImage} className={styles.circleImage} />
-              <h2 className={styles.addTittle} >{t('Add a Lisk ID')}</h2>
-            </div>
-          </Link>
+            </Link>
+          </li>
           {savedAccounts.map(account => (
-            <div className={`saved-account-card ${styles.card}
+            <li className={`saved-account-card ${styles.card}
               ${this.state.editing ? null : styles.clickable}
               ${this.isSelectedForRemove(account) ? styles.darkBackground : null}`}
             key={account.publicKey + account.network}
@@ -112,7 +113,7 @@ class SavedAccounts extends React.Component {
                 </strong> :
                 null)}
               <div className={styles.cardIcon}>
-                <AccountVisual address={extractAddress(account.publicKey)} size={155}
+                <AccountVisual address={extractAddress(account.publicKey)} size={155} sizeS={100}
                   className={styles.accountVisual} />
               </div>
               <h2>
@@ -136,9 +137,9 @@ class SavedAccounts extends React.Component {
                   label={this.isSelectedForRemove(account) ? t('Confirm') : t('Remove from Favorites')}/> :
                 null
               }
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
         <SecondaryLightButton className='edit-button'
           onClick={this.toggleEdit.bind(this)}
           theme={{ button: styles.addAcctiveAccountButton }}>

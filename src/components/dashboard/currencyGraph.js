@@ -1,5 +1,6 @@
 import { Line as LineChart, Chart } from 'react-chartjs-2';
 import { translate } from 'react-i18next';
+import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import React from 'react';
 
@@ -157,7 +158,7 @@ class CurrencyGraph extends React.Component {
       const { candles } = response;
       const data = candles.slice(Math.max(candles.length - step.length, 1)).map(c => ({
         x: new Date(c.date),
-        y: (parseFloat(c.high) + parseFloat(c.low)) / 2,
+        y: new BigNumber(c.high).plus(new BigNumber(c.low)).dividedBy(2),
       }));
       this.setState({ data });
     }).catch((error) => {

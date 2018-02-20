@@ -56,10 +56,10 @@ export default [
     params: 'id',
     name: 'explorer-transaction',
   }, {
-    regex: /register(\/)?$/,
-    path: '/',
+    regex: /register(?:\/[^/]*)?$/,
+    path: '/register/',
     params: 'dialog',
-    name: 'login',
+    name: 'register',
   }, {
     regex: /^\/$/,
     path: '/',
