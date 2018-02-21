@@ -16,7 +16,7 @@ const {
 const accounts = require('../../constants/accounts.js');
 
 chai.use(chaiAsPromised);
-const expect = chai.expect;
+const { expect } = chai;
 const EC = protractor.ExpectedConditions;
 const defaultTimeout = 10 * 1000;
 
@@ -166,6 +166,12 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
 
   When('I go to "{url}"', (url, callback) => {
     browser.get(`${browser.params.baseURL}#${url}`).then(callback);
+  });
+
+  Then('I should be on url "{url}"', (expectedURL) => {
+    browser.getCurrentUrl().then((url) => {
+      expect(url).to.eql(`${browser.params.baseURL}#${expectedURL}`);
+    });
   });
 
   When('I {iterations} times move mouse randomly', (iterations, callback) => {

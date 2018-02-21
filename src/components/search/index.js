@@ -47,7 +47,7 @@ class Search extends React.Component {
               <li className={styles.item}>{t('Last searches')}</li>
               {this.getRecentSearches().map((search, i) =>
                 (<li key={i}
-                  className={`${styles.item} ${styles.clickable}`}
+                  className={`${styles.item} ${styles.clickable} search-result`}
                   onClick={() => { visit(search, history); }}
                 >
                   {search}
