@@ -176,12 +176,14 @@
       outline: none !important;
       transition: all ease 400ms;
       transition-delay: 300ms;
+      overflow: hidden;
     }
 
     & section.actionBar {
       pointer-events: none;
       visibility: hidden;
       text-align: center;
+      margin: 0;
 
       & > div {
         margin: 60px auto 50px;
