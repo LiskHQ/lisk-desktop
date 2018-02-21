@@ -152,6 +152,7 @@
                 top: 50%;
                 margin: 0;
                 transform: translateX(-50%) translateY(-50%);
+                transition: opacity linear 2s;
             }
 
             .splash-screen .logo img {
@@ -230,6 +231,10 @@
                 right: 0px;
                 bottom: 0px;
                 animation: fadeIn5;
+            }
+
+            #app:not(:empty) + .splash-screen .logo {
+                opacity: 0;
             }
 
             @media (max-width: 1024px) {
