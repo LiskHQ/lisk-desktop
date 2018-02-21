@@ -31,7 +31,7 @@
 
 .bigSlider {
   position: absolute;
-  top: 100px;
+  margin-top: -40px;
   left: 50%;
   width: 575px !important;
   transform: translateX(-50%) translateY(-50%);
@@ -310,19 +310,35 @@
         line-height: 48px;
       }
 
-      & div span {
-        font-weight: normal;
-        text-indent: 53px;
+      & div {
+        width: calc(100% - 24px);
+
+        & span {
+          font-weight: normal;
+          text-indent: 53px;
+        }
+
+        &::before {
+          width: calc(100% - 24px);
+        }
       }
     }
 
     & .smallSlider {
       width: 180px !important;
+
+      & div span {
+        font-weight: normal;
+        text-indent: 53px;
+        text-align: center;
+        min-width: 100% !important;
+      }
     }
 
     & .bigSlider {
       width: 330px !important;
-      top: calc(50vh - 48px); /* stylelint-disable-line */
+      top: 50%;
+      margin-top: -200px;
 
       & div > span:first-child {
         display: none;
