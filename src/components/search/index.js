@@ -28,7 +28,7 @@ class Search extends React.Component {
     return (<Box className={styles.search}>
       <div className={styles.wrapper}>
         <Input
-          className={styles.input}
+          className={`${styles.input} search-input`}
           autoFocus={true}
           placeholder={this.props.t('Search for Lisk ID or Transaction ID')}
           onKeyUp={(e) => { visitAndSaveSearchOnEnter(e, history); }}
@@ -39,7 +39,7 @@ class Search extends React.Component {
           <span
             id='input-search-button'
             onClick={() => { visitAndSaveSearch(this.state.inputValue, history); }}
-            className={styles.button}>Search <FontIcon className={styles.icon} value='arrow-right'/></span>
+            className={`${styles.button} input-search-button`}>Search <FontIcon className={styles.icon} value='arrow-right'/></span>
         </Input>
         {
           this.showRecentSearches()
@@ -47,7 +47,7 @@ class Search extends React.Component {
               <li className={styles.item}>{t('Last searches')}</li>
               {this.getRecentSearches().map((search, i) =>
                 (<li key={i}
-                  className={`${styles.item} ${styles.clickable}`}
+                  className={`${styles.item} ${styles.clickable} search-result`}
                   onClick={() => { visit(search, history); }}
                 >
                   {search}
