@@ -87,16 +87,6 @@ Feature: Voting page
 
   @integration
   @pending
-  Scenario: should allow to select delegates in the "Vote" dialog and vote for them
-    Given I'm logged in as "delegate candidate"
-    When I click "voting" menu
-    And I click "vote button"
-    And Search twice for "genesis_7" in vote dialog
-    And I click "submit button"
-    Then I should see alert dialog with title "Success" and text "Your votes were successfully submitted. It can take several seconds before they are processed."
-
-  @integration
-  @pending
   Scenario: should not allow to vote if not enough funds for the fee
     Given I'm logged in as "empty account"
     When I go to "main/voting/"
