@@ -11,7 +11,7 @@ const path = require('path');
 const getLocales = (url) => {
   const file = fs.readFileSync(path.join(__dirname, url));
   const str = [];
-  const langs = file.toString().match(/.*:\s{\n/g);
+  const langs = file.toString().match(/.*:\s{\r?\n/g);
   langs.forEach((item) => {
     str.push(item.match(/[a-z]{2}/g)[0]);
   });
