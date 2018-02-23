@@ -1,18 +1,26 @@
 import { step } from 'mocha-steps';
+import thunk from 'redux-thunk';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import sinon from 'sinon';
+import { stub, match } from 'sinon';
 // import thunk from 'redux-thunk';
 import { prepareStore, renderWithRouter } from '../utils/applicationInit';
-import middleware from '../../src/store/middlewares';
 import accounts from '../constants/accounts';
-import actionTypes from '../../src/constants/actions';
+import transactionReducer from '../../src/store/reducers/transactions';
 import accountReducer from '../../src/store/reducers/account';
 import votingReducer from '../../src/store/reducers/voting';
-import peersReducer from '../../src/store/reducers/peers';
 import { accountLoggedIn } from '../../src/actions/account';
 import * as delegateApi from '../../src/utils/api/delegate';
+import * as accountAPI from '../../src/utils/api/account';
 import Voting from '../../src/components/voting';
+import peersReducer from '../../src/store/reducers/peers';
+import loginMiddleware from '../../src/store/middlewares/login';
+import accountMiddleware from '../../src/store/middlewares/account';
+import peerMiddleware from '../../src/store/middlewares/peers';
+import transactionsMiddleware from '../../src/store/middlewares/transactions';
+import { activePeerSet } from '../../src/actions/peers';
+import networks from './../../src/constants/networks';
+import getNetwork from './../../src/utils/getNetwork';
 
 const delegates = [
   {
@@ -53,7 +61,7 @@ const delegates = [
   },
 ];
 
-const realAccount = {
+const account = {
   ...accounts.genesis,
   delegate: {},
   multisignatures: [],
@@ -61,87 +69,149 @@ const realAccount = {
   unconfirmedBalance: '0',
 };
 
-const peers = {
-  defaultPeers: [
-    'node01.lisk.io',
-    'node02.lisk.io',
-  ],
-  defaultSSLPeers: [
-    'node01.lisk.io',
-    'node02.lisk.io',
-  ],
-  defaultTestnetPeers: [
-    'testnet.lisk.io',
-  ],
-  options: {
-    name: 'Testnet',
-    testnet: true,
-    ssl: true,
-    port: 443,
-    code: 1,
-  },
-  ssl: true,
-  randomPeer: true,
-  testnet: true,
-  bannedPeers: [],
-  currentPeer: 'testnet.lisk.io',
-  port: 443,
-  nethash: {
-    'Content-Type': 'application/json',
-    nethash: 'da3ed6a45429278bac2666961289ca17ad86595d33b31037615d4b8e8f158bba',
-    broadhash: 'da3ed6a45429278bac2666961289ca17ad86595d33b31037615d4b8e8f158bba',
-    os: 'lisk-js-api',
-    version: '1.0.0',
-    minVersion: '>=0.5.0',
-    port: 443,
-  },
+let store;
+let wrapper;
+let listDelegatesApiStub;
+let listAccountDelegatesStub;
+let voteApiStub;
+let accountAPIStub;
+let localStorageStub;
+
+const loginProcess = (votes = []) => {
+  accountAPIStub = stub(accountAPI, 'getAccount');
+  localStorageStub = stub(localStorage, 'getItem');
+  localStorageStub.withArgs('accounts').returns(JSON.stringify([{}, {}]));
+  listDelegatesApiStub = stub(delegateApi, 'listDelegates');
+  listAccountDelegatesStub = stub(delegateApi, 'listAccountDelegates');
+  voteApiStub = stub(delegateApi, 'vote');
+  store = prepareStore({
+    account: accountReducer,
+    peers: peersReducer,
+    voting: votingReducer,
+    transactions: transactionReducer,
+  }, [
+    thunk,
+    accountMiddleware,
+    loginMiddleware,
+    transactionsMiddleware,
+    peerMiddleware,
+  ]);
+
+  accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
+  store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
+  accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
+  store.dispatch(accountLoggedIn(account));
+
+  listDelegatesApiStub.returnsPromise()
+    .resolves({ delegates, success: true, totalCount: 20 });
+  listAccountDelegatesStub.returnsPromise()
+    .resolves({ delegates: votes, success: true });
+
+  wrapper = mount(renderWithRouter(Voting, store));
+  expect(store.getState().account).to.be.an('Object');
+  expect(store.getState().voting).to.be.an('Object');
+  expect(store.getState().peers).to.be.an('Object');
+};
+
+const restoreApiMocks = () => {
+  listDelegatesApiStub.restore();
+  listAccountDelegatesStub.restore();
+  voteApiStub.restore();
+  accountAPIStub.restore();
+  localStorageStub.restore();
 };
 
 describe('@integration test of Voting', () => {
-  let store;
-  let wrapper;
-  let clock;
+  describe('Scenario: should allow to select delegates in the "Voting" and vote for them', () => {
+    step('I\'m logged in as "genesis"', () => { loginProcess(); });
 
+    step('And next button should be disabled', () => {
+      expect(wrapper.find('button.next').props().disabled).to.be.equal(true);
+    });
 
-  let listDelegatesApiStub;
-  let listAccountDelegatesStub;
+    step('When I vote to delegates and next button should be enabled', () => {
+      wrapper.find('.delegate-list input').at(0).simulate('change', { target: { value: 'true' } });
+      wrapper.find('.delegate-list input').at(1).simulate('change', { target: { value: 'true' } });
+      const selectionHeader = wrapper.find('.selection h4').text();
+      expect(selectionHeader).to.be.equal('2');
+      expect(wrapper.find('button.next').props().disabled).to.be.equal(false);
+    });
 
-  beforeEach(() => {
-    listDelegatesApiStub = sinon.stub(delegateApi, 'listDelegates');
-    listAccountDelegatesStub = sinon.stub(delegateApi, 'listAccountDelegates');
-    clock = sinon.useFakeTimers({
-      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    step('Then I must be able to go to next step', () => {
+      expect(wrapper.find('button.confirm').exists()).to.be.equal(false);
+      wrapper.find('button.next').simulate('click');
+      expect(wrapper.find('button.confirm').exists()).to.be.equal(true);
+    });
+
+    step('Then I confirm my votes', () => {
+      const expectedValue = 'Votes submitted';
+      voteApiStub.returnsPromise()
+        .resolves({
+          transactionId: 12341234123432412,
+          account,
+        });
+      wrapper.find('button.confirm').simulate('click');
+      expect(wrapper.find('h2.result-box-header').text()).to.be.equal(expectedValue);
+      expect(wrapper.find('p.result-box-message').exists()).to.be.equal(true);
+      restoreApiMocks();
     });
   });
-  afterEach(() => {
-    listDelegatesApiStub.restore();
-    listAccountDelegatesStub.restore();
-    clock.restore();
-  });
-  step('Given user is login in', () => {
-    store = prepareStore({
-      account: accountReducer,
-      voting: votingReducer,
-      peers: peersReducer,
-    }, middleware);
 
-    store.dispatch(accountLoggedIn(realAccount));
-    store.dispatch({
-      data: peers,
-      type: actionTypes.activePeerSet,
+  describe('Scenario: should allow me to filter my votes', () => {
+    step('I\'m logged in as "genesis"', () => { loginProcess([delegates[0]]); });
+
+    step('And I should see 3 rows', () => {
+      expect(wrapper.find('ul.delegate-row')).to.have.lengthOf(3);
     });
-    listDelegatesApiStub.returnsPromise()
-      .resolves({ delegates, success: true, totalCount: 20 });
-    listAccountDelegatesStub.returnsPromise()
-      .resolves({ delegates: [delegates[0]], success: true });
 
-    wrapper = mount(renderWithRouter(Voting, store));
-    expect(store.getState().account).to.be.an('Object');
-    expect(store.getState().voting).to.be.an('Object');
-    expect(store.getState().peers).to.be.an('Object');
+    step('When I click filter-voted I should see 1 rows', () => {
+      wrapper.find('li.filter-voted').simulate('click');
+      expect(wrapper.find('ul.delegate-row')).to.have.lengthOf(1);
+    });
+
+    step('When I click filter-not-voted I should see 2 rows', () => {
+      wrapper.find('li.filter-not-voted').simulate('click');
+      expect(wrapper.find('ul.delegate-row')).to.have.lengthOf(2);
+    });
+
+    step('When I click filter-all I should see all votes again', () => {
+      wrapper.find('li.filter-all').simulate('click');
+      expect(wrapper.find('ul.delegate-row')).to.have.lengthOf(3);
+      restoreApiMocks();
+    });
   });
 
-  step('When user doesn\'t vote to any delegates next button should be disabled', () => {
-    expect(wrapper.find('button.next').props().disabled).to.be.equal(true);
+  describe('Scenario: should allow to select delegates in the "Voting" and unvote them', () => {
+    step('I\'m logged in as "genesis"', () => { loginProcess([delegates[0]]); });
+
+    step('And next button should be disabled', () => {
+      expect(wrapper.find('button.next').props().disabled).to.be.equal(true);
+    });
+
+    step('When I remove my vote my delegates and next button should be enabled', () => {
+      wrapper.find('.delegate-list input').at(0).simulate('change', { target: { value: 'false' } });
+      const selectionHeader = wrapper.find('.selection h4').text();
+      expect(selectionHeader).to.be.equal('1');
+      expect(wrapper.find('button.next').props().disabled).to.be.equal(false);
+    });
+
+    step('Then I must be able to go to next step', () => {
+      expect(wrapper.find('button.confirm').exists()).to.be.equal(false);
+      wrapper.find('button.next').simulate('click');
+      expect(wrapper.find('button.confirm').exists()).to.be.equal(true);
+    });
+
+    step('Then I confirm my votes', () => {
+      const expectedValue = 'Votes submitted';
+      voteApiStub.returnsPromise()
+        .resolves({
+          transactionId: 12341234123432412,
+          account,
+        });
+      wrapper.find('button.confirm').simulate('click');
+      expect(wrapper.find('h2.result-box-header').text()).to.be.equal(expectedValue);
+      expect(wrapper.find('p.result-box-message').exists()).to.be.equal(true);
+      restoreApiMocks();
+    });
   });
 });
