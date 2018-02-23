@@ -1,4 +1,4 @@
-import io from '../../utils/socketShim';
+import io from 'socket.io-client';
 import actionTypes from '../../constants/actions';
 import { activePeerUpdate } from '../../actions/peers';
 
