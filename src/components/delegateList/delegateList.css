@@ -324,6 +324,7 @@
       color: var(--color-grayscale-dark);
       font-size: 16px;
       font-weight: 400;
+      transform: translateZ(0);
 
       &:last-child {
         font-weight: 300;
@@ -367,7 +368,7 @@
 @media (--xLarge-viewport) {
   .delegatesList {
     & .row {
-      padding: 0px var(--grid-padding-L);
+      padding: 11px var(--grid-padding-L);
     }
   }
 }
