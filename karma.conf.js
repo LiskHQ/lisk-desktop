@@ -117,7 +117,6 @@ module.exports = function (config) {
             'src/components/toaster/index.js',
             'src/components/mainMenu/mainMenu.js',
             'src/components/setting/setting.js',
-            'src/utils/externalLinks.js',
             'src/utils/ipcLocale.js',
             'app/src/menu.js',
             'app/src/modules/autoUpdater.js',
