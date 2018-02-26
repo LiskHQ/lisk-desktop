@@ -113,6 +113,9 @@ const loginProcess = (votes = []) => {
   expect(store.getState().peers).to.be.an('Object');
 };
 
+/**
+ * restore all Api mocks
+ */
 const restoreApiMocks = () => {
   listDelegatesApiStub.restore();
   listAccountDelegatesStub.restore();
@@ -121,38 +124,59 @@ const restoreApiMocks = () => {
   localStorageStub.restore();
 };
 
+/**
+ * 
+ * @param {string} index - index of the delegate in the list
+ * @param {boolean} value - new value of the input
+ */
+const voteToDelegates = (index, value) => {
+  wrapper.find('.delegate-list input').at(index)
+    .simulate('change', { target: { value } });
+};
+
+const goToConfirmation = () => {
+  expect(wrapper.find('button.confirm')).to.be.not.present();
+  wrapper.find('button.next').simulate('click');
+  expect(wrapper.find('button.confirm')).to.be.present();
+};
+
 describe('@integration test of Voting', () => {
   describe('Scenario: should allow to select delegates in the "Voting" and vote for them', () => {
     step('I\'m logged in as "genesis"', () => { loginProcess(); });
 
     step('And next button should be disabled', () => {
-      expect(wrapper.find('button.next').props().disabled).to.be.equal(true);
+      expect(wrapper.find('button.next')).to.have.prop('disabled', true);
     });
 
     step('When I vote to delegates and next button should be enabled', () => {
-      wrapper.find('.delegate-list input').at(0).simulate('change', { target: { value: 'true' } });
-      wrapper.find('.delegate-list input').at(1).simulate('change', { target: { value: 'true' } });
-      const selectionHeader = wrapper.find('.selection h4').text();
-      expect(selectionHeader).to.be.equal('2');
-      expect(wrapper.find('button.next').props().disabled).to.be.equal(false);
+      voteToDelegates(0, true);
+      voteToDelegates(1, true);
     });
 
-    step('Then I must be able to go to next step', () => {
-      expect(wrapper.find('button.confirm').exists()).to.be.equal(false);
-      wrapper.find('button.next').simulate('click');
-      expect(wrapper.find('button.confirm').exists()).to.be.equal(true);
+    step('Then next button should be enabled', () => {
+      expect(wrapper.find('button.next')).to.have.prop('disabled', false);
     });
 
-    step('Then I confirm my votes', () => {
-      const expectedValue = 'Votes submitted';
+    step('And selectionHeader should be equal to "2"', () => {
+      const selectionHeader = wrapper.find('.selection h4');
+      expect(selectionHeader).to.have.text('2');
+    });
+
+    step('Then I go to confirmation step', () => { goToConfirmation(); });
+
+    step('When I click on confirm button', () => {
       voteApiStub.returnsPromise()
         .resolves({
           transactionId: 12341234123432412,
           account,
         });
       wrapper.find('button.confirm').simulate('click');
-      expect(wrapper.find('h2.result-box-header').text()).to.be.equal(expectedValue);
-      expect(wrapper.find('p.result-box-message').exists()).to.be.equal(true);
+    });
+
+    step('Then I should see result box', () => {
+      const expectedValue = 'Votes submitted';
+      expect(wrapper.find('h2.result-box-header')).to.have.text(expectedValue);
+      expect(wrapper.find('p.result-box-message')).to.be.present();
       restoreApiMocks();
     });
   });
@@ -164,18 +188,27 @@ describe('@integration test of Voting', () => {
       expect(wrapper.find('ul.delegate-row')).to.have.lengthOf(3);
     });
 
-    step('When I click filter-voted I should see 1 rows', () => {
+    step('When I click filter-voted', () => {
       wrapper.find('li.filter-voted').simulate('click');
+    });
+
+    step('Then I should see 1 rows', () => {
       expect(wrapper.find('ul.delegate-row')).to.have.lengthOf(1);
     });
 
-    step('When I click filter-not-voted I should see 2 rows', () => {
+    step('When I click filter-not-voted', () => {
       wrapper.find('li.filter-not-voted').simulate('click');
+    });
+
+    step('Then I should see 2 rows', () => {
       expect(wrapper.find('ul.delegate-row')).to.have.lengthOf(2);
     });
 
     step('When I click filter-all I should see all votes again', () => {
       wrapper.find('li.filter-all').simulate('click');
+    });
+
+    step('Then I should see all votes again', () => {
       expect(wrapper.find('ul.delegate-row')).to.have.lengthOf(3);
       restoreApiMocks();
     });
@@ -185,32 +218,37 @@ describe('@integration test of Voting', () => {
     step('I\'m logged in as "genesis"', () => { loginProcess([delegates[0]]); });
 
     step('And next button should be disabled', () => {
-      expect(wrapper.find('button.next').props().disabled).to.be.equal(true);
+      expect(wrapper.find('button.next')).to.have.prop('disabled', true);
     });
 
-    step('When I remove my vote my delegates and next button should be enabled', () => {
-      wrapper.find('.delegate-list input').at(0).simulate('change', { target: { value: 'false' } });
-      const selectionHeader = wrapper.find('.selection h4').text();
-      expect(selectionHeader).to.be.equal('1');
-      expect(wrapper.find('button.next').props().disabled).to.be.equal(false);
+    step('When I remove my vote', () => {
+      voteToDelegates(0, 'false');
     });
 
-    step('Then I must be able to go to next step', () => {
-      expect(wrapper.find('button.confirm').exists()).to.be.equal(false);
-      wrapper.find('button.next').simulate('click');
-      expect(wrapper.find('button.confirm').exists()).to.be.equal(true);
+    step('Then next button should be enabled', () => {
+      expect(wrapper.find('button.next')).to.have.prop('disabled', false);
     });
 
-    step('Then I confirm my votes', () => {
-      const expectedValue = 'Votes submitted';
+    step('And selectionHeader should be equal to "1"', () => {
+      const selectionHeader = wrapper.find('.selection h4');
+      expect(selectionHeader).to.have.text('1');
+    });
+
+    step('Then I go to confirmation step', () => { goToConfirmation(); });
+
+    step('When I click on confirm button', () => {
       voteApiStub.returnsPromise()
         .resolves({
           transactionId: 12341234123432412,
           account,
         });
       wrapper.find('button.confirm').simulate('click');
-      expect(wrapper.find('h2.result-box-header').text()).to.be.equal(expectedValue);
-      expect(wrapper.find('p.result-box-message').exists()).to.be.equal(true);
+    });
+
+    step('Then I should see result box', () => {
+      const expectedValue = 'Votes submitted';
+      expect(wrapper.find('h2.result-box-header')).to.have.text(expectedValue);
+      expect(wrapper.find('p.result-box-message')).to.be.present();
       restoreApiMocks();
     });
   });
