@@ -222,7 +222,7 @@ describe('@integration test of Voting', () => {
     });
 
     step('When I remove my vote', () => {
-      voteToDelegates(0, 'false');
+      voteToDelegates(0, false);
     });
 
     step('Then next button should be enabled', () => {
