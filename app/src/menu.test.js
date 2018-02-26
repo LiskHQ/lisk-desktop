@@ -1,5 +1,5 @@
 import { expect } from 'chai'; // eslint-disable-line import/no-extraneous-dependencies
-import { spy } from 'sinon'; // eslint-disable-line import/no-extraneous-dependencies
+import { spy, match } from 'sinon'; // eslint-disable-line import/no-extraneous-dependencies
 import menu from './menu';
 
 describe('MenuBuilder', () => {
@@ -12,7 +12,8 @@ describe('MenuBuilder', () => {
         setApplicationMenu: spy(),
         buildFromTemplate: template => (template),
       },
-      app: { getName: () => ('Lisk Hub'), getVersion: () => ('some version') },
+      app: { getName: () => ('Lisk Hub'), getVersion: () => ('0.2.0') },
+      dialog: { showMessageBox: spy() },
     };
   });
 
@@ -38,6 +39,24 @@ describe('MenuBuilder', () => {
 
     // make sure the mac about menu was not added
     expect(template[0].label).to.not.equal('Lisk Hub');
+
+    // make sure message box is not shown on click if window is not focused
+    submenu[submenu.length - 1].click(null, false);
+    expect(electron.dialog.showMessageBox).to.have.not.been.calledWith();
+
+    const expectedOptions = {
+      buttons: ['OK'],
+      icon: '//assets/images/LISK.png',
+      message: `${electron.app.getName()}\nVersion ${electron.app.getVersion()}\nCopyright © 2016 - 2017 Lisk Foundation`,
+    };
+
+    // make sure message box is shown on click if window is focused
+    submenu[submenu.length - 1].click(null, true);
+    expect(electron.dialog.showMessageBox).to.have.been.calledWith(
+      true,
+      expectedOptions,
+      match.typeOf('function'),
+    );
   });
 
   it('Should open link on click', () => {
