@@ -118,7 +118,6 @@ module.exports = function (config) {
             'src/components/setting/setting.js',
             'app/src/menu.js',
             'app/src/modules/autoUpdater.js',
-            'app/src/modules/localeHandler.js',
             'src/components/votesPreview/index.js',
           ],
           overrides: {
