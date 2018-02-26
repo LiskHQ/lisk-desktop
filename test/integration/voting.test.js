@@ -5,6 +5,7 @@ import { mount } from 'enzyme';
 import { stub, match } from 'sinon';
 // import thunk from 'redux-thunk';
 import { prepareStore, renderWithRouter } from '../utils/applicationInit';
+import { Utils } from '../utils/mountHelpers';
 import accounts from '../constants/accounts';
 import transactionReducer from '../../src/store/reducers/transactions';
 import accountReducer from '../../src/store/reducers/account';
@@ -76,7 +77,11 @@ let listAccountDelegatesStub;
 let voteApiStub;
 let accountAPIStub;
 let localStorageStub;
+let helper;
 
+/**
+ * required steps for login
+ */
 const loginProcess = (votes = []) => {
   accountAPIStub = stub(accountAPI, 'getAccount');
   localStorageStub = stub(localStorage, 'getItem');
@@ -108,6 +113,7 @@ const loginProcess = (votes = []) => {
     .resolves({ delegates: votes, success: true });
 
   wrapper = mount(renderWithRouter(Voting, store));
+  helper = new Utils(wrapper);
   expect(store.getState().account).to.be.an('Object');
   expect(store.getState().voting).to.be.an('Object');
   expect(store.getState().peers).to.be.an('Object');
@@ -134,6 +140,15 @@ const voteToDelegates = (index, value) => {
     .simulate('change', { target: { value } });
 };
 
+const confirmVotes = () => {
+  voteApiStub.returnsPromise()
+    .resolves({
+      transactionId: 12341234123432412,
+      account,
+    });
+  wrapper.find('button.confirm').simulate('click');
+};
+
 const goToConfirmation = () => {
   expect(wrapper.find('button.confirm')).to.be.not.present();
   wrapper.find('button.next').simulate('click');
@@ -142,114 +157,39 @@ const goToConfirmation = () => {
 
 describe('@integration test of Voting', () => {
   describe('Scenario: should allow to select delegates in the "Voting" and vote for them', () => {
-    step('I\'m logged in as "genesis"', () => { loginProcess(); });
-
-    step('And next button should be disabled', () => {
-      expect(wrapper.find('button.next')).to.have.prop('disabled', true);
-    });
-
-    step('When I vote to delegates and next button should be enabled', () => {
-      voteToDelegates(0, true);
-      voteToDelegates(1, true);
-    });
-
-    step('Then next button should be enabled', () => {
-      expect(wrapper.find('button.next')).to.have.prop('disabled', false);
-    });
-
-    step('And selectionHeader should be equal to "2"', () => {
-      const selectionHeader = wrapper.find('.selection h4');
-      expect(selectionHeader).to.have.text('2');
-    });
-
-    step('Then I go to confirmation step', () => { goToConfirmation(); });
-
-    step('When I click on confirm button', () => {
-      voteApiStub.returnsPromise()
-        .resolves({
-          transactionId: 12341234123432412,
-          account,
-        });
-      wrapper.find('button.confirm').simulate('click');
-    });
-
-    step('Then I should see result box', () => {
-      const expectedValue = 'Votes submitted';
-      expect(wrapper.find('h2.result-box-header')).to.have.text(expectedValue);
-      expect(wrapper.find('p.result-box-message')).to.be.present();
-      restoreApiMocks();
-    });
+    step('I\'m logged in as "genesis"', loginProcess);
+    step('And next button should be disabled', () => helper.checkDisableInput('button.next'));
+    step('When I click checkbox on list item no. 0', () => voteToDelegates(0, true));
+    step('When I click checkbox on list item no. 1', () => voteToDelegates(1, true));
+    step('Then next button should be enabled', () => helper.checkDisableInput('button.next', 'not'));
+    step('And selectionHeader should be equal to "2"', () => helper.haveTextOf('.selection h4', 2));
+    step('Then I go to confirmation step', goToConfirmation);
+    step('When I click on confirm button', confirmVotes);
+    step('Then I should see result box', () => helper.haveTextOf('h2.result-box-header', 'Votes submitted'));
+    step('Then I restore Api mocks', restoreApiMocks);
   });
 
   describe('Scenario: should allow me to filter my votes', () => {
-    step('I\'m logged in as "genesis"', () => { loginProcess([delegates[0]]); });
-
-    step('And I should see 3 rows', () => {
-      expect(wrapper.find('ul.delegate-row')).to.have.lengthOf(3);
-    });
-
-    step('When I click filter-voted', () => {
-      wrapper.find('li.filter-voted').simulate('click');
-    });
-
-    step('Then I should see 1 rows', () => {
-      expect(wrapper.find('ul.delegate-row')).to.have.lengthOf(1);
-    });
-
-    step('When I click filter-not-voted', () => {
-      wrapper.find('li.filter-not-voted').simulate('click');
-    });
-
-    step('Then I should see 2 rows', () => {
-      expect(wrapper.find('ul.delegate-row')).to.have.lengthOf(2);
-    });
-
-    step('When I click filter-all I should see all votes again', () => {
-      wrapper.find('li.filter-all').simulate('click');
-    });
-
-    step('Then I should see all votes again', () => {
-      expect(wrapper.find('ul.delegate-row')).to.have.lengthOf(3);
-      restoreApiMocks();
-    });
+    step('I\'m logged in as "genesis"', () => loginProcess([delegates[0]]));
+    step('And I should see 3 rows', () => helper.haveLengthOf('ul.delegate-row', 3));
+    step('When I click filter-voted', () => helper.clickOnElement('li.filter-voted'));
+    step('Then I should see 1 rows', () => helper.haveLengthOf('ul.delegate-row', 1));
+    step('When I click filter-not-voted', () => helper.clickOnElement('li.filter-not-voted'));
+    step('Then I should see 2 rows', () => helper.haveLengthOf('ul.delegate-row', 2));
+    step('When I click filter-all', () => helper.clickOnElement('li.filter-all'));
+    step('Then I should see all votes again', () => helper.haveLengthOf('ul.delegate-row', 3));
+    step('Then I restore Api mocks', restoreApiMocks);
   });
 
   describe('Scenario: should allow to select delegates in the "Voting" and unvote them', () => {
-    step('I\'m logged in as "genesis"', () => { loginProcess([delegates[0]]); });
-
-    step('And next button should be disabled', () => {
-      expect(wrapper.find('button.next')).to.have.prop('disabled', true);
-    });
-
-    step('When I remove my vote', () => {
-      voteToDelegates(0, false);
-    });
-
-    step('Then next button should be enabled', () => {
-      expect(wrapper.find('button.next')).to.have.prop('disabled', false);
-    });
-
-    step('And selectionHeader should be equal to "1"', () => {
-      const selectionHeader = wrapper.find('.selection h4');
-      expect(selectionHeader).to.have.text('1');
-    });
-
-    step('Then I go to confirmation step', () => { goToConfirmation(); });
-
-    step('When I click on confirm button', () => {
-      voteApiStub.returnsPromise()
-        .resolves({
-          transactionId: 12341234123432412,
-          account,
-        });
-      wrapper.find('button.confirm').simulate('click');
-    });
-
-    step('Then I should see result box', () => {
-      const expectedValue = 'Votes submitted';
-      expect(wrapper.find('h2.result-box-header')).to.have.text(expectedValue);
-      expect(wrapper.find('p.result-box-message')).to.be.present();
-      restoreApiMocks();
-    });
+    step('I\'m logged in as "genesis"', loginProcess.bind(null, [delegates[0]]));
+    step('And next button should be disabled', () => helper.checkDisableInput('button.next'));
+    step('When I click checkbox on list item no. 0', () => voteToDelegates(0, false));
+    step('Then next button should be enabled', () => helper.checkDisableInput('button.next', 'not'));
+    step('And selectionHeader should be equal to "2"', () => helper.haveTextOf('.selection h4', 1));
+    step('Then I go to confirmation step', goToConfirmation);
+    step('When I click on confirm button', confirmVotes);
+    step('Then I should see result box', () => helper.haveTextOf('h2.result-box-header', 'Votes submitted'));
+    step('Then I restore Api mocks', restoreApiMocks);
   });
 });
