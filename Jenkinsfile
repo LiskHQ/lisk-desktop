@@ -130,7 +130,7 @@ node('lisk-hub') {
     stage ('Run E2E Tests') {
       try {
         ansiColor('xterm') {
-          withCredentials([string(credentialsId: 'lisk-hub-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
+          withCredentials([string(credentialsId: 'lisk-hub-testnet-passphrase', variable: 'TESTNET_PASSPHRASE'), usernamePassword(credentialsId: 'lisk-hub-browserstack-credentials', usernameVariable: 'BROWSERSTACK_USERNAME', passwordVariable: 'BROWSERSTACK_PASSWORD')]) {
             sh '''
             N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
 
@@ -141,13 +141,13 @@ node('lisk-hub') {
             # Run end-to-end tests
 
             if [ -z $CHANGE_BRANCH ]; then
-              npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL https://testnet.lisk.io --cucumberOpts.tags @testnet --params.useTestnetPassphrase true
+              npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL https://testnet.lisk.io --cucumberOpts.tags @testnet --params.useTestnetPassphrase true --directConnect true
             else
               echo "Skipping @testnet end-to-end tests because we're not on 'development' branch"
             fi
-            npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL http://127.0.0.1:400$N
+            npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL http://127.0.0.1:400$N --seleniumAddress http://hub-cloud.browserstack.com/wd/hub --capabilities.browserstack.user $BROWSERSTACK_USERNAME --capabilities.browserstack.key $BROWSERSTACK_PASSWORD
             if [ -z $CHANGE_BRANCH ]; then
-              npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --cucumberOpts.tags @testnet --params.useTestnetPassphrase true --params.network testnet
+              npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --cucumberOpts.tags @testnet --params.useTestnetPassphrase true --params.network testnet --directConnect true
             else
               echo "Skipping @testnet end-to-end tests because we're not on 'development' branch"
             fi

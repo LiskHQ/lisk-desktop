@@ -4,8 +4,7 @@ exports.config = {
   specs: [
     'test/e2e/*.feature',
   ],
-
-  directConnect: true,
+  directConnect: process.env.ON_JENKINS,
   capabilities: {
     browserName: 'chrome',
   },
