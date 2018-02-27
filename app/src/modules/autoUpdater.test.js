@@ -49,22 +49,33 @@ describe('autoUpdater', () => {
     expect(params.autoUpdater.checkForUpdates).to.have.been.calledWithExactly();
   });
 
-  it('should call params.autoUpdater.checkForUpdates every 24 hours', () => {
+  it('should check for updates every 24 hours if platform is not linux', () => {
     autoUpdater(params);
     expect(params.autoUpdater.checkForUpdates).to.have.callCount(1);
     clock.tick(24 * 60 * 60 * 1000);
     expect(params.autoUpdater.checkForUpdates).to.have.callCount(2);
     clock.tick(24 * 60 * 60 * 1000);
     expect(params.autoUpdater.checkForUpdates).to.have.callCount(3);
-  });
 
-  it('should call params.autoUpdater.on with "update-downloaded" and "error"', () => {
+    params.autoUpdater.checkForUpdates.reset();
+    params.process.platform = 'linux';
     autoUpdater(params);
-    expect(callbacks['update-downloaded']).to.be.a('function');
-    expect(callbacks.error).to.be.a('function');
+    expect(params.autoUpdater.checkForUpdates).to.have.callCount(0);
   });
 
-  it('should call params.dialog.showMessageBox on params.autoUpdater.on("update-downloaded", ...) ', () => {
+  it('should show error box when there was an error', () => {
+    autoUpdater(params);
+    callbacks.error(undefined);
+    expect(params.dialog.showErrorBox).to.not.have.been.calledWith();
+
+    callbacks.error(null);
+    expect(params.dialog.showErrorBox).to.have.been.calledWith('Error: ', 'unknown');
+
+    callbacks.error('error');
+    expect(params.dialog.showErrorBox).to.have.been.calledWith('Error: ', 'error');
+  });
+
+  it('should show info box when update downloaded', () => {
     const dialogSpy = spy(params.dialog, 'showMessageBox');
 
     autoUpdater(params);
@@ -73,17 +84,21 @@ describe('autoUpdater', () => {
     expect(dialogSpy).to.have.been.calledWith();
   });
 
-  it('should call params.dialog.showMessageBox on params.autoUpdater.on("update-not-available", ...) if checkForUpdates was called', () => {
+  it('should show info box if update was requested but not available', () => {
     const dialogSpy = spy(params.dialog, 'showMessageBox');
 
     const checkForUpdates = autoUpdater(params);
     checkForUpdates({});
-    callbacks['update-not-available']({ version });
 
-    expect(dialogSpy).to.have.been.calledWith();
+    callbacks['update-not-available']({ version });
+    expect(dialogSpy).to.have.been.calledWith({ title: 'No Updates', message: 'Current version is up-to-date.' });
+
+    dialogSpy.reset();
+    callbacks['update-not-available']({ version });
+    expect(dialogSpy).to.have.not.been.calledWith();
   });
 
-  it('should params.autoUpdater.quitAndInstall() on "update-downloaded" in params.dialog.showMessageBox callback if the first button was pressed', () => {
+  it('should install update once downloaded and "Restart now" button pressed', () => {
     autoUpdater(params);
     callbacks['update-downloaded']({ version });
     callbacks.dialog(0);
@@ -91,7 +106,7 @@ describe('autoUpdater', () => {
     expect(params.autoUpdater.quitAndInstall).to.have.been.calledWithExactly();
   });
 
-  it('should not params.autoUpdater.quitAndInstall() on "update-downloaded" in params.dialog.showMessageBox callback if the second button was pressed', () => {
+  it('should not install update when "Later" was pressed', () => {
     autoUpdater(params);
     callbacks['update-downloaded']({ version });
     callbacks.dialog(1);
@@ -99,7 +114,7 @@ describe('autoUpdater', () => {
     expect(params.autoUpdater.quitAndInstall).to.not.have.been.calledWith();
   });
 
-  it('should params.autoUpdater.downloadUpdate() on "update-available" in params.dialog.showMessageBox callback if the first button was pressed', () => {
+  it('should download the update if update is available and the "Update" button was pressed', () => {
     autoUpdater(params);
     callbacks['update-available']({ version });
     callbacks.dialog(0);
@@ -107,7 +122,7 @@ describe('autoUpdater', () => {
     expect(params.autoUpdater.downloadUpdate).to.have.been.calledWithExactly();
   });
 
-  it('should not params.autoUpdater.downloadUpdate() on "update-available" in params.dialog.showMessageBox callback if the second button was pressed', () => {
+  it('should not download the update if update is available and the "Later" button was pressed', () => {
     autoUpdater(params);
     callbacks['update-available']({ version });
     callbacks.dialog(1);
@@ -115,13 +130,13 @@ describe('autoUpdater', () => {
     expect(params.autoUpdater.downloadUpdate).to.not.have.been.calledWith();
   });
 
-  it('should call win.browser.setProgressBar() on "download-progress"', () => {
+  it('should set the progress bar when being in download progress', () => {
     autoUpdater(params);
     callbacks['download-progress']({ transferred: 50, total: 100 });
     expect(params.win.browser.setProgressBar).to.have.been.calledWith(50 / 100);
   });
 
-  it('should console.error any error from params.autoUpdater.on("error", ...) ', () => {
+  it('should log any update error', () => {
     const error = new Error('Error: Can not find Squirrel');
     const consoleSpy = spy(console, 'error');
 
