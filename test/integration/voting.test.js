@@ -189,7 +189,7 @@ describe('@integration test of Voting', () => {
   });
 
   describe('Scenario: should allow to select delegates in the "Voting" and unvote them', () => {
-    step('I\'m logged in as "genesis"', loginProcess.bind(null, [delegates[0]]));
+    step('I\'m logged in as "genesis"', () => loginProcess([delegates[0]]));
     step('And next button should be disabled', () => helper.checkDisableInput('button.next'));
     step('When I click checkbox on list item no. 0', () => helper.voteToDelegates(0, false));
     step('Then next button should be enabled', () => helper.checkDisableInput('button.next', 'not'));
