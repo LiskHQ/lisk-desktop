@@ -14,7 +14,7 @@ class Dashboard extends React.Component {
   render() {
     const { transactions, t } = this.props;
     return <div className={`${grid.row} ${styles.wrapper}`}>
-      <div className={`${grid['col-md-8']} ${grid['col-xs-12']} ${styles.colHack}`}>
+      <div className={`${grid['col-md-8']} ${grid['col-xs-12']} ${styles.main}`}>
         <Box className={`${styles.graph}`}>
           <CurrencyGraph />
         </Box>
