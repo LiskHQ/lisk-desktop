@@ -41,4 +41,8 @@ export default class GenericStepDefinition {
   haveTextOf(query, text) {
     expect(this.wrapper.find(query)).to.have.text(text);
   }
+
+  fillInputField(value, field) {
+    this.wrapper.find(`.${field} input`).first().simulate('change', { target: { value } });
+  }
 }
