@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import io from './../../utils/socketShim';
+import io from 'socket.io-client';
 import middleware from './socket';
 import actionTypes from '../../constants/actions';
 import { activePeerUpdate } from '../../actions/peers';

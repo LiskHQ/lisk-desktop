@@ -6,7 +6,7 @@ import i18n from './../i18n';
 
 describe('localeHandler', () => {
   const callbacks = {};
-  const options = [];
+  const options = {};
   let storage;
   let electron;
   let i18nMock;
@@ -16,8 +16,9 @@ describe('localeHandler', () => {
       get: (item, callback) => {
         callbacks[item] = callback;
       },
-      set: (item, option) => {
-        options.push(option);
+      set: (item, option, callback) => {
+        options[item] = option;
+        callback();
       },
     };
 
@@ -40,7 +41,7 @@ describe('localeHandler', () => {
     i18nMock.expects('changeLanguage').once();
     const event = {};
     localeHandler.update({ electron, event, langCode: 'de', storage });
-    expect(options[0].lang).to.equal('de');
+    expect(options.config.lang).to.equal('de');
     expect(electron.Menu.setApplicationMenu).to.have.been.calledWith(electron.Menu);
     expect(event.returnValue).to.equal('Rebuilt electron menu.');
   });
@@ -55,6 +56,21 @@ describe('localeHandler', () => {
     expect(win.eventStack[0].event).to.equal('detectedLocale');
     expect(win.eventStack[0].value).to.equal('de');
 
+    sendSpy.restore();
+  });
+
+  it('Does not send the detected language in case of error', () => {
+    const sendSpy = spy(win, 'send');
+    localeHandler.send({ storage });
+    callbacks.config({}, {});
+
+    expect(sendSpy).to.not.have.been.calledWith();
+    expect(win.eventStack.length).to.equal(0);
+
+    callbacks.config(null, {});
+    expect(win.eventStack.length).to.equal(1);
+    expect(win.eventStack[0].event).to.equal('detectedLocale');
+    expect(win.eventStack[0].value).to.equal('en');
     sendSpy.restore();
   });
 });
