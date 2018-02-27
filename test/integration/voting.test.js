@@ -5,7 +5,7 @@ import { mount } from 'enzyme';
 import { stub, match } from 'sinon';
 // import thunk from 'redux-thunk';
 import { prepareStore, renderWithRouter } from '../utils/applicationInit';
-import { Utils } from '../utils/mountHelpers';
+import GenericStepDefinition from '../utils/genericStepDefinition';
 import accounts from '../constants/accounts';
 import transactionReducer from '../../src/store/reducers/transactions';
 import accountReducer from '../../src/store/reducers/account';
@@ -80,6 +80,32 @@ let localStorageStub;
 let helper;
 
 /**
+ * extend GenericStepDefinition and add some specific function to it for testing voting  
+ */
+class Helper extends GenericStepDefinition {
+  constructor(input) {
+    super(input);
+    this.wrapper = input;
+  }
+
+  /**
+   * 
+   * @param {String} index - index of the delegate in the list
+   * @param {Boolean} value - new value of the input
+   */
+  voteToDelegates(index, value) {
+    this.wrapper.find('.delegate-list input').at(index)
+      .simulate('change', { target: { value } });
+  }
+
+  goToConfirmation() {
+    expect(this.wrapper.find('button.confirm')).to.be.not.present();
+    this.wrapper.find('button.next').simulate('click');
+    expect(this.wrapper.find('button.confirm')).to.be.present();
+  }
+}
+
+/**
  * required steps for login
  */
 const loginProcess = (votes = []) => {
@@ -112,8 +138,14 @@ const loginProcess = (votes = []) => {
   listAccountDelegatesStub.returnsPromise()
     .resolves({ delegates: votes, success: true });
 
+  voteApiStub.returnsPromise()
+    .resolves({
+      transactionId: 12341234123432412,
+      account,
+    });
+
   wrapper = mount(renderWithRouter(Voting, store));
-  helper = new Utils(wrapper);
+  helper = new Helper(wrapper);
   expect(store.getState().account).to.be.an('Object');
   expect(store.getState().voting).to.be.an('Object');
   expect(store.getState().peers).to.be.an('Object');
@@ -130,41 +162,16 @@ const restoreApiMocks = () => {
   localStorageStub.restore();
 };
 
-/**
- * 
- * @param {string} index - index of the delegate in the list
- * @param {boolean} value - new value of the input
- */
-const voteToDelegates = (index, value) => {
-  wrapper.find('.delegate-list input').at(index)
-    .simulate('change', { target: { value } });
-};
-
-const confirmVotes = () => {
-  voteApiStub.returnsPromise()
-    .resolves({
-      transactionId: 12341234123432412,
-      account,
-    });
-  wrapper.find('button.confirm').simulate('click');
-};
-
-const goToConfirmation = () => {
-  expect(wrapper.find('button.confirm')).to.be.not.present();
-  wrapper.find('button.next').simulate('click');
-  expect(wrapper.find('button.confirm')).to.be.present();
-};
-
 describe('@integration test of Voting', () => {
   describe('Scenario: should allow to select delegates in the "Voting" and vote for them', () => {
     step('I\'m logged in as "genesis"', loginProcess);
     step('And next button should be disabled', () => helper.checkDisableInput('button.next'));
-    step('When I click checkbox on list item no. 0', () => voteToDelegates(0, true));
-    step('When I click checkbox on list item no. 1', () => voteToDelegates(1, true));
+    step('When I click checkbox on list item no. 0', () => helper.voteToDelegates(0, true));
+    step('When I click checkbox on list item no. 1', () => helper.voteToDelegates(1, true));
     step('Then next button should be enabled', () => helper.checkDisableInput('button.next', 'not'));
     step('And selectionHeader should be equal to "2"', () => helper.haveTextOf('.selection h4', 2));
-    step('Then I go to confirmation step', goToConfirmation);
-    step('When I click on confirm button', confirmVotes);
+    step('Then I go to confirmation step', () => helper.goToConfirmation());
+    step('When I click on confirm button', () => helper.clickOnElement('button.confirm'));
     step('Then I should see result box', () => helper.haveTextOf('h2.result-box-header', 'Votes submitted'));
     step('Then I restore Api mocks', restoreApiMocks);
   });
@@ -184,11 +191,11 @@ describe('@integration test of Voting', () => {
   describe('Scenario: should allow to select delegates in the "Voting" and unvote them', () => {
     step('I\'m logged in as "genesis"', loginProcess.bind(null, [delegates[0]]));
     step('And next button should be disabled', () => helper.checkDisableInput('button.next'));
-    step('When I click checkbox on list item no. 0', () => voteToDelegates(0, false));
+    step('When I click checkbox on list item no. 0', () => helper.voteToDelegates(0, false));
     step('Then next button should be enabled', () => helper.checkDisableInput('button.next', 'not'));
     step('And selectionHeader should be equal to "2"', () => helper.haveTextOf('.selection h4', 1));
-    step('Then I go to confirmation step', goToConfirmation);
-    step('When I click on confirm button', confirmVotes);
+    step('Then I go to confirmation step', () => helper.goToConfirmation());
+    step('When I click on confirm button', () => helper.clickOnElement('button.confirm'));
     step('Then I should see result box', () => helper.haveTextOf('h2.result-box-header', 'Votes submitted'));
     step('Then I restore Api mocks', restoreApiMocks);
   });
