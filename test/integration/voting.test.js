@@ -83,11 +83,6 @@ let helper;
  * extend GenericStepDefinition and add some specific function to it for testing voting  
  */
 class Helper extends GenericStepDefinition {
-  constructor(input) {
-    super(input);
-    this.wrapper = input;
-  }
-
   /**
    * 
    * @param {String} index - index of the delegate in the list
