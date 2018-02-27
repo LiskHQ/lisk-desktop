@@ -24,14 +24,6 @@ Feature: Voting page
     Then I should see 0 instances of "delegate row"
     And I should see text "No delegates found." in "empty message" element
 
-  @integration
-  Scenario: should allow to view my votes
-    Given I'm logged in as "genesis"
-    And I wait 0.1 seconds
-    When I go to "main/voting/"
-    And I click "filter voted"
-    Then I should see 100 instances of "delegate row"
-
   @testnet
   Scenario: should allow to select delegates in the "Voting" tab and vote for them
     Given I'm logged in as "delegate candidate"
@@ -58,19 +50,7 @@ Feature: Voting page
     And I click "confirm"
     And I wait 0.5 seconds
     Then I should see text "You’re votes are being processed and will be confirmed. It may take up to 10 minutes to be secured in the blockchain." in "result box message" element
-
-  @integration
-  Scenario: should allow to remove votes form delegates
-    Given I'm logged in as "genesis"
-    And I wait 0.1 seconds
-    When I go to "main/voting/"
-    And I click checkbox on list item no. 3
-    And I click checkbox on list item no. 5
-    And I click "next"
-    And I click "confirm"
-    And I wait 0.5 seconds
-    Then I should see text "You’re votes are being processed and will be confirmed. It may take up to 10 minutes to be secured in the blockchain." in "result box message" element
-
+  
   Scenario: should allow to select delegates by URL
     Given I'm logged in as "delegate candidate"
     When I go to "/main/voting/vote?votes=standby_27,standby_28,standby_29,nonexisting_22&unvotes=standby_33"
@@ -84,23 +64,3 @@ Feature: Voting page
       standby_2[789]
       standby_2[789]
       """
-
-  @integration
-  @pending
-  Scenario: should allow to select delegates in the "Vote" dialog and vote for them
-    Given I'm logged in as "delegate candidate"
-    When I click "voting" menu
-    And I click "vote button"
-    And Search twice for "genesis_7" in vote dialog
-    And I click "submit button"
-    Then I should see alert dialog with title "Success" and text "Your votes were successfully submitted. It can take several seconds before they are processed."
-
-  @integration
-  @pending
-  Scenario: should not allow to vote if not enough funds for the fee
-    Given I'm logged in as "empty account"
-    When I go to "main/voting/"
-    And I click checkbox on list item no. 3
-    And I click "vote button"
-    Then I should see "Insufficient funds for 1 LSK fee" error message
-    And "submit button" should be disabled

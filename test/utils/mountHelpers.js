@@ -33,3 +33,4 @@ export const mountWithContext = (component, { storeState = {}, location = {} }) 
   };
   return mount(component, options);
 };
+
