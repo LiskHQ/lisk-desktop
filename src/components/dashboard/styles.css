@@ -5,9 +5,10 @@
 }
 
 .main {
-  max-height: 75vh;
+  max-height: 75vh; /* stylelint-disable-line */
   overflow: auto;
 }
+
 .seeAllLink {
   font-size: 15px;
   color: var(--color-primary-standard);
