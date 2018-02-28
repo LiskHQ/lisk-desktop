@@ -41,4 +41,26 @@ export default class GenericStepDefinition {
   haveTextOf(query, text) {
     expect(this.wrapper.find(query)).to.have.text(text);
   }
+  /**
+   * 
+   * @param {String} value - The value to fill in input
+   * @param {String} field - space separated class name of the input, without the initial dot
+   */
+  fillInputField(value, field) {
+    const selector = `.${field.replace(/ /g, '-')} input`;
+    this.wrapper.find(selector).first().simulate('change', { target: { value } });
+  }
+  /**
+   * 
+   * @param {String} value - The index of option in the list to click on
+   * @param {String} field - space separated class name of the input, without the initial dot
+   */
+  selectOptionItem(optionIndex, field) {
+    const selector = `.${field.replace(/ /g, '-')} ul li`;
+    this.wrapper.find(selector).at(parseInt(optionIndex, 10) - 1).simulate('click');
+  }
+
+  submitForm() {
+    this.wrapper.find('form').simulate('submit', {});
+  }
 }
