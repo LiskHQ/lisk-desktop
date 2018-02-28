@@ -20,11 +20,12 @@ import { activePeerSet } from '../../src/actions/peers';
 import * as toasterActions from '../../src/actions/toaster';
 import Login from './../../src/components/login';
 import accounts from '../constants/accounts';
-import { fillInputField, selectOptionItem } from './steps';
+import GenericStepDefinition from '../utils/genericStepDefinition';
 
 describe('@integration: Login', () => {
   let store;
   let wrapper;
+  let helper;
   const requestToActivePeerStub = stub(peers, 'requestToActivePeer');
   const accountAPIStub = stub(accountAPI, 'getAccount');
   const delegateAPIStub = stub(delegateAPI, 'getDelegate');
@@ -32,7 +33,8 @@ describe('@integration: Login', () => {
   const localStorageStub = stub(localStorage, 'getItem');
   const errorToastDisplayedSpy = spy(toasterActions, 'errorToastDisplayed');
   const localhostUrl = 'http://localhost:4218';
-  const connectionErrorMessage = 'Unable to connect to the node';
+  const errorMessage = 'Unable to connect to the node';
+  const { passphrase } = accounts.genesis;
 
   afterEach(() => {
     wrapper.update();
@@ -52,9 +54,14 @@ describe('@integration: Login', () => {
     ]);
   };
 
-  const setupScenarioDefault = () => {
-    createStore();
+  const restoreStubs = () => {
+    requestToActivePeerStub.restore();
+    localStorageStub.restore();
+    accountAPIStub.restore();
+    delegateAPIStub.restore();
+  };
 
+  const stubApisDefaultScenario = () => {
     localStorageStub.withArgs('accounts').returns(JSON.stringify([{}, {}]));
     localStorageStub.withArgs('showNetwork').returns(JSON.stringify(true));
     accountAPIStub.returnsPromise().resolves({
@@ -69,61 +76,54 @@ describe('@integration: Login', () => {
       u_multisignatures: [],
     });
     delegateAPIStub.returnsPromise().rejects();
-
-    wrapper = mount(renderWithRouter(Login, store, { location: { search: '' } }));
   };
 
-  const setupScenarioInvalidNode = () => {
-    createStore();
-
+  const stubApisScenarioInvalidNode = () => {
     localStorageStub.withArgs('accounts').returns(JSON.stringify([{}, {}]));
     localStorageStub.withArgs('showNetwork').returns(JSON.stringify(true));
     netHashAPIStub.returnsPromise().rejects();
     accountAPIStub.returnsPromise().rejects();
     delegateAPIStub.returnsPromise().rejects();
+  };
 
+  class Helper extends GenericStepDefinition {
+    // eslint-disable-next-line class-methods-use-this
+    checkIfInRoute() {
+      expect(store.getState().account).to.have.all.keys('passphrase', 'publicKey', 'address', 'delegate',
+        'isDelegate', 'expireTime', 'u_multisignatures', 'multisignatures', 'unconfirmedBalance',
+        'secondSignature', 'secondPublicKey', 'balance', 'unconfirmedSignature');
+      restoreStubs();
+    }
+
+    // eslint-disable-next-line class-methods-use-this
+    checkIfErrorToastFired() {
+      expect(errorToastDisplayedSpy).to.have.been.calledWith({ label: errorMessage });
+      restoreStubs();
+    }
+  }
+
+  const setupStep = (stubApis) => {
+    createStore();
+    stubApis();
     wrapper = mount(renderWithRouter(Login, store, { location: { search: '' } }), { activePeerSet });
-  };
-
-  const restoreStubs = () => {
-    requestToActivePeerStub.restore();
-    localStorageStub.restore();
-    accountAPIStub.restore();
-    delegateAPIStub.restore();
-  };
-
-  const submit = () => {
-    wrapper.find('form').simulate('submit', {});
-  };
-
-  const checkIfInRoute = () => {
-    expect(store.getState().account).to.have.all.keys('passphrase', 'publicKey', 'address', 'delegate',
-      'isDelegate', 'expireTime', 'u_multisignatures', 'multisignatures', 'unconfirmedBalance',
-      'secondSignature', 'secondPublicKey', 'balance', 'unconfirmedSignature');
-    restoreStubs();
-  };
-
-  const checkIfErrorToastFired = () => {
-    expect(errorToastDisplayedSpy).to.have.been.calledWith({ label: connectionErrorMessage });
-    restoreStubs();
+    helper = new Helper(wrapper);
   };
 
   describe('Scenario: should allow to login', () => {
-    step('Given I\'m on login page', setupScenarioDefault);
-    step(`When I fill "${accounts.genesis.passphrase}" into "passphrase" field`,
-      () => fillInputField(wrapper, accounts.genesis.passphrase, 'passphrase'));
-    step('And I click "login button"', () => submit(wrapper, 'login button'));
-    step('Then I should be logged in', () => checkIfInRoute());
+    step('Given I\'m on login page', () => setupStep(stubApisDefaultScenario));
+    step(`When I fill "${passphrase}" into "passphrase" field`,
+      () => helper.fillInputField(passphrase, 'passphrase'));
+    step('And I click "login button"', () => helper.submitForm());
+    step('Then I should be logged in', () => helper.checkIfInRoute());
   });
 
   describe('Scenario: should show toast when trying to connect to an unavailable custom node', () => {
-    step('Given I\'m on login page', setupScenarioInvalidNode);
-    step(`When I fill "${accounts.genesis.passphrase}" into "passphrase" field`, () =>
-      fillInputField(wrapper, accounts.genesis.passphrase, 'passphrase'));
-    step('And I select option no. 3 from "network" select', () => selectOptionItem(wrapper, 3, 'network'));
-    step('And I clear "address" field', () => fillInputField(wrapper, '', 'address'));
-    step(`And I fill in "${localhostUrl}" to "address" field`, () => fillInputField(wrapper, localhostUrl, 'address'));
-    step('And I click "login button"', () => submit(wrapper, 'login button'));
-    step(`Then I should see text ${connectionErrorMessage} in "toast" element`, () => checkIfErrorToastFired());
+    step('Given I\'m on login page', () => setupStep(stubApisScenarioInvalidNode));
+    step(`When I fill "${passphrase}" into "passphrase" field`, () => helper.fillInputField(passphrase, 'passphrase'));
+    step('And I select option no. 3 from "network" select', () => helper.selectOptionItem(3, 'network'));
+    step('And I clear "address" field', () => helper.fillInputField('', 'address'));
+    step(`And I fill in "${localhostUrl}" to "address" field`, () => helper.fillInputField(localhostUrl, 'address'));
+    step('And I click "login button"', () => helper.submitForm());
+    step(`Then I should see text ${errorMessage} in "toast" element`, () => helper.checkIfErrorToastFired());
   });
 });
