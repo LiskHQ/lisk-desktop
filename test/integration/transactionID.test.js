@@ -19,9 +19,19 @@ import getNetwork from './../../src/utils/getNetwork';
 import { accountLoggedIn } from '../../src/actions/account';
 import SingleTransaction from './../../src/components/singleTransaction';
 import accounts from '../constants/accounts';
+import GenericStepDefinition from '../utils/genericStepDefinition';
+
+class Helper extends GenericStepDefinition {
+  checkTxDetails() {
+    expect(this.wrapper.find('#transaction-id').first().text()).to.contain('123456789');
+    expect(this.wrapper.find('#sender-address').first().text()).to.contain('123l');
+    expect(this.wrapper.find('#receiver-address').first().text()).to.contain('456l');
+  }
+}
 
 describe('@integration: Single Transaction', () => {
   let store;
+  let helper;
   let wrapper;
   let requestToActivePeerStub;
   let accountAPIStub;
@@ -68,21 +78,16 @@ describe('@integration: Single Transaction', () => {
     if (accountType) { store.dispatch(accountLoggedIn(account)); }
     wrapper = mount(renderWithRouter(SingleTransaction, store,
       { match: { params: { id } } }));
-  };
-
-  const checkTxDetails = () => {
-    expect(wrapper.find('#transaction-id').first().text()).to.contain('123456789');
-    expect(wrapper.find('#sender-address').first().text()).to.contain('123l');
-    expect(wrapper.find('#receiver-address').first().text()).to.contain('456l');
+    helper = new Helper(wrapper);
   };
 
   describe('Scenario: should allow to view transactions of any account', () => {
-    step('Given I\'m on "transactions/123456789" as "genesis" account', setupStep.bind(null, { accountType: 'genesis', id: '123456789' }));
-    step('Then I should see the transaction details of 123456789', checkTxDetails);
+    step('Given I\'m on "transactions/123456789" as "genesis" account', () => setupStep({ accountType: 'genesis', id: '123456789' }));
+    step('Then I should see the transaction details of 123456789', () => helper.checkTxDetails());
   });
 
   describe('Scenario: should allow to view transactions of any account without login', () => {
-    step('Given I\'m on "transactions/123456789" as "genesis" account', setupStep.bind(null, { id: '123456789' }));
-    step('Then I should see the transaction details of 123456789', checkTxDetails);
+    step('Given I\'m on "transactions/123456789" as "genesis" account', () => setupStep({ id: '123456789' }));
+    step('Then I should see the transaction details of 123456789', () => helper.checkTxDetails());
   });
 });
