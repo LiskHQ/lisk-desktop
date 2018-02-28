@@ -116,7 +116,7 @@ describe('@integration: Wallet', () => {
     accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
     store.dispatch(accountLoggedIn(account));
     wrapper = mount(renderWithRouter(Wallet, store, { location: { search: '' } }));
-    helper = new Helper(wrapper);
+    helper = new Helper(wrapper, store);
   };
 
   describe('Send', () => {

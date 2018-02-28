@@ -74,7 +74,7 @@ describe('@integration: Account switch', () => {
     wrapper = mount(renderWithRouter(SavedAccounts, store));
     store.dispatch(accountsRetrieved());
     wrapper.update();
-    helper = new GenericStepDefinition(wrapper);
+    helper = new GenericStepDefinition(wrapper, store);
   };
 
   describe('Scenario: should allow to remove a saved account', () => {
@@ -89,6 +89,6 @@ describe('@integration: Account switch', () => {
   describe('Scenario: should allow to switch account', () => {
     step('Given I\'m on "account switcher" with accounts: "genesis,delegate,empty account"', setupStep);
     step('When I click "saved account card"', () => helper.clickOnElement('.saved-account-card'));
-    step('Then I should be logged in as "genesis" account', () => helper.shouldBeLoggedInAs(store.getState().account.publicKey, accounts.genesis.publicKey));
+    step('Then I should be logged in as "genesis" account', () => helper.shouldBeLoggedInAs(accounts.genesis.publicKey));
   });
 });

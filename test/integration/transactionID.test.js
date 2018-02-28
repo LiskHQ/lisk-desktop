@@ -78,7 +78,7 @@ describe('@integration: Single Transaction', () => {
     if (accountType) { store.dispatch(accountLoggedIn(account)); }
     wrapper = mount(renderWithRouter(SingleTransaction, store,
       { match: { params: { id } } }));
-    helper = new Helper(wrapper);
+    helper = new Helper(wrapper, store);
   };
 
   describe('Scenario: should allow to view transactions of any account', () => {

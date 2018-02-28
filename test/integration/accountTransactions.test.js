@@ -101,7 +101,7 @@ describe('@integration: Account Transactions', () => {
     wrapper = mount(renderWithRouter(AccountTransactions, store,
       { match: { params: { address } } }));
 
-    helper = new Helper(wrapper);
+    helper = new Helper(wrapper, store);
   };
 
   describe('Scenario: should allow to view transactions of any account', () => {

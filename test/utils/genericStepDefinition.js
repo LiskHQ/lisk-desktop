@@ -2,8 +2,9 @@
 import { expect } from 'chai';
 
 export default class GenericStepDefinition {
-  constructor(input) {
+  constructor(input, store) {
     this.wrapper = input;
+    this.store = store;
   }
   /**
    * simulate click on a dom query
@@ -46,9 +47,8 @@ export default class GenericStepDefinition {
     this.wrapper.find(`.${field} input`).first().simulate('change', { target: { value } });
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  shouldBeLoggedInAs(publicKey, expectedPublicKey) {
-    expect(publicKey).to.equal(expectedPublicKey);
+  shouldBeLoggedInAs(expectedPublicKey) {
+    expect(this.store.getState().account.publicKey).to.equal(expectedPublicKey);
   }
 
   shouldSeeCountInstancesOf(count, query) {
