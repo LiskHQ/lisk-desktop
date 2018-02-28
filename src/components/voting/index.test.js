@@ -17,6 +17,7 @@ describe('VotingHOC', () => {
         pending: [],
         confirmed: [],
       },
+      loading: [],
       voting: {
         delegates: [
           {
