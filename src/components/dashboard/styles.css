@@ -4,6 +4,11 @@
   width: 100%;
 }
 
+.main {
+  max-height: 75vh; /* stylelint-disable-line */
+  overflow: auto;
+}
+
 .seeAllLink {
   font-size: 15px;
   color: var(--color-primary-standard);
@@ -49,7 +54,7 @@
 
 @media (--medium-viewport) {
   .wrapper {
-    & .colHack {
+    & .main {
       padding: 0;
       max-width: 100%;
       flex-basis: 100%;
