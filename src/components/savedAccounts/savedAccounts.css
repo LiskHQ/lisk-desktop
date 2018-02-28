@@ -305,6 +305,10 @@
   }
 }
 
+.background {
+  display: block !important;
+}
+
 @media (--small-viewport) {
   .wrapper {
     & > h1 {
