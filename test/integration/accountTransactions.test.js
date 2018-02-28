@@ -23,11 +23,6 @@ import accounts from '../constants/accounts';
 import GenericStepDefinition from '../utils/genericStepDefinition';
 
 class Helper extends GenericStepDefinition {
-  checkRowCount(length) {
-    this.wrapper.update();
-    expect(this.wrapper.find('TransactionRow')).to.have.length(length);
-  }
-
   checkSelectedFilter(filter) {
     const expectedClass = '_active';
 
@@ -111,22 +106,22 @@ describe('@integration: Account Transactions', () => {
 
   describe('Scenario: should allow to view transactions of any account', () => {
     step('Given I\'m on "accounts/123L" as "genesis" account', () => setupStep({ accountType: 'genesis', address: '123L' }));
-    step('Then I should see 20 transaction rows as result of the address 123L', () => helper.checkRowCount(20));
+    step('Then I should see 20 transaction rows as result of the address 123L', () => helper.shouldSeeCountInstancesOf(20, 'TransactionRow'));
   });
 
   describe('Scenario: should allow to filter transactions', () => {
     step('Given I\'m on "wallet" as "genesis" account', () => setupStep({ accountType: 'genesis', address: '123L' }));
     step('Then the "All" filter should be selected by default', () => helper.checkSelectedFilter('all'));
     step('When I click on the "Outgoing" filter', () => helper.clickOnElement('.filter-out'));
-    step('Then I expect to see the results for "Outgoing"', () => helper.checkRowCount(5));
+    step('Then I expect to see the results for "Outgoing"', () => helper.shouldSeeCountInstancesOf(5, 'TransactionRow'));
     step('When I click on the "Incoming" filter', () => helper.clickOnElement('.filter-in'));
-    step('Then I expect to see the results for "Incoming"', () => helper.checkRowCount(15));
+    step('Then I expect to see the results for "Incoming"', () => helper.shouldSeeCountInstancesOf(15, 'TransactionRow'));
     step('When I click again on the "All" filter', () => helper.clickOnElement('.filter-all'));
-    step('Then I expect to see the results for "All"', () => helper.checkRowCount(20));
+    step('Then I expect to see the results for "All"', () => helper.shouldSeeCountInstancesOf(20, 'TransactionRow'));
   });
 
   describe('Scenario: allows to view transactions without login', () => {
     step('Given I\'m on "accounts/123L" with no account', () => setupStep({ address: '123L' }));
-    step('Then I should see 20 transaction rows as result of the address 123L', () => helper.checkRowCount(20));
+    step('Then I should see 20 transaction rows as result of the address 123L', () => helper.shouldSeeCountInstancesOf(20, 'TransactionRow'));
   });
 });

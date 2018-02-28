@@ -1,5 +1,4 @@
 import { step } from 'mocha-steps';
-import { expect } from 'chai';
 import { stub, match } from 'sinon';
 import { mount } from 'enzyme';
 import thunk from 'redux-thunk';
@@ -16,11 +15,12 @@ import savedAccountsReducer from '../../src/store/reducers/savedAccounts';
 import SavedAccounts from '../../src/components/savedAccounts';
 import * as accountApi from '../../src/utils/api/account';
 import * as peers from '../../src/utils/api/peers';
-import { click } from './steps';
+import GenericStepDefinition from '../utils/genericStepDefinition';
 
 describe('@integration: Account switch', () => {
   let store;
   let wrapper;
+  let helper;
   let getAccountStub;
   let requestToActivePeerStub;
   let localStorageStub;
@@ -74,33 +74,21 @@ describe('@integration: Account switch', () => {
     wrapper = mount(renderWithRouter(SavedAccounts, store));
     store.dispatch(accountsRetrieved());
     wrapper.update();
-  };
-
-  const clickStep = (elementName) => {
-    click(wrapper, elementName);
-  };
-
-  const shouldSeeCountInstancesOf = (count, elementName) => {
-    const selector = `.${elementName.replace(/ /g, '-')}`;
-    expect(wrapper.find(selector)).to.have.lengthOf(count);
-  };
-
-  const shouldBeLoggedInAs = (accountName) => {
-    expect(store.getState().account.publicKey).to.equal(accounts[accountName].publicKey);
+    helper = new GenericStepDefinition(wrapper);
   };
 
   describe('Scenario: should allow to remove a saved account', () => {
     step('Given I\'m on "account switcher" with accounts: "genesis,delegate,empty account"', setupStep);
-    step('Then I should see 3 instances of "saved account card"', shouldSeeCountInstancesOf.bind(null, 3, 'saved account card'));
-    step('When I click "edit button"', clickStep.bind(null, 'edit button'));
-    step('When I click "remove button"', clickStep.bind(null, 'remove button'));
-    step('When I click "remove button"', clickStep.bind(null, 'remove button'));
-    step('Then I should see 2 instances of "saved account card"', shouldSeeCountInstancesOf.bind(null, 2, 'saved account card'));
+    step('Then I should see 3 instances of "saved account card"', () => helper.shouldSeeCountInstancesOf(3, '.saved-account-card'));
+    step('When I click "edit button"', () => helper.clickOnElement('button.edit-button'));
+    step('When I click "remove button"', () => helper.clickOnElement('button.remove-button'));
+    step('When I click "remove button"', () => helper.clickOnElement('button.remove-button'));
+    step('Then I should see 2 instances of "saved account card"', () => helper.shouldSeeCountInstancesOf(2, '.saved-account-card'));
   });
 
   describe('Scenario: should allow to switch account', () => {
     step('Given I\'m on "account switcher" with accounts: "genesis,delegate,empty account"', setupStep);
-    step('When I click "saved account card"', clickStep.bind(null, 'saved account card'));
-    step('Then I should be logged in as "genesis" account', shouldBeLoggedInAs.bind(null, 'genesis'));
+    step('When I click "saved account card"', () => helper.clickOnElement('.saved-account-card'));
+    step('Then I should be logged in as "genesis" account', () => helper.shouldBeLoggedInAs(store.getState().account.publicKey, accounts.genesis.publicKey));
   });
 });

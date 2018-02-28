@@ -24,11 +24,6 @@ import accounts from '../constants/accounts';
 import GenericStepDefinition from '../utils/genericStepDefinition';
 
 class Helper extends GenericStepDefinition {
-  checkRowCount(length) {
-    this.wrapper.update();
-    expect(this.wrapper.find('TransactionRow')).to.have.length(length);
-  }
-
   checkSelectedFilter(filter) {
     const expectedClass = '_active';
 
@@ -200,20 +195,20 @@ describe('@integration: Wallet', () => {
   describe('Transactions', () => {
     describe('Scenario: should allow to view transactions', () => {
       step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
-      step('Then I should see 25 rows', () => helper.checkRowCount(25));
+      step('Then I should see 25 rows', () => helper.shouldSeeCountInstancesOf(25, 'TransactionRow'));
       step('When I scroll to the bottom of "transactions box"', () => { wrapper.find('Waypoint').props().onEnter(); });
-      step('Then I should see 50 rows', () => helper.checkRowCount(50));
+      step('Then I should see 50 rows', () => { wrapper.update(); helper.shouldSeeCountInstancesOf(50, 'TransactionRow'); });
     });
 
     describe('Scenario: should allow to filter transactions', () => {
       step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
       step('Then the "All" filter should be selected by default', () => helper.checkSelectedFilter('all'));
       step('When I click on the "Outgoing" filter', () => helper.clickOnElement('.filter-out'));
-      step('Then I expect to see the results for "Outgoing"', () => helper.checkRowCount(5));
+      step('Then I expect to see the results for "Outgoing"', () => helper.shouldSeeCountInstancesOf(5, 'TransactionRow'));
       step('When I click on the "Incoming" filter', () => helper.clickOnElement('.filter-in'));
-      step('Then I expect to see the results for "Incoming"', () => helper.checkRowCount(15));
+      step('Then I expect to see the results for "Incoming"', () => helper.shouldSeeCountInstancesOf(15, 'TransactionRow'));
       step('When I click again on the "All" filter', () => helper.clickOnElement('.filter-all'));
-      step('Then I expect to see the results for "All"', () => helper.checkRowCount(25));
+      step('Then I expect to see the results for "All"', () => helper.shouldSeeCountInstancesOf(25, 'TransactionRow'));
     });
   });
 });

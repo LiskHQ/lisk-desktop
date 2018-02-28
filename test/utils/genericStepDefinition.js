@@ -10,7 +10,7 @@ export default class GenericStepDefinition {
    * @param {String} query - dom query that we need to simulate clink on it 
    */
   clickOnElement(query) {
-    this.wrapper.find(query).simulate('click');
+    this.wrapper.find(query).first().simulate('click');
   }
   /**
    * check that dom query entry is disable or enable
@@ -44,5 +44,14 @@ export default class GenericStepDefinition {
 
   fillInputField(value, field) {
     this.wrapper.find(`.${field} input`).first().simulate('change', { target: { value } });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  shouldBeLoggedInAs(publicKey, expectedPublicKey) {
+    expect(publicKey).to.equal(expectedPublicKey);
+  }
+
+  shouldSeeCountInstancesOf(count, query) {
+    expect(this.wrapper.find(query)).to.have.lengthOf(count);
   }
 }
