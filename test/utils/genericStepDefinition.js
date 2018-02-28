@@ -2,15 +2,16 @@
 import { expect } from 'chai';
 
 export default class GenericStepDefinition {
-  constructor(input) {
+  constructor(input, store) {
     this.wrapper = input;
+    this.store = store;
   }
   /**
    * simulate click on a dom query
    * @param {String} query - dom query that we need to simulate clink on it 
    */
   clickOnElement(query) {
-    this.wrapper.find(query).simulate('click');
+    this.wrapper.find(query).first().simulate('click');
   }
   /**
    * check that dom query entry is disable or enable
@@ -62,5 +63,22 @@ export default class GenericStepDefinition {
 
   submitForm() {
     this.wrapper.find('form').simulate('submit', {});
+  }
+
+  /**
+   * 
+   * @param {String} expectedPublicKey - Valid publicKey
+   */
+  shouldBeLoggedInAs(expectedPublicKey) {
+    expect(this.store.getState().account.publicKey).to.equal(expectedPublicKey);
+  }
+
+  /**
+   * 
+   * @param {Number} count - Valid publicKey
+   * @param {String} selector - Valid css selector 
+   */
+  shouldSeeCountInstancesOf(count, selector) {
+    expect(this.wrapper.find(selector)).to.have.lengthOf(count);
   }
 }

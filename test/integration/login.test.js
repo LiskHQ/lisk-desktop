@@ -4,7 +4,6 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { stub, spy } from 'sinon';
 
-import * as peers from '../../src/utils/api/peers';
 import * as accountAPI from '../../src/utils/api/account';
 import * as delegateAPI from '../../src/utils/api/delegate';
 import * as netHash from '../../src/utils/api/nethash';
@@ -26,12 +25,12 @@ describe('@integration: Login', () => {
   let store;
   let wrapper;
   let helper;
-  const requestToActivePeerStub = stub(peers, 'requestToActivePeer');
-  const accountAPIStub = stub(accountAPI, 'getAccount');
-  const delegateAPIStub = stub(delegateAPI, 'getDelegate');
-  const netHashAPIStub = stub(netHash, 'getNethash');
-  const localStorageStub = stub(localStorage, 'getItem');
-  const errorToastDisplayedSpy = spy(toasterActions, 'errorToastDisplayed');
+  // const requestToActivePeerStub = stub(peers, 'requestToActivePeer');
+  let accountAPIStub;
+  let delegateAPIStub;
+  let netHashAPIStub;
+  let localStorageStub;
+  let errorToastDisplayedSpy;
   const localhostUrl = 'http://localhost:4218';
   const errorMessage = 'Unable to connect to the node';
   const { passphrase } = accounts.genesis;
@@ -55,15 +54,20 @@ describe('@integration: Login', () => {
   };
 
   const restoreStubs = () => {
-    requestToActivePeerStub.restore();
+    // requestToActivePeerStub.restore();
     localStorageStub.restore();
     accountAPIStub.restore();
     delegateAPIStub.restore();
+    netHashAPIStub.restore();
+    errorToastDisplayedSpy.restore();
   };
 
   const stubApisDefaultScenario = () => {
+    netHashAPIStub = stub(netHash, 'getNethash').returnsPromise().rejects();
+    localStorageStub = stub(localStorage, 'getItem');
     localStorageStub.withArgs('accounts').returns(JSON.stringify([{}, {}]));
     localStorageStub.withArgs('showNetwork').returns(JSON.stringify(true));
+    accountAPIStub = stub(accountAPI, 'getAccount');
     accountAPIStub.returnsPromise().resolves({
       address: '6307319849853921018L',
       unconfirmedBalance: '10190054753073',
@@ -75,15 +79,18 @@ describe('@integration: Login', () => {
       multisignatures: [],
       u_multisignatures: [],
     });
-    delegateAPIStub.returnsPromise().rejects();
+    delegateAPIStub = stub(delegateAPI, 'getDelegate').returnsPromise().rejects();
+    errorToastDisplayedSpy = spy(toasterActions, 'errorToastDisplayed');
   };
 
   const stubApisScenarioInvalidNode = () => {
+    localStorageStub = stub(localStorage, 'getItem');
     localStorageStub.withArgs('accounts').returns(JSON.stringify([{}, {}]));
     localStorageStub.withArgs('showNetwork').returns(JSON.stringify(true));
-    netHashAPIStub.returnsPromise().rejects();
-    accountAPIStub.returnsPromise().rejects();
-    delegateAPIStub.returnsPromise().rejects();
+    netHashAPIStub = stub(netHash, 'getNethash').returnsPromise().rejects();
+    accountAPIStub = stub(accountAPI, 'getAccount').returnsPromise().rejects();
+    delegateAPIStub = stub(delegateAPI, 'getDelegate').returnsPromise().rejects();
+    errorToastDisplayedSpy = spy(toasterActions, 'errorToastDisplayed');
   };
 
   class Helper extends GenericStepDefinition {

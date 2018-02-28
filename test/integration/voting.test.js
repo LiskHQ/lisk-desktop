@@ -140,7 +140,7 @@ const loginProcess = (votes = []) => {
     });
 
   wrapper = mount(renderWithRouter(Voting, store));
-  helper = new Helper(wrapper);
+  helper = new Helper(wrapper, store);
   expect(store.getState().account).to.be.an('Object');
   expect(store.getState().voting).to.be.an('Object');
   expect(store.getState().peers).to.be.an('Object');
