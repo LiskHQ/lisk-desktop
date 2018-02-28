@@ -3,8 +3,14 @@ import { spy } from 'sinon'; // eslint-disable-line import/no-extraneous-depende
 import win from './win';
 
 describe('Electron Browser Window Wrapper', () => {
-  let electron;
-  electron = {
+  const callbacks = {};
+  const events = [];
+  const path = { resolve: () => ('test') };
+  const electronLocalshortcut = {
+    register: () => {},
+  };
+
+  const electron = {
     screen: { getPrimaryDisplay: () => ({ workAreaSize: { width: 1400, height: 900 } }) },
     BrowserWindow: ({ width, height, center, webPreferences }) =>
       ({
@@ -13,26 +19,32 @@ describe('Electron Browser Window Wrapper', () => {
         center,
         webPreferences,
         loadURL: spy(),
-        on: spy(),
+        on: (item, callback) => {
+          callbacks[item] = callback;
+        },
         webContents: {
-          on: spy(),
-          send: spy(),
+          on: (item, callback) => {
+            callbacks[item] = callback;
+          },
+          send: (event, value) => {
+            events.push({ event, value });
+          },
         },
       }),
     Menu: {
-      setApplicationMenu: () => {},
-      buildFromTemplate: () => {},
+      setApplicationMenu: spy(),
+      buildFromTemplate: () => (electron.Menu),
+      popup: spy(),
     },
+    app: { getName: () => ('Lisk Hub'), getVersion: () => ('some version') },
   };
-  const electronLocalshortcut = {
-    register: () => {},
-  };
-  const path = { resolve: () => ('test') };
+
 
   afterEach(() => {
     win.browser = null;
     win.isUILoaded = false;
     win.eventStack.length = 0;
+    events.length = 0;
   });
 
   describe('Init', () => {
@@ -69,55 +81,26 @@ describe('Electron Browser Window Wrapper', () => {
 
     it('Sends events', () => {
       win.init({ electron, path, electronLocalshortcut });
-      win.browser.webContents = { send: spy() };
       win.isUILoaded = true;
       win.send({ event: 'openUrl', value: 'someurl' });
-      expect(win.browser.webContents.send).to.have.been.calledWith('openUrl', 'someurl');
       expect(win.eventStack.length).to.equal(0);
     });
   });
 
   describe('Create', () => {
-    const callbacks = {};
-    let events = [];
-
     const storage = {
       get: (item, callback) => {
         callbacks[item] = callback;
       },
     };
 
-    electron = {
-      screen: { getPrimaryDisplay: () => ({ workAreaSize: { width: 1400, height: 900 } }) },
-      BrowserWindow: ({ width, height, center, webPreferences }) =>
-        ({
-          width,
-          height,
-          center,
-          webPreferences,
-          loadURL: spy(),
-          on: (item, callback) => {
-            callbacks[item] = callback;
-          },
-          webContents: {
-            on: (item, callback) => {
-              callbacks[item] = callback;
-            },
-            send: (event, value) => {
-              events.push({ event, value });
-            },
-          },
-        }),
-      Menu: {
-        setApplicationMenu: spy(),
-        buildFromTemplate: () => (electron.Menu),
-        popup: spy(),
-      },
-      app: { getName: () => ('Lisk Hub'), getVersion: () => ('some version') },
-    };
-
-    afterEach(() => {
-      events = [];
+    it('Sends blur and focus events', () => {
+      win.create({ electron, path, electronLocalshortcut, storage });
+      expect(events.length).to.equal(0);
+      callbacks.focus();
+      expect(events[0].event).to.equal('focus');
+      callbacks.blur();
+      expect(events[1].event).to.equal('blur');
     });
 
     it('Creates the window with menu when platform is "darwin"', () => {

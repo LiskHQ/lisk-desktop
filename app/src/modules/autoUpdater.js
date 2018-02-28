@@ -18,7 +18,6 @@ export default ({ autoUpdater, dialog, win, process }) => {
     console.error('There was a problem updating the application');
     // eslint-disable-next-line no-console
     console.error(error);
-    // eslint-disable-next-line max-len
     if (updater.error !== error) {
       updater.error = error;
       dialog.showErrorBox('Error: ', error == null ? 'unknown' : error.toString());

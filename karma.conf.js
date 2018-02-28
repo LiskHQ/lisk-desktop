@@ -116,10 +116,6 @@ module.exports = function (config) {
             'src/components/toaster/index.js',
             'src/components/mainMenu/mainMenu.js',
             'src/components/setting/setting.js',
-            'app/src/menu.js',
-            'app/src/modules/autoUpdater.js',
-            'app/src/modules/win.js',
-            'app/src/modules/localeHandler.js',
             'src/components/votesPreview/index.js',
           ],
           overrides: {

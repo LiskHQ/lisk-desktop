@@ -25,7 +25,7 @@ class ResultBox extends React.Component {
                 : <FontIcon value='error' className={styles.icon}/>
               }
             </div>
-            <h2>{this.props.title}</h2>
+            <h2 className='result-box-header'>{this.props.title}</h2>
           </header>
 
           <p className='result-box-message'>
