@@ -42,16 +42,43 @@ export default class GenericStepDefinition {
   haveTextOf(query, text) {
     expect(this.wrapper.find(query)).to.have.text(text);
   }
-
+  /**
+   * 
+   * @param {String} value - The value to fill in input
+   * @param {String} field - space separated class name of the input, without the initial dot
+   */
   fillInputField(value, field) {
-    this.wrapper.find(`.${field} input`).first().simulate('change', { target: { value } });
+    const selector = `.${field.replace(/ /g, '-')} input`;
+    this.wrapper.find(selector).first().simulate('change', { target: { value } });
+  }
+  /**
+   * 
+   * @param {String} value - The index of option in the list to click on
+   * @param {String} field - space separated class name of the input, without the initial dot
+   */
+  selectOptionItem(optionIndex, field) {
+    const selector = `.${field.replace(/ /g, '-')} ul li`;
+    this.wrapper.find(selector).at(parseInt(optionIndex, 10) - 1).simulate('click');
   }
 
+  submitForm() {
+    this.wrapper.find('form').simulate('submit', {});
+  }
+
+  /**
+   * 
+   * @param {String} expectedPublicKey - Valid publicKey
+   */
   shouldBeLoggedInAs(expectedPublicKey) {
     expect(this.store.getState().account.publicKey).to.equal(expectedPublicKey);
   }
 
-  shouldSeeCountInstancesOf(count, query) {
-    expect(this.wrapper.find(query)).to.have.lengthOf(count);
+  /**
+   * 
+   * @param {Number} count - Valid publicKey
+   * @param {String} selector - Valid css selector 
+   */
+  shouldSeeCountInstancesOf(count, selector) {
+    expect(this.wrapper.find(selector)).to.have.lengthOf(count);
   }
 }
