@@ -54,7 +54,6 @@ describe('@integration: Login', () => {
   );
 
   const restoreStubs = () => {
-    // requestToActivePeerStub.restore();
     localStorageStub.restore();
     accountAPIStub.restore();
     delegateAPIStub.restore();
