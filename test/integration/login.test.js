@@ -22,7 +22,6 @@ import accounts from '../constants/accounts';
 import GenericStepDefinition from '../utils/genericStepDefinition';
 
 describe('@integration: Login', () => {
-  let store;
   let wrapper;
   let helper;
   // const requestToActivePeerStub = stub(peers, 'requestToActivePeer');
@@ -39,8 +38,8 @@ describe('@integration: Login', () => {
     wrapper.update();
   });
 
-  const createStore = () => {
-    store = prepareStore({
+  const createStore = () => (
+    prepareStore({
       account: accountReducer,
       peers: peersReducer,
       savedAccounts: savedAccountsReducer,
@@ -50,8 +49,8 @@ describe('@integration: Login', () => {
       accountMiddleware,
       loginMiddleware,
       peerMiddleware,
-    ]);
-  };
+    ])
+  );
 
   const restoreStubs = () => {
     // requestToActivePeerStub.restore();
@@ -110,7 +109,7 @@ describe('@integration: Login', () => {
   }
 
   const setupStep = (stubApis) => {
-    createStore();
+    const store = createStore();
     stubApis();
     wrapper = mount(renderWithRouter(Login, store, { location: { search: '' } }), { activePeerSet });
     helper = new Helper(wrapper, store);
