@@ -75,7 +75,7 @@ class SavedAccounts extends React.Component {
 
     return (
       <div className={`${styles.wrapper} save-account`}>
-        <BackgroundMaker />
+        <BackgroundMaker className={styles.background} />
         <h1>
           {t('Your favorite Lisk IDs')}
         </h1>
