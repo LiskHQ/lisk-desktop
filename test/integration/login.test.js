@@ -96,7 +96,7 @@ describe('@integration: Login', () => {
   class Helper extends GenericStepDefinition {
     // eslint-disable-next-line class-methods-use-this
     checkIfInRoute() {
-      expect(store.getState().account).to.have.all.keys('passphrase', 'publicKey', 'address', 'delegate',
+      expect(this.store.getState().account).to.have.all.keys('passphrase', 'publicKey', 'address', 'delegate',
         'isDelegate', 'expireTime', 'u_multisignatures', 'multisignatures', 'unconfirmedBalance',
         'secondSignature', 'secondPublicKey', 'balance', 'unconfirmedSignature');
       restoreStubs();
@@ -113,7 +113,7 @@ describe('@integration: Login', () => {
     createStore();
     stubApis();
     wrapper = mount(renderWithRouter(Login, store, { location: { search: '' } }), { activePeerSet });
-    helper = new Helper(wrapper);
+    helper = new Helper(wrapper, store);
   };
 
   describe('Scenario: should allow to login', () => {
