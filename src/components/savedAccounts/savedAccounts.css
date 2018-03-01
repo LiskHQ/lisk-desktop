@@ -340,7 +340,7 @@
 
   .deviceIos {
     & .addAcctiveAccountButton {
-      bottom: 20vh; /* stylelint-disable-line */
+      bottom: 95px; /* stylelint-disable-line */
     }
   }
 
