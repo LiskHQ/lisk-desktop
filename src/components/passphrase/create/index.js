@@ -35,13 +35,11 @@ class Create extends React.Component {
   }
 
   componentDidMount() {
-    this.container = document.getElementById('generatorContainer');
     this.isTouchDevice = this.checkDevice(this.props.agent);
-    const eventName = this.isTouchDevice ? 'devicemotion' : 'mousemove';
-
-    window.addEventListener(eventName, this.eventNormalizer, true);
+    if (this.isTouchDevice) {
+      window.addEventListener('devicemotion', this.eventNormalizer, true);
+    }
   }
-
 
   moveTitle() {
     setTimeout(() => {
@@ -175,7 +173,8 @@ class Create extends React.Component {
     const hintTitle = this.isTouchDevice ? 'by tilting your device.' : 'by moving your mouse.';
 
     return (
-      <section className={`${grid.row} ${grid['center-xs']} ${styles.wrapper} ${styles.generation}`} id="generatorContainer" >
+      <section className={`${grid.row} ${grid['center-xs']} ${styles.wrapper} ${styles.generation}`}
+        id='generatorContainer' ref={(el) => { this.container = el; }} onMouseMove={this.eventNormalizer} >
         <div className={grid['col-xs-12']}
           ref={ (pageRoot) => { this.pageRoot = pageRoot; } }>
           {!this.state.address ?
