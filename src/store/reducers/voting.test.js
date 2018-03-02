@@ -4,6 +4,12 @@ import voting from './voting';
 
 describe('Reducer: voting(state, action)', () => {
   const initialState = { votes: {}, delegates: [], refresh: true };
+  const defaultVoteUserData = {
+    confirmed: true,
+    unconfirmed: true,
+    pending: false,
+    publicKey: 'sample_key',
+  };
   const cleanVotes = {
     username1: { confirmed: false, unconfirmed: false, publicKey: 'sample_key' },
     username2: { confirmed: true, unconfirmed: true, publicKey: 'sample_key' },
@@ -22,6 +28,18 @@ describe('Reducer: voting(state, action)', () => {
 
   const updatedVotes0 = {
     username1: { confirmed: true, unconfirmed: true, pending: true, publicKey: 'sample_key' },
+  };
+
+  const updatedVotes1 = {
+    username1: { confirmed: true, unconfirmed: false, pending: true, publicKey: 'sample_key' },
+  };
+
+  const updatedVotes2 = {
+    username1: { confirmed: true, unconfirmed: false, pending: false, publicKey: 'sample_key' },
+  };
+
+  const updatedVotes3 = {
+    username1: { confirmed: true, unconfirmed: false, pending: false, publicKey: 'sample_key' },
   };
 
   const restoredVotes = {
@@ -187,7 +205,7 @@ describe('Reducer: voting(state, action)', () => {
     expect(changedState).to.be.deep.equal(expectedState);
   });
 
-  it('should add new username, when pending and unconfirmed and user not yet registered in votes: votesUpdated', () => {
+  it('should add new username to votes, when pending and unconfirmed and user not yet registered in votes: votesUpdated', () => {
     const action = {
       type: actionTypes.votesUpdated,
       data: {
@@ -198,18 +216,81 @@ describe('Reducer: voting(state, action)', () => {
       votes: updatedVotes0,
     };
 
-    const defaultUserData = {
-      confirmed: true,
-      unconfirmed: true,
-      pending: false,
-      publicKey: 'sample_key',
+    const expectedState = {
+      votes: Object.assign(
+        {},
+        { ...updatedVotes0 },
+        { username5: { ...defaultVoteUserData } }),
+      refresh: false,
+    };
+
+    const changedState = voting(state, action);
+    expect(changedState).to.be.deep.equal(expectedState);
+  });
+
+  it('should keep existing record of username in votes, when pending and not unconfirmed and user is already in votes: votesUpdated', () => {
+    const action = {
+      type: actionTypes.votesUpdated,
+      data: {
+        list: [{ username: 'username1', publicKey: 'sample_key' }],
+      },
+    };
+    const state = {
+      votes: updatedVotes1,
     };
 
     const expectedState = {
       votes: Object.assign(
         {},
-        { ...updatedVotes0 },
-        { username5: { ...defaultUserData } }),
+        { ...updatedVotes1 },
+      ),
+      refresh: false,
+    };
+
+    const changedState = voting(state, action);
+    expect(changedState).to.be.deep.equal(expectedState);
+  });
+
+  it('should add new record of username in votes, when not pending, confirmed/unconfirmed mismatch and user is not yet in votes: votesUpdated', () => {
+    const action = {
+      type: actionTypes.votesUpdated,
+      data: {
+        list: [{ username: 'username5', publicKey: 'sample_key' }],
+      },
+    };
+    const state = {
+      votes: updatedVotes2,
+    };
+
+    const expectedState = {
+      votes: Object.assign(
+        {},
+        { ...updatedVotes2 },
+        { username5: { ...defaultVoteUserData } },
+      ),
+      refresh: false,
+    };
+
+    const changedState = voting(state, action);
+    expect(changedState).to.be.deep.equal(expectedState);
+  });
+
+  it('should keep record of username in votes, when not pending, confirmed/unconfirmed mismatch, user is already in votes and has confirmed: votesUpdated', () => {
+    const action = {
+      type: actionTypes.votesUpdated,
+      data: {
+        list: [{ username: 'username1', publicKey: 'sample_key' }],
+      },
+    };
+    const state = {
+      votes: updatedVotes3,
+    };
+
+    const expectedState = {
+      votes: Object.assign(
+        {},
+        { ...updatedVotes3 },
+      ),
       refresh: false,
     };
 
