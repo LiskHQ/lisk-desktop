@@ -14,14 +14,15 @@
   animation-iteration-count: infinite;
   animation-timing-function: ease-in-out;
   animation-direction: alternate;
+  transform: translateZ(0);
 }
 
 @keyframes float {
   from {
-    transform: rotate(0deg);
+    transform: translateZ(0) rotate(0deg);
   }
 
   to {
-    transform: rotate(10deg);
+    transform: translateZ(0) rotate(10deg);
   }
 }
