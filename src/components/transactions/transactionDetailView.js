@@ -1,6 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { TimeFromTimestamp, DateFromTimestamp } from './../timestamp/index';
 import CopyToClipboard from '../copyToClipboard';
 import AccountVisual from '../accountVisual';
@@ -35,10 +35,10 @@ const TransactionsDetailView = props => (
               </figure> : null
           }
           <div className={`${styles.value} ${styles.sender} `}>
-            <Link className={`${styles.addressLink} ${styles.clickable}`} id='sender-address'
-              to={`${routes.account.long}/${props.value.senderId}`}>
+            <div className={`${styles.addressLink} ${styles.clickable}`} id='sender-address'
+              onClick={() => { props.history.push(`${routes.account.long}/${props.value.senderId}`); }}>
               {props.value.senderId}
-            </Link>
+            </div>
           </div>
         </div>
         <div className={`${grid['col-xs-12']} ${grid['col-sm-4']} ${grid['col-md-4']} ${styles.column}`}>
@@ -52,10 +52,10 @@ const TransactionsDetailView = props => (
           <div className={styles.value}>
             {
               props.value.recipientId ?
-                <Link className={`${styles.addressLink} ${styles.clickable}`} id='receiver-address'
-                  to={`${routes.account.long}/${props.value.recipientId}`}>
+                <div className={`${styles.addressLink} ${styles.clickable}`} id='receiver-address'
+                  onClick={() => { props.history.push(`${routes.account.long}/${props.value.recipientId}`); }}>
                   {props.value.recipientId}
-                </Link> : '-'
+                </div> : '-'
             }
           </div>
         </div>
@@ -119,4 +119,4 @@ const TransactionsDetailView = props => (
   </div>
 );
 
-export default TransactionsDetailView;
+export default withRouter(TransactionsDetailView);
