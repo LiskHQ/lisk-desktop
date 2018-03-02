@@ -16,7 +16,7 @@ const Info = ({ t, useCaseNote, securityNote, fee, nextStep, backButtonFn }) => 
     <ActionBar
       secondaryButton={{
         label: t('Back'),
-        onClick: typeof backButtonFn === 'function' ? backButtonFn : () => {},
+        onClick: backButtonFn,
       }}
       primaryButton={{
         label: t('Next'),

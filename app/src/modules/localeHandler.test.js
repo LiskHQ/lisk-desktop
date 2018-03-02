@@ -1,5 +1,5 @@
 import { expect } from 'chai'; // eslint-disable-line import/no-extraneous-dependencies
-import { spy } from 'sinon'; // eslint-disable-line import/no-extraneous-dependencies
+import { spy, mock } from 'sinon'; // eslint-disable-line import/no-extraneous-dependencies
 import win from './win';
 import localeHandler from './localeHandler';
 import i18n from './../i18n';
@@ -9,6 +9,7 @@ describe('localeHandler', () => {
   const options = {};
   let storage;
   let electron;
+  let i18nMock;
 
   beforeEach(() => {
     storage = {
@@ -28,16 +29,18 @@ describe('localeHandler', () => {
       },
       app: { getName: () => ('some name'), getVersion: () => ('some version') },
     };
+    i18nMock = mock(i18n);
   });
 
   afterEach(() => {
     win.eventStack.length = 0;
+    i18nMock.verify();
   });
 
   it('Changes the locale and rebuilds the menu', () => {
+    i18nMock.expects('changeLanguage').once();
     const event = {};
     localeHandler.update({ electron, event, langCode: 'de', storage });
-    expect(i18n.language).to.equal('de');
     expect(options.config.lang).to.equal('de');
     expect(electron.Menu.setApplicationMenu).to.have.been.calledWith(electron.Menu);
     expect(event.returnValue).to.equal('Rebuilt electron menu.');
