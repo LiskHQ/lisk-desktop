@@ -1,6 +1,9 @@
 import actionTypes from '../../constants/actions';
 
 const mergeVotes = (newList, oldDict) => {
+  // eslint-disable-next-line no-console
+  console.log(typeof newList);
+
   const newDict = newList.reduce((tempDict, delegate) => {
     tempDict[delegate.username] = {
       confirmed: true,

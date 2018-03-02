@@ -19,6 +19,11 @@ describe('Reducer: voting(state, action)', () => {
     username2: { confirmed: true, unconfirmed: true, pending: false, publicKey: 'sample_key' },
     username3: { confirmed: false, unconfirmed: false, pending: false, publicKey: 'sample_key' },
   };
+
+  const updatedVotes0 = {
+    username1: { confirmed: true, unconfirmed: true, pending: true, publicKey: 'sample_key' },
+  };
+
   const restoredVotes = {
     username1: { confirmed: false, unconfirmed: false, pending: false, publicKey: 'sample_key' },
     username2: { confirmed: true, unconfirmed: true, pending: false, publicKey: 'sample_key' },
@@ -179,6 +184,36 @@ describe('Reducer: voting(state, action)', () => {
     };
     const changedState = voting(state, action);
 
+    expect(changedState).to.be.deep.equal(expectedState);
+  });
+
+  it('should add new username, when pending and unconfirmed and user not yet registered in votes: votesUpdated', () => {
+    const action = {
+      type: actionTypes.votesUpdated,
+      data: {
+        list: [{ username: 'username5', publicKey: 'sample_key' }],
+      },
+    };
+    const state = {
+      votes: updatedVotes0,
+    };
+
+    const defaultUserData = {
+      confirmed: true,
+      unconfirmed: true,
+      pending: false,
+      publicKey: 'sample_key',
+    };
+
+    const expectedState = {
+      votes: Object.assign(
+        {},
+        { ...updatedVotes0 },
+        { username5: { ...defaultUserData } }),
+      refresh: false,
+    };
+
+    const changedState = voting(state, action);
     expect(changedState).to.be.deep.equal(expectedState);
   });
 
