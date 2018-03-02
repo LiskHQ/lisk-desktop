@@ -7,6 +7,8 @@ exports.config = {
   directConnect: process.env.ON_JENKINS,
   capabilities: {
     browserName: 'chrome',
+    'browserstack.user': process.env.BROWSERSTACK_USERNAME,
+    'browserstack.key': process.env.BROWSERSTACK_PASSWORD,
   },
   framework: 'custom',
   frameworkPath: require.resolve('protractor-cucumber-framework'),
