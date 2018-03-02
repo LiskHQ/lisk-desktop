@@ -206,7 +206,7 @@
 }
 
 .addAcctiveAccountButton {
-  position: absolute;
+  position: absolute !important;
   bottom: 100px;
   left: 50%;
   transform: translateX(-50%);
@@ -305,6 +305,13 @@
   }
 }
 
+.background {
+  display: block !important;
+  position: fixed !important;
+  left: 0;
+  top: 0;
+}
+
 @media (--small-viewport) {
   .wrapper {
     & > h1 {
@@ -333,7 +340,7 @@
 
   .deviceIos {
     & .addAcctiveAccountButton {
-      bottom: 20vh; /* stylelint-disable-line */
+      bottom: 95px; /* stylelint-disable-line */
     }
   }
 

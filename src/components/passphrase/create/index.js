@@ -172,7 +172,7 @@ class Create extends React.Component {
     const { t, nextStep } = this.props;
     const { shapes } = this.state;
     const percentage = this.state.data ? this.state.data.percentage : 0;
-    const hintTitle = this.isTouchDevice ? 'by tilting you device.' : 'by moving your mouse.';
+    const hintTitle = this.isTouchDevice ? 'by tilting your device.' : 'by moving your mouse.';
 
     return (
       <section className={`${grid.row} ${grid['center-xs']} ${styles.wrapper} ${styles.generation}`} id="generatorContainer" >

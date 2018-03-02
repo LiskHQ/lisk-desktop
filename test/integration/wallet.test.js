@@ -21,7 +21,20 @@ import txTypes from './../../src/constants/transactionTypes';
 import getNetwork from './../../src/utils/getNetwork';
 import Wallet from '../../src/components/transactionDashboard';
 import accounts from '../constants/accounts';
-import { click, containsMessage } from './steps';
+import GenericStepDefinition from '../utils/genericStepDefinition';
+
+class Helper extends GenericStepDefinition {
+  checkSelectedFilter(filter) {
+    const expectedClass = '_active';
+
+    const activeFilter = this.wrapper.find('.transaction-filter-item').filterWhere((item) => {
+      const className = item.prop('className');
+      return className.includes(expectedClass);
+    });
+
+    expect(activeFilter.text().toLowerCase()).to.equal(filter);
+  }
+}
 
 describe('@integration: Wallet', () => {
   let store;
@@ -29,6 +42,7 @@ describe('@integration: Wallet', () => {
   let requestToActivePeerStub;
   let accountAPIStub;
   let localStorageStub;
+  let helper;
 
   const successMessage = 'Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain.';
   const errorMessage = 'An error occurred while creating the transaction.';
@@ -72,7 +86,6 @@ describe('@integration: Wallet', () => {
     requestToActivePeerStub.restore();
     accountAPIStub.restore();
     localStorageStub.restore();
-    wrapper.update();
   });
 
   const setupStep = (accountType, isLocked = false) => {
@@ -103,40 +116,14 @@ describe('@integration: Wallet', () => {
     accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
     store.dispatch(accountLoggedIn(account));
     wrapper = mount(renderWithRouter(Wallet, store, { location: { search: '' } }));
-  };
-
-  const fillInputField = (value, field) => {
-    wrapper.find(`.${field} input`).first().simulate('change', { target: { value } });
-  };
-
-  const clickStep = (elementName) => {
-    click(wrapper, elementName);
-  };
-
-  const shouldContainMessage = (elementName, message) => {
-    containsMessage(wrapper, elementName, message);
-  };
-
-  const checkRowCount = (length) => {
-    expect(wrapper.find('TransactionRow')).to.have.length(length);
-  };
-
-  const checkSelectedFilter = (filter) => {
-    const expectedClass = '_active';
-
-    const activeFilter = wrapper.find('.transaction-filter-item').filterWhere((item) => {
-      const className = item.prop('className');
-      return className.includes(expectedClass);
-    });
-
-    expect(activeFilter.text().toLowerCase()).to.equal(filter);
+    helper = new Helper(wrapper, store);
   };
 
   describe('Send', () => {
     describe('Scenario: should not allow to send when not enough funds', () => {
-      step('Given I\'m on "wallet" as "empty account"', setupStep.bind(null, 'empty account', false));
-      step('And I fill in "1" to "amount" field', fillInputField.bind(null, '1', 'amount'));
-      step('And I fill in "537318935439898807L" to "recipient" field', fillInputField.bind(null, '537318935439898807L', 'recipient'));
+      step('Given I\'m on "wallet" as "empty account"', () => setupStep('empty account'));
+      step('And I fill in "1" to "amount" field', () => helper.fillInputField('1', 'amount'));
+      step('And I fill in "537318935439898807L" to "recipient" field', () => helper.fillInputField('537318935439898807L', 'recipient'));
       step('Then I should see "Not enough LSK" error message', () => {
         expect(wrapper.find('Input').at(1).html()).to.contain('Not enough LSK');
       });
@@ -146,71 +133,71 @@ describe('@integration: Wallet', () => {
     });
 
     describe('Scenario: should give and error message when sending fails', () => {
-      step('Given I\'m on "wallet" as "genesis" account', setupStep.bind(null, 'genesis', false));
-      step('And I fill in "1" to "amount" field', fillInputField.bind(null, '1', 'amount'));
-      step('And I fill in "537318935439898807L" to "recipient" field', fillInputField.bind(null, '537318935439898807L', 'recipient'));
-      step('And I click "send next button"', clickStep.bind(null, 'send next button'));
+      step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
+      step('And I fill in "1" to "amount" field', () => helper.fillInputField('1', 'amount'));
+      step('And I fill in "537318935439898807L" to "recipient" field', () => helper.fillInputField('537318935439898807L', 'recipient'));
+      step('And I click "send next button"', () => helper.clickOnElement('button.send-next-button'));
       step('When I click "send button"', () => {
         requestToActivePeerStub.withArgs(match.any, 'transactions', match.any).returnsPromise().rejects({});
-        wrapper.find('.send-button button').simulate('click');
+        helper.clickOnElement('.send-button button');
       });
-      step(`Then I should see text ${errorMessage} in "result box message" element`, shouldContainMessage.bind(this, 'result box message', errorMessage));
+      step(`Then I should see text ${errorMessage} in "result box message" element`, () => helper.haveTextOf('.result-box-message', errorMessage));
     });
 
     describe('Scenario: should allow to send LSK from unlocked account', () => {
-      step('Given I\'m on "wallet" as "genesis" account', setupStep.bind(null, 'genesis', false));
-      step('And I fill in "1" to "amount" field', fillInputField.bind(null, '1', 'amount'));
-      step('And I fill in "537318935439898807L" to "recipient" field', fillInputField.bind(null, '537318935439898807L', 'recipient'));
-      step('And I click "send next button"', clickStep.bind(null, 'send next button'));
-      step('When I click "send button"', () => { wrapper.find('.send-button button').simulate('click'); });
-      step(`Then I should see text ${successMessage} in "result box message" element`, shouldContainMessage.bind(this, 'result box message', successMessage));
+      step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
+      step('And I fill in "1" to "amount" field', () => { helper.fillInputField('1', 'amount'); });
+      step('And I fill in "537318935439898807L" to "recipient" field', () => { helper.fillInputField('537318935439898807L', 'recipient'); });
+      step('And I click "send next button"', () => { helper.clickOnElement('button.send-next-button'); });
+      step('When I click "send button"', () => helper.clickOnElement('button.send-button button'));
+      step(`Then I should see text ${successMessage} in "result box message" element`, () => helper.haveTextOf('.result-box-message', successMessage));
     });
 
     describe('Scenario: should allow to send LSK from locked account', () => {
       const { passphrase } = accounts.genesis;
-      step('Given I\'m on "wallet" as "genesis" account', setupStep.bind(null, 'genesis', true));
-      step('And I fill in "1" to "amount" field', fillInputField.bind(null, '1', 'amount'));
-      step('And I fill in "537318935439898807L" to "recipient" field', fillInputField.bind(null, '537318935439898807L', 'recipient'));
-      step('And I click "send next button"', clickStep.bind(null, 'send next button'));
-      step('And I fill in passphrase of "genesis" to "passphrase" field', fillInputField.bind(null, passphrase, 'passphrase'));
-      step('When I click "next button"', () => { wrapper.find('.first-passphrase-next button').simulate('click'); });
-      step('When I click "send button"', () => { wrapper.find('.send-button button').simulate('click'); });
-      step(`Then I should see text ${successMessage} in "result box message" element`, shouldContainMessage.bind(this, 'result box message', successMessage));
+      step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis', true));
+      step('And I fill in "1" to "amount" field', () => { helper.fillInputField('1', 'amount'); });
+      step('And I fill in "537318935439898807L" to "recipient" field', () => { helper.fillInputField('537318935439898807L', 'recipient'); });
+      step('And I click "send next button"', () => helper.clickOnElement('button.send-next-button'));
+      step('And I fill in passphrase of "genesis" to "passphrase" field', () => { helper.fillInputField(passphrase, 'passphrase'); });
+      step('When I click "next button"', () => helper.clickOnElement('.first-passphrase-next button'));
+      step('When I click "send button"', () => helper.clickOnElement('.send-button button'));
+      step(`Then I should see text ${successMessage} in "result box message" element`, () => helper.haveTextOf('.result-box-message', successMessage));
     });
 
     describe('Scenario: should allow to send LSK from unlocked account with 2nd passphrase', () => {
       const { secondPassphrase } = accounts['second passphrase account'];
-      step('Given I\'m on "wallet" as "second passphrase account"', setupStep.bind(null, 'second passphrase account', false));
-      step('And I fill in "1" to "amount" field', fillInputField.bind(null, '1', 'amount'));
-      step('And I fill in "537318935439898807L" to "recipient" field', fillInputField.bind(null, '537318935439898807L', 'recipient'));
-      step('And I click "send next button"', clickStep.bind(null, 'send next button'));
-      step('And I fill in second passphrase of "second passphrase account" to "second passphrase" field', fillInputField.bind(null, secondPassphrase, 'second-passphrase'));
-      step('When I click "next button"', () => { wrapper.find('.second-passphrase-next button').simulate('click'); });
-      step('When I click "send button"', () => { wrapper.find('.send-button button').simulate('click'); });
-      step(`Then I should see text ${successMessage} in "result box message" element`, shouldContainMessage.bind(this, 'result box message', successMessage));
+      step('Given I\'m on "wallet" as "second passphrase account"', () => setupStep('second passphrase account'));
+      step('And I fill in "1" to "amount" field', () => { helper.fillInputField('1', 'amount'); });
+      step('And I fill in "537318935439898807L" to "recipient" field', () => { helper.fillInputField('537318935439898807L', 'recipient'); });
+      step('And I click "send next button"', () => helper.clickOnElement('button.send-next-button'));
+      step('And I fill in second passphrase of "second passphrase account" to "second passphrase" field', () => { helper.fillInputField(secondPassphrase, 'second-passphrase'); });
+      step('When I click "next button"', () => helper.clickOnElement('.second-passphrase-next button'));
+      step('When I click "send button"', () => helper.clickOnElement('.send-button button'));
+      step(`Then I should see text ${successMessage} in "result box message" element`, () => helper.haveTextOf('.result-box-message', successMessage));
     });
 
     describe('Scenario: should allow to send LSK from locked account with 2nd passphrase', () => {
       const { secondPassphrase, passphrase } = accounts['second passphrase account'];
-      step('Given I\'m on "wallet" as "second passphrase account"', setupStep.bind(null, 'second passphrase account', true));
-      step('And I fill in "1" to "amount" field', fillInputField.bind(null, '1', 'amount'));
-      step('And I fill in "537318935439898807L" to "recipient" field', fillInputField.bind(null, '537318935439898807L', 'recipient'));
-      step('And I click "send next button"', clickStep.bind(null, 'send next button'));
-      step('And I fill in passphrase of "second passphrase account" to "passphrase" field', fillInputField.bind(null, passphrase, 'passphrase'));
-      step('When I click "next button"', () => { wrapper.find('.first-passphrase-next button').simulate('click'); });
-      step('And I fill in second passphrase of "second passphrase account" to "second passphrase" field', fillInputField.bind(null, secondPassphrase, 'second-passphrase'));
-      step('When I click "next button"', () => { wrapper.find('.second-passphrase-next button').simulate('click'); });
-      step('When I click "send button"', () => { wrapper.find('.send-button button').simulate('click'); });
-      step(`Then I should see text ${successMessage} in "result box message" element`, shouldContainMessage.bind(this, 'result box message', successMessage));
+      step('Given I\'m on "wallet" as "second passphrase account"', () => setupStep('second passphrase account', true));
+      step('And I fill in "1" to "amount" field', () => { helper.fillInputField('1', 'amount'); });
+      step('And I fill in "537318935439898807L" to "recipient" field', () => { helper.fillInputField('537318935439898807L', 'recipient'); });
+      step('And I click "send next button"', () => helper.clickOnElement('button.send-next-button'));
+      step('And I fill in passphrase of "second passphrase account" to "passphrase" field', () => { helper.fillInputField(passphrase, 'passphrase'); });
+      step('When I click "next button"', () => helper.clickOnElement('.first-passphrase-next button'));
+      step('And I fill in second passphrase of "second passphrase account" to "second passphrase" field', () => { helper.fillInputField(secondPassphrase, 'second-passphrase'); });
+      step('When I click "next button"', () => helper.clickOnElement('.second-passphrase-next button'));
+      step('When I click "send button"', () => helper.clickOnElement('.send-button button'));
+      step(`Then I should see text ${successMessage} in "result box message" element`, () => helper.haveTextOf('.result-box-message', successMessage));
     });
   });
 
-  describe('transactions', () => {
+  describe('Transactions', () => {
     describe('Scenario: should allow to view transactions', () => {
-      step('Given I\'m on "wallet" as "genesis" account', setupStep.bind(null, 'genesis', false));
-      step('Then I should see 25 rows', checkRowCount.bind(null, 25));
+      step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
+      step('Then I should see 25 rows', () => helper.shouldSeeCountInstancesOf(25, 'TransactionRow'));
       step('When I scroll to the bottom of "transactions box"', () => { wrapper.find('Waypoint').props().onEnter(); });
-      step('Then I should see 50 rows', checkRowCount.bind(null, 50));
+      step('Then I should see 50 rows', () => { wrapper.update(); helper.shouldSeeCountInstancesOf(50, 'TransactionRow'); });
     });
 
     describe('Scenario: should allow to filter transactions', () => {
@@ -223,16 +210,14 @@ describe('@integration: Wallet', () => {
           .returnsPromise().resolves({ transactions: generateTransactions(25), count: 1000 });
       });
 
-      step('Given I\'m on "wallet" as "genesis" account', setupStep.bind(null, 'genesis', false));
-      step('Then the "All" filter should be selected by default', checkSelectedFilter.bind(null, 'all'));
-      step('When I click on the "Outgoing" filter', clickStep.bind(null, 'filter out'));
-      step('Then I expect to see the results for "Outgoing"', checkRowCount.bind(null, 25));
-      step('When I click on the "Incoming" filter', clickStep.bind(null, 'filter in'));
-      step('Then I expect to see the results for "Incoming"', checkRowCount.bind(null, 25));
-      step('When I click again on the "All" filter', clickStep.bind(null, 'filter all'));
-      step('Then I expect to see the results for "All"', checkRowCount.bind(null, 25));
+      step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
+      step('Then the "All" filter should be selected by default', () => helper.checkSelectedFilter('all'));
+      step('When I click on the "Outgoing" filter', () => helper.clickOnElement('.filter-out'));
+      step('Then I expect to see the results for "Outgoing"', () => helper.shouldSeeCountInstancesOf(25, 'TransactionRow'));
+      step('When I click on the "Incoming" filter', () => helper.clickOnElement('.filter-in'));
+      step('Then I expect to see the results for "Incoming"', () => helper.shouldSeeCountInstancesOf(25, 'TransactionRow'));
+      step('When I click again on the "All" filter', () => helper.clickOnElement('.filter-all'));
+      step('Then I expect to see the results for "All"', () => helper.shouldSeeCountInstancesOf(25, 'TransactionRow'));
     });
-
-    describe.skip('Scenario: should allow to search transactions');
   });
 });

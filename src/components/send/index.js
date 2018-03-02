@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { translate } from 'react-i18next';
 
 import { FontIcon } from '../fontIcon';
@@ -28,7 +28,7 @@ class Send extends React.Component {
   render() {
     const { t } = this.props;
     return (
-      <div>
+      <Fragment>
         <span className={styles.mobileMenu}>
           <span className={`send-menu-item ${styles.mobileMenuItem}`}
             onClick={this.setSendIsActive.bind(this, true)}>
@@ -51,7 +51,7 @@ class Send extends React.Component {
             <ResultBox />
           </MultiStep>
         </Box>
-      </div>
+      </Fragment>
     );
   }
 }
