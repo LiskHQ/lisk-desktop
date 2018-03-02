@@ -42,6 +42,8 @@ describe('Reducer: voting(state, action)', () => {
     username1: { confirmed: true, unconfirmed: false, pending: false, publicKey: 'sample_key' },
   };
 
+  const updatedVotes4 = updatedVotes0;
+
   const restoredVotes = {
     username1: { confirmed: false, unconfirmed: false, pending: false, publicKey: 'sample_key' },
     username2: { confirmed: true, unconfirmed: true, pending: false, publicKey: 'sample_key' },
@@ -290,6 +292,29 @@ describe('Reducer: voting(state, action)', () => {
       votes: Object.assign(
         {},
         { ...updatedVotes3 },
+      ),
+      refresh: false,
+    };
+
+    const changedState = voting(state, action);
+    expect(changedState).to.be.deep.equal(expectedState);
+  });
+
+  it('should reset flags on username vote record, when non of previous cases are met: votesUpdated', () => {
+    const action = {
+      type: actionTypes.votesUpdated,
+      data: {
+        list: [{ username: 'username1', publicKey: 'sample_key' }],
+      },
+    };
+    const state = {
+      votes: updatedVotes4,
+    };
+
+    const expectedState = {
+      votes: Object.assign(
+        {},
+        { username1: { ...defaultVoteUserData } },
       ),
       refresh: false,
     };
