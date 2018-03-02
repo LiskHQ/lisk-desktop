@@ -50,7 +50,7 @@ describe('Reducer: transactions(state, action)', () => {
   });
 
   it('should filter failed transactions from state.pending if action.type = actionTypes.transactionsFailed', () => {
-    const state = Object.assign({}, {...defaultState}, { pending: [mockTransactions[1]] });
+    const state = Object.assign({}, { ...defaultState }, { pending: [mockTransactions[1]] });
     const data = {
       failed: [mockTransactions[1]],
     };

@@ -29,14 +29,27 @@ describe('Reducer: savedAccounts(state, action)', () => {
     expect(changedState).to.deep.equal(action.data);
   });
 
-  it('should return action.data with phassprasse if action.type = actionTypes.accountSaved and phassprasse in action data', () => {
-    const state = { accounts: [account, account2] };
+  it('should update account with phassprasse if action.type = actionTypes.accountSaved and phassprasse in action data', () => {
+    const state = { accounts: [account, account2], lastActive: [] };
     const action = {
       type: actionTypes.accountSaved,
-      data: account2,
+      data: Object.assign(
+        {},
+        { ...account },
+        { passphrase: accounts.genesis.passphrase },
+        { balance: 0 },
+      ),
     };
+    const expectedState = Object.assign({}, { ...state });
+    expectedState.accounts[0] = Object.assign({},
+      { ...expectedState.accounts[0] },
+      { passphrase: accounts.genesis.passphrase },
+      { balance: 0 },
+    );
+    expectedState.lastActive = expectedState.accounts[0];
+
     const changedState = savedAccounts(state, action);
-    expect(changedState.accounts[1].passphrase).to.equal(account2.passphrase);
+    expect(changedState).to.deep.equal(expectedState);
   });
 
   it('should return action.data with address if action.type = actionTypes.accountSaved', () => {
