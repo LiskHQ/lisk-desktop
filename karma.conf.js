@@ -58,7 +58,6 @@ module.exports = function (config) {
             'src/components/setting/index.js',
             'src/components/setting/setting.js',
             'src/components/menuBar/menuBar.js',
-            'src/store/reducers/forging.js',
             'src/store/reducers/voting.js',
             'src/store/reducers/transactions.js',
             'src/store/reducers/savedAccounts.js',
