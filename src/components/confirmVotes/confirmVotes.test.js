@@ -64,7 +64,7 @@ describe('ConfirmVotes', () => {
     expect(props.prevStep).to.be.calledWith();
   });
 
-  it('should click to confirm button call votePlaced', () => {
+  it('should click to confirm button call votePlaced with success equal to true', () => {
     wrapper.find('button.confirm').simulate('click');
     expect(props.nextStep).to.be.calledWith();
   });
@@ -86,5 +86,14 @@ describe('ConfirmVotes', () => {
     wrapper.update();
     expect(props.nextStep).to.be.calledWith();
     clock.restore();
+  });
+
+  it('should click to confirm button call votePlaced with success equal to false', () => {
+    props.votePlaced = (data) => {
+      data.goToNextStep({ success: false });
+    };
+    wrapper.setProps(props);
+    wrapper.find('button.confirm').simulate('click');
+    expect(props.nextStep).to.be.calledWith();
   });
 });

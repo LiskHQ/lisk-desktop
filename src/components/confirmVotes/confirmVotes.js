@@ -23,7 +23,6 @@ class ConfirmVotes extends React.Component {
       success: false,
       body: text,
     };
-    /* istanbul ignore else */
     if (success) {
       message = {
         title: t('Votes submitted'),
