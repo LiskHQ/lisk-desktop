@@ -5,7 +5,6 @@ import { activePeerUpdate } from '../../actions/peers';
 import { votesFetched } from '../../actions/voting';
 import actionTypes from '../../constants/actions';
 import accountConfig from '../../constants/account';
-import { fetchAndUpdateForgedBlocks } from '../../actions/forging';
 import { getDelegate } from '../../utils/api/delegate';
 import transactionTypes from '../../constants/transactionTypes';
 
@@ -35,14 +34,6 @@ const updateAccountData = (store, action) => {
     if (result.balance !== account.balance) {
       if (!action.data.windowIsFocused || !hasRecentTransactions(transactions)) {
         updateTransactions(store, peers, account);
-      }
-      if (account.isDelegate) {
-        store.dispatch(fetchAndUpdateForgedBlocks({
-          activePeer: peers.data,
-          limit: 10,
-          offset: 0,
-          generatorPublicKey: account.publicKey,
-        }));
       }
     }
     store.dispatch(accountUpdated(result));

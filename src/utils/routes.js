@@ -27,11 +27,6 @@ export default [
     params: 'dialog',
     name: 'sidechains',
   }, {
-    regex: /\/main\/forging(?:\/[^/]*)?$/,
-    path: '/main/forging/',
-    params: 'dialog',
-    name: 'forging',
-  }, {
     regex: /\/add-account(?:\/[^/]*)?$/,
     path: '/add-account/',
     params: 'dialog',
