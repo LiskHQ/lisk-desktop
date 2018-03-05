@@ -12,6 +12,7 @@ const peersMiddleware = store => next => (action) => {
 
   switch (action.type) {
     case actionTypes.storeCreated:
+      /* istanbul ignore else  */
       if (hasNoSavedAccounts) {
         store.dispatch(activePeerSet({ network, noSavedAccounts: true }));
         store.dispatch(activePeerUpdate({ online: true }));

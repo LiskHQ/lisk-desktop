@@ -69,6 +69,19 @@ describe('Socket middleware', () => {
     expect(store.dispatch).to.have.been.calledWith(activePeerUpdate({ online: true }));
   });
 
+  it(`should dispatch ${actionTypes.accountLoggedIn} with https protocol`, () => {
+    store.getState = () => ({ ...store,
+      peers: { data: { options: { ssl: true, address: 'localhost:4000' } } },
+    });
+    middleware(store)(next)({ type: actionTypes.accountLoggedIn });
+    expect(store.dispatch).to.not.have.been.calledWith(activePeerUpdate({ online: true }));
+  });
+
+  it(`should dispatch ${actionTypes.accountLoggedIn} with https protocol`, () => {
+    middleware(store)(next)({ type: actionTypes.accountLoggedOut });
+    expect(store.dispatch).to.not.have.been.calledWith();
+  });
+
   it('should dispatch offline event on disconnect', () => {
     middleware(store)(next)({ type: actionTypes.accountLoggedIn });
     socketCallbacks.disconnect();

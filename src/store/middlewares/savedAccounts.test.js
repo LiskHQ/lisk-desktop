@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { spy, mock, match } from 'sinon';
 
-import { accountLoading } from '../../actions/account';
+import { accountLoading, accountLoggedOut } from '../../actions/account';
 import { accountSaved } from '../../actions/savedAccounts';
 import * as peersActions from '../../actions/peers';
 import actionTypes from '../../constants/actions';
@@ -37,6 +37,7 @@ describe('SavedAccounts middleware', () => {
       account: {
         balance,
         publicKey,
+        network: null,
       },
     };
     store.getState = () => state;
@@ -127,5 +128,24 @@ describe('SavedAccounts middleware', () => {
       network: networks.mainnet.code,
       publicKey: publicKey2,
     }));
+  });
+
+  it(`should dispatch accountRemoved action on ${actionTypes.accountLoggedOut} action if given account is logged in`, () => {
+    const publicKey2 = 'hab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88';
+    state.account = {
+      publicKey: publicKey2,
+      balance,
+    };
+
+    state.savedAccounts = {
+      accounts: [],
+    };
+
+    store.getState = () => state;
+    const action = {
+      type: actionTypes.accountRemoved,
+    };
+    middleware(store)(next)(action);
+    expect(store.dispatch).to.have.been.calledWith(accountLoggedOut());
   });
 });
