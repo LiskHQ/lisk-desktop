@@ -29,7 +29,7 @@ describe('Reducer: savedAccounts(state, action)', () => {
     expect(changedState).to.deep.equal(action.data);
   });
 
-  it('should update account with phassprasse if action.type = actionTypes.accountSaved and phassprasse in action data', () => {
+  it('should update corresponding account phassprasse when saving account', () => {
     const state = { accounts: [account, account2], lastActive: [] };
     const action = {
       type: actionTypes.accountSaved,
@@ -40,16 +40,16 @@ describe('Reducer: savedAccounts(state, action)', () => {
         { balance: 0 },
       ),
     };
-    const expectedState = Object.assign({}, { ...state });
-    expectedState.accounts[0] = Object.assign({},
-      { ...expectedState.accounts[0] },
+    const accountUpdatedWithPassphrase = Object.assign({}, { ...state });
+    accountUpdatedWithPassphrase.accounts[0] = Object.assign({},
+      { ...accountUpdatedWithPassphrase.accounts[0] },
       { passphrase: accounts.genesis.passphrase },
       { balance: 0 },
     );
-    expectedState.lastActive = expectedState.accounts[0];
+    accountUpdatedWithPassphrase.lastActive = accountUpdatedWithPassphrase.accounts[0];
 
     const changedState = savedAccounts(state, action);
-    expect(changedState).to.deep.equal(expectedState);
+    expect(changedState).to.deep.equal(accountUpdatedWithPassphrase);
   });
 
   it('should return action.data with address if action.type = actionTypes.accountSaved', () => {
@@ -83,7 +83,7 @@ describe('Reducer: savedAccounts(state, action)', () => {
     expect(changedState).to.deep.equal({ accounts: [account, account2WithoutPassphrase] });
   });
 
-  it('should return array same accounts with passphrase updated to action data if action.type = actionTypes.passphraseUsed', () => {
+  it('should update corresponding account passprasse when a passphrase is used', () => {
     const state = {
       accounts: [account, account2],
       lastActive: account2,
@@ -92,9 +92,11 @@ describe('Reducer: savedAccounts(state, action)', () => {
       type: actionTypes.passphraseUsed,
       data: accounts.genesis.passphrase,
     };
-    const changedState = savedAccounts(state, action);
-    expect(changedState.accounts[0]).to.deep.equal(account);
-    expect(changedState.accounts[1].passphrase).to.deep.equal(accounts.genesis.passphrase);
+    const accountsUpdated = savedAccounts(state, action);
+    const accountPreserved = accountsUpdated.accounts[0];
+    const accountsWithPassphraseUpdated = accountsUpdated.accounts[1];
+    expect(accountPreserved).to.deep.equal(account);
+    expect(accountsWithPassphraseUpdated.passphrase).to.deep.equal(accounts.genesis.passphrase);
   });
 });
 
