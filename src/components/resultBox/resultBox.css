@@ -27,7 +27,6 @@
   }
 
   & p {
-    font-size: 1.125em;
     color: var(--paragraph-color);
     line-height: var(--paragraph-line-height);
   }
