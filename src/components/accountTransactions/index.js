@@ -22,6 +22,7 @@ class accountTransactions extends React.Component {
           balance={this.props.balance}
           address={this.props.match.params.address}
           t={this.props.t}
+          notLoading={this.props.notLoading}
         />
       </div>
       <div className={`${grid['col-sm-12']} ${styles.transactions} ${grid['col-md-8']}`}>
@@ -35,6 +36,7 @@ class accountTransactions extends React.Component {
 
 const mapStateToProps = state => ({
   balance: state.transactions.account ? state.transactions.account.balance : null,
+  notLoading: state.loading.length === 0,
 });
 
 const mapDispatchToProps = dispatch => ({
