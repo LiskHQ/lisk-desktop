@@ -1,0 +1,29 @@
+@import '../app/variables.css';
+
+.wrapper {
+  padding: 45px; /* stylelint-disable-line */
+  line-height: 36px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  & header {
+    & h2 {
+      margin-top: 0;
+      font-weight: var(--font-weight-semi-bold);
+    }
+  }
+
+  & footer {
+    padding: 0px;
+  }
+
+  & .button {
+    font-weight: var(--font-weight-bold);
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 18px;
+    text-transform: none;
+  }
+}

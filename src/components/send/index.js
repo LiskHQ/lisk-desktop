@@ -8,6 +8,7 @@ import ResultBox from '../resultBox';
 import SendWritable from '../sendWritable';
 import SendReadable from './../sendReadable';
 import PassphraseSteps from './../passphraseSteps';
+import AccountInitialization from '../accountInitialization';
 import { parseSearchParams } from './../../utils/searchParams';
 import breakpoints from './../../constants/breakpoints';
 import styles from './send.css';
@@ -45,6 +46,7 @@ class Send extends React.Component {
           </span>
           <MultiStep finalCallback={this.setSendIsActive.bind(this, false)}
             className={styles.wrapper}>
+            <AccountInitialization />
             <SendWritable
               autoFocus={this.state.sendIsActive || window.innerWidth > breakpoints.m}
               address={this.getSearchParams().address}

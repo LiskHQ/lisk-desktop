@@ -22,6 +22,7 @@ class TransactionsDashboard extends React.Component {
 const mapStateToProps = state => ({
   address: state.account.address,
   balance: state.account.balance,
+  account: state.account,
 });
 
 export default connect(mapStateToProps)(TransactionsDashboard);
