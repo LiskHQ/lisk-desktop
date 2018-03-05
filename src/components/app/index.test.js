@@ -11,7 +11,6 @@ import Login from '../login';
 import Transactions from '../transactionDashboard';
 import Search from '../search';
 import Voting from '../voting';
-import Forging from '../forging';
 
 const fakeStore = configureStore();
 
@@ -34,7 +33,6 @@ const publicComponent = [
 const privateComponent = [
   { route: '/main/transactions', component: Transactions },
   { route: '/main/voting', component: Voting },
-  { route: '/main/forging', component: Forging },
 ];
 
 describe('App', () => {
@@ -72,9 +70,6 @@ describe('App', () => {
     const store = fakeStore({
       account: {
         publicKey: '000',
-      },
-      forging: {
-        statics: {},
       },
       dialog: {},
       peers: {

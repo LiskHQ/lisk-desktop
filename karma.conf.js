@@ -98,8 +98,6 @@ module.exports = function (config) {
             'src/components/voting/index.js',
             'src/components/delegateList/index.js',
             'src/components/delegateList/delegateList.js',
-            'src/components/forging/index.js',
-            'src/components/forging/forging.js',
             'src/components/dialog/index.js',
             'src/components/dialog/dialog.js',
             'src/components/toaster/index.js',
