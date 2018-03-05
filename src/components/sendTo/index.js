@@ -39,14 +39,13 @@ class SendTo extends React.Component {
         ${grid['col-lg-12']}
         `}>
             <h2>
-              {
-                this.props.notLoading
-                  ? <span>
-                    <LiskAmount val={this.props.balance}/>
-                    <small className={styles.balanceUnit}>LSK</small>
-                  </span>
-                  : null
-              }
+              <span>
+                {
+                  this.props.notLoading
+                    ? <LiskAmount val={this.props.balance}/>
+                    : null
+                } <small className={styles.balanceUnit}>LSK</small>
+              </span>
             </h2>
             <CopyToClipboard value={this.props.address} className={`${styles.address}`} copyClassName={styles.copy} />
           </div>

@@ -73,18 +73,19 @@ class Transactions extends React.Component {
       <div className={`transactions ${styles.activity}`}>
         <header>
           <h2 className={styles.title}>{this.props.t('Activity')}</h2>
-          {!this.isLoading()
-            ? <div className={styles.account}>
-              <h2>
-                <span>
+          <div className={styles.account}>
+            <h2>
+              {!this.isLoading()
+                ? <span>
                   <LiskAmount val={this.props.balance}/>&nbsp;
                 </span>
-                <small className={styles.balanceUnit}>LSK</small>
-              </h2>
-              <CopyToClipboard value={this.props.address} className={`${styles.address}`} copyClassName={styles.copy}/>
-            </div>
-            : null
-          }
+                : null
+              }
+              <small className={styles.balanceUnit}>LSK</small>
+            </h2>
+            <CopyToClipboard value={this.props.address} className={`${styles.address}`} copyClassName={styles.copy}/>
+          </div>
+
         </header>
         {this.shouldShowEmptyState() ?
           <EmptyState title={this.props.t('No activity yet')}
