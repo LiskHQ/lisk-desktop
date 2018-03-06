@@ -34,6 +34,7 @@ describe('@integration: Account switch', () => {
     publicKey: accounts.delegate.publicKey,
     address: 'http://localhost:8080',
     balance: accounts.delegate.balance,
+    passphrase: accounts.genesis.passphrase,
   }, {
     network: networks.mainnet.code,
     publicKey: accounts['empty account'].publicKey,
@@ -97,6 +98,13 @@ describe('@integration: Account switch', () => {
     step('When I click "edit button"', () => helper.clickOnElement('button.edit-button'));
     step('When I click "remove button"', () => helper.clickOnElement('button.remove-button'));
     step('When I click "remove button"', () => helper.clickOnElement('button.remove-button'));
+    step('Then I should see 2 instances of "saved account card"', () => helper.shouldSeeCountInstancesOf(2, '.saved-account-card'));
+  });
+
+  describe('Scenario: should allow to remove a saved account with "Lock ID"', () => {
+    step('Given I\'m on "account switcher" with accounts: "genesis,delegate,empty account"', setupStep);
+    step('Then I should see 3 instances of "saved account card"', () => helper.shouldSeeCountInstancesOf(3, '.saved-account-card'));
+    step('When I click "Lock ID"', () => helper.clickOnElement('strong.unlocked'));
     step('Then I should see 2 instances of "saved account card"', () => helper.shouldSeeCountInstancesOf(2, '.saved-account-card'));
   });
 

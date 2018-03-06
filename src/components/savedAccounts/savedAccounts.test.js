@@ -7,6 +7,7 @@ import configureStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import networks from '../../constants/networks';
+import account from '../../constants/account';
 import SavedAccounts from './savedAccounts';
 import routes from '../../constants/routes';
 
@@ -26,6 +27,7 @@ describe('SavedAccounts', () => {
     {
       publicKey: 'hab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88',
       network: networks.mainnet.code,
+      passphrase: account.genesis.passphrase,
     },
     {
       network: networks.customNode.code,
@@ -39,6 +41,7 @@ describe('SavedAccounts', () => {
     {
       network: networks.testnet.code,
       publicKey: activeAccount.publicKey,
+      passphrase: account.genesis.passphrase,
     },
   ];
 
@@ -85,6 +88,12 @@ describe('SavedAccounts', () => {
     wrapper.find('button.remove-button').at(1).simulate('click');
     wrapper.find('button.remove-button').at(1).simulate('click');
     expect(props.accountRemoved).to.have.been.calledWith(savedAccounts[1]);
+  });
+
+  it('should call props.accountRemoved on "Lock ID" click', () => {
+    expect(wrapper.find('strong.unlocked')).to.have.lengthOf(2);
+    wrapper.find('strong.unlocked').at(1).simulate('click');
+    expect(props.accountRemoved).to.have.been.calledWith(savedAccounts[3]);
   });
 
   it('should call props.accountSwitched on the "saved account card" click', () => {
