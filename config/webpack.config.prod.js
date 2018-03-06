@@ -12,7 +12,7 @@ const bundleVersion = require('../package.json').version;
 module.exports = merge(baseConfig, reactConfig, {
   output: {
     path: resolve(__dirname, '../app', '../app/build'),
-    filename: 'bundle.[name].js',
+    filename: 'bundle.[name].[hash].js',
   },
   plugins: [
     new webpack.DefinePlugin({
