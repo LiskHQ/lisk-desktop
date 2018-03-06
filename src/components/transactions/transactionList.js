@@ -28,51 +28,64 @@ class TransactionsList extends React.Component {
   }
 
   render() {
+    const {
+      filter,
+      transactions,
+      loading,
+      dashboard,
+      address,
+      nextStep,
+      loadMore,
+      t,
+    } = this.props;
+
     const fixIncomingFilter = (transaction) => {
       const isTypeNonSend = transaction.type !== txTypes.send;
-      const isFilterIncoming = this.props.filter
-        && this.props.filter.value === txFilters.incoming;
+      const isFilterIncoming = filter && filter.value === txFilters.incoming;
       const isAccountInit = transaction.type === txTypes.send
         && transaction.senderId === transaction.recipientId;
 
       return !(isFilterIncoming && (isTypeNonSend || isAccountInit));
     };
 
-    if (this.props.transactions.length > 0) {
-      return <div className={`${styles.results} transaction-results`}>
-        <TransactionsHeader tableStyle={tableStyle}></TransactionsHeader>
-        {this.props.transactions
-          .filter(fixIncomingFilter)
-          .map((transaction, i) => (
-            <TransactionRow address={this.props.address}
-              key={i}
-              t={this.props.t}
-              value={transaction}
-              nextStep={this.props.nextStep}
-            />))}
-        {
-          // the transaction list should be scrollable on a large screen
-          // otherwise (XS) the whole transaction box will be scrollable
-          // (see transactionOverview.js)
-          this.isLargeScreen()
-            ? <Waypoint bottomOffset='-80%'
-              key={this.props.transactions.length}
-              onEnter={() => {
-                if (this.props.loadMore) {
-                  this.props.loadMore();
-                }
-              }}></Waypoint>
-            : null
-        }
-      </div>;
-    } else if (!this.props.filter || this.props.filter.value !== txFilters.all) {
-      return <p className={`${styles.empty} hasPaddingRow empty-message`}>
-        {this.props.t('There are no {{filterName}} transactions.', {
-          filterName: this.props.filter && this.props.filter.name ? this.props.filter.name.toLowerCase() : '',
-        })}
-      </p>;
+    if (loading) return null;
+    if (transactions.length === 0) {
+      if (dashboard || (filter && filter.value !== txFilters.all)) {
+        return <p className={`${styles.empty} hasPaddingRow empty-message`}>
+          {t('There are no {{filterName}} transactions.', {
+            filterName: filter && filter.name ? filter.name.toLowerCase() : '',
+          })}
+        </p>;
+      }
+      return null;
     }
-    return null;
+
+    return <div className={`${styles.results} transaction-results`}>
+      <TransactionsHeader tableStyle={tableStyle}></TransactionsHeader>
+      {transactions
+        .filter(fixIncomingFilter)
+        .map((transaction, i) => (
+          <TransactionRow address={address}
+            key={i}
+            t={t}
+            value={transaction}
+            nextStep={nextStep}
+          />))}
+      {
+        // the transaction list should be scrollable on a large screen
+        // otherwise (XS) the whole transaction box will be scrollable
+        // (see transactionOverview.js)
+        this.isLargeScreen()
+          ? <Waypoint bottomOffset='-80%'
+            key={transactions.length}
+            onEnter={() => {
+              if (!dashboard) {
+                loadMore();
+              }
+            }}></Waypoint>
+          : null
+      }
+    </div>;
   }
 }
 
