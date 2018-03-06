@@ -15,9 +15,6 @@
   --header-balance-unit-font-size-L: 18px;
   --header-subtitle-font-size-XL: 18px;
   --header-subtitle-font-size-L: 16px;
-  --main-header-font-size-XL: 32px;
-  --main-header-font-size-L: 28px;
-  --main-header-font-size-XS: 24px;
   --grid-padding-XL: var(--box-padding-left-L); /* L until we add this padding to everywhere else too */
   --grid-padding-L: var(--box-padding-left-L);
   --grid-padding-M: var(--box-padding-left-M);
@@ -290,8 +287,6 @@
         padding: 20px var(--grid-padding-XL);
 
         & h2 {
-          font-size: var(--main-header-font-size-XL);
-
           & .balanceUnit {
             font-size: var(--header-balance-unit-font-size-XL);
           }
@@ -373,8 +368,6 @@
         padding: 20px var(--grid-padding-L);
 
         & h2 {
-          font-size: var(--main-header-font-size-L);
-
           & .balanceUnit {
             font-size: var(--header-balance-unit-font-size-L);
           }
@@ -478,10 +471,6 @@
     & .activity {
       & header {
         padding: 20px var(--grid-padding-M);
-
-        & h2 {
-          font-size: var(--main-header-font-size-XS);
-        }
 
         & .account {
           display: none;
