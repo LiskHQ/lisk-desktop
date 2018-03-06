@@ -184,7 +184,7 @@
 
 .network,
 .unlocked {
-  font-size: 1em;
+  font-size: var(--font-size-h6);
   position: absolute;
   top: 0;
   padding: 24px;
