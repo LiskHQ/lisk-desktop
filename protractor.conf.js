@@ -9,6 +9,8 @@ exports.config = {
     browserName: 'chrome',
     'browserstack.user': process.env.BROWSERSTACK_USERNAME,
     'browserstack.key': process.env.BROWSERSTACK_PASSWORD,
+    'browserstack.local': process.env.ON_JENKINS ? 'true' : undefined,
+    'browserstack.localIdentifier': process.env.ON_JENKINS ? process.env.BRANCH_NAME : undefined,
   },
   framework: 'custom',
   frameworkPath: require.resolve('protractor-cucumber-framework'),
