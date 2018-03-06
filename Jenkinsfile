@@ -123,7 +123,6 @@ node('lisk-hub') {
             Xvfb :1$N -ac -screen 0 1280x1024x24 &
 
             # Run end-to-end tests
-
             if [ -z $CHANGE_BRANCH ]; then
               npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL https://testnet.lisk.io --cucumberOpts.tags @testnet --params.useTestnetPassphrase true --directConnect true
             else
@@ -132,14 +131,15 @@ node('lisk-hub') {
 
             ~/bin/BrowserStackLocal --key $BROWSERSTACK_PASSWORD --folder ${WORKSPACE}/app/build --local-identifier $BRANCH_NAME &
             sleep 10
-            npm run --silent e2e-test -- --params.baseURL http://vtstanislav1.browserstack.com/index.html --params.liskCoreURL http://127.0.0.1:400$N --seleniumAddress http://hub-cloud.browserstack.com/wd/hub
+            npm run --silent e2e-test -- --params.baseURL http://vtstanislav1.browserstack.com/index.html --params.liskCoreURL http://127.0.0.1:400$N --seleniumAddress http://hub-cloud.browserstack.com/wd/hub --cucumberOpts.tags @testnet
 
             if [ -z $CHANGE_BRANCH ]; then
-              
+
               npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --cucumberOpts.tags @testnet --params.useTestnetPassphrase true --params.network testnet --directConnect true
             else
               echo "Skipping @testnet end-to-end tests because we're not on 'development' branch"
             fi
+
             '''
           }
         }
