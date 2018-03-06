@@ -4,7 +4,7 @@
   --tab-inactive-color: var(--color-grayscale-dark);
   --grid-padding-left: 30px;
   --header-line-height: 36px;
-  --header-subtitle-font-size: var(--font-size-medium);
+  --header-subtitle-font-size: var(--subtitle-font-size);
   --font-weight-bold: 500;
   --fee-color: var(--color-grayscale-dark);
 }
