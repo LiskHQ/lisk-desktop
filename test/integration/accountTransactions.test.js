@@ -10,6 +10,7 @@ import { prepareStore, renderWithRouter } from '../utils/applicationInit';
 import accountReducer from '../../src/store/reducers/account';
 import transactionReducer from '../../src/store/reducers/transactions';
 import peersReducer from '../../src/store/reducers/peers';
+import loadingReducer from '../../src/store/reducers/loading';
 import loginMiddleware from '../../src/store/middlewares/login';
 import accountMiddleware from '../../src/store/middlewares/account';
 import transactionsMiddleware from '../../src/store/middlewares/transactions';
@@ -79,6 +80,7 @@ describe('@integration: Account Transactions', () => {
       account: accountReducer,
       transactions: transactionReducer,
       peers: peersReducer,
+      loading: loadingReducer,
     }, [
       thunk,
       accountMiddleware,
