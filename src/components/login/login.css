@@ -258,7 +258,7 @@
     }
 
     & .subTitle {
-      font-size: 1em;
+      font-size: var(--subtitle-font-size);
     }
 
     & .shape {
