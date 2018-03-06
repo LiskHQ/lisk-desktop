@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { spy, stub, useFakeTimers } from 'sinon';
+import { spy, stub, useFakeTimers, match } from 'sinon';
 import { accountUpdated } from '../../actions/account';
 import accountConfig from '../../constants/account';
 import { activePeerUpdate } from '../../actions/peers';
@@ -157,7 +157,7 @@ describe('Account middleware', () => {
   it(`should call transactions API methods on ${actionTypes.newBlockCreated} action if block.transactions contains null element`, () => {
     middleware(store)(next)(blockWithNullTransaction);
 
-    expect(store.dispatch).to.have.been.calledWith();
+    expect(store.dispatch).to.have.been.calledWith(match.has('type', actionTypes.transactionsUpdated));
   });
 
   it(`should call API methods on ${actionTypes.newBlockCreated} action if state.transaction.transactions.confired does not contain recent transaction. Case with transactions address`, () => {
@@ -172,8 +172,8 @@ describe('Account middleware', () => {
     });
 
     middleware(store)(next)(newBlockCreated);
-    expect(stubGetAccount).to.have.been.calledWith();
-    expect(store.dispatch).to.have.been.calledWith();
+    expect(stubGetAccount).to.have.been.calledWith({});
+    expect(store.dispatch).to.have.been.calledWith(match.has('type', actionTypes.transactionsUpdated));
   });
 
   it(`should call API methods on ${actionTypes.newBlockCreated} action if state.transaction.transactions.confired does not contain recent transaction. Case with confirmed address`, () => {
@@ -189,8 +189,8 @@ describe('Account middleware', () => {
     });
 
     middleware(store)(next)(newBlockCreated);
-    expect(stubGetAccount).to.have.been.calledWith();
-    expect(store.dispatch).to.have.been.calledWith();
+    expect(stubGetAccount).to.have.been.calledWith({});
+    expect(store.dispatch).to.have.been.calledWith(match.has('type', actionTypes.transactionsUpdated));
   });
 
   it(`should fetch delegate info on ${actionTypes.newBlockCreated} action if account.balance changes and account.isDelegate`, () => {
