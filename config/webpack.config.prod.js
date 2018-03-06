@@ -3,8 +3,10 @@ const webpack = require('webpack');
 const { resolve } = require('path');
 const merge = require('webpack-merge');
 const { NamedModulesPlugin } = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const baseConfig = require('./webpack.config');
 const reactConfig = require('./webpack.config.react');
+const bundleVersion = require('../package.json').version;
 /* eslint-enable import/no-extraneous-dependencies */
 
 module.exports = merge(baseConfig, reactConfig, {
@@ -29,5 +31,10 @@ module.exports = merge(baseConfig, reactConfig, {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
     }),
+    new HtmlWebpackPlugin({
+      template: 'src/index.html',
+      VERSION: bundleVersion,
+      inject: false,
+    })
   ],
 });
