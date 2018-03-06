@@ -102,22 +102,6 @@ input:read-only {
   padding-right: 85px;
 }
 
-@media (--xLarge-viewport) {
-  .headerWrapper {
-    & h2 {
-      font-size: var(--font-size-h2-xl);
-    }
-  }
-}
-
-@media (--large-viewport) {
-  .headerWrapper {
-    & h2 {
-      font-size: var(--font-size-h2-l);
-    }
-  }
-}
-
 @media (--small-viewport) {
   .headerWrapper {
     display: none;
