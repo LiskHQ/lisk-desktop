@@ -111,22 +111,6 @@ node('lisk-hub') {
       }
     }
 
-    stage ('Run Unit Tests') {
-      try {
-        ansiColor('xterm') {
-          sh '''
-          ON_JENKINS=true npm run --silent test
-          # Submit coverage to coveralls
-          cat coverage/*/lcov.info | coveralls -v
-          '''
-
-        }
-      } catch (err) {
-        echo "Error: ${err}"
-        fail('Stopping build: test suite failed')
-      }
-    }
-
     stage ('Run E2E Tests') {
       try {
         ansiColor('xterm') {
