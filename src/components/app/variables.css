@@ -39,12 +39,12 @@ or "warn/action" ineastd of "red/green"
   /*************************
         Font
   *************************/
-  --font-size-h1: 6.854em;
-  --font-size-h2: 4.236em;
-  --font-size-h3: 2.618em;
-  --font-size-h4: 1.618em;
-  --font-size-h5: 1.32em;
-  --font-size-h6: 1em;
+  --font-size-h1: 65px;
+  --font-size-h2: 32px;
+  --font-size-h3: 28px;
+  --font-size-h4: 26;
+  --font-size-h5: 20px;
+  --font-size-h6: 16px;
   --font-size-small: 0.875em;
   --heading-font: 'gilroy', 'Open Sans', sans-serif;
   --content-font: 'Open Sans', sans-serif;
@@ -57,6 +57,7 @@ or "warn/action" ineastd of "red/green"
   --paragraph-font-size-l: 15px;
   --paragraph-font-size-s: 14px;
   --input-font-size: 16px;
+  --button-font-size: 16px;
 
   /* Font xl breakpoint */
   --font-size-h2-xl: 32px;
