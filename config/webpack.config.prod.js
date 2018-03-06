@@ -4,6 +4,7 @@ const { resolve } = require('path');
 const merge = require('webpack-merge');
 const { NamedModulesPlugin } = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 const baseConfig = require('./webpack.config');
 const reactConfig = require('./webpack.config.react');
 const bundleVersion = require('../package.json').version;
@@ -35,6 +36,8 @@ module.exports = merge(baseConfig, reactConfig, {
       template: 'src/index.html',
       VERSION: bundleVersion,
       inject: false,
-    })
+      inlineSource: 'crp-styles.(css)$',
+    }),
+    new HtmlWebpackInlineSourcePlugin()
   ],
 });
