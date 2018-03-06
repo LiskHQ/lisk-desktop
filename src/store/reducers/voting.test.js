@@ -26,26 +26,6 @@ describe('Reducer: voting(state, action)', () => {
     username3: { confirmed: false, unconfirmed: false, pending: false, publicKey: 'sample_key' },
   };
 
-  const votedButNotYetInList = {
-    username1: { confirmed: true, unconfirmed: true, pending: true, publicKey: 'sample_key' },
-  };
-
-  const updateVotesUnvotedWithExistingUsername = {
-    username1: { confirmed: true, unconfirmed: false, pending: true, publicKey: 'sample_key' },
-  };
-
-  const updateVotesDirtyNotVotedNotExistingUsername = {
-    username1: { confirmed: true, unconfirmed: false, pending: false, publicKey: 'sample_key' },
-  };
-
-  const updateVotesDirtyNotVotedExistingUsername = {
-    username1: { confirmed: true, unconfirmed: false, pending: false, publicKey: 'sample_key' },
-  };
-
-  const updateVotesNonConditionsMet = {
-    username1: { confirmed: true, unconfirmed: true, pending: true, publicKey: 'sample_key' },
-  };
-
   const restoredVotes = {
     username1: { confirmed: false, unconfirmed: false, pending: false, publicKey: 'sample_key' },
     username2: { confirmed: true, unconfirmed: true, pending: false, publicKey: 'sample_key' },
@@ -216,18 +196,19 @@ describe('Reducer: voting(state, action)', () => {
         list: [{ username: 'username5', publicKey: 'sample_key' }],
       },
     };
-    const state = {
-      votes: votedButNotYetInList,
+    const votedButNotYetInList = {
+      username1: { confirmed: true, unconfirmed: true, pending: true, publicKey: 'sample_key' },
     };
-
+    const state = {
+      votes: { ...votedButNotYetInList },
+    };
     const newUserNameRegisteredInVotes = {
-      votes: Object.assign(
-        {},
-        { ...votedButNotYetInList },
-        { username5: { ...defaultVoteUserData } }),
+      votes: {
+        ...votedButNotYetInList,
+        username5: { ...defaultVoteUserData },
+      },
       refresh: false,
     };
-
     const saveNewUserInVotes = voting(state, action);
     expect(saveNewUserInVotes).to.be.deep.equal(newUserNameRegisteredInVotes);
   });
@@ -239,15 +220,14 @@ describe('Reducer: voting(state, action)', () => {
         list: [{ username: 'username1', publicKey: 'sample_key' }],
       },
     };
-    const state = {
-      votes: updateVotesUnvotedWithExistingUsername,
+    const updateVotesUnvotedWithExistingUsername = {
+      username1: { confirmed: true, unconfirmed: false, pending: true, publicKey: 'sample_key' },
     };
-
+    const state = {
+      votes: { ...updateVotesUnvotedWithExistingUsername },
+    };
     const notChangedVotesRecords = {
-      votes: Object.assign(
-        {},
-        { ...updateVotesUnvotedWithExistingUsername },
-      ),
+      votes: { ...updateVotesUnvotedWithExistingUsername },
       refresh: false,
     };
 
@@ -262,19 +242,19 @@ describe('Reducer: voting(state, action)', () => {
         list: [{ username: 'username5', publicKey: 'sample_key' }],
       },
     };
-    const state = {
-      votes: updateVotesDirtyNotVotedNotExistingUsername,
+    const updateVotesDirtyNotVotedNotExistingUsername = {
+      username1: { confirmed: true, unconfirmed: false, pending: false, publicKey: 'sample_key' },
     };
-
+    const state = {
+      votes: { ...updateVotesDirtyNotVotedNotExistingUsername },
+    };
     const newUsernameAddedToVotes = {
-      votes: Object.assign(
-        {},
-        { ...updateVotesDirtyNotVotedNotExistingUsername },
-        { username5: { ...defaultVoteUserData } },
-      ),
+      votes: {
+        ...updateVotesDirtyNotVotedNotExistingUsername,
+        username5: { ...defaultVoteUserData },
+      },
       refresh: false,
     };
-
     const changedState = voting(state, action);
     expect(changedState).to.be.deep.equal(newUsernameAddedToVotes);
   });
@@ -286,18 +266,16 @@ describe('Reducer: voting(state, action)', () => {
         list: [{ username: 'username1', publicKey: 'sample_key' }],
       },
     };
-    const state = {
-      votes: updateVotesDirtyNotVotedExistingUsername,
+    const updateVotesDirtyNotVotedExistingUsername = {
+      username1: { confirmed: true, unconfirmed: false, pending: false, publicKey: 'sample_key' },
     };
-
+    const state = {
+      votes: { ...updateVotesDirtyNotVotedExistingUsername },
+    };
     const votesRecordsUnchanged = {
-      votes: Object.assign(
-        {},
-        { ...updateVotesDirtyNotVotedExistingUsername },
-      ),
+      votes: { ...updateVotesDirtyNotVotedExistingUsername },
       refresh: false,
     };
-
     const changedState = voting(state, action);
     expect(changedState).to.be.deep.equal(votesRecordsUnchanged);
   });
@@ -309,18 +287,16 @@ describe('Reducer: voting(state, action)', () => {
         list: [{ username: 'username1', publicKey: 'sample_key' }],
       },
     };
-    const state = {
-      votes: updateVotesNonConditionsMet,
+    const updateVotesNonConditionsMet = {
+      username1: { confirmed: true, unconfirmed: true, pending: true, publicKey: 'sample_key' },
     };
-
+    const state = {
+      votes: { ...updateVotesNonConditionsMet },
+    };
     const votesRecordsWithDefaultFlags = {
-      votes: Object.assign(
-        {},
-        { username1: { ...defaultVoteUserData } },
-      ),
+      votes: { username1: { ...defaultVoteUserData } },
       refresh: false,
     };
-
     const changedState = voting(state, action);
     expect(changedState).to.be.deep.equal(votesRecordsWithDefaultFlags);
   });

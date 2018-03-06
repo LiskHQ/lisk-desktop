@@ -50,7 +50,10 @@ describe('Reducer: transactions(state, action)', () => {
   });
 
   it('should filter out failed transactions from pending', () => {
-    const state = Object.assign({}, { ...defaultState }, { pending: [mockTransactions[1]] });
+    const state = {
+      ...defaultState,
+      pending: [mockTransactions[1]],
+    };
     const data = {
       failed: [mockTransactions[1]],
     };
@@ -59,8 +62,7 @@ describe('Reducer: transactions(state, action)', () => {
       type: actionTypes.transactionsFailed,
     };
     const pendingTransactionsFiltered = transactions(state, action);
-
-    const stateWithNoPendingTransactions = Object.assign({}, { ...defaultState });
+    const stateWithNoPendingTransactions = { ...defaultState };
     expect(pendingTransactionsFiltered).to.deep.equal(stateWithNoPendingTransactions);
   });
 

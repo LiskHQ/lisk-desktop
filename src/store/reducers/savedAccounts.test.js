@@ -33,19 +33,18 @@ describe('Reducer: savedAccounts(state, action)', () => {
     const state = { accounts: [account, account2], lastActive: [] };
     const action = {
       type: actionTypes.accountSaved,
-      data: Object.assign(
-        {},
-        { ...account },
-        { passphrase: accounts.genesis.passphrase },
-        { balance: 0 },
-      ),
+      data: {
+        ...account,
+        passphrase: accounts.genesis.passphrase,
+        balance: 0,
+      },
     };
-    const accountUpdatedWithPassphrase = Object.assign({}, { ...state });
-    accountUpdatedWithPassphrase.accounts[0] = Object.assign({},
-      { ...accountUpdatedWithPassphrase.accounts[0] },
-      { passphrase: accounts.genesis.passphrase },
-      { balance: 0 },
-    );
+    const accountUpdatedWithPassphrase = { ...state };
+    accountUpdatedWithPassphrase.accounts[0] = {
+      ...accountUpdatedWithPassphrase.accounts[0],
+      passphrase: accounts.genesis.passphrase,
+      balance: 0,
+    };
     accountUpdatedWithPassphrase.lastActive = accountUpdatedWithPassphrase.accounts[0];
 
     const changedState = savedAccounts(state, action);
