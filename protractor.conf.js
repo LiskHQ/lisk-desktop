@@ -7,6 +7,9 @@ exports.config = {
   directConnect: !process.env.BRANCH_NAME,
   capabilities: {
     browserName: 'chrome',
+    resolution: '1680x1050',
+    project: 'Lisk Hub',
+    build: process.env.BRANCH_NAME,
     'browserstack.user': process.env.BROWSERSTACK_USERNAME,
     'browserstack.key': process.env.BROWSERSTACK_PASSWORD,
     'browserstack.local': process.env.BRANCH_NAME ? 'true' : undefined,
