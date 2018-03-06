@@ -4,13 +4,13 @@ exports.config = {
   specs: [
     'test/e2e/*.feature',
   ],
-  directConnect: process.env.ON_JENKINS,
+  directConnect: !process.env.BRANCH_NAME,
   capabilities: {
     browserName: 'chrome',
     'browserstack.user': process.env.BROWSERSTACK_USERNAME,
     'browserstack.key': process.env.BROWSERSTACK_PASSWORD,
-    'browserstack.local': process.env.ON_JENKINS ? 'true' : undefined,
-    'browserstack.localIdentifier': process.env.ON_JENKINS ? process.env.BRANCH_NAME : undefined,
+    'browserstack.local': process.env.BRANCH_NAME ? 'true' : undefined,
+    'browserstack.localIdentifier': process.env.BRANCH_NAME,
   },
   framework: 'custom',
   frameworkPath: require.resolve('protractor-cucumber-framework'),
