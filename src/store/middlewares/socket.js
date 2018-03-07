@@ -13,11 +13,11 @@ const openConnection = (state) => {
 };
 
 const closeConnection = () => {
-  /* istanbul ignore else  */
   if (connection) {
     forcedClosing = true;
     connection.close();
     forcedClosing = false;
+    connection = undefined;
   }
 };
 

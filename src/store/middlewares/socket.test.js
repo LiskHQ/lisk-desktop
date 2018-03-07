@@ -62,6 +62,12 @@ describe('Socket middleware', () => {
     expect(io.connect().close).to.have.been.calledWith();
     expect(store.dispatch).to.not.have.been.calledWith(activePeerUpdate({ online: false }));
   });
+  // it depends on actionTypes.accountLoggedOut in test above that sets connection to null
+  it('should not dispatch any action then there is no connection', () => {
+    middleware(store)(next)({ type: actionTypes.accountLoggedOut });
+    expect(io.connect().close).to.not.have.been.calledWith();
+    expect(store.dispatch).to.not.have.been.calledWith(activePeerUpdate({ online: false }));
+  });
 
   it('should dispatch online event on reconnect', () => {
     middleware(store)(next)({ type: actionTypes.accountLoggedIn });
