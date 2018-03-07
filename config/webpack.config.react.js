@@ -45,7 +45,7 @@ module.exports = {
         extends: 'stylelint-config-standard',
         rules: {
           'selector-pseudo-class-no-unknown': null,
-          'unit-whitelist': ['px', 'deg', '%', 'em', 'ms'],
+          'unit-whitelist': ['px', 'deg', '%', 'ms'],
           'length-zero-no-unit': null,
           'at-rule-no-unknown': null,
         },
