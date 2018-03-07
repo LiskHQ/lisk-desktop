@@ -172,7 +172,8 @@
     "url-polyfill": "1.0.10",
     "webpack": "3.6.0",
     "webpack-bundle-analyzer": "2.9.0",
-    "webpack-dev-server": "2.8.2"
+    "webpack-dev-server": "2.8.2",
+    "webpack-file-changer": "2.0.1"
   },
   "build": {
     "appId": "io.lisk.hub",

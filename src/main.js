@@ -12,6 +12,8 @@ import proxyLogin from './utils/proxyLogin';
 import externalLinks from './utils/externalLinks';
 import env from './constants/env';
 import ipcLocale from './utils/ipcLocale';
+import './assets/css/crp-styles.css';
+
 
 if (env.production) {
   proxyLogin.init();
@@ -20,6 +22,7 @@ if (env.production) {
 }
 
 const rootElement = document.getElementById('app');
+
 
 const renderWithRouter = Component =>
   <Provider store={store}>

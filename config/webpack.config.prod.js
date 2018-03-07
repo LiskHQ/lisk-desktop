@@ -5,6 +5,7 @@ const merge = require('webpack-merge');
 const { NamedModulesPlugin } = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
+const FileChanger = require('webpack-file-changer');
 const baseConfig = require('./webpack.config');
 const reactConfig = require('./webpack.config.react');
 const bundleVersion = require('../package.json').version;
@@ -33,11 +34,22 @@ module.exports = merge(baseConfig, reactConfig, {
       name: 'vendor',
     }),
     new HtmlWebpackPlugin({
-      template: 'src/index.html',
+      template: './app/build/index.html',
       VERSION: bundleVersion,
       inject: false,
-      inlineSource: 'crp-styles.(css)$',
+      inlineSource: '.(css)$',
     }),
-    new HtmlWebpackInlineSourcePlugin()
+    new HtmlWebpackInlineSourcePlugin(),
+    new FileChanger({
+      change: [
+        {
+            file: "./index.html",
+            parameters: {
+                'bundle\\.vendor\\.js': 'bundle.vendor.[hash].js',
+                'bundle\\.app\\.js': 'bundle.app.[hash].js',
+            },
+        }  
+      ]
+    })
   ],
 });
