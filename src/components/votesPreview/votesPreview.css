@@ -3,9 +3,9 @@
 :root {
   --danger-color: var(--color-error);
   --link-color: #0077bd;
-  --main-header-font-size-XL: 32px;
-  --main-header-font-size-L: 28px;
-  --main-header-font-size-XS: 24px;
+  --main-header-font-size-XL: var(--font-size-h2-xl);
+  --main-header-font-size-L: var(--font-size-h2-l);
+  --main-header-font-size-XS: var(--font-size-h2-s);
   --header-font-size: 28px;
   --link-font-size: 15px;
   --progress-bar-text-font-size: 13px;
@@ -17,11 +17,12 @@
   --error-font-size-XL: 16px;
   --error-font-size-L: 14px;
   --button-height: 55px;
+  --error-font-size: var(--subtitle-font-size);
 }
 
 .errorMessage {
   color: var(--color-error);
-  height: 20px;
+  height: var(--error-font-size);
   font-weight: var(--font-weight-semi-bold);
   padding-top: 10px;
 }
@@ -152,7 +153,7 @@
   background-color: var(--color-error);
   color: var(--color-white);
   z-index: 4;
-  font-size: 16px;
+  font-size: var(--error-font-size);
   padding: 15px 24px !important;
   box-sizing: border-box;
   line-height: var(--message-line-height);
