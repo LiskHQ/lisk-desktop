@@ -80,13 +80,6 @@ class MainMenu extends React.Component {
         image: menuLogos.buyLisk,
       }, {
       */
-      /* TODO: uncomment when the page is updated
-        label: t('Forging'),
-        route: '/main/forging',
-        id: 'forging',
-        image: menuLogos.sidechains,
-      }, {
-      */
         label: t('Explorer'),
         route: '/explorer/search',
         id: 'explorer',

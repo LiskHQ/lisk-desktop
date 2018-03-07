@@ -49,6 +49,22 @@ describe('Reducer: transactions(state, action)', () => {
     expect(changedState).to.deep.equal({ ...state, failed: { errorMessage } });
   });
 
+  it('should filter out failed transactions from pending', () => {
+    const state = {
+      ...defaultState,
+      pending: [mockTransactions[1]],
+    };
+    const data = {
+      failed: [mockTransactions[1]],
+    };
+    const action = {
+      data,
+      type: actionTypes.transactionsFailed,
+    };
+    const pendingTransactionsFiltered = transactions(state, action);
+    const stateWithNoPendingTransactions = { ...defaultState };
+    expect(pendingTransactionsFiltered).to.deep.equal(stateWithNoPendingTransactions);
+  });
 
   it('should concat action.data to state.confirmed if action.type = actionTypes.transactionsLoaded', () => {
     const state = { ...defaultState };

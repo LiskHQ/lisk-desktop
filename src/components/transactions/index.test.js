@@ -27,6 +27,7 @@ describe('TransactionsHOC', () => {
       peers,
       transactions,
       account,
+      loading: [],
     });
     wrapper = mount(<Provider store={store}><Router><TransactionsHOC /></Router></Provider>, {
       context: { store, history, i18n },

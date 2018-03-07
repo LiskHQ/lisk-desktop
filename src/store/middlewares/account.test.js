@@ -4,7 +4,6 @@ import { accountUpdated } from '../../actions/account';
 import accountConfig from '../../constants/account';
 import { activePeerUpdate } from '../../actions/peers';
 import * as votingActions from '../../actions/voting';
-import * as forgingActions from '../../actions/forging';
 import * as accountApi from '../../utils/api/account';
 import accounts from '../../../test/constants/accounts';
 import actionTypes from '../../constants/actions';
@@ -203,16 +202,6 @@ describe('Account middleware', () => {
     expect(store.dispatch).to.have.been.calledWith();
 
     delegateApiMock.restore();
-  });
-
-  it(`should call fetchAndUpdateForgedBlocks(...) on ${actionTypes.newBlockCreated} action if account.balance changes and account.isDelegate`, () => {
-    state.account.isDelegate = true;
-    store.getState = () => (state);
-    stubGetAccount.resolves({ balance: 10e8 });
-    const fetchAndUpdateForgedBlocksSpy = spy(forgingActions, 'fetchAndUpdateForgedBlocks');
-
-    middleware(store)(next)(newBlockCreated);
-    expect(fetchAndUpdateForgedBlocksSpy).to.have.been.calledWith();
   });
 
   it(`should fetch delegate info on ${actionTypes.transactionsUpdated} action if action.data.confirmed contains delegateRegistration transactions`, () => {

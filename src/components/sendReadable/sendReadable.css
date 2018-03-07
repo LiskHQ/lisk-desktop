@@ -50,7 +50,6 @@ input:read-only {
   }
 
   & p {
-    font-size: 1.125em;
     color: var(--color-grayscale-dark);
     line-height: 36px;
   }

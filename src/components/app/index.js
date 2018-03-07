@@ -11,7 +11,6 @@ import SearchResult from '../search/searchResult';
 import TransactionDashboard from '../transactionDashboard';
 import AccountTransactions from '../accountTransactions';
 import Voting from '../voting';
-import Forging from '../forging';
 import SingleTransaction from './../singleTransaction';
 import styles from './app.css';
 import Dialog from '../dialog';
@@ -47,7 +46,6 @@ class App extends React.Component {
                       <Route path={`${match.url}${routes.wallet.short}/:dialog?`} component={TransactionDashboard} />
                       <Route path={`${match.url}/voting/:dialog?`} component={Voting} />
                       <Route path={`${match.url}/sidechains/:dialog?`} component={Sidechains} />
-                      <Route path={`${match.url}/forging/:dialog?`} component={Forging} />
                       <Route path='*' component={NotFound} />
                     </Switch>
                   </main>

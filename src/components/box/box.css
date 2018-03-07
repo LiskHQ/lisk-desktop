@@ -22,7 +22,7 @@
 
     & :global .subTitle {
       margin-top: 20px;
-      font-size: 1em;
+      font-size: var(--subtitle-font-size);
       color: var(--color-grayscale-dark);
       height: 22px;
     }

@@ -99,15 +99,6 @@ describe('Login', () => {
       expect(props.history.replace).to.have.been.calledWith('/main/voting');
     });
 
-    it('call this.props.history.replace with "/main/transaction" if referrer address is "/main/forging" and account.isDelegate === false', () => {
-      history.location.search = '';
-      wrapper = shallow(<Login {...props}/>, options);
-      history.location.search = '?referrer=/main/forging';
-      props.history.replace.reset();
-      wrapper.setProps({ history, account: { address: 'dummy', isDelegate: false } });
-      expect(props.history.replace).to.have.been.calledWith('/main/dashboard');
-    });
-
     it('hides network options by default', () => {
       wrapper = shallow(<Login {...props}/>, options);
       props.history.replace.reset();

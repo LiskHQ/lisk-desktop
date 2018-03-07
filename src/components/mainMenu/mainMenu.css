@@ -7,6 +7,9 @@
   --more-menu-color: var(--color-grayscale-medium);
   --offcanvas-menu-border-color: var(--color-grayscale-light);
   --more-menu-border-color: var(--color-grayscale-medium);
+  --read-more-font-size: 17px;
+  --read-more-icon-font-size: 65px;
+  --close-icon-font-size: 35px;
 }
 
 .sideBarWrapper {
@@ -90,7 +93,7 @@
 }
 
 .close {
-  font-size: 35px;
+  font-size: var(--close-icon-font-size);
   display: flex;
   width: auto;
   cursor: pointer;
@@ -118,7 +121,7 @@
 
 .label {
   padding: 4.5vh 10px; /* stylelint-disable-line */
-  font-size: 1.125em;
+  font-size: var(--main-menu-font-size);
   color: var(--color-black);
   font-weight: bold;
   font-family: var(--heading-font);
@@ -203,14 +206,14 @@
 }
 
 .readMoreText {
-  font-size: 17px;
+  font-size: var(--read-more-font-size);
   font-weight: bold;
   text-transform: capitalize;
   font-family: 'gilroy', 'Open Sans', sans-serif;
 }
 
 .readMoreIcon {
-  font-size: 65px;
+  font-size: var(--read-more-icon-font-size);
   width: 100%;
 }
 

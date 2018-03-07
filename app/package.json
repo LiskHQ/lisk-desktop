@@ -3,7 +3,7 @@
   "version": "0.2.0-rc.1",
   "description": "Lisk Hub",
   "main": "./build/main.js",
-  "author":{
+  "author": {
     "name": "Lisk Foundation",
     "email": "admin@lisk.io"
   }

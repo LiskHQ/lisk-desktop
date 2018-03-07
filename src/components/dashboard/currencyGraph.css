@@ -1,5 +1,9 @@
 @import '../app/variables';
 
+:root {
+  --stepSwitch-font-size: 15px;
+}
+
 .wrapper {
   height: 100%;
   min-height: 200px;
@@ -28,7 +32,7 @@
 .stepSwitch {
   padding: 10px 16px;
   cursor: pointer;
-  font-size: 15px;
+  font-size: var(--stepSwitch-font-size);
   font-weight: 500;
   color: var(--color-grayscale-medium);
 
@@ -61,7 +65,7 @@
     min-height: 300px;
 
     & h2 {
-      font-size: 28px;
+      font-size: var(--font-size-h2-l);
       margin: 45px var(--box-padding-left-M) 20px;
     }
   }

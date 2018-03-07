@@ -20,6 +20,7 @@ describe('AccountTransaction Component', () => {
       },
       peers: { options: { data: {} } },
       account: { address: 'some address' },
+      loading: [],
     };
 
     props = {
