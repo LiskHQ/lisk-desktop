@@ -62,7 +62,7 @@
   color: inherit;
 }
 
-@media screen and (max-width: 48em) {
+@media (--small-viewport) {
   .hiddenXs {
     display: none;
   }
