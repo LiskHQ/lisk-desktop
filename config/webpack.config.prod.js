@@ -37,19 +37,19 @@ module.exports = merge(baseConfig, reactConfig, {
       template: './app/build/index.html',
       VERSION: bundleVersion,
       inject: false,
-      inlineSource: '.(css)$'
+      inlineSource: '.(css)$',
     }),
     new HtmlWebpackInlineSourcePlugin(),
     new FileChanger({
       change: [
         {
-            file: "./index.html",
-            parameters: {
-                'bundle\\.vendor\\.js': 'bundle.vendor.[hash].js',
-                'bundle\\.app\\.js': 'bundle.app.[hash].js',
-            },
-        }  
-      ]
-    })
+          file: './index.html',
+          parameters: {
+            'bundle\\.vendor\\.js': 'bundle.vendor.[hash].js',
+            'bundle\\.app\\.js': 'bundle.app.[hash].js',
+          },
+        },
+      ],
+    }),
   ],
 });

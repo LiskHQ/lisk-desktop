@@ -25,12 +25,10 @@ const entries = {
   vendor: ['babel-polyfill', 'url-polyfill', 'react', 'redux', 'react-dom', 'react-redux'],
   'head.css': `${resolve(__dirname, '../src/assets/css')}/styles.head.css`,
 };
-
 const extractHeadCSS = new ExtractTextPlugin({
   filename: 'head.css',
   allChunks: false,
 });
-
 const cssLoader = {
   loader: 'css-loader',
   options: {
@@ -47,9 +45,8 @@ const headCssLoader = {
     sourceMap: true,
     minimize: true,
     modules: false,
-  }
+  },
 };
-
 const headCssLoadersConfig = Object.assign({}, headCssLoader);
 
 const cssLoadersConfig = {
@@ -82,7 +79,7 @@ const cssLoadersConfig = {
           /* eslint-enable import/no-extraneous-dependencies */
         ],
       },
-    }
+    },
   ),
 };
 
