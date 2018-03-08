@@ -51,7 +51,8 @@ const headCssLoadersConfig = Object.assign({}, headCssLoader);
 
 const cssLoadersConfig = {
   fallback: 'style-loader',
-  use: [cssLoader].concat(
+  use: [
+    cssLoader,
     {
       loader: 'postcss-loader',
       options: {
@@ -80,7 +81,7 @@ const cssLoadersConfig = {
         ],
       },
     },
-  ),
+  ],
 };
 
 module.exports = {
