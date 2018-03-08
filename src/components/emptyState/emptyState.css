@@ -30,7 +30,6 @@
   }
 
   & p {
-    font-size: 16px;
     line-height: 26px;
     color: var(--color-grayscale-dark);
   }

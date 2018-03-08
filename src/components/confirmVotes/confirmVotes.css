@@ -14,12 +14,11 @@
   text-align: center;
 
   & h2 {
-    font-size: 32px;
+    font-size: var(--font-size-h2-xl);
     margin: 0;
   }
 
   & p {
-    font-size: 18px;
     line-height: 36px;
     margin: 32px 0;
   }

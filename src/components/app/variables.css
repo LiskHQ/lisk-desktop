@@ -46,13 +46,17 @@ or "warn/action" ineastd of "red/green"
   --font-size-h5: 1.32em;
   --font-size-h6: 1em;
   --font-size-small: 0.875em;
-  --font-size-medium: 1.125em;
   --heading-font: 'gilroy', 'Open Sans', sans-serif;
   --content-font: 'Open Sans', sans-serif;
   --font-weight-normal: 400;
   --font-weight-semi-bold: 500;
   --font-weight-bold: 600;
   --font-weight-very-bold: 700;
+  --subtitle-font-size: 16px;
+  --main-menu-font-size: 18px;
+  --paragraph-font-size-l: 15px;
+  --paragraph-font-size-s: 14px;
+  --input-font-size: 16px;
 
   /* Font xl breakpoint */
   --font-size-h2-xl: 32px;

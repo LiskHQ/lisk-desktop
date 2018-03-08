@@ -29,6 +29,7 @@ describe('Dashboard', () => {
           data: {},
           options: {},
         },
+        loading: [],
         account: { address: 'some address' },
       },
     };

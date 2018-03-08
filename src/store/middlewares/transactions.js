@@ -1,3 +1,5 @@
+import { loadingStarted, loadingFinished } from '../../utils/loading';
+
 import { unconfirmedTransactions, transactions as getTransactions, getAccount, transaction } from '../../utils/api/account';
 import {
   transactionsFailed,
@@ -39,7 +41,7 @@ const filterTransactions = (store, action) => {
 const initTransactions = (store, action) => {
   const activePeer = store.getState().peers.data;
   const address = action.data.address;
-
+  loadingStarted('transactions-init');
   getTransactions({ activePeer, address, limit: 25 })
     .then((txResponse) => {
       const { transactions, count } = txResponse;
@@ -51,6 +53,7 @@ const initTransactions = (store, action) => {
             balance: accountResponse.balance,
             address,
           }));
+          loadingFinished('transactions-init');
         });
     });
 };

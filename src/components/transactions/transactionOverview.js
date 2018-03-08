@@ -42,8 +42,12 @@ class Transactions extends React.Component {
   }
 
   shouldShowEmptyState() {
-    return this.props.transactions.length === 0 &&
+    return this.props.transactions.length === 0 && !this.isLoading() &&
       (!this.props.activeFilter || this.props.activeFilter === txFilters.all);
+  }
+
+  isLoading() {
+    return this.props.loading.length > 0;
   }
 
   render() {
@@ -71,13 +75,17 @@ class Transactions extends React.Component {
           <h2 className={styles.title}>{this.props.t('Activity')}</h2>
           <div className={styles.account}>
             <h2>
-              <span>
-                <LiskAmount val={this.props.balance}/>&nbsp;
-              </span>
+              {!this.isLoading()
+                ? <span>
+                  <LiskAmount val={this.props.balance}/>&nbsp;
+                </span>
+                : null
+              }
               <small className={styles.balanceUnit}>LSK</small>
             </h2>
-            <CopyToClipboard value={this.props.address} className={`${styles.address}`} copyClassName={styles.copy} />
+            <CopyToClipboard value={this.props.address} className={`${styles.address}`} copyClassName={styles.copy}/>
           </div>
+
         </header>
         {this.shouldShowEmptyState() ?
           <EmptyState title={this.props.t('No activity yet')}
@@ -100,6 +108,7 @@ class Transactions extends React.Component {
           transactions={this.props.transactions}
           loadMore={this.loadMore.bind(this)}
           nextStep={this.props.nextStep}
+          loading={this.isLoading()}
           t={this.props.t}
         />
         {

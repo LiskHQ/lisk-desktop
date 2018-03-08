@@ -32,6 +32,8 @@ class Dashboard extends React.Component {
             transactions,
             t,
             address: this.props.accountAddress,
+            dashboard: true,
+            loading: this.props.loading,
           }} />
         </Box>
       </div>
@@ -45,6 +47,7 @@ class Dashboard extends React.Component {
 const mapStateToProps = state => ({
   transactions: [...state.transactions.pending, ...state.transactions.confirmed].slice(0, 3),
   accountAddress: state.account.address,
+  loading: state.loading.length > 0,
 });
 
 export default connect(mapStateToProps)(translate()(Dashboard));
