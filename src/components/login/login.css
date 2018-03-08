@@ -4,7 +4,8 @@
   --gradient: linear-gradient(45deg, rgba(0, 74, 255, 1) 0%, rgba(147, 244, 254, 1) 100%);
   --transition: all ease 300ms;
   --header-focused-font-size: 32px;
-  --arrow-font-size: 19px;
+  --arrow-font-size: 60px;
+  --arrow-focused-font-size: 40px;
   --rect-width: 200px;
   --login-box-padding-L: 48px;
   --login-box-padding-XL: 56px;
@@ -255,7 +256,13 @@
     transform: translateZ(0);
 
     & h2 {
-      font-size: var(--header-focused-font-size);
+      & a {
+        font-size: var(--header-focused-font-size);
+      }
+
+      & .singUpArrow {
+        font-size: var(--arrow-focused-font-size);
+      }
     }
 
     & .subTitle {
@@ -370,7 +377,7 @@
 
   .signUp,
   .login {
-    & h2 {
+    & h2 a {
       font-size: 65px;
     }
   }
@@ -479,7 +486,7 @@
   .signUp {
     padding: 0 20px;
 
-    & h2 {
+    & h2 a {
       font-size: var(--font-size-h2-s);
       margin-top: 12vh; /* stylelint-disable-line */
     }
