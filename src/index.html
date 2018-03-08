@@ -257,6 +257,12 @@
 
         </style>
         <link rel="icon" type="image/png" href="./assets/images/LISK.png" />
+        <script type="text/javascript">
+          var defaultNet = 'mainnet';
+          (function(targetNet) {
+            localStorage.setItem('defaultNetwork', defaultNet);
+          })(defaultNet);
+        </script>
     </head>
     <body>
         <div id="app"></div>
