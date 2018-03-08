@@ -206,11 +206,11 @@
   },
   "bundlesize": [
     {
-      "path": "./app/build/bundle.app.js",
+      "path": "./app/build/bundle.app.*.js",
       "maxSize": "890 kB"
     },
     {
-      "path": "./app/build/bundle.vendor.js",
+      "path": "./app/build/bundle.vendor.*.js",
       "maxSize": "150 kB"
     },
     {
