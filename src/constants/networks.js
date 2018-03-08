@@ -22,6 +22,9 @@ const networks = {
   },
 };
 
-networks.default = networks[env.defaultNetwork];
+const preferredNetwork = localStorage.getItem('defaultNetwork');
+const targetNetwork = JSON.stringify(preferredNetwork || env.defaultNetwork);
+
+networks.default = networks[targetNetwork];
 
 module.exports = networks;
