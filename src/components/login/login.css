@@ -455,6 +455,7 @@
   .login,
   .signUp {
     & h2 {
+      font-size: var(--font-size-h2-l);
       margin-top: 28vh; /* stylelint-disable-line */
     }
   }
@@ -465,6 +466,10 @@
     border-radius: 0px;
     width: 60%;
     height: calc(100vh - var(--m-top-bar-height) - var(--m-menu-bar-height)); /* stylelint-disable-line */
+
+    & .singUpArrow {
+      font-size: var(--arrow-focused-font-size);
+    }
   }
 
   .login,
@@ -486,6 +491,10 @@
   .login,
   .signUp {
     padding: 0 20px;
+
+    & h2 {
+      font-size: var(--font-size-h2-s);
+    }
 
     & h2 a {
       margin-top: 12vh; /* stylelint-disable-line */
