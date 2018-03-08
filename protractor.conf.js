@@ -6,29 +6,29 @@ exports.config = {
   ],
   directConnect: !process.env.BRANCH_NAME,
   multiCapabilities: [{
-    browserName: 'Chrome',
-    browser_version: '63.0',
+    browserName: 'chrome',
+    browserVersion: '63.0',
     os: 'Windows',
-    os_version: '10',
+    osVersion: '10',
     resolution: '1680x1050',
   /*
   }, {
     browserName: 'Firefox',
-    browser_version: '58.0',
+    browserVersion: '58.0',
     os: 'Windows',
-    os_version: '10',
+    osVersion: '10',
     resolution: '1680x1050',
   }, {
     browserName: 'Edge',
-    browser_version: '16.0',
+    browserVersion: '16.0',
     os: 'Windows',
-    os_version: '10',
+    osVersion: '10',
     resolution: '1680x1050',
   }, {
     browserName: 'Safari',
-    browser_version: '10.1',
+    browserVersion: '10.1',
     os: 'OS X',
-    os_version: 'Sierra',
+    osVersion: 'Sierra',
     resolution: '1600x1200',
     */
   }].map(({ browserName, os, resolution }) => ({
