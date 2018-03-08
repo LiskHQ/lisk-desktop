@@ -45,6 +45,7 @@ module.exports = merge(baseConfig, reactConfig, {
         {
           file: './index.html',
           parameters: {
+            'styles\\.css': 'styles.[hash].css',
             'bundle\\.vendor\\.js': 'bundle.vendor.[hash].js',
             'bundle\\.app\\.js': 'bundle.app.[hash].js',
           },

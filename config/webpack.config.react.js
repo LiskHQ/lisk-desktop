@@ -111,7 +111,7 @@ module.exports = {
       },
     }),
     new ExtractTextPlugin({
-      filename: 'styles.css',
+      filename: 'styles.[hash].css',
       allChunks: true,
     }),
     extractHeadCSS,
