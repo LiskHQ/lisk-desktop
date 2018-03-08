@@ -214,7 +214,7 @@
       "maxSize": "150 kB"
     },
     {
-      "path": "./app/build/styles.css",
+      "path": "./app/build/styles.*.css",
       "maxSize": "1.50 MB"
     }
   ],
