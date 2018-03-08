@@ -36,7 +36,7 @@ module.exports = {
   },
   plugins: [
     new DefinePlugin({
-      DEFAULT_NEWTORK: 'mainnet',
+      DEFAULT_NETWORK: JSON.stringify('mainnet'),
     }),
     new StyleLintPlugin({
       context: `${resolve(__dirname, '../src')}/`,
