@@ -49,6 +49,8 @@ describe('SavedAccounts', () => {
     closeDialog: () => {},
     accountRemoved: spy(),
     accountSwitched: spy(),
+    removePassphrase: spy(),
+    removeSavedAccountPassphrase: spy(),
     networkOptions: {
       code: networks.mainnet.code,
     },
@@ -90,10 +92,11 @@ describe('SavedAccounts', () => {
     expect(props.accountRemoved).to.have.been.calledWith(savedAccounts[1]);
   });
 
-  it('should call props.accountRemoved on "Lock ID" click', () => {
+  it('should call props.removePassphrase and props.removeSavedAccountPassphrase on "Lock ID" click when account is in saved', () => {
     expect(wrapper.find('strong.unlocked')).to.have.lengthOf(2);
     wrapper.find('strong.unlocked').at(1).simulate('click');
-    expect(props.accountRemoved).to.have.been.calledWith(savedAccounts[3]);
+    expect(props.removePassphrase).to.have.been.calledWith(savedAccounts[3]);
+    expect(props.removeSavedAccountPassphrase).to.have.been.calledWith(savedAccounts[3]);
   });
 
   it('should call props.accountSwitched on the "saved account card" click', () => {

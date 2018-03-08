@@ -50,3 +50,13 @@ export const accountsRetrieved = () => ({
 export const activeAccountSaved = () => ({
   type: actionTypes.activeAccountSaved,
 });
+
+/**
+ * An action to dispatch removeSavedAccountPassphrase
+ * @param {Object} data - account data
+ * @returns {Object} - Action object
+ */
+export const removeSavedAccountPassphrase = data => ({
+  data,
+  type: actionTypes.removeSavedAccountPassphrase,
+});

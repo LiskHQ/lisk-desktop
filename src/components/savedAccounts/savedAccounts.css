@@ -197,6 +197,13 @@
 
 .unlocked {
   left: 0;
+
+  &:hover {
+    & span {
+      transform: scale(1.1);
+      transform-origin: 100%;
+    }
+  }
 }
 
 .network {

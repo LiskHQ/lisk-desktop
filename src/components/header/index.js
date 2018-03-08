@@ -3,6 +3,7 @@ import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
 import { dialogDisplayed } from '../../actions/dialog';
 import { accountLoggedOut, removePassphrase } from '../../actions/account';
+import { removeSavedAccountPassphrase } from '../../actions/savedAccounts';
 import Header from './header';
 
 const mapStateToProps = state => ({
@@ -15,7 +16,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   setActiveDialog: data => dispatch(dialogDisplayed(data)),
   logOut: () => dispatch(accountLoggedOut()),
-  removePassphrase: () => dispatch(removePassphrase()),
+  removePassphrase: data => dispatch(removePassphrase(data)),
+  removeSavedAccountPassphrase: data => dispatch(removeSavedAccountPassphrase(data)),
 });
 export default withRouter(connect(
   mapStateToProps,

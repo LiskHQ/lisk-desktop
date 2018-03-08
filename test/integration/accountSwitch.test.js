@@ -101,11 +101,11 @@ describe('@integration: Account switch', () => {
     step('Then I should see 2 instances of "saved account card"', () => helper.shouldSeeCountInstancesOf(2, '.saved-account-card'));
   });
 
-  describe('Scenario: should allow to remove a saved account with "Lock ID"', () => {
+  describe('Scenario: should allow to "Lock ID" account', () => {
     step('Given I\'m on "account switcher" with accounts: "genesis,delegate,empty account"', setupStep);
-    step('Then I should see 3 instances of "saved account card"', () => helper.shouldSeeCountInstancesOf(3, '.saved-account-card'));
+    step('Then I should see 3 instances of "saved account card"', () => helper.shouldSeeCountInstancesOf(1, 'strong.unlocked'));
     step('When I click "Lock ID"', () => helper.clickOnElement('strong.unlocked'));
-    step('Then I should see 2 instances of "saved account card"', () => helper.shouldSeeCountInstancesOf(2, '.saved-account-card'));
+    step('Then I should see 2 instances of "saved account card"', () => helper.shouldSeeCountInstancesOf(0, 'strong.unlocked'));
   });
 
   describe('Scenario: should allow to switch account', () => {

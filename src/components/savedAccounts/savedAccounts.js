@@ -57,6 +57,18 @@ class SavedAccounts extends React.Component {
     e.stopPropagation();
   }
 
+  handleRemoveDirectly(account, e) {
+    e.stopPropagation();
+
+    const { savedAccounts } = this.props;
+    const savedActiveAccount = savedAccounts.find(acc => `${acc.network} ${acc.network}` === `${account.network} ${account.network}`);
+    if (savedActiveAccount) {
+      this.props.removePassphrase(account);
+    }
+
+    this.props.removeSavedAccountPassphrase(account);
+  }
+
   render() {
     const {
       closeDialog,
@@ -104,7 +116,7 @@ class SavedAccounts extends React.Component {
               {(account.passphrase ?
                 <strong
                   className={`unlocked ${styles.unlocked}`}
-                  onClick={ e => this.handleRemove(account, e, true) }
+                  onClick={this.handleRemoveDirectly.bind(this, account)}
                 >
                   <FontIcon value='unlocked' />
                   {t('Lock ID')}

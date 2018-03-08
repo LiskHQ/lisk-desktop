@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import actionTypes from '../constants/actions';
 import { accountUpdated, accountLoggedOut,
-  secondPassphraseRegistered, delegateRegistered, sent } from './account';
+  secondPassphraseRegistered, delegateRegistered, sent, removePassphrase } from './account';
 import { transactionAdded, transactionFailed } from './transactions';
 import { errorAlertDialogDisplayed } from './dialog';
 import * as accountApi from '../utils/api/account';
@@ -10,6 +10,8 @@ import * as delegateApi from '../utils/api/delegate';
 import Fees from '../constants/fees';
 import { toRawLsk } from '../utils/lsk';
 import transactionTypes from '../constants/transactionTypes';
+import networks from '../constants/networks';
+import account from '../constants/account';
 
 describe('actions: account', () => {
   describe('accountUpdated', () => {
@@ -213,6 +215,23 @@ describe('actions: account', () => {
       actionFunction(dispatch);
       const expectedAction = transactionFailed({ errorMessage: 'An error occurred while creating the transaction.' });
       expect(dispatch).to.have.been.calledWith(expectedAction);
+    });
+  });
+
+  describe('removePassphrase', () => {
+    it('should create an action to remove passphrase', () => {
+      const data = {
+        publicKey: account.genesis.publicKey,
+        network: networks.testnet,
+        address: account.genesis.address,
+      };
+
+      const expectedAction = {
+        data,
+        type: actionTypes.removePassphrase,
+      };
+
+      expect(removePassphrase(data)).to.be.deep.equal(expectedAction);
     });
   });
 });

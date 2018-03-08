@@ -59,11 +59,13 @@ const savedAccounts = (state = { accounts: [] }, action) => {
           !(account.publicKey === action.data.publicKey &&
           account.network === action.data.network)),
       };
-    case actionTypes.removePassphrase:
+    case actionTypes.removeSavedAccountPassphrase:
       return {
         ...state,
         accounts: state.accounts.map((account) => {
-          delete account.passphrase;
+          if ((`${action.data.network} ${action.data.network}` === `${account.network} ${account.network}`)) {
+            delete account.passphrase;
+          }
           return account;
         }),
       };

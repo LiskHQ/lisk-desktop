@@ -71,10 +71,11 @@ describe('Reducer: savedAccounts(state, action)', () => {
     expect(changedState).to.deep.equal({ accounts: [account2] });
   });
 
-  it('should return array same accounts without passphrase if action.type = actionTypes.removePassphrase', () => {
+  it('should return array same accounts without passphrase if action.type = actionTypes.removeSavedAccountPassphrase', () => {
     const state = { accounts: [account, account2] };
     const action = {
-      type: actionTypes.removePassphrase,
+      type: actionTypes.removeSavedAccountPassphrase,
+      data: account2,
     };
     const changedState = savedAccounts(state, action);
     const account2WithoutPassphrase = { ...account2 };
