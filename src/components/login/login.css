@@ -245,6 +245,7 @@
 
   & a {
     text-decoration: none;
+    font-size: inherit;
   }
 
   & .shapes {
@@ -377,7 +378,6 @@
 
   .signUp,
   .login {
-    & h2 a,
     & h2 {
       font-size: 65px;
     }
@@ -488,7 +488,6 @@
     padding: 0 20px;
 
     & h2 a {
-      font-size: var(--font-size-h2-s);
       margin-top: 12vh; /* stylelint-disable-line */
     }
   }
