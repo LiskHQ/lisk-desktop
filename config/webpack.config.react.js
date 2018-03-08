@@ -25,6 +25,58 @@ const entries = {
   vendor: ['babel-polyfill', 'url-polyfill', 'react', 'redux', 'react-dom', 'react-redux'],
 };
 
+const extractHeadCSS = new ExtractTextPlugin({
+  filename: 'styles.head.css',
+  allChunks: true,
+});
+
+const cssLoader = {
+  loader: 'css-loader',
+  options: {
+    sourceMap: true,
+    minimize: true,
+    modules: true,
+    importLoaders: 1,
+    localIdentName: '[name]__[local]___[hash:base64:5]',
+  },
+};
+
+const headCssLoadersConfig = Object.assign({}, cssLoader);
+
+const cssLoadersConfig = {
+  fallback: 'style-loader',
+  use: [cssLoader].concat(
+    {
+      loader: 'postcss-loader',
+      options: {
+        ident: 'postcss',
+        sourceMap: true,
+        sourceComments: true,
+        plugins: [
+          /* eslint-disable import/no-extraneous-dependencies */
+          require('postcss-partial-import')({}),
+          require('postcss-mixins')({}),
+          require('postcss-nesting')({}),
+          require('postcss-cssnext')({
+            features: {
+              customProperties: {
+                variables: reactToolboxVariables,
+              },
+            },
+          }),
+          require('postcss-functions')({
+            functions: {
+              rem: px => `${(px / 10)}rem`,
+            },
+          }),
+          require('postcss-for')({}),
+          /* eslint-enable import/no-extraneous-dependencies */
+        ],
+      },
+    }
+  ),
+};
+
 module.exports = {
   entry: entries,
   devtool: 'source-map',
@@ -55,6 +107,7 @@ module.exports = {
       filename: 'styles.css',
       allChunks: true,
     }),
+    extractHeadCSS,
     new I18nScannerPlugin({
       translationFunctionNames: ['i18next.t', 'props.t', 'this.props.t', 't'],
       outputFilePath: './i18n/locales/en/common.json',
@@ -68,50 +121,14 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/,
-        use: ['css-hot-loader'].concat(ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                sourceMap: true,
-                minimize: true,
-                modules: true,
-                importLoaders: 1,
-                localIdentName: '[name]__[local]___[hash:base64:5]',
-              },
-            },
-            {
-              loader: 'postcss-loader',
-              options: {
-                ident: 'postcss',
-                sourceMap: true,
-                sourceComments: true,
-                plugins: [
-                  /* eslint-disable import/no-extraneous-dependencies */
-                  require('postcss-partial-import')({}),
-                  require('postcss-mixins')({}),
-                  require('postcss-nesting')({}),
-                  require('postcss-cssnext')({
-                    features: {
-                      customProperties: {
-                        variables: reactToolboxVariables,
-                      },
-                    },
-                  }),
-                  require('postcss-functions')({
-                    functions: {
-                      rem: px => `${(px / 10)}rem`,
-                    },
-                  }),
-                  require('postcss-for')({}),
-                  /* eslint-enable import/no-extraneous-dependencies */
-                ],
-              },
-            },
-          ],
-        })),
+        test: /\.css/i,
+        exclude: /\.head\.css/,
+        use: ['css-hot-loader'].concat(ExtractTextPlugin.extract(cssLoadersConfig)),
+      },
+      {
+        test: /\.head\.css/i,
+        exclude: /styles\.css/,
+        use: [].concat(extractHeadCSS.extract(headCssLoadersConfig)),
       },
     ],
   },

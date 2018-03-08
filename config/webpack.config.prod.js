@@ -37,7 +37,7 @@ module.exports = merge(baseConfig, reactConfig, {
       template: './app/build/index.html',
       VERSION: bundleVersion,
       inject: false,
-      inlineSource: '.(css)$',
+      inlineSource: '.(css)$'
     }),
     new HtmlWebpackInlineSourcePlugin(),
     new FileChanger({

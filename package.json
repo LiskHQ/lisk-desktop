@@ -170,7 +170,7 @@
     "stylelint-webpack-plugin": "=0.9.0",
     "url-loader": "0.5.9",
     "url-polyfill": "1.0.10",
-    "webpack": "3.6.0",
+    "webpack": "3.11.0",
     "webpack-bundle-analyzer": "2.9.0",
     "webpack-dev-server": "2.8.2",
     "webpack-file-changer": "2.0.1"

@@ -12,8 +12,7 @@ import proxyLogin from './utils/proxyLogin';
 import externalLinks from './utils/externalLinks';
 import env from './constants/env';
 import ipcLocale from './utils/ipcLocale';
-import './assets/css/crp-styles.css';
-
+import './assets/css/styles.head.css';
 
 if (env.production) {
   proxyLogin.init();
