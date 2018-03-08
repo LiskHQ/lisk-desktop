@@ -2,7 +2,7 @@ const env = {
   production: PRODUCTION,
   test: TEST,
   development: (!PRODUCTION && !TEST),
-  defaultNetwork: DEFAULT_NETWORK,
+  defaultNetwork: 'mainnet',
 };
 
 export default env;

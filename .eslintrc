@@ -15,7 +15,6 @@
     "beforeEach": true,
     "afterEach": true,
     "ipc": true,
-    "DEFAULT_NETWORK": true,
     "PRODUCTION": true,
     "TEST": true
   },
