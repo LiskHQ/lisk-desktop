@@ -7,7 +7,9 @@
   "main": "main.js",
   "scripts": {
     "build": "npm run clean-build && npm run copy-files && npm run build-prod && npm run build-electron",
-    "build:testnet": "export TESTNET=true && npm run build",
+    "build:testnet": "npm run build:testnet:pre",
+    "build:testnet:pre": "cpx ./app/build ./app/build-testnet && npm run build:testnet:post",
+    "build:testnet:post": "replace '\"mainnet\";//defaultNetwork' '\"testnet\";//defaultNetwork' ./app/build-testnet/index.html ",
     "dev": "webpack-dev-server --config ./config/webpack.config.dev --env.dev --hot",
     "build-prod": "webpack --config ./config/webpack.config.prod --env.prod",
     "build-electron": "webpack --config ./config/webpack.config.electron",
@@ -157,6 +159,7 @@
     "react-hot-loader": "=1.3.1",
     "react-test-renderer": "=16.0.0",
     "redux-mock-store": "1.3.0",
+    "replace": "0.3.0",
     "should": "13.1.0",
     "simulant": "0.2.2",
     "sinon": "3.3.0",
