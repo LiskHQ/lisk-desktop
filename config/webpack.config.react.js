@@ -23,11 +23,12 @@ const langRegex = getLocales('../i18n/languages.js');
 const entries = {
   app: `${resolve(__dirname, '../src')}/main.js`,
   vendor: ['babel-polyfill', 'url-polyfill', 'react', 'redux', 'react-dom', 'react-redux'],
+  'head.css': `${resolve(__dirname, '../src/assets/css')}/styles.head.css`,
 };
 
 const extractHeadCSS = new ExtractTextPlugin({
-  filename: 'styles.head.css',
-  allChunks: true,
+  filename: 'head.css',
+  allChunks: false,
 });
 
 const cssLoader = {
@@ -40,8 +41,16 @@ const cssLoader = {
     localIdentName: '[name]__[local]___[hash:base64:5]',
   },
 };
+const headCssLoader = {
+  loader: 'css-loader',
+  options: {
+    sourceMap: true,
+    minimize: true,
+    modules: false,
+  }
+};
 
-const headCssLoadersConfig = Object.assign({}, cssLoader);
+const headCssLoadersConfig = Object.assign({}, headCssLoader);
 
 const cssLoadersConfig = {
   fallback: 'style-loader',
@@ -121,14 +130,12 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css/i,
-        exclude: /\.head\.css/,
-        use: ['css-hot-loader'].concat(ExtractTextPlugin.extract(cssLoadersConfig)),
+        test: /styles\.head\.css$/,
+        use: [].concat(extractHeadCSS.extract(headCssLoadersConfig)),
       },
       {
-        test: /\.head\.css/i,
-        exclude: /styles\.css/,
-        use: [].concat(extractHeadCSS.extract(headCssLoadersConfig)),
+        test: /^((?!styles\.head).)*\.css$/,
+        use: ['css-hot-loader'].concat(ExtractTextPlugin.extract(cssLoadersConfig)),
       },
     ],
   },
