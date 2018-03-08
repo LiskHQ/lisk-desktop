@@ -22,7 +22,7 @@ const networks = {
   },
 };
 
-const preferredNetwork = localStorage.getItem('defaultNetwork');
+const preferredNetwork = window.localStorage ? localStorage.getItem('defaultNetwork') : null;
 const targetNetwork = preferredNetwork || env.defaultNetwork;
 networks.default = networks[targetNetwork];
 
