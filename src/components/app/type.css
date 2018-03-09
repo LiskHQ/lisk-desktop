@@ -86,7 +86,7 @@ a,
 b,
 i,
 strong {
-  font-size: var(--font-size-h6);
+  font-size: var(--paragraph-font-size-l);
 }
 
 strong {
@@ -139,5 +139,9 @@ select {
 
   h5 {
     font-size: var(--font-size-h5-s);
+  }
+
+  p {
+    font-size: var(--paragraph-font-size-s);
   }
 }

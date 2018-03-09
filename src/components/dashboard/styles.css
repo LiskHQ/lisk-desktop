@@ -37,7 +37,6 @@
 @media (--xLarge-viewport) {
   .latestActivity {
     & h2 {
-      font-size: var(--font-size-h2-xl);
       margin: 45px var(--box-padding-left-L) 20px;
     }
   }
@@ -46,7 +45,6 @@
 @media (--large-viewport) {
   .latestActivity {
     & h2 {
-      font-size: var(--font-size-h2-l);
       margin: 45px var(--box-padding-left-L) 20px;
     }
   }
@@ -73,19 +71,12 @@
     height: auto;
 
     & h2 {
-      font-size: var(--font-size-h2-l);
       margin: 45px var(--box-padding-left-M) 20px;
     }
   }
 }
 
 @media (--small-viewport) {
-  .latestActivity {
-    & h2 {
-      font-size: var(--font-size-h2-s);
-    }
-  }
-
   .seeAllLink {
     display: block;
     margin-top: 16px;

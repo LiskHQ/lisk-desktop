@@ -1,11 +1,13 @@
 @import '../app/variables.css';
 
 :root {
-  --font-size-ids-h1-xl: 4em;
-  --font-size-ids-h1-l: 3em;
-  --font-size-ids-h1-s: 2em;
-  --font-size-card-h2: 2em;
-  --font-size-card-h2-s: 1.5em;
+  --font-size-ids-h1-xl: 64px;
+  --font-size-ids-h1-l: 48px;
+  --font-size-ids-h1-s: 32px;
+  --font-size-card-h2: 32px;
+  --font-size-card-h2-s: 24px;
+  --address-font-size: 18px;
+  --small-font-size: 20px;
   --close-button-shadow: 0 20px 20px 0 rgba(0, 32, 68, 0.25);
   --h1-padding-xl: 85px;
   --h1-padding-l: 40px;
@@ -75,7 +77,7 @@
     color: var(--color-black);
 
     & > small {
-      font-size: 0.6875em;
+      font-size: var(--small-font-size);
     }
   }
 
@@ -116,7 +118,7 @@
 .address {
   margin-bottom: 40px;
   color: var(--color-grayscale-dark);
-  font-size: 1.125em;
+  font-size: var(--address-font-size);
 }
 
 .cardIcon {
@@ -184,7 +186,7 @@
 
 .network,
 .unlocked {
-  font-size: 1em;
+  font-size: var(--font-size-h6);
   position: absolute;
   top: 0;
   padding: 24px;
