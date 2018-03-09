@@ -10,16 +10,14 @@ def get_build_info() {
 def slack_send(color, message) {
   /* Slack channel names are limited to 21 characters */
   CHANNEL_MAX_LEN = 21
-  CHANNEL_SUFFIX = '-jenkins'
 
   channel = "${env.JOB_NAME}".tokenize('/')[0]
-  channel_len = CHANNEL_MAX_LEN - CHANNEL_SUFFIX.size()
-  if ( channel.size() > channel_len ) {
-     channel = channel.substring(0, channel_len)
+  channel = channel.replace('lisk-', 'lisk-ci-')
+  if ( channel.size() > CHANNEL_MAX_LEN ) {
+     channel = channel.substring(0, CHANNEL_MAX_LEN)
   }
-  channel += CHANNEL_SUFFIX
-  echo "[slack_send] channel: ${channel} "
 
+  echo "[slack_send] channel: ${channel} "
   slackSend color: "${color}", message: "${message}", channel: "${channel}"
 }
 
