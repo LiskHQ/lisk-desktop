@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import networks from '../../constants/networks';
 import SavedAccounts from './savedAccounts';
+import routes from '../../constants/routes';
 
 const mountWithRouter = (node, options) => mount(<Router>{node}</Router>, options);
 const fakeStore = configureStore();
@@ -89,7 +90,7 @@ describe('SavedAccounts', () => {
   it('should call props.accountSwitched on the "saved account card" click', () => {
     wrapper.find('.saved-account-card').at(1).simulate('click');
     expect(props.accountSwitched).to.have.been.calledWith(savedAccounts[1]);
-    expect(props.history.push).to.have.been.calledWith('/main/dashboard/');
+    expect(props.history.push).to.have.been.calledWith(`${routes.main}${routes.dashboard.url}`);
   });
 
   it('should not call props.accountSwitched on the "saved account card" click if in "edit" mode', () => {

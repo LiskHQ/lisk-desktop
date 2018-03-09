@@ -9,6 +9,7 @@ import networks from '../../constants/networks';
 import getNetwork from '../../utils/getNetwork';
 import Box from '../box';
 import styles from './register.css';
+import routes from '../../constants/routes';
 
 
 class Register extends React.Component {
@@ -19,7 +20,7 @@ class Register extends React.Component {
 
   componentDidUpdate() {
     if (this.props.account.passphrase !== undefined) {
-      this.props.history.push('/main/dashboard');
+      this.props.history.push(`${routes.main}${routes.dashboard.url}`);
     }
   }
 

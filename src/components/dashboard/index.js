@@ -9,6 +9,7 @@ import TransactionList from './../transactions/transactionList';
 import Send from '../send';
 import CurrencyGraph from './currencyGraph';
 import styles from './styles.css';
+import routes from '../../constants/routes';
 
 class Dashboard extends React.Component {
   render() {
@@ -22,7 +23,7 @@ class Dashboard extends React.Component {
           <header>
             <h2 className={styles.title}>
               {t('Latest activity')}
-              <Link to='/main/transactions' className={styles.seeAllLink}>
+              <Link to={`${routes.main}${routes.dashboard.url}`} className={styles.seeAllLink}>
                 {t('See all transactions')}
                 <FontIcon value='arrow-right'/>
               </Link>

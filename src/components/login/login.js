@@ -12,6 +12,7 @@ import { extractAddress } from '../../utils/api/account';
 import PassphraseInput from '../passphraseInput';
 import styles from './login.css';
 import networks from '../../constants/networks';
+import routes from '../../constants/routes';
 import getNetwork from '../../utils/getNetwork';
 import { parseSearchParams } from './../../utils/searchParams';
 import Box from '../box';
@@ -99,7 +100,7 @@ class Login extends React.Component {
 
   getReferrerRoute() {
     const search = parseSearchParams(this.props.history.location.search);
-    const dashboardRoute = '/main/dashboard';
+    const dashboardRoute = `${routes.main}${routes.dashboard.url}`;
     const referrerRoute = search.referrer ? search.referrer : dashboardRoute;
     return referrerRoute;
   }
@@ -200,7 +201,7 @@ class Login extends React.Component {
           <section className={styles.table}>
             <div className='text-left'>
               <h2>
-                <Link className='new-account-button' to='/register'>
+                <Link className='new-account-button' to={routes.register.url}>
                   {this.props.t('Create Lisk ID')}
                 </Link>
                 <FontIcon className={styles.singUpArrow} value='arrow-right' />

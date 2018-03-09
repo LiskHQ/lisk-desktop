@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import sinon from 'sinon';
 import Header from './header';
 import i18n from '../../i18n';
+import routes from '../../constants/routes';
 
 describe('Header', () => {
   let wrapper;
@@ -25,7 +26,7 @@ describe('Header', () => {
       setActiveDialog: () => { },
       account: {},
       t: key => key,
-      location: { pathname: '/explorer/search' },
+      location: { pathname: `${routes.explorer}${routes.search}` },
       isAuthenticated: false,
     };
     propsMock = sinon.mock(mockInputProps);

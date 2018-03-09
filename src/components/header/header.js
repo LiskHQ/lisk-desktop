@@ -26,7 +26,7 @@ class Header extends React.Component {
 
   shouldShowSearchBar() {
     const { pathname } = this.props.location;
-    return ![routes.search.long, routes.register.url, routes.addAccount.url]
+    return ![`${routes.explorer}${routes.search.url}`, routes.register.url, routes.addAccount.url]
       .some(el => pathname.includes(el)) && pathname !== routes.login.url;
   }
 

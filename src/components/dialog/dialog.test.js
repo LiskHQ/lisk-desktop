@@ -16,7 +16,7 @@ describe('Dialog', () => {
   beforeEach(() => {
     history = {
       location: {
-        pathname: `${routes.search.long}saved-accounts`,
+        pathname: `${routes.explorer}${routes.search.url}saved-accounts`,
         search: '',
       },
       push: sinon.spy(),
@@ -45,7 +45,7 @@ describe('Dialog', () => {
   });
 
   it('allows to close the dialog on regexp path ', () => {
-    const basePath = '/explorer/transactions/1523498127498/';
+    const basePath = `${routes.explorer}${routes.wallet.url}/1523498127498/`;
     history.location.pathname = `${basePath}saved-accounts`;
     wrapper.setProps({ history });
     wrapper.find('.x-button').simulate('click');
@@ -53,7 +53,7 @@ describe('Dialog', () => {
   });
 
   it('allows to close the dialog on non-regexp path ', () => {
-    history.location.pathname = `${routes.wallet.long}saved-accounts`;
+    history.location.pathname = `${routes.main}${routes.wallet.url}saved-accounts`;
     wrapper.setProps({ history });
     wrapper.find('.x-button').simulate('click');
     expect(history.push).to.have.been.calledWith();

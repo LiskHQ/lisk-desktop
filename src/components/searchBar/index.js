@@ -28,7 +28,7 @@ class Search extends React.Component {
 
   shouldShowSearchBarOnMobile() {
     const { pathname } = this.props.location;
-    return pathname.includes('explorer') && !pathname.includes(routes.search.long);
+    return pathname.includes('explorer') && !pathname.includes(`${routes.explorer}${routes.search.url}`);
   }
 
 

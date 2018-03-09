@@ -13,17 +13,17 @@ const saveSearch = (search) => {
 
 export const visit = (value, history) => {
   if (value.match(regex.address)) {
-    history.push(`${routes.account.long}/${value}`);
+    history.push(`${routes.explorer}${routes.account.url}/${value}`);
   } else if (value.match(regex.transactionId)) {
-    history.push(`${routes.transaction.long}/${value}`);
+    history.push(`${routes.explorer}${routes.transaction.url}/${value}`);
   } else {
-    history.push(`${routes.searchResult.long}/${value}`);
+    history.push(`${routes.explorer}${routes.searchResult.url}/${value}`);
   }
 };
 
 export const visitAndSaveSearch = (value, history) => {
   if (value.length === 0) {
-    history.push(routes.search.long);
+    history.push(`${routes.explorer}${routes.search.url}`);
   } else {
     value = value.trim();
     saveSearch(value);

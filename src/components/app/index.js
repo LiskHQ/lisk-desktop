@@ -38,24 +38,24 @@ class App extends React.Component {
             <div className={styles.mainBox}>
               <Header />
               <Switch>
-                <PrivateRoutes path='/main' render={ ({ match }) => (
+                <PrivateRoutes path={routes.main} render={ ({ match }) => (
                   <main className={offlineStyle.disableWhenOffline}>
                     <Switch>
-                      <Route path={`${match.url}/account-visual-demo/:dialog?`} component={AccountVisualDemo} />
-                      <Route path={`${match.url}/dashboard/:dialog?`} component={Dashboard} />
+                      <Route path={`${match.url}${routes.accountVisualDemo.url}/:dialog?`} component={AccountVisualDemo} />
+                      <Route path={`${match.url}${routes.dashboard.url}/:dialog?`} component={Dashboard} />
                       <Route path={`${match.url}${routes.wallet.short}/:dialog?`} component={TransactionDashboard} />
-                      <Route path={`${match.url}/voting/:dialog?`} component={Voting} />
-                      <Route path={`${match.url}/sidechains/:dialog?`} component={Sidechains} />
+                      <Route path={`${match.url}${routes.voting.url}/:dialog?`} component={Voting} />
+                      <Route path={`${match.url}${routes.sidechains.url}/:dialog?`} component={Sidechains} />
                       <Route path='*' component={NotFound} />
                     </Switch>
                   </main>
                 )} />
-                <Route path='/explorer' render={ ({ match }) => (
+                <Route path={routes.explorer} render={ ({ match }) => (
                   <main>
-                    <Route path={`${match.url}${routes.search.short}/:dialog?`} component={Search} />
-                    <Route path={`${match.url}${routes.searchResult.short}/:query?`} component={SearchResult} />
-                    <Route path={`${match.url}${routes.account.short}/:address?`} component={AccountTransactions} />
-                    <Route path={`${match.url}${routes.transaction.short}/:id`} component={SingleTransaction} />
+                    <Route path={`${match.url}${routes.search.url}/:dialog?`} component={Search} />
+                    <Route path={`${match.url}${routes.searchResult.url}/:query?`} component={SearchResult} />
+                    <Route path={`${match.url}${routes.account.url}/:address?`} component={AccountTransactions} />
+                    <Route path={`${match.url}${routes.transaction.url}/:id`} component={SingleTransaction} />
                   </main>
                 )} />
                 <Route path={`${routes.register.url}:dialog?`} component={Register} />
