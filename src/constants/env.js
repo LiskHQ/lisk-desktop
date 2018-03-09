@@ -3,6 +3,7 @@ const env = {
   test: TEST,
   development: (!PRODUCTION && !TEST),
   defaultNetwork: 'mainnet',
+  testNetwork: 'testnet',
 };
 
 export default env;

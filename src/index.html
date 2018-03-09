@@ -261,7 +261,7 @@
           var defaultNet = "mainnet";//defaultNetwork
           (function(targetNet) {
             if (window.localStorage){
-              localStorage.setItem('defaultNetwork', defaultNet);
+              window.localStorage.setItem('defaultNetwork', defaultNet);
             }
           })(defaultNet);
         </script>
