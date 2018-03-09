@@ -48,8 +48,8 @@ class SavedAccounts extends React.Component {
       account.address === address);
   }
 
-  handleRemove(account, e, removeDirectly = false) {
-    if (this.isSelectedForRemove(account) || removeDirectly) {
+  handleRemove(account, e) {
+    if (this.isSelectedForRemove(account)) {
       this.props.accountRemoved(account);
     } else {
       this.selectForRemove(account);
@@ -57,7 +57,7 @@ class SavedAccounts extends React.Component {
     e.stopPropagation();
   }
 
-  handleRemoveDirectly(account, e) {
+  handleRemovePassphrase(account, e) {
     e.stopPropagation();
 
     const { savedAccounts } = this.props;
@@ -116,7 +116,7 @@ class SavedAccounts extends React.Component {
               {(account.passphrase ?
                 <strong
                   className={`unlocked ${styles.unlocked}`}
-                  onClick={this.handleRemoveDirectly.bind(this, account)}
+                  onClick={this.handleRemovePassphrase.bind(this, account)}
                 >
                   <FontIcon value='unlocked' />
                   {t('Lock ID')}
