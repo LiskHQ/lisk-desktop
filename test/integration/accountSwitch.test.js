@@ -30,8 +30,9 @@ describe('@integration: Account switch', () => {
     publicKey: accounts.genesis.publicKey,
     balance: accounts.genesis.balance,
   }, {
-    network: networks.mainnet.code,
+    network: networks.customNode.code,
     publicKey: accounts.delegate.publicKey,
+    address: 'http://localhost:8080',
     balance: accounts.delegate.balance,
   }, {
     network: networks.mainnet.code,
@@ -51,7 +52,11 @@ describe('@integration: Account switch', () => {
 
     localStorageStub = stub(localStorage, 'getItem');
     localStorageStub.withArgs('accounts').returns(JSON.stringify(savedAccounts));
-    localStorageStub.withArgs('lastActiveAccountIndex').returns(0);
+    localStorageStub.withArgs('lastActiveAccountIndex')
+      .onFirstCall()
+        .returns(0)
+      .onThirdCall()
+        .returns(1);
   });
 
   afterEach(() => {
@@ -77,7 +82,16 @@ describe('@integration: Account switch', () => {
     helper = new GenericStepDefinition(wrapper, store);
   };
 
-  describe('Scenario: should allow to remove a saved account', () => {
+  describe('Scenario: should allow to remove a saved account with lastActiveAccount on mainnet', () => {
+    step('Given I\'m on "account switcher" with accounts: "genesis,delegate,empty account"', setupStep);
+    step('Then I should see 3 instances of "saved account card"', () => helper.shouldSeeCountInstancesOf(3, '.saved-account-card'));
+    step('When I click "edit button"', () => helper.clickOnElement('button.edit-button'));
+    step('When I click "remove button"', () => helper.clickOnElement('button.remove-button'));
+    step('When I click "remove button"', () => helper.clickOnElement('button.remove-button'));
+    step('Then I should see 2 instances of "saved account card"', () => helper.shouldSeeCountInstancesOf(2, '.saved-account-card'));
+  });
+
+  describe('Scenario: should allow to remove a saved account with lastActiveAccount on customNode', () => {
     step('Given I\'m on "account switcher" with accounts: "genesis,delegate,empty account"', setupStep);
     step('Then I should see 3 instances of "saved account card"', () => helper.shouldSeeCountInstancesOf(3, '.saved-account-card'));
     step('When I click "edit button"', () => helper.clickOnElement('button.edit-button'));
