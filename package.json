@@ -52,7 +52,7 @@
     "lisk-js": "0.5.1",
     "lodash.throttle": "4.1.1",
     "moment": "2.20.1",
-    "numeral": "git+https://github.com/michaeltomasik/Numeral-js.git",
+    "numeral": "git+https://github.com/LiskHQ/Numeral-js.git",
     "parallax-js": "3.1.0",
     "popmotion": "7.8.2",
     "popmotion-react": "1.1.1",
