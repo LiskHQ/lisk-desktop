@@ -258,10 +258,10 @@
         </style>
         <link rel="icon" type="image/png" href="./assets/images/LISK.png" />
         <script type="text/javascript">
-          /* Following comment is placeholder used by `npm run build:testnet`, do not remove */
+          /* Following comment is a placeholder used by `npm run build:testnet`, do not remove */
           var defaultNet = "mainnet";//defaultNetwork
           (function(targetNet) {
-            if (window.localStorage){
+            if (window.localStorage && !window.localStorage.getItem('defaultNetwork')){
               window.localStorage.setItem('defaultNetwork', defaultNet);
             }
           })(defaultNet);
