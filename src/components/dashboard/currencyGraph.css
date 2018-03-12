@@ -65,7 +65,6 @@
     min-height: 300px;
 
     & h2 {
-      font-size: var(--font-size-h2-l);
       margin: 45px var(--box-padding-left-M) 20px;
     }
   }

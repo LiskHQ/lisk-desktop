@@ -60,15 +60,6 @@ input:read-only {
   }
 }
 
-.temporarySuccessCheck {
-  /* values are not saved as variable since this will be deleted anyway */
-  position: absolute;
-  bottom: -20px;
-  left: 155px;
-  font-size: 3em;
-  color: #ff6236;
-}
-
 .headerWrapper {
   padding: 20px 0px;
 
@@ -82,7 +73,6 @@ input:read-only {
 
   & h2 {
     margin-bottom: 0;
-    font-size: 2em;
   }
 
   & h3 {

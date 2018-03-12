@@ -146,7 +146,6 @@
     margin-bottom: 0;
     font-weight: 400;
     padding-bottom: 60px;
-    font-size: var(--main-header-font-size-XL);
 
     &.desktopTitle {
       display: block;
@@ -376,10 +375,6 @@
 @media (--large-viewport) {
   .header {
     padding: 20px var(--grid-padding-L);
-
-    & h2 {
-      font-size: var(--main-header-font-size-L);
-    }
   }
 
   .delegatesList {
@@ -507,10 +502,6 @@
 @media (--xSmall-viewport) {
   .header {
     padding: 20px var(--grid-padding-XS);
-
-    & h2 {
-      font-size: var(--main-header-font-size-XS);
-    }
 
     & .account {
       display: none;

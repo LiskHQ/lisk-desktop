@@ -14,8 +14,8 @@
   font-style: normal;
   font-size: 24px;
   display: inline-block;
-  width: 1em;
-  height: 1em;
+  width: 1em; /* stylelint-disable-line unit-whitelist */
+  height: 1em; /* stylelint-disable-line unit-whitelist */
   line-height: 1 !important;
   text-transform: none;
   letter-spacing: normal;
