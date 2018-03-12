@@ -7,6 +7,7 @@ import { spy, match } from 'sinon';
 import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
 
+import networks from '../../constants/networks';
 import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
 import Register from './register';
@@ -61,7 +62,7 @@ describe('Register', () => {
   it('should call activePeerSet with network and passphrase', () => {
     wrapper.find('MultiStep').props().finalCallback(passphrase);
     expect(prop.activePeerSet).to.have.been.calledWith(match({
-      network: { code: 0, name: 'Mainnet', port: 443, ssl: true },
+      network: networks.testnet,
       passphrase,
     }));
   });

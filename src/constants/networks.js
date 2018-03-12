@@ -22,9 +22,7 @@ const networks = {
   },
 };
 
-const preferredNetwork = env.test ?
-  env.testNetwork :
-  (window.localStorage && window.localStorage.getItem('defaultNetwork')) || env.defaultNetwork;
-
+let preferredNetwork = (window.localStorage && window.localStorage.getItem('defaultNetwork')) || env.defaultNetwork;
+preferredNetwork = env.test ? env.testNetwork : preferredNetwork;
 networks.default = networks[preferredNetwork];
-module.exports = networks;
+export default networks;
