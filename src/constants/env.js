@@ -1,9 +1,18 @@
 const env = {
   production: PRODUCTION,
-  test: TEST,
   development: (!PRODUCTION && !TEST),
   defaultNetwork: 'mainnet',
   testNetwork: 'testnet',
 };
 
 export default env;
+
+module.exports = {
+  test: () => {
+    /* eslint-disable no-console */
+    console.log('ENV-TEST--> ', TEST);
+    /* eslint-disable no-console */
+    return TEST;
+  },
+};
+
