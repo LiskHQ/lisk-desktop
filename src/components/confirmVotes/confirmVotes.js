@@ -66,7 +66,7 @@ class ConfirmVotes extends React.Component {
             className={`${styles.backButton} back`}
             onClick={() => prevStep({ reset: skipped })}>{t('Back')}</Button>
           <Checkbox
-            className={styles.checkbox}
+            className={`${styles.checkbox} confirmSlider`}
             label={t(`Confirm (Fee: ${fromRawLsk(fees.vote)} LSK)`)}
             icons={{
               done: 'checkmark',

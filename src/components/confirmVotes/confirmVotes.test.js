@@ -59,13 +59,40 @@ describe('ConfirmVotes', () => {
     wrapper = mount(<ConfirmVotes {...props}></ConfirmVotes>);
   });
 
-
   it('should click to back button call prevStep', () => {
     wrapper.find('button.back').simulate('click');
     expect(props.prevStep).to.be.calledWith();
   });
 
-  it('should click to confirm button call votePlaced', () => {
+  it('should click to confirm button call votePlaced with success equal to true', () => {
+    wrapper.find('button.confirm').simulate('click');
+    expect(props.nextStep).to.be.calledWith();
+  });
+
+  it('should drag slider checkbox call nextStep', () => {
+    const clock = sinon.useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
+    wrapper.find('.confirmSlider label').props().onMouseDown({ nativeEvent: { pageX: 870 } });
+    // When I start dragging the arrow
+    wrapper.find('.confirmSlider label').props().onMouseMove({ nativeEvent: { pageX: 870 } });
+
+    // And I keep dragging a bit more
+    wrapper.find('.confirmSlider label').props().onMouseMove({ nativeEvent: { pageX: 921 } });
+    // When I then 'drop' the arrow
+    wrapper.find('.confirmSlider label').props().onMouseLeave();
+    wrapper.update();
+    clock.tick(250);
+    wrapper.update();
+    expect(props.nextStep).to.be.calledWith();
+    clock.restore();
+  });
+
+  it('should click to confirm button call votePlaced with success equal to false', () => {
+    props.votePlaced = (data) => {
+      data.goToNextStep({ success: false });
+    };
+    wrapper.setProps(props);
     wrapper.find('button.confirm').simulate('click');
     expect(props.nextStep).to.be.calledWith();
   });
