@@ -168,7 +168,6 @@
   line-height: var(--list-line-height);
   list-style: none;
   padding: 0;
-  justify-content: flex-start;
 
   & .filter {
     display: inline-block;
@@ -433,7 +432,11 @@
     justify-content: space-between;
 
     & .filter {
-      margin-right: 0 !important;
+      margin-right: 0;
+
+      &:not(:last-of-type) {
+        margin-right: 0;
+      }
 
       & input {
         width: 70px;
@@ -506,6 +509,18 @@
 
     & .account {
       display: none;
+    }
+  }
+
+  .filters {
+    justify-content: flex-start;
+
+    & .filter {
+      margin-right: 10px;
+
+      &:not(:last-of-type) {
+        margin-right: 24px;
+      }
     }
   }
 }
