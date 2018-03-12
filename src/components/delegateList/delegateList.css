@@ -168,6 +168,7 @@
   line-height: var(--list-line-height);
   list-style: none;
   padding: 0;
+  justify-content: flex-start;
 
   & .filter {
     display: inline-block;
@@ -205,7 +206,7 @@
     font-weight: 400;
     padding-left: 30px;
     padding-right: 20px;
-    vertical-align: middle;
+    vertical-align: top;
     background-color: transparent;
     border-bottom: solid 1px transparent;
     transition: all ease 250ms;
