@@ -8,9 +8,6 @@
   --header-subtitle-font-size-XL: 18px;
   --header-subtitle-font-size-L: 16px;
   --header-subtitle-font-size-XS: 14px;
-  --main-header-font-size-XL: 32px;
-  --main-header-font-size-L: 28px;
-  --main-header-font-size-XS: 24px;
 }
 
 .wrapper {
@@ -61,8 +58,6 @@
 @media (--xLarge-viewport) {
   .wrapper {
     & h2 {
-      font-size: var(--main-header-font-size-XL);
-
       & .balanceUnit {
         font-size: var(--header-balance-unit-font-size-XL);
       }
@@ -77,8 +72,6 @@
 @media (--large-viewport) {
   .wrapper {
     & h2 {
-      font-size: var(--main-header-font-size-L);
-
       & .balanceUnit {
         font-size: var(--header-balance-unit-font-size-L);
       }
