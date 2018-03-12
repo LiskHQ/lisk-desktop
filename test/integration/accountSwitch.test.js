@@ -52,11 +52,7 @@ describe('@integration: Account switch', () => {
 
     localStorageStub = stub(localStorage, 'getItem');
     localStorageStub.withArgs('accounts').returns(JSON.stringify(savedAccounts));
-    localStorageStub.withArgs('lastActiveAccountIndex')
-      .onFirstCall()
-      .returns(0)
-      .onThirdCall()
-      .returns(1);
+    localStorageStub.withArgs('lastActiveAccountIndex').returns(0);
   });
 
   afterEach(() => {
@@ -92,6 +88,10 @@ describe('@integration: Account switch', () => {
   });
 
   describe('Scenario: should allow to remove a saved account with lastActiveAccount on customNode', () => {
+    beforeEach(() => {
+      localStorageStub.withArgs('lastActiveAccountIndex').returns(1);
+    });
+
     step('Given I\'m on "account switcher" with accounts: "genesis,delegate,empty account"', setupStep);
     step('Then I should see 3 instances of "saved account card"', () => helper.shouldSeeCountInstancesOf(3, '.saved-account-card'));
     step('When I click "edit button"', () => helper.clickOnElement('button.edit-button'));
