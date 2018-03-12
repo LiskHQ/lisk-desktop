@@ -29,6 +29,7 @@ describe('Login middleware', () => {
         data: {},
       },
       account: {},
+      settings: { autoLog: true },
     });
     store.dispatch = spy();
 

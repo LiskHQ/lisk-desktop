@@ -17,12 +17,14 @@ const closeConnection = () => {
     forcedClosing = true;
     connection.close();
     forcedClosing = false;
+    connection = undefined;
   }
 };
 
 const socketSetup = (store) => {
   let windowIsFocused = true;
   const { ipc } = window;
+  /* istanbul ignore else  */
   if (ipc) {
     ipc.on('blur', () => { windowIsFocused = false; });
     ipc.on('focus', () => { windowIsFocused = true; });
@@ -36,6 +38,7 @@ const socketSetup = (store) => {
     });
   });
   connection.on('disconnect', () => {
+    /* istanbul ignore else  */
     if (!forcedClosing) {
       store.dispatch(activePeerUpdate({ online: false }));
     }
