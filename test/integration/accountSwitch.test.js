@@ -54,9 +54,9 @@ describe('@integration: Account switch', () => {
     localStorageStub.withArgs('accounts').returns(JSON.stringify(savedAccounts));
     localStorageStub.withArgs('lastActiveAccountIndex')
       .onFirstCall()
-        .returns(0)
+      .returns(0)
       .onThirdCall()
-        .returns(1);
+      .returns(1);
   });
 
   afterEach(() => {
