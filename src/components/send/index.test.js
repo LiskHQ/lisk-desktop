@@ -22,6 +22,7 @@ describe('Send', () => {
     storeState = {
       peers,
       transactions,
+      account: { serverPublicKey: 'public_key' },
     };
 
     context = {

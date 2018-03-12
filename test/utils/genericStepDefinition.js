@@ -40,7 +40,15 @@ export default class GenericStepDefinition {
    * @param {String} text - expect text of the dom query entry
    */
   haveTextOf(query, text) {
-    expect(this.wrapper.find(query)).to.have.text(text);
+    expect(this.wrapper.find(query).first()).to.have.text(text);
+  }
+  /**
+   *
+   * @param {String} query - dom query that we need to check text of that
+   * @param {String} text - expect text of the dom query entry
+   */
+  haveInputValueOf(query, text) {
+    expect(this.wrapper.find(query).first().props().value).to.equal(text);
   }
   /**
    * 

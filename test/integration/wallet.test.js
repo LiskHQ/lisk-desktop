@@ -89,7 +89,7 @@ describe('@integration: Wallet', () => {
     localStorageStub.restore();
   });
 
-  const setupStep = (accountType, isLocked = false) => {
+  const setupStep = (accountType, isLocked = false, withPublicKey = true) => {
     store = prepareStore({
       account: accountReducer,
       transactions: transactionReducer,
@@ -115,7 +115,8 @@ describe('@integration: Wallet', () => {
 
     accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
     store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
-    accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
+    accountAPIStub.withArgs(match.any).returnsPromise()
+      .resolves({ ...account, serverPublicKey: withPublicKey ? account.publicKey : undefined });
     store.dispatch(accountLoggedIn(account));
     wrapper = mount(renderWithRouter(Wallet, store, { history: { location: { search: '' } } }));
     helper = new Helper(wrapper, store);
@@ -191,6 +192,35 @@ describe('@integration: Wallet', () => {
       step('When I click "next button"', () => helper.clickOnElement('.second-passphrase-next button'));
       step('When I click "send button"', () => helper.clickOnElement('.send-button button'));
       step(`Then I should see text ${successMessage} in "result box message" element`, () => helper.haveTextOf('.result-box-message', successMessage));
+    });
+
+    describe('Scenario: should show account initialisation option if no public key and balance is greater than 0', () => {
+      step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis', false, false));
+      step('Then I should see the account init option', () => helper.haveTextOf('header h2', 'Initialize Lisk ID'));
+      step('When I click "account init button"', () => helper.clickOnElement('.account-init-button button'));
+      step('Then I should see the filled out send form', () => {
+        helper.haveInputValueOf('.recipient input', accounts.genesis.address);
+        helper.haveInputValueOf('.amount input', 0.1);
+      });
+    });
+
+    describe('Scenario: should not show account initialisation option if public key and balance is greater than 0', () => {
+      step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
+      step('Then I should not see the account init option', () => helper.haveTextOf('header h2', 'Transfer'));
+    });
+
+    describe('Scenario: should not show account initialisation option if no public key and balance equals 0', () => {
+      step('Given I\'m on "wallet" as "genesis" account', () => setupStep('empty account', false, false));
+      step('Then I should not see the account init option', () => helper.haveTextOf('header h2', 'Transfer'));
+    });
+
+    describe('Scenario: should close account initialisation option when discarded', () => {
+      step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis', false, false));
+      step('When I click "account init discard button"', () => helper.clickOnElement('.account-init-discard-button'));
+      step('Then I should see the empty send form', () => {
+        helper.haveInputValueOf('.recipient input', '');
+        helper.haveInputValueOf('.amount input', '');
+      });
     });
   });
 
