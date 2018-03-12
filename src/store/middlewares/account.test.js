@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { spy, stub, useFakeTimers } from 'sinon';
+import { spy, stub, useFakeTimers, match } from 'sinon';
 import { accountUpdated } from '../../actions/account';
 import accountConfig from '../../constants/account';
 import { activePeerUpdate } from '../../actions/peers';
@@ -68,6 +68,7 @@ describe('Account middleware', () => {
           id: 12498250891724098,
         }],
         confirmed: [],
+        account: { address: 'test_address' },
       },
     };
     store.getState = () => (state);
@@ -143,7 +144,7 @@ describe('Account middleware', () => {
     middleware(store)(next)(newBlockCreated);
 
     expect(stubGetAccount).to.have.been.calledWith();
-    expect(stubTransactions).to.have.been.calledWith();
+    expect(stubTransactions).to.have.been.calledWith(match({ address: 'test_address' }));
   });
 
   it(`should fetch delegate info on ${actionTypes.newBlockCreated} action if account.balance changes and account.isDelegate`, () => {
