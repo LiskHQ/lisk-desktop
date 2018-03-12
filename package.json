@@ -126,6 +126,8 @@
     "extract-text-webpack-plugin": "3.0.0",
     "file-loader": "1.1.6",
     "glob": "=7.1.2",
+    "html-webpack-inline-source-plugin": "0.0.10",
+    "html-webpack-plugin": "3.0.4",
     "i18next-scanner": "=2.0.0",
     "imports-loader": "0.7.1",
     "js-nacl": "=1.2.2",
@@ -168,9 +170,10 @@
     "stylelint-webpack-plugin": "=0.9.0",
     "url-loader": "0.5.9",
     "url-polyfill": "1.0.10",
-    "webpack": "3.6.0",
+    "webpack": "3.11.0",
     "webpack-bundle-analyzer": "2.9.0",
-    "webpack-dev-server": "2.8.2"
+    "webpack-dev-server": "2.8.2",
+    "webpack-file-changer": "2.0.1"
   },
   "build": {
     "appId": "io.lisk.hub",
@@ -203,15 +206,15 @@
   },
   "bundlesize": [
     {
-      "path": "./app/build/bundle.app.js",
+      "path": "./app/build/bundle.app.*.js",
       "maxSize": "890 kB"
     },
     {
-      "path": "./app/build/bundle.vendor.js",
+      "path": "./app/build/bundle.vendor.*.js",
       "maxSize": "150 kB"
     },
     {
-      "path": "./app/build/styles.css",
+      "path": "./app/build/styles.*.css",
       "maxSize": "1.50 MB"
     }
   ],
