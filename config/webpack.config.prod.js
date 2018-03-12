@@ -3,12 +3,10 @@ const webpack = require('webpack');
 const { resolve } = require('path');
 const merge = require('webpack-merge');
 const { NamedModulesPlugin } = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const FileChanger = require('webpack-file-changer');
 const baseConfig = require('./webpack.config');
 const reactConfig = require('./webpack.config.react');
-const bundleVersion = require('../package.json').version;
 /* eslint-enable import/no-extraneous-dependencies */
 
 module.exports = merge(baseConfig, reactConfig, {
@@ -33,13 +31,10 @@ module.exports = merge(baseConfig, reactConfig, {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
     }),
-    new HtmlWebpackPlugin({
-      template: './app/build/index.html',
-      VERSION: bundleVersion,
-      inject: false,
-      inlineSource: '.(css)$',
+    new ExtractTextPlugin({
+      filename: 'styles.[hash].css',
+      allChunks: true,
     }),
-    new HtmlWebpackInlineSourcePlugin(),
     new FileChanger({
       change: [
         {

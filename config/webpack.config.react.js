@@ -3,10 +3,13 @@ const { resolve } = require('path');
 const { ContextReplacementPlugin, DefinePlugin } = require('webpack');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 const reactToolboxVariables = require('./reactToolbox.config');
 const I18nScannerPlugin = require('../src/i18n-scanner');
 const fs = require('fs');
 const path = require('path');
+const bundleVersion = require('../package.json').version;
 
 const getLocales = (url) => {
   const file = fs.readFileSync(path.join(__dirname, url));
@@ -111,10 +114,17 @@ module.exports = {
       },
     }),
     new ExtractTextPlugin({
-      filename: 'styles.[hash].css',
+      filename: 'styles.css',
       allChunks: true,
     }),
     extractHeadCSS,
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      VERSION: bundleVersion,
+      inject: false,
+      inlineSource: '.(css)$',
+    }),
+    new HtmlWebpackInlineSourcePlugin(),
     new I18nScannerPlugin({
       translationFunctionNames: ['i18next.t', 'props.t', 'this.props.t', 't'],
       outputFilePath: './i18n/locales/en/common.json',
