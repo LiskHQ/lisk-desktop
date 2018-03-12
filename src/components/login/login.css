@@ -4,6 +4,8 @@
   --gradient: linear-gradient(45deg, rgba(0, 74, 255, 1) 0%, rgba(147, 244, 254, 1) 100%);
   --transition: all ease 300ms;
   --header-focused-font-size: 32px;
+  --arrow-font-size: 60px;
+  --arrow-focused-font-size: 40px;
   --rect-width: 200px;
   --login-box-padding-L: 48px;
   --login-box-padding-XL: 56px;
@@ -234,7 +236,7 @@
   }
 
   & .singUpArrow {
-    font-size: 1.2em;
+    font-size: var(--arrow-font-size);
   }
 
   & .subTitle {
@@ -243,6 +245,7 @@
 
   & a {
     text-decoration: none;
+    font-size: inherit;
   }
 
   & .shapes {
@@ -254,11 +257,17 @@
     transform: translateZ(0);
 
     & h2 {
-      font-size: var(--header-focused-font-size);
+      & a {
+        font-size: var(--header-focused-font-size);
+      }
+
+      & .singUpArrow {
+        font-size: var(--arrow-focused-font-size);
+      }
     }
 
     & .subTitle {
-      font-size: 1em;
+      font-size: var(--subtitle-font-size);
     }
 
     & .shape {
@@ -446,6 +455,7 @@
   .login,
   .signUp {
     & h2 {
+      font-size: var(--font-size-h2-l);
       margin-top: 28vh; /* stylelint-disable-line */
     }
   }
@@ -456,6 +466,10 @@
     border-radius: 0px;
     width: 60%;
     height: calc(100vh - var(--m-top-bar-height) - var(--m-menu-bar-height)); /* stylelint-disable-line */
+
+    & .singUpArrow {
+      font-size: var(--arrow-focused-font-size);
+    }
   }
 
   .login,
@@ -480,6 +494,9 @@
 
     & h2 {
       font-size: var(--font-size-h2-s);
+    }
+
+    & h2 a {
       margin-top: 12vh; /* stylelint-disable-line */
     }
   }
