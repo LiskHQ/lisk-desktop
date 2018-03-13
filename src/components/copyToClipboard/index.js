@@ -2,7 +2,7 @@ import React from 'react';
 import { CopyToClipboard as ReactCopyToClipboard } from 'react-copy-to-clipboard';
 import { translate } from 'react-i18next';
 import { FontIcon } from '../fontIcon';
-import styles from './copy.css';
+import styles from './copyToClipboard.css';
 
 class CopyToClipboard extends React.Component {
   constructor() {

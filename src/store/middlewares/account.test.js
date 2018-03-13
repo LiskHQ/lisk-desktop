@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { spy, stub, useFakeTimers } from 'sinon';
+import { spy, stub, useFakeTimers, match } from 'sinon';
 import { accountUpdated } from '../../actions/account';
 import accountConfig from '../../constants/account';
 import { activePeerUpdate } from '../../actions/peers';
@@ -45,6 +45,14 @@ describe('Account middleware', () => {
     data: {
       windowIsFocused: false,
       block: transactions,
+    },
+  };
+
+  const blockWithNullTransaction = {
+    type: actionTypes.newBlockCreated,
+    data: {
+      windowIsFocused: true,
+      block: { transactions: [null] },
     },
   };
 
@@ -143,6 +151,45 @@ describe('Account middleware', () => {
 
     expect(stubGetAccount).to.have.been.calledWith();
     expect(stubTransactions).to.have.been.calledWith();
+  });
+
+  it(`should call transactions API methods on ${actionTypes.newBlockCreated} action if block.transactions contains null element`, () => {
+    middleware(store)(next)(blockWithNullTransaction);
+
+    expect(store.dispatch).to.have.been.calledWith(match.has('type', actionTypes.transactionsUpdated));
+  });
+
+  it(`should call API methods on ${actionTypes.newBlockCreated} action if state.transaction.transactions.confired does not contain recent transaction. Case with transactions address`, () => {
+    stubGetAccount.resolves({ balance: 0 });
+
+    store.getState = () => ({ ...state,
+      transactions: {
+        ...state.transactions,
+        confirmed: [{ confirmations: 10 }],
+        address: 'sample_address',
+      },
+    });
+
+    middleware(store)(next)(newBlockCreated);
+    expect(stubGetAccount).to.have.been.calledWith({});
+    expect(store.dispatch).to.have.been.calledWith(match.has('type', actionTypes.transactionsUpdated));
+  });
+
+  it(`should call API methods on ${actionTypes.newBlockCreated} action if state.transaction.transactions.confired does not contain recent transaction. Case with confirmed address`, () => {
+    stubGetAccount.resolves({ balance: 0 });
+
+    store.getState = () => ({ ...state,
+      transactions: {
+        pending: [{
+          id: 12498250891724098,
+        }],
+        confirmed: [{ confirmations: 10, address: 'sample_address' }],
+      },
+    });
+
+    middleware(store)(next)(newBlockCreated);
+    expect(stubGetAccount).to.have.been.calledWith({});
+    expect(store.dispatch).to.have.been.calledWith(match.has('type', actionTypes.transactionsUpdated));
   });
 
   it(`should fetch delegate info on ${actionTypes.newBlockCreated} action if account.balance changes and account.isDelegate`, () => {

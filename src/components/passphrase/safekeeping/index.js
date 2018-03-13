@@ -2,7 +2,7 @@ import React from 'react';
 import ActionBar from '../../actionBar';
 import styles from './safekeeping.css';
 // eslint-disable-next-line import/no-named-as-default
-import SliderCheckbox from '../../toolbox/checkbox';
+import SliderCheckbox from '../../toolbox/sliderCheckbox';
 import TransitionWrapper from '../../toolbox/transitionWrapper';
 
 class SafeKeeping extends React.Component {

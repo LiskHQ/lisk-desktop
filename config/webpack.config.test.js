@@ -31,3 +31,4 @@ module.exports = merge(baseConfig, reactConfig, {
   ],
   externals,
 });
+

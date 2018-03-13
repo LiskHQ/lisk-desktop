@@ -1,8 +1,7 @@
 const env = {
   production: PRODUCTION,
-  test: TEST,
   development: (!PRODUCTION && !TEST),
-  defaultNetwork: DEFAULT_NEWTORK,
+  test: TEST,
 };
 
 export default env;
