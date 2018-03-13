@@ -1,4 +1,5 @@
 @import './../app/variables.css';
+@import './animations.css';
 
 :root {
   --gradient: linear-gradient(45deg, rgba(0, 74, 255, 1) 0%, rgba(147, 244, 254, 1) 100%);
@@ -20,12 +21,6 @@
   --back-button-label-font-size-L: 12px;
   --back-button-icon-font-size-XL: 24px;
   --back-button-icon-font-size-L: 16px;
-}
-
-@keyframes delayedFadeIn {
-  0% { opacity: 0; }
-  75% { opacity: 0; }
-  100% { opacity: 1; }
 }
 
 .wrapper {
@@ -286,63 +281,6 @@
 
 .outTaken {
   position: absolute;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes somersault {
-  0% {
-    transform: translate3d(15%, 0, 0) rotateZ(10deg);
-  }
-
-  100% {
-    transform: translate3d(-15%, 0, 0) rotateZ(-10deg);
-  }
-}
-
-@keyframes tilt {
-  0% {
-    transform: rotateX(-30deg);
-  }
-
-  25% {
-    transform: rotateX(30deg);
-  }
-
-  50% {
-    transform: rotateY(-30deg);
-  }
-
-  75% {
-    transform: rotateY(30deg);
-  }
-
-  100% {
-    transform: rotateZ(20deg);
-  }
-}
-
-@-webkit-keyframes wave {
-  0% {
-    transform: rotateZ(0deg) translate3d(0, 10%, 0) rotateZ(0deg);
-  }
-
-  100% {
-    transform: rotateZ(360deg) translate3d(0, 10%, 0) rotateZ(-360deg);
-  }
-}
-
-@-webkit-keyframes wander {
-  0% {
-    transform: translate3d(0, 0, 0) rotateZ(0deg);
-  }
-
-  100% {
-    transform: translate3d(-15%, 10%, 0) rotateZ(0deg);
-  }
 }
 
 .loading {
