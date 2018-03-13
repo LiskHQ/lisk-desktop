@@ -5,6 +5,7 @@ import { FontIcon } from '../fontIcon';
 import AccountVisual from '../accountVisual';
 import SearchBar from '../searchBar';
 import CountDownTemplate from './countDownTemplate';
+import CopyToClipboard from '../copyToClipboard';
 import LiskAmount from '../liskAmount';
 import Account from '../account';
 import logo from '../../assets/images/logo-beta.svg';
@@ -46,17 +47,17 @@ class Header extends React.Component {
                       <LiskAmount val={this.props.account.balance}/>
                       <small> LSK</small>
                     </div>
-                    <div className={`${styles.address} account-information-address`}>{this.props.account.address}</div>
+                    <CopyToClipboard value={this.props.account.address} className={`${styles.address} account-information-address`}/>
                     {this.props.autoLog ? <div className={styles.timer}>
                       {((!this.props.account.expireTime || this.props.account.expireTime === 0)) ?
-                        <span><FontIcon value='locked' className={styles.lock}/> {this.props.t('Account locked!')}</span> :
+                        <span>{this.props.t('Account locked!')} <FontIcon value='locked' className={styles.lock}/></span> :
                         <div>
-                          <FontIcon value='unlocked' className={styles.lock}/> {this.props.t('Address timeout in')} <i> </i>
+                          {this.props.t('Address timeout in')} <i> </i>
                           <Countdown
                             date={this.props.account.expireTime}
                             renderer={CountDownTemplate}
                             onComplete={() => this.props.removePassphrase()}
-                          />
+                          />  <FontIcon value='unlocked' className={styles.lock}/>
                         </div>}
                     </div>
                       : <div className={styles.timer}>
