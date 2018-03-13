@@ -197,6 +197,11 @@
 
 .unlocked {
   left: 0;
+  padding-top: 25px;
+
+  & span {
+    margin-bottom: 3px;
+  }
 
   &:hover {
     & span {
