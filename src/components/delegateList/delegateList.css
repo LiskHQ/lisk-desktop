@@ -7,7 +7,6 @@
   --blue: var(--color-primary-medium);
   --link-color: var(--color-primary-very-light);
   --row-background-color: var(--color-white);
-  --filter-list-color: var(--color-grayscale-medium);
   --result-address-font-weight: var(--font-weight-semi-bold);
   --detail-label-font-weight: var(--font-weight-very-bold);
   --header-address-font-weight: var(--font-weight-semi-bold);
@@ -22,7 +21,6 @@
   --tabel-header-padding-s: 19px;
   --grid-padding-L: var(--box-padding-left-L);
   --grid-padding-M: var(--box-padding-left-M);
-  --grid-padding-XS: var(--box-padding-left-M);
   --list-line-height: 25px;
   --grid-header-line-height: 60px;
   --main-row-line-height: 70px;
@@ -73,22 +71,6 @@
   background-color: #eaeae9 !important;
 }
 
-.actionBar {
-  margin-top: 9px;
-  display: inline-block;
-}
-
-.votesMenuButton {
-  margin-right: 16px;
-  margin-top: 8px;
-
-  & :global span {
-    vertical-align: top;
-    line-height: 24px;
-    margin-left: 6px;
-  }
-}
-
 .voted {
   color: #7cb342;
 }
@@ -97,35 +79,9 @@
   color: #c62828;
 }
 
-.menuItem {
-  flex-direction: row-reverse;
-  width: 241px;
-}
-
 .icon {
   text-align: right;
   width: auto;
-}
-
-.menuInner {
-  height: 306px;
-  overflow-y: auto;
-}
-
-.button {
-  width: auto;
-  margin-top: 18px;
-  margin-right: 16px;
-}
-
-.rotated {
-  transform: rotate(45deg);
-}
-
-.voteButton {
-  color: var(--color-black) !important;
-  position: relative;
-  top: 3px;
 }
 
 .productivity {
@@ -230,56 +186,6 @@
     min-height: 100%;
   }
 
-  .header {
-    padding: 0 19px !important;
-
-    & .table .tableHead li {
-      padding: 0 0 12px 12px;
-    }
-
-    &.offCanvas ~ .delegatesList {
-      & .table .tableHead {
-        width: 100%;
-        position: fixed;
-        top: var(--header-height-m);
-        left: 0;
-        z-index: 2;
-        background: var(--color-white);
-        box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.5);
-        padding-left: var(--tabel-header-padding-m);
-        padding-right: var(--tabel-header-padding-m);
-
-        & li {
-          padding-bottom: 0;
-        }
-      }
-    }
-
-    & h2.desktopTitle {
-      display: none;
-    }
-
-    & h2.mobileTitle {
-      display: block;
-      padding: 0;
-    }
-  }
-
-  .filters {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-
-    & .filter {
-      margin-right: 0 !important;
-
-      & input {
-        width: 70px;
-        line-height: 16px;
-      }
-    }
-  }
-
   .delegatesList {
     height: auto;
     overflow-y: visible;
@@ -317,23 +223,7 @@
 }
 
 @media (--small-viewport) {
-  .header.offCanvas ~ .delegatesList .table .tableHead {
-    top: var(--header-height-s);
-    padding-left: var(--tabel-header-padding-s);
-    padding-right: var(--tabel-header-padding-s);
-  }
-
   .delegatesList {
     padding-bottom: var(--list-bottom-padding-s);
-  }
-}
-
-@media (--xSmall-viewport) {
-  .header {
-    padding: 20px var(--grid-padding-XS);
-
-    & .account {
-      display: none;
-    }
   }
 }
