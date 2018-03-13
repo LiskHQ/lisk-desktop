@@ -1,5 +1,3 @@
-import env from './env';
-
 const networks = {
   mainnet: { // network name translation t('Mainnet');
     name: 'Mainnet',
@@ -22,7 +20,5 @@ const networks = {
   },
 };
 
-let preferredNetwork = (window.localStorage && window.localStorage.getItem('defaultNetwork')) || /* istanbul ignore next */ env.defaultNetwork;
-preferredNetwork = env.test ? env.testNetwork : /* istanbul ignore next */ preferredNetwork;
-networks.default = networks[preferredNetwork];
+networks.default = networks[window.localStorage && window.localStorage.getItem('defaultNetwork')] || networks.mainnet;
 module.exports = networks;
