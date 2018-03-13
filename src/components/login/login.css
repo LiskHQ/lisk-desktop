@@ -1,5 +1,6 @@
 @import './../app/variables.css';
 @import './animations.css';
+@import './shapes.css';
 
 :root {
   --gradient: linear-gradient(45deg, rgba(0, 74, 255, 1) 0%, rgba(147, 244, 254, 1) 100%);
@@ -138,77 +139,6 @@
     opacity: 0.94;
     background: var(--gradient);
     border-radius: 3px;
-  }
-
-  & .shapes {
-    z-index: 1;
-  }
-
-  & .shape {
-    position: absolute !important;
-
-    &.rectA {
-      right: 20% !important;
-      top: 20% !important;
-      left: auto !important;
-      width: var(--rect-width);
-
-      & img {
-        width: 100%;
-        animation: wave 20s 0.1s infinite linear; /* stylelint-disable-line */
-      }
-    }
-
-    &.rectB {
-      left: 10% !important;
-      bottom: 25% !important;
-      top: auto !important;
-      width: var(--rect-width);
-
-      & img {
-        width: 100%;
-        animation: wave 16s 0.1s infinite linear; /* stylelint-disable-line */
-      }
-    }
-
-    &.rectC {
-      right: 20% !important;
-      bottom: 20% !important;
-      top: auto !important;
-      left: auto !important;
-      z-index: 2;
-      width: var(--rect-width);
-
-      & img {
-        width: 100%;
-        animation: wave 12s 0.1s infinite linear; /* stylelint-disable-line */
-      }
-    }
-
-    &.circle {
-      right: 5% !important;
-      bottom: 0% !important;
-      left: auto !important;
-      top: auto !important;
-      width: 150px;
-
-      & img {
-        width: 100%;
-        animation: wander 16s 0.1s infinite alternate cubic-bezier(0.455, 0.03, 0.515, 0.955); /* stylelint-disable-line */
-      }
-    }
-
-    &.triangle {
-      right: 10% !important;
-      left: auto !important;
-      top: 10% !important;
-      width: 250px;
-
-      & img {
-        width: 100%;
-        animation: somersault 20s 0.1s infinite alternate cubic-bezier(0.455, 0.03, 0.515, 0.955); /* stylelint-disable-line */
-      }
-    }
   }
 
   & .table {
@@ -507,44 +437,6 @@
 
     &.focused {
       width: 100vw; /* stylelint-disable-line */
-    }
-
-    & .shape {
-      position: absolute !important;
-
-      &.rectA {
-        right: 0% !important;
-        top: 5% !important;
-        left: auto !important;
-        width: 30%;
-      }
-
-      &.rectB {
-        right: -4% !important;
-        top: 10% !important;
-        left: auto !important;
-        width: 30%;
-      }
-
-      &.rectC {
-        & img {
-          display: none;
-          width: 0;
-        }
-      }
-
-      &.circle {
-        right: auto !important;
-        left: 0% !important;
-        bottom: 7% !important;
-        width: 45%;
-      }
-
-      &.triangle {
-        right: -5px !important;
-        top: 5px !important;
-        width: 40%;
-      }
     }
   }
 }
