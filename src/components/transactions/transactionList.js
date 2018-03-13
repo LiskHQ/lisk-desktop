@@ -7,7 +7,7 @@ import TransactionsHeader from './transactionsHeader';
 import { transactionsRequestInit } from '../../actions/transactions';
 import txFilters from './../../constants/transactionFilters';
 import txTypes from './../../constants/transactionTypes';
-import styles from './transactions.css';
+import styles from './transactionList.css';
 
 class TransactionsList extends React.Component {
   constructor(props) {

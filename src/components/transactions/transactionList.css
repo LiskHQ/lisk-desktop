@@ -1,0 +1,57 @@
+@import '../app/variables.css';
+
+:root {
+  --result-address-font-weight: var(--font-weight-semi-bold);
+  --grid-padding-XL: var(--box-padding-left-L); /* L until we add this padding to everywhere else too */
+  --grid-padding-L: var(--box-padding-left-L);
+  --grid-padding-M: var(--box-padding-left-M);
+  --header-line-height: 36px;
+}
+
+.results {
+  overflow-y: initial;
+
+  & .header {
+    color: var(--grid-header-color);
+    line-height: var(--grid-header-line-height);
+    font-weight: var(--font-weight-very-bold);
+  }
+
+  & .turnArrow {
+    transform: rotate(180deg);
+  }
+
+  & .address {
+    font-weight: var(--result-address-font-weight);
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 135%;
+  }
+}
+
+.empty {
+  text-align: center;
+  font-weight: var(--font-weight-semi-bold);
+  padding-top: 25px;
+  color: var(--color-grayscale-dark);
+}
+
+@media (--xLarge-viewport) {
+  .results {
+    overflow-y: auto;
+
+    & .header {
+      font-size: 15px;
+    }
+  }
+}
+
+@media (--large-viewport) {
+  .results {
+    overflow-y: auto;
+
+    & .header {
+      font-size: 12px;
+    }
+  }
+}

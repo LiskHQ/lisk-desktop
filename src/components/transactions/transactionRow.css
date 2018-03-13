@@ -1,0 +1,63 @@
+@import '../app/variables.css';
+@import './states.css';
+
+:root {
+  --amount-negative-color: var(--color-grayscale-dark);
+  --link-color: var(--color-primary-very-light);
+  --row-background-color: var(--color-white);
+  --grid-padding-XL: var(--box-padding-left-L); /* L until we add this padding to everywhere else too */
+  --grid-padding-L: var(--box-padding-left-L);
+  --grid-padding-M: var(--box-padding-left-M);
+  --main-row-line-height: 70px;
+  --grid-header-color: var(--color-black);
+  --grid-header-line-height: 60px;
+}
+
+.rows:nth-of-type(even) {
+  background: var(--gradient-greyscale);
+}
+
+.rows:nth-of-type(odd) {
+  background: var(--row-background-color);
+}
+
+.header {
+  color: var(--grid-header-color);
+  line-height: var(--grid-header-line-height);
+  font-weight: var(--font-weight-very-bold);
+}
+
+.rows {
+  color: var(--amount-negative-color);
+  border-bottom: 0;
+  border-top: 0;
+  margin-right: 0;
+  margin-left: 0;
+
+  &:hover:not(:first-child) {
+    background: var(--link-color);
+  }
+
+  & .copyIcon {
+    vertical-align: bottom;
+    padding-left: 5px;
+    cursor: pointer;
+  }
+}
+
+.mainRow {
+  line-height: var(--main-row-line-height);
+  white-space: nowrap;
+}
+
+@media (--xLarge-viewport) {
+  .rows {
+    padding: 0px var(--grid-padding-XL);
+  }
+}
+
+@media (--large-viewport) {
+  .rows {
+    padding: 0px var(--grid-padding-L);
+  }
+}
