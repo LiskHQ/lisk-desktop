@@ -26,7 +26,6 @@ describe('Send Writable Component', () => {
       account,
       pendingTransactions: [],
       closeDialog: () => {},
-      sent: sinon.spy(),
       t: key => key,
       nextStep: () => {},
       history: { location: { search: '' } },
