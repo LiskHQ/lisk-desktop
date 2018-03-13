@@ -519,7 +519,7 @@
       margin-right: 10px;
 
       &:not(:last-of-type) {
-        margin-right: 24px;
+        margin-right: 20px;
       }
     }
   }
