@@ -26,16 +26,16 @@ class AccountInitialization extends React.Component {
     return (<Box className={`${styles.wrapper} ${grid.row}`}>
       <header>
         <h2>{t('Initialize Lisk ID')}</h2>
+      </header>
+      <div>
         <p>{t('It is recommended that you initialize your Lisk ID.')}</p>
-        <p>{t('The easiest way to do this is to send LSK to yourself by clicking this button. ' +
-            'It will cost you only the usual 0.1 LSK transaction fee.')}</p>
+        <p>{t('The easiest way to do this is to send LSK to yourself. It will cost you only the usual 0.1 LSK transaction fee.')}</p>
         <p>
           <a target='_blank' href='https://help.lisk.io/account-security/should-i-initialize-my-lisk-account' rel='noopener noreferrer'>
-            {t('Why should I initialize my Lisk ID?')} <FontIcon>arrow-right</FontIcon>
+            {t('Learn more about Lisk ID initialization')} <FontIcon>arrow-right</FontIcon>
           </a>
         </p>
-      </header>
-      <div></div>
+      </div>
       <footer>
         <div className={grid.row} >
           <div className={grid['col-xs-4']}>

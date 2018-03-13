@@ -89,7 +89,7 @@ describe('@integration: Wallet', () => {
     localStorageStub.restore();
   });
 
-  const setupStep = (accountType, isLocked = false, withPublicKey = true) => {
+  const setupStep = (accountType, options = { isLocked: false, withPublicKey: true }) => {
     store = prepareStore({
       account: accountReducer,
       transactions: transactionReducer,
@@ -103,7 +103,7 @@ describe('@integration: Wallet', () => {
       peerMiddleware,
     ]);
 
-    const passphrase = isLocked ? undefined : accounts[accountType].passphrase;
+    const passphrase = options.isLocked ? undefined : accounts[accountType].passphrase;
     const account = {
       ...accounts[accountType],
       delegate: {},
@@ -116,7 +116,10 @@ describe('@integration: Wallet', () => {
     accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
     store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
     accountAPIStub.withArgs(match.any).returnsPromise()
-      .resolves({ ...account, serverPublicKey: withPublicKey ? account.publicKey : undefined });
+      .resolves({
+        ...account,
+        serverPublicKey: options.withPublicKey ? account.publicKey : undefined,
+      });
     store.dispatch(accountLoggedIn(account));
     wrapper = mount(renderWithRouter(Wallet, store, { history: { location: { search: '' } } }));
     helper = new Helper(wrapper, store);
@@ -158,7 +161,7 @@ describe('@integration: Wallet', () => {
 
     describe('Scenario: should allow to send LSK from locked account', () => {
       const { passphrase } = accounts.genesis;
-      step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis', true));
+      step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis', { isLocked: true, withPublicKey: true }));
       step('And I fill in "1" to "amount" field', () => { helper.fillInputField('1', 'amount'); });
       step('And I fill in "537318935439898807L" to "recipient" field', () => { helper.fillInputField('537318935439898807L', 'recipient'); });
       step('And I click "send next button"', () => helper.clickOnElement('button.send-next-button'));
@@ -182,7 +185,7 @@ describe('@integration: Wallet', () => {
 
     describe('Scenario: should allow to send LSK from locked account with 2nd passphrase', () => {
       const { secondPassphrase, passphrase } = accounts['second passphrase account'];
-      step('Given I\'m on "wallet" as "second passphrase account"', () => setupStep('second passphrase account', true));
+      step('Given I\'m on "wallet" as "second passphrase account"', () => setupStep('second passphrase account', { isLocked: true, withPublicKey: true }));
       step('And I fill in "1" to "amount" field', () => { helper.fillInputField('1', 'amount'); });
       step('And I fill in "537318935439898807L" to "recipient" field', () => { helper.fillInputField('537318935439898807L', 'recipient'); });
       step('And I click "send next button"', () => helper.clickOnElement('button.send-next-button'));
@@ -195,13 +198,16 @@ describe('@integration: Wallet', () => {
     });
 
     describe('Scenario: should show account initialisation option if no public key and balance is greater than 0', () => {
-      step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis', false, false));
+      step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis', { isLocked: false, withPublicKey: false }));
       step('Then I should see the account init option', () => helper.haveTextOf('header h2', 'Initialize Lisk ID'));
       step('When I click "account init button"', () => helper.clickOnElement('.account-init-button button'));
       step('Then I should see the filled out send form', () => {
         helper.haveInputValueOf('.recipient input', accounts.genesis.address);
         helper.haveInputValueOf('.amount input', 0.1);
       });
+      step('And I click "send next button"', () => { helper.clickOnElement('button.send-next-button'); });
+      step('When I click "send button"', () => helper.clickOnElement('button.send-button button'));
+      step(`Then I should see text ${successMessage} in "result box message" element`, () => helper.haveTextOf('.result-box-message', successMessage));
     });
 
     describe('Scenario: should not show account initialisation option if public key and balance is greater than 0', () => {
@@ -210,12 +216,12 @@ describe('@integration: Wallet', () => {
     });
 
     describe('Scenario: should not show account initialisation option if no public key and balance equals 0', () => {
-      step('Given I\'m on "wallet" as "genesis" account', () => setupStep('empty account', false, false));
+      step('Given I\'m on "wallet" as "genesis" account', () => setupStep('empty account', { isLocked: false, withPublicKey: false }));
       step('Then I should not see the account init option', () => helper.haveTextOf('header h2', 'Transfer'));
     });
 
     describe('Scenario: should close account initialisation option when discarded', () => {
-      step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis', false, false));
+      step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis', { isLocked: false, withPublicKey: false }));
       step('When I click "account init discard button"', () => helper.clickOnElement('.account-init-discard-button'));
       step('Then I should see the empty send form', () => {
         helper.haveInputValueOf('.recipient input', '');
