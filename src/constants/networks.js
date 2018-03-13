@@ -1,5 +1,3 @@
-import env from './env';
-
 const networks = {
   mainnet: { // network name translation t('Mainnet');
     name: 'Mainnet',
@@ -22,6 +20,5 @@ const networks = {
   },
 };
 
-networks.default = networks[env.defaultNetwork];
-
+networks.default = networks[window.localStorage && window.localStorage.getItem('defaultNetwork')] || networks.mainnet;
 module.exports = networks;
