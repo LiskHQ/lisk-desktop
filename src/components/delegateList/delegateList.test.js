@@ -9,7 +9,8 @@ import store from '../../store';
 import history from '../../history';
 import i18n from '../../i18n';
 
-describe('DelegateList', () => {
+/* eslint-disable mocha/no-exclusive-tests */
+describe.only('DelegateList', () => {
   let wrapper;
 
   const delegates = [
@@ -43,8 +44,9 @@ describe('DelegateList', () => {
     delegatesFetched: sinon.spy(),
     t: key => key,
   };
-  beforeEach(() => {
-    wrapper = mount(<Router><DelegateList {...props}></DelegateList></Router>,
+
+  const mountComponentWithProps = (desiredProps) => {
+    const targetWrapper = mount(<Router><DelegateList {...desiredProps}></DelegateList></Router>,
       {
         context: { store, history, i18n },
         childContextTypes: {
@@ -54,6 +56,10 @@ describe('DelegateList', () => {
         },
       },
     );
+    return targetWrapper;
+  };
+  beforeEach(() => {
+    wrapper = mountComponentWithProps(props);
   });
 
   afterEach(() => {
@@ -77,7 +83,8 @@ describe('DelegateList', () => {
       toFake: ['setTimeout', 'clearTimeout', 'Date'],
     });
     props.delegatesFetched.reset();
-    wrapper.find('.search input').at(0).simulate('change', { nativeEvent: { target: { value: 'query' } } });
+    wrapper.find('.search input')
+      .at(0).simulate('change', { nativeEvent: { target: { value: 'query' } } });
     clock.tick(251);
     expect(props.delegatesFetched).to.be.calledWith({
       activePeer: props.activePeer,
@@ -87,4 +94,35 @@ describe('DelegateList', () => {
     });
     clock.restore();
   });
+
+  it('should loadMore when scrolling', () => {
+    const showChangeSummeryProps = {
+      ...props,
+      showChangeSummery: false,
+      totalDelegates: 100,
+    };
+    wrapper = mountComponentWithProps(showChangeSummeryProps);
+
+    expect(wrapper.find('h2.voting-header')).to.have.lengthOf(1);
+    expect(wrapper.find('h2.voting-header').text()).to.be.equal('Delegate List');
+
+
+    const delegateVote = wrapper.find('.delegate-row').at(0).find('label');
+
+    console.log(delegateVote);
+
+    delegateVote.simulate('click');
+
+    console.log(wrapper.find('.next'));
+    wrapper.find('.next').at(0).simulate('click');
+
+    expect(wrapper.find('h2.voting-header')).to.have.lengthOf(1);
+    expect(wrapper.find('h2.voting-header').text()).to.be.equal('Your selection');
+
+    // clock.tick(300);
+    // wrapper.setProps({ state: { showChangeSummery: true } });
+    // expect(wrapper.find('h2.voting-header')).to.have.lengthOf(1);
+    // clock.restore();
+  });
 });
+/* eslint-enable mocha/no-exclusive-tests */
