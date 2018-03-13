@@ -17,6 +17,7 @@ describe('Send Readable Component', () => {
 
   beforeEach(() => {
     const account = accounts.delegate;
+    account.serverPublicKey = 'public_key';
 
     const store = fakeStore({
       account,

@@ -16,8 +16,12 @@ import styles from './send.css';
 class Send extends React.Component {
   constructor(props) {
     super(props);
+    const needsAccountInit = !props.account.serverPublicKey && props.account.balance > 0;
+
     this.state = {
-      sendIsActive: !!this.getSearchParams().address || !!this.getSearchParams().amount,
+      sendIsActive: !!this.getSearchParams().address
+      || !!this.getSearchParams().amount
+      || needsAccountInit,
     };
   }
 

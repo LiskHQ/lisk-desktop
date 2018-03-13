@@ -10,7 +10,7 @@ class TransactionsDashboard extends React.Component {
   render() {
     return <div className={`${grid.row} ${styles.wrapper}`}>
       <div className={`${grid['col-md-4']}`}>
-        <Send history={this.props.history} />
+        <Send history={this.props.history} account={this.props.account}/>
       </div>
       <div className={`${grid['col-sm-12']} ${styles.transactions} ${grid['col-md-8']}`}>
         <Transactions {...this.props} />

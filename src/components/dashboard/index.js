@@ -47,7 +47,7 @@ class Dashboard extends React.Component {
 
 const mapStateToProps = state => ({
   transactions: [...state.transactions.pending, ...state.transactions.confirmed].slice(0, 3),
-  accountAddress: state.account.address,
+  account: state.account,
   loading: state.loading.length > 0,
 });
 

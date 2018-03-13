@@ -22,13 +22,14 @@ describe('Send', () => {
     storeState = {
       peers,
       transactions,
-      account: { serverPublicKey: 'public_key' },
+      account: { serverPublicKey: 'public_key', balance: 0 },
     };
 
     context = {
       storeState,
     };
-    wrapper = mountWithContext(<Send history={ { location: {} } }/>, context);
+    wrapper = mountWithContext(<Send history={ { location: {} } } account={storeState.account}/>,
+      context);
   });
 
   it('should render MultiStep component ', () => {
