@@ -87,6 +87,16 @@ module.exports = function (config) {
             'src/components/register/index.js',
             'src/components/register/register.js',
             'src/components/transactions/transactionOverview.js',
+            'src/components/transactions/transactionDetailView.js',
+            'src/components/voting/index.js',
+            'src/components/delegateList/index.js',
+            'src/components/delegateList/delegateList.js',
+            'src/components/dialog/index.js',
+            'src/components/dialog/dialog.js',
+            'src/components/toaster/index.js',
+            'src/components/mainMenu/mainMenu.js',
+            'src/components/setting/setting.js',
+            'src/components/votesPreview/index.js',
           ],
           overrides: {
             'src/store/**/*.js': {

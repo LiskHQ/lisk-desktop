@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 
-import { sent } from '../../actions/account';
 import Send from './send';
 
 const mapStateToProps = state => ({
@@ -10,8 +9,4 @@ const mapStateToProps = state => ({
   pendingTransactions: state.transactions.pending,
 });
 
-const mapDispatchToProps = dispatch => ({
-  sent: data => dispatch(sent(data)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(Send));
+export default connect(mapStateToProps)(translate()(Send));
