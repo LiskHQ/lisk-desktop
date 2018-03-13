@@ -2,8 +2,11 @@ import { step } from 'mocha-steps';
 import thunk from 'redux-thunk';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import { stub, useFakeTimers, spy } from 'sinon';
+import { stub, useFakeTimers, spy, match } from 'sinon';
 
+import * as accountAPI from '../../src/utils/api/account';
+import * as delegateAPI from '../../src/utils/api/delegate';
+import * as netHash from '../../src/utils/api/nethash';
 import Register from './../../src/components/register';
 import * as peersActions from '../../src/actions/peers';
 import accountReducer from '../../src/store/reducers/account';
@@ -11,42 +14,57 @@ import peersReducer from '../../src/store/reducers/peers';
 import GenericStepDefinition from '../utils/genericStepDefinition';
 import accountMiddleware from '../../src/store/middlewares/account';
 import peerMiddleware from '../../src/store/middlewares/peers';
+import loginMiddleware from '../../src/store/middlewares/login';
 import { prepareStore, renderWithRouter } from '../utils/applicationInit';
+import networks from '../../src/constants/networks';
+import getNetwork from '../../src/utils/getNetwork';
 
 describe('@integration: Register', () => {
-  let store;
   let wrapper;
   let helper;
   let localStorageStub;
   let activePeerSetSpy;
+  let netHashAPIStub;
   let clock;
   let passphrase;
+  let accountAPIStub;
+  let delegateAPIStub;
 
   afterEach(() => {
     wrapper.update();
   });
 
-  const createStore = () => {
-    store = prepareStore({
+  const createStore = () =>
+    prepareStore({
       account: accountReducer,
       peers: peersReducer,
     }, [
       thunk,
       accountMiddleware,
       peerMiddleware,
+      loginMiddleware,
     ]);
-  };
 
 
   const restoreStubs = () => {
     localStorageStub.restore();
     activePeerSetSpy.restore();
+    accountAPIStub.restore();
+    delegateAPIStub.restore();
+    netHashAPIStub.restore();
     clock.restore();
   };
 
   const stubApis = () => {
     localStorageStub = stub(localStorage, 'getItem');
     activePeerSetSpy = spy(peersActions, 'activePeerSet');
+    accountAPIStub = stub(accountAPI, 'getAccount');
+    accountAPIStub.returnsPromise().resolves({
+      success: false,
+      error: 'Account not found',
+    });
+    netHashAPIStub = stub(netHash, 'getNethash').returnsPromise().rejects();
+    delegateAPIStub = stub(delegateAPI, 'getDelegate').returnsPromise().rejects();
     clock = useFakeTimers({
       toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
     });
@@ -55,7 +73,8 @@ describe('@integration: Register', () => {
   class Helper extends GenericStepDefinition {
     moveMouseRandomly() {
       for (let i = 0; i < 250; i++) {
-        this.wrapper.find('#generatorContainer').simulate('mousemove', { pageX: 200 * (i % 2), pageY: 200 * (i % 2) });
+        this.wrapper.find('#generatorContainer').simulate('mousemove',
+          { pageX: 200 * (i % 2), pageY: 200 * (i % 2) });
       }
     }
 
@@ -65,7 +84,10 @@ describe('@integration: Register', () => {
 
     // eslint-disable-next-line class-methods-use-this
     checkIfRegistrationConfirmed() {
-      expect(activePeerSetSpy).to.have.been.calledWith();
+      expect(activePeerSetSpy).to.have.been.calledWith(match({
+        network: getNetwork(networks.default.code),
+        passphrase,
+      }));
       restoreStubs();
     }
 
@@ -92,7 +114,7 @@ describe('@integration: Register', () => {
   }
 
   const setupStep = () => {
-    createStore();
+    const store = createStore();
     stubApis();
     wrapper = mount(renderWithRouter(Register, store, { location: { search: '' } }), { activePeerSet: peersActions.activePeerSet });
     helper = new Helper(wrapper, store);
