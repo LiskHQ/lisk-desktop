@@ -17,7 +17,7 @@ class SendWritable extends React.Component {
         value: this.props.address || '',
       },
       amount: {
-        value: '',
+        value: this.props.amount || '',
       },
       ...authStatePrefill(),
     };
@@ -35,7 +35,7 @@ class SendWritable extends React.Component {
           value: this.props.prevState.recipient || this.state.recipient.value,
         },
         amount: {
-          value: this.props.prevState.amount || '',
+          value: this.props.prevState.amount || this.state.amount.value,
         },
         ...authStatePrefill(this.props.account),
       };
