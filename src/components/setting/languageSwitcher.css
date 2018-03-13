@@ -5,7 +5,8 @@
   & input[type='checkbox'] {
     &:checked + label {
       & .button {
-        left: calc(100% - 48px);
+        left: 100%;
+        transform: translateX(-48px);
       }
     }
   }
