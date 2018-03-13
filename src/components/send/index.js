@@ -16,6 +16,7 @@ class Send extends React.Component {
   constructor(props) {
     super(props);
     this.address = parseSearchParams(props.search).address;
+    this.amount = parseSearchParams(props.search).amount;
     this.state = {
       sendIsActive: !!this.address,
     };
@@ -45,6 +46,7 @@ class Send extends React.Component {
             <SendWritable
               autoFocus={this.state.sendIsActive || window.innerWidth > breakpoints.m}
               address={this.address}
+              amount={this.amount}
             />
             <PassphraseSteps />
             <SendReadable />
