@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import { spy } from 'sinon';
 import externalLinks from './externalLinks';
 import history from '../history';
+import routes from '../constants/routes';
 
 describe('externalLinks', () => {
   const historyPush = spy(history, 'push');
@@ -28,6 +29,6 @@ describe('externalLinks', () => {
     };
     externalLinks.init();
     callbacks.openUrl({}, 'lisk://register');
-    expect(historyPush).to.have.been.calledWith('/register');
+    expect(historyPush).to.have.been.calledWith(routes.register.path);
   });
 });

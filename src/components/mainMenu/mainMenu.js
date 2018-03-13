@@ -7,6 +7,7 @@ import logo from '../../assets/images/logo-beta.svg';
 import * as menuLogos from '../../assets/images/main-menu-icons/*.svg'; //eslint-disable-line
 import { FontIcon } from '../fontIcon';
 import Setting from '../setting';
+import routes from '../../constants/routes';
 
 const getIndex = (history, tabs) => {
   if (history.location.pathname.includes('explorer')) return 2;
@@ -64,12 +65,12 @@ class MainMenu extends React.Component {
     const tabs = [
       {
         label: t('Dashboard'),
-        route: '/main/dashboard',
+        route: `${routes.main.path}${routes.dashboard.path}`,
         id: 'dashboard',
         image: menuLogos.dashboard,
       }, {
         label: t('Wallet'),
-        route: '/main/transactions',
+        route: `${routes.main.path}${routes.wallet.path}`,
         id: 'transactions',
         image: menuLogos.wallet,
       }, {
@@ -81,12 +82,12 @@ class MainMenu extends React.Component {
       }, {
       */
         label: t('Explorer'),
-        route: '/explorer/search',
+        route: `${routes.explorer.path}${routes.search.path}`,
         id: 'explorer',
         image: menuLogos.search,
       }, {
         label: t('Sidechains'),
-        route: '/main/sidechains',
+        route: `${routes.main.path}${routes.sidechains.path}`,
         id: 'sidechains',
         image: menuLogos.sidechains,
       },
@@ -96,7 +97,7 @@ class MainMenu extends React.Component {
       tabs.splice(tabs.length - 1, 0, {
         label: t('Delegates'),
         id: 'voting',
-        route: '/main/voting',
+        route: `${routes.main.path}${routes.voting.path}`,
         image: menuLogos.delegates,
       });
     }

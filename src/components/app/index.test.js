@@ -11,6 +11,7 @@ import Login from '../login';
 import Transactions from '../transactionDashboard';
 import Search from '../search';
 import Voting from '../voting';
+import routes from '../../constants/routes';
 
 const fakeStore = configureStore();
 
@@ -27,12 +28,12 @@ const addRouter = Component => (props, path) =>
 
 const publicComponent = [
   { route: '/', component: Login },
-  { route: '/explorer/search', component: Search },
+  { route: `${routes.explorer.path}${routes.search.path}`, component: Search },
 ];
 
 const privateComponent = [
-  { route: '/main/transactions', component: Transactions },
-  { route: '/main/voting', component: Voting },
+  { route: `${routes.main.path}${routes.transaction.path}`, component: Transactions },
+  { route: `${routes.main.path}${routes.voting.path}`, component: Voting },
 ];
 
 describe('App', () => {
