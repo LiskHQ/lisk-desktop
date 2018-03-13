@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Transactions from './../transactions';
 import Send from '../send';
-import styles from './styles.css';
+import styles from './transactionDasboard.css';
 
 class TransactionsDashboard extends React.Component {
   // eslint-disable-next-line class-methods-use-this

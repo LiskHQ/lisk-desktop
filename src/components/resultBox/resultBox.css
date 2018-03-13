@@ -5,10 +5,11 @@
   --paragraph-color: var(--color-grayscale-dark);
   --paragraph-line-height: 36px;
   --title-font-size: 32px;
+  --icon-font-size: 48px;
 }
 
 .icon {
-  font-size: 3em;
+  font-size: var(--icon-font-size);
   color: #ff6236;
 }
 
@@ -29,10 +30,6 @@
   & p {
     color: var(--paragraph-color);
     line-height: var(--paragraph-line-height);
-  }
-
-  & h2 {
-    font-size: var(--title-font-size);
   }
 
   & .copy {

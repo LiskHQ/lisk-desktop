@@ -6,7 +6,7 @@ import TransactionDetails from './../transactions/transactionDetailView';
 import CopyToClipboard from '../copyToClipboard';
 import Box from '../box';
 import EmptyState from '../emptyState';
-import styles from './transaction.css';
+import styles from './singleTransaction.css';
 
 class SingleTransaction extends React.Component {
   constructor(props) {

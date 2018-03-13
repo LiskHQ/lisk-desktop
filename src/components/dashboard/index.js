@@ -8,8 +8,8 @@ import Box from '../box';
 import TransactionList from './../transactions/transactionList';
 import Send from '../send';
 import CurrencyGraph from './currencyGraph';
-import styles from './styles.css';
 import routes from '../../constants/routes';
+import styles from './dashboard.css';
 
 class Dashboard extends React.Component {
   render() {

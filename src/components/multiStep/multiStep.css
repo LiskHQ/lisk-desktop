@@ -58,7 +58,11 @@
       height: 0;
       border-bottom: solid 2px var(--link-color);
       opacity: 0.5;
-      font-size: 0;
+      font-size: 0 !important;
+
+      & small {
+        font-size: 0;
+      }
     }
 
     & .icon {

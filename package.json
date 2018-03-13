@@ -7,7 +7,9 @@
   "main": "main.js",
   "scripts": {
     "build": "npm run clean-build && npm run copy-files && npm run build-prod && npm run build-electron",
-    "build:testnet": "export TESTNET=true && npm run build",
+    "build:testnet": "npm run build:testnet:pre",
+    "build:testnet:pre": "cpx \"./app/build/**\" ./app/build-testnet && npm run build:testnet:post",
+    "build:testnet:post": "replace '\"mainnet\";//defaultNetwork' '\"testnet\";//defaultNetwork' ./app/build-testnet/index.html ",
     "dev": "webpack-dev-server --config ./config/webpack.config.dev --env.dev --hot",
     "build-prod": "webpack --config ./config/webpack.config.prod --env.prod",
     "build-electron": "webpack --config ./config/webpack.config.electron",
@@ -126,6 +128,8 @@
     "extract-text-webpack-plugin": "3.0.0",
     "file-loader": "1.1.6",
     "glob": "=7.1.2",
+    "html-webpack-inline-source-plugin": "0.0.10",
+    "html-webpack-plugin": "3.0.4",
     "i18next-scanner": "=2.0.0",
     "imports-loader": "0.7.1",
     "js-nacl": "=1.2.2",
@@ -157,6 +161,7 @@
     "react-hot-loader": "=1.3.1",
     "react-test-renderer": "=16.0.0",
     "redux-mock-store": "1.3.0",
+    "replace": "0.3.0",
     "should": "13.1.0",
     "simulant": "0.2.2",
     "sinon": "3.3.0",
@@ -168,9 +173,10 @@
     "stylelint-webpack-plugin": "=0.9.0",
     "url-loader": "0.5.9",
     "url-polyfill": "1.0.10",
-    "webpack": "3.6.0",
+    "webpack": "3.11.0",
     "webpack-bundle-analyzer": "2.9.0",
-    "webpack-dev-server": "2.8.2"
+    "webpack-dev-server": "2.8.2",
+    "webpack-file-changer": "2.0.1"
   },
   "build": {
     "appId": "io.lisk.hub",
@@ -203,15 +209,15 @@
   },
   "bundlesize": [
     {
-      "path": "./app/build/bundle.app.js",
+      "path": "./app/build/bundle.app.*.js",
       "maxSize": "890 kB"
     },
     {
-      "path": "./app/build/bundle.vendor.js",
+      "path": "./app/build/bundle.vendor.*.js",
       "maxSize": "150 kB"
     },
     {
-      "path": "./app/build/styles.css",
+      "path": "./app/build/styles.*.css",
       "maxSize": "1.50 MB"
     }
   ],
