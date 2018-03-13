@@ -77,7 +77,7 @@ module.exports = function (config) {
             'src/components/multiStep/index.js',
             'src/components/passphrase/create/index.js',
             'src/components/passphrase/safekeeping/index.js',
-            'src/components/toolbox/checkbox/index.js',
+            'src/components/toolbox/sliderCheckbox/index.js',
             'src/components/toolbox/transitionWrapper/index.js',
             'src/components/searchBar/index.js',
             'src/components/sendWritable/index.js',

@@ -6,7 +6,7 @@ import { FontIcon } from '../../fontIcon';
 const StaticLabel = ({ text, theme, icons, iconName }) => (
   <span className={`${theme.circle} ${theme[iconName]}`}>
     {text ? icons[iconName] :
-      <FontIcon className={`${theme.icon} ${theme.arrowRight}`}>{icons.goal}</FontIcon>
+      <FontIcon className={`${theme.icon} ${theme.arrowRight}`}>{icons[iconName]}</FontIcon>
     }
   </span>
 );
@@ -122,18 +122,18 @@ class SliderCheckbox extends React.Component {
           ref={(el) => { this.shape = el; }}>
           <span className={theme.arrowRight}>
             { textAsIcon ?
-              <span className={theme.text}>{icons.start}</span> :
+              <span className={theme.text}>{icons.unchecked}</span> :
               <FontIcon className={theme.icon}>
-                {icons.start || 'arrow-right'}
+                {icons.unchecked || 'arrow-right'}
               </FontIcon>
             }
           </span>
 
           <span className={theme.checkMark}>
             { textAsIcon ?
-              <span className={theme.text}>{icons.done}</span> :
+              <span className={theme.text}>{icons.checked}</span> :
               <FontIcon className={theme.icon}>
-                {icons.done || 'checkmark'}
+                {icons.checked || 'checkmark'}
               </FontIcon>
             }
           </span>
