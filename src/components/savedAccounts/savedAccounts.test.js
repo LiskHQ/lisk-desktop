@@ -7,7 +7,7 @@ import configureStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import networks from '../../constants/networks';
-import account from '../../constants/account';
+import accounts from '../../../test/constants/accounts';
 import SavedAccounts from './savedAccounts';
 import routes from '../../constants/routes';
 
@@ -27,7 +27,7 @@ describe('SavedAccounts', () => {
     {
       publicKey: 'hab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88',
       network: networks.mainnet.code,
-      passphrase: account.genesis.passphrase,
+      passphrase: accounts.genesis.passphrase,
     },
     {
       network: networks.customNode.code,
@@ -41,7 +41,7 @@ describe('SavedAccounts', () => {
     {
       network: networks.testnet.code,
       publicKey: activeAccount.publicKey,
-      passphrase: account.genesis.passphrase,
+      passphrase: accounts.genesis.passphrase,
     },
   ];
 

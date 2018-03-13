@@ -11,7 +11,7 @@ import Fees from '../constants/fees';
 import { toRawLsk } from '../utils/lsk';
 import transactionTypes from '../constants/transactionTypes';
 import networks from '../constants/networks';
-import account from '../constants/account';
+import accounts from '../../test/constants/accounts';
 
 describe('actions: account', () => {
   describe('accountUpdated', () => {
@@ -221,9 +221,9 @@ describe('actions: account', () => {
   describe('removePassphrase', () => {
     it('should create an action to remove passphrase', () => {
       const data = {
-        publicKey: account.genesis.publicKey,
+        publicKey: accounts.genesis.publicKey,
         network: networks.testnet,
-        address: account.genesis.address,
+        address: accounts.genesis.address,
       };
 
       const expectedAction = {
