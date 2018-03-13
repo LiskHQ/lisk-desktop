@@ -33,7 +33,7 @@ describe('Dashboard', () => {
         account: { address: 'some address' },
       },
     };
-    wrapper = mountWithContext(<Dashboard/>, context);
+    wrapper = mountWithContext(<Dashboard history={ { location: {} } }/>, context);
   });
 
   it('should render transaction list with at most 3 transactions', () => {

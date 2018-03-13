@@ -15,20 +15,13 @@ import styles from './send.css';
 class Send extends React.Component {
   constructor(props) {
     super(props);
-    const { address, amount } = parseSearchParams(props.history.location.search);
     this.state = {
-      address,
-      amount,
-      sendIsActive: !!address,
+      sendIsActive: !!this.getSearchParams().address || !!this.getSearchParams().amount,
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { address, amount } = parseSearchParams(nextProps.history.location);
-
-    if (address !== this.state.address || amount !== this.state.amount) {
-      this.setState({ address, amount });
-    }
+  getSearchParams() {
+    return parseSearchParams(this.props.history.location.search);
   }
 
   setSendIsActive(sendIsActive) {
@@ -54,8 +47,8 @@ class Send extends React.Component {
             className={styles.wrapper}>
             <SendWritable
               autoFocus={this.state.sendIsActive || window.innerWidth > breakpoints.m}
-              address={this.state.address}
-              amount={this.state.amount}
+              address={this.getSearchParams().address}
+              amount={this.getSearchParams().amount}
             />
             <PassphraseSteps />
             <SendReadable />
