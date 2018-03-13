@@ -19,15 +19,15 @@ class Header extends React.Component {
     const { pathname } = this.props.location;
     return !this.props.isAuthenticated
       && !this.props.account.loading
-      && pathname !== routes.login.url
-      && ![routes.register.url, routes.addAccount.url]
+      && pathname !== routes.login.path
+      && ![routes.register.path, routes.addAccount.path]
         .some(el => pathname.includes(el));
   }
 
   shouldShowSearchBar() {
     const { pathname } = this.props.location;
-    return ![`${routes.explorer}${routes.search.url}`, routes.register.url, routes.addAccount.url]
-      .some(el => pathname.includes(el)) && pathname !== routes.login.url;
+    return ![`${routes.explorer}${routes.search.path}`, routes.register.path, routes.addAccount.path]
+      .some(el => pathname.includes(el)) && pathname !== routes.login.path;
   }
 
   render() {

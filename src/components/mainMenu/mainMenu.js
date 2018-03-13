@@ -65,12 +65,12 @@ class MainMenu extends React.Component {
     const tabs = [
       {
         label: t('Dashboard'),
-        route: `${routes.main}${routes.dashboard.url}`,
+        route: `${routes.main}${routes.dashboard.path}`,
         id: 'dashboard',
         image: menuLogos.dashboard,
       }, {
         label: t('Wallet'),
-        route: `${routes.main}${routes.wallet.url}`,
+        route: `${routes.main}${routes.wallet.path}`,
         id: 'transactions',
         image: menuLogos.wallet,
       }, {
@@ -82,12 +82,12 @@ class MainMenu extends React.Component {
       }, {
       */
         label: t('Explorer'),
-        route: `${routes.explorer}${routes.search.url}`,
+        route: `${routes.explorer}${routes.search.path}`,
         id: 'explorer',
         image: menuLogos.search,
       }, {
         label: t('Sidechains'),
-        route: `${routes.main}${routes.sidechains.url}`,
+        route: `${routes.main}${routes.sidechains.path}`,
         id: 'sidechains',
         image: menuLogos.sidechains,
       },
@@ -97,7 +97,7 @@ class MainMenu extends React.Component {
       tabs.splice(tabs.length - 1, 0, {
         label: t('Delegates'),
         id: 'voting',
-        route: `${routes.main}${routes.voting.url}`,
+        route: `${routes.main}${routes.voting.path}`,
         image: menuLogos.delegates,
       });
     }

@@ -20,7 +20,7 @@ class Register extends React.Component {
 
   componentDidUpdate() {
     if (this.props.account.passphrase !== undefined) {
-      this.props.history.push(`${routes.main}${routes.dashboard.url}`);
+      this.props.history.push(`${routes.main}${routes.dashboard.path}`);
     }
   }
 

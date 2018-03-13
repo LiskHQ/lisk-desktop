@@ -29,6 +29,6 @@ describe('externalLinks', () => {
     };
     externalLinks.init();
     callbacks.openUrl({}, 'lisk://register');
-    expect(historyPush).to.have.been.calledWith(routes.register.url);
+    expect(historyPush).to.have.been.calledWith(routes.register.path);
   });
 });

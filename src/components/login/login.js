@@ -100,7 +100,7 @@ class Login extends React.Component {
 
   getReferrerRoute() {
     const search = parseSearchParams(this.props.history.location.search);
-    const dashboardRoute = `${routes.main}${routes.dashboard.url}`;
+    const dashboardRoute = `${routes.main}${routes.dashboard.path}`;
     const referrerRoute = search.referrer ? search.referrer : dashboardRoute;
     return referrerRoute;
   }
@@ -201,7 +201,7 @@ class Login extends React.Component {
           <section className={styles.table}>
             <div className='text-left'>
               <h2>
-                <Link className='new-account-button' to={routes.register.url}>
+                <Link className='new-account-button' to={routes.register.path}>
                   {this.props.t('Create Lisk ID')}
                 </Link>
                 <FontIcon className={styles.singUpArrow} value='arrow-right' />

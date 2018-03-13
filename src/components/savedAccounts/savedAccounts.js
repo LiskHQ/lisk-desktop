@@ -69,7 +69,7 @@ class SavedAccounts extends React.Component {
     const switchAccount = (account) => {
       if (!this.state.editing) {
         accountSwitched(account);
-        history.push(`${routes.main}${routes.dashboard.url}`);
+        history.push(`${routes.main}${routes.dashboard.path}`);
       }
     };
 
@@ -81,7 +81,7 @@ class SavedAccounts extends React.Component {
         </h1>
         <ul className={styles.cardsWrapper} >
           <li>
-            <Link to={`${routes.addAccount.url}?referrer=${routes.main}${routes.dashboard.url}/`} >
+            <Link to={`${routes.addAccount.path}?referrer=${routes.main}${routes.dashboard.path}/`} >
               <div className={`add-lisk-id-card ${styles.card} ${styles.addNew}`} >
                 <div className={styles.cardIcon}>
                   <img src={plusShapeIcon} className={styles.plusShapeIcon} />

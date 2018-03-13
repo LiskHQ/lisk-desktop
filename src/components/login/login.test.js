@@ -86,18 +86,18 @@ describe('Login', () => {
   });
 
   describe('History management', () => {
-    it(`calls this.props.history.replace('${routes.main}${routes.dashboard.url}')`, () => {
+    it('calls this.props.history.replace(\'/main/dashboard\')', () => {
       wrapper = shallow(<Login {...props}/>, options);
       wrapper.setProps({ account: { address: 'dummy' } });
-      expect(props.history.replace).to.have.been.calledWith(`${routes.main}${routes.dashboard.url}`);
+      expect(props.history.replace).to.have.been.calledWith(`${routes.main}${routes.dashboard.path}`);
     });
 
     it('calls this.props.history.replace with referrer address', () => {
       wrapper = shallow(<Login {...props}/>, options);
       props.history.replace.reset();
-      history.location.search = `?referrer=${routes.main}${routes.voting.url}`;
+      history.location.search = `?referrer=${routes.main}${routes.voting.path}`;
       wrapper.setProps({ history, account: { address: 'dummy' } });
-      expect(props.history.replace).to.have.been.calledWith(`${routes.main}${routes.voting.url}`);
+      expect(props.history.replace).to.have.been.calledWith(`${routes.main}${routes.voting.path}`);
     });
 
     it('hides network options by default', () => {
