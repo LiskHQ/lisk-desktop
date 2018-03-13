@@ -28,12 +28,12 @@ const addRouter = Component => (props, path) =>
 
 const publicComponent = [
   { route: '/', component: Login },
-  { route: `${routes.explorer}${routes.search.path}`, component: Search },
+  { route: `${routes.explorer.path}${routes.search.path}`, component: Search },
 ];
 
 const privateComponent = [
-  { route: `${routes.main}${routes.transaction.path}`, component: Transactions },
-  { route: `${routes.main}${routes.voting.path}`, component: Voting },
+  { route: `${routes.main.path}${routes.transaction.path}`, component: Transactions },
+  { route: `${routes.main.path}${routes.voting.path}`, component: Voting },
 ];
 
 describe('App', () => {

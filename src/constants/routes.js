@@ -11,6 +11,6 @@ export default {
   register: { path: '/register' },
   sidechains: { path: '/sidechains' },
   voting: { path: '/voting' },
-  main: '/main',
-  explorer: '/explorer',
+  main: { path: '/main' },
+  explorer: { path: '/explorer' },
 };

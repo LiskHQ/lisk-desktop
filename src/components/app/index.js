@@ -38,7 +38,7 @@ class App extends React.Component {
             <div className={styles.mainBox}>
               <Header />
               <Switch>
-                <PrivateRoutes path={routes.main} render={ ({ match }) => (
+                <PrivateRoutes path={routes.main.path} render={ ({ match }) => (
                   <main className={offlineStyle.disableWhenOffline}>
                     <Switch>
                       <Route path={`${match.url}${routes.accountVisualDemo.path}/:dialog?`} component={AccountVisualDemo} />
@@ -50,7 +50,7 @@ class App extends React.Component {
                     </Switch>
                   </main>
                 )} />
-                <Route path={routes.explorer} render={ ({ match }) => (
+                <Route path={routes.explorer.path} render={ ({ match }) => (
                   <main>
                     <Route path={`${match.url}${routes.search.path}/:dialog?`} component={Search} />
                     <Route path={`${match.url}${routes.searchResult.path}/:query?`} component={SearchResult} />

@@ -26,7 +26,7 @@ describe('Header', () => {
       setActiveDialog: () => { },
       account: {},
       t: key => key,
-      location: { pathname: `${routes.explorer}${routes.search}` },
+      location: { pathname: `${routes.explorer.path}${routes.search}` },
       isAuthenticated: false,
     };
     propsMock = sinon.mock(mockInputProps);
