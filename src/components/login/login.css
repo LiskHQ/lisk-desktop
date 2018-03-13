@@ -123,23 +123,6 @@
   border-radius: 3px;
   overflow: hidden;
 
-  & .bg,
-  & .shapes,
-  & .shapes > div {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-  }
-
-  & .bg {
-    z-index: 0;
-    opacity: 0.94;
-    background: var(--gradient);
-    border-radius: 3px;
-  }
-
   & .table {
     position: relative;
     z-index: 2;
