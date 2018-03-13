@@ -203,7 +203,7 @@ describe('@integration: Wallet', () => {
       step('When I click "account init button"', () => helper.clickOnElement('.account-init-button button'));
       step('Then I should see the filled out send form', () => {
         helper.haveInputValueOf('.recipient input', accounts.genesis.address);
-        helper.haveInputValueOf('.amount input', 0.1);
+        helper.haveInputValueOf('.amount input', '0.1');
       });
       step('And I click "send next button"', () => { helper.clickOnElement('button.send-next-button'); });
       step('When I click "send button"', () => helper.clickOnElement('button.send-button button'));
