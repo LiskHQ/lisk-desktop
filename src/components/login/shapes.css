@@ -1,3 +1,6 @@
+:root {
+  --rect-width: 200px;
+}
 .shapes {
   z-index: 1;
 }
