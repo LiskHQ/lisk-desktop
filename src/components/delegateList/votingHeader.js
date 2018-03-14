@@ -74,7 +74,7 @@ export class VotingHeaderRaw extends React.Component {
     return (
       <header className={`${styles.header} ${styles[this.state.headerPosition]}`}>
         <div>
-          <h2 className={`${styles.desktopTitle} voting-header`}>{t(titleDesktop)}</h2>
+          <h2 className={styles.desktopTitle}>{t(titleDesktop)}</h2>
           <h2 className={styles.mobileTitle}>{t(titleMobile)}</h2>
         </div>
         <div>

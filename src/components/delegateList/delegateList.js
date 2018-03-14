@@ -22,7 +22,6 @@ class DelegateList extends React.Component {
   }
 
   componentDidMount() {
-    // this.setState({ activeFilter: voteFilters.all, showChangeSummery: false });
     this.loadVotedDelegates(true);
   }
 
