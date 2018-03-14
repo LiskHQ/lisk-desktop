@@ -27,6 +27,7 @@
   min-height: 200px;
   margin-bottom: 20px;
   overflow: hidden;
+  padding: 0px;
 }
 
 .latestActivity {
