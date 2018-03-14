@@ -217,7 +217,7 @@
 .closeButton {
   box-shadow: var(--close-button-shadow);
   position: absolute !important;
-  top: 85px;
+  top: var(--h1-padding-l);
   right: 85px;
 }
 
@@ -259,6 +259,10 @@
       padding-top: var(--h1-padding-xl);
     }
   }
+
+  .closeButton {
+    top: var(--h1-padding-xl);
+  }
 }
 
 @media (--medium-viewport) {
@@ -294,7 +298,7 @@
   }
 
   .closeButton {
-    top: 35px;
+    top: var(--h1-padding-m);
     right: 35px;
   }
 
@@ -320,6 +324,11 @@
       font-size: var(--font-size-ids-h1-s);
       width: var(--h1-width-s);
     }
+  }
+
+  .closeButton {
+    top: 15px;
+    right: 15px;
   }
 
   .cardsWrapper {
@@ -354,12 +363,5 @@
     & .addAcctiveAccountButton {
       bottom: 120px;
     }
-  }
-}
-
-@media (--xSmall-viewport) {
-  .closeButton {
-    top: 15px;
-    right: 15px;
   }
 }
