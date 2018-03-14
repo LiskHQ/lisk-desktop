@@ -110,7 +110,7 @@ class MainMenu extends React.Component {
       <Fragment>
         <aside className={styles.aside}>
           <div className={styles.sideBarWrapper}>
-            <Link to={routes.login.path}><img src={logo} className={styles.logo} /></Link>
+            <Link to={`${routes.main.path}${routes.dashboard.path}`}><img src={logo} className={styles.logo} /></Link>
             <ToolboxTabs index={getIndex(history, tabs)}
               theme={styles}
               onChange={this.navigate.bind(this, history, tabs)}
@@ -136,7 +136,7 @@ class MainMenu extends React.Component {
               onOverlayClick={this.menuToggle.bind(this)}>
               <div>
                 <header className={styles.header}>
-                  <Link to={routes.login.path}><img src={logo} className={styles.logo} /></Link>
+                  <Link to={`${routes.main.path}${routes.dashboard.path}`}><img src={logo} className={styles.logo} /></Link>
                   <FontIcon value='close' className={styles.close} onClick={this.menuToggle.bind(this)} />
                 </header>
                 <ToolboxTabs index={getIndex(history, tabs)}
