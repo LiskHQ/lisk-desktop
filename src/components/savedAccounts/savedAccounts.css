@@ -182,7 +182,8 @@
 }
 
 .network,
-.unlocked {
+.unlocked,
+.unlockedSecured {
   font-size: var(--font-size-h6);
   position: absolute;
   top: 0;
@@ -207,8 +208,14 @@
     & span {
       transform: scale(1.1);
       transform-origin: 100%;
+      transition: transform ease-in-out 500ms;
     }
   }
+}
+
+.unlockedSecured {
+  left: 0;
+  padding-top: 30px;
 }
 
 .network {

@@ -67,6 +67,7 @@ describe('SavedAccounts', () => {
       account: {
         balance: 100e8,
       },
+      isSecureAppears: false,
     });
     wrapper = mountWithRouter(<SavedAccounts {...props} />, {
       context: { store, i18n },
