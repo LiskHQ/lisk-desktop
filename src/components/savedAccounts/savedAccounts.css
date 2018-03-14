@@ -12,9 +12,6 @@
   --h1-padding-xl: 85px;
   --h1-padding-l: 40px;
   --h1-padding-m: 25px;
-  --h1-width: 300px;
-  --h1-width-m: 400px;
-  --h1-width-s: 260px;
   --add-button-margin: 200px;
   --card-width: 347px;
   --card-height: 436px;
@@ -36,9 +33,9 @@
     text-align: center;
     padding-top: var(--h1-padding-l);
     margin: 0;
-    width: var(--h1-width);
     left: 50%;
     transform: translateX(-50%);
+    white-space: nowrap;
   }
 }
 
@@ -270,7 +267,6 @@
     & > h1 {
       font-size: var(--font-size-ids-h1-l);
       padding: var(--h1-padding-m);
-      width: var(--h1-width-m);
     }
   }
 
@@ -322,7 +318,6 @@
   .wrapper {
     & > h1 {
       font-size: var(--font-size-ids-h1-s);
-      width: var(--h1-width-s);
     }
   }
 
