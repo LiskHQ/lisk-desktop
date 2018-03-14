@@ -194,5 +194,29 @@ describe.only('DelegateList', () => {
     const delegateRow = wrapper.find('.empty-message');
     expect(delegateRow.text()).to.equal('You have not voted yet.');
   });
+
+  it('should show no results message', () => {
+    const emptyMessageProps = {
+      ...props,
+    };
+    emptyMessageProps.delegates = [];
+    emptyMessageProps.votes = {};
+    wrapper = mountWithContext(<DelegateList {...emptyMessageProps}/>, emptyMessageProps);
+    const nextProps = {
+      delegates: [delegates[1]],
+    };
+
+    /*
+    force to reset isInitial flag
+    and then reset delegates
+    */
+    wrapper.setProps(nextProps);
+    clock.tick(300);
+    wrapper.update();
+
+    wrapper.setProps({ delegates: [] });
+    const delegateRow = wrapper.find('.empty-message');
+    expect(delegateRow.text()).to.equal('No delegates found.');
+  });
 });
 /* eslint-enable mocha/no-exclusive-tests */
