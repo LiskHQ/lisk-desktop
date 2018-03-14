@@ -14,7 +14,7 @@ class ResultBox extends React.Component {
   }
   render() {
     return (
-      <div className={`${styles.resultBox} boxPadding`}>
+      <div className={`${styles.resultBox}`}>
         <div></div>
 
         <div>
