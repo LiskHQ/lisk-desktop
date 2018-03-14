@@ -41,7 +41,7 @@
   "dependencies": {
     "bignumber.js": "4.0.4",
     "bitcore-mnemonic": "1.2.5",
-    "chart.js": "2.7.1",
+    "chart.js": "2.7.2",
     "copy-to-clipboard": "3.0.8",
     "electron-localshortcut": "=2.0.2",
     "flexboxgrid": "=6.3.1",
