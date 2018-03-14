@@ -45,48 +45,9 @@
   }
 }
 
-@media (--xLarge-viewport) {
-  header {
-    & h2 {
-      font-size: var(--font-size-h2-xl);
-    }
-  }
-}
-
-@media (--large-viewport) {
-  header {
-    & h2 {
-      font-size: var(--font-size-h2-l);
-    }
-  }
-}
-
-@media (--medium-viewport) {
-  header {
-    & h2 {
-      /* todo: manage font sizes, --font-size-h2-m is too big for this */
-      font-size: var(--font-size-h2-l);
-    }
-  }
-}
-
-@media (--small-viewport) {
-  header {
-    & h2 {
-      font-size: var(--font-size-h2-s);
-    }
-  }
-}
-
 @media (--xSmall-viewport) {
   .wrapper {
     padding: 20px 19px;
-
-    & header {
-      & h2 {
-        font-size: var(--font-size-h2-s);
-      }
-    }
 
     & p {
       font-size: var(--font-size-XS);
