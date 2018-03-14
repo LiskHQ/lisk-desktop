@@ -1,7 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import sinon from 'sinon';
 import configureStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
 import accounts from '../../../test/constants/accounts';

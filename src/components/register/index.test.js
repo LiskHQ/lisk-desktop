@@ -10,7 +10,6 @@ import Register from './index';
 import sinon from 'sinon';
 import * as dialogActions from '../../actions/dialog';
 
-
 describe('RegisterHOC', () => {
   let wrapper;
   const peers = {};

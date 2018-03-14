@@ -66,7 +66,7 @@ describe('Register', () => {
       passphrase,
     }));
   });
-  
+
   it('should return to Login page when prevPage in MultiStep is executed', () => {
     expect(wrapper.find('Register').props().history.location.pathname).to.not.be.equal('/');
     wrapper.find('MultiStep').props().prevPage();
