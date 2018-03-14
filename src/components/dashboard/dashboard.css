@@ -34,22 +34,6 @@
   margin: 0px;
 }
 
-@media (--xLarge-viewport) {
-  .latestActivity {
-    & h2 {
-      margin: 45px var(--box-padding-left-L) 20px;
-    }
-  }
-}
-
-@media (--large-viewport) {
-  .latestActivity {
-    & h2 {
-      margin: 45px var(--box-padding-left-L) 20px;
-    }
-  }
-}
-
 @media (--medium-viewport) {
   .wrapper {
     & .main {
@@ -69,10 +53,6 @@
 
   .latestActivity {
     height: auto;
-
-    & h2 {
-      margin: 45px var(--box-padding-left-M) 20px;
-    }
   }
 }
 
