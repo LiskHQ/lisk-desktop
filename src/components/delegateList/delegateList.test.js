@@ -5,9 +5,11 @@ import PropTypes from 'prop-types';
 import { BrowserRouter as Router } from 'react-router-dom';
 import sinon from 'sinon';
 import DelegateList from './delegateList';
+import { mountWithContext } from './../../../test/utils/mountHelpers';
 import store from '../../store';
 import history from '../../history';
 import i18n from '../../i18n';
+import voteFilters from './../../constants/voteFilters';
 
 /* eslint-disable mocha/no-exclusive-tests */
 describe.only('DelegateList', () => {
@@ -74,7 +76,7 @@ describe.only('DelegateList', () => {
     clock.restore();
     loadMoreSpy.restore();
   });
-/*
+
   it('should render VotingHeader', () => {
     expect(wrapper.find('VotingHeaderRaw')).to.have.lengthOf(1);
   });
@@ -112,18 +114,16 @@ describe.only('DelegateList', () => {
     expect(loadMoreSpy).to.have.been.calledWith();
     expect(wrapper.find('.delegate-row').length).to.equal(delegates.length);
   });
-*/
+
   it('should call loadMore and loadDelegates if not still loading', () => {
     const loadMoreProps = {
       ...props,
       totalDelegates: 100,
     };
-    wrapper = mountComponentWithProps(loadMoreProps);
+    const loadDelegates = sinon.spy(DelegateList.prototype, 'loadDelegates');
+    wrapper = mountWithContext(<DelegateList {...props}/>, { ...store });
     const waypoint = wrapper.find('Waypoint').at(1);
 
-    const prevProps = {
-      delegates: [...loadMoreProps.delegates[0]],
-    };
     const nextProps = {
       delegates: [
         ...loadMoreProps.delegates,
@@ -135,23 +135,64 @@ describe.only('DelegateList', () => {
         }],
     };
 
-    console.log(nextProps.delegates.length);
-    // wrapper.update(nextProps);
-    wrapper.setProps(prevProps);
-    wrapper.update();
-    clock.tick(300);
-
+    /*
+    Force trigger componentWillUpdate, 
+    will reset freezeLoading flag to cover loadMore
+    */
     wrapper.setProps(nextProps);
-    wrapper.update();
     clock.tick(300);
-
-    // wrapper.update();
     waypoint.props().onEnter();
     expect(loadMoreSpy).to.have.been.calledWith();
-    expect(wrapper.find('.delegate-row').length).to.equal(delegates.length);
+    expect(wrapper.find('.delegate-row').length).to.equal(delegates.length + 1);
+    loadDelegates.restore();
+    clock.restore();
   });
-  it('should set Active filter, when clicking in heading filters', () => {
 
+  it('should filter voted delegates', () => {
+    const filterVotedProps = {
+      ...props,
+    };
+    wrapper = mountComponentWithProps(filterVotedProps);
+    wrapper.find('.transaction-filter-item').at(voteFilters.voted).simulate('click');
+    wrapper.update();
+    const delegateRow = wrapper.find('.delegate-row');
+    expect(delegateRow.length).to.equal(delegates.length - 1);
+    expect(delegateRow.find('li').at(2).text()).to.equal(delegates[0].username);
+  });
+
+  it('should filter notVoted delegates', () => {
+    const filterVotedProps = {
+      ...props,
+    };
+    wrapper = mountComponentWithProps(filterVotedProps);
+    wrapper.find('.transaction-filter-item').at(voteFilters.notVoted).simulate('click');
+    wrapper.update();
+    const delegateRow = wrapper.find('.delegate-row');
+    expect(delegateRow.length).to.equal(delegates.length - 1);
+    expect(delegateRow.find('li').at(2).text()).to.equal(delegates[1].username);
+  });
+
+  it('should show no voted message', () => {
+    const emptyMessageProps = {
+      ...props,
+    };
+    emptyMessageProps.delegates = [];
+    emptyMessageProps.votes = {};
+    wrapper = mountWithContext(<DelegateList {...emptyMessageProps}/>, emptyMessageProps);
+    const nextProps = {
+      delegates: [],
+    };
+
+    /*
+    force to have no delegates and 
+    trigger voted filter
+    */
+    wrapper.setProps(nextProps);
+    clock.tick(300);
+    wrapper.find('.transaction-filter-item').at(voteFilters.voted).simulate('click');
+    wrapper.update();
+    const delegateRow = wrapper.find('.empty-message');
+    expect(delegateRow.text()).to.equal('You have not voted yet.');
   });
 });
 /* eslint-enable mocha/no-exclusive-tests */
