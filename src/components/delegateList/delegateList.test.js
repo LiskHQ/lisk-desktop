@@ -11,8 +11,7 @@ import history from '../../history';
 import i18n from '../../i18n';
 import voteFilters from './../../constants/voteFilters';
 
-/* eslint-disable mocha/no-exclusive-tests */
-describe.only('DelegateList', () => {
+describe('DelegateList', () => {
   let wrapper;
 
   const delegates = [
@@ -219,4 +218,3 @@ describe.only('DelegateList', () => {
     expect(delegateRow.text()).to.equal('No delegates found.');
   });
 });
-/* eslint-enable mocha/no-exclusive-tests */
