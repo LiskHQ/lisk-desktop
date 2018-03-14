@@ -77,7 +77,7 @@ class SavedAccounts extends React.Component {
       <div className={`${styles.wrapper} save-account`}>
         <BackgroundMaker className={styles.background} />
         <h1>
-          {t('Your favorite Lisk IDs')}
+          {t('Your Lisk IDs')}
         </h1>
         <ul className={styles.cardsWrapper} >
           <li>
@@ -134,7 +134,7 @@ class SavedAccounts extends React.Component {
                     { button: styles.removeButton }
                   }
                   onClick={this.handleRemove.bind(this, account)}
-                  label={this.isSelectedForRemove(account) ? t('Confirm') : t('Remove from Favorites')}/> :
+                  label={this.isSelectedForRemove(account) ? t('Confirm') : t('Remove')}/> :
                 null
               }
             </li>
