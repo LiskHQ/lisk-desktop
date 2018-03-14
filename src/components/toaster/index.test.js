@@ -6,8 +6,8 @@ import Toaster from './toaster';
 import ToasterHOC from './index';
 import store from '../../store';
 
-
-describe('ToasterHOC', () => {
+/* eslint-disable mocha/no-exclusive-tests */
+describe.only('ToasterHOC', () => {
   let wrapper;
 
   beforeEach(() => {
@@ -18,3 +18,4 @@ describe('ToasterHOC', () => {
     expect(wrapper.find(Toaster)).to.have.lengthOf(1);
   });
 });
+/* eslint-enable mocha/no-exclusive-tests */
