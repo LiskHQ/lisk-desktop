@@ -58,6 +58,7 @@ describe.only('DelegateList', () => {
     );
     return targetWrapper;
   };
+
   beforeEach(() => {
     wrapper = mountComponentWithProps(props);
   });
@@ -95,34 +96,26 @@ describe.only('DelegateList', () => {
     clock.restore();
   });
 
-  it('should loadMore when scrolling', () => {
+  it('should loadMore when scrolling and not yet loading more', () => {
     const showChangeSummeryProps = {
       ...props,
       showChangeSummery: false,
       totalDelegates: 100,
+      freezeLoading: false,
     };
+    const loadMoreSpy = sinon.spy(DelegateList.prototype, 'loadMore');
     wrapper = mountComponentWithProps(showChangeSummeryProps);
 
-    expect(wrapper.find('h2.voting-header')).to.have.lengthOf(1);
-    expect(wrapper.find('h2.voting-header').text()).to.be.equal('Delegate List');
-
-
-    const delegateVote = wrapper.find('.delegate-row').at(0).find('label');
-
-    console.log(delegateVote);
-
-    delegateVote.simulate('click');
-
-    console.log(wrapper.find('.next'));
-    wrapper.find('.next').at(0).simulate('click');
-
-    expect(wrapper.find('h2.voting-header')).to.have.lengthOf(1);
-    expect(wrapper.find('h2.voting-header').text()).to.be.equal('Your selection');
-
-    // clock.tick(300);
-    // wrapper.setProps({ state: { showChangeSummery: true } });
     // expect(wrapper.find('h2.voting-header')).to.have.lengthOf(1);
-    // clock.restore();
+    // expect(wrapper.find('h2.voting-header').text()).to.be.equal('Delegate List');
+
+    // expect(wrapper.find('.delegate-row').length).to.equal(delegates.length);
+
+    const waypoint = wrapper.find('Waypoint').at(1);
+    wrapper.setProps({ freezeLoading: false });
+    waypoint.props().onEnter();
+    expect(loadMoreSpy).to.have.been.calledWith();
+    expect(wrapper.find('.delegate-row').length).to.equal(delegates.length);
   });
 });
 /* eslint-enable mocha/no-exclusive-tests */
