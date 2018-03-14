@@ -31,6 +31,9 @@ class DelegateList extends React.Component {
       this.loadVotedDelegates(true);
     }
 
+    console.log(this.props.delegates);
+    console.log(nextProps.delegates);
+
     if (this.props.delegates.length < nextProps.delegates.length) {
       setTimeout(() => {
         this.freezeLoading = false;

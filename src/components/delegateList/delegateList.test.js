@@ -59,14 +59,22 @@ describe.only('DelegateList', () => {
     return targetWrapper;
   };
 
+  let clock;
+  let loadMoreSpy;
+
   beforeEach(() => {
+    clock = sinon.useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
+    loadMoreSpy = sinon.spy(DelegateList.prototype, 'loadMore');
     wrapper = mountComponentWithProps(props);
   });
 
   afterEach(() => {
-    // Voting.prototype.setStatus.restore();
+    clock.restore();
+    loadMoreSpy.restore();
   });
-
+/*
   it('should render VotingHeader', () => {
     expect(wrapper.find('VotingHeaderRaw')).to.have.lengthOf(1);
   });
@@ -80,9 +88,6 @@ describe.only('DelegateList', () => {
   });
 
   it('should define search method to reload delegates based on given query', () => {
-    const clock = sinon.useFakeTimers({
-      toFake: ['setTimeout', 'clearTimeout', 'Date'],
-    });
     props.delegatesFetched.reset();
     wrapper.find('.search input')
       .at(0).simulate('change', { nativeEvent: { target: { value: 'query' } } });
@@ -96,26 +101,57 @@ describe.only('DelegateList', () => {
     clock.restore();
   });
 
-  it('should loadMore when scrolling and not yet loading more', () => {
-    const showChangeSummeryProps = {
+  it('should call loadMore and not loadDelegates if still loading', () => {
+    const loadMoreProps = {
       ...props,
-      showChangeSummery: false,
       totalDelegates: 100,
-      freezeLoading: false,
     };
-    const loadMoreSpy = sinon.spy(DelegateList.prototype, 'loadMore');
-    wrapper = mountComponentWithProps(showChangeSummeryProps);
-
-    // expect(wrapper.find('h2.voting-header')).to.have.lengthOf(1);
-    // expect(wrapper.find('h2.voting-header').text()).to.be.equal('Delegate List');
-
-    // expect(wrapper.find('.delegate-row').length).to.equal(delegates.length);
-
+    wrapper = mountComponentWithProps(loadMoreProps);
     const waypoint = wrapper.find('Waypoint').at(1);
-    wrapper.setProps({ freezeLoading: false });
     waypoint.props().onEnter();
     expect(loadMoreSpy).to.have.been.calledWith();
     expect(wrapper.find('.delegate-row').length).to.equal(delegates.length);
+  });
+*/
+  it('should call loadMore and loadDelegates if not still loading', () => {
+    const loadMoreProps = {
+      ...props,
+      totalDelegates: 100,
+    };
+    wrapper = mountComponentWithProps(loadMoreProps);
+    const waypoint = wrapper.find('Waypoint').at(1);
+
+    const prevProps = {
+      delegates: [...loadMoreProps.delegates[0]],
+    };
+    const nextProps = {
+      delegates: [
+        ...loadMoreProps.delegates,
+        {
+          address: 'address 3',
+          username: 'username3',
+          publicKey: 'sample_key',
+          rank: 23,
+        }],
+    };
+
+    console.log(nextProps.delegates.length);
+    // wrapper.update(nextProps);
+    wrapper.setProps(prevProps);
+    wrapper.update();
+    clock.tick(300);
+
+    wrapper.setProps(nextProps);
+    wrapper.update();
+    clock.tick(300);
+
+    // wrapper.update();
+    waypoint.props().onEnter();
+    expect(loadMoreSpy).to.have.been.calledWith();
+    expect(wrapper.find('.delegate-row').length).to.equal(delegates.length);
+  });
+  it('should set Active filter, when clicking in heading filters', () => {
+
   });
 });
 /* eslint-enable mocha/no-exclusive-tests */
