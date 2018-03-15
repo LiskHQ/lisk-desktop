@@ -23,12 +23,15 @@ class SendReadable extends React.Component {
   }
 
   componentDidMount() {
+    const recipient = this.props.accountInit ? this.props.account.address : this.props.recipient;
+    const amount = this.props.accountInit ? 0.1 : this.props.amount;
+
     const newState = {
       recipient: {
-        value: this.props.recipient || '',
+        value: recipient || '',
       },
       amount: {
-        value: this.props.amount || '',
+        value: amount || '',
       },
     };
     this.setState(newState);
@@ -82,7 +85,7 @@ class SendReadable extends React.Component {
   }
 
   addAmountAndFee() {
-    return fromRawLsk(toRawLsk(this.props.amount) + this.fee);
+    return fromRawLsk(toRawLsk(this.state.amount.value) + this.fee);
   }
 
   render() {
@@ -90,28 +93,36 @@ class SendReadable extends React.Component {
       <div className={`${styles.wrapper} send`}>
         <div className={styles.header}>
           <header className={styles.headerWrapper}>
-            <h2>{this.props.t('Confirm transfer')}</h2>
+            <h2>{this.props.accountInit ? this.props.t('Initialize Lisk ID') : this.props.t('Confirm transfer')}</h2>
           </header>
-          <figure className={styles.accountVisual}>
-            <AccountVisual address={this.state.recipient.value} size={150} sizeS={60} />
-          </figure>
+          {this.props.accountInit
+            ? null
+            : <figure className={styles.accountVisual}>
+              <AccountVisual address={this.state.recipient.value} size={150} sizeS={60} />
+            </figure>}
         </div>
-        <form>
-          <Input label={this.props.t('Send to Address')}
-            className={`recipient ${styles.disabledInput}`}
-            value={this.props.recipient}
-            onChange={this.handleChange.bind(this, 'recipient')}
-            disabled={true}
-          />
+        {this.props.accountInit
+          ? <div>
+            <p>{this.props.t('You will send a small amount of 0.1 LSK to yourself and therefore initialize your ID.')}</p>
+            <p>{this.props.t('You only need to do this once for each Lisk ID.')}</p>
+          </div>
+          : <form>
+            <Input label={this.props.t('Send to Address')}
+              className={`recipient ${styles.disabledInput}`}
+              value={this.state.recipient.value}
+              onChange={this.handleChange.bind(this, 'recipient')}
+              disabled={true}
+            />
 
-          <Input label={this.props.t('Total incl. 0.1 LSK Fee')}
-            className={`amount ${styles.disabledInput}`}
-            error={this.state.amount.error}
-            value={this.addAmountAndFee()}
-            disabled={true}
-            theme={styles}
-            onChange={this.handleChange.bind(this, 'amount')} />
-        </form>
+            <Input label={this.props.t('Total incl. 0.1 LSK Fee')}
+              className={`amount ${styles.disabledInput}`}
+              error={this.state.amount.error}
+              value={this.addAmountAndFee()}
+              disabled={true}
+              theme={styles}
+              onChange={this.handleChange.bind(this, 'amount')} />
+          </form>
+        }
         <footer>
           <section className={grid.row} >
             <div className={grid['col-xs-4']}>
@@ -129,7 +140,7 @@ class SendReadable extends React.Component {
             <div className={grid['col-xs-8']}>
               <PrimaryButton
                 className='send-button'
-                label={this.props.t('Send')}
+                label={this.props.accountInit ? this.props.t('Confirm (Fee: 0.1 LSK)') : this.props.t('Send')}
                 type='submit'
                 theme={styles}
                 onClick={this.send.bind(this)}

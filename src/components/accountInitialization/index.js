@@ -48,7 +48,7 @@ class AccountInitialization extends React.Component {
           <div className={grid['col-xs-8']}>
             <Button
               label={t('Next')}
-              onClick={() => nextStep({ address: account.address, amount: 0.1 })}
+              onClick={() => nextStep({ account, accountInit: true }, 2)}
               className={`account-init-button ${styles.button}`}/>
           </div>
         </div>
