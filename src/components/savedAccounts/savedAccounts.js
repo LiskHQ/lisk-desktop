@@ -1,16 +1,14 @@
-import { Button as ToolBoxButton } from 'react-toolbox/lib/button';
 import { Link } from 'react-router-dom';
 // import FontIcon from 'react-toolbox/lib/font_icon';
 import React from 'react';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { extractAddress } from '../../utils/api/account';
 import { PrimaryButton, SecondaryLightButton } from '../toolbox/buttons/button';
 import AccountVisual from '../accountVisual';
 import LiskAmount from '../liskAmount';
-import BackgroundMaker from '../backgroundMaker';
 import networks from '../../constants/networks';
 import getNetwork from '../../utils/getNetwork';
 import routes from '../../constants/routes';
-
 import plusShapeIcon from '../../assets/images/plus-shape.svg';
 import circleImage from '../../assets/images/add-id-oval.svg';
 import rectangleOnTheRight from '../../assets/images/add-id-rectangle-1.svg';
@@ -78,7 +76,6 @@ class SavedAccounts extends React.Component {
 
   render() {
     const {
-      closeDialog,
       accountSwitched,
       savedAccounts,
       history,
@@ -93,8 +90,7 @@ class SavedAccounts extends React.Component {
     };
 
     return (
-      <div className={`${styles.wrapper} save-account`}>
-        <BackgroundMaker className={styles.background} />
+      <div className={`${grid.row} ${styles.wrapper} save-account`}>
         <h1>
           {t('Your Lisk IDs')}
         </h1>
@@ -173,7 +169,6 @@ class SavedAccounts extends React.Component {
             value={this.state.editing ? 'checkmark' : 'edit'} />
           {this.state.editing ? t('Done') : t('Edit')}
         </SecondaryLightButton>
-        <ToolBoxButton icon={<FontIcon value='close' />} floating onClick={closeDialog} className={`x-button ${styles.closeButton}`} />
       </div>
     );
   }

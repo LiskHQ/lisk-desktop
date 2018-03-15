@@ -11,6 +11,7 @@ import SearchResult from '../search/searchResult';
 import TransactionDashboard from '../transactionDashboard';
 import AccountTransactions from '../accountTransactions';
 import Voting from '../voting';
+import SavedAccounts from '../savedAccounts';
 import SingleTransaction from './../singleTransaction';
 import styles from './app.css';
 import Dialog from '../dialog';
@@ -59,6 +60,7 @@ class App extends React.Component {
                   </main>
                 )} />
                 <Route path={`${routes.register.path}:dialog?`} component={Register} />
+                <Route path={`${routes.accounts.path}/:dialog?`} component={SavedAccounts} />
                 <Route path={`${routes.addAccount.path}:dialog?`} component={Login} />
                 <Route exact path={routes.login.path} component={Login} />
                 <Route path='*' component={NotFound} />
