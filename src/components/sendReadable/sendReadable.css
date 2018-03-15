@@ -125,9 +125,9 @@ input:read-only {
 }
 
 @media (--xSmall-viewport) {
- .wrapper {
-   & p {
-     font-size: var(--font-size-L);
-   }
- }
+  .wrapper {
+    & p {
+      font-size: var(--font-size-L);
+    }
+  }
 }
