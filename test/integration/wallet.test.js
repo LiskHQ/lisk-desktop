@@ -201,11 +201,7 @@ describe('@integration: Wallet', () => {
       step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis', { isLocked: false, withPublicKey: false }));
       step('Then I should see the account init option', () => helper.haveTextOf('header h2', 'Initialize Lisk ID'));
       step('When I click "account init button"', () => helper.clickOnElement('.account-init-button button'));
-      step('Then I should see the filled out send form', () => {
-        helper.haveInputValueOf('.recipient input', accounts.genesis.address);
-        helper.haveInputValueOf('.amount input', '0.1');
-      });
-      step('And I click "send next button"', () => { helper.clickOnElement('button.send-next-button'); });
+      step('Then I should be on the confirm page', () => helper.haveTextOf('header h2', 'Initialize Lisk ID'));
       step('When I click "send button"', () => helper.clickOnElement('button.send-button button'));
       step(`Then I should see text ${successMessage} in "result box message" element`, () => helper.haveTextOf('.result-box-message', successMessage));
     });
