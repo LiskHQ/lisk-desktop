@@ -21,10 +21,13 @@
 }
 
 .wrapper {
-  margin: 0;
-  overflow-y: auto;
+  margin: 0 -;
   height: 75vh; /* stylelint-disable-line */
   position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex: 0 1 auto;
+  flex-flow: row wrap;
 
   & > h1 {
     position: absolute;
@@ -42,12 +45,13 @@
 .cardsWrapper {
   display: table-cell;
   vertical-align: middle;
-  overflow-y: visible;
+  overflow-y: auto;
   white-space: nowrap;
-  padding: 0 232px;
   text-align: center;
   position: relative;
   margin: auto;
+  padding: 0;
+  overflow-x: scroll;
 
   & > li {
     display: inline-block;
