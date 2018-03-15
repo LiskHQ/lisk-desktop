@@ -6,6 +6,7 @@ import Sidechains from '../sidechains';
 import Header from '../header';
 import Login from '../login';
 import Register from '../register';
+import SecondPassphrase from '../secondPassphrase';
 import Search from '../search';
 import SearchResult from '../search/searchResult';
 import TransactionDashboard from '../transactionDashboard';
@@ -47,6 +48,7 @@ class App extends React.Component {
                       <Route path={`${match.url}${routes.wallet.path}/:dialog?`} component={TransactionDashboard} />
                       <Route path={`${match.url}${routes.voting.path}/:dialog?`} component={Voting} />
                       <Route path={`${match.url}${routes.sidechains.path}/:dialog?`} component={Sidechains} />
+                      <Route path={`${match.url}${routes.secondPassphrase.path}/:dialog?`} component={SecondPassphrase} />
                       <Route path='*' component={NotFound} />
                     </Switch>
                   </main>
