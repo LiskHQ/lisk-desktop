@@ -46,20 +46,6 @@ describe('DelegateList', () => {
     t: key => key,
   };
 
-  const mountComponentWithProps = (desiredProps) => {
-    const targetWrapper = mount(<Router><DelegateList {...desiredProps}></DelegateList></Router>,
-      {
-        context: { store, history, i18n },
-        childContextTypes: {
-          store: PropTypes.object.isRequired,
-          history: PropTypes.object.isRequired,
-          i18n: PropTypes.object.isRequired,
-        },
-      },
-    );
-    return targetWrapper;
-  };
-
   let clock;
   let loadMoreSpy;
 
@@ -68,7 +54,7 @@ describe('DelegateList', () => {
       toFake: ['setTimeout', 'clearTimeout', 'Date'],
     });
     loadMoreSpy = sinon.spy(DelegateList.prototype, 'loadMore');
-    wrapper = mountComponentWithProps(props);
+    wrapper = mountWithContext(<DelegateList {...props}/>, {});
   });
 
   afterEach(() => {
@@ -107,7 +93,7 @@ describe('DelegateList', () => {
       ...props,
       totalDelegates: 100,
     };
-    wrapper = mountComponentWithProps(loadMoreProps);
+    wrapper = mountWithContext(<DelegateList {...loadMoreProps}/>, {});
     const waypoint = wrapper.find('Waypoint').at(1);
     waypoint.props().onEnter();
     expect(loadMoreSpy).to.have.been.calledWith();
@@ -151,7 +137,7 @@ describe('DelegateList', () => {
     const filterVotedProps = {
       ...props,
     };
-    wrapper = mountComponentWithProps(filterVotedProps);
+    wrapper = mountWithContext(<DelegateList {...filterVotedProps}/>, {});
     wrapper.find('.transaction-filter-item').at(voteFilters.voted).simulate('click');
     wrapper.update();
     const delegateRow = wrapper.find('.delegate-row');
@@ -163,7 +149,7 @@ describe('DelegateList', () => {
     const filterVotedProps = {
       ...props,
     };
-    wrapper = mountComponentWithProps(filterVotedProps);
+    wrapper = mountWithContext(<DelegateList {...filterVotedProps}/>, {});
     wrapper.find('.transaction-filter-item').at(voteFilters.notVoted).simulate('click');
     wrapper.update();
     const delegateRow = wrapper.find('.delegate-row');
