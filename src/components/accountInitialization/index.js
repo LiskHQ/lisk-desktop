@@ -23,7 +23,7 @@ class AccountInitialization extends React.Component {
   render() {
     const { account, t, nextStep } = this.props;
 
-    return (<Box className={`${styles.wrapper} ${grid.row}`}>
+    return (<Box className={`${styles.wrapper} ${grid.row} account-initialization`}>
       <header>
         <h2>{t('Initialize Lisk ID')}</h2>
       </header>

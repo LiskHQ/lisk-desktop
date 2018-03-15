@@ -114,6 +114,14 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     });
   });
 
+  Then('I should see "{elementName}" element', (elementName, callback) => {
+    const selector = `.${elementName.replace(/ /g, '-')}`;
+    waitForElemRemoved(selector).then(() => {
+      expect(element.all(by.css(selector)).count()).to.eventually.equal(1)
+        .and.notify(callback);
+    });
+  });
+
   Then('I should see "{text}" error message', (text, callback) => {
     browser.sleep(500);
     waitForElemAndCheckItsText('.error-message, .theme__error___2k5Jz', text, callback);
