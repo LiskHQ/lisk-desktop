@@ -1,0 +1,76 @@
+.wrapper {
+  position: absolute;
+  height: calc(100% - 85px) !important;
+  background: #fff;
+  width: 100%;
+  bottom: 0;
+  z-index: 3;
+
+  &.hidden {
+    display: none;
+  }
+
+  & header {
+    height: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+  }
+
+  & h5 {
+    line-height: 38px;
+  }
+}
+
+.content {
+  position: absolute;
+  height: 50%;
+  border-top: solid 1px #f6f8fb;
+  background: #f6f8fb;
+  box-sizing: border-box;
+  width: 100%;
+  bottom: 0;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+
+  &.done {
+    background: #fff;
+    border: none;
+    justify-content: baseline;
+  }
+}
+
+.innerContent {
+  margin-top: 45px;
+  padding: 0 50px;
+}
+
+.confirmSlider {
+  width: 250px;
+  margin: 48px auto;
+}
+
+.sliderInput label {
+  width: 275px;
+  margin: 48px auto;
+
+  & div > span {
+    text-indent: 75px;
+  }
+}
+
+.headerIcon {
+  font-size: 68px;
+  color: #ff6236;
+  margin-bottom: 30px;
+}
+
+.resultHeader {
+  margin: 0 auto 30px !important;
+}
+
+.resultButton {
+  margin: 0 auto;
+}
