@@ -13,7 +13,10 @@ const { lockDuration } = accountConfig;
 const updateTransactions = (store, peers) => {
   const state = store.getState();
   const { filter } = state.transactions;
-  const address = state.transactions.address ? state.transactions.address : state.account.address;
+  const address = state.transactions.account
+    ? state.transactions.account.address
+    : state.account.address;
+
   getTransactions({
     activePeer: peers.data, address, limit: 25, filter,
   }).then(response => store.dispatch(transactionsUpdated({
