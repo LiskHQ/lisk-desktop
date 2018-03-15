@@ -32,6 +32,11 @@ export default [
     params: 'dialog',
     name: 'add-account',
   }, {
+    regex: /\/accounts(?:\/[^/]*)?$/,
+    path: `${routes.accounts.path}/`,
+    params: 'dialog',
+    name: 'accounts',
+  }, {
     regex: /\/explorer\/accounts\/\d{1,21}[L|l](?:\/[^/]*)?$/,
     path: new RegExp(`${routes.explorer.path}${routes.account.path}/\\d{1,21}[L|l]/`),
     params: 'address',
