@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, PrimaryButton } from '../toolbox/buttons/button';
 import styles from './confirmVotes.css';
-import Checkbox from '../toolbox/checkbox';
+import Checkbox from '../toolbox/sliderCheckbox';
 import fees from '../../constants/fees';
 import { fromRawLsk } from '../../utils/lsk';
 

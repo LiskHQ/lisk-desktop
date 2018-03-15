@@ -8,11 +8,12 @@ import Box from '../box';
 import TransactionList from './../transactions/transactionList';
 import Send from '../send';
 import CurrencyGraph from './currencyGraph';
+import routes from '../../constants/routes';
 import styles from './dashboard.css';
 
 class Dashboard extends React.Component {
   render() {
-    const { transactions, t } = this.props;
+    const { transactions, t, history, accountAddress, loading } = this.props;
     return <div className={`${grid.row} ${styles.wrapper}`}>
       <div className={`${grid['col-md-8']} ${grid['col-xs-12']} ${styles.main}`}>
         <Box className={`${styles.graph}`}>
@@ -22,7 +23,7 @@ class Dashboard extends React.Component {
           <header>
             <h2 className={styles.title}>
               {t('Latest activity')}
-              <Link to='/main/transactions' className={styles.seeAllLink}>
+              <Link to={`${routes.main.path}${routes.dashboard.path}`} className={styles.seeAllLink}>
                 {t('See all transactions')}
                 <FontIcon value='arrow-right'/>
               </Link>
@@ -31,14 +32,14 @@ class Dashboard extends React.Component {
           <TransactionList {...{
             transactions,
             t,
-            address: this.props.accountAddress,
+            address: accountAddress,
             dashboard: true,
-            loading: this.props.loading,
+            loading,
           }} />
         </Box>
       </div>
       <div className={`${grid['col-md-4']} ${styles.sendWrapper}`}>
-        <Send/>
+        <Send history={history} />
       </div>
     </div>;
   }

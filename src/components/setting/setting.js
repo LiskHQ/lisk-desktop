@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactSwipe from 'react-swipe';
 import styles from './setting.css';
-import Checkbox from '../toolbox/checkbox';
+import Checkbox from '../toolbox/sliderCheckbox';
 import i18n from '../../i18n';
 import accountConfig from '../../constants/account';
 // TODO: will be re-enabled when the functionality is updated
@@ -89,8 +89,8 @@ class Setting extends React.Component {
             onChange={this.changeLanguage.bind(this)}
             textAsIcon={true}
             icons={{
-              start: 'EN',
-              done: 'DE',
+              unchecked: 'EN',
+              checked: 'DE',
               goal: 'DE',
               begin: 'EN',
             }}

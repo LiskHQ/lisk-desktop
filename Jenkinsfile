@@ -99,6 +99,7 @@ node('lisk-hub') {
         sh '''
         cp ~/.coveralls.yml-hub .coveralls.yml
         npm run --silent build
+        npm run --silent build:testnet
         rsync -axl --delete --rsync-path="mkdir -p /var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/ && rsync" $WORKSPACE/app/build/ jenkins@master-01:/var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/
         npm run --silent bundlesize
         '''

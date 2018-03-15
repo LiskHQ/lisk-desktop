@@ -22,7 +22,7 @@ Feature: Explorer page
     When I clear "search bar input" field
     And I fill in "9938914350729699234" to "search bar input" field
     When I click "search bar button"
-    Then I should see text "9938914350729699234" in "copy title" element
+    Then I should see ID "9938914350729699234" in transaction header
 
   Scenario: should show search results on custom node for an account and a transactions while being logged in
     Given I'm logged in as "genesis"
@@ -50,4 +50,4 @@ Feature: Explorer page
     When I clear "search bar input" field
     And I fill in "1465651642158264047" to "search bar input" field
     When I click "search bar button"
-    Then I should see text "1465651642158264047" in "copy title" element
+    Then I should see ID "1465651642158264047" in transaction header
