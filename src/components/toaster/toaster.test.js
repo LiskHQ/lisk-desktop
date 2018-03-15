@@ -2,17 +2,11 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { mount } from 'enzyme';
-import { BrowserRouter as Router } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import Toaster from './toaster';
-import store from '../../store';
-import history from '../../history';
-import i18n from '../../i18n';
+import actionTypes from '../../constants/actions';
+import { mapStateToProps, mapDispatchToProps } from './index';
 
-import { mountWithContext } from './../../../test/utils/mountHelpers';
-
-/* eslint-disable mocha/no-exclusive-tests */
-describe.only('Toaster', () => {
+describe('Toaster', () => {
   const toasts = [{
     label: 'test',
     type: 'success',
@@ -56,26 +50,19 @@ describe.only('Toaster', () => {
     clock.restore();
   });
 
-  it('dispatches toastHidden action when calling hideToast', () => {
-    const clock = sinon.useFakeTimers({
-      toFake: ['setTimeout', 'clearTimeout', 'Date'],
-    });
-    const propsWithToasts = {
-      toasts: [...toasts],
-    };
-    const wrapper = mount(<Router><Toaster {...propsWithToasts}></Toaster></Router>,
-      {
-        context: { store, history, i18n },
-        childContextTypes: {
-          store: PropTypes.object.isRequired,
-          history: PropTypes.object.isRequired,
-          i18n: PropTypes.object.isRequired,
-        },
-      },
-    );
-    const snackBar = wrapper.find('Snackbar').first();
-    snackBar.props().onTimeout();
-    clock.tick(1000);
+  it('hideToast dispatches toastHidden action', () => {
+    const dispatchSpy = sinon.spy();
+    const { hideToast } = mapDispatchToProps(dispatchSpy);
+    const payload = [{ toast1: {} }];
+    hideToast(payload);
+    const dispatchSpyCallArgs = dispatchSpy.args[0][0];
+    expect(dispatchSpyCallArgs.type).to.be.eql(actionTypes.toastHidden);
+    expect(dispatchSpyCallArgs.data).to.be.eql(payload);
+  });
+
+  it('inits with empty toasts when empty state', () => {
+    const initialState = {};
+    const toastsState = mapStateToProps(initialState);
+    expect(toastsState.toasts.length).to.be.equal(0);
   });
 });
-/* eslint-enable mocha/no-exclusive-tests */
