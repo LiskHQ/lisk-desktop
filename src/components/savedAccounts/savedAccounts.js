@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 // import FontIcon from 'react-toolbox/lib/font_icon';
 import React from 'react';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { extractAddress } from '../../utils/api/account';
 import { PrimaryButton, SecondaryLightButton } from '../toolbox/buttons/button';
 import AccountVisual from '../accountVisual';
@@ -71,7 +70,7 @@ class SavedAccounts extends React.Component {
     };
 
     return (
-      <div className={`${grid.row} ${styles.wrapper} save-account`}>
+      <div className={`${styles.wrapper} save-account`}>
         <h1>
           {t('Your Lisk IDs')}
         </h1>
