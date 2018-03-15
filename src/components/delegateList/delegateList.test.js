@@ -97,7 +97,7 @@ describe('DelegateList', () => {
     const waypoint = wrapper.find('Waypoint').at(1);
     waypoint.props().onEnter();
     expect(loadMoreSpy).to.have.been.calledWith();
-    expect(wrapper.find('.delegate-row').length).to.equal(delegates.length);
+    expect(wrapper).to.have.exactly(delegates.length).descendants('.delegate-row');
   });
 
   it('should call loadMore and loadDelegates if not still loading', () => {
@@ -128,7 +128,7 @@ describe('DelegateList', () => {
     clock.tick(300);
     waypoint.props().onEnter();
     expect(loadMoreSpy).to.have.been.calledWith();
-    expect(wrapper.find('.delegate-row').length).to.equal(delegates.length + 1);
+    expect(wrapper).to.have.exactly(delegates.length + 1).descendants('.delegate-row');
     loadDelegates.restore();
     clock.restore();
   });
@@ -142,7 +142,7 @@ describe('DelegateList', () => {
     wrapper.update();
     const delegateRow = wrapper.find('.delegate-row');
     expect(delegateRow.length).to.equal(delegates.length - 1);
-    expect(delegateRow.find('li').at(2).text()).to.equal(delegates[0].username);
+    expect(delegateRow.find('li').at(2)).to.have.text(delegates[0].username);
   });
 
   it('should filter notVoted delegates', () => {
@@ -154,7 +154,7 @@ describe('DelegateList', () => {
     wrapper.update();
     const delegateRow = wrapper.find('.delegate-row');
     expect(delegateRow.length).to.equal(delegates.length - 1);
-    expect(delegateRow.find('li').at(2).text()).to.equal(delegates[1].username);
+    expect(delegateRow.find('li').at(2)).to.have.text(delegates[1].username);
   });
 
   it('should show no voted message', () => {
@@ -177,7 +177,7 @@ describe('DelegateList', () => {
     wrapper.find('.transaction-filter-item').at(voteFilters.voted).simulate('click');
     wrapper.update();
     const delegateRow = wrapper.find('.empty-message');
-    expect(delegateRow.text()).to.equal('You have not voted yet.');
+    expect(delegateRow).to.have.text('You have not voted yet.');
   });
 
   it('should show no results message', () => {
