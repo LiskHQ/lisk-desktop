@@ -22,7 +22,6 @@
 
 .wrapper {
   margin: 0;
-  /* background: #013165; */
   overflow-y: auto;
   height: 75vh; /* stylelint-disable-line */
   position: relative;
@@ -43,7 +42,7 @@
 .cardsWrapper {
   display: table-cell;
   vertical-align: middle;
-  overflow: visible;
+  overflow-y: visible;
   white-space: nowrap;
   padding: 0 232px;
   text-align: center;

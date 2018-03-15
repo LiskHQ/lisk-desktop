@@ -12,7 +12,6 @@ import logo from '../../assets/images/logo-beta.svg';
 import PrivateWrapper from '../privateWrapper';
 import { ActionButton } from './../toolbox/buttons/button';
 import styles from './header.css';
-import RelativeLink from '../relativeLink';
 import routes from './../../constants/routes';
 
 class Header extends React.Component {
@@ -68,16 +67,17 @@ class Header extends React.Component {
                       </div>
                     }
                   </div>
-                  <RelativeLink to='saved-accounts' className={styles.avatar}>
+                  <Link to={`${routes.accounts.path}`} className={styles.avatar}>
                     <AccountVisual
                       address={this.props.account.address}
                       size={69} sizeS={40}
                     />
-                  </RelativeLink>
+                  </Link>
                   <div className={styles.menu}>
                     <figure className={styles.iconCircle}>
-                      <RelativeLink className={`${styles.link} saved-accounts`}
-                        to='saved-accounts'><FontIcon value='more'/></RelativeLink>
+                      <Link to={`${routes.accounts.path}`} className={`${styles.link} saved-accounts`}>
+                        <FontIcon value='more'/>
+                      </Link>
                     </figure>
                   </div>
                 </div>
