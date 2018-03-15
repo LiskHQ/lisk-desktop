@@ -1,14 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
-import { mount } from 'enzyme';
-import PropTypes from 'prop-types';
-import { BrowserRouter as Router } from 'react-router-dom';
 import sinon from 'sinon';
 import DelegateList from './delegateList';
 import { mountWithContext } from './../../../test/utils/mountHelpers';
 import store from '../../store';
-import history from '../../history';
-import i18n from '../../i18n';
 import voteFilters from './../../constants/voteFilters';
 
 describe('DelegateList', () => {
