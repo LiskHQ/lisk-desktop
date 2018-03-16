@@ -28,7 +28,7 @@ class SafeKeeping extends React.Component {
     this.setState({ step: 'done-step' });
     setTimeout(() => {
       this.props.nextStep({ passphrase: this.props.passphrase });
-    }, 600);
+    }, 400);
   }
 
   render() {
