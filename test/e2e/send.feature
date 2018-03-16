@@ -35,5 +35,7 @@ Feature: Send dialog
     And I click "send button"
     And I wait 1 seconds
     Then I should see text "Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain." in "result box message" element
+    When I click "okay button"
+    Then I should see no "account initialization"
     When I refresh the page
     Then I should see no "account initialization"
