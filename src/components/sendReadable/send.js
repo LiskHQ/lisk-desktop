@@ -103,7 +103,7 @@ class SendReadable extends React.Component {
         </div>
         {this.props.accountInit
           ? <div>
-            <p>{this.props.t('You will send a small amount of 0.1 LSK to yourself and therefore initialize your ID.')}</p>
+            <p>{this.props.t('You will send a small amount of {{fee}} LSK to yourself and therefore initialize your ID.', { fee: fromRawLsk(fees.send) })}</p>
             <p>{this.props.t('You only need to do this once for each Lisk ID.')}</p>
           </div>
           : <form>
@@ -114,7 +114,7 @@ class SendReadable extends React.Component {
               disabled={true}
             />
 
-            <Input label={this.props.t('Total incl. 0.1 LSK Fee')}
+            <Input label={this.props.t('Total incl. {{fee}} LSK Fee', { fee: fromRawLsk(fees.send) })}
               className={`amount ${styles.disabledInput}`}
               error={this.state.amount.error}
               value={this.addAmountAndFee()}
@@ -140,7 +140,7 @@ class SendReadable extends React.Component {
             <div className={grid['col-xs-8']}>
               <PrimaryButton
                 className='send-button'
-                label={this.props.accountInit ? this.props.t('Confirm (Fee: 0.1 LSK)') : this.props.t('Send')}
+                label={this.props.accountInit ? this.props.t('Confirm (Fee: {{fee}} LSK)', { fee: fromRawLsk(fees.send) }) : this.props.t('Send')}
                 type='submit'
                 theme={styles}
                 onClick={this.send.bind(this)}

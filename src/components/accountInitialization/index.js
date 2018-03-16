@@ -6,6 +6,8 @@ import { Button } from './../toolbox/buttons/button';
 import { FontIcon } from '../fontIcon';
 import Box from '../box';
 import styles from './accountInit.css';
+import fees from './../../constants/fees';
+import { fromRawLsk } from '../../utils/lsk';
 
 class AccountInitialization extends React.Component {
   closeInfo() {
@@ -31,7 +33,7 @@ class AccountInitialization extends React.Component {
       </header>
       <div>
         <p>{t('It is recommended that you initialize your Lisk ID.')}</p>
-        <p>{t('The easiest way to do this is to send LSK to yourself. It will cost you only the usual 0.1 LSK transaction fee.')}</p>
+        <p>{t('The easiest way to do this is to send LSK to yourself. It will cost you only the usual {{fee}} LSK transaction fee.', { fee: fromRawLsk(fees.send) })}</p>
         <p>
           <a target='_blank' href='https://help.lisk.io/account-security/should-i-initialize-my-lisk-account' rel='noopener noreferrer'>
             {t('Learn more about Lisk ID initialization')} <FontIcon>arrow-right</FontIcon>
