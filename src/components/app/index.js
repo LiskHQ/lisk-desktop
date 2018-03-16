@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { ConnectedRouter } from 'react-router-redux';
 import PrivateRoutes from '../privateRoute';
 import Dashboard from '../dashboard';
 import Sidechains from '../sidechains';
@@ -25,7 +24,6 @@ import OfflineWrapper from '../offlineWrapper';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import AccountVisualDemo from '../accountVisual/demo';
 import routes from '../../constants/routes';
-import { history } from '../../store';
 
 class App extends React.Component {
   markAsLoaded() {
@@ -38,9 +36,7 @@ class App extends React.Component {
       <OfflineWrapper>
         <main className={`${styles.bodyWrapper}`} ref={(el) => { this.main = el; }}>
           <MainMenu />
-          <ConnectedRouter history={history}>
-            <Route path={`${routes.accounts.path}/:dialog?`} component={SavedAccounts} />
-          </ConnectedRouter>
+          <Route path={`${routes.accounts.path}/:dialog?`} component={SavedAccounts} />
           <section>
             <div className={styles.mainBox}>
               <Header />
