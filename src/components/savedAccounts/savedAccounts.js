@@ -27,6 +27,7 @@ class SavedAccounts extends React.Component {
     super();
 
     this.state = {
+      isSecureAppears: {},
     };
   }
 
@@ -55,6 +56,24 @@ class SavedAccounts extends React.Component {
       this.selectForRemove(account);
     }
     e.stopPropagation();
+  }
+
+  handleRemovePassphrase(account, e) {
+    e.stopPropagation();
+
+    const uniqueID = `${account.network}${account.publicKey}`;
+    const { savedAccounts } = this.props;
+    const savedActiveAccount = savedAccounts.find(acc => `${acc.network}${acc.passphrase}` === `${account.network}${account.passphrase}`);
+    if (savedActiveAccount) {
+      this.props.removePassphrase(account);
+    }
+
+    this.props.removeSavedAccountPassphrase(account);
+
+    this.setState({ isSecureAppears: { ...this.state.isSecureAppears, [uniqueID]: true } });
+    setTimeout(() => {
+      this.setState({ isSecureAppears: { ...this.state.isSecureAppears, [uniqueID]: false } });
+    }, 5000);
   }
 
   render() {
@@ -102,9 +121,16 @@ class SavedAccounts extends React.Component {
             key={account.publicKey + account.network}
             onClick={ switchAccount.bind(null, account)} >
               {(account.passphrase ?
-                <strong className={styles.unlocked}>
+                <strong
+                  className={`unlocked ${styles.unlocked}`}
+                  onClick={this.handleRemovePassphrase.bind(this, account)}>
                   <FontIcon value='unlocked' />
-                  {t('Unlocked')}
+                  {t('Lock ID')}
+                </strong> :
+                null)}
+              {(this.state.isSecureAppears[`${account.network}${account.publicKey}`] ?
+                <strong className={`unlockedSecured ${styles.unlockedSecured}`}>
+                  {t('Your ID is now secured!')}
                 </strong> :
                 null)}
               {(account.network !== networks.mainnet.code ?

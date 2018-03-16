@@ -11,9 +11,11 @@ import transactionTypes from '../constants/transactionTypes';
 /**
  * Trigger this action to remove passphrase from account object
  *
+ * @param {Object} data - account data
  * @returns {Object} - Action object
  */
-export const removePassphrase = () => ({
+export const removePassphrase = data => ({
+  data,
   type: actionTypes.removePassphrase,
 });
 
