@@ -18,16 +18,13 @@
   --card-width-m: 267px;
   --card-height-m: 336px;
   --add-button-margin: 240px;
+  --wrapper-margin: -24px;
 }
 
 .wrapper {
-  margin: 0;
-  height: 75vh; /* stylelint-disable-line */
-  position: relative;
-  box-sizing: border-box;
-  display: flex;
-  flex: 0 1 auto;
-  flex-flow: row wrap;
+  margin: var(--wrapper-margin);
+  background: #013165;
+  overflow-y: auto;
 
   & > h1 {
     position: absolute;
@@ -45,13 +42,14 @@
 .cardsWrapper {
   display: table-cell;
   vertical-align: middle;
-  overflow-y: auto;
+  overflow: auto;
   white-space: nowrap;
+  padding: 0 232px;
   text-align: center;
+  height: 100vh; /* stylelint-disable-line */
+  width: 100vw; /* stylelint-disable-line */
+  max-width: 100vw; /* stylelint-disable-line */
   position: relative;
-  margin: auto;
-  padding: 0;
-  overflow-x: scroll;
 
   & > li {
     display: inline-block;
