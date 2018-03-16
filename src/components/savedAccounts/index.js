@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
+import { withRouter } from 'react-router';
 import { accountRemoved, accountSwitched, removeSavedAccountPassphrase } from '../../actions/savedAccounts';
 import { removePassphrase } from '../../actions/account';
 import SavedAccounts from './savedAccounts';
