@@ -14,13 +14,14 @@ const loginMiddleware = store => next => (action) => {
 
   next(Object.assign({}, action, { data: action.data.activePeer }));
 
-  const { passphrase } = action.data;
+  const { passphrase, activePeer: { options: { code } } } = action.data;
   const publicKey = passphrase ? extractPublicKey(passphrase) : action.data.publicKey;
   const address = extractAddress(publicKey);
   const accountBasics = {
     passphrase,
     publicKey,
     address,
+    network: code,
   };
   const { activePeer } = action.data;
 

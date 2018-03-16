@@ -25,8 +25,8 @@ class MultiStep extends React.Component {
 
     this.state = {
       step: {
-        nextStep: (data) => {
-          this.next.call(this, data);
+        nextStep: (data, jump) => {
+          this.next.call(this, data, jump);
         },
         prevStep: (data) => {
           this.prev.call(this, data);
@@ -37,9 +37,9 @@ class MultiStep extends React.Component {
     };
   }
 
-  next(data) {
+  next(data, jump = 1) {
     const newState = Object.assign({}, this.state);
-    newState.step.current++;
+    newState.step.current += jump;
     newState.step.data[newState.step.current] = data;
     this.setState(newState);
   }

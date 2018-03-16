@@ -13,7 +13,7 @@ import styles from './dashboard.css';
 
 class Dashboard extends React.Component {
   render() {
-    const { transactions, t, history, accountAddress, loading } = this.props;
+    const { transactions, t, account, loading } = this.props;
     return <div className={`${grid.row} ${styles.wrapper}`}>
       <div className={`${grid['col-md-8']} ${grid['col-xs-12']} ${styles.main}`}>
         <Box className={`${styles.graph}`}>
@@ -32,14 +32,14 @@ class Dashboard extends React.Component {
           <TransactionList {...{
             transactions,
             t,
-            address: accountAddress,
+            address: account.address,
             dashboard: true,
             loading,
           }} />
         </Box>
       </div>
       <div className={`${grid['col-md-4']} ${styles.sendWrapper}`}>
-        <Send history={history} />
+        <Send {...this.props} />
       </div>
     </div>;
   }
@@ -47,7 +47,8 @@ class Dashboard extends React.Component {
 
 const mapStateToProps = state => ({
   transactions: [...state.transactions.pending, ...state.transactions.confirmed].slice(0, 3),
-  accountAddress: state.account.address,
+  pendingTransactions: state.transactions.pending,
+  account: state.account,
   loading: state.loading.length > 0,
 });
 
