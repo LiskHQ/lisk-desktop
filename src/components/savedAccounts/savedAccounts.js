@@ -73,7 +73,7 @@ class SavedAccounts extends React.Component {
     this.setState({ isSecureAppears: { ...this.state.isSecureAppears, [uniqueID]: true } });
     setTimeout(() => {
       this.setState({ isSecureAppears: { ...this.state.isSecureAppears, [uniqueID]: false } });
-    }, 3000);
+    }, 5000);
   }
 
   render() {

@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { MemoryRouter as Router } from 'react-router-dom';
 import { mount } from 'enzyme';
-import { spy } from 'sinon';
+import { spy, useFakeTimers } from 'sinon';
 import configureStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n';
@@ -104,6 +104,23 @@ describe('SavedAccounts', () => {
     wrapper.find('.saved-account-card').at(1).simulate('click');
     expect(props.accountSwitched).to.have.been.calledWith(savedAccounts[1]);
     expect(props.history.push).to.have.been.calledWith(`${routes.main.path}${routes.dashboard.path}`);
+  });
+
+  it('should check if "Your ID is now secured!" disapears after 5sec', () => {
+    const clock = useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
+
+    expect(wrapper.find('strong.unlockedSecured')).to.have.lengthOf(0);
+    wrapper.find('strong.unlocked').at(1).simulate('click');
+    clock.tick(2000);
+    expect(wrapper.find('strong.unlockedSecured')).to.have.lengthOf(1);
+
+    clock.tick(7000);
+    wrapper.update();
+    expect(wrapper.find('strong.unlockedSecured')).to.have.lengthOf(0);
+
+    clock.restore();
   });
 
   it('should not call props.accountSwitched on the "saved account card" click if in "edit" mode', () => {

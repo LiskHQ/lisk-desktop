@@ -202,13 +202,13 @@
 
   & span {
     margin-bottom: 3px;
+    transition: transform ease-in-out 500ms;
   }
 
   &:hover {
     & span {
       transform: scale(1.1);
       transform-origin: 100%;
-      transition: transform ease-in-out 500ms;
     }
   }
 }

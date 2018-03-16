@@ -63,8 +63,8 @@ describe('HeaderHOC', () => {
 
   it('should dispatch removeSavedAccountPassphrase action', () => {
     const actionsSpy = sinon.spy(savedAccountsActions, 'removeSavedAccountPassphrase');
-    wrapper.find(Header).props().removeSavedAccountPassphrase({});
-    expect(actionsSpy).to.be.calledWith({});
+    wrapper.find(Header).props().removeSavedAccountPassphrase();
+    expect(actionsSpy).to.be.calledWith();
     actionsSpy.restore();
   });
 });
