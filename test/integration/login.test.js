@@ -19,7 +19,7 @@ import { activePeerSet } from '../../src/actions/peers';
 import * as toasterActions from '../../src/actions/toaster';
 import Login from './../../src/components/login';
 import accounts from '../constants/accounts';
-import networks from '../constants/networks';
+import networks from './../../src/constants/networks';
 import GenericStepDefinition from '../utils/genericStepDefinition';
 
 describe('@integration: Login', () => {
