@@ -140,6 +140,7 @@ class PassphraseSteps extends React.Component {
               onClick={() => this.props.prevStep({
                 recipient: this.props.recipient,
                 amount: this.props.amount,
+                reset: this.props.accountInit,
               })}
               type='button'
               theme={styles}

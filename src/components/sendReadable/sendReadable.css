@@ -2,6 +2,8 @@
 
 :root {
   --tab-inactive-color: --color-grayscale-dark;
+  --font-size-L: 16px;
+  --font-size-XS: 14px;
 }
 
 .wrapper {
@@ -12,6 +14,11 @@
   width: 100%;
   overflow-y: hidden;
   box-sizing: border-box;
+
+  & p {
+    font-size: var(--font-size-L);
+    line-height: 30px;
+  }
 }
 
 .fee {
@@ -94,10 +101,6 @@ input:read-only {
   }
 }
 
-.wrapper {
-  width: 100%;
-}
-
 .accountVisual {
   margin: 13px 0px;
 }
@@ -118,5 +121,13 @@ input:read-only {
 
   .accountVisual {
     margin: 24px 0;
+  }
+}
+
+@media (--xSmall-viewport) {
+  .wrapper {
+    & p {
+      font-size: var(--font-size-L);
+    }
   }
 }

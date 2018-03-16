@@ -75,6 +75,7 @@ describe('Account middleware', () => {
           id: 12498250891724098,
         }],
         confirmed: [],
+        account: { address: 'test_address' },
       },
     };
     store.getState = () => (state);
@@ -150,7 +151,7 @@ describe('Account middleware', () => {
     middleware(store)(next)(newBlockCreated);
 
     expect(stubGetAccount).to.have.been.calledWith();
-    expect(stubTransactions).to.have.been.calledWith();
+    expect(stubTransactions).to.have.been.calledWith(match({ address: 'test_address' }));
   });
 
   it(`should call transactions API methods on ${actionTypes.newBlockCreated} action if block.transactions contains null element`, () => {

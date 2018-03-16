@@ -6,7 +6,10 @@ export const getAccount = (activePeer, address) =>
   new Promise((resolve, reject) => {
     activePeer.getAccount(address, (data) => {
       if (data.success) {
-        resolve(data.account);
+        resolve({
+          ...data.account,
+          serverPublicKey: data.account.publicKey,
+        });
       } else if (!data.success && data.error === 'Account not found') {
         // when the account has no transactions yet (therefore is not saved on the blockchain)
         // this endpoint returns { success: false }

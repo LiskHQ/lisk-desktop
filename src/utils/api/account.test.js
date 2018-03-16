@@ -22,12 +22,12 @@ describe('Utils: Account', () => {
     });
 
     it('should return a promise that is resolved when activePeer.getAccount() calls its callback with data.success == true', () => {
-      const account = { address, balance: 0 };
+      const account = { address, balance: 0, publicKey: 'sample_key' };
       const response = { success: true, account };
 
       activePeerMock.expects('getAccount').withArgs(address).callsArgWith(1, response);
       const requestPromise = getAccount(activePeer, address);
-      return expect(requestPromise).to.eventually.eql(account);
+      return expect(requestPromise).to.eventually.eql({ ...account, serverPublicKey: 'sample_key' });
     });
 
     it('should return a promise that is resolved even when activePeer.getAccount() calls its callback with data.success == false and "Account not found"', () => {
