@@ -1,3 +1,4 @@
+import { Button as ToolBoxButton } from 'react-toolbox/lib/button';
 import { Link } from 'react-router-dom';
 // import FontIcon from 'react-toolbox/lib/font_icon';
 import React from 'react';
@@ -9,13 +10,16 @@ import BackgroundMaker from '../backgroundMaker';
 import networks from '../../constants/networks';
 import getNetwork from '../../utils/getNetwork';
 import routes from '../../constants/routes';
+import routesReg from '../../utils/routes';
 import plusShapeIcon from '../../assets/images/plus-shape.svg';
 import circleImage from '../../assets/images/add-id-oval.svg';
 import rectangleOnTheRight from '../../assets/images/add-id-rectangle-1.svg';
 import rectangleImage2 from '../../assets/images/add-id-rectangle-2.svg';
 import rectangleImage3 from '../../assets/images/add-id-rectangle-3.svg';
 import triangleImage from '../../assets/images/add-id-triangle.svg';
+
 import { FontIcon } from '../fontIcon';
+
 
 import styles from './savedAccounts.css';
 
@@ -24,8 +28,20 @@ class SavedAccounts extends React.Component {
   constructor() {
     super();
 
+    this.current = {
+      pathname: '/',
+      reg: routesReg[3],
+      list: [],
+      dialog: '',
+    };
+
     this.state = {
     };
+  }
+
+  shouldComponentUpdate(nextProps) {
+    console.log(this.props.location);
+    console.log(nextProps.location);
   }
 
   toggleEdit() {
@@ -62,6 +78,10 @@ class SavedAccounts extends React.Component {
       history,
       t,
     } = this.props;
+
+    const goBack = () => {
+
+    };
 
     const switchAccount = (account) => {
       if (!this.state.editing) {
@@ -144,6 +164,7 @@ class SavedAccounts extends React.Component {
             value={this.state.editing ? 'checkmark' : 'edit'} />
           {this.state.editing ? t('Done') : t('Edit')}
         </SecondaryLightButton>
+        <ToolBoxButton icon={<FontIcon value='close' />} floating onClick={goBack.bind(this)} className={`x-button ${styles.closeButton}`} />
       </div>
     );
   }
