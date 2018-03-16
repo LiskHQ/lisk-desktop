@@ -491,7 +491,7 @@
       font-size: var(--font-size-h2-s);
     }
 
-    & h2 a {
+    & h2 {
       margin-top: 12vh; /* stylelint-disable-line */
     }
   }
