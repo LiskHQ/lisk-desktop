@@ -5,6 +5,7 @@ import { extractAddress } from '../../utils/api/account';
 import { PrimaryButton, SecondaryLightButton } from '../toolbox/buttons/button';
 import AccountVisual from '../accountVisual';
 import LiskAmount from '../liskAmount';
+import BackgroundMaker from '../backgroundMaker';
 import networks from '../../constants/networks';
 import getNetwork from '../../utils/getNetwork';
 import routes from '../../constants/routes';
@@ -71,6 +72,7 @@ class SavedAccounts extends React.Component {
 
     return (
       <div className={`${styles.wrapper} save-account`}>
+        <BackgroundMaker className={styles.background} />
         <h1>
           {t('Your Lisk IDs')}
         </h1>
