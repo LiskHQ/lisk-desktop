@@ -7,15 +7,12 @@
   --arrow-font-size: 60px;
   --arrow-focused-font-size: 40px;
   --rect-width: 200px;
-  --login-box-padding-L: 48px;
-  --login-box-padding-XL: 56px;
-  --signup-box-padding-L: 48px;
-  --signup-box-padding-XL: 72px;
+  --login-box-padding-L: var(--box-padding-left-L);
+  --login-box-padding-XL: var(--box-padding-left-XL);
+  --signup-box-padding-L: var(--box-padding-left-L);
+  --signup-box-padding-XL: var(--box-padding-left-XL);
   --focused-signup-box-padding-XL: 31px;
   --focused-signup-box-padding-L: 24px;
-  --back-button-icon-margin-XL: -6px;
-  --back-button-icon-margin-L: -6px;
-  --back-button-icon-margin-XS: 0px;
   --back-button-label-font-size-XL: 15px;
   --back-button-label-font-size-L: 12px;
   --back-button-icon-font-size-XL: 24px;
@@ -225,6 +222,7 @@
     color: var(--color-white);
     margin-top: 32vh; /* stylelint-disable-line */
     margin-bottom: 24px;
+    white-space: nowrap;
   }
 
   & .subTitle,
@@ -355,7 +353,7 @@
 
 @media (--xLarge-viewport) {
   .login {
-    padding: 0 var(--login-box-padding-XL);
+    padding-right: var(--login-box-padding-XL);
 
     &.focused {
       width: 75%;
@@ -363,8 +361,6 @@
 
     & header {
       & .backButton {
-        margin-left: var(--back-button-icon-margin-XL);
-
         & .label {
           font-size: var(--back-button-label-font-size-XL);
         }
@@ -399,7 +395,7 @@
 
 @media (--large-viewport) {
   .login {
-    padding: 0 var(--login-box-padding-L);
+    padding-right: var(--login-box-padding-L);
 
     &.focused {
       width: 68%;
@@ -407,8 +403,6 @@
 
     & header {
       & .backButton {
-        margin-left: var(--back-button-icon-margin-L);
-
         & .label {
           font-size: var(--back-button-label-font-size-L);
         }
@@ -484,13 +478,14 @@
 
 @media (--small-viewport) {
   .wrapper {
+    padding-left: 0;
     padding-right: 0;
     height: 100%;
   }
 
   .login,
   .signUp {
-    padding: 0 20px;
+    padding: 0 var(--box-padding-left-M);
 
     & h2 {
       font-size: var(--font-size-h2-s);
@@ -524,12 +519,6 @@
         display: block;
         width: 100%;
         max-width: 100%;
-      }
-
-      & header {
-        & .backButton {
-          margin-left: var(--back-button-icon-margin-XS);
-        }
       }
     }
 
