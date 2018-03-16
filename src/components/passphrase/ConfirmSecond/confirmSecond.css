@@ -1,3 +1,17 @@
+@import '../../app/variables.css';
+
+@keyframes burst {
+  0% {
+    opacity: 0;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
 .wrapper {
   position: absolute;
   height: calc(100% - 85px) !important;
@@ -16,6 +30,10 @@
     display: flex;
     justify-content: space-around;
     flex-direction: column;
+
+    &.done {
+      justify-content: flex-end;
+    }
   }
 
   & h5 {
@@ -68,9 +86,18 @@
 }
 
 .resultHeader {
-  margin: 0 auto 30px !important;
+  margin: 0 auto 10px !important;
 }
 
 .resultButton {
+  margin: 60px auto 0;
+}
+
+.pendingIcon {
+  color: var(--color-grayscale-dark);
+  animation: burst 2000ms infinite linear;
+  font-size: 120px;
   margin: 0 auto;
+  transform-origin: 50%;
+  animation-delay: 450ms;
 }
