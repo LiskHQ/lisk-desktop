@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
+import { withRouter } from 'react-router';
 import { dialogDisplayed } from '../../actions/dialog';
 import { secondPassphraseRegistered } from '../../actions/account';
 import SecondPassphrase from './secondPassphrase';
@@ -18,7 +19,7 @@ const mapDispatchToProps = dispatch => ({
   registerSecondPassphrase: data => dispatch(secondPassphraseRegistered(data)),
 });
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(translate()(SecondPassphrase));
+)(translate()(SecondPassphrase)));
