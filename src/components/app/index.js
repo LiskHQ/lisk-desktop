@@ -35,6 +35,7 @@ class App extends React.Component {
       <OfflineWrapper>
         <main className={`${styles.bodyWrapper}`} ref={(el) => { this.main = el; }}>
           <MainMenu />
+          <Route path={`${routes.accounts.path}/:dialog?`} component={SavedAccounts} />
           <section>
             <div className={styles.mainBox}>
               <Header />
@@ -60,7 +61,6 @@ class App extends React.Component {
                   </main>
                 )} />
                 <Route path={`${routes.register.path}:dialog?`} component={Register} />
-                <Route path={`${routes.accounts.path}/:dialog?`} component={SavedAccounts} />
                 <Route path={`${routes.addAccount.path}:dialog?`} component={Login} />
                 <Route exact path={routes.login.path} component={Login} />
                 <Route path='*' component={NotFound} />
