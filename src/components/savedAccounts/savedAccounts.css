@@ -3,10 +3,10 @@
 :root {
   --font-size-ids-h1-xl: 64px;
   --font-size-ids-h1-l: 48px;
-  --font-size-ids-h1-s: 32px;
-  --font-size-card-h2: 32px;
+  --font-size-ids-h1-s: 30px;
+  --font-size-card-h2: 30px;
   --font-size-card-h2-s: 24px;
-  --address-font-size: 18px;
+  --address-font-size: 17px;
   --small-font-size: 20px;
   --close-button-shadow: 0 20px 20px 0 rgba(0, 32, 68, 0.25);
   --h1-padding-xl: 85px;
@@ -22,9 +22,12 @@
 }
 
 .wrapper {
-  margin: var(--wrapper-margin);
   background: #013165;
   overflow-y: auto;
+  z-index: var(--accounts-index);
+  position: absolute;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased; /* stylelint-disable property-no-unknown */
 
   & > h1 {
     position: absolute;
@@ -44,7 +47,6 @@
   vertical-align: middle;
   overflow: auto;
   white-space: nowrap;
-  padding: 0 232px;
   text-align: center;
   height: 100vh; /* stylelint-disable-line */
   width: 100vw; /* stylelint-disable-line */

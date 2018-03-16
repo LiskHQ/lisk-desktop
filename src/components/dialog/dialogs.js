@@ -1,7 +1,5 @@
 import i18next from 'i18next';
 import RegisterDelegate from '../registerDelegate';
-import SavedAccounts from '../savedAccounts';
-import savedAccountsTheme from '../savedAccounts/modalTheme.css';
 import SecondPassphrase from '../secondPassphrase';
 import Send from '../sendWritable';
 import VoteDialog from '../voteDialog';
@@ -22,9 +20,5 @@ export default () => ({
   vote: {
     title: i18next.t('Vote for delegates'),
     component: VoteDialog,
-  },
-  'saved-accounts': {
-    component: SavedAccounts,
-    theme: savedAccountsTheme,
   },
 });
