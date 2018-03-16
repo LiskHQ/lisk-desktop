@@ -13,8 +13,10 @@ class AccountInitialization extends React.Component {
   }
 
   componentDidMount() {
-    const { account } = this.props;
-    const needsNoAccountInit = account.serverPublicKey || account.balance === 0;
+    const { account, transactions } = this.props;
+    const needsNoAccountInit = account.serverPublicKey
+      || account.balance === 0
+      || transactions.pending.length > 0;
     if (needsNoAccountInit) {
       this.props.nextStep();
     }
@@ -61,6 +63,7 @@ class AccountInitialization extends React.Component {
 
 const mapStateToProps = state => ({
   account: state.account,
+  transactions: state.transactions,
 });
 
 export default connect(mapStateToProps)(translate()(AccountInitialization));

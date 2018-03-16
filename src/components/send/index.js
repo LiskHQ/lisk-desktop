@@ -16,7 +16,9 @@ import styles from './send.css';
 class Send extends React.Component {
   constructor(props) {
     super(props);
-    const needsAccountInit = !props.account.serverPublicKey && props.account.balance > 0;
+    const needsAccountInit = !props.account.serverPublicKey
+      && props.account.balance > 0
+      && props.pendingTransactions.length === 0;
 
     this.state = {
       sendIsActive: !!this.getSearchParams().address
