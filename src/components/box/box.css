@@ -25,7 +25,7 @@
   }
 
   & footer {
-    padding: 0 0 50px;
+    padding-bottom: 50px;
     text-align: center;
 
     & :global .subTitle {
