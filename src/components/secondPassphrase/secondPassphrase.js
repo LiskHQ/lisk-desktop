@@ -7,36 +7,38 @@ import Safekeeping from '../passphrase/safekeeping';
 import Confirm from '../passphrase/confirm';
 import Box from '../box';
 import styles from './secondPassphrase.css';
+import routes from '../../constants/routes';
 
-const SecondPassphrase = ({
-  account, peers, registerSecondPassphrase, t,
-}) => {
-  const onPassphraseRegister = (secondPassphrase, passphrase) => {
-    registerSecondPassphrase({
-      activePeer: peers.data,
-      secondPassphrase,
-      passphrase,
-      account,
-    });
-  };
-
-  // const useCaseNote = 
-  // t('your second passphrase will be required for all transactions sent from this account');
-  // const securityNote = 
-  // t('Losing access to this passphrase will mean no funds can be sent from this account.');
-
-  return (
-    <Box className={`${styles.hasPaddingTop} ${styles.register}`}>
-      <MultiStep
-        showNav={true}
-        finalCallback={onPassphraseRegister}
-        backButtonLabel={t('Back')}>
-        <CreateSecond title='Create' t={t} icon='add' />
-        <Safekeeping title='Safekeeping' t={t} icon='checkmark' />
-        <Confirm title='Confirm' t={t} confirmButton='Register'
-          icon='login' secondPassConfirmation={true} />
-      </MultiStep>
-    </Box>);
-};
+class SecondPassphrase extends React.Component {
+  componentDidMount() {
+    if (this.props.account.secondSignature === 1) {
+      this.props.history
+        .push(`${routes.main.path}${routes.dashboard.path}`);
+    }
+  }
+  render() {
+    const { account, peers, registerSecondPassphrase, t } = this.props;
+    const onPassphraseRegister = (secondPassphrase, passphrase) => {
+      registerSecondPassphrase({
+        activePeer: peers.data,
+        secondPassphrase,
+        passphrase,
+        account,
+      });
+    };
+    return (
+      <Box className={`${styles.hasPaddingTop} ${styles.register}`}>
+        <MultiStep
+          showNav={true}
+          finalCallback={onPassphraseRegister}
+          backButtonLabel={t('Back')}>
+          <CreateSecond title='Create' t={t} icon='add' />
+          <Safekeeping title='Safekeeping' t={t} icon='checkmark' />
+          <Confirm title='Confirm' t={t} confirmButton='Register'
+            icon='login' secondPassConfirmation={true} />
+        </MultiStep>
+      </Box>);
+  }
+}
 
 export default SecondPassphrase;

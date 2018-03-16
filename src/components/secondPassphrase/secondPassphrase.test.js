@@ -9,7 +9,7 @@ import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
 import SecondPassphrase from './secondPassphrase';
 
-describe('SecondPassphrase', () => {
+describe.skip('SecondPassphrase', () => {
   let wrapper;
   const peers = { data: {} };
   const account = accounts.delegate;
