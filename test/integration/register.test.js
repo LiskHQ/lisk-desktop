@@ -16,8 +16,6 @@ import accountMiddleware from '../../src/store/middlewares/account';
 import peerMiddleware from '../../src/store/middlewares/peers';
 import loginMiddleware from '../../src/store/middlewares/login';
 import { prepareStore, renderWithRouter } from '../utils/applicationInit';
-import networks from '../../src/constants/networks';
-import getNetwork from '../../src/utils/getNetwork';
 
 describe('@integration: Register', () => {
   let wrapper;
@@ -85,7 +83,6 @@ describe('@integration: Register', () => {
     // eslint-disable-next-line class-methods-use-this
     checkIfRegistrationConfirmed() {
       expect(activePeerSetSpy).to.have.been.calledWith(match({
-        network: getNetwork(networks.default.code),
         passphrase,
       }));
       restoreStubs();
