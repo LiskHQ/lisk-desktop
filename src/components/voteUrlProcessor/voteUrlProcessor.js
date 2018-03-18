@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Chip from 'react-toolbox/lib/chip';
 import React from 'react';
 import ProgressBar from '../toolbox/progressBar/progressBar';
@@ -42,7 +43,7 @@ export default class VoteUrlProcessor extends React.Component {
     };
     return (
       <div>
-        {this.getProcessedCount() < this.props.urlVoteCount ?
+        {/* {this.getProcessedCount() < this.props.urlVoteCount ?
           (<div>
             <ProgressBar type='linear' mode='determinate'
               value={this.getProcessedCount()} max={this.props.urlVoteCount}/>
@@ -65,7 +66,7 @@ export default class VoteUrlProcessor extends React.Component {
             this.props[list].length ? (
               <div key={list} className={`${styles.success} ${list}-message`}>{successMessages[list]}</div>
             ) : null
-          ))}</span>)}
+          ))}</span>)} */}
       </div>
     );
   }
