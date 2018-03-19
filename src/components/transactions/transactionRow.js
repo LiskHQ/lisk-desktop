@@ -16,7 +16,7 @@ class TransactionRow extends React.Component {
 
   render() {
     const { props } = this;
-    const nextStep = () => (props.nextStep({ value: props.value })) || (() => {});
+    const nextStep = !props.nextStep ? (() => {}) : () => (props.nextStep({ value: props.value }));
 
     return (
       <div className={`${grid.row} ${styles.rows} ${styles.clickable} transactionsRow`} onClick={nextStep}>
