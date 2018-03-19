@@ -1,5 +1,6 @@
 :root {
   --rect-width: 200px;
+  --gradient: linear-gradient(45deg, rgba(0, 74, 255, 1) 0%, rgba(147, 244, 254, 1) 100%);
 }
 
 .bg,
