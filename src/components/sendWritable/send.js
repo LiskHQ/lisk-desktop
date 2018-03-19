@@ -75,7 +75,7 @@ class SendWritable extends React.Component {
 
   render() {
     return (
-      <div className={`${styles.sendWrapper} boxPadding`}>
+      <div className={`${styles.sendWrapper}`}>
         <div className={styles.header}>
           <header className={styles.headerWrapper}>
             <h2>{this.props.t('Transfer')}</h2>

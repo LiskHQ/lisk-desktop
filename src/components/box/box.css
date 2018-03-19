@@ -1,5 +1,9 @@
 @import './../app/variables.css';
 
+:root {
+  --box-padding-top: 20px;
+}
+
 .wrapper {
   position: relative;
   width: 100%;
@@ -16,8 +20,12 @@
   height: var(--main-box-height);
   -webkit-overflow-scrolling: touch;
 
+  & header {
+    padding-top: var(--box-padding-top);
+  }
+
   & footer {
-    padding: 0 0 50px;
+    padding-bottom: 50px;
     text-align: center;
 
     & :global .subTitle {
@@ -29,8 +37,21 @@
   }
 }
 
+@media (--xLarge-viewport) {
+  .wrapper {
+    padding: 0 var(--box-padding-left-XL) 0 var(--box-padding-left-XL);
+  }
+}
+
+@media (--large-viewport) {
+  .wrapper {
+    padding: 0 var(--box-padding-left-L) 0 var(--box-padding-left-L);
+  }
+}
+
 @media (--medium-viewport) {
   .wrapper {
+    padding: 0 var(--box-padding-left-M) 0 var(--box-padding-left-M);
     min-height: calc(100vh - var(--m-menu-bar-height) - var(--m-menu-bar-height)); /* stylelint-disable-line */
     background-color: var(--color-grayscale-mobile-background);
     box-shadow: unset;

@@ -27,27 +27,12 @@
   min-height: 200px;
   margin-bottom: 20px;
   overflow: hidden;
+  padding: 0px;
 }
 
 .latestActivity {
   height: 40%;
   margin: 0px;
-}
-
-@media (--xLarge-viewport) {
-  .latestActivity {
-    & h2 {
-      margin: 45px var(--box-padding-left-L) 20px;
-    }
-  }
-}
-
-@media (--large-viewport) {
-  .latestActivity {
-    & h2 {
-      margin: 45px var(--box-padding-left-L) 20px;
-    }
-  }
 }
 
 @media (--medium-viewport) {
@@ -69,10 +54,6 @@
 
   .latestActivity {
     height: auto;
-
-    & h2 {
-      margin: 45px var(--box-padding-left-M) 20px;
-    }
   }
 }
 
