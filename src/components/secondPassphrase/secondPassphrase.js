@@ -10,7 +10,12 @@ import styles from './secondPassphrase.css';
 import routes from '../../constants/routes';
 
 class SecondPassphrase extends React.Component {
+  // eslint-disable-next-line class-methods-use-this
+  componentWillUnmount() {
+    document.body.classList.remove('contentFocused');
+  }
   componentDidMount() {
+    document.body.classList.add('contentFocused');
     if (this.props.account.secondSignature === 1) {
       this.props.history
         .push(`${routes.main.path}${routes.dashboard.path}`);
