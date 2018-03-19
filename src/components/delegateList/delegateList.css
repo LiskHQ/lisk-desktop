@@ -165,6 +165,9 @@
   line-height: var(--list-line-height);
   list-style: none;
   padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
 
   & .filter {
     display: inline-block;
@@ -202,7 +205,7 @@
     font-weight: 400;
     padding-left: 30px;
     padding-right: 20px;
-    vertical-align: middle;
+    vertical-align: top;
     background-color: transparent;
     border-bottom: solid 1px transparent;
     transition: all ease 250ms;
@@ -434,12 +437,10 @@
   }
 
   .filters {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-
     & .filter {
-      margin-right: 0 !important;
+      &:not(:last-of-type) {
+        margin-right: 24px;
+      }
 
       & input {
         width: 70px;
@@ -522,6 +523,14 @@
   .header {
     & .account {
       display: none;
+    }
+  }
+
+  .filters {
+    & .filter {
+      &:not(:last-of-type) {
+        margin-right: 20px;
+      }
     }
   }
 }
