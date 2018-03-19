@@ -12,9 +12,24 @@ import logo from '../../assets/images/logo-beta.svg';
 import PrivateWrapper from '../privateWrapper';
 import { ActionButton } from './../toolbox/buttons/button';
 import styles from './header.css';
+import style from './../app/onboardingStyles';
 import routes from './../../constants/routes';
 
 class Header extends React.Component {
+  componentDidMount() {
+    this.props.addSteps([
+      {
+        title: '10 minutes session timeout',
+        text: 'After 10 minutes of inactivity time we log you out to prevent others from accessing your Lisk ID. ' +
+        'Will be reset as soon you get active. \n' +
+        'Or you reset timer by clicking on the clock symbol.',
+        selector: '.account-timer',
+        position: 'bottom',
+        style,
+      },
+    ]);
+  }
+
   shouldShowActionButton() {
     const { pathname } = this.props.location;
     return !this.props.isAuthenticated
@@ -47,23 +62,26 @@ class Header extends React.Component {
                       <small> LSK</small>
                     </div>
                     <CopyToClipboard value={this.props.account.address} className={`${styles.address} account-information-address`}/>
-                    {this.props.autoLog ? <div className={styles.timer}>
-                      {((this.props.account.expireTime &&
+                    {this.props.autoLog
+                      ? <div className={`${styles.timer} account-timer`}>
+                        {((this.props.account.expireTime &&
                           this.props.account.expireTime !== 0) &&
-                          this.props.account.passphrase) ?
-                        <div>
-                          {this.props.t('Address timeout in')} <i> </i>
-                          <Countdown
-                            date={this.props.account.expireTime}
-                            renderer={CountDownTemplate}
-                            onComplete={() => {
-                              this.props.removeSavedAccountPassphrase();
-                            }
-                            }
-                          />
-                        </div> : <div></div>}
-                    </div>
-                      : <div className={styles.timer}>
+                          this.props.account.passphrase)
+                          ?
+                          <div>
+                            {this.props.t('Address timeout in')} <i> </i>
+                            <Countdown
+                              date={this.props.account.expireTime}
+                              renderer={CountDownTemplate}
+                              onComplete={() => {
+                                this.props.removeSavedAccountPassphrase();
+                              }
+                              }
+                            />
+                          </div>
+                          : <div></div>}
+                      </div>
+                      : <div className={`${styles.timer} account-timer`}>
                         {this.props.account.passphrase ? '' : <span>
                           <FontIcon value='locked' className={styles.lock}/> {this.props.t('Account locked!')}
                         </span>

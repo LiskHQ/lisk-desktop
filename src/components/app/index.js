@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import Joyride from 'react-joyride';
 import PrivateRoutes from '../privateRoute';
 import Dashboard from '../dashboard';
 import Sidechains from '../sidechains';
@@ -25,20 +26,62 @@ import AccountVisualDemo from '../accountVisual/demo';
 import routes from '../../constants/routes';
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this._addSteps = this._addSteps.bind(this);
+    this.state = {
+      steps: [],
+    };
+  }
+
   markAsLoaded() {
     this.main.classList.add(styles.loaded);
     this.main.classList.add('appLoaded');
   }
 
+  _addSteps(steps) {
+    let newSteps = steps;
+
+    if (!Array.isArray(newSteps)) {
+      newSteps = [newSteps];
+    }
+
+    if (!newSteps.length) {
+      return;
+    }
+
+    // Force setState to be synchronous to keep step order.
+    this.setState((currentState) => {
+      currentState.steps = currentState.steps.concat(newSteps);
+      return currentState;
+    });
+  }
+
   render() {
     return (
       <OfflineWrapper>
+        <Joyride
+          ref={(c) => { this.joyride = c; }}
+          steps={this.state.steps}
+          run={true}
+          locale={{
+            skip: (<span>Click here to skip</span>),
+            close: (<span>Close</span>),
+            last: (<span>Complete</span>),
+            next: (<span>Next</span>),
+          }}
+          showOverlay={true}
+          showSkipButton={true}
+          autoStart={false}
+          type='continuous'
+        />
         <main className={`${styles.bodyWrapper}`} ref={(el) => { this.main = el; }}>
           <MainMenu />
           <Route path={routes.accounts.path} component={SavedAccounts} />
           <section>
             <div className={styles.mainBox}>
-              <Header />
+              <Header addSteps={this._addSteps}/>
               <Switch>
                 <PrivateRoutes path={routes.main.path} render={ ({ match }) => (
                   <main className={offlineStyle.disableWhenOffline}>
