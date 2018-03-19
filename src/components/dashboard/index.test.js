@@ -30,7 +30,7 @@ describe('Dashboard', () => {
           options: {},
         },
         loading: [],
-        account: { address: 'some address' },
+        account: { address: 'some address', serverPublicKey: 'public_key' },
       },
     };
     wrapper = mountWithContext(<Dashboard history={ { location: {} } }/>, context);

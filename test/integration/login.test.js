@@ -19,6 +19,7 @@ import { activePeerSet } from '../../src/actions/peers';
 import * as toasterActions from '../../src/actions/toaster';
 import Login from './../../src/components/login';
 import accounts from '../constants/accounts';
+import networks from './../../src/constants/networks';
 import GenericStepDefinition from '../utils/genericStepDefinition';
 
 describe('@integration: Login', () => {
@@ -76,6 +77,7 @@ describe('@integration: Login', () => {
       secondSignature: 0,
       secondPublicKey: null,
       multisignatures: [],
+      network: networks.mainnet.code,
       u_multisignatures: [],
     });
     delegateAPIStub = stub(delegateAPI, 'getDelegate').returnsPromise().rejects();
@@ -97,7 +99,7 @@ describe('@integration: Login', () => {
     checkIfInRoute() {
       expect(this.store.getState().account).to.have.all.keys('passphrase', 'publicKey', 'address', 'delegate',
         'isDelegate', 'expireTime', 'u_multisignatures', 'multisignatures', 'unconfirmedBalance',
-        'secondSignature', 'secondPublicKey', 'balance', 'unconfirmedSignature');
+        'secondSignature', 'secondPublicKey', 'balance', 'unconfirmedSignature', 'network');
       restoreStubs();
     }
 

@@ -1,6 +1,6 @@
 {
   "name": "lisk-hub",
-  "version": "0.2.0-rc.1",
+  "version": "0.3.0-rc.1",
   "description": "Lisk Hub",
   "homepage": "https://github.com/LiskHQ/lisk-hub",
   "bugs": "https://github.com/LiskHQ/lisk-hub/issues",
@@ -54,7 +54,7 @@
     "lisk-js": "0.5.1",
     "lodash.throttle": "4.1.1",
     "moment": "2.20.1",
-    "numeral": "=2.0.6",
+    "numeral": "git+https://github.com/LiskHQ/Numeral-js.git",
     "parallax-js": "3.1.0",
     "popmotion": "7.8.2",
     "popmotion-react": "1.1.1",
