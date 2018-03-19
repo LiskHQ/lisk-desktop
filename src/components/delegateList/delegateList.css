@@ -323,13 +323,16 @@
       color: var(--color-grayscale-dark);
       font-size: 16px;
       font-weight: 400;
-      transform: translateZ(0);
 
       &:last-child {
         font-weight: 300;
       }
     }
   }
+}
+
+.safariHack {
+  transform: translateZ(0);
 }
 
 .username {
