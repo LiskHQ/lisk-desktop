@@ -28,8 +28,7 @@ describe('Sidechains', () => {
         <Router>
           <Sidechains {...props} />
         </Router>
-      </Provider>, options
-    );
+      </Provider>, options);
     expect(wrapper.find('Sidechains')).to.have.lengthOf(1);
   });
 });

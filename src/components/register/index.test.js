@@ -17,7 +17,6 @@ describe('RegisterHOC', () => {
   const store = configureMockStore([])({
     peers,
     account,
-    activePeerSet: () => {},
   });
 
   beforeEach(() => {
