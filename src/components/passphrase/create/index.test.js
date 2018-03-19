@@ -29,7 +29,7 @@ describe('Passphrase: Create', () => {
     },
   };
 
-  it('shows multiple MovableShape components', () => {
+  it.skip('shows multiple MovableShape components', () => {
     const wrapper = mount(<Create {...props} />, options);
     expect(wrapper.find('MovableShape')).to.have.lengthOf(9);
   });

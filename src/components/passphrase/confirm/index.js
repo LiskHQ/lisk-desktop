@@ -19,7 +19,7 @@ class Confirm extends React.Component {
       answers: new Array(2),
       trials: 0,
       showError: false,
-      formStatus: styles.clean,
+      formStatus: 'clean',
     };
   }
 
@@ -34,22 +34,22 @@ class Confirm extends React.Component {
   }
 
   updateState(answers) {
-    switch (this.formStatus(answers)) {
+    switch (this.getFormStatus(answers)) {
       case 'valid':
         this.setState({
-          formStatus: styles.valid,
+          formStatus: 'valid',
           answers,
         });
         this.next();
         break;
       case 'invalid':
-        this.setState({ formStatus: styles.invalid, answers });
+        this.setState({ formStatus: 'invalid', answers });
         this.timeout = setTimeout(() => {
           this.resetForm.call(this);
         }, 800);
         break;
       case 'out of trials':
-        this.setState({ formStatus: styles.outOfTrials, answers });
+        this.setState({ formStatus: 'outOfTrials', answers });
         break;
       default:
         this.setState({ answers });
@@ -68,7 +68,7 @@ class Confirm extends React.Component {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  formStatus(answers) {
+  getFormStatus(answers) {
     // eslint-disable-next-line eqeqeq
     if (!answers.reduce((acc, current) => (acc && current != undefined), true)) {
       return 'not filled';
@@ -130,7 +130,7 @@ class Confirm extends React.Component {
       missing,
       selectedFieldset: -1,
       wordOptions,
-      formStatus: styles.clean,
+      formStatus: 'clean',
       answers: new Array(2),
       trials: this.state.trials + 1,
     });
@@ -172,8 +172,8 @@ class Confirm extends React.Component {
     this.setState({ answer });
   }
 
-  selectFieldset(index) {
-    this.setState({ selectedFieldset: index });
+  selectFieldset(selectedFieldset) {
+    this.setState({ selectedFieldset });
   }
 
   // eslint-disable-next-line  class-methods-use-this
@@ -186,9 +186,10 @@ class Confirm extends React.Component {
   }
 
   render() {
-    const { missing, words, wordOptions, step, answers, selectedFieldset, trials } = this.state;
-    const errorTitleVisibility = (this.state.formStatus === styles.outOfTrials ||
-      this.state.formStatus === styles.invalid) ? styles.visible : '';
+    const { missing, words, wordOptions, step, answers,
+      selectedFieldset, trials, formStatus } = this.state;
+    const errorTitleVisibility = (this.state.formStatus === 'outOfTrials' ||
+      this.state.formStatus === 'invalid') ? styles.visible : '';
 
     return (
       <section className={`passphrase-verifier ${styles.verifier} ${styles[step]}`}>
@@ -207,9 +208,10 @@ class Confirm extends React.Component {
         </header>
         <section className={`${styles.table} ${styles.verify}`}>
           <div className={styles.tableCell}>
-            <Form missing={missing} wordOptions={wordOptions} words={words}
-              answers={answers} selectedFieldset={selectedFieldset} trials={trials}
-              onWordSelected={this.onWordSelected} selectFieldset={this.selectFieldset}/>
+            <Form missing={missing} wordOptions={wordOptions}
+              words={words} answers={answers} selectedFieldset={selectedFieldset}
+              trials={trials} onWordSelected={this.onWordSelected.bind(this)}
+              selectFieldset={this.selectFieldset.bind(this)} formStatus={formStatus}/>
           </div>
         </section>
         <section className={`${styles.table} ${styles.done}`}>

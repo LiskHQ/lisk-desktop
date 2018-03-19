@@ -1,4 +1,5 @@
 @import '../app/variables.css';
+@import './states.css';
 
 :root {
   --amount-negative-color: var(--color-grayscale-dark);

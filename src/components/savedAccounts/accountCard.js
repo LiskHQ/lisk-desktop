@@ -9,8 +9,8 @@ import { FontIcon } from '../fontIcon';
 import styles from './card.css';
 
 const AccountCard = ({ account, t, isEditing, handleRemove,
-  isSelectedForRemove, selectForRemove }) =>
-  (<li className={`saved-account-card ${styles.card}
+  isSelectedForRemove, selectForRemove, onClick }) =>
+  (<li onClick={onClick} className={`saved-account-card ${styles.card}
     ${isEditing ? null : styles.clickable}
     ${isSelectedForRemove(account) ? styles.darkBackground : null}`}>
     {(account.passphrase ?
@@ -45,7 +45,7 @@ const AccountCard = ({ account, t, isEditing, handleRemove,
           {} :
           { button: styles.removeButton }
         }
-        onClick={() => handleRemove(account)}
+        onClick={e => handleRemove(account, e)}
         label={isSelectedForRemove(account) ? t('Confirm') : t('Remove from Favorites')}/> :
       null
     }

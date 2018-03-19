@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from './form.css';
 
-const Form = ({ wordOptions, words, missing, answers,
+const Form = ({ wordOptions, words, missing, answers, formStatus,
   trials, selectedFieldset, onWordSelected, selectFieldset }) => {
   let missingWordIndex = -1;
 
-  return (<form className={`passphrase-holder ${this.state.formStatus}`}>
+  return (<form className={`passphrase-holder ${styles[formStatus]}`}>
     {
       wordOptions ?
         words.map((word, index) => {
@@ -17,7 +17,7 @@ const Form = ({ wordOptions, words, missing, answers,
 
           return (
             <fieldset key={`${word}-${missingWordIndex}-${trials}`}>
-              <span onClick={selectFieldset(missingWordIndex)}
+              <span onClick={() => selectFieldset(missingWordIndex)}
                 className={`${styles.placeholder} ${selectedFieldset === missingWordIndex ?
                   styles.selected : ''} ${answers[missingWordIndex] ? styles[validity] : ''}`}>
                 { answers[missingWordIndex] ? answers[missingWordIndex].value : '' }
@@ -32,7 +32,7 @@ const Form = ({ wordOptions, words, missing, answers,
                       type='radio'
                       value={wd}
                       id={`${wd}-${missingWordIndex}-${trials}`}
-                      onChange={onWordSelected.bind(this)} />
+                      onChange={onWordSelected} />
                     <label className={styles.option} htmlFor={`${wd}-${missingWordIndex}-${trials}`}>{wd}</label>
                   </div>)
               }
