@@ -81,7 +81,7 @@
 
 .headerIcon {
   font-size: 68px;
-  color: #ff6236;
+  color: var(--color-action-light);
   margin-bottom: 30px;
 }
 
@@ -100,4 +100,15 @@
   margin: 0 auto;
   transform-origin: 50%;
   animation-delay: 450ms;
+}
+
+.button {
+  margin-top: 10px;
+}
+
+@media (--small-viewport) {
+  .content {
+    position: relative;
+    height: 90%;
+  }
 }
