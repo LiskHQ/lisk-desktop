@@ -109,6 +109,7 @@
 @media (--small-viewport) {
   .content {
     position: relative;
-    height: 90%;
+    min-height: 90%;
+    height: auto;
   }
 }
