@@ -37,9 +37,9 @@ class SecondPassphrase extends React.Component {
           showNav={true}
           finalCallback={onPassphraseRegister}
           backButtonLabel={t('Back')}>
-          <CreateSecond title='Create' t={t} icon='add' />
-          <Safekeeping title='Safekeeping' t={t} icon='checkmark' />
-          <Confirm title='Confirm' t={t} confirmButton='Register'
+          <CreateSecond title={t('Create')} t={t} icon='add' />
+          <Safekeeping title={t('Safekeeping')} t={t} icon='checkmark' />
+          <Confirm title={t('Confirm')} t={t} confirmButton='Register'
             icon='login' secondPassConfirmation={true} />
         </MultiStep>
       </Box>);
