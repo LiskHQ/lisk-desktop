@@ -21,12 +21,6 @@ describe('TransactionsHOC', () => {
   };
   const account = { address: '16313739661670634666L' };
   const peers = { data: {} };
-  const voting = {
-    votes: {},
-    delegates: [],
-    totalDelegates: [],
-    refresh: false,
-  };
 
   beforeEach(() => {
     store.getState = () => ({
@@ -34,7 +28,6 @@ describe('TransactionsHOC', () => {
       transactions,
       account,
       loading: [],
-      voting,
     });
     wrapper = mount(<Provider store={store}><Router><TransactionsHOC /></Router></Provider>, {
       context: { store, history, i18n },
