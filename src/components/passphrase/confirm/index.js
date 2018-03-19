@@ -5,6 +5,7 @@ import { PrimaryButton } from '../../toolbox/buttons/button';
 import { extractAddress } from '../../../utils/api/account';
 import TransitionWrapper from '../../toolbox/transitionWrapper';
 import AccountVisual from '../../accountVisual';
+import Form from './form';
 
 class Confirm extends React.Component {
   constructor() {
@@ -185,7 +186,6 @@ class Confirm extends React.Component {
   }
 
   render() {
-    let missingWordIndex = -1;
     const { missing, words, wordOptions, step, answers, selectedFieldset, trials } = this.state;
     const errorTitleVisibility = (this.state.formStatus === styles.outOfTrials ||
       this.state.formStatus === styles.invalid) ? styles.visible : '';
@@ -207,40 +207,9 @@ class Confirm extends React.Component {
         </header>
         <section className={`${styles.table} ${styles.verify}`}>
           <div className={styles.tableCell}>
-            <form className={`passphrase-holder ${this.state.formStatus}`}>
-              {
-                wordOptions ?
-                  words.map((word, index) => {
-                    if (!missing.includes(index)) {
-                      return (<span key={word} className={styles.word}>{word}</span>);
-                    }
-                    missingWordIndex++;
-                    const validity = answers[missingWordIndex] && answers[missingWordIndex].validity ? 'valid' : 'invalid';
-
-                    return (
-                      <fieldset key={`${word}-${missingWordIndex}-${trials}`}>
-                        <span onClick={this.selectFieldset.bind(this, missingWordIndex)}
-                          className={`${styles.placeholder} ${selectedFieldset === missingWordIndex ?
-                            styles.selected : ''} ${answers[missingWordIndex] ? styles[validity] : ''}`}>{answers[missingWordIndex] ? answers[missingWordIndex].value : ''}</span>
-                        {
-                          wordOptions[missingWordIndex].map(wd =>
-                            <div key={`${wd}-${missingWordIndex}-${trials}`}>
-                              <input
-                                name={`answer${missingWordIndex}`}
-                                className={styles.option}
-                                answer={missingWordIndex}
-                                type='radio'
-                                value={wd}
-                                id={`${wd}-${missingWordIndex}-${trials}`}
-                                onChange={this.onWordSelected.bind(this)} />
-                              <label className={styles.option} htmlFor={`${wd}-${missingWordIndex}-${trials}`}>{wd}</label>
-                            </div>)
-                        }
-                      </fieldset>
-                    );
-                  }) : null
-              }
-            </form>
+            <Form missing={missing} wordOptions={wordOptions} words={words}
+              answers={answers} selectedFieldset={selectedFieldset} trials={trials}
+              onWordSelected={this.onWordSelected} selectFieldset={this.selectFieldset}/>
           </div>
         </section>
         <section className={`${styles.table} ${styles.done}`}>
