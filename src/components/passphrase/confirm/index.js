@@ -196,7 +196,7 @@ class Confirm extends React.Component {
         <header className={styles.table}>
           <div className={styles.tableCell}>
             <TransitionWrapper current={this.state.step} step='verify'>
-              <h2 className={styles.verify}>{this.props.t('Choose the correct phrases to confirm.')}</h2>
+              <h2 className={styles.verify}>{this.props.t('Select the missing words to confirm')}</h2>
             </TransitionWrapper>
             {!this.props.secondPassConfirmation ? <TransitionWrapper current={this.state.step} step='done'>
               <h2 className={styles.done}>{this.props.t('Perfect! You’re all set.')}</h2>
