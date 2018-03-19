@@ -168,6 +168,9 @@
   line-height: var(--list-line-height);
   list-style: none;
   padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
 
   & .filter {
     display: inline-block;
@@ -427,15 +430,9 @@
   }
 
   .filters {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-
     & .filter {
-      margin-right: 0;
-
       &:not(:last-of-type) {
-        margin-right: 0;
+        margin-right: 24px;
       }
 
       & input {
@@ -513,11 +510,7 @@
   }
 
   .filters {
-    justify-content: flex-start;
-
     & .filter {
-      margin-right: 10px;
-
       &:not(:last-of-type) {
         margin-right: 20px;
       }
