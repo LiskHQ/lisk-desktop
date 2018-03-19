@@ -5,9 +5,6 @@
   --title-bar-extra-padding-XS: 52px;
   --header-subtitle-font-size-XL: 18px;
   --header-subtitle-font-size-L: 16px;
-  --grid-padding-XL: 48px;
-  --grid-padding-L: 32px;
-  --grid-padding-XS: 19px;
   --details-wrapper-max-width-s: 800px;
   --details-wrapper-max-width-m: 650px;
 }
@@ -45,8 +42,6 @@
 @media (--xLarge-viewport) {
   .transaction {
     & header {
-      padding: 20px var(--grid-padding-XL);
-
       & h2 {
         margin-bottom: 7px;
       }
@@ -57,8 +52,6 @@
 @media (--large-viewport) {
   .transaction {
     & header {
-      padding: 20px var(--grid-padding-L);
-
       & h2 {
         margin-bottom: 5px;
       }
@@ -69,10 +62,6 @@
 @media (--medium-viewport) {
   .transaction {
     margin-top: var(--title-bar-extra-padding-M);
-
-    & header {
-      padding: 20px  var(--grid-padding-L) calc(20px + var(--title-bar-extra-padding-M)) var(--grid-padding-L);
-    }
 
     & .content {
       & .detailsWrapper {
@@ -85,10 +74,6 @@
 @media (--xSmall-viewport) {
   .transaction {
     margin-top: var(--title-bar-extra-padding-XS);
-
-    & header {
-      padding: 20px  var(--grid-padding-XS) calc(20px + var(--title-bar-extra-padding-XS)) var(--grid-padding-XS);
-    }
 
     & .content {
       display: block;

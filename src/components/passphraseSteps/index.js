@@ -119,7 +119,7 @@ class PassphraseSteps extends React.Component {
       },
     };
 
-    return <div className={`${styles.wrapper} boxPadding`}>
+    return <div className={`${styles.wrapper}`}>
       <header className={styles.headerWrapper}>
         <h2>{values[this.getCurrentStep()].header}</h2>
       </header>
