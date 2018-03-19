@@ -39,7 +39,6 @@ class confirmSecond extends React.Component {
       step: 'confirm',
     });
   }
-
   componentDidMount() {
     if (this.props.account.passphrase) {
       this.setState({ step: 'confirm' });
@@ -59,7 +58,7 @@ class confirmSecond extends React.Component {
     });
   }
   render() {
-    const { hidden, t, history, account } = this.props;
+    const { hidden, t, history } = this.props;
     const status = hidden ? styles.hidden : '';
     const doneClass = (this.state.step === 'done' || this.state.step === 'pending') ? styles.done : '';
     return (<section className={`${styles.wrapper} ${status}`}>
@@ -85,7 +84,7 @@ class confirmSecond extends React.Component {
             </h2>
             <div className='subTitle'>
               {t('Your registration is secured on the blockchain.')}
-              second pass is : {account.secondSignature}</div>
+            </div>
           </article>
         </TransitionWrapper>
       </header>
@@ -96,7 +95,7 @@ class confirmSecond extends React.Component {
               error={this.state.passphrase.error}
               value={this.state.passphrase.value}
               onChange={this.onChange.bind(this, 'passphrase')}
-              columns={{ xs: 2, sm: 4, md: 2 }}
+              columns={{ xs: 6, sm: 4, md: 2 }}
               isFocused={true}
             />
             <footer>
@@ -119,7 +118,7 @@ class confirmSecond extends React.Component {
             <SliderCheckbox
               theme={styles}
               className={`${styles.smallSlider} i-understand-checkbox`}
-              label={t('I Confirm (Fee: 5 LSK)')}
+              label={t('I confirm (Fee: 5 LSK)')}
               clickable={true}
               onChange={this.confirm.bind(this)}
               input={{
