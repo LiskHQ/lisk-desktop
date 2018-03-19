@@ -158,7 +158,7 @@ describe('DelegateList', () => {
     };
     emptyMessageProps.delegates = [];
     emptyMessageProps.votes = {};
-    wrapper = mountWithContext(<DelegateList {...emptyMessageProps}/>, emptyMessageProps);
+    wrapper = mountWithContext(<DelegateList {...emptyMessageProps}/>, {});
     const nextProps = {
       delegates: [],
     };
@@ -181,7 +181,7 @@ describe('DelegateList', () => {
     };
     emptyMessageProps.delegates = [];
     emptyMessageProps.votes = {};
-    wrapper = mountWithContext(<DelegateList {...emptyMessageProps}/>, emptyMessageProps);
+    wrapper = mountWithContext(<DelegateList {...emptyMessageProps}/>, {});
     const nextProps = {
       delegates: [delegates[1]],
     };
@@ -196,6 +196,6 @@ describe('DelegateList', () => {
 
     wrapper.setProps({ delegates: [] });
     const delegateRow = wrapper.find('.empty-message');
-    expect(delegateRow.text()).to.equal('No delegates found.');
+    expect(delegateRow).to.have.text('No delegates found.');
   });
 });
