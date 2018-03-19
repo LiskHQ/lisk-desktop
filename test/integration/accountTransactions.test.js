@@ -109,6 +109,8 @@ describe('@integration: Account Transactions', () => {
   describe('Scenario: should allow to view transactions of any account', () => {
     step('Given I\'m on "accounts/123L" as "genesis" account', () => setupStep({ accountType: 'genesis', address: '123L' }));
     step('Then I should see 20 transaction rows as result of the address 123L', () => helper.shouldSeeCountInstancesOf(20, 'TransactionRow'));
+    step('When I click on a transaction row', () => helper.clickOnElement('.transactionsRow'));
+    step('Then I should be able to see the details of that transaction', () => helper.shouldSeeCountInstancesOf(1, '.transactions-detail-view'));
   });
 
   describe('Scenario: should allow to filter transactions', () => {
