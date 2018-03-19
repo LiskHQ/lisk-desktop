@@ -1,7 +1,8 @@
 import { step } from 'mocha-steps';
-import { stub, match } from 'sinon';
+import { stub, match, spy } from 'sinon';
 import { mount } from 'enzyme';
 import thunk from 'redux-thunk';
+import PropTypes from 'prop-types';
 
 import { prepareStore, renderWithRouter } from '../utils/applicationInit';
 import { accountsRetrieved } from '../../src/actions/savedAccounts';
@@ -16,6 +17,8 @@ import SavedAccounts from '../../src/components/savedAccounts';
 import * as accountApi from '../../src/utils/api/account';
 import * as peers from '../../src/utils/api/peers';
 import GenericStepDefinition from '../utils/genericStepDefinition';
+import i18n from '../../src/i18n';
+import routes from '../../src/constants/routes';
 
 describe('@integration: Account switch', () => {
   let store;
@@ -72,7 +75,23 @@ describe('@integration: Account switch', () => {
       loginMiddleware,
     ]);
 
-    wrapper = mount(renderWithRouter(SavedAccounts, store));
+    const history = {
+      location: {
+        pathname: `${routes.main.path}${routes.dashboard.path}`,
+      },
+      push: spy(),
+    };
+
+    const options = {
+      context: { store, history, i18n },
+      childContextTypes: {
+        store: PropTypes.object.isRequired,
+        history: PropTypes.object.isRequired,
+        i18n: PropTypes.object.isRequired,
+      },
+    };
+
+    wrapper = mount(renderWithRouter(SavedAccounts, store), options);
     store.dispatch(accountsRetrieved());
     wrapper.update();
     helper = new GenericStepDefinition(wrapper, store);
@@ -100,9 +119,11 @@ describe('@integration: Account switch', () => {
     step('Then I should see 2 instances of "saved account card"', () => helper.shouldSeeCountInstancesOf(2, '.saved-account-card'));
   });
 
-  describe('Scenario: should allow to switch account', () => {
+  /* eslint-disable mocha/no-exclusive-tests */
+  describe.only('Scenario: should allow to switch account', () => {
     step('Given I\'m on "account switcher" with accounts: "genesis,delegate,empty account"', setupStep);
     step('When I click "saved account card"', () => helper.clickOnElement('.saved-account-card'));
     step('Then I should be logged in as "genesis" account', () => helper.shouldBeLoggedInAs(accounts.genesis.publicKey));
   });
+  /* eslint-enable mocha/no-exclusive-tests */
 });
