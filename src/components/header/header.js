@@ -12,7 +12,7 @@ import logo from '../../assets/images/logo-beta.svg';
 import PrivateWrapper from '../privateWrapper';
 import { ActionButton } from './../toolbox/buttons/button';
 import styles from './header.css';
-import style from './../app/onboardingStyles';
+import { step } from './../app/onboardingStyles';
 import routes from './../../constants/routes';
 
 class Header extends React.Component {
@@ -25,7 +25,7 @@ class Header extends React.Component {
         'Or you reset timer by clicking on the clock symbol.',
         selector: '.account-timer',
         position: 'bottom',
-        style,
+        style: step,
       },
     ]);
   }

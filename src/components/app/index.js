@@ -24,6 +24,7 @@ import OfflineWrapper from '../offlineWrapper';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import AccountVisualDemo from '../accountVisual/demo';
 import routes from '../../constants/routes';
+import { intro } from './../app/onboardingStyles';
 
 class App extends React.Component {
   constructor(props) {
@@ -33,6 +34,18 @@ class App extends React.Component {
     this.state = {
       steps: [],
     };
+  }
+
+  componentDidMount() {
+    this._addSteps([
+      {
+        title: 'Lets start with a quick onboarding',
+        text: 'Take a quick tour to see how the Lisk App works.',
+        selector: '#app',
+        position: 'bottom',
+        style: intro,
+      },
+    ]);
   }
 
   markAsLoaded() {
@@ -73,7 +86,7 @@ class App extends React.Component {
           }}
           showOverlay={true}
           showSkipButton={true}
-          autoStart={false}
+          autoStart={true}
           type='continuous'
         />
         <main className={`${styles.bodyWrapper}`} ref={(el) => { this.main = el; }}>

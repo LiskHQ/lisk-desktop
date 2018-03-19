@@ -9,7 +9,7 @@ import * as menuLogos from '../../assets/images/main-menu-icons/*.svg'; //eslint
 import { FontIcon } from '../fontIcon';
 import Setting from '../setting';
 import routes from '../../constants/routes';
-import style from './../app/onboardingStyles';
+import { step } from './../app/onboardingStyles';
 
 const getIndex = (history, tabs) => {
   if (history.location.pathname.includes('explorer')) return 2;
@@ -51,35 +51,35 @@ class MainMenu extends React.Component {
         text: 'Once you create an address you will be able to access all relevant stats and address information here.',
         selector: '#dashboard',
         position: 'right',
-        style,
+        style: step,
       },
       {
         title: 'Send LSK',
         text: 'All activities are secure and only executable by your private passphrase you got when you create an address.',
         selector: '#transactions',
         position: 'right',
-        style,
+        style: step,
       },
       {
         title: 'Explore in real time',
         text: 'Search and found addresses and transactions.Transparency is what differentiate decentralized networks from others.',
         selector: '#explorer',
         position: 'right',
-        style,
+        style: step,
       },
       {
         title: 'Manage your application',
         text: 'Soon you will be able to use and manage your sidechain application by this website interface here.',
         selector: '#sidechains',
         position: 'right',
-        style,
+        style: step,
       },
       {
         title: 'More opportunities',
         text: 'Change account settings easily.\n Repeat the onboarding here.',
         selector: '.more-menu',
         position: 'right',
-        style,
+        style: step,
       },
     ]);
   }
