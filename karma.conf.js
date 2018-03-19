@@ -78,6 +78,8 @@ module.exports = function (config) {
             'src/components/header/header.js',
             'src/components/searchBar/index.js',
             'src/components/register/register.js',
+            'src/components/search/index.js',
+            'src/components/voteUrlProcessor/voteUrlProcessor.js',
             'src/components/voteUrlProcessor/index.js',
           ],
           overrides: {

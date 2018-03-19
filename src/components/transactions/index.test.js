@@ -21,12 +21,6 @@ describe('TransactionsHOC', () => {
   };
   const account = { address: '16313739661670634666L' };
   const peers = { data: {} };
-  const voting = {
-    votes: {},
-    delegates: [],
-    totalDelegates: [],
-    refresh: false,
-  };
 
   beforeEach(() => {
     store.getState = () => ({
@@ -34,7 +28,21 @@ describe('TransactionsHOC', () => {
       transactions,
       account,
       loading: [],
-      voting,
+      voting: {
+        delegates: [
+          {
+            username: 'username1',
+            publicKey: 'sample_key',
+            address: 'sample_address',
+            rank: 12,
+          },
+        ],
+        votes: {
+          username1: { confirmed: true, unconfirmed: true, publicKey: 'sample_key' },
+        },
+        totalDelegates: [],
+        refresh: false,
+      },
     });
     wrapper = mount(<Provider store={store}><Router><TransactionsHOC /></Router></Provider>, {
       context: { store, history, i18n },

@@ -71,7 +71,7 @@ describe('Setting', () => {
 
   afterEach(() => {
     clock.restore();
-    i18n.changeLanguage('en');
+    // i18n.changeLanguage('en');
   });
 
   it('should render "ReactSwipe" component', () => {

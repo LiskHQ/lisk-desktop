@@ -22,7 +22,8 @@ class VotesPreview extends React.Component {
       this.props.onMount(false, 'VotesPreview');
     }
 
-    if (this.props.history.location.search.includes('votes') &&
+    if (this.props.history &&
+        this.props.history.location.search.includes('votes') &&
         this.props.account.balance !== 0) {
       this.props.updateList(true);
       this.props.nextStep({});
