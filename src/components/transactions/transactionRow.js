@@ -2,7 +2,7 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { translate } from 'react-i18next';
 import TransactionType from './transactionType';
-import styles from './transactions.css';
+import styles from './transactionRow.css';
 import Amount from './amount';
 import Spinner from '../spinner';
 import { DateFromTimestamp } from './../timestamp/index';

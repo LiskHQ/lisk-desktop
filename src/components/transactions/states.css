@@ -1,0 +1,45 @@
+
+@import '../app/variables.css';
+
+:root {
+  --amount-positive-color: var(--color-success-dark);
+  --amount-negative-color: var(--color-grayscale-dark);
+}
+
+.smallButton {
+  display: inline-block;
+}
+
+.leftText {
+  text-align: left;
+  padding-left: 0px;
+}
+
+.rightText {
+  text-align: right;
+}
+
+.ordinaryText {
+  text-decoration: none;
+  color: inherit;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.greyLabel {
+  font-weight: var(--font-weight-semi-bold);
+  color: var(--amount-negative-color);
+}
+
+.greenLabel {
+  font-weight: var(--font-weight-semi-bold);
+  color: var(--amount-positive-color) !important;
+}
+
+.addressLink {
+  color: var(--color-link);
+  font-weight: 600;
+  text-decoration: none;
+}

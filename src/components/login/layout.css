@@ -1,0 +1,113 @@
+@import './../app/variables.css';
+
+:root {
+  --transition: all ease 300ms;
+}
+
+.wrapper {
+  animation: delayedFadeIn 300ms;
+  overflow: visible !important;
+  display: block !important;
+  clear: both;
+  padding-right: 16px;
+}
+
+.table {
+  display: table;
+  width: 100%;
+  height: 100%;
+}
+
+.outTaken {
+  position: absolute;
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: var(--color-grayscale-medium);
+  padding-top: 200px;
+  clear: both;
+}
+
+.input {
+  padding-bottom: 0px;
+}
+
+.login,
+.signUp {
+  transition: var(--transition);
+  position: relative;
+  box-sizing: border-box;
+  float: left;
+}
+
+@media (--xLarge-viewport) {
+  .signUp,
+  .login {
+    & h2 {
+      font-size: 65px;
+    }
+  }
+}
+
+@media (--large-viewport) {
+  .signUp,
+  .login {
+    & h2 {
+      font-size: 50px;
+    }
+  }
+}
+
+@media (--medium-viewport) {
+  .wrapper {
+    height: 100%;
+    padding-right: 0;
+  }
+
+  .login,
+  .signUp {
+    & h2 {
+      font-size: var(--font-size-h2-l);
+      margin-top: 28vh; /* stylelint-disable-line */
+    }
+
+    & .focused {
+      & h2 {
+        font-size: var(--font-size-h3-m);
+      }
+    }
+  }
+}
+
+@media (--small-viewport) {
+  .wrapper {
+    padding-left: 0;
+    padding-right: 0;
+    height: 100%;
+  }
+
+  .login,
+  .signUp {
+    padding: 0 var(--box-padding-left-M);
+
+    & h2 {
+      font-size: var(--font-size-h2-s);
+      margin-top: 12vh; /* stylelint-disable-line */
+    }
+
+    & h2 a {
+      margin-top: 12vh; /* stylelint-disable-line */
+    }
+  }
+}
+
+@media (--xSmall-viewport) {
+  .login,
+  .signUp {
+    & h2 {
+      margin-top: 8vh; /* stylelint-disable-line */
+    }
+  }
+}

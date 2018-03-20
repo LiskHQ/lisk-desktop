@@ -120,8 +120,6 @@
     }
 
     & h2 {
-      font-size: var(--main-header-font-size-XS);
-
       & .balanceUnit {
         font-size: var(--header-balance-unit-font-size-XS);
       }

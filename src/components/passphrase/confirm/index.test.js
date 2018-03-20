@@ -48,7 +48,7 @@ describe('Passphrase: Confirm', () => {
     clock.restore();
   });
 
-  it('renders an input component', () => {
+  it('renders 6 input components', () => {
     expect(wrapper.find('input')).to.have.lengthOf(6);
   });
 

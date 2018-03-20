@@ -58,6 +58,9 @@
       height: 0;
       border-bottom: solid 2px var(--link-color);
       opacity: 0.5;
+    }
+
+    &.dash small {
       font-size: 0 !important;
 
       & small {

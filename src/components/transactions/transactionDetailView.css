@@ -1,0 +1,224 @@
+@import '../app/variables.css';
+@import './states.css';
+
+:root {
+  --detail-label-font-weight: var(--font-weight-very-bold);
+  --grid-padding-XL: var(--box-padding-left-L); /* L until we add this padding to everywhere else too */
+  --grid-padding-L: var(--box-padding-left-L);
+  --grid-padding-M: var(--box-padding-left-M);
+  --list-line-height: 25px;
+  --details-font-color: var(--color-grayscale-dark);
+  --details-label-font-size-L: 12px;
+  --details-label-font-size-XS: 12px;
+  --back-button-font-size-XL: 15px;
+  --back-button-font-size-L: 12px;
+  --back-button-font-size-XS: 12px;
+  --back-button-arrow-font-size-XL: 16px;
+  --back-button-arrow-font-size-L: 16px;
+  --back-button-arrow-font-size-XS: 16px;
+}
+
+.accountVisual {
+  position: absolute;
+  left: 0px;
+  top: 3px;
+  margin: 0;
+}
+
+.details {
+  line-height: var(--list-line-height);
+  color: var(--details-font-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  & footer {
+    padding-bottom: 92px;
+  }
+
+  & .copy {
+    color: var(--color-primary-standard) !important;
+  }
+
+  & .row {
+    padding-bottom: 48px;
+
+    &:last-child {
+      padding-bottom: 0px;
+    }
+  }
+
+  & .column {
+    position: relative;
+    padding-left: 50px;
+  }
+
+  & .label {
+    font-weight: var(--font-weight-very-bold);
+  }
+
+  & .sender {
+    font-weight: var(--font-weight-semi-bold);
+  }
+
+  & header {
+    padding-left: 0px;
+
+    & h3 {
+      font-family: var(--content-font);
+
+      & small {
+        font-weight: var(--detail-label-font-weight);
+        margin-left: -6px;
+        cursor: pointer;
+      }
+
+      & .backButton {
+        & .arrow {
+          vertical-align: middle;
+        }
+
+        & .text {
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+}
+
+@media (--xLarge-viewport) {
+  .details {
+    & .label {
+      font-size: var(--details-label-font-size-L);
+    }
+
+    & .value {
+      & a,
+      & span {
+        font-size: 15px;
+        font-weight: 500;
+
+        & span {
+          color: inherit;
+        }
+      }
+
+      & span {
+        color: var(--details-font-color);
+      }
+
+      & .copy {
+        font-size: 24px;
+        vertical-align: top;
+      }
+
+      &.sender a {
+        font-weight: 600;
+      }
+    }
+
+    & header {
+      & small {
+        font-size: var(--back-button-font-size-XL);
+      }
+
+      & .backButton {
+        & .arrow {
+          font-size: var(--back-button-arrow-font-size-XL);
+        }
+      }
+    }
+  }
+}
+
+@media (--large-viewport) {
+  .details {
+    & .label {
+      font-size: var(--details-label-font-size-L);
+    }
+
+    & header {
+      & small {
+        font-size: var(--back-button-font-size-L);
+      }
+
+      & .backButton {
+        & .arrow {
+          font-size: var(--back-button-arrow-font-size-L);
+        }
+      }
+    }
+  }
+}
+
+@media (--medium-viewport) {
+  .results {
+    overflow-y: initial;
+    padding-bottom: 100px;
+    margin: 0px calc(0 - var(--box-padding-left-M));
+
+    & .header {
+      font-size: 12px;
+    }
+
+    & .rows {
+      padding: 0px var(--box-padding-left-M);
+    }
+
+    & .rows:nth-of-type(even) {
+      background: var(--gradient-greyscale-mobile);
+    }
+
+    & .rows:nth-of-type(odd) {
+      background: var(--color-grayscale-mobile-background);
+    }
+  }
+}
+
+/**
+@media (--small-viewport) {
+  .details {
+    & .row {
+      margin-right: 0;
+      margin-left: 0;
+      padding-bottom: 0;
+    }
+
+    & .column {
+      padding-bottom: 30px;
+    }
+  }
+}
+**/
+
+@media (--xSmall-viewport) {
+  .details {
+    padding: 0px var(--grid-padding-M);
+
+    & .row {
+      padding-bottom: 0px;
+    }
+
+    & .column {
+      padding-bottom: 20px;
+    }
+
+    & .label {
+      font-size: var(--details-label-font-size-XS);
+    }
+
+    & header {
+      margin-bottom: 20px;
+
+      & small {
+        font-size: var(--back-button-font-size-XS);
+      }
+
+      & .backButton {
+        & .arrow {
+          font-size: var(--back-button-arrow-font-size-XS);
+        }
+      }
+    }
+  }
+}
