@@ -24,15 +24,19 @@ import OfflineWrapper from '../offlineWrapper';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import AccountVisualDemo from '../accountVisual/demo';
 import routes from '../../constants/routes';
+import { FontIcon } from '../fontIcon';
 import onboardingSteps from './../app/onboardingSteps';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
+    this.onboardingStarted = false;
     this.state = {
       steps: [],
       run: false,
+      intro: true,
+      skip: false,
     };
   }
 
@@ -49,6 +53,20 @@ class App extends React.Component {
 
   // eslint-disable-next-line class-methods-use-this
   onboardingCallback(data) {
+    if (data.index === 0 && !this.onboardingStarted) {
+      this.joyride.next();
+    }
+    if (data.index === 1) {
+      this.onboardingStarted = true;
+
+      if (data.action === 'skip') {
+        this.setState({ skip: true });
+        this.joyride.reset(true);
+      }
+    }
+    if (data.index > 1) {
+      this.setState({ intro: false });
+    }
     if (data.type === 'finished') {
       window.localStorage.setItem('onboarding', 'false');
     }
@@ -66,12 +84,11 @@ class App extends React.Component {
           steps={this.state.steps}
           run={this.state.run}
           locale={{
-            skip: (<span>Click here to skip</span>),
-            close: (<span>Close</span>),
             last: (<span>Complete</span>),
-            next: (<span>Next</span>),
+            skip: this.state.skip ? <span>Use Lisk App</span> : <span>Click here to skip</span>,
+            next: this.state.intro ? <span>See how it works</span> : <span>Next <FontIcon value='arrow-right'/></span>,
           }}
-          callback={this.onboardingCallback}
+          callback={this.onboardingCallback.bind(this)}
           showOverlay={true}
           showSkipButton={true}
           autoStart={true}

@@ -12,14 +12,59 @@ const styles = {
       fontWeight: '400',
     },
     skip: {
+      fontFamily: 'Open Sans,sans-serif',
       color: '#74869B',
+      lineHeight: '30px',
     },
     close: {
       display: 'none',
     },
     button: {
+      fontFamily: 'Open Sans,sans-serif',
       backgroundColor: '#fff',
       color: '#ED4537',
+      padding: '0px',
+      lineHeight: '30px',
+    },
+  },
+  skip: {
+    fontSize: '15px',
+    borderRadius: '0',
+    color: '#000',
+    textAlign: 'center',
+    width: '486px',
+    arrow: {
+      display: 'none',
+    },
+    main: {
+      padding: '10px 90px 30px',
+    },
+    header: {
+      borderBottom: 'none',
+      fontFamily: 'gilroy,Open Sans,sans-serif',
+      fontSize: '28px',
+      padding: '80px 90px 20px',
+    },
+    skip: {
+      fontFamily: 'Open Sans,sans-serif',
+      fontSize: '16px',
+      backgroundImage: 'linear-gradient(-224deg, #FF6236 14%, #C80039 100%)',
+      color: '#fff',
+      height: '60px',
+      width: '85%',
+      margin: '20px 0px 40px 0px',
+      borderRadius: '3px',
+      float: 'none',
+    },
+    footer: {
+      textAlign: 'center',
+      padding: '0px 90px 0px',
+    },
+    close: {
+      display: 'none',
+    },
+    button: {
+      display: 'none',
     },
   },
   intro: {
@@ -41,6 +86,7 @@ const styles = {
       padding: '80px 90px 20px',
     },
     skip: {
+      fontFamily: 'Open Sans,sans-serif',
       color: '#74869B',
       float: 'none',
       margin: '0',
@@ -53,7 +99,8 @@ const styles = {
       display: 'none',
     },
     button: {
-      backgroundImage: 'linear-gradient(-224deg, #FF6236 14%, #C80039 100%)',
+      fontFamily: 'Open Sans,sans-serif',
+      backgroundImage: 'linear-gradient(224deg, #FF6236 14%, #C80039 100%)',
       color: '#fff',
       height: '60px',
       width: '85%',
@@ -90,7 +137,8 @@ const styles = {
       display: 'none',
     },
     button: {
-      backgroundImage: 'linear-gradient(-224deg, #FF6236 14%, #C80039 100%)',
+      fontFamily: 'Open Sans,sans-serif',
+      backgroundImage: 'linear-gradient(224deg, #FF6236 14%, #C80039 100%)',
       color: '#fff',
       height: '60px',
       width: '85%',
@@ -101,6 +149,13 @@ const styles = {
 };
 
 export default [
+  {
+    title: 'Onboarding whenever you need',
+    text: 'Go to "More" on your Sidebar to start the onboarding whenever you need.',
+    selector: '#app',
+    position: 'bottom',
+    style: styles.skip,
+  },
   {
     title: 'Lets start with a quick onboarding',
     text: 'Take a quick tour to see how the Lisk App works.',
@@ -153,7 +208,7 @@ export default [
     style: styles.step,
   },
   {
-    title: 'Awesome!\nOnboarding completed',
+    title: 'Awesome! Onboarding completed',
     text: 'Go to More on your Sidebar to start How Lisk-App works when ever you want.',
     selector: '#app',
     position: 'bottom',
