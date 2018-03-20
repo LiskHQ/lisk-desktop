@@ -30,6 +30,8 @@
     display: flex;
     justify-content: space-around;
     flex-direction: column;
+    position: relative;
+    z-index: 1;
 
     &.done {
       justify-content: flex-end;
