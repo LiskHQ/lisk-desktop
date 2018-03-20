@@ -23,6 +23,8 @@ class SecondPassphrase extends React.Component {
   }
   render() {
     const { account, peers, registerSecondPassphrase, t } = this.props;
+    const header = t('Secure the use of your Lisk ID with a second passphrase.');
+    const message = t('You will need it to use your Lisk ID, like sending and voting. You are responsible for keeping your second passphrase safe. No one can restore it, not even Lisk.');
     const onPassphraseRegister = (secondPassphrase, passphrase) => {
       registerSecondPassphrase({
         activePeer: peers.data,
@@ -38,7 +40,8 @@ class SecondPassphrase extends React.Component {
           finalCallback={onPassphraseRegister}
           backButtonLabel={t('Back')}>
           <CreateSecond title={t('Create')} t={t} icon='add' />
-          <Safekeeping title={t('Safekeeping')} t={t} icon='checkmark' />
+          <Safekeeping title={t('Safekeeping')} t={t}
+            icon='checkmark' header={header} message={message} />
           <Confirm title={t('Confirm')} t={t} confirmButton='Register'
             icon='login' secondPassConfirmation={true} />
         </MultiStep>
