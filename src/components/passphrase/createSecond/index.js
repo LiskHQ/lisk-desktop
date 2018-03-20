@@ -129,7 +129,7 @@ class Create extends React.Component {
   }
 
   seedGenerator(pageX, pageY) {
-    const { t, nextStep } = this.props;
+    const { nextStep } = this.props;
     if (!this.state.data || this.state.data.percentage < 100) {
       this.setState({
         lastCaptured: {
@@ -150,8 +150,6 @@ class Create extends React.Component {
         nextStep({
           passphrase,
           step: 'info',
-          header: t('Secure the use of your Lisk ID with a second passphrase.'),
-          message: t('You will need it to use your Lisk ID, like sending and voting. You are responsible for keeping your second passphrase safe. No one can restore it, not even Lisk.'),
         });
       }, 300);
     }
