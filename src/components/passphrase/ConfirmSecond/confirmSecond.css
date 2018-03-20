@@ -98,6 +98,7 @@
 .pendingIcon {
   color: var(--color-grayscale-dark);
   animation: burst 2000ms infinite linear;
+  animation-direction: alternate;
   font-size: 120px;
   margin: 0 auto;
   transform-origin: 50%;
