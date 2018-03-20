@@ -54,6 +54,10 @@ class App extends React.Component {
     }
   }
 
+  startOnboarding() {
+    this.setState({ run: true });
+  }
+
   render() {
     return (
       <OfflineWrapper>
@@ -74,7 +78,7 @@ class App extends React.Component {
           type='continuous'
         />
         <main className={`${styles.bodyWrapper}`} ref={(el) => { this.main = el; }}>
-          <MainMenu />
+          <MainMenu startOnboarding={this.startOnboarding.bind(this)}/>
           <Route path={routes.accounts.path} component={SavedAccounts} />
           <section>
             <div className={styles.mainBox}>
