@@ -22,6 +22,9 @@ Each unit test live in the same folder as the unit that it tests. E.g. tests for
 
 Configuration is in [karma.conf.js](/LiskHQ/lisk-hub/blob/development/karma.conf.js) and [config/webpack.config.test.js](/LiskHQ/lisk-hub/blob/development/config/webpack.config.test.js).
 
+### How to run them?
+See [relevant sections of README](/LiskHQ/lisk-hub#run-unit-tests)
+
 ### What tools are used?
 - **Assertions** use `expect` syntax of [chai](http://www.chaijs.com/), e.g.:
 https://github.com/LiskHQ/lisk-hub/blob/80afda8289b75cb70bf345d14d36117fde2bdd90/src/utils/passphrase.test.js#L136
@@ -43,6 +46,9 @@ Integration tests for each page have their own `*.test.js` file in [/test/integr
 
 Configuration is common with unit tests.
 
+### How to run them?
+They are run together with unit tests.
+
 ### What tools are used?
 - All that are used for unit tests.
 - [mocha-steps](https://www.npmjs.com/package/mocha-steps) to write the tests in a more [BDD](https://en.wikipedia.org/wiki/Behavior-driven_development) way.
@@ -54,6 +60,9 @@ Configuration is common with unit tests.
 
 ### What do they test?
 Full user scenarios in the application as a whole, including the communication with Lisk Core. 
+
+### How to run them?
+See [relevant sections of README](/LiskHQ/lisk-hub#run-end-to-end-tests)
 
 ### How are they organized?
 E2E tests for each major feature have the tests specified in its own `*.feature` in [/test/e2e/](/LiskHQ/lisk-hub/blob/development/test/e2e). The test specifications in `*.feature` files use [Gherkin](https://github.com/cucumber/cucumber/wiki/Gherkin) language. The implementation of the steps is in [/test/e2e/step_definitions](/LiskHQ/lisk-hub/blob/development/test/e2e/step_definitions). If the step is used just in multiple `*.feature` files, then its definition is in [test/e2e/step_definitions/generic.step.js](test/e2e/step_definitions/generic.step.js). Definition for unique steps of `featureName.feature` is in `featurename.step.js`.
