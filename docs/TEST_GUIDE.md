@@ -24,3 +24,18 @@ https://github.com/LiskHQ/lisk-hub/blob/19a2a613fa08a34fe3088b0e40c11c7fa37a645d
 
 - To test **React compoments** we use [http://airbnb.io/enzyme/](enzyme), e.g.:
 https://github.com/LiskHQ/lisk-hub/blob/79165170a326a7f98efee098732e55be37d31223/src/components/toolbox/sliderCheckbox/index.test.js#L21
+
+
+## Integration tests
+
+### What do they test?
+Integration of all components, utils, reducers and middlewares on one page (e.g. Dashboard, Wallet, Delegates).
+
+### Where do they live?
+Integration tests for each page have their own file in [/test/integration/](/test/integration).
+
+### What tools are used?
+- All that are used for unit tests.
+- [https://www.npmjs.com/package/mocha-steps](mocha-steps) to write the tests in a more [https://en.wikipedia.org/wiki/Behavior-driven_development](BDD) way.
+- Our own **generic step definitions** https://github.com/LiskHQ/lisk-hub/blob/bfc94e4f46b4e2393bcc1a0ecd6f1bc85590b6a6/test/utils/genericStepDefinition.js
+- Our own **mount helper** that wraps `enzyme.mount` to avoid some code repetition: https://github.com/LiskHQ/lisk-hub/blob/bfc94e4f46b4e2393bcc1a0ecd6f1bc85590b6a6/test/utils/mountHelpers.js
