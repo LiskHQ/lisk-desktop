@@ -2,11 +2,11 @@ import { connect } from 'react-redux';
 import Toaster from './toaster';
 import { toastHidden } from '../../actions/toaster';
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   toasts: state.toaster || [],
 });
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   hideToast: data => dispatch(toastHidden(data)),
 });
 
