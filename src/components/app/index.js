@@ -24,28 +24,21 @@ import OfflineWrapper from '../offlineWrapper';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import AccountVisualDemo from '../accountVisual/demo';
 import routes from '../../constants/routes';
-import { intro } from './../app/onboardingStyles';
+import onboardingSteps from './../app/onboardingSteps';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this._addSteps = this._addSteps.bind(this);
     this.state = {
       steps: [],
+      run: false,
     };
   }
 
   componentDidMount() {
-    this._addSteps([
-      {
-        title: 'Lets start with a quick onboarding',
-        text: 'Take a quick tour to see how the Lisk App works.',
-        selector: '#app',
-        position: 'bottom',
-        style: intro,
-      },
-    ]);
+    this.addSteps(onboardingSteps);
+    this.setState({ run: true });
   }
 
   markAsLoaded() {
@@ -53,7 +46,7 @@ class App extends React.Component {
     this.main.classList.add('appLoaded');
   }
 
-  _addSteps(steps) {
+  addSteps(steps) {
     let newSteps = steps;
 
     if (!Array.isArray(newSteps)) {
@@ -77,7 +70,7 @@ class App extends React.Component {
         <Joyride
           ref={(c) => { this.joyride = c; }}
           steps={this.state.steps}
-          run={true}
+          run={this.state.run}
           locale={{
             skip: (<span>Click here to skip</span>),
             close: (<span>Close</span>),
@@ -94,7 +87,7 @@ class App extends React.Component {
           <Route path={routes.accounts.path} component={SavedAccounts} />
           <section>
             <div className={styles.mainBox}>
-              <Header addSteps={this._addSteps}/>
+              <Header/>
               <Switch>
                 <PrivateRoutes path={routes.main.path} render={ ({ match }) => (
                   <main className={offlineStyle.disableWhenOffline}>
