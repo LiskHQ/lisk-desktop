@@ -39,3 +39,17 @@ Integration tests for each page have their own file in [/test/integration/](/tes
 - [mocha-steps](https://www.npmjs.com/package/mocha-steps) to write the tests in a more [BDD](https://en.wikipedia.org/wiki/Behavior-driven_development) way.
 - Our own **generic step definitions** https://github.com/LiskHQ/lisk-hub/blob/bfc94e4f46b4e2393bcc1a0ecd6f1bc85590b6a6/test/utils/genericStepDefinition.js
 - Our own **mount helper** that wraps `enzyme.mount` to avoid some code repetition: https://github.com/LiskHQ/lisk-hub/blob/bfc94e4f46b4e2393bcc1a0ecd6f1bc85590b6a6/test/utils/mountHelpers.js
+
+
+## End-to-end (E2E) tests
+
+### What do they test?
+Full user scenarios in the application as a whole, including the communication with Lisk Core. 
+
+### How are they organized?
+E2E tests for each major feature have the tests specified in its own `*.feature` in [/test/e2e/](/test/e2e). The test specifications in `*.feature` files use [Gherkin](https://github.com/cucumber/cucumber/wiki/Gherkin) language. The implementation of the steps is in [/test/e2e/step_definitions](/test/e2e/step_definitions). If the step is used just in multiple `*.feature` files, then its definition is in [test/e2e/step_definitions/generic.step.js](test/e2e/step_definitions/generic.step.js). Definition for unique steps of `featureName.feature` is in `featurename.step.js`.
+
+### What tools are used?
+- [Cucumber-js](https://github.com/cucumber/cucumber-js) for Given-When-Then Scenarios and Behaviour-Driven Development.
+- [protractor](https://www.protractortest.org/) for E2E test implementation. We use `expect` syntax of [chai](http://www.chaijs.com/) assertions (`expect(...).to.equal(...)`) instead of protractor default jasmine assertions (`expect(...).toEqual(...)`)  to be consistent with unit and integration tests.
+- [protractor-cucumber-framework](https://github.com/protractor-cucumber-framework/protractor-cucumber-framework) to connect Cucumber with protractor.
