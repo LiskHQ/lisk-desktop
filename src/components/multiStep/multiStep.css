@@ -62,6 +62,10 @@
 
     &.dash small {
       font-size: 0 !important;
+
+      & small {
+        font-size: 0;
+      }
     }
 
     & .icon {

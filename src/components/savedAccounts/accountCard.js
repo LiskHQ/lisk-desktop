@@ -14,9 +14,11 @@ const AccountCard = ({ account, t, isEditing, handleRemove,
     ${isEditing ? null : styles.clickable}
     ${isSelectedForRemove(account) ? styles.darkBackground : null}`}>
     {(account.passphrase ?
-      <strong className={styles.unlocked}>
+      <strong
+        className={styles.unlocked}
+        onClick={this.handleRemovePassphrase.bind(this, account)}>
         <FontIcon value='unlocked' />
-        {t('Unlocked')}
+        {t('Lock ID')}
       </strong> :
       null)}
     {(account.network !== networks.mainnet.code ?

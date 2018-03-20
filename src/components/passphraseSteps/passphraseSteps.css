@@ -1,12 +1,10 @@
 @import '../app/variables.css';
 
 .wrapper {
-  padding: 0px 30px 20px;
   display: flex;
   flex-flow: column;
   justify-content: space-between;
   width: 100%;
-  overflow-y: hidden;
   box-sizing: border-box;
   height: 100%;
 
@@ -35,8 +33,6 @@
 
 @media (--small-viewport) {
   .wrapper {
-    padding: 0px 30px 80px;
     max-height: 100%;
-    overflow: auto;
   }
 }

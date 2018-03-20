@@ -38,29 +38,29 @@ class App extends React.Component {
             <div className={styles.mainBox}>
               <Header />
               <Switch>
-                <PrivateRoutes path='/main' render={ ({ match }) => (
+                <PrivateRoutes path={routes.main.path} render={ ({ match }) => (
                   <main className={offlineStyle.disableWhenOffline}>
                     <Switch>
-                      <Route path={`${match.url}/account-visual-demo/:dialog?`} component={AccountVisualDemo} />
-                      <Route path={`${match.url}/dashboard/:dialog?`} component={Dashboard} />
-                      <Route path={`${match.url}${routes.wallet.short}/:dialog?`} component={TransactionDashboard} />
-                      <Route path={`${match.url}/voting/:dialog?`} component={Voting} />
-                      <Route path={`${match.url}/sidechains/:dialog?`} component={Sidechains} />
+                      <Route path={`${match.url}${routes.accountVisualDemo.path}/:dialog?`} component={AccountVisualDemo} />
+                      <Route path={`${match.url}${routes.dashboard.path}/:dialog?`} component={Dashboard} />
+                      <Route path={`${match.url}${routes.wallet.path}/:dialog?`} component={TransactionDashboard} />
+                      <Route path={`${match.url}${routes.voting.path}/:dialog?`} component={Voting} />
+                      <Route path={`${match.url}${routes.sidechains.path}/:dialog?`} component={Sidechains} />
                       <Route path='*' component={NotFound} />
                     </Switch>
                   </main>
                 )} />
-                <Route path='/explorer' render={ ({ match }) => (
+                <Route path={routes.explorer.path} render={ ({ match }) => (
                   <main>
-                    <Route path={`${match.url}${routes.search.short}/:dialog?`} component={Search} />
-                    <Route path={`${match.url}${routes.searchResult.short}/:query?`} component={SearchResult} />
-                    <Route path={`${match.url}${routes.account.short}/:address?`} component={AccountTransactions} />
-                    <Route path={`${match.url}${routes.transaction.short}/:id`} component={SingleTransaction} />
+                    <Route path={`${match.url}${routes.search.path}/:dialog?`} component={Search} />
+                    <Route path={`${match.url}${routes.searchResult.path}/:query?`} component={SearchResult} />
+                    <Route path={`${match.url}${routes.account.path}/:address?`} component={AccountTransactions} />
+                    <Route path={`${match.url}${routes.transaction.path}/:id`} component={SingleTransaction} />
                   </main>
                 )} />
-                <Route path={`${routes.register.url}:dialog?`} component={Register} />
-                <Route path={`${routes.addAccount.url}:dialog?`} component={Login} />
-                <Route exact path={routes.login.url} component={Login} />
+                <Route path={`${routes.register.path}:dialog?`} component={Register} />
+                <Route path={`${routes.addAccount.path}:dialog?`} component={Login} />
+                <Route exact path={routes.login.path} component={Login} />
                 <Route path='*' component={NotFound} />
               </Switch>
             </div>

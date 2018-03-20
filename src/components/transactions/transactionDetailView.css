@@ -31,7 +31,6 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 100%;
 
   & footer {
     padding-bottom: 92px;
@@ -89,8 +88,6 @@
 
 @media (--xLarge-viewport) {
   .details {
-    padding: 0px var(--grid-padding-XL);
-
     & .label {
       font-size: var(--details-label-font-size-L);
     }
@@ -136,8 +133,6 @@
 
 @media (--large-viewport) {
   .details {
-    padding: 0px var(--grid-padding-L);
-
     & .label {
       font-size: var(--details-label-font-size-L);
     }
@@ -160,13 +155,14 @@
   .results {
     overflow-y: initial;
     padding-bottom: 100px;
+    margin: 0px calc(0 - var(--box-padding-left-M));
 
     & .header {
       font-size: 12px;
     }
 
     & .rows {
-      padding: 0px var(--grid-padding-M);
+      padding: 0px var(--box-padding-left-M);
     }
 
     & .rows:nth-of-type(even) {
@@ -179,6 +175,7 @@
   }
 }
 
+/**
 @media (--small-viewport) {
   .details {
     & .row {
@@ -192,6 +189,7 @@
     }
   }
 }
+**/
 
 @media (--xSmall-viewport) {
   .details {

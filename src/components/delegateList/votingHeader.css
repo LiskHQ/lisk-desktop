@@ -14,7 +14,6 @@
 
 .header {
   line-height: var(--header-line-height);
-  padding: 20px var(--grid-padding-L);
 
   & h2 {
     margin-bottom: 0;
@@ -107,6 +106,9 @@
   line-height: var(--list-line-height);
   list-style: none;
   padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
 
   & .filter {
     display: inline-block;
@@ -129,8 +131,6 @@
 
 @media (--medium-viewport) {
   .header {
-    padding: 0 19px !important;
-
     & .table .tableHead li {
       padding: 0 0 12px 12px;
     }
@@ -164,12 +164,10 @@
   }
 
   .filters {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-
     & .filter {
-      margin-right: 0 !important;
+      &:not(:last-of-type) {
+        margin-right: 24px;
+      }
 
       & input {
         width: 70px;
@@ -190,11 +188,11 @@
 }
 
 @media (--small-viewport) {
-  .header.offCanvas ~ .delegatesList .table .tableHead {
+  /* .header.offCanvas ~ .delegatesList .table .tableHead {
     top: var(--header-height-s);
     padding-left: var(--tabel-header-padding-s);
     padding-right: var(--tabel-header-padding-s);
-  }
+  } */
 }
 
 @media (--xSmall-viewport) {
@@ -203,6 +201,14 @@
 
     & .account {
       display: none;
+    }
+  }
+
+  .filters {
+    & .filter {
+      &:not(:last-of-type) {
+        margin-right: 20px;
+      }
     }
   }
 }

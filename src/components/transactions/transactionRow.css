@@ -33,6 +33,8 @@
   border-top: 0;
   margin-right: 0;
   margin-left: 0;
+  line-height: var(--main-row-line-height);
+  white-space: nowrap;
 
   &:hover:not(:first-child) {
     background: var(--link-color);
@@ -52,12 +54,18 @@
 
 @media (--xLarge-viewport) {
   .rows {
-    padding: 0px var(--grid-padding-XL);
+    padding: 0px var(--box-padding-left-XL);
   }
 }
 
 @media (--large-viewport) {
   .rows {
-    padding: 0px var(--grid-padding-L);
+    padding: 0px var(--box-padding-left-L);
+  }
+}
+
+@media (--medium-viewport) {
+  .rows {
+    padding: 0px var(--box-padding-left-M);
   }
 }

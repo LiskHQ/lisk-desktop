@@ -5,13 +5,14 @@ import { FontIcon } from '../fontIcon';
 // eslint-disable-next-line import/no-unresolved
 import * as shapes from '../../assets/images/*.svg';
 import styles from './signUp.css';
+import routes from '../../constants/routes';
 
 const SignUp = ({ t, passInputState }) =>
   (<section className={`${styles.signUp} ${styles[passInputState]}`}>
     <section className={styles.table}>
       <div className='text-left'>
         <h2>
-          <Link className='new-account-button' to='/register'>
+          <Link className='new-account-button' to={routes.register.path}>
             {t('Create Lisk ID')}
           </Link>
           <FontIcon className={styles.singUpArrow} value='arrow-right' />

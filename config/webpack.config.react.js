@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const { resolve } = require('path');
-const { ContextReplacementPlugin, DefinePlugin } = require('webpack');
+const { ContextReplacementPlugin } = require('webpack');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -97,9 +97,6 @@ module.exports = {
     historyApiFallback: true,
   },
   plugins: [
-    new DefinePlugin({
-      DEFAULT_NEWTORK: JSON.stringify(process.env.TESTNET ? 'testnet' : 'mainnet'),
-    }),
     new StyleLintPlugin({
       context: `${resolve(__dirname, '../src')}/`,
       files: '**/*.css',

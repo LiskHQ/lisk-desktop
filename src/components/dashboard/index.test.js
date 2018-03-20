@@ -30,10 +30,10 @@ describe('Dashboard', () => {
           options: {},
         },
         loading: [],
-        account: { address: 'some address' },
+        account: { address: 'some address', serverPublicKey: 'public_key' },
       },
     };
-    wrapper = mountWithContext(<Dashboard/>, context);
+    wrapper = mountWithContext(<Dashboard history={ { location: {} } }/>, context);
   });
 
   it('should render transaction list with at most 3 transactions', () => {

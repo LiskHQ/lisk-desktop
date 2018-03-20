@@ -6,10 +6,13 @@
   --grid-padding-L: var(--box-padding-left-L);
   --grid-padding-M: var(--box-padding-left-M);
   --header-line-height: 36px;
+  --grid-header-color: var(--color-black);
+  --grid-header-line-height: 60px;
 }
 
 .results {
-  overflow-y: initial;
+  overflow-y: auto;
+  margin: 0px calc(0 - var(--box-padding-left-XL));
 
   & .header {
     color: var(--grid-header-color);

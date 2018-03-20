@@ -16,8 +16,6 @@
 }
 
 .transactions {
-  height: var(--main-box-height);
-
   & .activity {
     display: flex;
     flex-direction: column;
@@ -70,6 +68,7 @@
   color: var(--filter-list-color);
   line-height: var(--list-line-height);
   list-style: none;
+  padding-left: 0px;
 
   & .item {
     display: inline-block;
@@ -90,8 +89,6 @@
   .transactions {
     & .activity {
       & header {
-        padding: 20px var(--grid-padding-XL);
-
         & h2 {
           & .balanceUnit {
             font-size: var(--header-balance-unit-font-size-XL);
@@ -114,8 +111,6 @@
   .transactions {
     & .activity {
       & header {
-        padding: 20px var(--grid-padding-L);
-
         & h2 {
           & .balanceUnit {
             font-size: var(--header-balance-unit-font-size-L);
@@ -158,8 +153,6 @@
   .transactions {
     & .activity {
       & header {
-        padding: 20px var(--grid-padding-M);
-
         & .account {
           display: none;
         }
@@ -168,8 +161,6 @@
   }
 
   .list {
-    padding: 0px 0px 0px var(--grid-padding-M);
-
     & .item {
       &:not(:last-of-type) {
         margin-right: 24px;

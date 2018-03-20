@@ -83,16 +83,18 @@
 
 @media (--small-viewport) {
   .wrapper {
+    padding-left: 0;
     padding-right: 0;
     height: 100%;
   }
 
   .login,
   .signUp {
-    padding: 0 20px;
+    padding: 0 var(--box-padding-left-M);
 
     & h2 {
       font-size: var(--font-size-h2-s);
+      margin-top: 12vh; /* stylelint-disable-line */
     }
 
     & h2 a {

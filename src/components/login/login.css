@@ -4,15 +4,40 @@
 
 :root {
   --header-focused-font-size: 32px;
-  --login-box-padding-L: 48px;
-  --login-box-padding-XL: 56px;
   --back-button-icon-margin-XL: -6px;
   --back-button-icon-margin-L: -6px;
   --back-button-icon-margin-XS: 0px;
+  --arrow-font-size: 60px;
+  --arrow-focused-font-size: 40px;
+  --rect-width: 200px;
+  --login-box-padding-L: var(--box-padding-left-L);
+  --login-box-padding-XL: var(--box-padding-left-XL);
+  --signup-box-padding-L: var(--box-padding-left-L);
+  --signup-box-padding-XL: var(--box-padding-left-XL);
+  --focused-signup-box-padding-XL: 31px;
+  --focused-signup-box-padding-L: 24px;
   --back-button-label-font-size-XL: 15px;
   --back-button-label-font-size-L: 12px;
   --back-button-icon-font-size-XL: 24px;
   --back-button-icon-font-size-L: 16px;
+}
+
+.table {
+  display: table;
+  width: 100%;
+  height: 100%;
+}
+
+.outTaken {
+  position: absolute;
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: var(--color-grayscale-medium);
+  padding-top: 200px;
+  clear: both;
 }
 
 .login {
@@ -91,7 +116,7 @@
 
 @media (--xLarge-viewport) {
   .login {
-    padding: 0 var(--login-box-padding-XL);
+    padding-right: var(--login-box-padding-XL);
 
     &.focused {
       width: 75%;
@@ -99,8 +124,6 @@
 
     & header {
       & .backButton {
-        margin-left: var(--back-button-icon-margin-XL);
-
         & .label {
           font-size: var(--back-button-label-font-size-XL);
         }
@@ -115,7 +138,7 @@
 
 @media (--large-viewport) {
   .login {
-    padding: 0 var(--login-box-padding-L);
+    padding-right: var(--login-box-padding-L);
 
     &.focused {
       width: 68%;
@@ -123,8 +146,6 @@
 
     & header {
       & .backButton {
-        margin-left: var(--back-button-icon-margin-L);
-
         & .label {
           font-size: var(--back-button-label-font-size-L);
         }
@@ -168,12 +189,6 @@
         display: block;
         width: 100%;
         max-width: 100%;
-      }
-
-      & header {
-        & .backButton {
-          margin-left: var(--back-button-icon-margin-XS);
-        }
       }
     }
 

@@ -5,6 +5,7 @@ import { FontIcon } from '../fontIcon';
 import AccountVisual from '../accountVisual';
 import SearchBar from '../searchBar';
 import CountDownTemplate from './countDownTemplate';
+import CopyToClipboard from '../copyToClipboard';
 import LiskAmount from '../liskAmount';
 import Account from '../account';
 import logo from '../../assets/images/logo-beta.svg';
@@ -19,15 +20,15 @@ class Header extends React.Component {
     const { pathname } = this.props.location;
     return !this.props.isAuthenticated
       && !this.props.account.loading
-      && pathname !== routes.login.url
-      && ![routes.register.url, routes.addAccount.url]
+      && pathname !== routes.login.path
+      && ![routes.register.path, routes.addAccount.path]
         .some(el => pathname.includes(el));
   }
 
   shouldShowSearchBar() {
     const { pathname } = this.props.location;
-    return ![routes.search.long, routes.register.url, routes.addAccount.url]
-      .some(el => pathname.includes(el)) && pathname !== routes.login.url;
+    return ![`${routes.explorer.path}${routes.search.path}`, routes.register.path, routes.addAccount.path]
+      .some(el => pathname.includes(el)) && pathname !== routes.login.path;
   }
 
   render() {
@@ -46,18 +47,22 @@ class Header extends React.Component {
                       <LiskAmount val={this.props.account.balance}/>
                       <small> LSK</small>
                     </div>
-                    <div className={`${styles.address} account-information-address`}>{this.props.account.address}</div>
+                    <CopyToClipboard value={this.props.account.address} className={`${styles.address} account-information-address`}/>
                     {this.props.autoLog ? <div className={styles.timer}>
-                      {((!this.props.account.expireTime || this.props.account.expireTime === 0)) ?
-                        <span><FontIcon value='locked' className={styles.lock}/> {this.props.t('Account locked!')}</span> :
+                      {((this.props.account.expireTime &&
+                          this.props.account.expireTime !== 0) &&
+                          this.props.account.passphrase) ?
                         <div>
-                          <FontIcon value='unlocked' className={styles.lock}/> {this.props.t('Address timeout in')} <i> </i>
+                          {this.props.t('Address timeout in')} <i> </i>
                           <Countdown
                             date={this.props.account.expireTime}
                             renderer={CountDownTemplate}
-                            onComplete={() => this.props.removePassphrase()}
+                            onComplete={() => {
+                              this.props.removeSavedAccountPassphrase();
+                            }
+                            }
                           />
-                        </div>}
+                        </div> : <div></div>}
                     </div>
                       : <div className={styles.timer}>
                         {this.props.account.passphrase ? '' : <span>

@@ -7,12 +7,14 @@ import { FontIcon } from '../fontIcon';
 import AddAccountCard from './addAccountCard';
 import styles from './savedAccounts.css';
 import AccountCard from './accountCard';
+import routes from '../../constants/routes';
 
 class SavedAccounts extends React.Component {
   constructor() {
     super();
 
     this.state = {
+      isSecureAppears: {},
     };
   }
 
@@ -43,6 +45,24 @@ class SavedAccounts extends React.Component {
     e.stopPropagation();
   }
 
+  handleRemovePassphrase(account, e) {
+    e.stopPropagation();
+
+    const uniqueID = `${account.network}${account.publicKey}`;
+    const { savedAccounts } = this.props;
+    const savedActiveAccount = savedAccounts.find(acc => `${acc.network}${acc.passphrase}` === `${account.network}${account.passphrase}`);
+    if (savedActiveAccount) {
+      this.props.removePassphrase(account);
+    }
+
+    this.props.removeSavedAccountPassphrase(account);
+
+    this.setState({ isSecureAppears: { ...this.state.isSecureAppears, [uniqueID]: true } });
+    setTimeout(() => {
+      this.setState({ isSecureAppears: { ...this.state.isSecureAppears, [uniqueID]: false } });
+    }, 5000);
+  }
+
   render() {
     const {
       closeDialog,
@@ -55,14 +75,14 @@ class SavedAccounts extends React.Component {
     const switchAccount = (account) => {
       if (!this.state.editing) {
         accountSwitched(account);
-        history.push('/main/dashboard/');
+        history.push(`${routes.main.path}${routes.dashboard.path}`);
       }
     };
 
     return (
       <div className={`${styles.wrapper} save-account`}>
         <BackgroundMaker className={styles.background} />
-        <h1>{t('Your favorite Lisk IDs')}</h1>
+        <h1>{t('Your Lisk IDs')}</h1>
         <ul className={styles.cardsWrapper} >
           <AddAccountCard t={t} />
           {

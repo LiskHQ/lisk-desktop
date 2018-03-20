@@ -10,6 +10,7 @@ import { extractAddress } from '../../utils/api/account';
 import PassphraseInput from '../passphraseInput';
 import styles from './login.css';
 import networks from '../../constants/networks';
+import routes from '../../constants/routes';
 import getNetwork from '../../utils/getNetwork';
 import { parseSearchParams } from './../../utils/searchParams';
 import Box from '../box';
@@ -96,7 +97,7 @@ class Login extends React.Component {
 
   getReferrerRoute() {
     const search = parseSearchParams(this.props.history.location.search);
-    const dashboardRoute = '/main/dashboard';
+    const dashboardRoute = `${routes.main.path}${routes.dashboard.path}`;
     const referrerRoute = search.referrer ? search.referrer : dashboardRoute;
     return referrerRoute;
   }

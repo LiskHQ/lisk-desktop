@@ -8,9 +8,6 @@
   --h1-padding-xl: 85px;
   --h1-padding-l: 40px;
   --h1-padding-m: 25px;
-  --h1-width: 300px;
-  --h1-width-m: 400px;
-  --h1-width-s: 260px;
   --wrapper-margin: -24px;
 }
 
@@ -26,9 +23,9 @@
     text-align: center;
     padding-top: var(--h1-padding-l);
     margin: 0;
-    width: var(--h1-width);
     left: 50%;
     transform: translateX(-50%);
+    white-space: nowrap;
   }
 }
 
@@ -75,7 +72,7 @@
 .closeButton {
   box-shadow: var(--close-button-shadow);
   position: absolute !important;
-  top: 85px;
+  top: var(--h1-padding-l);
   right: 85px;
 }
 
@@ -91,6 +88,10 @@
       padding-top: var(--h1-padding-xl);
     }
   }
+
+  .closeButton {
+    top: var(--h1-padding-xl);
+  }
 }
 
 .background {
@@ -105,7 +106,6 @@
     & > h1 {
       font-size: var(--font-size-ids-h1-l);
       padding: var(--h1-padding-m);
-      width: var(--h1-width-m);
     }
   }
 
@@ -114,7 +114,7 @@
   }
 
   .closeButton {
-    top: 35px;
+    top: var(--h1-padding-m);
     right: 35px;
   }
 
@@ -127,8 +127,12 @@
   .wrapper {
     & > h1 {
       font-size: var(--font-size-ids-h1-s);
-      width: var(--h1-width-s);
     }
+  }
+
+  .closeButton {
+    top: 15px;
+    right: 15px;
   }
 
   .cardsWrapper {
@@ -153,12 +157,5 @@
     & .addAcctiveAccountButton {
       bottom: 120px;
     }
-  }
-}
-
-@media (--xSmall-viewport) {
-  .closeButton {
-    top: 15px;
-    right: 15px;
   }
 }

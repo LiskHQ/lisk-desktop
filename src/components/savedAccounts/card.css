@@ -71,6 +71,7 @@
   font-size: var(--address-font-size);
 }
 
+.unlockedSecured,
 .network,
 .unlocked {
   font-size: var(--font-size-h6);
@@ -87,6 +88,24 @@
 
 .unlocked {
   left: 0;
+  padding-top: 25px;
+
+  & span {
+    margin-bottom: 3px;
+    transition: transform ease-in-out 500ms;
+  }
+
+  &:hover {
+    & span {
+      transform: scale(1.1);
+      transform-origin: 100%;
+    }
+  }
+}
+
+.unlockedSecured {
+  left: 0;
+  padding-top: 30px;
 }
 
 .network {
