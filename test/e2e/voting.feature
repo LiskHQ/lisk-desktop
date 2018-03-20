@@ -46,3 +46,8 @@ Feature: Voting page
     And I wait 0.5 seconds
     Then I should see text "You’re votes are being processed and will be confirmed. It may take up to 10 minutes to be secured in the blockchain." in "result box message" element
 
+  Scenario: should allow to select delegates by URL
+    Given I'm logged in as "delegate candidate"
+    When I go to "/main/voting/vote?votes=genesis_12,genesis_14,genesis_16"
+    And I wait 1 seconds
+    Then I should see text "Confirm (Fee: 1 LSK)" in "confirm" element
