@@ -10,7 +10,7 @@ The goal of this guide is to provide an overview of used types of tests, describ
 ## Unit tests
 
 ### What do they test?
-One unit (e.g. component, util, reducer, middleware) in isolation.
+One unit ([component](/src/components), [util](/src/utils), [action](/src/actions), [reducer](/src/store/reducers), [middleware](/src/store/middlewares), or [subscriber](/src/store/subscribers)) in isolation.
 
 ### Where do they live?
 Each unit test live in the same folder as the unit that it tests. E.g. tests for [/src/components/login/login.js](/src/components/login/login.js) are in [/src/components/login/login.test.js](/src/components/login/login.test.js).
@@ -29,7 +29,7 @@ https://github.com/LiskHQ/lisk-hub/blob/79165170a326a7f98efee098732e55be37d31223
 ## Integration tests
 
 ### What do they test?
-Integration of all components, utils, reducers and middlewares on one page (e.g. Dashboard, Wallet, Delegates).
+Integration of all components, utils, reducers and middlewares on one page, e.g. [Login](/test/integration/login.test.js), [Wallet](/test/integration/wallet.test.js), [Delegates](/test/integration/voting.test.js).
 
 ### Where do they live?
 Integration tests for each page have their own file in [/test/integration/](/test/integration).
