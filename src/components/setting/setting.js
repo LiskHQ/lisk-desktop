@@ -1,13 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import ReactSwipe from 'react-swipe';
 import styles from './setting.css';
 import Checkbox from '../toolbox/sliderCheckbox';
 import i18n from '../../i18n';
 import accountConfig from '../../constants/account';
-import routes from '../../constants/routes';
-import { FontIcon } from '../fontIcon';
 // TODO: will be re-enabled when the functionality is updated
+// import routes from '../../constants/routes';
+// import { FontIcon } from '../fontIcon';
 // import languageSwitcherTheme from './languageSwitcher.css';
 
 class Setting extends React.Component {
@@ -83,6 +83,7 @@ class Setting extends React.Component {
             <p>{t('Lock ID’s automatically after 10 minutes.')}</p>
           </article>
         </div>
+        {/* TODO: will be re-enabled when the functionality is updated
         <div>
           {!hasSecondPassphrase ?
             <Link
@@ -100,7 +101,6 @@ class Setting extends React.Component {
             <p>{t('Register 2nd passphrase')}</p>
           </article>
         </div>
-        {/* TODO: will be re-enabled when the functionality is updated
         <div>
           <Checkbox
             theme={languageSwitcherTheme}
@@ -125,7 +125,7 @@ class Setting extends React.Component {
         */}
       </ReactSwipe>
       <ul className={ styles.carouselNav } id='carouselNav'>
-        {[...Array(3)].map((x, i) =>
+        {[...Array(2)].map((x, i) =>
           <li
             key={i}
             className={(i === this.state.activeSlide) ? styles.activeSlide : ''}
