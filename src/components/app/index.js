@@ -37,8 +37,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.addSteps(onboardingSteps);
-    this.setState({ run: true });
+    this.setState({ steps: onboardingSteps, run: true });
   }
 
   markAsLoaded() {
@@ -46,23 +45,6 @@ class App extends React.Component {
     this.main.classList.add('appLoaded');
   }
 
-  addSteps(steps) {
-    let newSteps = steps;
-
-    if (!Array.isArray(newSteps)) {
-      newSteps = [newSteps];
-    }
-
-    if (!newSteps.length) {
-      return;
-    }
-
-    // Force setState to be synchronous to keep step order.
-    this.setState((currentState) => {
-      currentState.steps = currentState.steps.concat(newSteps);
-      return currentState;
-    });
-  }
 
   render() {
     return (

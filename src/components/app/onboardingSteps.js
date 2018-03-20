@@ -58,6 +58,44 @@ const styles = {
       height: '60px',
       width: '85%',
       margin: '20px 0px 40px 0px',
+      fontSize: '16px',
+    },
+  },
+  outro: {
+    fontSize: '15px',
+    borderRadius: '0',
+    color: '#000',
+    textAlign: 'center',
+    width: '486px',
+    arrow: {
+      display: 'none',
+    },
+    main: {
+      padding: '10px 90px 30px',
+    },
+    header: {
+      borderBottom: 'none',
+      fontFamily: 'gilroy,Open Sans,sans-serif',
+      fontSize: '28px',
+      padding: '80px 90px 20px',
+    },
+    skip: {
+      display: 'none',
+    },
+    footer: {
+      textAlign: 'center',
+      padding: '0px 90px 0px',
+    },
+    close: {
+      display: 'none',
+    },
+    button: {
+      backgroundImage: 'linear-gradient(-224deg, #FF6236 14%, #C80039 100%)',
+      color: '#fff',
+      height: '60px',
+      width: '85%',
+      margin: '20px 0px 40px 0px',
+      fontSize: '16px',
     },
   },
 };
@@ -113,5 +151,12 @@ export default [
     selector: '.more-menu',
     position: 'right',
     style: styles.step,
+  },
+  {
+    title: 'Awesome!\nOnboarding completed',
+    text: 'Go to More on your Sidebar to start How Lisk-App works when ever you want.',
+    selector: '#app',
+    position: 'bottom',
+    style: styles.outro,
   },
 ];
