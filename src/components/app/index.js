@@ -37,7 +37,9 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({ steps: onboardingSteps, run: true });
+    const onboarding = window.localStorage.getItem('onboarding');
+    const run = onboarding !== 'false';
+    this.setState({ steps: onboardingSteps, run });
   }
 
   markAsLoaded() {
@@ -45,6 +47,12 @@ class App extends React.Component {
     this.main.classList.add('appLoaded');
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  onboardingCallback(data) {
+    if (data.type === 'finished') {
+      window.localStorage.setItem('onboarding', 'false');
+    }
+  }
 
   render() {
     return (
@@ -59,6 +67,7 @@ class App extends React.Component {
             last: (<span>Complete</span>),
             next: (<span>Next</span>),
           }}
+          callback={this.onboardingCallback}
           showOverlay={true}
           showSkipButton={true}
           autoStart={true}
