@@ -106,6 +106,10 @@
   margin-top: 10px;
 }
 
+.sliderInput span.circle {
+  margin-top: 0;
+}
+
 @media (--small-viewport) {
   .content {
     position: relative;
