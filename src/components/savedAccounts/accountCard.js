@@ -8,17 +8,22 @@ import getNetwork from '../../utils/getNetwork';
 import { FontIcon } from '../fontIcon';
 import styles from './card.css';
 
-const AccountCard = ({ account, t, isEditing, handleRemove,
-  isSelectedForRemove, selectForRemove, onClick }) =>
+const AccountCard = ({ account, t, isEditing, handleRemove, isSecureAppears,
+  isSelectedForRemove, selectForRemove, onClick, handleRemovePassphrase }) =>
   (<li onClick={onClick} className={`saved-account-card ${styles.card}
     ${isEditing ? null : styles.clickable}
     ${isSelectedForRemove(account) ? styles.darkBackground : null}`}>
     {(account.passphrase ?
       <strong
-        className={styles.unlocked}
-        onClick={this.handleRemovePassphrase.bind(this, account)}>
+        className={`unlocked ${styles.unlocked}`}
+        onClick={e => handleRemovePassphrase(account, e)}>
         <FontIcon value='unlocked' />
         {t('Lock ID')}
+      </strong> :
+      null)}
+    {(isSecureAppears[`${account.network}${account.publicKey}`] ?
+      <strong className={`unlockedSecured ${styles.unlockedSecured}`}>
+        {t('Your ID is now secured!')}
       </strong> :
       null)}
     {(account.network !== networks.mainnet.code ?

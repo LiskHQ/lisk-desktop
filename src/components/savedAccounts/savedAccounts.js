@@ -93,7 +93,9 @@ class SavedAccounts extends React.Component {
                 handleRemove={this.handleRemove.bind(this)}
                 isSelectedForRemove={this.isSelectedForRemove.bind(this)}
                 selectForRemove={this.selectForRemove.bind(this)}
+                handleRemovePassphrase={this.handleRemovePassphrase.bind(this)}
                 account={account}
+                isSecureAppears={this.state.isSecureAppears}
                 t={t}
                 isEditing={this.state.editing} />)
           }
