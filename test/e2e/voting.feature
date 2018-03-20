@@ -45,3 +45,4 @@ Feature: Voting page
     And I click "confirm"
     And I wait 0.5 seconds
     Then I should see text "You’re votes are being processed and will be confirmed. It may take up to 10 minutes to be secured in the blockchain." in "result box message" element
+
