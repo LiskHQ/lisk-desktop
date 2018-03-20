@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { spy } from 'sinon';
 import { expect } from 'chai';
 import { mountWithContext } from './../../../test/utils/mountHelpers';
 import VotesPreview from './index';
@@ -8,7 +9,6 @@ import VotesPreview from './index';
 describe('votesPreview', () => {
   let wrapper;
   const props = {
-    updateList: key => key,
     votes: {
       voted: {
         confirmed: true,
@@ -31,6 +31,9 @@ describe('votesPreview', () => {
         unconfirmed: false,
       },
     },
+    history: { location: { search: 'votes?trest' } },
+    nextStep: spy(),
+    updateList: spy(),
   };
 
   const generateNVotes = n => (
@@ -75,5 +78,10 @@ describe('votesPreview', () => {
     expect(wrapper.find('article.selection h4')).to.have.text('34');
     className = wrapper.find('.selection-wrapper').props().className;
     expect(className.match(/red/g)).to.have.lengthOf(1);
+  });
+
+  it('should call nextStep and updateList when history.location.search contains votes', () => {
+    expect(props.nextStep).to.have.been.calledWith({});
+    expect(props.updateList).to.have.been.calledWith(true);
   });
 });
