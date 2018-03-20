@@ -40,6 +40,7 @@ class DelegateList extends React.Component {
 
     if (this.props.showChangeSummery !== nextProps.showChangeSummery) {
       this.setState({
+        activeFilter: voteFilters.all,
         showChangeSummery: nextProps.showChangeSummery,
       });
     }
