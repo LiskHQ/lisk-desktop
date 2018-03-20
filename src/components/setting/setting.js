@@ -45,7 +45,7 @@ class Setting extends React.Component {
   render() {
     this.language = (i18n.language === 'de');
     const showSetting = this.props.showSetting ? styles.active : '';
-    const { t, settings, settingsUpdated, hasSecondPassphrase } = this.props;
+    const { t, settings, settingsUpdated } = this.props;
     return <footer className={`${styles.wrapper} ${showSetting}`}>
       <ReactSwipe
         className={styles.carousel}
