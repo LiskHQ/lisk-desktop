@@ -7,6 +7,15 @@ This is the reason why this guide was created.
 
 The goal of this guide is to provide an overview of used types of tests, describe their pros and cons, and give hints for when to use which.
 
+### Why multiple levels of test?
+Because it is much easier and faster to test small units, but when testing small units separately it doesn't ensure that they will work together.
+So we want to use a lot of smaller (unit) tests to cover all the details, because running bigger tests to check all the small details would take much longer.
+But then we also need several bigger (integration) tests to make sure that the units work well together and we won't end up like 
+[this](https://giphy.com/gifs/unit-test-integration-3o7rbPDRHIHwbmcOBy/fullscreen) or
+[this](https://giphy.com/gifs/fail-technology-i5RWkVZzVScmY/fullscreen).
+The same argument holds true for unit vs. integration tests as well as for integration vs. end-to-end (E2E) tests. 
+
+
 ## Unit tests
 
 ### What do they test?
@@ -56,7 +65,7 @@ They are run together with unit tests.
 - Our own **mount helper** that wraps `enzyme.mount` to avoid some code repetition: [/test/utils/mountHelpers.js](https://github.com/LiskHQ/lisk-hub/blob/bfc94e4f46b4e2393bcc1a0ecd6f1bc85590b6a6/test/utils/mountHelpers.js)
 
 
-## End-to-end (E2E) tests
+## E2E tests
 
 ### What do they test?
 Full user scenarios in the application as a whole, including the communication with Lisk Core. 
