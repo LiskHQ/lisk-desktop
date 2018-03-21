@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Joyride from 'react-joyride';
 import PrivateRoutes from '../privateRoute';
 import Dashboard from '../dashboard';
 import Sidechains from '../sidechains';
@@ -24,76 +23,24 @@ import OfflineWrapper from '../offlineWrapper';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import AccountVisualDemo from '../accountVisual/demo';
 import routes from '../../constants/routes';
-import { FontIcon } from '../fontIcon';
-import onboardingSteps from './../app/onboardingSteps';
+import Onboarding from '../onboarding';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.onboardingStarted = false;
-    this.state = {
-      steps: [],
-      run: false,
-      intro: true,
-      skip: false,
-    };
-  }
-
-  componentDidMount() {
-    const onboarding = window.localStorage.getItem('onboarding');
-    const run = onboarding !== 'false';
-    this.setState({ steps: onboardingSteps, run });
-  }
-
   markAsLoaded() {
     this.main.classList.add(styles.loaded);
     this.main.classList.add('appLoaded');
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  onboardingCallback(data) {
-    if (data.index === 0 && !this.onboardingStarted) {
-      this.joyride.next();
-    }
-    if (data.index === 1) {
-      this.onboardingStarted = true;
-
-      if (data.action === 'skip') {
-        this.setState({ skip: true });
-        this.joyride.reset(true);
-      }
-    }
-    if (data.index > 1) {
-      this.setState({ intro: false });
-    }
-    if (data.type === 'finished') {
-      window.localStorage.setItem('onboarding', 'false');
-    }
-  }
-
   startOnboarding() {
-    this.setState({ run: true });
+    this.onboarding.setState({ start: true });
   }
 
   render() {
     return (
       <OfflineWrapper>
-        <Joyride
-          ref={(c) => { this.joyride = c; }}
-          steps={this.state.steps}
-          run={this.state.run}
-          locale={{
-            last: (<span>Complete</span>),
-            skip: this.state.skip ? <span>Use Lisk App</span> : <span>Click here to skip</span>,
-            next: this.state.intro ? <span>See how it works</span> : <span>Next <FontIcon value='arrow-right'/></span>,
-          }}
-          callback={this.onboardingCallback.bind(this)}
-          showOverlay={true}
-          showSkipButton={true}
-          autoStart={true}
-          type='continuous'
-        />
+        <Onboarding ref={(el) => {
+          if (el) { this.onboarding = el.getWrappedInstance(); }
+        }} />
         <main className={`${styles.bodyWrapper}`} ref={(el) => { this.main = el; }}>
           <MainMenu startOnboarding={this.startOnboarding.bind(this)}/>
           <Route path={routes.accounts.path} component={SavedAccounts} />

@@ -136,7 +136,7 @@ class Setting extends React.Component {
         */}
       </ReactSwipe>
       <ul className={ styles.carouselNav } id='carouselNav'>
-        {[...Array(3)].map((x, i) =>
+        {[...Array(this.props.isAuthenticated ? 3 : 2)].map((x, i) =>
           <li
             key={i}
             className={(i === this.state.activeSlide) ? styles.activeSlide : ''}

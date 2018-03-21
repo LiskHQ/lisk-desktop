@@ -5,6 +5,9 @@ const styles = {
     color: '#000',
     textAlign: 'left',
     width: '280px',
+    hole: {
+      borderRadius: '0px',
+    },
     header: {
       borderBottom: 'none',
       fontFamily: 'gilroy,Open Sans,sans-serif',
