@@ -194,4 +194,17 @@ describe('@integration test of Voting', () => {
     step('Then I should see result box', () => helper.haveTextOf('h2.result-box-header', 'Votes submitted'));
     step('Then I restore Api mocks', restoreApiMocks);
   });
+
+  describe('Scenario: should allow to see all selected delegates in confirm step', () => {
+    step('I\'m logged in as "genesis"', () => loginProcess([delegates[0]]));
+    step('And next button should be disabled', () => helper.checkDisableInput('button.next'));
+    step('And I click filter-voted', () => helper.clickOnElement('li.filter-voted'));
+    step('And I click checkbox on list item no. 0', () => helper.voteToDelegates(0, false));
+    step('And I click filter-not-voted', () => helper.clickOnElement('li.filter-not-voted'));
+    step('And I click checkbox on list item no. 0', () => helper.voteToDelegates(0, true));
+    step('Then next button should be enabled', () => helper.checkDisableInput('button.next', 'not'));
+    step('When I go to confirmation step', () => helper.goToConfirmation());
+    step('Then I should see all votes on confirmation step', () => helper.haveLengthOf('ul.votedRow', 2));
+    step('Then I restore Api mocks', restoreApiMocks);
+  });
 });

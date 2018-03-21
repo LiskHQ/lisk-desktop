@@ -152,7 +152,6 @@ class DelegateList extends React.Component {
           setActiveFilter={this.setActiveFilter.bind(this)}
           showChangeSummery={this.state.showChangeSummery}
           voteToggled={this.props.voteToggled}
-          addTransaction={this.props.addTransaction}
           search={ value => this.search(value) }
         />
         <section className={`${styles.delegatesList} delegate-list`}>
