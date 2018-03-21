@@ -37,10 +37,11 @@
   height: 100vh; /* stylelint-disable-line */
   width: 100vw; /* stylelint-disable-line */
   max-width: 100vw; /* stylelint-disable-line */
-  -webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
   border-radius: 0;
   top: 0;
+  /* vendor specific, not supported by autoprefixer */
+  -webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 
   & > h1 {
     position: absolute;
