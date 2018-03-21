@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { translate } from 'react-i18next';
 import Joyride from 'react-joyride';
 import throttle from 'lodash.throttle';
 import { FontIcon } from '../fontIcon';
@@ -28,15 +29,15 @@ class Onboarding extends React.Component {
     const onboarding = window.localStorage.getItem('onboarding');
 
     if (this.props.showDelegates) {
-      steps.splice(7, 0, {
-        title: 'Delegate voting',
-        text: 'Search through delegates and submit votes.',
+      steps(this.props.t).splice(7, 0, {
+        title: this.props.t('Delegate voting'),
+        text: this.props.t('View forging delegates and vote for the ones you support.'),
         selector: '#voting',
         position: 'right',
         style: styles.step,
       });
     }
-    this.setState({ steps, needsOnboarding: onboarding !== 'false' });
+    this.setState({ steps: steps(this.props.t), needsOnboarding: onboarding !== 'false' });
   }
 
   componentWillUnmount() {
@@ -79,9 +80,9 @@ class Onboarding extends React.Component {
       steps={this.state.steps}
       run={this.props.isAuthenticated && isDesktop && (start || needsOnboarding)}
       locale={{
-        last: (<span>Complete</span>),
-        skip: skip ? <span>Use Lisk App</span> : <span>Click here to skip</span>,
-        next: intro ? <span>Start the tour</span> : <span>Next <FontIcon value='arrow-right'/></span>,
+        last: (<span>{this.props.t('Complete')}</span>),
+        skip: skip ? <span>{this.props.t('Use Lisk App')}</span> : <span>{this.props.t('Click here to skip')}</span>,
+        next: intro ? <span>{this.props.t('Start the tour')}</span> : <span>{this.props.t('Next')} <FontIcon value='arrow-right'/></span>,
       }}
       callback={this.onboardingCallback.bind(this)}
       showOverlay={true}
@@ -99,4 +100,5 @@ const mapStateToProps = state => ({
   showDelegates: state.settings.advancedMode,
 });
 
-export default connect(mapStateToProps, null, null, { withRef: true })(Onboarding);
+export default connect(mapStateToProps, null, null, { withRef: true })(translate(null,
+  { withRef: true })(Onboarding));

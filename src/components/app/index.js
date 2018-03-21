@@ -39,7 +39,7 @@ class App extends React.Component {
     return (
       <OfflineWrapper>
         <Onboarding ref={(el) => {
-          if (el) { this.onboarding = el.getWrappedInstance(); }
+          if (el) { this.onboarding = el.getWrappedInstance().getWrappedInstance(); }
         }} />
         <main className={`${styles.bodyWrapper}`} ref={(el) => { this.main = el; }}>
           <MainMenu startOnboarding={this.startOnboarding.bind(this)}/>
