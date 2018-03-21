@@ -78,28 +78,17 @@ class SavedAccounts extends React.Component {
 
   render() {
     const {
+      closeDialog,
       accountSwitched,
       savedAccounts,
       history,
       t,
     } = this.props;
 
-    const goToDashboard = () => {
-      history.push(`${routes.main.path}${routes.dashboard.path}`);
-    };
-
-    const goBack = () => {
-      if (history.length <= 2) {
-        goToDashboard();
-        return;
-      }
-      history.goBack();
-    };
-
     const switchAccount = (account) => {
       if (!this.state.editing) {
         accountSwitched(account);
-        goToDashboard();
+        history.push(`${routes.main.path}${routes.dashboard.path}`);
       }
     };
 
@@ -184,7 +173,7 @@ class SavedAccounts extends React.Component {
             value={this.state.editing ? 'checkmark' : 'edit'} />
           {this.state.editing ? t('Done') : t('Edit')}
         </SecondaryLightButton>
-        <ToolBoxButton icon={<FontIcon value='close' />} floating onClick={goBack} className={`x-button ${styles.closeButton}`} />
+        <ToolBoxButton icon={<FontIcon value='close' />} floating onClick={closeDialog} className={`x-button ${styles.closeButton}`} />
       </div>
     );
   }
