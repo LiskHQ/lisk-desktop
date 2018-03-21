@@ -176,6 +176,13 @@ export default [
     style: styles.step,
   },
   {
+    title: 'Lisk ID',
+    text: 'Here you can see your balance, ID and find entry to your saved Lisk IDs.',
+    selector: '.account',
+    position: 'bottom',
+    style: styles.step,
+  },
+  {
     title: 'Keep the overview',
     text: 'Once you create an address you will be able to access all relevant stats and address information here.',
     selector: '#dashboard',
