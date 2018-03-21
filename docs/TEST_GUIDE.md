@@ -15,6 +15,24 @@ But then we also need several bigger (integration) tests to make sure that the u
 [this](https://giphy.com/gifs/fail-technology-i5RWkVZzVScmY/fullscreen).
 The same argument holds true for unit vs. integration tests as well as for integration vs. end-to-end (E2E) tests. 
 
+### Which level should I use for a given feature?
+With the previous paragraph in mind, you should use the lowest possible level that covers the whole feature. 
+
+This section illustrates the problem on the "Send LSK" feature. Feature description: If user enters valid address and amount smaller than their balance, then they should be able to send the transaction to Lisk network.
+
+Test split:
+- **Unit test**: If the whole feature is inside one component. E.g. Address validation, because validity of the entered address depends only on the entered value and a regexp inside the component. 
+- **Integration test**: If the feature relies on multiple components or Redux store. E.g. Balance validation, because the validity of the balance depends on the entered value and the account balance in Redux store.
+- **E2E test**: If the feature involves multiple pages and/or API calls. E.g. Sending a LSK transaction with valid inputs.
+
+### Where is each level mocking?
+All the tests make assumptions about how things work outside of their scope. These assumptions are made by mocking the environment. Each level mocks something else:
+- **Unit test** mock called functions and methods.
+- **Integration test** mock server API, router, localStorage.
+- **E2E test**: use a local devnet node of Lisk which is a mock of Lisk Mainnet network.
+
+The problem of these assumptions is that we cannot be 100% sure that the mocks behave exactly as the things they're mocking. If the mock is not accurate, then we can have a passing test and broken feature. Therefore, every feature should have at least one test that doesn't mock.
+
 
 ## Unit tests
 
