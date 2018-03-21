@@ -47,6 +47,7 @@ class App extends React.Component {
           <section>
             <div className={styles.mainBox}>
               <Header/>
+              <div id='onboardingAnchor'></div>
               <Switch>
                 <PrivateRoutes path={routes.main.path} render={ ({ match }) => (
                   <main className={offlineStyle.disableWhenOffline}>

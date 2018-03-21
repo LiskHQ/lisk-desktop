@@ -155,14 +155,14 @@ export const steps = [
   {
     title: 'Onboarding whenever you need',
     text: 'Go to "More" on your Sidebar to start the onboarding whenever you need.',
-    selector: '#app',
+    selector: '#onboardingAnchor',
     position: 'bottom',
     style: styles.skip,
   },
   {
     title: 'Lets start with a quick onboarding',
     text: 'Take a quick tour to see how the Lisk App works.',
-    selector: '#app',
+    selector: '#onboardingAnchor',
     position: 'bottom',
     style: styles.intro,
   },
@@ -220,7 +220,7 @@ export const steps = [
   {
     title: 'Awesome! Onboarding completed',
     text: 'Go to More on your Sidebar to start How Lisk-App works when ever you want.',
-    selector: '#app',
+    selector: '#onboardingAnchor',
     position: 'bottom',
     style: styles.outro,
   },
