@@ -5,19 +5,11 @@ import AppBar from 'react-toolbox/lib/app_bar';
 import IconButton from '../toolbox/buttons/iconButton';
 import { parseSearchParams } from '../../utils/searchParams';
 import styles from './dialog.css';
-import getDialogs from './dialogs';
-import routesReg from '../../utils/routes';
 
 class DialogElement extends Component {
   constructor() {
     super();
     this.state = {};
-    this.current = {
-      pathname: '/',
-      reg: routesReg[3],
-      list: [],
-      dialog: '',
-    };
   }
 
   componentDidMount() {
@@ -31,26 +23,17 @@ class DialogElement extends Component {
   checkForDialog() {
     // if the dialog is wrong, show a toast
     if (this.current.pathname !== this.props.history.location.pathname) {
-      this.current.reg = routesReg.find(item =>
-        item.regex.test(this.props.history.location.pathname));
-      this.current.pathname = this.props.history.location.pathname;
-      const dialogName = this.props.history.location.pathname.replace(this.current.reg.path, '');
-      const dialogs = getDialogs();
-      if (dialogs[dialogName] !== undefined) {
-        this.open(this.current.reg, dialogs[dialogName]);
-      } else {
-        this.close();
-      }
+      this.open();
     }
   }
 
-  open(config, dialog) {
+  open() {
     clearTimeout(this.timeout);
     this.setState({ hidden: false });
     this.props.dialogDisplayed({
-      title: dialog.title,
-      theme: dialog.theme,
-      childComponent: dialog.component,
+      title: this.props.dialog.title,
+      theme: this.props.dialog.theme,
+      childComponent: this.props.dialog.childComponent,
       childComponentProps: parseSearchParams(this.props.history.location.search),
     });
   }
