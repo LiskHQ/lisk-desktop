@@ -31,6 +31,7 @@ describe('Dialog', () => {
 
     props = {
       dialogDisplayed: () => {},
+      dialogHidden: sinon.spy(),
       t: key => key,
     };
     wrapper = shallow(<Dialog dialog={dialogProps} history={history} {...props}/>);
@@ -44,6 +45,20 @@ describe('Dialog', () => {
     expect(wrapper.find(SavedAccounts)).to.have.length(1);
   });
 
+  it('doesn\'t render appBar if title not provided', () => {
+    const propsWithoutTitle = { ...dialogProps };
+    delete propsWithoutTitle.title;
+    wrapper = shallow(<Dialog dialog={propsWithoutTitle} history={history} {...props}/>);
+    expect(wrapper.find('AppBar')).to.have.length(0);
+  });
+
+  it('doesn\'t render body if not childComponents present', () => {
+    const propsWithoutChildComponent = { ...dialogProps };
+    delete propsWithoutChildComponent.childComponent;
+    wrapper = shallow(<Dialog dialog={propsWithoutChildComponent} history={history} {...props}/>);
+    expect(wrapper.find(SavedAccounts)).to.have.length(0);
+  });
+
   it('allows to close the dialog on regexp path ', () => {
     const basePath = `${routes.explorer.path}${routes.wallet.path}/1523498127498/`;
     history.location.pathname = `${basePath}saved-accounts`;
@@ -53,11 +68,19 @@ describe('Dialog', () => {
   });
 
   it('allows to close the dialog on non-regexp path ', () => {
+    const clock = sinon.useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout'],
+    });
     history.location.pathname = `${routes.main.path}${routes.wallet.path}saved-accounts`;
     wrapper.setProps({ history });
     wrapper.find('.x-button').simulate('click');
+    clock.tick(600);
+    expect(props.dialogHidden).to.have.been.calledWith();
     expect(history.goBack).to.have.been.calledWith();
+    clock.restore();
   });
+
+
 
   // this test used to pass only because the history.push spy was not in beforeEach
   it.skip('should fix the route if there are two dialog names', () => {
