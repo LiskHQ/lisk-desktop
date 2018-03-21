@@ -65,6 +65,7 @@
   width: calc(100vw - (24px * 2)); /* stylelint-disable-line */
   max-width: calc(100vw - (24px * 2)); /* stylelint-disable-line */
   padding: 0 232px;
+  box-sizing: border-box;
 
   & > li {
     display: inline-block;
