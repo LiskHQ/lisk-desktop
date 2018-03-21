@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Joyride from 'react-joyride';
 import { FontIcon } from '../fontIcon';
-import steps from './steps';
+import { styles, steps } from './steps';
 
 class Onboarding extends React.Component {
   constructor(props) {
@@ -21,6 +21,16 @@ class Onboarding extends React.Component {
 
   componentDidMount() {
     const onboarding = window.localStorage.getItem('onboarding');
+
+    if (this.props.showDelegates) {
+      steps.splice(7, 0, {
+        title: 'Delegates',
+        text: 'Vote for delegates and receive more information about them.',
+        selector: '#voting',
+        position: 'right',
+        style: styles.step,
+      });
+    }
     this.setState({ steps, needsOnboarding: onboarding !== 'false' });
   }
 
@@ -70,6 +80,7 @@ class Onboarding extends React.Component {
 
 const mapStateToProps = state => ({
   isAuthenticated: !!state.account.publicKey,
+  showDelegates: state.settings.advancedMode,
 });
 
 export default connect(mapStateToProps, null, null, { withRef: true })(Onboarding);

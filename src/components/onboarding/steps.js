@@ -1,4 +1,4 @@
-const styles = {
+export const styles = {
   step: {
     fontSize: '15px',
     borderRadius: '0',
@@ -151,7 +151,7 @@ const styles = {
   },
 };
 
-export default [
+export const steps = [
   {
     title: 'Onboarding whenever you need',
     text: 'Go to "More" on your Sidebar to start the onboarding whenever you need.',
