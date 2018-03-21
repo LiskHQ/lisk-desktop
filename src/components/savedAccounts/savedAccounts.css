@@ -37,7 +37,8 @@
   height: 100vh; /* stylelint-disable-line */
   width: 100vw; /* stylelint-disable-line */
   max-width: 100vw; /* stylelint-disable-line */
-  font-smoothing: antialiased; /* stylelint-disable property-no-unknown */
+  -webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
   border-radius: 0;
   top: 0;
 
