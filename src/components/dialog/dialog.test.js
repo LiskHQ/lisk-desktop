@@ -19,7 +19,7 @@ describe('Dialog', () => {
         pathname: `${routes.explorer.path}${routes.search.path}saved-accounts`,
         search: '',
       },
-      push: sinon.spy(),
+      goBack: sinon.spy(),
     };
     dialogProps = {
       title: 'Saved Accounts',
@@ -49,14 +49,14 @@ describe('Dialog', () => {
     history.location.pathname = `${basePath}saved-accounts`;
     wrapper.setProps({ history });
     wrapper.find('.x-button').simulate('click');
-    expect(history.push).to.have.been.calledWith(basePath);
+    expect(history.goBack).to.have.been.calledWith();
   });
 
   it('allows to close the dialog on non-regexp path ', () => {
     history.location.pathname = `${routes.main.path}${routes.wallet.path}saved-accounts`;
     wrapper.setProps({ history });
     wrapper.find('.x-button').simulate('click');
-    expect(history.push).to.have.been.calledWith();
+    expect(history.goBack).to.have.been.calledWith();
   });
 
   // this test used to pass only because the history.push spy was not in beforeEach
@@ -65,6 +65,6 @@ describe('Dialog', () => {
     newProps.dialog.title = 'Send1';
     // trying to update the component
     wrapper.setProps(newProps);
-    expect(history.push).to.have.been.calledWith();
+    expect(history.goBack).to.have.been.calledWith();
   });
 });

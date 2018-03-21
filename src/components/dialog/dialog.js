@@ -12,19 +12,8 @@ class DialogElement extends Component {
     this.state = {};
   }
 
-  componentDidMount() {
-    this.checkForDialog();
-  }
-
   componentDidUpdate() {
-    this.checkForDialog();
-  }
-
-  checkForDialog() {
-    // if the dialog is wrong, show a toast
-    if (this.current.pathname !== this.props.history.location.pathname) {
-      this.open();
-    }
+    this.open();
   }
 
   open() {
@@ -47,9 +36,7 @@ class DialogElement extends Component {
   }
 
   goBack() {
-    this.props.history.push((this.current.reg.path instanceof RegExp) ?
-      this.props.history.location.pathname.match(this.current.reg.path)[0] :
-      this.current.reg.path);
+    this.props.history.goBack();
   }
 
   render() {
