@@ -36,6 +36,7 @@ class DialogElement extends Component {
   }
 
   goBack() {
+    this.close();
     this.props.history.goBack();
   }
 
