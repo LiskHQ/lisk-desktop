@@ -26,18 +26,7 @@
   padding: 24px;
   height: 100%;
   box-sizing: border-box;
-
-  & > h1 {
-    position: absolute;
-    color: var(--color-white);
-    font-size: var(--font-size-ids-h1-l);
-    text-align: center;
-    padding-top: var(--h1-padding-l);
-    margin: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    white-space: nowrap;
-  }
+  overflow: auto;
 }
 
 .wrapper {
@@ -51,6 +40,18 @@
   font-smoothing: antialiased; /* stylelint-disable property-no-unknown */
   border-radius: 0;
   top: 0;
+
+  & > h1 {
+    position: absolute;
+    color: var(--color-white);
+    font-size: var(--font-size-ids-h1-l);
+    text-align: center;
+    padding-top: var(--h1-padding-l);
+    margin: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
 }
 
 .cardsWrapper {
