@@ -119,7 +119,7 @@
 }
 
 .settingsButton {
-  font-family: gilroy;
+  font-family: var(--slide-header-font);
   font-weight: var(--font-weight-bold);
   font-size: 16px;
   background: var(--color-grayscale-light);
