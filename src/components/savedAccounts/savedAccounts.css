@@ -21,13 +21,11 @@
   --wrapper-margin: -24px;
 }
 
-.wrapper {
-  background: #013165;
-  overflow-y: auto;
-  z-index: var(--accounts-index);
-  position: absolute;
-  -webkit-font-smoothing: antialiased;
-  font-smoothing: antialiased; /* stylelint-disable property-no-unknown */
+.content {
+  position: relative;
+  padding: 24px;
+  height: 100%;
+  box-sizing: border-box;
 
   & > h1 {
     position: absolute;
@@ -42,16 +40,29 @@
   }
 }
 
+.wrapper {
+  display: flex;
+  background: #013165;
+  z-index: var(--accounts-index);
+  position: absolute;
+  height: 100vh; /* stylelint-disable-line */
+  width: 100vw; /* stylelint-disable-line */
+  max-width: 100vw; /* stylelint-disable-line */
+  font-smoothing: antialiased; /* stylelint-disable property-no-unknown */
+  border-radius: 0;
+  top: 0;
+}
+
 .cardsWrapper {
   display: table-cell;
   vertical-align: middle;
   overflow: auto;
   white-space: nowrap;
   text-align: center;
-  height: 100vh; /* stylelint-disable-line */
-  width: 100vw; /* stylelint-disable-line */
-  max-width: 100vw; /* stylelint-disable-line */
-  position: relative;
+  height: calc(100vh - (24px * 2)); /* stylelint-disable-line */
+  width: calc(100vw - (24px * 2)); /* stylelint-disable-line */
+  max-width: calc(100vw - (24px * 2)); /* stylelint-disable-line */
+  padding: 0 232px;
 
   & > li {
     display: inline-block;
@@ -266,6 +277,8 @@
 
 @media (--medium-viewport) {
   .wrapper {
+    top: -100px;
+
     & > h1 {
       font-size: var(--font-size-ids-h1-l);
       padding: var(--h1-padding-m);
@@ -318,6 +331,8 @@
 
 @media (--small-viewport) {
   .wrapper {
+    top: -67px;
+
     & > h1 {
       font-size: var(--font-size-ids-h1-s);
     }

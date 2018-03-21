@@ -14,7 +14,6 @@ import Voting from '../voting';
 import SavedAccounts from '../savedAccounts';
 import SingleTransaction from './../singleTransaction';
 import styles from './app.css';
-import Dialog from '../dialog';
 import Toaster from '../toaster';
 import MainMenu from '../mainMenu';
 import LoadingBar from '../loadingBar';
@@ -35,7 +34,7 @@ class App extends React.Component {
       <OfflineWrapper>
         <main className={`${styles.bodyWrapper}`} ref={(el) => { this.main = el; }}>
           <MainMenu />
-          <Route path={`${routes.accounts.path}/:dialog?`} component={SavedAccounts} />
+          <Route path={routes.accounts.path} component={SavedAccounts} />
           <section>
             <div className={styles.mainBox}>
               <Header />
@@ -43,30 +42,29 @@ class App extends React.Component {
                 <PrivateRoutes path={routes.main.path} render={ ({ match }) => (
                   <main className={offlineStyle.disableWhenOffline}>
                     <Switch>
-                      <Route path={`${match.url}${routes.accountVisualDemo.path}/:dialog?`} component={AccountVisualDemo} />
-                      <Route path={`${match.url}${routes.dashboard.path}/:dialog?`} component={Dashboard} />
-                      <Route path={`${match.url}${routes.wallet.path}/:dialog?`} component={TransactionDashboard} />
-                      <Route path={`${match.url}${routes.voting.path}/:dialog?`} component={Voting} />
-                      <Route path={`${match.url}${routes.sidechains.path}/:dialog?`} component={Sidechains} />
+                      <Route path={`${match.url}${routes.accountVisualDemo.path}`} component={AccountVisualDemo} />
+                      <Route path={`${match.url}${routes.dashboard.path}`} component={Dashboard} />
+                      <Route path={`${match.url}${routes.wallet.path}`} component={TransactionDashboard} />
+                      <Route path={`${match.url}${routes.voting.path}`} component={Voting} />
+                      <Route path={`${match.url}${routes.sidechains.path}`} component={Sidechains} />
                       <Route path='*' component={NotFound} />
                     </Switch>
                   </main>
                 )} />
                 <Route path={routes.explorer.path} render={ ({ match }) => (
                   <main>
-                    <Route path={`${match.url}${routes.search.path}/:dialog?`} component={Search} />
+                    <Route path={`${match.url}${routes.search.path}`} component={Search} />
                     <Route path={`${match.url}${routes.searchResult.path}/:query?`} component={SearchResult} />
                     <Route path={`${match.url}${routes.account.path}/:address?`} component={AccountTransactions} />
                     <Route path={`${match.url}${routes.transaction.path}/:id`} component={SingleTransaction} />
                   </main>
                 )} />
-                <Route path={`${routes.register.path}:dialog?`} component={Register} />
-                <Route path={`${routes.addAccount.path}:dialog?`} component={Login} />
+                <Route path={routes.register.path} component={Register} />
+                <Route path={routes.addAccount.path} component={Login} />
                 <Route exact path={routes.login.path} component={Login} />
                 <Route path='*' component={NotFound} />
               </Switch>
             </div>
-            <Dialog />
             <Toaster />
             <LoadingBar markAsLoaded={this.markAsLoaded.bind(this)} />
           </section>
