@@ -18,7 +18,6 @@ import loginMiddleware from '../../src/store/middlewares/login';
 import { prepareStore, renderWithRouter } from '../utils/applicationInit';
 
 describe('@integration: Register', () => {
-  let wrapper;
   let helper;
   let localStorageStub;
   let activePeerSetSpy;
@@ -27,10 +26,6 @@ describe('@integration: Register', () => {
   let passphrase;
   let accountAPIStub;
   let delegateAPIStub;
-
-  afterEach(() => {
-    wrapper.update();
-  });
 
   const createStore = () =>
     prepareStore({
@@ -90,7 +85,7 @@ describe('@integration: Register', () => {
 
     confirmMissingWords() {
       clock.tick(501);
-      wrapper.update();
+      this.wrapper.update();
       const inputs = this.wrapper.find('form input');
 
       for (let i = 0; i < 6; i++) {
@@ -106,14 +101,14 @@ describe('@integration: Register', () => {
       }
 
       clock.tick(801);
-      wrapper.update();
+      this.wrapper.update();
     }
   }
 
   const setupStep = () => {
     const store = createStore();
     stubApis();
-    wrapper = mount(renderWithRouter(Register, store, { location: { search: '' } }), { activePeerSet: peersActions.activePeerSet });
+    const wrapper = mount(renderWithRouter(Register, store, { location: { search: '' } }), { activePeerSet: peersActions.activePeerSet });
     helper = new Helper(wrapper, store);
   };
 
