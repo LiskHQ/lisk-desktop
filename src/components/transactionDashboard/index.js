@@ -10,7 +10,7 @@ class TransactionsDashboard extends React.Component {
   render() {
     return <div className={`${grid.row} ${styles.wrapper}`}>
       <div className={`${grid['col-md-4']}`}>
-        <Send history={this.props.history} />
+        <Send {...this.props}/>
       </div>
       <div className={`${grid['col-sm-12']} ${styles.transactions} ${grid['col-md-8']}`}>
         <Transactions {...this.props} />
@@ -22,6 +22,8 @@ class TransactionsDashboard extends React.Component {
 const mapStateToProps = state => ({
   address: state.account.address,
   balance: state.account.balance,
+  account: state.account,
+  pendingTransactions: state.transactions.pending,
 });
 
 export default connect(mapStateToProps)(TransactionsDashboard);

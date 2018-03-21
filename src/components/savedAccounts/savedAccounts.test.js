@@ -2,11 +2,12 @@ import React from 'react';
 import { expect } from 'chai';
 import { MemoryRouter as Router } from 'react-router-dom';
 import { mount } from 'enzyme';
-import { spy } from 'sinon';
+import { spy, useFakeTimers } from 'sinon';
 import configureStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import networks from '../../constants/networks';
+import accounts from '../../../test/constants/accounts';
 import SavedAccounts from './savedAccounts';
 import routes from '../../constants/routes';
 
@@ -26,6 +27,7 @@ describe('SavedAccounts', () => {
     {
       publicKey: 'hab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88',
       network: networks.mainnet.code,
+      passphrase: accounts.genesis.passphrase,
     },
     {
       network: networks.customNode.code,
@@ -39,6 +41,7 @@ describe('SavedAccounts', () => {
     {
       network: networks.testnet.code,
       publicKey: activeAccount.publicKey,
+      passphrase: accounts.genesis.passphrase,
     },
   ];
 
@@ -46,6 +49,8 @@ describe('SavedAccounts', () => {
     closeDialog: () => {},
     accountRemoved: spy(),
     accountSwitched: spy(),
+    removePassphrase: spy(),
+    removeSavedAccountPassphrase: spy(),
     networkOptions: {
       code: networks.mainnet.code,
     },
@@ -62,6 +67,7 @@ describe('SavedAccounts', () => {
       account: {
         balance: 100e8,
       },
+      isSecureAppears: false,
     });
     wrapper = mountWithRouter(<SavedAccounts {...props} />, {
       context: { store, i18n },
@@ -87,10 +93,34 @@ describe('SavedAccounts', () => {
     expect(props.accountRemoved).to.have.been.calledWith(savedAccounts[1]);
   });
 
+  it('should call props.removePassphrase and props.removeSavedAccountPassphrase on "Lock ID" click when account is in saved', () => {
+    expect(wrapper.find('strong.unlocked')).to.have.lengthOf(2);
+    wrapper.find('strong.unlocked').at(1).simulate('click');
+    expect(props.removePassphrase).to.have.been.calledWith(savedAccounts[3]);
+    expect(props.removeSavedAccountPassphrase).to.have.been.calledWith(savedAccounts[3]);
+  });
+
   it('should call props.accountSwitched on the "saved account card" click', () => {
     wrapper.find('.saved-account-card').at(1).simulate('click');
     expect(props.accountSwitched).to.have.been.calledWith(savedAccounts[1]);
     expect(props.history.push).to.have.been.calledWith(`${routes.main.path}${routes.dashboard.path}`);
+  });
+
+  it('should check if "Your ID is now secured!" disapears after 5sec', () => {
+    const clock = useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
+
+    expect(wrapper.find('strong.unlockedSecured')).to.have.lengthOf(0);
+    wrapper.find('strong.unlocked').at(1).simulate('click');
+    clock.tick(2000);
+    expect(wrapper.find('strong.unlockedSecured')).to.have.lengthOf(1);
+
+    clock.tick(7000);
+    wrapper.update();
+    expect(wrapper.find('strong.unlockedSecured')).to.have.lengthOf(0);
+
+    clock.restore();
   });
 
   it('should not call props.accountSwitched on the "saved account card" click if in "edit" mode', () => {

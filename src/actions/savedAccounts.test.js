@@ -8,6 +8,7 @@ import {
   accountRemoved,
   accountsRetrieved,
   activeAccountSaved,
+  removeSavedAccountPassphrase,
 } from './savedAccounts';
 
 
@@ -74,6 +75,17 @@ describe('actions: savedAccount', () => {
       };
 
       expect(activeAccountSaved()).to.be.deep.equal(expectedAction);
+    });
+  });
+
+  describe('removeSavedAccountPassphrase', () => {
+    it('should create an action to remove passphrase', () => {
+      const expectedAction = {
+        data,
+        type: actionTypes.removeSavedAccountPassphrase,
+      };
+
+      expect(removeSavedAccountPassphrase(data)).to.be.deep.equal(expectedAction);
     });
   });
 });

@@ -18,11 +18,18 @@ class DelegateList extends React.Component {
     this.state = {
       activeFilter: voteFilters.all,
       showChangeSummery: false,
+      safariClass: '',
     };
   }
 
   componentDidMount() {
     this.loadVotedDelegates(true);
+    if (navigator.userAgent) {
+      const agent = navigator.userAgent;
+      if (agent.indexOf('Safari') > 0 && agent.indexOf('Chrome') === -1) {
+        this.setState({ safariClass: styles.safariHack });
+      }
+    }
   }
 
   componentWillUpdate(nextProps) {
@@ -135,6 +142,7 @@ class DelegateList extends React.Component {
   getList(filteredList) {
     return filteredList.map(item => (
       <VotingRow key={item.address} data={item}
+        className={this.state.safariClass}
         voteToggled={this.props.voteToggled}
         voteStatus={this.props.votes[item.username]}
       />

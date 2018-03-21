@@ -195,6 +195,11 @@ hr {
   }
 }
 
+.secondPassphrase {
+  height: auto !important;
+  width: 100%;
+}
+
 @media (--large-viewport) {
   .generation aside.description {
     padding-top: 150px;

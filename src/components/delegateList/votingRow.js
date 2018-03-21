@@ -28,8 +28,8 @@ class VotingRow extends React.Component {
   }
 
   render() {
-    const { data, voteStatus, voteToggled } = this.props;
-    return (<ul className={`delegate-row ${styles.row} ${grid.row} ${setRowClass(voteStatus)}`}>
+    const { data, voteStatus, voteToggled, className } = this.props;
+    return (<ul className={`delegate-row ${styles.row} ${grid.row} ${className} ${setRowClass(voteStatus)}`}>
       <li className={`${grid['col-md-1']} ${grid['col-xs-2']} ${styles.leftText}`}>
         <Checkbox styles={styles}
           toggle={voteToggled}

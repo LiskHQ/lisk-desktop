@@ -20,25 +20,23 @@ class TransactionRow extends React.Component {
     return (
       <div className={`${grid.row} ${styles.rows} ${styles.clickable} transactionsRow`} onClick={nextStep.bind(this, { ...props })}>
         <div className={`${styles.leftText} ${grid['col-xs-6']} ${grid['col-sm-6']} transactions-cell`}>
-          <div className={`${styles.mainRow} ${styles.address}`}>
+          <div className={`${styles.address}`}>
             <TransactionType {...props.value} address={props.address}></TransactionType>
           </div>
         </div>
-        <div className={`${styles.rightText} ${grid['col-xs-0']} ${grid['col-sm-2']} transactions-cell`}>
-          <div className={`${styles.mainRow} ${styles.hiddenXs}`}>
+        <div className={`${styles.rightText} ${grid['col-sm-2']} transactions-cell`}>
+          <div className={`${styles.hiddenXs}`}>
             {props.value.confirmations ? <DateFromTimestamp time={props.value.timestamp} />
               : <Spinner />}
           </div>
         </div>
         <div className={`${styles.rightText} ${grid['col-xs-5']} ${grid['col-sm-3']} transactions-cell`}>
-          <div className={styles.mainRow}><Amount {...props}></Amount></div>
+          <Amount {...props}></Amount>
         </div>
         <div className={`${styles.rightText} ${grid['col-xs-1']} ${grid['col-sm-1']} transactions-cell`}>
-          { props.nextStep ?
-            <div className={`${styles.mainRow} `} >
-              <FontIcon value='arrow-right'/>
-            </div> :
-            null
+          { props.nextStep
+            ? <FontIcon value='arrow-right'/>
+            : null
           }
         </div>
       </div>

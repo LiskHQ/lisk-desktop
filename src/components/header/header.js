@@ -48,16 +48,20 @@ class Header extends React.Component {
                     </div>
                     <CopyToClipboard value={this.props.account.address} className={`${styles.address} account-information-address`}/>
                     {this.props.autoLog ? <div className={styles.timer}>
-                      {((!this.props.account.expireTime || this.props.account.expireTime === 0)) ?
-                        <span>{this.props.t('Account locked!')} <FontIcon value='locked' className={styles.lock}/></span> :
+                      {((this.props.account.expireTime &&
+                          this.props.account.expireTime !== 0) &&
+                          this.props.account.passphrase) ?
                         <div>
                           {this.props.t('Address timeout in')} <i> </i>
                           <Countdown
                             date={this.props.account.expireTime}
                             renderer={CountDownTemplate}
-                            onComplete={() => this.props.removePassphrase()}
-                          />  <FontIcon value='unlocked' className={styles.lock}/>
-                        </div>}
+                            onComplete={() => {
+                              this.props.removeSavedAccountPassphrase();
+                            }
+                            }
+                          />
+                        </div> : <div></div>}
                     </div>
                       : <div className={styles.timer}>
                         {this.props.account.passphrase ? '' : <span>

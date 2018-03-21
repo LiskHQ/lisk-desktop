@@ -43,6 +43,7 @@ const actionTypes = {
   removePassphrase: 'REMOVE_PASSPHRASE',
   settingsUpdated: 'SETTINGS_UPDATED',
   settingsReset: 'SETTINGS_RESET',
+  removeSavedAccountPassphrase: 'REMOVE_SAVED_ACCOUNT_PASSPHRASE',
 };
 
 export default actionTypes;
