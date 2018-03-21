@@ -28,12 +28,12 @@ See [relevant sections of README](/LiskHQ/lisk-hub#run-unit-tests)
 ### What tools are used?
 - **Assertions** use `expect` syntax of [chai](http://www.chaijs.com/), e.g.:
 https://github.com/LiskHQ/lisk-hub/blob/80afda8289b75cb70bf345d14d36117fde2bdd90/src/utils/passphrase.test.js#L136
-
 - **Spies, stubs, ands mocks** use [sinon](http://sinonjs.org/), e.g.:
 https://github.com/LiskHQ/lisk-hub/blob/19a2a613fa08a34fe3088b0e40c11c7fa37a645d/src/store/middlewares/savedSettings.test.js#L20
-
 - To test **React compoments** we use [enzyme](http://airbnb.io/enzyme/), e.g.:
 https://github.com/LiskHQ/lisk-hub/blob/79165170a326a7f98efee098732e55be37d31223/src/components/toolbox/sliderCheckbox/index.test.js#L21
+- To **assert on React compopnents** we use [chai-enzyme](https://github.com/producthunt/chai-enzyme) because it gives more descriptive messages when the assertion fails, e.g.: https://github.com/LiskHQ/lisk-hub/commit/bc7677c6d5c205449311ac4e18fd3de6fe2b23ff
+- To **assert on spies, stubs and mocks** we use [sinon-chai](https://github.com/domenic/sinon-chai), often together with [sinon.match](http://sinonjs.org/releases/v1.17.7/matchers/), e.g.: https://github.com/LiskHQ/lisk-hub/blob/c82683df85b2bc3277c697ebacff24463a8fed2c/src/components/register/register.test.js#L64-L67
 
 
 ## Integration tests
