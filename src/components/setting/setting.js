@@ -5,6 +5,7 @@ import styles from './setting.css';
 import Checkbox from '../toolbox/sliderCheckbox';
 import i18n from '../../i18n';
 import accountConfig from '../../constants/account';
+import breakpoints from './../../constants/breakpoints';
 // TODO: will be re-enabled when the functionality is updated
 // import routes from '../../constants/routes';
 // import { FontIcon } from '../fontIcon';
@@ -40,6 +41,10 @@ class Setting extends React.Component {
       accountUpdated({ expireTime: date });
     }
     settingsUpdated({ autoLog: !settings.autoLog });
+  }
+
+  showOnboardingSetting() {
+    return this.props.isAuthenticated && window.innerWidth > breakpoints.m;
   }
 
   render() {
@@ -136,7 +141,7 @@ class Setting extends React.Component {
         */}
       </ReactSwipe>
       <ul className={ styles.carouselNav } id='carouselNav'>
-        {[...Array(this.props.isAuthenticated ? 3 : 2)].map((x, i) =>
+        {[...Array(this.showOnboardingSetting() ? 3 : 2)].map((x, i) =>
           <li
             key={i}
             className={(i === this.state.activeSlide) ? styles.activeSlide : ''}

@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Joyride from 'react-joyride';
+import throttle from 'lodash.throttle';
 import { FontIcon } from '../fontIcon';
 import { styles, steps } from './steps';
+import breakpoints from './../../constants/breakpoints';
 
 class Onboarding extends React.Component {
   constructor(props) {
@@ -11,6 +13,7 @@ class Onboarding extends React.Component {
     this.onboardingStarted = false;
     this.onboardingFinished = false;
     this.state = {
+      isDesktop: window.innerWidth > breakpoints.m,
       steps: [],
       needsOnboarding: false,
       start: false,
@@ -20,6 +23,8 @@ class Onboarding extends React.Component {
   }
 
   componentDidMount() {
+    window.addEventListener('resize', throttle(this.resizeWindow.bind(this), 1000));
+
     const onboarding = window.localStorage.getItem('onboarding');
 
     if (this.props.showDelegates) {
@@ -32,6 +37,14 @@ class Onboarding extends React.Component {
       });
     }
     this.setState({ steps, needsOnboarding: onboarding !== 'false' });
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.resizeWindow.bind(this));
+  }
+
+  resizeWindow() {
+    this.setState({ isDesktop: window.innerWidth > breakpoints.m });
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -58,14 +71,17 @@ class Onboarding extends React.Component {
     }
   }
   render() {
+    const { isDesktop, start, needsOnboarding, skip, intro } = this.state;
+    if (!isDesktop && start) this.setState({ start: false });
+
     return <Joyride
       ref={(el) => { this.joyride = el; }}
       steps={this.state.steps}
-      run={this.props.isAuthenticated && (this.state.start || this.state.needsOnboarding)}
+      run={this.props.isAuthenticated && isDesktop && (start || needsOnboarding)}
       locale={{
         last: (<span>Complete</span>),
-        skip: this.state.skip ? <span>Use Lisk App</span> : <span>Click here to skip</span>,
-        next: this.state.intro ? <span>See how it works</span> : <span>Next <FontIcon value='arrow-right'/></span>,
+        skip: skip ? <span>Use Lisk App</span> : <span>Click here to skip</span>,
+        next: intro ? <span>See how it works</span> : <span>Next <FontIcon value='arrow-right'/></span>,
       }}
       callback={this.onboardingCallback.bind(this)}
       showOverlay={true}
