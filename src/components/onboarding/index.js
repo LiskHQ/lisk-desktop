@@ -29,8 +29,8 @@ class Onboarding extends React.Component {
 
     if (this.props.showDelegates) {
       steps.splice(7, 0, {
-        title: 'Delegates',
-        text: 'Vote for delegates and receive more information about them.',
+        title: 'Delegate voting',
+        text: 'Search through delegates and submit votes.',
         selector: '#voting',
         position: 'right',
         style: styles.step,
@@ -81,7 +81,7 @@ class Onboarding extends React.Component {
       locale={{
         last: (<span>Complete</span>),
         skip: skip ? <span>Use Lisk App</span> : <span>Click here to skip</span>,
-        next: intro ? <span>See how it works</span> : <span>Next <FontIcon value='arrow-right'/></span>,
+        next: intro ? <span>Start the tour</span> : <span>Next <FontIcon value='arrow-right'/></span>,
       }}
       callback={this.onboardingCallback.bind(this)}
       showOverlay={true}
