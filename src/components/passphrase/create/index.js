@@ -275,7 +275,11 @@ class Create extends React.Component {
                 theme={styles}
                 label='Get passphrase'
                 className="get-passphrase-button"
-                onClick={() => nextStep({ passphrase: this.state.passphrase })}
+                onClick={() => nextStep({
+                  passphrase: this.state.passphrase,
+                  header: t('Your passphrase is used to access your Lisk ID.'),
+                  message: t('I am responsible for keeping my passphrase safe. No one can reset it, not even Lisk.'),
+                })}
               />
             </Fragment>
             : ''}

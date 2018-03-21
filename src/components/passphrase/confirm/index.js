@@ -5,6 +5,7 @@ import { PrimaryButton } from '../../toolbox/buttons/button';
 import { extractAddress } from '../../../utils/api/account';
 import TransitionWrapper from '../../toolbox/transitionWrapper';
 import AccountVisual from '../../accountVisual';
+import SecondPassphraseSteps from '../ConfirmSecond';
 
 class Confirm extends React.Component {
   constructor() {
@@ -195,11 +196,11 @@ class Confirm extends React.Component {
         <header className={styles.table}>
           <div className={styles.tableCell}>
             <TransitionWrapper current={this.state.step} step='verify'>
-              <h2 className={styles.verify}>{this.props.t('Choose the correct phrases to confirm.')}</h2>
+              <h2 className={styles.verify}>{this.props.t('Select the missing words to confirm')}</h2>
             </TransitionWrapper>
-            <TransitionWrapper current={this.state.step} step='done'>
+            {!this.props.secondPassConfirmation ? <TransitionWrapper current={this.state.step} step='done'>
               <h2 className={styles.done}>{this.props.t('Perfect! You’re all set.')}</h2>
-            </TransitionWrapper>
+            </TransitionWrapper> : null}
             <h5 className={`${styles.verify} ${errorTitleVisibility}`}>
               {this.props.t('Please go back and check your passphrase again.')}
             </h5>
@@ -243,21 +244,27 @@ class Confirm extends React.Component {
             </form>
           </div>
         </section>
-        <section className={`${styles.table} ${styles.done}`}>
-          <div className={styles.tableCell}>
-            <figure>
-              <AccountVisual address={this.getAddress()} size={200} />
-            </figure>
-            <h4 className={styles.address}>{this.address}</h4>
-            <PrimaryButton
-              theme={styles}
-              disabled={this.state.step !== 'done'}
-              label={this.props.t('Get to your Dashboard')}
-              className={`${styles.button} get-to-your-dashboard-button`}
-              onClick={() => this.props.finalCallback(words.join(' '))}
-            />
-          </div>
-        </section>
+        {
+          this.props.secondPassConfirmation ?
+            <SecondPassphraseSteps
+              hidden={this.state.step !== 'done'}
+              finalCallback={(passphrase) => { this.props.finalCallback(words.join(' '), passphrase); }}/> :
+            <section className={`${styles.table} ${styles.done}`}>
+              <div className={styles.tableCell}>
+                <figure>
+                  <AccountVisual address={this.getAddress()} size={200} />
+                </figure>
+                <h4 className={styles.address}>{this.address}</h4>
+                <PrimaryButton
+                  theme={styles}
+                  disabled={this.state.step !== 'done'}
+                  label={this.props.t('Get to your Dashboard')}
+                  className={`${styles.button} get-to-your-dashboard-button`}
+                  onClick={() => this.props.finalCallback(words.join(' '))}
+                />
+              </div>
+            </section>
+        }
       </section>
     );
   }

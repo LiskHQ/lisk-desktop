@@ -13,4 +13,5 @@ export default {
   voting: { path: '/voting' },
   main: { path: '/main' },
   explorer: { path: '/explorer' },
+  secondPassphrase: { path: '/second-passphrase' },
 };
