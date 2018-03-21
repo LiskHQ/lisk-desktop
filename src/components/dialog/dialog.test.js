@@ -80,8 +80,6 @@ describe('Dialog', () => {
     clock.restore();
   });
 
-
-
   // this test used to pass only because the history.push spy was not in beforeEach
   it.skip('should fix the route if there are two dialog names', () => {
     const newProps = Object.assign({}, { dialog: dialogProps, history }, props);
