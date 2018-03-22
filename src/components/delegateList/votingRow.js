@@ -11,7 +11,7 @@ const setRowClass = (voteStatus) => {
   if (pending) {
     return styles.pendingRow;
   } else if (confirmed !== unconfirmed) {
-    return confirmed ? `${styles.downVoteRow} votedRow` : `${styles.upVoteRow} votedRow`;
+    return confirmed ? `${styles.downVoteRow} selected-row` : `${styles.upVoteRow} selected-row`;
   }
   return confirmed ? styles.votedRow : '';
 };

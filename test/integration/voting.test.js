@@ -204,7 +204,7 @@ describe('@integration test of Voting', () => {
     step('And I click checkbox on list item no. 0', () => helper.voteToDelegates(0, true));
     step('Then next button should be enabled', () => helper.checkDisableInput('button.next', 'not'));
     step('When I go to confirmation step', () => helper.goToConfirmation());
-    step('Then I should see all votes on confirmation step', () => helper.haveLengthOf('ul.votedRow', 2));
+    step('Then I should see all votes on confirmation step', () => helper.haveLengthOf('ul.selected-row', 2));
     step('Then I restore Api mocks', restoreApiMocks);
   });
 });
