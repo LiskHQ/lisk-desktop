@@ -8,10 +8,10 @@ export default class GenericStepDefinition {
   }
   /**
    * simulate click on a dom query
-   * @param {String} query - dom query that we need to simulate clink on it 
+   * @param {String} selector - Valid css query selector
    */
-  clickOnElement(query) {
-    this.wrapper.find(query).first().simulate('click');
+  clickOnElement(selector) {
+    this.wrapper.find(selector).first().simulate('click');
   }
   /**
    * check that dom query entry is disable or enable
