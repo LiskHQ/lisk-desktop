@@ -21,19 +21,14 @@ class LoadingBar extends React.Component {
         this.setState({ visible: false });
       }, animationDuration - (timeDiff % animationDuration));
     }
-  }
 
-  componentDidMount() {
-    this.mountingTimeout = setTimeout(() => {
-      if (!this.markedAsLoaded && typeof this.props.markAsLoaded === 'function') {
-        this.markedAsLoaded = true;
-        this.props.markAsLoaded();
-      }
-    }, 100);
+    if (!this.markedAsLoaded && nextProps.peers.data) {
+      this.markedAsLoaded = true;
+      this.props.markAsLoaded();
+    }
   }
 
   componentWillUnmount() {
-    clearTimeout(this.mountingTimeout);
     clearTimeout(this.timeout);
   }
 
