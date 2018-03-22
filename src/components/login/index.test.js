@@ -7,8 +7,7 @@ import configureMockStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import LoginHOC from './index';
-import * as dialog from '../../actions/dialog';
-import  * as savedAccounts from '../../actions/savedAccounts';
+import * as savedAccounts from '../../actions/savedAccounts';
 
 describe('LoginHOC', () => {
   // Mocking store
