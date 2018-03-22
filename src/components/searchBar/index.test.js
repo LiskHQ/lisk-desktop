@@ -76,18 +76,13 @@ describe('SearchBar', () => {
     expect(wrapper.find('Search input').props().value).to.equal('12025');
   });
 
-  it('should change value on "change" event', () => {
-    wrapper.find('Search input').simulate('change', { target: { value: '12025' } });
-    expect(wrapper.find('Search input').props().value).to.equal('12025');
-  });
-
   it('should change value on keyup event', () => {
     wrapper.find('Search input').simulate('keyup', { which: 13, target: { value: '999' } });
     expect(wrapper.find('Search input').props().value).to.equal('999');
   });
 
   it('should render Search', () => {
-    expect(wrapper.find('.search-bar-input')).to.have.lengthOf(1);
+    expect(wrapper).to.have.descendants('.search-bar-input');
   });
 });
 

@@ -30,6 +30,6 @@ describe('RegisterHOC', () => {
   });
 
   it('should render Register', () => {
-    expect(wrapper.find('Register')).to.have.lengthOf(1);
+    expect(wrapper).to.have.descendants('Register');
   });
 });

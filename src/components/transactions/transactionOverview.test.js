@@ -13,6 +13,6 @@ describe('TransactionOverview', () => {
       peers: {},
     };
     const wrapper = shallow(<TransactionOverview {...props} />);
-    expect(wrapper.find('Waypoint')).to.have.length(1);
+    expect(wrapper).to.have.descendants('Waypoint');
   });
 });

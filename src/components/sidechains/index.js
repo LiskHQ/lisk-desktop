@@ -1,5 +1,4 @@
 import React from 'react';
-import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
 import { FontIcon } from '../fontIcon';
 import Box from '../box';
@@ -33,5 +32,5 @@ class Sidechains extends React.Component {
   }
 }
 
-export default withRouter(translate()(Sidechains));
+export default translate()(Sidechains);
 
