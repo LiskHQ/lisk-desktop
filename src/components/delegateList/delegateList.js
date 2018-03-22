@@ -23,7 +23,10 @@ class DelegateList extends React.Component {
   }
 
   componentDidMount() {
-    this.loadVotedDelegates(true);
+    if (this.props.serverPublicKey) {
+      this.loadVotedDelegates(true);
+    }
+
     if (navigator.userAgent) {
       const agent = navigator.userAgent;
       if (agent.indexOf('Safari') > 0 && agent.indexOf('Chrome') === -1) {
