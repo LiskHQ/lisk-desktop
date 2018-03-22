@@ -2,6 +2,7 @@ import BigNumber from 'bignumber.js';
 import React from 'react';
 import sha256 from 'js-sha256';
 import { Gradients, gradientSchemes } from './gradients';
+import generateUniqueId from './../../utils/generateUniqueId';
 import breakpoints from './../../constants/breakpoints';
 import styles from './accountVisual.css';
 
@@ -184,6 +185,10 @@ class AccountVisual extends React.Component {
     this.setState({ isSBreakpoint: window.innerWidth <= breakpoints.s });
   }
 
+  componentWillMount() {
+    this.uniqueSvgUrlHash = generateUniqueId();
+  }
+
   componentDidMount() {
     window.addEventListener('resize', this.resizeWindow.bind(this));
   }
@@ -196,14 +201,25 @@ class AccountVisual extends React.Component {
     const {
       address, size, sizeS, className,
     } = this.props;
+
+    const replaceUrlByHashOnScheme = gradientScheme => ({
+      ...gradientScheme,
+      url: gradientScheme.url.replace(/\)/g, `-${this.uniqueSvgUrlHash})`),
+      id: `${gradientScheme.id}-${this.uniqueSvgUrlHash}`,
+    });
     const sizeL = size || 200;
     const newSize = this.state.isSBreakpoint && sizeS ? sizeS : sizeL;
 
     const addressHashChunks = getHashChunks(address);
     const gradientScheme = gradientSchemes[
       addressHashChunks[0].substr(1, 2) % gradientSchemes.length];
-    const primaryGradients = pickTwo(addressHashChunks[1], gradientScheme.primary);
-    const secondaryGradients = pickTwo(addressHashChunks[2], gradientScheme.secondary);
+
+    const gradientsSchemesUrlsHashed = {
+      primary: gradientScheme.primary.map(replaceUrlByHashOnScheme),
+      secondary: gradientScheme.secondary.map(replaceUrlByHashOnScheme),
+    };
+    const primaryGradients = pickTwo(addressHashChunks[1], gradientsSchemesUrlsHashed.primary);
+    const secondaryGradients = pickTwo(addressHashChunks[2], gradientsSchemesUrlsHashed.secondary);
     const shapes = [
       getBackgroundCircle(newSize, primaryGradients[0]),
       getShape(addressHashChunks[1], newSize, primaryGradients[1], 1),
@@ -213,7 +229,7 @@ class AccountVisual extends React.Component {
     return (
       <div style={{ height: newSize, width: newSize }} className={`${styles.wrapper} ${className}`}>
         <svg height={newSize} width={newSize} className={styles.accountVisual}>
-          <Gradients scheme={gradientScheme}/>
+          <Gradients scheme={gradientsSchemesUrlsHashed}/>
           {shapes.map((shape, i) => (
             <shape.component {...shape.props} key={i}/>
           ))}

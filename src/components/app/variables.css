@@ -129,6 +129,9 @@ or "warn/action" ineastd of "red/green"
         Z-Indexes
   *************************/
   --normal-index: 1;
+  --headerbar-index: 20;
+  --menubar-index: 4;
+  --accounts-index: 21;
 
   /*************************
         Margins
