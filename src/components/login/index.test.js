@@ -76,11 +76,4 @@ describe('LoginHOC', () => {
     expect(actionsSpy).to.be.calledWith();
     actionsSpy.restore();
   });
-
-  it('should bind dialogDisplayed action to Login props.dialogDisplayed', () => {
-    const actionsSpy = sinon.spy(dialog, 'dialogDisplayed');
-    wrapper.find('Login').props().setActiveDialog({});
-    expect(actionsSpy).to.be.calledWith({});
-    actionsSpy.restore();
-  });
 });

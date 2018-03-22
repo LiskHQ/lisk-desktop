@@ -19,16 +19,11 @@ describe('Sidechains', () => {
     },
   };
 
-  it('should render Sidechains', () => {
+  it('should render "Coming soon" in h2', () => {
     const props = {
       t: () => {},
     };
-    const wrapper = mount(
-      <Provider store={{}}>
-        <Router>
-          <Sidechains {...props} />
-        </Router>
-      </Provider>, options);
-    expect(wrapper.find('Sidechains')).to.have.lengthOf(1);
+    const wrapper = mount(<Sidechains {...props} />, options);
+    expect(wrapper.find('h2')).to.have.text('Coming soon.');
   });
 });
