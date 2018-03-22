@@ -24,6 +24,7 @@ Feature: Explorer page
     When I click "search bar button"
     Then I should see ID "9938914350729699234" in transaction header
 
+  @advanced
   Scenario: should show search results on custom node for an account and a transactions while being logged in
     Given I'm logged in as "genesis"
     And I wait 1 seconds
