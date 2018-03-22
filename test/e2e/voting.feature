@@ -51,6 +51,7 @@ Feature: Voting page
     And I wait 0.5 seconds
     Then I should see text "You’re votes are being processed and will be confirmed. It may take up to 10 minutes to be secured in the blockchain." in "result box message" element
   
+  @pending
   Scenario: should allow to select delegates by URL
     Given I'm logged in as "delegate candidate"
     When I go to "/main/voting/vote?votes=standby_27,standby_28,standby_29,nonexisting_22&unvotes=standby_33"
