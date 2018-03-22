@@ -11,10 +11,8 @@ import SecondPassphraseHOC from './index';
 
 describe('SecondPassphraseHOC', () => {
   let wrapper;
-  const peers = {};
   const account = { secondSignature: 1 };
   const store = configureMockStore([])({
-    peers,
     account,
   });
 
@@ -34,9 +32,7 @@ describe('SecondPassphraseHOC', () => {
 
   it('should mount SecondPassphrase with appropriate properties', () => {
     const props = wrapper.find('SecondPassphrase').props();
-    expect(props.peers).to.be.equal(peers);
     expect(props.account).to.be.equal(account);
-    expect(typeof props.setActiveDialog).to.be.equal('function');
     expect(typeof props.registerSecondPassphrase).to.be.equal('function');
   });
 });
