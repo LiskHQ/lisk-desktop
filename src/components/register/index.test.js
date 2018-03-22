@@ -7,8 +7,6 @@ import { I18nextProvider } from 'react-i18next';
 import configureMockStore from 'redux-mock-store';
 import i18n from '../../i18n';
 import Register from './index';
-import sinon from 'sinon';
-import * as dialogActions from '../../actions/dialog';
 
 describe('RegisterHOC', () => {
   let wrapper;

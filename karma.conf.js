@@ -97,8 +97,9 @@ module.exports = function (config) {
             'src/components/mainMenu/mainMenu.js',
             'src/components/setting/setting.js',
             'src/components/votesPreview/index.js',
-            'src/components/register/index.js', 
+            'src/components/register/index.js',
             'src/components/register/register.js',
+            'src/components/header/header.js',
             'src/components/voteUrlProcessor/index.js',
           ],
           overrides: {

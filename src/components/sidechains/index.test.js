@@ -1,8 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import { Provider } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
 
