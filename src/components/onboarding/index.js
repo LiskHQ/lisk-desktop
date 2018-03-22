@@ -12,11 +12,11 @@ class Onboarding extends React.Component {
     super(props);
 
     this.onboardingStarted = false;
-    this.onboardingFinished = false;
+    this.isAlreadyOnboarded = window.localStorage.getItem('onboarding') === 'false';
+    this.steps = [];
+
     this.state = {
       isDesktop: window.innerWidth > breakpoints.m,
-      steps: [],
-      needsOnboarding: false,
       start: false,
       intro: true,
       skip: false,
@@ -25,11 +25,9 @@ class Onboarding extends React.Component {
 
   componentDidMount() {
     window.addEventListener('resize', throttle(this.resizeWindow.bind(this), 1000));
-
-    const onboarding = window.localStorage.getItem('onboarding');
-
+    this.steps = steps(this.props.t);
     if (this.props.showDelegates) {
-      steps(this.props.t).splice(7, 0, {
+      this.steps.splice(7, 0, {
         title: this.props.t('Delegate voting'),
         text: this.props.t('View forging delegates and vote for the ones you support.'),
         selector: '#voting',
@@ -37,7 +35,6 @@ class Onboarding extends React.Component {
         style: styles.step,
       });
     }
-    this.setState({ steps: steps(this.props.t), needsOnboarding: onboarding !== 'false' });
   }
 
   componentWillUnmount() {
@@ -48,37 +45,49 @@ class Onboarding extends React.Component {
     this.setState({ isDesktop: window.innerWidth > breakpoints.m });
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  onboardingCallback(data) {
-    if (data.index === 0 && !this.onboardingStarted) {
-      this.joyride.next();
-    }
-    if (data.index === 1) {
-      this.onboardingStarted = true;
+  reset() {
+    this.isAlreadyOnboarded = true;
+    this.onboardingStarted = false;
+    window.localStorage.setItem('onboarding', 'false');
+    this.setState({ start: false, intro: true, skip: false });
+  }
 
-      if (data.action === 'skip') {
-        this.setState({ skip: true });
-        this.joyride.reset(true);
-      }
+  onboardingCallback(data) {
+    // index 0 is the step you will see when you skip the onboarding
+    const onboardingNotStarted = data.index === 0 && !this.onboardingStarted;
+    const onboardingStarted = data.index === 1;
+    const onboardingStep = data.index > 1;
+    const skipOnboarding = data.action === 'skip';
+    const onboardingFinished = data.type === 'finished';
+
+    if (onboardingNotStarted) {
+      this.joyride.next(); // skip to welcome step
     }
-    if (data.index > 1) {
+    if (onboardingStarted) {
+      this.onboardingFinished = false;
+      this.onboardingStarted = true;
+    }
+    if (onboardingStep) {
       this.setState({ intro: false });
     }
-    if (data.type === 'finished') {
-      window.localStorage.setItem('onboarding', 'false');
-
-      if (this.onboardingFinished) this.setState({ start: false });
+    if (skipOnboarding) {
+      this.setState({ skip: true });
+      this.joyride.reset(true); // go to step 0 to show the skip step
+    }
+    if (onboardingFinished) {
+      if (this.onboardingFinished) this.reset();
       this.onboardingFinished = true;
     }
   }
+
   render() {
-    const { isDesktop, start, needsOnboarding, skip, intro } = this.state;
+    const { isDesktop, start, skip, intro } = this.state;
     if (!isDesktop && start) this.setState({ start: false });
 
     return <Joyride
       ref={(el) => { this.joyride = el; }}
-      steps={this.state.steps}
-      run={this.props.isAuthenticated && isDesktop && (start || needsOnboarding)}
+      steps={this.steps}
+      run={this.props.isAuthenticated && isDesktop && (start || !this.isAlreadyOnboarded)}
       locale={{
         last: (<span>{this.props.t('Complete')}</span>),
         skip: skip ? <span>{this.props.t('Use Lisk App')}</span> : <span>{this.props.t('Click here to skip')}</span>,
