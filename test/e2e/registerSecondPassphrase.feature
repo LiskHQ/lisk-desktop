@@ -1,32 +1,33 @@
 Feature: Register second passphrase
   # TODO: will be re-enabled when the functionality is re-enabled
-  @pending
   Scenario: should allow to set 2nd passphrase
     Given I'm logged in as "second passphrase candidate"
-    When I click "more menu"
-    And I wait 0.4 seconds
-    And I click 4 item in setting carousel
-    And I wait 0.4 seconds
-    And I click "register second passphrase"
-    And I click "next button"
-    And I 250 times move mouse randomly
-    And I wait 1 seconds
-    And I click "get passphrase button"
-    And I wait 1 seconds
+    And I wait 0.1 seconds
+    When I go to "main/second-passphrase/"
+    And I wait 0.5 seconds
+    And I 150 times move mouse randomly
+    And I wait 0.5 seconds
     And I swipe "i understand checkbox" to right
     And I wait 1 seconds
+    And I copy the second passphrase
     And I swipe "reveal checkbox" to right
-    And I wait 1 seconds
+    And I wait 0.5 seconds
     And I remember passphrase, click "yes its safe button", choose missing words
     And I wait 1 seconds
+    And I swipe "confirm checkbox" to right
+    And I wait 10 seconds
     And I click "get to your dashboard button"
-    Then I should see alert dialog with title "Success" and text "Second passphrase registration was successfully submitted. It can take several seconds before it is processed."
-
-  # TODO: will be re-enabled when the functionality is re-enabled
-  @pending
-  Scenario: should not allow to set 2nd passphrase again
-    Given I'm logged in as "second passphrase account"
-    Then There is no "register second passphrase" in main menu
+    And I fill in "1" to "amount" field
+    And I fill in "94495548317450502L" to "recipient" field
+    And I click "send next button"
+    And I wait 1 seconds
+    When I fill in second passphrase to "second passphrase" field
+    And I click "second passphrase next"
+    When I click "send button"
+    And I wait 1 seconds
+    Then I should see text "Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain." in "result box message" element
+    When I go to "main/second-passphrase/"
+    Then I should be on url "/main/dashboard"
 
   @pending
   Scenario: should ask for passphrase for saved account
@@ -48,10 +49,3 @@ Feature: Register second passphrase
     Then I should see "Insufficient funds for 5 LSK fee" error message
     And "next button" should be disabled
 
-  @integration
-  @pending
-  Scenario: should allow to exit 2nd passphrase registration dialog
-    Given I'm logged in as "genesis"
-    When I go to "main/dashboard/register-second-passphrase"
-    And I click "cancel button"
-    Then I should see no "modal dialog"
