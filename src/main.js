@@ -24,19 +24,14 @@ const rootElement = document.getElementById('app');
 
 
 let basename = '/hub';
-// const initialUrl = '/main/dashboard';
+const initialUrl = '/main/dashboard';
 if (env.production) {
   basename = document.location.href.replace('file://', '').concat(basename);
-  // basename = `${window.location.pathname}/hub`;
-  console.log('PRODUCITON: \n', document.location.href);
 }
 const historyObj = history({ basename });
-
-// console.log('HISTORY.STATE', window.history);
-// console.log('HISTORY.STATE', Object.keys(window.history));
-// console.log('HISTORY.STATE', Object.keys(history));
-
-// historyObj.push(initialUrl);
+if (env.production) {
+  historyObj.push(initialUrl);
+}
 
 const renderWithRouter = Component =>
   <Provider store={store}>

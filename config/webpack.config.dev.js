@@ -2,6 +2,7 @@
 const webpack = require('webpack');
 const { resolve } = require('path');
 const merge = require('webpack-merge');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const baseConfig = require('./webpack.config');
 const reactConfig = require('./webpack.config.react');
 /* eslint-enable import/no-extraneous-dependencies */
@@ -9,6 +10,7 @@ const reactConfig = require('./webpack.config.react');
 module.exports = merge(baseConfig, reactConfig, {
   output: {
     path: resolve(__dirname, '../app', '../dist'),
+    publicPath: '/',
     filename: 'bundle.[name].js',
   },
   devServer: {
@@ -29,6 +31,11 @@ module.exports = merge(baseConfig, reactConfig, {
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
+    }),
+    new HtmlWebpackPlugin({
+      basename: '/hub',
+      inject: false,
+      template: 'src/index.html',
     }),
   ],
 });

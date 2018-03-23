@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
     <head>
+        <base href="<%= htmlWebpackPlugin.options.basename ? htmlWebpackPlugin.options.basename : '/' %>" />
         <meta charset="utf-8">
         <meta data-lisk-hub-version="<%= htmlWebpackPlugin.options.VERSION %>">
         <meta name="viewport" content="width=device-width,user-scalable=no">
