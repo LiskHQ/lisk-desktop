@@ -1,0 +1,22 @@
+.reset {
+  margin-right: 10px;
+  padding: 0px 3px;
+  cursor: pointer;
+  color: white;
+  border-bottom: solid 2px white;
+  display: inline;
+
+  &:hover {
+    transition: all 0.3 ease-out;
+    transform: scale(1.1);
+  }
+}
+
+.timeout {
+  color: red;
+}
+
+.timerRow {
+  display: flex;
+  justify-content: flex-end;
+}

@@ -5,21 +5,17 @@ import CountDownTemplate from './countDownTemplate';
 
 describe('countDownTemplate', () => {
   let wrapper;
+  const Child = props => <div className='test'>{props.minutes}:{props.seconds}</div>;
 
   beforeEach(() => {
     const propsMock = {
       minutes: 10,
       seconds: 25,
     };
-    wrapper = mount(<CountDownTemplate {...propsMock} />);
+    wrapper = mount(<CountDownTemplate {...propsMock}><Child/></CountDownTemplate>);
   });
 
-  it('should render "10:25"', () => {
-    expect(wrapper.find('span').text()).to.be.equal('10:25');
-  });
-
-  it('should render "01:05"', () => {
-    wrapper.setProps({ minutes: 1, seconds: 5 });
-    expect(wrapper.find('span').text()).to.be.equal('01:05');
+  it('should mount Renderer', () => {
+    expect(wrapper).to.have.descendants('Renderer');
   });
 });

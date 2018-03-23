@@ -12,6 +12,8 @@ import logo from '../../assets/images/logo-beta.svg';
 import PrivateWrapper from '../privateWrapper';
 import { ActionButton } from './../toolbox/buttons/button';
 import styles from './header.css';
+import RelativeLink from '../relativeLink';
+import CustomCountDown from './customCountDown';
 import routes from './../../constants/routes';
 
 class Header extends React.Component {
@@ -51,22 +53,24 @@ class Header extends React.Component {
                       ? <div className={`${styles.timer} account-timer`}>
                         {((this.props.account.expireTime &&
                           this.props.account.expireTime !== 0) &&
-                          this.props.account.passphrase)
-                          ?
-                          <div>
-                            {this.props.t('Address timeout in')} <i> </i>
-                            <Countdown
-                              date={this.props.account.expireTime}
-                              renderer={CountDownTemplate}
-                              onComplete={() => {
-                                this.props.removeSavedAccountPassphrase();
-                              }
-                              }
+                          this.props.account.passphrase) ?
+                        <div>
+                          <Countdown
+                            date={this.props.account.expireTime}
+                            renderer={CountDownTemplate}
+                            onComplete={() => {
+                              this.props.removeSavedAccountPassphrase();
+                            }
+                            }
+                          ><CustomCountDown
+                              resetTimer={this.props.resetTimer}
+                              autoLog={this.props.autoLog}
+                              t={this.props.t}
                             />
-                          </div>
-                          : <div></div>}
-                      </div>
-                      : <div className={`${styles.timer} account-timer`}>
+                          </Countdown>
+                        </div> : <div></div>}
+                    </div>
+                      : <div className={styles.timer}>
                         {this.props.account.passphrase ? '' : <span>
                           <FontIcon value='locked' className={styles.lock}/> {this.props.t('Account locked!')}
                         </span>
