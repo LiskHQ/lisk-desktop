@@ -9,7 +9,14 @@ class LoadingBar extends React.Component {
     this.markedAsLoaded = false;
   }
 
+  markLoaded() {
+    this.props.markAsLoaded();
+    this.markedAsLoaded = true;
+  }
+
   componentWillReceiveProps(nextProps) {
+    if (!this.markedAsLoaded && nextProps.peers.data) this.markLoaded();
+
     if (nextProps.loading && nextProps.loading.length > 0 && this.props.loading.length === 0) {
       this.startTime = new Date();
       this.setState({ visible: true });
@@ -21,11 +28,10 @@ class LoadingBar extends React.Component {
         this.setState({ visible: false });
       }, animationDuration - (timeDiff % animationDuration));
     }
+  }
 
-    if (!this.markedAsLoaded && nextProps.peers.data) {
-      this.markedAsLoaded = true;
-      this.props.markAsLoaded();
-    }
+  componentDidMount() {
+    if (this.props.peers.data) this.markLoaded();
   }
 
   componentWillUnmount() {

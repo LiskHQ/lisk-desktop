@@ -87,8 +87,8 @@ class App extends React.Component {
             : null
           }
           <Toaster />
-          <LoadingBar markAsLoaded={this.markAsLoaded.bind(this)} />
         </main>
+        <LoadingBar markAsLoaded={this.markAsLoaded.bind(this)} />
       </OfflineWrapper>
     );
   }
