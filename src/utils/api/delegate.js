@@ -20,12 +20,6 @@ export const vote = (activePeer, secret, publicKey, voteList, unvoteList, second
     secondSecret,
   });
 
-export const unvoteAutocomplete = (username, votedDict) =>
-  new Promise(resolve => resolve(Object.keys(votedDict)
-    .filter(delegate => delegate.indexOf(username) !== -1 && votedDict[delegate].unconfirmed)
-    .map(element => ({ username: element, publicKey: votedDict[element].publicKey }))),
-  );
-
 export const registerDelegate = (activePeer, username, secret, secondSecret = null) => {
   const data = { username, secret };
   if (secondSecret) {
