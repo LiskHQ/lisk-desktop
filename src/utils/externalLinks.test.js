@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { spy } from 'sinon';
 import externalLinks from './externalLinks';
-import history from '../history';
+import { history } from '../history';
 import routes from '../constants/routes';
 
 describe('externalLinks', () => {

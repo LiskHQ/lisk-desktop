@@ -21,8 +21,6 @@ if (env.production) {
 
 const rootElement = document.getElementById('app');
 
-
-
 let basename = '/hub';
 const initialUrl = '/main/dashboard';
 if (env.production) {
@@ -53,3 +51,6 @@ if (module.hot) {
 
 applyDeviceClass(document.getElementsByTagName('html')[0], navigator);
 
+module.exports = {
+  history: historyObj,
+};

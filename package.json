@@ -39,6 +39,7 @@
     "url": "https://github.com/LiskHQ/lisk-hub"
   },
   "dependencies": {
+    "base-href-webpack-plugin": "1.0.2",
     "bignumber.js": "4.0.4",
     "bitcore-mnemonic": "1.2.5",
     "chart.js": "2.7.2",

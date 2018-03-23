@@ -1,4 +1,4 @@
-import history from '../history';
+import { history } from '../main';
 
 export default {
   init: () => {
