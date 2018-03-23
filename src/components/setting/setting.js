@@ -88,17 +88,20 @@ class Setting extends React.Component {
             <p>{t('Lock ID’s automatically after 10 minutes.')}</p>
           </article>
         </div>
-        <div>
-          <button className={styles.settingsButton} onClick={() => {
-            this.props.menuToggle();
-            this.props.startOnboarding();
-          }
-          }>{t('Start')}</button>
-          <article>
-            <h5>{t('Start the onboarding')}</h5>
-            <p>{t('Take a quick tour to see how the Lisk App works.')}</p>
-          </article>
-        </div>
+        {this.showOnboardingSetting()
+          ? <div>
+            <button className={styles.settingsButton} onClick={() => {
+              this.props.menuToggle();
+              this.props.startOnboarding();
+            }
+            }>{t('Start')}</button>
+            <article>
+              <h5>{t('Start the onboarding')}</h5>
+              <p>{t('Take a quick tour to see how the Lisk App works.')}</p>
+            </article>
+          </div>
+          : null
+        }
         {/* TODO: will be re-enabled when the functionality is updated
         <div>
           {!hasSecondPassphrase ?
