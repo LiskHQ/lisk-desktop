@@ -11,8 +11,12 @@ describe('Search Component', () => {
   let props;
   let visitSpy;
   let visitOnEnterSpy;
+  const storage = {};
 
   beforeEach(() => {
+    window.localStorage.getItem = key => (storage[key]);
+    window.localStorage.setItem = (key, item) => { storage[key] = item; };
+
     visitOnEnterSpy = spy(keyAction, 'visitAndSaveSearchOnEnter');
     visitSpy = spy(keyAction, 'visitAndSaveSearch');
 

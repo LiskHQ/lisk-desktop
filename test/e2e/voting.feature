@@ -51,3 +51,8 @@ Feature: Voting page
     When I go to "/main/voting/vote?votes=genesis_12,genesis_14,genesis_16"
     And I wait 1 seconds
     Then I should see text "Confirm (Fee: 1 LSK)" in "confirm" element
+<<<<<<< HEAD
+=======
+    And I should see 3 instances of "selected row"
+
+>>>>>>> :white_check_mark: Add missing test
