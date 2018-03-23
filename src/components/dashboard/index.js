@@ -23,7 +23,7 @@ class Dashboard extends React.Component {
           <header>
             <h2 className={styles.title}>
               {t('Latest activity')}
-              <Link to={`${routes.main.path}${routes.dashboard.path}`} className={styles.seeAllLink}>
+              <Link to={`${routes.main.path}${routes.transaction.path}`} className={`${styles.seeAllLink} seeAllLink`}>
                 {t('See all transactions')}
                 <FontIcon value='arrow-right'/>
               </Link>

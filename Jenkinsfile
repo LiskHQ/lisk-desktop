@@ -103,6 +103,8 @@ node('lisk-hub') {
         rsync -axl --delete --rsync-path="mkdir -p /var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/ && rsync" $WORKSPACE/app/build/ jenkins@master-01:/var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/
         npm run --silent bundlesize
         '''
+        archiveArtifacts artifacts: 'app/build/'
+        archiveArtifacts artifacts: 'app/build-testnet/'
         githubNotify context: 'Jenkins test deployment', description: 'Commit was deployed to test', status: 'SUCCESS', targetUrl: "${HUDSON_URL}test/" + "${JOB_NAME}".tokenize('/')[0] + "/${BRANCH_NAME}"
       } catch (err) {
         echo "Error: ${err}"

@@ -25,7 +25,7 @@ const TransactionsDetailView = props => (
         </header> : null
     }
     <div>
-      <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
+      <div className={`transactions-detail-view ${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
         <div className={`${grid['col-xs-12']} ${grid['col-sm-4']} ${grid['col-md-4']} ${styles.column}`}>
           <div className={styles.label}>{props.t('Sender')}</div>
           {
