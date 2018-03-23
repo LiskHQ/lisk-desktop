@@ -22,7 +22,8 @@ Feature: Send dialog
     Then I should see text "Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain." in "result box message" element
 
   Scenario: should be able to init account if needed
-    Given I'm logged in as "without initialization"
+    Given I wait 10 seconds
+    And I'm logged in as "without initialization"
     Then I should see "account initialization" element
     When I click "account init button"
     And I click "send button"
