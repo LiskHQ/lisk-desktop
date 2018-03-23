@@ -7,6 +7,7 @@ import Amount from './amount';
 import Spinner from '../spinner';
 import { DateFromTimestamp } from './../timestamp/index';
 import { FontIcon } from '../fontIcon';
+import routes from './../../constants/routes';
 
 class TransactionRow extends React.Component {
   // eslint-disable-next-line class-methods-use-this
@@ -16,10 +17,8 @@ class TransactionRow extends React.Component {
 
   render() {
     const { props } = this;
-    const nextStep = !props.nextStep ? (() => {}) : () => (props.nextStep({ value: props.value }));
-
     return (
-      <div className={`${grid.row} ${styles.rows} ${styles.clickable} transactionsRow`} onClick={nextStep}>
+      <div className={`${grid.row} ${styles.rows} ${styles.clickable} transactionsRow`} onClick={() => { this.props.onClick(this.props); }}>
         <div className={`${styles.leftText} ${grid['col-xs-6']} ${grid['col-sm-6']} transactions-cell`}>
           <div className={`${styles.address}`}>
             <TransactionType {...props.value} address={props.address}></TransactionType>

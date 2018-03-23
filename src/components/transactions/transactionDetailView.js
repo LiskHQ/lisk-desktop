@@ -17,7 +17,10 @@ const TransactionsDetailView = props => (
       props.prevStep ?
         <header>
           <h3>
-            <small className={`${styles.backButton}`} onClick={() => { props.prevStep(); }} id='transactionDetailsBackButton'>
+            <small className={`${styles.backButton}`} onClick={() => {
+              props.history.push(props.history.location.pathname);
+              props.prevStep();
+            }} id='transactionDetailsBackButton'>
               <FontIcon className={`${styles.arrow}`} value='arrow-left'/>
               <span className={`${styles.text}`}>{props.t('Back to overview')}</span>
             </small>
