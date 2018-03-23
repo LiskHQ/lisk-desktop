@@ -1,5 +1,4 @@
 Feature: Register second passphrase
-  # TODO: will be re-enabled when the functionality is re-enabled
   Scenario: should allow to set 2nd passphrase
     Given I'm logged in as "second passphrase candidate"
     And I wait 0.1 seconds
@@ -29,6 +28,7 @@ Feature: Register second passphrase
     When I go to "main/second-passphrase/"
     Then I should be on url "/main/dashboard"
 
+  # TODO: will be re-enabled when the functionality is implemented
   @pending
   Scenario: should ask for passphrase for saved account
     Given I'm logged in as "empty account"
