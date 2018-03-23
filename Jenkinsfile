@@ -140,6 +140,7 @@ node('lisk-hub') {
             # Run end-to-end tests
 
             if [ -z $CHANGE_BRANCH ]; then
+              npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL http://127.0.0.1:400$N --cucumberOpts.tags @advanced
               npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL https://testnet.lisk.io --cucumberOpts.tags @testnet --params.useTestnetPassphrase true
             else
               echo "Skipping @testnet end-to-end tests because we're not on 'development' branch"
