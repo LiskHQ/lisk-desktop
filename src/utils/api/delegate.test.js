@@ -4,7 +4,6 @@ import { listAccountDelegates,
   listDelegates,
   getDelegate,
   vote,
-  voteAutocomplete,
   unvoteAutocomplete,
   registerDelegate } from './delegate';
 import * as peers from './peers';
@@ -131,21 +130,6 @@ describe('Utils: Delegate', () => {
       }];
       const promise = vote(null, secret, publicKey, voteList, unvoteList, secondSecret);
       expect(typeof promise.then).to.be.equal('function');
-    });
-  });
-
-  describe('voteAutocomplete', () => {
-    it('should return requestToActivePeer(activePeer, `delegates/`, data)', () => {
-      const delegates = [
-        { username: 'genesis_42' },
-        { username: 'genesis_44' },
-      ];
-      const votedDict = { genesis_3: { confirmed: true, unconfirmed: false, publicKey: 'sample_key' } };
-      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates/search', { q: username })
-        .returnsPromise().resolves({ success: true, delegates });
-
-      const returnedPromise = voteAutocomplete(activePeer, username, votedDict);
-      return expect(returnedPromise).to.eventually.eql(delegates);
     });
   });
 });
