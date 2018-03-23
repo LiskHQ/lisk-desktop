@@ -74,10 +74,10 @@ class confirmSecond extends React.Component {
           </h2>
         </TransitionWrapper>
         <TransitionWrapper current={this.state.step} step='pending'>
-          <div><FontIcon className={styles.pendingIcon} value="logo-icon"></FontIcon></div>
+          <div id='pendingContainer'><FontIcon className={styles.pendingIcon} value="logo-icon"></FontIcon></div>
         </TransitionWrapper>
         <TransitionWrapper current={this.state.step} step='done'>
-          <article className={styles.resultContainer}>
+          <article className={`${styles.resultContainer} doneContainer`}>
             <FontIcon className={styles.headerIcon} value="checkmark"></FontIcon>
             <h2 className={styles.resultHeader}>
               {t('Success!')}
@@ -97,11 +97,13 @@ class confirmSecond extends React.Component {
               onChange={this.onChange.bind(this, 'passphrase')}
               columns={{ xs: 6, sm: 4, md: 2 }}
               isFocused={true}
+              className='passphraseInput'
             />
             <footer>
               <Button
                 label={this.props.t('Unlock account')}
                 theme={styles}
+                className={'unlock'}
                 onClick={this.login.bind(this, 'passphrase')}
                 disabled={!passphraseIsValid(this.state.passphrase)}
               />
