@@ -41,6 +41,7 @@ exports.config = {
     'browserstack.key': process.env.BROWSERSTACK_PASSWORD,
     'browserstack.local': process.env.BRANCH_NAME ? 'true' : undefined,
     'browserstack.localIdentifier': process.env.BRANCH_NAME,
+    'browserstack.debug': true,
   })),
   framework: 'custom',
   frameworkPath: require.resolve('protractor-cucumber-framework'),
