@@ -10,7 +10,7 @@
   "Additional fee": "Additional fee",
   "Address": "Address",
   "Address timeout in": "Address timeout in",
-  "After 10 minutes of inactivity you will be logged out to prevent an unauthorized access to your Lisk ID. This will reset as soon as you become active again. You can also reset the timer anytime by clicking on the countdown.": "After 10 minutes of inactivity you will be logged out to prevent an unauthorized access to your Lisk ID. This will reset as soon as you become active again. You can also reset the timer anytime by clicking on the countdown.",
+  "After 10 minutes of inactivity you will be logged out\n  // to prevent an unauthorized access to your Lisk ID.\n  // This will reset as soon as you become active again.\n  // You can also reset the timer anytime by clicking on the countdown.": "After 10 minutes of inactivity you will be logged out\n  // to prevent an unauthorized access to your Lisk ID.\n  // This will reset as soon as you become active again.\n  // You can also reset the timer anytime by clicking on the countdown.",
   "All": "All",
   "Amount (LSK)": "Amount (LSK)",
   "An error occurred while creating the transaction.": "An error occurred while creating the transaction.",

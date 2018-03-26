@@ -166,13 +166,16 @@ export const steps = t => ([
     position: 'bottom',
     style: styles.intro,
   },
-  {
-    title: t('Timeout'),
-    text: t('After 10 minutes of inactivity you will be logged out to prevent an unauthorized access to your Lisk ID. This will reset as soon as you become active again. You can also reset the timer anytime by clicking on the countdown.'),
-    selector: '.account-timer',
-    position: 'bottom',
-    style: styles.step,
-  },
+  // {
+  //   title: t('Timeout'),
+  //   text: t('After 10 minutes of inactivity you will be logged out
+  // to prevent an unauthorized access to your Lisk ID.
+  // This will reset as soon as you become active again.
+  // You can also reset the timer anytime by clicking on the countdown.'),
+  //   selector: '.account-timer',
+  //   position: 'bottom',
+  //   style: styles.step,
+  // },
   {
     title: t('Lisk ID'),
     text: t('Click here to view your balance, Lisk ID and saved Lisk IDs.'),
