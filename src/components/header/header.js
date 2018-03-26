@@ -86,13 +86,13 @@ class Header extends React.Component {
                   </div>
                 </div>
               </PrivateWrapper>
-              {this.shouldShowActionButton() && <Link className={styles.login}
-                to='/'>
-                <ActionButton className={styles.button}>{this.props.t('Sign in')}</ActionButton>
-                <span className={styles.link}>
-                  {this.props.t('Sign in')} <FontIcon value='arrow-right'/>
-                </span>
-              </Link>
+              { this.shouldShowActionButton() &&
+                <Link className={styles.login} to='/'>
+                  <ActionButton className={styles.button}>{this.props.t('Sign in')}</ActionButton>
+                  <span className={styles.link}>
+                    {this.props.t('Sign in')} <FontIcon value='arrow-right'/>
+                  </span>
+                </Link>
               }
             </div>
           </div>
