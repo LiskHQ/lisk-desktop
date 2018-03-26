@@ -6,7 +6,6 @@ import Toaster from './toaster';
 import ToasterHOC from './index';
 import store from '../../store';
 
-
 describe('ToasterHOC', () => {
   let wrapper;
 

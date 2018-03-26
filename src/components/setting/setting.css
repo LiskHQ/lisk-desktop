@@ -115,6 +115,7 @@
 .secondPassphraseEnabled {
   color: var(--secondPassphrase-background-color);
   background: var(--secondPassphrase-color);
+  cursor: default;
 }
 
 @media (--medium-viewport) {

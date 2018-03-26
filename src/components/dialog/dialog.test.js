@@ -19,7 +19,7 @@ describe('Dialog', () => {
         pathname: `${routes.explorer.path}${routes.search.path}saved-accounts`,
         search: '',
       },
-      push: sinon.spy(),
+      goBack: sinon.spy(),
     };
     dialogProps = {
       title: 'Saved Accounts',
@@ -31,6 +31,7 @@ describe('Dialog', () => {
 
     props = {
       dialogDisplayed: () => {},
+      dialogHidden: sinon.spy(),
       t: key => key,
     };
     wrapper = shallow(<Dialog dialog={dialogProps} history={history} {...props}/>);
@@ -44,19 +45,39 @@ describe('Dialog', () => {
     expect(wrapper.find(SavedAccounts)).to.have.length(1);
   });
 
+  it('doesn\'t render appBar if title not provided', () => {
+    const propsWithoutTitle = { ...dialogProps };
+    delete propsWithoutTitle.title;
+    wrapper = shallow(<Dialog dialog={propsWithoutTitle} history={history} {...props}/>);
+    expect(wrapper.find('AppBar')).to.have.length(0);
+  });
+
+  it('doesn\'t render body if not childComponents present', () => {
+    const propsWithoutChildComponent = { ...dialogProps };
+    delete propsWithoutChildComponent.childComponent;
+    wrapper = shallow(<Dialog dialog={propsWithoutChildComponent} history={history} {...props}/>);
+    expect(wrapper.find(SavedAccounts)).to.have.length(0);
+  });
+
   it('allows to close the dialog on regexp path ', () => {
     const basePath = `${routes.explorer.path}${routes.wallet.path}/1523498127498/`;
     history.location.pathname = `${basePath}saved-accounts`;
     wrapper.setProps({ history });
     wrapper.find('.x-button').simulate('click');
-    expect(history.push).to.have.been.calledWith(basePath);
+    expect(history.goBack).to.have.been.calledWith();
   });
 
   it('allows to close the dialog on non-regexp path ', () => {
+    const clock = sinon.useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout'],
+    });
     history.location.pathname = `${routes.main.path}${routes.wallet.path}saved-accounts`;
     wrapper.setProps({ history });
     wrapper.find('.x-button').simulate('click');
-    expect(history.push).to.have.been.calledWith();
+    clock.tick(600);
+    expect(props.dialogHidden).to.have.been.calledWith();
+    expect(history.goBack).to.have.been.calledWith();
+    clock.restore();
   });
 
   // this test used to pass only because the history.push spy was not in beforeEach
@@ -65,6 +86,6 @@ describe('Dialog', () => {
     newProps.dialog.title = 'Send1';
     // trying to update the component
     wrapper.setProps(newProps);
-    expect(history.push).to.have.been.calledWith();
+    expect(history.goBack).to.have.been.calledWith();
   });
 });

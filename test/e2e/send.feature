@@ -9,14 +9,7 @@ Feature: Send dialog
     And I wait 1 seconds
     Then I should see text "Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain." in "result box message" element
 
-  @integration
-  Scenario: should not allow to send when not enough funds
-    Given I'm logged in as "empty account"
-    And I fill in "1" to "amount" field
-    And I fill in "94495548317450502L" to "recipient" field
-    Then I should see "Not enough LSK" error message
-    And "send next button" should be disabled
-
+  @advanced
   Scenario: should allow to send with second passphrase
     Given I'm logged in as "second passphrase account"
     And I fill in "1" to "amount" field
@@ -29,7 +22,8 @@ Feature: Send dialog
     Then I should see text "Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain." in "result box message" element
 
   Scenario: should be able to init account if needed
-    Given I'm logged in as "without initialization"
+    Given I wait 10 seconds
+    And I'm logged in as "without initialization"
     Then I should see "account initialization" element
     When I click "account init button"
     And I click "send button"
