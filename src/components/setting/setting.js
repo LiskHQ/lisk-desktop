@@ -97,7 +97,7 @@ class Setting extends React.Component {
             }>{t('Start')}</button>
             <article>
               <h5>{t('Start the onboarding')}</h5>
-              <p>{t('Take a quick tour to see how the Lisk App works.')}</p>
+              <p>{t('Take a quick tour to see how the Lisk Hub works.')}</p>
             </article>
           </div>
           : null

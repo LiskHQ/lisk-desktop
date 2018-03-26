@@ -90,7 +90,7 @@ class Onboarding extends React.Component {
       run={this.props.isAuthenticated && isDesktop && (start || !this.isAlreadyOnboarded)}
       locale={{
         last: (<span>{this.props.t('Complete')}</span>),
-        skip: skip ? <span>{this.props.t('Use Lisk App')}</span> : <span>{this.props.t('Click here to skip')}</span>,
+        skip: skip ? <span>{this.props.t('Use Lisk Hub')}</span> : <span>{this.props.t('Click here to skip')}</span>,
         next: intro ? <span>{this.props.t('Start the tour')}</span> : <span>{this.props.t('Next')} <FontIcon value='arrow-right'/></span>,
       }}
       callback={this.onboardingCallback.bind(this)}

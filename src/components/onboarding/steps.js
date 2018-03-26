@@ -168,24 +168,24 @@ export const steps = t => ([
   },
   // {
   //   title: t('Timeout'),
-  //   text: t('After 10 minutes of inactivity you will be logged out
-  // to prevent an unauthorized access to your Lisk ID.
-  // This will reset as soon as you become active again.
-  // You can also reset the timer anytime by clicking on the countdown.'),
+  //   text: t('After 10 minutes of not using your passphrase,
+  // your Lisk ID will be locked to prevent an unauthorized use of your Lisk ID. .
+  // The timer will reset as soon as you make an transaction.
+  // After 5 minutes, you can also reset the timer by clicking on "reset".'),
   //   selector: '.account-timer',
   //   position: 'bottom',
   //   style: styles.step,
   // },
   {
     title: t('Lisk ID'),
-    text: t('Click here to view your balance, Lisk ID and saved Lisk IDs.'),
+    text: t('Here you see your address and balance. You can click your account avatar to see all your saved IDs.'),
     selector: '.account',
     position: 'bottom',
     style: styles.step,
   },
   {
     title: t('Keep the overview'),
-    text: t('Click here to go back to the main page of Lisk Hub and find all relevant statistics and ID information'),
+    text: t('Click here to go to the main page of Lisk Hub and find all relevant statistics and ID information'),
     selector: '#dashboard',
     position: 'right',
     style: styles.step,
