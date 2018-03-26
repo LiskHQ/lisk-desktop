@@ -4,7 +4,6 @@ import { mount } from 'enzyme';
 import sinon from 'sinon';
 import configureMockStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
-import { MemoryRouter } from 'react-router-dom';
 import Setting from './setting';
 import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
@@ -47,21 +46,15 @@ describe('Setting', () => {
   const t = key => key;
   let wrapper;
 
-  let settingsUpdatedSpy;
-  let accountUpdatedSpy;
-
-  const props = {
-    settingsUpdated: () => {},
-    accountUpdated: () => {},
-  };
+  const settingsUpdated = sinon.spy();
+  const accountUpdated = sinon.spy();
 
   beforeEach(() => {
-    settingsUpdatedSpy = sinon.spy(props, 'settingsUpdated');
-    accountUpdatedSpy = sinon.spy(props, 'accountUpdated');
-    wrapper = mount(<MemoryRouter>
+    wrapper = mount(
       <Setting store={store}
-        settingsUpdated={props.settingsUpdated}
-        settings={settings} t={t}/></MemoryRouter>, options);
+        settingsUpdated={settingsUpdated}
+        accountUpdated={accountUpdated}
+        settings={settings} t={t}/>, options);
 
     clock = sinon.useFakeTimers({
       toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
@@ -69,8 +62,6 @@ describe('Setting', () => {
   });
 
   afterEach(() => {
-    settingsUpdatedSpy.restore();
-    accountUpdatedSpy.restore();
     clock.restore();
     i18n.changeLanguage('en');
   });
@@ -94,7 +85,7 @@ describe('Setting', () => {
     const expectedCallToSettingsUpdated = {
       advancedMode: !settings.advancedMode,
     };
-    expect(settingsUpdatedSpy).to.have.been.calledWith(expectedCallToSettingsUpdated);
+    expect(settingsUpdated).to.have.been.calledWith(expectedCallToSettingsUpdated);
   });
 
   it('should change autolog setting when clicking on checkbox', () => {
@@ -104,7 +95,7 @@ describe('Setting', () => {
     const expectedCallToSettingsUpdated = {
       autoLog: !settings.autoLog,
     };
-    expect(settingsUpdatedSpy).to.have.been.calledWith(expectedCallToSettingsUpdated);
+    expect(settingsUpdated).to.have.been.calledWith(expectedCallToSettingsUpdated);
   });
 
 
@@ -113,17 +104,8 @@ describe('Setting', () => {
     const settingsToExpireTime = { ...settings };
     settingsToExpireTime.autoLog = false;
     accountToExpireTime.passphrase = accounts.genesis.passphrase;
-    options.store = configureMockStore([])({
-      account: accountToExpireTime,
-      activePeerSet: () => {},
-      settings: settingsToExpireTime,
-    });
-    wrapper = mount(<MemoryRouter>
-      <Setting store={store}
-        {...props}
-        account={accountToExpireTime}
-        settings={settingsToExpireTime} t={t}/>
-    </MemoryRouter>, options);
+    wrapper.setProps({ account: accountToExpireTime, settings: settingsToExpireTime });
+    wrapper.update();
 
     wrapper.find('.autoLog').at(0).find('input').simulate('change', { target: { checked: true, value: true } });
     clock.tick(300);
@@ -133,7 +115,7 @@ describe('Setting', () => {
     const expectedCallToAccountUpdated = {
       expireTime: timeNow,
     };
-    expect(accountUpdatedSpy.getCall(0).args[0].expireTime)
+    expect(accountUpdated.getCall(0).args[0].expireTime)
       .to.be.greaterThan(expectedCallToAccountUpdated.expireTime);
   });
 
