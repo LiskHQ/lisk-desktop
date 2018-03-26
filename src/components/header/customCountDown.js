@@ -5,8 +5,8 @@ const CustomCountDown = ({ minutes, autoLog, seconds, resetTimer, t }) => {
   const min = minutes < 10 ? `0${minutes}` : minutes;
   const sec = seconds < 10 ? `0${seconds}` : seconds;
 
-  const resetCondition = (minutes <= 9 && seconds <= 50);
-  const timeoutCondition = (minutes <= 5 && seconds <= 0);
+  const resetCondition = (minutes < 5);
+  const timeoutCondition = (minutes === 0 && seconds === 0);
 
   const resetButton = resetCondition && !timeoutCondition ? <div onClick={() => {
     resetTimer();

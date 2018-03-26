@@ -28,6 +28,13 @@
   }
 }
 
+.unlocked {
+  color: red;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 1.1em; /* stylelint-disable-line */
+}
+
 .logoWrapper {
   width: 25%;
 }
@@ -120,18 +127,29 @@
     height: var(--avatar-height);
 
     & .balance {
-      font-size: var(--font-size-normal);
+      font-size: 29px;
       color: var(--color-white);
+      line-height: 0.5em; /* stylelint-disable-line */
+      padding-top: 7px;
+
+      & small {
+        font-size: var(--font-size-small);
+      }
     }
 
     & .address {
-      font-size: var(--font-size-normal);
+      font-size: var(--font-size-small);
       color: var(--color-grayscale-medium);
+    }
+
+    & .copy {
+      font-size: var(--font-size-normal);
     }
 
     & .timer {
       font-size: var(--font-size-small);
       color: var(--color-grayscale-medium);
+      line-height: 1.1em; /* stylelint-disable-line */
     }
   }
 
