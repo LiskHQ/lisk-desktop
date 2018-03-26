@@ -65,6 +65,15 @@ const win = {
       menuPopup({ props, selectionMenu, inputMenu }); // eslint-disable-line no-use-before-define
     });
 
+    const handleRedirect = (e, url) => {
+      if (url !== win.browser.webContents.getURL()) {
+        e.preventDefault();
+        electron.shell.openExternal(url);
+      }
+    };
+    win.browser.webContents.on('will-navigate', handleRedirect);
+    win.browser.webContents.on('new-window', handleRedirect);
+
     // Resolve all events from stack when dom is ready
     win.browser.webContents.on('did-finish-load', () => {
       win.isUILoaded = true;
