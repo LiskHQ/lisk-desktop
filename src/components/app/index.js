@@ -29,6 +29,7 @@ class App extends React.Component {
   markAsLoaded() {
     this.main.classList.add(styles.loaded);
     this.main.classList.add('appLoaded');
+    this.appLoaded = true;
   }
 
   startOnboarding() {
@@ -38,7 +39,7 @@ class App extends React.Component {
   render() {
     return (
       <OfflineWrapper>
-        <Onboarding ref={(el) => {
+        <Onboarding appLoaded={this.appLoaded} ref={(el) => {
           if (el) { this.onboarding = el.getWrappedInstance().getWrappedInstance(); }
         }} />
         <main className={`${styles.bodyWrapper}`} ref={(el) => { this.main = el; }}>

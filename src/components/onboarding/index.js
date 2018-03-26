@@ -4,7 +4,7 @@ import { translate } from 'react-i18next';
 import Joyride from 'react-joyride';
 import throttle from 'lodash.throttle';
 import { FontIcon } from '../fontIcon';
-import { styles, steps } from './steps';
+import { steps } from './steps';
 import breakpoints from './../../constants/breakpoints';
 
 class Onboarding extends React.Component {
@@ -13,27 +13,28 @@ class Onboarding extends React.Component {
 
     this.onboardingStarted = false;
     this.isAlreadyOnboarded = window.localStorage.getItem('onboarding') === 'false';
-    this.steps = [];
 
     this.state = {
       isDesktop: window.innerWidth > breakpoints.m,
       start: false,
       intro: true,
       skip: false,
+      steps: [],
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if ((nextProps.appLoaded && !this.stepsAdded)
+      || this.props.showDelegates !== nextProps.showDelegates) {
+      this.addSteps(nextProps.showDelegates);
+    }
   }
 
   componentDidMount() {
     window.addEventListener('resize', throttle(this.resizeWindow.bind(this), 1000));
-    this.steps = steps(this.props.t);
-    if (this.props.showDelegates) {
-      this.steps.splice(7, 0, {
-        title: this.props.t('Delegate voting'),
-        text: this.props.t('View forging delegates and vote for the ones you support.'),
-        selector: '#voting',
-        position: 'right',
-        style: styles.step,
-      });
+
+    if (this.props.appLoaded) {
+      this.addSteps(this.props.showDelegates);
     }
   }
 
@@ -45,10 +46,19 @@ class Onboarding extends React.Component {
     this.setState({ isDesktop: window.innerWidth > breakpoints.m });
   }
 
+  addSteps(showDelegates) {
+    let newSteps = steps(this.props.t);
+    if (!showDelegates) {
+      newSteps = newSteps.filter(step => step.selector !== '#voting');
+    }
+
+    this.setState({ steps: newSteps });
+    this.stepsAdded = true;
+  }
+
   reset() {
     this.isAlreadyOnboarded = true;
     this.onboardingStarted = false;
-    window.localStorage.setItem('onboarding', 'false');
     this.setState({ start: false, intro: true, skip: false });
   }
 
@@ -77,6 +87,7 @@ class Onboarding extends React.Component {
     if (onboardingFinished) {
       if (this.onboardingFinished) this.reset();
       this.onboardingFinished = true;
+      window.localStorage.setItem('onboarding', 'false');
     }
   }
 
@@ -86,7 +97,7 @@ class Onboarding extends React.Component {
 
     return <Joyride
       ref={(el) => { this.joyride = el; }}
-      steps={this.steps}
+      steps={this.state.steps}
       run={this.props.isAuthenticated && isDesktop && (start || !this.isAlreadyOnboarded)}
       locale={{
         last: (<span>{this.props.t('Complete')}</span>),
