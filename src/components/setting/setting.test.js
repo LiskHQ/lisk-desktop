@@ -8,8 +8,8 @@ import { MemoryRouter } from 'react-router-dom';
 import Setting from './setting';
 import i18n from '../../i18n';
 
-
-describe('Setting', () => {
+/* eslint-disable mocha/no-exclusive-tests */
+describe.only('Setting', () => {
   const history = {
     location: {
       pathname: '/main/voting',
@@ -74,6 +74,17 @@ describe('Setting', () => {
     expect(wrapper.find('#carouselNav li').at(1).props().className).to.be.include('activeSlide');
   });
 
+  it('should change advanceMode setting when clicking on checkbox', () => {
+    wrapper.find('.advancedMode').at(0).simulate('change');
+    wrapper.update();
+    clock.tick(500);
+    wrapper.update();
+    const expectedCallToSettingsUpdated = {
+      advancedMode: !settings.advancedMode,
+    };
+    expect(settingsUpdated).to.have.been.calledWith(expectedCallToSettingsUpdated);
+  });
+
   it.skip('should click on .autoLog update the setting', () => {
     wrapper.find('.autoLog input').simulate('click');
     clock.tick(100);
@@ -103,4 +114,4 @@ describe('Setting', () => {
     expect(i18n.language).to.be.equal('en');
   });
 });
-
+/* eslint-enable mocha/no-exclusive-tests */

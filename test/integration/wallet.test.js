@@ -113,12 +113,15 @@ describe('@integration: Wallet', () => {
       passphrase,
     };
 
+    if (!options.withPublicKey) {
+      delete account.serverPublicKey;
+    }
+
     accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
     store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
     accountAPIStub.withArgs(match.any).returnsPromise()
       .resolves({
         ...account,
-        serverPublicKey: options.withPublicKey ? account.publicKey : undefined,
       });
     store.dispatch(accountLoggedIn(account));
     wrapper = mount(renderWithRouter(Wallet, store, { history: { location: { search: '' } } }));
