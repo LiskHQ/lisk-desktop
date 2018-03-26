@@ -144,12 +144,6 @@ class Login extends React.Component {
       <Box className={styles.wrapper}>
         <section className={`${styles.login} ${styles[this.state.passInputState]}`}>
           <section className={styles.table}>
-            <header>
-              <a className={styles.backButton} href='https://lisk.io' target='_blank' rel='noopener noreferrer'>
-                <FontIcon className={styles.icon}>arrow-left</FontIcon>
-                <span className={styles.label}>{this.props.t('Back to lisk.io')}</span>
-              </a>
-            </header>
             <div className={`${styles.tableCell} text-left`}>
               <h2>{this.props.t('Sign in')}</h2>
               <form onSubmit={this.onFormSubmit.bind(this)}>
