@@ -6,10 +6,10 @@ import configureMockStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
 import { MemoryRouter } from 'react-router-dom';
 import Setting from './setting';
+import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
 
-/* eslint-disable mocha/no-exclusive-tests */
-describe.only('Setting', () => {
+describe('Setting', () => {
   const history = {
     location: {
       pathname: '/main/voting',
@@ -46,18 +46,31 @@ describe.only('Setting', () => {
 
   const t = key => key;
   let wrapper;
-  const settingsUpdated = sinon.spy();
+
+  let settingsUpdatedSpy;
+  let accountUpdatedSpy;
+
+  const props = {
+    settingsUpdated: () => {},
+    accountUpdated: () => {},
+  };
 
   beforeEach(() => {
+    settingsUpdatedSpy = sinon.spy(props, 'settingsUpdated');
+    accountUpdatedSpy = sinon.spy(props, 'accountUpdated');
     wrapper = mount(<MemoryRouter>
-      <Setting store={store} settingsUpdated={settingsUpdated} settings={settings} t={t}/>
-    </MemoryRouter>, options);
+      <Setting store={store}
+        settingsUpdated={props.settingsUpdated}
+        settings={settings} t={t}/></MemoryRouter>, options);
+
     clock = sinon.useFakeTimers({
       toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
     });
   });
 
   afterEach(() => {
+    settingsUpdatedSpy.restore();
+    accountUpdatedSpy.restore();
     clock.restore();
     i18n.changeLanguage('en');
   });
@@ -75,25 +88,53 @@ describe.only('Setting', () => {
   });
 
   it('should change advanceMode setting when clicking on checkbox', () => {
-    wrapper.find('.advancedMode').at(0).simulate('change');
-    wrapper.update();
-    clock.tick(500);
+    wrapper.find('.advancedMode').at(0).find('input').simulate('change', { target: { checked: false, value: false } });
+    clock.tick(300);
     wrapper.update();
     const expectedCallToSettingsUpdated = {
       advancedMode: !settings.advancedMode,
     };
-    expect(settingsUpdated).to.have.been.calledWith(expectedCallToSettingsUpdated);
+    expect(settingsUpdatedSpy).to.have.been.calledWith(expectedCallToSettingsUpdated);
   });
 
-  it.skip('should click on .autoLog update the setting', () => {
-    wrapper.find('.autoLog input').simulate('click');
-    clock.tick(100);
-    wrapper.find('.autoLog label').simulate('click');
+  it('should change autolog setting when clicking on checkbox', () => {
+    wrapper.find('.autoLog').at(0).find('input').simulate('change', { target: { checked: false, value: false } });
+    clock.tick(300);
     wrapper.update();
-    clock.tick(500);
+    const expectedCallToSettingsUpdated = {
+      autoLog: !settings.autoLog,
+    };
+    expect(settingsUpdatedSpy).to.have.been.calledWith(expectedCallToSettingsUpdated);
+  });
+
+
+  it('should update expireTime when updating autolog', () => {
+    const accountToExpireTime = { ...account };
+    const settingsToExpireTime = { ...settings };
+    settingsToExpireTime.autoLog = false;
+    accountToExpireTime.passphrase = accounts.genesis.passphrase;
+    options.store = configureMockStore([])({
+      account: accountToExpireTime,
+      activePeerSet: () => {},
+      settings: settingsToExpireTime,
+    });
+    wrapper = mount(<MemoryRouter>
+      <Setting store={store}
+        {...props}
+        account={accountToExpireTime}
+        settings={settingsToExpireTime} t={t}/>
+    </MemoryRouter>, options);
+
+    wrapper.find('.autoLog').at(0).find('input').simulate('change', { target: { checked: true, value: true } });
+    clock.tick(300);
     wrapper.update();
 
-    expect(settingsUpdated).to.have.been.calledOnce();
+    const timeNow = Date.now();
+    const expectedCallToAccountUpdated = {
+      expireTime: timeNow,
+    };
+    expect(accountUpdatedSpy.getCall(0).args[0].expireTime)
+      .to.be.greaterThan(expectedCallToAccountUpdated.expireTime);
   });
 
   // TODO: will be re-enabled when the functionality is re-enabled
@@ -114,4 +155,3 @@ describe.only('Setting', () => {
     expect(i18n.language).to.be.equal('en');
   });
 });
-/* eslint-enable mocha/no-exclusive-tests */
