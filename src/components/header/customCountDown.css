@@ -1,11 +1,13 @@
+@import '../app/variables.css';
+
 .reset {
   margin-right: 18px;
   padding-left: 3px;
   padding-right: 3px;
   padding-bottom: 3px;
   cursor: pointer;
-  color: white;
-  border-bottom: solid 2px white;
+  color: var(--color-white);
+  border-bottom: solid 2px var(--color-white);
   display: inline;
   font-family: 'Open Sans';
   font-weight: 600;
@@ -13,11 +15,11 @@
 }
 
 .default {
-  color: #FFFFFF;
+  color: var(--color-white);
 }
 
 .timeout {
-  color: red;
+  color: var(--color-error);
 }
 
 .timerRow {
