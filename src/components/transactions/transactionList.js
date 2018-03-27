@@ -28,9 +28,11 @@ class TransactionsList extends React.Component {
 
   showDetails(transactions) {
     const paramsId = parseSearchParams(this.props.history.location.search).id;
-    const value = transactions.filter(transaction => transaction.id === paramsId)[0];
 
-    if (value) this.props.nextStep({ value, t: this.props.t });
+    if (paramsId) {
+      const value = transactions.filter(transaction => transaction.id === paramsId)[0];
+      if (value) this.props.nextStep({ value, t: this.props.t });
+    }
   }
 
   // eslint-disable-next-line class-methods-use-this

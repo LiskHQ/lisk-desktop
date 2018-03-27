@@ -17,7 +17,10 @@ class TransactionRow extends React.Component {
   render() {
     const { props } = this;
     return (
-      <div className={`${grid.row} ${styles.rows} ${styles.clickable} transactionsRow`} onClick={() => { this.props.onClick(this.props); }}>
+      <div className={`${grid.row} ${styles.rows} ${styles.clickable} transactionsRow`} onClick={() => {
+        // eslint-disable-next-line no-unused-expressions
+        this.props.onClick && this.props.onClick(this.props);
+      }}>
         <div className={`${styles.leftText} ${grid['col-xs-6']} ${grid['col-sm-6']} transactions-cell`}>
           <div className={`${styles.address}`}>
             <TransactionType {...props.value} address={props.address}></TransactionType>
