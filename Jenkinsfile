@@ -140,13 +140,16 @@ node('lisk-hub') {
             # Run end-to-end tests
 
             if [ -z $CHANGE_BRANCH ]; then
-              npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL https://testnet.lisk.io --cucumberOpts.tags @testnet --params.useTestnetPassphrase true
+              npm run serve --  $WORKSPACE/app/build -p 300$N -a 127.0.0.1
+              npm run --silent e2e-test -- --params.baseURL http://127.0.0.1:300$N --params.liskCoreURL https://testnet.lisk.io --cucumberOpts.tags @testnet --params.useTestnetPassphrase true
             else
               echo "Skipping @testnet end-to-end tests because we're not on 'development' branch"
             fi
-            npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL http://127.0.0.1:400$N
+            npm run serve --  $WORKSPACE/app/build -p 300$N -a 127.0.0.1
+            npm run --silent e2e-test -- --params.baseURL http://127.0.0.1:300$N --params.liskCoreURL http://127.0.0.1:400$N
             if [ -z $CHANGE_BRANCH ]; then
-              npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --cucumberOpts.tags @testnet --params.useTestnetPassphrase true --params.network testnet
+              npm run serve --  $WORKSPACE/app/build -p 300$N -a 127.0.0.1
+              npm run --silent e2e-test -- --params.baseURL http://127.0.0.1:300$N --cucumberOpts.tags @testnet --params.useTestnetPassphrase true --params.network testnet
             else
               echo "Skipping @testnet end-to-end tests because we're not on 'development' branch"
             fi
