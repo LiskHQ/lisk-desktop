@@ -46,15 +46,23 @@ describe('Setting', () => {
   const t = key => key;
   let wrapper;
 
-  const settingsUpdated = sinon.spy();
-  const accountUpdated = sinon.spy();
+  let settingsUpdated;
+  let accountUpdated;
 
   beforeEach(() => {
+    settingsUpdated = sinon.spy();
+    accountUpdated = sinon.spy();
+    const props = {
+      settingsUpdated,
+      accountUpdated,
+      settings,
+      t,
+    };
+
     wrapper = mount(
-      <Setting store={store}
-        settingsUpdated={settingsUpdated}
-        accountUpdated={accountUpdated}
-        settings={settings} t={t}/>, options);
+      <Setting
+        store={store}
+        {...props}/>, options);
 
     clock = sinon.useFakeTimers({
       toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
