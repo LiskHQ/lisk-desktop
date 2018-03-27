@@ -32,7 +32,7 @@ const publicComponent = [
 ];
 
 const privateComponent = [
-  { route: `${routes.main.path}${routes.transaction.path}`, component: Transactions },
+  { route: `${routes.main.path}${routes.wallet.path}`, component: Transactions },
   { route: `${routes.main.path}${routes.delegates.path}`, component: Voting },
 ];
 

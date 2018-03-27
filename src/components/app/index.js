@@ -68,7 +68,7 @@ class App extends React.Component {
                     <Route path={`${match.url}${routes.search.path}`} component={Search} />
                     <Route path={`${match.url}${routes.searchResult.path}/:query?`} component={SearchResult} />
                     <Route path={`${match.url}${routes.account.path}/:address?`} component={AccountTransactions} />
-                    <Route path={`${match.url}${routes.transaction.path}/:id`} component={SingleTransaction} />
+                    <Route path={`${match.url}${routes.wallet.path}/:id`} component={SingleTransaction} />
                   </main>
                 )} />
                 <Route path={routes.register.path} component={Register} />

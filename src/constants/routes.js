@@ -1,11 +1,10 @@
 export default {
-  wallet: { path: '/transactions' },
+  wallet: { path: '/wallet' },
   account: { path: '/accounts' },
   accountVisualDemo: { path: '/account-visual-demo' },
   dashboard: { path: '/dashboard' },
   search: { path: '/search' },
   searchResult: { path: '/result' },
-  transaction: { path: '/transactions' },
   login: { path: '/' },
   accounts: { path: '/accounts' },
   addAccount: { path: '/add-account' },

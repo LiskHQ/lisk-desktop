@@ -15,7 +15,7 @@ export const visit = (value, history) => {
   if (value.match(regex.address)) {
     history.push(`${routes.explorer.path}${routes.account.path}/${value}`);
   } else if (value.match(regex.transactionId)) {
-    history.push(`${routes.explorer.path}${routes.transaction.path}/${value}`);
+    history.push(`${routes.explorer.path}${routes.wallet.path}/${value}`);
   } else {
     history.push(`${routes.explorer.path}${routes.searchResult.path}/${value}`);
   }
