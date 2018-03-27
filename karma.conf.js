@@ -70,6 +70,7 @@ module.exports = function (config) {
             'src/components/authenticate/authenticate.js',
             'src/components/multiStep/index.js',
             'src/components/onboarding/index.js',
+            'src/components/onboarding/steps.js',
             'src/components/passphrase/create/index.js',
             'src/components/passphrase/createSecond/index.js',
             'src/components/passphrase/safekeeping/index.js',
