@@ -1,21 +1,29 @@
 .reset {
-  margin-right: 10px;
+  margin-right: 18px;
   padding-left: 3px;
   padding-right: 3px;
-  padding-bottom: 5px;
+  padding-bottom: 3px;
   cursor: pointer;
   color: white;
   border-bottom: solid 2px white;
   display: inline;
+  font-family: 'Open Sans';
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.default {
+  color: #FFFFFF;
 }
 
 .timeout {
   color: red;
-  font-weight: 600;
-  font-size: 13px;
 }
 
 .timerRow {
   display: flex;
   justify-content: flex-end;
+  font-weight: 600;
+  font-size: 12px;
+  font-family: 'Open Sans';
 }

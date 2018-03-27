@@ -12,7 +12,7 @@ const CustomCountDown = ({ minutes, autoLog, seconds, resetTimer, t }) => {
     resetTimer();
   }} className={`${styles.reset} reset`}> {t('Reset')} </div> : <div></div>;
 
-  const resetStyle = resetCondition ? styles.timeout : {};
+  const resetStyle = resetCondition ? styles.timeout : styles.default;
   const timer = !timeoutCondition &&
     <span className={resetStyle}>{t('ID lock in')} {min}:{sec}</span>;
 
