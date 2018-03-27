@@ -97,8 +97,8 @@ class MainMenu extends React.Component {
     if (showDelegate) {
       tabs.splice(tabs.length - 1, 0, {
         label: t('Delegates'),
-        id: 'voting',
-        route: `${routes.main.path}${routes.voting.path}`,
+        id: 'delegates',
+        route: `${routes.main.path}${routes.delegates.path}`,
         image: menuLogos.delegates,
       });
     }

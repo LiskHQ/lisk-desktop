@@ -42,7 +42,7 @@ describe('MainMenu', () => {
 
   const history = {
     location: {
-      pathname: `${routes.main.path}${routes.voting.path}`,
+      pathname: `${routes.main.path}${routes.delegates.path}`,
     },
     push: sinon.spy(),
   };

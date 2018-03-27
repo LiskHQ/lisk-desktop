@@ -56,7 +56,7 @@ class App extends React.Component {
                       <Route path={`${match.url}${routes.accountVisualDemo.path}`} component={AccountVisualDemo} />
                       <Route path={`${match.url}${routes.dashboard.path}`} component={Dashboard} />
                       <Route path={`${match.url}${routes.wallet.path}`} component={TransactionDashboard} />
-                      <Route path={`${match.url}${routes.voting.path}`} component={Voting} />
+                      <Route path={`${match.url}${routes.delegates.path}`} component={Voting} />
                       <Route path={`${match.url}${routes.sidechains.path}`} component={Sidechains} />
                       <Route path={`${match.url}${routes.secondPassphrase.path}`} component={SecondPassphrase} />
                       <Route path='*' component={NotFound} />

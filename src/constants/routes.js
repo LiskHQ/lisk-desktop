@@ -11,7 +11,7 @@ export default {
   addAccount: { path: '/add-account' },
   register: { path: '/register' },
   sidechains: { path: '/sidechains' },
-  voting: { path: '/voting' },
+  delegates: { path: '/delegates' },
   main: { path: '/main' },
   explorer: { path: '/explorer' },
   secondPassphrase: { path: '/second-passphrase' },

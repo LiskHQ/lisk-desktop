@@ -95,9 +95,9 @@ describe('Login', () => {
     it('calls this.props.history.replace with referrer address', () => {
       wrapper = shallow(<Login {...props}/>, options);
       props.history.replace.reset();
-      history.location.search = `?referrer=${routes.main.path}${routes.voting.path}`;
+      history.location.search = `?referrer=${routes.main.path}${routes.delegates.path}`;
       wrapper.setProps({ history, account: { address: 'dummy' } });
-      expect(props.history.replace).to.have.been.calledWith(`${routes.main.path}${routes.voting.path}`);
+      expect(props.history.replace).to.have.been.calledWith(`${routes.main.path}${routes.delegates.path}`);
     });
 
     it('hides network options by default', () => {
