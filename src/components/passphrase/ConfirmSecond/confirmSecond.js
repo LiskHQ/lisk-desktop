@@ -40,12 +40,14 @@ class confirmSecond extends React.Component {
     });
   }
   componentDidMount() {
+    console.error('Initialize');
     if (this.props.account.passphrase) {
       this.setState({ step: 'confirm' });
     }
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.account.secondSignature === 1) {
+      console.error('I received second passphrase');
       this.setState({ step: 'done' });
     }
   }
