@@ -103,6 +103,8 @@ node('lisk-hub') {
         rsync -axl --delete --rsync-path="mkdir -p /var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/ && rsync" $WORKSPACE/app/build/ jenkins@master-01:/var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/
         npm run --silent bundlesize
         '''
+        archiveArtifacts artifacts: 'app/build/'
+        archiveArtifacts artifacts: 'app/build-testnet/'
         githubNotify context: 'Jenkins test deployment', description: 'Commit was deployed to test', status: 'SUCCESS', targetUrl: "${HUDSON_URL}test/" + "${JOB_NAME}".tokenize('/')[0] + "/${BRANCH_NAME}"
       } catch (err) {
         echo "Error: ${err}"
@@ -141,6 +143,7 @@ node('lisk-hub') {
 
             if [ -z $CHANGE_BRANCH ]; then
               npm run serve --  $WORKSPACE/app/build -p 300$N -a 127.0.0.1
+              npm run --silent e2e-test -- --params.baseURL http://127.0.0.1:300$N --params.liskCoreURL http://127.0.0.1:400$N --cucumberOpts.tags @advanced
               npm run --silent e2e-test -- --params.baseURL http://127.0.0.1:300$N --params.liskCoreURL https://testnet.lisk.io --cucumberOpts.tags @testnet --params.useTestnetPassphrase true
             else
               echo "Skipping @testnet end-to-end tests because we're not on 'development' branch"

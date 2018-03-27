@@ -18,6 +18,7 @@ import rectangleImage2 from '../../assets/images/add-id-rectangle-2.svg';
 import rectangleImage3 from '../../assets/images/add-id-rectangle-3.svg';
 import triangleImage from '../../assets/images/add-id-triangle.svg';
 import { FontIcon } from '../fontIcon';
+import CopyToClipboard from '../copyToClipboard';
 
 import styles from './savedAccounts.css';
 
@@ -157,7 +158,8 @@ class SavedAccounts extends React.Component {
                 <h2>
                   <LiskAmount val={account.balance} /> <small>LSK</small>
                 </h2>
-                <div className={styles.address} >{extractAddress(account.publicKey)}</div>
+                <div className={styles.address} onClick={ e => e.stopPropagation()}>
+                  <CopyToClipboard value={extractAddress(account.publicKey)}/></div>
                 { this.isSelectedForRemove(account) ?
                   <div className={styles.removeConfirm}>
                     <h2>{t('You can always get it back.')}</h2>

@@ -14,10 +14,11 @@ exports.config = {
 
   cucumberOpts: {
     require: 'test/e2e/step_definitions/*.js',
-    tags: [],
+    tags: ['~@advanced'],
     format: 'pretty',
     profile: false,
     'no-source': true,
+    strict: true,
   },
 
   params: {

@@ -66,4 +66,16 @@ describe('Register', () => {
       passphrase,
     }));
   });
+
+  it('should return to Login page when prevPage in MultiStep is executed', () => {
+    expect(wrapper.find('Register').props().history.location.pathname).to.not.be.equal('/');
+    wrapper.find('MultiStep').props().prevPage();
+    expect(wrapper.find('Register').props().history.location.pathname).to.be.equal('/');
+  });
+
+  it('should remove "contentFocused" class in unMount', () => {
+    expect(document.getElementsByClassName('contentFocused')).to.have.length(1);
+    wrapper.unmount();
+    expect(document.getElementsByClassName('contentFocused')).to.have.length(0);
+  });
 });

@@ -23,7 +23,10 @@ class DelegateList extends React.Component {
   }
 
   componentDidMount() {
-    this.loadVotedDelegates(true);
+    if (this.props.serverPublicKey) {
+      this.loadVotedDelegates(true);
+    }
+
     if (navigator.userAgent) {
       const agent = navigator.userAgent;
       if (agent.indexOf('Safari') > 0 && agent.indexOf('Chrome') === -1) {
@@ -47,6 +50,7 @@ class DelegateList extends React.Component {
 
     if (this.props.showChangeSummery !== nextProps.showChangeSummery) {
       this.setState({
+        activeFilter: voteFilters.all,
         showChangeSummery: nextProps.showChangeSummery,
       });
     }
@@ -159,7 +163,6 @@ class DelegateList extends React.Component {
           setActiveFilter={this.setActiveFilter.bind(this)}
           showChangeSummery={this.state.showChangeSummery}
           voteToggled={this.props.voteToggled}
-          addTransaction={this.props.addTransaction}
           search={ value => this.search(value) }
         />
         <section className={`${styles.delegatesList} delegate-list`}>
