@@ -72,28 +72,6 @@
     animation: fadeIn 300ms forwards;
   }
 
-  & header {
-    position: absolute;
-    left: 0;
-    top: 0;
-    margin-top: 50px;
-
-    & .backButton {
-      color: var(--color-primary-standard);
-      text-decoration: initial;
-      font-family: var(--content-font);
-      font-weight: var(--font-weight-bold);
-
-      & .label {
-        vertical-align: middle;
-      }
-
-      & .icon {
-        vertical-align: middle;
-      }
-    }
-  }
-
   /* @todo remove these with #3 */
 
   & .outTaken {
@@ -623,4 +601,3 @@
 .input {
   padding-bottom: 0px;
 }
-
