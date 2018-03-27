@@ -4,6 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/LiskHQ/lisk-hub/badge.svg?branch=development)](https://coveralls.io/github/LiskHQ/lisk-hub?branch=development)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 [![Join the chat at https://gitter.im/LiskHQ/lisk](https://badges.gitter.im/LiskHQ/lisk.svg)](https://gitter.im/LiskHQ/lisk?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Dependencies Status](https://david-dm.org/liskHQ/lisk-hub/status.svg)](https://david-dm.org/liskHQ/lisk-hub)
 [![devDependencies Status](https://david-dm.org/liskHQ/lisk-hub/dev-status.svg)](https://david-dm.org/liskHQ/lisk-hub?type=dev)
 
 ## Development
