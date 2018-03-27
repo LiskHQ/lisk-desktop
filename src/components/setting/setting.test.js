@@ -4,10 +4,9 @@ import { mount } from 'enzyme';
 import sinon from 'sinon';
 import configureMockStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
-import { MemoryRouter } from 'react-router-dom';
 import Setting from './setting';
+import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
-
 
 describe('Setting', () => {
   const history = {
@@ -46,12 +45,25 @@ describe('Setting', () => {
 
   const t = key => key;
   let wrapper;
-  const settingsUpdated = sinon.spy();
+
+  let settingsUpdated;
+  let accountUpdated;
 
   beforeEach(() => {
-    wrapper = mount(<MemoryRouter>
-      <Setting store={store} settingsUpdated={settingsUpdated} settings={settings} t={t}/>
-    </MemoryRouter>, options);
+    settingsUpdated = sinon.spy();
+    accountUpdated = sinon.spy();
+    const props = {
+      settingsUpdated,
+      accountUpdated,
+      settings,
+      t,
+    };
+
+    wrapper = mount(
+      <Setting
+        store={store}
+        {...props}/>, options);
+
     clock = sinon.useFakeTimers({
       toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
     });
@@ -74,15 +86,45 @@ describe('Setting', () => {
     expect(wrapper.find('#carouselNav li').at(1).props().className).to.be.include('activeSlide');
   });
 
-  it.skip('should click on .autoLog update the setting', () => {
-    wrapper.find('.autoLog input').simulate('click');
-    clock.tick(100);
-    wrapper.find('.autoLog label').simulate('click');
+  it('should change advanceMode setting when clicking on checkbox', () => {
+    wrapper.find('.advancedMode').at(0).find('input').simulate('change', { target: { checked: false, value: false } });
+    clock.tick(300);
     wrapper.update();
-    clock.tick(500);
+    const expectedCallToSettingsUpdated = {
+      advancedMode: !settings.advancedMode,
+    };
+    expect(settingsUpdated).to.have.been.calledWith(expectedCallToSettingsUpdated);
+  });
+
+  it('should change autolog setting when clicking on checkbox', () => {
+    wrapper.find('.autoLog').at(0).find('input').simulate('change', { target: { checked: false, value: false } });
+    clock.tick(300);
+    wrapper.update();
+    const expectedCallToSettingsUpdated = {
+      autoLog: !settings.autoLog,
+    };
+    expect(settingsUpdated).to.have.been.calledWith(expectedCallToSettingsUpdated);
+  });
+
+
+  it('should update expireTime when updating autolog', () => {
+    const accountToExpireTime = { ...account };
+    const settingsToExpireTime = { ...settings };
+    settingsToExpireTime.autoLog = false;
+    accountToExpireTime.passphrase = accounts.genesis.passphrase;
+    wrapper.setProps({ account: accountToExpireTime, settings: settingsToExpireTime });
     wrapper.update();
 
-    expect(settingsUpdated).to.have.been.calledOnce();
+    wrapper.find('.autoLog').at(0).find('input').simulate('change', { target: { checked: true, value: true } });
+    clock.tick(300);
+    wrapper.update();
+
+    const timeNow = Date.now();
+    const expectedCallToAccountUpdated = {
+      expireTime: timeNow,
+    };
+    expect(accountUpdated.getCall(0).args[0].expireTime)
+      .to.be.greaterThan(expectedCallToAccountUpdated.expireTime);
   });
 
   // TODO: will be re-enabled when the functionality is re-enabled
@@ -103,4 +145,3 @@ describe('Setting', () => {
     expect(i18n.language).to.be.equal('en');
   });
 });
-
