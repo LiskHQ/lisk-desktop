@@ -131,6 +131,7 @@
   margin-bottom: 40px;
   color: var(--color-grayscale-dark);
   font-size: var(--address-font-size);
+  font-weight: var(--font-weight-normal);
 }
 
 .cardIcon {
