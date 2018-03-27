@@ -18,6 +18,7 @@ exports.config = {
     format: 'pretty',
     profile: false,
     'no-source': true,
+    strict: true,
   },
 
   params: {
