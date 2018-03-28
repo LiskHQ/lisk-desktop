@@ -4,6 +4,7 @@ import { mount } from 'enzyme';
 import sinon from 'sinon';
 import configureMockStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
+import { MemoryRouter as Router } from 'react-router-dom';
 import Setting from './setting';
 import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
@@ -46,23 +47,22 @@ describe('Setting', () => {
   const t = key => key;
   let wrapper;
 
-  let settingsUpdated;
-  let accountUpdated;
+  const settingsUpdated = sinon.spy();
+  const accountUpdated = sinon.spy();
+  const props = {
+    settingsUpdated,
+    accountUpdated,
+    settings,
+    t,
+    toggleMenu: sinon.spy(),
+  };
 
   beforeEach(() => {
-    settingsUpdated = sinon.spy();
-    accountUpdated = sinon.spy();
-    const props = {
-      settingsUpdated,
-      accountUpdated,
-      settings,
-      t,
-    };
-
-    wrapper = mount(
+    wrapper = mount(<Router>
       <Setting
         store={store}
-        {...props}/>, options);
+        {...props}/>
+    </Router>, options);
 
     clock = sinon.useFakeTimers({
       toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
@@ -112,8 +112,14 @@ describe('Setting', () => {
     const settingsToExpireTime = { ...settings };
     settingsToExpireTime.autoLog = false;
     accountToExpireTime.passphrase = accounts.genesis.passphrase;
-    wrapper.setProps({ account: accountToExpireTime, settings: settingsToExpireTime });
-    wrapper.update();
+    wrapper = mount(<Router>
+      <Setting
+        {...props}
+        store={store}
+        account={accountToExpireTime}
+        settings={settingsToExpireTime}
+      />
+    </Router>, options);
 
     wrapper.find('.autoLog').at(0).find('input').simulate('change', { target: { checked: true, value: true } });
     clock.tick(300);
