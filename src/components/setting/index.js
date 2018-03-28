@@ -8,6 +8,7 @@ const mapStateToProps = state => ({
   hasSecondPassphrase: state.account.secondSignature,
   settings: state.settings,
   account: state.account,
+  isAuthenticated: !!state.account.publicKey,
 });
 
 const mapDispatchToProps = dispatch => ({

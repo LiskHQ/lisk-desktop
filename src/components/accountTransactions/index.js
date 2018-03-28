@@ -27,6 +27,7 @@ class accountTransactions extends React.Component {
       </div>
       <div className={`${grid['col-sm-12']} ${styles.transactions} ${grid['col-md-8']}`}>
         <Transactions
+          history={this.props.history}
           address={this.props.match.params.address}
           balance={this.props.balance} />
       </div>

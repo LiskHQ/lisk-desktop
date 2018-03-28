@@ -101,7 +101,7 @@ describe('@integration: Account Transactions', () => {
     accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
     if (accountType) { store.dispatch(accountLoggedIn(account)); }
     wrapper = mount(renderWithRouter(AccountTransactions, store,
-      { match: { params: { address } } }));
+      { match: { params: { address } }, history: { location: { search: '' } } }));
 
     helper = new Helper(wrapper, store);
   };
