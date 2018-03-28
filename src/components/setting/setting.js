@@ -1,13 +1,13 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ReactSwipe from 'react-swipe';
 import styles from './setting.css';
 import Checkbox from '../toolbox/sliderCheckbox';
 import i18n from '../../i18n';
 import accountConfig from '../../constants/account';
 // TODO: will be re-enabled when the functionality is updated
-// import routes from '../../constants/routes';
-// import { FontIcon } from '../fontIcon';
+import routes from '../../constants/routes';
+import { FontIcon } from '../fontIcon';
 // import languageSwitcherTheme from './languageSwitcher.css';
 
 class Setting extends React.Component {
@@ -45,7 +45,7 @@ class Setting extends React.Component {
   render() {
     this.language = (i18n.language === 'de');
     const showSetting = this.props.showSetting ? styles.active : '';
-    const { t, settings, settingsUpdated } = this.props;
+    const { t, settings, settingsUpdated, hasSecondPassphrase, toggleMenu } = this.props;
     return <footer className={`${styles.wrapper} ${showSetting}`}>
       <ReactSwipe
         className={styles.carousel}
@@ -83,12 +83,12 @@ class Setting extends React.Component {
             <p>{t('Lock ID’s automatically after 10 minutes.')}</p>
           </article>
         </div>
-        {/* TODO: will be re-enabled when the functionality is updated
         <div>
           {!hasSecondPassphrase ?
             <Link
               className={`register-second-passphrase ${styles.secondPassphrase}`}
-              to={`${routes.main.path}${routes.secondPassphrase.path}`}>
+              to={`${routes.main.path}${routes.secondPassphrase.path}`}
+              onClick={toggleMenu}>
               {t('Add')}
             </Link> :
             <span
@@ -101,6 +101,7 @@ class Setting extends React.Component {
             <p>{t('Register 2nd passphrase')}</p>
           </article>
         </div>
+        {/* TODO: will be re-enabled when the functionality is updated
         <div>
           <Checkbox
             theme={languageSwitcherTheme}
@@ -125,7 +126,7 @@ class Setting extends React.Component {
         */}
       </ReactSwipe>
       <ul className={ styles.carouselNav } id='carouselNav'>
-        {[...Array(2)].map((x, i) =>
+        {[...Array(3)].map((x, i) =>
           <li
             key={i}
             className={(i === this.state.activeSlide) ? styles.activeSlide : ''}
