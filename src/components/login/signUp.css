@@ -1,0 +1,181 @@
+@import './../app/variables.css';
+@import './animations.css';
+@import './shapes.css';
+@import './layout.css';
+
+:root {
+  --transition: all ease 300ms;
+  --header-focused-font-size: 32px;
+  --arrow-font-size: 60px;
+  --arrow-focused-font-size: 40px;
+  --signup-box-padding-L: var(--box-padding-left-L);
+  --signup-box-padding-XL: var(--box-padding-left-XL);
+  --focused-signup-box-padding-XL: 31px;
+  --focused-signup-box-padding-L: 24px;
+}
+
+.signUp {
+  height: calc(100% + 46px);
+  width: 58%;
+  margin-top: -23px;
+  border-radius: 3px;
+  overflow: hidden;
+  @mixin login-signup;
+
+  & .table {
+    position: relative;
+    z-index: 2;
+  }
+
+  & h2 {
+    color: var(--color-white);
+    margin-top: 32vh; /* stylelint-disable-line */
+    margin-bottom: 24px;
+    white-space: nowrap;
+  }
+
+  & .subTitle,
+  & a,
+  & .singUpArrow {
+    color: var(--color-white);
+    vertical-align: middle;
+    transition: var(--transition);
+  }
+
+  & .singUpArrow {
+    font-size: var(--arrow-font-size);
+  }
+
+  & .subTitle {
+    line-height: 28px;
+  }
+
+  & a {
+    text-decoration: none;
+    font-size: inherit;
+  }
+
+  /** @todo redundant? **/
+  & .shapes {
+    position: absolute;
+    z-index: 1;
+  }
+
+  &.focused {
+    transform: translateZ(0);
+
+    & h2 {
+      & a {
+        font-size: var(--header-focused-font-size);
+      }
+
+      & .singUpArrow {
+        font-size: var(--arrow-focused-font-size);
+      }
+    }
+
+    & .subTitle {
+      font-size: var(--subtitle-font-size);
+    }
+
+    & .shape {
+      &.triangle {
+        right: -25% !important;
+      }
+    }
+  }
+}
+
+@media (--xLarge-viewport) {
+  .signUp {
+    padding: 0 var(--signup-box-padding-XL);
+
+    & .subTitle {
+      font-size: 18px;
+    }
+
+    &.focused {
+      width: 25%;
+      padding: 0 var(--focused-signup-box-padding-XL);
+    }
+
+    & h2 {
+      font-size: 65px;
+    }
+  }
+}
+
+@media (--large-viewport) {
+  .signUp {
+    padding: 0 var(--signup-box-padding-L);
+
+    & .subTitle {
+      font-size: 16px;
+    }
+
+    &.focused {
+      width: 32%;
+      padding: 0 var(--focused-signup-box-padding-L);
+    }
+
+    & h2 {
+      font-size: 50px;
+    }
+  }
+}
+
+@media (--medium-viewport) {
+  .signUp {
+    margin-top: 0;
+    margin-right: -33px;
+    border-radius: 0px;
+    width: 60%;
+    height: calc(100vh - var(--m-top-bar-height) - var(--m-menu-bar-height)); /* stylelint-disable-line */
+
+    & .singUpArrow {
+      font-size: var(--arrow-focused-font-size);
+    }
+
+    & h2 {
+      font-size: var(--font-size-h2-l);
+      margin-top: 28vh; /* stylelint-disable-line */
+    }
+
+    & .focused {
+      & h2 {
+        font-size: var(--font-size-h3-m);
+      }
+    }
+  }
+}
+
+@media (--small-viewport) {
+  .signUp {
+    margin-right: 0;
+    border-radius: 0;
+    width: 100vw; /* stylelint-disable-line */
+    height: calc(50vh - var(--s-menu-bar-height)); /* stylelint-disable-line */
+    padding: 0 var(--box-padding-left-M);
+
+    & h2 {
+      font-size: var(--font-size-h2-s);
+      margin-top: 12vh; /* stylelint-disable-line */
+    }
+
+    & .bg {
+      border-radius: 0;
+    }
+
+    &.focused {
+      width: 100vw; /* stylelint-disable-line */
+    }
+  }
+}
+
+@media (--xSmall-viewport) {
+  .signUp {
+    & h2 {
+      margin-top: 8vh; /* stylelint-disable-line */
+    }
+  }
+}
