@@ -154,7 +154,7 @@ class MainMenu extends React.Component {
                 </ToolboxTabs>
               </div>
               <Setting showSetting={this.state.setting}
-                menuToggle={this.menuToggle.bind(this)}
+                toggleMenu={this.menuToggle.bind(this)}
                 startOnboarding={this.props.startOnboarding}
               />
             </Drawer>
