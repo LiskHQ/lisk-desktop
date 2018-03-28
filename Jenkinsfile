@@ -110,7 +110,7 @@ node('lisk-hub') {
         '''
         archiveArtifacts artifacts: 'app/build/'
         archiveArtifacts artifacts: 'app/build-testnet/'
-        archiveArtifacts artifacts: 'dist/lisk-hub*'
+        archiveArtifacts allowEmptyArchive: true, artifacts: 'dist/lisk-hub*'
         githubNotify context: 'Jenkins test deployment', description: 'Commit was deployed to test', status: 'SUCCESS', targetUrl: "${HUDSON_URL}test/" + "${JOB_NAME}".tokenize('/')[0] + "/${BRANCH_NAME}"
       } catch (err) {
         echo "Error: ${err}"
