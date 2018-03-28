@@ -168,7 +168,7 @@ class SavedAccounts extends React.Component {
                   null
                 }
                 { this.state.editing ?
-                  <PrimaryButton className='remove-button'
+                  <PrimaryButton className={this.isSelectedForRemove(account) ? 'confirm-button' : 'remove-button'}
                     theme={ this.isSelectedForRemove(account) ?
                       {} :
                       { button: styles.removeButton }
