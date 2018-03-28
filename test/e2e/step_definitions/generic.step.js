@@ -178,7 +178,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
 
   Then('I should be on url "{url}"', (expectedURL) => {
     browser.getCurrentUrl().then((url) => {
-      expect(url).to.eql(`${browser.params.baseURL}#${expectedURL}`);
+      expect(url).to.eql(`${browser.params.baseURL}/#${expectedURL}`);
     });
   });
 

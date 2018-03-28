@@ -25,7 +25,7 @@ describe('AccountTransaction Component', () => {
 
     props = {
       match: { params: { address: '987654321L' } },
-      history: { push: spy() },
+      history: { push: spy(), location: { search: ' ' } },
       t: key => key,
     };
     wrapper = mountWithContext(<AccountTransactions {...props}/>, { storeState });

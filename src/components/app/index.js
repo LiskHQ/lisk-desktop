@@ -23,22 +23,32 @@ import OfflineWrapper from '../offlineWrapper';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import AccountVisualDemo from '../accountVisual/demo';
 import routes from '../../constants/routes';
+import Onboarding from '../onboarding';
 
 class App extends React.Component {
   markAsLoaded() {
     this.main.classList.add(styles.loaded);
     this.main.classList.add('appLoaded');
+    this.appLoaded = true;
+  }
+
+  startOnboarding() {
+    this.onboarding.setState({ start: true });
   }
 
   render() {
     return (
       <OfflineWrapper>
+        <Onboarding appLoaded={this.appLoaded} ref={(el) => {
+          if (el) { this.onboarding = el.getWrappedInstance().getWrappedInstance(); }
+        }} />
         <main className={`${styles.bodyWrapper}`} ref={(el) => { this.main = el; }}>
-          <MainMenu />
+          <MainMenu startOnboarding={this.startOnboarding.bind(this)}/>
           <Route path={routes.accounts.path} component={SavedAccounts} />
           <section>
             <div className={styles.mainBox}>
-              <Header />
+              <Header/>
+              <div id='onboardingAnchor'></div>
               <Switch>
                 <PrivateRoutes path={routes.main.path} render={ ({ match }) => (
                   <main className={offlineStyle.disableWhenOffline}>

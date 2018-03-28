@@ -59,7 +59,7 @@ describe('TransactionRow', () => {
     expect(wrapper.find('.transactions-cell')).to.have.lengthOf(4);
   });
 
-  it('should not cause any error on click if props.nextStep is not defined', () => {
+  it('should not cause any error on click if props.onClick is not defined', () => {
     const wrapper = mount(<Provider store={store}>
       <Router>
         <I18nextProvider i18n={ i18n }>

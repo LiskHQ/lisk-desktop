@@ -108,8 +108,10 @@ class Transactions extends React.Component {
           transactions={this.props.transactions}
           loadMore={this.loadMore.bind(this)}
           nextStep={this.props.nextStep}
+          onClick={this.props.nextStep}
           loading={this.isLoading()}
           t={this.props.t}
+          history={this.props.history}
         />
         {
           // the whole transactions box should be scrollable on XS

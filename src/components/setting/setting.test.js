@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import Setting from './setting';
 import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
+import breakpoints from './../../constants/breakpoints';
 
 describe('Setting', () => {
   const history = {
@@ -42,22 +43,21 @@ describe('Setting', () => {
 
 
   let clock;
-
   const t = key => key;
   let wrapper;
 
-  let settingsUpdated;
-  let accountUpdated;
+  const props = {
+    settingsUpdated: sinon.spy(),
+    accountUpdated: sinon.spy(),
+    settings,
+    t,
+    menuToggle: sinon.spy(),
+    startOnboarding: sinon.spy(),
+    isAuthenticated: true,
+  };
 
   beforeEach(() => {
-    settingsUpdated = sinon.spy();
-    accountUpdated = sinon.spy();
-    const props = {
-      settingsUpdated,
-      accountUpdated,
-      settings,
-      t,
-    };
+    window.innerWidth = breakpoints.l;
 
     wrapper = mount(
       <Setting
@@ -89,11 +89,36 @@ describe('Setting', () => {
   it('should change advanceMode setting when clicking on checkbox', () => {
     wrapper.find('.advancedMode').at(0).find('input').simulate('change', { target: { checked: false, value: false } });
     clock.tick(300);
+  });
+
+  it('should show the onboarding setting when authenticated and not on mobile', () => {
+    expect(wrapper.find('#carouselNav li')).to.have.length(3);
+    wrapper.find('button').props().onClick();
+    expect(props.menuToggle).to.have.been.calledWith();
+    expect(props.startOnboarding).to.have.been.calledWith();
+  });
+
+  it('should not show the onboarding setting when on mobile', () => {
+    window.innerWidth = breakpoints.m;
+    wrapper = mount(<Setting store={store} {...props}/>, options);
+    expect(wrapper.find('#carouselNav li')).to.have.length(2);
+  });
+
+  it('should not show the onboarding setting when not authenticated', () => {
+    props.isAuthenticated = false;
+    wrapper = mount(<Setting store={store} {...props}/>, options);
+    expect(wrapper.find('#carouselNav li')).to.have.length(2);
+  });
+
+  it.skip('should click on .autoLog update the setting', () => {
+    wrapper.find('.autoLog input').simulate('click');
+    clock.tick(100);
+    wrapper.find('.autoLog label').simulate('click');
     wrapper.update();
     const expectedCallToSettingsUpdated = {
       advancedMode: !settings.advancedMode,
     };
-    expect(settingsUpdated).to.have.been.calledWith(expectedCallToSettingsUpdated);
+    expect(props.settingsUpdated).to.have.been.calledWith(expectedCallToSettingsUpdated);
   });
 
   it('should change autolog setting when clicking on checkbox', () => {
@@ -103,7 +128,7 @@ describe('Setting', () => {
     const expectedCallToSettingsUpdated = {
       autoLog: !settings.autoLog,
     };
-    expect(settingsUpdated).to.have.been.calledWith(expectedCallToSettingsUpdated);
+    expect(props.settingsUpdated).to.have.been.calledWith(expectedCallToSettingsUpdated);
   });
 
 
@@ -123,7 +148,7 @@ describe('Setting', () => {
     const expectedCallToAccountUpdated = {
       expireTime: timeNow,
     };
-    expect(accountUpdated.getCall(0).args[0].expireTime)
+    expect(props.accountUpdated.getCall(0).args[0].expireTime)
       .to.be.greaterThan(expectedCallToAccountUpdated.expireTime);
   });
 

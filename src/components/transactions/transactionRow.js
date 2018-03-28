@@ -16,10 +16,9 @@ class TransactionRow extends React.Component {
 
   render() {
     const { props } = this;
-    const nextStep = !props.nextStep ? (() => {}) : () => (props.nextStep({ value: props.value }));
-
+    const onClick = !props.onClick ? (() => {}) : () => props.onClick(this.props);
     return (
-      <div className={`${grid.row} ${styles.rows} ${styles.clickable} transactionsRow`} onClick={nextStep}>
+      <div className={`${grid.row} ${styles.rows} ${styles.clickable} transactionsRow`} onClick={onClick}>
         <div className={`${styles.leftText} ${grid['col-xs-6']} ${grid['col-sm-6']} transactions-cell`}>
           <div className={`${styles.address}`}>
             <TransactionType {...props.value} address={props.address}></TransactionType>
@@ -35,10 +34,7 @@ class TransactionRow extends React.Component {
           <Amount {...props}></Amount>
         </div>
         <div className={`${styles.rightText} ${grid['col-xs-1']} ${grid['col-sm-1']} transactions-cell`}>
-          { props.nextStep
-            ? <FontIcon value='arrow-right'/>
-            : null
-          }
+          <FontIcon value='arrow-right'/>
         </div>
       </div>
     );
