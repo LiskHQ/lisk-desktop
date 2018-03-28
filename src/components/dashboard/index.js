@@ -13,7 +13,8 @@ import styles from './dashboard.css';
 
 class Dashboard extends React.Component {
   render() {
-    const { transactions, t, account, loading } = this.props;
+    const { transactions, t, account, loading, history } = this.props;
+
     return <div className={`${grid.row} ${styles.wrapper}`}>
       <div className={`${grid['col-md-8']} ${grid['col-xs-12']} ${styles.main}`}>
         <Box className={`${styles.graph}`}>
@@ -35,6 +36,8 @@ class Dashboard extends React.Component {
             address: account.address,
             dashboard: true,
             loading,
+            history,
+            onClick: props => history.push(`${routes.main.path}${routes.wallet.path}?id=${props.value.id}`),
           }} />
         </Box>
       </div>
