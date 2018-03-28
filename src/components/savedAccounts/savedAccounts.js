@@ -1,25 +1,11 @@
 import { Button as ToolBoxButton } from 'react-toolbox/lib/button';
-import { Link } from 'react-router-dom';
-// import FontIcon from 'react-toolbox/lib/font_icon';
 import React from 'react';
-import { extractAddress } from '../../utils/api/account';
-import { PrimaryButton, SecondaryLightButton } from '../toolbox/buttons/button';
-import AccountVisual from '../accountVisual';
-import LiskAmount from '../liskAmount';
+import { SecondaryLightButton } from '../toolbox/buttons/button';
 import BackgroundMaker from '../backgroundMaker';
-import networks from '../../constants/networks';
-import getNetwork from '../../utils/getNetwork';
 import routes from '../../constants/routes';
-
-import plusShapeIcon from '../../assets/images/plus-shape.svg';
-import circleImage from '../../assets/images/add-id-oval.svg';
-import rectangleOnTheRight from '../../assets/images/add-id-rectangle-1.svg';
-import rectangleImage2 from '../../assets/images/add-id-rectangle-2.svg';
-import rectangleImage3 from '../../assets/images/add-id-rectangle-3.svg';
-import triangleImage from '../../assets/images/add-id-triangle.svg';
 import { FontIcon } from '../fontIcon';
-import CopyToClipboard from '../copyToClipboard';
-
+import AddAccountCard from './addAccountCard';
+import AccountCard from './accountCard';
 import styles from './savedAccounts.css';
 
 
@@ -112,72 +98,19 @@ class SavedAccounts extends React.Component {
         </h1>
         <div className={`${styles.content}`}>
           <ul className={styles.cardsWrapper} >
-            <li>
-              <Link to={`${routes.addAccount.path}?referrer=${routes.main.path}${routes.dashboard.path}/`} >
-                <div className={`add-lisk-id-card ${styles.card} ${styles.addNew}`} >
-                  <div className={styles.cardIcon}>
-                    <img src={plusShapeIcon} className={styles.plusShapeIcon} />
-                  </div>
-                  <img src={rectangleOnTheRight} className={styles.rectangleOnTheRight} />
-                  <img src={rectangleImage2} className={styles.rectangleImage2} />
-                  <img src={rectangleImage3} className={styles.rectangleImage3} />
-                  <img src={triangleImage} className={styles.triangleImage} />
-                  <img src={circleImage} className={styles.circleImage} />
-                  <h2 className={styles.addTittle} >{t('Add a Lisk ID')}</h2>
-                </div>
-              </Link>
-            </li>
+            <AddAccountCard t={t} />
             {savedAccounts.map(account => (
-              <li className={`saved-account-card ${styles.card}
-                ${this.state.editing ? null : styles.clickable}
-                ${this.isSelectedForRemove(account) ? styles.darkBackground : null}`}
-              key={account.publicKey + account.network}
-              onClick={ switchAccount.bind(null, account)} >
-                {(account.passphrase ?
-                  <strong
-                    className={`unlocked ${styles.unlocked}`}
-                    onClick={this.handleRemovePassphrase.bind(this, account)}>
-                    <FontIcon value='unlocked' />
-                    {t('Lock ID')}
-                  </strong> :
-                  null)}
-                {(this.state.isSecureAppears[`${account.network}${account.publicKey}`] ?
-                  <strong className={`unlockedSecured ${styles.unlockedSecured}`}>
-                    {t('Your ID is now secured!')}
-                  </strong> :
-                  null)}
-                {(account.network !== networks.mainnet.code ?
-                  <strong className={styles.network}>
-                    {account.address ? account.address : t(getNetwork(account.network).name)}
-                  </strong> :
-                  null)}
-                <div className={styles.cardIcon}>
-                  <AccountVisual address={extractAddress(account.publicKey)} size={155} sizeS={100}
-                    className={styles.accountVisual} />
-                </div>
-                <h2>
-                  <LiskAmount val={account.balance} /> <small>LSK</small>
-                </h2>
-                <div className={styles.address} onClick={ e => e.stopPropagation()}>
-                  <CopyToClipboard value={extractAddress(account.publicKey)}/></div>
-                { this.isSelectedForRemove(account) ?
-                  <div className={styles.removeConfirm}>
-                    <h2>{t('You can always get it back.')}</h2>
-                    <a onClick={this.selectForRemove.bind(this)}>{t('Keep it')}</a>
-                  </div> :
-                  null
-                }
-                { this.state.editing ?
-                  <PrimaryButton className='remove-button'
-                    theme={ this.isSelectedForRemove(account) ?
-                      {} :
-                      { button: styles.removeButton }
-                    }
-                    onClick={this.handleRemove.bind(this, account)}
-                    label={this.isSelectedForRemove(account) ? t('Confirm') : t('Remove')}/> :
-                  null
-                }
-              </li>
+              <AccountCard
+                key={account.publicKey + account.network}
+                onClick={() => switchAccount(account)}
+                handleRemove={this.handleRemove.bind(this)}
+                isSelectedForRemove={this.isSelectedForRemove.bind(this)}
+                selectForRemove={this.selectForRemove.bind(this)}
+                handleRemovePassphrase={this.handleRemovePassphrase.bind(this)}
+                account={account}
+                isSecureAppears={this.state.isSecureAppears}
+                t={t}
+                isEditing={this.state.editing} />
             ))}
           </ul>
         </div>
