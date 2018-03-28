@@ -118,6 +118,23 @@
   cursor: default;
 }
 
+.settingsButton {
+  font-family: var(--slide-header-font);
+  font-weight: var(--font-weight-bold);
+  font-size: 16px;
+  background: var(--color-grayscale-light);
+  color: var(--color-grayscale-dark);
+  border-radius: 25px;
+  line-height: 48px;
+  padding: 0px 28px;
+  border: none;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+}
+
 @media (--medium-viewport) {
   .wrapper {
     position: absolute;

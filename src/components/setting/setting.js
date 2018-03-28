@@ -5,6 +5,7 @@ import styles from './setting.css';
 import Checkbox from '../toolbox/sliderCheckbox';
 import i18n from '../../i18n';
 import accountConfig from '../../constants/account';
+import breakpoints from './../../constants/breakpoints';
 // TODO: will be re-enabled when the functionality is updated
 // import routes from '../../constants/routes';
 // import { FontIcon } from '../fontIcon';
@@ -40,6 +41,10 @@ class Setting extends React.Component {
       accountUpdated({ expireTime: date });
     }
     settingsUpdated({ autoLog: !settings.autoLog });
+  }
+
+  showOnboardingSetting() {
+    return this.props.isAuthenticated && window.innerWidth > breakpoints.m;
   }
 
   render() {
@@ -83,6 +88,20 @@ class Setting extends React.Component {
             <p>{t('Lock ID’s automatically after 10 minutes.')}</p>
           </article>
         </div>
+        {this.showOnboardingSetting()
+          ? <div>
+            <button className={styles.settingsButton} onClick={() => {
+              this.props.menuToggle();
+              this.props.startOnboarding();
+            }
+            }>{t('Start')}</button>
+            <article>
+              <h5>{t('Start the onboarding')}</h5>
+              <p>{t('Take a quick tour to see how the Lisk Hub works.')}</p>
+            </article>
+          </div>
+          : null
+        }
         {/* TODO: will be re-enabled when the functionality is updated
         <div>
           {!hasSecondPassphrase ?
@@ -125,7 +144,7 @@ class Setting extends React.Component {
         */}
       </ReactSwipe>
       <ul className={ styles.carouselNav } id='carouselNav'>
-        {[...Array(2)].map((x, i) =>
+        {[...Array(this.showOnboardingSetting() ? 3 : 2)].map((x, i) =>
           <li
             key={i}
             className={(i === this.state.activeSlide) ? styles.activeSlide : ''}
