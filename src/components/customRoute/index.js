@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 
 export const CustomRouteRender = ({ path, component, isPrivate, exact,
-  isAuthenticated, ...rest }) => {
+  isAuthenticated, pathSuffix = '', pathPrefix = '', ...rest }) => {
   const { pathname, search } = rest.history.location;
 
   return ((isPrivate && isAuthenticated) || !isPrivate ?
     <main className={isPrivate ? offlineStyle.disableWhenOffline : null}>
-      <Route path={path} component={component} exact={exact} />
+      <Route path={pathPrefix + path + pathSuffix} component={component} exact={exact} />
     </main>
     : <Redirect to={`/?referrer=${pathname}${encodeURIComponent(search)}`} />
   );
