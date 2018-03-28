@@ -34,8 +34,7 @@ class Voting extends React.Component {
         <aside className={`${grid['col-sm-12']} ${grid['col-md-4']} ${styles.votingBox}`}>
           <DelegateSidebar votes={this.props.votes}
             setLayover={this.setLayover.bind(this)}
-            updateList={(value) => { this.toggleSummery(value); }}
-            history={this.props.history} />
+            updateList={(value) => { this.toggleSummery(value); }} />
         </aside>
         <section className={`${grid['col-sm-12']} ${grid['col-md-8']} ${styles.votingBox}`}>
           <DelegateList showChangeSummery={this.state.showChangeSummery} />

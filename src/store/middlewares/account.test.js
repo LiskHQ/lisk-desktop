@@ -67,7 +67,6 @@ describe('Account middleware', () => {
         data: {},
       },
       account: {
-        balance: 0,
         address: 'sample_address',
       },
       transactions: {

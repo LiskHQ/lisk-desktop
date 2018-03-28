@@ -31,7 +31,6 @@ describe('votesPreview', () => {
         unconfirmed: false,
       },
     },
-    history: { location: { search: 'votes?trest' } },
     nextStep: spy(),
     updateList: spy(),
   };
@@ -78,10 +77,5 @@ describe('votesPreview', () => {
     expect(wrapper.find('article.selection h4')).to.have.text('34');
     className = wrapper.find('.selection-wrapper').props().className;
     expect(className.match(/red/g)).to.have.lengthOf(1);
-  });
-
-  it('should call nextStep and updateList when history.location.search contains votes', () => {
-    expect(props.nextStep).to.have.been.calledWith({});
-    expect(props.updateList).to.have.been.calledWith(true);
   });
 });

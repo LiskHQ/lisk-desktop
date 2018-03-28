@@ -12,8 +12,7 @@ const DelegateSidebar = props => (
     <MultiStep className={styles.wrapper} finalCallback={() => true}>
       <VotesPreview votes={props.votes}
         updateList={(value) => { props.updateList(value); }}
-        onMount={props.setLayover}
-        history={props.history}/>
+        onMount={props.setLayover} />
       <PassphraseSteps onMount={props.setLayover} />
       <ConfirmVotes
         updateList={(value) => { props.updateList(value); }}
