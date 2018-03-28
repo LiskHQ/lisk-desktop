@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { spy } from 'sinon';
 import { expect } from 'chai';
 import { mountWithContext } from './../../../test/utils/mountHelpers';
 import VotesPreview from './index';
@@ -8,7 +9,6 @@ import VotesPreview from './index';
 describe('votesPreview', () => {
   let wrapper;
   const props = {
-    updateList: key => key,
     votes: {
       voted: {
         confirmed: true,
@@ -31,6 +31,8 @@ describe('votesPreview', () => {
         unconfirmed: false,
       },
     },
+    nextStep: spy(),
+    updateList: spy(),
   };
 
   const generateNVotes = n => (

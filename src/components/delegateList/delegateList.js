@@ -5,6 +5,7 @@ import Box from '../box';
 import Header from './votingHeader';
 import VotingRow from './votingRow';
 import styles from './delegateList.css';
+import VoteUrlProcessor from '../voteUrlProcessor';
 import voteFilters from './../../constants/voteFilters';
 
 // Create a new Table component injecting Head and Row
@@ -159,6 +160,7 @@ class DelegateList extends React.Component {
     const filteredList = this.filter(this.props.delegates);
     return (
       <Box className={`voting delegate-list-box ${showChangeSummery} ${styles.box}`}>
+        <VoteUrlProcessor />
         <Header
           setActiveFilter={this.setActiveFilter.bind(this)}
           showChangeSummery={this.state.showChangeSummery}
