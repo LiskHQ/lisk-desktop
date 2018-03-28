@@ -4,10 +4,12 @@
   --font-size-card-h2: 30px;
   --font-size-card-h2-s: 24px;
   --address-font-size: 17px;
+  --address-font-size-s: 14px;
   --small-font-size: 20px;
   --card-width: 347px;
   --card-height: 436px;
   --card-width-m: 267px;
+  --card-width-s: 227px;
   --card-height-m: 336px;
 }
 
@@ -217,9 +219,26 @@
 
 @media (--small-viewport) {
   .card {
-    width: var(--card-width-m);
-    height: 320px;
+    width: var(--card-width-s);
+    height: 280px;
     margin: 0px 24px;
+
+    & h2 {
+      margin: 15px 0;
+      padding: 0;
+      font-size: var(--font-size-card-h2-s);
+    }
+
+    & .removeButton {
+      position: absolute;
+      top: -10px;
+      left: -50%;
+      transform: translateX(50%);
+    }
+  }
+
+  .address {
+    font-size: var(--address-font-size-s);
   }
 
   .cardIcon {
