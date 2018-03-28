@@ -30,7 +30,8 @@
     "pack": "npm install && npm run build && npm run clean-dist && npm run dist",
     "pack:win": "cmd /c npm install && npm run clean-build && npm run copy-files && npm run build-prod && npm run build-electron && npm run clean-dist && npm run dist:win",
     "storybook": "start-storybook -p 6006 -s ./src/",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "serve": "http-server"
   },
   "author": "Lisk Foundation <admin@lisk.io>, lightcurve GmbH <admin@lightcurve.io>",
   "license": "GPL-3.0",
@@ -130,6 +131,7 @@
     "glob": "=7.1.2",
     "html-webpack-inline-source-plugin": "0.0.10",
     "html-webpack-plugin": "3.0.4",
+    "http-server": "0.11.1",
     "i18next-scanner": "=2.0.0",
     "imports-loader": "0.7.1",
     "js-nacl": "=1.2.2",
