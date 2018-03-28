@@ -14,6 +14,8 @@ describe('Passphrase: Safekeeping', () => {
   let wrapper;
   const passphrase = 'stock wagon borrow episode laundry kitten salute link globe zero feed marble';
   const props = {
+    header: 'test header',
+    message: 'test message',
     passphrase,
     t: key => key,
     prevStep: () => {},

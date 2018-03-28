@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { HashRouter as Router } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 import { applyDeviceClass } from './utils/applyDeviceClass';
+import history from './history';
 import App from './components/app';
-// import history from './history';
 import store from './store';
 import i18n from './i18n'; // initialized i18next instance
 import proxyLogin from './utils/proxyLogin';
@@ -21,10 +21,19 @@ if (env.production) {
 
 const rootElement = document.getElementById('app');
 
+let basename = '/hub';
+const initialUrl = '/main/dashboard';
+if (env.production) {
+  basename = document.location.href.replace('file://', '').concat(basename);
+}
+const historyObj = history({ basename });
+if (env.production) {
+  historyObj.push(initialUrl);
+}
 
 const renderWithRouter = Component =>
   <Provider store={store}>
-    <Router>
+    <Router history={historyObj}>
       <I18nextProvider i18n={ i18n }>
         <Component />
       </I18nextProvider>
@@ -42,3 +51,6 @@ if (module.hot) {
 
 applyDeviceClass(document.getElementsByTagName('html')[0], navigator);
 
+module.exports = {
+  history: historyObj,
+};

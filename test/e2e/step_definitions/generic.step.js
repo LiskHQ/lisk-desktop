@@ -173,7 +173,7 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
   });
 
   When('I go to "{url}"', (url, callback) => {
-    browser.get(`${browser.params.baseURL}#${url}`).then(callback);
+    browser.get(`${browser.params.baseURL}${url}`).then(callback);
   });
 
   Then('I should be on url "{url}"', (expectedURL) => {

@@ -1,11 +1,13 @@
 import React from 'react';
+// import { Link } from 'react-router-dom';
 import ReactSwipe from 'react-swipe';
 import styles from './setting.css';
 import Checkbox from '../toolbox/sliderCheckbox';
 import i18n from '../../i18n';
 import accountConfig from '../../constants/account';
 // TODO: will be re-enabled when the functionality is updated
-// import RelativeLink from '../relativeLink';
+// import routes from '../../constants/routes';
+// import { FontIcon } from '../fontIcon';
 // import languageSwitcherTheme from './languageSwitcher.css';
 
 class Setting extends React.Component {
@@ -83,6 +85,23 @@ class Setting extends React.Component {
         </div>
         {/* TODO: will be re-enabled when the functionality is updated
         <div>
+          {!hasSecondPassphrase ?
+            <Link
+              className={`register-second-passphrase ${styles.secondPassphrase}`}
+              to={`${routes.main.path}${routes.secondPassphrase.path}`}>
+              {t('Add')}
+            </Link> :
+            <span
+              className={`register-second-passphrase ${styles.secondPassphraseEnabled}`}>
+              <FontIcon>checkmark</FontIcon>
+            </span>
+          }
+          <article>
+            <h5>{t('Security')}</h5>
+            <p>{t('Register 2nd passphrase')}</p>
+          </article>
+        </div>
+        <div>
           <Checkbox
             theme={languageSwitcherTheme}
             className={`${styles.smallSlider} language-switcher`}
@@ -101,23 +120,6 @@ class Setting extends React.Component {
           <article>
             <h5>{t('Language')}</h5>
             <p>{t('Currently we speaking english and german.')}</p>
-          </article>
-        </div>
-        <div>
-          {!hasSecondPassphrase ?
-            <RelativeLink
-              className={`register-second-passphrase ${styles.secondPassphrase}`}
-              to='register-second-passphrase'>
-              {t('Add')}
-            </RelativeLink> :
-            <span
-              className={`register-second-passphrase ${styles.secondPassphraseEnabled}`}>
-              <FontIcon>checkmark</FontIcon>
-            </span>
-          }
-          <article>
-            <h5>{t('Security')}</h5>
-            <p>{t('Register 2nd passphrase')}</p>
           </article>
         </div>
         */}

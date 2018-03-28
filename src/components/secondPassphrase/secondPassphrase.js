@@ -1,36 +1,52 @@
 import React from 'react';
-import Fees from '../../constants/fees';
-import Authenticate from '../authenticate';
+// import Fees from '../../constants/fees';
 import MultiStep from '../multiStep';
-import Info from '../passphrase/info';
-import Create from '../passphrase/create';
+// import Info from '../passphrase/info';
+import CreateSecond from '../passphrase/createSecond';
 import Safekeeping from '../passphrase/safekeeping';
 import Confirm from '../passphrase/confirm';
+import Box from '../box';
+import styles from './secondPassphrase.css';
+import routes from '../../constants/routes';
 
-const SecondPassphrase = ({
-  passphrase, account, peers, registerSecondPassphrase, closeDialog, t,
-}) => {
-  const onPassphraseRegister = (secondPassphrase) => {
-    registerSecondPassphrase({
-      activePeer: peers.data,
-      secondPassphrase,
-      account,
-    });
-  };
-
-  const useCaseNote = t('your second passphrase will be required for all transactions sent from this account');
-  const securityNote = t('Losing access to this passphrase will mean no funds can be sent from this account.');
-
-  return (
-    typeof passphrase === 'string' && passphrase.length > 0 ?
-      <MultiStep showNav={false} finalCallback={onPassphraseRegister}>
-        <Info title='Info' t={t} icon='bookmark_border' fee={Fees.setSecondPassphrase}
-          useCaseNote={useCaseNote} securityNote={securityNote} backButtonFn={closeDialog} />
-        <Create title='Create' t={t} icon='vpn_key' />
-        <Safekeeping title='Safekeeping' t={t} icon='done' />
-        <Confirm title='Confirm' t={t} confirmButton='Register' icon='launch' />
-      </MultiStep> :
-      <Authenticate nextAction={t('set second passphrase')} />);
-};
+class SecondPassphrase extends React.Component {
+  // eslint-disable-next-line class-methods-use-this
+  componentWillUnmount() {
+    document.body.classList.remove('contentFocused');
+  }
+  componentDidMount() {
+    document.body.classList.add('contentFocused');
+    if (this.props.account.secondSignature === 1) {
+      this.props.history
+        .push(`${routes.main.path}${routes.dashboard.path}`);
+    }
+  }
+  render() {
+    const { account, peers, registerSecondPassphrase, t } = this.props;
+    const header = t('Secure the use of your Lisk ID with a second passphrase.');
+    const message = t('You will need it to use your Lisk ID, like sending and voting. You are responsible for keeping your second passphrase safe. No one can restore it, not even Lisk.');
+    const onPassphraseRegister = (secondPassphrase, passphrase) => {
+      registerSecondPassphrase({
+        activePeer: peers.data,
+        secondPassphrase,
+        passphrase,
+        account,
+      });
+    };
+    return (
+      <Box className={`${styles.hasPaddingTop} ${styles.register}`}>
+        <MultiStep
+          showNav={true}
+          finalCallback={onPassphraseRegister}
+          backButtonLabel={t('Back')}>
+          <CreateSecond title={t('Create')} t={t} icon='add' />
+          <Safekeeping title={t('Safekeeping')} t={t}
+            icon='checkmark' header={header} message={message} />
+          <Confirm title={t('Confirm')} t={t} confirmButton='Register'
+            icon='login' secondPassConfirmation={true} />
+        </MultiStep>
+      </Box>);
+  }
+}
 
 export default SecondPassphrase;

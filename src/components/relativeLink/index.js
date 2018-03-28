@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import buttonStyle from 'react-toolbox/lib/button/theme.css';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
-import dialogs from '../dialog/dialogs';
 
 const RelativeLink = ({
   location, to, children, className, raised, neutral, primary, flat, disableWhenOffline,
@@ -17,13 +16,7 @@ const RelativeLink = ({
   if (disableWhenOffline !== undefined) style += `${offlineStyle.disableWhenOffline} `;
   if (style !== '') style += ` ${buttonStyle.button}`;
 
-  const dialogNames = Object.keys(dialogs());
-  let pathname = location.pathname;
-  dialogNames.forEach((dialog) => {
-    pathname = pathname.replace(`/${dialog}`, '');
-  });
-
-  const path = `${pathname}/${to}`.replace('//', '/');
+  const path = `${location.pathname}/${to}`.replace('//', '/');
   return (
     <Link className={`${className} ${style}`} to={path}>{ children }</Link>
   );

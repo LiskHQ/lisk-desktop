@@ -7,10 +7,12 @@ export default {
   searchResult: { path: '/result' },
   transaction: { path: '/transactions' },
   login: { path: '/' },
+  accounts: { path: '/accounts' },
   addAccount: { path: '/add-account' },
   register: { path: '/register' },
   sidechains: { path: '/sidechains' },
   voting: { path: '/voting' },
   main: { path: '/main' },
   explorer: { path: '/explorer' },
+  secondPassphrase: { path: '/second-passphrase' },
 };

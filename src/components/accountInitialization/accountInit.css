@@ -6,21 +6,20 @@
 }
 
 .wrapper {
-  padding: 45px;
-  line-height: 30px;
   height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
   & header {
     & h2 {
-      margin-top: 0;
       font-weight: var(--font-weight-semi-bold);
     }
   }
 
   & p {
+    line-height: 30px;
     font-size: var(--font-size-L);
   }
 
@@ -28,10 +27,6 @@
     font-weight: var(--font-weight-bold);
     color: var(--color-link);
     text-decoration: none;
-  }
-
-  & footer {
-    padding: 0px;
   }
 
   & .button {
@@ -47,8 +42,6 @@
 
 @media (--xSmall-viewport) {
   .wrapper {
-    padding: 20px 19px;
-
     & p {
       font-size: var(--font-size-XS);
     }

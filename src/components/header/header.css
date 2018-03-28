@@ -183,7 +183,7 @@
     position: fixed;
     top: 0;
     background-color: var(--color-white);
-    z-index: 20;
+    z-index: var(--headerbar-index);
     height: auto;
 
     & .searchBar {
