@@ -13,7 +13,7 @@ const saveSearch = (search) => {
 
 export const visit = (value, history) => {
   if (value.match(regex.address)) {
-    history.push(`${routes.explorer.path}${routes.account.path}/${value}`);
+    history.push(`${routes.explorer.path}${routes.accounts.path}/${value}`);
   } else if (value.match(regex.transactionId)) {
     history.push(`${routes.explorer.path}${routes.wallet.path}/${value}`);
   } else {

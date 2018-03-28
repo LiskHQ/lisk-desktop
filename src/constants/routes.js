@@ -78,13 +78,6 @@ export default {
     component: SearchResult,
     isPrivate: false,
   },
-  account: {
-    pathPrefix: '/explorer',
-    path: '/accounts',
-    pathSuffix: '/:address?',
-    component: AccountTransactions,
-    isPrivate: false,
-  },
   accounts: {
     pathPrefix: '/explorer',
     path: '/accounts',
