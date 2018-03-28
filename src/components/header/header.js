@@ -12,7 +12,6 @@ import logo from '../../assets/images/logo-beta.svg';
 import PrivateWrapper from '../privateWrapper';
 import { ActionButton } from './../toolbox/buttons/button';
 import styles from './header.css';
-import RelativeLink from '../relativeLink';
 import CustomCountDown from './customCountDown';
 import routes from './../../constants/routes';
 
