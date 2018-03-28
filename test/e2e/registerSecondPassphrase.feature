@@ -14,7 +14,7 @@ Feature: Register second passphrase
     And I remember passphrase, click "yes its safe button", choose missing words
     And I wait 1 seconds
     And I swipe "confirm checkbox" to right
-    And I wait 20 seconds
+    And I wait 10 seconds
     And I click "get to your dashboard button"
     And I fill in "1" to "amount" field
     And I fill in "94495548317450502L" to "recipient" field
