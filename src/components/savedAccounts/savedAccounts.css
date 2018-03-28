@@ -8,6 +8,7 @@
   --h1-padding-xl: 85px;
   --h1-padding-l: 40px;
   --h1-padding-m: 25px;
+  --add-button-bottom-margin: calc(100vh - (55px +  98px)); /* stylelint-disable-line */
 }
 
 .content {
@@ -148,6 +149,15 @@
     & > h1 {
       font-size: var(--font-size-ids-h1-s);
     }
+
+    & > .closeButton[type='button'] {
+      height: 40px;
+      width: 40px;
+
+      & > span[data-react-toolbox='font-icon'] {
+        line-height: 40px;
+      }
+    }
   }
 
   .closeButton {
@@ -156,16 +166,16 @@
   }
 
   .cardsWrapper {
-    padding: 0;
+    padding-bottom: 100px;
   }
 
   .addAcctiveAccountButton {
-    bottom: 18vh; /* stylelint-disable-line */
+    top: var(--add-button-bottom-margin);
   }
 
   .deviceIos {
     & .addAcctiveAccountButton {
-      bottom: 95px; /* stylelint-disable-line */
+      top: var(--add-button-bottom-margin);
     }
   }
 
@@ -175,7 +185,7 @@
     }
 
     & .addAcctiveAccountButton {
-      bottom: 120px;
+      top: var(--add-button-bottom-margin);
     }
   }
 }
