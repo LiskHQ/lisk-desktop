@@ -20,6 +20,7 @@
   margin-top: -23px;
   border-radius: 3px;
   overflow: hidden;
+
   @mixin login-signup;
 
   & .table {
