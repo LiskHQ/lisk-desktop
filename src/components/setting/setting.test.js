@@ -4,6 +4,7 @@ import { mount } from 'enzyme';
 import sinon from 'sinon';
 import configureMockStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
+import { MemoryRouter as Router } from 'react-router-dom';
 import Setting from './setting';
 import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
@@ -51,7 +52,7 @@ describe('Setting', () => {
     accountUpdated: sinon.spy(),
     settings,
     t,
-    menuToggle: sinon.spy(),
+    toggleMenu: sinon.spy(),
     startOnboarding: sinon.spy(),
     isAuthenticated: true,
   };
@@ -59,10 +60,11 @@ describe('Setting', () => {
   beforeEach(() => {
     window.innerWidth = breakpoints.l;
 
-    wrapper = mount(
+    wrapper = mount(<Router>
       <Setting
         store={store}
-        {...props}/>, options);
+        {...props}/>
+    </Router>, options);
 
     clock = sinon.useFakeTimers({
       toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
@@ -92,22 +94,30 @@ describe('Setting', () => {
   });
 
   it('should show the onboarding setting when authenticated and not on mobile', () => {
-    expect(wrapper.find('#carouselNav li')).to.have.length(3);
+    expect(wrapper.find('#carouselNav li')).to.have.length(4);
     wrapper.find('button').props().onClick();
-    expect(props.menuToggle).to.have.been.calledWith();
+    expect(props.toggleMenu).to.have.been.calledWith();
     expect(props.startOnboarding).to.have.been.calledWith();
   });
 
   it('should not show the onboarding setting when on mobile', () => {
     window.innerWidth = breakpoints.m;
-    wrapper = mount(<Setting store={store} {...props}/>, options);
-    expect(wrapper.find('#carouselNav li')).to.have.length(2);
+    wrapper = mount(<Router>
+      <Setting
+        {...props}
+      />
+    </Router>, options);
+    expect(wrapper.find('#carouselNav li')).to.have.length(3);
   });
 
   it('should not show the onboarding setting when not authenticated', () => {
     props.isAuthenticated = false;
-    wrapper = mount(<Setting store={store} {...props}/>, options);
-    expect(wrapper.find('#carouselNav li')).to.have.length(2);
+    wrapper = mount(<Router>
+      <Setting
+        {...props}
+      />
+    </Router>, options);
+    expect(wrapper.find('#carouselNav li')).to.have.length(3);
   });
 
   it.skip('should click on .autoLog update the setting', () => {
@@ -137,8 +147,14 @@ describe('Setting', () => {
     const settingsToExpireTime = { ...settings };
     settingsToExpireTime.autoLog = false;
     accountToExpireTime.passphrase = accounts.genesis.passphrase;
-    wrapper.setProps({ account: accountToExpireTime, settings: settingsToExpireTime });
-    wrapper.update();
+    wrapper = mount(<Router>
+      <Setting
+        {...props}
+        store={store}
+        account={accountToExpireTime}
+        settings={settingsToExpireTime}
+      />
+    </Router>, options);
 
     wrapper.find('.autoLog').at(0).find('input').simulate('change', { target: { checked: true, value: true } });
     clock.tick(300);

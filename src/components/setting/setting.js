@@ -1,5 +1,5 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ReactSwipe from 'react-swipe';
 import styles from './setting.css';
 import Checkbox from '../toolbox/sliderCheckbox';
@@ -7,8 +7,8 @@ import i18n from '../../i18n';
 import accountConfig from '../../constants/account';
 import breakpoints from './../../constants/breakpoints';
 // TODO: will be re-enabled when the functionality is updated
-// import routes from '../../constants/routes';
-// import { FontIcon } from '../fontIcon';
+import routes from '../../constants/routes';
+import { FontIcon } from '../fontIcon';
 // import languageSwitcherTheme from './languageSwitcher.css';
 
 class Setting extends React.Component {
@@ -50,7 +50,8 @@ class Setting extends React.Component {
   render() {
     this.language = (i18n.language === 'de');
     const showSetting = this.props.showSetting ? styles.active : '';
-    const { t, settings, settingsUpdated } = this.props;
+    const { t, settings, settingsUpdated, hasSecondPassphrase, toggleMenu,
+      startOnboarding } = this.props;
     return <footer className={`${styles.wrapper} ${showSetting}`}>
       <ReactSwipe
         className={styles.carousel}
@@ -91,8 +92,8 @@ class Setting extends React.Component {
         {this.showOnboardingSetting()
           ? <div>
             <button className={styles.settingsButton} onClick={() => {
-              this.props.menuToggle();
-              this.props.startOnboarding();
+              toggleMenu();
+              startOnboarding();
             }
             }>{t('Start')}</button>
             <article>
@@ -102,12 +103,12 @@ class Setting extends React.Component {
           </div>
           : null
         }
-        {/* TODO: will be re-enabled when the functionality is updated
         <div>
           {!hasSecondPassphrase ?
             <Link
               className={`register-second-passphrase ${styles.secondPassphrase}`}
-              to={`${routes.secondPassphrase.path}`}>
+              to={`${routes.main.path}${routes.secondPassphrase.path}`}
+              onClick={toggleMenu}>
               {t('Add')}
             </Link> :
             <span
@@ -120,6 +121,8 @@ class Setting extends React.Component {
             <p>{t('Register 2nd passphrase')}</p>
           </article>
         </div>
+        {/* TODO: will be re-enabled when the functionality is updated
+        {/* TODO: will be re-enabled when the functionality is updated
         <div>
           <Checkbox
             theme={languageSwitcherTheme}
@@ -144,7 +147,7 @@ class Setting extends React.Component {
         */}
       </ReactSwipe>
       <ul className={ styles.carouselNav } id='carouselNav'>
-        {[...Array(this.showOnboardingSetting() ? 3 : 2)].map((x, i) =>
+        {[...Array(this.showOnboardingSetting() ? 4 : 3)].map((x, i) =>
           <li
             key={i}
             className={(i === this.state.activeSlide) ? styles.activeSlide : ''}
