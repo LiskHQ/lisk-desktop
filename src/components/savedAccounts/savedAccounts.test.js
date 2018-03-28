@@ -103,7 +103,7 @@ describe('SavedAccounts', () => {
   it('should call props.accountSwitched on the "saved account card" click', () => {
     wrapper.find('.saved-account-card').at(1).simulate('click');
     expect(props.accountSwitched).to.have.been.calledWith(savedAccounts[1]);
-    expect(props.history.push).to.have.been.calledWith(`${routes.main.path}${routes.dashboard.path}`);
+    expect(props.history.push).to.have.been.calledWith(`${routes.dashboard.path}`);
   });
 
   it('should check if "Your ID is now secured!" disapears after 5sec', () => {

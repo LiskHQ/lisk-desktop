@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import PrivateRoutes from '../privateRoute';
 import Dashboard from '../dashboard';
 import Sidechains from '../sidechains';
 import Header from '../header';
@@ -20,8 +19,8 @@ import MainMenu from '../mainMenu';
 import LoadingBar from '../loadingBar';
 import NotFound from '../notFound';
 import OfflineWrapper from '../offlineWrapper';
-import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import AccountVisualDemo from '../accountVisual/demo';
+import CustomRoute from '../customRoute';
 import routes from '../../constants/routes';
 import Onboarding from '../onboarding';
 
@@ -37,6 +36,101 @@ class App extends React.Component {
   }
 
   render() {
+    const privateRoutes = [
+      {
+        name: 'accountVisualDemo',
+        path: `${routes.accountVisualDemo.path}`,
+        component: AccountVisualDemo,
+        isPrivate: true,
+      },
+      {
+        name: 'dashboard',
+        path: `${routes.dashboard.path}`,
+        component: Dashboard,
+        isPrivate: true,
+      },
+      {
+        name: 'wallet',
+        path: `${routes.wallet.path}`,
+        component: TransactionDashboard,
+        isPrivate: true,
+      },
+      {
+        name: 'delegates',
+        path: `${routes.delegates.path}`,
+        component: Voting,
+        isPrivate: true,
+      },
+      {
+        name: 'sidechains',
+        path: `${routes.sidechains.path}`,
+        component: Sidechains,
+        isPrivate: true,
+      },
+      {
+        name: 'secondPassphrase',
+        path: `${routes.secondPassphrase.path}`,
+        component: SecondPassphrase,
+        isPrivate: true,
+      },
+      {
+        name: 'register',
+        path: `${routes.register.path}`,
+        component: Register,
+        isPrivate: false,
+      },
+      {
+        name: 'addAccount',
+        path: `${routes.addAccount.path}`,
+        component: Login,
+        isPrivate: false,
+      },
+      {
+        name: 'login',
+        path: `${routes.login.path}`,
+        component: Login,
+        isPrivate: false,
+        exact: true,
+      },
+      {
+        name: 'login',
+        path: '*',
+        component: NotFound,
+        isPrivate: false,
+      },
+      {
+        name: 'search',
+        pathPrefix: 'explorer',
+        path: `${routes.search.path}`,
+        component: Search,
+        isPrivate: false,
+      },
+      {
+        name: 'searchResult',
+        pathPrefix: 'explorer',
+        path: `${routes.searchResult.path}`,
+        pathSuffix: '/:query?',
+        component: SearchResult,
+        isPrivate: false,
+      },
+      {
+        name: 'account',
+        pathPrefix: 'explorer',
+        path: `${routes.account.path}`,
+        pathSuffix: '/:address?',
+        component: AccountTransactions,
+        isPrivate: false,
+      },
+      {
+        name: 'wallet',
+        pathPrefix: 'explorer',
+        path: `${routes.wallet.path}`,
+        pathSuffix: '/:address?',
+        component: SingleTransaction,
+        isPrivate: false,
+      },
+    ];
+
     return (
       <OfflineWrapper>
         <Onboarding appLoaded={this.appLoaded} ref={(el) => {
@@ -50,19 +144,6 @@ class App extends React.Component {
               <Header/>
               <div id='onboardingAnchor'></div>
               <Switch>
-                <PrivateRoutes path={routes.main.path} render={ ({ match }) => (
-                  <main className={offlineStyle.disableWhenOffline}>
-                    <Switch>
-                      <Route path={`${match.url}${routes.accountVisualDemo.path}`} component={AccountVisualDemo} />
-                      <Route path={`${match.url}${routes.dashboard.path}`} component={Dashboard} />
-                      <Route path={`${match.url}${routes.wallet.path}`} component={TransactionDashboard} />
-                      <Route path={`${match.url}${routes.delegates.path}`} component={Voting} />
-                      <Route path={`${match.url}${routes.sidechains.path}`} component={Sidechains} />
-                      <Route path={`${match.url}${routes.secondPassphrase.path}`} component={SecondPassphrase} />
-                      <Route path='*' component={NotFound} />
-                    </Switch>
-                  </main>
-                )} />
                 <Route path={routes.explorer.path} render={ ({ match }) => (
                   <main>
                     <Route path={`${match.url}${routes.search.path}`} component={Search} />
@@ -71,10 +152,14 @@ class App extends React.Component {
                     <Route path={`${match.url}${routes.wallet.path}/:id`} component={SingleTransaction} />
                   </main>
                 )} />
-                <Route path={routes.register.path} component={Register} />
-                <Route path={routes.addAccount.path} component={Login} />
-                <Route exact path={routes.login.path} component={Login} />
-                <Route path='*' component={NotFound} />
+                {privateRoutes.map((route, key) => (
+                  <CustomRoute
+                    path={route.path}
+                    component={route.component}
+                    isPrivate={route.isPrivate}
+                    exact={route.exact}
+                    key={key} />
+                ))}
               </Switch>
             </div>
             <Toaster />

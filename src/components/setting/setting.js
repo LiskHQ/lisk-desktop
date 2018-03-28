@@ -107,7 +107,7 @@ class Setting extends React.Component {
           {!hasSecondPassphrase ?
             <Link
               className={`register-second-passphrase ${styles.secondPassphrase}`}
-              to={`${routes.main.path}${routes.secondPassphrase.path}`}>
+              to={`${routes.secondPassphrase.path}`}>
               {t('Add')}
             </Link> :
             <span

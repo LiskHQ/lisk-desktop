@@ -89,15 +89,15 @@ describe('Login', () => {
     it('calls this.props.history.replace(\'/main/dashboard\')', () => {
       wrapper = shallow(<Login {...props}/>, options);
       wrapper.setProps({ account: { address: 'dummy' } });
-      expect(props.history.replace).to.have.been.calledWith(`${routes.main.path}${routes.dashboard.path}`);
+      expect(props.history.replace).to.have.been.calledWith(`${routes.dashboard.path}`);
     });
 
     it('calls this.props.history.replace with referrer address', () => {
       wrapper = shallow(<Login {...props}/>, options);
       props.history.replace.reset();
-      history.location.search = `?referrer=${routes.main.path}${routes.delegates.path}`;
+      history.location.search = `?referrer=${routes.delegates.path}`;
       wrapper.setProps({ history, account: { address: 'dummy' } });
-      expect(props.history.replace).to.have.been.calledWith(`${routes.main.path}${routes.delegates.path}`);
+      expect(props.history.replace).to.have.been.calledWith(`${routes.delegates.path}`);
     });
 
     it('hides network options by default', () => {

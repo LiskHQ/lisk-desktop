@@ -139,7 +139,7 @@ class confirmSecond extends React.Component {
           <Button
             label={this.props.t('Go back to Dashboard')}
             className={`${styles.resultButton} get-to-your-dashboard-button`}
-            onClick={() => history.push(`${routes.main.path}${routes.dashboard.path}`) }
+            onClick={() => history.push(`${routes.dashboard.path}`) }
           />
         </TransitionWrapper>
       </div>

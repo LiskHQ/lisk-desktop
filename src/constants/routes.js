@@ -11,7 +11,6 @@ export default {
   register: { path: '/register' },
   sidechains: { path: '/sidechains' },
   delegates: { path: '/delegates' },
-  main: { path: '/main' },
   explorer: { path: '/explorer' },
   secondPassphrase: { path: '/second-passphrase' },
 };
