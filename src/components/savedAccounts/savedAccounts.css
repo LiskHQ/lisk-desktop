@@ -1,31 +1,34 @@
 @import '../app/variables.css';
 
 :root {
-  --font-size-ids-h1-xl: 4em;
-  --font-size-ids-h1-l: 3em;
-  --font-size-ids-h1-s: 2em;
-  --font-size-card-h2: 2em;
-  --font-size-card-h2-s: 1.5em;
+  --font-size-ids-h1-xl: 64px;
+  --font-size-ids-h1-l: 48px;
+  --font-size-ids-h1-s: 30px;
   --close-button-shadow: 0 20px 20px 0 rgba(0, 32, 68, 0.25);
   --h1-padding-xl: 85px;
   --h1-padding-l: 40px;
   --h1-padding-m: 25px;
-  --h1-width: 300px;
-  --h1-width-m: 400px;
-  --h1-width-s: 260px;
-  --add-button-margin: 200px;
-  --card-width: 347px;
-  --card-height: 436px;
-  --card-width-m: 267px;
-  --card-height-m: 336px;
-  --add-button-margin: 240px;
-  --wrapper-margin: -24px;
+}
+
+.content {
+  position: relative;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: auto;
 }
 
 .wrapper {
-  margin: var(--wrapper-margin);
+  display: flex;
   background: #013165;
-  overflow-y: auto;
+  z-index: var(--accounts-index);
+  position: absolute;
+  height: 100vh; /* stylelint-disable-line */
+  width: 100vw; /* stylelint-disable-line */
+  max-width: 100vw; /* stylelint-disable-line */
+  border-radius: 0;
+  top: 0;
+  -webkit-font-smoothing: antialiased; /* vendor specific, not supported by autoprefixer */
+  -moz-osx-font-smoothing: grayscale;
 
   & > h1 {
     position: absolute;
@@ -34,9 +37,9 @@
     text-align: center;
     padding-top: var(--h1-padding-l);
     margin: 0;
-    width: var(--h1-width);
     left: 50%;
     transform: translateX(-50%);
+    white-space: nowrap;
   }
 }
 
@@ -45,127 +48,19 @@
   vertical-align: middle;
   overflow: auto;
   white-space: nowrap;
-  padding: 0 232px;
   text-align: center;
   height: 100vh; /* stylelint-disable-line */
   width: 100vw; /* stylelint-disable-line */
   max-width: 100vw; /* stylelint-disable-line */
-  position: relative;
+  padding: 0 232px;
+  box-sizing: border-box;
 
   & > li {
     display: inline-block;
   }
 }
 
-.card {
-  position: relative;
-  display: inline-block;
-  width: var(--card-width);
-  height: var(--card-height);
-  border-radius: var(--border-radius-normal);
-  background-color: var(--color-white);
-  box-shadow: var(--normal-shadow);
-  margin: 24px;
-  text-align: center;
-  vertical-align: top;
-
-  & h2 {
-    position: relative;
-    font-size: var(--font-size-card-h2);
-    color: var(--color-black);
-
-    & > small {
-      font-size: 0.6875em;
-    }
-  }
-
-  &:hover {
-    & .accountVisual {
-      transform: scale(1.1);
-      transform-origin: 50%;
-    }
-  }
-
-  & .removeButton {
-    background: var(--color-white) !important;
-    color: var(--color-grayscale-dark) !important;
-    border: none;
-    box-shadow: var(--normal-shadow);
-    text-transform: none;
-
-    &:hover {
-      background: var(--color-white) !important;
-      color: var(--color-primary-medium) !important;
-    }
-  }
-}
-
-.clickable {
-  cursor: pointer;
-}
-
-.addNew {
-  background-image: linear-gradient(-134deg, #93f4fe 1%, #004aff 98%);
-
-  & > h2 {
-    color: var(--color-white);
-    text-align: center;
-  }
-}
-
-.address {
-  margin-bottom: 40px;
-  color: var(--color-grayscale-dark);
-  font-size: 1.125em;
-}
-
-.cardIcon {
-  width: 175px;
-  height: 175px;
-  margin: 78px 78px 32px;
-  position: relative;
-}
-
-.plusShapeIcon {
-  width: 134px;
-  height: 134px;
-  margin: 24px;
-}
-
-.rectangleOnTheRight,
-.rectangleImage2,
-.rectangleImage3,
-.triangleImage,
-.circleImage {
-  position: absolute;
-  opacity: 0.8;
-}
-
-.circleImage {
-  right: 0px;
-  bottom: 64px;
-}
-
-.rectangleOnTheRight {
-  right: 0px;
-  bottom: 60px;
-}
-
-.rectangleImage2 {
-  left: 50px;
-  bottom: 0px;
-}
-
-.rectangleImage3 {
-  left: 0px;
-  bottom: 0px;
-}
-
-.triangleImage {
-  left: 54px;
-  bottom: 92px;
-}
-
+/** Obsolete
 .accountVisualPlaceholder,
 .accountVisualPlaceholder2 {
   position: absolute;
@@ -181,29 +76,7 @@
   top: 70px;
   left: 44px;
 }
-
-.network,
-.unlocked {
-  font-size: 1em;
-  position: absolute;
-  top: 0;
-  padding: 24px;
-  color: var(--color-grayscale-dark);
-  font-weight: bold;
-
-  & > * {
-    vertical-align: bottom;
-  }
-}
-
-.unlocked {
-  left: 0;
-}
-
-.network {
-  padding-top: 30px;
-  right: 0;
-}
+**/
 
 .addAcctiveAccountButton {
   position: absolute !important;
@@ -215,34 +88,8 @@
 .closeButton {
   box-shadow: var(--close-button-shadow);
   position: absolute !important;
-  top: 85px;
+  top: var(--h1-padding-l);
   right: 85px;
-}
-
-.darkBackground {
-  background-color: var(--color-primary-dark);
-}
-
-.removeConfirm {
-  position: absolute;
-  top: 0px;
-  background-color: var(--color-primary-dark);
-  color: var(--color-white);
-  border-radius: var(--border-radius-normal);
-  height: var(--card-height);
-
-  & h2 {
-    white-space: normal;
-    color: var(--color-white);
-    margin: 155px 45px 24px;
-  }
-
-  & a {
-    color: var(--color-white);
-    text-decoration: underline;
-    margin: 20px 40px 200px;
-    cursor: pointer;
-  }
 }
 
 .editIcon {
@@ -257,51 +104,9 @@
       padding-top: var(--h1-padding-xl);
     }
   }
-}
-
-@media (--medium-viewport) {
-  .wrapper {
-    & > h1 {
-      font-size: var(--font-size-ids-h1-l);
-      padding: var(--h1-padding-m);
-      width: var(--h1-width-m);
-    }
-  }
-
-  .cardsWrapper {
-    padding: 0 40px;
-  }
-
-  .card {
-    width: var(--card-width-m);
-    height: var(--card-height-m);
-
-    & h2 {
-      font-size: var(--font-size-card-h2);
-    }
-  }
-
-  .removeConfirm {
-    height: var(--card-height-m);
-  }
-
-  .cardIcon {
-    width: 175px;
-    height: 175px;
-    margin: 38px 48px 32px;
-  }
 
   .closeButton {
-    top: 35px;
-    right: 35px;
-  }
-
-  .addAcctiveAccountButton {
-    bottom: 16vh; /* stylelint-disable-line */
-  }
-
-  .address {
-    margin-bottom: 20px;
+    top: var(--h1-padding-xl);
   }
 }
 
@@ -312,26 +117,46 @@
   top: 0;
 }
 
-@media (--small-viewport) {
+@media (--medium-viewport) {
   .wrapper {
+    top: -100px;
+
     & > h1 {
-      font-size: var(--font-size-ids-h1-s);
-      width: var(--h1-width-s);
+      font-size: var(--font-size-ids-h1-l);
+      padding: var(--h1-padding-m);
     }
   }
 
   .cardsWrapper {
+    padding: 0 40px;
+  }
+
+  .closeButton {
+    top: var(--h1-padding-m);
+    right: 35px;
+  }
+
+  .addAcctiveAccountButton {
+    bottom: 16vh; /* stylelint-disable-line */
+  }
+}
+
+@media (--small-viewport) {
+  .wrapper {
+    top: -67px;
+
+    & > h1 {
+      font-size: var(--font-size-ids-h1-s);
+    }
+  }
+
+  .closeButton {
+    top: 15px;
+    right: 15px;
+  }
+
+  .cardsWrapper {
     padding: 0;
-  }
-
-  .card {
-    width: var(--card-width-m);
-    height: 320px;
-    margin: 0px 24px;
-  }
-
-  .cardIcon {
-    height: 130px;
   }
 
   .addAcctiveAccountButton {
@@ -352,12 +177,5 @@
     & .addAcctiveAccountButton {
       bottom: 120px;
     }
-  }
-}
-
-@media (--xSmall-viewport) {
-  .closeButton {
-    top: 15px;
-    right: 15px;
   }
 }

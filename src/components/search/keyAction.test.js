@@ -43,9 +43,9 @@ describe('Search KeyAction', () => {
     ];
 
     const expectedHistory = [
-      `${routes.account.long}/${testValues[0]}`,
-      `${routes.transaction.long}/${testValues[1]}`,
-      `${routes.searchResult.long}/${testValues[2]}`,
+      `${routes.explorer.path}${routes.account.path}/${testValues[0]}`,
+      `${routes.explorer.path}${routes.transaction.path}/${testValues[1]}`,
+      `${routes.explorer.path}${routes.searchResult.path}/${testValues[2]}`,
     ];
 
     testValues.forEach((value) => {

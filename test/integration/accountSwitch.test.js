@@ -1,5 +1,5 @@
 import { step } from 'mocha-steps';
-import { stub, match } from 'sinon';
+import { stub, match, spy } from 'sinon';
 import { mount } from 'enzyme';
 import thunk from 'redux-thunk';
 
@@ -16,6 +16,7 @@ import SavedAccounts from '../../src/components/savedAccounts';
 import * as accountApi from '../../src/utils/api/account';
 import * as peers from '../../src/utils/api/peers';
 import GenericStepDefinition from '../utils/genericStepDefinition';
+import routes from '../../src/constants/routes';
 
 describe('@integration: Account switch', () => {
   let store;
@@ -30,9 +31,11 @@ describe('@integration: Account switch', () => {
     publicKey: accounts.genesis.publicKey,
     balance: accounts.genesis.balance,
   }, {
-    network: networks.mainnet.code,
+    network: networks.customNode.code,
     publicKey: accounts.delegate.publicKey,
+    address: 'http://localhost:8080',
     balance: accounts.delegate.balance,
+    passphrase: accounts.genesis.passphrase,
   }, {
     network: networks.mainnet.code,
     publicKey: accounts['empty account'].publicKey,
@@ -71,19 +74,46 @@ describe('@integration: Account switch', () => {
       loginMiddleware,
     ]);
 
-    wrapper = mount(renderWithRouter(SavedAccounts, store));
+    const history = {
+      location: {
+        pathname: `${routes.main.path}${routes.dashboard.path}`,
+      },
+      push: spy(),
+    };
+
+    wrapper = mount(renderWithRouter(SavedAccounts, store, { history }));
     store.dispatch(accountsRetrieved());
     wrapper.update();
     helper = new GenericStepDefinition(wrapper, store);
   };
 
-  describe('Scenario: should allow to remove a saved account', () => {
+  describe('Scenario: should allow to remove a saved account with lastActiveAccount on mainnet', () => {
     step('Given I\'m on "account switcher" with accounts: "genesis,delegate,empty account"', setupStep);
     step('Then I should see 3 instances of "saved account card"', () => helper.shouldSeeCountInstancesOf(3, '.saved-account-card'));
     step('When I click "edit button"', () => helper.clickOnElement('button.edit-button'));
     step('When I click "remove button"', () => helper.clickOnElement('button.remove-button'));
-    step('When I click "remove button"', () => helper.clickOnElement('button.remove-button'));
+    step('When I click "confirm button"', () => helper.clickOnElement('button.confirm-button'));
     step('Then I should see 2 instances of "saved account card"', () => helper.shouldSeeCountInstancesOf(2, '.saved-account-card'));
+  });
+
+  describe('Scenario: should allow to remove a saved account with lastActiveAccount on customNode', () => {
+    beforeEach(() => {
+      localStorageStub.withArgs('lastActiveAccountIndex').returns(1);
+    });
+
+    step('Given I\'m on "account switcher" with accounts: "genesis,delegate,empty account"', setupStep);
+    step('Then I should see 3 instances of "saved account card"', () => helper.shouldSeeCountInstancesOf(3, '.saved-account-card'));
+    step('When I click "edit button"', () => helper.clickOnElement('button.edit-button'));
+    step('When I click "remove button"', () => helper.clickOnElement('button.remove-button'));
+    step('When I click "confirm button"', () => helper.clickOnElement('button.confirm-button'));
+    step('Then I should see 2 instances of "saved account card"', () => helper.shouldSeeCountInstancesOf(2, '.saved-account-card'));
+  });
+
+  describe('Scenario: should allow to "Lock ID" account', () => {
+    step('Given I\'m on "account switcher" with accounts: "genesis,delegate,empty account"', setupStep);
+    step('Then I should see 1 instance of "Lock ID"', () => helper.shouldSeeCountInstancesOf(1, 'strong.unlocked'));
+    step('When I click "Lock ID"', () => helper.clickOnElement('strong.unlocked'));
+    step('Then I should see 0 instances of "Lock ID"', () => helper.shouldSeeCountInstancesOf(0, 'strong.unlocked'));
   });
 
   describe('Scenario: should allow to switch account', () => {

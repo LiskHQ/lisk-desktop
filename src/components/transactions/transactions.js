@@ -11,7 +11,7 @@ class Transactions extends React.Component {
       <Box>
         <MultiStep className={styles.transactions}>
           <TransactionOverview {...this.props} />
-          <TransactionDetailView />
+          <TransactionDetailView {...this.props} />
         </MultiStep>
       </Box>
     );

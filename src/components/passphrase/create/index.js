@@ -35,13 +35,11 @@ class Create extends React.Component {
   }
 
   componentDidMount() {
-    this.container = document.getElementById('generatorContainer');
     this.isTouchDevice = this.checkDevice(this.props.agent);
-    const eventName = this.isTouchDevice ? 'devicemotion' : 'mousemove';
-
-    window.addEventListener(eventName, this.eventNormalizer, true);
+    if (this.isTouchDevice) {
+      window.addEventListener('devicemotion', this.eventNormalizer, true);
+    }
   }
-
 
   moveTitle() {
     setTimeout(() => {
@@ -173,9 +171,15 @@ class Create extends React.Component {
     const { shapes } = this.state;
     const percentage = this.state.data ? this.state.data.percentage : 0;
     const hintTitle = this.isTouchDevice ? 'by tilting your device.' : 'by moving your mouse.';
+    const modifyID = (id) => {
+      const substring = id.slice(3, id.length - 1);
+      const replacement = substring.replace(/.{1}/g, '*');
+      return id.replace(substring, replacement);
+    };
 
     return (
-      <section className={`${grid.row} ${grid['center-xs']} ${styles.wrapper} ${styles.generation}`} id="generatorContainer" >
+      <section className={`${grid.row} ${grid['center-xs']} ${styles.wrapper} ${styles.generation}`}
+        id='generatorContainer' ref={(el) => { this.container = el; }} onMouseMove={this.eventNormalizer} >
         <div className={grid['col-xs-12']}
           ref={ (pageRoot) => { this.pageRoot = pageRoot; } }>
           {!this.state.address ?
@@ -258,7 +262,8 @@ class Create extends React.Component {
             <aside className={`${styles.description} ${this.state.step === 'info' && this.state.showHint ? styles.fadeIn : ''}`}>
               <p>The <b>Avatar</b> represents the ID making it easy to recognize.
                 Every Lisk ID has one unique avatar.</p>
-              <p>The <b>ID</b> is unique and can’t be changed. It’s yours.</p>
+              <p>The <b>ID</b> is unique and can’t be changed. It’s yours.
+                You will get the full <b>ID</b> at the end.</p>
               <Button
                 label={t('Got it')}
                 onClick={this.showHint.bind(this)}
@@ -270,12 +275,16 @@ class Create extends React.Component {
               <figure>
                 <AccountVisual address={this.state.address} size={200} />
               </figure>
-              <h4 className={styles.address}>{this.state.address}</h4>
+              <h4 className={styles.address}>{modifyID(this.state.address)}</h4>
               <PrimaryButton
                 theme={styles}
                 label='Get passphrase'
                 className="get-passphrase-button"
-                onClick={() => nextStep({ passphrase: this.state.passphrase })}
+                onClick={() => nextStep({
+                  passphrase: this.state.passphrase,
+                  header: t('Your passphrase is used to access your Lisk ID.'),
+                  message: t('I am responsible for keeping my passphrase safe. No one can reset it, not even Lisk.'),
+                })}
               />
             </Fragment>
             : ''}

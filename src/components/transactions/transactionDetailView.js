@@ -17,7 +17,10 @@ const TransactionsDetailView = props => (
       props.prevStep ?
         <header>
           <h3>
-            <small className={`${styles.backButton}`} onClick={() => { props.prevStep(); }} id='transactionDetailsBackButton'>
+            <small className={`${styles.backButton}`} onClick={() => {
+              props.history.push(props.history.location.pathname);
+              props.prevStep();
+            }} id='transactionDetailsBackButton'>
               <FontIcon className={`${styles.arrow}`} value='arrow-left'/>
               <span className={`${styles.text}`}>{props.t('Back to overview')}</span>
             </small>
@@ -25,7 +28,7 @@ const TransactionsDetailView = props => (
         </header> : null
     }
     <div>
-      <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
+      <div className={`transactions-detail-view ${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
         <div className={`${grid['col-xs-12']} ${grid['col-sm-4']} ${grid['col-md-4']} ${styles.column}`}>
           <div className={styles.label}>{props.t('Sender')}</div>
           {
@@ -36,7 +39,7 @@ const TransactionsDetailView = props => (
           }
           <div className={`${styles.value} ${styles.sender} `}>
             <Link className={`${styles.addressLink} ${styles.clickable}`} id='sender-address'
-              to={`${routes.account.long}/${props.value.senderId}`}>
+              to={`${routes.explorer.path}${routes.account.path}/${props.value.senderId}`}>
               {props.value.senderId}
             </Link>
           </div>
@@ -53,7 +56,7 @@ const TransactionsDetailView = props => (
             {
               props.value.recipientId ?
                 <Link className={`${styles.addressLink} ${styles.clickable}`} id='receiver-address'
-                  to={`${routes.account.long}/${props.value.recipientId}`}>
+                  to={`${routes.explorer.path}${routes.account.path}/${props.value.recipientId}`}>
                   {props.value.recipientId}
                 </Link> : '-'
             }

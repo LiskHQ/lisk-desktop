@@ -17,7 +17,7 @@ class SendWritable extends React.Component {
         value: this.props.address || '',
       },
       amount: {
-        value: '',
+        value: this.props.amount || '',
       },
       ...authStatePrefill(),
     };
@@ -35,7 +35,7 @@ class SendWritable extends React.Component {
           value: this.props.prevState.recipient || this.state.recipient.value,
         },
         amount: {
-          value: this.props.prevState.amount || '',
+          value: this.props.prevState.amount || this.state.amount.value,
         },
         ...authStatePrefill(this.props.account),
       };
@@ -75,7 +75,7 @@ class SendWritable extends React.Component {
 
   render() {
     return (
-      <div className={`${styles.sendWrapper} boxPadding`}>
+      <div className={`${styles.sendWrapper}`}>
         <div className={styles.header}>
           <header className={styles.headerWrapper}>
             <h2>{this.props.t('Transfer')}</h2>

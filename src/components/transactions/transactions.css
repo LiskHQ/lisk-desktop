@@ -15,12 +15,6 @@
   --header-balance-unit-font-size-L: 18px;
   --header-subtitle-font-size-XL: 18px;
   --header-subtitle-font-size-L: 16px;
-  --main-header-font-size-XL: 32px;
-  --main-header-font-size-L: 28px;
-  --main-header-font-size-XS: 24px;
-  --grid-padding-XL: var(--box-padding-left-L); /* L until we add this padding to everywhere else too */
-  --grid-padding-L: var(--box-padding-left-L);
-  --grid-padding-M: var(--box-padding-left-M);
   --list-line-height: 25px;
   --grid-header-line-height: 60px;
   --main-row-line-height: 70px;
@@ -65,7 +59,7 @@
   color: inherit;
 }
 
-@media screen and (max-width: 48em) {
+@media (--small-viewport) {
   .hiddenXs {
     display: none;
   }
@@ -83,8 +77,6 @@
 }
 
 .transactions {
-  height: var(--main-box-height);
-
   & .activity {
     display: flex;
     flex-direction: column;
@@ -147,6 +139,7 @@
   color: var(--filter-list-color);
   line-height: var(--list-line-height);
   list-style: none;
+  padding-left: 0px;
 
   & .item {
     display: inline-block;
@@ -169,7 +162,6 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 100%;
 
   & footer {
     padding-bottom: 92px;
@@ -248,6 +240,8 @@
     border-top: 0;
     margin-right: 0;
     margin-left: 0;
+    line-height: var(--main-row-line-height);
+    white-space: nowrap;
 
     &:hover:not(:first-child) {
       background: var(--link-color);
@@ -262,11 +256,6 @@
 
   & .turnArrow {
     transform: rotate(180deg);
-  }
-
-  & .mainRow {
-    line-height: var(--main-row-line-height);
-    white-space: nowrap;
   }
 
   & .address {
@@ -287,11 +276,7 @@
   .transactions {
     & .activity {
       & header {
-        padding: 20px var(--grid-padding-XL);
-
         & h2 {
-          font-size: var(--main-header-font-size-XL);
-
           & .balanceUnit {
             font-size: var(--header-balance-unit-font-size-XL);
           }
@@ -305,8 +290,6 @@
   }
 
   .details {
-    padding: 0px var(--grid-padding-XL);
-
     & .label {
       font-size: var(--details-label-font-size-L);
     }
@@ -349,19 +332,16 @@
     }
   }
 
-  .list {
-    padding: 0px 0px 20px var(--grid-padding-XL);
-  }
-
   .results {
     overflow-y: auto;
+    margin: 0px calc(0 - var(--box-padding-left-XL));
 
     & .header {
       font-size: 15px;
     }
 
     & .rows {
-      padding: 0px var(--grid-padding-XL);
+      padding: 0px var(--box-padding-left-XL);
     }
   }
 }
@@ -370,11 +350,7 @@
   .transactions {
     & .activity {
       & header {
-        padding: 20px var(--grid-padding-L);
-
         & h2 {
-          font-size: var(--main-header-font-size-L);
-
           & .balanceUnit {
             font-size: var(--header-balance-unit-font-size-L);
           }
@@ -388,8 +364,6 @@
   }
 
   .details {
-    padding: 0px var(--grid-padding-L);
-
     & .label {
       font-size: var(--details-label-font-size-L);
     }
@@ -407,42 +381,32 @@
     }
   }
 
-  .list {
-    padding: 0px 0px 20px var(--grid-padding-L);
-  }
-
   .results {
     overflow-y: auto;
+    margin: 0px calc(0 - var(--box-padding-left-L));
 
     & .header {
       font-size: 12px;
     }
 
     & .rows {
-      padding: 0px var(--grid-padding-L);
+      padding: 0px var(--box-padding-left-L);
     }
   }
 }
 
 @media (--medium-viewport) {
-  .transactions {
-    & .activity {
-      & header {
-        padding: 20px var(--grid-padding-M);
-      }
-    }
-  }
-
   .results {
     overflow-y: initial;
     padding-bottom: 100px;
+    margin: 0px calc(0 - var(--box-padding-left-M));
 
     & .header {
       font-size: 12px;
     }
 
     & .rows {
-      padding: 0px var(--grid-padding-M);
+      padding: 0px var(--box-padding-left-M);
     }
 
     & .rows:nth-of-type(even) {
@@ -452,10 +416,6 @@
     & .rows:nth-of-type(odd) {
       background: var(--color-grayscale-mobile-background);
     }
-  }
-
-  .list {
-    padding: 0px 0px 20px var(--grid-padding-M);
   }
 }
 
@@ -477,12 +437,6 @@
   .transactions {
     & .activity {
       & header {
-        padding: 20px var(--grid-padding-M);
-
-        & h2 {
-          font-size: var(--main-header-font-size-XS);
-        }
-
         & .account {
           display: none;
         }
@@ -491,8 +445,6 @@
   }
 
   .list {
-    padding: 0px 0px 0px var(--grid-padding-M);
-
     & .item {
       &:not(:last-of-type) {
         margin-right: 24px;
@@ -501,8 +453,6 @@
   }
 
   .details {
-    padding: 0px var(--grid-padding-M);
-
     & .row {
       padding-bottom: 0px;
     }

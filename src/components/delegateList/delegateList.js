@@ -5,6 +5,7 @@ import Box from '../box';
 import Header from './votingHeader';
 import VotingRow from './votingRow';
 import styles from './delegateList.css';
+import VoteUrlProcessor from '../voteUrlProcessor';
 import voteFilters from './../../constants/voteFilters';
 
 // Create a new Table component injecting Head and Row
@@ -18,11 +19,21 @@ class DelegateList extends React.Component {
     this.state = {
       activeFilter: voteFilters.all,
       showChangeSummery: false,
+      safariClass: '',
     };
   }
 
   componentDidMount() {
-    this.loadVotedDelegates(true);
+    if (this.props.serverPublicKey) {
+      this.loadVotedDelegates(true);
+    }
+
+    if (navigator.userAgent) {
+      const agent = navigator.userAgent;
+      if (agent.indexOf('Safari') > 0 && agent.indexOf('Chrome') === -1) {
+        this.setState({ safariClass: styles.safariHack });
+      }
+    }
   }
 
   componentWillUpdate(nextProps) {
@@ -40,6 +51,7 @@ class DelegateList extends React.Component {
 
     if (this.props.showChangeSummery !== nextProps.showChangeSummery) {
       this.setState({
+        activeFilter: voteFilters.all,
         showChangeSummery: nextProps.showChangeSummery,
       });
     }
@@ -135,6 +147,7 @@ class DelegateList extends React.Component {
   getList(filteredList) {
     return filteredList.map(item => (
       <VotingRow key={item.address} data={item}
+        className={this.state.safariClass}
         voteToggled={this.props.voteToggled}
         voteStatus={this.props.votes[item.username]}
       />
@@ -147,11 +160,11 @@ class DelegateList extends React.Component {
     const filteredList = this.filter(this.props.delegates);
     return (
       <Box className={`voting delegate-list-box ${showChangeSummery} ${styles.box}`}>
+        <VoteUrlProcessor />
         <Header
           setActiveFilter={this.setActiveFilter.bind(this)}
           showChangeSummery={this.state.showChangeSummery}
           voteToggled={this.props.voteToggled}
-          addTransaction={this.props.addTransaction}
           search={ value => this.search(value) }
         />
         <section className={`${styles.delegatesList} delegate-list`}>

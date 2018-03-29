@@ -5,6 +5,14 @@ Feature: Transactions page
     Then I should see 25 rows
     When I scroll to the bottom of "transaction results"
     Then I should see 50 rows
+  
+  Scenario: should open all transactions
+    Given I'm logged in as "genesis"
+    When I click "dashboard" menu
+    And I should see 3 rows
+    When I click "seeAllLink"
+    Then I should be on url "/main/transactions"
+    And I should see 25 rows
 
   @integration
   Scenario: should provide a message if there are "No transactions" 

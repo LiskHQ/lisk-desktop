@@ -5,6 +5,7 @@ import middleware from './login';
 import actionTypes from '../../constants/actions';
 import * as accountApi from '../../utils/api/account';
 import * as delegateApi from '../../utils/api/delegate';
+import networks from '../../constants/networks';
 
 describe('Login middleware', () => {
   let store;
@@ -12,7 +13,7 @@ describe('Login middleware', () => {
   let accountApiMock;
   let delegateApiMock;
   const { passphrase } = accounts.genesis;
-  const activePeer = {};
+  const activePeer = { options: { code: networks.mainnet } };
   const activePeerSetAction = {
     type: actionTypes.activePeerSet,
     data: {
@@ -29,6 +30,7 @@ describe('Login middleware', () => {
         data: {},
       },
       account: {},
+      settings: { autoLog: true },
     });
     store.dispatch = spy();
 

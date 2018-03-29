@@ -8,13 +8,9 @@
   --header-subtitle-font-size-XL: 18px;
   --header-subtitle-font-size-L: 16px;
   --header-subtitle-font-size-XS: 14px;
-  --main-header-font-size-XL: 32px;
-  --main-header-font-size-L: 28px;
-  --main-header-font-size-XS: 24px;
 }
 
 .wrapper {
-  padding: 9.2vh 42px; /* stylelint-disable-line */
   text-align: center;
   line-height: 36px;
   height: 100%;
@@ -61,8 +57,6 @@
 @media (--xLarge-viewport) {
   .wrapper {
     & h2 {
-      font-size: var(--main-header-font-size-XL);
-
       & .balanceUnit {
         font-size: var(--header-balance-unit-font-size-XL);
       }
@@ -77,8 +71,6 @@
 @media (--large-viewport) {
   .wrapper {
     & h2 {
-      font-size: var(--main-header-font-size-L);
-
       & .balanceUnit {
         font-size: var(--header-balance-unit-font-size-L);
       }
@@ -92,6 +84,7 @@
 
 @media (--medium-viewport) {
   .wrapper {
+    padding: 9.2vh var(--box-padding-left-M); /* stylelint-disable-line */
     flex-direction: row;
     min-height: 1px;
     height: auto;
@@ -120,7 +113,7 @@
 
 @media (--small-viewport) {
   .wrapper {
-    padding: 5.3vh 24px; /* stylelint-disable-line */
+    padding: 5.3vh var(--box-padding-left-M); /* stylelint-disable-line */
 
     & .content {
       display: block;

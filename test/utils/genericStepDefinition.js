@@ -8,10 +8,10 @@ export default class GenericStepDefinition {
   }
   /**
    * simulate click on a dom query
-   * @param {String} query - dom query that we need to simulate clink on it 
+   * @param {String} selector - Valid css query selector
    */
-  clickOnElement(query) {
-    this.wrapper.find(query).first().simulate('click');
+  clickOnElement(selector) {
+    this.wrapper.find(selector).first().simulate('click');
   }
   /**
    * check that dom query entry is disable or enable
@@ -40,7 +40,15 @@ export default class GenericStepDefinition {
    * @param {String} text - expect text of the dom query entry
    */
   haveTextOf(query, text) {
-    expect(this.wrapper.find(query)).to.have.text(text);
+    expect(this.wrapper.find(query).first()).to.have.text(text);
+  }
+  /**
+   *
+   * @param {String} query - dom query that we need to check text of that
+   * @param {String} text - expect text of the dom query entry
+   */
+  haveInputValueOf(query, text) {
+    expect(this.wrapper.find(query).first()).to.have.value(text);
   }
   /**
    * 
@@ -79,6 +87,6 @@ export default class GenericStepDefinition {
    * @param {String} selector - Valid css selector 
    */
   shouldSeeCountInstancesOf(count, selector) {
-    expect(this.wrapper.find(selector)).to.have.lengthOf(count);
+    expect(this.wrapper).to.have.exactly(count).descendants(selector);
   }
 }

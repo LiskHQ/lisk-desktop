@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { spy, stub, useFakeTimers } from 'sinon';
+import { spy, stub, useFakeTimers, match } from 'sinon';
 import { accountUpdated } from '../../actions/account';
 import accountConfig from '../../constants/account';
 import { activePeerUpdate } from '../../actions/peers';
@@ -48,6 +48,14 @@ describe('Account middleware', () => {
     },
   };
 
+  const blockWithNullTransaction = {
+    type: actionTypes.newBlockCreated,
+    data: {
+      windowIsFocused: true,
+      block: { transactions: [null] },
+    },
+  };
+
   let clock;
 
   beforeEach(() => {
@@ -59,7 +67,6 @@ describe('Account middleware', () => {
         data: {},
       },
       account: {
-        balance: 0,
         address: 'sample_address',
       },
       transactions: {
@@ -67,6 +74,7 @@ describe('Account middleware', () => {
           id: 12498250891724098,
         }],
         confirmed: [],
+        account: { address: 'test_address', balance: 0 },
       },
     };
     store.getState = () => (state);
@@ -142,7 +150,46 @@ describe('Account middleware', () => {
     middleware(store)(next)(newBlockCreated);
 
     expect(stubGetAccount).to.have.been.calledWith();
-    expect(stubTransactions).to.have.been.calledWith();
+    expect(stubTransactions).to.have.been.calledWith(match({ address: 'test_address' }));
+  });
+
+  it(`should call transactions API methods on ${actionTypes.newBlockCreated} action if block.transactions contains null element`, () => {
+    middleware(store)(next)(blockWithNullTransaction);
+
+    expect(store.dispatch).to.have.been.calledWith(match.has('type', actionTypes.transactionsUpdated));
+  });
+
+  it(`should call API methods on ${actionTypes.newBlockCreated} action if state.transaction.transactions.confired does not contain recent transaction. Case with transactions address`, () => {
+    stubGetAccount.resolves({ balance: 0 });
+
+    store.getState = () => ({ ...state,
+      transactions: {
+        ...state.transactions,
+        confirmed: [{ confirmations: 10 }],
+        address: 'sample_address',
+      },
+    });
+
+    middleware(store)(next)(newBlockCreated);
+    expect(stubGetAccount).to.have.been.calledWith({});
+    expect(store.dispatch).to.have.been.calledWith(match.has('type', actionTypes.transactionsUpdated));
+  });
+
+  it(`should call API methods on ${actionTypes.newBlockCreated} action if state.transaction.transactions.confired does not contain recent transaction. Case with confirmed address`, () => {
+    stubGetAccount.resolves({ balance: 0 });
+
+    store.getState = () => ({ ...state,
+      transactions: {
+        pending: [{
+          id: 12498250891724098,
+        }],
+        confirmed: [{ confirmations: 10, address: 'sample_address' }],
+      },
+    });
+
+    middleware(store)(next)(newBlockCreated);
+    expect(stubGetAccount).to.have.been.calledWith({});
+    expect(store.dispatch).to.have.been.calledWith(match.has('type', actionTypes.transactionsUpdated));
   });
 
   it(`should fetch delegate info on ${actionTypes.newBlockCreated} action if account.balance changes and account.isDelegate`, () => {

@@ -8,6 +8,7 @@ import ResultBox from '../resultBox';
 import SendWritable from '../sendWritable';
 import SendReadable from './../sendReadable';
 import PassphraseSteps from './../passphraseSteps';
+import AccountInitialization from '../accountInitialization';
 import { parseSearchParams } from './../../utils/searchParams';
 import breakpoints from './../../constants/breakpoints';
 import styles from './send.css';
@@ -15,10 +16,19 @@ import styles from './send.css';
 class Send extends React.Component {
   constructor(props) {
     super(props);
-    this.address = parseSearchParams(props.search).address;
+    const needsAccountInit = !props.account.serverPublicKey
+      && props.account.balance > 0
+      && props.pendingTransactions.length === 0;
+
     this.state = {
-      sendIsActive: !!this.address,
+      sendIsActive: !!this.getSearchParams().address
+      || !!this.getSearchParams().amount
+      || needsAccountInit,
     };
+  }
+
+  getSearchParams() {
+    return parseSearchParams(this.props.history.location.search);
   }
 
   setSendIsActive(sendIsActive) {
@@ -42,13 +52,15 @@ class Send extends React.Component {
           </span>
           <MultiStep finalCallback={this.setSendIsActive.bind(this, false)}
             className={styles.wrapper}>
+            <AccountInitialization />
             <SendWritable
               autoFocus={this.state.sendIsActive || window.innerWidth > breakpoints.m}
-              address={this.address}
+              address={this.getSearchParams().address}
+              amount={this.getSearchParams().amount}
             />
             <PassphraseSteps />
             <SendReadable />
-            <ResultBox />
+            <ResultBox history={this.props.history}/>
           </MultiStep>
         </Box>
       </Fragment>

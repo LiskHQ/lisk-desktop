@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import { Tab, Tabs as ToolboxTabs } from 'react-toolbox/lib/tabs';
 import Drawer from 'react-toolbox/lib/drawer';
 import MenuBar from '../menuBar';
@@ -7,6 +8,7 @@ import logo from '../../assets/images/logo-beta.svg';
 import * as menuLogos from '../../assets/images/main-menu-icons/*.svg'; //eslint-disable-line
 import { FontIcon } from '../fontIcon';
 import Setting from '../setting';
+import routes from '../../constants/routes';
 
 const getIndex = (history, tabs) => {
   if (history.location.pathname.includes('explorer')) return 2;
@@ -64,12 +66,12 @@ class MainMenu extends React.Component {
     const tabs = [
       {
         label: t('Dashboard'),
-        route: '/main/dashboard',
+        route: `${routes.main.path}${routes.dashboard.path}`,
         id: 'dashboard',
         image: menuLogos.dashboard,
       }, {
         label: t('Wallet'),
-        route: '/main/transactions',
+        route: `${routes.main.path}${routes.wallet.path}`,
         id: 'transactions',
         image: menuLogos.wallet,
       }, {
@@ -81,12 +83,12 @@ class MainMenu extends React.Component {
       }, {
       */
         label: t('Explorer'),
-        route: '/explorer/search',
+        route: `${routes.explorer.path}${routes.search.path}`,
         id: 'explorer',
         image: menuLogos.search,
       }, {
         label: t('Sidechains'),
-        route: '/main/sidechains',
+        route: `${routes.main.path}${routes.sidechains.path}`,
         id: 'sidechains',
         image: menuLogos.sidechains,
       },
@@ -96,7 +98,7 @@ class MainMenu extends React.Component {
       tabs.splice(tabs.length - 1, 0, {
         label: t('Delegates'),
         id: 'voting',
-        route: '/main/voting',
+        route: `${routes.main.path}${routes.voting.path}`,
         image: menuLogos.delegates,
       });
     }
@@ -108,7 +110,7 @@ class MainMenu extends React.Component {
       <Fragment>
         <aside className={styles.aside}>
           <div className={styles.sideBarWrapper}>
-            <img src={logo} className={styles.logo} />
+            <Link to={`${routes.main.path}${routes.dashboard.path}`}><img src={logo} className={styles.logo} /></Link>
             <ToolboxTabs index={getIndex(history, tabs)}
               theme={styles}
               onChange={this.navigate.bind(this, history, tabs)}
@@ -134,7 +136,7 @@ class MainMenu extends React.Component {
               onOverlayClick={this.menuToggle.bind(this)}>
               <div>
                 <header className={styles.header}>
-                  <img src={logo} className={styles.logo} />
+                  <Link to={`${routes.main.path}${routes.dashboard.path}`}><img src={logo} className={styles.logo} /></Link>
                   <FontIcon value='close' className={styles.close} onClick={this.menuToggle.bind(this)} />
                 </header>
                 <ToolboxTabs index={getIndex(history, tabs)}
@@ -151,7 +153,10 @@ class MainMenu extends React.Component {
                     />)}
                 </ToolboxTabs>
               </div>
-              <Setting showSetting={this.state.setting} />
+              <Setting showSetting={this.state.setting}
+                toggleMenu={this.menuToggle.bind(this)}
+                startOnboarding={this.props.startOnboarding}
+              />
             </Drawer>
           </div>
         </aside>

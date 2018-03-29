@@ -40,7 +40,7 @@ app.on('activate', () => {
 });
 
 // Set app protocol
-// app.setAsDefaultProtocolClient('lisk');
+app.setAsDefaultProtocolClient('lisk');
 
 // Force single instance application
 const isSecondInstance = app.makeSingleInstance((argv) => {
@@ -58,13 +58,13 @@ if (isSecondInstance) {
 }
 
 // ToDo - enable this feature when it is implemented in the new design
-// app.on('will-finish-launching', () => {
-//   // Protocol handler for MacOS
-//   app.on('open-url', (event, url) => {
-//     event.preventDefault();
-//     win.send({ event: 'openUrl', value: url });
-//   });
-// });
+app.on('will-finish-launching', () => {
+  // Protocol handler for MacOS
+  app.on('open-url', (event, url) => {
+    event.preventDefault();
+    win.send({ event: 'openUrl', value: url });
+  });
+});
 
 app.on('login', (event, webContents, request, authInfo, callback) => {
   global.myTempFunction = callback;

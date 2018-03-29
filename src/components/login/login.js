@@ -1,10 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Dropdown from 'react-toolbox/lib/dropdown';
 import i18next from 'i18next';
 import { FontIcon } from '../fontIcon';
-import Parallax from '../parallax';
 import Input from '../toolbox/inputs/input';
 import { PrimaryButton } from '../toolbox/buttons/button';
 import { extractAddress } from '../../utils/api/account';
@@ -12,11 +10,12 @@ import { extractAddress } from '../../utils/api/account';
 import PassphraseInput from '../passphraseInput';
 import styles from './login.css';
 import networks from '../../constants/networks';
+import routes from '../../constants/routes';
 import getNetwork from '../../utils/getNetwork';
 import { parseSearchParams } from './../../utils/searchParams';
 import Box from '../box';
 // eslint-disable-next-line import/no-unresolved
-import * as shapes from '../../assets/images/*.svg';
+import SignUp from './signUp';
 import { validateUrl } from '../../utils/login';
 
 /**
@@ -99,7 +98,7 @@ class Login extends React.Component {
 
   getReferrerRoute() {
     const search = parseSearchParams(this.props.history.location.search);
-    const dashboardRoute = '/main/dashboard';
+    const dashboardRoute = `${routes.main.path}${routes.dashboard.path}`;
     const referrerRoute = search.referrer ? search.referrer : dashboardRoute;
     return referrerRoute;
   }
@@ -196,42 +195,7 @@ class Login extends React.Component {
             </div>
           </section>
         </section>
-        <section className={`${styles.signUp} ${styles[this.state.passInputState]}`}>
-          <section className={styles.table}>
-            <div className='text-left'>
-              <h2>
-                <Link className='new-account-button' to='/register'>
-                  {this.props.t('Create Lisk ID')}
-                </Link>
-                <FontIcon className={styles.singUpArrow} value='arrow-right' />
-              </h2>
-
-              <div className={styles.subTitle}>
-                {this.props.t('Create a Lisk ID to gain access to all services.')}
-              </div>
-            </div>
-          </section>
-          <div className={styles.bg}></div>
-          <div className={styles.shapes}>
-            <Parallax bgWidth='200px' bgHeight='10px'>
-              <figure className={`${styles.shape} ${styles.circle}`} data-depth='0.5'>
-                <img src={shapes.circle} alt='circle'/>
-              </figure>
-              <figure className={`${styles.shape} ${styles.triangle}`} data-depth='0.6'>
-                <img src={shapes.triangle} alt='triangle'/>
-              </figure>
-              <figure className={`${styles.shape} ${styles.rectA}`} data-depth='0.2'>
-                <img src={shapes.rect} alt='rect A'/>
-              </figure>
-              <figure className={`${styles.shape} ${styles.rectB}`} data-depth='0.8'>
-                <img src={shapes.rect} alt='rect B'/>
-              </figure>
-              <figure className={`${styles.shape} ${styles.rectC}`} data-depth='1.5'>
-                <img src={shapes.rect} alt='rect C' />
-              </figure>
-            </Parallax>
-          </div>
-        </section>
+        <SignUp t={this.props.t} passInputState={this.state.passInputState} />
       </Box>
     );
   }

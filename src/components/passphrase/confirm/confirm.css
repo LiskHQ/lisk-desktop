@@ -8,6 +8,7 @@
   --header-animation-duration: 450ms;
   --second-header-animation-delay: 1000ms;
   --steps-nav-height: 22px;
+  --header-font-size: var(--paragraph-font-size-l);
 }
 
 .table {
@@ -45,7 +46,7 @@
   }
 
   & header {
-    font-size: 0.959em;
+    font-size: var(--header-font-size);
 
     & h2,
     & h5 {

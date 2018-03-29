@@ -1,0 +1,66 @@
+@import '../app/variables.css';
+
+.wrapper {
+  width: 100%;
+}
+
+.main {
+  max-height: 75vh; /* stylelint-disable-line */
+  overflow: auto;
+}
+
+.seeAllLink {
+  font-size: 15px;
+  color: var(--color-primary-standard);
+  margin-left: 40px;
+  text-decoration: none;
+  font-family: var(--content-font);
+  font-weight: var(--font-weight-bold);
+}
+
+.send {
+  position: relative;
+}
+
+.graph {
+  height: calc(60% - 20px);
+  min-height: 200px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  padding: 0px;
+}
+
+.latestActivity {
+  height: 40%;
+  margin: 0px;
+}
+
+@media (--medium-viewport) {
+  .wrapper {
+    & .main {
+      padding: 0;
+      max-width: 100%;
+      flex-basis: 100%;
+    }
+
+    margin: 0;
+  }
+
+  .graph {
+    height: 60%;
+    min-height: 300px;
+    margin-bottom: 0;
+  }
+
+  .latestActivity {
+    height: auto;
+  }
+}
+
+@media (--small-viewport) {
+  .seeAllLink {
+    display: block;
+    margin-top: 16px;
+    margin-left: 0;
+  }
+}

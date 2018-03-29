@@ -2,3 +2,4 @@ dist
 node_modules
 coverage
 app/build
+app/build-testnet

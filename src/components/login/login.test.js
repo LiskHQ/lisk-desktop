@@ -7,6 +7,7 @@ import { MemoryRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import Login from './login';
+import routes from '../../constants/routes';
 
 describe('Login', () => {
   let wrapper;
@@ -88,15 +89,15 @@ describe('Login', () => {
     it('calls this.props.history.replace(\'/main/dashboard\')', () => {
       wrapper = shallow(<Login {...props}/>, options);
       wrapper.setProps({ account: { address: 'dummy' } });
-      expect(props.history.replace).to.have.been.calledWith('/main/dashboard');
+      expect(props.history.replace).to.have.been.calledWith(`${routes.main.path}${routes.dashboard.path}`);
     });
 
     it('calls this.props.history.replace with referrer address', () => {
       wrapper = shallow(<Login {...props}/>, options);
       props.history.replace.reset();
-      history.location.search = '?referrer=/main/voting';
+      history.location.search = `?referrer=${routes.main.path}${routes.voting.path}`;
       wrapper.setProps({ history, account: { address: 'dummy' } });
-      expect(props.history.replace).to.have.been.calledWith('/main/voting');
+      expect(props.history.replace).to.have.been.calledWith(`${routes.main.path}${routes.voting.path}`);
     });
 
     it('hides network options by default', () => {

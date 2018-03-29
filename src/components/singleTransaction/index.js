@@ -6,7 +6,7 @@ import TransactionDetails from './../transactions/transactionDetailView';
 import CopyToClipboard from '../copyToClipboard';
 import Box from '../box';
 import EmptyState from '../emptyState';
-import styles from './transaction.css';
+import styles from './singleTransaction.css';
 
 class SingleTransaction extends React.Component {
   constructor(props) {
@@ -30,10 +30,9 @@ class SingleTransaction extends React.Component {
           <header>
             <h2>{this.props.t('Transaction ID')}</h2>
             <CopyToClipboard
-              id='transaction-id'
               value={this.props.match.params.id}
               text={this.props.match.params.id}
-              className={styles.copyLabel}
+              className={`${styles.copyLabel} transaction-id`}
               copyClassName={`${styles.copyIcon}`} />
           </header>
           <div className={styles.content}>

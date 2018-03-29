@@ -21,6 +21,7 @@ if (env.production) {
 
 const rootElement = document.getElementById('app');
 
+
 const renderWithRouter = Component =>
   <Provider store={store}>
     <Router>

@@ -8,7 +8,6 @@ import configureMockStore from 'redux-mock-store';
 import i18n from '../../i18n';
 import Register from './index';
 
-
 describe('RegisterHOC', () => {
   let wrapper;
   const peers = {};
@@ -29,6 +28,6 @@ describe('RegisterHOC', () => {
   });
 
   it('should render Register', () => {
-    expect(wrapper.find('Register')).to.have.lengthOf(1);
+    expect(wrapper).to.have.descendants('Register');
   });
 });

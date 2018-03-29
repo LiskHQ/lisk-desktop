@@ -14,6 +14,8 @@ const savedAccountsMiddleware = (store) => {
     if (savedAccounts && savedAccounts.lastActive) {
       const account = savedAccounts.lastActive;
       const network = Object.assign({}, getNetwork(account.network));
+
+      /* istanbul ignore if  */
       if (account.network === networks.customNode.code) {
         network.address = account.address;
       }

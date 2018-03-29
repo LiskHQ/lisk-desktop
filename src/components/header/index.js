@@ -2,8 +2,12 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
 import { dialogDisplayed } from '../../actions/dialog';
-import { accountLoggedOut, removePassphrase } from '../../actions/account';
+import { accountLoggedOut, removePassphrase, accountUpdated } from '../../actions/account';
+import { removeSavedAccountPassphrase } from '../../actions/savedAccounts';
+import accountConfig from '../../constants/account';
 import Header from './header';
+
+const { lockDuration } = accountConfig;
 
 const mapStateToProps = state => ({
   account: state.account,
@@ -15,7 +19,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   setActiveDialog: data => dispatch(dialogDisplayed(data)),
   logOut: () => dispatch(accountLoggedOut()),
-  removePassphrase: () => dispatch(removePassphrase()),
+  removePassphrase: data => dispatch(removePassphrase(data)),
+  removeSavedAccountPassphrase: () => dispatch(removeSavedAccountPassphrase()),
+  resetTimer: () => dispatch(accountUpdated({ expireTime: Date.now() + lockDuration })),
 });
 export default withRouter(connect(
   mapStateToProps,

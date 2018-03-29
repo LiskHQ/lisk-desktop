@@ -44,10 +44,6 @@ input:read-only {
   top: -15px;
 }
 
-.paddingLeft {
-  padding: 0px var(--grid-padding-left);
-}
-
 .headerWrapper {
   padding: 20px 0px;
   line-height: var(--header-line-height);
@@ -100,22 +96,6 @@ input:read-only {
 .error {
   display: block;
   padding-right: 85px;
-}
-
-@media (--xLarge-viewport) {
-  .headerWrapper {
-    & h2 {
-      font-size: var(--font-size-h2-xl);
-    }
-  }
-}
-
-@media (--large-viewport) {
-  .headerWrapper {
-    & h2 {
-      font-size: var(--font-size-h2-l);
-    }
-  }
 }
 
 @media (--small-viewport) {

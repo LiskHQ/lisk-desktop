@@ -15,7 +15,6 @@
     "beforeEach": true,
     "afterEach": true,
     "ipc": true,
-    "DEFAULT_NEWTORK": true,
     "PRODUCTION": true,
     "TEST": true
   },

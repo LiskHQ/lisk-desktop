@@ -11,9 +11,11 @@ import transactionTypes from '../constants/transactionTypes';
 /**
  * Trigger this action to remove passphrase from account object
  *
+ * @param {Object} data - account data
  * @returns {Object} - Action object
  */
-export const removePassphrase = () => ({
+export const removePassphrase = data => ({
+  data,
   type: actionTypes.removePassphrase,
 });
 
@@ -63,9 +65,9 @@ export const passphraseUsed = data => ({
 /**
  *
  */
-export const secondPassphraseRegistered = ({ activePeer, secondPassphrase, account }) =>
+export const secondPassphraseRegistered = ({ activePeer, secondPassphrase, account, passphrase }) =>
   (dispatch) => {
-    setSecondPassphrase(activePeer, secondPassphrase, account.publicKey, account.passphrase)
+    setSecondPassphrase(activePeer, secondPassphrase, account.publicKey, passphrase)
       .then((data) => {
         dispatch(transactionAdded({
           id: data.transactionId,
@@ -79,7 +81,7 @@ export const secondPassphraseRegistered = ({ activePeer, secondPassphrase, accou
         const text = (error && error.message) ? error.message : i18next.t('An error occurred while registering your second passphrase. Please try again.');
         dispatch(errorAlertDialogDisplayed({ text }));
       });
-    dispatch(passphraseUsed(account.passphrase));
+    dispatch(passphraseUsed(passphrase));
   };
 
 /**

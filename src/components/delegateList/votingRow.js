@@ -9,9 +9,9 @@ const setRowClass = (voteStatus) => {
   }
   const { pending, confirmed, unconfirmed } = voteStatus;
   if (pending) {
-    return styles.pendingRow;
+    return 'pendingRow';
   } else if (confirmed !== unconfirmed) {
-    return confirmed ? styles.downVoteRow : styles.upVoteRow;
+    return confirmed ? `${styles.downVoteRow} selected-row` : `${styles.upVoteRow} selected-row`;
   }
   return confirmed ? styles.votedRow : '';
 };
@@ -28,8 +28,8 @@ class VotingRow extends React.Component {
   }
 
   render() {
-    const { data, voteStatus, voteToggled } = this.props;
-    return (<ul className={`delegate-row ${styles.row} ${grid.row} ${setRowClass(voteStatus)}`}>
+    const { data, voteStatus, voteToggled, className } = this.props;
+    return (<ul className={`delegate-row ${styles.row} ${grid.row} ${className} ${setRowClass(voteStatus)}`}>
       <li className={`${grid['col-md-1']} ${grid['col-xs-2']} ${styles.leftText}`}>
         <Checkbox styles={styles}
           toggle={voteToggled}

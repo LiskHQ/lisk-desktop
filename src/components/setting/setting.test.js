@@ -4,10 +4,11 @@ import { mount } from 'enzyme';
 import sinon from 'sinon';
 import configureMockStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter as Router } from 'react-router-dom';
 import Setting from './setting';
+import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
-
+import breakpoints from './../../constants/breakpoints';
 
 describe('Setting', () => {
   const history = {
@@ -43,15 +44,28 @@ describe('Setting', () => {
 
 
   let clock;
-
   const t = key => key;
   let wrapper;
-  const settingsUpdated = sinon.spy();
+
+  const props = {
+    settingsUpdated: sinon.spy(),
+    accountUpdated: sinon.spy(),
+    settings,
+    t,
+    toggleMenu: sinon.spy(),
+    startOnboarding: sinon.spy(),
+    isAuthenticated: true,
+  };
 
   beforeEach(() => {
-    wrapper = mount(<MemoryRouter>
-      <Setting store={store} settingsUpdated={settingsUpdated} settings={settings} t={t}/>
-    </MemoryRouter>, options);
+    window.innerWidth = breakpoints.l;
+
+    wrapper = mount(<Router>
+      <Setting
+        store={store}
+        {...props}/>
+    </Router>, options);
+
     clock = sinon.useFakeTimers({
       toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
     });
@@ -59,7 +73,7 @@ describe('Setting', () => {
 
   afterEach(() => {
     clock.restore();
-    i18n.changeLanguage('en');
+    // i18n.changeLanguage('en');
   });
 
   it('should render "ReactSwipe" component', () => {
@@ -74,15 +88,84 @@ describe('Setting', () => {
     expect(wrapper.find('#carouselNav li').at(1).props().className).to.be.include('activeSlide');
   });
 
+  it('should change advanceMode setting when clicking on checkbox', () => {
+    wrapper.find('.advancedMode').at(0).find('input').simulate('change', { target: { checked: false, value: false } });
+    clock.tick(300);
+  });
+
+  it('should show the onboarding setting when authenticated and not on mobile', () => {
+    expect(wrapper.find('#carouselNav li')).to.have.length(4);
+    wrapper.find('button').props().onClick();
+    expect(props.toggleMenu).to.have.been.calledWith();
+    expect(props.startOnboarding).to.have.been.calledWith();
+  });
+
+  it('should not show the onboarding setting when on mobile', () => {
+    window.innerWidth = breakpoints.m;
+    wrapper = mount(<Router>
+      <Setting
+        {...props}
+      />
+    </Router>, options);
+    expect(wrapper.find('#carouselNav li')).to.have.length(3);
+  });
+
+  it('should not show the onboarding setting when not authenticated', () => {
+    props.isAuthenticated = false;
+    wrapper = mount(<Router>
+      <Setting
+        {...props}
+      />
+    </Router>, options);
+    expect(wrapper.find('#carouselNav li')).to.have.length(3);
+  });
+
   it.skip('should click on .autoLog update the setting', () => {
     wrapper.find('.autoLog input').simulate('click');
     clock.tick(100);
     wrapper.find('.autoLog label').simulate('click');
     wrapper.update();
-    clock.tick(500);
+    const expectedCallToSettingsUpdated = {
+      advancedMode: !settings.advancedMode,
+    };
+    expect(props.settingsUpdated).to.have.been.calledWith(expectedCallToSettingsUpdated);
+  });
+
+  it('should change autolog setting when clicking on checkbox', () => {
+    wrapper.find('.autoLog').at(0).find('input').simulate('change', { target: { checked: false, value: false } });
+    clock.tick(300);
+    wrapper.update();
+    const expectedCallToSettingsUpdated = {
+      autoLog: !settings.autoLog,
+    };
+    expect(props.settingsUpdated).to.have.been.calledWith(expectedCallToSettingsUpdated);
+  });
+
+
+  it('should update expireTime when updating autolog', () => {
+    const accountToExpireTime = { ...account };
+    const settingsToExpireTime = { ...settings };
+    settingsToExpireTime.autoLog = false;
+    accountToExpireTime.passphrase = accounts.genesis.passphrase;
+    wrapper = mount(<Router>
+      <Setting
+        {...props}
+        store={store}
+        account={accountToExpireTime}
+        settings={settingsToExpireTime}
+      />
+    </Router>, options);
+
+    wrapper.find('.autoLog').at(0).find('input').simulate('change', { target: { checked: true, value: true } });
+    clock.tick(300);
     wrapper.update();
 
-    expect(settingsUpdated).to.have.been.calledOnce();
+    const timeNow = Date.now();
+    const expectedCallToAccountUpdated = {
+      expireTime: timeNow,
+    };
+    expect(props.accountUpdated.getCall(0).args[0].expireTime)
+      .to.be.greaterThan(expectedCallToAccountUpdated.expireTime);
   });
 
   // TODO: will be re-enabled when the functionality is re-enabled
@@ -103,4 +186,3 @@ describe('Setting', () => {
     expect(i18n.language).to.be.equal('en');
   });
 });
-

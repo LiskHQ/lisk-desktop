@@ -29,11 +29,4 @@ describe('SendWritableHOC', () => {
   it('should render Send', () => {
     expect(wrapper.find('SendWritable')).to.have.lengthOf(1);
   });
-
-  it('should mount Send with appropriate properties', () => {
-    const props = wrapper.find('SendWritable').props();
-    expect(props.activePeer).to.be.equal(peers.data);
-    expect(props.account).to.be.equal(account);
-    expect(typeof props.sent).to.be.equal('function');
-  });
 });

@@ -1,0 +1,151 @@
+
+@font-face {
+  font-family: "icons";
+  src:
+    url("../../assets/fonts/iconfont/icons.woff") format("woff"),
+    url("../../assets/fonts/iconfont/icons.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.icon {
+  font-family: "icons";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  display: inline-block;
+  width: 1em; /* stylelint-disable-line unit-whitelist */
+  height: 1em; /* stylelint-disable-line unit-whitelist */
+  line-height: 1 !important;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  vertical-align: middle;
+  speak: none;
+  text-decoration: none;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.add::before {
+  content: "\f101";
+}
+
+.arrow-down::before {
+  content: "\f102";
+}
+
+.arrow-left::before {
+  content: "\f103";
+}
+
+.arrow-right::before {
+  content: "\f104";
+}
+
+.arrow-up::before {
+  content: "\f105";
+}
+
+.buy-tokens::before {
+  content: "\f106";
+}
+
+.checkmark-check::before {
+  content: "\f107";
+}
+
+.checkmark-uncheck::before {
+  content: "\f108";
+}
+
+.checkmark::before {
+  content: "\f109";
+}
+
+.close::before {
+  content: "\f10a";
+}
+
+.copy-to-clipboard::before {
+  content: "\f10b";
+}
+
+.dropdown::before {
+  content: "\f10c";
+}
+
+.edit::before {
+  content: "\f10d";
+}
+
+.error::before {
+  content: "\f10e";
+}
+
+.hide::before {
+  content: "\f10f";
+}
+
+.info::before {
+  content: "\f110";
+}
+
+.internet::before {
+  content: "\f111";
+}
+
+.locked::before {
+  content: "\f112";
+}
+
+.login::before {
+  content: "\f113";
+}
+
+.logo-icon::before {
+  content: "\f114";
+}
+
+.logo-text::before {
+  content: "\f115";
+}
+
+.menu::before {
+  content: "\f116";
+}
+
+.more::before {
+  content: "\f117";
+}
+
+.overview::before {
+  content: "\f118";
+}
+
+.profile::before {
+  content: "\f119";
+}
+
+.request-token::before {
+  content: "\f11a";
+}
+
+.search::before {
+  content: "\f11b";
+}
+
+.send-token::before {
+  content: "\f11c";
+}
+
+.show::before {
+  content: "\f11d";
+}
+
+.unlocked::before {
+  content: "\f11e";
+}

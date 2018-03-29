@@ -8,11 +8,13 @@ import Box from '../box';
 import TransactionList from './../transactions/transactionList';
 import Send from '../send';
 import CurrencyGraph from './currencyGraph';
-import styles from './styles.css';
+import routes from '../../constants/routes';
+import styles from './dashboard.css';
 
 class Dashboard extends React.Component {
   render() {
-    const { transactions, t } = this.props;
+    const { transactions, t, account, loading, history } = this.props;
+
     return <div className={`${grid.row} ${styles.wrapper}`}>
       <div className={`${grid['col-md-8']} ${grid['col-xs-12']} ${styles.main}`}>
         <Box className={`${styles.graph}`}>
@@ -22,7 +24,7 @@ class Dashboard extends React.Component {
           <header>
             <h2 className={styles.title}>
               {t('Latest activity')}
-              <Link to='/main/transactions' className={styles.seeAllLink}>
+              <Link to={`${routes.main.path}${routes.transaction.path}`} className={`${styles.seeAllLink} seeAllLink`}>
                 {t('See all transactions')}
                 <FontIcon value='arrow-right'/>
               </Link>
@@ -31,14 +33,16 @@ class Dashboard extends React.Component {
           <TransactionList {...{
             transactions,
             t,
-            address: this.props.accountAddress,
+            address: account.address,
             dashboard: true,
-            loading: this.props.loading,
+            loading,
+            history,
+            onClick: props => history.push(`${routes.main.path}${routes.wallet.path}?id=${props.value.id}`),
           }} />
         </Box>
       </div>
       <div className={`${grid['col-md-4']} ${styles.sendWrapper}`}>
-        <Send/>
+        <Send {...this.props} />
       </div>
     </div>;
   }
@@ -46,7 +50,8 @@ class Dashboard extends React.Component {
 
 const mapStateToProps = state => ({
   transactions: [...state.transactions.pending, ...state.transactions.confirmed].slice(0, 3),
-  accountAddress: state.account.address,
+  pendingTransactions: state.transactions.pending,
+  account: state.account,
   loading: state.loading.length > 0,
 });
 

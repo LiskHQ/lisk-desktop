@@ -25,7 +25,7 @@ describe('VotingRow', () => {
 
   it('should have a list item with class name of "pendingRow" when props.data.pending is true', () => {
     const wrapper = mount(<VotingRow {...props} voteStatus={pendingStatus}></VotingRow>, options);
-    const expectedClass = '_pendingRow';
+    const expectedClass = 'pendingRow';
     const className = wrapper.find('ul').prop('className');
     expect(className).to.contain(expectedClass);
   });
