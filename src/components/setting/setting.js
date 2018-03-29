@@ -91,7 +91,7 @@ class Setting extends React.Component {
         </div>
         {this.showOnboardingSetting()
           ? <div>
-            <button className={styles.settingsButton} onClick={() => {
+            <button className={`${styles.settingsButton} onboarding-setting`} onClick={() => {
               toggleMenu();
               startOnboarding();
             }
