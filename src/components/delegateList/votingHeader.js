@@ -1,7 +1,7 @@
 import React from 'react';
 import Waypoint from 'react-waypoint';
 import { translate } from 'react-i18next';
-import styles from './delegateList.css';
+import styles from './votingHeader.css';
 import { FontIcon } from '../fontIcon';
 import voteFilters from './../../constants/voteFilters';
 
