@@ -179,7 +179,8 @@
     "webpack": "3.11.0",
     "webpack-bundle-analyzer": "2.9.0",
     "webpack-dev-server": "2.8.2",
-    "webpack-file-changer": "2.0.1"
+    "webpack-file-changer": "2.0.1",
+    "webpack-pwa-manifest": "3.6.2"
   },
   "build": {
     "appId": "io.lisk.hub",

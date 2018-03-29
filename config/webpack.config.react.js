@@ -4,6 +4,8 @@ const { ContextReplacementPlugin } = require('webpack');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WebpackPwaManifest = require('webpack-pwa-manifest');
+
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 const reactToolboxVariables = require('./reactToolbox.config');
 const I18nScannerPlugin = require('../src/i18n-scanner');
@@ -131,6 +133,22 @@ module.exports = {
       ],
     }),
     new ContextReplacementPlugin(/moment[/\\]locale$/, new RegExp(langRegex)),
+    new WebpackPwaManifest({
+      name: 'Lisk Hub',
+      short_name: 'Lisk Hub',
+      description: '🖥 Graphical User Interface (GUI) to manage Lisk IDs, tokens and your sidechains ',
+      theme_color: '#005a90',
+      background_color: '#013165',
+      orientation: 'portrait',
+      display: 'standalone',
+      start_url: '/',
+      icons: [
+        {
+          src: `${resolve('__dirname', '../src/assets/images/lisk-logo-180x180.png')}`,
+          sizes: [96, 128, 180],
+        },
+      ],
+    }),
   ],
   module: {
     rules: [
