@@ -37,7 +37,7 @@ class Dashboard extends React.Component {
             dashboard: true,
             loading,
             history,
-            onClick: props => history.push(`${routes.main.path}${routes.wallet.path}?id=${props.value.id}`),
+            onClick: props => history.push(`${routes.wallet.path}?id=${props.value.id}`),
           }} />
         </Box>
       </div>
