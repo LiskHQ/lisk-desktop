@@ -69,6 +69,8 @@ module.exports = function (config) {
             'src/components/authenticate/index.js',
             'src/components/authenticate/authenticate.js',
             'src/components/multiStep/index.js',
+            'src/components/onboarding/index.js',
+            'src/components/onboarding/steps.js',
             'src/components/passphrase/create/index.js',
             'src/components/passphrase/createSecond/index.js',
             'src/components/passphrase/safekeeping/index.js',
@@ -78,6 +80,8 @@ module.exports = function (config) {
             'src/components/header/header.js',
             'src/components/searchBar/index.js',
             'src/components/register/register.js',
+            'src/components/search/index.js',
+            'src/components/voteUrlProcessor/voteUrlProcessor.js',
             'src/components/voteUrlProcessor/index.js',
           ],
           overrides: {

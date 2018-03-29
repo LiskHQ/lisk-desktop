@@ -17,6 +17,7 @@ describe('TransactionDetailView', () => {
         confirmations: '',
         id: '',
       },
+      history: { push: () => {}, location: { search: '' } },
     };
     const wrapper = mountWithContext(<TransactionDetailView {...props} />, { });
 

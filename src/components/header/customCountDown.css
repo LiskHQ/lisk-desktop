@@ -1,0 +1,31 @@
+@import '../app/variables.css';
+
+.reset {
+  margin-right: 18px;
+  padding-left: 3px;
+  padding-right: 3px;
+  padding-bottom: 3px;
+  cursor: pointer;
+  color: var(--color-white);
+  border-bottom: solid 2px var(--color-white);
+  display: inline;
+  font-family: 'Open Sans';
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.default {
+  color: var(--color-white);
+}
+
+.timeout {
+  color: var(--color-error);
+}
+
+.timerRow {
+  display: flex;
+  justify-content: flex-end;
+  font-weight: 600;
+  font-size: 12px;
+  font-family: 'Open Sans';
+}

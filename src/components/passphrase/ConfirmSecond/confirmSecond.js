@@ -119,7 +119,7 @@ class confirmSecond extends React.Component {
             </h5>
             <SliderCheckbox
               theme={styles}
-              className={`${styles.smallSlider} i-understand-checkbox`}
+              className={`${styles.smallSlider} confirm-checkbox`}
               label={t('I confirm (Fee: 5 LSK)')}
               clickable={true}
               onChange={this.confirm.bind(this)}
@@ -138,7 +138,7 @@ class confirmSecond extends React.Component {
         <TransitionWrapper current={this.state.step} step='done'>
           <Button
             label={this.props.t('Go back to Dashboard')}
-            className={styles.resultButton}
+            className={`${styles.resultButton} get-to-your-dashboard-button`}
             onClick={() => history.push(`${routes.main.path}${routes.dashboard.path}`) }
           />
         </TransitionWrapper>

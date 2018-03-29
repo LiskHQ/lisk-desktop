@@ -8,6 +8,7 @@ import { transactionsRequestInit } from '../../actions/transactions';
 import txFilters from './../../constants/transactionFilters';
 import txTypes from './../../constants/transactionTypes';
 import styles from './transactions.css';
+import { parseSearchParams } from './../../utils/searchParams';
 
 class TransactionsList extends React.Component {
   constructor(props) {
@@ -21,7 +22,19 @@ class TransactionsList extends React.Component {
     if (nextProps.peers.data !== this.props.peers.data) {
       this.props.transactionsRequestInit({ address: this.props.address });
     }
+
+    if (nextProps.transactions && this.props.nextStep) this.showDetails(nextProps.transactions);
   }
+
+  showDetails(transactions) {
+    const paramsId = parseSearchParams(this.props.history.location.search).id;
+
+    if (paramsId) {
+      const value = transactions.filter(transaction => transaction.id === paramsId)[0];
+      if (value) this.props.nextStep({ value, t: this.props.t });
+    }
+  }
+
   // eslint-disable-next-line class-methods-use-this
   isLargeScreen() {
     return window.innerWidth > 768;
@@ -34,7 +47,7 @@ class TransactionsList extends React.Component {
       loading,
       dashboard,
       address,
-      nextStep,
+      onClick,
       loadMore,
       t,
     } = this.props;
@@ -69,7 +82,7 @@ class TransactionsList extends React.Component {
             key={i}
             t={t}
             value={transaction}
-            nextStep={nextStep}
+            onClick={onClick}
           />))}
       {
         // the transaction list should be scrollable on a large screen
