@@ -6,7 +6,10 @@ export default {
 
     if (ipc) {
       ipc.on('openUrl', (action, url) => {
-        const normalizedUrl = url.toLowerCase().replace('lisk://', '/');
+        const normalizedUrl = url.toLowerCase()
+          .replace('lisk://', '/')
+          .replace('/main/transactions/send', '/wallet')
+          .replace('/main/voting/vote', '/delegates/vote');
         history.push(normalizedUrl);
       });
     }
