@@ -92,7 +92,7 @@ describe('@integration: Account switch', () => {
     step('Then I should see 3 instances of "saved account card"', () => helper.shouldSeeCountInstancesOf(3, '.saved-account-card'));
     step('When I click "edit button"', () => helper.clickOnElement('button.edit-button'));
     step('When I click "remove button"', () => helper.clickOnElement('button.remove-button'));
-    step('When I click "remove button"', () => helper.clickOnElement('button.remove-button'));
+    step('When I click "confirm button"', () => helper.clickOnElement('button.confirm-button'));
     step('Then I should see 2 instances of "saved account card"', () => helper.shouldSeeCountInstancesOf(2, '.saved-account-card'));
   });
 
@@ -105,7 +105,7 @@ describe('@integration: Account switch', () => {
     step('Then I should see 3 instances of "saved account card"', () => helper.shouldSeeCountInstancesOf(3, '.saved-account-card'));
     step('When I click "edit button"', () => helper.clickOnElement('button.edit-button'));
     step('When I click "remove button"', () => helper.clickOnElement('button.remove-button'));
-    step('When I click "remove button"', () => helper.clickOnElement('button.remove-button'));
+    step('When I click "confirm button"', () => helper.clickOnElement('button.confirm-button'));
     step('Then I should see 2 instances of "saved account card"', () => helper.shouldSeeCountInstancesOf(2, '.saved-account-card'));
   });
 

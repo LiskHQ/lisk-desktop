@@ -1,6 +1,6 @@
 {
   "name": "lisk-hub",
-  "version": "0.3.0",
+  "version": "0.4.0-rc.1",
   "description": "Lisk Hub",
   "homepage": "https://github.com/LiskHQ/lisk-hub",
   "bugs": "https://github.com/LiskHQ/lisk-hub/issues",
@@ -19,7 +19,7 @@
     "analyze-bundles": "webpack  --config ./config/webpack.config.analyze",
     "test-live": "npm test -- --auto-watch --no-single-run",
     "start": "electron ./app/",
-    "dist": "build --ia32 --x64 --armv7l --publish onTag",
+    "dist": "build --ia32 --x64 --publish onTag",
     "dist:win": "build --win --ia32 --x64 --publish onTag",
     "dist:mac": "build --mac",
     "dist:linux": "build --linux --ia32 --x64 --armv7l",
@@ -196,10 +196,7 @@
     ],
     "linux": {
       "target": [
-        "AppImage",
-        "deb",
-        "rpm",
-        "tar.gz"
+        "AppImage"
       ],
       "desktop": {
         "MimeType": "application/lisk;x-scheme-handler/lisk"

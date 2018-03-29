@@ -89,7 +89,7 @@ describe('SavedAccounts', () => {
   it('should call props.accountRemoved on the second "remove button" click', () => {
     wrapper.find('button.edit-button').simulate('click');
     wrapper.find('button.remove-button').at(1).simulate('click');
-    wrapper.find('button.remove-button').at(1).simulate('click');
+    wrapper.find('button.confirm-button').at(0).simulate('click');
     expect(props.accountRemoved).to.have.been.calledWith(savedAccounts[1]);
   });
 

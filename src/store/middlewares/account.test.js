@@ -67,7 +67,6 @@ describe('Account middleware', () => {
         data: {},
       },
       account: {
-        balance: 0,
         address: 'sample_address',
       },
       transactions: {
@@ -75,7 +74,7 @@ describe('Account middleware', () => {
           id: 12498250891724098,
         }],
         confirmed: [],
-        account: { address: 'test_address' },
+        account: { address: 'test_address', balance: 0 },
       },
     };
     store.getState = () => (state);

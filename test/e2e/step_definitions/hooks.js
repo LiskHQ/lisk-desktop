@@ -48,7 +48,9 @@ defineSupportCode(({ Before, After, registerListener }) => {
     browser.get(browser.params.baseURL);
     localStorage.clear();
     localStorage.setItem('showNetwork', 'true');
-    localStorage.setItem('onboarding', 'false');
+    if (scenario.scenario.feature.name !== 'Onboarding') {
+      localStorage.setItem('onboarding', 'false');
+    }
     browser.get(browser.params.baseURL).then(callback);
   });
 

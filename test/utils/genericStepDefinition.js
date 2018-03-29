@@ -87,6 +87,6 @@ export default class GenericStepDefinition {
    * @param {String} selector - Valid css selector 
    */
   shouldSeeCountInstancesOf(count, selector) {
-    expect(this.wrapper.find(selector)).to.have.lengthOf(count);
+    expect(this.wrapper).to.have.exactly(count).descendants(selector);
   }
 }

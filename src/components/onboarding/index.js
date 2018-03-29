@@ -59,6 +59,8 @@ class Onboarding extends React.Component {
   reset() {
     this.isAlreadyOnboarded = true;
     this.onboardingStarted = false;
+    this.onboardingFinished = false;
+    this.joyride.reset(true);
     this.setState({ start: false, intro: true, skip: false });
   }
 
@@ -68,6 +70,7 @@ class Onboarding extends React.Component {
     const onboardingStarted = data.index === 1;
     const onboardingStep = data.index > 1;
     const skipOnboarding = data.action === 'skip';
+    const lastStepReached = data.index === this.state.steps.length - 1;
     const onboardingFinished = data.type === 'finished';
 
     if (onboardingNotStarted) {
@@ -83,6 +86,9 @@ class Onboarding extends React.Component {
     if (skipOnboarding) {
       this.setState({ skip: true });
       this.joyride.reset(true); // go to step 0 to show the skip step
+    }
+    if (lastStepReached) {
+      this.onboardingFinished = true;
     }
     if (onboardingFinished) {
       if (this.onboardingFinished) this.reset();
