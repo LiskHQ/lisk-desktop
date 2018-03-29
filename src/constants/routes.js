@@ -49,7 +49,7 @@ export default {
     isPrivate: false,
   },
   addAccount: {
-    path: 'add-account',
+    path: '/add-account',
     component: Login,
     isPrivate: false,
   },
