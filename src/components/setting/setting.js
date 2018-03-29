@@ -5,7 +5,6 @@ import styles from './setting.css';
 import Checkbox from '../toolbox/sliderCheckbox';
 import i18n from '../../i18n';
 import accountConfig from '../../constants/account';
-import breakpoints from './../../constants/breakpoints';
 // TODO: will be re-enabled when the functionality is updated
 // import routes from '../../constants/routes';
 // import { FontIcon } from '../fontIcon';
@@ -44,7 +43,7 @@ class Setting extends React.Component {
   }
 
   showOnboardingSetting() {
-    return this.props.isAuthenticated && window.innerWidth > breakpoints.m;
+    return this.props.isAuthenticated;
   }
 
   render() {
