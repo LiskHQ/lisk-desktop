@@ -5,7 +5,7 @@ const StyleLintPlugin = require('stylelint-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
-
+const OfflinePlugin = require('offline-plugin');
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 const reactToolboxVariables = require('./reactToolbox.config');
 const I18nScannerPlugin = require('../src/i18n-scanner');
@@ -142,12 +142,19 @@ module.exports = {
       orientation: 'portrait',
       display: 'standalone',
       start_url: '/',
+      ios: true,
       icons: [
         {
-          src: `${resolve('__dirname', '../src/assets/images/lisk-logo-180x180.png')}`,
-          sizes: [96, 128, 180],
+          src: `${resolve('__dirname', '../src/assets/images/lisk-logo.png')}`,
+          sizes: [120, 152, 167, 180],
+          ios: true,
         },
       ],
+    }),
+    new OfflinePlugin({
+      ServiceWorker: {
+        events: true,
+      },
     }),
   ],
   module: {

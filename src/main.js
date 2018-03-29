@@ -13,6 +13,11 @@ import externalLinks from './utils/externalLinks';
 import env from './constants/env';
 import ipcLocale from './utils/ipcLocale';
 
+const { install } = require('offline-plugin/runtime');
+
+// Init ServiceWorker
+install();
+
 if (env.production) {
   proxyLogin.init();
   ipcLocale.init(i18n);
