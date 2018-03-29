@@ -92,6 +92,12 @@ export default {
     component: SingleTransaction,
     isPrivate: false,
   },
+  notFoundExplorer: {
+    pathPrefix: '/explorer',
+    path: '*',
+    component: NotFound,
+    isPrivate: false,
+  },
   explorer: {
     path: '/explorer',
   },
