@@ -76,8 +76,10 @@ ex. `git checkout -b 123-create-docs`
   * :arrow_down: `:arrow_down:` when downgrading a dependency
   * :back: `:back:` when reverting changes
 
-##### Guidance
- - Please make sure that you follow our [css guide](/docs/CSS_GUIDE.md) rules.
+##### Before creating PR make use that:
+ - All conflicts are resolved
+ - The PR follows our [Test guide](/LiskHQ/lisk-hub/blob/development/docs/TEST_GUIDE.md)
+ - The PR follows our [CSS guide](/LiskHQ/lisk-hub/blob/development/docs/CSS_GUIDE.md)
 
 When you're done, submit a pull request and for one of the maintainers to check it out. We would let you know if there is any problem or any changes that should be considered.
 ## Pull Requests
@@ -97,11 +99,6 @@ When you're done, submit a pull request and for one of the maintainers to check 
 - Projects
   - Assign version according to issue version
   - Assign sprint according to issue sprint
-##### Before creating PR make use that:
- - All conflicts are resolved
- - All new code is covered with unit tests
- - All new features are covered with e2e tests
- - All new code follows best practices
 
 ##### Guidance
 
