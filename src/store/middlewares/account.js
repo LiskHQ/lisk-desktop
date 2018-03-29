@@ -39,7 +39,17 @@ const updateAccountData = (store, action) => {
         updateTransactions(store, peers, account);
       }
     }
-    store.dispatch(accountUpdated(result));
+    let accountUpdatedWithDelegate = { ...result };
+
+    if ((action.data.isDelegate && !result.delegate) ||
+        (result.delegate.username !== action.data.delegate.username)) {
+      accountUpdatedWithDelegate = {
+        ...accountUpdatedWithDelegate,
+        delegate: { ...action.data.delegate },
+      };
+    }
+
+    store.dispatch(accountUpdated(accountUpdatedWithDelegate));
     store.dispatch(activePeerUpdate({ online: true }));
   }).catch((res) => {
     store.dispatch(activePeerUpdate({ online: false, code: res.error.code }));
