@@ -11,7 +11,7 @@
   --menu-icon-height-XL: 39px;
   --menu-icon-height-M: 34px;
   --font-size-normal: 16px;
-  --font-size-small: 13px;
+  --font-size-small: 12px;
 }
 
 .wrapper {
@@ -26,6 +26,14 @@
     display: inline-block;
     float: left;
   }
+}
+
+.unlocked {
+  color: var(--color-error);
+  font-family: 'Open Sans';
+  font-weight: 600;
+  font-size: var(--font-size-small);
+  line-height: 1.5em; /* stylelint-disable-line */
 }
 
 .logoWrapper {
@@ -118,20 +126,36 @@
     line-height: 25px;
     padding-right: 20px;
     height: var(--avatar-height);
+    font-family: 'Open Sans';
+    font-weight: 600;
 
     & .balance {
-      font-size: var(--font-size-normal);
+      font-size: 24px;
+      font-family: var(--heading-font);
       color: var(--color-white);
+      line-height: 0.5em; /* stylelint-disable-line */
+      padding-top: 7px;
+
+      & small {
+        padding-left: 5px;
+        font-size: var(--font-size-small);
+      }
     }
 
     & .address {
-      font-size: var(--font-size-normal);
+      font-size: 14px;
       color: var(--color-grayscale-medium);
+    }
+
+    & .copy {
+      font-size: 24px;
+      padding-right: 5px;
     }
 
     & .timer {
       font-size: var(--font-size-small);
       color: var(--color-grayscale-medium);
+      line-height: 1.5em; /* stylelint-disable-line */
     }
   }
 

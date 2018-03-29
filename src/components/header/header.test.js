@@ -24,6 +24,7 @@ describe('Header', () => {
   beforeEach(() => {
     const mockInputProps = {
       setActiveDialog: () => { },
+      resetTimer: sinon.spy(),
       account: {},
       t: key => key,
       location: { pathname: `${routes.explorer.path}${routes.search}` },
