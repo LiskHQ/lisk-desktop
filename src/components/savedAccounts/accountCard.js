@@ -49,7 +49,7 @@ const AccountCard = ({ account, t, isEditing, handleRemove, isSecureAppears,
       null
     }
     { isEditing ?
-      <PrimaryButton className='remove-button'
+      <PrimaryButton className={isSelectedForRemove(account) ? 'confirm-button' : 'remove-button'}
         theme={ isSelectedForRemove(account) ?
           {} :
           { button: styles.removeButton }
