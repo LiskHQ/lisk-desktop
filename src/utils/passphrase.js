@@ -33,7 +33,6 @@ const leftPadd = (str, pad, length) => {
  */
 const init = (rand = Math.random()) => {
   let step = (160 + Math.floor(rand * 160)) / 100;
-  step = step >= 0.01 ? step : 0.1 + (step * 5);
   return {
     step,
     percentage: 0,
