@@ -90,7 +90,6 @@ class Confirm extends React.Component {
 
   resetForm() {
     const words = this.props.passphrase.match(/\w+/g);
-    const indexByRand = num => Math.floor(num * (words.length - 1));
 
     /**
      * Returns a random index which doesn't exist in list
@@ -101,7 +100,7 @@ class Confirm extends React.Component {
     const randomIndex = (list) => {
       let index;
       do {
-        index = indexByRand(Math.random());
+        index = Math.floor(Math.random() * words.length);
       }
       while (list.includes(index));
       return index;
