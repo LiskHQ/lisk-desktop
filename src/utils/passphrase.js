@@ -59,7 +59,7 @@ const init = (rand = Math.random()) => {
  * @returns {number[]} The input array whose member is pos is set
  */
 export const generateSeed = ({ byte, seed, percentage, step } = init(), rand = Math.random()) => {
-  const available = byte.map((bit, index) => (!bit ? index : null)).filter(index => (index !== null));
+  const available = byte.map((bit, idx) => (!bit ? idx : null)).filter(idx => (idx !== null));
   const seedIndex = (available.length > 0) ?
     available[Math.floor(rand * available.length)] :
     Math.floor(rand * byte.length);
