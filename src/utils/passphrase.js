@@ -44,8 +44,8 @@ const init = (rand = Math.random()) => {
 
 /**
  * - From a zero byte:
- * - Removes all the 1s and replaces all the 1s with their index
- * - Creates a random number with the length of resulting array (pos)
+ * - Removes all the 1s and replaces all the 0s with their index
+ * - Creates a random index (pos) of the resulting array
  * - sets the bit in the pos position
  * - creates random byte using crypto and assigns that to seed in the
  *    position of pos
