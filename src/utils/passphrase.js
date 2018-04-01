@@ -61,8 +61,8 @@ const init = (rand = Math.random()) => {
 export const generateSeed = ({ byte, seed, percentage, step } = init(), rand = Math.random()) => {
   const available = byte.map((bit, index) => (!bit ? index : null)).filter(bit => (bit !== null));
   const seedIndex = (available.length > 0) ?
-    available[parseInt(rand * available.length, 10)] :
-    parseInt(rand * byte.length, 10);
+    available[Math.floor(rand * available.length)] :
+    Math.floor(rand * byte.length);
 
   const content = leftPadd(crypto.randomBytes(1)[0].toString(16), '0', 2);
 
