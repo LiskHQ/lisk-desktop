@@ -106,7 +106,7 @@ describe('Passphrase', () => {
     it('should generate an array of 16 hex numbers as seed', () => {
       const { seed } = generateSeed();
       seed.forEach((num) => {
-        expect(parseInt(`0x${num}`, 10)).to.be.below(256);
+        expect(parseInt(num, 16)).to.be.below(256);
       });
     });
   });
