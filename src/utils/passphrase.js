@@ -32,7 +32,7 @@ const leftPadd = (str, pad, length) => {
  * Resets previous settings and creates a step with a random length between 1.6% to 3.2%
  */
 const init = (rand = Math.random()) => {
-  let step = (160 + Math.floor(rand * 160)) / 100;
+  const step = (160 + Math.floor(rand * 160)) / 100;
   return {
     step,
     percentage: 0,
