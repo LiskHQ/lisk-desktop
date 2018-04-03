@@ -126,7 +126,7 @@ class Create extends React.Component {
 
   render() {
     const { t, balance } = this.props;
-    const hasFund = fromRawLsk(balance) * 1 <= fromRawLsk(fees.setSecondPassphrase) * 1;
+    const hasFund = fromRawLsk(balance) * 1 < fromRawLsk(fees.setSecondPassphrase) * 1;
     const percentage = this.state.data ? this.state.data.percentage : 0;
     const hintTitle = this.isTouchDevice ?
       t('by tilting your device.') :
@@ -158,7 +158,6 @@ class Create extends React.Component {
               type={'button'} />
             {hasFund ? <p className={styles.error}>
               {t('Insufficient funds (Fee: {{fee}} LSK)', { fee: fromRawLsk(fees.setSecondPassphrase) })}
-              - {fromRawLsk(balance)} - {fromRawLsk(fees.setSecondPassphrase)}
             </p> : '' }
           </div>
         </TransitionWrapper>
