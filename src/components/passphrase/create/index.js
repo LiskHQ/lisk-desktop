@@ -41,17 +41,6 @@ class Create extends React.Component {
     }
   }
 
-  moveTitle() {
-    setTimeout(() => {
-      const { percentage } = this.state.data;
-      if (percentage > 15 && percentage < 18) {
-        this.setState({
-          headingClass: styles.goToTop,
-        });
-      }
-    }, 10);
-  }
-
   // eslint-disable-next-line class-methods-use-this
   hideShapeRandomly(list) {
     const result = [];
@@ -66,12 +55,6 @@ class Create extends React.Component {
     }
     result.forEach((item) => { list[item] = 0; });
     return list;
-  }
-
-  componentDidUpdate() {
-    if (this.state.data) {
-      this.moveTitle();
-    }
   }
 
   componentWillUnmount() {
@@ -241,7 +224,7 @@ class Create extends React.Component {
             </div> :
             null
           }
-          <header className={this.state.headingClass}>
+          <header>
             <TransitionWrapper current={this.state.step} step='generate'>
               <h2 className={`${styles.generatorHeader}`}
                 id="generatorHeader" >
