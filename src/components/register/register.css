@@ -12,17 +12,18 @@
 }
 
 .hasPaddingTop {
-  padding-top: var(--padding-top);
+  padding: var(--padding-top) 0 0 0;
 }
 
 @media (--medium-viewport) {
   .hasPaddingTop {
     height: 100vh; /* stylelint-disable-line */
+    padding: var(--padding-top) 0 0 0;
   }
 }
 
 @media (--small-viewport) {
   .hasPaddingTop {
-    padding-top: var(--box-padding);
+    padding: var(--box-padding) 0 0 0;
   }
 }
