@@ -200,6 +200,19 @@ hr {
   width: 100%;
 }
 
+.info {
+  margin-bottom: 80px;
+  line-height: 26px;
+}
+
+.nextButton {
+  margin: 0 auto;
+}
+
+.error {
+  color: var(--color-error);
+}
+
 @media (--large-viewport) {
   .generation aside.description {
     padding-top: 150px;
