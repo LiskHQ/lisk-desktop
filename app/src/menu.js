@@ -132,6 +132,10 @@ const menu = {
             click: menu.onClickLink.bind(null, electron, 'https://explorer.lisk.io'),
           },
           {
+            label: i18n.t('Lisk Academy'),
+            click: menu.onClickLink.bind(null, electron, 'https://lisk.io/academy'),
+          },
+          {
             type: 'separator',
           },
           {
