@@ -69,14 +69,14 @@
 
 :global .joyride-hole {
   border-radius: 4px;
-  -webkit-box-shadow: 0 0 0 9999px rgba(0,26,62, 0.5), 0 0 15px rgba(0,26,62, 0.5);
-  box-shadow: 0 0 0 9999px rgba(0,26,62, 0.5), 0 0 15px rgba(0,26,62, 0.5);
+  -webkit-box-shadow: 0 0 0 9999px rgba(0,26,62, 0.9), 0 0 15px rgba(0,26,62, 0.9);
+  box-shadow: 0 0 0 9999px rgba(0,26,62, 0.9), 0 0 15px rgba(0,26,62, 0.9);
   position: absolute;
 }
 
 :global .joyride-hole.safari {
-  -webkit-box-shadow: 0 0 999px 9999px rgba(0,26,62, 0.5), 0 0 15px rgba(0,26,62, 0.5);
-  box-shadow: 0 0 999px 9999px rgba(0,26,62, 0.5), 0 0 15px rgba(0,26,62, 0.5);
+  -webkit-box-shadow: 0 0 999px 9999px rgba(0,26,62, 0.9), 0 0 15px rgba(0,26,62, 0.9);
+  box-shadow: 0 0 999px 9999px rgba(0,26,62, 0.9), 0 0 15px rgba(0,26,62, 0.9);
 }
 
 :global .joyride-tooltip {

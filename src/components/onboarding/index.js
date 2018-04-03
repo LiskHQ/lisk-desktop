@@ -26,28 +26,35 @@ class Onboarding extends React.Component {
   componentWillReceiveProps(nextProps) {
     if ((nextProps.appLoaded && !this.stepsAdded)
       || this.props.showDelegates !== nextProps.showDelegates) {
-      this.addSteps(nextProps.showDelegates);
+      this.addSteps(nextProps.showDelegates, this.state.isDesktop);
     }
   }
 
   componentDidMount() {
+    this.props.onRef(this);
     window.addEventListener('resize', throttle(this.resizeWindow.bind(this), 1000));
 
     if (this.props.appLoaded) {
-      this.addSteps(this.props.showDelegates);
+      this.addSteps(this.props.showDelegates, this.state.isDesktop);
     }
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.resizeWindow.bind(this));
+    this.props.onRef(undefined);
   }
 
   resizeWindow() {
-    this.setState({ isDesktop: window.innerWidth > breakpoints.m });
+    const isDesktop = window.innerWidth > breakpoints.m;
+    if (isDesktop !== this.state.isDesktop) {
+      this.addSteps(this.props.t, isDesktop);
+    }
+
+    this.setState({ isDesktop });
   }
 
-  addSteps(showDelegates) {
-    let newSteps = steps(this.props.t);
+  addSteps(showDelegates, isDesktop) {
+    let newSteps = steps(this.props.t, isDesktop);
     if (!showDelegates) {
       newSteps = newSteps.filter(step => step.selector !== '#voting');
     }
@@ -98,13 +105,11 @@ class Onboarding extends React.Component {
   }
 
   render() {
-    const { isDesktop, start, skip, intro } = this.state;
-    if (!isDesktop && start) this.setState({ start: false });
-
+    const { start, skip, intro } = this.state;
     return <Joyride
       ref={(el) => { this.joyride = el; }}
       steps={this.state.steps}
-      run={this.props.isAuthenticated && isDesktop && (start || !this.isAlreadyOnboarded)}
+      run={this.props.isAuthenticated && (start || !this.isAlreadyOnboarded)}
       locale={{
         last: (<span>{this.props.t('Complete')}</span>),
         skip: skip ? <span>{this.props.t('Use Lisk Hub')}</span> : <span>{this.props.t('Click here to skip')}</span>,
@@ -126,5 +131,4 @@ const mapStateToProps = state => ({
   showDelegates: state.settings.advancedMode,
 });
 
-export default connect(mapStateToProps, null, null, { withRef: true })(translate(null,
-  { withRef: true })(Onboarding));
+export default connect(mapStateToProps)(translate()(Onboarding));
