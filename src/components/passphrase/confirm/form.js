@@ -17,7 +17,7 @@ const Form = ({ wordOptions, words, missing, answers, formStatus,
 
           return (
             <fieldset key={`${word}-${missingWordIndex}-${trials}`}>
-              <span onClick={() => selectFieldset(missingWordIndex)}
+              <span onClick={e => selectFieldset(e)} field={missingWordIndex}
                 className={`${styles.placeholder} ${selectedFieldset === missingWordIndex ?
                   styles.selected : ''} ${answers[missingWordIndex] ? styles[validity] : ''}`}>
                 { answers[missingWordIndex] ? answers[missingWordIndex].value : '' }

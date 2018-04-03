@@ -173,8 +173,9 @@ class Confirm extends React.Component {
     this.setState({ answer });
   }
 
-  selectFieldset(index) {
-    this.setState({ selectedFieldset: index });
+  selectFieldset(e) {
+    const selectedFieldset = parseInt(e.nativeEvent.target.getAttribute('field'), 10);
+    this.setState({ selectedFieldset });
   }
 
   // eslint-disable-next-line  class-methods-use-this
@@ -212,7 +213,7 @@ class Confirm extends React.Component {
             <Form missing={missing} wordOptions={wordOptions}
               words={words} answers={answers} selectedFieldset={selectedFieldset}
               trials={trials} onWordSelected={this.onWordSelected.bind(this)}
-              selectFieldset={this.selectFieldset.bind(this)} formStatus={formStatus}/>
+              selectFieldset={this.selectFieldset.bind(this)} formStatus={formStatus} />
           </div>
         </section>
         {
