@@ -38,14 +38,15 @@ const filterTransactions = (store, action) => {
     });
 };
 
+const getAccountSuccess = (store, accountData) => {
+  store.dispatch(transactionsInit(accountData));
+  loadingFinished('transactions-init');
+};
+
 const initTransactions = (store, action) => {
   const activePeer = store.getState().peers.data;
   const address = action.data.address;
   loadingStarted('transactions-init');
-  const getAccountSuccess = (accountData) => {
-    store.dispatch(transactionsInit(accountData));
-    loadingFinished('transactions-init');
-  };
 
   getTransactions({ activePeer, address, limit: 25 })
     .then((txResponse) => {
@@ -65,12 +66,12 @@ const initTransactions = (store, action) => {
                   ...accountDataResult,
                   delegate: { ...delegateData.delegate },
                 };
-                getAccountSuccess(accountDataResult);
+                getAccountSuccess(store, accountDataResult);
               }).catch(() => {
-                getAccountSuccess(accountDataResult);
+                getAccountSuccess(store, accountDataResult);
               });
           } else {
-            getAccountSuccess(accountDataResult);
+            getAccountSuccess(store, accountDataResult);
           }
         });
     });
