@@ -50,12 +50,13 @@ class App extends React.Component {
         <main className={`${styles.bodyWrapper}`} ref={(el) => { this.main = el; }}>
           <MainMenu startOnboarding={this.startOnboarding.bind(this)}/>
           <Route path={routes.accounts.path} component={SavedAccounts} />
-          {this.state.loaded
-            ? <section>
-              <div className={styles.mainBox}>
-                <Header />
-                <div id='onboardingAnchor'></div>
-                <Switch>
+          <section>
+            <div className={styles.mainBox}>
+              <Header />
+              <div id='onboardingAnchor'></div>
+              <Switch>
+                {this.state.loaded
+                  ?
                   <PrivateRoutes path={routes.main.path} render={ ({ match }) => (
                     <main className={offlineStyle.disableWhenOffline}>
                       <Switch>
@@ -69,6 +70,10 @@ class App extends React.Component {
                       </Switch>
                     </main>
                   )} />
+                  : null
+                }
+                {this.state.loaded
+                  ?
                   <Route path={routes.explorer.path} render={ ({ match }) => (
                     <main>
                       <Route path={`${match.url}${routes.search.path}`} component={Search} />
@@ -77,15 +82,15 @@ class App extends React.Component {
                       <Route path={`${match.url}${routes.transaction.path}/:id`} component={SingleTransaction} />
                     </main>
                   )} />
-                  <Route path={routes.register.path} component={Register} />
-                  <Route path={routes.addAccount.path} component={Login} />
-                  <Route exact path={routes.login.path} component={Login} />
-                  <Route path='*' component={NotFound} />
-                </Switch>
-              </div>
-            </section>
-            : null
-          }
+                  : null
+                }
+                <Route path={routes.register.path} component={Register} />
+                <Route path={routes.addAccount.path} component={Login} />
+                <Route exact path={routes.login.path} component={Login} />
+                <Route path='*' component={NotFound} />
+              </Switch>
+            </div>
+          </section>
           <Toaster />
         </main>
         <LoadingBar markAsLoaded={this.markAsLoaded.bind(this)} />
