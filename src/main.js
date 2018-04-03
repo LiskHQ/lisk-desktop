@@ -12,16 +12,13 @@ import proxyLogin from './utils/proxyLogin';
 import externalLinks from './utils/externalLinks';
 import env from './constants/env';
 import ipcLocale from './utils/ipcLocale';
-
-const { install } = require('offline-plugin/runtime');
-
-// Init ServiceWorker
-install();
+import offline from './utils/offline';
 
 if (env.production) {
   proxyLogin.init();
   ipcLocale.init(i18n);
   externalLinks.init();
+  offline.init();
 }
 
 const rootElement = document.getElementById('app');

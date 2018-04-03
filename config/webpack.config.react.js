@@ -152,8 +152,23 @@ module.exports = {
       ],
     }),
     new OfflinePlugin({
+      publicPath: '/',
+      caches: {
+        main: [
+          '*.css',
+          '*.js',
+        ],
+        additional: [
+          ':externals:',
+        ],
+        optional: [
+          ':rest:',
+        ],
+      },
+      externals: ['/'],
       ServiceWorker: {
         events: true,
+        navigateFallbackURL: '/',
       },
     }),
   ],
