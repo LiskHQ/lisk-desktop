@@ -14,7 +14,6 @@ const Form = ({ wordOptions, words, missing, answers, formStatus,
           }
           missingWordIndex++;
           const validity = answers[missingWordIndex] && answers[missingWordIndex].validity ? 'valid' : 'invalid';
-
           return (
             <fieldset key={`${word}-${missingWordIndex}-${trials}`}>
               <span onClick={e => selectFieldset(e)} field={missingWordIndex}
