@@ -8,6 +8,8 @@
   & > div {
     height: 100%;
     overflow: hidden;
+    margin-right: -48px;
+    margin-left: -48px;
   }
 }
 
@@ -24,5 +26,10 @@
 @media (--small-viewport) {
   .hasPaddingTop {
     padding-top: var(--box-padding);
+
+    & > div {
+      margin-right: 0px;
+      margin-left: 0px;
+    }
   }
 }
