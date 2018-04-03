@@ -20,8 +20,8 @@
 @media (--large-viewport) {
   .hasPaddingTop {
     & > div {
-    margin-right: calc(-1 * var(--box-padding-left-L));
-    margin-left: calc(-1 * var(--box-padding-left-L));
+      margin-right: calc(-1 * var(--box-padding-left-L));
+      margin-left: calc(-1 * var(--box-padding-left-L));
     }
   }
 }
@@ -37,8 +37,8 @@
     padding-top: var(--box-padding);
 
     & > div {
-    margin-right: calc(-1 * var(--box-padding-left-M));
-    margin-left: calc(-1 * var(--box-padding-left-M));
+      margin-right: calc(-1 * var(--box-padding-left-M));
+      margin-left: calc(-1 * var(--box-padding-left-M));
     }
   }
 }
