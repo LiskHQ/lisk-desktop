@@ -1,6 +1,7 @@
 import { loadingStarted, loadingFinished } from '../../utils/loading';
 
 import { unconfirmedTransactions, transactions as getTransactions, getAccount, transaction } from '../../utils/api/account';
+import { getDelegate } from '../../utils/api/delegate';
 import {
   transactionsFailed,
   transactionsFiltered,
@@ -37,23 +38,40 @@ const filterTransactions = (store, action) => {
     });
 };
 
-
 const initTransactions = (store, action) => {
   const activePeer = store.getState().peers.data;
   const address = action.data.address;
   loadingStarted('transactions-init');
+  const getAccountSuccess = (accountData) => {
+    store.dispatch(transactionsInit(accountData));
+    loadingFinished('transactions-init');
+  };
+
   getTransactions({ activePeer, address, limit: 25 })
     .then((txResponse) => {
       const { transactions, count } = txResponse;
       getAccount(activePeer, address)
-        .then((accountResponse) => {
-          store.dispatch(transactionsInit({
+        .then((accountData) => {
+          let accountDataResult = {
             confirmed: transactions,
             count: parseInt(count, 10),
-            balance: accountResponse.balance,
+            balance: accountData.balance,
             address,
-          }));
-          loadingFinished('transactions-init');
+          };
+          if (accountData.publicKey) {
+            getDelegate(activePeer, { publicKey: accountData.publicKey })
+              .then((delegateData) => {
+                accountDataResult = {
+                  ...accountDataResult,
+                  delegate: { ...delegateData.delegate },
+                };
+                getAccountSuccess(accountDataResult);
+              }).catch(() => {
+                getAccountSuccess(accountDataResult);
+              });
+          } else {
+            getAccountSuccess(accountDataResult);
+          }
         });
     });
 };
