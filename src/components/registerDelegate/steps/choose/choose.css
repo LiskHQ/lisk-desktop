@@ -1,0 +1,33 @@
+@import '../../../app/variables.css';
+
+:root {
+  --main-content-horizontal-padding: 218px;
+  --step-heading-fs: 48px;
+}
+
+.stepContainer {
+  text-align: center;
+  padding: 0 var(--main-content-horizontal-padding);
+}
+
+.stepHeading {
+  font-family: var(--heading-font);
+  font-size: var(--step-heading-fs);
+  font-weight: var(--font-weight-very-bold);
+  margin: 0;
+  margin-bottom: 0;
+}
+
+.stepDescription {
+  font-size: var(--subtitle-font-size);
+  margin-bottom: 80px;
+}
+
+.chooseNameBtn {
+  margin-bottom: 24px;
+}
+
+.stepError {
+  color: var(--color-error);
+  font-size: var(--font-size-small);
+}

@@ -44,6 +44,7 @@ class App extends React.Component {
         <main className={`${styles.bodyWrapper}`} ref={(el) => { this.main = el; }}>
           <MainMenu startOnboarding={this.startOnboarding.bind(this)}/>
           <Route path={routes.accounts.path} component={SavedAccounts} />
+          <Route path={routes.registerDelegate.path} component={RegisterDelegate} />
           <section>
             <div className={styles.mainBox}>
               <Header />
