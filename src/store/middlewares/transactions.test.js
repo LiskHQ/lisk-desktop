@@ -31,6 +31,11 @@ describe('transaction middleware', () => {
       transactions: {
         pending: [],
       },
+      savedAccounts: {
+        lastActive: {
+          address: '8096217735672704724L',
+        },
+      },
     };
     store.getState = () => (state);
     store.dispatch = spy();
@@ -89,7 +94,7 @@ describe('transaction middleware', () => {
   });
 
 
-  it('should add delegate data to transactionsInit action if account is a delegate', () => {
+  it('should fetch delegate info if account is not the active account', () => {
     const delegateCandidateData = accounts['delegate candidate'];
     const genesisAccountData = accounts.genesis;
     accountApiMock.expects('transactions').returnsPromise().resolves({ transactions: [mockTransaction], count: 1 });
@@ -100,7 +105,7 @@ describe('transaction middleware', () => {
       type: actionTypes.transactionsRequestInit,
       data: {
         id: '1345',
-        address: genesisAccountData.address,
+        address: delegateCandidateData.address,
       },
     };
 
@@ -108,8 +113,8 @@ describe('transaction middleware', () => {
       confirmed: [mockTransaction],
       count: 1,
       balance: genesisAccountData.balance,
-      address: genesisAccountData.address,
-      delegate: {
+      address: delegateCandidateData.address,
+      targetDelegate: {
         ...delegateCandidateData,
       },
     };
@@ -117,6 +122,75 @@ describe('transaction middleware', () => {
     middleware(store)(next)(givenAction);
     expect(store.dispatch).to.have.been
       .calledWith(transactionsInit(expectedCallArgs));
+  });
+
+  it('should not fetch delegate info if account is the active account and isDelegate', () => {
+    const delegateCandidateData = accounts['delegate candidate'];
+    accountApiMock.expects('transactions').returnsPromise().resolves({ transactions: [mockTransaction], count: 1 });
+    accountApiMock.expects('getAccount').returnsPromise().resolves({
+      ...delegateCandidateData,
+      isDelegate: true,
+      delegate: { ...delegateCandidateData },
+    });
+    delegateApiMock.expects('getDelegate').returnsPromise().resolves({ delegate: delegateCandidateData });
+
+    store.getState = () => ({
+      ...state,
+      account: { address: delegateCandidateData.address },
+    });
+
+    const givenAction = {
+      type: actionTypes.transactionsRequestInit,
+      data: {
+        id: '1345',
+        address: delegateCandidateData.address,
+      },
+    };
+
+    const expectedCallArgs = {
+      confirmed: [mockTransaction],
+      count: 1,
+      balance: delegateCandidateData.balance,
+      address: delegateCandidateData.address,
+      targetDelegate: {
+        ...delegateCandidateData,
+      },
+    };
+
+    middleware(store)(next)(givenAction);
+    expect(store.dispatch).to.have.been
+      .calledWith(transactionsInit(expectedCallArgs));
+  });
+
+  it('should finish loading transactions when no delegate found for account', () => {
+    const delegateAccountData = accounts['delegate candidate'];
+    accountApiMock.expects('transactions').returnsPromise().resolves({ transactions: [mockTransaction], count: 1 });
+    accountApiMock.expects('getAccount').returnsPromise().resolves(delegateAccountData);
+    delegateApiMock.expects('getDelegate').returnsPromise().rejects(true);
+
+    store.getState = () => ({
+      ...state,
+      account: { address: delegateAccountData.address },
+    });
+
+    const givenAction = {
+      type: actionTypes.transactionsRequestInit,
+      data: {
+        id: '1345',
+        address: delegateAccountData.address,
+      },
+    };
+
+    const expectedCallArgsNoDelegate = {
+      confirmed: [mockTransaction],
+      count: 1,
+      balance: delegateAccountData.balance,
+      address: delegateAccountData.address,
+    };
+
+    middleware(store)(next)(givenAction);
+    expect(store.dispatch).to.have.been
+      .calledWith(transactionsInit(expectedCallArgsNoDelegate));
   });
 
   it('should call unconfirmedTransactions and then dispatch transactionsFailed if state.transactions.pending.length > 0 and action.type is transactionsUpdated', () => {

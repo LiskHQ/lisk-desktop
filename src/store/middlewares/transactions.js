@@ -1,6 +1,6 @@
 import { loadingStarted, loadingFinished } from '../../utils/loading';
 
-import { unconfirmedTransactions, transactions as getTransactions, getAccount, transaction } from '../../utils/api/account';
+import { unconfirmedTransactions, transactions as getTransactions, getAccount, transaction, extractAddress } from '../../utils/api/account';
 import { getDelegate } from '../../utils/api/delegate';
 import {
   transactionsFailed,
@@ -46,6 +46,10 @@ const getAccountSuccess = (store, accountData) => {
 const initTransactions = (store, action) => {
   const activePeer = store.getState().peers.data;
   const address = action.data.address;
+  const lastActiveAddress = store.getState().savedAccounts.lastActive ?
+    extractAddress(store.getState().savedAccounts.lastActive.publicKey) :
+    null;
+  const isSameAccount = lastActiveAddress === address;
   loadingStarted('transactions-init');
 
   getTransactions({ activePeer, address, limit: 25 })
@@ -59,20 +63,25 @@ const initTransactions = (store, action) => {
             balance: accountData.balance,
             address,
           };
-          if (accountData.publicKey) {
+          if (!isSameAccount && accountData.publicKey) {
             getDelegate(activePeer, { publicKey: accountData.publicKey })
               .then((delegateData) => {
                 accountDataResult = {
                   ...accountDataResult,
-                  delegate: { ...delegateData.delegate },
+                  targetDelegate: { ...delegateData.delegate },
                 };
                 getAccountSuccess(store, accountDataResult);
               }).catch(() => {
                 getAccountSuccess(store, accountDataResult);
               });
-          } else {
-            getAccountSuccess(store, accountDataResult);
+            return;
+          } else if (isSameAccount && accountData.isDelegate) {
+            accountDataResult = {
+              ...accountDataResult,
+              targetDelegate: { ...accountData.delegate },
+            };
           }
+          getAccountSuccess(store, accountDataResult);
         });
     });
 };

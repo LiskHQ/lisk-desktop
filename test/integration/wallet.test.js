@@ -12,11 +12,14 @@ import accountReducer from '../../src/store/reducers/account';
 import transactionReducer from '../../src/store/reducers/transactions';
 import peersReducer from '../../src/store/reducers/peers';
 import loadingReducer from '../../src/store/reducers/loading';
+import savedAccountsReducer from '../../src/store/reducers/savedAccounts';
 import loginMiddleware from '../../src/store/middlewares/login';
 import accountMiddleware from '../../src/store/middlewares/account';
 import peerMiddleware from '../../src/store/middlewares/peers';
 import transactionsMiddleware from '../../src/store/middlewares/transactions';
+import savedAccountsMiddleware from '../../src/store/middlewares/savedAccounts';
 import { accountLoggedIn } from '../../src/actions/account';
+import { accountsRetrieved } from '../../src/actions/savedAccounts';
 import { activePeerSet } from '../../src/actions/peers';
 import networks from './../../src/constants/networks';
 import txTypes from './../../src/constants/transactionTypes';
@@ -63,7 +66,6 @@ describe('@integration: Wallet', () => {
     delegateAPIStub = stub(delegateAPI, 'getDelegate');
 
     localStorageStub = stub(localStorage, 'getItem');
-    localStorageStub.withArgs('accounts').returns(JSON.stringify([{}, {}]));
 
     requestToActivePeerStub.withArgs(match.any, 'transactions', match({
       recipientId: '537318935439898807L',
@@ -99,12 +101,14 @@ describe('@integration: Wallet', () => {
       transactions: transactionReducer,
       peers: peersReducer,
       loading: loadingReducer,
+      savedAccounts: savedAccountsReducer,
     }, [
       thunk,
       accountMiddleware,
       loginMiddleware,
       transactionsMiddleware,
       peerMiddleware,
+      savedAccountsMiddleware,
     ]);
 
     const passphrase = options.isLocked ? undefined : accounts[accountType].passphrase;
@@ -127,9 +131,20 @@ describe('@integration: Wallet', () => {
       .resolves({
         ...account,
       });
-    store.dispatch(accountLoggedIn(account));
     delegateAPIStub.withArgs(match.any).returnsPromise()
       .resolves({ delegate: { ...accounts['delegate candidate'] } });
+
+    const targetSavedAccountsInLocalStorage = [{
+      publicKey: accounts['without initialization'].publicKey,
+      network: 1,
+      balance: 0,
+    }];
+
+    localStorageStub.withArgs('accounts').returns(JSON.stringify(targetSavedAccountsInLocalStorage));
+
+    store.dispatch(accountsRetrieved());
+    store.dispatch(accountLoggedIn(account));
+
     wrapper = mount(renderWithRouter(Wallet, store, { history: { location: { search: '' } } }));
     helper = new Helper(wrapper, store);
   };
@@ -152,6 +167,8 @@ describe('@integration: Wallet', () => {
       step('And I fill in "1" to "amount" field', () => helper.fillInputField('1', 'amount'));
       step('And I fill in "537318935439898807L" to "recipient" field', () => helper.fillInputField('537318935439898807L', 'recipient'));
       step('And I click "send next button"', () => helper.clickOnElement('button.send-next-button'));
+
+
       step('When I click "send button"', () => {
         requestToActivePeerStub.withArgs(match.any, 'transactions', match.any).returnsPromise().rejects({});
         helper.clickOnElement('.send-button button');
