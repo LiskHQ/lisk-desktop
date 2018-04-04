@@ -26,10 +26,15 @@ import routes from '../../constants/routes';
 import Onboarding from '../onboarding';
 
 class App extends React.Component {
+  constructor() {
+    super();
+    this.state = { loaded: false };
+  }
+
   markAsLoaded() {
     this.main.classList.add(styles.loaded);
     this.main.classList.add('appLoaded');
-    this.appLoaded = true;
+    this.setState({ loaded: true });
   }
 
   startOnboarding() {
@@ -39,46 +44,54 @@ class App extends React.Component {
   render() {
     return (
       <OfflineWrapper>
-        <Onboarding appLoaded={this.appLoaded} onRef={(ref) => { this.onboarding = ref; }}/>
+        <Onboarding appLoaded={this.state.loaded} onRef={(ref) => { this.onboarding = ref; }}/>
         <main className={`${styles.bodyWrapper}`} ref={(el) => { this.main = el; }}>
           <MainMenu startOnboarding={this.startOnboarding.bind(this)}/>
           <Route path={routes.accounts.path} component={SavedAccounts} />
           <section>
             <div className={styles.mainBox}>
-              <Header/>
+              <Header />
               <div id='onboardingAnchor'></div>
               <Switch>
-                <PrivateRoutes path={routes.main.path} render={ ({ match }) => (
-                  <main className={offlineStyle.disableWhenOffline}>
-                    <Switch>
-                      <Route path={`${match.url}${routes.accountVisualDemo.path}`} component={AccountVisualDemo} />
-                      <Route path={`${match.url}${routes.dashboard.path}`} component={Dashboard} />
-                      <Route path={`${match.url}${routes.wallet.path}`} component={TransactionDashboard} />
-                      <Route path={`${match.url}${routes.voting.path}`} component={Voting} />
-                      <Route path={`${match.url}${routes.sidechains.path}`} component={Sidechains} />
-                      <Route path={`${match.url}${routes.secondPassphrase.path}`} component={SecondPassphrase} />
-                      <Route path='*' component={NotFound} />
-                    </Switch>
-                  </main>
-                )} />
-                <Route path={routes.explorer.path} render={ ({ match }) => (
-                  <main>
-                    <Route path={`${match.url}${routes.search.path}`} component={Search} />
-                    <Route path={`${match.url}${routes.searchResult.path}/:query?`} component={SearchResult} />
-                    <Route path={`${match.url}${routes.account.path}/:address?`} component={AccountTransactions} />
-                    <Route path={`${match.url}${routes.transaction.path}/:id`} component={SingleTransaction} />
-                  </main>
-                )} />
+                {this.state.loaded
+                  ?
+                  <PrivateRoutes path={routes.main.path} render={ ({ match }) => (
+                    <main className={offlineStyle.disableWhenOffline}>
+                      <Switch>
+                        <Route path={`${match.url}${routes.accountVisualDemo.path}`} component={AccountVisualDemo} />
+                        <Route path={`${match.url}${routes.dashboard.path}`} component={Dashboard} />
+                        <Route path={`${match.url}${routes.wallet.path}`} component={TransactionDashboard} />
+                        <Route path={`${match.url}${routes.voting.path}`} component={Voting} />
+                        <Route path={`${match.url}${routes.sidechains.path}`} component={Sidechains} />
+                        <Route path={`${match.url}${routes.secondPassphrase.path}`} component={SecondPassphrase} />
+                        <Route path='*' component={NotFound} />
+                      </Switch>
+                    </main>
+                  )} />
+                  : null
+                }
+                {this.state.loaded
+                  ?
+                  <Route path={routes.explorer.path} render={ ({ match }) => (
+                    <main>
+                      <Route path={`${match.url}${routes.search.path}`} component={Search} />
+                      <Route path={`${match.url}${routes.searchResult.path}/:query?`} component={SearchResult} />
+                      <Route path={`${match.url}${routes.account.path}/:address?`} component={AccountTransactions} />
+                      <Route path={`${match.url}${routes.transaction.path}/:id`} component={SingleTransaction} />
+                    </main>
+                  )} />
+                  : null
+                }
                 <Route path={routes.register.path} component={Register} />
                 <Route path={routes.addAccount.path} component={Login} />
                 <Route exact path={routes.login.path} component={Login} />
                 <Route path='*' component={NotFound} />
               </Switch>
             </div>
-            <Toaster />
-            <LoadingBar markAsLoaded={this.markAsLoaded.bind(this)} />
           </section>
+          <Toaster />
         </main>
+        <LoadingBar markAsLoaded={this.markAsLoaded.bind(this)} />
       </OfflineWrapper>
     );
   }
