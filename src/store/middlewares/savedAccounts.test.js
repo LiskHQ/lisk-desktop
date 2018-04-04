@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { spy, mock, match } from 'sinon';
 
+import * as accountApi from '../../utils/api/account';
 import { accountLoading, accountLoggedOut } from '../../actions/account';
 import { accountSaved } from '../../actions/savedAccounts';
 import * as peersActions from '../../actions/peers';
@@ -22,6 +23,7 @@ describe('SavedAccounts middleware', () => {
     store.dispatch = spy();
     state = {
       peers: {
+        data: { options: { code: networks.mainnet.code } },
         options: {
           code: networks.mainnet.code,
         },
@@ -31,6 +33,7 @@ describe('SavedAccounts middleware', () => {
           {
             publicKey,
             network: networks.mainnet.code,
+            balance: 0,
           },
         ],
       },
@@ -147,5 +150,50 @@ describe('SavedAccounts middleware', () => {
     };
     middleware(store)(next)(action);
     expect(store.dispatch).to.have.been.calledWith(accountLoggedOut());
+  });
+
+  it('should make a request for the account information, if a relevant transaction was made', () => {
+    const getAccountStub = mock(accountApi);
+    getAccountStub.expects('getAccount').withArgs(match.any, '1155682438012955434L').returnsPromise().resolves({ balance: 1 });
+    const transactions = { transactions: [{ senderId: '1234L', recipientId: '1155682438012955434L' }] };
+    middleware(store)(next)({
+      type: actionTypes.newBlockCreated,
+      data: { block: transactions, windowIsFocused: true },
+    });
+
+    expect(store.dispatch).to.have.been.calledWith({
+      data: {
+        accounts: state.savedAccounts.accounts,
+        lastActive: match.any,
+      },
+      type: actionTypes.accountsRetrieved,
+    });
+    getAccountStub.restore();
+  });
+
+  it('should not make a request for the account information, if no relevant transaction was made', () => {
+    const getAccountStub = mock(accountApi);
+    getAccountStub.expects('getAccount').withArgs(match.any, '1155682438012955434L').returnsPromise().resolves({ balance: 1 });
+    const transactions = { transactions: [{ senderId: '1234L', recipientId: '4321L' }] };
+    middleware(store)(next)({
+      type: actionTypes.newBlockCreated,
+      data: { block: transactions, windowIsFocused: true },
+    });
+
+    expect(store.dispatch).to.not.have.been.calledWith();
+    getAccountStub.restore();
+  });
+
+  it('should not make a request for the account information, if a relevant transaction was made but window is not focused', () => {
+    const getAccountStub = mock(accountApi);
+    getAccountStub.expects('getAccount').withArgs(match.any, '1155682438012955434L').returnsPromise().resolves({ balance: 1 });
+    const transactions = { transactions: [{ senderId: '1234L', recipientId: '1155682438012955434L' }] };
+    middleware(store)(next)({
+      type: actionTypes.newBlockCreated,
+      data: { block: transactions, windowIsFocused: false },
+    });
+
+    expect(store.dispatch).to.not.have.been.calledWith();
+    getAccountStub.restore();
   });
 });
