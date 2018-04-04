@@ -9,7 +9,7 @@ import TransactionDashboard from '../components/transactionDashboard';
 import AccountTransactions from '../components/accountTransactions';
 import Voting from '../components/voting';
 import SingleTransaction from '../components/singleTransaction';
-import NotFound from '../components/notFound';
+// import NotFound from '../components/notFound';
 import AccountVisualDemo from '../components/accountVisual/demo';
 
 export default {
@@ -59,11 +59,11 @@ export default {
     isPrivate: false,
     exact: true,
   },
-  notFound: {
-    path: '*',
-    component: NotFound,
-    isPrivate: false,
-  },
+  // notFound: {
+  //   path: '*',
+  //   component: NotFound,
+  //   isPrivate: false,
+  // },
   search: {
     pathPrefix: '/explorer',
     path: '/search',
@@ -92,12 +92,12 @@ export default {
     component: SingleTransaction,
     isPrivate: false,
   },
-  notFoundExplorer: {
-    pathPrefix: '/explorer',
-    path: '*',
-    component: NotFound,
-    isPrivate: false,
-  },
+  // notFoundExplorer: {
+  //   pathPrefix: '/explorer',
+  //   path: '*',
+  //   component: NotFound,
+  //   isPrivate: false,
+  // },
   explorer: {
     path: '/explorer',
   },

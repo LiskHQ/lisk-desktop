@@ -8,6 +8,7 @@ import OfflineWrapper from '../offlineWrapper';
 import CustomRoute from '../customRoute';
 import Header from '../header';
 import SavedAccounts from '../savedAccounts';
+import NotFound from '../notFound';
 
 import routes from '../../constants/routes';
 import Onboarding from '../onboarding';
@@ -24,7 +25,7 @@ class App extends React.Component {
   }
 
   render() {
-    const allRoutes = Object.entries(routes).map(x => x[1]);
+    const allRoutes = Object.values(routes);
 
     const defaultRoutes = allRoutes.filter(routeObj =>
       routeObj.component && !routeObj.pathPrefix);
@@ -65,6 +66,7 @@ class App extends React.Component {
                     exact={route.exact}
                     key={key} />
                 ))}
+                <Route component={NotFound} />
               </Switch>
             </div>
             <Toaster />
