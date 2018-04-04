@@ -5,7 +5,7 @@ import history from '../history';
 import routes from '../constants/routes';
 
 describe('externalLinks', () => {
-  const historyPush = spy(history, 'push');
+  const historyReplace = spy(history, 'replace');
   const ipc = {
     on: spy(),
   };
@@ -29,6 +29,6 @@ describe('externalLinks', () => {
     };
     externalLinks.init();
     callbacks.openUrl({}, 'lisk://register');
-    expect(historyPush).to.have.been.calledWith(routes.register.path);
+    expect(historyReplace).to.have.been.calledWith(routes.register.path);
   });
 });
