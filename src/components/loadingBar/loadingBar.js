@@ -9,7 +9,14 @@ class LoadingBar extends React.Component {
     this.markedAsLoaded = false;
   }
 
+  markLoaded() {
+    this.props.markAsLoaded();
+    this.markedAsLoaded = true;
+  }
+
   componentWillReceiveProps(nextProps) {
+    if (!this.markedAsLoaded && nextProps.peers.data) this.markLoaded();
+
     if (nextProps.loading && nextProps.loading.length > 0 && this.props.loading.length === 0) {
       this.startTime = new Date();
       this.setState({ visible: true });
@@ -24,16 +31,10 @@ class LoadingBar extends React.Component {
   }
 
   componentDidMount() {
-    this.mountingTimeout = setTimeout(() => {
-      if (!this.markedAsLoaded && typeof this.props.markAsLoaded === 'function') {
-        this.markedAsLoaded = true;
-        this.props.markAsLoaded();
-      }
-    }, 100);
+    if (this.props.peers.data) this.markLoaded();
   }
 
   componentWillUnmount() {
-    clearTimeout(this.mountingTimeout);
     clearTimeout(this.timeout);
   }
 

@@ -7,6 +7,11 @@ import LoadingBar from './loadingBar';
 
 describe('LoadingBar Container', () => {
   let clock;
+  const props = {
+    loading: [],
+    markAsLoaded: sinon.spy(),
+    peers: {},
+  };
 
   beforeEach(() => {
     clock = sinon.useFakeTimers({
@@ -20,18 +25,18 @@ describe('LoadingBar Container', () => {
   });
 
   it('should show ProgresBar if props.loading.length is changed not to be 0', () => {
-    const wrapper = mount(<LoadingBar loading={[]} />);
+    const wrapper = mount(<LoadingBar {...props} />);
     wrapper.setProps({ loading: ['test'] });
     expect(wrapper.find('ProgressBar')).to.be.present();
   });
 
   it('should not show ProgressBar if props.loading.length is 0', () => {
-    const wrapper = mount(<LoadingBar loading={[]} />);
+    const wrapper = mount(<LoadingBar {...props} />);
     expect(wrapper.find('ProgressBar')).not.to.be.present();
   });
 
   it('should hide ProgresBar after 1 second if props.loading.length is changed to be 0', () => {
-    const wrapper = mount(<LoadingBar loading={[]} />);
+    const wrapper = mount(<LoadingBar {...props} />);
     expect(wrapper.find('ProgressBar')).not.to.be.present();
     wrapper.setProps({ loading: ['test'] });
     expect(wrapper.find('ProgressBar')).to.be.present();
@@ -47,10 +52,10 @@ describe('LoadingBar Container', () => {
     expect(wrapper.find('ProgressBar')).not.to.be.present();
   });
 
-  it('should call markAsLoaded after LoadingBar mounted', () => {
-    const markAsLoaded = sinon.spy();
-    mount(<LoadingBar loading={[]} markAsLoaded={markAsLoaded} />);
-    clock.tick(101);
-    expect(markAsLoaded).to.have.been.calledWith();
+  it('should call markAsLoaded after peer is set', () => {
+    const wrapper = mount(<LoadingBar {...props} />);
+    expect(props.markAsLoaded).to.not.have.been.calledWith();
+    wrapper.setProps({ peers: { data: {} } });
+    expect(props.markAsLoaded).to.have.been.calledWith();
   });
 });
