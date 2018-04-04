@@ -31,6 +31,7 @@ class Onboarding extends React.Component {
   }
 
   componentDidMount() {
+    this.props.onRef(this);
     window.addEventListener('resize', throttle(this.resizeWindow.bind(this), 1000));
 
     if (this.props.appLoaded) {
@@ -40,6 +41,7 @@ class Onboarding extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.resizeWindow.bind(this));
+    this.props.onRef(undefined);
   }
 
   resizeWindow() {
@@ -126,5 +128,4 @@ const mapStateToProps = state => ({
   showDelegates: state.settings.advancedMode,
 });
 
-export default connect(mapStateToProps, null, null, { withRef: true })(translate(null,
-  { withRef: true })(Onboarding));
+export default connect(mapStateToProps)(translate()(Onboarding));

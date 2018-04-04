@@ -4,10 +4,10 @@ Feature: Register second passphrase
     And I wait 0.1 seconds
     When I go to "main/second-passphrase/"
     And I wait 0.5 seconds
+    And I click "next"
+    And I wait 0.5 seconds
     And I 150 times move mouse randomly
     And I wait 0.5 seconds
-    And I swipe "i understand checkbox" to right
-    And I wait 1 seconds
     And I copy the second passphrase
     And I swipe "reveal checkbox" to right
     And I wait 0.5 seconds

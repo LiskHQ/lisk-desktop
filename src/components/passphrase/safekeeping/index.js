@@ -9,8 +9,14 @@ class SafeKeeping extends React.Component {
   constructor() {
     super();
     this.state = {
-      step: 'introduction-step',
+      step: '',
     };
+  }
+
+  componentDidMount() {
+    this.setState({
+      step: this.props.step || 'introduction-step',
+    });
   }
 
   next(e) {

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { TimeFromTimestamp, DateFromTimestamp } from './../timestamp/index';
 import CopyToClipboard from '../copyToClipboard';
 import AccountVisual from '../accountVisual';
-import styles from './transactions.css';
+import styles from './transactionDetailView.css';
 import { FontIcon } from '../fontIcon';
 import TransactionType from './transactionType';
 import LiskAmount from '../liskAmount';

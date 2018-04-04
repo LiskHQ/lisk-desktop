@@ -7,10 +7,10 @@
   --header-focused-font-size: 32px;
   --login-box-padding-L: var(--box-padding-left-L);
   --login-box-padding-XL: var(--box-padding-left-XL);
-  --back-button-label-font-size-XL: 15px;
-  --back-button-label-font-size-L: 12px;
-  --back-button-icon-font-size-XL: 24px;
-  --back-button-icon-font-size-L: 16px;
+  --forward-to-link-label-font-size-XL: 15px;
+  --forward-to-link-label-font-size-L: 12px;
+  --forward-to-link-icon-font-size-XL: 24px;
+  --forward-to-link-icon-font-size-L: 16px;
 }
 
 .login {
@@ -46,7 +46,7 @@
     top: 0;
     margin-top: 50px;
 
-    & .backButton {
+    & .forwardToLink {
       color: var(--color-primary-standard);
       text-decoration: initial;
       font-family: var(--content-font);
@@ -98,13 +98,13 @@
     }
 
     & header {
-      & .backButton {
+      & .forwardToLink {
         & .label {
-          font-size: var(--back-button-label-font-size-XL);
+          font-size: var(--forward-to-link-label-font-size-XL);
         }
 
         & .icon {
-          font-size: var(--back-button-icon-font-size-XL);
+          font-size: var(--forward-to-link-icon-font-size-XL);
         }
       }
     }
@@ -124,13 +124,13 @@
     }
 
     & header {
-      & .backButton {
+      & .forwardToLink {
         & .label {
-          font-size: var(--back-button-label-font-size-L);
+          font-size: var(--forward-to-link-label-font-size-L);
         }
 
         & .icon {
-          font-size: var(--back-button-icon-font-size-L);
+          font-size: var(--forward-to-link-icon-font-size-L);
         }
       }
     }

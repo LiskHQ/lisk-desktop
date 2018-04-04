@@ -39,8 +39,8 @@ class SecondPassphrase extends React.Component {
           showNav={true}
           finalCallback={onPassphraseRegister}
           backButtonLabel={t('Back')}>
-          <CreateSecond title={t('Create')} t={t} icon='add' />
-          <Safekeeping title={t('Safekeeping')} t={t}
+          <CreateSecond title={t('Create')} t={t} icon='add' balance={account.balance} />
+          <Safekeeping title={t('Safekeeping')} t={t} step='revealing-step'
             icon='checkmark' header={header} message={message} />
           <Confirm title={t('Confirm')} t={t} confirmButton='Register'
             icon='login' secondPassConfirmation={true} />

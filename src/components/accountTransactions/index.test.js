@@ -36,7 +36,7 @@ describe('AccountTransaction Component', () => {
   });
 
   it('updates transactions on address update', () => {
-    expect(transactionsRequestInitSpy).to.not.have.been.calledWith();
+    expect(transactionsRequestInitSpy).to.have.been.calledWith({ address: '987654321L' });
     wrapper.setProps({ match: { params: { address: '12345L' } } });
     expect(transactionsRequestInitSpy).to.have.been.calledWith({ address: '12345L' });
   });

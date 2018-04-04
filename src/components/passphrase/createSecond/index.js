@@ -5,13 +5,15 @@ import { generateSeed, generatePassphrase } from '../../../utils/passphrase';
 import styles from '../create/create.css';
 import ProgressBarTheme from './progressBar.css';
 import TransitionWrapper from '../../toolbox/transitionWrapper';
+import { PrimaryButton } from '../../toolbox/buttons/button';
+import { fromRawLsk } from '../../../utils/lsk';
+import fees from '../../../constants/fees';
 
 class Create extends React.Component {
   constructor() {
     super();
     this.state = {
-      step: 'generate',
-      showHint: false,
+      step: 'info',
       address: null,
       lastCaptured: {
         x: 0,
@@ -27,48 +29,6 @@ class Create extends React.Component {
     };
     this.count = 0;
     this.eventNormalizer = this._eventNormalizer.bind(this);
-  }
-
-  componentDidMount() {
-    this.container = document.getElementById('generatorContainer');
-    this.isTouchDevice = this.checkDevice(this.props.agent);
-    const eventName = this.isTouchDevice ? 'devicemotion' : 'mousemove';
-
-    window.addEventListener(eventName, this.eventNormalizer, true);
-  }
-
-
-  moveTitle() {
-    setTimeout(() => {
-      const { percentage } = this.state.data;
-      if (percentage > 15 && percentage < 18) {
-        this.setState({
-          headingClass: styles.goToTop,
-        });
-      }
-    }, 10);
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  hideShapeRandomly(list) {
-    const result = [];
-    const min = 0;
-    const max = 9;
-    let randomNumber;
-    while (result.length < 4) {
-      randomNumber = Math.floor((Math.random() * (max - min)) + min);
-      if (result.indexOf(randomNumber) === -1) {
-        result.push(randomNumber);
-      }
-    }
-    result.forEach((item) => { list[item] = 0; });
-    return list;
-  }
-
-  componentDidUpdate() {
-    if (this.state.data) {
-      this.moveTitle();
-    }
   }
 
   componentWillUnmount() {
@@ -149,18 +109,24 @@ class Create extends React.Component {
       setTimeout(() => {
         nextStep({
           passphrase,
-          step: 'info',
         });
       }, 300);
     }
   }
 
-  showHint() {
-    this.setState({ showHint: !this.state.showHint });
+  next() {
+    this.container = document.getElementById('generatorContainer');
+    this.isTouchDevice = this.checkDevice(this.props.agent);
+    const eventName = this.isTouchDevice ? 'devicemotion' : 'mousemove';
+    window.addEventListener(eventName, this.eventNormalizer, true);
+    this.setState({
+      step: 'generate',
+    });
   }
 
   render() {
-    const { t } = this.props;
+    const { t, balance } = this.props;
+    const hasFund = fromRawLsk(balance) * 1 < fromRawLsk(fees.setSecondPassphrase) * 1;
     const percentage = this.state.data ? this.state.data.percentage : 0;
     const hintTitle = this.isTouchDevice ?
       t('by tilting your device.') :
@@ -168,10 +134,37 @@ class Create extends React.Component {
 
     return (
       <section className={`${grid.row} ${grid['center-xs']} ${styles.wrapper} ${styles.generation}`} id="generatorContainer" >
+        <TransitionWrapper current={this.state.step} step='info'>
+          <div className={styles.secondPassphrase}
+            ref={ (pageRoot) => { this.pageRoot = pageRoot; } }>
+            <header>
+              <h2 className={`${styles.generatorHeader}`}
+                id="generatorHeader" >
+                {t('Secure the use of your Lisk ID')}
+                <br />
+                {t('with a 2nd passphrase')}
+              </h2>
+            </header>
+            <p className={styles.info}>
+              {t('After registration, you will need it to use your Lisk ID, like sending and voting.')}
+              <br />
+              {t('You are responsible for keeping your 2nd passphrase safe. No one can restore it, not even Lisk.')}
+            </p>
+            <PrimaryButton
+              className={`${styles.nextButton} next`}
+              disabled={hasFund}
+              label={t('Next')}
+              onClick={this.next.bind(this)}
+              type={'button'} />
+            {hasFund ? <p className={styles.error}>
+              {t('Insufficient funds (Fee: {{fee}} LSK)', { fee: fromRawLsk(fees.setSecondPassphrase) })}
+            </p> : '' }
+          </div>
+        </TransitionWrapper>
         <TransitionWrapper current={this.state.step} step='generate'>
           <div className={styles.secondPassphrase}
             ref={ (pageRoot) => { this.pageRoot = pageRoot; } }>
-            <header className={this.state.headingClass}>
+            <header>
               <h2 className={`${styles.generatorHeader}`}
                 id="generatorHeader" >
                 {t('Create your second passphrase')}

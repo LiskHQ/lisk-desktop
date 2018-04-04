@@ -143,9 +143,9 @@ class Login extends React.Component {
         <section className={`${styles.login} ${styles[this.state.passInputState]}`}>
           <section className={styles.table}>
             <header>
-              <a className={styles.backButton} href='https://lisk.io' target='_blank' rel='noopener noreferrer'>
-                <FontIcon className={styles.icon}>arrow-left</FontIcon>
-                <span className={styles.label}>{this.props.t('Back to lisk.io')}</span>
+              <a className={styles.forwardToLink} href='https://lisk.io' target='_blank' rel='noopener noreferrer'>
+                <span className={styles.label}>{this.props.t('Go to lisk.io')}</span>
+                <FontIcon className={styles.icon}>arrow-right</FontIcon>
               </a>
             </header>
             <div className={`${styles.tableCell} text-left`}>
