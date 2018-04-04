@@ -164,9 +164,7 @@
   "Redo": "Redo",
   "Register": "Register",
   "Register 2nd passphrase": "Register 2nd passphrase",
-  "Register Second Passphrase": "Register Second Passphrase",
   "Register and oversee your decentralized application here. Available soon.": "Register and oversee your decentralized application here. Available soon.",
-  "Register as delegate": "Register as delegate",
   "Reload": "Reload",
   "Remove": "Remove",
   "Report Issue...": "Report Issue...",
@@ -256,10 +254,6 @@
   "You are looking into a saved account. In order to {{nextAction}} you need to enter your passphrase.": "You are looking into a saved account. In order to {{nextAction}} you need to enter your passphrase.",
   "You can also press ↲ enter to search": "You can also press ↲ enter to search",
   "You can always get it back.": "You can always get it back.",
-  "You can select up to {{count}} delegates in one voting turn.": "You can select up to {{count}} delegates in one voting turn.",
-  "You can select up to {{count}} delegates in one voting turn._plural": "",
-  "You can vote for up to {{count}} delegates in total.": "You can vote for up to {{count}} delegates in total.",
-  "You can vote for up to {{count}} delegates in total._plural": "",
   "You can now use Lisk Hub.<br": {
     " If you want to repeat the onboarding, navigate to \"More\" on the sidebar.": "You can now use Lisk Hub.<br> If you want to repeat the onboarding, navigate to \"More\" on the sidebar."
   },
