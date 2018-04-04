@@ -6,6 +6,7 @@ import { stub, match } from 'sinon';
 
 import * as peers from '../../src/utils/api/peers';
 import * as accountAPI from '../../src/utils/api/account';
+import * as delegateAPI from '../../src/utils/api/delegate';
 import { prepareStore, renderWithRouter } from '../utils/applicationInit';
 import accountReducer from '../../src/store/reducers/account';
 import transactionReducer from '../../src/store/reducers/transactions';
@@ -42,6 +43,7 @@ describe('@integration: Wallet', () => {
   let wrapper;
   let requestToActivePeerStub;
   let accountAPIStub;
+  let delegateAPIStub;
   let localStorageStub;
   let helper;
 
@@ -58,6 +60,7 @@ describe('@integration: Wallet', () => {
   beforeEach(() => {
     requestToActivePeerStub = stub(peers, 'requestToActivePeer');
     accountAPIStub = stub(accountAPI, 'getAccount');
+    delegateAPIStub = stub(delegateAPI, 'getDelegate');
 
     localStorageStub = stub(localStorage, 'getItem');
     localStorageStub.withArgs('accounts').returns(JSON.stringify([{}, {}]));
@@ -86,6 +89,7 @@ describe('@integration: Wallet', () => {
   afterEach(() => {
     requestToActivePeerStub.restore();
     accountAPIStub.restore();
+    delegateAPIStub.restore();
     localStorageStub.restore();
   });
 
@@ -124,6 +128,8 @@ describe('@integration: Wallet', () => {
         ...account,
       });
     store.dispatch(accountLoggedIn(account));
+    delegateAPIStub.withArgs(match.any).returnsPromise()
+      .resolves({ delegate: { ...accounts['delegate candidate'] } });
     wrapper = mount(renderWithRouter(Wallet, store, { history: { location: { search: '' } } }));
     helper = new Helper(wrapper, store);
   };
