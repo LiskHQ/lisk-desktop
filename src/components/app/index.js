@@ -44,9 +44,7 @@ class App extends React.Component {
   render() {
     return (
       <OfflineWrapper>
-        <Onboarding appLoaded={this.state.loaded} ref={(el) => {
-          if (el) { this.onboarding = el.getWrappedInstance().getWrappedInstance(); }
-        }} />
+        <Onboarding appLoaded={this.state.loaded} onRef={(ref) => { this.onboarding = ref; }}/>
         <main className={`${styles.bodyWrapper}`} ref={(el) => { this.main = el; }}>
           <MainMenu startOnboarding={this.startOnboarding.bind(this)}/>
           <Route path={routes.accounts.path} component={SavedAccounts} />
