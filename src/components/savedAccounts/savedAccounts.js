@@ -99,9 +99,9 @@ class SavedAccounts extends React.Component {
         <div className={`${styles.content}`}>
           <ul className={styles.cardsWrapper} >
             <AddAccountCard t={t} />
-            {savedAccounts.map(account => (
+            {savedAccounts.map((account, key) => (
               <AccountCard
-                key={account.publicKey + account.network}
+                key={key}
                 onClick={() => switchAccount(account)}
                 handleRemove={this.handleRemove.bind(this)}
                 isSelectedForRemove={this.isSelectedForRemove.bind(this)}
