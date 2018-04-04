@@ -20,9 +20,9 @@ class Send extends React.Component {
       && props.account.balance > 0
       && props.pendingTransactions.length === 0;
 
-    const { amount, address, recipient } = this.getSearchParams();
+    const { amount, recipient } = this.getSearchParams();
     this.state = {
-      sendIsActive: !!address || !!recipient || !!amount || needsAccountInit,
+      sendIsActive: !!recipient || !!amount || needsAccountInit,
     };
   }
 
@@ -36,7 +36,7 @@ class Send extends React.Component {
 
   render() {
     const { t } = this.props;
-    const { amount, address, recipient } = this.getSearchParams();
+    const { amount, recipient } = this.getSearchParams();
 
     return (
       <Fragment>
@@ -56,7 +56,7 @@ class Send extends React.Component {
             <AccountInitialization />
             <SendWritable
               autoFocus={this.state.sendIsActive || window.innerWidth > breakpoints.m}
-              address={address || recipient}
+              address={recipient}
               amount={amount}
             />
             <PassphraseSteps />
