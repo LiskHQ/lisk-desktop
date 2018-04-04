@@ -6,6 +6,7 @@ import { stub, match } from 'sinon';
 
 import * as peers from '../../src/utils/api/peers';
 import * as accountAPI from '../../src/utils/api/account';
+import * as delegateAPI from '../../src/utils/api/delegate';
 import { prepareStore, renderWithRouter } from '../utils/applicationInit';
 import accountReducer from '../../src/store/reducers/account';
 import transactionReducer from '../../src/store/reducers/transactions';
@@ -42,12 +43,17 @@ describe('@integration: Account Transactions', () => {
   let wrapper;
   let requestToActivePeerStub;
   let accountAPIStub;
+  let delegateAPIStub;
 
   beforeEach(() => {
     requestToActivePeerStub = stub(peers, 'requestToActivePeer');
     accountAPIStub = stub(accountAPI, 'getAccount');
+    delegateAPIStub = stub(delegateAPI, 'getDelegate');
 
     const transactionExample = { senderId: '456L', receiverId: '456L', type: txTypes.send };
+
+    delegateAPIStub.withArgs(match.any).returnsPromise()
+      .resolves({ delegate: { ...accounts['delegate candidate'] } });
 
     // specific address
     let transactions = new Array(20);
@@ -72,6 +78,7 @@ describe('@integration: Account Transactions', () => {
   afterEach(() => {
     requestToActivePeerStub.restore();
     accountAPIStub.restore();
+    delegateAPIStub.restore();
     wrapper.update();
   });
 
