@@ -1,19 +1,11 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import PrivateRoutes from '../privateRoute';
-import Dashboard from '../dashboard';
-import Sidechains from '../sidechains';
+import asyncComponent from '../asyncComponent';
+
 import Header from '../header';
 import Login from '../login';
 import Register from '../register';
-import SecondPassphrase from '../secondPassphrase';
-import Search from '../search';
-import SearchResult from '../search/searchResult';
-import TransactionDashboard from '../transactionDashboard';
-import AccountTransactions from '../accountTransactions';
-import Voting from '../voting';
-import SavedAccounts from '../savedAccounts';
-import SingleTransaction from './../singleTransaction';
 import styles from './app.css';
 import Toaster from '../toaster';
 import MainMenu from '../mainMenu';
@@ -21,9 +13,20 @@ import LoadingBar from '../loadingBar';
 import NotFound from '../notFound';
 import OfflineWrapper from '../offlineWrapper';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
-import AccountVisualDemo from '../accountVisual/demo';
 import routes from '../../constants/routes';
 import Onboarding from '../onboarding';
+
+const Dashboard = asyncComponent(() => import('../dashboard'));
+const SavedAccounts = asyncComponent(() => import('../savedAccounts'));
+const AccountVisualDemo = asyncComponent(() => import('../accountVisual/demo'));
+const TransactionDashboard = asyncComponent(() => import('../transactionDashboard'));
+const Voting = asyncComponent(() => import('../voting'));
+const Sidechains = asyncComponent(() => import('../sidechains'));
+const SecondPassphrase = asyncComponent(() => import('../secondPassphrase'));
+const Search = asyncComponent(() => import('../search'));
+const SearchResult = asyncComponent(() => import('../search/searchResult'));
+const AccountTransactions = asyncComponent(() => import('../accountTransactions'));
+const SingleTransaction = asyncComponent(() => import('../singleTransaction'));
 
 class App extends React.Component {
   markAsLoaded() {
