@@ -1,5 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const webpack = require('webpack');
+const { NamedModulesPlugin } = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const { resolve } = require('path');
 const merge = require('webpack-merge');
 const baseConfig = require('./webpack.config');
@@ -27,8 +29,13 @@ module.exports = merge(baseConfig, reactConfig, {
         NODE_ENV: null,
       },
     }),
+    new NamedModulesPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
+    }),
+    new ExtractTextPlugin({
+      filename: 'styles.css',
+      allChunks: true,
     }),
   ],
 });
