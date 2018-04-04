@@ -1,0 +1,38 @@
+@import '../app/variables.css';
+
+.empty {
+  text-align: center;
+  font-weight: var(--font-weight-semi-bold);
+  padding-top: 25px;
+  color: var(--color-grayscale-dark);
+}
+
+.results {
+  overflow-y: initial;
+
+  & .turnArrow {
+    transform: rotate(180deg);
+  }
+}
+
+@media (--xLarge-viewport) {
+  .results {
+    overflow-y: auto;
+    margin: 0px calc(0 - var(--box-padding-left-XL));
+  }
+}
+
+@media (--large-viewport) {
+  .results {
+    overflow-y: auto;
+    margin: 0px calc(0 - var(--box-padding-left-L));
+  }
+}
+
+@media (--medium-viewport) {
+  .results {
+    overflow-y: initial;
+    padding-bottom: 100px;
+    margin: 0px calc(0 - var(--box-padding-left-M));
+  }
+}

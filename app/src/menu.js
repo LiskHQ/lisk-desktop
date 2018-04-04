@@ -116,6 +116,10 @@ const menu = {
         label: i18n.t('Help'),
         submenu: [
           {
+            label: i18n.t('Lisk Help Center'),
+            click: menu.onClickLink.bind(null, electron, 'https://help.lisk.io/'),
+          },
+          {
             label: i18n.t('Lisk Website'),
             click: menu.onClickLink.bind(null, electron, 'https://lisk.io'),
           },
@@ -128,15 +132,11 @@ const menu = {
             click: menu.onClickLink.bind(null, electron, 'https://explorer.lisk.io'),
           },
           {
-            label: i18n.t('Lisk Forum'),
-            click: menu.onClickLink.bind(null, electron, 'https://forum.lisk.io'),
+            label: i18n.t('Lisk Academy'),
+            click: menu.onClickLink.bind(null, electron, 'https://lisk.io/academy'),
           },
           {
             type: 'separator',
-          },
-          {
-            label: i18n.t('Report Issue...'),
-            click: menu.onClickLink.bind(null, electron, 'https://lisk.zendesk.com/hc/en-us/requests/new'),
           },
           {
             label: i18n.t('What\'s New...'),

@@ -13,7 +13,7 @@ import breakpoints from './../../constants/breakpoints';
 describe('Setting', () => {
   const history = {
     location: {
-      pathname: '/main/voting',
+      pathname: '/delegates',
     },
     push: sinon.spy(),
   };

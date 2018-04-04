@@ -2,13 +2,16 @@
 
 :root {
   --font-size-card-h2: 30px;
-  --font-size-card-h2-s: 24px;
+  --font-size-card-h2-s: 20px;
   --address-font-size: 17px;
+  --address-font-size-s: 14px;
   --small-font-size: 20px;
   --card-width: 347px;
   --card-height: 436px;
   --card-width-m: 267px;
+  --card-width-s: 227px;
   --card-height-m: 336px;
+  --card-height-s: 280px;
 }
 
 .card {
@@ -224,5 +227,54 @@
 
   .cardIcon {
     height: 130px;
+  }
+}
+
+@media (--xSmall-viewport) {
+  .card {
+    width: var(--card-width-s);
+    height: var(--card-height-s);
+    margin: 0px 24px;
+
+    & h2 {
+      margin: 15px 0;
+      padding: 0;
+      font-size: var(--font-size-card-h2-s);
+    }
+  }
+
+  .addNew {
+    overflow: hidden;
+  }
+
+  .plusShapeIcon {
+    margin: 24px auto;
+  }
+
+  .triangleImage {
+    left: 0;
+  }
+
+  .circleImage {
+    right: -54px;
+  }
+
+  .removeConfirm {
+    height: var(--card-height-s);
+  }
+
+  .network,
+  .unlocked,
+  .unlockedSecured {
+    padding: 10px;
+  }
+
+  .address {
+    font-size: var(--address-font-size-s);
+  }
+
+  .cardIcon {
+    height: 100px;
+    margin: 38px auto 0;
   }
 }

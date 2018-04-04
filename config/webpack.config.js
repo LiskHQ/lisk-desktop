@@ -17,7 +17,14 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         options: {
-          presets: ['es2015', 'react', 'stage-3'],
+          presets: [
+            ['env', {
+              targets: {
+                browsers: ['last 2 versions', 'safari >= 7'],
+              },
+            }],
+            'react',
+            'stage-3'],
           plugins: ['syntax-trailing-function-commas', 'import-glob', 'transform-decorators-legacy', 'syntax-dynamic-import'],
           env: {
             test: {
