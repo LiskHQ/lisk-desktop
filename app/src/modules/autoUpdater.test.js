@@ -68,8 +68,11 @@ describe('autoUpdater', () => {
     callbacks.error(undefined);
     expect(params.dialog.showErrorBox).to.not.have.been.calledWith();
 
+    callbacks.error('404 Not Found');
+    expect(params.dialog.showErrorBox).to.not.have.been.calledWith();
+
     callbacks.error(null);
-    expect(params.dialog.showErrorBox).to.have.been.calledWith('Error: ', 'unknown');
+    expect(params.dialog.showErrorBox).to.not.have.been.calledWith();
 
     callbacks.error('error');
     expect(params.dialog.showErrorBox).to.have.been.calledWith('Error: ', 'error');
