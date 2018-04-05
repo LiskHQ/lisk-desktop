@@ -39,6 +39,22 @@ class RegisterDelegate extends React.Component {
     });
   }
 
+  signWithFirstPass(passphrase) {
+    const data = {
+      activePeer: this.props.peers.data,
+      passphrase,
+    };
+    this.props.accountUpdated(data);
+  }
+
+  signWithSecondPass(passphrase) {
+    const data = {
+      activePeer: this.props.peers.data,
+      secondPassphrase: passphrase,
+    };
+    this.props.accountUpdated(data);
+  }
+
   goBack() {
     this.props.history.goBack();
   }
@@ -52,7 +68,11 @@ class RegisterDelegate extends React.Component {
             prevPage={this.goBack.bind(this)}
             finalCallback={this.register.bind(this)}
             backButtonLabel={this.props.t('Back')}>
-            <Choose title='Choose' t={this.props.t} icon='add' />
+            <Choose title='Choose'
+              t={this.props.t}
+              signWithFirstPass={this.signWithFirstPass.bind(this)}
+              signWithSecondPass={this.signWithSecondPass.bind(this)}
+              icon='add' />
             <Choose title='Confirm' t={this.props.t} icon='add' />
           </MultiStep>
         </Box>
