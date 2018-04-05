@@ -11,6 +11,7 @@
   --card-width-m: 267px;
   --card-width-s: 227px;
   --card-height-m: 336px;
+  --card-height-s: 280px;
 }
 
 .card {
@@ -220,7 +221,7 @@
 @media (--small-viewport) {
   .card {
     width: var(--card-width-s);
-    height: 280px;
+    height: var(--card-height-s);
     margin: 0px 24px;
 
     & h2 {
@@ -228,13 +229,32 @@
       padding: 0;
       font-size: var(--font-size-card-h2-s);
     }
+  }
 
-    & .removeButton {
-      position: absolute;
-      top: -10px;
-      left: -50%;
-      transform: translateX(50%);
-    }
+  .addNew {
+    overflow: hidden;
+  }
+
+  .plusShapeIcon {
+    margin: 24px auto;
+  }
+
+  .triangleImage {
+    left: 0;
+  }
+
+  .circleImage {
+    right: -54px;
+  }
+
+  .removeConfirm {
+    height: var(--card-height-s);
+  }
+
+  .network,
+  .unlocked,
+  .unlockedSecured {
+    padding: 10px;
   }
 
   .address {
@@ -242,6 +262,7 @@
   }
 
   .cardIcon {
-    height: 130px;
+    height: 100px;
+    margin: 38px auto 0;
   }
 }

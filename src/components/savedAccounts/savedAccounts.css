@@ -8,6 +8,7 @@
   --h1-padding-xl: 85px;
   --h1-padding-l: 40px;
   --h1-padding-m: 25px;
+  --h1-padding-s: 18px;
   --add-button-bottom-margin: calc(100vh - (55px +  98px)); /* stylelint-disable-line */
 }
 
@@ -148,6 +149,7 @@
 
     & > h1 {
       font-size: var(--font-size-ids-h1-s);
+      padding: var(--h1-padding-s);
     }
 
     & > .closeButton[type='button'] {
@@ -166,7 +168,7 @@
   }
 
   .cardsWrapper {
-    padding-bottom: 100px;
+    padding-bottom: 110px;
   }
 
   .addAcctiveAccountButton {
