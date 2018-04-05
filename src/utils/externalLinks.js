@@ -8,7 +8,9 @@ export default {
       ipc.on('openUrl', (action, url) => {
         const normalizedUrl = url.toLowerCase().replace('lisk://', '/');
         history.replace(normalizedUrl);
-        window.location.reload();
+        if (normalizedUrl.includes('votes')) {
+          window.location.reload();
+        }
       });
     }
   },

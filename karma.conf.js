@@ -81,6 +81,7 @@ module.exports = function (config) {
             'src/components/searchBar/index.js',
             'src/components/register/register.js',
             'src/components/search/index.js',
+            'src/utils/externalLinks.js',
             'src/components/voteUrlProcessor/voteUrlProcessor.js',
             'src/components/voteUrlProcessor/index.js',
           ],
