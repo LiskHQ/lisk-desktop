@@ -40,34 +40,6 @@ node('lisk-hub') {
         echo "Error: ${err}"
         fail('Stopping build: checkout failed')
       }
-
-      try {
-        sh '''
-        N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
-        cd ~/lisk-Linux-x86_64
-        # work around core bug: config.json gets overwritten; use backup
-        cp .config.json config_$N.json
-        # change core port, listen only on 127.0.0.1
-        sed -i -r -e "s/^(.*ort\\":) 4000,/\\1 400$N,/" config_$N.json
-        sed -i -r -e "s/^(.*\\"address\\":) \\"0.0.0.0\\",/\\1 \\"127.0.0.1\\",/" config_$N.json
-        # disable redis
-        sed -i -r -e "s/^(\\s*\\"cacheEnabled\\":) true/\\1 false/" config_$N.json
-        # change postgres databse
-        sed -i -r -e "s/^(\\s*\\"database\\": \\"lisk_test)\\",/\\1_$N\\",/" config_$N.json
-        cp etc/pm2-lisk.json etc/pm2-lisk_$N.json
-        sed -i -r -e "s/config.json/config_$N.json/" etc/pm2-lisk_$N.json
-        sed -i -r -e "s/(lisk.app)/\\1_$N/" etc/pm2-lisk_$N.json
-        # logs
-        sed -i -r -e "s/lisk.log/lisk_${JOB_BASE_NAME}_${BUILD_ID}.log/" config_$N.json
-        sed -i -r -e "s/lisk.app_$N/lisk.app_$N_${JOB_BASE_NAME}_${BUILD_ID}/" etc/pm2-lisk_$N.json
-        #
-        JENKINS_NODE_COOKIE=dontKillMe bash lisk.sh start_db -p etc/pm2-lisk_$N.json
-        bash lisk.sh rebuild -p etc/pm2-lisk_$N.json -f blockchain_explorer.db.gz
-        '''
-      } catch (err) {
-        echo "Error: ${err}"
-        fail('Stopping build: Lisk Core failed to start')
-      }
     }
 
     stage ('Install npm dependencies') {
@@ -129,6 +101,13 @@ node('lisk-hub') {
             export DISPLAY=:1$N
             Xvfb :1$N -ac -screen 0 1280x1024x24 &
 
+	    cp -r ~/lisk-docker/examples/development $WORKSPACE/$BRANCH_NAME
+	    cd $WORKSPACE/$BRANCH_NAME
+	    cp /home/lisk/blockchain_explorer.db.gz ./blockchain.db.gz
+	    LISK_VERSION=0.9.12a make coldstart
+	    LISK_PORT=$( docker-compose port lisk 4000 |cut -d ":" -f 2 )
+	    cd -
+
             # Run end-to-end tests
             if [ -z $CHANGE_BRANCH ]; then
               npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL https://testnet.lisk.io --cucumberOpts.tags @testnet --params.useTestnetPassphrase true --directConnect true
@@ -157,11 +136,21 @@ node('lisk-hub') {
     }
   } catch(err) {
     echo "Error: ${err}"
+    ansiColor('xterm') {
+      sh '''
+      cd $WORKSPACE/$BRANCH_NAME
+      docker-compose logs
+      '''
+    }
   } finally {
+    ansiColor('xterm') {
+      sh '''
+      cd $WORKSPACE/$BRANCH_NAME
+      make mrproper
+      '''
+    }
     sh '''
     N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
-    curl --verbose http://127.0.0.1:400$N/api/blocks/getNethash || true
-    ( cd ~/lisk-Linux-x86_64 && bash lisk.sh stop_node -p etc/pm2-lisk_$N.json ) || true
     pgrep --list-full -f "Xvfb :1$N" || true
     pkill --echo -f "Xvfb :1$N" -9 || echo "pkill returned code $?"
 

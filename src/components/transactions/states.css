@@ -1,0 +1,17 @@
+.leftText {
+  text-align: left;
+  padding-left: 0px;
+}
+
+.rightText {
+  text-align: right;
+}
+
+.ordinaryText {
+  text-decoration: none;
+  color: inherit;
+}
+
+.clickable {
+  cursor: pointer;
+}

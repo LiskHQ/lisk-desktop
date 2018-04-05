@@ -10,7 +10,7 @@ describe('LoadingBarHOC', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<Provider store={store}><LoadingBarHOC /></Provider>);
+    wrapper = mount(<Provider store={store}><LoadingBarHOC markAsLoaded={() => {}} /></Provider>);
   });
 
   it('should render Send', () => {
