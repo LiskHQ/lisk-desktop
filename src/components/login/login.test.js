@@ -86,7 +86,7 @@ describe('Login', () => {
   });
 
   describe('History management', () => {
-    it('calls this.props.history.replace(\'/main/dashboard\')', () => {
+    it('calls this.props.history.replace(\'/dashboard\')', () => {
       wrapper = shallow(<Login {...props}/>, options);
       wrapper.setProps({ account: { address: 'dummy' } });
       expect(props.history.replace).to.have.been.calledWith(`${routes.dashboard.path}`);
