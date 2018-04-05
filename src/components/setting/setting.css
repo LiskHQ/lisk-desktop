@@ -145,6 +145,7 @@
     display: flex;
     left: -100%;
     transition: all linear 300ms;
+    margin: 0;
 
     &.active {
       left: 0;
