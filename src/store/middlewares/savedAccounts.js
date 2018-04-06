@@ -31,16 +31,24 @@ const savedAccountsMiddleware = (store) => {
 
   const updateSavedAccounts = (peers, tx, savedAccounts) => {
     const { accounts } = savedAccounts;
+    const fetchedAccounts = [];
+
     tx.forEach((transaction) => {
       const sender = transaction ? transaction.senderId : null;
       const recipient = transaction ? transaction.recipientId : null;
 
       accounts.forEach((account, i) => {
         const address = extractAddress(account.publicKey);
-        const isSameNetwork = account.address === peers.data.options.address
-          && peers.data.options.code === account.network;
+        const shouldMakeRequest = () => {
+          const isSameNetwork = account.address === peers.data.options.address
+            && peers.data.options.code === account.network;
 
-        if ((address === recipient || address === sender) && isSameNetwork) {
+          return (address === recipient || address === sender)
+            && isSameNetwork && !fetchedAccounts.includes(address);
+        };
+
+        if (shouldMakeRequest()) {
+          fetchedAccounts.push(address);
           getAccount(peers.data, address).then((result) => {
             if (result.balance !== account.balance) {
               accounts[i].balance = result.balance;
