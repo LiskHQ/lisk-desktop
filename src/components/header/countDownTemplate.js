@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
-const Renderer = ({ minutes, seconds }) => {
-  const min = minutes < 10 ? `0${minutes}` : minutes;
-  const sec = seconds < 10 ? `0${seconds}` : seconds;
-  return <span>{min}:{sec}</span>;
+const Renderer = ({ minutes, seconds, children }) => {
+  const child = React.cloneElement(children, { minutes, seconds });
+  return (<Fragment> {child} </Fragment>);
 };
 
 export default Renderer;

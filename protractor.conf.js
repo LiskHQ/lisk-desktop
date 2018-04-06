@@ -14,15 +14,16 @@ exports.config = {
 
   cucumberOpts: {
     require: 'test/e2e/step_definitions/*.js',
-    tags: [],
+    tags: ['~@advanced'],
     format: 'pretty',
     profile: false,
     'no-source': true,
+    strict: true,
   },
 
   params: {
     screenshotFolder: 'e2e-test-screenshots',
-    baseURL: 'http://localhost:8080/',
+    baseURL: 'http://localhost:8080',
     liskCoreURL: 'http://localhost:4000/',
     testnetPassphrase: process.env.TESTNET_PASSPHRASE,
     useTestnetPassphrase: false,

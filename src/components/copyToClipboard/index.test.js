@@ -28,7 +28,7 @@ describe('CopyToClipboard', () => {
   });
 
   it('should click on span.default render "Copied!"', () => {
-    const expectValue = 'Copied! ';
+    const expectValue = ' Copied!';
     wrapper.find('span.default').simulate('click');
     expect(wrapper.find('span.copied').text()).to.be.equal(expectValue);
   });

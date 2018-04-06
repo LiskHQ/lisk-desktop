@@ -28,8 +28,23 @@ describe('TransactionsHOC', () => {
       transactions,
       account,
       loading: [],
+      voting: {
+        delegates: [
+          {
+            username: 'username1',
+            publicKey: 'sample_key',
+            address: 'sample_address',
+            rank: 12,
+          },
+        ],
+        votes: {
+          username1: { confirmed: true, unconfirmed: true, publicKey: 'sample_key' },
+        },
+        totalDelegates: [],
+        refresh: false,
+      },
     });
-    wrapper = mount(<Provider store={store}><Router><TransactionsHOC /></Router></Provider>, {
+    wrapper = mount(<Provider store={store}><Router><TransactionsHOC history={ { location: { search: '' } }} /></Router></Provider>, {
       context: { store, history, i18n },
       childContextTypes: {
         store: PropTypes.object.isRequired,

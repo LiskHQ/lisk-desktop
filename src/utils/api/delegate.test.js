@@ -4,13 +4,10 @@ import { listAccountDelegates,
   listDelegates,
   getDelegate,
   vote,
-  voteAutocomplete,
-  unvoteAutocomplete,
   registerDelegate } from './delegate';
 import * as peers from './peers';
 import accounts from '../../../test/constants/accounts';
 
-const username = 'genesis_1';
 const secret = 'sample_secret';
 const secondSecret = 'samepl_second_secret';
 const publicKey = '';
@@ -67,30 +64,6 @@ describe('Utils: Delegate', () => {
     });
   });
 
-  describe('unvoteAutocomplete', () => {
-    it('should return a promise that resolves an empty array when trying to unvote a non-existing user name', () => {
-      const voteList = {
-        genesis_1: { confirmed: true, unconfirmed: false, publicKey: 'sample_key' },
-        genesis_2: { confirmed: true, unconfirmed: false, publicKey: 'sample_key' },
-        genesis_3: { confirmed: true, unconfirmed: false, publicKey: 'sample_key' },
-      };
-
-      const nonExistingUsername = 'genesis_4';
-      return expect(unvoteAutocomplete(nonExistingUsername, voteList)).to.eventually.eql([]);
-    });
-
-    it('should return a promise that resolves an array when trying to unvote an existing user name', () => {
-      const voteList = {
-        genesis_1: { confirmed: true, unconfirmed: true, publicKey: 'sample_key' },
-        genesis_2: { confirmed: true, unconfirmed: false, publicKey: 'sample_key' },
-        genesis_3: { confirmed: true, unconfirmed: false, publicKey: 'sample_key' },
-      };
-
-      const expectedResult = [{ username: 'genesis_1', publicKey: 'sample_key' }];
-      return expect(unvoteAutocomplete(username, voteList)).to.eventually.eql(expectedResult);
-    });
-  });
-
   describe('registerDelegate', () => {
     it('should return requestToActivePeer(activePeer, `delegates`, data)', () => {
       const data = {
@@ -131,21 +104,6 @@ describe('Utils: Delegate', () => {
       }];
       const promise = vote(null, secret, publicKey, voteList, unvoteList, secondSecret);
       expect(typeof promise.then).to.be.equal('function');
-    });
-  });
-
-  describe('voteAutocomplete', () => {
-    it('should return requestToActivePeer(activePeer, `delegates/`, data)', () => {
-      const delegates = [
-        { username: 'genesis_42' },
-        { username: 'genesis_44' },
-      ];
-      const votedDict = { genesis_3: { confirmed: true, unconfirmed: false, publicKey: 'sample_key' } };
-      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates/search', { q: username })
-        .returnsPromise().resolves({ success: true, delegates });
-
-      const returnedPromise = voteAutocomplete(activePeer, username, votedDict);
-      return expect(returnedPromise).to.eventually.eql(delegates);
     });
   });
 });

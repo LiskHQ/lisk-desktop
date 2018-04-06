@@ -1,6 +1,6 @@
 {
   "name": "lisk-hub",
-  "version": "0.3.0",
+  "version": "0.4.0-rc.1",
   "description": "Lisk Hub",
   "homepage": "https://github.com/LiskHQ/lisk-hub",
   "bugs": "https://github.com/LiskHQ/lisk-hub/issues",
@@ -19,7 +19,7 @@
     "analyze-bundles": "webpack  --config ./config/webpack.config.analyze",
     "test-live": "npm test -- --auto-watch --no-single-run",
     "start": "electron ./app/",
-    "dist": "build --ia32 --x64 --armv7l --publish onTag",
+    "dist": "build --ia32 --x64 --publish onTag",
     "dist:win": "build --win --ia32 --x64 --publish onTag",
     "dist:mac": "build --mac",
     "dist:linux": "build --linux --ia32 --x64 --armv7l",
@@ -30,7 +30,8 @@
     "pack": "npm install && npm run build && npm run clean-dist && npm run dist",
     "pack:win": "cmd /c npm install && npm run clean-build && npm run copy-files && npm run build-prod && npm run build-electron && npm run clean-dist && npm run dist:win",
     "storybook": "start-storybook -p 6006 -s ./src/",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "serve": "http-server"
   },
   "author": "Lisk Foundation <admin@lisk.io>, lightcurve GmbH <admin@lightcurve.io>",
   "license": "GPL-3.0",
@@ -41,7 +42,7 @@
   "dependencies": {
     "bignumber.js": "4.0.4",
     "bitcore-mnemonic": "1.2.5",
-    "chart.js": "2.7.1",
+    "chart.js": "2.7.2",
     "copy-to-clipboard": "3.0.8",
     "electron-localshortcut": "=2.0.2",
     "flexboxgrid": "=6.3.1",
@@ -72,6 +73,7 @@
     "react-css-themr": "=2.1.2",
     "react-dom": "=16.2.0",
     "react-i18next": "=6.0.6",
+    "react-joyride": "1.11.4",
     "react-redux": "5.0.6",
     "react-router": "4.2.0",
     "react-router-dom": "4.2.2",
@@ -130,6 +132,7 @@
     "glob": "=7.1.2",
     "html-webpack-inline-source-plugin": "0.0.10",
     "html-webpack-plugin": "3.0.4",
+    "http-server": "0.11.1",
     "i18next-scanner": "=2.0.0",
     "imports-loader": "0.7.1",
     "js-nacl": "=1.2.2",
@@ -193,10 +196,7 @@
     ],
     "linux": {
       "target": [
-        "AppImage",
-        "deb",
-        "rpm",
-        "tar.gz"
+        "AppImage"
       ],
       "desktop": {
         "MimeType": "application/lisk;x-scheme-handler/lisk"

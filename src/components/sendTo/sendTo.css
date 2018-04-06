@@ -11,7 +11,6 @@
 }
 
 .wrapper {
-  padding: 9.2vh 42px; /* stylelint-disable-line */
   text-align: center;
   line-height: 36px;
   height: 100%;
@@ -85,6 +84,7 @@
 
 @media (--medium-viewport) {
   .wrapper {
+    padding: 9.2vh var(--box-padding-left-M); /* stylelint-disable-line */
     flex-direction: row;
     min-height: 1px;
     height: auto;
@@ -113,7 +113,7 @@
 
 @media (--small-viewport) {
   .wrapper {
-    padding: 5.3vh 24px; /* stylelint-disable-line */
+    padding: 5.3vh var(--box-padding-left-M); /* stylelint-disable-line */
 
     & .content {
       display: block;

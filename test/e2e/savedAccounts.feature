@@ -42,10 +42,11 @@ Feature: Saved Accounts
     And I should see 2 instances of "saved account card"
     And I click "edit button"
     And I click "remove button"
-    And I click "remove button"
+    And I click "confirm button"
     And I click "edit button"
     Then I should see 1 instances of "saved account card"
 
+  @advanced
   Scenario: should save accounts only once
     When I go to "/"
     And I fill in passphrase of "empty account" to "passphrase" field

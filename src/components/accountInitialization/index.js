@@ -4,7 +4,6 @@ import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Button } from './../toolbox/buttons/button';
 import { FontIcon } from '../fontIcon';
-import Box from '../box';
 import styles from './accountInit.css';
 import fees from './../../constants/fees';
 import { fromRawLsk } from '../../utils/lsk';
@@ -15,11 +14,11 @@ class AccountInitialization extends React.Component {
   }
 
   componentDidMount() {
-    const { account, transactions } = this.props;
+    const { account, transactions, address } = this.props;
     const needsNoAccountInit = account.serverPublicKey
       || account.balance === 0
       || transactions.pending.length > 0;
-    if (needsNoAccountInit) {
+    if (needsNoAccountInit || address) {
       this.props.nextStep();
     }
   }
@@ -27,7 +26,7 @@ class AccountInitialization extends React.Component {
   render() {
     const { account, t, nextStep } = this.props;
 
-    return (<Box className={`${styles.wrapper} ${grid.row} account-initialization`}>
+    return (<div className={`${styles.wrapper} account-initialization`}>
       <header>
         <h2>{t('Initialize Lisk ID')}</h2>
       </header>
@@ -58,7 +57,7 @@ class AccountInitialization extends React.Component {
         </div>
         <div className='subTitle'>{t('Confirmation in the next step')}</div>
       </footer>
-    </Box>
+    </div>
     );
   }
 }

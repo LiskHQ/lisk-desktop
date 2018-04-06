@@ -1,5 +1,5 @@
 import { step } from 'mocha-steps';
-import { stub, match } from 'sinon';
+import { stub, match, spy } from 'sinon';
 import { mount } from 'enzyme';
 import thunk from 'redux-thunk';
 
@@ -16,6 +16,7 @@ import SavedAccounts from '../../src/components/savedAccounts';
 import * as accountApi from '../../src/utils/api/account';
 import * as peers from '../../src/utils/api/peers';
 import GenericStepDefinition from '../utils/genericStepDefinition';
+import routes from '../../src/constants/routes';
 
 describe('@integration: Account switch', () => {
   let store;
@@ -73,7 +74,14 @@ describe('@integration: Account switch', () => {
       loginMiddleware,
     ]);
 
-    wrapper = mount(renderWithRouter(SavedAccounts, store));
+    const history = {
+      location: {
+        pathname: `${routes.main.path}${routes.dashboard.path}`,
+      },
+      push: spy(),
+    };
+
+    wrapper = mount(renderWithRouter(SavedAccounts, store, { history }));
     store.dispatch(accountsRetrieved());
     wrapper.update();
     helper = new GenericStepDefinition(wrapper, store);
@@ -84,7 +92,7 @@ describe('@integration: Account switch', () => {
     step('Then I should see 3 instances of "saved account card"', () => helper.shouldSeeCountInstancesOf(3, '.saved-account-card'));
     step('When I click "edit button"', () => helper.clickOnElement('button.edit-button'));
     step('When I click "remove button"', () => helper.clickOnElement('button.remove-button'));
-    step('When I click "remove button"', () => helper.clickOnElement('button.remove-button'));
+    step('When I click "confirm button"', () => helper.clickOnElement('button.confirm-button'));
     step('Then I should see 2 instances of "saved account card"', () => helper.shouldSeeCountInstancesOf(2, '.saved-account-card'));
   });
 
@@ -97,7 +105,7 @@ describe('@integration: Account switch', () => {
     step('Then I should see 3 instances of "saved account card"', () => helper.shouldSeeCountInstancesOf(3, '.saved-account-card'));
     step('When I click "edit button"', () => helper.clickOnElement('button.edit-button'));
     step('When I click "remove button"', () => helper.clickOnElement('button.remove-button'));
-    step('When I click "remove button"', () => helper.clickOnElement('button.remove-button'));
+    step('When I click "confirm button"', () => helper.clickOnElement('button.confirm-button'));
     step('Then I should see 2 instances of "saved account card"', () => helper.shouldSeeCountInstancesOf(2, '.saved-account-card'));
   });
 

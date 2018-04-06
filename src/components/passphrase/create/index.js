@@ -6,7 +6,7 @@ import AccountVisual from '../../accountVisual';
 import styles from './create.css';
 import { FontIcon } from '../../fontIcon';
 import * as shapesSrc from '../../../assets/images/register-shapes/*.svg'; //eslint-disable-line
-import MovableShape from './movableShape';
+import Shapes from './shapes';
 import { PrimaryButton, Button } from '../../toolbox/buttons/button';
 import TransitionWrapper from '../../toolbox/transitionWrapper';
 
@@ -35,23 +35,10 @@ class Create extends React.Component {
   }
 
   componentDidMount() {
-    this.container = document.getElementById('generatorContainer');
     this.isTouchDevice = this.checkDevice(this.props.agent);
-    const eventName = this.isTouchDevice ? 'devicemotion' : 'mousemove';
-
-    window.addEventListener(eventName, this.eventNormalizer, true);
-  }
-
-
-  moveTitle() {
-    setTimeout(() => {
-      const { percentage } = this.state.data;
-      if (percentage > 15 && percentage < 18) {
-        this.setState({
-          headingClass: styles.goToTop,
-        });
-      }
-    }, 10);
+    if (this.isTouchDevice) {
+      window.addEventListener('devicemotion', this.eventNormalizer, true);
+    }
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -68,12 +55,6 @@ class Create extends React.Component {
     }
     result.forEach((item) => { list[item] = 0; });
     return list;
-  }
-
-  componentDidUpdate() {
-    if (this.state.data) {
-      this.moveTitle();
-    }
   }
 
   componentWillUnmount() {
@@ -170,74 +151,24 @@ class Create extends React.Component {
 
   render() {
     const { t, nextStep } = this.props;
-    const { shapes } = this.state;
     const percentage = this.state.data ? this.state.data.percentage : 0;
     const hintTitle = this.isTouchDevice ? 'by tilting your device.' : 'by moving your mouse.';
+    const modifyID = (id) => {
+      const substring = id.slice(3, id.length - 1);
+      const replacement = substring.replace(/.{1}/g, '*');
+      return id.replace(substring, replacement);
+    };
 
     return (
-      <section className={`${grid.row} ${grid['center-xs']} ${styles.wrapper} ${styles.generation}`} id="generatorContainer" >
+      <section className={`${grid.row} ${grid['center-xs']} ${styles.wrapper} ${styles.generation}`}
+        id='generatorContainer' ref={(el) => { this.container = el; }} onMouseMove={this.eventNormalizer} >
         <div className={grid['col-xs-12']}
           ref={ (pageRoot) => { this.pageRoot = pageRoot; } }>
           {!this.state.address ?
-            <div className={styles.shapesWrapper}>
-              <MovableShape
-                hidden={shapes[0]}
-                src={shapesSrc.circle}
-                className={styles.circle}
-                percentage={percentage}
-                initial={['100%', '20%']} />
-              <MovableShape
-                hidden={shapes[1]}
-                src={shapesSrc.smallCircle}
-                className={styles.smallCircle}
-                percentage={percentage}
-                initial={['62%', '-2%']} />
-              <MovableShape
-                hidden={shapes[2]}
-                src={shapesSrc.triangle}
-                className={styles.triangle}
-                percentage={percentage}
-                initial={['80%', '-2%']} />
-              <MovableShape
-                hidden={shapes[4]}
-                src={shapesSrc.squareLeft}
-                className={styles.squareLeft}
-                percentage={percentage}
-                initial={['5%', '-1%']} />
-              <MovableShape
-                hidden={shapes[8]}
-                src={shapesSrc.squareRight}
-                className={styles.squareRight}
-                percentage={percentage}
-                initial={['70%', '-5%']} />
-              <MovableShape
-                hidden={shapes[5]}
-                src={shapesSrc.triangleLeft}
-                className={styles.triangleLeft}
-                percentage={percentage}
-                initial={['-2%', '30%']} />
-              <MovableShape
-                hidden={shapes[7]}
-                src={shapesSrc.circleLeft}
-                className={styles.circleLeft}
-                percentage={percentage}
-                initial={['20%', '2%']} />
-              <MovableShape
-                hidden={shapes[3]}
-                src={shapesSrc.smallTriangle}
-                className={styles.smallTriangle}
-                percentage={percentage}
-                initial={['40%', '-2%']} />
-              <MovableShape
-                hidden={shapes[6]}
-                src={shapesSrc.verySmallCircle}
-                className={styles.verySmallCircle}
-                percentage={percentage}
-                initial={['45%', '0%']} />
-            </div> :
+            <Shapes percentage={percentage} shapes={this.state.shapes} /> :
             null
           }
-          <header className={this.state.headingClass}>
+          <header>
             <TransitionWrapper current={this.state.step} step='generate'>
               <h2 className={`${styles.generatorHeader}`}
                 id="generatorHeader" >
@@ -258,7 +189,8 @@ class Create extends React.Component {
             <aside className={`${styles.description} ${this.state.step === 'info' && this.state.showHint ? styles.fadeIn : ''}`}>
               <p>The <b>Avatar</b> represents the ID making it easy to recognize.
                 Every Lisk ID has one unique avatar.</p>
-              <p>The <b>ID</b> is unique and can’t be changed. It’s yours.</p>
+              <p>The <b>ID</b> is unique and can’t be changed. It’s yours.
+                You will get the full <b>ID</b> at the end.</p>
               <Button
                 label={t('Got it')}
                 onClick={this.showHint.bind(this)}
@@ -270,12 +202,16 @@ class Create extends React.Component {
               <figure>
                 <AccountVisual address={this.state.address} size={200} />
               </figure>
-              <h4 className={styles.address}>{this.state.address}</h4>
+              <h4 className={styles.address}>{modifyID(this.state.address)}</h4>
               <PrimaryButton
                 theme={styles}
                 label='Get passphrase'
                 className="get-passphrase-button"
-                onClick={() => nextStep({ passphrase: this.state.passphrase })}
+                onClick={() => nextStep({
+                  passphrase: this.state.passphrase,
+                  header: t('Your passphrase is used to access your Lisk ID.'),
+                  message: t('I am responsible for keeping my passphrase safe. No one can reset it, not even Lisk.'),
+                })}
               />
             </Fragment>
             : ''}

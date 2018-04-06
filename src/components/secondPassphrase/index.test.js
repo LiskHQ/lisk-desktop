@@ -4,25 +4,26 @@ import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 import configureMockStore from 'redux-mock-store';
+import { MemoryRouter as Router } from 'react-router-dom';
 import i18n from '../../i18n';
 import SecondPassphraseHOC from './index';
 
 
 describe('SecondPassphraseHOC', () => {
   let wrapper;
-  const peers = {};
   const account = { secondSignature: 1 };
   const store = configureMockStore([])({
-    peers,
     account,
   });
 
   beforeEach(() => {
-    wrapper = mount(<Provider store={store}>
-      <I18nextProvider i18n={ i18n }>
-        <SecondPassphraseHOC />
-      </I18nextProvider>
-    </Provider>);
+    wrapper = mount(<Router>
+      <Provider store={store}>
+        <I18nextProvider i18n={ i18n }>
+          <SecondPassphraseHOC />
+        </I18nextProvider>
+      </Provider>
+    </Router>);
   });
 
   it('should render SecondPassphrase', () => {
@@ -31,9 +32,7 @@ describe('SecondPassphraseHOC', () => {
 
   it('should mount SecondPassphrase with appropriate properties', () => {
     const props = wrapper.find('SecondPassphrase').props();
-    expect(props.peers).to.be.equal(peers);
     expect(props.account).to.be.equal(account);
-    expect(typeof props.setActiveDialog).to.be.equal('function');
     expect(typeof props.registerSecondPassphrase).to.be.equal('function');
   });
 });

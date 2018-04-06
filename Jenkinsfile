@@ -102,9 +102,15 @@ node('lisk-hub') {
         npm run --silent build:testnet
         rsync -axl --delete --rsync-path="mkdir -p /var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/ && rsync" $WORKSPACE/app/build/ jenkins@master-01:/var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/
         npm run --silent bundlesize
+        if [ -z $CHANGE_BRANCH ]; then
+          USE_SYSTEM_XORRISO=true npm run dist
+        else
+          echo "Skipping desktop build for Linux because we're not on 'development' branch"
+        fi
         '''
         archiveArtifacts artifacts: 'app/build/'
         archiveArtifacts artifacts: 'app/build-testnet/'
+        archiveArtifacts allowEmptyArchive: true, artifacts: 'dist/lisk-hub*'
         githubNotify context: 'Jenkins test deployment', description: 'Commit was deployed to test', status: 'SUCCESS', targetUrl: "${HUDSON_URL}test/" + "${JOB_NAME}".tokenize('/')[0] + "/${BRANCH_NAME}"
       } catch (err) {
         echo "Error: ${err}"
@@ -141,14 +147,16 @@ node('lisk-hub') {
 
             # Run end-to-end tests
 
+            npm run serve --  $WORKSPACE/app/build -p 300$N -a 127.0.0.1 &>server.log &
             if [ -z $CHANGE_BRANCH ]; then
-              npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL https://testnet.lisk.io --cucumberOpts.tags @testnet --params.useTestnetPassphrase true
+              npm run --silent e2e-test -- --params.baseURL http://127.0.0.1:300$N --params.liskCoreURL http://127.0.0.1:400$N --cucumberOpts.tags @advanced
+              npm run --silent e2e-test -- --params.baseURL http://127.0.0.1:300$N --params.liskCoreURL https://testnet.lisk.io --cucumberOpts.tags @testnet --params.useTestnetPassphrase true
             else
               echo "Skipping @testnet end-to-end tests because we're not on 'development' branch"
             fi
-            npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL http://127.0.0.1:400$N
+            npm run --silent e2e-test -- --params.baseURL http://127.0.0.1:300$N --params.liskCoreURL http://127.0.0.1:400$N
             if [ -z $CHANGE_BRANCH ]; then
-              npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --cucumberOpts.tags @testnet --params.useTestnetPassphrase true --params.network testnet
+              npm run --silent e2e-test -- --params.baseURL http://127.0.0.1:300$N --cucumberOpts.tags @testnet --params.useTestnetPassphrase true --params.network testnet
             else
               echo "Skipping @testnet end-to-end tests because we're not on 'development' branch"
             fi

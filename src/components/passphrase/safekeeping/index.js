@@ -9,8 +9,14 @@ class SafeKeeping extends React.Component {
   constructor() {
     super();
     this.state = {
-      step: 'introduction-step',
+      step: '',
     };
+  }
+
+  componentDidMount() {
+    this.setState({
+      step: this.props.step || 'introduction-step',
+    });
   }
 
   next(e) {
@@ -32,7 +38,7 @@ class SafeKeeping extends React.Component {
   }
 
   render() {
-    const { t, passphrase, prevStep } = this.props;
+    const { t, passphrase, prevStep, header, message } = this.props;
 
     return (
       <section className={`${styles.safekeeping} ${styles[this.state.step]}`}>
@@ -40,7 +46,7 @@ class SafeKeeping extends React.Component {
           <div className={styles.tableCell}>
             <TransitionWrapper current={this.state.step} step='introduction-step'>
               <h2 className={styles.introduction}>
-                Your passphrase is used to access your Lisk ID.
+                { header || '' }
               </h2>
             </TransitionWrapper>
             <TransitionWrapper current={this.state.step} step='revealing-step,revealed-step'>
@@ -54,7 +60,7 @@ class SafeKeeping extends React.Component {
         <section className={`${styles.introduction} ${styles.table}`}>
           <div className={styles.tableCell}>
             <TransitionWrapper current={this.state.step} step='introduction-step'>
-              <h5>{t('I am responsible for keeping my passphrase safe. No one can reset it, not even Lisk.')}</h5>
+              <h5>{ message || ''}</h5>
             </TransitionWrapper>
             <TransitionWrapper current={this.state.step} step='introduction-step' animationName='fade'>
               <SliderCheckbox
@@ -104,6 +110,7 @@ class SafeKeeping extends React.Component {
                 onClick: () => prevStep({ jump: 2 }),
               }}
               primaryButton={{
+                disabled: this.state.step === 'done-step',
                 label: t('Yes! It\'s safe'),
                 className: 'next-button yes-its-safe-button',
                 onClick: this.done.bind(this),
