@@ -13,6 +13,7 @@ module.exports = function (config) {
     basePath: '',
     frameworks: ['mocha', 'chai'],
     files: [
+      'node_modules/babel-polyfill/browser.js',
       fileRoot,
       {
         pattern: filePattern,
