@@ -4,8 +4,10 @@ import Fees from '../../../../constants/fees';
 import { fromRawLsk } from '../../../../utils/lsk';
 import { PrimaryButton } from '../../../toolbox/buttons/button';
 import { extractPublicKey } from '../../../../utils/api/account';
+// import { handleChange } from '../../../../utils/form';
 // eslint-disable-next-line import/no-named-as-default
 import PassphraseInput from '../../../passphraseInput';
+import Input from '../../../toolbox/inputs/input';
 
 import styles from './choose.css';
 
@@ -22,7 +24,13 @@ class Choose extends React.Component {
         value: '',
         error: '',
       },
+      delegateName: {
+        value: '',
+        error: '',
+      },
     };
+    this.delegateNameRegEx = new RegExp(/[a-zA-Z0-9!@$&_.]+/g);
+    this.delegateNameMaxChars = 20; // !@$&_.
   }
 
   hasEnoughLSK() {
@@ -30,9 +38,10 @@ class Choose extends React.Component {
     > fromRawLsk(Fees.registerDelegate) * 1);
   }
 
-  checkSufficientFunds(evt) {
+  checkSufficientFunds() {
     // TODO: uncomment
     /*
+    * evt
     if (!this.hasEnoughLSK()) {
       evt.preventDefault();
       return;
@@ -44,8 +53,32 @@ class Choose extends React.Component {
 
   validatePassphrase(name, value) {
     let error;
-    if (extractPublicKey(value) !== this.props.account.publicKey) {
+    const publicKeyMap = {
+      passphrase: 'publicKey',
+      secondPassphrase: 'secondPublicKey',
+    };
+    const expectedPublicKey = this.props.account[publicKeyMap[name]];
+
+    if (expectedPublicKey && expectedPublicKey !== extractPublicKey(value)) {
       error = this.props.t('Entered passphrase does not belong to the active account');
+    }
+    this.setState({
+      [name]: {
+        value,
+        error: typeof error === 'string' ? error : undefined,
+      },
+    });
+  }
+
+  validateDelegateName(name, value) {
+    let error;
+
+    const nameMatchRegEx = value.match(this.delegateNameRegEx);
+    if (!value ||
+        (typeof value !== 'string') ||
+        nameMatchRegEx.length > 1 ||
+        nameMatchRegEx[0].length !== value.length) {
+      error = this.props.t('Max 20 characters a-z 0-1, no special characters except “!@$&_.”');
     }
     this.setState({
       [name]: {
@@ -63,8 +96,13 @@ class Choose extends React.Component {
 
   handleSecondPassSubmit(evt) {
     evt.preventDefault();
-    this.props.signWithSecondPass(this.state.passphrase.value);
+    this.props.signWithSecondPass(this.state.secondPassphrase.value);
     this.setState({ step: 'confirm' });
+  }
+
+  handleDelegateNameSubmit(evt) {
+    evt.preventDefault();
+    this.props.submitDelegate(this.state);
   }
 
   render() {
@@ -72,7 +110,11 @@ class Choose extends React.Component {
     const hasEnoughLSK = true; // TODO: this.hasEnoughLSK();
     const isDelegate = false; // TODO: this.props.account.isDelegate;
     const firstPassHasError = (!typeof this.state.passphrase.value === 'string' ||
-      this.state.passphrase.error);
+      this.state.passphrase.error !== undefined);
+    const seccondPassHasError = (!typeof this.state.secondPassphrase.value === 'string' ||
+      this.state.secondPassphrase.error !== undefined);
+    const delegateNameHasError = (!typeof this.state.delegateName.value === 'string' ||
+      this.state.delegateName.error !== undefined);
     return (
       <section>
         <TransitionWrapper current={this.state.step} step='choose'>
@@ -152,10 +194,37 @@ class Choose extends React.Component {
                 />
 
                 <PrimaryButton
-                  disabled={firstPassHasError}
+                  disabled={seccondPassHasError}
                   label={t('Next')}
                   className={`${styles.chooseNameBtn} sign-second-pass-btn`}
-                  onClick={this.handleFirstPassSubmit.bind(this)}
+                  onClick={this.handleSecondPassSubmit.bind(this)}
+                />
+              </form>
+            </div>
+          </div>
+        </TransitionWrapper>
+
+        <TransitionWrapper current={this.state.step} step='confirm'>
+          <div className={styles.container}>
+            <header>
+              <h5 className={styles.heading}>
+                {t('Choose your name')}
+              </h5>
+            </header>
+            <div className={styles.form}>
+              <form onSubmit={this.handleDelegateNameSubmit.bind(this)}>
+                <Input label={this.props.t('Delegate name')} required={true}
+                  autoFocus={true}
+                  className='delegate-name'
+                  onChange={this.validateDelegateName.bind(this, 'delegateName')}
+                  error={this.state.delegateName.error}
+                  value={this.state.delegateName.value} />
+
+                <PrimaryButton
+                  disabled={delegateNameHasError}
+                  label={t('Next')}
+                  className={`${styles.chooseNameBtn} submit-delegate-name`}
+                  onClick={this.handleDelegateNameSubmit.bind(this)}
                 />
               </form>
             </div>
