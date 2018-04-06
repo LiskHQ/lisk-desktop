@@ -220,6 +220,18 @@
 
 @media (--small-viewport) {
   .card {
+    width: var(--card-width-m);
+    height: 320px;
+    margin: 0px 24px;
+  }
+
+  .cardIcon {
+    height: 130px;
+  }
+}
+
+@media (--xSmall-viewport) {
+  .card {
     width: var(--card-width-s);
     height: var(--card-height-s);
     margin: 0px 24px;
