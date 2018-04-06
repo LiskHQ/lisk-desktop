@@ -53,7 +53,7 @@ class Send extends React.Component {
           </span>
           <MultiStep finalCallback={this.setSendIsActive.bind(this, false)}
             className={styles.wrapper}>
-            <AccountInitialization />
+            <AccountInitialization address={recipient} />
             <SendWritable
               autoFocus={this.state.sendIsActive || window.innerWidth > breakpoints.m}
               address={recipient}
