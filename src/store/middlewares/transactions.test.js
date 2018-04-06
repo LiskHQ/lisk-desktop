@@ -1,9 +1,7 @@
 import { expect } from 'chai';
 import { spy, stub, mock } from 'sinon';
-import i18next from 'i18next';
 import * as accountApi from '../../utils/api/account';
-import { successAlertDialogDisplayed } from '../../actions/dialog';
-import { transactionsFailed } from '../../actions/transactions';
+import { transactionsFailed, transactionLoaded, transactionLoadFailed } from '../../actions/transactions';
 import middleware from './transactions';
 import actionTypes from '../../constants/actions';
 
@@ -50,27 +48,6 @@ describe('transaction middleware', () => {
     expect(next).to.have.been.calledWith(givenAction);
   });
 
-  it('should fire success dialog action with appropriate text if action.type is transactionAdded', () => {
-    const givenAction = {
-      type: actionTypes.transactionAdded,
-      data: mockTransaction,
-    };
-
-    const expectedMessages = [
-      'Your transaction of 1 LSK to 16313739661670634666L was accepted and will be processed in a few seconds.',
-      'Second passphrase registration was successfully submitted. It can take several seconds before it is processed.',
-      'Delegate registration was successfully submitted with username: "test". It can take several seconds before it is processed.',
-      'Your votes were successfully submitted. It can take several seconds before they are processed.',
-    ];
-
-    for (let i = 0; i < 4; i++) {
-      givenAction.data.type = i;
-      middleware(store)(next)(givenAction);
-      const expectedAction = successAlertDialogDisplayed({ text: i18next.t(expectedMessages[i]) });
-      expect(store.dispatch).to.have.been.calledWith(expectedAction);
-    }
-  });
-
   it('should do nothing if state.transactions.pending.length === 0 and action.type is transactionsUpdated', () => {
     const givenAction = {
       type: actionTypes.transactionsUpdated,
@@ -79,6 +56,31 @@ describe('transaction middleware', () => {
 
     middleware(store)(next)(givenAction);
     expect(store.dispatch).to.not.have.been.calledWith();
+  });
+
+  it('should load one transaction action.type is transactionLoadRequested', () => {
+    accountApiMock.expects('transaction').returnsPromise().resolves(mockTransaction);
+
+    const givenAction = {
+      type: actionTypes.transactionLoadRequested,
+      data: { id: '1345' },
+    };
+
+    middleware(store)(next)(givenAction);
+    expect(store.dispatch).to.have.been.calledWith(transactionLoaded({ ...mockTransaction }));
+  });
+
+  it('should catch if transaction was not found', () => {
+    const error = { success: false, error: 'Transaction not found' };
+    accountApiMock.expects('transaction').returnsPromise().rejects(error);
+
+    const givenAction = {
+      type: actionTypes.transactionLoadRequested,
+      data: { id: '1345' },
+    };
+
+    middleware(store)(next)(givenAction);
+    expect(store.dispatch).to.have.been.calledWith(transactionLoadFailed({ error }));
   });
 
   it('should call unconfirmedTransactions and then dispatch transactionsFailed if state.transactions.pending.length > 0 and action.type is transactionsUpdated', () => {

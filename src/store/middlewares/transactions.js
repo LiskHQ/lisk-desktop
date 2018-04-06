@@ -1,25 +1,15 @@
-import i18next from 'i18next';
+import { loadingStarted, loadingFinished } from '../../utils/loading';
 
-import { fromRawLsk } from '../../utils/lsk';
-import { unconfirmedTransactions } from '../../utils/api/account';
-import { successAlertDialogDisplayed } from '../../actions/dialog';
-import { transactionsFailed } from '../../actions/transactions';
+import { unconfirmedTransactions, transactions as getTransactions, getAccount, transaction } from '../../utils/api/account';
+import {
+  transactionsFailed,
+  transactionsFiltered,
+  transactionsInit,
+  transactionLoaded,
+  transactionLoadFailed,
+} from '../../actions/transactions';
+
 import actionTypes from '../../constants/actions';
-import transactionTypes from '../../constants/transactionTypes';
-
-const transactionAdded = (store, action) => {
-  const texts = {
-    [transactionTypes.setSecondPassphrase]: i18next.t('Second passphrase registration was successfully submitted. It can take several seconds before it is processed.'),
-    [transactionTypes.registerDelegate]: i18next.t('Delegate registration was successfully submitted with username: "{{username}}". It can take several seconds before it is processed.',
-      { username: action.data.username }),
-    [transactionTypes.vote]: i18next.t('Your votes were successfully submitted. It can take several seconds before they are processed.'),
-    [transactionTypes.send]: i18next.t('Your transaction of {{amount}} LSK to {{recipientAddress}} was accepted and will be processed in a few seconds.',
-      { amount: fromRawLsk(action.data.amount), recipientAddress: action.data.recipientId }),
-  };
-  const text = texts[action.data.type];
-  const newAction = successAlertDialogDisplayed({ text });
-  store.dispatch(newAction);
-};
 
 const transactionsUpdated = (store) => {
   const { transactions, account, peers } = store.getState();
@@ -32,14 +22,66 @@ const transactionsUpdated = (store) => {
   }
 };
 
+const filterTransactions = (store, action) => {
+  getTransactions({
+    activePeer: store.getState().peers.data,
+    address: store.getState().transactions.account.address,
+    limit: 25,
+    filter: action.data.filter })
+    .then((response) => {
+      store.dispatch(transactionsFiltered({
+        confirmed: response.transactions,
+        count: parseInt(response.count, 10),
+        filter: action.data.filter,
+      }));
+    });
+};
+
+
+const initTransactions = (store, action) => {
+  const activePeer = store.getState().peers.data;
+  const address = action.data.address;
+  loadingStarted('transactions-init');
+  getTransactions({ activePeer, address, limit: 25 })
+    .then((txResponse) => {
+      const { transactions, count } = txResponse;
+      getAccount(activePeer, address)
+        .then((accountResponse) => {
+          store.dispatch(transactionsInit({
+            confirmed: transactions,
+            count: parseInt(count, 10),
+            balance: accountResponse.balance,
+            address,
+          }));
+          loadingFinished('transactions-init');
+        });
+    });
+};
+
+const loadTransaction = (store, action) => {
+  transaction({ activePeer: store.getState().peers.data, id: action.data.id })
+    .then((response) => {
+      store.dispatch(transactionLoaded({ ...response }));
+    }).catch((error) => {
+      store.dispatch(transactionLoadFailed({ error }));
+    })
+  ;
+};
+
 const transactionsMiddleware = store => next => (action) => {
   next(action);
   switch (action.type) {
-    case actionTypes.transactionAdded:
-      transactionAdded(store, action);
-      break;
     case actionTypes.transactionsUpdated:
       transactionsUpdated(store, action);
+      break;
+    case actionTypes.transactionsFilterSet:
+      filterTransactions(store, action);
+      break;
+    case actionTypes.transactionsRequestInit:
+      initTransactions(store, action);
+      break;
+    case actionTypes.transactionLoadRequested:
+      loadTransaction(store, action);
       break;
     default: break;
   }

@@ -34,7 +34,7 @@ const setChangedItem = (account, changes, property, value) =>
 const merge = (account, info) => {
   const keys = Object.keys(info);
   let changes = {};
-  const updatedAccount = Object.assign({}, account);
+  const updatedAccount = Object.assign({}, account, {});
 
   keys.forEach((key) => {
     if (info[key]) {
@@ -53,12 +53,19 @@ const merge = (account, info) => {
  */
 const account = (state = {}, action) => {
   switch (action.type) {
+    case actionTypes.removePassphrase:
+      return Object.assign({}, state, { passphrase: null, expireTime: 0 });
     case actionTypes.accountUpdated:
-    case actionTypes.accountLoggedIn:
       return merge(state, action.data);
+    case actionTypes.accountLoggedIn:
+      return action.data;
     case actionTypes.accountLoggedOut:
       return {
         afterLogout: true,
+      };
+    case actionTypes.accountLoading:
+      return {
+        loading: true,
       };
     default:
       return state;

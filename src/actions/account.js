@@ -2,11 +2,22 @@ import i18next from 'i18next';
 import actionTypes from '../constants/actions';
 import { setSecondPassphrase, send } from '../utils/api/account';
 import { registerDelegate } from '../utils/api/delegate';
-import { transactionAdded } from './transactions';
+import { transactionAdded, transactionFailed } from './transactions';
 import { errorAlertDialogDisplayed } from './dialog';
 import Fees from '../constants/fees';
 import { toRawLsk } from '../utils/lsk';
 import transactionTypes from '../constants/transactionTypes';
+
+/**
+ * Trigger this action to remove passphrase from account object
+ *
+ * @param {Object} data - account data
+ * @returns {Object} - Action object
+ */
+export const removePassphrase = data => ({
+  data,
+  type: actionTypes.removePassphrase,
+});
 
 /**
  * Trigger this action to update the account object
@@ -40,6 +51,10 @@ export const accountLoggedOut = () => ({
 export const accountLoggedIn = data => ({
   type: actionTypes.accountLoggedIn,
   data,
+});
+
+export const accountLoading = () => ({
+  type: actionTypes.accountLoading,
 });
 
 export const passphraseUsed = data => ({
@@ -114,8 +129,8 @@ export const sent = ({ activePeer, account, recipientId, amount, passphrase, sec
         }));
       })
       .catch((error) => {
-        const text = error && error.message ? `${error.message}.` : i18next.t('An error occurred while creating the transaction.');
-        dispatch(errorAlertDialogDisplayed({ text }));
+        const errorMessage = error && error.message ? `${error.message}.` : i18next.t('An error occurred while creating the transaction.');
+        dispatch(transactionFailed({ errorMessage }));
       });
     dispatch(passphraseUsed(passphrase));
   };

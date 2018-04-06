@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="60" viewBox="0 0 80 60">
+  <defs>
+    <linearGradient id="sidechain_export-a" x1="19.476%" x2="86.047%" y1="88.413%" y2="18.496%">
+      <stop offset="0%" stop-color="#004AFF"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+    <linearGradient id="sidechain_export-b" x1="161.572%" x2="0%" y1="-42.263%" y2="100%">
+      <stop offset="0%" stop-color="#FFF" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#82F0FC"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" fill-rule="evenodd" transform="translate(10 4)">
+    <polygon fill="url(#sidechain_export-a)" points="39 11 57.187 21.5 57.187 42.5 39 53 20.813 42.5 20.813 21.5" opacity=".7"/>
+    <polygon fill="url(#sidechain_export-b)" points="21 0 39.187 10.5 39.187 31.5 21 42 2.813 31.5 2.813 10.5"/>
+  </g>
+</svg>

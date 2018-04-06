@@ -1,0 +1,138 @@
+@import '../app/variables.css';
+
+:root {
+  --header-address-font-weight: var(--font-weight-semi-bold);
+  --header-balance-unit-font-size-XL: 20px;
+  --header-balance-unit-font-size-L: 18px;
+  --header-balance-unit-font-size-XS: 18px;
+  --header-subtitle-font-size-XL: 18px;
+  --header-subtitle-font-size-L: 16px;
+  --header-subtitle-font-size-XS: 14px;
+}
+
+.wrapper {
+  padding: 9.2vh 42px; /* stylelint-disable-line */
+  text-align: center;
+  line-height: 36px;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+
+  & .account {
+    margin-bottom: 8.5vh; /* stylelint-disable-line */
+
+    & .copy {
+      color: var(--color-grayscale-medium);
+    }
+
+    & h2 {
+      margin-bottom: 0;
+      font-weight: var(--font-weight-semi-bold);
+      white-space: nowrap;
+
+      & .balanceUnit {
+        font-weight: var(--font-weight-semi-bold);
+      }
+    }
+
+    & .address {
+      color: var(--color-grayscale-dark);
+      white-space: nowrap;
+    }
+  }
+
+  & .sendButton {
+    margin: auto 0px;
+  }
+
+  & .button {
+    font-weight: var(--font-weight-bold);
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 18px;
+    text-transform: none;
+    width: 100%;
+  }
+}
+
+@media (--xLarge-viewport) {
+  .wrapper {
+    & h2 {
+      & .balanceUnit {
+        font-size: var(--header-balance-unit-font-size-XL);
+      }
+    }
+
+    & .address {
+      font-size: var(--header-subtitle-font-size-XL);
+    }
+  }
+}
+
+@media (--large-viewport) {
+  .wrapper {
+    & h2 {
+      & .balanceUnit {
+        font-size: var(--header-balance-unit-font-size-L);
+      }
+    }
+
+    & .address {
+      font-size: var(--header-subtitle-font-size-L);
+    }
+  }
+}
+
+@media (--medium-viewport) {
+  .wrapper {
+    flex-direction: row;
+    min-height: 1px;
+    height: auto;
+    background: var(--color-grayscale-darker-mobile-background);
+    display: flex;
+
+    & .content {
+      display: flex;
+      width: 100%;
+    }
+
+    & .account {
+      margin: auto 0px;
+      text-align: left;
+
+      & h2 {
+        margin: 0px;
+      }
+    }
+
+    & .sendButton {
+      margin: auto 0px;
+    }
+  }
+}
+
+@media (--small-viewport) {
+  .wrapper {
+    padding: 5.3vh 24px; /* stylelint-disable-line */
+
+    & .content {
+      display: block;
+    }
+
+    & h2 {
+      font-size: var(--main-header-font-size-XS);
+
+      & .balanceUnit {
+        font-size: var(--header-balance-unit-font-size-XS);
+      }
+    }
+
+    & .address {
+      font-size: var(--header-subtitle-font-size-XS);
+    }
+
+    & .sendButton {
+      margin-top: 3.2vh; /* stylelint-disable-line */
+    }
+  }
+}

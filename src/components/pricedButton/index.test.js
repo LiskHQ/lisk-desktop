@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
-import Button from 'react-toolbox/lib/button';
+import { PrimaryButton } from '../toolbox/buttons/button';
 import { PricedButtonComponent } from './index';
 import i18n from '../../i18n';
 import styles from './pricedButton.css';
@@ -20,7 +20,7 @@ describe('PricedButton', () => {
 
   it('renders <Button /> component from react-toolbox', () => {
     wrapper = shallow(<PricedButtonComponent {...props} balance={sufficientBalance} />);
-    expect(wrapper.find(Button)).to.have.length(1);
+    expect(wrapper.find(PrimaryButton)).to.have.length(1);
   });
 
   describe('Sufficient funds', () => {
@@ -33,7 +33,7 @@ describe('PricedButton', () => {
     });
 
     it('allows to click on Button', () => {
-      wrapper.find(Button).simulate('click');
+      wrapper.find(PrimaryButton).simulate('click');
       expect(props.onClick).to.have.been.calledWithExactly();
     });
   });
@@ -48,7 +48,7 @@ describe('PricedButton', () => {
     });
 
     it('sets the disabled attribute of the button', () => {
-      const buttonProps = wrapper.find(Button).props();
+      const buttonProps = wrapper.find(PrimaryButton).props();
       expect(buttonProps.disabled).to.be.equal(true);
     });
   });

@@ -1,11 +1,14 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
 import actionTypes from '../constants/actions';
-import * as saveAccountUtils from '../utils/saveAccount';
+import * as savedAccountsUtils from '../utils/savedAccounts';
 import {
   accountSaved,
+  accountSwitched,
   accountRemoved,
   accountsRetrieved,
+  activeAccountSaved,
+  removeSavedAccountPassphrase,
 } from './savedAccounts';
 
 
@@ -18,12 +21,19 @@ describe('actions: savedAccount', () => {
 
   describe('accountsRetrieved', () => {
     it('should create an action to retrieved the saved accounts list', () => {
-      sinon.stub(saveAccountUtils, 'getSavedAccount').returns([data]);
+      const getSavedAccountsStub = sinon.stub(savedAccountsUtils, 'getSavedAccounts').returns([data]);
+      const getLastActiveAccountStub = sinon.stub(savedAccountsUtils, 'getLastActiveAccount').returns(data);
       const expectedAction = {
-        data: [data],
+        data: {
+          accounts: [data],
+          lastActive: data,
+        },
         type: actionTypes.accountsRetrieved,
       };
       expect(accountsRetrieved()).to.be.deep.equal(expectedAction);
+
+      getSavedAccountsStub.restore();
+      getLastActiveAccountStub.restore();
     });
   });
 
@@ -37,6 +47,16 @@ describe('actions: savedAccount', () => {
     });
   });
 
+  describe('accountSwitched', () => {
+    it('should create an action to save account', () => {
+      const expectedAction = {
+        data,
+        type: actionTypes.accountSwitched,
+      };
+      expect(accountSwitched(data)).to.be.deep.equal(expectedAction);
+    });
+  });
+
   describe('accountRemoved', () => {
     it('should create an action to remove account', () => {
       const expectedAction = {
@@ -45,6 +65,27 @@ describe('actions: savedAccount', () => {
       };
 
       expect(accountRemoved(data.publicKey)).to.be.deep.equal(expectedAction);
+    });
+  });
+
+  describe('activeAccountSaved', () => {
+    it('should create an action to remove account', () => {
+      const expectedAction = {
+        type: actionTypes.activeAccountSaved,
+      };
+
+      expect(activeAccountSaved()).to.be.deep.equal(expectedAction);
+    });
+  });
+
+  describe('removeSavedAccountPassphrase', () => {
+    it('should create an action to remove passphrase', () => {
+      const expectedAction = {
+        data,
+        type: actionTypes.removeSavedAccountPassphrase,
+      };
+
+      expect(removeSavedAccountPassphrase(data)).to.be.deep.equal(expectedAction);
     });
   });
 });

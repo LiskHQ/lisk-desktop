@@ -3,11 +3,14 @@ import { spy, stub, match } from 'sinon';
 import actionTypes from '../constants/actions';
 import netHashes from '../constants/netHashes';
 import { activePeerSet, activePeerUpdate } from './peers';
+import { errorToastDisplayed } from './toaster';
 import * as nethashApi from './../utils/api/nethash';
+import accounts from '../../test/constants/accounts';
+import networks from '../constants/networks';
 
 
 describe('actions: peers', () => {
-  const passphrase = 'wagon stock borrow episode laundry kitten salute link globe zero feed marble';
+  const { passphrase } = accounts.genesis;
   const nethash = '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d';
 
   describe('activePeerUpdate', () => {
@@ -64,6 +67,17 @@ describe('actions: peers', () => {
       expect(dispatch).to.have.been.calledWith(match.hasNested('data.activePeer.options.address', 'localhost:8000'));
     });
 
+    it('dispatch activePeerSet action with hubXX.lisk.io node if mainnet', () => {
+      const network = networks.mainnet;
+
+      activePeerSet({ passphrase, network })(dispatch);
+
+      expect(dispatch).to.have.been.calledWith(match.hasNested(
+        'data.activePeer.options.node',
+        match(new RegExp('hub[23][1-8].lisk.io')),
+      ));
+    });
+
     it('dispatch activePeerSet with testnet config set to true when the network is a custom node and nethash is testnet', () => {
       getNetHash.returnsPromise();
       const network = {
@@ -88,6 +102,19 @@ describe('actions: peers', () => {
       getNetHash.resolves({ nethash: 'some other nethash' });
 
       expect(dispatch).to.have.been.calledWith(match.hasNested('data.activePeer.testnet', false));
+    });
+
+    it('does not display the error toast if the network is a custom node and there are not saved account and getnethash fails', () => {
+      getNetHash.returnsPromise();
+      const network = {
+        address: 'http://localhost:4000',
+        custom: true,
+      };
+
+      activePeerSet({ passphrase, network, noSavedAccounts: true })(dispatch);
+      getNetHash.rejects();
+
+      expect(dispatch).to.not.have.been.calledWith(errorToastDisplayed);
     });
 
     it('dispatch activePeerSet action even if network is undefined', () => {

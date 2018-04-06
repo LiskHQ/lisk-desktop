@@ -8,8 +8,11 @@ e2e-test-screenshots
 app/report.html
 app/*.map
 app/build
+app/build-testnet
 *.sw[pon]
 app/app.js
 .vscode
 .idea
 blockchain_explorer.db.gz
+package-lock.json
+reports

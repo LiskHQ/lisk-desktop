@@ -18,7 +18,7 @@ module.exports = {
         loader: 'babel-loader',
         options: {
           presets: ['es2015', 'react', 'stage-3'],
-          plugins: ['syntax-trailing-function-commas'],
+          plugins: ['syntax-trailing-function-commas', 'import-glob', 'transform-decorators-legacy'],
           env: {
             test: {
               plugins: ['istanbul'],
@@ -27,7 +27,16 @@ module.exports = {
         },
       },
       {
-        test: /\.(eot|svg|ttf|woff|woff2|png)$/,
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        exclude: [/images/],
+        options: {
+          name: '[path][name].[ext]',
+        },
+        loader: 'file-loader',
+      },
+      {
+        test: /\.(png|svg)$/,
+        exclude: [/fonts/],
         loader: 'url-loader',
       },
       {

@@ -1,0 +1,85 @@
+@import '../app/variables';
+
+:root {
+  --stepSwitch-font-size: 15px;
+}
+
+.wrapper {
+  height: 100%;
+  min-height: 200px;
+  position: relative;
+}
+
+.chartWrapper {
+  height: calc(100% - 70px);
+  min-height: 130px;
+  width: calc(100% + 50px);
+  margin: 0 -25px;
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+}
+
+.errorMessage {
+  margin-top: 60px;
+}
+
+.stepSwitchWrapper {
+  float: right;
+  margin: 50px;
+}
+
+.stepSwitch {
+  padding: 10px 16px;
+  cursor: pointer;
+  font-size: var(--stepSwitch-font-size);
+  font-weight: 500;
+  color: var(--color-grayscale-medium);
+
+  &.active {
+    color: var(--color-white);
+    background: var(--gradient-tertiary);
+    border-radius: var(--border-radius-normal);
+    font-weight: 300;
+  }
+}
+
+@media (--xLarge-viewport) {
+  .wrapper {
+    & h2 {
+      margin: 45px var(--box-padding-left-L) 20px;
+    }
+  }
+}
+
+@media (--large-viewport) {
+  .wrapper {
+    & h2 {
+      margin: 45px var(--box-padding-left-L) 20px;
+    }
+  }
+}
+
+@media (--medium-viewport) {
+  .wrapper {
+    min-height: 300px;
+
+    & h2 {
+      margin: 45px var(--box-padding-left-M) 20px;
+    }
+  }
+
+  .chartWrapper {
+    min-height: 230px;
+  }
+
+  .errorMessage {
+    margin-top: 30px;
+  }
+}
+
+@media (--small-viewport) {
+  .stepSwitchWrapper {
+    margin: 45px 0;
+  }
+}

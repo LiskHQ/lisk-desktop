@@ -1,4 +1,3 @@
-import { errorAlertDialogDisplayed } from './dialog';
 import {
   listAccountDelegates,
   listDelegates,
@@ -70,7 +69,8 @@ export const voteLookupStatusCleared = () => ({
  * Adds pending state and then after the duration of one round
  * cleans the pending state
  */
-export const votePlaced = ({ activePeer, passphrase, account, votes, secondSecret }) =>
+export const votePlaced = ({ activePeer, passphrase, account,
+  votes, secondSecret, goToNextStep }) =>
   (dispatch) => {
     const votedList = [];
     const unvotedList = [];
@@ -105,9 +105,10 @@ export const votePlaced = ({ activePeer, passphrase, account, votes, secondSecre
         fee: Fees.vote,
         type: transactionTypes.vote,
       }));
+      goToNextStep({ success: true });
     }).catch((error) => {
       const text = error && error.message ? `${error.message}.` : 'An error occurred while placing your vote.';
-      dispatch(errorAlertDialogDisplayed({ text }));
+      goToNextStep({ success: false, text });
     });
     dispatch(passphraseUsed(account.passphrase));
   };

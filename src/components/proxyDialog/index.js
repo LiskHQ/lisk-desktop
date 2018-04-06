@@ -1,7 +1,7 @@
-import { Input, Button } from 'react-toolbox';
 import React from 'react';
 import { translate } from 'react-i18next';
-
+import Input from '../toolbox/inputs/input';
+import { Button } from '../toolbox/buttons/button';
 
 class ProxyDialog extends React.Component {
   constructor() {

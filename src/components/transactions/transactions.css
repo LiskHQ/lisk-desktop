@@ -1,44 +1,60 @@
-:root {
-  --in: #73c8a9;
-  --out: #777;
-  --btn: rgb(2, 136, 209);
-}
+@import '../app/variables.css';
 
-.grayButton,
-.inButton,
-.outButton,
-.smallButton {
-  background-color: #eee;
-  border-radius: 3px;
-  padding: 6px;
-  text-transform: uppercase;
-  color: #000;
-  display: block;
+:root {
+  --grid-header-color: var(--color-black);
+  --amount-positive-color: var(--color-success-dark);
+  --amount-negative-color: var(--color-grayscale-dark);
+  --blue: var(--color-primary-medium);
+  --link-color: var(--color-primary-very-light);
+  --row-background-color: var(--color-white);
+  --filter-list-color: var(--color-grayscale-medium);
+  --result-address-font-weight: var(--font-weight-semi-bold);
+  --detail-label-font-weight: var(--font-weight-very-bold);
+  --header-address-font-weight: var(--font-weight-semi-bold);
+  --header-balance-unit-font-size-XL: 20px;
+  --header-balance-unit-font-size-L: 18px;
+  --header-subtitle-font-size-XL: 18px;
+  --header-subtitle-font-size-L: 16px;
+  --grid-padding-XL: var(--box-padding-left-L); /* L until we add this padding to everywhere else too */
+  --grid-padding-L: var(--box-padding-left-L);
+  --grid-padding-M: var(--box-padding-left-M);
+  --list-line-height: 25px;
+  --grid-header-line-height: 60px;
+  --main-row-line-height: 70px;
+  --sub-row-height: 50px;
+  --header-line-height: 36px;
+  --main-header-unit-font-size: 20px;
+  --grid-header-font-size: 15px;
+  --details-font-color: var(--color-grayscale-dark);
+  --details-label-font-size-XL: 15px;
+  --details-label-font-size-L: 12px;
+  --details-label-font-size-XS: 12px;
+  --back-button-font-size-XL: 15px;
+  --back-button-font-size-L: 12px;
+  --back-button-font-size-XS: 12px;
+  --back-button-arrow-font-size-XL: 16px;
+  --back-button-arrow-font-size-L: 16px;
+  --back-button-arrow-font-size-XS: 16px;
 }
 
 .smallButton {
   display: inline-block;
 }
 
-.inButton {
-  background: color(var(--in) alpha(45%)) !important;
-}
-
 .empty {
-  color: #777;
   text-align: center;
+  font-weight: var(--font-weight-semi-bold);
+  padding-top: 25px;
+  color: var(--color-grayscale-dark);
 }
 
-.in {
-  color: var(--in) !important;
+.leftText {
+  text-align: left;
+  padding-left: 0px;
 }
 
-.out {
-  color: var(--out) !important;
-}
-
-.centerText {
-  text-align: center;
+.rightText {
+  text-align: right;
 }
 
 .ordinaryText {
@@ -46,8 +62,460 @@
   color: inherit;
 }
 
-@media screen and (max-width: 48em) {
+@media (--small-viewport) {
   .hiddenXs {
     display: none;
+  }
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.accountVisual {
+  position: absolute;
+  left: 0px;
+  top: 3px;
+  margin: 0;
+}
+
+.transactions {
+  height: var(--main-box-height);
+
+  & .activity {
+    display: flex;
+    flex-direction: column;
+    height: var(--main-box-height);
+
+    & header {
+      line-height: var(--header-line-height);
+
+      & .copy {
+        color: var(--color-grayscale-medium);
+      }
+
+      & .title {
+        float: left;
+      }
+
+      & .account {
+        text-align: right;
+      }
+
+      & h2 {
+        margin-bottom: 0;
+        font-weight: var(--font-weight-semi-bold);
+      }
+
+      & h3 {
+        display: inline-block;
+        margin: 0;
+      }
+
+      & .address {
+        text-align: right;
+        cursor: pointer;
+        color: var(--color-grayscale-dark);
+      }
+
+      & .transfer {
+        color: var(--color-grayscale-dark);
+      }
+
+      & .balanceUnit {
+        font-weight: var(--font-weight-semi-bold);
+      }
+    }
+  }
+}
+
+.greyLabel {
+  font-weight: var(--font-weight-semi-bold);
+  color: var(--amount-negative-color);
+}
+
+.greenLabel {
+  font-weight: var(--font-weight-semi-bold);
+  color: var(--amount-positive-color) !important;
+}
+
+.list {
+  font-weight: var(--font-weight-bold);
+  color: var(--filter-list-color);
+  line-height: var(--list-line-height);
+  list-style: none;
+
+  & .item {
+    display: inline-block;
+    cursor: pointer;
+
+    &:not(:last-of-type) {
+      margin-right: 50px;
+    }
+  }
+
+  & .active {
+    border-bottom: 2px solid var(--amount-negative-color);
+    color: var(--amount-negative-color);
+  }
+}
+
+.details {
+  line-height: var(--list-line-height);
+  color: var(--details-font-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100%;
+
+  & footer {
+    padding-bottom: 92px;
+  }
+
+  & .copy {
+    color: var(--color-primary-standard) !important;
+  }
+
+  & .row {
+    padding-bottom: 48px;
+
+    &:last-child {
+      padding-bottom: 0px;
+    }
+  }
+
+  & .column {
+    position: relative;
+    padding-left: 50px;
+  }
+
+  & .label {
+    font-weight: var(--font-weight-very-bold);
+  }
+
+  & .sender {
+    font-weight: var(--font-weight-semi-bold);
+  }
+
+  & header {
+    padding-left: 0px;
+
+    & h3 {
+      font-family: var(--content-font);
+
+      & small {
+        font-weight: var(--detail-label-font-weight);
+        margin-left: -6px;
+        cursor: pointer;
+      }
+
+      & .backButton {
+        & .arrow {
+          vertical-align: middle;
+        }
+
+        & .text {
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+}
+
+.results {
+  overflow-y: initial;
+
+  & .header {
+    color: var(--grid-header-color);
+    line-height: var(--grid-header-line-height);
+    font-weight: var(--font-weight-very-bold);
+  }
+
+  & .rows:nth-of-type(even) {
+    background: var(--gradient-greyscale);
+  }
+
+  & .rows:nth-of-type(odd) {
+    background: var(--row-background-color);
+  }
+
+  & .rows {
+    color: var(--amount-negative-color);
+    border-bottom: 0;
+    border-top: 0;
+    margin-right: 0;
+    margin-left: 0;
+
+    &:hover:not(:first-child) {
+      background: var(--link-color);
+    }
+
+    & .copyIcon {
+      vertical-align: bottom;
+      padding-left: 5px;
+      cursor: pointer;
+    }
+  }
+
+  & .turnArrow {
+    transform: rotate(180deg);
+  }
+
+  & .mainRow {
+    line-height: var(--main-row-line-height);
+    white-space: nowrap;
+  }
+
+  & .address {
+    font-weight: var(--result-address-font-weight);
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 135%;
+  }
+}
+
+.addressLink {
+  color: var(--color-link);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+@media (--xLarge-viewport) {
+  .transactions {
+    & .activity {
+      & header {
+        padding: 20px var(--grid-padding-XL);
+
+        & h2 {
+          & .balanceUnit {
+            font-size: var(--header-balance-unit-font-size-XL);
+          }
+        }
+
+        & .address {
+          font-size: var(--header-subtitle-font-size-XL);
+        }
+      }
+    }
+  }
+
+  .details {
+    padding: 0px var(--grid-padding-XL);
+
+    & .label {
+      font-size: var(--details-label-font-size-L);
+    }
+
+    & .value {
+      & a,
+      & span {
+        font-size: 15px;
+        font-weight: 500;
+
+        & span {
+          color: inherit;
+        }
+      }
+
+      & span {
+        color: var(--details-font-color);
+      }
+
+      & .copy {
+        font-size: 24px;
+        vertical-align: top;
+      }
+
+      &.sender a {
+        font-weight: 600;
+      }
+    }
+
+    & header {
+      & small {
+        font-size: var(--back-button-font-size-XL);
+      }
+
+      & .backButton {
+        & .arrow {
+          font-size: var(--back-button-arrow-font-size-XL);
+        }
+      }
+    }
+  }
+
+  .list {
+    padding: 0px 0px 20px var(--grid-padding-XL);
+  }
+
+  .results {
+    overflow-y: auto;
+
+    & .header {
+      font-size: 15px;
+    }
+
+    & .rows {
+      padding: 0px var(--grid-padding-XL);
+    }
+  }
+}
+
+@media (--large-viewport) {
+  .transactions {
+    & .activity {
+      & header {
+        padding: 20px var(--grid-padding-L);
+
+        & h2 {
+          & .balanceUnit {
+            font-size: var(--header-balance-unit-font-size-L);
+          }
+        }
+
+        & .address {
+          font-size: var(--header-subtitle-font-size-L);
+        }
+      }
+    }
+  }
+
+  .details {
+    padding: 0px var(--grid-padding-L);
+
+    & .label {
+      font-size: var(--details-label-font-size-L);
+    }
+
+    & header {
+      & small {
+        font-size: var(--back-button-font-size-L);
+      }
+
+      & .backButton {
+        & .arrow {
+          font-size: var(--back-button-arrow-font-size-L);
+        }
+      }
+    }
+  }
+
+  .list {
+    padding: 0px 0px 20px var(--grid-padding-L);
+  }
+
+  .results {
+    overflow-y: auto;
+
+    & .header {
+      font-size: 12px;
+    }
+
+    & .rows {
+      padding: 0px var(--grid-padding-L);
+    }
+  }
+}
+
+@media (--medium-viewport) {
+  .transactions {
+    & .activity {
+      & header {
+        padding: 20px var(--grid-padding-M);
+      }
+    }
+  }
+
+  .results {
+    overflow-y: initial;
+    padding-bottom: 100px;
+
+    & .header {
+      font-size: 12px;
+    }
+
+    & .rows {
+      padding: 0px var(--grid-padding-M);
+    }
+
+    & .rows:nth-of-type(even) {
+      background: var(--gradient-greyscale-mobile);
+    }
+
+    & .rows:nth-of-type(odd) {
+      background: var(--color-grayscale-mobile-background);
+    }
+  }
+
+  .list {
+    padding: 0px 0px 20px var(--grid-padding-M);
+  }
+}
+
+@media (--small-viewport) {
+  .details {
+    & .row {
+      margin-right: 0;
+      margin-left: 0;
+      padding-bottom: 0;
+    }
+
+    & .column {
+      padding-bottom: 30px;
+    }
+  }
+}
+
+@media (--xSmall-viewport) {
+  .transactions {
+    & .activity {
+      & header {
+        padding: 20px var(--grid-padding-M);
+
+        & .account {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .list {
+    padding: 0px 0px 0px var(--grid-padding-M);
+
+    & .item {
+      &:not(:last-of-type) {
+        margin-right: 24px;
+      }
+    }
+  }
+
+  .details {
+    padding: 0px var(--grid-padding-M);
+
+    & .row {
+      padding-bottom: 0px;
+    }
+
+    & .column {
+      padding-bottom: 20px;
+    }
+
+    & .label {
+      font-size: var(--details-label-font-size-XS);
+    }
+
+    & header {
+      margin-bottom: 20px;
+
+      & small {
+        font-size: var(--back-button-font-size-XS);
+      }
+
+      & .backButton {
+        & .arrow {
+          font-size: var(--back-button-arrow-font-size-XS);
+        }
+      }
+    }
   }
 }

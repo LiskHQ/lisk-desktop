@@ -1,22 +1,24 @@
 import { expect } from 'chai';
-import { spy, stub } from 'sinon';
+import { spy, stub, useFakeTimers, match } from 'sinon';
 import { accountUpdated } from '../../actions/account';
+import accountConfig from '../../constants/account';
 import { activePeerUpdate } from '../../actions/peers';
 import * as votingActions from '../../actions/voting';
-import * as forgingActions from '../../actions/forging';
 import * as accountApi from '../../utils/api/account';
+import accounts from '../../../test/constants/accounts';
 import actionTypes from '../../constants/actions';
 import * as delegateApi from '../../utils/api/delegate';
 import middleware from './account';
 import transactionTypes from '../../constants/transactionTypes';
 
 describe('Account middleware', () => {
+  const { lockDuration } = accountConfig;
   let store;
   let next;
   let state;
   let stubGetAccount;
   let stubTransactions;
-  const passphrase = 'right cat soul renew under climb middle maid powder churn cram coconut';
+  const { passphrase } = accounts.genesis;
 
   const transactions = { transactions: [{ senderId: 'sample_address', receiverId: 'some_address' }] };
 
@@ -46,7 +48,18 @@ describe('Account middleware', () => {
     },
   };
 
+  const blockWithNullTransaction = {
+    type: actionTypes.newBlockCreated,
+    data: {
+      windowIsFocused: true,
+      block: { transactions: [null] },
+    },
+  };
+
+  let clock;
+
   beforeEach(() => {
+    clock = useFakeTimers(new Date('2017-12-29').getTime());
     store = stub();
     store.dispatch = spy();
     state = {
@@ -62,6 +75,7 @@ describe('Account middleware', () => {
           id: 12498250891724098,
         }],
         confirmed: [],
+        account: { address: 'test_address' },
       },
     };
     store.getState = () => (state);
@@ -74,6 +88,7 @@ describe('Account middleware', () => {
   afterEach(() => {
     stubGetAccount.restore();
     stubTransactions.restore();
+    clock.restore();
   });
 
   it('should pass the action to next middleware', () => {
@@ -119,13 +134,63 @@ describe('Account middleware', () => {
     expect(stubTransactions).to.have.been.calledWith();
   });
 
+  it(`should call transactions API methods on ${actionTypes.newBlockCreated} action if account.balance changes the user has no transactions yet`, () => {
+    stubGetAccount.resolves({ balance: 10e8 });
+
+    state.transactions.count = 0;
+    middleware(store)(next)(newBlockCreated);
+
+    expect(stubGetAccount).to.have.been.calledWith();
+    // eslint-disable-next-line no-unused-expressions
+    expect(stubTransactions).to.have.been.calledOnce;
+  });
+
   it(`should call transactions API methods on ${actionTypes.newBlockCreated} action if the window is in focus and there are recent transactions`, () => {
     stubGetAccount.resolves({ balance: 0 });
 
     middleware(store)(next)(newBlockCreated);
 
     expect(stubGetAccount).to.have.been.calledWith();
-    expect(stubTransactions).to.have.been.calledWith();
+    expect(stubTransactions).to.have.been.calledWith(match({ address: 'test_address' }));
+  });
+
+  it(`should call transactions API methods on ${actionTypes.newBlockCreated} action if block.transactions contains null element`, () => {
+    middleware(store)(next)(blockWithNullTransaction);
+
+    expect(store.dispatch).to.have.been.calledWith(match.has('type', actionTypes.transactionsUpdated));
+  });
+
+  it(`should call API methods on ${actionTypes.newBlockCreated} action if state.transaction.transactions.confired does not contain recent transaction. Case with transactions address`, () => {
+    stubGetAccount.resolves({ balance: 0 });
+
+    store.getState = () => ({ ...state,
+      transactions: {
+        ...state.transactions,
+        confirmed: [{ confirmations: 10 }],
+        address: 'sample_address',
+      },
+    });
+
+    middleware(store)(next)(newBlockCreated);
+    expect(stubGetAccount).to.have.been.calledWith({});
+    expect(store.dispatch).to.have.been.calledWith(match.has('type', actionTypes.transactionsUpdated));
+  });
+
+  it(`should call API methods on ${actionTypes.newBlockCreated} action if state.transaction.transactions.confired does not contain recent transaction. Case with confirmed address`, () => {
+    stubGetAccount.resolves({ balance: 0 });
+
+    store.getState = () => ({ ...state,
+      transactions: {
+        pending: [{
+          id: 12498250891724098,
+        }],
+        confirmed: [{ confirmations: 10, address: 'sample_address' }],
+      },
+    });
+
+    middleware(store)(next)(newBlockCreated);
+    expect(stubGetAccount).to.have.been.calledWith({});
+    expect(store.dispatch).to.have.been.calledWith(match.has('type', actionTypes.transactionsUpdated));
   });
 
   it(`should fetch delegate info on ${actionTypes.newBlockCreated} action if account.balance changes and account.isDelegate`, () => {
@@ -138,16 +203,6 @@ describe('Account middleware', () => {
     expect(store.dispatch).to.have.been.calledWith();
 
     delegateApiMock.restore();
-  });
-
-  it(`should call fetchAndUpdateForgedBlocks(...) on ${actionTypes.newBlockCreated} action if account.balance changes and account.isDelegate`, () => {
-    state.account.isDelegate = true;
-    store.getState = () => (state);
-    stubGetAccount.resolves({ balance: 10e8 });
-    const fetchAndUpdateForgedBlocksSpy = spy(forgingActions, 'fetchAndUpdateForgedBlocks');
-
-    middleware(store)(next)(newBlockCreated);
-    expect(fetchAndUpdateForgedBlocksSpy).to.have.been.calledWith();
   });
 
   it(`should fetch delegate info on ${actionTypes.transactionsUpdated} action if action.data.confirmed contains delegateRegistration transactions`, () => {
@@ -186,7 +241,8 @@ describe('Account middleware', () => {
       data: passphrase,
     };
     middleware(store)(next)(action);
-    expect(store.dispatch).to.have.been.calledWith(accountUpdated({ passphrase }));
+    expect(store.dispatch).to.have.been
+      .calledWith(accountUpdated({ passphrase, expireTime: clock.now + lockDuration }));
   });
 
   it(`should not dispatch accountUpdated action on ${actionTypes.passphraseUsed} action if store.account.passphrase is already set`, () => {
@@ -194,8 +250,11 @@ describe('Account middleware', () => {
       type: actionTypes.passphraseUsed,
       data: passphrase,
     };
-    store.getState = () => ({ ...state, account: { ...state.account, passphrase } });
+    store.getState = () => ({ ...state,
+      account: { ...state.account, passphrase, expireTime: clock.now + lockDuration },
+    });
     middleware(store)(next)(action);
-    expect(store.dispatch).to.not.have.been.calledWith();
+    expect(store.dispatch).to.have.been
+      .calledWith(accountUpdated({ expireTime: clock.now + lockDuration }));
   });
 });

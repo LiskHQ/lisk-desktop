@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="145px" height="145px" viewBox="0 0 145 145" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>shape-1</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="0%" y1="50%" x2="94.0204156%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#3023AE" offset="0%"></stop>
+            <stop stop-color="#C86DD7" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="01_Get-Access-✅" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Get-Access-Dashboard-2-Lisk-XL" transform="translate(-363.000000, -600.000000)" fill="url(#linearGradient-1)">
+            <g id="Group" transform="translate(315.000000, 146.000000)">
+                <rect id="shape-1" transform="translate(120.124210, 526.124210) rotate(-45.000000) translate(-120.124210, -526.124210) " x="90" y="470" width="60" height="60"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

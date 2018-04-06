@@ -1,0 +1,52 @@
+@import '../app/variables.css';
+
+:root {
+  --title-bar-extra-padding-M: 58px;
+  --title-bar-extra-padding-S: 52px;
+}
+
+.wrapper {
+  min-width: 100%;
+
+  & .sendTo {
+    width: 100%;
+  }
+}
+
+@media (--xLarge-viewport) {
+  .gridPadding {
+    padding-right: 37px;
+  }
+}
+
+@media (--large-viewport) {
+  .gridPadding {
+    padding-right: 24px;
+  }
+}
+
+@media (--medium-viewport) {
+  .wrapper {
+    padding-top: var(--title-bar-extra-padding-M);
+
+    & .gridPadding {
+      padding-right: 0;
+    }
+  }
+}
+
+@media (--small-viewport) {
+  .wrapper {
+    padding-top: var(--title-bar-extra-padding-S);
+
+    & .gridPadding {
+      padding-right: 0;
+    }
+  }
+}
+
+@media (max-width: 1025px) {
+  .transactions {
+    width: 100%;
+  }
+}

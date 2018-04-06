@@ -1,22 +1,22 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallow } from 'enzyme';
+import { MemoryRouter as Router } from 'react-router-dom';
+import { mount } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
-import { Button } from 'react-toolbox/lib/button';
 import PropTypes from 'prop-types';
 import sinon from 'sinon';
-import styles from './header.css';
 import Header from './header';
-import RelativeLink from '../relativeLink';
-import logo from '../../assets/images/LISK-nano.png';
 import i18n from '../../i18n';
+import routes from '../../constants/routes';
 
 describe('Header', () => {
   let wrapper;
   let propsMock;
 
+  const mountWithRouter = (node, options) => mount(<Router>{node}</Router>, options);
+
   const store = configureMockStore([])({
-    peers: { data: {} },
+    peers: { data: { options: {} } },
     account: {},
     activePeerSet: () => {},
   });
@@ -26,11 +26,14 @@ describe('Header', () => {
       setActiveDialog: () => { },
       account: {},
       t: key => key,
+      location: { pathname: `${routes.explorer.path}${routes.search}` },
+      isAuthenticated: false,
     };
     propsMock = sinon.mock(mockInputProps);
-    wrapper = shallow(<Header {...mockInputProps} />, {
+    wrapper = mountWithRouter(<Header {...mockInputProps} />, {
       context: { store, i18n },
       childContextTypes: {
+        store: PropTypes.object.isRequired,
         i18n: PropTypes.object.isRequired,
       },
     });
@@ -41,16 +44,7 @@ describe('Header', () => {
     propsMock.restore();
   });
 
-  it('renders 1 Button components', () => {
-    expect(wrapper.find(Button)).to.have.length(1);
-  });
-
-  it('renders 9 RelativeLink components', () => {
-    expect(wrapper.find(RelativeLink)).to.have.length(9);
-  });
-
-  it('should have an image with source of "logo"', () => {
-    expect(wrapper.contains(<img className={styles.logo} src={logo} alt="logo" />))
-      .to.be.equal(true);
+  it('renders 1 Link component if not logged in', () => {
+    expect(wrapper.find('Link')).to.have.length(1);
   });
 });

@@ -2,100 +2,187 @@ import React from 'react';
 import { expect } from 'chai';
 import { spy } from 'sinon';
 import { mount } from 'enzyme';
+import PropTypes from 'prop-types';
+
+import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
-import PassphraseInput from './index';
+import PassphraseInputHOC, { PassphraseInput } from './index';
+import keyCodes from './../../constants/keyCodes';
 
 describe('PassphraseInput', () => {
   let wrapper;
   let props;
   let onChangeSpy;
 
-  beforeEach('', () => {
-    props = {
-      error: '',
-      value: '',
-      onChange: () => {},
-      i18n,
-    };
-    onChangeSpy = spy(props, 'onChange');
-    wrapper = mount(<PassphraseInput {...props} />);
-  });
+  describe('with HOC', () => {
+    beforeEach('', () => {
+      props = {
+        error: '',
+        value: '',
+        onChange: () => {},
+        i18n,
+      };
+      onChangeSpy = spy(props, 'onChange');
+      wrapper = mount(<PassphraseInputHOC {...props} />);
+    });
 
-  afterEach('', () => {
-    onChangeSpy.restore();
-  });
+    afterEach('', () => {
+      onChangeSpy.restore();
+    });
 
-  it('should call props.onChange with error=undefined if a valid passphrase is entered', () => {
-    const passphrase = 'wagon stock borrow episode laundry kitten salute link globe zero feed marble';
-    wrapper.find('input').simulate('change', { target: { value: passphrase } });
-    expect(wrapper.props().onChange).to.have.been.calledWith(passphrase, undefined);
-  });
+    it('should call props.onChange with error=undefined if a valid passphrase is entered', () => {
+      const { passphrase } = accounts.genesis;
+      wrapper.find('input').first().simulate('change', { target: { value: passphrase } });
+      expect(wrapper.props().onChange).to.have.been.calledWith(passphrase, undefined);
+    });
 
-  it('should call props.onChange with error="Required" if an empty passphrase is entered', () => {
-    const passphrase = '';
-    wrapper.find('input').simulate('change', { target: { value: passphrase } });
-    expect(wrapper.props().onChange).to.have.been.calledWith(passphrase, 'Required');
-  });
+    it('should call props.onChange with error="Required" if an empty passphrase is entered', () => {
+      const passphrase = '';
+      wrapper.find('input').first().simulate('change', { target: { value: passphrase } });
+      expect(wrapper.props().onChange).to.have.been.calledWith(passphrase, 'Required');
+    });
 
-  const ONLY_ONE_WORD_ERROR = 'Passphrase should have 12 words, entered passphrase has 1';
-  it(`should call props.onChange with error="${ONLY_ONE_WORD_ERROR}" if an "test" passphrase is entered`, () => {
-    const passphrase = 'test';
-    wrapper.find('input').simulate('change', { target: { value: passphrase } });
-    expect(wrapper.props().onChange).to.have.been.calledWith(passphrase, ONLY_ONE_WORD_ERROR);
-  });
+    const ONLY_ONE_WORD_ERROR = 'Passphrase should have 12 words, entered passphrase has 1';
+    it(`should call props.onChange with error="${ONLY_ONE_WORD_ERROR}" if an "test" passphrase is entered`, () => {
+      const passphrase = 'test';
+      wrapper.find('input').first().simulate('change', { target: { value: passphrase } });
+      wrapper.setProps({ value: passphrase });
+      expect(wrapper.props().onChange).to.have.been.calledWith(passphrase, ONLY_ONE_WORD_ERROR);
+    });
 
-  const INVALID_WORD = 'INVALID_WORD';
-  const INVALID_WORD_ERROR = `Word "${INVALID_WORD}" is not on the passphrase Word List.`;
-  it(`should call props.onChange with error='${INVALID_WORD_ERROR}' if a passphrase with an invalid word is entered`, () => {
-    const passphrase = `${INVALID_WORD} stock borrow episode laundry kitten salute link globe zero feed marble`;
-    wrapper.find('input').simulate('change', { target: { value: passphrase } });
-    expect(wrapper.props().onChange).to.have.been.calledWith(passphrase, INVALID_WORD_ERROR);
-  });
+    const NOT_VALID_ERROR = 'Passphrase is not valid';
+    it(`should call props.onChange with error="${NOT_VALID_ERROR}" if an otherwise invalid passphrase is entered`, () => {
+      const passphrase = 'stock wagon borrow episode laundry kitten salute link globe zero feed marble';
+      wrapper.find('input').first().simulate('change', { target: { value: passphrase } });
+      expect(wrapper.props().onChange).to.have.been.calledWith(passphrase, NOT_VALID_ERROR);
+    });
 
-  const SIMILAR_WORD_ERROR = 'Word "wagot" is not on the passphrase Word List. Most similar word on the list is "wagon"';
-  it(`should call props.onChange with error='${SIMILAR_WORD_ERROR}' if an passphrase with a typo is entered`, () => {
-    const passphrase = 'wagot stock borrow episode laundry kitten salute link globe zero feed marble';
-    wrapper.find('input').simulate('change', { target: { value: passphrase } });
-    expect(wrapper.props().onChange).to.have.been.calledWith(passphrase, SIMILAR_WORD_ERROR);
-  });
-
-  const NOT_VALID_ERROR = 'Passphrase is not valid';
-  it(`should call props.onChange with error="${NOT_VALID_ERROR}" if an otherwise invalid passphrase is entered`, () => {
-    const passphrase = 'stock wagon borrow episode laundry kitten salute link globe zero feed marble';
-    wrapper.find('input').simulate('change', { target: { value: passphrase } });
-    expect(wrapper.props().onChange).to.have.been.calledWith(passphrase, NOT_VALID_ERROR);
-  });
-
-  const WHITE_SPACE_AT_THE_BEGINNING_ERROR = 'Passphrase contains unnecessary whitespace at the beginning';
-  it("should call props.onChange with error='Passphrase contains unnecessary whitespace at the beginning'", () => {
-    const passphrase = ' wagon stock borrow episode laundry kitten salute link globe zero feed marble';
-    wrapper.find('input').simulate('change', { target: { value: passphrase } });
-    expect(wrapper.props().onChange).to.have.been
-      .calledWith(passphrase, WHITE_SPACE_AT_THE_BEGINNING_ERROR);
-  });
-
-  const WHITE_SPACE_AT_THE_END_ERROR = 'Passphrase contains unnecessary whitespace at the end';
-  it("should call props.onChange with error='Passphrase contains unnecessary whitespace at the end'", () => {
-    const passphrase = 'wagon stock borrow episode laundry kitten salute link globe zero feed marble ';
-    wrapper.find('input').simulate('change', { target: { value: passphrase } });
-    expect(wrapper.props().onChange).to.have.been
-      .calledWith(passphrase, WHITE_SPACE_AT_THE_END_ERROR);
+    it('should allow to change the input field to type="text" and back', () => {
+      expect(wrapper.find('input').first().props().type).to.equal('password');
+      wrapper.find('input').first().simulate('click');
+      wrapper.find('.show-passphrase-toggle').simulate('click');
+      expect(wrapper.find('input').first().props().type).to.equal('text');
+      wrapper.find('.show-passphrase-toggle').simulate('click');
+      expect(wrapper.find('input').first().props().type).to.equal('password');
+    });
   });
 
 
-  const EXTRA_WHITE_SPACE_ERROR = 'Passphrase contains extra whitespace between words';
-  it("should call props.onChange with error='Passphrase contains extra whitespace between words'", () => {
-    const passphrase = 'wagon  stock borrow episode laundry kitten salute link globe zero feed marble';
-    wrapper.find('input').simulate('change', { target: { value: passphrase } });
-    expect(wrapper.props().onChange).to.have.been
-      .calledWith(passphrase, EXTRA_WHITE_SPACE_ERROR);
-  });
+  describe('without HOC', () => {
+    beforeEach('', () => {
+      props = {
+        error: '',
+        value: '',
+        onChange: () => {},
+        i18n,
+        t: key => key,
+      };
 
-  it('should allow to change the input field to type="text" and back', () => {
-    expect(wrapper.find('input').props().type).to.equal('password');
-    wrapper.find('button.show-passphrase-toggle').simulate('click');
-    expect(wrapper.find('input').props().type).to.equal('text');
-    wrapper.find('button.show-passphrase-toggle').simulate('click');
-    expect(wrapper.find('input').props().type).to.equal('password');
+      onChangeSpy = spy(props, 'onChange');
+
+      const options = {
+        context: { i18n },
+        childContextTypes: {
+          i18n: PropTypes.object.isRequired,
+        },
+      };
+
+      wrapper = mount(<PassphraseInput {...props} />, options);
+    });
+
+    afterEach('', () => {
+      onChangeSpy.restore();
+    });
+
+    it('should highlight invalid words if a passphrase with an invalid word is entered', () => {
+      const errorMessage = 'Please check the highlighted words';
+      let passphrase = 'wagon stock borrow episode laundry kitten salute link globe zero feed marble';
+      wrapper.find('input').first().simulate('change', { target: { value: passphrase } });
+      expect(wrapper.props().onChange).to.not.have.been.calledWith(passphrase, errorMessage);
+      passphrase = 'wagonn stock borrow episode laundry kitten salute link globe zero feed marble';
+      wrapper.find('input').first().simulate('change', { target: { value: passphrase } });
+      expect(wrapper.state('partialPassphraseError')[0]).to.equal(true);
+      expect(wrapper.props().onChange).to.have.been.calledWith(passphrase, errorMessage);
+    });
+
+    it('should focus input on click', () => {
+      expect(wrapper.find('input')).to.have.length(1);
+      expect(wrapper.state('isFocused')).to.equal(false);
+      wrapper.find('input').first().simulate('click');
+      expect(wrapper.state('isFocused')).to.equal(true);
+      expect(wrapper.find('input')).to.have.length(12);
+    });
+
+    it('should handle paste a passphrase', () => {
+      expect(wrapper.state('isFocused')).to.equal(false);
+      expect(wrapper.find('input')).to.have.length(1);
+      const passphrase = 'stock wagon borrow episode laundry kitten salute link globe zero feed marble';
+      wrapper.find('input').first().simulate('change', { target: { value: passphrase } });
+      expect(wrapper.state('isFocused')).to.equal(true);
+      expect(wrapper.find('input')).to.have.length(12);
+      expect(wrapper.props().onChange).to.have.been.calledWith(passphrase);
+    });
+
+    it('should focus next element on space press', () => {
+      expect(wrapper.state('focus')).to.equal(0);
+      wrapper.find('input').first().simulate('click');
+      wrapper.find('input').first().simulate('keyDown', {
+        keyCode: keyCodes.space,
+        which: keyCodes.space,
+      });
+      expect(wrapper.state('focus')).to.equal(1);
+    });
+
+    it('should focus next element on arrow right and previous element on left press', () => {
+      expect(wrapper.state('focus')).to.equal(0);
+      wrapper.find('input').first().simulate('click');
+      wrapper.find('input').first().simulate('keyDown', {
+        keyCode: keyCodes.arrowRight,
+        which: keyCodes.arrowRight,
+      });
+      expect(wrapper.state('focus')).to.equal(1);
+      wrapper.find('input').at(1).simulate('keyDown', {
+        keyCode: keyCodes.arrowLeft,
+        which: keyCodes.arrowLeft,
+      });
+      expect(wrapper.state('focus')).to.equal(0);
+    });
+
+    it('should focus previous element on backspace press', () => {
+      expect(wrapper.state('focus')).to.equal(0);
+      wrapper.find('input').first().simulate('click');
+      wrapper.find('input').first().simulate('keyDown', {
+        keyCode: keyCodes.arrowRight,
+        which: keyCodes.arrowRight,
+      });
+      expect(wrapper.state('focus')).to.equal(1);
+      wrapper.find('input').at(1).simulate('keyDown', {
+        keyCode: keyCodes.delete,
+        which: keyCodes.delete,
+      });
+      expect(wrapper.state('focus')).to.equal(0);
+    });
+
+    it('should render partial input correctly on load', () => {
+      wrapper.find('input').first().simulate('click');
+
+      expect(wrapper.find('input').at(0).props().shouldfocus).to.equal(1);
+      expect(wrapper.find('input').at(0).props().type).to.equal('password');
+      expect(wrapper.find('input').at(0).props().placeholder.toLowerCase()).to.equal('start here');
+      expect(wrapper.find('input').at(0).props().value).to.equal('');
+
+      expect(wrapper.find('input').at(1).props().shouldfocus).to.equal(0);
+      expect(wrapper.find('input').at(1).props().type).to.equal('password');
+      expect(wrapper.find('input').at(1).props().placeholder).to.equal('');
+      expect(wrapper.find('input').at(0).props().value).to.equal('');
+    });
+
+    it('should change focused element on focus and blur', () => {
+      wrapper.find('input').first().simulate('click');
+      wrapper.find('input').at(1).simulate('focus');
+      expect(wrapper.find('input').at(1).props().shouldfocus).to.equal(1);
+      wrapper.find('input').at(1).simulate('blur');
+      expect(wrapper.find('input').at(1).props().shouldfocus).to.equal(0);
+    });
   });
 });

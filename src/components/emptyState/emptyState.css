@@ -1,0 +1,47 @@
+@import '../app/variables.css';
+
+:root {
+  --float-animation-distance: 10px;
+}
+
+@keyframes float {
+  0% {
+    margin-top: 0px;
+    margin-bottom: var(--float-animation-distance);
+  }
+
+  100% {
+    margin-top: var(--float-animation-distance);
+    margin-bottom: 0px;
+  }
+}
+
+.emptyState {
+  max-width: 255px;
+  margin: auto;
+  text-align: center;
+
+  & img {
+    animation: float 1500ms 0ms infinite alternate ease-in-out;
+  }
+
+  & h2 {
+    margin: 10px;
+  }
+
+  & p {
+    line-height: 26px;
+    color: var(--color-grayscale-dark);
+  }
+}
+
+@media (--small-viewport) {
+  .emptyState {
+    margin: 50px auto;
+
+    & p {
+      font-size: 14px;
+    }
+  }
+}
+

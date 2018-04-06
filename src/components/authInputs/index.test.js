@@ -4,19 +4,21 @@ import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 import configureMockStore from 'redux-mock-store';
+
+import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
 import AuthInputsHOC from './index';
 
 describe('AuthInputsHOC', () => {
   let wrapper;
-  const passphrase = 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit';
   const props = {
     onChange: () => {},
-    secondPassphrase: {},
+    secondPassphrase: { value: '' },
+    passphrase: { value: '' },
   };
   const account = {
     secondSignature: 1,
-    passphrase,
+    passphrase: accounts.delegate.passphrase,
   };
 
   it('should render AuthInputs with props.account equal to state.account ', () => {

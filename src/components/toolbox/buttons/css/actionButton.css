@@ -1,0 +1,8 @@
+@import './base.css';
+
+.button {
+  min-height: 56px;
+
+  @mixin buttonBasics;
+  @mixin buttonAction;
+}

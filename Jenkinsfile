@@ -10,16 +10,14 @@ def get_build_info() {
 def slack_send(color, message) {
   /* Slack channel names are limited to 21 characters */
   CHANNEL_MAX_LEN = 21
-  CHANNEL_SUFFIX = '-jenkins'
 
   channel = "${env.JOB_NAME}".tokenize('/')[0]
-  channel_len = CHANNEL_MAX_LEN - CHANNEL_SUFFIX.size()
-  if ( channel.size() > channel_len ) {
-     channel = channel.substring(0, channel_len)
+  channel = channel.replace('lisk-', 'lisk-ci-')
+  if ( channel.size() > CHANNEL_MAX_LEN ) {
+     channel = channel.substring(0, CHANNEL_MAX_LEN)
   }
-  channel += CHANNEL_SUFFIX
-  echo "[slack_send] channel: ${channel} "
 
+  echo "[slack_send] channel: ${channel} "
   slackSend color: "${color}", message: "${message}", channel: "${channel}"
 }
 
@@ -32,7 +30,7 @@ def fail(reason) {
 
 /* comment out the next line to allow concurrent builds on the same branch */
 properties([disableConcurrentBuilds(), pipelineTriggers([])])
-node('lisk-nano') {
+node('lisk-hub') {
   try {
     stage ('Checkout and Start Lisk Core') {
       try {
@@ -45,7 +43,7 @@ node('lisk-nano') {
 
       try {
         sh '''
-        N=${EXECUTOR_NUMBER:-0}
+        N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
         cd ~/lisk-Linux-x86_64
         # work around core bug: config.json gets overwritten; use backup
         cp .config.json config_$N.json
@@ -96,25 +94,21 @@ node('lisk-nano') {
       }
     }
 
-    stage ('Build Nano') {
+    stage ('Build and Deploy') {
       try {
         sh '''
-        cp ~/.coveralls.yml-nano .coveralls.yml
+        cp ~/.coveralls.yml-hub .coveralls.yml
         npm run --silent build
+        npm run --silent build:testnet
+        rsync -axl --delete --rsync-path="mkdir -p /var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/ && rsync" $WORKSPACE/app/build/ jenkins@master-01:/var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/
+        npm run --silent bundlesize
         '''
-      } catch (err) {
-        echo "Error: ${err}"
-        fail('Stopping build: nano build failed')
-      }
-    }
-
-    stage ('Deploy') {
-      try {
-        sh 'rsync -axl --delete --rsync-path="mkdir -p /var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/ && rsync" $WORKSPACE/app/build/ jenkins@master-01:/var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/'
+        archiveArtifacts artifacts: 'app/build/'
+        archiveArtifacts artifacts: 'app/build-testnet/'
         githubNotify context: 'Jenkins test deployment', description: 'Commit was deployed to test', status: 'SUCCESS', targetUrl: "${HUDSON_URL}test/" + "${JOB_NAME}".tokenize('/')[0] + "/${BRANCH_NAME}"
       } catch (err) {
         echo "Error: ${err}"
-        fail('Stopping build: deploy failed')
+        fail('Stopping build: build or deploy failed')
       }
     }
 
@@ -126,6 +120,7 @@ node('lisk-nano') {
           # Submit coverage to coveralls
           cat coverage/*/lcov.info | coveralls -v
           '''
+
         }
       } catch (err) {
         echo "Error: ${err}"
@@ -136,9 +131,9 @@ node('lisk-nano') {
     stage ('Run E2E Tests') {
       try {
         ansiColor('xterm') {
-          withCredentials([string(credentialsId: 'lisk-nano-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
+          withCredentials([string(credentialsId: 'lisk-hub-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
             sh '''
-            N=${EXECUTOR_NUMBER:-0}
+            N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
 
             # End to End test configuration
             export DISPLAY=:1$N
@@ -146,9 +141,17 @@ node('lisk-nano') {
 
             # Run end-to-end tests
 
-            npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL https://testnet.lisk.io --cucumberOpts.tags @testnet --params.useTestnetPassphrase true
-            npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL http://127.0.0.1:400$N --cucumberOpts.tags @testnet --params.useTestnetPassphrase true --params.network testnet
+            if [ -z $CHANGE_BRANCH ]; then
+              npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL https://testnet.lisk.io --cucumberOpts.tags @testnet --params.useTestnetPassphrase true
+            else
+              echo "Skipping @testnet end-to-end tests because we're not on 'development' branch"
+            fi
             npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL http://127.0.0.1:400$N
+            if [ -z $CHANGE_BRANCH ]; then
+              npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --cucumberOpts.tags @testnet --params.useTestnetPassphrase true --params.network testnet
+            else
+              echo "Skipping @testnet end-to-end tests because we're not on 'development' branch"
+            fi
             '''
           }
         }
@@ -161,7 +164,7 @@ node('lisk-nano') {
     echo "Error: ${err}"
   } finally {
     sh '''
-    N=${EXECUTOR_NUMBER:-0}
+    N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
     curl --verbose http://127.0.0.1:400$N/api/blocks/getNethash || true
     ( cd ~/lisk-Linux-x86_64 && bash lisk.sh stop_node -p etc/pm2-lisk_$N.json ) || true
     pgrep --list-full -f "Xvfb :1$N" || true
@@ -171,7 +174,14 @@ node('lisk-nano') {
     if [ $BRANCH_NAME = "development" ]; then
         rsync -axl --delete $WORKSPACE/node_modules/ ~/cache/development/node_modules/ || true
     fi
+    cat reports/cucumber_report.json | ./node_modules/.bin/cucumber-junit > reports/cucumber_report.xml
     '''
+
+    cobertura autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: 'coverage/*/cobertura-coverage.xml', conditionalCoverageTargets: '70, 0, 0', failUnhealthy: false, failUnstable: false, fileCoverageTargets: '100, 0, 0', lineCoverageTargets: '80, 0, 0', maxNumberOfBuilds: 0, methodCoverageTargets: '80, 0, 0', onlyStable: false, sourceEncoding: 'ASCII'
+
+    junit 'reports/junit_report.xml'
+    junit 'reports/cucumber_report.xml'
+
     dir('node_modules') {
       deleteDir()
     }

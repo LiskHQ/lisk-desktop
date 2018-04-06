@@ -27,6 +27,7 @@ describe('TransactionsHOC', () => {
       peers,
       transactions,
       account,
+      loading: [],
     });
     wrapper = mount(<Provider store={store}><Router><TransactionsHOC /></Router></Provider>, {
       context: { store, history, i18n },
@@ -39,12 +40,11 @@ describe('TransactionsHOC', () => {
   });
 
   it('should render Transactions', () => {
-    expect(wrapper.find('Transactions')).to.have.lengthOf(1);
+    expect(wrapper.find('Transactions')).to.have.lengthOf(2);
   });
 
   it('should mount Transactions with appropriate properties', () => {
-    const props = wrapper.find('Transactions').props();
-    expect(props.address).to.be.equal(account.address);
+    const props = wrapper.find('Transactions').first().props();
     expect(props.activePeer).to.be.equal(peers.data);
     expect(props.transactions).to.deep.equal([...transactions, ...pending]);
     expect(props.count).to.be.equal(transactions.count);

@@ -1,71 +1,112 @@
-import { Button } from 'react-toolbox/lib/button';
-import { IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
 import React from 'react';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
-
+import { Link } from 'react-router-dom';
+import Countdown from 'react-countdown-now';
+import { FontIcon } from '../fontIcon';
+import AccountVisual from '../accountVisual';
+import SearchBar from '../searchBar';
+import CountDownTemplate from './countDownTemplate';
+import CopyToClipboard from '../copyToClipboard';
+import LiskAmount from '../liskAmount';
+import Account from '../account';
+import logo from '../../assets/images/logo-beta.svg';
 import PrivateWrapper from '../privateWrapper';
-import SaveAccountButton from '../saveAccountButton';
-import logo from '../../assets/images/LISK-nano.png';
-import offlineStyle from '../offlineWrapper/offlineWrapper.css';
+import { ActionButton } from './../toolbox/buttons/button';
 import styles from './header.css';
 import RelativeLink from '../relativeLink';
+import routes from './../../constants/routes';
 
-const Header = props => (
-  <header className={`${grid.row} ${grid['between-xs']} ${styles.wrapper}`} >
-    <div className={styles.logoWrapper}>
-      <img className={styles.logo} src={logo} alt="logo" />
-    </div>
-    <PrivateWrapper>
-      <IconMenu
-        className={`${styles.iconButton} main-menu-icon-button ${offlineStyle.disableWhenOffline}`}
-        icon="more_vert"
-        position="topRight"
-        menuRipple
-        theme={styles}
-      >
-        {
-          !props.account.isDelegate &&
-            <MenuItem theme={styles}>
-              <RelativeLink className={`register-as-delegate ${styles.menuLink}`}
-                to='register-delegate'>{props.t('Register as delegate')}</RelativeLink>
-            </MenuItem>
-        }
-        {
-          !props.account.secondSignature &&
-            <MenuItem theme={styles}>
-              <RelativeLink className={`register-second-passphrase ${styles.menuLink}`}
-                to='register-second-passphrase'>{props.t('Register second passphrase')}</RelativeLink>
-            </MenuItem>
-        }
-        <MenuItem theme={styles}>
-          <RelativeLink className={`sign-message ${styles.menuLink}`} to='sign-message'>{props.t('Sign message')}</RelativeLink>
-        </MenuItem>
-        <MenuItem theme={styles}>
-          <RelativeLink className={`verify-message ${styles.menuLink}`}
-            to='verify-message'>{props.t('Verify message')}</RelativeLink>
-        </MenuItem>
-        <MenuItem theme={styles}>
-          <RelativeLink className={`encrypt-message ${styles.menuLink}`}
-            to='encrypt-message'>{props.t('Encrypt message')}</RelativeLink>
-        </MenuItem>
-        <MenuItem theme={styles}>
-          <RelativeLink className={`decrypt-message ${styles.menuLink}`}
-            to='decrypt-message'>{props.t('Decrypt message')}</RelativeLink>
-        </MenuItem>
-        <MenuDivider />
-        <SaveAccountButton theme={styles} />
-        <MenuItem theme={styles}>
-          <RelativeLink className={`settings ${styles.menuLink}`} to='settings'>{props.t('Settings')}</RelativeLink>
-        </MenuItem>
-      </IconMenu>
+class Header extends React.Component {
+  shouldShowActionButton() {
+    const { pathname } = this.props.location;
+    return !this.props.isAuthenticated
+      && !this.props.account.loading
+      && pathname !== routes.login.path
+      && ![routes.register.path, routes.addAccount.path]
+        .some(el => pathname.includes(el));
+  }
 
-      <Button className={`${styles.button} logout-button`} raised onClick={props.logOut}>{props.t('logout')}</Button>
-      <RelativeLink neutral raised className={`${styles.button} receive-button`}
-        to='receive'>{props.t('Receive LSK')}</RelativeLink>
-      <RelativeLink primary raised disableWhenOffline className={`${styles.button} send-button`}
-        to='send'>{props.t('send')}</RelativeLink>
-    </PrivateWrapper>
-  </header>
-);
+  shouldShowSearchBar() {
+    const { pathname } = this.props.location;
+    return ![`${routes.explorer.path}${routes.search.path}`, routes.register.path, routes.addAccount.path]
+      .some(el => pathname.includes(el)) && pathname !== routes.login.path;
+  }
+
+  render() {
+    return (
+      <header className={`${styles.wrapper} mainHeader`}>
+        <div className={`${styles.loginInfo}`}>
+          <div>
+            <div style={{ display: 'inline-block', float: 'left' }}>
+              <img src={logo} className={`${styles.logo}`}/>
+            </div>
+            <div style={{ display: 'inline-block' }}>
+              <PrivateWrapper>
+                <div className={`account ${styles.account}`}>
+                  <div className={styles.information} align="right">
+                    <div className={styles.balance}>
+                      <LiskAmount val={this.props.account.balance}/>
+                      <small> LSK</small>
+                    </div>
+                    <CopyToClipboard value={this.props.account.address} className={`${styles.address} account-information-address`}/>
+                    {this.props.autoLog ? <div className={styles.timer}>
+                      {((this.props.account.expireTime &&
+                          this.props.account.expireTime !== 0) &&
+                          this.props.account.passphrase) ?
+                        <div>
+                          {this.props.t('Address timeout in')} <i> </i>
+                          <Countdown
+                            date={this.props.account.expireTime}
+                            renderer={CountDownTemplate}
+                            onComplete={() => {
+                              this.props.removeSavedAccountPassphrase();
+                            }
+                            }
+                          />
+                        </div> : <div></div>}
+                    </div>
+                      : <div className={styles.timer}>
+                        {this.props.account.passphrase ? '' : <span>
+                          <FontIcon value='locked' className={styles.lock}/> {this.props.t('Account locked!')}
+                        </span>
+                        }
+                      </div>
+                    }
+                  </div>
+                  <RelativeLink to='saved-accounts' className={styles.avatar}>
+                    <AccountVisual
+                      address={this.props.account.address}
+                      size={69} sizeS={40}
+                    />
+                  </RelativeLink>
+                  <div className={styles.menu}>
+                    <figure className={styles.iconCircle}>
+                      <RelativeLink className={`${styles.link} saved-accounts`}
+                        to='saved-accounts'><FontIcon value='more'/></RelativeLink>
+                    </figure>
+                  </div>
+                </div>
+              </PrivateWrapper>
+              {this.shouldShowActionButton() && <Link className={styles.login}
+                to='/'>
+                <ActionButton className={styles.button}>{this.props.t('Sign in')}</ActionButton>
+                <span className={styles.link}>
+                  {this.props.t('Sign in')} <FontIcon value='arrow-right'/>
+                </span>
+              </Link>
+              }
+            </div>
+          </div>
+        </div>
+        <div className={`${styles.searchBar}`}>
+          {this.shouldShowSearchBar() && <SearchBar/>}
+          {this.props.account.loading ?
+            null :
+            <Account peers={this.props.peers} t={this.props.t}/>}
+        </div>
+      </header>
+    );
+  }
+}
+
 
 export default Header;

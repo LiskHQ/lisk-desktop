@@ -1,0 +1,103 @@
+.willTransition {
+  &:not(.fadeIn):not(.fadeOut):not(.slideIn):not(.slideOut) {
+    display: none;
+  }
+
+  &.slideIn,
+  &.slideOut,
+  &.fadeIn,
+  &.fadeOut {
+    animation-duration: 400ms;
+    animation-fill-mode: forwards;
+  }
+
+  &.slideIn {
+    animation-name: slideIn;
+  }
+
+  &.slideOut {
+    animation-name: slideOut;
+  }
+
+  &.fadeIn {
+    animation-name: fadeIn;
+  }
+
+  &.fadeOut {
+    animation-name: fadeOut;
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    display: none;
+    transform: translateX(100px);
+  }
+
+  1% {
+    opacity: 0;
+    display: block;
+    transform: translateX(100px);
+  }
+
+  100% {
+    opacity: 1;
+    display: block;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  0% {
+    display: block;
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  99% {
+    display: block;
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+
+  100% {
+    display: none;
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    display: none;
+  }
+
+  1% {
+    opacity: 0;
+    display: block;
+  }
+
+  100% {
+    opacity: 1;
+    display: block;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    display: block;
+    opacity: 1;
+  }
+
+  99% {
+    display: block;
+    opacity: 0;
+  }
+
+  100% {
+    display: none;
+    opacity: 0;
+  }
+}

@@ -1,0 +1,48 @@
+@import './../app/variables.css';
+
+.wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  box-sizing: border-box;
+  background: var(--color-white);
+  box-shadow: var(--normal-shadow);
+  border-radius: 3px;
+  max-height: 100%;
+  flex-direction: column;
+  overflow: auto;
+  overflow-x: hidden;
+  margin: 0px;
+  height: var(--main-box-height);
+  -webkit-overflow-scrolling: touch;
+
+  & footer {
+    padding: 0 0 50px;
+    text-align: center;
+
+    & :global .subTitle {
+      margin-top: 20px;
+      font-size: var(--subtitle-font-size);
+      color: var(--color-grayscale-dark);
+      height: 22px;
+    }
+  }
+}
+
+@media (--medium-viewport) {
+  .wrapper {
+    min-height: calc(100vh - var(--m-menu-bar-height) - var(--m-menu-bar-height)); /* stylelint-disable-line */
+    background-color: var(--color-grayscale-mobile-background);
+    box-shadow: unset;
+  }
+}
+
+@media (--small-viewport) {
+  .wrapper {
+    min-height: calc(100vh - var(--s-menu-bar-height) - var(--s-menu-bar-height)); /* stylelint-disable-line */
+
+    & footer {
+      position: relative;
+    }
+  }
+}

@@ -1,0 +1,241 @@
+@import '../app/variables.css';
+
+:root {
+  --menu-background-color: var(--color-white);
+  --menu-item-active-gradient: linear-gradient(-27deg, #004aff 4%, #57afff 61%, #93f4fe 100%);
+  --menu-item-active-border-width: 7px;
+  --more-menu-color: var(--color-grayscale-medium);
+  --offcanvas-menu-border-color: var(--color-grayscale-light);
+  --more-menu-border-color: var(--color-grayscale-medium);
+  --read-more-font-size: 17px;
+  --read-more-icon-font-size: 65px;
+  --close-icon-font-size: 35px;
+}
+
+.sideBarWrapper {
+  text-align: center;
+}
+
+.aside {
+  transform: translateX(-100%);
+  opacity: 0.5;
+  transition: all ease 300ms;
+  transition-delay: 200ms;
+}
+
+:global(.appLoaded) .aside {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.logo {
+  margin: 40px 0 44px;
+  height: 60px;
+}
+
+.more {
+  color: var(--more-menu-color);
+  border-top: 1px solid var(--more-menu-border-color);
+  background: var(--menu-background-color);
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  padding: 20px 0 30px;
+  cursor: pointer;
+}
+
+.tab {
+  background: var(--menu-background-color);
+  text-align: center;
+  box-shadow: none;
+  width: 100% !important;
+  max-width: 100% !important;
+  border: none !important;
+  padding: 20px 10px !important;
+}
+
+.navigationContainer {
+  overflow: hidden;
+  margin-left: -2px;
+  flex: 0 1 auto;
+  flex-flow: row wrap;
+}
+
+.drawer {
+  width: 480px;
+  background: #fff;
+  max-width: 100%;
+
+  &.left {
+    border-right: none;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
+
+@media (max-height: 920px) {
+  .drawer.left {
+    display: block;
+    height: 100%;
+  }
+}
+
+.header {
+  align-items: center;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 40px 0 60px;
+  background: #fff;
+}
+
+.close {
+  font-size: var(--close-icon-font-size);
+  display: flex;
+  width: auto;
+  cursor: pointer;
+  color: var(--more-menu-color);
+}
+
+@media (--medium-viewport) {
+  .aside {
+    display: none;
+  }
+
+  .header {
+    padding: 0;
+  }
+
+  .close {
+    display: none;
+  }
+
+  .logo {
+    margin: 20px auto;
+    height: 42px;
+  }
+}
+
+.label {
+  padding: 4.5vh 10px; /* stylelint-disable-line */
+  font-size: var(--main-menu-font-size);
+  color: var(--color-black);
+  font-weight: bold;
+  font-family: var(--heading-font);
+  display: flex;
+  flex: 0 0 auto;
+  width: 50%;
+  text-align: center;
+  flex-grow: 1;
+  text-transform: capitalize;
+  border-right: 1px solid var(--offcanvas-menu-border-color);
+  border-bottom: 1px solid var(--offcanvas-menu-border-color);
+  background: #fff;
+  max-width: 50%;
+
+  &:nth-child(2n) {
+    border-right: none !important;
+  }
+
+  &:nth-child(1) {
+    border-top: 1px solid var(--offcanvas-menu-border-color);
+  }
+
+  &:nth-child(2) {
+    border-top: 1px solid var(--offcanvas-menu-border-color);
+  }
+
+  & > div {
+    width: 100%;
+
+    &:hover {
+      filter: brightness(1.1);
+    }
+  }
+
+  & span {
+    display: block;
+    margin: 10px 0 0;
+  }
+
+  & > .rippleWrapper {
+    display: none;
+  }
+}
+
+.navigationContainer .navigation {
+  padding-left: 0;
+  box-shadow: none;
+  margin-left: 2px;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.tabs nav {
+  overflow: hidden;
+}
+
+.pointer {
+  display: none;
+}
+
+.arrowContainer {
+  display: none;
+}
+
+.label.active {
+  position: relative;
+  background: white;
+  color: var(--color-black);
+  opacity: 1;
+
+  &::before {
+    position: absolute;
+    width: var(--menu-item-active-border-width);
+    height: 100%;
+    top: 0;
+    right: 0;
+    content: '';
+    display: block;
+    opacity: 0.8;
+    background-image: var(--menu-item-active-gradient);
+  }
+}
+
+.readMoreText {
+  font-size: var(--read-more-font-size);
+  font-weight: bold;
+  text-transform: capitalize;
+  font-family: 'gilroy', 'Open Sans', sans-serif;
+}
+
+.readMoreIcon {
+  font-size: var(--read-more-icon-font-size);
+  width: 100%;
+}
+
+@media (--medium-viewport) {
+  .sideBarWrapper {
+    display: none;
+  }
+}
+
+@media (--xSmall-viewport) {
+  .sideBarWrapper {
+    display: none;
+  }
+
+  .label {
+    padding: 25px 10px;
+  }
+
+  .label.active::before {
+    top: auto;
+    width: 100%;
+    bottom: 0;
+    height: 5px;
+  }
+}

@@ -1,20 +1,28 @@
 import { getAccount, transactions as getTransactions } from '../../utils/api/account';
-import { accountUpdated, accountLoggedIn } from '../../actions/account';
+import { accountUpdated } from '../../actions/account';
 import { transactionsUpdated } from '../../actions/transactions';
 import { activePeerUpdate } from '../../actions/peers';
 import { votesFetched } from '../../actions/voting';
 import actionTypes from '../../constants/actions';
-import { fetchAndUpdateForgedBlocks } from '../../actions/forging';
+import accountConfig from '../../constants/account';
 import { getDelegate } from '../../utils/api/delegate';
 import transactionTypes from '../../constants/transactionTypes';
 
-const updateTransactions = (store, peers, account) => {
-  const maxBlockSize = 25;
-  getTransactions(peers.data, account.address, maxBlockSize)
-    .then(response => store.dispatch(transactionsUpdated({
-      confirmed: response.transactions,
-      count: parseInt(response.count, 10),
-    })));
+const { lockDuration } = accountConfig;
+
+const updateTransactions = (store, peers) => {
+  const state = store.getState();
+  const { filter } = state.transactions;
+  const address = state.transactions.account
+    ? state.transactions.account.address
+    : state.account.address;
+
+  getTransactions({
+    activePeer: peers.data, address, limit: 25, filter,
+  }).then(response => store.dispatch(transactionsUpdated({
+    confirmed: response.transactions,
+    count: parseInt(response.count, 10),
+  })));
 };
 
 const hasRecentTransactions = txs => (
@@ -23,20 +31,12 @@ const hasRecentTransactions = txs => (
 );
 
 const updateAccountData = (store, action) => {
-  const { peers, account } = store.getState();
+  const { peers, account, transactions } = store.getState();
 
   getAccount(peers.data, account.address).then((result) => {
     if (result.balance !== account.balance) {
-      if (!action.data.windowIsFocused) {
+      if (!action.data.windowIsFocused || !hasRecentTransactions(transactions)) {
         updateTransactions(store, peers, account);
-      }
-      if (account.isDelegate) {
-        store.dispatch(fetchAndUpdateForgedBlocks({
-          activePeer: peers.data,
-          limit: 10,
-          offset: 0,
-          generatorPublicKey: account.publicKey,
-        }));
       }
     }
     store.dispatch(accountUpdated(result));
@@ -62,7 +62,7 @@ const delegateRegistration = (store, action) => {
   if (delegateRegistrationTx) {
     getDelegate(state.peers.data, { publicKey: state.account.publicKey })
       .then((delegateData) => {
-        store.dispatch(accountLoggedIn(Object.assign({},
+        store.dispatch(accountUpdated(Object.assign({},
           { delegate: delegateData.delegate, isDelegate: true })));
       });
   }
@@ -86,7 +86,10 @@ const votePlaced = (store, action) => {
 
 const passphraseUsed = (store, action) => {
   if (!store.getState().account.passphrase) {
-    store.dispatch(accountUpdated({ passphrase: action.data }));
+    store.dispatch(accountUpdated({ passphrase: action.data,
+      expireTime: Date.now() + lockDuration }));
+  } else {
+    store.dispatch(accountUpdated({ expireTime: Date.now() + lockDuration }));
   }
 };
 

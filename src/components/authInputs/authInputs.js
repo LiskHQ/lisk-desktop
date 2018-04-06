@@ -1,4 +1,5 @@
 import React from 'react';
+// eslint-disable-next-line import/no-named-as-default
 import PassphraseInput from '../passphraseInput';
 import { extractPublicKey } from '../../utils/api/account';
 
@@ -27,17 +28,23 @@ class AuthInputs extends React.Component {
   render() {
     return <span>
       {(!this.props.account.passphrase &&
-        <PassphraseInput label={this.props.t('Passphrase')}
+        <PassphraseInput label={this.props.t('Enter your 1st passphrase to confirm')}
           className='passphrase'
           error={this.props.passphrase.error}
           value={this.props.passphrase.value}
-          onChange={this.onChange.bind(this, 'passphrase')} />)}
+          onChange={this.onChange.bind(this, 'passphrase')}
+          columns={this.props.columns}
+          theme={this.props.theme}
+        />)}
       {(this.props.account.secondSignature &&
-        <PassphraseInput label={this.props.t('Second Passphrase')}
+        <PassphraseInput label={this.props.t('Enter your 2nd passphrase to confirm')}
           className='second-passphrase'
           error={this.props.secondPassphrase.error}
           value={this.props.secondPassphrase.value}
-          onChange={this.onChange.bind(this, 'secondPassphrase')} />)}
+          onChange={this.onChange.bind(this, 'secondPassphrase')}
+          columns={this.props.columns}
+          theme={this.props.theme}
+        />)}
     </span>;
   }
 }

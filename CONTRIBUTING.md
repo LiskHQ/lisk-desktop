@@ -24,6 +24,8 @@ Contributing to a project on Github is pretty straight forward. If this is you'r
 
 And that's it! Read the code available and apply your changes according to the issue you're working on! You're change should not break the existing code and should pass the tests. Start from the branch **development**,  create a new branch under the name of the issue and work in there.
 
+If you want to add some styles to a component please make sure that you follow our [css guide](/docs/CSS_GUIDE.md) rules.
+
 When you're done, submit a pull request and for one of the maintainers to check it out. We would let you know if there is any problem or any changes that should be considered.
 
 ### Tests

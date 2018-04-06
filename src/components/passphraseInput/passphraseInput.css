@@ -1,3 +1,12 @@
+@import '../app/variables.css';
+
+:root {
+  --icon-font-size: 22px;
+  --tab-inactive-color: --color-grayscale-dark;
+  --error-font-size-XL: 16px;
+  --error-font-size-L: 14px;
+}
+
 .wrapper {
   position: relative;
 }
@@ -7,16 +16,70 @@
   position: hidden;
 }
 
-.eyeIcon {
+.inputTypeToggle {
   position: absolute;
   right: 0;
-  bottom: 50%;
-  transform: translateY(50%);
-  line-height: 24px;
-  height: 24px;
+  font-size: 16px;
+  font-weight: var(--font-weight-semi-bold);
+  color: #2475b9 !important;
+  top: -45px;
   cursor: pointer;
+
+  & label {
+    text-transform: capitalize;
+  }
+
+  & .eyeIcon {
+    font-size: var(--icon-font-size);
+  }
 }
 
 .inputWrapper input {
   padding-right: 35px;
+  border-radius: 0;
+}
+
+.errorMessage {
+  color: var(--color-error);
+  height: 20px;
+  font-weight: var(--font-weight-semi-bold);
+  padding-top: 10px;
+}
+
+.error input {
+  color: var(--color-error) !important;
+}
+
+.partial input {
+  text-align: center;
+  border-radius: 0;
+}
+
+@media (--small-viewport) {
+  .inputTypeToggle {
+    top: 10px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .errorMessage {
+    padding-bottom: 10px;
+  }
+
+  .wrapper {
+    margin-top: 0;
+    padding-top: 40px;
+  }
+}
+
+@media (--large-viewport) {
+  .errorMessage {
+    font-size: var(--error-font-size-L);
+  }
+}
+
+@media (--xLarge-viewport) {
+  .errorMessage {
+    font-size: var(--error-font-size-XL);
+  }
 }

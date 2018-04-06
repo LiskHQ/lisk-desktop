@@ -1,0 +1,147 @@
+/*****************************************
+
+Please Read the guide line
+before adding any rules here
+
+# No component specific rule
+This file is inteded to solely include
+rules defines against tag names and global
+test styling, no component specific rule
+blongs to this file
+
+# Usecases
+Prefered is to use the HTML tag semantically
+but you can use @apply in any rules
+
+# class names
+Try not use nested rules and also prefer
+using classnames with :global to make them
+avaialble application-wide
+
+****************************************/
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
+
+@font-face {
+  font-family: 'gilroy';
+  src:
+    url('../../assets/fonts/gilroy/gilroy-bold.woff2') format('woff2'),
+    url('../../assets/fonts/gilroy/gilroy-bold.woff') format('woff'),
+    url('../../assets/fonts/gilroy/gilroy-bold.ttf')  format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'gilroy';
+  src:
+    url('../../assets/fonts/gilroy/gilroy-extra-bold.woff2') format('woff2'),
+    url('../../assets/fonts/gilroy/gilroy-extra-bold.woff') format('woff'),
+    url('../../assets/fonts/gilroy/gilroy-extra-bold.ttf')  format('truetype');
+  font-weight: bolder;
+  font-style: normal;
+}
+
+body {
+  font-family: var(--content-font);
+  font-weight: 300;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--heading-font);
+  font-weight: 500;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+}
+
+h3 {
+  font-size: var(--font-size-h3);
+}
+
+h4 {
+  font-size: var(--font-size-h4);
+}
+
+h5 {
+  font-size: var(--font-size-h5);
+  font-weight: normal;
+}
+
+h6 {
+  font-size: var(--font-size-h6);
+  font-weight: normal;
+}
+
+p,
+a,
+b,
+i,
+strong {
+  font-size: var(--paragraph-font-size-l);
+}
+
+strong {
+  font-weight: bolder;
+}
+
+small {
+  font-size: var(--font-size-small);
+}
+
+/********************
+    Directions
+********************/
+:global .text-center {
+  text-align: center;
+}
+
+input,
+textarea,
+select {
+  font-family: var(--content-font);
+}
+
+@media (--xLarge-viewport) {
+  h2 {
+    font-size: var(--font-size-h2-xl);
+  }
+}
+
+@media (--large-viewport) {
+  h2 {
+    font-size: var(--font-size-h2-l);
+  }
+}
+
+@media (--medium-viewport) {
+  h2 {
+    font-size: var(--font-size-h2-m);
+  }
+
+  h5 {
+    font-size: var(--font-size-h5-m);
+  }
+}
+
+@media (--small-viewport) {
+  h2 {
+    font-size: var(--font-size-h2-s);
+  }
+
+  h5 {
+    font-size: var(--font-size-h5-s);
+  }
+
+  p {
+    font-size: var(--paragraph-font-size-s);
+  }
+}

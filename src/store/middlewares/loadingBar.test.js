@@ -7,7 +7,7 @@ import actionType from '../../constants/actions';
 describe('LoadingBar middleware', () => {
   let store;
   let next;
-  const ignoredLoadingActionKeys = ['loader/status'];
+  const ignoredLoadingActionKeys = ['transactions'];
 
   beforeEach(() => {
     store = stub();

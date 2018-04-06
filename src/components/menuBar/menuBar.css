@@ -1,0 +1,79 @@
+@import '../app/variables.css';
+
+:root {
+  --menu-bar-padding: 20px;
+  --menu-bar-font-size-m: 24px;
+  --menu-bar-font-size-s: 18px;
+}
+
+.menuBar {
+  display: none;
+  z-index: 4 !important;
+}
+
+.openMenu {
+  z-index: 1000 !important;
+  box-shadow: none !important;
+}
+
+.icon {
+  font-size: 25px !important;
+  margin-top: 2px;
+  margin-left: 5px;
+
+  &.goBack {
+    margin-left: -5px;
+  }
+}
+
+@media (--medium-viewport) {
+  .menuBar {
+    position: fixed;
+    display: flex;
+    height: var(--m-menu-bar-height);
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.12), 0 -2px 24px 0 rgba(0, 0, 0, 0.24);
+    font-weight: bold;
+    font-size: var(--menu-bar-font-size-m);
+    font-family: var(--heading-font);
+    background-color: var(--color-white);
+    z-index: 1;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+  }
+
+  .menuButton {
+    display: flex;
+    padding: var(--menu-bar-padding);
+    cursor: pointer;
+    user-select: none;
+
+    & > * {
+      font-size: inherit;
+      vertical-align: middle;
+    }
+  }
+}
+
+@media (--small-viewport) {
+  .menuBar {
+    height: var(--s-menu-bar-height);
+    font-size: var(--menu-bar-font-size-s);
+  }
+
+  .setting {
+    display: none;
+  }
+
+  .icon {
+    margin-top: -2px;
+  }
+}
+
+@media (--xSmall-viewport) {
+  .setting {
+    display: flex;
+  }
+}

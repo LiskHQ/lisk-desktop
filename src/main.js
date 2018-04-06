@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { HashRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
+import { applyDeviceClass } from './utils/applyDeviceClass';
 import App from './components/app';
 // import history from './history';
 import store from './store';
@@ -19,6 +20,7 @@ if (env.production) {
 }
 
 const rootElement = document.getElementById('app');
+
 
 const renderWithRouter = Component =>
   <Provider store={store}>
@@ -37,3 +39,6 @@ if (module.hot) {
     ReactDOM.render(renderWithRouter(NextRootContainer), rootElement);
   });
 }
+
+applyDeviceClass(document.getElementsByTagName('html')[0], navigator);
+

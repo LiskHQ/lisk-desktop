@@ -2,7 +2,6 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
-import Lisk from 'lisk-js';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 import i18n from '../../i18n'; // initialized i18next instance
@@ -24,7 +23,7 @@ const delegateAccount = {
   address: '16313739661670634666L',
   balance: 1000e8,
   delegate: {
-    username: 'lisk-nano',
+    username: 'lisk-hub',
   },
 };
 
@@ -33,20 +32,14 @@ const withSecondSecretAccount = {
   address: '16313739661670634666L',
   balance: 1000e8,
   delegate: {
-    username: 'lisk-nano',
+    username: 'lisk-hub',
   },
   secondSignature: 1,
 };
 
 const props = {
   peers: {
-    data: Lisk.api({
-      name: 'Custom Node',
-      custom: true,
-      address: 'http://localhost:4000',
-      testnet: true,
-      nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
-    }),
+    data: {},
   },
   closeDialog: () => {},
   delegateRegistered: sinon.spy(),
@@ -151,9 +144,12 @@ describe('RegisterDelegate', () => {
       </Provider>);
     });
 
-    it('does not allow register as delegate for a delegate account', () => {
-      wrapper.find('.username input').simulate('change', { target: { value: 'sample_username' } });
-      expect(wrapper.find('.primary-button button').props().disabled).to.be.equal(true);
+    it('renders an InfoParagraph component', () => {
+      expect(wrapper.find('InfoParagraph')).to.have.length(1);
+    });
+
+    it('does not render the delegate registration form for registering', () => {
+      expect(wrapper.find('form')).to.have.length(0);
     });
   });
 });

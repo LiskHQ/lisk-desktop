@@ -2,7 +2,7 @@
 
 exports.config = {
   specs: [
-    'features/*.feature',
+    'test/e2e/*.feature',
   ],
 
   directConnect: true,
@@ -13,7 +13,7 @@ exports.config = {
   frameworkPath: require.resolve('protractor-cucumber-framework'),
 
   cucumberOpts: {
-    require: 'features/step_definitions/*.js',
+    require: 'test/e2e/step_definitions/*.js',
     tags: [],
     format: 'pretty',
     profile: false,
@@ -27,5 +27,9 @@ exports.config = {
     testnetPassphrase: process.env.TESTNET_PASSPHRASE,
     useTestnetPassphrase: false,
     network: 'customNode',
+    screenWidth: 1400,
+    screenHeight: 1300,
+    reportDir: './reports/',
+    reportFile: 'cucumber_report.json',
   },
 };

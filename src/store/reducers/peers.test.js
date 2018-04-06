@@ -17,7 +17,7 @@ describe('Reducer: peers(state, action)', () => {
       },
     };
 
-    const newState = { data: action.data };
+    const newState = { data: action.data, options: action.data.options };
     const changedState = peers(state, action);
     expect(changedState).to.deep.equal(newState);
   });
@@ -30,26 +30,6 @@ describe('Reducer: peers(state, action)', () => {
     };
 
     const newState = { status: action.data };
-    const changedState = peers(state, action);
-    expect(changedState).to.deep.equal(newState);
-  });
-
-  it('should return and empty state object if action is accountLoggedOut', () => {
-    const state = {
-      data: {
-        currentPeer: 'localhost',
-        port: 4000,
-        options: {
-          name: 'Custom Node',
-        },
-      },
-      status: { online: true },
-    };
-    const action = {
-      type: actionTypes.accountLoggedOut,
-    };
-
-    const newState = { status: {}, data: {} };
     const changedState = peers(state, action);
     expect(changedState).to.deep.equal(newState);
   });

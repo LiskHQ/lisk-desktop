@@ -50,7 +50,7 @@ describe('Offline middleware', () => {
 
     middleware(store)(next)(action);
     expect(store.dispatch).to.have.been.calledWith(errorToastDisplayed({
-      label: `Failed to connect to node ${peers.data.currentPeer}:${peers.data.port}`,
+      label: 'Failed to connect to node',
     }));
   });
 
@@ -74,7 +74,7 @@ describe('Offline middleware', () => {
       code: 'EPARSE',
     };
 
-    const expectedResult = `Failed to connect to node ${peers.data.currentPeer}:${peers.data.port} Make sure that you are using the latest version of Lisk Nano.`;
+    const expectedResult = 'Failed to connect to node Make sure that you are using the latest version of Lisk Hub.';
     middleware(store)(next)(action);
     expect(store.dispatch).to.have.been.calledWith(errorToastDisplayed({
       label: expectedResult,

@@ -8,9 +8,10 @@ import { I18nextProvider } from 'react-i18next';
 import i18n from '../../i18n'; // initialized i18next instance
 import App from './';
 import Login from '../login';
-import Transactions from '../transactions';
+import Transactions from '../transactionDashboard';
+import Search from '../search';
 import Voting from '../voting';
-import Forging from '../forging';
+import routes from '../../constants/routes';
 
 const fakeStore = configureStore();
 
@@ -27,12 +28,12 @@ const addRouter = Component => (props, path) =>
 
 const publicComponent = [
   { route: '/', component: Login },
+  { route: `${routes.explorer.path}${routes.search.path}`, component: Search },
 ];
 
 const privateComponent = [
-  { route: '/main/transactions', component: Transactions },
-  { route: '/main/voting', component: Voting },
-  { route: '/main/forging', component: Forging },
+  { route: `${routes.main.path}${routes.transaction.path}`, component: Transactions },
+  { route: `${routes.main.path}${routes.voting.path}`, component: Voting },
 ];
 
 describe('App', () => {
@@ -41,7 +42,11 @@ describe('App', () => {
     const store = fakeStore({
       account: {},
       dialog: {},
-      peers: {},
+      peers: { data: { options: {} } },
+      settings: {
+        autoLog: true,
+        advancedMode: true,
+      },
     });
     publicComponent.forEach(({ route, component }) => {
       it(`should render ${component.name} component at "${route}" route`, () => {
@@ -66,9 +71,6 @@ describe('App', () => {
     const store = fakeStore({
       account: {
         publicKey: '000',
-      },
-      forging: {
-        statics: {},
       },
       dialog: {},
       peers: {

@@ -1,0 +1,16 @@
+export default {
+  wallet: { path: '/transactions' },
+  account: { path: '/accounts' },
+  accountVisualDemo: { path: '/account-visual-demo' },
+  dashboard: { path: '/dashboard' },
+  search: { path: '/search' },
+  searchResult: { path: '/result' },
+  transaction: { path: '/transactions' },
+  login: { path: '/' },
+  addAccount: { path: '/add-account' },
+  register: { path: '/register' },
+  sidechains: { path: '/sidechains' },
+  voting: { path: '/voting' },
+  main: { path: '/main' },
+  explorer: { path: '/explorer' },
+};

@@ -1,0 +1,38 @@
+@import '../app/variables.css';
+
+.sliderInput {
+  & input[type='radio'],
+  & input[type='checkbox'] {
+    &:checked + label {
+      & .button {
+        left: 100%;
+        transform: translateX(-48px);
+      }
+    }
+  }
+
+  & label {
+    height: 48px;
+    line-height: 48px;
+    width: 93px;
+    background: #3c506b;
+    display: inline-block;
+  }
+
+  & span.circle {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    background: var(--gradient-action-orange);
+
+    &.goal,
+    &.begin {
+      background: transparent;
+    }
+
+    & span {
+      width: 100%;
+      line-height: 48px !important;
+    }
+  }
+}

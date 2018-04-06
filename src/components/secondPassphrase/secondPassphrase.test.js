@@ -4,18 +4,19 @@ import { mount } from 'enzyme';
 import { spy } from 'sinon';
 import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
+
+import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
 import SecondPassphrase from './secondPassphrase';
-import Fees from '../../constants/fees';
 
 describe('SecondPassphrase', () => {
   let wrapper;
   const peers = { data: {} };
-  const account = {};
+  const account = accounts.delegate;
+  const secPassphrase = accounts['delegate candidate'].passphrase;
   const store = configureMockStore([])({
     peers,
     account,
-    activePeerSet: () => {},
   });
   const options = {
     context: { store, i18n },
@@ -24,38 +25,48 @@ describe('SecondPassphrase', () => {
       i18n: PropTypes.object.isRequired,
     },
   };
-  const prop = {
+  const props = {
     account,
     peers,
+    closeDialog: () => {},
+    passphrase: account.passphrase,
     registerSecondPassphrase: spy(),
     t: key => key,
   };
 
-  beforeEach(() => {
-    wrapper = mount(<SecondPassphrase {...prop} />, options);
+  describe('Authenticated', () => {
+    beforeEach(() => {
+      wrapper = mount(<SecondPassphrase {...props} />, options);
+    });
+
+    it('renders MultiStep component', () => {
+      expect(wrapper.find('MultiStep')).to.have.length(1);
+    });
+
+    it('initially renders PassphraseInfo', () => {
+      expect(wrapper.find('Info')).to.have.length(1);
+    });
+
+    it('should call activePeerSet with network and passphrase', () => {
+      wrapper.find('MultiStep').props().finalCallback(secPassphrase);
+      expect(props.registerSecondPassphrase).to.have.been.calledWith({
+        activePeer: peers.data,
+        secondPassphrase: secPassphrase,
+        account,
+      });
+    });
   });
 
-  it('renders Passphrase component', () => {
-    expect(wrapper.find('Passphrase')).to.have.length(1);
-  });
+  describe('Not authenticated', () => {
+    const unAuthenticatedProps = Object.assign({}, props);
+    delete unAuthenticatedProps.passphrase;
 
-  it('should mount SecondPassphrase with appropriate properties', () => {
-    const props = wrapper.find('Passphrase').props();
-    expect(props.securityNote).to.be.equal('Losing access to this passphrase will mean no funds can be sent from this account.');
-    expect(props.useCaseNote).to.be.equal('your second passphrase will be required for all transactions sent from this account');
-    expect(props.confirmButton).to.be.equal('Register');
-    expect(props.fee).to.be.equal(Fees.setSecondPassphrase);
-    expect(props.keepModal).to.be.equal(true);
-    expect(typeof props.onPassGenerated).to.be.equal('function');
-  });
+    beforeEach(() => {
+      wrapper = mount(<SecondPassphrase {...unAuthenticatedProps} />, options);
+    });
 
-  it('should call registerSecondPassphrase if props.onPassGenerated is called', () => {
-    const props = wrapper.find('Passphrase').props();
-    props.onPassGenerated('sample passphrase');
-    expect(prop.registerSecondPassphrase).to.have.been.calledWith({
-      activePeer: peers.data,
-      secondPassphrase: 'sample passphrase',
-      account,
+    it('renders Authenticate component if the user is not authenticated yet', () => {
+      expect(wrapper.find('Authenticate')).to.have.length(1);
     });
   });
 });

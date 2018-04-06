@@ -1,0 +1,10 @@
+@import './mixin.css';
+@import '../app/variables.css';
+
+@mixin backgroundMaker 1.5, var(--color-primary-semi-dark), 21deg;
+
+@media (--medium-viewport) {
+  .stageStripes {
+    display: none;
+  }
+}

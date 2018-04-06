@@ -1,98 +1,150 @@
-import { IconButton } from 'react-toolbox/lib/button';
 import { translate } from 'react-i18next';
-import Input from 'react-toolbox/lib/input';
 import React from 'react';
-import Tooltip from 'react-toolbox/lib/tooltip';
-
-import { findSimilarWord, inDictionary } from '../../utils/similarWord';
-import { isValidPassphrase } from '../../utils/passphrase';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import { FontIcon } from '../fontIcon';
+import Input from '../toolbox/inputs/input';
+import { isValidPassphrase, getPassphraseValidationErrors } from '../../utils/passphrase';
 import styles from './passphraseInput.css';
-
-// eslint-disable-next-line new-cap
-const TooltipIconButton = Tooltip(IconButton);
+import keyCodes from './../../constants/keyCodes';
 
 class PassphraseInput extends React.Component {
-  constructor() {
-    super();
-    this.state = { inputType: 'password' };
+  constructor(props) {
+    super(props);
+    this.state = {
+      inputType: 'password',
+      isFocused: this.props.isFocused || false,
+      partialPassphraseError: [],
+      focus: 0,
+    };
   }
 
-  handleValueChange(value) {
-    let error;
+  setFocusedField(field) {
+    this.setState({ focus: field });
+  }
 
-    if (!value) {
-      error = this.props.t('Required');
-    } else if (!isValidPassphrase(value)) {
-      error = this.getPassphraseValidationError(value);
-    } else if (this.hasExtraWhitespace(value)) {
-      error = this.getPassphraseWhitespaceError(value);
+  handleValueChange(index, value) {
+    let insertedValue = value;
+    const insertedValueAsArray = insertedValue.split(' ');
+    let passphrase = this.props.value.split(' ');
+
+    if (insertedValueAsArray.length > 1) {
+      for (let i = 0; i < 12; i++) {
+        if (insertedValueAsArray[i]) {
+          passphrase[i] = insertedValueAsArray[i];
+          this.setState({ focus: i });
+        }
+      }
+      insertedValue = insertedValueAsArray[index];
     }
 
-    this.props.onChange(value, error);
+    passphrase[index] = insertedValue;
+    passphrase = passphrase.join(' ');
+
+    let error;
+
+    this.setState({ partialPassphraseError: [] });
+    if (!passphrase) {
+      error = this.props.t('Required');
+    } else if (!isValidPassphrase(passphrase)) {
+      error = this.getPassphraseValidationError(passphrase);
+    }
+    this.props.onChange(passphrase, error);
   }
 
   // eslint-disable-next-line class-methods-use-this
   getPassphraseValidationError(passphrase) {
-    const mnemonic = passphrase.trim().split(' ');
-    if (mnemonic.length < 12) {
-      return this.props.t('Passphrase should have 12 words, entered passphrase has {{length}}', { length: mnemonic.length });
-    }
+    const { partialPassphraseError, validationError } = getPassphraseValidationErrors(passphrase);
+    this.setState({ partialPassphraseError });
 
-    const invalidWord = mnemonic.find(word => !inDictionary(word.toLowerCase()));
-    if (invalidWord) {
-      if (invalidWord.length >= 2 && invalidWord.length <= 8) {
-        const validWord = findSimilarWord(invalidWord);
-        if (validWord) {
-          return this.props.t('Word "{{invalidWord}}" is not on the passphrase Word List. Most similar word on the list is "{{similarWord}}"', { invalidWord, similarWord: findSimilarWord(invalidWord) });
-        }
-      }
-      return this.props.t('Word "{{invalidWord}}" is not on the passphrase Word List.', { invalidWord });
-    }
-    return this.props.t('Passphrase is not valid');
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  hasExtraWhitespace(passphrase) {
-    const normalizedValue = passphrase.replace(/ +/g, ' ').trim();
-    return normalizedValue !== passphrase;
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  getPassphraseWhitespaceError(passphrase) {
-    if (passphrase.replace(/^\s+/, '') !== passphrase) {
-      return this.props.t('Passphrase contains unnecessary whitespace at the beginning');
-    } else if (passphrase.replace(/\s+$/, '') !== passphrase) {
-      return this.props.t('Passphrase contains unnecessary whitespace at the end');
-    } else if (passphrase.replace(/\s+/g, ' ') !== passphrase) {
-      return this.props.t('Passphrase contains extra whitespace between words');
-    }
-
-    return null;
+    return validationError;
   }
 
   toggleInputType() {
     this.setState({ inputType: this.state.inputType === 'password' ? 'text' : 'password' });
   }
 
+  keyAction({ event, value, index }) {
+    if (event.which === keyCodes.space || event.which === keyCodes.arrowRight) {
+      event.preventDefault();
+      this.setState({ focus: index + 1 });
+    }
+
+    if ((event.which === keyCodes.delete && !value) || event.which === keyCodes.arrowLeft) {
+      this.setState({ focus: index - 1 });
+    }
+  }
+
+  setFocused() {
+    if (this.props.onFocus) this.props.onFocus();
+    this.setState({ isFocused: true });
+  }
+
+  focusAndPaste(value) {
+    this.setFocused();
+    this.handleValueChange(0, value);
+  }
+
   render() {
+    const propsColumns = this.props.columns;
+    const xs = `col-xs-${propsColumns && propsColumns.xs ? propsColumns.xs : '6'}`;
+    const sm = `col-sm-${propsColumns && propsColumns.sm ? propsColumns.sm : '2'}`;
+    const md = `col-md-${propsColumns && propsColumns.md ? propsColumns.md : '2'}`;
+
+    const value = this.props.value.split(' ');
     return (
-      <div className={styles.wrapper}>
-        <Input label={this.props.label} required={true}
-          className={`${this.props.className} ${styles.inputWrapper}`}
-          error={this.props.error}
-          value={this.props.value || ''}
-          type={this.state.inputType}
-          theme={this.props.theme}
-          onChange={this.handleValueChange.bind(this)} />
-        <TooltipIconButton className={`show-passphrase-toggle ${styles.eyeIcon}`}
-          tooltipPosition='horizontal'
-          tooltip={this.state.inputType === 'password' ?
-            this.props.t('Show passphrase') :
-            this.props.t('Hide passphrase')}
-          icon={this.state.inputType === 'password' ? 'visibility' : 'visibility_off'}
-          onClick={this.toggleInputType.bind(this)}/>
+      <div onClick={this.setFocused.bind(this)}>
+        {this.state.isFocused
+          ?
+          <div className={styles.wrapper}>
+            <div
+              className={`show-passphrase-toggle ${styles.inputTypeToggle}`}
+              onClick={this.toggleInputType.bind(this)}>
+              <FontIcon className={styles.eyeIcon} value={this.state.inputType === 'password' ? 'hide' : 'show'}
+              /> <label>{this.state.inputType === 'password' ? this.props.t('Show passphrase') : this.props.t('Hide passphrase') }</label>
+            </div>
+            <div className={grid.row}>
+              {[...Array(12)].map((x, i) =>
+                <div className={`${grid[xs]} ${grid[sm]} ${grid[md]}`} key={i}>
+                  <Input
+                    shouldfocus={this.state.focus === i ? 1 : 0}
+                    placeholder={i === 0 ? this.props.t('Start here') : ''}
+                    className={`${this.props.className} ${styles.partial} ${this.state.partialPassphraseError[i] ? styles.error : ''}`}
+                    value={value[i] || ''}
+                    type={this.state.inputType}
+                    theme={this.props.theme}
+                    autoComplete='off'
+                    onFocus={(e) => {
+                      const val = e.target.value;
+                      e.target.value = '';
+                      e.target.value = val;
+
+                      this.setFocusedField(i);
+                    }}
+                    onBlur={this.setFocusedField.bind(this, null)}
+                    onChange={(val) => {
+                      this.handleValueChange(i, val);
+                    }}
+                    onKeyDown={(event) => {
+                      this.keyAction({ event, value: value[i], index: i });
+                    }}
+                    index={i}
+                  />
+                </div>,
+              )}
+            </div>
+            <div className={styles.errorMessage}>{this.props.error}</div>
+          </div>
+          :
+          <Input label={this.props.label}
+            className={`${this.props.className} ${styles.inputWrapper}`}
+            type={this.state.inputType}
+            onChange={this.focusAndPaste.bind(this)}
+          />
+        }
       </div>);
   }
 }
 
+export { PassphraseInput };
+// eslint-disable-next-line import/no-named-as-default
 export default translate()(PassphraseInput);

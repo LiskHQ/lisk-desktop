@@ -1,13 +1,14 @@
 import React from 'react';
 import { translate } from 'react-i18next';
-import { TooltipWrapper } from '../timestamp';
 import styles from './transactions.css';
-import ClickToSend from '../clickToSend';
 
 const TransactionType = (props) => {
-  const t = props.t;
+  const { t } = props;
   let type;
   switch (props.type) {
+    case 0:
+      type = props.senderId === props.recipientId ? t('Account initialization') : false;
+      break;
     case 1:
       type = t('Second Signature Creation');
       break;
@@ -15,7 +16,7 @@ const TransactionType = (props) => {
       type = t('Delegate Registration');
       break;
     case 3:
-      type = t('Vote');
+      type = t('Vote', { context: 'noun' });
       break;
     case 4:
       type = t('Multisignature Creation');
@@ -36,9 +37,7 @@ const TransactionType = (props) => {
   const address = props.address !== props.senderId ? props.senderId : props.recipientId;
   const template = type ?
     <span className={styles.smallButton}>{type}</span> :
-    <ClickToSend recipient={address} className={`from-to ${styles.ordinaryText}`} >
-      <TooltipWrapper tooltip={t('Send to this address')}>{address}</TooltipWrapper>
-    </ClickToSend>;
+    <span className={styles.ordinaryText}>{address}</span>;
   return template;
 };
 

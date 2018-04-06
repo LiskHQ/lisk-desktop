@@ -1,0 +1,72 @@
+@import '../../../app/variables.css';
+
+@define-mixin buttonBasics {
+  width: 250px;
+  max-width: 100%;
+  border-radius: 3px;
+  text-transform: capitalize;
+  font-weight: var(--font-weight-bold);
+  font-family: var(--content-font) !important;
+  transition: none !important;
+
+  &:disabled {
+    background: none !important;
+    color: var(--color-grayscale-light) !important;
+    box-shadow: 0 0 0 2px var(--color-grayscale-light);
+  }
+}
+
+@define-mixin buttonSecondary--blue {
+  background: none !important;
+  color: var(--color-primary-medium) !important;
+  box-shadow: 0 0 0 2px var(--color-primary-medium);
+
+  &:hover {
+    color: var(--color-white) !important;
+    background: var(--color-primary-medium) !important;
+  }
+}
+
+@define-mixin buttonPrimary {
+  color: var(--color-white) !important;
+  background: var(--gradient-action-orange);
+
+  &:hover {
+    background: var(--color-action-medium) !important;
+  }
+}
+
+@define-mixin buttonSecondary--light {
+  background: none !important;
+  color: var(--color-white) !important;
+  box-shadow: 0 0 0 2px var(--color-white);
+
+  &:disabled {
+    color: var(--color-grayscale-light) !important;
+    box-shadow: 0 0 0 2px var(--color-grayscale-light);
+  }
+
+  &:hover {
+    color: var(--color-black) !important;
+    background-color: var(--color-white) !important;
+  }
+}
+
+@define-mixin buttonTertiary {
+  color: var(--color-white) !important;
+  background: var(--gradient-tertiary);
+
+  &:hover {
+    background: var(--color-tertiary-medium) !important;
+  }
+}
+
+@define-mixin buttonAction {
+  color: var(--color-white) !important;
+  background: var(--gradient-action-blue);
+  width: 140px;
+
+  &:hover {
+    background: var(--gradient-action-blue-hover) !important;
+  }
+}

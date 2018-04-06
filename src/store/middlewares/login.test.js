@@ -1,22 +1,19 @@
-import Lisk from 'lisk-js';
 import { expect } from 'chai';
 import { spy, stub } from 'sinon';
+import accounts from '../../../test/constants/accounts';
 import middleware from './login';
 import actionTypes from '../../constants/actions';
 import * as accountApi from '../../utils/api/account';
 import * as delegateApi from '../../utils/api/delegate';
+import networks from '../../constants/networks';
 
 describe('Login middleware', () => {
   let store;
   let next;
-  const passphrase = 'wagon stock borrow episode laundry kitten salute link globe zero feed marble';
-  const activePeer = Lisk.api({
-    name: 'Custom Node',
-    custom: true,
-    address: 'http://localhost:4000',
-    testnet: true,
-    nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
-  });
+  let accountApiMock;
+  let delegateApiMock;
+  const { passphrase } = accounts.genesis;
+  const activePeer = { options: { code: networks.mainnet } };
   const activePeerSetAction = {
     type: actionTypes.activePeerSet,
     data: {
@@ -33,8 +30,17 @@ describe('Login middleware', () => {
         data: {},
       },
       account: {},
+      settings: { autoLog: true },
     });
     store.dispatch = spy();
+
+    accountApiMock = stub(accountApi, 'getAccount').returnsPromise();
+    delegateApiMock = stub(delegateApi, 'getDelegate').returnsPromise();
+  });
+
+  afterEach(() => {
+    accountApiMock.restore();
+    delegateApiMock.restore();
   });
 
   it(`should just pass action along for all actions except ${actionTypes.activePeerSet}`, () => {
@@ -55,19 +61,16 @@ describe('Login middleware', () => {
   });
 
   it(`should fetch account and delegate info on ${actionTypes.activePeerSet} action (non delegate)`, () => {
-    const accountApiMock = stub(accountApi, 'getAccount').returnsPromise().resolves({ success: true, balance: 0 });
-    const delegateApiMock = stub(delegateApi, 'getDelegate').returnsPromise().rejects({ success: false });
+    accountApiMock.resolves({ success: true, balance: 0 });
+    delegateApiMock.rejects({ success: false });
 
     middleware(store)(next)(activePeerSetAction);
     expect(store.dispatch).to.have.been.calledWith();
-
-    accountApiMock.restore();
-    delegateApiMock.restore();
   });
 
-  it.skip(`should fetch account and delegate info on ${actionTypes.activePeerSet} action (delegate)`, () => {
-    const accountApiMock = stub(accountApi, 'getAccount').returnsPromise().resolves({ success: true, balance: 0 });
-    const delegateApiMock = stub(delegateApi, 'getDelegate').returnsPromise().resolves({
+  it(`should fetch account and delegate info on ${actionTypes.activePeerSet} action (delegate)`, () => {
+    accountApiMock.resolves({ success: true, balance: 0 });
+    delegateApiMock.resolves({
       success: true,
       delegate: { username: 'TEST' },
       username: 'TEST',
@@ -75,9 +78,6 @@ describe('Login middleware', () => {
 
     middleware(store)(next)(activePeerSetAction);
     expect(store.dispatch).to.have.been.calledWith();
-
-    accountApiMock.restore();
-    delegateApiMock.restore();
   });
 });
 

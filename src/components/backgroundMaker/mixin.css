@@ -1,0 +1,126 @@
+@define-mixin backgroundMaker $height-factor, $background-color, $skew {
+  .stageStripe,
+  .stageStripes {
+    position: absolute;
+  }
+
+  .stageStripes {
+    background-color: $background-color;
+    background-image: linear-gradient(109deg, #00335d 0%, #001a56 100%);
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;
+    transform: skewY($skew) translate3d(0, 0, 0);
+    transform-origin: right top;
+
+    & :nth-child(1) {
+      background-image: linear-gradient(4deg, #002759 5%, #002667 87%);
+      opacity: 1;
+      top: rem(calc($height-factor * 158));
+      height: rem(calc($height-factor * 3));
+      width: calc($height-factor * 41%);
+      right: -1.66666%;
+    }
+
+    & :nth-child(2) {
+      background-image: linear-gradient(180deg, #003986 1%, #00305c 95%);
+      opacity: 0.8;
+      top: rem(calc($height-factor * 250));
+      height: rem(calc($height-factor * 40));
+      width: calc($height-factor * 101.66666%);
+      right: -1.66666%;
+    }
+
+    & :nth-child(3) {
+      background-image: linear-gradient(-44deg, #0057b8 0%, #003061 98%);
+      opacity: 1;
+      top: rem(calc($height-factor * 290));
+      height: rem(calc($height-factor * 3));
+      width: calc($height-factor * 71%);
+      right: -1.66666%;
+    }
+
+    & :nth-child(4) {
+      background-image: linear-gradient(180deg, #003986 1%, #00305c 95%);
+      opacity: 0.8;
+      top: rem(calc($height-factor * 293));
+      height: rem(calc($height-factor * 40));
+      width: calc($height-factor * 101.66666%);
+      right: -1.66666%;
+    }
+
+    & :nth-child(5) {
+      background-image: linear-gradient(243deg, rgba(0, 28, 86, 0) 6%, rgba(0, 36, 88, 0.18) 43%, #0b3b67 73%, #005ea0 99%);
+      opacity: 1;
+      top: rem(calc($height-factor * 413));
+      height: rem(calc($height-factor * 230));
+      width: calc($height-factor * 71%);
+      left: -1.66666%;
+    }
+
+    & :nth-child(6) {
+      background-image: linear-gradient(243deg, rgba(0, 0, 0, 0) 6%, #002e5b 64%, rgba(0, 0, 0, 0) 77%, rgba(0, 0, 0, 0) 98%);
+      opacity: 0.8;
+      top: rem(calc($height-factor * 454));
+      height: rem(calc($height-factor * 190));
+      width: calc($height-factor * 66%);
+      left: -1.66666%;
+    }
+
+    & :nth-child(7) {
+      background-image: linear-gradient(-120deg, #003767 19%, #002e5d 30%, #00285a 45%, rgba(0, 38, 103, 0.3) 90%);
+      opacity: 1;
+      top: rem(calc($height-factor * 433));
+      height: rem(calc($height-factor * 4));
+      width: calc($height-factor * 31%);
+      right: -1.66666%;
+    }
+
+    & :nth-child(8) {
+      background-image: linear-gradient(-120deg, #003767 19%, #002e5d 30%, #00285a 45%, rgba(0, 38, 103, 0.3) 90%);
+      opacity: 1;
+      top: rem(calc($height-factor * 533));
+      height: rem(calc($height-factor * 4));
+      width: calc($height-factor * 34%);
+      right: -1.66666%;
+    }
+
+    & :nth-child(9) {
+      background-image: linear-gradient(180deg, rgba(0, 83, 140, 0.3) 11%, #00266f 87%);
+      opacity: 0.6;
+      top: rem(calc($height-factor * 780));
+      height: rem(calc($height-factor * 220));
+      width: calc($height-factor * 101.66666%);
+      left: -1.66666%;
+    }
+
+    & :nth-child(10) {
+      background-image: linear-gradient(106deg, rgba(0, 96, 156, 0.3) 11%, #004880 19%, rgba(0, 0, 0, 0) 87%);
+      opacity: 0.8;
+      top: rem(calc($height-factor * 780));
+      height: rem(calc($height-factor * 60));
+      width: calc($height-factor * 41%);
+      left: -1.66666%;
+    }
+
+    & :nth-child(11) {
+      background-image: linear-gradient(29deg, #007dbb 15%, #00417c 38%, #003372 66%, rgba(0, 0, 0, 0) 100%);
+      opacity: 0.8;
+      top: rem(calc($height-factor * 870));
+      height: rem(calc($height-factor * 10));
+      width: calc($height-factor * 51%);
+      left: -1.66666%;
+    }
+
+    & :nth-child(12) {
+      background-image: linear-gradient(16deg, rgba(0, 0, 0, 0) 19%, #004780 29%, #00437d 39%, #003877 61%, #005c97 100%);
+      opacity: 0.8;
+      top: rem(calc($height-factor * 800));
+      height: rem(calc($height-factor * 5));
+      width: calc($height-factor * 51%);
+      right: -1.66666%;
+    }
+  }
+}
+

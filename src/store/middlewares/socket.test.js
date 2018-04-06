@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import io from './../../utils/socketShim';
+import io from 'socket.io-client';
 import middleware from './socket';
 import actionTypes from '../../constants/actions';
 import { activePeerUpdate } from '../../actions/peers';
@@ -62,11 +62,25 @@ describe('Socket middleware', () => {
     expect(io.connect().close).to.have.been.calledWith();
     expect(store.dispatch).to.not.have.been.calledWith(activePeerUpdate({ online: false }));
   });
+  // it depends on actionTypes.accountLoggedOut in test above that sets connection to null
+  it('should not dispatch any action then there is no connection', () => {
+    middleware(store)(next)({ type: actionTypes.accountLoggedOut });
+    expect(io.connect().close).to.not.have.been.calledWith();
+    expect(store.dispatch).to.not.have.been.calledWith(activePeerUpdate({ online: false }));
+  });
 
   it('should dispatch online event on reconnect', () => {
     middleware(store)(next)({ type: actionTypes.accountLoggedIn });
     socketCallbacks.reconnect();
     expect(store.dispatch).to.have.been.calledWith(activePeerUpdate({ online: true }));
+  });
+
+  it(`should dispatch ${actionTypes.accountLoggedIn} with https protocol`, () => {
+    store.getState = () => ({ ...store,
+      peers: { data: { options: { ssl: true, address: 'localhost:4000' } } },
+    });
+    middleware(store)(next)({ type: actionTypes.accountLoggedIn });
+    expect(store.dispatch).to.not.have.been.calledWith(activePeerUpdate({ online: true }));
   });
 
   it('should dispatch offline event on disconnect', () => {

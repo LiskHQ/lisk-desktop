@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Button from 'react-toolbox/lib/button';
+import { PrimaryButton } from '../toolbox/buttons/button';
 import { fromRawLsk } from '../../utils/lsk';
 import styles from './pricedButton.css';
 
@@ -19,9 +19,8 @@ export const PricedButtonComponent = ({
             }
           </span>)
       }
-      <Button
+      <PrimaryButton
         label={label}
-        primary={true}
         raised={true}
         type={type || 'button'}
         className={`next-button ${customClassName}`}

@@ -1,0 +1,139 @@
+@import './../app/variables.css';
+
+.search {
+  text-align: center;
+  padding: 0px 15vh; /* stylelint-disable-line */
+
+  & .wrapper {
+    margin: auto;
+    height: 100px;
+    width: 100%;
+
+    & .input {
+      margin-bottom: 40px;
+      position: relative;
+
+      & .button {
+        display: block;
+        position: absolute;
+        right: 0;
+        top: 34px;
+        color: var(--color-primary-standard);
+        font-weight: var(--font-weight-bold);
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+      & .icon {
+        font-size: 29px;
+      }
+    }
+
+    & .button {
+      display: none;
+    }
+
+    & .subTitle {
+      line-height: 26px;
+      color: var(--color-grayscale-medium);
+    }
+  }
+
+  & .recent {
+    padding: 0px;
+    line-height: 32px;
+    color: var(--color-grayscale-medium);
+    width: max-content;
+    margin: auto;
+
+    & .item {
+      list-style: none;
+    }
+
+    & .clickable {
+      cursor: pointer;
+      color: var(--color-primary-standard);
+    }
+  }
+
+  & input {
+    font-size: 32px !important;
+    color: var(--color-primary-standard);
+    font-family: var(--heading-font);
+    text-align: center;
+    line-height: 32px;
+    padding-right: 90px;
+    padding-left: 90px;
+    border-radius: 0;
+  }
+
+  & input::placeholder {
+    font-size: 30px;
+    font-family: var(--content-font);
+    color: var(--color-grayscale-medium);
+    font-weight: 200;
+    letter-spacing: 0;
+    line-height: 30px;
+  }
+}
+
+@media (--xLarge-viewport) {
+  .search {
+    & .wrapper {
+      & .subTitle {
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+@media (--medium-viewport) {
+  .search {
+    padding: 0px 6vh; /* stylelint-disable-line */
+  }
+}
+
+@media (--small-viewport) {
+  .search {
+    padding: 0px 4vh; /* stylelint-disable-line */
+
+    & .wrapper {
+      height: unset;
+
+      & .input {
+        & .button {
+          display: none;
+        }
+      }
+
+      & .button {
+        display: block;
+        margin: 0px auto 15px;
+        width: 100%;
+        max-width: 300px;
+      }
+
+      & .subTitle {
+        font-size: 14px;
+      }
+    }
+
+    & .recent {
+      font-size: 14px;
+    }
+
+    & input {
+      font-size: 24px !important;
+      padding-right: 0px;
+      padding-left: 0px;
+    }
+
+    & input::placeholder {
+      font-size: 16px;
+    }
+  }
+
+  .resultWrapper {
+    padding-top: var(--s-top-bar-height);
+  }
+}

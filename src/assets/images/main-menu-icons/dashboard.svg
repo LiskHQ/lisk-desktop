@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="65px" height="46px" viewBox="0 0 65 46" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 2</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="17.803138%" y1="20.1690102%" x2="87.719972%" y2="86.7395469%" id="linearGradient-1">
+            <stop stop-color="#004AFF" offset="0%"></stop>
+            <stop stop-color="#93F4FE" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="46.55599%" y1="-63.7484464%" x2="46.55599%" y2="100%" id="linearGradient-2">
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#82F0FC" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="19.4762866%" y1="88.4126955%" x2="86.0468234%" y2="18.4958616%" id="linearGradient-3">
+            <stop stop-color="#004AFF" offset="0%"></stop>
+            <stop stop-color="#93F4FE" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Sidebar-Definition" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-1337.000000, -396.000000)">
+        <g id="Group-6-Copy" transform="translate(1288.000000, 110.000000)">
+            <g id="Group-34-Copy-4">
+                <g id="Group-14-Copy-5" transform="translate(0.000000, 256.000000)">
+                    <g id="Dashboard" transform="translate(39.000000, 30.000000)">
+                        <g id="Group-2" transform="translate(10.000000, 0.000000)">
+                            <rect id="Rectangle-2-Copy-5" fill="url(#linearGradient-1)" opacity="0.398720562" transform="translate(35.000000, 15.000000) rotate(-90.000000) translate(-35.000000, -15.000000) " x="20" y="-7" width="30" height="44"></rect>
+                            <rect id="Rectangle-2-Copy-5" fill="url(#linearGradient-2)" transform="translate(22.000000, 23.000000) rotate(-90.000000) translate(-22.000000, -23.000000) " x="7" y="1" width="30" height="44"></rect>
+                            <rect id="Rectangle-2-Copy-5" fill="url(#linearGradient-3)" opacity="0.700000048" transform="translate(43.000000, 31.000000) rotate(-90.000000) translate(-43.000000, -31.000000) " x="28" y="9" width="30" height="44"></rect>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

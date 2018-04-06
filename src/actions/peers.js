@@ -4,15 +4,39 @@ import actionTypes from '../constants/actions';
 import { getNethash } from './../utils/api/nethash';
 import { errorToastDisplayed } from './toaster';
 import netHashes from '../constants/netHashes';
+import networks from '../constants/networks';
 
 const peerSet = (data, config) => ({
   data: Object.assign({
     passphrase: data.passphrase,
     publicKey: data.publicKey,
     activePeer: Lisk.api(config),
+    noSavedAccounts: data.noSavedAccounts,
   }),
   type: actionTypes.activePeerSet,
 });
+
+const pickMainnetNode = () => {
+  const nodes = [
+    'hub21.lisk.io',
+    'hub22.lisk.io',
+    'hub23.lisk.io',
+    'hub24.lisk.io',
+    'hub25.lisk.io',
+    'hub26.lisk.io',
+    'hub27.lisk.io',
+    'hub28.lisk.io',
+    'hub31.lisk.io',
+    'hub32.lisk.io',
+    'hub33.lisk.io',
+    'hub34.lisk.io',
+    'hub35.lisk.io',
+    'hub36.lisk.io',
+    'hub37.lisk.io',
+    'hub38.lisk.io',
+  ];
+  return nodes[Math.floor(Math.random() * nodes.length) % nodes.length];
+};
 
 /**
  * Returns required action object to set
@@ -29,6 +53,10 @@ export const activePeerSet = data =>
       return reg.test(url) ? url : `http://${url}`;
     };
     const config = data.network || {};
+    if (config.code === networks.mainnet.code) {
+      config.node = pickMainnetNode();
+    }
+
 
     if (config.address) {
       const { hostname, port, protocol } = new URL(addHttp(config.address));
@@ -48,7 +76,9 @@ export const activePeerSet = data =>
         }
         dispatch(peerSet(data, config));
       }).catch(() => {
-        dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node') }));
+        if (!data.noSavedAccounts) {
+          dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node') }));
+        }
       });
     } else {
       dispatch(peerSet(data, config));

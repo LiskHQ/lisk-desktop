@@ -1,5 +1,5 @@
 .spinner {
-  width: 40px;
+  width: 24px;
   text-align: center;
   display: inline-block;
 }
@@ -7,32 +7,30 @@
 .bounce1,
 .bounce2,
 .bounce3 {
-  width: 8px;
-  height: 8px;
-  background-color: #aaa;
+  width: 3px;
+  height: 3px;
+  margin: 1px;
   border-radius: 100%;
   display: inline-block;
-  animation: sk-bouncedelay 1400ms infinite ease-in-out both;
+  animation: changeColor 1400ms infinite ease-in-out both;
 }
 
 .bounce1 {
-  animation-delay: -320ms;
+  animation-delay: -6400ms;
 }
 
 .bounce2 {
-  animation-delay: -160ms;
+  animation-delay: -320ms;
 }
 
-@keyframes sk-bouncedelay {
+@keyframes changeColor {
   0%,
   80%,
   100% {
-    -webkit-transform: scale(0.5);
-    transform: scale(0.5);
+    background-color: #37516a;
   }
 
   40% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
+    background-color: #c9dae5;
   }
 }

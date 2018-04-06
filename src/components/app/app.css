@@ -1,53 +1,107 @@
-@import '../../assets/fonts/roboto/style.css';
-@import '../../assets/fonts/roboto-mono/style.css';
-@import '../../assets/fonts/material-design-icons/style.css';
+@import './variables.css';
+@import './global.css';
+@import './type.css';
 
 body {
   margin: 0;
   padding: 0;
   width: 100%;
-  background-color: #eee;
 }
 
-.body-wrapper {
-  flex: 1 1 80%;
-  max-width: 100%;
-  max-height: 100%;
-  box-sizing: border-box;
-  margin: 0 auto;
-  font-family: roboto;
+.bodyWrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  align-items: center;
+  display: flex;
+
+  & > section {
+    width: 100%;
+    padding-left: calc(var(--sidebar-width) + 24px);
+    padding-right: 24px;
+    opacity: 0;
+    transition: all ease 250ms;
+  }
+
+  &.loaded > section {
+    opacity: 1;
+  }
+
+  & > aside {
+    position: fixed;
+    width: var(--sidebar-width);
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: var(--color-white);
+  }
 }
 
 .hasMarginBottom {
   margin-bottom: 20px;
 }
 
+/* move to type */
 .text-center {
   text-align: center;
 }
 
-:global .material-icons {
-  font-size: 24px !important;
+.mainBox {
+  margin: 0 auto;
+  max-width: var(--main-box-width);
 }
 
-:global .box {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
-  background-color: #fff;
-  padding: 16px;
-  box-sizing: border-box;
+@media (--medium-viewport) {
+  body {
+    background-color: var(--color-grayscale-mobile-background);
+    margin-top: var(--header-height-m);
+  }
 
-  &.noPaddingBox {
-    padding: 16px 0;
+  .bodyWrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    display: flex;
+
+    & > section {
+      padding: 0;
+    }
   }
 }
 
-:global .hasPaddingRow {
-  padding: 0 16px;
+@media (--xLarge-viewport) {
+  body {
+    font-size: 16px;
+  }
+
+  .bodyWrapper {
+    & > section {
+      padding-left: calc(var(--sidebar-width-xl) + 24px);
+    }
+
+    & > aside {
+      width: var(--sidebar-width-xl);
+    }
+  }
 }
 
-:global .verticalScroll {
-  overflow-x: auto;
+@media (--large-viewport) {
+  body {
+    font-size: 15px;
+  }
+}
+
+@media (--small-viewport) {
+  body {
+    margin-top: var(--header-height-s);
+  }
+}
+
+@media (--xSmall-viewport) {
+  body {
+    font-size: 14px;
+  }
 }

@@ -1,102 +1,71 @@
-.table {
-  & :global thead th:first-child {
-    display: none !important;
+@import '../app/variables.css';
+
+:root {
+  --submit-button-height: 55px;
+  --filters-height: 55px;
+}
+
+.wrapper {
+  width: 100%;
+}
+
+@media (--medium-viewport) {
+  .wrapper {
+    margin: 0;
+
+    & > section {
+      width: 100%;
+      height: calc(100vh - var(--submit-button-height) - var(--header-height-m) - var(--footer-height-m)); /* stylelint-disable-line */
+      position: relative;
+    }
+
+    & > aside {
+      position: fixed;
+      z-index: 2;
+      left: 0;
+      bottom: var(--footer-height-m);
+      width: 100%;
+      max-height: 100%;
+      height: 95px;
+    }
+  }
+
+  .hasLayover {
+    & :global(.delegate-list-box) {
+      overflow: hidden;
+      opacity: 0;
+    }
+
+    & aside {
+      height: 100%;
+      height: calc(100% - var(--header-height-m) - var(--footer-height-m));
+    }
+  }
+
+  .wrapper:not(.hasLayover) aside > div {
+    background-color: transparent;
   }
 }
 
-.searchBox {
-  position: relative;
-}
+@media (--small-viewport) {
+  .wrapper {
+    & > section {
+      height: calc(100vh - var(--submit-button-height) - var(--header-height-s) - var(--footer-height-s)); /* stylelint-disable-line */
+    }
 
-.searchIcon {
-  position: absolute;
-  top: 15px;
-  right: 10px;
-  color: rgba(0, 0, 0, 0.38);
-}
+    & > aside {
+      bottom: var(--footer-height-s);
+    }
+  }
 
-.field {
-  margin-bottom: 0 !important;
-}
-
-.row {
-  &:hover {
-    background: #fff;
+  .hasLayover aside {
+    height: calc(100% - var(--header-height-s) - var(--footer-height-s));
   }
 }
 
-.upVoteRow {
-  background-color: rgb(226, 238, 213) !important;
-}
-
-.downVoteRow {
-  background-color: rgb(255, 228, 220) !important;
-}
-
-.votedRow {
-  background-color: #d6f0ff !important;
-}
-
-.pendingRow {
-  background-color: #eaeae9 !important;
-}
-
-.actionBar {
-  margin-top: 9px;
-  display: inline-block;
-}
-
-.votesMenuButton {
-  margin-right: 16px;
-  margin-top: 8px;
-
-  & :global span {
-    vertical-align: top;
-    line-height: 24px;
-    margin-left: 6px;
+@media (max-width: 1025px) {
+  .votingBox {
+    flex-basis: 100%;
+    max-width: 100%;
   }
-}
-
-.voted {
-  color: #7cb342;
-}
-
-.unvoted {
-  color: #c62828;
-}
-
-/* react toolbar overwroght */
-.input {
-  margin-top: -10px;
-}
-
-.menuItem {
-  flex-direction: row-reverse;
-  width: 241px;
-}
-
-.icon {
-  text-align: right;
-  width: auto;
-}
-
-.menuInner {
-  height: 306px;
-  overflow-y: auto;
-}
-
-.button {
-  width: auto;
-  margin-top: 18px;
-  margin-right: 16px;
-}
-
-.rotated {
-  transform: rotate(45deg);
-}
-
-.voteButton {
-  color: #000 !important;
-  position: relative;
-  top: 3px;
 }

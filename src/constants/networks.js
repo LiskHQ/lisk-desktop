@@ -1,4 +1,4 @@
-module.exports = {
+const networks = {
   mainnet: { // network name translation t('Mainnet');
     name: 'Mainnet',
     ssl: true,
@@ -19,3 +19,6 @@ module.exports = {
     code: 2,
   },
 };
+
+networks.default = networks[window.localStorage && window.localStorage.getItem('defaultNetwork')] || networks.mainnet;
+module.exports = networks;

@@ -9,7 +9,11 @@ const mapDispatchToProps = dispatch => ({
   activePeerSet: data => dispatch(activePeerSet(data)),
 });
 
+const mapStateToProps = state => ({
+  account: state.account,
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(translate()(Register));

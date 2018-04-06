@@ -1,0 +1,56 @@
+@import './variables.css';
+
+/*****************************************
+
+Please Read the guide line
+before adding any rules here
+
+# No component specific rule
+This file is intended to solely include
+global/common rules, every rule added here
+must be used at least in 2 different
+components.
+
+# Usecases
+Rules defined here must be related
+to positioning and visibility or the overal
+behaviour of the application e.g. scrolling
+or text selection color.
+
+# Avoid !important
+Please avoid using !important since it will
+result in many compulsory !important usages
+all over the application
+
+# Use with :global
+As name of the file suggests, The rules
+defined here must initiate with :global in
+order to be available application wide
+
+****************************************/
+
+:global .hidden {
+  position: absolute;
+  visibility: hidden;
+}
+
+:global .boxPadding {
+  padding: 0px 30px;
+}
+
+@media (--medium-viewport) {
+  :global body.contentFocused {
+    margin-top: 0;
+
+    & .menuBar,
+    & .mainHeader {
+      display: none;
+    }
+  }
+}
+
+@media (--small-viewport) {
+  :global .boxPadding {
+    padding: 0px 20px;
+  }
+}

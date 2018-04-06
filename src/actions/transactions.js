@@ -11,6 +11,15 @@ export const transactionAdded = data => ({
 });
 
 /**
+ * An action to dispatch transactionFailed
+ *
+ */
+export const transactionFailed = ({ errorMessage }) => ({
+  data: { errorMessage },
+  type: actionTypes.transactionFailed,
+});
+
+/**
  * An action to dispatch transactionsFailed
  *
  */
@@ -37,17 +46,53 @@ export const transactionsLoaded = data => ({
   type: actionTypes.transactionsLoaded,
 });
 
+export const transactionsFilterSet = data => ({
+  data,
+  type: actionTypes.transactionsFilterSet,
+});
+
+export const transactionsFiltered = data => ({
+  data,
+  type: actionTypes.transactionsFiltered,
+});
+
+export const transactionsRequestInit = data => ({
+  data,
+  type: actionTypes.transactionsRequestInit,
+});
+
+export const transactionsInit = data => ({
+  data,
+  type: actionTypes.transactionsInit,
+});
+
+export const transactionLoadRequested = data => ({
+  data,
+  type: actionTypes.transactionLoadRequested,
+});
+
+export const transactionLoaded = data => ({
+  data,
+  type: actionTypes.transactionLoaded,
+});
+
+export const transactionLoadFailed = data => ({
+  data,
+  type: actionTypes.transactionLoadFailed,
+});
 /**
  *
  *
  */
-export const transactionsRequested = ({ activePeer, address, limit, offset }) =>
+export const transactionsRequested = ({ activePeer, address, limit, offset, filter }) =>
   (dispatch) => {
-    transactions(activePeer, address, limit, offset)
+    transactions({ activePeer, address, limit, offset, filter })
       .then((response) => {
         dispatch(transactionsLoaded({
           count: parseInt(response.count, 10),
           confirmed: response.transactions,
+          address,
+          filter,
         }));
       });
   };

@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="239" height="291" viewBox="0 0 239 291">
+  <defs>
+    <linearGradient id="graphic-application-b" x1="-7.718%" x2="139.039%" y1="171.768%" y2="19.942%">
+      <stop offset="0%" stop-color="#243475"/>
+      <stop offset="100%" stop-color="#0097FF"/>
+    </linearGradient>
+    <polygon id="graphic-application-a" points="119.396 .407 238.792 69.328 238.792 77.154 119.396 146.075 0 77.154 0 69.328"/>
+    <filter id="graphic-application-c" width="123.9%" height="140.2%" x="-11.9%" y="-20.1%" filterUnits="objectBoundingBox">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="8.888"/>
+    </filter>
+    <linearGradient id="graphic-application-f" x1="-60.921%" x2="56.81%" y1="-239.64%" y2="123.936%">
+      <stop offset="0%" stop-color="#08061E" stop-opacity=".57"/>
+      <stop offset="100%" stop-color="#001A55" stop-opacity="0"/>
+    </linearGradient>
+    <polygon id="graphic-application-e" points="119.396 139.203 238.792 69.611 238.792 77.432 119.396 146.312 0 77.432 0 69.611"/>
+    <linearGradient id="graphic-application-h" x1="50%" x2="78.931%" y1=".811%" y2="75.945%">
+      <stop offset="0%" stop-color="#08061E"/>
+      <stop offset="100%" stop-color="#001A55"/>
+    </linearGradient>
+    <linearGradient id="graphic-application-i" x1="65.935%" x2="7.1%" y1="82.749%" y2="45.965%">
+      <stop offset="0%" stop-color="#FFF"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+    <polygon id="graphic-application-g" points="119.396 0 238.792 68.884 238.792 76.706 119.396 145.59 0 76.706 0 68.884"/>
+    <linearGradient id="graphic-application-k" x1="-52.506%" y1="-9.548%" y2="95.048%">
+      <stop offset="0%" stop-color="#00457D"/>
+      <stop offset="100%" stop-color="#001A56" stop-opacity=".08"/>
+    </linearGradient>
+    <linearGradient id="graphic-application-l" x1="57.703%" x2="0%" y1="50%" y2="78.368%">
+      <stop offset="0%" stop-color="#021755" stop-opacity="0"/>
+      <stop offset="40.262%" stop-color="#022264" stop-opacity=".088"/>
+      <stop offset="100%" stop-color="#0097FF"/>
+    </linearGradient>
+    <polygon id="graphic-application-j" points="119.396 138.563 238.792 68.966 238.792 76.788 119.396 145.672 0 76.788 0 68.966"/>
+    <linearGradient id="graphic-application-m" x1="-4.402%" y1="-4.443%" y2="95.048%">
+      <stop offset="0%" stop-color="#00457D"/>
+      <stop offset="100%" stop-color="#001A56"/>
+    </linearGradient>
+    <filter id="graphic-application-n" width="120.5%" height="134.6%" x="-10.3%" y="-17.3%" filterUnits="objectBoundingBox">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="7.651"/>
+    </filter>
+    <linearGradient id="graphic-application-p" x1="-11.816%" x2="134.274%" y1="36.069%" y2="36.069%">
+      <stop offset="0%" stop-color="#0462F5"/>
+      <stop offset="100%" stop-color="#00ECFF"/>
+    </linearGradient>
+    <polygon id="graphic-application-o" points="119.363 0 238.726 68.842 238.726 76.658 119.363 145.5 0 76.658 0 68.842"/>
+    <linearGradient id="graphic-application-r" x1="50%" x2="50%" y1="156.647%" y2="-88.354%">
+      <stop offset="0%" stop-color="#74F8F8" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#74F8F8"/>
+    </linearGradient>
+    <polygon id="graphic-application-q" points="119.363 138.385 238.726 68.723 238.726 76.552 119.363 145.5 0 76.552 0 68.723"/>
+    <linearGradient id="graphic-application-s" x1="50%" x2="50%" y1="0%" y2="82.151%">
+      <stop offset="0%" stop-color="#74F8F8" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#74F8F8"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <g transform="translate(.108 143.996)">
+      <mask id="graphic-application-d" fill="#fff">
+        <use xlink:href="#graphic-application-a"/>
+      </mask>
+      <use fill="url(#graphic-application-b)" fill-opacity=".7" xlink:href="#graphic-application-a"/>
+      <polygon fill="#000" points="119.642 -2.835 231.344 65.309 119.642 129.789 7.941 65.309" filter="url(#graphic-application-c)" mask="url(#graphic-application-d)" opacity=".268"/>
+      <use fill="url(#graphic-application-f)" xlink:href="#graphic-application-e"/>
+    </g>
+    <g transform="translate(.108 120.148)">
+      <use fill="url(#graphic-application-h)" xlink:href="#graphic-application-g"/>
+      <use fill="url(#graphic-application-i)" xlink:href="#graphic-application-g"/>
+      <g>
+        <use fill="url(#graphic-application-k)" fill-opacity=".15" xlink:href="#graphic-application-j"/>
+        <use fill="url(#graphic-application-l)" fill-opacity=".2" xlink:href="#graphic-application-j"/>
+      </g>
+    </g>
+    <g transform="translate(.645 95.393)">
+      <polygon fill="url(#graphic-application-m)" fill-opacity=".33" points="112.115 .059 223.816 68.167 112.115 132.612 .413 68.167" filter="url(#graphic-application-n)" transform="translate(7.527 21.166)"/>
+      <use fill="url(#graphic-application-m)" xlink:href="#graphic-application-o"/>
+      <use fill="url(#graphic-application-p)" fill-opacity=".9" xlink:href="#graphic-application-o"/>
+      <use fill="url(#graphic-application-r)" fill-opacity=".8" opacity=".57" xlink:href="#graphic-application-q"/>
+    </g>
+    <polygon fill="url(#graphic-application-s)" points="0 0 239.113 0 239.113 164.081 119.9 233.721 0 164.081" opacity=".39"/>
+  </g>
+</svg>

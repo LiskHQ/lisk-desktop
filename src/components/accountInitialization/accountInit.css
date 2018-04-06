@@ -1,0 +1,60 @@
+@import '../app/variables.css';
+
+:root {
+  --font-size-L: 16px;
+  --font-size-XS: 14px;
+}
+
+.wrapper {
+  padding: 45px;
+  line-height: 30px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  & header {
+    & h2 {
+      margin-top: 0;
+      font-weight: var(--font-weight-semi-bold);
+    }
+  }
+
+  & p {
+    font-size: var(--font-size-L);
+  }
+
+  & a {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-link);
+    text-decoration: none;
+  }
+
+  & footer {
+    padding: 0px;
+  }
+
+  & .button {
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-L);
+    letter-spacing: 0;
+    line-height: 18px;
+    text-transform: none;
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+@media (--xSmall-viewport) {
+  .wrapper {
+    padding: 20px 19px;
+
+    & p {
+      font-size: var(--font-size-XS);
+    }
+
+    & .button {
+      font-size: var(--font-size-XS);
+    }
+  }
+}

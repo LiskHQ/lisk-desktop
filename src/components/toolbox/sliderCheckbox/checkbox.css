@@ -1,0 +1,208 @@
+@import '../../app/variables';
+
+:root {
+  --action-button-bg: var(--gradient-action-orange);
+  --secondary-button-bg: gray;
+  --gradient-bg: linear-gradient(to right, #134381, #001e45);
+  --element-width: 100%;
+  --element-height: 62px;
+  --element-height-small: 48px;
+  --label-font-size: 16px;
+  --icon-text-font: var(--heading-font);
+}
+
+.sliderInput {
+  user-select: none;
+  width: var(--element-width);
+
+  & span,
+  & label,
+  & div {
+    user-select: none;
+  }
+
+  & div {
+    transition: all ease 300ms;
+    width: calc(100% - calc(var(--element-height) / 2));
+    height: 100%;
+    position: relative;
+    text-indent: calc(var(--element-height) / 3);
+    flex-flow: row nowrap;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      z-index: 1;
+      background: linear-gradient(to right, rgba(19, 67, 129, 0), #001e45);
+      height: inherit;
+      right: 0;
+      width: 100%;
+    }
+
+    & > span {
+      text-indent: var(--element-height);
+      flex: 0 auto;
+      width: auto;
+      font-size: var(--label-font-size);
+    }
+
+    & > span.arrows {
+      display: block;
+      text-indent: 0;
+      height: 100%;
+      overflow: hidden;
+
+      & span {
+        padding-left: 15px;
+        font-size: 20px;
+      }
+    }
+
+    & > span:not(.arrows) {
+      word-break: keep-all;
+      min-width: 200px;
+      z-index: 2;
+      position: relative;
+
+      &::after,
+      &::before {
+        display: none !important;
+      }
+    }
+  }
+
+  & label {
+    height: var(--element-height);
+    line-height: var(--element-height);
+    width: 100%;
+    border-radius: calc(var(--element-height) / 2);
+    background: var(--gradient-bg);
+    color: var(--color-white);
+    display: block;
+    position: relative;
+    cursor: grab;
+  }
+
+  & span.circle {
+    position: absolute;
+    width: var(--element-height);
+    height: inherit;
+    line-height: inherit;
+    display: block;
+    text-align: center;
+    border-radius: 50%;
+    top: 0;
+    transition: all ease 300ms;
+    background: var(--action-button-bg);
+
+    & .text {
+      font-size: var(--label-font-size);
+      font-family: var(--icon-text-font);
+    }
+
+    &.button {
+      left: 0;
+      z-index: 3;
+
+      &[style] {
+        cursor: grabbing;
+        transition: all ease 50ms;
+
+        & + div {
+          opacity: 0.5;
+        }
+      }
+    }
+
+    &.goal {
+      background: var(--secondary-button-bg);
+      right: 0;
+      z-index: 2;
+      font-family: var(--icon-text-font);
+    }
+
+    &.begin {
+      background: var(--secondary-button-bg);
+      left: 0;
+      z-index: 2;
+      font-family: var(--icon-text-font);
+    }
+
+    & span {
+      width: 100%;
+      line-height: inherit !important;
+      position: absolute;
+      left: 0;
+      top: 0;
+      transition: all ease 300ms;
+      font-size: 30px;
+
+      &.checkMark {
+        opacity: 0;
+      }
+
+      &.arrowRight {
+        opacity: 1;
+      }
+    }
+  }
+
+  & input[type='radio'],
+  & input[type='checkbox'] {
+    position: absolute;
+    visibility: hidden;
+
+    &:checked + label {
+      & .button {
+        left: 100%;
+        transform: translateX(calc(-1 * var(--element-height)));
+
+        & .checkMark {
+          opacity: 1;
+        }
+
+        & .arrowRight {
+          opacity: 0;
+        }
+      }
+
+      & > div {
+        opacity: 0;
+      }
+    }
+  }
+}
+
+@media (--small-viewport) {
+  .sliderInput {
+    & label {
+      height: var(--element-height-small) !important;
+      line-height: var(--element-height-small) !important;
+    }
+
+    & span.circle {
+      width: var(--element-height-small);
+    }
+
+    & input[type='radio'],
+    & input[type='checkbox'] {
+      &:checked + label .button {
+        transform: translateX(calc(-1 * var(--element-height-small)));
+      }
+    }
+
+    & div {
+      & span {
+        text-indent: calc(var(--element-height-small) + 20px);
+      }
+
+      &::after {
+        letter-spacing: -5px;
+      }
+    }
+  }
+}

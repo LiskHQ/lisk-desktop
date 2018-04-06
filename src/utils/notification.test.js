@@ -5,8 +5,10 @@ import Notification from './notification';
 
 describe('Notification', () => {
   let notify;
+  const callbacks = {};
 
   beforeEach(() => {
+    window.ipc = { on: (key, callback) => { callbacks[key] = callback; } };
     notify = Notification.init();
   });
 
@@ -34,8 +36,16 @@ describe('Notification', () => {
     });
 
     it('should not call window.Notification if app is focused', () => {
-      notify.isFocused = true;
+      notify.isFocused = false;
+      callbacks.focus();
       notify.about('deposit', amount);
+      expect(mockNotification).to.have.been.not.calledWith();
+      mockNotification.reset();
+    });
+
+    it('should do nothing if an unhandled notification is supplied', () => {
+      callbacks.blur();
+      notify.about('unhandled_notification');
       expect(mockNotification).to.have.been.not.calledWith();
       mockNotification.reset();
     });

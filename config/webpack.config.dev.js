@@ -2,10 +2,8 @@
 const webpack = require('webpack');
 const { resolve } = require('path');
 const merge = require('webpack-merge');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const baseConfig = require('./webpack.config');
 const reactConfig = require('./webpack.config.react');
-const reactToolboxVariables = require('./reactToolbox.config');
 /* eslint-enable import/no-extraneous-dependencies */
 
 module.exports = merge(baseConfig, reactConfig, {
@@ -18,6 +16,7 @@ module.exports = merge(baseConfig, reactConfig, {
     inline: true,
     port: 8080,
     historyApiFallback: true,
+    host: '0.0.0.0',
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -32,45 +31,4 @@ module.exports = merge(baseConfig, reactConfig, {
       name: 'vendor',
     }),
   ],
-  module: {
-    rules: [
-      {
-        test: /\.css$/,
-        use: ['css-hot-loader'].concat(ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                sourceMap: true,
-                modules: true,
-                importLoaders: 1,
-                localIdentName: '[name]__[local]___[hash:base64:5]',
-              },
-            },
-            {
-              loader: 'postcss-loader',
-              options: {
-                sourceMap: true,
-                sourceComments: true,
-                plugins: [
-                  // eslint-disable-next-line import/no-extraneous-dependencies
-                  require('postcss-partial-import')({}),
-                  require('postcss-cssnext')({
-                    features: {
-                      customProperties: {
-                        variables: reactToolboxVariables,
-                      },
-                    },
-                  }),
-                  // eslint-disable-next-line import/no-extraneous-dependencies
-                  require('postcss-for')({}),
-                ],
-              },
-            },
-          ],
-        })),
-      },
-    ],
-  },
 });

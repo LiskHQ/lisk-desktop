@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="93px" height="107px" viewBox="0 0 93 107" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>sidechain_1</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="-52.5060119%" y1="-9.54799107%" x2="100%" y2="95.0482094%" id="linearGradient-1">
+            <stop stop-color="#00457D" offset="0%"></stop>
+            <stop stop-color="#001A56" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="0%" y1="100%" x2="100%" y2="0%" id="linearGradient-2">
+            <stop stop-color="#021755" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#0097FF" offset="100%"></stop>
+        </linearGradient>
+        <polygon id="path-3" points="46.5071113 0.313842369 92.5428752 26.9164611 92.5428752 80.1216984 46.5071113 106.724317 0.471347479 80.1216984 0.471347479 26.9164611"></polygon>
+        <linearGradient x1="0%" y1="31.052572%" x2="50%" y2="50%" id="linearGradient-5">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="100%" y1="68.2837664%" x2="-19.4463392%" y2="28.8615027%" id="linearGradient-6">
+            <stop stop-color="#021755" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#0097FF" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="26.176351%" y1="8.46088596%" x2="105.232905%" y2="39.8701423%" id="linearGradient-7">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Wallet-Zero-Dashboard-Lisk-L" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-928.000000, -392.000000)">
+        <g id="Group-2" transform="translate(599.000000, 159.000000)">
+            <g id="sidechain_1" transform="translate(329.000000, 233.000000)">
+                <mask id="mask-4" fill="white">
+                    <use xlink:href="#path-3"></use>
+                </mask>
+                <g id="Massdk">
+                    <use fill="url(#linearGradient-1)" xlink:href="#path-3"></use>
+                    <use fill="url(#linearGradient-2)" xlink:href="#path-3"></use>
+                </g>
+                <polygon id="Path-9" fill="url(#linearGradient-5)" style="mix-blend-mode: soft-light;" opacity="0.630774457" mask="url(#mask-4)" points="0.471347479 79.7446301 0.471347479 26.9164611 46.1061303 0.313842369 46.1061303 53.4512412"></polygon>
+                <polygon id="Path" fill="url(#linearGradient-6)" mask="url(#mask-4)" points="46.7943303 106.347249 46.7943303 53.5190797 92.4291131 26.9164611 92.4291131 80.0538599"></polygon>
+                <polygon id="Mask" fill="url(#linearGradient-7)" style="mix-blend-mode: soft-light;" opacity="0.70069067" points="46.5071113 52.7590049 46.5071113 106.724317 0.471347479 80.1216984 0.471347479 26.9164611"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

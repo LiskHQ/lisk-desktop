@@ -5,7 +5,7 @@
 ### How to test it?
 
 ### Review checklist
-- [ ] The PR solves #INSERT_ISSUE_NUMBER
-- [ ] All new code is covered with unit tests
-- [ ] All new features are covered with e2e tests
-- [ ] All new code follows best practices
+- The PR solves #INSERT_ISSUE_NUMBER
+- All new code is covered with unit tests
+- All new features are covered with e2e tests
+- All new code follows best practices

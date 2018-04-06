@@ -1,0 +1,133 @@
+@import '../app/variables.css';
+
+:root {
+  --tab-inactive-color: --color-grayscale-dark;
+  --font-size-L: 16px;
+  --font-size-XS: 14px;
+}
+
+.wrapper {
+  padding: 0px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  overflow-y: hidden;
+  box-sizing: border-box;
+
+  & p {
+    font-size: var(--font-size-L);
+    line-height: 30px;
+  }
+}
+
+.fee {
+  text-align: right;
+  margin-top: -12px;
+  margin-bottom: 24px;
+  font-size: 12px;
+  line-height: 14px;
+  color: grey;
+}
+
+input:read-only {
+  border-bottom: solid 1px var(--color-white) !important;
+}
+
+.button {
+  min-width: 0;
+  width: 100%;
+}
+
+.temporarySmallAvatar {
+  /* values are not saved as variable since this will be deleted anyway */
+  height: 50px;
+  width: 50px;
+  background: linear-gradient(90deg, #3023ae 0%, #53a0fd 48%, #b4ec51 100%);
+  position: absolute;
+  border-radius: 100%;
+}
+
+/* this part will be refactored in the next issue */
+.modal {
+  text-align: center;
+
+  & .header {
+    position: relative;
+  }
+
+  & p {
+    color: var(--color-grayscale-dark);
+    line-height: 36px;
+  }
+
+  & .copy {
+    color: var(--color-primary-dark);
+    cursor: pointer;
+  }
+}
+
+.headerWrapper {
+  padding: 20px 0px;
+
+  & .title {
+    float: left;
+  }
+
+  & .account {
+    float: right;
+  }
+
+  & h2 {
+    margin-bottom: 0;
+  }
+
+  & h3 {
+    display: inline-block;
+    margin: 0;
+  }
+
+  & .balanceUnit {
+    font-weight: var(--font-weight-bold);
+  }
+
+  & .address {
+    text-align: right;
+    cursor: pointer;
+  }
+
+  & .transfer {
+    color: var(--color-grayscale-dark);
+  }
+}
+
+.accountVisual {
+  margin: 13px 0px;
+}
+
+.disabledInput input:disabled {
+  opacity: 1;
+  border: none;
+}
+
+@media (--small-viewport) {
+  .headerWrapper {
+    display: none;
+  }
+
+  .header {
+    height: 60px;
+  }
+
+  .accountVisual {
+    margin: 24px 0;
+  }
+}
+
+@media (--xSmall-viewport) {
+  .wrapper {
+    & p {
+      font-size: var(--font-size-L);
+    }
+  }
+}

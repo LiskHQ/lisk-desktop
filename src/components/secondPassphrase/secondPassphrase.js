@@ -1,11 +1,16 @@
 import React from 'react';
-import Passphrase from '../passphrase';
 import Fees from '../../constants/fees';
+import Authenticate from '../authenticate';
+import MultiStep from '../multiStep';
+import Info from '../passphrase/info';
+import Create from '../passphrase/create';
+import Safekeeping from '../passphrase/safekeeping';
+import Confirm from '../passphrase/confirm';
 
 const SecondPassphrase = ({
-  account, peers, registerSecondPassphrase, closeDialog, t,
+  passphrase, account, peers, registerSecondPassphrase, closeDialog, t,
 }) => {
-  const onLoginSubmission = (secondPassphrase) => {
+  const onPassphraseRegister = (secondPassphrase) => {
     registerSecondPassphrase({
       activePeer: peers.data,
       secondPassphrase,
@@ -13,16 +18,19 @@ const SecondPassphrase = ({
     });
   };
 
+  const useCaseNote = t('your second passphrase will be required for all transactions sent from this account');
+  const securityNote = t('Losing access to this passphrase will mean no funds can be sent from this account.');
+
   return (
-    <Passphrase
-      onPassGenerated={onLoginSubmission}
-      keepModal={true}
-      fee={Fees.setSecondPassphrase}
-      closeDialog={closeDialog}
-      confirmButton={t('Register')}
-      useCaseNote={t('your second passphrase will be required for all transactions sent from this account')}
-      securityNote={t('Losing access to this passphrase will mean no funds can be sent from this account.')}/>
-  );
+    typeof passphrase === 'string' && passphrase.length > 0 ?
+      <MultiStep showNav={false} finalCallback={onPassphraseRegister}>
+        <Info title='Info' t={t} icon='bookmark_border' fee={Fees.setSecondPassphrase}
+          useCaseNote={useCaseNote} securityNote={securityNote} backButtonFn={closeDialog} />
+        <Create title='Create' t={t} icon='vpn_key' />
+        <Safekeeping title='Safekeeping' t={t} icon='done' />
+        <Confirm title='Confirm' t={t} confirmButton='Register' icon='launch' />
+      </MultiStep> :
+      <Authenticate nextAction={t('set second passphrase')} />);
 };
 
 export default SecondPassphrase;

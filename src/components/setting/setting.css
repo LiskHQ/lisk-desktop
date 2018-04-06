@@ -1,0 +1,171 @@
+@import '../app/variables.css';
+
+:root {
+  --setting-background-color: var(--color-grayscale-medium);
+  --secondPassphrase-background-color: var(--color-grayscale-light);
+  --secondPassphrase-color: var(--color-primary-dark);
+  --carousel-nav-background-color: #3c506b;
+  --slide-header-font: var(--heading-font);
+  --secured-account-color: var(--color-success-dark);
+  --check-box-height: 48px;
+  --check-box-width: 95px;
+}
+
+.wrapper {
+  position: relative;
+}
+
+.carousel {
+  background: var(--setting-background-color);
+  color: var(--color-white);
+  text-align: center;
+
+  & > div {
+    min-height: 200px;
+    padding: 4vh 0; /* stylelint-disable-line */
+
+    & h5 {
+      font-family: var(--slide-header-font);
+      font-size: 16px;
+      color: var(--color-white);
+      letter-spacing: 0;
+      margin: 26px 0 0;
+    }
+
+    & p {
+      margin-bottom: 48px;
+    }
+  }
+}
+
+.carouselNav {
+  display: block;
+  width: 100%;
+  margin: 5px 0;
+  text-align: center;
+  list-style: none;
+  padding: 0;
+  position: absolute;
+  z-index: 9;
+  bottom: 30px;
+  left: 0;
+
+  & li {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    opacity: 0.3;
+    margin: 4px;
+    border-radius: 100%;
+    background: var(--carousel-nav-background-color);
+    cursor: pointer;
+  }
+}
+
+.activeSlide {
+  opacity: 1 !important;
+}
+
+.sliderInput {
+  & label {
+    height: var(--check-box-height);
+    line-height: var(--check-box-height);
+    width: var(--check-box-width);
+    background: var(--color-grayscale-dark);
+    display: inline-block;
+  }
+
+  & span.circle {
+    background: var(--color-primary-dark);
+    width: var(--check-box-height);
+
+    &.goal,
+    &.begin {
+      background: transparent;
+    }
+
+    & span {
+      width: 100%;
+    }
+  }
+
+  & input[type='radio'],
+  & input[type='checkbox'] {
+    &:checked + label .button {
+      transform: translateX(calc(-1 * var(--check-box-height)));
+    }
+  }
+}
+
+.secondPassphrase,
+.secondPassphraseEnabled {
+  height: var(--check-box-height);
+  line-height: var(--check-box-height);
+  width: var(--check-box-width);
+  background: var(--secondPassphrase-background-color);
+  display: inline-block;
+  border-radius: 31px;
+  color: var(--secondPassphrase-color);
+  font-family: gilroy;
+  position: relative;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.secondPassphraseEnabled {
+  color: var(--secondPassphrase-background-color);
+  background: var(--secondPassphrase-color);
+}
+
+@media (--medium-viewport) {
+  .wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    background: var(--setting-background-color);
+    display: flex;
+    left: -100%;
+    transition: all linear 300ms;
+
+    &.active {
+      left: 0;
+    }
+  }
+
+  .carousel {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  .carouselNav {
+    bottom: 70px;
+  }
+}
+
+@media (--small-viewport) {
+  .wrapper {
+    position: relative;
+    margin-bottom: 62px;
+    left: 0;
+    height: 250px;
+  }
+
+  .carouselNav {
+    bottom: 20px;
+  }
+}
+
+@media (--xSmall-viewport) {
+  .wrapper {
+    position: absolute;
+    margin-bottom: 62px;
+    left: -100%;
+    height: 100%;
+  }
+
+  .carouselNav {
+    bottom: 70px;
+  }
+}

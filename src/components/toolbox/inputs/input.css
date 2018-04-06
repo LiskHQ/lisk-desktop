@@ -1,0 +1,53 @@
+@import '../../app/variables.css';
+
+:root {
+  --input-focus-border-color: var(--color-primary-standard);
+  --input-focus-color: var(--color-primary-standard);
+  --input-color: var(--color-grayscale-dark);
+  --label-font-size: var(--font-size-small);
+  --placeholder-color: var(--color-grayscale-light);
+}
+
+.input input:focus {
+  border-bottom: solid 1px var(--input-focus-border-color);
+  color: var(--input-focus-color);
+  font-weight: 600;
+  font-size: var(--input-font-size);
+}
+
+.input {
+  font-weight: 500;
+  font-size: var(--input-font-size);
+}
+
+.input input::placeholder {
+  color: var(--placeholder-color);
+}
+
+.inputElement:focus:not([disabled]):not([readonly]) ~ .label:not(.fixed),
+.inputElement.filled ~ .label:not(.fixed) {
+  font-size: var(--label-font-size);
+  color: var(--input-color);
+}
+
+.label {
+  color: var(--input-color);
+  font-size: var(--input-font-size);
+}
+
+.input input:not(:focus) {
+  border-bottom: solid 1px var(--input-color);
+  color: var(--input-color);
+  font-size: var(--input-font-size);
+  font-weight: 600;
+}
+
+.error {
+  font-size: var(--label-font-size);
+  line-height: 30px;
+  color: var(--color-error);
+
+  .label {
+    color: var(--input-color);
+  }
+}

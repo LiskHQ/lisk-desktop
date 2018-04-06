@@ -1,9 +1,9 @@
 {
-  "name": "lisk-nano",
-  "version": "1.2.1",
-  "description": "Lisk Nano",
+  "name": "lisk-hub",
+  "version": "0.3.0",
+  "description": "Lisk Hub",
   "main": "./build/main.js",
-  "author":{
+  "author": {
     "name": "Lisk Foundation",
     "email": "admin@lisk.io"
   }

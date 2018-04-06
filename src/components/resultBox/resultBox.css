@@ -1,0 +1,55 @@
+@import '../app/variables.css';
+
+:root {
+  --copy-color: var(--color-primary-standard);
+  --paragraph-color: var(--color-grayscale-dark);
+  --paragraph-line-height: 36px;
+  --title-font-size: 32px;
+  --icon-font-size: 48px;
+}
+
+.icon {
+  font-size: var(--icon-font-size);
+  color: #ff6236;
+}
+
+.resultBox {
+  text-align: center;
+  justify-content: space-around;
+  flex-flow: column;
+  display: flex;
+
+  & .header {
+    position: relative;
+  }
+
+  & footer {
+    padding: 0px;
+  }
+
+  & p {
+    color: var(--paragraph-color);
+    line-height: var(--paragraph-line-height);
+  }
+
+  & .copy {
+    color: var(--copy-color);
+    cursor: pointer;
+  }
+}
+
+@media (--small-viewport) {
+  .resultBox {
+    height: calc(100vh - 58px - 62px); /* stylelint-disable-line */
+  }
+
+  .icon {
+    margin-top: 40px;
+  }
+}
+
+@media (--xSmall-viewport) {
+  .okButton {
+    width: 100%;
+  }
+}
