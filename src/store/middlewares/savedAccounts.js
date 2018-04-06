@@ -29,7 +29,10 @@ const savedAccountsMiddleware = (store) => {
     }
   });
 
-  const updateSavedAccounts = (peers, tx, savedAccounts) => {
+  const isSameNetwork = (account, peers) => account.address === peers.data.options.address
+    && peers.data.options.code === account.network;
+
+  const checkTransactionsAndUpdateSavedAccounts = (peers, tx, savedAccounts) => {
     const { accounts } = savedAccounts;
     const fetchedAccounts = [];
 
@@ -39,13 +42,8 @@ const savedAccountsMiddleware = (store) => {
 
       accounts.forEach((account, i) => {
         const address = extractAddress(account.publicKey);
-        const shouldMakeRequest = () => {
-          const isSameNetwork = account.address === peers.data.options.address
-            && peers.data.options.code === account.network;
-
-          return (address === recipient || address === sender)
-            && isSameNetwork && !fetchedAccounts.includes(address);
-        };
+        const shouldMakeRequest = () => (address === recipient || address === sender)
+            && isSameNetwork(account, peers) && !fetchedAccounts.includes(address);
 
         if (shouldMakeRequest()) {
           fetchedAccounts.push(address);
@@ -65,12 +63,36 @@ const savedAccountsMiddleware = (store) => {
     });
   };
 
+  const updateSavedAccounts = (peers, savedAccounts) => {
+    const { accounts } = savedAccounts;
+
+    accounts.forEach((account, i) => {
+      const address = extractAddress(account.publicKey);
+      if (isSameNetwork(account, peers)) {
+        getAccount(peers.data, address).then((result) => {
+          if (result.balance !== account.balance) {
+            accounts[i].balance = result.balance;
+            store.dispatch({ data: {
+              accounts,
+              lastActive: getLastActiveAccount(),
+            },
+            type: actionTypes.accountsRetrieved,
+            });
+          }
+        });
+      }
+    });
+  };
+
   return next => (action) => {
     next(action);
     const { peers, account, savedAccounts } = store.getState();
     switch (action.type) {
       case actionTypes.newBlockCreated:
-        updateSavedAccounts(peers, action.data.block.transactions, savedAccounts);
+        checkTransactionsAndUpdateSavedAccounts(
+          peers,
+          action.data.block.transactions,
+          savedAccounts);
         break;
       case actionTypes.accountSwitched:
         store.dispatch(accountLoading());
@@ -92,6 +114,7 @@ const savedAccountsMiddleware = (store) => {
         }));
         break;
       case actionTypes.accountLoggedIn:
+        updateSavedAccounts(peers, savedAccounts);
         store.dispatch(accountSaved({
           passphrase: action.data.passphrase,
           balance: action.data.balance,

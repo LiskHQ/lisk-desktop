@@ -206,4 +206,26 @@ describe('SavedAccounts middleware', () => {
     expect(store.dispatch).to.not.have.been.calledWith();
     getAccountStub.restore();
   });
+
+  it('should make a request for the account information, when account logged in', () => {
+    const getAccountStub = mock(accountApi);
+    getAccountStub.expects('getAccount').withArgs(match.any, '1155682438012955434L').returnsPromise().resolves({ balance: 1 });
+    middleware(store)(next)({
+      type: actionTypes.accountLoggedIn,
+      data: {
+        publicKey,
+        balance,
+        passphrase,
+      },
+    });
+
+    expect(store.dispatch).to.have.been.calledWith({
+      data: {
+        accounts: state.savedAccounts.accounts,
+        lastActive: match.any,
+      },
+      type: actionTypes.accountsRetrieved,
+    });
+    getAccountStub.restore();
+  });
 });
