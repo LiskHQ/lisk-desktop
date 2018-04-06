@@ -62,9 +62,7 @@ const savedAccountsMiddleware = (store) => {
     const { peers, account, savedAccounts } = store.getState();
     switch (action.type) {
       case actionTypes.newBlockCreated:
-        if (action.data.windowIsFocused) {
-          updateSavedAccounts(peers, action.data.block.transactions, savedAccounts);
-        }
+        updateSavedAccounts(peers, action.data.block.transactions, savedAccounts);
         break;
       case actionTypes.accountSwitched:
         store.dispatch(accountLoading());

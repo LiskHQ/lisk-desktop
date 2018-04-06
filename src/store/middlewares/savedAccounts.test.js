@@ -158,7 +158,7 @@ describe('SavedAccounts middleware', () => {
     const transactions = { transactions: [{ senderId: '1234L', recipientId: '1155682438012955434L' }] };
     middleware(store)(next)({
       type: actionTypes.newBlockCreated,
-      data: { block: transactions, windowIsFocused: true },
+      data: { block: transactions },
     });
 
     expect(store.dispatch).to.have.been.calledWith({
@@ -177,20 +177,7 @@ describe('SavedAccounts middleware', () => {
     const transactions = { transactions: [{ senderId: '1234L', recipientId: '4321L' }] };
     middleware(store)(next)({
       type: actionTypes.newBlockCreated,
-      data: { block: transactions, windowIsFocused: true },
-    });
-
-    expect(store.dispatch).to.not.have.been.calledWith();
-    getAccountStub.restore();
-  });
-
-  it('should not make a request for the account information, if a relevant transaction was made but window is not focused', () => {
-    const getAccountStub = mock(accountApi);
-    getAccountStub.expects('getAccount').withArgs(match.any, '1155682438012955434L').returnsPromise().resolves({ balance: 1 });
-    const transactions = { transactions: [{ senderId: '1234L', recipientId: '1155682438012955434L' }] };
-    middleware(store)(next)({
-      type: actionTypes.newBlockCreated,
-      data: { block: transactions, windowIsFocused: false },
+      data: { block: transactions },
     });
 
     expect(store.dispatch).to.not.have.been.calledWith();
