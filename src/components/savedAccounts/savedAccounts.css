@@ -149,6 +149,43 @@
 
     & > h1 {
       font-size: var(--font-size-ids-h1-s);
+    }
+  }
+
+  .closeButton {
+    top: 15px;
+    right: 15px;
+  }
+
+  .cardsWrapper {
+    padding: 0;
+  }
+
+  .addAcctiveAccountButton {
+    bottom: 18vh; /* stylelint-disable-line */
+  }
+
+  .deviceIos {
+    & .addAcctiveAccountButton {
+      bottom: 95px; /* stylelint-disable-line */
+    }
+  }
+
+  .deviceAndroid {
+    & .cardsWrapper {
+      padding-bottom: 50px;
+    }
+
+    & .addAcctiveAccountButton {
+      bottom: 120px;
+    }
+  }
+}
+
+@media (--xSmall-viewport) {
+  .wrapper {
+    & > h1 {
+      font-size: var(--font-size-ids-h1-s);
       padding: var(--h1-padding-s);
     }
 
@@ -160,11 +197,6 @@
         line-height: 40px;
       }
     }
-  }
-
-  .closeButton {
-    top: 15px;
-    right: 15px;
   }
 
   .cardsWrapper {
@@ -182,10 +214,6 @@
   }
 
   .deviceAndroid {
-    & .cardsWrapper {
-      padding-bottom: 50px;
-    }
-
     & .addAcctiveAccountButton {
       top: var(--add-button-bottom-margin);
     }
