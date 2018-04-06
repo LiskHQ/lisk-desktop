@@ -1,37 +1,129 @@
-# How to contribute
 
-First of all, thank you for taking the time to contribute to this project. We've tried to make a stable project and try to fix bugs and add new features continuously. You can help us do more.
+## Table of Contents
+<!-- vim-markdown-toc GFM -->
+
+* [How to contribute?](#how-to-contribute)
+* [Finding first issue](#finding-first-issue)
+* [Reporting issues](#reporting-issues)
+* [Creating commits](#creating-commits)
+* [Pull Requests](#pull-requests)
+* [Creating branch](#creating-branch)
+* [Tests](#tests)
+
+<!-- vim-markdown-toc -->
+## How to contribute
+
+First of all, thank you for taking the time to contribute to this project. :tada::tada::tada:
+We've tried to make a stable project and try to fix bugs and add new features continuously. You can help us do more.
 
 Before you start, read the **README.md** file for info on the project and how to set it up.
 
-## Getting started
+## Finding first issue
+Go to [issues tab](https://github.com/LiskHQ/lisk-hub/issues) and look for 
 
-### Check out the roadmap
+*✏️ `good first issue`* - it is a label for tasks that are perfect for people who want to start with lisk-hub.
 
-We have some functionalities in mind and we have issued them and there is a *milestone* label available on the issue. If there is a bug or a feature that is not listed in the **issues** page or there is no one assigned to the issue, feel free to fix/add it! Although it's better to discuss it in the issue or create a new issue for it so there is no conflicting code.
+## Reporting issues
 
-### Filing issues
+ 1. Check if problem already exist in [issues tab](https://github.com/LiskHQ/lisk-hub/issues)
+ 2. If not, create a new [issue](https://github.com/LiskHQ/lisk-hub/issues/new)
+ 3. Fill our template:
+```
+Expected behaviour
 
-Before starting work on a larger idea not discussed in an issue we recommend starting one to iron out your approach to implementation. PRs with conflicting ideas regarding architecture or other aspects of the project may be rejected. We appreciate any and all ideas you contribute providing they're discussed in a respectful and constructive manner.
+Actual behaviour
 
-Issues created that are not relevant to this project will be closed immediately - this is purely for efficiency as we don't have time to address and or move all of them to their correct place.
+Steps to reproduce
+```
+4. Click `Submit new issue`
+##### Guidance
 
-### Writing some code!
+ * Include screenshots or animated GIF
+ * Use a clear and descriptive title
+ * Provide OS and browser version
+
+##### Example
+![Alt text](./docs/assets/issue.png?raw=true "Perfect Issue")
+
+:heavy_exclamation_mark: Issues created that are not relevant to this project will be closed immediately.
+
+## Writing some code!
 
 Contributing to a project on Github is pretty straight forward. If this is you're first time, these are the steps you should take.
 
 - Fork this repo.
 
-And that's it! Read the code available and apply your changes according to the issue you're working on! You're change should not break the existing code and should pass the tests. Start from the branch **development**,  create a new branch under the name of the issue and work in there.
+And that's it! Read the code available and apply your changes according to the issue you're working on! You're change should not break the existing code and should pass the tests.
 
-If you want to add some styles to a component please make sure that you follow our [css guide](/docs/CSS_GUIDE.md) rules.
+Start from the branch that **matches issue version** ex. `0.5.0` 
+If there is no issue version start from `development`.
+`git checkout development`
+Create a new branch under the name of the issue and work in there. Remember about branch naming convention `[issue number]-ticket-description`
+ex. `git checkout -b 123-create-docs`
+
+## Creating commits
+* Use the present tense ("Add feature" not "Added feature")
+* Use the imperative mood ("Move cursor to..." not "Moves cursor to...")
+* Limit the first line to 72 characters or less
+* Reference issues and pull requests liberally after the first line
+* Consider starting the commit message with an applicable emoji:
+  * :seedling: `:seedling:` when adding a new feature
+  * :bug: `:bug:` when fixing a bug
+  * :books: `:books:` when adding or updating documentation
+  * :nail_care: `:nail_care:` when making changes to code style (e.g. lint settings)
+  * :recycle: `:recycle:` when refactoring code
+  * :fire: `:fire:` when removing code or files (including dependencies)
+  * :racehorse: `:racehorse:` when improving performance
+  * :white_check_mark: `:white_check_mark:` when adding or updating tests
+  * :construction_worker: `:construction_worker:` when updating the build process
+  * :bowtie: `:bowtie:` when updating CI
+  * :house: `:house:` when performing chores
+  * :new: `:new:` when adding a new dependency
+  * :arrow_up: `:arrow_up:` when upgrading a dependency
+  * :arrow_down: `:arrow_down:` when downgrading a dependency
+  * :back: `:back:` when reverting changes
+
+##### Guidance
+ - Please make sure that you follow our [css guide](/docs/CSS_GUIDE.md) rules.
 
 When you're done, submit a pull request and for one of the maintainers to check it out. We would let you know if there is any problem or any changes that should be considered.
+## Pull Requests
+ - Title
+   - Use the imperative mood ("Fix bug" not "Fixed bug")
+   - Use this structure `[name] - Closes #[issue number]` it will automatically close issue after PR will get merge.
+   ex. `Fix bug - Closes #123`
+- Description
+    - Fill our description template
+- Labels
+    - Use labels accordingly to current condition of PR
+      - :eye: `pending review` - When PR is ready to Review
+      - :building_construction: `in progress` - When there are still some changes to do on your PR
+      - :white_check_mark: `ready` - After your PR gets approved and merged
+- Projects
+  - Assign version according to issue version
+  - Assign sprint according to issue sprint
+##### Before creating PR make use that:
+ - All conflicts are resolved
+ - All new code is covered with unit tests
+ - All new features are covered with e2e tests
+ - All new code follows best practices
 
-### Tests
+##### Guidance
 
-We've written tests and you can run them to assure the stability of the code, just try running `npm test`. If you're adding a new functionality please include tests for it.
+ * Please use `rebase` instead of `merge` for resolving conflicts
+ * Delete Branch after PR gets merged
+ * Make sure that Jenkins build passes
 
-### Documentation
+##### Example
+![Alt text](./docs/assets/pr.png?raw=true "Perfect PR")
 
-Every chunk of code that may be hard to understand has some comments above it. If you write some new code or change some part of the existing code in a way that it would not be functional without changing it's usages, it needs to be documented.
+### Creating branch
+We use naming convention `[issue number]-[what ticket is about]`.
+:heavy_exclamation_mark: Remember to use `-` instead of `_`.
+ex. `12-create-new-sign-in-template`
+
+## Tests
+
+We've written tests and you can run them to assure the stability of the code, just try running `npm run test-live`.
+If you're adding a new functionality please include tests for it.
+
