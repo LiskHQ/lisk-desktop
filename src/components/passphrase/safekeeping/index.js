@@ -10,7 +10,6 @@ class SafeKeeping extends React.Component {
     super();
     this.state = {
       step: '',
-      isSafe: false,
     };
   }
 
@@ -32,7 +31,7 @@ class SafeKeeping extends React.Component {
   }
 
   done() {
-    this.setState({ step: 'done-step', isSafe: true });
+    this.setState({ step: 'done-step' });
     setTimeout(() => {
       this.props.nextStep({ passphrase: this.props.passphrase });
     }, 400);
@@ -111,7 +110,7 @@ class SafeKeeping extends React.Component {
                 onClick: () => prevStep({ jump: 2 }),
               }}
               primaryButton={{
-                disabled: this.state.isSafe,
+                disabled: this.state.step === 'done-step',
                 label: t('Yes! It\'s safe'),
                 className: 'next-button yes-its-safe-button',
                 onClick: this.done.bind(this),
