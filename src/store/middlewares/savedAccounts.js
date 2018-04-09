@@ -32,56 +32,37 @@ const savedAccountsMiddleware = (store) => {
   const isSameNetwork = (account, peers) => account.address === peers.data.options.address
     && peers.data.options.code === account.network;
 
-  const checkTransactionsAndUpdateSavedAccounts = (peers, tx, savedAccounts) => {
-    const { accounts } = savedAccounts;
-    const fetchedAccounts = [];
-
-    tx.forEach((transaction) => {
-      const sender = transaction ? transaction.senderId : null;
-      const recipient = transaction ? transaction.recipientId : null;
-
-      accounts.forEach((account, i) => {
-        const address = extractAddress(account.publicKey);
-        const shouldMakeRequest = () => (address === recipient || address === sender)
-            && isSameNetwork(account, peers) && !fetchedAccounts.includes(address);
-
-        if (shouldMakeRequest()) {
-          fetchedAccounts.push(address);
-          getAccount(peers.data, address).then((result) => {
-            if (result.balance !== account.balance) {
-              accounts[i].balance = result.balance;
-              store.dispatch({ data: {
-                accounts,
-                lastActive: getLastActiveAccount(),
-              },
-              type: actionTypes.accountsRetrieved,
-              });
-            }
-          });
-        }
-      });
-    });
-  };
-
-  const updateSavedAccounts = (peers, savedAccounts) => {
-    const { accounts } = savedAccounts;
-
+  const updateSavedAccounts = (peers, accounts) => {
     accounts.forEach((account, i) => {
       const address = extractAddress(account.publicKey);
       if (isSameNetwork(account, peers)) {
         getAccount(peers.data, address).then((result) => {
           if (result.balance !== account.balance) {
             accounts[i].balance = result.balance;
-            store.dispatch({ data: {
-              accounts,
-              lastActive: getLastActiveAccount(),
-            },
-            type: actionTypes.accountsRetrieved,
+            store.dispatch({
+              data: {
+                accounts,
+                lastActive: getLastActiveAccount(),
+              },
+              type: actionTypes.accountsRetrieved,
             });
           }
         });
       }
     });
+  };
+
+  const checkTransactionsAndUpdateSavedAccounts = (peers, tx, savedAccounts) => {
+    const changedAccounts = savedAccounts.accounts.filter((account) => {
+      const address = extractAddress(account.publicKey);
+      const relevantTransactions = tx.filter((transaction) => {
+        const sender = transaction ? transaction.senderId : null;
+        const recipient = transaction ? transaction.recipientId : null;
+        return (address === recipient || address === sender);
+      });
+      return relevantTransactions.length > 0;
+    });
+    updateSavedAccounts(peers, changedAccounts);
   };
 
   return next => (action) => {
@@ -92,7 +73,8 @@ const savedAccountsMiddleware = (store) => {
         checkTransactionsAndUpdateSavedAccounts(
           peers,
           action.data.block.transactions,
-          savedAccounts);
+          savedAccounts,
+        );
         break;
       case actionTypes.accountSwitched:
         store.dispatch(accountLoading());
@@ -114,7 +96,7 @@ const savedAccountsMiddleware = (store) => {
         }));
         break;
       case actionTypes.accountLoggedIn:
-        updateSavedAccounts(peers, savedAccounts);
+        updateSavedAccounts(peers, savedAccounts.accounts);
         store.dispatch(accountSaved({
           passphrase: action.data.passphrase,
           balance: action.data.balance,
