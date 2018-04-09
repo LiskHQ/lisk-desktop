@@ -17,6 +17,7 @@ const actionTypes = {
   voteLookupStatusCleared: 'VOTE_LOOKUP_STATUS_CLEARED',
   voteLookupStatusUpdated: 'VOTE_LOOKUP_STATUS_UPDATED',
   delegatesAdded: 'DELEGATES_ADDED',
+  delegatesRetrieved: 'DELEGATES_RETRIEVED',
   pendingVotesAdded: 'PENDING_VOTES_ADDED',
   toastDisplayed: 'TOAST_DISPLAYED',
   toastHidden: 'TOAST_HIDDEN',

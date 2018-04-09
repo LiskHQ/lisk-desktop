@@ -20,6 +20,15 @@ class RegisterDelegate extends React.Component {
     });
   }
 
+  checkDelegateUsernameAvailable(username) {
+    const data = {
+      activePeer: this.props.peers.data,
+      offset: 0,
+      q: username,
+    };
+    this.props.delegatesFetched(data);
+  }
+
   signWithFirstPass(passphrase) {
     const data = {
       activePeer: this.props.peers.data,
@@ -51,8 +60,10 @@ class RegisterDelegate extends React.Component {
             backButtonLabel={this.props.t('Back')}>
             <Choose title='Choose'
               t={this.props.t}
+              delegate={this.props.delegate}
               signWithFirstPass={this.signWithFirstPass.bind(this)}
               signWithSecondPass={this.signWithSecondPass.bind(this)}
+              checkDelegateUsernameAvailable={this.checkDelegateUsernameAvailable.bind(this)}
               submitDelegate={this.submitDelegate.bind(this)}
               icon='add' />
             <Choose title='Confirm' t={this.props.t} icon='add' />

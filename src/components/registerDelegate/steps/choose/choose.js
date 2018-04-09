@@ -29,8 +29,14 @@ class Choose extends React.Component {
         error: '',
       },
     };
-    this.delegateNameRegEx = new RegExp(/[a-zA-Z0-9!@$&_.]+/g);
-    this.delegateNameMaxChars = 20; // !@$&_.
+    this.delegateNameRegEx = new RegExp(/[a-zA-Z0-9!@$&_.]+/g); // !@$&_.
+    this.delegateNameMaxChars = 20;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.delegate.delegateNameInvalid) {
+      this.setState({ delegateName: { error: this.props.t('Usernane already exists') } });
+    }
   }
 
   hasEnoughLSK() {
@@ -184,7 +190,7 @@ class Choose extends React.Component {
               </h5>
             </header>
             <div className={styles.form}>
-              <form onSubmit={this.submitDelegate.bind(this)}>
+              <form onSubmit={this.handleSecondPassSubmit.bind(this)}>
                 <PassphraseInput
                   error={this.state.secondPassphrase.error}
                   value={this.state.secondPassphrase.value}
@@ -198,7 +204,7 @@ class Choose extends React.Component {
                   disabled={seccondPassHasError}
                   label={t('Next')}
                   className={`${styles.chooseNameBtn} sign-second-pass-btn`}
-                  onClick={this.submitDelegate.bind(this)}
+                  onClick={this.handleSecondPassSubmit.bind(this)}
                 />
               </form>
             </div>
@@ -213,7 +219,8 @@ class Choose extends React.Component {
               </h5>
             </header>
             <div className={styles.form}>
-              <form onSubmit={this.handleDelegateNameSubmit.bind(this)}>
+              <form onSubmit={() =>
+                this.props.checkDelegateUsernameAvailable(this.state.delegateName.value)}>
                 <Input label={this.props.t('Delegate name')} required={true}
                   autoFocus={true}
                   className='delegate-name'
@@ -225,7 +232,8 @@ class Choose extends React.Component {
                   disabled={delegateNameHasError}
                   label={t('Next')}
                   className={`${styles.chooseNameBtn} submit-delegate-name`}
-                  onClick={this.handleDelegateNameSubmit.bind(this)}
+                  onClick={() =>
+                    this.props.checkDelegateUsernameAvailable(this.state.delegateName.value)}
                 />
               </form>
             </div>
