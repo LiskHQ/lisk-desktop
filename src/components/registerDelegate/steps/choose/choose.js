@@ -77,7 +77,8 @@ class Choose extends React.Component {
     if (!value ||
         (typeof value !== 'string') ||
         nameMatchRegEx.length > 1 ||
-        nameMatchRegEx[0].length !== value.length) {
+        nameMatchRegEx[0].length !== value.length ||
+        value.length > this.delegateNameMaxChars) {
       error = this.props.t('Max 20 characters a-z 0-1, no special characters except “!@$&_.”');
     }
     this.setState({
@@ -183,7 +184,7 @@ class Choose extends React.Component {
               </h5>
             </header>
             <div className={styles.form}>
-              <form onSubmit={this.handleSecondPassSubmit.bind(this)}>
+              <form onSubmit={this.submitDelegate.bind(this)}>
                 <PassphraseInput
                   error={this.state.secondPassphrase.error}
                   value={this.state.secondPassphrase.value}
@@ -197,7 +198,7 @@ class Choose extends React.Component {
                   disabled={seccondPassHasError}
                   label={t('Next')}
                   className={`${styles.chooseNameBtn} sign-second-pass-btn`}
-                  onClick={this.handleSecondPassSubmit.bind(this)}
+                  onClick={this.submitDelegate.bind(this)}
                 />
               </form>
             </div>

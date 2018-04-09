@@ -8,7 +8,7 @@ import Box from '../box';
 import styles from './registerDelegate.css';
 
 class RegisterDelegate extends React.Component {
-  handleDelegateNameSubmit(state) {
+  submitDelegate(state) {
     event.preventDefault();
     // @todo I'm not handling this part: this.setState({ nameError: error.message });
     this.props.delegateRegistered({
@@ -47,13 +47,13 @@ class RegisterDelegate extends React.Component {
         <Box className={styles.registerDelegate}>
           <MultiStep
             prevPage={this.goBack.bind(this)}
-            finalCallback={this.handleDelegateNameSubmit.bind(this)}
+            finalCallback={this.submitDelegate.bind(this)}
             backButtonLabel={this.props.t('Back')}>
             <Choose title='Choose'
               t={this.props.t}
               signWithFirstPass={this.signWithFirstPass.bind(this)}
               signWithSecondPass={this.signWithSecondPass.bind(this)}
-              handleDelegateNameSubmit={this.handleDelegateNameSubmit.bind(this)}
+              submitDelegate={this.submitDelegate.bind(this)}
               icon='add' />
             <Choose title='Confirm' t={this.props.t} icon='add' />
           </MultiStep>
