@@ -131,7 +131,9 @@ describe('transaction middleware', () => {
 
     store.getState = () => ({
       ...state,
-      account: { address: delegateCandidateData.address },
+      account: {
+        publicKey: delegateCandidateData.publicKey,
+      },
     });
 
     const givenAction = {
