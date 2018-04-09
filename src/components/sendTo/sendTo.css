@@ -54,9 +54,14 @@
   }
 }
 
+.delegateRow {
+  line-height: 26px;
+  color: var(--color-grayscale-dark);
+}
+
 .delegateUsername {
-  font-weight: bold;
-  margin-left: 10px;
+  font-weight: 600;
+  margin-left: 8px;
 }
 
 @media (--xLarge-viewport) {
