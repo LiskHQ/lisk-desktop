@@ -23,8 +23,7 @@ class RegisterDelegate extends React.Component {
   checkDelegateUsernameAvailable(username) {
     const data = {
       activePeer: this.props.peers.data,
-      offset: 0,
-      q: username,
+      username,
     };
     this.props.delegatesFetched(data);
   }
