@@ -10,31 +10,32 @@ describe('VoteUrlProcessor', () => {
   let wrapper;
   let props;
 
-  // beforeEach(() => {
-  //   const account = accounts.delegate;
+  beforeEach(() => {
+    const account = accounts.delegate;
 
-  //   props = {
-  //     activePeer: {},
-  //     account,
-  //     clearVoteLookupStatus: sinon.spy(),
-  //     urlVotesFound: sinon.spy(),
-  //     notVotedYet: [],
-  //     notFound: [],
-  //     alreadyVoted: [],
-  //     upvotes: [],
-  //     unvotes: [],
-  //     pending: [],
-  //     history: {
-  //       location: {
-  //         search: '',
-  //       },
-  //     },
-  //     urlVoteCount: 0,
-  //     t: key => key,
-  //   };
-  //   wrapper = mount(<VoteUrlProcessor {...props} />);
-  // });
-
+    props = {
+      activePeer: {},
+      account,
+      clearVoteLookupStatus: sinon.spy(),
+      urlVotesFound: sinon.spy(),
+      settingsUpdated: sinon.spy(),
+      notVotedYet: [],
+      notFound: [],
+      alreadyVoted: [],
+      upvotes: [],
+      unvotes: [],
+      pending: [],
+      history: {
+        location: {
+          search: '',
+        },
+      },
+      urlVoteCount: 0,
+      t: key => key,
+    };
+    wrapper = mount(<VoteUrlProcessor {...props} />);
+  });
+  //
   // it('renders ProgressBar component if props.pending.length > 0', () => {
   //   wrapper.setProps({
   //     pending: ['delegate_name'],
@@ -43,40 +44,41 @@ describe('VoteUrlProcessor', () => {
   //   expect(wrapper.find('ProgressBar')).to.have.length(1);
   // });
 
-  // it('calls props.urlVotesFound with upvotes if URL contains ?votes=delegate_name', () => {
-  //   wrapper = mount(<VoteUrlProcessor {...{
-  //     ...props,
-  //     history: {
-  //       location: {
-  //         search: '?votes=delegate_name',
-  //       },
-  //     },
-  //   }} />);
-  //   expect(props.urlVotesFound).to.have.been.calledWith({
-  //     activePeer: props.activePeer,
-  //     upvotes: ['delegate_name'],
-  //     unvotes: [],
-  //     address: props.account.address,
-  //   });
-  // });
+  it('calls props.urlVotesFound with upvotes if URL contains ?votes=delegate_name', () => {
+    wrapper = mount(<VoteUrlProcessor {...{
+      ...props,
+      history: {
+        location: {
+          search: '?votes=delegate_name',
+        },
+      },
+    }} />);
+    expect(props.urlVotesFound).to.have.been.calledWith({
+      activePeer: props.activePeer,
+      upvotes: ['delegate_name'],
+      unvotes: [],
+      address: props.account.address,
+    });
+    expect(props.settingsUpdated).to.have.been.calledWith({ advancedMode: true });
+    });
 
-
-  // it('calls props.urlVotesFound with unvotes if URL contains ?unvotes=delegate_name', () => {
-  //   wrapper = mount(<VoteUrlProcessor {...{
-  //     ...props,
-  //     history: {
-  //       location: {
-  //         search: '?unvotes=delegate_name',
-  //       },
-  //     },
-  //   }} />);
-  //   expect(props.urlVotesFound).to.have.been.calledWith({
-  //     activePeer: props.activePeer,
-  //     upvotes: [],
-  //     unvotes: ['delegate_name'],
-  //     address: props.account.address,
-  //   });
-  // });
+  it('calls props.urlVotesFound with unvotes if URL contains ?unvotes=delegate_name', () => {
+    wrapper = mount(<VoteUrlProcessor {...{
+      ...props,
+      history: {
+        location: {
+          search: '?unvotes=delegate_name',
+        },
+      },
+    }} />);
+    expect(props.urlVotesFound).to.have.been.calledWith({
+      activePeer: props.activePeer,
+      upvotes: [],
+      unvotes: ['delegate_name'],
+      address: props.account.address,
+    });
+    expect(props.settingsUpdated).to.have.been.calledWith({ advancedMode: true });
+  });
 
   // it('renders .upvotes-message element with a message if props.upvotes.length > 0', () => {
   //   wrapper.setProps({

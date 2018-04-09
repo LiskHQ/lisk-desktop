@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router';
+import { settingsUpdated } from '../../actions/settings';
 
 import {
   urlVotesFound,
@@ -27,6 +28,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   urlVotesFound: data => dispatch(urlVotesFound(data)),
+  settingsUpdated: data => dispatch(settingsUpdated(data)),
   clearVoteLookupStatus: () => dispatch(voteLookupStatusCleared()),
 });
 

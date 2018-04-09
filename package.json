@@ -1,6 +1,6 @@
 {
   "name": "lisk-hub",
-  "version": "0.4.0-rc.1",
+  "version": "0.4.0-rc.2",
   "description": "Lisk Hub",
   "homepage": "https://github.com/LiskHQ/lisk-hub",
   "bugs": "https://github.com/LiskHQ/lisk-hub/issues",
@@ -97,7 +97,7 @@
     "babel-plugin-syntax-trailing-function-commas": "=6.22.0",
     "babel-plugin-transform-decorators-legacy": "=1.3.4",
     "babel-polyfill": "6.26.0",
-    "babel-preset-es2015": "6.24.1",
+    "babel-preset-env": "1.6.1",
     "babel-preset-react": "6.24.1",
     "babel-preset-stage-3": "=6.24.1",
     "bundlesize": "0.15.3",

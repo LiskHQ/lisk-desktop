@@ -32,8 +32,7 @@ const leftPadd = (str, pad, length) => {
  * Resets previous settings and creates a step with a random length between 1.6% to 3.2%
  */
 const init = (rand = Math.random()) => {
-  let step = (160 + Math.floor(rand * 160)) / 100;
-  step = step >= 0.01 ? step : 0.1 + (step * 5);
+  const step = (160 + Math.floor(rand * 160)) / 100;
   return {
     step,
     percentage: 0,
@@ -44,8 +43,8 @@ const init = (rand = Math.random()) => {
 
 /**
  * - From a zero byte:
- * - Removes all the 1s and replaces all the 1s with their index
- * - Creates a random number with the length of resulting array (pos)
+ * - Removes all the 1s and replaces all the 0s with their index
+ * - Creates a random index (pos) of the resulting array
  * - sets the bit in the pos position
  * - creates random byte using crypto and assigns that to seed in the
  *    position of pos
@@ -59,10 +58,10 @@ const init = (rand = Math.random()) => {
  * @returns {number[]} The input array whose member is pos is set
  */
 export const generateSeed = ({ byte, seed, percentage, step } = init(), rand = Math.random()) => {
-  const available = byte.map((bit, index) => (!bit ? index : null)).filter(bit => (bit !== null));
+  const available = byte.map((bit, idx) => (!bit ? idx : null)).filter(idx => (idx !== null));
   const seedIndex = (available.length > 0) ?
-    available[parseInt(rand * available.length, 10)] :
-    parseInt(rand * byte.length, 10);
+    available[Math.floor(rand * available.length)] :
+    Math.floor(rand * byte.length);
 
   const content = leftPadd(crypto.randomBytes(1)[0].toString(16), '0', 2);
 

@@ -20,10 +20,9 @@ class Send extends React.Component {
       && props.account.balance > 0
       && props.pendingTransactions.length === 0;
 
+    const { amount, recipient } = this.getSearchParams();
     this.state = {
-      sendIsActive: !!this.getSearchParams().address
-      || !!this.getSearchParams().amount
-      || needsAccountInit,
+      sendIsActive: !!recipient || !!amount || needsAccountInit,
     };
   }
 
@@ -37,6 +36,8 @@ class Send extends React.Component {
 
   render() {
     const { t } = this.props;
+    const { amount, recipient } = this.getSearchParams();
+
     return (
       <Fragment>
         <span className={styles.mobileMenu}>
@@ -52,11 +53,11 @@ class Send extends React.Component {
           </span>
           <MultiStep finalCallback={this.setSendIsActive.bind(this, false)}
             className={styles.wrapper}>
-            <AccountInitialization />
+            <AccountInitialization address={recipient} />
             <SendWritable
               autoFocus={this.state.sendIsActive || window.innerWidth > breakpoints.m}
-              address={this.getSearchParams().address}
-              amount={this.getSearchParams().amount}
+              address={recipient}
+              amount={amount}
             />
             <PassphraseSteps />
             <SendReadable />
