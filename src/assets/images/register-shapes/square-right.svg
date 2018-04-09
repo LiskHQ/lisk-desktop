@@ -5,8 +5,12 @@
     <desc>Created with Sketch.</desc>
     <defs>
         <linearGradient x1="0%" y1="50%" x2="94.0204156%" y2="50%" id="linearGradient-1">
-            <stop stop-color="#3023AE" offset="0%"></stop>
-            <stop stop-color="#C86DD7" offset="100%"></stop>
+            <stop stop-color="#3023AE" offset="0%">
+                <animate attributeName="stop-color" values="#C86DD7;#004AFF;#008BFF;#4D3AFF;#F792A6;#FFD300;#F792A6;#C86DD7" dur="10s" repeatCount="indefinite" />
+            </stop>
+            <stop stop-color="#C86DD7" offset="100%">
+                <animate attributeName="stop-color" values="#3023AE;#93F4FE;#00EDFF;#8480FF;#EC596D;#FF9100;#EC596D;#3023AE" dur="10s" repeatCount="indefinite" />
+            </stop>
         </linearGradient>
     </defs>
     <g id="01_Get-Access-✅" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
