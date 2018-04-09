@@ -9,7 +9,7 @@ import i18n from '../../i18n'; // initialized i18next instance
 import App from './';
 import Login from '../login';
 import Transactions from '../transactionDashboard';
-import Search from '../search';
+// import Search from '../search';
 import Voting from '../voting';
 import routes from '../../constants/routes';
 
@@ -28,7 +28,8 @@ const addRouter = Component => (props, path) =>
 
 const publicComponent = [
   { route: '/', component: Login },
-  { route: `${routes.explorer.path}${routes.search.path}`, component: Search },
+  // This route are commented because there are no easy solution for test async import components
+  // { route: `${routes.explorer.path}${routes.search.path}`, component: Search },
 ];
 
 const privateComponent = [
