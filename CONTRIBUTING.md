@@ -16,7 +16,7 @@
 First of all, thank you for taking the time to contribute to this project. :tada::tada::tada:
 We've tried to make a stable project and try to fix bugs and add new features continuously. You can help us do more.
 
-Before you start, read the **README.md** file for info on the project and how to set it up.
+Before you start, read the **[README.md](/README.md)** file for info on the project and how to set it up.
 
 ## Finding first issue
 Go to [issues tab](https://github.com/LiskHQ/lisk-hub/issues) and look for 
@@ -99,6 +99,8 @@ When you're done, submit a pull request and for one of the maintainers to check 
       - :eye: `pending review` - When PR is ready to Review
       - :building_construction: `in progress` - When there are still some changes to do on your PR
       - :white_check_mark: `ready` - After your PR gets approved and merged
+- Branch
+  - Make sure that base branch of PR is the same one as issue branch.
 - Projects
   - Assign version according to issue version
   - Assign sprint according to issue sprint
@@ -111,7 +113,6 @@ When you're done, submit a pull request and for one of the maintainers to check 
 ##### Guidance
 
  * Please use `rebase` instead of `merge` for resolving conflicts
- * Delete Branch after PR gets merged
  * Make sure that Jenkins build passes
  * Remember to delete branch after successfully merging the PR.
 

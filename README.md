@@ -8,7 +8,7 @@
 [![devDependencies Status](https://david-dm.org/liskHQ/lisk-hub/dev-status.svg)](https://david-dm.org/liskHQ/lisk-hub?type=dev)
 
 ## For Contributors
-Please see CONTRIBUTING.md for more information.
+Please see [CONTRIBUTING.md](/CONTRIBUTING.md) for more information.
 ## Development
 
 ```
