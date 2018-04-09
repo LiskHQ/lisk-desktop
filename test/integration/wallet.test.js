@@ -12,12 +12,10 @@ import accountReducer from '../../src/store/reducers/account';
 import transactionReducer from '../../src/store/reducers/transactions';
 import peersReducer from '../../src/store/reducers/peers';
 import loadingReducer from '../../src/store/reducers/loading';
-import savedAccountsReducer from '../../src/store/reducers/savedAccounts';
 import loginMiddleware from '../../src/store/middlewares/login';
 import accountMiddleware from '../../src/store/middlewares/account';
 import peerMiddleware from '../../src/store/middlewares/peers';
 import transactionsMiddleware from '../../src/store/middlewares/transactions';
-import savedAccountsMiddleware from '../../src/store/middlewares/savedAccounts';
 import { accountLoggedIn } from '../../src/actions/account';
 import { accountsRetrieved } from '../../src/actions/savedAccounts';
 import { activePeerSet } from '../../src/actions/peers';
@@ -101,14 +99,12 @@ describe('@integration: Wallet', () => {
       transactions: transactionReducer,
       peers: peersReducer,
       loading: loadingReducer,
-      savedAccounts: savedAccountsReducer,
     }, [
       thunk,
       accountMiddleware,
       loginMiddleware,
       transactionsMiddleware,
       peerMiddleware,
-      savedAccountsMiddleware,
     ]);
 
     const passphrase = options.isLocked ? undefined : accounts[accountType].passphrase;

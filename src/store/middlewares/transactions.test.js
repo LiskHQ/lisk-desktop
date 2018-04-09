@@ -31,11 +31,6 @@ describe('transaction middleware', () => {
       transactions: {
         pending: [],
       },
-      savedAccounts: {
-        lastActive: {
-          address: '8096217735672704724L',
-        },
-      },
     };
     store.getState = () => (state);
     store.dispatch = spy();

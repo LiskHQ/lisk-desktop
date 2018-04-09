@@ -44,10 +44,11 @@ const getAccountSuccess = (store, accountData) => {
 };
 
 const initTransactions = (store, action) => {
-  const activePeer = store.getState().peers.data;
-  const address = action.data.address;
-  const lastActiveAddress = store.getState().savedAccounts.lastActive ?
-    extractAddress(store.getState().savedAccounts.lastActive.publicKey) :
+  const state = store.getState();
+  const activePeer = state.peers.data;
+  const { address } = action.data;
+  const lastActiveAddress = state.account ?
+    extractAddress(state.account.publicKey) :
     null;
   const isSameAccount = lastActiveAddress === address;
   loadingStarted('transactions-init');
