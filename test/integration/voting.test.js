@@ -168,6 +168,8 @@ describe('@integration test of Voting', () => {
     step('Then I go to confirmation step', () => helper.goToConfirmation());
     step('When I click on confirm button', () => helper.clickOnElement('button.confirm'));
     step('Then I should see result box', () => helper.haveTextOf('h2.result-box-header', 'Votes submitted'));
+    step('Then I click Okey button', () => helper.clickOnElement('button.okay-button'));
+    step('And selectionHeader should be equal to "0"', () => helper.haveTextOf('.selection h4', 0));
     step('Then I restore Api mocks', restoreApiMocks);
   });
 

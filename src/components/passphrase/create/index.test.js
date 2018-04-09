@@ -39,6 +39,12 @@ describe('Passphrase: Create', () => {
     expect(wrapper.find('PrimaryButton')).to.have.lengthOf(0);
   });
 
+  it('should call showHint on ANDROID', () => {
+    const wrapper = mount(<Create {...props} agent='android' />, options);
+    wrapper.find('aside Button').simulate('click');
+    expect(wrapper.state().showHint).to.be.equal(true);
+  });
+
   it.skip('shows at least some progress on mousemove', () => {
     const wrapper = mount(<Create {...props} agent='ipad'/>, options);
     for (let i = 0; i < 10; i++) {
