@@ -90,7 +90,7 @@ When you're done, submit a pull request and for one of the maintainers to check 
 ## Pull Requests
  - Title
    - Use the imperative mood ("Fix bug" not "Fixed bug")
-   - Use this structure `[name] - Closes #[issue number]` it will automatically close issue after PR will get merge.
+   - Use this structure `[issue number]-[what-ticket-is-about]` it will automatically close issue after PR will get merge.
    ex. `Fix bug - Closes #123`
 - Description
     - Fill our description template
@@ -113,6 +113,7 @@ When you're done, submit a pull request and for one of the maintainers to check 
  * Please use `rebase` instead of `merge` for resolving conflicts
  * Delete Branch after PR gets merged
  * Make sure that Jenkins build passes
+ * Remember to delete branch after successfully merging the PR.
 
 ##### Example
 ![Alt text](./docs/assets/pr.png?raw=true "Perfect PR")
