@@ -99,8 +99,8 @@ When you're done, submit a pull request and for one of the maintainers to check 
       - :eye: `pending review` - When PR is ready to Review
       - :building_construction: `in progress` - When there are still some changes to do on your PR
       - :white_check_mark: `ready` - After your PR gets approved and merged
-- Branch
-  - Make sure that base branch of PR is the same one as issue branch.
+- Base branch
+  - Make sure that base branch of PR is the same one as issue version project, e.g. the branch for Project `Version 0.3.0` is `0.3.0`.
 - Projects
   - Assign version according to issue version
   - Assign sprint according to issue sprint
