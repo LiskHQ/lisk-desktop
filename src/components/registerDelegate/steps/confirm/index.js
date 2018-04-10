@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router';
-import Choose from './choose';
+import Confirm from './confirm';
 
 const mapStateToProps = state => ({
   account: state.account,
@@ -10,4 +10,4 @@ const mapStateToProps = state => ({
 
 export default withRouter(connect(
   mapStateToProps,
-)(translate()(Choose)));
+)(translate()(Confirm)));

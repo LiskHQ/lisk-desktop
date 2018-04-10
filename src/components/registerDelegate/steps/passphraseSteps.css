@@ -1,0 +1,22 @@
+@import '../../app/variables.css';
+
+:root {
+  --main-content-horizontal-padding: 218px;
+  --step-heading-fs: 48px;
+  --form-content-horizontal-padding: 48px;
+}
+
+.headerWrapper {
+  text-align: center;
+
+  & h2 {
+    font-family: var(--heading-font);
+    font-size: var(--step-heading-fs);
+    font-weight: var(--font-weight-very-bold);
+    padding: 0 var(--main-content-horizontal-padding);
+  }
+}
+
+.wrapper {
+  padding: var(--form-content-horizontal-padding);
+}

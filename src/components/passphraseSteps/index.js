@@ -103,6 +103,7 @@ class PassphraseSteps extends React.Component {
 
   render() {
     const values = {
+      columns: { xs: 6, sm: 4, md: 6 },
       passphrase: {
         key: 'passphrase',
         header: this.props.t('Enter your passphrase'),
@@ -119,17 +120,28 @@ class PassphraseSteps extends React.Component {
       },
     };
 
-    return <div className={`${styles.wrapper}`}>
-      <header className={styles.headerWrapper}>
-        <h2>{values[this.getCurrentStep()].header}</h2>
+    let updatedValues = { ...values };
+    let updatedStyles = { ...styles };
+
+    if (this.props.values) {
+      updatedValues = { ...updatedValues, ...this.props.values };
+    }
+
+    if (this.props.styles) {
+      updatedStyles = { ...updatedStyles, ...this.props.styles };
+    }
+
+    return <div className={`${updatedStyles.wrapper}`}>
+      <header className={updatedStyles.headerWrapper}>
+        <h2>{updatedValues[this.getCurrentStep()].header}</h2>
       </header>
       <PassphraseInput
-        className={values[this.getCurrentStep()].className}
+        className={updatedValues[this.getCurrentStep()].className}
         error={values[this.getCurrentStep()].state.error}
         value={values[this.getCurrentStep()].state.value}
         onChange={this.onChange.bind(this, values[this.getCurrentStep()].key)}
-        columns={{ xs: 6, sm: 4, md: 6 }}
-        theme={styles}
+        columns={updatedValues.columns}
+        theme={updatedStyles}
         isFocused={true}
       />
       <footer>
@@ -143,14 +155,14 @@ class PassphraseSteps extends React.Component {
                 reset: this.props.accountInit,
               })}
               type='button'
-              theme={styles}
+              theme={updatedStyles}
             />
           </div>
           <div className={grid['col-xs-8']}>
             <Button
               className={values[this.getCurrentStep()].buttonClassName}
               label={this.props.t('Next')}
-              theme={styles}
+              theme={updatedStyles}
               onClick={this.setDone.bind(this, values[this.getCurrentStep()].key)}
               disabled={!passphraseIsValid(values[this.getCurrentStep()].state)}
             />

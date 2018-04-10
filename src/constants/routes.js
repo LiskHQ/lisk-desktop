@@ -2,6 +2,7 @@ import Dashboard from '../components/dashboard';
 import Sidechains from '../components/sidechains';
 import Login from '../components/login';
 import Register from '../components/register';
+import RegisterDelegate from '../components/registerDelegate';
 import SecondPassphrase from '../components/secondPassphrase';
 import Search from '../components/search';
 import SearchResult from '../components/search/searchResult';
@@ -46,6 +47,12 @@ export default {
   register: {
     path: '/register',
     component: Register,
+    isLoaded: true,
+    isPrivate: false,
+  },
+  registerDelegate: {
+    path: '/register-delegate',
+    component: RegisterDelegate,
     isLoaded: true,
     isPrivate: false,
   },

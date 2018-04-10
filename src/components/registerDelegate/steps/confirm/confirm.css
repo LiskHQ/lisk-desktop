@@ -1,0 +1,16 @@
+@import '../../../app/variables.css';
+
+.delegateName {
+  font-family: var(--heading-font);
+  font-size: var(--font-size-h2);
+  margin-bottom: 32px;
+}
+
+.accountVisual {
+  margin: 0;
+}
+
+.confirmInput {
+  width: 261px;
+  margin: 0 auto;
+}

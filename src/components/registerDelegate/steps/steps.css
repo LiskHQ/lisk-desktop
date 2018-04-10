@@ -1,0 +1,42 @@
+@import '../../app/variables.css';
+
+:root {
+  --main-content-horizontal-padding: 218px;
+  --step-heading-fs: 48px;
+  --form-content-vertical-padding: 32px;
+  --form-content-horizontal-padding: 48px;
+}
+
+.container {
+  text-align: center;
+}
+
+.heading {
+  font-family: var(--heading-font);
+  font-size: var(--step-heading-fs);
+  font-weight: var(--font-weight-very-bold);
+  margin: 0;
+  margin-bottom: 0;
+  padding: 0 var(--main-content-horizontal-padding);
+}
+
+.description {
+  font-size: var(--subtitle-font-size);
+  color: var(--color-grayscale-dark);
+  margin-bottom: 80px;
+  padding: 0 var(--main-content-horizontal-padding);
+}
+
+.chooseNameBtn {
+  margin-bottom: 24px;
+}
+
+.error {
+  color: var(--color-error);
+  font-size: var(--font-size-small);
+}
+
+.form {
+  padding: var(--form-content-vertical-padding) var(--form-content-horizontal-padding);
+  width: calc(100% - var(--form-content-horizontal-padding) * 2);
+}

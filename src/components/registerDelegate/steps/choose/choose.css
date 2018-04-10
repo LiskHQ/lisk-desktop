@@ -1,41 +1,20 @@
 @import '../../../app/variables.css';
 
 :root {
-  --main-content-horizontal-padding: 218px;
-  --step-heading-fs: 48px;
-  --form-content-vertical-padding: 32px;
-  --form-content-horizontal-padding: 48px;
+  --input-horizontal-padding: 184px;
 }
 
-.container {
-  text-align: center;
-}
+.delegateNameInput {
+  padding: 0 var(--input-horizontal-padding);
+  margin-bottom: 111px;
 
-.heading {
-  font-family: var(--heading-font);
-  font-size: var(--step-heading-fs);
-  font-weight: var(--font-weight-very-bold);
-  margin: 0;
-  margin-bottom: 0;
-  padding: 0 var(--main-content-horizontal-padding);
-}
+  & > input[type='text'] {
+    font-size: 32px;
+    font-family: var(--heading-font);
+  }
 
-.description {
-  font-size: var(--subtitle-font-size);
-  margin-bottom: 80px;
-  padding: 0 var(--main-content-horizontal-padding);
-}
-
-.chooseNameBtn {
-  margin-bottom: 24px;
-}
-
-.error {
-  color: var(--color-error);
-  font-size: var(--font-size-small);
-}
-
-.form {
-  padding: var(--form-content-vertical-padding) var(--form-content-horizontal-padding);
-  width: calc(100% - var(--form-content-horizontal-padding) * 2);
+  & > span[class*='input__error'] {
+    font-size: 14px;
+    font-family: var(--heading-font);
+  }
 }

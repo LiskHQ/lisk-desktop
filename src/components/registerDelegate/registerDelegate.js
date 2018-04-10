@@ -1,22 +1,26 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
+import PassphraseSteps from './../passphraseSteps';
 import Choose from './steps/choose';
+import Confirm from './steps/confirm';
 import BackgroundMaker from '../backgroundMaker';
 import MultiStep from '../multiStep';
 import Box from '../box';
 import styles from './registerDelegate.css';
+import passphraseStyles from './steps/passphraseSteps.css';
 
 class RegisterDelegate extends React.Component {
-  submitDelegate(state) {
+  submitDelegate({ delegateName, passphrase, secondPassphrase }) {
     event.preventDefault();
     // @todo I'm not handling this part: this.setState({ nameError: error.message });
+
     this.props.delegateRegistered({
       activePeer: this.props.peers.data,
       account: this.props.account,
-      username: state.delegateName.value,
-      passphrase: state.passphrase.value,
-      secondPassphrase: state.secondPassphrase.value,
+      username: delegateName,
+      passphrase,
+      secondPassphrase: `${secondPassphrase}-notValid`, // TODO: remove
     });
   }
 
@@ -28,27 +32,21 @@ class RegisterDelegate extends React.Component {
     this.props.delegatesFetched(data);
   }
 
-  signWithFirstPass(passphrase) {
-    const data = {
-      activePeer: this.props.peers.data,
-      passphrase,
-    };
-    this.props.accountUpdated(data);
-  }
-
-  signWithSecondPass(passphrase) {
-    const data = {
-      activePeer: this.props.peers.data,
-      secondPassphrase: passphrase,
-    };
-    this.props.accountUpdated(data);
-  }
-
   goBack() {
     this.props.history.goBack();
   }
 
   render() {
+    const passphraseValues = {
+      columns: { xs: 2, sm: 2, md: 2 },
+      passphrase: {
+        header: this.props.t('Please sign in with your 1st passphrase'),
+      },
+      secondPassphrase: {
+        header: this.props.t('Please sign in with your 2nd passphrase'),
+      },
+    };
+
     return (
       <div className={styles.wrapper}>
         <BackgroundMaker className={styles.background} />
@@ -57,15 +55,17 @@ class RegisterDelegate extends React.Component {
             prevPage={this.goBack.bind(this)}
             finalCallback={this.submitDelegate.bind(this)}
             backButtonLabel={this.props.t('Back')}>
-            <Choose title='Choose'
+            <Choose
+              title={this.props.t('Choose')}
               t={this.props.t}
-              delegate={this.props.delegate}
-              signWithFirstPass={this.signWithFirstPass.bind(this)}
-              signWithSecondPass={this.signWithSecondPass.bind(this)}
               checkDelegateUsernameAvailable={this.checkDelegateUsernameAvailable.bind(this)}
-              submitDelegate={this.submitDelegate.bind(this)}
               icon='add' />
-            <Choose title='Confirm' t={this.props.t} icon='add' />
+            <PassphraseSteps styles={passphraseStyles} values={passphraseValues} title={this.props.t('Safekeeping')} icon='add' />
+            <Confirm
+              title={this.props.t('Confirm')}
+              icon='add'
+              t={this.props.t}
+              submitDelegate={this.submitDelegate.bind(this)} />
           </MultiStep>
         </Box>
       </div>
