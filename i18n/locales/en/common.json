@@ -215,7 +215,6 @@
   "The download was started. Depending on your internet speed it can take up to several minutes. You will be informed then it is finished and prompted to restart the app.": "The download was started. Depending on your internet speed it can take up to several minutes. You will be informed then it is finished and prompted to restart the app.",
   "The easiest way to do this is to send LSK to yourself. It will cost you only the usual {{fee}} LSK transaction fee.": "The easiest way to do this is to send LSK to yourself. It will cost you only the usual {{fee}} LSK transaction fee.",
   "There are no {{filterName}} transactions.": "There are no {{filterName}} transactions.",
-  "There is a new version ({{version}}) available, do you want to update now?": "There is a new version ({{version}}) available, do you want to update now?",
   "This is not reversible.": "This is not reversible.",
   "This is your Lisk ID": "This is your Lisk ID",
   "This process should take only 10 seconds but may take up to 15 minutes.": "This process should take only 10 seconds but may take up to 15 minutes.",
