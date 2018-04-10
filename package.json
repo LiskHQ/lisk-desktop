@@ -12,7 +12,7 @@
     "build:testnet:post": "replace '\"mainnet\";//defaultNetwork' '\"testnet\";//defaultNetwork' ./app/build-testnet/index.html ",
     "dev": "webpack-dev-server --config ./config/webpack.config.dev --env.dev --hot",
     "build-prod": "webpack --config ./config/webpack.config.prod --env.prod",
-    "build-electron": "webpack --config ./config/webpack.config.electron",
+    "build-electron": "webpack --config ./config/webpack.config.electron && cpx ./app/update.html ./app/build/",
     "e2e-test": "protractor protractor.conf.js",
     "test": "karma start",
     "bundlesize": "bundlesize",
