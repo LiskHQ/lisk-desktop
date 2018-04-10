@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+  <head>
+      <meta charset="utf-8">
+      <title>Lisk update</title>
+      <style>
+          body {
+            background: #003E7C;
+            padding: 20px;
+          }
+
+          .header {
+            margin-top: 0;
+            color: #fff;
+          }
+
+          .app {
+            background: #fff;
+            margin: 20px 0;
+            height: 285px;
+            overflow-y: scroll;
+            padding: 10px;
+            border-radius: 4px;
+          }
+
+          .actionBar {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+          }
+
+          .button {
+            border: none;
+            background: #FD4E31;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+          }
+
+          .button.isClose {
+            background: #eee;
+            color: #666;
+            outline: none !important;
+          }
+      </style>
+    </head>
+    <body>
+      <h1 class="header" id="header"></h1>
+      <div class="app" id="app"></div>
+      <div class="actionBar">
+        <button class="button isClose" id="close">Close</button>
+        <button class="button" id="update">Update</button>
+      </div>
+    </body>
+    <script>
+        const ipc = require('electron').ipcRenderer;
+        const updateElm = document.getElementById('update');
+        const closeElm = document.getElementById('close');
+        const app = document.getElementById('app');
+        const header = document.getElementById('header');
+        ipc.on('loadNotes', function (event, data) {
+          app.innerHTML = data.message;
+          header.innerText = data.title;
+          updateElm.innerText = data.buttons[0];
+          closeElm.innerText = data.buttons[1];
+        });
+        function closeWindow() {
+          window.close();
+          return false;
+        } 
+        function updateApp() {
+          ipc.send('update', { text: 'update' });
+        }
+        updateElm.addEventListener("mouseup", updateApp, false);
+        closeElm.addEventListener("mouseup", closeWindow, false);
+    </script>
+</html>
