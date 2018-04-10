@@ -37,7 +37,7 @@ class accountTransactions extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  delegateUsername: state.account.targetDelegate ? state.account.targetDelegate.username : null,
+  delegateUsername: state.account.delegate ? state.account.delegate.username : null,
   balance: state.transactions.account ? state.transactions.account.balance : null,
   notLoading: state.loading.length === 0,
 });

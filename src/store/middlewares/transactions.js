@@ -69,7 +69,7 @@ const initTransactions = (store, action) => {
               .then((delegateData) => {
                 accountDataResult = {
                   ...accountDataResult,
-                  targetDelegate: { ...delegateData.delegate },
+                  delegate: { ...delegateData.delegate },
                 };
                 getAccountSuccess(store, accountDataResult);
               }).catch(() => {
@@ -79,7 +79,7 @@ const initTransactions = (store, action) => {
           } else if (isSameAccount && accountData.isDelegate) {
             accountDataResult = {
               ...accountDataResult,
-              targetDelegate: { ...accountData.delegate },
+              delegate: { ...accountData.delegate },
             };
           }
           getAccountSuccess(store, accountDataResult);

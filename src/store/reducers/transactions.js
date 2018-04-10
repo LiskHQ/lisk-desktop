@@ -58,7 +58,7 @@ const transactions = (state = { pending: [], confirmed: [], count: null }, actio
         account: {
           address: action.data.address,
           balance: action.data.balance,
-          targetDelegate: action.data.targetDelegate,
+          delegate: action.data.delegate,
         },
         filter: txFilter.all,
       });

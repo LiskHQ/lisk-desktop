@@ -109,7 +109,7 @@ describe('transaction middleware', () => {
       count: 1,
       balance: genesisAccountData.balance,
       address: delegateCandidateData.address,
-      targetDelegate: {
+      delegate: {
         ...delegateCandidateData,
       },
     };
@@ -149,7 +149,7 @@ describe('transaction middleware', () => {
       count: 1,
       balance: delegateCandidateData.balance,
       address: delegateCandidateData.address,
-      targetDelegate: {
+      delegate: {
         ...delegateCandidateData,
       },
     };

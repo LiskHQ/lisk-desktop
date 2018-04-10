@@ -58,7 +58,7 @@ const account = (state = {}, action) => {
     case actionTypes.accountUpdated:
       return merge(state, action.data);
     case actionTypes.transactionsInit:
-      return { ...state, targetDelegate: action.data.targetDelegate };
+      return { ...state, delegate: action.data.delegate };
     case actionTypes.accountLoggedIn:
       return action.data;
     case actionTypes.accountLoggedOut:
