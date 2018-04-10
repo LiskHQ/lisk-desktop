@@ -1,8 +1,8 @@
 Feature: Register second passphrase
   Scenario: should allow to set 2nd passphrase
     Given I'm logged in as "second passphrase candidate"
-    And I wait 0.1 seconds
-    When I go to "second-passphrase/"
+    And I wait 0.5 seconds
+    When I go to "second-passphrase"
     And I wait 0.5 seconds
     And I click "next"
     And I wait 0.5 seconds
@@ -25,7 +25,7 @@ Feature: Register second passphrase
     When I click "send button"
     And I wait 1 seconds
     Then I should see text "Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain." in "result box message" element
-    When I go to "second-passphrase/"
+    When I go to "second-passphrase"
     Then I should be on url "/dashboard"
 
   # TODO: will be re-enabled when the functionality is implemented

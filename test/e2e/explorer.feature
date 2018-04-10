@@ -14,7 +14,7 @@ Feature: Explorer page
     Then I should see 25 rows
     When I click "send to address"
     And I wait 1 seconds
-    Then I should be on url "/?referrer=/wallet%3Faddress%3D15610359283786884938L"
+    Then I should be on url "/?referrer=/wallet%3Frecipient%3D15610359283786884938L"
     When I click "explorer" menu
     When I fill in "1465651642158264047" to "search input" field
     And I click "input search button"
