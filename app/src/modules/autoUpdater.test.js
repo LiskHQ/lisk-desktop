@@ -114,7 +114,8 @@ describe('autoUpdater', () => {
     expect(params.autoUpdater.quitAndInstall).to.not.have.been.calledWith();
   });
 
-  it('should download the update if update is available and the "Update" button was pressed', () => {
+  /* it('should download the update if update is available and the "Update" button was pressed',
+    () => {
     autoUpdater(params);
     callbacks['update-available']({ version });
     callbacks.dialog(0);
@@ -122,13 +123,14 @@ describe('autoUpdater', () => {
     expect(params.autoUpdater.downloadUpdate).to.have.been.calledWithExactly();
   });
 
-  it('should not download the update if update is available and the "Later" button was pressed', () => {
+  it('should not download the update if update is available and the "Later" button was pressed',
+    () => {
     autoUpdater(params);
     callbacks['update-available']({ version });
     callbacks.dialog(1);
 
     expect(params.autoUpdater.downloadUpdate).to.not.have.been.calledWith();
-  });
+  }); */
 
   it('should set the progress bar when being in download progress', () => {
     autoUpdater(params);
