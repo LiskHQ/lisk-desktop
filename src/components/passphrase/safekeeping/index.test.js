@@ -14,8 +14,6 @@ describe('Passphrase: Safekeeping', () => {
   let wrapper;
   const passphrase = 'stock wagon borrow episode laundry kitten salute link globe zero feed marble';
   const props = {
-    header: 'test header',
-    message: 'test message',
     passphrase,
     t: key => key,
     prevStep: () => {},
@@ -34,6 +32,8 @@ describe('Passphrase: Safekeeping', () => {
       store: PropTypes.object.isRequired,
     },
   };
+
+  spy(Safekeeping.prototype, 'next');
 
   beforeEach(() => {
     spy(props, 'prevStep');
@@ -58,17 +58,29 @@ describe('Passphrase: Safekeeping', () => {
     expect(wrapper.find(ActionBar)).to.have.lengthOf(1);
   });
 
-  /**
-   * @todo simulate doesn't trigger onChange
-   */
-  it.skip('should change the state to revealing if the first SliderCheckbox checked', () => {
-    wrapper.find('SliderCheckbox').at(0).find('input[type="checkbox"]')
-      .simulate('change', { target: { checked: true } });
+  it('should change the state.step to revealing-step', () => {
+    const clock = useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
+    wrapper.find('SliderCheckbox').at(0).props()
+      .onChange({ checked: true, value: 'introduction-step' });
+    expect(Safekeeping.prototype.next.calledOnce).to.equal(true);
+    clock.tick(701);
     wrapper.update();
+    expect(wrapper.find('TransitionWrapper').at(0).props().current).to.be.equal('revealing-step');
+    clock.restore();
+  });
 
-    const className = wrapper.find('section').at(0).props().className;
-    expect(className).to.not.include('introduction-step');
-    expect(className).to.include('revealing-step');
+  it('should change the state.step to revealed-step', () => {
+    const clock = useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
+    wrapper.find('SliderCheckbox').at(0).props()
+      .onChange({ checked: true, value: 'revealing-step' });
+    clock.tick(701);
+    wrapper.update();
+    expect(wrapper.find('TransitionWrapper').at(0).props().current).to.be.equal('revealed-step');
+    clock.restore();
   });
 
   it('should call nextStep if Next button clicked', () => {
@@ -81,5 +93,12 @@ describe('Passphrase: Safekeeping', () => {
     expect(props.nextStep).to.have.been.calledWith();
     wrapper.unmount();
     clock.restore();
+  });
+
+  it('should call prevStep if Back button clicked', () => {
+    wrapper.find('button.back-button').simulate('click');
+
+    expect(props.prevStep).to.have.been.calledWith({ jump: 2 });
+    wrapper.unmount();
   });
 });

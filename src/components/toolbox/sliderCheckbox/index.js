@@ -123,7 +123,7 @@ class SliderCheckbox extends React.Component {
           <span className={theme.arrowRight}>
             { textAsIcon ?
               <span className={theme.text}>{icons.unchecked}</span> :
-              <FontIcon className={theme.icon}>
+              <FontIcon className={`${theme.icon} icon`}>
                 {icons.unchecked || 'arrow-right'}
               </FontIcon>
             }
@@ -132,7 +132,7 @@ class SliderCheckbox extends React.Component {
           <span className={theme.checkMark}>
             { textAsIcon ?
               <span className={theme.text}>{icons.checked}</span> :
-              <FontIcon className={theme.icon}>
+              <FontIcon className={`${theme.icon} icon`}>
                 {icons.checked || 'checkmark'}
               </FontIcon>
             }

@@ -7,7 +7,7 @@ describe('SliderCheckbox without HOC', () => {
   let wrapper;
 
   const props = {
-    icons: { done: 'done' },
+    icons: { done: 'done', begin: 'begin' },
     onChange: () => {},
     input: { value: 'introduction-step' },
     theme: {
@@ -18,11 +18,17 @@ describe('SliderCheckbox without HOC', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<SliderCheckbox {...props} />);
+    wrapper = mount(<SliderCheckbox {...props} textAsIcon={true} />);
   });
 
   it('should render Checkbox', () => {
     expect(wrapper.find(SliderCheckbox)).to.have.lengthOf(1);
+  });
+
+  it('should render Checkbox without textAsAction', () => {
+    const customWrapper = mount(<SliderCheckbox {...props} />);
+    wrapper.find('label').props().onMouseDown({ nativeEvent: { pageX: 'x' } });
+    expect(customWrapper.find('span.icon')).to.have.lengthOf(2);
   });
 
   // the values 870, 900 and 1000 are describing the position of the dragged element 

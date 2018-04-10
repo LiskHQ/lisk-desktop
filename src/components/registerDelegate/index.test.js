@@ -1,5 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
+import thunk from 'redux-thunk';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
@@ -27,7 +28,7 @@ describe('RegisterDelegateHOC', () => {
     username: 'lisk-hub',
   };
 
-  const store = configureMockStore([])({
+  const store = configureMockStore([thunk])({
     peers,
     account,
   });

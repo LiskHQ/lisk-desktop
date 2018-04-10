@@ -69,6 +69,8 @@ module.exports = function (config) {
             'src/components/search/index.js',
             'src/components/voteUrlProcessor/voteUrlProcessor.js',
             'src/components/voteUrlProcessor/index.js',
+            'src/components/onboarding/index.js',
+            'src/components/passphrase/createSecond/index.js',
           ],
           overrides: {
             'src/store/**/*.js': {

@@ -26,6 +26,7 @@ class SecondPassphrase extends React.Component {
     const header = t('Secure the use of your Lisk ID with a second passphrase.');
     const message = t('You will need it to use your Lisk ID, like sending and voting. You are responsible for keeping your second passphrase safe. No one can restore it, not even Lisk.');
     const onPassphraseRegister = (secondPassphrase, passphrase) => {
+      /* istanbul ignore next */
       registerSecondPassphrase({
         activePeer: peers.data,
         secondPassphrase,

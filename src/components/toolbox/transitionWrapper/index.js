@@ -30,8 +30,8 @@ class TransitionWrapper extends React.Component {
       this.transitionIn(true);
     }
   }
-
   validateChildren() {
+    /* istanbul ignore if */
     if (this.props.children instanceof Array && this.props.children.length !== 1) {
       throw Error('TransitionWrapper must have exactly one child');
     }
