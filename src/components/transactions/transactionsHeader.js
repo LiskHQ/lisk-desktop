@@ -1,7 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { translate } from 'react-i18next';
-import styles from './transactions.css';
+import styles from './transactionRow.css';
 
 const TransactionsHeader = ({ t }) => (
   <div className={`${grid.row}  ${styles.rows} ${styles.paddingLeft}`} id="transactionsHeader">

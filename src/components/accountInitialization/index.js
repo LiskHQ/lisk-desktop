@@ -14,11 +14,11 @@ class AccountInitialization extends React.Component {
   }
 
   componentDidMount() {
-    const { account, transactions } = this.props;
+    const { account, transactions, address } = this.props;
     const needsNoAccountInit = account.serverPublicKey
       || account.balance === 0
       || transactions.pending.length > 0;
-    if (needsNoAccountInit) {
+    if (needsNoAccountInit || address) {
       this.props.nextStep();
     }
   }

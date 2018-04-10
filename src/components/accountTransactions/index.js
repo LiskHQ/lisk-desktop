@@ -17,7 +17,7 @@ class accountTransactions extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   render() {
     return <div className={`${grid.row} ${styles.wrapper}`}>
-      <div className={`${grid['col-md-4']} ${styles.gridPadding} ${styles.sendTo}`}>
+      <div className={`${grid['col-md-4']} ${styles.sendTo}`}>
         <SendTo
           balance={this.props.balance}
           address={this.props.match.params.address}
