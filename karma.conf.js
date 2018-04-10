@@ -54,6 +54,8 @@ module.exports = function (config) {
           functions: 80,
           lines: 80,
           excludes: [
+            'app/src/modules/autoUpdater.js',
+            'app/src/modules/updateModal.js',
             'src/components/delegateSidebar/index.js',
             'src/components/setting/index.js',
             'src/components/menuBar/menuBar.js',
