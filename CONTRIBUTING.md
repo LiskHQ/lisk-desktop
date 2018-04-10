@@ -90,7 +90,7 @@ When you're done, submit a pull request and for one of the maintainers to check 
 ## Pull Requests
  - Title
    - Use the imperative mood ("Fix bug" not "Fixed bug")
-   - Use this structure `[issue number]-[what-ticket-is-about]` it will automatically close issue after PR will get merge.
+   - Use this structure `[What the PR is about] - Closes #[issue number]` it will automatically close issue after PR will get merged.
    ex. `Fix bug - Closes #123`
 - Description
     - Fill our description template
@@ -120,7 +120,7 @@ When you're done, submit a pull request and for one of the maintainers to check 
 ![Alt text](./docs/assets/pr.png?raw=true "Perfect PR")
 
 ### Creating branch
-We use naming convention `[issue number]-[what ticket is about]`.
+We use naming convention `[issue number]-[what-the-ticket-is-about]`.
 :heavy_exclamation_mark: Remember to use `-` instead of `_`.
 ex. `12-create-new-sign-in-template`
 
