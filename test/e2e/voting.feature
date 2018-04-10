@@ -2,7 +2,7 @@ Feature: Voting page
   Scenario: should allow to view delegates and more on scroll
     Given I'm logged in as "any account"
     And I wait 0.1 seconds
-    When I go to "main/voting/"
+    When I go to "delegates/"
     Then I should see 100 instances of "delegate row"
     When I scroll to the bottom of "delegate list"
     Then I should see 200 instances of "delegate row"
@@ -10,7 +10,7 @@ Feature: Voting page
   Scenario: should allow to search delegates
     Given I'm logged in as "any account"
     And I wait 0.1 seconds
-    When I go to "main/voting/"
+    When I go to "delegates/"
     And I fill in "genesis_42" to "search" field
     Then I should see 1 instances of "delegate row"
     And I clear "search" field
@@ -19,10 +19,10 @@ Feature: Voting page
     And I should see text "No delegates found." in "empty message" element
 
   @testnet
-  Scenario: should allow to select delegates in the "Voting" tab and vote for them
+  Scenario: should allow to select delegates in the "Delegates" tab and vote for them
     Given I'm logged in as "delegate candidate"
     And I wait 0.5 seconds
-    When I go to "main/voting/"
+    When I go to "delegates/"
     And I click checkbox on list item no. 3
     And I click checkbox on list item no. 5
     And I click checkbox on list item no. 8
@@ -35,7 +35,7 @@ Feature: Voting page
   Scenario: should allow to vote with second passphrase account
     Given I'm logged in as "second passphrase account"
     And I wait 0.1 seconds
-    When I go to "main/voting/"
+    When I go to "delegates/"
     And I click checkbox on list item no. 3
     And I click checkbox on list item no. 5
     And I click checkbox on list item no. 8

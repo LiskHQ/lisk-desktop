@@ -18,11 +18,11 @@ describe('SendTo Component', () => {
   });
 
   it('renders correct link', () => {
-    expect(wrapper.find('Link').prop('to')).to.equal(`${routes.main.path}${routes.wallet.path}?recipient=${props.address}`);
+    expect(wrapper.find('Link').prop('to')).to.equal(`${routes.wallet.path}?recipient=${props.address}`);
   });
 
   it('updates when address changes', () => {
     wrapper.setProps({ address: '9876L' });
-    expect(wrapper.find('Link').prop('to')).to.equal(`${routes.main.path}${routes.wallet.path}?recipient=9876L`);
+    expect(wrapper.find('Link').prop('to')).to.equal(`${routes.wallet.path}?recipient=9876L`);
   });
 });

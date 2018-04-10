@@ -24,7 +24,7 @@ class Dashboard extends React.Component {
           <header>
             <h2 className={styles.title}>
               {t('Latest activity')}
-              <Link to={`${routes.main.path}${routes.transaction.path}`} className={`${styles.seeAllLink} seeAllLink`}>
+              <Link to={`${routes.wallet.path}`} className={`${styles.seeAllLink} seeAllLink`}>
                 {t('See all transactions')}
                 <FontIcon value='arrow-right'/>
               </Link>
@@ -37,7 +37,7 @@ class Dashboard extends React.Component {
             dashboard: true,
             loading,
             history,
-            onClick: props => history.push(`${routes.main.path}${routes.wallet.path}?id=${props.value.id}`),
+            onClick: props => history.push(`${routes.wallet.path}?id=${props.value.id}`),
           }} />
         </Box>
       </div>

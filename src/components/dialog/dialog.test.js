@@ -71,7 +71,7 @@ describe('Dialog', () => {
     const clock = sinon.useFakeTimers({
       toFake: ['setTimeout', 'clearTimeout'],
     });
-    history.location.pathname = `${routes.main.path}${routes.wallet.path}saved-accounts`;
+    history.location.pathname = `${routes.wallet.path}saved-accounts`;
     wrapper.setProps({ history });
     wrapper.find('.x-button').simulate('click');
     clock.tick(600);

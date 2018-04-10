@@ -11,7 +11,7 @@ Feature: Transactions page
     When I click "dashboard" menu
     And I should see 3 rows
     When I click "seeAllLink"
-    Then I should be on url "/main/transactions"
+    Then I should be on url "/wallet"
     And I should see 25 rows
 
   @integration

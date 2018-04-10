@@ -32,8 +32,8 @@ const publicComponent = [
 ];
 
 const privateComponent = [
-  { route: `${routes.main.path}${routes.transaction.path}`, component: Transactions },
-  { route: `${routes.main.path}${routes.voting.path}`, component: Voting },
+  { route: `${routes.wallet.path}`, component: Transactions },
+  { route: `${routes.delegates.path}`, component: Voting },
 ];
 
 describe('App', () => {

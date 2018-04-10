@@ -72,7 +72,7 @@ class SavedAccounts extends React.Component {
     } = this.props;
 
     const goToDashboard = () => {
-      history.push(`${routes.main.path}${routes.dashboard.path}`);
+      history.push(`${routes.dashboard.path}`);
     };
 
     const goBack = () => {

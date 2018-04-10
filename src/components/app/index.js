@@ -1,27 +1,15 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import PrivateRoutes from '../privateRoute';
-import Dashboard from '../dashboard';
-import Sidechains from '../sidechains';
-import Header from '../header';
-import Login from '../login';
-import Register from '../register';
-import SecondPassphrase from '../secondPassphrase';
-import Search from '../search';
-import SearchResult from '../search/searchResult';
-import TransactionDashboard from '../transactionDashboard';
-import AccountTransactions from '../accountTransactions';
-import Voting from '../voting';
-import SavedAccounts from '../savedAccounts';
-import SingleTransaction from './../singleTransaction';
 import styles from './app.css';
 import Toaster from '../toaster';
 import MainMenu from '../mainMenu';
 import LoadingBar from '../loadingBar';
-import NotFound from '../notFound';
 import OfflineWrapper from '../offlineWrapper';
-import offlineStyle from '../offlineWrapper/offlineWrapper.css';
-import AccountVisualDemo from '../accountVisual/demo';
+import CustomRoute from '../customRoute';
+import Header from '../header';
+import SavedAccounts from '../savedAccounts';
+import NotFound from '../notFound';
+
 import routes from '../../constants/routes';
 import Onboarding from '../onboarding';
 
@@ -42,6 +30,13 @@ class App extends React.Component {
   }
 
   render() {
+    const allRoutes = Object.values(routes);
+
+    const defaultRoutes = allRoutes.filter(routeObj =>
+      routeObj.component && !routeObj.pathPrefix && !routeObj.isLoaded);
+    const explorerRoutes = allRoutes.filter(routeObj =>
+      routeObj.pathPrefix && routeObj.pathPrefix === routes.explorer.path);
+
     return (
       <OfflineWrapper>
         <Onboarding appLoaded={this.state.loaded} onRef={(ref) => { this.onboarding = ref; }}/>
@@ -53,38 +48,36 @@ class App extends React.Component {
               <Header />
               <div id='onboardingAnchor'></div>
               <Switch>
-                {this.state.loaded
-                  ?
-                  <PrivateRoutes path={routes.main.path} render={ ({ match }) => (
-                    <main className={offlineStyle.disableWhenOffline}>
-                      <Switch>
-                        <Route path={`${match.url}${routes.accountVisualDemo.path}`} component={AccountVisualDemo} />
-                        <Route path={`${match.url}${routes.dashboard.path}`} component={Dashboard} />
-                        <Route path={`${match.url}${routes.wallet.path}`} component={TransactionDashboard} />
-                        <Route path={`${match.url}${routes.voting.path}`} component={Voting} />
-                        <Route path={`${match.url}${routes.sidechains.path}`} component={Sidechains} />
-                        <Route path={`${match.url}${routes.secondPassphrase.path}`} component={SecondPassphrase} />
-                        <Route path='*' component={NotFound} />
-                      </Switch>
-                    </main>
+                {this.state.loaded ?
+                  <Route path={routes.explorer.path} render={ () => (
+                    explorerRoutes.map((route, key) => (
+                      <CustomRoute
+                        pathPrefix={route.pathPrefix}
+                        path={route.path}
+                        pathSuffix={route.pathSuffix}
+                        component={route.component}
+                        isPrivate={route.isPrivate}
+                        exact={route.exact}
+                        key={key} />
+                    ))
                   )} />
                   : null
                 }
-                {this.state.loaded
-                  ?
-                  <Route path={routes.explorer.path} render={ ({ match }) => (
-                    <main>
-                      <Route path={`${match.url}${routes.search.path}`} component={Search} />
-                      <Route path={`${match.url}${routes.searchResult.path}/:query?`} component={SearchResult} />
-                      <Route path={`${match.url}${routes.account.path}/:address?`} component={AccountTransactions} />
-                      <Route path={`${match.url}${routes.transaction.path}/:id`} component={SingleTransaction} />
-                    </main>
-                  )} />
+                {this.state.loaded ?
+                  defaultRoutes.map((route, key) => (
+                    <CustomRoute
+                      path={route.path}
+                      pathSuffix={route.pathSuffix}
+                      component={route.component}
+                      isPrivate={route.isPrivate}
+                      exact={route.exact}
+                      key={key} />
+                  ))
                   : null
                 }
-                <Route path={routes.register.path} component={Register} />
-                <Route path={routes.addAccount.path} component={Login} />
-                <Route exact path={routes.login.path} component={Login} />
+                <Route path={routes.register.path} component={routes.register.component} />
+                <Route path={routes.addAccount.path} component={routes.addAccount.component} />
+                <Route exact path={routes.login.path} component={routes.login.component} />
                 <Route path='*' component={NotFound} />
               </Switch>
             </div>

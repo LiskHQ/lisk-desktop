@@ -68,31 +68,31 @@
 
 .sliderInput {
   & label {
-    height: var(--check-box-height);
-    line-height: var(--check-box-height);
-    width: var(--check-box-width);
-    background: var(--color-grayscale-dark);
-    display: inline-block;
+    height: var(--check-box-height) !important;
+    line-height: var(--check-box-height) !important;
+    width: var(--check-box-width) !important;
+    background: var(--color-grayscale-dark) !important;
+    display: inline-block !important;
   }
 
   & span.circle {
-    background: var(--color-primary-dark);
-    width: var(--check-box-height);
+    background: var(--color-primary-dark) !important;
+    width: var(--check-box-height) !important;
 
     &.goal,
     &.begin {
-      background: transparent;
+      background: transparent !important;
     }
 
     & span {
-      width: 100%;
+      width: 100% !important;
     }
   }
 
   & input[type='radio'],
   & input[type='checkbox'] {
     &:checked + label .button {
-      transform: translateX(calc(-1 * var(--check-box-height)));
+      transform: translateX(calc(-1 * var(--check-box-height))) !important;
     }
   }
 }

@@ -66,12 +66,12 @@ class MainMenu extends React.Component {
     const tabs = [
       {
         label: t('Dashboard'),
-        route: `${routes.main.path}${routes.dashboard.path}`,
+        route: `${routes.dashboard.path}`,
         id: 'dashboard',
         image: menuLogos.dashboard,
       }, {
         label: t('Wallet'),
-        route: `${routes.main.path}${routes.wallet.path}`,
+        route: `${routes.wallet.path}`,
         id: 'transactions',
         image: menuLogos.wallet,
       }, {
@@ -88,7 +88,7 @@ class MainMenu extends React.Component {
         image: menuLogos.search,
       }, {
         label: t('Sidechains'),
-        route: `${routes.main.path}${routes.sidechains.path}`,
+        route: `${routes.sidechains.path}`,
         id: 'sidechains',
         image: menuLogos.sidechains,
       },
@@ -97,8 +97,8 @@ class MainMenu extends React.Component {
     if (showDelegate) {
       tabs.splice(tabs.length - 1, 0, {
         label: t('Delegates'),
-        id: 'voting',
-        route: `${routes.main.path}${routes.voting.path}`,
+        id: 'delegates',
+        route: `${routes.delegates.path}`,
         image: menuLogos.delegates,
       });
     }
@@ -110,7 +110,7 @@ class MainMenu extends React.Component {
       <Fragment>
         <aside className={styles.aside}>
           <div className={styles.sideBarWrapper}>
-            <Link to={`${routes.main.path}${routes.dashboard.path}`}><img src={logo} className={styles.logo} /></Link>
+            <Link to={`${routes.dashboard.path}`}><img src={logo} className={styles.logo} /></Link>
             <ToolboxTabs index={getIndex(history, tabs)}
               theme={styles}
               onChange={this.navigate.bind(this, history, tabs)}
@@ -136,7 +136,7 @@ class MainMenu extends React.Component {
               onOverlayClick={this.menuToggle.bind(this)}>
               <div>
                 <header className={styles.header}>
-                  <Link to={`${routes.main.path}${routes.dashboard.path}`}><img src={logo} className={styles.logo} /></Link>
+                  <Link to={`${routes.dashboard.path}`}><img src={logo} className={styles.logo} /></Link>
                   <FontIcon value='close' className={styles.close} onClick={this.menuToggle.bind(this)} />
                 </header>
                 <ToolboxTabs index={getIndex(history, tabs)}
