@@ -27,15 +27,8 @@ Go to [issues tab](https://github.com/LiskHQ/lisk-hub/issues) and look for
 
  1. Check if problem already exist in [issues tab](https://github.com/LiskHQ/lisk-hub/issues)
  2. If not, create a new [issue](https://github.com/LiskHQ/lisk-hub/issues/new)
- 3. Fill our template:
-```
-Expected behaviour
-
-Actual behaviour
-
-Steps to reproduce
-```
-4. Click `Submit new issue`
+ 3. Fill our [template](/.github/issue_template.md)
+ 4. Click `Submit new issue`
 ##### Guidance
 
  * Include screenshots or animated GIF
@@ -93,7 +86,7 @@ When you're done, submit a pull request and for one of the maintainers to check 
    - Use this structure `[What the PR is about] - Closes #[issue number]` it will automatically close issue after PR will get merged.
    ex. `Fix bug - Closes #123`
 - Description
-    - Fill our description template
+    - Fill our [description template](/.github/pull_request_template.md)
 - Labels
     - Use labels accordingly to current condition of PR
       - :eye: `pending review` - When PR is ready to Review
