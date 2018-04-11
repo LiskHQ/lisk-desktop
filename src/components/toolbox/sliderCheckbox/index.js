@@ -3,11 +3,9 @@ import { themr } from 'react-css-themr';
 import styles from './checkbox.css';
 import { FontIcon } from '../../fontIcon';
 
-const StaticLabel = ({ text, theme, icons, iconName }) => (
+const StaticLabel = ({ theme, icons, iconName }) => (
   <span className={`${theme.circle} ${theme[iconName]}`}>
-    {text ? icons[iconName] :
-      <FontIcon className={`${theme.icon} ${theme.arrowRight}`}>{icons[iconName]}</FontIcon>
-    }
+    <FontIcon className={`${theme.icon} ${theme.arrowRight}`}>{icons[iconName]}</FontIcon>
   </span>
 );
 class SliderCheckbox extends React.Component {
@@ -99,7 +97,7 @@ class SliderCheckbox extends React.Component {
   }
 
   render() {
-    const { label, input, className, hasSlidingArrows, theme, textAsIcon } = this.props;
+    const { label, input, className, hasSlidingArrows, theme } = this.props;
     const icons = this.props.icons ? this.props.icons : {};
 
     const checkType = i => (typeof i === 'string');
@@ -121,21 +119,15 @@ class SliderCheckbox extends React.Component {
           className={`${theme.circle} ${theme.button} circle`}
           ref={(el) => { this.shape = el; }}>
           <span className={theme.arrowRight}>
-            { textAsIcon ?
-              <span className={theme.text}>{icons.unchecked}</span> :
-              <FontIcon className={theme.icon}>
-                {icons.unchecked || 'arrow-right'}
-              </FontIcon>
-            }
+            <FontIcon className={theme.icon}>
+              {icons.unchecked || 'arrow-right'}
+            </FontIcon>
           </span>
 
           <span className={theme.checkMark}>
-            { textAsIcon ?
-              <span className={theme.text}>{icons.checked}</span> :
-              <FontIcon className={theme.icon}>
-                {icons.checked || 'checkmark'}
-              </FontIcon>
-            }
+            <FontIcon className={theme.icon}>
+              {icons.checked || 'checkmark'}
+            </FontIcon>
           </span>
         </span>
         { label ?
@@ -151,11 +143,11 @@ class SliderCheckbox extends React.Component {
         }
         {
           checkType(icons.begin) ?
-            <StaticLabel theme={theme} icons={icons} text={textAsIcon} iconName='begin' /> : null
+            <StaticLabel theme={theme} icons={icons} iconName='begin' /> : null
         }
         {
           checkType(icons.goal) ?
-            <StaticLabel theme={theme} icons={icons} text={textAsIcon} iconName='goal' /> : null
+            <StaticLabel theme={theme} icons={icons} iconName='goal' /> : null
         }
       </label>
     </div>);
