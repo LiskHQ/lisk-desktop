@@ -62,9 +62,9 @@ class SliderCheckbox extends React.Component {
   stopTracking() {
     if (this.trackable) {
       this.trackable = false;
-
-      if (Math.abs(this.delta) > 50 && !this.props.disabled) {
-        this.change('swiped');
+      // delta === 0 covers clicking
+      if ((this.delta === 0 || Math.abs(this.delta) > 50) && !this.props.disabled) {
+        this.change();
       } else {
         this.revert();
       }
@@ -72,19 +72,17 @@ class SliderCheckbox extends React.Component {
     }
   }
 
-  change(type) {
-    if (!this.props.swipeOnly || type === 'swiped') {
-      this.input.checked = !this.input.checked;
-      this.shape.removeAttribute('style');
-      this.direction = this.input.checked ? -1 : 1;
-      if (typeof this.props.onChange === 'function' &&
-        this.props.input instanceof Object &&
-        !(this.props.input instanceof Array)) {
-        this.props.onChange({
-          checked: this.input.checked,
-          value: this.props.input.value,
-        });
-      }
+  change() {
+    this.input.checked = !this.input.checked;
+    this.shape.removeAttribute('style');
+    this.direction = this.input.checked ? -1 : 1;
+    if (typeof this.props.onChange === 'function' &&
+      this.props.input instanceof Object &&
+      !(this.props.input instanceof Array)) {
+      this.props.onChange({
+        checked: this.input.checked,
+        value: this.props.input.value,
+      });
     }
   }
 
@@ -111,7 +109,6 @@ class SliderCheckbox extends React.Component {
         onMouseUp={this.stopTracking.bind(this)}
         onTouchEnd={this.stopTracking.bind(this)}>
         <span
-          onClick= {this.change.bind(this)}
           className={`${theme.circle} ${theme.button} circle`}
           ref={(el) => { this.shape = el; }}>
           <span className={theme.arrowRight}>
