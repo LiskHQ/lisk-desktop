@@ -1,11 +1,14 @@
 import React from 'react';
 import { expect } from 'chai';
+import { spy } from 'sinon';
 import { mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import SettingHOC from './index';
+import * as accountsActions from '../../actions/account';
+import * as settingActions from '../../actions/settings';
 
 describe('SettingHOC', () => {
   // Mocking store
@@ -39,5 +42,19 @@ describe('SettingHOC', () => {
 
   it('should mount Setting', () => {
     expect(wrapper.find('Setting')).to.have.lengthOf(1);
+  });
+
+  it('should connect accountUpdated action using dispatch function', () => {
+    const actionsSpy = spy(accountsActions, 'accountUpdated');
+    wrapper.find('Setting').props().accountUpdated();
+    expect(actionsSpy).to.be.calledWith();
+    actionsSpy.restore();
+  });
+
+  it('should connect settingsUpdated action using dispatch function', () => {
+    const actionsSpy = spy(settingActions, 'settingsUpdated');
+    wrapper.find('Setting').props().settingsUpdated();
+    expect(actionsSpy).to.be.calledWith();
+    actionsSpy.restore();
   });
 });
