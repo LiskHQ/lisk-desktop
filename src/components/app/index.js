@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { isPathCorrect } from '../../utils/app';
 import styles from './app.css';
 import Toaster from '../toaster';
 import MainMenu from '../mainMenu';
@@ -50,17 +51,21 @@ class App extends React.Component {
               <div id='onboardingAnchor'></div>
               <Switch>
                 {this.state.loaded ?
-                  <Route path={routes.explorer.path} render={ () => (
-                    explorerRoutes.map((route, key) => (
-                      <CustomRoute
-                        pathPrefix={route.pathPrefix}
-                        path={route.path}
-                        pathSuffix={route.pathSuffix}
-                        component={route.component}
-                        isPrivate={route.isPrivate}
-                        exact={route.exact}
-                        key={key} />
-                    ))
+                  <Route path={routes.explorer.path} component={ ({ location }) => (
+                    isPathCorrect(location, explorerRoutes) ? (
+                      <div>
+                        {explorerRoutes.map((route, key) => (
+                          <CustomRoute
+                            pathPrefix={route.pathPrefix}
+                            path={route.path}
+                            pathSuffix={route.pathSuffix}
+                            component={route.component}
+                            isPrivate={route.isPrivate}
+                            exact={true}
+                            key={key} />
+                        ))}
+                      </div>
+                    ) : <Route path='*' component={NotFound} />
                   )} />
                   : null
                 }
