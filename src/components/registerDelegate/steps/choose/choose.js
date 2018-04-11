@@ -37,17 +37,12 @@ class Choose extends React.Component {
     > fromRawLsk(Fees.registerDelegate) * 1);
   }
 
-  checkSufficientFunds() {
-    // TODO: uncomment
-    /*
-    * evt
+  checkSufficientFunds(evt) {
     if (!this.hasEnoughLSK()) {
       evt.preventDefault();
       return;
     }
-    */
     this.setState({ step: 'choose' });
-    // this.props.nextStep({});
   }
 
   validateDelegateName(name, value) {
@@ -75,9 +70,9 @@ class Choose extends React.Component {
   }
 
   render() {
-    const { t } = this.props;
-    const hasEnoughLSK = true; // TODO: this.hasEnoughLSK();
-    const isDelegate = false; // TODO: this.props.account.isDelegate;
+    const { t, account } = this.props;
+    const hasEnoughLSK = this.hasEnoughLSK();
+    const isDelegate = account.isDelegate;
     const delegateNameHasError = (!typeof this.state.delegateName.value === 'string' ||
       this.state.delegateName.error !== undefined);
     return (

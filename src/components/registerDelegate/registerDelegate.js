@@ -19,7 +19,7 @@ class RegisterDelegate extends React.Component {
       account: this.props.account,
       username: delegateName,
       passphrase: passphrase.value,
-      secondPassphrase: `${secondPassphrase.value}-notValid`, // TODO: remove
+      secondPassphrase: secondPassphrase.value,
     });
   }
 

@@ -19,7 +19,7 @@ class Confirm extends React.Component {
   constructor() {
     super();
     this.state = {
-      step: 'register-success',
+      step: 'confirm',
     };
   }
 
@@ -35,8 +35,7 @@ class Confirm extends React.Component {
   }
 
   redirectToDashboard() {
-    const dashboarRoute = `${routes.dashboard.path}`;
-    this.props.history.replace(dashboarRoute);
+    this.props.history.replace(routes.dashboard.path);
   }
 
   redirectToFirstStep() {
