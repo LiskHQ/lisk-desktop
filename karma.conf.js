@@ -54,9 +54,6 @@ module.exports = function (config) {
           functions: 80,
           lines: 80,
           excludes: [
-            'src/components/delegateSidebar/index.js',
-            'src/components/setting/index.js',
-            'src/components/menuBar/menuBar.js',
             'src/components/accountVisual/demo.js',
             'src/components/delegateList/votingHeader.js',
             'src/components/app/index.js',
