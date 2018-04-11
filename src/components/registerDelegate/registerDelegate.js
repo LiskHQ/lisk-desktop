@@ -1,10 +1,10 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import PassphraseSteps from './../passphraseSteps';
 import Choose from './steps/choose';
 import Confirm from './steps/confirm';
-import BackgroundMaker from '../backgroundMaker';
 import MultiStep from '../multiStep';
 import Box from '../box';
 import styles from './registerDelegate.css';
@@ -44,12 +44,15 @@ class RegisterDelegate extends React.Component {
       secondPassphrase: {
         header: this.props.t('Please sign in with your 2nd passphrase'),
       },
+      footer: {
+        firstGrid: passphraseStyles.firstGrid,
+        secondGrid: grid['col-xs-12'],
+      },
     };
 
     return (
-      <div className={styles.wrapper}>
-        <BackgroundMaker className={styles.background} />
-        <Box className={styles.registerDelegate}>
+      <Box className={styles.registerDelegate}>
+        <section className={`${grid.row} ${grid['center-xs']}`}>
           <MultiStep
             className={styles.multiStep}
             prevPage={this.goBack.bind(this)}
@@ -67,8 +70,8 @@ class RegisterDelegate extends React.Component {
               t={this.props.t}
               submitDelegate={this.submitDelegate.bind(this)} />
           </MultiStep>
-        </Box>
-      </div>
+        </section>
+      </Box>
     );
   }
 }

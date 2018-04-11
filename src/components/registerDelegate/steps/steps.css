@@ -14,7 +14,7 @@
 .heading {
   font-family: var(--heading-font);
   font-size: var(--step-heading-fs);
-  font-weight: var(--font-weight-very-bold);
+  font-weight: var(--font-weight-semi-bold);
   margin: 0;
   margin-bottom: 0;
   padding: 0 var(--main-content-horizontal-padding);
@@ -41,6 +41,11 @@
   }
 }
 
+.input {
+  width: 261px;
+  margin: 0 auto;
+}
+
 .iconError {
   transform: rotate(45deg);
 }
@@ -57,4 +62,18 @@
 .form {
   padding: var(--form-content-vertical-padding) var(--form-content-horizontal-padding);
   width: calc(100% - var(--form-content-horizontal-padding) * 2);
+  display: inline-block;
+  position: relative;
+}
+
+.formWithBg {
+  &::before {
+    height: calc(100% + 25px);
+    width: 100%;
+    content: '';
+    position: absolute;
+    background-color: var(--color-form-bg);
+    left: 0;
+    bottom: -48px;
+  }
 }

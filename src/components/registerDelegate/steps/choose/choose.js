@@ -108,8 +108,6 @@ class Choose extends React.Component {
                 </p> : null }
               </form>
             </div>
-            <footer>
-            </footer>
           </div>
         </TransitionWrapper>
 
@@ -120,7 +118,7 @@ class Choose extends React.Component {
                 {t('Choose your name')}
               </h5>
             </header>
-            <div className={stepStyles.form}>
+            <div className={`${stepStyles.form} ${stepStyles.formWithBg}`}>
               <form onSubmit={() =>
                 this.props.checkDelegateUsernameAvailable(this.state.delegateName.value)}>
                 <Input

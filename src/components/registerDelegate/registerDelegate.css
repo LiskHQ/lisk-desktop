@@ -1,22 +1,9 @@
 @import '../app/variables.css';
 
-.wrapper {
-  display: flex;
-  background: #013165;
-  z-index: var(--accounts-index);
-  position: absolute;
-  height: 100vh; /* stylelint-disable-line */
-  width: 100vw; /* stylelint-disable-line */
-  max-width: 100vw; /* stylelint-disable-line */
-  border-radius: 0;
-  top: 0;
-}
-
 .registerDelegate {
   background: var(--color-white);
-  height: 75vh; /* stylelint-disable-line */
-  width: 75vw; /* stylelint-disable-line */
-  margin: auto;
+  width: 100%;
+  margin: 0;
   padding: 48px 0;
 }
 
@@ -28,6 +15,12 @@
 }
 
 .multiStep {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc(75vh - (48px * 2)); /* stylelint-disable-line */
+  width: 100%;
+
   & > nav > section {
     width: 300px;
   }

@@ -67,7 +67,7 @@ class Confirm extends React.Component {
                 <p className={styles.delegateName}>{delegateName}</p>
                 <SliderCheckbox
                   theme={styles}
-                  className={`${styles.confirmInput} confirm-delegate-registration`}
+                  className={`${stepStyles.input} confirm-delegate-registration`}
                   label={t('Confirm (Fee: {{fee}} LSK)', { fee: fromRawLsk(Fees.registerDelegate) })}
                   clickable={true}
                   onChange={this.handleConfirmation.bind(this)}
@@ -76,19 +76,14 @@ class Confirm extends React.Component {
                   }}/>
               </form>
             </div>
-            <footer>
-            </footer>
           </div>
         </TransitionWrapper>
         <TransitionWrapper current={this.state.step} step='submitting'>
           <div className={stepStyles.container}>
-
             <FontIcon className={stepStyles.headerIcon} value="logo-icon"></FontIcon>
             <p className={stepStyles.description}>
               {t('Your delegate name is being registered')}
             </p>
-            <footer>
-            </footer>
           </div>
         </TransitionWrapper>
 

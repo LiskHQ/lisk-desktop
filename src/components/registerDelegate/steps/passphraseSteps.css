@@ -12,11 +12,37 @@
   & h2 {
     font-family: var(--heading-font);
     font-size: var(--step-heading-fs);
-    font-weight: var(--font-weight-very-bold);
+    font-weight: var(--font-weight-semi-bold);
     padding: 0 var(--main-content-horizontal-padding);
+    margin: 0;
+    margin-bottom: 96px;
   }
+}
+
+.firstGrid {
+  display: none;
+}
+
+.button {
+  margin: 0 auto;
+  width: 261px;
 }
 
 .wrapper {
   padding: var(--form-content-horizontal-padding);
+  position: relative;
+
+  & header {
+    padding-top: 0;
+  }
+
+  &::before {
+    height: calc(75vh / 2 + 48px); /* stylelint-disable-line */
+    width: 100%;
+    content: '';
+    position: absolute;
+    background-color: var(--color-form-bg);
+    left: 0;
+    bottom: -48px;
+  }
 }

@@ -118,6 +118,10 @@ class PassphraseSteps extends React.Component {
         className: 'second-passphrase',
         buttonClassName: 'second-passphrase-next',
       },
+      footer: {
+        firstGrid: grid['col-xs-4'],
+        secondGrid: grid['col-xs-8'],
+      },
     };
 
     let updatedValues = { ...values };
@@ -146,7 +150,7 @@ class PassphraseSteps extends React.Component {
       />
       <footer>
         <section className={grid.row} >
-          <div className={grid['col-xs-4']}>
+          <div className={updatedValues.footer.firstGrid}>
             <Button
               label={this.props.t('Back')}
               onClick={() => this.props.prevStep({
@@ -158,7 +162,7 @@ class PassphraseSteps extends React.Component {
               theme={updatedStyles}
             />
           </div>
-          <div className={grid['col-xs-8']}>
+          <div className={updatedValues.footer.secondGrid}>
             <Button
               className={values[this.getCurrentStep()].buttonClassName}
               label={this.props.t('Next')}
