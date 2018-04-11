@@ -75,7 +75,6 @@ module.exports = function (config) {
             'src/components/passphrase/createSecond/index.js',
             'src/components/passphrase/safekeeping/index.js',
             'src/components/secondPassphrase/secondPassphrase.js',
-            'src/components/toolbox/sliderCheckbox/index.js',
             'src/components/toolbox/transitionWrapper/index.js',
             'src/components/header/header.js',
             'src/components/searchBar/index.js',
