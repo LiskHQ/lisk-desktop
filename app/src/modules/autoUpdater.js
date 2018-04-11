@@ -20,7 +20,10 @@ export default ({ autoUpdater, dialog, win, process }) => {
     console.error(error);
     if (updater.error !== error) {
       updater.error = error;
-      dialog.showErrorBox('Error: ', error == null ? 'unknown' : error.toString());
+      if (error && error.toString().indexOf('404 Not Found') === -1) {
+        // this condition is because of https://github.com/LiskHQ/lisk-hub/issues/647
+        dialog.showErrorBox('Error: ', error == null ? 'unknown' : error.toString());
+      }
     }
   });
 
