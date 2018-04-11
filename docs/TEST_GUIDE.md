@@ -44,6 +44,11 @@ One unit ([component](/LiskHQ/lisk-hub/blob/development/src/components),
 [middleware](/LiskHQ/lisk-hub/blob/development/src/store/middlewares), or
 [subscriber](/LiskHQ/lisk-hub/blob/development/src/store/subscribers)) in isolation.
 
+### What doesn't need unit test?
+- **action that contains no logic** - it is an integration point between React and Redux therefore it should be be covered by integration tests, e.g. [accountUpdated action](https://github.com/LiskHQ/lisk-hub/blob/8239062584a9573ac8e99bd28d681563b40048b2/src/actions/account.js#L29-L32) 
+- **React HOC (higher order component)** - also integration point, e.g. [header HOC](/LiskHQ/lisk-hub/blob/development/src/components/header/index.js)
+- **Presentational React component with no logic** - should have coverage by being rendered by its parent in its unit test or integration, e.g. [Spinner component](/LiskHQ/lisk-hub/blob/development/src/components/spinner/index.js) 
+
 ### How are they organized?
 Each unit test live in the same folder as the unit that it tests. E.g. tests for [/src/components/login/login.js](/LiskHQ/lisk-hub/blob/development/src/components/login/login.js) are in [/src/components/login/login.test.js](/LiskHQ/lisk-hub/blob/development/src/components/login/login.test.js).
 
