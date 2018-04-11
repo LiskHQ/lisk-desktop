@@ -4,13 +4,21 @@ const delegate = (state = [], action) => {
   switch (action.type) {
     case actionTypes.delegatesRetrieved:
       return {
+        ...state,
         delegateNameQueried: true,
         delegateNameInvalid: action.data.delegate !== undefined,
       };
 
-    case actionTypes.transactionAdded:
+    case actionTypes.delegateRegisteredSuccess:
       return {
-        delegateRegisteredSuccess: action.data,
+        ...state,
+        registerStep: 'register-success',
+      };
+
+    case actionTypes.delegateRegisteredFailure:
+      return {
+        ...state,
+        registerStep: 'register-failure',
       };
     default:
       return state;

@@ -11,6 +11,7 @@
   & > input[type='text'] {
     font-size: 32px;
     font-family: var(--heading-font);
+    text-align: center;
   }
 
   & > span[class*='input__error'] {

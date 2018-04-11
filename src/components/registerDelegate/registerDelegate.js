@@ -13,14 +13,13 @@ import passphraseStyles from './steps/passphraseSteps.css';
 class RegisterDelegate extends React.Component {
   submitDelegate({ delegateName, passphrase, secondPassphrase }) {
     event.preventDefault();
-    // @todo I'm not handling this part: this.setState({ nameError: error.message });
 
     this.props.delegateRegistered({
       activePeer: this.props.peers.data,
       account: this.props.account,
       username: delegateName,
-      passphrase,
-      secondPassphrase: `${secondPassphrase}-notValid`, // TODO: remove
+      passphrase: passphrase.value,
+      secondPassphrase: `${secondPassphrase.value}-notValid`, // TODO: remove
     });
   }
 
@@ -52,6 +51,7 @@ class RegisterDelegate extends React.Component {
         <BackgroundMaker className={styles.background} />
         <Box className={styles.registerDelegate}>
           <MultiStep
+            className={styles.multiStep}
             prevPage={this.goBack.bind(this)}
             finalCallback={this.submitDelegate.bind(this)}
             backButtonLabel={this.props.t('Back')}>
@@ -63,7 +63,7 @@ class RegisterDelegate extends React.Component {
             <PassphraseSteps styles={passphraseStyles} values={passphraseValues} title={this.props.t('Safekeeping')} icon='add' />
             <Confirm
               title={this.props.t('Confirm')}
-              icon='add'
+              icon='login'
               t={this.props.t}
               submitDelegate={this.submitDelegate.bind(this)} />
           </MultiStep>

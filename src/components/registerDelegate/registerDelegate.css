@@ -26,3 +26,16 @@
   left: 0;
   top: 0;
 }
+
+.multiStep {
+  & > nav > section {
+    width: 300px;
+  }
+
+  & div[class*='multiStep__navEl'] {
+    &:nth-child(3),
+    &:nth-child(4) {
+      display: none;
+    }
+  }
+}

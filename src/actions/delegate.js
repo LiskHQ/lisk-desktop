@@ -24,3 +24,14 @@ export const delegatesFetched = ({ activePeer, username }) =>
       dispatch(delegatesRetrieved({ delegate: undefined }));
     });
   };
+
+
+export const delegateRegisteredSuccess = data => ({
+  type: actionTypes.delegateRegisteredSuccess,
+  data,
+});
+
+export const delegateRegisteredFailure = data => ({
+  type: actionTypes.delegateRegisteredFailure,
+  data,
+});

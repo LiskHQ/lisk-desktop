@@ -27,6 +27,24 @@
   padding: 0 var(--main-content-horizontal-padding);
 }
 
+.headerIcon {
+  height: 48px;
+  width: 48px;
+  margin-bottom: 32px;
+  font-size: 48px;
+  font-weight: bold;
+
+  &::before {
+    background: var(--gradient-action-orange);
+    -webkit-background-clip: text; /* unsupported by autoprefixer */
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+.iconError {
+  transform: rotate(45deg);
+}
+
 .chooseNameBtn {
   margin-bottom: 24px;
 }
