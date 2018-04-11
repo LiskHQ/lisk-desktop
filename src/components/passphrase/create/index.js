@@ -5,7 +5,6 @@ import { extractAddress } from '../../../utils/api/account';
 import AccountVisual from '../../accountVisual';
 import styles from './create.css';
 import { FontIcon } from '../../fontIcon';
-import * as shapesSrc from '../../../assets/images/register-shapes/*.svg'; //eslint-disable-line
 import Shapes from './shapes';
 import { PrimaryButton, Button } from '../../toolbox/buttons/button';
 import TransitionWrapper from '../../toolbox/transitionWrapper';

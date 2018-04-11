@@ -72,13 +72,37 @@ class MovableShape extends React.Component {
   }
 
   render() {
-    const { className, src } = this.props;
+    const {
+      className,
+      group,
+      color1,
+      color2,
+      gradients1,
+      gradients2,
+      width,
+      height,
+      viewBox,
+      id } = this.props;
 
-    return <img
-      style = { this.state.style }
+    return <div style = { this.state.style }
       className={className}
-      ref={(input) => { this.shape = input; }}
-      src={src} />;
+      ref={(input) => { this.shape = input; }}>
+      <svg width={width} height={height} viewBox={viewBox} >
+        <defs>
+          <linearGradient x1="19.4762866%" y1="88.4126955%" x2="86.0468234%" y2="18.4958616%" id={id}>
+            <stop stopColor={color1} offset="0%">
+              {this.progress > 0 ? <animate attributeName="stop-color" values={gradients1} dur="10s" repeatCount="indefinite" /> : null }
+            </stop>
+            <stop stopColor={color2} offset="100%">
+              {this.progress > 0 ? <animate attributeName="stop-color" values={gradients2} dur="10s" repeatCount="indefinite" /> : null }
+            </stop>
+          </linearGradient>
+        </defs>
+        <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" opacity="0.8">
+          {group}
+        </g>
+      </svg>
+    </div>;
   }
 }
 
