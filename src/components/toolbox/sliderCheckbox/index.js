@@ -125,10 +125,10 @@ class SliderCheckbox extends React.Component {
         </span>
         { label ?
           <div>
-            <span>{label}</span>
+            <span className='label'>{label}</span>
             {
               hasSlidingArrows ?
-                <span className={styles.arrows}>
+                <span className={`${styles.arrows} arrow`}>
                   { this.arrows.map(key => <FontIcon key={key} value='arrow-right' />) }
                 </span> : null
             }
