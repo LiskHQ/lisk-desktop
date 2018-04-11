@@ -128,4 +128,5 @@ const mapStateToProps = state => ({
   showDelegates: state.settings.advancedMode,
 });
 
+export { Onboarding };
 export default connect(mapStateToProps)(translate()(Onboarding));

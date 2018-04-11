@@ -23,6 +23,7 @@ import OfflineWrapper from '../offlineWrapper';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import AccountVisualDemo from '../accountVisual/demo';
 import routes from '../../constants/routes';
+// eslint-disable-next-line import/no-named-as-default
 import Onboarding from '../onboarding';
 
 class App extends React.Component {
