@@ -1,9 +1,11 @@
 import React from 'react';
 import { expect } from 'chai';
+import sinon from 'sinon';
 import thunk from 'redux-thunk';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
+import * as accountActions from '../../actions/account';
 import i18n from '../../i18n';
 import RegisterDelegateHOC from './index';
 
@@ -46,5 +48,12 @@ describe('RegisterDelegateHOC', () => {
     expect(props.peers).to.be.equal(peers);
     expect(props.account).to.be.equal(account);
     expect(typeof props.delegateRegistered).to.be.equal('function');
+  });
+
+  it('should bind delegateRegistered action to RegisterDelegate props.delegateRegistered', () => {
+    const actionsSpy = sinon.spy(accountActions, 'delegateRegistered');
+    wrapper.find('RegisterDelegate').props().delegateRegistered({});
+    expect(actionsSpy).to.be.calledWith();
+    actionsSpy.restore();
   });
 });

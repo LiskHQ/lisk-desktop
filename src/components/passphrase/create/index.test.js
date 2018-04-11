@@ -42,6 +42,7 @@ describe('Passphrase: Create', () => {
     const wrapper = mount(<Create {...props} agent='android' />, options);
     wrapper.find('aside Button').simulate('click');
     expect(wrapper.state().showHint).to.be.equal(true);
+    wrapper.unmount();
   });
 
   it('should call showHint on Taizen', () => {
