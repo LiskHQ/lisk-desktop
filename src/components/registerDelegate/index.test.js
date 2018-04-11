@@ -45,6 +45,7 @@ describe('RegisterDelegateHOC', () => {
 
   it('should mount registerDelegate with appropriate properties', () => {
     const props = wrapper.find('RegisterDelegate').props();
+
     expect(props.peers).to.be.equal(peers);
     expect(props.account).to.be.equal(account);
     expect(typeof props.delegateRegistered).to.be.equal('function');
