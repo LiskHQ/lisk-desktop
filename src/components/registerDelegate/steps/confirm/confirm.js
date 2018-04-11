@@ -62,7 +62,7 @@ class Confirm extends React.Component {
               <AccountVisual address={addressForVisual} size={100} />
             </figure>
             <div className={stepStyles.form}>
-              <form onSubmit={this.props.submitDelegate}>
+              <form onSubmit={this.handleConfirmation.bind(this)}>
                 <p className={styles.delegateName}>{delegateName}</p>
                 <SliderCheckbox
                   theme={styles}
@@ -79,10 +79,12 @@ class Confirm extends React.Component {
         </TransitionWrapper>
         <TransitionWrapper current={this.state.step} step='submitting'>
           <div className={stepStyles.container}>
-            <FontIcon className={stepStyles.headerIcon} value="logo-icon"></FontIcon>
+            <FontIcon className={stepStyles.submitIcon} value="logo-icon"></FontIcon>
             <p className={stepStyles.description}>
               {t('Your delegate name is being registered')}
             </p>
+            <footer>
+            </footer>
           </div>
         </TransitionWrapper>
 

@@ -1,5 +1,17 @@
 @import '../../app/variables.css';
 
+@keyframes burst {
+  0% {
+    opacity: 0;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
 :root {
   --main-content-horizontal-padding: 218px;
   --step-heading-fs: 48px;
@@ -39,6 +51,16 @@
     -webkit-background-clip: text; /* unsupported by autoprefixer */
     -webkit-text-fill-color: transparent;
   }
+}
+
+.submitIcon {
+  color: var(--color-grayscale-dark);
+  animation: burst 2000ms infinite linear;
+  animation-direction: alternate;
+  font-size: 120px;
+  margin: 0 auto;
+  transform-origin: 50%;
+  animation-delay: 450ms;
 }
 
 .input {
