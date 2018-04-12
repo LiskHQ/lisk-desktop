@@ -6,23 +6,21 @@ const Shapes = ({ shapes, percentage }) =>
   (<div className={styles.shapesWrapper}>
     <MovableShape
       hidden={shapes[0]}
-      id='big-circle'
+      idBg='big-circle-bg'
+      idFg='big-circle-fg'
       group={
-        <g id="Get-Access-Dashboard-1-Lisk-XL" transform="translate(-1437.000000, -746.000000)" fill="url(#big-circle)">
-          <g id="Group-18" transform="translate(410.000000, 123.000000)">
-            <g id="Group-3" transform="translate(580.000000, 0.000000)">
-              <g id="Group-5" transform="translate(78.000000, 19.000000)">
-                <g id="Group">
-                  <ellipse id="Oval-5" cx="442.480253" cy="678.71605" rx="73.4802533" ry="74.7160504"></ellipse>
-                </g>
+        <g transform="translate(-1437.000000, -746.000000)" >
+          <g transform="translate(410.000000, 123.000000)">
+            <g transform="translate(580.000000, 0.000000)">
+              <g transform="translate(78.000000, 19.000000)">
+                <ellipse fill="url(#big-circle-bg)" className={`${styles.shapeBackground}`} cx="442.480253" cy="678.71605" rx="73.4802533" ry="74.7160504" />
+                <ellipse fill="url(#big-circle-fg)" className={`${styles.shapeForeground}`} cx="442.480253" cy="678.71605" rx="73.4802533" ry="74.7160504" />
               </g>
             </g>
           </g>
         </g>}
-      gradients1='#FFD300;#F792A6;#C86DD7;#004AFF;#008BFF;#4D3AFF;#F792A6;#FFD300'
-      gradients2='#FF9100;#EC596D;#3023AE;#93F4FE;#00EDFF;#8480FF;#EC596D;#FF9100'
-      color1='#FFD300'
-      color2='#FF9100'
+      backGroundIndex={2}
+      foreGroundIndex={3}
       width='215px'
       height='215px'
       viewBox='0 0 147 150'
@@ -32,17 +30,17 @@ const Shapes = ({ shapes, percentage }) =>
     </MovableShape>
     <MovableShape
       hidden={shapes[1]}
-      id='smallCircle'
+      idBg='small-circle-bg'
+      idFg='small-circle-fg'
       group={
-        <g id="Get-Access-Dashboard-2-Lisk-XL" transform="translate(-467.000000, -806.000000)" fill="url(#smallCircle)">
-          <g id="Group" transform="translate(315.000000, 146.000000)">
-            <ellipse id="shape-2" cx="192" cy="701" rx="40" ry="41"></ellipse>
+        <g transform="translate(-467.000000, -806.000000)">
+          <g transform="translate(315.000000, 146.000000)">
+            <ellipse fill="url(#small-circle-bg" className={`${styles.shapeBackground}`} cx="192" cy="701" rx="40" ry="41" />
+            <ellipse fill="url(#small-circle-fg" className={`${styles.shapeForeground}`} cx="192" cy="701" rx="40" ry="41" />
           </g>
         </g>}
-      gradients1='#F792A6;#C86DD7;#4D3AFF;#004AFF;#008BFF;#93F4FE;#96F7E1;#FFF8CF;#FFD300;#F792A6'
-      gradients2='#EC596D;#3023AE;#8480FF;#93F4FE;#4D3AFF;#004AFF;#5DECBF;#FFD23A;#FF9100;#EC596D'
-      color1='#FAD961'
-      color2='#F76B1C'
+      backGroundIndex={2}
+      foreGroundIndex={3}
       width='80px'
       height='82px'
       viewBox='0 0 80 82'
@@ -51,17 +49,17 @@ const Shapes = ({ shapes, percentage }) =>
       initial={['62%', '-2%']} />
     <MovableShape
       hidden={shapes[2]}
-      id='triangle'
+      idBg='triangle-bg'
+      idFg='triangle-fg'
       group={
-        <g id="Get-Access-Dashboard-2-Lisk-XL" transform="translate(-1355.000000, -704.000000)" fill="url(#triangle)">
-          <g id="Group" transform="translate(315.000000, 146.000000)">
-            <polygon id="triangle" transform="translate(1128.068314, 616.047499) rotate(-345.000000) translate(-1128.068314, -616.047499) " points="1124.3008 557.547499 1203.56831 674.547499 1052.56831 674.547499"></polygon>
+        <g transform="translate(-1355.000000, -704.000000)">
+          <g transform="translate(315.000000, 146.000000)">
+            <polygon fill="url(#triangle-bg)" className={`${styles.shapeBackground}`} transform="translate(1128.068314, 616.047499) rotate(-345.000000) translate(-1128.068314, -616.047499) " points="1124.3008 557.547499 1203.56831 674.547499 1052.56831 674.547499"/>
+            <polygon fill="url(#triangle-fg)" className={`${styles.shapeForeground}`} transform="translate(1128.068314, 616.047499) rotate(-345.000000) translate(-1128.068314, -616.047499) " points="1124.3008 557.547499 1203.56831 674.547499 1052.56831 674.547499"/>
           </g>
         </g>}
-      gradients1='#F792A6;#C86DD7;#4D3AFF;#004AFF;#008BFF;#93F4FE;#96F7E1;#FFF8CF;#FFD300;#F792A6'
-      gradients2='#EC596D;#3023AE;#8480FF;#93F4FE;#4D3AFF;#004AFF;#5DECBF;#FFD23A;#FF9100;#EC596D'
-      color1='#00EDFF'
-      color2='#008BFF'
+      backGroundIndex={1}
+      foreGroundIndex={2}
       width='146px'
       height='135px'
       viewBox='0 0 146 135'
@@ -70,17 +68,17 @@ const Shapes = ({ shapes, percentage }) =>
       initial={['80%', '-2%']} />
     <MovableShape
       hidden={shapes[4]}
-      id='square-left'
+      idBg='square-left-bg'
+      idFg='square-left-fg'
       group={
-        <g id="Get-Access-Dashboard-2-Lisk-XL" transform="translate(-1165.000000, -676.000000)" fill="url(#square-left)">
-          <g id="Group" transform="translate(315.000000, 146.000000)">
-            <rect id="Rectangle-Copy" transform="translate(944.637722, 561.361314) rotate(-345.000000) translate(-944.637722, -561.361314) " x="880" y="490" width="100" height="100"></rect>
+        <g transform="translate(-1165.000000, -676.000000)" >
+          <g transform="translate(315.000000, 146.000000)">
+            <rect fill="url(#square-left-bg)" className={`${styles.shapeBackground}`} transform="translate(944.637722, 561.361314) rotate(-345.000000) translate(-944.637722, -561.361314) " x="880" y="490" width="100" height="100"/>
+            <rect fill="url(#square-left-fg)" className={`${styles.shapeForeground}`} transform="translate(944.637722, 561.361314) rotate(-345.000000) translate(-944.637722, -561.361314) " x="880" y="490" width="100" height="100"/>
           </g>
         </g>}
-      gradients1='#F792A6;#C86DD7;#4D3AFF;#004AFF;#008BFF;#93F4FE;#96F7E1;#FFF8CF;#FFD300;#F792A6'
-      gradients2='#EC596D;#3023AE;#8480FF;#93F4FE;#4D3AFF;#004AFF;#5DECBF;#FFD23A;#FF9100;#EC596D'
-      color1='#FFD300'
-      color2='#FF9100'
+      backGroundIndex={3}
+      foreGroundIndex={4}
       width='200px'
       height='200px'
       viewBox='0 0 189 63'
@@ -89,17 +87,17 @@ const Shapes = ({ shapes, percentage }) =>
       initial={['5%', '-1%']} />
     <MovableShape
       hidden={shapes[8]}
-      id='square-right'
+      idBg='square-right-bg'
+      idFg='square-right-fg'
       group={
-        <g id="Get-Access-Dashboard-2-Lisk-XL" transform="translate(-363.000000, -600.000000)" fill="url(#square-right)">
-          <g id="Group" transform="translate(315.000000, 146.000000)">
-            <rect id="shape-1" transform="translate(120.124210, 526.124210) rotate(-45.000000) translate(-120.124210, -526.124210) " x="90" y="470" width="60" height="60"></rect>
+        <g transform="translate(-363.000000, -600.000000)">
+          <g transform="translate(315.000000, 146.000000)">
+            <rect fill="url(#square-right-bg)" className={`${styles.shapeBackground}`} transform="translate(120.124210, 526.124210) rotate(-45.000000) translate(-120.124210, -526.124210) " x="90" y="470" width="60" height="60"/>
+            <rect fill="url(#square-right-fg)" className={`${styles.shapeForeground}`} transform="translate(120.124210, 526.124210) rotate(-45.000000) translate(-120.124210, -526.124210) " x="90" y="470" width="60" height="60"/>
           </g>
         </g>}
-      gradients1='#C86DD7;#004AFF;#008BFF;#4D3AFF;#F792A6;#FFD300;#F792A6;#C86DD7'
-      gradients2='#3023AE;#93F4FE;#00EDFF;#8480FF;#EC596D;#FF9100;#EC596D;#3023AE'
-      color1='#3023AE'
-      color2='#C86DD7'
+      backGroundIndex={0}
+      foreGroundIndex={1}
       width='145px'
       height='145px'
       viewBox='0 0 145 145'
@@ -108,17 +106,17 @@ const Shapes = ({ shapes, percentage }) =>
       initial={['70%', '-5%']} />
     <MovableShape
       hidden={shapes[5]}
-      id='triangle-left'
+      idBg='triangle-left-bg'
+      idFg='triangle-left-fg'
       group={
-        <g id="Get-Access-Dashboard-2-Lisk-XL" transform="translate(-1355.000000, -704.000000)" fill="url(#triangle-left)">
-          <g id="Group" transform="translate(315.000000, 146.000000)">
-            <polygon id="triangle" transform="translate(1128.068314, 616.047499) rotate(-320.000000) translate(-1128.068314, -616.047499) " points="1124.3008 557.547499 1180.56831 670.547499 1050.56831 650.547499"></polygon>
+        <g transform="translate(-1355.000000, -704.000000)">
+          <g transform="translate(315.000000, 146.000000)">
+            <polygon fill="url(#triangle-left-bg)" className={`${styles.shapeBackground}`} transform="translate(1128.068314, 616.047499) rotate(-320.000000) translate(-1128.068314, -616.047499) " points="1124.3008 557.547499 1180.56831 670.547499 1050.56831 650.547499"/>
+            <polygon fill="url(#triangle-left-fg)" className={`${styles.shapeForeground}`} transform="translate(1128.068314, 616.047499) rotate(-320.000000) translate(-1128.068314, -616.047499) " points="1124.3008 557.547499 1180.56831 670.547499 1050.56831 650.547499"/>
           </g>
         </g>}
-      gradients1='#FFD300;#F792A6;#C86DD7;#004AFF;#008BFF;#4D3AFF;#F792A6;#FFD300'
-      gradients2='#FF9100;#EC596D;#3023AE;#93F4FE;#00EDFF;#8480FF;#EC596D;#FF9100'
-      color1='#4D3AFF'
-      color2='#8480FF'
+      backGroundIndex={0}
+      foreGroundIndex={1}
       width='160px'
       height='180px'
       viewBox='0 0 146 135'
@@ -127,17 +125,17 @@ const Shapes = ({ shapes, percentage }) =>
       initial={['-2%', '30%']} />
     <MovableShape
       hidden={shapes[7]}
-      id='circle-left'
+      idBg='circle-left-bg'
+      idFg='circle-left-fg'
       group={
-        <g id="Get-Access-Dashboard-2-Lisk-XL" transform="translate(-467.000000, -806.000000)" fill="url(#circle-left)">
-          <g id="Group" transform="translate(315.000000, 146.000000)">
-            <ellipse id="shape-2" cx="192" cy="701" rx="40" ry="41"></ellipse>
+        <g transform="translate(-467.000000, -806.000000)">
+          <g transform="translate(315.000000, 146.000000)">
+            <ellipse fill="url(#circle-left-bg)" className={`${styles.shapeBackground}`} cx="192" cy="701" rx="40" ry="41"/>
+            <ellipse fill="url(#circle-left-fg)" className={`${styles.shapeForeground}`} cx="192" cy="701" rx="40" ry="41"/>
           </g>
         </g>}
-      gradients1='#F792A6;#C86DD7;#4D3AFF;#004AFF;#008BFF;#93F4FE;#96F7E1;#FFF8CF;#FFD300;#F792A6'
-      gradients2='#EC596D;#3023AE;#8480FF;#93F4FE;#4D3AFF;#004AFF;#5DECBF;#FFD23A;#FF9100;#EC596D'
-      color1='#00EDFF'
-      color2='#008BFF'
+      backGroundIndex={3}
+      foreGroundIndex={4}
       width='80px'
       height='82px'
       viewBox='0 0 80 82'
@@ -146,17 +144,17 @@ const Shapes = ({ shapes, percentage }) =>
       initial={['20%', '2%']} />
     <MovableShape
       hidden={shapes[3]}
-      id='smallTriangle'
+      idBg='small-triangle-bg'
+      idFg='small-triangle-fg'
       group={
-        <g id="Get-Access-Dashboard-2-Lisk-XL" transform="translate(-1333.000000, -767.000000)" fill="url(#smallTriangle)">
-          <g id="Group" transform="translate(315.000000, 146.000000)">
-            <polygon id="Triangle-2-Copy" transform="translate(1039.959376, 649.345689) rotate(-30.000000) translate(-1039.959376, -649.345689) " points="1037.77139 615.371723 1083.80612 683.319655 996.112633 683.319655"></polygon>
+        <g transform="translate(-1333.000000, -767.000000)" >
+          <g transform="translate(315.000000, 146.000000)">
+            <polygon fill="url(#small-triangle-bg)" className={`${styles.shapeBackground}`} transform="translate(1039.959376, 649.345689) rotate(-30.000000) translate(-1039.959376, -649.345689) " points="1037.77139 615.371723 1083.80612 683.319655 996.112633 683.319655"/>
+            <polygon fill="url(#small-triangle-fg)" className={`${styles.shapeForeground}`} transform="translate(1039.959376, 649.345689) rotate(-30.000000) translate(-1039.959376, -649.345689) " points="1037.77139 615.371723 1083.80612 683.319655 996.112633 683.319655"/>
           </g>
         </g>}
-      gradients1='#5DECBF;#FFD23A;#FF9100;#EC596D;#EC596D;#3023AE;#8480FF;#93F4FE;#4D3AFF;#004AFF;#5DECBF'
-      gradients2='#96F7E1;#FFF8CF;#FFD300;#F792A6;#F792A6;#C86DD7;#4D3AFF;#004AFF;#008BFF;#93F4FE;#96F7E1'
-      color1='#F792A6'
-      color2='#EC596D'
+      backGroundIndex={2}
+      foreGroundIndex={3}
       width='77px'
       height='80px'
       viewBox='0 0 77 80'
@@ -165,17 +163,17 @@ const Shapes = ({ shapes, percentage }) =>
       initial={['40%', '-2%']} />
     <MovableShape
       hidden={shapes[6]}
-      id='verySmallCircle'
+      idBg='very-small-circle-bg'
+      idFg='very-small-circle-fg'
       group={
-        <g id="Get-Access-Dashboard-2-Lisk-XL" transform="translate(-467.000000, -806.000000)" fill="url(#verySmallCircle)">
-          <g id="Group" transform="translate(315.000000, 146.000000)">
-            <ellipse id="shape-2" cx="192" cy="701" rx="40" ry="41"></ellipse>
+        <g transform="translate(-467.000000, -806.000000)">
+          <g transform="translate(315.000000, 146.000000)">
+            <ellipse fill="url(#very-small-circle-bg)" className={`${styles.shapeBackground}`} cx="192" cy="701" rx="40" ry="41"/>
+            <ellipse fill="url(#very-small-circle-fg)" className={`${styles.shapeForeground}`} cx="192" cy="701" rx="40" ry="41"/>
           </g>
         </g>}
-      gradients1='#C86DD7;#004AFF;#008BFF;#4D3AFF;#F792A6;#FFD300;#F792A6;#C86DD7'
-      gradients2='#3023AE;#93F4FE;#00EDFF;#8480FF;#EC596D;#FF9100;#EC596D;#3023AE'
-      color1='#92BEFF'
-      color2='#598AFF'
+      backGroundIndex={1}
+      foreGroundIndex={2}
       width='50px'
       height='50px'
       viewBox='0 0 80 82'

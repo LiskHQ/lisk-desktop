@@ -1,11 +1,16 @@
 import { css, tween, easing } from 'popmotion';
 import React from 'react';
+import styles from './shapes.css';
+import schemes from './colorSchemes';
 
 class MovableShape extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.progress = 0;
     this.totalSteps = 100;
+    this.threshold = 20;
+    this.backGroundIndex = props.backGroundIndex;
+    this.foreGroundIndex = props.foreGroundIndex;
     this.state = {
       style: {
         opacity: 0,
@@ -71,30 +76,53 @@ class MovableShape extends React.Component {
     }
   }
 
+  setIndex(key, length) {
+    if (this[key] === length) {
+      this[key] = 0;
+    } else {
+      this[key]++;
+    }
+  }
+
+  distributeColors() {
+    const { percentage } = this.props;
+    const { foreground: fg, background: bg } = schemes[0];
+
+    const pattern = {
+      bg: { x: bg[this.backGroundIndex][0], y: bg[this.backGroundIndex][1] },
+      fg: { x: fg[this.foreGroundIndex][0], y: fg[this.foreGroundIndex][1] },
+    };
+
+    if (percentage > this.threshold && percentage < 90) {
+      this.threshold += 10;
+      this.setIndex('foreGroundIndex', fg.length - 1);
+      this.setIndex('backGroundIndex', bg.length - 1);
+    }
+
+    return pattern;
+  }
+
   render() {
-    const {
-      className,
-      group,
-      color1,
-      color2,
-      gradients1,
-      gradients2,
-      width,
-      height,
-      viewBox,
-      id } = this.props;
+    const { className, group, width, height, viewBox, idBg, idFg } = this.props;
+    const toggleShape = () =>
+      (this.props.percentage > 80 ? false : Math.floor((this.props.percentage / 10)) % 2);
 
     return <div style = { this.state.style }
-      className={className}
+
+      className={`${toggleShape() ? styles.switch : null} ${className}`}
       ref={(input) => { this.shape = input; }}>
-      <svg width={width} height={height} viewBox={viewBox} >
+      <svg width={width} height={height} viewBox={viewBox}>
         <defs>
-          <linearGradient x1="19.4762866%" y1="88.4126955%" x2="86.0468234%" y2="18.4958616%" id={id}>
-            <stop stopColor={color1} offset="0%">
-              {this.progress > 0 ? <animate attributeName="stop-color" values={gradients1} dur="10s" repeatCount="indefinite" /> : null }
+          <linearGradient x1="19%" y1="88%" x2="86%" y2="18%" id={idBg}>
+            <stop stopColor={this.distributeColors().fg.x} offset="0%">
             </stop>
-            <stop stopColor={color2} offset="100%">
-              {this.progress > 0 ? <animate attributeName="stop-color" values={gradients2} dur="10s" repeatCount="indefinite" /> : null }
+            <stop stopColor={this.distributeColors().fg.y} offset="100%">
+            </stop>
+          </linearGradient>
+          <linearGradient x1="19%" y1="88%" x2="86%" y2="18%" id={idFg}>
+            <stop stopColor={this.distributeColors().bg.x} offset="0%">
+            </stop>
+            <stop stopColor={this.distributeColors().bg.y} offset="100%">
             </stop>
           </linearGradient>
         </defs>
