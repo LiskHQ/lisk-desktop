@@ -1,6 +1,7 @@
 import actionTypes from '../../constants/actions';
 
 const delegate = (state = [], action) => {
+  let targetState = { ...state };
   switch (action.type) {
     case actionTypes.delegatesRetrieved:
       return {
@@ -10,16 +11,19 @@ const delegate = (state = [], action) => {
         delegateName: action.data.username,
       };
 
-    case actionTypes.delegateRegisteredSuccess:
-      return {
-        ...state,
-        registerStep: 'register-success',
-      };
-
+    case actionTypes.accountUpdated:
+      if (action.data.delegate && action.data.isDelegate) {
+        targetState = {
+          ...targetState,
+          registerStep: 'register-success',
+        };
+      }
+      return targetState;
     case actionTypes.delegateRegisteredFailure:
       return {
         ...state,
         registerStep: 'register-failure',
+        registerError: action.data.error,
       };
     default:
       return state;
