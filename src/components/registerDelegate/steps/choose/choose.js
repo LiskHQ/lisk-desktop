@@ -22,16 +22,6 @@ class Choose extends React.Component {
     this.delegateNameMaxChars = 20;
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.delegate.delegateNameQueried) {
-      if (nextProps.delegate.delegateNameInvalid) {
-        this.setState({ delegateName: { error: this.props.t('Usernane already exists') } });
-      } else {
-        this.props.nextStep({ delegateName: this.state.delegateName.value });
-      }
-    }
-  }
-
   hasEnoughLSK() {
     return (fromRawLsk(this.props.account.balance) * 1
     > fromRawLsk(Fees.registerDelegate) * 1);
@@ -56,12 +46,24 @@ class Choose extends React.Component {
         value.length > this.delegateNameMaxChars) {
       error = this.props.t('Max 20 characters a-z 0-1, no special characters except “!@$&_.”');
     }
+
     this.setState({
       [name]: {
         value,
         error: typeof error === 'string' ? error : undefined,
       },
     });
+
+    if (error) {
+      return;
+    }
+
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      if (value === this.state.delegateName.value) {
+        this.props.checkDelegateUsernameAvailable(this.state.delegateName.value);
+      }
+    }, 250);
   }
 
   handleDelegateNameSubmit(evt) {
@@ -73,8 +75,10 @@ class Choose extends React.Component {
     const { t, account } = this.props;
     const hasEnoughLSK = this.hasEnoughLSK();
     const isDelegate = account.isDelegate;
-    const delegateNameHasError = (!typeof this.state.delegateName.value === 'string' ||
-      this.state.delegateName.error !== undefined);
+    const delegateNameHasError = (typeof this.state.delegateName.error === 'string' &&
+      this.state.delegateName.error !== '');
+    const delegateNameDuplicated = this.props.delegate.delegateNameQueried &&
+      this.props.delegate.delegateNameInvalid;
     return (
       <section>
         <TransitionWrapper current={this.state.step} step='confirm'>
@@ -114,8 +118,7 @@ class Choose extends React.Component {
               </h5>
             </header>
             <div className={`${stepStyles.form} ${stepStyles.formWithBg}`}>
-              <form onSubmit={() =>
-                this.props.checkDelegateUsernameAvailable(this.state.delegateName.value)}>
+              <form onSubmit={this.validateDelegateName.bind(this, 'delegateName')}>
                 <Input
                   placeholder={this.props.t('Write to check availability')}
                   required={true}
@@ -124,12 +127,15 @@ class Choose extends React.Component {
                   onChange={this.validateDelegateName.bind(this, 'delegateName')}
                   error={this.state.delegateName.error}
                   value={this.state.delegateName.value} />
+                {delegateNameDuplicated ? <p className={`${stepStyles.error} ${stepStyles.errorInline}`}>
+                  {t('Usernane already exists')}
+                </p> : null }
                 <PrimaryButton
-                  disabled={delegateNameHasError}
+                  disabled={delegateNameHasError || delegateNameDuplicated}
                   label={t('Next')}
                   className={`${stepStyles.chooseNameBtn} submit-delegate-name`}
                   onClick={() =>
-                    this.props.checkDelegateUsernameAvailable(this.state.delegateName.value)}
+                    this.props.nextStep({ delegateName: this.state.delegateName.value })}
                 />
               </form>
             </div>

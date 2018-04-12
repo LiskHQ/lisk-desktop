@@ -79,6 +79,14 @@
 .error {
   color: var(--color-error);
   font-size: var(--font-size-small);
+  font-family: var(--heading-font);
+}
+
+.errorInline {
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .form {
@@ -90,12 +98,12 @@
 
 .formWithBg {
   &::before {
-    height: calc(100% + 25px);
+    height: 200%;
     width: 100%;
     content: '';
     position: absolute;
     background-color: var(--color-form-bg);
     left: 0;
-    bottom: -48px;
+    z-index: -1;
   }
 }

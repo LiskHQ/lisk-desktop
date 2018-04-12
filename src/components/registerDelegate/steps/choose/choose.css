@@ -17,5 +17,8 @@
   & > span[class*='input__error'] {
     font-size: 14px;
     font-family: var(--heading-font);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }

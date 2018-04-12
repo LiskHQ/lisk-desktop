@@ -24,8 +24,12 @@
 }
 
 .button {
-  margin: 0 auto;
+  margin: 48px auto;
   width: 261px;
+}
+
+.input {
+  padding-bottom: 0;
 }
 
 .wrapper {
@@ -37,12 +41,12 @@
   }
 
   &::before {
-    height: calc(75vh / 2 + 48px); /* stylelint-disable-line */
+    height: 200%;
     width: 100%;
     content: '';
     position: absolute;
     background-color: var(--color-form-bg);
     left: 0;
-    bottom: -48px;
+    top: 200px;
   }
 }

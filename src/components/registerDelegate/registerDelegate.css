@@ -5,6 +5,7 @@
   width: 100%;
   margin: 0;
   padding: 48px 0;
+  overflow: hidden;
 }
 
 .background {
@@ -15,11 +16,15 @@
 }
 
 .multiStep {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: calc(75vh - (48px * 2)); /* stylelint-disable-line */
   width: 100%;
+
+  & > section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: calc(75vh - (32px + 45px + 48px)); /* stylelint-disable-line */
+    width: 100%;
+  }
 
   & > nav > section {
     width: 300px;
