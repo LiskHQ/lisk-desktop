@@ -22,6 +22,18 @@ class Choose extends React.Component {
     this.delegateNameMaxChars = 20;
   }
 
+  componentWillMount() {
+    if (this.props.delegate.delegateName) {
+      this.setState({
+        step: 'choose',
+        delegateName: {
+          value: this.props.delegate.delegateName,
+          error: '',
+        },
+      });
+    }
+  }
+
   hasEnoughLSK() {
     return (fromRawLsk(this.props.account.balance) * 1
     > fromRawLsk(Fees.registerDelegate) * 1);

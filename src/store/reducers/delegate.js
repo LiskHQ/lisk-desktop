@@ -7,6 +7,7 @@ const delegate = (state = [], action) => {
         ...state,
         delegateNameQueried: true,
         delegateNameInvalid: action.data.delegate !== undefined,
+        delegateName: action.data.username,
       };
 
     case actionTypes.delegateRegisteredSuccess:

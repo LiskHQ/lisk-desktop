@@ -19,9 +19,9 @@ export const delegatesFetched = ({ activePeer, username }) =>
     getDelegate(
       activePeer, { username },
     ).then(({ delegate }) => {
-      dispatch(delegatesRetrieved({ delegate }));
+      dispatch(delegatesRetrieved({ delegate, username }));
     }).catch(() => {
-      dispatch(delegatesRetrieved({ delegate: undefined }));
+      dispatch(delegatesRetrieved({ delegate: undefined, username }));
     });
   };
 
