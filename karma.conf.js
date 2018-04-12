@@ -54,9 +54,7 @@ module.exports = function (config) {
           functions: 80,
           lines: 80,
           excludes: [
-            'src/components/app/index.js',
             'src/components/transactions/transactionList.js',
-            'src/components/relativeLink/index.js',
             'src/components/receiveDialog/receiveDialog.js',
             'src/components/header/header.js',
             'src/components/searchBar/index.js',
