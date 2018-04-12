@@ -34,8 +34,12 @@ export default ({ autoUpdater, dialog, win, process, electron }) => {
     win.browser.setProgressBar(progressObj.transferred / progressObj.total);
   });
 
-  autoUpdater.on('update-available', ({ releaseNotes }) => {
+  autoUpdater.on('update-available', ({ releaseNotes, version }) => {
     updater.error = undefined;
+    const versions = {
+      oldVersion: electron.app.getVersion(),
+      newVersion: version,
+    };
     const updateApp = () => {
       autoUpdater.downloadUpdate();
       setTimeout(() => {
@@ -47,7 +51,7 @@ export default ({ autoUpdater, dialog, win, process, electron }) => {
         }
       }, 500);
     };
-    updateModal(electron, releaseNotes, updateApp);
+    updateModal(electron, releaseNotes, updateApp, versions);
   });
 
   autoUpdater.on('update-not-available', () => {
