@@ -61,6 +61,10 @@ defineSupportCode(({ Before, After, registerListener }) => {
       console.log(`BROWSER LOG: ${util.inspect(browserLog)}`); // eslint-disable-line no-console
     });
 
+    if (browser.driver != null) {
+      browser.driver.quit();
+    }
+
     if (scenario.isFailed()) {
       const screnarioSlug = slugify([scenario.scenario.feature.name, scenario.scenario.name].join(' '));
       takeScreenshot(screnarioSlug, callback);
