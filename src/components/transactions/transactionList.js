@@ -7,22 +7,16 @@ import TransactionsHeader from './transactionsHeader';
 import { transactionsRequestInit } from '../../actions/transactions';
 import txFilters from './../../constants/transactionFilters';
 import txTypes from './../../constants/transactionTypes';
-import styles from './transactions.css';
+import styles from './transactionList.css';
 import { parseSearchParams } from './../../utils/searchParams';
 
 class TransactionsList extends React.Component {
   constructor(props) {
     super(props);
-    if (props.peers.data) {
-      this.props.transactionsRequestInit({ address: this.props.address });
-    }
+    this.props.transactionsRequestInit({ address: this.props.address });
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.peers.data !== this.props.peers.data) {
-      this.props.transactionsRequestInit({ address: this.props.address });
-    }
-
     if (nextProps.transactions && this.props.nextStep) this.showDetails(nextProps.transactions);
   }
 
@@ -106,8 +100,4 @@ const mapDispatchToProps = dispatch => ({
   transactionsRequestInit: data => dispatch(transactionsRequestInit(data)),
 });
 
-const mapStateToProps = state => ({
-  peers: state.peers,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(TransactionsList);
+export default connect(null, mapDispatchToProps)(TransactionsList);

@@ -32,8 +32,8 @@ const publicComponent = [
 ];
 
 const privateComponent = [
-  { route: `${routes.main.path}${routes.transaction.path}`, component: Transactions },
-  { route: `${routes.main.path}${routes.voting.path}`, component: Voting },
+  { route: `${routes.wallet.path}`, component: Transactions },
+  { route: `${routes.delegates.path}`, component: Voting },
 ];
 
 describe('App', () => {
@@ -51,6 +51,8 @@ describe('App', () => {
     publicComponent.forEach(({ route, component }) => {
       it(`should render ${component.name} component at "${route}" route`, () => {
         const wrapper = navigateTo({ store }, [route]);
+        wrapper.find('LoadingBar').props().markAsLoaded();
+        wrapper.update();
         expect(wrapper.find(component).exists()).to.be.equal(true);
       });
     });
@@ -58,6 +60,8 @@ describe('App', () => {
     privateComponent.forEach(({ route, component }) => {
       it(`should redirect from ${component.name} component if user is not authenticated`, () => {
         const wrapper = navigateTo({ store }, [route]);
+        wrapper.find('LoadingBar').props().markAsLoaded();
+        wrapper.update();
         expect(wrapper.find(component).exists()).to.be.equal(false);
         expect(wrapper.find(Login).exists()).to.be.equal(true);
       });

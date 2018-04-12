@@ -76,7 +76,7 @@ describe('@integration: Account switch', () => {
 
     const history = {
       location: {
-        pathname: `${routes.main.path}${routes.dashboard.path}`,
+        pathname: `${routes.dashboard.path}`,
       },
       push: spy(),
     };

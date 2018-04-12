@@ -18,7 +18,7 @@ class SecondPassphrase extends React.Component {
     document.body.classList.add('contentFocused');
     if (this.props.account.secondSignature === 1) {
       this.props.history
-        .push(`${routes.main.path}${routes.dashboard.path}`);
+        .push(`${routes.dashboard.path}`);
     }
   }
 
