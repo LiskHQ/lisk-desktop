@@ -117,7 +117,7 @@ node('lisk-hub') {
 
             ~/bin/BrowserStackLocal --key $BROWSERSTACK_PASSWORD --folder ${WORKSPACE}/app/build --local-identifier $BRANCH_NAME &
             sleep 10
-            npm run --silent e2e-test -- --params.baseURL http://bsuser44281.browserstack.com/index.html --params.liskCoreURL http://127.0.0.1:400$N --seleniumAddress http://hub-cloud.browserstack.com/wd/hub --cucumberOpts.tags @testnet
+            npm run --silent e2e-test -- --params.baseURL http://bsuser44281.browserstack.com/index.html --params.liskCoreURL http://127.0.0.1:$LISK_PORT --seleniumAddress http://hub-cloud.browserstack.com/wd/hub --cucumberOpts.tags @testnet
 
             if [ -z $CHANGE_BRANCH ]; then
 
