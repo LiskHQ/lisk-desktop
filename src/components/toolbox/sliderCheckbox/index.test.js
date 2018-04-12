@@ -85,7 +85,7 @@ describe('SliderCheckbox without HOC', () => {
     isItTransformed(wrapper, '249px');
     stopDragging(wrapper);
 
-    // // The checkbox should be checked
+    // The checkbox should not be checked
     shouldBeNotChecked(wrapper);
   });
 
