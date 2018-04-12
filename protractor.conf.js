@@ -46,7 +46,7 @@ exports.config = {
   })),
   framework: 'custom',
   frameworkPath: require.resolve('protractor-cucumber-framework'),
-
+  restartBrowserBetweenTests: true,
   cucumberOpts: {
     require: 'test/e2e/step_definitions/*.js',
     tags: ['~@advanced'],
