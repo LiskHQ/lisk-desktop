@@ -7,9 +7,9 @@ exports.config = {
   directConnect: !process.env.BRANCH_NAME,
   multiCapabilities: [{
     browserName: 'chrome',
-    browserVersion: '63.0',
+    browserVersion: '65.0',
     os: 'Windows',
-    osVersion: '10',
+    osVersion: '7',
     resolution: '1680x1050',
   /*
   }, {
