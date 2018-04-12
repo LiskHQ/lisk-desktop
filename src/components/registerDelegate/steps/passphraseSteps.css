@@ -3,7 +3,9 @@
 :root {
   --main-content-horizontal-padding: 218px;
   --step-heading-fs: 48px;
+  --step-heading-fs-s: 25px;
   --form-content-horizontal-padding: 48px;
+  --form-content-horizontal-padding-s: 20px;
 }
 
 .headerWrapper {
@@ -48,5 +50,38 @@
     background-color: var(--color-form-bg);
     left: 0;
     top: 200px;
+  }
+}
+
+@media (--small-viewport) {
+  .headerWrapper {
+    & h2 {
+      font-size: var(--step-heading-fs-s);
+      padding: 0 var(--main-content-horizontal-padding-s);
+      margin-bottom: 24px;
+      text-align: left;
+    }
+  }
+
+  .input {
+    padding: 0;
+  }
+
+  .wrapper {
+    padding: var(--form-content-horizontal-padding-s);
+    padding-top: 0;
+
+    &::before {
+      top: 85px;
+    }
+
+    & div[class*='inputTypeToggle'] {
+      text-align: right;
+      width: auto;
+    }
+  }
+
+  .button {
+    margin: 10px auto;
   }
 }

@@ -7,6 +7,7 @@
   --tabel-header-padding-s: 19px;
   --list-line-height: 25px;
   --header-line-height: 36px;
+  --link-font-size: 15px;
 }
 
 .header {
@@ -40,11 +41,12 @@
   font-weight: 600;
   text-decoration: none;
   white-space: nowrap;
+  line-height: 15px;
 }
 
 .registerLink {
   position: absolute;
-  top: 90px;
+  top: 95px;
   left: 48px;
 }
 
@@ -187,6 +189,12 @@
         line-height: 16px;
       }
     }
+  }
+
+  .registerLink {
+    position: relative;
+    top: inherit;
+    left: inherit;
   }
 
   .search input {

@@ -7,7 +7,6 @@
   --back-button-width-l: 75px;
   --back-button-width-s: 65px;
   --nav-size: 490px;
-  --nav-bottom-margin: 52px;
 }
 
 .navigation {
@@ -18,7 +17,6 @@
   justify-content: space-between;
   position: relative;
   z-index: 9;
-  margin-bottom: var(--nav-bottom-margin);
 
   & > section {
     align-self: flex-end;

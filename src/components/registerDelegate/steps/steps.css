@@ -14,9 +14,13 @@
 
 :root {
   --main-content-horizontal-padding: 218px;
+  --main-content-horizontal-padding-s: 20px;
   --step-heading-fs: 48px;
+  --step-heading-fs-s: 25px;
   --form-content-vertical-padding: 32px;
+  --form-content-vertical-padding-s: 0;
   --form-content-horizontal-padding: 48px;
+  --form-content-horizontal-padding-s: 20px;
 }
 
 .container {
@@ -105,5 +109,32 @@
     background-color: var(--color-form-bg);
     left: 0;
     z-index: -1;
+  }
+}
+
+@media (--small-viewport) {
+  .heading,
+  .description {
+    padding: 0 var(--main-content-horizontal-padding-s);
+  }
+
+  .heading {
+    font-size: var(--step-heading-fs-s);
+  }
+
+  .description {
+    margin-bottom: 24px;
+  }
+}
+
+@media (--xSmall-viewport) {
+  .form {
+    padding: var(--form-content-vertical-padding-s) var(--form-content-horizontal-padding-s);
+    width: calc(100% - var(--form-content-horizontal-padding-s) * 2);
+  }
+
+  .chooseNameBtn,
+  .input {
+    width: 100%;
   }
 }
