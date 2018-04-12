@@ -7,7 +7,7 @@
 
 .delegateNameInput {
   padding: 0 var(--input-horizontal-padding);
-  margin-bottom: 111px;
+  margin-bottom: 110px;
 
   & > input[type='text'] {
     font-size: 32px;
