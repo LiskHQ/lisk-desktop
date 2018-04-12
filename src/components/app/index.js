@@ -11,6 +11,7 @@ import SavedAccounts from '../savedAccounts';
 import NotFound from '../notFound';
 
 import routes from '../../constants/routes';
+// eslint-disable-next-line import/no-named-as-default
 import Onboarding from '../onboarding';
 
 class App extends React.Component {
