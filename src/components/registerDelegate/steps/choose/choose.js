@@ -54,9 +54,12 @@ class Choose extends React.Component {
     if (!value ||
         (typeof value !== 'string') ||
         nameMatchRegEx.length > 1 ||
-        nameMatchRegEx[0].length !== value.length ||
-        value.length > this.delegateNameMaxChars) {
-      error = this.props.t('Max 20 characters a-z 0-1, no special characters except “!@$&_.”');
+        nameMatchRegEx[0].length !== value.length) {
+      error = this.props.t('Characters not allowed: “!@$&_.”');
+    }
+
+    if (!error && value.length > this.delegateNameMaxChars) {
+      error = this.props.t('Name too long');
     }
 
     this.setState({
@@ -89,8 +92,22 @@ class Choose extends React.Component {
     const isDelegate = account.isDelegate;
     const delegateNameHasError = (typeof this.state.delegateName.error === 'string' &&
       this.state.delegateName.error !== '');
-    const delegateNameDuplicated = this.props.delegate.delegateNameQueried &&
+    const delegateNameDuplicated =
+      !delegateNameHasError
+      && !this.props.delegate.delegateNameQueried &&
       this.props.delegate.delegateNameInvalid;
+    const showCheckingAvailability = this.props.delegate.delegateNameQueried;
+    const showInfoNameAvailable =
+      !delegateNameHasError &&
+      this.state.delegateName.value !== '' &&
+      !this.props.delegate.delegateNameQueried &&
+      !this.props.delegate.delegateNameInvalid;
+    const showInfoValidation =
+      !showInfoNameAvailable &&
+      !delegateNameHasError &&
+      !delegateNameDuplicated &&
+      !showCheckingAvailability;
+      
     return (
       <section>
         <TransitionWrapper current={this.state.step} step='confirm'>
@@ -140,7 +157,16 @@ class Choose extends React.Component {
                   error={this.state.delegateName.error}
                   value={this.state.delegateName.value} />
                 {delegateNameDuplicated ? <p className={`${stepStyles.error} ${stepStyles.errorInline}`}>
-                  {t('Usernane already exists')}
+                  {t('Name is already taken!')}
+                </p> : null }
+                {showCheckingAvailability ? <p className={stepStyles.info}>
+                  {t('Checking availability')}
+                </p> : null }
+                {showInfoNameAvailable ? <p className={stepStyles.info}>
+                  {t('Name is available')}
+                </p> : null }
+                {showInfoValidation ? <p className={stepStyles.info}>
+                  {t('Max 20 characters a-z 0-1, no special characters except “!@$&_.”')}
                 </p> : null }
                 <PrimaryButton
                   disabled={delegateNameHasError || delegateNameDuplicated}

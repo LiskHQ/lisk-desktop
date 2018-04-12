@@ -58,7 +58,7 @@
 }
 
 .submitIcon {
-  color: var(--color-grayscale-dark);
+  color: var(--color-primary-standard);
   animation: burst 2000ms infinite linear;
   animation-direction: alternate;
   font-size: 120px;
@@ -87,6 +87,16 @@
 }
 
 .errorInline {
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.info {
+  color: var(--color-primary-standard);
+  font-size: var(--font-size-small);
+  font-family: var(--content-font);
   position: absolute;
   top: 80px;
   left: 50%;

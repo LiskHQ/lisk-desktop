@@ -12,10 +12,19 @@ export const delegatesRetrieved = data => ({
 });
 
 /**
+ * Add data to the list of all delegates
+ */
+export const delegatesRetrieving = data => ({
+  type: actionTypes.delegatesRetrieving,
+  data,
+});
+
+/**
  * Gets list of all delegates
  */
 export const delegatesFetched = ({ activePeer, username }) =>
   (dispatch) => {
+    dispatch(delegatesRetrieving());
     getDelegate(
       activePeer, { username },
     ).then(({ delegate }) => {
