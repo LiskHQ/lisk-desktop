@@ -4,6 +4,7 @@ import { mount } from 'enzyme';
 import sinon from 'sinon';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
+import { BrowserRouter as Router } from 'react-router-dom';
 import i18n from '../../i18n'; // initialized i18next instance
 import store from '../../store';
 import RegisterDelegate from './registerDelegate';
@@ -37,6 +38,8 @@ const withSecondSecretAccount = {
   secondSignature: 1,
 };
 
+const delegateStore = {};
+
 const props = {
   peers: {
     data: {},
@@ -67,26 +70,31 @@ describe('RegisterDelegate', () => {
     beforeEach(() => {
       store.getState = () => ({
         account: normalAccount,
+        delegate: delegateStore,
       });
       wrapper = mount(<Provider store={store}>
-        <I18nextProvider i18n={ i18n }>
-          <RegisterDelegate {...normalProps} />
-        </I18nextProvider>
+        <Router>
+          <I18nextProvider i18n={ i18n }>
+            <RegisterDelegate {...normalProps} />
+          </I18nextProvider>
+        </Router>
       </Provider>);
     });
 
-    it('renders an InfoParagraph components', () => {
-      expect(wrapper.find('InfoParagraph')).to.have.length(1);
+    it('renders a MultiStep component', () => {
+      expect(wrapper.find('MultiStep')).to.have.length(1);
     });
 
-    it('renders one Input component for a normal account', () => {
-      expect(wrapper.find('Input')).to.have.length(1);
+    it('renders one Choose component', () => {
+      expect(wrapper.find('Choose')).to.have.length(1);
     });
 
     it('allows register as delegate for a non delegate account', () => {
-      wrapper.find('.username input').simulate('change', { target: { value: 'sample_username' } });
-      wrapper.find('button.next-button').simulate('submit');
-      expect(wrapper.find('.primary-button button').props().disabled).to.not.equal(true);
+      wrapper.find('.choose-name').first().simulate('click');
+      wrapper.find('.delegate-name').first().simulate('change', { target: { value: 'sample_username' } });
+      const submitDelegateBtn = wrapper.find('.submit-delegate-name').first();
+      expect(submitDelegateBtn.props().disabled).to.not.equal(true);
+      submitDelegateBtn.simulate('click');
       expect(props.delegateRegistered).to.have.been.calledWith();
     });
 
