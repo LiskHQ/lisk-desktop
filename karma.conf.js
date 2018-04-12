@@ -54,7 +54,6 @@ module.exports = function (config) {
           functions: 80,
           lines: 80,
           excludes: [
-            'src/components/delegateList/votingHeader.js',
             'src/components/app/index.js',
             'src/components/transactions/transactionList.js',
             'src/components/relativeLink/index.js',
