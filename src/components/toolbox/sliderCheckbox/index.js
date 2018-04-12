@@ -3,11 +3,9 @@ import { themr } from 'react-css-themr';
 import styles from './checkbox.css';
 import { FontIcon } from '../../fontIcon';
 
-const StaticLabel = ({ text, theme, icons, iconName }) => (
+const StaticLabel = ({ theme, icons, iconName }) => (
   <span className={`${theme.circle} ${theme[iconName]}`}>
-    {text ? icons[iconName] :
-      <FontIcon className={`${theme.icon} ${theme.arrowRight}`}>{icons[iconName]}</FontIcon>
-    }
+    <FontIcon className={`${theme.icon} ${theme.arrowRight}`}>{icons[iconName]}</FontIcon>
   </span>
 );
 class SliderCheckbox extends React.Component {
@@ -38,21 +36,16 @@ class SliderCheckbox extends React.Component {
     this.trackable = true;
     this.xOffset = this.getXOffset(e);
     this.direction = this.input.checked ? -1 : 1;
-    const sliderWidth = this.parent.getBoundingClientRect().width;
-    const buttonWidth = this.shape.getBoundingClientRect().width;
-    if (buttonWidth > 0 && sliderWidth > buttonWidth) {
-      this.buttonWidth = buttonWidth;
-      this.maxMovement = sliderWidth - buttonWidth;
-    } else {
-      this.buttonWidth = this.props.buttonWidth;
-      this.maxMovement = this.props.maxMovement;
-    }
+    /* istanbul ignore next */
+    const sliderWidth = this.props.sliderWidth || this.parent.getBoundingClientRect().width;
+    /* istanbul ignore next */
+    this.buttonWidth = this.props.buttonWidth || this.shape.getBoundingClientRect().width;
+    this.maxMovement = sliderWidth - this.buttonWidth;
   }
 
   track(e) {
     if (this.trackable) {
       const pageX = this.getXOffset(e);
-
       this.delta = pageX - this.xOffset;
       const left = this.direction > 0
         ? this.delta
@@ -68,9 +61,9 @@ class SliderCheckbox extends React.Component {
   stopTracking() {
     if (this.trackable) {
       this.trackable = false;
-
-      if (Math.abs(this.delta) > 50 && !this.props.disabled) {
-        this.change('swiped');
+      // delta === 0 covers clicking
+      if ((this.delta === 0 || Math.abs(this.delta) > 50) && !this.props.disabled) {
+        this.change();
       } else {
         this.revert();
       }
@@ -78,19 +71,17 @@ class SliderCheckbox extends React.Component {
     }
   }
 
-  change(type) {
-    if (!this.props.swipeOnly || type === 'swiped') {
-      this.input.checked = !this.input.checked;
-      this.shape.removeAttribute('style');
-      this.direction = this.input.checked ? -1 : 1;
-      if (typeof this.props.onChange === 'function' &&
-        this.props.input instanceof Object &&
-        !(this.props.input instanceof Array)) {
-        this.props.onChange({
-          checked: this.input.checked,
-          value: this.props.input.value,
-        });
-      }
+  change() {
+    this.input.checked = !this.input.checked;
+    this.shape.removeAttribute('style');
+    this.direction = this.input.checked ? -1 : 1;
+    if (typeof this.props.onChange === 'function' &&
+      this.props.input instanceof Object &&
+      !(this.props.input instanceof Array)) {
+      this.props.onChange({
+        checked: this.input.checked,
+        value: this.props.input.value,
+      });
     }
   }
 
@@ -99,7 +90,7 @@ class SliderCheckbox extends React.Component {
   }
 
   render() {
-    const { label, input, className, hasSlidingArrows, theme, textAsIcon } = this.props;
+    const { label, input, className, hasSlidingArrows, theme } = this.props;
     const icons = this.props.icons ? this.props.icons : {};
 
     const checkType = i => (typeof i === 'string');
@@ -117,33 +108,26 @@ class SliderCheckbox extends React.Component {
         onMouseUp={this.stopTracking.bind(this)}
         onTouchEnd={this.stopTracking.bind(this)}>
         <span
-          onClick= {this.change.bind(this)}
           className={`${theme.circle} ${theme.button} circle`}
           ref={(el) => { this.shape = el; }}>
           <span className={theme.arrowRight}>
-            { textAsIcon ?
-              <span className={theme.text}>{icons.unchecked}</span> :
-              <FontIcon className={theme.icon}>
-                {icons.unchecked || 'arrow-right'}
-              </FontIcon>
-            }
+            <FontIcon className={theme.icon}>
+              {icons.unchecked || 'arrow-right'}
+            </FontIcon>
           </span>
 
           <span className={theme.checkMark}>
-            { textAsIcon ?
-              <span className={theme.text}>{icons.checked}</span> :
-              <FontIcon className={theme.icon}>
-                {icons.checked || 'checkmark'}
-              </FontIcon>
-            }
+            <FontIcon className={theme.icon}>
+              {icons.checked || 'checkmark'}
+            </FontIcon>
           </span>
         </span>
         { label ?
           <div>
-            <span>{label}</span>
+            <span className='label'>{label}</span>
             {
               hasSlidingArrows ?
-                <span className={styles.arrows}>
+                <span className={`${styles.arrows} arrow`}>
                   { this.arrows.map(key => <FontIcon key={key} value='arrow-right' />) }
                 </span> : null
             }
@@ -151,11 +135,11 @@ class SliderCheckbox extends React.Component {
         }
         {
           checkType(icons.begin) ?
-            <StaticLabel theme={theme} icons={icons} text={textAsIcon} iconName='begin' /> : null
+            <StaticLabel theme={theme} icons={icons} iconName='begin' /> : null
         }
         {
           checkType(icons.goal) ?
-            <StaticLabel theme={theme} icons={icons} text={textAsIcon} iconName='goal' /> : null
+            <StaticLabel theme={theme} icons={icons} iconName='goal' /> : null
         }
       </label>
     </div>);
