@@ -5,6 +5,7 @@ import DelegateList from './delegateList';
 
 const mapStateToProps = state => ({
   address: state.account.address,
+  isDelegate: state.account.isDelegate,
   serverPublicKey: state.account.serverPublicKey,
   activePeer: state.peers.data,
   votes: state.voting.votes,
