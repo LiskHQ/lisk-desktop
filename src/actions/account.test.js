@@ -5,7 +5,7 @@ import { accountUpdated, accountLoggedOut,
   secondPassphraseRegistered, delegateRegistered, sent, removePassphrase, passphraseUsed } from './account';
 import { transactionAdded, transactionFailed } from './transactions';
 import { errorAlertDialogDisplayed } from './dialog';
-import { delegateRegisteredFailure, delegateRegisteredSuccess } from './delegate';
+import { delegateRegisteredFailure } from './delegate';
 import * as accountApi from '../utils/api/account';
 import * as delegateApi from '../utils/api/delegate';
 import Fees from '../constants/fees';
@@ -97,8 +97,7 @@ describe('actions: account', () => {
     });
   });
 
-  /* eslint-disable mocha/no-exclusive-tests */
-  describe.only('delegateRegistered', () => {
+  describe('delegateRegistered', () => {
     let delegateApiMock;
     const data = {
       activePeer: {},
@@ -142,17 +141,6 @@ describe('actions: account', () => {
       expect(dispatch).to.have.been.calledWith(transactionAdded(expectedAction));
     });
 
-    it('should dispatch delegateRegisteredSuccess action if resolved', () => {
-      delegateApiMock.returnsPromise().resolves({ transactionId: '15626650747375562521' });
-      const delegateRegisteredSuccessAction = {
-        transactionId: '15626650747375562521',
-      };
-
-      actionFunction(dispatch);
-      expect(dispatch).to.have.been
-        .calledWith(delegateRegisteredSuccess(delegateRegisteredSuccessAction));
-    });
-
     it('should dispatch delegateRegisteredFailure action if caught', () => {
       delegateApiMock.returnsPromise().rejects({ message: 'sample message.' });
 
@@ -169,7 +157,6 @@ describe('actions: account', () => {
       expect(dispatch).to.have.been.calledWith(passphraseUsedAction);
     });
   });
-  /* eslint-enable mocha/no-exclusive-tests */
 
   describe('sent', () => {
     let accountApiMock;
