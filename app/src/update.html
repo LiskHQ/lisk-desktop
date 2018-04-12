@@ -3,52 +3,24 @@
   <head>
       <meta charset="utf-8">
       <title>Lisk update</title>
+      <link href="dialog.css" rel="stylesheet">
       <style>
-          body {
-            background: #003E7C;
-            padding: 20px;
-          }
-
-          .header {
-            margin-top: 0;
-            color: #fff;
-          }
-
-          .app {
-            background: #fff;
-            margin: 20px 0;
-            height: 285px;
-            overflow-y: scroll;
-            padding: 10px;
-            border-radius: 4px;
-          }
-
-          .actionBar {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-          }
-
-          .button {
-            border: none;
-            background: #FD4E31;
-            color: #fff;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
-          }
-
-          .button.isClose {
-            background: #eee;
-            color: #666;
-            outline: none !important;
-          }
+        @font-face {
+          font-family: 'gilroy';
+          src:
+            url('./assets/fonts/gilroy/gilroy-bold.woff2') format('woff2'),
+            url('./assets/fonts/gilroy/gilroy-bold.woff') format('woff'),
+            url('./assets/fonts/gilroy/gilroy-bold.ttf')  format('truetype');
+          font-weight: bold;
+          font-style: normal;
+        }
       </style>
     </head>
     <body>
       <h1 class="header" id="header"></h1>
-      <div class="app" id="app"></div>
+      <p class="description" id="description"></p>
+      <div class="app" id="app">
+      </div>
       <div class="actionBar">
         <button class="button isClose" id="close">Close</button>
         <button class="button" id="update">Update</button>
@@ -59,10 +31,12 @@
         const updateElm = document.getElementById('update');
         const closeElm = document.getElementById('close');
         const app = document.getElementById('app');
+        const description = document.getElementById('description');
         const header = document.getElementById('header');
         ipc.on('loadNotes', function (event, data) {
           app.innerHTML = data.message;
           header.innerText = data.title;
+          description.innerText = data.versions;
           updateElm.innerText = data.buttons[0];
           closeElm.innerText = data.buttons[1];
         });

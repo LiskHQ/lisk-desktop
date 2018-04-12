@@ -1,0 +1,85 @@
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300');
+
+body {
+  background: #003E7C;
+  padding: 20px;
+  font-weight: 300;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+}
+
+h1{
+  font-weight: 500;
+  font-size: 32px;
+  font-family: gilroy,Open Sans,sans-serif;
+  font-weight: 500;
+}
+
+h3 {
+  font-weight: 500;
+  font-family: gilroy,Open Sans,sans-serif;
+  font-size: 24px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+a {
+  color: #2475b9;
+  font-family: Open Sans,sans-serif;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.header {
+  margin-top: 0;
+  color: #fff;
+}
+
+.description {
+  color: #fff;
+  font-size: 14px;
+}
+
+.app {
+  background: #fff;
+  margin: 20px 0;
+  height: 270px;
+  overflow-y: scroll;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.actionBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.button:hover {
+  background: #ed4537!important;
+}
+
+.button {
+  border: none;
+  background: linear-gradient(-27deg,#c80039,#ff6236);
+  color: #fff;
+  padding: 15px 20px;
+  font-size: 14px;
+  border-radius: 3px;
+  cursor: pointer;
+  width: 200px;
+}
+
+.button.isClose:hover {
+  background: #fff!important;
+  color: #3c7fb4!important;
+}
+
+.button.isClose {
+  background: transparent;
+  color: #fff;
+  outline: none !important;
+  border: 2px solid #fff;
+  box-sizing: border-box;
+}
