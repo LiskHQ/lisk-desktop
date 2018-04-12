@@ -6,6 +6,11 @@ import { extractAddress } from '../../utils/api/account';
 import AccountVisual from '../accountVisual';
 import Box from '../box';
 
+/**
+ * Ignored the unit test coverage of this component
+ * since it's developed for demonstration purpose only
+ */
+/* istanbul ignore next */
 class AccountVisualDemo extends React.Component {
   constructor() {
     super();
