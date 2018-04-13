@@ -3,7 +3,7 @@ const webpackConfig = require('./config/webpack.config.test');
 
 webpackConfig.watch = true;
 
-const filePattern = 'src/**/registerDelegate.test.js';
+const filePattern = 'src/**/*.test.js';
 const fileRoot = 'src/tests.js';
 const onJenkins = process.env.ON_JENKINS;
 process.env.BABEL_ENV = 'test';
