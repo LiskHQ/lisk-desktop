@@ -76,6 +76,7 @@
     padding-right: 20px;
     vertical-align: top;
     background-color: transparent;
+    border-radius: 0;
     border-bottom: solid 1px transparent;
     transition: all ease 250ms;
 
@@ -95,6 +96,7 @@
       display: none;
     }
 
+    &:focus,
     &.dirty {
       border-bottom-color: var(--color-grayscale-dark);
 
