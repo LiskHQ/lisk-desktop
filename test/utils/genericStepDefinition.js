@@ -89,4 +89,10 @@ export default class GenericStepDefinition {
   shouldSeeCountInstancesOf(count, selector) {
     expect(this.wrapper).to.have.exactly(count).descendants(selector);
   }
+  /**
+   * prints rendered DOM by wrapper into console
+   */
+  debug() {
+    console.log(this.wrapper.debug());
+  }
 }

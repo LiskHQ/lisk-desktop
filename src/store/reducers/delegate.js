@@ -12,7 +12,7 @@ const delegate = (state = [], action) => {
       return {
         ...state,
         delegateNameQueried: false,
-        delegateNameInvalid: action.data.delegate !== undefined,
+        delegateNameInvalid: action.data.delegate === undefined,
         delegateName: action.data.username,
       };
     case actionTypes.accountUpdated:
@@ -27,7 +27,7 @@ const delegate = (state = [], action) => {
       return {
         ...state,
         registerStep: 'register-failure',
-        registerError: action.data.error,
+        registerError: action.data,
       };
     default:
       return state;
