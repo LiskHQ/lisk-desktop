@@ -38,11 +38,4 @@ Feature: Register second passphrase
     And I wait 0.5 seconds
     Then I should see text "You’re votes are being processed and will be confirmed. It may take up to 10 minutes to be secured in the blockchain." in "result box message" element
 
-  @integration
-  @pending
-  Scenario: should not allow to set 2nd passphrase if not enough funds for the fee
-    Given I'm logged in as "empty account"
-    When I go to "dashboard/register-second-passphrase"
-    Then I should see "Insufficient funds for 5 LSK fee" error message
-    And "next button" should be disabled
 
