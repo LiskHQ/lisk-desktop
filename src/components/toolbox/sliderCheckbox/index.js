@@ -106,6 +106,7 @@ class SliderCheckbox extends React.Component {
         onTouchMove={this.track.bind(this)}
         onMouseLeave={this.stopTracking.bind(this)}
         onMouseUp={this.stopTracking.bind(this)}
+        onClick={e => e.stopPropagation()}
         onTouchEnd={this.stopTracking.bind(this)}>
         <span
           className={`${theme.circle} ${theme.button} circle`}
