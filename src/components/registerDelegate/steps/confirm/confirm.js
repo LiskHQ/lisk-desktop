@@ -50,37 +50,41 @@ class Confirm extends React.Component {
       <section>
         <TransitionWrapper current={this.state.step} step='confirm'>
           <div className={stepStyles.container}>
-            <header>
-              <h5 className={stepStyles.heading}>
-                {t('Confirm your name')}
-              </h5>
-            </header>
-            <p className={stepStyles.description}>
-              {t('Names are unique. Once you register the name, it can\'t be changed.')}
-            </p>
-            <figure className={styles.accountVisual}>
-              <AccountVisual address={addressForVisual} size={100} />
-            </figure>
-            <div className={stepStyles.form}>
-              <form onSubmit={this.handleConfirmation.bind(this)}>
-                <p className={styles.delegateName}>{delegateName}</p>
-                <SliderCheckbox
-                  theme={styles}
-                  className={`${stepStyles.input} confirm-delegate-registration`}
-                  label={t('Confirm (Fee: {{fee}} LSK)', { fee: fromRawLsk(Fees.registerDelegate) })}
-                  clickable={true}
-                  onChange={this.handleConfirmation.bind(this)}
-                  input={{
-                    value: 'submitting',
-                  }}/>
-              </form>
+            <div className={`${stepStyles.firstContainer} ${stepStyles.resetMargin}`}>
+              <header>
+                <h5 className={stepStyles.heading}>
+                  {t('Confirm your name')}
+                </h5>
+              </header>
+              <p className={stepStyles.description}>
+                {t('Names are unique. Once you register the name, it can\'t be changed.')}
+              </p>
+            </div>
+            <div className={stepStyles.secondContainer}>
+              <figure className={styles.accountVisual}>
+                <AccountVisual address={addressForVisual} size={100} />
+              </figure>
+              <div className={stepStyles.form}>
+                <form onSubmit={this.handleConfirmation.bind(this)}>
+                  <p className={styles.delegateName}>{delegateName}</p>
+                  <SliderCheckbox
+                    theme={styles}
+                    className={`${stepStyles.input} ${styles.inputWide} confirm-delegate-registration`}
+                    label={t('Confirm (Fee: {{fee}} LSK)', { fee: fromRawLsk(Fees.registerDelegate) })}
+                    clickable={true}
+                    onChange={this.handleConfirmation.bind(this)}
+                    input={{
+                      value: 'submitting',
+                    }}/>
+                </form>
+              </div>
             </div>
           </div>
         </TransitionWrapper>
         <TransitionWrapper current={this.state.step} step='submitting'>
           <div className={stepStyles.container}>
             <FontIcon className={stepStyles.submitIcon} value="logo-icon"></FontIcon>
-            <p className={stepStyles.description}>
+            <p className={`${stepStyles.description} ${styles.descriptionBold}`}>
               {t('Your delegate name is being registered')}
             </p>
             <footer>
@@ -90,24 +94,29 @@ class Confirm extends React.Component {
 
         <TransitionWrapper current={this.state.step} step='register-success'>
           <div className={stepStyles.container}>
-            <header>
-              <FontIcon className={stepStyles.headerIcon} value='checkmark'></FontIcon>
-              <h5 className={stepStyles.heading}>
-                {t('Success!')}
-              </h5>
-            </header>
-            <p className={stepStyles.description}>
-              {t('Your registration is secured on the blockchain')}
-            </p>
-            <div className={stepStyles.form}>
-              <form onSubmit={this.redirectToDashboard.bind(this)}>
-                <PrimaryButton
-                  disabled={false}
-                  label={t('Go to your Dashboard')}
-                  className={`${stepStyles.chooseNameBtn} registration-success`}
-                  onClick={this.redirectToDashboard.bind(this)}
-                />
-              </form>
+            <div className={`${stepStyles.firstContainer} ${stepStyles.resetMargin}`}>
+              <header>
+                <FontIcon className={stepStyles.headerIcon} value='checkmark' />
+                <h5 className={stepStyles.heading}>
+                  {t('Success!')}
+                </h5>
+              </header>
+              <p className={stepStyles.description}>
+                {t('Your registration is secured on the blockchain')}
+              </p>
+            </div>
+            <div className={stepStyles.secondContainer}>
+              <div className={stepStyles.form}>
+                <form onSubmit={this.redirectToDashboard.bind(this)}>
+                  <PrimaryButton
+                    disabled={false}
+                    label={t('Go to your Dashboard')}
+                    className={`${stepStyles.chooseNameBtn} registration-success`}
+                    onClick={this.redirectToDashboard.bind(this)}>
+                    <FontIcon className={styles.iconAtLeft} value='login' />
+                  </PrimaryButton>
+                </form>
+              </div>
             </div>
           </div>
         </TransitionWrapper>

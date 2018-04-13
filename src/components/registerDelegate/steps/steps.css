@@ -24,7 +24,28 @@
 }
 
 .container {
+  display: flex;
   text-align: center;
+  flex-direction: column;
+  justify-content: center;
+  height: calc(75vh - (32px + 45px + 48px)); /* stylelint-disable-line */
+}
+
+.firstContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 140px;
+}
+
+.secondContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.resetMargin {
+  margin-bottom: 51px;
 }
 
 .heading {
@@ -32,14 +53,12 @@
   font-size: var(--step-heading-fs);
   font-weight: var(--font-weight-semi-bold);
   margin: 0;
-  margin-bottom: 0;
   padding: 0 var(--main-content-horizontal-padding);
 }
 
 .description {
   font-size: var(--subtitle-font-size);
   color: var(--color-grayscale-dark);
-  margin-bottom: 80px;
   padding: 0 var(--main-content-horizontal-padding);
 }
 
@@ -58,7 +77,7 @@
 }
 
 .submitIcon {
-  color: var(--color-primary-standard);
+  color: var(--color-black);
   animation: burst 2000ms infinite linear;
   animation-direction: alternate;
   font-size: 120px;
@@ -83,7 +102,8 @@
 .error {
   color: var(--color-error);
   font-size: var(--font-size-small);
-  font-family: var(--heading-font);
+  font-family: var(--content-font);
+  font-weight: var(--font-weight-semi-bold);
 }
 
 .errorInline {
@@ -96,6 +116,7 @@
 .info {
   color: var(--color-primary-standard);
   font-size: var(--font-size-small);
+  font-weight: var(--font-weight-semi-bold);
   font-family: var(--content-font);
   position: absolute;
   top: 80px;
@@ -118,6 +139,7 @@
     position: absolute;
     background-color: var(--color-form-bg);
     left: 0;
+    top: -48px;
     z-index: -1;
   }
 }

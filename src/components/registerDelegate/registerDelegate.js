@@ -37,7 +37,7 @@ class RegisterDelegate extends React.Component {
 
   render() {
     const passphraseValues = {
-      columns: { xs: 6, sm: 6, md: 2 },
+      columns: { xs: 6, sm: 2, md: 2 },
       passphrase: {
         header: this.props.t('Please sign in with your 1st passphrase'),
       },

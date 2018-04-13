@@ -8,6 +8,7 @@
 .delegateNameInput {
   padding: 0 var(--input-horizontal-padding);
   margin-bottom: 110px;
+  height: 85px;
 
   & > input[type='text'] {
     font-size: 32px;
@@ -16,9 +17,10 @@
   }
 
   & > span[class*='input__error'] {
-    font-size: 14px;
-    font-family: var(--heading-font);
-    position: absolute;
+    color: var(--color-error);
+    font-size: var(--font-size-small);
+    font-family: var(--content-font);
+    font-weight: var(--font-weight-semi-bold);
     left: 50%;
     transform: translateX(-50%);
   }

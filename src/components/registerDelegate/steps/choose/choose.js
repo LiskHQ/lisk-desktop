@@ -22,18 +22,6 @@ class Choose extends React.Component {
     this.delegateNameMaxChars = 20;
   }
 
-  componentWillMount() {
-    if (this.props.delegate.delegateName) {
-      this.setState({
-        step: 'choose',
-        delegateName: {
-          value: this.props.delegate.delegateName,
-          error: '',
-        },
-      });
-    }
-  }
-
   hasEnoughLSK() {
     return (fromRawLsk(this.props.account.balance) * 1
     > fromRawLsk(Fees.registerDelegate) * 1);
@@ -50,12 +38,9 @@ class Choose extends React.Component {
   validateDelegateName(name, value) {
     let error;
 
-    const nameMatchRegEx = value.match(this.delegateNameRegEx);
-    if (!value ||
-        (typeof value !== 'string') ||
-        nameMatchRegEx.length > 1 ||
-        nameMatchRegEx[0].length !== value.length) {
-      error = this.props.t('Characters not allowed: “!@$&_.”');
+    const charsNotAllowedInName = value.replace(this.delegateNameRegEx, '');
+    if (charsNotAllowedInName.length > 0) {
+      error = this.props.t(`Characters not allowed: "${charsNotAllowedInName}"`);
     }
 
     if (!error && value.length > this.delegateNameMaxChars) {
@@ -92,36 +77,38 @@ class Choose extends React.Component {
     const isDelegate = account.isDelegate;
     const delegateNameHasError = (typeof this.state.delegateName.error === 'string' &&
       this.state.delegateName.error !== '');
-    const delegateNameDuplicated =
-      !delegateNameHasError
+    const delegateNameDuplicated = !delegateNameHasError
       && !this.props.delegate.delegateNameQueried &&
       this.props.delegate.delegateNameInvalid;
+    const disableSubmitButton = delegateNameHasError ||
+      delegateNameDuplicated ||
+      this.state.delegateName.value === '';
     const showCheckingAvailability = this.props.delegate.delegateNameQueried;
-    const showInfoNameAvailable =
-      !delegateNameHasError &&
+    const showInfoNameAvailable = !delegateNameHasError &&
       this.state.delegateName.value !== '' &&
       !this.props.delegate.delegateNameQueried &&
       !this.props.delegate.delegateNameInvalid;
-    const showInfoValidation =
-      !showInfoNameAvailable &&
+    const showInfoValidation = !showInfoNameAvailable &&
       !delegateNameHasError &&
       !delegateNameDuplicated &&
       !showCheckingAvailability;
-      
+
     return (
       <section>
         <TransitionWrapper current={this.state.step} step='confirm'>
           <div className={stepStyles.container}>
-            <header>
-              <h5 className={stepStyles.heading}>
-                {t('Be a delegate')}
-              </h5>
-            </header>
-            <p className={stepStyles.description}>
-              {t('Delegates have great responsibility within the Lisk system, securing the blockchain. Becoming a delegate requires the registration of a name. The top 101 delegates are eligible to forge.')}
-            </p>
-            <div className={stepStyles.form}>
-              <form onSubmit={this.checkSufficientFunds.bind(this)}>
+            <div className={stepStyles.firstContainer}>
+              <header>
+                <h5 className={stepStyles.heading}>
+                  {t('Be a delegate')}
+                </h5>
+              </header>
+              <p className={stepStyles.description}>
+                {t('Delegates have great responsibility within the Lisk system, securing the blockchain. Becoming a delegate requires the registration of a name. The top 101 delegates are eligible to forge.')}
+              </p>
+            </div>
+            <div className={stepStyles.secondContainer}>
+              <form className={stepStyles.form} onSubmit={this.checkSufficientFunds.bind(this)}>
                 <PrimaryButton
                   disabled={!hasEnoughLSK || isDelegate}
                   label={t('Choose a name')}
@@ -141,13 +128,16 @@ class Choose extends React.Component {
 
         <TransitionWrapper current={this.state.step} step='choose'>
           <div className={stepStyles.container}>
-            <header>
-              <h5 className={stepStyles.heading}>
-                {t('Choose your name')}
-              </h5>
-            </header>
-            <div className={`${stepStyles.form} ${stepStyles.formWithBg}`}>
-              <form onSubmit={this.validateDelegateName.bind(this, 'delegateName')}>
+            <div className={stepStyles.firstContainer}>
+              <header>
+                <h5 className={stepStyles.heading}>
+                  {t('Choose your name')}
+                </h5>
+              </header>
+            </div>
+            <div className={stepStyles.secondContainer}>
+              <form className={`${stepStyles.form} ${stepStyles.formWithBg}`}
+                onSubmit={this.validateDelegateName.bind(this, 'delegateName')}>
                 <Input
                   placeholder={this.props.t('Write to check availability')}
                   required={true}
@@ -169,7 +159,7 @@ class Choose extends React.Component {
                   {t('Max 20 characters a-z 0-1, no special characters except “!@$&_.”')}
                 </p> : null }
                 <PrimaryButton
-                  disabled={delegateNameHasError || delegateNameDuplicated}
+                  disabled={disableSubmitButton}
                   label={t('Next')}
                   className={`${stepStyles.chooseNameBtn} submit-delegate-name`}
                   onClick={() =>

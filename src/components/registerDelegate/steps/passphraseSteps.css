@@ -40,6 +40,7 @@
 
   & header {
     padding-top: 0;
+    margin-bottom: 160px;
   }
 
   &::before {
@@ -49,7 +50,7 @@
     position: absolute;
     background-color: var(--color-form-bg);
     left: 0;
-    top: 200px;
+    bottom: calc(-150% + 144px);
   }
 }
 

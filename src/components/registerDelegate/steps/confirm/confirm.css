@@ -9,3 +9,20 @@
 .accountVisual {
   margin: 0;
 }
+
+.inputWide {
+  width: 271px;
+
+  & > label {
+    padding-left: 10px;
+  }
+}
+
+.descriptionBold {
+  font-weight: var(--font-weight-semi-bold);
+}
+
+.iconAtLeft {
+  float: left;
+  margin-top: 5px;
+}
