@@ -1,8 +1,9 @@
 Feature: Voting page
+  @testnet
   Scenario: should allow to view delegates and more on scroll and search them and vote for them
     Given I'm logged in as "delegate candidate"
     And I wait 0.1 seconds
-    When I go to "main/voting/"
+    When I go to "delegates/"
     Then I should see 100 instances of "delegate row"
     When I scroll to the bottom of "delegate list"
     Then I should see 200 instances of "delegate row"

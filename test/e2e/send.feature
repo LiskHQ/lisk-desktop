@@ -8,14 +8,12 @@ Feature: Send dialog
     And I click "send button"
     And I wait 1 seconds
     Then I should see text "Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain." in "result box message" element
-    Then I click "dashboard" menu
     And I should see 3 rows
     When I click "seeAllLink"
-    Then I should be on url "/main/transactions"
     And I should see 26 rows
     When I scroll to the bottom of "transaction results"
     Then I should see 51 rows
-  @pending
+  @advanced
   Scenario: should be able to init account if needed
     Given I wait 10 seconds
     And I'm logged in as "without initialization"

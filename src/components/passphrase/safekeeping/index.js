@@ -110,6 +110,7 @@ class SafeKeeping extends React.Component {
                 onClick: () => prevStep({ jump: 2 }),
               }}
               primaryButton={{
+                disabled: this.state.step === 'done-step',
                 label: t('Yes! It\'s safe'),
                 className: 'next-button yes-its-safe-button',
                 onClick: this.done.bind(this),

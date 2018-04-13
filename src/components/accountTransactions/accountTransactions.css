@@ -13,35 +13,15 @@
   }
 }
 
-@media (--xLarge-viewport) {
-  .gridPadding {
-    padding-right: 37px;
-  }
-}
-
-@media (--large-viewport) {
-  .gridPadding {
-    padding-right: 24px;
-  }
-}
-
 @media (--medium-viewport) {
   .wrapper {
     padding-top: var(--title-bar-extra-padding-M);
-
-    & .gridPadding {
-      padding-right: 0;
-    }
   }
 }
 
 @media (--small-viewport) {
   .wrapper {
     padding-top: var(--title-bar-extra-padding-S);
-
-    & .gridPadding {
-      padding-right: 0;
-    }
   }
 }
 

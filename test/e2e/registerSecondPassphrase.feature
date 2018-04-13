@@ -1,8 +1,8 @@
 Feature: Register second passphrase
   Scenario: should allow to set 2nd passphrase and should ask it before any transactions
     Given I'm logged in as "second passphrase candidate"
-    And I wait 0.1 seconds
-    When I go to "main/second-passphrase/"
+    And I wait 0.5 seconds
+    When I go to "second-passphrase"
     And I wait 0.5 seconds
     And I click "next"
     And I wait 0.5 seconds
@@ -25,9 +25,9 @@ Feature: Register second passphrase
     When I click "send button"
     And I wait 1 seconds
     Then I should see text "Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain." in "result box message" element
-    When I go to "main/second-passphrase/"
-    Then I should be on url "/main/dashboard"
-    When I go to "main/voting/"
+    When I go to "second-passphrase/"
+    Then I should be on url "/dashboard"
+    When I go to "delegates/"
     And I click checkbox on list item no. 3
     And I click checkbox on list item no. 5
     And I click checkbox on list item no. 8
@@ -38,24 +38,11 @@ Feature: Register second passphrase
     And I wait 0.5 seconds
     Then I should see text "You’re votes are being processed and will be confirmed. It may take up to 10 minutes to be secured in the blockchain." in "result box message" element
 
-  # TODO: will be re-enabled when the functionality is implemented
-  @pending
-  Scenario: should ask for passphrase for saved account
-    Given I'm logged in as "empty account"
-    And I wait 1 seconds
-    And I refresh the page
-    And I wait 2 seconds
-    When I go to "main/dashboard/register-second-passphrase"
-    And I fill in passphrase of "empty account" to "passphrase" field
-    And I click "authenticate button"
-    Then I should see "Insufficient funds for 5 LSK fee" error message
-    And "next button" should be disabled
-
   @integration
   @pending
   Scenario: should not allow to set 2nd passphrase if not enough funds for the fee
     Given I'm logged in as "empty account"
-    When I go to "main/dashboard/register-second-passphrase"
+    When I go to "dashboard/register-second-passphrase"
     Then I should see "Insufficient funds for 5 LSK fee" error message
     And "next button" should be disabled
 

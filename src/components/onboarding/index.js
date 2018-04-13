@@ -51,7 +51,7 @@ class Onboarding extends React.Component {
   addSteps(showDelegates) {
     let newSteps = steps(this.props.t);
     if (!showDelegates) {
-      newSteps = newSteps.filter(step => step.selector !== '#voting');
+      newSteps = newSteps.filter(step => step.selector !== '#delegates');
     }
 
     this.setState({ steps: newSteps });
@@ -128,4 +128,5 @@ const mapStateToProps = state => ({
   showDelegates: state.settings.advancedMode,
 });
 
+export { Onboarding };
 export default connect(mapStateToProps)(translate()(Onboarding));

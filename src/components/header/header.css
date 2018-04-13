@@ -318,3 +318,9 @@
     }
   }
 }
+
+@media (--xSmall-viewport) {
+  .logo {
+    padding: 10px 0 7px;
+  }
+}
