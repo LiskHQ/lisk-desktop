@@ -30,8 +30,7 @@ export default (electron, releaseNotes, updateCallBack, versions) => {
     });
     win.show();
   }, 1000);
-  ipcMain.on('update', (e, text) => {
-    console.log(text);
+  ipcMain.on('update', () => {
     win.close();
     updateCallBack();
   });
