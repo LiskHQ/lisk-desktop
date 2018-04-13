@@ -2,6 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { spy } from 'sinon';
+import { BrowserRouter as Router } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import VotingHOC from './';
@@ -32,6 +33,7 @@ describe('VotingHOC', () => {
         },
       },
       account: {},
+      delegate: {},
     });
 
     const history = {
@@ -54,7 +56,7 @@ describe('VotingHOC', () => {
       },
     };
 
-    wrapper = mount(<VotingHOC />, options);
+    wrapper = mount(<Router><VotingHOC /></Router>, options);
   });
 
   it('should render Voting', () => {

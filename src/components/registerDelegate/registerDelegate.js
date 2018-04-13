@@ -1,90 +1,79 @@
 import React from 'react';
-import InfoParagraph from '../infoParagraph';
-import ActionBar from '../actionBar';
-import Fees from '../../constants/fees';
-import AuthInputs from '../authInputs';
-import { handleChange, authStatePrefill, authStateIsValid } from '../../utils/form';
-import Input from '../toolbox/inputs/input';
+import { withRouter } from 'react-router';
+import { translate } from 'react-i18next';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import PassphraseSteps from './../passphraseSteps';
+import Choose from './steps/choose';
+import Confirm from './steps/confirm';
+import MultiStep from '../multiStep';
+import Box from '../box';
+import styles from './registerDelegate.css';
+import passphraseStyles from './steps/passphraseSteps.css';
 
 class RegisterDelegate extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      name: {
-        value: '',
-      },
-      ...authStatePrefill(),
-    };
-  }
-
-  componentDidMount() {
-    const newState = {
-      name: {
-        value: '',
-      },
-      ...authStatePrefill(this.props.account),
-    };
-    this.setState(newState);
-  }
-
-  register(event) {
+  submitDelegate({ delegateName, passphrase, secondPassphrase }) {
     event.preventDefault();
-    // @todo I'm not handling this part: this.setState({ nameError: error.message });
+
     this.props.delegateRegistered({
       activePeer: this.props.peers.data,
       account: this.props.account,
-      username: this.state.name.value,
-      passphrase: this.state.passphrase.value,
-      secondPassphrase: this.state.secondPassphrase.value,
+      username: delegateName,
+      passphrase: passphrase.value,
+      secondPassphrase: secondPassphrase.value,
     });
   }
 
+  checkDelegateUsernameAvailable(username) {
+    const data = {
+      activePeer: this.props.peers.data,
+      username,
+    };
+    this.props.delegatesFetched(data);
+  }
+
+  goBack() {
+    this.props.history.goBack();
+  }
+
   render() {
-    if (this.props.account.isDelegate) {
-      return (
-        <div>
-          <InfoParagraph>
-            {this.props.t('You have already registered as a delegate.')}
-          </InfoParagraph>
-        </div>
-      );
-    }
+    const passphraseValues = {
+      columns: { xs: 6, sm: 6, md: 2 },
+      passphrase: {
+        header: this.props.t('Please sign in with your passphrase'),
+      },
+      secondPassphrase: {
+        header: this.props.t('Please sign in with your second passphrase'),
+      },
+      footer: {
+        firstGrid: passphraseStyles.firstGrid,
+        secondGrid: grid['col-xs-12'],
+      },
+    };
 
     return (
-      <div>
-        <form onSubmit={this.register.bind(this)}>
-          <Input label={this.props.t('Delegate name')} required={true}
-            autoFocus={true}
-            className='username'
-            onChange={handleChange.bind(this, 'name')}
-            error={this.state.name.error}
-            value={this.state.name.value} />
-          <AuthInputs
-            passphrase={this.state.passphrase}
-            secondPassphrase={this.state.secondPassphrase}
-            onChange={handleChange.bind(this)} />
-          <hr/>
-          <InfoParagraph>
-            {this.props.t('Becoming a delegate requires registration. You may choose your own delegate name, which can be used to promote your delegate. Only the top 101 delegates are eligible to forge. All fees are shared equally between the top 101 delegates.')}
-          </InfoParagraph>
-          <ActionBar
-            secondaryButton={{
-              onClick: this.props.closeDialog,
-            }}
-            primaryButton={{
-              label: this.props.t('Register'),
-              fee: Fees.registerDelegate,
-              type: 'submit',
-              className: 'register-button',
-              disabled: (!this.state.name.value ||
-                this.props.account.isDelegate ||
-                !authStateIsValid(this.state)),
-            }} />
-        </form>
-      </div>
+      <Box className={styles.registerDelegate}>
+        <section className={`${grid.row} ${grid['center-xs']}`}>
+          <MultiStep
+            className={styles.multiStep}
+            prevPage={this.goBack.bind(this)}
+            finalCallback={this.submitDelegate.bind(this)}
+            backButtonLabel={this.props.t('Back')}>
+            <Choose
+              title={this.props.t('Choose')}
+              t={this.props.t}
+              checkDelegateUsernameAvailable={this.checkDelegateUsernameAvailable.bind(this)}
+              icon='add' />
+            <PassphraseSteps styles={passphraseStyles} values={passphraseValues} title={this.props.t('Safekeeping')} icon='add' />
+            <Confirm
+              title={this.props.t('Confirm')}
+              icon='login'
+              t={this.props.t}
+              submitDelegate={this.submitDelegate.bind(this)} />
+          </MultiStep>
+        </section>
+      </Box>
     );
   }
 }
 
-export default RegisterDelegate;
+export default withRouter(translate()(RegisterDelegate));

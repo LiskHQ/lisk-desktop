@@ -76,6 +76,7 @@ describe('Account middleware', () => {
         confirmed: [],
         account: { address: 'test_address', balance: 0 },
       },
+      delegate: {},
     };
     store.getState = () => (state);
 

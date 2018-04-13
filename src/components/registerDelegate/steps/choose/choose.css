@@ -1,0 +1,37 @@
+@import '../../../app/variables.css';
+
+:root {
+  --input-horizontal-padding: 184px;
+  --input-horizontal-padding-s: 20px;
+}
+
+.delegateNameInput {
+  padding: 0 var(--input-horizontal-padding);
+  margin-bottom: 110px;
+  height: 85px;
+
+  & > input[type='text'] {
+    font-size: 32px;
+    font-family: var(--heading-font);
+    text-align: center;
+  }
+
+  & > span[class*='input__error'] {
+    color: var(--color-error);
+    font-size: var(--font-size-small);
+    font-family: var(--content-font);
+    font-weight: var(--font-weight-semi-bold);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@media (--small-viewport) {
+  .delegateNameInput {
+    padding: 0 var(--input-horizontal-padding-s);
+
+    & > input[type='text'] {
+      font-size: 24px;
+    }
+  }
+}

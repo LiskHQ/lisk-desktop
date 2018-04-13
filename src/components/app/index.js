@@ -76,6 +76,8 @@ class App extends React.Component {
                   ))
                   : null
                 }
+                <Route path={routes.registerDelegate.path}
+                  component={routes.registerDelegate.component} />
                 <Route path={routes.register.path} component={routes.register.component} />
                 <Route path={routes.addAccount.path} component={routes.addAccount.component} />
                 <Route exact path={routes.login.path} component={routes.login.component} />
