@@ -9,3 +9,5 @@ Feature: Login page
     When I click "transactions" menu
     And I should see 0 rows
     Then I should see text "No activity yet" in "empty message" element
+    When I go to "second-passphrase"
+    And "next" should be disabled
