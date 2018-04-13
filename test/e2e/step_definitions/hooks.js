@@ -36,7 +36,7 @@ function takeScreenshot(screnarioSlug, callback) {
   });
 }
 
-defineSupportCode(({ Before, After, AfterAll, registerListener }) => {
+defineSupportCode(({ Before, After, registerListener }) => {
   Before('@pending', (scenario, callback) => {
     callback(null, 'pending');
   });
@@ -67,10 +67,6 @@ defineSupportCode(({ Before, After, AfterAll, registerListener }) => {
     } else {
       callback();
     }
-  });
-
-  AfterAll(() => {
-    browser.driver.quit();
   });
 
   jsonFormatter.log = function (string) {
