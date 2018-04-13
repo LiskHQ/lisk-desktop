@@ -69,6 +69,10 @@ defineSupportCode(({ Before, After, registerListener }) => {
     }
   });
 
+  AfterAll(() => {
+    browser.driver.quit();
+  });
+
   jsonFormatter.log = function (string) {
     if (!fs.existsSync(browser.params.reportDir)) {
       fs.mkdirSync(browser.params.reportDir);
