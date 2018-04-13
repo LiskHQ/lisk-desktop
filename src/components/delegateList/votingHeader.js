@@ -99,7 +99,11 @@ export class VotingHeaderRaw extends React.Component {
                 value={this.state.query}
                 onChange={this.search.bind(this)}
                 placeholder={t('Search')}/>
-              <FontIcon id='cleanIcon' className={styles.clean} value='close' onClick={ this.clearSearch.bind(this) }/>
+              <FontIcon
+                id='cleanIcon'
+                className={`${styles.clean} clean-icon`}
+                value='close'
+                onClick={ this.clearSearch.bind(this) }/>
             </li>
           </ul>
         </div>
