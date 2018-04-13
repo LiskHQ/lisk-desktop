@@ -13,6 +13,7 @@ export default class VoteUrlProcessor extends React.Component {
     if (params.votes || params.unvotes) {
       const upvotes = params.votes ? params.votes.split(',') : [];
       const unvotes = params.unvotes ? params.unvotes.split(',') : [];
+      this.props.settingsUpdated({ advancedMode: true })
       this.props.urlVotesFound({
         activePeer: this.props.activePeer,
         upvotes,

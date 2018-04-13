@@ -207,7 +207,7 @@ export const steps = t => ([
   {
     title: t('Delegate voting'),
     text: t('View forging delegates and vote for the ones you support.'),
-    selector: '#voting',
+    selector: '#delegates',
     position: 'right',
     style: styles.step,
   },

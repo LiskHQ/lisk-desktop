@@ -11,7 +11,7 @@ import styles from './card.css';
 
 const AddAccountCard = ({ t }) =>
   (<li>
-    <Link to={`${routes.addAccount.path}?referrer=${routes.main.path}${routes.dashboard.path}/`} >
+    <Link to={`${routes.addAccount.path}?referrer=${routes.dashboard.path}/`} >
       <div className={`add-lisk-id-card ${styles.card} ${styles.addNew}`} >
         <div className={styles.cardIcon}>
           <img src={plusShapeIcon} className={styles.plusShapeIcon} />

@@ -37,6 +37,10 @@
 }
 
 @media (--medium-viewport) {
+  .wrapper {
+    margin: 0 calc(-1 * var(--box-padding-left-M));
+  }
+
   .confirmButton {
     display: none;
   }

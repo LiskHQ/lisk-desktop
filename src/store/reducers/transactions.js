@@ -55,7 +55,11 @@ const transactions = (state = { pending: [], confirmed: [], count: null }, actio
       return Object.assign({}, state, {
         confirmed: action.data.confirmed,
         count: action.data.count,
-        account: { address: action.data.address, balance: action.data.balance },
+        account: {
+          address: action.data.address,
+          balance: action.data.balance,
+          delegate: action.data.delegate,
+        },
         filter: txFilter.all,
       });
     case (actionTypes.accountSwitched):

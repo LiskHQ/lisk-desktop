@@ -1,11 +1,11 @@
 import { expect } from 'chai';
-import { spy } from 'sinon';
+import { spy, mock } from 'sinon';
 import externalLinks from './externalLinks';
 import history from '../history';
 import routes from '../constants/routes';
 
 describe('externalLinks', () => {
-  const historyPush = spy(history, 'push');
+  const historyMock = mock(history);
   const ipc = {
     on: spy(),
   };
@@ -27,8 +27,9 @@ describe('externalLinks', () => {
     window.ipc = {
       on: (event, callback) => { callbacks[event] = callback; },
     };
+
     externalLinks.init();
     callbacks.openUrl({}, 'lisk://register');
-    expect(historyPush).to.have.been.calledWith(routes.register.path);
+    historyMock.expects('replace').once().withArgs(routes.register.path);
   });
 });

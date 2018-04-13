@@ -39,7 +39,7 @@ const TransactionsDetailView = props => (
           }
           <div className={`${styles.value} ${styles.sender} `}>
             <Link className={`${styles.addressLink} ${styles.clickable}`} id='sender-address'
-              to={`${routes.explorer.path}${routes.account.path}/${props.value.senderId}`}>
+              to={`${routes.explorer.path}${routes.accounts.path}/${props.value.senderId}`}>
               {props.value.senderId}
             </Link>
           </div>
@@ -56,7 +56,7 @@ const TransactionsDetailView = props => (
             {
               props.value.recipientId ?
                 <Link className={`${styles.addressLink} ${styles.clickable}`} id='receiver-address'
-                  to={`${routes.explorer.path}${routes.account.path}/${props.value.recipientId}`}>
+                  to={`${routes.explorer.path}${routes.accounts.path}/${props.value.recipientId}`}>
                   {props.value.recipientId}
                 </Link> : '-'
             }

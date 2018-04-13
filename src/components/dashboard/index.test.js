@@ -44,6 +44,6 @@ describe('Dashboard', () => {
 
   it('should be possible to click the transaction rows', () => {
     wrapper.find(TransactionRow).at(0).simulate('click');
-    expect(history.push).to.have.been.calledWith(`${routes.main.path}${routes.wallet.path}?id=1038520263604146911`);
+    expect(history.push).to.have.been.calledWith(`${routes.wallet.path}?id=1038520263604146911`);
   });
 });
