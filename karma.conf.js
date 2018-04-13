@@ -3,7 +3,7 @@ const webpackConfig = require('./config/webpack.config.test');
 
 webpackConfig.watch = true;
 
-const filePattern = 'src/**/*.test.js';
+const filePattern = 'src/**/registerDelegate.test.js';
 const fileRoot = 'src/tests.js';
 const onJenkins = process.env.ON_JENKINS;
 process.env.BABEL_ENV = 'test';
@@ -71,6 +71,11 @@ module.exports = function (config) {
             'src/components/voteUrlProcessor/index.js',
             'src/components/onboarding/index.js',
             'src/components/passphrase/createSecond/index.js',
+            'src/components/registerDelegate/registerDelegate.js',
+            'src/components/registerDelegate/steps/choose/choose.js',
+            'src/components/registerDelegate/steps/choose/index.js',
+            'src/components/registerDelegate/steps/confirm/confirm.js',
+            'src/components/registerDelegate/steps/confirm/index.js',
           ],
           overrides: {
             'src/store/**/*.js': {
