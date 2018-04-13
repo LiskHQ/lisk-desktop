@@ -3,6 +3,7 @@
 .delegateName {
   font-family: var(--heading-font);
   font-size: var(--font-size-h2);
+  margin: 0;
   margin-bottom: 32px;
 }
 
@@ -14,7 +15,16 @@
   width: 271px;
 
   & > label {
-    padding-left: 10px;
+
+    & > div {
+      & > span {
+        padding-left: 15px;
+        font-weight: var(--font-weight-normal);
+        position: absolute;
+        right: 21px;
+        left: 0;
+      }
+    }
   }
 }
 

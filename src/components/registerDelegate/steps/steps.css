@@ -73,6 +73,7 @@
 
 .description {
   font-size: var(--subtitle-font-size);
+  font-weight: var(--font-weight-normal);
   color: var(--color-grayscale-dark);
   padding: 0 var(--main-content-horizontal-padding);
   line-height: 26px;
