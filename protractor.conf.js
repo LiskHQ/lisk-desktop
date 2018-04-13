@@ -11,7 +11,7 @@ exports.config = {
     os: 'Windows',
     osVersion: '7',
     resolution: '1680x1050',
-    maxInstances: 5,
+    maxInstances: 10,
   /*
   }, {
     browserName: 'Firefox',
