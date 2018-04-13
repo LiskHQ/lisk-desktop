@@ -13,7 +13,7 @@ describe('TransitionWrapper', () => {
     clock = useFakeTimers({
       toFake: ['setTimeout', 'clearTimeout', 'Date'],
     });
-    wrapper = mount(<TransitionWrapper current={step} step='target-step-name'>
+    wrapper = mount(<TransitionWrapper animationDuration={200} current={step} step='target-step-name'>
       <h1>Child</h1>
     </TransitionWrapper>);
   });

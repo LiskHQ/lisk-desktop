@@ -2,14 +2,14 @@ import React from 'react';
 import { expect } from 'chai';
 import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
-import simulant from 'simulant';
+import sinon from 'sinon';
 import configureStore from 'redux-mock-store';
 import CreateSecond from './index';
 import i18n from '../../../i18n';
 import accounts from '../../../../test/constants/accounts';
 
 
-describe('Passphrase: Create', () => {
+describe('Second Passphrase: Create', () => {
   const props = {
     t: key => key,
     prevStep: () => {},
@@ -22,7 +22,6 @@ describe('Passphrase: Create', () => {
   });
 
   const options = {
-    // attachTo: document.body,
     context: { i18n, store },
     childContextTypes: {
       i18n: PropTypes.object.isRequired,
@@ -35,14 +34,13 @@ describe('Passphrase: Create', () => {
     expect(wrapper.find('ProgressBar')).to.have.lengthOf(1);
   });
 
-  it.skip('shows at least some progress on mousemove', () => {
-    options.attachTo = document.body;
-    const wrapper = mount(<CreateSecond {...props} agent='Chrome'/>, options);
-    for (let i = 0; i < 100; i++) {
-      simulant.fire(document.body, 'mousemove', {
-        pageX: 100 * i, pageY: 100 * i,
-      });
-    }
-    expect(wrapper.find('ProgressBar').props().value).to.be.at.least(1);
+  it('should call showHint on Chrome', () => {
+    sinon.spy(CreateSecond.prototype, 'next');
+    const wrapper = mount(<CreateSecond {...props} agent='android' />, options);
+
+    wrapper.find('button.next').props().onClick();
+    expect(CreateSecond.prototype.next.calledOnce).to.equal(true);
+
+    wrapper.find('button.next').simulate('click');
   });
 });

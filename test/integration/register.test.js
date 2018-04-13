@@ -122,4 +122,15 @@ describe('@integration: Register', () => {
     step('And I click "get to your dashboard button"', () => helper.clickOnElement('.get-to-your-dashboard-button'));
     step('Then I should be logged in', () => helper.checkIfRegistrationConfirmed(''));
   });
+
+  describe('Scenario: should allow to create a second passphrase', () => {
+    step('Given I am in "second passphrase" page', setupStep);
+    step('And I move mouse randomly 250 times', () => helper.moveMouseRandomly());
+    step('And I click "get passphrase button"', () => helper.clickOnElement('.get-passphrase-button'));
+    step('And I remember passphrase', () => helper.rememberPassphrase());
+    step('And I click "yes it\'s safe button"', () => helper.clickOnElement('.yes-its-safe-button'));
+    step('And confirm missing words', () => helper.confirmMissingWords());
+    step('And I click "get to your dashboard button"', () => helper.clickOnElement('.get-to-your-dashboard-button'));
+    step('Then I should be logged in', () => helper.checkIfRegistrationConfirmed(''));
+  });
 });

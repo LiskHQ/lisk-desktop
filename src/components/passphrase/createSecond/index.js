@@ -162,7 +162,7 @@ class Create extends React.Component {
           </div>
         </TransitionWrapper>
         <TransitionWrapper current={this.state.step} step='generate'>
-          <div className={styles.secondPassphrase}
+          <div className={`${styles.secondPassphrase} secondPassphrase`}
             ref={ (pageRoot) => { this.pageRoot = pageRoot; } }>
             <header>
               <h2 className={`${styles.generatorHeader}`}
@@ -173,6 +173,7 @@ class Create extends React.Component {
               </h2>
             </header>
             <ProgressBar
+              className='progress-bar'
               theme={ProgressBarTheme}
               mode='determinate'
               value={percentage} />

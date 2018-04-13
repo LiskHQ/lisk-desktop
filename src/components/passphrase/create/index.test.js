@@ -2,7 +2,6 @@ import React from 'react';
 import { expect } from 'chai';
 import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
-import simulant from 'simulant';
 import configureStore from 'redux-mock-store';
 import Create from './index';
 import i18n from '../../../i18n';
@@ -39,13 +38,16 @@ describe('Passphrase: Create', () => {
     expect(wrapper.find('PrimaryButton')).to.have.lengthOf(0);
   });
 
-  it.skip('shows at least some progress on mousemove', () => {
-    const wrapper = mount(<Create {...props} agent='ipad'/>, options);
-    for (let i = 0; i < 10; i++) {
-      simulant.fire(document, 'mousemove', {
-        pageX: 100 * i, pageY: 100 * i, relatedTarget: document.body,
-      });
-    }
-    expect(wrapper.find('ProgressBar').props().value).to.be.at.least(1);
+  it('should call showHint on ANDROID', () => {
+    const wrapper = mount(<Create {...props} agent='android' />, options);
+    wrapper.find('aside Button').simulate('click');
+    expect(wrapper.state().showHint).to.be.equal(true);
+    wrapper.unmount();
+  });
+
+  it('should call showHint on Taizen', () => {
+    const wrapper = mount(<Create {...props} agent='teizen' />, options);
+    wrapper.find('aside Button').simulate('click');
+    expect(wrapper.state().showHint).to.be.equal(true);
   });
 });
