@@ -1,6 +1,7 @@
 import i18n from './../i18n';
+import updateModal from './updateModal';
 
-export default ({ autoUpdater, dialog, win, process }) => {
+export default ({ autoUpdater, dialog, win, process, electron }) => {
   const updater = {
     menuItem: { enabled: true },
   };
@@ -36,28 +37,24 @@ export default ({ autoUpdater, dialog, win, process }) => {
     win.browser.setProgressBar(progressObj.transferred / progressObj.total);
   });
 
-  autoUpdater.on('update-available', ({ version }) => {
+  autoUpdater.on('update-available', ({ releaseNotes, version }) => {
     updater.error = undefined;
-    dialog.showMessageBox({
-      type: 'info',
-      title: i18n.t('New version available'),
-      message: i18n.t('There is a new version ({{version}}) available, do you want to update now?', { version }),
-      buttons: [i18n.t('Update now'), i18n.t('Later')],
-    }, (buttonIndex) => {
-      if (buttonIndex === 0) {
-        autoUpdater.downloadUpdate();
-        setTimeout(() => {
-          if (!updater.error) {
-            dialog.showMessageBox({
-              title: i18n.t('Dowload started'),
-              message: i18n.t('The download was started. Depending on your internet speed it can take up to several minutes. You will be informed then it is finished and prompted to restart the app.'),
-            });
-          }
-        }, 500);
-      } else {
-        updater.menuItem.enabled = true;
-      }
-    });
+    const versions = {
+      oldVersion: electron.app.getVersion(),
+      newVersion: version,
+    };
+    const updateApp = () => {
+      autoUpdater.downloadUpdate();
+      setTimeout(() => {
+        if (!updater.error) {
+          dialog.showMessageBox({
+            title: i18n.t('Dowload started'),
+            message: i18n.t('The download was started. Depending on your internet speed it can take up to several minutes. You will be informed then it is finished and prompted to restart the app.'),
+          });
+        }
+      }, 500);
+    };
+    updateModal(electron, releaseNotes, updateApp, versions);
   });
 
   autoUpdater.on('update-not-available', () => {
