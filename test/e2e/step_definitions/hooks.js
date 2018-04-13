@@ -36,7 +36,7 @@ function takeScreenshot(screnarioSlug, callback) {
   });
 }
 
-defineSupportCode(({ Before, After, registerListener }) => {
+defineSupportCode(({ Before, After, AfterAll, registerListener }) => {
   Before('@pending', (scenario, callback) => {
     callback(null, 'pending');
   });
