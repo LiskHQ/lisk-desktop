@@ -136,8 +136,8 @@ class Choose extends React.Component {
                 </h5>
               </header>
             </div>
-            <div className={stepStyles.secondContainer}>
-              <form className={`${stepStyles.form} ${stepStyles.formWithBg}`}
+            <div className={`${stepStyles.secondContainer} ${stepStyles.containerWithBg}`}>
+              <form className={`${stepStyles.form}`}
                 onSubmit={this.validateDelegateName.bind(this, 'delegateName')}>
                 <Input
                   placeholder={this.props.t('Write to check availability')}
