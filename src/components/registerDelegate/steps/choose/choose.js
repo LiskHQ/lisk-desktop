@@ -4,6 +4,7 @@ import Fees from '../../../../constants/fees';
 import { fromRawLsk } from '../../../../utils/lsk';
 import { PrimaryButton } from '../../../toolbox/buttons/button';
 import Input from '../../../toolbox/inputs/input';
+import { FontIcon } from '../../../fontIcon';
 
 import stepStyles from '../steps.css';
 import styles from './choose.css';
@@ -141,7 +142,7 @@ class Choose extends React.Component {
                 <Input
                   placeholder={this.props.t('Write to check availability')}
                   required={true}
-                  autoFocus={true}
+                  shouldfocus="true"
                   className={`${styles.delegateNameInput} delegate-name`}
                   onChange={this.validateDelegateName.bind(this, 'delegateName')}
                   error={this.state.delegateName.error}
@@ -150,9 +151,11 @@ class Choose extends React.Component {
                   {t('Name is already taken!')}
                 </p> : null }
                 {showCheckingAvailability ? <p className={stepStyles.info}>
-                  {t('Checking availability')}
+                  <FontIcon value='more' />
+                  {t('checking availability')}
                 </p> : null }
                 {showInfoNameAvailable ? <p className={stepStyles.info}>
+                  <FontIcon value='checkmark' />
                   {t('Name is available')}
                 </p> : null }
                 {showInfoValidation ? <p className={stepStyles.info}>

@@ -52,6 +52,7 @@
 @media (--small-viewport) {
   .registerDelegate {
     padding: var(--register-delegate-vertical-padding-s) 0;
+    overflow-y: inherit;
   }
 
   .multiStep {

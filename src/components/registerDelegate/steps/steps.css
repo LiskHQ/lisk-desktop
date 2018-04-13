@@ -60,6 +60,7 @@
   font-size: var(--subtitle-font-size);
   color: var(--color-grayscale-dark);
   padding: 0 var(--main-content-horizontal-padding);
+  line-height: 26px;
 }
 
 .headerIcon {
@@ -122,6 +123,10 @@
   top: 80px;
   left: 50%;
   transform: translateX(-50%);
+
+  & > span {
+    margin-right: 5px;
+  }
 }
 
 .form {
@@ -160,6 +165,10 @@
 }
 
 @media (--xSmall-viewport) {
+  .firstContainer {
+    margin-bottom: 24px;
+  }
+
   .form {
     padding: var(--form-content-vertical-padding-s) var(--form-content-horizontal-padding-s);
     width: calc(100% - var(--form-content-horizontal-padding-s) * 2);
@@ -168,5 +177,15 @@
   .chooseNameBtn,
   .input {
     width: 100%;
+  }
+
+  .info {
+    width: calc(100% - (20px * 2));
+  }
+
+  .formWithBg {
+    &::before {
+      display: none;
+    }
   }
 }

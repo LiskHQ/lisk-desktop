@@ -73,7 +73,7 @@
     padding-top: 0;
 
     &::before {
-      top: 85px;
+      bottom: calc(-150% + 164px);
     }
 
     & div[class*='inputTypeToggle'] {
@@ -84,5 +84,17 @@
 
   .button {
     margin: 10px auto;
+  }
+}
+
+@media (--xSmall-viewport) {
+  .wrapper {
+    &::before {
+      display: none;
+    }
+
+    & header {
+      margin-bottom: 28px;
+    }
   }
 }
