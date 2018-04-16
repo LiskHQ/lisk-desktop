@@ -84,11 +84,11 @@ class Choose extends React.Component {
     const disableSubmitButton = delegateNameHasError ||
       delegateNameDuplicated ||
       this.state.delegateName.value === '';
-    const showCheckingAvailability = this.props.delegate.delegateNameQueried;
+    const showCheckingAvailability = this.props.delegate.delegateNameQueried &&
+      !delegateNameDuplicated;
     const showInfoNameAvailable = !delegateNameHasError &&
       this.state.delegateName.value !== '' &&
-      !this.props.delegate.delegateNameQueried &&
-      !this.props.delegate.delegateNameInvalid;
+      !delegateNameDuplicated;
     const showInfoValidation = !showInfoNameAvailable &&
       !delegateNameHasError &&
       !delegateNameDuplicated &&
@@ -147,14 +147,14 @@ class Choose extends React.Component {
                   onChange={this.validateDelegateName.bind(this, 'delegateName')}
                   error={this.state.delegateName.error}
                   value={this.state.delegateName.value} />
-                {delegateNameDuplicated ? <p className={`${stepStyles.error} ${stepStyles.errorInline}`}>
+                {delegateNameDuplicated ? <p className={`${stepStyles.error} ${stepStyles.errorInline} error-name-duplicate`}>
                   {t('Name is already taken!')}
                 </p> : null }
-                {showCheckingAvailability ? <p className={stepStyles.info}>
+                {showCheckingAvailability ? <p className={`${stepStyles.info} info`}>
                   <FontIcon value='more' />
                   {t('checking availability')}
                 </p> : null }
-                {showInfoNameAvailable ? <p className={stepStyles.info}>
+                {showInfoNameAvailable ? <p className={`${stepStyles.info} info`}>
                   <FontIcon value='checkmark' />
                   {t('Name is available')}
                 </p> : null }

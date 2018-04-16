@@ -3,13 +3,19 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 import { I18nextProvider } from 'react-i18next';
 import { BrowserRouter as Router } from 'react-router-dom';
 import i18n from '../../i18n'; // initialized i18next instance
-import store from '../../store';
-import RegisterDelegate from './registerDelegate';
+import RegisterDelegateHOC from './index';
+import { prepareStore } from '../../../test/utils/applicationInit';
+import { accountLoggedIn } from '../../actions/account';
 import * as delegateApi from '../../utils/api/delegate';
-
+import delegateReducer from '../../store/reducers/delegate';
+import accountReducer from '../../store/reducers/account';
+import peersReducer from '../../store/reducers/peers';
+import networks from '../../constants/networks';
+import loginMiddleware from '../../store/middlewares/login';
 
 const normalAccount = {
   passphrase: 'pass',
@@ -38,50 +44,51 @@ const withSecondSecretAccount = {
   secondSignature: 1,
 };
 
-const delegateStore = {};
-const clock = sinon.useFakeTimers({
-  toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
-});
+let clock;
+let store;
 
 const props = {
-  peers: {
-    data: {},
-  },
   closeDialog: () => {},
   delegateRegistered: sinon.spy(),
   t: key => key,
 };
 
-const delegateProps = { ...props, account: delegateAccount };
-const normalProps = { ...props, account: normalAccount };
+// const normalProps = { ...props, account: normalAccount };
 const withSecondSecretProps = { ...props, account: withSecondSecretAccount };
 
-describe('RegisterDelegate', () => {
+/* eslint-disable mocha/no-exclusive-tests */
+describe.only('RegisterDelegate', () => {
   let wrapper;
   let delegateApiMock;
 
-  beforeEach(() => {
-    delegateApiMock = sinon.mock(delegateApi);
-  });
-
-  afterEach(() => {
-    delegateApiMock.verify();
-    delegateApiMock.restore();
-  });
-
   describe('Ordinary account', () => {
     beforeEach(() => {
-      store.getState = () => ({
-        account: normalAccount,
-        delegate: delegateStore,
-      });
+      store = prepareStore({
+        peers: peersReducer,
+        account: accountReducer,
+        delegate: delegateReducer,
+      }, [
+        thunk,
+        loginMiddleware,
+      ]);
+      // store.dispatch = () => {};
+      // store.subscribe = () => {};
       wrapper = mount(<Provider store={store}>
         <Router>
           <I18nextProvider i18n={ i18n }>
-            <RegisterDelegate {...normalProps} />
+            <RegisterDelegateHOC />
           </I18nextProvider>
         </Router>
       </Provider>);
+      delegateApiMock = sinon.mock(delegateApi);
+      clock = sinon.useFakeTimers({
+        toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
+      });
+    });
+
+    afterEach(() => {
+      clock.restore();
+      delegateApiMock.restore();
     });
 
     it('renders a MultiStep component', () => {
@@ -92,24 +99,38 @@ describe('RegisterDelegate', () => {
       expect(wrapper.find('Choose')).to.have.length(1);
     });
 
-    it.skip('allows register as delegate for a non delegate account', () => {
+    it.only('allows register as delegate for a non delegate account', () => {
+      store.dispatch(accountLoggedIn(normalAccount));
       wrapper.find('.choose-name').first().simulate('click');
-      wrapper.find('.delegate-name').first().find('input').simulate('change', { target: { value: 'sample_username' } });
-      clock.tick(300);
+      wrapper.find('.delegate-name').first().find('input')
+        .simulate('change', { target: { value: 'sample_username' } });
       const submitDelegateBtn = wrapper.find('.submit-delegate-name').first();
       expect(submitDelegateBtn.props().disabled).to.not.equal(true);
       submitDelegateBtn.simulate('click');
-      wrapper.find('.confirm-delegate-registration').first().simulate('change');
-      expect(props.delegateRegistered).to.have.been.calledWith();
+      clock.tick(300);
+      wrapper.find('.confirm-delegate-registration').find('input').first()
+        .simulate('change');
+
+      const expectedRegisterCallArgs = {
+        activePeer: peers.data,
+        account: normalAccount,
+        username: 'sample_username',
+        passphrase: normalAccount.passphrase,
+        secondPassphrase: null,
+      };
+      console.log(wrapper.debug());
+      expect(props.delegateRegistered).to.have.been.calledWith(expectedRegisterCallArgs);
     });
 
-    it.skip('handles register as delegate "username already exists" failure', () => {
-      const message = 'Username already exists';
-      delegateApiMock.expects('registerDelegate').rejects({ message });
-      wrapper.find('.username input').simulate('change', { target: { value: 'sample_username' } });
-      wrapper.find('.next-button').simulate('click');
-      // TODO: this doesn't work for some reason
-      // expect(wrapper.find('RegisterDelegate .username').text()).to.contain(message);
+    it('handles register as delegate "Name already taken!" error', () => {
+      wrapper.find('.choose-name').first().simulate('click');
+      const delegateNameInput = wrapper.find('.delegate-name').first().find('input');
+      delegateApiMock.expects('getDelegate').returnsPromise().rejects({});
+      delegateNameInput.simulate('change', { target: { value: 'genesis_17' } });
+      clock.tick(250);
+      wrapper.update();
+      const message = 'Name is already taken!';
+      expect(wrapper.find('.error-name-duplicate').first()).to.have.text(message);
     });
 
     it.skip('handles register as delegate failure', () => {
@@ -130,7 +151,7 @@ describe('RegisterDelegate', () => {
       wrapper = mount(<Provider store={store}>
         <Router>
           <I18nextProvider i18n={ i18n }>
-            <RegisterDelegate {...withSecondSecretProps} />
+            <RegisterDelegateHOC {...withSecondSecretProps} />
           </I18nextProvider>
         </Router>
       </Provider>);
@@ -155,18 +176,15 @@ describe('RegisterDelegate', () => {
       wrapper = mount(<Provider store={store}>
         <Router>
           <I18nextProvider i18n={ i18n }>
-            <RegisterDelegate {...delegateProps} />
+            <RegisterDelegateHOC />
           </I18nextProvider>
         </Router>
       </Provider>);
     });
 
-    it('renders an InfoParagraph component', () => {
+    it('should disable confirm register as delegate', () => {
       expect(wrapper.find('InfoParagraph')).to.have.length(1);
-    });
-
-    it('does not render the delegate registration form for registering', () => {
-      expect(wrapper.find('form')).to.have.length(0);
     });
   });
 });
+/* eslint-enable mocha/no-exclusive-tests */
