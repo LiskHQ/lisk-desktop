@@ -13,7 +13,7 @@ exports.config = {
     os: 'Windows',
     osVersion: '7',
     resolution: '1680x1050',
-    maxInstances: 10,
+    maxInstances: 1,
     project: 'Lisk Hub',
     build: process.env.BRANCH_NAME,
     'browserstack.user': process.env.BROWSERSTACK_USERNAME,
