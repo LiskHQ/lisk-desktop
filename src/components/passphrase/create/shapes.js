@@ -2,10 +2,10 @@ import React from 'react';
 import MovableShape from './movableShape';
 import styles from './shapes.css';
 
-const Shapes = ({ shapes, percentage }) =>
+const Shapes = ({ percentage }) =>
   (<div className={styles.shapesWrapper}>
     <MovableShape
-      hidden={shapes[0]}
+      zIndex={3}
       idBg='big-circle-bg'
       idFg='big-circle-fg'
       group={
@@ -29,7 +29,7 @@ const Shapes = ({ shapes, percentage }) =>
       initial={['100%', '20%']} >
     </MovableShape>
     <MovableShape
-      hidden={shapes[1]}
+      zIndex={5}
       idBg='small-circle-bg'
       idFg='small-circle-fg'
       group={
@@ -48,7 +48,7 @@ const Shapes = ({ shapes, percentage }) =>
       percentage={percentage}
       initial={['62%', '-2%']} />
     <MovableShape
-      hidden={shapes[2]}
+      zIndex={3}
       idBg='triangle-bg'
       idFg='triangle-fg'
       group={
@@ -58,8 +58,8 @@ const Shapes = ({ shapes, percentage }) =>
             <polygon fill="url(#triangle-fg)" className={`${styles.shapeForeground}`} transform="translate(1128.068314, 616.047499) rotate(-345.000000) translate(-1128.068314, -616.047499) " points="1124.3008 557.547499 1203.56831 674.547499 1052.56831 674.547499"/>
           </g>
         </g>}
-      backGroundIndex={1}
-      foreGroundIndex={2}
+      backGroundIndex={4}
+      foreGroundIndex={5}
       width='146px'
       height='135px'
       viewBox='0 0 146 135'
@@ -67,7 +67,7 @@ const Shapes = ({ shapes, percentage }) =>
       percentage={percentage}
       initial={['80%', '-2%']} />
     <MovableShape
-      hidden={shapes[4]}
+      zIndex={1}
       idBg='square-left-bg'
       idFg='square-left-fg'
       group={
@@ -86,7 +86,7 @@ const Shapes = ({ shapes, percentage }) =>
       percentage={percentage}
       initial={['5%', '-1%']} />
     <MovableShape
-      hidden={shapes[8]}
+      zIndex={4}
       idBg='square-right-bg'
       idFg='square-right-fg'
       group={
@@ -105,7 +105,7 @@ const Shapes = ({ shapes, percentage }) =>
       percentage={percentage}
       initial={['70%', '-5%']} />
     <MovableShape
-      hidden={shapes[5]}
+      zIndex={2}
       idBg='triangle-left-bg'
       idFg='triangle-left-fg'
       group={
@@ -124,7 +124,7 @@ const Shapes = ({ shapes, percentage }) =>
       percentage={percentage}
       initial={['-2%', '30%']} />
     <MovableShape
-      hidden={shapes[7]}
+      zIndex={1}
       idBg='circle-left-bg'
       idFg='circle-left-fg'
       group={
@@ -143,7 +143,7 @@ const Shapes = ({ shapes, percentage }) =>
       percentage={percentage}
       initial={['20%', '2%']} />
     <MovableShape
-      hidden={shapes[3]}
+      zIndex={1}
       idBg='small-triangle-bg'
       idFg='small-triangle-fg'
       group={
@@ -162,7 +162,7 @@ const Shapes = ({ shapes, percentage }) =>
       percentage={percentage}
       initial={['40%', '-2%']} />
     <MovableShape
-      hidden={shapes[6]}
+      zIndex={4}
       idBg='very-small-circle-bg'
       idFg='very-small-circle-fg'
       group={

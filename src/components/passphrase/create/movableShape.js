@@ -52,8 +52,8 @@ class MovableShape extends React.Component {
   }
 
   allocateShape() {
-    const { hidden } = this.props;
-    const style = Object.assign({ opacity: hidden },
+    const { zIndex } = this.props;
+    const style = Object.assign({ zIndex },
       { left: this.props.initial[0], bottom: this.props.initial[1] });
     this.setState({ style });
   }
@@ -109,7 +109,9 @@ class MovableShape extends React.Component {
 
     return <div style = { this.state.style }
 
-      className={`${toggleShape() ? styles.switch : null} ${className}`}
+      className={`${toggleShape() ? styles.switch : null}
+      ${this.props.percentage > 99 ? styles.fadeOut : null}
+      ${className}`}
       ref={(input) => { this.shape = input; }}>
       <svg width={width} height={height} viewBox={viewBox}>
         <defs>
@@ -126,7 +128,7 @@ class MovableShape extends React.Component {
             </stop>
           </linearGradient>
         </defs>
-        <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" opacity="0.8">
+        <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" opacity="0.9">
           {group}
         </g>
       </svg>
