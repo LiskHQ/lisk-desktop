@@ -2,7 +2,7 @@
 const { defineSupportCode } = require('cucumber');
 const Cucumber = require('cucumber');
 const fs = require('fs');
-// const util = require('util');
+const util = require('util');
 const localStorage = require('../support/localStorage.js');
 
 const jsonFormatter = new Cucumber.JsonFormatter();
@@ -42,7 +42,7 @@ defineSupportCode(({ Before, After, registerListener }) => {
   });
 
   Before((scenario, callback) => {
-    browser.ignoreSynchronization = true;
+    // browser.ignoreSynchronization = true;
     browser.driver.manage().window()
       .setSize(browser.params.screenWidth, browser.params.screenHeight);
     browser.get(browser.params.baseURL);
@@ -57,9 +57,9 @@ defineSupportCode(({ Before, After, registerListener }) => {
   After((scenario, callback) => {
     localStorage.clear();
 
-    // browser.manage().logs().get('browser').then((browserLog) => {
-    //   console.log(`BROWSER LOG: ${util.inspect(browserLog)}`); // eslint-disable-line no-console
-    // });
+    browser.manage().logs().get('browser').then((browserLog) => {
+      console.log(`BROWSER LOG: ${util.inspect(browserLog)}`); // eslint-disable-line no-console
+    });
 
     if (scenario.isFailed()) {
       const screnarioSlug = slugify([scenario.scenario.feature.name, scenario.scenario.name].join(' '));
