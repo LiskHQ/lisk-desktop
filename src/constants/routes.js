@@ -95,9 +95,9 @@ export default {
     component: AccountTransactions,
     isPrivate: false,
   },
-  walletExplorer: {
+  transactions: {
     pathPrefix: '/explorer',
-    path: '/wallet',
+    path: '/transactions',
     pathSuffix: '/:id?',
     component: SingleTransaction,
     isPrivate: false,
