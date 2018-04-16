@@ -57,9 +57,9 @@ defineSupportCode(({ Before, After, registerListener }) => {
   After((scenario, callback) => {
     localStorage.clear();
 
-    browser.manage().logs().get('browser').then((browserLog) => {
-      console.log(`BROWSER LOG: ${util.inspect(browserLog)}`); // eslint-disable-line no-console
-    });
+    // browser.manage().logs().get('browser').then((browserLog) => {
+    //   console.log(`BROWSER LOG: ${util.inspect(browserLog)}`); // eslint-disable-line no-console
+    // });
 
     if (scenario.isFailed()) {
       const screnarioSlug = slugify([scenario.scenario.feature.name, scenario.scenario.name].join(' '));
