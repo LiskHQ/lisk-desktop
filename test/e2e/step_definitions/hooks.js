@@ -2,7 +2,7 @@
 const { defineSupportCode } = require('cucumber');
 const Cucumber = require('cucumber');
 const fs = require('fs');
-const util = require('util');
+// const util = require('util');
 const localStorage = require('../support/localStorage.js');
 
 const jsonFormatter = new Cucumber.JsonFormatter();
