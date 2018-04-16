@@ -64,8 +64,6 @@ module.exports = function (config) {
             'src/components/voteUrlProcessor/index.js',
             'src/components/onboarding/index.js',
             'src/components/passphrase/createSecond/index.js',
-            'src/components/registerDelegate/index.js',
-            'src/components/registerDelegate/registerDelegate.js',
             'src/components/registerDelegate/steps/choose/choose.js',
             'src/components/registerDelegate/steps/choose/index.js',
             'src/components/registerDelegate/steps/confirm/confirm.js',
