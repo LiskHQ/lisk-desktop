@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+  <head>
+      <meta charset="utf-8">
+      <title>Lisk update</title>
+      <link href="dialog.css" rel="stylesheet">
+      <style>
+        @font-face {
+          font-family: 'gilroy';
+          src:
+            url('./assets/fonts/gilroy/gilroy-bold.woff2') format('woff2'),
+            url('./assets/fonts/gilroy/gilroy-bold.woff') format('woff'),
+            url('./assets/fonts/gilroy/gilroy-bold.ttf')  format('truetype');
+          font-weight: bold;
+          font-style: normal;
+        }
+      </style>
+    </head>
+    <body>
+      <h1 class="header" id="header"></h1>
+      <p class="description" id="description"></p>
+      <div class="app" id="app"></div>
+      <div class="actionBar">
+        <button class="button isClose" id="close">Close</button>
+        <button class="button" id="update">Update</button>
+      </div>
+    </body>
+    <script>
+        const ipc = require('electron').ipcRenderer;
+        const updateElm = document.getElementById('update');
+        const closeElm = document.getElementById('close');
+        const app = document.getElementById('app');
+        const description = document.getElementById('description');
+        const header = document.getElementById('header');
+        ipc.on('loadNotes', function (event, data) {
+          app.innerHTML = data.message;
+          header.innerText = data.title;
+          description.innerText = data.versions;
+          updateElm.innerText = data.buttons[0];
+          closeElm.innerText = data.buttons[1];
+        });
+        function closeWindow() {
+          window.close();
+          return false;
+        } 
+        function updateApp() {
+          ipc.send('update', { text: 'update' });
+        }
+        updateElm.addEventListener("mouseup", updateApp, false);
+        closeElm.addEventListener("mouseup", closeWindow, false);
+    </script>
+</html>

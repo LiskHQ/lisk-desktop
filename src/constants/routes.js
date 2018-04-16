@@ -13,6 +13,7 @@ const Search = asyncComponent(() => import('../components/search'));
 const SearchResult = asyncComponent(() => import('../components/search/searchResult'));
 const AccountTransactions = asyncComponent(() => import('../componetns/accountTransactions'));
 const SingleTransaction = asyncComponent(() => import('../components/singleTransaction'));
+const RegisterDelegate = asyncComponent(() => import('../components/registerDelegate'));
 
 export default {
   accountVisualDemo: {
@@ -48,6 +49,12 @@ export default {
   register: {
     path: '/register',
     component: Register,
+    isLoaded: true,
+    isPrivate: false,
+  },
+  registerDelegate: {
+    path: '/register-delegate',
+    component: RegisterDelegate,
     isLoaded: true,
     isPrivate: false,
   },
@@ -90,9 +97,9 @@ export default {
     component: AccountTransactions,
     isPrivate: false,
   },
-  walletExplorer: {
+  transactions: {
     pathPrefix: '/explorer',
-    path: '/wallet',
+    path: '/transactions',
     pathSuffix: '/:id?',
     component: SingleTransaction,
     isPrivate: false,

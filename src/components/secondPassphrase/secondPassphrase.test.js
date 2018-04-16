@@ -9,7 +9,7 @@ import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
 import SecondPassphrase from './secondPassphrase';
 
-describe.skip('SecondPassphrase', () => {
+describe('SecondPassphrase', () => {
   let wrapper;
   const peers = { data: {} };
   const account = accounts.delegate;
@@ -43,30 +43,20 @@ describe.skip('SecondPassphrase', () => {
       expect(wrapper.find('MultiStep')).to.have.length(1);
     });
 
-    it('initially renders PassphraseInfo', () => {
-      expect(wrapper.find('Info')).to.have.length(1);
+    it('unmount remove contentFocused', () => {
+      expect(document.getElementsByClassName('contentFocused')).to.have.length(1);
+      wrapper.unmount();
+      expect(document.getElementsByClassName('contentFocused')).to.have.length(0);
     });
 
     it('should call activePeerSet with network and passphrase', () => {
-      wrapper.find('MultiStep').props().finalCallback(secPassphrase);
+      wrapper.find('MultiStep').props().finalCallback(secPassphrase, account.passphrase);
       expect(props.registerSecondPassphrase).to.have.been.calledWith({
         activePeer: peers.data,
         secondPassphrase: secPassphrase,
         account,
+        passphrase: account.passphrase,
       });
-    });
-  });
-
-  describe('Not authenticated', () => {
-    const unAuthenticatedProps = Object.assign({}, props);
-    delete unAuthenticatedProps.passphrase;
-
-    beforeEach(() => {
-      wrapper = mount(<SecondPassphrase {...unAuthenticatedProps} />, options);
-    });
-
-    it('renders Authenticate component if the user is not authenticated yet', () => {
-      expect(wrapper.find('Authenticate')).to.have.length(1);
     });
   });
 });

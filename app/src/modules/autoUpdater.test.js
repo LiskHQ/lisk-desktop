@@ -1,12 +1,49 @@
 import { expect } from 'chai'; // eslint-disable-line import/no-extraneous-dependencies
 import sinon, { spy } from 'sinon'; // eslint-disable-line import/no-extraneous-dependencies
+import ipcMock from 'electron-ipc-mock'; // eslint-disable-line import/no-extraneous-dependencies
 import autoUpdater from './autoUpdater';
 
 describe('autoUpdater', () => {
   const version = '1.2.3';
+  const releaseNotes = 'this notes';
+  const loadURL = spy();
+  const show = spy();
+  const close = spy();
+  const events = [];
+  const { ipcMain, ipcRenderer } = ipcMock();
   let params;
   let callbacks;
   let clock;
+  const electron = {
+    BrowserWindow: ({ width, height, center, webPreferences }) =>
+      ({
+        width,
+        height,
+        center,
+        webPreferences,
+        loadURL,
+        show,
+        close: () => {
+          close();
+          callbacks.closed();
+        },
+        on: (item, callback) => {
+          callbacks[item] = callback;
+        },
+        webContents: {
+          on: (item, callback) => {
+            callbacks[item] = callback;
+          },
+          send: (event, value) => {
+            events.push({ event, value });
+          },
+        },
+      }),
+    app: {
+      getVersion: () => 123,
+    },
+    ipcMain,
+  };
 
   beforeEach(() => {
     callbacks = {};
@@ -68,8 +105,11 @@ describe('autoUpdater', () => {
     callbacks.error(undefined);
     expect(params.dialog.showErrorBox).to.not.have.been.calledWith();
 
+    callbacks.error('404 Not Found');
+    expect(params.dialog.showErrorBox).to.not.have.been.calledWith();
+
     callbacks.error(null);
-    expect(params.dialog.showErrorBox).to.have.been.calledWith('Error: ', 'unknown');
+    expect(params.dialog.showErrorBox).to.not.have.been.calledWith();
 
     callbacks.error('error');
     expect(params.dialog.showErrorBox).to.have.been.calledWith('Error: ', 'error');
@@ -108,27 +148,32 @@ describe('autoUpdater', () => {
 
   it('should not install update when "Later" was pressed', () => {
     autoUpdater(params);
-    callbacks['update-downloaded']({ version });
+    callbacks['update-downloaded']({ releaseNotes, version });
     callbacks.dialog(1);
 
     expect(params.autoUpdater.quitAndInstall).to.not.have.been.calledWith();
   });
 
   it('should download the update if update is available and the "Update" button was pressed', () => {
-    autoUpdater(params);
+    const newPrams = Object.assign({}, params, { electron });
+    autoUpdater(newPrams);
     callbacks['update-available']({ version });
-    callbacks.dialog(0);
+    clock.tick(1001);
+    ipcRenderer.send('update', { text: 'update' });
+    clock.tick(100);
+    expect(close).to.has.been.calledWith();
 
     expect(params.autoUpdater.downloadUpdate).to.have.been.calledWithExactly();
   });
 
-  it('should not download the update if update is available and the "Later" button was pressed', () => {
+  /* it('should not download the update if update is available and the "Later" button was pressed',
+    () => {
     autoUpdater(params);
     callbacks['update-available']({ version });
     callbacks.dialog(1);
 
     expect(params.autoUpdater.downloadUpdate).to.not.have.been.calledWith();
-  });
+  }); */
 
   it('should set the progress bar when being in download progress', () => {
     autoUpdater(params);

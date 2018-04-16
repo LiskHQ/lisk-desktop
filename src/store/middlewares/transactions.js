@@ -1,6 +1,7 @@
 import { loadingStarted, loadingFinished } from '../../utils/loading';
 
-import { unconfirmedTransactions, transactions as getTransactions, getAccount, transaction } from '../../utils/api/account';
+import { unconfirmedTransactions, transactions as getTransactions, getAccount, transaction, extractAddress } from '../../utils/api/account';
+import { getDelegate } from '../../utils/api/delegate';
 import {
   transactionsFailed,
   transactionsFiltered,
@@ -37,23 +38,51 @@ const filterTransactions = (store, action) => {
     });
 };
 
+const getAccountSuccess = (store, accountData) => {
+  store.dispatch(transactionsInit(accountData));
+  loadingFinished('transactions-init');
+};
 
 const initTransactions = (store, action) => {
-  const activePeer = store.getState().peers.data;
-  const address = action.data.address;
+  const state = store.getState();
+  const activePeer = state.peers.data;
+  const { address } = action.data;
+  const lastActiveAddress = state.account ?
+    extractAddress(state.account.publicKey) :
+    null;
+  const isSameAccount = lastActiveAddress === address;
   loadingStarted('transactions-init');
+
   getTransactions({ activePeer, address, limit: 25 })
     .then((txResponse) => {
       const { transactions, count } = txResponse;
       getAccount(activePeer, address)
-        .then((accountResponse) => {
-          store.dispatch(transactionsInit({
+        .then((accountData) => {
+          let accountDataResult = {
             confirmed: transactions,
             count: parseInt(count, 10),
-            balance: accountResponse.balance,
+            balance: accountData.balance,
             address,
-          }));
-          loadingFinished('transactions-init');
+          };
+          if (!isSameAccount && accountData.publicKey) {
+            getDelegate(activePeer, { publicKey: accountData.publicKey })
+              .then((delegateData) => {
+                accountDataResult = {
+                  ...accountDataResult,
+                  delegate: { ...delegateData.delegate },
+                };
+                getAccountSuccess(store, accountDataResult);
+              }).catch(() => {
+                getAccountSuccess(store, accountDataResult);
+              });
+            return;
+          } else if (isSameAccount && accountData.isDelegate) {
+            accountDataResult = {
+              ...accountDataResult,
+              delegate: { ...accountData.delegate },
+            };
+          }
+          getAccountSuccess(store, accountDataResult);
         });
     });
 };

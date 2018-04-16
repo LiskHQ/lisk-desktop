@@ -4,10 +4,17 @@ import { autoUpdater } from 'electron-updater'; // eslint-disable-line import/no
 import path from 'path';
 import storage from 'electron-json-storage'; // eslint-disable-line import/no-extraneous-dependencies
 import win from './modules/win';
+import './styles.dialog.css';
 // import localeHandler from './modules/localeHandler';
 import updateChecker from './modules/autoUpdater';
 
-const checkForUpdates = updateChecker({ autoUpdater, dialog: electron.dialog, win, process });
+const checkForUpdates = updateChecker({
+  autoUpdater,
+  dialog: electron.dialog,
+  win,
+  process,
+  electron,
+});
 
 const { app, ipcMain } = electron;
 

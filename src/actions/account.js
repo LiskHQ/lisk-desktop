@@ -3,6 +3,7 @@ import actionTypes from '../constants/actions';
 import { setSecondPassphrase, send } from '../utils/api/account';
 import { registerDelegate } from '../utils/api/delegate';
 import { transactionAdded, transactionFailed } from './transactions';
+import { delegateRegisteredFailure } from './delegate';
 import { errorAlertDialogDisplayed } from './dialog';
 import Fees from '../constants/fees';
 import { toRawLsk } from '../utils/lsk';
@@ -104,9 +105,7 @@ export const delegateRegistered = ({
         }));
       })
       .catch((error) => {
-        const text = error && error.message ? `${error.message}.` : i18next.t('An error occurred while registering as delegate.');
-        const actionObj = errorAlertDialogDisplayed({ text });
-        dispatch(actionObj);
+        dispatch(delegateRegisteredFailure(error));
       });
     dispatch(passphraseUsed(passphrase));
   };

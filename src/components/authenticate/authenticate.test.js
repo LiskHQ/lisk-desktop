@@ -33,6 +33,7 @@ describe('Authenticate', () => {
   const account = {
     isDelegate: false,
     publicKey: accounts.genesis.publicKey,
+    secondPublicKey: accounts.genesis.serverPublicKey,
     address: accounts.genesis.address,
   };
 
@@ -84,6 +85,43 @@ describe('Authenticate', () => {
     wrapper.update();
     wrapper.find('Button.authenticate-button').simulate('click');
     wrapper.update();
+    expect(props.accountUpdated).to.have.been.calledWith({
+      activePeer: props.peers.data,
+      passphrase,
+      secondPassphrase: null,
+    });
+  });
+
+  it('should call accountUpdated if entered passphrase and clicked submit without PublicKey', () => {
+    props = {
+      account: {
+        isDelegate: false,
+        publicKey: accounts.genesis.publicKey,
+        address: accounts.genesis.address,
+      },
+      peers,
+      t: (str, opts) => i18next.t(str, opts),
+      nextAction: 'perform a sample action',
+      closeDialog: spy(),
+      accountUpdated: spy(),
+    };
+
+    const store = fakeStore({
+      account: {
+        balance: 100e8,
+      },
+    });
+    const customWrapper = mount(<Authenticate {...props} />, {
+      context: { store, i18n },
+      childContextTypes: {
+        store: PropTypes.object.isRequired,
+        i18n: PropTypes.object.isRequired,
+      },
+    });
+    customWrapper.find('.passphrase input').first().simulate('change', { target: { value: passphrase } });
+    customWrapper.update();
+    customWrapper.find('Button.authenticate-button').simulate('click');
+    customWrapper.update();
     expect(props.accountUpdated).to.have.been.calledWith({
       activePeer: props.peers.data,
       passphrase,

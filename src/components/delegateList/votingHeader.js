@@ -1,9 +1,14 @@
 import React from 'react';
 import Waypoint from 'react-waypoint';
+import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
 import styles from './votingHeader.css';
 import { FontIcon } from '../fontIcon';
 import voteFilters from './../../constants/voteFilters';
+import { fromRawLsk } from './../../utils/lsk';
+import Fees from './../../constants/fees';
+import routes from './../../constants/routes';
+
 
 export class VotingHeaderRaw extends React.Component {
   constructor() {
@@ -53,11 +58,6 @@ export class VotingHeaderRaw extends React.Component {
     this.search({ nativeEvent: { target: { value: '' } } });
   }
 
-  shouldShowEmptyState() {
-    return this.props.transactions.length === 0 &&
-      (!this.props.activeFilter || this.props.activeFilter === voteFilters.all);
-  }
-
   filterVotes(filter) {
     this.setState({ activeFilter: filter.value });
     this.props.setActiveFilter(filter.value);
@@ -68,7 +68,7 @@ export class VotingHeaderRaw extends React.Component {
   }
 
   render() {
-    const { t } = this.props;
+    const { t, isDelegate } = this.props;
     const titleDesktop = this.props.showChangeSummery ? 'Your selection' : 'Delegate List';
     const titleMobile = this.props.showChangeSummery ? 'Your selection' : 'Voting';
     return (
@@ -77,6 +77,12 @@ export class VotingHeaderRaw extends React.Component {
           <h2 className={styles.desktopTitle}>{t(titleDesktop)}</h2>
           <h2 className={styles.mobileTitle}>{t(titleMobile)}</h2>
         </div>
+        {!isDelegate ?
+          <Link to={`${routes.registerDelegate.path}`} className={`${styles.link} ${styles.registerLink} register-delegate`}>
+            {t('Register as a delegate (Fee: {{fee}} LSK)', { fee: fromRawLsk(Fees.registerDelegate) })}
+            <FontIcon value='arrow-right'/>
+          </Link> : null
+        }
         <div>
           <ul className={styles.filters}>
             {this.filters.map((filter, i) => (
@@ -99,7 +105,11 @@ export class VotingHeaderRaw extends React.Component {
                 value={this.state.query}
                 onChange={this.search.bind(this)}
                 placeholder={t('Search')}/>
-              <FontIcon id='cleanIcon' className={styles.clean} value='close' onClick={ this.clearSearch.bind(this) }/>
+              <FontIcon
+                id='cleanIcon'
+                className={`${styles.clean} clean-icon`}
+                value='close'
+                onClick={ this.clearSearch.bind(this) }/>
             </li>
           </ul>
         </div>

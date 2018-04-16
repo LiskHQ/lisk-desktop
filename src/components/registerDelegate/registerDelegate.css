@@ -1,0 +1,63 @@
+@import '../app/variables.css';
+
+:root {
+  --register-delegate-vertical-padding: 48px;
+  --register-delegate-vertical-padding-s: 27px;
+  --nav-bottom-margin: 52px;
+  --nav-bottom-margin-s: 32px;
+}
+
+.registerDelegate {
+  background: var(--color-white);
+  width: 100%;
+  margin: 0;
+  padding: var(--register-delegate-vertical-padding) 0;
+  overflow: hidden;
+}
+
+.background {
+  display: block !important;
+  position: fixed !important;
+  left: 0;
+  top: 0;
+}
+
+.multiStep {
+  width: 100%;
+
+  & > section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: calc(75vh - 132px); /* stylelint-disable-line */
+    width: 100%;
+  }
+
+  & > nav {
+    margin-bottom: var(--nav-bottom-margin);
+  }
+
+  & > nav > section {
+    width: 300px;
+  }
+
+  & div[class*='multiStep__navEl'] {
+    &:nth-child(3),
+    &:nth-child(4) {
+      display: none;
+    }
+  }
+}
+
+@media (--small-viewport) {
+  .registerDelegate {
+    padding: var(--register-delegate-vertical-padding-s) 0;
+    overflow-y: inherit;
+  }
+
+  .multiStep {
+    & > nav {
+      margin-bottom: var(--nav-bottom-margin-s);
+    }
+  }
+}

@@ -1,0 +1,37 @@
+@import '../../../app/variables.css';
+
+.delegateName {
+  font-family: var(--heading-font);
+  font-size: var(--font-size-h2);
+  margin: 0;
+  margin-bottom: 32px;
+}
+
+.accountVisual {
+  margin: 0;
+}
+
+.inputWide {
+  width: 271px;
+
+  & > label {
+    & > div {
+      & > span {
+        padding-left: 15px;
+        font-weight: var(--font-weight-normal);
+        position: absolute;
+        right: 21px;
+        left: 0;
+      }
+    }
+  }
+}
+
+.descriptionBold {
+  font-weight: var(--font-weight-semi-bold);
+}
+
+.iconAtLeft {
+  float: left;
+  margin-top: 5px;
+}

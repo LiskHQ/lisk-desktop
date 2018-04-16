@@ -37,6 +37,8 @@
   & .backButton {
     width: var(--back-button-width-l); /* to have equal width with its shadow */
     cursor: pointer;
+    color: var(--link-color);
+    font-weight: bold;
 
     & .icon {
       font-size: 32px;

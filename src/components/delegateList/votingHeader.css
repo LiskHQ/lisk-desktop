@@ -7,6 +7,7 @@
   --tabel-header-padding-s: 19px;
   --list-line-height: 25px;
   --header-line-height: 36px;
+  --link-font-size: 15px;
 }
 
 .header {
@@ -30,6 +31,23 @@
     display: inline-block;
     margin: 0;
   }
+}
+
+.link {
+  font-size: var(--link-font-size);
+  color: var(--color-link);
+  margin-top: 16px;
+  display: block;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  line-height: 15px;
+}
+
+.registerLink {
+  position: absolute;
+  top: 95px;
+  left: 48px;
 }
 
 .filters {
@@ -76,6 +94,7 @@
     padding-right: 20px;
     vertical-align: top;
     background-color: transparent;
+    border-radius: 0;
     border-bottom: solid 1px transparent;
     transition: all ease 250ms;
 
@@ -95,6 +114,7 @@
       display: none;
     }
 
+    &:focus,
     &.dirty {
       border-bottom-color: var(--color-grayscale-dark);
 
@@ -171,6 +191,12 @@
         line-height: 16px;
       }
     }
+  }
+
+  .registerLink {
+    position: relative;
+    top: inherit;
+    left: inherit;
   }
 
   .search input {
