@@ -88,18 +88,11 @@ class Choose extends React.Component {
       !delegateNameDuplicated;
     const showInfoNameAvailable = !delegateNameHasError &&
       this.state.delegateName.value !== '' &&
-      !this.props.delegate.delegateNameQueried &&
-      !this.props.delegate.delegateNameInvalid;
+      !delegateNameDuplicated;
     const showInfoValidation = !showInfoNameAvailable &&
       !delegateNameHasError &&
       !delegateNameDuplicated &&
       !showCheckingAvailability;
-
-    console.log('this.props.delegate.delegateNameQueried ', this.props.delegate.delegateNameQueried);
-    console.log('this.props.delegate.delegateNameInvalid ', this.props.delegate.delegateNameInvalid);
-    console.log('showCheckingAvailability ', showCheckingAvailability);
-    console.log('delegateNameHasError ', delegateNameHasError);
-    console.log('delegateNameDuplicated ', delegateNameDuplicated);
 
     return (
       <section>

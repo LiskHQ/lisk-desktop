@@ -9,10 +9,13 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import i18n from '../../i18n'; // initialized i18next instance
 import RegisterDelegateHOC from './index';
 import { prepareStore } from '../../../test/utils/applicationInit';
+import { accountLoggedIn } from '../../actions/account';
 import * as delegateApi from '../../utils/api/delegate';
 import delegateReducer from '../../store/reducers/delegate';
 import accountReducer from '../../store/reducers/account';
 import peersReducer from '../../store/reducers/peers';
+import networks from '../../constants/networks';
+import loginMiddleware from '../../store/middlewares/login';
 
 const normalAccount = {
   passphrase: 'pass',
@@ -50,26 +53,13 @@ const props = {
   t: key => key,
 };
 
-const delegateProps = { ...props, account: delegateAccount };
-const normalProps = { ...props, account: normalAccount };
+// const normalProps = { ...props, account: normalAccount };
 const withSecondSecretProps = { ...props, account: withSecondSecretAccount };
 
 /* eslint-disable mocha/no-exclusive-tests */
 describe.only('RegisterDelegate', () => {
   let wrapper;
   let delegateApiMock;
-
-  beforeEach(() => {
-    delegateApiMock = sinon.mock(delegateApi);
-    clock = sinon.useFakeTimers({
-      toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
-    });
-  });
-
-  afterEach(() => {
-    // delegateApiMock.verify();
-    delegateApiMock.restore();
-  });
 
   describe('Ordinary account', () => {
     beforeEach(() => {
@@ -79,6 +69,7 @@ describe.only('RegisterDelegate', () => {
         delegate: delegateReducer,
       }, [
         thunk,
+        loginMiddleware,
       ]);
       // store.dispatch = () => {};
       // store.subscribe = () => {};
@@ -89,6 +80,15 @@ describe.only('RegisterDelegate', () => {
           </I18nextProvider>
         </Router>
       </Provider>);
+      delegateApiMock = sinon.mock(delegateApi);
+      clock = sinon.useFakeTimers({
+        toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
+      });
+    });
+
+    afterEach(() => {
+      clock.restore();
+      delegateApiMock.restore();
     });
 
     it('renders a MultiStep component', () => {
@@ -99,35 +99,36 @@ describe.only('RegisterDelegate', () => {
       expect(wrapper.find('Choose')).to.have.length(1);
     });
 
-    it('allows register as delegate for a non delegate account', () => {
+    it.only('allows register as delegate for a non delegate account', () => {
+      store.dispatch(accountLoggedIn(normalAccount));
       wrapper.find('.choose-name').first().simulate('click');
-      wrapper.find('.delegate-name').first().find('input').simulate('change', { target: { value: 'sample_username' } });
+      wrapper.find('.delegate-name').first().find('input')
+        .simulate('change', { target: { value: 'sample_username' } });
       const submitDelegateBtn = wrapper.find('.submit-delegate-name').first();
       expect(submitDelegateBtn.props().disabled).to.not.equal(true);
       submitDelegateBtn.simulate('click');
       clock.tick(300);
-      wrapper.find('.confirm-delegate-registration').find('input').first().simulate('change');
+      wrapper.find('.confirm-delegate-registration').find('input').first()
+        .simulate('change');
+
       const expectedRegisterCallArgs = {
-        activePeer: normalProps.peers.data,
-        account: normalProps.account,
+        activePeer: peers.data,
+        account: normalAccount,
         username: 'sample_username',
         passphrase: normalAccount.passphrase,
         secondPassphrase: null,
       };
+      console.log(wrapper.debug());
       expect(props.delegateRegistered).to.have.been.calledWith(expectedRegisterCallArgs);
     });
 
-    it.only('handles register as delegate "Name already taken!" error', () => {
+    it('handles register as delegate "Name already taken!" error', () => {
       wrapper.find('.choose-name').first().simulate('click');
       const delegateNameInput = wrapper.find('.delegate-name').first().find('input');
-      delegateNameInput.simulate('change', { target: { value: 'genesis_17' } });
-      clock.tick(300);
       delegateApiMock.expects('getDelegate').returnsPromise().rejects({});
-      // const submitDelegateBtn = wrapper.find('.submit-delegate-name').first();
+      delegateNameInput.simulate('change', { target: { value: 'genesis_17' } });
+      clock.tick(250);
       wrapper.update();
-      clock.tick(500);
-      console.log(wrapper.debug());
-      // expect(submitDelegateBtn.props().disabled).to.equal(true);
       const message = 'Name is already taken!';
       expect(wrapper.find('.error-name-duplicate').first()).to.have.text(message);
     });
@@ -175,18 +176,14 @@ describe.only('RegisterDelegate', () => {
       wrapper = mount(<Provider store={store}>
         <Router>
           <I18nextProvider i18n={ i18n }>
-            <RegisterDelegateHOC {...delegateProps} />
+            <RegisterDelegateHOC />
           </I18nextProvider>
         </Router>
       </Provider>);
     });
 
-    it('renders an InfoParagraph component', () => {
+    it('should disable confirm register as delegate', () => {
       expect(wrapper.find('InfoParagraph')).to.have.length(1);
-    });
-
-    it('does not render the delegate registration form for registering', () => {
-      expect(wrapper.find('form')).to.have.length(0);
     });
   });
 });
