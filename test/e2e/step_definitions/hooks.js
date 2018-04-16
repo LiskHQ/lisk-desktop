@@ -42,7 +42,7 @@ defineSupportCode(({ Before, After, registerListener }) => {
   });
 
   Before((scenario, callback) => {
-    // browser.ignoreSynchronization = true;
+    browser.ignoreSynchronization = true;
     browser.driver.manage().window()
       .setSize(browser.params.screenWidth, browser.params.screenHeight);
     browser.get(browser.params.baseURL);
