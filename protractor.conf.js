@@ -5,13 +5,22 @@ exports.config = {
     'test/e2e/*.feature',
   ],
   directConnect: !process.env.BRANCH_NAME,
-  multiCapabilities: [{
+  capabilities:
+  // multiCapabilities: [
+  {
     browserName: 'chrome',
     browserVersion: '65.0',
     os: 'Windows',
     osVersion: '7',
     resolution: '1680x1050',
     maxInstances: 10,
+    project: 'Lisk Hub',
+    build: process.env.BRANCH_NAME,
+    'browserstack.user': process.env.BROWSERSTACK_USERNAME,
+    'browserstack.key': process.env.BROWSERSTACK_PASSWORD,
+    'browserstack.local': process.env.BRANCH_NAME ? 'true' : undefined,
+    'browserstack.localIdentifier': process.env.BRANCH_NAME,
+    'browserstack.debug': true,
   /*
   }, {
     browserName: 'Firefox',
@@ -32,18 +41,19 @@ exports.config = {
     osVersion: 'Sierra',
     resolution: '1600x1200',
     */
-  }].map(({ browserName, os, resolution }) => ({
-    browserName,
-    os,
-    resolution,
-    project: 'Lisk Hub',
-    build: process.env.BRANCH_NAME,
-    'browserstack.user': process.env.BROWSERSTACK_USERNAME,
-    'browserstack.key': process.env.BROWSERSTACK_PASSWORD,
-    'browserstack.local': process.env.BRANCH_NAME ? 'true' : undefined,
-    'browserstack.localIdentifier': process.env.BRANCH_NAME,
-    'browserstack.debug': true,
-  })),
+  },
+  // ].map(({ browserName, os, resolution }) => ({
+  //     browserName,
+  //     os,
+  //     resolution,
+  //     project: 'Lisk Hub',
+  //     build: process.env.BRANCH_NAME,
+  //     'browserstack.user': process.env.BROWSERSTACK_USERNAME,
+  //     'browserstack.key': process.env.BROWSERSTACK_PASSWORD,
+  //     'browserstack.local': process.env.BRANCH_NAME ? 'true' : undefined,
+  //     'browserstack.localIdentifier': process.env.BRANCH_NAME,
+  //     'browserstack.debug': true,
+  //   }))
   framework: 'custom',
   frameworkPath: require.resolve('protractor-cucumber-framework'),
   cucumberOpts: {
