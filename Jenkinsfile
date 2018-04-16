@@ -109,19 +109,21 @@ node('lisk-hub') {
 	    cd -
 
             # Run end-to-end tests
+
+            npm run serve --  $WORKSPACE/app/build -p 300$N -a 127.0.0.1 &>server.log &
             if [ -z $CHANGE_BRANCH ]; then
-              npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL https://testnet.lisk.io --cucumberOpts.tags @testnet --params.useTestnetPassphrase true --directConnect true
+              npm run --silent e2e-test -- --params.baseURL http://127.0.0.1:300$N --params.liskCoreURL https://testnet.lisk.io --cucumberOpts.tags @testnet --params.useTestnetPassphrase true --directConnect true
             else
               echo "Skipping @testnet end-to-end tests because we're not on 'development' branch"
             fi
 
             ~/bin/BrowserStackLocal --key $BROWSERSTACK_PASSWORD --folder ${WORKSPACE}/app/build --local-identifier $BRANCH_NAME &
             sleep 10
-            npm run --silent e2e-test -- --params.baseURL http://bsuser44281.browserstack.com/index.html --params.liskCoreURL http://127.0.0.1:$LISK_PORT --seleniumAddress http://hub-cloud.browserstack.com/wd/hub
+            npm run --silent e2e-test -- --params.baseURL http://127.0.0.1:300$N --params.liskCoreURL http://127.0.0.1:$LISK_PORT --seleniumAddress http://hub-cloud.browserstack.com/wd/hub
 
             if [ -z $CHANGE_BRANCH ]; then
 
-              npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --cucumberOpts.tags @testnet --params.useTestnetPassphrase true --params.network testnet --directConnect true
+              npm run --silent e2e-test -- --params.baseURL http://127.0.0.1:300$N --cucumberOpts.tags @testnet --params.useTestnetPassphrase true --params.network testnet --directConnect true
             else
               echo "Skipping @testnet end-to-end tests because we're not on 'development' branch"
             fi
