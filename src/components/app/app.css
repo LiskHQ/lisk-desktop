@@ -98,6 +98,13 @@ body {
   body {
     margin-top: var(--header-height-s);
   }
+
+  html.on-device,
+  html.on-device body {
+    -webkit-overflow-scrolling: touch !important;
+    overflow: auto !important;
+    height: 100% !important;
+  }
 }
 
 @media (--xSmall-viewport) {
