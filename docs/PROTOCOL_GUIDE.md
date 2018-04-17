@@ -13,6 +13,9 @@ Everything that comes after `lisk://` is treated as a route so this example will
 
 #### Voting protocol
 Makes voting for delegates easier 
-`lisk://main/voting/vote?votes=thepool,4miners.net`
+`lisk://main/voting/vote?votes=thepool,4miners.net` or `lisk://delegates/vote?votes=thepool,4miners.net`
 It will open lisk app and select delegates automatically `thepool` and `4miners.net`
+
+:exclamation: Please keep in mind that We don't use `/main` route anymore but some websites still relay on an old url so We are allowing `/main` in this particular case `main/voting/vote`.
+
 ![Alt text](./assets/voting_protocol.png?raw=true "Lisk voting protocol")
