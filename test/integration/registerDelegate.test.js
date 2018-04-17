@@ -26,8 +26,7 @@ let clock;
 let store;
 let helper;
 
-/* eslint-disable mocha/no-exclusive-tests */
-describe.only('@integration RegisterDelegate', () => {
+describe('@integration RegisterDelegate', () => {
   let wrapper;
   let delegateApiMock;
 
@@ -51,13 +50,10 @@ describe.only('@integration RegisterDelegate', () => {
     helper = new GenericStepDefinition(wrapper, store);
   };
 
-  beforeEach(() => {
-  });
-
-  afterEach(() => {
+  const restoreMocks = () => {
     clock.restore();
     delegateApiMock.restore();
-  });
+  };
 
   describe('Scenario: allows register as a delegate for a non delegate account', () => {
     step('Given I am in "register-delegate" page', () => setupStep(normalAccount));
@@ -68,16 +64,33 @@ describe.only('@integration RegisterDelegate', () => {
     step('Then I should see a confirmation step', () => helper.shouldSeeCountInstancesOf(1, 'button.registration-success'));
   });
 
-  describe('Scenario: does not allows to register as delegate with insuficient balance', () => {
+  describe('Scenario: does not allow to register as delegate with insuficient balance', () => {
     const accountWithNoBalance = { ...normalAccount, balance: 0 };
     step('Given I am in "register-delegate" page', () => setupStep(accountWithNoBalance));
     step('Then I should not be able to click on "choose-name"', () => helper.checkDisableInput('button.choose-name'));
   });
 
-  describe('Scenario: does not allows to register as delegate with a delegate account', () => {
+  describe('Scenario: does not allow to register as delegate with a delegate account', () => {
     const delegateAccount = { ...normalAccount, isDelegate: true };
     step('Given I am in "register-delegate" page', () => setupStep(delegateAccount));
     step('Then I should not be able to click on "choose-name"', () => helper.checkDisableInput('button.choose-name'));
   });
+
+  describe('Scenario: does not allow to register as delegate with a duplicate username', () => {
+    step('Given I am in "register-delegate" page', () => {
+      setupStep(normalAccount);
+      delegateApiMock.expects('getDelegate').returnsPromise().rejects({});
+    });
+    step('When I click in "choose-name" button', () => helper.clickOnElement('.choose-name'));
+    step('When I fill an existing delegate name in "delegate-name" input', () => {
+      clock.tick(300);
+      helper.fillInputField('genesis_1', 'delegate-name');
+      clock.tick(300);
+      helper.fillInputField('genesis_17', 'delegate-name');
+    });
+    step('Then I should not be able to click on "submit-delegate-name"', () => {
+      helper.checkDisableInput('button.submit-delegate-name');
+      restoreMocks();
+    });
+  });
 });
-/* eslint-enable mocha/no-exclusive-tests */

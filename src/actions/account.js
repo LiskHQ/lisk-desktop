@@ -105,7 +105,6 @@ export const delegateRegistered = ({
         }));
       })
       .catch((error) => {
-        console.log(`${error}`);
         dispatch(delegateRegisteredFailure(error));
       });
     dispatch(passphraseUsed(passphrase));
