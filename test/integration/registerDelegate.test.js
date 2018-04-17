@@ -31,7 +31,7 @@ describe.only('@integration RegisterDelegate', () => {
   let wrapper;
   let delegateApiMock;
 
-  const setupStep = () => {
+  const setupStep = (account) => {
     store = prepareStore({
       peers: peersReducer,
       account: accountReducer,
@@ -47,7 +47,7 @@ describe.only('@integration RegisterDelegate', () => {
     });
     wrapper = mount(renderWithRouter(RegisterDelegate, store, { history }));
     delegateApiMock = sinon.mock(delegateApi);
-    store.dispatch(accountLoggedIn(normalAccount));
+    store.dispatch(accountLoggedIn(account));
     helper = new GenericStepDefinition(wrapper, store);
   };
 
@@ -60,12 +60,24 @@ describe.only('@integration RegisterDelegate', () => {
   });
 
   describe('Scenario: allows register as a delegate for a non delegate account', () => {
-    step('Given I am in "register-delegate" page', setupStep);
+    step('Given I am in "register-delegate" page', () => setupStep(normalAccount));
     step('When I click in "choose-name" button', () => helper.clickOnElement('.choose-name'));
     step('When I fill a valid name in "delegate-name" input', () => helper.fillInputField('sample_username', 'delegate-name'));
     step('Then I should be able to proceed to confirmation', () => helper.clickOnElement('.submit-delegate-name'));
     step('When I click "confirm delegate"', () => helper.fillInputField(true, 'confirm-delegate-registration'));
     step('Then I should see a confirmation step', () => helper.shouldSeeCountInstancesOf(1, 'button.registration-success'));
+  });
+
+  describe('Scenario: does not allows to register as delegate with insuficient balance', () => {
+    const accountWithNoBalance = { ...normalAccount, balance: 0 };
+    step('Given I am in "register-delegate" page', () => setupStep(accountWithNoBalance));
+    step('Then I should not be able to click on "choose-name"', () => helper.checkDisableInput('button.choose-name'));
+  });
+
+  describe('Scenario: does not allows to register as delegate with a delegate account', () => {
+    const delegateAccount = { ...normalAccount, isDelegate: true };
+    step('Given I am in "register-delegate" page', () => setupStep(delegateAccount));
+    step('Then I should not be able to click on "choose-name"', () => helper.checkDisableInput('button.choose-name'));
   });
 });
 /* eslint-enable mocha/no-exclusive-tests */
