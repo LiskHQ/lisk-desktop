@@ -34,12 +34,6 @@ export const delegatesFetched = ({ activePeer, username }) =>
     });
   };
 
-
-export const delegateRegisteredSuccess = data => ({
-  type: actionTypes.delegateRegisteredSuccess,
-  data,
-});
-
 export const delegateRegisteredFailure = data => ({
   type: actionTypes.delegateRegisteredFailure,
   data,
