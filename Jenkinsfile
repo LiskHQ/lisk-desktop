@@ -89,6 +89,21 @@ node('lisk-hub') {
         fail('Stopping build: build or deploy failed')
       }
     }
+    stage ('Run Unit Tests') {
+      try {
+        ansiColor('xterm') {
+          sh '''
+          ON_JENKINS=true npm run --silent test
+          # Submit coverage to coveralls
+          cat coverage/*/lcov.info | coveralls -v
+          '''
+
+        }
+      } catch (err) {
+        echo "Error: ${err}"
+        fail('Stopping build: test suite failed')
+      }
+    }
 
     stage ('Run E2E Tests') {
       try {
@@ -163,9 +178,9 @@ node('lisk-hub') {
     cat reports/cucumber_report.json | ./node_modules/.bin/cucumber-junit > reports/cucumber_report.xml
     '''
 
-    // cobertura autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: 'coverage/*/cobertura-coverage.xml', conditionalCoverageTargets: '70, 0, 0', failUnhealthy: false, failUnstable: false, fileCoverageTargets: '100, 0, 0', lineCoverageTargets: '80, 0, 0', maxNumberOfBuilds: 0, methodCoverageTargets: '80, 0, 0', onlyStable: false, sourceEncoding: 'ASCII'
+    cobertura autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: 'coverage/*/cobertura-coverage.xml', conditionalCoverageTargets: '70, 0, 0', failUnhealthy: false, failUnstable: false, fileCoverageTargets: '100, 0, 0', lineCoverageTargets: '80, 0, 0', maxNumberOfBuilds: 0, methodCoverageTargets: '80, 0, 0', onlyStable: false, sourceEncoding: 'ASCII'
 
-    // junit 'reports/junit_report.xml'
+    junit 'reports/junit_report.xml'
     junit 'reports/cucumber_report.xml'
 
     dir('node_modules') {
