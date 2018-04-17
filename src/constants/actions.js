@@ -48,6 +48,7 @@ const actionTypes = {
   settingsUpdated: 'SETTINGS_UPDATED',
   settingsReset: 'SETTINGS_RESET',
   removeSavedAccountPassphrase: 'REMOVE_SAVED_ACCOUNT_PASSPHRASE',
+  transactionAddDelegateName: 'TRANSACTION_ADD_DELEGATE_NAME',
 };
 
 export default actionTypes;

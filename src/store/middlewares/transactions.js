@@ -8,6 +8,7 @@ import {
   transactionsInit,
   transactionLoaded,
   transactionLoadFailed,
+  transactionAddDelegateName,
 } from '../../actions/transactions';
 
 import actionTypes from '../../constants/actions';
@@ -90,6 +91,20 @@ const initTransactions = (store, action) => {
 const loadTransaction = (store, action) => {
   transaction({ activePeer: store.getState().peers.data, id: action.data.id })
     .then((response) => {
+      const { added, deleted } = response.transaction.votes;
+      deleted.map(publicKey =>
+        getDelegate(store.getState().peers.data, { publicKey })
+          .then((delegateData) => {
+            store.dispatch(transactionAddDelegateName({ username: delegateData.delegate.username, arrName: 'deleted' }));
+          }),
+      );
+
+      added.map(publicKey =>
+        getDelegate(store.getState().peers.data, { publicKey })
+          .then((delegateData) => {
+            store.dispatch(transactionAddDelegateName({ username: delegateData.delegate.username, arrName: 'added' }));
+          }),
+      );
       store.dispatch(transactionLoaded({ ...response }));
     }).catch((error) => {
       store.dispatch(transactionLoadFailed({ error }));

@@ -6,6 +6,16 @@ const transaction = (state = [], action) => {
       return { success: action.data.success, ...action.data.transaction };
     case actionTypes.transactionLoadFailed:
       return action.data.error;
+    case actionTypes.transactionAddDelegateName: {
+      const votesName = state.votesName || { added: [], deleted: [] };
+      return {
+        ...state,
+        votesName: {
+          ...votesName,
+          [action.arrName]: [].concat(votesName[action.arrName], action.username),
+        },
+      };
+    }
     default:
       return state;
   }
