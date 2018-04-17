@@ -61,7 +61,6 @@ describe('RegisterDelegateHOC', () => {
     expect(props.delegate).to.be.equal(delegate);
     expect(typeof props.delegateRegistered).to.be.equal('function');
     expect(typeof props.delegatesFetched).to.be.equal('function');
-    expect(typeof props.accountUpdated).to.be.equal('function');
   });
 
   it('should bind delegateRegistered action to RegisterDelegate props.delegateRegistered', () => {

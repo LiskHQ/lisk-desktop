@@ -41,18 +41,10 @@ describe('@integration RegisterDelegate', () => {
       peerMiddleware,
       loginMiddleware,
     ]);
-    clock = sinon.useFakeTimers({
-      toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
-    });
     wrapper = mount(renderWithRouter(RegisterDelegate, store, { history }));
     delegateApiMock = sinon.mock(delegateApi);
     store.dispatch(accountLoggedIn(account));
     helper = new GenericStepDefinition(wrapper, store);
-  };
-
-  const restoreMocks = () => {
-    clock.restore();
-    delegateApiMock.restore();
   };
 
   describe('Scenario: allows register as a delegate for a non delegate account', () => {
@@ -80,6 +72,9 @@ describe('@integration RegisterDelegate', () => {
     step('Given I am in "register-delegate" page', () => {
       setupStep(normalAccount);
       delegateApiMock.expects('getDelegate').returnsPromise().rejects({});
+      clock = sinon.useFakeTimers({
+        toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
+      });
     });
     step('When I click in "choose-name" button', () => helper.clickOnElement('.choose-name'));
     step('When I fill an existing delegate name in "delegate-name" input', () => {
@@ -90,7 +85,8 @@ describe('@integration RegisterDelegate', () => {
     });
     step('Then I should not be able to click on "submit-delegate-name"', () => {
       helper.checkDisableInput('button.submit-delegate-name');
-      restoreMocks();
+      clock.restore();
+      delegateApiMock.restore();
     });
   });
 });

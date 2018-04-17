@@ -37,7 +37,7 @@ const MultiStepNav = ({ steps, showNav, current, prevStep,
     <nav className={styles.navigation}>
       {
         typeof backButtonLabel === 'string' ?
-          <a onClick={backButtonFn} className={styles.backButton}>
+          <a onClick={backButtonFn} className={`${styles.backButton} multistep-back`}>
             <FontIcon className={styles.icon}>arrow-left</FontIcon>
             <span className={styles.label}>{backButtonLabel}</span>
           </a> : null
