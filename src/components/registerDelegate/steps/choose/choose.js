@@ -67,11 +67,6 @@ class Choose extends React.Component {
     }, 250);
   }
 
-  handleDelegateNameSubmit(evt) {
-    evt.preventDefault();
-    this.props.submitDelegate(this.state);
-  }
-
   render() {
     const { t, account } = this.props;
     const hasEnoughLSK = this.hasEnoughLSK();
