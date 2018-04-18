@@ -12,8 +12,7 @@ const delegate = (state = [], action) => {
       return {
         ...state,
         delegateNameQueried: false,
-        delegateNameInvalid: action.data.delegate === undefined,
-        delegateName: action.data.username,
+        delegateNameInvalid: action.data.delegate !== undefined,
       };
     case actionTypes.accountUpdated:
       if (action.data.delegate && action.data.isDelegate) {

@@ -4,7 +4,7 @@ import {
 import actionTypes from '../constants/actions';
 
 /**
- * Add data to the list of all delegates
+ * Pass response from getDelegate to reducers
  */
 export const delegatesRetrieved = data => ({
   type: actionTypes.delegatesRetrieved,
@@ -12,7 +12,7 @@ export const delegatesRetrieved = data => ({
 });
 
 /**
- * Add data to the list of all delegates
+ * Used to set a flag utill response from getDelegate is resolved
  */
 export const delegatesRetrieving = data => ({
   type: actionTypes.delegatesRetrieving,
@@ -20,7 +20,7 @@ export const delegatesRetrieving = data => ({
 });
 
 /**
- * Gets list of all delegates
+ * Retrieves delegates matching a username
  */
 export const delegatesFetched = ({ activePeer, username }) =>
   (dispatch) => {
