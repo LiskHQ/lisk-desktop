@@ -23,8 +23,8 @@ import { validateUrl } from '../../utils/login';
  * and create account functionality
  */
 class Login extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       passphrase: '',
@@ -32,6 +32,7 @@ class Login extends React.Component {
       network: networks.default.code,
     };
 
+    this.secondIteration = false;
     this.validators = {
       address: validateUrl,
       passphrase: this.validatePassphrase.bind(this),
@@ -55,8 +56,11 @@ class Login extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    const params = parseSearchParams(prevProps.history.location.search);
+    const showNetworkParam = params.showNetwork || params.shownetwork;
+
     if (this.props.account &&
-      this.props.account.address &&
+      this.props.account.address && (showNetworkParam !== 'true' || this.secondIteration) &&
       !this.alreadyLoggedWithThisAddress(prevProps.account.address, prevProps.peers.options)) {
       this.redirectToReferrer();
     }
@@ -85,6 +89,7 @@ class Login extends React.Component {
 
   onLoginSubmission(passphrase) {
     const network = this.getNetwork();
+    this.secondIteration = true;
     if (this.alreadyLoggedWithThisAddress(extractAddress(passphrase), network)) {
       this.redirectToReferrer();
       this.props.activeAccountSaved();
@@ -131,9 +136,11 @@ class Login extends React.Component {
 
   // eslint-disable-next-line class-methods-use-this
   showNetworkOptions() {
+    const showNetwork = localStorage.getItem('showNetwork') || localStorage.getItem('shownetwork');
     const params = parseSearchParams(this.props.history.location.search);
-    const showNetwork = localStorage.getItem('showNetwork');
-    return params.showNetwork === 'true' || (showNetwork && params.showNetwork !== 'false');
+    const showNetworkParam = params.showNetwork || params.shownetwork;
+
+    return showNetworkParam === 'true' || (showNetwork && showNetworkParam !== 'false');
   }
 
   render() {
