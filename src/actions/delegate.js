@@ -12,7 +12,7 @@ export const delegatesRetrieved = data => ({
 });
 
 /**
- * Used to set a flag utill response from getDelegate is resolved
+ * Set a flag until response from getDelegate is resolved
  */
 export const delegatesRetrieving = data => ({
   type: actionTypes.delegatesRetrieving,
@@ -30,7 +30,7 @@ export const delegatesFetched = ({ activePeer, username }) =>
     ).then(({ delegate }) => {
       dispatch(delegatesRetrieved({ delegate, username }));
     }).catch(() => {
-      dispatch(delegatesRetrieved({ delegate: undefined, username }));
+      dispatch(delegatesRetrieved({ delegate: null, username }));
     });
   };
 

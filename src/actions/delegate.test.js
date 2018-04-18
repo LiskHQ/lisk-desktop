@@ -42,7 +42,7 @@ describe('actions: delegate', () => {
     });
 
     it('should create actions to handle getDelegate response failure', () => {
-      const responseData = { delegate: undefined };
+      const responseData = { delegate: null };
       getDelegateStub.returnsPromise().rejects(true);
 
       const expectedActionDelegatesRetrieved = {

@@ -71,7 +71,7 @@ describe('@integration RegisterDelegate', () => {
   describe('Scenario: does not allow to register as delegate with a duplicate username', () => {
     step('Given I am in "register-delegate" page', () => {
       setupStep(normalAccount);
-      delegateApiMock.expects('getDelegate').returnsPromise().rejects({});
+      delegateApiMock.expects('getDelegate').returnsPromise().resolves({ delegate: { username: 'peter' } });
       clock = sinon.useFakeTimers({
         toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
       });

@@ -2,8 +2,7 @@ import { expect } from 'chai';
 import actionTypes from '../../constants/actions';
 import delegate from './delegate';
 
-/* eslint-disable mocha/no-exclusive-tests */
-describe.only('Reducer: delegate(state, action)', () => {
+describe('Reducer: delegate(state, action)', () => {
   let state;
 
   beforeEach(() => {
@@ -23,10 +22,11 @@ describe.only('Reducer: delegate(state, action)', () => {
     });
   });
 
-  it('should reset delegateNameQueried flag and validate delegateName', () => {
+  it('should reset delegateNameQueried flag and invalidate delegateName', () => {
     const action = {
       type: actionTypes.delegatesRetrieved,
       data: {
+        delegate: null,
       },
     };
     const stateValidUsername = delegate(state, action);
@@ -36,7 +36,7 @@ describe.only('Reducer: delegate(state, action)', () => {
     });
   });
 
-  it('should reset delegateNameQueried flag and unvalidate delegateName', () => {
+  it('should reset delegateNameQueried flag and invalidate delegateName', () => {
     const action = {
       type: actionTypes.delegatesRetrieved,
       data: {
@@ -90,4 +90,3 @@ describe.only('Reducer: delegate(state, action)', () => {
     expect(stateAccountUpdatedNoDelegate).to.deep.equal({});
   });
 });
-/* eslint-enable mocha/no-exclusive-tests */
