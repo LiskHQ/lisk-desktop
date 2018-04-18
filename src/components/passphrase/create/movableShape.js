@@ -103,7 +103,7 @@ class MovableShape extends React.Component {
   }
 
   render() {
-    const { className, group, width, height, viewBox, idBg, idFg } = this.props;
+    const { className, group, width, height, idBg, idFg } = this.props;
     const toggleShape = () =>
       (this.props.percentage > 80 ? false : Math.floor((this.props.percentage / 10)) % 2);
 
@@ -113,7 +113,7 @@ class MovableShape extends React.Component {
       ${this.props.percentage > 99 ? styles.fadeOut : null}
       ${className}`}
       ref={(input) => { this.shape = input; }}>
-      <svg width={width} height={height} viewBox={viewBox}>
+      <svg width={`${width}px`} height={`${height}px`} viewBox={`0 0 ${width} ${height}`}>
         <defs>
           <linearGradient x1="19%" y1="88%" x2="86%" y2="18%" id={idBg}>
             <stop stopColor={this.distributeColors().fg.x} offset="0%">
@@ -128,9 +128,7 @@ class MovableShape extends React.Component {
             </stop>
           </linearGradient>
         </defs>
-        <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" opacity="0.9">
-          {group}
-        </g>
+        {group}
       </svg>
     </div>;
   }
