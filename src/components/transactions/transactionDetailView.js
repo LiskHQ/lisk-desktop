@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { transactionLoadRequested } from '../../actions/transactions';
 import { TimeFromTimestamp, DateFromTimestamp } from './../timestamp/index';
@@ -23,15 +23,29 @@ class TransactionsDetailView extends React.Component {
   }
 
   getVoters() {
-    const deleted = this.props.transaction.votesName && this.props.transaction.votesName.deleted && this.props.transaction.votesName.deleted.join(', ');
-    const added = this.props.transaction.votesName && this.props.transaction.votesName.added && this.props.transaction.votesName.added.join(', ');
+    let deleted = this.props.transaction.votesName && this.props.transaction.votesName.deleted;
+    let added = this.props.transaction.votesName && this.props.transaction.votesName.added;
+
+    deleted = deleted ? deleted.map((delegate, key) => (
+      <Link className={`${styles.addressLink} ${styles.clickable} voter-address`}
+        to={`${routes.explorer.path}${routes.accounts.path}/${delegate.address}`}
+        key={`${key}-deleted`}>
+        {`${delegate.username} `}
+      </Link>
+    )) : '';
+    added = added ? added.map((delegate, key) => (
+      <Link className={`${styles.addressLink} ${styles.clickable} voter-address`}
+        to={`${routes.explorer.path}${routes.accounts.path}/${delegate.address}`}
+        key={`${key}-added`}>
+        {`${delegate.username} `}
+      </Link>
+    )) : '';
 
     return { deleted, added };
   }
 
   render() {
     const voters = this.getVoters();
-
     return (
       <div className={`${styles.details}`}>
         {
@@ -165,7 +179,5 @@ const mapDispatchToProps = dispatch => ({
   transactionLoadRequested: data => dispatch(transactionLoadRequested(data)),
 });
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(translate()(TransactionsDetailView)),
-);
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(TransactionsDetailView));
 

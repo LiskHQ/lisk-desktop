@@ -17,6 +17,7 @@ describe('transaction middleware', () => {
     username: 'test',
     amount: 1e8,
     recipientId: '16313739661670634666L',
+    transaction: { votes: {} },
   };
 
   beforeEach(() => {

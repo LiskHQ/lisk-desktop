@@ -81,8 +81,8 @@ export const transactionLoadFailed = data => ({
   type: actionTypes.transactionLoadFailed,
 });
 
-export const transactionAddDelegateName = ({ username, arrName }) => ({
-  username,
+export const transactionAddDelegateName = ({ delegate, arrName }) => ({
+  delegate,
   arrName,
   type: actionTypes.transactionAddDelegateName,
 });

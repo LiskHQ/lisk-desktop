@@ -1,5 +1,5 @@
 import React from 'react';
-import { extractAddress } from '../../utils/api/account';
+import { extractAddress } from '../../utils/account';
 import { PrimaryButton } from '../toolbox/buttons/button';
 import AccountVisual from '../accountVisual';
 import LiskAmount from '../liskAmount';

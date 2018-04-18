@@ -1,5 +1,6 @@
 import i18next from 'i18next';
-import { getAccount, extractAddress, extractPublicKey } from '../../utils/api/account';
+import { getAccount } from '../../utils/api/account';
+import { extractAddress, extractPublicKey } from '../../utils/account';
 import { getDelegate } from '../../utils/api/delegate';
 import { accountLoggedIn, accountLoading } from '../../actions/account';
 import actionTypes from '../../constants/actions';

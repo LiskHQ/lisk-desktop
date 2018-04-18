@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { generateSeed, generatePassphrase } from '../../../utils/passphrase';
-import { extractAddress } from '../../../utils/api/account';
+import { extractAddress } from '../../../utils/account';
 import AccountVisual from '../../accountVisual';
 import styles from './create.css';
 import { FontIcon } from '../../fontIcon';

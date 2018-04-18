@@ -1,6 +1,6 @@
 import React from 'react';
 import routes from '../../../../constants/routes';
-import { extractAddress } from '../../../../utils/api/account';
+import { extractAddress } from '../../../../utils/account';
 import { fromRawLsk } from '../../../../utils/lsk';
 
 import TransitionWrapper from '../../../toolbox/transitionWrapper';

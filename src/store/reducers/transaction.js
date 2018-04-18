@@ -12,7 +12,7 @@ const transaction = (state = [], action) => {
         ...state,
         votesName: {
           ...votesName,
-          [action.arrName]: [].concat(votesName[action.arrName], action.username),
+          [action.arrName]: [].concat(votesName[action.arrName], action.delegate),
         },
       };
     }

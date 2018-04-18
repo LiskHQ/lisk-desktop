@@ -5,7 +5,7 @@ import i18next from 'i18next';
 import { FontIcon } from '../fontIcon';
 import Input from '../toolbox/inputs/input';
 import { PrimaryButton } from '../toolbox/buttons/button';
-import { extractAddress } from '../../utils/api/account';
+import { extractAddress } from '../../utils/account';
 // eslint-disable-next-line import/no-named-as-default
 import PassphraseInput from '../passphraseInput';
 import styles from './login.css';
