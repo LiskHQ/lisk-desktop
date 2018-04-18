@@ -11,7 +11,7 @@ Feature: Register delegate
     And I click "second-passphrase-next"
     And I wait 0.5 seconds
     And I click "confirm-delegate-registration"
-    And I wait 6 seconds
+    And I wait 8 seconds
     Then I should see text "Success!" in "success-header" element
     Then I should see text "Your registration is secured on the blockchain" in "success-description" element
     And I click "registration-success"
