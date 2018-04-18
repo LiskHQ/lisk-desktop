@@ -9,7 +9,7 @@ import ResultBox from '../resultBox';
 
 const DelegateSidebar = props => (
   <Box className={`confirm-votes ${styles.box}`}>
-    <MultiStep className={styles.wrapper} finalCallback={() => true}>
+    <MultiStep className={styles.wrapper}>
       <VotesPreview votes={props.votes}
         updateList={(value) => { props.updateList(value); }}
         onMount={props.setLayover} />

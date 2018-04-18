@@ -7,6 +7,8 @@
 [![Dependencies Status](https://david-dm.org/liskHQ/lisk-hub/status.svg)](https://david-dm.org/liskHQ/lisk-hub)
 [![devDependencies Status](https://david-dm.org/liskHQ/lisk-hub/dev-status.svg)](https://david-dm.org/liskHQ/lisk-hub?type=dev)
 
+## For Contributors
+Please see [CONTRIBUTING.md](/CONTRIBUTING.md) for more information.
 ## Development
 
 ```
@@ -29,7 +31,7 @@ http://localhost:8080/#/?showNetwork=true
 ```
 
 
-## Build
+#### Build
 
 ```
 npm run build
@@ -37,7 +39,7 @@ npm run build
 
 ## Electron
 
-### Start
+#### Start
 
 
 Start the Electron client. Before staring you need to make sure the application is built. If you need to built the entire application, run
@@ -58,7 +60,7 @@ Then, in order to launch electron, you can run
 npm run start
 ```
 
-### Windows
+#### Windows
 
 Build package for Windows (on Windows in [Git BASH](https://git-for-windows.github.io/)).
 
@@ -66,7 +68,7 @@ Build package for Windows (on Windows in [Git BASH](https://git-for-windows.gith
 npm run pack:win
 ```
 
-### macOS
+#### macOS
 
 Build package for macOS (on macOs)
 
@@ -74,7 +76,7 @@ Build package for macOS (on macOs)
 npm run pack 
 ```
 
-### Linux
+#### Linux
 
 Build package for Linux (on Linux).
 
@@ -84,19 +86,20 @@ npm run pack
 
 ## Run unit tests
 
-### Single run
+#### Single run
 ```
 npm run test
 ```
 
-### Run each time a file changes
+#### Run each time a file changes
 ```
 npm run test-live
 ```
 
 ## Run end-to-end tests
+In order to run e2e tests you need to install [lisk-core](https://github.com/LiskHQ/lisk)
 
-### Setup
+#### Setup
 
 Setup protractor
 
@@ -108,7 +111,7 @@ Setup a lisk test node to run on localhost:4000 as described in https://github.c
 
 And run it with [pm2](http://pm2.keymetrics.io/).
 
-### Run
+#### Run
 
 Start the development version of lisk-hub:
 

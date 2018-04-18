@@ -8,3 +8,4 @@ export { default as transactions } from './transactions';
 export { default as transaction } from './transaction';
 export { default as savedAccounts } from './savedAccounts';
 export { default as settings } from './settings';
+export { default as delegate } from './delegate';

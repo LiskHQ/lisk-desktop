@@ -2,9 +2,10 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import actionTypes from '../constants/actions';
 import { accountUpdated, accountLoggedOut,
-  secondPassphraseRegistered, delegateRegistered, sent, removePassphrase } from './account';
+  secondPassphraseRegistered, delegateRegistered, sent, removePassphrase, passphraseUsed } from './account';
 import { transactionAdded, transactionFailed } from './transactions';
 import { errorAlertDialogDisplayed } from './dialog';
+import { delegateRegisteredFailure } from './delegate';
 import * as accountApi from '../utils/api/account';
 import * as delegateApi from '../utils/api/delegate';
 import Fees from '../constants/fees';
@@ -101,6 +102,7 @@ describe('actions: account', () => {
     const data = {
       activePeer: {},
       username: 'test',
+      passphrase: accounts.genesis.passphrase,
       secondPassphrase: null,
       account: {
         publicKey: 'test_public-key',
@@ -139,20 +141,20 @@ describe('actions: account', () => {
       expect(dispatch).to.have.been.calledWith(transactionAdded(expectedAction));
     });
 
-    it('should dispatch errorAlertDialogDisplayed action if caught', () => {
-      delegateApiMock.returnsPromise().rejects({ message: 'sample message' });
+    it('should dispatch delegateRegisteredFailure action if caught', () => {
+      delegateApiMock.returnsPromise().rejects({ message: 'sample message.' });
 
       actionFunction(dispatch);
-      const expectedAction = errorAlertDialogDisplayed({ text: 'sample message.' });
-      expect(dispatch).to.have.been.calledWith(expectedAction);
+      const delegateRegisteredFailureAction = delegateRegisteredFailure({ message: 'sample message.' });
+      expect(dispatch).to.have.been.calledWith(delegateRegisteredFailureAction);
     });
 
-    it('should dispatch errorAlertDialogDisplayed action if caught but no message returned', () => {
-      delegateApiMock.returnsPromise().rejects({});
+    it('should dispatch passphraseUsed action always', () => {
+      delegateApiMock.returnsPromise().rejects({ message: 'sample message.' });
 
       actionFunction(dispatch);
-      const expectedAction = errorAlertDialogDisplayed({ text: 'An error occurred while registering as delegate.' });
-      expect(dispatch).to.have.been.calledWith(expectedAction);
+      const passphraseUsedAction = passphraseUsed(accounts.genesis.passphrase);
+      expect(dispatch).to.have.been.calledWith(passphraseUsedAction);
     });
   });
 

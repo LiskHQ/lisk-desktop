@@ -48,6 +48,14 @@ class SendTo extends React.Component {
               </span>
             </h2>
             <CopyToClipboard value={this.props.address} className={`${styles.address}`} copyClassName={styles.copy} />
+            {
+              this.props.delegateUsername ?
+                <div className={styles.delegateRow}>
+                  {this.props.t('Delegate')}
+                  <span className={`${styles.delegateUsername} delegate-name`}>{this.props.delegateUsername}</span>
+                </div>
+                : null
+            }
           </div>
         </div>
         <div className={`
@@ -58,7 +66,7 @@ class SendTo extends React.Component {
       ${grid['middle-sm']}
       ${styles.sendButton}
       `}>
-          <Link to={`${routes.main.path}${routes.wallet.path}?address=${this.props.address}`}>
+          <Link to={`${routes.wallet.path}?recipient=${this.props.address}`}>
             <TertiaryButton className={`${styles.button} send-to-address`} >
               <FontIcon value={'send-token'}/> {this.props.t('Send to this address')}
             </TertiaryButton>

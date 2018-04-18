@@ -164,6 +164,7 @@ class DelegateList extends React.Component {
         <Header
           setActiveFilter={this.setActiveFilter.bind(this)}
           showChangeSummery={this.state.showChangeSummery}
+          isDelegate={this.props.isDelegate}
           voteToggled={this.props.voteToggled}
           search={ value => this.search(value) }
         />

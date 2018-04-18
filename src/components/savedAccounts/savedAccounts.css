@@ -8,6 +8,8 @@
   --h1-padding-xl: 85px;
   --h1-padding-l: 40px;
   --h1-padding-m: 25px;
+  --h1-padding-s: 18px;
+  --add-button-bottom-margin: calc(100vh - (55px +  98px)); /* stylelint-disable-line */
 }
 
 .content {
@@ -176,6 +178,44 @@
 
     & .addAcctiveAccountButton {
       bottom: 120px;
+    }
+  }
+}
+
+@media (--xSmall-viewport) {
+  .wrapper {
+    & > h1 {
+      font-size: var(--font-size-ids-h1-s);
+      padding: var(--h1-padding-s);
+    }
+
+    & > .closeButton[type='button'] {
+      height: 40px;
+      width: 40px;
+
+      & > span[data-react-toolbox='font-icon'] {
+        line-height: 40px;
+      }
+    }
+  }
+
+  .cardsWrapper {
+    padding-bottom: 110px;
+  }
+
+  .addAcctiveAccountButton {
+    top: var(--add-button-bottom-margin);
+  }
+
+  .deviceIos {
+    & .addAcctiveAccountButton {
+      top: var(--add-button-bottom-margin);
+    }
+  }
+
+  .deviceAndroid {
+    & .addAcctiveAccountButton {
+      top: var(--add-button-bottom-margin);
     }
   }
 }

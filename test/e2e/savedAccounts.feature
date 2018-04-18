@@ -7,7 +7,7 @@ Feature: Saved Accounts
     And I wait 2 seconds
     Then I should be logged in
     And I wait 0.5 seconds
-    Then I go to "main/transactions"
+    Then I go to "wallet"
     When I fill in "1" to "amount" field
     And I fill in "537318935439898807L" to "recipient" field
     And I click "send next button"

@@ -17,14 +17,17 @@ class TransactionsList extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    // istanbul ignore else
     if (nextProps.transactions && this.props.nextStep) this.showDetails(nextProps.transactions);
   }
 
   showDetails(transactions) {
     const paramsId = parseSearchParams(this.props.history.location.search).id;
 
+    // istanbul ignore else
     if (paramsId) {
       const value = transactions.filter(transaction => transaction.id === paramsId)[0];
+      // istanbul ignore else
       if (value) this.props.nextStep({ value, t: this.props.t });
     }
   }
@@ -56,7 +59,9 @@ class TransactionsList extends React.Component {
     };
 
     if (loading) return null;
+    // istanbul ignore else
     if (transactions.length === 0) {
+      // istanbul ignore else
       if (dashboard || (filter && filter.value !== txFilters.all)) {
         return <p className={`${styles.empty} hasPaddingRow empty-message`}>
           {t('There are no {{filterName}} transactions.', {

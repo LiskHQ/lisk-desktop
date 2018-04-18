@@ -42,9 +42,11 @@ class ResultBox extends React.Component {
         <footer>
           <Button className={`okay-button ${styles.okButton}`}
             onClick={() => {
-              this.props.finalCallback();
+              // istanbul ignore else
+              if (typeof this.props.finalCallback === 'function') {
+                this.props.finalCallback();
+              }
               this.props.reset();
-              this.props.history.push(this.props.history.location.pathname);
             }}>
             {this.props.t('Okay')}
           </Button>
