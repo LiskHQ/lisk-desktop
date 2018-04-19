@@ -28,13 +28,15 @@ describe('TransactionDetailView', () => {
         fee: '',
         confirmations: '',
         id: '',
+        amount: 100,
       },
+      match: { params: {} },
       history: { push: () => {}, location: { search: '' } },
     };
     const wrapper = mountWithContext(<TransactionDetailView {...props} />, context);
     const expectedValue = /flexboxgrid__row/g;
     const html = wrapper.html();
-    expect(html.match(expectedValue)).to.have.lengthOf(6);
+    expect(html.match(expectedValue)).to.have.lengthOf(5);
     wrapper.find('#transactionDetailsBackButton').simulate('click');
     expect(props.prevStep).to.have.been.calledWith();
   });
@@ -65,7 +67,9 @@ describe('TransactionDetailView', () => {
         fee: '',
         confirmations: '',
         id: '',
+        amount: 0,
       },
+      match: { params: {} },
       history: { push: () => {}, location: { search: '' } },
     };
     const wrapper = mountWithContext(<TransactionDetailView {...props} />, context);

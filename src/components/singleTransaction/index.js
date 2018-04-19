@@ -37,7 +37,10 @@ class SingleTransaction extends React.Component {
           </header>
           <div className={styles.content}>
             <div className={styles.detailsWrapper}>
-              <TransactionDetails value={this.props.transaction} t={this.props.t} />
+              <TransactionDetails
+                value={this.props.transaction}
+                t={this.props.t}
+                match={this.props.match} />
             </div>
           </div>
         </Fragment> :

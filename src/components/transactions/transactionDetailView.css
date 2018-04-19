@@ -75,6 +75,7 @@
 
   & header {
     padding-left: 0px;
+    padding-top: 0px;
 
     & h3 {
       font-family: var(--content-font);

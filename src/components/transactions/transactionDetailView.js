@@ -63,14 +63,18 @@ class TransactionsDetailView extends React.Component {
             </header> : null
         }
         <div>
-
-          <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
-            <header>
-              <h2 className={styles.title}>
-                <TransactionType {...this.props.value} address={this.props.value.senderId} />
-              </h2>
-            </header>
-          </div>
+          {
+            !this.props.match.params.id ?
+              <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
+                <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
+                  <header>
+                    <h2 className={styles.title}>
+                      <TransactionType {...this.props.value} address={this.props.value.senderId} />
+                    </h2>
+                  </header>
+                </div>
+              </div> : null
+          }
           <div className={`transactions-detail-view ${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
             <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.column}`}>
               <div className={styles.label}>{this.props.t('Sender')}</div>
@@ -136,16 +140,20 @@ class TransactionsDetailView extends React.Component {
               }
             </div>
           </div>
-          <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
-            <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
-              <div className={styles.label}>{this.props.t('Added votes')}</div>
-              <div className={styles.value}>{voters.added}</div>
-            </div>
-            <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
-              <div className={styles.label}>{this.props.t('Removed votes')}</div>
-              <div className={styles.value}>{voters.deleted}</div>
-            </div>
-          </div>
+          {
+            this.props.value.amount === 0 ?
+              <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
+                <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
+                  <div className={styles.label}>{this.props.t('Added votes')}</div>
+                  <div className={styles.value}>{voters.added}</div>
+                </div>
+                <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
+                  <div className={styles.label}>{this.props.t('Removed votes')}</div>
+                  <div className={styles.value}>{voters.deleted}</div>
+                </div>
+              </div>
+              : null
+          }
           <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
             <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
               <div className={styles.label}>{this.props.t('Additional fee')}</div>

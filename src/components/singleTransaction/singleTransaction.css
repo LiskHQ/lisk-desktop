@@ -30,11 +30,13 @@
     height: 100%;
     flex-flow: column;
     justify-content: center;
+    overflow: auto;
 
     & .detailsWrapper {
       margin: 0 auto;
       max-width: var(--details-wrapper-max-width-s);
       width: 90%;
+      margin-top: 140px;
     }
   }
 }

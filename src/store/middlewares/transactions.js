@@ -92,8 +92,8 @@ const initTransactions = (store, action) => {
 const loadTransaction = (store, action) => {
   transaction({ activePeer: store.getState().peers.data, id: action.data.id })
     .then((response) => {
-      const added = response.transaction.votes.added || [];
-      const deleted = response.transaction.votes.deleted || [];
+      const added = (response.transaction.votes && response.transaction.votes.added) || [];
+      const deleted = (response.transaction.votes && response.transaction.votes.deleted) || [];
 
       deleted.map(publicKey =>
         getDelegate(store.getState().peers.data, { publicKey })
