@@ -110,7 +110,7 @@ class MovableShape extends React.Component {
     return <div style = { this.state.style }
 
       className={`${toggleShape() ? styles.switch : null}
-      ${this.props.percentage > 99 ? styles.fadeOut : null}
+      ${this.props.percentage >= 90 ? styles.faceOutShape : null}
       ${className}`}
       ref={(input) => { this.shape = input; }}>
       <svg width={`${width}px`} height={`${height}px`} viewBox={`0 0 ${width} ${height}`}>

@@ -24,6 +24,11 @@
   transform: translateX(-50%) translateY(50%);
 }
 
+.faceOutShape.triangleLeft {
+  opacity: 0 !important;
+  transition: all 0.4s ease-in;
+}
+
 .fadeOut {
   opacity: 0 !important;
   transition: all 0.2s ease-in;

@@ -140,10 +140,7 @@ class Create extends React.Component {
         id='generatorContainer' ref={(el) => { this.container = el; }} onMouseMove={this.eventNormalizer} >
         <div className={grid['col-xs-12']}
           ref={ (pageRoot) => { this.pageRoot = pageRoot; } }>
-          {!this.state.address ?
-            <Shapes percentage={percentage} /> :
-            null
-          }
+          <Shapes percentage={percentage} addressCreated={this.state.address}/>
           <header>
             <TransitionWrapper current={this.state.step} step='generate'>
               <h2 className={`${styles.generatorHeader}`}
