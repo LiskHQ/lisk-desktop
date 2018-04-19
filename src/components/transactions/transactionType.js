@@ -16,7 +16,7 @@ const TransactionType = (props) => {
       type = t('Delegate Registration');
       break;
     case 3:
-      type = t('Vote', { context: 'noun' });
+      type = t('Delegate vote', { context: 'noun' });
       break;
     case 4:
       type = t('Multisignature Creation');

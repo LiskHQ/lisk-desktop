@@ -56,6 +56,15 @@
     padding-left: 50px;
   }
 
+  & .columnNarrow {
+    position: relative;
+    padding-left: 20px;
+  }
+
+  & .title {
+    color: var(--color-black);
+  }
+
   & .label {
     font-weight: var(--font-weight-very-bold);
   }
