@@ -2,6 +2,7 @@
 
 :root {
   --main-content-horizontal-padding: 218px;
+  --main-content-horizontal-padding-s: 20px;
   --step-heading-fs: 48px;
   --step-heading-fs-s: 25px;
   --form-content-horizontal-padding: 48px;
