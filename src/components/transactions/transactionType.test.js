@@ -34,7 +34,7 @@ const createTest = (type) => {
       expectedValue = 'Delegate Registration';
       break;
     case 3:
-      expectedValue = 'Vote';
+      expectedValue = 'Delegate vote';
       break;
     case 4:
       expectedValue = 'Multisignature Creation';

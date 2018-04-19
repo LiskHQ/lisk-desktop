@@ -5,7 +5,7 @@ import { mountWithContext } from '../../../test/utils/mountHelpers';
 import TransactionDetailView from './transactionDetailView';
 
 describe('TransactionDetailView', () => {
-  it('should render 5 rows', () => {
+  it('should render 6 rows', () => {
     const context = {
       storeState: {
         peers: {
@@ -34,7 +34,7 @@ describe('TransactionDetailView', () => {
     const wrapper = mountWithContext(<TransactionDetailView {...props} />, context);
     const expectedValue = /flexboxgrid__row/g;
     const html = wrapper.html();
-    expect(html.match(expectedValue)).to.have.lengthOf(5);
+    expect(html.match(expectedValue)).to.have.lengthOf(6);
     wrapper.find('#transactionDetailsBackButton').simulate('click');
     expect(props.prevStep).to.have.been.calledWith();
   });

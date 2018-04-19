@@ -64,7 +64,7 @@ class TransactionsDetailView extends React.Component {
         }
         <div>
 
-          <div className={`transactions-detail-view ${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
+          <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
             <header>
               <h2 className={styles.title}>
                 <TransactionType {...this.props.value} address={this.props.value.senderId} />
