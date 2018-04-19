@@ -1,12 +1,12 @@
+import { connect } from 'react-redux';
 import { Line as LineChart, Chart } from 'react-chartjs-2';
 import { translate } from 'react-i18next';
-import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import React from 'react';
 
-import EmptyState from '../emptyState';
-import liskServiceApi from '../../utils/api/liskService';
+import { getCurrencyGraphData } from '../../actions/liskService';
 
+import EmptyState from '../emptyState';
 import styles from './currencyGraph.css';
 
 const bottomPadding = 15;
@@ -150,25 +150,21 @@ class CurrencyGraph extends React.Component {
     this.state = {
       step: steps[0],
     };
-    this.updateData(this.state.step);
   }
 
-  updateData(step) {
-    liskServiceApi.getCurrencyGrapData(step).then((response) => {
-      const { candles } = response;
-      const data = candles.slice(Math.max(candles.length - step.length, 1)).map(c => ({
-        x: new Date(c.date),
-        y: new BigNumber(c.high).plus(new BigNumber(c.low)).dividedBy(2),
-      }));
-      this.setState({ data });
-    }).catch((error) => {
-      this.setState({ error });
-    });
+  componentWillMount() {
+    this.props.getCurrencyGraphData(this.state.step);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.liskService.candles) {
+      this.setState({ step: nextProps.liskService.step, data: nextProps.liskService.candles.data });
+    }
   }
 
   setStep(step) {
     this.setState({ step, data: undefined });
-    this.updateData(step);
+    this.props.getCurrencyGraphData(step);
   }
 
   render() {
@@ -200,12 +196,12 @@ class CurrencyGraph extends React.Component {
         </div>
         <header><h2>{this.props.t('LSK/BTC')}</h2></header>
         <div className={`${styles.chartWrapper}`} >
-          {this.state.data ?
+          {this.props.liskService.candles ?
             <LineChart
-              data={chartData.bind(null, this.state.data)}
-              options={chartOptions(this.state.step)}/> :
+              data={chartData.bind(null, this.props.liskService.candles.data)}
+              options={chartOptions(this.props.liskService.step)}/> :
             null}
-          {this.state.error ?
+          {this.props.liskService.graphError ?
             <EmptyState className={styles.errorMessage}
               message={this.props.t('Price data currently not available')} /> :
             null}
@@ -215,4 +211,12 @@ class CurrencyGraph extends React.Component {
   }
 }
 
-export default translate()(CurrencyGraph);
+const mapStateToProps = state => ({
+  liskService: state.liskService,
+});
+
+const mapDispatchToProps = dispatch => ({
+  getCurrencyGraphData: data => dispatch(getCurrencyGraphData(data)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(CurrencyGraph));
