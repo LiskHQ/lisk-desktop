@@ -79,7 +79,7 @@ export class VotingHeaderRaw extends React.Component {
         </div>
         {!isDelegate ?
           <Link to={`${routes.registerDelegate.path}`} className={`${styles.link} ${styles.registerLink} register-delegate`}>
-            {t('Register as a delegate (Fee: {{fee}} LSK)', { fee: fromRawLsk(Fees.registerDelegate) })}
+            {t('Be a delegate (Fee: {{fee}} LSK)', { fee: fromRawLsk(Fees.registerDelegate) })}
             <FontIcon value='arrow-right'/>
           </Link> : null
         }
