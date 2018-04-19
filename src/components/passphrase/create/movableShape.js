@@ -9,8 +9,6 @@ class MovableShape extends React.Component {
     this.progress = 0;
     this.totalSteps = 100;
     this.threshold = 20;
-    this.backGroundIndex = props.backGroundIndex;
-    this.foreGroundIndex = props.foreGroundIndex;
     this.state = {
       style: {
         opacity: 0,
@@ -76,30 +74,23 @@ class MovableShape extends React.Component {
     }
   }
 
-  setIndex(key, length) {
-    if (this[key] === length) {
-      this[key] = 0;
-    } else {
-      this[key]++;
-    }
-  }
-
-  distributeColors() {
+  getColors() {
     const { percentage } = this.props;
     const { foreground: fg, background: bg } = schemes[0];
+    const progressOffset = Math.floor(Math.min(percentage, 90) / this.threshold);
+    const backGroundIndex = this.props.backGroundIndex + progressOffset;
+    const foreGroundIndex = this.props.foreGroundIndex + progressOffset;
 
-    const pattern = {
-      bg: { x: bg[this.backGroundIndex][0], y: bg[this.backGroundIndex][1] },
-      fg: { x: fg[this.foreGroundIndex][0], y: fg[this.foreGroundIndex][1] },
+    return {
+      bg: {
+        x: bg[backGroundIndex % bg.length][0],
+        y: bg[backGroundIndex % bg.length][1],
+      },
+      fg: {
+        x: fg[foreGroundIndex % fg.length][0],
+        y: fg[foreGroundIndex % fg.length][1],
+      },
     };
-
-    if (percentage > this.threshold && percentage < 90) {
-      this.threshold += 10;
-      this.setIndex('foreGroundIndex', fg.length - 1);
-      this.setIndex('backGroundIndex', bg.length - 1);
-    }
-
-    return pattern;
   }
 
   render() {
@@ -116,15 +107,15 @@ class MovableShape extends React.Component {
       <svg width={`${width}px`} height={`${height}px`} viewBox={`0 0 ${width} ${height}`}>
         <defs>
           <linearGradient x1="19%" y1="88%" x2="86%" y2="18%" id={idBg}>
-            <stop stopColor={this.distributeColors().fg.x} offset="0%">
+            <stop stopColor={this.getColors().fg.x} offset="0%">
             </stop>
-            <stop stopColor={this.distributeColors().fg.y} offset="100%">
+            <stop stopColor={this.getColors().fg.y} offset="100%">
             </stop>
           </linearGradient>
           <linearGradient x1="19%" y1="88%" x2="86%" y2="18%" id={idFg}>
-            <stop stopColor={this.distributeColors().bg.x} offset="0%">
+            <stop stopColor={this.getColors().bg.x} offset="0%">
             </stop>
-            <stop stopColor={this.distributeColors().bg.y} offset="100%">
+            <stop stopColor={this.getColors().bg.y} offset="100%">
             </stop>
           </linearGradient>
         </defs>
