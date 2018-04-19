@@ -31,7 +31,6 @@
     }],
 
     "react/prop-types": "off",
-    "no-else-return": "error",
     "no-plusplus": "off",
     "no-underscore-dangle": "off",
     "import/no-extraneous-dependencies": ["error", {
