@@ -17,6 +17,8 @@ The same argument holds true for unit vs. integration tests as well as for integ
 
 ### Which level should I use for a given feature?
 With the previous paragraph in mind, you should use the lowest possible level that covers the whole feature. 
+In practice it might be easier to go from the top to bottom.
+Start with e2e tests where needed and then look for what needs integration tests and only in the end the test coverage report will tell you what still needs unit tests.
 
 This section illustrates the problem on the "Send LSK" feature. Feature description: If user enters valid address and amount smaller than their balance, then they should be able to send the transaction to Lisk network.
 
