@@ -5,7 +5,6 @@ import { extractAddress } from '../../../utils/api/account';
 import AccountVisual from '../../accountVisual';
 import styles from './create.css';
 import { FontIcon } from '../../fontIcon';
-import * as shapesSrc from '../../../assets/images/register-shapes/*.svg'; //eslint-disable-line
 import Shapes from './shapes';
 import { PrimaryButton, Button } from '../../toolbox/buttons/button';
 import TransitionWrapper from '../../toolbox/transitionWrapper';
@@ -21,7 +20,6 @@ class Create extends React.Component {
         x: 0,
         y: 0,
       },
-      shapes: [1, 1, 1, 1, 1, 1, 1, 1, 1],
       headingClass: '',
     };
     this.isTouchDevice = false;
@@ -39,22 +37,6 @@ class Create extends React.Component {
     if (this.isTouchDevice) {
       window.addEventListener('devicemotion', this.eventNormalizer, true);
     }
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  hideShapeRandomly(list) {
-    const result = [];
-    const min = 0;
-    const max = 9;
-    let randomNumber;
-    while (result.length < 4) {
-      randomNumber = Math.floor((Math.random() * (max - min)) + min);
-      if (result.indexOf(randomNumber) === -1) {
-        result.push(randomNumber);
-      }
-    }
-    result.forEach((item) => { list[item] = 0; });
-    return list;
   }
 
   componentWillUnmount() {
@@ -136,12 +118,6 @@ class Create extends React.Component {
         step: 'info',
         address,
       });
-
-      const shapes = this.hideShapeRandomly(this.state.shapes);
-      // update state
-      this.setState({
-        shapes,
-      });
     }
   }
 
@@ -164,10 +140,7 @@ class Create extends React.Component {
         id='generatorContainer' ref={(el) => { this.container = el; }} onMouseMove={this.eventNormalizer} >
         <div className={grid['col-xs-12']}
           ref={ (pageRoot) => { this.pageRoot = pageRoot; } }>
-          {!this.state.address ?
-            <Shapes percentage={percentage} shapes={this.state.shapes} /> :
-            null
-          }
+          <Shapes percentage={percentage} addressCreated={this.state.address}/>
           <header>
             <TransitionWrapper current={this.state.step} step='generate'>
               <h2 className={`${styles.generatorHeader}`}

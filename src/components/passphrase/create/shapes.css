@@ -23,3 +23,33 @@
   z-index: 0;
   transform: translateX(-50%) translateY(50%);
 }
+
+.faceOutShape.triangleLeft {
+  opacity: 0 !important;
+  transition: all 0.4s ease-in;
+}
+
+.fadeOut {
+  opacity: 0 !important;
+  transition: all 0.2s ease-in;
+}
+
+.shapeForeground {
+  opacity: 0;
+  transition: all 0.4s ease-in;
+}
+
+.shapeBackground {
+  opacity: 1;
+  transition: all 0.4s ease-in;
+}
+
+.switch {
+  & .shapeForeground {
+    opacity: 1;
+  }
+
+  & .shapeBackground {
+    opacity: 0;
+  }
+}
