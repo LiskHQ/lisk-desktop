@@ -60,14 +60,14 @@
     }
   }
 
-  & .clean {
+  &.clean {
     & input:checked + label {
       background-color: var(--color-primary-standard);
       color: var(--color-white);
     }
   }
 
-  & .invalid {
+  &.invalid {
     & input:checked + label {
       background-color: var(--color-action-dark);
       border-color: var(--color-action-dark);
@@ -75,7 +75,7 @@
     }
   }
 
-  & .outOfTrials {
+  &.outOfTrials {
     & input + label {
       opacity: 0.2;
       cursor: auto;
@@ -83,7 +83,7 @@
     }
   }
 
-  & .valid {
+  &.valid {
     & input:checked + label {
       background-color: var(--color-success-dark);
       border-color: var(--color-success-dark);
