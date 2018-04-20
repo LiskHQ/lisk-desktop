@@ -6,6 +6,5 @@
 
 ### Review checklist
 - The PR solves #INSERT_ISSUE_NUMBER
-- All new code is covered with unit tests
-- All new features are covered with e2e tests
-- All new code follows best practices
+- The PR follows our [Test guide](/LiskHQ/lisk-hub/blob/development/docs/TEST_GUIDE.md)
+- The PR follows our [CSS guide](/LiskHQ/lisk-hub/blob/development/docs/CSS_GUIDE.md)
