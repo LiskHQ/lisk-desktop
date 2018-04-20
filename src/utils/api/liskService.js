@@ -15,6 +15,17 @@ const liskServiceApi = {
         }
       }).catch(reject);
   }),
+  getPriceTicker: () => new Promise((resolve, reject) => {
+    popsicle.get(`${liskServiceUrl}/api/getPriceTicker`)
+      .use(popsicle.plugins.parse('json'))
+      .then((response) => {
+        if (response.body.success) {
+          resolve(response.body.tickers);
+        } else {
+          reject(response.body);
+        }
+      }).catch(reject);
+  }),
 };
 
 export default liskServiceApi;

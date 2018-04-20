@@ -3,6 +3,7 @@ import { fromRawLsk } from '../../utils/lsk';
 import { Button } from './../toolbox/buttons/button';
 import { authStatePrefill } from '../../utils/form';
 import AccountVisual from '../accountVisual';
+import Converter from '../converter';
 import Input from '../toolbox/inputs/input';
 import fees from './../../constants/fees';
 import styles from './sendWritable.css';
@@ -98,15 +99,7 @@ class SendWritable extends React.Component {
               : ''
             }
           </Input>
-
-          <Input label={this.props.t('Amount (LSK)')}
-            className='amount'
-            error={this.state.amount.error}
-            value={this.state.amount.value}
-            theme={styles}
-            onChange={this.handleChange.bind(this, 'amount')} >
-            <div className={styles.fee}> {this.props.t('Fee: {{fee}} LSK', { fee: fromRawLsk(this.fee) })} </div>
-          </Input>
+          <Converter {...this.props} />
         </form>
         <footer>
           <Button onClick={() => this.props.nextStep({
