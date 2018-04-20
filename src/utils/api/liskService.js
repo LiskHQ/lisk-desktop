@@ -4,7 +4,7 @@ const popsicle = require('popsicle');
 const liskServiceUrl = 'https://service.lisk.io';
 
 const liskServiceApi = {
-  getCurrencyGrapData: ({ span }) => new Promise((resolve, reject) => {
+  getCurrencyGraphData: ({ span }) => new Promise((resolve, reject) => {
     popsicle.get(`${liskServiceUrl}/api/exchanges/getCandles?e=bittrex&d=${span}`)
       .use(popsicle.plugins.parse('json'))
       .then((response) => {
