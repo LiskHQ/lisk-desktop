@@ -18,7 +18,7 @@ export const clearDataOfCurrencyGraph = data => ({
 
 export const getCurrencyGraphData = step => (dispatch) => {
   dispatch(clearDataOfCurrencyGraph());
-  liskServiceApi.getCurrencyGraphData(step.span).then((response) => {
+  liskServiceApi.getCurrencyGraphData(step).then((response) => {
     dispatch(addDataToCurrencyGraph({ response, step }));
   }).catch((error) => {
     dispatch(addErrorToCurrencyGraph(error));

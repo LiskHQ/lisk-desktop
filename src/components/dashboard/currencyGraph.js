@@ -156,12 +156,6 @@ class CurrencyGraph extends React.Component {
     this.props.getCurrencyGraphData(this.state.step);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.liskService.candles) {
-      this.setState({ step: nextProps.liskService.step, data: nextProps.liskService.candles.data });
-    }
-  }
-
   setStep(step) {
     this.setState({ step, data: undefined });
     this.props.getCurrencyGraphData(step);
