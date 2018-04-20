@@ -62,7 +62,8 @@ const chartOptions = step => ({
         return `BTC ${tooltipItem[0].yLabel}`;
       },
       label(tooltipItem) {
-        return moment(tooltipItem.xLabel).format('DD MMM             HH:mm:ss').replace(' 0', '  ');
+        return moment(tooltipItem.xLabel, 'MMMM DD YYYY h:mm:ss A')
+          .format('DD MMM             HH:mm:ss').replace(' 0', '  ');
       },
     },
     backgroundColor: 'rgba(255, 255, 255, 0.9)',
