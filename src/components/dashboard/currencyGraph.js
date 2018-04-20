@@ -190,7 +190,7 @@ class CurrencyGraph extends React.Component {
           ))}
         </div>
         <header><h2>{this.props.t('LSK/BTC')}</h2></header>
-        <div className={`${styles.chartWrapper}`} >
+        <div className={`${styles.chartWrapper} chart-wrapper`} >
           {this.props.liskService.candles ?
             <LineChart
               data={chartData.bind(null, this.props.liskService.candles.data)}
