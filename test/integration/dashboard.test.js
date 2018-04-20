@@ -12,6 +12,7 @@ import accountReducer from '../../src/store/reducers/account';
 import transactionReducer from '../../src/store/reducers/transactions';
 import peersReducer from '../../src/store/reducers/peers';
 import loadingReducer from '../../src/store/reducers/loading';
+import liskServiceReducer from '../../src/store/reducers/liskService';
 import loginMiddleware from '../../src/store/middlewares/login';
 import accountMiddleware from '../../src/store/middlewares/account';
 import peerMiddleware from '../../src/store/middlewares/peers';
@@ -81,6 +82,7 @@ describe('@integration: Dashboard', () => {
       transactions: transactionReducer,
       peers: peersReducer,
       loading: loadingReducer,
+      liskService: liskServiceReducer,
     }, [
       thunk,
       accountMiddleware,
