@@ -1,7 +1,7 @@
 # Test guide
 
 This project uses 3 layers of automated tests (unit, integration, and end-to-end). 
-It is very powerful setup, but at the same time it can be challenging to choose appropriate 
+It is very powerful setup, but at the same time, it can be challenging to choose the appropriate 
 level of test for the problem at hand. 
 This is the reason why this guide was created. 
 
@@ -17,16 +17,16 @@ The same argument holds true for unit vs. integration tests as well as for integ
 
 ### Which level should I use for a given feature?
 With the previous paragraph in mind, you should use the lowest possible level that covers the whole feature. 
-In practice it might be easier to go from the top to bottom.
+In practice, it might be easier to go from the top to bottom.
 Start with e2e tests where needed and then look for what needs integration tests and only in the end the test coverage report will tell you what still needs unit tests.
 This way, you should avoid testing the exact same thing on multiple levels.
 
-This section illustrates the problem on the "Send LSK" feature. Feature description: If user enters valid address and amount smaller than their balance, then they should be able to send the transaction to Lisk network.
+This section illustrates the problem on the "Send LSK" feature. Feature description: If a user enters a valid address and amount smaller than their balance, then they should be able to send the transaction to Lisk network.
 
 Test split:
-- **Unit test**: If the whole feature is inside one component. E.g. Address validation, because validity of the entered address depends only on the entered value and a regexp inside the component. 
+- **Unit test**: If the whole feature is inside one component. E.g. Address validation, because the validity of the entered address depends only on the entered value and a regexp inside the component. 
 - **Integration test**: If the feature relies on multiple components or Redux store. E.g. Balance validation, because the validity of the balance depends on the entered value and the account balance in Redux store.
-- **E2E test**: If the feature involves multiple pages and/or API calls. E.g. Sending a LSK transaction with valid inputs.
+- **E2E test**: If the feature involves multiple pages and/or API calls. E.g. Sending an LSK transaction with valid inputs.
 
 ### Where is each level mocking?
 All the tests make assumptions about how things work outside of their scope. These assumptions are made by mocking the environment. Each level mocks something else:
@@ -63,9 +63,9 @@ See [relevant sections of README](/LiskHQ/lisk-hub#run-unit-tests)
 ### What tools are used?
 - **Assertions** use `expect` syntax of [chai](http://www.chaijs.com/), e.g.:
 https://github.com/LiskHQ/lisk-hub/blob/80afda8289b75cb70bf345d14d36117fde2bdd90/src/utils/passphrase.test.js#L136
-- **Spies, stubs, ands mocks** use [sinon](http://sinonjs.org/), e.g.:
+- **Spies, stubs, and mocks** use [sinon](http://sinonjs.org/), e.g.:
 https://github.com/LiskHQ/lisk-hub/blob/19a2a613fa08a34fe3088b0e40c11c7fa37a645d/src/store/middlewares/savedSettings.test.js#L20
-- To test **React compoments** we use [enzyme](http://airbnb.io/enzyme/), e.g.:
+- To test **React components** we use [enzyme](http://airbnb.io/enzyme/), e.g.:
 https://github.com/LiskHQ/lisk-hub/blob/79165170a326a7f98efee098732e55be37d31223/src/components/toolbox/sliderCheckbox/index.test.js#L21
 - To **assert on React compopnents** we use [chai-enzyme](https://github.com/producthunt/chai-enzyme) because it gives more descriptive messages when the assertion fails, e.g.: https://github.com/LiskHQ/lisk-hub/commit/bc7677c6d5c205449311ac4e18fd3de6fe2b23ff
 - To **assert on spies, stubs and mocks** we use [sinon-chai](https://github.com/domenic/sinon-chai), often together with [sinon.match](http://sinonjs.org/releases/v1.17.7/matchers/), e.g.: https://github.com/LiskHQ/lisk-hub/blob/c82683df85b2bc3277c697ebacff24463a8fed2c/src/components/register/register.test.js#L64-L67
@@ -74,7 +74,7 @@ https://github.com/LiskHQ/lisk-hub/blob/79165170a326a7f98efee098732e55be37d31223
 ## Integration tests
 
 ### What do they test?
-Integration of all components, utils, reducers and middlewares on one page, e.g. [Login](/LiskHQ/lisk-hub/blob/development/test/integration/login.test.js), [Wallet](/LiskHQ/lisk-hub/blob/development/test/integration/wallet.test.js), [Delegates](/LiskHQ/lisk-hub/blob/development/test/integration/voting.test.js).
+Integration of all components, utils, reducers, and middlewares on one page, e.g. [Login](/LiskHQ/lisk-hub/blob/development/test/integration/login.test.js), [Wallet](/LiskHQ/lisk-hub/blob/development/test/integration/wallet.test.js), [Delegates](/LiskHQ/lisk-hub/blob/development/test/integration/voting.test.js).
 
 ### How are they organized?
 Integration tests for each page have their own `*.test.js` file in [/test/integration/](/LiskHQ/lisk-hub/blob/development/test/integration).
@@ -100,7 +100,7 @@ Full user scenarios in the application as a whole, including the communication w
 See [relevant sections of README](/LiskHQ/lisk-hub#run-end-to-end-tests)
 
 ### How are they organized?
-E2E tests for each major feature have the tests specified in its own `*.feature` in [/test/e2e/](/LiskHQ/lisk-hub/blob/development/test/e2e). The test specifications in `*.feature` files use [Gherkin](https://github.com/cucumber/cucumber/wiki/Gherkin) language. The implementation of the steps is in [/test/e2e/step_definitions](/LiskHQ/lisk-hub/blob/development/test/e2e/step_definitions). If the step is used just in multiple `*.feature` files, then its definition is in [test/e2e/step_definitions/generic.step.js](test/e2e/step_definitions/generic.step.js). Definition for unique steps of `featureName.feature` is in `featurename.step.js`.
+E2E tests for each major feature have the tests specified in its own `*.feature` in [/test/e2e/](/LiskHQ/lisk-hub/blob/development/test/e2e). The test specifications in `*.feature` files use [Gherkin](https://github.com/cucumber/cucumber/wiki/Gherkin) language. The implementation of the steps is in [/test/e2e/step_definitions](/LiskHQ/lisk-hub/blob/development/test/e2e/step_definitions). If the step is used just in multiple `*.feature` files, then its definition is in [test/e2e/step_definitions/generic.step.js](test/e2e/step_definitions/generic.step.js). The definition for unique steps of `featureName.feature` is in `featurename.step.js`.
 
 Configuration is in [protractor.conf.js](/LiskHQ/lisk-hub/blob/development/protractor.conf.js).
 
