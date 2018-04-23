@@ -11,9 +11,8 @@ export const addErrorToCurrencyGraph = data => ({
   data,
 });
 
-export const clearDataOfCurrencyGraph = data => ({
+export const clearDataOfCurrencyGraph = () => ({
   type: actionTypes.clearDataOfCurrencyGraph,
-  data,
 });
 
 export const getCurrencyGraphData = step => (dispatch) => {
