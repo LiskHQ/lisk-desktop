@@ -62,10 +62,13 @@ class Converter extends React.Component {
         theme={styles}
         onChange={this.props.onChange} >
         <div className={styles.convertorWrapper}>
-          <div className={this.props.error ? `${styles.convertorErr} convertorErr` : `${styles.convertor} convertor`}>
-            <div className={`${styles.convertElem} convertElem`}>{price}</div>
-            {intersperse}
-          </div>
+          {this.props.value !== '' ?
+            <div className={this.props.error ? `${styles.convertorErr} convertorErr` : `${styles.convertor} convertor`}>
+              <div className={`${styles.convertElem} convertElem`}>~ {price}</div>
+              {intersperse}
+            </div>
+            : <div></div>
+          }
         </div>
         <div className={styles.fee}> {this.props.t('Fee: {{fee}} LSK', { fee: fromRawLsk(this.fee) })} </div>
       </Input>

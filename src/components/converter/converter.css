@@ -43,7 +43,7 @@
     cursor: pointer;
     margin-right: -2.5px;
     color: var(--color-grayscale-medium);
-    margin-top: -20px;
+    margin-top: -25px;
 
     & div {
       padding: 0 2.5px;
@@ -59,7 +59,7 @@
   & .convertorErr {
     display: flex;
     justify-content: space-between;
-    margin-top: -50px;
+    margin-top: -57px;
     cursor: pointer;
 
     & div {

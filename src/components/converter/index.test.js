@@ -66,7 +66,7 @@ describe('Converter', () => {
     explorereApiMock.resolves({ LSK: { USD: 123, EUR: 12 } });
     wrapper.update();
     expect(wrapper.state('LSK')).to.have.deep.equal({ USD: 123, EUR: 12 });
-    expect(wrapper.find('.convertElem').at(0).text()).to.have.equal('246.00');
+    expect(wrapper.find('.convertElem').at(0).text()).to.have.equal('~ 246.00');
   });
 });
 
