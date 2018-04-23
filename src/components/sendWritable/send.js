@@ -99,7 +99,15 @@ class SendWritable extends React.Component {
               : ''
             }
           </Input>
-          <Converter {...this.props} />
+          <Converter
+            label={this.props.t('Amount (LSK)')}
+            className='amount'
+            theme={styles}
+            error={this.state.amount.error}
+            value={this.state.amount.value}
+            onChange={this.handleChange.bind(this, 'amount')}
+            t={this.props.t}
+          />
         </form>
         <footer>
           <Button onClick={() => this.props.nextStep({
