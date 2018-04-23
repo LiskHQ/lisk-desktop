@@ -6,8 +6,8 @@ import actionTypes from '../../constants/actions';
  * @param {Array} candlesResponse array of candles to show
  * @param {Object} target step configuration
  */
-const getCandlesForGraph = (candles = [], step) => ({
-  data: candles.slice(Math.max(candles.length - step.length, 1))
+const getPricesForGraph = ({ prices = [], step }) => ({
+  data: prices.slice(Math.max(prices.length - step.length, 1))
     .map(c => ({
       x: new Date(c.date),
       y: new BigNumber(c.high).plus(new BigNumber(c.low)).dividedBy(2),
@@ -19,13 +19,16 @@ const liskService = (state = [], action) => {
     case actionTypes.clearDataOfCurrencyGraph:
       return {
         ...state,
-        candles: undefined,
+        prices: undefined,
         graphError: undefined,
       };
     case actionTypes.addDataToCurrencyGraph:
       return {
         ...state,
-        candles: getCandlesForGraph(action.data.response.candles, action.data.step),
+        prices: getPricesForGraph({
+          prices: action.data.response.candles,
+          step: action.data.step,
+        }),
         step: action.data.step,
         graphError: undefined,
       };

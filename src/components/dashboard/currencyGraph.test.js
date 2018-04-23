@@ -21,6 +21,11 @@ describe('CurrencyGraph', () => {
   let wrapper;
   let store;
 
+  const prices = [
+    { high: 0.003223542, date: '2018-02-01 13:00:00' },
+    { high: 0.012344282, date: '2018-02-02 13:00:00' },
+  ];
+
   beforeEach(() => {
     explorereApiMock = sinon.stub(liskServiceApi, 'getCurrencyGraphData').returnsPromise();
     store = prepareStore({
@@ -42,14 +47,9 @@ describe('CurrencyGraph', () => {
   });
 
   it('shold render LineChart when explorer api resolves candle data', () => {
-    const candles = [
-      { high: 0.003223542, date: '2018-02-01 13:00:00' },
-      { high: 0.012344282, date: '2018-02-01 14:00:00' },
-    ];
-
     expect(wrapper.find('.chart-wrapper').first()).to.be.present();
     expect(wrapper.find(LineChart)).not.to.be.present();
-    explorereApiMock.resolves({ candles });
+    explorereApiMock.resolves({ prices });
     wrapper.update();
     expect(wrapper.find(LineChart)).to.be.present();
   });
@@ -62,14 +62,9 @@ describe('CurrencyGraph', () => {
   });
 
   it('should allow to change step', () => {
-    const candles = [
-      { high: 0.003223542, date: '2018-02-01 13:00:00' },
-      { high: 0.012344282, date: '2018-02-02 13:00:00' },
-    ];
-
     wrapper.find('.step').at(1).simulate('click');
     expect(wrapper.find(LineChart)).not.to.be.present();
-    explorereApiMock.resolves({ candles });
+    explorereApiMock.resolves({ prices });
     wrapper.update();
     expect(wrapper.find(LineChart)).to.be.present();
   });
