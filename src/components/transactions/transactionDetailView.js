@@ -22,30 +22,24 @@ class TransactionsDetailView extends React.Component {
     }
   }
 
-  getVoters() {
-    let deleted = this.props.transaction.votesName && this.props.transaction.votesName.deleted;
-    let added = this.props.transaction.votesName && this.props.transaction.votesName.added;
+  getVoters(dataName) {
+    let data = this.props.transaction.votesName && this.props.transaction.votesName[dataName];
 
-    deleted = deleted ? deleted.map((delegate, key) => (
+    data = data ? data.map((delegate, key) => (
       <Link className={`${styles.addressLink} ${styles.clickable} voter-address`}
         to={`${routes.explorer.path}${routes.accounts.path}/${delegate.address}`}
-        key={`${key}-deleted`}>
-        {`${delegate.username} `}
-      </Link>
-    )) : '';
-    added = added ? added.map((delegate, key) => (
-      <Link className={`${styles.addressLink} ${styles.clickable} voter-address`}
-        to={`${routes.explorer.path}${routes.accounts.path}/${delegate.address}`}
-        key={`${key}-added`}>
+        key={`${key}-${dataName}`}>
         {`${delegate.username} `}
       </Link>
     )) : '';
 
-    return { deleted, added };
+    return data;
   }
 
   render() {
-    const voters = this.getVoters();
+    const deletedVoters = this.getVoters('deleted');
+    const addedVoters = this.getVoters('added');
+
     return (
       <div className={`${styles.details}`}>
         {
@@ -145,11 +139,11 @@ class TransactionsDetailView extends React.Component {
               <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
                 <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
                   <div className={styles.label}>{this.props.t('Added votes')}</div>
-                  <div className={styles.value}>{voters.added}</div>
+                  <div className={styles.value}>{addedVoters}</div>
                 </div>
                 <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
                   <div className={styles.label}>{this.props.t('Removed votes')}</div>
-                  <div className={styles.value}>{voters.deleted}</div>
+                  <div className={styles.value}>{deletedVoters}</div>
                 </div>
               </div>
               : null
