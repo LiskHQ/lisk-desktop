@@ -23,7 +23,7 @@
 }
 
 .graph {
-  height: calc(60% - 20px);
+  height: calc(40% - 20px);
   min-height: 200px;
   margin-bottom: 20px;
   overflow: hidden;
@@ -31,7 +31,7 @@
 }
 
 .latestActivity {
-  height: 40%;
+  height: 60%;
   margin: 0px;
 }
 
