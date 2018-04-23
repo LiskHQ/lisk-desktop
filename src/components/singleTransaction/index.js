@@ -13,14 +13,21 @@ class SingleTransaction extends React.Component {
   constructor(props) {
     super(props);
     if (props.peers.data) {
-      this.props.transactionLoadRequested({ id: this.props.match.params.id });
+      //  TODO refactor to reducs
+      this.props.transactionLoadRequested({
+        activePeer: props.peers.data,
+        id: this.props.match.params.id,
+      });
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.peers.data !== this.props.peers.data
       || nextProps.match.params.id !== this.props.match.params.id) {
-      this.props.transactionLoadRequested({ id: nextProps.match.params.id });
+      this.props.transactionLoadRequested({
+        activePeer: nextProps.peers.data,
+        id: nextProps.match.params.id,
+      });
     }
   }
 
