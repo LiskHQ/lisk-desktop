@@ -105,6 +105,7 @@ class Transactions extends React.Component {
         <TransactionList
           filter={filters[this.props.activeFilter]}
           address={this.props.address}
+          publicKey={this.props.publicKey}
           transactions={this.props.transactions}
           loadMore={this.loadMore.bind(this)}
           nextStep={this.props.nextStep}

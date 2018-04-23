@@ -38,3 +38,28 @@ export const delegateRegisteredFailure = data => ({
   type: actionTypes.delegateRegisteredFailure,
   data,
 });
+
+export const getDelegateForTransactionsRequestSuccess = data => ({
+  type: actionTypes.getDelegateForTransactionsRequestSuccess,
+  data,
+});
+
+export const getDelegateForTransactionsRequestFailure = data => ({
+  type: actionTypes.getDelegateForTransactionsRequestFailure,
+  data,
+});
+
+export const getDelegateForTransactionsRequest = ({ activePeer, publicKey, accountDataUpdated }) =>
+  (dispatch) => {
+    getDelegate(
+      activePeer, { publicKey },
+    ).then((response) => {
+      const accountDataUpdatedWithDelegate = {
+        ...accountDataUpdated,
+        delegate: response.delegate,
+      };
+      dispatch(getDelegateForTransactionsRequestSuccess(accountDataUpdatedWithDelegate));
+    }).catch((error) => {
+      dispatch(getDelegateForTransactionsRequestFailure(error));
+    });
+  };

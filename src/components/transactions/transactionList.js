@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import tableStyle from 'react-toolbox/lib/table/theme.css';
 import TransactionRow from './transactionRow';
 import TransactionsHeader from './transactionsHeader';
-import { transactionsRequestInit } from '../../actions/transactions';
+import { getTransactionsForAccount } from '../../actions/transactions';
 import txFilters from './../../constants/transactionFilters';
 import txTypes from './../../constants/transactionTypes';
 import styles from './transactionList.css';
@@ -13,7 +13,11 @@ import { parseSearchParams } from './../../utils/searchParams';
 class TransactionsList extends React.Component {
   constructor(props) {
     super(props);
-    this.props.transactionsRequestInit({ address: this.props.address });
+    this.props.getTransactionsForAccount({
+      activePeer: this.props.peers.data,
+      address: this.props.address,
+      publicKey: this.props.publicKey,
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -101,8 +105,12 @@ class TransactionsList extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  transactionsRequestInit: data => dispatch(transactionsRequestInit(data)),
+const mapStateToProps = state => ({
+  peers: state.peers,
 });
 
-export default connect(null, mapDispatchToProps)(TransactionsList);
+const mapDispatchToProps = dispatch => ({
+  getTransactionsForAccount: data => dispatch(getTransactionsForAccount(data)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TransactionsList);
