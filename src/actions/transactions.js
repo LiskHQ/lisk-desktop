@@ -86,6 +86,10 @@ export const transactionAddDelegateName = ({ delegate, arrName }) => ({
   arrName,
   type: actionTypes.transactionAddDelegateName,
 });
+
+export const transactionInit = () => ({
+  type: actionTypes.transactionInit,
+});
 /**
  *
  *

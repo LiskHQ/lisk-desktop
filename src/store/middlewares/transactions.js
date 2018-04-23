@@ -10,6 +10,7 @@ import {
   transactionLoaded,
   transactionLoadFailed,
   transactionAddDelegateName,
+  transactionInit,
 } from '../../actions/transactions';
 
 import actionTypes from '../../constants/actions';
@@ -47,6 +48,7 @@ const getAccountSuccess = (store, accountData) => {
 
 const initTransactions = (store, action) => {
   const state = store.getState();
+  store.dispatch(transactionInit());
   const activePeer = state.peers.data;
   const { address } = action.data;
   const lastActiveAddress = state.account ?

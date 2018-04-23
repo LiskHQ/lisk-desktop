@@ -1,7 +1,9 @@
 import actionTypes from '../../constants/actions';
 
-const transaction = (state = [], action) => {
+const transaction = (state = {}, action) => {
   switch (action.type) {
+    case actionTypes.transactionInit:
+      return {};
     case actionTypes.transactionLoaded:
       return { success: action.data.success, ...action.data.transaction };
     case actionTypes.transactionLoadFailed:
