@@ -1,5 +1,5 @@
 import actionTypes from '../constants/actions';
-import { transactions } from '../utils/api/account';
+import { transactions, transaction } from '../utils/api/account';
 
 /**
  * An action to dispatch transactionAdded
@@ -66,11 +66,6 @@ export const transactionsInit = data => ({
   type: actionTypes.transactionsInit,
 });
 
-export const transactionLoadRequested = data => ({
-  data,
-  type: actionTypes.transactionLoadRequested,
-});
-
 export const transactionLoaded = data => ({
   data,
   type: actionTypes.transactionLoaded,
@@ -90,6 +85,18 @@ export const transactionAddDelegateName = ({ delegate, voteArrayName }) => ({
 export const transactionInit = () => ({
   type: actionTypes.transactionInit,
 });
+
+
+export const transactionLoadRequested = ({ activePeer, id }) =>
+  (dispatch) => {
+    transaction(activePeer, { id })
+      .then(({ response }) => {
+        dispatch(transactionLoaded({ ...response }));
+      }).catch((error) => {
+        dispatch(transactionLoadFailed({ error }));
+      });
+  };
+
 /**
  *
  *

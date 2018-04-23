@@ -129,9 +129,6 @@ const transactionsMiddleware = store => next => (action) => {
     case actionTypes.transactionsRequestInit:
       initTransactions(store, action);
       break;
-    case actionTypes.transactionLoadRequested:
-      loadTransaction(store, action);
-      break;
     default: break;
   }
 };
