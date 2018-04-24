@@ -35,8 +35,8 @@ const TransactionType = (props) => {
       break;
   }
   const address = props.address !== props.senderId ? props.senderId : props.recipientId;
-  const template = type ?
-    <span className={styles.smallButton}>{type}</span> :
+  const template = type || props.showTransaction ?
+    <span className={styles.smallButton}>{type || t('Transaction')}</span> :
     <span className={styles.ordinaryText}>{address}</span>;
   return template;
 };

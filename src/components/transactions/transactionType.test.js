@@ -27,6 +27,9 @@ const options = {
 const createTest = (type) => {
   let expectedValue;
   switch (type) {
+    case 0:
+      expectedValue = 'Transaction';
+      break;
     case 1:
       expectedValue = 'Second Signature Creation';
       break;
@@ -67,13 +70,13 @@ describe('TransactionType', () => {
   for (let i = 1; i < 8; i++) {
     createTest(i);
   }
+});
 
-  it('sets TransactionType equal the values of "props.senderId"', () => {
-    const inputValue = {
-      type: 0,
-      senderId: '1085993630748340485L',
-    };
-    const wrapper = mount(<Router><TransactionType {...inputValue} /></Router>, options);
-    expect(wrapper.text()).to.equal(inputValue.senderId);
-  });
+it('sets TransactionType equal the values of "props.senderId"', () => {
+  const inputValue = {
+    type: 0,
+    senderId: '1085993630748340485L',
+  };
+  const wrapper = mount(<Router><TransactionType {...inputValue} /></Router>, options);
+  expect(wrapper.text()).to.equal(inputValue.senderId);
 });

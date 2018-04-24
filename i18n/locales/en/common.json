@@ -241,6 +241,7 @@
   "Toggle full screen": "Toggle full screen",
   "Total": "Total",
   "Total incl. {{fee}} LSK Fee": "Total incl. {{fee}} LSK Fee",
+  "Transaction": "Transaction",
   "Transaction ID": "Transaction ID",
   "Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain.": "Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain.",
   "Transactions can’t be reversed": "Transactions can’t be reversed",

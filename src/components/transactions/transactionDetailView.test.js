@@ -36,7 +36,7 @@ describe('TransactionDetailView', () => {
     const wrapper = mountWithContext(<TransactionDetailView {...props} />, context);
     const expectedValue = /flexboxgrid__row/g;
     const html = wrapper.html();
-    expect(html.match(expectedValue)).to.have.lengthOf(5);
+    expect(html.match(expectedValue)).to.have.lengthOf(4);
     wrapper.find('#transactionDetailsBackButton').simulate('click');
     expect(props.prevStep).to.have.been.calledWith();
   });

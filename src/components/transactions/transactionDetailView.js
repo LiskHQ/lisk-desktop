@@ -36,9 +36,68 @@ class TransactionsDetailView extends React.Component {
     return data;
   }
 
+  getFirstRow(isDelegateVote) {
+    const secondColumn = isDelegateVote ?
+      (
+        <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
+          <div className={styles.label}>{this.props.t('Date')}</div>
+          <div className={styles.value}>
+            { this.props.value.timestamp ?
+              <span>
+                <DateFromTimestamp
+                  time={this.props.value.timestamp} /> - <TimeFromTimestamp
+                  time={this.props.value.timestamp}/>
+              </span> :
+              <span>{this.props.t('Pending')}</span>
+            }
+          </div>
+        </div>
+      ) : (
+        <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.column}`}>
+          <div className={styles.label}>{this.props.t('Recipient')}</div>
+          {
+            this.props.value.recipientId ?
+              <figure className={styles.accountVisual}>
+                <AccountVisual address={this.props.value.recipientId} size={43} />
+              </figure> : null
+          }
+          <div className={styles.value}>
+            {
+              this.props.value.recipientId ?
+                <Link className={`${styles.addressLink} ${styles.clickable}`} id='receiver-address'
+                  to={`${routes.explorer.path}${routes.accounts.path}/${this.props.value.recipientId}`}>
+                  {this.props.value.recipientId}
+                </Link> : '-'
+            }
+          </div>
+        </div>
+      );
+    return (
+      <div className={`transactions-detail-view ${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
+        <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.column}`}>
+          <div className={styles.label}>{this.props.t('Sender')}</div>
+          {
+            this.props.value.senderId ?
+              <figure className={styles.accountVisual}>
+                <AccountVisual address={this.props.value.senderId} size={43} />
+              </figure> : null
+          }
+          <div className={`${styles.value} ${styles.sender} `}>
+            <Link className={`${styles.addressLink} ${styles.clickable}`} id='sender-address'
+              to={`${routes.explorer.path}${routes.accounts.path}/${this.props.value.senderId}`}>
+              {this.props.value.senderId}
+            </Link>
+          </div>
+        </div>
+        {secondColumn}
+      </div>
+    );
+  }
+
   render() {
     const deletedVoters = this.getVoters('deleted');
     const addedVoters = this.getVoters('added');
+    const isDelegateVote = this.props.transaction.type === 3;
 
     return (
       <div className={`${styles.details}`}>
@@ -60,80 +119,54 @@ class TransactionsDetailView extends React.Component {
           {
             !this.props.match.params.id ?
               <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
-                <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
+                <div className={`${grid['col-xs-12']} ${grid['col-sm-7']} ${grid['col-md-7']} ${styles.columnNarrow}`}>
                   <header>
                     <h2 className={styles.title}>
-                      <TransactionType {...this.props.value} address={this.props.value.senderId} />
+                      <TransactionType
+                        {...this.props.value}
+                        address={this.props.value.senderId}
+                        showTransaction />
                     </h2>
                   </header>
                 </div>
               </div> : null
           }
-          <div className={`transactions-detail-view ${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
-            <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.column}`}>
-              <div className={styles.label}>{this.props.t('Sender')}</div>
-              {
-                this.props.value.senderId ?
-                  <figure className={styles.accountVisual}>
-                    <AccountVisual address={this.props.value.senderId} size={43} />
-                  </figure> : null
-              }
-              <div className={`${styles.value} ${styles.sender} `}>
-                <Link className={`${styles.addressLink} ${styles.clickable}`} id='sender-address'
-                  to={`${routes.explorer.path}${routes.accounts.path}/${this.props.value.senderId}`}>
-                  {this.props.value.senderId}
-                </Link>
-              </div>
-            </div>
-            <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.column}`}>
-              <div className={styles.label}>{this.props.t('Recipient')}</div>
-              {
-                this.props.value.recipientId ?
-                  <figure className={styles.accountVisual}>
-                    <AccountVisual address={this.props.value.recipientId} size={43} />
-                  </figure> : null
-              }
-              <div className={styles.value}>
-                {
-                  this.props.value.recipientId ?
-                    <Link className={`${styles.addressLink} ${styles.clickable}`} id='receiver-address'
-                      to={`${routes.explorer.path}${routes.accounts.path}/${this.props.value.recipientId}`}>
-                      {this.props.value.recipientId}
-                    </Link> : '-'
-                }
-              </div>
-            </div>
-          </div>
-          <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
-            <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
-              <div className={styles.label}>{this.props.t('Date')}</div>
-              <div className={styles.value}>
-                { this.props.value.timestamp ?
-                  <span>
-                    <DateFromTimestamp
-                      time={this.props.value.timestamp} /> - <TimeFromTimestamp
-                      time={this.props.value.timestamp}/>
-                  </span> :
-                  <span>{this.props.t('Pending')}</span>
-                }
-              </div>
-            </div>
-            <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
-              {
-                this.props.value.type === 0 ?
-                  <div>
-                    <div className={styles.label}>{this.props.t('Amount (LSK)')}</div>
-                    <div className={`${styles.value} ${styles.amount}`}><Amount {...this.props}></Amount></div>
-                  </div> :
-                  <div>
-                    <div className={styles.label}>{this.props.t('Type')}</div>
-                    <div className={styles.value}>
-                      <TransactionType {...this.props.value} address={this.props.value.senderId} />
-                    </div>
+          {this.getFirstRow(isDelegateVote)}
+          {
+            this.props.value.type === 0 ?
+              <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
+                <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
+                  <div className={styles.label}>{this.props.t('Date')}</div>
+                  <div className={styles.value}>
+                    { this.props.value.timestamp ?
+                      <span>
+                        <DateFromTimestamp
+                          time={this.props.value.timestamp} /> - <TimeFromTimestamp
+                          time={this.props.value.timestamp}/>
+                      </span> :
+                      <span>{this.props.t('Pending')}</span>
+                    }
                   </div>
-              }
-            </div>
-          </div>
+                </div>
+                <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
+                  {
+                    this.props.value.type === 0 ?
+                      <div>
+                        <div className={styles.label}>{this.props.t('Amount (LSK)')}</div>
+                        <div className={`${styles.value} ${styles.amount}`}><Amount {...this.props}></Amount></div>
+                      </div> :
+                      <div>
+                        <div className={styles.label}>{this.props.t('Type')}</div>
+                        <div className={styles.value}>
+                          <TransactionType
+                            {...this.props.value}
+                            address={this.props.value.senderId} />
+                        </div>
+                      </div>
+                  }
+                </div>
+              </div> : ''
+          }
           {
             this.props.value.amount === 0 ?
               <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
