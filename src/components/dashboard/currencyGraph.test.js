@@ -2,14 +2,11 @@ import thunk from 'redux-thunk';
 import { expect } from 'chai';
 import { Line as LineChart } from 'react-chartjs-2';
 import sinon from 'sinon';
-import { Provider } from 'react-redux';
-import { I18nextProvider } from 'react-i18next';
 import { mount } from 'enzyme';
 import React from 'react';
-import { Router } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import i18n from '../../i18n';
-import history from '../../history';
 import { prepareStore } from '../../../test/utils/applicationInit';
 import liskServiceApi from '../../utils/api/liskService';
 
@@ -25,6 +22,13 @@ describe('CurrencyGraph', () => {
     { high: 0.003223542, date: '2018-02-01 13:00:00' },
     { high: 0.012344282, date: '2018-02-02 13:00:00' },
   ];
+  const options = {
+    context: { store, i18n },
+    childContextTypes: {
+      store: PropTypes.object.isRequired,
+      i18n: PropTypes.object.isRequired,
+    },
+  };
 
   beforeEach(() => {
     liskServiceApiMock = sinon.stub(liskServiceApi, 'getCurrencyGraphData').returnsPromise();
@@ -32,14 +36,7 @@ describe('CurrencyGraph', () => {
       liskService: liskServiceReducer,
     }, [thunk]);
 
-    wrapper = mount(
-      <Provider store={store}>
-        <Router history={history}>
-          <I18nextProvider i18n={ i18n }>
-            <CurrencyGraph />
-          </I18nextProvider>
-        </Router>
-      </Provider>);
+    wrapper = mount(<CurrencyGraph store={store}/>, options);
   });
 
   afterEach(() => {
