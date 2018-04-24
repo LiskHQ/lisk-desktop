@@ -16,7 +16,7 @@ class TransactionsList extends React.Component {
     this.props.getTransactionsForAccount({
       activePeer: this.props.peers.data,
       address: this.props.address,
-      publicKey: this.props.publicKey,
+      publicKey: this.props.account.publicKey,
     });
   }
 
@@ -107,6 +107,7 @@ class TransactionsList extends React.Component {
 
 const mapStateToProps = state => ({
   peers: state.peers,
+  account: state.account,
 });
 
 const mapDispatchToProps = dispatch => ({

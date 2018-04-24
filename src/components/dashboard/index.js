@@ -13,7 +13,7 @@ import styles from './dashboard.css';
 
 class Dashboard extends React.Component {
   render() {
-    const { transactions, t, account, loading, history, peers } = this.props;
+    const { transactions, t, account, loading, history } = this.props;
 
     return <div className={`${grid.row} ${styles.wrapper}`}>
       <div className={`${grid['col-md-8']} ${grid['col-xs-12']} ${styles.main}`}>
@@ -34,8 +34,6 @@ class Dashboard extends React.Component {
             transactions,
             t,
             address: account.address,
-            publicKey: account.publicKey,
-            activePeer: peers.data,
             dashboard: true,
             loading,
             history,

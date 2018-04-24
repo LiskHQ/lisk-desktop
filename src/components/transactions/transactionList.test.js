@@ -1,10 +1,19 @@
 import React from 'react';
+import thunk from 'redux-thunk';
 import { expect } from 'chai';
 import { spy } from 'sinon';
 import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
-import configureMockStore from 'redux-mock-store';
 import TransactionsList from './transactionList';
+
+import { prepareStore } from '../../../test/utils/applicationInit';
+import peersReducer from '../../store/reducers/peers';
+import accountReducer from '../../store/reducers/account';
+import transactionReducer from '../../store/reducers/transaction';
+import delegateReducer from '../../store/reducers/delegate';
+import accountMiddleware from '../../store/middlewares/account';
+import peerMiddleware from '../../store/middlewares/peers';
+import transactionsMiddleware from '../../store/middlewares/transactions';
 import txFilters from '../../constants/transactionFilters';
 import i18n from '../../i18n';
 
@@ -22,6 +31,27 @@ describe('TransactionsList', () => {
     confirmations: 4314504,
     address: '12345678L',
   }];
+
+  const store = prepareStore({
+    peers: peersReducer,
+    account: accountReducer,
+    transaction: transactionReducer,
+    delegate: delegateReducer,
+  }, [
+    thunk,
+    peerMiddleware,
+    accountMiddleware,
+    transactionsMiddleware,
+  ]);
+
+  const options = {
+    context: { store, i18n },
+    childContextTypes: {
+      store: PropTypes.object.isRequired,
+      i18n: PropTypes.object.isRequired,
+    },
+  };
+
   const props = {
     address: '',
     filter: {
@@ -34,19 +64,8 @@ describe('TransactionsList', () => {
     onClick: () => {},
     loadMore: () => {},
     prevStep: () => {},
-    transactionsRequestInit: () => {},
     t: () => {},
     history: { location: { search: { id: transactions[0].id } } },
-  };
-
-  const store = configureMockStore([])({});
-
-  const options = {
-    context: { store, i18n },
-    childContextTypes: {
-      store: PropTypes.object.isRequired,
-      i18n: PropTypes.object.isRequired,
-    },
   };
 
   it('should render nothing while loading', () => {
