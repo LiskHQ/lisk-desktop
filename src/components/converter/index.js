@@ -25,14 +25,15 @@ class Converter extends React.Component {
       this.setState({ error });
     });
   }
-
+  /*
+   * It swaping clicked currency with active currency on index 0
+   */
   selectActive(currency) {
     const currencyIndex = this.state.currencies.indexOf(currency);
     if (currencyIndex !== 0) {
       const currencies = this.state.currencies;
-      const currencyA = currencies[currencyIndex];
-      currencies[currencyIndex] = currencies[0];
-      currencies[0] = currencyA;
+
+      currencies.push(currencies.shift(currencies[currencyIndex]));
       this.setState({ currencies });
     }
   }
