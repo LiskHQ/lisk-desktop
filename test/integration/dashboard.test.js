@@ -141,7 +141,7 @@ describe('@integration: Dashboard', () => {
   describe('Transactions', () => {
     describe('Scenario: should allow to view transactions', () => {
       step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
-      step('Then I should see 3 rows', () => helper.shouldSeeCountInstancesOf(3, 'TransactionRow'));
+      step('Then I should see 5 rows', () => helper.shouldSeeCountInstancesOf(5, 'TransactionRow'));
       step('Then I click on one of the transactions and expect to get directed to its details', () => helper.clickOnTransaction());
     });
   });

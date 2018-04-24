@@ -49,7 +49,7 @@ class Dashboard extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  transactions: [...state.transactions.pending, ...state.transactions.confirmed].slice(0, 3),
+  transactions: [...state.transactions.pending, ...state.transactions.confirmed].slice(0, 5),
   pendingTransactions: state.transactions.pending,
   account: state.account,
   loading: state.loading.length > 0,
