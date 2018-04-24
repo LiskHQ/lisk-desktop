@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
 import configureStore from 'redux-mock-store';
-import CreateSecond from './index';
+import CreateSecond from './create';
 import i18n from '../../../i18n';
 import accounts from '../../../../test/constants/accounts';
 
