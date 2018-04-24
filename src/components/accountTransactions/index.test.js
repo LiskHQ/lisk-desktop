@@ -8,10 +8,10 @@ import AccountTransactions from './index';
 describe('AccountTransaction Component', () => {
   let wrapper;
   let props;
-  let transactionsRequestInitSpy;
+  let getTransactionsForAccountSpy;
 
   beforeEach(() => {
-    transactionsRequestInitSpy = spy(transactions, 'transactionsRequestInit');
+    getTransactionsForAccountSpy = spy(transactions, 'getTransactionsForAccount');
     const storeState = {
       transactions: {
         account: { balance: 0 },
@@ -32,11 +32,12 @@ describe('AccountTransaction Component', () => {
   });
 
   afterEach(() => {
-    transactionsRequestInitSpy.restore();
+    getTransactionsForAccountSpy.restore();
   });
 
   it('updates transactions on address update', () => {
+    expect(getTransactionsForAccountSpy).to.have.been.calledWith({ address: '987654321L' });
     wrapper.setProps({ match: { params: { address: '12345L' } } });
-    expect(transactionsRequestInitSpy).to.have.been.calledWith({ address: '12345L' });
+    expect(getTransactionsForAccountSpy).to.have.been.calledWith({ address: '12345L' });
   });
 });
