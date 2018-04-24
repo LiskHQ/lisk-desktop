@@ -1,55 +1,58 @@
+import thunk from 'redux-thunk';
 import { expect } from 'chai';
 import { Line as LineChart } from 'react-chartjs-2';
 import sinon from 'sinon';
 import React from 'react';
-
+import { mountWithContext } from './../../../test/utils/mountHelpers';
+import { prepareStore } from '../../../test/utils/applicationInit';
 import liskServiceApi from '../../utils/api/liskService';
-import { mountWithContext } from '../../../test/utils/mountHelpers';
+
+import liskServiceReducer from '../../store/reducers/liskService';
 import CurrencyGraph from './currencyGraph';
 
 describe('CurrencyGraph', () => {
-  let explorereApiMock;
+  let liskServiceApiMock;
   let wrapper;
+  let store;
+
+  const prices = [
+    { high: 0.003223542, date: '2018-02-01 13:00:00' },
+    { high: 0.012344282, date: '2018-02-02 13:00:00' },
+  ];
 
   beforeEach(() => {
-    explorereApiMock = sinon.stub(liskServiceApi, 'getCurrencyGrapData').returnsPromise();
-    wrapper = mountWithContext(<CurrencyGraph/>, {});
+    liskServiceApiMock = sinon.stub(liskServiceApi, 'getCurrencyGraphData').returnsPromise();
+    store = prepareStore({
+      liskService: liskServiceReducer,
+    }, [thunk]);
+
+    wrapper = mountWithContext(<CurrencyGraph store={store}/>, {});
   });
 
   afterEach(() => {
-    explorereApiMock.restore();
+    liskServiceApiMock.restore();
   });
 
-  it('shold render LineChart when explorer api resolves candle data', () => {
-    const candles = [
-      { high: 0.003223542, date: '2018-02-01 13:00:00' },
-      { high: 0.012344282, date: '2018-02-01 14:00:00' },
-    ];
-
+  it('should render LineChart when explorer api resolves candle data', () => {
+    expect(wrapper.find('.chart-wrapper').first()).to.be.present();
     expect(wrapper.find(LineChart)).not.to.be.present();
-    explorereApiMock.resolves({ candles });
+    liskServiceApiMock.resolves({ prices });
     wrapper.update();
     expect(wrapper.find(LineChart)).to.be.present();
   });
 
-  it('shold show and error message when explorer api call fails', () => {
+  it('should show and error message when explorer api call fails', () => {
     expect(wrapper.find(LineChart)).not.to.be.present();
-    explorereApiMock.rejects({ });
+    liskServiceApiMock.rejects({ });
     expect(wrapper.find(LineChart)).not.to.be.present();
     expect(wrapper.text()).to.contain('Price data currently not available');
   });
 
   it('should allow to change step', () => {
-    const candles = [
-      { high: 0.003223542, date: '2018-02-01 13:00:00' },
-      { high: 0.012344282, date: '2018-02-02 13:00:00' },
-    ];
-
     wrapper.find('.step').at(1).simulate('click');
     expect(wrapper.find(LineChart)).not.to.be.present();
-    explorereApiMock.resolves({ candles });
+    liskServiceApiMock.resolves({ prices });
     wrapper.update();
     expect(wrapper.find(LineChart)).to.be.present();
   });
 });
-
