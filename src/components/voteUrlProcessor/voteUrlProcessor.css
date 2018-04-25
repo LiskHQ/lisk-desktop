@@ -1,28 +1,30 @@
-.error,
-.success {
-  padding: 16px 24px;
-  margin: 0 -24px;
-  color: black;
-  border-bottom: 1px solid #e6e6e6;
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }
 
-.error:first-child,
-.success:first-child {
-  margin-top: -24px;
+.title {
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 22px;
+  margin-bottom: 16px;
 }
 
-.error {
-  background-color: rgb(255, 228, 220) !important;
+.close {
+  position: absolute;
+  top: 48px;
+  right: 48px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
-.success {
-  background-color: rgb(226, 238, 213) !important;
+.block {
+  margin-bottom: 32px;
 }
 
-.chip {
-  margin: 6px 1px -8px 1px;
-}
-
-.center {
-  text-align: center;
+.button {
+  margin-bottom: 32px;
 }

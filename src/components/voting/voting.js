@@ -37,7 +37,8 @@ class Voting extends React.Component {
             updateList={(value) => { this.toggleSummery(value); }} />
         </aside>
         <section className={`${grid['col-sm-12']} ${grid['col-md-8']} ${styles.votingBox}`}>
-          <DelegateList showChangeSummery={this.state.showChangeSummery} />
+          <DelegateList showChangeSummery={this.state.showChangeSummery}
+            history={this.props.history}/>
         </section>
       </div>
     );

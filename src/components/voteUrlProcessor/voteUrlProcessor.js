@@ -1,9 +1,9 @@
 /* eslint-disable */
-import Chip from 'react-toolbox/lib/chip';
 import React from 'react';
-import ProgressBar from '../toolbox/progressBar/progressBar';
-
+import { PrimaryButton } from './../toolbox/buttons/button';
+import Box from '../box';
 import { parseSearchParams } from '../../utils/searchParams';
+import { FontIcon } from '../fontIcon';
 import styles from './voteUrlProcessor.css';
 
 export default class VoteUrlProcessor extends React.Component {
@@ -28,50 +28,58 @@ export default class VoteUrlProcessor extends React.Component {
   }
 
   render() {
-    return <div></div>;
-  }
-  /*render() {
     const errorMessages = {
-      notFound: this.props.t('{{count}} of the provided delegate names could not be resolved:',
-        { count: this.props.notFound.length }),
-      alreadyVoted: this.props.t('{{count}} of the delegate names selected for voting was already voted for for:',
-        { count: this.props.alreadyVoted.length }),
-      notVotedYet: this.props.t('{{count}} of the delegate names selected for unvoting was not currently voted for:',
-        { count: this.props.notVotedYet.length }),
+      notFound: this.props.t('Check spelling – name does not exist on mainnet'),
+      alreadyVoted: this.props.t('Nothing to change – already voted/unvoted'),
     };
+
     const successMessages = {
-      upvotes: this.props.t('{{count}} delegate names were successfully resolved for voting.',
-        { count: this.props.upvotes.length }),
-      unvotes: this.props.t('{{count}} delegate names were successfully resolved for unvoting.',
-        { count: this.props.unvotes.length }),
+      upvotes: `${this.props.upvotes.length} delegate(s) selected to vote`,
+      unvotes: `${this.props.unvotes.length} delegate(s) selected to unvote`,
     };
-    return (
-      <div>
-        { {this.getProcessedCount() < this.props.urlVoteCount ?
-          (<div>
-            <ProgressBar type='linear' mode='determinate'
-              value={this.getProcessedCount()} max={this.props.urlVoteCount}/>
-            <div className={styles.center}>
-              {this.props.t('Processing delegate names: ')}
-              {this.getProcessedCount()} / {this.props.urlVoteCount}
-            </div>
-          </div>) :
-          (<span>{Object.keys(errorMessages).map(list => (
+
+    // const successMessages = {
+    //   upvotes: this.props.t('{{count}} delegates selected to vote',
+    //     { count: this.props.upvotes.length }),
+    //   unvotes: this.props.t('{{count}} delegates selected to unvote',
+    //     { count: this.props.unvotes.length }),
+    // };
+
+    return this.props.show ?
+      <Box>
+        <section className={styles.wrapper}>
+        <header>
+            <h2>Your Pre-Selection</h2>
+        </header>
+        <div>
+          <span>{Object.keys(errorMessages).map((list, key) => (
             this.props[list].length ? (
-              <div key={list} className={`${styles.error} ${list}-message`}>
-                {errorMessages[list]}
-                {this.props[list].map((username, i) => (
-                  <Chip theme={styles} key={i}>{username}</Chip>
-                ))}
+              <div key={key} className={`${styles.block} ${list}-message`}>
+                <div className={`${styles.title}`}>{errorMessages[list]}</div>
+                {this.props[list].join(', ')}
               </div>
             ) : null
           ))}
-          {Object.keys(successMessages).map(list => (
-            this.props[list].length ? (
-              <div key={list} className={`${styles.success} ${list}-message`}>{successMessages[list]}</div>
-            ) : null
-          ))}</span>)}}
-      </div>
-    );
-  }*/
+          {Object.keys(successMessages).map((list, key) => {
+            return this.props[list].length ? (
+              <div key={key} className={styles.block}>
+                <div className={`${styles.title}`}>{successMessages[list]}</div>
+                <div className={`${list}-message`}>{this.props[list].join(', ')}</div>
+              </div>
+            ) : null }
+          )}</span>
+        </div>
+        <footer>
+          <PrimaryButton className={styles.button} label={this.props.t('Ok')} onClick={this.props.closeInfo}/>
+          <div className={`${styles.close}`} onClick={() => {
+            this.props.clearVoteLookupStatus();
+            this.props.clearVotes();
+            this.props.closeInfo();
+          }}>
+              Close <FontIcon value='close' />
+          </div>
+        </footer>
+        </section>
+      </Box> : null;
+  }
 }

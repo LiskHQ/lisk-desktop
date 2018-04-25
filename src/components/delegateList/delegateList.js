@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Waypoint from 'react-waypoint';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Box from '../box';
@@ -7,6 +7,7 @@ import VotingRow from './votingRow';
 import styles from './delegateList.css';
 import VoteUrlProcessor from '../voteUrlProcessor';
 import voteFilters from './../../constants/voteFilters';
+import { parseSearchParams } from '../../utils/searchParams';
 
 // Create a new Table component injecting Head and Row
 class DelegateList extends React.Component {
@@ -17,6 +18,7 @@ class DelegateList extends React.Component {
     this.offset = -1;
     this.query = '';
     this.state = {
+      showInfo: true,
       activeFilter: voteFilters.all,
       showChangeSummery: false,
       safariClass: '',
@@ -154,42 +156,53 @@ class DelegateList extends React.Component {
     ));
   }
 
+  showInfo() {
+    const params = parseSearchParams(this.props.history.location.search);
+    return (params.votes || params.unvotes) && this.state.showInfo;
+  }
+
+  closeInfo() {
+    this.setState({ showInfo: false });
+  }
+
   render() {
     const showChangeSummery = this.state.showChangeSummery ?
       styles.showChangeSummery : '';
     const filteredList = this.filter(this.props.delegates);
     return (
-      <Box className={`voting delegate-list-box ${showChangeSummery} ${styles.box}`}>
-        <VoteUrlProcessor />
-        <Header
-          setActiveFilter={this.setActiveFilter.bind(this)}
-          showChangeSummery={this.state.showChangeSummery}
-          isDelegate={this.props.isDelegate}
-          voteToggled={this.props.voteToggled}
-          search={ value => this.search(value) }
-        />
-        <section className={`${styles.delegatesList} delegate-list`}>
-          <div className={styles.table}>
-            <ul className={`${styles.tableHead} ${grid.row}`}>
-              <li className={`${grid['col-md-1']} ${grid['col-xs-2']} ${styles.leftText}`}>{this.props.t('Vote', { context: 'verb' })}</li>
-              <li className={`${grid['col-md-1']} ${grid['col-xs-2']}`}>{this.props.t('Rank')}</li>
-              <li className={`${grid['col-md-3']} ${grid['col-xs-5']}`}>{this.props.t('Name')}</li>
-              <li className={`${grid['col-md-5']}`}>{this.props.t('Lisk ID')}</li>
-              <li className={`${grid['col-md-2']} ${grid['col-xs-3']} ${styles.productivity}`}>{this.props.t('Productivity')}</li>
-            </ul>
-            { this.getList(filteredList) }
-          </div>
-          {
-            (filteredList.length === 0) ?
-              <div className={`empty-message ${styles.emptyMessage}`}>
-                {this.props.t(this.getEmptyStateMessage(filteredList))}
-              </div> : null
-          }
-          <Waypoint bottomOffset='-80%'
-            key={this.props.delegates.length}
-            onEnter={this.loadMore.bind(this)}></Waypoint>
-        </section>
-      </Box>
+      <Fragment>
+        <VoteUrlProcessor closeInfo={this.closeInfo.bind(this)} show={this.showInfo()}/>
+        { !this.showInfo() ? <Box className={`voting delegate-list-box ${showChangeSummery} ${styles.box}`}>
+          <Header
+            setActiveFilter={this.setActiveFilter.bind(this)}
+            showChangeSummery={this.state.showChangeSummery}
+            isDelegate={this.props.isDelegate}
+            search={ value => this.search(value) }
+          />
+          <section className={`${styles.delegatesList} delegate-list`}>
+            <div className={styles.table}>
+              <ul className={`${styles.tableHead} ${grid.row}`}>
+                <li className={`${grid['col-md-1']} ${grid['col-xs-2']} ${styles.leftText}`}>{this.props.t('Vote', { context: 'verb' })}</li>
+                <li className={`${grid['col-md-1']} ${grid['col-xs-2']}`}>{this.props.t('Rank')}</li>
+                <li className={`${grid['col-md-3']} ${grid['col-xs-5']}`}>{this.props.t('Name')}</li>
+                <li className={`${grid['col-md-5']}`}>{this.props.t('Lisk ID')}</li>
+                <li className={`${grid['col-md-2']} ${grid['col-xs-3']} ${styles.productivity}`}>{this.props.t('Productivity')}</li>
+              </ul>
+              { this.getList(filteredList) }
+            </div>
+            {
+              (filteredList.length === 0) ?
+                <div className={`empty-message ${styles.emptyMessage}`}>
+                  {this.props.t(this.getEmptyStateMessage(filteredList))}
+                </div> : null
+            }
+            <Waypoint bottomOffset='-80%'
+              key={this.props.delegates.length}
+              onEnter={this.loadMore.bind(this)}></Waypoint>
+          </section>
+        </Box>
+          : null }
+      </Fragment>
     );
   }
 }
