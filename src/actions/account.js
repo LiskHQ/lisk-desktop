@@ -165,7 +165,6 @@ export const getAccountForTransactionsRequest = ({
           dispatch(getDelegateForTransactionsRequest({
             activePeer,
             publicKey: response.publicKey,
-            accountDataUpdated,
           }));
         } else if (isSameAccount && response.isDelegate) {
           accountDataUpdated = {

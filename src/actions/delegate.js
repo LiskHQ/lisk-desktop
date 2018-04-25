@@ -49,16 +49,12 @@ export const getDelegateForTransactionsRequestFailure = data => ({
   data,
 });
 
-export const getDelegateForTransactionsRequest = ({ activePeer, publicKey, accountDataUpdated }) =>
+export const getDelegateForTransactionsRequest = ({ activePeer, publicKey }) =>
   (dispatch) => {
     getDelegate(
       activePeer, { publicKey },
     ).then((response) => {
-      const accountDataUpdatedWithDelegate = {
-        ...accountDataUpdated,
-        delegate: response.delegate,
-      };
-      dispatch(getDelegateForTransactionsRequestSuccess(accountDataUpdatedWithDelegate));
+      dispatch(getDelegateForTransactionsRequestSuccess({ delegate: response.delegate }));
     }).catch((error) => {
       dispatch(getDelegateForTransactionsRequestFailure(error));
     });
