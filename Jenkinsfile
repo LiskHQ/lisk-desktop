@@ -24,6 +24,7 @@ def slack_send(color, message) {
 def fail(reason) {
   build_info = get_build_info()
   slack_send('danger', "Build ${build_info} failed (<${env.BUILD_URL}/console|console>, <${env.BUILD_URL}/changes|changes>)\nCause: ${reason}")
+  emailext body: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS: Check console output at $BUILD_URL to view the results.', recipientProviders: [culprits()], subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!'
   currentBuild.result = 'FAILURE'
   error("${reason}")
 }
