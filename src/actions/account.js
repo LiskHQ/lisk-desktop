@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import actionTypes from '../constants/actions';
 import { setSecondPassphrase, send } from '../utils/api/account';
-import { registerDelegate } from '../utils/api/delegate';
+import { registerDelegate, getVotes } from '../utils/api/delegate';
 import { transactionAdded, transactionFailed } from './transactions';
 import { delegateRegisteredFailure } from './delegate';
 import { errorAlertDialogDisplayed } from './dialog';
@@ -62,6 +62,20 @@ export const passphraseUsed = data => ({
   type: actionTypes.passphraseUsed,
   data,
 });
+
+export const accountAddDelegates = delegates => ({
+  type: actionTypes.accountAddDelegates,
+  delegates,
+});
+
+/**
+ * Gets list of all voters
+ */
+export const accountVotersFetched = ({ activePeer, address }) =>
+  dispatch =>
+    getVotes(activePeer, address).then(({ delegates }) => {
+      dispatch(accountAddDelegates(delegates));
+    });
 
 /**
  *

@@ -69,6 +69,14 @@ class Transactions extends React.Component {
       },
     ];
 
+    if (this.props.delegates) {
+      filters.push({
+        name: this.isSmallScreen() ? this.props.t('Statistics') : this.props.t('Delegate statistics'),
+        value: txFilters.statistics,
+        className: 'delegate-statistics',
+      });
+    }
+
     return (
       <div className={`transactions ${styles.activity}`}>
         <header>

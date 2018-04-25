@@ -60,7 +60,7 @@ const account = (state = {}, action) => {
     case actionTypes.transactionsInit:
       return { ...state, delegate: action.data.delegate };
     case actionTypes.accountLoggedIn:
-      return action.data;
+      return { ...state, ...action.data };
     case actionTypes.accountLoggedOut:
       return {
         afterLogout: true,
@@ -69,6 +69,8 @@ const account = (state = {}, action) => {
       return {
         loading: true,
       };
+    case actionTypes.accountAddDelegates:
+      return { ...state, delegates: action.delegates };
     default:
       return state;
   }

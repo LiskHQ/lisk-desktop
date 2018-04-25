@@ -9,6 +9,7 @@ import txFilters from './../../constants/transactionFilters';
 import txTypes from './../../constants/transactionTypes';
 import styles from './transactionList.css';
 import { parseSearchParams } from './../../utils/searchParams';
+import DelegateStatistics from './delegateStatistics';
 
 class TransactionsList extends React.Component {
   constructor(props) {
@@ -70,6 +71,12 @@ class TransactionsList extends React.Component {
         </p>;
       }
       return null;
+    }
+
+    const isDelegateStatistics = filter && filter.value === txFilters.statistics;
+
+    if (isDelegateStatistics) {
+      return <DelegateStatistics />;
     }
 
     return <div className={`${styles.results} transaction-results`}>
