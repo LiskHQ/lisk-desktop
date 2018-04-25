@@ -1,3 +1,7 @@
+* {
+  user-select: none;
+}
+
 body {
   background-color: #013165;
 }
