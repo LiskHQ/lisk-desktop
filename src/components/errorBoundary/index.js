@@ -14,7 +14,7 @@ class ErrorBoundary extends React.Component {
   render() {
     const renderFallback = (isDevelopment, errorMessage = '', info) => (
       <div>
-        <h1 className='error-header'>{errorMessage}</h1>
+        <p className='error-header'>{errorMessage}</p>
         {isDevelopment ?
           <p className='error-body'>{`${info.componentStack}`}</p> : null
         }

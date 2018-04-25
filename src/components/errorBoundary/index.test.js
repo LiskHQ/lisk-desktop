@@ -4,64 +4,54 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import ErrorBoundary from './index';
 
-
-const ProblemChild = () => {
-  throw new Error('Error thrown from problem child');
-  return <div>Error</div>; // eslint-disable-line
-};
-
 /* eslint-disable mocha/no-exclusive-tests */
-const props = {
-  errorMessage: 'Should show this message on error',
-};
+describe.only('ErrorBoundary:', () => {
+  const props = {
+    errorMessage: 'Should show this message on error',
+  };
+  let wrapper;
 
-describe('ErrorBoundary:', () => {
-  describe('on development environment', () => {
-    const envDevelopmentProps = {
-      ...props,
-      isDevelopment: true,
+  /* eslint-disable no-console */
+  const pauseErrorLogging = (codeToRun) => {
+    const logger = console.error;
+    console.error = () => {};
+    codeToRun();
+    console.error = logger;
+  };
+  /* eslint-enable no-console */
+
+  it('should show message on child error with stacktrace', () => {
+    const ProblemChild = () => {
+      throw new Error('Error thrown from problem child');
+      return <div>Error</div>; // eslint-disable-line
     };
-    let componentDidCatchSpy;
-    let wrapper;
-
-    beforeEach(() => {
-      componentDidCatchSpy = spy(ErrorBoundary.prototype, 'componentDidCatch');
-      try {
-        wrapper = mount(<ErrorBoundary {...envDevelopmentProps}>
+    try {
+      pauseErrorLogging(() => {
+        wrapper = mount(<ErrorBoundary {...props}>
           <ProblemChild />
         </ErrorBoundary>);
-      } catch (err) {} // eslint-disable-line
-    });
-
-    it('handles error and shows message on child error with stacktrace', () => {
-      expect(componentDidCatchSpy).to.have.been.calledWith();
-      expect(wrapper.find('.error-header')).to.have.text(props.errorMessage);
-      expect(wrapper.find('.error-body').text().indexOf('in ProblemChild')).to.be.greaterThan(-1);
-    });
+      });
+    } catch (err) {} // eslint-disable-line
+    expect(wrapper.find('.error-header')).to.have.text(props.errorMessage);
+    expect(wrapper.find('.error-body').text().indexOf('inProblemChild')).to.be.greaterThan(-1);
   });
 
-  describe('on production environment', () => {
-    const notEnvDevelopmentProps = {
-      ...props,
-      isDevelopment: false,
+  it('should show message on child error without stacktrace ', () => {
+    const ProblemChild = () => {
+      throw new Error('Error thrown from problem child');
+      return <div>Error</div>; // eslint-disable-line
     };
-    let componentDidCatchSpy;
-    let wrapper;
-
-    beforeEach(() => {
-      componentDidCatchSpy = spy(ErrorBoundary.prototype, 'componentDidCatch');
-      try {
-        wrapper = mount(<ErrorBoundary {...notEnvDevelopmentProps}>
-          <ProblemChild />
-        </ErrorBoundary>);
-      } catch (err) {} // eslint-disable-line
-    });
-
-    it('handles error and shows message on child error without stacktrace', () => {
-      expect(componentDidCatchSpy).to.have.been.calledWith();
+    try {
+      wrapper = mount(<ErrorBoundary {...props}>
+        <ProblemChild />
+      </ErrorBoundary>);
+    } catch (err) {
+      wrapper.setProps({ isDevelopment: false });
+      wrapper.update();
       expect(wrapper.find('.error-header')).to.have.text(props.errorMessage);
       expect(wrapper.find('.error-body')).not.to.be.present();
-    });
+    }
   });
 });
+
 /* eslint-enable mocha/no-exclusive-tests */
