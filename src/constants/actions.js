@@ -41,7 +41,6 @@ const actionTypes = {
   transactionsLoaded: 'TRANSACTIONS_LOADED',
   transactionsFilterSet: 'TRANSACTIONS_FILTER_SET',
   transactionsFiltered: 'TRANSACTIONS_FILTERED',
-  transactionsRequestInit: 'TRANSACTIONS_REQUEST_INIT',
   transactionsInit: 'TRANSACTIONS_INIT',
   transactionInit: 'TRANSACTION_INIT',
   transactionLoadRequested: 'TRANSACTION_LOAD_REQUESTED',
