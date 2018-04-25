@@ -13,7 +13,6 @@ class SingleTransaction extends React.Component {
   constructor(props) {
     super(props);
     if (props.peers.data) {
-      //  TODO refactor to reducs
       this.props.transactionLoadRequested({
         activePeer: props.peers.data,
         id: this.props.match.params.id,
