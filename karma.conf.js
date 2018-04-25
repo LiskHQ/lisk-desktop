@@ -72,6 +72,7 @@ module.exports = function (config) {
             'src/components/registerDelegate/steps/confirm/index.js',
             'src/store/reducers/delegate.js',
             'src/actions/delegate.js',
+            'src/utils/api/liskService.js',
           ],
           overrides: {
             'src/store/**/*.js': {
