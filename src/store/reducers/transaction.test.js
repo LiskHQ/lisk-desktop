@@ -33,7 +33,7 @@ describe('Reducer: transaction(state, action)', () => {
     expect(changedState).to.deep.equal({ ...error });
   });
 
-  it('should add new Delegte object', () => {
+  it('should add new Delegate object', () => {
     const state = [];
     const actionAdd = {
       type: actionTypes.transactionAddDelegateName,

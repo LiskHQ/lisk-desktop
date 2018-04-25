@@ -63,6 +63,7 @@
 
   & .title {
     color: var(--color-black);
+    margin-left: -5px;
   }
 
   & .label {
@@ -82,7 +83,7 @@
 
       & small {
         font-weight: var(--detail-label-font-weight);
-        margin-left: 6px;
+        margin-left: 3px;
         cursor: pointer;
       }
 
