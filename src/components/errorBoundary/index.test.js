@@ -27,7 +27,7 @@ describe('ErrorBoundary:', () => {
       return <div>Error</div>; // eslint-disable-line
     };
 
-    // TODO: renable once enzyme gives support to react 16
+    // TODO: reenable once enzyme gives support to react 16
     // github.com/airbnb/enzyme/issues/1255
     it.skip('should show error message when error occured in child', (done) => {
       const componentDidCatchSpy = spy(ErrorBoundary.prototype, 'componentDidCatch');
@@ -39,6 +39,7 @@ describe('ErrorBoundary:', () => {
         });
       } catch (err) {
         expect(componentDidCatchSpy).to.have.been.called();
+        expect(wrapper.find('.error-header')).to.have.text(props.errorMessage);
         componentDidCatchSpy.restore();
         done();
       } // eslint-disable-line 
