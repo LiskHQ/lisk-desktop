@@ -27,10 +27,13 @@ class VotesPreview extends React.Component {
     this.setState({ surpassMessageDismissed: true });
   }
 
+  nextStep() {
+    this.props.nextStep({});
+    this.props.nextStepGotCalled();
+  }
+
   render() {
-    const {
-      votes, t, nextStep, updateList,
-    } = this.props;
+    const { votes, t, updateList } = this.props;
     const { maxCountOfVotes, maxCountOfVotesInOneTurn } = votingConst;
     const voteList = getVoteList(votes);
     const unvoteList = getUnvoteList(votes);
@@ -91,7 +94,7 @@ class VotesPreview extends React.Component {
           <Button
             className={`${styles.button} next`}
             type='button'
-            onClick={() => { updateList(true); nextStep({}); }}
+            onClick={() => { updateList(true); this.nextStep(); }}
             disabled={totalNewVotesCount === 0 || surpassedVoteLimit || insufficientFunds}>
             <span>{t('Next')}</span>
             <FontIcon value='arrow-right' className={styles.arrow} />

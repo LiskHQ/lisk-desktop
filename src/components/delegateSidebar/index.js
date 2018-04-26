@@ -11,6 +11,7 @@ const DelegateSidebar = props => (
   <Box className={`confirm-votes ${styles.box}`}>
     <MultiStep className={styles.wrapper}>
       <VotesPreview votes={props.votes}
+        nextStepGotCalled={props.nextStepGotCalled}
         updateList={(value) => { props.updateList(value); }}
         onMount={props.setLayover} />
       <PassphraseSteps onMount={props.setLayover} />

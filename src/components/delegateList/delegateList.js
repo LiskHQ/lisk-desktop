@@ -158,7 +158,7 @@ class DelegateList extends React.Component {
 
   showInfo() {
     const params = parseSearchParams(this.props.history.location.search);
-    return (params.votes || params.unvotes) && this.state.showInfo;
+    return !this.props.nextStepCalled && (params.votes || params.unvotes) && this.state.showInfo;
   }
 
   closeInfo() {
