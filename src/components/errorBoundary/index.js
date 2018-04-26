@@ -8,20 +8,11 @@ class ErrorBoundary extends React.Component {
 
   componentDidCatch(error, info) {
     this.setState({ hasError: true, error, info });
-    // TODO: log the error to an error reporting service
   }
 
   render() {
-    const renderFallback = (isDevelopment, errorMessage = '', info) => (
-      <div>
-        <p className='error-header'>{errorMessage}</p>
-        {isDevelopment ?
-          <p className='error-body'>{`${info.componentStack}`}</p> : null
-        }
-      </div>
-    );
     if (this.state.hasError) {
-      return renderFallback(this.props.isDevelopment, this.props.errorMessage, this.state.info);
+      return <p className='error-header'>{this.props.errorMessage}</p>;
     }
     return this.props.children;
   }
