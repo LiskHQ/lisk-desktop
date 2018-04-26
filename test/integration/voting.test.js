@@ -139,7 +139,7 @@ const loginProcess = (votes = []) => {
       account,
     });
 
-  wrapper = mount(renderWithRouter(Voting, store));
+  wrapper = mount(renderWithRouter(Voting, store, { history: { location: { search: '' } } }));
   helper = new Helper(wrapper, store);
   expect(store.getState().account).to.be.an('Object');
   expect(store.getState().voting).to.be.an('Object');

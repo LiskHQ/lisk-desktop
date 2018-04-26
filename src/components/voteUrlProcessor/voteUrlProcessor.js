@@ -34,16 +34,9 @@ export default class VoteUrlProcessor extends React.Component {
     };
 
     const successMessages = {
-      upvotes: `${this.props.upvotes.length} delegate(s) selected to vote`,
-      unvotes: `${this.props.unvotes.length} delegate(s) selected to unvote`,
+      upvotes: this.props.t('{{count}} delegate(s) selected to vote', { count: this.props.upvotes.length }),
+      unvotes: this.props.t('{{count}} delegate(s) selected to unvote', { count: this.props.unvotes.length }),
     };
-
-    // const successMessages = {
-    //   upvotes: this.props.t('{{count}} delegates selected to vote',
-    //     { count: this.props.upvotes.length }),
-    //   unvotes: this.props.t('{{count}} delegates selected to unvote',
-    //     { count: this.props.unvotes.length }),
-    // };
 
     return this.props.show ?
       <Box>

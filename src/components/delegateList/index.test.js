@@ -27,7 +27,7 @@ describe('DelegateListHOC', () => {
       voting,
       loading: [],
     });
-    wrapper = mount(<Provider store={store}><Router><DelegateList /></Router></Provider>, {
+    wrapper = mount(<Provider store={store}><Router><DelegateList history={{ location: { search: '' } }}/></Router></Provider>, {
       context: { store, history, i18n },
       childContextTypes: {
         store: PropTypes.object.isRequired,
