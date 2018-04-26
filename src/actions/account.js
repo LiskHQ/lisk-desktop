@@ -2,8 +2,8 @@ import i18next from 'i18next';
 import actionTypes from '../constants/actions';
 import { setSecondPassphrase, send, getAccount } from '../utils/api/account';
 import { registerDelegate } from '../utils/api/delegate';
-import { transactionAdded, transactionFailed, getTransactionsForAccountFinish } from './transactions';
-import { delegateRegisteredFailure, getDelegateForTransactionsRequest } from './delegate';
+import { transactionAdded, transactionFailed, loadTransactions } from './transactions';
+import { delegateRegisteredFailure, loadDelegate } from './delegate';
 import { errorAlertDialogDisplayed } from './dialog';
 import Fees from '../constants/fees';
 import { toRawLsk } from '../utils/lsk';
@@ -60,16 +60,6 @@ export const accountLoading = () => ({
 
 export const passphraseUsed = data => ({
   type: actionTypes.passphraseUsed,
-  data,
-});
-
-export const getAccountForTransactionsRequestSuccess = data => ({
-  type: actionTypes.getAccountForTransactionsRequestSuccess,
-  data,
-});
-
-export const getAccountForTransactionsRequestFailure = data => ({
-  type: actionTypes.getAccountForTransactionsRequestSuccess,
   data,
 });
 
@@ -144,7 +134,7 @@ export const sent = ({ activePeer, account, recipientId, amount, passphrase, sec
     dispatch(passphraseUsed(passphrase));
   };
 
-export const getAccountForTransactionsRequest = ({
+export const loadAccount = ({
   activePeer,
   address,
   transactionsResponse,
@@ -153,7 +143,6 @@ export const getAccountForTransactionsRequest = ({
   (dispatch) => {
     getAccount(activePeer, address)
       .then((response) => {
-        dispatch(getAccountForTransactionsRequestSuccess(response));
         let accountDataUpdated = {
           confirmed: transactionsResponse.transactions,
           count: parseInt(transactionsResponse.count, 10),
@@ -162,7 +151,7 @@ export const getAccountForTransactionsRequest = ({
         };
 
         if (!isSameAccount && response.publicKey) {
-          dispatch(getDelegateForTransactionsRequest({
+          dispatch(loadDelegate({
             activePeer,
             publicKey: response.publicKey,
           }));
@@ -172,9 +161,6 @@ export const getAccountForTransactionsRequest = ({
             delegate: response.delegate,
           };
         }
-        dispatch(getTransactionsForAccountFinish(accountDataUpdated));
-      })
-      .catch((error) => {
-        dispatch(getAccountForTransactionsRequestFailure(error));
+        dispatch(loadTransactions(accountDataUpdated));
       });
   };

@@ -69,7 +69,7 @@ const account = (state = {}, action) => {
       return {
         loading: true,
       };
-    case actionTypes.getDelegateForTransactionsRequestSuccess:
+    case actionTypes.updateDelegate:
       return {
         ...state,
         ...action.data,

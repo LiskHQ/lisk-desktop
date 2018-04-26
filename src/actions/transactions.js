@@ -1,7 +1,7 @@
 import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../utils/loading';
 import { transactions, transaction, extractAddress } from '../utils/api/account';
-import { getAccountForTransactionsRequest } from './account';
+import { loadAccount } from './account';
 
 /**
  * An action to dispatch transactionAdded
@@ -83,17 +83,7 @@ export const transactionInit = () => ({
   type: actionTypes.transactionInit,
 });
 
-export const getTransactionsForAccountSuccess = data => ({
-  data,
-  type: actionTypes.getTransactionsForAccountSuccess,
-});
-
-export const getTransactionsForAccountFailure = data => ({
-  data,
-  type: actionTypes.getTransactionsForAccountFailure,
-});
-
-export const getTransactionsForAccountFinish = accountUpdated =>
+export const loadTransactions = accountUpdated =>
   (dispatch) => {
     loadingFinished('transactions-init');
     dispatch(transactionsInit(accountUpdated));
@@ -108,15 +98,12 @@ export const getTransactionsForAccount = ({ activePeer, publicKey, address }) =>
     loadingStarted('transactions-init');
     transactions({ activePeer, address, limit: 25 })
       .then((transactionsResponse) => {
-        dispatch(getTransactionsForAccountSuccess({ transactionsResponse }));
-        dispatch(getAccountForTransactionsRequest({
+        dispatch(loadAccount({
           activePeer,
           address,
           transactionsResponse,
           isSameAccount,
         }));
-      }).catch((error) => {
-        dispatch(getTransactionsForAccountFailure(error));
       });
   };
 
