@@ -1,16 +1,18 @@
 import React, { Fragment } from 'react';
-import Waypoint from 'react-waypoint';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Box from '../box';
-import Header from './votingHeader';
-import VotingRow from './votingRow';
-import styles from './delegateList.css';
+import MultiStep from './../multiStep';
+import VotingHeader from './votingHeader';
+import ListLabels from './listLabels';
+import styles from './votingListView.css';
 import VoteUrlProcessor from '../voteUrlProcessor';
 import voteFilters from './../../constants/voteFilters';
 import { parseSearchParams } from '../../utils/searchParams';
+import VoteList from './voteList';
+import DelegateList from './delegateList';
 
 // Create a new Table component injecting Head and Row
-class DelegateList extends React.Component {
+class VotingListView extends React.Component {
   constructor() {
     super();
     this.freezeLoading = false;
@@ -20,7 +22,6 @@ class DelegateList extends React.Component {
     this.state = {
       showInfo: true,
       activeFilter: voteFilters.all,
-      showChangeSummery: false,
       safariClass: '',
     };
   }
@@ -50,13 +51,6 @@ class DelegateList extends React.Component {
         this.isInitial = false;
       }, 5);
     }
-
-    if (this.props.showChangeSummery !== nextProps.showChangeSummery) {
-      this.setState({
-        activeFilter: voteFilters.all,
-        showChangeSummery: nextProps.showChangeSummery,
-      });
-    }
   }
 
   loadVotedDelegates(refresh) {
@@ -83,6 +77,7 @@ class DelegateList extends React.Component {
 
   /**
    * Fetches a list of delegates
+   * This method is also used in all other methods which load more, search or filter the list.
    *
    * @method loadDelegates
    * @param {String} query - The search phrase to match with the delegate name
@@ -146,16 +141,6 @@ class DelegateList extends React.Component {
     return message;
   }
 
-  getList(filteredList) {
-    return filteredList.map(item => (
-      <VotingRow key={item.address} data={item}
-        className={this.state.safariClass}
-        voteToggled={this.props.voteToggled}
-        voteStatus={this.props.votes[item.username]}
-      />
-    ));
-  }
-
   showInfo() {
     const params = parseSearchParams(this.props.history.location.search);
     return !this.props.nextStepCalled && (params.votes || params.unvotes) && this.state.showInfo;
@@ -166,45 +151,44 @@ class DelegateList extends React.Component {
   }
 
   render() {
-    const showChangeSummery = this.state.showChangeSummery ?
-      styles.showChangeSummery : '';
     const filteredList = this.filter(this.props.delegates);
+    const { showChangeSummery, isDelegate, voteToggled, votes, t } = this.props;
     return (
       <Fragment>
-        <VoteUrlProcessor closeInfo={this.closeInfo.bind(this)} show={this.showInfo()}/>
-        { !this.showInfo() ? <Box className={`voting delegate-list-box ${showChangeSummery} ${styles.box}`}>
-          <Header
-            setActiveFilter={this.setActiveFilter.bind(this)}
-            showChangeSummery={this.state.showChangeSummery}
-            isDelegate={this.props.isDelegate}
-            search={ value => this.search(value) }
-          />
-          <section className={`${styles.delegatesList} delegate-list`}>
-            <div className={styles.table}>
-              <ul className={`${styles.tableHead} ${grid.row}`}>
-                <li className={`${grid['col-md-1']} ${grid['col-xs-2']} ${styles.leftText}`}>{this.props.t('Vote', { context: 'verb' })}</li>
-                <li className={`${grid['col-md-1']} ${grid['col-xs-2']}`}>{this.props.t('Rank')}</li>
-                <li className={`${grid['col-md-3']} ${grid['col-xs-5']}`}>{this.props.t('Name')}</li>
-                <li className={`${grid['col-md-5']}`}>{this.props.t('Lisk ID')}</li>
-                <li className={`${grid['col-md-2']} ${grid['col-xs-3']} ${styles.productivity}`}>{this.props.t('Productivity')}</li>
-              </ul>
-              { this.getList(filteredList) }
-            </div>
-            {
-              (filteredList.length === 0) ?
-                <div className={`empty-message ${styles.emptyMessage}`}>
-                  {this.props.t(this.getEmptyStateMessage(filteredList))}
-                </div> : null
-            }
-            <Waypoint bottomOffset='-80%'
-              key={this.props.delegates.length}
-              onEnter={this.loadMore.bind(this)}></Waypoint>
-          </section>
-        </Box>
-          : null }
-      </Fragment>
+        <VoteUrlProcessor closeInfo={this.closeInfo.bind(this)} show={this.showInfo()} />
+        { !this.showInfo() ?
+          <Box className={`voting delegate-list-box ${showChangeSummery} ${styles.box}`}>
+            <VotingHeader
+              setActiveFilter={this.setActiveFilter.bind(this)}
+              showChangeSummery={showChangeSummery}
+              isDelegate={isDelegate}
+              voteToggled={voteToggled}
+              search={ value => this.search(value) }
+            />
+            <section className={`${styles.delegatesList} delegate-list`}>
+              <div className={styles.table}>
+                <ListLabels t={t} styles={styles} grid={grid} status={showChangeSummery} />
+                <MultiStep
+                  className={styles.wrapper}>
+                  <DelegateList list={filteredList} votes={votes}
+                    voteToggled={voteToggled} showChangeSummery={showChangeSummery}
+                    safari={this.state.safariClass} loadMore={this.loadMore.bind(this)} />
+                  <VoteList votes={votes} showChangeSummery={showChangeSummery}
+                    safari={this.state.safariClass} />
+                </MultiStep>
+              </div>
+              {
+                (filteredList.length === 0) ?
+                  <div className={`empty-message ${styles.emptyMessage}`}>
+                    {t(this.getEmptyStateMessage(filteredList))}
+                  </div> : null
+              }
+            </section>
+          </Box> : null
+        }
+      <Fragment>
     );
   }
 }
 
-export default DelegateList;
+export default VotingListView;
