@@ -33,7 +33,11 @@ class TransactionsDetailView extends React.Component {
       </Link>
     )) : '';
 
-    return data;
+    // putting <span>•</span> inbetween array objects
+    const intersperse = data && data
+      .reduce((a, v) => [...a, v, <span>• </span>], []) // eslint-disable-line
+      .slice(0, -1);
+    return intersperse;
   }
 
   getFirstRow(isDelegateVote) {
@@ -169,7 +173,7 @@ class TransactionsDetailView extends React.Component {
           }
           {
             this.props.value.amount === 0 ?
-              <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
+              <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row} votersRow`}>
                 <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
                   <div className={styles.label}>{this.props.t('Added votes')}</div>
                   <div className={styles.value}>{addedVoters}</div>

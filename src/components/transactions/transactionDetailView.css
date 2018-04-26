@@ -51,6 +51,12 @@
     }
   }
 
+  & .votersRow {
+    span {
+      font-size: 30px;
+    }
+  }
+
   & .column {
     position: relative;
     padding-left: 70px;

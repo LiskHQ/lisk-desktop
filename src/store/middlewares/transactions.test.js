@@ -76,7 +76,7 @@ describe('transaction middleware', () => {
     expect(store.dispatch).to.have.been.calledWith(transactionLoaded({ ...mockTransaction }));
   });
 
-  it('should dispatch transactionAddDelegateName for arrName deleted', () => {
+  it('should dispatch transactionAddDelegateName when deleted voters are fetched', () => {
     const delegateCandidateData = accounts['delegate candidate'];
     accountApiMock.expects('transaction').returnsPromise().resolves(mockTransaction);
     delegateApiMock.expects('getDelegate').returnsPromise().resolves({ delegate: delegateCandidateData });
@@ -94,7 +94,7 @@ describe('transaction middleware', () => {
     expect(store.dispatch).to.have.been.calledWith(transactionAddDelegateName(expectedOutput));
   });
 
-  it('should dispatch transactionAddDelegateName for arrName deleted', () => {
+  it('should dispatch transactionAddDelegateName when added voters are fetched', () => {
     const delegateCandidateData = accounts['delegate candidate'];
     accountApiMock.expects('transaction').returnsPromise().resolves({
       username: 'test',

@@ -65,7 +65,9 @@ describe('@integration: Account Transactions', () => {
     transactions.fill(transactionExample);
     requestToActivePeerStub.withArgs(match.any, 'transactions', match({ senderId: '123L', recipientId: '123L' }))
       .returnsPromise().resolves({ transactions, count: 1000 });
-    transactionAPIStub.returnsPromise().resolves();
+    transactionAPIStub.returnsPromise().resolves({ transaction: {
+      id: '123456789', senderId: '123l', recipientId: '456l', votes: { added: [], deleted: [] },
+    } });
     // incoming transaction result
     transactions = new Array(15);
     transactions.fill(transactionExample);
