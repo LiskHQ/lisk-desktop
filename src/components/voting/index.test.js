@@ -5,7 +5,7 @@ import { spy } from 'sinon';
 import { BrowserRouter as Router } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n';
-import VotingHOC from './';
+import VotingHOC from './index';
 import store from '../../store';
 
 describe('VotingHOC', () => {

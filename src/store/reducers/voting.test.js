@@ -4,42 +4,36 @@ import voting from './voting';
 
 describe('Reducer: voting(state, action)', () => {
   const initialState = { votes: {}, delegates: [], refresh: true };
-  const defaultVoteUserData = {
-    confirmed: true,
-    unconfirmed: true,
-    pending: false,
-    publicKey: 'sample_key',
-  };
+  const delegate1 = { publicKey: 'sample_key_1', address: '100001L', rank: 1, productivity: 99 };
+  const delegate2 = { publicKey: 'sample_key_2', address: '100002L', rank: 2, productivity: 98 };
+  const delegate3 = { publicKey: 'sample_key_3', address: '100003L', rank: 3, productivity: 97 };
+  const delegate4 = { publicKey: 'sample_key_4', address: '100004L', rank: 4, productivity: 96 };
+  const delegate5 = { publicKey: 'sample_key_5', address: '100005L', rank: 5, productivity: 95 };
   const cleanVotes = {
-    username1: { confirmed: false, unconfirmed: false, publicKey: 'sample_key' },
-    username2: { confirmed: true, unconfirmed: true, publicKey: 'sample_key' },
-    username3: { confirmed: false, unconfirmed: false, publicKey: 'sample_key' },
+    username1: { confirmed: false, unconfirmed: false, ...delegate1 },
+    username2: { confirmed: true, unconfirmed: true, ...delegate2 },
+    username3: { confirmed: false, unconfirmed: false, ...delegate3 },
   };
   const dirtyVotes = {
-    username1: { confirmed: false, unconfirmed: true, publicKey: 'sample_key' },
-    username2: { confirmed: true, unconfirmed: true, publicKey: 'sample_key' },
-    username3: { confirmed: false, unconfirmed: false, publicKey: 'sample_key' },
+    username1: { confirmed: false, unconfirmed: true, ...delegate1 },
+    username2: { confirmed: true, unconfirmed: true, ...delegate2 },
+    username3: { confirmed: false, unconfirmed: false, ...delegate3 },
   };
   const pendingVotes = {
-    username1: { confirmed: true, unconfirmed: true, pending: true, publicKey: 'sample_key' },
-    username2: { confirmed: true, unconfirmed: true, pending: false, publicKey: 'sample_key' },
-    username3: { confirmed: false, unconfirmed: false, pending: false, publicKey: 'sample_key' },
+    username1: { confirmed: true, unconfirmed: true, pending: true, ...delegate1 },
+    username2: { confirmed: true, unconfirmed: true, pending: false, ...delegate2 },
+    username3: { confirmed: false, unconfirmed: false, pending: false, ...delegate3 },
   };
 
   const restoredVotes = {
-    username1: { confirmed: false, unconfirmed: false, pending: false, publicKey: 'sample_key' },
-    username2: { confirmed: true, unconfirmed: true, pending: false, publicKey: 'sample_key' },
-    username3: { confirmed: false, unconfirmed: false, pending: false, publicKey: 'sample_key' },
+    username1: { confirmed: false, unconfirmed: false, pending: false, ...delegate1 },
+    username2: { confirmed: true, unconfirmed: true, pending: false, ...delegate2 },
+    username3: { confirmed: false, unconfirmed: false, pending: false, ...delegate3 },
   };
-  const delegates1 = [
-    { username: 'username1', publicKey: 'sample_key' },
-    { username: 'username2', publicKey: 'sample_key' },
-  ];
-  const delegates2 = [
-    { username: 'username3', publicKey: 'sample_key' },
-    { username: 'username4', publicKey: 'sample_key' },
-  ];
-  const fullDelegates = [...delegates1, ...delegates2];
+
+  const delegateList1 = [{ username: 'username1', ...delegate1 }, { username: 'username2', ...delegate2 }];
+  const delegateList2 = [{ username: 'username3', ...delegate3 }, { username: 'username4', ...delegate4 }];
+  const fullDelegates = [...delegateList1, ...delegateList2];
 
   it('should return default state if action does not match', () => {
     const action = {
@@ -65,13 +59,13 @@ describe('Reducer: voting(state, action)', () => {
     const action = {
       type: actionTypes.votesAdded,
       data: {
-        list: delegates1,
+        list: delegateList1,
       },
     };
     const expectedState = {
       votes: {
-        username1: { confirmed: true, unconfirmed: true, publicKey: 'sample_key' },
-        username2: { confirmed: true, unconfirmed: true, publicKey: 'sample_key' },
+        username1: { confirmed: true, unconfirmed: true, ...delegate1 },
+        username2: { confirmed: true, unconfirmed: true, ...delegate2 },
       },
       delegates: [],
       refresh: false,
@@ -85,13 +79,13 @@ describe('Reducer: voting(state, action)', () => {
     const action = {
       type: actionTypes.delegatesAdded,
       data: {
-        list: delegates2,
+        list: delegateList2,
         totalCount: 100,
         refresh: false,
       },
     };
     const state = {
-      delegates: delegates1,
+      delegates: delegateList1,
     };
     const expectedState = {
       delegates: fullDelegates,
@@ -107,16 +101,16 @@ describe('Reducer: voting(state, action)', () => {
     const action = {
       type: actionTypes.delegatesAdded,
       data: {
-        list: delegates1,
+        list: delegateList1,
         totalDelegates: 100,
         refresh: true,
       },
     };
     const state = {
-      delegates: delegates2,
+      delegates: delegateList2,
     };
     const expectedState = {
-      delegates: delegates1,
+      delegates: delegateList1,
       refresh: true,
       totalDelegates: 100,
     };
@@ -128,7 +122,7 @@ describe('Reducer: voting(state, action)', () => {
   it('should toggle unconfirmed state, with action: voteToggled', () => {
     const action = {
       type: actionTypes.voteToggled,
-      data: delegates1[0],
+      data: delegateList1[0],
     };
     const state = { votes: cleanVotes };
     const expectedState = {
@@ -143,11 +137,11 @@ describe('Reducer: voting(state, action)', () => {
   it('should add to votes dictionary in not exist, with action: voteToggled', () => {
     const action = {
       type: actionTypes.voteToggled,
-      data: delegates1[0],
+      data: delegateList1[0],
     };
     const expectedState = {
       votes: {
-        [delegates1[0].username]: dirtyVotes[delegates1[0].username],
+        [delegateList1[0].username]: dirtyVotes[delegateList1[0].username],
       },
       delegates: [],
       refresh: false,
@@ -193,11 +187,11 @@ describe('Reducer: voting(state, action)', () => {
     const action = {
       type: actionTypes.votesUpdated,
       data: {
-        list: [{ username: 'username5', publicKey: 'sample_key' }],
+        list: [{ username: 'username5', ...delegate5 }],
       },
     };
     const votedButNotYetInList = {
-      username1: { confirmed: true, unconfirmed: true, pending: true, publicKey: 'sample_key' },
+      username1: { confirmed: true, unconfirmed: true, pending: true, ...delegate1 },
     };
     const state = {
       votes: { ...votedButNotYetInList },
@@ -205,7 +199,7 @@ describe('Reducer: voting(state, action)', () => {
     const newUserNameRegisteredInVotes = {
       votes: {
         ...votedButNotYetInList,
-        username5: { ...defaultVoteUserData },
+        username5: { confirmed: true, unconfirmed: true, pending: false, ...delegate5 },
       },
       refresh: false,
     };
@@ -217,11 +211,11 @@ describe('Reducer: voting(state, action)', () => {
     const updateVotesWithExistingUsernameAction = {
       type: actionTypes.votesUpdated,
       data: {
-        list: [{ username: 'username1', publicKey: 'sample_key' }],
+        list: [{ username: 'username1', ...delegate1 }],
       },
     };
     const updateVotesUnvotedWithExistingUsername = {
-      username1: { confirmed: true, unconfirmed: false, pending: true, publicKey: 'sample_key' },
+      username1: { confirmed: true, unconfirmed: false, pending: true, ...delegate1 },
     };
     const state = {
       votes: { ...updateVotesUnvotedWithExistingUsername },
@@ -239,11 +233,11 @@ describe('Reducer: voting(state, action)', () => {
     const action = {
       type: actionTypes.votesUpdated,
       data: {
-        list: [{ username: 'username5', publicKey: 'sample_key' }],
+        list: [{ username: 'username5', ...delegate5 }],
       },
     };
     const updateVotesDirtyNotVotedNotExistingUsername = {
-      username1: { confirmed: true, unconfirmed: false, pending: false, publicKey: 'sample_key' },
+      username1: { confirmed: true, unconfirmed: false, pending: false, ...delegate1 },
     };
     const state = {
       votes: { ...updateVotesDirtyNotVotedNotExistingUsername },
@@ -251,7 +245,7 @@ describe('Reducer: voting(state, action)', () => {
     const newUsernameAddedToVotes = {
       votes: {
         ...updateVotesDirtyNotVotedNotExistingUsername,
-        username5: { ...defaultVoteUserData },
+        username5: { confirmed: true, unconfirmed: true, pending: false, ...delegate5 },
       },
       refresh: false,
     };
@@ -263,11 +257,11 @@ describe('Reducer: voting(state, action)', () => {
     const action = {
       type: actionTypes.votesUpdated,
       data: {
-        list: [{ username: 'username1', publicKey: 'sample_key' }],
+        list: [{ username: 'username1', ...delegate1 }],
       },
     };
     const updateVotesDirtyNotVotedExistingUsername = {
-      username1: { confirmed: true, unconfirmed: false, pending: false, publicKey: 'sample_key' },
+      username1: { confirmed: true, unconfirmed: false, pending: false, ...delegate1 },
     };
     const state = {
       votes: { ...updateVotesDirtyNotVotedExistingUsername },
@@ -284,17 +278,17 @@ describe('Reducer: voting(state, action)', () => {
     const action = {
       type: actionTypes.votesUpdated,
       data: {
-        list: [{ username: 'username1', publicKey: 'sample_key' }],
+        list: [{ username: 'username1', ...delegate1 }],
       },
     };
     const updateVotesNonConditionsMet = {
-      username1: { confirmed: true, unconfirmed: true, pending: true, publicKey: 'sample_key' },
+      username1: { confirmed: true, unconfirmed: true, pending: true, ...delegate1 },
     };
     const state = {
       votes: { ...updateVotesNonConditionsMet },
     };
     const votesRecordsWithDefaultFlags = {
-      votes: { username1: { ...defaultVoteUserData } },
+      votes: { username1: { confirmed: true, unconfirmed: true, pending: false, ...delegate1 } },
       refresh: false,
     };
     const changedState = voting(state, action);
