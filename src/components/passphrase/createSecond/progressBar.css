@@ -7,6 +7,8 @@
   max-width: 80%;
   background: var(--color-primary-dark);
   margin: 40px auto;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
 }
 
 .value {
