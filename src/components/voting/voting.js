@@ -2,7 +2,7 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './voting.css';
 import DelegateSidebar from '../delegateSidebar';
-import DelegateList from '../delegateList';
+import VotingListView from '../votingListView';
 
 class Voting extends React.Component {
   constructor() {
@@ -44,7 +44,7 @@ class Voting extends React.Component {
             updateList={(value) => { this.toggleSummery(value); }} />
         </aside>
         <section className={`${grid['col-sm-12']} ${grid['col-md-8']} ${styles.votingBox}`}>
-          <DelegateList showChangeSummery={this.state.showChangeSummery}
+          <VotingListView showChangeSummery={this.state.showChangeSummery}
             nextStepCalled={this.state.nextStepCalled}
             history={this.props.history}
           />
