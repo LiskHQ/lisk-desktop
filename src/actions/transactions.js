@@ -1,6 +1,8 @@
 import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../utils/loading';
-import { transactions, transaction, extractAddress } from '../utils/api/account';
+import { transactions, transaction } from '../utils/api/account';
+import { getDelegate } from '../utils/api/delegate';
+import { extractAddress } from '../utils/account';
 import { loadAccount } from './account';
 
 /**
@@ -95,6 +97,7 @@ export const getTransactionsForAccount = ({ activePeer, publicKey, address }) =>
       extractAddress(publicKey) :
       null;
     const isSameAccount = lastActiveAddress === address;
+    dispatch(transactionInit());
     loadingStarted('transactions-init');
     transactions({ activePeer, address, limit: 25 })
       .then((transactionsResponse) => {
@@ -108,10 +111,26 @@ export const getTransactionsForAccount = ({ activePeer, publicKey, address }) =>
   };
 
 
-export const transactionLoadRequested = ({ activePeer, id }) =>
+export const loadTransaction = ({ activePeer, id }) =>
   (dispatch) => {
     transaction({ activePeer, id })
       .then((response) => {
+        const added = (response.transaction.votes && response.transaction.votes.added) || [];
+        const deleted = (response.transaction.votes && response.transaction.votes.deleted) || [];
+
+        deleted.map(publicKey =>
+          getDelegate(activePeer, { publicKey })
+            .then((delegateData) => {
+              dispatch(transactionAddDelegateName({ delegate: delegateData.delegate, voteArrayName: 'deleted' }));
+            }),
+        );
+
+        added.map(publicKey =>
+          getDelegate(activePeer, { publicKey })
+            .then((delegateData) => {
+              dispatch(transactionAddDelegateName({ delegate: delegateData.delegate, voteArrayName: 'added' }));
+            }),
+        );
         dispatch(transactionLoaded({ ...response }));
       }).catch((error) => {
         dispatch(transactionLoadFailed({ error }));

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { transactionLoadRequested } from '../../actions/transactions';
+import { loadTransaction } from '../../actions/transactions';
 import { TimeFromTimestamp, DateFromTimestamp } from './../timestamp/index';
 import CopyToClipboard from '../copyToClipboard';
 import AccountVisual from '../accountVisual';
@@ -18,7 +18,10 @@ class TransactionsDetailView extends React.Component {
   constructor(props) {
     super(props);
     if (props.peers.data) {
-      this.props.transactionLoadRequested({ id: this.props.value.id });
+      this.props.loadTransaction({
+        activePeer: props.peers.data,
+        id: this.props.value.id,
+      });
     }
   }
 
@@ -35,7 +38,7 @@ class TransactionsDetailView extends React.Component {
 
     // putting <span>•</span> inbetween array objects
     const intersperse = data && data
-      .reduce((arr, val) => [...arr, val, <span className={styles.dot} key={`span-${val}`}>• </span>], [])
+      .reduce((arr, val) => [...arr, val, <span className={styles.dot} key={`span-${val.props.children}`}>• </span>], [])
       .slice(0, -1);
     return intersperse;
   }
@@ -223,7 +226,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  transactionLoadRequested: data => dispatch(transactionLoadRequested(data)),
+  loadTransaction: data => dispatch(loadTransaction(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(TransactionsDetailView));
