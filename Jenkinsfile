@@ -90,7 +90,6 @@ node('lisk-hub') {
         fail('Stopping build: build or deploy failed')
       }
     }
-
     stage ('Run Unit Tests') {
       try {
         ansiColor('xterm') {
@@ -110,7 +109,7 @@ node('lisk-hub') {
     stage ('Run E2E Tests') {
       try {
         ansiColor('xterm') {
-          withCredentials([string(credentialsId: 'lisk-hub-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
+          withCredentials([string(credentialsId: 'lisk-hub-testnet-passphrase', variable: 'TESTNET_PASSPHRASE'), usernamePassword(credentialsId: 'lisk-hub-browserstack-credentials', usernameVariable: 'BROWSERSTACK_USERNAME', passwordVariable: 'BROWSERSTACK_PASSWORD')]) {
             sh '''
             N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
 
@@ -129,17 +128,22 @@ node('lisk-hub') {
 
             npm run serve --  $WORKSPACE/app/build -p 300$N -a 127.0.0.1 &>server.log &
             if [ -z $CHANGE_BRANCH ]; then
-              npm run --silent e2e-test -- --params.baseURL http://127.0.0.1:300$N --params.liskCoreURL http://127.0.0.1:$LISK_PORT --cucumberOpts.tags @advanced
-              npm run --silent e2e-test -- --params.baseURL http://127.0.0.1:300$N --params.liskCoreURL https://testnet.lisk.io --cucumberOpts.tags @testnet --params.useTestnetPassphrase true
+              npm run --silent e2e-test -- --params.baseURL http://127.0.0.1:300$N --params.liskCoreURL https://testnet.lisk.io --cucumberOpts.tags @testnet --params.useTestnetPassphrase true --directConnect true
             else
               echo "Skipping @testnet end-to-end tests because we're not on 'development' branch"
             fi
-            npm run --silent e2e-test -- --params.baseURL http://127.0.0.1:300$N --params.liskCoreURL http://127.0.0.1:$LISK_PORT
+
+            ~/bin/BrowserStackLocal --key $BROWSERSTACK_PASSWORD --folder ${WORKSPACE}/app/build --local-identifier $BRANCH_NAME &
+            sleep 10
+            npm run --silent e2e-test -- --params.baseURL http://127.0.0.1:300$N --params.liskCoreURL http://127.0.0.1:$LISK_PORT --seleniumAddress http://hub-cloud.browserstack.com/wd/hub
+
             if [ -z $CHANGE_BRANCH ]; then
-              npm run --silent e2e-test -- --params.baseURL http://127.0.0.1:300$N --cucumberOpts.tags @testnet --params.useTestnetPassphrase true --params.network testnet
+
+              npm run --silent e2e-test -- --params.baseURL http://127.0.0.1:300$N --cucumberOpts.tags @testnet --params.useTestnetPassphrase true --params.network testnet --directConnect true
             else
               echo "Skipping @testnet end-to-end tests because we're not on 'development' branch"
             fi
+
             '''
           }
         }
