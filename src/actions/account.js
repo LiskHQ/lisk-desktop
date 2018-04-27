@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import actionTypes from '../constants/actions';
 import { setSecondPassphrase, send } from '../utils/api/account';
-import { registerDelegate, getVotes } from '../utils/api/delegate';
+import { registerDelegate, getVotes, getVoters } from '../utils/api/delegate';
 import { transactionAdded, transactionFailed } from './transactions';
 import { delegateRegisteredFailure } from './delegate';
 import { errorAlertDialogDisplayed } from './dialog';
@@ -63,20 +63,33 @@ export const passphraseUsed = data => ({
   data,
 });
 
-export const accountAddDelegates = delegates => ({
-  type: actionTypes.accountAddDelegates,
-  delegates,
+export const accountAddVotes = votes => ({
+  type: actionTypes.accountAddVotes,
+  votes,
 });
+
+export const accountAddVoters = voters => ({
+  type: actionTypes.accountAddVoters,
+  voters,
+});
+
+/**
+ * Gets list of all votes
+ */
+export const accountVotesFetched = ({ activePeer, address }) =>
+  dispatch =>
+    getVotes(activePeer, address).then(({ delegates }) => {
+      dispatch(accountAddVotes(delegates));
+    });
 
 /**
  * Gets list of all voters
  */
-export const accountVotersFetched = ({ activePeer, address }) =>
+export const accountVotersFetched = ({ activePeer, publicKey }) =>
   dispatch =>
-    getVotes(activePeer, address).then(({ delegates }) => {
-      dispatch(accountAddDelegates(delegates));
+    getVoters(activePeer, publicKey).then(({ accounts }) => {
+      dispatch(accountAddVoters(accounts));
     });
-
 /**
  *
  */

@@ -9,6 +9,7 @@ import txFilters from './../../constants/transactionFilters';
 import txTypes from './../../constants/transactionTypes';
 import styles from './transactionList.css';
 import { parseSearchParams } from './../../utils/searchParams';
+import { accountVotersFetched, accountVotesFetched } from '../../actions/account';
 import DelegateStatistics from './delegateStatistics';
 
 class TransactionsList extends React.Component {
@@ -108,8 +109,19 @@ class TransactionsList extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  transactionsRequestInit: data => dispatch(transactionsRequestInit(data)),
+
+const mapStateToProps = state => ({
+  delegate: state.account.delegate || {},
+  votes: state.account.votes || [],
+  voters: state.account.voters || [],
+  publicKey: state.account.delegate ? state.account.delegate.publicKey : null,
+  peers: state.peers,
 });
 
-export default connect(null, mapDispatchToProps)(TransactionsList);
+const mapDispatchToProps = dispatch => ({
+  transactionsRequestInit: data => dispatch(transactionsRequestInit(data)),
+  accountVotersFetched: data => dispatch(accountVotersFetched(data)),
+  accountVotesFetched: data => dispatch(accountVotesFetched(data)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TransactionsList);

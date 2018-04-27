@@ -69,8 +69,10 @@ const account = (state = {}, action) => {
       return {
         loading: true,
       };
-    case actionTypes.accountAddDelegates:
-      return { ...state, delegates: action.delegates };
+    case actionTypes.accountAddVotes:
+      return { ...state, votes: action.votes };
+    case actionTypes.accountAddVoters:
+      return { ...state, voters: action.voters };
     default:
       return state;
   }
