@@ -13,7 +13,14 @@
     margin-bottom: 16px;
   }
 
+  & .votes {
+    color: var(--color-grayscale-dark);
+    font-size: 14px;
+  }
+
   & .cancel {
+    color: var(--color-grayscale-dark);
+    font-family: var(--content-font);
     float: right;
     font-size: 12px;
     font-weight: 600;

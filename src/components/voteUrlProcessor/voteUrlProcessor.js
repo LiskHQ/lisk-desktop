@@ -47,7 +47,7 @@ export default class VoteUrlProcessor extends React.Component {
                   this.props.clearVoteLookupStatus();
                   this.props.clearVotes();
                   this.props.closeInfo();
-                }}>Cancel <FontIcon value='close' />
+                }}>{this.props.t('Cancel')} <FontIcon value='close' />
                 </div>
               </h2>
           </header>
@@ -56,7 +56,7 @@ export default class VoteUrlProcessor extends React.Component {
               this.props[list].length ? (
                 <div key={key} className={`${styles.block} ${list}-message`}>
                   <div className={`${styles.title}`}>{errorMessages[list]}</div>
-                  {this.props[list].join(', ')}
+                  <div className={styles.votes}>{this.props[list].join(', ')}</div>
                 </div>
               ) : null
             ))}
@@ -64,7 +64,7 @@ export default class VoteUrlProcessor extends React.Component {
               return this.props[list].length ? (
                 <div key={key} className={styles.block}>
                   <div className={`${styles.title}`}>{successMessages[list]}</div>
-                  <div className={`${list}-message`}>{this.props[list].join(', ')}</div>
+                  <div className={`${list}-message ${styles.votes}`}>{this.props[list].join(', ')}</div>
                 </div>
               ) : null }
             )}</div>
