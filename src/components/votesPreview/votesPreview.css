@@ -50,6 +50,10 @@
   box-sizing: border-box;
   height: 100%;
 
+  & .progress {
+    overflow: auto;
+  }
+
   & header {
     margin-bottom: 4vh; /* stylelint-disable-line */
 
@@ -71,6 +75,7 @@
 
 .footerWrapper {
   margin-bottom: 56px;
+  margin-top: 40px;
   text-align: center;
 
   & .button {
@@ -86,7 +91,10 @@
   width: 100%;
   font-family: var(--heading-font);
   position: relative;
-  margin-bottom: 40px;
+
+  &:first-of-type {
+    margin-bottom: 40px;
+  }
 
   &.red {
     & h4 {
@@ -169,6 +177,18 @@
         margin: 15px 0px;
       }
     }
+  }
+}
+
+@media (--xLarge-viewport) {
+  .progress {
+    margin: 0px calc(0 - var(--box-padding-left-XL));
+  }
+}
+
+@media (--large-viewport) {
+  .progress {
+    margin: 0px calc(0 - var(--box-padding-left-L));
   }
 }
 

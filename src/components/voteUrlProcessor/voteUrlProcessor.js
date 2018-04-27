@@ -51,7 +51,7 @@ export default class VoteUrlProcessor extends React.Component {
                 </div>
               </h2>
           </header>
-          <div>
+          <div className={styles.selectedVotes}>
             <div>{Object.keys(errorMessages).map((list, key) => (
               this.props[list].length ? (
                 <div key={key} className={`${styles.block} ${list}-message`}>

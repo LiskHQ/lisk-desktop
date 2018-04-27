@@ -299,8 +299,8 @@
   "checking availability": "checking availability",
   "more": "more",
   "with a 2nd passphrase": "with a 2nd passphrase",
-  "{{count}} delegate(s) selected to unvote": "{{count}} delegate(s) selected to unvote",
-  "{{count}} delegate(s) selected to unvote_plural": "",
-  "{{count}} delegate(s) selected to vote": "{{count}} delegate(s) selected to vote",
-  "{{count}} delegate(s) selected to vote_plural": ""
+  "{{count}} delegate(s) selected to unvote": "{{count}} delegate selected to unvote",
+  "{{count}} delegate(s) selected to unvote_plural": "{{count}} delegates selected to unvote",
+  "{{count}} delegate(s) selected to vote": "{{count}} delegate selected to vote",
+  "{{count}} delegate(s) selected to vote_plural": "{{count}} delegates selected to vote"
 }

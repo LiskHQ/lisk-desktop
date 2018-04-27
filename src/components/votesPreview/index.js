@@ -62,7 +62,7 @@ class VotesPreview extends React.Component {
             {t('Learn how voting works')} <FontIcon>arrow-right</FontIcon>
           </a>
         </header>
-        <section>
+        <section className={styles.progress}>
           <div className={`${styles.progressWrapper} ${selectionClass} selection-wrapper`}>
             <CircularProgressBar
               styles={progressBarStyles}

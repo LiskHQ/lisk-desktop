@@ -20,12 +20,20 @@
     cursor: pointer;
   }
 
+  & .selectedVotes {
+    overflow: auto;
+  }
+
   & .block {
     margin-bottom: 32px;
   }
 
   & .button {
     margin-bottom: 32px;
+  }
+
+  & footer {
+    margin-top: 40px;
   }
 }
 
