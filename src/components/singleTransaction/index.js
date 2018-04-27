@@ -6,6 +6,7 @@ import TransactionDetails from './../transactions/transactionDetailView';
 import CopyToClipboard from '../copyToClipboard';
 import Box from '../box';
 import EmptyState from '../emptyState';
+import TransactionType from '../transactions/transactionType';
 import styles from './singleTransaction.css';
 
 class SingleTransaction extends React.Component {
@@ -28,7 +29,12 @@ class SingleTransaction extends React.Component {
       { this.props.transaction.id && !this.props.transaction.error ?
         <Fragment>
           <header>
-            <h2>{this.props.t('Transaction ID')}</h2>
+            <h2>
+              <TransactionType
+                {...this.props.transaction}
+                address={this.props.transaction.senderId}
+                showTransaction />
+            </h2>
             <CopyToClipboard
               value={this.props.match.params.id}
               text={this.props.match.params.id}
@@ -37,7 +43,10 @@ class SingleTransaction extends React.Component {
           </header>
           <div className={styles.content}>
             <div className={styles.detailsWrapper}>
-              <TransactionDetails value={this.props.transaction} t={this.props.t} />
+              <TransactionDetails
+                value={this.props.transaction}
+                t={this.props.t}
+                match={this.props.match} />
             </div>
           </div>
         </Fragment> :

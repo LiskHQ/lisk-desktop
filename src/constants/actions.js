@@ -38,6 +38,7 @@ const actionTypes = {
   transactionsFiltered: 'TRANSACTIONS_FILTERED',
   transactionsRequestInit: 'TRANSACTIONS_REQUEST_INIT',
   transactionsInit: 'TRANSACTIONS_INIT',
+  transactionInit: 'TRANSACTION_INIT',
   transactionLoadRequested: 'TRANSACTION_LOAD_REQUESTED',
   transactionLoaded: 'TRANSACTION_LOADED',
   transactionLoadFailed: 'TRANSACTION_LOAD_FAILED',
@@ -51,6 +52,7 @@ const actionTypes = {
   settingsUpdated: 'SETTINGS_UPDATED',
   settingsReset: 'SETTINGS_RESET',
   removeSavedAccountPassphrase: 'REMOVE_SAVED_ACCOUNT_PASSPHRASE',
+  transactionAddDelegateName: 'TRANSACTION_ADD_DELEGATE_NAME',
 };
 
 export default actionTypes;

@@ -2,7 +2,7 @@ import React from 'react';
 import fillWordsList from 'bitcore-mnemonic/lib/words/english';
 import styles from './confirm.css';
 import { PrimaryButton } from '../../toolbox/buttons/button';
-import { extractAddress } from '../../../utils/api/account';
+import { extractAddress } from '../../../utils/account';
 import TransitionWrapper from '../../toolbox/transitionWrapper';
 import AccountVisual from '../../accountVisual';
 import SecondPassphraseSteps from '../ConfirmSecond';

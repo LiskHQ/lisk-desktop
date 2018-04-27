@@ -16,7 +16,7 @@ const TransactionType = (props) => {
       type = t('Delegate Registration');
       break;
     case 3:
-      type = t('Vote', { context: 'noun' });
+      type = t('Delegate vote', { context: 'noun' });
       break;
     case 4:
       type = t('Multisignature Creation');
@@ -35,8 +35,8 @@ const TransactionType = (props) => {
       break;
   }
   const address = props.address !== props.senderId ? props.senderId : props.recipientId;
-  const template = type ?
-    <span className={styles.smallButton}>{type}</span> :
+  const template = type || props.showTransaction ?
+    <span className={styles.smallButton}>{type || t('Transaction')}</span> :
     <span className={styles.ordinaryText}>{address}</span>;
   return template;
 };

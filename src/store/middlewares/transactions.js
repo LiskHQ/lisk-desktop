@@ -1,6 +1,7 @@
 import { loadingStarted, loadingFinished } from '../../utils/loading';
 
-import { unconfirmedTransactions, transactions as getTransactions, getAccount, transaction, extractAddress } from '../../utils/api/account';
+import { unconfirmedTransactions, transactions as getTransactions, getAccount, transaction } from '../../utils/api/account';
+import { extractAddress } from '../../utils/account';
 import { getDelegate } from '../../utils/api/delegate';
 import {
   transactionsFailed,
@@ -8,6 +9,8 @@ import {
   transactionsInit,
   transactionLoaded,
   transactionLoadFailed,
+  transactionAddDelegateName,
+  transactionInit,
 } from '../../actions/transactions';
 
 import actionTypes from '../../constants/actions';
@@ -45,6 +48,7 @@ const getAccountSuccess = (store, accountData) => {
 
 const initTransactions = (store, action) => {
   const state = store.getState();
+  store.dispatch(transactionInit());
   const activePeer = state.peers.data;
   const { address } = action.data;
   const lastActiveAddress = state.account ?
@@ -90,6 +94,22 @@ const initTransactions = (store, action) => {
 const loadTransaction = (store, action) => {
   transaction({ activePeer: store.getState().peers.data, id: action.data.id })
     .then((response) => {
+      const added = (response.transaction.votes && response.transaction.votes.added) || [];
+      const deleted = (response.transaction.votes && response.transaction.votes.deleted) || [];
+
+      deleted.map(publicKey =>
+        getDelegate(store.getState().peers.data, { publicKey })
+          .then((delegateData) => {
+            store.dispatch(transactionAddDelegateName({ delegate: delegateData.delegate, voteArrayName: 'deleted' }));
+          }),
+      );
+
+      added.map(publicKey =>
+        getDelegate(store.getState().peers.data, { publicKey })
+          .then((delegateData) => {
+            store.dispatch(transactionAddDelegateName({ delegate: delegateData.delegate, voteArrayName: 'added' }));
+          }),
+      );
       store.dispatch(transactionLoaded({ ...response }));
     }).catch((error) => {
       store.dispatch(transactionLoadFailed({ error }));

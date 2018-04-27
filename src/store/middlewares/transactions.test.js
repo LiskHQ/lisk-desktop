@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { spy, stub, mock } from 'sinon';
 import * as accountApi from '../../utils/api/account';
 import * as delegateApi from '../../utils/api/delegate';
-import { transactionsFailed, transactionLoaded, transactionLoadFailed, transactionsInit } from '../../actions/transactions';
+import { transactionsFailed, transactionLoaded, transactionLoadFailed, transactionsInit, transactionAddDelegateName } from '../../actions/transactions';
 import middleware from './transactions';
 import actionTypes from '../../constants/actions';
 import accounts from '../../../test/constants/accounts';
@@ -17,6 +17,7 @@ describe('transaction middleware', () => {
     username: 'test',
     amount: 1e8,
     recipientId: '16313739661670634666L',
+    transaction: { votes: { deleted: [{ id: 123 }] } },
   };
 
   beforeEach(() => {
@@ -73,6 +74,47 @@ describe('transaction middleware', () => {
 
     middleware(store)(next)(givenAction);
     expect(store.dispatch).to.have.been.calledWith(transactionLoaded({ ...mockTransaction }));
+  });
+
+  it('should dispatch transactionAddDelegateName when deleted voters are fetched', () => {
+    const delegateCandidateData = accounts['delegate candidate'];
+    accountApiMock.expects('transaction').returnsPromise().resolves(mockTransaction);
+    delegateApiMock.expects('getDelegate').returnsPromise().resolves({ delegate: delegateCandidateData });
+
+    const givenAction = {
+      type: actionTypes.transactionLoadRequested,
+      data: { id: '1345' },
+    };
+
+    middleware(store)(next)(givenAction);
+    const expectedOutput = {
+      voteArrayName: 'deleted',
+      delegate: delegateCandidateData,
+    };
+    expect(store.dispatch).to.have.been.calledWith(transactionAddDelegateName(expectedOutput));
+  });
+
+  it('should dispatch transactionAddDelegateName when added voters are fetched', () => {
+    const delegateCandidateData = accounts['delegate candidate'];
+    accountApiMock.expects('transaction').returnsPromise().resolves({
+      username: 'test',
+      amount: 1e8,
+      recipientId: '16313739661670634666L',
+      transaction: { votes: { added: [{ id: 23 }] } },
+    });
+    delegateApiMock.expects('getDelegate').returnsPromise().resolves({ delegate: delegateCandidateData });
+
+    const givenAction = {
+      type: actionTypes.transactionLoadRequested,
+      data: { id: '1345' },
+    };
+
+    middleware(store)(next)(givenAction);
+    const expectedOutput = {
+      voteArrayName: 'added',
+      delegate: delegateCandidateData,
+    };
+    expect(store.dispatch).to.have.been.calledWith(transactionAddDelegateName(expectedOutput));
   });
 
   it('should catch if transaction was not found', () => {

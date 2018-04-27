@@ -80,6 +80,16 @@ export const transactionLoadFailed = data => ({
   data,
   type: actionTypes.transactionLoadFailed,
 });
+
+export const transactionAddDelegateName = ({ delegate, voteArrayName }) => ({
+  delegate,
+  voteArrayName,
+  type: actionTypes.transactionAddDelegateName,
+});
+
+export const transactionInit = () => ({
+  type: actionTypes.transactionInit,
+});
 /**
  *
  *

@@ -9,12 +9,15 @@ import * as accountAPI from '../../src/utils/api/account';
 import * as delegateAPI from '../../src/utils/api/delegate';
 import { prepareStore, renderWithRouter } from '../utils/applicationInit';
 import accountReducer from '../../src/store/reducers/account';
-import transactionReducer from '../../src/store/reducers/transactions';
+import transactionsReducer from '../../src/store/reducers/transactions';
 import peersReducer from '../../src/store/reducers/peers';
 import loadingReducer from '../../src/store/reducers/loading';
+import votingReducer from '../../src/store/reducers/voting';
+import transactionReducer from '../../src/store/reducers/transaction';
 import loginMiddleware from '../../src/store/middlewares/login';
 import accountMiddleware from '../../src/store/middlewares/account';
 import transactionsMiddleware from '../../src/store/middlewares/transactions';
+import votingMiddleware from '../../src/store/middlewares/voting';
 import { activePeerSet } from '../../src/actions/peers';
 import networks from './../../src/constants/networks';
 import txTypes from './../../src/constants/transactionTypes';
@@ -44,10 +47,12 @@ describe('@integration: Account Transactions', () => {
   let requestToActivePeerStub;
   let accountAPIStub;
   let delegateAPIStub;
+  let transactionAPIStub;
 
   beforeEach(() => {
     requestToActivePeerStub = stub(peers, 'requestToActivePeer');
     accountAPIStub = stub(accountAPI, 'getAccount');
+    transactionAPIStub = stub(accountAPI, 'transaction');
     delegateAPIStub = stub(delegateAPI, 'getDelegate');
 
     const transactionExample = { senderId: '456L', receiverId: '456L', type: txTypes.send };
@@ -60,7 +65,9 @@ describe('@integration: Account Transactions', () => {
     transactions.fill(transactionExample);
     requestToActivePeerStub.withArgs(match.any, 'transactions', match({ senderId: '123L', recipientId: '123L' }))
       .returnsPromise().resolves({ transactions, count: 1000 });
-
+    transactionAPIStub.returnsPromise().resolves({ transaction: {
+      id: '123456789', senderId: '123l', recipientId: '456l', votes: { added: [], deleted: [] },
+    } });
     // incoming transaction result
     transactions = new Array(15);
     transactions.fill(transactionExample);
@@ -79,13 +86,16 @@ describe('@integration: Account Transactions', () => {
     requestToActivePeerStub.restore();
     accountAPIStub.restore();
     delegateAPIStub.restore();
+    transactionAPIStub.restore();
     wrapper.update();
   });
 
   const setupStep = ({ accountType, address }) => {
     store = prepareStore({
       account: accountReducer,
-      transactions: transactionReducer,
+      transactions: transactionsReducer,
+      transaction: transactionReducer,
+      voting: votingReducer,
       peers: peersReducer,
       loading: loadingReducer,
     }, [
@@ -93,6 +103,7 @@ describe('@integration: Account Transactions', () => {
       accountMiddleware,
       loginMiddleware,
       transactionsMiddleware,
+      votingMiddleware,
     ]);
 
     const account = {

@@ -4,7 +4,7 @@ import styles from './confirmSecond.css';
 import { passphraseIsValid } from '../../../utils/form';
 import TransitionWrapper from '../../toolbox/transitionWrapper';
 import { FontIcon } from '../../fontIcon';
-import { extractPublicKey } from '../../../utils/api/account';
+import { extractPublicKey } from '../../../utils/account';
 // eslint-disable-next-line import/no-named-as-default
 import SliderCheckbox from '../../toolbox/sliderCheckbox';
 // eslint-disable-next-line import/no-named-as-default

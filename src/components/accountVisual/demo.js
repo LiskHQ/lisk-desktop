@@ -2,7 +2,7 @@ import React from 'react';
 import Waypoint from 'react-waypoint';
 
 import { generatePassphrase } from '../../utils/passphrase';
-import { extractAddress } from '../../utils/api/account';
+import { extractAddress } from '../../utils/account';
 import AccountVisual from '../accountVisual';
 import Box from '../box';
 

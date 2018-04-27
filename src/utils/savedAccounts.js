@@ -1,5 +1,5 @@
 import { validateUrl } from './login';
-import { extractAddress } from './api/account';
+import { extractAddress } from './account';
 
 const isValidSavedAccount = ({ publicKey, network, address }) => {
   try {
