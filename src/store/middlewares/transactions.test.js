@@ -88,7 +88,7 @@ describe('transaction middleware', () => {
 
     middleware(store)(next)(givenAction);
     const expectedOutput = {
-      arrName: 'deleted',
+      voteArrayName: 'deleted',
       delegate: delegateCandidateData,
     };
     expect(store.dispatch).to.have.been.calledWith(transactionAddDelegateName(expectedOutput));
@@ -111,7 +111,7 @@ describe('transaction middleware', () => {
 
     middleware(store)(next)(givenAction);
     const expectedOutput = {
-      arrName: 'added',
+      voteArrayName: 'added',
       delegate: delegateCandidateData,
     };
     expect(store.dispatch).to.have.been.calledWith(transactionAddDelegateName(expectedOutput));

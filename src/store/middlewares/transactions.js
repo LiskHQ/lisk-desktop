@@ -100,14 +100,14 @@ const loadTransaction = (store, action) => {
       deleted.map(publicKey =>
         getDelegate(store.getState().peers.data, { publicKey })
           .then((delegateData) => {
-            store.dispatch(transactionAddDelegateName({ delegate: delegateData.delegate, arrName: 'deleted' }));
+            store.dispatch(transactionAddDelegateName({ delegate: delegateData.delegate, voteArrayName: 'deleted' }));
           }),
       );
 
       added.map(publicKey =>
         getDelegate(store.getState().peers.data, { publicKey })
           .then((delegateData) => {
-            store.dispatch(transactionAddDelegateName({ delegate: delegateData.delegate, arrName: 'added' }));
+            store.dispatch(transactionAddDelegateName({ delegate: delegateData.delegate, voteArrayName: 'added' }));
           }),
       );
       store.dispatch(transactionLoaded({ ...response }));

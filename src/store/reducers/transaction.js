@@ -9,13 +9,13 @@ const transaction = (state = {}, action) => {
     case actionTypes.transactionLoadFailed:
       return action.data.error;
     case actionTypes.transactionAddDelegateName: {
-      const arr = (state.votesName && state.votesName[action.arrName]) || [];
+      const arr = (state.votesName && state.votesName[action.voteArrayName]) || [];
       const value = [].concat(arr, action.delegate);
       return {
         ...state,
         votesName: {
           ...state.votesName,
-          [action.arrName]: value,
+          [action.voteArrayName]: value,
         },
       };
     }
