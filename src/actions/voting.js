@@ -64,6 +64,10 @@ export const voteLookupStatusCleared = () => ({
   type: actionTypes.voteLookupStatusCleared,
 });
 
+export const clearVotes = () => ({
+  type: actionTypes.votesCleared,
+});
+
 /**
  * Makes Api call to register votes
  * Adds pending state and then after the duration of one round

@@ -40,6 +40,7 @@ describe('DelegateList', () => {
     votesFetched: sinon.spy(),
     delegatesFetched: sinon.spy(),
     t: key => key,
+    history: { location: { search: '' } },
   };
 
   let clock;

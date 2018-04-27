@@ -56,7 +56,7 @@ describe('VotingHOC', () => {
       },
     };
 
-    wrapper = mount(<Router><VotingHOC /></Router>, options);
+    wrapper = mount(<Router><VotingHOC history={history}/></Router>, options);
   });
 
   it('should render Voting', () => {

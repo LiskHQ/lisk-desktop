@@ -101,7 +101,7 @@ class Choose extends React.Component {
             <div className={stepStyles.firstContainer}>
               <header>
                 <h5 className={stepStyles.heading}>
-                  {t('Be a delegate')}
+                  {t('Become a delegate')}
                 </h5>
               </header>
               <p className={stepStyles.description}>

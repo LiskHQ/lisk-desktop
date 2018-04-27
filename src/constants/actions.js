@@ -13,6 +13,7 @@ const actionTypes = {
   VotePlaced: 'VOTE_PLACED',
   voteToggled: 'VOTE_TOGGLED',
   votesAdded: 'VOTES_ADDED',
+  votesCleared: 'VOTES_CLEARED',
   votesUpdated: 'VOTES_UPDATED',
   voteLookupStatusCleared: 'VOTE_LOOKUP_STATUS_CLEARED',
   voteLookupStatusUpdated: 'VOTE_LOOKUP_STATUS_UPDATED',
