@@ -35,7 +35,7 @@ class TransactionsDetailView extends React.Component {
 
     // putting <span>•</span> inbetween array objects
     const intersperse = data && data
-      .reduce((a, v) => [...a, v, <span>• </span>], []) // eslint-disable-line
+      .reduce((arr, val) => [...arr, val, <span className={styles.dot} key={`span-${val}`}>• </span>], [])
       .slice(0, -1);
     return intersperse;
   }
@@ -173,10 +173,10 @@ class TransactionsDetailView extends React.Component {
           }
           {
             this.props.value.amount === 0 ?
-              <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row} votersRow`}>
+              <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
                 <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
                   <div className={styles.label}>{this.props.t('Added votes')}</div>
-                  <div className={styles.value}>{addedVoters}</div>
+                  <div className={`${styles.value} voters`}>{addedVoters}</div>
                 </div>
                 <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
                   <div className={styles.label}>{this.props.t('Removed votes')}</div>

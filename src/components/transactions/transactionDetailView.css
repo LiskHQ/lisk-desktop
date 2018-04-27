@@ -28,6 +28,11 @@
   text-decoration: none;
 }
 
+.dot {
+  padding: 0px 6px;
+  color: var(--color-primary-standard) !important;
+}
+
 .details {
   line-height: var(--list-line-height);
   color: var(--details-font-color);
@@ -48,12 +53,6 @@
 
     &:last-child {
       padding-bottom: 0px;
-    }
-  }
-
-  & .votersRow {
-    span {
-      font-size: 30px;
     }
   }
 
