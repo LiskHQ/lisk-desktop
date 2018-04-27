@@ -43,11 +43,6 @@ describe('AccountTransaction Component', () => {
   });
 
   it('updates transactions on address update', () => {
-    expect(getTransactionsForAccountSpy).to.have.been.calledWith({
-      address: accounts.genesis.address,
-      activePeer: storeState.peers.data,
-      publicKey: storeState.account.publicKey });
-
     wrapper.setProps({ match: { params: { address: accounts['empty account'].address } } });
 
     expect(getTransactionsForAccountSpy).to.have.been.calledWith({
