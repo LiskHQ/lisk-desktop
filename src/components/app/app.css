@@ -8,6 +8,11 @@ body {
   width: 100%;
 }
 
+img,
+a {
+  -webkit-user-drag: none;
+}
+
 .bodyWrapper {
   position: absolute;
   width: 100%;
