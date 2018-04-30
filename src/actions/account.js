@@ -1,9 +1,9 @@
 import i18next from 'i18next';
 import actionTypes from '../constants/actions';
 import { setSecondPassphrase, send, getAccount } from '../utils/api/account';
-import { registerDelegate } from '../utils/api/delegate';
+import { registerDelegate, getDelegate } from '../utils/api/delegate';
 import { transactionAdded, transactionFailed, loadTransactions } from './transactions';
-import { delegateRegisteredFailure, loadDelegate } from './delegate';
+import { delegateRegisteredFailure } from './delegate';
 import { errorAlertDialogDisplayed } from './dialog';
 import Fees from '../constants/fees';
 import { toRawLsk } from '../utils/lsk';
@@ -132,6 +132,21 @@ export const sent = ({ activePeer, account, recipientId, amount, passphrase, sec
         dispatch(transactionFailed({ errorMessage }));
       });
     dispatch(passphraseUsed(passphrase));
+  };
+
+
+export const updateDelegate = data => ({
+  type: actionTypes.updateDelegate,
+  data,
+});
+
+export const loadDelegate = ({ activePeer, publicKey }) =>
+  (dispatch) => {
+    getDelegate(
+      activePeer, { publicKey },
+    ).then((response) => {
+      dispatch(updateDelegate({ delegate: response.delegate }));
+    });
   };
 
 export const loadAccount = ({

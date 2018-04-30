@@ -38,17 +38,3 @@ export const delegateRegisteredFailure = data => ({
   type: actionTypes.delegateRegisteredFailure,
   data,
 });
-
-export const updateDelegate = data => ({
-  type: actionTypes.updateDelegate,
-  data,
-});
-
-export const loadDelegate = ({ activePeer, publicKey }) =>
-  (dispatch) => {
-    getDelegate(
-      activePeer, { publicKey },
-    ).then((response) => {
-      dispatch(updateDelegate({ delegate: response.delegate }));
-    });
-  };
