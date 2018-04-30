@@ -186,7 +186,7 @@ class VotingListView extends React.Component {
             </section>
           </Box> : null
         }
-      <Fragment>
+      </Fragment>
     );
   }
 }
