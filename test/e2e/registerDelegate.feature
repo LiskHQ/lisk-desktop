@@ -9,7 +9,7 @@ Feature: Register delegate
     And I click "submit-delegate-name"
     And I fill in second passphrase of "second passphrase account" to "second-passphrase" field
     And I click "second-passphrase-next"
-    And I wait 0.5 seconds
+    And I wait 1 seconds
     And I click "confirm-delegate-registration"
     And I wait 8 seconds
     Then I should see text "Success!" in "success-header" element
