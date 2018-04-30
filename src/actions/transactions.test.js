@@ -3,8 +3,9 @@ import sinon from 'sinon';
 import actionTypes from '../constants/actions';
 import txFilters from './../constants/transactionFilters';
 import { transactionAdded, transactionsUpdated, transactionFailed, transactionsFailed,
-  transactionsLoaded, transactionsRequested, loadTransaction, transactionAddDelegateName } from './transactions';
+  transactionsLoaded, transactionsRequested, loadTransaction, transactionLoaded, transactionAddDelegateName } from './transactions';
 import * as accountApi from '../utils/api/account';
+import * as delegateApi from '../utils/api/delegate';
 
 describe('actions: transactions', () => {
   describe('transactionAdded', () => {
@@ -129,7 +130,7 @@ describe('actions: transactions', () => {
 
     beforeEach(() => {
       accountApiMock = sinon.stub(accountApi, 'transaction');
-      delegateApiMock = sinon.stub(accountApi, 'getDelegate');
+      delegateApiMock = sinon.stub(delegateApi, 'getDelegate');
       dispatch = sinon.spy();
     });
 
@@ -144,7 +145,8 @@ describe('actions: transactions', () => {
 
     it('should dispatch one transactionAddDelegateName action when transaction contains one vote added', () => {
       const delegateResponse = { delegate: { username: 'peterpan' } };
-      accountApiMock.returnsPromise().resolves({ transaction: { votes: { added: ['one'] }, count: '0' } });
+      const transactionResponse = { transaction: { votes: { added: ['one'] }, count: '0' } };
+      accountApiMock.returnsPromise().resolves(transactionResponse);
       delegateApiMock.returnsPromise().resolves(delegateResponse);
       const expectedAction = {
         ...delegateResponse,
@@ -152,12 +154,16 @@ describe('actions: transactions', () => {
       };
 
       actionFunction(dispatch);
-      expect(dispatch).to.have.been.calledWith(transactionAddDelegateName(expectedAction));
+      expect(dispatch).to.have.been
+        .calledWith(transactionLoaded(transactionResponse));
+      expect(dispatch).to.have.been
+        .calledWith(transactionAddDelegateName(expectedAction));
     });
 
     it('should dispatch one transactionAddDelegateName action when transaction contains one vote deleted', () => {
       const delegateResponse = { delegate: { username: 'peterpan' } };
-      accountApiMock.returnsPromise().resolves({ transaction: { votes: { deleted: ['one'] }, count: '0' } });
+      const transactionResponse = { transaction: { votes: { deleted: ['one'] }, count: '0' } };
+      accountApiMock.returnsPromise().resolves(transactionResponse);
       delegateApiMock.returnsPromise().resolves(delegateResponse);
       const expectedAction = {
         ...delegateResponse,
@@ -165,7 +171,10 @@ describe('actions: transactions', () => {
       };
 
       actionFunction(dispatch);
-      expect(dispatch).to.have.been.calledWith(transactionAddDelegateName(expectedAction));
+      expect(dispatch).to.have.been
+        .calledWith(transactionLoaded(transactionResponse));
+      expect(dispatch).to.have.been
+        .calledWith(transactionAddDelegateName(expectedAction));
     });
   });
 });
