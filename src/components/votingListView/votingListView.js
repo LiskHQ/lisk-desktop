@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Box from '../box';
 import MultiStep from './../multiStep';
 import VotingHeader from './votingHeader';
@@ -167,7 +166,7 @@ class VotingListView extends React.Component {
             />
             <section className={`${styles.delegatesList} delegate-list`}>
               <div className={styles.table}>
-                <ListLabels t={t} styles={styles} grid={grid} status={showChangeSummery} />
+                <ListLabels t={t} status={showChangeSummery} />
                 <MultiStep
                   className={styles.wrapper}>
                   <DelegateList list={filteredList} votes={votes}

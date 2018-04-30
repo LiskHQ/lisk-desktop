@@ -1,6 +1,8 @@
 import React from 'react';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import styles from './votingListView.css';
 
-const ListLabels = ({ styles, grid, status, t }) =>
+const ListLabels = ({ status, t }) =>
   (<ul className={`${styles.tableHead} ${grid.row}`}>
     {
       !status ?
