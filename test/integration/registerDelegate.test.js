@@ -15,11 +15,10 @@ import accountReducer from '../../src/store/reducers/account';
 import peersReducer from '../../src/store/reducers/peers';
 import loginMiddleware from '../../src/store/middlewares/login';
 
+import accounts from '../../test/constants/accounts';
+
 const normalAccount = {
-  passphrase: 'pass',
-  isDelegate: false,
-  address: '16313739661670634666L',
-  balance: 1000e8,
+  ...accounts['send all account'],
 };
 
 let clock;
