@@ -3,7 +3,6 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './votingListView.css';
 
 class VotingRow extends React.Component {
-  // eslint-disable-next-line class-methods-use-this
   shouldComponentUpdate({ data }) {
     const oldData = this.props.data;
     return (!oldData && !!data) ||
