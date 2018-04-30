@@ -48,7 +48,7 @@ const props = {
     data: {},
   },
   closeDialog: () => {},
-  delegateRegistered: sinon.spy(),
+  delegateRegistered: () => {},
   t: key => key,
 };
 
@@ -62,11 +62,13 @@ describe('RegisterDelegate', () => {
 
   beforeEach(() => {
     delegateApiMock = sinon.mock(delegateApi);
+    sinon.spy(props, 'delegateRegistered');
   });
 
   afterEach(() => {
     delegateApiMock.verify();
     delegateApiMock.restore();
+    props.delegateRegistered.restore();
   });
 
   describe('Ordinary account', () => {

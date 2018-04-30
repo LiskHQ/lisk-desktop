@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { voteToggled, votesFetched, delegatesFetched } from '../../actions/voting';
-import DelegateList from './delegateList';
+import VotingListView from './votingListView';
 
 const mapStateToProps = state => ({
   address: state.account.address,
@@ -20,4 +20,4 @@ const mapDispatchToProps = dispatch => ({
   delegatesFetched: data => dispatch(delegatesFetched(data)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(DelegateList));
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(VotingListView));

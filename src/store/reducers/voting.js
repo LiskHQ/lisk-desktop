@@ -7,6 +7,9 @@ const mergeVotes = (newList, oldDict) => {
       unconfirmed: true,
       pending: false,
       publicKey: delegate.publicKey,
+      rank: delegate.rank,
+      address: delegate.address,
+      productivity: delegate.productivity,
     };
     return tempDict;
   }, {});
@@ -52,6 +55,9 @@ const voting = (state = {
               confirmed: true,
               unconfirmed: true,
               publicKey: delegate.publicKey,
+              productivity: delegate.productivity,
+              rank: delegate.rank,
+              address: delegate.address,
             };
             return votesDict;
           }, {}),
@@ -76,6 +82,9 @@ const voting = (state = {
             unconfirmed: state.votes[action.data.username] ?
               !state.votes[action.data.username].unconfirmed : true,
             publicKey: action.data.publicKey,
+            productivity: action.data.productivity,
+            rank: action.data.rank,
+            address: action.data.address,
           },
         }),
       });
@@ -95,6 +104,9 @@ const voting = (state = {
             confirmed: state.votes[username].confirmed,
             unconfirmed: state.votes[username].confirmed,
             publicKey: state.votes[username].publicKey,
+            address: state.votes[username].address,
+            productivity: state.votes[username].productivity,
+            rank: state.votes[username].rank,
             pending: false,
           };
           return votesDict;
@@ -112,7 +124,8 @@ const voting = (state = {
       return Object.assign({}, state, {
         refresh: false,
         votes: Object.keys(state.votes).reduce((votesDict, username) => {
-          const { confirmed, unconfirmed, publicKey, pending } = state.votes[username];
+          const { confirmed, unconfirmed, publicKey,
+            pending, address, rank, productivity } = state.votes[username];
           const nextPendingStatus = pending || (confirmed !== unconfirmed);
 
           votesDict[username] = {
@@ -120,6 +133,9 @@ const voting = (state = {
             unconfirmed,
             pending: nextPendingStatus,
             publicKey,
+            address,
+            rank,
+            productivity,
           };
           return votesDict;
         }, {}),
