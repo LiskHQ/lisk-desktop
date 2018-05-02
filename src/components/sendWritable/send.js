@@ -85,11 +85,11 @@ class SendWritable extends React.Component {
           </header>
 
           <div className={`${grid.row} ${styles.tab} `}>
-            <div className={`${grid['col-xs-6']} ${styles.tabActive}`} onClick={() => { this.props.setActiveTab('send'); }}>
-              Send
+            <div className={`${grid['col-xs-6']} ${styles.tabActive} send-tab`}>
+              {this.props.t('Send')}
             </div>
-            <div className={`${grid['col-xs-6']} ${styles.tabInactive}`} onClick={() => { this.props.setActiveTab('receive'); }}>
-              Request
+            <div className={`${grid['col-xs-6']} ${styles.tabInactive} request-tab`} onClick={() => { this.props.setTabSend(false); }}>
+              {this.props.t('Request')}
             </div>
           </div>
 

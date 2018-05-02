@@ -122,6 +122,12 @@ input:read-only {
   padding-right: 85px;
 }
 
+@media (--medium-viewport) {
+  .tab {
+    display: none;
+  }
+}
+
 @media (--small-viewport) {
   .headerWrapper {
     display: none;

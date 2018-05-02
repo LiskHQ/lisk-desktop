@@ -42,8 +42,12 @@
     padding: 20px 0px;
     line-height: var(--header-line-height);
 
-    & .title {
-      float: left;
+    & .mobileTitle {
+      display: none;
+    }
+
+    & .desktopTitle {
+      display: block;
     }
 
     & .subTitle {
@@ -51,7 +55,6 @@
     }
 
     & h2 {
-      font-weight: var(--font-weight-bold);
       margin-bottom: 0;
     }
 
@@ -87,8 +90,12 @@
 
 @media (--small-viewport) {
   .wrapper {
-    & header {
+    & .subTitle {
       display: none;
+    }
+
+    & .copy {
+      font-size: 12px;
     }
   }
 }
@@ -96,5 +103,30 @@
 @media (--medium-viewport) {
   .tab {
     display: none;
+  }
+
+  .wrapper {
+    & header {
+      & h2 {
+        line-height: initial;
+        margin: 0;
+      }
+
+      & .mobileTitle {
+        display: block;
+      }
+
+      & .desktopTitle {
+        display: none;
+      }
+    }
+  }
+}
+
+@media (--large-viewport) {
+  .wrapper {
+    & .qrCode {
+      height: 200px;
+    }
   }
 }

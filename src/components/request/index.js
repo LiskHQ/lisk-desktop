@@ -11,20 +11,23 @@ class Request extends React.Component {
       <div className={`${styles.wrapper}`}>
         <div>
           <header>
-            <h2>{this.props.t('Transfer')}</h2>
-            <span className={`${styles.subTitle} ${styles.transfer}`}>{this.props.t('Quickly send and request LSK token')}</span>
+            <h2 className={styles.desktopTitle} >{this.props.t('Transfer')}</h2>
+            <h2 className={styles.mobileTitle} >{this.props.t('Request')}</h2>
+            <span className={styles.subTitle}>{this.props.t('Quickly send and request LSK token')}</span>
           </header>
+
           <div className={`${grid.row} ${styles.tab} `}>
-            <div className={`${grid['col-xs-6']} ${styles.tabInactive}`} onClick={() => { this.props.setActiveTab('send'); }}>
-              Send
+            <div className={`${grid['col-xs-6']} ${styles.tabInactive} send-tab`} onClick={() => { this.props.setTabSend(true); }}>
+              {this.props.t('Send')}
             </div>
-            <div className={`${grid['col-xs-6']} ${styles.tabActive}`} onClick={() => { this.props.setActiveTab('receive'); }}>
-              Request
+            <div className={`${grid['col-xs-6']} ${styles.tabActive} request-tab`}>
+              {this.props.t('Request')}
             </div>
           </div>
+
         </div>
         <div className={styles.body}>
-          <img className={styles.qrCode} src={`https://chart.googleapis.com/chart?cht=qr&chl=${this.props.account.address}&chs=260x260&choe=UTF-8&chld=L|2`} alt='qr code'/>
+          <img className={`${styles.qrCode} request-qr-code`} src={`https://chart.googleapis.com/chart?cht=qr&chl=${this.props.account.address}&chs=260x260&choe=UTF-8&chld=L|2`} alt='qr code'/>
           <CopyToClipboard
             value={this.props.account.address}
             className={styles.copy}/>
