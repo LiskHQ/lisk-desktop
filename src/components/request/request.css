@@ -1,0 +1,100 @@
+@import '../app/variables.css';
+
+:root {
+  --tab-inactive-color: var(--color-grayscale-dark);
+  --header-line-height: 36px;
+  --header-subtitle-font-size: var(--subtitle-font-size);
+}
+
+.tab {
+  font-size: 16px;
+  vertical-align: middle;
+  text-align: center;
+  line-height: 50px;
+  font-weight: var(--font-weight-normal);
+  border: 3px solid transparent;
+  border-radius: 6px;
+  background: var(--gradient-action-blue);
+  background-clip: padding-box;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.tabActive {
+  color: var(--color-white);
+  background: var(--gradient-action-blue);
+}
+
+.tabInactive {
+  color: var(--color-primary-medium);
+  background: var(--color-white);
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+
+  & header {
+    padding: 20px 0px;
+    line-height: var(--header-line-height);
+
+    & .title {
+      float: left;
+    }
+
+    & .subTitle {
+      font-size: var(--header-subtitle-font-size);
+    }
+
+    & h2 {
+      font-weight: var(--font-weight-bold);
+      margin-bottom: 0;
+    }
+
+    & h3 {
+      display: inline-block;
+      margin: 0;
+    }
+  }
+
+  & .body {
+    text-align: center;
+  }
+
+  & .emailLink {
+    text-decoration: none;
+    color: var(--color-primary-standard);
+    font-weight: var(--font-weight-bold);
+    font-size: 14px;
+  }
+
+  & .copy {
+    color: var(--color-grayscale-medium);
+    display: block;
+    margin-bottom: 15px;
+    font-size: 14px;
+    font-weight: var(--font-weight-bold);
+  }
+
+  & .qrCode {
+    mix-blend-mode: multiply;
+  }
+}
+
+@media (--small-viewport) {
+  .wrapper {
+    & header {
+      display: none;
+    }
+  }
+}
+
+@media (--medium-viewport) {
+  .tab {
+    display: none;
+  }
+}

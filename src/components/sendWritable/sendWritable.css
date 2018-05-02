@@ -84,6 +84,30 @@ input:read-only {
   }
 }
 
+.tab {
+  font-size: 16px;
+  vertical-align: middle;
+  text-align: center;
+  line-height: 50px;
+  font-weight: var(--font-weight-normal);
+  border: 3px solid transparent;
+  border-radius: 6px;
+  background: var(--gradient-action-blue);
+  background-clip: padding-box;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.tabActive {
+  color: var(--color-white);
+  background: var(--gradient-action-blue);
+}
+
+.tabInactive {
+  color: var(--color-primary-medium);
+  background: var(--color-white);
+}
+
 .sendWrapper {
   display: flex;
   flex-direction: column;

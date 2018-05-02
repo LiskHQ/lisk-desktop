@@ -7,6 +7,7 @@ import MultiStep from './../multiStep';
 import ResultBox from '../resultBox';
 import SendWritable from '../sendWritable';
 import SendReadable from './../sendReadable';
+import Request from '../request';
 import PassphraseSteps from './../passphraseSteps';
 import AccountInitialization from '../accountInitialization';
 import { parseSearchParams } from './../../utils/searchParams';
@@ -23,6 +24,7 @@ class Send extends React.Component {
     const { amount, recipient } = this.getSearchParams();
     this.state = {
       sendIsActive: !!recipient || !!amount || needsAccountInit,
+      activeTab: 'send',
     };
   }
 
@@ -32,6 +34,10 @@ class Send extends React.Component {
 
   setSendIsActive(sendIsActive) {
     this.setState({ sendIsActive });
+  }
+
+  setActive(tab) {
+    this.setState({ activeTab: tab });
   }
 
   render() {
@@ -51,19 +57,24 @@ class Send extends React.Component {
             onClick={this.setSendIsActive.bind(this, false)}>
             {t('Close')} <FontIcon value='close' />
           </span>
-          <MultiStep finalCallback={this.setSendIsActive.bind(this, false)}
-            className={styles.wrapper}>
-            <AccountInitialization address={recipient} />
-            <SendWritable
-              autoFocus={this.state.sendIsActive || window.innerWidth > breakpoints.m}
-              address={recipient}
-              amount={amount}
-            />
-            <PassphraseSteps />
-            <SendReadable />
-            <ResultBox history={this.props.history}/>
-          </MultiStep>
-
+          {this.state.activeTab === 'send'
+            ? <MultiStep finalCallback={this.setSendIsActive.bind(this, false)}
+              className={styles.wrapper}>
+              <AccountInitialization address={recipient}/>
+              <SendWritable
+                autoFocus={this.state.sendIsActive || window.innerWidth > breakpoints.m}
+                address={recipient}
+                amount={amount}
+                setActiveTab={this.setActive.bind(this)}
+              />
+              <PassphraseSteps/>
+              <SendReadable/>
+              <ResultBox history={this.props.history}/>
+            </MultiStep>
+            : <MultiStep className={styles.wrapper}>
+              <Request {...this.props} setActiveTab={this.setActive.bind(this)} />
+            </MultiStep>
+          }
         </Box>
       </Fragment>
     );

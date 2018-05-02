@@ -1,4 +1,5 @@
 import React from 'react';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { fromRawLsk } from '../../utils/lsk';
 import { Button } from './../toolbox/buttons/button';
 import { authStatePrefill } from '../../utils/form';
@@ -82,6 +83,16 @@ class SendWritable extends React.Component {
             <h2>{this.props.t('Transfer')}</h2>
             <span className={`${styles.subTitle} ${styles.transfer}`}>{this.props.t('Quickly send and request LSK token')}</span>
           </header>
+
+          <div className={`${grid.row} ${styles.tab} `}>
+            <div className={`${grid['col-xs-6']} ${styles.tabActive}`} onClick={() => { this.props.setActiveTab('send'); }}>
+              Send
+            </div>
+            <div className={`${grid['col-xs-6']} ${styles.tabInactive}`} onClick={() => { this.props.setActiveTab('receive'); }}>
+              Request
+            </div>
+          </div>
+
         </div>
         <form className={styles.form}>
           <Input label={this.props.t('Send to address')}
