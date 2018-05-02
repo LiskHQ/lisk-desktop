@@ -62,27 +62,4 @@ describe('transaction middleware', () => {
     middleware(store)(next)(givenAction);
     expect(store.dispatch).to.not.have.been.calledWith();
   });
-
-  it('should call unconfirmedTransactions and then dispatch transactionsFailed if state.transactions.pending.length > 0 and action.type is transactionsUpdated', () => {
-    const transactions = [
-      mockTransaction,
-    ];
-    accountApiMock.expects('unconfirmedTransactions')
-      .withExactArgs(state.peers.data, state.account.address)
-      .returnsPromise().resolves({ transactions });
-    store.getState = () => ({
-      ...state,
-      transactions: {
-        pending: transactions,
-      },
-    });
-    const givenAction = {
-      type: actionTypes.transactionsUpdated,
-      data: [],
-    };
-
-    middleware(store)(next)(givenAction);
-    const expectedAction = transactionsFailed({ failed: [] });
-    expect(store.dispatch).to.have.been.calledWith(expectedAction);
-  });
 });

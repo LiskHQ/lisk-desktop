@@ -34,20 +34,6 @@ describe('actions: transactions', () => {
     });
   });
 
-  describe('transactionsFailed', () => {
-    it('should create an action to transactionsFailed', () => {
-      const data = {
-        id: 'dummy',
-      };
-      const expectedAction = {
-        data,
-        type: actionTypes.transactionsFailed,
-      };
-
-      expect(transactionsFailed(data)).to.be.deep.equal(expectedAction);
-    });
-  });
-
   describe('transactionsUpdated', () => {
     it('should create an action to transactionsUpdated', () => {
       const data = {

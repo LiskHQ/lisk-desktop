@@ -1,18 +1,9 @@
 import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../utils/loading';
-import { transactions, transaction } from '../utils/api/account';
+import { transactions, transaction, unconfirmedTransactions } from '../utils/api/account';
 import { getDelegate } from '../utils/api/delegate';
 import { extractAddress } from '../utils/account';
 import { loadAccount } from './account';
-
-/**
- * An action to dispatch transactionsFailed
- *
- */
-export const transactionsFailed = data => ({
-  data,
-  type: actionTypes.transactionsFailed,
-});
 
 /**
  * An action to dispatch transactionsUpdated
@@ -32,6 +23,17 @@ export const transactionsFiltered = data => ({
   data,
   type: actionTypes.transactionsFiltered,
 });
+
+export const transactionsUpdateUnconfirmed = ({ activePeer, address, pendingTransactions }) =>
+  (dispatch) => {
+    unconfirmedTransactions(activePeer, address).then(response => dispatch({
+      data: {
+        failed: pendingTransactions.filter(tx =>
+          response.filter(unconfirmedTx => tx.id === unconfirmedTx.id).length === 0),
+      },
+      type: actionTypes.transactionsFailed,
+    }));
+  };
 
 export const loadTransactionsFinish = accountUpdated =>
   (dispatch) => {
