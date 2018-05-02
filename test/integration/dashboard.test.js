@@ -16,7 +16,6 @@ import liskServiceReducer from '../../src/store/reducers/liskService';
 import loginMiddleware from '../../src/store/middlewares/login';
 import accountMiddleware from '../../src/store/middlewares/account';
 import peerMiddleware from '../../src/store/middlewares/peers';
-import transactionsMiddleware from '../../src/store/middlewares/transactions';
 import { accountLoggedIn } from '../../src/actions/account';
 import { accountsRetrieved } from '../../src/actions/savedAccounts';
 import { activePeerSet } from '../../src/actions/peers';
@@ -87,7 +86,6 @@ describe('@integration: Dashboard', () => {
       thunk,
       accountMiddleware,
       loginMiddleware,
-      transactionsMiddleware,
       peerMiddleware,
     ]);
 

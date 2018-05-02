@@ -50,6 +50,15 @@ class Transactions extends React.Component {
     return this.props.loading.length > 0;
   }
 
+  setTransactionsFilter(filter) {
+    this.props.transactionsFilterSet({
+      activePeer: this.props.activePeer,
+      address: this.props.address,
+      limit: 25,
+      filter,
+    });
+  }
+
   render() {
     const filters = [
       {
@@ -96,7 +105,7 @@ class Transactions extends React.Component {
           <ul className={styles.list}>
             {filters.map((filter, i) => (
               <li key={i} className={`transaction-filter-item ${filter.className} ${styles.item} ${this.isActiveFilter(filter.value) ? styles.active : ''}`}
-                onClick={() => { this.props.transactionsFilterSet({ filter: filter.value }); }}>
+                onClick={() => this.setTransactionsFilter(filter.value)}>
                 {filter.name}
               </li>
             ))}

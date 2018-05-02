@@ -13,7 +13,6 @@ import transactionReducer from '../../store/reducers/transaction';
 import delegateReducer from '../../store/reducers/delegate';
 import accountMiddleware from '../../store/middlewares/account';
 import peerMiddleware from '../../store/middlewares/peers';
-import transactionsMiddleware from '../../store/middlewares/transactions';
 import txFilters from '../../constants/transactionFilters';
 import i18n from '../../i18n';
 
@@ -41,7 +40,6 @@ describe('TransactionsList', () => {
     thunk,
     peerMiddleware,
     accountMiddleware,
-    transactionsMiddleware,
   ]);
 
   const options = {

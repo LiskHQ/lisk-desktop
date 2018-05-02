@@ -14,22 +14,30 @@ export const transactionsUpdated = data => ({
   type: actionTypes.transactionsUpdated,
 });
 
-export const transactionsFilterSet = data => ({
-  data,
-  type: actionTypes.transactionsFilterSet,
-});
 
-export const transactionsFiltered = data => ({
-  data,
-  type: actionTypes.transactionsFiltered,
-});
+export const transactionsFilterSet = ({ activePeer, address, limit, filter }) =>
+  (dispatch) => {
+    transactions({
+      activePeer,
+      address,
+      limit,
+      filter,
+    }).then(response => dispatch({
+      data: {
+        confirmed: response.transactions,
+        count: parseInt(response.count, 10),
+        filter,
+      },
+      type: actionTypes.transactionsFiltered,
+    }));
+  };
 
 export const transactionsUpdateUnconfirmed = ({ activePeer, address, pendingTransactions }) =>
   (dispatch) => {
     unconfirmedTransactions(activePeer, address).then(response => dispatch({
       data: {
         failed: pendingTransactions.filter(tx =>
-          response.filter(unconfirmedTx => tx.id === unconfirmedTx.id).length === 0),
+          response.transactions.filter(unconfirmedTx => tx.id === unconfirmedTx.id).length === 0),
       },
       type: actionTypes.transactionsFailed,
     }));
