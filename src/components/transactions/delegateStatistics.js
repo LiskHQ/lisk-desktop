@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
 import Waypoint from 'react-waypoint';
 import { connect } from 'react-redux';
+import { FontIcon } from '../fontIcon';
 import { accountVotersFetched, accountVotesFetched } from '../../actions/account';
 import routes from './../../constants/routes';
 import styles from './delegateStatistics.css';
@@ -37,10 +38,8 @@ class DelegateStatistics extends React.Component {
       .slice(0, -1);
   }
 
-  getInterspersed(dataName) {
+  getInterspersed(dataName, filterQuery) {
     let data = this.props[dataName];
-    // data = this.props[dataName] && !this.state.loadAll[dataName] ? data.slice(0, 35) : data;
-    // data = this.props[dataName] && this.state.loadAll[dataName] ? this.props[dataName] : data;
     data = data ? data.map((user, key) => (
       <Link className={`${styles.addressLink} ${styles.clickable} voter-address`}
         to={`${routes.explorer.path}${routes.accounts.path}/${user.address}`}
@@ -49,6 +48,12 @@ class DelegateStatistics extends React.Component {
       </Link>
     )) : [];
 
+    if (this.state[filterQuery] !== '') {
+      data = data.filter((obj) => {
+        const name = obj.props.children.trim();
+        return name.includes(this.state[filterQuery]);
+      });
+    }
     return this.putDotsInbetween(data);
   }
 
@@ -59,27 +64,32 @@ class DelegateStatistics extends React.Component {
     });
   }
 
+  renderSearchFilter(filterQuery, placeholder) {
+    return (
+      <div className={`${styles.search} ${styles.filter} search`}>
+        <FontIcon className={styles.search} value='search' id='searchIcon'/>
+        <input type='text'
+          name='query'
+          className={`search ${styles.desktopInput} ${this.state[filterQuery].length > 0 ? styles.dirty : ''} `}
+          value={this.state[filterQuery]}
+          onChange={this.search.bind(this, filterQuery)}
+          placeholder={placeholder}/>
+        <input type='text'
+          name='query'
+          className={`${styles.mobileInput} ${this.state[filterQuery].length > 0 ? styles.dirty : ''} `}
+          value={this.state[filterQuery]}
+          onChange={this.search.bind(this, filterQuery)}
+          placeholder={this.props.t('Filter')}/>
+      </div>
+    );
+  }
+
   render() {
     const { delegate, t } = this.props;
-    let votesInterspered = this.getInterspersed('votes');
-    let votersInterspered = this.getInterspersed('voters');
+    let votesInterspered = this.getInterspersed('votes', 'votesFilterQuery');
+    const votersInterspered = this.getInterspersed('voters', 'votersFilterQuery');
 
-    if (this.state.votesFilterQuery !== '') {
-      votesInterspered = votesInterspered.filter((votes) => {
-        const name = votes.props.children.trim();
-        return name.includes(this.state.votesFilterQuery);
-      });
-      votesInterspered = this.putDotsInbetween(votesInterspered);
-    }
-
-    if (this.state.votersFilterQuery !== '') {
-      votersInterspered = votersInterspered.filter((voters) => {
-        const name = voters.props.children.trim();
-        return name.includes(this.state.votersFilterQuery);
-      });
-      votersInterspered = this.putDotsInbetween(votersInterspered);
-    }
-
+    const votesElementNumber = votesInterspered.length;
     if (votesInterspered) {
       votesInterspered = this.state.loadAllVotes ? votesInterspered :
         votesInterspered.slice(0, this.state.showVotesNumber);
@@ -88,7 +98,7 @@ class DelegateStatistics extends React.Component {
     const missed = this.props.t('missed');
     return (
       <div className={`${styles.details}`}>
-        <div className={`transactions-detail-view ${grid.row} ${grid['between-md']} ${grid['between-sm']}`}>
+        <div className={`transactions-detail-view ${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
           <div className={`${grid['col-xs-12']} ${grid['col-sm-4']} ${grid['col-md-4']}`}>
             <div className={styles.label}>{this.props.t('Uptime')}</div>
             <div className={styles.value}>{delegate.productivity}%</div>
@@ -102,7 +112,7 @@ class DelegateStatistics extends React.Component {
             <div className={styles.value}>{delegate.approval}%</div>
           </div>
         </div>
-        <div className={`transactions-detail-view ${grid.row} ${grid['between-md']} ${grid['between-sm']}`}>
+        <div className={`transactions-detail-view ${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
           <div className={`${grid['col-xs-12']} ${grid['col-sm-4']} ${grid['col-md-4']}`}>
             <div className={styles.label}>{this.props.t('Vote weight')}</div>
             <div className={styles.value}>{delegate.vote}</div>
@@ -114,37 +124,36 @@ class DelegateStatistics extends React.Component {
             </div>
           </div>
         </div>
-        <div className={`transactions-detail-view ${grid.row} ${grid['between-md']} ${grid['between-sm']}`}>
+        <div className={`transactions-detail-view ${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
           <div className={`${grid['col-xs-12']} ${grid['col-sm-12']} ${grid['col-md-12']}`}>
             <div className={styles.label}>
-              {this.props.t('Votes of this accont')}
-              {`(${this.state.votesSize})`}
-              <input
-                type='text'
-                name='queryVotes'
-                value={this.state.votesFilterQuery}
-                onChange={this.search.bind(this, 'votesFilterQuery')}
-                placeholder={t('Filter votes')}/>
+              <div>
+                {this.props.t('Votes of this accont')}
+                {` (${this.state.votesSize})`}
+              </div>
+              {this.renderSearchFilter('votesFilterQuery', t('Filter votes'))}
             </div>
             <div className={styles.value}>
               {votesInterspered}
             </div>
-            {!this.state.loadAllVotes ?
-              <div onClick={() => { this.showAll(); }}>Show All</div> : ''
+            {!this.state.loadAllVotes
+              && this.state.votesFilterQuery === ''
+              && votesElementNumber > this.state.showVotesNumber ?
+              <div onClick={() => { this.showAll(); }} className={styles.showAll}>
+                <FontIcon className={styles.arrowDown} value='arrow-down'/>
+                {this.props.t('Show all')}
+              </div> : ''
             }
           </div>
         </div>
-        <div className={`transactions-detail-view ${grid.row} ${grid['between-md']} ${grid['between-sm']}`}>
+        <div className={`transactions-detail-view ${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
           <div className={`${grid['col-xs-12']} ${grid['col-sm-12']} ${grid['col-md-12']}`}>
             <div className={styles.label}>
-              {this.props.t('Who voted to this delegate')}
-              {`(${this.state.votersSize})`}
-              <input
-                type='text'
-                name='queryVoters'
-                value={this.state.votersFilterQuery}
-                onChange={this.search.bind(this, 'votersFilterQuery')}
-                placeholder={t('Filter voters')}/>
+              <div>
+                {this.props.t('Who voted to this delegate')}
+                {` (${this.state.votersSize})`}
+              </div>
+              {this.renderSearchFilter('votersFilterQuery', t('Filter voters'))}
             </div>
             <div className={styles.value}>
               {votersInterspered && votersInterspered
