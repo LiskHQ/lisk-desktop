@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect, withRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+import ErrorBoundary from '../errorBoundary';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 
 export const CustomRouteRender = ({ path, component, isPrivate, exact,
@@ -9,7 +10,9 @@ export const CustomRouteRender = ({ path, component, isPrivate, exact,
   const fullPath = pathPrefix + path + pathSuffix;
   return ((isPrivate && isAuthenticated) || !isPrivate ?
     <main className={isPrivate ? offlineStyle.disableWhenOffline : null}>
-      <Route path={fullPath} component={component} exact={exact} />
+      <ErrorBoundary errorMessage='An error occoured while rendering this page'>
+        <Route path={fullPath} component={component} exact={exact} />
+      </ErrorBoundary>
     </main>
     : <Redirect to={`/?referrer=${pathname}${encodeURIComponent(search)}`} />
   );

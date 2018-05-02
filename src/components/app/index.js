@@ -10,6 +10,7 @@ import CustomRoute from '../customRoute';
 import Header from '../header';
 import SavedAccounts from '../savedAccounts';
 import NotFound from '../notFound';
+import ErrorBoundary from '../errorBoundary';
 
 import routes from '../../constants/routes';
 // eslint-disable-next-line import/no-named-as-default
@@ -51,6 +52,7 @@ class App extends React.Component {
               <div id='onboardingAnchor'></div>
               <Switch>
                 {this.state.loaded ?
+
                   <Route path={routes.explorer.path} component={ ({ location }) => (
                     isPathCorrect(location, explorerRoutes) ? (
                       <div>
@@ -77,7 +79,7 @@ class App extends React.Component {
                       component={route.component}
                       isPrivate={route.isPrivate}
                       exact={route.exact}
-                      key={key} />
+                      key={key}/>
                   ))
                   : null
                 }
@@ -85,7 +87,9 @@ class App extends React.Component {
                   component={routes.registerDelegate.component} />
                 <Route path={routes.register.path} component={routes.register.component} />
                 <Route path={routes.addAccount.path} component={routes.addAccount.component} />
-                <Route exact path={routes.login.path} component={routes.login.component} />
+                <ErrorBoundary errorMessage=''>
+                  <Route exact path={routes.login.path} component={routes.login.component} />
+                </ErrorBoundary>
                 <Route path='*' component={NotFound} />
               </Switch>
             </div>

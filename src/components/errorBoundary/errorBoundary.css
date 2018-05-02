@@ -1,5 +1,43 @@
 @import './../app/variables.css';
 
+:root {
+  --float-animation-distance: 10px;
+}
+
+@keyframes float {
+  0% {
+    margin-top: 0px;
+    margin-bottom: var(--float-animation-distance);
+  }
+
+  100% {
+    margin-top: var(--float-animation-distance);
+    margin-bottom: 0px;
+  }
+}
+
 .section {
-  background-color: pink;
+  max-width: 230px;
+  margin: auto;
+  text-align: center;
+
+  & button {
+    margin-bottom: 20px;
+  }
+}
+
+.img {
+  animation: float 1500ms 0ms infinite alternate ease-in-out;
+}
+
+.header {
+  font-weight: var(--font-weight-semi-bold);
+  font-size: 24px;
+  margin: 10px;
+}
+
+.description {
+  font-size: 14px;
+  line-height: 26px;
+  color: var(--color-grayscale-dark);
 }
