@@ -228,6 +228,14 @@ describe('@integration: Wallet', () => {
       step(`Then I should see text ${successMessage} in "result box message" element`, () => helper.haveTextOf('.result-box-message', successMessage));
     });
 
+    describe('Scenario: should display the request LSK component when clicking on the tab', () => {
+      step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
+      step('And I click "request tab"', () => { helper.clickOnElement('.request-tab'); });
+      step('Then I should see the QR code', () => helper.haveLengthOf('.request-qr-code', 1));
+      step('And I click "send tab"', () => { helper.clickOnElement('.send-tab'); });
+      step('Then I should not see the QR code anymore', () => helper.haveLengthOf('.request-qr-code', 0));
+    });
+
     describe('Scenario: should not show account initialisation option if public key and balance is greater than 0', () => {
       step('Given I\'m on "wallet" as "genesis" account and already initialized ', () => setupStep('genesis'));
       step('Then I should not see the account init option', () => helper.haveTextOf('header h2', 'Transfer'));
