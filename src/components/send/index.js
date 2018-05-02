@@ -63,6 +63,7 @@ class Send extends React.Component {
             <SendReadable />
             <ResultBox history={this.props.history}/>
           </MultiStep>
+
         </Box>
       </Fragment>
     );
