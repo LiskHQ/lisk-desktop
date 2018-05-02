@@ -1,11 +1,5 @@
 @import '../app/variables.css';
 
-:root {
-  --tab-inactive-color: var(--color-grayscale-dark);
-  --header-line-height: 36px;
-  --header-subtitle-font-size: var(--subtitle-font-size);
-}
-
 .tab {
   font-size: 16px;
   vertical-align: middle;
@@ -40,7 +34,7 @@
 
   & header {
     padding: 20px 0px;
-    line-height: var(--header-line-height);
+    line-height: 36px;
 
     & .mobileTitle {
       display: none;
@@ -51,7 +45,7 @@
     }
 
     & .subTitle {
-      font-size: var(--header-subtitle-font-size);
+      font-size: var(--subtitle-font-size);
     }
 
     & h2 {
