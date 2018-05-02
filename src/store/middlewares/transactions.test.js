@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import { spy, stub, mock } from 'sinon';
 import * as accountApi from '../../utils/api/account';
 import * as delegateApi from '../../utils/api/delegate';
-import { transactionsFailed } from '../../actions/transactions';
 import middleware from './transactions';
 import actionTypes from '../../constants/actions';
 

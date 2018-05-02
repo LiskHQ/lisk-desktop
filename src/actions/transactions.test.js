@@ -2,8 +2,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import actionTypes from '../constants/actions';
 import txFilters from './../constants/transactionFilters';
-import { transactionAdded, transactionsUpdated, transactionFailed, transactionsFailed,
-  transactionsLoaded, transactionsRequested, loadTransaction, transactionLoaded, transactionAddDelegateName } from './transactions';
+import { transactionAdded, transactionsUpdated, transactionFailed, transactionsRequested, loadTransaction } from './transactions';
 import * as accountApi from '../utils/api/account';
 import * as delegateApi from '../utils/api/delegate';
 
