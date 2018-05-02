@@ -24,7 +24,7 @@ class PassphraseCreation extends React.Component {
     this.eventNormalizer = this._eventNormalizer.bind(this);
   }
 
-  componentDidMount() {
+  addEventListener() {
     this.isTouchDevice = this.checkDevice(this.props.agent);
     const eventName = this.isTouchDevice ? 'devicemotion' : 'mousemove';
     window.addEventListener(eventName, this.eventNormalizer, true);
@@ -32,7 +32,7 @@ class PassphraseCreation extends React.Component {
 
   componentWillUnmount() {
     const eventName = this.isTouchDevice ? 'devicemotion' : 'mousemove';
-    document.removeEventListener(eventName, this.seedGeneratorBoundToThis, true);
+    window.removeEventListener(eventName, this.eventNormalizer, true);
   }
 
   /**
@@ -128,13 +128,14 @@ class PassphraseCreation extends React.Component {
       this.props.t('by moving your mouse.');
 
     return (
-      <section id='generatorContainer' onMouseMove={this.eventNormalizer}>
+      <section id='generatorContainer'>
         {React.cloneElement(this.props.children, {
           percentage,
           hintTitle,
           address,
           step,
           passphrase,
+          addEventListener: this.addEventListener.bind(this),
         })}
       </section>
     );

@@ -11,6 +11,8 @@ import accounts from '../../../../test/constants/accounts';
 describe('Passphrase: Create', () => {
   const props = {
     t: key => key,
+    step: 'generate',
+    addEventListener: () => {},
     prevStep: () => {},
     nextStep: () => {},
     percentage: 0,

@@ -14,7 +14,7 @@ class Create extends React.Component {
   }
 
   next() {
-    // this.container = document.getElementById('generatorContainer');
+    this.props.addEventListener();
     this.setState({ step: 'generate' });
   }
 

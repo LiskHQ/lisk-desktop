@@ -14,6 +14,7 @@ describe('Second Passphrase: Create', () => {
     t: key => key,
     prevStep: () => {},
     nextStep: () => {},
+    addEventListener: () => {},
   };
   const account = accounts.delegate;
   const fakeStore = configureStore();

@@ -71,7 +71,6 @@ hr {
 
   & .secondHeading,
   & .generatorHeader {
-    width: 90%;
     margin: 0 auto;
     text-align: center;
     transition: all cubic-bezier(0.01, 0.54, 0.32, 0.96) 1000ms;

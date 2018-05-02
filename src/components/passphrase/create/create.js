@@ -12,6 +12,10 @@ class CreateFirst extends React.Component {
     this.state = { showHint: false };
   }
 
+  componentDidMount() {
+    this.props.addEventListener();
+  }
+
   showHint() {
     this.setState({ showHint: !this.state.showHint });
   }
