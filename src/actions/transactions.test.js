@@ -2,37 +2,11 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import actionTypes from '../constants/actions';
 import txFilters from './../constants/transactionFilters';
-import { transactionAdded, transactionsUpdated, transactionFailed, transactionsRequested, loadTransaction } from './transactions';
+import { transactionsUpdated, transactionsRequested, loadTransaction } from './transactions';
 import * as accountApi from '../utils/api/account';
 import * as delegateApi from '../utils/api/delegate';
 
 describe('actions: transactions', () => {
-  describe('transactionAdded', () => {
-    it('should create an action to transactionAdded', () => {
-      const data = {
-        id: 'dummy',
-      };
-      const expectedAction = {
-        data,
-        type: actionTypes.transactionAdded,
-      };
-
-      expect(transactionAdded(data)).to.be.deep.equal(expectedAction);
-    });
-  });
-
-  describe('transactionFailed', () => {
-    it('should create an action to transactionFailed', () => {
-      const errorMessage = 'Your transaction failed';
-      const expectedAction = {
-        data: { errorMessage },
-        type: actionTypes.transactionFailed,
-      };
-
-      expect(transactionFailed({ errorMessage })).to.be.deep.equal(expectedAction);
-    });
-  });
-
   describe('transactionsUpdated', () => {
     it('should create an action to transactionsUpdated', () => {
       const data = {

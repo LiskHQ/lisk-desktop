@@ -14,7 +14,6 @@ import {
   delegatesAdded,
 } from './voting';
 import Fees from '../constants/fees';
-import { transactionAdded } from './transactions';
 import * as delegateApi from '../utils/api/delegate';
 
 const delegateList = [
@@ -129,7 +128,8 @@ describe('actions: voting', () => {
       };
 
       actionFunction(dispatch);
-      expect(dispatch).to.have.been.calledWith(transactionAdded(expectedAction));
+      expect(dispatch).to.have.been
+        .calledWith({ data: expectedAction, type: actionTypes.transactionAdded });
     });
 
     it('should call goToNextStep with "success: false" if caught an error', () => {

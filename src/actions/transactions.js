@@ -90,25 +90,6 @@ export const transactionsRequested = ({ activePeer, address, limit, offset, filt
       });
   };
 
-
-/**
- * An action to dispatch transactionAdded
- *
- */
-export const transactionAdded = data => ({
-  data,
-  type: actionTypes.transactionAdded,
-});
-
-/**
- * An action to dispatch transactionFailed
- *
- */
-export const transactionFailed = ({ errorMessage }) => ({
-  data: { errorMessage },
-  type: actionTypes.transactionFailed,
-});
-
 export const loadTransaction = ({ activePeer, id }) =>
   (dispatch) => {
     dispatch({ type: actionTypes.transactionCleared });
