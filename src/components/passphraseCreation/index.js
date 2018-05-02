@@ -1,6 +1,6 @@
 import React from 'react';
 import { generateSeed, generatePassphrase } from './../../utils/passphrase';
-import { extractAddress } from './../../utils/api/account';
+import { extractAddress } from '../../utils/account';
 
 class PassphraseCreation extends React.Component {
   constructor() {
