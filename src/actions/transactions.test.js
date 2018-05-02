@@ -2,25 +2,11 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import actionTypes from '../constants/actions';
 import txFilters from './../constants/transactionFilters';
-import { transactionsUpdated, transactionsRequested, loadTransaction } from './transactions';
+import { transactionsRequested, loadTransaction } from './transactions';
 import * as accountApi from '../utils/api/account';
 import * as delegateApi from '../utils/api/delegate';
 
 describe('actions: transactions', () => {
-  describe('transactionsUpdated', () => {
-    it('should create an action to transactionsUpdated', () => {
-      const data = {
-        id: 'dummy',
-      };
-      const expectedAction = {
-        data,
-        type: actionTypes.transactionsUpdated,
-      };
-
-      expect(transactionsUpdated(data)).to.be.deep.equal(expectedAction);
-    });
-  });
-
   describe('transactionsRequested', () => {
     let accountApiMock;
     const data = {

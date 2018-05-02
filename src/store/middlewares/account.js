@@ -1,6 +1,6 @@
 import { getAccount, transactions as getTransactions } from '../../utils/api/account';
 import { accountUpdated } from '../../actions/account';
-import { transactionsUpdated, transactionsUpdateUnconfirmed } from '../../actions/transactions';
+import { transactionsUpdateUnconfirmed } from '../../actions/transactions';
 import { activePeerUpdate } from '../../actions/peers';
 import { votesFetched } from '../../actions/voting';
 import actionTypes from '../../constants/actions';
@@ -20,10 +20,13 @@ const updateTransactions = (store, peers) => {
   getTransactions({
     activePeer: peers.data, address, limit: 25, filter,
   }).then((response) => {
-    store.dispatch(transactionsUpdated({
-      confirmed: response.transactions,
-      count: parseInt(response.count, 10),
-    }));
+    store.dispatch({
+      data: {
+        confirmed: response.transactions,
+        count: parseInt(response.count, 10),
+      },
+      type: actionTypes.transactionsUpdated,
+    });
     if (state.transactions.pending.length) {
       store.dispatch(transactionsUpdateUnconfirmed({
         activePeer: peers.data,

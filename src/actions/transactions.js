@@ -5,16 +5,6 @@ import { getDelegate } from '../utils/api/delegate';
 import { extractAddress } from '../utils/account';
 import { loadAccount } from './account';
 
-/**
- * An action to dispatch transactionsUpdated
- *
- */
-export const transactionsUpdated = data => ({
-  data,
-  type: actionTypes.transactionsUpdated,
-});
-
-
 export const transactionsFilterSet = ({ activePeer, address, limit, filter }) =>
   (dispatch) => {
     transactions({
