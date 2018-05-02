@@ -62,20 +62,6 @@ describe('actions: transactions', () => {
     });
   });
 
-  describe('transactionsLoaded', () => {
-    it('should create an action to transactionsLoaded', () => {
-      const data = {
-        id: 'dummy',
-      };
-      const expectedAction = {
-        data,
-        type: actionTypes.transactionsLoaded,
-      };
-
-      expect(transactionsLoaded(data)).to.be.deep.equal(expectedAction);
-    });
-  });
-
   describe('transactionsRequested', () => {
     let accountApiMock;
     const data = {
@@ -101,7 +87,7 @@ describe('actions: transactions', () => {
       expect(typeof actionFunction).to.be.deep.equal('function');
     });
 
-    it('should dispatch transactionAdded action if resolved', () => {
+    it('should dispatch transactionsLoaded action if resolved', () => {
       accountApiMock.returnsPromise().resolves({ transactions: [], count: '0' });
       const expectedAction = {
         count: 0,
@@ -111,7 +97,8 @@ describe('actions: transactions', () => {
       };
 
       actionFunction(dispatch);
-      expect(dispatch).to.have.been.calledWith(transactionsLoaded(expectedAction));
+      expect(dispatch).to.have.been
+        .calledWith({ data: expectedAction, type: actionTypes.transactionsLoaded });
     });
   });
 
@@ -148,16 +135,16 @@ describe('actions: transactions', () => {
       const transactionResponse = { transaction: { votes: { added: ['one'] }, count: '0' } };
       accountApiMock.returnsPromise().resolves(transactionResponse);
       delegateApiMock.returnsPromise().resolves(delegateResponse);
-      const expectedAction = {
+      const expectedActionPayload = {
         ...delegateResponse,
         voteArrayName: 'added',
       };
 
       actionFunction(dispatch);
       expect(dispatch).to.have.been
-        .calledWith(transactionLoaded(transactionResponse));
+        .calledWith({ data: transactionResponse, type: actionTypes.transactionLoaded });
       expect(dispatch).to.have.been
-        .calledWith(transactionAddDelegateName(expectedAction));
+        .calledWith({ data: expectedActionPayload, type: actionTypes.transactionAddDelegateName });
     });
 
     it('should dispatch one transactionAddDelegateName action when transaction contains one vote deleted', () => {
@@ -165,16 +152,16 @@ describe('actions: transactions', () => {
       const transactionResponse = { transaction: { votes: { deleted: ['one'] }, count: '0' } };
       accountApiMock.returnsPromise().resolves(transactionResponse);
       delegateApiMock.returnsPromise().resolves(delegateResponse);
-      const expectedAction = {
+      const expectedActionPayload = {
         ...delegateResponse,
         voteArrayName: 'deleted',
       };
 
       actionFunction(dispatch);
       expect(dispatch).to.have.been
-        .calledWith(transactionLoaded(transactionResponse));
+        .calledWith({ data: transactionResponse, type: actionTypes.transactionLoaded });
       expect(dispatch).to.have.been
-        .calledWith(transactionAddDelegateName(expectedAction));
+        .calledWith({ data: expectedActionPayload, type: actionTypes.transactionAddDelegateName });
     });
   });
 });

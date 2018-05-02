@@ -2,7 +2,7 @@ import i18next from 'i18next';
 import actionTypes from '../constants/actions';
 import { setSecondPassphrase, send, getAccount } from '../utils/api/account';
 import { registerDelegate, getDelegate } from '../utils/api/delegate';
-import { transactionAdded, transactionFailed, loadTransactions } from './transactions';
+import { transactionAdded, transactionFailed, loadTransactionsFinish } from './transactions';
 import { delegateRegisteredFailure } from './delegate';
 import { errorAlertDialogDisplayed } from './dialog';
 import Fees from '../constants/fees';
@@ -176,6 +176,6 @@ export const loadAccount = ({
             delegate: response.delegate,
           };
         }
-        dispatch(loadTransactions(accountDataUpdated));
+        dispatch(loadTransactionsFinish(accountDataUpdated));
       });
   };

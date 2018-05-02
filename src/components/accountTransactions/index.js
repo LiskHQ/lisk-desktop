@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { getTransactionsForAccount } from '../../actions/transactions';
+import { loadTransactions } from '../../actions/transactions';
 import Transactions from './../transactions';
 import SendTo from '../sendTo';
 import styles from './accountTransactions.css';
@@ -10,7 +10,7 @@ import styles from './accountTransactions.css';
 class accountTransactions extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.match.params.address !== this.props.match.params.address) {
-      this.props.getTransactionsForAccount({
+      this.props.loadTransactions({
         activePeer: this.props.activePeer,
         publicKey: this.props.publicKey,
         address: nextProps.match.params.address });
@@ -48,7 +48,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getTransactionsForAccount: data => dispatch(getTransactionsForAccount(data)),
+  loadTransactions: data => dispatch(loadTransactions(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(accountTransactions));

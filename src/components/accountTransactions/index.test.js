@@ -10,7 +10,7 @@ import accounts from '../../../test/constants/accounts';
 describe('AccountTransaction Component', () => {
   let wrapper;
   let props;
-  let getTransactionsForAccountSpy;
+  let loadTransactionsSpy;
 
   const storeState = {
     peers: { data: { options: {} } },
@@ -26,7 +26,7 @@ describe('AccountTransaction Component', () => {
   };
 
   beforeEach(() => {
-    getTransactionsForAccountSpy = spy(transactions, 'getTransactionsForAccount');
+    loadTransactionsSpy = spy(transactions, 'loadTransactions');
 
     props = {
       match: { params: { address: accounts.genesis.address } },
@@ -39,13 +39,13 @@ describe('AccountTransaction Component', () => {
   });
 
   afterEach(() => {
-    getTransactionsForAccountSpy.restore();
+    loadTransactionsSpy.restore();
   });
 
   it('updates transactions on address update', () => {
     wrapper.setProps({ match: { params: { address: accounts['empty account'].address } } });
 
-    expect(getTransactionsForAccountSpy).to.have.been.calledWith({
+    expect(loadTransactionsSpy).to.have.been.calledWith({
       address: accounts['empty account'].address,
       activePeer: storeState.peers.data,
       publicKey: storeState.account.publicKey });

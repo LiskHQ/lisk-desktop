@@ -2,7 +2,7 @@ import actionTypes from '../../constants/actions';
 
 const transaction = (state = {}, action) => {
   switch (action.type) {
-    case actionTypes.transactionInit:
+    case actionTypes.transactionCleared:
       return {};
     case actionTypes.transactionLoaded:
       return { success: action.data.success, ...action.data.transaction };
