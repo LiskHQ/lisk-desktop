@@ -87,6 +87,8 @@
   "Failed to connect: Node {{address}} is not active": "Failed to connect: Node {{address}} is not active",
   "Fee: {{amount}} LSK": "Fee: {{amount}} LSK",
   "Fee: {{fee}} LSK": "Fee: {{fee}} LSK",
+  "Filter voters": "Filter voters",
+  "Filter votes": "Filter votes",
   "Final confirmation": "Final confirmation",
   "Get to your Dashboard": "Get to your Dashboard",
   "Go back to Dashboard": "Go back to Dashboard",
