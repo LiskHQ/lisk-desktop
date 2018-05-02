@@ -4,6 +4,8 @@ const merge = require('webpack-merge');
 const webpack = require('webpack');
 const baseConfig = require('./webpack.config');
 const reactConfig = require('./webpack.config.react');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 /* eslint-enable import/no-extraneous-dependencies */
 
 const entries = `${resolve(__dirname, '../src')}/main.js`;
@@ -27,6 +29,10 @@ module.exports = merge(baseConfig, reactConfig, {
       'process.env': {
         NODE_ENV: null,
       },
+    }),
+    new ExtractTextPlugin({
+      filename: 'styles.css',
+      allChunks: true,
     }),
   ],
   externals,

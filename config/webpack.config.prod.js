@@ -2,7 +2,6 @@
 const webpack = require('webpack');
 const { resolve } = require('path');
 const merge = require('webpack-merge');
-const { NamedModulesPlugin } = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const FileChanger = require('webpack-file-changer');
 const baseConfig = require('./webpack.config');
@@ -27,7 +26,6 @@ module.exports = merge(baseConfig, reactConfig, {
       sourceMap: false,
       mangle: false,
     }),
-    new NamedModulesPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
     }),

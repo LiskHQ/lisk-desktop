@@ -1,5 +1,8 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import asyncComponent from '../asyncComponent';
+
+import Header from '../header';
 import { isPathCorrect } from '../../utils/app';
 import styles from './app.css';
 import Toaster from '../toaster';
@@ -7,13 +10,13 @@ import MainMenu from '../mainMenu';
 import LoadingBar from '../loadingBar';
 import OfflineWrapper from '../offlineWrapper';
 import CustomRoute from '../customRoute';
-import Header from '../header';
-import SavedAccounts from '../savedAccounts';
 import NotFound from '../notFound';
 
 import routes from '../../constants/routes';
 // eslint-disable-next-line import/no-named-as-default
 import Onboarding from '../onboarding';
+
+const SavedAccounts = asyncComponent(() => import('../savedAccounts'));
 
 class App extends React.Component {
   constructor() {

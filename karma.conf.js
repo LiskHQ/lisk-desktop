@@ -13,6 +13,7 @@ module.exports = function (config) {
     basePath: '',
     frameworks: ['mocha', 'chai'],
     files: [
+      'node_modules/babel-polyfill/browser.js',
       fileRoot,
       {
         pattern: filePattern,
@@ -61,6 +62,7 @@ module.exports = function (config) {
             'src/components/search/index.js',
             'src/components/voteUrlProcessor/voteUrlProcessor.js',
             'src/components/voteUrlProcessor/index.js',
+            'src/components/asyncComponent/index.js',
             'src/components/onboarding/index.js',
             'src/components/passphrase/createSecond/index.js',
             'src/utils/api/liskService.js',

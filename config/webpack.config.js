@@ -25,7 +25,7 @@ module.exports = {
             }],
             'react',
             'stage-3'],
-          plugins: ['syntax-trailing-function-commas', 'import-glob', 'transform-decorators-legacy'],
+          plugins: ['syntax-trailing-function-commas', 'import-glob', 'transform-decorators-legacy', 'syntax-dynamic-import'],
           env: {
             test: {
               plugins: ['istanbul'],

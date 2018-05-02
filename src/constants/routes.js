@@ -1,17 +1,19 @@
-import Dashboard from '../components/dashboard';
-import Sidechains from '../components/sidechains';
 import Login from '../components/login';
 import Register from '../components/register';
-import RegisterDelegate from '../components/registerDelegate';
-import SecondPassphrase from '../components/secondPassphrase';
-import Search from '../components/search';
-import SearchResult from '../components/search/searchResult';
-import TransactionDashboard from '../components/transactionDashboard';
-import AccountTransactions from '../components/accountTransactions';
-import Voting from '../components/voting';
-import SingleTransaction from '../components/singleTransaction';
 // import NotFound from '../components/notFound';
-import AccountVisualDemo from '../components/accountVisual/demo';
+import asyncComponent from '../components/asyncComponent';
+
+const Dashboard = asyncComponent(() => import('../components/dashboard'));
+const AccountVisualDemo = asyncComponent(() => import('../components/accountVisual/demo'));
+const TransactionDashboard = asyncComponent(() => import('../components/transactionDashboard'));
+const Voting = asyncComponent(() => import('../components/voting'));
+const Sidechains = asyncComponent(() => import('../components/sidechains'));
+const SecondPassphrase = asyncComponent(() => import('../components/secondPassphrase'));
+const Search = asyncComponent(() => import('../components/search'));
+const SearchResult = asyncComponent(() => import('../components/search/searchResult'));
+const AccountTransactions = asyncComponent(() => import('../componetns/accountTransactions'));
+const SingleTransaction = asyncComponent(() => import('../components/singleTransaction'));
+const RegisterDelegate = asyncComponent(() => import('../components/registerDelegate'));
 
 export default {
   accountVisualDemo: {
