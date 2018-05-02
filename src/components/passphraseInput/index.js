@@ -23,7 +23,7 @@ class PassphraseInput extends React.Component {
   }
 
   handleValueChange(index, value) {
-    let insertedValue = value;
+    let insertedValue = value.trim().replace(/\W+/g, ' ');
     const insertedValueAsArray = insertedValue.split(' ');
     let passphrase = this.props.value.split(' ');
 
