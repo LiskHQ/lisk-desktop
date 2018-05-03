@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
-import { mount } from 'enzyme';
 import { spy } from 'sinon';
+import { mountWithContext } from './../../../test/utils/mountHelpers';
 import ErrorBoundary from './index';
 
 describe('ErrorBoundary:', () => {
@@ -33,9 +33,9 @@ describe('ErrorBoundary:', () => {
       const componentDidCatchSpy = spy(ErrorBoundary.prototype, 'componentDidCatch');
       try {
         pauseErrorLogging(() => {
-          wrapper = mount(<ErrorBoundary {...props}>
+          wrapper = mountWithContext(<ErrorBoundary {...props}>
             <ProblematicChild />
-          </ErrorBoundary>);
+          </ErrorBoundary>, { storeState: {} });
         });
       } catch (err) {
         expect(componentDidCatchSpy).to.have.been.called();
@@ -46,9 +46,9 @@ describe('ErrorBoundary:', () => {
     });
 
     it('should render childs when no errors', () => {
-      wrapper = mount(<ErrorBoundary {...props}>
+      wrapper = mountWithContext(<ErrorBoundary {...props}>
         <NonProblematicChild />
-      </ErrorBoundary>);
+      </ErrorBoundary>, { storeState: {} });
 
       wrapper.update();
       expect(wrapper.find('.error-header')).not.to.be.present();

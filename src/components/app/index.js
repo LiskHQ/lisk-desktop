@@ -52,7 +52,6 @@ class App extends React.Component {
               <div id='onboardingAnchor'></div>
               <Switch>
                 {this.state.loaded ?
-
                   <Route path={routes.explorer.path} component={ ({ location }) => (
                     isPathCorrect(location, explorerRoutes) ? (
                       <div>
@@ -83,10 +82,16 @@ class App extends React.Component {
                   ))
                   : null
                 }
-                <Route path={routes.registerDelegate.path}
-                  component={routes.registerDelegate.component} />
-                <Route path={routes.register.path} component={routes.register.component} />
-                <Route path={routes.addAccount.path} component={routes.addAccount.component} />
+                <ErrorBoundary errorMessage=''>
+                  <Route path={routes.registerDelegate.path}
+                    component={routes.registerDelegate.component} />
+                </ErrorBoundary>
+                <ErrorBoundary errorMessage=''>
+                  <Route path={routes.register.path} component={routes.register.component} />
+                </ErrorBoundary>
+                <ErrorBoundary errorMessage=''>
+                  <Route path={routes.addAccount.path} component={routes.addAccount.component} />
+                </ErrorBoundary>
                 <ErrorBoundary errorMessage=''>
                   <Route exact path={routes.login.path} component={routes.login.component} />
                 </ErrorBoundary>

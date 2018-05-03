@@ -1,7 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
-import { connect } from 'react-redux';
 
 import Box from '../box';
 import { FontIcon } from '../fontIcon';
@@ -62,4 +60,4 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-export default withRouter((translate()(ErrorBoundary)));
+export default translate()(ErrorBoundary);
