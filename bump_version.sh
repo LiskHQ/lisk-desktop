@@ -21,7 +21,7 @@ fi
 
 release=$1
 
-changes=$(git status --porcelain -u no)
+changes=$(git status --porcelain -uno)
 
 if [ -z "${changes}" ]; then
   bump "package.json"
