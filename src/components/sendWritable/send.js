@@ -1,4 +1,5 @@
 import React from 'react';
+import TransferTabs from './../transferTabs';
 import { fromRawLsk } from '../../utils/lsk';
 import { Button } from './../toolbox/buttons/button';
 import { authStatePrefill } from '../../utils/form';
@@ -82,6 +83,7 @@ class SendWritable extends React.Component {
             <h2>{this.props.t('Transfer')}</h2>
             <span className={`${styles.subTitle} ${styles.transfer}`}>{this.props.t('Quickly send and request LSK token')}</span>
           </header>
+          <TransferTabs setTabSend={this.props.setTabSend} isActiveTabSend={true}/>
         </div>
         <form className={styles.form}>
           <Input label={this.props.t('Send to address')}
