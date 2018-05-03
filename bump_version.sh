@@ -12,9 +12,10 @@ function bump {
 function help {
 	echo "Usage: $(basename $0) <newversion>"
 	echo "  e.g. $(basename $0) 0.1.0"
+	echo "       $(basename $0) 0.1.0-rc.1"
 }
 
-if [ -z "$1" ] || [ "$1" = "help" ]; then
+if [ -z "$1" ] || [ "$1" = "help" ] || [[ "$1" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$ ]]; then
 	help
 	exit
 fi
