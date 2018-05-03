@@ -2,6 +2,7 @@
 
 :root {
   --float-animation-distance: 10px;
+  --link-font-size: 15px;
 }
 
 @keyframes float {
@@ -17,13 +18,9 @@
 }
 
 .section {
-  max-width: 230px;
+  max-width: 360px;
   margin: auto;
   text-align: center;
-
-  & button {
-    margin-bottom: 20px;
-  }
 }
 
 .img {
@@ -40,4 +37,15 @@
   font-size: 14px;
   line-height: 26px;
   color: var(--color-grayscale-dark);
+}
+
+.link {
+  font-size: var(--link-font-size);
+  color: var(--color-link);
+  display: block;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  line-height: 15px;
+  text-align: center;
 }

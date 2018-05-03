@@ -21,25 +21,33 @@ class ErrorBoundary extends React.Component {
   }
 
   reloadPage() {
-    this.props.router.refresh();
+    window.location.reload();
   }
 
 
   render() {
+    const getMailReference = () => {
+      const recipient = 'mailto:admin@lisk.io';
+      const subject = `User Reported Error - Lisk Hub - ${VERSION}`; // eslint-disable-line no-undef
+      const body = `${this.state.error}:%0A${this.state.info.componentStack.replace(/\s{4}/g, '%0A')}`;
+      return `${recipient}?&subject=${subject}&body=${body}`;
+    };
     const renderErrorSection = () => (
       <Box>
         <section className={styles.section}>
           <img className={styles.img} src={notFoundImg} />
           {this.props.errorMessage ?
             <h2 className={styles.header}>{this.props.t(this.props.errorMessage)}</h2> : null}
-          <p className={styles.description}>Try reloading this page</p>
+          <p className={styles.description}>{this.props.t('Here are some actions you can do')}</p>
           <PrimaryButton
             theme={styles}
             label={this.props.t('Reload this page')}
             className={`${styles.button} error-reload-btn`}
             onClick={() => this.reloadPage() }/>
+          <p className={styles.description}>{this.props.t('or')}</p>
           <a target='_blank'
-            href={`mailto:admin@lisk.io?&subject=User%20Reported%20Error&body=${this.state.error}-${this.state.info.componentStack.replace(/ /g, '\n')}`}
+            className={styles.link}
+            href={getMailReference()}
             rel='noopener noreferrer'>
             {this.props.t('Report this error to the community')}&nbsp;<FontIcon>arrow-right</FontIcon>
           </a>
@@ -54,8 +62,4 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  router: state.router,
-});
-
-export default withRouter(connect(mapStateToProps)(translate()(ErrorBoundary)));
+export default withRouter((translate()(ErrorBoundary)));
