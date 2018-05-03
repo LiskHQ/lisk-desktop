@@ -36,6 +36,17 @@
   width: auto;
 }
 
+@media (--large-viewport) {
+  .content {
+    padding-right: 0;
+    padding-left: 0;
+
+    & > h2 {
+      padding: 0 40px;
+    }
+  }
+}
+
 @media (--medium-viewport) {
   .wrapper {
     margin: 0 calc(-1 * var(--box-padding-left-M));
