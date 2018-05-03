@@ -25,10 +25,10 @@ class ErrorBoundary extends React.Component {
 
   render() {
     const getMailReference = () => {
-      const recipient = 'mailto:admin@lisk.io';
+      const recipient = 'hubdev@lisk.io';
       const subject = `User Reported Error - Lisk Hub - ${VERSION}`; // eslint-disable-line no-undef
       const body = `${this.state.error}:%0A${this.state.info.componentStack.replace(/\s{4}/g, '%0A')}`;
-      return `${recipient}?&subject=${subject}&body=${body}`;
+      return `mailto:${recipient}?&subject=${subject}&body=${body}`;
     };
     const renderErrorSection = () => (
       <Box>
@@ -47,7 +47,7 @@ class ErrorBoundary extends React.Component {
             className={styles.link}
             href={getMailReference()}
             rel='noopener noreferrer'>
-            {this.props.t('Report this error to the community')}&nbsp;<FontIcon>arrow-right</FontIcon>
+            {this.props.t('Report this error to the developers')}&nbsp;<FontIcon>arrow-right</FontIcon>
           </a>
         </section>
       </Box>
