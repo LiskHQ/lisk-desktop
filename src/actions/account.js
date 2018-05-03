@@ -144,17 +144,17 @@ export const sent = ({ activePeer, account, recipientId, amount, passphrase, sec
   };
 
 
-export const updateDelegate = data => ({
-  type: actionTypes.updateDelegate,
-  data,
-});
-
 export const loadDelegate = ({ activePeer, publicKey }) =>
   (dispatch) => {
     getDelegate(
       activePeer, { publicKey },
     ).then((response) => {
-      dispatch(updateDelegate({ delegate: response.delegate }));
+      dispatch({
+        data: {
+          delegate: response.delegate,
+        },
+        type: actionTypes.updateDelegate,
+      });
     });
   };
 
