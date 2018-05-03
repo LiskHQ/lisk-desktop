@@ -36,8 +36,7 @@ const privateComponent = [
   { route: `${routes.delegates.path}`, component: Voting },
 ];
 
-/* eslint-disable mocha/no-exclusive-tests */
-describe.only('App', () => {
+describe('App', () => {
   const navigateTo = addRouter(App);
   describe('renders correct routes', () => {
     const store = fakeStore({
@@ -54,7 +53,6 @@ describe.only('App', () => {
         const wrapper = navigateTo({ store }, [route]);
         wrapper.find('LoadingBar').props().markAsLoaded();
         wrapper.update();
-        // console.log(wrapper.debug());
         expect(wrapper.find(component).exists()).to.be.equal(true);
       });
     });
@@ -64,7 +62,6 @@ describe.only('App', () => {
         const wrapper = navigateTo({ store }, [route]);
         wrapper.find('LoadingBar').props().markAsLoaded();
         wrapper.update();
-        // console.log(wrapper.debug());
         expect(wrapper.find(component).exists()).to.be.equal(false);
         expect(wrapper.find(Login).exists()).to.be.equal(true);
       });

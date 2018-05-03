@@ -22,7 +22,6 @@ class ErrorBoundary extends React.Component {
     window.location.reload();
   }
 
-
   render() {
     const getMailReference = () => {
       const recipient = 'hubdev@lisk.io';

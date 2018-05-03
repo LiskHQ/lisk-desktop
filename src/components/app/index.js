@@ -10,7 +10,6 @@ import CustomRoute from '../customRoute';
 import Header from '../header';
 import SavedAccounts from '../savedAccounts';
 import NotFound from '../notFound';
-import ErrorBoundary from '../errorBoundary';
 
 import routes from '../../constants/routes';
 // eslint-disable-next-line import/no-named-as-default
@@ -39,6 +38,13 @@ class App extends React.Component {
       routeObj.component && !routeObj.pathPrefix && !routeObj.isLoaded);
     const explorerRoutes = allRoutes.filter(routeObj =>
       routeObj.pathPrefix && routeObj.pathPrefix === routes.explorer.path);
+
+    const routesOutsideMainWrapper = [
+      'registerDelegate',
+      'register',
+      'addAccount',
+      'login',
+    ];
 
     return (
       <OfflineWrapper>
@@ -78,23 +84,21 @@ class App extends React.Component {
                       component={route.component}
                       isPrivate={route.isPrivate}
                       exact={route.exact}
-                      key={key}/>
+                      key={key} />
                   ))
                   : null
                 }
-                <ErrorBoundary errorMessage=''>
-                  <Route path={routes.registerDelegate.path}
-                    component={routes.registerDelegate.component} />
-                </ErrorBoundary>
-                <ErrorBoundary errorMessage=''>
-                  <Route path={routes.register.path} component={routes.register.component} />
-                </ErrorBoundary>
-                <ErrorBoundary errorMessage=''>
-                  <Route path={routes.addAccount.path} component={routes.addAccount.component} />
-                </ErrorBoundary>
-                <ErrorBoundary errorMessage=''>
-                  <Route exact path={routes.login.path} component={routes.login.component} />
-                </ErrorBoundary>
+
+                {
+                  routesOutsideMainWrapper.map((route, key) => (
+                    <CustomRoute
+                      path={routes[route].path}
+                      component={routes[route].component}
+                      isPrivate={false}
+                      exact={true}
+                      key={key} />
+                  ))
+                }
                 <Route path='*' component={NotFound} />
               </Switch>
             </div>
