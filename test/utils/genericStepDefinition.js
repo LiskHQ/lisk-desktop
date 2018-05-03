@@ -93,6 +93,6 @@ export default class GenericStepDefinition {
    * prints rendered DOM by wrapper into console
    */
   debug() {
-    console.log(this.wrapper.debug());
+    console.log(this.wrapper.debug()); // eslint-disable-line no-console
   }
 }

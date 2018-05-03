@@ -18,7 +18,6 @@ import peersReducer from '../../src/store/reducers/peers';
 import loginMiddleware from '../../src/store/middlewares/login';
 import accountMiddleware from '../../src/store/middlewares/account';
 import peerMiddleware from '../../src/store/middlewares/peers';
-import transactionsMiddleware from '../../src/store/middlewares/transactions';
 import { activePeerSet } from '../../src/actions/peers';
 import networks from './../../src/constants/networks';
 import getNetwork from './../../src/utils/getNetwork';
@@ -119,7 +118,6 @@ const loginProcess = (votes = []) => {
     thunk,
     accountMiddleware,
     loginMiddleware,
-    transactionsMiddleware,
     peerMiddleware,
   ]);
 

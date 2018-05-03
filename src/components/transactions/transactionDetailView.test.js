@@ -1,4 +1,5 @@
 import React from 'react';
+import thunk from 'redux-thunk';
 import { expect } from 'chai';
 import { spy } from 'sinon';
 import { mountWithContext } from '../../../test/utils/mountHelpers';
@@ -17,6 +18,7 @@ describe('TransactionDetailView', () => {
         },
         voting: { votes: {} },
       },
+      middlewares: [thunk],
     };
     const props = {
       prevStep: spy(),
@@ -56,6 +58,7 @@ describe('TransactionDetailView', () => {
         },
         voting: { votes: {} },
       },
+      middlewares: [thunk],
     };
     const props = {
       prevStep: spy(),
