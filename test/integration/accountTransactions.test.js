@@ -44,11 +44,45 @@ describe('@integration: Account Transactions', () => {
   let requestToActivePeerStub;
   let accountAPIStub;
   let delegateAPIStub;
+  let delegateGetVotesAPIStub;
+  let delegateGetVotersAPIStub;
+  const voters = {
+    accounts: [{
+      username: null,
+      address: '3484156157234038617L',
+      publicKey: 'bd56ce59f413370cf45dbc4be094acbd4de9c6894443476e5406dfc458337889',
+      balance: '0',
+    }],
+  };
+
+  const votes = {
+    delegates: [{
+      username: 'liskpool_com_01',
+      address: '14593474056247442712L',
+      publicKey: 'ec111c8ad482445cfe83d811a7edd1f1d2765079c99d7d958cca1354740b7614',
+      vote: '4257396024977439',
+      producedblocks: 43961,
+      missedblocks: 283,
+      rate: 2,
+      rank: 2,
+      approval: 35.27,
+      productivity: 99.36,
+    }],
+  };
 
   beforeEach(() => {
     requestToActivePeerStub = stub(peers, 'requestToActivePeer');
     accountAPIStub = stub(accountAPI, 'getAccount');
     delegateAPIStub = stub(delegateAPI, 'getDelegate');
+    delegateGetVotesAPIStub = stub(delegateAPI, 'getVotes');
+    delegateGetVotersAPIStub = stub(delegateAPI, 'getVoters');
+
+    delegateGetVotesAPIStub.returnsPromise()
+      .resolves({ ...votes });
+
+    delegateGetVotersAPIStub.returnsPromise()
+      .resolves({ ...voters });
+
 
     const transactionExample = { senderId: '456L', receiverId: '456L', type: txTypes.send };
 
@@ -79,6 +113,8 @@ describe('@integration: Account Transactions', () => {
     requestToActivePeerStub.restore();
     accountAPIStub.restore();
     delegateAPIStub.restore();
+    delegateGetVotesAPIStub.restore();
+    delegateGetVotersAPIStub.restore();
     wrapper.update();
   });
 
@@ -108,7 +144,11 @@ describe('@integration: Account Transactions', () => {
     accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
     if (accountType) { store.dispatch(accountLoggedIn(account)); }
     wrapper = mount(renderWithRouter(AccountTransactions, store,
-      { match: { params: { address } }, history: { location: { search: '' } } }));
+      {
+        delegate: { publicKey: accounts.genesis.publicKey },
+        match: { params: { address } },
+        history: { location: { search: '' } },
+      }));
 
     helper = new Helper(wrapper, store);
   };

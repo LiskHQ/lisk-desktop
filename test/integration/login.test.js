@@ -25,7 +25,6 @@ import GenericStepDefinition from '../utils/genericStepDefinition';
 describe('@integration: Login', () => {
   let wrapper;
   let helper;
-  // const requestToActivePeerStub = stub(peers, 'requestToActivePeer');
   let accountAPIStub;
   let delegateAPIStub;
   let netHashAPIStub;
@@ -98,7 +97,7 @@ describe('@integration: Login', () => {
     checkIfInRoute() {
       expect(this.store.getState().account).to.have.all.keys('passphrase', 'publicKey', 'address', 'delegate',
         'isDelegate', 'expireTime', 'u_multisignatures', 'multisignatures', 'unconfirmedBalance',
-        'secondSignature', 'secondPublicKey', 'balance', 'unconfirmedSignature', 'network');
+        'secondSignature', 'secondPublicKey', 'balance', 'unconfirmedSignature', 'network', 'votes', 'voters');
       restoreStubs();
     }
 

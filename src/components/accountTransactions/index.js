@@ -56,11 +56,12 @@ class accountTransactions extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  delegateUsername: state.account.delegate ? state.account.delegate.username : null,
+  delegateUsername: (state.account && state.account.delegate)
+    ? state.account.delegate.username : null,
   balance: state.transactions.account ? state.transactions.account.balance : null,
   notLoading: state.loading.length === 0,
   peers: state.peers,
-  delegate: state.account.delegate,
+  delegate: state.account && state.account.delegate,
 });
 
 const mapDispatchToProps = dispatch => ({

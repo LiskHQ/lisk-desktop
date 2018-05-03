@@ -111,10 +111,10 @@ class TransactionsList extends React.Component {
 
 
 const mapStateToProps = state => ({
-  delegate: state.account.delegate || {},
-  votes: state.account.votes || [],
-  voters: state.account.voters || [],
-  publicKey: state.account.delegate ? state.account.delegate.publicKey : null,
+  delegate: state.account && (state.account.delegate || {}),
+  votes: state.account && (state.account.votes || []),
+  voters: state.account && (state.account.voters || []),
+  publicKey: (state.account && state.account.delegate) ? state.account.delegate.publicKey : null,
   peers: state.peers,
 });
 
