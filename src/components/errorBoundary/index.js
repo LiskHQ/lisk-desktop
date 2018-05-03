@@ -36,13 +36,13 @@ class ErrorBoundary extends React.Component {
           <img className={styles.img} src={notFoundImg} />
           {this.props.errorMessage ?
             <h2 className={styles.header}>{this.props.t(this.props.errorMessage)}</h2> : null}
-          <p className={styles.description}>{this.props.t('Here are some actions you can do')}</p>
+          <p className={styles.description}>{this.props.t('To recover you can')}</p>
           <PrimaryButton
             theme={styles}
             label={this.props.t('Reload this page')}
             className={`${styles.button} error-reload-btn`}
             onClick={() => this.reloadPage() }/>
-          <p className={styles.description}>{this.props.t('or')}</p>
+          <p className={styles.description}>{this.props.t('if the problem persists')}</p>
           <a target='_blank'
             className={styles.link}
             href={getMailReference()}
