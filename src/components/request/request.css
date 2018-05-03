@@ -67,6 +67,7 @@
     color: var(--color-primary-standard);
     font-weight: var(--font-weight-bold);
     font-size: 14px;
+    padding-left: 10px;
   }
 
   & .copy {
@@ -78,7 +79,13 @@
   }
 
   & .qrCode {
-    mix-blend-mode: multiply;
+    margin-bottom: 20px;
+
+    & canvas {
+      max-width: 260px;
+      width: 100% !important;
+      height: auto !important;
+    }
   }
 }
 
@@ -113,14 +120,6 @@
       & .desktopTitle {
         display: none;
       }
-    }
-  }
-}
-
-@media (--large-viewport) {
-  .wrapper {
-    & .qrCode {
-      height: 200px;
     }
   }
 }

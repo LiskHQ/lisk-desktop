@@ -1,5 +1,6 @@
 import React from 'react';
 import { translate } from 'react-i18next';
+import QRCode from 'qrcode.react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import CopyToClipboard from '../copyToClipboard/index';
 import { FontIcon } from '../fontIcon';
@@ -27,7 +28,9 @@ class Request extends React.Component {
 
         </div>
         <div className={styles.body}>
-          <img className={`${styles.qrCode} request-qr-code`} src={`https://chart.googleapis.com/chart?cht=qr&chl=${this.props.account.address}&chs=260x260&choe=UTF-8&chld=L|2`} alt='qr code'/>
+          <div className={`${styles.qrCode} request-qr-code`}>
+            <QRCode value={this.props.account.address} />
+          </div>
           <CopyToClipboard
             value={this.props.account.address}
             className={styles.copy}/>
