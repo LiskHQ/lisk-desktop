@@ -230,9 +230,9 @@ describe('@integration: Wallet', () => {
 
     describe('Scenario: should display the request LSK component when clicking on the tab', () => {
       step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
-      step('And I click "request tab"', () => { helper.clickOnElement('.request-tab'); });
+      step('When I click "request tab"', () => { helper.clickOnElement('.request-tab'); });
       step('Then I should see the QR code', () => helper.haveLengthOf('.request-qr-code', 1));
-      step('And I click "send tab"', () => { helper.clickOnElement('.send-tab'); });
+      step('When I click "send tab"', () => { helper.clickOnElement('.send-tab'); });
       step('Then I should not see the QR code anymore', () => helper.haveLengthOf('.request-qr-code', 0));
     });
 
