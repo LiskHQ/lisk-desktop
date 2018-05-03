@@ -81,7 +81,6 @@ class SendWritable extends React.Component {
         <div className={styles.header}>
           <header className={styles.headerWrapper}>
             <h2>{this.props.t('Transfer')}</h2>
-            <span className={`${styles.subTitle} ${styles.transfer}`}>{this.props.t('Quickly send and request LSK token')}</span>
           </header>
           <TransferTabs setTabSend={this.props.setTabSend} isActiveTabSend={true}/>
         </div>

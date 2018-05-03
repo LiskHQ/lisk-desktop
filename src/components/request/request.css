@@ -36,6 +36,7 @@
 
   & .body {
     text-align: center;
+    margin: 2vh 0px; /* stylelint-disable-line */
   }
 
   & .emailLink {
@@ -43,26 +44,56 @@
     color: var(--color-primary-standard);
     font-weight: var(--font-weight-bold);
     font-size: 14px;
-    padding-left: 10px;
   }
 
   & .copy {
     color: var(--color-grayscale-medium);
     display: block;
     margin-bottom: 15px;
+    margin-left: -5px;
     font-size: 14px;
     font-weight: var(--font-weight-bold);
   }
 
   & .qrCode {
     margin-bottom: 20px;
+    cursor: pointer;
 
-    & canvas {
-      max-width: 260px;
-      width: 100% !important;
-      height: auto !important;
+    &.magnified {
+      & canvas {
+        max-width: 260px;
+        width: 100% !important;
+        height: auto !important;
+      }
+    }
+
+    &.minimized {
+      & canvas {
+        width: 60px !important;
+        height: auto !important;
+      }
     }
   }
+
+  & .backButton {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+.paddingLeft {
+  padding-left: 10px;
+}
+
+.accountVisual {
+  position: absolute;
+  left: -40px;
+  top: -15px;
+}
+
+.disabledInput input:disabled {
+  opacity: 1;
+  border: none;
 }
 
 @media (--small-viewport) {

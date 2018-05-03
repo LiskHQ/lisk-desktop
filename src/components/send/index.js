@@ -8,6 +8,8 @@ import ResultBox from '../resultBox';
 import SendWritable from '../sendWritable';
 import SendReadable from './../sendReadable';
 import Request from '../request';
+import SpecifyRequest from '../request/specifyRequest';
+import ConfirmRequest from '../request/confirmRequest';
 import PassphraseSteps from './../passphraseSteps';
 import AccountInitialization from '../accountInitialization';
 import { parseSearchParams } from './../../utils/searchParams';
@@ -64,10 +66,11 @@ class Send extends React.Component {
             {t('Close')} <FontIcon value='close' />
           </span>
           {this.state.isActiveTabSend
-            ? <MultiStep finalCallback={this.setActiveOnMobile.bind(this,
-              { isActiveOnMobile: false })
-            }
-            className={styles.wrapper}>
+            ?
+            <MultiStep
+              key='send'
+              finalCallback={this.setActiveOnMobile.bind(this, { isActiveOnMobile: false })}
+              className={styles.wrapper}>
               <AccountInitialization address={recipient}/>
               <SendWritable
                 autoFocus={this.state.isActiveOnMobile || window.innerWidth > breakpoints.m}
@@ -79,8 +82,14 @@ class Send extends React.Component {
               <SendReadable/>
               <ResultBox history={this.props.history}/>
             </MultiStep>
-            : <MultiStep className={styles.wrapper}>
+            :
+            <MultiStep
+              key='request'
+              finalCallback={this.setActiveOnMobile.bind(this, { isActiveOnMobile: false })}
+              className={styles.wrapper}>
               <Request {...this.props} setTabSend={this.setActiveTabSend.bind(this)} />
+              <SpecifyRequest {...this.props} />
+              <ConfirmRequest {...this.props} />
             </MultiStep>
           }
         </Box>
