@@ -2,13 +2,14 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './voting.css';
 import DelegateSidebar from '../delegateSidebar';
-import DelegateList from '../delegateList';
+import VotingListView from '../votingListView';
 
 class Voting extends React.Component {
   constructor() {
     super();
     this.state = {
       showChangeSummery: false,
+      nextStepCalled: false,
     };
   }
 
@@ -28,16 +29,25 @@ class Voting extends React.Component {
     }
   }
 
+  nextStepGotCalled() {
+    this.setState({ nextStepCalled: true });
+  }
+
+
   render() {
     return (
       <div className={`${grid.row} ${styles.wrapper}`} ref={(el) => { this.root = el; }}>
         <aside className={`${grid['col-sm-12']} ${grid['col-md-4']} ${styles.votingBox}`}>
           <DelegateSidebar votes={this.props.votes}
+            nextStepGotCalled={this.nextStepGotCalled.bind(this)}
             setLayover={this.setLayover.bind(this)}
             updateList={(value) => { this.toggleSummery(value); }} />
         </aside>
         <section className={`${grid['col-sm-12']} ${grid['col-md-8']} ${styles.votingBox}`}>
-          <DelegateList showChangeSummery={this.state.showChangeSummery} />
+          <VotingListView showChangeSummery={this.state.showChangeSummery}
+            nextStepCalled={this.state.nextStepCalled}
+            history={this.props.history}
+          />
         </section>
       </div>
     );

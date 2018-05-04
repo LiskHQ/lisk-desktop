@@ -1,6 +1,6 @@
 import React from 'react';
 import routes from '../../../../constants/routes';
-import { extractAddress } from '../../../../utils/api/account';
+import { extractAddress } from '../../../../utils/account';
 import { fromRawLsk } from '../../../../utils/lsk';
 
 import TransitionWrapper from '../../../toolbox/transitionWrapper';
@@ -97,11 +97,11 @@ class Confirm extends React.Component {
             <div className={`${stepStyles.firstContainer} ${stepStyles.resetMargin}`}>
               <header>
                 <FontIcon className={stepStyles.headerIcon} value='checkmark' />
-                <h5 className={stepStyles.heading}>
+                <h5 className={`${stepStyles.heading} success-header`}>
                   {t('Success!')}
                 </h5>
               </header>
-              <p className={stepStyles.description}>
+              <p className={`${stepStyles.description} success-description`}>
                 {t('Your registration is secured on the blockchain')}
               </p>
             </div>

@@ -30,6 +30,7 @@
     height: 100%;
     flex-flow: column;
     justify-content: center;
+    overflow: auto;
 
     & .detailsWrapper {
       margin: 0 auto;

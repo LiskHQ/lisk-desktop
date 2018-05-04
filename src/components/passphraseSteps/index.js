@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { extractPublicKey } from '../../utils/api/account';
+import { extractPublicKey } from '../../utils/account';
 import { Button } from './../toolbox/buttons/button';
 // eslint-disable-next-line import/no-named-as-default
 import PassphraseInput from '../passphraseInput';
@@ -128,7 +128,14 @@ class PassphraseSteps extends React.Component {
     let updatedStyles = { ...styles };
 
     if (this.props.values) {
-      updatedValues = { ...updatedValues, ...this.props.values };
+      const columns = { ...updatedValues.columns, ...this.props.values.columns };
+      const footer = { ...updatedValues.footer, ...this.props.values.footer };
+      const passphrase = { ...updatedValues.passphrase, ...this.props.values.passphrase };
+      const secondPassphrase = {
+        ...updatedValues.secondPassphrase,
+        ...this.props.values.secondPassphrase,
+      };
+      updatedValues = { columns, passphrase, secondPassphrase, footer };
     }
 
     if (this.props.styles) {

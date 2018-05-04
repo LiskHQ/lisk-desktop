@@ -10,7 +10,6 @@ import history from '../../history';
 import i18n from '../../i18n';
 
 describe('VotingHeader', () => {
-  let wrapper;
   const voteDict = {
     username3: { confirmed: false, unconfirmed: true, publicKey: 'sample_key3' },
   };
@@ -61,21 +60,23 @@ describe('VotingHeader', () => {
 
   describe('Vote and Unvote', () => {
     beforeEach(() => {
-      wrapper = mount(<Router><VotingHeader {...props} votes={votes} /></Router>, options);
     });
 
     it('should render an input, a unordered list', () => {
+      const wrapper = mount(<Router><VotingHeader {...props} votes={votes} /></Router>, options);
       expect(wrapper.find('input')).to.have.lengthOf(2);
       expect(wrapper.find('ul')).to.have.lengthOf(1);
     });
 
     it('should render a clean icon and a search icon', () => {
+      const wrapper = mount(<Router><VotingHeader {...props} votes={votes} /></Router>, options);
       // expect(wrapper.find('i.material-icons')).to.have.lengthOf(1);
       expect(wrapper.find(searchButton).exists()).to.be.equal(true);
       expect(wrapper.find(clearButton).exists()).to.be.equal(true);
     });
 
     it('should this.props.search when this.search is called', () => {
+      const wrapper = mount(<Router><VotingHeader {...props} votes={votes} /></Router>, options);
       const clock = sinon.useFakeTimers({
         toFake: ['setTimeout', 'clearTimeout', 'Date'],
       });
@@ -86,6 +87,7 @@ describe('VotingHeader', () => {
     });
 
     it(`click on ${clearButton} should clear value of search input`, () => {
+      const wrapper = mount(<Router><VotingHeader {...props} votes={votes} /></Router>, options);
       wrapper.find('input').at(0).simulate('change', { nativeEvent: { target: { value: '555' } } });
       wrapper.update();
       expect(wrapper.find('input').at(0).props().value).to.be.equal('555');

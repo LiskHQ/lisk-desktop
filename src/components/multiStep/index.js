@@ -91,12 +91,15 @@ class MultiStep extends React.Component {
     }
 
     return (<div className={className}>
-      <MultiStepNav steps={children} showNav={this.props.showNav}
-        prevPage={prevPage}
-        browsable={browsable} backButtonLabel={backButtonLabel}
-        current={step.current} prevStep={step.prevStep} />
+      { children.length ?
+        <MultiStepNav steps={children} showNav={this.props.showNav}
+          prevPage={prevPage}
+          browsable={browsable} backButtonLabel={backButtonLabel}
+          current={step.current} prevStep={step.prevStep} />
+        : null
+      }
       {
-        React.cloneElement(children[step.current], extraProps)
+        React.cloneElement(children.length ? children[step.current] : children, extraProps)
       }
     </div>);
   }

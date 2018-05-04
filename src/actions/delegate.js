@@ -4,7 +4,7 @@ import {
 import actionTypes from '../constants/actions';
 
 /**
- * Add data to the list of all delegates
+ * Pass response from getDelegate to reducers
  */
 export const delegatesRetrieved = data => ({
   type: actionTypes.delegatesRetrieved,
@@ -12,7 +12,7 @@ export const delegatesRetrieved = data => ({
 });
 
 /**
- * Add data to the list of all delegates
+ * Set a flag until response from getDelegate is resolved
  */
 export const delegatesRetrieving = data => ({
   type: actionTypes.delegatesRetrieving,
@@ -20,7 +20,7 @@ export const delegatesRetrieving = data => ({
 });
 
 /**
- * Gets list of all delegates
+ * Retrieves delegates matching a username
  */
 export const delegatesFetched = ({ activePeer, username }) =>
   (dispatch) => {
@@ -30,15 +30,9 @@ export const delegatesFetched = ({ activePeer, username }) =>
     ).then(({ delegate }) => {
       dispatch(delegatesRetrieved({ delegate, username }));
     }).catch(() => {
-      dispatch(delegatesRetrieved({ delegate: undefined, username }));
+      dispatch(delegatesRetrieved({ delegate: null, username }));
     });
   };
-
-
-export const delegateRegisteredSuccess = data => ({
-  type: actionTypes.delegateRegisteredSuccess,
-  data,
-});
 
 export const delegateRegisteredFailure = data => ({
   type: actionTypes.delegateRegisteredFailure,

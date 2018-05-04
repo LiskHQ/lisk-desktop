@@ -17,7 +17,7 @@
 
 .accountVisual {
   position: absolute;
-  left: 0px;
+  left: 18px;
   top: 3px;
   margin: 0;
 }
@@ -26,6 +26,11 @@
   color: var(--color-link);
   font-weight: 600;
   text-decoration: none;
+}
+
+.dot {
+  padding: 0px 6px;
+  color: var(--color-primary-standard) !important;
 }
 
 .details {
@@ -53,7 +58,17 @@
 
   & .column {
     position: relative;
-    padding-left: 50px;
+    padding-left: 70px;
+  }
+
+  & .columnNarrow {
+    position: relative;
+    padding-left: 20px;
+  }
+
+  & .title {
+    color: var(--color-black);
+    margin-left: -5px;
   }
 
   & .label {
@@ -66,13 +81,14 @@
 
   & header {
     padding-left: 0px;
+    padding-top: 0px;
 
     & h3 {
       font-family: var(--content-font);
 
       & small {
         font-weight: var(--detail-label-font-weight);
-        margin-left: -6px;
+        margin-left: 3px;
         cursor: pointer;
       }
 

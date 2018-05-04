@@ -1,8 +1,8 @@
 import i18next from 'i18next';
 import actionTypes from '../constants/actions';
-import { setSecondPassphrase, send } from '../utils/api/account';
-import { registerDelegate, getVotes, getVoters } from '../utils/api/delegate';
-import { transactionAdded, transactionFailed } from './transactions';
+import { setSecondPassphrase, send, getAccount } from '../utils/api/account';
+import { registerDelegate, getDelegate, getVotes, getVoters } from '../utils/api/delegate';
+import { loadTransactionsFinish } from './transactions';
 import { delegateRegisteredFailure } from './delegate';
 import { errorAlertDialogDisplayed } from './dialog';
 import Fees from '../constants/fees';
@@ -97,14 +97,17 @@ export const secondPassphraseRegistered = ({ activePeer, secondPassphrase, accou
   (dispatch) => {
     setSecondPassphrase(activePeer, secondPassphrase, account.publicKey, passphrase)
       .then((data) => {
-        dispatch(transactionAdded({
-          id: data.transactionId,
-          senderPublicKey: account.publicKey,
-          senderId: account.address,
-          amount: 0,
-          fee: Fees.setSecondPassphrase,
-          type: transactionTypes.setSecondPassphrase,
-        }));
+        dispatch({
+          data: {
+            id: data.transactionId,
+            senderPublicKey: account.publicKey,
+            senderId: account.address,
+            amount: 0,
+            fee: Fees.setSecondPassphrase,
+            type: transactionTypes.setSecondPassphrase,
+          },
+          type: actionTypes.transactionAdded,
+        });
       }).catch((error) => {
         const text = (error && error.message) ? error.message : i18next.t('An error occurred while registering your second passphrase. Please try again.');
         dispatch(errorAlertDialogDisplayed({ text }));
@@ -121,15 +124,18 @@ export const delegateRegistered = ({
     registerDelegate(activePeer, username, passphrase, secondPassphrase)
       .then((data) => {
         // dispatch to add to pending transaction
-        dispatch(transactionAdded({
-          id: data.transactionId,
-          senderPublicKey: account.publicKey,
-          senderId: account.address,
-          username,
-          amount: 0,
-          fee: Fees.registerDelegate,
-          type: transactionTypes.registerDelegate,
-        }));
+        dispatch({
+          data: {
+            id: data.transactionId,
+            senderPublicKey: account.publicKey,
+            senderId: account.address,
+            username,
+            amount: 0,
+            fee: Fees.registerDelegate,
+            type: transactionTypes.registerDelegate,
+          },
+          type: actionTypes.transactionAdded,
+        });
       })
       .catch((error) => {
         dispatch(delegateRegisteredFailure(error));
@@ -144,19 +150,68 @@ export const sent = ({ activePeer, account, recipientId, amount, passphrase, sec
   (dispatch) => {
     send(activePeer, recipientId, toRawLsk(amount), passphrase, secondPassphrase)
       .then((data) => {
-        dispatch(transactionAdded({
-          id: data.transactionId,
-          senderPublicKey: account.publicKey,
-          senderId: account.address,
-          recipientId,
-          amount: toRawLsk(amount),
-          fee: Fees.send,
-          type: transactionTypes.send,
-        }));
+        dispatch({
+          data: {
+            id: data.transactionId,
+            senderPublicKey: account.publicKey,
+            senderId: account.address,
+            recipientId,
+            amount: toRawLsk(amount),
+            fee: Fees.send,
+            type: transactionTypes.send,
+          },
+          type: actionTypes.transactionAdded,
+        });
       })
       .catch((error) => {
         const errorMessage = error && error.message ? `${error.message}.` : i18next.t('An error occurred while creating the transaction.');
-        dispatch(transactionFailed({ errorMessage }));
+        dispatch({ data: { errorMessage }, type: actionTypes.transactionFailed });
       });
     dispatch(passphraseUsed(passphrase));
+  };
+
+
+export const loadDelegate = ({ activePeer, publicKey }) =>
+  (dispatch) => {
+    getDelegate(
+      activePeer, { publicKey },
+    ).then((response) => {
+      dispatch({
+        data: {
+          delegate: response.delegate,
+        },
+        type: actionTypes.updateDelegate,
+      });
+    });
+  };
+
+export const loadAccount = ({
+  activePeer,
+  address,
+  transactionsResponse,
+  isSameAccount }) =>
+
+  (dispatch) => {
+    getAccount(activePeer, address)
+      .then((response) => {
+        let accountDataUpdated = {
+          confirmed: transactionsResponse.transactions,
+          count: parseInt(transactionsResponse.count, 10),
+          balance: response.balance,
+          address,
+        };
+
+        if (!isSameAccount && response.publicKey) {
+          dispatch(loadDelegate({
+            activePeer,
+            publicKey: response.publicKey,
+          }));
+        } else if (isSameAccount && response.isDelegate) {
+          accountDataUpdated = {
+            ...accountDataUpdated,
+            delegate: response.delegate,
+          };
+        }
+        dispatch(loadTransactionsFinish(accountDataUpdated));
+      });
   };

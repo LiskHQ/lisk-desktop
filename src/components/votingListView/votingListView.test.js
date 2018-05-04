@@ -1,12 +1,12 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import DelegateList from './delegateList';
+import VotingListView from './votingListView';
 import { mountWithContext } from './../../../test/utils/mountHelpers';
 import store from '../../store';
 import voteFilters from './../../constants/voteFilters';
 
-describe('DelegateList', () => {
+describe('VotingListView', () => {
   let wrapper;
 
   const delegates = [
@@ -40,6 +40,7 @@ describe('DelegateList', () => {
     votesFetched: sinon.spy(),
     delegatesFetched: sinon.spy(),
     t: key => key,
+    history: { location: { search: '' } },
   };
 
   let clock;
@@ -49,8 +50,8 @@ describe('DelegateList', () => {
     clock = sinon.useFakeTimers({
       toFake: ['setTimeout', 'clearTimeout', 'Date'],
     });
-    loadMoreSpy = sinon.spy(DelegateList.prototype, 'loadMore');
-    wrapper = mountWithContext(<DelegateList {...props}/>, {});
+    loadMoreSpy = sinon.spy(VotingListView.prototype, 'loadMore');
+    wrapper = mountWithContext(<VotingListView {...props}/>, {});
   });
 
   afterEach(() => {
@@ -89,9 +90,9 @@ describe('DelegateList', () => {
       ...props,
       totalDelegates: 100,
     };
-    wrapper = mountWithContext(<DelegateList {...loadMoreProps}/>, {});
-    const waypoint = wrapper.find('Waypoint').at(1);
-    waypoint.props().onEnter();
+    wrapper = mountWithContext(<VotingListView {...loadMoreProps}/>, {});
+    const Waypoint = wrapper.find('Waypoint').at(1);
+    Waypoint.props().onEnter();
     expect(loadMoreSpy).to.have.been.calledWith();
     expect(wrapper).to.have.exactly(delegates.length).descendants('.delegate-row');
   });
@@ -101,9 +102,9 @@ describe('DelegateList', () => {
       ...props,
       totalDelegates: 100,
     };
-    const loadDelegates = sinon.spy(DelegateList.prototype, 'loadDelegates');
-    wrapper = mountWithContext(<DelegateList {...props}/>, { ...store });
-    const waypoint = wrapper.find('Waypoint').at(1);
+    const loadDelegates = sinon.spy(VotingListView.prototype, 'loadDelegates');
+    wrapper = mountWithContext(<VotingListView {...props}/>, { ...store });
+    const Waypoint = wrapper.find('Waypoint').at(1);
 
     const nextProps = {
       delegates: [
@@ -122,7 +123,7 @@ describe('DelegateList', () => {
     */
     wrapper.setProps(nextProps);
     clock.tick(300);
-    waypoint.props().onEnter();
+    Waypoint.props().onEnter();
     expect(loadMoreSpy).to.have.been.calledWith();
     expect(wrapper).to.have.exactly(delegates.length + 1).descendants('.delegate-row');
     loadDelegates.restore();
@@ -133,7 +134,7 @@ describe('DelegateList', () => {
     const filterVotedProps = {
       ...props,
     };
-    wrapper = mountWithContext(<DelegateList {...filterVotedProps}/>, {});
+    wrapper = mountWithContext(<VotingListView {...filterVotedProps}/>, {});
     wrapper.find('.transaction-filter-item').at(voteFilters.voted).simulate('click');
     wrapper.update();
     const delegateRow = wrapper.find('.delegate-row');
@@ -145,7 +146,7 @@ describe('DelegateList', () => {
     const filterVotedProps = {
       ...props,
     };
-    wrapper = mountWithContext(<DelegateList {...filterVotedProps}/>, {});
+    wrapper = mountWithContext(<VotingListView {...filterVotedProps}/>, {});
     wrapper.find('.transaction-filter-item').at(voteFilters.notVoted).simulate('click');
     wrapper.update();
     const delegateRow = wrapper.find('.delegate-row');
@@ -159,7 +160,7 @@ describe('DelegateList', () => {
     };
     emptyMessageProps.delegates = [];
     emptyMessageProps.votes = {};
-    wrapper = mountWithContext(<DelegateList {...emptyMessageProps}/>, {});
+    wrapper = mountWithContext(<VotingListView {...emptyMessageProps}/>, {});
     const nextProps = {
       delegates: [],
     };
@@ -182,7 +183,7 @@ describe('DelegateList', () => {
     };
     emptyMessageProps.delegates = [];
     emptyMessageProps.votes = {};
-    wrapper = mountWithContext(<DelegateList {...emptyMessageProps}/>, {});
+    wrapper = mountWithContext(<VotingListView {...emptyMessageProps}/>, {});
     const nextProps = {
       delegates: [delegates[1]],
     };

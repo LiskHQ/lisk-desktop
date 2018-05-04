@@ -32,4 +32,26 @@ describe('Reducer: transaction(state, action)', () => {
     const changedState = transaction(state, action);
     expect(changedState).to.deep.equal({ ...error });
   });
+
+  it('should add new Delegate object', () => {
+    const state = [];
+    const actionAdd = {
+      type: actionTypes.transactionAddDelegateName,
+      voteArrayName: 'added',
+      delegate: { id: 123 },
+    };
+    let changedState = transaction(state, actionAdd);
+    expect(changedState).to.deep.equal({ votesName: { added: [{ id: 123 }] } });
+
+    const actionDelete = {
+      type: actionTypes.transactionAddDelegateName,
+      voteArrayName: 'deleted',
+      delegate: { id: 123123 },
+    };
+    changedState = transaction(changedState, actionDelete);
+    expect(changedState).to.deep.equal({ votesName: {
+      added: [{ id: 123 }],
+      deleted: [{ id: 123123 }],
+    } });
+  });
 });

@@ -25,7 +25,12 @@ const processVote = (store, options, username) => {
   lookupDelegate(store, username).then((data) => {
     const vote = store.getState().voting.votes[username];
     if (options.isValid(vote)) {
-      store.dispatch(voteToggled({ username, publicKey: data.delegate.publicKey }));
+      store.dispatch(voteToggled({
+        username,
+        publicKey: data.delegate.publicKey,
+        rank: data.delegate.rank,
+        productivity: data.delegate.productivity,
+      }));
       updateLookupStatus(store, options.successState, username);
     } else {
       updateLookupStatus(store, options.invalidState, username);

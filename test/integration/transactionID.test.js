@@ -10,9 +10,10 @@ import { prepareStore, renderWithRouter } from '../utils/applicationInit';
 import accountReducer from '../../src/store/reducers/account';
 import transactionReducer from '../../src/store/reducers/transaction';
 import peersReducer from '../../src/store/reducers/peers';
+import votingReducer from '../../src/store/reducers/voting';
 import loginMiddleware from '../../src/store/middlewares/login';
 import accountMiddleware from '../../src/store/middlewares/account';
-import transactionsMiddleware from '../../src/store/middlewares/transactions';
+import votingMiddleware from '../../src/store/middlewares/voting';
 import { activePeerSet } from '../../src/actions/peers';
 import networks from './../../src/constants/networks';
 import getNetwork from './../../src/utils/getNetwork';
@@ -35,19 +36,29 @@ describe('@integration: Single Transaction', () => {
   let wrapper;
   let requestToActivePeerStub;
   let accountAPIStub;
+  let transactionAPIStub;
 
   beforeEach(() => {
     requestToActivePeerStub = stub(peers, 'requestToActivePeer');
+    transactionAPIStub = stub(accountAPI, 'transaction');
     accountAPIStub = stub(accountAPI, 'getAccount');
 
+    transactionAPIStub
+      .returnsPromise()
+      .resolves({ transaction: {
+        id: '123456789', senderId: '123l', recipientId: '456l', votes: { added: [], deleted: [] },
+      } });
+
     requestToActivePeerStub.withArgs(match.any, 'transactions/get', { id: '123456789' })
-      .returnsPromise().resolves({
+      .returnsPromise()
+      .resolves({
         success: true,
         transaction: { id: '123456789', senderId: '123l', recipientId: '456l' } });
   });
 
   afterEach(() => {
     requestToActivePeerStub.restore();
+    transactionAPIStub.restore();
     accountAPIStub.restore();
     wrapper.update();
   });
@@ -57,11 +68,12 @@ describe('@integration: Single Transaction', () => {
       account: accountReducer,
       transaction: transactionReducer,
       peers: peersReducer,
+      voting: votingReducer,
     }, [
       thunk,
       accountMiddleware,
       loginMiddleware,
-      transactionsMiddleware,
+      votingMiddleware,
     ]);
 
     const account = {
@@ -77,7 +89,7 @@ describe('@integration: Single Transaction', () => {
     accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
     if (accountType) { store.dispatch(accountLoggedIn(account)); }
     wrapper = mount(renderWithRouter(SingleTransaction, store,
-      { match: { params: { id } } }));
+      { match: { params: { id } }, transaction: { id } }));
     helper = new Helper(wrapper, store);
   };
 

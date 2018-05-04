@@ -1,0 +1,77 @@
+@import '../app/variables.css';
+
+:root {
+  --tab-inactive-color: var(--color-grayscale-dark);
+  --grid-padding-left: 30px;
+  --header-line-height: 36px;
+  --header-subtitle-font-size: var(--subtitle-font-size);
+  --font-weight-bold: 500;
+  --fee-color: var(--color-grayscale-dark);
+}
+
+.form {
+  position: relative;
+  margin-bottom: 15px;
+
+  & input {
+    border-radius: 0;
+  }
+}
+
+.fee {
+  text-align: right;
+  margin-bottom: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  position: absolute;
+  right: 0;
+  top: 70px;
+  color: var(--fee-color);
+}
+
+.convertorWrapper {
+  text-align: right;
+  font-size: 14px;
+  font-weight: 600;
+  position: absolute;
+  right: 0;
+  color: var(--fee-color);
+
+  & .convertor {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    margin-right: -2.5px;
+    color: var(--color-grayscale-medium);
+    margin-top: -25px;
+
+    & div {
+      padding: 0 2.5px;
+
+      &:nth-child(1),
+      &:nth-child(2) {
+        color: var(--color-grayscale-dark);
+        cursor: auto;
+      }
+    }
+  }
+
+  & .convertorErr {
+    display: flex;
+    justify-content: space-between;
+    margin-top: -57px;
+    cursor: pointer;
+
+    & div {
+      padding: 0 5px;
+      margin-right: -5px;
+      color: var(--color-grayscale-medium);
+
+      &:nth-child(1),
+      &:nth-child(2) {
+        color: var(--color-grayscale-dark);
+        cursor: auto;
+      }
+    }
+  }
+}

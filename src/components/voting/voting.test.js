@@ -36,6 +36,7 @@ describe('Voting', () => {
     totalDelegates: 10,
     votes,
     t: key => key,
+    history: { location: { search: '' } },
   };
   beforeEach(() => {
     wrapper = mount(<Router><Voting {...props}></Voting></Router>,

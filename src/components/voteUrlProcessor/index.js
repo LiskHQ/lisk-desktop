@@ -6,6 +6,7 @@ import { settingsUpdated } from '../../actions/settings';
 import {
   urlVotesFound,
   voteLookupStatusCleared,
+  clearVotes,
 } from '../../actions/voting';
 import VoteUrlProcessor from './voteUrlProcessor';
 
@@ -19,8 +20,7 @@ const mapStateToProps = state => ({
   pending: filterObjectPropsWithValue(state.voting.voteLookupStatus, 'pending'),
   unvotes: filterObjectPropsWithValue(state.voting.voteLookupStatus, 'unvotes'),
   upvotes: filterObjectPropsWithValue(state.voting.voteLookupStatus, 'upvotes'),
-  alreadyVoted: filterObjectPropsWithValue(state.voting.voteLookupStatus, 'alreadyVoted'),
-  notVotedYet: filterObjectPropsWithValue(state.voting.voteLookupStatus, 'notVotedYet'),
+  alreadyVoted: filterObjectPropsWithValue(state.voting.voteLookupStatus, 'alreadyVoted').concat(filterObjectPropsWithValue(state.voting.voteLookupStatus, 'notVotedYet')),
   notFound: filterObjectPropsWithValue(state.voting.voteLookupStatus, 'notFound'),
   account: state.account,
   activePeer: state.peers.data,
@@ -30,6 +30,7 @@ const mapDispatchToProps = dispatch => ({
   urlVotesFound: data => dispatch(urlVotesFound(data)),
   settingsUpdated: data => dispatch(settingsUpdated(data)),
   clearVoteLookupStatus: () => dispatch(voteLookupStatusCleared()),
+  clearVotes: () => dispatch(clearVotes()),
 });
 
 export default withRouter(

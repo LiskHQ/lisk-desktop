@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import tableStyle from 'react-toolbox/lib/table/theme.css';
 import TransactionRow from './transactionRow';
 import TransactionsHeader from './transactionsHeader';
-import { transactionsRequestInit } from '../../actions/transactions';
+import { loadTransactions } from '../../actions/transactions';
 import txFilters from './../../constants/transactionFilters';
 import txTypes from './../../constants/transactionTypes';
 import styles from './transactionList.css';
@@ -14,7 +14,11 @@ import DelegateStatistics from './delegateStatistics';
 class TransactionsList extends React.Component {
   constructor(props) {
     super(props);
-    this.props.transactionsRequestInit({ address: this.props.address });
+    this.props.loadTransactions({
+      activePeer: this.props.peers.data,
+      address: this.props.address,
+      publicKey: this.props.account.publicKey,
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -108,17 +112,17 @@ class TransactionsList extends React.Component {
   }
 }
 
-
 const mapStateToProps = state => ({
   delegate: state.account && (state.account.delegate || {}),
   votes: state.account && (state.account.votes || []),
   voters: state.account && (state.account.voters || []),
   publicKey: (state.account && state.account.delegate) ? state.account.delegate.publicKey : null,
   peers: state.peers,
+  account: state.account,
 });
 
 const mapDispatchToProps = dispatch => ({
-  transactionsRequestInit: data => dispatch(transactionsRequestInit(data)),
+  loadTransactions: data => dispatch(loadTransactions(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TransactionsList);

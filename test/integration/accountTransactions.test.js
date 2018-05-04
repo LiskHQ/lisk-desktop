@@ -9,12 +9,14 @@ import * as accountAPI from '../../src/utils/api/account';
 import * as delegateAPI from '../../src/utils/api/delegate';
 import { prepareStore, renderWithRouter } from '../utils/applicationInit';
 import accountReducer from '../../src/store/reducers/account';
-import transactionReducer from '../../src/store/reducers/transactions';
+import transactionsReducer from '../../src/store/reducers/transactions';
 import peersReducer from '../../src/store/reducers/peers';
 import loadingReducer from '../../src/store/reducers/loading';
+import votingReducer from '../../src/store/reducers/voting';
+import transactionReducer from '../../src/store/reducers/transaction';
 import loginMiddleware from '../../src/store/middlewares/login';
 import accountMiddleware from '../../src/store/middlewares/account';
-import transactionsMiddleware from '../../src/store/middlewares/transactions';
+import votingMiddleware from '../../src/store/middlewares/voting';
 import { activePeerSet } from '../../src/actions/peers';
 import networks from './../../src/constants/networks';
 import txTypes from './../../src/constants/transactionTypes';
@@ -44,45 +46,13 @@ describe('@integration: Account Transactions', () => {
   let requestToActivePeerStub;
   let accountAPIStub;
   let delegateAPIStub;
-  let delegateGetVotesAPIStub;
-  let delegateGetVotersAPIStub;
-  const voters = {
-    accounts: [{
-      username: null,
-      address: '3484156157234038617L',
-      publicKey: 'bd56ce59f413370cf45dbc4be094acbd4de9c6894443476e5406dfc458337889',
-      balance: '0',
-    }],
-  };
-
-  const votes = {
-    delegates: [{
-      username: 'liskpool_com_01',
-      address: '14593474056247442712L',
-      publicKey: 'ec111c8ad482445cfe83d811a7edd1f1d2765079c99d7d958cca1354740b7614',
-      vote: '4257396024977439',
-      producedblocks: 43961,
-      missedblocks: 283,
-      rate: 2,
-      rank: 2,
-      approval: 35.27,
-      productivity: 99.36,
-    }],
-  };
+  let transactionAPIStub;
 
   beforeEach(() => {
     requestToActivePeerStub = stub(peers, 'requestToActivePeer');
     accountAPIStub = stub(accountAPI, 'getAccount');
+    transactionAPIStub = stub(accountAPI, 'transaction');
     delegateAPIStub = stub(delegateAPI, 'getDelegate');
-    delegateGetVotesAPIStub = stub(delegateAPI, 'getVotes');
-    delegateGetVotersAPIStub = stub(delegateAPI, 'getVoters');
-
-    delegateGetVotesAPIStub.returnsPromise()
-      .resolves({ ...votes });
-
-    delegateGetVotersAPIStub.returnsPromise()
-      .resolves({ ...voters });
-
 
     const transactionExample = { senderId: '456L', receiverId: '456L', type: txTypes.send };
 
@@ -94,7 +64,9 @@ describe('@integration: Account Transactions', () => {
     transactions.fill(transactionExample);
     requestToActivePeerStub.withArgs(match.any, 'transactions', match({ senderId: '123L', recipientId: '123L' }))
       .returnsPromise().resolves({ transactions, count: 1000 });
-
+    transactionAPIStub.returnsPromise().resolves({ transaction: {
+      id: '123456789', senderId: '123l', recipientId: '456l', votes: { added: [], deleted: [] },
+    } });
     // incoming transaction result
     transactions = new Array(15);
     transactions.fill(transactionExample);
@@ -113,22 +85,23 @@ describe('@integration: Account Transactions', () => {
     requestToActivePeerStub.restore();
     accountAPIStub.restore();
     delegateAPIStub.restore();
-    delegateGetVotesAPIStub.restore();
-    delegateGetVotersAPIStub.restore();
+    transactionAPIStub.restore();
     wrapper.update();
   });
 
   const setupStep = ({ accountType, address }) => {
     store = prepareStore({
       account: accountReducer,
-      transactions: transactionReducer,
+      transactions: transactionsReducer,
+      transaction: transactionReducer,
+      voting: votingReducer,
       peers: peersReducer,
       loading: loadingReducer,
     }, [
       thunk,
       accountMiddleware,
       loginMiddleware,
-      transactionsMiddleware,
+      votingMiddleware,
     ]);
 
     const account = {
@@ -144,11 +117,7 @@ describe('@integration: Account Transactions', () => {
     accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
     if (accountType) { store.dispatch(accountLoggedIn(account)); }
     wrapper = mount(renderWithRouter(AccountTransactions, store,
-      {
-        delegate: { publicKey: accounts.genesis.publicKey },
-        match: { params: { address } },
-        history: { location: { search: '' } },
-      }));
+      { match: { params: { address } }, history: { location: { search: '' } } }));
 
     helper = new Helper(wrapper, store);
   };

@@ -19,9 +19,9 @@ const Amount = (props) => {
     params.className = 'greyLabel';
     params.clickToSendEnabled = props.value.type === transactionTypes.send;
   }
-
+  const amount = props.value.amount === 0 ? '-' : <LiskAmount val={props.value.amount} />;
   return <span id='transactionAmount' className={styles[params.className]}>
-    { params.pre }<LiskAmount val={props.value.amount} />
+    { params.pre }{amount}
   </span>;
 };
 export default translate()(Amount);

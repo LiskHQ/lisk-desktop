@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
+import { withRouter } from 'react-router-dom';
 import { transactionsRequested, transactionsFilterSet } from '../../actions/transactions';
 import Transactions from './transactions';
 
@@ -20,5 +21,6 @@ const mapDispatchToProps = dispatch => ({
   transactionsFilterSet: data => dispatch(transactionsFilterSet(data)),
 });
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(Transactions));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(translate()(Transactions)),
+);

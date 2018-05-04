@@ -5,11 +5,11 @@ import { Provider } from 'react-redux';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Router } from 'react-router-dom';
 import store from '../../store';
-import DelegateList from './index';
+import VotingListView from './index';
 import i18n from '../../i18n';
 import history from '../../history';
 
-describe('DelegateListHOC', () => {
+describe('VotingListView', () => {
   let wrapper;
   const account = { address: '16313739661670634666L' };
   const peers = { data: {} };
@@ -19,15 +19,24 @@ describe('DelegateListHOC', () => {
     totalDelegates: 10,
     refresh: false,
   };
+  const confirmed = [];
+  const pending = [];
+  const transactions = {
+    pending,
+    confirmed,
+    count: confirmed.length,
+  };
 
   beforeEach(() => {
     store.getState = () => ({
       peers,
       account,
       voting,
+      transactions,
+      delegate: {},
       loading: [],
     });
-    wrapper = mount(<Provider store={store}><Router><DelegateList /></Router></Provider>, {
+    wrapper = mount(<Provider store={store}><Router><VotingListView history={{ location: { search: '' } }} /></Router></Provider>, {
       context: { store, history, i18n },
       childContextTypes: {
         store: PropTypes.object.isRequired,
@@ -38,11 +47,11 @@ describe('DelegateListHOC', () => {
   });
 
   it('should render delegate list', () => {
-    expect(wrapper.find(DelegateList)).to.have.lengthOf(1);
+    expect(wrapper.find(VotingListView)).to.have.lengthOf(1);
   });
 
   it('should mount DelegatesList with appropriate properties', () => {
-    const props = wrapper.find('DelegateList').first().props();
+    const props = wrapper.find('VotingListView').first().props();
     expect(props.refreshDelegates).to.be.equal(voting.refresh);
     expect(props.delegates).to.be.equal(voting.delegates);
     expect(props.votes).to.be.equal(voting.votes);

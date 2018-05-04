@@ -15,7 +15,6 @@ import loadingReducer from '../../src/store/reducers/loading';
 import loginMiddleware from '../../src/store/middlewares/login';
 import accountMiddleware from '../../src/store/middlewares/account';
 import peerMiddleware from '../../src/store/middlewares/peers';
-import transactionsMiddleware from '../../src/store/middlewares/transactions';
 import { accountLoggedIn } from '../../src/actions/account';
 import { accountsRetrieved } from '../../src/actions/savedAccounts';
 import { activePeerSet } from '../../src/actions/peers';
@@ -103,7 +102,6 @@ describe('@integration: Wallet', () => {
       thunk,
       accountMiddleware,
       loginMiddleware,
-      transactionsMiddleware,
       peerMiddleware,
     ]);
 
@@ -226,6 +224,14 @@ describe('@integration: Wallet', () => {
       step('Then I should be on the confirm page', () => helper.haveTextOf('header h2', 'Initialize Lisk ID'));
       step('When I click "send button"', () => helper.clickOnElement('button.send-button button'));
       step(`Then I should see text ${successMessage} in "result box message" element`, () => helper.haveTextOf('.result-box-message', successMessage));
+    });
+
+    describe('Scenario: should display the request LSK component when clicking on the tab', () => {
+      step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
+      step('When I click "request tab"', () => { helper.clickOnElement('.request-tab'); });
+      step('Then I should see the QR code', () => helper.haveLengthOf('.request-qr-code', 1));
+      step('When I click "send tab"', () => { helper.clickOnElement('.send-tab'); });
+      step('Then I should not see the QR code anymore', () => helper.haveLengthOf('.request-qr-code', 0));
     });
 
     describe('Scenario: should not show account initialisation option if public key and balance is greater than 0', () => {
