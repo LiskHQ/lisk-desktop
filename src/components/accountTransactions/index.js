@@ -40,9 +40,7 @@ class accountTransactions extends React.Component {
     return <div className={`${grid.row} ${styles.wrapper}`}>
       <div className={`${grid['col-md-4']} ${styles.sendTo}`}>
         <SendTo
-          balance={this.props.balance}
           address={this.props.match.params.address}
-          delegateUsername={this.props.delegateUsername}
           t={this.props.t}
           notLoading={this.props.notLoading}
         />

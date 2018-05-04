@@ -1,14 +1,59 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Waypoint from 'react-waypoint';
 import EmptyState from '../emptyState';
 import TransactionList from './transactionList';
 import styles from './transactions.css';
 import txFilters from './../../constants/transactionFilters';
+import { loadTransactions } from '../../actions/transactions';
+import { searchTransactions } from '../../actions/search';
+import actionTypes from '../../constants/actions';
 
 class Transactions extends React.Component {
   constructor(props) {
     super(props);
     this.canLoadMore = true;
+
+    this.state = {
+      transactions: [],
+      account: {},
+      activeFilter: 0,
+      count: null,
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.address !== nextProps.address) {
+      if (this.props.address !== this.props.account.address) {
+        if (!this.props.search.transactions[this.props.address]) {
+          this.props.searchTransactions({
+            activePeer: this.props.peers.data,
+            address: this.props.address,
+            limit: 25,
+            filter: this.props.filter,
+          });
+        }
+        // this.setState({
+        //   transactions: this.props.transactions.confirmed,
+        //   count: this.props.transactions.count,
+        //   account: this.props.account,
+        //   activeFilter: this.props.transactions.filter,
+        // });
+      } else {
+        this.props.loadTransactions({
+          activePeer: this.props.peers.data,
+          address: this.props.address,
+          publicKey: this.props.account.publicKey,
+        });
+
+        // this.setState({
+        //   transactions: nextProps.search.transactions[nextProps.search.lastSearch].transactions,
+        //   count: nextProps.search.transactions[nextProps.search.lastSearch].count,
+        //   account: nextProps.search.accounts[nextProps.search.lastSearch],
+        //   activeFilter: nextProps.search.transactions[nextProps.search.lastSearch].filter,
+        // });
+      }
+    }
   }
 
   componentWillUnmount() {
@@ -18,13 +63,23 @@ class Transactions extends React.Component {
   loadMore() {
     if (this.canLoadMore) {
       this.canLoadMore = false;
-      this.props.transactionsRequested({
-        activePeer: this.props.activePeer,
-        address: this.props.address,
-        limit: 25,
-        offset: this.props.transactions.length,
-        filter: this.props.activeFilter,
-      });
+
+      if (this.props.address === this.props.account.address) {
+        this.props.transactionsRequested({
+          activePeer: this.props.activePeer,
+          address: this.props.address,
+          limit: 25,
+          offset: this.props.transactions.length,
+          filter: this.props.activeFilter,
+        });
+      } else {
+        this.props.searchMoreTransactions({
+          activePeer: this.props.activePeer,
+          address: this.props.address,
+          limit: 25,
+          offset: this.props.search.transactions[this.props.address].transactions.length,
+        });
+      }
     }
   }
 
@@ -34,8 +89,8 @@ class Transactions extends React.Component {
   }
 
   componentDidUpdate() {
-    const { count, transactions } = this.props;
-    this.canLoadMore = count === null || count > transactions.length;
+    this.canLoadMore = this.props.count === null ||
+      this.props.count > this.props.transactions.length;
   }
 
   isActiveFilter(filter) {
@@ -43,22 +98,35 @@ class Transactions extends React.Component {
       (this.props.activeFilter === filter);
   }
 
+  /* eslint-disable class-methods-use-this */
   shouldShowEmptyState() {
-    return this.props.transactions.length === 0 && !this.isLoading() &&
-      (!this.props.activeFilter || this.props.activeFilter === txFilters.all);
+    // TODO uncomment
+    // this.state.transactions.length === 0 && !this.isLoading() &&
+    //   (!this.state.activeFilter || this.state.activeFilter === txFilters.all);
+    return false;
   }
+  /* eslint-enable class-methods-use-this */
 
   isLoading() {
     return this.props.loading.length > 0;
   }
 
   setTransactionsFilter(filter) {
-    this.props.transactionsFilterSet({
-      activePeer: this.props.activePeer,
-      address: this.props.address,
-      limit: 25,
-      filter,
-    });
+    if (this.props.address === this.props.account.address) {
+      this.props.transactionsFilterSet({
+        activePeer: this.props.activePeer,
+        address: this.props.address,
+        limit: 25,
+        filter,
+      });
+    } else {
+      this.props.searchTransactions({
+        activePeer: this.props.activePeer,
+        address: this.props.address,
+        limit: 25,
+        filter,
+      });
+    }
   }
 
   render() {
@@ -109,24 +177,39 @@ class Transactions extends React.Component {
             ))}
           </ul>
         }
-        <TransactionList
-          filter={filters[this.props.activeFilter]}
-          address={this.props.address}
-          publicKey={this.props.publicKey}
-          transactions={this.props.transactions}
-          loadMore={this.loadMore.bind(this)}
-          nextStep={this.props.nextStep}
-          onClick={this.props.nextStep}
-          loading={this.isLoading()}
-          t={this.props.t}
-          history={this.props.history}
-        />
+        {
+          this.props.address === this.props.account.address ?
+            <TransactionList
+              filter={filters[this.state.activeFilter]}
+              address={this.props.address}
+              publicKey={this.props.publicKey}
+              transactions={this.props.transactions ? this.props.transactions.confirmed : []}
+              loadMore={this.loadMore.bind(this)}
+              nextStep={this.props.nextStep}
+              onClick={this.props.nextStep}
+              loading={this.isLoading()}
+              t={this.props.t}
+              history={this.props.history}
+            /> :
+            <TransactionList
+              filter={filters[this.props.activeFilter]}
+              address={this.props.address}
+              publicKey={this.props.publicKey}
+              transactions={this.props.search.searchResults}
+              loadMore={this.loadMore.bind(this)}
+              nextStep={this.props.nextStep}
+              onClick={this.props.nextStep}
+              loading={this.isLoading()}
+              t={this.props.t}
+              history={this.props.history}
+            />
+        }
         {
           // the whole transactions box should be scrollable on XS
           // otherwise only the transaction list should be scrollable
           // (see transactionList.js)
           this.isSmallScreen()
-            ? <Waypoint bottomOffset='-80%' key={this.props.transactions.length}
+            ? <Waypoint bottomOffset='-80%' key={this.props.search.searchResults.length}
               onEnter={() => { this.loadMore(); }}></Waypoint>
             : null
         }
@@ -134,5 +217,17 @@ class Transactions extends React.Component {
     );
   }
 }
+const mapStateToProps = state => ({
+  peers: state.peers,
+  account: state.account,
+  transactions: state.transactions,
+  search: state.search,
+});
+const mapDispatchToProps = dispatch => ({
+  loadTransactions: data => dispatch(loadTransactions(data)),
+  searchTransactions: data => dispatch(searchTransactions(data)),
+  searchUpdateLast: data =>
+    dispatch({ data, type: actionTypes.searchUpdateLast }),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Transactions);
 
-export default Transactions;

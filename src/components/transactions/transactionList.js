@@ -1,10 +1,9 @@
 import React from 'react';
 import Waypoint from 'react-waypoint';
-import { connect } from 'react-redux';
 import tableStyle from 'react-toolbox/lib/table/theme.css';
 import TransactionRow from './transactionRow';
 import TransactionsHeader from './transactionsHeader';
-import { loadTransactions } from '../../actions/transactions';
+
 import txFilters from './../../constants/transactionFilters';
 import txTypes from './../../constants/transactionTypes';
 import styles from './transactionList.css';
@@ -12,16 +11,6 @@ import { parseSearchParams } from './../../utils/searchParams';
 import DelegateStatistics from './delegateStatistics';
 
 class TransactionsList extends React.Component {
-  constructor(props) {
-    super(props);
-    const { peers, address, account } = props;
-    this.props.loadTransactions({
-      activePeer: peers.data,
-      address,
-      publicKey: account.publicKey,
-    });
-  }
-
   componentWillReceiveProps(nextProps) {
     // istanbul ignore else
     if (nextProps.transactions && this.props.nextStep) this.showDetails(nextProps.transactions);
@@ -113,17 +102,4 @@ class TransactionsList extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  delegate: state.account && (state.account.delegate || {}),
-  votes: state.account && (state.account.votes || []),
-  voters: state.account && (state.account.voters || []),
-  publicKey: (state.account && state.account.delegate) ? state.account.delegate.publicKey : null,
-  peers: state.peers,
-  account: state.account,
-});
-
-const mapDispatchToProps = dispatch => ({
-  loadTransactions: data => dispatch(loadTransactions(data)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(TransactionsList);
+export default TransactionsList;
