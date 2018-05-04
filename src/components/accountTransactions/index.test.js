@@ -2,6 +2,7 @@ import React from 'react';
 import { spy } from 'sinon';
 import { expect } from 'chai';
 import * as transactions from '../../actions/transactions';
+import * as account from '../../actions/account';
 import { mountWithContext } from './../../../test/utils/mountHelpers';
 import AccountTransactions from './index';
 
@@ -9,9 +10,13 @@ describe('AccountTransaction Component', () => {
   let wrapper;
   let props;
   let transactionsRequestInitSpy;
+  let accountVotesFetchedSpy;
+  let accountVotersFetchedSpy;
 
   beforeEach(() => {
     transactionsRequestInitSpy = spy(transactions, 'transactionsRequestInit');
+    accountVotesFetchedSpy = spy(account, 'accountVotesFetched');
+    accountVotersFetchedSpy = spy(account, 'accountVotersFetched');
     const storeState = {
       transactions: {
         account: { balance: 0 },
@@ -33,6 +38,8 @@ describe('AccountTransaction Component', () => {
 
   afterEach(() => {
     transactionsRequestInitSpy.restore();
+    accountVotesFetchedSpy.restore();
+    accountVotersFetchedSpy.restore();
   });
 
   it('updates transactions on address update', () => {

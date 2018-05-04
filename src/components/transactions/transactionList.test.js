@@ -90,4 +90,15 @@ describe('TransactionsList', () => {
       t: propsTxDetails.t,
     });
   });
+
+  it('should render delegate statistics', () => {
+    const propsDelegateStatistics = Object.assign({}, props, {
+      filter: {
+        value: txFilters.statistics,
+        name: 'delegate-statistics',
+      },
+    });
+    wrapper = mount(<TransactionsList {...propsDelegateStatistics} />, options);
+    expect(wrapper.find('.delegate-statistics')).to.have.lengthOf(1);
+  });
 });
