@@ -14,15 +14,16 @@
   --back-button-arrow-font-size-XS: 16px;
 }
 
-.dot {
-  padding: 0px 6px;
-  color: var(--color-primary-standard) !important;
-}
-
 .addressLink {
   color: var(--color-link);
   font-weight: 600;
   text-decoration: none;
+
+  &::after {
+    content: "• ";
+    padding: 0px 6px;
+    color: var(--color-primary-standard) !important;
+  }
 }
 
 .filters {

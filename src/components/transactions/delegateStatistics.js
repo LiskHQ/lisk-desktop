@@ -30,13 +30,6 @@ class DelegateStatistics extends React.Component {
     this.setState({ loadAllVotes: true });
   }
 
-  // putting <span>•</span> inbetween array objects
-  putDotsInbetween(data) { // eslint-disable-line class-methods-use-this
-    return data && data
-      .reduce((arr, val) => [...arr, val, <span className={styles.dot} key={`span-${new Date().valueOf() * Math.random()}`}>• </span>], [])
-      .slice(0, -1);
-  }
-
   getInterspersed(dataName, filterQuery) {
     let data = this.props[dataName];
     data = data ? data.map((user, key) => (
@@ -53,7 +46,7 @@ class DelegateStatistics extends React.Component {
         return name.includes(this.state[filterQuery]);
       });
     }
-    return this.putDotsInbetween(data);
+    return data;
   }
 
   search(filterName, e) {
