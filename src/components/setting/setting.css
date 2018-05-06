@@ -3,7 +3,7 @@
 :root {
   --setting-background-color: var(--color-grayscale-medium);
   --secondPassphrase-background-color: var(--color-grayscale-light);
-  --secondPassphrase-color: var(--color-primary-dark);
+  --secondPassphrase-color: var(--color-grayscale-dark);
   --carousel-nav-background-color: #3c506b;
   --slide-header-font: var(--heading-font);
   --secured-account-color: var(--color-success-dark);
@@ -103,13 +103,16 @@
   line-height: var(--check-box-height);
   width: var(--check-box-width);
   background: var(--secondPassphrase-background-color);
-  display: inline-block;
   border-radius: 31px;
   color: var(--secondPassphrase-color);
-  font-family: gilroy;
+  font-family: var(--slide-header-font);
+  font-weight: var(--font-weight-bold);
+  font-size: 16px;
   position: relative;
   cursor: pointer;
   text-decoration: none;
+  display: inline-block;
+  padding-top: 2px;
 }
 
 .secondPassphraseEnabled {
@@ -125,8 +128,10 @@
   background: var(--color-grayscale-light);
   color: var(--color-grayscale-dark);
   border-radius: 25px;
-  line-height: 48px;
-  padding: 0px 28px;
+  line-height: 43px;
+  padding-left: 28px;
+  padding-right: 28px;
+  padding-top: 5px;
   border: none;
   cursor: pointer;
 
