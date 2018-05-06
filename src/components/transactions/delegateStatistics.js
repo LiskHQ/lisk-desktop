@@ -2,7 +2,6 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
-import Waypoint from 'react-waypoint';
 import { connect } from 'react-redux';
 import { FontIcon } from '../fontIcon';
 import routes from './../../constants/routes';
@@ -22,24 +21,15 @@ class DelegateStatistics extends React.Component {
     };
   }
 
-  loadMore() {
-    this.setState({ showVotersNumber: this.state.showVotersNumber + 125 });
-  }
-
   showAll() {
     this.setState({ loadAllVotes: true });
   }
 
-  getInterspersed(dataName, filterQuery) {
-    let data = this.props[dataName];
-    data = data ? data.map((user, key) => (
-      <Link className={`${styles.addressLink} ${styles.clickable} voter-address`}
-        to={`${routes.explorer.path}${routes.accounts.path}/${user.address}`}
-        key={`${key}-${dataName}`}>
-        {`${user.username || user.address} `}
-      </Link>
-    )) : [];
+  showMore(amount = 100) {
+    this.setState({ showVotersNumber: this.state.showVotersNumber + amount });
+  }
 
+  filterList(data, filterQuery) {
     if (this.state[filterQuery] !== '') {
       data = data.filter((obj) => {
         const name = obj.props.children.trim();
@@ -47,6 +37,18 @@ class DelegateStatistics extends React.Component {
       });
     }
     return data;
+  }
+
+  getFormatedDelegates(dataName, filterQuery) {
+    const data = this.props[dataName] ? this.props[dataName].map((user, key) => (
+      <Link className={`${styles.addressLink} ${styles.clickable} voter-address`}
+        to={`${routes.explorer.path}${routes.accounts.path}/${user.address}`}
+        key={`${key}-${dataName}`}>
+        {`${user.username || user.address} `}
+      </Link>
+    )) : [];
+
+    return this.filterList(data, filterQuery);
   }
 
   search(filterName, e) {
@@ -78,13 +80,18 @@ class DelegateStatistics extends React.Component {
 
   render() {
     const { delegate, t } = this.props;
-    let votesInterspered = this.getInterspersed('votes', 'votesFilterQuery');
-    const votersInterspered = this.getInterspersed('voters', 'votersFilterQuery');
+    let votesInterspered = this.getFormatedDelegates('votes', 'votesFilterQuery');
+    const votersInterspered = this.getFormatedDelegates('voters', 'votersFilterQuery');
 
     const votesElementNumber = votesInterspered.length;
     if (votesInterspered) {
       votesInterspered = this.state.loadAllVotes ? votesInterspered :
         votesInterspered.slice(0, this.state.showVotesNumber);
+    }
+
+    let status = '';
+    if (delegate && delegate.rank) {
+      status = delegate.rank < 101 ? this.props.t('Active') : this.props.t('Unactive');
     }
 
     const missed = this.props.t('missed');
@@ -96,8 +103,8 @@ class DelegateStatistics extends React.Component {
             <div className={styles.value}>{delegate && delegate.productivity}%</div>
           </div>
           <div className={`${grid['col-xs-12']} ${grid['col-sm-4']} ${grid['col-md-4']} rank`}>
-            <div className={styles.label}>{this.props.t('Rank')}</div>
-            <div className={styles.value}>{delegate && delegate.rank}</div>
+            <div className={styles.label}>{this.props.t('Rank / Status')}</div>
+            <div className={styles.value}>{delegate && delegate.rank} / {status}</div>
           </div>
           <div className={`${grid['col-xs-12']} ${grid['col-sm-4']} ${grid['col-md-4']} approval`}>
             <div className={styles.label}>{this.props.t('Approval')}</div>
@@ -151,14 +158,14 @@ class DelegateStatistics extends React.Component {
               {votersInterspered && votersInterspered
                 .slice(0, this.state.showVotersNumber)}
             </div>
+            {votersInterspered.length >= this.state.showVotesNumber ?
+              <div onClick={() => { this.showMore(); }} className={`${styles.showMore} showMore`}>
+                <FontIcon className={styles.arrowDown} value='arrow-down'/>
+                {this.props.t('Show more')}
+              </div> : ''
+            }
           </div>
         </div>
-        <Waypoint
-          bottomOffset='-20%'
-          key='delegate-statistics'
-          onEnter={() => {
-            this.loadMore();
-          }}></Waypoint>
       </div>
     );
   }

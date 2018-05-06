@@ -14,10 +14,11 @@ import DelegateStatistics from './delegateStatistics';
 class TransactionsList extends React.Component {
   constructor(props) {
     super(props);
+    const { peers, address, account } = props;
     this.props.loadTransactions({
-      activePeer: this.props.peers.data,
-      address: this.props.address,
-      publicKey: this.props.account.publicKey,
+      activePeer: peers.data,
+      address,
+      publicKey: account.publicKey,
     });
   }
 

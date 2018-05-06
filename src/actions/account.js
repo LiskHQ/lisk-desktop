@@ -63,23 +63,16 @@ export const passphraseUsed = data => ({
   data,
 });
 
-export const accountAddVotes = votes => ({
-  type: actionTypes.accountAddVotes,
-  votes,
-});
-
-export const accountAddVoters = voters => ({
-  type: actionTypes.accountAddVoters,
-  voters,
-});
-
 /**
  * Gets list of all votes
  */
 export const accountVotesFetched = ({ activePeer, address }) =>
   dispatch =>
     getVotes(activePeer, address).then(({ delegates }) => {
-      dispatch(accountAddVotes(delegates));
+      dispatch({
+        type: actionTypes.accountAddVotes,
+        votes: delegates,
+      });
     });
 
 /**
@@ -88,7 +81,10 @@ export const accountVotesFetched = ({ activePeer, address }) =>
 export const accountVotersFetched = ({ activePeer, publicKey }) =>
   dispatch =>
     getVoters(activePeer, publicKey).then(({ accounts }) => {
-      dispatch(accountAddVoters(accounts));
+      dispatch({
+        type: actionTypes.accountAddVoters,
+        voters: accounts,
+      });
     });
 /**
  *

@@ -6,12 +6,6 @@
   --details-label-font-size-XL: 15px;
   --details-label-font-size-L: 12px;
   --details-label-font-size-XS: 12px;
-  --back-button-font-size-XL: 15px;
-  --back-button-font-size-L: 12px;
-  --back-button-font-size-XS: 12px;
-  --back-button-arrow-font-size-XL: 16px;
-  --back-button-arrow-font-size-L: 16px;
-  --back-button-arrow-font-size-XS: 16px;
 }
 
 .addressLink {
@@ -23,6 +17,10 @@
     content: "• ";
     padding: 0px 6px;
     color: var(--color-primary-standard) !important;
+  }
+
+  &:last-child::after {
+    content: "";
   }
 }
 
@@ -127,10 +125,9 @@
 .details {
   line-height: var(--list-line-height);
   color: var(--color-grayscale-dark);
-  overflow-y: auto;
-  padding-right: 15px;
 
-  & .showAll {
+  & .showAll,
+  & .showMore {
     color: var(--color-primary-standard);
     font-size: 16px;
     font-weight: 600;
@@ -144,12 +141,12 @@
     }
   }
 
-  & footer {
-    padding-bottom: 92px;
+  & .showMore {
+    margin-bottom: 20px;
   }
 
-  & .copy {
-    color: var(--color-primary-standard);
+  & footer {
+    padding-bottom: 92px;
   }
 
   & .row {
@@ -169,10 +166,6 @@
     font-weight: var(--font-weight-very-bold);
     display: flex;
     justify-content: space-between;
-  }
-
-  & .sender {
-    font-weight: var(--font-weight-semi-bold);
   }
 
   & header {
