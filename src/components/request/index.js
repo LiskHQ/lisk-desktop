@@ -33,7 +33,7 @@ class Request extends React.Component {
           </a>
         </div>
         <footer>
-          <Button onClick={() => this.props.nextStep()}>{this.props.t('Request specific amount')}</Button>
+          <Button className='specify-request' onClick={() => this.props.nextStep()}>{this.props.t('Request specific amount')}</Button>
           <div className='subTitle'></div>
         </footer>
       </div>

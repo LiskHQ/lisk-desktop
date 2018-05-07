@@ -19,7 +19,7 @@ class ConfirmRequest extends React.Component {
     const { address, amount, prevStep, finalCallback, t } = this.props;
     const link = `lisk://wallet?recipient=${address}&amount=${amount}`;
     return (
-      <div className={`${styles.wrapper}`}>
+      <div className={`${styles.wrapper} confirm-request-step`}>
         <div className={styles.header}>
           <header>
             <h2>{t('Your request')}</h2>
@@ -40,7 +40,7 @@ class ConfirmRequest extends React.Component {
             className={`recipient ${styles.disabledInput}`}
             value={amount}
             disabled={true}/>
-          <div className={`${styles.qrCode} ${this.state.magnifyQrCode ? styles.magnified : styles.minimized}`}
+          <div className={`${styles.qrCode} ${this.state.magnifyQrCode ? styles.magnified : styles.minimized} qr-code`}
             onClick={() => this.setState({ magnifyQrCode: !this.state.magnifyQrCode })}>
             <QRCode value={link}/>
           </div>
@@ -56,7 +56,7 @@ class ConfirmRequest extends React.Component {
           <section className={grid.row} >
             <div className={grid['col-xs-4']}>
               <Button
-                className={styles.backButton}
+                className={`${styles.backButton} back-button`}
                 label={t('Back')}
                 onClick={() => prevStep()}
               />
@@ -65,6 +65,7 @@ class ConfirmRequest extends React.Component {
               <TertiaryButton
                 label={t("Okay, I'm done")}
                 onClick={() => finalCallback()}
+                className='finish-button'
               />
               <div className='subTitle'></div>
             </div>
