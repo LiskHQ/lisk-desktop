@@ -10,6 +10,7 @@ import styles from './request.css';
 class Request extends React.Component {
   render() {
     const { t, setTabSend, account } = this.props;
+    const link = `lisk://wallet?recipient=${account.address}`;
 
     return (
       <div className={`${styles.wrapper}`}>
@@ -28,12 +29,12 @@ class Request extends React.Component {
             value={account.address}
             className={styles.copy}/>
           <a className={`${styles.emailLink} ${styles.paddingLeft}`}
-            href={`mailto:?subject=My Lisk ID&body=Hey there, this is my Lisk ID: ${account.address}.`}>
+            href={`mailto:?subject=Request LSK to ${account.address}&body=Hey there, here is a link you can use to send me LSK via your wallet: ${link}`}>
             {t('Send request via E-mail')} <FontIcon value='arrow-right'/>
           </a>
         </div>
         <footer>
-          <Button className='specify-request' onClick={() => this.props.nextStep()}>{this.props.t('Request specific amount')}</Button>
+          <Button className='specify-request' onClick={() => this.props.nextStep({ address: account.address })}>{this.props.t('Request specific amount')}</Button>
           <div className='subTitle'></div>
         </footer>
       </div>

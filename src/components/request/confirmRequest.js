@@ -48,7 +48,7 @@ class ConfirmRequest extends React.Component {
             value={link}
             className={styles.copy}/>
           <a className={styles.emailLink}
-            href={`mailto:?subject=My Lisk ID&body=Hey there, this is my Lisk ID: ${address}. Please send me ${amount} LSK.`}>
+            href={`mailto:?subject=Request ${amount} LSK to ${address}&body=Hey there, here is a link you can use to send me ${amount} LSK via your wallet: ${link}`}>
             {t('Send request via E-mail')} <FontIcon value='arrow-right'/>
           </a>
         </div>

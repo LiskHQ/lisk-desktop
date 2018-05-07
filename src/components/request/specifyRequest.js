@@ -13,7 +13,7 @@ class SpecifyRequest extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipient: { value: this.props.address },
+      recipient: { value: props.address },
       amount: { value: '' },
     };
     this.fee = fees.send;
