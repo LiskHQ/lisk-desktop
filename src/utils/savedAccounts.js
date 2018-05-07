@@ -29,9 +29,7 @@ export const setSavedAccounts = (accounts) => {
   return accounts;
 };
 
-export const getLastActiveAccount = () => (
-  getSavedAccounts()[localStorage.getItem('lastActiveAccountIndex') || 0]
-);
+export const getLastActiveAccount = () => (getSavedAccounts()[localStorage.getItem('lastActiveAccountIndex')] || getSavedAccounts()[0]);
 
 export const getIndexOfSavedAccount = (savedAccounts, { publicKey, network, address }) =>
   savedAccounts.findIndex(account => (
@@ -45,8 +43,8 @@ export const setLastActiveAccount = ({ publicKey, network, address }) => {
     getSavedAccounts(),
     { publicKey, network, address },
   );
+
   if (lastActiveAccountIndex > -1) {
     localStorage.setItem('lastActiveAccountIndex', lastActiveAccountIndex);
   }
-  return lastActiveAccountIndex;
 };
