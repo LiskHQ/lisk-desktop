@@ -26,7 +26,6 @@ export const setSavedAccounts = (accounts) => {
     publicKey, network, address, balance,
   }));
   localStorage.setItem('accounts', JSON.stringify(accounts));
-  return accounts;
 };
 
 export const getLastActiveAccount = () => (getSavedAccounts()[localStorage.getItem('lastActiveAccountIndex')] || getSavedAccounts()[0]);
