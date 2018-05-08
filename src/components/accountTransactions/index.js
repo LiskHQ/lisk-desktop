@@ -49,7 +49,6 @@ class accountTransactions extends React.Component {
         <Transactions
           history={this.props.history}
           address={this.props.match.params.address}
-          balance={this.props.balance}
           delegate={this.props.delegate} />
       </div>
     </div>;
@@ -57,9 +56,6 @@ class accountTransactions extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  delegateUsername: (state.account && state.account.delegate)
-    ? state.account.delegate.username : null,
-  balance: state.transactions.account ? state.transactions.account.balance : null,
   publicKey: state.account.publicKey,
   activePeer: state.peers.data,
   notLoading: state.loading.length === 0,
