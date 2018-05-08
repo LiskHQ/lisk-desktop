@@ -5,9 +5,6 @@ import EmptyState from '../emptyState';
 import TransactionList from './transactionList';
 import styles from './transactions.css';
 import txFilters from './../../constants/transactionFilters';
-import { loadTransactions } from '../../actions/transactions';
-import { searchTransactions } from '../../actions/search';
-import actionTypes from '../../constants/actions';
 
 class Transactions extends React.Component {
   constructor(props) {
@@ -216,11 +213,5 @@ const mapStateToProps = state => ({
   transactions: state.transactions,
   search: state.search,
 });
-const mapDispatchToProps = dispatch => ({
-  loadTransactions: data => dispatch(loadTransactions(data)),
-  searchTransactions: data => dispatch(searchTransactions(data)),
-  searchUpdateLast: data =>
-    dispatch({ data, type: actionTypes.searchUpdateLast }),
-});
-export default connect(mapStateToProps, mapDispatchToProps)(Transactions);
+export default connect(mapStateToProps)(Transactions);
 
