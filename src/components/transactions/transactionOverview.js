@@ -20,6 +20,10 @@ class Transactions extends React.Component {
 
     if (this.props.address !== this.props.account.address) {
       if (!this.props.search.transactions[this.props.address]) {
+        this.props.searchAccount({
+          activePeer: this.props.peers.data,
+          address: this.props.address,
+        });
         this.props.searchTransactions({
           activePeer: this.props.peers.data,
           address: this.props.address,
@@ -124,6 +128,7 @@ class Transactions extends React.Component {
         address: this.props.address,
         limit: 25,
         filter,
+        showLoading: false,
       });
     }
   }

@@ -5,16 +5,13 @@ import { getDelegate } from '../utils/api/delegate';
 
 const searchDelegate = ({ activePeer, publicKey }) =>
   (dispatch) => {
-    loadingStarted(actionTypes.searchDelegateLoaded);
     getDelegate(activePeer, { publicKey }).then((response) => {
       dispatch({ data: response.delegate, type: actionTypes.searchDelegateLoaded });
-      loadingFinished(actionTypes.searchDelegateLoaded);
     });
   };
 
-const searchAccount = ({ activePeer, address }) =>
+export const searchAccount = ({ activePeer, address }) =>
   (dispatch) => {
-    loadingStarted(actionTypes.searchAccountLoaded);
     getAccount(activePeer, address).then((response) => {
       const accountData = {
         balance: response.balance,
@@ -22,14 +19,12 @@ const searchAccount = ({ activePeer, address }) =>
       };
       dispatch(searchDelegate({ activePeer, publicKey: response.publicKey }));
       dispatch({ data: accountData, type: actionTypes.searchAccountLoaded });
-      loadingFinished(actionTypes.searchAccountLoaded);
     });
   };
 
-export const searchTransactions = ({ activePeer, address, limit, filter }) =>
+export const searchTransactions = ({ activePeer, address, limit, filter, showLoading = true }) =>
   (dispatch) => {
-    loadingStarted(actionTypes.searchTransactionsLoaded);
-    dispatch(searchAccount({ activePeer, address }));
+    if (showLoading) loadingStarted(actionTypes.searchTransactionsLoaded);
     transactions({ activePeer, address, limit, filter })
       .then((transactionsResponse) => {
         dispatch({
@@ -41,7 +36,7 @@ export const searchTransactions = ({ activePeer, address, limit, filter }) =>
           },
           type: actionTypes.searchTransactionsLoaded,
         });
-        loadingFinished(actionTypes.searchTransactionsLoaded);
+        if (showLoading) loadingFinished(actionTypes.searchTransactionsLoaded);
       });
   };
 
