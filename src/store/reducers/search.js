@@ -23,6 +23,8 @@ const search = (state = {
           [action.data.address]: {
             transactions: addressTransactions,
             count: action.data.count,
+            filter: action.data.filter,
+            address: action.data.address,
           },
         },
         lastSearch: action.data.address,

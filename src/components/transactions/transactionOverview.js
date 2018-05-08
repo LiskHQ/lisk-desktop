@@ -20,39 +20,44 @@ class Transactions extends React.Component {
       activeFilter: 0,
       count: null,
     };
+
+    if (this.props.address !== this.props.account.address) {
+      if (!this.props.search.transactions[this.props.address]) {
+        this.props.searchTransactions({
+          activePeer: this.props.peers.data,
+          address: this.props.address,
+          limit: 25,
+          filter: this.props.filter,
+        });
+      } else {
+        this.props.searchUpdateLast({
+          address: this.props.address,
+        });
+      }
+    } else {
+      this.props.loadTransactions({
+        activePeer: this.props.peers.data,
+        address: this.props.address,
+        publicKey: this.props.account.publicKey,
+      });
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.address !== nextProps.address) {
-      if (this.props.address !== this.props.account.address) {
-        if (!this.props.search.transactions[this.props.address]) {
-          this.props.searchTransactions({
-            activePeer: this.props.peers.data,
-            address: this.props.address,
-            limit: 25,
-            filter: this.props.filter,
-          });
-        }
-        // this.setState({
-        //   transactions: this.props.transactions.confirmed,
-        //   count: this.props.transactions.count,
-        //   account: this.props.account,
-        //   activeFilter: this.props.transactions.filter,
-        // });
-      } else {
-        this.props.loadTransactions({
-          activePeer: this.props.peers.data,
-          address: this.props.address,
-          publicKey: this.props.account.publicKey,
-        });
-
-        // this.setState({
-        //   transactions: nextProps.search.transactions[nextProps.search.lastSearch].transactions,
-        //   count: nextProps.search.transactions[nextProps.search.lastSearch].count,
-        //   account: nextProps.search.accounts[nextProps.search.lastSearch],
-        //   activeFilter: nextProps.search.transactions[nextProps.search.lastSearch].filter,
-        // });
-      }
+    if (this.props.address === this.props.account.address) {
+      this.setState({
+        transactions: this.props.transactions.confirmed,
+        count: this.props.transactions.count,
+        account: this.props.account,
+        activeFilter: this.props.transactions.filter,
+      });
+    } else if (nextProps.search.lastSearch) {
+      this.setState({
+        transactions: nextProps.search.searchResults,
+        count: nextProps.search.transactions[nextProps.search.lastSearch].count,
+        account: nextProps.search.accounts[nextProps.search.lastSearch],
+        activeFilter: nextProps.search.transactions[nextProps.search.lastSearch].filter,
+      });
     }
   }
 
@@ -78,6 +83,7 @@ class Transactions extends React.Component {
           address: this.props.address,
           limit: 25,
           offset: this.props.search.transactions[this.props.address].transactions.length,
+          filter: this.props.search.transactions[this.props.address].filter,
         });
       }
     }
@@ -89,23 +95,19 @@ class Transactions extends React.Component {
   }
 
   componentDidUpdate() {
-    this.canLoadMore = this.props.count === null ||
-      this.props.count > this.props.transactions.length;
+    this.canLoadMore = this.state.count === null ||
+      this.state.count > this.state.transactions.length;
   }
 
   isActiveFilter(filter) {
-    return (!this.props.activeFilter && filter === txFilters.all) ||
-      (this.props.activeFilter === filter);
+    return (!this.state.activeFilter && filter === txFilters.all) ||
+      (this.state.activeFilter === filter);
   }
 
-  /* eslint-disable class-methods-use-this */
   shouldShowEmptyState() {
-    // TODO uncomment
-    // this.state.transactions.length === 0 && !this.isLoading() &&
-    //   (!this.state.activeFilter || this.state.activeFilter === txFilters.all);
-    return false;
+    return this.state.transactions.length === 0 && !this.isLoading() &&
+      (!this.state.activeFilter || this.state.activeFilter === txFilters.all);
   }
-  /* eslint-enable class-methods-use-this */
 
   isLoading() {
     return this.props.loading.length > 0;
@@ -156,6 +158,10 @@ class Transactions extends React.Component {
       });
     }
 
+    const wayoutIndex = this.state.transactions.length > 15 ?
+      this.state.transactions.length - 10 :
+      this.state.transactions.length;
+
     return (
       <div className={`transactions ${styles.activity}`}>
         <header>
@@ -178,38 +184,25 @@ class Transactions extends React.Component {
           </ul>
         }
         {
-          this.props.address === this.props.account.address ?
-            <TransactionList
-              filter={filters[this.state.activeFilter]}
-              address={this.props.address}
-              publicKey={this.props.publicKey}
-              transactions={this.props.transactions ? this.props.transactions.confirmed : []}
-              loadMore={this.loadMore.bind(this)}
-              nextStep={this.props.nextStep}
-              onClick={this.props.nextStep}
-              loading={this.isLoading()}
-              t={this.props.t}
-              history={this.props.history}
-            /> :
-            <TransactionList
-              filter={filters[this.props.activeFilter]}
-              address={this.props.address}
-              publicKey={this.props.publicKey}
-              transactions={this.props.search.searchResults}
-              loadMore={this.loadMore.bind(this)}
-              nextStep={this.props.nextStep}
-              onClick={this.props.nextStep}
-              loading={this.isLoading()}
-              t={this.props.t}
-              history={this.props.history}
-            />
+          <TransactionList
+            filter={filters[this.state.activeFilter]}
+            address={this.props.address}
+            publicKey={this.props.publicKey}
+            transactions={this.state.transactions}
+            loadMore={this.loadMore.bind(this)}
+            nextStep={this.props.nextStep}
+            onClick={this.props.nextStep}
+            loading={this.isLoading()}
+            t={this.props.t}
+            history={this.props.history}
+          />
         }
         {
           // the whole transactions box should be scrollable on XS
           // otherwise only the transaction list should be scrollable
           // (see transactionList.js)
           this.isSmallScreen()
-            ? <Waypoint bottomOffset='-80%' key={this.props.search.searchResults.length}
+            ? <Waypoint bottomOffset='-80%' key={wayoutIndex}
               onEnter={() => { this.loadMore(); }}></Waypoint>
             : null
         }
