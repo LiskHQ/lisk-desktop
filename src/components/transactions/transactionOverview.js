@@ -11,6 +11,10 @@ class Transactions extends React.Component {
     this.canLoadMore = true;
   }
 
+  componentWillUnmount() {
+    this.setTransactionsFilter(txFilters.all);
+  }
+
   loadMore() {
     if (this.canLoadMore) {
       this.canLoadMore = false;

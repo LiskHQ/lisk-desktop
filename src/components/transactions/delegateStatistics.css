@@ -119,6 +119,7 @@
     top: 6px;
     right: 0;
     font-size: 16px;
+    cursor: pointer;
   }
 }
 
@@ -264,10 +265,19 @@
       margin-right: 0;
       margin-left: 0;
       padding-bottom: 0;
+
+      &:last-child {
+        padding-bottom: 50px;
+      }
     }
 
     & .column {
       padding-bottom: 30px;
+    }
+
+    & .label {
+      display: flex;
+      flex-direction: column;
     }
   }
 }
@@ -276,6 +286,10 @@
   .details {
     & .row {
       padding-bottom: 0px;
+
+      &:last-child {
+        padding-bottom: 50px;
+      }
     }
 
     & .column {

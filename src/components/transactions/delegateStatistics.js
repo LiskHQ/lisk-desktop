@@ -21,12 +21,9 @@ class DelegateStatistics extends React.Component {
     };
   }
 
-  showAll() {
-    this.setState({ loadAllVotes: true });
-  }
-
-  showMore(amount = 100) {
-    this.setState({ showVotersNumber: this.state.showVotersNumber + amount });
+  showMore(name, amount = 100) {
+    const newAmount = this.state[name] + amount;
+    this.setState({ [name]: newAmount });
   }
 
   filterList(data, filterQuery) {
@@ -58,6 +55,10 @@ class DelegateStatistics extends React.Component {
     });
   }
 
+  clearSearch(filterQuery) {
+    this.search(filterQuery, { target: { value: '' } });
+  }
+
   renderSearchFilter(filterQuery, placeholder) {
     return (
       <div className={`${styles.search} ${styles.filter} search ${filterQuery}`}>
@@ -74,24 +75,23 @@ class DelegateStatistics extends React.Component {
           value={this.state[filterQuery]}
           onChange={this.search.bind(this, filterQuery)}
           placeholder={this.props.t('Filter')}/>
+        <FontIcon
+          id='cleanIcon'
+          className={`${styles.clean} clean-icon`}
+          value='close'
+          onClick={ this.clearSearch.bind(this, filterQuery) }/>
       </div>
     );
   }
 
   render() {
     const { delegate, t } = this.props;
-    let votesInterspered = this.getFormatedDelegates('votes', 'votesFilterQuery');
+    const votesInterspered = this.getFormatedDelegates('votes', 'votesFilterQuery');
     const votersInterspered = this.getFormatedDelegates('voters', 'votersFilterQuery');
-
-    const votesElementNumber = votesInterspered.length;
-    if (votesInterspered) {
-      votesInterspered = this.state.loadAllVotes ? votesInterspered :
-        votesInterspered.slice(0, this.state.showVotesNumber);
-    }
 
     let status = '';
     if (delegate && delegate.rank) {
-      status = delegate.rank < 101 ? this.props.t('Active') : this.props.t('Unactive');
+      status = delegate.rank < 101 ? this.props.t('Active') : this.props.t('Standby');
     }
 
     const missed = this.props.t('missed');
@@ -127,20 +127,20 @@ class DelegateStatistics extends React.Component {
           <div className={`${grid['col-xs-12']} ${grid['col-sm-12']} ${grid['col-md-12']}`}>
             <div className={styles.label}>
               <div>
-                {this.props.t('Votes of this accont')}
+                {this.props.t('Votes of an account')}
                 {` (${this.state.votesSize})`}
               </div>
               {this.renderSearchFilter('votesFilterQuery', t('Filter votes'))}
             </div>
             <div className={styles.value}>
-              {votesInterspered}
+              {votesInterspered && votesInterspered
+                .slice(0, this.state.showVotesNumber)}
             </div>
-            {!this.state.loadAllVotes
-              && this.state.votesFilterQuery === ''
-              && votesElementNumber > this.state.showVotesNumber ?
-              <div onClick={() => { this.showAll(); }} className={`${styles.showAll} showAll`}>
+            {votesInterspered.length > this.state.showVotesNumber
+              && this.state.votesFilterQuery === '' ?
+              <div onClick={() => { this.showMore('showVotesNumber'); }} className={`${styles.showMore} showMore`}>
                 <FontIcon className={styles.arrowDown} value='arrow-down'/>
-                {this.props.t('Show all')}
+                {this.props.t('Show more')}
               </div> : ''
             }
           </div>
@@ -149,7 +149,7 @@ class DelegateStatistics extends React.Component {
           <div className={`${grid['col-xs-12']} ${grid['col-sm-12']} ${grid['col-md-12']}`}>
             <div className={styles.label}>
               <div>
-                {this.props.t('Who voted to this delegate')}
+                {this.props.t('Who voted for a delegate')}
                 {` (${this.state.votersSize})`}
               </div>
               {this.renderSearchFilter('votersFilterQuery', t('Filter voters'))}
@@ -158,8 +158,8 @@ class DelegateStatistics extends React.Component {
               {votersInterspered && votersInterspered
                 .slice(0, this.state.showVotersNumber)}
             </div>
-            {votersInterspered.length >= this.state.showVotesNumber ?
-              <div onClick={() => { this.showMore(); }} className={`${styles.showMore} showMore`}>
+            {votersInterspered.length > this.state.showVotersNumber ?
+              <div onClick={() => { this.showMore('showVotersNumber'); }} className={`${styles.showMore} showMore`}>
                 <FontIcon className={styles.arrowDown} value='arrow-down'/>
                 {this.props.t('Show more')}
               </div> : ''
