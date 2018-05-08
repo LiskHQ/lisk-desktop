@@ -89,6 +89,18 @@ class Setting extends React.Component {
             <p>{t('Lock ID’s automatically after 10 minutes.')}</p>
           </article>
         </div>
+        <div>
+          <Link
+            className={`signMessage ${styles.secondPassphrase}`}
+            to={`${routes.signMessage.path}`}
+            onClick={toggleMenu}>
+            {t('Sign')}
+          </Link>
+          <article>
+            <h5>{t('Sign Message')}</h5>
+            <p>{t('Create your encrypted message')}</p>
+          </article>
+        </div>
         {this.showOnboardingSetting()
           ? <div>
             <button className={`${styles.settingsButton} onboarding-setting`} onClick={() => {
@@ -147,7 +159,7 @@ class Setting extends React.Component {
         */}
       </ReactSwipe>
       <ul className={ styles.carouselNav } id='carouselNav'>
-        {[...Array(this.showOnboardingSetting() ? 4 : 3)].map((x, i) =>
+        {[...Array(this.showOnboardingSetting() ? 5 : 4)].map((x, i) =>
           <li
             key={i}
             className={(i === this.state.activeSlide) ? styles.activeSlide : ''}

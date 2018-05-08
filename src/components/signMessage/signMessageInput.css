@@ -1,0 +1,368 @@
+@import '../app/variables';
+
+:root {
+  --sub-title-color: var(--color-grayscale-dark);
+  --address-color: var(--color-primary-medium);
+  --address-animation-delay: 1200ms;
+  --address-animation-duration: 1000ms;
+  --header-animation-duration: 450ms;
+  --second-header-animation-delay: 1000ms;
+  --header-font-size: var(--paragraph-font-size-l);
+}
+
+.table {
+  width: 100%;
+  height: 100%;
+  display: table;
+
+  & .tableCell {
+    display: table-cell;
+    vertical-align: middle;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.smallSlider {
+  margin: 40px auto;
+  width: 220px !important;
+}
+
+.bigSlider {
+  position: absolute;
+  margin-top: -40px;
+  left: 50%;
+  width: 575px !important;
+  transform: translateX(-50%) translateY(-50%);
+  z-index: 3;
+
+  & label {
+    & i:last-child {
+      font-size: 24px !important;
+    }
+  }
+}
+
+.safekeeping {
+  text-align: center;
+  height: calc(100% - 22px);
+  margin-right: 0px;
+  margin-left: 0px;
+  overflow-y: auto;
+
+  & > section {
+    height: 50%;
+  }
+
+  & > header {
+    height: 50%;
+  }
+
+  & header {
+    font-size: var(--header-font-size);
+
+    & h2,
+    & h5 {
+      max-width: 750px;
+      margin: 0 auto;
+    }
+
+    & h2 {
+      font-size: 48px;
+    }
+  }
+
+  /* Steps */
+  &.introduction-step {
+    & section.revealed,
+    & section.revealing {
+      display: none;
+    }
+
+    & > header {
+      & h5 {
+        font-size: 18px;
+        width: 430px;
+        line-height: 32px;
+      }
+    }
+
+    & > section {
+      border-top: solid 1px #f6f8fb;
+      background: #f6f8fb;
+      box-sizing: border-box;
+
+      & h5 {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+    }
+  }
+
+  &.revealing-step,
+  &.done-step,
+  &.revealed-step {
+    & section.introduction {
+      display: none;
+    }
+
+    & h5 {
+      margin-top: 40px;
+      color: var(--color-grayscale-dark);
+    }
+  }
+
+  & .revealing {
+    & .tableCell {
+      position: relative;
+    }
+
+    & .textarea {
+      width: 100%;
+      height: 80px;
+      background: transparent;
+      padding: 0;
+      color: transparent;
+      font-size: 0;
+      line-height: 0;
+      border: none;
+      text-align: center;
+      counter-reset: section;
+      position: relative;
+
+      & .word {
+        padding: 0 5px;
+        position: relative;
+        font-size: 26px;
+        margin-top: 23px;
+        display: inline-block;
+        line-height: 30px;
+        user-select: none;
+
+        &::after {
+          opacity: 0;
+          position: absolute;
+          top: 240%;
+          left: 50%;
+          color: var(--color-grayscale-light);
+          font-size: 15px;
+          counter-increment: section;
+          content: counter(section);
+          transform: translateX(-50%);
+          transition: all ease 400ms;
+          -webkit-user-select: none;
+        }
+      }
+    }
+
+    & .hiddenInput {
+      position: absolute;
+      user-select: none;
+      text-align: center;
+      width: 100%;
+      padding: 25px 0;
+      line-height: 30px;
+      height: 30px;
+      left: 0;
+      top: 0;
+      z-index: 2;
+      resize: none;
+      border: none;
+      background: transparent;
+      font-size: 26px;
+      text-shadow: 0px 0px 15px rgba(0, 0, 0, 1);
+      color: rgba(0, 0, 0, 0);
+      outline: none !important;
+      transition: all ease 400ms;
+      transition-delay: 300ms;
+      overflow: hidden;
+    }
+
+    & section.actionBar {
+      pointer-events: none;
+      visibility: hidden;
+      text-align: center;
+      margin: 0;
+
+      & > div {
+        margin: 60px auto 50px;
+      }
+    }
+  }
+
+  &.done-step,
+  &.revealed-step {
+    & .bigSlider {
+      display: none !important;
+    }
+
+    & .hiddenInput {
+      background: #f1f1f1;
+      color: #000 !important;
+      text-shadow: none !important;
+      user-select: auto;
+    }
+
+    & .textarea .word::after {
+      opacity: 1;
+    }
+
+    & section.actionBar {
+      visibility: visible;
+      pointer-events: auto;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .safekeeping .revealing {
+    & .textarea .word,
+    & .hiddenInput {
+      font-size: 20px;
+    }
+  }
+}
+
+@media (--small-viewport) {
+  .safekeeping {
+    & h2 {
+      font-size: 40px !important;
+    }
+
+    &.done-step,
+    &.revealing-step,
+    &.revealed-step {
+      overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
+
+      & > header {
+        height: auto;
+        padding-top: 40px;
+        padding-bottom: 20px;
+
+        & > h2 {
+          padding-bottom: 0;
+        }
+
+        & h5 {
+          margin-top: 20px;
+        }
+      }
+    }
+
+    &.revealing-step {
+      & .textarea {
+        -webkit-user-select: none;
+      }
+    }
+
+    &.revealed-step {
+      & .textarea {
+        -webkit-user-select: auto;
+      }
+    }
+
+    &.introduction-step > section {
+      & h5 {
+        max-width: 90%;
+        margin-left: 5%;
+      }
+    }
+
+    & section.revealing {
+      height: auto;
+      display: block;
+      padding-bottom: 50px;
+
+      & .tableCell {
+        display: block;
+      }
+
+      & .textarea {
+        height: auto;
+        width: 140px;
+        margin: 0 auto;
+      }
+
+      & .word {
+        display: block !important;
+        clear: both;
+        padding-bottom: 20px !important;
+        margin-top: 10px !important;
+
+        &::after {
+          left: 180px !important;
+          top: auto !important;
+        }
+      }
+
+      & .hiddenInput {
+        height: 100%;
+        word-spacing: 200px;
+        line-height: 60px;
+        padding: 0;
+      }
+    }
+
+    & .bigSlider,
+    & .smallSlider {
+      & label {
+        height: 48px;
+        line-height: 48px;
+      }
+
+      & div {
+        width: calc(100% - 24px);
+
+        & span {
+          font-weight: normal;
+          text-indent: 53px;
+        }
+
+        &::before {
+          width: calc(100% - 24px);
+        }
+      }
+    }
+
+    & .smallSlider {
+      width: 180px !important;
+
+      & div span {
+        font-weight: normal;
+        text-indent: 53px;
+        text-align: center;
+        min-width: 100% !important;
+      }
+    }
+
+    & .bigSlider {
+      width: 330px !important;
+      top: 50%;
+      margin-top: -200px;
+
+      & div > span:first-child {
+        display: none;
+      }
+    }
+
+    & .actionBar {
+      margin-right: 0 !important;
+      margin-left: 0 !important;
+    }
+
+    & .textarea {
+      border-top: solid 1px transparent !important;
+    }
+  }
+}
+
+@media (--xSmall-viewport) {
+  .safekeeping {
+    & .bigSlider {
+      width: 225px !important;
+    }
+  }
+}
