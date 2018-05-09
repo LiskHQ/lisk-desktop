@@ -12,6 +12,12 @@ const Private = () => <h1>Private</h1>;
 
 describe('CustomRouteRender', () => {
   const store = configureMockStore([])({});
+  const props = {
+    t: key => key,
+    history: { location: { pathname: '' } },
+    path: '/private',
+    component: Private,
+  };
   const options = {
     context: { store, history, i18n },
     childContextTypes: {
@@ -27,9 +33,7 @@ describe('CustomRouteRender', () => {
         <div>
           <Route path='/' component={Public} />
           <CustomRouteRender
-            history={ { location: { pathname: '' } } }
-            path='/private'
-            component={Private}
+            { ...props }
             isAuthenticated={isAuthenticated}
             isPrivate={isPrivate} />
         </div>
