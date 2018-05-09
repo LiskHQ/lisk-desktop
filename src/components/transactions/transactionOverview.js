@@ -82,7 +82,7 @@ class Transactions extends React.Component {
 
     if (this.props.delegate) {
       filters.push({
-        name: this.isSmallScreen() ? this.props.t('Statistics') : this.props.t('Delegate statistics'),
+        name: this.isSmallScreen() ? this.props.t('Stats') : this.props.t('Delegate statistics'),
         value: txFilters.statistics,
         className: 'delegate-statistics',
       });

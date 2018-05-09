@@ -38,7 +38,7 @@ class DelegateStatistics extends React.Component {
 
   getFormatedDelegates(dataName, filterQuery) {
     const data = this.props[dataName] ? this.props[dataName].map((user, key) => (
-      <Link className={`${styles.addressLink} ${styles.clickable} voter-address`}
+      <Link className={`${styles.addressLink} ${styles.clickable} voter-address ${filterQuery}-row`}
         to={`${routes.explorer.path}${routes.accounts.path}/${user.address}`}
         key={`${key}-${dataName}`}>
         {`${user.username || user.address} `}
@@ -138,7 +138,7 @@ class DelegateStatistics extends React.Component {
             </div>
             {votesInterspered.length > this.state.showVotesNumber
               && this.state.votesFilterQuery === '' ?
-              <div onClick={() => { this.showMore('showVotesNumber'); }} className={`${styles.showMore} showMore`}>
+              <div onClick={() => { this.showMore('showVotesNumber'); }} className={`${styles.showMore} showMore show-votes`}>
                 <FontIcon className={styles.arrowDown} value='arrow-down'/>
                 {this.props.t('Show more')}
               </div> : ''
@@ -159,7 +159,7 @@ class DelegateStatistics extends React.Component {
                 .slice(0, this.state.showVotersNumber)}
             </div>
             {votersInterspered.length > this.state.showVotersNumber ?
-              <div onClick={() => { this.showMore('showVotersNumber'); }} className={`${styles.showMore} showMore`}>
+              <div onClick={() => { this.showMore('showVotersNumber'); }} className={`${styles.showMore} showMore  show-voters`}>
                 <FontIcon className={styles.arrowDown} value='arrow-down'/>
                 {this.props.t('Show more')}
               </div> : ''

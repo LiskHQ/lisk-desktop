@@ -154,7 +154,7 @@
     padding-bottom: 48px;
 
     &:last-child {
-      padding-bottom: 0px;
+      padding-bottom: 32px;
     }
   }
 
