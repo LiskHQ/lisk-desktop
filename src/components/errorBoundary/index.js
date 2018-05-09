@@ -38,7 +38,7 @@ class ErrorBoundary extends React.Component {
           <p className={styles.description}>{this.props.t('To recover you can')}</p>
           <PrimaryButton
             theme={styles}
-            label={this.props.t('Reload this page')}
+            label={this.props.t('Reload the page')}
             className={`${styles.button} error-reload-btn`}
             onClick={() => this.reloadPage() }/>
           <p className={styles.description}>{this.props.t('if the problem persists')}</p>
@@ -46,7 +46,7 @@ class ErrorBoundary extends React.Component {
             className={styles.link}
             href={getMailReference()}
             rel='noopener noreferrer'>
-            {this.props.t('Report this error to the developers')}&nbsp;<FontIcon>arrow-right</FontIcon>
+            {this.props.t('Report the error via E-Mail')}&nbsp;<FontIcon>arrow-right</FontIcon>
           </a>
         </section>
       </Box>
