@@ -14,6 +14,7 @@ import peersReducer from '../../src/store/reducers/peers';
 import loadingReducer from '../../src/store/reducers/loading';
 import votingReducer from '../../src/store/reducers/voting';
 import transactionReducer from '../../src/store/reducers/transaction';
+import searchReducer from '../../src/store/reducers/search';
 import loginMiddleware from '../../src/store/middlewares/login';
 import accountMiddleware from '../../src/store/middlewares/account';
 import votingMiddleware from '../../src/store/middlewares/voting';
@@ -97,6 +98,7 @@ describe('@integration: Account Transactions', () => {
       voting: votingReducer,
       peers: peersReducer,
       loading: loadingReducer,
+      search: searchReducer,
     }, [
       thunk,
       accountMiddleware,
