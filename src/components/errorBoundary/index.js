@@ -41,7 +41,7 @@ class ErrorBoundary extends React.Component {
             <PrimaryButton
               theme={styles}
               label={this.props.t('Reload the page')}
-              className={`${styles.button} error-reload-btn`}
+              className='error-reload-btn'
               onClick={() => this.reloadPage() }/>
             <p className={styles.description}>{this.props.t('if the problem persists')}</p>
             <a target='_blank'
