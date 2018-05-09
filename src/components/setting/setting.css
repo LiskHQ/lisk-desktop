@@ -129,7 +129,7 @@
   color: var(--color-grayscale-dark);
   border-radius: 25px;
   line-height: 43px;
-  padding: 5px 28px 0px 28px;
+  padding: 5px 28px 0px;
   border: none;
   cursor: pointer;
 
