@@ -17,7 +17,9 @@ export const searchAccount = ({ activePeer, address }) =>
         balance: response.balance,
         address,
       };
-      dispatch(searchDelegate({ activePeer, publicKey: response.publicKey }));
+      if (response.publicKey) {
+        dispatch(searchDelegate({ activePeer, publicKey: response.publicKey }));
+      }
       dispatch({ data: accountData, type: actionTypes.searchAccountLoaded });
     });
   };

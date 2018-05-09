@@ -5,6 +5,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import React from 'react';
 import { FontIcon } from '../fontIcon';
 import Box from '../box';
+import { loadTransactions } from '../../actions/transactions';
 import TransactionList from './../transactions/transactionList';
 import Send from '../send';
 import CurrencyGraph from './currencyGraph';
@@ -12,6 +13,16 @@ import routes from '../../constants/routes';
 import styles from './dashboard.css';
 
 class Dashboard extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.props.loadTransactions({
+      activePeer: this.props.peers.data,
+      address: this.props.account.address,
+      publicKey: this.props.account.publicKey,
+    });
+  }
+
   render() {
     const { transactions, t, account, loading, history } = this.props;
 
@@ -56,4 +67,8 @@ const mapStateToProps = state => ({
   peers: state.peers,
 });
 
-export default connect(mapStateToProps)(translate()(Dashboard));
+const mapDispatchToProps = dispatch => ({
+  loadTransactions: data => dispatch(loadTransactions(data)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(Dashboard));
