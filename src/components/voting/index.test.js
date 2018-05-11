@@ -1,9 +1,10 @@
 import React from 'react';
 import configureMockStore from 'redux-mock-store';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import { BrowserRouter as Router } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import VotingHOC from './index';
@@ -58,9 +59,12 @@ describe('VotingHOC', () => {
         history: PropTypes.object.isRequired,
       },
     };
-    wrapper = mount(<Router>
-      <VotingHOC history={history} store={store} />
-    </Router>, options);
+    wrapper = mount(
+      <Provider store={store}>
+        <Router>
+          <VotingHOC history={history} />
+        </Router>
+      </Provider>, options);
   });
 
   it('should render Voting', () => {

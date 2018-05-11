@@ -9,9 +9,8 @@ import * as accountAPI from '../../src/utils/api/account';
 import * as delegateAPI from '../../src/utils/api/delegate';
 import { prepareStore, renderWithRouter } from '../utils/applicationInit';
 import accountReducer from '../../src/store/reducers/account';
-import accountsReducer from '../../src/store/reducers/savedAccounts';
-import transactionReducer from '../../src/store/reducers/transaction';
 import transactionsReducer from '../../src/store/reducers/transactions';
+import searchReducer from '../../src/store/reducers/search';
 import peersReducer from '../../src/store/reducers/peers';
 import loadingReducer from '../../src/store/reducers/loading';
 import liskServiceReducer from '../../src/store/reducers/liskService';
@@ -80,12 +79,11 @@ describe('@integration: Dashboard', () => {
   const setupStep = (accountType, options = { isLocked: false }) => {
     store = prepareStore({
       account: accountReducer,
-      accounts: accountsReducer,
-      transaction: transactionReducer,
       transactions: transactionsReducer,
       peers: peersReducer,
       loading: loadingReducer,
       liskService: liskServiceReducer,
+      search: searchReducer,
     }, [
       thunk,
       accountMiddleware,
