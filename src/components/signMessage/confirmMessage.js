@@ -1,7 +1,8 @@
 import React from 'react';
 import Lisk from 'lisk-js';
-import styles from '../passphrase/confirm/confirm.css';
+import styles from './confirmMessage.css';
 import { Button } from '../toolbox/buttons/button';
+import Input from '../toolbox/inputs/input';
 import { extractAddress, extractPublicKey } from '../../utils/account';
 import { passphraseIsValid } from '../../utils/form';
 // eslint-disable-next-line import/no-named-as-default
@@ -81,19 +82,16 @@ class ConfirmMessage extends React.Component {
   }
 
   render() {
-    const { step, formStatus } = this.state;
+    const { formStatus } = this.state;
     const errorTitleVisibility = (formStatus === 'outOfTrials' ||
       formStatus === 'invalid') ? styles.visible : '';
     return (
-      <section className={`passphrase-verifier ${styles.verifier} ${styles[step]}`}>
+      <section className={`passphrase-verifier ${styles.wrapper} ${styles.verifier}`}>
         <header className={styles.table}>
           <div className={styles.tableCell}>
             <TransitionWrapper current={this.state.step} step='verify'>
               <h2 className={styles.verify}>{this.props.t('Select the missing words to confirm')}</h2>
             </TransitionWrapper>
-            {!this.props.secondPassConfirmation ? <TransitionWrapper current={this.state.step} step='done'>
-              <h2 className={styles.done}>{this.props.t('Perfect! You’re all set.')}</h2>
-            </TransitionWrapper> : null}
             <h5 className={`${styles.verify} ${errorTitleVisibility}`}>
               {this.props.t('Please go back and check your passphrase again.')}
             </h5>
@@ -101,22 +99,28 @@ class ConfirmMessage extends React.Component {
             <TransitionWrapper current={this.state.step} step='done'>
               <h2 className={styles.verify}>{this.props.t('Your signed message')}</h2>
             </TransitionWrapper>
-
-            <TransitionWrapper current={this.state.step} step='done'>
-              <p className={styles.verify}>{this.state.result}</p>
-            </TransitionWrapper>
-
-            <TransitionWrapper current={this.state.step} step='done'>
-              <CopyToClipboard
-                value={this.state.result}
-                className={`${styles.address} account-information-address`}
-                copyClassName={styles.copy}
-                text={this.props.t('Copy to Clipboard')}/>
-            </TransitionWrapper>
-
           </div>
         </header>
-        <section className={`${styles.table} ${styles.verify}`}>
+        <section className={`${styles.table} ${styles.verify} ${styles.content}`}>
+          <TransitionWrapper current={this.state.step} step='done'>
+            <div className={styles.resultWrapper}>
+              <Input className={`${styles.result} result`} multiline readOnly value={this.state.result} />
+            </div>
+          </TransitionWrapper>
+
+          <TransitionWrapper current={this.state.step} step='done'>
+            <div className={`${styles.innerContent} ${styles.copySection}`}>
+              <Button
+                theme={styles} >
+                <CopyToClipboard
+                  value={this.state.result}
+                  className={`${styles.address} account-information-address`}
+                  copyClassName={styles.copy}
+                  text={this.props.t('Copy to Clipboard')}/>
+              </Button>
+            </div>
+          </TransitionWrapper>
+
           <TransitionWrapper current={this.state.step} step='verify'>
             <div className={styles.innerContent}>
               <PassphraseInput
