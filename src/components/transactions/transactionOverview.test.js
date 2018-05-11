@@ -6,9 +6,12 @@ import store from '../../store';
 import accounts from './../../../test/constants/accounts';
 
 describe('TransactionOverview', () => {
-  it('should render Waypoint on smallScreen', () => {
+  let wrapper;
+  let props;
+
+  beforeEach(() => {
     window.innerWidth = 200;
-    const props = {
+    props = {
       t: () => {},
       loading: [],
       peers: {
@@ -27,8 +30,11 @@ describe('TransactionOverview', () => {
       },
       search: {},
     });
-    const wrapper = mountWithContext(<TransactionOverview {...props} store={store} />,
+    wrapper = mountWithContext(<TransactionOverview {...props} store={store} />,
       { storeState: store });
+  });
+
+  it('should render Waypoint on smallScreen', () => {
     expect(wrapper).to.have.descendants('Waypoint');
   });
 });
