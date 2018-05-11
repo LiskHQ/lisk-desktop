@@ -1,0 +1,22 @@
+@import './../app/variables.css';
+
+:root {
+  --link-font-size: 15px;
+}
+
+.section {
+  max-width: 360px;
+  margin: auto;
+  text-align: center;
+}
+
+.link {
+  font-size: var(--link-font-size);
+  color: var(--color-link);
+  display: block;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  line-height: 15px;
+  text-align: center;
+}
