@@ -11,10 +11,9 @@ import VotingHOC from './index';
 
 describe('VotingHOC', () => {
   let wrapper;
-  let store;
 
   beforeEach(() => {
-    store = configureMockStore([])({
+    const store = configureMockStore([])({
       peers: {},
       transactions: {
         pending: [],
