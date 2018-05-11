@@ -10,7 +10,7 @@ const expect = chai.expect;
 defineSupportCode(({ Then }) => {
   Then('I should see {lineCount} rows', (lineCount, callback) => {
     browser.sleep(500);
-    expect(element.all(by.css('.transactionsRow')).count()).to.eventually.equal(parseInt(lineCount, 10))
+    expect(element.all(by.css('.transactionsRow')).count()).to.eventually.at.least(parseInt(lineCount, 10))
       .and.notify(callback);
   });
 });
