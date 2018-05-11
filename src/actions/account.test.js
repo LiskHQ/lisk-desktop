@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import actionTypes from '../constants/actions';
 import { accountUpdated, accountLoggedOut,
-  secondPassphraseRegistered, delegateRegistered, sent, removePassphrase, passphraseUsed } from './account';
+  secondPassphraseRegistered, delegateRegistered, sent, removePassphrase, passphraseUsed, loadDelegate } from './account';
 import { errorAlertDialogDisplayed } from './dialog';
 import { delegateRegisteredFailure } from './delegate';
 import * as accountApi from '../utils/api/account';
@@ -156,6 +156,37 @@ describe('actions: account', () => {
       actionFunction(dispatch);
       const passphraseUsedAction = passphraseUsed(accounts.genesis.passphrase);
       expect(dispatch).to.have.been.calledWith(passphraseUsedAction);
+    });
+  });
+
+  describe('loadDelegate', () => {
+    let delegateApiMock;
+    let dispatch;
+    const data = {
+      activePeer: {},
+      publicKey: accounts.genesis.publicKey,
+    };
+    const actionFunction = loadDelegate(data);
+
+    beforeEach(() => {
+      delegateApiMock = sinon.stub(delegateApi, 'getDelegate');
+      dispatch = sinon.spy();
+    });
+
+    afterEach(() => {
+      delegateApiMock.restore();
+    });
+
+    it('should dispatch updateDelegate with delegate response', () => {
+      const delegateResponse = { delegate: { ...accounts['delegate candidate'] } };
+      delegateApiMock.returnsPromise().resolves(delegateResponse);
+
+      actionFunction(dispatch);
+      const updateDelegateAction = {
+        data: delegateResponse,
+        type: actionTypes.updateDelegate,
+      };
+      expect(dispatch).to.have.been.calledWith(updateDelegateAction);
     });
   });
 

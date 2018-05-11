@@ -54,6 +54,17 @@ describe('Reducer: account(state, action)', () => {
     expect(changedAccount.passphrase).to.be.equal(null);
   });
 
+  it('should reduce account delegate when updateDelegate has been triggered', () => {
+    const action = {
+      data: {
+        delegate: accounts['delegate candidate'],
+      },
+      type: actionTypes.updateDelegate,
+    };
+    const accountWithDelegateUpdated = account(state, action);
+    expect(accountWithDelegateUpdated.delegate).to.be.equal(accounts['delegate candidate']);
+  });
+
   it('should return state if action.type is none of the above', () => {
     const action = {
       type: 'UNKNOWN',
