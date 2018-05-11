@@ -112,10 +112,10 @@ class TransactionsDetailView extends React.Component {
           this.props.prevStep ?
             <header>
               <h3>
-                <small className={`${styles.backButton}`} onClick={() => {
+                <small className={`${styles.backButton} transaction-details-back-button`} onClick={() => {
                   this.props.history.push(this.props.history.location.pathname);
                   this.props.prevStep();
-                }} id='transactionDetailsBackButton'>
+                }}>
                   <FontIcon className={`${styles.arrow}`} value='arrow-left'/>
                   <span className={`${styles.text}`}>{this.props.t('Back to overview')}</span>
                 </small>
