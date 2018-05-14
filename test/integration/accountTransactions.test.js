@@ -27,6 +27,17 @@ import AccountTransactions from './../../src/components/accountTransactions';
 import accounts from '../constants/accounts';
 import GenericStepDefinition from '../utils/genericStepDefinition';
 
+
+const delegateProductivity = {
+  producedblocks: 43961,
+  missedblocks: 283,
+  rate: 2,
+  rank: 2,
+  approval: 35.27,
+  productivity: 99.36,
+};
+
+
 class Helper extends GenericStepDefinition {
   checkSelectedFilter(filter) {
     const expectedClass = '_active';
@@ -37,6 +48,16 @@ class Helper extends GenericStepDefinition {
     });
 
     expect(activeFilter.text().toLowerCase()).to.equal(filter);
+  }
+
+  checkDelegateDetails() {
+    expect(this.wrapper.find('.approval').first()).to.have.text(`Approval${delegateProductivity.approval}%`);
+    expect(this.wrapper.find('.rank').first()).to.have.text(`Rank / Status${delegateProductivity.rank} / Active`);
+    expect(this.wrapper.find('.productivity').first()).to.have.text(`Uptime${delegateProductivity.productivity}%`);
+  }
+
+  countLinks(expectedNumber) {
+    expect(this.wrapper.find('.voters Link')).to.have.length(expectedNumber);
   }
 }
 
@@ -51,6 +72,42 @@ describe('@integration: Account Transactions', () => {
   let votersAPIStub;
   let transactionAPIStub;
 
+  const voters = [{
+    username: null,
+    address: '3484156157234038617L',
+    publicKey: 'bd56ce59f413370cf45dbc4be094acbd4de9c6894443476e5406dfc458337889',
+    balance: '0',
+  }, {
+    username: null,
+    address: '1234038617L',
+    publicKey: 'bd56ce59f413370cf45dbc4be094acbd4de9c6894443476e5406dfc458337889',
+    balance: '0',
+  }];
+
+  const votes = [{
+    username: 'liskpool_com_01',
+    address: '14593474056247442712L',
+    publicKey: 'ec111c8ad482445cfe83d811a7edd1f1d2765079c99d7d958cca1354740b7614',
+    vote: '4257396024977439',
+    producedblocks: 43961,
+    missedblocks: 283,
+    rate: 2,
+    rank: 2,
+    approval: 35.27,
+    productivity: 99.36,
+  }, {
+    username: 'test123',
+    address: '14593474056247442712L',
+    publicKey: 'ec111c8ad482445cfe83d811a7edd1f1d2765079c99d7d958cca1354740b7614',
+    vote: '4257396024977439',
+    producedblocks: 43961,
+    missedblocks: 283,
+    rate: 2,
+    rank: 2,
+    approval: 35.27,
+    productivity: 99.36,
+  }];
+
   beforeEach(() => {
     requestToActivePeerStub = stub(peers, 'requestToActivePeer');
     accountAPIStub = stub(accountAPI, 'getAccount');
@@ -62,10 +119,15 @@ describe('@integration: Account Transactions', () => {
     const transactionExample = { senderId: '456L', receiverId: '456L', type: txTypes.send };
 
     delegateAPIStub.withArgs(match.any).returnsPromise()
-      .resolves({ delegate: { ...accounts['delegate candidate'] } });
+      .resolves({ delegate: {
+        ...accounts['delegate candidate'],
+        ...delegateProductivity,
+        address: '123L',
+      } });
+
+    let transactions = new Array(20);
 
     // specific address
-    let transactions = new Array(20);
     transactions.fill(transactionExample);
     requestToActivePeerStub.withArgs(match.any, 'transactions', match({ senderId: '123L', recipientId: '123L' }))
       .returnsPromise().resolves({ transactions, count: 1000 });
@@ -96,7 +158,7 @@ describe('@integration: Account Transactions', () => {
     wrapper.update();
   });
 
-  const setupStep = ({ accountType, address }) => {
+  const setupStep = ({ accountType, address }, accountExtraProps = {}) => {
     store = prepareStore({
       account: accountReducer,
       transactions: transactionsReducer,
@@ -118,12 +180,13 @@ describe('@integration: Account Transactions', () => {
       multisignatures: [],
       u_multisignatures: [],
       unconfirmedBalance: '0',
+      ...accountExtraProps,
     };
 
     votesAPIStub.withArgs(match.any).returnsPromise()
-      .resolves({ delegates: [{ ...accounts['empty account'] }] });
+      .resolves({ delegates: votes });
     votersAPIStub.withArgs(match.any).returnsPromise()
-      .resolves({ accounts: [{ ...accounts['empty account'] }] });
+      .resolves({ accounts: voters });
 
     accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
     store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
@@ -172,5 +235,14 @@ describe('@integration: Account Transactions', () => {
     step('Then I should see 20 transaction rows as result of the address 123L', () => helper.shouldSeeCountInstancesOf(20, 'TransactionRow'));
     step('When I scroll to the bottom of "transactions box"', () => { wrapper.find('Waypoint').props().onEnter(); });
     step('Then I should see 40 transaction rows as result of the address 123L', () => helper.shouldSeeCountInstancesOf(40, 'TransactionRow'));
+  });
+
+  describe('Scenario: should allow to view delegate details of a delegate account', () => {
+    step('Given I\'m on "accounts/123L" as "genesis" account', () => setupStep({ accountType: 'genesis', address: '123L' }, { isDelegate: true }));
+    step('When I click on the "delegate-statistics" filter', () => helper.clickOnElement('.delegate-statistics'));
+    step('Then I should see the delegate statistics details rendered', () => helper.checkDelegateDetails());
+    step('Then I should see 2 voters', () => helper.countLinks(2));
+    step('When I fill voters filter input', () => helper.fillInputField('123', 'voters'));
+    step('Then I should see 1 voter', () => helper.countLinks(1));
   });
 });
