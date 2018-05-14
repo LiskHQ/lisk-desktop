@@ -21,7 +21,10 @@
 }
 
 .errorMessage {
-  margin-top: 5px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 
   & img {
     height: 60px;
