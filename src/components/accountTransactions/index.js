@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { loadTransactions } from '../../actions/transactions';
+import { accountVotersFetched, accountVotesFetched } from '../../actions/account';
 import Transactions from './../transactions';
 import SendTo from '../sendTo';
 import styles from './accountTransactions.css';
@@ -14,6 +15,23 @@ class accountTransactions extends React.Component {
         activePeer: this.props.activePeer,
         publicKey: this.props.publicKey,
         address: nextProps.match.params.address });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { peers, match, delegate } = this.props;
+
+    if (prevProps.delegate !== delegate) {
+      if (delegate && delegate.publicKey) {
+        this.props.accountVotersFetched({
+          activePeer: peers.data,
+          publicKey: delegate.publicKey,
+        });
+        this.props.accountVotesFetched({
+          activePeer: peers.data,
+          address: match.params.address,
+        });
+      }
     }
   }
 
@@ -33,21 +51,27 @@ class accountTransactions extends React.Component {
         <Transactions
           history={this.props.history}
           address={this.props.match.params.address}
-          balance={this.props.balance} />
+          balance={this.props.balance}
+          delegate={this.props.delegate} />
       </div>
     </div>;
   }
 }
 
 const mapStateToProps = state => ({
-  delegateUsername: state.account.delegate ? state.account.delegate.username : null,
+  delegateUsername: (state.account && state.account.delegate)
+    ? state.account.delegate.username : null,
   balance: state.transactions.account ? state.transactions.account.balance : null,
   publicKey: state.account.publicKey,
   activePeer: state.peers.data,
   notLoading: state.loading.length === 0,
+  peers: state.peers,
+  delegate: state.account && state.account.delegate,
 });
 
 const mapDispatchToProps = dispatch => ({
+  accountVotersFetched: data => dispatch(accountVotersFetched(data)),
+  accountVotesFetched: data => dispatch(accountVotesFetched(data)),
   loadTransactions: data => dispatch(loadTransactions(data)),
 });
 

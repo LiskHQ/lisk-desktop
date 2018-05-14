@@ -9,14 +9,16 @@ import txFilters from './../../constants/transactionFilters';
 import txTypes from './../../constants/transactionTypes';
 import styles from './transactionList.css';
 import { parseSearchParams } from './../../utils/searchParams';
+import DelegateStatistics from './delegateStatistics';
 
 class TransactionsList extends React.Component {
   constructor(props) {
     super(props);
+    const { peers, address, account } = props;
     this.props.loadTransactions({
-      activePeer: this.props.peers.data,
-      address: this.props.address,
-      publicKey: this.props.account.publicKey,
+      activePeer: peers.data,
+      address,
+      publicKey: account.publicKey,
     });
   }
 
@@ -76,6 +78,12 @@ class TransactionsList extends React.Component {
       return null;
     }
 
+    const isDelegateStatistics = filter && (filter.value === txFilters.statistics);
+
+    if (isDelegateStatistics) {
+      return <DelegateStatistics />;
+    }
+
     return <div className={`${styles.results} transaction-results`}>
       <TransactionsHeader tableStyle={tableStyle}></TransactionsHeader>
       {transactions
@@ -106,6 +114,10 @@ class TransactionsList extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  delegate: state.account && (state.account.delegate || {}),
+  votes: state.account && (state.account.votes || []),
+  voters: state.account && (state.account.voters || []),
+  publicKey: (state.account && state.account.delegate) ? state.account.delegate.publicKey : null,
   peers: state.peers,
   account: state.account,
 });

@@ -1,9 +1,7 @@
 import React from 'react';
 import Waypoint from 'react-waypoint';
-import CopyToClipboard from '../copyToClipboard';
 import EmptyState from '../emptyState';
 import TransactionList from './transactionList';
-import LiskAmount from '../liskAmount';
 import styles from './transactions.css';
 import txFilters from './../../constants/transactionFilters';
 
@@ -11,6 +9,10 @@ class Transactions extends React.Component {
   constructor(props) {
     super(props);
     this.canLoadMore = true;
+  }
+
+  componentWillUnmount() {
+    this.setTransactionsFilter(txFilters.all);
   }
 
   loadMore() {
@@ -78,22 +80,18 @@ class Transactions extends React.Component {
       },
     ];
 
+    if (this.props.delegate) {
+      filters.push({
+        name: this.isSmallScreen() ? this.props.t('Stats') : this.props.t('Delegate statistics'),
+        value: txFilters.statistics,
+        className: 'delegate-statistics',
+      });
+    }
+
     return (
       <div className={`transactions ${styles.activity}`}>
         <header>
           <h2 className={styles.title}>{this.props.t('Activity')}</h2>
-          <div className={styles.account}>
-            <h2>
-              {!this.isLoading()
-                ? <span>
-                  <LiskAmount val={this.props.balance}/>&nbsp;
-                </span>
-                : null
-              }
-              <small className={styles.balanceUnit}>LSK</small>
-            </h2>
-            <CopyToClipboard value={this.props.address} className={`${styles.address}`} copyClassName={styles.copy}/>
-          </div>
 
         </header>
         {this.shouldShowEmptyState() ?
