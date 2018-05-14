@@ -24,10 +24,12 @@ class SignMessage extends React.Component {
   render() {
     const { account, t } = this.props;
     const header = t('Sign a message.');
-    const message = t('You will need it to use your Lisk ID, like sending and voting. You are responsible for keeping your second passphrase safe. No one can restore it, not even Lisk.');
+    const message = t('Signing a message with this tool indicates ownership of a privateKey (secret) and provides a level of proof that you are the owner of the key.') +
+      t('Its important to bear in mind that this is not a 100% proof as computer systems can be compromised, but is still an effective tool for proving ownership of a particular publicKey/address pair.') +
+      t('Note: Digital Signatures and signed messages are not encrypted!');
 
     return (
-      <Box className={`${styles.hasPaddingTop} ${styles.register}`}>
+      <Box className={`${styles.hasPaddingTop} ${styles.signMessage}`}>
         <MultiStep
           showNav={true}
           backButtonLabel={t('Back')}

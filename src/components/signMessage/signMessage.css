@@ -4,7 +4,7 @@
   --padding-top: 40px;
 }
 
-.register > div {
+.signMessage > div {
   height: 100%;
   overflow: hidden;
   margin: 0 -48px;
@@ -31,19 +31,19 @@
 }
 
 @media (--xLarge-viewport) {
-  .register > div {
+  .signMessage > div {
     margin: 0 calc(var(--box-padding-left-XL) * -1);
   }
 }
 
 @media (--large-viewport) {
-  .register > div {
+  .signMessage > div {
     margin: 0 calc(var(--box-padding-left-L) * -1);
   }
 }
 
 @media (--medium-viewport) {
-  .register > div {
+  .signMessage > div {
     margin: 0 calc(var(--box-padding-left-M) * -1);
   }
 }

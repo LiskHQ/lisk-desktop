@@ -9,15 +9,9 @@ class SignMessageInput extends React.Component {
   constructor() {
     super();
     this.state = {
-      step: '',
+      step: 'introduction-step',
       message: {},
     };
-  }
-
-  componentDidMount() {
-    this.setState({
-      step: this.props.step || 'introduction-step',
-    });
   }
 
   handleChange(name, value) {
@@ -36,16 +30,19 @@ class SignMessageInput extends React.Component {
   render() {
     const { t, header, message } = this.props;
     return (
-      <section className={`${styles.safekeeping} ${styles[this.state.step]}`}>
+      <section className={`${styles.signMessageInput}`}>
         <header className={styles.table}>
           <div className={styles.tableCell}>
             <TransitionWrapper current={this.state.step} step='introduction-step'>
-              <h2 className={styles.introduction}>
-                { header || '' }
+              <h2 className={`${styles.generatorHeader}`}
+                id="generatorHeader" >
+                {header}
               </h2>
             </TransitionWrapper>
             <TransitionWrapper current={this.state.step} step='introduction-step'>
-              <h5>{ message || ''}</h5>
+              <p className={styles.info}>
+                {message}
+              </p>
             </TransitionWrapper>
           </div>
         </header>

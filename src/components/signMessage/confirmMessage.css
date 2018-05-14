@@ -1,12 +1,6 @@
 @import '../app/variables';
 
 :root {
-  --sub-title-color: var(--color-grayscale-dark);
-  --address-color: var(--color-primary-medium);
-  --address-animation-delay: 1200ms;
-  --address-animation-duration: 1000ms;
-  --header-animation-duration: 450ms;
-  --second-header-animation-delay: 1000ms;
   --steps-nav-height: 22px;
   --header-font-size: var(--paragraph-font-size-l);
 }
@@ -14,7 +8,7 @@
 .wrapper {
   position: absolute;
   height: calc(100% - 85px) !important;
-  background: #fff;
+  background: var(--color-white);
   width: 100%;
   bottom: 0;
   z-index: 3;
@@ -34,19 +28,14 @@
     width: 250px;
     max-width: 100%;
     border-radius: 3px;
-    text-transform: capitalize;
-    font-weight: 600;
-    font-family: Open Sans, sans-serif !important;
-    transition: none !important;
-    background: none !important;
-    color: #3c7fb4 !important;
-    box-shadow: 0 0 0 2px #3c7fb4;
+    color: var(--color-primary-medium) !important;
+    box-shadow: 0 0 0 2px var(--color-primary-medium);
     display: flex;
     justify-content: center;
     align-items: center;
 
     &:hover {
-      color: #fff !important;
+      color: var(--color-white) !important;
       background: #3c7fb4 !important;
     }
   }
@@ -93,7 +82,7 @@
     background: #333;
     border-radius: 5px;
     overflow: auto;
-    color: #fff;
+    color: var(--color-white);
     font-family: monospace;
     padding: 12px 24px;
     height: 230px !important;
@@ -103,8 +92,8 @@
 .content {
   position: absolute;
   height: 50%;
-  border-top: solid 1px #f6f8fb;
-  background: #f6f8fb;
+  border-top: solid 1px var(--color-white);
+  background: var(--color-white);
   box-sizing: border-box;
   width: 100%;
   bottom: 0;
@@ -113,7 +102,7 @@
   flex-direction: column;
 
   &.done {
-    background: #fff;
+    background: var(--color-white);
     border: none;
     justify-content: baseline;
   }
@@ -182,32 +171,6 @@
         opacity: 1;
         transition-delay: 500ms;
       }
-    }
-  }
-
-  &.done {
-    & > section.verify {
-      display: none;
-    }
-
-    & > section {
-      & .tableCell {
-        vertical-align: top;
-      }
-    }
-
-    & h4 {
-      color: var(--address-color);
-    }
-
-    & figure {
-      & img {
-        height: 200px;
-      }
-    }
-
-    & .button {
-      margin-bottom: 50px;
     }
   }
 }
