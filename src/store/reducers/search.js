@@ -11,7 +11,7 @@ const search = (state = {
   delegates: {},
   searchResults: [] }, action) => {
   switch (action.type) {
-    case actionTypes.searchMoreTransactionsLoaded : {
+    case actionTypes.searchMoreTransactions : {
       const addressTransactions = [
         ...state.transactions[action.data.address].transactions,
         ...action.data.transactions,
@@ -31,7 +31,7 @@ const search = (state = {
         searchResults: addressTransactions,
       };
     }
-    case actionTypes.searchTransactionsLoaded :
+    case actionTypes.searchTransactions :
       return {
         ...state,
         transactions: {
@@ -47,7 +47,7 @@ const search = (state = {
         lastSearch: action.data.address,
         searchResults: state.transactions[action.data.address].transactions,
       };
-    case actionTypes.searchAccountLoaded :
+    case actionTypes.searchAccount :
       return {
         ...state,
         accounts: {
@@ -55,12 +55,28 @@ const search = (state = {
           [action.data.address]: action.data,
         },
       };
-    case actionTypes.searchDelegateLoaded :
+    case actionTypes.searchDelegate :
       return {
         ...state,
         delegates: {
           ...state.delegates,
           [action.data.address]: action.data,
+        },
+      };
+    case actionTypes.searchVotes :
+      return {
+        ...state,
+        votes: {
+          ...state.votes,
+          [action.data.address]: action.data.votes,
+        },
+      };
+    case actionTypes.searchVoters :
+      return {
+        ...state,
+        voters: {
+          ...state.voters,
+          [action.data.address]: action.data.voters,
         },
       };
     default:

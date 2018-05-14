@@ -72,7 +72,10 @@ class TransactionsList extends React.Component {
     const isDelegateStatistics = filter && (filter.value === txFilters.statistics);
 
     if (isDelegateStatistics) {
-      return <DelegateStatistics />;
+      return <DelegateStatistics
+        delegate={this.props.delegate}
+        votes={this.props.votes}
+        voters={this.props.voters} />;
     }
 
     return <div className={`${styles.results} transaction-results`}>

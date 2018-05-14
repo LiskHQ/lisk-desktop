@@ -41,12 +41,26 @@ class Transactions extends React.Component {
         address: this.props.address,
         publicKey: this.props.account.publicKey,
       });
+
+      if (this.props.account.isDelegate && this.props.account.delegate.publicKey) {
+        this.props.accountVotersFetched({
+          activePeer: this.props.peers.data,
+          publicKey: this.props.account.delegate.publicKey,
+        });
+        this.props.accountVotesFetched({
+          activePeer: this.props.peers.data,
+          address: this.props.address,
+        });
+      }
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.address === this.props.account.address) {
       this.setState({
+        delegate: nextProps.account.delegate,
+        votes: nextProps.account.votes,
+        voters: nextProps.account.voters,
         transactions: nextProps.transactions.confirmed,
         count: nextProps.transactions.count,
         account: nextProps.account,
@@ -54,6 +68,9 @@ class Transactions extends React.Component {
       });
     } else if (nextProps.search.lastSearch) {
       this.setState({
+        delegate: nextProps.search.delegates[nextProps.search.lastSearch],
+        votes: nextProps.search.votes[nextProps.search.lastSearch],
+        voters: nextProps.search.voters[nextProps.search.lastSearch],
         transactions: nextProps.search.searchResults,
         count: nextProps.search.transactions[nextProps.search.lastSearch].count,
         account: nextProps.search.accounts[nextProps.search.lastSearch],
@@ -188,6 +205,9 @@ class Transactions extends React.Component {
         {
           <TransactionList
             filter={filters[this.state.activeFilter]}
+            delegate={this.state.delegate}
+            votes={this.state.votes}
+            voters={this.state.voters}
             address={this.props.address}
             publicKey={this.props.publicKey}
             transactions={this.state.transactions}
