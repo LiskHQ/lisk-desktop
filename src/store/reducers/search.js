@@ -9,6 +9,8 @@ const search = (state = {
   transactions: {},
   accounts: {},
   delegates: {},
+  votes: {},
+  voters: {},
   searchResults: [] }, action) => {
   switch (action.type) {
     case actionTypes.searchMoreTransactions : {
