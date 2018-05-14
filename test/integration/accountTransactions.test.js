@@ -47,6 +47,8 @@ describe('@integration: Account Transactions', () => {
   let requestToActivePeerStub;
   let accountAPIStub;
   let delegateAPIStub;
+  let votesAPIStub;
+  let votersAPIStub;
   let transactionAPIStub;
 
   beforeEach(() => {
@@ -54,6 +56,8 @@ describe('@integration: Account Transactions', () => {
     accountAPIStub = stub(accountAPI, 'getAccount');
     transactionAPIStub = stub(accountAPI, 'transaction');
     delegateAPIStub = stub(delegateAPI, 'getDelegate');
+    votesAPIStub = stub(delegateAPI, 'getVotes');
+    votersAPIStub = stub(delegateAPI, 'getVoters');
 
     const transactionExample = { senderId: '456L', receiverId: '456L', type: txTypes.send };
 
@@ -87,6 +91,8 @@ describe('@integration: Account Transactions', () => {
     accountAPIStub.restore();
     delegateAPIStub.restore();
     transactionAPIStub.restore();
+    votesAPIStub.restore();
+    votersAPIStub.restore();
     wrapper.update();
   });
 
@@ -113,6 +119,11 @@ describe('@integration: Account Transactions', () => {
       u_multisignatures: [],
       unconfirmedBalance: '0',
     };
+
+    votesAPIStub.withArgs(match.any).returnsPromise()
+      .resolves({ delegates: [{ ...accounts['empty account'] }] });
+    votersAPIStub.withArgs(match.any).returnsPromise()
+      .resolves({ accounts: [{ ...accounts['empty account'] }] });
 
     accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
     store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
@@ -156,7 +167,7 @@ describe('@integration: Account Transactions', () => {
     step('Then I should see 20 transaction rows as result of the address 123L', () => helper.shouldSeeCountInstancesOf(20, 'TransactionRow'));
   });
 
-  describe('Scenario: allows to load more transactions of an account', () => {
+  describe('Scenario: allows to load more cache transactions of an account', () => {
     step('Given I\'m on "accounts/123L" with no account', () => setupStep({ address: '123L' }));
     step('Then I should see 20 transaction rows as result of the address 123L', () => helper.shouldSeeCountInstancesOf(20, 'TransactionRow'));
     step('When I scroll to the bottom of "transactions box"', () => { wrapper.find('Waypoint').props().onEnter(); });
