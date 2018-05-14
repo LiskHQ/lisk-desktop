@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
-import Create from './index';
+import Create from './create';
 import i18n from '../../../i18n';
 import accounts from '../../../../test/constants/accounts';
 
@@ -11,8 +11,11 @@ import accounts from '../../../../test/constants/accounts';
 describe('Passphrase: Create', () => {
   const props = {
     t: key => key,
+    step: 'generate',
+    addEventListener: () => {},
     prevStep: () => {},
     nextStep: () => {},
+    percentage: 0,
   };
   const account = accounts.delegate;
   const fakeStore = configureStore();

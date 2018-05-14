@@ -76,6 +76,12 @@
     border-bottom: 2px solid var(--amount-negative-color);
     color: var(--amount-negative-color);
   }
+
+  &.disabled {
+    pointer-events: none;
+    cursor: disabled;
+    opacity: 0.4;
+  }
 }
 
 .search {

@@ -16,7 +16,6 @@ import votingReducer from '../../src/store/reducers/voting';
 import transactionReducer from '../../src/store/reducers/transaction';
 import loginMiddleware from '../../src/store/middlewares/login';
 import accountMiddleware from '../../src/store/middlewares/account';
-import transactionsMiddleware from '../../src/store/middlewares/transactions';
 import votingMiddleware from '../../src/store/middlewares/voting';
 import { activePeerSet } from '../../src/actions/peers';
 import networks from './../../src/constants/networks';
@@ -102,7 +101,6 @@ describe('@integration: Account Transactions', () => {
       thunk,
       accountMiddleware,
       loginMiddleware,
-      transactionsMiddleware,
       votingMiddleware,
     ]);
 

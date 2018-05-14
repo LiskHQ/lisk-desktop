@@ -53,6 +53,7 @@ const mapStateToProps = state => ({
   pendingTransactions: state.transactions.pending,
   account: state.account,
   loading: state.loading.length > 0,
+  peers: state.peers,
 });
 
 export default connect(mapStateToProps)(translate()(Dashboard));

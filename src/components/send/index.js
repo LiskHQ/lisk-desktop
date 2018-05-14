@@ -7,6 +7,7 @@ import MultiStep from './../multiStep';
 import ResultBox from '../resultBox';
 import SendWritable from '../sendWritable';
 import SendReadable from './../sendReadable';
+import Request from '../request';
 import PassphraseSteps from './../passphraseSteps';
 import AccountInitialization from '../accountInitialization';
 import { parseSearchParams } from './../../utils/searchParams';
@@ -22,7 +23,8 @@ class Send extends React.Component {
 
     const { amount, recipient } = this.getSearchParams();
     this.state = {
-      sendIsActive: !!recipient || !!amount || needsAccountInit,
+      isActiveOnMobile: !!recipient || !!amount || needsAccountInit,
+      isActiveTabSend: true,
     };
   }
 
@@ -30,8 +32,12 @@ class Send extends React.Component {
     return parseSearchParams(this.props.history.location.search);
   }
 
-  setSendIsActive(sendIsActive) {
-    this.setState({ sendIsActive });
+  setActiveOnMobile({ isActiveOnMobile, isActiveTabSend = true }) {
+    this.setState({ isActiveOnMobile, isActiveTabSend });
+  }
+
+  setActiveTabSend(isActiveTabSend) {
+    this.setState({ isActiveTabSend });
   }
 
   render() {
@@ -42,27 +48,41 @@ class Send extends React.Component {
       <Fragment>
         <span className={styles.mobileMenu}>
           <span className={`send-menu-item ${styles.mobileMenuItem}`}
-            onClick={this.setSendIsActive.bind(this, true)}>
+            onClick={this.setActiveOnMobile.bind(this, { isActiveOnMobile: true })}>
             {t('Send')}
           </span>
+          <span className={`request-menu-item ${styles.mobileMenuItem}`}
+            onClick={this.setActiveOnMobile.bind(this,
+              { isActiveOnMobile: true, isActiveTabSend: false })
+            }>
+            {t('Request')}
+          </span>
         </span>
-        <Box className={`send-box ${styles.send} ${this.state.sendIsActive ? styles.isActive : ''}`}>
+        <Box className={`send-box ${styles.send} ${this.state.isActiveOnMobile ? styles.isActive : ''}`}>
           <span className={`mobile-close-button ${styles.mobileClose}`}
-            onClick={this.setSendIsActive.bind(this, false)}>
+            onClick={this.setActiveOnMobile.bind(this, { isActiveOnMobile: false })}>
             {t('Close')} <FontIcon value='close' />
           </span>
-          <MultiStep finalCallback={this.setSendIsActive.bind(this, false)}
+          {this.state.isActiveTabSend
+            ? <MultiStep finalCallback={this.setActiveOnMobile.bind(this,
+              { isActiveOnMobile: false })
+            }
             className={styles.wrapper}>
-            <AccountInitialization address={recipient} />
-            <SendWritable
-              autoFocus={this.state.sendIsActive || window.innerWidth > breakpoints.m}
-              address={recipient}
-              amount={amount}
-            />
-            <PassphraseSteps />
-            <SendReadable />
-            <ResultBox history={this.props.history}/>
-          </MultiStep>
+              <AccountInitialization address={recipient}/>
+              <SendWritable
+                autoFocus={this.state.isActiveOnMobile || window.innerWidth > breakpoints.m}
+                address={recipient}
+                amount={amount}
+                setTabSend={this.setActiveTabSend.bind(this)}
+              />
+              <PassphraseSteps/>
+              <SendReadable/>
+              <ResultBox history={this.props.history}/>
+            </MultiStep>
+            : <MultiStep className={styles.wrapper}>
+              <Request {...this.props} setTabSend={this.setActiveTabSend.bind(this)} />
+            </MultiStep>
+          }
         </Box>
       </Fragment>
     );

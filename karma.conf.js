@@ -54,7 +54,6 @@ module.exports = function (config) {
           functions: 80,
           lines: 80,
           excludes: [
-            'src/components/registerDelegate/index.js',
             'src/components/accountVisual/index.js',
             'src/components/header/header.js',
             'src/components/searchBar/index.js',
@@ -64,14 +63,7 @@ module.exports = function (config) {
             'src/components/voteUrlProcessor/index.js',
             'src/components/onboarding/index.js',
             'src/components/passphrase/createSecond/index.js',
-            'src/components/registerDelegate/index.js',
-            'src/components/registerDelegate/registerDelegate.js',
-            'src/components/registerDelegate/steps/choose/choose.js',
-            'src/components/registerDelegate/steps/choose/index.js',
-            'src/components/registerDelegate/steps/confirm/confirm.js',
-            'src/components/registerDelegate/steps/confirm/index.js',
-            'src/store/reducers/delegate.js',
-            'src/actions/delegate.js',
+            'src/components/passphraseCreation/index.js',
             'src/utils/api/liskService.js',
           ],
           overrides: {

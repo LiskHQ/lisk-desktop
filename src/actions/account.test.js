@@ -3,7 +3,6 @@ import sinon from 'sinon';
 import actionTypes from '../constants/actions';
 import { accountUpdated, accountLoggedOut,
   secondPassphraseRegistered, delegateRegistered, sent, removePassphrase, passphraseUsed } from './account';
-import { transactionAdded, transactionFailed } from './transactions';
 import { errorAlertDialogDisplayed } from './dialog';
 import { delegateRegisteredFailure } from './delegate';
 import * as accountApi from '../utils/api/account';
@@ -77,7 +76,8 @@ describe('actions: account', () => {
       };
 
       actionFunction(dispatch);
-      expect(dispatch).to.have.been.calledWith(transactionAdded(expectedAction));
+      expect(dispatch).to.have.been
+        .calledWith({ data: expectedAction, type: actionTypes.transactionAdded });
     });
 
     it('should dispatch errorAlertDialogDisplayed action if caught', () => {
@@ -138,7 +138,8 @@ describe('actions: account', () => {
       };
 
       actionFunction(dispatch);
-      expect(dispatch).to.have.been.calledWith(transactionAdded(expectedAction));
+      expect(dispatch).to.have.been
+        .calledWith({ data: expectedAction, type: actionTypes.transactionAdded });
     });
 
     it('should dispatch delegateRegisteredFailure action if caught', () => {
@@ -200,14 +201,20 @@ describe('actions: account', () => {
       };
 
       actionFunction(dispatch);
-      expect(dispatch).to.have.been.calledWith(transactionAdded(expectedAction));
+      expect(dispatch).to.have.been
+        .calledWith({ data: expectedAction, type: actionTypes.transactionAdded });
     });
 
     it('should dispatch transactionFailed action if caught', () => {
       accountApiMock.returnsPromise().rejects({ message: 'sample message' });
 
       actionFunction(dispatch);
-      const expectedAction = transactionFailed({ errorMessage: 'sample message.' });
+      const expectedAction = {
+        data: {
+          errorMessage: 'sample message.',
+        },
+        type: actionTypes.transactionFailed,
+      };
       expect(dispatch).to.have.been.calledWith(expectedAction);
     });
 
@@ -215,7 +222,12 @@ describe('actions: account', () => {
       accountApiMock.returnsPromise().rejects({});
 
       actionFunction(dispatch);
-      const expectedAction = transactionFailed({ errorMessage: 'An error occurred while creating the transaction.' });
+      const expectedAction = {
+        data: {
+          errorMessage: 'An error occurred while creating the transaction.',
+        },
+        type: actionTypes.transactionFailed,
+      };
       expect(dispatch).to.have.been.calledWith(expectedAction);
     });
   });

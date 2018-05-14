@@ -4,7 +4,6 @@ import {
   vote,
 } from '../utils/api/delegate';
 import { passphraseUsed } from './account';
-import { transactionAdded } from './transactions';
 import Fees from '../constants/fees';
 import actionTypes from '../constants/actions';
 import transactionTypes from '../constants/transactionTypes';
@@ -101,14 +100,17 @@ export const votePlaced = ({ activePeer, passphrase, account,
 
       // Add the new transaction
       // @todo Handle alerts either in transactionAdded action or middleware
-      dispatch(transactionAdded({
-        id: response.transactionId,
-        senderPublicKey: account.publicKey,
-        senderId: account.address,
-        amount: 0,
-        fee: Fees.vote,
-        type: transactionTypes.vote,
-      }));
+      dispatch({
+        data: {
+          id: response.transactionId,
+          senderPublicKey: account.publicKey,
+          senderId: account.address,
+          amount: 0,
+          fee: Fees.vote,
+          type: transactionTypes.vote,
+        },
+        type: actionTypes.transactionAdded,
+      });
       goToNextStep({ success: true });
     }).catch((error) => {
       const text = error && error.message ? `${error.message}.` : 'An error occurred while placing your vote.';

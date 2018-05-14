@@ -84,7 +84,7 @@ export class VotingHeaderRaw extends React.Component {
           </Link> : null
         }
         <div>
-          <ul className={styles.filters}>
+          <ul className={`${styles.filters} ${this.props.showChangeSummery ? styles.disabled : ''}`}>
             {this.filters.map((filter, i) => (
               <li key={i} className={`transaction-filter-item ${filter.className} ${styles.filter} ${(this.state.activeFilter === filter.value) ? styles.active : ''}`}
                 onClick={this.filterVotes.bind(this, filter)}>

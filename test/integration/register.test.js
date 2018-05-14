@@ -26,6 +26,7 @@ describe('@integration: Register', () => {
   let passphrase;
   let accountAPIStub;
   let delegateAPIStub;
+  const events = {};
 
   const createStore = () =>
     prepareStore({
@@ -37,7 +38,6 @@ describe('@integration: Register', () => {
       peerMiddleware,
       loginMiddleware,
     ]);
-
 
   const restoreStubs = () => {
     localStorageStub.restore();
@@ -66,9 +66,9 @@ describe('@integration: Register', () => {
   class Helper extends GenericStepDefinition {
     moveMouseRandomly() {
       for (let i = 0; i < 250; i++) {
-        this.wrapper.find('#generatorContainer').simulate('mousemove',
-          { pageX: 200 * (i % 2), pageY: 200 * (i % 2) });
+        events.mousemove({ pageX: 200 * (i % 2), pageY: 200 * (i % 2) });
       }
+      this.wrapper.update();
     }
 
     rememberPassphrase() {
@@ -108,6 +108,9 @@ describe('@integration: Register', () => {
   const setupStep = () => {
     const store = createStore();
     stubApis();
+    window.addEventListener = (name, event) => {
+      events[name] = event;
+    };
     const wrapper = mount(renderWithRouter(Register, store, { location: { search: '' } }), { activePeerSet: peersActions.activePeerSet });
     helper = new Helper(wrapper, store);
   };
