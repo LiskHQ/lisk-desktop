@@ -11,12 +11,12 @@
 .input input:focus {
   border-bottom: solid 1px var(--input-focus-border-color);
   color: var(--input-focus-color);
-  font-weight: 600;
+  font-weight: var(--font-weight-bold);
   font-size: var(--input-font-size);
 }
 
 .input {
-  font-weight: 500;
+  font-weight: var(--font-weight-semi-bold);
   font-size: var(--input-font-size);
 }
 
@@ -39,7 +39,7 @@
   border-bottom: solid 1px var(--input-color);
   color: var(--input-color);
   font-size: var(--input-font-size);
-  font-weight: 600;
+  font-weight: var(--font-weight-bold);
 }
 
 .error {
