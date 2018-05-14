@@ -42,7 +42,9 @@ class Transactions extends React.Component {
         publicKey: this.props.account.publicKey,
       });
 
-      if (this.props.account.isDelegate && this.props.account.delegate.publicKey) {
+      if (this.props.account.isDelegate &&
+        this.props.account.delegate &&
+        this.props.account.delegate.publicKey) {
         this.props.accountVotersFetched({
           activePeer: this.props.peers.data,
           publicKey: this.props.account.delegate.publicKey,
