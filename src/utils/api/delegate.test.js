@@ -3,6 +3,8 @@ import sinon from 'sinon';
 import { listAccountDelegates,
   listDelegates,
   getDelegate,
+  getVotes,
+  getVoters,
   vote,
   registerDelegate } from './delegate';
 import * as peers from './peers';
@@ -60,6 +62,28 @@ describe('Utils: Delegate', () => {
         .returnsPromise().resolves('resolved promise');
 
       const returnedPromise = getDelegate(activePeer, options);
+      return expect(returnedPromise).to.eventually.equal('resolved promise');
+    });
+  });
+
+  describe('getVotes', () => {
+    it('should return requestToActivePeer(activePeer, `accounts/delegates/`, options)', () => {
+      const { address } = accounts.delegate;
+      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'accounts/delegates/', { address })
+        .returnsPromise().resolves('resolved promise');
+
+      const returnedPromise = getVotes(activePeer, address);
+      return expect(returnedPromise).to.eventually.equal('resolved promise');
+    });
+  });
+
+
+  describe('getVoters', () => {
+    it('should return requestToActivePeer(activePeer, `delegates/voters`, options)', () => {
+      peersMock.expects('requestToActivePeer').withArgs(activePeer, 'delegates/voters', { publicKey })
+        .returnsPromise().resolves('resolved promise');
+
+      const returnedPromise = getVoters(activePeer, publicKey);
       return expect(returnedPromise).to.eventually.equal('resolved promise');
     });
   });

@@ -300,5 +300,13 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
       .catch(error => console.error(`${error}`)); // eslint-disable-line no-console
     optionElem.click().then(callback).catch(callback);
   });
+
+  Then('I click on "{className}" element no. {index}', (className, index, callback) => {
+    browser.sleep(500);
+    const optionElem = element.all(by.css(className)).get(index - 1);
+    browser.wait(EC.presenceOf(optionElem), waitTime)
+      .catch(error => console.error(`${error}`)); // eslint-disable-line no-console
+    optionElem.click().then(callback).catch(callback);
+  });
 });
 

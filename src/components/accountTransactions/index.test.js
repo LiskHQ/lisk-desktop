@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import { spy } from 'sinon';
 import { expect } from 'chai';
 import * as transactions from '../../actions/transactions';
+import * as account from '../../actions/account';
 import { mountWithContext } from './../../../test/utils/mountHelpers';
 import AccountTransactions from './index';
 import accounts from '../../../test/constants/accounts';
@@ -10,13 +11,16 @@ import accounts from '../../../test/constants/accounts';
 describe('AccountTransaction Component', () => {
   let wrapper;
   let props;
+  let accountVotesFetchedSpy;
+  let accountVotersFetchedSpy;
   let loadTransactionsSpy;
+
 
   const storeState = {
     peers: { data: { options: {} } },
-    account: { address: accounts.genesis.address,
-      delegate: {},
-      publicKey: accounts.genesis.publicKey },
+    account: {
+      address: accounts.genesis.address,
+    },
     transactions: {
       account: { balance: 0 },
       pending: [],
@@ -27,6 +31,8 @@ describe('AccountTransaction Component', () => {
 
   beforeEach(() => {
     loadTransactionsSpy = spy(transactions, 'loadTransactions');
+    accountVotesFetchedSpy = spy(account, 'accountVotesFetched');
+    accountVotersFetchedSpy = spy(account, 'accountVotersFetched');
 
     props = {
       match: { params: { address: accounts.genesis.address } },
@@ -39,6 +45,8 @@ describe('AccountTransaction Component', () => {
   });
 
   afterEach(() => {
+    accountVotesFetchedSpy.restore();
+    accountVotersFetchedSpy.restore();
     loadTransactionsSpy.restore();
   });
 
