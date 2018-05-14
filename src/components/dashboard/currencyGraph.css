@@ -22,6 +22,7 @@
 
 .errorMessage {
   margin-top: 5px;
+
   & img {
     height: 60px;
   }
