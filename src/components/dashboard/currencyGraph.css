@@ -21,7 +21,10 @@
 }
 
 .errorMessage {
-  margin-top: 60px;
+  margin-top: 5px;
+  & img {
+    height: 60px;
+  }
 }
 
 .stepSwitchWrapper {
