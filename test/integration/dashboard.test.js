@@ -7,6 +7,7 @@ import { stub, match, spy } from 'sinon';
 import * as peers from '../../src/utils/api/peers';
 import * as accountAPI from '../../src/utils/api/account';
 import * as delegateAPI from '../../src/utils/api/delegate';
+import * as liskServiceAPI from '../../src/utils/api/liskService';
 import { prepareStore, renderWithRouter } from '../utils/applicationInit';
 import accountReducer from '../../src/store/reducers/account';
 import transactionsReducer from '../../src/store/reducers/transactions';
@@ -28,6 +29,7 @@ import Dashboard from '../../src/components/dashboard';
 import CurrencyGraph from '../../src/components/dashboard/currencyGraph';
 import accounts from '../constants/accounts';
 import GenericStepDefinition from '../utils/genericStepDefinition';
+import EmptyState from '../../src/components/emptyState';
 
 describe('@integration: Dashboard', () => {
   let store;
@@ -35,6 +37,7 @@ describe('@integration: Dashboard', () => {
   let requestToActivePeerStub;
   let accountAPIStub;
   let delegateAPIStub;
+  let liskServiceAPIStub;
   let helper;
 
   const history = { push: spy(), location: { search: '' } };
@@ -56,6 +59,7 @@ describe('@integration: Dashboard', () => {
 
   beforeEach(() => {
     requestToActivePeerStub = stub(peers, 'requestToActivePeer');
+    liskServiceAPIStub = stub(liskServiceAPI, 'getCurrencyGraphData');
     accountAPIStub = stub(accountAPI, 'getAccount');
     delegateAPIStub = stub(delegateAPI, 'getDelegate');
 
@@ -110,6 +114,11 @@ describe('@integration: Dashboard', () => {
     delegateAPIStub.withArgs(match.any).returnsPromise()
       .resolves({ delegate: { ...accounts['delegate candidate'] } });
 
+    liskServiceAPIStub.withArgs(match.any).returnsPromise()
+      .resolves({ body: {
+        candles: [{ timestamp: 111111111 }, { timestamp: 11111111112 }],
+      } });
+
     store.dispatch(accountsRetrieved());
     store.dispatch(accountLoggedIn(account));
 
@@ -152,6 +161,8 @@ describe('@integration: Dashboard', () => {
     describe('Scenario: displays the currency graph', () => {
       step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
       step('Then I should see the currency graph', () => helper.shouldSeeCountInstancesOf(1, CurrencyGraph));
+      step('When I click on "step"', () => helper.clickOnElement('.step'));
+      step('Then I should still see the currency graph', () => helper.shouldSeeCountInstancesOf(0, EmptyState));
     });
   });
 });
