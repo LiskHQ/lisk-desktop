@@ -110,14 +110,13 @@ class ConfirmMessage extends React.Component {
 
           <TransitionWrapper current={this.state.step} step='done'>
             <div className={`${styles.innerContent} ${styles.copySection}`}>
-              <Button
-                theme={styles} >
+              <div className={styles.copyBorder}>
                 <CopyToClipboard
                   value={this.state.result}
                   className={`${styles.address} account-information-address`}
                   copyClassName={styles.copy}
                   text={this.props.t('Copy to Clipboard')}/>
-              </Button>
+              </div>
             </div>
           </TransitionWrapper>
 

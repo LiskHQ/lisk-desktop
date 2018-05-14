@@ -6,19 +6,15 @@ import SignMessageInput from './signMessageInput';
 import ConfirmMessage from './confirmMessage';
 import Box from '../box';
 import styles from './signMessage.css';
-import routes from '../../constants/routes';
 
 class SignMessage extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   componentWillUnmount() {
     document.body.classList.remove('contentFocused');
   }
+  // eslint-disable-next-line class-methods-use-this
   componentDidMount() {
     document.body.classList.add('contentFocused');
-    if (this.props.account.secondSignature === 1) {
-      this.props.history
-        .push(`${routes.dashboard.path}`);
-    }
   }
 
   backToPreviousPage() {

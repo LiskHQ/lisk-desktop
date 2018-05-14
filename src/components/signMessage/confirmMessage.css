@@ -24,7 +24,31 @@
   }
 
   & .copySection {
-    margin-bottom: 30px;
+    margin-top: 0px;
+    display: flex;
+    justify-content: center;
+  }
+
+  & .copyBorder {
+    min-height: 55px;
+    width: 250px;
+    max-width: 100%;
+    border-radius: 3px;
+    text-transform: capitalize;
+    font-weight: 600;
+    font-family: Open Sans, sans-serif !important;
+    transition: none !important;
+    background: none !important;
+    color: #3c7fb4 !important;
+    box-shadow: 0 0 0 2px #3c7fb4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+      color: #fff !important;
+      background: #3c7fb4 !important;
+    }
   }
 
   & header {
@@ -63,6 +87,7 @@
 
 .result {
   padding: 0px 30px;
+  margin-top: -60px;
 
   & textarea {
     background: #333;
