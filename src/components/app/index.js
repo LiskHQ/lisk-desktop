@@ -39,6 +39,13 @@ class App extends React.Component {
     const explorerRoutes = allRoutes.filter(routeObj =>
       routeObj.pathPrefix && routeObj.pathPrefix === routes.explorer.path);
 
+    const routesOutsideMainWrapper = [
+      'registerDelegate',
+      'register',
+      'addAccount',
+      'login',
+    ];
+
     return (
       <OfflineWrapper>
         <Onboarding appLoaded={this.state.loaded} onRef={(ref) => { this.onboarding = ref; }}/>
@@ -81,11 +88,17 @@ class App extends React.Component {
                   ))
                   : null
                 }
-                <Route path={routes.registerDelegate.path}
-                  component={routes.registerDelegate.component} />
-                <Route path={routes.register.path} component={routes.register.component} />
-                <Route path={routes.addAccount.path} component={routes.addAccount.component} />
-                <Route exact path={routes.login.path} component={routes.login.component} />
+
+                {
+                  routesOutsideMainWrapper.map((route, key) => (
+                    <CustomRoute
+                      path={routes[route].path}
+                      component={routes[route].component}
+                      isPrivate={false}
+                      exact={true}
+                      key={key} />
+                  ))
+                }
                 <Route path='*' component={NotFound} />
               </Switch>
             </div>

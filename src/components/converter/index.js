@@ -52,7 +52,7 @@ class Converter extends React.Component {
     );
     // putting <div>|</div> inbetween array objects
     const intersperse = currenciesObejects
-      .reduce((a, v) => [...a, v, <div>|</div>], []) // eslint-disable-line
+      .reduce((a, v, key) => [...a, v, <div key={key}>|</div>], []) // eslint-disable-line
       .slice(0, -1);
     return (
       <Input

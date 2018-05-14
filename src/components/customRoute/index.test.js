@@ -1,26 +1,44 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
+import PropTypes from 'prop-types';
+import configureMockStore from 'redux-mock-store';
 import { MemoryRouter, Route } from 'react-router';
 import { CustomRouteRender } from './index';
+import i18n from '../../i18n';
 
 const Public = () => <h1>Public</h1>;
 const Private = () => <h1>Private</h1>;
 
 describe('CustomRouteRender', () => {
+  const store = configureMockStore([])({});
+  const props = {
+    t: key => key,
+    history: { location: { pathname: '' } },
+    path: '/private',
+    component: Private,
+  };
+  const options = {
+    context: { store, history, i18n },
+    childContextTypes: {
+      store: PropTypes.object.isRequired,
+      history: PropTypes.object.isRequired,
+      i18n: PropTypes.object.isRequired,
+    },
+  };
+
   const isAuth = ({ isAuthenticated, isPrivate }) => (
     mount(
       <MemoryRouter initialEntries={['/private/test']}>
         <div>
           <Route path='/' component={Public} />
           <CustomRouteRender
-            history={ { location: { pathname: '' } } }
-            path='/private'
-            component={Private}
+            { ...props }
             isAuthenticated={isAuthenticated}
             isPrivate={isPrivate} />
         </div>
       </MemoryRouter>,
+      options,
     )
   );
   it('should render Component if user is authenticated', () => {

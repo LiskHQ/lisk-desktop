@@ -6,7 +6,7 @@ export default {
 
     if (ipc) {
       ipc.on('openUrl', (action, url) => {
-        const normalizedUrl = url.toLowerCase()
+        const normalizedUrl = url
           .replace('lisk://', '/')
           .replace('/main/transactions/send', '/wallet')
           .replace('/main/voting/vote', '/delegates/vote');
