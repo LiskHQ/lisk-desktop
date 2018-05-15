@@ -91,9 +91,9 @@
 
 .content {
   position: absolute;
-  height: 50%;
+  top: 50%;
   border-top: solid 1px var(--color-white);
-  background: var(--color-white);
+  background-color: var(--color-form-bg);
   box-sizing: border-box;
   width: 100%;
   bottom: 0;
@@ -111,12 +111,17 @@
 .innerContent {
   margin-top: 45px;
   padding: 0 50px;
+  background-color: var(--color-form-bg);
 }
 
 .signMessage {
   margin-top: 0px;
   display: flex;
   justify-content: center;
+}
+
+.confirm {
+  top: 20px;
 }
 
 .verifier {

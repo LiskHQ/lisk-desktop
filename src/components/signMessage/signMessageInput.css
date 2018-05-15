@@ -20,7 +20,11 @@
 }
 
 .message {
-  margin: 50px 30px;
+  margin: 50px 180px;
+
+  & textarea {
+    border-color: var(--color-black);
+  }
 }
 
 .nextButton {
@@ -33,9 +37,15 @@
 }
 
 .info {
-  margin-bottom: 80px;
+  margin: 30px 160px 80px;
   line-height: 26px;
   padding: 0 30px;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.verify {
+  background-color: var(--color-form-bg);
 }
 
 .signMessageInput {

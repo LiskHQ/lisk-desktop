@@ -3,14 +3,19 @@ import styles from './signMessageInput.css';
 // eslint-disable-next-line import/no-named-as-default
 import Input from '../toolbox/inputs/input';
 import { PrimaryButton } from '../toolbox/buttons/button';
+import { parseSearchParams } from './../../utils/searchParams';
 import TransitionWrapper from '../toolbox/transitionWrapper';
 
 class SignMessageInput extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    const { message } = this.getSearchParams();
     this.state = {
       step: 'introduction-step',
-      message: {},
+      message: {
+        value: message || '',
+      },
     };
   }
 
@@ -20,6 +25,10 @@ class SignMessageInput extends React.Component {
         value,
       },
     });
+  }
+
+  getSearchParams() {
+    return parseSearchParams(this.props.history.location.search);
   }
 
   done() {
@@ -49,7 +58,7 @@ class SignMessageInput extends React.Component {
           <TransitionWrapper current={this.state.step} step='introduction-step' animationName='fade'>
             <Input
               multiline
-              label={this.props.t('message')}
+              label={this.props.t('Write a message')}
               className={`${styles.message} message`}
               onChange={this.handleChange.bind(this, 'message')}
               value={this.state.message.value}/>

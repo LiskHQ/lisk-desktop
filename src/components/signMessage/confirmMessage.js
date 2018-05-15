@@ -8,6 +8,7 @@ import { passphraseIsValid } from '../../utils/form';
 import PassphraseInput from '../passphraseInput';
 import TransitionWrapper from '../toolbox/transitionWrapper';
 import CopyToClipboard from '../copyToClipboard';
+import passphraseStepsStyles from '../passphraseSteps/passphraseSteps.css';
 
 class ConfirmMessage extends React.Component {
   constructor() {
@@ -54,7 +55,7 @@ class ConfirmMessage extends React.Component {
         <header className={styles.table}>
           <div className={styles.tableCell}>
             <TransitionWrapper current={this.state.step} step='verify'>
-              <h2 className={styles.verify}>{this.props.t('Please Confirm your passphrase')}</h2>
+              <h2 className={styles.verify}>{this.props.t('Please sign in with your passphrase')}</h2>
             </TransitionWrapper>
             <h5 className={`${styles.verify}`}>
               {this.props.t('Please go back and check your passphrase again.')}
@@ -93,12 +94,13 @@ class ConfirmMessage extends React.Component {
                 columns={{ xs: 6, sm: 4, md: 2 }}
                 isFocused={true}
                 className='passphraseInput'
+                theme={passphraseStepsStyles}
               />
               <footer>
                 <Button
                   label={this.props.t('Confirm')}
                   theme={styles}
-                  className={'confirm'}
+                  className={`${styles.confirm} confirm`}
                   onClick={this.signMessage.bind(this, 'passphrase')}
                   disabled={!passphraseIsValid(this.state.passphrase)}
                 />

@@ -22,11 +22,9 @@ class SignMessage extends React.Component {
   }
 
   render() {
-    const { account, t } = this.props;
-    const header = t('Sign a message.');
-    const message = t('Signing a message with this tool indicates ownership of a privateKey (secret) and provides a level of proof that you are the owner of the key.') +
-      t('Its important to bear in mind that this is not a 100% proof as computer systems can be compromised, but is still an effective tool for proving ownership of a particular publicKey/address pair.') +
-      t('Note: Digital Signatures and signed messages are not encrypted!');
+    const { account, t, history } = this.props;
+    const header = t('Sign a message');
+    const message = t('Signing a message with this tool indicates ownership of a privateKey (secret) and provides a level of proof that you are the owner of the key.');
 
     return (
       <Box className={`${styles.hasPaddingTop} ${styles.signMessage}`}>
@@ -36,7 +34,7 @@ class SignMessage extends React.Component {
           prevPage={this.backToPreviousPage.bind(this)}
         >
           <SignMessageInput title={t('Input')} t={t}
-            icon='edit' header={header} message={message} />
+            icon='edit' header={header} message={message} history={history} />
           <ConfirmMessage title={t('Result')} t={t} confirmButton='Register'
             icon='checkmark' secondPassConfirmation={true} account={account} />
         </MultiStep>
