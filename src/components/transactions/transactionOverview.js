@@ -60,13 +60,13 @@ class Transactions extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.address === this.props.account.address) {
       this.setState({
-        delegate: nextProps.account.delegate,
-        votes: nextProps.account.votes,
-        voters: nextProps.account.voters,
-        transactions: nextProps.transactions.confirmed,
-        count: nextProps.transactions.count,
-        account: nextProps.account,
-        activeFilter: nextProps.transactions.filter,
+        delegate: this.props.account.delegate,
+        votes: this.props.account.votes,
+        voters: this.props.account.voters,
+        transactions: this.props.transactions.confirmed,
+        count: this.props.transactions.count,
+        account: this.props.account,
+        activeFilter: this.props.transactions.filter,
       });
     } else if (nextProps.search.lastSearch) {
       this.setState({
@@ -179,10 +179,6 @@ class Transactions extends React.Component {
       });
     }
 
-    const wayoutIndex = this.state.transactions.length > 15 ?
-      this.state.transactions.length - 10 :
-      this.state.transactions.length;
-
     return (
       <div className={`transactions ${styles.activity}`}>
         <header>
@@ -226,7 +222,7 @@ class Transactions extends React.Component {
           // otherwise only the transaction list should be scrollable
           // (see transactionList.js)
           this.isSmallScreen()
-            ? <Waypoint bottomOffset='-80%' key={wayoutIndex}
+            ? <Waypoint bottomOffset='-80%' key={this.state.transactions.length}
               onEnter={() => { this.loadMore(); }}></Waypoint>
             : null
         }

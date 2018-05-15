@@ -44,8 +44,6 @@ class TransactionsList extends React.Component {
       t,
     } = this.props;
 
-    const wayoutIndex = transactions.length > 15 ? transactions.length - 10 : transactions.length;
-
     const fixIncomingFilter = (transaction) => {
       const isTypeNonSend = transaction.type !== txTypes.send;
       const isFilterIncoming = filter && filter.value === txFilters.incoming;
@@ -95,7 +93,7 @@ class TransactionsList extends React.Component {
         // (see transactionOverview.js)
         this.isLargeScreen()
           ? <Waypoint bottomOffset='-80%'
-            key={wayoutIndex}
+            key={transactions.length}
             onEnter={() => {
               if (!dashboard) {
                 loadMore();
