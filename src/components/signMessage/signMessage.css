@@ -4,12 +4,10 @@
   --padding-top: 40px;
 }
 
-.signMessage {
-  div {
-    height: 100%;
-    overflow: hidden;
-    margin: 0 -48px;
-  }
+.signMessageContainer {
+  height: 100%;
+  overflow: hidden;
+  margin: 0 -48px;
 }
 
 .hasPaddingTop {
@@ -33,25 +31,19 @@
 }
 
 @media (--xLarge-viewport) {
-  .signMessage {
-    & > div {
-      margin: 0 calc(var(--box-padding-left-XL) * -1);
-    }
+  .signMessageContainer {
+    margin: 0 calc(var(--box-padding-left-XL) * -1);
   }
 }
 
 @media (--large-viewport) {
-  .signMessage {
-    & > div {
-      margin: 0 calc(var(--box-padding-left-L) * -1);
-    }
+  .signMessageContainer {
+    margin: 0 calc(var(--box-padding-left-L) * -1);
   }
 }
 
 @media (--medium-viewport) {
-  .signMessage {
-    & > div {
-      margin: 0 calc(var(--box-padding-left-M) * -1);
-    }
+  .signMessageContainer {
+    margin: 0 calc(var(--box-padding-left-M) * -1);
   }
 }

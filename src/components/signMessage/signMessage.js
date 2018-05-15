@@ -23,6 +23,7 @@ class SignMessage extends React.Component {
           showNav={true}
           backButtonLabel={t('Back')}
           prevPage={this.backToPreviousPage.bind(this)}
+          className={styles.signMessageContainer}
         >
           <SignMessageInput title={t('Input')} t={t}
             icon='edit' header={header} message={message} history={history} />

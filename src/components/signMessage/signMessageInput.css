@@ -132,4 +132,8 @@
     font-size: 16px;
     font-weight: 400;
   }
+
+  .nextButton {
+    margin-bottom: 150px;
+  }
 }

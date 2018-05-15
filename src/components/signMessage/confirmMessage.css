@@ -189,8 +189,12 @@
       width: 80%;
     }
   }
+  
+  .confirm {
+    margin-bottom: 150px;
+  }
 
-  .passphrase {
-    margin-top: 350px !important;
+  .content {
+    top: 100%;
   }
 }
