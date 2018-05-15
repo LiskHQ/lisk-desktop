@@ -29,6 +29,10 @@
   & img {
     height: 60px;
   }
+
+  & p {
+    margin-top: 0px;
+  }
 }
 
 .stepSwitchWrapper {
