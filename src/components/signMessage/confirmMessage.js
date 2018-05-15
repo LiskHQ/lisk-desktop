@@ -52,21 +52,17 @@ class ConfirmMessage extends React.Component {
   render() {
     return (
       <section className={`passphrase-verifier ${styles.wrapper} ${styles.verifier}`}>
-        <header className={styles.table}>
+        <header>
           <div className={styles.tableCell}>
             <TransitionWrapper current={this.state.step} step='verify'>
               <h2 className={styles.verify}>{this.props.t('Please sign in with your passphrase')}</h2>
             </TransitionWrapper>
-            <h5 className={`${styles.verify}`}>
-              {this.props.t('Please go back and check your passphrase again.')}
-            </h5>
-
             <TransitionWrapper current={this.state.step} step='done'>
               <h2 className={styles.verify}>{this.props.t('Your signed message')}</h2>
             </TransitionWrapper>
           </div>
         </header>
-        <section className={`${styles.table} ${styles.verify} ${styles.content}`}>
+        <section className={`${styles.table} ${styles.verify} ${this.state.step === 'verify' ? styles.content : ''}`}>
           <TransitionWrapper current={this.state.step} step='done'>
             <div className={styles.resultWrapper}>
               <Input className={`${styles.result} result`} multiline readOnly value={this.state.result} />
@@ -86,7 +82,7 @@ class ConfirmMessage extends React.Component {
           </TransitionWrapper>
 
           <TransitionWrapper current={this.state.step} step='verify'>
-            <div className={styles.innerContent}>
+            <div className={`${styles.innerContent} ${styles.passphrase}`}>
               <PassphraseInput
                 error={this.state.passphrase.error}
                 value={this.state.passphrase.value}
