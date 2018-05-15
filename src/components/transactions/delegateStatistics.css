@@ -53,25 +53,6 @@
   }
 }
 
-.content {
-  position: absolute;
-  height: 50%;
-  border-top: solid 1px #f6f8fb;
-  background: #f6f8fb;
-  box-sizing: border-box;
-  width: 100%;
-  bottom: 0;
-  display: flex;
-  justify-content: space-around;
-  flex-direction: column;
-
-  &.done {
-    background: #fff;
-    border: none;
-    justify-content: baseline;
-  }
-}
-
 .search {
   position: relative;
   padding-bottom: 10px;
@@ -173,7 +154,7 @@
     padding-bottom: 48px;
 
     &:last-child {
-      padding-bottom: 0px;
+      padding-bottom: 32px;
     }
   }
 

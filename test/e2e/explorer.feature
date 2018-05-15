@@ -52,3 +52,19 @@ Feature: Explorer page
     And I fill in "1465651642158264047" to "search bar input" field
     When I click "search bar button"
     Then I should see ID "1465651642158264047" in transaction header
+    When I click "explorer" menu
+    When I fill in "2581762640681118072L" to "search input" field
+    And I click "input search button"
+    And I wait 3 seconds
+    And I click "delegate statistics"
+    And I wait 1 seconds
+    Then I should see 2 instances of "votersFilterQuery row"
+    When I click "explorer" menu
+    When I fill in "4401082358022424760L" to "search input" field
+    And I click "input search button"
+    And I wait 3 seconds
+    And I click "delegate statistics"
+    And I wait 1 seconds
+    Then I should see 35 instances of "votesFilterQuery row"
+    When I click "show votes"
+    Then I should see 101 instances of "votesFilterQuery row"

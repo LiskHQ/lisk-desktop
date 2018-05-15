@@ -20,6 +20,12 @@ export const vote = (activePeer, secret, publicKey, voteList, unvoteList, second
     secondSecret,
   });
 
+export const getVotes = (activePeer, address) =>
+  requestToActivePeer(activePeer, 'accounts/delegates/', { address });
+
+export const getVoters = (activePeer, publicKey) =>
+  requestToActivePeer(activePeer, 'delegates/voters', { publicKey });
+
 export const registerDelegate = (activePeer, username, secret, secondSecret = null) => {
   const data = { username, secret };
   if (secondSecret) {

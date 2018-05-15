@@ -5,6 +5,8 @@ const actionTypes = {
   accountLoggedOut: 'ACCOUNT_LOGGED_OUT',
   accountLoggedIn: 'ACCOUNT_LOGGED_IN',
   accountLoading: 'ACCOUNT_LOADING',
+  accountAddVotes: 'ACCOUNT_ADD_VOTES',
+  accountAddVoters: 'ACCOUNT_ADD_VOTERS',
   activePeerSet: 'ACTIVE_PEER_SET',
   activePeerUpdate: 'ACTIVE_PEER_UPDATE',
   activePeerReset: 'ACTIVE_PEER_RESET',

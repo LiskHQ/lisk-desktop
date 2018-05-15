@@ -36,6 +36,15 @@ class Helper extends GenericStepDefinition {
 
     expect(activeFilter.text().toLowerCase()).to.equal(filter);
   }
+
+  checkConfirmRequest(account) {
+    const address = accounts[account].address;
+    this.haveLengthOf('.confirm-request-step', 1);
+    this.haveTextOf('.copy-title', `lisk://wallet?recipient=${address}&amount=1`);
+    expect(this.wrapper.find('QRCode')
+      .filterWhere(item => item.prop('value') === `lisk://wallet?recipient=${address}&amount=1`))
+      .to.have.lengthOf(1);
+  }
 }
 
 describe('@integration: Wallet', () => {
@@ -232,6 +241,16 @@ describe('@integration: Wallet', () => {
       step('Then I should see the QR code', () => helper.haveLengthOf('.request-qr-code', 1));
       step('When I click "send tab"', () => { helper.clickOnElement('.send-tab'); });
       step('Then I should not see the QR code anymore', () => helper.haveLengthOf('.request-qr-code', 0));
+    });
+
+    describe('Scenario: should request specific amount', () => {
+      step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
+      step('When I click "request tab"', () => { helper.clickOnElement('.request-tab'); });
+      step('Then I should see the QR code', () => helper.haveLengthOf('.request-qr-code', 1));
+      step('When I click "specify request"', () => { helper.clickOnElement('.specify-request'); });
+      step('And I fill in "1" to "amount" field', () => { helper.fillInputField('1', 'amount'); });
+      step('When I click "confirm request"', () => { helper.clickOnElement('.confirm-request'); });
+      step('Then I should be on the confirm page with correct links and QR code', () => helper.checkConfirmRequest('genesis'));
     });
 
     describe('Scenario: should not show account initialisation option if public key and balance is greater than 0', () => {
