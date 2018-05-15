@@ -253,7 +253,7 @@
   "Testnet": "Testnet",
   "Thank you": "Thank you",
   "The Wallet will show your recent transactions.": "The Wallet will show your recent transactions.",
-  "The download was started. Depending on your internet speed it can take up to several minutes. You will be informed then it is finished and prompted to restart the app.": "The download was started. Depending on your internet speed it can take up to several minutes. You will be informed then it is finished and prompted to restart the app.",
+  "The download has started. Depending on your internet speed, it can take several minutes. You will be informed when it is finished and be prompted to restart the app.": "The download has started. Depending on your internet speed, it can take several minutes. You will be informed when it is finished and be prompted to restart the app.",
   "The easiest way to do this is to send LSK to yourself. It will cost you only the usual {{fee}} LSK transaction fee.": "The easiest way to do this is to send LSK to yourself. It will cost you only the usual {{fee}} LSK transaction fee.",
   "There are no {{filterName}} transactions.": "There are no {{filterName}} transactions.",
   "This is not reversible.": "This is not reversible.",
