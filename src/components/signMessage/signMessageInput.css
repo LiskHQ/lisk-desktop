@@ -114,4 +114,16 @@
       }
     }
   }
+
+  .message {
+    margin: 50px 30px;
+  }
+
+  .info {
+    margin: 30px 0px 60px;
+    line-height: 26px;
+    padding: 0 30px;
+    font-size: 16px;
+    font-weight: 400;
+  }
 }
