@@ -18,7 +18,6 @@ class SignMessageInput extends React.Component {
     this.setState({
       [name]: {
         value,
-        error: value === '' ? this.props.t('Required') : '',
       },
     });
   }
@@ -53,7 +52,6 @@ class SignMessageInput extends React.Component {
               label={this.props.t('message')}
               className={`${styles.message} message`}
               onChange={this.handleChange.bind(this, 'message')}
-              error={this.state.message.error}
               value={this.state.message.value}/>
           </TransitionWrapper>
           <TransitionWrapper current={this.state.step} step='introduction-step' animationName='fade'>

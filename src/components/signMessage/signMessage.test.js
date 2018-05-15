@@ -38,9 +38,9 @@ describe('SignMessage', () => {
     peers,
     closeDialog: () => {},
     passphrase: account.passphrase,
-    registerSecondPassphrase: spy(),
     t: key => key,
     history,
+    nextStep: spy(),
   };
 
   describe('Authenticated', () => {
@@ -48,15 +48,15 @@ describe('SignMessage', () => {
       wrapper = mount(<SignMessage {...props} />, options);
     });
 
-    it('renders MultiStep component', () => {
+    it('should render MultiStep component', () => {
       expect(wrapper.find('MultiStep')).to.have.length(1);
     });
 
-    it('renders SignMessageInput component', () => {
+    it('should render SignMessageInput component', () => {
       expect(wrapper.find('SignMessageInput')).to.have.length(1);
     });
 
-    it('allows to go back to previous screen', () => {
+    it('should allow to go back to previous screen', () => {
       const backButton = wrapper.find('.multistep-back');
       backButton.first().simulate('click');
       expect(history.goBack).to.have.been.calledWith();
@@ -66,6 +66,38 @@ describe('SignMessage', () => {
       expect(document.getElementsByClassName('contentFocused')).to.have.length(1);
       wrapper.unmount();
       expect(document.getElementsByClassName('contentFocused')).to.have.length(0);
+    });
+
+    it('should render ConfirmMessage step "verify"', () => {
+      wrapper.find('Input').props().onChange('message', '123aaa');
+      wrapper.update();
+      const nextButton = wrapper.find('button');
+      nextButton.first().simulate('click');
+      expect(wrapper).to.have.descendants('ConfirmMessage');
+    });
+
+    it('should render ConfirmMessage step "done"', () => {
+      expect(wrapper).to.not.have.descendants('ConfirmMessage');
+      wrapper.find('Input').props().onChange('message', '123aaa');
+      wrapper.update();
+      wrapper.find('button').first().simulate('click');
+      expect(wrapper).to.have.descendants('ConfirmMessage');
+      wrapper.find('PassphraseInput').props().onChange('message', account.passphrase);
+      wrapper.update();
+      wrapper.find('Button').props().onClick();
+      expect(wrapper).to.have.descendants('ConfirmMessage');
+    });
+
+    it('should not render ConfirmMessage step "done" when passphrase is not from active account', () => {
+      expect(wrapper).to.not.have.descendants('ConfirmMessage');
+      wrapper.find('Input').props().onChange('message', '123aaa');
+      wrapper.update();
+      wrapper.find('button').first().simulate('click');
+      expect(wrapper).to.have.descendants('ConfirmMessage');
+      wrapper.find('PassphraseInput').props().onChange('message', account.passphrase);
+      wrapper.update();
+      wrapper.find('Button').props().onClick();
+      expect(wrapper).to.have.descendants('ConfirmMessage');
     });
   });
 });

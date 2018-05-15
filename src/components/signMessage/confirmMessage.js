@@ -3,7 +3,6 @@ import Lisk from 'lisk-js';
 import styles from './confirmMessage.css';
 import { Button } from '../toolbox/buttons/button';
 import Input from '../toolbox/inputs/input';
-import { extractAddress, extractPublicKey } from '../../utils/account';
 import { passphraseIsValid } from '../../utils/form';
 // eslint-disable-next-line import/no-named-as-default
 import PassphraseInput from '../passphraseInput';
@@ -24,28 +23,13 @@ class ConfirmMessage extends React.Component {
     };
   }
 
-  componentWillUnmount() {
-    clearTimeout(this.timeout);
-  }
-
   handleChange(name, value, error) {
-    const { publicKey } = this.props.account;
-    if (!error && extractPublicKey(value) !== publicKey) {
-      error = this.props.t('Entered passphrase does not belong to the active account');
-    }
-
     this.setState({
       [name]: {
         value,
-        error: typeof error === 'string' ? error : undefined,
+        error,
       },
     });
-  }
-
-  next() {
-    setTimeout(() => {
-      this.setState({ step: 'login' });
-    }, 800);
   }
 
   signMessage() {
@@ -53,15 +37,6 @@ class ConfirmMessage extends React.Component {
       step: 'done',
       result: this.sign(),
     });
-  }
-
-  // eslint-disable-next-line  class-methods-use-this
-  focus({ nativeEvent }) {
-    nativeEvent.target.focus();
-  }
-
-  getAddress() {
-    return extractAddress(this.props.passphrase);
   }
 
   sign() {
