@@ -62,12 +62,6 @@ describe('SignMessage', () => {
       expect(history.goBack).to.have.been.calledWith();
     });
 
-    it('unmount remove contentFocused', () => {
-      expect(document.getElementsByClassName('contentFocused')).to.have.length(1);
-      wrapper.unmount();
-      expect(document.getElementsByClassName('contentFocused')).to.have.length(0);
-    });
-
     it('should render ConfirmMessage step "verify"', () => {
       wrapper.find('Input').props().onChange('message', '123aaa');
       wrapper.update();

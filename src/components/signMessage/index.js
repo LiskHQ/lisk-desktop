@@ -2,7 +2,6 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router';
-import { secondPassphraseRegistered } from '../../actions/account';
 import SignMessage from './signMessage';
 
 /**
@@ -10,14 +9,8 @@ import SignMessage from './signMessage';
  */
 const mapStateToProps = state => ({
   account: state.account,
-  peers: state.peers,
-});
-
-const mapDispatchToProps = dispatch => ({
-  registerSecondPassphrase: data => dispatch(secondPassphraseRegistered(data)),
 });
 
 export default withRouter(connect(
   mapStateToProps,
-  mapDispatchToProps,
 )(translate()(SignMessage)));

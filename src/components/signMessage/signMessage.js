@@ -8,15 +8,6 @@ import Box from '../box';
 import styles from './signMessage.css';
 
 class SignMessage extends React.Component {
-  // eslint-disable-next-line class-methods-use-this
-  componentWillUnmount() {
-    document.body.classList.remove('contentFocused');
-  }
-  // eslint-disable-next-line class-methods-use-this
-  componentDidMount() {
-    document.body.classList.add('contentFocused');
-  }
-
   backToPreviousPage() {
     this.props.history.goBack();
   }

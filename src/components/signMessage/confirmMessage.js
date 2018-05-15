@@ -97,7 +97,7 @@ class ConfirmMessage extends React.Component {
                   label={this.props.t('Confirm')}
                   theme={styles}
                   className={`${styles.confirm} confirm`}
-                  onClick={this.signMessage.bind(this, 'passphrase')}
+                  onClick={this.signMessage.bind(this)}
                   disabled={!passphraseIsValid(this.state.passphrase)}
                 />
               </footer>

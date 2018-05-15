@@ -94,7 +94,7 @@ describe('Setting', () => {
   });
 
   it('should show the onboarding setting when authenticated and not on mobile', () => {
-    expect(wrapper.find('#carouselNav li')).to.have.length(5);
+    expect(wrapper.find('#carouselNav li')).to.have.length(4);
     wrapper.find('button').props().onClick();
     expect(props.toggleMenu).to.have.been.calledWith();
     expect(props.startOnboarding).to.have.been.calledWith();
@@ -107,7 +107,7 @@ describe('Setting', () => {
         {...props}
       />
     </Router>, options);
-    expect(wrapper.find('#carouselNav li')).to.have.length(4);
+    expect(wrapper.find('#carouselNav li')).to.have.length(3);
   });
 
   it('should not show the onboarding setting when not authenticated', () => {
@@ -117,7 +117,7 @@ describe('Setting', () => {
         {...props}
       />
     </Router>, options);
-    expect(wrapper.find('#carouselNav li')).to.have.length(4);
+    expect(wrapper.find('#carouselNav li')).to.have.length(3);
   });
 
   it.skip('should click on .autoLog update the setting', () => {
