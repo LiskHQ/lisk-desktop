@@ -4,9 +4,8 @@ const { waitForElemAndMatchItsText } = require('../support/util.js');
 
 defineSupportCode(({ Then }) => {
   Then('I should see "{elementName}" element with text matching coverter price', (elementName, callback) => {
-    const regexp = /^~ \d{0,100}(\.\d{0,2}){0,1}$/;
+    const regexp = /^~ \d{1,100}(\.\d{1,2})?$/;
     const selectorClass = `.${elementName.replace(/ /g, '-')}`;
     waitForElemAndMatchItsText(selectorClass, regexp, callback);
   });
 });
-
