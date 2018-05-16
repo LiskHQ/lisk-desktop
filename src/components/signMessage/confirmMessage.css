@@ -46,7 +46,8 @@
   }
 
   & header {
-    height: 50%;
+    padding-top: 0px;
+    height: 40%;
     width: 100%;
     display: flex;
     justify-content: space-around;
@@ -66,7 +67,7 @@
 
 .table {
   width: 100%;
-  height: 50%;
+  height: 60%;
   display: table;
   background-color: var(--color-form-bg);
 

@@ -57,11 +57,11 @@
   overflow-y: auto;
 
   & > section {
-    height: 50%;
+    height: 60%;
   }
 
   & > header {
-    height: 50%;
+    height: 40%;
   }
 
   & header {
