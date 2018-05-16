@@ -76,6 +76,7 @@ describe('@integration: Dashboard', () => {
 
   afterEach(() => {
     requestToActivePeerStub.restore();
+    liskServiceAPIStub.restore();
     accountAPIStub.restore();
     delegateAPIStub.restore();
   });
