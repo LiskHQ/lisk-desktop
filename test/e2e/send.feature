@@ -3,6 +3,9 @@ Feature: Send dialog
   Scenario: should allow to send when enough funds and correct address form
     Given I'm logged in as "genesis"
     And I fill in "1" to "amount" field
+    Then I should see "convertor" element
+    Given I wait 5 seconds
+    Then I should see "convertElem" element with text matching validator format
     And I fill in "94495548317450502L" to "recipient" field
     And I click "send next button"
     And I click "send button"
