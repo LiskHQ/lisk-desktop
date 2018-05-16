@@ -21,7 +21,18 @@
 }
 
 .errorMessage {
-  margin-top: 60px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  & img {
+    height: 60px;
+  }
+
+  & p {
+    margin-top: 0px;
+  }
 }
 
 .stepSwitchWrapper {
