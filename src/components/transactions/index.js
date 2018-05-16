@@ -16,6 +16,7 @@ const mapStateToProps = state => ({
   confirmed: state.transactions.confirmed,
   pending: state.transactions.pending,
   delegate: state.account && (state.account.delegate || {}),
+  activeFilter: state.transactions.filter,
   loading: state.loading,
 });
 

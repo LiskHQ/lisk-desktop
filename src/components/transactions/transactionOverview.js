@@ -60,13 +60,13 @@ class Transactions extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.address === this.props.account.address) {
       this.setState({
-        delegate: this.props.account.delegate,
-        votes: this.props.account.votes,
-        voters: this.props.account.voters,
-        transactions: this.props.transactions.confirmed,
-        count: this.props.transactions.count,
-        account: this.props.account,
-        activeFilter: this.props.transactions.filter,
+        delegate: nextProps.account.delegate,
+        votes: nextProps.account.votes,
+        voters: nextProps.account.voters,
+        transactions: nextProps.transactions.confirmed,
+        count: nextProps.transactions.count,
+        account: nextProps.account,
+        activeFilter: nextProps.transactions.filter,
       });
     } else if (nextProps.search.lastSearch) {
       this.setState({
@@ -94,8 +94,8 @@ class Transactions extends React.Component {
           activePeer: this.props.activePeer,
           address: this.props.address,
           limit: 25,
-          offset: this.props.transactions.length,
-          filter: this.props.activeFilter,
+          offset: this.state.transactions.length,
+          filter: this.state.activeFilter,
         });
       } else {
         this.props.searchMoreTransactions({
