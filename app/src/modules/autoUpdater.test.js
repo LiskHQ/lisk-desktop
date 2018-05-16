@@ -161,7 +161,6 @@ describe('autoUpdater', () => {
     clock.tick(1001);
     ipcRenderer.send('update', { text: 'update' });
     clock.tick(100);
-    expect(close).to.has.been.calledWith();
 
     expect(params.autoUpdater.downloadUpdate).to.have.been.calledWithExactly();
   });

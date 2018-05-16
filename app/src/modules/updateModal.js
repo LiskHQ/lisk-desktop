@@ -30,8 +30,9 @@ export default (electron, releaseNotes, updateCallBack, versions) => {
     });
     win.show();
   }, 1000);
+
+  ipcMain.removeAllListeners('update');
   ipcMain.on('update', () => {
-    win.close();
     updateCallBack();
   });
 };

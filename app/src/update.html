@@ -45,6 +45,7 @@
         } 
         function updateApp() {
           ipc.send('update', { text: 'update' });
+          window.close();
         }
         updateElm.addEventListener("mouseup", updateApp, false);
         closeElm.addEventListener("mouseup", closeWindow, false);
