@@ -49,7 +49,7 @@ export default ({ autoUpdater, dialog, win, process, electron }) => {
         if (!updater.error) {
           dialog.showMessageBox({
             title: i18n.t('Dowload started'),
-            message: i18n.t('The download was started. Depending on your internet speed it can take up to several minutes. You will be informed then it is finished and prompted to restart the app.'),
+            message: i18n.t('The download has started. Depending on your internet speed, it can take several minutes. You will be informed when it is finished and be prompted to restart the app.'),
           });
         }
       }, 500);
