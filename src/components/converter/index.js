@@ -10,7 +10,9 @@ class Converter extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      LSK: {},
+      LSK: {
+        USD: '0',
+      },
       // 0 index is active one
       currencies: ['USD', 'EUR'],
     };
