@@ -7,7 +7,6 @@ describe('Electron update modal', () => {
   const updateCallBack = spy();
   const loadURL = spy();
   const show = spy();
-  const close = spy();
   const callbacks = {};
   const events = [];
   const { ipcMain, ipcRenderer } = ipcMock();
@@ -21,7 +20,6 @@ describe('Electron update modal', () => {
         webPreferences,
         loadURL,
         show,
-        close,
         on: (item, callback) => {
           callbacks[item] = callback;
         },
@@ -64,7 +62,6 @@ describe('Electron update modal', () => {
     updateModal(electron, 'test notes', updateCallBack, versions);
     ipcRenderer.send('update', { text: 'update' });
     clock.tick(100);
-    expect(close).to.has.been.calledWith();
     expect(updateCallBack).to.has.been.calledWith();
   });
   it('trigger "will-navigate" shouldn\'t fire "shell.openExternal" on electron when url isn\'t equal getURL', () => {
