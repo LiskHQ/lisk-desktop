@@ -46,7 +46,7 @@ describe('Converter', () => {
       },
     });
     expect(wrapper.state('currencies')[0]).to.have.equal('USD');
-    wrapper.find('.convertElem').at(2).simulate('click');
+    wrapper.find('.converted-price').at(2).simulate('click');
     expect(wrapper.state('currencies')[0]).to.have.equal('EUR');
   });
 
@@ -66,7 +66,7 @@ describe('Converter', () => {
     explorereApiMock.resolves({ LSK: { USD: 123, EUR: 12 } });
     wrapper.update();
     expect(wrapper.state('LSK')).to.have.deep.equal({ USD: 123, EUR: 12 });
-    expect(wrapper.find('.convertElem').at(0).text()).to.have.equal('~ 246.00');
+    expect(wrapper.find('.converted-price').at(0).text()).to.have.equal('~ 246.00');
   });
 });
 

@@ -10,7 +10,9 @@ class Converter extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      LSK: {},
+      LSK: {
+        USD: '0',
+      },
       // 0 index is active one
       currencies: ['USD', 'EUR'],
     };
@@ -46,7 +48,7 @@ class Converter extends React.Component {
     const currenciesObejects = currencies.map((currency, key) =>
       (<div
         key={`${currency}-${key}`}
-        className={`${styles.convertElem} convertElem`}
+        className={`${styles.convertElem} converted-price`}
         // eslint-disable-next-line
         onClick={() => { this.selectActive(currency); }}>{currency}</div>)
     );
@@ -63,9 +65,9 @@ class Converter extends React.Component {
         theme={styles}
         onChange={this.props.onChange} >
         <div className={styles.convertorWrapper}>
-          {this.props.value !== '' ?
+          {this.props.value !== '' && this.state.LSK[currencies[0]] ?
             <div className={this.props.error ? `${styles.convertorErr} convertorErr` : `${styles.convertor} convertor`}>
-              <div className={`${styles.convertElem} convertElem`}>~ {price}</div>
+              <div className={`${styles.convertElem} converted-price`}>~ {price}</div>
               {intersperse}
             </div>
             : <div></div>
