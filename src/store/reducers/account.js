@@ -57,6 +57,8 @@ const account = (state = {}, action) => {
       return Object.assign({}, state, { passphrase: null, expireTime: 0 });
     case actionTypes.accountUpdated:
       return merge(state, action.data);
+    case actionTypes.transactionsLoadFinish:
+      return { ...state, delegate: action.data.delegate };
     case actionTypes.accountLoggedIn:
       return { ...action.data, votes: state.votes, voters: state.voters };
     case actionTypes.accountLoggedOut:
