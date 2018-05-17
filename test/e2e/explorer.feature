@@ -52,6 +52,15 @@ Feature: Explorer page
     And I fill in "1465651642158264047" to "search bar input" field
     When I click "search bar button"
     Then I should see ID "1465651642158264047" in transaction header
+
+  Scenario: should show added voters in "voted delegate" transaction type while being logged in
+    Given I'm logged in as "genesis"
+    And I wait 1 seconds
+    When I click "explorer" menu
+    When I fill in "4401082358022424760L" to "search input" field
+    And I click "input search button"
+    Then I click on "transactions row" element no. 2
+    Then I should see 2 instances of "voter address"
     When I click "explorer" menu
     When I fill in "2581762640681118072L" to "search input" field
     And I click "input search button"

@@ -291,6 +291,15 @@ defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
     optionElem.click().then(callback).catch(callback);
   });
 
+  Then('I click on "{className}" element no. {index}', (className, index, callback) => {
+    browser.sleep(500);
+    const selector = `.${className.replace(/ /g, '-')}`;
+    const optionElem = element.all(by.css(selector)).get(index - 1);
+    browser.wait(EC.presenceOf(optionElem), waitTime)
+      .then(() => optionElem.click().then(callback).catch(callback))
+      .catch(error => console.error(`${error}`)); // eslint-disable-line no-console
+  });
+
   When('I select option no. {index} from "{selectName}" select', (index, selectName, callback) => {
     waitForElemAndClickIt(`.${selectName}`);
     browser.sleep(1000);
