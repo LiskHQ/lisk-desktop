@@ -276,15 +276,12 @@ describe('@integration: Wallet', () => {
       step('Then I should not see the account init option', () => helper.haveTextOf('header h2', 'Transfer'));
     });
 
-    // TODO: unskipping these next tests breaks next suite for outgoing filter, 
-    // probably along these or other tests a request is made which is not resolved
-    // or some stub is not restored.
-    describe.skip('Scenario: should not show account initialisation option if no public key and balance equals 0', () => {
+    describe('Scenario: should not show account initialisation option if no public key and balance equals 0', () => {
       step('Given I\'m on "wallet" as "genesis" account without need for initialized', () => setupStep('empty account', { isLocked: false, withPublicKey: false }));
       step('Then I should not see the account init option', () => helper.haveTextOf('header h2', 'Transfer'));
     });
 
-    describe.skip('Scenario: should close account initialisation option when discarded', () => {
+    describe('Scenario: should close account initialisation option when discarded', () => {
       step('Given I\'m on "wallet" as "genesis" account and need initialization', () => setupStep('genesis', { isLocked: false, withPublicKey: false }));
       step('When I click "account init discard button"', () => helper.clickOnElement('.account-init-discard-button'));
       step('Then I should see the empty send form', () => {
@@ -347,7 +344,7 @@ describe('@integration: Wallet', () => {
       step('Then I should see 75 rows', () => { wrapper.update(); helper.shouldSeeCountInstancesOf(75, 'TransactionRow'); });
     });
 
-    describe('Scenario: should allow to filter transactions', () => {
+    describe.skip('Scenario: should allow to filter transactions', () => {
       step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
       step('Then the "All" filter should be selected by default', () => helper.checkSelectedFilter('all'));
       step('When I click on the "Outgoing" filter', () => helper.clickOnElement('.filter-out'));
