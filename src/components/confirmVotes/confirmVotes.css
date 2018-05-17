@@ -38,9 +38,6 @@
 
 @media (--large-viewport) {
   .content {
-    padding-right: 0;
-    padding-left: 0;
-
     & > h2 {
       padding: 0 40px;
     }
@@ -65,8 +62,7 @@
   }
 
   .content {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding: 20px;
     background: var(--color-white);
     position: relative;
     box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
@@ -84,12 +80,12 @@
       width: 50px;
       min-height: 36px;
       position: absolute;
-      top: 26px;
+      top: 34px;
       left: 14px;
     }
 
     & .checkbox {
-      padding-left: 40px;
+      padding-left: 60px;
       box-sizing: border-box;
     }
   }
@@ -98,7 +94,7 @@
 @media (--small-viewport) {
   .content {
     & .checkbox {
-      padding-left: 40px;
+      padding-left: 50px;
       box-sizing: border-box;
 
       & div span {
@@ -109,6 +105,10 @@
         font-weight: 400;
         text-indent: 58px;
       }
+    }
+
+    & .backButton {
+      top: 26px;
     }
   }
 }
