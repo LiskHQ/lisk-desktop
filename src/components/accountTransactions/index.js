@@ -4,6 +4,7 @@ import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { loadTransactions } from '../../actions/transactions';
 import Transactions from './../transactions';
+import ExplorerTransactions from './../transactions';
 import SendTo from '../sendTo';
 import styles from './accountTransactions.css';
 
@@ -28,7 +29,7 @@ class accountTransactions extends React.Component {
         />
       </div>
       <div className={`${grid['col-sm-12']} ${styles.transactions} ${grid['col-md-8']}`}>
-        <Transactions
+        <ExplorerTransactions
           history={this.props.history}
           address={this.props.match.params.address}
           delegate={this.props.delegate} />
