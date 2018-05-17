@@ -98,8 +98,7 @@
 
 .content {
   position: absolute;
-  top: 50%;
-  height: 50%;
+  height: 60%;
   border-top: solid 1px var(--color-white);
   background-color: var(--color-form-bg);
   box-sizing: border-box;
