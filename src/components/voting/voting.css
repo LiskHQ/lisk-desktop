@@ -30,7 +30,7 @@
       left: 0;
       bottom: var(--footer-height-m);
       max-height: 100%;
-      height: 95px;
+      height: auto;
     }
   }
 
