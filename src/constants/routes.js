@@ -4,6 +4,7 @@ import Login from '../components/login';
 import Register from '../components/register';
 import RegisterDelegate from '../components/registerDelegate';
 import SecondPassphrase from '../components/secondPassphrase';
+import SignMessage from '../components/signMessage';
 import Search from '../components/search';
 import SearchResult from '../components/search/searchResult';
 import TransactionDashboard from '../components/transactionDashboard';
@@ -42,6 +43,11 @@ export default {
   secondPassphrase: {
     path: '/second-passphrase',
     component: SecondPassphrase,
+    isPrivate: true,
+  },
+  signMessage: {
+    path: '/sign-message',
+    component: SignMessage,
     isPrivate: true,
   },
   register: {

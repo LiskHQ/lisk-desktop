@@ -6,6 +6,12 @@
   --details-label-font-size-XL: 15px;
   --details-label-font-size-L: 12px;
   --details-label-font-size-XS: 12px;
+  --back-button-font-size-XL: 15px;
+  --back-button-font-size-L: 12px;
+  --back-button-font-size-XS: 12px;
+  --back-button-arrow-font-size-XL: 16px;
+  --back-button-arrow-font-size-L: 16px;
+  --back-button-arrow-font-size-XS: 16px;
 }
 
 .addressLink {

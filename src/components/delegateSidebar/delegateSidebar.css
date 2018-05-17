@@ -16,6 +16,12 @@
   }
 
   .wrapper {
+    margin-right: calc(-1 * var(--box-padding-left-M));
+    margin-left: calc(-1 * var(--box-padding-left-M));
+    border-style: solid;
+    border-width: 0 var(--box-padding-left-M);
+    border-color: var(--color-grayscale-mobile-background);
+
     & > div {
       height: auto;
       background: var(--color-grayscale-mobile-background);
@@ -41,5 +47,11 @@
 @media (--small-viewport) {
   .layover {
     height: calc(100vh - var(--footer-height-s) - var(--header-height-s)); /* stylelint-disable-line */
+  }
+
+  .wrapper {
+    & footer {
+      padding: 0 var(--box-padding-left-M);
+    }
   }
 }
