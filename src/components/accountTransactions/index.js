@@ -2,22 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { loadTransactions } from '../../actions/transactions';
-import Transactions from './../transactions';
-import ExplorerTransactions from './../transactions';
+import ExplorerTransactions from './../transactions/explorerTransactions';
 import SendTo from '../sendTo';
 import styles from './accountTransactions.css';
 
-class accountTransactions extends React.Component {
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.match.params.address !== this.props.match.params.address) {
-      this.props.loadTransactions({
-        activePeer: this.props.activePeer,
-        publicKey: this.props.publicKey,
-        address: nextProps.match.params.address });
-    }
-  }
-
+class AccountTransactions extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   render() {
     return <div className={`${grid.row} ${styles.wrapper}`}>
@@ -46,8 +35,4 @@ const mapStateToProps = state => ({
   delegate: state.account && state.account.delegate,
 });
 
-const mapDispatchToProps = dispatch => ({
-  loadTransactions: data => dispatch(loadTransactions(data)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(accountTransactions));
+export default connect(mapStateToProps)(translate()(AccountTransactions));

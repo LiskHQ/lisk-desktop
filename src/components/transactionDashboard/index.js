@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import WalletTransactions from './../transactions';
+import WalletTransactions from './../transactions/walletTransactions';
 import Send from '../send';
 import styles from './transactionDasboard.css';
 
