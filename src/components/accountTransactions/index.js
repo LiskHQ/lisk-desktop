@@ -15,6 +15,8 @@ class AccountTransactions extends React.Component {
           address={this.props.match.params.address}
           t={this.props.t}
           notLoading={this.props.notLoading}
+          account={this.props.account}
+          delegate={this.props.delegate}
         />
       </div>
       <div className={`${grid['col-sm-12']} ${styles.transactions} ${grid['col-md-8']}`}>
@@ -32,7 +34,8 @@ const mapStateToProps = state => ({
   activePeer: state.peers.data,
   notLoading: state.loading.length === 0,
   peers: state.peers,
-  delegate: state.account && state.account.delegate,
+  account: state.search.accounts[state.search.lastSearch] || {},
+  delegate: state.search.delegates[state.search.lastSearch] || {},
 });
 
 export default connect(mapStateToProps)(translate()(AccountTransactions));
