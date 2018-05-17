@@ -1,5 +1,6 @@
 import Dashboard from '../components/dashboard';
 import Sidechains from '../components/sidechains';
+import Setting from '../components/setting';
 import Login from '../components/login';
 import Register from '../components/register';
 import RegisterDelegate from '../components/registerDelegate';
@@ -37,6 +38,11 @@ export default {
   sidechains: {
     path: '/sidechains',
     component: Sidechains,
+    isPrivate: true,
+  },
+  setting: {
+    path: '/setting',
+    component: Setting,
     isPrivate: true,
   },
   secondPassphrase: {
