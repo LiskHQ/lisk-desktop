@@ -58,6 +58,13 @@ export const loadTransactions = ({ activePeer, publicKey, address }) =>
           transactionsResponse,
           isSameAccount,
         }));
+        dispatch({
+          data: {
+            count: parseInt(transactionsResponse.count, 10),
+            confirmed: transactionsResponse.transactions,
+          },
+          type: actionTypes.transactionsLoaded,
+        });
       });
   };
 

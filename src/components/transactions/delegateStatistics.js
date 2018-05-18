@@ -2,7 +2,6 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
-import { connect } from 'react-redux';
 import { FontIcon } from '../fontIcon';
 import routes from './../../constants/routes';
 import styles from './delegateStatistics.css';
@@ -171,13 +170,5 @@ class DelegateStatistics extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  delegate: state.account && (state.account.delegate || {}),
-  votes: state.account && (state.account.votes || []),
-  voters: state.account && (state.account.voters || []),
-  publicKey: (state.account && state.account.delegate) ? state.account.delegate.publicKey : null,
-  peers: state.peers,
-});
-
-export default connect(mapStateToProps, {})(translate()(DelegateStatistics));
+export default translate()(DelegateStatistics);
 
