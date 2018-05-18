@@ -18,10 +18,12 @@ class TransactionsDetailView extends React.Component {
   constructor(props) {
     super(props);
 
-    this.props.loadTransaction({
-      activePeer: props.peers.data,
-      id: this.props.value.id,
-    });
+    if ((props.peers.data && !props.transaction.id) || (props.value.id !== props.transaction.id)) {
+      this.props.loadTransaction({
+        activePeer: props.peers.data,
+        id: this.props.value.id,
+      });
+    }
   }
 
   getVoters(dataName) {
