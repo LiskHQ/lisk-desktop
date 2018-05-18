@@ -6,7 +6,7 @@ const transaction = (state = {}, action) => {
       return {};
     case actionTypes.transactionLoaded:
       return {
-        votesName: state.votesName,
+        votesName: state.votesName || {},
         success: action.data.success,
         ...action.data.transaction,
       };
