@@ -3,7 +3,7 @@ Feature: Onboarding
     Given I go to "/"
     And I wait 1 seconds
     Then I should see no "joyride-tooltip__header"
-
+  @pending
   Scenario: should start onboarding automatically
     Given I'm logged in as "genesis"
     And I wait 0.4 seconds
