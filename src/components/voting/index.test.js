@@ -1,18 +1,19 @@
 import React from 'react';
-import { expect } from 'chai';
-import { mount } from 'enzyme';
-import { spy } from 'sinon';
+import configureMockStore from 'redux-mock-store';
+import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { mount } from 'enzyme';
+import { expect } from 'chai';
+import { spy } from 'sinon';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import VotingHOC from './index';
-import store from '../../store';
 
 describe('VotingHOC', () => {
   let wrapper;
 
   beforeEach(() => {
-    store.getState = () => ({
+    const store = configureMockStore([])({
       peers: {},
       transactions: {
         pending: [],
@@ -34,6 +35,7 @@ describe('VotingHOC', () => {
       },
       account: {},
       delegate: {},
+      search: {},
     });
 
     const history = {
@@ -42,6 +44,7 @@ describe('VotingHOC', () => {
         search: '',
       },
       replace: spy(),
+      createHref: () => {},
     };
 
     const options = {
@@ -55,8 +58,12 @@ describe('VotingHOC', () => {
         history: PropTypes.object.isRequired,
       },
     };
-
-    wrapper = mount(<Router><VotingHOC history={history}/></Router>, options);
+    wrapper = mount(
+      <Provider store={store}>
+        <Router>
+          <VotingHOC history={history} />
+        </Router>
+      </Provider>, options);
   });
 
   it('should render Voting', () => {

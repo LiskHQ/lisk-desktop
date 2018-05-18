@@ -11,7 +11,7 @@ Feature: Send dialog
     And I wait 1 seconds
     Then I should see text "Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain." in "result box message" element
     And I should see 5 rows
-    And I wait 15 seconds
+    And I wait 5 seconds
     When I click "seeAllLink"
     And I should see 25 rows
     When I scroll to the bottom of "transaction results"

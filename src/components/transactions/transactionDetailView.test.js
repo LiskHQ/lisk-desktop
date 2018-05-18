@@ -39,7 +39,7 @@ describe('TransactionDetailView', () => {
     const expectedValue = /flexboxgrid__row/g;
     const html = wrapper.html();
     expect(html.match(expectedValue)).to.have.lengthOf(4);
-    wrapper.find('#transactionDetailsBackButton').simulate('click');
+    wrapper.find('.transaction-details-back-button').simulate('click');
     expect(props.prevStep).to.have.been.calledWith();
   });
 
