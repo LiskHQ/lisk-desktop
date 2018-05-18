@@ -10,7 +10,7 @@ class WalletTransactions extends React.Component {
     const onInit = () => {
       this.props.loadTransactions({
         activePeer: this.props.activePeer,
-        address: this.props.address,
+        address: this.props.account.address,
         publicKey: this.props.account.publicKey,
       });
 

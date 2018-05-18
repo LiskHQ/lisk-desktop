@@ -7,11 +7,12 @@ import WalletTransactions from './walletTransactions';
 
 const mapStateToProps = state => ({
   activePeer: state.peers.data,
+  account: state.account,
   transactions: [...state.transactions.pending, ...state.transactions.confirmed],
   votes: state.account.votes,
   voters: state.account.voters,
   count: state.transactions.count,
-  delegate: state.account && (state.account.delegate || {}),
+  delegate: state.account && (state.account.delegate || null),
   activeFilter: state.transactions.filter,
   loading: state.loading,
 });
