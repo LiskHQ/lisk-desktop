@@ -17,12 +17,11 @@ import routes from './../../constants/routes';
 class TransactionsDetailView extends React.Component {
   constructor(props) {
     super(props);
-    if (props.peers.data && !props.transaction.id) {
-      this.props.loadTransaction({
-        activePeer: props.peers.data,
-        id: this.props.value.id,
-      });
-    }
+
+    this.props.loadTransaction({
+      activePeer: props.peers.data,
+      id: this.props.value.id,
+    });
   }
 
   getVoters(dataName) {

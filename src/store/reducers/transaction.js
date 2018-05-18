@@ -5,7 +5,11 @@ const transaction = (state = {}, action) => {
     case actionTypes.transactionCleared:
       return {};
     case actionTypes.transactionLoaded:
-      return { success: action.data.success, ...action.data.transaction };
+      return {
+        votesName: state.votesName,
+        success: action.data.success,
+        ...action.data.transaction,
+      };
     case actionTypes.transactionLoadFailed:
       return action.data.error;
     case actionTypes.transactionAddDelegateName: {

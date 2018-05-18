@@ -2,6 +2,7 @@ import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../utils/loading';
 import { transactions, transaction, unconfirmedTransactions } from '../utils/api/account';
 import { getDelegate } from '../utils/api/delegate';
+import localJSONStorage from '../utils/localJSONStorage';
 import { extractAddress } from '../utils/account';
 import { loadAccount } from './account';
 
@@ -87,26 +88,43 @@ export const loadTransaction = ({ activePeer, id }) =>
       .then((response) => {
         const added = (response.transaction.votes && response.transaction.votes.added) || [];
         const deleted = (response.transaction.votes && response.transaction.votes.deleted) || [];
+        const localStorageDelegates = localJSONStorage.get(activePeer.currentPeer, {});
 
-        deleted.map(publicKey =>
-          getDelegate(activePeer, { publicKey })
-            .then((delegateData) => {
-              dispatch({
-                data: { delegate: delegateData.delegate, voteArrayName: 'deleted' },
-                type: actionTypes.transactionAddDelegateName,
+        deleted.forEach((publicKey) => {
+          const address = extractAddress(publicKey);
+          if (localStorageDelegates[address]) {
+            dispatch({
+              data: { delegate: { username: localStorageDelegates[address].username, address }, voteArrayName: 'deleted' },
+              type: actionTypes.transactionAddDelegateName,
+            });
+          } else {
+            getDelegate(activePeer, { publicKey })
+              .then((delegateData) => {
+                dispatch({
+                  data: { delegate: delegateData.delegate, voteArrayName: 'deleted' },
+                  type: actionTypes.transactionAddDelegateName,
+                });
               });
-            }),
-        );
+          }
+        });
 
-        added.map(publicKey =>
-          getDelegate(activePeer, { publicKey })
-            .then((delegateData) => {
-              dispatch({
-                data: { delegate: delegateData.delegate, voteArrayName: 'added' },
-                type: actionTypes.transactionAddDelegateName,
+        added.forEach((publicKey) => {
+          const address = extractAddress(publicKey);
+          if (localStorageDelegates[address]) {
+            dispatch({
+              data: { delegate: { ...localStorageDelegates[address], address }, voteArrayName: 'added' },
+              type: actionTypes.transactionAddDelegateName,
+            });
+          } else {
+            getDelegate(activePeer, { publicKey })
+              .then((delegateData) => {
+                dispatch({
+                  data: { delegate: delegateData.delegate, voteArrayName: 'added' },
+                  type: actionTypes.transactionAddDelegateName,
+                });
               });
-            }),
-        );
+          }
+        });
         dispatch({ data: response, type: actionTypes.transactionLoaded });
       }).catch((error) => {
         dispatch({ data: error, type: actionTypes.transactionLoadFailed });

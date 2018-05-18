@@ -96,7 +96,7 @@ export const votePlaced = ({ activePeer, passphrase, account,
       unvotedList,
       secondSecret,
     ).then((response) => {
-      // Ad to list
+      // Add to list
       dispatch(pendingVotesAdded());
 
       // Add the new transaction
