@@ -60,12 +60,15 @@ class Setting extends React.Component {
           <p>{t('Set up Lisk Hub and your account.')}</p>
         </header>
         {this.showOnboardingSetting()
-          ? <div className={styles.item}>
+          ? <div className={`${styles.item} onBoarding`}>
             <label>{t('Start the onboarding')}</label>
             <button className={`${styles.settingsButton} onboarding-setting`} onClick={() => {
               startOnboarding();
             }
-            }>{t('Start')}</button>
+            }>
+              {t('Start')}
+              <FontIcon>arrow-right</FontIcon>
+            </button>
           </div>
           : null
         }
@@ -79,9 +82,11 @@ class Setting extends React.Component {
               className={`register-second-passphrase ${styles.secondPassphrase}`}
               to={`${routes.secondPassphrase.path}`}>
               {t('Register')}
+              <FontIcon>arrow-right</FontIcon>
             </Link> :
             <span
               className={`register-second-passphrase ${styles.secondPassphraseEnabled}`}>
+              {t('Registered')}
               <FontIcon>checkmark</FontIcon>
             </span>
           }
@@ -108,6 +113,14 @@ class Setting extends React.Component {
               value: true,
               checked: settings.advancedMode,
             }}/>
+        </div>
+        <h4>{t('Local')}</h4>
+        <div className={styles.item}>
+          <label>{t('Currency')}</label>
+          <ul className={styles.currencyList}>
+            <li className={styles.active}>USD</li>
+            <li>EUR</li>
+          </ul>
         </div>
         {/* TODO: will be re-enabled when the functionality is updated
         {/* TODO: will be re-enabled when the functionality is updated
