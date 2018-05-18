@@ -6,7 +6,7 @@ import TransactionOverview from './transactionOverview';
 import store from '../../store';
 import accounts from './../../../test/constants/accounts';
 
-describe.only('TransactionOverview', () => {
+describe('TransactionOverview', () => {
   let wrapper;
   let props;
   let onInitSpy;
