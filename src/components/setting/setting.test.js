@@ -53,7 +53,6 @@ describe('Setting', () => {
     settings,
     t,
     toggleMenu: sinon.spy(),
-    startOnboarding: sinon.spy(),
     isAuthenticated: true,
   };
 
@@ -83,7 +82,7 @@ describe('Setting', () => {
 
   it('should show the onboarding setting when authenticated and not on mobile', () => {
     wrapper.find('button').props().onClick();
-    expect(props.startOnboarding).to.have.been.calledWith();
+    expect(props.settingsUpdated).to.have.been.calledWith();
   });
 
   it('should not show the onboarding setting when on mobile', () => {

@@ -51,7 +51,7 @@ class Setting extends React.Component {
   render() {
     this.language = (i18n.language === 'de');
     const { t, settings, settingsUpdated,
-      hasSecondPassphrase, startOnboarding } = this.props;
+      hasSecondPassphrase } = this.props;
 
     return (<Box className={styles.wrapper}>
       <aside>
@@ -63,7 +63,7 @@ class Setting extends React.Component {
           ? <div className={`${styles.item} onBoarding`}>
             <label>{t('Start the onboarding')}</label>
             <button className={`${styles.settingsButton} onboarding-setting`} onClick={() => {
-              startOnboarding();
+              this.props.settingsUpdated({ onBoarding: true });
             }
             }>
               {t('Start')}
@@ -76,7 +76,7 @@ class Setting extends React.Component {
       <section>
         <h4>{t('Security')}</h4>
         <div className={styles.item}>
-          <label>{t('Register 2nd passphrase')}</label>
+          <label>{t('2nd passphrase (Fee: 5 LSK)')}</label>
           {!hasSecondPassphrase ?
             <Link
               className={`register-second-passphrase ${styles.secondPassphrase}`}
