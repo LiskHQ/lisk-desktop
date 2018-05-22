@@ -10,7 +10,7 @@ Feature: Explorer page
     When I clear "search bar input" field
     And I fill in "15610359283786884938L" to "search bar input" field
     When I click "search bar button"
-    And I wait 3 seconds
+    And I wait 5 seconds
     Then I should see 25 rows
     When I click "send to address"
     And I wait 1 seconds
