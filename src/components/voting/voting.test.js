@@ -3,13 +3,24 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { prepareStore } from '../../../test/utils/applicationInit';
+import peersReducer from '../../store/reducers/peers';
+import accountReducer from '../../store/reducers/account';
+import votingReducer from '../../store/reducers/voting';
 import Voting from './voting';
-import store from '../../store';
 import history from '../../history';
 import i18n from '../../i18n';
 
 describe('Voting', () => {
   let wrapper;
+  const votes = {
+    username1: { confirmed: true, unconfirmed: true, publicKey: 'sample_key' },
+  };
+  const store = prepareStore({
+    peers: peersReducer,
+    account: accountReducer,
+    voting: votingReducer,
+  });
 
   const delegates = [
     {
@@ -27,9 +38,6 @@ describe('Voting', () => {
       rank: 23,
     },
   ];
-  const votes = {
-    username1: { confirmed: true, unconfirmed: true, publicKey: 'sample_key' },
-  };
   const props = {
     refreshDelegates: false,
     delegates,
@@ -39,7 +47,7 @@ describe('Voting', () => {
     history: { location: { search: '' } },
   };
   beforeEach(() => {
-    wrapper = mount(<Router><Voting {...props}></Voting></Router>,
+    wrapper = mount(<Router><Voting {...props} store={store}></Voting></Router>,
       {
         context: { store, history, i18n },
         childContextTypes: {

@@ -1,0 +1,49 @@
+@import '../app/variables.css';
+
+:root {
+  --padding-top: 40px;
+}
+
+.signMessageContainer {
+  height: 100%;
+  overflow: hidden;
+  margin: 0 -48px;
+}
+
+.hasPaddingTop {
+  padding-top: var(--padding-top);
+}
+
+.hidden {
+  display: none;
+}
+
+@media (--medium-viewport) {
+  .hasPaddingTop {
+    height: 100vh; /* stylelint-disable-line */
+  }
+}
+
+@media (--small-viewport) {
+  .hasPaddingTop {
+    padding-top: var(--box-padding);
+  }
+}
+
+@media (--xLarge-viewport) {
+  .signMessageContainer {
+    margin: 0 calc(var(--box-padding-left-XL) * -1);
+  }
+}
+
+@media (--large-viewport) {
+  .signMessageContainer {
+    margin: 0 calc(var(--box-padding-left-L) * -1);
+  }
+}
+
+@media (--medium-viewport) {
+  .signMessageContainer {
+    margin: 0 calc(var(--box-padding-left-M) * -1);
+  }
+}

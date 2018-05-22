@@ -44,8 +44,9 @@ describe('TransactionsHOC', () => {
         refresh: false,
       },
       delegate: {},
+      search: {},
     });
-    wrapper = mount(<Provider store={store}><Router><TransactionsHOC history={ { location: { search: '' } }} /></Router></Provider>, {
+    wrapper = mount(<Provider store={store}><Router><TransactionsHOC history={ { location: { search: '' } }} address={account.address} /></Router></Provider>, {
       context: { store, history, i18n },
       childContextTypes: {
         store: PropTypes.object.isRequired,

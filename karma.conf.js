@@ -67,6 +67,9 @@ module.exports = function (config) {
             'src/components/accountTransactions/index.js',
             'src/utils/api/liskService.js',
             'src/components/errorBoundary/index.js',
+            'src/store/reducers/transactions.js',
+            'src/actions/transactions.js',
+            'src/components/transactions/index.js',
           ],
           overrides: {
             'src/store/**/*.js': {

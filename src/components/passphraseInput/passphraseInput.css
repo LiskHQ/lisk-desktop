@@ -22,7 +22,7 @@
   font-size: 16px;
   font-weight: var(--font-weight-semi-bold);
   color: #2475b9 !important;
-  top: -45px;
+  top: -25px;
   cursor: pointer;
 
   & label {

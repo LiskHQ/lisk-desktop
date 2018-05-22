@@ -27,6 +27,7 @@ describe('AccountTransaction Component', () => {
       confirmed: [],
     },
     loading: [],
+    search: {},
   };
 
   beforeEach(() => {
