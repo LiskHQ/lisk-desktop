@@ -5,6 +5,8 @@ import TransactionOverview from './../transactionOverview';
 import TransactionDetailView from './../transactionDetailView';
 import Box from './../../box';
 
+import routes from './../../../constants/routes';
+
 class ExplorerTransactions extends React.Component {
   onInit() {
     this.props.searchAccount({
@@ -37,12 +39,20 @@ class ExplorerTransactions extends React.Component {
     });
   }
 
+  onTransactionRowClick(props) {
+    const explorerBasePath = `${routes.accounts.pathPrefix}${routes.accounts.path}`;
+    const accountPath = `${explorerBasePath}/${this.props.address}`;
+    const transactionDetailPath = `${accountPath}?id=${props.value.id}`;
+    this.props.history.push(transactionDetailPath);
+  }
+
   render() {
     const overviewProps = {
       ...this.props,
       onInit: this.onInit.bind(this),
       onLoadMore: this.onLoadMore.bind(this),
       onFilterSet: this.onFilterSet.bind(this),
+      onTransactionRowClick: this.onTransactionRowClick.bind(this),
     };
 
     return (

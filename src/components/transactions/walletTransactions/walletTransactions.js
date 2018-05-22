@@ -5,6 +5,8 @@ import TransactionOverview from './../transactionOverview';
 import TransactionDetailView from './../transactionDetailView';
 import Box from './../../box';
 
+import routes from './../../../constants/routes';
+
 class WalletTransactions extends React.Component {
   onInit() {
     this.props.loadTransactions({
@@ -44,12 +46,17 @@ class WalletTransactions extends React.Component {
     });
   }
 
+  onTransactionRowClick(props) {
+    this.props.history.push(`${routes.wallet.path}?id=${props.value.id}`);
+  };
+
   render() {
     const overviewProps = {
       ...this.props,
       onInit: this.onInit.bind(this),
       onLoadMore: this.onLoadMore.bind(this),
       onFilterSet: this.onFilterSet.bind(this),
+      onTransactionRowClick: this.onTransactionRowClick.bind(this),
     };
 
     return (
