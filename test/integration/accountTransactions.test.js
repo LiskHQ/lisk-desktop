@@ -2,7 +2,7 @@ import thunk from 'redux-thunk';
 import { step } from 'mocha-steps';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import { stub, match } from 'sinon';
+import { stub, match, spy } from 'sinon';
 
 import * as peers from '../../src/utils/api/peers';
 import * as accountAPI from '../../src/utils/api/account';
@@ -25,8 +25,8 @@ import getNetwork from './../../src/utils/getNetwork';
 import { accountLoggedIn } from '../../src/actions/account';
 import AccountTransactions from './../../src/components/accountTransactions';
 import accounts from '../constants/accounts';
+import routes from '../../src/constants/routes';
 import GenericStepDefinition from '../utils/genericStepDefinition';
-
 
 const delegateProductivity = {
   producedblocks: 43961,
@@ -37,31 +37,7 @@ const delegateProductivity = {
   productivity: 99.36,
 };
 
-
-class Helper extends GenericStepDefinition {
-  checkSelectedFilter(filter) {
-    const expectedClass = '_active';
-
-    const activeFilter = this.wrapper.find('.transaction-filter-item').filterWhere((item) => {
-      const className = item.prop('className');
-      return className.includes(expectedClass);
-    });
-
-    expect(activeFilter.text().toLowerCase()).to.equal(filter);
-  }
-
-  checkDelegateDetails() {
-    expect(this.wrapper.find('.approval').first()).to.have.text(`Approval${delegateProductivity.approval}%`);
-    expect(this.wrapper.find('.rank').first()).to.have.text(`Rank / Status${delegateProductivity.rank} / Active`);
-    expect(this.wrapper.find('.productivity').first()).to.have.text(`Uptime${delegateProductivity.productivity}%`);
-  }
-
-  countLinks(expectedNumber) {
-    expect(this.wrapper.find('.voters Link')).to.have.length(expectedNumber);
-  }
-}
-
-describe('@integration: Account Transactions', () => {
+describe.only('@integration: Account Transactions', () => {
   let store;
   let helper;
   let wrapper;
@@ -71,6 +47,39 @@ describe('@integration: Account Transactions', () => {
   let votesAPIStub;
   let votersAPIStub;
   let transactionAPIStub;
+  let explorerTransactionsProps;
+
+  const history = {
+    location: {
+      search: '',
+      pathname: '',
+    },
+    push: spy(),
+  };
+
+  class Helper extends GenericStepDefinition {
+    checkSelectedFilter(filter) {
+      const expectedClass = '_active';
+      const activeFilter = this.wrapper.find('.transaction-filter-item').filterWhere((item) => {
+        const className = item.prop('className');
+        return className.includes(expectedClass);
+      });
+      expect(activeFilter.text().toLowerCase()).to.equal(filter);
+    }
+    checkDelegateDetails() {
+      expect(this.wrapper.find('.approval').first()).to.have.text(`Approval${delegateProductivity.approval}%`);
+      expect(this.wrapper.find('.rank').first()).to.have.text(`Rank / Status${delegateProductivity.rank} / Active`);
+      expect(this.wrapper.find('.productivity').first()).to.have.text(`Uptime${delegateProductivity.productivity}%`);
+    }
+    countLinks(expectedNumber) {
+      expect(this.wrapper.find('.voters Link')).to.have.length(expectedNumber);
+    }
+    clickOnTransaction() {
+      this.wrapper.find('.transactions-row').first().simulate('click');
+      // eslint-disable-next-line no-unused-expressions
+      expect(explorerTransactionsProps.history.push).to.have.been.calledWith(`${routes.accounts.pathPrefix}${routes.accounts.path}/123L?id=123456`);
+    }
+  }
 
   const voters = [{
     username: null,
@@ -116,7 +125,7 @@ describe('@integration: Account Transactions', () => {
     votesAPIStub = stub(delegateAPI, 'getVotes');
     votersAPIStub = stub(delegateAPI, 'getVoters');
 
-    const transactionExample = { senderId: '456L', receiverId: '456L', type: txTypes.send };
+    const transactionExample = { senderId: '456L', receiverId: '456L', type: txTypes.send, id: '123456' };
 
     delegateAPIStub.withArgs(match.any).returnsPromise()
       .resolves({ delegate: {
@@ -193,16 +202,17 @@ describe('@integration: Account Transactions', () => {
     accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
     if (accountType) { store.dispatch(accountLoggedIn(account)); }
     wrapper = mount(renderWithRouter(AccountTransactions, store,
-      { match: { params: { address } }, history: { location: { search: '' } } }));
+      { match: { params: { address } }, history }));
 
+    explorerTransactionsProps = wrapper.find('ExplorerTransactions').props();
+    explorerTransactionsProps.history.push = spy();
     helper = new Helper(wrapper, store);
   };
 
-  describe('Scenario: should allow to view transactions of any account', () => {
+  describe.only('Scenario: should allow to view transactions of any account', () => {
     step('Given I\'m on "accounts/123L" as "genesis" account', () => setupStep({ accountType: 'genesis', address: '123L' }));
     step('Then I should see 20 transaction rows as result of the address 123L', () => helper.shouldSeeCountInstancesOf(20, 'TransactionRow'));
-    step('When I click on a transaction row', () => helper.clickOnElement('.transactions-row'));
-    step('Then I should be able to see the details of that transaction', () => helper.shouldSeeCountInstancesOf(1, '.transactions-detail-view'));
+    step('When I click on a transaction row, I should be redirected to transactoinDetails step', () => helper.clickOnTransaction());
   });
 
   describe('Scenario: should allow to filter transactions', () => {
