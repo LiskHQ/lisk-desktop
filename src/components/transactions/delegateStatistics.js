@@ -125,7 +125,7 @@ class DelegateStatistics extends React.Component {
         <div className={`transactions-detail-view ${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row} votes`}>
           <div className={`${grid['col-xs-12']} ${grid['col-sm-12']} ${grid['col-md-12']}`}>
             <div className={styles.label}>
-              <div>
+              <div className='votes-value'>
                 {this.props.t('Votes of an account')}
                 {` (${this.state.votesSize})`}
               </div>
@@ -147,7 +147,7 @@ class DelegateStatistics extends React.Component {
         <div className={`transactions-detail-view ${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row} voters`}>
           <div className={`${grid['col-xs-12']} ${grid['col-sm-12']} ${grid['col-md-12']}`}>
             <div className={styles.label}>
-              <div>
+              <div className='voters-value'>
                 {this.props.t('Who voted for a delegate')}
                 {` (${this.state.votersSize})`}
               </div>
