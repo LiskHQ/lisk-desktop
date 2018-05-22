@@ -5,8 +5,9 @@
   --carousel-nav-background-color: #3c506b;
   --slide-header-font: var(--heading-font);
   --secured-account-color: var(--color-success-dark);
-  --check-box-height: 48px;
-  --check-box-width: 95px;
+  --check-box-height: 35px;
+  --check-box-width: 65px;
+  --check-box-font-size: 23px;
 }
 
 .wrapper {
@@ -69,7 +70,8 @@
     }
 
     & span {
-      width: 100% !important;
+      width: 100%;
+      font-size: var(--check-box-font-size);
     }
   }
 
