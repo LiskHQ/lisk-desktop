@@ -27,10 +27,6 @@ class App extends React.Component {
     this.setState({ loaded: true });
   }
 
-  startOnboarding() {
-    this.onboarding.setState({ start: true });
-  }
-
   render() {
     const allRoutes = Object.values(routes);
 
@@ -48,9 +44,9 @@ class App extends React.Component {
 
     return (
       <OfflineWrapper>
-        <Onboarding appLoaded={this.state.loaded} onRef={(ref) => { this.onboarding = ref; }}/>
+        <Onboarding appLoaded={this.state.loaded} />
         <main className={`${styles.bodyWrapper}`} ref={(el) => { this.main = el; }}>
-          <MainMenu startOnboarding={this.startOnboarding.bind(this)}/>
+          <MainMenu />
           <Route path={routes.accounts.path} component={SavedAccounts} />
           <section>
             <div className={styles.mainBox}>
