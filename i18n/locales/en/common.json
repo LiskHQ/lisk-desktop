@@ -1,5 +1,6 @@
 {
   " Make sure that you are using the latest version of Lisk Hub.": " Make sure that you are using the latest version of Lisk Hub.",
+  "2nd passphrase (Fee: 5 LSK)": "2nd passphrase (Fee: 5 LSK)",
   "About": "About",
   "Access extra features": "Access extra features",
   "Account initialization": "Account initialization",
@@ -196,7 +197,6 @@
   "Recipient": "Recipient",
   "Redo": "Redo",
   "Register": "Register",
-  "Register 2nd passphrase": "Register 2nd passphrase",
   "Register and oversee your decentralized application here. Available soon.": "Register and oversee your decentralized application here. Available soon.",
   "Registered": "Registered",
   "Release Notes": "Release Notes",
