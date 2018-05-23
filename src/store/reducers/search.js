@@ -62,7 +62,7 @@ const search = (state = {
         ...state,
         delegates: {
           ...state.delegates,
-          [action.data.address]: action.data,
+          [action.data.address]: action.data.delegate,
         },
       };
     case actionTypes.searchVotes :

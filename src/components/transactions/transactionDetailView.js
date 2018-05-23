@@ -222,7 +222,6 @@ class TransactionsDetailView extends React.Component {
 const mapStateToProps = state => ({
   transaction: state.transaction,
   peers: state.peers,
-  votes: state.voting.votes,
 });
 
 const mapDispatchToProps = dispatch => ({
