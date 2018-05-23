@@ -52,9 +52,16 @@ node('lisk-hub') {
     stage ('Install npm dependencies') {
       try {
         sh '''
-        cp -r ~/cache/development/node_modules ./ || true
+        cache_file="$HOME/cache/$( sha1sum package.json |awk '{ print $1 }' ).tar.gz"
+        if [ -f "$cache_file" ]; then
+            tar xf "$cache_file"
+        fi
         npm install
         ./node_modules/protractor/bin/webdriver-manager update
+        if [ ! -f "$cache_file" ]; then
+            GZIP=-4 tar czf "$cache_file" node_modules/
+            find $HOME/cache/ -name '*.tar.gz' -ctime +7 -delete
+        fi
         '''
       } catch (err) {
         echo "Error: ${err}"
@@ -174,10 +181,6 @@ node('lisk-hub') {
     pgrep --list-full -f "Xvfb :1$N" || true
     pkill --echo -f "Xvfb :1$N" -9 || echo "pkill returned code $?"
 
-    # cache nightly builds (development) only to save space
-    if [ $BRANCH_NAME = "development" ]; then
-        rsync -axl --delete $WORKSPACE/node_modules/ ~/cache/development/node_modules/ || true
-    fi
     cat reports/cucumber_report.json | ./node_modules/.bin/cucumber-junit > reports/cucumber_report.xml
     '''
 
