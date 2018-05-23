@@ -37,7 +37,7 @@ const delegateProductivity = {
   productivity: 99.36,
 };
 
-describe.only('@integration: Account Transactions', () => {
+describe('@integration: Account Transactions', () => {
   let store;
   let helper;
   let wrapper;
@@ -76,7 +76,6 @@ describe.only('@integration: Account Transactions', () => {
     }
     clickOnTransaction() {
       this.wrapper.find('.transactions-row').first().simulate('click');
-      // eslint-disable-next-line no-unused-expressions
       expect(explorerTransactionsProps.history.push).to.have.been.calledWith(`${routes.accounts.pathPrefix}${routes.accounts.path}/123L?id=123456`);
     }
   }
@@ -209,7 +208,7 @@ describe.only('@integration: Account Transactions', () => {
     helper = new Helper(wrapper, store);
   };
 
-  describe.only('Scenario: should allow to view transactions of any account', () => {
+  describe('Scenario: should allow to view transactions details of any account', () => {
     step('Given I\'m on "accounts/123L" as "genesis" account', () => setupStep({ accountType: 'genesis', address: '123L' }));
     step('Then I should see 20 transaction rows as result of the address 123L', () => helper.shouldSeeCountInstancesOf(20, 'TransactionRow'));
     step('When I click on a transaction row, I should be redirected to transactoinDetails step', () => helper.clickOnTransaction());
