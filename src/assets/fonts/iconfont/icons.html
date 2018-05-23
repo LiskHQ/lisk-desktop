@@ -60,10 +60,10 @@
 
 @font-face {
 	font-family:"icons";
-	src:url("./icons.eot?305e36904edd664b441bd845b9c1cd1e");
+	src:url("./icons.eot?f6d64bbc071861365dcee8b0f2247c75");
 	src:url("./icons.eot?#iefix") format("embedded-opentype"),
-		url("./icons.woff?305e36904edd664b441bd845b9c1cd1e") format("woff"),
-		url("./icons.ttf?305e36904edd664b441bd845b9c1cd1e") format("truetype");
+		url("./icons.woff?f6d64bbc071861365dcee8b0f2247c75") format("woff"),
+		url("./icons.ttf?f6d64bbc071861365dcee8b0f2247c75") format("truetype");
 	font-weight:normal;
 	font-style:normal;
 }
@@ -89,153 +89,188 @@
 /* Icons */
 
 
-.add:before {
+.add-circled:before {
 	content:"\f101";
 }
 
 
-.arrow-down:before {
+.add:before {
 	content:"\f102";
 }
 
 
-.arrow-left:before {
+.angle-down:before {
 	content:"\f103";
 }
 
 
-.arrow-right:before {
+.arrow-left:before {
 	content:"\f104";
 }
 
 
-.arrow-up:before {
+.arrow-right:before {
 	content:"\f105";
 }
 
 
-.buy-tokens:before {
+.arrow-up:before {
 	content:"\f106";
 }
 
 
-.checkmark-check:before {
+.buy-tokens:before {
 	content:"\f107";
 }
 
 
-.checkmark-uncheck:before {
+.checkmark-check:before {
 	content:"\f108";
 }
 
 
-.checkmark:before {
+.checkmark-circled:before {
 	content:"\f109";
 }
 
 
-.close:before {
+.checkmark-uncheck:before {
 	content:"\f10a";
 }
 
 
-.copy-to-clipboard:before {
+.checkmark:before {
 	content:"\f10b";
 }
 
 
-.dropdown:before {
+.close:before {
 	content:"\f10c";
 }
 
 
-.edit:before {
+.copy-to-clipboard:before {
 	content:"\f10d";
 }
 
 
-.error:before {
+.dropdown:before {
 	content:"\f10e";
 }
 
 
-.hide:before {
+.edit:before {
 	content:"\f10f";
 }
 
 
-.info:before {
+.error:before {
 	content:"\f110";
 }
 
 
-.internet:before {
+.external-link:before {
 	content:"\f111";
 }
 
 
-.locked:before {
+.hide:before {
 	content:"\f112";
 }
 
 
-.login:before {
+.info:before {
 	content:"\f113";
 }
 
 
-.logo-icon:before {
+.internet:before {
 	content:"\f114";
 }
 
 
-.logo-text:before {
+.locked:before {
 	content:"\f115";
 }
 
 
-.menu:before {
+.login:before {
 	content:"\f116";
 }
 
 
-.more:before {
+.logo-beta:before {
 	content:"\f117";
 }
 
 
-.overview:before {
+.logo-icon:before {
 	content:"\f118";
 }
 
 
-.profile:before {
+.logo-text:before {
 	content:"\f119";
 }
 
 
-.request-token:before {
+.menu:before {
 	content:"\f11a";
 }
 
 
-.search:before {
+.more:before {
 	content:"\f11b";
 }
 
 
-.send-token:before {
+.remove-circled:before {
 	content:"\f11c";
 }
 
 
-.show:before {
+.request-token:before {
 	content:"\f11d";
 }
 
 
-.unlocked:before {
+.search:before {
 	content:"\f11e";
+}
+
+
+.send-token:before {
+	content:"\f11f";
+}
+
+
+.show:before {
+	content:"\f120";
+}
+
+
+.undo:before {
+	content:"\f121";
+}
+
+
+.unlocked:before {
+	content:"\f122";
+}
+
+
+.warning:before {
+	content:"\f123";
+}
+
+
+.zoom-in:before {
+	content:"\f124";
+}
+
+
+.zoom-out:before {
+	content:"\f125";
 }
 
 		</style>
@@ -245,9 +280,11 @@
 
 		<div class="icons" id="icons">
 			
+				<div class="icons__item" data-name="add-circled"><i class="icon add-circled"></i> add-circled</div>
+			
 				<div class="icons__item" data-name="add"><i class="icon add"></i> add</div>
 			
-				<div class="icons__item" data-name="arrow-down"><i class="icon arrow-down"></i> arrow-down</div>
+				<div class="icons__item" data-name="angle-down"><i class="icon angle-down"></i> angle-down</div>
 			
 				<div class="icons__item" data-name="arrow-left"><i class="icon arrow-left"></i> arrow-left</div>
 			
@@ -258,6 +295,8 @@
 				<div class="icons__item" data-name="buy-tokens"><i class="icon buy-tokens"></i> buy-tokens</div>
 			
 				<div class="icons__item" data-name="checkmark-check"><i class="icon checkmark-check"></i> checkmark-check</div>
+			
+				<div class="icons__item" data-name="checkmark-circled"><i class="icon checkmark-circled"></i> checkmark-circled</div>
 			
 				<div class="icons__item" data-name="checkmark-uncheck"><i class="icon checkmark-uncheck"></i> checkmark-uncheck</div>
 			
@@ -273,6 +312,8 @@
 			
 				<div class="icons__item" data-name="error"><i class="icon error"></i> error</div>
 			
+				<div class="icons__item" data-name="external-link"><i class="icon external-link"></i> external-link</div>
+			
 				<div class="icons__item" data-name="hide"><i class="icon hide"></i> hide</div>
 			
 				<div class="icons__item" data-name="info"><i class="icon info"></i> info</div>
@@ -283,6 +324,8 @@
 			
 				<div class="icons__item" data-name="login"><i class="icon login"></i> login</div>
 			
+				<div class="icons__item" data-name="logo-beta"><i class="icon logo-beta"></i> logo-beta</div>
+			
 				<div class="icons__item" data-name="logo-icon"><i class="icon logo-icon"></i> logo-icon</div>
 			
 				<div class="icons__item" data-name="logo-text"><i class="icon logo-text"></i> logo-text</div>
@@ -291,9 +334,7 @@
 			
 				<div class="icons__item" data-name="more"><i class="icon more"></i> more</div>
 			
-				<div class="icons__item" data-name="overview"><i class="icon overview"></i> overview</div>
-			
-				<div class="icons__item" data-name="profile"><i class="icon profile"></i> profile</div>
+				<div class="icons__item" data-name="remove-circled"><i class="icon remove-circled"></i> remove-circled</div>
 			
 				<div class="icons__item" data-name="request-token"><i class="icon request-token"></i> request-token</div>
 			
@@ -303,7 +344,15 @@
 			
 				<div class="icons__item" data-name="show"><i class="icon show"></i> show</div>
 			
+				<div class="icons__item" data-name="undo"><i class="icon undo"></i> undo</div>
+			
 				<div class="icons__item" data-name="unlocked"><i class="icon unlocked"></i> unlocked</div>
+			
+				<div class="icons__item" data-name="warning"><i class="icon warning"></i> warning</div>
+			
+				<div class="icons__item" data-name="zoom-in"><i class="icon zoom-in"></i> zoom-in</div>
+			
+				<div class="icons__item" data-name="zoom-out"><i class="icon zoom-out"></i> zoom-out</div>
 			
 		</div>
 

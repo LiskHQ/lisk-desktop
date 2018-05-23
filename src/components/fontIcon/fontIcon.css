@@ -30,122 +30,151 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.add::before {
+.add-circled::before {
   content: "\f101";
 }
 
-.arrow-down::before {
+.add::before {
   content: "\f102";
 }
 
-.arrow-left::before {
+.angle-down::before {
   content: "\f103";
 }
 
-.arrow-right::before {
+.arrow-left::before {
   content: "\f104";
 }
 
-.arrow-up::before {
+.arrow-right::before {
   content: "\f105";
 }
 
-.buy-tokens::before {
+.arrow-up::before {
   content: "\f106";
 }
 
-.checkmark-check::before {
+.buy-tokens::before {
   content: "\f107";
 }
 
-.checkmark-uncheck::before {
+.checkmark-check::before {
   content: "\f108";
 }
 
-.checkmark::before {
+.checkmark-circled::before {
   content: "\f109";
 }
 
-.close::before {
+.checkmark-uncheck::before {
   content: "\f10a";
 }
 
-.copy-to-clipboard::before {
+.checkmark::before {
   content: "\f10b";
 }
 
-.dropdown::before {
+.close::before {
   content: "\f10c";
 }
 
-.edit::before {
+.copy-to-clipboard::before {
   content: "\f10d";
 }
 
-.error::before {
+.dropdown::before {
   content: "\f10e";
 }
 
-.hide::before {
+.edit::before {
   content: "\f10f";
 }
 
-.info::before {
+.error::before {
   content: "\f110";
 }
 
-.internet::before {
+.external-link::before {
   content: "\f111";
 }
 
-.locked::before {
+.hide::before {
   content: "\f112";
 }
 
-.login::before {
+.info::before {
   content: "\f113";
 }
 
-.logo-icon::before {
+.internet::before {
   content: "\f114";
 }
 
-.logo-text::before {
+.locked::before {
   content: "\f115";
 }
 
-.menu::before {
+.login::before {
   content: "\f116";
 }
 
-.more::before {
+.logo-beta::before {
   content: "\f117";
 }
 
-.overview::before {
+.logo-icon::before {
   content: "\f118";
 }
 
-.profile::before {
+.logo-text::before {
   content: "\f119";
 }
 
-.request-token::before {
+.menu::before {
   content: "\f11a";
 }
 
-.search::before {
+.more::before {
   content: "\f11b";
 }
 
-.send-token::before {
+.remove-circled::before {
   content: "\f11c";
 }
 
-.show::before {
+.request-token::before {
   content: "\f11d";
 }
 
-.unlocked::before {
+.search::before {
   content: "\f11e";
 }
+
+.send-token::before {
+  content: "\f11f";
+}
+
+.show::before {
+  content: "\f120";
+}
+
+.undo::before {
+  content: "\f121";
+}
+
+.unlocked::before {
+  content: "\f122";
+}
+
+.warning::before {
+  content: "\f123";
+}
+
+.zoom-in::before {
+  content: "\f124";
+}
+
+.zoom-out::before {
+  content: "\f125";
+}
+
