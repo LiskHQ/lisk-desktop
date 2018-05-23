@@ -29,13 +29,25 @@ export default class VoteUrlProcessor extends React.Component {
 
   render() {
     const errorMessages = {
-      notFound: this.props.t('Check spelling – name does not exist on mainnet'),
-      alreadyVoted: this.props.t('Nothing to change – already voted/unvoted'),
+      notFound: {
+        text: this.props.t('Check spelling – name does not exist on mainnet'),
+        icon: 'warning',
+      },
+      alreadyVoted: {
+        text: this.props.t('Nothing to change – already voted/unvoted'),
+        icon: 'checkmark-circled',
+      },
     };
 
     const successMessages = {
-      upvotes: this.props.t('{{count}} delegate(s) selected to vote', { count: this.props.upvotes.length }),
-      unvotes: this.props.t('{{count}} delegate(s) selected to unvote', { count: this.props.unvotes.length }),
+      upvotes: {
+        text: this.props.t('{{count}} delegate(s) selected to vote', { count: this.props.upvotes.length }),
+        icon: 'remove-circled',
+      },
+      unvotes: {
+        text: this.props.t('{{count}} delegate(s) selected to unvote', { count: this.props.unvotes.length }),
+        icon: 'add-circled',
+      },
     };
 
     return this.props.show ?
@@ -55,7 +67,9 @@ export default class VoteUrlProcessor extends React.Component {
             <div>{Object.keys(errorMessages).map((list, key) => (
               this.props[list].length ? (
                 <div key={key} className={`${styles.block} ${list}-message`}>
-                  <div className={`${styles.title}`}>{errorMessages[list]}</div>
+                  <div className={`${styles.title}`}>
+                    <FontIcon value={errorMessages[list].icon} /> {errorMessages[list].text}
+                  </div>
                   <div className={styles.votes}>{this.props[list].join(', ')}</div>
                 </div>
               ) : null
@@ -63,7 +77,9 @@ export default class VoteUrlProcessor extends React.Component {
             {Object.keys(successMessages).map((list, key) => {
               return this.props[list].length ? (
                 <div key={key} className={styles.block}>
-                  <div className={`${styles.title}`}>{successMessages[list]}</div>
+                  <div className={`${styles.title}`}>
+                    <FontIcon value={successMessages[list].icon} /> {successMessages[list].text}
+                  </div>
                   <div className={`${list}-message ${styles.votes}`}>{this.props[list].join(', ')}</div>
                 </div>
               ) : null }
