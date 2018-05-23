@@ -7,7 +7,6 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { prepareStore } from '../../../../test/utils/applicationInit';
 import * as accountAPI from '../../../../src/utils/api/account';
-import * as delegateAPI from '../../../../src/utils/api/delegate';
 import peersReducer from '../../../store/reducers/peers';
 import accountReducer from '../../../store/reducers/account';
 import transactionsReducer from '../../../store/reducers/transactions';
@@ -22,14 +21,11 @@ import getNetwork from './../../../../src/utils/getNetwork';
 import ExplorerTransactions from './index';
 import i18n from '../../../i18n';
 import accounts from '../../../../test/constants/accounts';
-import txFilters from './../../../../src/constants/transactionFilters';
 
 describe('ExplorerTransactions Component', () => {
   let wrapper;
   let props;
   let transactionsActionsStub;
-  let delegateVotesStub;
-  let delegateVotersStub;
 
   const store = prepareStore({
     peers: peersReducer,
@@ -75,13 +71,9 @@ describe('ExplorerTransactions Component', () => {
     transactionsActionsStub.restore();
   });
 
-  it('renders ExplorerTransactions Component and loads account transactions', () => {
+  it('renders ExplorerTransactions Component and loads searched account transactions', () => {
     const renderedExplorerTransactions = wrapper.find(ExplorerTransactions);
     expect(renderedExplorerTransactions).to.be.present();
     expect(wrapper).to.have.exactly(1).descendants('.transactions-row');
-  });
-
-  it('allows to cache transactions of an account search', () => {
-
   });
 });
