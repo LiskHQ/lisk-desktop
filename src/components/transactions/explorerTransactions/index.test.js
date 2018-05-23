@@ -22,13 +22,15 @@ import ExplorerTransactions from './index';
 import i18n from '../../../i18n';
 import accounts from '../../../../test/constants/accounts';
 import txFilters from '../../../constants/transactionFilters';
+import txTypes from '../../../constants/transactionTypes';
 
 describe('ExplorerTransactions Component', () => {
   let wrapper;
   let props;
   let accountStub;
   let delegateStub;
-  let transactionsActionsStub;
+  let transactionActionStub;
+  let transactionsActionStub;
   let delegateVotesStub;
   let delegateVotersStub;
 
@@ -42,7 +44,8 @@ describe('ExplorerTransactions Component', () => {
   }, [thunk]);
 
   beforeEach(() => {
-    transactionsActionsStub = stub(accountAPI, 'transactions');
+    transactionsActionStub = stub(accountAPI, 'transactions');
+    transactionActionStub = stub(accountAPI, 'transaction');
     accountStub = stub(accountAPI, 'getAccount');
     delegateStub = stub(delegateAPI, 'getDelegate');
     delegateVotesStub = stub(delegateAPI, 'getVotes');
@@ -53,6 +56,8 @@ describe('ExplorerTransactions Component', () => {
     delegateVotesStub.returnsPromise().resolves({ delegates: [accounts['delegate candidate']] });
     delegateVotersStub.returnsPromise().resolves({ accounts: [accounts['empty account']] });
 
+    transactionActionStub.returnsPromise().resolves({ id: 'Some ID', type: txTypes.send });
+
     props = {
       match: { params: { address: accounts.genesis.address } },
       address: accounts.genesis.address,
@@ -61,19 +66,19 @@ describe('ExplorerTransactions Component', () => {
       t: key => key,
     };
 
-    transactionsActionsStub.withArgs({
+    transactionsActionStub.withArgs({
       activePeer: match.any,
       address: accounts.genesis.address,
       limit: 25,
       filter: undefined,
-    }).returnsPromise().resolves({ transactions: [{ id: 'Some ID' }], count: 1000 });
+    }).returnsPromise().resolves({ transactions: [{ id: 'Some ID', type: txTypes.vote }], count: 1000 });
 
-    transactionsActionsStub.withArgs({
+    transactionsActionStub.withArgs({
       activePeer: match.any,
       address: accounts.genesis.address,
       limit: 25,
       filter: txFilters.all,
-    }).returnsPromise().resolves({ transactions: [{ id: 'Some ID' }], count: 1000 });
+    }).returnsPromise().resolves({ transactions: [{ id: 'Some ID', type: txTypes.vote }], count: 1000 });
 
     store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
 
@@ -88,7 +93,8 @@ describe('ExplorerTransactions Component', () => {
   afterEach(() => {
     accountStub.restore();
     delegateStub.restore();
-    transactionsActionsStub.restore();
+    transactionActionStub.restore();
+    transactionsActionStub.restore();
     delegateVotesStub.restore();
     delegateVotersStub.restore();
   });

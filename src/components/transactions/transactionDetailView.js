@@ -20,7 +20,7 @@ class TransactionsDetailView extends React.Component {
     if (props.peers.data && !props.transaction.id) {
       this.props.loadTransaction({
         activePeer: props.peers.data,
-        id: this.props.value.id,
+        id: this.props.transaction.id,
       });
     }
   }
@@ -49,11 +49,11 @@ class TransactionsDetailView extends React.Component {
         <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
           <div className={styles.label}>{this.props.t('Date')}</div>
           <div className={styles.value}>
-            { this.props.value.timestamp ?
+            { this.props.transaction.timestamp ?
               <span>
                 <DateFromTimestamp
-                  time={this.props.value.timestamp} /> - <TimeFromTimestamp
-                  time={this.props.value.timestamp}/>
+                  time={this.props.transaction.timestamp} /> - <TimeFromTimestamp
+                  time={this.props.transaction.timestamp}/>
               </span> :
               <span>{this.props.t('Pending')}</span>
             }
@@ -63,17 +63,17 @@ class TransactionsDetailView extends React.Component {
         <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.column}`}>
           <div className={styles.label}>{this.props.t('Recipient')}</div>
           {
-            this.props.value.recipientId ?
+            this.props.transaction.recipientId ?
               <figure className={styles.accountVisual}>
-                <AccountVisual address={this.props.value.recipientId} size={43} />
+                <AccountVisual address={this.props.transaction.recipientId} size={43} />
               </figure> : null
           }
           <div className={styles.value}>
             {
-              this.props.value.recipientId ?
+              this.props.transaction.recipientId ?
                 <Link className={`${styles.addressLink} ${styles.clickable}`} id='receiver-address'
-                  to={`${routes.explorer.path}${routes.accounts.path}/${this.props.value.recipientId}`}>
-                  {this.props.value.recipientId}
+                  to={`${routes.explorer.path}${routes.accounts.path}/${this.props.transaction.recipientId}`}>
+                  {this.props.transaction.recipientId}
                 </Link> : '-'
             }
           </div>
@@ -84,15 +84,15 @@ class TransactionsDetailView extends React.Component {
         <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.column}`}>
           <div className={styles.label}>{this.props.t('Sender')}</div>
           {
-            this.props.value.senderId ?
+            this.props.transaction.senderId ?
               <figure className={styles.accountVisual}>
-                <AccountVisual address={this.props.value.senderId} size={43} />
+                <AccountVisual address={this.props.transaction.senderId} size={43} />
               </figure> : null
           }
           <div className={`${styles.value} ${styles.sender} `}>
             <Link className={`${styles.addressLink} ${styles.clickable}`} id='sender-address'
-              to={`${routes.explorer.path}${routes.accounts.path}/${this.props.value.senderId}`}>
-              {this.props.value.senderId}
+              to={`${routes.explorer.path}${routes.accounts.path}/${this.props.transaction.senderId}`}>
+              {this.props.transaction.senderId}
             </Link>
           </div>
         </div>
@@ -130,8 +130,8 @@ class TransactionsDetailView extends React.Component {
                   <header>
                     <h2 className={styles.title}>
                       <TransactionType
-                        {...this.props.value}
-                        address={this.props.value.senderId}
+                        {...this.props.transaction}
+                        address={this.props.transaction.senderId}
                         showTransaction />
                     </h2>
                   </header>
@@ -140,16 +140,16 @@ class TransactionsDetailView extends React.Component {
           }
           {this.getFirstRow(isDelegateVote)}
           {
-            this.props.value.type === 0 ?
+            this.props.transaction.type === 0 ?
               <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
                 <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
                   <div className={styles.label}>{this.props.t('Date')}</div>
                   <div className={styles.value}>
-                    { this.props.value.timestamp ?
+                    { this.props.transaction.timestamp ?
                       <span>
                         <DateFromTimestamp
-                          time={this.props.value.timestamp} /> - <TimeFromTimestamp
-                          time={this.props.value.timestamp}/>
+                          time={this.props.transaction.timestamp} /> - <TimeFromTimestamp
+                          time={this.props.transaction.timestamp}/>
                       </span> :
                       <span>{this.props.t('Pending')}</span>
                     }
@@ -157,7 +157,7 @@ class TransactionsDetailView extends React.Component {
                 </div>
                 <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
                   {
-                    this.props.value.type === 0 ?
+                    this.props.transaction.type === 0 ?
                       <div>
                         <div className={styles.label}>{this.props.t('Amount (LSK)')}</div>
                         <div className={`${styles.value} ${styles.amount}`}><Amount {...this.props}></Amount></div>
@@ -166,8 +166,8 @@ class TransactionsDetailView extends React.Component {
                         <div className={styles.label}>{this.props.t('Type')}</div>
                         <div className={styles.value}>
                           <TransactionType
-                            {...this.props.value}
-                            address={this.props.value.senderId} />
+                            {...this.props.transaction}
+                            address={this.props.transaction.senderId} />
                         </div>
                       </div>
                   }
@@ -175,7 +175,7 @@ class TransactionsDetailView extends React.Component {
               </div> : ''
           }
           {
-            this.props.value.amount === 0 ?
+            this.props.transaction.amount === 0 ?
               <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
                 <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
                   <div className={styles.label}>{this.props.t('Added votes')}</div>
@@ -191,12 +191,12 @@ class TransactionsDetailView extends React.Component {
           <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
             <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
               <div className={styles.label}>{this.props.t('Additional fee')}</div>
-              <div className={styles.value}><LiskAmount val={this.props.value.fee} /></div>
+              <div className={styles.value}><LiskAmount val={this.props.transaction.fee} /></div>
             </div>
             <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
               <div className={styles.label}>{this.props.t('Confirmations')}</div>
               <div className={styles.value}>
-                <span>{this.props.value.confirmations}</span>
+                <span>{this.props.transaction.confirmations}</span>
               </div>
             </div>
           </div>
@@ -204,8 +204,8 @@ class TransactionsDetailView extends React.Component {
             {this.props.prevStep && <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
               <div className={styles.label}>{this.props.t('Transaction ID')}</div>
               <div className={styles.value}><CopyToClipboard
-                value={this.props.value.id}
-                text={this.props.value.id}
+                value={this.props.transaction.id}
+                text={this.props.transaction.id}
                 copyClassName={`${styles.copy}`} /></div>
             </div>}
             <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
@@ -220,7 +220,6 @@ class TransactionsDetailView extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  transaction: state.transaction,
   peers: state.peers,
 });
 
