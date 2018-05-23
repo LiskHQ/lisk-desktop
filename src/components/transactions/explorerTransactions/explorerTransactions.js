@@ -17,7 +17,7 @@ class ExplorerTransactions extends React.Component {
           activePeer: this.props.activePeer,
           address: this.props.address,
           limit: 25,
-          filter: this.props.activeFitler,
+          filter: this.props.activeFilter,
         });
       } else {
         this.props.searchUpdateLast({
