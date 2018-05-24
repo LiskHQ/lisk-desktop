@@ -90,6 +90,11 @@ class MainMenu extends React.Component {
         route: `${routes.sidechains.path}`,
         id: 'sidechains',
         image: menuLogos.sidechains,
+      }, {
+        label: t('Settings'),
+        route: `${routes.setting.path}`,
+        id: 'settings',
+        image: menuLogos.settings,
       },
     ];
 
