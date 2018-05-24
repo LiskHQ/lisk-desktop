@@ -17,10 +17,17 @@ import routes from './../../constants/routes';
 class TransactionsDetailView extends React.Component {
   constructor(props) {
     super(props);
-    if (props.peers.data && !props.transaction.id) {
+
+    const { search } = this.props.location || window.location;
+    const params = new URLSearchParams(search);
+    const transactionId = params.get('id');
+
+    if (props.peers.data &&
+      !props.transaction.id &&
+      transactionId) {
       this.props.loadTransaction({
         activePeer: props.peers.data,
-        id: this.props.transaction.id,
+        id: transactionId,
       });
     }
   }

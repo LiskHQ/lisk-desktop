@@ -60,7 +60,7 @@ Feature: Explorer page
     When I fill in "4401082358022424760L" to "search input" field
     And I click "input search button"
     Then I click on "transactions row" element no. 2
-    Then I should see 33 instances of "voter address"
+    Then I should see 2 instances of "voter address"
     When I click "explorer" menu
     When I fill in "2581762640681118072L" to "search input" field
     And I click "input search button"
