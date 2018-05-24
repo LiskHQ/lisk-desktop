@@ -3,7 +3,7 @@ Feature: Onboarding
     Given I go to "/"
     And I wait 1 seconds
     Then I should see no "joyride-tooltip__header"
-
+  
   Scenario: should start onboarding automatically
     Given I'm logged in as "genesis"
     And I wait 0.4 seconds
@@ -40,12 +40,9 @@ Feature: Onboarding
     And I click "joyride-tooltip__button--primary"
     Then I should see no "joyride-tooltip__header"
 
-    When I click "more menu"
-    And I click 1 item in setting carousel
-    And I wait 0.4 seconds
+    When I go to "/setting"
     And I click "advancedMode"
-    And I click 3 item in setting carousel
-    And I wait 0.4 seconds
+    And I wait 0.1 seconds
     And I click "onboarding-setting"
     Then I should see text "Welcome to Lisk Hub" in "joyride-tooltip__header" element
 

@@ -1,98 +1,84 @@
 @import '../app/variables.css';
 
 :root {
-  --setting-background-color: var(--color-grayscale-medium);
-  --secondPassphrase-background-color: var(--color-grayscale-light);
-  --secondPassphrase-color: var(--color-grayscale-dark);
+  --secondPassphrase-color: var(--color-primary-standard);
   --carousel-nav-background-color: #3c506b;
   --slide-header-font: var(--heading-font);
   --secured-account-color: var(--color-success-dark);
-  --check-box-height: 48px;
-  --check-box-width: 95px;
+  --check-box-height: 35px;
+  --check-box-width: 65px;
+  --check-box-font-size: 23px;
 }
 
 .wrapper {
   position: relative;
-}
-
-.carousel {
-  background: var(--setting-background-color);
-  color: var(--color-white);
-  text-align: center;
-
-  & > div {
-    min-height: 200px;
-    padding: 4vh 0; /* stylelint-disable-line */
-
-    & h5 {
-      font-family: var(--slide-header-font);
-      font-size: 16px;
-      color: var(--color-white);
-      letter-spacing: 0;
-      margin: 26px 0 0;
-    }
-
-    & p {
-      margin-bottom: 48px;
-    }
-  }
-}
-
-.carouselNav {
-  display: block;
-  width: 100%;
-  margin: 5px 0;
-  text-align: center;
-  list-style: none;
+  display: flex;
+  flex-direction: row;
   padding: 0;
-  position: absolute;
-  z-index: 9;
-  bottom: 30px;
-  left: 0;
+  box-sizing: border-box;
 
-  & li {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    opacity: 0.3;
-    margin: 4px;
-    border-radius: 100%;
-    background: var(--carousel-nav-background-color);
-    cursor: pointer;
+  & > aside {
+    display: flex;
+    flex: 0 0 30%;
+    height: 100%;
+    background: #f5f8fc;
+    padding: 40px 30px;
+    justify-content: space-between;
+    flex-direction: column;
+    box-sizing: border-box;
+
+    & h4 {
+      margin-top: 0;
+    }
+  }
+
+  & > section {
+    flex: 1;
+    background: #fff;
+    overflow: auto;
+    padding: 40px 50px;
+    justify-content: space-between;
   }
 }
 
-.activeSlide {
-  opacity: 1 !important;
+.item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
 }
 
 .sliderInput {
+  width: auto;
+
   & label {
-    height: var(--check-box-height) !important;
-    line-height: var(--check-box-height) !important;
-    width: var(--check-box-width) !important;
-    background: var(--color-grayscale-dark) !important;
-    display: inline-block !important;
+    height: var(--check-box-height);
+    line-height: var(--check-box-height);
+    width: var(--check-box-width);
+    background: var(--color-grayscale-light);
+    display: inline-block;
   }
 
   & span.circle {
-    background: var(--color-primary-dark) !important;
-    width: var(--check-box-height) !important;
+    background: var(--gradient-action-blue);
+    width: var(--check-box-height);
 
     &.goal,
     &.begin {
-      background: transparent !important;
+      background: transparent;
     }
 
     & span {
-      width: 100% !important;
+      width: 100%;
+      font-size: var(--check-box-font-size);
     }
   }
 
   & input[type='radio'],
   & input[type='checkbox'] {
     &:checked + label .button {
-      transform: translateX(calc(-1 * var(--check-box-height))) !important;
+      transform: translateX(calc(-1 * var(--check-box-height)));
     }
   }
 }
@@ -101,9 +87,7 @@
 .secondPassphraseEnabled {
   height: var(--check-box-height);
   line-height: var(--check-box-height);
-  width: var(--check-box-width);
-  background: var(--secondPassphrase-background-color);
-  border-radius: 31px;
+  min-width: var(--check-box-width);
   color: var(--secondPassphrase-color);
   font-family: var(--slide-header-font);
   font-weight: var(--font-weight-bold);
@@ -113,11 +97,10 @@
   text-decoration: none;
   display: inline-block;
   padding-top: 2px;
+  text-align: center;
 }
 
 .secondPassphraseEnabled {
-  color: var(--secondPassphrase-background-color);
-  background: var(--secondPassphrase-color);
   cursor: default;
 }
 
@@ -125,11 +108,10 @@
   font-family: var(--slide-header-font);
   font-weight: var(--font-weight-bold);
   font-size: 16px;
-  background: var(--color-grayscale-light);
-  color: var(--color-grayscale-dark);
-  border-radius: 25px;
+  color: var(--secondPassphrase-color);
+  background: transparent;
   line-height: 43px;
-  padding: 5px 28px 0px;
+  padding: 5px 0px 0px;
   border: none;
   cursor: pointer;
 
@@ -138,31 +120,26 @@
   }
 }
 
-@media (--medium-viewport) {
-  .wrapper {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    background: var(--setting-background-color);
-    display: flex;
-    left: -100%;
-    transition: all linear 300ms;
-    margin: 0;
+.currencyList {
+  list-style: none;
+  font-family: var(--slide-header-font);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-grayscale-light);
+  padding: 0;
+
+  & li {
+    margin-right: 16px;
+    font-size: 16px;
+    display: inline-block;
+    cursor: pointer;
+
+    &:last-child {
+      margin-right: 0;
+    }
 
     &.active {
-      left: 0;
+      color: var(--color-grayscale-dark);
     }
-  }
-
-  .carousel {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-  }
-
-  .carouselNav {
-    bottom: 70px;
   }
 }
 
@@ -170,24 +147,10 @@
   .wrapper {
     position: relative;
     margin-bottom: 62px;
-    left: 0;
-    height: 250px;
+    flex-direction: column;
   }
 
   .carouselNav {
     bottom: 20px;
-  }
-}
-
-@media (--xSmall-viewport) {
-  .wrapper {
-    position: absolute;
-    margin-bottom: 62px;
-    left: -100%;
-    height: 100%;
-  }
-
-  .carouselNav {
-    bottom: 70px;
   }
 }

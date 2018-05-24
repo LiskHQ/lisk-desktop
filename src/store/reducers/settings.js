@@ -4,6 +4,7 @@ import actionTypes from '../../constants/actions';
 const initialState = JSON.parse(localStorage.getItem('settings')) || {
   advancedMode: false,
   autoLog: true,
+  onBoarding: localStorage.getItem('onboarding') !== 'false',
 };
 
 /**
