@@ -1,14 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import ReactSwipe from 'react-swipe';
-import styles from './setting.css';
+// import ReactSwipe from 'react-swipe';
 import Checkbox from '../toolbox/sliderCheckbox';
+import styles from './setting.css';
 import i18n from '../../i18n';
 import accountConfig from '../../constants/account';
 import breakpoints from './../../constants/breakpoints';
 // TODO: will be re-enabled when the functionality is updated
 import routes from '../../constants/routes';
 import { FontIcon } from '../fontIcon';
+import Box from '../box';
 // import languageSwitcherTheme from './languageSwitcher.css';
 
 class Setting extends React.Component {
@@ -49,33 +50,49 @@ class Setting extends React.Component {
 
   render() {
     this.language = (i18n.language === 'de');
-    const showSetting = this.props.showSetting ? styles.active : '';
-    const { t, settings, settingsUpdated, hasSecondPassphrase, toggleMenu,
-      startOnboarding } = this.props;
-    return <footer className={`${styles.wrapper} ${showSetting}`}>
-      <ReactSwipe
-        className={styles.carousel}
-        ref={(reactSwipe) => { this.reactSwipe = reactSwipe; }}
-        swipeOptions={{
-          stopPropagation: true,
-          continuous: false,
-          transitionEnd: index => this.changeSlide(index),
-        }}>
-        <div>
-          <Checkbox
-            theme={styles}
-            className={`${styles.smallSlider} advancedMode`}
-            onChange={() => settingsUpdated({ advancedMode: !settings.advancedMode })}
-            input={{
-              value: true,
-              checked: settings.advancedMode,
-            }}/>
-          <article>
-            <h5>{t('Delegate features')}</h5>
-            <p>{t('Delegate section will be displayed.')}</p>
-          </article>
+    const { t, settings, settingsUpdated,
+      hasSecondPassphrase } = this.props;
+
+    return (<Box className={styles.wrapper}>
+      <aside>
+        <header>
+          <h4>{t('Settings')}</h4>
+          <p>{t('Set up Lisk Hub and your account.')}</p>
+        </header>
+        {this.showOnboardingSetting()
+          ? <div className={`${styles.item} onBoarding`}>
+            <label>{t('Start the onboarding')}</label>
+            <button className={`${styles.settingsButton} onboarding-setting`} onClick={() => {
+              this.props.settingsUpdated({ onBoarding: true });
+            }
+            }>
+              {t('Start')}
+              <FontIcon>arrow-right</FontIcon>
+            </button>
+          </div>
+          : null
+        }
+      </aside>
+      <section>
+        <h4>{t('Security')}</h4>
+        <div className={styles.item}>
+          <label>{t('2nd passphrase (Fee: 5 LSK)')}</label>
+          {!hasSecondPassphrase ?
+            <Link
+              className={`register-second-passphrase ${styles.secondPassphrase}`}
+              to={`${routes.secondPassphrase.path}`}>
+              {t('Register')}
+              <FontIcon>arrow-right</FontIcon>
+            </Link> :
+            <span
+              className={`register-second-passphrase ${styles.secondPassphraseEnabled}`}>
+              {t('Registered')}
+              <FontIcon>checkmark</FontIcon>
+            </span>
+          }
         </div>
-        <div>
+        <div className={styles.item}>
+          <label>{t('Auto-Lock')}</label>
           <Checkbox
             theme={styles}
             className={`${styles.smallSlider} autoLog`}
@@ -84,43 +101,29 @@ class Setting extends React.Component {
               value: true,
               checked: settings.autoLog,
             }}/>
-          <article>
-            <h5>{t('Auto-Lock')}</h5>
-            <p>{t('Lock ID’s automatically after 10 minutes.')}</p>
-          </article>
         </div>
-        {this.showOnboardingSetting()
-          ? <div>
-            <button className={`${styles.settingsButton} onboarding-setting`} onClick={() => {
-              toggleMenu();
-              startOnboarding();
-            }
-            }>{t('Start')}</button>
-            <article>
-              <h5>{t('Start the onboarding')}</h5>
-              <p>{t('Take a quick tour to see how the Lisk Hub works.')}</p>
-            </article>
+        <h4>{t('Advanced features')}</h4>
+        <div className={styles.item}>
+          <label>{t('Delegate features')}</label>
+          <Checkbox
+            theme={styles}
+            className={`${styles.smallSlider} advancedMode`}
+            onChange={() => settingsUpdated({ advancedMode: !settings.advancedMode })}
+            input={{
+              value: true,
+              checked: settings.advancedMode,
+            }}/>
+        </div>
+        {/* TODO: will be re-enabled when the functionality is updated
+          <h4>{t('Local')}</h4>
+          <div className={styles.item}>
+            <label>{t('Currency')}</label>
+            <ul className={styles.currencyList}>
+              <li className={styles.active}>USD</li>
+              <li>EUR</li>
+            </ul>
           </div>
-          : null
-        }
-        <div>
-          {!hasSecondPassphrase ?
-            <Link
-              className={`register-second-passphrase ${styles.secondPassphrase}`}
-              to={`${routes.secondPassphrase.path}`}
-              onClick={toggleMenu}>
-              {t('Add')}
-            </Link> :
-            <span
-              className={`register-second-passphrase ${styles.secondPassphraseEnabled}`}>
-              <FontIcon>checkmark</FontIcon>
-            </span>
-          }
-          <article>
-            <h5>{t('Security')}</h5>
-            <p>{t('Register 2nd passphrase')}</p>
-          </article>
-        </div>
+        */}
         {/* TODO: will be re-enabled when the functionality is updated
         {/* TODO: will be re-enabled when the functionality is updated
         <div>
@@ -145,17 +148,8 @@ class Setting extends React.Component {
           </article>
         </div>
         */}
-      </ReactSwipe>
-      <ul className={ styles.carouselNav } id='carouselNav'>
-        {[...Array(this.showOnboardingSetting() ? 4 : 3)].map((x, i) =>
-          <li
-            key={i}
-            className={(i === this.state.activeSlide) ? styles.activeSlide : ''}
-            onClick={this.changeSlide.bind(this, i)}>
-          </li>,
-        )}
-      </ul>
-    </footer>;
+      </section>
+    </Box>);
   }
 }
 

@@ -12,7 +12,6 @@ describe('MenuBar', () => {
   };
 
   props.menuToggle = () => { props.menuStatus = !props.menuStatus; };
-  props.settingToggle = () => { props.settingStatus = !props.settingStatus; };
 
   /**
    * Clicks on the given element in Component
@@ -30,21 +29,6 @@ describe('MenuBar', () => {
   it('should call menuToggle when menuButton called', () => {
     wrapper = mount(<MenuBar {...props} />);
     const buttonSelector = '.menu-button';
-    expect(getClassList(buttonSelector)).to.include('expand');
-    // clicking on menu shows the close button
-    clickAndUpdate(buttonSelector);
-    expect(getClassList(buttonSelector)).to.include('close');
-
-    // the second click reverts to initial state
-    clickAndUpdate(buttonSelector);
-    expect(getClassList(buttonSelector)).to.include('expand');
-  });
-
-  it('should call settingStatus when setting button called', () => {
-    // only if the menu is shown
-    const buttonSelector = 'span.setting';
-    props.menuStatus = true;
-    wrapper = mount(<MenuBar {...props} />);
     expect(getClassList(buttonSelector)).to.include('expand');
     // clicking on menu shows the close button
     clickAndUpdate(buttonSelector);

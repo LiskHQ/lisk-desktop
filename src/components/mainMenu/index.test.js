@@ -53,7 +53,7 @@ describe('MainMenuHOC', () => {
     expect(wrapper.find('MainMenu')).to.have.lengthOf(1);
   });
 
-  it('should mount 5 Tab inside MainMenu', () => {
-    expect(wrapper.find('Tab')).to.have.lengthOf(5);
+  it('should mount 6 Tab inside MainMenu', () => {
+    expect(wrapper.find('Tab')).to.have.lengthOf(6);
   });
 });

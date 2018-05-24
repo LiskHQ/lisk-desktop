@@ -17,6 +17,8 @@ describe('Onboarding Component', () => {
     appLoaded: true,
     isAuthenticated: true,
     showDelegates: false,
+    start: true,
+    settingsUpdated: () => true,
   };
 
   describe('Without advanced settings', () => {
@@ -24,7 +26,6 @@ describe('Onboarding Component', () => {
       joyrideComponentWillReceiveProps = spy(Joyride.prototype, 'componentWillReceiveProps');
       joyrideReset = spy(Joyride.prototype, 'reset');
       joyrideNext = spy(Joyride.prototype, 'next');
-
       wrapper = mount(<Onboarding {...props} />);
     });
 
@@ -40,6 +41,8 @@ describe('Onboarding Component', () => {
     });
 
     it('goes through the onboarding', () => {
+      // const settingsUpdated = spy();
+      // wrapper.setProps({ settingsUpdated });
       expect(joyrideNext).to.not.have.been.calledWith();
       wrapper.find(Joyride).props().callback({ index: 0 });
       expect(joyrideNext).to.have.been.calledWith();
@@ -63,6 +66,8 @@ describe('Onboarding Component', () => {
       expect(joyrideReset).to.not.have.been.calledWith();
       wrapper.find(Joyride).props().callback({ type: 'finished' });
       expect(joyrideReset).to.have.been.calledWith();
+      // expect(settingsUpdated).to.have.been.calledWith({ onBoarding: false });
+      // settingsUpdated.restore();
     });
   });
 

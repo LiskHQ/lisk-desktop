@@ -53,7 +53,6 @@ describe('Setting', () => {
     settings,
     t,
     toggleMenu: sinon.spy(),
-    startOnboarding: sinon.spy(),
     isAuthenticated: true,
   };
 
@@ -76,28 +75,14 @@ describe('Setting', () => {
     // i18n.changeLanguage('en');
   });
 
-  it('should render "ReactSwipe" component', () => {
-    expect(wrapper.find('ReactSwipe').exists()).to.equal(true);
-  });
-
-  it('should click on #carouselNav li change the slider', () => {
-    wrapper.find('#carouselNav li').at(1).simulate('click');
-    wrapper.update();
-    clock.tick(500);
-    wrapper.update();
-    expect(wrapper.find('#carouselNav li').at(1).props().className).to.be.include('activeSlide');
-  });
-
   it('should change advanceMode setting when clicking on checkbox', () => {
     wrapper.find('.advancedMode').at(0).find('input').simulate('change', { target: { checked: false, value: false } });
     clock.tick(300);
   });
 
   it('should show the onboarding setting when authenticated and not on mobile', () => {
-    expect(wrapper.find('#carouselNav li')).to.have.length(4);
     wrapper.find('button').props().onClick();
-    expect(props.toggleMenu).to.have.been.calledWith();
-    expect(props.startOnboarding).to.have.been.calledWith();
+    expect(props.settingsUpdated).to.have.been.calledWith();
   });
 
   it('should not show the onboarding setting when on mobile', () => {
@@ -107,7 +92,7 @@ describe('Setting', () => {
         {...props}
       />
     </Router>, options);
-    expect(wrapper.find('#carouselNav li')).to.have.length(3);
+    expect(wrapper.find('.onBoarding')).to.have.length(0);
   });
 
   it('should not show the onboarding setting when not authenticated', () => {
@@ -117,7 +102,7 @@ describe('Setting', () => {
         {...props}
       />
     </Router>, options);
-    expect(wrapper.find('#carouselNav li')).to.have.length(3);
+    expect(wrapper.find('.onBoarding')).to.have.length(0);
   });
 
   it.skip('should click on .autoLog update the setting', () => {

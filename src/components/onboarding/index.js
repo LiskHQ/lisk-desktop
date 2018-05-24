@@ -6,17 +6,16 @@ import throttle from 'lodash.throttle';
 import { FontIcon } from '../fontIcon';
 import { steps } from './steps';
 import breakpoints from './../../constants/breakpoints';
+import { settingsUpdated } from '../../actions/settings';
 
 class Onboarding extends React.Component {
   constructor(props) {
     super(props);
 
     this.onboardingStarted = false;
-    this.isAlreadyOnboarded = window.localStorage.getItem('onboarding') === 'false';
 
     this.state = {
       isDesktop: window.innerWidth > breakpoints.m,
-      start: false,
       intro: true,
       skip: false,
       steps: [],
@@ -31,7 +30,6 @@ class Onboarding extends React.Component {
   }
 
   componentDidMount() {
-    this.props.onRef(this);
     window.addEventListener('resize', throttle(this.resizeWindow.bind(this), 1000));
 
     if (this.props.appLoaded) {
@@ -59,11 +57,10 @@ class Onboarding extends React.Component {
   }
 
   reset() {
-    this.isAlreadyOnboarded = true;
     this.onboardingStarted = false;
     this.onboardingFinished = false;
     this.joyride.reset(true);
-    this.setState({ start: false, intro: true, skip: false });
+    this.setState({ intro: true, skip: false });
   }
 
   onboardingCallback(data) {
@@ -95,18 +92,17 @@ class Onboarding extends React.Component {
     if (onboardingFinished) {
       if (this.onboardingFinished) this.reset();
       this.onboardingFinished = true;
-      window.localStorage.setItem('onboarding', 'false');
+      this.props.settingsUpdated({ onBoarding: false });
+      // window.localStorage.setItem('onboarding', 'false');
     }
   }
 
   render() {
-    const { isDesktop, start, skip, intro } = this.state;
-    if (!isDesktop && start) this.setState({ start: false });
-
+    const { isDesktop, skip, intro } = this.state;
     return <Joyride
       ref={(el) => { this.joyride = el; }}
       steps={this.state.steps}
-      run={this.props.isAuthenticated && isDesktop && (start || !this.isAlreadyOnboarded)}
+      run={this.props.isAuthenticated && this.props.start && isDesktop}
       locale={{
         last: (<span>{this.props.t('Complete')}</span>),
         skip: skip ? <span>{this.props.t('Use Lisk Hub')}</span> : <span>{this.props.t('Click here to skip')}</span>,
@@ -122,11 +118,14 @@ class Onboarding extends React.Component {
   }
 }
 
-
+const mapDispatchToProps = dispatch => ({
+  settingsUpdated: data => dispatch(settingsUpdated(data)),
+});
 const mapStateToProps = state => ({
   isAuthenticated: !!state.account.publicKey,
   showDelegates: state.settings.advancedMode,
+  start: state.settings.onBoarding,
 });
 
 export { Onboarding };
-export default connect(mapStateToProps)(translate()(Onboarding));
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(Onboarding));
