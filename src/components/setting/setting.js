@@ -114,14 +114,16 @@ class Setting extends React.Component {
               checked: settings.advancedMode,
             }}/>
         </div>
-        <h4>{t('Local')}</h4>
-        <div className={styles.item}>
-          <label>{t('Currency')}</label>
-          <ul className={styles.currencyList}>
-            <li className={styles.active}>USD</li>
-            <li>EUR</li>
-          </ul>
-        </div>
+        {/* TODO: will be re-enabled when the functionality is updated
+          <h4>{t('Local')}</h4>
+          <div className={styles.item}>
+            <label>{t('Currency')}</label>
+            <ul className={styles.currencyList}>
+              <li className={styles.active}>USD</li>
+              <li>EUR</li>
+            </ul>
+          </div>
+        */}
         {/* TODO: will be re-enabled when the functionality is updated
         {/* TODO: will be re-enabled when the functionality is updated
         <div>
