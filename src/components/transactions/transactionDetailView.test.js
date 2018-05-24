@@ -25,13 +25,14 @@ describe('TransactionDetailView', () => {
       prevStep: spy(),
       t: () => {},
       transaction: {
+        type: txTypes.send,
+        amount: 0,
         senderId: '',
         recipientId: '',
         timestamp: '',
         fee: '',
         confirmations: '',
         id: '',
-        amount: 100,
       },
       match: { params: {} },
       history: { push: () => {}, location: { search: '' } },
@@ -39,22 +40,20 @@ describe('TransactionDetailView', () => {
     const wrapper = mountWithContext(<TransactionDetailView {...props} />, context);
     const expectedValue = /flexboxgrid__row/g;
     const html = wrapper.html();
-    expect(html.match(expectedValue)).to.have.lengthOf(4);
+    expect(html.match(expectedValue)).to.have.lengthOf(6);
     wrapper.find('.transaction-details-back-button').simulate('click');
     expect(props.prevStep).to.have.been.calledWith();
   });
 
   it('should display 2 voter-address Links', () => {
     const transaction = {
-      value: {
-        type: txTypes.send,
-      },
       senderId: '',
       recipientId: '',
       timestamp: '',
       fee: '',
       confirmations: '',
       id: '',
+      type: txTypes.send,
       amount: 0,
     };
     const context = {

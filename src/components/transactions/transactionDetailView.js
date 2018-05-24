@@ -160,7 +160,12 @@ class TransactionsDetailView extends React.Component {
                     this.props.transaction.type === 0 ?
                       <div>
                         <div className={styles.label}>{this.props.t('Amount (LSK)')}</div>
-                        <div className={`${styles.value} ${styles.amount}`}><Amount {...this.props}></Amount></div>
+                        <div className={`${styles.value} ${styles.amount}`}>
+                          <Amount
+                            value={this.props.transaction}
+                            address={this.props.address}>
+                          </Amount>
+                        </div>
                       </div> :
                       <div>
                         <div className={styles.label}>{this.props.t('Type')}</div>
