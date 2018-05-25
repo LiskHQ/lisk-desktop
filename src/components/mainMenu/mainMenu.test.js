@@ -119,7 +119,7 @@ describe('MainMenu', () => {
     const wrapper = mount(<MemoryRouter>
       <MainMenu {...props} />
     </MemoryRouter>, options);
-    wrapper.find('.more-menu').simulate('click');
+    wrapper.find('.menu-button').simulate('click');
     clock.tick(100);
     wrapper.update();
     expect(wrapper.find('Drawer').props().active).to.be.equal(true);
