@@ -1,39 +1,37 @@
 import React from 'react';
 import thunk from 'redux-thunk';
 import { spy } from 'sinon';
+import { mount } from 'enzyme';
 import { expect } from 'chai';
-import * as transactions from '../../actions/transactions';
-import * as account from '../../actions/account';
-import { mountWithContext } from './../../../test/utils/mountHelpers';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { prepareStore } from '../../../test/utils/applicationInit';
+import * as search from '../../actions/search';
+import peersReducer from '../../store/reducers/peers';
+import accountReducer from '../../store/reducers/account';
+import searchReducer from '../../store/reducers/search';
+import loadingReducer from '../../store/reducers/loading';
+
 import AccountTransactions from './index';
+import i18n from '../../i18n';
 import accounts from '../../../test/constants/accounts';
 
 describe('AccountTransaction Component', () => {
   let wrapper;
   let props;
-  let accountVotesFetchedSpy;
-  let accountVotersFetchedSpy;
-  let loadTransactionsSpy;
+  let searchTransactionsSpy;
+  let searchAccountSpy;
 
-
-  const storeState = {
-    peers: { data: { options: {} } },
-    account: {
-      address: accounts.genesis.address,
-    },
-    transactions: {
-      account: { balance: 0 },
-      pending: [],
-      confirmed: [],
-    },
-    loading: [],
-    search: {},
-  };
+  const store = prepareStore({
+    peers: peersReducer,
+    account: accountReducer,
+    search: searchReducer,
+    loading: loadingReducer,
+  }, [thunk]);
 
   beforeEach(() => {
-    loadTransactionsSpy = spy(transactions, 'loadTransactions');
-    accountVotesFetchedSpy = spy(account, 'accountVotesFetched');
-    accountVotersFetchedSpy = spy(account, 'accountVotersFetched');
+    searchTransactionsSpy = spy(search, 'searchTransactions');
+    searchAccountSpy = spy(search, 'searchAccount');
 
     props = {
       match: { params: { address: accounts.genesis.address } },
@@ -41,22 +39,24 @@ describe('AccountTransaction Component', () => {
       t: key => key,
     };
 
-    wrapper = mountWithContext(<AccountTransactions {...props} />,
-      { storeState, middlewares: [thunk] });
+    wrapper = mount(<Provider store={store}>
+      <Router>
+        <AccountTransactions {...props} i18n={i18n}/>
+      </Router>
+    </Provider>);
   });
 
   afterEach(() => {
-    accountVotesFetchedSpy.restore();
-    accountVotersFetchedSpy.restore();
-    loadTransactionsSpy.restore();
+    searchTransactionsSpy.restore();
+    searchAccountSpy.restore();
   });
 
-  it('updates transactions on address update', () => {
-    wrapper.setProps({ match: { params: { address: accounts['empty account'].address } } });
-
-    expect(loadTransactionsSpy).to.have.been.calledWith({
-      address: accounts['empty account'].address,
-      activePeer: storeState.peers.data,
-      publicKey: storeState.account.publicKey });
+  it('renders AccountTransaction Component and loads account transactions', () => {
+    const renderedAccountTransactions = wrapper.find(AccountTransactions);
+    expect(renderedAccountTransactions).to.be.present();
+    /* eslint-disable no-unused-expressions */
+    expect(searchTransactionsSpy).to.have.been.calledOnce;
+    expect(searchAccountSpy).to.have.been.calledOnce;
+    /* eslint-enable no-unused-expressions */
   });
 });

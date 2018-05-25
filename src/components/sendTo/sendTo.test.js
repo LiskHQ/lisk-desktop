@@ -13,9 +13,6 @@ describe('SendTo Component', () => {
     const account = {
       address: '12345L',
       isDelegate: true,
-      delegate: {
-        username: 'peter',
-      },
     };
     const store = configureMockStore([])({
       account,
@@ -23,8 +20,10 @@ describe('SendTo Component', () => {
       activePeerSet: () => {},
     });
     props = {
-      address: '12345L',
-      balance: 0,
+      account,
+      delegate: {
+        username: 'peter',
+      },
       t: key => key,
     };
     wrapper = mountWithContext(<SendTo {...props} store={store} />, {

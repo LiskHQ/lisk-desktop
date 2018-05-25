@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import Transactions from './../transactions';
+import WalletTransactions from './../transactions/walletTransactions';
 import Send from '../send';
 import styles from './transactionDasboard.css';
 
@@ -13,7 +13,7 @@ class TransactionsDashboard extends React.Component {
         <Send {...this.props}/>
       </div>
       <div className={`${grid['col-sm-12']} ${styles.transactions} ${grid['col-md-8']}`}>
-        <Transactions {...this.props} />
+        <WalletTransactions {...this.props} />
       </div>
     </div>;
   }

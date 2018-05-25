@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { TertiaryButton } from './../toolbox/buttons/button';
@@ -12,31 +11,6 @@ import routes from './../../constants/routes';
 import styles from './sendTo.css';
 
 class SendTo extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      account: {},
-      delegateUsername: null,
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.address === this.props.account.address) {
-      this.setState({
-        account: this.props.account,
-        delegateUsername: this.props.account.isDelegate ?
-          this.props.account.delegate.username : null,
-      });
-    } else if (nextProps.search.lastSearch) {
-      this.setState({
-        account: nextProps.search.accounts[nextProps.search.lastSearch],
-        delegateUsername: nextProps.search.delegates[nextProps.search.lastSearch] ?
-          nextProps.search.delegates[nextProps.search.lastSearch].username : null,
-      });
-    }
-  }
-
   render() {
     return (<Box className={`${styles.wrapper} ${grid.row}`}>
       <section className={styles.content}>
@@ -48,9 +22,9 @@ class SendTo extends React.Component {
       ${grid['middle-sm']}
       ${grid.row}
       `}>
-          {this.state.account.address ?
+          {this.props.account.address ?
             <AccountVisual
-              address={this.state.account.address}
+              address={this.props.account.address}
               size={144}
               sizeS={90}
               className={`
@@ -71,17 +45,17 @@ class SendTo extends React.Component {
               <span>
                 {
                   this.props.notLoading
-                    ? <LiskAmount val={this.state.account.balance}/>
+                    ? <LiskAmount val={this.props.account.balance}/>
                     : null
                 } <small className={styles.balanceUnit}>LSK</small>
               </span>
             </h2>
-            <CopyToClipboard value={this.state.account.address} className={`${styles.address}`} copyClassName={styles.copy} />
+            <CopyToClipboard value={this.props.account.address} className={`${styles.address}`} copyClassName={styles.copy} />
             {
-              this.state.delegateUsername ?
+              this.props.delegate.username ?
                 <div className={styles.delegateRow}>
                   {this.props.t('Delegate')}
-                  <span className={`${styles.delegateUsername} delegate-name`}>{this.state.delegateUsername}</span>
+                  <span className={`${styles.delegateUsername} delegate-name`}>{this.props.delegate.username}</span>
                 </div>
                 : null
             }
@@ -106,8 +80,5 @@ class SendTo extends React.Component {
     );
   }
 }
-const mapStateToProps = state => ({
-  account: state.account,
-  search: state.search,
-});
-export default connect(mapStateToProps)(SendTo);
+
+export default SendTo;

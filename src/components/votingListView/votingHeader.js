@@ -69,13 +69,16 @@ export class VotingHeaderRaw extends React.Component {
 
   render() {
     const { t, isDelegate } = this.props;
-    const titleDesktop = this.props.showChangeSummery ? 'Your selection' : 'Delegate List';
-    const titleMobile = this.props.showChangeSummery ? 'Your selection' : 'Voting';
+    const selectionTitle = t('Your selection');
+    const delegateTitle = t('Delegate List');
+    const votingTitle = t('Voting');
+    const titleDesktop = this.props.showChangeSummery ? selectionTitle : delegateTitle;
+    const titleMobile = this.props.showChangeSummery ? selectionTitle : votingTitle;
     return (
       <header className={`${styles.header} ${styles[this.state.headerPosition]}`}>
         <div>
-          <h2 className={styles.desktopTitle}>{t(titleDesktop)}</h2>
-          <h2 className={styles.mobileTitle}>{t(titleMobile)}</h2>
+          <h2 className={styles.desktopTitle}>{titleDesktop}</h2>
+          <h2 className={styles.mobileTitle}>{titleMobile}</h2>
         </div>
         {!isDelegate ?
           <Link to={`${routes.registerDelegate.path}`} className={`${styles.link} ${styles.registerLink} register-delegate`}>
