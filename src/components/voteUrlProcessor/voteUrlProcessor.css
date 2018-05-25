@@ -49,7 +49,7 @@
   }
 }
 
-.notFound{
+.notFound {
   color: var(--color-error);
 }
 
@@ -57,7 +57,7 @@
   color: var(--color-grayscale-medium);
 }
 
-.unvotes{
+.unvotes {
   color: var(--unvotes-color);
 }
 
