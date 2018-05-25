@@ -43,12 +43,6 @@ const search = (state = {
         lastSearch: action.data.address,
         searchResults: action.data.transactions,
       };
-    case actionTypes.searchUpdateLast :
-      return {
-        ...state,
-        lastSearch: action.data.address,
-        searchResults: state.transactions[action.data.address].transactions,
-      };
     case actionTypes.searchAccount :
       return {
         ...state,
