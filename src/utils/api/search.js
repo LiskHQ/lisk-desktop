@@ -17,9 +17,12 @@ export const getSearches = (search) => {
   allSearches = search.match(regex.address) ?
     [...allSearches, searchAddress(search)] :
     [...allSearches];
+  // if transaction match, we also add address promise, 
+  // (not complete txId can also be a valid address search)
   allSearches = search.match(regex.transactionId) ?
-    [...allSearches, searchTransaction(search)] :
+    [...allSearches, searchAddress(search), searchTransaction(search)] :
     [...allSearches];
+  // allways add delegates promise as they share format (address, tx)
   allSearches = [...allSearches, searchDelegate(search)];
   // eslint-disable-next-line no-confusing-arrow
   return allSearches;
@@ -27,16 +30,12 @@ export const getSearches = (search) => {
 
 const searchAll = ({ activePeer, search}) => {
   const promises = getSearches(search);
-  let results = {};
-  return promises.map(promise =>
-    promise.then((response) => {
-      results = { ...results, response };
-      return results;
-    }).catch((error) => {
-      results = { ...results, error };
-      return results;
-    }),
-  );
+  return new Promise((resolve, reject) =>
+    promises.map(promise =>
+      promise.catch((error => error)
+        .then(promiseResults => resolve(promiseResults))
+        .catch(error => reject(error)),
+      )));
 };
 
 export default searchAll;

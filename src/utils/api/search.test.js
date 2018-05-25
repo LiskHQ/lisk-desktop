@@ -33,17 +33,20 @@ describe.only('Utils: Search', () => {
     });
 
     it('should return {addresses,delegates} promises when only address pattern matched', () => {
-      const promises = searchAPI.default({ activePeer: {}, search: '1337L' });
-      expect(promises).to.have.length(2);
+      const promises = searchAPI.getSearches('1337L');
+      return expect(Promise.all(promises)).to.eventually.deep.equal([
+        { addresses: [] },
+        { delegates: [] },
+      ]);
     });
 
-    it.skip('should return {addresses,transactions,delegates} promises when only transaction pattern matched', () => {
-      const promises = searchAPI.default({ activePeer: {}, search: '1337' });
-      return expect(promises).to.eventually.equal({
-        addresses: [],
-        delegates: [],
-        transactions: [],
-      });
+    it('should return {addresses,transactions,delegates} promises when only transaction pattern matched', () => {
+      const promises = searchAPI.getSearches('1337');
+      return expect(Promise.all(promises)).to.eventually.deep.equal([
+        { addresses: [] },
+        { transactions: [] },
+        { delegates: [] },
+      ]);
     });
   });
 
