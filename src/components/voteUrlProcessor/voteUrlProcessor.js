@@ -42,11 +42,11 @@ export default class VoteUrlProcessor extends React.Component {
     const successMessages = {
       upvotes: {
         text: this.props.t('{{count}} delegate(s) selected to vote', { count: this.props.upvotes.length }),
-        icon: 'remove-circled',
+        icon: 'add-circled',
       },
       unvotes: {
         text: this.props.t('{{count}} delegate(s) selected to unvote', { count: this.props.unvotes.length }),
-        icon: 'add-circled',
+        icon: 'remove-circled',
       },
     };
 
@@ -68,7 +68,8 @@ export default class VoteUrlProcessor extends React.Component {
               this.props[list].length ? (
                 <div key={key} className={`${styles.block} ${list}-message`}>
                   <div className={`${styles.title}`}>
-                    <FontIcon value={errorMessages[list].icon} /> {errorMessages[list].text}
+                    <FontIcon className={styles[list]}
+                      value={errorMessages[list].icon} /> {errorMessages[list].text}
                   </div>
                   <div className={styles.votes}>{this.props[list].join(', ')}</div>
                 </div>
@@ -78,7 +79,8 @@ export default class VoteUrlProcessor extends React.Component {
               return this.props[list].length ? (
                 <div key={key} className={styles.block}>
                   <div className={`${styles.title}`}>
-                    <FontIcon value={successMessages[list].icon} /> {successMessages[list].text}
+                    <FontIcon className={styles[list]}
+                      value={successMessages[list].icon} /> {successMessages[list].text}
                   </div>
                   <div className={`${list}-message ${styles.votes}`}>{this.props[list].join(', ')}</div>
                 </div>
