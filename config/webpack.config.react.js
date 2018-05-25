@@ -110,6 +110,7 @@ module.exports = {
           'unit-whitelist': ['px', 'deg', '%', 'ms', 's'],
           'length-zero-no-unit': null,
           'at-rule-no-unknown': null,
+          'selector-no-vendor-prefix': true,
         },
       },
     }),
@@ -122,7 +123,7 @@ module.exports = {
       template: './src/index.html',
       VERSION: bundleVersion,
       inject: false,
-      inlineSource: '.(css)$',
+      // inlineSource: '.(css)$',
     }),
     new HtmlWebpackInlineSourcePlugin(),
     new I18nScannerPlugin({
