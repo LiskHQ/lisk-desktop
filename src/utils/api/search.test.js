@@ -1,26 +1,17 @@
 import { expect } from 'chai';
-import { mock, stub } from 'sinon';
+import { stub } from 'sinon';
 import * as searchAPI from './search';
 
-describe.only('Utils: Search', () => {
+describe('Utils: Search', () => {
   let searchAddressesStub;
   let searchDelegatesStub;
   let searchTransactionsStub;
 
-  beforeEach(() => {
-    searchAddressesStub = stub(searchAPI, 'searchAddress');
-    searchDelegatesStub = stub(searchAPI, 'searchDelegate');
-    searchTransactionsStub = stub(searchAPI, 'searchTransaction');
-  });
-
-  afterEach(() => {
-    searchAddressesStub.restore();
-    searchDelegatesStub.restore();
-    searchTransactionsStub.restore();
-  });
-
   describe('On all requests resolved', () => {
     beforeEach(() => {
+      searchAddressesStub = stub(searchAPI, 'searchAddresses');
+      searchDelegatesStub = stub(searchAPI, 'searchDelegates');
+      searchTransactionsStub = stub(searchAPI, 'searchTransactions');
       searchAddressesStub.returnsPromise().resolves({ addresses: [] });
       searchDelegatesStub.returnsPromise().resolves({ delegates: [] });
       searchTransactionsStub.returnsPromise().resolves({ transactions: [] });
@@ -50,8 +41,11 @@ describe.only('Utils: Search', () => {
     });
   });
 
-  describe.skip('On some requests failed', () => {
+  describe('On some requests failed', () => {
     beforeEach(() => {
+      searchAddressesStub = stub(searchAPI, 'searchAddresses');
+      searchDelegatesStub = stub(searchAPI, 'searchDelegates');
+      searchTransactionsStub = stub(searchAPI, 'searchTransactions');
       searchAddressesStub.returnsPromise().resolves({ addresses: [] });
       searchDelegatesStub.returnsPromise().resolves({ delegates: [] });
       searchTransactionsStub.returnsPromise().resolves({ transactions: [] });
@@ -64,23 +58,45 @@ describe.only('Utils: Search', () => {
     });
 
     it('should still return {delegates} promises when addresses request failure', () => {
-      searchAddressesStub.returnsPromise().rejects({ success: false });
-      const promises = searchAPI.default({ activePeer: {}, search: '1337L' });
-      return expect(promises).to.eventually.equal({
-        accounts: { success: false },
-        delegates: [],
-      });
+      searchAddressesStub.returnsPromise().rejects({ addresses: undefined });
+
+      return expect(searchAPI.resolveAll([
+        searchAPI.searchAddresses({}),
+        searchAPI.searchDelegates({}),
+        searchAPI.searchTransactions({}),
+      ])).to.eventually.deep.equal([
+        { addresses: undefined },
+        { delegates: [] },
+        { transactions: [] },
+      ]);
     });
 
     it('should still return {address,transactions} promises when delegates request failure', () => {
-      searchDelegatesStub.returnsPromise().rejects({ success: false });
-      const promises = searchAPI.default({ activePeer: {}, search: '1337L' });
+      searchDelegatesStub.returnsPromise().rejects({ delegates: undefined });
 
-      return expect(promises).to.eventually.equal({
-        addresses: [],
-        delegates: { success: false },
-        transactions: [],
-      });
+      return expect(searchAPI.resolveAll([
+        searchAPI.searchAddresses({}),
+        searchAPI.searchDelegates({}),
+        searchAPI.searchTransactions({}),
+      ])).to.eventually.deep.equal([
+        { addresses: [] },
+        { delegates: undefined },
+        { transactions: [] },
+      ]);
+    });
+
+    it('should still return {address,delegates} promises when transactions request failure', () => {
+      searchTransactionsStub.returnsPromise().rejects({ transactions: undefined });
+
+      return expect(searchAPI.resolveAll([
+        searchAPI.searchAddresses({}),
+        searchAPI.searchDelegates({}),
+        searchAPI.searchTransactions({}),
+      ])).to.eventually.deep.equal([
+        { addresses: [] },
+        { delegates: [] },
+        { transactions: undefined },
+      ]);
     });
   });
 });

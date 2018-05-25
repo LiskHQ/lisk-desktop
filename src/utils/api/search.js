@@ -2,40 +2,50 @@ import requestToActivePeer from './peers';
 import regex from './../../utils/regex';
 
 
-export const searchAddress = ({ activePeer, search }) => new Promise((resolve, reject) => {
+export const searchAddresses = ({ activePeer, search }) => new Promise((resolve, reject) => {
   resolve({ addresses: [] });
 });
-export const searchDelegate = ({ activePeer, search }) => new Promise((resolve, reject) => {
+export const searchDelegates = ({ activePeer, search }) => new Promise((resolve, reject) => {
   resolve({ delegates: [] });
 });
-export const searchTransaction = ({ activePeer, search }) => new Promise((resolve, reject) => {
+export const searchTransactions = ({ activePeer, search }) => new Promise((resolve, reject) => {
   resolve({ transactions: [] });
 });
 
 export const getSearches = (search) => {
   let allSearches = [];
   allSearches = search.match(regex.address) ?
-    [...allSearches, searchAddress(search)] :
+    [...allSearches, searchAddresses(search)] :
     [...allSearches];
   // if transaction match, we also add address promise, 
   // (not complete txId can also be a valid address search)
   allSearches = search.match(regex.transactionId) ?
-    [...allSearches, searchAddress(search), searchTransaction(search)] :
+    [...allSearches, searchAddresses(search), searchTransactions(search)] :
     [...allSearches];
   // allways add delegates promise as they share format (address, tx)
-  allSearches = [...allSearches, searchDelegate(search)];
-  // eslint-disable-next-line no-confusing-arrow
+  allSearches = [...allSearches, searchDelegates(search)];
   return allSearches;
 };
 
+export const resolveAll = (promises) => {
+  const nonFailingPromises = promises.map((promise) => {
+    const catchedPromise = promise.catch ?
+      promise.catch(error => error) :
+      promise;
+    return catchedPromise;
+  });
+
+  return new Promise((resolve, reject) => {
+    Promise.all(nonFailingPromises)
+      .then(result => resolve(result))
+      .catch(error => reject(error));
+  });
+};
+
+
 const searchAll = ({ activePeer, search}) => {
   const promises = getSearches(search);
-  return new Promise((resolve, reject) =>
-    promises.map(promise =>
-      promise.catch((error => error)
-        .then(promiseResults => resolve(promiseResults))
-        .catch(error => reject(error)),
-      )));
+  return resolveAll(promises);
 };
 
 export default searchAll;
