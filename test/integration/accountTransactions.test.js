@@ -230,13 +230,6 @@ describe('@integration: Account Transactions', () => {
     step('Then I should see 20 transaction rows as result of the address 123L', () => helper.shouldSeeCountInstancesOf(20, 'TransactionRow'));
   });
 
-  describe('Scenario: allows to see details of an account transaction', () => {
-    step('Given I\'m on "accounts/123L" with no account', () => setupStep({ address: '123L' }));
-    step('Then I should see 20 transaction rows as result of the address 123L', () => helper.shouldSeeCountInstancesOf(20, 'TransactionRow'));
-    step('When I click on a transaction row', () => helper.clickOnElement('.transactions-row'));
-    step('Then I should be able to see the details of that transaction', () => helper.shouldSeeCountInstancesOf(1, '.transactions-detail-view'));
-  });
-
   describe('Scenario: allows to load more cache transactions of an account', () => {
     step('Given I\'m on "accounts/123L" with no account', () => setupStep({ address: '123L' }));
     step('Then I should see 20 transaction rows as result of the address 123L', () => helper.shouldSeeCountInstancesOf(20, 'TransactionRow'));
