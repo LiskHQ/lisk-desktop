@@ -45,10 +45,9 @@ class WalletTransactions extends React.Component {
       filter,
     });
   }
-
   onTransactionRowClick(props) {
     this.props.history.push(`${routes.wallet.path}?id=${props.value.id}`);
-  };
+  }
 
   render() {
     const overviewProps = {
