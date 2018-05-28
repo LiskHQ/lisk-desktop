@@ -3,6 +3,7 @@ import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
 import { FontIcon } from '../fontIcon';
 import { visitAndSaveSearchOnEnter, visitAndSaveSearch } from './../search/keyAction';
+import AutoSuggest from './../autoSuggest';
 import routes from './../../constants/routes';
 import styles from './searchBar.css';
 
@@ -31,7 +32,6 @@ class Search extends React.Component {
     return pathname.includes('explorer') && !pathname.includes(`${routes.explorer.path}${routes.search.path}`);
   }
 
-
   select() {
     this.searchInput.select();
   }
@@ -50,6 +50,7 @@ class Search extends React.Component {
         value={this.state.searchItem}
         onChange={(e) => { this.setState({ searchItem: e.target.value }); }}
       />
+      <AutoSuggest history={this.props.history} />
     </div>);
   }
 }
