@@ -74,9 +74,9 @@ describe('@integration: Account Transactions', () => {
     countLinks(expectedNumber) {
       expect(this.wrapper.find('.voters Link')).to.have.length(expectedNumber);
     }
-    clickOnTransaction() {
-      this.wrapper.find('.transactions-row').first().simulate('click');
-      expect(explorerTransactionsProps.history.push).to.have.been.calledWith(`${routes.accounts.pathPrefix}${routes.accounts.path}/123L?id=123456`);
+    // eslint-disable-next-line class-methods-use-this
+    checkRedirectionToDetails(address, transactionId) {
+      expect(explorerTransactionsProps.history.push).to.have.been.calledWith(`${routes.accounts.pathPrefix}${routes.accounts.path}/${address}?id=${transactionId}`);
     }
   }
 
@@ -211,7 +211,8 @@ describe('@integration: Account Transactions', () => {
   describe('Scenario: should allow to view transactions details of any account', () => {
     step('Given I\'m on "accounts/123L" as "genesis" account', () => setupStep({ accountType: 'genesis', address: '123L' }));
     step('Then I should see 20 transaction rows as result of the address 123L', () => helper.shouldSeeCountInstancesOf(20, 'TransactionRow'));
-    step('When I click on a transaction row, I should be redirected to transactoinDetails step', () => helper.clickOnTransaction());
+    step('When I click on a transaction row', () => helper.clickOnElement('.transactions-row'));
+    step('Then I should be redirected to transactoinDetails step', () => helper.checkRedirectionToDetails('123L', '123456'));
   });
 
   describe('Scenario: should allow to filter transactions', () => {

@@ -53,9 +53,9 @@ class Helper extends GenericStepDefinition {
       .to.have.lengthOf(1);
   }
 
-  clickOnTransaction() {
-    this.wrapper.find('.transactions-row').first().simulate('click');
-    expect(walletTransactionsProps.history.push).to.have.been.calledWith(`${routes.wallet.path}?id=123456`);
+  // eslint-disable-next-line class-methods-use-this
+  checkRedirectionToDetails(transactionId) {
+    expect(walletTransactionsProps.history.push).to.have.been.calledWith(`${routes.wallet.path}?id=${transactionId}`);
   }
 }
 
@@ -362,7 +362,8 @@ describe('@integration: Wallet', () => {
       step('Then I should see 50 rows', () => helper.shouldSeeCountInstancesOf(50, 'TransactionRow'));
       step('When I scroll to the bottom of "transactions box"', () => { wrapper.find('Waypoint').props().onEnter(); });
       step('Then I should see 75 rows', () => { wrapper.update(); helper.shouldSeeCountInstancesOf(75, 'TransactionRow'); });
-      step('When I click on a transaction row, I should be redirected to transactoinDetails step', () => helper.clickOnTransaction());
+      step('When I click on a transaction row', () => helper.clickOnElement('.transactions-row'));
+      step('Then I should be redirected to transactoinDetails step', () => helper.checkRedirectionToDetails('123456'));
     });
 
     describe.skip('Scenario: should allow to filter transactions', () => {
