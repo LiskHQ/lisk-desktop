@@ -52,7 +52,11 @@ describe('actions: transactions', () => {
     let accountApiMock;
     let delegateApiMock;
     const data = {
-      activePeer: {},
+      activePeer: {
+        options: {
+          name: 'Mainnet',
+        },
+      },
       address: '15626650747375562521',
       limit: 20,
       offset: 0,

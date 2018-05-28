@@ -95,9 +95,8 @@ export const loadTransaction = ({ activePeer, id }) =>
       .then((response) => {
         const added = (response.transaction.votes && response.transaction.votes.added) || [];
         const deleted = (response.transaction.votes && response.transaction.votes.deleted) || [];
-        const localStorageDelegates = loadDelegateCache(activePeer.options.address
-          || activePeer.options.name);
-
+        const localStorageDelegates = activePeer.options &&
+          loadDelegateCache(activePeer.options.address || activePeer.options.name);
         deleted.forEach((publicKey) => {
           const address = extractAddress(publicKey);
           const storedDelegate = localStorageDelegates[address];
