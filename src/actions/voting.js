@@ -3,7 +3,7 @@ import {
   listDelegates,
   vote,
 } from '../utils/api/delegate';
-import { updateDelegates } from '../utils/delegates';
+import { updateDelegateCache } from '../utils/delegates';
 import { passphraseUsed } from './account';
 import Fees from '../constants/fees';
 import actionTypes from '../constants/actions';
@@ -147,7 +147,7 @@ export const delegatesFetched = ({ activePeer, q, offset, refresh }) =>
         q,
       },
     ).then(({ delegates, totalCount }) => {
-      updateDelegates(delegates, activePeer.currentPeer);
+      updateDelegateCache(delegates, activePeer.options.address || activePeer.options.name);
       dispatch(delegatesAdded({ list: delegates, totalDelegates: totalCount, refresh }));
     });
   };

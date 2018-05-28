@@ -1,7 +1,8 @@
 
 import localJSONStorage from './localJSONStorage';
+import networks from '../constants/networks';
 
-export const updateDelegates = (delegates, network = 'mainet') => {
+export const updateDelegateCache = (delegates, network = networks.mainnet.name) => {
   const savedDelegates = localJSONStorage.get(network, {});
   const formatedDelegates = delegates.reduce((delegate, { address, publicKey, username }) => {
     delegate[address] = { publicKey, username };
@@ -12,4 +13,5 @@ export const updateDelegates = (delegates, network = 'mainet') => {
   localJSONStorage.set(network, updatedDelegates);
 };
 
-export default updateDelegates;
+export const loadDelegateCache = (network = networks.mainnet.name) =>
+  localJSONStorage.get(network, {});

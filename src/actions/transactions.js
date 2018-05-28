@@ -2,7 +2,7 @@ import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../utils/loading';
 import { transactions, transaction, unconfirmedTransactions } from '../utils/api/account';
 import { getDelegate } from '../utils/api/delegate';
-import localJSONStorage from '../utils/localJSONStorage';
+import { loadDelegateCache } from '../utils/delegates';
 import { extractAddress } from '../utils/account';
 import { loadAccount } from './account';
 
@@ -95,13 +95,20 @@ export const loadTransaction = ({ activePeer, id }) =>
       .then((response) => {
         const added = (response.transaction.votes && response.transaction.votes.added) || [];
         const deleted = (response.transaction.votes && response.transaction.votes.deleted) || [];
-        const localStorageDelegates = localJSONStorage.get(activePeer.currentPeer, {});
+        const localStorageDelegates = loadDelegateCache(activePeer.options.address
+          || activePeer.options.name);
 
         deleted.forEach((publicKey) => {
           const address = extractAddress(publicKey);
-          if (localStorageDelegates[address]) {
+          const storedDelegate = localStorageDelegates[address];
+          if (storedDelegate) {
             dispatch({
-              data: { delegate: { username: localStorageDelegates[address].username, address }, voteArrayName: 'deleted' },
+              data: {
+                delegate: {
+                  username: storedDelegate.username,
+                  address,
+                },
+                voteArrayName: 'deleted' },
               type: actionTypes.transactionAddDelegateName,
             });
           } else {
