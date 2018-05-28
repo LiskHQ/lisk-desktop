@@ -3,7 +3,7 @@ import { stub } from 'sinon';
 import searchAll from './search';
 import * as peersAPI from './peers';
 
-describe.only('Utils: Search', () => {
+describe('Utils: Search', () => {
   let peersAPIStub;
 
   const accountsResponse = { account: { address: '1337L' } };
@@ -45,19 +45,17 @@ describe.only('Utils: Search', () => {
     peersAPIStub.restore();
   });
 
-  it('should search {addresses,delegates} when only address pattern matched', () => {
-    return expect(searchAll({ search: '1337L' })).to.eventually.deep.equal([
+  it('should search {addresses,delegates} when only address pattern matched', () =>
+    expect(searchAll({ search: '1337L' })).to.eventually.deep.equal([
       { addresses: [accountsResponse.account] },
       { delegates: delegatesResponse.delegates },
-    ]);
-  });
+    ]));
 
-  it('should search {transactions,delegates} when only transaction pattern matched', () => {
-    return expect(searchAll({ search: '1337' })).to.eventually.deep.equal([
+  it('should search {transactions,delegates} when only transaction pattern matched', () =>
+    expect(searchAll({ search: '1337' })).to.eventually.deep.equal([
       { transactions: [transactionsResponse.transaction] },
       { delegates: delegatesResponse.delegates },
-    ]);
-  });
+    ]));
 
   it('should still search for {addresses} when failing {delegates} request', () => {
     peersAPIStub.withArgs(undefined, 'delegates/search', delegatesUrlParams).returnsPromise().rejects({ success: false });

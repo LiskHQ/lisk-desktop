@@ -1,27 +1,24 @@
 import { requestToActivePeer } from './peers';
 import regex from './../../utils/regex';
 
-export const searchAddresses = ({ activePeer, search }) => new Promise((resolve, reject) => {
-  return requestToActivePeer(activePeer, 'accounts', {
+export const searchAddresses = ({ activePeer, search }) => new Promise((resolve, reject) =>
+  requestToActivePeer(activePeer, 'accounts', {
     address: search,
   }).then(response => resolve({ addresses: [response.account] }))
-    .catch(() => reject({ addresses: [] }));
-});
+    .catch(() => reject({ addresses: [] })));
 
-export const searchDelegates = ({ activePeer, search }) => new Promise((resolve, reject) => {
-  return requestToActivePeer(activePeer, 'delegates/search', {
+export const searchDelegates = ({ activePeer, search }) => new Promise((resolve, reject) =>
+  requestToActivePeer(activePeer, 'delegates/search', {
     q: search,
     orderBy: 'username:asc',
   }).then(response => resolve({ delegates: response.delegates }))
-    .catch(() => reject({ delegates: [] }));
-});
+    .catch(() => reject({ delegates: [] })));
 
-export const searchTransactions = ({ activePeer, search }) => new Promise((resolve, reject) => {
-  return requestToActivePeer(activePeer, 'transactions/get', {
+export const searchTransactions = ({ activePeer, search }) => new Promise((resolve, reject) =>
+  requestToActivePeer(activePeer, 'transactions/get', {
     id: search,
   }).then(response => resolve({ transactions: [response.transaction] }))
-    .catch(() => reject({ transactions: [] }));
-});
+    .catch(() => reject({ transactions: [] })));
 
 export const getSearches = (search) => {
   let allSearches = [];
@@ -47,7 +44,7 @@ export const resolveAll = (activePeer, apiCalls, search) => {
   });
 };
 
-const searchAll = ({ activePeer, search}) => {
+const searchAll = ({ activePeer, search }) => {
   const apiCalls = getSearches(search);
   return resolveAll(activePeer, apiCalls, search);
 };
