@@ -2,7 +2,7 @@ import thunk from 'redux-thunk';
 import { step } from 'mocha-steps';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import { stub, match } from 'sinon';
+import { stub, match, spy } from 'sinon';
 
 import * as peers from '../../src/utils/api/peers';
 import * as accountAPI from '../../src/utils/api/account';
@@ -28,6 +28,9 @@ import Wallet from '../../src/components/transactionDashboard';
 import accounts from '../constants/accounts';
 import GenericStepDefinition from '../utils/genericStepDefinition';
 import txFilters from './../../src/constants/transactionFilters';
+import routes from './../../src/constants/routes';
+
+let walletTransactionsProps;
 
 class Helper extends GenericStepDefinition {
   checkSelectedFilter(filter) {
@@ -49,6 +52,11 @@ class Helper extends GenericStepDefinition {
       .filterWhere(item => item.prop('value') === `lisk://wallet?recipient=${address}&amount=1`))
       .to.have.lengthOf(1);
   }
+
+  // eslint-disable-next-line class-methods-use-this
+  checkRedirectionToDetails(transactionId) {
+    expect(walletTransactionsProps.history.push).to.have.been.calledWith(`${routes.wallet.path}?id=${transactionId}`);
+  }
 }
 
 describe('@integration: Wallet', () => {
@@ -66,7 +74,7 @@ describe('@integration: Wallet', () => {
   const errorMessage = 'An error occurred while creating the transaction.';
 
   const generateTransactions = (n) => {
-    const transactionExample = { senderId: 'sample_address', receiverId: 'some_address', type: txTypes.send };
+    const transactionExample = { senderId: 'sample_address', receiverId: 'some_address', type: txTypes.send, id: '123456' };
     const transactions = new Array(n);
     transactions.fill(transactionExample);
     return transactions;
@@ -121,7 +129,19 @@ describe('@integration: Wallet', () => {
     store.dispatch(accountsRetrieved());
     store.dispatch(accountLoggedIn(account));
 
-    wrapper = mount(renderWithRouter(Wallet, store, { history: { location: { search: '' } } }));
+    const history = {
+      location: {
+        search: '',
+        pathname: '',
+      },
+      push: spy(),
+    };
+
+    wrapper = mount(renderWithRouter(Wallet, store, { history }));
+
+    walletTransactionsProps = wrapper.find('WalletTransactions').props();
+    walletTransactionsProps.history.push = spy();
+
     helper = new Helper(wrapper, store);
   };
 
@@ -342,6 +362,8 @@ describe('@integration: Wallet', () => {
       step('Then I should see 50 rows', () => helper.shouldSeeCountInstancesOf(50, 'TransactionRow'));
       step('When I scroll to the bottom of "transactions box"', () => { wrapper.find('Waypoint').props().onEnter(); });
       step('Then I should see 75 rows', () => { wrapper.update(); helper.shouldSeeCountInstancesOf(75, 'TransactionRow'); });
+      step('When I click on a transaction row', () => helper.clickOnElement('.transactions-row'));
+      step('Then I should be redirected to transactoinDetails step', () => helper.checkRedirectionToDetails('123456'));
     });
 
     describe.skip('Scenario: should allow to filter transactions', () => {

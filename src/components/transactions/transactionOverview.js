@@ -112,10 +112,10 @@ class TransactionsOverview extends React.Component {
             transactions={this.props.transactions}
             loadMore={this.loadMore.bind(this)}
             nextStep={this.props.nextStep}
-            onClick={this.props.nextStep}
             loading={this.isLoading()}
             t={this.props.t}
             history={this.props.history}
+            onClick={props => this.props.onTransactionRowClick(props)}
           />
         }
         {
