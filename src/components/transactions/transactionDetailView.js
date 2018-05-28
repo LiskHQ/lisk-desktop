@@ -14,11 +14,19 @@ import LiskAmount from '../liskAmount';
 import Amount from './amount';
 import routes from './../../constants/routes';
 
-const TransactionsDetailViewField = ({ value, label }) =>
-  <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
+const TransactionsDetailViewField = ({ value, label, style, children, column }) =>
+  <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${column ? styles.column : styles.columnNarrow}`}>
     <div className={styles.label}>{label}</div>
-    <div className={styles.value}>{value}</div>
+    {children}
+    <div className={`${styles.value} ${style}`}>{value}</div>
   </div>;
+
+const TransactionsDetailViewRow = ({ children, condition }) => (
+  (condition === null || condition === false) ? null :
+    <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
+      {children}
+    </div>);
+
 class TransactionsDetailView extends React.Component {
   constructor(props) {
     super(props);
@@ -64,45 +72,42 @@ class TransactionsDetailView extends React.Component {
   }
 
   getFirstRow(isDelegateVote) {
-    const secondColumn = isDelegateVote ? this.getDateField() : (
-      <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.column}`}>
-        <div className={styles.label}>{this.props.t('Recipient')}</div>
-        {
-          this.props.transaction.recipientId ?
-            <figure className={styles.accountVisual}>
-              <AccountVisual address={this.props.transaction.recipientId} size={43} />
-            </figure> : null
-        }
-        <div className={styles.value}>
-          {
-            this.props.transaction.recipientId ?
-              <Link className={`${styles.addressLink} ${styles.clickable}`} id='receiver-address'
-                to={`${routes.explorer.path}${routes.accounts.path}/${this.props.transaction.recipientId}`}>
-                {this.props.transaction.recipientId}
-              </Link> : '-'
-          }
-        </div>
-      </div>
-    );
     return (
-      <div className={`transactions-detail-view ${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
-        <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.column}`}>
-          <div className={styles.label}>{this.props.t('Sender')}</div>
-          {
-            this.props.transaction.senderId ?
-              <figure className={styles.accountVisual}>
-                <AccountVisual address={this.props.transaction.senderId} size={43} />
-              </figure> : null
-          }
-          <div className={`${styles.value} ${styles.sender} `}>
+      <TransactionsDetailViewRow>
+        <TransactionsDetailViewField
+          label={this.props.t('Sender')}
+          value={
             <Link className={`${styles.addressLink} ${styles.clickable}`} id='sender-address'
               to={`${routes.explorer.path}${routes.accounts.path}/${this.props.transaction.senderId}`}>
               {this.props.transaction.senderId}
             </Link>
-          </div>
-        </div>
-        {secondColumn}
-      </div>
+          }
+          column>
+          {this.props.transaction.senderId ?
+            <figure className={styles.accountVisual}>
+              <AccountVisual address={this.props.transaction.senderId} size={43} />
+            </figure> : null}
+        </TransactionsDetailViewField>
+        {isDelegateVote ? this.getDateField() :
+          <TransactionsDetailViewField
+            label={this.props.t('Recipient')}
+            style={styles.sender}
+            value={
+              this.props.transaction.recipientId ?
+                <Link className={`${styles.addressLink} ${styles.clickable}`} id='receiver-address'
+                  to={`${routes.explorer.path}${routes.accounts.path}/${this.props.transaction.recipientId}`}>
+                  {this.props.transaction.recipientId}
+                </Link> : '-'
+            }
+            column>
+            {this.props.transaction.recipientId ?
+              <figure className={styles.accountVisual}>
+                <AccountVisual address={this.props.transaction.recipientId} size={43} />
+              </figure> : null
+            }
+          </TransactionsDetailViewField>
+        }
+      </TransactionsDetailViewRow>
     );
   }
 
@@ -128,58 +133,53 @@ class TransactionsDetailView extends React.Component {
             </header> : null
         }
         <div>
-          {
-            !this.props.match.params.id ?
-              <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
-                <div className={`${grid['col-xs-12']} ${grid['col-sm-7']} ${grid['col-md-7']} ${styles.columnNarrow}`}>
-                  <header>
-                    <h2 className={styles.title}>
-                      <TransactionType
-                        {...this.props.transaction}
-                        address={this.props.transaction.senderId}
-                        showTransaction />
-                    </h2>
-                  </header>
-                </div>
-              </div> : null
-          }
+          <TransactionsDetailViewRow condition={!this.props.match.params.id}>
+            <div className={`${grid['col-xs-12']} ${grid['col-sm-7']} ${grid['col-md-7']} ${styles.columnNarrow}`}>
+              <header>
+                <h2 className={styles.title}>
+                  <TransactionType
+                    {...this.props.transaction}
+                    address={this.props.transaction.senderId}
+                    showTransaction />
+                </h2>
+              </header>
+            </div>
+          </TransactionsDetailViewRow>
+
           {this.getFirstRow(isDelegateVote)}
-          {
-            this.props.transaction.type === 0 ?
-              <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
-                {this.getDateField()}
-                <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
-                  {
-                    <div>
-                      <div className={styles.label}>{this.props.t('Amount (LSK)')}</div>
-                      <div className={`${styles.value} ${styles.amount}`}>
-                        <Amount
-                          value={this.props.transaction}
-                          address={this.props.address}>
-                        </Amount>
-                      </div>
-                    </div>
-                  }
-                </div>
-              </div> : ''
-          }
-          {
-            this.props.transaction.amount === 0 ?
-              <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
-                <TransactionsDetailViewField label={this.props.t('Added votes')} value={addedVoters} />
-                <TransactionsDetailViewField label={this.props.t('Removed votes')} value={deletedVoters} />
-              </div>
-              : null
-          }
-          <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
+
+          <TransactionsDetailViewRow condition={this.props.transaction.type === 0}>
+            {this.getDateField()}
+            <TransactionsDetailViewField
+              label={this.props.t('Amount (LSK)')}
+              value={
+                <Amount
+                  value={this.props.transaction}
+                  address={this.props.address}>
+                </Amount>
+              }
+              style={styles.amount} />
+          </TransactionsDetailViewRow>
+
+          <TransactionsDetailViewRow condition={this.props.transaction.amount === 0}>
+            <TransactionsDetailViewField
+              label={this.props.t('Added votes')}
+              value={addedVoters} />
+            <TransactionsDetailViewField
+              label={this.props.t('Removed votes')}
+              value={deletedVoters} />
+          </TransactionsDetailViewRow>
+
+          <TransactionsDetailViewRow>
             <TransactionsDetailViewField
               label={this.props.t('Additional fee')}
               value={<LiskAmount val={this.props.transaction.fee} />} />
             <TransactionsDetailViewField
               label={this.props.t('Confirmations')}
               value={<span>{this.props.transaction.confirmations}</span>} />
-          </div>
-          <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
+          </TransactionsDetailViewRow>
+
+          <TransactionsDetailViewRow>
             {this.props.prevStep &&
               <TransactionsDetailViewField
                 label={this.props.t('Transaction ID')}
@@ -190,9 +190,8 @@ class TransactionsDetailView extends React.Component {
                     copyClassName={`${styles.copy}`} />
                 } />
             }
-            <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
-            </div>
-          </div>
+            <TransactionsDetailViewField label='' value='' />
+          </TransactionsDetailViewRow>
         </div>
         <footer>
         </footer>
