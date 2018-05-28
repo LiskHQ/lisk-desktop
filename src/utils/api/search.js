@@ -3,15 +3,24 @@ import regex from './../../utils/regex';
 
 
 export const searchAddresses = ({ activePeer, search }) => new Promise((resolve, reject) => {
+
+  console.log(activePeer, 'accounts', { address: search });
   requestToActivePeer(activePeer, 'accounts', { address: search })
-    .then(response => ({ addresses: response.account }))
-    .catch(() => ({ addresses: undefined }));
+    .then(response => resolve({ addresses: response.account }))
+    .catch(() => reject({ addresses: undefined }));
 });
 export const searchDelegates = ({ activePeer, search }) => new Promise((resolve, reject) => {
-  resolve({ delegates: [] });
+  requestToActivePeer(activePeer, 'delegates/search', {
+    q: search,
+    orderBy: 'username:asc',
+  }).then(response => resolve({ delegates: response.delegates }))
+    .catch(() => reject({ delegates: undefined }));
 });
 export const searchTransactions = ({ activePeer, search }) => new Promise((resolve, reject) => {
-  resolve({ transactions: [] });
+  requestToActivePeer(activePeer, 'transactions/get', {
+    id: search,
+  }).then(response => resolve({ transactions: response.transaction }))
+    .catch(() => reject({ transactions: undefined }));
 });
 
 export const getSearches = (search) => {

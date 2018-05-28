@@ -1,102 +1,89 @@
 import { expect } from 'chai';
-import { stub } from 'sinon';
-import * as searchAPI from './search';
+import { stub, match } from 'sinon';
+import searchAll from './search';
+import * as peersAPI from './peers';
 
-describe('Utils: Search', () => {
-  let searchAddressesStub;
-  let searchDelegatesStub;
-  let searchTransactionsStub;
+describe.only('Utils: Search', () => {
+  let peersAPIStub;
 
-  describe('On all requests resolved', () => {
-    beforeEach(() => {
-      searchAddressesStub = stub(searchAPI, 'searchAddresses');
-      searchDelegatesStub = stub(searchAPI, 'searchDelegates');
-      searchTransactionsStub = stub(searchAPI, 'searchTransactions');
-      searchAddressesStub.returnsPromise().resolves({ addresses: [] });
-      searchDelegatesStub.returnsPromise().resolves({ delegates: [] });
-      searchTransactionsStub.returnsPromise().resolves({ transactions: [] });
-    });
+  const accountsResponse = { account: { address: '1337L' } };
+  const accountsUrlParams = accountsResponse.account;
 
-    afterEach(() => {
-      searchAddressesStub.restore();
-      searchDelegatesStub.restore();
-      searchTransactionsStub.restore();
-    });
+  const delegatesResponse = { delegates: [{ username: '1337', rank: 18 }, { username: '1337l', rank: 19 }] };
+  const delegatesUrlParams = {
+    q: '1337L',
+    orderBy: 'username:asc',
+  };
 
-    it('should return {addresses,delegates} promises when only address pattern matched', () => {
-      const promises = searchAPI.getSearches('1337L');
-      return expect(Promise.all(promises)).to.eventually.deep.equal([
-        { addresses: [] },
-        { delegates: [] },
-      ]);
-    });
+  const transactionsResponse = { transaction: { id: '1337' } };
+  const transactionsUrlParams = {
+    id: '1337',
+  };
 
-    it('should return {addresses,transactions,delegates} promises when only transaction pattern matched', () => {
-      const promises = searchAPI.getSearches('1337');
-      return expect(Promise.all(promises)).to.eventually.deep.equal([
-        { addresses: [] },
-        { transactions: [] },
-        { delegates: [] },
-      ]);
-    });
+  beforeEach(() => {
+    peersAPIStub = stub(peersAPI, 'requestToActivePeer');
+    peersAPIStub.withArgs(match.any, 'accounts', accountsUrlParams).returnsPromise().resolves(accountsResponse);
+    peersAPIStub.withArgs(match.any, 'delegaets/search', delegatesUrlParams).returnsPromise().resolves(delegatesResponse);
+    peersAPIStub.withArgs(match.any, 'transactions/get', transactionsUrlParams).returnsPromise().resolves(transactionsResponse);
   });
 
-  describe('On some requests failed', () => {
-    beforeEach(() => {
-      searchAddressesStub = stub(searchAPI, 'searchAddresses');
-      searchDelegatesStub = stub(searchAPI, 'searchDelegates');
-      searchTransactionsStub = stub(searchAPI, 'searchTransactions');
-      searchAddressesStub.returnsPromise().resolves({ addresses: [] });
-      searchDelegatesStub.returnsPromise().resolves({ delegates: [] });
-      searchTransactionsStub.returnsPromise().resolves({ transactions: [] });
-    });
+  afterEach(() => {
+    peersAPIStub.restore();
+  });
 
-    afterEach(() => {
-      searchAddressesStub.restore();
-      searchDelegatesStub.restore();
-      searchTransactionsStub.restore();
-    });
+  it('should return {addresses,delegates} promises when only address pattern matched', () => {
+    return expect(searchAll({ search: '1337L' })).to.eventually.deep.equal([
+      { addresses: [accountsResponse] },
+      { delegates: delegatesResponse.delegates },
+    ]);
+  });
 
-    it('should still return {delegates} promises when addresses request failure', () => {
-      searchAddressesStub.returnsPromise().rejects({ addresses: undefined });
+  it('should return {addresses,transactions,delegates} promises when only transaction pattern matched', () => {
+    return expect(searchAll({ search: '1337' })).to.eventually.deep.equal([
+      { addresses: [] },
+      { transactions: [] },
+      { delegates: [] },
+    ]);
+  });
 
-      return expect(searchAPI.resolveAll([
-        searchAPI.searchAddresses({}),
-        searchAPI.searchDelegates({}),
-        searchAPI.searchTransactions({}),
-      ])).to.eventually.deep.equal([
-        { addresses: undefined },
-        { delegates: [] },
-        { transactions: [] },
-      ]);
-    });
+  it.skip('should still return {delegates} promises when addresses request failure', () => {
 
-    it('should still return {address,transactions} promises when delegates request failure', () => {
-      searchDelegatesStub.returnsPromise().rejects({ delegates: undefined });
+    return expect(searchAPI.resolveAll([
+      searchAPI.searchAddresses({}),
+      searchAPI.searchDelegates({}),
+      searchAPI.searchTransactions({}),
+    ])).to.eventually.deep.equal([
+      { addresses: undefined },
+      { delegates: [] },
+      { transactions: [] },
+    ]);
+  });
 
-      return expect(searchAPI.resolveAll([
-        searchAPI.searchAddresses({}),
-        searchAPI.searchDelegates({}),
-        searchAPI.searchTransactions({}),
-      ])).to.eventually.deep.equal([
-        { addresses: [] },
-        { delegates: undefined },
-        { transactions: [] },
-      ]);
-    });
+  it.skip('should still return {address,transactions} promises when delegates request failure', () => {
+    searchDelegatesStub.returnsPromise().rejects({ delegates: undefined });
 
-    it('should still return {address,delegates} promises when transactions request failure', () => {
-      searchTransactionsStub.returnsPromise().rejects({ transactions: undefined });
+    return expect(searchAPI.resolveAll([
+      searchAPI.searchAddresses({}),
+      searchAPI.searchDelegates({}),
+      searchAPI.searchTransactions({}),
+    ])).to.eventually.deep.equal([
+      { addresses: [] },
+      { delegates: undefined },
+      { transactions: [] },
+    ]);
+  });
 
-      return expect(searchAPI.resolveAll([
-        searchAPI.searchAddresses({}),
-        searchAPI.searchDelegates({}),
-        searchAPI.searchTransactions({}),
-      ])).to.eventually.deep.equal([
-        { addresses: [] },
-        { delegates: [] },
-        { transactions: undefined },
-      ]);
-    });
+  it.skip('should still return {address,delegates} promises when transactions request failure', () => {
+    searchTransactionsStub.returnsPromise().rejects({ transactions: undefined });
+
+    return expect(searchAPI.resolveAll([
+      searchAPI.searchAddresses({}),
+      searchAPI.searchDelegates({}),
+      searchAPI.searchTransactions({}),
+    ])).to.eventually.deep.equal([
+      { addresses: [] },
+      { delegates: [] },
+      { transactions: undefined },
+    ]);
   });
 });
