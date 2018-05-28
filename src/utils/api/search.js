@@ -1,9 +1,11 @@
-import requestToActivePeer from './peers';
+import { requestToActivePeer } from './peers';
 import regex from './../../utils/regex';
 
 
 export const searchAddresses = ({ activePeer, search }) => new Promise((resolve, reject) => {
-  resolve({ addresses: [] });
+  requestToActivePeer(activePeer, 'accounts', { address: search })
+    .then(response => ({ addresses: response.account }))
+    .catch(() => ({ addresses: undefined }));
 });
 export const searchDelegates = ({ activePeer, search }) => new Promise((resolve, reject) => {
   resolve({ delegates: [] });
