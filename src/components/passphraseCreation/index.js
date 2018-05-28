@@ -11,7 +11,7 @@ class PassphraseCreation extends React.Component {
       address: null,
       headingClass: '',
     };
-    this.isTouchDevice = false;
+    this.isTouchDevice = checkDevice();
     this.lastCaptured = {
       x: 0,
       y: 0,
@@ -21,7 +21,6 @@ class PassphraseCreation extends React.Component {
   }
 
   addEventListener() {
-    this.isTouchDevice = checkDevice(this.props.agent);
     const eventName = this.isTouchDevice ? 'devicemotion' : 'mousemove';
     window.addEventListener(eventName, this.eventNormalizer, true);
   }
@@ -44,8 +43,6 @@ class PassphraseCreation extends React.Component {
       const time = new Date();
 
       const throttle = time - this.lastCaptured.time > Math.random() * 500;
-      console.log('time', time, this.lastCaptured.time);
-
       const deviceIsTilting = (Math.abs(x) > 10 || Math.abs(y) > 10)
         && (deltaX > 10 || deltaY > 10);
 
