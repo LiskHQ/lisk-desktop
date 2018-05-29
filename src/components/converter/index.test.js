@@ -11,9 +11,12 @@ import Converter from './index';
 describe('Converter', () => {
   let explorereApiMock;
   let wrapper;
+  const storage = {};
 
   beforeEach(() => {
     explorereApiMock = sinon.stub(liskServiceApi, 'getPriceTicker').returnsPromise();
+    window.localStorage.getItem = key => (storage[key]);
+    window.localStorage.setItem = (key, item) => { storage[key] = item; };
   });
 
   afterEach(() => {
@@ -50,7 +53,7 @@ describe('Converter', () => {
     expect(wrapper.state('currencies')[0]).to.have.equal('EUR');
   });
 
-  it('should convert price to USD', () => {
+  it('should convert price to EUR from localStorage', () => {
     const props = {
       t: () => {},
       value: 2,
@@ -66,7 +69,7 @@ describe('Converter', () => {
     explorereApiMock.resolves({ LSK: { USD: 123, EUR: 12 } });
     wrapper.update();
     expect(wrapper.state('LSK')).to.have.deep.equal({ USD: 123, EUR: 12 });
-    expect(wrapper.find('.converted-price').at(0).text()).to.have.equal('~ 246.00');
+    expect(wrapper.find('.converted-price').at(0).text()).to.have.equal('~ 24.00');
   });
 });
 

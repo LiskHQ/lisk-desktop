@@ -2,6 +2,8 @@ import React from 'react';
 import liskServiceApi from '../../utils/api/liskService';
 import Input from '../toolbox/inputs/input';
 import { fromRawLsk } from '../../utils/lsk';
+import localJSONStorage from '../../utils/localJSONStorage';
+
 import fees from './../../constants/fees';
 
 import styles from './converter.css';
@@ -17,6 +19,11 @@ class Converter extends React.Component {
       currencies: ['USD', 'EUR'],
     };
     this.fee = fees.send;
+
+    const localStorageCurrency = localJSONStorage.get('currency', '');
+    if (localStorageCurrency) {
+      this.selectActive(localStorageCurrency);
+    }
     this.updateData();
   }
 
@@ -37,6 +44,7 @@ class Converter extends React.Component {
 
       currencies.push(currencies.shift(currencies[currencyIndex]));
       this.setState({ currencies });
+      localJSONStorage.set('currency', currency);
     }
   }
 
