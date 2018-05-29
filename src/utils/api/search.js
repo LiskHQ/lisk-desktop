@@ -1,51 +1,42 @@
-import { requestToActivePeer } from './peers';
+import { getAccount, transaction } from './account';
+import { listDelegates } from './delegate';
 import regex from './../../utils/regex';
 
-const reducers = {
-  addresses: ['address', 'balance'],
-  delegates: ['username', 'rank', 'address'],
-  transactions: ['id', 'height'],
-};
-const reduceResponseProps = (response, key, reducerKeys) => {
-  const reduced = response.map(result =>
-    Object.keys(result)
-      .filter(objKey => reducerKeys[key].includes(objKey))
-      .reduce((obj, objKey) => {
-        obj[objKey] = result[objKey];
-        return obj;
-      }, {}));
-  return reduced;
-};
+const searchAddresses = ({ activePeer, searchTerm }) => new Promise((resolve, reject) =>
+  getAccount(activePeer, searchTerm)
+    .then(response => resolve({ addresses: [response.account] }))
+    .catch((err) => {
+      console.log('getAccount-->', err);
+      reject({ addresses: [] });
+    }));
 
-export const searchAddresses = ({ activePeer, search }) => new Promise((resolve, reject) =>
-  requestToActivePeer(activePeer, 'accounts', {
-    address: search,
-  }).then(response => resolve({ addresses: reduceResponseProps([response.account], 'addresses', reducers) }))
-    .catch(() => reject({ addresses: [] })));
-
-export const searchDelegates = ({ activePeer, search }) => new Promise((resolve, reject) =>
-  requestToActivePeer(activePeer, 'delegates/search', {
-    q: search,
+const searchDelegates = ({ activePeer, searchTerm }) => new Promise((resolve, reject) =>
+  listDelegates(activePeer, {
+    q: searchTerm,
     orderBy: 'username:asc',
-  }).then(response => resolve({ delegates: reduceResponseProps(response.delegates, 'delegates', reducers) }))
+  }).then(response => resolve({ delegates: response.delegates }))
     .catch(() => reject({ delegates: [] })));
 
-export const searchTransactions = ({ activePeer, search }) => new Promise((resolve, reject) =>
-  requestToActivePeer(activePeer, 'transactions/get', {
-    id: search,
-  }).then(response => resolve({ transactions: reduceResponseProps([response.transaction], 'transactions', reducers) }))
+const searchTransactions = ({ activePeer, searchTerm }) => new Promise((resolve, reject) =>
+  transaction({
+    activePeer,
+    id: searchTerm,
+  }).then(response => resolve({ transactions: [response.transaction] }))
     .catch(() => reject({ transactions: [] })));
 
-export const getSearches = search => ([
-  ...(search.match(regex.address) ? [searchAddresses] : []),
-  ...(search.match(regex.transactionId) ? [searchTransactions] : []),
+const getSearches = search => ([
+  ...(search.match(regex.address) ?
+    [searchAddresses] : [() => new Promise(resolve => resolve({ addresses: [] }))]),
+  ...(search.match(regex.transactionId) ?
+    [searchTransactions] : [() => new Promise(resolve => resolve({ transactions: [] }))]),
   searchDelegates, // allways add delegates promise as they share format (address, tx)
 ]);
 
-export const resolveAll = (activePeer, apiCalls, search) => {
+const resolveAll = (activePeer, apiCalls, searchTerm) => {
   const promises = apiCalls.map(apiCall =>
-    apiCall({ activePeer, search })
+    apiCall({ activePeer, searchTerm })
       .catch(err => err));
+
   return new Promise((resolve, reject) => {
     Promise.all(promises)
       .then(result => resolve(result))
@@ -53,9 +44,9 @@ export const resolveAll = (activePeer, apiCalls, search) => {
   });
 };
 
-const searchAll = ({ activePeer, search }) => {
-  const apiCalls = getSearches(search);
-  return resolveAll(activePeer, apiCalls, search);
+const searchAll = ({ activePeer, searchTerm }) => {
+  const apiCalls = getSearches(searchTerm);
+  return resolveAll(activePeer, apiCalls, searchTerm);
 };
 
 export default searchAll;

@@ -1,23 +1,17 @@
 import { expect } from 'chai';
-import { stub } from 'sinon';
+import { stub, mock, match } from 'sinon';
 import searchAll from './search';
 import * as peersAPI from './peers';
 
-describe('Utils: Search', () => {
+describe.only('Utils: Search', () => {
   let peersAPIStub;
-
-  const accountsResponse = { account: { address: '1337L', balance: 1110, someOtherProperty: 'other property' } };
-  const accountExpectedResponse = { account: { address: '1337L', balance: 1110 } };
-  const accountsUrlParams = { address: '1337L' };
-  const accountsUrlParamsTxMatch = { address: '1337' };
-
-  const delegatesResponse = {
-    delegates: [
-      { username: '1337', rank: 18, address: '123456', someOtherProperty: 'other property' },
-      { username: '1337l', rank: 19, address: '123456', someOtherProperty: 'other property' },
-    ],
+  let activePeerMock;
+  let activePeer = {
+    getAccount: () => {},
   };
-  const delegatesExpectedResponse = {
+
+  const accountsResponse = { account: { address: '1337L', balance: 1110 }, success: true };
+  const delegatesResponse = {
     delegates: [
       { username: '1337', rank: 18, address: '123456' },
       { username: '1337l', rank: 19, address: '123456' },
@@ -32,8 +26,7 @@ describe('Utils: Search', () => {
     orderBy: 'username:asc',
   };
 
-  const transactionsResponse = { transaction: { id: '1337', height: 99, someOtherProperty: 'other property' } };
-  const transactionsExpectedResponse = { transaction: { id: '1337', height: 99 } };
+  const transactionsResponse = { transaction: { id: '1337', height: 99 } };
   const transactionsUrlParams = {
     id: '1337L',
   };
@@ -43,54 +36,62 @@ describe('Utils: Search', () => {
 
   beforeEach(() => {
     peersAPIStub = stub(peersAPI, 'requestToActivePeer');
+    activePeerMock = mock(activePeer);
     // address match
-    peersAPIStub.withArgs(undefined, 'accounts', accountsUrlParams).returnsPromise().resolves(accountsResponse);
+    activePeerMock.expects('getAccount').twice().withArgs('1337L').callsArgWith(1, accountsResponse);
     peersAPIStub.withArgs(undefined, 'delegates/search', delegatesUrlParams).returnsPromise().resolves(delegatesResponse);
     peersAPIStub.withArgs(undefined, 'transactions/get', transactionsUrlParams).returnsPromise().resolves(transactionsResponse);
 
     // txSearch match
-    peersAPIStub.withArgs(undefined, 'accounts', accountsUrlParamsTxMatch).returnsPromise().resolves(accountsResponse);
+    activePeerMock.expects('getAccount').withArgs('1337').callsArgWith(1, accountsResponse);
     peersAPIStub.withArgs(undefined, 'delegates/search', delegatesUrlParamsTxMatch).returnsPromise().resolves(delegatesResponse);
     peersAPIStub.withArgs(undefined, 'transactions/get', transactionsUrlParamsTxMatch).returnsPromise().resolves(transactionsResponse);
   });
 
   afterEach(() => {
     peersAPIStub.restore();
+    activePeerMock.restore();
   });
 
-  it('should search {addresses,delegates} when only address pattern matched', () =>
-    expect(searchAll({ search: '1337L' })).to.eventually.deep.equal([
-      { addresses: [accountExpectedResponse.account] },
-      { delegates: delegatesExpectedResponse.delegates },
-    ]));
+  it.only('should search {addresses,delegates} when only address pattern matched', () => {
+    searchAll({ activePeer, searchTerm: '1337L' }).then(response => console.log(response));
+    return expect(searchAll({ activePeer, searchTerm: '1337L' })).to.eventually.deep.equal([
+      { addresses: [accountsResponse.account] },
+      { transactions: [] },
+      { delegates: delegatesResponse.delegates },
+    ]);
+  });
 
   it('should search {transactions,delegates} when only transaction pattern matched', () =>
-    expect(searchAll({ search: '1337' })).to.eventually.deep.equal([
-      { transactions: [transactionsExpectedResponse.transaction] },
-      { delegates: delegatesExpectedResponse.delegates },
+    expect(searchAll({ searchTerm: '1337' })).to.eventually.deep.equal([
+      { addresses: [] },
+      { transactions: [transactionsResponse.transaction] },
+      { delegates: delegatesResponse.delegates },
     ]));
 
   it('should still search for {addresses} when failing {delegates} request', () => {
     peersAPIStub.withArgs(undefined, 'delegates/search', delegatesUrlParams).returnsPromise().rejects({ success: false });
-    return expect(searchAll({ search: '1337L' })).to.eventually.deep.equal([
-      { addresses: [accountExpectedResponse.account] },
+    return expect(searchAll({ searchTerm: '1337L' })).to.eventually.deep.equal([
+      { addresses: [accountsResponse.account] },
+      { transactions: [] },
       { delegates: [] },
     ]);
   });
 
   it('should still search for {delegates} when failing {addresses} request', () => {
-    peersAPIStub.withArgs(undefined, 'accounts', accountsUrlParams).returnsPromise().rejects({ success: false });
-    return expect(searchAll({ search: '1337L' })).to.eventually.deep.equal([
+    return expect(searchAll({ searchTerm: '1337L' })).to.eventually.deep.equal([
       { addresses: [] },
-      { delegates: delegatesExpectedResponse.delegates },
+      { transactions: [] },
+      { delegates: delegatesResponse.delegates },
     ]);
   });
 
   it('should still search for {delegates} when failing {transactions} request', () => {
     peersAPIStub.withArgs(undefined, 'transactions/get', transactionsUrlParamsTxMatch).returnsPromise().rejects({ success: false });
-    return expect(searchAll({ search: '1337' })).to.eventually.deep.equal([
+    return expect(searchAll({ searchTerm: '1337' })).to.eventually.deep.equal([
+      { addresses: [] },
       { transactions: [] },
-      { delegates: delegatesExpectedResponse.delegates },
+      { delegates: delegatesResponse.delegates },
     ]);
   });
 });
