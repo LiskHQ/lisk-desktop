@@ -1,5 +1,10 @@
 @import '../app/variables.css';
 
+:root {
+  --unvotes-color: #f9b8b8;
+  --upvotes-color: #a2e6f1;
+}
+
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -42,6 +47,22 @@
   & footer {
     margin-top: 40px;
   }
+}
+
+.notFound {
+  color: var(--color-error);
+}
+
+.alreadyVoted {
+  color: var(--color-grayscale-medium);
+}
+
+.unvotes {
+  color: var(--unvotes-color);
+}
+
+.upvotes {
+  color: var(--upvotes-color);
 }
 
 @media (--medium-viewport) {
