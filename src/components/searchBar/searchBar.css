@@ -25,32 +25,6 @@
     cursor: pointer;
   }
 
-  & .input {
-    background: var(--color-primary-less-dark);
-    line-height: var(--search-box-line-height);
-    font-size: var(--search-box-font-size);
-    color: var(--color-grayscale-medium);
-    width: 100%;
-    padding-left: 24px;
-    border-radius: 3px;
-    border: none;
-
-    &::selection {
-      color: #fff;
-      background: var(--search-box-selection-background);
-    }
-  }
-
-  & .input:focus {
-    outline: none;
-  }
-
-  & .input::placeholder {
-    color: var(--color-grayscale-medium);
-    font-weight: 200;
-    letter-spacing: 0;
-  }
-
   & .subTitle {
     line-height: var(--sub-title-line-height);
     color: var(--color-grayscale-medium);
