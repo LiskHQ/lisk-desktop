@@ -123,7 +123,7 @@ module.exports = {
       template: './src/index.html',
       VERSION: bundleVersion,
       inject: false,
-      // inlineSource: '.(css)$',
+      inlineSource: '.(css)$',
     }),
     new HtmlWebpackInlineSourcePlugin(),
     new I18nScannerPlugin({
