@@ -110,6 +110,7 @@ module.exports = {
           'unit-whitelist': ['px', 'deg', '%', 'ms', 's'],
           'length-zero-no-unit': null,
           'at-rule-no-unknown': null,
+          'selector-no-vendor-prefix': true,
         },
       },
     }),
