@@ -36,18 +36,11 @@ export const searchTransactions = ({ activePeer, search }) => new Promise((resol
   }).then(response => resolve({ transactions: reduceResponseProps([response.transaction], 'transactions', reducers) }))
     .catch(() => reject({ transactions: [] })));
 
-export const getSearches = (search) => {
-  let allSearches = [];
-  allSearches = search.match(regex.address) ?
-    [...allSearches, searchAddresses] :
-    [...allSearches];
-  allSearches = search.match(regex.transactionId) ?
-    [...allSearches, searchTransactions] :
-    [...allSearches];
-  // allways add delegates promise as they share format (address, tx)
-  allSearches = [...allSearches, searchDelegates];
-  return allSearches;
-};
+export const getSearches = search => ([
+  ...(search.match(regex.address) ? [searchAddresses] : []),
+  ...(search.match(regex.transactionId) ? [searchTransactions] : []),
+  searchDelegates, // allways add delegates promise as they share format (address, tx)
+]);
 
 export const resolveAll = (activePeer, apiCalls, search) => {
   const promises = apiCalls.map(apiCall =>
