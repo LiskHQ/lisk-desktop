@@ -51,6 +51,7 @@ class SingleTransaction extends React.Component {
             <div className={styles.detailsWrapper}>
               <TransactionDetails
                 transaction={this.props.transaction}
+                address={this.props.address}
                 t={this.props.t}
                 match={this.props.match} />
             </div>
@@ -64,6 +65,7 @@ class SingleTransaction extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  address: state.account.address,
   transaction: state.transaction,
   peers: state.peers,
 });
