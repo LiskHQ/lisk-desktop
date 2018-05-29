@@ -52,6 +52,10 @@ class VotingListView extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.props.delegatesCleared();
+  }
+
   loadVotedDelegates(refresh) {
     /* istanbul-ignore-else */
     if (!this.freezeLoading) {

@@ -3,10 +3,16 @@ import { loadingStarted, loadingFinished } from '../utils/loading';
 import { transactions, getAccount } from '../utils/api/account';
 import { getDelegate, getVoters, getVotes } from '../utils/api/delegate';
 
-const searchDelegate = ({ activePeer, publicKey }) =>
+const searchDelegate = ({ activePeer, publicKey, address }) =>
   (dispatch) => {
     getDelegate(activePeer, { publicKey }).then((response) => {
-      dispatch({ data: response.delegate, type: actionTypes.searchDelegate });
+      dispatch({
+        data: {
+          delegate: response.delegate,
+          address,
+        },
+        type: actionTypes.searchDelegate,
+      });
     });
   };
 
@@ -43,7 +49,7 @@ export const searchAccount = ({ activePeer, address }) =>
         address,
       };
       if (response.publicKey) {
-        dispatch(searchDelegate({ activePeer, publicKey: response.publicKey }));
+        dispatch(searchDelegate({ activePeer, publicKey: response.publicKey, address }));
         dispatch(searchVoters({ activePeer, address, publicKey: response.publicKey }));
       }
       dispatch({ data: accountData, type: actionTypes.searchAccount });

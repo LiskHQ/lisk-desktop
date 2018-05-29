@@ -7,7 +7,6 @@ import styles from './mainMenu.css';
 import logo from '../../assets/images/logo-beta.svg';
 import * as menuLogos from '../../assets/images/main-menu-icons/*.svg'; //eslint-disable-line
 import { FontIcon } from '../fontIcon';
-import Setting from '../setting';
 import routes from '../../constants/routes';
 
 const getIndex = (history, tabs) => {
@@ -91,6 +90,11 @@ class MainMenu extends React.Component {
         route: `${routes.sidechains.path}`,
         id: 'sidechains',
         image: menuLogos.sidechains,
+      }, {
+        label: t('Settings'),
+        route: `${routes.setting.path}`,
+        id: 'settings',
+        image: menuLogos.settings,
       },
     ];
 
@@ -153,10 +157,6 @@ class MainMenu extends React.Component {
                     />)}
                 </ToolboxTabs>
               </div>
-              <Setting showSetting={this.state.setting}
-                toggleMenu={this.menuToggle.bind(this)}
-                startOnboarding={this.props.startOnboarding}
-              />
             </Drawer>
           </div>
         </aside>

@@ -4,6 +4,7 @@ import { expect } from 'chai';
 import { spy } from 'sinon';
 import { mountWithContext } from '../../../test/utils/mountHelpers';
 import TransactionDetailView from './transactionDetailView';
+import txTypes from '../../constants/transactionTypes';
 
 describe('TransactionDetailView', () => {
   it('should render 6 rows', () => {
@@ -23,14 +24,15 @@ describe('TransactionDetailView', () => {
     const props = {
       prevStep: spy(),
       t: () => {},
-      value: {
+      transaction: {
+        type: txTypes.send,
+        amount: 0,
         senderId: '',
         recipientId: '',
         timestamp: '',
         fee: '',
         confirmations: '',
         id: '',
-        amount: 100,
       },
       match: { params: {} },
       history: { push: () => {}, location: { search: '' } },
@@ -38,12 +40,22 @@ describe('TransactionDetailView', () => {
     const wrapper = mountWithContext(<TransactionDetailView {...props} />, context);
     const expectedValue = /flexboxgrid__row/g;
     const html = wrapper.html();
-    expect(html.match(expectedValue)).to.have.lengthOf(4);
+    expect(html.match(expectedValue)).to.have.lengthOf(6);
     wrapper.find('.transaction-details-back-button').simulate('click');
     expect(props.prevStep).to.have.been.calledWith();
   });
 
   it('should display 2 voter-address Links', () => {
+    const transaction = {
+      senderId: '',
+      recipientId: '',
+      timestamp: '',
+      fee: '',
+      confirmations: '',
+      id: '',
+      type: txTypes.send,
+      amount: 0,
+    };
     const context = {
       storeState: {
         peers: {
@@ -51,10 +63,7 @@ describe('TransactionDetailView', () => {
           options: {},
         },
         transaction: {
-          votesName: {
-            deleted: [{ address: 123, username: 123 }],
-            added: [{ address: 123, username: 123 }],
-          },
+          ...transaction,
         },
         voting: { votes: {} },
       },
@@ -63,14 +72,12 @@ describe('TransactionDetailView', () => {
     const props = {
       prevStep: spy(),
       t: () => {},
-      value: {
-        senderId: '',
-        recipientId: '',
-        timestamp: '',
-        fee: '',
-        confirmations: '',
-        id: '',
-        amount: 0,
+      transaction: {
+        ...transaction,
+        votesName: {
+          deleted: [{ address: 123, username: 123 }],
+          added: [{ address: 123, username: 123 }],
+        },
       },
       match: { params: {} },
       history: { push: () => {}, location: { search: '' } },
