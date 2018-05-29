@@ -1,6 +1,108 @@
 @import './../app/variables.css';
 
+:root {
+  --search-box-font-size: 16px;
+  --search-box-line-height: 56px;
+  --search-box-selection-background: var(--color-primary-light);
+}
+
+.wrapper {
+  margin-right: -24px;
+}
+
 .autoSuggest {
-  background: pink;
-  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+  background-color: var(--color-white);
+  left: 0;
+  right: -24px;
+  position: absolute;
+  top: 55px;
+  z-index: var(--autosuggest-index);
+  border-radius: 3px;
+  box-shadow: 0 22px 22px 0 rgba(0, 0, 0, 0.22);
+  border-top: none;
+  padding-bottom: 24px;
+}
+
+.resultList {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+  margin: 0;
+  padding: 0;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+  color: var(--color-primary-standard);
+  font-family: var(--content-font);
+  font-size: var(--paragraph-font-size-l);
+
+  &:hover {
+    background-color: rgba(205, 218, 229, 0.2);
+  }
+
+  & span {
+    margin: 0 24px;
+    line-height: 36px;
+  }
+}
+
+.heading {
+  margin-top: 24px;
+  color: var(--color-grayscale-medium);
+  font-family: var(--content-font);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-bold);
+
+  &:hover {
+    background-color: inherit;
+  }
+}
+
+.input {
+  padding: 0;
+  z-index: var(--searchbar-input-index);
+
+  & input {
+    background-color: var(--color-primary-less-dark);
+    line-height: var(--search-box-line-height);
+    font-size: var(--search-box-font-size);
+    color: var(--color-grayscale-medium);
+    width: 100%;
+    padding: 0;
+    padding-left: 24px;
+    border-radius: 3px;
+    border: none;
+
+    &::selection {
+      color: #fff;
+      background: var(--search-box-selection-background);
+    }
+
+    &::placeholder {
+      color: var(--color-grayscale-medium);
+      font-weight: 200;
+      letter-spacing: 0;
+    }
+
+    &:focus {
+      outline: none;
+      background-color: var(--color-white);
+    }
+  }
+
+  & span {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
 }
