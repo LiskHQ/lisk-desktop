@@ -10,6 +10,8 @@ import TransactionList from './../transactions/transactionList';
 import Send from '../send';
 import CurrencyGraph from './currencyGraph';
 import routes from '../../constants/routes';
+import { settingsUpdated } from '../../actions/settings';
+
 import styles from './dashboard.css';
 
 class Dashboard extends React.Component {
@@ -65,10 +67,12 @@ const mapStateToProps = state => ({
   account: state.account,
   loading: state.loading.length > 0,
   peers: state.peers,
+  settings: state.settings,
 });
 
 const mapDispatchToProps = dispatch => ({
   loadTransactions: data => dispatch(loadTransactions(data)),
+  settingsUpdated: data => dispatch(settingsUpdated(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(Dashboard));

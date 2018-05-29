@@ -14,17 +14,21 @@ class Converter extends React.Component {
     this.state = {
       LSK: {
         USD: '0',
+        EUR: '0',
       },
       // 0 index is active one
       currencies: ['USD', 'EUR'],
     };
     this.fee = fees.send;
 
-    const localStorageCurrency = localJSONStorage.get('currency', '');
-    if (localStorageCurrency) {
-      this.selectActive(localStorageCurrency);
-    }
     this.updateData();
+  }
+
+  componentDidMount() {
+    const localStorageSettings = localJSONStorage.get('settings', {});
+    if (localStorageSettings.currency) {
+      this.selectActive(localStorageSettings.currency);
+    }
   }
 
   updateData() {
@@ -44,7 +48,7 @@ class Converter extends React.Component {
 
       currencies.push(currencies.shift(currencies[currencyIndex]));
       this.setState({ currencies });
-      localJSONStorage.set('currency', currency);
+      this.props.settingsUpdated({ currency });
     }
   }
 

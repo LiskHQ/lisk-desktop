@@ -77,6 +77,8 @@ class Send extends React.Component {
                 address={recipient}
                 amount={amount}
                 setTabSend={this.setActiveTabSend.bind(this)}
+                settingsUpdated={this.props.settingsUpdated}
+                settings={this.props.settings}
               />
               <PassphraseSteps/>
               <SendReadable/>
