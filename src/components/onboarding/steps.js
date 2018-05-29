@@ -221,7 +221,7 @@ export const steps = t => ([
   {
     title: t('Access extra features'),
     text: t('Change account settings, enable delegate voting and repeat the onboarding here.'),
-    selector: '.more-menu',
+    selector: '#settings',
     position: 'right',
     style: styles.step,
   },
