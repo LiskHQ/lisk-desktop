@@ -13,6 +13,7 @@ import TransactionType from './transactionType';
 import LiskAmount from '../liskAmount';
 import Amount from './amount';
 import routes from './../../constants/routes';
+import transactions from './../../constants/transactionTypes';
 
 const TransactionsDetailViewField = ({ value, label, style, children, column, shouldShow }) => (
   (shouldShow === null || shouldShow === false) ? null :
@@ -75,8 +76,7 @@ class TransactionsDetailView extends React.Component {
   }
 
   getFirstRow() {
-    const isDelegateRegistration = this.props.transaction.type === 2;
-    const isDelegateVote = this.props.transaction.type === 3;
+    const isSendTransaction = this.props.transaction.type === transactions.send;
 
     return (
       <TransactionsDetailViewRow>
@@ -95,7 +95,7 @@ class TransactionsDetailView extends React.Component {
             </figure> : null}
         </TransactionsDetailViewField>
 
-        {isDelegateVote || isDelegateRegistration ? this.getDateField() :
+        {!isSendTransaction ? this.getDateField() :
           <TransactionsDetailViewField
             shouldShow={this.props.transaction.recipientId}
             label={this.props.t('Recipient')}
