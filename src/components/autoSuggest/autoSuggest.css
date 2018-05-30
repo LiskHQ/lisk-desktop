@@ -59,6 +59,10 @@
   }
 }
 
+.rowSelected {
+  background-color: rgba(204, 217, 228, 0.2);
+}
+
 .heading {
   margin-top: 24px;
   color: var(--color-grayscale-medium);

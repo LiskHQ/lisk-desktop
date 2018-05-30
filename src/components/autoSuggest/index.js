@@ -56,24 +56,75 @@ const searchResults =
 class AutoSuggest extends React.Component {
   constructor(props) {
     super(props);
+
+    let resultsLength = 0;
+    Object.keys(searchResults).map((resultKey) => {
+      resultsLength += searchResults[resultKey].length;
+      return resultsLength;
+    });
+
     this.state = {
       show: false,
+      selectedIdx: 0,
+      resultsLength,
     };
   }
   submitSearch(urlSearch) {
     this.props.history.push(urlSearch);
   }
 
-  /* eslint-disable class-methods-use-this */
-  handleKey() {}
+  /* eslint-disable class-methods-use-this,no-unused-vars */
+  search(searchTerm) {
+  }
+  /* eslint-enable class-methods-use-this,no-unused-vars */
+
+  handleArrowDown() {
+    let currentIdx = this.state.selectedIdx;
+    currentIdx = (currentIdx === this.resultsLength) ? this.resultsLength : currentIdx += 1;
+    this.setState({ selectedIdx: currentIdx });
+  }
+
+  handleArrowUp() {
+    let currentIdx = this.state.selectedIdx;
+    currentIdx = (currentIdx === 0) ? 0 : currentIdx -= 1;
+    this.setState({ selectedIdx: currentIdx });
+  }
+
   handleBlur() {
-    this.setState({ show: false });
+    setTimeout(() => this.closeDropdown(), 100);
   }
   handleFocus() {
+    this.showDropdown();
+  }
+
+  handleKey(event) {
+    switch (event.keyCode) {
+      case 40: // arrow down
+        this.handleArrowDown();
+        break;
+      case 38: // arrow up
+        this.handleArrowUp();
+        break;
+      case 27 : // escape
+        this.closeDropdown();
+        break;
+      case 13 : // enter
+        break;
+      case 9 : // tab
+        break;
+      default:
+        break;
+    }
+    return false;
+  }
+
+  closeDropdown() {
+    this.setState({ show: false });
+  }
+
+  showDropdown() {
     this.setState({ show: true });
   }
-  search() {}
-  /* eslint-enable class-methods-use-this */
 
   render() {
     // eslint-disable-next-line no-unused-vars
@@ -87,13 +138,17 @@ class AutoSuggest extends React.Component {
       keyHeader,
       keyValue,
       i18Header,
-      i18Value }) => {
-      const targetRows = entities.map(entity =>
+      i18Value,
+      entityIdxStart,
+      selectedIdx,
+    }) => {
+      const targetRows = entities.map((entity, idx) =>
         <li
           onClick={this.submitSearch.bind(this,
             `${redirectPath}${entity[uniqueKey]}`,
           )}
-          className={styles.row} key={entity[uniqueKey]}>
+          className={`${styles.row} ${selectedIdx === entityIdxStart + idx ? styles.rowSelected : ''}`}
+          key={entity[uniqueKey]}>
           <span>{entity[keyHeader]}</span>
           <span>{entity[keyValue]}</span>
         </li>);
@@ -151,18 +206,24 @@ class AutoSuggest extends React.Component {
                   return renderEntities({
                     entities: searchResults[entity],
                     entityKey: entity,
+                    entityIdxStart: 0,
+                    selectedIdx: this.state.selectedIdx,
                     ...delegatesPropsMap,
                   });
                 case resultsEntities[1] :
                   return renderEntities({
                     entities: searchResults[entity],
                     entityKey: entity,
+                    entityIdxStart: searchResults.delegates.length,
+                    selectedIdx: this.state.selectedIdx,
                     ...addressesPropsMap,
                   });
                 case resultsEntities[2] :
                   return renderEntities({
                     entities: searchResults[entity],
                     entityKey: entity,
+                    entityIdxStart: searchResults.delegates.length + searchResults.addresses.length,
+                    selectedIdx: this.state.selectedIdx,
                     ...transactionsPropsMap,
                   });
                 default:
