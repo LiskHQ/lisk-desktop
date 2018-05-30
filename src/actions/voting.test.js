@@ -193,7 +193,11 @@ describe('actions: voting', () => {
 
   describe('delegatesFetched', () => {
     const data = {
-      activePeer: {},
+      activePeer: {
+        options: {
+          name: 'Mainnet',
+        },
+      },
       q: '',
       offset: 0,
       refresh: true,

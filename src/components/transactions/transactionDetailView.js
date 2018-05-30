@@ -35,21 +35,15 @@ class TransactionsDetailView extends React.Component {
   }
 
   getVoters(dataName) {
-    let data = this.props.transaction.votesName && this.props.transaction.votesName[dataName];
+    const data = this.props.transaction.votesName && this.props.transaction.votesName[dataName];
 
-    data = data ? data.map((delegate, key) => (
+    return data ? data.map((delegate, key) => (
       <Link className={`${styles.addressLink} ${styles.clickable} voter-address`}
         to={`${routes.explorer.path}${routes.accounts.path}/${delegate.address}`}
         key={`${key}-${dataName}`}>
         {`${delegate.username} `}
       </Link>
     )) : '';
-
-    // putting <span>•</span> inbetween array objects
-    const intersperse = data && data
-      .reduce((arr, val) => [...arr, val, <span className={styles.dot} key={`span-${val.props.children}`}>• </span>], [])
-      .slice(0, -1);
-    return intersperse;
   }
 
   getFirstRow(isDelegateVote) {

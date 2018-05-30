@@ -19,7 +19,11 @@ describe('Reducer: transaction(state, action)', () => {
       data: mockTransaction,
     };
     const changedState = transaction(state, action);
-    expect(changedState).to.deep.equal({ success: true, ...mockTransaction.transaction });
+    expect(changedState).to.deep.equal({
+      votesName: {},
+      success: true,
+      ...mockTransaction.transaction,
+    });
   });
 
   it('should return error if action.type = actionTypes.transactionLoadFailed', () => {
