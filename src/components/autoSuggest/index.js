@@ -210,11 +210,11 @@ class AutoSuggest extends React.Component {
           className={styles.input}
           theme={styles}
           onFocus={this.handleFocus.bind(this)}
-          onBlur={this.handleBlur.bind(this)}
           onKeyDown={this.handleKey.bind(this)}
           onChange={this.search.bind(this)}
           autoComplete='off' />
-        <div className={`${styles.autoSuggest} ${this.state.show ? styles.show : ''}`}>
+        <div className={`${styles.autoSuggest} ${this.state.show ? styles.show : ''}`}
+          onBlur={this.handleBlur.bind(this)}>
           {
             resultsEntities.map((entity) => {
               switch (entity) {
