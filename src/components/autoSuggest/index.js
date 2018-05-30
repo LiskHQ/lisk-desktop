@@ -43,12 +43,15 @@ const searchResults =
       {
         id: '1234',
         height: 56,
+        senderId: '12345L',
       }, {
         id: '12345',
         height: 57,
+        senderId: '12345L',
       }, {
         id: '123456',
         height: 58,
+        senderId: '12345L',
       },
     ],
   };
@@ -59,7 +62,7 @@ class AutoSuggest extends React.Component {
 
     this.delegatesPropsMap = {
       uniqueKey: 'address',
-      redirectPath: `${routes.accounts.pathPrefix}${routes.accounts.path}/`,
+      redirectPath: entity => `${routes.accounts.pathPrefix}${routes.accounts.path}/${entity.address}`,
       keyHeader: 'username',
       keyValue: 'rank',
       i18Header: this.props.t('Delegate'),
@@ -68,7 +71,7 @@ class AutoSuggest extends React.Component {
 
     this.addressesPropsMap = {
       uniqueKey: 'address',
-      redirectPath: `${routes.accounts.pathPrefix}${routes.accounts.path}/`,
+      redirectPath: entity => `${routes.accounts.pathPrefix}${routes.accounts.path}/${entity.address}`,
       keyHeader: 'address',
       keyValue: 'balance',
       i18Header: this.props.t('Address'),
@@ -77,7 +80,7 @@ class AutoSuggest extends React.Component {
 
     this.transactionsPropsMap = {
       uniqueKey: 'id',
-      redirectPath: `${routes.wallet.path}?id=`,
+      redirectPath: entity => `${routes.accounts.pathPrefix}${routes.accounts.path}/${entity.senderId}?id=${entity.id}`,
       keyHeader: 'id',
       keyValue: 'height',
       i18Header: this.props.t('Transaction'),
@@ -184,7 +187,7 @@ class AutoSuggest extends React.Component {
       const targetRows = entities.map((entity, idx) => {
         const isSelectedRow = selectedIdx === entityIdxStart + idx;
         let rowProps = {
-          onClick: this.submitSearch.bind(this, `${redirectPath}${entity[uniqueKey]}`),
+          onClick: this.submitSearch.bind(this, redirectPath(entity)),
           className: `${styles.row} ${isSelectedRow ? styles.rowSelected : ''}`,
         };
         if (isSelectedRow) {
