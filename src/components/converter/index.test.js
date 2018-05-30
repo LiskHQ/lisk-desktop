@@ -11,12 +11,9 @@ import Converter from './index';
 describe('Converter', () => {
   let explorereApiMock;
   let wrapper;
-  const storage = {};
 
   beforeEach(() => {
     explorereApiMock = sinon.stub(liskServiceApi, 'getPriceTicker').returnsPromise();
-    window.localStorage.getItem = key => (storage[key]);
-    window.localStorage.setItem = (key, item) => { storage[key] = item; };
   });
 
   afterEach(() => {
@@ -41,6 +38,7 @@ describe('Converter', () => {
       t: () => {},
       value: 0,
       error: false,
+      settingsUpdated: sinon.spy(),
     };
     wrapper = mount(<Converter {...props} />, {
       context: { i18n },
@@ -58,6 +56,8 @@ describe('Converter', () => {
       t: () => {},
       value: 2,
       error: false,
+      currency: 'USD',
+      settingsUpdated: sinon.spy(),
     };
     wrapper = mount(<Converter {...props} />, {
       context: { i18n },
@@ -69,7 +69,7 @@ describe('Converter', () => {
     explorereApiMock.resolves({ LSK: { USD: 123, EUR: 12 } });
     wrapper.update();
     expect(wrapper.state('LSK')).to.have.deep.equal({ USD: 123, EUR: 12 });
-    expect(wrapper.find('.converted-price').at(0).text()).to.have.equal('~ 24.00');
+    expect(wrapper.find('.converted-price').at(0).text()).to.have.equal('~ 246.00');
   });
 });
 

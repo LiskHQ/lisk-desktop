@@ -14,6 +14,7 @@ describe('Specify Request', () => {
       address: '234l',
       nextStep: spy(),
       prevStep: spy(),
+      settingsUpdated: spy(),
     };
 
     wrapper = mount(<SpecifyRequest {...props} />);

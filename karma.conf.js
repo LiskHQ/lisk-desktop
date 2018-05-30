@@ -66,6 +66,7 @@ module.exports = function (config) {
             'src/components/passphraseCreation/index.js',
             'src/utils/api/liskService.js',
             'src/components/errorBoundary/index.js',
+            'src/components/transactionDashboard/index.js',
           ],
           overrides: {
             'src/store/**/*.js': {
