@@ -3,7 +3,7 @@ import localJSONStorage from './localJSONStorage';
 
 export const updateDelegateCache = (delegates, activePeer) => {
   const network = activePeer.options.address || activePeer.options.name;
-  const savedDelegates = localJSONStorage.get(network, {});
+  const savedDelegates = localJSONStorage.get(`delegateCache-${network}`, {});
   const formatedDelegates = delegates.reduce((delegate, { address, publicKey, username }) => {
     delegate[address] = { publicKey, username };
     return delegate;
