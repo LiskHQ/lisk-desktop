@@ -31,7 +31,7 @@ class TransactionsDetailView extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.location.search) this.props.prevStep();
+    if (nextProps.location && !nextProps.location.search) this.props.prevStep();
   }
 
   getVoters(dataName) {

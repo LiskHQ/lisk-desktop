@@ -57,9 +57,8 @@ Feature: Explorer page
     Given I'm logged in as "genesis"
     And I wait 1 seconds
     When I click "explorer" menu
-    When I fill in "4401082358022424760L" to "search input" field
+    When I fill in "18294919898268153226" to "search input" field
     And I click "input search button"
-    Then I click on "transactions row" element no. 2
     Then I should see 33 instances of "voter address"
     When I click "explorer" menu
     When I fill in "2581762640681118072L" to "search input" field
