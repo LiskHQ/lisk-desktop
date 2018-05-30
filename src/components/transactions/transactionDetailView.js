@@ -21,8 +21,8 @@ const TransactionsDetailViewField = ({ value, label, style, children, column }) 
     <div className={`${styles.value} ${style}`}>{value}</div>
   </div>;
 
-const TransactionsDetailViewRow = ({ children, condition }) => (
-  (condition === null || condition === false) ? null :
+const TransactionsDetailViewRow = ({ children, shouldShow }) => (
+  (shouldShow === null || shouldShow === false) ? null :
     <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
       {children}
     </div>);
@@ -47,13 +47,15 @@ class TransactionsDetailView extends React.Component {
   getVoters(dataName) {
     const data = this.props.transaction.votesName && this.props.transaction.votesName[dataName];
 
-    return data ? data.map((delegate, key) => (
-      <Link className={`${styles.addressLink} ${styles.clickable} voter-address`}
-        to={`${routes.explorer.path}${routes.accounts.path}/${delegate.address}`}
-        key={`${key}-${dataName}`}>
-        {`${delegate.username} `}
-      </Link>
-    )) : '';
+    return data ? data
+      .sort((delegate1, delegate2) => delegate1.username - delegate2.username)
+      .map((delegate, key) => (
+        <Link className={`${styles.addressLink} ${styles.clickable} voter-address`}
+          to={`${routes.explorer.path}${routes.accounts.path}/${delegate.address}`}
+          key={`${key}-${dataName}`}>
+          {`${delegate.username} `}
+        </Link>
+      )) : '';
   }
 
   getDateField() {
@@ -112,8 +114,6 @@ class TransactionsDetailView extends React.Component {
   }
 
   render() {
-    const deletedVoters = this.getVoters('deleted');
-    const addedVoters = this.getVoters('added');
     const isDelegateVote = this.props.transaction.type === 3;
 
     return (
@@ -133,7 +133,7 @@ class TransactionsDetailView extends React.Component {
             </header> : null
         }
         <div>
-          <TransactionsDetailViewRow condition={!this.props.match.params.id}>
+          <TransactionsDetailViewRow shouldShow={!this.props.match.params.id}>
             <div className={`${grid['col-xs-12']} ${grid['col-sm-7']} ${grid['col-md-7']} ${styles.columnNarrow}`}>
               <header>
                 <h2 className={styles.title}>
@@ -148,7 +148,7 @@ class TransactionsDetailView extends React.Component {
 
           {this.getFirstRow(isDelegateVote)}
 
-          <TransactionsDetailViewRow condition={this.props.transaction.type === 0}>
+          <TransactionsDetailViewRow shouldShow={this.props.transaction.type === 0}>
             {this.getDateField()}
             <TransactionsDetailViewField
               label={this.props.t('Amount (LSK)')}
@@ -161,13 +161,13 @@ class TransactionsDetailView extends React.Component {
               style={styles.amount} />
           </TransactionsDetailViewRow>
 
-          <TransactionsDetailViewRow condition={this.props.transaction.amount === 0}>
+          <TransactionsDetailViewRow shouldShow={this.props.transaction.amount === 0}>
             <TransactionsDetailViewField
               label={this.props.t('Added votes')}
-              value={addedVoters} />
+              value={this.getVoters('added')} />
             <TransactionsDetailViewField
               label={this.props.t('Removed votes')}
-              value={deletedVoters} />
+              value={this.getVoters('deleted')} />
           </TransactionsDetailViewRow>
 
           <TransactionsDetailViewRow>
