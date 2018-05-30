@@ -74,7 +74,10 @@ class TransactionsDetailView extends React.Component {
     );
   }
 
-  getFirstRow(isDelegateVote) {
+  getFirstRow() {
+    const isDelegateRegistration = this.props.transaction.type === 2;
+    const isDelegateVote = this.props.transaction.type === 3;
+
     return (
       <TransactionsDetailViewRow>
         <TransactionsDetailViewField
@@ -91,7 +94,8 @@ class TransactionsDetailView extends React.Component {
               <AccountVisual address={this.props.transaction.senderId} size={43} />
             </figure> : null}
         </TransactionsDetailViewField>
-        {isDelegateVote ? this.getDateField() :
+
+        {isDelegateVote || isDelegateRegistration ? this.getDateField() :
           <TransactionsDetailViewField
             shouldShow={this.props.transaction.recipientId}
             label={this.props.t('Recipient')}
@@ -115,8 +119,6 @@ class TransactionsDetailView extends React.Component {
   }
 
   render() {
-    const isDelegateVote = this.props.transaction.type === 3;
-
     return (
       <div className={`${styles.details}`}>
         {
@@ -147,7 +149,7 @@ class TransactionsDetailView extends React.Component {
             </div>
           </TransactionsDetailViewRow>
 
-          {this.getFirstRow(isDelegateVote)}
+          {this.getFirstRow()}
 
           <TransactionsDetailViewRow shouldShow={this.props.transaction.type === 0}>
             {this.getDateField()}
