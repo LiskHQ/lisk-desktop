@@ -3,62 +3,14 @@ import Input from 'react-toolbox/lib/input';
 import { translate } from 'react-i18next';
 import styles from './autoSuggest.css';
 import routes from './../../constants/routes';
+import mockSearchResults from './searchResults.mock';
 
-const resultsEntities = [
-  'delegates',
-  'addresses',
-  'transactions',
-];
-
-const searchResults =
-  {
-    addresses: [
-      {
-        address: '12334L',
-        balance: 9999,
-      }, {
-        address: '1233456L',
-        balance: 999,
-      }, {
-        address: '12334567L',
-        balance: 99,
-      },
-    ],
-    delegates: [
-      {
-        username: 'peter',
-        rank: 73,
-        address: '123456L',
-      }, {
-        username: 'peter2',
-        rank: 76,
-        address: '1234567L',
-      }, {
-        username: 'peter4',
-        rank: 77,
-        address: '12345678L',
-      },
-    ],
-    transactions: [
-      {
-        id: '1234',
-        height: 56,
-        senderId: '12345L',
-      }, {
-        id: '12345',
-        height: 57,
-        senderId: '12345L',
-      }, {
-        id: '123456',
-        height: 58,
-        senderId: '12345L',
-      },
-    ],
-  };
-
+let searchResults = mockSearchResults;
 class AutoSuggest extends React.Component {
   constructor(props) {
     super(props);
+
+    searchResults = this.props.results || searchResults;
 
     this.delegatesPropsMap = {
       uniqueKey: 'address',
@@ -188,7 +140,7 @@ class AutoSuggest extends React.Component {
         const isSelectedRow = selectedIdx === entityIdxStart + idx;
         let rowProps = {
           onClick: this.submitSearch.bind(this, redirectPath(entity)),
-          className: `${styles.row} ${isSelectedRow ? styles.rowSelected : ''}`,
+          className: `${styles.row} ${isSelectedRow ? styles.rowSelected : ''} ${entityKey}-result`,
         };
         if (isSelectedRow) {
           rowProps = { ...rowProps, ref: (el) => { this.selectedRow = el; } };
@@ -199,13 +151,17 @@ class AutoSuggest extends React.Component {
         </li>;
       });
       return <ul className={styles.resultList} key={entityKey}>
-        <li className={`${styles.row} ${styles.heading}`}>
+        <li className={`${styles.row} ${styles.heading} ${entityKey}-header`}>
           <span>{i18Header}</span>
           <span>{i18Value}</span>
         </li>
         {targetRows}
       </ul>;
     };
+
+    const delegatesResults = searchResults.delegates || [];
+    const addressesResults = searchResults.addresses || [];
+    const transactionsResults = searchResults.transactions || [];
 
     return (
       <div className={styles.wrapper}>
@@ -216,39 +172,37 @@ class AutoSuggest extends React.Component {
           onKeyDown={this.handleKey.bind(this)}
           onChange={this.search.bind(this)}
           autoComplete='off' />
-        <div className={`${styles.autoSuggest} ${this.state.show ? styles.show : ''}`}
-          onBlur={this.handleBlur.bind(this)}>
+        <div className={`${styles.autoSuggest} ${this.state.show ? styles.show : ''} autosuggest-dropdown`}
+          onMouseLeave={this.handleBlur.bind(this)}>
           {
-            resultsEntities.map((entity) => {
-              switch (entity) {
-                case resultsEntities[0] :
-                  return renderEntities({
-                    entities: searchResults[entity],
-                    entityKey: entity,
-                    entityIdxStart: 0,
-                    selectedIdx: this.state.selectedIdx,
-                    ...this.delegatesPropsMap,
-                  });
-                case resultsEntities[1] :
-                  return renderEntities({
-                    entities: searchResults[entity],
-                    entityKey: entity,
-                    entityIdxStart: searchResults.delegates.length,
-                    selectedIdx: this.state.selectedIdx,
-                    ...this.addressesPropsMap,
-                  });
-                case resultsEntities[2] :
-                  return renderEntities({
-                    entities: searchResults[entity],
-                    entityKey: entity,
-                    entityIdxStart: searchResults.delegates.length + searchResults.addresses.length,
-                    selectedIdx: this.state.selectedIdx,
-                    ...this.transactionsPropsMap,
-                  });
-                default:
-              }
-              return null;
-            })
+            delegatesResults.length > 0 ?
+              renderEntities({
+                entities: delegatesResults,
+                entityKey: 'delegates',
+                entityIdxStart: 0,
+                selectedIdx: this.state.selectedIdx,
+                ...this.delegatesPropsMap,
+              }) : null
+          }
+          {
+            addressesResults.length > 0 ?
+              renderEntities({
+                entities: addressesResults,
+                entityKey: 'addresses',
+                entityIdxStart: delegatesResults.length,
+                selectedIdx: this.state.selectedIdx,
+                ...this.addressesPropsMap,
+              }) : null
+          }
+          {
+            transactionsResults.length > 0 ?
+              renderEntities({
+                entities: transactionsResults,
+                entityKey: 'transactions',
+                entityIdxStart: delegatesResults.length + addressesResults.length,
+                selectedIdx: this.state.selectedIdx,
+                ...this.transactionsPropsMap,
+              }) : null
           }
         </div>
       </div>
