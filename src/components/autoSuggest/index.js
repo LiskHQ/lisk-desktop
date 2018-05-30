@@ -3,6 +3,7 @@ import Input from 'react-toolbox/lib/input';
 import { translate } from 'react-i18next';
 import styles from './autoSuggest.css';
 import routes from './../../constants/routes';
+import keyCodes from './../../constants/keyCodes';
 import mockSearchResults from './searchResults.mock';
 
 let searchResults = mockSearchResults;
@@ -32,7 +33,7 @@ class AutoSuggest extends React.Component {
 
     this.transactionsPropsMap = {
       uniqueKey: 'id',
-      redirectPath: entity => `${routes.accounts.pathPrefix}${routes.accounts.path}/${entity.senderId}?id=${entity.id}`,
+      redirectPath: entity => `${routes.transactions.pathPrefix}${routes.transactions.path}/${entity.id}`,
       keyHeader: 'id',
       keyValue: 'height',
       i18Header: this.props.t('Transaction'),
@@ -91,19 +92,19 @@ class AutoSuggest extends React.Component {
 
   handleKey(event) {
     switch (event.keyCode) {
-      case 40: // arrow down
+      case keyCodes.arrowDown :
         this.handleArrowDown();
         break;
-      case 38: // arrow up
+      case keyCodes.arrowUp :
         this.handleArrowUp();
         break;
-      case 27 : // escape
+      case keyCodes.escape :
         this.closeDropdown();
         break;
-      case 13 : // enter
+      case keyCodes.enter :
         this.submitSearch();
         break;
-      case 9 : // tab
+      case keyCodes.tab :
         this.submitSearch();
         break;
       default:
@@ -166,7 +167,7 @@ class AutoSuggest extends React.Component {
     return (
       <div className={styles.wrapper}>
         <Input type='text' placeholder={t('Search delegates, addresses')} name='searchBarInput'
-          className={styles.input}
+          className={`${styles.input} autosuggest-input`}
           theme={styles}
           onFocus={this.handleFocus.bind(this)}
           onKeyDown={this.handleKey.bind(this)}
