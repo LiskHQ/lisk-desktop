@@ -23,8 +23,20 @@ Feature: Voting page
     And I wait 0.5 seconds
     Then I should see text "You’re votes are being processed and will be confirmed. It may take up to 10 minutes to be secured in the blockchain." in "result box message" element
 
-  # Scenario: should allow to select delegates by URL
-  #   Given I'm logged in as "delegate candidate"
-  #   When I go to "/main/voting/vote?votes=genesis_12,genesis_14,genesis_16"
-  #   And I wait 1 seconds
-  #   And I should see 3 instances of "selected row"
+  Scenario: should allow to select delegates by URL
+    Given I'm logged in as "delegate candidate"
+    When I go to "/delegates/vote?votes=genesis_12,genesis_14,genesis_16"
+    And I wait 1 seconds
+    Then I should see text "genesis_12, genesis_14, genesis_16" in "upvotes message" element
+    When I click "next"
+    And I click "confirm"
+    And I wait 0.5 seconds
+    Then I should see text "You’re votes are being processed and will be confirmed. It may take up to 10 minutes to be secured in the blockchain." in "result box message" element
+    And I wait 10 seconds
+    And I go to "/delegates/vote?unvotes=genesis_12"
+    When I refresh the page
+    Then I should see text "genesis_12" in "unvotes message" element
+    When I go to "/delegates/vote?votes=genesis_14,genesis_16"
+    When I refresh the page
+    And I wait 1 seconds
+    Then I should see "alreadyVoted-message" element
