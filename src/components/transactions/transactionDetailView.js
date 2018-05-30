@@ -14,12 +14,13 @@ import LiskAmount from '../liskAmount';
 import Amount from './amount';
 import routes from './../../constants/routes';
 
-const TransactionsDetailViewField = ({ value, label, style, children, column }) =>
-  <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${column ? styles.column : styles.columnNarrow}`}>
-    <div className={styles.label}>{label}</div>
-    {children}
-    <div className={`${styles.value} ${style}`}>{value}</div>
-  </div>;
+const TransactionsDetailViewField = ({ value, label, style, children, column, shouldShow }) => (
+  (shouldShow === null || shouldShow === false) ? null :
+    <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${column ? styles.column : styles.columnNarrow}`}>
+      <div className={styles.label}>{label}</div>
+      {children}
+      <div className={`${styles.value} ${style}`}>{value}</div>
+    </div>);
 
 const TransactionsDetailViewRow = ({ children, shouldShow }) => (
   (shouldShow === null || shouldShow === false) ? null :
@@ -92,14 +93,14 @@ class TransactionsDetailView extends React.Component {
         </TransactionsDetailViewField>
         {isDelegateVote ? this.getDateField() :
           <TransactionsDetailViewField
+            shouldShow={this.props.transaction.recipientId}
             label={this.props.t('Recipient')}
             style={styles.sender}
             value={
-              this.props.transaction.recipientId ?
-                <Link className={`${styles.addressLink} ${styles.clickable}`} id='receiver-address'
-                  to={`${routes.explorer.path}${routes.accounts.path}/${this.props.transaction.recipientId}`}>
-                  {this.props.transaction.recipientId}
-                </Link> : '-'
+              <Link className={`${styles.addressLink} ${styles.clickable}`} id='receiver-address'
+                to={`${routes.explorer.path}${routes.accounts.path}/${this.props.transaction.recipientId}`}>
+                {this.props.transaction.recipientId}
+              </Link>
             }
             column>
             {this.props.transaction.recipientId ?
@@ -161,7 +162,9 @@ class TransactionsDetailView extends React.Component {
               style={styles.amount} />
           </TransactionsDetailViewRow>
 
-          <TransactionsDetailViewRow shouldShow={this.props.transaction.amount === 0}>
+          <TransactionsDetailViewRow shouldShow={
+            this.props.transaction.amount === 0 &&
+            this.props.transaction.recipientId}>
             <TransactionsDetailViewField
               label={this.props.t('Added votes')}
               value={this.getVoters('added')} />
