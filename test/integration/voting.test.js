@@ -2,7 +2,7 @@ import { step } from 'mocha-steps';
 import thunk from 'redux-thunk';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import { stub, match } from 'sinon';
+import { stub, match, spy } from 'sinon';
 // import thunk from 'redux-thunk';
 import { prepareStore, renderWithRouter } from '../utils/applicationInit';
 import GenericStepDefinition from '../utils/genericStepDefinition';
@@ -137,7 +137,12 @@ const loginProcess = (votes = []) => {
       account,
     });
 
-  wrapper = mount(renderWithRouter(Voting, store, { history: { location: { search: '' } } }));
+  wrapper = mount(renderWithRouter(Voting, store, {
+    history: {
+      location: { search: '' },
+      replace: spy(),
+    },
+  }));
   helper = new Helper(wrapper, store);
   expect(store.getState().account).to.be.an('Object');
   expect(store.getState().voting).to.be.an('Object');
