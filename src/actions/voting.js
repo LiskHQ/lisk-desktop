@@ -147,7 +147,7 @@ export const delegatesFetched = ({ activePeer, q, offset, refresh }) =>
         q,
       },
     ).then(({ delegates, totalCount }) => {
-      updateDelegateCache(delegates, activePeer.options.address || activePeer.options.name);
+      updateDelegateCache(delegates, activePeer);
       dispatch(delegatesAdded({ list: delegates, totalDelegates: totalCount, refresh }));
     });
   };

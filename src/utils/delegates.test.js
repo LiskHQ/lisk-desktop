@@ -19,7 +19,8 @@ describe('Delegates Utils', () => {
   };
 
   it('sets and gets the item', () => {
-    updateDelegateCache(item, 'item');
-    expect(loadDelegateCache('item')).to.eql(itemExpected);
+    const activePeer = { options: { address: 'item' } };
+    updateDelegateCache(item, activePeer);
+    expect(loadDelegateCache(activePeer)).to.eql(itemExpected);
   });
 });

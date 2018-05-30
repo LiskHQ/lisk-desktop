@@ -45,9 +45,7 @@ export const loadTransactionsFinish = accountUpdated =>
 
 export const loadTransactions = ({ activePeer, publicKey, address }) =>
   (dispatch) => {
-    const lastActiveAddress = publicKey ?
-      extractAddress(publicKey) :
-      null;
+    const lastActiveAddress = publicKey && extractAddress(publicKey);
     const isSameAccount = lastActiveAddress === address;
     loadingStarted(actionTypes.transactionsLoad);
     transactions({ activePeer, address, limit: 25 })
@@ -95,8 +93,7 @@ export const loadTransaction = ({ activePeer, id }) =>
       .then((response) => {
         const added = (response.transaction.votes && response.transaction.votes.added) || [];
         const deleted = (response.transaction.votes && response.transaction.votes.deleted) || [];
-        const localStorageDelegates = activePeer.options &&
-          loadDelegateCache(activePeer.options.address || activePeer.options.name);
+        const localStorageDelegates = activePeer.options && loadDelegateCache(activePeer);
         deleted.forEach((publicKey) => {
           const address = extractAddress(publicKey);
           const storedDelegate = localStorageDelegates[address];
