@@ -5,10 +5,7 @@ import regex from './../../utils/regex';
 const searchAddresses = ({ activePeer, searchTerm }) => new Promise((resolve, reject) =>
   getAccount(activePeer, searchTerm)
     .then(response => resolve({ addresses: [response.account] }))
-    .catch((err) => {
-      console.log('getAccount-->', err);
-      reject({ addresses: [] });
-    }));
+    .catch(() => reject({ addresses: [] })));
 
 const searchDelegates = ({ activePeer, searchTerm }) => new Promise((resolve, reject) =>
   listDelegates(activePeer, {

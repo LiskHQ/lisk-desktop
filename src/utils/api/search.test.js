@@ -1,14 +1,12 @@
 import { expect } from 'chai';
-import { stub, mock, match } from 'sinon';
+import { stub } from 'sinon';
 import searchAll from './search';
 import * as peersAPI from './peers';
+import * as accountsAPI from './account';
 
-describe.only('Utils: Search', () => {
+describe('Utils: Search', () => {
   let peersAPIStub;
-  let activePeerMock;
-  let activePeer = {
-    getAccount: () => {},
-  };
+  let getAccountStub;
 
   const accountsResponse = { account: { address: '1337L', balance: 1110 }, success: true };
   const delegatesResponse = {
@@ -36,31 +34,30 @@ describe.only('Utils: Search', () => {
 
   beforeEach(() => {
     peersAPIStub = stub(peersAPI, 'requestToActivePeer');
-    activePeerMock = mock(activePeer);
+    getAccountStub = stub(accountsAPI, 'getAccount');
+
     // address match
-    activePeerMock.expects('getAccount').twice().withArgs('1337L').callsArgWith(1, accountsResponse);
+    getAccountStub.withArgs(undefined, '1337L').returnsPromise().resolves(accountsResponse);
     peersAPIStub.withArgs(undefined, 'delegates/search', delegatesUrlParams).returnsPromise().resolves(delegatesResponse);
     peersAPIStub.withArgs(undefined, 'transactions/get', transactionsUrlParams).returnsPromise().resolves(transactionsResponse);
 
     // txSearch match
-    activePeerMock.expects('getAccount').withArgs('1337').callsArgWith(1, accountsResponse);
+    getAccountStub.withArgs(undefined, '1337').returnsPromise().resolves(accountsResponse);
     peersAPIStub.withArgs(undefined, 'delegates/search', delegatesUrlParamsTxMatch).returnsPromise().resolves(delegatesResponse);
     peersAPIStub.withArgs(undefined, 'transactions/get', transactionsUrlParamsTxMatch).returnsPromise().resolves(transactionsResponse);
   });
 
   afterEach(() => {
     peersAPIStub.restore();
-    activePeerMock.restore();
+    getAccountStub.restore();
   });
 
-  it.only('should search {addresses,delegates} when only address pattern matched', () => {
-    searchAll({ activePeer, searchTerm: '1337L' }).then(response => console.log(response));
-    return expect(searchAll({ activePeer, searchTerm: '1337L' })).to.eventually.deep.equal([
+  it('should search {addresses,delegates} when only address pattern matched', () => 
+    expect(searchAll({ searchTerm: '1337L' })).to.eventually.deep.equal([
       { addresses: [accountsResponse.account] },
       { transactions: [] },
       { delegates: delegatesResponse.delegates },
-    ]);
-  });
+    ]));
 
   it('should search {transactions,delegates} when only transaction pattern matched', () =>
     expect(searchAll({ searchTerm: '1337' })).to.eventually.deep.equal([
@@ -79,6 +76,7 @@ describe.only('Utils: Search', () => {
   });
 
   it('should still search for {delegates} when failing {addresses} request', () => {
+    getAccountStub.withArgs(undefined, '1337L').returnsPromise().rejects({ success: false });
     return expect(searchAll({ searchTerm: '1337L' })).to.eventually.deep.equal([
       { addresses: [] },
       { transactions: [] },
