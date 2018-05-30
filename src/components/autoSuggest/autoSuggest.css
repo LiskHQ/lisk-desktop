@@ -108,5 +108,10 @@
     bottom: 0;
     left: 0;
     right: 0;
+
+    &::before,
+    &::after {
+      background-color: var(--color-grayscale-light);
+    }
   }
 }
