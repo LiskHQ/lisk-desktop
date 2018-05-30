@@ -68,42 +68,58 @@ class AutoSuggest extends React.Component {
     // eslint-disable-next-line no-unused-vars
     const { history, t, results } = this.props;
 
-    const renderDelegates = (delegates) => {
-      const delegatesRows = delegates.map(delegate =>
+    const renderEntities = ({
+      entities,
+      entityKey,
+      uniqueKey,
+      redirectPath,
+      keyHeader,
+      keyValue,
+      i18Header,
+      i18Value }) => {
+      const targetRows = entities.map(entity =>
         <li
           onClick={this.submitSearch.bind(this,
-            `${routes.accounts.pathPrefix}${routes.accounts.path}/${delegate.address}`,
+            `${redirectPath}${entity[uniqueKey]}`,
           )}
-          className={styles.row} key={delegate.address}>
-          <span>{delegate.username}</span>
-          <span>{delegate.rank}</span>
+          className={styles.row} key={entity[uniqueKey]}>
+          <span>{entity[keyHeader]}</span>
+          <span>{entity[keyValue]}</span>
         </li>);
-      return <ul className={styles.resultList} key='delegates'>
+      return <ul className={styles.resultList} key={entityKey}>
         <li className={`${styles.row} ${styles.heading}`}>
-          <span>{t('Delegate')}</span>
-          <span>{t('Rank')}</span>
+          <span>{i18Header}</span>
+          <span>{i18Value}</span>
         </li>
-        {delegatesRows}
+        {targetRows}
       </ul>;
     };
 
-    const renderAddresses = (addresses) => {
-      const addressesRows = addresses.map(account =>
-        <li
-          onClick={this.submitSearch.bind(this,
-            `${routes.accounts.pathPrefix}${routes.accounts.path}/${account.address}`,
-          )}
-          className={styles.row} key={account.address}>
-          <span>{account.address}</span>
-          <span>{account.balance}</span>
-        </li>);
-      return <ul className={styles.resultList} key='addresses'>
-        <li className={`${styles.row} ${styles.heading}`}>
-          <span>{t('Address')}</span>
-          <span>{t('Balance')}</span>
-        </li>
-        {addressesRows}
-      </ul>;
+    const delegatesPropsMap = {
+      uniqueKey: 'address',
+      redirectPath: `${routes.accounts.pathPrefix}${routes.accounts.path}/`,
+      keyHeader: 'username',
+      keyValue: 'rank',
+      i18Header: t('Delegate'),
+      i18Value: t('Rank'),
+    };
+
+    const addressesPropsMap = {
+      uniqueKey: 'address',
+      redirectPath: `${routes.accounts.pathPrefix}${routes.accounts.path}/`,
+      keyHeader: 'address',
+      keyValue: 'balance',
+      i18Header: t('Address'),
+      i18Value: t('Balance'),
+    };
+
+    const transactionsPropsMap = {
+      uniqueKey: 'id',
+      redirectPath: `${routes.wallet.path}?id=`,
+      keyHeader: 'id',
+      keyValue: 'height',
+      i18Header: t('Transaction'),
+      i18Value: t('Height'),
     };
 
     return (
@@ -120,9 +136,23 @@ class AutoSuggest extends React.Component {
             resultsEntities.map((entity) => {
               switch (entity) {
                 case resultsEntities[0] :
-                  return renderDelegates(searchResults[entity]);
+                  return renderEntities({
+                    entities: searchResults[entity],
+                    entityKey: entity,
+                    ...delegatesPropsMap,
+                  });
                 case resultsEntities[1] :
-                  return renderAddresses(searchResults[entity]);
+                  return renderEntities({
+                    entities: searchResults[entity],
+                    entityKey: entity,
+                    ...addressesPropsMap,
+                  });
+                case resultsEntities[2] :
+                  return renderEntities({
+                    entities: searchResults[entity],
+                    entityKey: entity,
+                    ...transactionsPropsMap,
+                  });
                 default:
               }
               return null;
