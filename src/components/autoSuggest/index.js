@@ -14,13 +14,13 @@ const searchResults =
   {
     addresses: [
       {
-        address: '12334',
+        address: '12334L',
         balance: 9999,
       }, {
-        address: '1233456',
+        address: '1233456L',
         balance: 999,
       }, {
-        address: '12334567',
+        address: '12334567L',
         balance: 99,
       },
     ],
@@ -28,15 +28,15 @@ const searchResults =
       {
         username: 'peter',
         rank: 73,
-        address: '123456',
+        address: '123456L',
       }, {
         username: 'peter2',
         rank: 76,
-        address: '1234567',
+        address: '1234567L',
       }, {
         username: 'peter4',
         rank: 77,
-        address: '12345678',
+        address: '12345678L',
       },
     ],
     transactions: [
@@ -57,11 +57,40 @@ class AutoSuggest extends React.Component {
   constructor(props) {
     super(props);
 
+    this.delegatesPropsMap = {
+      uniqueKey: 'address',
+      redirectPath: `${routes.accounts.pathPrefix}${routes.accounts.path}/`,
+      keyHeader: 'username',
+      keyValue: 'rank',
+      i18Header: this.props.t('Delegate'),
+      i18Value: this.props.t('Rank'),
+    };
+
+    this.addressesPropsMap = {
+      uniqueKey: 'address',
+      redirectPath: `${routes.accounts.pathPrefix}${routes.accounts.path}/`,
+      keyHeader: 'address',
+      keyValue: 'balance',
+      i18Header: this.props.t('Address'),
+      i18Value: this.props.t('Balance'),
+    };
+
+    this.transactionsPropsMap = {
+      uniqueKey: 'id',
+      redirectPath: `${routes.wallet.path}?id=`,
+      keyHeader: 'id',
+      keyValue: 'height',
+      i18Header: this.props.t('Transaction'),
+      i18Value: this.props.t('Height'),
+    };
+
     let resultsLength = 0;
     Object.keys(searchResults).map((resultKey) => {
       resultsLength += searchResults[resultKey].length;
       return resultsLength;
     });
+
+    this.selectedRow = null;
 
     this.state = {
       show: false,
@@ -69,12 +98,19 @@ class AutoSuggest extends React.Component {
       resultsLength,
     };
   }
+
   submitSearch(urlSearch) {
+    this.closeDropdown();
+    if (!urlSearch) {
+      this.selectedRow.click();
+      return;
+    }
     this.props.history.push(urlSearch);
   }
 
   /* eslint-disable class-methods-use-this,no-unused-vars */
   search(searchTerm) {
+    if (!this.state.show) this.setState({ show: true });
   }
   /* eslint-enable class-methods-use-this,no-unused-vars */
 
@@ -91,8 +127,9 @@ class AutoSuggest extends React.Component {
   }
 
   handleBlur() {
-    setTimeout(() => this.closeDropdown(), 100);
+    this.closeDropdown();
   }
+
   handleFocus() {
     this.showDropdown();
   }
@@ -109,8 +146,10 @@ class AutoSuggest extends React.Component {
         this.closeDropdown();
         break;
       case 13 : // enter
+        this.submitSearch();
         break;
       case 9 : // tab
+        this.submitSearch();
         break;
       default:
         break;
@@ -142,16 +181,20 @@ class AutoSuggest extends React.Component {
       entityIdxStart,
       selectedIdx,
     }) => {
-      const targetRows = entities.map((entity, idx) =>
-        <li
-          onClick={this.submitSearch.bind(this,
-            `${redirectPath}${entity[uniqueKey]}`,
-          )}
-          className={`${styles.row} ${selectedIdx === entityIdxStart + idx ? styles.rowSelected : ''}`}
-          key={entity[uniqueKey]}>
+      const targetRows = entities.map((entity, idx) => {
+        const isSelectedRow = selectedIdx === entityIdxStart + idx;
+        let rowProps = {
+          onClick: this.submitSearch.bind(this, `${redirectPath}${entity[uniqueKey]}`),
+          className: `${styles.row} ${isSelectedRow ? styles.rowSelected : ''}`,
+        };
+        if (isSelectedRow) {
+          rowProps = { ...rowProps, ref: (el) => { this.selectedRow = el; } };
+        }
+        return <li {...rowProps} key={entity[uniqueKey]}>
           <span>{entity[keyHeader]}</span>
           <span>{entity[keyValue]}</span>
-        </li>);
+        </li>;
+      });
       return <ul className={styles.resultList} key={entityKey}>
         <li className={`${styles.row} ${styles.heading}`}>
           <span>{i18Header}</span>
@@ -159,33 +202,6 @@ class AutoSuggest extends React.Component {
         </li>
         {targetRows}
       </ul>;
-    };
-
-    const delegatesPropsMap = {
-      uniqueKey: 'address',
-      redirectPath: `${routes.accounts.pathPrefix}${routes.accounts.path}/`,
-      keyHeader: 'username',
-      keyValue: 'rank',
-      i18Header: t('Delegate'),
-      i18Value: t('Rank'),
-    };
-
-    const addressesPropsMap = {
-      uniqueKey: 'address',
-      redirectPath: `${routes.accounts.pathPrefix}${routes.accounts.path}/`,
-      keyHeader: 'address',
-      keyValue: 'balance',
-      i18Header: t('Address'),
-      i18Value: t('Balance'),
-    };
-
-    const transactionsPropsMap = {
-      uniqueKey: 'id',
-      redirectPath: `${routes.wallet.path}?id=`,
-      keyHeader: 'id',
-      keyValue: 'height',
-      i18Header: t('Transaction'),
-      i18Value: t('Height'),
     };
 
     return (
@@ -208,7 +224,7 @@ class AutoSuggest extends React.Component {
                     entityKey: entity,
                     entityIdxStart: 0,
                     selectedIdx: this.state.selectedIdx,
-                    ...delegatesPropsMap,
+                    ...this.delegatesPropsMap,
                   });
                 case resultsEntities[1] :
                   return renderEntities({
@@ -216,7 +232,7 @@ class AutoSuggest extends React.Component {
                     entityKey: entity,
                     entityIdxStart: searchResults.delegates.length,
                     selectedIdx: this.state.selectedIdx,
-                    ...addressesPropsMap,
+                    ...this.addressesPropsMap,
                   });
                 case resultsEntities[2] :
                   return renderEntities({
@@ -224,7 +240,7 @@ class AutoSuggest extends React.Component {
                     entityKey: entity,
                     entityIdxStart: searchResults.delegates.length + searchResults.addresses.length,
                     selectedIdx: this.state.selectedIdx,
-                    ...transactionsPropsMap,
+                    ...this.transactionsPropsMap,
                   });
                 default:
               }
