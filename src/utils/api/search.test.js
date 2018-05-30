@@ -52,7 +52,7 @@ describe('Utils: Search', () => {
     getAccountStub.restore();
   });
 
-  it('should search {addresses,delegates} when only address pattern matched', () => 
+  it('should search {addresses,delegates} when only address pattern matched', () =>
     expect(searchAll({ searchTerm: '1337L' })).to.eventually.deep.equal([
       { addresses: [accountsResponse.account] },
       { transactions: [] },
