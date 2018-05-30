@@ -137,7 +137,7 @@ const steps = [
   },
   // Not enough data from endpoint to make 1 month (max 19 days)
   {
-    title: '14d',
+    title: '2w',
     span: 'day',
     length: 14,
     timeFormat: {
