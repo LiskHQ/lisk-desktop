@@ -135,10 +135,11 @@ const steps = [
       minUnit: 'day',
     },
   },
+  // Not enough data from endpoint to make 1 month (max 19 days)
   {
-    title: '1m',
+    title: '2w',
     span: 'day',
-    length: 30,
+    length: 14,
     timeFormat: {
       minUnit: 'day',
     },

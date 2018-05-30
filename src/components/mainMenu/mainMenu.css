@@ -30,7 +30,7 @@
 
 .logo {
   margin: 40px 0 44px;
-  height: 60px;
+  height: 50px;
 }
 
 .more {
@@ -159,6 +159,10 @@
   & span {
     display: block;
     margin: 10px 0 0;
+  }
+
+  & img {
+    width: 55px;
   }
 
   & > .rippleWrapper {

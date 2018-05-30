@@ -3,6 +3,7 @@ import {
   listDelegates,
   vote,
 } from '../utils/api/delegate';
+import { updateDelegateCache } from '../utils/delegates';
 import { passphraseUsed } from './account';
 import Fees from '../constants/fees';
 import actionTypes from '../constants/actions';
@@ -95,7 +96,7 @@ export const votePlaced = ({ activePeer, passphrase, account,
       unvotedList,
       secondSecret,
     ).then((response) => {
-      // Ad to list
+      // Add to list
       dispatch(pendingVotesAdded());
 
       // Add the new transaction
@@ -146,6 +147,7 @@ export const delegatesFetched = ({ activePeer, q, offset, refresh }) =>
         q,
       },
     ).then(({ delegates, totalCount }) => {
+      updateDelegateCache(delegates, activePeer);
       dispatch(delegatesAdded({ list: delegates, totalDelegates: totalCount, refresh }));
     });
   };

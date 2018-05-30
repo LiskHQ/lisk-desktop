@@ -103,14 +103,6 @@
     border-bottom: solid 1px transparent;
     transition: all ease 250ms;
 
-    &:-moz-placeholder,
-    &::-moz-placeholder,
-    &::-webkit-input-placeholder {
-      font-weight: 400;
-      color: var(--color-grayscale-medium);
-      font-size: 15px;
-    }
-
     &.desktopInput {
       display: inline-block;
     }

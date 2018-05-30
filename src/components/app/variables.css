@@ -53,7 +53,7 @@ or "warn/action" ineastd of "red/green"
   --font-weight-bold: 600;
   --font-weight-very-bold: 700;
   --subtitle-font-size: 16px;
-  --main-menu-font-size: 18px;
+  --main-menu-font-size: 15px;
   --paragraph-font-size-l: 15px;
   --paragraph-font-size-s: 14px;
   --input-font-size: 16px;
@@ -77,8 +77,8 @@ or "warn/action" ineastd of "red/green"
   /*************************
         Sizes
   *************************/
-  --sidebar-width: 162px;
-  --sidebar-width-xl: 192px;
+  --sidebar-width: 115px;
+  --sidebar-width-xl: 142px;
   --main-box-width: 1291px;
   --main-box-height: 75vh; /* stylelint-disable-line */
   --border-radius-normal: 3px;

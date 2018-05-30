@@ -35,7 +35,7 @@ describe('Result Box', () => {
       copyToClipboard: () => {},
       finalCallback: () => {},
       t: () => {},
-      history: { location: {}, push: () => {} },
+      history: { location: {}, push: () => {}, replace: () => {} },
     };
 
     wrapper = mount(<ResultBox {...props} />, options);

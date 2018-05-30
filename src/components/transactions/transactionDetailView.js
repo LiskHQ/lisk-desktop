@@ -37,13 +37,16 @@ class TransactionsDetailView extends React.Component {
     const params = new URLSearchParams(search);
     const transactionId = params.get('id');
 
-    if (props.peers.data &&
-      transactionId) {
+    if (props.peers.data && transactionId) {
       this.props.loadTransaction({
         activePeer: props.peers.data,
         id: transactionId,
       });
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.location && !nextProps.location.search) this.props.prevStep();
   }
 
   getVoters(dataName) {
@@ -125,10 +128,8 @@ class TransactionsDetailView extends React.Component {
           this.props.prevStep ?
             <header>
               <h3>
-                <small className={`${styles.backButton} transaction-details-back-button`} onClick={() => {
-                  this.props.history.push(this.props.history.location.pathname);
-                  this.props.prevStep();
-                }}>
+                <small className={`${styles.backButton} transaction-details-back-button`}
+                  onClick={() => this.props.history.push(this.props.history.location.pathname)}>
                   <FontIcon className={`${styles.arrow}`} value='arrow-left'/>
                   <span className={`${styles.text}`}>{this.props.t('Back to overview')}</span>
                 </small>
