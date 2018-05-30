@@ -54,13 +54,24 @@ const searchResults =
   };
 
 class AutoSuggest extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      show: false,
+    };
+  }
   submitSearch(urlSearch) {
     this.props.history.push(urlSearch);
   }
 
   /* eslint-disable class-methods-use-this */
   handleKey() {}
-  handleBlur() {}
+  handleBlur() {
+    this.setState({ show: false });
+  }
+  handleFocus() {
+    this.setState({ show: true });
+  }
   search() {}
   /* eslint-enable class-methods-use-this */
 
@@ -127,11 +138,12 @@ class AutoSuggest extends React.Component {
         <Input type='text' placeholder={t('Search delegates, addresses')} name='searchBarInput'
           className={styles.input}
           theme={styles}
+          onFocus={this.handleFocus.bind(this)}
           onBlur={this.handleBlur.bind(this)}
           onKeyDown={this.handleKey.bind(this)}
           onChange={this.search.bind(this)}
           autoComplete='off' />
-        <div className={styles.autoSuggest}>
+        <div className={`${styles.autoSuggest} ${this.state.show ? styles.show : ''}`}>
           {
             resultsEntities.map((entity) => {
               switch (entity) {

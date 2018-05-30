@@ -11,7 +11,7 @@
 }
 
 .autoSuggest {
-  display: flex;
+  display: none;
   flex-direction: column;
   align-content: flex-start;
   background-color: var(--color-white);
@@ -24,6 +24,10 @@
   box-shadow: 0 22px 22px 0 rgba(0, 0, 0, 0.22);
   border-top: none;
   padding-bottom: 24px;
+}
+
+.show {
+  display: flex;
 }
 
 .resultList {
