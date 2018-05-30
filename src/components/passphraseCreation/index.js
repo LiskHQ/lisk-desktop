@@ -1,6 +1,7 @@
 import React from 'react';
 import { generateSeed, generatePassphrase } from './../../utils/passphrase';
 import { extractAddress } from '../../utils/account';
+import checkDevice from '../../utils/checkDevice';
 
 class PassphraseCreation extends React.Component {
   constructor() {
@@ -8,24 +9,18 @@ class PassphraseCreation extends React.Component {
     this.state = {
       step: 'generate',
       address: null,
-      lastCaptured: {
-        x: 0,
-        y: 0,
-      },
       headingClass: '',
     };
-    this.isTouchDevice = false;
+    this.isTouchDevice = checkDevice();
     this.lastCaptured = {
       x: 0,
       y: 0,
       time: new Date(),
     };
-    this.count = 0;
     this.eventNormalizer = this._eventNormalizer.bind(this);
   }
 
   addEventListener() {
-    this.isTouchDevice = this.checkDevice(this.props.agent);
     const eventName = this.isTouchDevice ? 'devicemotion' : 'mousemove';
     window.addEventListener(eventName, this.eventNormalizer, true);
   }
@@ -35,66 +30,46 @@ class PassphraseCreation extends React.Component {
     window.removeEventListener(eventName, this.eventNormalizer, true);
   }
 
-  /**
-   * Tests useragent with a regexp and defines if the account is mobile device
-   * it is on class so that we can mock it in unit tests
-   *
-   * @param {String} [agent] - The useragent string, This parameter is used for
-   *  unit testing purpose
-   * @returns {Boolean} - whether the agent represents a mobile device or not
-   */
-  // eslint-disable-next-line class-methods-use-this
-  checkDevice(agent, os) {
-    let reg = /iPad|iPhone|iPod/i;
-    if (!os) {
-      reg = /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i;
-    } else if (os === 'android') {
-      reg = /android/i;
-    }
-    return (reg.test(agent || navigator.userAgent || navigator.vendor || window.opera));
-  }
-
   _eventNormalizer(e) {
     let x = 0;
     let y = 0;
-    let ratio = 1;
     if (this.isTouchDevice) {
-      if (this.checkDevice(this.props.agent, 'android')) {
-        ratio = 10;
-      }
+      const ratio = checkDevice(this.props.agent, 'android') ? 10 : 1;
       x = e.rotationRate.alpha * ratio;
       y = e.rotationRate.beta * ratio;
-
-      this.count += 1;
 
       const deltaX = Math.abs(x - this.lastCaptured.x);
       const deltaY = Math.abs(y - this.lastCaptured.y);
       const time = new Date();
 
-      if ((Math.abs(x) > 10 || Math.abs(y)) && (deltaX > 10 || deltaY > 10)
-        && (time - this.lastCaptured.time > Math.random() * 500)) {
-        this.lastCaptured = { x, y, time };
-        this.seedGenerator.call(this, x / 10, y / 10);
+      const throttle = time - this.lastCaptured.time > Math.random() * 500;
+      const deviceIsTilting = (Math.abs(x) > 10 || Math.abs(y) > 10)
+        && (deltaX > 10 || deltaY > 10);
+
+      if (deviceIsTilting && throttle) {
+        this.seedGenerator.call(this, x, y, time);
       }
     } else {
       x = e.pageX;
       y = e.pageY;
 
-      if (typeof nativeEvent === 'string' || Math.sqrt(((x - this.state.lastCaptured.x) ** 2) +
-          ((y - this.state.lastCaptured.y) ** 2)) > 120) {
+      const deltaX = x - this.lastCaptured.x;
+      const deltaY = y - this.lastCaptured.y;
+
+      const mouseWasMovedSufficiently = Math.sqrt((deltaX ** 2) + (deltaY ** 2)) > 120;
+      if (mouseWasMovedSufficiently) {
         this.seedGenerator.call(this, x, y);
       }
     }
   }
 
-  seedGenerator(pageX, pageY) {
+  seedGenerator(pageX, pageY, time) {
     if (!this.state.data || this.state.data.percentage < 100) {
-      this.setState({
-        lastCaptured: {
-          x: pageX,
-          y: pageY,
-        },
-      });
+      this.lastCaptured = {
+        x: pageX,
+        y: pageY,
+        time,
+      };
 
       // defining diffSeed to use for animating HEX numbers
       // note: in the first iteration data is undefined
