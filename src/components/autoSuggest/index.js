@@ -106,10 +106,6 @@ class AutoSuggest extends React.Component {
     this.closeDropdown();
   }
 
-  handleFocus() {
-    if (this.state.value !== '') this.showDropdown();
-  }
-
   handleKey(event) {
     switch (event.keyCode) {
       case keyCodes.arrowDown :
@@ -161,7 +157,6 @@ class AutoSuggest extends React.Component {
           innerRef={(el) => { this.inputRef = el; }}
           className={`${styles.input} autosuggest-input`}
           theme={styles}
-          onFocus={this.handleFocus.bind(this)}
           onKeyDown={this.handleKey.bind(this)}
           onChange={this.search.bind(this)}
           autoComplete='off'>
