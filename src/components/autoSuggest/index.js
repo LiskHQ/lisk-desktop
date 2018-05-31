@@ -6,6 +6,7 @@ import { FontIcon } from '../fontIcon';
 import resultList from './resultList';
 import routes from './../../constants/routes';
 import keyCodes from './../../constants/keyCodes';
+import { visitAndSaveSearch } from './../search/keyAction';
 import mockSearchResults from './searchResults.mock';
 
 let searchResults = mockSearchResults;
@@ -118,7 +119,8 @@ class AutoSuggest extends React.Component {
         this.closeDropdown();
         break;
       case keyCodes.enter :
-        this.submitSearch();
+        visitAndSaveSearch(this.state.value, this.props.history);
+        this.resetSearch();
         break;
       case keyCodes.tab :
         this.submitSearch();
@@ -163,7 +165,8 @@ class AutoSuggest extends React.Component {
           {
             this.state.show ?
               <FontIcon value='close' className={styles.icon} onClick={this.resetSearch.bind(this)} /> :
-              <FontIcon value='search' className={`${styles.icon} ${styles.iconSearch}`} onClick={() => this.submitSearch.bind(this)} />
+              <FontIcon value='search' className={`${styles.icon} ${styles.iconSearch}`}
+                onClick={() => { visitAndSaveSearch(this.state.value, this.props.history); }} />
           }
         </Input>
         <div className={`${styles.autoSuggest} ${this.state.show ? styles.show : ''} autosuggest-dropdown`}
