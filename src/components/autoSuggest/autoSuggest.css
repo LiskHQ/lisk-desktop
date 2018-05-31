@@ -53,10 +53,14 @@
     background-color: rgba(205, 218, 229, 0.2);
   }
 
-  & span {
+  & > span {
     margin: 0 24px;
     line-height: 36px;
   }
+}
+
+.rowResult {
+  cursor: pointer;
 }
 
 .rowSelected {

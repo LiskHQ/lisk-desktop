@@ -1,6 +1,7 @@
 import React from 'react';
 import Input from 'react-toolbox/lib/input';
 import styles from './autoSuggest.css';
+import LiskAmount from './../liskAmount';
 import routes from './../../constants/routes';
 import keyCodes from './../../constants/keyCodes';
 import mockSearchResults from './searchResults.mock';
@@ -16,7 +17,7 @@ class AutoSuggest extends React.Component {
       uniqueKey: 'address',
       redirectPath: entity => `${routes.accounts.pathPrefix}${routes.accounts.path}/${entity.address}`,
       keyHeader: 'username',
-      keyValue: 'rank',
+      keyValue: entity => (<span>{entity.rank}</span>),
       i18Header: this.props.t('Delegate'),
       i18Value: this.props.t('Rank'),
     };
@@ -25,7 +26,7 @@ class AutoSuggest extends React.Component {
       uniqueKey: 'address',
       redirectPath: entity => `${routes.accounts.pathPrefix}${routes.accounts.path}/${entity.address}`,
       keyHeader: 'address',
-      keyValue: 'balance',
+      keyValue: entity => (<span><LiskAmount val={entity.balance}/> LSK</span>),
       i18Header: this.props.t('Address'),
       i18Value: this.props.t('Balance'),
     };
@@ -34,7 +35,7 @@ class AutoSuggest extends React.Component {
       uniqueKey: 'id',
       redirectPath: entity => `${routes.transactions.pathPrefix}${routes.transactions.path}/${entity.id}`,
       keyHeader: 'id',
-      keyValue: 'height',
+      keyValue: entity => (<span>{entity.height}</span>),
       i18Header: this.props.t('Transaction'),
       i18Value: this.props.t('Height'),
     };
@@ -141,14 +142,16 @@ class AutoSuggest extends React.Component {
         const isSelectedRow = selectedIdx === entityIdxStart + idx;
         let rowProps = {
           onClick: this.submitSearch.bind(this, redirectPath(entity)),
-          className: `${styles.row} ${isSelectedRow ? styles.rowSelected : ''} ${entityKey}-result`,
+          className: `${styles.row} ${styles.rowResult} ${isSelectedRow ? styles.rowSelected : ''} ${entityKey}-result`,
         };
         if (isSelectedRow) {
           rowProps = { ...rowProps, ref: (el) => { this.selectedRow = el; } };
         }
         return <li {...rowProps} key={entity[uniqueKey]}>
           <span>{entity[keyHeader]}</span>
-          <span>{entity[keyValue]}</span>
+          {
+            keyValue(entity)
+          }
         </li>;
       });
       return <ul className={styles.resultList} key={entityKey}>

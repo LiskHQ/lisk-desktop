@@ -2,13 +2,13 @@ const mockSearchResults = {
   addresses: [
     {
       address: '12334L',
-      balance: 9999,
+      balance: '4932970292',
     }, {
       address: '1233456L',
-      balance: 999,
+      balance: '4932970292',
     }, {
       address: '12334567L',
-      balance: 99,
+      balance: '4932970292',
     },
   ],
   delegates: [

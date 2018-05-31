@@ -1,8 +1,10 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
+import { I18nextProvider } from 'react-i18next';
 import { spy } from 'sinon';
 import AutoSuggest from './index';
+import i18n from '../../i18n';
 
 import routes from '../../constants/routes';
 import keyCodes from './../../constants/keyCodes';
@@ -25,7 +27,7 @@ describe.only('AutoSuggest', () => {
     };
 
     submitSearchSpy = spy(AutoSuggest.prototype, 'submitSearch');
-    wrapper = mount(<AutoSuggest {...props} />);
+    wrapper = mount(<I18nextProvider i18n={i18n}><AutoSuggest {...props} /></I18nextProvider>);
     wrapper.update();
   });
 
