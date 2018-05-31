@@ -54,7 +54,6 @@ module.exports = function (config) {
           functions: 80,
           lines: 80,
           excludes: [
-            'src/components/header/header.js',
             'src/components/searchBar/index.js',
             'src/components/register/register.js',
             'src/components/search/index.js',
