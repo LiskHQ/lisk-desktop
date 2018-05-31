@@ -51,48 +51,29 @@ describe('AccountVisual', () => {
     expect(wrapper.find('rect')).to.have.attr('fill').match(/url\(#loriot-3-\d{13}-\w{5}\)/);
   });
 
-  it('should create account visual of given size', () => {
+  it('should have given default size and change to sizeS size if resized to S breakpoint', () => {
     const props = {
       address: accounts.genesis.address,
       size: 100,
       sizeS: 60,
     };
+
     const wrapper = mount(<AccountVisual {...props} />);
 
     expect(wrapper).to.have.exactly(1).descendants('svg');
     expect(wrapper.find('svg')).to.have.attr('height', `${props.size}`);
     expect(wrapper.find('svg')).to.have.attr('width', `${props.size}`);
-    console.log(window.innerWidth);
-  });
-
-  it('should create account visual of different size for s breakpoint', () => {
-    const props = {
-      address: accounts.genesis.address,
-      size: 100,
-      sizeS: 60,
-    };
 
     // manipulate breakpoints to simulate s breakpoint
     const sBreakpointBackup = breakpoints.s;
     breakpoints.s = window.innerWidth + 1;
-
-    const wrapper = mount(<AccountVisual {...props} />);
+    window.dispatchEvent(new Event('resize'));
 
     expect(wrapper).to.have.exactly(1).descendants('svg');
     expect(wrapper.find('svg')).to.have.attr('height', `${props.sizeS}`);
     expect(wrapper.find('svg')).to.have.attr('width', `${props.sizeS}`);
 
     breakpoints.s = sBreakpointBackup;
-  });
-
-  it('should call resizeWindow once', () => {
-    sinon.spy(AccountVisual.prototype, 'componentDidMount');
-    sinon.spy(AccountVisual.prototype, 'resizeWindow');
-    const wrapper = shallow(<AccountVisual address='sadasdasfsg43r43wt35t' />); // eslint-disable-line
-    const resizeEvent = new Event('resize');
-    window.dispatchEvent(resizeEvent);
-    expect(AccountVisual.prototype.componentDidMount.calledOnce).to.equal(true);
-    expect(AccountVisual.prototype.resizeWindow.calledOnce).to.equal(true);
   });
 
   it('should removeEventListener on unmount', () => {
