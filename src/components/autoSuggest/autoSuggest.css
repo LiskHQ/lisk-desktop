@@ -30,55 +30,6 @@
   display: flex;
 }
 
-.resultList {
-  list-style-type: none;
-  display: flex;
-  flex-direction: column;
-  align-content: flex-start;
-  margin: 0;
-  padding: 0;
-}
-
-.row {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin: 0;
-  padding: 0;
-  color: var(--color-primary-standard);
-  font-family: var(--content-font);
-  font-size: var(--paragraph-font-size-l);
-
-  &:hover {
-    background-color: rgba(205, 218, 229, 0.2);
-  }
-
-  & > span {
-    margin: 0 24px;
-    line-height: 36px;
-  }
-}
-
-.rowResult {
-  cursor: pointer;
-}
-
-.rowSelected {
-  background-color: rgba(204, 217, 228, 0.2);
-}
-
-.heading {
-  margin-top: 24px;
-  color: var(--color-grayscale-medium);
-  font-family: var(--content-font);
-  font-size: var(--font-size-small);
-  font-weight: var(--font-weight-bold);
-
-  &:hover {
-    background-color: inherit;
-  }
-}
-
 .input {
   padding: 0;
   z-index: var(--searchbar-input-index);
@@ -123,7 +74,7 @@
     }
   }
 
-  & .close {
+  & .icon {
     padding: 0 24px 24px;
     position: absolute;
     top: 19px;
@@ -131,5 +82,12 @@
     cursor: pointer;
     height: 16px;
     width: 16px;
+    font-size: var(--input-font-size);
+  }
+
+  & .iconSearch {
+    color: var(--color-grayscale-medium);
+    top: 17px;
+    font-size: 24px;
   }
 }

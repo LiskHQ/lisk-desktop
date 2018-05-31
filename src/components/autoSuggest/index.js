@@ -3,6 +3,7 @@ import Input from 'react-toolbox/lib/input';
 import styles from './autoSuggest.css';
 import LiskAmount from './../liskAmount';
 import { FontIcon } from '../fontIcon';
+import resultList from './resultList';
 import routes from './../../constants/routes';
 import keyCodes from './../../constants/keyCodes';
 import mockSearchResults from './searchResults.mock';
@@ -11,6 +12,8 @@ let searchResults = mockSearchResults;
 class AutoSuggest extends React.Component {
   constructor(props) {
     super(props);
+
+    this.submitSearch = this.submitSearch.bind(this);
 
     searchResults = this.props.results || searchResults;
 
@@ -41,6 +44,13 @@ class AutoSuggest extends React.Component {
       i18Value: this.props.t('Height'),
     };
 
+    this.commonProps = {
+      submitSearch: this.submitSearch,
+      selectedRowProps: {
+        ref: this.setSelectedRow.bind(this),
+      },
+    };
+
     let resultsLength = 0;
     Object.keys(searchResults).map((resultKey) => {
       resultsLength += searchResults[resultKey].length;
@@ -55,6 +65,10 @@ class AutoSuggest extends React.Component {
       selectedIdx: 0,
       resultsLength,
     };
+  }
+
+  setSelectedRow(el) {
+    this.selectedRow = el;
   }
 
   submitSearch(urlSearch) {
@@ -136,43 +150,6 @@ class AutoSuggest extends React.Component {
     // eslint-disable-next-line no-unused-vars
     const { history, t, results } = this.props;
 
-    const renderEntities = ({
-      entities,
-      entityKey,
-      uniqueKey,
-      redirectPath,
-      keyHeader,
-      keyValue,
-      i18Header,
-      i18Value,
-      entityIdxStart,
-      selectedIdx,
-    }) => {
-      const targetRows = entities.map((entity, idx) => {
-        const isSelectedRow = selectedIdx === entityIdxStart + idx;
-        let rowProps = {
-          onClick: this.submitSearch.bind(this, redirectPath(entity)),
-          className: `${styles.row} ${styles.rowResult} ${isSelectedRow ? styles.rowSelected : ''} ${entityKey}-result`,
-        };
-        if (isSelectedRow) {
-          rowProps = { ...rowProps, ref: (el) => { this.selectedRow = el; } };
-        }
-        return <li {...rowProps} key={entity[uniqueKey]}>
-          <span>{entity[keyHeader]}</span>
-          {
-            keyValue(entity)
-          }
-        </li>;
-      });
-      return <ul className={styles.resultList} key={entityKey}>
-        <li className={`${styles.row} ${styles.heading} ${entityKey}-header`}>
-          <span>{i18Header}</span>
-          <span>{i18Value}</span>
-        </li>
-        {targetRows}
-      </ul>;
-    };
-
     const delegatesResults = searchResults.delegates || [];
     const addressesResults = searchResults.addresses || [];
     const transactionsResults = searchResults.transactions || [];
@@ -190,40 +167,43 @@ class AutoSuggest extends React.Component {
           autoComplete='off'>
           {
             this.state.show ?
-              <FontIcon value='close' className={styles.close} onClick={this.resetSearch.bind(this)} /> :
-              null
+              <FontIcon value='close' className={styles.icon} onClick={this.resetSearch.bind(this)} /> :
+              <FontIcon value='search' className={`${styles.icon} ${styles.iconSearch}`} onClick={() => this.submitSearch.bind(this)} />
           }
         </Input>
         <div className={`${styles.autoSuggest} ${this.state.show ? styles.show : ''} autosuggest-dropdown`}
           onMouseLeave={this.handleBlur.bind(this)}>
           {
             delegatesResults.length > 0 ?
-              renderEntities({
+              resultList({
                 entities: delegatesResults,
                 entityKey: 'delegates',
                 entityIdxStart: 0,
                 selectedIdx: this.state.selectedIdx,
                 ...this.delegatesPropsMap,
+                ...this.commonProps,
               }) : null
           }
           {
             addressesResults.length > 0 ?
-              renderEntities({
+              resultList({
                 entities: addressesResults,
                 entityKey: 'addresses',
                 entityIdxStart: delegatesResults.length,
                 selectedIdx: this.state.selectedIdx,
                 ...this.addressesPropsMap,
+                ...this.commonProps,
               }) : null
           }
           {
             transactionsResults.length > 0 ?
-              renderEntities({
+              resultList({
                 entities: transactionsResults,
                 entityKey: 'transactions',
                 entityIdxStart: delegatesResults.length + addressesResults.length,
                 selectedIdx: this.state.selectedIdx,
                 ...this.transactionsPropsMap,
+                ...this.commonProps,
               }) : null
           }
         </div>
