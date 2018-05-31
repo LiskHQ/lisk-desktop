@@ -48,3 +48,11 @@
     background-color: inherit;
   }
 }
+
+@media (--medium-viewport) {
+  .row {
+    & > span {
+      margin: 0 21px;
+    }
+  }
+}

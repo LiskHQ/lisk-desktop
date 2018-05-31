@@ -62,6 +62,7 @@ describe('AutoSuggest', () => {
     let autosuggestDropdown = wrapper.find('.autosuggest-dropdown').first();
     const autosuggestInput = wrapper.find('.autosuggest-input').find('input').first();
     expect(autosuggestDropdown.props().className.match(new RegExp(/ {1}autoSuggest__show__/g))).to.be.equal(null);
+    autosuggestInput.simulate('focus');
     autosuggestInput.simulate('change', { target: { value: 'abc' } });
     wrapper.update();
     autosuggestDropdown = wrapper.find('.autosuggest-dropdown').first();

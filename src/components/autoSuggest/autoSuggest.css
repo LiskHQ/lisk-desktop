@@ -91,3 +91,23 @@
     font-size: 24px;
   }
 }
+
+@media (--medium-viewport) {
+  .wrapper {
+    margin-right: 0;
+  }
+
+  .autoSuggest {
+    right: 0;
+  }
+
+  .input {
+    & input {
+      padding-left: 21px;
+    }
+
+    & .icon {
+      padding: 0 21px 21px;
+    }
+  }
+}
