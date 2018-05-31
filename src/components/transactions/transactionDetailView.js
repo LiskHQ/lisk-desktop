@@ -14,20 +14,8 @@ import LiskAmount from '../liskAmount';
 import Amount from './amount';
 import routes from './../../constants/routes';
 import transactions from './../../constants/transactionTypes';
-
-const TransactionsDetailViewField = ({ value, label, style, children, column, shouldShow }) => (
-  (shouldShow === null || shouldShow === false) ? null :
-    <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${column ? styles.column : styles.columnNarrow}`}>
-      <div className={styles.label}>{label}</div>
-      {children}
-      <div className={`${styles.value} ${style}`}>{value}</div>
-    </div>);
-
-const TransactionsDetailViewRow = ({ children, shouldShow }) => (
-  (shouldShow === null || shouldShow === false) ? null :
-    <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
-      {children}
-    </div>);
+import TransactionDetailViewField from './transactionDetailViewField';
+import TransactionDetailViewRow from './transactionDetailViewRow';
 
 class TransactionsDetailView extends React.Component {
   constructor(props) {
@@ -65,7 +53,7 @@ class TransactionsDetailView extends React.Component {
 
   getDateField() {
     return (
-      <TransactionsDetailViewField
+      <TransactionDetailViewField
         label={this.props.t('Date')}
         value={ this.props.transaction.timestamp ?
           <span>
@@ -82,8 +70,8 @@ class TransactionsDetailView extends React.Component {
     const isSendTransaction = this.props.transaction.type === transactions.send;
 
     return (
-      <TransactionsDetailViewRow>
-        <TransactionsDetailViewField
+      <TransactionDetailViewRow>
+        <TransactionDetailViewField
           label={this.props.t('Sender')}
           value={
             <Link className={`${styles.addressLink} ${styles.clickable}`} id='sender-address'
@@ -96,10 +84,10 @@ class TransactionsDetailView extends React.Component {
             <figure className={styles.accountVisual}>
               <AccountVisual address={this.props.transaction.senderId} size={43} />
             </figure> : null}
-        </TransactionsDetailViewField>
+        </TransactionDetailViewField>
 
         {!isSendTransaction ? this.getDateField() :
-          <TransactionsDetailViewField
+          <TransactionDetailViewField
             shouldShow={this.props.transaction.recipientId}
             label={this.props.t('Recipient')}
             style={styles.sender}
@@ -115,9 +103,9 @@ class TransactionsDetailView extends React.Component {
                 <AccountVisual address={this.props.transaction.recipientId} size={43} />
               </figure> : null
             }
-          </TransactionsDetailViewField>
+          </TransactionDetailViewField>
         }
-      </TransactionsDetailViewRow>
+      </TransactionDetailViewRow>
     );
   }
 
@@ -137,7 +125,7 @@ class TransactionsDetailView extends React.Component {
             </header> : null
         }
         <div>
-          <TransactionsDetailViewRow shouldShow={!this.props.match.params.id}>
+          <TransactionDetailViewRow shouldShow={!this.props.match.params.id}>
             <div className={`${grid['col-xs-12']} ${grid['col-sm-7']} ${grid['col-md-7']} ${styles.columnNarrow}`}>
               <header>
                 <h2 className={styles.title}>
@@ -148,13 +136,13 @@ class TransactionsDetailView extends React.Component {
                 </h2>
               </header>
             </div>
-          </TransactionsDetailViewRow>
+          </TransactionDetailViewRow>
 
           {this.getFirstRow()}
 
-          <TransactionsDetailViewRow shouldShow={this.props.transaction.type === 0}>
+          <TransactionDetailViewRow shouldShow={this.props.transaction.type === 0}>
             {this.getDateField()}
-            <TransactionsDetailViewField
+            <TransactionDetailViewField
               label={this.props.t('Amount (LSK)')}
               value={
                 <Amount
@@ -163,31 +151,31 @@ class TransactionsDetailView extends React.Component {
                 </Amount>
               }
               style={styles.amount} />
-          </TransactionsDetailViewRow>
+          </TransactionDetailViewRow>
 
-          <TransactionsDetailViewRow shouldShow={
+          <TransactionDetailViewRow shouldShow={
             this.props.transaction.amount === 0 &&
             this.props.transaction.recipientId}>
-            <TransactionsDetailViewField
+            <TransactionDetailViewField
               label={this.props.t('Added votes')}
               value={this.getVoters('added')} />
-            <TransactionsDetailViewField
+            <TransactionDetailViewField
               label={this.props.t('Removed votes')}
               value={this.getVoters('deleted')} />
-          </TransactionsDetailViewRow>
+          </TransactionDetailViewRow>
 
-          <TransactionsDetailViewRow>
-            <TransactionsDetailViewField
+          <TransactionDetailViewRow>
+            <TransactionDetailViewField
               label={this.props.t('Additional fee')}
               value={<LiskAmount val={this.props.transaction.fee} />} />
-            <TransactionsDetailViewField
+            <TransactionDetailViewField
               label={this.props.t('Confirmations')}
               value={<span>{this.props.transaction.confirmations}</span>} />
-          </TransactionsDetailViewRow>
+          </TransactionDetailViewRow>
 
-          <TransactionsDetailViewRow>
+          <TransactionDetailViewRow>
             {this.props.prevStep &&
-              <TransactionsDetailViewField
+              <TransactionDetailViewField
                 label={this.props.t('Transaction ID')}
                 value={
                   <CopyToClipboard
@@ -196,8 +184,8 @@ class TransactionsDetailView extends React.Component {
                     copyClassName={`${styles.copy}`} />
                 } />
             }
-            <TransactionsDetailViewField label='' value='' />
-          </TransactionsDetailViewRow>
+            <TransactionDetailViewField label='' value='' />
+          </TransactionDetailViewRow>
         </div>
         <footer>
         </footer>
