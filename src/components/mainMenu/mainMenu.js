@@ -99,7 +99,7 @@ class MainMenu extends React.Component {
     ];
 
     if (showDelegate) {
-      tabs.splice(tabs.length - 1, 0, {
+      tabs.splice(tabs.length - 2, 0, {
         label: t('Delegates'),
         id: 'delegates',
         route: `${routes.delegates.path}`,

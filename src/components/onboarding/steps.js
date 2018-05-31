@@ -154,7 +154,7 @@ export const styles = {
 export const steps = t => ([
   {
     title: t('Onboarding whenever you need'),
-    text: t('Go to "More" on your Sidebar to start the onboarding whenever you need.'),
+    text: t('Go to "Settings" on your Sidebar to start the onboarding whenever you need.'),
     selector: '#onboardingAnchor',
     position: 'bottom',
     style: styles.skip,
@@ -221,13 +221,13 @@ export const steps = t => ([
   {
     title: t('Access extra features'),
     text: t('Change account settings, enable delegate voting and repeat the onboarding here.'),
-    selector: '.more-menu',
+    selector: '#settings',
     position: 'right',
     style: styles.step,
   },
   {
     title: t('You’ve completed the tour!'),
-    text: t('You can now use Lisk Hub.<br> If you want to repeat the onboarding, navigate to "More" on the sidebar.'),
+    text: t('You can now use Lisk Hub.<br> If you want to repeat the onboarding, navigate to "Settings" on the sidebar.'),
     selector: '#onboardingAnchor',
     position: 'bottom',
     style: styles.outro,
