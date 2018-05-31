@@ -55,10 +55,8 @@ module.exports = function (config) {
           lines: 80,
           excludes: [
             'src/components/register/register.js',
-            'src/components/search/index.js',
             'src/components/voteUrlProcessor/voteUrlProcessor.js',
             'src/components/voteUrlProcessor/index.js',
-            'src/components/onboarding/index.js',
             'src/utils/checkDevice.js',
             'src/utils/api/liskService.js',
             'src/components/errorBoundary/index.js',
