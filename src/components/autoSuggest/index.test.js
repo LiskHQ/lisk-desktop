@@ -10,7 +10,7 @@ import routes from '../../constants/routes';
 import keyCodes from './../../constants/keyCodes';
 import mockSearchResults from './searchResults.mock';
 
-describe.only('AutoSuggest', () => {
+describe('AutoSuggest', () => {
   let wrapper;
   let props;
   let results;
@@ -107,7 +107,6 @@ describe.only('AutoSuggest', () => {
       keyCode: keyCodes.enter,
       which: keyCodes.enter,
     });
-    // eslint-disable-next-line no-unused-expressions
     expect(submitSearchSpy).to.have.been.calledWith();
   });
 
