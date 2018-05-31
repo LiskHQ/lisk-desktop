@@ -26,7 +26,6 @@ class Helper extends GenericStepDefinition {
   checkTxDetails() {
     expect(this.wrapper.find('.transaction-id').first().text()).to.contain('123456789');
     expect(this.wrapper.find('#sender-address').first().text()).to.contain('123l');
-    expect(this.wrapper.find('#receiver-address').first().text()).to.contain('456l');
   }
 }
 
