@@ -1,10 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import { I18nextProvider } from 'react-i18next';
 import { spy } from 'sinon';
 import AutoSuggest from './index';
-import i18n from '../../i18n';
 
 import routes from '../../constants/routes';
 import keyCodes from './../../constants/keyCodes';
@@ -14,6 +12,7 @@ describe.only('AutoSuggest', () => {
   let wrapper;
   let props;
   let results;
+  let submitSearchSpy;
 
   beforeEach(() => {
     results = { ...mockSearchResults };
@@ -24,7 +23,14 @@ describe.only('AutoSuggest', () => {
       },
       results,
     };
-    wrapper = mount(<I18nextProvider i18n={ i18n }><AutoSuggest {...props} /></I18nextProvider>);
+
+    submitSearchSpy = spy(AutoSuggest.prototype, 'submitSearch');
+    wrapper = mount(<AutoSuggest {...props} />);
+    wrapper.update();
+  });
+
+  afterEach(() => {
+    submitSearchSpy.restore();
   });
 
   it('should render a row for each entity found {addresses,delegates,transactions}', () => {
@@ -54,10 +60,15 @@ describe.only('AutoSuggest', () => {
     let autosuggestDropdown = wrapper.find('.autosuggest-dropdown').first();
     const autosuggestInput = wrapper.find('.autosuggest-input').find('input').first();
     expect(autosuggestDropdown.props().className.match(new RegExp(/ {1}autoSuggest__show__/g))).to.be.equal(null);
-    autosuggestInput.simulate('change');
+    autosuggestInput.simulate('focus');
     wrapper.update();
     autosuggestDropdown = wrapper.find('.autosuggest-dropdown').first();
     expect(autosuggestDropdown.props().className.match(new RegExp(/ {1}autoSuggest__show__/g))).not.to.be.equal(null);
+
+    autosuggestDropdown.simulate('mouseleave');
+    wrapper.update();
+    autosuggestDropdown = wrapper.find('.autosuggest-dropdown').first();
+    expect(autosuggestDropdown.props().className.match(new RegExp(/ {1}autoSuggest__show__/g))).to.be.equal(null);
   });
 
   it('should allow to click on {addresss} suggestion and redirect to its "explorer/accounts" page', () => {
@@ -78,10 +89,9 @@ describe.only('AutoSuggest', () => {
       .calledWith(`${routes.transactions.pathPrefix}${routes.transactions.path}/${results.transactions[0].id}`);
   });
 
-  it.skip('should allow to navigate suggestion results with keyboard', () => {
+  it('should redirect to entity page on keyboard event {enter}', () => {
     const autosuggestInput = wrapper.find('.autosuggest-input').find('input').first();
-    const targetRowProps = wrapper.find('.delegates-result').first().props();
-    const targetRowSpy = spy(targetRowProps, 'onClick');
+
     autosuggestInput.simulate('change');
     autosuggestInput.simulate('keyDown', {
       keyCode: keyCodes.arrowDown,
@@ -96,6 +106,38 @@ describe.only('AutoSuggest', () => {
       which: keyCodes.enter,
     });
     // eslint-disable-next-line no-unused-expressions
-    expect(targetRowSpy).to.have.been.calledOnce;
+    expect(submitSearchSpy).to.have.been.calledWith();
+  });
+
+  it('should redirect to entity page on keyboard event {tab}', () => {
+    const autosuggestInput = wrapper.find('.autosuggest-input').find('input').first();
+
+    autosuggestInput.simulate('change');
+    autosuggestInput.simulate('keyDown', {
+      keyCode: keyCodes.arrowDown,
+      which: keyCodes.arrowDown,
+    });
+    autosuggestInput.simulate('keyDown', {
+      keyCode: keyCodes.arrowUp,
+      which: keyCodes.arrowUp,
+    });
+    autosuggestInput.simulate('keyDown', {
+      keyCode: keyCodes.tab,
+      which: keyCodes.tab,
+    });
+    expect(submitSearchSpy).to.have.been.calledWith();
+  });
+
+  it('should close dropdown on keyboard event {escape}', () => {
+    const autosuggestInput = wrapper.find('.autosuggest-input').find('input').first();
+
+    autosuggestInput.simulate('change');
+    autosuggestInput.simulate('keyDown', {
+      keyCode: keyCodes.escape,
+      which: keyCodes.escape,
+    });
+    expect(submitSearchSpy).not.to.have.been.calledWith();
+    const autosuggestDropdown = wrapper.find('.autosuggest-dropdown').first();
+    expect(autosuggestDropdown.props().className.match(new RegExp(/ {1}autoSuggest__show__/g))).to.be.equal(null);
   });
 });

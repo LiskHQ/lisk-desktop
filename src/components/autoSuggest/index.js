@@ -1,6 +1,5 @@
 import React from 'react';
 import Input from 'react-toolbox/lib/input';
-import { translate } from 'react-i18next';
 import styles from './autoSuggest.css';
 import routes from './../../constants/routes';
 import keyCodes from './../../constants/keyCodes';
@@ -57,6 +56,7 @@ class AutoSuggest extends React.Component {
 
   submitSearch(urlSearch) {
     this.closeDropdown();
+    this.inputRef.blur();
     if (!urlSearch) {
       this.selectedRow.click();
       return;
@@ -167,6 +167,7 @@ class AutoSuggest extends React.Component {
     return (
       <div className={styles.wrapper}>
         <Input type='text' placeholder={t('Search delegates, addresses')} name='searchBarInput'
+          innerRef={(el) => { this.inputRef = el; }}
           className={`${styles.input} autosuggest-input`}
           theme={styles}
           onFocus={this.handleFocus.bind(this)}
@@ -211,4 +212,4 @@ class AutoSuggest extends React.Component {
   }
 }
 
-export default translate()(AutoSuggest);
+export default AutoSuggest;
