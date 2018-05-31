@@ -2,8 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
 import { FontIcon } from '../fontIcon';
-import { visitAndSaveSearch } from './../search/keyAction';
-import AutoSuggest from './../autoSuggest';
+import { visitAndSaveSearchOnEnter, visitAndSaveSearch } from './../search/keyAction';
 import routes from './../../constants/routes';
 import styles from './searchBar.css';
 
@@ -32,6 +31,7 @@ class Search extends React.Component {
     return pathname.includes('explorer') && !pathname.includes(`${routes.explorer.path}${routes.search.path}`);
   }
 
+
   select() {
     this.searchInput.select();
   }
@@ -41,7 +41,7 @@ class Search extends React.Component {
       <FontIcon
         onClick={() => { visitAndSaveSearch(this.state.searchItem, this.props.history); }}
         value='search' className={`${styles.icon} search-bar-button`}/>
-      {/* <input
+      <input
         ref={(el) => { this.searchInput = el; }}
         onFocus={this.select.bind(this)}
         onKeyUp={(e) => { visitAndSaveSearchOnEnter(e, this.props.history); }}
@@ -49,8 +49,7 @@ class Search extends React.Component {
         placeholder={this.props.t('Search for Lisk ID or Transaction ID')}
         value={this.state.searchItem}
         onChange={(e) => { this.setState({ searchItem: e.target.value }); }}
-      /> */}
-      <AutoSuggest history={this.props.history} />
+      />
     </div>);
   }
 }
