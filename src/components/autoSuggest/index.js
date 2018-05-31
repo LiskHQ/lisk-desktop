@@ -2,6 +2,7 @@ import React from 'react';
 import Input from 'react-toolbox/lib/input';
 import styles from './autoSuggest.css';
 import LiskAmount from './../liskAmount';
+import { FontIcon } from '../fontIcon';
 import routes from './../../constants/routes';
 import keyCodes from './../../constants/keyCodes';
 import mockSearchResults from './searchResults.mock';
@@ -50,13 +51,14 @@ class AutoSuggest extends React.Component {
 
     this.state = {
       show: false,
+      value: '',
       selectedIdx: 0,
       resultsLength,
     };
   }
 
   submitSearch(urlSearch) {
-    this.closeDropdown();
+    this.resetSearch();
     this.inputRef.blur();
     if (!urlSearch) {
       this.selectedRow.click();
@@ -65,11 +67,14 @@ class AutoSuggest extends React.Component {
     this.props.history.push(urlSearch);
   }
 
-  /* eslint-disable class-methods-use-this,no-unused-vars */
   search(searchTerm) {
-    if (!this.state.show) this.setState({ show: true });
+    if (searchTerm !== '') {
+      this.setState({ show: true });
+    } else {
+      this.setState({ show: false });
+    }
+    this.setState({ value: searchTerm });
   }
-  /* eslint-enable class-methods-use-this,no-unused-vars */
 
   handleArrowDown() {
     let currentIdx = this.state.selectedIdx;
@@ -88,7 +93,7 @@ class AutoSuggest extends React.Component {
   }
 
   handleFocus() {
-    this.showDropdown();
+    if (this.state.value !== '') this.showDropdown();
   }
 
   handleKey(event) {
@@ -112,6 +117,11 @@ class AutoSuggest extends React.Component {
         break;
     }
     return false;
+  }
+
+  resetSearch() {
+    this.setState({ value: '' });
+    this.closeDropdown();
   }
 
   closeDropdown() {
@@ -170,13 +180,20 @@ class AutoSuggest extends React.Component {
     return (
       <div className={styles.wrapper}>
         <Input type='text' placeholder={t('Search delegates, addresses')} name='searchBarInput'
+          value={this.state.value}
           innerRef={(el) => { this.inputRef = el; }}
           className={`${styles.input} autosuggest-input`}
           theme={styles}
           onFocus={this.handleFocus.bind(this)}
           onKeyDown={this.handleKey.bind(this)}
           onChange={this.search.bind(this)}
-          autoComplete='off' />
+          autoComplete='off'>
+          {
+            this.state.show ?
+              <FontIcon value='close' className={styles.close} onClick={this.resetSearch.bind(this)} /> :
+              null
+          }
+        </Input>
         <div className={`${styles.autoSuggest} ${this.state.show ? styles.show : ''} autosuggest-dropdown`}
           onMouseLeave={this.handleBlur.bind(this)}>
           {

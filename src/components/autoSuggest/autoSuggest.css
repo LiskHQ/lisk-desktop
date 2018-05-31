@@ -111,7 +111,7 @@
     }
   }
 
-  & span {
+  & span:nth-child(2) {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -121,5 +121,15 @@
     &::after {
       background-color: var(--color-grayscale-light);
     }
+  }
+
+  & .close {
+    padding: 0 24px 24px;
+    position: absolute;
+    top: 19px;
+    right: 24px;
+    cursor: pointer;
+    height: 16px;
+    width: 16px;
   }
 }
