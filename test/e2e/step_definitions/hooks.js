@@ -47,7 +47,9 @@ defineSupportCode(({ Before, After, registerListener }) => {
       .setSize(browser.params.screenWidth, browser.params.screenHeight);
     browser.get(browser.params.baseURL);
     localStorage.clear();
-    localStorage.setItem('showNetwork', 'true');
+    if (scenario.scenario.feature.name !== 'Login') {
+      localStorage.setItem('showNetwork', 'true');
+    }
     if (scenario.scenario.feature.name !== 'Onboarding') {
       localStorage.setItem('onboarding', 'false');
     }
