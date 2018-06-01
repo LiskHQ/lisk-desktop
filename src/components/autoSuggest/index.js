@@ -103,10 +103,6 @@ class AutoSuggest extends React.Component {
     this.setState({ selectedIdx: currentIdx });
   }
 
-  handleBlur() {
-    this.closeDropdown();
-  }
-
   handleKey(event) {
     switch (event.keyCode) {
       case keyCodes.arrowDown :
@@ -170,7 +166,7 @@ class AutoSuggest extends React.Component {
           }
         </Input>
         <div className={`${styles.autoSuggest} ${this.state.show ? styles.show : ''} autosuggest-dropdown`}
-          onMouseLeave={this.handleBlur.bind(this)}>
+          onMouseLeave={this.closeDropdown.bind(this)}>
           {
             delegatesResults.length > 0 ?
               resultList({
