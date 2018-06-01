@@ -3,30 +3,27 @@ import styles from './resultsList.css';
 
 class ResultsList extends React.Component {
   getRowsForResults() {
-    return this.props.results.map((entity, idx) => {
-      const isSelectedRow = this.props.selectedIdx === this.props.entityIdxStart + idx;
+    return this.props.results.map((result) => {
       let rowProps = {
-        onClick: () => this.props.submitSearch(this.props.redirectPath(entity)),
-        className: `${styles.row} ${styles.rowResult} ${isSelectedRow ? styles.rowSelected : ''} ${this.props.entityKey}-result`,
+        onClick: () => this.props.onClick(result.id, result.type),
+        className: `${styles.row} ${styles.rowResult} ${result.isSelected ? styles.rowSelected : ''} ${result.type}-result`,
       };
-      if (isSelectedRow) {
+      if (result.isSelected) {
         rowProps = { ...rowProps, ...this.props.selectedRowProps };
       }
-      return <li {...rowProps} key={entity[this.props.uniqueKey]}>
-        <span>{entity[this.props.keyHeader]}</span>
-        {
-          this.props.keyValue(entity)
-        }
+      return <li {...rowProps} key={result.id}>
+        <span>{result.valueLeft}</span>
+        <span>{result.valueRight}</span>
       </li>;
     });
   }
 
   render() {
     return this.props.results.length > 0 ?
-      <ul className={styles.resultList} key={this.props.entityKey}>
-        <li className={`${styles.row} ${styles.heading} ${this.props.entityKey}-header`}>
-          <span>{this.props.i18Header}</span>
-          <span>{this.props.i18Value}</span>
+      <ul className={styles.resultList}>
+        <li className={`${styles.row} ${styles.heading}`}>
+          <span>{this.props.header.titleLeft}</span>
+          <span>{this.props.header.titleRight}</span>
         </li>
         {this.getRowsForResults()}
       </ul> : null;

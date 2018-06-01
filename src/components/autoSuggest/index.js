@@ -18,40 +18,6 @@ class AutoSuggest extends React.Component {
 
     searchResults = this.props.results || searchResults;
 
-    this.delegatesPropsMap = {
-      uniqueKey: 'address',
-      redirectPath: entity => `${routes.accounts.pathPrefix}${routes.accounts.path}/${entity.address}`,
-      keyHeader: 'username',
-      keyValue: entity => (<span>{entity.rank}</span>),
-      i18Header: this.props.t('Delegate'),
-      i18Value: this.props.t('Rank'),
-    };
-
-    this.addressesPropsMap = {
-      uniqueKey: 'address',
-      redirectPath: entity => `${routes.accounts.pathPrefix}${routes.accounts.path}/${entity.address}`,
-      keyHeader: 'address',
-      keyValue: entity => (<span><LiskAmount val={entity.balance}/> LSK</span>),
-      i18Header: this.props.t('Address'),
-      i18Value: this.props.t('Balance'),
-    };
-
-    this.transactionsPropsMap = {
-      uniqueKey: 'id',
-      redirectPath: entity => `${routes.transactions.pathPrefix}${routes.transactions.path}/${entity.id}`,
-      keyHeader: 'id',
-      keyValue: entity => (<span>{entity.height}</span>),
-      i18Header: this.props.t('Transaction'),
-      i18Value: this.props.t('Height'),
-    };
-
-    this.commonProps = {
-      submitSearch: this.submitSearch,
-      selectedRowProps: {
-        ref: this.setSelectedRow.bind(this),
-      },
-    };
-
     let resultsLength = 0;
     Object.keys(searchResults).map((resultKey) => {
       resultsLength += searchResults[resultKey].length;
@@ -66,6 +32,22 @@ class AutoSuggest extends React.Component {
       selectedIdx: 0,
       resultsLength,
     };
+  }
+
+  onResultClick(id, type) {
+    let urlSearch;
+    switch (type) {
+      case 'addresses' :
+      case 'delegates' :
+        urlSearch = `${routes.accounts.pathPrefix}${routes.accounts.path}/${id}`;
+        break;
+      case 'transactions' :
+        urlSearch = `${routes.transactions.pathPrefix}${routes.transactions.path}/${id}`;
+        break;
+      default:
+        break;
+    }
+    this.submitSearch(urlSearch);
   }
 
   setSelectedRow(el) {
@@ -140,13 +122,40 @@ class AutoSuggest extends React.Component {
     this.setState({ show: true });
   }
 
+  getDelegatesResults() {
+    return searchResults.delegates.map((delegate, idx) => ({
+      id: delegate.address,
+      valueLeft: delegate.username,
+      valueRight: delegate.rank,
+      isSelected: idx === this.state.selectedIdx,
+      type: 'delegates',
+    }));
+  }
+
+  getAddressesResults() {
+    return searchResults.addresses.map((account, idx) => ({
+      id: account.address,
+      valueLeft: account.address,
+      valueRight: <span><LiskAmount val={account.balance}/> LSK</span>,
+      isSelected: searchResults.delegates.length + idx === this.state.selectedIdx,
+      type: 'addresses',
+    }));
+  }
+
+  getTransactionsResults() {
+    return searchResults.transactions.map((transaction, idx) => ({
+      id: transaction.id,
+      valueLeft: transaction.id,
+      valueRight: transaction.height,
+      isSelected: searchResults.delegates.length +
+        searchResults.addresses.length + idx === this.state.selectedIdx,
+      type: 'transactions',
+    }));
+  }
+
   render() {
     // eslint-disable-next-line no-unused-vars
-    const { history, t, results } = this.props;
-
-    const delegatesResults = searchResults.delegates || [];
-    const addressesResults = searchResults.addresses || [];
-    const transactionsResults = searchResults.transactions || [];
+    const { history, t } = this.props;
 
     return (
       <div className={styles.wrapper}>
@@ -162,34 +171,43 @@ class AutoSuggest extends React.Component {
             this.state.show ?
               <FontIcon value='close' className={styles.icon} onClick={this.resetSearch.bind(this)} /> :
               <FontIcon value='search' className={`${styles.icon} ${styles.iconSearch}`}
-                onClick={() => { visitAndSaveSearch(this.state.value, this.props.history); }} />
+                onClick={() => { visitAndSaveSearch(this.state.value, history); }} />
           }
         </Input>
         <div className={`${styles.autoSuggest} ${this.state.show ? styles.show : ''} autosuggest-dropdown`}
           onMouseLeave={this.closeDropdown.bind(this)}>
-          <ResultsList {...{
-            results: delegatesResults,
-            entityKey: 'delegates',
-            entityIdxStart: 0,
-            selectedIdx: this.state.selectedIdx,
-            ...this.delegatesPropsMap,
-            ...this.commonProps,
+          <ResultsList key='delegates' {...{
+            results: this.getDelegatesResults(),
+            header: {
+              titleLeft: t('Delegate'),
+              titleRight: t('Rank'),
+            },
+            onClick: this.onResultClick.bind(this),
+            selectedRowProps: {
+              ref: this.setSelectedRow.bind(this),
+            },
           }} />
-          <ResultsList {...{
-            results: addressesResults,
-            entityKey: 'addresses',
-            entityIdxStart: delegatesResults.length,
-            selectedIdx: this.state.selectedIdx,
-            ...this.addressesPropsMap,
-            ...this.commonProps,
+          <ResultsList key='addresses' {...{
+            results: this.getAddressesResults(),
+            header: {
+              titleLeft: t('Address'),
+              titleRight: t('Balance'),
+            },
+            onClick: this.onResultClick.bind(this),
+            selectedRowProps: {
+              ref: this.setSelectedRow.bind(this),
+            },
           }} />
-          <ResultsList {...{
-            results: transactionsResults,
-            entityKey: 'transactions',
-            entityIdxStart: delegatesResults.length + addressesResults.length,
-            selectedIdx: this.state.selectedIdx,
-            ...this.transactionsPropsMap,
-            ...this.commonProps,
+          <ResultsList key='transactions' {...{
+            results: this.getTransactionsResults(),
+            header: {
+              titleLeft: t('Transaction'),
+              titleRight: t('Height'),
+            },
+            onClick: this.onResultClick.bind(this),
+            selectedRowProps: {
+              ref: this.setSelectedRow.bind(this),
+            },
           }} />
         </div>
       </div>

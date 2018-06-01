@@ -12,7 +12,7 @@ import routes from '../../constants/routes';
 import keyCodes from './../../constants/keyCodes';
 import mockSearchResults from './searchResults.mock';
 
-describe('AutoSuggest', () => {
+describe.only('AutoSuggest', () => {
   let wrapper;
   let props;
   let results;
@@ -42,25 +42,23 @@ describe('AutoSuggest', () => {
 
   it('should render a row for each entity found {addresses,delegates,transactions}', () => {
     expect(wrapper).to.have.exactly(3).descendants('.addresses-result');
-    expect(wrapper).to.have.exactly(1).descendants('.addresses-header');
     expect(wrapper).to.have.exactly(3).descendants('.delegates-result');
-    expect(wrapper).to.have.exactly(1).descendants('.delegates-header');
     expect(wrapper).to.have.exactly(3).descendants('.transactions-result');
-    expect(wrapper).to.have.exactly(1).descendants('.transactions-header');
   });
 
   it('should not render any row for not found entities {delegates}', () => {
-    const partialResults = results;
-    delete partialResults.addresses;
-    delete partialResults.transactions;
-    wrapper.setProps({ results: partialResults });
+    const partialResults = {
+      ...results,
+      addresses: [],
+      transactions: [],
+    };
+    const updatedProps = { ...props, results: partialResults };
+    wrapper = mount(<I18nextProvider i18n={i18n}>
+      <AutoSuggest {...updatedProps} /></I18nextProvider>);
     wrapper.update();
     expect(wrapper).to.have.exactly(0).descendants('.addresses-result');
-    expect(wrapper).to.have.exactly(0).descendants('.addresses-header');
     expect(wrapper).to.have.exactly(3).descendants('.delegates-result');
-    expect(wrapper).to.have.exactly(1).descendants('.delegates-header');
     expect(wrapper).to.have.exactly(0).descendants('.transactions-result');
-    expect(wrapper).to.have.exactly(0).descendants('.transactions-header');
   });
 
   it('should show autosuggest on search input change and hide it on blur', () => {
