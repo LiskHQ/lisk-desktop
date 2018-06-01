@@ -4,19 +4,15 @@ import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
 import { FontIcon } from '../fontIcon';
 import routes from './../../constants/routes';
-import UserVotes from './userVotes';
 import styles from './delegateStatistics.css';
 
-class DelegateStatistics extends React.Component {
+class UserVotes extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       showVotesNumber: 35,
-      showVotersNumber: 35,
       loadAllVotes: false,
-      votersFilterQuery: '',
       votesFilterQuery: '',
-      votersSize: (props.voters && props.voters.length) || 0,
       votesSize: (props.votes && props.votes.length) || 0,
     };
   }
@@ -85,59 +81,27 @@ class DelegateStatistics extends React.Component {
   }
 
   render() {
-    const { delegate, t } = this.props;
-    const votersInterspered = this.getFormatedDelegates('voters', 'votersFilterQuery');
+    const { t } = this.props;
+    const votes = this.getFormatedDelegates('votes', 'votesFilterQuery');
 
-    let status = '';
-    if (delegate && delegate.rank) {
-      status = delegate.rank < 101 ? this.props.t('Active') : this.props.t('Standby');
-    }
-
-    const missed = this.props.t('missed');
     return (
       <div className={`${styles.details} delegate-statistics`}>
-        <div className={`transactions-detail-view ${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
-          <div className={`${grid['col-xs-12']} ${grid['col-sm-4']} ${grid['col-md-4']} productivity`}>
-            <div className={styles.label}>{this.props.t('Uptime')}</div>
-            <div className={styles.value}>{delegate && delegate.productivity}%</div>
-          </div>
-          <div className={`${grid['col-xs-12']} ${grid['col-sm-4']} ${grid['col-md-4']} rank`}>
-            <div className={styles.label}>{this.props.t('Rank / Status')}</div>
-            <div className={styles.value}>{delegate && delegate.rank} / {status}</div>
-          </div>
-          <div className={`${grid['col-xs-12']} ${grid['col-sm-4']} ${grid['col-md-4']} approval`}>
-            <div className={styles.label}>{this.props.t('Approval')}</div>
-            <div className={styles.value}>{delegate && delegate.approval}%</div>
-          </div>
-        </div>
-        <div className={`transactions-detail-view ${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row} vote`}>
-          <div className={`${grid['col-xs-12']} ${grid['col-sm-4']} ${grid['col-md-4']}`}>
-            <div className={styles.label}>{this.props.t('Vote weight')}</div>
-            <div className={styles.value}>{delegate && delegate.vote}</div>
-          </div>
-          <div className={`${grid['col-xs-12']} ${grid['col-sm-8']} ${grid['col-md-8']} blocks`}>
-            <div className={styles.label}>{this.props.t('Blocks')}</div>
-            <div className={styles.value}>
-              {`${delegate && delegate.producedblocks} (${delegate && delegate.missedblocks} ${missed})`}
-            </div>
-          </div>
-        </div>
-        <UserVotes {...this.props} />
-        <div className={`transactions-detail-view ${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row} voters`}>
+        <div className={`transactions-detail-view ${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row} votes`}>
           <div className={`${grid['col-xs-12']} ${grid['col-sm-12']} ${grid['col-md-12']}`}>
             <div className={styles.label}>
-              <div className='voters-value'>
-                {this.props.t('Who voted for a delegate')}
-                {` (${this.state.votersSize})`}
+              <div className='votes-value'>
+                {this.props.t('Votes of an account')}
+                {` (${this.state.votesSize})`}
               </div>
-              {this.renderSearchFilter('votersFilterQuery', t('Filter voters'))}
+              {this.renderSearchFilter('votesFilterQuery', t('Filter votes'))}
             </div>
             <div className={styles.value}>
-              {votersInterspered && votersInterspered
-                .slice(0, this.state.showVotersNumber)}
+              {votes && votes
+                .slice(0, this.state.showVotesNumber)}
             </div>
-            {votersInterspered.length > this.state.showVotersNumber ?
-              <div onClick={() => { this.showMore('showVotersNumber'); }} className={`${styles.showMore} showMore  show-voters`}>
+            {votes.length > this.state.showVotesNumber
+              && this.state.votesFilterQuery === '' ?
+              <div onClick={() => { this.showMore('showVotesNumber'); }} className={`${styles.showMore} showMore show-votes`}>
                 <FontIcon className={styles.arrowDown} value='arrow-down'/>
                 {this.props.t('Show more')}
               </div> : ''
@@ -149,5 +113,5 @@ class DelegateStatistics extends React.Component {
   }
 }
 
-export default translate()(DelegateStatistics);
+export default translate()(UserVotes);
 
