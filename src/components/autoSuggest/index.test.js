@@ -6,6 +6,8 @@ import { spy } from 'sinon';
 import AutoSuggest from './index';
 import i18n from '../../i18n';
 
+import * as searchActions from './../search/keyAction';
+
 import routes from '../../constants/routes';
 import keyCodes from './../../constants/keyCodes';
 import mockSearchResults from './searchResults.mock';
@@ -15,6 +17,7 @@ describe('AutoSuggest', () => {
   let props;
   let results;
   let submitSearchSpy;
+  let visitAndSaveSearchSpy;
 
   beforeEach(() => {
     results = { ...mockSearchResults };
@@ -27,12 +30,14 @@ describe('AutoSuggest', () => {
     };
 
     submitSearchSpy = spy(AutoSuggest.prototype, 'submitSearch');
+    visitAndSaveSearchSpy = spy(searchActions, 'visitAndSaveSearch');
     wrapper = mount(<I18nextProvider i18n={i18n}><AutoSuggest {...props} /></I18nextProvider>);
     wrapper.update();
   });
 
   afterEach(() => {
     submitSearchSpy.restore();
+    visitAndSaveSearchSpy.restore();
   });
 
   it('should render a row for each entity found {addresses,delegates,transactions}', () => {
@@ -94,21 +99,11 @@ describe('AutoSuggest', () => {
 
   it('should redirect to entity page on keyboard event {enter}', () => {
     const autosuggestInput = wrapper.find('.autosuggest-input').find('input').first();
-
-    autosuggestInput.simulate('change');
-    autosuggestInput.simulate('keyDown', {
-      keyCode: keyCodes.arrowDown,
-      which: keyCodes.arrowDown,
-    });
-    autosuggestInput.simulate('keyDown', {
-      keyCode: keyCodes.arrowUp,
-      which: keyCodes.arrowUp,
-    });
     autosuggestInput.simulate('keyDown', {
       keyCode: keyCodes.enter,
       which: keyCodes.enter,
     });
-    expect(submitSearchSpy).to.have.been.calledWith();
+    expect(visitAndSaveSearchSpy).to.have.been.calledWith();
   });
 
   it('should redirect to entity page on keyboard event {tab}', () => {
