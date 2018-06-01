@@ -2,6 +2,7 @@ import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../utils/loading';
 import { transactions, getAccount } from '../utils/api/account';
 import { getDelegate, getVoters, getVotes } from '../utils/api/delegate';
+import { searchAll } from '../utils/api/search';
 
 const searchDelegate = ({ activePeer, publicKey, address }) =>
   (dispatch) => {
