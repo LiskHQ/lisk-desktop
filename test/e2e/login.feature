@@ -32,7 +32,7 @@ Feature: Login
     When I'm on login page
     Then I fill in passphrase of "genesis" to "passphrase" field
     And I select option no. 3 from "network" select
-    When I fill in "localhost:4000" to "address" field
+    When I fill in "https://testnet.lisk.io" to "address" field
     And I click "login button"
     Then I should be logged in as "genesis" account
     And I should see text "custom node" in "peer network" element

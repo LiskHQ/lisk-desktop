@@ -32,11 +32,12 @@ Feature: Voting page
     And I click "confirm"
     And I wait 0.5 seconds
     Then I should see text "You’re votes are being processed and will be confirmed. It may take up to 10 minutes to be secured in the blockchain." in "result box message" element
+    When I go to "/wallet"
     And I wait 10 seconds
     And I go to "/delegates/vote?unvotes=genesis_12"
-    When I refresh the page
     Then I should see text "genesis_12" in "unvotes message" element
+    When I go to "/wallet"
     When I go to "/delegates/vote?votes=genesis_14,genesis_16"
-    When I refresh the page
     And I wait 1 seconds
     Then I should see "alreadyVoted-message" element
+    
