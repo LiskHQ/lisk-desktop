@@ -41,12 +41,12 @@ describe('AutoSuggest', () => {
   });
 
   it('should render a row for each entity found {addresses,delegates,transactions}', () => {
-    expect(wrapper.find('.addresses-result')).to.have.lengthOf(3);
-    expect(wrapper.find('.addresses-header')).to.have.lengthOf(1);
-    expect(wrapper.find('.delegates-result')).to.have.lengthOf(3);
-    expect(wrapper.find('.delegates-header')).to.have.lengthOf(1);
-    expect(wrapper.find('.transactions-result')).to.have.lengthOf(3);
-    expect(wrapper.find('.transactions-header')).to.have.lengthOf(1);
+    expect(wrapper).to.have.exactly(3).descendants('.addresses-result');
+    expect(wrapper).to.have.exactly(1).descendants('.addresses-header');
+    expect(wrapper).to.have.exactly(3).descendants('.delegates-result');
+    expect(wrapper).to.have.exactly(1).descendants('.delegates-header');
+    expect(wrapper).to.have.exactly(3).descendants('.transactions-result');
+    expect(wrapper).to.have.exactly(1).descendants('.transactions-header');
   });
 
   it('should not render any row for not found entities {delegates}', () => {
@@ -55,12 +55,12 @@ describe('AutoSuggest', () => {
     delete partialResults.transactions;
     wrapper.setProps({ results: partialResults });
     wrapper.update();
-    expect(wrapper.find('.addresses-result')).to.have.lengthOf(0);
-    expect(wrapper.find('.addresses-header')).to.have.lengthOf(0);
-    expect(wrapper.find('.delegates-result')).to.have.lengthOf(3);
-    expect(wrapper.find('.delegates-header')).to.have.lengthOf(1);
-    expect(wrapper.find('.transactions-result')).to.have.lengthOf(0);
-    expect(wrapper.find('.transactions-header')).to.have.lengthOf(0);
+    expect(wrapper).to.have.exactly(0).descendants('.addresses-result');
+    expect(wrapper).to.have.exactly(0).descendants('.addresses-header');
+    expect(wrapper).to.have.exactly(3).descendants('.delegates-result');
+    expect(wrapper).to.have.exactly(1).descendants('.delegates-header');
+    expect(wrapper).to.have.exactly(0).descendants('.transactions-result');
+    expect(wrapper).to.have.exactly(0).descendants('.transactions-header');
   });
 
   it('should show autosuggest on search input change and hide it on blur', () => {
