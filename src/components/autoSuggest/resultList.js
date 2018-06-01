@@ -31,13 +31,13 @@ const resultList = ({
       }
     </li>;
   });
-  return <ul className={styles.resultList} key={entityKey}>
+  return entities.length > 0 ? <ul className={styles.resultList} key={entityKey}>
     <li className={`${styles.row} ${styles.heading} ${entityKey}-header`}>
       <span>{i18Header}</span>
       <span>{i18Value}</span>
     </li>
     {targetRows}
-  </ul>;
+  </ul> : null;
 };
 
 export default resultList;
