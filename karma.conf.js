@@ -64,6 +64,7 @@ module.exports = function (config) {
             'src/utils/checkDevice.js',
             'src/utils/api/liskService.js',
             'src/components/errorBoundary/index.js',
+            'src/store/reducers/search.js',
           ],
           overrides: {
             'src/store/**/*.js': {
