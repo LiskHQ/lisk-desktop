@@ -12,7 +12,7 @@ class UserVotes extends AccountList {
     const votes = super.getFormatedDelegates('votes', 'votesFilterQuery');
 
     return (
-      <div className={`${styles.details} delegate-statistics`}>
+      <div className={`${styles.details} user-votes`}>
         <div className={`transactions-detail-view ${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row} votes`}>
           <div className={`${grid['col-xs-12']} ${grid['col-sm-12']} ${grid['col-md-12']}`}>
             <div className={styles.label}>

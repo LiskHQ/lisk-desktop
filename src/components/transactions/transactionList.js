@@ -9,7 +9,7 @@ import txTypes from './../../constants/transactionTypes';
 import styles from './transactionList.css';
 import { parseSearchParams } from './../../utils/searchParams';
 import DelegateStatistics from './delegateStatistics';
-import AccountInfo from './accountInfo';
+import UserVotes from './userVotes';
 
 class TransactionsList extends React.Component {
   componentWillReceiveProps(nextProps) {
@@ -80,7 +80,7 @@ class TransactionsList extends React.Component {
     const isAccountInfo = filter && (filter.value === txFilters.accountInfo);
 
     if (isAccountInfo) {
-      return <AccountInfo
+      return <UserVotes
         delegate={this.props.delegate}
         votes={this.props.votes}
         voters={this.props.voters} />;
