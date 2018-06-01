@@ -9,6 +9,8 @@ import styles from './autoSuggest.css';
 
 import * as searchActions from './../search/keyAction';
 
+import * as searchActions from './../search/keyAction';
+
 import routes from '../../constants/routes';
 import keyCodes from './../../constants/keyCodes';
 import mockSearchResults from './searchResults.mock';
