@@ -12,7 +12,7 @@ import routes from '../../constants/routes';
 import keyCodes from './../../constants/keyCodes';
 import mockSearchResults from './searchResults.mock';
 
-describe.only('AutoSuggest', () => {
+describe('AutoSuggest', () => {
   let wrapper;
   let props;
   let results;
