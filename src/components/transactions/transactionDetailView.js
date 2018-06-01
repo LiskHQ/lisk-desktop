@@ -13,6 +13,9 @@ import TransactionType from './transactionType';
 import LiskAmount from '../liskAmount';
 import Amount from './amount';
 import routes from './../../constants/routes';
+import transactions from './../../constants/transactionTypes';
+import TransactionDetailViewField from './transactionDetailViewField';
+import TransactionDetailViewRow from './transactionDetailViewRow';
 
 class TransactionsDetailView extends React.Component {
   constructor(props) {
@@ -37,78 +40,76 @@ class TransactionsDetailView extends React.Component {
   getVoters(dataName) {
     const data = this.props.transaction.votesName && this.props.transaction.votesName[dataName];
 
-    return data ? data.map((delegate, key) => (
-      <Link className={`${styles.addressLink} ${styles.clickable} voter-address`}
-        to={`${routes.explorer.path}${routes.accounts.path}/${delegate.address}`}
-        key={`${key}-${dataName}`}>
-        {`${delegate.username} `}
-      </Link>
-    )) : '';
+    return data ? data
+      .sort((delegate1, delegate2) => delegate1.username - delegate2.username)
+      .map((delegate, key) => (
+        <Link className={`${styles.addressLink} ${styles.clickable} voter-address`}
+          to={`${routes.explorer.path}${routes.accounts.path}/${delegate.address}`}
+          key={`${key}-${dataName}`}>
+          {`${delegate.username} `}
+        </Link>
+      )) : '';
   }
 
-  getFirstRow(isDelegateVote) {
-    const secondColumn = isDelegateVote ?
-      (
-        <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
-          <div className={styles.label}>{this.props.t('Date')}</div>
-          <div className={styles.value}>
-            { this.props.transaction.timestamp ?
-              <span>
-                <DateFromTimestamp
-                  time={this.props.transaction.timestamp} /> - <TimeFromTimestamp
-                  time={this.props.transaction.timestamp}/>
-              </span> :
-              <span>{this.props.t('Pending')}</span>
-            }
-          </div>
-        </div>
-      ) : (
-        <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.column}`}>
-          <div className={styles.label}>{this.props.t('Recipient')}</div>
-          {
-            this.props.transaction.recipientId ?
-              <figure className={styles.accountVisual}>
-                <AccountVisual address={this.props.transaction.recipientId} size={43} />
-              </figure> : null
-          }
-          <div className={styles.value}>
-            {
-              this.props.transaction.recipientId ?
-                <Link className={`${styles.addressLink} ${styles.clickable}`} id='receiver-address'
-                  to={`${routes.explorer.path}${routes.accounts.path}/${this.props.transaction.recipientId}`}>
-                  {this.props.transaction.recipientId}
-                </Link> : '-'
-            }
-          </div>
-        </div>
-      );
+  getDateField() {
     return (
-      <div className={`transactions-detail-view ${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
-        <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.column}`}>
-          <div className={styles.label}>{this.props.t('Sender')}</div>
-          {
-            this.props.transaction.senderId ?
-              <figure className={styles.accountVisual}>
-                <AccountVisual address={this.props.transaction.senderId} size={43} />
-              </figure> : null
-          }
-          <div className={`${styles.value} ${styles.sender} `}>
+      <TransactionDetailViewField
+        label={this.props.t('Date')}
+        value={ this.props.transaction.timestamp ?
+          <span>
+            <DateFromTimestamp
+              time={this.props.transaction.timestamp} /> - <TimeFromTimestamp
+              time={this.props.transaction.timestamp}/>
+          </span> :
+          <span>{this.props.t('Pending')}</span>
+        } />
+    );
+  }
+
+  getFirstRow() {
+    const isSendTransaction = this.props.transaction.type === transactions.send;
+
+    return (
+      <TransactionDetailViewRow>
+        <TransactionDetailViewField
+          label={this.props.t('Sender')}
+          value={
             <Link className={`${styles.addressLink} ${styles.clickable}`} id='sender-address'
               to={`${routes.explorer.path}${routes.accounts.path}/${this.props.transaction.senderId}`}>
               {this.props.transaction.senderId}
             </Link>
-          </div>
-        </div>
-        {secondColumn}
-      </div>
+          }
+          column>
+          {this.props.transaction.senderId ?
+            <figure className={styles.accountVisual}>
+              <AccountVisual address={this.props.transaction.senderId} size={43} />
+            </figure> : null}
+        </TransactionDetailViewField>
+
+        {!isSendTransaction ? this.getDateField() :
+          <TransactionDetailViewField
+            shouldShow={this.props.transaction.recipientId}
+            label={this.props.t('Recipient')}
+            style={styles.sender}
+            value={
+              <Link className={`${styles.addressLink} ${styles.clickable}`} id='receiver-address'
+                to={`${routes.explorer.path}${routes.accounts.path}/${this.props.transaction.recipientId}`}>
+                {this.props.transaction.recipientId}
+              </Link>
+            }
+            column>
+            {this.props.transaction.recipientId ?
+              <figure className={styles.accountVisual}>
+                <AccountVisual address={this.props.transaction.recipientId} size={43} />
+              </figure> : null
+            }
+          </TransactionDetailViewField>
+        }
+      </TransactionDetailViewRow>
     );
   }
 
   render() {
-    const deletedVoters = this.getVoters('deleted');
-    const addedVoters = this.getVoters('added');
-    const isDelegateVote = this.props.transaction.type === 3;
-
     return (
       <div className={`${styles.details}`}>
         {
@@ -124,99 +125,67 @@ class TransactionsDetailView extends React.Component {
             </header> : null
         }
         <div>
-          {
-            !this.props.match.params.id ?
-              <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
-                <div className={`${grid['col-xs-12']} ${grid['col-sm-7']} ${grid['col-md-7']} ${styles.columnNarrow}`}>
-                  <header>
-                    <h2 className={styles.title}>
-                      <TransactionType
-                        {...this.props.transaction}
-                        address={this.props.transaction.senderId}
-                        showTransaction />
-                    </h2>
-                  </header>
-                </div>
-              </div> : null
-          }
-          {this.getFirstRow(isDelegateVote)}
-          {
-            this.props.transaction.type === 0 ?
-              <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
-                <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
-                  <div className={styles.label}>{this.props.t('Date')}</div>
-                  <div className={styles.value}>
-                    { this.props.transaction.timestamp ?
-                      <span>
-                        <DateFromTimestamp
-                          time={this.props.transaction.timestamp} /> - <TimeFromTimestamp
-                          time={this.props.transaction.timestamp}/>
-                      </span> :
-                      <span>{this.props.t('Pending')}</span>
-                    }
-                  </div>
-                </div>
-                <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
-                  {
-                    this.props.transaction.type === 0 ?
-                      <div>
-                        <div className={styles.label}>{this.props.t('Amount (LSK)')}</div>
-                        <div className={`${styles.value} ${styles.amount}`}>
-                          <Amount
-                            value={this.props.transaction}
-                            address={this.props.address}>
-                          </Amount>
-                        </div>
-                      </div> :
-                      <div>
-                        <div className={styles.label}>{this.props.t('Type')}</div>
-                        <div className={styles.value}>
-                          <TransactionType
-                            {...this.props.transaction}
-                            address={this.props.transaction.senderId} />
-                        </div>
-                      </div>
-                  }
-                </div>
-              </div> : ''
-          }
-          {
-            this.props.transaction.amount === 0 ?
-              <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
-                <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
-                  <div className={styles.label}>{this.props.t('Added votes')}</div>
-                  <div className={`${styles.value} voters`}>{addedVoters}</div>
-                </div>
-                <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
-                  <div className={styles.label}>{this.props.t('Removed votes')}</div>
-                  <div className={styles.value}>{deletedVoters}</div>
-                </div>
-              </div>
-              : null
-          }
-          <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
-            <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
-              <div className={styles.label}>{this.props.t('Additional fee')}</div>
-              <div className={styles.value}><LiskAmount val={this.props.transaction.fee} /></div>
+          <TransactionDetailViewRow shouldShow={!this.props.match.params.id}>
+            <div className={`${grid['col-xs-12']} ${grid['col-sm-7']} ${grid['col-md-7']} ${styles.columnNarrow}`}>
+              <header>
+                <h2 className={styles.title}>
+                  <TransactionType
+                    {...this.props.transaction}
+                    address={this.props.transaction.senderId}
+                    showTransaction />
+                </h2>
+              </header>
             </div>
-            <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
-              <div className={styles.label}>{this.props.t('Confirmations')}</div>
-              <div className={styles.value}>
-                <span>{this.props.transaction.confirmations}</span>
-              </div>
-            </div>
-          </div>
-          <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
-            {this.props.prevStep && <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
-              <div className={styles.label}>{this.props.t('Transaction ID')}</div>
-              <div className={styles.value}><CopyToClipboard
-                value={this.props.transaction.id}
-                text={this.props.transaction.id}
-                copyClassName={`${styles.copy}`} /></div>
-            </div>}
-            <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${styles.columnNarrow}`}>
-            </div>
-          </div>
+          </TransactionDetailViewRow>
+
+          {this.getFirstRow()}
+
+          <TransactionDetailViewRow shouldShow={this.props.transaction.type === 0}>
+            {this.getDateField()}
+            <TransactionDetailViewField
+              label={this.props.t('Amount (LSK)')}
+              value={
+                <Amount
+                  value={this.props.transaction}
+                  address={this.props.address}>
+                </Amount>
+              }
+              style={styles.amount} />
+          </TransactionDetailViewRow>
+
+          <TransactionDetailViewRow shouldShow={
+            this.props.transaction.amount === 0 &&
+            this.props.transaction.recipientId}>
+            <TransactionDetailViewField
+              label={this.props.t('Added votes')}
+              value={this.getVoters('added')} />
+            <TransactionDetailViewField
+              label={this.props.t('Removed votes')}
+              value={this.getVoters('deleted')} />
+          </TransactionDetailViewRow>
+
+          <TransactionDetailViewRow>
+            <TransactionDetailViewField
+              label={this.props.t('Additional fee')}
+              value={<LiskAmount val={this.props.transaction.fee} />} />
+            <TransactionDetailViewField
+              label={this.props.t('Confirmations')}
+              value={<span>{this.props.transaction.confirmations}</span>} />
+          </TransactionDetailViewRow>
+
+          <TransactionDetailViewRow>
+            {this.props.prevStep &&
+              <TransactionDetailViewField
+                label={this.props.t('Transaction ID')}
+                value={
+                  <CopyToClipboard
+                    value={this.props.transaction.id}
+                    text={this.props.transaction.id}
+                    copyClassName={`${styles.copy}`} />
+                } />
+            }
+            <TransactionDetailViewField label='' value='' />
+          </TransactionDetailViewRow>
         </div>
         <footer>
         </footer>
