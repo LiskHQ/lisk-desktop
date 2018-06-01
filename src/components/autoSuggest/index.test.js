@@ -17,7 +17,7 @@ import routes from '../../constants/routes';
 import keyCodes from './../../constants/keyCodes';
 import mockSearchResults from './searchResults.mock';
 
-describe('AutoSuggest', () => {
+describe.only('AutoSuggest', () => {
   let wrapper;
   let props;
   let results;
