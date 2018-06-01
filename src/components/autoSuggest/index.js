@@ -3,7 +3,7 @@ import Input from 'react-toolbox/lib/input';
 import styles from './autoSuggest.css';
 import LiskAmount from './../liskAmount';
 import { FontIcon } from '../fontIcon';
-import resultList from './resultList';
+import ResultsList from './resultsList';
 import routes from './../../constants/routes';
 import keyCodes from './../../constants/keyCodes';
 import { visitAndSaveSearch } from './../search/keyAction';
@@ -167,36 +167,30 @@ class AutoSuggest extends React.Component {
         </Input>
         <div className={`${styles.autoSuggest} ${this.state.show ? styles.show : ''} autosuggest-dropdown`}
           onMouseLeave={this.closeDropdown.bind(this)}>
-          {
-            resultList({
-              entities: delegatesResults,
-              entityKey: 'delegates',
-              entityIdxStart: 0,
-              selectedIdx: this.state.selectedIdx,
-              ...this.delegatesPropsMap,
-              ...this.commonProps,
-            })
-          }
-          {
-            resultList({
-              entities: addressesResults,
-              entityKey: 'addresses',
-              entityIdxStart: delegatesResults.length,
-              selectedIdx: this.state.selectedIdx,
-              ...this.addressesPropsMap,
-              ...this.commonProps,
-            })
-          }
-          {
-            resultList({
-              entities: transactionsResults,
-              entityKey: 'transactions',
-              entityIdxStart: delegatesResults.length + addressesResults.length,
-              selectedIdx: this.state.selectedIdx,
-              ...this.transactionsPropsMap,
-              ...this.commonProps,
-            })
-          }
+          <ResultsList {...{
+            results: delegatesResults,
+            entityKey: 'delegates',
+            entityIdxStart: 0,
+            selectedIdx: this.state.selectedIdx,
+            ...this.delegatesPropsMap,
+            ...this.commonProps,
+          }} />
+          <ResultsList {...{
+            results: addressesResults,
+            entityKey: 'addresses',
+            entityIdxStart: delegatesResults.length,
+            selectedIdx: this.state.selectedIdx,
+            ...this.addressesPropsMap,
+            ...this.commonProps,
+          }} />
+          <ResultsList {...{
+            results: transactionsResults,
+            entityKey: 'transactions',
+            entityIdxStart: delegatesResults.length + addressesResults.length,
+            selectedIdx: this.state.selectedIdx,
+            ...this.transactionsPropsMap,
+            ...this.commonProps,
+          }} />
         </div>
       </div>
     );
