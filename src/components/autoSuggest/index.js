@@ -168,37 +168,34 @@ class AutoSuggest extends React.Component {
         <div className={`${styles.autoSuggest} ${this.state.show ? styles.show : ''} autosuggest-dropdown`}
           onMouseLeave={this.closeDropdown.bind(this)}>
           {
-            delegatesResults.length > 0 ?
-              resultList({
-                entities: delegatesResults,
-                entityKey: 'delegates',
-                entityIdxStart: 0,
-                selectedIdx: this.state.selectedIdx,
-                ...this.delegatesPropsMap,
-                ...this.commonProps,
-              }) : null
+            resultList({
+              entities: delegatesResults,
+              entityKey: 'delegates',
+              entityIdxStart: 0,
+              selectedIdx: this.state.selectedIdx,
+              ...this.delegatesPropsMap,
+              ...this.commonProps,
+            })
           }
           {
-            addressesResults.length > 0 ?
-              resultList({
-                entities: addressesResults,
-                entityKey: 'addresses',
-                entityIdxStart: delegatesResults.length,
-                selectedIdx: this.state.selectedIdx,
-                ...this.addressesPropsMap,
-                ...this.commonProps,
-              }) : null
+            resultList({
+              entities: addressesResults,
+              entityKey: 'addresses',
+              entityIdxStart: delegatesResults.length,
+              selectedIdx: this.state.selectedIdx,
+              ...this.addressesPropsMap,
+              ...this.commonProps,
+            })
           }
           {
-            transactionsResults.length > 0 ?
-              resultList({
-                entities: transactionsResults,
-                entityKey: 'transactions',
-                entityIdxStart: delegatesResults.length + addressesResults.length,
-                selectedIdx: this.state.selectedIdx,
-                ...this.transactionsPropsMap,
-                ...this.commonProps,
-              }) : null
+            resultList({
+              entities: transactionsResults,
+              entityKey: 'transactions',
+              entityIdxStart: delegatesResults.length + addressesResults.length,
+              selectedIdx: this.state.selectedIdx,
+              ...this.transactionsPropsMap,
+              ...this.commonProps,
+            })
           }
         </div>
       </div>
