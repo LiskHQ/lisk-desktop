@@ -98,3 +98,15 @@ export const searchMoreTransactions = ({
         });
       });
   };
+
+export const searchSuggestions = ({ activePeer, searchTerm }) =>
+  (dispatch) => {
+    dispatch({
+      data: {},
+      type: actionTypes.searchSuggestionsClear,
+    });
+    searchAll({ activePeer, searchTerm }).then(response => dispatch({
+      data: response,
+      type: actionTypes.searchSuggestions,
+    }));
+  };

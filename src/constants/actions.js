@@ -33,6 +33,8 @@ const actionTypes = {
   clearDataOfCurrencyGraph: 'CLEAR_DATA_OF_CURRENCY_GRAPH',
   loadingStarted: 'LOADING_STARTED',
   loadingFinished: 'LOADING_FINISHED',
+  searchSuggestions: 'SEARCH_SUGGESTIONS',
+  searchSuggestionsClear: 'SEARCH_SUGGESTIONS_CLEAR',
   searchTransactions: 'SEARCH_TRANSACTIONS',
   searchMoreTransactions: 'SEARCH_MORE_TRANSACTIONS',
   searchAccount: 'SEARCH_ACCOUNT',
