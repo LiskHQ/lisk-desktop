@@ -16,6 +16,7 @@ class AutoSuggest extends React.Component {
 
     this.submitSearch = this.submitSearch.bind(this);
 
+    /* istanbul ignore next */
     searchResults = this.props.results || searchResults;
 
     let resultsLength = 0;
@@ -44,6 +45,7 @@ class AutoSuggest extends React.Component {
       case 'transactions' :
         urlSearch = `${routes.transactions.pathPrefix}${routes.transactions.path}/${id}`;
         break;
+      /* istanbul ignore next */
       default:
         break;
     }
@@ -103,6 +105,7 @@ class AutoSuggest extends React.Component {
       case keyCodes.tab :
         this.submitSearch();
         break;
+      /* istanbul ignore next */
       default:
         break;
     }
@@ -116,10 +119,6 @@ class AutoSuggest extends React.Component {
 
   closeDropdown() {
     this.setState({ show: false });
-  }
-
-  showDropdown() {
-    this.setState({ show: true });
   }
 
   getDelegatesResults() {
