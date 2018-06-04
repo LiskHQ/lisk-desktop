@@ -5,6 +5,7 @@ import { I18nextProvider } from 'react-i18next';
 import { spy } from 'sinon';
 import AutoSuggest from './index';
 import i18n from '../../i18n';
+import styles from './autoSuggest.css';
 
 import * as searchActions from './../search/keyAction';
 
@@ -64,17 +65,17 @@ describe('AutoSuggest', () => {
   it('should show autosuggest on search input change and hide it on blur', () => {
     let autosuggestDropdown = wrapper.find('.autosuggest-dropdown').first();
     const autosuggestInput = wrapper.find('.autosuggest-input').find('input').first();
-    expect(autosuggestDropdown.props().className.match(new RegExp(/ {1}autoSuggest__show__/g))).to.be.equal(null);
+    expect(autosuggestDropdown).not.to.have.className(styles.show);
     autosuggestInput.simulate('focus');
     autosuggestInput.simulate('change', { target: { value: 'abc' } });
     wrapper.update();
     autosuggestDropdown = wrapper.find('.autosuggest-dropdown').first();
-    expect(autosuggestDropdown.props().className.match(new RegExp(/ {1}autoSuggest__show__/g))).not.to.be.equal(null);
+    expect(autosuggestDropdown).to.have.className(styles.show);
 
     autosuggestDropdown.simulate('mouseleave');
     wrapper.update();
     autosuggestDropdown = wrapper.find('.autosuggest-dropdown').first();
-    expect(autosuggestDropdown.props().className.match(new RegExp(/ {1}autoSuggest__show__/g))).to.be.equal(null);
+    expect(autosuggestDropdown).not.to.have.className(styles.show);
   });
 
   it('should allow to click on {addresss} suggestion and redirect to its "explorer/accounts" page', () => {
@@ -133,6 +134,6 @@ describe('AutoSuggest', () => {
     });
     expect(submitSearchSpy).not.to.have.been.calledWith();
     const autosuggestDropdown = wrapper.find('.autosuggest-dropdown').first();
-    expect(autosuggestDropdown.props().className.match(new RegExp(/ {1}autoSuggest__show__/g))).to.be.equal(null);
+    expect(autosuggestDropdown).not.to.have.className(styles.show);
   });
 });

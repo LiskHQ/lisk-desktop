@@ -175,39 +175,36 @@ class AutoSuggest extends React.Component {
         </Input>
         <div className={`${styles.autoSuggest} ${this.state.show ? styles.show : ''} autosuggest-dropdown`}
           onMouseLeave={this.closeDropdown.bind(this)}>
-          <ResultsList key='delegates' {...{
-            results: this.getDelegatesResults(),
-            header: {
+          <ResultsList
+            key='delegates'
+            results={this.getDelegatesResults()}
+            header={{
               titleLeft: t('Delegate'),
               titleRight: t('Rank'),
-            },
-            onClick: this.onResultClick.bind(this),
-            selectedRowProps: {
-              ref: this.setSelectedRow.bind(this),
-            },
-          }} />
-          <ResultsList key='addresses' {...{
-            results: this.getAddressesResults(),
-            header: {
+            }}
+            onClick={this.onResultClick.bind(this)}
+            setSelectedRow={this.setSelectedRow.bind(this)}
+          />
+          <ResultsList
+            key='addresses'
+            results={this.getAddressesResults()}
+            header={{
               titleLeft: t('Address'),
               titleRight: t('Balance'),
-            },
-            onClick: this.onResultClick.bind(this),
-            selectedRowProps: {
-              ref: this.setSelectedRow.bind(this),
-            },
-          }} />
-          <ResultsList key='transactions' {...{
-            results: this.getTransactionsResults(),
-            header: {
+            }}
+            onClick={this.onResultClick.bind(this)}
+            setSelectedRow={this.setSelectedRow.bind(this)}
+          />
+          <ResultsList
+            key='transactions'
+            results={this.getTransactionsResults()}
+            header={{
               titleLeft: t('Transaction'),
               titleRight: t('Height'),
-            },
-            onClick: this.onResultClick.bind(this),
-            selectedRowProps: {
-              ref: this.setSelectedRow.bind(this),
-            },
-          }} />
+            }}
+            onClick={this.onResultClick.bind(this)}
+            setSelectedRow={this.setSelectedRow.bind(this)}
+          />
         </div>
       </div>
     );
