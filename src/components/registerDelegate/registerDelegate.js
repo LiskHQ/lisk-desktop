@@ -11,7 +11,7 @@ import styles from './registerDelegate.css';
 import passphraseStyles from './steps/passphraseSteps.css';
 
 class RegisterDelegate extends React.Component {
-  submitDelegate({ delegateName, passphrase, secondPassphrase }) {
+  submitDelegate(event, { delegateName, passphrase, secondPassphrase }) {
     event.preventDefault();
 
     this.props.delegateRegistered({

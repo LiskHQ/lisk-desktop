@@ -61,7 +61,7 @@ describe('SliderCheckbox without HOC', () => {
     expect(wrapper.find(SliderCheckbox)).to.have.lengthOf(1);
   });
 
-  // the values 870, 900 and 1000 are describing the position of the dragged element 
+  // the values 870, 900 and 1000 are describing the position of the dragged element
   // 870 being the initial value (not dragged)
   // 900 a bit less than 50% dragged
   // 1000 a bit more than 50% dragged

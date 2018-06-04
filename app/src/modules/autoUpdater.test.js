@@ -15,7 +15,9 @@ describe('autoUpdater', () => {
   let callbacks;
   let clock;
   const electron = {
-    BrowserWindow: ({ width, height, center, webPreferences }) =>
+    BrowserWindow: ({
+      width, height, center, webPreferences,
+    }) =>
       ({
         width,
         height,

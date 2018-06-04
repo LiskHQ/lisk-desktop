@@ -28,8 +28,10 @@ describe('Send', () => {
     context = {
       storeState,
     };
-    wrapper = mountWithContext(<Send history={ { location: {} } } account={storeState.account}/>,
-      context);
+    wrapper = mountWithContext(
+<Send history={ { location: {} } } account={storeState.account}/>,
+context,
+    );
   });
 
   it('should render MultiStep component ', () => {

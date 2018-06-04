@@ -44,15 +44,18 @@ describe('@integration: Single Transaction', () => {
 
     transactionAPIStub
       .returnsPromise()
-      .resolves({ transaction: {
-        id: '123456789', senderId: '123l', recipientId: '456l', votes: { added: [], deleted: [] },
-      } });
+      .resolves({
+        transaction: {
+          id: '123456789', senderId: '123l', recipientId: '456l', votes: { added: [], deleted: [] },
+        },
+      });
 
     requestToActivePeerStub.withArgs(match.any, 'transactions/get', { id: '123456789' })
       .returnsPromise()
       .resolves({
         success: true,
-        transaction: { id: '123456789', senderId: '123l', recipientId: '456l' } });
+        transaction: { id: '123456789', senderId: '123l', recipientId: '456l' },
+      });
   });
 
   afterEach(() => {
@@ -87,8 +90,10 @@ describe('@integration: Single Transaction', () => {
     store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
     accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
     if (accountType) { store.dispatch(accountLoggedIn(account)); }
-    wrapper = mount(renderWithRouter(SingleTransaction, store,
-      { match: { params: { id } }, transaction: { id } }));
+    wrapper = mount(renderWithRouter(
+      SingleTransaction, store,
+      { match: { params: { id } }, transaction: { id } },
+    ));
     helper = new Helper(wrapper, store);
   };
 

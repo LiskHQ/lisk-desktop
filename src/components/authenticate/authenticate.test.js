@@ -70,8 +70,7 @@ describe('Authenticate', () => {
   });
 
   it('should render InfoParagraph with appropriate message', () => {
-    expect(wrapper.find('InfoParagraph').text()).to.include(
-      `You are looking into a saved account. In order to ${props.nextAction} you need to enter your passphrase`);
+    expect(wrapper.find('InfoParagraph').text()).to.include(`You are looking into a saved account. In order to ${props.nextAction} you need to enter your passphrase`);
   });
 
   it('should activate primary button if correct passphrase entered', () => {

@@ -20,7 +20,9 @@ const { expect } = chai;
 const EC = protractor.ExpectedConditions;
 const defaultTimeout = 10 * 1000;
 
-defineSupportCode(({ Given, When, Then, setDefaultTimeout }) => {
+defineSupportCode(({
+  Given, When, Then, setDefaultTimeout,
+}) => {
   setDefaultTimeout(defaultTimeout);
 
   When('I fill in "{value}" to "{fieldName}" field', (value, fieldName, callback) => {

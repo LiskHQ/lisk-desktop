@@ -68,21 +68,24 @@ const getRecentTransactionOfType = (transactionsList, type) => (
 
 const delegateRegistration = (store, action) => {
   const delegateRegistrationTx = getRecentTransactionOfType(
-    action.data.confirmed, transactionTypes.registerDelegate);
+    action.data.confirmed,
+    transactionTypes.registerDelegate,
+  );
   const state = store.getState();
 
   if (delegateRegistrationTx) {
     getDelegate(state.peers.data, { publicKey: state.account.publicKey })
       .then((delegateData) => {
-        store.dispatch(accountUpdated(Object.assign({},
-          { delegate: delegateData.delegate, isDelegate: true })));
+        store.dispatch(accountUpdated(Object.assign(
+          {},
+          { delegate: delegateData.delegate, isDelegate: true },
+        )));
       });
   }
 };
 
 const votePlaced = (store, action) => {
-  const voteTransaction = getRecentTransactionOfType(
-    action.data.confirmed, transactionTypes.vote);
+  const voteTransaction = getRecentTransactionOfType(action.data.confirmed, transactionTypes.vote);
 
   if (voteTransaction) {
     const state = store.getState();
@@ -98,8 +101,10 @@ const votePlaced = (store, action) => {
 
 const passphraseUsed = (store, action) => {
   if (!store.getState().account.passphrase) {
-    store.dispatch(accountUpdated({ passphrase: action.data,
-      expireTime: Date.now() + lockDuration }));
+    store.dispatch(accountUpdated({
+      passphrase: action.data,
+      expireTime: Date.now() + lockDuration,
+    }));
   } else {
     store.dispatch(accountUpdated({ expireTime: Date.now() + lockDuration }));
   }

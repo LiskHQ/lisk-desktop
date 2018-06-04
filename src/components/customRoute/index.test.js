@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
 import { MemoryRouter, Route } from 'react-router';
 import { CustomRouteRender } from './index';
+import history from '../../history';
 import i18n from '../../i18n';
 
 const Public = () => <h1>Public</h1>;

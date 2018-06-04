@@ -61,7 +61,9 @@ class MainMenu extends React.Component {
   }
 
   render() {
-    const { history, t, showDelegate, account } = this.props;
+    const {
+      history, t, showDelegate, account,
+    } = this.props;
     const tabs = [
       {
         label: t('Dashboard'),

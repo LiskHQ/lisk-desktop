@@ -50,8 +50,7 @@ class Converter extends React.Component {
         key={`${currency}-${key}`}
         className={`${styles.convertElem} converted-price`}
         // eslint-disable-next-line
-        onClick={() => { this.selectActive(currency); }}>{currency}</div>)
-    );
+        onClick={() => { this.selectActive(currency); }}>{currency}</div>));
     // putting <div>|</div> inbetween array objects
     const intersperse = currenciesObejects
       .reduce((a, v, key) => [...a, v, <div key={key}>|</div>], []) // eslint-disable-line

@@ -90,7 +90,9 @@ class SliderCheckbox extends React.Component {
   }
 
   render() {
-    const { label, input, className, hasSlidingArrows, theme } = this.props;
+    const {
+      label, input, className, hasSlidingArrows, theme,
+    } = this.props;
     const icons = this.props.icons ? this.props.icons : {};
 
     const checkType = i => (typeof i === 'string');

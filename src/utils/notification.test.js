@@ -29,9 +29,7 @@ describe('Notification', () => {
 
       notify.isFocused = false;
       notify.about('deposit', amount);
-      expect(mockNotification).to.have.been.calledWith(
-        'LSK received', { body: msg },
-      );
+      expect(mockNotification).to.have.been.calledWith('LSK received', { body: msg });
       mockNotification.reset();
     });
 

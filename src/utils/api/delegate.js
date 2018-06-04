@@ -14,9 +14,7 @@ export const vote = (activePeer, secret, publicKey, voteList, unvoteList, second
   requestToActivePeer(activePeer, 'accounts/delegates', {
     secret,
     publicKey,
-    delegates: voteList.map(delegate => `+${delegate}`).concat(
-      unvoteList.map(delegate => `-${delegate}`),
-    ),
+    delegates: voteList.map(delegate => `+${delegate}`).concat(unvoteList.map(delegate => `-${delegate}`)),
     secondSecret,
   });
 

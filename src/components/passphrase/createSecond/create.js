@@ -19,7 +19,9 @@ class Create extends React.Component {
   }
 
   render() {
-    const { t, balance, percentage, hintTitle } = this.props;
+    const {
+      t, balance, percentage, hintTitle,
+    } = this.props;
     const hasFund = fromRawLsk(balance) * 1 < fromRawLsk(fees.setSecondPassphrase) * 1;
 
     return (

@@ -2,7 +2,9 @@ import React from 'react';
 import InfoParagraph from '../../infoParagraph';
 import ActionBar from '../../actionBar';
 
-const Info = ({ t, useCaseNote, securityNote, fee, nextStep, backButtonFn }) => (
+const Info = ({
+  t, useCaseNote, securityNote, fee, nextStep, backButtonFn,
+}) => (
   <div>
     <InfoParagraph>
       {t('Please click Next, then move around your mouse randomly to generate a random passphrase.')}

@@ -27,15 +27,15 @@ export default class GenericStepDefinition {
     }
   }
   /**
-   * 
+   *
    * @param {String} query - dom query that we need to check length of that
-   * @param {Integer} length 
+   * @param {Integer} length
    */
   haveLengthOf(query, length) {
     expect(this.wrapper).to.have.exactly(length).descendants(query);
   }
   /**
-   * 
+   *
    * @param {String} query - dom query that we need to check text of that
    * @param {String} text - expect text of the dom query entry
    */
@@ -51,7 +51,7 @@ export default class GenericStepDefinition {
     expect(this.wrapper.find(query).first()).to.have.value(text);
   }
   /**
-   * 
+   *
    * @param {String} value - The value to fill in input
    * @param {String} field - space separated class name of the input, without the initial dot
    */
@@ -60,7 +60,7 @@ export default class GenericStepDefinition {
     this.wrapper.find(selector).first().simulate('change', { target: { value } });
   }
   /**
-   * 
+   *
    * @param {String} value - The index of option in the list to click on
    * @param {String} field - space separated class name of the input, without the initial dot
    */
@@ -74,7 +74,7 @@ export default class GenericStepDefinition {
   }
 
   /**
-   * 
+   *
    * @param {String} expectedPublicKey - Valid publicKey
    */
   shouldBeLoggedInAs(expectedPublicKey) {
@@ -82,9 +82,9 @@ export default class GenericStepDefinition {
   }
 
   /**
-   * 
+   *
    * @param {Number} count - Valid publicKey
-   * @param {String} selector - Valid css selector 
+   * @param {String} selector - Valid css selector
    */
   shouldSeeCountInstancesOf(count, selector) {
     expect(this.wrapper).to.have.exactly(count).descendants(selector);

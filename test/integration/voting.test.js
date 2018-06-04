@@ -79,11 +79,11 @@ let localStorageStub;
 let helper;
 
 /**
- * extend GenericStepDefinition and add some specific function to it for testing voting  
+ * extend GenericStepDefinition and add some specific function to it for testing voting
  */
 class Helper extends GenericStepDefinition {
   /**
-   * 
+   *
    * @param {String} index - index of the delegate in the list
    * @param {Boolean} value - new value of the input
    */

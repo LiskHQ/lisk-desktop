@@ -7,6 +7,4 @@ const mapStateToProps = state => ({
   account: state.account,
 });
 
-export default withRouter(connect(
-  mapStateToProps,
-)(translate()(ConfirmSecond)));
+export default withRouter(connect(mapStateToProps)(translate()(ConfirmSecond)));

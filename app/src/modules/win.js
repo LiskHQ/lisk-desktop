@@ -29,7 +29,9 @@ const win = {
   },
 
 
-  create: ({ electron, path, electronLocalshortcut, storage, checkForUpdates }) => {
+  create: ({
+    electron, path, electronLocalshortcut, storage, checkForUpdates,
+  }) => {
     const { Menu } = electron;
 
     win.init({ electron, path, electronLocalshortcut });
