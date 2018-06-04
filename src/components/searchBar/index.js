@@ -1,8 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
 import { FontIcon } from '../fontIcon';
-import { visitAndSaveSearchOnEnter, visitAndSaveSearch } from './../search/keyAction';
+import { visitAndSaveSearch } from './../search/keyAction';
+import { searchSuggestions } from './../../actions/search';
+import AutoSuggest from './../autoSuggest';
 import routes from './../../constants/routes';
 import styles from './searchBar.css';
 
@@ -40,7 +43,7 @@ class Search extends React.Component {
       <FontIcon
         onClick={() => { visitAndSaveSearch(this.state.searchItem, this.props.history); }}
         value='search' className={`${styles.icon} search-bar-button`}/>
-      <input
+      {/* <input
         ref={(el) => { this.searchInput = el; }}
         onFocus={this.select.bind(this)}
         onKeyUp={(e) => { visitAndSaveSearchOnEnter(e, this.props.history); }}
@@ -48,9 +51,25 @@ class Search extends React.Component {
         placeholder={this.props.t('Search for Lisk ID or Transaction ID')}
         value={this.state.searchItem}
         onChange={(e) => { this.setState({ searchItem: e.target.value }); }}
+      /> */}
+      <AutoSuggest
+        history={this.props.history}
+        t={this.props.t}
+        results={this.props.suggestions}
+        searchSuggestions={this.props.searchSuggestions}
       />
     </div>);
   }
 }
 
-export default withRouter(translate()(Search));
+const mapStateToProps = state => ({
+  suggestions: state.search.suggestions,
+});
+const mapDispatchToProps = dispatch => ({
+  searchSuggestions: data => dispatch(searchSuggestions(data)),
+});
+
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(translate()(Search)));

@@ -73,6 +73,13 @@ class AutoSuggest extends React.Component {
       this.setState({ show: false });
     }
     this.setState({ value: searchTerm });
+
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      if (searchTerm === this.state.value) {
+        this.props.searchSuggestions(this.state.value);
+      }
+    }, 250);
   }
 
   handleArrowDown() {
