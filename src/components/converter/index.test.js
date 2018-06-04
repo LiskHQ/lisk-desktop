@@ -23,6 +23,7 @@ describe('Converter', () => {
   it('shold render Converter component', () => {
     const props = {
       t: () => {},
+      settings: {},
     };
     wrapper = mount(<Converter {...props} />, {
       context: { i18n },
@@ -38,6 +39,7 @@ describe('Converter', () => {
       t: () => {},
       value: 0,
       error: false,
+      settings: {},
       settingsUpdated: sinon.spy(),
     };
     wrapper = mount(<Converter {...props} />, {
@@ -57,6 +59,7 @@ describe('Converter', () => {
       value: 2,
       error: false,
       currency: 'USD',
+      settings: { currency: 'USD' },
       settingsUpdated: sinon.spy(),
     };
     wrapper = mount(<Converter {...props} />, {

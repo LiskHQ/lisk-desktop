@@ -29,6 +29,7 @@ describe('Send Writable Component', () => {
       t: key => key,
       nextStep: () => {},
       history: { location: { search: '' } },
+      settings: {},
       settingsUpdated: spy(),
     };
     wrapper = mount(<SendWritable {...props} />, {

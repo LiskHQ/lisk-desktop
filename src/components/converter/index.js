@@ -2,7 +2,6 @@ import React from 'react';
 import liskServiceApi from '../../utils/api/liskService';
 import Input from '../toolbox/inputs/input';
 import { fromRawLsk } from '../../utils/lsk';
-import localJSONStorage from '../../utils/localJSONStorage';
 
 import fees from './../../constants/fees';
 
@@ -25,9 +24,9 @@ class Converter extends React.Component {
   }
 
   componentDidMount() {
-    const localStorageSettings = localJSONStorage.get('settings', {});
-    if (localStorageSettings.currency) {
-      this.selectActive(localStorageSettings.currency);
+    const { settings } = this.props;
+    if (settings.currency) {
+      this.selectActive(settings.currency);
     }
   }
 

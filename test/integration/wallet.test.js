@@ -12,6 +12,7 @@ import { prepareStore, renderWithRouter } from '../utils/applicationInit';
 import accountReducer from '../../src/store/reducers/account';
 import transactionReducer from '../../src/store/reducers/transaction';
 import transactionsReducer from '../../src/store/reducers/transactions';
+import settingsReducer from '../../src/store/reducers/settings';
 import peersReducer from '../../src/store/reducers/peers';
 import loadingReducer from '../../src/store/reducers/loading';
 import searchReducer from '../../src/store/reducers/search';
@@ -88,6 +89,7 @@ describe('@integration: Wallet', () => {
       peers: peersReducer,
       loading: loadingReducer,
       search: searchReducer,
+      settings: settingsReducer,
     }, [
       thunk,
       accountMiddleware,

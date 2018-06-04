@@ -14,6 +14,7 @@ import transactionsReducer from '../../src/store/reducers/transactions';
 import searchReducer from '../../src/store/reducers/search';
 import peersReducer from '../../src/store/reducers/peers';
 import loadingReducer from '../../src/store/reducers/loading';
+import settingsReducer from '../../src/store/reducers/settings';
 import liskServiceReducer from '../../src/store/reducers/liskService';
 import loginMiddleware from '../../src/store/middlewares/login';
 import accountMiddleware from '../../src/store/middlewares/account';
@@ -89,6 +90,7 @@ describe('@integration: Dashboard', () => {
       loading: loadingReducer,
       liskService: liskServiceReducer,
       search: searchReducer,
+      settings: settingsReducer,
     }, [
       thunk,
       accountMiddleware,

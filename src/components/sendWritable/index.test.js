@@ -23,7 +23,11 @@ describe('SendWritableHOC', () => {
     });
     store.subscribe = () => {};
     store.dispatch = () => {};
-    wrapper = mount(<Router><Provider store={store}><SendHOC i18n={i18n} /></Provider></Router>);
+    wrapper = mount(<Router>
+      <Provider store={store}>
+        <SendHOC i18n={i18n} settings={{}} />
+      </Provider>
+    </Router>);
   });
 
   it('should render Send', () => {
