@@ -77,7 +77,10 @@ class AutoSuggest extends React.Component {
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
       if (searchTerm === this.state.value) {
-        this.props.searchSuggestions(this.state.value);
+        this.props.searchSuggestions({
+          activePeer: this.props.activePeer,
+          searchTerm: this.state.value,
+        });
       }
     }, 250);
   }
