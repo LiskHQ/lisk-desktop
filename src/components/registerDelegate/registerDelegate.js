@@ -11,7 +11,7 @@ import styles from './registerDelegate.css';
 import passphraseStyles from './steps/passphraseSteps.css';
 
 class RegisterDelegate extends React.Component {
-  submitDelegate(event, { delegateName, passphrase, secondPassphrase }) {
+  submitDelegate({ delegateName, passphrase, secondPassphrase }, event) {
     event.preventDefault();
 
     this.props.delegateRegistered({
@@ -56,7 +56,7 @@ class RegisterDelegate extends React.Component {
           <MultiStep
             className={styles.multiStep}
             prevPage={this.goBack.bind(this)}
-            finalCallback={this.submitDelegate.bind(this)}
+            finalCallback={(evt) => this.submitDelegate.bind(this, evt)}
             backButtonLabel={this.props.t('Back')}>
             <Choose
               title={this.props.t('Choose')}
@@ -68,7 +68,7 @@ class RegisterDelegate extends React.Component {
               title={this.props.t('Confirm')}
               icon='login'
               t={this.props.t}
-              submitDelegate={this.submitDelegate.bind(this)} />
+              submitDelegate={(evt) => this.submitDelegate.bind(this, evt)} />
           </MultiStep>
         </section>
       </Box>
