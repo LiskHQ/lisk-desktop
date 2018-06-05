@@ -24,14 +24,14 @@ class WalletTransactions extends React.Component {
       });
       this.props.accountVotesFetched({
         activePeer: this.props.activePeer,
-        address: this.props.account.address,
+        address: this.props.address,
       });
     }
   }
   onLoadMore() {
     this.props.transactionsRequested({
       activePeer: this.props.activePeer,
-      address: this.props.account.address,
+      address: this.props.address,
       limit: 25,
       offset: this.props.transactions.length,
       filter: this.props.activeFilter,
@@ -40,7 +40,7 @@ class WalletTransactions extends React.Component {
   onFilterSet(filter) {
     this.props.transactionsFilterSet({
       activePeer: this.props.activePeer,
-      address: this.props.account.address,
+      address: this.props.address,
       limit: 25,
       filter,
     });

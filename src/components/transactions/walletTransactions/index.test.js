@@ -57,6 +57,7 @@ describe('WalletTransactions Component', () => {
       activePeer: match.any,
       address: accounts.genesis.address,
       limit: 25,
+      filter: txFilters.all,
     }).returnsPromise().resolves({ transactions: [{ id: 'Some ID' }], count: 1000 });
 
 
