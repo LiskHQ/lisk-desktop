@@ -141,7 +141,7 @@ class AutoSuggest extends React.Component {
       id: account.address,
       valueLeft: account.address,
       valueRight: <span><LiskAmount val={account.balance}/> LSK</span>,
-      isSelected: searchResults.delegates.length + idx === this.state.selectedIdx,
+      isSelected: this.props.results.delegates.length + idx === this.state.selectedIdx,
       type: 'addresses',
     }));
   }
@@ -151,8 +151,8 @@ class AutoSuggest extends React.Component {
       id: transaction.id,
       valueLeft: transaction.id,
       valueRight: transaction.height,
-      isSelected: searchResults.delegates.length +
-        searchResults.addresses.length + idx === this.state.selectedIdx,
+      isSelected: this.props.results.delegates.length +
+      this.props.results.addresses.length + idx === this.state.selectedIdx,
       type: 'transactions',
     }));
   }
