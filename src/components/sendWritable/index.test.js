@@ -38,8 +38,8 @@ describe('SendWritableHOC', () => {
 
   it('should bind settingsUpdated action to SendWritable props.settingsUpdated', () => {
     const actionsSpy = spy(settingsActions, 'settingsUpdated');
-    wrapper.find('SendWritable').props().settingsUpdated({});
-    expect(actionsSpy).to.be.calledWith();
+    wrapper.find('SendWritable').props().settingsUpdated({ currency: 'EUR' });
+    expect(actionsSpy).to.be.calledWith({ currency: 'EUR' });
     actionsSpy.restore();
   });
 });

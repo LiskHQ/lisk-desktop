@@ -15,7 +15,7 @@ describe('Specify Request', () => {
       nextStep: spy(),
       prevStep: spy(),
       settings: {},
-      settingsUpdated: spy(),
+      settingsUpdated: () => {},
     };
 
     wrapper = mount(<SpecifyRequest {...props} />);

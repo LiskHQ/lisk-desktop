@@ -40,7 +40,7 @@ describe('Converter', () => {
       value: 0,
       error: false,
       settings: {},
-      settingsUpdated: sinon.spy(),
+      settingsUpdated: () => {},
     };
     wrapper = mount(<Converter {...props} />, {
       context: { i18n },
@@ -60,7 +60,7 @@ describe('Converter', () => {
       error: false,
       currency: 'USD',
       settings: { currency: 'USD' },
-      settingsUpdated: sinon.spy(),
+      settingsUpdated: () => {},
     };
     wrapper = mount(<Converter {...props} />, {
       context: { i18n },

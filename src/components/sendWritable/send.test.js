@@ -1,7 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import { spy } from 'sinon';
 import configureStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
 import accounts from '../../../test/constants/accounts';
@@ -30,7 +29,7 @@ describe('Send Writable Component', () => {
       nextStep: () => {},
       history: { location: { search: '' } },
       settings: {},
-      settingsUpdated: spy(),
+      settingsUpdated: () => {},
     };
     wrapper = mount(<SendWritable {...props} />, {
       context: { store, i18n },
