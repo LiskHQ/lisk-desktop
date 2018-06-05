@@ -21,12 +21,9 @@ class AutoSuggest extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let resultsLength;
     this.selectedRow = null;
-    ['delegates', 'addresses', 'transactions'].map((resultKey) => {
-      resultsLength += nextProps.results[resultKey].length;
-      return resultsLength;
-    });
+    const resultsLength = ['delegates', 'addresses', 'transactions'].reduce((total, resultKey) =>
+      total + nextProps.results[resultKey].length);
     this.setState({ resultsLength });
   }
 
