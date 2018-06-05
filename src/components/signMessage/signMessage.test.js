@@ -62,12 +62,23 @@ describe('SignMessage', () => {
       expect(history.goBack).to.have.been.calledWith();
     });
 
-    it('should render ConfirmMessage step "verify"', () => {
+    it('should render step "done" when account unlocked', () => {
       wrapper.find('Input').props().onChange('message', '123aaa');
       wrapper.update();
       const nextButton = wrapper.find('button');
       nextButton.first().simulate('click');
-      expect(wrapper).to.have.descendants('ConfirmMessage');
+      expect(wrapper).to.have.descendants('.account-information-address');
+    });
+
+    it('should render PassphraseInput step "verify" when account locked', () => {
+      const propsWithoutPassprase = { ...props };
+      delete propsWithoutPassprase.account.passphrase;
+      wrapper = mount(<SignMessage {...propsWithoutPassprase} />, options);
+      wrapper.find('Input').props().onChange('message', '123aaa');
+      wrapper.update();
+      const nextButton = wrapper.find('button');
+      nextButton.first().simulate('click');
+      expect(wrapper).to.have.descendants('PassphraseInput');
     });
 
     it('should render ConfirmMessage step "done"', () => {
