@@ -4,6 +4,7 @@ import styles from './../transactions.css';
 import TransactionOverview from './../transactionOverview';
 import TransactionDetailView from './../transactionDetailView';
 import Box from './../../box';
+import txFilters from './../../../constants/transactionFilters';
 
 import routes from './../../../constants/routes';
 
@@ -17,7 +18,7 @@ class ExplorerTransactions extends React.Component {
       activePeer: this.props.activePeer,
       address: this.props.address,
       limit: 25,
-      filter: this.props.activeFilter,
+      filter: txFilters.all,
     });
   }
   onLoadMore() {

@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
-import { loadTransactions, transactionsRequested, transactionsFilterSet } from '../../../actions/transactions';
+import { transactionsRequested, transactionsFilterSet } from '../../../actions/transactions';
 import { accountVotersFetched, accountVotesFetched } from '../../../actions/account';
 import WalletTransactions from './walletTransactions';
 
+/* istanbul ignore next */
 const mapStateToProps = state => ({
   activePeer: state.peers.data,
   account: state.account,
@@ -19,7 +20,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  loadTransactions: data => dispatch(loadTransactions(data)),
   transactionsRequested: data => dispatch(transactionsRequested(data)),
   transactionsFilterSet: data => dispatch(transactionsFilterSet(data)),
   accountVotersFetched: data => dispatch(accountVotersFetched(data)),

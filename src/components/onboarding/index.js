@@ -61,6 +61,7 @@ class Onboarding extends React.Component {
     this.onboardingFinished = false;
     this.joyride.reset(true);
     this.setState({ intro: true, skip: false });
+    this.props.settingsUpdated({ onBoarding: false });
   }
 
   onboardingCallback(data) {
@@ -92,8 +93,6 @@ class Onboarding extends React.Component {
     if (onboardingFinished) {
       if (this.onboardingFinished) this.reset();
       this.onboardingFinished = true;
-      this.props.settingsUpdated({ onBoarding: false });
-      // window.localStorage.setItem('onboarding', 'false');
     }
   }
 
