@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import WalletTransactions from './../transactions/walletTransactions';
 import Send from '../send';
-import { settingsUpdated } from '../../actions/settings';
 
 import styles from './transactionDasboard.css';
 
@@ -29,8 +28,4 @@ const mapStateToProps = state => ({
   pendingTransactions: state.transactions.pending,
 });
 
-const mapDispatchToProps = dispatch => ({
-  settingsUpdated: data => dispatch(settingsUpdated(data)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(TransactionsDashboard);
+export default connect(mapStateToProps)(TransactionsDashboard);
