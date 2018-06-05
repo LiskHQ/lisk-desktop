@@ -5,7 +5,7 @@ import regex from './../../utils/regex';
 /* eslint-disable prefer-promise-reject-errors */
 const searchAddresses = ({ activePeer, searchTerm }) => new Promise((resolve, reject) =>
   getAccount(activePeer, searchTerm)
-    .then(response => resolve({ addresses: [response.account] }))
+    .then(response => resolve({ addresses: [response] }))
     .catch(() => reject({ addresses: [] })));
 
 const searchDelegates = ({ activePeer, searchTerm }) => new Promise((resolve, reject) =>
