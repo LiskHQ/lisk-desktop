@@ -1,12 +1,11 @@
 import i18next from 'i18next';
 import actionTypes from '../constants/actions';
-import { setSecondPassphrase, send, getAccount } from '../utils/api/account';
+import { setSecondPassphrase, getAccount } from '../utils/api/account';
 import { registerDelegate, getDelegate, getVotes, getVoters } from '../utils/api/delegate';
 import { loadTransactionsFinish } from './transactions';
 import { delegateRegisteredFailure } from './delegate';
 import { errorAlertDialogDisplayed } from './dialog';
 import Fees from '../constants/fees';
-import { toRawLsk } from '../utils/lsk';
 import transactionTypes from '../constants/transactionTypes';
 
 /**
@@ -141,36 +140,6 @@ export const delegateRegistered = ({
       });
     dispatch(passphraseUsed(passphrase));
   };
-
-/**
- *
- */
-export const sent = ({
-  activePeer, account, recipientId, amount, passphrase, secondPassphrase,
-}) =>
-  (dispatch) => {
-    send(activePeer, recipientId, toRawLsk(amount), passphrase, secondPassphrase)
-      .then((data) => {
-        dispatch({
-          data: {
-            id: data.transactionId,
-            senderPublicKey: account.publicKey,
-            senderId: account.address,
-            recipientId,
-            amount: toRawLsk(amount),
-            fee: Fees.send,
-            type: transactionTypes.send,
-          },
-          type: actionTypes.transactionAdded,
-        });
-      })
-      .catch((error) => {
-        const errorMessage = error && error.message ? `${error.message}.` : i18next.t('An error occurred while creating the transaction.');
-        dispatch({ data: { errorMessage }, type: actionTypes.transactionFailed });
-      });
-    dispatch(passphraseUsed(passphrase));
-  };
-
 
 export const loadDelegate = ({ activePeer, publicKey }) =>
   (dispatch) => {

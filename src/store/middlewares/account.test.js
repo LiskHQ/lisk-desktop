@@ -5,6 +5,7 @@ import accountConfig from '../../constants/account';
 import { activePeerUpdate } from '../../actions/peers';
 import * as votingActions from '../../actions/voting';
 import * as accountApi from '../../utils/api/account';
+import * as transactionsApi from '../../utils/api/transactions';
 import accounts from '../../../test/constants/accounts';
 import actionTypes from '../../constants/actions';
 import * as delegateApi from '../../utils/api/delegate';
@@ -82,7 +83,7 @@ describe('Account middleware', () => {
 
     next = spy();
     stubGetAccount = stub(accountApi, 'getAccount').returnsPromise();
-    stubTransactions = stub(accountApi, 'transactions').returnsPromise().resolves(true);
+    stubTransactions = stub(transactionsApi, 'getTransactions').returnsPromise().resolves(true);
   });
 
   afterEach(() => {

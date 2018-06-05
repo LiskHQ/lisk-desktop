@@ -1,6 +1,7 @@
 import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../utils/loading';
-import { transactions, getAccount } from '../utils/api/account';
+import { getAccount } from '../utils/api/account';
+import { getTransactions } from '../utils/api/transactions';
 import { getDelegate, getVoters, getVotes } from '../utils/api/delegate';
 import { searchAll } from '../utils/api/search';
 
@@ -62,9 +63,7 @@ export const searchTransactions = ({
 }) =>
   (dispatch) => {
     if (showLoading) loadingStarted(actionTypes.searchTransactions);
-    transactions({
-      activePeer, address, limit, filter,
-    })
+    getTransactions({ activePeer, address, limit, filter })
       .then((transactionsResponse) => {
         dispatch({
           data: {
@@ -83,9 +82,7 @@ export const searchMoreTransactions = ({
   activePeer, address, limit, offset, filter,
 }) =>
   (dispatch) => {
-    transactions({
-      activePeer, address, limit, offset, filter,
-    })
+    getTransactions({ activePeer, address, limit, offset, filter })
       .then((transactionsResponse) => {
         dispatch({
           data: {

@@ -1,4 +1,4 @@
-import { getAccount, transactions as getTransactions } from '../../utils/api/account';
+import { getAccount } from '../../utils/api/account';
 import { accountUpdated } from '../../actions/account';
 import { transactionsUpdateUnconfirmed } from '../../actions/transactions';
 import { activePeerUpdate } from '../../actions/peers';
@@ -6,6 +6,7 @@ import { votesFetched } from '../../actions/voting';
 import actionTypes from '../../constants/actions';
 import accountConfig from '../../constants/account';
 import { getDelegate } from '../../utils/api/delegate';
+import { getTransactions } from '../../utils/api/transactions';
 import transactionTypes from '../../constants/transactionTypes';
 
 const { lockDuration } = accountConfig;
@@ -45,6 +46,7 @@ const hasRecentTransactions = txs => (
 const updateAccountData = (store, action) => {
   const { peers, account, transactions } = store.getState();
 
+  // all dispatches
   getAccount(peers.data, account.address).then((result) => {
     if (result.balance !== account.balance) {
       if (!action.data.windowIsFocused || !hasRecentTransactions(transactions)) {
@@ -74,6 +76,7 @@ const delegateRegistration = (store, action) => {
   const state = store.getState();
 
   if (delegateRegistrationTx) {
+    // all dispatches no api calls and no dispatches after api call
     getDelegate(state.peers.data, { publicKey: state.account.publicKey })
       .then((delegateData) => {
         store.dispatch(accountUpdated(Object.assign(

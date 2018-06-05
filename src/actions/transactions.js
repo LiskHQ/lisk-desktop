@@ -1,16 +1,20 @@
+import i18next from 'i18next';
 import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../utils/loading';
-import { transactions, transaction, unconfirmedTransactions } from '../utils/api/account';
+import { send, getTransactions, getSingleTransaction, unconfirmedTransactions } from '../utils/api/transactions';
 import { getDelegate } from '../utils/api/delegate';
 import { loadDelegateCache } from '../utils/delegates';
 import { extractAddress } from '../utils/account';
-import { loadAccount } from './account';
+import { loadAccount, passphraseUsed } from './account';
+import Fees from '../constants/fees';
+import { toRawLsk } from '../utils/lsk';
+import transactionTypes from '../constants/transactionTypes';
 
 export const transactionsFilterSet = ({
   activePeer, address, limit, filter,
 }) =>
   (dispatch) => {
-    transactions({
+    getTransactions({
       activePeer,
       address,
       limit,
@@ -50,7 +54,7 @@ export const loadTransactions = ({ activePeer, publicKey, address }) =>
     const lastActiveAddress = publicKey && extractAddress(publicKey);
     const isSameAccount = lastActiveAddress === address;
     loadingStarted(actionTypes.transactionsLoad);
-    transactions({ activePeer, address, limit: 25 })
+    getTransactions({ activePeer, address, limit: 25 })
       .then((transactionsResponse) => {
         dispatch(loadAccount({
           activePeer,
@@ -68,17 +72,9 @@ export const loadTransactions = ({ activePeer, publicKey, address }) =>
       });
   };
 
-/**
- *
- *
- */
-export const transactionsRequested = ({
-  activePeer, address, limit, offset, filter,
-}) =>
+export const transactionsRequested = ({ activePeer, address, limit, offset, filter }) =>
   (dispatch) => {
-    transactions({
-      activePeer, address, limit, offset, filter,
-    })
+    getTransactions({ activePeer, address, limit, offset, filter })
       .then((response) => {
         dispatch({
           data: {
@@ -95,7 +91,7 @@ export const transactionsRequested = ({
 export const loadTransaction = ({ activePeer, id }) =>
   (dispatch) => {
     dispatch({ type: actionTypes.transactionCleared });
-    transaction({ activePeer, id })
+    getSingleTransaction({ activePeer, id })
       .then((response) => {
         const added = (response.transaction.votes && response.transaction.votes.added) || [];
         const deleted = (response.transaction.votes && response.transaction.votes.deleted) || [];
@@ -146,4 +142,49 @@ export const loadTransaction = ({ activePeer, id }) =>
       }).catch((error) => {
         dispatch({ data: error, type: actionTypes.transactionLoadFailed });
       });
+  };
+
+export const transactionsUpdated = ({ activePeer, address, limit, filter, pendingTransactions }) =>
+  (dispatch) => {
+    getTransactions({ activePeer, address, limit, filter })
+      .then((response) => {
+        dispatch({
+          data: {
+            confirmed: response.transactions,
+            count: parseInt(response.count, 10),
+          },
+          type: actionTypes.transactionsUpdated,
+        });
+        if (pendingTransactions.length) {
+          dispatch(transactionsUpdateUnconfirmed({
+            activePeer,
+            address,
+            pendingTransactions,
+          }));
+        }
+      });
+  };
+
+export const sent = ({ activePeer, account, recipientId, amount, passphrase, secondPassphrase }) =>
+  (dispatch) => {
+    send(activePeer, recipientId, toRawLsk(amount), passphrase, secondPassphrase)
+      .then((data) => {
+        dispatch({
+          data: {
+            id: data.transactionId,
+            senderPublicKey: account.publicKey,
+            senderId: account.address,
+            recipientId,
+            amount: toRawLsk(amount),
+            fee: Fees.send,
+            type: transactionTypes.send,
+          },
+          type: actionTypes.transactionAdded,
+        });
+      })
+      .catch((error) => {
+        const errorMessage = error && error.message ? `${error.message}.` : i18next.t('An error occurred while creating the transaction.');
+        dispatch({ data: { errorMessage }, type: actionTypes.transactionFailed });
+      });
+    dispatch(passphraseUsed(passphrase));
   };
