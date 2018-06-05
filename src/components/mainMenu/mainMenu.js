@@ -129,11 +129,6 @@ class MainMenu extends React.Component {
                   disabled={itemShouldBeDisabled(index)}
                 />)}
             </ToolboxTabs>
-            <div onClick={this.menuToggle.bind(this)}
-              className={`${styles.more} more-menu`}>
-              <FontIcon value='more' className={styles.readMoreIcon} />
-              <span className={styles.readMoreText}>{t('more')}</span>
-            </div>
             <Drawer theme={styles}
               className='drawer'
               active={this.state.active}

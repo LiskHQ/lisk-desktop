@@ -35,14 +35,14 @@ describe('TransactionDetailView', () => {
         id: '',
       },
       match: { params: {} },
-      history: { push: () => {}, location: { search: '' } },
+      history: { push: spy(), location: { search: '' } },
     };
     const wrapper = mountWithContext(<TransactionDetailView {...props} />, context);
     const expectedValue = /flexboxgrid__row/g;
     const html = wrapper.html();
     expect(html.match(expectedValue)).to.have.lengthOf(6);
     wrapper.find('.transaction-details-back-button').simulate('click');
-    expect(props.prevStep).to.have.been.calledWith();
+    expect(props.history.push).to.have.been.calledWith();
   });
 
   it('should display 2 voter-address Links', () => {

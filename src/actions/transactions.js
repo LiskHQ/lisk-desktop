@@ -2,6 +2,7 @@ import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../utils/loading';
 import { transactions, transaction, unconfirmedTransactions } from '../utils/api/account';
 import { getDelegate } from '../utils/api/delegate';
+import { loadDelegateCache } from '../utils/delegates';
 import { extractAddress } from '../utils/account';
 import { loadAccount } from './account';
 
@@ -44,9 +45,7 @@ export const loadTransactionsFinish = accountUpdated =>
 
 export const loadTransactions = ({ activePeer, publicKey, address }) =>
   (dispatch) => {
-    const lastActiveAddress = publicKey ?
-      extractAddress(publicKey) :
-      null;
+    const lastActiveAddress = publicKey && extractAddress(publicKey);
     const isSameAccount = lastActiveAddress === address;
     loadingStarted(actionTypes.transactionsLoad);
     transactions({ activePeer, address, limit: 25 })
@@ -94,26 +93,48 @@ export const loadTransaction = ({ activePeer, id }) =>
       .then((response) => {
         const added = (response.transaction.votes && response.transaction.votes.added) || [];
         const deleted = (response.transaction.votes && response.transaction.votes.deleted) || [];
-
-        deleted.map(publicKey =>
-          getDelegate(activePeer, { publicKey })
-            .then((delegateData) => {
-              dispatch({
-                data: { delegate: delegateData.delegate, voteArrayName: 'deleted' },
-                type: actionTypes.transactionAddDelegateName,
+        const localStorageDelegates = activePeer.options && loadDelegateCache(activePeer);
+        deleted.forEach((publicKey) => {
+          const address = extractAddress(publicKey);
+          const storedDelegate = localStorageDelegates[address];
+          if (storedDelegate) {
+            dispatch({
+              data: {
+                delegate: {
+                  username: storedDelegate.username,
+                  address,
+                },
+                voteArrayName: 'deleted' },
+              type: actionTypes.transactionAddDelegateName,
+            });
+          } else {
+            getDelegate(activePeer, { publicKey })
+              .then((delegateData) => {
+                dispatch({
+                  data: { delegate: delegateData.delegate, voteArrayName: 'deleted' },
+                  type: actionTypes.transactionAddDelegateName,
+                });
               });
-            }),
-        );
+          }
+        });
 
-        added.map(publicKey =>
-          getDelegate(activePeer, { publicKey })
-            .then((delegateData) => {
-              dispatch({
-                data: { delegate: delegateData.delegate, voteArrayName: 'added' },
-                type: actionTypes.transactionAddDelegateName,
+        added.forEach((publicKey) => {
+          const address = extractAddress(publicKey);
+          if (localStorageDelegates[address]) {
+            dispatch({
+              data: { delegate: { ...localStorageDelegates[address], address }, voteArrayName: 'added' },
+              type: actionTypes.transactionAddDelegateName,
+            });
+          } else {
+            getDelegate(activePeer, { publicKey })
+              .then((delegateData) => {
+                dispatch({
+                  data: { delegate: delegateData.delegate, voteArrayName: 'added' },
+                  type: actionTypes.transactionAddDelegateName,
+                });
               });
-            }),
-        );
+          }
+        });
         dispatch({ data: response, type: actionTypes.transactionLoaded });
       }).catch((error) => {
         dispatch({ data: error, type: actionTypes.transactionLoadFailed });

@@ -54,7 +54,6 @@ module.exports = function (config) {
           functions: 80,
           lines: 80,
           excludes: [
-            'src/components/accountVisual/index.js',
             'src/components/header/header.js',
             'src/components/searchBar/index.js',
             'src/components/register/register.js',
@@ -62,8 +61,7 @@ module.exports = function (config) {
             'src/components/voteUrlProcessor/voteUrlProcessor.js',
             'src/components/voteUrlProcessor/index.js',
             'src/components/onboarding/index.js',
-            'src/components/passphrase/createSecond/index.js',
-            'src/components/passphraseCreation/index.js',
+            'src/utils/checkDevice.js',
             'src/utils/api/liskService.js',
             'src/components/errorBoundary/index.js',
           ],

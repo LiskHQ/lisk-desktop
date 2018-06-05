@@ -5,6 +5,7 @@ import txFilters from './../constants/transactionFilters';
 import { transactionsRequested, loadTransaction } from './transactions';
 import * as accountApi from '../utils/api/account';
 import * as delegateApi from '../utils/api/delegate';
+import accounts from '../../test/constants/accounts';
 
 describe('actions: transactions', () => {
   describe('transactionsRequested', () => {
@@ -51,7 +52,11 @@ describe('actions: transactions', () => {
     let accountApiMock;
     let delegateApiMock;
     const data = {
-      activePeer: {},
+      activePeer: {
+        options: {
+          name: 'Mainnet',
+        },
+      },
       address: '15626650747375562521',
       limit: 20,
       offset: 0,
@@ -77,7 +82,7 @@ describe('actions: transactions', () => {
 
     it('should dispatch one transactionAddDelegateName action when transaction contains one vote added', () => {
       const delegateResponse = { delegate: { username: 'peterpan' } };
-      const transactionResponse = { transaction: { votes: { added: ['one'] }, count: '0' } };
+      const transactionResponse = { transaction: { votes: { added: [accounts.delegate.publicKey] }, count: '0' } };
       accountApiMock.returnsPromise().resolves(transactionResponse);
       delegateApiMock.returnsPromise().resolves(delegateResponse);
       const expectedActionPayload = {
@@ -94,7 +99,7 @@ describe('actions: transactions', () => {
 
     it('should dispatch one transactionAddDelegateName action when transaction contains one vote deleted', () => {
       const delegateResponse = { delegate: { username: 'peterpan' } };
-      const transactionResponse = { transaction: { votes: { deleted: ['one'] }, count: '0' } };
+      const transactionResponse = { transaction: { votes: { deleted: [accounts.delegate.publicKey] }, count: '0' } };
       accountApiMock.returnsPromise().resolves(transactionResponse);
       delegateApiMock.returnsPromise().resolves(delegateResponse);
       const expectedActionPayload = {
