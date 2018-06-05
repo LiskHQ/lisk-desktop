@@ -170,8 +170,8 @@ class AutoSuggest extends React.Component {
           autoComplete='off'>
           {
             this.state.show ?
-              <FontIcon value='close' className={styles.icon} onClick={this.resetSearch.bind(this)} /> :
-              <FontIcon value='search' className={`${styles.icon} ${styles.iconSearch}`}
+              <FontIcon value='close' className={`${styles.icon} autosuggest-btn-close`} onClick={this.resetSearch.bind(this)} /> :
+              <FontIcon value='search' className={`${styles.icon} ${styles.iconSearch} autosuggest-btn-search`}
                 onClick={() => { visitAndSaveSearch(this.state.value, history); }} />
           }
         </Input>
