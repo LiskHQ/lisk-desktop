@@ -44,9 +44,6 @@ module.exports = {
       {
         test: /\.(png|svg)$/,
         exclude: [/fonts/],
-        options: {
-          name: '[path][name].[ext]',
-        },
         loader: 'url-loader',
       },
       {
