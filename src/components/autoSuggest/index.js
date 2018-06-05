@@ -7,32 +7,27 @@ import ResultsList from './resultsList';
 import routes from './../../constants/routes';
 import keyCodes from './../../constants/keyCodes';
 import { visitAndSaveSearch } from './../search/keyAction';
-import mockSearchResults from './searchResults.mock';
 
-let searchResults = mockSearchResults;
 class AutoSuggest extends React.Component {
   constructor(props) {
     super(props);
-
     this.submitSearch = this.submitSearch.bind(this);
-
-    /* istanbul ignore next */
-    searchResults = this.props.results || searchResults;
-
-    let resultsLength = 0;
-    Object.keys(searchResults).map((resultKey) => {
-      resultsLength += searchResults[resultKey].length;
-      return resultsLength;
-    });
-
     this.selectedRow = null;
-
     this.state = {
       show: false,
       value: '',
       selectedIdx: 0,
-      resultsLength,
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    let resultsLength;
+    this.selectedRow = null;
+    ['delegates', 'addresses', 'transactions'].map((resultKey) => {
+      resultsLength += nextProps.results[resultKey].length;
+      return resultsLength;
+    });
+    this.setState({ resultsLength });
   }
 
   onResultClick(id, type) {
@@ -132,7 +127,7 @@ class AutoSuggest extends React.Component {
   }
 
   getDelegatesResults() {
-    return searchResults.delegates.map((delegate, idx) => ({
+    return this.props.results.delegates.map((delegate, idx) => ({
       id: delegate.address,
       valueLeft: delegate.username,
       valueRight: delegate.rank,
@@ -142,7 +137,7 @@ class AutoSuggest extends React.Component {
   }
 
   getAddressesResults() {
-    return searchResults.addresses.map((account, idx) => ({
+    return this.props.results.addresses.map((account, idx) => ({
       id: account.address,
       valueLeft: account.address,
       valueRight: <span><LiskAmount val={account.balance}/> LSK</span>,
@@ -152,7 +147,7 @@ class AutoSuggest extends React.Component {
   }
 
   getTransactionsResults() {
-    return searchResults.transactions.map((transaction, idx) => ({
+    return this.props.results.transactions.map((transaction, idx) => ({
       id: transaction.id,
       valueLeft: transaction.id,
       valueRight: transaction.height,
