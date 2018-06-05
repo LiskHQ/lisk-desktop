@@ -14,10 +14,6 @@ class TransactionsOverview extends React.Component {
     this.props.onInit();
   }
 
-  componentWillUnmount() {
-    this.setTransactionsFilter(txFilters.all);
-  }
-
   loadMore() {
     if (this.canLoadMore) {
       this.canLoadMore = false;

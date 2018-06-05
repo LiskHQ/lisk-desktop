@@ -339,9 +339,9 @@ describe('@integration: Wallet', () => {
 
     describe('Scenario: should allow to view transactions', () => {
       step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
-      step('Then I should see 50 rows', () => helper.shouldSeeCountInstancesOf(50, 'TransactionRow'));
+      step('Then I should see 25 rows', () => helper.shouldSeeCountInstancesOf(25, 'TransactionRow'));
       step('When I scroll to the bottom of "transactions box"', () => { wrapper.find('Waypoint').props().onEnter(); });
-      step('Then I should see 75 rows', () => { wrapper.update(); helper.shouldSeeCountInstancesOf(75, 'TransactionRow'); });
+      step('Then I should see 50 rows', () => { wrapper.update(); helper.shouldSeeCountInstancesOf(50, 'TransactionRow'); });
     });
 
     describe.skip('Scenario: should allow to filter transactions', () => {
