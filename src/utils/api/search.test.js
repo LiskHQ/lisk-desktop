@@ -8,7 +8,7 @@ describe('Utils: Search', () => {
   let peersAPIStub;
   let getAccountStub;
 
-  const accountsResponse = { account: { address: '1337L', balance: 1110 }, success: true };
+  const accountsResponse = { address: '1337L', balance: 1110 };
   const delegatesResponse = {
     delegates: [
       { username: '1337', rank: 18, address: '123456' },
@@ -54,7 +54,7 @@ describe('Utils: Search', () => {
 
   it('should search {addresses,delegates} when only address pattern matched', () =>
     expect(searchAll({ searchTerm: '1337L' })).to.eventually.deep.equal([
-      { addresses: [accountsResponse.account] },
+      { addresses: [accountsResponse] },
       { transactions: [] },
       { delegates: delegatesResponse.delegates },
     ]));
@@ -69,7 +69,7 @@ describe('Utils: Search', () => {
   it('should still search for {addresses} when failing {delegates} request', () => {
     peersAPIStub.withArgs(undefined, 'delegates/search', delegatesUrlParams).returnsPromise().rejects({ success: false });
     return expect(searchAll({ searchTerm: '1337L' })).to.eventually.deep.equal([
-      { addresses: [accountsResponse.account] },
+      { addresses: [accountsResponse] },
       { transactions: [] },
       { delegates: [] },
     ]);

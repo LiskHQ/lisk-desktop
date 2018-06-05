@@ -24,6 +24,13 @@ describe('HeaderHOC', () => {
       autoLog: true,
       advancedMode: true,
     },
+    search: {
+      suggestions: {
+        delegates: [],
+        addresses: [],
+        transactions: [],
+      },
+    },
   });
 
   beforeEach(() => {
