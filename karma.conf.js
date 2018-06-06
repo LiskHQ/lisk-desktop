@@ -63,8 +63,9 @@ module.exports = function (config) {
             'src/components/onboarding/index.js',
             'src/utils/checkDevice.js',
             'src/utils/api/liskService.js',
-            'src/components/errorBoundary/index.js',
+            'src/store/reducers/liskService.js',
             'src/store/reducers/search.js',
+            'src/components/errorBoundary/index.js',
           ],
           overrides: {
             'src/store/**/*.js': {
