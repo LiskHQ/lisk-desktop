@@ -50,8 +50,8 @@ describe('Reducer: search', () => {
     };
     // responses come as array from promise all,
     // reducer transform results to Object with keys
-    const stateWithClearedSuggestions = search(state, action);
-    expect(stateWithClearedSuggestions).to.deep.equal({
+    const stateWithReducedSuggestions = search(state, action);
+    expect(stateWithReducedSuggestions).to.deep.equal({
       suggestions: {
         addresses: mockData,
         delegates: mockData,
