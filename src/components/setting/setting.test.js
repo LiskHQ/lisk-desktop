@@ -20,6 +20,7 @@ describe('Setting', () => {
   const settings = {
     autoLog: true,
     advancedMode: true,
+    currency: 'USD',
   };
 
   const account = {
@@ -126,6 +127,14 @@ describe('Setting', () => {
     expect(props.settingsUpdated).to.have.been.calledWith(expectedCallToSettingsUpdated);
   });
 
+  it('should change active currency setting to EUR', () => {
+    wrapper.find('.currency').at(1).simulate('click');
+    wrapper.update();
+    const expectedCallToSettingsUpdated = {
+      currency: 'EUR',
+    };
+    expect(props.settingsUpdated).to.have.been.calledWith(expectedCallToSettingsUpdated);
+  });
 
   it('should update expireTime when updating autolog', () => {
     const accountToExpireTime = { ...account };

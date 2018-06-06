@@ -17,6 +17,7 @@ class Setting extends React.Component {
     super();
     this.state = {
       activeSlide: 0,
+      currencies: ['USD', 'EUR'],
     };
   }
 
@@ -56,6 +57,8 @@ class Setting extends React.Component {
       t, settings, settingsUpdated,
       hasSecondPassphrase,
     } = this.props;
+
+    const activeCurrency = settings.currency || 'USD';
 
     return (<Box className={styles.wrapper}>
       <aside>
@@ -118,16 +121,21 @@ class Setting extends React.Component {
               checked: settings.advancedMode,
             }}/>
         </div>
-        {/* TODO: will be re-enabled when the functionality is updated
-          <h4>{t('Local')}</h4>
-          <div className={styles.item}>
-            <label>{t('Currency')}</label>
-            <ul className={styles.currencyList}>
-              <li className={styles.active}>USD</li>
-              <li>EUR</li>
-            </ul>
-          </div>
-        */}
+        {/* TODO: will be re-enabled when the functionality is updated */}
+        <h4>{t('Local')}</h4>
+        <div className={styles.item}>
+          <label>{t('Currency')}</label>
+          <ul className={styles.currencyList}>
+            {this.state.currencies.map(currency => (
+              <li
+                key={`currency-${currency}`}
+                className={`currency ${currency === activeCurrency ? styles.active : 'unactive'}`}
+                onClick={() => settingsUpdated({ currency })}>
+                {currency}
+              </li>
+            ))}
+          </ul>
+        </div>
         {/* TODO: will be re-enabled when the functionality is updated
         {/* TODO: will be re-enabled when the functionality is updated
         <div>
