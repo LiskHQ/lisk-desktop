@@ -89,7 +89,7 @@ node('lisk-hub') {
         rsync -axl --delete --rsync-path="mkdir -p /var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/ && rsync" $WORKSPACE/app/build/ jenkins@master-01:/var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/
         npm run --silent bundlesize
         if [ -z $CHANGE_BRANCH ]; then
-          USE_SYSTEM_XORRISO=true npm run dist
+          USE_SYSTEM_XORRISO=true npm run dist:linux
         else
           echo "Skipping desktop build for Linux because we're not on 'development' branch"
         fi
