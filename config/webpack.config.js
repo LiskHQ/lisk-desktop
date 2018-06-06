@@ -37,7 +37,7 @@ module.exports = {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
         exclude: [/images/],
         options: {
-          name: '[path][name].[ext]',
+          name: '[path][name]-[hash:6].[ext]',
         },
         loader: 'file-loader',
       },
