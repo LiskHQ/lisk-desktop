@@ -70,7 +70,7 @@ class TransactionsList extends React.Component {
       return null;
     }
 
-    const isDelegateStatistics = tabObj && (tabObj.value === tabObj.statistics);
+    const isDelegateStatistics = tabObj && (tabObj.value === txFilters.statistics);
 
     if (isDelegateStatistics) {
       return <DelegateStatistics
