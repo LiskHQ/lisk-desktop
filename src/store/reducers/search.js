@@ -16,7 +16,8 @@ const search = (state = {
     addresses: [],
     transactions: [],
   },
-  searchResults: [] }, action) => {
+  searchResults: [],
+}, action) => {
   switch (action.type) {
     case actionTypes.searchMoreTransactions: {
       const addressTransactions = [
