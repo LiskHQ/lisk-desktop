@@ -68,8 +68,6 @@ class SpecifyRequest extends React.Component {
             value={this.state.amount.value}
             onChange={this.handleChange.bind(this, 'amount')}
             t={this.props.t}
-            settings={this.props.settings}
-            settingsUpdated={this.props.settingsUpdated}
           />
         </div>
         <footer>

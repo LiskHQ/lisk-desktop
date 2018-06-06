@@ -9,7 +9,6 @@ import i18n from '../../i18n';
 import history from '../../history';
 import SettingHOC from './index';
 import * as accountsActions from '../../actions/account';
-import * as settingActions from '../../actions/settings';
 
 describe('SettingHOC', () => {
   // Mocking store
@@ -48,13 +47,6 @@ describe('SettingHOC', () => {
   it('should connect accountUpdated action using dispatch function', () => {
     const actionsSpy = spy(accountsActions, 'accountUpdated');
     wrapper.find('Setting').props().accountUpdated();
-    expect(actionsSpy).to.be.calledWith();
-    actionsSpy.restore();
-  });
-
-  it('should connect settingsUpdated action using dispatch function', () => {
-    const actionsSpy = spy(settingActions, 'settingsUpdated');
-    wrapper.find('Setting').props().settingsUpdated();
     expect(actionsSpy).to.be.calledWith();
     actionsSpy.restore();
   });

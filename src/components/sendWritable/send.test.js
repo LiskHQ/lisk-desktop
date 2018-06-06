@@ -18,6 +18,8 @@ describe('Send Writable Component', () => {
 
     const store = fakeStore({
       account,
+      settings: {},
+      settingsUpdated: () => {},
     });
 
     props = {
@@ -28,8 +30,6 @@ describe('Send Writable Component', () => {
       t: key => key,
       nextStep: () => {},
       history: { location: { search: '' } },
-      settings: {},
-      settingsUpdated: () => {},
     };
     wrapper = mount(<SendWritable {...props} />, {
       context: { store, i18n },

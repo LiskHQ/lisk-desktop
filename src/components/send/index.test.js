@@ -23,6 +23,8 @@ describe('Send', () => {
       peers,
       transactions,
       account: { serverPublicKey: 'public_key', balance: 0 },
+      settings: {},
+      settingsUpdated: () => {},
     };
 
     context = {
@@ -30,7 +32,7 @@ describe('Send', () => {
     };
     wrapper = mountWithContext(<Send
       history={ { location: {} } }
-      settings={{}} account={storeState.account} />,
+      account={storeState.account} />,
     context);
   });
 
