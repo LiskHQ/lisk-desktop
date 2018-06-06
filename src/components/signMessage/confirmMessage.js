@@ -24,6 +24,12 @@ class ConfirmMessage extends React.Component {
     };
   }
 
+  componentWillMount() {
+    if (this.props.account.passphrase) {
+      this.signMessage();
+    }
+  }
+
   handleChange(name, value, error) {
     this.setState({
       [name]: {
