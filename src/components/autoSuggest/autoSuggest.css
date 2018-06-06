@@ -1,0 +1,113 @@
+@import './../app/variables.css';
+
+:root {
+  --search-box-font-size: 16px;
+  --search-box-line-height: 56px;
+  --search-box-selection-background: var(--color-primary-light);
+}
+
+.wrapper {
+  margin-right: -24px;
+}
+
+.autoSuggest {
+  display: none;
+  flex-direction: column;
+  align-content: flex-start;
+  background-color: var(--color-white);
+  left: 0;
+  right: -24px;
+  position: absolute;
+  top: 55px;
+  z-index: var(--autosuggest-index);
+  border-radius: 3px;
+  box-shadow: 0 22px 22px 0 rgba(0, 0, 0, 0.22);
+  border-top: none;
+  padding-bottom: 24px;
+}
+
+.show {
+  display: flex;
+}
+
+.input {
+  padding: 0;
+  z-index: var(--searchbar-input-index);
+
+  & input {
+    background-color: var(--color-primary-less-dark);
+    line-height: var(--search-box-line-height);
+    font-size: var(--search-box-font-size);
+    color: var(--color-grayscale-medium);
+    width: 100%;
+    padding: 0;
+    padding-left: 24px;
+    border-radius: 3px;
+    border: none;
+
+    &::selection {
+      color: #fff;
+      background: var(--search-box-selection-background);
+    }
+
+    &::placeholder {
+      color: var(--color-grayscale-medium);
+      font-weight: 200;
+      letter-spacing: 0;
+    }
+
+    &:focus {
+      outline: none;
+      background-color: var(--color-white);
+    }
+  }
+
+  & span:nth-child(2) {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    &::before,
+    &::after {
+      background-color: var(--color-grayscale-light);
+    }
+  }
+
+  & .icon {
+    padding: 0 24px 24px;
+    position: absolute;
+    top: 19px;
+    right: 24px;
+    cursor: pointer;
+    height: 16px;
+    width: 16px;
+    font-size: var(--input-font-size);
+  }
+
+  & .iconSearch {
+    color: var(--color-grayscale-medium);
+    top: 17px;
+    font-size: 24px;
+  }
+}
+
+@media (--medium-viewport) {
+  .wrapper {
+    margin-right: 0;
+  }
+
+  .autoSuggest {
+    right: 0;
+  }
+
+  .input {
+    & input {
+      padding-left: 21px;
+    }
+
+    & .icon {
+      padding: 0 21px 21px;
+    }
+  }
+}

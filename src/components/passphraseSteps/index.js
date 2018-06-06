@@ -135,7 +135,9 @@ class PassphraseSteps extends React.Component {
         ...updatedValues.secondPassphrase,
         ...this.props.values.secondPassphrase,
       };
-      updatedValues = { columns, passphrase, secondPassphrase, footer };
+      updatedValues = {
+        columns, passphrase, secondPassphrase, footer,
+      };
     }
 
     if (this.props.styles) {

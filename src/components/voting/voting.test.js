@@ -47,15 +47,16 @@ describe('Voting', () => {
     history: { location: { search: '' } },
   };
   beforeEach(() => {
-    wrapper = mount(<Router><Voting {...props} store={store}></Voting></Router>,
-      {
-        context: { store, history, i18n },
-        childContextTypes: {
-          store: PropTypes.object.isRequired,
-          history: PropTypes.object.isRequired,
-          i18n: PropTypes.object.isRequired,
-        },
-      },
+    wrapper = mount(
+<Router><Voting {...props} store={store}></Voting></Router>,
+{
+  context: { store, history, i18n },
+  childContextTypes: {
+    store: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+    i18n: PropTypes.object.isRequired,
+  },
+},
     );
   });
 

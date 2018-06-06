@@ -5,7 +5,7 @@ import { expect } from 'chai';
 import { mountWithContext } from './../../../test/utils/mountHelpers';
 import VotesPreview from './index';
 
-// To-do enable this tests when votesPreview is implemented 
+// To-do enable this tests when votesPreview is implemented
 describe('votesPreview', () => {
   let wrapper;
   const props = {
@@ -36,11 +36,10 @@ describe('votesPreview', () => {
   };
 
   const generateNVotes = n => (
-    [...Array(n)].map((item, i) => i).reduce(
-      (dict, value) => {
-        dict[`genesis_${value}`] = { unconfirmed: true };
-        return dict;
-      }, {})
+    [...Array(n)].map((item, i) => i).reduce((dict, value) => {
+      dict[`genesis_${value}`] = { unconfirmed: true };
+      return dict;
+    }, {})
   );
 
   beforeEach(() => {

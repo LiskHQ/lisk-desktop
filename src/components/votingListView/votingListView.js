@@ -155,7 +155,9 @@ class VotingListView extends React.Component {
 
   render() {
     const filteredList = this.filter(this.props.delegates);
-    const { showChangeSummery, isDelegate, voteToggled, votes, t } = this.props;
+    const {
+      showChangeSummery, isDelegate, voteToggled, votes, t,
+    } = this.props;
     return (
       <Fragment>
         <VoteUrlProcessor closeInfo={this.closeInfo.bind(this)} show={this.showInfo()} />

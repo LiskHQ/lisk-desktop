@@ -76,7 +76,8 @@ describe('Socket middleware', () => {
   });
 
   it(`should dispatch ${actionTypes.accountLoggedIn} with https protocol`, () => {
-    store.getState = () => ({ ...store,
+    store.getState = () => ({
+      ...store,
       peers: { data: { options: { ssl: true, address: 'localhost:4000' } } },
     });
     middleware(store)(next)({ type: actionTypes.accountLoggedIn });

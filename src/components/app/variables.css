@@ -130,9 +130,11 @@ or "warn/action" ineastd of "red/green"
         Z-Indexes
   *************************/
   --normal-index: 1;
-  --headerbar-index: 20;
   --menubar-index: 4;
-  --accounts-index: 21;
+  --headerbar-index: 20;
+  --autosuggest-index: 21;
+  --searchbar-input-index: 22;
+  --accounts-index: 23;
 
   /*************************
         Margins

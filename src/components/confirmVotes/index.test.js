@@ -68,8 +68,9 @@ describe('ConfirmVotesHOC', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<Router><ConfirmVotesHOC store={store} {...props}></ConfirmVotesHOC></Router>,
-      options,
+    wrapper = mount(
+<Router><ConfirmVotesHOC store={store} {...props}></ConfirmVotesHOC></Router>,
+options,
     );
   });
 

@@ -2,6 +2,7 @@ import { getAccount, transaction } from './account';
 import { listDelegates } from './delegate';
 import regex from './../../utils/regex';
 
+/* eslint-disable prefer-promise-reject-errors */
 const searchAddresses = ({ activePeer, searchTerm }) => new Promise((resolve, reject) =>
   getAccount(activePeer, searchTerm)
     .then(response => resolve({ addresses: [response.account] }))
@@ -40,6 +41,7 @@ const resolveAll = (activePeer, apiCalls, searchTerm) => {
       .catch(error => reject(error));
   });
 };
+/* eslint-enable prefer-promise-reject-errors */
 
 const searchAll = ({ activePeer, searchTerm }) => {
   const apiCalls = getSearches(searchTerm);

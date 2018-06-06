@@ -25,9 +25,7 @@ export const delegatesRetrieving = data => ({
 export const delegatesFetched = ({ activePeer, username }) =>
   (dispatch) => {
     dispatch(delegatesRetrieving());
-    getDelegate(
-      activePeer, { username },
-    ).then(({ delegate }) => {
+    getDelegate(activePeer, { username }).then(({ delegate }) => {
       dispatch(delegatesRetrieved({ delegate, username }));
     }).catch(() => {
       dispatch(delegatesRetrieved({ delegate: null, username }));

@@ -23,7 +23,9 @@ let appIsReady = false;
 
 app.on('ready', () => {
   appIsReady = true;
-  win.create({ electron, path, electronLocalshortcut, storage, checkForUpdates });
+  win.create({
+    electron, path, electronLocalshortcut, storage, checkForUpdates,
+  });
 });
 
 app.on('window-all-closed', () => {
@@ -42,7 +44,9 @@ app.on('activate', () => {
   // sometimes, the event is triggered before app.on('ready', ...)
   // then creating new windows will fail
   if (win.browser === null && appIsReady) {
-    win.create({ electron, path, electronLocalshortcut, storage, checkForUpdates });
+    win.create({
+      electron, path, electronLocalshortcut, storage, checkForUpdates,
+    });
   }
 });
 

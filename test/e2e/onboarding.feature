@@ -80,16 +80,11 @@ Feature: Onboarding
 
     And I click "joyride-tooltip__button--primary"
     Then I should see no "joyride-tooltip__header"
-
-  # todo: find out why the test is failing => will be fixed in #669
-  @pending
-  Scenario: onboarding should work after refresh
     When I refresh the page
     And I wait 1 seconds
     Then I should see no "joyride-tooltip__header"
 
-    When I click "more menu"
-    And I click 3 item in setting carousel
+    When I click "settings" menu
     And I wait 0.4 seconds
     And I click "onboarding-setting"
     And I wait 0.4 seconds

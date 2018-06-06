@@ -40,7 +40,9 @@ describe('localeHandler', () => {
   it('Changes the locale and rebuilds the menu', () => {
     i18nMock.expects('changeLanguage').once();
     const event = {};
-    localeHandler.update({ electron, event, langCode: 'de', storage });
+    localeHandler.update({
+      electron, event, langCode: 'de', storage,
+    });
     expect(options.config.lang).to.equal('de');
     expect(electron.Menu.setApplicationMenu).to.have.been.calledWith(electron.Menu);
     expect(event.returnValue).to.equal('Rebuilt electron menu.');

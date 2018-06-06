@@ -3,7 +3,9 @@ import menu from './../menu';
 import win from './win';
 
 const handler = {
-  update: ({ electron, event, langCode, storage, checkForUpdates }) => {
+  update: ({
+    electron, event, langCode, storage, checkForUpdates,
+  }) => {
     // change locale
     i18n.changeLanguage(langCode);
     // write selected lang on JSON file

@@ -57,9 +57,11 @@ describe('Reducer: transaction(state, action)', () => {
       },
     };
     changedState = transaction(changedState, actionDelete);
-    expect(changedState).to.deep.equal({ votesName: {
-      added: [{ id: 123 }],
-      deleted: [{ id: 123123 }],
-    } });
+    expect(changedState).to.deep.equal({
+      votesName: {
+        added: [{ id: 123 }],
+        deleted: [{ id: 123123 }],
+      },
+    });
   });
 });

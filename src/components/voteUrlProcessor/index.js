@@ -33,8 +33,7 @@ const mapDispatchToProps = dispatch => ({
   clearVotes: () => dispatch(clearVotes()),
 });
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(
-    translate()(VoteUrlProcessor),
-  ),
-);
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(translate()(VoteUrlProcessor)));

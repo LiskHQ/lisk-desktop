@@ -56,10 +56,14 @@ export const searchAccount = ({ activePeer, address }) =>
     });
   };
 
-export const searchTransactions = ({ activePeer, address, limit, filter, showLoading = true }) =>
+export const searchTransactions = ({
+  activePeer, address, limit, filter, showLoading = true,
+}) =>
   (dispatch) => {
     if (showLoading) loadingStarted(actionTypes.searchTransactions);
-    transactions({ activePeer, address, limit, filter })
+    transactions({
+      activePeer, address, limit, filter,
+    })
       .then((transactionsResponse) => {
         dispatch({
           data: {
@@ -74,9 +78,13 @@ export const searchTransactions = ({ activePeer, address, limit, filter, showLoa
       });
   };
 
-export const searchMoreTransactions = ({ activePeer, address, limit, offset, filter }) =>
+export const searchMoreTransactions = ({
+  activePeer, address, limit, offset, filter,
+}) =>
   (dispatch) => {
-    transactions({ activePeer, address, limit, offset, filter })
+    transactions({
+      activePeer, address, limit, offset, filter,
+    })
       .then((transactionsResponse) => {
         dispatch({
           data: {

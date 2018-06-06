@@ -11,6 +11,4 @@ const mapStateToProps = state => ({
   account: state.account,
 });
 
-export default withRouter(connect(
-  mapStateToProps,
-)(translate()(SignMessage)));
+export default withRouter(connect(mapStateToProps)(translate()(SignMessage)));

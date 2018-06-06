@@ -112,8 +112,8 @@ describe('Account middleware', () => {
 
     middleware(store)(next)(newBlockCreated);
 
-    expect(store.dispatch).to.have.been.calledWith(activePeerUpdate(
-      { online: false, code: errorCode }));
+    expect(store.dispatch).to.have.been
+      .calledWith(activePeerUpdate({ online: false, code: errorCode }));
   });
 
   it(`should call transactions API methods on ${actionTypes.newBlockCreated} action if account.balance changes`, () => {
@@ -163,7 +163,8 @@ describe('Account middleware', () => {
   it(`should call API methods on ${actionTypes.newBlockCreated} action if state.transaction.transactions.confired does not contain recent transaction. Case with transactions address`, () => {
     stubGetAccount.resolves({ balance: 0 });
 
-    store.getState = () => ({ ...state,
+    store.getState = () => ({
+      ...state,
       transactions: {
         ...state.transactions,
         confirmed: [{ confirmations: 10 }],
@@ -179,7 +180,8 @@ describe('Account middleware', () => {
   it(`should call API methods on ${actionTypes.newBlockCreated} action if state.transaction.transactions.confired does not contain recent transaction. Case with confirmed address`, () => {
     stubGetAccount.resolves({ balance: 0 });
 
-    store.getState = () => ({ ...state,
+    store.getState = () => ({
+      ...state,
       transactions: {
         pending: [{
           id: 12498250891724098,
@@ -250,7 +252,8 @@ describe('Account middleware', () => {
       type: actionTypes.passphraseUsed,
       data: passphrase,
     };
-    store.getState = () => ({ ...state,
+    store.getState = () => ({
+      ...state,
       account: { ...state.account, passphrase, expireTime: clock.now + lockDuration },
     });
     middleware(store)(next)(action);

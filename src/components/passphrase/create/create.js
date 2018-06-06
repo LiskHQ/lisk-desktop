@@ -21,7 +21,9 @@ class CreateFirst extends React.Component {
   }
 
   render() {
-    const { t, percentage, address, hintTitle, step, nextStep, passphrase } = this.props;
+    const {
+      t, percentage, address, hintTitle, step, nextStep, passphrase,
+    } = this.props;
     const modifyID = (id) => {
       const substring = id.slice(3, id.length - 1);
       const replacement = substring.replace(/.{1}/g, '*');

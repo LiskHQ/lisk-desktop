@@ -41,8 +41,10 @@ describe('TransactionOverview', () => {
     onInitSpy = spy(props, 'onInit');
     onLoadMoreSpy = spy(props, 'onLoadMore');
     onFilterSetSpy = spy(props, 'onFilterSet');
-    wrapper = mountWithContext(<TransactionOverview {...props} store={store} />,
-      { storeState: store });
+    wrapper = mountWithContext(
+<TransactionOverview {...props} store={store} />,
+{ storeState: store },
+    );
   });
 
   it('should render Waypoint on smallScreen', () => {

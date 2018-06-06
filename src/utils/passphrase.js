@@ -57,7 +57,9 @@ const init = (rand = Math.random()) => {
  *
  * @returns {number[]} The input array whose member is pos is set
  */
-export const generateSeed = ({ byte, seed, percentage, step } = init(), rand = Math.random()) => {
+export const generateSeed = ({
+  byte, seed, percentage, step,
+} = init(), rand = Math.random()) => {
   const available = byte.map((bit, idx) => (!bit ? idx : null)).filter(idx => (idx !== null));
   const seedIndex = (available.length > 0) ?
     available[Math.floor(rand * available.length)] :
@@ -80,6 +82,7 @@ export const generateSeed = ({ byte, seed, percentage, step } = init(), rand = M
    * @param {string[]} seed - An array of 16 hex numbers in string format
    * @returns {string} The generated passphrase
    */
+// eslint-disable-next-line no-buffer-constructor
 export const generatePassphrase = ({ seed }) => (new mnemonic(new Buffer(seed.join(''), 'hex'))).toString();
 
 /**

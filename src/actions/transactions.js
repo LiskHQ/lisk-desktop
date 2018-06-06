@@ -6,7 +6,9 @@ import { loadDelegateCache } from '../utils/delegates';
 import { extractAddress } from '../utils/account';
 import { loadAccount } from './account';
 
-export const transactionsFilterSet = ({ activePeer, address, limit, filter }) =>
+export const transactionsFilterSet = ({
+  activePeer, address, limit, filter,
+}) =>
   (dispatch) => {
     transactions({
       activePeer,
@@ -70,9 +72,13 @@ export const loadTransactions = ({ activePeer, publicKey, address }) =>
  *
  *
  */
-export const transactionsRequested = ({ activePeer, address, limit, offset, filter }) =>
+export const transactionsRequested = ({
+  activePeer, address, limit, offset, filter,
+}) =>
   (dispatch) => {
-    transactions({ activePeer, address, limit, offset, filter })
+    transactions({
+      activePeer, address, limit, offset, filter,
+    })
       .then((response) => {
         dispatch({
           data: {
@@ -104,7 +110,8 @@ export const loadTransaction = ({ activePeer, id }) =>
                   username: storedDelegate.username,
                   address,
                 },
-                voteArrayName: 'deleted' },
+                voteArrayName: 'deleted',
+              },
               type: actionTypes.transactionAddDelegateName,
             });
           } else {

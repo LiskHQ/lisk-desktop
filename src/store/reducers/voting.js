@@ -124,8 +124,10 @@ const voting = (state = {
       return Object.assign({}, state, {
         refresh: false,
         votes: Object.keys(state.votes).reduce((votesDict, username) => {
-          const { confirmed, unconfirmed, publicKey,
-            pending, address, rank, productivity } = state.votes[username];
+          const {
+            confirmed, unconfirmed, publicKey,
+            pending, address, rank, productivity,
+          } = state.votes[username];
           const nextPendingStatus = pending || (confirmed !== unconfirmed);
 
           votesDict[username] = {
