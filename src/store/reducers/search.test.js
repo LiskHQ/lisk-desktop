@@ -5,7 +5,7 @@ import actionTypes from '../../constants/actions';
 
 const mockData = ['1', '2'];
 
-describe.only('Reducer: search', () => {
+describe('Reducer: search', () => {
   it('should clear suggestions', () => {
     const state = { suggestions: {
       delegates: mockData,
@@ -28,9 +28,9 @@ describe.only('Reducer: search', () => {
 
   it('should reduce search suggestions to key,value object', () => {
     const state = { suggestions: {
-      addresses: ['1', '2'],
-      delegates: ['1', '2'],
-      transactions: ['1', '2'],
+      addresses: [],
+      delegates: [],
+      transactions: [],
     } };
 
     const delegatesResponse = { 'delegates': mockData };
