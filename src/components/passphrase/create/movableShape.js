@@ -51,8 +51,10 @@ class MovableShape extends React.Component {
 
   allocateShape() {
     const { zIndex } = this.props;
-    const style = Object.assign({ zIndex },
-      { left: this.props.initial[0], bottom: this.props.initial[1] });
+    const style = Object.assign(
+      { zIndex },
+      { left: this.props.initial[0], bottom: this.props.initial[1] },
+    );
     this.setState({ style });
   }
 
@@ -94,7 +96,9 @@ class MovableShape extends React.Component {
   }
 
   render() {
-    const { className, group, width, height, idBg, idFg } = this.props;
+    const {
+      className, group, width, height, idBg, idFg,
+    } = this.props;
     const toggleShape = () =>
       (this.props.percentage > 80 ? false : Math.floor((this.props.percentage / 10)) % 2);
 

@@ -54,8 +54,10 @@ class Send extends React.Component {
             {t('Send')}
           </span>
           <span className={`request-menu-item ${styles.mobileMenuItem}`}
-            onClick={this.setActiveOnMobile.bind(this,
-              { isActiveOnMobile: true, isActiveTabSend: false })
+            onClick={this.setActiveOnMobile.bind(
+this,
+              { isActiveOnMobile: true, isActiveTabSend: false },
+)
             }>
             {t('Request')}
           </span>

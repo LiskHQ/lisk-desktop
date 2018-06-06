@@ -4,9 +4,15 @@ import { mount } from 'enzyme';
 import DelegateList from './delegateList';
 
 describe('DelegateList', () => {
-  const delegate1 = { publicKey: 'sample_key_1', address: '100001L', rank: 1, productivity: 99 };
-  const delegate2 = { publicKey: 'sample_key_2', address: '100002L', rank: 2, productivity: 98 };
-  const delegate3 = { publicKey: 'sample_key_3', address: '100003L', rank: 3, productivity: 97 };
+  const delegate1 = {
+    publicKey: 'sample_key_1', address: '100001L', rank: 1, productivity: 99,
+  };
+  const delegate2 = {
+    publicKey: 'sample_key_2', address: '100002L', rank: 2, productivity: 98,
+  };
+  const delegate3 = {
+    publicKey: 'sample_key_3', address: '100003L', rank: 3, productivity: 97,
+  };
   const props = {
     showChangeSummery: false,
     list: [delegate1, delegate2, delegate3],

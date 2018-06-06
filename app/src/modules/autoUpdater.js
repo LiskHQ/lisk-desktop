@@ -1,7 +1,9 @@
 import i18n from './../i18n';
 import updateModal from './updateModal';
 
-export default ({ autoUpdater, dialog, win, process, electron }) => {
+export default ({
+  autoUpdater, dialog, win, process, electron,
+}) => {
   const updater = {
     menuItem: { enabled: true },
   };

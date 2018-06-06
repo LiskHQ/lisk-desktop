@@ -1,8 +1,10 @@
 import React from 'react';
 import styles from './form.css';
 
-const Form = ({ wordOptions, words, missing, answers, formStatus,
-  trials, selectedFieldset, onWordSelected, selectFieldset }) => {
+const Form = ({
+  wordOptions, words, missing, answers, formStatus,
+  trials, selectedFieldset, onWordSelected, selectFieldset,
+}) => {
   let missingWordIndex = -1;
 
   return (<form className={`passphrase-holder ${styles.form} ${styles[formStatus]}`}>

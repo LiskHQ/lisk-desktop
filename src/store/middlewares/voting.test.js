@@ -12,11 +12,10 @@ describe('voting middleware', () => {
   let next;
 
   const generateNVotes = (n, vote) => (
-    [...Array(n)].map((item, i) => i).reduce(
-      (dict, value) => {
-        dict[`genesis_${value}`] = vote;
-        return dict;
-      }, {})
+    [...Array(n)].map((item, i) => i).reduce((dict, value) => {
+      dict[`genesis_${value}`] = vote;
+      return dict;
+    }, {})
   );
 
   const initStoreWithNVotes = (n, vote) => {
@@ -37,7 +36,8 @@ describe('voting middleware', () => {
     store = stub();
     initStoreWithNVotes(
       votingConst.maxCountOfVotesInOneTurn + 1,
-      { confirmed: false, unconfirmed: true });
+      { confirmed: false, unconfirmed: true },
+    );
     store.dispatch = spy();
     next = spy();
   });

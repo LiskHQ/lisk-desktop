@@ -2,6 +2,7 @@ import { step } from 'mocha-steps';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
 import thunk from 'redux-thunk';
+import history from '../../src/history';
 import { prepareStore, renderWithRouter } from '../utils/applicationInit';
 import GenericStepDefinition from '../utils/genericStepDefinition';
 

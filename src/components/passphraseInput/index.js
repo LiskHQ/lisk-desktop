@@ -129,8 +129,7 @@ class PassphraseInput extends React.Component {
                     }}
                     index={i}
                   />
-                </div>,
-              )}
+                </div>)}
             </div>
             <div className={styles.errorMessage}>{this.props.error}</div>
           </div>

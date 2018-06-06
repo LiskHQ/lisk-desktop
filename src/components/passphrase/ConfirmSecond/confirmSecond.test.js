@@ -98,10 +98,12 @@ describe('SecondPassphrase: Confirmation', () => {
     clock.tick(501);
     wrapper.update();
     expect(props.finalCallback).to.have.been.calledWith();
-    wrapper.setProps({ account: {
-      passphrase: accounts.passphrase,
-      secondSignature: 1,
-    } });
+    wrapper.setProps({
+      account: {
+        passphrase: accounts.passphrase,
+        secondSignature: 1,
+      },
+    });
     clock.tick(501);
     wrapper.update();
     const className = wrapper.find('.doneContainer').props().className;

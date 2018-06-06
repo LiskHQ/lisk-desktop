@@ -89,7 +89,9 @@ export const accountVotersFetched = ({ activePeer, publicKey }) =>
 /**
  *
  */
-export const secondPassphraseRegistered = ({ activePeer, secondPassphrase, account, passphrase }) =>
+export const secondPassphraseRegistered = ({
+  activePeer, secondPassphrase, account, passphrase,
+}) =>
   (dispatch) => {
     setSecondPassphrase(activePeer, secondPassphrase, account.publicKey, passphrase)
       .then((data) => {
@@ -115,7 +117,8 @@ export const secondPassphraseRegistered = ({ activePeer, secondPassphrase, accou
  *
  */
 export const delegateRegistered = ({
-  activePeer, account, passphrase, username, secondPassphrase }) =>
+  activePeer, account, passphrase, username, secondPassphrase,
+}) =>
   (dispatch) => {
     registerDelegate(activePeer, username, passphrase, secondPassphrase)
       .then((data) => {
@@ -142,7 +145,9 @@ export const delegateRegistered = ({
 /**
  *
  */
-export const sent = ({ activePeer, account, recipientId, amount, passphrase, secondPassphrase }) =>
+export const sent = ({
+  activePeer, account, recipientId, amount, passphrase, secondPassphrase,
+}) =>
   (dispatch) => {
     send(activePeer, recipientId, toRawLsk(amount), passphrase, secondPassphrase)
       .then((data) => {
@@ -169,9 +174,7 @@ export const sent = ({ activePeer, account, recipientId, amount, passphrase, sec
 
 export const loadDelegate = ({ activePeer, publicKey }) =>
   (dispatch) => {
-    getDelegate(
-      activePeer, { publicKey },
-    ).then((response) => {
+    getDelegate(activePeer, { publicKey }).then((response) => {
       dispatch({
         data: {
           delegate: response.delegate,
@@ -185,7 +188,8 @@ export const loadAccount = ({
   activePeer,
   address,
   transactionsResponse,
-  isSameAccount }) =>
+  isSameAccount,
+}) =>
 
   (dispatch) => {
     getAccount(activePeer, address)

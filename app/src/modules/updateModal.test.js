@@ -12,7 +12,9 @@ describe('Electron update modal', () => {
   const { ipcMain, ipcRenderer } = ipcMock();
   let clock;
   const electron = {
-    BrowserWindow: ({ width, height, center, webPreferences }) =>
+    BrowserWindow: ({
+      width, height, center, webPreferences,
+    }) =>
       ({
         width,
         height,

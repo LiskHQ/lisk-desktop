@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 import { Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
+import history from '../../history';
 import i18n from '../../i18n';
 import RegisterDelegate from './registerDelegate';
 
@@ -43,8 +44,7 @@ describe('RegisterDelegate', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(
-      <Provider store={store}>
+    wrapper = mount(<Provider store={store}>
         <Router history={browserHistory}>
           <I18nextProvider i18n={ i18n }>
             <RegisterDelegate {...props} />

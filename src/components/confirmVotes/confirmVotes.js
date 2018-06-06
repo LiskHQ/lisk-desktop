@@ -41,8 +41,10 @@ class ConfirmVotes extends React.Component {
   }
 
   render() {
-    const { t, prevStep, votePlaced, activePeer, skipped,
-      votes, account, secondPassphrase, passphrase } = this.props;
+    const {
+      t, prevStep, votePlaced, activePeer, skipped,
+      votes, account, secondPassphrase, passphrase,
+    } = this.props;
     const data = {
       activePeer,
       account,

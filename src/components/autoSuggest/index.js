@@ -38,11 +38,11 @@ class AutoSuggest extends React.Component {
   onResultClick(id, type) {
     let urlSearch;
     switch (type) {
-      case 'addresses' :
-      case 'delegates' :
+      case 'addresses':
+      case 'delegates':
         urlSearch = `${routes.accounts.pathPrefix}${routes.accounts.path}/${id}`;
         break;
-      case 'transactions' :
+      case 'transactions':
         urlSearch = `${routes.transactions.pathPrefix}${routes.transactions.path}/${id}`;
         break;
       /* istanbul ignore next */
@@ -89,20 +89,20 @@ class AutoSuggest extends React.Component {
 
   handleKey(event) {
     switch (event.keyCode) {
-      case keyCodes.arrowDown :
+      case keyCodes.arrowDown:
         this.handleArrowDown();
         break;
-      case keyCodes.arrowUp :
+      case keyCodes.arrowUp:
         this.handleArrowUp();
         break;
-      case keyCodes.escape :
+      case keyCodes.escape:
         this.closeDropdown();
         break;
-      case keyCodes.enter :
+      case keyCodes.enter:
         visitAndSaveSearch(this.state.value, this.props.history);
         this.resetSearch();
         break;
-      case keyCodes.tab :
+      case keyCodes.tab:
         this.submitSearch();
         break;
       /* istanbul ignore next */

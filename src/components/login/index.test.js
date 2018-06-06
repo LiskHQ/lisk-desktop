@@ -54,8 +54,10 @@ describe('LoginHOC', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<MemoryRouter><LoginHOC store={store}/></MemoryRouter>,
-      options);
+    wrapper = mount(
+<MemoryRouter><LoginHOC store={store}/></MemoryRouter>,
+options,
+    );
   });
 
   it('should mount Login', () => {

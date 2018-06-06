@@ -24,7 +24,9 @@ class CopyToClipboard extends React.Component {
   }
 
   render() {
-    const { value, t, className, text, copyClassName } = this.props;
+    const {
+      value, t, className, text, copyClassName,
+    } = this.props;
     return (
       <ReactCopyToClipboard text={value} onCopy={() => this.textIsCopied()}>
         {this.state.copied ? <span className={`${className} copied`}>

@@ -38,7 +38,9 @@ class SafeKeeping extends React.Component {
   }
 
   render() {
-    const { t, passphrase, prevStep, header, message } = this.props;
+    const {
+      t, passphrase, prevStep, header, message,
+    } = this.props;
 
     return (
       <section className={`${styles.safekeeping} ${styles[this.state.step]}`}>

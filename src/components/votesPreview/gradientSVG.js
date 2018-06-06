@@ -1,6 +1,8 @@
 import React from 'react';
 
-const GradientSVG = ({ startColor, endColor, id, rotation }) => {
+const GradientSVG = ({
+  startColor, endColor, id, rotation,
+}) => {
   const gradientTransform = `rotate(${rotation})`;
   return (
     <svg style={{ height: 0 }}>

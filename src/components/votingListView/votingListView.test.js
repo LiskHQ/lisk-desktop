@@ -118,7 +118,7 @@ describe('VotingListView', () => {
     };
 
     /*
-    Force trigger componentWillUpdate, 
+    Force trigger componentWillUpdate,
     will reset freezeLoading flag to cover loadMore
     */
     wrapper.setProps(nextProps);
@@ -166,7 +166,7 @@ describe('VotingListView', () => {
     };
 
     /*
-    force to have no delegates and 
+    force to have no delegates and
     trigger voted filter
     */
     wrapper.setProps(nextProps);

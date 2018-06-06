@@ -74,7 +74,9 @@ describe('@integration: Wallet', () => {
   const errorMessage = 'An error occurred while creating the transaction.';
 
   const generateTransactions = (n) => {
-    const transactionExample = { senderId: 'sample_address', receiverId: 'some_address', type: txTypes.send, id: '123456' };
+    const transactionExample = {
+      senderId: 'sample_address', receiverId: 'some_address', type: txTypes.send, id: '123456',
+    };
     const transactions = new Array(n);
     transactions.fill(transactionExample);
     return transactions;

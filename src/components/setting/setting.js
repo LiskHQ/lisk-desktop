@@ -36,7 +36,9 @@ class Setting extends React.Component {
   // }
 
   toggleAutoLog(state) {
-    const { account, settings, settingsUpdated, accountUpdated } = this.props;
+    const {
+      account, settings, settingsUpdated, accountUpdated,
+    } = this.props;
     if (state && account.passphrase) {
       const date = Date.now() + accountConfig.lockDuration;
       accountUpdated({ expireTime: date });
@@ -50,8 +52,10 @@ class Setting extends React.Component {
 
   render() {
     this.language = (i18n.language === 'de');
-    const { t, settings, settingsUpdated,
-      hasSecondPassphrase } = this.props;
+    const {
+      t, settings, settingsUpdated,
+      hasSecondPassphrase,
+    } = this.props;
 
     return (<Box className={styles.wrapper}>
       <aside>

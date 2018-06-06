@@ -8,6 +8,4 @@ const mapStateToProps = state => ({
   delegate: state.delegate,
 });
 
-export default withRouter(connect(
-  mapStateToProps,
-)(translate()(Confirm)));
+export default withRouter(connect(mapStateToProps)(translate()(Confirm)));

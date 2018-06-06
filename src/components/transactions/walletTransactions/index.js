@@ -26,6 +26,7 @@ const mapDispatchToProps = dispatch => ({
   accountVotesFetched: data => dispatch(accountVotesFetched(data)),
 });
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(translate()(WalletTransactions)),
-);
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(translate()(WalletTransactions)));

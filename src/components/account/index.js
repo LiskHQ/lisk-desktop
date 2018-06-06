@@ -10,6 +10,4 @@ const mapStateToProps = state => ({
   account: state.account,
 });
 
-export default connect(
-  mapStateToProps,
-)(translate()(Account));
+export default connect(mapStateToProps)(translate()(Account));

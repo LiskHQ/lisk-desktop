@@ -12,7 +12,9 @@ describe('Electron Browser Window Wrapper', () => {
 
   const electron = {
     screen: { getPrimaryDisplay: () => ({ workAreaSize: { width: 1400, height: 900 } }) },
-    BrowserWindow: ({ width, height, center, webPreferences }) =>
+    BrowserWindow: ({
+      width, height, center, webPreferences,
+    }) =>
       ({
         width,
         height,
@@ -95,7 +97,9 @@ describe('Electron Browser Window Wrapper', () => {
     };
 
     it('Sends blur and focus events', () => {
-      win.create({ electron, path, electronLocalshortcut, storage });
+      win.create({
+        electron, path, electronLocalshortcut, storage,
+      });
       expect(events.length).to.equal(0);
       callbacks.focus();
       expect(events[0].event).to.equal('focus');
@@ -107,7 +111,9 @@ describe('Electron Browser Window Wrapper', () => {
       process.platform = 'darwin';
 
       expect(win.browser).to.equal(null);
-      win.create({ electron, path, electronLocalshortcut, storage });
+      win.create({
+        electron, path, electronLocalshortcut, storage,
+      });
       expect(win.browser).to.not.equal(null);
 
       // detect the locale
@@ -140,7 +146,9 @@ describe('Electron Browser Window Wrapper', () => {
       process.platform = 'not darwin';
 
       expect(win.browser).to.equal(null);
-      win.create({ electron, path, electronLocalshortcut, storage });
+      win.create({
+        electron, path, electronLocalshortcut, storage,
+      });
       expect(win.browser).to.not.equal(null);
 
       // detect the locale

@@ -96,7 +96,9 @@ class PassphraseCreation extends React.Component {
   }
 
   render() {
-    const { data, address, step, passphrase } = this.state;
+    const {
+      data, address, step, passphrase,
+    } = this.state;
     const percentage = data ? data.percentage : 0;
     const hintTitle = this.isTouchDevice ?
       this.props.t('by tilting your device.') :
