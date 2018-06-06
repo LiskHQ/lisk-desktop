@@ -67,8 +67,7 @@ class TransactionsOverview extends React.Component {
         className: 'filter-out',
       },
     ];
-
-    if (this.props.delegate) {
+    if (Object.keys(this.props.delegate).length !== 0) {
       filters.push({
         name: this.isSmallScreen() ? this.props.t('Stats') : this.props.t('Delegate statistics'),
         value: txFilters.statistics,
