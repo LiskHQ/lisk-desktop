@@ -39,7 +39,6 @@ class Onboarding extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.resizeWindow.bind(this));
-    this.props.onRef(undefined);
   }
 
   resizeWindow() {

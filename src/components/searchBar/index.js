@@ -31,7 +31,6 @@ class Search extends React.Component {
     return pathname.includes('explorer') && !pathname.includes(`${routes.explorer.path}${routes.search.path}`);
   }
 
-
   select() {
     this.searchInput.select();
   }

@@ -41,8 +41,6 @@ describe('Onboarding Component', () => {
     });
 
     it('goes through the onboarding', () => {
-      // const settingsUpdated = spy();
-      // wrapper.setProps({ settingsUpdated });
       expect(joyrideNext).to.not.have.been.calledWith();
       wrapper.find(Joyride).props().callback({ index: 0 });
       expect(joyrideNext).to.have.been.calledWith();
@@ -66,8 +64,14 @@ describe('Onboarding Component', () => {
       expect(joyrideReset).to.not.have.been.calledWith();
       wrapper.find(Joyride).props().callback({ type: 'finished' });
       expect(joyrideReset).to.have.been.calledWith();
-      // expect(settingsUpdated).to.have.been.calledWith({ onBoarding: false });
-      // settingsUpdated.restore();
+    });
+
+    it('should remove event listener on unmount', () => {
+      spy(window, 'removeEventListener');
+      expect(window.removeEventListener).to.not.have.been.calledWith();
+      wrapper.unmount();
+      expect(window.removeEventListener).to.have.been.calledWith('resize');
+      window.removeEventListener.restore();
     });
   });
 

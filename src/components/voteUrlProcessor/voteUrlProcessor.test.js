@@ -17,6 +17,8 @@ describe('VoteUrlProcessor', () => {
       activePeer: {},
       account,
       clearVoteLookupStatus: sinon.spy(),
+      clearVotes: sinon.spy(),
+      closeInfo: sinon.spy(),
       urlVotesFound: sinon.spy(),
       settingsUpdated: sinon.spy(),
       notVotedYet: [],
@@ -35,14 +37,6 @@ describe('VoteUrlProcessor', () => {
     };
     wrapper = mount(<VoteUrlProcessor {...props} />);
   });
-  //
-  // it('renders ProgressBar component if props.pending.length > 0', () => {
-  //   wrapper.setProps({
-  //     pending: ['delegate_name'],
-  //     urlVoteCount: 1,
-  //   });
-  //   expect(wrapper.find('ProgressBar')).to.have.length(1);
-  // });
 
   it('calls props.urlVotesFound with upvotes if URL contains ?votes=delegate_name', () => {
     wrapper = mount(<VoteUrlProcessor {...{
@@ -80,22 +74,20 @@ describe('VoteUrlProcessor', () => {
     expect(props.settingsUpdated).to.have.been.calledWith({ advancedMode: true });
   });
 
-  // it('renders .upvotes-message element with a message if props.upvotes.length > 0', () => {
-  //   wrapper.setProps({
-  //     upvotes: ['delegate_name'],
-  //     urlVoteCount: 1,
-  //   });
-  //   expect(wrapper.find('.upvotes-message')).to.have.length(1);
-  //   expect(wrapper.find('.upvotes-message').text()).to.equal('{{count}} delegate names were successfully resolved for voting.');
-  // });
+  it('displays the selected votes and clears them on closing', () => {
+    props.show = true;
+    props.upvotes =  ['delegate_1', 'delegate_3'];
+    props.unvotes =  ['delegate_2'];
 
-  // it('renders .notFound-message element with a message if props.notFound.length > 0', () => {
-  //   wrapper.setProps({
-  //     notFound: ['delegate_name'],
-  //     urlVoteCount: 1,
-  //   });
-  //   expect(wrapper.find('.notFound-message')).to.have.length(1);
-  //   expect(wrapper.find('.notFound-message').text()).to.equal('{{count}} of the provided delegate names could not be resolved:delegate_name');
-  // });
+    wrapper = mount(<VoteUrlProcessor {...props} />);
+
+    expect(wrapper.find('.upvotes-message')).to.have.text('delegate_1, delegate_3');
+    expect(wrapper.find('.unvotes-message')).to.have.text('delegate_2');
+
+    wrapper.find('.clear-votes').simulate('click');
+    expect(props.clearVoteLookupStatus).to.have.been.calledWith();
+    expect(props.clearVotes).to.have.been.calledWith();
+    expect(props.closeInfo).to.have.been.calledWith();
+  });
 });
 

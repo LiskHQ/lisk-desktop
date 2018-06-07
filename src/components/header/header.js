@@ -50,29 +50,36 @@ class Header extends React.Component {
                     <CopyToClipboard
                       value={this.props.account.address}
                       className={`${styles.address} account-information-address`}
-                      copyClassName={styles.copy}/>
-                    {!this.props.autoLog && this.props.account.passphrase ?
-                      <div className={styles.unlocked}>{this.props.t('Unlocked')}</div> : <div></div>}
-                    {this.props.autoLog ? <div className={styles.timer}>
-                      {((this.props.account.expireTime &&
+                      copyClassName={styles.copy}
+                    />
+
+                    {!this.props.autoLog && this.props.account.passphrase
+                      ? <div className={`${styles.unlocked} unlocked`}>{this.props.t('Unlocked')}</div>
+                      : <div></div>
+                    }
+                    {this.props.autoLog
+                      ? <div className={styles.timer}>
+                        {((this.props.account.expireTime &&
                           this.props.account.expireTime !== 0) &&
-                          this.props.account.passphrase) ?
-                        <div>
-                          <Countdown
-                            date={this.props.account.expireTime}
-                            renderer={CountDownTemplate}
-                            onComplete={() => {
-                              this.props.removeSavedAccountPassphrase();
-                            }
-                            }
-                          ><CustomCountDown
-                              resetTimer={this.props.resetTimer}
-                              autoLog={this.props.autoLog}
-                              t={this.props.t}
-                            />
-                          </Countdown>
-                        </div> : <div></div>}
-                    </div>
+                          this.props.account.passphrase)
+                          ? <div>
+                            <Countdown
+                              date={this.props.account.expireTime}
+                              renderer={CountDownTemplate}
+                              onComplete={() => {
+                                this.props.removeSavedAccountPassphrase();
+                              }}
+                            >
+                              <CustomCountDown
+                                resetTimer={this.props.resetTimer}
+                                autoLog={this.props.autoLog}
+                                t={this.props.t}
+                              />
+                            </Countdown>
+                          </div>
+                          : <div></div>
+                        }
+                      </div>
                       : <div></div>
                     }
                   </div>
@@ -104,9 +111,9 @@ class Header extends React.Component {
         </div>
         <div className={`${styles.searchBar}`}>
           {this.shouldShowSearchBar() && <SearchBar/>}
-          {this.props.account.loading ?
-            null :
-            <Account peers={this.props.peers} t={this.props.t}/>}
+          {this.props.account.loading
+            ? null
+            : <Account peers={this.props.peers} t={this.props.t}/>}
         </div>
       </header>
     );
