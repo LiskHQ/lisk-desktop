@@ -4,7 +4,7 @@ import { mount } from 'enzyme';
 import { stub, spy } from 'sinon';
 import PassphraseCreation from './index';
 import CreateFirst from './../passphrase/create/create';
-import * as checkDevice from '../../utils/checkDevice';
+import * as isMobile from '../../utils/isMobile';
 import * as passphraseUtils from './../../utils/passphrase';
 import accounts from './../../../test/constants/accounts';
 
@@ -32,7 +32,7 @@ describe('Passphrase Creation', () => {
 
   describe('Using laptop', () => {
     beforeEach(() => {
-      stub(checkDevice, 'default').returns(false);
+      stub(isMobile, 'default').returns(false);
 
       wrapper = mount(<PassphraseCreation {...props} >
         <CreateFirst t={() => {}}/>
@@ -40,7 +40,7 @@ describe('Passphrase Creation', () => {
     });
 
     afterEach(() => {
-      checkDevice.default.restore();
+      isMobile.default.restore();
     });
 
     it('sets the next step once the movement is completed', () => {
@@ -68,11 +68,11 @@ describe('Passphrase Creation', () => {
       window.addEventListener = (name, event) => {
         events[name] = event;
       };
-      stub(checkDevice, 'default').returns(true);
+      stub(isMobile, 'default').returns(true);
     });
 
     afterEach(() => {
-      checkDevice.default.restore();
+      isMobile.default.restore();
     });
 
     it('returns child element with correct properties', () => {

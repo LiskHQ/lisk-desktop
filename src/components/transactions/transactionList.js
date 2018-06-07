@@ -9,6 +9,7 @@ import txTypes from './../../constants/transactionTypes';
 import styles from './transactionList.css';
 import { parseSearchParams } from './../../utils/searchParams';
 import DelegateStatistics from './delegateStatistics';
+import UserVotes from './userVotes';
 
 class TransactionsList extends React.Component {
   componentWillReceiveProps(nextProps) {
@@ -34,7 +35,6 @@ class TransactionsList extends React.Component {
 
   render() {
     const {
-      filter,
       transactions,
       loading,
       dashboard,
@@ -43,10 +43,13 @@ class TransactionsList extends React.Component {
       loadMore,
       t,
     } = this.props;
+    // All, incoming, outgoing are filter values. To be more consistance with other possible tabs
+    // We can refer to props.filter as tabObj
+    const tabObj = this.props.filter;
 
     const fixIncomingFilter = (transaction) => {
       const isTypeNonSend = transaction.type !== txTypes.send;
-      const isFilterIncoming = filter && filter.value === txFilters.incoming;
+      const isFilterIncoming = tabObj && tabObj.value === txFilters.incoming;
       const isAccountInit = transaction.type === txTypes.send
         && transaction.senderId === transaction.recipientId;
 
@@ -57,20 +60,29 @@ class TransactionsList extends React.Component {
     // istanbul ignore else
     if (transactions.length === 0) {
       // istanbul ignore else
-      if (dashboard || (filter && filter.value !== txFilters.all)) {
+      if (dashboard || (tabObj && tabObj.value !== txFilters.all)) {
         return <p className={`${styles.empty} hasPaddingRow empty-message`}>
           {t('There are no {{filterName}} transactions.', {
-            filterName: filter && filter.name ? filter.name.toLowerCase() : '',
+            filterName: tabObj && tabObj.name ? tabObj.name.toLowerCase() : '',
           })}
         </p>;
       }
       return null;
     }
 
-    const isDelegateStatistics = filter && (filter.value === txFilters.statistics);
+    const isDelegateStatistics = tabObj && (tabObj.value === txFilters.statistics);
 
     if (isDelegateStatistics) {
       return <DelegateStatistics
+        delegate={this.props.delegate}
+        votes={this.props.votes}
+        voters={this.props.voters} />;
+    }
+
+    const isAccountInfo = tabObj && (tabObj.value === txFilters.accountInfo);
+
+    if (isAccountInfo) {
+      return <UserVotes
         delegate={this.props.delegate}
         votes={this.props.votes}
         voters={this.props.voters} />;

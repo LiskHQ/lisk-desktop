@@ -68,12 +68,18 @@ class TransactionsOverview extends React.Component {
       },
     ];
 
-    if (this.props.delegate) {
-      filters.push({
+    if (this.props.delegate && Object.values(this.props.delegate).length > 0) {
+      filters[txFilters.statistics] = {
         name: this.isSmallScreen() ? this.props.t('Stats') : this.props.t('Delegate statistics'),
         value: txFilters.statistics,
         className: 'delegate-statistics',
-      });
+      };
+    } else {
+      filters[txFilters.accountInfo] = {
+        name: this.isSmallScreen() ? this.props.t('Info') : this.props.t('Account Info'),
+        value: txFilters.accountInfo,
+        className: 'account-info',
+      };
     }
 
     return (

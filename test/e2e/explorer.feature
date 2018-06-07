@@ -11,7 +11,6 @@ Feature: Explorer page
     And I wait 2 seconds
     And I fill in "15610359283786884938L" to "search bar input" field
     When I click "search bar button"
-    And I wait 3 seconds
     Then I should see 25 rows
     When I click "send to address"
     And I wait 1 seconds
