@@ -282,6 +282,8 @@
 
 @media (--xSmall-viewport) {
   .details {
+    padding-bottom: 40px;
+
     & .row {
       padding-bottom: 0px;
 
