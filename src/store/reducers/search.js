@@ -76,6 +76,18 @@ const search = (state = {
           [action.data.address]: action.data.voters,
         },
       };
+    case actionTypes.searchSuggestions:
+      return {
+        ...state,
+        suggestions: {
+          ...action.data,
+        },
+      };
+    case actionTypes.searchClearSuggestions:
+      return {
+        ...state,
+        suggestions: {},
+      };
     default:
       return state;
   }
