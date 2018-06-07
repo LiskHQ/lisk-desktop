@@ -22,6 +22,7 @@ const mapStateToProps = state => ({
   account: state.account,
   peers: state.peers,
   savedAccounts: state.savedAccounts,
+  settings: state.settings,
 });
 
 const mapDispatchToProps = dispatch => ({

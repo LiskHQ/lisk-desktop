@@ -10,6 +10,10 @@
   --check-box-font-size: 23px;
 }
 
+.disable {
+  pointer-events: none !important;
+  opacity: 0.5;
+}
 .wrapper {
   position: relative;
   display: flex;

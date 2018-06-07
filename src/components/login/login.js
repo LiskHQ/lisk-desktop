@@ -57,7 +57,9 @@ class Login extends React.Component {
 
   componentDidUpdate(prevProps) {
     const params = parseSearchParams(prevProps.history.location.search);
-    const showNetworkParam = params.showNetwork || params.shownetwork;
+    const showNetworkParam = params.showNetwork
+      || params.shownetwork
+      || this.props.settings.showNetwork;
 
     if (this.props.account &&
       this.props.account.address && (showNetworkParam !== 'true' || this.secondIteration) &&
@@ -136,7 +138,7 @@ class Login extends React.Component {
 
   // eslint-disable-next-line class-methods-use-this
   showNetworkOptions() {
-    const showNetwork = localStorage.getItem('showNetwork') || localStorage.getItem('shownetwork');
+    const showNetwork = this.props.settings.showNetwork;
     const params = parseSearchParams(this.props.history.location.search);
     const showNetworkParam = params.showNetwork || params.shownetwork;
 

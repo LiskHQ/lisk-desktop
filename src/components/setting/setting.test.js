@@ -20,6 +20,7 @@ describe('Setting', () => {
   const settings = {
     autoLog: true,
     advancedMode: true,
+    showNetwork: false,
   };
 
   const account = {
@@ -122,6 +123,16 @@ describe('Setting', () => {
     wrapper.update();
     const expectedCallToSettingsUpdated = {
       autoLog: !settings.autoLog,
+    };
+    expect(props.settingsUpdated).to.have.been.calledWith(expectedCallToSettingsUpdated);
+  });
+
+  it('should change showNetwork setting when clicking on checkbox', () => {
+    wrapper.find('.showNetwork').at(0).find('input').simulate('change', { target: { checked: true, value: true } });
+    clock.tick(300);
+    wrapper.update();
+    const expectedCallToSettingsUpdated = {
+      showNetwork: !settings.showNetwork,
     };
     expect(props.settingsUpdated).to.have.been.calledWith(expectedCallToSettingsUpdated);
   });

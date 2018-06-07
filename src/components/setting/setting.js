@@ -46,10 +46,6 @@ class Setting extends React.Component {
     settingsUpdated({ autoLog: !settings.autoLog });
   }
 
-  showOnboardingSetting() {
-    return this.props.isAuthenticated && window.innerWidth > breakpoints.m;
-  }
-
   render() {
     this.language = (i18n.language === 'de');
     const {
@@ -57,13 +53,16 @@ class Setting extends React.Component {
       hasSecondPassphrase,
     } = this.props;
 
+    const allowAuthClass = !this.props.isAuthenticated ? styles.disable : '';
+    const showOnboardingSetting = window.innerWidth > breakpoints.m;
+
     return (<Box className={styles.wrapper}>
       <aside>
         <header>
           <h4>{t('Settings')}</h4>
           <p>{t('Set up Lisk Hub and your account.')}</p>
         </header>
-        {this.showOnboardingSetting()
+        {showOnboardingSetting
           ? <div className={`${styles.item} onBoarding`}>
             <label>{t('Start the onboarding')}</label>
             <button className={`${styles.settingsButton} onboarding-setting`} onClick={() => {
@@ -78,12 +77,12 @@ class Setting extends React.Component {
         }
       </aside>
       <section>
-        <h4>{t('Security')}</h4>
+        <h4 className={`${allowAuthClass}`}>{t('Security')}</h4>
         <div className={styles.item}>
-          <label>{t('2nd passphrase (Fee: 5 LSK)')}</label>
+          <label className={`${allowAuthClass}`}>{t('2nd passphrase (Fee: 5 LSK)')}</label>
           {!hasSecondPassphrase ?
             <Link
-              className={`register-second-passphrase ${styles.secondPassphrase}`}
+              className={`register-second-passphrase ${styles.secondPassphrase} ${allowAuthClass}`}
               to={`${routes.secondPassphrase.path}`}>
               {t('Register')}
               <FontIcon>arrow-right</FontIcon>
@@ -96,10 +95,11 @@ class Setting extends React.Component {
           }
         </div>
         <div className={styles.item}>
-          <label>{t('Auto-Lock')}</label>
+          <label className={`${allowAuthClass}`}>{t('Auto-Lock')}</label>
           <Checkbox
             theme={styles}
-            className={`${styles.smallSlider} autoLog`}
+            disabled={!this.props.isAuthenticated}
+            className={`${styles.smallSlider} autoLog ${allowAuthClass}`}
             onChange={() => this.toggleAutoLog(!settings.autoLog)}
             input={{
               value: true,
@@ -108,10 +108,22 @@ class Setting extends React.Component {
         </div>
         <h4>{t('Advanced features')}</h4>
         <div className={styles.item}>
-          <label>{t('Delegate features')}</label>
+          <label>{t('Switch networks (main-/Testnet, Custom)')}</label>
           <Checkbox
             theme={styles}
-            className={`${styles.smallSlider} advancedMode`}
+            className={`${styles.smallSlider} showNetwork`}
+            onChange={() => settingsUpdated({ showNetwork: !settings.showNetwork })}
+            input={{
+              value: false,
+              checked: settings.showNetwork,
+            }}/>
+        </div>
+        <div className={styles.item}>
+          <label className={`${allowAuthClass}`}>{t('Delegate features')}</label>
+          <Checkbox
+            theme={styles}
+            disabled={!this.props.isAuthenticated}
+            className={`${styles.smallSlider} advancedMode ${allowAuthClass}`}
             onChange={() => settingsUpdated({ advancedMode: !settings.advancedMode })}
             input={{
               value: true,
