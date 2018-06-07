@@ -55,7 +55,7 @@ export default class VoteUrlProcessor extends React.Component {
         <section className={styles.wrapper}>
           <header>
               <h2>Your Pre-Selection
-                <div className={`${styles.cancel}`} onClick={() => {
+                <div className={`${styles.cancel} clear-votes`} onClick={() => {
                   this.props.clearVoteLookupStatus();
                   this.props.clearVotes();
                   this.props.closeInfo();

@@ -9,6 +9,7 @@ import Setting from './setting';
 import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
 import breakpoints from './../../constants/breakpoints';
+import settingsConst from './../../constants/settings';
 
 describe('Setting', () => {
   const history = {
@@ -21,6 +22,7 @@ describe('Setting', () => {
     autoLog: true,
     advancedMode: true,
     showNetwork: false,
+    currency: settingsConst.currencies[0],
   };
 
   const account = {
@@ -137,6 +139,14 @@ describe('Setting', () => {
     expect(props.settingsUpdated).to.have.been.calledWith(expectedCallToSettingsUpdated);
   });
 
+  it('should change active currency setting to EUR', () => {
+    wrapper.find('.currency').at(1).simulate('click');
+    wrapper.update();
+    const expectedCallToSettingsUpdated = {
+      currency: settingsConst.currencies[1],
+    };
+    expect(props.settingsUpdated).to.have.been.calledWith(expectedCallToSettingsUpdated);
+  });
 
   it('should update expireTime when updating autolog', () => {
     const accountToExpireTime = { ...account };

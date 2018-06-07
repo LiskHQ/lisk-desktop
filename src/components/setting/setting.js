@@ -6,6 +6,7 @@ import styles from './setting.css';
 import i18n from '../../i18n';
 import accountConfig from '../../constants/account';
 import breakpoints from './../../constants/breakpoints';
+import settingsConst from './../../constants/settings';
 // TODO: will be re-enabled when the functionality is updated
 import routes from '../../constants/routes';
 import { FontIcon } from '../fontIcon';
@@ -17,6 +18,7 @@ class Setting extends React.Component {
     super();
     this.state = {
       activeSlide: 0,
+      currencies: settingsConst.currencies,
     };
   }
 
@@ -55,6 +57,7 @@ class Setting extends React.Component {
 
     const allowAuthClass = !this.props.isAuthenticated ? styles.disable : '';
     const showOnboardingSetting = window.innerWidth > breakpoints.m;
+    const activeCurrency = settings.currency || settingsConst.currencies[0];
 
     return (<Box className={styles.wrapper}>
       <aside>
@@ -130,16 +133,20 @@ class Setting extends React.Component {
               checked: settings.advancedMode,
             }}/>
         </div>
-        {/* TODO: will be re-enabled when the functionality is updated
-          <h4>{t('Local')}</h4>
-          <div className={styles.item}>
-            <label>{t('Currency')}</label>
-            <ul className={styles.currencyList}>
-              <li className={styles.active}>USD</li>
-              <li>EUR</li>
-            </ul>
-          </div>
-        */}
+        <h4>{t('Local')}</h4>
+        <div className={styles.item}>
+          <label>{t('Currency')}</label>
+          <ul className={styles.currencyList}>
+            {this.state.currencies.map(currency => (
+              <li
+                key={`currency-${currency}`}
+                className={`currency ${currency === activeCurrency ? styles.active : ''}`}
+                onClick={() => settingsUpdated({ currency })}>
+                {currency}
+              </li>
+            ))}
+          </ul>
+        </div>
         {/* TODO: will be re-enabled when the functionality is updated
         {/* TODO: will be re-enabled when the functionality is updated
         <div>

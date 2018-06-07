@@ -1,7 +1,7 @@
 import React from 'react';
 import { generateSeed, generatePassphrase } from './../../utils/passphrase';
 import { extractAddress } from '../../utils/account';
-import checkDevice from '../../utils/checkDevice';
+import isMobile from '../../utils/isMobile';
 
 class PassphraseCreation extends React.Component {
   constructor() {
@@ -11,7 +11,7 @@ class PassphraseCreation extends React.Component {
       address: null,
       headingClass: '',
     };
-    this.isTouchDevice = checkDevice();
+    this.isTouchDevice = isMobile();
     this.lastCaptured = {
       x: 0,
       y: 0,
@@ -34,7 +34,7 @@ class PassphraseCreation extends React.Component {
     let x = 0;
     let y = 0;
     if (this.isTouchDevice) {
-      const ratio = checkDevice(this.props.agent, 'android') ? 10 : 1;
+      const ratio = isMobile(this.props.agent, 'android') ? 10 : 1;
       x = e.rotationRate.alpha * ratio;
       y = e.rotationRate.beta * ratio;
 
