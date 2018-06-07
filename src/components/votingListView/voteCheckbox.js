@@ -14,8 +14,8 @@ const VoteCheckbox = ({ data, status, toggle }) => {
         id={`vote-${publicKey}`}
         checked={status ? status.unconfirmed : false}
         onChange={toggle.bind(null, {
- username, publicKey, rank, productivity, address,
-})} />
+          username, publicKey, rank, productivity, address,
+        })} />
       <FontIcon value='checkmark-check' className={styles.checked} />
       <FontIcon value='checkmark-uncheck' className={styles.unchecked} />
     </label>;
