@@ -9,8 +9,10 @@ import CopyToClipboard from '../copyToClipboard';
 import { FontIcon } from '../fontIcon';
 import styles from './card.css';
 
-const AccountCard = ({ account, t, isEditing, handleRemove, isSecureAppears,
-  isSelectedForRemove, selectForRemove, onClick, handleRemovePassphrase }) =>
+const AccountCard = ({
+  account, t, isEditing, handleRemove, isSecureAppears,
+  isSelectedForRemove, selectForRemove, onClick, handleRemovePassphrase,
+}) =>
   (<li onClick={onClick} className={`saved-account-card ${styles.card}
     ${isEditing ? null : styles.clickable}
     ${isSelectedForRemove(account) ? styles.darkBackground : null}`}>

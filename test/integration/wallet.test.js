@@ -74,7 +74,9 @@ describe('@integration: Wallet', () => {
   const errorMessage = 'An error occurred while creating the transaction.';
 
   const generateTransactions = (n) => {
-    const transactionExample = { senderId: 'sample_address', receiverId: 'some_address', type: txTypes.send, id: '123456' };
+    const transactionExample = {
+      senderId: 'sample_address', receiverId: 'some_address', type: txTypes.send, id: '123456',
+    };
     const transactions = new Array(n);
     transactions.fill(transactionExample);
     return transactions;
@@ -359,9 +361,9 @@ describe('@integration: Wallet', () => {
 
     describe('Scenario: should allow to view transactions', () => {
       step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
-      step('Then I should see 50 rows', () => helper.shouldSeeCountInstancesOf(50, 'TransactionRow'));
+      step('Then I should see 25 rows', () => helper.shouldSeeCountInstancesOf(25, 'TransactionRow'));
       step('When I scroll to the bottom of "transactions box"', () => { wrapper.find('Waypoint').props().onEnter(); });
-      step('Then I should see 75 rows', () => { wrapper.update(); helper.shouldSeeCountInstancesOf(75, 'TransactionRow'); });
+      step('Then I should see 50 rows', () => { wrapper.update(); helper.shouldSeeCountInstancesOf(50, 'TransactionRow'); });
       step('When I click on a transaction row', () => helper.clickOnElement('.transactions-row'));
       step('Then I should be redirected to transactoinDetails step', () => helper.checkRedirectionToDetails('123456'));
     });

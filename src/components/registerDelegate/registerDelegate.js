@@ -12,8 +12,6 @@ import passphraseStyles from './steps/passphraseSteps.css';
 
 class RegisterDelegate extends React.Component {
   submitDelegate({ delegateName, passphrase, secondPassphrase }) {
-    event.preventDefault();
-
     this.props.delegateRegistered({
       activePeer: this.props.peers.data,
       account: this.props.account,

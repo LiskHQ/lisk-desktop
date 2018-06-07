@@ -26,8 +26,7 @@ describe('SendTo Component', () => {
       },
       t: key => key,
     };
-    wrapper = mountWithContext(<SendTo {...props} store={store} />, {
-      storeState: store });
+    wrapper = mountWithContext(<SendTo {...props} store={store} />, { storeState: store });
     wrapper.setProps({ account });
   });
 

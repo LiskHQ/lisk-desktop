@@ -24,6 +24,7 @@
   "Auto-Lock": "Auto-Lock",
   "Back": "Back",
   "Back to overview": "Back to overview",
+  "Balance": "Balance",
   "Become a delegate": "Become a delegate",
   "Become a delegate (Fee: {{fee}} LSK)": "Become a delegate (Fee: {{fee}} LSK)",
   "Blockchain Application Registration": "Blockchain Application Registration",
@@ -103,11 +104,12 @@
   "Get passphrase": "Get passphrase",
   "Get to your Dashboard": "Get to your Dashboard",
   "Go back to Dashboard": "Go back to Dashboard",
-  "Go to \"More\" on your Sidebar to start the onboarding whenever you need.": "Go to \"More\" on your Sidebar to start the onboarding whenever you need.",
+  "Go to \"Settings\" on your Sidebar to start the onboarding whenever you need.": "Go to \"Settings\" on your Sidebar to start the onboarding whenever you need.",
   "Go to lisk.io": "Go to lisk.io",
   "Go to your Dashboard": "Go to your Dashboard",
   "Got it": "Got it",
   "Great!\nYou’re almost finished": "Great!\nYou’re almost finished",
+  "Height": "Height",
   "Help": "Help",
   "Here you see your address and balance. You can click your account avatar to see all your saved IDs.": "Here you see your address and balance. You can click your account avatar to see all your saved IDs.",
   "Hide passphrase": "Hide passphrase",
@@ -218,6 +220,7 @@
   "Result": "Result",
   "Safekeeping": "Safekeeping",
   "Search": "Search",
+  "Search delegates, addresses": "Search delegates, addresses",
   "Search for Lisk ID or Transaction ID": "Search for Lisk ID or Transaction ID",
   "Search for a delegate": "Search for a delegate",
   "Second Signature Creation": "Second Signature Creation",
@@ -316,7 +319,7 @@
   "You can also press ↲ enter to search": "You can also press ↲ enter to search",
   "You can always get it back.": "You can always get it back.",
   "You can now use Lisk Hub.<br": {
-    " If you want to repeat the onboarding, navigate to \"More\" on the sidebar.": "You can now use Lisk Hub.<br> If you want to repeat the onboarding, navigate to \"More\" on the sidebar."
+    " If you want to repeat the onboarding, navigate to \"Settings\" on the sidebar.": "You can now use Lisk Hub.<br> If you want to repeat the onboarding, navigate to \"Settings\" on the sidebar."
   },
   "You have already registered as a delegate.": "You have already registered as a delegate.",
   "You only need to do this once for each Lisk ID.": "You only need to do this once for each Lisk ID.",

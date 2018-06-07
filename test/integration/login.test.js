@@ -95,9 +95,11 @@ describe('@integration: Login', () => {
   class Helper extends GenericStepDefinition {
     // eslint-disable-next-line class-methods-use-this
     checkIfInRoute() {
-      expect(this.store.getState().account).to.have.all.keys('passphrase', 'publicKey', 'address', 'delegate',
+      expect(this.store.getState().account).to.have.all.keys(
+        'passphrase', 'publicKey', 'address', 'delegate',
         'isDelegate', 'expireTime', 'u_multisignatures', 'multisignatures', 'unconfirmedBalance',
-        'secondSignature', 'secondPublicKey', 'balance', 'unconfirmedSignature', 'network', 'votes', 'voters');
+        'secondSignature', 'secondPublicKey', 'balance', 'unconfirmedSignature', 'network', 'votes', 'voters',
+      );
       restoreStubs();
     }
 
@@ -117,8 +119,10 @@ describe('@integration: Login', () => {
 
   describe('Scenario: should allow to login', () => {
     step('Given I\'m on login page', () => setupStep(stubApisDefaultScenario));
-    step(`When I fill "${passphrase}" into "passphrase" field`,
-      () => helper.fillInputField(passphrase, 'passphrase'));
+    step(
+      `When I fill "${passphrase}" into "passphrase" field`,
+      () => helper.fillInputField(passphrase, 'passphrase'),
+    );
     step('And I click "login button"', () => helper.submitForm());
     step('Then I should be logged in', () => helper.checkIfInRoute());
   });

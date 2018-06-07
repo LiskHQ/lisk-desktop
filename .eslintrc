@@ -24,6 +24,7 @@
   },
   "rules": {
     "mocha/no-exclusive-tests": "error",
+    "prefer-destructuring": "off",
     "func-names": "off",
     "global-require": "off",
     "new-cap": ["error", {

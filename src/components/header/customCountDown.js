@@ -1,7 +1,9 @@
 import React, { Fragment } from 'react';
 import styles from './customCountDown.css';
 
-const CustomCountDown = ({ minutes, autoLog, seconds, resetTimer, t }) => {
+const CustomCountDown = ({
+  minutes, autoLog, seconds, resetTimer, t,
+}) => {
   const min = minutes < 10 ? `0${minutes}` : minutes;
   const sec = seconds < 10 ? `0${seconds}` : seconds;
 

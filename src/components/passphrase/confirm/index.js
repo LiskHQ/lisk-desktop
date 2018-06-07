@@ -94,7 +94,7 @@ class Confirm extends React.Component {
 
     /**
      * Returns a random index which doesn't exist in list
-     * 
+     *
      * @param {Array} list - The list of existing random Indexes
      * @returns {Number} random index between 0 and length of words
      */
@@ -187,8 +187,10 @@ class Confirm extends React.Component {
   }
 
   render() {
-    const { missing, words, wordOptions, step,
-      answers, selectedFieldset, trials, formStatus } = this.state;
+    const {
+      missing, words, wordOptions, step,
+      answers, selectedFieldset, trials, formStatus,
+    } = this.state;
     const errorTitleVisibility = (formStatus === 'outOfTrials' ||
       formStatus === 'invalid') ? styles.visible : '';
 

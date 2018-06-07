@@ -86,8 +86,10 @@ class TransitionWrapper extends React.Component {
       };
     }
 
-    return React.cloneElement(this.props.children,
-      Object.assign({}, this.state.extraProps, inlineStyles));
+    return React.cloneElement(
+      this.props.children,
+      Object.assign({}, this.state.extraProps, inlineStyles),
+    );
   }
 }
 

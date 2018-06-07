@@ -18,7 +18,7 @@ function slugify(text) {
 
 function writeScreenShot(data, filename) {
   const stream = fs.createWriteStream(filename);
-  stream.write(new Buffer(data, 'base64'));
+  stream.write(new Buffer(data, 'base64')); // eslint-disable-line no-buffer-constructor
   stream.end();
 }
 

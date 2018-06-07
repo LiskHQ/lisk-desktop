@@ -37,19 +37,18 @@ describe.skip('VotingListView', () => {
       delegate: {},
       loading: [],
     });
-    wrapper = mount(
-      <Provider store={store}>
+    wrapper = mount(<Provider store={store}>
         <Router>
           <VotingListView history={{ location: { search: '' } }} />
         </Router>
       </Provider>, {
-        context: { store, history, i18n },
-        childContextTypes: {
-          store: PropTypes.object.isRequired,
-          history: PropTypes.object.isRequired,
-          i18n: PropTypes.object.isRequired,
-        },
-      });
+      context: { store, history, i18n },
+      childContextTypes: {
+        store: PropTypes.object.isRequired,
+        history: PropTypes.object.isRequired,
+        i18n: PropTypes.object.isRequired,
+      },
+    });
   });
 
   it('should render delegate list', () => {

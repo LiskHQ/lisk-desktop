@@ -6,6 +6,7 @@ import { MemoryRouter } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n';
+import history from '../../history';
 import SettingHOC from './index';
 import * as accountsActions from '../../actions/account';
 import * as settingActions from '../../actions/settings';

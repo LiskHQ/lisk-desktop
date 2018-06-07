@@ -51,7 +51,9 @@ describe('@integration: Dashboard', () => {
   }
 
   const generateTransactions = (n) => {
-    const transactionExample = { id: 10385202636, senderId: 'sample_address', receiverId: 'some_address', type: txTypes.send };
+    const transactionExample = {
+      id: 10385202636, senderId: 'sample_address', receiverId: 'some_address', type: txTypes.send,
+    };
     const transactions = new Array(n);
     transactions.fill(transactionExample);
     return transactions;
@@ -116,9 +118,11 @@ describe('@integration: Dashboard', () => {
       .resolves({ delegate: { ...accounts['delegate candidate'] } });
 
     liskServiceAPIStub.withArgs(match.any).returnsPromise()
-      .resolves({ body: {
-        candles: [{ timestamp: 111111111 }, { timestamp: 11111111112 }],
-      } });
+      .resolves({
+        body: {
+          candles: [{ timestamp: 111111111 }, { timestamp: 11111111112 }],
+        },
+      });
 
     store.dispatch(accountsRetrieved());
     store.dispatch(accountLoggedIn(account));

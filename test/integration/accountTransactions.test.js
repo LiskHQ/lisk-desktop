@@ -124,14 +124,18 @@ describe('@integration: Account Transactions', () => {
     votesAPIStub = stub(delegateAPI, 'getVotes');
     votersAPIStub = stub(delegateAPI, 'getVoters');
 
-    const transactionExample = { senderId: '456L', receiverId: '456L', type: txTypes.send, id: '123456' };
+    const transactionExample = {
+      senderId: '456L', receiverId: '456L', type: txTypes.send, id: '123456',
+    };
 
     delegateAPIStub.withArgs(match.any).returnsPromise()
-      .resolves({ delegate: {
-        ...accounts['delegate candidate'],
-        ...delegateProductivity,
-        address: '123L',
-      } });
+      .resolves({
+        delegate: {
+          ...accounts['delegate candidate'],
+          ...delegateProductivity,
+          address: '123L',
+        },
+      });
 
     let transactions = new Array(20);
 
@@ -139,9 +143,11 @@ describe('@integration: Account Transactions', () => {
     transactions.fill(transactionExample);
     requestToActivePeerStub.withArgs(match.any, 'transactions', match({ senderId: '123L', recipientId: '123L' }))
       .returnsPromise().resolves({ transactions, count: 1000 });
-    transactionAPIStub.returnsPromise().resolves({ transaction: {
-      id: '123456789', senderId: '123l', recipientId: '456l', votes: { added: [], deleted: [] },
-    } });
+    transactionAPIStub.returnsPromise().resolves({
+      transaction: {
+        id: '123456789', senderId: '123l', recipientId: '456l', votes: { added: [], deleted: [] },
+      },
+    });
     // incoming transaction result
     transactions = new Array(15);
     transactions.fill(transactionExample);
@@ -200,8 +206,10 @@ describe('@integration: Account Transactions', () => {
     store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
     accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
     if (accountType) { store.dispatch(accountLoggedIn(account)); }
-    wrapper = mount(renderWithRouter(AccountTransactions, store,
-      { match: { params: { address } }, history }));
+    wrapper = mount(renderWithRouter(
+      AccountTransactions, store,
+      { match: { params: { address } }, history },
+    ));
 
     explorerTransactionsProps = wrapper.find('ExplorerTransactions').props();
     explorerTransactionsProps.history.push = spy();

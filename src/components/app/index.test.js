@@ -16,15 +16,13 @@ import routes from '../../constants/routes';
 const fakeStore = configureStore();
 
 const addRouter = Component => (props, path) =>
-  mount(
-    <Provider {...props}>
+  mount(<Provider {...props}>
       <MemoryRouter initialEntries={path}>
         <I18nextProvider i18n={ i18n }>
           <Component />
         </I18nextProvider>
       </MemoryRouter>
-    </Provider>,
-  );
+    </Provider>);
 
 const publicComponent = [
   { route: '/', component: Login },

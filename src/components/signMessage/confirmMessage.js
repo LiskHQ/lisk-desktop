@@ -24,6 +24,12 @@ class ConfirmMessage extends React.Component {
     };
   }
 
+  componentWillMount() {
+    if (this.props.account.passphrase) {
+      this.signMessage();
+    }
+  }
+
   handleChange(name, value, error) {
     this.setState({
       [name]: {
@@ -42,10 +48,14 @@ class ConfirmMessage extends React.Component {
 
   sign() {
     const { message } = this.props;
-    const signedMessage = Lisk.crypto.signMessageWithSecret(message,
-      this.state.passphrase.value);
+    const signedMessage = Lisk.crypto.signMessageWithSecret(
+      message,
+      this.state.passphrase.value,
+    );
     const result = Lisk.crypto.printSignedMessage(
-      message, signedMessage, this.props.account.publicKey);
+      message,
+      signedMessage, this.props.account.publicKey,
+    );
     return result;
   }
 

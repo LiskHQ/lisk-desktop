@@ -4,11 +4,21 @@ import voting from './voting';
 
 describe('Reducer: voting(state, action)', () => {
   const initialState = { votes: {}, delegates: [], refresh: true };
-  const delegate1 = { publicKey: 'sample_key_1', address: '100001L', rank: 1, productivity: 99 };
-  const delegate2 = { publicKey: 'sample_key_2', address: '100002L', rank: 2, productivity: 98 };
-  const delegate3 = { publicKey: 'sample_key_3', address: '100003L', rank: 3, productivity: 97 };
-  const delegate4 = { publicKey: 'sample_key_4', address: '100004L', rank: 4, productivity: 96 };
-  const delegate5 = { publicKey: 'sample_key_5', address: '100005L', rank: 5, productivity: 95 };
+  const delegate1 = {
+    publicKey: 'sample_key_1', address: '100001L', rank: 1, productivity: 99,
+  };
+  const delegate2 = {
+    publicKey: 'sample_key_2', address: '100002L', rank: 2, productivity: 98,
+  };
+  const delegate3 = {
+    publicKey: 'sample_key_3', address: '100003L', rank: 3, productivity: 97,
+  };
+  const delegate4 = {
+    publicKey: 'sample_key_4', address: '100004L', rank: 4, productivity: 96,
+  };
+  const delegate5 = {
+    publicKey: 'sample_key_5', address: '100005L', rank: 5, productivity: 95,
+  };
   const cleanVotes = {
     username1: { confirmed: false, unconfirmed: false, ...delegate1 },
     username2: { confirmed: true, unconfirmed: true, ...delegate2 },
@@ -20,15 +30,27 @@ describe('Reducer: voting(state, action)', () => {
     username3: { confirmed: false, unconfirmed: false, ...delegate3 },
   };
   const pendingVotes = {
-    username1: { confirmed: true, unconfirmed: true, pending: true, ...delegate1 },
-    username2: { confirmed: true, unconfirmed: true, pending: false, ...delegate2 },
-    username3: { confirmed: false, unconfirmed: false, pending: false, ...delegate3 },
+    username1: {
+      confirmed: true, unconfirmed: true, pending: true, ...delegate1,
+    },
+    username2: {
+      confirmed: true, unconfirmed: true, pending: false, ...delegate2,
+    },
+    username3: {
+      confirmed: false, unconfirmed: false, pending: false, ...delegate3,
+    },
   };
 
   const restoredVotes = {
-    username1: { confirmed: false, unconfirmed: false, pending: false, ...delegate1 },
-    username2: { confirmed: true, unconfirmed: true, pending: false, ...delegate2 },
-    username3: { confirmed: false, unconfirmed: false, pending: false, ...delegate3 },
+    username1: {
+      confirmed: false, unconfirmed: false, pending: false, ...delegate1,
+    },
+    username2: {
+      confirmed: true, unconfirmed: true, pending: false, ...delegate2,
+    },
+    username3: {
+      confirmed: false, unconfirmed: false, pending: false, ...delegate3,
+    },
   };
 
   const delegateList1 = [{ username: 'username1', ...delegate1 }, { username: 'username2', ...delegate2 }];
@@ -191,7 +213,9 @@ describe('Reducer: voting(state, action)', () => {
       },
     };
     const votedButNotYetInList = {
-      username1: { confirmed: true, unconfirmed: true, pending: true, ...delegate1 },
+      username1: {
+        confirmed: true, unconfirmed: true, pending: true, ...delegate1,
+      },
     };
     const state = {
       votes: { ...votedButNotYetInList },
@@ -199,7 +223,9 @@ describe('Reducer: voting(state, action)', () => {
     const newUserNameRegisteredInVotes = {
       votes: {
         ...votedButNotYetInList,
-        username5: { confirmed: true, unconfirmed: true, pending: false, ...delegate5 },
+        username5: {
+          confirmed: true, unconfirmed: true, pending: false, ...delegate5,
+        },
       },
       refresh: false,
     };
@@ -215,7 +241,9 @@ describe('Reducer: voting(state, action)', () => {
       },
     };
     const updateVotesUnvotedWithExistingUsername = {
-      username1: { confirmed: true, unconfirmed: false, pending: true, ...delegate1 },
+      username1: {
+        confirmed: true, unconfirmed: false, pending: true, ...delegate1,
+      },
     };
     const state = {
       votes: { ...updateVotesUnvotedWithExistingUsername },
@@ -237,7 +265,9 @@ describe('Reducer: voting(state, action)', () => {
       },
     };
     const updateVotesDirtyNotVotedNotExistingUsername = {
-      username1: { confirmed: true, unconfirmed: false, pending: false, ...delegate1 },
+      username1: {
+        confirmed: true, unconfirmed: false, pending: false, ...delegate1,
+      },
     };
     const state = {
       votes: { ...updateVotesDirtyNotVotedNotExistingUsername },
@@ -245,7 +275,9 @@ describe('Reducer: voting(state, action)', () => {
     const newUsernameAddedToVotes = {
       votes: {
         ...updateVotesDirtyNotVotedNotExistingUsername,
-        username5: { confirmed: true, unconfirmed: true, pending: false, ...delegate5 },
+        username5: {
+          confirmed: true, unconfirmed: true, pending: false, ...delegate5,
+        },
       },
       refresh: false,
     };
@@ -261,7 +293,9 @@ describe('Reducer: voting(state, action)', () => {
       },
     };
     const updateVotesDirtyNotVotedExistingUsername = {
-      username1: { confirmed: true, unconfirmed: false, pending: false, ...delegate1 },
+      username1: {
+        confirmed: true, unconfirmed: false, pending: false, ...delegate1,
+      },
     };
     const state = {
       votes: { ...updateVotesDirtyNotVotedExistingUsername },
@@ -282,13 +316,19 @@ describe('Reducer: voting(state, action)', () => {
       },
     };
     const updateVotesNonConditionsMet = {
-      username1: { confirmed: true, unconfirmed: true, pending: true, ...delegate1 },
+      username1: {
+        confirmed: true, unconfirmed: true, pending: true, ...delegate1,
+      },
     };
     const state = {
       votes: { ...updateVotesNonConditionsMet },
     };
     const votesRecordsWithDefaultFlags = {
-      votes: { username1: { confirmed: true, unconfirmed: true, pending: false, ...delegate1 } },
+      votes: {
+        username1: {
+          confirmed: true, unconfirmed: true, pending: false, ...delegate1,
+        },
+      },
       refresh: false,
     };
     const changedState = voting(state, action);

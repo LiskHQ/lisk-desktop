@@ -4,6 +4,7 @@ import { mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
+import history from '../../history';
 import i18n from '../../i18n';
 import MainMenuHOC from './index';
 

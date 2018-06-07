@@ -29,6 +29,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ data, type: actionTypes.searchUpdateLast }),
 });
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(translate()(ExplorerTransactions)),
-);
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(translate()(ExplorerTransactions)));

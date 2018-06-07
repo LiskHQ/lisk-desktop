@@ -2,13 +2,17 @@ import React from 'react';
 import { FontIcon } from '../fontIcon';
 import styles from './multiStep.css';
 
-const MultiStepNav = ({ steps, showNav, current, prevStep,
-  browsable, backButtonLabel, prevPage }) => {
+const MultiStepNav = ({
+  steps, showNav, current, prevStep,
+  browsable, backButtonLabel, prevPage,
+}) => {
   // Checks if all titles are defined and showNav is not false
   const validateTitles = () => {
-    const titlesAreValid = steps.reduce((acc, step) =>
-      (acc && typeof step.props.title === 'string' && step.props.title.length > 0)
-      , true);
+    const titlesAreValid = steps.reduce(
+      (acc, step) =>
+        (acc && typeof step.props.title === 'string' && step.props.title.length > 0)
+      , true,
+    );
     return showNav !== false && titlesAreValid;
   };
 

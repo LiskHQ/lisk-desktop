@@ -61,7 +61,9 @@ class MainMenu extends React.Component {
   }
 
   render() {
-    const { history, t, showDelegate, account } = this.props;
+    const {
+      history, t, showDelegate, account,
+    } = this.props;
     const tabs = [
       {
         label: t('Dashboard'),
@@ -99,7 +101,7 @@ class MainMenu extends React.Component {
     ];
 
     if (showDelegate) {
-      tabs.splice(tabs.length - 1, 0, {
+      tabs.splice(tabs.length - 2, 0, {
         label: t('Delegates'),
         id: 'delegates',
         route: `${routes.delegates.path}`,

@@ -174,8 +174,10 @@ describe('SavedAccounts middleware', () => {
   it('should make only one request for the account information, if several transactions for the same account were made', () => {
     const getAccountStub = mock(accountApi);
     getAccountStub.expects('getAccount').withArgs(match.any, '1155682438012955434L').returnsPromise().resolves({ balance: 1 });
-    const transactions = { transactions: [{ senderId: '1234L', recipientId: '1155682438012955434L' },
-      { senderId: '1234L', recipientId: '1155682438012955434L' }] };
+    const transactions = {
+      transactions: [{ senderId: '1234L', recipientId: '1155682438012955434L' },
+        { senderId: '1234L', recipientId: '1155682438012955434L' }],
+    };
 
     middleware(store)(next)({
       type: actionTypes.newBlockCreated,

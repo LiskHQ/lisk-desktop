@@ -99,7 +99,9 @@ describe('Utils: Delegate', () => {
         .returnsPromise().resolves('resolved promise');
 
       const returnedPromise = registerDelegate(
-        activePeer, data.username, data.secret, data.secondSecret);
+        activePeer,
+        data.username, data.secret, data.secondSecret,
+      );
       return expect(returnedPromise).to.eventually.equal('resolved promise');
     });
 

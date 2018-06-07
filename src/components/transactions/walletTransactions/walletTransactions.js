@@ -4,15 +4,17 @@ import styles from './../transactions.css';
 import TransactionOverview from './../transactionOverview';
 import TransactionDetailView from './../transactionDetailView';
 import Box from './../../box';
+import txFilters from './../../../constants/transactionFilters';
 
 import routes from './../../../constants/routes';
 
 class WalletTransactions extends React.Component {
   onInit() {
-    this.props.loadTransactions({
+    this.props.transactionsFilterSet({
       activePeer: this.props.activePeer,
       address: this.props.account.address,
-      publicKey: this.props.account.publicKey,
+      limit: 25,
+      filter: txFilters.all,
     });
 
     if (this.props.account.isDelegate &&

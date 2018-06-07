@@ -58,8 +58,7 @@ describe('VotingHOC', () => {
         history: PropTypes.object.isRequired,
       },
     };
-    wrapper = mount(
-      <Provider store={store}>
+    wrapper = mount(<Provider store={store}>
         <Router>
           <VotingHOC history={history} />
         </Router>
