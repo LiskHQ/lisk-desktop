@@ -59,7 +59,7 @@ class Setting extends React.Component {
       hasSecondPassphrase,
     } = this.props;
 
-    const activeCurrency = settings.currency || 'USD';
+    const activeCurrency = settings.currency || settingsConst.currencies[0];
 
     return (<Box className={styles.wrapper}>
       <aside>
