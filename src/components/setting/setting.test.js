@@ -96,14 +96,14 @@ describe('Setting', () => {
     expect(wrapper.find('.onBoarding')).to.have.length(0);
   });
 
-  it('should not show the onboarding setting when not authenticated', () => {
+  it('should show the onboarding setting when not authenticated', () => {
     props.isAuthenticated = false;
     wrapper = mount(<Router>
       <Setting
         {...props}
       />
     </Router>, options);
-    expect(wrapper.find('.onBoarding')).to.have.length(0);
+    expect(wrapper.find('.onBoarding')).to.have.length(1);
   });
 
   it.skip('should click on .autoLog update the setting', () => {
