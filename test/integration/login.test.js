@@ -113,7 +113,7 @@ describe('@integration: Login', () => {
     const store = createStore();
     stubApis();
     store.dispatch(settingsUpdated({ showNetwork: true }));
-    wrapper = mount(renderWithRouter(Login, store, { location: { search: '' }, history }), { activePeerSet });
+    wrapper = mount(renderWithRouter(Login, store, { location: { search: '' } }), { activePeerSet });
     helper = new Helper(wrapper, store);
   };
 
