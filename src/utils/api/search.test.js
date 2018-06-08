@@ -9,10 +9,30 @@ describe('Utils: Search', () => {
   let getAccountStub;
 
   const accountsResponse = { address: '1337L', balance: 1110 };
+
   const delegatesResponse = {
     delegates: [
-      { username: '1337l', rank: 19, address: '123456' },
+      { username: '_1337l', rank: 19, address: '123456' },
       { username: '1337', rank: 18, address: '123456' },
+      { username: '1337l', rank: 18, address: '123456' },
+      { username: '1337Lolo', rank: 18, address: '123456' },
+    ],
+  };
+  const delegatesResponseOrdered = {
+    delegates: [
+      { username: '1337', rank: 18, address: '123456' },
+      { username: '1337Lolo', rank: 18, address: '123456' },
+      { username: '1337l', rank: 18, address: '123456' },
+      { username: '_1337l', rank: 19, address: '123456' },
+    ],
+  };
+
+  const delegatesResponseOrderedAddressMatch = {
+    delegates: [
+      { username: '1337Lolo', rank: 18, address: '123456' },
+      { username: '1337l', rank: 18, address: '123456' },
+      { username: '1337', rank: 18, address: '123456' },
+      { username: '_1337l', rank: 19, address: '123456' },
     ],
   };
   const delegatesUrlParams = {
@@ -56,14 +76,14 @@ describe('Utils: Search', () => {
     expect(searchAll({ searchTerm: '1337L' })).to.eventually.deep.equal([
       { addresses: [accountsResponse] },
       { transactions: [] },
-      { delegates: delegatesResponse.delegates },
+      { delegates: delegatesResponseOrderedAddressMatch.delegates },
     ]));
 
   it('should search {transactions,delegates} when only transaction pattern matched', () =>
     expect(searchAll({ searchTerm: '1337' })).to.eventually.deep.equal([
       { addresses: [] },
       { transactions: [transactionsResponse.transaction] },
-      { delegates: delegatesResponse.delegates },
+      { delegates: delegatesResponseOrdered.delegates },
     ]));
 
   it('should still search for {addresses} when failing {delegates} request', () => {
@@ -80,7 +100,7 @@ describe('Utils: Search', () => {
     return expect(searchAll({ searchTerm: '1337L' })).to.eventually.deep.equal([
       { addresses: [] },
       { transactions: [] },
-      { delegates: delegatesResponse.delegates },
+      { delegates: delegatesResponseOrderedAddressMatch.delegates },
     ]);
   });
 
@@ -89,7 +109,7 @@ describe('Utils: Search', () => {
     return expect(searchAll({ searchTerm: '1337' })).to.eventually.deep.equal([
       { addresses: [] },
       { transactions: [] },
-      { delegates: delegatesResponse.delegates },
+      { delegates: delegatesResponseOrdered.delegates },
     ]);
   });
 });

@@ -6,7 +6,7 @@ import { FontIcon } from '../fontIcon';
 import ResultsList from './resultsList';
 import routes from './../../constants/routes';
 import keyCodes from './../../constants/keyCodes';
-import { visitAndSaveSearch } from './../search/keyAction';
+import { saveSearch } from './../search/keyAction';
 
 class AutoSuggest extends React.Component {
   constructor(props) {
@@ -27,9 +27,13 @@ class AutoSuggest extends React.Component {
     const resultsLength = ['delegates', 'addresses', 'transactions'].reduce((total, resultKey) =>
       total + nextProps.results[resultKey].length);
     this.setState({ resultsLength });
+    /* istanbul ignore else */
     if (nextProps.results.delegates.length > 0
       && nextProps.results.delegates[0].username.match(this.lastSearch)) {
-      this.setState({ value: nextProps.results.delegates[0].username });
+      this.setState({
+        selectedIdx: 0,
+        value: nextProps.results.delegates[0].username,
+      });
     }
   }
 
@@ -47,21 +51,18 @@ class AutoSuggest extends React.Component {
       default:
         break;
     }
-    this.submitSearch(urlSearch);
+    saveSearch(id);
+    this.props.history.push(urlSearch);
   }
 
   setSelectedRow(el) {
     this.selectedRow = el;
   }
 
-  submitSearch(urlSearch) {
+  submitSearch() {
     this.resetSearch();
     this.inputRef.blur();
-    if (!urlSearch) {
-      this.selectedRow.click();
-      return;
-    }
-    this.props.history.push(urlSearch);
+    this.onResultClick(this.selectedRow.dataset.id, this.selectedRow.dataset.type);
   }
 
   search(searchTerm) {
@@ -111,8 +112,7 @@ class AutoSuggest extends React.Component {
         this.closeDropdown();
         break;
       case keyCodes.enter:
-        visitAndSaveSearch(this.state.value, this.props.history);
-        this.resetSearch();
+        this.submitSearch();
         break;
       case keyCodes.tab:
         this.submitSearch();
@@ -184,7 +184,7 @@ class AutoSuggest extends React.Component {
             this.state.value !== '' ?
               <FontIcon value='close' className={`${styles.icon} autosuggest-btn-close`} onClick={this.resetSearch.bind(this)} /> :
               <FontIcon value='search' className={`${styles.icon} ${styles.iconSearch} autosuggest-btn-search`}
-                onClick={() => { visitAndSaveSearch(this.state.value, history); }} />
+                onClick={this.submitSearch.bind(this)} />
           }
         </Input>
         <div className={`${styles.autoSuggest} ${this.state.show ? styles.show : ''} autosuggest-dropdown`}>

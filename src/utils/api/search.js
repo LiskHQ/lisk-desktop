@@ -4,6 +4,7 @@ import regex from './../../utils/regex';
 
 const orderDelegatesByMatch = (searchTerm, delegates) => delegates.sort((first, second) => {
   const regEx = new RegExp(`^${searchTerm}`, 'g');
+  /* istanbul ignore else */
   if (first.username.match(regEx) && second.username.match(regEx)) {
     return first.username < second.username ? -1 : 1;
   } else if (!first.username.match(regEx)) {

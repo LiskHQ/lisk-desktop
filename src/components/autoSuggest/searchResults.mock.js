@@ -13,7 +13,7 @@ const mockSearchResults = {
   ],
   delegates: [
     {
-      username: 'peter',
+      username: 'peterpan',
       rank: 73,
       address: '123456L',
     }, {
@@ -21,7 +21,7 @@ const mockSearchResults = {
       rank: 76,
       address: '1234567L',
     }, {
-      username: 'peter4',
+      username: '_peter4',
       rank: 77,
       address: '12345678L',
     },

@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { I18nextProvider } from 'react-i18next';
-import { spy } from 'sinon';
+import { spy, useFakeTimers } from 'sinon';
 import AutoSuggest from './index';
 import i18n from '../../i18n';
 import styles from './autoSuggest.css';
@@ -17,7 +17,8 @@ describe('AutoSuggest', () => {
   let props;
   let results;
   let submitSearchSpy;
-  let visitAndSaveSearchSpy;
+  let saveSearchSpy;
+  let clock;
 
   beforeEach(() => {
     results = { ...mockSearchResults };
@@ -27,17 +28,22 @@ describe('AutoSuggest', () => {
         push: spy(),
       },
       results,
+      searchSuggestions: spy(),
     };
+    clock = useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
+    });
 
     submitSearchSpy = spy(AutoSuggest.prototype, 'submitSearch');
-    visitAndSaveSearchSpy = spy(searchActions, 'visitAndSaveSearch');
+    saveSearchSpy = spy(searchActions, 'saveSearch');
     wrapper = mount(<I18nextProvider i18n={i18n}><AutoSuggest {...props} /></I18nextProvider>);
     wrapper.update();
   });
 
   afterEach(() => {
     submitSearchSpy.restore();
-    visitAndSaveSearchSpy.restore();
+    saveSearchSpy.restore();
+    clock.restore();
   });
 
   it('should render a row for each entity found {addresses,delegates,transactions}', () => {
@@ -66,8 +72,10 @@ describe('AutoSuggest', () => {
     const autosuggestInput = wrapper.find('.autosuggest-input').find('input').first();
     expect(autosuggestDropdown).not.to.have.className(styles.show);
     autosuggestInput.simulate('focus');
-    autosuggestInput.simulate('change', { target: { value: 'abc' } });
+    autosuggestInput.simulate('change', { target: { value: 'peter' } });
+    clock.tick(300);
     wrapper.update();
+    expect(props.searchSuggestions).to.have.been.calledWith();
     autosuggestDropdown = wrapper.find('.autosuggest-dropdown').first();
     expect(autosuggestDropdown).to.have.className(styles.show);
 
@@ -101,7 +109,7 @@ describe('AutoSuggest', () => {
       keyCode: keyCodes.enter,
       which: keyCodes.enter,
     });
-    expect(visitAndSaveSearchSpy).to.have.been.calledWith();
+    expect(saveSearchSpy).to.have.been.calledWith();
   });
 
   it('should redirect to entity page on keyboard event {tab}', () => {
