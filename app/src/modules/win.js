@@ -11,7 +11,7 @@ const win = {
       width: width > 1680 ? 1680 : width,
       height: height > 1050 ? 1050 : height,
       minHeight: 576,
-      minWidth: 768,
+      minWidth: 769,
       center: true,
       webPreferences: {
         // Avoid app throttling when Electron is in background
