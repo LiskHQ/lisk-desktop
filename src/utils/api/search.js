@@ -4,12 +4,14 @@ import regex from './../../utils/regex';
 
 const orderDelegatesByMatch = (searchTerm, delegates) => delegates.sort((first, second) => {
   const regEx = new RegExp(`^${searchTerm}`, 'g');
-  if (first.username.match(regEx)) {
-    return -1;
-  } else if (second.username.match(regEx)) {
+  if (first.username.match(regEx) && second.username.match(regEx)) {
+    return first.username < second.username ? -1 : 1;
+  } else if (!first.username.match(regEx)) {
     return 1;
+  } else if (!second.username.match(regEx)) {
+    return -1;
   }
-  return 0;
+  return first.username < second.username ? -1 : 1;
 });
 
 /* eslint-disable prefer-promise-reject-errors */

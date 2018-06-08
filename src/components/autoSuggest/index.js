@@ -13,11 +13,13 @@ class AutoSuggest extends React.Component {
     super(props);
     this.submitSearch = this.submitSearch.bind(this);
     this.selectedRow = null;
+    this.lastSearch = null;
     this.state = {
       show: false,
       value: '',
       selectedIdx: 0,
     };
+    this.delegateRegEx = new RegExp(/[!@$&_.]+/g);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -25,7 +27,8 @@ class AutoSuggest extends React.Component {
     const resultsLength = ['delegates', 'addresses', 'transactions'].reduce((total, resultKey) =>
       total + nextProps.results[resultKey].length);
     this.setState({ resultsLength });
-    if (nextProps.results.delegates.length > 0) {
+    if (nextProps.results.delegates.length > 0
+      && nextProps.results.delegates[0].username.match(this.lastSearch)) {
       this.setState({ value: nextProps.results.delegates[0].username });
     }
   }
@@ -62,19 +65,23 @@ class AutoSuggest extends React.Component {
   }
 
   search(searchTerm) {
-    if (searchTerm !== '') {
-      this.setState({ show: true });
-    } else {
-      this.setState({ show: false });
-    }
     this.setState({ value: searchTerm });
+    const regEx = new RegExp(`^${searchTerm.replace(this.delegateRegEx, '')}`, 'g');
+    // don't trigger search if user is just removing chars from last search
+    if (searchTerm.length < 3 ||
+      (this.lastSearch && this.lastSearch.match(regEx))) {
+      this.setState({ show: false });
+      return;
+    }
 
+    this.setState({ show: true });
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
       if (searchTerm === this.state.value) {
+        this.lastSearch = searchTerm;
         this.props.searchSuggestions({
           activePeer: this.props.activePeer,
-          searchTerm: this.state.value,
+          searchTerm: this.state.value.replace(this.delegateRegEx, ''),
         });
       }
     }, 250);
@@ -173,7 +180,7 @@ class AutoSuggest extends React.Component {
           onChange={this.search.bind(this)}
           autoComplete='off'>
           {
-            this.state.show ?
+            this.state.value !== '' ?
               <FontIcon value='close' className={`${styles.icon} autosuggest-btn-close`} onClick={this.resetSearch.bind(this)} /> :
               <FontIcon value='search' className={`${styles.icon} ${styles.iconSearch} autosuggest-btn-search`}
                 onClick={() => { visitAndSaveSearch(this.state.value, history); }} />
