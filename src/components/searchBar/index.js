@@ -34,27 +34,12 @@ class Search extends React.Component {
     return pathname.includes('explorer') && !pathname.includes(`${routes.explorer.path}${routes.search.path}`);
   }
 
-  select() {
-    this.searchInput.select();
-  }
-
   render() {
     return (<div className={`${styles.searchBar} search-bar-input ${this.shouldShowSearchBarOnMobile() ? styles.show : null}`}>
-      <FontIcon
-        onClick={() => { visitAndSaveSearch(this.state.searchItem, this.props.history); }}
-        value='search' className={`${styles.icon} search-bar-button`}/>
-      {/* <input
-        ref={(el) => { this.searchInput = el; }}
-        onFocus={this.select.bind(this)}
-        onKeyUp={(e) => { visitAndSaveSearchOnEnter(e, this.props.history); }}
-        className={`${styles.input}`} type="text"
-        placeholder={this.props.t('Search for Lisk ID or Transaction ID')}
-        value={this.state.searchItem}
-        onChange={(e) => { this.setState({ searchItem: e.target.value }); }}
-      /> */}
       <AutoSuggest
         history={this.props.history}
         t={this.props.t}
+        value={this.state.searchItem}
         results={this.props.suggestions}
         activePeer={this.props.activePeer}
         searchSuggestions={this.props.searchSuggestions}

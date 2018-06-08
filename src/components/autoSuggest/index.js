@@ -156,12 +156,12 @@ class AutoSuggest extends React.Component {
 
   render() {
     // eslint-disable-next-line no-unused-vars
-    const { history, t } = this.props;
+    const { history, t, value } = this.props;
 
     return (
       <div className={styles.wrapper}>
         <Input type='text' placeholder={t('Search delegates, addresses')} name='searchBarInput'
-          value={this.state.value}
+          value={this.state.value || value}
           innerRef={(el) => { this.inputRef = el; }}
           className={`${styles.input} autosuggest-input`}
           theme={styles}

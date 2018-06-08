@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 
 import i18n from '../../i18n';
 import Search from './index';
-import keyCodes from './../../constants/keyCodes';
 import * as keyAction from './../search/keyAction';
 
 describe('SearchBar', () => {
@@ -56,6 +55,13 @@ describe('SearchBar', () => {
     };
     store.getState = () => ({
       peers,
+      search: {
+        suggestions: {
+          delegates: [],
+          addresses: [],
+          transactions: [],
+        }
+      }
     });
     store.subscribe = () => {};
     store.dispatch = () => {};
@@ -78,27 +84,15 @@ describe('SearchBar', () => {
     wrapper.find('Search').props().history.push('/explorer/');
     wrapper.update();
     expect(wrapper.find('Search input').props().value).to.equal('');
-    wrapper.find('Search').props().history.push('/explorer/transaciton/123');
+    wrapper.find('Search').props().history.push('/explorer/transaction/123');
     wrapper.update();
     expect(wrapper.find('Search input')).to.have.props({ value: '123' });
   });
 
-  it('should change input value on change event', () => {
-    wrapper.find('Search input').simulate('change', { target: { value: '12025' } });
-    expect(wrapper.find('Search input')).to.have.props({ value: '12025' });
-    wrapper.find('Search input').simulate('keyup', { which: keyCodes.enter });
-    expect(keyAction.visitAndSaveSearchOnEnter).to.have.been.calledWith();
-  });
-
-  it('should change value on keyup event', () => {
-    wrapper.find('Search input').simulate('keyup', { which: keyCodes.enter, target: { value: '999' } });
-    expect(wrapper.find('Search input')).to.have.props({ value: '999' });
-    wrapper.find('.search-bar-button').first().simulate('click');
-    expect(keyAction.visitAndSaveSearch).to.have.been.calledWith();
-  });
-
-  it('should render Search', () => {
+  it('should render Autosuggest', () => {
     expect(wrapper).to.have.descendants('.search-bar-input');
+    expect(wrapper).to.have.descendants('.autosuggest-input');
+    expect(wrapper).to.have.descendants('.autosuggest-dropdown');
   });
 });
 
