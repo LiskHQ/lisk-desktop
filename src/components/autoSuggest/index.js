@@ -25,6 +25,9 @@ class AutoSuggest extends React.Component {
     const resultsLength = ['delegates', 'addresses', 'transactions'].reduce((total, resultKey) =>
       total + nextProps.results[resultKey].length);
     this.setState({ resultsLength });
+    if (nextProps.results.delegates.length > 0) {
+      this.setState({ value: nextProps.results.delegates[0].username });
+    }
   }
 
   onResultClick(id, type) {
