@@ -2,8 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
-import { FontIcon } from '../fontIcon';
-import { visitAndSaveSearch } from './../search/keyAction';
 import { searchSuggestions } from './../../actions/search';
 import AutoSuggest from './../autoSuggest';
 import routes from './../../constants/routes';
