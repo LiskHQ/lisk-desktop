@@ -59,7 +59,7 @@ class Converter extends React.Component {
     const currenciesObejects = currencies.map((currency, key) => (
       <div
         key={`${currency}-${key}`}
-        className={`${styles.convertElem} converted-price`}
+        className={`${styles.convertElem} converted-currency`}
         // eslint-disable-next-line
         onClick={() => { this.selectActive(currency); }}>{currency}</div>
     ));

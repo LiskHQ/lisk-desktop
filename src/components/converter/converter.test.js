@@ -39,9 +39,9 @@ describe('Converter', () => {
       error: false,
     };
     wrapper = mountWithContext(<Converter {...props} store={store}/>, { storeState: store });
-    expect(wrapper.find('.converted-price').at(1).text()).to.have.equal('USD');
-    wrapper.find('.converted-price').at(2).simulate('click');
-    expect(wrapper.find('.converted-price').at(1).text()).to.have.equal('EUR');
+    expect(wrapper.find('.converted-currency').at(0)).to.have.text('USD');
+    wrapper.find('.converted-currency').at(1).simulate('click');
+    expect(wrapper.find('.converted-currency').at(0)).to.have.text('EUR');
   });
 
   it('should convert price to EUR from localStorage', () => {
@@ -64,7 +64,7 @@ describe('Converter', () => {
 
     explorereApiMock.resolves({ LSK: { USD: 123, EUR: 12 } });
     wrapper.update();
-    expect(wrapper.find('.converted-price').at(0).text()).to.have.equal('~ 246.00');
+    expect(wrapper.find('.converted-price').at(0)).to.have.text('~ 246.00');
   });
 });
 
