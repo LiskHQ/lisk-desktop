@@ -11,8 +11,8 @@ describe('Utils: Search', () => {
   const accountsResponse = { address: '1337L', balance: 1110 };
   const delegatesResponse = {
     delegates: [
-      { username: '1337', rank: 18, address: '123456' },
       { username: '1337l', rank: 19, address: '123456' },
+      { username: '1337', rank: 18, address: '123456' },
     ],
   };
   const delegatesUrlParams = {

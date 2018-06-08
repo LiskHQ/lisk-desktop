@@ -2,6 +2,16 @@ import { getAccount, transaction } from './account';
 import { listDelegates } from './delegate';
 import regex from './../../utils/regex';
 
+const orderDelegatesByMatch = (searchTerm, delegates) => delegates.sort((first, second) => {
+  const regEx = new RegExp(`^${searchTerm}`, 'g');
+  if (first.username.match(regEx)) {
+    return -1;
+  } else if (second.username.match(regEx)) {
+    return 1;
+  }
+  return 0;
+});
+
 /* eslint-disable prefer-promise-reject-errors */
 const searchAddresses = ({ activePeer, searchTerm }) => new Promise((resolve, reject) =>
   getAccount(activePeer, searchTerm)
@@ -12,7 +22,7 @@ const searchDelegates = ({ activePeer, searchTerm }) => new Promise((resolve, re
   listDelegates(activePeer, {
     q: searchTerm,
     orderBy: 'username:asc',
-  }).then(response => resolve({ delegates: response.delegates }))
+  }).then(response => resolve({ delegates: orderDelegatesByMatch(searchTerm, response.delegates) }))
     .catch(() => reject({ delegates: [] })));
 
 const searchTransactions = ({ activePeer, searchTerm }) => new Promise((resolve, reject) =>
