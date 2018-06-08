@@ -24,7 +24,8 @@ const searchDelegates = ({ activePeer, searchTerm }) => new Promise((resolve, re
   listDelegates(activePeer, {
     q: searchTerm,
     orderBy: 'username:asc',
-  }).then(response => resolve({ delegates: orderDelegatesByMatch(searchTerm, response.delegates) }))
+  }).then(response =>
+    resolve({ delegates: orderDelegatesByMatch(searchTerm, response.delegates).slice(0, 4) }))
     .catch(() => reject({ delegates: [] })));
 
 const searchTransactions = ({ activePeer, searchTerm }) => new Promise((resolve, reject) =>

@@ -125,6 +125,7 @@ class AutoSuggest extends React.Component {
   }
 
   resetSearch() {
+    this.lastSearch = null;
     this.setState({ value: '' });
     this.closeDropdown();
   }
