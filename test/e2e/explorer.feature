@@ -8,6 +8,7 @@ Feature: Explorer page
     And I wait 2 seconds
     Then I should see text "No activity yet" in "empty message" element
     When I clear "search bar input" field
+    And I wait 2 seconds
     And I fill in "15610359283786884938L" to "search bar input" field
     When I click "search bar button"
     Then I should see 25 rows

@@ -1,72 +1,43 @@
-import { expect } from 'chai';
-import sinon from 'sinon';
-import { mount } from 'enzyme';
 import React from 'react';
-import PropTypes from 'prop-types';
+import { expect } from 'chai';
+import { spy } from 'sinon';
+import configureMockStore from 'redux-mock-store';
+import ConverterHOC from './index';
+import { mountWithContext } from './../../../test/utils/mountHelpers';
+import * as settingsActions from '../../actions/settings';
 
-import liskServiceApi from '../../utils/api/liskService';
-import i18n from '../../i18n';
-import Converter from './index';
-
-describe('Converter', () => {
-  let explorereApiMock;
+describe('ConverterHOC', () => {
   let wrapper;
-
+  const peers = {
+    data: {},
+    status: true,
+  };
+  const account = {};
+  const transactions = { pending: [] };
   beforeEach(() => {
-    explorereApiMock = sinon.stub(liskServiceApi, 'getPriceTicker').returnsPromise();
-  });
-
-  afterEach(() => {
-    explorereApiMock.restore();
-  });
-
-  it('shold render Converter component', () => {
+    const store = configureMockStore([])({
+      peers,
+      account,
+      transactions,
+      settings: { currency: 'USD' },
+      settingsUpdated: () => {},
+    });
     const props = {
       t: () => {},
+      store,
     };
-    wrapper = mount(<Converter {...props} />, {
-      context: { i18n },
-      childContextTypes: {
-        i18n: PropTypes.object.isRequired,
-      },
-    });
-    expect(wrapper.find('Converter')).to.have.present();
+
+    wrapper = mountWithContext(<ConverterHOC {...props} />, { storeState: store });
   });
 
-  it('should change active price', () => {
-    const props = {
-      t: () => {},
-      value: 0,
-      error: false,
-    };
-    wrapper = mount(<Converter {...props} />, {
-      context: { i18n },
-      childContextTypes: {
-        i18n: PropTypes.object.isRequired,
-      },
-    });
-    expect(wrapper.state('currencies')[0]).to.have.equal('USD');
-    wrapper.find('.converted-price').at(2).simulate('click');
-    expect(wrapper.state('currencies')[0]).to.have.equal('EUR');
+  it('should render Send', () => {
+    expect(wrapper.find('Converter')).to.have.lengthOf(1);
   });
 
-  it('should convert price to USD', () => {
-    const props = {
-      t: () => {},
-      value: 2,
-      error: false,
-    };
-    wrapper = mount(<Converter {...props} />, {
-      context: { i18n },
-      childContextTypes: {
-        i18n: PropTypes.object.isRequired,
-      },
-    });
-
-    explorereApiMock.resolves({ LSK: { USD: 123, EUR: 12 } });
-    wrapper.update();
-    expect(wrapper.state('LSK')).to.have.deep.equal({ USD: 123, EUR: 12 });
-    expect(wrapper.find('.converted-price').at(0).text()).to.have.equal('~ 246.00');
+  it('should bind settingsUpdated action to SendWritable props.settingsUpdated', () => {
+    const actionsSpy = spy(settingsActions, 'settingsUpdated');
+    wrapper.find('Converter').props().settingsUpdated({ currency: 'EUR' });
+    expect(actionsSpy).to.be.calledWith({ currency: 'EUR' });
+    actionsSpy.restore();
   });
 });
-

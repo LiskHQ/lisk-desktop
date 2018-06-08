@@ -12,8 +12,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  settingsUpdated: data => dispatch(settingsUpdated(data)),
   accountUpdated: data => dispatch(accountUpdated(data)),
+  settingsUpdated: data => dispatch(settingsUpdated(data)),
 });
 
 export default connect(

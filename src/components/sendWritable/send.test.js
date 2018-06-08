@@ -18,6 +18,8 @@ describe('Send Writable Component', () => {
 
     const store = fakeStore({
       account,
+      settings: {},
+      settingsUpdated: () => {},
     });
 
     props = {

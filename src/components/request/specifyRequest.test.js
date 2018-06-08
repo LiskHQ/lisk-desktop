@@ -1,14 +1,24 @@
 import React from 'react';
 import { expect } from 'chai';
-import { mount } from 'enzyme';
 import { spy } from 'sinon';
+import { mountWithContext } from './../../../test/utils/mountHelpers';
 import SpecifyRequest from './specifyRequest';
 
 describe('Specify Request', () => {
   let wrapper;
   let props;
+  let storeState;
 
   beforeEach(() => {
+    storeState = {
+      settings: {},
+      settingsUpdated: () => {},
+    };
+
+    const context = {
+      storeState,
+    };
+
     props = {
       t: key => key,
       address: '234l',
@@ -16,7 +26,7 @@ describe('Specify Request', () => {
       prevStep: spy(),
     };
 
-    wrapper = mount(<SpecifyRequest {...props} />);
+    wrapper = mountWithContext(<SpecifyRequest {...props} />, context);
   });
 
   it('accepts valid amount', () => {
