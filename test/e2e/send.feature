@@ -17,6 +17,16 @@ Feature: Send dialog
     When I scroll to the bottom of "transaction results"
     Then I should see 50 rows
 
+  Scenario: should allow to send when using launch protocol
+    Given I'm logged in as "genesis"
+    When I go to "/wallet?recipient=4995063339468361088L&amount=5"
+    Then I should see "4995063339468361088L" in "recipient" field
+    And I should see "5" in "amount" field
+    When I click "send next button"
+    Then I click "send button"
+    And I wait 1 seconds
+    Then I should see text "Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain." in "result box message" element
+
   # pending because this test currently depends on the prior one
   # and is failing when running isolated
   @advanced @pending

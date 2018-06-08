@@ -19,3 +19,25 @@ It will open lisk app and select delegates automatically `thepool` and `4miners.
 :exclamation: Please keep in mind that We don't use `/main` route anymore but some websites still relay on an old url so We are allowing `/main` in this particular case `main/voting/vote`.
 
 ![Alt text](./assets/voting_protocol.png?raw=true "Lisk voting protocol")
+
+#### Network switcher protocol
+Opens the login page and enables the network switcher options.
+
+`lisk://add-account?showNetwork=true`
+
+![Alt text](./assets/network_switcher.png?raw=true "Lisk voting protocol")
+
+#### Send protocol
+Opens the wallet and prefills the send form with recipient and amount.
+
+`lisk://wallet?recipient=16313739661670634666L&amount=5`
+
+![Alt text](./assets/send.png?raw=true "Lisk voting protocol")
+
+#### Sign message protocol
+Opens the sign message form and prefills it with your message.
+
+`lisk://sign-message?message=my message`
+
+![Alt text](./assets/sign_message.png?raw=true "Lisk voting protocol")
+

@@ -2,6 +2,7 @@ import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../utils/loading';
 import { transactions, getAccount } from '../utils/api/account';
 import { getDelegate, getVoters, getVotes } from '../utils/api/delegate';
+import { searchAll } from '../utils/api/search';
 
 const searchDelegate = ({ activePeer, publicKey, address }) =>
   (dispatch) => {
@@ -96,4 +97,16 @@ export const searchMoreTransactions = ({
           type: actionTypes.searchMoreTransactions,
         });
       });
+  };
+
+export const searchSuggestions = ({ activePeer, searchTerm }) =>
+  (dispatch) => {
+    dispatch({
+      data: {},
+      type: actionTypes.searchClearSuggestions,
+    });
+    searchAll({ activePeer, searchTerm }).then(response => dispatch({
+      data: response,
+      type: actionTypes.searchSuggestions,
+    }));
   };
