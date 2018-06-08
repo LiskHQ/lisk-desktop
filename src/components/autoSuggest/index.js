@@ -165,6 +165,7 @@ class AutoSuggest extends React.Component {
           innerRef={(el) => { this.inputRef = el; }}
           className={`${styles.input} autosuggest-input`}
           theme={styles}
+          onBlur={this.closeDropdown.bind(this)}
           onKeyDown={this.handleKey.bind(this)}
           onChange={this.search.bind(this)}
           autoComplete='off'>
@@ -175,8 +176,7 @@ class AutoSuggest extends React.Component {
                 onClick={() => { visitAndSaveSearch(this.state.value, history); }} />
           }
         </Input>
-        <div className={`${styles.autoSuggest} ${this.state.show ? styles.show : ''} autosuggest-dropdown`}
-          onMouseLeave={this.closeDropdown.bind(this)}>
+        <div className={`${styles.autoSuggest} ${this.state.show ? styles.show : ''} autosuggest-dropdown`}>
           <ResultsList
             key='delegates'
             results={this.getDelegatesResults()}
@@ -184,7 +184,7 @@ class AutoSuggest extends React.Component {
               titleLeft: t('Delegate'),
               titleRight: t('Rank'),
             }}
-            onClick={this.onResultClick.bind(this)}
+            onMouseDown={this.onResultClick.bind(this)}
             setSelectedRow={this.setSelectedRow.bind(this)}
           />
           <ResultsList
@@ -194,7 +194,7 @@ class AutoSuggest extends React.Component {
               titleLeft: t('Address'),
               titleRight: t('Balance'),
             }}
-            onClick={this.onResultClick.bind(this)}
+            onMouseDown={this.onResultClick.bind(this)}
             setSelectedRow={this.setSelectedRow.bind(this)}
           />
           <ResultsList
@@ -204,7 +204,7 @@ class AutoSuggest extends React.Component {
               titleLeft: t('Transaction'),
               titleRight: t('Height'),
             }}
-            onClick={this.onResultClick.bind(this)}
+            onMouseDown={this.onResultClick.bind(this)}
             setSelectedRow={this.setSelectedRow.bind(this)}
           />
         </div>

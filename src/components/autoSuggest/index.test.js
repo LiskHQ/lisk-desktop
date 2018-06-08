@@ -71,26 +71,26 @@ describe('AutoSuggest', () => {
     autosuggestDropdown = wrapper.find('.autosuggest-dropdown').first();
     expect(autosuggestDropdown).to.have.className(styles.show);
 
-    autosuggestDropdown.simulate('mouseleave');
+    autosuggestInput.simulate('blur');
     wrapper.update();
     autosuggestDropdown = wrapper.find('.autosuggest-dropdown').first();
     expect(autosuggestDropdown).not.to.have.className(styles.show);
   });
 
   it('should allow to click on {addresss} suggestion and redirect to its "explorer/accounts" page', () => {
-    wrapper.find('.addresses-result').first().simulate('click');
+    wrapper.find('.addresses-result').first().simulate('mousedown');
     expect(props.history.push).to.have.been
       .calledWith(`${routes.accounts.pathPrefix}${routes.accounts.path}/${results.addresses[0].address}`);
   });
 
   it('should allow to click on {delegate} suggestion and redirect to its "explorer/accounts" page', () => {
-    wrapper.find('.delegates-result').first().simulate('click');
+    wrapper.find('.delegates-result').first().simulate('mousedown');
     expect(props.history.push).to.have.been
       .calledWith(`${routes.accounts.pathPrefix}${routes.accounts.path}/${results.delegates[0].address}`);
   });
 
   it('should allow to click on {transaction} suggestion and redirect to its "explorer/transactions" page', () => {
-    wrapper.find('.transactions-result').first().simulate('click');
+    wrapper.find('.transactions-result').first().simulate('mousedown');
     expect(props.history.push).to.have.been
       .calledWith(`${routes.transactions.pathPrefix}${routes.transactions.path}/${results.transactions[0].id}`);
   });
