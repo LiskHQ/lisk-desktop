@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { spy, stub, useFakeTimers, match } from 'sinon';
 import { accountUpdated } from '../../actions/account';
+import * as transactionsActions from '../../actions/transactions';
 import accountConfig from '../../constants/account';
 import { activePeerUpdate } from '../../actions/peers';
 import * as votingActions from '../../actions/voting';
@@ -19,6 +20,7 @@ describe('Account middleware', () => {
   let state;
   let stubGetAccount;
   let stubTransactions;
+  let transactionsActionsStub;
   const { passphrase } = accounts.genesis;
 
   const transactions = { transactions: [{ senderId: 'sample_address', receiverId: 'some_address' }] };
@@ -83,10 +85,12 @@ describe('Account middleware', () => {
 
     next = spy();
     stubGetAccount = stub(accountApi, 'getAccount').returnsPromise();
+    transactionsActionsStub = spy(transactionsActions, 'transactionsUpdated');
     stubTransactions = stub(transactionsApi, 'getTransactions').returnsPromise().resolves(true);
   });
 
   afterEach(() => {
+    transactionsActionsStub.restore();
     stubGetAccount.restore();
     stubTransactions.restore();
     clock.restore();
@@ -119,20 +123,17 @@ describe('Account middleware', () => {
 
   it(`should call transactions API methods on ${actionTypes.newBlockCreated} action if account.balance changes`, () => {
     stubGetAccount.resolves({ balance: 10e8 });
-
     middleware(store)(next)(newBlockCreated);
-
     expect(stubGetAccount).to.have.been.calledWith();
-    expect(stubTransactions).to.have.been.calledWith();
+    expect(transactionsActionsStub).to.have.been.calledWith();
   });
 
   it(`should call transactions API methods on ${actionTypes.newBlockCreated} action if account.balance changes and the window is in blur`, () => {
     stubGetAccount.resolves({ balance: 10e8 });
 
     middleware(store)(next)(inactiveNewBlockCreated);
-
     expect(stubGetAccount).to.have.been.calledWith();
-    expect(stubTransactions).to.have.been.calledWith();
+    expect(transactionsActionsStub).to.have.been.calledWith();
   });
 
   it(`should call transactions API methods on ${actionTypes.newBlockCreated} action if account.balance changes the user has no transactions yet`, () => {
@@ -143,22 +144,21 @@ describe('Account middleware', () => {
 
     expect(stubGetAccount).to.have.been.calledWith();
     // eslint-disable-next-line no-unused-expressions
-    expect(stubTransactions).to.have.been.calledOnce;
+    expect(transactionsActionsStub).to.have.been.calledOnce;
   });
 
   it(`should call transactions API methods on ${actionTypes.newBlockCreated} action if the window is in focus and there are recent transactions`, () => {
     stubGetAccount.resolves({ balance: 0 });
 
     middleware(store)(next)(newBlockCreated);
-
     expect(stubGetAccount).to.have.been.calledWith();
-    expect(stubTransactions).to.have.been.calledWith(match({ address: 'test_address' }));
+    expect(transactionsActionsStub).to.have.been.calledWith(match({ address: 'test_address' }));
   });
 
   it(`should call transactions API methods on ${actionTypes.newBlockCreated} action if block.transactions contains null element`, () => {
     middleware(store)(next)(blockWithNullTransaction);
 
-    expect(store.dispatch).to.have.been.calledWith(match.has('type', actionTypes.transactionsUpdated));
+    expect(transactionsActionsStub).to.have.been.calledWith();
   });
 
   it(`should call API methods on ${actionTypes.newBlockCreated} action if state.transaction.transactions.confired does not contain recent transaction. Case with transactions address`, () => {
@@ -175,7 +175,7 @@ describe('Account middleware', () => {
 
     middleware(store)(next)(newBlockCreated);
     expect(stubGetAccount).to.have.been.calledWith({});
-    expect(store.dispatch).to.have.been.calledWith(match.has('type', actionTypes.transactionsUpdated));
+    expect(transactionsActionsStub).to.have.been.calledWith();
   });
 
   it(`should call API methods on ${actionTypes.newBlockCreated} action if state.transaction.transactions.confired does not contain recent transaction. Case with confirmed address`, () => {
@@ -193,26 +193,14 @@ describe('Account middleware', () => {
 
     middleware(store)(next)(newBlockCreated);
     expect(stubGetAccount).to.have.been.calledWith({});
-    expect(store.dispatch).to.have.been.calledWith(match.has('type', actionTypes.transactionsUpdated));
-  });
-
-  it(`should fetch delegate info on ${actionTypes.newBlockCreated} action if account.balance changes and account.isDelegate`, () => {
-    const delegateApiMock = stub(delegateApi, 'getDelegate').returnsPromise().resolves({ success: true, delegate: {} });
-    stubGetAccount.resolves({ balance: 10e8 });
-    state.account.isDelegate = true;
-    store.getState = () => (state);
-
-    middleware(store)(next)(newBlockCreated);
-    expect(store.dispatch).to.have.been.calledWith();
-
-    delegateApiMock.restore();
+    expect(transactionsActionsStub).to.have.been.calledWith();
   });
 
   it(`should fetch delegate info on ${actionTypes.transactionsUpdated} action if action.data.confirmed contains delegateRegistration transactions`, () => {
     const delegateApiMock = stub(delegateApi, 'getDelegate').returnsPromise().resolves({ success: true, delegate: {} });
 
     middleware(store)(next)(transactionsUpdatedAction);
-    expect(store.dispatch).to.have.been.calledWith();
+    expect(delegateApiMock).to.have.been.calledWith();
 
     delegateApiMock.restore();
   });
