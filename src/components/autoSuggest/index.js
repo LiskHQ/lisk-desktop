@@ -26,15 +26,7 @@ class AutoSuggest extends React.Component {
     this.selectedRow = null;
     const resultsLength = ['delegates', 'addresses', 'transactions'].reduce((total, resultKey) =>
       total + nextProps.results[resultKey].length);
-    this.setState({ resultsLength });
-    /* istanbul ignore next */
-    if (nextProps.results.delegates.length > 0
-      && nextProps.results.delegates[0].username.match(this.lastSearch)) {
-      this.setState({
-        selectedIdx: 0,
-        value: nextProps.results.delegates[0].username,
-      });
-    }
+    this.setState({ resultsLength, selectedIdx: 0 });
   }
 
   onResultClick(id, type) {
@@ -67,11 +59,7 @@ class AutoSuggest extends React.Component {
 
   search(searchTerm) {
     this.setState({ value: searchTerm });
-    const regEx = new RegExp(`^${searchTerm.replace(this.delegateRegEx, '')}`, 'g');
-    // don't trigger search if user is just removing chars from last search
-    if (searchTerm.length < 3 ||
-      (this.lastSearch && this.lastSearch.match(regEx))) {
-      this.setState({ show: false });
+    if (searchTerm.length < 3) {
       return;
     }
 
