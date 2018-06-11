@@ -33,6 +33,21 @@
   display: block;
 }
 
+.placeholder {
+  background-color: transparent;
+  line-height: var(--search-box-line-height);
+  font-size: var(--search-box-font-size);
+  color: var(--color-grayscale-medium);
+  outline: none;
+  border: none;
+  position: absolute;
+  left: 24px;
+  z-index: var(--searchbar-placeholder-index);
+  pointer-events: none;
+  opacity: 0.5;
+  padding: 0;
+}
+
 .input {
   padding: 0;
   z-index: var(--searchbar-input-index);

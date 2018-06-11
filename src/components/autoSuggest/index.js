@@ -19,6 +19,7 @@ class AutoSuggest extends React.Component {
       value: '',
       selectedIdx: 0,
       resultsLength: 0,
+      placeholder: '',
     };
   }
 
@@ -26,7 +27,11 @@ class AutoSuggest extends React.Component {
     this.selectedRow = null;
     const resultsLength = ['delegates', 'addresses', 'transactions'].reduce((total, resultKey) =>
       total + nextProps.results[resultKey].length, 0);
-    this.setState({ resultsLength, selectedIdx: 0 });
+    let placeholder = '';
+    if (nextProps.results.delegates.length > 0) {
+      placeholder = this.getValueFromCurrentIdx(0, nextProps.results);
+    }
+    this.setState({ resultsLength, selectedIdx: 0, placeholder });
   }
 
   onResultClick(id, type) {
@@ -62,7 +67,7 @@ class AutoSuggest extends React.Component {
   }
 
   search(searchTerm) {
-    this.setState({ value: searchTerm });
+    this.setState({ value: searchTerm, placeholder: '' });
     if (searchTerm.length < 3) {
       return;
     }
@@ -83,14 +88,38 @@ class AutoSuggest extends React.Component {
   handleArrowDown() {
     let currentIdx = this.state.selectedIdx;
     currentIdx = (currentIdx === this.resultsLength) ? this.resultsLength : currentIdx += 1;
-    this.setState({ selectedIdx: currentIdx });
+    const placeholder = this.getValueFromCurrentIdx(currentIdx, this.props.results);
+    this.setState({ selectedIdx: currentIdx, placeholder });
   }
 
   handleArrowUp() {
     let currentIdx = this.state.selectedIdx;
     currentIdx = (currentIdx === 0) ? 0 : currentIdx -= 1;
-    this.setState({ selectedIdx: currentIdx });
+    const placeholder = this.getValueFromCurrentIdx(currentIdx, this.props.results);
+    this.setState({ selectedIdx: currentIdx, placeholder });
   }
+
+  /* eslint-disable class-methods-use-this */
+  getValueFromCurrentIdx(index, results) {
+    let targetVal = '';
+    if (index < results.delegates.length) {
+      targetVal = results.delegates[index].username;
+    } else if (index <
+      results.delegates.length + results.addresses.length) {
+      const targetIdx = index - results.delegates.length;
+      targetVal = results.addresses[targetIdx].address;
+    } else if (index <
+      results.delegates.length +
+      results.addresses.length +
+      results.transactions.length) {
+      const targetIdx = index -
+        results.delegates.length -
+        results.addresses.length;
+      targetVal = results.transactions[targetIdx].id;
+    }
+    return targetVal;
+  }
+  /* eslint-enable class-methods-use-this */
 
   handleSubmit() {
     if (this.state.resultsLength > 0) {
@@ -126,7 +155,8 @@ class AutoSuggest extends React.Component {
 
   resetSearch() {
     this.lastSearch = null;
-    this.setState({ value: '' });
+    this.setState({ value: '', placeholder: '' });
+    this.props.searchClearSuggestions();
     this.closeDropdown();
   }
 
@@ -171,10 +201,7 @@ class AutoSuggest extends React.Component {
 
     return (
       <div className={styles.wrapper}>
-      <input className={styles.placeholder} type='text' name='autosuggest-placeholder'>
-        <span className={`${styles.placeholder} ${styles.matched}`}></span>
-        <span className={`${styles.placeholder} ${styles.unmatched}`}></span>
-      </input>
+        <input value={this.state.placeholder} className={styles.placeholder} type='text' name='autosuggest-placeholder' />
         <Input type='text' placeholder={t('Search for delegate, Lisk ID, transaction ID')} name='searchBarInput'
           value={this.state.value}
           innerRef={(el) => { this.inputRef = el; }}
