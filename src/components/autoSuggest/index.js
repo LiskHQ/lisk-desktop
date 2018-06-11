@@ -171,6 +171,10 @@ class AutoSuggest extends React.Component {
 
     return (
       <div className={styles.wrapper}>
+      <input className={styles.placeholder} type='text' name='autosuggest-placeholder'>
+        <span className={`${styles.placeholder} ${styles.matched}`}></span>
+        <span className={`${styles.placeholder} ${styles.unmatched}`}></span>
+      </input>
         <Input type='text' placeholder={t('Search for delegate, Lisk ID, transaction ID')} name='searchBarInput'
           value={this.state.value}
           innerRef={(el) => { this.inputRef = el; }}
