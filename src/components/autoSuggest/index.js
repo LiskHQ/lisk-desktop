@@ -104,9 +104,11 @@ class AutoSuggest extends React.Component {
     switch (event.keyCode) {
       case keyCodes.arrowDown:
         this.handleArrowDown();
+        event.preventDefault();
         break;
       case keyCodes.arrowUp:
         this.handleArrowUp();
+        event.preventDefault();
         break;
       case keyCodes.escape:
         this.closeDropdown();
@@ -171,7 +173,7 @@ class AutoSuggest extends React.Component {
 
     return (
       <div className={styles.wrapper}>
-        <Input type='text' placeholder={t('Search delegates, addresses')} name='searchBarInput'
+        <Input type='text' placeholder={t('Search for delegates, LiskID, transactions')} name='searchBarInput'
           value={this.state.value || value}
           innerRef={(el) => { this.inputRef = el; }}
           className={`${styles.input} autosuggest-input`}
