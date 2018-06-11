@@ -12,10 +12,11 @@ Feature: Explorer page
     And I wait 2 seconds
     And I click "addresses result"
     And I wait 5 seconds
-    When I clear "search bar input" field
+    When I clear "autosuggest input" field
     And I wait 2 seconds
-    And I fill in "15610359283786884938L" to "search bar input" field
-    When I click "search bar button"
+    And I fill in "15610359283786884938L" to "autosuggest input" field
+    And I wait 2 seconds
+    And I click "addresses result"
     Then I should see 25 rows
     When I click "send to address"
     And I wait 1 seconds
