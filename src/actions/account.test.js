@@ -12,6 +12,7 @@ import {
   loadAccount,
   accountDataUpdated,
   updateTransactionsIfNeeded,
+  updateDelegateAccount,
 } from './account';
 import { errorAlertDialogDisplayed } from './dialog';
 import { delegateRegisteredFailure } from './delegate';
@@ -375,6 +376,31 @@ describe('actions: account', () => {
 
       updateTransactionsIfNeeded(data, false)(dispatch);
       expect(transactionsActionsStub).to.have.been.calledWith();
+    });
+  });
+
+  describe('updateDelegateAccount', () => {
+    const dispatch = spy();
+
+    beforeEach(() => {
+      stub(delegateApi, 'getDelegate').returnsPromise();
+    });
+
+    afterEach(() => {
+      delegateApi.getDelegate.restore();
+    });
+
+    it('should fetch delegate and update account', () => {
+      delegateApi.getDelegate.resolves({ delegate: 'delegate data' });
+      const data = {
+        activePeer: {},
+        publicKey: accounts.genesis.publicKey,
+      };
+
+      updateDelegateAccount(data)(dispatch);
+
+      const accountUpdatedAction = accountUpdated(Object.assign({}, { delegate: 'delegate data', isDelegate: true }));
+      expect(dispatch).to.have.been.calledWith(accountUpdatedAction);
     });
   });
 });

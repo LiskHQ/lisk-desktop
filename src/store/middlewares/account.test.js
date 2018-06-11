@@ -8,7 +8,6 @@ import * as accountApi from '../../utils/api/account';
 import * as transactionsApi from '../../utils/api/transactions';
 import accounts from '../../../test/constants/accounts';
 import actionTypes from '../../constants/actions';
-import * as delegateApi from '../../utils/api/delegate';
 import middleware from './account';
 import transactionTypes from '../../constants/transactionTypes';
 
@@ -68,12 +67,14 @@ describe('Account middleware', () => {
 
     next = spy();
     spy(accountActions, 'updateTransactionsIfNeeded');
+    spy(accountActions, 'updateDelegateAccount');
     stubGetAccount = stub(accountApi, 'getAccount').returnsPromise();
     transactionsActionsStub = spy(transactionsActions, 'transactionsUpdated');
     stubTransactions = stub(transactionsApi, 'getTransactions').returnsPromise().resolves(true);
   });
 
   afterEach(() => {
+    accountActions.updateDelegateAccount.restore();
     accountActions.updateTransactionsIfNeeded.restore();
     transactionsActionsStub.restore();
     stubGetAccount.restore();
@@ -138,22 +139,15 @@ describe('Account middleware', () => {
   });
 
   it(`should fetch delegate info on ${actionTypes.transactionsUpdated} action if action.data.confirmed contains delegateRegistration transactions`, () => {
-    const delegateApiMock = stub(delegateApi, 'getDelegate').returnsPromise().resolves({ success: true, delegate: {} });
-
     middleware(store)(next)(transactionsUpdatedAction);
-    expect(delegateApiMock).to.have.been.calledWith();
-
-    delegateApiMock.restore();
+    expect(accountActions.updateDelegateAccount).to.have.been.calledWith();
   });
 
   it(`should not fetch delegate info on ${actionTypes.transactionsUpdated} action if action.data.confirmed does not contain delegateRegistration transactions`, () => {
-    const delegateApiMock = stub(delegateApi, 'getDelegate').returnsPromise().resolves({ success: true, delegate: {} });
     transactionsUpdatedAction.data.confirmed[0].type = transactionTypes.send;
 
     middleware(store)(next)(transactionsUpdatedAction);
     expect(store.dispatch).to.not.have.been.calledWith();
-
-    delegateApiMock.restore();
   });
 
   it(`should dispatch ${actionTypes.votesFetched} action on ${actionTypes.transactionsUpdated} action if action.data.confirmed contains delegateRegistration transactions`, () => {

@@ -1,8 +1,11 @@
-import { accountUpdated, accountDataUpdated, updateTransactionsIfNeeded } from '../../actions/account';
+import { accountUpdated,
+  accountDataUpdated,
+  updateTransactionsIfNeeded,
+  updateDelegateAccount,
+} from '../../actions/account';
 import { votesFetched } from '../../actions/voting';
 import actionTypes from '../../constants/actions';
 import accountConfig from '../../constants/account';
-import { getDelegate } from '../../utils/api/delegate';
 import transactionTypes from '../../constants/transactionTypes';
 
 const { lockDuration } = accountConfig;
@@ -34,13 +37,10 @@ const delegateRegistration = (store, action) => {
   const state = store.getState();
 
   if (delegateRegistrationTx) {
-    getDelegate(state.peers.data, { publicKey: state.account.publicKey })
-      .then((delegateData) => {
-        store.dispatch(accountUpdated(Object.assign(
-          {},
-          { delegate: delegateData.delegate, isDelegate: true },
-        )));
-      });
+    store.dispatch(updateDelegateAccount({
+      activePeer: state.peers.data,
+      publicKey: state.account.publicKey,
+    }));
   }
 };
 
