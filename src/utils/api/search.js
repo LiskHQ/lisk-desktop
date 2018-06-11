@@ -2,9 +2,9 @@ import { getAccount, transaction } from './account';
 import { listDelegates } from './delegate';
 import regex from './../../utils/regex';
 
-const orderDelegatesByMatch = (searchTerm, delegates) => delegates.sort((first, second) => {
+const orderDelegatesByMatch = (searchTerm, delegates) => [...delegates].sort((first, second) => {
   const regEx = new RegExp(`^${searchTerm}`, 'g');
-  /* istanbul ignore else */
+  /* istanbul ignore next */
   if (first.username.match(regEx) && second.username.match(regEx)) {
     return first.username < second.username ? -1 : 1;
   } else if (!first.username.match(regEx)) {
@@ -12,6 +12,7 @@ const orderDelegatesByMatch = (searchTerm, delegates) => delegates.sort((first, 
   } else if (!second.username.match(regEx)) {
     return -1;
   }
+  /* istanbul ignore next */
   return first.username < second.username ? -1 : 1;
 });
 
@@ -25,8 +26,13 @@ const searchDelegates = ({ activePeer, searchTerm }) => new Promise((resolve, re
   listDelegates(activePeer, {
     q: searchTerm,
     orderBy: 'username:asc',
-  }).then(response =>
-    resolve({ delegates: orderDelegatesByMatch(searchTerm, response.delegates).slice(0, 4) }))
+  }).then((response) => {
+    let delegatesSorted = orderDelegatesByMatch(searchTerm, response.delegates);
+    if (delegatesSorted.length > 4) {
+      delegatesSorted = delegatesSorted.slice(0, 4);
+    }
+    resolve({ delegates: delegatesSorted });
+  })
     .catch(() => reject({ delegates: [] })));
 
 const searchTransactions = ({ activePeer, searchTerm }) => new Promise((resolve, reject) =>

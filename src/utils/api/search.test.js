@@ -13,6 +13,7 @@ describe('Utils: Search', () => {
   const delegatesResponse = {
     delegates: [
       { username: '_1337l', rank: 19, address: '123456' },
+      { username: '__1337ll', rank: 19, address: '123456' },
       { username: '1337', rank: 18, address: '123456' },
       { username: '1337l', rank: 18, address: '123456' },
       { username: '1337Lolo', rank: 18, address: '123456' },
@@ -23,7 +24,7 @@ describe('Utils: Search', () => {
       { username: '1337', rank: 18, address: '123456' },
       { username: '1337Lolo', rank: 18, address: '123456' },
       { username: '1337l', rank: 18, address: '123456' },
-      { username: '_1337l', rank: 19, address: '123456' },
+      { username: '__1337ll', rank: 19, address: '123456' },
     ],
   };
 
@@ -32,7 +33,7 @@ describe('Utils: Search', () => {
       { username: '1337Lolo', rank: 18, address: '123456' },
       { username: '1337l', rank: 18, address: '123456' },
       { username: '1337', rank: 18, address: '123456' },
-      { username: '_1337l', rank: 19, address: '123456' },
+      { username: '__1337ll', rank: 19, address: '123456' },
     ],
   };
   const delegatesUrlParams = {
