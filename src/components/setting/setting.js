@@ -111,7 +111,7 @@ class Setting extends React.Component {
         </div>
         <h4>{t('Advanced features')}</h4>
         <div className={styles.item}>
-          <label>{t('Switch networks (main-/Testnet, Custom)')}</label>
+          <label>{t('Switch networks (Main-/Testnet, Custom)')}</label>
           <Checkbox
             theme={styles}
             className={`${styles.smallSlider} showNetwork`}

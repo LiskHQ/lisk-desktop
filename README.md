@@ -20,7 +20,7 @@ npm run dev
 
 Open http://localhost:8080
 
-For ease of development, you can pass key-value pair as query string to see network options in login page:
+For ease of development, you can set the following query string to see network options in login page:
 ```
 http://localhost:8080/#/?showNetwork=true
 ```
