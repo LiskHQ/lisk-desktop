@@ -52,8 +52,8 @@ defineSupportCode(({ Before, After, registerListener }) => {
       localStorage.setItem('settings', '{ "showNetwork": true }');
     }
 
-    if (scenario.scenario.feature.name !== 'Onboarding') {
-      localStorage.setItem('onboarding', 'false');
+    if (scenario.scenario.feature.name === 'Onboarding') {
+      localStorage.setItem('settings', '{ "showNetwork": true, "onBoarding": true }');
     }
     browser.get(browser.params.baseURL).then(callback);
   });

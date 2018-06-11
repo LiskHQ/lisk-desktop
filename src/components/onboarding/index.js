@@ -122,7 +122,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   isAuthenticated: !!state.account.publicKey,
   showDelegates: state.settings.advancedMode,
-  start: state.settings.onBoarding,
+  start: Object.prototype.hasOwnProperty.call(state.settings, 'onBoarding') && state.settings.onBoarding,
 });
 
 export { Onboarding };
