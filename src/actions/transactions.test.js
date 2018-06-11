@@ -32,7 +32,7 @@ describe('actions: transactions', () => {
       transactionsApiMock.restore();
     });
 
-    it('should dispatch transactionsLoaded action if resolved', () => {
+    it('should dispatch transactionsUpdated action if resolved', () => {
       transactionsApiMock.returnsPromise().resolves({ transactions: [], count: '0' });
       const expectedAction = {
         count: 0,

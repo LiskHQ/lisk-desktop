@@ -72,9 +72,13 @@ export const loadTransactions = ({ activePeer, publicKey, address }) =>
       });
   };
 
-export const transactionsRequested = ({ activePeer, address, limit, offset, filter }) =>
+export const transactionsRequested = ({
+  activePeer, address, limit, offset, filter,
+}) =>
   (dispatch) => {
-    getTransactions({ activePeer, address, limit, offset, filter })
+    getTransactions({
+      activePeer, address, limit, offset, filter,
+    })
       .then((response) => {
         dispatch({
           data: {
@@ -144,9 +148,13 @@ export const loadTransaction = ({ activePeer, id }) =>
       });
   };
 
-export const transactionsUpdated = ({ activePeer, address, limit, filter, pendingTransactions }) =>
+export const transactionsUpdated = ({
+  activePeer, address, limit, filter, pendingTransactions,
+}) =>
   (dispatch) => {
-    getTransactions({ activePeer, address, limit, filter })
+    getTransactions({
+      activePeer, address, limit, filter,
+    })
       .then((response) => {
         dispatch({
           data: {
@@ -165,7 +173,9 @@ export const transactionsUpdated = ({ activePeer, address, limit, filter, pendin
       });
   };
 
-export const sent = ({ activePeer, account, recipientId, amount, passphrase, secondPassphrase }) =>
+export const sent = ({
+  activePeer, account, recipientId, amount, passphrase, secondPassphrase,
+}) =>
   (dispatch) => {
     send(activePeer, recipientId, toRawLsk(amount), passphrase, secondPassphrase)
       .then((data) => {

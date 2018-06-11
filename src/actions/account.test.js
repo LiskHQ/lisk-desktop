@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import sinon from 'sinon';
+import { spy, stub } from 'sinon';
 import actionTypes from '../constants/actions';
 import {
   accountUpdated,
@@ -9,6 +9,9 @@ import {
   removePassphrase,
   passphraseUsed,
   loadDelegate,
+  loadAccount,
+  accountDataUpdated,
+  updateTransactionsIfNeeded,
 } from './account';
 import { errorAlertDialogDisplayed } from './dialog';
 import { delegateRegisteredFailure } from './delegate';
@@ -18,6 +21,8 @@ import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
 import networks from '../constants/networks';
 import accounts from '../../test/constants/accounts';
+import * as peersActions from './peers';
+import * as transactionsActions from './transactions';
 
 describe('actions: account', () => {
   describe('accountUpdated', () => {
@@ -58,8 +63,8 @@ describe('actions: account', () => {
     let dispatch;
 
     beforeEach(() => {
-      accountApiMock = sinon.stub(accountApi, 'setSecondPassphrase');
-      dispatch = sinon.spy();
+      accountApiMock = stub(accountApi, 'setSecondPassphrase');
+      dispatch = spy();
     });
 
     afterEach(() => {
@@ -119,8 +124,8 @@ describe('actions: account', () => {
     let dispatch;
 
     beforeEach(() => {
-      delegateApiMock = sinon.stub(delegateApi, 'registerDelegate');
-      dispatch = sinon.spy();
+      delegateApiMock = stub(delegateApi, 'registerDelegate');
+      dispatch = spy();
     });
 
     afterEach(() => {
@@ -175,8 +180,8 @@ describe('actions: account', () => {
     const actionFunction = loadDelegate(data);
 
     beforeEach(() => {
-      delegateApiMock = sinon.stub(delegateApi, 'getDelegate');
-      dispatch = sinon.spy();
+      delegateApiMock = stub(delegateApi, 'getDelegate');
+      dispatch = spy();
     });
 
     afterEach(() => {
@@ -210,6 +215,166 @@ describe('actions: account', () => {
       };
 
       expect(removePassphrase(data)).to.be.deep.equal(expectedAction);
+    });
+  });
+
+  describe('loadAccount', () => {
+    let getAccountStub;
+    let transactionsActionsStub;
+
+    const dispatch = spy();
+
+    beforeEach(() => {
+      getAccountStub = stub(accountApi, 'getAccount').returnsPromise();
+      transactionsActionsStub = spy(transactionsActions, 'loadTransactionsFinish');
+    });
+
+    afterEach(() => {
+      getAccountStub.restore();
+      transactionsActionsStub.restore();
+    });
+
+    it('should finish transactions load and load delegate if not own account', () => {
+      getAccountStub.resolves({
+        balance: 10e8,
+        publicKey: accounts.genesis.publicKey,
+        isDelegate: false,
+      });
+
+      const data = {
+        activePeer: {},
+        address: accounts.genesis.address,
+        transactionsResponse: { count: 0, transactions: [] },
+        isSameAccount: false,
+      };
+
+      loadAccount(data)(dispatch);
+      expect(transactionsActionsStub).to.have.been.calledWith({
+        confirmed: [],
+        count: 0,
+        balance: 10e8,
+        address: accounts.genesis.address,
+      });
+    });
+
+    it('should finish transactions load and should not load delegate if own account', () => {
+      getAccountStub.resolves({
+        balance: 10e8,
+        publicKey: accounts.genesis.publicKey,
+        isDelegate: true,
+        delegate: 'delegate information',
+      });
+
+      const data = {
+        activePeer: {},
+        address: accounts.genesis.address,
+        transactionsResponse: { count: 0, transactions: [] },
+        isSameAccount: true,
+      };
+
+      loadAccount(data)(dispatch);
+      expect(transactionsActionsStub).to.have.been.calledWith({
+        confirmed: [],
+        count: 0,
+        balance: 10e8,
+        address: accounts.genesis.address,
+        delegate: 'delegate information',
+      });
+    });
+  });
+
+  describe('accountDataUpdated', () => {
+    let peersActionsStub;
+    let getAccountStub;
+    let transactionsActionsStub;
+
+    const dispatch = spy();
+
+    beforeEach(() => {
+      peersActionsStub = spy(peersActions, 'activePeerUpdate');
+      getAccountStub = stub(accountApi, 'getAccount').returnsPromise();
+      transactionsActionsStub = spy(transactionsActions, 'transactionsUpdated');
+    });
+
+    afterEach(() => {
+      getAccountStub.restore();
+      peersActionsStub.restore();
+      transactionsActionsStub.restore();
+    });
+
+    it(`should call account API methods on ${actionTypes.newBlockCreated} action when online`, () => {
+      getAccountStub.resolves({ balance: 10e8 });
+
+      const data = {
+        windowIsFocused: false,
+        peers: { data: {} },
+        transactions: {
+          pending: [{
+            id: 12498250891724098,
+          }],
+          confirmed: [],
+          account: { address: 'test_address', balance: 0 },
+        },
+        account: { address: accounts.genesis.address, balance: 0 },
+      };
+
+      accountDataUpdated(data)(dispatch);
+      expect(dispatch).to.have.callCount(3);
+      expect(peersActionsStub).to.have.not.been.calledWith({ online: false, code: 'EUNAVAILABLE' });
+    });
+
+    it(`should call account API methods on ${actionTypes.newBlockCreated} action when offline`, () => {
+      getAccountStub.rejects({ error: { code: 'EUNAVAILABLE' } });
+
+      const data = {
+        windowIsFocused: true,
+        peers: { data: {} },
+        transactions: {
+          pending: [{ id: 12498250891724098 }],
+          confirmed: [],
+          account: { address: 'test_address', balance: 0 },
+        },
+        account: { address: accounts.genesis.address },
+      };
+
+      accountDataUpdated(data)(dispatch);
+      expect(peersActionsStub).to.have.been.calledWith({ online: false, code: 'EUNAVAILABLE' });
+    });
+  });
+
+  describe('updateTransactionsIfNeeded', () => {
+    let transactionsActionsStub;
+
+    const dispatch = spy();
+
+    beforeEach(() => {
+      transactionsActionsStub = spy(transactionsActions, 'transactionsUpdated');
+    });
+
+    afterEach(() => {
+      transactionsActionsStub.restore();
+    });
+
+    it('should update transactions when window is in focus', () => {
+      const data = {
+        activePeer: {},
+        transactions: { confirmed: [{ confirmations: 10 }], pending: [] },
+        account: { address: accounts.genesis.address },
+      };
+
+      updateTransactionsIfNeeded(data, true)(dispatch);
+      expect(transactionsActionsStub).to.have.been.calledWith();
+    });
+
+    it('should update transactions when there are no recent transactions', () => {
+      const data = {
+        activePeer: {},
+        transactions: { confirmed: [{ confirmations: 10000 }], pending: [] },
+        account: { address: accounts.genesis.address },
+      };
+
+      updateTransactionsIfNeeded(data, false)(dispatch);
+      expect(transactionsActionsStub).to.have.been.calledWith();
     });
   });
 });

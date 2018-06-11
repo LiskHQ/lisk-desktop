@@ -2,10 +2,16 @@ import { requestToActivePeer } from './peers';
 import txFilters from './../../constants/transactionFilters';
 
 export const send = (activePeer, recipientId, amount, secret, secondSecret = null) =>
-  requestToActivePeer(activePeer, 'transactions',
-    { recipientId, amount, secret, secondSecret });
+  requestToActivePeer(
+    activePeer, 'transactions',
+    {
+      recipientId, amount, secret, secondSecret,
+    },
+  );
 
-export const getTransactions = ({ activePeer, address, limit = 20, offset = 0, orderBy = 'timestamp:desc', filter = txFilters.all }) => {
+export const getTransactions = ({
+  activePeer, address, limit = 20, offset = 0, orderBy = 'timestamp:desc', filter = txFilters.all,
+}) => {
   let params = {
     recipientId: (filter === txFilters.incoming || filter === txFilters.all) ? address : undefined,
     senderId: (filter === txFilters.outgoing || filter === txFilters.all) ? address : undefined,

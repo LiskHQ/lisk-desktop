@@ -63,7 +63,9 @@ export const searchTransactions = ({
 }) =>
   (dispatch) => {
     if (showLoading) loadingStarted(actionTypes.searchTransactions);
-    getTransactions({ activePeer, address, limit, filter })
+    getTransactions({
+      activePeer, address, limit, filter,
+    })
       .then((transactionsResponse) => {
         dispatch({
           data: {
@@ -82,7 +84,9 @@ export const searchMoreTransactions = ({
   activePeer, address, limit, offset, filter,
 }) =>
   (dispatch) => {
-    getTransactions({ activePeer, address, limit, offset, filter })
+    getTransactions({
+      activePeer, address, limit, offset, filter,
+    })
       .then((transactionsResponse) => {
         dispatch({
           data: {
