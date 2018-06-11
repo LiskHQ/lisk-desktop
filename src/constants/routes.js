@@ -44,7 +44,7 @@ export default {
   setting: {
     path: '/setting',
     component: Setting,
-    isPrivate: true,
+    isPrivate: false,
   },
   secondPassphrase: {
     path: '/second-passphrase',

@@ -21,6 +21,7 @@ describe('Setting', () => {
   const settings = {
     autoLog: true,
     advancedMode: true,
+    showNetwork: false,
     currency: settingsConst.currencies[0],
   };
 
@@ -97,14 +98,14 @@ describe('Setting', () => {
     expect(wrapper.find('.onBoarding')).to.have.length(0);
   });
 
-  it('should not show the onboarding setting when not authenticated', () => {
+  it('should show the onboarding setting when not authenticated', () => {
     props.isAuthenticated = false;
     wrapper = mount(<Router>
       <Setting
         {...props}
       />
     </Router>, options);
-    expect(wrapper.find('.onBoarding')).to.have.length(0);
+    expect(wrapper.find('.onBoarding')).to.have.length(1);
   });
 
   it.skip('should click on .autoLog update the setting', () => {
@@ -124,6 +125,16 @@ describe('Setting', () => {
     wrapper.update();
     const expectedCallToSettingsUpdated = {
       autoLog: !settings.autoLog,
+    };
+    expect(props.settingsUpdated).to.have.been.calledWith(expectedCallToSettingsUpdated);
+  });
+
+  it('should change showNetwork setting when clicking on checkbox', () => {
+    wrapper.find('.showNetwork').at(0).find('input').simulate('change', { target: { checked: true, value: true } });
+    clock.tick(300);
+    wrapper.update();
+    const expectedCallToSettingsUpdated = {
+      showNetwork: !settings.showNetwork,
     };
     expect(props.settingsUpdated).to.have.been.calledWith(expectedCallToSettingsUpdated);
   });

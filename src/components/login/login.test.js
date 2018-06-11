@@ -38,6 +38,7 @@ describe('Login', () => {
     store = configureMockStore([])({
       peers,
       account,
+      settings: {},
     });
     history = {
       location: {

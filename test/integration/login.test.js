@@ -17,6 +17,7 @@ import accountMiddleware from '../../src/store/middlewares/account';
 import peerMiddleware from '../../src/store/middlewares/peers';
 import { activePeerSet } from '../../src/actions/peers';
 import * as toasterActions from '../../src/actions/toaster';
+import { settingsUpdated } from '../../src/actions/settings';
 import Login from './../../src/components/login';
 import accounts from '../constants/accounts';
 import networks from './../../src/constants/networks';
@@ -64,7 +65,6 @@ describe('@integration: Login', () => {
     netHashAPIStub = stub(netHash, 'getNethash').returnsPromise().rejects();
     localStorageStub = stub(localStorage, 'getItem');
     localStorageStub.withArgs('accounts').returns(JSON.stringify([{}, {}]));
-    localStorageStub.withArgs('showNetwork').returns(JSON.stringify(true));
     accountAPIStub = stub(accountAPI, 'getAccount');
     accountAPIStub.returnsPromise().resolves({
       address: '6307319849853921018L',
@@ -85,7 +85,6 @@ describe('@integration: Login', () => {
   const stubApisScenarioInvalidNode = () => {
     localStorageStub = stub(localStorage, 'getItem');
     localStorageStub.withArgs('accounts').returns(JSON.stringify([{}, {}]));
-    localStorageStub.withArgs('showNetwork').returns(JSON.stringify(true));
     netHashAPIStub = stub(netHash, 'getNethash').returnsPromise().rejects();
     accountAPIStub = stub(accountAPI, 'getAccount').returnsPromise().rejects();
     delegateAPIStub = stub(delegateAPI, 'getDelegate').returnsPromise().rejects();
@@ -113,6 +112,7 @@ describe('@integration: Login', () => {
   const setupStep = (stubApis) => {
     const store = createStore();
     stubApis();
+    store.dispatch(settingsUpdated({ showNetwork: true }));
     wrapper = mount(renderWithRouter(Login, store, { location: { search: '' } }), { activePeerSet });
     helper = new Helper(wrapper, store);
   };

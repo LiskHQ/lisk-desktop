@@ -20,12 +20,7 @@ npm run dev
 
 Open http://localhost:8080
 
-For ease of development, you can `setItem` in `localStorage` to see network options in login page:
-```
-localStorage.setItem('showNetwork', true)
-```
-
-You can also pass the same key-value pair as query string:
+For ease of development, you can set the following query string to see network options in login page:
 ```
 http://localhost:8080/#/?showNetwork=true
 ```
