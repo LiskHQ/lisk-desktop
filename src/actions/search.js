@@ -57,6 +57,16 @@ export const searchAccount = ({ activePeer, address }) =>
     });
   };
 
+export const setSearchTranactions = searchObj => ({
+  data: {
+    address: searchObj.address,
+    transactions: searchObj.transactions,
+    count: parseInt(searchObj.count, 10) || 0,
+    filter: searchObj.filter,
+  },
+  type: actionTypes.searchTransactions,
+});
+
 export const searchTransactions = ({
   activePeer, address, limit, filter, showLoading = true,
 }) =>
@@ -66,15 +76,7 @@ export const searchTransactions = ({
       activePeer, address, limit, filter,
     })
       .then((transactionsResponse) => {
-        dispatch({
-          data: {
-            address,
-            transactions: transactionsResponse.transactions,
-            count: parseInt(transactionsResponse.count, 10),
-            filter,
-          },
-          type: actionTypes.searchTransactions,
-        });
+        dispatch(setSearchTranactions({ ...transactionsResponse, address, filter }));
         if (showLoading) loadingFinished(actionTypes.searchTransactions);
       });
   };

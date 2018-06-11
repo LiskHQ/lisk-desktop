@@ -1,7 +1,12 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
-import { searchTransactions, searchMoreTransactions, searchAccount } from '../../../actions/search';
+import {
+  searchTransactions,
+  searchMoreTransactions,
+  searchAccount,
+  setSearchTranactions,
+} from '../../../actions/search';
 import actionTypes from '../../../constants/actions';
 import ExplorerTransactions from './explorerTransactions';
 import txFilters from './../../../constants/transactionFilters';
@@ -24,6 +29,7 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = dispatch => ({
   searchAccount: data => dispatch(searchAccount(data)),
   searchTransactions: data => dispatch(searchTransactions(data)),
+  setSearchTranactions: data => dispatch(setSearchTranactions(data)),
   searchMoreTransactions: data => dispatch(searchMoreTransactions(data)),
   searchUpdateLast: data =>
     dispatch({ data, type: actionTypes.searchUpdateLast }),
