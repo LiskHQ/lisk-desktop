@@ -47,6 +47,7 @@
     padding-left: 24px;
     border-radius: 3px;
     border: none;
+    transition: background-color 300ms linear;
 
     &::selection {
       color: #fff;
