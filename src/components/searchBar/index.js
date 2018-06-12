@@ -32,6 +32,7 @@ const mapStateToProps = state => ({
   suggestions: state.search.suggestions,
   activePeer: state.peers.data,
 });
+/* istanbul ignore next */
 const mapDispatchToProps = dispatch => ({
   searchSuggestions: data => dispatch(searchSuggestions(data)),
   searchClearSuggestions: data => dispatch({

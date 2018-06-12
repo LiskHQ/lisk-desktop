@@ -34,6 +34,8 @@ describe('SearchBar', () => {
     props = {
       history,
       t: () => {},
+      searchSuggestions: () => {},
+      searchClearSuggestions: () => {},
     };
     options = {
       context: {
