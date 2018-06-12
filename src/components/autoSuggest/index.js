@@ -16,7 +16,7 @@ class AutoSuggest extends React.Component {
     this.lastSearch = null;
     this.state = {
       show: false,
-      value: '',
+      value: props.value || '',
       selectedIdx: 0,
     };
     this.delegateRegEx = new RegExp(/[!@$&_.]+/g);
@@ -55,6 +55,11 @@ class AutoSuggest extends React.Component {
     this.resetSearch();
     this.inputRef.blur();
     this.onResultClick(this.selectedRow.dataset.id, this.selectedRow.dataset.type);
+  }
+
+  submitAnySearch() {
+    this.inputRef.blur();
+    this.props.history.push(`${routes.searchResult.pathPrefix}${routes.searchResult.path}/${this.state.value}`);
   }
 
   search(searchTerm) {
@@ -102,7 +107,7 @@ class AutoSuggest extends React.Component {
         this.closeDropdown();
         break;
       case keyCodes.enter:
-        this.submitSearch();
+        this.submitAnySearch();
         break;
       case keyCodes.tab:
         this.submitSearch();
@@ -162,7 +167,7 @@ class AutoSuggest extends React.Component {
     return (
       <div className={styles.wrapper}>
         <Input type='text' placeholder={t('Search for delegates, LiskID, transactions')} name='searchBarInput'
-          value={this.state.value || value}
+          value={this.state.value}
           innerRef={(el) => { this.inputRef = el; }}
           className={`${styles.input} autosuggest-input`}
           theme={styles}
