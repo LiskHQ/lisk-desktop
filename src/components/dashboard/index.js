@@ -11,6 +11,7 @@ import Send from '../send';
 import CurrencyGraph from './currencyGraph';
 import routes from '../../constants/routes';
 import { settingsUpdated } from '../../actions/settings';
+import FollowedAccounts from '../followedAccounts/dashboard/index';
 
 import styles from './dashboard.css';
 
@@ -32,9 +33,6 @@ class Dashboard extends React.Component {
 
     return <div className={`${grid.row} ${styles.wrapper}`}>
       <div className={`${grid['col-md-8']} ${grid['col-xs-12']} ${styles.main}`}>
-        <Box className={`${styles.graph}`}>
-          <CurrencyGraph />
-        </Box>
         <Box className={`${styles.latestActivity}`}>
           <header>
             <h2 className={styles.title}>
@@ -55,6 +53,18 @@ class Dashboard extends React.Component {
             onClick: props => history.push(`${routes.wallet.path}?id=${props.value.id}`),
           }} />
         </Box>
+        <div className={`${grid.row} ${styles.bottomModuleWrapper} `}>
+          <div className={`${grid['col-md-6']}`} style={{ paddingLeft: '0px' }}>
+            <Box>
+              <FollowedAccounts />
+            </Box>
+          </div>
+          <div className={`${grid['col-md-6']}`} style={{ paddingRight: '0px' }}>
+            <Box className={`${styles.graph}`}>
+              <CurrencyGraph />
+            </Box>
+          </div>
+        </div>
       </div>
       <div className={`${grid['col-md-4']} ${styles.sendWrapper}`}>
         <Send {...this.props} />

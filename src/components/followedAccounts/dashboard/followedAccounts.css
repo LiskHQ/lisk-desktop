@@ -1,0 +1,106 @@
+@import '../../app/variables.css';
+
+:root {
+  --amount-negative-color: var(--color-grayscale-dark);
+  --link-color: var(--color-primary-very-light);
+  --row-background-color: var(--color-white);
+  --result-address-font-weight: var(--font-weight-semi-bold);
+  --main-row-line-height: 70px;
+}
+
+.accountVisual {
+  vertical-align: middle;
+}
+
+.rows {
+  color: var(--amount-negative-color);
+  border-bottom: 0;
+  border-top: 0;
+  margin-right: 0;
+  margin-left: 0;
+  line-height: var(--main-row-line-height);
+  white-space: nowrap;
+
+  &:nth-of-type(even) {
+    background: var(--row-background-color);
+  }
+
+  &:nth-of-type(odd) {
+    background: var(--gradient-greyscale);
+  }
+
+  & .accountInformation {
+    font-weight: var(--font-weight-bold);
+    line-height: 25px;
+    margin: auto;
+
+    & .balance {
+      color: var(--color-black);
+      font-size: 16px;
+    }
+
+    & .title {
+      color: var(--color-grayscale-medium);
+      font-size: 14px;
+    }
+  }
+}
+
+.leftText {
+  text-align: left;
+  padding-left: 0px;
+}
+
+.rightText {
+  text-align: right;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.accounts {
+  overflow-y: initial;
+}
+
+@media (--xLarge-viewport) {
+  .accounts {
+    overflow-y: auto;
+    margin: 0px calc(0 - var(--box-padding-left-XL));
+  }
+
+  .rows {
+    padding: 0px var(--box-padding-left-XL);
+  }
+}
+
+@media (--large-viewport) {
+  .accounts {
+    overflow-y: auto;
+    margin: 0px calc(0 - var(--box-padding-left-L));
+  }
+
+  .rows {
+    padding: 0px var(--box-padding-left-L);
+  }
+}
+
+@media (--medium-viewport) {
+  .accounts {
+    overflow-y: initial;
+    padding-bottom: 100px;
+    margin: 0px calc(0 - var(--box-padding-left-M));
+  }
+
+  .rows {
+    padding: 0px var(--box-padding-left-M);
+
+    &:nth-of-type(even) {
+      background: var(--gradient-greyscale-mobile);
+    }
+
+    &:nth-of-type(odd) {
+      background: var(--color-grayscale-mobile-background);
+    }
+  }
+}
