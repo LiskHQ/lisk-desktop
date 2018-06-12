@@ -2,19 +2,16 @@ import { getAccount, transaction } from './account';
 import { listDelegates } from './delegate';
 import regex from './../../utils/regex';
 
-const orderDelegatesByMatch = (searchTerm, delegates) => [...delegates].sort((first, second) => {
-  const regEx = new RegExp(`^${searchTerm}`, 'g');
-  /* istanbul ignore next */
-  if (first.username.match(regEx) && second.username.match(regEx)) {
-    return first.username < second.username ? -1 : 1;
-  } else if (!first.username.match(regEx)) {
-    return 1;
-  } else if (!second.username.match(regEx)) {
-    return -1;
-  }
-  /* istanbul ignore next */
-  return first.username < second.username ? -1 : 1;
-});
+const filterAndOrderByMatch = (regEx, delegates) =>
+  [...delegates].filter(result =>
+    result.username.match(regEx)).sort((first, second) => {
+    if (first.username < second.username) {
+      return -1;
+    } else if (first.username > second.username) {
+      return 1;
+    }
+    return 0;
+  });
 
 /* eslint-disable prefer-promise-reject-errors */
 const searchAddresses = ({ activePeer, searchTerm }) => new Promise((resolve, reject) =>
@@ -27,7 +24,7 @@ const searchDelegates = ({ activePeer, searchTerm }) => new Promise((resolve, re
     q: searchTerm,
     orderBy: 'username:asc',
   }).then((response) => {
-    let delegatesSorted = orderDelegatesByMatch(searchTerm, response.delegates);
+    let delegatesSorted = filterAndOrderByMatch(new RegExp(`^${searchTerm}`, 'g'), response.delegates);
     if (delegatesSorted.length > 4) {
       delegatesSorted = delegatesSorted.slice(0, 4);
     }
