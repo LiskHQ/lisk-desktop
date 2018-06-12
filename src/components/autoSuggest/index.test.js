@@ -1,12 +1,12 @@
 import React from 'react';
 import { expect } from 'chai';
 import configureMockStore from 'redux-mock-store';
-import { spy, useFakeTimers } from 'sinon';
+import { spy, stub, useFakeTimers } from 'sinon';
 import { mountWithContext } from '../../../test/utils/mountHelpers';
 import AutoSuggest from './index';
 import styles from './autoSuggest.css';
-
 import * as searchActions from './../search/keyAction';
+import localJSONStorageUtil from './../../utils/localJSONStorage';
 import routes from '../../constants/routes';
 import keyCodes from './../../constants/keyCodes';
 import mockSearchResults from './searchResults.mock';
@@ -15,12 +15,15 @@ describe('AutoSuggest', () => {
   let wrapper;
   let props;
   let results;
+  let localStorageStub;
   let submitSearchSpy;
   let submitSearchAnythingSpy;
   let saveSearchSpy;
   let clock;
 
   beforeEach(() => {
+    localStorageStub = stub(localJSONStorageUtil, 'get');
+    localStorageStub.withArgs('searches', []).returns(['111L', '111']);
     results = { ...mockSearchResults };
     props = {
       t: key => key,
@@ -53,6 +56,7 @@ describe('AutoSuggest', () => {
   });
 
   afterEach(() => {
+    localStorageStub.restore();
     submitSearchSpy.restore();
     submitSearchAnythingSpy.restore();
     saveSearchSpy.restore();
@@ -76,6 +80,22 @@ describe('AutoSuggest', () => {
     expect(wrapper).to.have.exactly(0).descendants('.addresses-result');
     expect(wrapper).to.have.exactly(3).descendants('.delegates-result');
     expect(wrapper).to.have.exactly(0).descendants('.transactions-result');
+  });
+
+  it('should show recent searches when focusing on input and no search value has been entered yet', () => {
+    wrapper.setProps({
+      results: {
+        delegates: [],
+        addresses: [],
+        transactions: [],
+      },
+    });
+    wrapper.update();
+    const autosuggestInput = wrapper.find('.autosuggest-input').find('input').first();
+    autosuggestInput.simulate('focus');
+    expect(wrapper).to.have.exactly(1).descendants('.addresses-result');
+    expect(wrapper).to.have.exactly(1).descendants('.transactions-result');
+    expect(props.searchSuggestions).not.to.have.been.calledWith();
   });
 
   it('should show autosuggest on search input change, show suggestion, and hide it on blur', () => {
