@@ -24,7 +24,6 @@ describe('Utils: Search', () => {
       { username: '1337', rank: 18, address: '123456' },
       { username: '1337Lolo', rank: 18, address: '123456' },
       { username: '1337l', rank: 18, address: '123456' },
-      { username: '__1337ll', rank: 19, address: '123456' },
     ],
   };
 
@@ -32,8 +31,6 @@ describe('Utils: Search', () => {
     delegates: [
       { username: '1337Lolo', rank: 18, address: '123456' },
       { username: '1337l', rank: 18, address: '123456' },
-      { username: '1337', rank: 18, address: '123456' },
-      { username: '__1337ll', rank: 19, address: '123456' },
     ],
   };
   const delegatesUrlParams = {
@@ -73,12 +70,14 @@ describe('Utils: Search', () => {
     getAccountStub.restore();
   });
 
-  it('should search {addresses,delegates} when only address pattern matched', () =>
-    expect(searchAll({ searchTerm: '1337L' })).to.eventually.deep.equal([
+  it('should search {addresses,delegates} when only address pattern matched', () => {
+    searchAll({ searchTerm: '1337L' }).then(response => console.log(JSON.stringify(response)));
+    return expect(searchAll({ searchTerm: '1337L' })).to.eventually.deep.equal([
       { addresses: [accountsResponse] },
       { transactions: [] },
       { delegates: delegatesResponseOrderedAddressMatch.delegates },
-    ]));
+    ]);
+  });
 
   it('should search {transactions,delegates} when only transaction pattern matched', () =>
     expect(searchAll({ searchTerm: '1337' })).to.eventually.deep.equal([
