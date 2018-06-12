@@ -23,7 +23,7 @@ describe('AutoSuggest', () => {
 
   beforeEach(() => {
     localStorageStub = stub(localJSONStorageUtil, 'get');
-    localStorageStub.withArgs('searches', []).returns(['111L', '111']);
+    localStorageStub.withArgs('searches', []).returns([]);
     results = { ...mockSearchResults };
     props = {
       t: key => key,
@@ -83,6 +83,7 @@ describe('AutoSuggest', () => {
   });
 
   it('should show recent searches when focusing on input and no search value has been entered yet', () => {
+    localStorageStub.withArgs('searches', []).returns(['111L', '111']);
     wrapper.setProps({
       results: {
         delegates: [],
