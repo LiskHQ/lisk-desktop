@@ -65,7 +65,7 @@ class ConfirmMessage extends React.Component {
         <header>
           <div className={styles.tableCell}>
             <TransitionWrapper current={this.state.step} step='verify'>
-              <h2 className={styles.verify}>{this.props.t('Please sign in with your passphrase')}</h2>
+              <h2 className={styles.verify}>{this.props.t('Sign in with the passphrase to encrypt with')}</h2>
             </TransitionWrapper>
             <TransitionWrapper current={this.state.step} step='done'>
               <h2 className={styles.verify}>{this.props.t('Your signed message')}</h2>
