@@ -230,7 +230,7 @@ class AutoSuggest extends React.Component {
   /* eslint-enable class-methods-use-this */
 
   render() {
-    const { t, value } = this.props;
+    const { t } = this.props;
 
     return (
       <div className={styles.wrapper}>
