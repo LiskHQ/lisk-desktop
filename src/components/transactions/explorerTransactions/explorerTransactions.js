@@ -19,6 +19,11 @@ class ExplorerTransactions extends React.Component {
       limit: 25,
       filter: txFilters.all,
     });
+
+    this.props.addFilter({
+      filterName: 'transactions',
+      value: txFilters.all,
+    });
   }
   onLoadMore() {
     this.props.searchMoreTransactions({
@@ -35,19 +40,18 @@ class ExplorerTransactions extends React.Component {
     for other tabs that are not using transactions there is no need to call API
   */
   onFilterSet(filter) {
-    if (filter > 2) {
-      this.props.setSearchTranactions({
-        filter,
-        address: this.props.address,
-        transactions: [this.props.delegate],
-      });
-    } else {
+    if (filter <= 2) {
       this.props.searchTransactions({
         activePeer: this.props.activePeer,
         address: this.props.address,
         limit: 25,
         filter,
         showLoading: false,
+      });
+    } else {
+      this.props.addFilter({
+        filterName: 'transactions',
+        value: filter,
       });
     }
   }
