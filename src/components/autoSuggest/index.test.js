@@ -103,13 +103,16 @@ describe('AutoSuggest', () => {
       .calledWith(`${routes.transactions.pathPrefix}${routes.transactions.path}/${results.transactions[0].id}`);
   });
 
-  it('should redirect to entity page on keyboard event {enter}', () => {
+  it('should redirect to search result page on keyboard event {enter}', () => {
     const autosuggestInput = wrapper.find('.autosuggest-input').find('input').first();
+    autosuggestInput.simulate('change', { target: { value: 'notExistingDelegate' } });
     autosuggestInput.simulate('keyDown', {
       keyCode: keyCodes.enter,
       which: keyCodes.enter,
     });
-    expect(saveSearchSpy).to.have.been.calledWith();
+    expect(saveSearchSpy).not.to.have.been.calledWith();
+    expect(props.history.push).to.have.been
+      .calledWith(`${routes.searchResult.pathPrefix}${routes.searchResult.path}/notExistingDelegate`);
   });
 
   it('should redirect to entity page on keyboard event {tab}', () => {

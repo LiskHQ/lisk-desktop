@@ -16,7 +16,7 @@ class AutoSuggest extends React.Component {
     this.lastSearch = null;
     this.state = {
       show: false,
-      value: props.value || '',
+      value: '',
       selectedIdx: 0,
     };
     this.delegateRegEx = new RegExp(/[!@$&_.]+/g);
@@ -167,7 +167,7 @@ class AutoSuggest extends React.Component {
     return (
       <div className={styles.wrapper}>
         <Input type='text' placeholder={t('Search for delegates, LiskID, transactions')} name='searchBarInput'
-          value={this.state.value}
+          value={this.state.value || value}
           innerRef={(el) => { this.inputRef = el; }}
           className={`${styles.input} autosuggest-input`}
           theme={styles}

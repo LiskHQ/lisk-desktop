@@ -83,10 +83,10 @@ describe('SearchBar', () => {
   it('should call getSearchItem on componentWillReceiveProps', () => {
     wrapper.find('Search').props().history.push('/explorer/');
     wrapper.update();
-    expect(wrapper.find('Search input').props().value).to.equal('');
+    expect(wrapper.find('.autosuggest-input').find('input')).to.have.value('');
     wrapper.find('Search').props().history.push('/explorer/transaction/123');
     wrapper.update();
-    expect(wrapper.find('Search input')).to.have.props({ value: '123' });
+    expect(wrapper.find('.autosuggest-input').find('input')).to.have.value('123');
   });
 
   it('should render Autosuggest', () => {
