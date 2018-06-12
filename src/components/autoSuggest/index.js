@@ -6,6 +6,8 @@ import { FontIcon } from '../fontIcon';
 import ResultsList from './resultsList';
 import routes from './../../constants/routes';
 import keyCodes from './../../constants/keyCodes';
+import localJSONStorage from './../../utils/localJSONStorage';
+import regex from './../../utils/regex';
 import { saveSearch } from './../search/keyAction';
 
 class AutoSuggest extends React.Component {
@@ -28,7 +30,7 @@ class AutoSuggest extends React.Component {
     const resultsLength = ['delegates', 'addresses', 'transactions'].reduce((total, resultKey) =>
       total + nextProps.results[resultKey].length, 0);
     let placeholder = '';
-    if (nextProps.results.delegates.length > 0) {
+    if (resultsLength > 0) {
       placeholder = this.getValueFromCurrentIdx(0, nextProps.results);
     }
     this.setState({ resultsLength, selectedIdx: 0, placeholder });
@@ -75,6 +77,7 @@ class AutoSuggest extends React.Component {
   search(searchTerm) {
     this.setState({ value: searchTerm, placeholder: '' });
     if (searchTerm.length < 3) {
+      this.props.searchClearSuggestions();
       return;
     }
 
@@ -207,9 +210,27 @@ class AutoSuggest extends React.Component {
     }));
   }
 
+  /* eslint-disable class-methods-use-this */
+  getRecentSearchResults() {
+    return localJSONStorage.get('searches', [])
+      .map((result) => {
+        let type = 'addresses';
+        if (result.match(regex.transactionId)) {
+          type = 'transactions';
+        }
+        return {
+          id: result,
+          valueLeft: result,
+          valueRight: '',
+          isSelected: false,
+          type,
+        };
+      });
+  }
+  /* eslint-enable class-methods-use-this */
+
   render() {
-    // eslint-disable-next-line no-unused-vars
-    const { history, t, value } = this.props;
+    const { t, value } = this.props;
 
     return (
       <div className={styles.wrapper}>
@@ -223,6 +244,7 @@ class AutoSuggest extends React.Component {
           className={`${styles.input} autosuggest-input`}
           theme={styles}
           onClick={this.selectInput.bind(this)}
+          onFocus={() => this.setState({ show: true })}
           onBlur={this.closeDropdown.bind(this)}
           onKeyDown={this.handleKey.bind(this)}
           onChange={this.search.bind(this)}
@@ -235,40 +257,48 @@ class AutoSuggest extends React.Component {
           }
         </Input>
         <div className={`${styles.autoSuggest} ${this.state.show ? styles.show : ''} autosuggest-dropdown`}>
-          { this.state.value !== '' ?
-            <div>
-              <ResultsList
-                key='delegates'
-                results={this.getDelegatesResults()}
-                header={{
-                  titleLeft: t('Delegate'),
-                  titleRight: t('Rank'),
-                }}
-                onMouseDown={this.onResultClick.bind(this)}
-                setSelectedRow={this.setSelectedRow.bind(this)}
-              />
-              <ResultsList
-                key='addresses'
-                results={this.getAddressesResults()}
-                header={{
-                  titleLeft: t('Address'),
-                  titleRight: t('Balance'),
-                }}
-                onMouseDown={this.onResultClick.bind(this)}
-                setSelectedRow={this.setSelectedRow.bind(this)}
-              />
-              <ResultsList
-                key='transactions'
-                results={this.getTransactionsResults()}
-                header={{
-                  titleLeft: t('Transaction'),
-                  titleRight: t('Height'),
-                }}
-                onMouseDown={this.onResultClick.bind(this)}
-                setSelectedRow={this.setSelectedRow.bind(this)}
-              />
-            </div>
-            : <div>{t('Recent Searches')}</div>
+          <ResultsList
+            key='delegates'
+            results={this.getDelegatesResults()}
+            header={{
+              titleLeft: t('Delegate'),
+              titleRight: t('Rank'),
+            }}
+            onMouseDown={this.onResultClick.bind(this)}
+            setSelectedRow={this.setSelectedRow.bind(this)}
+          />
+          <ResultsList
+            key='addresses'
+            results={this.getAddressesResults()}
+            header={{
+              titleLeft: t('Address'),
+              titleRight: t('Balance'),
+            }}
+            onMouseDown={this.onResultClick.bind(this)}
+            setSelectedRow={this.setSelectedRow.bind(this)}
+          />
+          <ResultsList
+            key='transactions'
+            results={this.getTransactionsResults()}
+            header={{
+              titleLeft: t('Transaction'),
+              titleRight: t('Height'),
+            }}
+            onMouseDown={this.onResultClick.bind(this)}
+            setSelectedRow={this.setSelectedRow.bind(this)}
+          />
+          { this.state.value === '' && this.state.resultsLength === 0 ?
+            <ResultsList
+            key='recent'
+            results={this.getRecentSearchResults()}
+            header={{
+              titleLeft: t('Recent searches'),
+              titleRight: '',
+            }}
+            onMouseDown={this.onResultClick.bind(this)}
+            setSelectedRow={this.setSelectedRow.bind(this)}
+          />
+            : null
           }
         </div>
       </div>
