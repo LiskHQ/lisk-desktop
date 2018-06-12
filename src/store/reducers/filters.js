@@ -5,7 +5,7 @@ const filters = (state = { transactions: 0 }, action) => {
     case actionTypes.addFilter:
       return {
         ...state,
-        [action.filterName]: action.value,
+        [action.data.filterName]: action.data.value,
       };
     default:
       return state;

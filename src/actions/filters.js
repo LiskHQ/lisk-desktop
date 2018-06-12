@@ -1,7 +1,6 @@
 import actionTypes from '../constants/actions';
 // eslint-disable-next-line
-export const addFilter = ({ filterName, value }) => ({
+export const addFilter = data => ({
   type: actionTypes.addFilter,
-  filterName,
-  value,
+  data,
 });

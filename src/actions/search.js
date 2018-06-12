@@ -75,11 +75,15 @@ export const searchTransactions = ({
           },
           type: actionTypes.searchTransactions,
         });
-        dispatch({
-          filterName: 'transactions',
-          value: filter,
-          type: actionTypes.addFilter,
-        });
+        if (filter) {
+          dispatch({
+            data: {
+              filterName: 'transactions',
+              value: filter,
+            },
+            type: actionTypes.addFilter,
+          });
+        }
         if (showLoading) loadingFinished(actionTypes.searchTransactions);
       });
   };
