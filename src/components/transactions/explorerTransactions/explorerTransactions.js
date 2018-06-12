@@ -34,7 +34,7 @@ class ExplorerTransactions extends React.Component {
       filter: this.props.activeFilter,
     });
   }
-  /* 
+  /*
     Transactions from tabs are filtered based on filter number
     It applys to All, Incoming and Outgoing
     for other tabs that are not using transactions there is no need to call API
