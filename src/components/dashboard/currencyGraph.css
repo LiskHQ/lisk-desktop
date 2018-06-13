@@ -11,7 +11,7 @@
 }
 
 .chartWrapper {
-  height: calc(100% - 70px);
+  height: 100%;
   min-height: 130px;
   width: calc(100% + 50px);
   margin: 0 -25px;
@@ -38,6 +38,8 @@
 .stepSwitchWrapper {
   float: right;
   margin: 50px;
+  z-index: 10;
+  position: relative;
 }
 
 .stepSwitch {
