@@ -1,0 +1,30 @@
+
+.header {
+  padding: 5px 0;
+  display: flex;
+}
+
+.timestampMessage {
+  color: grey;
+  padding-left: 10px;
+  font-weight: 500;
+}
+
+.description {
+  padding: 5px 0;
+  font-family: Open Sans,sans-serif;
+  font-weight: 300;
+  color: #3c5068;
+  padding-bottom: 10px;
+}
+
+.tag {
+  font-weight: 600;
+}
+
+.readMore {
+  color: #2475b9;
+  font-weight: 600;
+  cursor: pointer;
+  padding-bottom: 10px;
+}
