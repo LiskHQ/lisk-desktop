@@ -18,8 +18,13 @@ describe('Subscriber: followedAccounts(state)', () => {
 
   it('should save accounts in localStorage', () => {
     spy(followedAccountsUtils, 'setFollowedAccountsInLocalStorage');
-    let state = { followedAccounts: { accounts: [] } };
+    let state = { followedAccounts: {} };
     const store = { getState: () => state };
+
+    followedAccounts(store);
+    expect(followedAccountsUtils.setFollowedAccountsInLocalStorage).to.not.have.been.calledWith();
+
+    state = { followedAccounts: { accounts: [] } };
 
     followedAccounts(store);
     expect(followedAccountsUtils.setFollowedAccountsInLocalStorage).to.have.been.calledWith([]);

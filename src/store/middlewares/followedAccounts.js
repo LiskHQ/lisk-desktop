@@ -26,10 +26,8 @@ const followedAccountsMiddleware = (store) => {
       const address = extractAddress(account.publicKey);
 
       const relevantTransactions = tx.filter((transaction) => {
-        const sender = transaction ? transaction.senderId : null;
-        const recipient = transaction ? transaction.recipientId : null;
-
-        return (address === recipient || address === sender);
+        const { senderId, recipientId } = transaction;
+        return (address === recipientId || address === senderId);
       });
 
       return relevantTransactions.length > 0;
