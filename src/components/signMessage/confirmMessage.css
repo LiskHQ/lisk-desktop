@@ -7,7 +7,7 @@
 
 .address {
   padding: 15px 32px;
-  font-family: 'Open Sans';
+  font-family: var(--content-font);
   font-weight: 600;
 }
 
@@ -89,10 +89,10 @@
   background-color: var(--color-form-bg);
 
   & textarea {
-    background: #333;
+    background: #06213b;
     border-radius: 5px;
     overflow: auto;
-    color: var(--color-white);
+    color: #9bf436;
     font-family: monospace;
     padding: 12px 24px;
     height: 230px !important;
