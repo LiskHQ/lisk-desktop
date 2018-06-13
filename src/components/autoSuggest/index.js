@@ -124,6 +124,8 @@ class AutoSuggest extends React.Component {
   handleSubmit() {
     if (this.state.resultsLength > 0) {
       this.submitSearch();
+      this.props.searchClearSuggestions();
+      this.setState({ placeholder: '' });
     } else {
       this.submitAnySearch();
     }

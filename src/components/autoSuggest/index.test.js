@@ -130,7 +130,6 @@ describe('AutoSuggest', () => {
       keyCode: keyCodes.enter,
       which: keyCodes.enter,
     });
-    expect(props.searchClearSuggestions).to.have.been.calledWith();
     expect(saveSearchSpy).not.to.have.been.calledWith();
     expect(props.history.push).to.have.been
       .calledWith(`${routes.searchResult.pathPrefix}${routes.searchResult.path}/notExistingDelegate`);
@@ -167,7 +166,7 @@ describe('AutoSuggest', () => {
       keyCode: keyCodes.tab,
       which: keyCodes.tab,
     });
-    expect(submitSearchAnythingSpy).to.have.been.calledWith();
+    expect(submitSearchSpy).to.have.been.calledWith();
     expect(props.searchClearSuggestions).to.have.been.calledWith();
   });
 
