@@ -20,7 +20,6 @@ class AutoSuggest extends React.Component {
       selectedIdx: 0,
       resultsLength: 0,
     };
-    this.delegateRegEx = new RegExp(/[!@$&_.]+/g);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -75,7 +74,7 @@ class AutoSuggest extends React.Component {
         this.lastSearch = searchTerm;
         this.props.searchSuggestions({
           activePeer: this.props.activePeer,
-          searchTerm: this.state.value.replace(this.delegateRegEx, ''),
+          searchTerm: this.state.value,
         });
       }
     }, 250);

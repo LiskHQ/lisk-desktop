@@ -2,9 +2,9 @@ import { getAccount, transaction } from './account';
 import { listDelegates } from './delegate';
 import regex from './../../utils/regex';
 
-const filterAndOrderByMatch = (regEx, delegates) =>
+const filterAndOrderByMatch = (searchTerm, delegates) =>
   [...delegates].filter(result =>
-    result.username.toLowerCase().match(regEx)).sort((first, second) => {
+    result.username.toLowerCase().indexOf(searchTerm.toLowerCase()) === 0).sort((first, second) => {
     if (first.username < second.username) {
       return -1;
     } else if (first.username > second.username) {
@@ -24,7 +24,7 @@ const searchDelegates = ({ activePeer, searchTerm }) => new Promise((resolve, re
     q: searchTerm,
     orderBy: 'username:asc',
   }).then((response) => {
-    let delegatesSorted = filterAndOrderByMatch(new RegExp(`^${searchTerm.toLowerCase()}`, 'g'), response.delegates);
+    let delegatesSorted = filterAndOrderByMatch(searchTerm, response.delegates);
     if (delegatesSorted.length > 4) {
       delegatesSorted = delegatesSorted.slice(0, 4);
     }
