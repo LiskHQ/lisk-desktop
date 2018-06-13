@@ -58,7 +58,7 @@ class AutoSuggest extends React.Component {
 
   submitAnySearch() {
     this.inputRef.blur();
-    this.props.history.push(`${routes.searchResult.pathPrefix}${routes.searchResult.path}/${this.state.value}`);
+    this.props.history.push(`${routes.searchResult.pathPrefix}${routes.searchResult.path}/${encodeURIComponent(this.state.value)}`);
   }
 
   search(searchTerm) {
