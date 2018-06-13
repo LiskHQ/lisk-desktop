@@ -37,7 +37,6 @@ class Search extends React.Component {
       <AutoSuggest
         history={this.props.history}
         t={this.props.t}
-        value={this.state.searchItem}
         results={this.props.suggestions}
         activePeer={this.props.activePeer}
         searchSuggestions={this.props.searchSuggestions}
