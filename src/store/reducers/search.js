@@ -11,6 +11,11 @@ const search = (state = {
   delegates: {},
   votes: {},
   voters: {},
+  suggestions: {
+    delegates: [],
+    addresses: [],
+    transactions: [],
+  },
   searchResults: [],
 }, action) => {
   switch (action.type) {
@@ -80,13 +85,19 @@ const search = (state = {
       return {
         ...state,
         suggestions: {
-          ...action.data,
+          ...action.data[0],
+          ...action.data[1],
+          ...action.data[2],
         },
       };
     case actionTypes.searchClearSuggestions:
       return {
         ...state,
-        suggestions: {},
+        suggestions: {
+          delegates: [],
+          addresses: [],
+          transactions: [],
+        },
       };
     default:
       return state;

@@ -12,8 +12,6 @@
 
 .autoSuggest {
   display: none;
-  flex-direction: column;
-  align-content: flex-start;
   background-color: var(--color-white);
   left: 0;
   right: -24px;
@@ -23,11 +21,16 @@
   border-radius: 3px;
   box-shadow: 0 22px 22px 0 rgba(0, 0, 0, 0.22);
   border-top: none;
-  padding-bottom: 24px;
+  max-height: 353px;
+  overflow-y: scroll;
+
+  &:not(:empty) {
+    padding-bottom: 15px;
+  }
 }
 
 .show {
-  display: flex;
+  display: block;
 }
 
 .input {
@@ -44,6 +47,7 @@
     padding-left: 24px;
     border-radius: 3px;
     border: none;
+    transition: background-color 300ms linear;
 
     &::selection {
       color: #fff;

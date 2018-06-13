@@ -7,10 +7,17 @@ Feature: Explorer page
     And I click "input search button"
     And I wait 2 seconds
     Then I should see text "No activity yet" in "empty message" element
-    When I clear "search bar input" field
+    When I clear "autosuggest input" field
+    And I fill in "15610359283786884938L" to "autosuggest input" field
     And I wait 2 seconds
-    And I fill in "15610359283786884938L" to "search bar input" field
-    When I click "search bar button"
+    And I click "addresses result"
+    And I wait 5 seconds
+    When I clear "autosuggest input" field
+    And I wait 2 seconds
+    And I fill in "15610359283786884938L" to "autosuggest input" field
+    And I wait 2 seconds
+    And I click "addresses result"
+    And I wait 2 seconds
     Then I should see 25 rows
     When I click "send to address"
     And I wait 1 seconds
@@ -19,9 +26,9 @@ Feature: Explorer page
     When I fill in "1465651642158264047" to "search input" field
     And I click "input search button"
     Then I should see text "No results" in "empty message" element
-    When I clear "search bar input" field
-    And I fill in "9938914350729699234" to "search bar input" field
-    When I click "search bar button"
+    When I clear "autosuggest input" field
+    And I fill in "9938914350729699234" to "autosuggest input" field
+    And I click "transactions result"
     Then I should see ID "9938914350729699234" in transaction header
 
   @advanced

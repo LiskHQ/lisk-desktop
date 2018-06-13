@@ -45,6 +45,13 @@ describe('App', () => {
         autoLog: true,
         advancedMode: true,
       },
+      search: {
+        suggestions: {
+          delegates: [],
+          addresses: [],
+          transactions: [],
+        },
+      },
     });
     publicComponent.forEach(({ route, component }) => {
       it(`should render ${component.name} component at "${route}" route`, () => {
