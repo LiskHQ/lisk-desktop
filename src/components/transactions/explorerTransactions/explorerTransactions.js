@@ -70,6 +70,7 @@ class ExplorerTransactions extends React.Component {
       onLoadMore: this.onLoadMore.bind(this),
       onFilterSet: this.onFilterSet.bind(this),
       onTransactionRowClick: this.onTransactionRowClick.bind(this),
+      showAdditionalTabs: true,
     };
 
     return (

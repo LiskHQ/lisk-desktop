@@ -75,7 +75,7 @@ export const searchTransactions = ({
           },
           type: actionTypes.searchTransactions,
         });
-        if (filter) {
+        if (filter !== undefined) {
           dispatch({
             data: {
               filterName: 'transactions',
