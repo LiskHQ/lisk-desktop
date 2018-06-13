@@ -9,7 +9,7 @@ import { extractAddress } from '../../utils/account';
 const followedAccountsMiddleware = (store) => {
   setImmediate(() => {
     const accounts = getFollowedAccountsFromLocalStorage();
-    store.dispatch(followedAccountsRetrieved(accounts));
+    if (Array.isArray(accounts)) store.dispatch(followedAccountsRetrieved(accounts));
   });
 
   const updateFollowedAccounts = (peers, accounts) => {
@@ -47,7 +47,7 @@ const followedAccountsMiddleware = (store) => {
           followedAccounts,
         );
         break;
-      case actionTypes.accountLoggedIn:
+      case actionTypes.activePeerSet:
         updateFollowedAccounts(peers, followedAccounts.accounts);
         break;
       default:

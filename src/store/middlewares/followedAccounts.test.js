@@ -3,7 +3,6 @@ import { spy, mock } from 'sinon';
 import middleware from './followedAccounts';
 import actionTypes from '../../constants/actions';
 import accounts from '../../../test/constants/accounts';
-import { accountLoggedIn } from '../../actions/account';
 import * as followedAccountsActions from '../../actions/followedAccounts';
 
 describe('FollowedAccounts middleware', () => {
@@ -46,9 +45,11 @@ describe('FollowedAccounts middleware', () => {
     expect(next).to.have.been.calledWith(randomAction);
   });
 
-  it(`should update the following accounts on ${actionTypes.accountLoggedIn} action`, () => {
-    const action = accountLoggedIn({});
-    middleware(store)(next)(action);
+  it(`should update the following accounts on ${actionTypes.activePeerSet} action`, () => {
+    middleware(store)(next)({
+      type: actionTypes.activePeerSet,
+      data: {},
+    });
 
     expect(followedAccountsActions.followedAccountFetchedAndUpdated).to.have.callCount(2);
   });

@@ -23,15 +23,9 @@ describe('Reducer: followedAccounts(state, action)', () => {
 
   it(`should return accounts if action.type is ${actionTypes.followedAccountsRetrieved}`, () => {
     const state = { accounts: [] };
+    const action = followedAccountsRetrieved([account, account2]);
 
-    let action = followedAccountsRetrieved(account);
-    let changedState = followedAccounts(state, action);
-    // make sure an array will be returned, regardless of input
-    expect(changedState.accounts).to.deep.equal([account]);
-
-    action = followedAccountsRetrieved([account, account2]);
-
-    changedState = followedAccounts(state, action);
+    const changedState = followedAccounts(state, action);
     expect(changedState.accounts[0]).to.deep.equal(account);
     expect(changedState.accounts[1]).to.deep.equal(account2);
   });

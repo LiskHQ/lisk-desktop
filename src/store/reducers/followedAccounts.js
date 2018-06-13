@@ -4,11 +4,10 @@ import actionTypes from '../../constants/actions';
 const followedAccounts = (state = { accounts: [] }, action) => {
   const accounts = [...state.accounts];
   let indexOfAccount;
-  let changedAccount;
 
   switch (action.type) {
     case actionTypes.followedAccountsRetrieved:
-      return { accounts: Array.isArray(action.data) ? action.data : [action.data] };
+      return { accounts: action.data };
 
     case actionTypes.followedAccountAdded:
       accounts.push(action.data);
@@ -16,10 +15,9 @@ const followedAccounts = (state = { accounts: [] }, action) => {
 
     case actionTypes.followedAccountUpdated:
       indexOfAccount = getIndexOfFollowedAccount(state.accounts, action.data);
-      changedAccount = action.data;
 
       if (indexOfAccount !== -1) {
-        changedAccount = {
+        const changedAccount = {
           ...accounts[indexOfAccount],
           balance: action.data.balance,
           publicKey: action.data.publicKey,
