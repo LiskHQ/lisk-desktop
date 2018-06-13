@@ -7,26 +7,7 @@ import AutoSuggest from './../autoSuggest';
 import routes from './../../constants/routes';
 import styles from './searchBar.css';
 
-const getSearchItem = (location) => {
-  const regex = new RegExp('/explorer/(?:[^/]*)/?');
-
-  return location.pathname.includes('explorer')
-    ? location.pathname.replace(regex, '')
-    : '';
-};
-
 class Search extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { searchItem: getSearchItem(props.location) };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.location !== this.props.location) {
-      this.setState({ searchItem: getSearchItem(nextProps.location) });
-    }
-  }
-
   shouldShowSearchBarOnMobile() {
     const { pathname } = this.props.location;
     return pathname.includes('explorer') && !pathname.includes(`${routes.explorer.path}${routes.search.path}`);

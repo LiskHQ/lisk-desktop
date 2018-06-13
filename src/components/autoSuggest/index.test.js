@@ -17,6 +17,7 @@ describe('AutoSuggest', () => {
   let props;
   let results;
   let submitSearchSpy;
+  let submitSearchAnythingSpy;
   let saveSearchSpy;
   let clock;
 
@@ -35,6 +36,7 @@ describe('AutoSuggest', () => {
     });
 
     submitSearchSpy = spy(AutoSuggest.prototype, 'submitSearch');
+    submitSearchAnythingSpy = spy(AutoSuggest.prototype, 'submitAnySearch');
     saveSearchSpy = spy(searchActions, 'saveSearch');
     wrapper = mount(<I18nextProvider i18n={i18n}><AutoSuggest {...props} /></I18nextProvider>);
     wrapper.update();
@@ -42,6 +44,7 @@ describe('AutoSuggest', () => {
 
   afterEach(() => {
     submitSearchSpy.restore();
+    submitSearchAnythingSpy.restore();
     saveSearchSpy.restore();
     clock.restore();
   });
@@ -131,7 +134,7 @@ describe('AutoSuggest', () => {
       keyCode: keyCodes.tab,
       which: keyCodes.tab,
     });
-    expect(submitSearchSpy).to.have.been.calledWith();
+    expect(submitSearchAnythingSpy).to.have.been.calledWith();
   });
 
   it('should close dropdown on keyboard event {escape}', () => {

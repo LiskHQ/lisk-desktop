@@ -18,6 +18,7 @@ class AutoSuggest extends React.Component {
       show: false,
       value: '',
       selectedIdx: 0,
+      resultsLength: 0,
     };
     this.delegateRegEx = new RegExp(/[!@$&_.]+/g);
   }

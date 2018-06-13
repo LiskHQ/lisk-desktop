@@ -9,14 +9,12 @@ import PropTypes from 'prop-types';
 
 import i18n from '../../i18n';
 import Search from './index';
-import * as keyAction from './../search/keyAction';
 
 describe('SearchBar', () => {
   let wrapper;
   let history;
   let props;
   let options;
-  let localStorageStub;
   const store = {};
   const peers = {
     data: {},
@@ -25,10 +23,6 @@ describe('SearchBar', () => {
 
   // Mocking store
   beforeEach(() => {
-    localStorageStub = stub(localStorage, 'getItem');
-    localStorageStub.withArgs('searches').returns([]);
-    spy(keyAction, 'visitAndSaveSearch');
-    spy(keyAction, 'visitAndSaveSearchOnEnter');
 
     history = {
       location: {
@@ -72,21 +66,6 @@ describe('SearchBar', () => {
         </Router>
       </Provider>, options,
     );
-  });
-
-  afterEach(() => {
-    localStorageStub.restore();
-    keyAction.visitAndSaveSearch.restore()
-    keyAction.visitAndSaveSearchOnEnter.restore()
-  });
-
-  it('should call getSearchItem on componentWillReceiveProps', () => {
-    wrapper.find('Search').props().history.push('/explorer/');
-    wrapper.update();
-    expect(wrapper.find('.autosuggest-input').find('input')).to.have.value('');
-    wrapper.find('Search').props().history.push('/explorer/transaction/123');
-    wrapper.update();
-    expect(wrapper.find('.autosuggest-input').find('input')).to.have.value('123');
   });
 
   it('should render Autosuggest', () => {
