@@ -15,14 +15,25 @@ export const transactionsFilterSet = ({
       address,
       limit,
       filter,
-    }).then(response => dispatch({
-      data: {
-        confirmed: response.transactions,
-        count: parseInt(response.count, 10),
-        filter,
-      },
-      type: actionTypes.transactionsFiltered,
-    }));
+    }).then((response) => {
+      dispatch({
+        data: {
+          confirmed: response.transactions,
+          count: parseInt(response.count, 10),
+          filter,
+        },
+        type: actionTypes.transactionsFiltered,
+      });
+      if (filter !== undefined) {
+        dispatch({
+          data: {
+            filterName: 'wallet',
+            value: filter,
+          },
+          type: actionTypes.addFilter,
+        });
+      }
+    });
   };
 
 export const transactionsUpdateUnconfirmed = ({ activePeer, address, pendingTransactions }) =>

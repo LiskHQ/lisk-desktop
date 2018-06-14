@@ -70,11 +70,20 @@ export const searchTransactions = ({
           data: {
             address,
             transactions: transactionsResponse.transactions,
-            count: parseInt(transactionsResponse.count, 10),
+            count: parseInt(transactionsResponse.count, 10) || 0,
             filter,
           },
           type: actionTypes.searchTransactions,
         });
+        if (filter !== undefined) {
+          dispatch({
+            data: {
+              filterName: 'transactions',
+              value: filter,
+            },
+            type: actionTypes.addFilter,
+          });
+        }
         if (showLoading) loadingFinished(actionTypes.searchTransactions);
       });
   };

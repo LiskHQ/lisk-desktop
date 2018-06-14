@@ -70,6 +70,7 @@ const actionTypes = {
   settingsUpdated: 'SETTINGS_UPDATED',
   settingsReset: 'SETTINGS_RESET',
   removeSavedAccountPassphrase: 'REMOVE_SAVED_ACCOUNT_PASSPHRASE',
+  addFilter: 'ADD_FILTER',
 };
 
 export default actionTypes;

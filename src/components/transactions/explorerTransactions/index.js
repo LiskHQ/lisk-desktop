@@ -15,8 +15,7 @@ const mapStateToProps = (state, ownProps) => ({
   count: state.search.transactions[state.search.lastSearch] &&
     (state.search.transactions[state.search.lastSearch].count || null),
   offset: state.search.searchResults.length,
-  activeFilter: state.search.transactions[state.search.lastSearch] &&
-    (state.search.transactions[state.search.lastSearch].filter || txFilters.all),
+  activeFilter: state.filters.transactions || txFilters.all,
   isSearchInStore: state.search.transactions[ownProps.address] !== undefined,
   loading: state.loading,
 });
@@ -25,6 +24,7 @@ const mapDispatchToProps = dispatch => ({
   searchAccount: data => dispatch(searchAccount(data)),
   searchTransactions: data => dispatch(searchTransactions(data)),
   searchMoreTransactions: data => dispatch(searchMoreTransactions(data)),
+  addFilter: data => dispatch({ type: actionTypes.addFilter, data }),
   searchUpdateLast: data =>
     dispatch({ data, type: actionTypes.searchUpdateLast }),
 });
