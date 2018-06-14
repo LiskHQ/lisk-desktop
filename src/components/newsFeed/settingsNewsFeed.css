@@ -20,7 +20,7 @@
   }
 
   & .newsWrapper:nth-child(odd) {
-    background: linear-gradient(90deg,#fff,#f5f8fc);
+    background: linear-gradient(90deg, #fff, #f5f8fc);
   }
 }
 

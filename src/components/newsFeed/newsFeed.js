@@ -20,8 +20,8 @@ class NewsFeed extends React.Component {
     this.setState({ showSettings: false });
   }
 
-  setNewsChannel(data) {
-    this.props.setNewsChannel(data);
+  setNewsChannels(data) {
+    this.props.settingsUpdated(data);
   }
 
   render() {
@@ -46,7 +46,7 @@ class NewsFeed extends React.Component {
               t={this.props.t}
               channels={this.props.channels}
               hideSettings={this.hideSettings.bind(this)}
-              setNewsChannel={this.setNewsChannel.bind(this)} />
+              setNewsChannels={this.setNewsChannels.bind(this)} />
           </form> :
           <form className={styles.form}>
             {this.props.newsFeed.map((news, index) => (

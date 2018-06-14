@@ -6,6 +6,13 @@ const initialState = JSON.parse(localStorage.getItem('settings')) || {
   autoLog: true,
   onBoarding: localStorage.getItem('onboarding') !== 'false',
   showNetwork: false,
+  channels: {
+    academy: false,
+    twitter: false,
+    blog: false,
+    github: false,
+    reddit: false,
+  },
 };
 
 /**
@@ -22,6 +29,14 @@ const settings = (state = initialState, action) => {
         advancedMode: false,
         autoLog: true,
       });
+    case actionTypes.switchChannel:
+      return {
+        ...state,
+        channels: {
+          ...state.channels,
+          [action.data.name]: action.data.value,
+        },
+      };
     default:
       return state;
   }
