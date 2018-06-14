@@ -8,9 +8,9 @@ defineSupportCode(({ Then }) => {
     waitForElemAndCheckItsText(selectorClass, text, callback);
   });
 
-  Then('I hit "{keyCode}" key in "{element}" input', (keyCode, element, callback) => {
+  Then('I hit enter key in "{element}" input', (element, callback) => {
     const selectorClass = `.${element.replace(/ /g, '-')}`;
-    waitForElemAndSendKeys(selectorClass, keyCode, callback);
+    waitForElemAndSendKeys(selectorClass, protractor.Key.ENTER, callback);
   });
 });
 

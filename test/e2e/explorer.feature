@@ -33,7 +33,7 @@ Feature: Explorer page
     When I click "home link"
     When I clear "autosuggest input" field
     When I fill in "1465651642158264047" to "autosuggest input" field
-    And I hit "13" key in "autosuggest input" input
+    And I hit enter key in "autosuggest input" input
     Then I should see text "No results" in "empty message" element
     When I clear "autosuggest input" field
     And I fill in "9938914350729699234" to "autosuggest input" field
