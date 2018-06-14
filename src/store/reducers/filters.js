@@ -1,6 +1,6 @@
 import actionTypes from '../../constants/actions';
 
-const filters = (state = { transactions: 0 }, action) => {
+const filters = (state = { transactions: 0, wallet: 0 }, action) => {
   switch (action.type) {
     case actionTypes.addFilter:
       return {
