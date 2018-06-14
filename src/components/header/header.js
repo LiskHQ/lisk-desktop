@@ -28,7 +28,7 @@ class Header extends React.Component {
   shouldShowSearchBar() {
     const { pathname } = this.props.location;
     return ![routes.register.path, routes.addAccount.path]
-      .some(el => pathname.includes(el)) && pathname !== routes.login.path;
+      .some(el => pathname.includes(el));
   }
 
   render() {

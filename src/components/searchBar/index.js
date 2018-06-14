@@ -8,13 +8,8 @@ import AutoSuggest from './../autoSuggest';
 import styles from './searchBar.css';
 
 class Search extends React.Component {
-  shouldShowSearchBarOnMobile() {
-    const { pathname } = this.props.location;
-    return pathname.includes('explorer');
-  }
-
   render() {
-    return (<div className={`${styles.searchBar} search-bar-input ${this.shouldShowSearchBarOnMobile() ? styles.show : null}`}>
+    return (<div className={`${styles.searchBar} ${styles.show} search-bar-input`}>
       <AutoSuggest
         history={this.props.history}
         t={this.props.t}

@@ -10,8 +10,6 @@ import { FontIcon } from '../fontIcon';
 import routes from '../../constants/routes';
 
 const getIndex = (history, tabs) => {
-  if (history.location.pathname.includes('explorer')) return 2;
-
   let index = -1;
   tabs.map(t => new RegExp(`${t.route}(\\/?)`)).forEach((item, i) => {
     if (history.location.pathname.match(item)) {
@@ -105,7 +103,7 @@ class MainMenu extends React.Component {
     }
 
     const itemShouldBeDisabled = index =>
-      (isCurrent(history, index, tabs) || !account.address) && index !== 2 && index !== 4;
+      (isCurrent(history, index, tabs) || !account.address) && index !== 4;
 
     return (
       <Fragment>
