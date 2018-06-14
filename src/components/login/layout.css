@@ -10,6 +10,7 @@
   display: block !important;
   clear: both;
   padding-right: 16px;
+  margin-top: 46px;
 }
 
 @define-mixin login-signup {
