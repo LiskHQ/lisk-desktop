@@ -5,7 +5,6 @@ import TransactionOverview from './../transactionOverview';
 import TransactionDetailView from './../transactionDetailView';
 import Box from './../../box';
 import txFilters from './../../../constants/transactionFilters';
-
 import routes from './../../../constants/routes';
 
 class ExplorerTransactions extends React.Component {
@@ -20,6 +19,11 @@ class ExplorerTransactions extends React.Component {
       limit: 25,
       filter: txFilters.all,
     });
+
+    this.props.addFilter({
+      filterName: 'transactions',
+      value: txFilters.all,
+    });
   }
   onLoadMore() {
     this.props.searchMoreTransactions({
@@ -30,14 +34,26 @@ class ExplorerTransactions extends React.Component {
       filter: this.props.activeFilter,
     });
   }
+  /*
+    Transactions from tabs are filtered based on filter number
+    It applys to All, Incoming and Outgoing
+    for other tabs that are not using transactions there is no need to call API
+  */
   onFilterSet(filter) {
-    this.props.searchTransactions({
-      activePeer: this.props.activePeer,
-      address: this.props.address,
-      limit: 25,
-      filter,
-      showLoading: false,
-    });
+    if (filter <= 2) {
+      this.props.searchTransactions({
+        activePeer: this.props.activePeer,
+        address: this.props.address,
+        limit: 25,
+        filter,
+        showLoading: false,
+      });
+    } else {
+      this.props.addFilter({
+        filterName: 'transactions',
+        value: filter,
+      });
+    }
   }
 
   onTransactionRowClick(props) {

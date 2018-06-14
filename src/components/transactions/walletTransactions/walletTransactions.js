@@ -29,6 +29,11 @@ class WalletTransactions extends React.Component {
         address: this.props.address,
       });
     }
+
+    this.props.addFilter({
+      filterName: 'wallet',
+      value: txFilters.all,
+    });
   }
   onLoadMore() {
     this.props.transactionsRequested({
@@ -39,13 +44,25 @@ class WalletTransactions extends React.Component {
       filter: this.props.activeFilter,
     });
   }
+  /*
+    Transactions from tabs are filtered based on filter number
+    It applys to All, Incoming and Outgoing
+    for other tabs that are not using transactions there is no need to call API
+  */
   onFilterSet(filter) {
-    this.props.transactionsFilterSet({
-      activePeer: this.props.activePeer,
-      address: this.props.address,
-      limit: 25,
-      filter,
-    });
+    if (filter <= 2) {
+      this.props.transactionsFilterSet({
+        activePeer: this.props.activePeer,
+        address: this.props.address,
+        limit: 25,
+        filter,
+      });
+    } else {
+      this.props.addFilter({
+        filterName: 'wallet',
+        value: filter,
+      });
+    }
   }
   onTransactionRowClick(props) {
     this.props.history.push(`${routes.wallet.path}?id=${props.value.id}`);

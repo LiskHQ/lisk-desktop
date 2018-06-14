@@ -2,7 +2,7 @@ import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../utils/loading';
 import { transactions, getAccount } from '../utils/api/account';
 import { getDelegate, getVoters, getVotes } from '../utils/api/delegate';
-import { searchAll } from '../utils/api/search';
+import searchAll from '../utils/api/search';
 
 const searchDelegate = ({ activePeer, publicKey, address }) =>
   (dispatch) => {
@@ -70,11 +70,20 @@ export const searchTransactions = ({
           data: {
             address,
             transactions: transactionsResponse.transactions,
-            count: parseInt(transactionsResponse.count, 10),
+            count: parseInt(transactionsResponse.count, 10) || 0,
             filter,
           },
           type: actionTypes.searchTransactions,
         });
+        if (filter !== undefined) {
+          dispatch({
+            data: {
+              filterName: 'transactions',
+              value: filter,
+            },
+            type: actionTypes.addFilter,
+          });
+        }
         if (showLoading) loadingFinished(actionTypes.searchTransactions);
       });
   };

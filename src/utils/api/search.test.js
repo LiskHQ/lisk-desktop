@@ -8,11 +8,29 @@ describe('Utils: Search', () => {
   let peersAPIStub;
   let getAccountStub;
 
-  const accountsResponse = { account: { address: '1337L', balance: 1110 }, success: true };
+  const accountsResponse = { address: '1337L', balance: 1110 };
+
   const delegatesResponse = {
     delegates: [
+      { username: '_1337l', rank: 19, address: '123456' },
+      { username: '__1337ll', rank: 19, address: '123456' },
       { username: '1337', rank: 18, address: '123456' },
-      { username: '1337l', rank: 19, address: '123456' },
+      { username: '1337l', rank: 18, address: '123456' },
+      { username: '1337Lolo', rank: 18, address: '123456' },
+    ],
+  };
+  const delegatesResponseOrdered = {
+    delegates: [
+      { username: '1337', rank: 18, address: '123456' },
+      { username: '1337Lolo', rank: 18, address: '123456' },
+      { username: '1337l', rank: 18, address: '123456' },
+    ],
+  };
+
+  const delegatesResponseOrderedAddressMatch = {
+    delegates: [
+      { username: '1337Lolo', rank: 18, address: '123456' },
+      { username: '1337l', rank: 18, address: '123456' },
     ],
   };
   const delegatesUrlParams = {
@@ -54,22 +72,22 @@ describe('Utils: Search', () => {
 
   it('should search {addresses,delegates} when only address pattern matched', () =>
     expect(searchAll({ searchTerm: '1337L' })).to.eventually.deep.equal([
-      { addresses: [accountsResponse.account] },
+      { addresses: [accountsResponse] },
       { transactions: [] },
-      { delegates: delegatesResponse.delegates },
+      { delegates: delegatesResponseOrderedAddressMatch.delegates },
     ]));
 
   it('should search {transactions,delegates} when only transaction pattern matched', () =>
     expect(searchAll({ searchTerm: '1337' })).to.eventually.deep.equal([
       { addresses: [] },
       { transactions: [transactionsResponse.transaction] },
-      { delegates: delegatesResponse.delegates },
+      { delegates: delegatesResponseOrdered.delegates },
     ]));
 
   it('should still search for {addresses} when failing {delegates} request', () => {
     peersAPIStub.withArgs(undefined, 'delegates/search', delegatesUrlParams).returnsPromise().rejects({ success: false });
     return expect(searchAll({ searchTerm: '1337L' })).to.eventually.deep.equal([
-      { addresses: [accountsResponse.account] },
+      { addresses: [accountsResponse] },
       { transactions: [] },
       { delegates: [] },
     ]);
@@ -80,7 +98,7 @@ describe('Utils: Search', () => {
     return expect(searchAll({ searchTerm: '1337L' })).to.eventually.deep.equal([
       { addresses: [] },
       { transactions: [] },
-      { delegates: delegatesResponse.delegates },
+      { delegates: delegatesResponseOrderedAddressMatch.delegates },
     ]);
   });
 
@@ -89,7 +107,7 @@ describe('Utils: Search', () => {
     return expect(searchAll({ searchTerm: '1337' })).to.eventually.deep.equal([
       { addresses: [] },
       { transactions: [] },
-      { delegates: delegatesResponse.delegates },
+      { delegates: delegatesResponseOrdered.delegates },
     ]);
   });
 });

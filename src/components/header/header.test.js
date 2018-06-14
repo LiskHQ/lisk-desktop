@@ -17,6 +17,13 @@ describe('Header', () => {
     peers: { data: { options: {} } },
     account: {},
     activePeerSet: () => {},
+    search: {
+      suggestions: {
+        delegates: [],
+        addresses: [],
+        transactions: [],
+      },
+    },
   };
   const mockInputProps = {
     setActiveDialog: () => { },

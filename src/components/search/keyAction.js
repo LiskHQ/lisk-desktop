@@ -3,7 +3,7 @@ import keyCodes from './../../constants/keyCodes';
 import routes from './../../constants/routes';
 import regex from './../../utils/regex';
 
-const saveSearch = (search) => {
+export const saveSearch = (search) => {
   if (search.length === 0) return;
 
   const recent = localJSONStorage.get('searches', []);

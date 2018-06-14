@@ -13,6 +13,7 @@ import accountReducer from '../../../store/reducers/account';
 import transactionsReducer from '../../../store/reducers/transactions';
 import searchReducer from '../../../store/reducers/search';
 import loadingReducer from '../../../store/reducers/loading';
+import filtersReducer from '../../../store/reducers/filters';
 
 import { accountLoggedIn } from '../../../../src/actions/account';
 import { activePeerSet } from '../../../../src/actions/peers';
@@ -37,6 +38,7 @@ describe('WalletTransactions Component', () => {
     transactions: transactionsReducer,
     search: searchReducer,
     loading: loadingReducer,
+    filters: filtersReducer,
   }, [thunk]);
 
   beforeEach(() => {
