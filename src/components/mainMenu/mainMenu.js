@@ -109,7 +109,7 @@ class MainMenu extends React.Component {
       <Fragment>
         <aside className={styles.aside}>
           <div className={styles.sideBarWrapper}>
-            <Link to={`${routes.dashboard.path}`}><img src={logo} className={styles.logo} /></Link>
+            <Link to={`${routes.dashboard.path}`} className='home-link'><img src={logo} className={styles.logo} /></Link>
             <ToolboxTabs index={getIndex(history, tabs)}
               theme={styles}
               onChange={this.navigate.bind(this, history, tabs)}

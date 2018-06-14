@@ -2,13 +2,18 @@ Feature: Explorer page
   Scenario: should show search results on mainnet for an account while being logged out
     Given I go to "/"
     And I wait 1 seconds
-    When I click "explorer" menu
-    When I fill in "16313739661670634666L" to "search input" field
-    And I click "input search button"
+    When I fill in "16313739661670634666L" to "autosuggest input" field
+    And I wait 2 seconds
+    And I click "addresses result"
     And I wait 2 seconds
     Then I should see text "No activity yet" in "empty message" element
     When I clear "autosuggest input" field
-    And I wait 1 seconds
+    And I fill in "15610359283786884938L" to "autosuggest input" field
+    And I wait 2 seconds
+    And I click "addresses result"
+    And I wait 2 seconds
+    When I clear "autosuggest input" field
+    And I wait 2 seconds
     And I fill in "15610359283786884938L" to "autosuggest input" field
     And I wait 2 seconds
     And I click "addresses result"
@@ -25,9 +30,10 @@ Feature: Explorer page
     When I click "send to address"
     And I wait 1 seconds
     Then I should be on url "/?referrer=/wallet%3Frecipient%3D15610359283786884938L"
-    When I click "explorer" menu
-    When I fill in "1465651642158264047" to "search input" field
-    And I click "input search button"
+    When I click "home link"
+    When I clear "autosuggest input" field
+    When I fill in "1465651642158264047" to "autosuggest input" field
+    And I hit "13" key in "autosuggest input" input
     Then I should see text "No results" in "empty message" element
     When I clear "autosuggest input" field
     And I fill in "9938914350729699234" to "autosuggest input" field
