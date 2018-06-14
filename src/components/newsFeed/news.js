@@ -14,7 +14,7 @@ class News extends React.Component {
     const hours = new Date().getHours() - timestamp.getHours();
     const timestampMessage = hours ? `${hours}h ago` : 'just now';
     return (
-      <div className={'news'}>
+      <div className={styles.news}>
         <div className={styles.header}>
           <div className={styles.tag}>{tag}</div>
           <div className={styles.timestampMessage}>{timestampMessage}</div>

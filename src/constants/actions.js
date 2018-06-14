@@ -66,6 +66,7 @@ const actionTypes = {
   settingsUpdated: 'SETTINGS_UPDATED',
   settingsReset: 'SETTINGS_RESET',
   removeSavedAccountPassphrase: 'REMOVE_SAVED_ACCOUNT_PASSPHRASE',
+  switchChannel: 'SWITCH_CHANNEL',
 };
 
 export default actionTypes;

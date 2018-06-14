@@ -1,5 +1,21 @@
 .headerWrapper {
+  display: flex;
   padding: 0 20px;
+}
+
+.settingsButton {
+  display: flex;
+  padding: 20px 20px 0;
+  align-items: center;
+
+  & span {
+    cursor: pointer;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
 }
 
 .form {

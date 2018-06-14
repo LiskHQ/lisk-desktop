@@ -1,4 +1,8 @@
 
+.news {
+  width: 100%;
+}
+
 .header {
   padding: 5px 0;
   display: flex;

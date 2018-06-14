@@ -1,5 +1,6 @@
 import React from 'react';
-import styles from './newsFeed.css';
+import Checkbox from '../toolbox/sliderCheckbox';
+import styles from './settingsNewsFeed.css';
 
 class SettingsNewsFeed extends React.Component {
   constructor() {
@@ -11,10 +12,22 @@ class SettingsNewsFeed extends React.Component {
 
   render() {
     return (
-      <div className={styles.newsFeed}>
-        <div onClick={() => { this.props.hideSettings(); }}>BACK</div>
-        Settings
-      </div>
+      <form className={styles.form}>
+        {Object.keys(this.props.channels).map((channel, index) => (
+          <div className={styles.item} key={`channel-${index}`}>
+            <label>{this.props.t(channel)}</label>
+            <Checkbox
+              onChange={() =>
+                this.props.setNewsChannel({ name: channel, value: !this.props.channels[channel] })
+              }
+              theme={styles}
+              input={{
+                value: true,
+                checked: this.props.channels[channel],
+              }}/>
+          </div>))
+        }
+      </form>
     );
   }
 }
