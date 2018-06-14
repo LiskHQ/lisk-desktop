@@ -9,7 +9,6 @@ import i18n from '../../i18n'; // initialized i18next instance
 import App from './';
 import Login from '../login';
 import Transactions from '../transactionDashboard';
-import Search from '../search';
 import Voting from '../voting';
 import routes from '../../constants/routes';
 

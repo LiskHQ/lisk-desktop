@@ -85,18 +85,18 @@ describe('MainMenu', () => {
     expect(wrapper.find(ToolboxTabs).exists()).to.equal(true);
   });
 
-  it('should render 6 Button components if props.showDelegate', () => {
+  it('should render 5 Button components if props.showDelegate', () => {
     const wrapper = mount(<MemoryRouter>
       <MainMenu {...props} showDelegate={true}/>
     </MemoryRouter>, options);
-    expect(wrapper.find(Tab)).to.have.lengthOf(6);
+    expect(wrapper.find(Tab)).to.have.lengthOf(5);
   });
 
-  it('should render 5 menu item components if !props.isDelegate', () => {
+  it('should render 4 menu item components if !props.isDelegate', () => {
     const wrapper = mount(<MemoryRouter>
       <MainMenu {...props} />
     </MemoryRouter>, options);
-    expect(wrapper.find(Tab)).to.have.lengthOf(5);
+    expect(wrapper.find(Tab)).to.have.lengthOf(4);
   });
 
   it('should all Tab be disabled except search if !props.account.address', () => {
@@ -104,7 +104,7 @@ describe('MainMenu', () => {
       <MainMenu {...props} account={{}} />
     </MemoryRouter>, options);
     expect(wrapper.find(Tab).at(0).props().disabled).to.be.equal(true);
-    expect(wrapper.find(Tab).at(2).props().disabled).to.be.equal(false);
+    expect(wrapper.find(Tab).at(2).props().disabled).to.be.equal(true);
   });
 
   it('should allow to change active menu item', () => {

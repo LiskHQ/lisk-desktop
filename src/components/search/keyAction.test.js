@@ -1,7 +1,6 @@
 import { expect } from 'chai';
-import { visitAndSaveSearchOnEnter, visit } from './keyAction';
+import { saveSearch } from './keyAction';
 import keyCodes from './../../constants/keyCodes';
-import routes from './../../constants/routes';
 import localJSONStorage from './../../utils/localJSONStorage';
 
 describe('Search KeyAction', () => {
@@ -12,7 +11,7 @@ describe('Search KeyAction', () => {
     window.localStorage.setItem = (key, item) => { storage[key] = item; };
   });
 
-  it('saves the last 3 searches without duplicates on enter', () => {
+  it('saves the last 3 searches without duplicates', () => {
     const testValues = [
       '811299173602533L',
       '947273526752682L',
@@ -28,30 +27,9 @@ describe('Search KeyAction', () => {
     ];
 
     testValues.forEach((value) => {
-      visitAndSaveSearchOnEnter({ which: keyCodes.enter, target: { value } }, []);
+      saveSearch(value);
     });
 
     expect(localJSONStorage.get('searches')).to.eql(expectedOutcome);
-  });
-
-  it('visits appropriate url when searched for term', () => {
-    const history = [];
-    const testValues = [
-      '811299173602533L',
-      '382923358293526',
-      'some string',
-    ];
-
-    const expectedHistory = [
-      `${routes.explorer.path}${routes.accounts.path}/${testValues[0]}`,
-      `${routes.explorer.path}${routes.transactions.path}/${testValues[1]}`,
-      `${routes.explorer.path}${routes.searchResult.path}/${testValues[2]}`,
-    ];
-
-    testValues.forEach((value) => {
-      visit(value, history);
-    });
-
-    expect(history).to.eql(expectedHistory);
   });
 });
