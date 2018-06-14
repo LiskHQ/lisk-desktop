@@ -7,7 +7,6 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { prepareStore } from '../../../test/utils/applicationInit';
 import * as search from '../../actions/search';
-import * as filtersActions from '../../actions/filters';
 import peersReducer from '../../store/reducers/peers';
 import accountReducer from '../../store/reducers/account';
 import searchReducer from '../../store/reducers/search';
@@ -23,7 +22,6 @@ describe('AccountTransaction Component', () => {
   let props;
   let searchTransactionsSpy;
   let searchAccountSpy;
-  let addFiltersSpy;
 
   const store = prepareStore({
     peers: peersReducer,
@@ -36,7 +34,6 @@ describe('AccountTransaction Component', () => {
   beforeEach(() => {
     searchTransactionsSpy = spy(search, 'searchTransactions');
     searchAccountSpy = spy(search, 'searchAccount');
-    addFiltersSpy = spy(filtersActions, 'addFilter');
 
     props = {
       match: { params: { address: accounts.genesis.address } },
@@ -54,7 +51,6 @@ describe('AccountTransaction Component', () => {
   afterEach(() => {
     searchTransactionsSpy.restore();
     searchAccountSpy.restore();
-    addFiltersSpy.restore();
   });
 
   it('renders AccountTransaction Component and loads account transactions', () => {
@@ -63,7 +59,6 @@ describe('AccountTransaction Component', () => {
     /* eslint-disable no-unused-expressions */
     expect(searchTransactionsSpy).to.have.been.calledOnce;
     expect(searchAccountSpy).to.have.been.calledOnce;
-    expect(addFiltersSpy).to.have.been.calledOnce;
     /* eslint-enable no-unused-expressions */
   });
 });
