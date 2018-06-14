@@ -1,6 +1,5 @@
 import { expect } from 'chai';
 import { saveSearch } from './keyAction';
-import keyCodes from './../../constants/keyCodes';
 import localJSONStorage from './../../utils/localJSONStorage';
 
 describe('Search KeyAction', () => {
