@@ -26,7 +26,6 @@ const addRouter = Component => (props, path) =>
 
 const publicComponent = [
   { route: '/', component: Login },
-  { route: `${routes.explorer.path}${routes.search.path}`, component: Search },
 ];
 
 const privateComponent = [

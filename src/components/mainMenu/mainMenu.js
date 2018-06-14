@@ -83,11 +83,6 @@ class MainMenu extends React.Component {
         image: menuLogos.buyLisk,
       }, {
       */
-        label: t('Explorer'),
-        route: `${routes.explorer.path}${routes.search.path}`,
-        id: 'explorer',
-        image: menuLogos.search,
-      }, {
         label: t('Sidechains'),
         route: `${routes.sidechains.path}`,
         id: 'sidechains',
