@@ -11,12 +11,12 @@ import accounts from '../../../test/constants/accounts';
 
 describe('Reducer: followedAccounts(state, action)', () => {
   const account = {
-    publicKey: accounts.genesis.publicKey,
+    address: accounts.genesis.address,
     balance: accounts.genesis.balance,
     title: accounts.genesis.address,
   };
   const account2 = {
-    publicKey: accounts.delegate.publicKey,
+    address: accounts.delegate.address,
     balance: accounts.delegate.balance,
     title: accounts.delegate.address,
   };
@@ -32,7 +32,7 @@ describe('Reducer: followedAccounts(state, action)', () => {
 
   it(`should return accounts with added account if action.type is ${actionTypes.followedAccountAdded}`, () => {
     const account3 = {
-      publicKey: accounts['empty account'].publicKey,
+      address: accounts['empty account'].address,
       balance: accounts['empty account'].balance,
       title: accounts['empty account'].address,
     };
@@ -50,7 +50,7 @@ describe('Reducer: followedAccounts(state, action)', () => {
 
   it(`should return accounts with updated account if action.type is ${actionTypes.followedAccountUpdated}`, () => {
     const updatedAccount = {
-      publicKey: accounts.delegate.publicKey,
+      address: accounts.delegate.address,
       balance: accounts.delegate.balance,
       title: 'bob',
     };

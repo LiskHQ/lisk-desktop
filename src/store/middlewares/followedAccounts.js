@@ -4,7 +4,6 @@ import {
   followedAccountsRetrieved,
 } from '../../actions/followedAccounts';
 import { getFollowedAccountsFromLocalStorage } from '../../utils/followedAccounts';
-import { extractAddress } from '../../utils/account';
 
 const followedAccountsMiddleware = (store) => {
   setImmediate(() => {
@@ -23,11 +22,9 @@ const followedAccountsMiddleware = (store) => {
 
   const checkTransactionsAndUpdateFollowedAccounts = (peers, tx, followedAccounts) => {
     const changedAccounts = followedAccounts.accounts.filter((account) => {
-      const address = extractAddress(account.publicKey);
-
       const relevantTransactions = tx.filter((transaction) => {
         const { senderId, recipientId } = transaction;
-        return (address === recipientId || address === senderId);
+        return (account.address === recipientId || account.address === senderId);
       });
 
       return relevantTransactions.length > 0;

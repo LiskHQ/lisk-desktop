@@ -9,12 +9,12 @@ describe('FollowedAccounts middleware', () => {
   let store;
   let next;
   const account = {
-    publicKey: accounts.genesis.publicKey,
+    address: accounts.genesis.address,
     balance: accounts.genesis.balance,
     title: accounts.genesis.address,
   };
   const account2 = {
-    publicKey: accounts.delegate.publicKey,
+    address: accounts.delegate.address,
     balance: accounts.delegate.balance,
     title: accounts.delegate.address,
   };

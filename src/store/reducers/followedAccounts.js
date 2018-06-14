@@ -20,7 +20,7 @@ const followedAccounts = (state = { accounts: [] }, action) => {
         const changedAccount = {
           ...accounts[indexOfAccount],
           balance: action.data.balance,
-          publicKey: action.data.publicKey,
+          address: action.data.address,
           title: action.data.title,
         };
         accounts[indexOfAccount] = changedAccount;
@@ -31,7 +31,7 @@ const followedAccounts = (state = { accounts: [] }, action) => {
     case actionTypes.followedAccountRemoved:
       return {
         ...state,
-        accounts: state.accounts.filter(account => !(account.publicKey === action.data.publicKey)),
+        accounts: state.accounts.filter(account => !(account.address === action.data.address)),
       };
 
     default:
