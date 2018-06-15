@@ -96,15 +96,28 @@ class AutoSuggest extends React.Component {
 
   handleArrowDown() {
     let currentIdx = this.state.selectedIdx;
-    currentIdx = (currentIdx === this.resultsLength) ? this.resultsLength : currentIdx += 1;
-    const placeholder = this.getValueFromCurrentIdx(currentIdx, this.props.results);
+    let placeholder = '';
+    if (this.state.resultsLength === 0) {
+      currentIdx = (currentIdx === this.recentSearches.length) ?
+        this.recentSearches.length : currentIdx += 1;
+      placeholder = this.recentSearches[currentIdx].valueLeft;
+    } else {
+      currentIdx = (currentIdx === this.state.resultsLength) ?
+        this.state.resultsLength : currentIdx += 1;
+      placeholder = this.getValueFromCurrentIdx(currentIdx, this.props.results);
+    }
     this.setState({ selectedIdx: currentIdx, placeholder });
   }
 
   handleArrowUp() {
     let currentIdx = this.state.selectedIdx;
     currentIdx = (currentIdx === 0) ? 0 : currentIdx -= 1;
-    const placeholder = this.getValueFromCurrentIdx(currentIdx, this.props.results);
+    let placeholder = '';
+    if (this.state.resultsLength === 0) {
+      placeholder = this.recentSearches[currentIdx].valueLeft;
+    } else {
+      placeholder = this.getValueFromCurrentIdx(currentIdx, this.props.results);
+    }
     this.setState({ selectedIdx: currentIdx, placeholder });
   }
 
@@ -131,7 +144,7 @@ class AutoSuggest extends React.Component {
   /* eslint-enable class-methods-use-this */
 
   handleSubmit() {
-    if (this.state.resultsLength > 0) {
+    if (this.state.resultsLength > 0 || this.state.placeholder !== '') {
       this.submitSearch();
       this.props.searchClearSuggestions();
       this.setState({ placeholder: '' });
@@ -212,8 +225,8 @@ class AutoSuggest extends React.Component {
 
   /* eslint-disable class-methods-use-this */
   getRecentSearchResults() {
-    return localJSONStorage.get('searches', [])
-      .map((result) => {
+    this.recentSearches = localJSONStorage.get('searches', [])
+      .map((result, idx) => {
         let type = 'addresses';
         if (result.match(regex.transactionId)) {
           type = 'transactions';
@@ -222,15 +235,19 @@ class AutoSuggest extends React.Component {
           id: result,
           valueLeft: result,
           valueRight: '',
-          isSelected: false,
+          isSelected: idx === this.state.selectedIdx,
           type,
         };
       });
+    return this.recentSearches;
   }
   /* eslint-enable class-methods-use-this */
 
   render() {
     const { t } = this.props;
+
+    const placeholderValue = this.state.placeholder !== '' ?
+      this.state.placeholder : t('Search for delegate, Lisk ID, transaction ID');
 
     return (
       <div className={styles.wrapper}>
@@ -238,7 +255,7 @@ class AutoSuggest extends React.Component {
           className={`${styles.placeholder} autosuggest-placeholder`}
           type='text'
           name='autosuggest-placeholder' />
-        <Input type='text' placeholder={t('Search for delegate, Lisk ID, transaction ID')} name='searchBarInput'
+        <Input type='text' placeholder={placeholderValue} name='searchBarInput'
           value={this.state.value}
           innerRef={(el) => { this.inputRef = el; }}
           className={`${styles.input} autosuggest-input`}
