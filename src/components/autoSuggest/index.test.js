@@ -1,10 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
-import { mount } from 'enzyme';
-import { I18nextProvider } from 'react-i18next';
+import configureMockStore from 'redux-mock-store';
 import { spy, useFakeTimers } from 'sinon';
+import { mountWithContext } from '../../../test/utils/mountHelpers';
 import AutoSuggest from './index';
-import i18n from '../../i18n';
 import styles from './autoSuggest.css';
 
 import * as searchActions from './../search/keyAction';
@@ -30,7 +29,18 @@ describe('AutoSuggest', () => {
       },
       results,
       searchSuggestions: spy(),
+      searchClearSuggestions: spy(),
     };
+
+    const store = configureMockStore([])({
+      search: {
+        suggestions: {
+          delegates: [],
+          addresses: [],
+          transactions: [],
+        },
+      },
+    });
     clock = useFakeTimers({
       toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
     });
@@ -38,7 +48,7 @@ describe('AutoSuggest', () => {
     submitSearchSpy = spy(AutoSuggest.prototype, 'submitSearch');
     submitSearchAnythingSpy = spy(AutoSuggest.prototype, 'submitAnySearch');
     saveSearchSpy = spy(searchActions, 'saveSearch');
-    wrapper = mount(<I18nextProvider i18n={i18n}><AutoSuggest {...props} /></I18nextProvider>);
+    wrapper = mountWithContext(<AutoSuggest {...props} />, { storeState: store });
     wrapper.update();
   });
 
@@ -61,23 +71,30 @@ describe('AutoSuggest', () => {
       addresses: [],
       transactions: [],
     };
-    const updatedProps = { ...props, results: partialResults };
-    wrapper = mount(<I18nextProvider i18n={i18n}>
-      <AutoSuggest {...updatedProps} /></I18nextProvider>);
+    wrapper.setProps({ results: partialResults });
     wrapper.update();
     expect(wrapper).to.have.exactly(0).descendants('.addresses-result');
     expect(wrapper).to.have.exactly(3).descendants('.delegates-result');
     expect(wrapper).to.have.exactly(0).descendants('.transactions-result');
   });
 
-  it('should show autosuggest on search input change and hide it on blur', () => {
+  it('should show autosuggest on search input change, show suggestion, and hide it on blur', () => {
     let autosuggestDropdown = wrapper.find('.autosuggest-dropdown').first();
     const autosuggestInput = wrapper.find('.autosuggest-input').find('input').first();
     expect(autosuggestDropdown).not.to.have.className(styles.show);
     autosuggestInput.simulate('focus');
     autosuggestInput.simulate('change', { target: { value: 'peter' } });
     clock.tick(300);
+    wrapper.setProps({
+      results: {
+        delegates: [results.delegates[0]],
+        addresses: [],
+        transactions: [],
+      },
+    });
     wrapper.update();
+    expect(wrapper.find('.autosuggest-placeholder')).to.have.value('peterpan');
+
     expect(props.searchSuggestions).to.have.been.calledWith();
     autosuggestDropdown = wrapper.find('.autosuggest-dropdown').first();
     expect(autosuggestDropdown).to.have.className(styles.show);
@@ -118,14 +135,29 @@ describe('AutoSuggest', () => {
       .calledWith(`${routes.searchResult.pathPrefix}${routes.searchResult.path}/notExistingDelegate`);
   });
 
-  it('should redirect to entity page on keyboard event {tab}', () => {
+  it('should update placeholder on events {arrowUp/arrowDown} and redirect to entity page on keyboard event {tab}', () => {
     const autosuggestInput = wrapper.find('.autosuggest-input').find('input').first();
 
+    wrapper.setProps({
+      results: {
+        delegates: [results.delegates[0]],
+        addresses: [results.addresses[0]],
+        transactions: [results.transactions[0]],
+      },
+    });
+    wrapper.update();
     autosuggestInput.simulate('change');
     autosuggestInput.simulate('keyDown', {
       keyCode: keyCodes.arrowDown,
       which: keyCodes.arrowDown,
     });
+    autosuggestInput.simulate('keyDown', {
+      keyCode: keyCodes.arrowDown,
+      which: keyCodes.arrowDown,
+    });
+    wrapper.update();
+    // first result of transactions mock data
+    expect(wrapper.find('.autosuggest-placeholder')).to.have.value('1234');
     autosuggestInput.simulate('keyDown', {
       keyCode: keyCodes.arrowUp,
       which: keyCodes.arrowUp,
@@ -134,7 +166,8 @@ describe('AutoSuggest', () => {
       keyCode: keyCodes.tab,
       which: keyCodes.tab,
     });
-    expect(submitSearchAnythingSpy).to.have.been.calledWith();
+    expect(submitSearchSpy).to.have.been.calledWith();
+    expect(props.searchClearSuggestions).to.have.been.calledWith();
   });
 
   it('should close dropdown on keyboard event {escape}', () => {

@@ -134,7 +134,8 @@ or "warn/action" ineastd of "red/green"
   --headerbar-index: 20;
   --autosuggest-index: 21;
   --searchbar-input-index: 22;
-  --accounts-index: 23;
+  --searchbar-placeholder-index: 23;
+  --accounts-index: 24;
 
   /*************************
         Margins

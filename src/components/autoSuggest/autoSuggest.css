@@ -22,7 +22,6 @@
   box-shadow: 0 22px 22px 0 rgba(0, 0, 0, 0.22);
   border-top: none;
   max-height: 353px;
-  overflow-y: scroll;
 
   &:not(:empty) {
     padding-bottom: 15px;
@@ -31,6 +30,21 @@
 
 .show {
   display: block;
+}
+
+.placeholder {
+  background-color: transparent;
+  line-height: var(--search-box-line-height);
+  font-size: var(--search-box-font-size);
+  color: var(--color-grayscale-medium);
+  outline: none;
+  border: none;
+  position: absolute;
+  left: 24px;
+  z-index: var(--searchbar-placeholder-index);
+  pointer-events: none;
+  opacity: 0.5;
+  padding: 0;
 }
 
 .input {
