@@ -2,19 +2,14 @@ import React from 'react';
 import { translate } from 'react-i18next';
 import ViewAccounts from './viewAccounts';
 import AddAccountID from './addAccountID';
-import addAccountTitle from './addAccountTitle';
+import AddAccountTitle from './addAccountTitle';
 import MultiStep from './../../multiStep';
+import styles from './followedAccounts.css';
 
-class FollowedAccounts extends React.Component {
-  render() {
-    return <div>
-      <MultiStep>
+const FollowedAccounts = () => (<MultiStep className={styles.height}>
         <ViewAccounts />
         <AddAccountID />
-        <addAccountTitle />
-      </MultiStep>
-    </div>;
-  }
-}
+        <AddAccountTitle />
+      </MultiStep>);
 
 export default translate()(FollowedAccounts);
