@@ -167,6 +167,10 @@ class AutoSuggest extends React.Component {
     this.setState({ show: false });
   }
 
+  selectInput() {
+    this.inputRef.inputNode.select();
+  }
+
   getDelegatesResults() {
     return this.props.results.delegates.map((delegate, idx) => ({
       id: delegate.address,
@@ -213,6 +217,7 @@ class AutoSuggest extends React.Component {
           innerRef={(el) => { this.inputRef = el; }}
           className={`${styles.input} autosuggest-input`}
           theme={styles}
+          onClick={this.selectInput.bind(this)}
           onBlur={this.closeDropdown.bind(this)}
           onKeyDown={this.handleKey.bind(this)}
           onChange={this.search.bind(this)}
