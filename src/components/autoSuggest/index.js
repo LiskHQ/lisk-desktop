@@ -57,6 +57,7 @@ class AutoSuggest extends React.Component {
   }
 
   submitSearch() {
+    this.setState({ value: this.state.placeholder });
     this.inputRef.blur();
     this.onResultClick(this.selectedRow.dataset.id, this.selectedRow.dataset.type);
   }
