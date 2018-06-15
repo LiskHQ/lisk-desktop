@@ -98,8 +98,8 @@ class AutoSuggest extends React.Component {
     let currentIdx = this.state.selectedIdx;
     let placeholder = '';
     if (this.state.resultsLength === 0) {
-      currentIdx = (currentIdx === this.recentSearches.length) ?
-        this.recentSearches.length : currentIdx += 1;
+      currentIdx = (currentIdx === this.recentSearches.length - 1) ?
+        this.recentSearches.length - 1 : currentIdx += 1;
       placeholder = this.recentSearches[currentIdx].valueLeft;
     } else {
       currentIdx = (currentIdx === this.state.resultsLength) ?
