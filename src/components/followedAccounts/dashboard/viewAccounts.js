@@ -6,6 +6,7 @@ import AccountVisual from '../../accountVisual/index';
 import LiskAmount from '../../liskAmount/index';
 import { FontIcon } from '../../fontIcon';
 import styles from './followedAccounts.css';
+import routes from './../../../constants/routes';
 
 class ViewAccounts extends React.Component {
   render() {
@@ -15,7 +16,11 @@ class ViewAccounts extends React.Component {
           ? <div className={styles.accounts}>
               <div className={styles.list}>
                 {this.props.accounts.map((account, i) =>
-                (<div key={i} className={`${grid.row} ${styles.rows} ${styles.clickable}`}>
+                (<div
+                  key={i}
+                  className={`${grid.row} ${styles.rows} ${styles.clickable}`}
+                  onClick={() => this.props.history.push(`${routes.explorer.path}${routes.accounts.path}/${account.address}`)}
+                >
                   <div className={`${styles.leftText} ${grid['col-md-3']}`}>
                     <AccountVisual
                       className={styles.accountVisual}

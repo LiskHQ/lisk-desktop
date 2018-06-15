@@ -56,7 +56,7 @@ class Dashboard extends React.Component {
         <div className={`${grid.row} ${styles.bottomModuleWrapper} `}>
           <div className={`${grid['col-md-6']} ${grid['col-lg-6']} ${grid['col-xs-6']}`} style={{ paddingLeft: '0px' }}>
             <Box>
-              <FollowedAccounts />
+              <FollowedAccounts history={history}/>
             </Box>
           </div>
           <div className={`${grid['col-md-6']} ${grid['col-lg-6']}  ${grid['col-xs-6']}`} style={{ paddingRight: '0px' }}>
