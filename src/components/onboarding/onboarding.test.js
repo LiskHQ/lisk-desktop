@@ -37,7 +37,7 @@ describe('Onboarding Component', () => {
 
     it('adds steps and does not start the onboarding when on mobile', () => {
       expect(joyrideComponentWillReceiveProps).to.have.been.calledWith(match({ run: false }));
-      expect(joyrideComponentWillReceiveProps.getCall(0).args[0].steps.length).to.equal(9);
+      expect(joyrideComponentWillReceiveProps.getCall(0).args[0].steps.length).to.equal(8);
     });
 
     it('goes through the onboarding', () => {
@@ -52,7 +52,7 @@ describe('Onboarding Component', () => {
       expect(wrapper.state('intro')).to.equal(false);
 
       expect(joyrideReset).to.not.have.been.calledWith();
-      wrapper.find(Joyride).props().callback({ index: 8 });
+      wrapper.find(Joyride).props().callback({ index: 7 });
 
       expect(wrapper.state('skip')).to.equal(false);
       expect(joyrideReset).to.not.have.been.calledWith();
@@ -103,7 +103,7 @@ describe('Onboarding Component', () => {
       expect(joyrideComponentWillReceiveProps).to.not.have.been.calledWith();
       wrapper.setProps({ appLoaded: true });
       expect(joyrideComponentWillReceiveProps).to.have.been.calledWith(match({ run: true }));
-      expect(joyrideComponentWillReceiveProps.getCall(0).args[0].steps.length).to.equal(10);
+      expect(joyrideComponentWillReceiveProps.getCall(0).args[0].steps.length).to.equal(9);
     });
   });
 });
