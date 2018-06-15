@@ -198,13 +198,6 @@ export const steps = t => ([
     style: styles.step,
   },
   {
-    title: t('Explore the network'),
-    text: t('View all the transactions happening on the Lisk Network in real time. Search for addresses and transactions.'),
-    selector: '#explorer',
-    position: 'right',
-    style: styles.step,
-  },
-  {
     title: t('Delegate voting'),
     text: t('View forging delegates and vote for the ones you support.'),
     selector: '#delegates',
