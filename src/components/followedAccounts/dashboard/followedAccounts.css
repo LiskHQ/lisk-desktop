@@ -37,12 +37,6 @@
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-
-  & .accountVisualInInput {
-    position: absolute;
-    left: -40px;
-    top: -15px;
-  }
 }
 
 .addAccountLink {

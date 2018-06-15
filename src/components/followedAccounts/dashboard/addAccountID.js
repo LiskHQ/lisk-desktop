@@ -3,11 +3,9 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Button, TertiaryButton } from '../../toolbox/buttons/button';
-import Input from '../../toolbox/inputs/input';
 import regex from './../../../utils/regex';
-import AccountVisual from '../../accountVisual';
 import styles from './followedAccounts.css';
-import inputTheme from './input.css';
+import AddressInput from './../../addressInput';
 
 class AddAccountID extends React.Component {
   constructor() {
@@ -47,20 +45,11 @@ class AddAccountID extends React.Component {
     return <div className={styles.addAccount}>
         <header><h2>Choose an ID</h2></header>
         <div>
-          <Input label={this.props.t('Enter a Lisk ID')}
-                 error={this.state.address.error}
-                 value={this.state.address.value}
-                 autoFocus={true}
-                 onChange={val => this.handleChange(val)}
-                 theme={this.showAccountVisual() ? inputTheme : {}}
-          >
-            {this.showAccountVisual() ?
-              <figure className={styles.accountVisualInInput}>
-                <AccountVisual address={this.state.address.value} size={50} />
-              </figure>
-              : null
-            }
-          </Input>
+          <AddressInput
+            label={this.props.t('Enter a Lisk ID')}
+            address={this.state.address}
+            handleChange={this.handleChange.bind(this)}
+          />
         </div>
         <footer className={grid.row} >
           <div className={grid['col-xs-4']}>
