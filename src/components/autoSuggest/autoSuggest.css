@@ -22,7 +22,6 @@
   box-shadow: 0 22px 22px 0 rgba(0, 0, 0, 0.22);
   border-top: none;
   max-height: 353px;
-  overflow-y: scroll;
 
   &:not(:empty) {
     padding-bottom: 15px;
