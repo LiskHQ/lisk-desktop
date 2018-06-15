@@ -1,16 +1,7 @@
 import actionTypes from '../../constants/actions';
-import {
-  followedAccountFetchedAndUpdated,
-  followedAccountsRetrieved,
-} from '../../actions/followedAccounts';
-import { getFollowedAccountsFromLocalStorage } from '../../utils/followedAccounts';
+import { followedAccountFetchedAndUpdated } from '../../actions/followedAccounts';
 
 const followedAccountsMiddleware = (store) => {
-  setImmediate(() => {
-    const accounts = getFollowedAccountsFromLocalStorage();
-    if (Array.isArray(accounts)) store.dispatch(followedAccountsRetrieved(accounts));
-  });
-
   const updateFollowedAccounts = (peers, accounts) => {
     accounts.forEach((account) => {
       store.dispatch(followedAccountFetchedAndUpdated({

@@ -1,7 +1,7 @@
-import { getIndexOfFollowedAccount } from '../../utils/followedAccounts';
+import { getIndexOfFollowedAccount, getFollowedAccountsFromLocalStorage } from '../../utils/followedAccounts';
 import actionTypes from '../../constants/actions';
 
-const followedAccounts = (state = { accounts: [] }, action) => {
+const followedAccounts = (state = { accounts: getFollowedAccountsFromLocalStorage() }, action) => {
   const accounts = [...state.accounts];
   let indexOfAccount;
 
