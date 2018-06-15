@@ -50,6 +50,7 @@ class AddAccountID extends React.Component {
           <Input label={this.props.t('Enter a Lisk ID')}
                  error={this.state.address.error}
                  value={this.state.address.value}
+                 autoFocus={true}
                  onChange={val => this.handleChange(val)}
                  theme={this.showAccountVisual() ? inputTheme : {}}
           >

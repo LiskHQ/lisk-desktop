@@ -25,17 +25,17 @@ class ViewAccounts extends React.Component {
                   </div>
                   <div className={`${styles.rightText} ${styles.accountInformation} ${grid['col-md-9']}`}>
                     <div>
-                    <div className={styles.balance}>
-                      <LiskAmount val={account.balance} /> <span>LSK</span>
+                      <div className={styles.balance}>
+                        <LiskAmount val={account.balance} /> <span>LSK</span>
+                      </div>
+                      <div className={styles.title}>{account.title || account.address}</div>
                     </div>
-                    <div className={styles.title}>{account.name || account.address}</div>
-                  </div>
                   </div>
                 </div>))
                 }
-              </div>
-              <div className={`${styles.addAccountLink} ${styles.clickable}`} onClick={() => this.props.nextStep()}>
-                Add a Lisk ID <FontIcon value='arrow-right'/>
+                <div className={`${styles.addAccountLink} ${styles.rows} ${styles.clickable}`} onClick={() => this.props.nextStep()}>
+                  Add a Lisk ID <FontIcon value='arrow-right'/>
+                </div>
               </div>
             </div>
           : <div className={styles.emptyList}>

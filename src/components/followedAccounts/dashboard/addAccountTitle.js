@@ -38,6 +38,7 @@ class AddAccountID extends React.Component {
           label={t('Title (optional)')}
           error={this.state.title.error}
           value={this.state.title.value}
+          autoFocus={true}
           onChange={val => this.handleChange(val)}
         />
       </div>
@@ -53,7 +54,7 @@ class AddAccountID extends React.Component {
           <TertiaryButton
             label={t('Add to list')}
             onClick={() => {
-              addAccount({ title: this.state.title, address });
+              addAccount({ title: this.state.title.value, address });
               prevStep({ reset: true });
             }}
           />
