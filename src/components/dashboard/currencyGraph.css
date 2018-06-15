@@ -1,7 +1,7 @@
 @import '../app/variables';
 
 :root {
-  --stepSwitch-font-size: 15px;
+  --stepSwitch-font-size: 16px;
 }
 
 .wrapper {
@@ -11,7 +11,7 @@
 }
 
 .chartWrapper {
-  height: calc(100% - 70px);
+  height: 100%;
   min-height: 130px;
   width: calc(100% + 50px);
   margin: 0 -25px;
@@ -38,20 +38,20 @@
 .stepSwitchWrapper {
   float: right;
   margin: 50px;
+  z-index: 10;
+  position: relative;
 }
 
 .stepSwitch {
-  padding: 10px 16px;
+  padding: 10px 14px;
   cursor: pointer;
   font-size: var(--stepSwitch-font-size);
-  font-weight: 500;
-  color: var(--color-grayscale-medium);
+  font-weight: 600;
+  font-family: var(--heading-font);
+  color: var(--color-grayscale-light);
 
   &.active {
-    color: var(--color-white);
-    background: var(--gradient-tertiary);
-    border-radius: var(--border-radius-normal);
-    font-weight: 300;
+    color: var(--color-grayscale-dark);
   }
 }
 
