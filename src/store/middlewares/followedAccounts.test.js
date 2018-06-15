@@ -45,6 +45,17 @@ describe('FollowedAccounts middleware', () => {
     expect(next).to.have.been.calledWith(randomAction);
   });
 
+
+  it(`should update the following account on ${actionTypes.followedAccountAdded} action`, () => {
+    middleware(store)(next)({
+      type: actionTypes.followedAccountAdded,
+      data: {},
+    });
+
+    expect(followedAccountsActions.followedAccountFetchedAndUpdated).to.have.callCount(1);
+  });
+
+
   it(`should update the following accounts on ${actionTypes.activePeerSet} action`, () => {
     middleware(store)(next)({
       type: actionTypes.activePeerSet,

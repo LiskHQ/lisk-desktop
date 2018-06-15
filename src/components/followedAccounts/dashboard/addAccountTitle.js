@@ -36,6 +36,7 @@ class AddAccountID extends React.Component {
       <div>
         <Input
           label={t('Title (optional)')}
+          className='title'
           error={this.state.title.error}
           value={this.state.title.value}
           autoFocus={true}
@@ -53,6 +54,7 @@ class AddAccountID extends React.Component {
         <div className={grid['col-xs-8']}>
           <TertiaryButton
             label={t('Add to list')}
+            className='next'
             onClick={() => {
               addAccount({ title: this.state.title.value, address });
               prevStep({ reset: true });
@@ -64,12 +66,8 @@ class AddAccountID extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  accounts: state.followedAccounts.accounts,
-});
-
 const mapDispatchToProps = dispatch => ({
   addAccount: data => dispatch(followedAccountAdded(data)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(AddAccountID));
+export default connect(null, mapDispatchToProps)(translate()(AddAccountID));

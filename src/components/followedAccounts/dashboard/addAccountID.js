@@ -13,10 +13,6 @@ class AddAccountID extends React.Component {
     this.state = { address: { value: '' } };
   }
 
-  showAccountVisual() {
-    return this.state.address.value.length && !this.state.address.error;
-  }
-
   handleChange(value) {
     this.setState({
       address: {
@@ -43,10 +39,11 @@ class AddAccountID extends React.Component {
 
   render() {
     return <div className={styles.addAccount}>
-        <header><h2>Choose an ID</h2></header>
+        <header><h2>{this.props.t('Choose an ID')}</h2></header>
         <div>
           <AddressInput
             label={this.props.t('Enter a Lisk ID')}
+            className='address'
             address={this.state.address}
             handleChange={this.handleChange.bind(this)}
           />
@@ -62,6 +59,7 @@ class AddAccountID extends React.Component {
           <div className={grid['col-xs-8']}>
             <TertiaryButton
               label={this.props.t('Next')}
+              className='next'
               disabled={(!!this.state.address.error || !this.state.address.value)}
               onClick={() => this.props.nextStep({ address: this.state.address.value })}
             />
