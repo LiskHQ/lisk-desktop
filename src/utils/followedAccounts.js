@@ -1,8 +1,11 @@
 import localJSONStorage from './localJSONStorage';
 import regex from './regex';
 
-export const getFollowedAccountsFromLocalStorage = () =>
-  localJSONStorage.get('followedAccounts', []).filter(({ address }) => address.match(regex.address));
+export const getFollowedAccountsFromLocalStorage = () => {
+  const accounts = localJSONStorage.get('followedAccounts', []);
+  const accountsArray = Array.isArray(accounts) ? accounts : [];
+  return accountsArray.filter(({ address }) => address.match(regex.address));
+};
 
 export const setFollowedAccountsInLocalStorage = accounts => localJSONStorage.set('followedAccounts', accounts);
 
