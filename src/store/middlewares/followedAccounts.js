@@ -35,6 +35,12 @@ const followedAccountsMiddleware = (store) => {
           followedAccounts,
         );
         break;
+      case actionTypes.followedAccountAdded:
+        store.dispatch(followedAccountFetchedAndUpdated({
+          activePeer: peers.data,
+          account: action.data,
+        }));
+        break;
       case actionTypes.activePeerSet:
         updateFollowedAccounts(peers, followedAccounts.accounts);
         break;
