@@ -223,7 +223,6 @@ class AutoSuggest extends React.Component {
     }));
   }
 
-  /* eslint-disable class-methods-use-this */
   getRecentSearchResults() {
     this.recentSearches = localJSONStorage.get('searches', [])
       .map((result, idx) => {
@@ -241,7 +240,6 @@ class AutoSuggest extends React.Component {
       });
     return this.recentSearches;
   }
-  /* eslint-enable class-methods-use-this */
 
   render() {
     const { t } = this.props;
