@@ -42,7 +42,6 @@
 @media (--medium-viewport) {
   .wrapper {
     & .main {
-      padding: 0;
       max-width: 100%;
       flex-basis: 100%;
     }
@@ -57,7 +56,8 @@
   }
 
   .latestActivity {
-    height: auto;
+    height: unset;
+    min-height: unset;
   }
 }
 

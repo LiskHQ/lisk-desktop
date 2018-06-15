@@ -37,7 +37,7 @@
 
 .stepSwitchWrapper {
   float: right;
-  margin: 50px;
+  margin: 50px 10px;
   z-index: 10;
   position: relative;
 }

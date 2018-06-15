@@ -6,7 +6,7 @@ import AddAccountTitle from './addAccountTitle';
 import MultiStep from './../../multiStep';
 import styles from './followedAccounts.css';
 
-const FollowedAccounts = () => (<MultiStep className={styles.height}>
+const FollowedAccounts = () => (<MultiStep className={styles.followedAccountsWrapper}>
         <ViewAccounts />
         <AddAccountID />
         <AddAccountTitle />
