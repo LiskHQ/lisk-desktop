@@ -40,7 +40,7 @@
 }
 
 .addAccountLink {
-  color: var(--color-primary-standard);
+  color: var(--color-primary-standard) !important;
   font-weight: var(--font-weight-bold);
   font-size: 15px;
 }
@@ -77,6 +77,10 @@
 
       &:nth-of-type(odd) {
         background: var(--gradient-greyscale);
+      }
+
+      &:hover {
+        background: var(--color-primary-very-light);
       }
 
       & .accountInformation {
