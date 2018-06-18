@@ -20,7 +20,7 @@ class TitleInput extends React.Component {
         ...props.account,
         title: this.state.title.value,
       });
-    } else {
+    } else if (!props.edit && (!newTitle.length || error)) {
       this.setState({ title: { value: oldTitle } });
     }
   }
