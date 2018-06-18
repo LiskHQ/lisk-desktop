@@ -6,6 +6,7 @@ import { stub, match, spy } from 'sinon';
 
 import * as peers from '../../src/utils/api/peers';
 import * as accountAPI from '../../src/utils/api/account';
+import * as transactionsAPI from '../../src/utils/api/transactions';
 import * as delegateAPI from '../../src/utils/api/delegate';
 import * as liskServiceApi from '../../src/utils/api/liskService';
 import { prepareStore, renderWithRouter } from '../utils/applicationInit';
@@ -319,7 +320,7 @@ describe('@integration: Wallet', () => {
 
   describe('Transactions', () => {
     beforeEach(() => {
-      getTransactionsStub = stub(accountAPI, 'transactions');
+      getTransactionsStub = stub(transactionsAPI, 'getTransactions');
 
       getTransactionsStub.withArgs({
         activePeer: match.any,

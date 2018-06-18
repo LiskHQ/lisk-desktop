@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 
-import { sent } from '../../actions/account';
+import { sent } from '../../actions/transactions';
 import Send from './send';
 
 const mapStateToProps = state => ({
