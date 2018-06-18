@@ -249,7 +249,6 @@
   "Sidechains will revolutionize the way decentralised apps are developed. Here you will be able to find hosts, and monitor your sidechains soon.": "Sidechains will revolutionize the way decentralised apps are developed. Here you will be able to find hosts, and monitor your sidechains soon.",
   "Sign a message": "Sign a message",
   "Sign in": "Sign in",
-  "Signing a message with this tool indicates ownership of a privateKey (secret) and provides a level of proof that you are the owner of the key.": "Signing a message with this tool indicates ownership of a privateKey (secret) and provides a level of proof that you are the owner of the key.",
   "Sorry": "Sorry",
   "Specify Amount": "Specify Amount",
   "Standby": "Standby",
@@ -272,6 +271,7 @@
   "This is not reversible.": "This is not reversible.",
   "This is your Lisk ID": "This is your Lisk ID",
   "This process should take only 10 seconds but may take up to 15 minutes.": "This process should take only 10 seconds but may take up to 15 minutes.",
+  "This signed message can prove that you are the owner of the account, since only your passphrase can produce it.": "This signed message can prove that you are the owner of the account, since only your passphrase can produce it.",
   "Timeout": "Timeout",
   "To recover you can": "To recover you can",
   "Toggle full screen": "Toggle full screen",
@@ -307,6 +307,7 @@
   "Votes submitted": "Votes submitted",
   "Voting": "Voting",
   "Wallet": "Wallet",
+  "We recommend including date & time or a specific keyword.": "We recommend including date & time or a specific keyword.",
   "Welcome to Lisk Hub": "Welcome to Lisk Hub",
   "What is Lisk ID?": "What is Lisk ID?",
   "What's New...": "What's New...",
@@ -322,6 +323,7 @@
   "You can now use Lisk Hub.<br": {
     " If you want to repeat the onboarding, navigate to \"Settings\" on the sidebar.": "You can now use Lisk Hub.<br> If you want to repeat the onboarding, navigate to \"Settings\" on the sidebar."
   },
+  "You can use your passphrase to sign a message. ": "You can use your passphrase to sign a message. ",
   "You have already registered as a delegate.": "You have already registered as a delegate.",
   "You only need to do this once for each Lisk ID.": "You only need to do this once for each Lisk ID.",
   "You will need it to use your Lisk ID, like sending and voting. You are responsible for keeping your second passphrase safe. No one can restore it, not even Lisk.": "You will need it to use your Lisk ID, like sending and voting. You are responsible for keeping your second passphrase safe. No one can restore it, not even Lisk.",

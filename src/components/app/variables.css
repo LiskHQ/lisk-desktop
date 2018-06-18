@@ -107,6 +107,8 @@ or "warn/action" ineastd of "red/green"
   --color-grayscale-light: #ccd9e4;
   --color-grayscale-mobile-background: #f9fbfd;
   --color-grayscale-darker-mobile-background: #eff4f9;
+  --color-console-text: #9bf436;
+  --color-console-background: #06213b;
   --color-white: #fff;
   --color-error: #da1d00;
   --color-action-dark: #c80039;
