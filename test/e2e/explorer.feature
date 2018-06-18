@@ -12,6 +12,7 @@ Feature: Explorer page
     And I fill in "15610359283786884938L" to "autosuggest input" field
     And I wait 2 seconds
     And I click "addresses result"
+    And I wait 2 seconds
     Then I should see 25 rows
     When I click "send to address"
     And I wait 1 seconds
