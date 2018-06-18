@@ -106,11 +106,32 @@ header {
         & .title {
           color: var(--color-grayscale-medium);
           font-size: 14px;
+          padding: 0px;
+        }
+
+        & .title input {
+          color: var(--color-grayscale-medium);
+          font-weight: var(--font-weight-bold);
+          font-size: 14px;
+          text-align: right;
+        }
+
+        & .title input:disabled {
+          opacity: 1;
+          border: none;
+        }
 
         & .editMode {
           padding-right: 10px;
           display: inline-block;
           vertical-align: middle;
+
+          & .balance {
+            color: var(--color-grayscale-medium);
+            font-weight: var(--font-weight-bold);
+            font-size: 14px;
+          }
+        }
 
         & .removeAccount {
           display: inline-block;

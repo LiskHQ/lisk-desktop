@@ -7,6 +7,7 @@ import LiskAmount from '../../liskAmount/index';
 import { FontIcon } from '../../fontIcon';
 import styles from './followedAccounts.css';
 import routes from './../../../constants/routes';
+import TitleInput from './titleInput';
 import { followedAccountRemoved } from './../../../actions/followedAccounts';
 
 class ViewAccounts extends React.Component {
@@ -54,7 +55,13 @@ class ViewAccounts extends React.Component {
                       <div className={styles.balance}>
                         <LiskAmount val={account.balance} /> <span>LSK</span>
                       </div>
-                      <div className={`${styles.title} account-title`}>{account.title || account.address}</div>
+                      <TitleInput edit={this.state.edit ? 1 : 0}
+                                  account={{
+                                    title: account.title || account.address,
+                                    address: account.address,
+                                    balance: account.balance,
+                                  }}
+                        />
                     </div>
                     {this.state.edit
                       ? <div className={styles.removeAccount}

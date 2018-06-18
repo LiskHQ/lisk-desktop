@@ -31,6 +31,7 @@ class AddAccountID extends React.Component {
       t, prevStep, addAccount, address,
     } = this.props;
 
+    const title = this.state.title.value || address;
     return <div className={styles.addAccount}>
       <header><h2>{t('How would you call it?')}</h2></header>
       <div>
@@ -56,7 +57,7 @@ class AddAccountID extends React.Component {
             label={t('Add to list')}
             className='next'
             onClick={() => {
-              addAccount({ title: this.state.title.value, address });
+              addAccount({ title, address });
               prevStep({ reset: true });
             }}
           />
