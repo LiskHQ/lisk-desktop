@@ -39,6 +39,16 @@
   box-sizing: border-box;
 }
 
+header {
+  & .edit {
+    color: var(--color-primary-standard);
+    font-weight: var(--font-weight-bold);
+    font-size: 16px;
+    line-height: 40px;
+    float: right;
+  }
+}
+
 .addAccountLink {
   color: var(--color-primary-standard) !important;
   font-weight: var(--font-weight-bold);
@@ -96,6 +106,16 @@
         & .title {
           color: var(--color-grayscale-medium);
           font-size: 14px;
+
+        & .editMode {
+          padding-right: 10px;
+          display: inline-block;
+          vertical-align: middle;
+
+        & .removeAccount {
+          display: inline-block;
+          vertical-align: middle;
+          color: var(--color-primary-standard);
         }
       }
     }

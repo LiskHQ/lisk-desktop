@@ -7,15 +7,30 @@ import LiskAmount from '../../liskAmount/index';
 import { FontIcon } from '../../fontIcon';
 import styles from './followedAccounts.css';
 import routes from './../../../constants/routes';
+import { followedAccountRemoved } from './../../../actions/followedAccounts';
 
 class ViewAccounts extends React.Component {
+  constructor() {
+    super();
+    this.state = { edit: false };
+  }
+
   render() {
     const {
-      t, accounts, history, nextStep,
+      t, accounts, history, nextStep, removeAccount,
     } = this.props;
 
     return <div>
-      <header><h2>{t('Following')}</h2></header>
+      <header><h2>
+        {t('Following')}
+        {accounts.length > 0
+        ? <div className={`${styles.clickable} ${styles.edit}`}
+             onClick={() => this.setState({ edit: !this.state.edit })}>
+            {this.state.edit ? <span>{t('Done')}</span> : <FontIcon value='edit'/>}
+        </div>
+          : null
+        }
+      </h2></header>
         {accounts.length
           ? <div className={`${styles.accounts} followed-accounts-list`}>
               <div className={styles.list}>
@@ -23,22 +38,31 @@ class ViewAccounts extends React.Component {
                 (<div
                   key={i}
                   className={`${grid.row} ${styles.rows} ${styles.clickable} followed-account`}
-                  onClick={() => history.push(`${routes.explorer.path}${routes.accounts.path}/${account.address}`)}
+                  onClick={() => {
+                    if (!this.state.edit) history.push(`${routes.explorer.path}${routes.accounts.path}/${account.address}`);
+                  }}
                 >
-                  <div className={`${styles.leftText} ${grid['col-md-3']}`}>
+                  <div className={`${styles.leftText} ${grid['col-md-2']}`}>
                     <AccountVisual
                       className={styles.accountVisual}
                       address={account.address}
                       size={43}
                     />
                   </div>
-                  <div className={`${styles.rightText} ${styles.accountInformation} ${grid['col-md-9']}`}>
-                    <div>
+                  <div className={`${styles.rightText} ${styles.accountInformation} ${grid['col-md-10']}`}>
+                    <div className={this.state.edit ? styles.editMode : null}>
                       <div className={styles.balance}>
                         <LiskAmount val={account.balance} /> <span>LSK</span>
                       </div>
                       <div className={`${styles.title} account-title`}>{account.title || account.address}</div>
                     </div>
+                    {this.state.edit
+                      ? <div className={styles.removeAccount}
+                             onClick={() => removeAccount(account) }>
+                          <FontIcon value='remove'/>
+                        </div>
+                      : null
+                    }
                   </div>
                 </div>))
                 }
@@ -63,4 +87,8 @@ const mapStateToProps = state => ({
   accounts: state.followedAccounts.accounts,
 });
 
-export default connect(mapStateToProps)(translate()(ViewAccounts));
+const mapDispatchToProps = dispatch => ({
+  removeAccount: data => dispatch(followedAccountRemoved(data)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(ViewAccounts));
