@@ -89,10 +89,10 @@
   background-color: var(--color-form-bg);
 
   & textarea {
-    background: #06213b;
+    background: var(--color-console-background);
     border-radius: 5px;
     overflow: auto;
-    color: var(--color-signMessage-console);
+    color: var(--color-console-text);
     font-family: monospace;
     padding: 12px 24px;
     height: 230px !important;
