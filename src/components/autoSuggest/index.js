@@ -19,7 +19,7 @@ class AutoSuggest extends React.Component {
     this.state = {
       show: false,
       value: '',
-      selectedIdx: 0,
+      selectedIdx: -1,
       resultsLength: 0,
       placeholder: '',
     };
@@ -30,10 +30,12 @@ class AutoSuggest extends React.Component {
     const resultsLength = ['delegates', 'addresses', 'transactions'].reduce((total, resultKey) =>
       total + nextProps.results[resultKey].length, 0);
     let placeholder = '';
+    let selectedIdx = -1;
     if (resultsLength > 0) {
       placeholder = this.getValueFromCurrentIdx(0, nextProps.results);
+      selectedIdx = 0;
     }
-    this.setState({ resultsLength, selectedIdx: 0, placeholder });
+    this.setState({ resultsLength, selectedIdx, placeholder });
   }
 
   onResultClick(id, type) {
@@ -144,6 +146,10 @@ class AutoSuggest extends React.Component {
   /* eslint-enable class-methods-use-this */
 
   handleSubmit() {
+    if (this.state.value === '' && this.state.placeholder === '') {
+      return;
+    }
+
     if (this.state.resultsLength > 0 || this.state.placeholder !== '') {
       this.submitSearch();
       this.props.searchClearSuggestions();
@@ -265,7 +271,7 @@ class AutoSuggest extends React.Component {
           onChange={this.search.bind(this)}
           autoComplete='off'>
           {
-            this.state.value !== '' ?
+            this.state.value !== '' || this.state.placeholder !== '' ?
               <FontIcon value='close' className={`${styles.icon} autosuggest-btn-close`} onClick={this.resetSearch.bind(this)} /> :
               <FontIcon value='search' className={`${styles.icon} ${styles.iconSearch} autosuggest-btn-search`}
                 onClick={this.submitSearch.bind(this)} />
