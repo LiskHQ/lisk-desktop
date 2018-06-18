@@ -1,0 +1,159 @@
+@import '../../app/variables.css';
+
+:root {
+  --amount-negative-color: var(--color-grayscale-dark);
+  --link-color: var(--color-primary-very-light);
+  --row-background-color: var(--color-white);
+  --result-address-font-weight: var(--font-weight-semi-bold);
+  --main-row-line-height: 70px;
+}
+
+.leftText {
+  text-align: left;
+  padding-left: 0px;
+}
+
+.rightText {
+  text-align: right;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.followedAccountsWrapper {
+  height: 100%;
+}
+
+.cancelButton {
+  min-width: 0;
+  width: 100%;
+}
+
+.addAccount {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.addAccountLink {
+  color: var(--color-primary-standard) !important;
+  font-weight: var(--font-weight-bold);
+  font-size: 15px;
+}
+
+.emptyList {
+  & p {
+    color: var(--color-grayscale-dark);
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  & .addAccountLink {
+    position: absolute;
+    bottom: 32px;
+  }
+}
+
+.accounts {
+  & .list {
+    overflow-y: initial;
+
+    & .rows {
+      color: var(--amount-negative-color);
+      border-bottom: 0;
+      border-top: 0;
+      margin-right: 0;
+      margin-left: 0;
+      line-height: var(--main-row-line-height);
+      white-space: nowrap;
+
+      &:nth-of-type(even) {
+        background: var(--row-background-color);
+      }
+
+      &:nth-of-type(odd) {
+        background: var(--gradient-greyscale);
+      }
+
+      &:hover {
+        background: var(--color-primary-very-light);
+      }
+
+      & .accountInformation {
+        font-weight: var(--font-weight-bold);
+        line-height: 25px;
+        margin: auto;
+
+        & .balance {
+          color: var(--color-black);
+          font-size: 16px;
+        }
+
+        & .title {
+          color: var(--color-grayscale-medium);
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  & .addAccountLink {
+    text-align: right;
+  }
+
+  & .accountVisual {
+    vertical-align: middle;
+  }
+}
+
+@media (--xLarge-viewport) {
+  .accounts {
+    & .list {
+      overflow-y: auto;
+      margin: 0px calc(0 - var(--box-padding-left-XL));
+    }
+
+    & .rows {
+      padding: 0px var(--box-padding-left-XL);
+    }
+  }
+}
+
+@media (--large-viewport) {
+  .accounts {
+    & .list {
+      overflow-y: auto;
+      margin: 0px calc(0 - var(--box-padding-left-L));
+    }
+
+    & .rows {
+      padding: 0px var(--box-padding-left-L);
+    }
+  }
+}
+
+@media (--medium-viewport) {
+  .accounts {
+    & .list {
+      overflow-y: initial;
+      padding-bottom: 100px;
+      margin: 0px calc(0 - var(--box-padding-left-M));
+    }
+
+    & .rows {
+      padding: 0px var(--box-padding-left-M);
+
+      &:nth-of-type(even) {
+        background: var(--gradient-greyscale-mobile);
+      }
+
+      &:nth-of-type(odd) {
+        background: var(--color-grayscale-mobile-background);
+      }
+    }
+  }
+}

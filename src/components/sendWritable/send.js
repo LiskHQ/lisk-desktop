@@ -3,13 +3,11 @@ import TransferTabs from './../transferTabs';
 import { fromRawLsk } from '../../utils/lsk';
 import { Button } from './../toolbox/buttons/button';
 import { authStatePrefill } from '../../utils/form';
-import AccountVisual from '../accountVisual';
 import Converter from '../converter';
-import Input from '../toolbox/inputs/input';
 import fees from './../../constants/fees';
 import styles from './sendWritable.css';
 import regex from './../../utils/regex';
-import inputTheme from './input.css';
+import AddressInput from './../addressInput';
 
 class SendWritable extends React.Component {
   constructor(props) {
@@ -85,21 +83,12 @@ class SendWritable extends React.Component {
           <TransferTabs setTabSend={this.props.setTabSend} isActiveTabSend={true}/>
         </div>
         <form className={styles.form}>
-          <Input label={this.props.t('Send to address')}
+          <AddressInput
             className='recipient'
-            autoFocus={this.props.autoFocus}
-            error={this.state.recipient.error}
-            value={this.state.recipient.value}
-            onChange={this.handleChange.bind(this, 'recipient')}
-            theme={this.showAccountVisual() ? inputTheme : {}}
-          >
-            {this.showAccountVisual() ?
-              <figure className={styles.accountVisual}>
-                <AccountVisual address={this.state.recipient.value} size={50} />
-              </figure>
-              : ''
-            }
-          </Input>
+            label={this.props.t('Send to address')}
+            address={this.state.recipient}
+            handleChange={this.handleChange.bind(this, 'recipient')}
+          />
           <Converter
             label={this.props.t('Amount (LSK)')}
             className='amount'
