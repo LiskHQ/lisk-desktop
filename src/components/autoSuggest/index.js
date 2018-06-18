@@ -259,7 +259,10 @@ class AutoSuggest extends React.Component {
           className={`${styles.placeholder} autosuggest-placeholder`}
           type='text'
           name='autosuggest-placeholder' />
-        <Input type='text' placeholder={placeholderValue} name='searchBarInput'
+        <Input type='text'
+          id='autosuggest-input'
+          placeholder={placeholderValue}
+          name='searchBarInput'
           value={this.state.value}
           innerRef={(el) => { this.inputRef = el; }}
           className={`${styles.input} autosuggest-input`}

@@ -99,7 +99,7 @@ describe('MainMenu', () => {
     expect(wrapper.find(Tab)).to.have.lengthOf(4);
   });
 
-  it('should all Tab be disabled except search if !props.account.address', () => {
+  it('should all Tab be disabled except Settings if !props.account.address', () => {
     const wrapper = mount(<MemoryRouter>
       <MainMenu {...props} account={{}} />
     </MemoryRouter>, options);

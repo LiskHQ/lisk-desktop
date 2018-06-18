@@ -184,6 +184,13 @@ export const steps = t => ([
     style: styles.step,
   },
   {
+    title: t('Explore the network'),
+    text: t('Search for delegates, addresses and transactions.'),
+    selector: '#autosuggest-input',
+    position: 'bottom',
+    style: styles.step,
+  },
+  {
     title: t('Keep the overview'),
     text: t('Click here to go to the main page of Lisk Hub and find all relevant statistics and ID information'),
     selector: '#dashboard',

@@ -12,6 +12,10 @@ Feature: Onboarding
     And I click "joyride-tooltip__button--primary"
     And I wait 0.4 seconds
     Then I should see text "Lisk ID" in "joyride-tooltip__header" element
+    
+    And I click "joyride-tooltip__button--primary"
+    And I wait 0.4 seconds
+    Then I should see text "Explore the network" in "joyride-tooltip__header" element
 
     And I click "joyride-tooltip__button--primary"
     And I wait 0.4 seconds
@@ -45,6 +49,10 @@ Feature: Onboarding
     And I click "joyride-tooltip__button--primary"
     And I wait 0.4 seconds
     Then I should see text "Lisk ID" in "joyride-tooltip__header" element
+
+    And I click "joyride-tooltip__button--primary"
+    And I wait 0.4 seconds
+    Then I should see text "Explore the network" in "joyride-tooltip__header" element
 
     And I click "joyride-tooltip__button--primary"
     And I wait 0.4 seconds
