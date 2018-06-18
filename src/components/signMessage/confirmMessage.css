@@ -92,7 +92,7 @@
     background: #06213b;
     border-radius: 5px;
     overflow: auto;
-    color: #9bf436;
+    color: var(--color-signMessage-console);
     font-family: monospace;
     padding: 12px 24px;
     height: 230px !important;
