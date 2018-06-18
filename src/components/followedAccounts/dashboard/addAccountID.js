@@ -52,7 +52,7 @@ class AddAccountID extends React.Component {
           <div className={grid['col-xs-4']}>
             <Button
               label={this.props.t('Cancel')}
-              className={styles.cancelButton}
+              className={`${styles.cancelButton} cancel`}
               onClick={() => this.props.prevStep()}
             />
           </div>

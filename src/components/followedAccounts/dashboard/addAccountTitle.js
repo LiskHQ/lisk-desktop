@@ -32,7 +32,7 @@ class AddAccountID extends React.Component {
     } = this.props;
 
     return <div className={styles.addAccount}>
-      <header><h2>{t('How would you call it')}</h2></header>
+      <header><h2>{t('How would you call it?')}</h2></header>
       <div>
         <Input
           label={t('Title (optional)')}
@@ -47,7 +47,7 @@ class AddAccountID extends React.Component {
         <div className={grid['col-xs-4']}>
           <Button
             label={t('Cancel')}
-            className={styles.cancelButton}
+            className={`${styles.cancelButton} cancel`}
             onClick={() => prevStep({ reset: true })}
           />
         </div>

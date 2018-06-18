@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { stub } from 'sinon';
 import {
   getFollowedAccountsFromLocalStorage,
   setFollowedAccountsInLocalStorage,
@@ -19,14 +20,14 @@ describe('followedAccounts', () => {
     },
   ];
 
-  let storage = {};
   beforeEach(() => {
-    window.localStorage.getItem = key => (storage[key]);
-    window.localStorage.setItem = (key, item) => { storage[key] = item; };
+    stub(localStorage, 'getItem');
+    stub(localStorage, 'setItem');
   });
 
   afterEach(() => {
-    storage = {};
+    localStorage.getItem.restore();
+    localStorage.setItem.restore();
   });
 
   describe('getFollowedAccountsFromLocalStorage', () => {
@@ -35,21 +36,21 @@ describe('followedAccounts', () => {
     });
 
     it('returns [] if if localStorage.getItem(\'followedAccounts\') returns invalid JSON string', () => {
-      window.localStorage.setItem('followedAccounts', '{]');
+      localStorage.getItem.returns('{]');
       expect(getFollowedAccountsFromLocalStorage()).to.deep.equal([]);
-      window.localStorage.setItem('followedAccounts', '{}');
+      localStorage.getItem.returns('{}');
       expect(getFollowedAccountsFromLocalStorage()).to.deep.equal([]);
     });
 
     it('returns [] if if localStorage.getItem(\'followedAccounts\') returns JSON encoded array with invalid data', () => {
       const invalidAccounts = [{ address: 'invalid' }];
 
-      window.localStorage.setItem('followedAccounts', JSON.stringify(invalidAccounts));
+      localStorage.getItem.returns(JSON.stringify(invalidAccounts));
       expect(getFollowedAccountsFromLocalStorage()).to.deep.equal([]);
     });
 
     it('returns array parsed from json in localStorage.getItem(\'followedAccounts\')', () => {
-      window.localStorage.setItem('followedAccounts', JSON.stringify(accounts));
+      localStorage.getItem.returns(JSON.stringify(accounts));
       expect(getFollowedAccountsFromLocalStorage()).to.deep.equal(accounts);
     });
   });
@@ -57,7 +58,7 @@ describe('followedAccounts', () => {
   describe('setFollowedAccountsInLocalStorage', () => {
     it('sets accounts in localStorage with appended passed account and also returns it', () => {
       setFollowedAccountsInLocalStorage([accounts[0]]);
-      expect(JSON.parse(window.localStorage.getItem('followedAccounts'))).to.deep.equal([accounts[0]]);
+      expect(localStorage.setItem).to.have.been.calledWith('followedAccounts', JSON.stringify([accounts[0]]));
     });
   });
 

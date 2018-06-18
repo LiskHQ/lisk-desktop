@@ -56,6 +56,11 @@ describe('Add Account Title Component', () => {
     expect(wrapper.find('Input.title').text()).to.contain('Title too long');
   });
 
+  it('cancels the process on button click', () => {
+    wrapper.find('.cancel').first().simulate('click');
+    expect(props.prevStep).to.have.been.calledWith({ reset: true });
+  });
+
   it('goes to next step on button click', () => {
     wrapper.find('.title input').simulate('change', { target: { value: 'some title' } });
     wrapper.find('.next').first().simulate('click');

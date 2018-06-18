@@ -51,9 +51,19 @@ describe('Add Account ID Component', () => {
     expect(wrapper.find('Input.address').text()).to.contain('Required');
   });
 
+  it('recognizes already following address', () => {
+    wrapper.find('.address input').simulate('change', { target: { value: '16313739661670634666L' } });
+    expect(wrapper.find('Input.address').text()).to.contain('ID already following');
+  });
+
   it('recognizes invalid address', () => {
     wrapper.find('.address input').simulate('change', { target: { value: '11004588490103196952' } });
     expect(wrapper.find('Input.address').text()).to.contain('Invalid address');
+  });
+
+  it('cancels the process on button click', () => {
+    wrapper.find('.cancel').first().simulate('click');
+    expect(props.prevStep).to.have.been.calledWith();
   });
 
   it('goes to next step on button click', () => {
