@@ -12,9 +12,9 @@ class DialogElement extends Component {
     this.state = {};
   }
 
-  componentDidUpdate() {
-    this.open();
-  }
+  // componentDidUpdate() {
+  //   this.open();
+  // }
 
   open() {
     clearTimeout(this.timeout);

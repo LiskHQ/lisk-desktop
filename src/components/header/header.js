@@ -13,6 +13,7 @@ import PrivateWrapper from '../privateWrapper';
 import { ActionButton } from './../toolbox/buttons/button';
 import styles from './header.css';
 import CustomCountDown from './customCountDown';
+import Alert from '../dialog/alert';
 import routes from './../../constants/routes';
 
 class Header extends React.Component {
@@ -43,7 +44,18 @@ class Header extends React.Component {
               <PrivateWrapper>
                 <div className={`account ${styles.account}`}>
                   <div className={styles.information} align="right">
-                    <div className={styles.balance}>
+                    <div
+                      className={styles.balance}
+                      onClick={() => {
+                        this.props.setActiveDialog({
+                          title: 'this.props.dialog.title',
+                          text: 'this.props.dialog.title',
+                          childComponent: Alert,
+                          childComponentProps: {
+                            text: 'Custom success message',
+                          },
+                        });
+                      }}>
                       <LiskAmount val={this.props.account.balance}/>
                       <small> LSK</small>
                     </div>
