@@ -25,7 +25,7 @@ class ViewAccounts extends React.Component {
       <header><h2>
         {t('Following')}
         {accounts.length > 0
-        ? <div className={`${styles.clickable} ${styles.edit}`}
+        ? <div className={`${styles.clickable} ${styles.edit} edit-accounts`}
              onClick={() => this.setState({ edit: !this.state.edit })}>
             {this.state.edit ? <span>{t('Done')}</span> : <FontIcon value='edit'/>}
         </div>
@@ -64,7 +64,7 @@ class ViewAccounts extends React.Component {
                         />
                     </div>
                     {this.state.edit
-                      ? <div className={styles.removeAccount}
+                      ? <div className={`${styles.removeAccount} remove-account`}
                              onClick={() => removeAccount(account) }>
                           <FontIcon value='remove'/>
                         </div>
