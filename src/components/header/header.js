@@ -34,8 +34,6 @@ class Header extends React.Component {
 
   openLogoutDialog() {
     this.props.setActiveDialog({
-      title: 'this.props.dialog.title',
-      text: 'this.props.dialog.title',
       childComponent: Options,
       childComponentProps: {
         title: this.props.t('Logout'),
@@ -95,6 +93,8 @@ class Header extends React.Component {
                               }}
                             >
                               <CustomCountDown
+                                history={this.props.history}
+                                setActiveDialog={this.props.setActiveDialog}
                                 resetTimer={this.props.resetTimer}
                                 autoLog={this.props.autoLog}
                                 t={this.props.t}
