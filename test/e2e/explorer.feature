@@ -8,12 +8,7 @@ Feature: Explorer page
     And I wait 2 seconds
     Then I should see text "No activity yet" in "empty message" element
     When I clear "autosuggest input" field
-    And I fill in "15610359283786884938L" to "autosuggest input" field
-    And I wait 2 seconds
-    And I click "addresses result"
-    And I wait 5 seconds
-    When I clear "autosuggest input" field
-    And I wait 2 seconds
+    And I wait 1 seconds
     And I fill in "15610359283786884938L" to "autosuggest input" field
     And I wait 2 seconds
     And I click "addresses result"
