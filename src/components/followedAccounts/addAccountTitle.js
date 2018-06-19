@@ -55,6 +55,7 @@ class AddAccountID extends React.Component {
         <div className={grid['col-xs-8']}>
           <TertiaryButton
             label={t('Add to list')}
+            disabled={!!this.state.title.error}
             className='next'
             onClick={() => {
               addAccount({ title, address });

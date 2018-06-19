@@ -55,7 +55,8 @@ class ViewAccounts extends React.Component {
                       <div className={styles.balance}>
                         <LiskAmount val={account.balance} /> <span>LSK</span>
                       </div>
-                      <TitleInput edit={this.state.edit ? 1 : 0}
+                      <TitleInput key={account.address}
+                                  edit={this.state.edit}
                                   account={{
                                     title: account.title || account.address,
                                     address: account.address,
