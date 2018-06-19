@@ -13,7 +13,7 @@ import PrivateWrapper from '../privateWrapper';
 import { ActionButton } from './../toolbox/buttons/button';
 import styles from './header.css';
 import CustomCountDown from './customCountDown';
-import Alert from '../dialog/alert';
+import Options from '../dialog/options';
 import routes from './../../constants/routes';
 
 class Header extends React.Component {
@@ -32,6 +32,29 @@ class Header extends React.Component {
       .some(el => pathname.includes(el)) && pathname !== routes.login.path;
   }
 
+  openLogoutDialog() {
+    this.props.setActiveDialog({
+      title: 'this.props.dialog.title',
+      text: 'this.props.dialog.title',
+      childComponent: Options,
+      childComponentProps: {
+        title: this.props.t('Logout'),
+        text: this.props.t('After logging out of your account you will be able to access the Dashbard, Settings and Explorer.'),
+        firstButton: {
+          text: this.props.t('Cancel'),
+          onClickHandler: this.props.closeDialog,
+        },
+        secondButton: {
+          text: this.props.t('Logout'),
+          onClickHandler: () => {
+            this.props.removeSavedAccountPassphrase();
+            this.props.closeDialog();
+          },
+        },
+      },
+    });
+  }
+
   render() {
     return (
       <header className={`${styles.wrapper} mainHeader`}>
@@ -44,18 +67,7 @@ class Header extends React.Component {
               <PrivateWrapper>
                 <div className={`account ${styles.account}`}>
                   <div className={styles.information} align="right">
-                    <div
-                      className={styles.balance}
-                      onClick={() => {
-                        this.props.setActiveDialog({
-                          title: 'this.props.dialog.title',
-                          text: 'this.props.dialog.title',
-                          childComponent: Alert,
-                          childComponentProps: {
-                            text: 'Custom success message',
-                          },
-                        });
-                      }}>
+                    <div className={styles.balance}>
                       <LiskAmount val={this.props.account.balance}/>
                       <small> LSK</small>
                     </div>
@@ -74,7 +86,7 @@ class Header extends React.Component {
                         {((this.props.account.expireTime &&
                           this.props.account.expireTime !== 0) &&
                           this.props.account.passphrase)
-                          ? <div>
+                          ? <div className={styles.logoutInfo}>
                             <Countdown
                               date={this.props.account.expireTime}
                               renderer={CountDownTemplate}
@@ -88,6 +100,9 @@ class Header extends React.Component {
                                 t={this.props.t}
                               />
                             </Countdown>
+                            <div
+                              className={styles.logout}
+                              onClick={() => this.openLogoutDialog() }>Logout</div>
                           </div>
                           : <div></div>
                         }

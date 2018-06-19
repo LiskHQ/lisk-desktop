@@ -102,6 +102,16 @@
   width: 32vw; /* stylelint-disable-line */
 }
 
+.logout {
+  cursor: pointer;
+  padding-left: 20px;
+}
+
+.logoutInfo {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .account {
   position: relative;
   height: 80px;

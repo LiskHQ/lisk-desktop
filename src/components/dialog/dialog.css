@@ -40,10 +40,8 @@
   overflow: auto;
 }
 
-@media screen and (min-width: 960px) {
-  .fullscreen {
-    width: 75vw; /* stylelint-disable-line */
-  }
+.fullscreen {
+  width: 650px;
 }
 
 @media screen and (min-width: 600px) {

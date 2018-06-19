@@ -62,12 +62,12 @@ const savedAccounts = (state = { accounts: [] }, action) => {
     case actionTypes.removeSavedAccountPassphrase:
       return {
         ...state,
-        accounts: state.accounts.map((account) => {
+        accounts: [].concat(state.accounts.map((account) => {
           if (!action.data || (`${action.data.network}${action.data.passphrase}` === `${account.network}${account.passphrase}`)) {
             delete account.passphrase;
           }
           return account;
-        }),
+        })),
       };
     default:
       return state;
