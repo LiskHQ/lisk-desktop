@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { Button, TertiaryButton } from '../../toolbox/buttons/button';
-import Input from '../../toolbox/inputs/input';
+import { Button, TertiaryButton } from '../toolbox/buttons/button';
+import Input from '../toolbox/inputs/input';
 import styles from './followedAccounts.css';
-import { followedAccountAdded } from './../../../actions/followedAccounts';
+import { followedAccountAdded } from '../../actions/followedAccounts';
 
 class AddAccountID extends React.Component {
   constructor() {

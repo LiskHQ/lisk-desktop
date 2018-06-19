@@ -2,13 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import AccountVisual from '../../accountVisual/index';
-import LiskAmount from '../../liskAmount/index';
-import { FontIcon } from '../../fontIcon';
+import AccountVisual from '../accountVisual/index';
+import LiskAmount from '../liskAmount/index';
+import { FontIcon } from '../fontIcon/index';
 import styles from './followedAccounts.css';
-import routes from './../../../constants/routes';
+import routes from '../../constants/routes';
 import TitleInput from './titleInput';
-import { followedAccountRemoved } from './../../../actions/followedAccounts';
+import { followedAccountRemoved } from '../../actions/followedAccounts';
 
 class ViewAccounts extends React.Component {
   constructor() {

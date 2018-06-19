@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { Button, TertiaryButton } from '../../toolbox/buttons/button';
-import regex from './../../../utils/regex';
+import { Button, TertiaryButton } from '../toolbox/buttons/button';
+import regex from '../../utils/regex';
 import styles from './followedAccounts.css';
-import AddressInput from './../../addressInput';
+import AddressInput from '../addressInput/index';
 
 class AddAccountID extends React.Component {
   constructor() {

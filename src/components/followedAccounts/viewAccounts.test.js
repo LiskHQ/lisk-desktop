@@ -4,10 +4,10 @@ import { mount } from 'enzyme';
 import { spy } from 'sinon';
 import configureStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
-import i18n from '../../../i18n';
+import i18n from '../../i18n';
 import ViewAccounts from './viewAccounts';
-import routes from './../../../constants/routes';
-import * as followedAccounts from './../../../actions/followedAccounts';
+import routes from '../../constants/routes';
+import * as followedAccounts from '../../actions/followedAccounts';
 
 const fakeStore = configureStore();
 

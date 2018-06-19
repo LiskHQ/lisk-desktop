@@ -1,9 +1,9 @@
 import React from 'react';
 import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
-import Input from '../../toolbox/inputs/input';
+import Input from '../toolbox/inputs/input';
 import styles from './followedAccounts.css';
-import { followedAccountUpdated } from './../../../actions/followedAccounts';
+import { followedAccountUpdated } from '../../actions/followedAccounts';
 
 class TitleInput extends React.Component {
   constructor(props) {
