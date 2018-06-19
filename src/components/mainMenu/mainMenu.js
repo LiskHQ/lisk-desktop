@@ -103,7 +103,7 @@ class MainMenu extends React.Component {
     }
 
     const itemShouldBeDisabled = index =>
-      (isCurrent(history, index, tabs) || !account.address) && index !== 4;
+      (isCurrent(history, index, tabs) || !account.address) && index !== 3;
 
     return (
       <Fragment>
