@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { Button, TertiaryButton } from '../../toolbox/buttons/button';
-import Input from '../../toolbox/inputs/input';
+import { Button, TertiaryButton } from '../toolbox/buttons/button';
+import Input from '../toolbox/inputs/input';
 import styles from './followedAccounts.css';
-import { followedAccountAdded } from './../../../actions/followedAccounts';
+import { followedAccountAdded } from '../../actions/followedAccounts';
 
 class AddAccountID extends React.Component {
   constructor() {
@@ -31,6 +31,7 @@ class AddAccountID extends React.Component {
       t, prevStep, addAccount, address,
     } = this.props;
 
+    const title = this.state.title.value || address;
     return <div className={styles.addAccount}>
       <header><h2>{t('How would you call it?')}</h2></header>
       <div>
@@ -54,9 +55,10 @@ class AddAccountID extends React.Component {
         <div className={grid['col-xs-8']}>
           <TertiaryButton
             label={t('Add to list')}
+            disabled={!!this.state.title.error}
             className='next'
             onClick={() => {
-              addAccount({ title: this.state.title.value, address });
+              addAccount({ title, address });
               prevStep({ reset: true });
             }}
           />

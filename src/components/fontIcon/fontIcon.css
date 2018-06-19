@@ -138,43 +138,54 @@
   content: "\f11b";
 }
 
-.remove-circled::before {
+.network::before {
   content: "\f11c";
 }
 
-.request-token::before {
+.remove-circled::before {
   content: "\f11d";
 }
 
-.search::before {
+.remove::before {
   content: "\f11e";
 }
 
-.send-token::before {
+.request-token::before {
   content: "\f11f";
 }
 
-.show::before {
+.search::before {
   content: "\f120";
 }
 
-.undo::before {
+.send-token::before {
   content: "\f121";
 }
 
-.unlocked::before {
+.show::before {
   content: "\f122";
 }
 
-.warning::before {
+.undo::before {
   content: "\f123";
 }
 
-.zoom-in::before {
+.unlocked::before {
   content: "\f124";
 }
 
-.zoom-out::before {
+.usb-stick::before {
   content: "\f125";
 }
 
+.warning::before {
+  content: "\f126";
+}
+
+.zoom-in::before {
+  content: "\f127";
+}
+
+.zoom-out::before {
+  content: "\f128";
+}

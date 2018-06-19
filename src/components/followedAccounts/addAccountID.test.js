@@ -4,7 +4,7 @@ import { mount } from 'enzyme';
 import { spy } from 'sinon';
 import configureStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
-import i18n from '../../../i18n';
+import i18n from '../../i18n';
 import AddAccountID from './addAccountID';
 
 const fakeStore = configureStore();

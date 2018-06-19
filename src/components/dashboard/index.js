@@ -11,7 +11,7 @@ import Send from '../send';
 import CurrencyGraph from './currencyGraph';
 import routes from '../../constants/routes';
 import { settingsUpdated } from '../../actions/settings';
-import FollowedAccounts from '../followedAccounts/dashboard/index';
+import FollowedAccounts from '../followedAccounts/index';
 
 import styles from './dashboard.css';
 
