@@ -47,13 +47,13 @@ describe('Add Account Title Component', () => {
   });
 
   it('accepts empty field', () => {
-    wrapper.find('.title input').simulate('change', { target: { value: '' } });
-    expect(wrapper.find('Input.title').text()).to.not.contain('Required');
+    wrapper.find('.account-title input').simulate('change', { target: { value: '' } });
+    expect(wrapper.find('Input.account-title').text()).to.not.contain('Required');
   });
 
   it('recognises too long title', () => {
-    wrapper.find('.title input').simulate('change', { target: { value: 'this is a very long title' } });
-    expect(wrapper.find('Input.title').text()).to.contain('Title too long');
+    wrapper.find('.account-title input').simulate('change', { target: { value: 'this is a very long title' } });
+    expect(wrapper.find('Input.account-title').text()).to.contain('Title too long');
   });
 
   it('cancels the process on button click', () => {
@@ -62,7 +62,7 @@ describe('Add Account Title Component', () => {
   });
 
   it('goes to next step on button click', () => {
-    wrapper.find('.title input').simulate('change', { target: { value: 'some title' } });
+    wrapper.find('.account-title input').simulate('change', { target: { value: 'some title' } });
     wrapper.find('.next').first().simulate('click');
     expect(followedAccounts.followedAccountAdded).to.have.been.calledWith({
       address: '16313739661670634666L',

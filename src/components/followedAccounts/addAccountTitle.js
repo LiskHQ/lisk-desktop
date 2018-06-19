@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Button, TertiaryButton } from '../toolbox/buttons/button';
-import Input from '../toolbox/inputs/input';
-import styles from './followedAccounts.css';
 import { followedAccountAdded } from '../../actions/followedAccounts';
+import styles from './followedAccounts.css';
+import TitleInput from './accountTitleInput';
 
 class AddAccountID extends React.Component {
   constructor() {
@@ -13,17 +13,13 @@ class AddAccountID extends React.Component {
     this.state = { title: { value: '' } };
   }
 
-  handleChange(value) {
+  handleChange(value, validateInput) {
     this.setState({
       title: {
         value,
-        error: this.validateInput(value),
+        error: validateInput(value),
       },
     });
-  }
-
-  validateInput(value) {
-    return value.length > 20 ? this.props.t('Title too long') : undefined;
   }
 
   render() {
@@ -35,14 +31,9 @@ class AddAccountID extends React.Component {
     return <div className={styles.addAccount}>
       <header><h2>{t('How would you call it?')}</h2></header>
       <div>
-        <Input
-          label={t('Title (optional)')}
-          className='title'
-          error={this.state.title.error}
-          value={this.state.title.value}
-          autoFocus={true}
-          onChange={val => this.handleChange(val)}
-        />
+        <TitleInput
+          title={this.state.title}
+          onChange={this.handleChange.bind(this)} />
       </div>
       <footer className={grid.row} >
         <div className={grid['col-xs-4']}>
