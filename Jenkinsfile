@@ -1,39 +1,4 @@
-def get_build_info() {
-  pr_branch = ''
-  if (env.CHANGE_BRANCH != null) {
-    pr_branch = " (${env.CHANGE_BRANCH})"
-  }
-  build_info = "#${env.BUILD_NUMBER} of <${env.BUILD_URL}|${env.JOB_NAME}>${pr_branch}"
-  return build_info
-}
-
-def slack_send(color, message) {
-  /* Slack channel names are limited to 21 characters */
-  CHANNEL_MAX_LEN = 21
-
-  channel = "${env.JOB_NAME}".tokenize('/')[0]
-  channel = channel.replace('lisk-', 'lisk-ci-')
-  if ( channel.size() > CHANNEL_MAX_LEN ) {
-     channel = channel.substring(0, CHANNEL_MAX_LEN)
-  }
-
-  echo "[slack_send] channel: ${channel} "
-  slackSend color: "${color}", message: "${message}", channel: "${channel}"
-}
-
-def fail(reason) {
-  build_info = get_build_info()
-  slack_send('danger', "Build ${build_info} failed (<${env.BUILD_URL}/console|console>, <${env.BUILD_URL}/changes|changes>)\nCause: ${reason}")
-  currentBuild.result = 'FAILURE'
-  pr_branch = ''
-  if (env.CHANGE_BRANCH != null) {
-    pr_branch = " (${env.CHANGE_BRANCH})"
-  }
-  email_subject = "Build #${BUILD_NUMBER} of ${JOB_NAME}${pr_branch} failed"
-  email_body = "${email_subject} - Check console output at $BUILD_URL to view the results."
-  emailext subject: email_subject, body: email_body, recipientProviders: [culprits()]
-  error("${reason}")
-}
+@Library('lisk-jenkins') _
 
 /* comment out the next line to allow concurrent builds on the same branch */
 properties([disableConcurrentBuilds(), pipelineTriggers([])])
@@ -201,8 +166,8 @@ node('lisk-hub') {
       /* notify of success if previous build failed */
       previous_build = currentBuild.getPreviousBuild()
       if (previous_build != null && previous_build.result == 'FAILURE') {
-        build_info = get_build_info()
-        slack_send('good', "Recovery: build ${build_info} was successful.")
+        build_info = getBuildInfo()
+        liskSlackSend('good', "Recovery: build ${build_info} was successful.")
       }
     } else {
       archiveArtifacts allowEmptyArchive: true, artifacts: 'e2e-test-screenshots/'
