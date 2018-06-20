@@ -8,6 +8,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { prepareStore } from '../../../../test/utils/applicationInit';
 import * as delegateAPI from '../../../../src/utils/api/delegate';
 import * as transactionsAPI from '../../../../src/utils/api/transactions';
+import followedAccountsReducer from '../../../store/reducers/followedAccounts';
 import peersReducer from '../../../store/reducers/peers';
 import accountReducer from '../../../store/reducers/account';
 import transactionsReducer from '../../../store/reducers/transactions';
@@ -33,6 +34,7 @@ describe('WalletTransactions Component', () => {
   let delegateVotersStub;
 
   const store = prepareStore({
+    followedAccounts: followedAccountsReducer,
     peers: peersReducer,
     account: accountReducer,
     transactions: transactionsReducer,

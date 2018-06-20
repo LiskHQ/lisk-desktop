@@ -29,6 +29,7 @@ describe('TransactionOverview', () => {
       onFilterSet: () => {},
     };
     store.getState = () => ({
+      followedAccounts: { accounts: [] },
       peers: { status: {}, options: {}, data: {} },
       transactions: {
         confirmed: [],

@@ -26,6 +26,10 @@
     & header {
       line-height: var(--header-line-height);
 
+      & .accountTitle {
+        color: var(--color-grayscale-medium);
+      }
+
       & .copy {
         color: var(--color-grayscale-medium);
       }
