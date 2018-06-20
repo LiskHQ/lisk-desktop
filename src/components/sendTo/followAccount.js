@@ -40,7 +40,7 @@ class FollowAccount extends React.Component {
             onChange={this.handleChange.bind(this)}
           />
           <footer>
-            <TertiaryButton className={`${styles.button} send-to-address`}
+            <TertiaryButton className={`${styles.button} follow-account`}
                 disabled={!!this.state.title.error}
                 onClick={() => {
                 addAccount({ title, address });
@@ -49,7 +49,7 @@ class FollowAccount extends React.Component {
               {t('Add to dashboard')}
             </TertiaryButton>
 
-            <Button onClick={() => prevStep()} className={`${styles.button} ${styles.follow} follow-account`} >
+            <Button onClick={() => prevStep()} className={`${styles.button} ${styles.follow} cancel`} >
               <span className={styles.label}>{t('Cancel')}</span>
             </Button>
           </footer>
