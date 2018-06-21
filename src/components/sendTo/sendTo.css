@@ -15,6 +15,10 @@
   line-height: 36px;
   display: flex;
   justify-content: space-around;
+  background: var(--gradient-greyscale);
+  box-shadow: none;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
 
   & .account {
     margin-bottom: 8.5vh; /* stylelint-disable-line */

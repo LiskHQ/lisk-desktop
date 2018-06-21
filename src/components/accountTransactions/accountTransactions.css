@@ -7,9 +7,15 @@
 
 .wrapper {
   min-width: 100%;
+  box-shadow: 0px 22px 22px 0px rgba(0,0,0,.22);
 
   & .sendTo {
     width: 100%;
+    padding-right: 0px;
+  }
+
+  & .transactions {
+    padding-left: 0px;
   }
 }
 

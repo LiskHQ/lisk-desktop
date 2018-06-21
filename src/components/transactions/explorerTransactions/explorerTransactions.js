@@ -73,7 +73,7 @@ class ExplorerTransactions extends React.Component {
     };
 
     return (
-      <Box>
+      <Box className={styles.wrapper}>
         <MultiStep className={styles.transactions}>
           <TransactionOverview {...overviewProps} />
           <TransactionDetailView {...this.props} />
