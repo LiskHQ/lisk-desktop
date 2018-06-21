@@ -7,6 +7,15 @@
 
 .wrapper {
   width: 100%;
+  box-shadow: var(--normal-shadow);
+}
+
+.sideBar {
+  padding-right: 0px;
+}
+
+.votes {
+  padding-left: 0px;
 }
 
 @media (--medium-viewport) {

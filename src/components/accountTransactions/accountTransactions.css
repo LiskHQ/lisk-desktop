@@ -7,7 +7,7 @@
 
 .wrapper {
   min-width: 100%;
-  box-shadow: 0px 22px 22px 0px rgba(0,0,0,.22);
+  box-shadow: var(--normal-shadow);
 
   & .sendTo {
     width: 100%;
