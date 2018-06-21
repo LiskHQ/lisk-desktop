@@ -4,6 +4,7 @@ import styles from './confirmMessage.css';
 import { Button } from '../toolbox/buttons/button';
 import Input from '../toolbox/inputs/input';
 import { passphraseIsValid } from '../../utils/form';
+import { extractPublicKey } from '../../utils/account';
 // eslint-disable-next-line import/no-named-as-default
 import PassphraseInput from '../passphraseInput';
 import TransitionWrapper from '../toolbox/transitionWrapper';
@@ -31,6 +32,18 @@ class ConfirmMessage extends React.Component {
   }
 
   handleChange(name, value, error) {
+    if (!error) {
+      const publicKeyMap = {
+        passphrase: 'publicKey',
+        secondPassphrase: 'secondPublicKey',
+      };
+
+      const expectedPublicKey = this.props.account[publicKeyMap[name]];
+
+      if (expectedPublicKey && expectedPublicKey !== extractPublicKey(value)) {
+        error = this.props.t('Entered passphrase does not belong to the active account');
+      }
+    }
     this.setState({
       [name]: {
         value,
