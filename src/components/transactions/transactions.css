@@ -17,6 +17,12 @@
   display: inline-block;
 }
 
+.wrapper {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  box-shadow: none;
+}
+
 .transactions {
   & .activity {
     display: flex;

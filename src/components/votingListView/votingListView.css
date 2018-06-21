@@ -8,6 +8,12 @@
   --list-bottom-padding-s: 90px;
 }
 
+.box {
+  box-shadow: none;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
 .leftText {
   text-align: left;
   padding-left: 0px;

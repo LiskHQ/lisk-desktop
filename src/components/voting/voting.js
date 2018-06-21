@@ -37,13 +37,13 @@ class Voting extends React.Component {
   render() {
     return (
       <div className={`${grid.row} ${styles.wrapper}`} ref={(el) => { this.root = el; }}>
-        <aside className={`${grid['col-sm-12']} ${grid['col-md-4']} ${styles.votingBox}`}>
+        <aside className={`${grid['col-sm-12']} ${grid['col-md-4']} ${styles.votingBox} ${styles.sideBar}`}>
           <DelegateSidebar votes={this.props.votes}
             nextStepGotCalled={this.nextStepGotCalled.bind(this)}
             setLayover={this.setLayover.bind(this)}
             updateList={(value) => { this.toggleSummery(value); }} />
         </aside>
-        <section className={`${grid['col-sm-12']} ${grid['col-md-8']} ${styles.votingBox}`}>
+        <section className={`${grid['col-sm-12']} ${grid['col-md-8']} ${styles.votingBox} ${styles.votes}`}>
           <VotingListView showChangeSummery={this.state.showChangeSummery}
             nextStepCalled={this.state.nextStepCalled}
             history={this.props.history}

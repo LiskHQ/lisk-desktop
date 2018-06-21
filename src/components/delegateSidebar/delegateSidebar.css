@@ -8,6 +8,13 @@
   flex-direction: column;
 }
 
+.box {
+  background: var(--gradient-greyscale);
+  box-shadow: none;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
 @media (--medium-viewport) {
   .box {
     height: 100%;

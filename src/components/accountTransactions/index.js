@@ -19,7 +19,7 @@ class AccountTransactions extends React.Component {
           delegate={this.props.delegate}
         />
       </div>
-      <div className={`${grid['col-sm-12']} ${styles.transactions} ${grid['col-md-8']}`}>
+      <div className={`${grid['col-sm-12']} ${styles.transactions} ${grid['col-md-8']} ${styles.transactions}`}>
         <ExplorerTransactions
           history={this.props.history}
           address={this.props.match.params.address}
