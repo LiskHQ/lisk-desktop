@@ -68,6 +68,20 @@ describe('HeaderHOC', () => {
     actionsSpy.restore();
   });
 
+  it('should dispatch dialogHidden action', () => {
+    const actionsSpy = sinon.spy(dialogActions, 'dialogHidden');
+    wrapper.find(Header).props().closeDialog();
+    expect(actionsSpy).to.be.calledWith();
+    actionsSpy.restore();
+  });
+
+  it('should dispatch accountUpdated action', () => {
+    const actionsSpy = sinon.spy(accountActions, 'accountUpdated');
+    wrapper.find(Header).props().resetTimer();
+    expect(actionsSpy).to.be.calledWith();
+    actionsSpy.restore();
+  });
+
   it('should dispatch removeSavedAccountPassphrase action', () => {
     const actionsSpy = sinon.spy(savedAccountsActions, 'removeSavedAccountPassphrase');
     wrapper.find(Header).props().removeSavedAccountPassphrase();

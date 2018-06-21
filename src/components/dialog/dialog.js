@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Dialog from 'react-toolbox/lib/dialog';
-import { parseSearchParams } from '../../utils/searchParams';
+// import { parseSearchParams } from '../../utils/searchParams';
 import styles from './dialog.css';
 
 class DialogElement extends Component {
@@ -13,29 +13,29 @@ class DialogElement extends Component {
   //   this.open();
   // }
 
-  open() {
-    clearTimeout(this.timeout);
-    this.setState({ hidden: false });
-    this.props.dialogDisplayed({
-      title: this.props.dialog.title,
-      theme: this.props.dialog.theme,
-      childComponent: this.props.dialog.childComponent,
-      childComponentProps: parseSearchParams(this.props.history.location.search),
-    });
-  }
+  // open() {
+  //   clearTimeout(this.timeout);
+  //   this.setState({ hidden: false });
+  //   this.props.dialogDisplayed({
+  //     title: this.props.dialog.title,
+  //     theme: this.props.dialog.theme,
+  //     childComponent: this.props.dialog.childComponent,
+  //     childComponentProps: parseSearchParams(this.props.history.location.search),
+  //   });
+  // }
 
-  close() {
-    this.timeout = setTimeout(() => {
-      this.props.dialogHidden();
-      this.setState({ hidden: false });
-    }, 500);
-    this.setState({ hidden: true });
-  }
+  // close() {
+  //   this.timeout = setTimeout(() => {
+  //     this.props.dialogHidden();
+  //     this.setState({ hidden: false });
+  //   }, 500);
+  //   this.setState({ hidden: true });
+  // }
 
-  goBack() {
-    this.close();
-    this.props.history.goBack();
-  }
+  // goBack() {
+  //   this.close();
+  //   this.props.history.goBack();
+  // }
 
   render() {
     const theme = {
@@ -60,7 +60,6 @@ class DialogElement extends Component {
             {this.props.dialog.childComponent ?
               <this.props.dialog.childComponent
                 {...(this.props.dialog.childComponentProps || {})}
-                closeDialog={this.goBack.bind(this)}
               /> :
               null
             }

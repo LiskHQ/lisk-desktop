@@ -45,7 +45,7 @@ class Header extends React.Component {
         secondButton: {
           text: this.props.t('Logout'),
           onClickHandler: () => {
-            this.props.removeSavedAccountPassphrase();
+            this.props.logOut();
             this.props.closeDialog();
           },
         },
@@ -89,10 +89,12 @@ class Header extends React.Component {
                               date={this.props.account.expireTime}
                               renderer={CountDownTemplate}
                               onComplete={() => {
-                                this.props.removeSavedAccountPassphrase();
+                                this.props.logOut();
+                                this.props.history.replace(routes.login.path);
                               }}
                             >
                               <CustomCountDown
+                                closeDialog={this.props.closeDialog}
                                 history={this.props.history}
                                 setActiveDialog={this.props.setActiveDialog}
                                 resetTimer={this.props.resetTimer}
@@ -101,7 +103,7 @@ class Header extends React.Component {
                               />
                             </Countdown>
                             <div
-                              className={styles.logout}
+                              className={`${styles.logout} logout`}
                               onClick={() => this.openLogoutDialog() }>Logout</div>
                           </div>
                           : <div></div>

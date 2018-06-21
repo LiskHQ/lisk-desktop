@@ -5,8 +5,8 @@ import { Button, RedButton } from '../toolbox/buttons/button';
 
 import styles from './options.css';
 
-const Options = ({ firstButton, secondButton, text, title }) => (
-  <div className={styles.optionsBody}>
+const Options = ({ firstButton, secondButton, text, title }) =>
+  (<div className={styles.optionsBody}>
     <div className={styles.title}>{title}</div>
     <br />
     <p className={styles.text}>{text}</p>
@@ -15,7 +15,6 @@ const Options = ({ firstButton, secondButton, text, title }) => (
       <Button label={firstButton.text} onClick={firstButton.onClickHandler} className='ok-button' />
       <RedButton label={secondButton.text} onClick={secondButton.onClickHandler} className='ok-button'/>
     </section>
-  </div>
-);
+  </div>);
 
 export default translate()(Options);

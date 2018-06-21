@@ -60,6 +60,7 @@ module.exports = function (config) {
             'src/store/reducers/liskService.js',
             'src/store/reducers/search.js',
             'src/components/errorBoundary/index.js',
+            'src/components/header/customCountDown.js',
           ],
           overrides: {
             'src/store/**/*.js': {

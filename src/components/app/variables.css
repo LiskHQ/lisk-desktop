@@ -128,6 +128,7 @@ or "warn/action" ineastd of "red/green"
   --gradient-greyscale-mobile: linear-gradient(to right, var(--color-grayscale-mobile-background), var(--color-grayscale-darker-mobile-background));
   --gradient-tertiary: linear-gradient(45deg, var(--color-tertiary-medium) 0%, var(--color-primary-medium) 100%);
   --gradient-red: linear-gradient(224.1deg, var(--color-action-light) 0%, var(--color-action-dark) 100%);
+
   /*************************
         Z-Indexes
   *************************/

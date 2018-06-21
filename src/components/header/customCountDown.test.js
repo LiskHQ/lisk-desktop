@@ -13,6 +13,7 @@ describe('customCountDown', () => {
       seconds: 25,
       autoLog: true,
       resetTimer: spy(),
+      setActiveDialog: () => {},
       t: key => key,
     };
     wrapper = mount(<CustomCountDown {...propsMock} />);
@@ -23,13 +24,13 @@ describe('customCountDown', () => {
   });
 
   it('should render reset button', () => {
-    wrapper.setProps({ minutes: 4, seconds: 49 });
-    expect(wrapper.find('span').text()).to.be.equal('ID lock in 04:49');
+    wrapper.setProps({ minutes: 0, seconds: 59 });
+    expect(wrapper.find('span').text()).to.be.equal('ID lock in 00:59');
     expect(wrapper).to.have.descendants('.reset');
   });
 
   it('should call resetTimer', () => {
-    wrapper.setProps({ minutes: 1, seconds: 5 });
+    wrapper.setProps({ minutes: 0, seconds: 1 });
     expect(wrapper).to.have.descendants('.reset');
     expect(wrapper.props().resetTimer).to.not.be.calledWith();
     wrapper.find('.reset').simulate('click');

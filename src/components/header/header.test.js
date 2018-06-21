@@ -28,6 +28,8 @@ describe('Header', () => {
   const mockInputProps = {
     setActiveDialog: () => { },
     resetTimer: sinon.spy(),
+    logOut: sinon.spy(),
+    history: { replace: sinon.spy() },
     account: { address: accounts.genesis.address },
     t: key => key,
     location: { pathname: `${routes.explorer.path}${routes.search}` },
@@ -62,5 +64,17 @@ describe('Header', () => {
     storeObject.account = { publicKey: '123' };
     wrapper = mountWithRouter(<Header {...mockInputProps} />, options);
     expect(wrapper.find('Countdown')).to.have.length(1);
+  });
+
+  it('should display logout dialog window', () => {
+    wrapper = mountWithRouter(<Header {...mockInputProps} />, options);
+    wrapper.find('.logout').simulate('click');
+    expect(wrapper.find('Countdown')).to.have.length(1);
+  });
+
+  it('should redirect to dashboard after 10 min', () => {
+    wrapper = mountWithRouter(<Header {...mockInputProps} />, options);
+    wrapper.find('Countdown').props().onComplete();
+    expect(mockInputProps.history.replace).to.have.been.calledWith(`${routes.login.path}`);
   });
 });

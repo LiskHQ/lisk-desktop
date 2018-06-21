@@ -44,6 +44,11 @@
   width: 650px;
 }
 
+.overlay {
+  background-color: rgba(0, 26, 62);
+  opacity: 0.9 !important;
+}
+
 @media screen and (min-width: 600px) {
   .innerBody {
     max-height: calc(100vh - 100px); /* stylelint-disable-line */
