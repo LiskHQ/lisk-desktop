@@ -156,10 +156,6 @@ class Login extends React.Component {
         <section className={`${styles.login} ${styles[this.state.passInputState]}`}>
           <section className={styles.table}>
             <header>
-              <a className={styles.forwardToLink} href='https://lisk.io' target='_blank' rel='noopener noreferrer'>
-                <span className={styles.label}>{this.props.t('Go to lisk.io')}</span>
-                <FontIcon className={styles.icon}>arrow-right</FontIcon>
-              </a>
             </header>
             <div className={`${styles.tableCell} text-left`}>
               <h2>{this.props.t('Sign in')}</h2>
