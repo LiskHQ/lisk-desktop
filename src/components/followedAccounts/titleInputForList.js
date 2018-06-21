@@ -1,11 +1,11 @@
 import React from 'react';
 import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
-import Input from '../toolbox/inputs/input';
 import styles from './followedAccounts.css';
 import { followedAccountUpdated } from '../../actions/followedAccounts';
+import TitleInput from './accountTitleInput';
 
-class TitleInput extends React.Component {
+class TitleInputForList extends React.Component {
   constructor(props) {
     super(props);
     this.state = { title: { value: props.account.title } };
@@ -25,27 +25,22 @@ class TitleInput extends React.Component {
     }
   }
 
-  handleChange(value) {
+  handleChange(value, validateInput) {
     this.setState({
       title: {
         value,
-        error: this.validateInput(value),
+        error: validateInput(value),
       },
     });
   }
 
-  validateInput(value) {
-    return value.length > 20 ? this.props.t('Title too long') : undefined;
-  }
-
   render() {
-    return <Input
-      className={`${styles.title} account-title`}
-      error={this.state.title.error}
-      value={this.state.title.value}
-      disabled={!this.props.edit}
-      autoFocus={true}
-      onChange={val => this.handleChange(val)}
+    return <TitleInput
+    className={styles.title}
+    title={this.state.title}
+    disabled={!this.props.edit}
+    hideLabel={true}
+    onChange={this.handleChange.bind(this)}
     />;
   }
 }
@@ -54,4 +49,4 @@ const mapDispatchToProps = dispatch => ({
   updateAccount: data => dispatch(followedAccountUpdated(data)),
 });
 
-export default connect(null, mapDispatchToProps)(translate()(TitleInput));
+export default connect(null, mapDispatchToProps)(translate()(TitleInputForList));

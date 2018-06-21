@@ -7,7 +7,7 @@ import LiskAmount from '../liskAmount/index';
 import { FontIcon } from '../fontIcon/index';
 import styles from './followedAccounts.css';
 import routes from '../../constants/routes';
-import TitleInput from './titleInput';
+import TitleInput from './titleInputForList';
 import { followedAccountRemoved } from '../../actions/followedAccounts';
 
 class ViewAccounts extends React.Component {

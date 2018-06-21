@@ -1,7 +1,6 @@
 @import '../app/variables.css';
 
 :root {
-  --header-address-font-weight: var(--font-weight-semi-bold);
   --header-balance-unit-font-size-XL: 20px;
   --header-balance-unit-font-size-L: 18px;
   --header-balance-unit-font-size-XS: 18px;
@@ -14,7 +13,6 @@
 .wrapper {
   text-align: center;
   line-height: 36px;
-  height: 100%;
   display: flex;
   justify-content: space-around;
 
@@ -43,6 +41,7 @@
 
   & .sendButton {
     margin: auto 0px;
+    padding: 0px;
   }
 
   & .button {
@@ -52,6 +51,16 @@
     line-height: 18px;
     text-transform: none;
     width: 100%;
+    height: 60px;
+  }
+
+  & .follow {
+    margin-top: 25px;
+    height: 56px;
+
+    & .label {
+      vertical-align: middle;
+    }
   }
 }
 

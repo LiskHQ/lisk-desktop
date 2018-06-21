@@ -166,26 +166,54 @@
   content: "\f122";
 }
 
-.undo::before {
+.smiley-angry::before {
   content: "\f123";
 }
 
-.unlocked::before {
+.smiley-happy::before {
   content: "\f124";
 }
 
-.usb-stick::before {
+.smiley-laughing::before {
   content: "\f125";
 }
 
-.warning::before {
+.smiley-neutral::before {
   content: "\f126";
 }
 
-.zoom-in::before {
+.smiley-sad::before {
   content: "\f127";
 }
 
-.zoom-out::before {
+.star-filled::before {
   content: "\f128";
+}
+
+.star-outline::before {
+  content: "\f129";
+}
+
+.undo::before {
+  content: "\f12a";
+}
+
+.unlocked::before {
+  content: "\f12b";
+}
+
+.usb-stick::before {
+  content: "\f12c";
+}
+
+.warning::before {
+  content: "\f12d";
+}
+
+.zoom-in::before {
+  content: "\f12e";
+}
+
+.zoom-out::before {
+  content: "\f12f";
 }

@@ -16,6 +16,7 @@ import votingReducer from '../../src/store/reducers/voting';
 import transactionReducer from '../../src/store/reducers/transaction';
 import searchReducer from '../../src/store/reducers/search';
 import filtersReducer from '../../src/store/reducers/filters';
+import followedAccountsReducer from '../../src/store/reducers/followedAccounts';
 import loginMiddleware from '../../src/store/middlewares/login';
 import accountMiddleware from '../../src/store/middlewares/account';
 import votingMiddleware from '../../src/store/middlewares/voting';
@@ -175,6 +176,7 @@ describe('@integration: Account Transactions', () => {
 
   const setupStep = ({ accountType, address }, accountExtraProps = {}) => {
     store = prepareStore({
+      followedAccounts: followedAccountsReducer,
       account: accountReducer,
       transactions: transactionsReducer,
       transaction: transactionReducer,
