@@ -1,0 +1,64 @@
+@import '../../app/variables.css';
+
+:root {
+  --dropdown-box-shadow: 0 8px 16px 0 rgba(29, 72, 119, 0.16);
+  --dropdown-list-hover-color: rgba(204, 217, 228, 0.2);
+}
+
+.dropdown ul {
+  box-shadow: var(--dropdown-box-shadow) !important;
+  width: 160px;
+}
+
+.dropdown li,
+.dropdown .selected {
+  padding: 12px;
+  color: var(--color-primary-standard);
+  font-weight: var(--font-weight-semi-bold);
+}
+
+.dropdown .values {
+  & li:hover:not(:first-child) {
+    background-color: var(--dropdown-list-hover-color) !important;
+  }
+}
+
+.dropdown .inputLabel {
+  color: var(--color-grayscale-dark) !important;
+  font-weight: var(--font-weight-semi-bold);
+}
+
+.dropdown .inputFilled {
+  margin-top: 10px;
+  color: var(--color-primary-standard) !important;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.dropdown .value {
+  padding-bottom: 0px;
+
+  &::after {
+    border: none;
+  }
+}
+
+.dropdown .disabled {
+  cursor: default !important;
+  color: var(--color-primary-standard) !important;
+  font-size: 12px;
+  font-weight: var(--font-weight-bold);
+  line-height: 27px;
+}
+
+.arrow {
+  position: absolute;
+  left: 95px;
+  top: 35px;
+  color: var(--color-primary-standard);
+  cursor: pointer;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: inset 0 0 0px 9999px var(--color-white);
+}

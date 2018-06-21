@@ -1,8 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import Dropdown from 'react-toolbox/lib/dropdown';
 import i18next from 'i18next';
-import { FontIcon } from '../fontIcon';
+import Dropdown from '../toolbox/dropdown/dropdown';
 import Input from '../toolbox/inputs/input';
 import { PrimaryButton } from '../toolbox/buttons/button';
 import { extractAddress } from '../../utils/account';
@@ -150,40 +149,41 @@ class Login extends React.Component {
   }
 
   render() {
+    const networkList = [{ label: this.props.t('Choose Network'), disabled: true }, ...this.networks];
     return (this.props.account.loading ?
       <div className={styles.loadingWrapper}></div> :
       <Box className={styles.wrapper}>
         <section className={`${styles.login} ${styles[this.state.passInputState]}`}>
           <section className={styles.table}>
             <header>
+              {this.showNetworkOptions()
+                ? <div>
+                  <Dropdown
+                    auto={false}
+                    source={networkList}
+                    onChange={this.changeHandler.bind(this, 'network')}
+                    label={this.props.t('Network to connect to')}
+                    value={this.state.network}
+                    className='network'
+                  />
+                  {
+                    this.state.network === networks.customNode.code &&
+                    <Input type='text'
+                           label={this.props.t('Enter IP or domain address of the node')}
+                           name='address'
+                           className={`address ${styles.outTaken}`}
+                           theme={styles}
+                           value={this.state.address}
+                           error={this.state.addressValidity}
+                           onChange={this.changeHandler.bind(this, 'address')}/>
+                  }
+                </div>
+                : ''
+              }
             </header>
             <div className={`${styles.tableCell} text-left`}>
               <h2>{this.props.t('Sign in')}</h2>
               <form onSubmit={this.onFormSubmit.bind(this)}>
-                {this.showNetworkOptions()
-                  ? <div className={styles.outTaken}>
-                    <Dropdown
-                      auto={false}
-                      source={this.networks}
-                      onChange={this.changeHandler.bind(this, 'network')}
-                      label={this.props.t('Select a network')}
-                      value={this.state.network}
-                      className='network'
-                    />
-                    {
-                      this.state.network === networks.customNode.code &&
-                      <Input type='text'
-                        label={this.props.t('Node address')}
-                        name='address'
-                        className={`address ${styles.outTaken}`}
-                        theme={styles}
-                        value={this.state.address}
-                        error={this.state.addressValidity}
-                        onChange={this.changeHandler.bind(this, 'address')}/>
-                    }
-                  </div>
-                  : ''
-                }
                 <PassphraseInput label={this.props.t('Enter your passphrase')}
                   className='passphrase'
                   onFocus={this.passFocused.bind(this)}
