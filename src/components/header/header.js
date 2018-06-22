@@ -112,19 +112,10 @@ class Header extends React.Component {
                       : <div></div>
                     }
                   </div>
-                  <Link to={`${routes.accounts.path}`} className={styles.avatar}>
-                    <AccountVisual
-                      address={this.props.account.address}
-                      size={69} sizeS={40}
-                    />
-                  </Link>
-                  <div className={styles.menu}>
-                    <figure className={styles.iconCircle}>
-                      <Link to={`${routes.accounts.path}`} className={`${styles.link} saved-accounts`}>
-                        <FontIcon value='more'/>
-                      </Link>
-                    </figure>
-                  </div>
+                  <AccountVisual
+                    address={this.props.account.address}
+                    size={69} sizeS={40}
+                  />
                 </div>
               </PrivateWrapper>
               { this.shouldShowActionButton() &&

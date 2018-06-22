@@ -132,7 +132,6 @@
 
   & .information {
     display: inline-block;
-    vertical-align: middle;
     line-height: 25px;
     padding-right: 20px;
     height: var(--avatar-height);

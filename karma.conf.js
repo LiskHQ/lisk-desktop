@@ -60,6 +60,9 @@ module.exports = function (config) {
             'src/store/reducers/liskService.js',
             'src/store/reducers/search.js',
             'src/components/errorBoundary/index.js',
+            'src/components/savedAccounts/index.js',
+            'src/store/middlewares/savedAccounts.js',
+            'src/store/reducers/savedAccounts.js',
             'src/components/header/customCountDown.js',
           ],
           overrides: {
