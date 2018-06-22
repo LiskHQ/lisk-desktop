@@ -5,10 +5,8 @@ import { Button, RedButton } from '../toolbox/buttons/button';
 
 import styles from './options.css';
 
-const Options = ({ firstButton, secondButton, text, title }) =>
+const Options = ({ firstButton, secondButton, text }) =>
   (<div className={styles.optionsBody}>
-    <div className={styles.title}>{title}</div>
-    <br />
     <p className={styles.text}>{text}</p>
     <br />
     <section className={`${grid.row} ${styles.buttonsRow} ${grid['between-xs']}`}>

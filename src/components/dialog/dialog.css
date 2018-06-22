@@ -29,6 +29,16 @@
   }
 }
 
+.title {
+  padding: 20px 0;
+  font-size: 48px;
+  text-align: center;
+  color: black;
+  font-family: Gilroy;
+  font-weight: 800;
+  line-height: 59px;
+}
+
 .body {
   border-radius: 2px 2px 0 0;
   padding: 0px;

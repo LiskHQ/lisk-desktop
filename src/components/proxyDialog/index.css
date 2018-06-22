@@ -1,0 +1,14 @@
+.submitButton {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.form {
+  padding: 0 65px;
+}
+
+.text {
+  text-align: center;
+  padding: 20px 0;
+}

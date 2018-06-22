@@ -42,6 +42,8 @@ class DialogElement extends Component {
       ...styles,
       ...(this.props.dialog.theme || {}),
     };
+
+    const { childComponentProps } = this.props.dialog;
     return (
       <Dialog active={this.props.dialog.childComponent !== undefined && !this.state.hidden}
         theme={theme}
@@ -57,6 +59,7 @@ class DialogElement extends Component {
             </AppBar> :
             null } */}
           <div className={`modal-dialog-body ${theme.innerBody}`}>
+            <div className={styles.title}>{childComponentProps && childComponentProps.title}</div>
             {this.props.dialog.childComponent ?
               <this.props.dialog.childComponent
                 {...(this.props.dialog.childComponentProps || {})}
