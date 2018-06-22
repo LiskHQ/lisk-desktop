@@ -7,12 +7,12 @@ Feature: Explorer page
     And I click "addresses result"
     And I wait 2 seconds
     Then I should see text "No activity yet" in "empty message" element
-    When I clear "autosuggest input" field
+    And I click "autosuggest btn close"
     And I fill in "15610359283786884938L" to "autosuggest input" field
     And I wait 2 seconds
     And I click "addresses result"
     And I wait 2 seconds
-    When I clear "autosuggest input" field
+    And I click "autosuggest btn close"
     And I wait 2 seconds
     And I fill in "15610359283786884938L" to "autosuggest input" field
     And I wait 2 seconds
@@ -31,12 +31,12 @@ Feature: Explorer page
     And I wait 1 seconds
     Then I should be on url "/?referrer=/wallet%3Frecipient%3D15610359283786884938L"
     When I click "home link"
-    When I clear "autosuggest input" field
+    And I click "autosuggest btn close"
     When I fill in "1465651642158264047" to "autosuggest input" field
     And I hit "ENTER" key in "autosuggest input" input
     And I wait 1 seconds
     Then I should see text "No results" in "empty message" element
-    When I clear "autosuggest input" field
+    And I click "autosuggest btn close"
     And I fill in "9938914350729699234" to "autosuggest input" field
     And I click "transactions result"
     Then I should see ID "9938914350729699234" in transaction header
@@ -51,7 +51,7 @@ Feature: Explorer page
     And I click "addresses result"
     And I wait 3 seconds
     Then I should see text "No activity yet" in "empty message" element
-    When I clear "autosuggest input" field
+    And I click "autosuggest btn close"
     And I fill in "16313739661670634666L" to "autosuggest input" field
     And I wait 1 seconds
     When I click "addresses result"
@@ -64,7 +64,7 @@ Feature: Explorer page
     When I fill in "9938914350729699234" to "autosuggest input" field
     And I hit "ENTER" key in "autosuggest input" input
     Then I should see text "No results" in "empty message" element
-    When I clear "autosuggest input" field
+    And I click "autosuggest btn close"
     And I fill in "1465651642158264047" to "autosuggest input" field
     When I click "transactions result"
     Then I should see ID "1465651642158264047" in transaction header
@@ -78,15 +78,16 @@ Feature: Explorer page
     And I click "transactions result"
     Then I should see 33 instances of "voter address"
     When I click "home link"
-    When I clear "autosuggest input" field
+    And I click "autosuggest btn close"
     When I fill in "2581762640681118072L" to "autosuggest input" field
+    And I wait 1 seconds
     And I click "addresses result"
     And I wait 3 seconds
     And I click "delegate statistics"
     And I wait 1 seconds
     Then I should see 2 instances of "votersFilterQuery row"
     When I click "home link"
-    When I clear "autosuggest input" field
+    And I click "autosuggest btn close"
     When I fill in "4401082358022424760L" to "autosuggest input" field
     And I wait 1 seconds
     And I click "addresses result"
