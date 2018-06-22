@@ -91,7 +91,6 @@ class SendTo extends React.Component {
               <FontIcon value={'send-token'}/> {t('Send to this address')}
             </TertiaryButton>
           </Link>
-
           <Button
             onClick={() => handleClick()}
             className={`${styles.button} ${styles.follow} follow-account`} >
