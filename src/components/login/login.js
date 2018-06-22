@@ -158,27 +158,27 @@ class Login extends React.Component {
             <header>
               {this.showNetworkOptions()
                 ? <div>
-                  <Dropdown
-                    auto={false}
-                    source={networkList}
-                    onChange={this.changeHandler.bind(this, 'network')}
-                    label={this.props.t('Network to connect to')}
-                    value={this.state.network}
-                    className='network'
-                  />
-                  {
-                    this.state.network === networks.customNode.code &&
-                    <Input type='text'
-                           label={this.props.t('Enter IP or domain address of the node')}
-                           name='address'
-                           className={`address ${styles.outTaken}`}
-                           theme={styles}
-                           value={this.state.address}
-                           error={this.state.addressValidity}
-                           onChange={this.changeHandler.bind(this, 'address')}/>
-                  }
+                    <Dropdown
+                      auto={false}
+                      source={networkList}
+                      onChange={this.changeHandler.bind(this, 'network')}
+                      label={this.props.t('Network to connect to')}
+                      value={this.state.network}
+                      className='network'
+                    />
+                    {
+                      this.state.network === networks.customNode.code &&
+                      <Input type='text'
+                             label={this.props.t('Enter IP or domain address of the node')}
+                             name='address'
+                             className={`address ${styles.outTaken}`}
+                             theme={styles}
+                             value={this.state.address}
+                             error={this.state.addressValidity}
+                             onChange={this.changeHandler.bind(this, 'address')}/>
+                    }
                 </div>
-                : ''
+                : null
               }
             </header>
             <div className={`${styles.tableCell} text-left`}>
