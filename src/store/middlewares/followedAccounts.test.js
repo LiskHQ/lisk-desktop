@@ -9,12 +9,12 @@ describe('FollowedAccounts middleware', () => {
   let store;
   let next;
   const account = {
-    publicKey: accounts.genesis.publicKey,
+    address: accounts.genesis.address,
     balance: accounts.genesis.balance,
     title: accounts.genesis.address,
   };
   const account2 = {
-    publicKey: accounts.delegate.publicKey,
+    address: accounts.delegate.address,
     balance: accounts.delegate.balance,
     title: accounts.delegate.address,
   };
@@ -44,6 +44,17 @@ describe('FollowedAccounts middleware', () => {
     middleware(store)(next)(randomAction);
     expect(next).to.have.been.calledWith(randomAction);
   });
+
+
+  it(`should update the following account on ${actionTypes.followedAccountAdded} action`, () => {
+    middleware(store)(next)({
+      type: actionTypes.followedAccountAdded,
+      data: {},
+    });
+
+    expect(followedAccountsActions.followedAccountFetchedAndUpdated).to.have.callCount(1);
+  });
+
 
   it(`should update the following accounts on ${actionTypes.activePeerSet} action`, () => {
     middleware(store)(next)({

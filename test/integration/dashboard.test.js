@@ -10,6 +10,7 @@ import * as delegateAPI from '../../src/utils/api/delegate';
 import * as liskServiceAPI from '../../src/utils/api/liskService';
 import { prepareStore, renderWithRouter } from '../utils/applicationInit';
 import accountReducer from '../../src/store/reducers/account';
+import followedAccountsReducer from '../../src/store/reducers/followedAccounts';
 import transactionsReducer from '../../src/store/reducers/transactions';
 import searchReducer from '../../src/store/reducers/search';
 import peersReducer from '../../src/store/reducers/peers';
@@ -18,6 +19,7 @@ import settingsReducer from '../../src/store/reducers/settings';
 import liskServiceReducer from '../../src/store/reducers/liskService';
 import loginMiddleware from '../../src/store/middlewares/login';
 import accountMiddleware from '../../src/store/middlewares/account';
+import followedAccountsMiddleware from '../../src/store/middlewares/followedAccounts';
 import peerMiddleware from '../../src/store/middlewares/peers';
 import { accountLoggedIn } from '../../src/actions/account';
 import { accountsRetrieved } from '../../src/actions/savedAccounts';
@@ -93,11 +95,13 @@ describe('@integration: Dashboard', () => {
       liskService: liskServiceReducer,
       search: searchReducer,
       settings: settingsReducer,
+      followedAccounts: followedAccountsReducer,
     }, [
       thunk,
       accountMiddleware,
       loginMiddleware,
       peerMiddleware,
+      followedAccountsMiddleware,
     ]);
 
     const passphrase = options.isLocked ? undefined : accounts[accountType].passphrase;

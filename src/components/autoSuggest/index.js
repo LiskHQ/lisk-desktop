@@ -6,6 +6,8 @@ import { FontIcon } from '../fontIcon';
 import ResultsList from './resultsList';
 import routes from './../../constants/routes';
 import keyCodes from './../../constants/keyCodes';
+import localJSONStorage from './../../utils/localJSONStorage';
+import regex from './../../utils/regex';
 import { saveSearch } from './../search/keyAction';
 
 class AutoSuggest extends React.Component {
@@ -17,7 +19,7 @@ class AutoSuggest extends React.Component {
     this.state = {
       show: false,
       value: '',
-      selectedIdx: 0,
+      selectedIdx: -1,
       resultsLength: 0,
       placeholder: '',
     };
@@ -28,10 +30,12 @@ class AutoSuggest extends React.Component {
     const resultsLength = ['delegates', 'addresses', 'transactions'].reduce((total, resultKey) =>
       total + nextProps.results[resultKey].length, 0);
     let placeholder = '';
-    if (nextProps.results.delegates.length > 0) {
+    let selectedIdx = -1;
+    if (resultsLength > 0) {
       placeholder = this.getValueFromCurrentIdx(0, nextProps.results);
+      selectedIdx = 0;
     }
-    this.setState({ resultsLength, selectedIdx: 0, placeholder });
+    this.setState({ resultsLength, selectedIdx, placeholder });
   }
 
   onResultClick(id, type) {
@@ -75,6 +79,7 @@ class AutoSuggest extends React.Component {
   search(searchTerm) {
     this.setState({ value: searchTerm, placeholder: '' });
     if (searchTerm.length < 3) {
+      this.props.searchClearSuggestions();
       return;
     }
 
@@ -93,15 +98,28 @@ class AutoSuggest extends React.Component {
 
   handleArrowDown() {
     let currentIdx = this.state.selectedIdx;
-    currentIdx = (currentIdx === this.resultsLength) ? this.resultsLength : currentIdx += 1;
-    const placeholder = this.getValueFromCurrentIdx(currentIdx, this.props.results);
+    let placeholder = '';
+    if (this.state.resultsLength === 0) {
+      currentIdx = (currentIdx === this.recentSearches.length - 1) ?
+        this.recentSearches.length - 1 : currentIdx += 1;
+      placeholder = this.recentSearches[currentIdx].valueLeft;
+    } else {
+      currentIdx = (currentIdx === this.state.resultsLength) ?
+        this.state.resultsLength : currentIdx += 1;
+      placeholder = this.getValueFromCurrentIdx(currentIdx, this.props.results);
+    }
     this.setState({ selectedIdx: currentIdx, placeholder });
   }
 
   handleArrowUp() {
     let currentIdx = this.state.selectedIdx;
     currentIdx = (currentIdx === 0) ? 0 : currentIdx -= 1;
-    const placeholder = this.getValueFromCurrentIdx(currentIdx, this.props.results);
+    let placeholder = '';
+    if (this.state.resultsLength === 0) {
+      placeholder = this.recentSearches[currentIdx].valueLeft;
+    } else {
+      placeholder = this.getValueFromCurrentIdx(currentIdx, this.props.results);
+    }
     this.setState({ selectedIdx: currentIdx, placeholder });
   }
 
@@ -128,7 +146,11 @@ class AutoSuggest extends React.Component {
   /* eslint-enable class-methods-use-this */
 
   handleSubmit() {
-    if (this.state.resultsLength > 0) {
+    if (this.state.value === '' && this.state.placeholder === '') {
+      return;
+    }
+
+    if (this.state.resultsLength > 0 || this.state.placeholder !== '') {
       this.submitSearch();
       this.props.searchClearSuggestions();
       this.setState({ placeholder: '' });
@@ -207,9 +229,29 @@ class AutoSuggest extends React.Component {
     }));
   }
 
+  getRecentSearchResults() {
+    this.recentSearches = localJSONStorage.get('searches', [])
+      .map((result, idx) => {
+        let type = 'addresses';
+        if (result.match(regex.transactionId)) {
+          type = 'transactions';
+        }
+        return {
+          id: result,
+          valueLeft: result,
+          valueRight: '',
+          isSelected: idx === this.state.selectedIdx,
+          type,
+        };
+      });
+    return this.recentSearches;
+  }
+
   render() {
-    // eslint-disable-next-line no-unused-vars
-    const { history, t, value } = this.props;
+    const { t } = this.props;
+
+    const placeholderValue = this.state.placeholder !== '' ?
+      this.state.placeholder : t('Search for delegate, Lisk ID, transaction ID');
 
     return (
       <div className={styles.wrapper}>
@@ -217,18 +259,19 @@ class AutoSuggest extends React.Component {
           className={`${styles.placeholder} autosuggest-placeholder`}
           type='text'
           name='autosuggest-placeholder' />
-        <Input type='text' placeholder={t('Search for delegate, Lisk ID, transaction ID')} name='searchBarInput'
+        <Input type='text' placeholder={placeholderValue} name='searchBarInput'
           value={this.state.value}
           innerRef={(el) => { this.inputRef = el; }}
           className={`${styles.input} autosuggest-input`}
           theme={styles}
           onClick={this.selectInput.bind(this)}
+          onFocus={() => this.setState({ show: true })}
           onBlur={this.closeDropdown.bind(this)}
           onKeyDown={this.handleKey.bind(this)}
           onChange={this.search.bind(this)}
           autoComplete='off'>
           {
-            this.state.value !== '' ?
+            this.state.value !== '' || this.state.placeholder !== '' ?
               <FontIcon value='close' className={`${styles.icon} autosuggest-btn-close`} onClick={this.resetSearch.bind(this)} /> :
               <FontIcon value='search' className={`${styles.icon} ${styles.iconSearch} autosuggest-btn-search`}
                 onClick={this.submitSearch.bind(this)} />
@@ -265,6 +308,19 @@ class AutoSuggest extends React.Component {
             onMouseDown={this.onResultClick.bind(this)}
             setSelectedRow={this.setSelectedRow.bind(this)}
           />
+          { this.state.value === '' && this.state.resultsLength === 0 ?
+            <ResultsList
+              key='recent'
+              results={this.getRecentSearchResults()}
+              header={{
+                titleLeft: t('Recent searches'),
+                titleRight: '',
+              }}
+              onMouseDown={this.onResultClick.bind(this)}
+              setSelectedRow={this.setSelectedRow.bind(this)}
+            />
+            : null
+          }
         </div>
       </div>
     );

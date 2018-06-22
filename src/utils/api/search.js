@@ -1,4 +1,5 @@
-import { getAccount, transaction } from './account';
+import { getAccount } from './account';
+import { getSingleTransaction } from './transactions';
 import { listDelegates } from './delegate';
 import regex from './../../utils/regex';
 
@@ -33,7 +34,7 @@ const searchDelegates = ({ activePeer, searchTerm }) => new Promise((resolve, re
     .catch(() => reject({ delegates: [] })));
 
 const searchTransactions = ({ activePeer, searchTerm }) => new Promise((resolve, reject) =>
-  transaction({
+  getSingleTransaction({
     activePeer,
     id: searchTerm,
   }).then(response => resolve({ transactions: [response.transaction] }))

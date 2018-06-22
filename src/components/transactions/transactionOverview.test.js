@@ -29,6 +29,7 @@ describe('TransactionOverview', () => {
       onFilterSet: () => {},
     };
     store.getState = () => ({
+      followedAccounts: { accounts: [] },
       peers: { status: {}, options: {}, data: {} },
       transactions: {
         confirmed: [],
@@ -42,8 +43,8 @@ describe('TransactionOverview', () => {
     onLoadMoreSpy = spy(props, 'onLoadMore');
     onFilterSetSpy = spy(props, 'onFilterSet');
     wrapper = mountWithContext(
-<TransactionOverview {...props} store={store} />,
-{ storeState: store },
+      <TransactionOverview {...props} store={store} />,
+      { storeState: store },
     );
   });
 

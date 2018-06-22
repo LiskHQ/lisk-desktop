@@ -6,9 +6,11 @@ import { stub, match, spy } from 'sinon';
 
 import * as peers from '../../src/utils/api/peers';
 import * as accountAPI from '../../src/utils/api/account';
+import * as transactionsAPI from '../../src/utils/api/transactions';
 import * as delegateAPI from '../../src/utils/api/delegate';
 import * as liskServiceApi from '../../src/utils/api/liskService';
 import { prepareStore, renderWithRouter } from '../utils/applicationInit';
+import followedAccountsReducer from '../../src/store/reducers/followedAccounts';
 import accountReducer from '../../src/store/reducers/account';
 import transactionReducer from '../../src/store/reducers/transaction';
 import transactionsReducer from '../../src/store/reducers/transactions';
@@ -86,6 +88,7 @@ describe('@integration: Wallet', () => {
 
   const setupStep = (accountType, options = { isLocked: false, withPublicKey: true }) => {
     store = prepareStore({
+      followedAccounts: followedAccountsReducer,
       account: accountReducer,
       transaction: transactionReducer,
       transactions: transactionsReducer,
@@ -319,7 +322,7 @@ describe('@integration: Wallet', () => {
 
   describe('Transactions', () => {
     beforeEach(() => {
-      getTransactionsStub = stub(accountAPI, 'transactions');
+      getTransactionsStub = stub(transactionsAPI, 'getTransactions');
 
       getTransactionsStub.withArgs({
         activePeer: match.any,

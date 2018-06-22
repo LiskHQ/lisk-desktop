@@ -138,43 +138,82 @@
   content: "\f11b";
 }
 
-.remove-circled::before {
+.network::before {
   content: "\f11c";
 }
 
-.request-token::before {
+.remove-circled::before {
   content: "\f11d";
 }
 
-.search::before {
+.remove::before {
   content: "\f11e";
 }
 
-.send-token::before {
+.request-token::before {
   content: "\f11f";
 }
 
-.show::before {
+.search::before {
   content: "\f120";
 }
 
-.undo::before {
+.send-token::before {
   content: "\f121";
 }
 
-.unlocked::before {
+.show::before {
   content: "\f122";
 }
 
-.warning::before {
+.smiley-angry::before {
   content: "\f123";
 }
 
-.zoom-in::before {
+.smiley-happy::before {
   content: "\f124";
 }
 
-.zoom-out::before {
+.smiley-laughing::before {
   content: "\f125";
 }
 
+.smiley-neutral::before {
+  content: "\f126";
+}
+
+.smiley-sad::before {
+  content: "\f127";
+}
+
+.star-filled::before {
+  content: "\f128";
+}
+
+.star-outline::before {
+  content: "\f129";
+}
+
+.undo::before {
+  content: "\f12a";
+}
+
+.unlocked::before {
+  content: "\f12b";
+}
+
+.usb-stick::before {
+  content: "\f12c";
+}
+
+.warning::before {
+  content: "\f12d";
+}
+
+.zoom-in::before {
+  content: "\f12e";
+}
+
+.zoom-out::before {
+  content: "\f12f";
+}

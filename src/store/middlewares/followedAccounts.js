@@ -1,17 +1,7 @@
 import actionTypes from '../../constants/actions';
-import {
-  followedAccountFetchedAndUpdated,
-  followedAccountsRetrieved,
-} from '../../actions/followedAccounts';
-import { getFollowedAccountsFromLocalStorage } from '../../utils/followedAccounts';
-import { extractAddress } from '../../utils/account';
+import { followedAccountFetchedAndUpdated } from '../../actions/followedAccounts';
 
 const followedAccountsMiddleware = (store) => {
-  setImmediate(() => {
-    const accounts = getFollowedAccountsFromLocalStorage();
-    if (Array.isArray(accounts)) store.dispatch(followedAccountsRetrieved(accounts));
-  });
-
   const updateFollowedAccounts = (peers, accounts) => {
     accounts.forEach((account) => {
       store.dispatch(followedAccountFetchedAndUpdated({
@@ -23,11 +13,9 @@ const followedAccountsMiddleware = (store) => {
 
   const checkTransactionsAndUpdateFollowedAccounts = (peers, tx, followedAccounts) => {
     const changedAccounts = followedAccounts.accounts.filter((account) => {
-      const address = extractAddress(account.publicKey);
-
       const relevantTransactions = tx.filter((transaction) => {
         const { senderId, recipientId } = transaction;
-        return (address === recipientId || address === senderId);
+        return (account.address === recipientId || account.address === senderId);
       });
 
       return relevantTransactions.length > 0;
@@ -46,6 +34,12 @@ const followedAccountsMiddleware = (store) => {
           action.data.block.transactions,
           followedAccounts,
         );
+        break;
+      case actionTypes.followedAccountAdded:
+        store.dispatch(followedAccountFetchedAndUpdated({
+          activePeer: peers.data,
+          account: action.data,
+        }));
         break;
       case actionTypes.activePeerSet:
         updateFollowedAccounts(peers, followedAccounts.accounts);

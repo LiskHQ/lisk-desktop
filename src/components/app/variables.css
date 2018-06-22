@@ -124,7 +124,7 @@ or "warn/action" ineastd of "red/green"
   --gradient-action-orange: linear-gradient(-27deg, var(--color-action-dark) 0%, var(--color-action-light) 100%);
   --gradient-action-blue: linear-gradient(136deg, var(--color-tertiary-medium) 0%, var(--color-primary-medium) 100%);
   --gradient-action-blue-hover: linear-gradient(224deg, var(--color-primary-medium) 0%, var(--color-tertiary-medium) 100%);
-  --gradient-greyscale: linear-gradient(to right, var(--row-background-color), #f5f8fc);
+  --gradient-greyscale: linear-gradient(to right, var(--color-white), #f5f8fc);
   --gradient-greyscale-mobile: linear-gradient(to right, var(--color-grayscale-mobile-background), var(--color-grayscale-darker-mobile-background));
   --gradient-tertiary: linear-gradient(45deg, var(--color-tertiary-medium) 0%, var(--color-primary-medium) 100%);
   --gradient-red: linear-gradient(224.1deg, var(--color-action-light) 0%, var(--color-action-dark) 100%);

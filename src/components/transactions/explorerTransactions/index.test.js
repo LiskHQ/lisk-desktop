@@ -8,6 +8,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { prepareStore } from '../../../../test/utils/applicationInit';
 import * as accountAPI from '../../../../src/utils/api/account';
 import * as delegateAPI from '../../../../src/utils/api/delegate';
+import * as transactionsAPI from '../../../../src/utils/api/transactions';
+import followedAccountsReducer from '../../../store/reducers/followedAccounts';
 import peersReducer from '../../../store/reducers/peers';
 import accountReducer from '../../../store/reducers/account';
 import transactionReducer from '../../../store/reducers/transaction';
@@ -36,6 +38,7 @@ describe('ExplorerTransactions Component', () => {
   let delegateVotersStub;
 
   const store = prepareStore({
+    followedAccounts: followedAccountsReducer,
     peers: peersReducer,
     account: accountReducer,
     transaction: transactionReducer,
@@ -46,8 +49,8 @@ describe('ExplorerTransactions Component', () => {
   }, [thunk]);
 
   beforeEach(() => {
-    transactionsActionStub = stub(accountAPI, 'transactions');
-    transactionActionStub = stub(accountAPI, 'transaction');
+    transactionsActionStub = stub(transactionsAPI, 'getTransactions');
+    transactionActionStub = stub(transactionsAPI, 'getSingleTransaction');
     accountStub = stub(accountAPI, 'getAccount');
     delegateStub = stub(delegateAPI, 'getDelegate');
     delegateVotesStub = stub(delegateAPI, 'getVotes');
