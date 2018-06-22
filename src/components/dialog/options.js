@@ -8,7 +8,6 @@ import styles from './options.css';
 const Options = ({ firstButton, secondButton, text }) =>
   (<div className={styles.optionsBody}>
     <p className={styles.text}>{text}</p>
-    <br />
     <section className={`${grid.row} ${styles.buttonsRow} ${grid['between-xs']}`}>
       <Button label={firstButton.text} onClick={firstButton.onClickHandler} className='ok-button' />
       <RedButton label={secondButton.text} onClick={secondButton.onClickHandler} className='ok-button'/>
