@@ -21,8 +21,7 @@ describe('App Util', () => {
     const explorerRoutes = allRoutes.filter(routeObj =>
       routeObj.pathPrefix && routeObj.pathPrefix === routes.explorer.path);
 
-    const invalidURLs = ['/explorer/search', '/explorer/search/',
-      '/explorer/accounts/16313739661670634666L'];
+    const invalidURLs = ['/explorer/accounts/16313739661670634666L'];
     for (let i = 0; i < invalidURLs.length; i++) {
       const data = isPathCorrect({ pathname: invalidURLs[i] }, explorerRoutes);
       expect(data).to.be.equal(invalidURLs[i]);

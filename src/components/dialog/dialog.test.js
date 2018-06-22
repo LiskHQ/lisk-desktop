@@ -16,7 +16,7 @@ describe('Dialog', () => {
   beforeEach(() => {
     history = {
       location: {
-        pathname: `${routes.explorer.path}${routes.search.path}saved-accounts`,
+        pathname: `${routes.explorer.path}${routes.searchResult.path}saved-accounts`,
         search: '',
       },
       goBack: sinon.spy(),

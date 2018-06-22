@@ -5,17 +5,16 @@ import { translate } from 'react-i18next';
 import { searchSuggestions } from './../../actions/search';
 import actionTypes from './../../constants/actions';
 import AutoSuggest from './../autoSuggest';
-import routes from './../../constants/routes';
 import styles from './searchBar.css';
 
 class Search extends React.Component {
   shouldShowSearchBarOnMobile() {
     const { pathname } = this.props.location;
-    return pathname.includes('explorer') && !pathname.includes(`${routes.explorer.path}${routes.search.path}`);
+    return pathname.includes('explorer');
   }
 
   render() {
-    return (<div className={`${styles.searchBar} search-bar-input ${this.shouldShowSearchBarOnMobile() ? styles.show : null}`}>
+    return (<div className={`${styles.searchBar} search-bar-input ${this.shouldShowSearchBarOnMobile() ? styles.show : ''}`}>
       <AutoSuggest
         history={this.props.history}
         t={this.props.t}

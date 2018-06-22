@@ -38,7 +38,7 @@ class AutoSuggest extends React.Component {
     this.setState({ resultsLength, selectedIdx, placeholder });
   }
 
-  onResultClick(id, type) {
+  onResultClick(id, type, value) {
     let urlSearch;
     switch (type) {
       case 'addresses':
@@ -53,6 +53,18 @@ class AutoSuggest extends React.Component {
         break;
     }
     saveSearch(id);
+    this.props.searchClearSuggestions();
+
+    if (['addresses', 'transactions'].filter(entity =>
+      entity === type).length > 0) {
+      this.setState({ value: id });
+    } else if (value) {
+      this.setState({ value, placeholder: '' });
+    } else {
+      this.setState({ value: this.state.placeholder });
+    }
+
+    this.inputRef.blur();
     this.props.history.push(urlSearch);
   }
 
@@ -61,14 +73,11 @@ class AutoSuggest extends React.Component {
   }
 
   submitSearch() {
-    if (['addresses', 'transactions'].filter(entity =>
-      entity === this.selectedRow.dataset.type).length > 0) {
-      this.setState({ value: this.selectedRow.dataset.id });
-    } else {
-      this.setState({ value: this.state.placeholder });
-    }
-    this.inputRef.blur();
-    this.onResultClick(this.selectedRow.dataset.id, this.selectedRow.dataset.type);
+    this.onResultClick(
+      this.selectedRow.dataset.id,
+      this.selectedRow.dataset.type,
+      this.selectedRow.dataset.value,
+    );
   }
 
   submitAnySearch() {
@@ -152,8 +161,6 @@ class AutoSuggest extends React.Component {
 
     if (this.state.resultsLength > 0 || this.state.placeholder !== '') {
       this.submitSearch();
-      this.props.searchClearSuggestions();
-      this.setState({ placeholder: '' });
     } else {
       this.submitAnySearch();
     }
@@ -259,7 +266,10 @@ class AutoSuggest extends React.Component {
           className={`${styles.placeholder} autosuggest-placeholder`}
           type='text'
           name='autosuggest-placeholder' />
-        <Input type='text' placeholder={placeholderValue} name='searchBarInput'
+        <Input type='text'
+          id='autosuggest-input'
+          placeholder={placeholderValue}
+          name='searchBarInput'
           value={this.state.value}
           innerRef={(el) => { this.inputRef = el; }}
           className={`${styles.input} autosuggest-input`}

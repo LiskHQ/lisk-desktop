@@ -10,8 +10,6 @@ import { FontIcon } from '../fontIcon';
 import routes from '../../constants/routes';
 
 const getIndex = (history, tabs) => {
-  if (history.location.pathname.includes('explorer')) return 2;
-
   let index = -1;
   tabs.map(t => new RegExp(`${t.route}(\\/?)`)).forEach((item, i) => {
     if (history.location.pathname.match(item)) {
@@ -83,11 +81,6 @@ class MainMenu extends React.Component {
         image: menuLogos.buyLisk,
       }, {
       */
-        label: t('Explorer'),
-        route: `${routes.explorer.path}${routes.search.path}`,
-        id: 'explorer',
-        image: menuLogos.search,
-      }, {
         label: t('Sidechains'),
         route: `${routes.sidechains.path}`,
         id: 'sidechains',
@@ -110,13 +103,13 @@ class MainMenu extends React.Component {
     }
 
     const itemShouldBeDisabled = index =>
-      (isCurrent(history, index, tabs) || !account.address) && index !== 2 && index !== 4;
+      (isCurrent(history, index, tabs) || !account.address) && index !== 3;
 
     return (
       <Fragment>
         <aside className={styles.aside}>
           <div className={styles.sideBarWrapper}>
-            <Link to={`${routes.dashboard.path}`}><img src={logo} className={styles.logo} /></Link>
+            <Link to={`${routes.dashboard.path}`} className='home-link'><img src={logo} className={styles.logo} /></Link>
             <ToolboxTabs index={getIndex(history, tabs)}
               theme={styles}
               onChange={this.navigate.bind(this, history, tabs)}
