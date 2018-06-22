@@ -107,6 +107,10 @@
   padding-left: 20px;
 }
 
+.logoutIcon {
+  font-size: 18px;
+}
+
 .logoutInfo {
   display: flex;
   justify-content: flex-end;
@@ -162,6 +166,8 @@
     }
 
     & .timer {
+      display: flex;
+      justify-content: flex-end;
       font-size: var(--font-size-small);
       color: var(--color-grayscale-medium);
       line-height: 1.5em; /* stylelint-disable-line */
