@@ -81,8 +81,18 @@ class AutoSuggest extends React.Component {
   }
 
   submitAnySearch() {
-    this.inputRef.blur();
-    this.props.history.push(`${routes.searchResult.pathPrefix}${routes.searchResult.path}/${encodeURIComponent(this.state.value)}`);
+    let searchType = null;
+    if (this.state.value.match(regex.address)) {
+      searchType = 'addresses';
+    } else if (this.state.value.match(regex.transactionId)) {
+      searchType = 'transactions';
+    }
+
+    if (!searchType) {
+      this.props.history.push(`${routes.searchResult.pathPrefix}${routes.searchResult.path}/${encodeURIComponent(this.state.value)}`);
+      return;
+    }
+    this.onResultClick(this.state.value, searchType, this.state.value);
   }
 
   search(searchTerm) {
