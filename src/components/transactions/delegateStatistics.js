@@ -11,7 +11,7 @@ class DelegateStatistics extends React.Component {
 
     let status = '';
     if (delegate && delegate.rank) {
-      status = delegate.rank < 101 ? this.props.t('Active') : this.props.t('Standby');
+      status = delegate.rank <= 101 ? this.props.t('Active') : this.props.t('Standby');
     }
 
     const missed = this.props.t('missed');
