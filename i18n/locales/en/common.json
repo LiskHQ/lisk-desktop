@@ -337,6 +337,7 @@
   "You can use your passphrase to sign a message. ": "You can use your passphrase to sign a message. ",
   "You have already registered as a delegate.": "You have already registered as a delegate.",
   "You only need to do this once for each Lisk ID.": "You only need to do this once for each Lisk ID.",
+  "You will be able to select the desired network when signing in": "You will be able to select the desired network when signing in",
   "You will need it to use your Lisk ID, like sending and voting. You are responsible for keeping your second passphrase safe. No one can restore it, not even Lisk.": "You will need it to use your Lisk ID, like sending and voting. You are responsible for keeping your second passphrase safe. No one can restore it, not even Lisk.",
   "You will send a small amount of {{fee}} LSK to yourself and therefore initialize your ID.": "You will send a small amount of {{fee}} LSK to yourself and therefore initialize your ID.",
   "You've received {{value}} LSK.": "You've received {{value}} LSK.",
