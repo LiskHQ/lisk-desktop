@@ -5,8 +5,10 @@ import styles from './customCountDown.css';
 
 class CustomCountDown extends React.Component {
   componentDidUpdate() {
-    const { minutes, seconds, resetTimer, t,
-      setActiveDialog, closeDialog, history } = this.props;
+    const {
+      minutes, seconds, resetTimer, t, setActiveDialog, closeDialog, history,
+    } = this.props;
+
     if (minutes === 0 && seconds === 59) {
       setActiveDialog({
         childComponent: Options,
@@ -55,7 +57,9 @@ class CustomCountDown extends React.Component {
     }
   }
   render() {
-    const { minutes, autoLog, seconds, resetTimer, t } = this.props;
+    const {
+      minutes, autoLog, seconds, resetTimer, t,
+    } = this.props;
     const min = minutes < 10 ? `0${minutes}` : minutes;
     const sec = seconds < 10 ? `0${seconds}` : seconds;
 
