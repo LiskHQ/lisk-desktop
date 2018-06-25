@@ -53,10 +53,10 @@ class AutoSuggest extends React.Component {
       default:
         break;
     }
-    saveSearch(id);
+    saveSearch(value, id);
     this.props.searchClearSuggestions();
 
-    if ([searchEntities.addresses, searchEntities.transactions].filter(entity =>
+    if (!value && [searchEntities.addresses, searchEntities.transactions].filter(entity =>
       entity === type).length > 0) {
       this.setState({ value: id });
     } else if (value) {
@@ -249,14 +249,15 @@ class AutoSuggest extends React.Component {
 
   getRecentSearchResults() {
     this.recentSearches = localJSONStorage.get('searches', [])
+      .filter(result => typeof result === 'object')
       .map((result, idx) => {
         let type = searchEntities.addresses;
-        if (result.match(regex.transactionId)) {
+        if (result.searchTerm.match(regex.transactionId)) {
           type = searchEntities.transactions;
         }
         return {
-          id: result,
-          valueLeft: result,
+          id: result.id,
+          valueLeft: result.searchTerm,
           valueRight: '',
           isSelected: idx === this.state.selectedIdx,
           type,
@@ -268,18 +269,21 @@ class AutoSuggest extends React.Component {
   render() {
     const { t } = this.props;
 
-    const placeholderValue = this.state.placeholder !== '' ?
-      this.state.placeholder : t('Search for delegate, Lisk ID, transaction ID');
+    let placeholderValue = '';
+    if (this.state.placeholder === '' && this.state.value === '') {
+      placeholderValue = t('Search for delegate, Lisk ID, transaction ID');
+    } else {
+      placeholderValue = this.state.placeholder;
+    }
 
     return (
       <div className={styles.wrapper}>
-        <input value={this.state.placeholder}
+        <input placeholder={placeholderValue}
           className={`${styles.placeholder} autosuggest-placeholder`}
           type='text'
           name='autosuggest-placeholder' />
         <Input type='text'
           id='autosuggest-input'
-          placeholder={placeholderValue}
           name='searchBarInput'
           value={this.state.value}
           innerRef={(el) => { this.inputRef = el; }}
