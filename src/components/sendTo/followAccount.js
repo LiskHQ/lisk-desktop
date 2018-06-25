@@ -31,7 +31,7 @@ class FollowAccount extends React.Component {
 
     return (<Box className={`${styles.wrapper}`}>
       <header>
-        <h2>Follow Account</h2>
+        <h2>{t('Follow Account')}</h2>
         <p>{t('Add this account to your dashboard to keep track of its balance.')}</p>
       </header>
       <AccountTitleInput

@@ -14,14 +14,14 @@ Feature: Explorer page
     And I click "addresses result"
     And I wait 2 seconds
     Then I should see 25 rows
-    Then I should see text "Follow" in "follow label" element
+    Then I should see text "Follow" in "follow account" element
     When I click "follow account"
     And I fill in "Bob" to "account title" field
     And I click "follow account"
-    Then I should see text "Unfollow" in "follow label" element
+    Then I should see text "Unfollow" in "follow account" element
     Then I should see text "Bob" in "account title" element
     When I click "follow account"
-    Then I should see text "Follow" in "follow label" element
+    Then I should see text "Follow" in "follow account" element
     When I click "send to address"
     And I wait 1 seconds
     Then I should be on url "/?referrer=/wallet%3Frecipient%3D15610359283786884938L"
