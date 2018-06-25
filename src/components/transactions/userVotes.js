@@ -17,7 +17,7 @@ class UserVotes extends AccountList {
           <div className={`${grid['col-xs-12']} ${grid['col-sm-12']} ${grid['col-md-12']}`}>
             <div className={styles.label}>
               <div className='votes-value'>
-                {this.props.t('Votes of an account')}
+                {this.props.t('Votes of this account')}
                 {` (${this.state.votesSize})`}
               </div>
               {super.renderSearchFilter('votesFilterQuery', t('Filter votes'))}
