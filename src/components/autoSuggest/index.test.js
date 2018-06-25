@@ -156,6 +156,27 @@ describe('AutoSuggest', () => {
       .calledWith(`${routes.searchResult.pathPrefix}${routes.searchResult.path}/notExistingDelegate`);
   });
 
+  it('should redirect to entity result page when not yet suggestions and pattern matching', () => {
+    wrapper.setProps({
+      results: {
+        delegates: [],
+        addresses: [],
+        transactions: [],
+      },
+    });
+    wrapper.update();
+    const autosuggestInput = wrapper.find('.autosuggest-input').find('input').first();
+    autosuggestInput.simulate('change', { target: { value: '123' } });
+    autosuggestInput.simulate('keyDown', {
+      keyCode: keyCodes.enter,
+      which: keyCodes.enter,
+    });
+    expect(saveSearchSpy).to.have.been.calledWith();
+    expect(submitSearchAnythingSpy).to.have.been.calledWith();
+    expect(props.history.push).to.have.been
+      .calledWith(`${routes.transactions.pathPrefix}${routes.transactions.path}/123`);
+  });
+
   it('should update placeholder on events {arrowUp/arrowDown} and redirect to entity page on keyboard event {tab}', () => {
     const autosuggestInput = wrapper.find('.autosuggest-input').find('input').first();
 
