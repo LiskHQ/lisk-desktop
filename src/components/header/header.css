@@ -15,7 +15,6 @@
 }
 
 .wrapper {
-  margin: 0 0 30px;
   text-align: right;
 
   & .noPadding {
@@ -25,6 +24,7 @@
   & .searchBar {
     display: inline-block;
     float: left;
+    margin-bottom: 33px;
   }
 }
 
@@ -212,6 +212,7 @@
 
     & .searchBar {
       width: 100%;
+      margin-bottom: 0;
     }
   }
 
