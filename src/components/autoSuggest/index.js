@@ -9,6 +9,7 @@ import keyCodes from './../../constants/keyCodes';
 import localJSONStorage from './../../utils/localJSONStorage';
 import regex from './../../utils/regex';
 import { saveSearch } from './../search/keyAction';
+import { searchEntities } from './../../constants/search';
 
 class AutoSuggest extends React.Component {
   constructor(props) {
@@ -27,7 +28,7 @@ class AutoSuggest extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.selectedRow = null;
-    const resultsLength = ['delegates', 'addresses', 'transactions'].reduce((total, resultKey) =>
+    const resultsLength = Object.keys(searchEntities).reduce((total, resultKey) =>
       total + nextProps.results[resultKey].length, 0);
     let placeholder = '';
     let selectedIdx = -1;
@@ -41,11 +42,11 @@ class AutoSuggest extends React.Component {
   onResultClick(id, type, value) {
     let urlSearch;
     switch (type) {
-      case 'addresses':
-      case 'delegates':
+      case searchEntities.addresses:
+      case searchEntities.delegates:
         urlSearch = `${routes.accounts.pathPrefix}${routes.accounts.path}/${id}`;
         break;
-      case 'transactions':
+      case searchEntities.transactions:
         urlSearch = `${routes.transactions.pathPrefix}${routes.transactions.path}/${id}`;
         break;
       /* istanbul ignore next */
@@ -55,7 +56,7 @@ class AutoSuggest extends React.Component {
     saveSearch(id);
     this.props.searchClearSuggestions();
 
-    if (['addresses', 'transactions'].filter(entity =>
+    if ([searchEntities.addresses, searchEntities.transactions].filter(entity =>
       entity === type).length > 0) {
       this.setState({ value: id });
     } else if (value) {
@@ -83,9 +84,9 @@ class AutoSuggest extends React.Component {
   submitAnySearch() {
     let searchType = null;
     if (this.state.value.match(regex.address)) {
-      searchType = 'addresses';
+      searchType = searchEntities.addresses;
     } else if (this.state.value.match(regex.transactionId)) {
-      searchType = 'transactions';
+      searchType = searchEntities.transactions;
     }
 
     if (!searchType) {
@@ -221,7 +222,7 @@ class AutoSuggest extends React.Component {
       valueLeft: delegate.username,
       valueRight: delegate.rank,
       isSelected: idx === this.state.selectedIdx,
-      type: 'delegates',
+      type: searchEntities.delegates,
     }));
   }
 
@@ -231,7 +232,7 @@ class AutoSuggest extends React.Component {
       valueLeft: account.address,
       valueRight: <span><LiskAmount val={account.balance}/> LSK</span>,
       isSelected: this.props.results.delegates.length + idx === this.state.selectedIdx,
-      type: 'addresses',
+      type: searchEntities.addresses,
     }));
   }
 
@@ -242,16 +243,16 @@ class AutoSuggest extends React.Component {
       valueRight: transaction.height,
       isSelected: this.props.results.delegates.length +
       this.props.results.addresses.length + idx === this.state.selectedIdx,
-      type: 'transactions',
+      type: searchEntities.transactions,
     }));
   }
 
   getRecentSearchResults() {
     this.recentSearches = localJSONStorage.get('searches', [])
       .map((result, idx) => {
-        let type = 'addresses';
+        let type = searchEntities.addresses;
         if (result.match(regex.transactionId)) {
-          type = 'transactions';
+          type = searchEntities.transactions;
         }
         return {
           id: result,
@@ -299,7 +300,7 @@ class AutoSuggest extends React.Component {
         </Input>
         <div className={`${styles.autoSuggest} ${this.state.show ? styles.show : ''} autosuggest-dropdown`}>
           <ResultsList
-            key='delegates'
+            key={searchEntities.delegates}
             results={this.getDelegatesResults()}
             header={{
               titleLeft: t('Delegate'),
@@ -309,7 +310,7 @@ class AutoSuggest extends React.Component {
             setSelectedRow={this.setSelectedRow.bind(this)}
           />
           <ResultsList
-            key='addresses'
+            key={searchEntities.addresses}
             results={this.getAddressesResults()}
             header={{
               titleLeft: t('Address'),
@@ -319,7 +320,7 @@ class AutoSuggest extends React.Component {
             setSelectedRow={this.setSelectedRow.bind(this)}
           />
           <ResultsList
-            key='transactions'
+            key={searchEntities.transactions}
             results={this.getTransactionsResults()}
             header={{
               titleLeft: t('Transaction'),
