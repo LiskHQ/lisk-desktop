@@ -252,7 +252,7 @@ class AutoSuggest extends React.Component {
       .filter(result => typeof result === 'object')
       .map((result, idx) => {
         let type = searchEntities.addresses;
-        if (result.searchTerm.match(regex.transactionId)) {
+        if (result.id.match(regex.transactionId)) {
           type = searchEntities.transactions;
         }
         return {
@@ -278,7 +278,9 @@ class AutoSuggest extends React.Component {
 
     return (
       <div className={styles.wrapper}>
-        <input placeholder={placeholderValue}
+        <input
+          value={placeholderValue}
+          onChange={() => {}}
           className={`${styles.placeholder} autosuggest-placeholder`}
           type='text'
           name='autosuggest-placeholder' />
