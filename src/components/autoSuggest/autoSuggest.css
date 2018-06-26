@@ -45,6 +45,7 @@
   pointer-events: none;
   opacity: 0.5;
   padding: 0;
+  width: 100%;
 }
 
 .input {

@@ -83,7 +83,10 @@ describe('AutoSuggest', () => {
   });
 
   it('should show recent searches when focusing on input and no search value has been entered yet', () => {
-    localStorageStub.withArgs('searches', []).returns(['111L', '111']);
+    localStorageStub.withArgs('searches', []).returns([
+      { id: '111L', searchTerm: 'pepe' },
+      { id: '111', searchTerm: '' },
+    ]);
     wrapper.setProps({
       results: {
         delegates: [],
