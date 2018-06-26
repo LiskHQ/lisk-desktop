@@ -1,4 +1,3 @@
-import { translate } from 'react-i18next';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Button, RedButton } from '../toolbox/buttons/button';
@@ -14,4 +13,4 @@ const Options = ({ firstButton, secondButton, text }) =>
     </section>
   </div>);
 
-export default translate()(Options);
+export default Options;

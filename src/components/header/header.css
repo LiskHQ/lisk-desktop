@@ -294,6 +294,8 @@
   .account {
     margin: var(--header-margin-top-bottom-S) var(--header-margin-right-left-S) 0px 0px;
     height: auto;
+    display: flex;
+    padding-bottom: 30px;
 
     & .avatar {
       margin-top: 4px;
@@ -313,10 +315,6 @@
         & small {
           font-size: 10px;
         }
-      }
-
-      & .timer {
-        display: none;
       }
     }
   }

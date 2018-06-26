@@ -108,7 +108,8 @@ class Header extends React.Component {
                         <div
                           className={`${styles.logout} logout`}
                           onClick={() => this.openLogoutDialog() }>
-                          <FontIcon value='logout' className={styles.logoutIcon} />Logout
+                          <FontIcon value='logout' className={styles.logoutIcon} />
+                          {this.props.t('Logout')}
                         </div>
                       </div>
                       : <div></div>
