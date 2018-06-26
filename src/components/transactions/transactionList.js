@@ -57,6 +57,7 @@ class TransactionsList extends React.Component {
     };
 
     if (loading) return null;
+
     // istanbul ignore else
     if (transactions.length === 0) {
       // istanbul ignore else
