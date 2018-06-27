@@ -97,7 +97,7 @@ class Onboarding extends React.Component {
 
   render() {
     const { isDesktop, skip, intro } = this.state;
-    return <Joyride
+    return <div className={this.props.isAuthenticated && this.props.start && isDesktop ? 'joyride-showing' : ''}> <Joyride
       ref={(el) => { this.joyride = el; }}
       steps={this.state.steps}
       run={this.props.isAuthenticated && this.props.start && isDesktop}
@@ -112,7 +112,7 @@ class Onboarding extends React.Component {
       autoStart={true}
       type='continuous'
       holePadding={0}
-    />;
+    /></div>;
   }
 }
 
