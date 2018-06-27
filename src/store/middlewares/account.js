@@ -82,7 +82,7 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
     action.data.windowIsFocused,
   ));
 
-  const tx = action.data.block.transactions;
+  const tx = action.data.block.transactions || [];
   const accountAddress = state.account.address;
   const blockContainsRelevantTransaction = tx.filter((transaction) => {
     const sender = transaction ? transaction.senderId : null;
