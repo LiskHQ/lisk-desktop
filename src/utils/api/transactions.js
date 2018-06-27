@@ -10,17 +10,19 @@ export const send = (activePeer, recipientId, amount, secret, secondSecret = nul
   );
 
 export const getTransactions = ({
-  activePeer, address, limit = 20, offset = 0, orderBy = 'timestamp:desc', filter = txFilters.all,
+  activePeer, address, limit = 20, offset = 0,
+  sort = 'timestamp:desc', filter = txFilters.all,
 }) => {
-  let params = {
-    recipientId: (filter === txFilters.incoming || filter === txFilters.all) ? address : undefined,
-    senderId: (filter === txFilters.outgoing || filter === txFilters.all) ? address : undefined,
+  const params = {
     limit,
     offset,
-    orderBy,
+    sort,
   };
-  params = JSON.parse(JSON.stringify(params));
-  return requestToActivePeer(activePeer, 'transactions', params);
+
+  if (filter === txFilters.incoming) params.recipientId = address;
+  if (filter === txFilters.outgoing) params.senderId = address;
+  if (filter === txFilters.all) params.senderIdOrRecipientId = address;
+  return activePeer.transactions.get(params);
 };
 
 export const getSingleTransaction = ({ activePeer, id }) => requestToActivePeer(activePeer, 'transactions/get', { id });
