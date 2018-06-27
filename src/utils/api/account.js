@@ -4,10 +4,10 @@ import Lisk from 'lisk-elements';
 export const getAccount = (activePeer, address) =>
   new Promise((resolve, reject) => {
     activePeer.accounts.get({ address }).then((res) => {
-      if (res.data.length > 0) {
+      if (res.success) {
         resolve({
-          ...res.data[0],
-          serverPublicKey: res.data[0].publicKey,
+          ...res.account,
+          serverPublicKey: res.account.publicKey,
         });
       } else {
         // when the account has no transactions yet (therefore is not saved on the blockchain)
