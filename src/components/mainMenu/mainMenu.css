@@ -192,7 +192,7 @@
 
 .label.active {
   position: relative;
-  background: white;
+  background: #2475b926;
   color: var(--color-black);
   opacity: 1;
 
