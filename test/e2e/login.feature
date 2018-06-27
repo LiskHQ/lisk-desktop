@@ -1,5 +1,4 @@
 Feature: Login
-  # TODO: will be re-enabled when the functionality is re-enabled
   @pending
   Scenario: should allow to login to Mainnet through network options launch protocol
     Given I go to "/"
@@ -16,7 +15,6 @@ Feature: Login
     When I go to "second-passphrase"
     And "next" should be disabled
 
-  # TODO: will be re-enabled when the functionality is re-enabled
   @pending
   Scenario: should allow to login to Testnet through network options launch protocol
     Given I go to "/"
@@ -29,7 +27,7 @@ Feature: Login
     And I should see text "testnet" in "peer network" element
     When I click "transactions" menu
     Then I should see 25 rows
-
+    
   Scenario: should allow to login to Custom node through network options launch protocol
     Given I go to "/"
     Then I should see no "network"
