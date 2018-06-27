@@ -176,7 +176,7 @@ export const loadAccount = ({
     getAccount(activePeer, address)
       .then((response) => {
         let accountDataUpdated = {
-          confirmed: transactionsResponse.transactions,
+          confirmed: transactionsResponse.data,
           count: parseInt(transactionsResponse.count, 10),
           balance: response.balance,
           address,
@@ -222,20 +222,22 @@ export const accountDataUpdated = ({
   peers, account, windowIsFocused, transactions,
 }) =>
   (dispatch) => {
-    getAccount(peers.data, account.address).then((result) => {
-      if (result.balance !== account.balance) {
-        dispatch(updateTransactionsIfNeeded(
-          {
-            transactions,
-            activePeer: peers.data,
-            account,
-          },
-          !windowIsFocused,
-        ));
-      }
-      dispatch(accountUpdated(result));
-      dispatch(activePeerUpdate({ online: true }));
-    }).catch((res) => {
-      dispatch(activePeerUpdate({ online: false, code: res.error.code }));
-    });
+    setTimeout(() => {
+      getAccount(peers.data, account.address).then((result) => {
+        if (result.balance !== account.balance) {
+          dispatch(updateTransactionsIfNeeded(
+            {
+              transactions,
+              activePeer: peers.data,
+              account,
+            },
+            !windowIsFocused,
+          ));
+        }
+        dispatch(accountUpdated(result));
+        dispatch(activePeerUpdate({ online: true }));
+      }).catch((res) => {
+        dispatch(activePeerUpdate({ online: false, code: res.error.code }));
+      });
+    }, 5000);
   };
