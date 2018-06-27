@@ -22,7 +22,7 @@ export const transactionsFilterSet = ({
     }).then((response) => {
       dispatch({
         data: {
-          confirmed: response.transactions,
+          confirmed: response.data,
           count: parseInt(response.count, 10),
           filter,
         },
@@ -76,7 +76,7 @@ export const loadTransactions = ({ activePeer, publicKey, address }) =>
         dispatch({
           data: {
             count: parseInt(transactionsResponse.count, 10),
-            confirmed: transactionsResponse.transactions,
+            confirmed: transactionsResponse.data,
           },
           type: actionTypes.transactionsLoaded,
         });
@@ -94,7 +94,7 @@ export const transactionsRequested = ({
         dispatch({
           data: {
             count: parseInt(response.count, 10),
-            confirmed: response.transactions,
+            confirmed: response.data,
             address,
             filter,
           },
@@ -169,7 +169,7 @@ export const transactionsUpdated = ({
       .then((response) => {
         dispatch({
           data: {
-            confirmed: response.transactions,
+            confirmed: response.data,
             count: parseInt(response.count, 10),
           },
           type: actionTypes.transactionsUpdated,
