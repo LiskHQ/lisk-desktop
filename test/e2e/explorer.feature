@@ -1,4 +1,5 @@
 Feature: Explorer page
+  @pending
   Scenario: should show search results on mainnet for an account while being logged out
     Given I go to "/"
     And I wait 1 seconds
