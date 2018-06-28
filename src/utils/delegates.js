@@ -14,6 +14,6 @@ export const updateDelegateCache = (delegates, activePeer) => {
 };
 
 export const loadDelegateCache = (activePeer) => {
-  const network = activePeer.options.address || activePeer.options.name;
+  const network = activePeer.currentNode;
   return localJSONStorage.get(`delegateCache-${network}`, {});
 };
