@@ -5,7 +5,7 @@ export const listAccountDelegates = (activePeer, address) =>
 
 
 export const listDelegates = (activePeer, options) =>
-  requestToActivePeer(activePeer, `delegates/${options.q ? 'search' : ''}`, options);
+  activePeer.delegates.get(options);
 
 export const getDelegate = (activePeer, options) =>
   activePeer.delegates.get(options);
