@@ -75,7 +75,7 @@ export const loadTransactions = ({ activePeer, publicKey, address }) =>
         }));
         dispatch({
           data: {
-            count: parseInt(transactionsResponse.count, 10),
+            count: parseInt(transactionsResponse.meta.count, 10),
             confirmed: transactionsResponse.data,
           },
           type: actionTypes.transactionsLoaded,

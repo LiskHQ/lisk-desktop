@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import Lisk from 'lisk-elements';
 import { spy, stub, match } from 'sinon';
 import actionTypes from '../constants/actions';
 import netHashes from '../constants/netHashes';
@@ -30,33 +31,46 @@ describe('actions: peers', () => {
   describe('activePeerSet', () => {
     let dispatch;
     let getNetHash;
+    let APIClientBackup;
+    let getConstantsMock;
 
     beforeEach(() => {
       dispatch = spy();
       getNetHash = stub(nethashApi, 'getNethash');
+      APIClientBackup = Lisk.APIClient;
+      getConstantsMock = stub().returnsPromise();
+
+      // TODO: find a better way of mocking Lisk.APIClient
+      Lisk.APIClient = class MockAPIClient {
+        constructor() {
+          this.node = {
+            getConstants: getConstantsMock,
+          };
+        }
+      };
+      Lisk.APIClient.constants = APIClientBackup.constants;
+
+      getConstantsMock.resolves({ data: { nethash } });
     });
 
     afterEach(() => {
       getNetHash.restore();
+      Lisk.APIClient = APIClientBackup;
     });
 
     it('creates active peer config', () => {
-      getNetHash.returnsPromise();
       const data = {
         passphrase,
         network: {
           name: 'Custom Node',
           custom: true,
-          address: 'http://localhost:4000',
+          address: 'localhost:8000',
           testnet: true,
           nethash,
         },
       };
-
       activePeerSet(data)(dispatch);
-      getNetHash.resolves({ nethash });
-
-      expect(dispatch).to.have.been.calledWith(match.hasNested('data.activePeer.options', data.network));
+      expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.address', 'localhost:8000'));
     });
 
     it('dispatch activePeerSet action also when address http missing', () => {
@@ -64,34 +78,32 @@ describe('actions: peers', () => {
 
       activePeerSet({ passphrase, network })(dispatch);
 
-      expect(dispatch).to.have.been.calledWith(match.hasNested('data.activePeer.options.address', 'localhost:8000'));
+      expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.address', 'localhost:8000'));
     });
 
-    it('dispatch activePeerSet action with hubXX.lisk.io node if mainnet', () => {
+    it('dispatch activePeerSet action with nodeXX.lisk.io node if mainnet', () => {
       const network = networks.mainnet;
 
       activePeerSet({ passphrase, network })(dispatch);
 
       expect(dispatch).to.have.been.calledWith(match.hasNested(
-        'data.activePeer.options.node',
-        match(new RegExp('hub[23][1-8].lisk.io')),
+        'data.options.nodes',
+        Lisk.APIClient.constants.MAINNET_NODES,
       ));
     });
 
-    it('dispatch activePeerSet with testnet config set to true when the network is a custom node and nethash is testnet', () => {
+    it('dispatch activePeerSet action with testnet nodes if testnet option is set', () => {
       getNetHash.returnsPromise();
+
       const network = {
-        address: 'http://localhost:4000',
-        custom: true,
+        testnet: true,
       };
 
       activePeerSet({ passphrase, network })(dispatch);
-      getNetHash.resolves({ nethash: netHashes.testnet });
-
-      expect(dispatch).to.have.been.calledWith(match.hasNested('data.activePeer.testnet', true));
+      expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.nodes', Lisk.APIClient.constants.TESTNET_NODES));
     });
 
-    it('dispatch activePeerSet with testnet config set to false when the network is a custom node and nethash is testnet', () => {
+    it('dispatch activePeerSet with custom node', () => {
       getNetHash.returnsPromise();
       const network = {
         address: 'http://localhost:4000',
@@ -99,9 +111,7 @@ describe('actions: peers', () => {
       };
 
       activePeerSet({ passphrase, network })(dispatch);
-      getNetHash.resolves({ nethash: 'some other nethash' });
-
-      expect(dispatch).to.have.been.calledWith(match.hasNested('data.activePeer.testnet', false));
+      expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.nodes[0]', 'http://localhost:4000'));
     });
 
     it('does not display the error toast if the network is a custom node and there are not saved account and getnethash fails', () => {
