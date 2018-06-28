@@ -8,7 +8,7 @@ const transaction = (state = {}, action) => {
       return {
         votesName: state.votesName || {},
         success: action.data.success,
-        ...action.data.transaction,
+        ...action.data,
       };
     case actionTypes.transactionLoadFailed:
       return action.data.error;
