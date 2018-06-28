@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import Lisk from 'lisk-elements';
 import { spy, stub, match } from 'sinon';
 import actionTypes from '../constants/actions';
-import netHashes from '../constants/netHashes';
 import { activePeerSet, activePeerUpdate } from './peers';
 import { errorToastDisplayed } from './toaster';
 import * as nethashApi from './../utils/api/nethash';
