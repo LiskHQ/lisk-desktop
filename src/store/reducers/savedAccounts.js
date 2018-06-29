@@ -1,4 +1,4 @@
-import { getIndexOfSavedAccount } from '../../utils/savedAccounts';
+// import { getIndexOfSavedAccount } from '../../utils/savedAccounts';
 import actionTypes from '../../constants/actions';
 
 /**
@@ -15,7 +15,7 @@ const savedAccounts = (state = { accounts: [] }, action) => {
     case actionTypes.accountsRetrieved:
       return action.data;
     case actionTypes.accountSaved:
-      indexOfAccount = getIndexOfSavedAccount(state.accounts, action.data);
+      indexOfAccount = 0;// getIndexOfSavedAccount(state.accounts, action.data);
       changedAccount = action.data;
       if (indexOfAccount !== -1) {
         changedAccount = {
@@ -35,7 +35,7 @@ const savedAccounts = (state = { accounts: [] }, action) => {
         lastActive: changedAccount,
       };
     case actionTypes.passphraseUsed:
-      indexOfAccount = getIndexOfSavedAccount(state.accounts, state.lastActive);
+      indexOfAccount = 0;// getIndexOfSavedAccount(state.accounts, state.lastActive);
       accounts[indexOfAccount] = {
         ...accounts[indexOfAccount],
         passphrase: action.data,

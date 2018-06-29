@@ -23,7 +23,7 @@ class PassphraseSteps extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.account.secondSignature) {
+    if (this.props.account.secondPublicKey) {
       this.setState({
         secondPassphrase: {
           value: '',
@@ -32,7 +32,7 @@ class PassphraseSteps extends React.Component {
       });
     }
 
-    if (this.props.account.passphrase && !this.props.account.secondSignature) {
+    if (this.props.account.passphrase && !this.props.account.secondPublicKey) {
       this.props.nextStep({
         ...this.props,
         ...authStatePrefill(this.props.account),
@@ -47,8 +47,8 @@ class PassphraseSteps extends React.Component {
 
   hasCorrectPassphrases() {
     const firstPPAndDone = !this.props.account.passphrase && this.state.done.passphrase;
-    const secondPPAndDone = this.props.account.secondSignature && this.state.done.secondPassphrase;
-    const onlyFirstPPAndDone = firstPPAndDone && !this.props.account.secondSignature;
+    const secondPPAndDone = this.props.account.secondPublicKey && this.state.done.secondPassphrase;
+    const onlyFirstPPAndDone = firstPPAndDone && !this.props.account.secondPublicKey;
     const onlySecondPPAndDone = secondPPAndDone && !!this.props.account.passphrase;
 
     return onlyFirstPPAndDone || onlySecondPPAndDone || (firstPPAndDone && secondPPAndDone);
@@ -93,7 +93,7 @@ class PassphraseSteps extends React.Component {
   }
 
   getCurrentStep() {
-    if (this.props.account.secondSignature &&
+    if (this.props.account.secondPublicKey &&
       (this.state.done.passphrase || this.props.account.passphrase)) {
       return 'secondPassphrase';
     }

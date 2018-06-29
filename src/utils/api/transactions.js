@@ -30,10 +30,12 @@ export const getTransactions = ({
 export const getSingleTransaction = ({ activePeer, id }) => activePeer.transactions.get({ id });
 
 export const unconfirmedTransactions = (activePeer, address, limit = 20, offset = 0, sort = 'timestamp:desc') =>
-  activePeer.node.getTransactions('unconfirmed', {
-    senderId: address,
-    recipientId: address,
-    limit,
-    offset,
-    sort,
+  new Promise(() => {
+    activePeer.node.getTransactions('unconfirmed', {
+      senderId: address,
+      recipientId: address,
+      limit,
+      offset,
+      sort,
+    });
   });
