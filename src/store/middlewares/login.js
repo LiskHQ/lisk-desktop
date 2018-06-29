@@ -33,17 +33,18 @@ const loginMiddleware = store => next => (action) => {
       Date.now() + lockDuration : 0;
     return getDelegate(activePeer, { publicKey })
       .then((delegateData) => {
-        store.dispatch(accountLoggedIn({
+        let accountUpdated = {
           ...accountData,
           ...accountBasics,
-          ...{ delegate: delegateData.delegate, isDelegate: true, expireTime: duration },
-        }));
-      }).catch(() => {
-        store.dispatch(accountLoggedIn({
-          ...accountData,
-          ...accountBasics,
-          ...{ delegate: {}, isDelegate: false, expireTime: duration },
-        }));
+          delegate: {},
+        };
+        if (delegateData.data.length > 0) {
+          accountUpdated = {
+            ...accountUpdated,
+            ...{ delegate: delegateData.data[0], isDelegate: true, expireTime: duration },
+          };
+        }
+        store.dispatch(accountLoggedIn(accountUpdated));
       });
   }).catch(() => store.dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node') })));
 };
