@@ -207,7 +207,7 @@ class AutoSuggest extends React.Component {
 
   getDelegatesResults() {
     return this.props.results.delegates.map((delegate, idx) => ({
-      id: delegate.address,
+      id: delegate.account.address,
       valueLeft: delegate.username,
       valueRight: delegate.rank,
       isSelected: idx === this.state.selectedIdx,
