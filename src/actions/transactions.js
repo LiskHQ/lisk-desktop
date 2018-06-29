@@ -108,8 +108,9 @@ export const loadTransaction = ({ activePeer, id }) =>
     dispatch({ type: actionTypes.transactionCleared });
     getSingleTransaction({ activePeer, id })
       .then((response) => {
-        const added = (response.transaction.votes && response.transaction.votes.added) || [];
-        const deleted = (response.transaction.votes && response.transaction.votes.deleted) || [];
+        const transaction = response.data[0];
+        const added = (transaction.votes && transaction.votes.added) || [];
+        const deleted = (transaction.votes && transaction.votes.deleted) || [];
         const localStorageDelegates = activePeer.options && loadDelegateCache(activePeer);
         deleted.forEach((publicKey) => {
           const address = extractAddress(publicKey);
@@ -153,7 +154,8 @@ export const loadTransaction = ({ activePeer, id }) =>
               });
           }
         });
-        dispatch({ data: response, type: actionTypes.transactionLoaded });
+
+        dispatch({ data: transaction, type: actionTypes.transactionLoaded });
       }).catch((error) => {
         dispatch({ data: error, type: actionTypes.transactionLoadFailed });
       });
