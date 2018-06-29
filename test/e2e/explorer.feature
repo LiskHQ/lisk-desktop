@@ -95,6 +95,4 @@ Feature: Explorer page
     And I wait 3 seconds
     And I click "delegate statistics"
     And I wait 1 seconds
-    Then I should see 35 instances of "votesFilterQuery row"
-    When I click "show votes"
-    Then I should see 101 instances of "votesFilterQuery row"
+    Then I should see 10 instances of "votesFilterQuery row"
