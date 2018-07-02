@@ -1,5 +1,5 @@
 Feature: Register delegate
-  Scenario: should allow to register a delegate with second passphrase
+  Scenario: should allow to register a delegate on custom node with second passphrase
     Given I'm logged in as "second passphrase account"
     When I go to "register-delegate"
     And I wait 0.5 seconds
