@@ -38,10 +38,9 @@ export const activePeerSet = data =>
       config.port = port || (config.ssl ? 443 : 80);
       config.nodes = [`${protocol}//${hostname}:${port}`];
     } else if (config.testnet) {
-      config.nodes = Lisk.APIClient.constants.TESTNET_NODES;
       config.nethash = Lisk.APIClient.constants.TESTNET_NETHASH;
+      config.nodes = ['https:testnet.lisk.io'];
     } else {
-      config.nodes = Lisk.APIClient.constants.MAINNET_NODES;
       config.nethash = Lisk.APIClient.constants.MAINNET_NETHASH;
     }
 
