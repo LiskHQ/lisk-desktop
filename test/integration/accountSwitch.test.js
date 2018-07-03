@@ -44,6 +44,7 @@ describe('@integration: Account switch', () => {
 
   beforeEach(() => {
     getAccountStub = stub(accountApi, 'getAccount');
+    getAccountStub.returnsPromise().resolves(accounts.genesis);
     getAccountStub.withArgs(match.any, accounts.genesis.address)
       .returnsPromise().resolves(accounts.genesis);
     getAccountStub.withArgs(match.any, accounts.delegate.address)
