@@ -172,7 +172,7 @@ export const transactionsUpdated = ({
         dispatch({
           data: {
             confirmed: response.data,
-            count: parseInt(response.count, 10),
+            count: parseInt(response.meta.count, 10),
           },
           type: actionTypes.transactionsUpdated,
         });
