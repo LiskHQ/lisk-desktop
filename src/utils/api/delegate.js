@@ -8,7 +8,7 @@ export const listDelegates = (activePeer, options) =>
   requestToActivePeer(activePeer, `delegates/${options.q ? 'search' : ''}`, options);
 
 export const getDelegate = (activePeer, options) =>
-  requestToActivePeer(activePeer, 'delegates/get', options);
+  activePeer.delegates.get(options);
 
 export const vote = (activePeer, secret, publicKey, voteList, unvoteList, secondSecret = null) =>
   requestToActivePeer(activePeer, 'accounts/delegates', {

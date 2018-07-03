@@ -1,4 +1,5 @@
 Feature: Login
+  @pending
   Scenario: should allow to login to Mainnet through network options launch protocol
     Given I go to "/"
     Then I should see no "network"
@@ -27,14 +28,14 @@ Feature: Login
     When I click "transactions" menu
     Then I should see 25 rows
 
-  @pending
   Scenario: should allow to login to Custom node through network options launch protocol
     Given I go to "/"
     Then I should see no "network"
     When I'm on login page
     Then I fill in passphrase of "genesis" to "passphrase" field
     And I select option no. 3 from "network" select
-    When I fill in "https://testnet.lisk.io" to "address" field
+    # TODO: has to point to jenkins node
+    When I fill in "localhost:4000" to "address" field
     And I click "login button"
     Then I should be logged in as "genesis" account
     And I should see text "custom node" in "peer network" element

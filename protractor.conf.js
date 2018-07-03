@@ -2,7 +2,7 @@
 
 exports.config = {
   specs: [
-    'test/e2e/*.feature',
+    'test/e2e/*login.feature',
   ],
 
   directConnect: true,

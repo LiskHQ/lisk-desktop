@@ -73,7 +73,7 @@ const savedAccountsMiddleware = (store) => {
       case actionTypes.newBlockCreated:
         checkTransactionsAndUpdateSavedAccounts(
           peers,
-          action.data.block.transactions,
+          action.data.block.transactions || [],
           savedAccounts,
         );
         break;
@@ -96,16 +96,16 @@ const savedAccountsMiddleware = (store) => {
           address: peers.options.address,
         }));
         break;
-      case actionTypes.accountLoggedIn:
-        updateSavedAccounts(peers, savedAccounts.accounts);
-        store.dispatch(accountSaved({
-          passphrase: action.data.passphrase,
-          balance: action.data.balance,
-          publicKey: action.data.publicKey,
-          network: peers.options.code,
-          address: peers.options.address,
-        }));
-        break;
+      // case actionTypes.accountLoggedIn:
+      //   updateSavedAccounts(peers, savedAccounts.accounts);
+      //   store.dispatch(accountSaved({
+      //     passphrase: action.data.passphrase,
+      //     balance: action.data.balance,
+      //     publicKey: action.data.publicKey,
+      //     network: peers.options.code,
+      //     address: peers.options.address,
+      //   }));
+      //   break;
       case actionTypes.accountRemoved:
         if (savedAccounts.accounts.length === 0) {
           store.dispatch(accountLoggedOut());

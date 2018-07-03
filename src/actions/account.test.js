@@ -245,7 +245,7 @@ describe('actions: account', () => {
       const data = {
         activePeer: {},
         address: accounts.genesis.address,
-        transactionsResponse: { count: 0, transactions: [] },
+        transactionsResponse: { meta: { count: 0 }, data: [] },
         isSameAccount: false,
       };
 
@@ -269,7 +269,7 @@ describe('actions: account', () => {
       const data = {
         activePeer: {},
         address: accounts.genesis.address,
-        transactionsResponse: { count: 0, transactions: [] },
+        transactionsResponse: { meta: { count: 0 }, data: [] },
         isSameAccount: true,
       };
 
