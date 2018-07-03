@@ -75,11 +75,10 @@ node('lisk-hub') {
       try {
         ansiColor('xterm') {
           sh '''
-          ON_JENKINS=true npm run --silent test
+          #ON_JENKINS=true npm run --silent test
           # Submit coverage to coveralls
-          cat coverage/*/lcov.info | coveralls -v
+          #cat coverage/*/lcov.info | coveralls -v
           '''
-
         }
       } catch (err) {
         echo "Error: ${err}"
