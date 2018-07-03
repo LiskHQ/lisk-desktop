@@ -116,6 +116,8 @@ export const loadTransaction = ({ activePeer, id }) =>
           return;
         }
 
+        // since core 1.0 added and deleted are not filtered in core,
+        // but provided as single array with [+,-] signs
         if ('votes' in response.data[0].asset) {
           added = response.data[0].asset.votes.filter(item => item.startsWith('+')).map(item => item.replace('+', ''));
           deleted = response.data[0].asset.votes.filter(item => item.startsWith('-')).map(item => item.replace('-', ''));
