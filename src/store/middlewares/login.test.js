@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { spy, stub, mock } from 'sinon';
+import { spy, stub } from 'sinon';
 import Lisk from 'lisk-elements';
 import accounts from '../../../test/constants/accounts';
 import middleware from './login';
