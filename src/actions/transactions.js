@@ -45,7 +45,7 @@ export const transactionsUpdateUnconfirmed = ({ activePeer, address, pendingTran
     unconfirmedTransactions(activePeer, address).then(response => dispatch({
       data: {
         failed: pendingTransactions.filter(tx =>
-          response.transactions.filter(unconfirmedTx => tx.id === unconfirmedTx.id).length === 0),
+          response.data.filter(unconfirmedTx => tx.id === unconfirmedTx.id).length === 0),
       },
       type: actionTypes.transactionsFailed,
     }));
