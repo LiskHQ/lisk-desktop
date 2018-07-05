@@ -130,12 +130,6 @@ node('lisk-hub') {
     }
   } catch(err) {
     echo "Error: ${err}"
-    ansiColor('xterm') {
-      sh '''
-      cd $WORKSPACE/$BRANCH_NAME
-      docker-compose logs
-      '''
-    }
   } finally {
     ansiColor('xterm') {
       sh '''
