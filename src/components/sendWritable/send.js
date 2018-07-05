@@ -8,6 +8,7 @@ import fees from './../../constants/fees';
 import styles from './sendWritable.css';
 import regex from './../../utils/regex';
 import AddressInput from './../addressInput';
+import ReferenceInput from './../referenceInput';
 
 class SendWritable extends React.Component {
   constructor(props) {
@@ -17,6 +18,10 @@ class SendWritable extends React.Component {
         value: this.props.address || '',
       },
       amount: {
+        value: this.props.amount || '',
+      },
+      // reference field
+      data: {
         value: this.props.amount || '',
       },
       ...authStatePrefill(),
@@ -43,17 +48,17 @@ class SendWritable extends React.Component {
     }
   }
 
-  handleChange(name, value, error) {
+  handleChange(name, required = true, value, error) {
     this.setState({
       [name]: {
         value,
-        error: typeof error === 'string' ? error : this.validateInput(name, value),
+        error: typeof error === 'string' ? error : this.validateInput(name, value, required),
       },
     });
   }
 
-  validateInput(name, value) {
-    if (!value) {
+  validateInput(name, value, required) {
+    if (!value && required) {
       return this.props.t('Required');
     } else if (!value.match(this.inputValidationRegexps[name])) {
       return name === 'amount' ? this.props.t('Invalid amount') : this.props.t('Invalid address');
@@ -87,7 +92,13 @@ class SendWritable extends React.Component {
             className='recipient'
             label={this.props.t('Send to address')}
             address={this.state.recipient}
-            handleChange={this.handleChange.bind(this, 'recipient')}
+            handleChange={this.handleChange.bind(this, 'recipient', true)}
+          />
+          <ReferenceInput
+            className='data'
+            label={this.props.t('Reference (optional)')}
+            address={this.state.data}
+            handleChange={this.handleChange.bind(this, 'data', false)}
           />
           <Converter
             label={this.props.t('Amount (LSK)')}
@@ -95,7 +106,7 @@ class SendWritable extends React.Component {
             theme={styles}
             error={this.state.amount.error}
             value={this.state.amount.value}
-            onChange={this.handleChange.bind(this, 'amount')}
+            onChange={this.handleChange.bind(this, 'amount', true)}
             t={this.props.t}
           />
         </form>
@@ -103,6 +114,7 @@ class SendWritable extends React.Component {
           <Button onClick={() => this.props.nextStep({
             recipient: this.state.recipient.value,
             amount: this.state.amount.value,
+            data: this.state.data.value,
           })}
           disabled={(!!this.state.recipient.error ||
                     !this.state.recipient.value ||

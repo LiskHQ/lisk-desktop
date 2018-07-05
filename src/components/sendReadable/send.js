@@ -17,6 +17,9 @@ class SendReadable extends React.Component {
       amount: {
         value: '',
       },
+      data: {
+        value: '',
+      },
       loading: false,
     };
     this.fee = fees.send;
@@ -25,13 +28,15 @@ class SendReadable extends React.Component {
   componentDidMount() {
     const recipient = this.props.accountInit ? this.props.account.address : this.props.recipient;
     const amount = this.props.accountInit ? 0.1 : this.props.amount;
-
     const newState = {
       recipient: {
         value: recipient || '',
       },
       amount: {
         value: amount || '',
+      },
+      data: {
+        value: this.props.data || '',
       },
     };
     this.setState(newState);
@@ -81,6 +86,7 @@ class SendReadable extends React.Component {
       amount: this.state.amount.value,
       passphrase: this.props.passphrase.value,
       secondPassphrase: this.props.secondPassphrase.value,
+      data: this.props.data,
     });
   }
 
