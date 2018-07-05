@@ -20,9 +20,8 @@ class SendWritable extends React.Component {
       amount: {
         value: this.props.amount || '',
       },
-      // reference field
-      data: {
-        value: this.props.amount || '',
+      reference: {
+        value: this.props.reference || '',
       },
       ...authStatePrefill(),
     };
@@ -41,6 +40,9 @@ class SendWritable extends React.Component {
         },
         amount: {
           value: this.props.prevState.amount || this.state.amount.value,
+        },
+        reference: {
+          value: this.props.prevState.reference || this.state.reference.value,
         },
         ...authStatePrefill(this.props.account),
       };
@@ -95,10 +97,10 @@ class SendWritable extends React.Component {
             handleChange={this.handleChange.bind(this, 'recipient', true)}
           />
           <ReferenceInput
-            className='data'
+            className='reference'
             label={this.props.t('Reference (optional)')}
-            address={this.state.data}
-            handleChange={this.handleChange.bind(this, 'data', false)}
+            address={this.state.reference}
+            handleChange={this.handleChange.bind(this, 'reference', false)}
           />
           <Converter
             label={this.props.t('Amount (LSK)')}
@@ -114,7 +116,7 @@ class SendWritable extends React.Component {
           <Button onClick={() => this.props.nextStep({
             recipient: this.state.recipient.value,
             amount: this.state.amount.value,
-            data: this.state.data.value,
+            reference: this.state.reference.value,
           })}
           disabled={(!!this.state.recipient.error ||
                     !this.state.recipient.value ||

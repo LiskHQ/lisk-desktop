@@ -17,7 +17,7 @@ class SendReadable extends React.Component {
       amount: {
         value: '',
       },
-      data: {
+      reference: {
         value: '',
       },
       loading: false,
@@ -35,8 +35,8 @@ class SendReadable extends React.Component {
       amount: {
         value: amount || '',
       },
-      data: {
-        value: this.props.data || '',
+      reference: {
+        value: this.props.reference || '',
       },
     };
     this.setState(newState);
@@ -86,7 +86,7 @@ class SendReadable extends React.Component {
       amount: this.state.amount.value,
       passphrase: this.props.passphrase.value,
       secondPassphrase: this.props.secondPassphrase.value,
-      data: this.props.data,
+      data: this.props.reference,
     });
   }
 

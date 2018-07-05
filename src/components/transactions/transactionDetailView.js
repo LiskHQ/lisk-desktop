@@ -184,7 +184,10 @@ class TransactionsDetailView extends React.Component {
                     copyClassName={`${styles.copy}`} />
                 } />
             }
-            <TransactionDetailViewField label='' value='' />
+            <TransactionDetailViewField
+              shouldShow={this.props.transaction.asset && this.props.transaction.asset.data}
+              label={this.props.t('Reference')}
+              value={(this.props.transaction.asset && this.props.transaction.asset.data) || '-'} />
           </TransactionDetailViewRow>
         </div>
         <footer>
