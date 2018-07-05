@@ -87,7 +87,7 @@ describe('actions: peers', () => {
 
       expect(dispatch).to.have.been.calledWith(match.hasNested(
         'data.options.nodes',
-        Lisk.APIClient.constants.MAINNET_NODES,
+        networks.mainnet.nodes,
       ));
     });
 
@@ -99,7 +99,7 @@ describe('actions: peers', () => {
       };
 
       activePeerSet({ passphrase, network })(dispatch);
-      expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.nodes', Lisk.APIClient.constants.TESTNET_NODES));
+      expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.nodes', networks.testnet.nodes));
     });
 
     it('dispatch activePeerSet with custom node', () => {
