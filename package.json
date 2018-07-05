@@ -52,6 +52,7 @@
     "i18next-xhr-backend": "=1.4.2",
     "js-sha256": "0.9.0",
     "lisk-js": "0.5.1",
+    "lisk-elements": "1.0.0-beta.4",
     "lodash.throttle": "4.1.1",
     "lolex": "=2.3.2",
     "moment": "2.20.1",
@@ -209,7 +210,7 @@
   "bundlesize": [
     {
       "path": "./app/build/bundle.app.*.js",
-      "maxSize": "890 kB"
+      "maxSize": "965 kB"
     },
     {
       "path": "./app/build/bundle.vendor.*.js",

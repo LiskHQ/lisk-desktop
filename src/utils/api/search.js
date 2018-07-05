@@ -37,7 +37,7 @@ const searchTransactions = ({ activePeer, searchTerm }) => new Promise((resolve,
   getSingleTransaction({
     activePeer,
     id: searchTerm,
-  }).then(response => resolve({ transactions: [response.transaction] }))
+  }).then(response => resolve({ transactions: response.data }))
     .catch(() => reject({ transactions: [] })));
 
 const getSearches = search => ([

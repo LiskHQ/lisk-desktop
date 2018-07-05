@@ -176,8 +176,8 @@ export const loadAccount = ({
     getAccount(activePeer, address)
       .then((response) => {
         let accountDataUpdated = {
-          confirmed: transactionsResponse.transactions,
-          count: parseInt(transactionsResponse.count, 10),
+          confirmed: transactionsResponse.data,
+          count: parseInt(transactionsResponse.meta.count, 10),
           balance: response.balance,
           address,
         };
