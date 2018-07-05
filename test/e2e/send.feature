@@ -45,5 +45,6 @@ Feature: Send dialog
     When I click "okay button"
     Then I should see no "account initialization"
     When I refresh the page
+    Then I wait 15 seconds
     Then I should see no "account initialization"
     Then I should see 2 rows
