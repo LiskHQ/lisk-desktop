@@ -101,7 +101,7 @@ node('lisk-hub') {
 	    cp -r ~/lisk-docker/examples/development $WORKSPACE/$BRANCH_NAME
 	    cd $WORKSPACE/$BRANCH_NAME
 	    cp /home/lisk/blockchain_explorer.db.gz ./blockchain.db.gz
-	    LISK_VERSION=0.9.12a make coldstart
+	    LISK_VERSION=1.0.0-beta.9.2 make coldstart
 	    LISK_PORT=$( docker-compose port lisk 4000 |cut -d ":" -f 2 )
 	    cd -
 
