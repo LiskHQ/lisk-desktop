@@ -60,8 +60,11 @@ class SendWritable extends React.Component {
   }
 
   validateInput(name, value, required) {
+    const byteCount = encodeURI(value).split(/%..|./).length - 1;
     if (!value && required) {
       return this.props.t('Required');
+    } else if (name === 'reference' && byteCount > 64) {
+      return this.props.t('Max 64 bytes message');
     } else if (!value.match(this.inputValidationRegexps[name])) {
       return name === 'amount' ? this.props.t('Invalid amount') : this.props.t('Invalid address');
     } else if (name === 'amount' && value > parseFloat(this.getMaxAmount())) {
@@ -121,6 +124,7 @@ class SendWritable extends React.Component {
           disabled={(!!this.state.recipient.error ||
                     !this.state.recipient.value ||
                     !!this.state.amount.error ||
+                    !!this.state.reference.error ||
                     !this.state.amount.value)}
           className={`send-next-button ${styles.nextButton}`}
           >{this.props.t('Next')}</Button>
