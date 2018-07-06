@@ -117,10 +117,10 @@ export const secondPassphraseRegistered = ({
 export const updateDelegateAccount = ({ activePeer, publicKey }) =>
   (dispatch) => {
     getDelegate(activePeer, { publicKey })
-      .then((delegateData) => {
+      .then((response) => {
         dispatch(accountUpdated(Object.assign(
           {},
-          { delegate: delegateData.delegate, isDelegate: true },
+          { delegate: response.data, isDelegate: true },
         )));
       });
   };
