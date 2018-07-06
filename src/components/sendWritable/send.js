@@ -64,7 +64,7 @@ class SendWritable extends React.Component {
     if (!value && required) {
       return this.props.t('Required');
     } else if (name === 'reference' && byteCount > 64) {
-      return this.props.t('Max 64 bytes message');
+      return this.props.t('Maximum length exceeded');
     } else if (!value.match(this.inputValidationRegexps[name])) {
       return name === 'amount' ? this.props.t('Invalid amount') : this.props.t('Invalid address');
     } else if (name === 'amount' && value > parseFloat(this.getMaxAmount())) {
