@@ -1,4 +1,5 @@
 Feature: Login
+  @pending
   Scenario: should allow to login to Mainnet through network options launch protocol
     Given I go to "/"
     Then I should see no "network"
@@ -16,7 +17,6 @@ Feature: Login
     When I go to "second-passphrase"
     And "next" should be disabled
 
-  @pending
   Scenario: should allow to login to Testnet through network options launch protocol
     Given I go to "/"
     Then I should see no "network"
@@ -31,7 +31,6 @@ Feature: Login
     When I click "transactions" menu
     Then I should see 25 rows
 
-  @pending
   Scenario: should allow to login to Custom node through network options launch protocol
     Given I go to "/"
     Then I should see no "network"

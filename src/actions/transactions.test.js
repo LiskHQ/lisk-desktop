@@ -33,7 +33,7 @@ describe('actions: transactions', () => {
     });
 
     it('should dispatch transactionsUpdated action if resolved', () => {
-      transactionsApiMock.returnsPromise().resolves({ transactions: [], count: '0' });
+      transactionsApiMock.returnsPromise().resolves({ data: [], meta: { count: '0' } });
       const expectedAction = {
         count: 0,
         confirmed: [],
@@ -73,7 +73,7 @@ describe('actions: transactions', () => {
     });
 
     it('should dispatch transactionsLoaded action if resolved', () => {
-      transactionsApiMock.returnsPromise().resolves({ transactions: [], count: '0' });
+      transactionsApiMock.returnsPromise().resolves({ data: [], meta: { count: '0' } });
       const expectedAction = {
         count: 0,
         confirmed: [],

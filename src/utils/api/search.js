@@ -22,10 +22,10 @@ const searchAddresses = ({ activePeer, searchTerm }) => new Promise((resolve, re
 
 const searchDelegates = ({ activePeer, searchTerm }) => new Promise((resolve, reject) =>
   listDelegates(activePeer, {
-    q: searchTerm,
-    orderBy: 'username:asc',
+    search: searchTerm,
+    sort: 'username:asc',
   }).then((response) => {
-    let delegatesSorted = filterAndOrderByMatch(searchTerm, response.delegates);
+    let delegatesSorted = filterAndOrderByMatch(searchTerm, response.data);
     if (delegatesSorted.length > 4) {
       delegatesSorted = delegatesSorted.slice(0, 4);
     }
@@ -37,7 +37,7 @@ const searchTransactions = ({ activePeer, searchTerm }) => new Promise((resolve,
   getSingleTransaction({
     activePeer,
     id: searchTerm,
-  }).then(response => resolve({ transactions: [response.transaction] }))
+  }).then(response => resolve({ transactions: response.data }))
     .catch(() => reject({ transactions: [] })));
 
 const getSearches = search => ([

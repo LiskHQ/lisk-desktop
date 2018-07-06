@@ -12,19 +12,17 @@ const loginMiddleware = store => next => (action) => {
   if (action.type !== actionTypes.activePeerSet || action.data.noSavedAccounts) {
     return next(action);
   }
+  next(action);
 
-  next(Object.assign({}, action, { data: action.data.activePeer }));
-
-  const { passphrase, activePeer: { options: { code } } } = action.data;
+  const { passphrase, activePeer } = action.data;
   const publicKey = passphrase ? extractPublicKey(passphrase) : action.data.publicKey;
   const address = extractAddress(publicKey);
   const accountBasics = {
     passphrase,
     publicKey,
     address,
-    network: code,
+    network: activePeer.currentNode,
   };
-  const { activePeer } = action.data;
 
   store.dispatch(accountLoading());
 

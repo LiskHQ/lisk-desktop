@@ -22,7 +22,7 @@ export const transactionsFilterSet = ({
     }).then((response) => {
       dispatch({
         data: {
-          confirmed: response.transactions,
+          confirmed: response.data,
           count: parseInt(response.count, 10),
           filter,
         },
@@ -75,8 +75,8 @@ export const loadTransactions = ({ activePeer, publicKey, address }) =>
         }));
         dispatch({
           data: {
-            count: parseInt(transactionsResponse.count, 10),
-            confirmed: transactionsResponse.transactions,
+            count: parseInt(transactionsResponse.meta.count, 10),
+            confirmed: transactionsResponse.data,
           },
           type: actionTypes.transactionsLoaded,
         });
@@ -94,7 +94,7 @@ export const transactionsRequested = ({
         dispatch({
           data: {
             count: parseInt(response.count, 10),
-            confirmed: response.transactions,
+            confirmed: response.data,
             address,
             filter,
           },
@@ -108,9 +108,9 @@ export const loadTransaction = ({ activePeer, id }) =>
     dispatch({ type: actionTypes.transactionCleared });
     getSingleTransaction({ activePeer, id })
       .then((response) => {
-        const added = (response.transaction.votes && response.transaction.votes.added) || [];
-        const deleted = (response.transaction.votes && response.transaction.votes.deleted) || [];
-        const localStorageDelegates = activePeer.options && loadDelegateCache(activePeer);
+        const added = response.data[0].asset.votes.filter(item => item.startsWith('+')).map(item => item.replace('+', '')) || [];
+        const deleted = response.data[0].asset.votes.filter(item => item.startsWith('-')).map(item => item.replace('-', '')) || [];
+        const localStorageDelegates = loadDelegateCache(activePeer);
         deleted.forEach((publicKey) => {
           const address = extractAddress(publicKey);
           const storedDelegate = localStorageDelegates[address];
@@ -129,7 +129,7 @@ export const loadTransaction = ({ activePeer, id }) =>
             getDelegate(activePeer, { publicKey })
               .then((delegateData) => {
                 dispatch({
-                  data: { delegate: delegateData.delegate, voteArrayName: 'deleted' },
+                  data: { delegate: delegateData.data[0], voteArrayName: 'deleted' },
                   type: actionTypes.transactionAddDelegateName,
                 });
               });
@@ -147,13 +147,13 @@ export const loadTransaction = ({ activePeer, id }) =>
             getDelegate(activePeer, { publicKey })
               .then((delegateData) => {
                 dispatch({
-                  data: { delegate: delegateData.delegate, voteArrayName: 'added' },
+                  data: { delegate: delegateData.data[0], voteArrayName: 'added' },
                   type: actionTypes.transactionAddDelegateName,
                 });
               });
           }
         });
-        dispatch({ data: response, type: actionTypes.transactionLoaded });
+        dispatch({ data: response.data[0], type: actionTypes.transactionLoaded });
       }).catch((error) => {
         dispatch({ data: error, type: actionTypes.transactionLoadFailed });
       });
@@ -169,8 +169,8 @@ export const transactionsUpdated = ({
       .then((response) => {
         dispatch({
           data: {
-            confirmed: response.transactions,
-            count: parseInt(response.count, 10),
+            confirmed: response.data,
+            count: parseInt(response.meta.count, 10),
           },
           type: actionTypes.transactionsUpdated,
         });
