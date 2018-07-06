@@ -1,5 +1,4 @@
 import Lisk from 'lisk-elements';
-import { requestToActivePeer } from './peers';
 
 export const listAccountDelegates = (activePeer, address) =>
   activePeer.votes.get({ address });
@@ -10,13 +9,16 @@ export const listDelegates = (activePeer, options) =>
 export const getDelegate = (activePeer, options) =>
   activePeer.delegates.get(options);
 
-export const vote = (activePeer, secret, publicKey, voteList, unvoteList, secondSecret = null) =>
-  requestToActivePeer(activePeer, 'accounts/delegates', {
-    secret,
-    publicKey,
-    delegates: voteList.map(delegate => `+${delegate}`).concat(unvoteList.map(delegate => `-${delegate}`)),
-    secondSecret,
+export const vote = (activePeer, secret, publicKey, votes, unvotes, secondSecret = null) => {
+  const transaiton = Lisk.transaction.castVotes({
+    votes,
+    unvotes,
+    passphrase: secret,
+    secondPassphrase: secondSecret,
   });
+
+  return activePeer.transactions.broadcast(transaiton);
+};
 
 export const getVotes = (activePeer, address) =>
   activePeer.votes.get({ address });
