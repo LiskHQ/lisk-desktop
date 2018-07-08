@@ -30,7 +30,7 @@ const savedAccountsMiddleware = (store) => {
     }
   });
 
-  const isSameNetwork = (account, peers) => account.address === peers.data.options.address
+  const isSameNetwork = (account, peers) => account.address === peers.data.currentNode
     && peers.data.options.code === account.network;
 
   const updateSavedAccounts = (peers, accounts) => {
@@ -96,16 +96,16 @@ const savedAccountsMiddleware = (store) => {
           address: peers.options.address,
         }));
         break;
-      // case actionTypes.accountLoggedIn:
-      //   updateSavedAccounts(peers, savedAccounts.accounts);
-      //   store.dispatch(accountSaved({
-      //     passphrase: action.data.passphrase,
-      //     balance: action.data.balance,
-      //     publicKey: action.data.publicKey,
-      //     network: peers.options.code,
-      //     address: peers.options.address,
-      //   }));
-      //   break;
+      case actionTypes.accountLoggedIn:
+        updateSavedAccounts(peers, savedAccounts.accounts);
+        store.dispatch(accountSaved({
+          passphrase: action.data.passphrase,
+          balance: action.data.balance,
+          publicKey: action.data.publicKey,
+          network: peers.options.code,
+          address: peers.options.address,
+        }));
+        break;
       case actionTypes.accountRemoved:
         if (savedAccounts.accounts.length === 0) {
           store.dispatch(accountLoggedOut());
