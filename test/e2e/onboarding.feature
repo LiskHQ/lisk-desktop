@@ -81,6 +81,10 @@ Feature: Onboarding
     And I click "joyride-tooltip__button--primary"
     Then I should see no "joyride-tooltip__header"
     When I refresh the page
+    And I click "home-link"
+    And I wait 0.4 seconds
+    Then I'm logged in as "genesis"
+    And I wait 0.4 seconds
     And I wait 1 seconds
     Then I should see no "joyride-tooltip__header"
 
