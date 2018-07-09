@@ -5,7 +5,7 @@ import { settingsUpdated } from '../../actions/settings';
 import { accountUpdated } from '../../actions/account';
 
 const mapStateToProps = state => ({
-  hasSecondPassphrase: state.account.secondSignature,
+  hasSecondPassphrase: state.account.secondPublicKey,
   settings: state.settings,
   account: state.account,
   isAuthenticated: !!state.account.publicKey,
