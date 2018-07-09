@@ -117,7 +117,7 @@ describe('actions: transactions', () => {
     it('should create an action function', () => {
       expect(typeof actionFunction).to.be.deep.equal('function');
     });
-    // To-Do enable this when voting functionalities is fixed
+    // TODO: enable this when voting functionalities is fixed
     it.skip('should dispatch one transactionAddDelegateName action when transaction contains one vote added', () => {
       const delegateResponse = { delegate: { username: 'peterpan' } };
       const transactionResponse = {
@@ -138,7 +138,7 @@ describe('actions: transactions', () => {
       expect(dispatch).to.have.been
         .calledWith({ data: expectedActionPayload, type: actionTypes.transactionAddDelegateName });
     });
-    // To-Do enable this when voting functionalities is fixed
+    // TODO: enable this when voting functionalities is fixed
     it.skip('should dispatch one transactionAddDelegateName action when transaction contains one vote deleted', () => {
       const delegateResponse = { delegate: { username: 'peterpan' } };
       const transactionResponse = { transaction: { votes: { deleted: [accounts.delegate.publicKey] }, count: '0' } };
