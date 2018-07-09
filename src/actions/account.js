@@ -120,7 +120,7 @@ export const updateDelegateAccount = ({ activePeer, publicKey }) =>
       .then((response) => {
         dispatch(accountUpdated(Object.assign(
           {},
-          { delegate: response.data, isDelegate: true },
+          { delegate: response.data[0], isDelegate: true },
         )));
       });
   };
