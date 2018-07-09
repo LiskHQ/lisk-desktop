@@ -107,6 +107,7 @@ describe('actions: transactions', () => {
     beforeEach(() => {
       transactionApiMock = sinon.stub(transactionsApi, 'getSingleTransaction');
       delegateApiMock = sinon.stub(delegateApi, 'getDelegate');
+      dispatch = sinon.spy();
     });
 
     afterEach(() => {
