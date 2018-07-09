@@ -147,6 +147,7 @@ export const delegatesFetched = ({
     listDelegates(activePeer, {
       offset,
       limit: '100',
+      sort: 'rank:asc',
     }).then((response) => {
       updateDelegateCache(response.data, activePeer);
       dispatch(delegatesAdded({
