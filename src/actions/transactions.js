@@ -23,7 +23,7 @@ export const transactionsFilterSet = ({
       dispatch({
         data: {
           confirmed: response.data,
-          count: parseInt(response.count, 10),
+          count: parseInt(response.meta.count, 10),
           filter,
         },
         type: actionTypes.transactionsFiltered,
@@ -93,7 +93,7 @@ export const transactionsRequested = ({
       .then((response) => {
         dispatch({
           data: {
-            count: parseInt(response.count, 10),
+            count: parseInt(response.meta.count, 10),
             confirmed: response.data,
             address,
             filter,
