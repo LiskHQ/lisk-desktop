@@ -141,14 +141,16 @@ export const votesFetched = ({ activePeer, address, type }) =>
  * Gets list of all delegates
  */
 export const delegatesFetched = ({
-  activePeer, offset, refresh,
+  activePeer, offset, refresh, q,
 }) =>
   (dispatch) => {
-    listDelegates(activePeer, {
+    let params = {
       offset,
       limit: '100',
       sort: 'rank:asc',
-    }).then((response) => {
+    };
+    params = q ? { ...params, search: q } : params;
+    listDelegates(activePeer, params).then((response) => {
       updateDelegateCache(response.data, activePeer);
       dispatch(delegatesAdded({
         list: response.data,
