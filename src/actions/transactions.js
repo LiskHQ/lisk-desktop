@@ -185,14 +185,14 @@ export const transactionsUpdated = ({
   };
 
 export const sent = ({
-  activePeer, account, recipientId, amount, passphrase, secondPassphrase,
+  activePeer, account, recipientId, amount, passphrase, secondPassphrase, data,
 }) =>
   (dispatch) => {
-    send(activePeer, recipientId, toRawLsk(amount), passphrase, secondPassphrase)
-      .then((data) => {
+    send(activePeer, recipientId, toRawLsk(amount), passphrase, secondPassphrase, data)
+      .then((response) => {
         dispatch({
           data: {
-            id: data.transactionId,
+            id: response.transactionId,
             senderPublicKey: account.publicKey,
             senderId: account.address,
             recipientId,
