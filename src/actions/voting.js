@@ -150,7 +150,9 @@ export const delegatesFetched = ({
       sort: 'rank:asc',
     };
     params = q ? { ...params, search: q } : params;
+    console.log(params);
     listDelegates(activePeer, params).then((response) => {
+      console.log(params, response, offset);
       updateDelegateCache(response.data, activePeer);
       dispatch(delegatesAdded({
         list: response.data,

@@ -6,7 +6,7 @@ Feature: Voting page
     When I go to "delegates/"
     Then I should see 100 instances of "delegate row"
     When I scroll to the bottom of "delegate list"
-    Then I should see 200 instances of "delegate row"
+    Then I should see 101 instances of "delegate row"
     And I fill in "genesis_42" to "search" field
     Then I should see 1 instances of "delegate row"
     And I click "clean icon"
