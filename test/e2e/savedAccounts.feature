@@ -29,7 +29,10 @@ Feature: Saved Accounts
     Given I'm logged in as "genesis"
     When I click "saved accounts" in main menu
     And I click "add lisk id card"
-    And I'm logged in as "empty account"
+    And I select option no. 3 from "network" select
+    When I fill in "https://testnet.lisk.io" to "address" field
+    Then I fill in passphrase of "empty account" to "passphrase" field
+    And I click "login button"
     And I click "saved accounts" in main menu
     Then I should see 2 instances of "saved account card"
     When I click "saved account card"
