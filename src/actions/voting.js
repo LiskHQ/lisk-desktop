@@ -172,6 +172,6 @@ export const urlVotesFound = ({
       dispatch(votesAdded({ list: votes, upvotes, unvotes }));
     };
     listAccountDelegates(activePeer, address)
-      .then(({ delegates }) => { processUrlVotes(delegates); })
+      .then((response) => { processUrlVotes(response.data.votes); })
       .catch(() => { processUrlVotes([]); });
   };
