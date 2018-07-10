@@ -91,7 +91,9 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
   }).length > 0;
 
   if (blockContainsRelevantTransaction) {
-    updateAccountData(store, action);
+    setTimeout(() => {
+      updateAccountData(store, action);
+    }, 5000);
   }
 };
 
