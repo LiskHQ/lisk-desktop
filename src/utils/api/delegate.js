@@ -1,3 +1,4 @@
+import Lisk from 'lisk-elements';
 import { requestToActivePeer } from './peers';
 
 export const listAccountDelegates = (activePeer, address) =>
@@ -24,10 +25,20 @@ export const getVotes = (activePeer, address) =>
 export const getVoters = (activePeer, publicKey) =>
   activePeer.voters.get({ publicKey });
 
-export const registerDelegate = (activePeer, username, secret, secondSecret = null) => {
-  const data = { username, secret };
-  if (secondSecret) {
-    data.secondSecret = secondSecret;
+export const registerDelegate = (activePeer, username, passphrase, secondPassphrase = null) => {
+  const data = { username, passphrase };
+  if (secondPassphrase) {
+    data.secondPassphrase = secondPassphrase;
   }
-  return requestToActivePeer(activePeer, 'delegates', data);
+  return new Promise((resolve, reject) => {
+    const transaction = Lisk.transaction.registerDelegate({ ...data });
+    activePeer.transactions
+      .broadcast(transaction)
+      .then(() => {
+        resolve(transaction);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
 };

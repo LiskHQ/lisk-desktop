@@ -30,7 +30,7 @@ const savedAccountsMiddleware = (store) => {
     }
   });
 
-  const isSameNetwork = (account, peers) => account.address === peers.data.options.address
+  const isSameNetwork = (account, peers) => account.address === peers.data.currentNode
     && peers.data.options.code === account.network;
 
   const updateSavedAccounts = (peers, accounts) => {

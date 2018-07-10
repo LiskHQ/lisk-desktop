@@ -47,6 +47,7 @@ const savedAccounts = (state = { accounts: [] }, action) => {
           passphrase: action.data,
         },
       };
+
     case actionTypes.accountSwitched:
       return {
         ...state,

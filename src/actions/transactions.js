@@ -45,7 +45,7 @@ export const transactionsUpdateUnconfirmed = ({ activePeer, address, pendingTran
     unconfirmedTransactions(activePeer, address).then(response => dispatch({
       data: {
         failed: pendingTransactions.filter(tx =>
-          response.transactions.filter(unconfirmedTx => tx.id === unconfirmedTx.id).length === 0),
+          response.data.filter(unconfirmedTx => tx.id === unconfirmedTx.id).length === 0),
       },
       type: actionTypes.transactionsFailed,
     }));
@@ -108,8 +108,21 @@ export const loadTransaction = ({ activePeer, id }) =>
     dispatch({ type: actionTypes.transactionCleared });
     getSingleTransaction({ activePeer, id })
       .then((response) => {
-        const added = response.data[0].asset.votes.filter(item => item.startsWith('+')).map(item => item.replace('+', '')) || [];
-        const deleted = response.data[0].asset.votes.filter(item => item.startsWith('-')).map(item => item.replace('-', '')) || [];
+        let added = [];
+        let deleted = [];
+
+        if (!response.data.length) {
+          dispatch({ data: { error: 'Transaction not found' }, type: actionTypes.transactionLoadFailed });
+          return;
+        }
+
+        // since core 1.0 added and deleted are not filtered in core,
+        // but provided as single array with [+,-] signs
+        if ('votes' in response.data[0].asset) {
+          added = response.data[0].asset.votes.filter(item => item.startsWith('+')).map(item => item.replace('+', ''));
+          deleted = response.data[0].asset.votes.filter(item => item.startsWith('-')).map(item => item.replace('-', ''));
+        }
+
         const localStorageDelegates = loadDelegateCache(activePeer);
         deleted.forEach((publicKey) => {
           const address = extractAddress(publicKey);
@@ -155,7 +168,7 @@ export const loadTransaction = ({ activePeer, id }) =>
         });
         dispatch({ data: response.data[0], type: actionTypes.transactionLoaded });
       }).catch((error) => {
-        dispatch({ data: error, type: actionTypes.transactionLoadFailed });
+        dispatch({ data: { error }, type: actionTypes.transactionLoadFailed });
       });
   };
 

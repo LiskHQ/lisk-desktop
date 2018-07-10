@@ -31,7 +31,7 @@ const followedAccountsMiddleware = (store) => {
       case actionTypes.newBlockCreated:
         checkTransactionsAndUpdateFollowedAccounts(
           peers,
-          action.data.block.transactions,
+          action.data.block.transactions || [],
           followedAccounts,
         );
         break;
