@@ -36,7 +36,7 @@ Feature: Saved Accounts
     And I click "saved accounts" in main menu
     Then I should see 2 instances of "saved account card"
     When I click "saved account card"
-    And I wait 1 seconds
+    And I wait 2 seconds
     Then I should be logged in as "genesis" account
     When I refresh the page
     And I wait 2 seconds
