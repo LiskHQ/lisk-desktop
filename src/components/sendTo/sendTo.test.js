@@ -15,7 +15,6 @@ describe('SendTo Component', () => {
     isDelegate: true,
   };
   const props = {
-    notLoading: false,
     nextStep: spy(),
     account,
     delegate: {
@@ -37,9 +36,7 @@ describe('SendTo Component', () => {
       wrapper.setProps({ account });
     });
 
-    it('shows balance when loaded', () => {
-      expect(wrapper.find('LiskAmount')).to.have.length(0);
-      wrapper.setProps({ notLoading: true });
+    it('shows balance', () => {
       expect(wrapper.find('LiskAmount')).to.have.length(1);
     });
 

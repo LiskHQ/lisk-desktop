@@ -1,6 +1,7 @@
 import i18next from 'i18next';
 import Lisk from 'lisk-elements';
 import actionTypes from '../constants/actions';
+import networks from '../constants/networks';
 import { errorToastDisplayed } from './toaster';
 import { loadingStarted, loadingFinished } from '../utils/loading';
 
@@ -38,11 +39,11 @@ export const activePeerSet = data =>
       config.port = port || (config.ssl ? 443 : 80);
       config.nodes = [`${protocol}//${hostname}:${port}`];
     } else if (config.testnet) {
-      config.nodes = Lisk.APIClient.constants.TESTNET_NODES;
       config.nethash = Lisk.APIClient.constants.TESTNET_NETHASH;
+      config.nodes = networks.testnet.nodes;
     } else {
-      config.nodes = Lisk.APIClient.constants.MAINNET_NODES;
       config.nethash = Lisk.APIClient.constants.MAINNET_NETHASH;
+      config.nodes = networks.mainnet.nodes;
     }
 
     if (config.custom) {
