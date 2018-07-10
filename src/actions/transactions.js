@@ -111,7 +111,7 @@ export const loadTransaction = ({ activePeer, id }) =>
         let added = [];
         let deleted = [];
 
-        if (!response.data.length > 0) {
+        if (!response.data.length) {
           dispatch({ data: { error: 'Transaction not found' }, type: actionTypes.transactionLoadFailed });
           return;
         }
