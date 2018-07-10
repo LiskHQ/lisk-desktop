@@ -87,7 +87,7 @@ describe('actions: peers', () => {
 
       expect(dispatch).to.have.been.calledWith(match.hasNested(
         'data.options.nodes',
-        Lisk.APIClient.constants.MAINNET_NODES,
+        networks.mainnet.nodes,
       ));
     });
 
@@ -99,7 +99,7 @@ describe('actions: peers', () => {
       };
 
       activePeerSet({ passphrase, network })(dispatch);
-      expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.nodes', Lisk.APIClient.constants.TESTNET_NODES));
+      expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.nodes', networks.testnet.nodes));
     });
 
     it('dispatch activePeerSet with custom node', () => {
@@ -143,10 +143,12 @@ describe('actions: peers', () => {
       const network4000 = { address: 'http://127.0.0.1:4000', nethash };
 
       activePeerSet({ passphrase, network: network7000 })(dispatch);
-      expect(dispatch).to.have.been.calledWith(match.hasNested('data.activePeer.options.testnet', true));
+      expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.nodes[0]', network7000.address));
+      expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.nethash', nethash));
 
       activePeerSet({ passphrase, network: network4000 })(dispatch);
-      expect(dispatch).to.have.been.calledWith(match.hasNested('data.activePeer.options.testnet', false));
+      expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.nodes[0]', network4000.address));
+      expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.nethash', nethash));
     });
   });
 });

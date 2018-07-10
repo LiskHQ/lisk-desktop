@@ -3,6 +3,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { translate } from 'react-i18next';
 import UserVotes from './userVotes';
 import VotedDelegates from './votedDelegates';
+import voting from '../../constants/voting';
 import styles from './delegateStatistics.css';
 
 class DelegateStatistics extends React.Component {
@@ -10,8 +11,9 @@ class DelegateStatistics extends React.Component {
     const { delegate } = this.props;
 
     let status = '';
+
     if (delegate && delegate.rank) {
-      status = delegate.rank < 101 ? this.props.t('Active') : this.props.t('Standby');
+      status = delegate.rank <= voting.maxCountOfVotes ? this.props.t('Active') : this.props.t('Standby');
     }
 
     const missed = this.props.t('missed');

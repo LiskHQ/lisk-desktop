@@ -9,6 +9,7 @@ import keyCodes from './../../constants/keyCodes';
 import localJSONStorage from './../../utils/localJSONStorage';
 import regex from './../../utils/regex';
 import { saveSearch } from './../search/keyAction';
+import { searchEntities } from './../../constants/search';
 
 class AutoSuggest extends React.Component {
   constructor(props) {
@@ -27,7 +28,7 @@ class AutoSuggest extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.selectedRow = null;
-    const resultsLength = ['delegates', 'addresses', 'transactions'].reduce((total, resultKey) =>
+    const resultsLength = Object.keys(searchEntities).reduce((total, resultKey) =>
       total + nextProps.results[resultKey].length, 0);
     let placeholder = '';
     let selectedIdx = -1;
@@ -41,21 +42,21 @@ class AutoSuggest extends React.Component {
   onResultClick(id, type, value) {
     let urlSearch;
     switch (type) {
-      case 'addresses':
-      case 'delegates':
+      case searchEntities.addresses:
+      case searchEntities.delegates:
         urlSearch = `${routes.accounts.pathPrefix}${routes.accounts.path}/${id}`;
         break;
-      case 'transactions':
+      case searchEntities.transactions:
         urlSearch = `${routes.transactions.pathPrefix}${routes.transactions.path}/${id}`;
         break;
       /* istanbul ignore next */
       default:
         break;
     }
-    saveSearch(id);
+    saveSearch(value, id);
     this.props.searchClearSuggestions();
 
-    if (['addresses', 'transactions'].filter(entity =>
+    if (!value && [searchEntities.addresses, searchEntities.transactions].filter(entity =>
       entity === type).length > 0) {
       this.setState({ value: id });
     } else if (value) {
@@ -81,8 +82,18 @@ class AutoSuggest extends React.Component {
   }
 
   submitAnySearch() {
-    this.inputRef.blur();
-    this.props.history.push(`${routes.searchResult.pathPrefix}${routes.searchResult.path}/${encodeURIComponent(this.state.value)}`);
+    let searchType = null;
+    if (this.state.value.match(regex.address)) {
+      searchType = searchEntities.addresses;
+    } else if (this.state.value.match(regex.transactionId)) {
+      searchType = searchEntities.transactions;
+    }
+
+    if (!searchType) {
+      this.props.history.push(`${routes.searchResult.pathPrefix}${routes.searchResult.path}/${encodeURIComponent(this.state.value)}`);
+      return;
+    }
+    this.onResultClick(this.state.value, searchType, this.state.value);
   }
 
   search(searchTerm) {
@@ -211,7 +222,7 @@ class AutoSuggest extends React.Component {
       valueLeft: delegate.username,
       valueRight: delegate.rank,
       isSelected: idx === this.state.selectedIdx,
-      type: 'delegates',
+      type: searchEntities.delegates,
     }));
   }
 
@@ -221,7 +232,7 @@ class AutoSuggest extends React.Component {
       valueLeft: account.address,
       valueRight: <span><LiskAmount val={account.balance}/> LSK</span>,
       isSelected: this.props.results.delegates.length + idx === this.state.selectedIdx,
-      type: 'addresses',
+      type: searchEntities.addresses,
     }));
   }
 
@@ -232,20 +243,21 @@ class AutoSuggest extends React.Component {
       valueRight: transaction.height,
       isSelected: this.props.results.delegates.length +
       this.props.results.addresses.length + idx === this.state.selectedIdx,
-      type: 'transactions',
+      type: searchEntities.transactions,
     }));
   }
 
   getRecentSearchResults() {
     this.recentSearches = localJSONStorage.get('searches', [])
+      .filter(result => typeof result === 'object')
       .map((result, idx) => {
-        let type = 'addresses';
-        if (result.match(regex.transactionId)) {
-          type = 'transactions';
+        let type = searchEntities.addresses;
+        if (result.id.match(regex.transactionId)) {
+          type = searchEntities.transactions;
         }
         return {
-          id: result,
-          valueLeft: result,
+          id: result.id,
+          valueLeft: result.searchTerm,
           valueRight: '',
           isSelected: idx === this.state.selectedIdx,
           type,
@@ -257,18 +269,23 @@ class AutoSuggest extends React.Component {
   render() {
     const { t } = this.props;
 
-    const placeholderValue = this.state.placeholder !== '' ?
-      this.state.placeholder : t('Search for delegate, Lisk ID, transaction ID');
+    let placeholderValue = '';
+    if (this.state.placeholder === '' && this.state.value === '') {
+      placeholderValue = t('Search for delegate, Lisk ID, transaction ID');
+    } else {
+      placeholderValue = this.state.placeholder;
+    }
 
     return (
       <div className={styles.wrapper}>
-        <input value={this.state.placeholder}
+        <input
+          value={placeholderValue}
+          onChange={() => {}}
           className={`${styles.placeholder} autosuggest-placeholder`}
           type='text'
           name='autosuggest-placeholder' />
         <Input type='text'
           id='autosuggest-input'
-          placeholder={placeholderValue}
           name='searchBarInput'
           value={this.state.value}
           innerRef={(el) => { this.inputRef = el; }}
@@ -289,7 +306,7 @@ class AutoSuggest extends React.Component {
         </Input>
         <div className={`${styles.autoSuggest} ${this.state.show ? styles.show : ''} autosuggest-dropdown`}>
           <ResultsList
-            key='delegates'
+            key={searchEntities.delegates}
             results={this.getDelegatesResults()}
             header={{
               titleLeft: t('Delegate'),
@@ -299,7 +316,7 @@ class AutoSuggest extends React.Component {
             setSelectedRow={this.setSelectedRow.bind(this)}
           />
           <ResultsList
-            key='addresses'
+            key={searchEntities.addresses}
             results={this.getAddressesResults()}
             header={{
               titleLeft: t('Address'),
@@ -309,7 +326,7 @@ class AutoSuggest extends React.Component {
             setSelectedRow={this.setSelectedRow.bind(this)}
           />
           <ResultsList
-            key='transactions'
+            key={searchEntities.transactions}
             results={this.getTransactionsResults()}
             header={{
               titleLeft: t('Transaction'),

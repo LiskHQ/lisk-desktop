@@ -23,7 +23,7 @@ export const transactionsFilterSet = ({
       dispatch({
         data: {
           confirmed: response.data,
-          count: parseInt(response.count, 10),
+          count: parseInt(response.meta.count, 10),
           filter,
         },
         type: actionTypes.transactionsFiltered,
@@ -93,7 +93,7 @@ export const transactionsRequested = ({
       .then((response) => {
         dispatch({
           data: {
-            count: parseInt(response.count, 10),
+            count: parseInt(response.meta.count, 10),
             confirmed: response.data,
             address,
             filter,
@@ -108,8 +108,21 @@ export const loadTransaction = ({ activePeer, id }) =>
     dispatch({ type: actionTypes.transactionCleared });
     getSingleTransaction({ activePeer, id })
       .then((response) => {
-        const added = response.data[0].asset.votes.filter(item => item.startsWith('+')).map(item => item.replace('+', '')) || [];
-        const deleted = response.data[0].asset.votes.filter(item => item.startsWith('-')).map(item => item.replace('-', '')) || [];
+        let added = [];
+        let deleted = [];
+
+        if (!response.data.length) {
+          dispatch({ data: { error: 'Transaction not found' }, type: actionTypes.transactionLoadFailed });
+          return;
+        }
+
+        // since core 1.0 added and deleted are not filtered in core,
+        // but provided as single array with [+,-] signs
+        if ('votes' in response.data[0].asset) {
+          added = response.data[0].asset.votes.filter(item => item.startsWith('+')).map(item => item.replace('+', ''));
+          deleted = response.data[0].asset.votes.filter(item => item.startsWith('-')).map(item => item.replace('-', ''));
+        }
+
         const localStorageDelegates = loadDelegateCache(activePeer);
         deleted.forEach((publicKey) => {
           const address = extractAddress(publicKey);
@@ -155,7 +168,7 @@ export const loadTransaction = ({ activePeer, id }) =>
         });
         dispatch({ data: response.data[0], type: actionTypes.transactionLoaded });
       }).catch((error) => {
-        dispatch({ data: error, type: actionTypes.transactionLoadFailed });
+        dispatch({ data: { error }, type: actionTypes.transactionLoadFailed });
       });
   };
 
@@ -170,7 +183,7 @@ export const transactionsUpdated = ({
         dispatch({
           data: {
             confirmed: response.data,
-            count: parseInt(response.count, 10),
+            count: parseInt(response.meta.count, 10),
           },
           type: actionTypes.transactionsUpdated,
         });
@@ -185,14 +198,14 @@ export const transactionsUpdated = ({
   };
 
 export const sent = ({
-  activePeer, account, recipientId, amount, passphrase, secondPassphrase,
+  activePeer, account, recipientId, amount, passphrase, secondPassphrase, data,
 }) =>
   (dispatch) => {
-    send(activePeer, recipientId, toRawLsk(amount), passphrase, secondPassphrase)
-      .then((data) => {
+    send(activePeer, recipientId, toRawLsk(amount), passphrase, secondPassphrase, data)
+      .then((response) => {
         dispatch({
           data: {
-            id: data.transactionId,
+            id: response.transactionId,
             senderPublicKey: account.publicKey,
             senderId: account.address,
             recipientId,

@@ -1,6 +1,6 @@
 import React from 'react';
-import Lisk from 'lisk-elements';
 import { FontIcon } from '../fontIcon';
+import networks from '../../constants/networks';
 import styles from './account.css';
 
 /**
@@ -15,7 +15,7 @@ const Account = ({ peers, t }) => {
     <FontIcon className='offline' value='error' />;
 
   return ((peers.data &&
-      peers.data.headers.nethash !== Lisk.APIClient.constants.MAINNET_NETHASH) ?
+      peers.options.code !== networks.mainnet.code) ?
     <section className={styles.peer}>
       <div className={`${styles.title} inner primary peer-network`}>{t(peers.options.name)} <span id="accountStatus" className={`${styles.status} status`}>{status}</span>
       </div>

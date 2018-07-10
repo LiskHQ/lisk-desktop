@@ -62,12 +62,15 @@ Feature: Explorer page
     When I click "send to address"
     Then I should see "16313739661670634666L" in "recipient" field
     When I click "home link"
+    And I click "autosuggest btn close"
     When I fill in "9938914350729699234" to "autosuggest input" field
     And I hit "ENTER" key in "autosuggest input" input
     Then I should see text "No results" in "empty message" element
     And I click "autosuggest btn close"
     And I fill in "1465651642158264047" to "autosuggest input" field
+    And I wait 1 seconds
     When I click "transactions result"
+    And I wait 3 seconds
     Then I should see ID "1465651642158264047" in transaction header
 
   Scenario: should show added voters in "voted delegate" transaction type while being logged in
