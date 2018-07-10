@@ -108,8 +108,19 @@ export const loadTransaction = ({ activePeer, id }) =>
     dispatch({ type: actionTypes.transactionCleared });
     getSingleTransaction({ activePeer, id })
       .then((response) => {
-        const added = response.data[0].asset.votes.filter(item => item.startsWith('+')).map(item => item.replace('+', '')) || [];
-        const deleted = response.data[0].asset.votes.filter(item => item.startsWith('-')).map(item => item.replace('-', '')) || [];
+        let added = [];
+        let deleted = [];
+
+        if (!response.data.length > 0) {
+          dispatch({ data: { error: 'Transaction not found' }, type: actionTypes.transactionLoadFailed });
+          return;
+        }
+
+        if ('votes' in response.data[0].asset) {
+          added = response.data[0].asset.votes.filter(item => item.startsWith('+')).map(item => item.replace('+', ''));
+          deleted = response.data[0].asset.votes.filter(item => item.startsWith('-')).map(item => item.replace('-', ''));
+        }
+
         const localStorageDelegates = loadDelegateCache(activePeer);
         deleted.forEach((publicKey) => {
           const address = extractAddress(publicKey);
@@ -155,7 +166,7 @@ export const loadTransaction = ({ activePeer, id }) =>
         });
         dispatch({ data: response.data[0], type: actionTypes.transactionLoaded });
       }).catch((error) => {
-        dispatch({ data: error, type: actionTypes.transactionLoadFailed });
+        dispatch({ data: { error }, type: actionTypes.transactionLoadFailed });
       });
   };
 
