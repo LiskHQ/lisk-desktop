@@ -104,7 +104,7 @@ class VotingListView extends React.Component {
   loadMore() {
     /* istanbul-ignore-else */
     if (!this.state.showChangeSummery && !this.freezeLoading
-      && this.props.totalDelegates > this.offset) {
+      && this.props.totalDelegates >= this.offset) {
       this.loadDelegates(this.query);
     }
   }

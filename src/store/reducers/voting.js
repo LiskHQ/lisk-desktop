@@ -68,7 +68,8 @@ const voting = (state = {
       return Object.assign({}, state, {
         delegates: action.data.refresh ? action.data.list :
           [...state.delegates, ...action.data.list],
-        totalDelegates: action.data.totalDelegates,
+        totalDelegates: action.data.refresh ? action.data.list.length :
+          [...state.delegates, ...action.data.list].length,
         refresh: true,
       });
 

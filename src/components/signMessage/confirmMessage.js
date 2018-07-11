@@ -1,5 +1,5 @@
 import React from 'react';
-import Lisk from 'lisk-js';
+import Lisk from 'lisk-elements';
 import styles from './confirmMessage.css';
 import { Button } from '../toolbox/buttons/button';
 import Input from '../toolbox/inputs/input';
@@ -61,14 +61,16 @@ class ConfirmMessage extends React.Component {
 
   sign() {
     const { message } = this.props;
-    const signedMessage = Lisk.crypto.signMessageWithSecret(
+    const signedMessage = Lisk.cryptography.signMessageWithPassphrase(
       message,
-      this.state.passphrase.value,
+      this.state.passphrase.value || this.props.account.passphrase,
+      this.props.account.publicKey,
     );
-    const result = Lisk.crypto.printSignedMessage(
+    const result = Lisk.cryptography.printSignedMessage({
       message,
-      signedMessage, this.props.account.publicKey,
-    );
+      publicKey: this.props.account.publicKey,
+      signature: signedMessage.signature,
+    });
     return result;
   }
 
