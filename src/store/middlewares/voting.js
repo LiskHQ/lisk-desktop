@@ -27,9 +27,9 @@ const processVote = (store, options, username) => {
     if (options.isValid(vote)) {
       store.dispatch(voteToggled({
         username,
-        publicKey: response.delegate.account.publicKey,
-        rank: response.delegate.rank,
-        productivity: response.delegate.productivity,
+        publicKey: response.data[0].account.publicKey,
+        rank: response.data[0].rank,
+        productivity: response.data[0].productivity,
       }));
       updateLookupStatus(store, options.successState, username);
     } else {

@@ -1,7 +1,7 @@
 Feature: Voting page
   @testnet
   Scenario: should allow to view delegates and more on scroll and search them and vote for them
-    Given I'm logged in as "genesis"
+    Given I'm logged in as "delegate candidate"
     And I wait 0.1 seconds
     When I go to "delegates/"
     Then I should see 100 instances of "delegate row"
@@ -24,7 +24,7 @@ Feature: Voting page
     Then I should see text "You’re votes are being processed and will be confirmed. It may take up to 10 minutes to be secured in the blockchain." in "result box message" element
 
   Scenario: should allow to select delegates by URL
-    Given I'm logged in as "genesis"
+    Given I'm logged in as "delegate candidate"
     When I go to "/delegates/vote?votes=genesis_12,genesis_14,genesis_16"
     And I wait 1 seconds
     Then I should see text "genesis_12, genesis_14, genesis_16" in "upvotes message" element
