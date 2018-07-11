@@ -42,7 +42,7 @@ class VotingRow extends React.Component {
       </li>
       <li className={`${grid['col-md-1']} ${grid['col-xs-2']}`}>{data.rank}</li>
       <li className={`${grid['col-md-3']} ${grid['col-xs-5']} ${styles.username}`}>{data.username}</li>
-      <li className={`${grid['col-md-5']}`}>{data.address}</li>
+      <li className={`${grid['col-md-5']}`}>{data.account.address}</li>
       <li className={`${grid['col-md-2']} ${grid['col-xs-3']} ${styles.productivity}`}>{data.productivity} %</li>
     </ul>
     );

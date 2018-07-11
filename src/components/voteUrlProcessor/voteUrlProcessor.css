@@ -5,6 +5,12 @@
   --upvotes-color: #a2e6f1;
 }
 
+.noShadow {
+  box-shadow: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
 .wrapper {
   display: flex;
   flex-direction: column;
