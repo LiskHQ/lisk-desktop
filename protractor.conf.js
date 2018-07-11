@@ -9,6 +9,7 @@ exports.config = {
     'test/e2e/*followedAccounts.feature',
     'test/e2e/*signMessage.feature',
     'test/e2e/*savedAccounts.feature',
+    'test/e2e/*registerDelegate.feature',
   ],
 
   directConnect: true,
