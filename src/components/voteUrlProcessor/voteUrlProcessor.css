@@ -5,6 +5,10 @@
   --upvotes-color: #a2e6f1;
 }
 
+.noShadow {
+  box-shadow: none;
+}
+
 .wrapper {
   display: flex;
   flex-direction: column;
