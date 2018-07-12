@@ -119,6 +119,15 @@ class SendReadable extends React.Component {
               onChange={this.handleChange.bind(this, 'recipient')}
               disabled={true}
             />
+            {this.state.reference.value ?
+              <Input label={this.props.t('Reference')}
+                className={`reference ${styles.disabledInput}`}
+                error={this.state.reference.error}
+                value={this.state.reference.value}
+                disabled={true}
+                theme={styles}
+              /> : null
+            }
 
             <Input label={this.props.t('Total incl. {{fee}} LSK Fee', { fee: fromRawLsk(fees.send) })}
               className={`amount ${styles.disabledInput}`}
