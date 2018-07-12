@@ -64,7 +64,9 @@ const savedAccounts = (state = { accounts: [] }, action) => {
       return {
         ...state,
         accounts: state.accounts.map((account) => {
-          if (!action.data || (`${action.data.network}${action.data.passphrase}` === `${account.network}${account.passphrase}`)) {
+          if (!action.data ||
+            (action.data.network.indexOf(account.address) > -1 &&
+            action.data.passphrase === account.passphrase)) {
             delete account.passphrase;
           }
           return account;

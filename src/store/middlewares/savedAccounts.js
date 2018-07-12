@@ -103,7 +103,7 @@ const savedAccountsMiddleware = (store) => {
           balance: action.data.balance,
           publicKey: action.data.publicKey,
           network: peers.options.code,
-          address: peers.options.address,
+          address: action.data.network,
         }));
         break;
       case actionTypes.accountRemoved:
