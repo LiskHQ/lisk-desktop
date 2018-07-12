@@ -2,6 +2,7 @@
 
 exports.config = {
   specs: [
+    'test/e2e/*send.feature',
     'test/e2e/*login.feature',
     'test/e2e/*explorer.feature',
     'test/e2e/*onboarding.feature',
