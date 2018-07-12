@@ -34,19 +34,20 @@ const savedAccounts = (state = { accounts: [] }, action) => {
         accounts,
         lastActive: changedAccount,
       };
-    // case actionTypes.passphraseUsed:
-    //   indexOfAccount = getIndexOfSavedAccount(state.accounts, state.lastActive);
-    //   accounts[indexOfAccount] = {
-    //     ...accounts[indexOfAccount],
-    //     passphrase: action.data,
-    //   };
-    //   return {
-    //     accounts,
-    //     lastActive: {
-    //       ...state.lastActive,
-    //       passphrase: action.data,
-    //     },
-    //   };
+    case actionTypes.passphraseUsed:
+      indexOfAccount = getIndexOfSavedAccount(state.accounts, state.lastActive);
+      accounts[indexOfAccount] = {
+        ...accounts[indexOfAccount],
+        passphrase: action.data,
+      };
+      return {
+        accounts,
+        lastActive: {
+          ...state.lastActive,
+          passphrase: action.data,
+        },
+      };
+
     case actionTypes.accountSwitched:
       return {
         ...state,
