@@ -83,7 +83,7 @@ Feature: Onboarding
     When I refresh the page
     And I click "home-link"
     And I wait 0.4 seconds
-    Then I'm logged in as "genesis"
+    Then I should be logged in as "genesis" account
     And I wait 0.4 seconds
     And I wait 1 seconds
     Then I should see no "joyride-tooltip__header"
