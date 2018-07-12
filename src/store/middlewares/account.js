@@ -91,6 +91,8 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
   }).length > 0;
 
   if (blockContainsRelevantTransaction) {
+    // it was not getting the account with secondPublicKey right
+    // after a new block with second passphrase registration transaction was received
     setTimeout(() => {
       updateAccountData(store, action);
     }, 5000);
