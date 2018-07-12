@@ -47,7 +47,6 @@ const savedAccounts = (state = { accounts: [] }, action) => {
           passphrase: action.data,
         },
       };
-
     case actionTypes.accountSwitched:
       return {
         ...state,
@@ -65,7 +64,7 @@ const savedAccounts = (state = { accounts: [] }, action) => {
         ...state,
         accounts: state.accounts.map((account) => {
           if (!action.data ||
-            (action.data.network.indexOf(account.address) > -1 &&
+            (action.data.peerAddress === account.peerAddress &&
             action.data.passphrase === account.passphrase)) {
             delete account.passphrase;
           }

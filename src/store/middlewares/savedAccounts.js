@@ -84,7 +84,7 @@ const savedAccountsMiddleware = (store) => {
           passphrase: action.data.passphrase,
           network: {
             ...getNetwork(action.data.network),
-            address: action.data.address,
+            address: action.data.peerAddress,
           },
         }));
         break;
@@ -103,7 +103,7 @@ const savedAccountsMiddleware = (store) => {
           balance: action.data.balance,
           publicKey: action.data.publicKey,
           network: peers.options.code,
-          address: action.data.network,
+          peerAddress: action.data.peerAddress,
         }));
         break;
       case actionTypes.accountRemoved:
