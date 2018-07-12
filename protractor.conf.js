@@ -6,7 +6,6 @@ exports.config = {
     'test/e2e/*explorer.feature',
     'test/e2e/*onboarding.feature',
     'test/e2e/*followedAccounts.feature',
-    'test/e2e/*registerSecondPassphrase.feature',
     'test/e2e/*signMessage.feature',
   ],
 
