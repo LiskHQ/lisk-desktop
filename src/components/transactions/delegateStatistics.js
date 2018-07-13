@@ -41,7 +41,7 @@ class DelegateStatistics extends React.Component {
           <div className={`${grid['col-xs-12']} ${grid['col-sm-8']} ${grid['col-md-8']} blocks`}>
             <div className={styles.label}>{this.props.t('Blocks')}</div>
             <div className={styles.value}>
-              {`${delegate && delegate.producedblocks} (${delegate && delegate.missedblocks} ${missed})`}
+              {`${delegate && delegate.producedBlocks} (${delegate && delegate.missedBlocks} ${missed})`}
             </div>
           </div>
         </div>
