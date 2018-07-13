@@ -19,9 +19,6 @@ const getIndex = (history, tabs) => {
   return index;
 };
 
-const isCurrent = (history, index, tabs) =>
-  history.location.pathname.indexOf(tabs[index].route) === 6; // after: /main/
-
 const TabTemplate = ({ img, label }) => (
   <div>
     <img src={img} />
@@ -46,10 +43,8 @@ class MainMenu extends React.Component {
   }
 
   navigate(history, tabs, index) {
-    if (!isCurrent(history, index, tabs)) {
-      this.setState({ active: false, index });
-      history.push(tabs[index].route);
-    }
+    this.setState({ active: false, index });
+    history.push(tabs[index].route);
   }
 
   settingToggle() {
