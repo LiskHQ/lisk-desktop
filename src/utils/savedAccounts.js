@@ -1,11 +1,11 @@
 import { validateUrl } from './login';
 import { extractAddress } from './account';
 
-const isValidSavedAccount = ({ publicKey, network, address }) => {
+const isValidSavedAccount = ({ publicKey, network, peerAddress }) => {
   try {
     return extractAddress(publicKey) &&
       network >= 0 && network <= 2 &&
-      (validateUrl(address).addressValidity === '' || network !== 2);
+      (validateUrl(peerAddress).addressValidity === '' || network !== 2);
   } catch (e) {
     return false;
   }
@@ -21,9 +21,9 @@ export const getSavedAccounts = () => {
 
 export const setSavedAccounts = (accounts) => {
   accounts = accounts.map(({
-    publicKey, network, address, balance,
+    publicKey, network, address, balance, peerAddress,
   }) => ({
-    publicKey, network, address, balance,
+    publicKey, network, address, balance, peerAddress,
   }));
   localStorage.setItem('accounts', JSON.stringify(accounts));
 };

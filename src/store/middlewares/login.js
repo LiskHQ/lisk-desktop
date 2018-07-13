@@ -13,14 +13,15 @@ const loginMiddleware = store => next => (action) => {
   }
   next(action);
 
-  const { passphrase, activePeer } = action.data;
+  const { passphrase, activePeer, options } = action.data;
   const publicKey = passphrase ? extractPublicKey(passphrase) : action.data.publicKey;
   const address = extractAddress(publicKey);
   const accountBasics = {
     passphrase,
     publicKey,
     address,
-    network: activePeer.currentNode,
+    network: options.code,
+    peerAddress: options.address,
   };
 
   store.dispatch(accountLoading());
