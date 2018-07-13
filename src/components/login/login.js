@@ -123,6 +123,21 @@ class Login extends React.Component {
       [name]: value,
       ...validator(value, error),
     });
+
+    if (name === 'network'
+      && value in [networks.testnet.code, networks.mainnet.code]) {
+      this.props.activePeerSet({
+        passphrase: this.state.passphrase.value,
+        network: getNetwork(value),
+      });
+    } else if (name === 'address' && this.state.address.value !== '' && !this.state.address.error) {
+      this.props.activePeerSet({
+        passphrase: this.state.passphrase.value,
+        network: {
+          address: value,
+        },
+      });
+    }
   }
 
   onFormSubmit(event) {
