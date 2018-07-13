@@ -48,7 +48,7 @@ class MainMenu extends React.Component {
   navigate(history, tabs, index) {
     if (!isCurrent(history, index, tabs)) {
       this.setState({ active: false, index });
-      history.replace(tabs[index].route);
+      history.push(tabs[index].route);
     }
   }
 
