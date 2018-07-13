@@ -205,7 +205,7 @@ export const sent = ({
       .then((response) => {
         dispatch({
           data: {
-            id: response.transactionId,
+            id: response.id,
             senderPublicKey: account.publicKey,
             senderId: account.address,
             recipientId,
