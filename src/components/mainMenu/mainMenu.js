@@ -90,6 +90,7 @@ class MainMenu extends React.Component {
         route: `${routes.setting.path}`,
         id: 'settings',
         image: menuLogos.settings,
+        enabledWhenNotLoggedIn: true,
       },
     ];
 
@@ -102,9 +103,6 @@ class MainMenu extends React.Component {
       });
     }
 
-    const itemShouldBeDisabled = index =>
-      (isCurrent(history, index, tabs) || !account.address) && index !== 3;
-
     return (
       <Fragment>
         <aside className={styles.aside}>
@@ -115,13 +113,15 @@ class MainMenu extends React.Component {
               onChange={this.navigate.bind(this, history, tabs)}
               disableAnimatedBottomBorder={true}
               className={`${styles.tabs} main-tabs`}>
-              {tabs.map(({ label, image, id }, index) =>
+              {tabs.map(({
+                   label, image, id, enabledWhenNotLoggedIn,
+                  }, index) =>
                 <Tab
                   key={index}
                   label={<TabTemplate label={label} img={image} />}
                   className={styles.tab}
                   id={id}
-                  disabled={itemShouldBeDisabled(index)}
+                  disabled={!account.address && !enabledWhenNotLoggedIn}
                 />)}
             </ToolboxTabs>
             <Drawer theme={styles}
@@ -138,12 +138,14 @@ class MainMenu extends React.Component {
                   onChange={this.navigate.bind(this, history, tabs)}
                   disableAnimatedBottomBorder={true}
                   className={`${styles.tabs} main-tabs`}>
-                  {tabs.map(({ label, image, id }, index) =>
+                  {tabs.map(({
+                       label, image, id, enabledWhenNotLoggedIn,
+                      }, index) =>
                     <Tab
                       key={index}
                       label={<TabTemplate label={label} img={image} />}
                       id={id}
-                      disabled={itemShouldBeDisabled(index)}
+                      disabled={!account.address && !enabledWhenNotLoggedIn}
                     />)}
                 </ToolboxTabs>
               </div>
