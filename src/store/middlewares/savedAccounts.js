@@ -20,7 +20,7 @@ const savedAccountsMiddleware = (store) => {
 
       /* istanbul ignore if  */
       if (account.network === networks.customNode.code) {
-        network.address = account.address;
+        network.address = account.peerAddress;
       }
 
       store.dispatch(activePeerSet({
