@@ -5,7 +5,6 @@ import MultiStep from '../multiStep';
 import Create from '../passphrase/create';
 import Safekeeping from '../passphrase/safekeeping';
 import Confirm from '../passphrase/confirm';
-import networks from '../../constants/networks';
 import getNetwork from '../../utils/getNetwork';
 import Box from '../box';
 import styles from './register.css';
@@ -30,7 +29,7 @@ class Register extends React.Component {
   }
 
   onRegister(passphrase) {
-    const network = Object.assign({}, getNetwork(networks.default.code));
+    const network = Object.assign({}, getNetwork(this.props.network));
 
     // set active peer
     this.props.activePeerSet({
