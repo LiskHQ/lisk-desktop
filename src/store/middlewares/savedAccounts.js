@@ -102,7 +102,7 @@ const savedAccountsMiddleware = (store) => {
           passphrase: action.data.passphrase,
           balance: action.data.balance,
           publicKey: action.data.publicKey,
-          network: peers.options.code,
+          network: !peers.options.code ? networks.customNode.code : peers.options.code,
           peerAddress: action.data.peerAddress,
         }));
         break;

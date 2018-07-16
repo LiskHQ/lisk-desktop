@@ -9,6 +9,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   account: state.account,
+  peers: state.peers,
 });
 
 export default connect(

@@ -4,11 +4,17 @@ import { extractAddress, extractPublicKey } from '../../utils/account';
 import { accountLoggedIn, accountLoading, accountLoggedOut } from '../../actions/account';
 import actionTypes from '../../constants/actions';
 import accountConfig from '../../constants/account';
+import networks from '../../constants/networks';
 import { errorToastDisplayed } from '../../actions/toaster';
 
 const { lockDuration } = accountConfig;
 const loginMiddleware = store => next => (action) => {
-  if (action.type !== actionTypes.activePeerSet || action.data.noSavedAccounts) {
+  if (action.type !== actionTypes.activePeerSet
+    || action.data.noSavedAccounts
+    // just setting peer on dropdown, no account to log into yet
+    || (action.type === actionTypes.activePeerSet
+      && !action.data.publicKey &&
+      !action.data.passphrase)) {
     return next(action);
   }
   next(action);
@@ -20,7 +26,7 @@ const loginMiddleware = store => next => (action) => {
     passphrase,
     publicKey,
     address,
-    network: options.code,
+    network: (!options.code && options.address) ? networks.customNode.code : options.code,
     peerAddress: options.address,
   };
 

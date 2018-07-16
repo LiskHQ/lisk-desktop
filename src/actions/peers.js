@@ -39,10 +39,10 @@ export const activePeerSet = data =>
       config.port = port || (config.ssl ? 443 : 80);
       config.nodes = [`${protocol}//${hostname}:${port}`];
     } else if (config.testnet) {
-      config.nethash = Lisk.APIClient.constants.TESTNET_NETHASH;
+      config.nethash = Lisk.constants.TESTNET_NETHASH;
       config.nodes = networks.testnet.nodes;
     } else {
-      config.nethash = Lisk.APIClient.constants.MAINNET_NETHASH;
+      config.nethash = Lisk.constants.MAINNET_NETHASH;
       config.nodes = networks.mainnet.nodes;
     }
 
