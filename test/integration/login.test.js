@@ -119,7 +119,7 @@ describe('@integration: Login', () => {
     // eslint-disable-next-line class-methods-use-this
     checkIfInRoute() {
       expect(this.store.getState().account).to.have.all.keys(
-        'passphrase', 'publicKey', 'address', 'delegate',
+        'passphrase', 'publicKey', 'address', 'peerAddress',
         'isDelegate', 'expireTime', 'u_multisignatures', 'multisignatures', 'unconfirmedBalance',
         'secondSignature', 'secondPublicKey', 'balance', 'unconfirmedSignature', 'network', 'votes', 'voters',
       );
