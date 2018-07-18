@@ -14,7 +14,7 @@ chai.use(sinonChai);
 chai.use(chaiEnzyme());
 chai.use(chaiAsPromised);
 sinonStubPromise(sinon);
-
+/* istanbul ignore next */
 window.localStorage.getItem = () => JSON.stringify([]);
 const testsContext = require.context('.', true, /\.test\.js$/);
 testsContext
