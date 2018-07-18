@@ -6,7 +6,6 @@ export const unitTestsDict = [
   './utils/notification.test.js',
   './utils/delegates.test.js',
   './utils/account.test.js',
-  './utils/isMobile.test.js',
   './utils/followedAccounts.test.js',
   './utils/polyfills.test.js',
   './utils/lsk.test.js',
