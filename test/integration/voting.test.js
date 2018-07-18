@@ -22,9 +22,9 @@ import { activePeerSet } from '../../src/actions/peers';
 import networks from './../../src/constants/networks';
 import getNetwork from './../../src/utils/getNetwork';
 
-const delegates = [
-  {
-    address: '10839494368003872009L',
+const delegates = {
+  data: [{
+    account: { address: '10839494368003872009L' },
     approval: 32.82,
     missedblocks: 658,
     producedblocks: 37236,
@@ -36,7 +36,7 @@ const delegates = [
     vote: '3883699551759500',
   },
   {
-    address: '14593474056247442712L',
+    account: { address: '14593474056247442712L' },
     approval: 32.08,
     missedblocks: 283,
     producedblocks: 38035,
@@ -48,7 +48,7 @@ const delegates = [
     vote: '3796476912180144',
   },
   {
-    address: '13943256167405531820L',
+    account: { address: '13943256167405531820L' },
     approval: 32.03,
     missedblocks: 164,
     producedblocks: 38088,
@@ -58,8 +58,8 @@ const delegates = [
     rate: 3,
     username: 'iii.element.iii',
     vote: '3789594637157356',
-  },
-];
+  }],
+};
 
 const account = {
   ...accounts.genesis,
@@ -121,15 +121,15 @@ const loginProcess = (votes = []) => {
     peerMiddleware,
   ]);
 
-  accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
+  accountAPIStub.withArgs(match.any).returnsPromise().resolves({ data: [account] });
   store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
-  accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
+  accountAPIStub.withArgs(match.any).returnsPromise().resolves({ data: [account] });
   store.dispatch(accountLoggedIn(account));
 
   listDelegatesApiStub.returnsPromise()
-    .resolves({ delegates, success: true, totalCount: 20 });
+    .resolves({ ...delegates, success: true, totalCount: 20 });
   listAccountDelegatesStub.returnsPromise()
-    .resolves({ delegates: votes, success: true });
+    .resolves({ data: { votes } });
 
   voteApiStub.returnsPromise()
     .resolves({
@@ -177,7 +177,7 @@ describe('@integration test of Voting', () => {
   });
 
   describe('Scenario: should allow me to filter my votes', () => {
-    step('I\'m logged in as "genesis"', () => loginProcess([delegates[0]]));
+    step('I\'m logged in as "genesis"', () => loginProcess([delegates.data[0]]));
     step('And I should see 3 rows', () => helper.haveLengthOf('ul.delegate-row', 3));
     step('When I click filter-voted', () => helper.clickOnElement('li.filter-voted'));
     step('Then I should see 1 rows', () => helper.haveLengthOf('ul.delegate-row', 1));
@@ -189,7 +189,7 @@ describe('@integration test of Voting', () => {
   });
 
   describe('Scenario: should allow to select delegates in the "Voting" and unvote them', () => {
-    step('I\'m logged in as "genesis"', () => loginProcess([delegates[0]]));
+    step('I\'m logged in as "genesis"', () => loginProcess([delegates.data[0]]));
     step('And next button should be disabled', () => helper.checkDisableInput('button.next'));
     step('When I click checkbox on list item no. 0', () => helper.voteToDelegates(0, false));
     step('Then next button should be enabled', () => helper.checkDisableInput('button.next', 'not'));
@@ -201,7 +201,7 @@ describe('@integration test of Voting', () => {
   });
 
   describe('Scenario: should allow to see all selected delegates in confirm step', () => {
-    step('I\'m logged in as "genesis"', () => loginProcess([delegates[0]]));
+    step('I\'m logged in as "genesis"', () => loginProcess([delegates.data[0]]));
     step('And next button should be disabled', () => helper.checkDisableInput('button.next'));
     step('And I click filter-voted', () => helper.clickOnElement('li.filter-voted'));
     step('And I click checkbox on list item no. 0', () => helper.voteToDelegates(0, false));
