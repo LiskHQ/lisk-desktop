@@ -88,7 +88,7 @@ describe('@integration: Account switch', () => {
   };
 
   describe('Scenario: should allow to remove a saved account with lastActiveAccount on mainnet', () => {
-    step('Given I\'m on "account switcher" with accounts: "genesis,delegate,empty account"', setupStep);
+    step('Given I\'m on "account switcher" with accounts: "genesis,second passphrase account,empty account"', setupStep);
     step('Then I should see 3 instances of "saved account card"', () => helper.shouldSeeCountInstancesOf(3, '.saved-account-card'));
     step('When I click "edit button"', () => helper.clickOnElement('button.edit-button'));
     step('When I click "remove button"', () => helper.clickOnElement('button.remove-button'));
@@ -101,7 +101,7 @@ describe('@integration: Account switch', () => {
       localStorageStub.withArgs('lastActiveAccountIndex').returns(1);
     });
 
-    step('Given I\'m on "account switcher" with accounts: "genesis,delegate,second passphrase account"', setupStep);
+    step('Given I\'m on "account switcher" with accounts: "genesis,second passphrase account, empty account"', setupStep);
     step('Then I should see 3 instances of "saved account card"', () => helper.shouldSeeCountInstancesOf(3, '.saved-account-card'));
     step('When I click "edit button"', () => helper.clickOnElement('button.edit-button'));
     step('When I click "remove button"', () => helper.clickOnElement('button.remove-button'));
@@ -110,14 +110,14 @@ describe('@integration: Account switch', () => {
   });
 
   describe('Scenario: should allow to "Lock ID" account', () => {
-    step('Given I\'m on "account switcher" with accounts: "genesis,delegate,second passphrase account"', setupStep);
+    step('Given I\'m on "account switcher" with accounts: "genesis,second passphrase account, empty account"', setupStep);
     step('Then I should see 1 instance of "Lock ID"', () => helper.shouldSeeCountInstancesOf(1, 'strong.unlocked'));
     step('When I click "Lock ID"', () => helper.clickOnElement('strong.unlocked'));
     step('Then I should see 0 instances of "Lock ID"', () => helper.shouldSeeCountInstancesOf(0, 'strong.unlocked'));
   });
 
   describe('Scenario: should allow to switch account', () => {
-    step('Given I\'m on "account switcher" with accounts: "genesis,delegate,second passphrase account"', setupStep);
+    step('Given I\'m on "account switcher" with accounts: "genesis,second passphrase account,empty account"', setupStep);
     step('When I click "saved account card"', () => helper.clickOnElement('.saved-account-card'));
     step('Then I should be logged in as "genesis" account', () => helper.shouldBeLoggedInAs(accounts.genesis.publicKey));
   });
