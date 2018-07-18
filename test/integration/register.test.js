@@ -10,6 +10,7 @@ import * as netHash from '../../src/utils/api/nethash';
 import Register from './../../src/components/register';
 import * as peersActions from '../../src/actions/peers';
 import accountReducer from '../../src/store/reducers/account';
+import settingsReducer from '../../src/store/reducers/settings';
 import peersReducer from '../../src/store/reducers/peers';
 import GenericStepDefinition from '../utils/genericStepDefinition';
 import accountMiddleware from '../../src/store/middlewares/account';
@@ -32,6 +33,7 @@ describe('@integration: Register', () => {
     prepareStore({
       account: accountReducer,
       peers: peersReducer,
+      settings: settingsReducer,
     }, [
       thunk,
       accountMiddleware,
