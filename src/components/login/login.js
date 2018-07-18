@@ -123,6 +123,8 @@ class Login extends React.Component {
       [name]: value,
       ...validator(value, error),
     });
+
+    this.props.settingsUpdated({ [name]: value });
   }
 
   onFormSubmit(event) {
