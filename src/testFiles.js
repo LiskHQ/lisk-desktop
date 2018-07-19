@@ -190,9 +190,9 @@ export const integrationTestsDict = [
   './accountTransactions.test.js',
   './dashboard.test.js',
   // './login.test.js',
-  './register.test.js',
+  // './register.test.js',
   // './registerDelegate.test.js',
   './transactionID.test.js',
-  './voting.test.js',
+  // './voting.test.js',
   './wallet.test.js',
 ];
