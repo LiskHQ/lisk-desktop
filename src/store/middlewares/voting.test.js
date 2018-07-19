@@ -107,7 +107,7 @@ describe('voting middleware', () => {
       };
 
       middleware(store)(next)(givenAction);
-      getDelegateMock.resolves({ delegate: { username, publicKey: 'whatever' } });
+      getDelegateMock.resolves({ data: [{ username, account: { publicKey: 'whatever' } }] });
 
       expect(store.dispatch).to.have.been.calledWith(voteLookupStatusUpdated({ username, status }));
     });
@@ -124,7 +124,7 @@ describe('voting middleware', () => {
       };
 
       middleware(store)(next)(givenAction);
-      getDelegateMock.resolves({ delegate: { username, publicKey: 'whatever' } });
+      getDelegateMock.resolves({ data: [{ username, account: { publicKey: 'whatever' } }] });
 
       expect(store.dispatch).to.have.been.calledWith(voteLookupStatusUpdated({ username, status }));
     });
@@ -141,7 +141,7 @@ describe('voting middleware', () => {
       };
 
       middleware(store)(next)(givenAction);
-      getDelegateMock.resolves({ delegate: { username, publicKey: 'whatever' } });
+      getDelegateMock.resolves({ data: [{ username, account: { publicKey: 'whatever' } }] });
 
       expect(store.dispatch).to.have.been.calledWith(voteLookupStatusUpdated({ username, status }));
     });
@@ -158,7 +158,7 @@ describe('voting middleware', () => {
       };
 
       middleware(store)(next)(givenAction);
-      getDelegateMock.resolves({ delegate: { username, publicKey: 'whatever' } });
+      getDelegateMock.resolves({ data: [{ username, account: { publicKey: 'whatever' } }] });
 
       expect(store.dispatch).to.have.been.calledWith(voteLookupStatusUpdated({ username, status }));
     });
