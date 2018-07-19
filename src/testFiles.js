@@ -191,7 +191,7 @@ export const integrationTestsDict = [
   './dashboard.test.js',
   // './login.test.js',
   // './register.test.js',
-  './registerDelegate.test.js',
+  // './registerDelegate.test.js',
   // './transactionID.test.js',
   // './voting.test.js',
   './wallet.test.js',
