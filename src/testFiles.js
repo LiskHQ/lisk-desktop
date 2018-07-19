@@ -149,7 +149,7 @@ export const unitTestsDict = [
   // './actions/peers.test.js',
   './actions/delegate.test.js',
   // './actions/setting.test.js',
-  './store/middlewares/savedAccounts.test.js',
+  // './store/middlewares/savedAccounts.test.js',
   // './store/middlewares/socket.test.js',
   // './store/middlewares/savedSettings.test.js',
   './store/middlewares/offline.test.js',
