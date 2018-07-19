@@ -31,7 +31,8 @@ const savedAccountsMiddleware = (store) => {
   });
 
   const isSameNetwork = (account, peers) => (
-    (!account.address || peers.data.currentNode.indexOf(account.address) > -1)
+    (peers.options.code !== networks.customNode.code ||
+      peers.data.currentNode.indexOf(account.address) > -1)
     && peers.options.code === account.network
   );
 
