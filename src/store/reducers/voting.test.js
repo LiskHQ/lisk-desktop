@@ -124,7 +124,6 @@ describe('Reducer: voting(state, action)', () => {
       type: actionTypes.delegatesAdded,
       data: {
         list: delegateList1,
-        totalDelegates: 100,
         refresh: true,
       },
     };
@@ -134,7 +133,7 @@ describe('Reducer: voting(state, action)', () => {
     const expectedState = {
       delegates: delegateList1,
       refresh: true,
-      totalDelegates: 100,
+      totalDelegates: 2,
     };
     const changedState = voting(state, action);
 
