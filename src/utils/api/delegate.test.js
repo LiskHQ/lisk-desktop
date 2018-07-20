@@ -51,7 +51,7 @@ describe('Utils: Delegate', () => {
   });
 
   describe('listDelegates', () => {
-    it('should return requestToActivePeer(activePeer, `delegates/`, options) if options = {}', () => {
+    it('should return getDelegate(activePeer, options) if options = {}', () => {
       const options = {};
       const response = { data: [] };
       activePeerMockDelegates.expects('get').withArgs(options).returnsPromise().resolves(response);
@@ -60,7 +60,7 @@ describe('Utils: Delegate', () => {
       return expect(returnedPromise).to.eventually.equal(response);
     });
 
-    it('should return requestToActivePeer(activePeer, `delegates/search`, options) if options.q is set', () => {
+    it('should return getDelegate(activePeer, options) if options.q is set', () => {
       const options = { q: 'genesis_1' };
       const response = { data: [] };
       activePeerMockDelegates.expects('get').withArgs(options).returnsPromise().resolves(response);
@@ -71,7 +71,7 @@ describe('Utils: Delegate', () => {
   });
 
   describe('getDelegate', () => {
-    it('should return requestToActivePeer(activePeer, `delegates/get`, options)', () => {
+    it('should return getDelegate(activePeer, options)', () => {
       const options = { publicKey: `"${accounts.delegate.publicKey}"` };
       const response = { data: [] };
       activePeerMockDelegates.expects('get').withArgs(options).returnsPromise().resolves(response);
@@ -82,7 +82,7 @@ describe('Utils: Delegate', () => {
   });
 
   describe('getVotes', () => {
-    it('should return requestToActivePeer(activePeer, `accounts/delegates/`, options)', () => {
+    it('should return getVotes(activePeer, address)', () => {
       const { address } = accounts.delegate;
       activePeerMockVotes.expects('get').withArgs({ address })
         .returnsPromise().resolves('resolved promise');
@@ -94,7 +94,7 @@ describe('Utils: Delegate', () => {
 
 
   describe('getVoters', () => {
-    it('should return requestToActivePeer(activePeer, `delegates/voters`, options)', () => {
+    it('should return getVoters(activePeer, publicKey)', () => {
       const publicKey = '';
       activePeerMockVoters.expects('get').withArgs({ publicKey })
         .returnsPromise().resolves('resolved promise');
