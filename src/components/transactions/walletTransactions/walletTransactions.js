@@ -24,11 +24,11 @@ class WalletTransactions extends React.Component {
         activePeer: this.props.activePeer,
         publicKey: this.props.account.delegate.publicKey,
       });
-      this.props.accountVotesFetched({
-        activePeer: this.props.activePeer,
-        address: this.props.address,
-      });
     }
+    this.props.accountVotesFetched({
+      activePeer: this.props.activePeer,
+      address: this.props.address,
+    });
 
     this.props.addFilter({
       filterName: 'wallet',
