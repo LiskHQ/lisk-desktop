@@ -1,5 +1,5 @@
 Feature: Send dialog
-  # @testnet
+  @testnet
   Scenario: should allow to send when enough funds and correct address form
     Given I'm logged in as "genesis"
     And I fill in "1" to "amount" field
@@ -13,9 +13,9 @@ Feature: Send dialog
     And I should see 5 rows
     And I wait 15 seconds
     When I click "seeAllLink"
-    And I should see 26 rows
-    # When I scroll to the bottom of "transaction results"
-    # Then I should see 50 rows
+    And I should see 25 rows
+    When I scroll to the bottom of "transaction results"
+    Then I should see 50 rows
 
   Scenario: should allow to send when using launch protocol
     Given I'm logged in as "genesis"

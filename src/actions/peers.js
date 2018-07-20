@@ -3,7 +3,7 @@ import Lisk from 'lisk-elements';
 import actionTypes from '../constants/actions';
 import networks from '../constants/networks';
 import { errorToastDisplayed } from './toaster';
-import { loadingStarted, loadingFinished } from '../utils/loading';
+import { loadingStarted, loadingFinished } from '../actions/loading';
 
 const peerSet = (data, config) => ({
   data: Object.assign({
@@ -50,11 +50,11 @@ export const activePeerSet = data =>
       const liskAPIClient = new Lisk.APIClient(config.nodes, { nethash: config.nethash });
       loadingStarted('getConstants');
       liskAPIClient.node.getConstants().then((response) => {
-        loadingFinished('getConstants');
+        dispatch(loadingFinished('getConstants'));
         config.nethash = response.data.nethash;
         dispatch(peerSet(data, config));
       }).catch(() => {
-        loadingFinished('getConstants');
+        dispatch(loadingFinished('getConstants'));
         dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node') }));
       });
     } else {
