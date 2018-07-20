@@ -44,7 +44,7 @@ class TransactionsDetailView extends React.Component {
       .sort((delegate1, delegate2) => delegate1.username - delegate2.username)
       .map((delegate, key) => (
         <Link className={`${styles.addressLink} ${styles.clickable} voter-address`}
-          to={`${routes.explorer.path}${routes.accounts.path}/${delegate.address}`}
+          to={`${routes.explorer.path}${routes.accounts.path}/${delegate.account.address}`}
           key={`${key}-${dataName}`}>
           {`${delegate.username} `}
         </Link>
