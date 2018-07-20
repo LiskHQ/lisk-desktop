@@ -14,7 +14,7 @@ describe('SavedAccounts middleware', () => {
   let next;
   let state;
   let getAccountStub;
-  const address = 'https://testnet.lisk.io';
+  const address = networks.testnet.nodes[0];
   const passphrase = 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit';
   const publicKey = 'fab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88';
   const balance = 10e8;
@@ -25,7 +25,7 @@ describe('SavedAccounts middleware', () => {
     state = {
       peers: {
         data: {
-          currentNode: 'https://hub01.lisk.io',
+          currentNode: networks.mainnet.nodes[0],
           options: { code: networks.mainnet.code },
         },
         options: {
