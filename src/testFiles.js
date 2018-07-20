@@ -165,16 +165,16 @@ export const unitTestsDict = [
   // './store/reducers/search.test.js',
   // './store/reducers/savedAccounts.test.js',
   './store/reducers/dialog.test.js',
-  './store/reducers/voting.test.js',
+  // './store/reducers/voting.test.js',
   './store/reducers/account.test.js',
   // './store/reducers/loding.test.js',
   './store/reducers/followedAccounts.test.js',
-  './store/reducers/transactions.test.js',
+  // './store/reducers/transactions.test.js',
   // './store/reducers/peers.test.js',
-  './store/reducers/toater.test.js',
-  './store/reducers/settings.test.js',
+  // './store/reducers/toater.test.js',
+  // './store/reducers/settings.test.js',
   './store/reducers/delegate.test.js',
-  './store/reducers/transaction.test.js',
+  // './store/reducers/transaction.test.js',
 ];
 
 export const integrationTestsDict = [
