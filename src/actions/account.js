@@ -68,10 +68,10 @@ export const passphraseUsed = data => ({
  */
 export const accountVotesFetched = ({ activePeer, address }) =>
   dispatch =>
-    getVotes(activePeer, address).then(({ delegates }) => {
+    getVotes(activePeer, address).then(({ data }) => {
       dispatch({
         type: actionTypes.accountAddVotes,
-        votes: delegates,
+        votes: data.votes,
       });
     });
 

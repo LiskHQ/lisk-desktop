@@ -7,7 +7,6 @@ const transaction = (state = {}, action) => {
     case actionTypes.transactionLoaded:
       return {
         votesName: state.votesName || {},
-        success: action.data && action.data.senderId,
         ...action.data,
       };
     case actionTypes.transactionLoadFailed:

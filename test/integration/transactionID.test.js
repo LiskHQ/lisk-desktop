@@ -4,8 +4,8 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { stub, match } from 'sinon';
 
-import * as peers from '../../src/utils/api/peers';
 import * as accountAPI from '../../src/utils/api/account';
+import * as transactionsAPI from '../../src/utils/api/transactions';
 import { prepareStore, renderWithRouter } from '../utils/applicationInit';
 import accountReducer from '../../src/store/reducers/account';
 import transactionReducer from '../../src/store/reducers/transaction';
@@ -24,8 +24,10 @@ import GenericStepDefinition from '../utils/genericStepDefinition';
 
 class Helper extends GenericStepDefinition {
   checkTxDetails() {
-    expect(this.wrapper.find('.transaction-id').first().text()).to.contain('123456789');
-    expect(this.wrapper.find('#sender-address').first().text()).to.contain('123l');
+    expect(this.wrapper).to.have.descendants('.transaction-id');
+    expect(this.wrapper.find('.transaction-id').first()).to.include.text('123456789');
+    expect(this.wrapper).to.have.descendants('#sender-address');
+    expect(this.wrapper.find('#sender-address').first()).to.include.text('123l');
   }
 }
 
@@ -33,34 +35,40 @@ describe('@integration: Single Transaction', () => {
   let store;
   let helper;
   let wrapper;
-  let requestToActivePeerStub;
   let accountAPIStub;
-  let transactionAPIStub;
+  let getTransactionsAPIStub;
+  let getSingleTransactionAPIStub;
 
   beforeEach(() => {
-    requestToActivePeerStub = stub(peers, 'requestToActivePeer');
-    transactionAPIStub = stub(accountAPI, 'transaction');
+    getTransactionsAPIStub = stub(transactionsAPI, 'getTransactions');
+    getSingleTransactionAPIStub = stub(transactionsAPI, 'getSingleTransaction');
     accountAPIStub = stub(accountAPI, 'getAccount');
 
-    transactionAPIStub
+    getTransactionsAPIStub
       .returnsPromise()
       .resolves({
-        transaction: {
-          id: '123456789', senderId: '123l', recipientId: '456l', votes: { added: [], deleted: [] },
-        },
+        data: [{
+          id: '123456789',
+          senderId: '123l',
+          recipientId: '456l',
+          asset: {
+            votes: { added: [], deleted: [] },
+          },
+        }],
       });
 
-    requestToActivePeerStub.withArgs(match.any, 'transactions/get', { id: '123456789' })
+    getSingleTransactionAPIStub
       .returnsPromise()
       .resolves({
-        success: true,
-        transaction: { id: '123456789', senderId: '123l', recipientId: '456l' },
+        data: [{
+          id: '123456789', senderId: '123l', recipientId: '456l', asset: {},
+        }],
       });
   });
 
   afterEach(() => {
-    requestToActivePeerStub.restore();
-    transactionAPIStub.restore();
+    getTransactionsAPIStub.restore();
+    getSingleTransactionAPIStub.restore();
     accountAPIStub.restore();
     wrapper.update();
   });
