@@ -177,14 +177,6 @@ export const unitTestsDict = [
   './store/reducers/transaction.test.js',
 ];
 
-export const electronTestsDict = [
-  './src/menu.test.js',
-  './src/modules/autoUpdater.test.js',
-  './src/modules/localeHandler.test.js',
-  './src/modules/updateModal.test.js',
-  './src/modules/win.test.js',
-];
-
 export const integrationTestsDict = [
   './accountSwitch.test.js',
   './accountTransactions.test.js',
