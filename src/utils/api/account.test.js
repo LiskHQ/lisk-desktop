@@ -8,11 +8,13 @@ describe('Utils: Account API', () => {
   describe('getAccount', () => {
     let activePeerMock;
     const activePeer = {
-      getAccount: () => { },
+      accounts: {
+        get: () => {},
+      },
     };
 
     beforeEach(() => {
-      activePeerMock = mock(activePeer);
+      activePeerMock = mock(activePeer.accounts);
     });
 
     afterEach(() => {
@@ -22,18 +24,17 @@ describe('Utils: Account API', () => {
 
     it('should return a promise that is resolved when activePeer.getAccount() calls its callback with data.success == true', () => {
       const account = { address, balance: 0, publicKey: 'sample_key' };
-      const response = { success: true, account };
+      const response = { data: [{ ...account }] };
 
-      activePeerMock.expects('getAccount').withArgs(address).callsArgWith(1, response);
+      activePeerMock.expects('get').withArgs({ address }).returnsPromise().resolves(response);
       const requestPromise = getAccount(activePeer, address);
       return expect(requestPromise).to.eventually.eql({ ...account, serverPublicKey: 'sample_key' });
     });
 
     it('should return a promise that is resolved even when activePeer.getAccount() calls its callback with data.success == false and "Account not found"', () => {
-      const response = { success: false, error: 'Account not found' };
       const account = { address, balance: 0 };
 
-      activePeerMock.expects('getAccount').withArgs(address).callsArgWith(1, response);
+      activePeerMock.expects('get').withArgs({ address }).returnsPromise().resolves({ data: [] });
       const requestPromise = getAccount(activePeer, address);
       return expect(requestPromise).to.eventually.eql(account);
     });
@@ -41,7 +42,7 @@ describe('Utils: Account API', () => {
     it('should otherwise return a promise that is rejected', () => {
       const response = { success: false };
 
-      activePeerMock.expects('getAccount').withArgs(address).callsArgWith(1, response);
+      activePeerMock.expects('get').withArgs({ address }).returnsPromise().rejects(response);
       const requestPromise = getAccount(activePeer, address);
       return expect(requestPromise).to.eventually.be.rejectedWith(response);
     });
