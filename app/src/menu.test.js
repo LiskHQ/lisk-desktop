@@ -47,7 +47,7 @@ describe('MenuBuilder', () => {
     const expectedOptions = {
       buttons: ['OK'],
       icon: '//assets/images/LISK.png',
-      message: `${electron.app.getName()}\nVersion ${electron.app.getVersion()}\nCopyright © 2016 - 2017 Lisk Foundation`,
+      message: `${electron.app.getName()}\nVersion ${electron.app.getVersion()}\nCopyright © 2016 - 2018 Lisk Foundation`,
     };
 
     // make sure message box is shown on click if window is focused

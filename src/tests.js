@@ -6,7 +6,7 @@ import sinon from 'sinon';
 import sinonStubPromise from 'sinon-stub-promise';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { unitTestsDict, integrationTestsDict, electronTestsDict } from './testFiles';
+import { unitTestsDict, integrationTestsDict } from './testFiles';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -29,7 +29,4 @@ integrationContext
   .forEach(integrationContext);
 
 const electronTestsContext = require.context('../app', true, /\.test\.js$/);
-electronTestsContext
-  .keys()
-  .filter(url => electronTestsDict.indexOf(url) === -1)
-  .forEach(electronTestsContext);
+electronTestsContext.keys().forEach(electronTestsContext);
