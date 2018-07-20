@@ -35,7 +35,7 @@ const delegateRegistration = (store, action) => {
     transactionTypes.registerDelegate,
   );
   const state = store.getState();
-  console.log(delegateRegistrationTx, 'delegateRegistrationTx');
+
   if (delegateRegistrationTx) {
     store.dispatch(updateDelegateAccount({
       activePeer: state.peers.data,
