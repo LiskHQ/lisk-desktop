@@ -68,6 +68,7 @@ class Header extends React.Component {
                               renderer={CountDownTemplate}
                               onComplete={() => {
                                 this.props.removeSavedAccountPassphrase(this.props.account);
+                                this.props.removePassphrase();
                               }}
                             >
                               <CustomCountDown
