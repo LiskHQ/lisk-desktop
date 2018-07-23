@@ -22,7 +22,7 @@ export const unitTestsDict = [
   // './utils/login.test.js',
   './components/searchBar/index.test.js',
   // './components/accountTransactions/index.test.js',
-  './components/multiStep/index.test.js',
+  // './components/multiStep/index.test.js',
   './components/multiStep/multiStepNav.test.js',
   './components/fontIcon/index.test.js',
   './components/toaster/toaster.test.js',
