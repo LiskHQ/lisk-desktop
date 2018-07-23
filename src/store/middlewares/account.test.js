@@ -98,6 +98,7 @@ describe('Account middleware', () => {
       transactions: state.transactions,
     };
 
+    clock.tick(7000);
     expect(accountDataUpdatedSpy).to.have.been.calledWith(data);
     expect(accountActions.updateTransactionsIfNeeded).to.have.been.calledWith();
     accountDataUpdatedSpy.restore();
@@ -116,6 +117,8 @@ describe('Account middleware', () => {
     });
 
     middleware(store)(next)(newBlockCreated);
+
+    clock.tick(7000);
     expect(accountDataUpdatedSpy).to.have.been.calledWith();
     accountDataUpdatedSpy.restore();
   });
@@ -134,6 +137,8 @@ describe('Account middleware', () => {
     });
 
     middleware(store)(next)(newBlockCreated);
+
+    clock.tick(7000);
     expect(accountDataUpdatedSpy).to.have.been.calledWith();
     accountDataUpdatedSpy.restore();
   });
