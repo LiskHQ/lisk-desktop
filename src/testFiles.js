@@ -52,7 +52,7 @@ export const unitTestsDict = [
   // './components/voting/voting.test.js',
   // './components/voting/index.test.js',
   // './components/customRoute/index.test.js',
-  './components/passphrase/ConfirmSecond/index.test.js',
+  // './components/passphrase/ConfirmSecond/index.test.js',
   './components/passphrase/ConfirmSecond/confirmSecond.test.js',
   './components/passphrase/safekeeping/index.test.js',
   './components/passphrase/confirm/index.test.js',
