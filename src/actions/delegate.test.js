@@ -28,10 +28,10 @@ describe('actions: delegate', () => {
 
     it('should create actions to handle getDelegate response', () => {
       const responseData = { delegate: {} };
-      getDelegateStub.returnsPromise().resolves({ ...responseData });
+      getDelegateStub.returnsPromise().resolves({ data: [{ ...responseData }] });
 
       const expectedActionDelegatesRetrieved = {
-        ...responseData,
+        delegate: responseData,
         username,
       };
       delegatesFetchedAction(dispatch);
@@ -43,7 +43,7 @@ describe('actions: delegate', () => {
 
     it('should create actions to handle getDelegate response failure', () => {
       const responseData = { delegate: null };
-      getDelegateStub.returnsPromise().rejects(true);
+      getDelegateStub.returnsPromise().resolves({ data: [] });
 
       const expectedActionDelegatesRetrieved = {
         ...responseData,
