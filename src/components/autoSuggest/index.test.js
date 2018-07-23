@@ -138,7 +138,7 @@ describe('AutoSuggest', () => {
   it('should allow to click on {delegate} suggestion and redirect to its "explorer/accounts" page', () => {
     wrapper.find('.delegates-result').first().simulate('mousedown');
     expect(props.history.push).to.have.been
-      .calledWith(`${routes.accounts.pathPrefix}${routes.accounts.path}/${results.delegates[0].address}`);
+      .calledWith(`${routes.accounts.pathPrefix}${routes.accounts.path}/${results.delegates[0].account.address}`);
   });
 
   it('should allow to click on {transaction} suggestion and redirect to its "explorer/transactions" page', () => {
