@@ -21,7 +21,7 @@ export const unitTestsDict = [
   // './utils/generateUniqueId.test.js',
   // './utils/login.test.js',
   './components/searchBar/index.test.js',
-  './components/accountTransactions/index.test.js',
+  // './components/accountTransactions/index.test.js',
   './components/multiStep/index.test.js',
   './components/multiStep/multiStepNav.test.js',
   './components/fontIcon/index.test.js',

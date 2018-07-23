@@ -14,6 +14,10 @@ import loadingReducer from '../../store/reducers/loading';
 import filtersReducer from '../../store/reducers/filters';
 import followedAccountsReducer from '../../store/reducers/followedAccounts';
 
+import { activePeerSet } from './../../../src/actions/peers';
+import networks from './../../../src/constants/networks';
+import getNetwork from './../../../src/utils/getNetwork';
+
 import AccountTransactions from './index';
 import i18n from '../../i18n';
 import accounts from '../../../test/constants/accounts';
@@ -42,6 +46,8 @@ describe('AccountTransaction Component', () => {
       history: { push: spy(), location: { search: ' ' } },
       t: key => key,
     };
+
+    store.dispatch(activePeerSet({ network: getNetwork(networks.testnet.code) }));
 
     wrapper = mount(<Provider store={store}>
       <Router>
