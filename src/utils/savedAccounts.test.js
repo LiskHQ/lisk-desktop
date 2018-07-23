@@ -22,7 +22,7 @@ describe('savedAccounts', () => {
     {
       publicKey,
       network: 2,
-      address: 'http://localhost:4000',
+      peerAddress: 'http://localhost:4000',
       balance: 0,
     },
   ];
