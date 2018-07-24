@@ -118,14 +118,14 @@ describe('@integration: Wallet', () => {
       delete account.serverPublicKey;
     }
 
-    accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
+    accountAPIStub.withArgs(match.any).returnsPromise().resolves({ data: [...account] });
     store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
     accountAPIStub.withArgs(match.any).returnsPromise()
       .resolves({
-        ...account,
+        data: [...account],
       });
     delegateAPIStub.withArgs(match.any).returnsPromise()
-      .resolves({ delegate: { ...accounts['delegate candidate'] } });
+      .resolves({ data: [{ ...accounts['delegate candidate'] }] });
 
     const targetSavedAccountsInLocalStorage = [{
       publicKey: accounts['without initialization'].publicKey,
@@ -171,33 +171,50 @@ describe('@integration: Wallet', () => {
 
   describe('Send', () => {
     beforeEach(() => {
-      requestToActivePeerStub = stub(peers, 'requestToActivePeer');
+      // getTransactionsStub = stub(transactionsAPI, 'getTransactions');
 
-      requestToActivePeerStub.withArgs(match.any, 'transactions', match({
-        recipientId: '537318935439898807L',
-        amount: 1e8,
-        secret: match.any,
-        secondSecret: match.any,
-      }))
-        .returnsPromise().resolves({ transactionId: 'Some ID' });
+      // getTransactionsStub.withArgs({
+      //   activePeer: match.any,
+      //   address: accounts.genesis.address,
+      //   limit: 25,
+      //   offset: match.any,
+      //   filter: txFilters.all,
+      // }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 1000 } });
 
-      requestToActivePeerStub.withArgs(match.any, 'transactions', match({ limit: 25, senderId: match.defined, recipientId: match.defined }))
-        .returnsPromise().resolves({ transactions: generateTransactions(25), count: 1000 });
+      // getTransactionsStub.withArgs({
+      //   activePeer: match.any,
+      //   address: accounts.genesis.address,
+      //   limit: 25,
+      // }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 1000 } });
 
-      // incoming transaction result
-      const transactions = generateTransactions(15);
-      transactions.push({ senderId: 'sample_address', receiverId: 'some_address', type: txTypes.vote });
+      // requestToActivePeerStub = stub(peers, 'requestToActivePeer');
 
-      requestToActivePeerStub.withArgs(match.any, 'transactions', match({ recipientId: accounts.genesis.address, senderId: undefined }))
-        .returnsPromise().resolves({ transactions, count: 1000 });
+      // requestToActivePeerStub.withArgs(match.any, 'transactions', match({
+      //   recipientId: '537318935439898807L',
+      //   amount: 1e8,
+      //   secret: match.any,
+      //   secondSecret: match.any,
+      // }))
+      //   .returnsPromise().resolves({ data: [{ id: 'Some ID' }] });
 
-      // outgoing transaction result
-      requestToActivePeerStub.withArgs(match.any, 'transactions', match({ senderId: accounts.genesis.address, recipientId: undefined }))
-        .returnsPromise().resolves({ transactions: generateTransactions(5), count: 1000 });
+      // requestToActivePeerStub.withArgs(match.any, 'transactions', match({ limit: 25, senderId: match.defined, recipientId: match.defined }))
+      //   .returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 1000 } });
+
+      // // incoming transaction result
+      // const transactions = generateTransactions(15);
+      // transactions.push({ senderId: 'sample_address', receiverId: 'some_address', type: txTypes.vote });
+
+      // requestToActivePeerStub.withArgs(match.any, 'transactions', match({ recipientId: accounts.genesis.address, senderId: undefined }))
+      //   .returnsPromise().resolves({ data: transactions, meta: { count: 1000 } });
+
+      // // outgoing transaction result
+      // requestToActivePeerStub.withArgs(match.any, 'transactions', match({ senderId: accounts.genesis.address, recipientId: undefined }))
+      //   .returnsPromise().resolves({ data: generateTransactions(5), meta: { count: 1000 } });
     });
 
     afterEach(() => {
-      requestToActivePeerStub.restore();
+      // requestToActivePeerStub.restore();
+      // getTransactionsStub.restore();
     });
 
     describe('Scenario: should not allow to send when not enough funds', () => {
@@ -205,24 +222,23 @@ describe('@integration: Wallet', () => {
       step('And I fill in "1" to "amount" field', () => helper.fillInputField('1', 'amount'));
       step('And I fill in "537318935439898807L" to "recipient" field', () => helper.fillInputField('537318935439898807L', 'recipient'));
       step('Then I should see "Not enough LSK" error message', () => {
-        expect(wrapper.find('Input').at(1).html()).to.contain('Not enough LSK');
+        expect(wrapper.find('Input').at(2).html()).to.contain('Not enough LSK');
       });
       step('And "send next button" should be disabled', () => {
         expect(wrapper.find('.send-next-button button').filterWhere(item => item.prop('disabled') === true)).to.have.lengthOf(1);
       });
     });
 
-    describe('Scenario: should give and error message when sending fails', () => {
+    describe.only('Scenario: should give and error message when sending fails', () => {
       step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
       step('And I fill in "1" to "amount" field', () => helper.fillInputField('1', 'amount'));
       step('And I fill in "537318935439898807L" to "recipient" field', () => helper.fillInputField('537318935439898807L', 'recipient'));
       step('And I click "send next button"', () => helper.clickOnElement('button.send-next-button'));
-
-
       step('When I click "send button"', () => {
-        requestToActivePeerStub.withArgs(match.any, 'transactions', match.any).returnsPromise().rejects({});
+        // getTransactionsStub.withArgs(match.any, 'transactions', match.any).returnsPromise().rejects({});
         helper.clickOnElement('.send-button button');
       });
+      step('print', () => helper.debug());
       step(`Then I should see text ${errorMessage} in "result box message" element`, () => helper.haveTextOf('.result-box-message', errorMessage));
     });
 

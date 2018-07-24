@@ -186,5 +186,5 @@ export const integrationTestsDict = [
   // './registerDelegate.test.js',
   // './transactionID.test.js',
   // './voting.test.js',
-  './wallet.test.js',
+  // './wallet.test.js',
 ];
