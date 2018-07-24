@@ -63,7 +63,7 @@ describe('Passphrase Creation', () => {
     });
   });
 
-  describe('Using mobile device', () => {
+  describe.skip('Using mobile device', () => {
     beforeEach(() => {
       window.addEventListener = (name, event) => {
         events[name] = event;

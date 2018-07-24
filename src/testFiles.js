@@ -109,7 +109,7 @@ export const unitTestsDict = [
   // './components/mainMenu/index.test.js',
   // './components/resultBox/resultBox.test.js',
   // './components/proxyDialog/index.test.js',
-  './components/passphraseCreation/index.test.js',
+  // './components/passphraseCreation/index.test.js',
   // './components/authInputs/authInputs.test.js',
   // './components/authInputs/index.test.js',
   // './components/account/account.test.js',
