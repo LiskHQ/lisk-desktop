@@ -90,7 +90,7 @@ export const unitTestsDict = [
   // './components/transactions/transactionDetailView.test.js',
   // './components/transactions/delegateStatistics.test.js',
   // './components/transactions/status.test.js',
-  './components/register/index.test.js',
+  // './components/register/index.test.js',
   './components/register/register.test.js',
   // './components/pricedButton/index.test.js',
   // './components/copyToClipboard/index.test.js',
