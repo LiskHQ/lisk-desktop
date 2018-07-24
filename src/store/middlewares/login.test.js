@@ -4,8 +4,11 @@ import Lisk from 'lisk-elements';
 import accounts from '../../../test/constants/accounts';
 import middleware from './login';
 import actionTypes from '../../constants/actions';
+import networks from '../../constants/networks';
 import * as accountApi from '../../utils/api/account';
 import * as delegateApi from '../../utils/api/delegate';
+
+// TODO: Check if tests that includes activePeerSet are still relevant
 
 describe('Login middleware', () => {
   let store;
@@ -51,6 +54,7 @@ describe('Login middleware', () => {
       data: {
         passphrase,
         activePeer: Lisk.APIClient,
+        options: { code: networks.mainnet.code, address: accounts.genesis.address },
       },
     };
 
@@ -70,17 +74,6 @@ describe('Login middleware', () => {
     };
     middleware(store)(next)(sampleAction);
     expect(next).to.have.been.calledWith(sampleAction);
-  });
-
-  it(`should action data to only have activePeer on ${actionTypes.activePeerSet} action`, () => {
-    middleware(store)(next)(activePeerSetAction);
-    expect(next).to.have.been.calledWith({
-      type: actionTypes.activePeerSet,
-      data: {
-        passphrase,
-        activePeer: Lisk.APIClient,
-      },
-    });
   });
 
   it(`should fetch account and delegate info on ${actionTypes.activePeerSet} action (non delegate)`, () => {
