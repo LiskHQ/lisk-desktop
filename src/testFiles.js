@@ -82,7 +82,7 @@ export const unitTestsDict = [
   // './components/transactions/amount.test.js',
   // './components/transactions/transactionRow.test.js',
   // './components/transactions/transactionType.test.js',
-  './components/transactions/explorerTransactions/index.test.js',
+  // './components/transactions/explorerTransactions/index.test.js',
   // './components/transactions/transactionList.test.js',
   './components/transactions/transactionOverview.test.js',
   // './components/transactions/transactionsHeader.test.js',
