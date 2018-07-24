@@ -79,7 +79,7 @@ export const unitTestsDict = [
   // './components/registerDelegate/steps/choose/choose.test.js',
   // './components/registerDelegate/steps/confirm/confirm.test.js',
   // './components/registerDelegate/registerDelegate.test.js',
-  './components/transactions/amount.test.js',
+  // './components/transactions/amount.test.js',
   // './components/transactions/transactionRow.test.js',
   // './components/transactions/transactionType.test.js',
   './components/transactions/explorerTransactions/index.test.js',
