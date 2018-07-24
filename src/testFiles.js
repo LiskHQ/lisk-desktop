@@ -94,7 +94,7 @@ export const unitTestsDict = [
   // './components/register/register.test.js',
   // './components/pricedButton/index.test.js',
   // './components/copyToClipboard/index.test.js',
-  './components/loadingBar/index.test.js',
+  // './components/loadingBar/index.test.js',
   './components/loadingBar/loadingBar.test.js',
   './components/toolbox/buttons/button.test.js',
   './components/toolbox/buttons/iconButton.test.js',
