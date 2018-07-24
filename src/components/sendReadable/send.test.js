@@ -56,6 +56,7 @@ describe('Send Readable Component', () => {
         account: props.account,
         activePeer: {},
         amount: '120.25',
+        data: undefined,
         passphrase: props.account.passphrase,
         recipientId: '11004588490103196952L',
         secondPassphrase: null,

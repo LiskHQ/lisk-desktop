@@ -38,7 +38,7 @@ describe('App', () => {
     const store = fakeStore({
       account: {},
       dialog: {},
-      peers: { data: { options: {} } },
+      peers: { data: { options: {} }, options: {} },
       settings: {
         autoLog: true,
         advancedMode: true,
