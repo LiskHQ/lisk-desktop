@@ -48,8 +48,8 @@ describe('WalletTransactions Component', () => {
     delegateVotesStub = stub(delegateAPI, 'getVotes');
     delegateVotersStub = stub(delegateAPI, 'getVoters');
 
-    delegateVotesStub.returnsPromise().resolves({ delegates: [accounts['delegate candidate']] });
-    delegateVotersStub.returnsPromise().resolves({ accounts: [accounts['empty account']] });
+    delegateVotesStub.returnsPromise().resolves({ data: [accounts['delegate candidate']] });
+    delegateVotersStub.returnsPromise().resolves({ data: [accounts['empty account']] });
 
     props = {
       match: { params: { address: accounts.genesis.address } },
@@ -62,7 +62,7 @@ describe('WalletTransactions Component', () => {
       address: accounts.genesis.address,
       limit: 25,
       filter: txFilters.all,
-    }).returnsPromise().resolves({ transactions: [{ id: 'Some ID' }], count: 1000 });
+    }).returnsPromise().resolves({ data: [{ id: 'Some ID' }], meta: { count: 1000 } });
 
 
     transactionsActionsStub.withArgs({
@@ -70,7 +70,7 @@ describe('WalletTransactions Component', () => {
       address: match.any,
       limit: 25,
       filter: txFilters.statistics,
-    }).returnsPromise().resolves({ transactions: [{ id: 'Some ID' }], count: 1000 });
+    }).returnsPromise().resolves({ data: [{ id: 'Some ID' }], meta: { count: 1000 } });
 
     store.dispatch(accountLoggedIn({
       ...accounts.genesis,
