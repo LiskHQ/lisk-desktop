@@ -105,7 +105,7 @@ export const unitTestsDict = [
   // './components/sendWritable/index.test.js',
   // './components/sendWritable/send.test.js',
   // './components/actionBar/index.test.js',
-  './components/mainMenu/mainMenu.test.js',
+  // './components/mainMenu/mainMenu.test.js',
   // './components/mainMenu/index.test.js',
   // './components/resultBox/resultBox.test.js',
   // './components/proxyDialog/index.test.js',

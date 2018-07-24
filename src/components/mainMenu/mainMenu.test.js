@@ -44,7 +44,7 @@ describe('MainMenu', () => {
     location: {
       pathname: `${routes.delegates.path}`,
     },
-    replace: sinon.spy(),
+    push: sinon.spy(),
   };
 
 
@@ -114,7 +114,7 @@ describe('MainMenu', () => {
       <MainMenu {...props} />
     </MemoryRouter>, options);
     wrapper.find(Tab).at(1).simulate('click');
-    expect(history.replace).to.have.been.calledWith(`${routes.wallet.path}`);
+    expect(history.push).to.have.been.calledWith(`${routes.wallet.path}`);
   });
 
   it('should click on more activate the drawer', () => {
