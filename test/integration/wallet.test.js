@@ -349,46 +349,49 @@ describe('@integration: Wallet', () => {
     });
   });
 
-  describe.skip('Transactions', () => {
+  describe('Transactions', () => {
     beforeEach(() => {
       getTransactionsStub = stub(transactionsAPI, 'getTransactions');
 
+      // transactionsFilterSet do pass filter
       getTransactionsStub.withArgs({
-        activePeer: match.any,
-        address: accounts.genesis.address,
+        activePeer: match.defined,
+        address: match.defined,
         limit: 25,
-        offset: match.any,
         filter: txFilters.all,
-      }).returnsPromise().resolves({ transactions: generateTransactions(25), count: 1000 });
+      }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 50 } });
 
+      // loadTransactions does not pass filter
       getTransactionsStub.withArgs({
-        activePeer: match.any,
-        address: accounts.genesis.address,
+        activePeer: match.defined,
+        address: match.defined,
         limit: 25,
-      }).returnsPromise().resolves({ transactions: generateTransactions(25), count: 1000 });
+      }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 50 } });
 
-
-      // NOTE: transactionsFilterSet does not use offset
+      // transactionsRequested does pass filter, offset
       getTransactionsStub.withArgs({
-        activePeer: match.any,
-        address: accounts.genesis.address,
+        activePeer: match.defined,
+        address: match.defined,
+        limit: 25,
+        offset: match.defined,
+        filter: txFilters.all,
+      }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 50 } });
+
+
+      // // NOTE: transactionsFilterSet does not use offset
+      getTransactionsStub.withArgs({
+        activePeer: match.defined,
+        address: match.defined,
         limit: 25,
         filter: txFilters.outgoing,
-      }).returnsPromise().resolves({ transactions: generateTransactions(20), count: 1000 });
+      }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 25 } });
 
       getTransactionsStub.withArgs({
-        activePeer: match.any,
-        address: accounts.genesis.address,
+        activePeer: match.defined,
+        address: match.defined,
         limit: 25,
         filter: txFilters.incoming,
-      }).returnsPromise().resolves({ transactions: generateTransactions(5), count: 1000 });
-
-      getTransactionsStub.withArgs({
-        activePeer: match.any,
-        address: accounts.genesis.address,
-        limit: 25,
-        filter: txFilters.all,
-      }).returnsPromise().resolves({ transactions: generateTransactions(25), count: 1000 });
+      }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 25 } });
     });
 
     afterEach(() => {
@@ -404,13 +407,13 @@ describe('@integration: Wallet', () => {
       step('Then I should be redirected to transactoinDetails step', () => helper.checkRedirectionToDetails('123456'));
     });
 
-    describe.skip('Scenario: should allow to filter transactions', () => {
+    describe('Scenario: should allow to filter transactions', () => {
       step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
       step('Then the "All" filter should be selected by default', () => helper.checkSelectedFilter('all'));
       step('When I click on the "Outgoing" filter', () => helper.clickOnElement('.filter-out'));
-      step('Then I expect to see the results for "Outgoing"', () => helper.shouldSeeCountInstancesOf(20, 'TransactionRow'));
+      step('Then I expect to see the results for "Outgoing"', () => helper.shouldSeeCountInstancesOf(25, 'TransactionRow'));
       step('When I click on the "Incoming" filter', () => helper.clickOnElement('.filter-in'));
-      step('Then I expect to see the results for "Incoming"', () => helper.shouldSeeCountInstancesOf(5, 'TransactionRow'));
+      step('Then I expect to see the results for "Incoming"', () => helper.shouldSeeCountInstancesOf(25, 'TransactionRow'));
       step('When I click again on the "All" filter', () => helper.clickOnElement('.filter-all'));
       step('Then I expect to see the results for "All"', () => helper.shouldSeeCountInstancesOf(25, 'TransactionRow'));
     });
