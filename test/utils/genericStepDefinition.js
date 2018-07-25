@@ -94,7 +94,7 @@ export default class GenericStepDefinition {
    */
   debug(element = null) {
     if (!element) {
-      console.log(this.wrapper.debug()); // eslint-disable no-console
+      console.log(this.wrapper.debug()); // eslint-disable-line no-console
     } else {
       console.log(this.wrapper.find(element).debug()); // eslint-disable-line no-console
     }
