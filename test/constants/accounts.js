@@ -45,6 +45,7 @@ const accounts = {
     publicKey: 'fab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88',
     serverPublicKey: 'fab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88',
     secondPassphrase: 'forest around decrease farm vanish permit hotel clay senior matter endorse domain',
+    secondPublicKey: 'ec057d8816b18b83a2baac387eebf8af707f8fb565c963476a0e4533e8481eaf',
     address: '1155682438012955434L',
     balance: 1000e8,
     secondSignature: 1,

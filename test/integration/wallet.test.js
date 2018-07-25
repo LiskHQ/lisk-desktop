@@ -177,7 +177,7 @@ describe('@integration: Wallet', () => {
 
       getTransactionsStub.withArgs({
         activePeer: match.any,
-        address: accounts.genesis.address,
+        address: match.any,
         limit: 25,
         offset: match.any,
         filter: txFilters.all,
@@ -185,7 +185,7 @@ describe('@integration: Wallet', () => {
 
       getTransactionsStub.withArgs({
         activePeer: match.any,
-        address: accounts.genesis.address,
+        address: match.any,
         limit: 25,
         filter: txFilters.all,
       }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 1000 } });
@@ -195,7 +195,7 @@ describe('@integration: Wallet', () => {
         match.any,
         '537318935439898807L',
         match.any,
-        accounts.genesis.passphrase,
+        match.any,
         match.any,
         match.any,
       ).returnsPromise().resolves({ data: [] });
@@ -255,7 +255,7 @@ describe('@integration: Wallet', () => {
       step(`Then I should see text ${errorMessage} in "result box message" element`, () => helper.haveTextOf('.result-box-message', errorMessage));
     });
 
-    describe.only('Scenario: should allow to send LSK from unlocked account', () => {
+    describe('Scenario: should allow to send LSK from unlocked account', () => {
       step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
       step('And I fill in "1" to "amount" field', () => { helper.fillInputField('1', 'amount'); });
       step('And I fill in "537318935439898807L" to "recipient" field', () => { helper.fillInputField('537318935439898807L', 'recipient'); });
@@ -276,7 +276,7 @@ describe('@integration: Wallet', () => {
       step(`Then I should see text ${successMessage} in "result box message" element`, () => helper.haveTextOf('.result-box-message', successMessage));
     });
 
-    describe('Scenario: should allow to send LSK from unlocked account with 2nd passphrase', () => {
+    describe.only('Scenario: should allow to send LSK from unlocked account with 2nd passphrase', () => {
       const { secondPassphrase } = accounts['second passphrase account'];
       step('Given I\'m on "wallet" as "second passphrase account"', () => setupStep('second passphrase account'));
       step('And I fill in "1" to "amount" field', () => { helper.fillInputField('1', 'amount'); });
