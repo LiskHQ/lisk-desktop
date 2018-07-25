@@ -71,6 +71,7 @@ describe('@integration: Wallet', () => {
   let delegateAPIStub;
   let localStorageStub;
   let getTransactionsStub;
+  let sendTransactionsStub;
   let liskServiceStub;
   let helper;
 
@@ -171,21 +172,23 @@ describe('@integration: Wallet', () => {
 
   describe('Send', () => {
     beforeEach(() => {
-      // getTransactionsStub = stub(transactionsAPI, 'getTransactions');
+      getTransactionsStub = stub(transactionsAPI, 'getTransactions');
+      sendTransactionsStub = stub(transactionsAPI, 'send');
 
-      // getTransactionsStub.withArgs({
-      //   activePeer: match.any,
-      //   address: accounts.genesis.address,
-      //   limit: 25,
-      //   offset: match.any,
-      //   filter: txFilters.all,
-      // }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 1000 } });
+      getTransactionsStub.withArgs({
+        activePeer: match.any,
+        address: accounts.genesis.address,
+        limit: 25,
+        offset: match.any,
+        filter: txFilters.all,
+      }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 1000 } });
 
-      // getTransactionsStub.withArgs({
-      //   activePeer: match.any,
-      //   address: accounts.genesis.address,
-      //   limit: 25,
-      // }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 1000 } });
+      getTransactionsStub.withArgs({
+        activePeer: match.any,
+        address: accounts.genesis.address,
+        limit: 25,
+        filter: txFilters.all,
+      }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 1000 } });
 
       // requestToActivePeerStub = stub(peers, 'requestToActivePeer');
 
@@ -214,7 +217,8 @@ describe('@integration: Wallet', () => {
 
     afterEach(() => {
       // requestToActivePeerStub.restore();
-      // getTransactionsStub.restore();
+      getTransactionsStub.restore();
+      sendTransactionsStub.restore();
     });
 
     describe('Scenario: should not allow to send when not enough funds', () => {
@@ -235,10 +239,9 @@ describe('@integration: Wallet', () => {
       step('And I fill in "537318935439898807L" to "recipient" field', () => helper.fillInputField('537318935439898807L', 'recipient'));
       step('And I click "send next button"', () => helper.clickOnElement('button.send-next-button'));
       step('When I click "send button"', () => {
-        // getTransactionsStub.withArgs(match.any, 'transactions', match.any).returnsPromise().rejects({});
+        sendTransactionsStub.withArgs(match.any, '537318935439898807L', match.any, accounts.genesis.passphrase, match.any, match.any).returnsPromise().rejects({});
         helper.clickOnElement('.send-button button');
       });
-      step('print', () => helper.debug());
       step(`Then I should see text ${errorMessage} in "result box message" element`, () => helper.haveTextOf('.result-box-message', errorMessage));
     });
 
