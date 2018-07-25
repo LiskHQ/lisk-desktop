@@ -4,7 +4,6 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { stub, match, spy } from 'sinon';
 
-import * as peers from '../../src/utils/api/peers';
 import * as accountAPI from '../../src/utils/api/account';
 import * as transactionsAPI from '../../src/utils/api/transactions';
 import * as delegateAPI from '../../src/utils/api/delegate';
@@ -165,7 +164,7 @@ describe('@integration: Wallet', () => {
     liskServiceStub.restore();
   });
 
-  describe.only('Send', () => {
+  describe('Send', () => {
     beforeEach(() => {
       getTransactionsStub = stub(transactionsAPI, 'getTransactions');
       sendTransactionsStub = stub(transactionsAPI, 'send');
