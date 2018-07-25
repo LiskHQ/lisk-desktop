@@ -170,7 +170,7 @@ describe('@integration: Wallet', () => {
     liskServiceStub.restore();
   });
 
-  describe('Send', () => {
+  describe.only('Send', () => {
     beforeEach(() => {
       getTransactionsStub = stub(transactionsAPI, 'getTransactions');
       sendTransactionsStub = stub(transactionsAPI, 'send');
@@ -189,6 +189,16 @@ describe('@integration: Wallet', () => {
         limit: 25,
         filter: txFilters.all,
       }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 1000 } });
+
+
+      sendTransactionsStub.withArgs(
+        match.any,
+        '537318935439898807L',
+        match.any,
+        accounts.genesis.passphrase,
+        match.any,
+        match.any,
+      ).returnsPromise().resolves({ data: [] });
 
       // requestToActivePeerStub = stub(peers, 'requestToActivePeer');
 
@@ -233,7 +243,7 @@ describe('@integration: Wallet', () => {
       });
     });
 
-    describe.only('Scenario: should give and error message when sending fails', () => {
+    describe('Scenario: should give and error message when sending fails', () => {
       step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
       step('And I fill in "1" to "amount" field', () => helper.fillInputField('1', 'amount'));
       step('And I fill in "537318935439898807L" to "recipient" field', () => helper.fillInputField('537318935439898807L', 'recipient'));
@@ -245,7 +255,7 @@ describe('@integration: Wallet', () => {
       step(`Then I should see text ${errorMessage} in "result box message" element`, () => helper.haveTextOf('.result-box-message', errorMessage));
     });
 
-    describe('Scenario: should allow to send LSK from unlocked account', () => {
+    describe.only('Scenario: should allow to send LSK from unlocked account', () => {
       step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
       step('And I fill in "1" to "amount" field', () => { helper.fillInputField('1', 'amount'); });
       step('And I fill in "537318935439898807L" to "recipient" field', () => { helper.fillInputField('537318935439898807L', 'recipient'); });
