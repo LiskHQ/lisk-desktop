@@ -40,8 +40,8 @@ describe('Send Writable Component', () => {
     });
   });
 
-  it('renders two Input components', () => {
-    expect(wrapper.find('Input')).to.have.length(2);
+  it('renders three Input components', () => {
+    expect(wrapper.find('Input')).to.have.length(3);
   });
 
   it('renders one Button component', () => {
