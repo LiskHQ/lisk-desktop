@@ -11,13 +11,13 @@ describe('VotingListView', () => {
 
   const delegates = [
     {
-      address: 'address 1',
+      account: { address: 'address 1' },
       username: 'username1',
       publicKey: 'sample_key',
       rank: 12,
     },
     {
-      address: 'address 2',
+      account: { address: 'address 2' },
       username: 'username2',
       publicKey: 'sample_key',
       rank: 23,
@@ -110,7 +110,7 @@ describe('VotingListView', () => {
       delegates: [
         ...loadMoreProps.delegates,
         {
-          address: 'address 3',
+          account: { address: 'address 3' },
           username: 'username3',
           publicKey: 'sample_key',
           rank: 23,
