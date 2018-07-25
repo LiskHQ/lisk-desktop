@@ -12,6 +12,7 @@ import accounts from '../../../../test/constants/accounts';
 
 describe('Passphrase: Safekeeping', () => {
   let wrapper;
+  let clock;
   const passphrase = 'stock wagon borrow episode laundry kitten salute link globe zero feed marble';
   const props = {
     passphrase,
@@ -38,12 +39,16 @@ describe('Passphrase: Safekeeping', () => {
   beforeEach(() => {
     spy(props, 'prevStep');
     spy(props, 'nextStep');
+    clock = useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
     wrapper = mount(<Safekeeping {...props} />, options);
   });
 
   afterEach(() => {
     props.prevStep.restore();
     props.nextStep.restore();
+    clock.restore();
   });
 
   it('renders 2 SliderCheckbox components', () => {
@@ -59,41 +64,28 @@ describe('Passphrase: Safekeeping', () => {
   });
 
   it('should change the state.step to revealing-step', () => {
-    const clock = useFakeTimers({
-      toFake: ['setTimeout', 'clearTimeout', 'Date'],
-    });
     wrapper.find('SliderCheckbox').at(0).props()
       .onChange({ checked: true, value: 'introduction-step' });
     expect(Safekeeping.prototype.next.calledOnce).to.equal(true);
     clock.tick(701);
     wrapper.update();
     expect(wrapper.find('TransitionWrapper').at(0).props().current).to.be.equal('revealing-step');
-    clock.restore();
   });
 
   it('should change the state.step to revealed-step', () => {
-    const clock = useFakeTimers({
-      toFake: ['setTimeout', 'clearTimeout', 'Date'],
-    });
     wrapper.find('SliderCheckbox').at(0).props()
       .onChange({ checked: true, value: 'revealing-step' });
     clock.tick(701);
     wrapper.update();
     expect(wrapper.find('TransitionWrapper').at(0).props().current).to.be.equal('revealed-step');
-    clock.restore();
   });
 
-  // Failing Randomly
-  it.skip('should call nextStep if Next button clicked', () => {
-    const clock = useFakeTimers({
-      toFake: ['setTimeout', 'clearTimeout', 'Date'],
-    });
+  it('should call nextStep if Next button clicked', () => {
     wrapper.find('button.yes-its-safe-button').simulate('click');
 
     clock.tick(501);
     expect(props.nextStep).to.have.been.calledWith();
     wrapper.unmount();
-    clock.restore();
   });
 
   it('should call prevStep if Back button clicked', () => {
