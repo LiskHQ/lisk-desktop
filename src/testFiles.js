@@ -179,7 +179,7 @@ export const unitTestsDict = [
 
 export const integrationTestsDict = [
   // './accountSwitch.test.js',
-  './accountTransactions.test.js',
+  // './accountTransactions.test.js',
   // './dashboard.test.js',
   // './login.test.js',
   // './register.test.js',
