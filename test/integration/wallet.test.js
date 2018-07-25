@@ -193,7 +193,7 @@ describe('@integration: Wallet', () => {
 
       sendTransactionsStub.withArgs(
         match.any,
-        '537318935439898807L',
+        match.any,
         match.any,
         match.any,
         match.any,
@@ -276,7 +276,7 @@ describe('@integration: Wallet', () => {
       step(`Then I should see text ${successMessage} in "result box message" element`, () => helper.haveTextOf('.result-box-message', successMessage));
     });
 
-    describe.only('Scenario: should allow to send LSK from unlocked account with 2nd passphrase', () => {
+    describe('Scenario: should allow to send LSK from unlocked account with 2nd passphrase', () => {
       const { secondPassphrase } = accounts['second passphrase account'];
       step('Given I\'m on "wallet" as "second passphrase account"', () => setupStep('second passphrase account'));
       step('And I fill in "1" to "amount" field', () => { helper.fillInputField('1', 'amount'); });
