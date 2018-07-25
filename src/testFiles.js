@@ -164,7 +164,7 @@ export const unitTestsDict = [
   // './store/subscribers/followedAccounts.test.js',
   // './store/reducers/search.test.js',
   // './store/reducers/savedAccounts.test.js',
-  './store/reducers/dialog.test.js',
+  // './store/reducers/dialog.test.js',
   // './store/reducers/voting.test.js',
   // './store/reducers/account.test.js',
   // './store/reducers/loding.test.js',
@@ -173,7 +173,7 @@ export const unitTestsDict = [
   // './store/reducers/peers.test.js',
   // './store/reducers/toater.test.js',
   // './store/reducers/settings.test.js',
-  './store/reducers/delegate.test.js',
+  // './store/reducers/delegate.test.js',
   // './store/reducers/transaction.test.js',
 ];
 
