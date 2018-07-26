@@ -184,16 +184,6 @@ describe('@integration: Wallet', () => {
         limit: 25,
       }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 1000 } });
 
-      // transactionsRequested does pass offset,filter
-      // getTransactionsStub.withArgs({
-      //   activePeer: match.defined,
-      //   address: match.defined,
-      //   limit: 25,
-      //   offset: match.defined,
-      //   filter: txFilters.all,
-      // }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 1000 } });
-
-
       // second passphrase send request
       sendTransactionsStub.withArgs(
         match.defined,
