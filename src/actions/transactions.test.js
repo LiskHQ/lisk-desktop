@@ -190,7 +190,7 @@ describe('actions: transactions', () => {
     it('should dispatch transactionAdded action if resolved', () => {
       transactionsApiMock.returnsPromise().resolves({ transactionId: '15626650747375562521' });
       const expectedAction = {
-        id: '15626650747375562521',
+        id: undefined,
         senderPublicKey: 'test_public-key',
         senderId: 'test_address',
         recipientId: data.recipientId,
