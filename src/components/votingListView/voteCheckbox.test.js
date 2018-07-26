@@ -8,6 +8,7 @@ import styles from './votingListView.css';
 describe('VoteCheckbox', () => {
   const props = {
     data: {
+      account: {},
       username: 'yashar',
       publicKey: 'address 1',
     },
