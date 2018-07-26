@@ -134,7 +134,6 @@ describe('@integration: Dashboard', () => {
 
     accountAPIStub.withArgs(match.any).returnsPromise().resolves({ data: [...account] });
     store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
-
     delegateAPIStub.withArgs(match.any).returnsPromise()
       .resolves({ delegate: { ...accounts['delegate candidate'] } });
 
