@@ -25,7 +25,7 @@ describe('SavedAccounts', () => {
 
   const savedAccounts = [
     {
-      publicKey: 'hab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88',
+      publicKey: 'aab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88',
       network: networks.mainnet.code,
       passphrase: accounts.genesis.passphrase,
     },

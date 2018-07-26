@@ -17,6 +17,7 @@ describe('SavedAccounts middleware', () => {
   const address = networks.testnet.nodes[0];
   const passphrase = 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit';
   const publicKey = 'fab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88';
+  const publicKey2 = 'aab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88';
   const balance = 10e8;
 
   beforeEach(() => {
@@ -104,7 +105,6 @@ describe('SavedAccounts middleware', () => {
   });
 
   it(`should dispatch accountSaved action on ${actionTypes.accountLoggedIn} action if given account is not saved yet`, () => {
-    const publicKey2 = 'hab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88';
     const action = {
       type: actionTypes.accountLoggedIn,
       data: {
@@ -124,7 +124,6 @@ describe('SavedAccounts middleware', () => {
   });
 
   it(`should dispatch accountSaved action on ${actionTypes.activeAccountSaved} action if given account is not saved yet`, () => {
-    const publicKey2 = 'hab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88';
     state.account = {
       publicKey: publicKey2,
       balance,
@@ -143,7 +142,6 @@ describe('SavedAccounts middleware', () => {
   });
 
   it(`should dispatch accountRemoved action on ${actionTypes.accountLoggedOut} action if given account is logged in`, () => {
-    const publicKey2 = 'hab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88';
     state.account = {
       publicKey: publicKey2,
       balance,
