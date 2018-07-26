@@ -91,15 +91,22 @@ export const searchMoreTransactions = ({
   activePeer, address, limit, offset, filter,
 }) =>
   (dispatch) => {
+
+    console.log(address);
+    console.log(limit);
+    console.log(offset);
+    console.log(filter);
+
     getTransactions({
       activePeer, address, limit, offset, filter,
     })
       .then((transactionsResponse) => {
+        console.log('searchMoreTransactions', transactionsResponse.data.length);
         dispatch({
           data: {
             address,
-            transactions: transactionsResponse.transactions,
-            count: parseInt(transactionsResponse.count, 10),
+            transactions: transactionsResponse.data,
+            count: parseInt(transactionsResponse.meta.count, 10),
             filter,
           },
           type: actionTypes.searchMoreTransactions,
