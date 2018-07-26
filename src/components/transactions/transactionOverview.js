@@ -117,7 +117,7 @@ class TransactionsOverview extends React.Component {
         {
           <TransactionList
             filter={filters[this.props.activeFilter]}
-            delegate={this.props.delegate}
+            delegate={this.props.account.delegate}
             votes={this.props.votes}
             voters={this.props.voters}
             address={this.props.address}
