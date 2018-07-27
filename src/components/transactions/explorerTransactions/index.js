@@ -8,7 +8,7 @@ import txFilters from './../../../constants/transactionFilters';
 
 const mapStateToProps = (state, ownProps) => ({
   activePeer: state.peers.data,
-  delegate: state.account.delegate,
+  delegate: state.search.delegates[state.search.lastSearch],
   transaction: state.transaction,
   transactions: state.search.searchResults,
   votes: state.search.votes[state.search.lastSearch],

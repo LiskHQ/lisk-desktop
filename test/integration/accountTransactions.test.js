@@ -224,7 +224,15 @@ describe('@integration: Account Transactions', () => {
     votersAPIStub.withArgs(match.any).returnsPromise()
       .resolves({ data: { voters } });
 
-    accountAPIStub.withArgs(match.any).returnsPromise().resolves({ data: [...account] });
+    accountAPIStub.withArgs(match.any, '123L')
+      .returnsPromise().resolves({
+        ...accounts['delegate candidate'],
+        ...delegateProductivity,
+        address: '123L',
+      });
+    accountAPIStub.withArgs(match.any)
+      .returnsPromise().resolves({ ...account });
+
     store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
     if (accountType) { store.dispatch(accountLoggedIn(account)); }
     wrapper = mount(renderWithRouter(
@@ -271,18 +279,11 @@ describe('@integration: Account Transactions', () => {
     step('Given I\'m on "accounts/123L" as "genesis" account', () => setupStep({
       accountType: 'genesis',
       address: '123L',
-    }, {
-      isDelegate: true,
-      delegate: {
-        ...accounts['delegate candidate'],
-        ...delegateProductivity,
-      },
     }));
     step('When I click on the "delegate-statistics" filter', () => helper.clickOnElement('.delegate-statistics'));
     step('Then I should see the delegate statistics details rendered', () => helper.checkDelegateDetails());
-    // TODO: fix integration for votes&voters, when is really working in application
-    // step('Then I should see 2 voters', () => helper.countLinks(2));
-    // step('When I fill voters filter input', () => helper.fillInputField('123', 'voters'));
-    // step('Then I should see 1 voter', () => helper.countLinks(1));
+    step('Then I should see 2 voters', () => helper.countLinks(2));
+    step('When I fill voters filter input', () => helper.fillInputField('123', 'voters'));
+    step('Then I should see 1 voter', () => helper.countLinks(1));
   });
 });
