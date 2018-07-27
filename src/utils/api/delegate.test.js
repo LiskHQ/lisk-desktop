@@ -10,9 +10,8 @@ import {
   getVoters,
   registerDelegate } from './delegate';
 import accounts from '../../../test/constants/accounts';
-import account from '../../constants/account';
 
-describe.only('Utils: Delegate', () => {
+describe('Utils: Delegate', () => {
   let activePeerMockDelegates;
   let activePeerMockVotes;
   let activePeerMockVoters;
@@ -147,14 +146,14 @@ describe.only('Utils: Delegate', () => {
   describe('registerDelegate', () => {
     it('should broadcast a registerDelegate transaction', () => {
       const registerDelegateArgs = [null, 'username', 'passphrase', 'secondPassphrase'];
-      const transaction = { id: '123' };
+      const transaction = { id: '1234' };
       liskTransactionsRegisterDelegateStub.withArgs({
         username: registerDelegateArgs[1],
         passphrase: registerDelegateArgs[2],
         secondPassphrase: registerDelegateArgs[3],
       }).returns(transaction);
-      registerDelegate(null, 'username', 'passphrase', 'secondPassphrase');
-      expect(activePeer.transactions.broadcast).to.have.been.calledWith(transaction);
+      registerDelegate(...registerDelegateArgs);
+      return expect(activePeer.transactions.broadcast).to.have.been.calledWith(transaction);
     });
   });
 });
