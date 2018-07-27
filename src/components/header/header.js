@@ -31,6 +31,11 @@ class Header extends React.Component {
       .some(el => pathname.includes(el));
   }
 
+  onAccountTimeout() {
+    this.props.removeSavedAccountPassphrase(this.props.account);
+    this.props.removePassphrase();
+  }
+
   render() {
     return (
       <header className={`${styles.wrapper} mainHeader`}>
@@ -66,10 +71,7 @@ class Header extends React.Component {
                             <Countdown
                               date={this.props.account.expireTime}
                               renderer={CountDownTemplate}
-                              onComplete={() => {
-                                this.props.removeSavedAccountPassphrase(this.props.account);
-                                this.props.removePassphrase();
-                              }}
+                              onComplete={this.onAccountTimeout.bind(this)}
                             >
                               <CustomCountDown
                                 resetTimer={this.props.resetTimer}
