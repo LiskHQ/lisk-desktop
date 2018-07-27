@@ -68,7 +68,7 @@ describe('Passphrase Creation', () => {
    *  therefore this test should be disabled,
    *  complete removal of Mobile support src code base will be handled separately
    */
-  describe.skip('Using mobile device', () => {
+  describe('Using mobile device', () => {
     beforeEach(() => {
       window.addEventListener = (name, event) => {
         events[name] = event;

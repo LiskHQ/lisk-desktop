@@ -8,6 +8,7 @@ import configureMockStore from 'redux-mock-store';
 import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
 import SecondPassphrase from './secondPassphrase';
+import routes from '../../constants/routes';
 
 describe('SecondPassphrase', () => {
   let wrapper;
@@ -32,6 +33,10 @@ describe('SecondPassphrase', () => {
     passphrase: account.passphrase,
     registerSecondPassphrase: spy(),
     t: key => key,
+    history: {
+      goBack: spy(),
+      push: spy(),
+    },
   };
 
   describe('Authenticated', () => {
@@ -57,6 +62,17 @@ describe('SecondPassphrase', () => {
         account,
         passphrase: account.passphrase,
       });
+    });
+
+    it('should go back in history when back button is clicked', () => {
+      wrapper.find('.multistep-back').simulate('click');
+      expect(props.history.goBack).to.have.calledWith();
+    });
+
+    it('should go to dashboard if account already has second passphrase', () => {
+      wrapper = mount(<SecondPassphrase {...props}
+        account={accounts['second passphrase account']} />, options);
+      expect(props.history.push).to.have.calledWith(routes.dashboard.path);
     });
   });
 });
