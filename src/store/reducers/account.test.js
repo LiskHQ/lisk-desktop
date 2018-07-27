@@ -65,6 +65,17 @@ describe('Reducer: account(state, action)', () => {
     expect(accountWithDelegateUpdated.delegate).to.be.equal(accounts['delegate candidate']);
   });
 
+  it('should reduce account delegate when loading transactions', () => {
+    const action = {
+      data: {
+        delegate: accounts['delegate candidate'],
+      },
+      type: actionTypes.transactionsLoadFinish,
+    };
+    const accountWithDelegateUpdated = account(state, action);
+    expect(accountWithDelegateUpdated.delegate).to.be.equal(accounts['delegate candidate']);
+  });
+
   it('should return state if action.type is none of the above', () => {
     const action = {
       type: 'UNKNOWN',
