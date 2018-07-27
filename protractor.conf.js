@@ -2,14 +2,7 @@
 
 exports.config = {
   specs: [
-    'test/e2e/*send.feature',
-    'test/e2e/*login.feature',
-    'test/e2e/*explorer.feature',
-    'test/e2e/*onboarding.feature',
-    'test/e2e/*followedAccounts.feature',
-    'test/e2e/*signMessage.feature',
-    'test/e2e/*savedAccounts.feature',
-    'test/e2e/*registerDelegate.feature',
+    'test/e2e/*.feature',
   ],
 
   directConnect: true,
