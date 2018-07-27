@@ -16,7 +16,7 @@ const closeConnection = () => {
 const socketSetup = (store) => {
   let windowIsFocused = true;
   const { ipc } = window;
-  if (ipc) {
+  if (ipc && ipc.on) {
     ipc.on('blur', () => { windowIsFocused = false; });
     ipc.on('focus', () => { windowIsFocused = true; });
   }

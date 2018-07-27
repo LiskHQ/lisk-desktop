@@ -111,6 +111,17 @@ describe('Socket middleware', () => {
       expect(window.ipc.on).to.have.been.calledWith('focus');
     });
 
+
+    it('should loggin when windows.ipc.on is null', () => {
+      window.ipc = {
+        on: null,
+      };
+
+      middleware(store)(next)({ type: actionTypes.accountLoggedIn });
+
+      expect(window.ipc.on).to.have.equal(null);
+    });
+
     it('should register window focus changes', () => {
       middleware(store)(next)({ type: actionTypes.accountLoggedIn });
       ipcCallbacks.blur();
