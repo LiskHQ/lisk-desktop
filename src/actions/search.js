@@ -45,12 +45,11 @@ export const searchAccount = ({ activePeer, address }) =>
     dispatch(searchVotes({ activePeer, address }));
     getAccount(activePeer, address).then((response) => {
       const accountData = {
-        balance: response.balance,
-        address,
+        ...response,
       };
-      if (response.publicKey) {
-        dispatch(searchDelegate({ activePeer, publicKey: response.publicKey, address }));
-        dispatch(searchVoters({ activePeer, address, publicKey: response.publicKey }));
+      if (accountData.publicKey) {
+        dispatch(searchDelegate({ activePeer, publicKey: accountData.publicKey, address }));
+        dispatch(searchVoters({ activePeer, address, publicKey: accountData.publicKey }));
       }
       dispatch({ data: accountData, type: actionTypes.searchAccount });
     });
@@ -98,8 +97,8 @@ export const searchMoreTransactions = ({
         dispatch({
           data: {
             address,
-            transactions: transactionsResponse.transactions,
-            count: parseInt(transactionsResponse.count, 10),
+            transactions: transactionsResponse.data,
+            count: parseInt(transactionsResponse.meta.count, 10),
             filter,
           },
           type: actionTypes.searchMoreTransactions,
