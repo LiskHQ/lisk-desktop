@@ -188,8 +188,8 @@ export const transactionsUpdated = ({
           type: actionTypes.transactionsUpdated,
         });
         // eslint-disable-next-line no-constant-condition
-        if (pendingTransactions.length || true) {
-          // "|| true" above was added to disable this, because this caused pending transactions
+        if (pendingTransactions.length && false) {
+          // "&& false" above was added to disable this, because this caused pending transactions
           // to disappear from the list before they appeared again as confirmed.
           // Currently, the problem is that a pending transaction will not be removed
           // from the list if it fails. Caused by Lisk Core 1.0.0
