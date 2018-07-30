@@ -47,7 +47,7 @@
   padding: 58px 48px 0;
 
   &:first-child {
-    background-color: var(--gradient-greyscale);
+    background: var(--gradient-greyscale);
   }
 
   &:last-child {
