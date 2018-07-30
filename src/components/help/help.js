@@ -25,12 +25,12 @@ class Help extends React.Component {
         <aside className={`${grid['col-sm-12']} ${grid['col-md-4']} ${styles.helpSection} ${styles.sideBar}`}>
           <h2>{this.props.t('Help')}</h2>
           <p>{this.props.t('Search through our tutorials, FAQs or connect to our community all over the world.')}</p>
-          <a onClick={() => this.initOnboarding() }>{this.props.t('New to Hub? Take a tour')}
+          <a className='help-onboarding' onClick={() => this.initOnboarding() }>{this.props.t('New to Hub? Take a tour')}
             <FontIcon>arrow-right</FontIcon>
           </a>
         </aside>
 
-        <section className={`${grid['col-sm-12']} ${grid['col-md-8']} ${styles.helpSection}`}>
+        <section className={`${grid['col-sm-12']} ${grid['col-md-8']} ${styles.helpSection} help-articles`}>
           <article>
             <h2>
               <FontIcon className={styles.headerIcon}>remove</FontIcon>
@@ -45,7 +45,7 @@ class Help extends React.Component {
                 </p>
               </div>
               <div>
-              <Button onClick={() => this.visitHelpCenter() }>{this.props.t('Visit Help Center')}
+              <Button className='help-visit-center' onClick={() => this.visitHelpCenter() }>{this.props.t('Visit Help Center')}
                 <FontIcon>arrow-right</FontIcon>
               </Button>
               </div>
