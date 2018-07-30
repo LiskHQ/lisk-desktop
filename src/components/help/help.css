@@ -1,0 +1,19 @@
+@import '../app/variables.css';
+
+:root {
+}
+
+.wrapper {
+  width: 100%;
+  box-shadow: var(--normal-shadow);
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.sideBar {
+  padding-right: 0px;
+}
+
+.helpSection {
+  min-height: 100%;
+}
