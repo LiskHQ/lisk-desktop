@@ -4,15 +4,17 @@ import Box from '../box';
 import { FontIcon } from '../fontIcon';
 import { Button } from './../toolbox/buttons/button';
 import styles from './help.css';
+import links from './../../constants/help';
 
 /* eslint-disable class-methods-use-this */
 class Help extends React.Component {
   initOnboarding() {
-
+    this.props.settingsUpdated({ onBoarding: true });
   }
 
   visitHelpCenter() {
-
+    const win = window.open(links.helpCenter, '_blank');
+    win.focus();
   }
 
   render() {
@@ -63,19 +65,19 @@ class Help extends React.Component {
               <div>
                 <ul>
                   <li>
-                    <a target='_blank' href='http://help.lisk.io/faq#sidechains' rel='noopener noreferrer'>
+                    <a target='_blank' href={links.explainBlockchain} rel='noopener noreferrer'>
                       {this.props.t('Explain Blockchain Like I\'m 5')}
                       <FontIcon>arrow-right</FontIcon>
                     </a>
                   </li>
                   <li>
-                    <a target='_blank' href='http://help.lisk.io/faq#sidechains' rel='noopener noreferrer'>
+                    <a target='_blank' href={links.isBlockchainSecure} rel='noopener noreferrer'>
                       {this.props.t('Is Blockchain Secure?')}
                       <FontIcon>arrow-right</FontIcon>
                     </a>
                   </li>
                   <li>
-                    <a target='_blank' href='http://help.lisk.io/faq#sidechains' rel='noopener noreferrer'>
+                    <a target='_blank' href={links.seeMore} rel='noopener noreferrer'>
                       {this.props.t('See more')}
                       <FontIcon>arrow-right</FontIcon>
                     </a>
@@ -98,13 +100,13 @@ class Help extends React.Component {
               <div>
                 <ul>
                   <li>
-                    <a target='_blank' href='http://help.lisk.io/faq#sidechains' rel='noopener noreferrer'>
+                    <a target='_blank' href={links.liskChat} rel='noopener noreferrer'>
                       {this.props.t('Visit Lisk.Chat')}
                       <FontIcon>arrow-right</FontIcon>
                     </a>
                   </li>
                   <li>
-                    <a target='_blank' href='http://help.lisk.io/faq#sidechains' rel='noopener noreferrer'>
+                    <a target='_blank' href={links.helpDeskChannel} rel='noopener noreferrer'>
                       {this.props.t('See #help-desk channel')}
                       <FontIcon>arrow-right</FontIcon>
                     </a>
