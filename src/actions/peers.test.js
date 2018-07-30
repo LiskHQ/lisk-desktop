@@ -113,7 +113,7 @@ describe('actions: peers', () => {
       expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.nodes[0]', 'http://localhost:4000'));
     });
 
-    it('dispatch activePeerSet when no port in address and https used', () => {
+    it('sets port 443, when address is https and no port used', () => {
       getNetHash.returnsPromise();
       const network = {
         address: 'https://localhost',
