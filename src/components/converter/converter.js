@@ -4,6 +4,7 @@ import Input from '../toolbox/inputs/input';
 import { fromRawLsk } from '../../utils/lsk';
 
 import fees from './../../constants/fees';
+import converter from './../../constants/converter';
 
 import styles from './converter.css';
 
@@ -53,11 +54,10 @@ class Converter extends React.Component {
 
   render() {
     const { LSK, currencies } = this.state;
-    const maxLSKSupply = 125000000;
 
     let price = !!this.props.error && Number.isNaN(this.props.value) ?
       (0).toFixed(2) : (this.props.value * LSK[currencies[0]]).toFixed(2);
-    price = price > maxLSKSupply || price === 'NaN' ? (0).toFixed(2) : price;
+    price = price > converter.maxLSKSupply || price === 'NaN' ? (0).toFixed(2) : price;
 
     const currenciesObejects = currencies.map((currency, key) => (
       <div
