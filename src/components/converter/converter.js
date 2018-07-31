@@ -84,7 +84,7 @@ class Converter extends React.Component {
             : <div></div>
           }
         </div>
-        <div className={styles.fee}> {this.props.t('Fee: {{fee}} LSK', { fee: fromRawLsk(this.fee) })} </div>
+        { this.props.isRequesting ? null : <div className={styles.fee}> {this.props.t('Fee: {{fee}} LSK', { fee: fromRawLsk(this.fee) })} </div> }
       </Input>
     );
   }
