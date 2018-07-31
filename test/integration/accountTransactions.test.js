@@ -3,8 +3,7 @@ import { step } from 'mocha-steps';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { stub, match, spy } from 'sinon';
-
-import * as peers from '../../src/utils/api/peers';
+import * as transactionsAPI from '../../src/utils/api/transactions';
 import * as accountAPI from '../../src/utils/api/account';
 import * as delegateAPI from '../../src/utils/api/delegate';
 import { prepareStore, renderWithRouter } from '../utils/applicationInit';
@@ -29,6 +28,8 @@ import AccountTransactions from './../../src/components/accountTransactions';
 import accounts from '../constants/accounts';
 import routes from '../../src/constants/routes';
 import GenericStepDefinition from '../utils/genericStepDefinition';
+import txFilters from './../../src/constants/transactionFilters';
+import peersMiddleware from '../../src/store/middlewares/peers';
 
 const delegateProductivity = {
   producedblocks: 43961,
@@ -43,7 +44,7 @@ describe('@integration: Account Transactions', () => {
   let store;
   let helper;
   let wrapper;
-  let requestToActivePeerStub;
+  let getTransactionsStub;
   let accountAPIStub;
   let delegateAPIStub;
   let votesAPIStub;
@@ -119,7 +120,7 @@ describe('@integration: Account Transactions', () => {
   }];
 
   beforeEach(() => {
-    requestToActivePeerStub = stub(peers, 'requestToActivePeer');
+    getTransactionsStub = stub(transactionsAPI, 'getTransactions');
     accountAPIStub = stub(accountAPI, 'getAccount');
     transactionAPIStub = stub(accountAPI, 'transaction');
     delegateAPIStub = stub(delegateAPI, 'getDelegate');
@@ -132,40 +133,56 @@ describe('@integration: Account Transactions', () => {
 
     delegateAPIStub.withArgs(match.any).returnsPromise()
       .resolves({
-        delegate: {
+        data: [{
           ...accounts['delegate candidate'],
           ...delegateProductivity,
           address: '123L',
-        },
+        }],
       });
 
-    let transactions = new Array(20);
-
+    const transactions = new Array(20);
     // specific address
     transactions.fill(transactionExample);
-    requestToActivePeerStub.withArgs(match.any, 'transactions', match({ senderId: '123L', recipientId: '123L' }))
-      .returnsPromise().resolves({ transactions, count: 1000 });
-    transactionAPIStub.returnsPromise().resolves({
-      transaction: {
-        id: '123456789', senderId: '123l', recipientId: '456l', votes: { added: [], deleted: [] },
-      },
-    });
-    // incoming transaction result
-    transactions = new Array(15);
-    transactions.fill(transactionExample);
-    transactions.push({ senderId: 'sample_address', receiverId: 'some_address', type: txTypes.vote });
-    requestToActivePeerStub.withArgs(match.any, 'transactions', match({ senderId: undefined }))
-      .returnsPromise().resolves({ transactions, count: 1000 });
 
-    // outgoing transaction result
-    transactions = new Array(5);
-    transactions.fill(transactionExample);
-    requestToActivePeerStub.withArgs(match.any, 'transactions', match({ recipientId: undefined }))
-      .returnsPromise().resolves({ transactions, count: 1000 });
+    // transactionsFilterSet do pass filter
+    getTransactionsStub.withArgs({
+      activePeer: match.defined,
+      address: match.defined,
+      limit: 25,
+      filter: txFilters.all,
+    }).returnsPromise().resolves({ data: transactions, meta: { count: 40 } });
+
+    getTransactionsStub.withArgs({
+      activePeer: match.defined,
+      address: match.defined,
+      limit: 25,
+      filter: txFilters.outgoing,
+    }).returnsPromise().resolves({ data: [...transactions].slice(0, 5), meta: { count: 5 } });
+
+    getTransactionsStub.withArgs({
+      activePeer: match.defined,
+      address: match.defined,
+      limit: 25,
+      filter: txFilters.incoming,
+    }).returnsPromise().resolves({ data: [...transactions].slice(0, 15), meta: { count: 15 } });
+
+    getTransactionsStub.withArgs({
+      activePeer: match.defined,
+      address: match.defined,
+      limit: 25,
+      filter: txFilters.all,
+      offset: match.defined,
+    }).returnsPromise().resolves({ data: transactions, meta: { count: 40 } });
+
+    transactionAPIStub.returnsPromise().resolves({
+      data: [{
+        id: '123456789', senderId: '123l', recipientId: '456l', votes: { added: [], deleted: [] },
+      }],
+    });
   });
 
   afterEach(() => {
-    requestToActivePeerStub.restore();
+    getTransactionsStub.restore();
     accountAPIStub.restore();
     delegateAPIStub.restore();
     transactionAPIStub.restore();
@@ -190,6 +207,7 @@ describe('@integration: Account Transactions', () => {
       accountMiddleware,
       loginMiddleware,
       votingMiddleware,
+      peersMiddleware,
     ]);
 
     const account = {
@@ -202,13 +220,20 @@ describe('@integration: Account Transactions', () => {
     };
 
     votesAPIStub.withArgs(match.any).returnsPromise()
-      .resolves({ delegates: votes });
+      .resolves({ data: { votes } });
     votersAPIStub.withArgs(match.any).returnsPromise()
-      .resolves({ accounts: voters });
+      .resolves({ data: { voters } });
 
-    accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
+    accountAPIStub.withArgs(match.any, '123L')
+      .returnsPromise().resolves({
+        ...accounts['delegate candidate'],
+        ...delegateProductivity,
+        address: '123L',
+      });
+    accountAPIStub.withArgs(match.any)
+      .returnsPromise().resolves({ ...account });
+
     store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
-    accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
     if (accountType) { store.dispatch(accountLoggedIn(account)); }
     wrapper = mount(renderWithRouter(
       AccountTransactions, store,
@@ -251,7 +276,10 @@ describe('@integration: Account Transactions', () => {
   });
 
   describe('Scenario: should allow to view delegate details of a delegate account', () => {
-    step('Given I\'m on "accounts/123L" as "genesis" account', () => setupStep({ accountType: 'genesis', address: '123L' }, { isDelegate: true }));
+    step('Given I\'m on "accounts/123L" as "genesis" account', () => setupStep({
+      accountType: 'genesis',
+      address: '123L',
+    }));
     step('When I click on the "delegate-statistics" filter', () => helper.clickOnElement('.delegate-statistics'));
     step('Then I should see the delegate statistics details rendered', () => helper.checkDelegateDetails());
     step('Then I should see 2 voters', () => helper.countLinks(2));

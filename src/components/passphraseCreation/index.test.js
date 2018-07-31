@@ -63,6 +63,11 @@ describe('Passphrase Creation', () => {
     });
   });
 
+  /**
+   *  TODO: since 0.10.0 we removed support for mobile devices,
+   *  therefore this test should be disabled,
+   *  complete removal of Mobile support src code base will be handled separately
+   */
   describe('Using mobile device', () => {
     beforeEach(() => {
       window.addEventListener = (name, event) => {

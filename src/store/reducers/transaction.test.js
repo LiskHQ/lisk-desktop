@@ -9,7 +9,7 @@ describe('Reducer: transaction(state, action)', () => {
       id: '16295820046284152875',
       timestamp: 33505748,
     },
-    success: true,
+    senderId: '11195820046284152875',
   };
 
   it('should return transaction if action.type = actionTypes.transactionLoaded', () => {
@@ -21,8 +21,7 @@ describe('Reducer: transaction(state, action)', () => {
     const changedState = transaction(state, action);
     expect(changedState).to.deep.equal({
       votesName: {},
-      success: true,
-      ...mockTransaction.transaction,
+      ...mockTransaction,
     });
   });
 

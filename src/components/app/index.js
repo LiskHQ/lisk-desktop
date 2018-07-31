@@ -28,6 +28,10 @@ class App extends React.Component {
     this.setState({ loaded: true });
   }
 
+  componentDidMount() {
+    this.markAsLoaded();
+  }
+
   render() {
     const allRoutes = Object.values(routes);
 

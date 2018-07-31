@@ -17,7 +17,7 @@ import styles from './sendTo.css';
 class SendTo extends React.Component {
   render() {
     const {
-      accounts, account, address, delegate, notLoading, nextStep, t, removeAccount,
+      accounts, account, address, delegate, nextStep, t, removeAccount,
     } = this.props;
 
     const isFollowing = getIndexOfFollowedAccount(accounts, account) !== -1;
@@ -60,11 +60,8 @@ class SendTo extends React.Component {
             `}>
             <h2>
               <span>
-                {
-                  notLoading
-                    ? <LiskAmount val={account.balance}/>
-                    : null
-                } <small className={styles.balanceUnit}>LSK</small>
+                <LiskAmount val={account.balance}/>
+                <small className={styles.balanceUnit}>LSK</small>
               </span>
             </h2>
             <CopyToClipboard value={account.address} className={`${styles.address}`} copyClassName={styles.copy} />

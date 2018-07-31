@@ -5,32 +5,23 @@ import { activePeerUpdate } from '../../actions/peers';
 let connection;
 let forcedClosing = false;
 
-const openConnection = (state) => {
-  const ssl = state.peers.data.options.ssl;
-  const protocol = ssl ? 'https' : 'http';
-
-  return io.connect(`${protocol}://${state.peers.data.currentPeer}:${state.peers.data.port}`);
-};
-
 const closeConnection = () => {
   if (connection) {
     forcedClosing = true;
     connection.close();
     forcedClosing = false;
-    connection = undefined;
   }
 };
 
 const socketSetup = (store) => {
   let windowIsFocused = true;
   const { ipc } = window;
-  /* istanbul ignore else  */
-  if (ipc) {
+  if (ipc && ipc.on) {
     ipc.on('blur', () => { windowIsFocused = false; });
     ipc.on('focus', () => { windowIsFocused = true; });
   }
 
-  connection = openConnection(store.getState());
+  connection = io.connect(store.getState().peers.data.currentNode);
   connection.on('blocks/change', (block) => {
     store.dispatch({
       type: actionTypes.newBlockCreated,
@@ -38,7 +29,6 @@ const socketSetup = (store) => {
     });
   });
   connection.on('disconnect', () => {
-    /* istanbul ignore else  */
     if (!forcedClosing) {
       store.dispatch(activePeerUpdate({ online: false }));
     }

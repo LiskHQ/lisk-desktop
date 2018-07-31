@@ -12,9 +12,11 @@ describe('RegisterHOC', () => {
   let wrapper;
   const peers = {};
   const account = {};
+  const settings = {};
   const store = configureMockStore([])({
     peers,
     account,
+    settings,
   });
 
   beforeEach(() => {

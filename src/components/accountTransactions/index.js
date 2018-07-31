@@ -14,7 +14,6 @@ class AccountTransactions extends React.Component {
         <SendTo
           address={this.props.match.params.address}
           t={this.props.t}
-          notLoading={this.props.notLoading}
           account={this.props.account}
           delegate={this.props.delegate}
         />
@@ -32,7 +31,6 @@ class AccountTransactions extends React.Component {
 const mapStateToProps = state => ({
   publicKey: state.account.publicKey,
   activePeer: state.peers.data,
-  notLoading: state.loading.length === 0,
   peers: state.peers,
   account: state.search.accounts[state.search.lastSearch] || {},
   delegate: state.search.delegates[state.search.lastSearch] || {},

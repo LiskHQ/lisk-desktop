@@ -1,7 +1,5 @@
 import { expect } from 'chai';
-import { visitAndSaveSearchOnEnter, visit } from './keyAction';
-import keyCodes from './../../constants/keyCodes';
-import routes from './../../constants/routes';
+import { saveSearch } from './keyAction';
 import localJSONStorage from './../../utils/localJSONStorage';
 
 describe('Search KeyAction', () => {
@@ -12,46 +10,24 @@ describe('Search KeyAction', () => {
     window.localStorage.setItem = (key, item) => { storage[key] = item; };
   });
 
-  it('saves the last 3 searches without duplicates on enter', () => {
+  it('saves the last 3 searches without duplicates', () => {
     const testValues = [
-      '811299173602533L',
-      '947273526752682L',
-      '',
-      '382923358293526L   ',
-      '947273526752682L',
+      { id: '811299173602533L', searchTerm: '811299173602533L' },
+      { id: '947273526752682L', searchTerm: '947273526752682L' },
+      { id: '', searchTerm: '' },
+      { id: '382923358293526L   ', searchTerm: '382923358293526L   ' },
+      { id: '947273526752682L   ', searchTerm: '947273526752682L' },
     ];
 
     const expectedOutcome = [
-      '947273526752682L',
-      '382923358293526L',
-      '811299173602533L',
+      { id: '947273526752682L   ', searchTerm: '947273526752682L' },
+      { id: '382923358293526L   ', searchTerm: '382923358293526L' },
+      { id: '811299173602533L', searchTerm: '811299173602533L' },
     ];
 
-    testValues.forEach((value) => {
-      visitAndSaveSearchOnEnter({ which: keyCodes.enter, target: { value } }, []);
+    testValues.forEach((searchObj) => {
+      saveSearch(searchObj.searchTerm, searchObj.id);
     });
-
     expect(localJSONStorage.get('searches')).to.eql(expectedOutcome);
-  });
-
-  it('visits appropriate url when searched for term', () => {
-    const history = [];
-    const testValues = [
-      '811299173602533L',
-      '382923358293526',
-      'some string',
-    ];
-
-    const expectedHistory = [
-      `${routes.explorer.path}${routes.accounts.path}/${testValues[0]}`,
-      `${routes.explorer.path}${routes.transactions.path}/${testValues[1]}`,
-      `${routes.explorer.path}${routes.searchResult.path}/${testValues[2]}`,
-    ];
-
-    testValues.forEach((value) => {
-      visit(value, history);
-    });
-
-    expect(history).to.eql(expectedHistory);
   });
 });

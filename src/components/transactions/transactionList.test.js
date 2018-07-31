@@ -66,12 +66,6 @@ describe('TransactionsList', () => {
     history: { location: { search: { id: transactions[0].id } } },
   };
 
-  it('should render nothing while loading', () => {
-    const propsOnLoading = Object.assign({}, props, { loading: true });
-    wrapper = mount(<TransactionsList {...propsOnLoading} />, options);
-    expect(wrapper.html()).to.be.equal(null);
-  });
-
   it('should render empty state template if transactions list is empty', () => {
     const propsNoTx = Object.assign({}, props, { transactions: emptyTx });
     wrapper = mount(<TransactionsList {...propsNoTx} />, options);

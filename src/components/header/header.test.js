@@ -14,7 +14,7 @@ describe('Header', () => {
   let wrapper;
   const mountWithRouter = (node, options) => mount(<Router>{node}</Router>, options);
   const storeObject = {
-    peers: { data: { options: {} } },
+    peers: { data: {}, options: {} },
     account: {},
     activePeerSet: () => {},
     search: {
@@ -34,14 +34,27 @@ describe('Header', () => {
     t: key => key,
     location: { pathname: `${routes.explorer.path}${routes.search}` },
     isAuthenticated: false,
+    removeSavedAccountPassphrase: sinon.spy(),
+    removePassphrase: sinon.spy(),
+  };
+
+  const history = {
+    location: { pathname: `${routes.explorer.path}${routes.search}` },
+    replace: sinon.spy(),
+    createHref: sinon.spy(),
+    push: sinon.spy(),
   };
 
   const store = configureMockStore([])(storeObject);
   const options = {
-    context: { store, i18n },
+    context: {
+      store, history, i18n, router: { route: history, history },
+    },
     childContextTypes: {
       store: PropTypes.object.isRequired,
+      history: PropTypes.object.isRequired,
       i18n: PropTypes.object.isRequired,
+      router: PropTypes.object.isRequired,
     },
   };
 
@@ -66,6 +79,15 @@ describe('Header', () => {
     expect(wrapper.find('Countdown')).to.have.length(1);
   });
 
+  // <<<<<<< HEAD
+  //   it('calls props functions to remove passphrase on account timeout', () => {
+  //     wrapper = mount(<Header {...mockInputProps} />, options);
+
+  //     wrapper.instance().onAccountTimeout();
+  //     expect(mockInputProps.removeSavedAccountPassphrase)
+  //       .to.have.been.calledWith(mockInputProps.account);
+  //     expect(mockInputProps.removePassphrase).to.have.been.calledWith();
+  // =======
   it('should display logout dialog window', () => {
     wrapper = mountWithRouter(<Header {...mockInputProps} />, options);
     wrapper.find('.logout').simulate('click');
@@ -76,5 +98,6 @@ describe('Header', () => {
     wrapper = mountWithRouter(<Header {...mockInputProps} />, options);
     wrapper.find('Countdown').props().onComplete();
     expect(mockInputProps.history.replace).to.have.been.calledWith(`${routes.login.path}`);
+  // >>>>>>> 540-implement-logout-button
   });
 });

@@ -82,7 +82,7 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
     action.data.windowIsFocused,
   ));
 
-  const tx = action.data.block.transactions;
+  const tx = action.data.block.transactions || [];
   const accountAddress = state.account.address;
   const blockContainsRelevantTransaction = tx.filter((transaction) => {
     const sender = transaction ? transaction.senderId : null;
@@ -91,7 +91,11 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
   }).length > 0;
 
   if (blockContainsRelevantTransaction) {
-    updateAccountData(store, action);
+    // it was not getting the account with secondPublicKey right
+    // after a new block with second passphrase registration transaction was received
+    setTimeout(() => {
+      updateAccountData(store, action);
+    }, 5000);
   }
 };
 

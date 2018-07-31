@@ -16,7 +16,7 @@ class SecondPassphrase extends React.Component {
   }
   componentDidMount() {
     document.body.classList.add('contentFocused');
-    if (this.props.account.secondSignature === 1) {
+    if (this.props.account.secondPublicKey) {
       this.props.history
         .push(`${routes.dashboard.path}`);
     }

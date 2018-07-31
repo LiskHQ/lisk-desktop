@@ -22,8 +22,8 @@ export const transactionsFilterSet = ({
     }).then((response) => {
       dispatch({
         data: {
-          confirmed: response.transactions,
-          count: parseInt(response.count, 10),
+          confirmed: response.data,
+          count: parseInt(response.meta.count, 10),
           filter,
         },
         type: actionTypes.transactionsFiltered,
@@ -45,7 +45,7 @@ export const transactionsUpdateUnconfirmed = ({ activePeer, address, pendingTran
     unconfirmedTransactions(activePeer, address).then(response => dispatch({
       data: {
         failed: pendingTransactions.filter(tx =>
-          response.transactions.filter(unconfirmedTx => tx.id === unconfirmedTx.id).length === 0),
+          response.data.filter(unconfirmedTx => tx.id === unconfirmedTx.id).length === 0),
       },
       type: actionTypes.transactionsFailed,
     }));
@@ -75,8 +75,8 @@ export const loadTransactions = ({ activePeer, publicKey, address }) =>
         }));
         dispatch({
           data: {
-            count: parseInt(transactionsResponse.count, 10),
-            confirmed: transactionsResponse.transactions,
+            count: parseInt(transactionsResponse.meta.count, 10),
+            confirmed: transactionsResponse.data,
           },
           type: actionTypes.transactionsLoaded,
         });
@@ -93,8 +93,8 @@ export const transactionsRequested = ({
       .then((response) => {
         dispatch({
           data: {
-            count: parseInt(response.count, 10),
-            confirmed: response.transactions,
+            count: parseInt(response.meta.count, 10),
+            confirmed: response.data,
             address,
             filter,
           },
@@ -108,9 +108,22 @@ export const loadTransaction = ({ activePeer, id }) =>
     dispatch({ type: actionTypes.transactionCleared });
     getSingleTransaction({ activePeer, id })
       .then((response) => {
-        const added = (response.transaction.votes && response.transaction.votes.added) || [];
-        const deleted = (response.transaction.votes && response.transaction.votes.deleted) || [];
-        const localStorageDelegates = activePeer.options && loadDelegateCache(activePeer);
+        let added = [];
+        let deleted = [];
+
+        if (!response.data.length) {
+          dispatch({ data: { error: 'Transaction not found' }, type: actionTypes.transactionLoadFailed });
+          return;
+        }
+
+        // since core 1.0 added and deleted are not filtered in core,
+        // but provided as single array with [+,-] signs
+        if ('votes' in response.data[0].asset) {
+          added = response.data[0].asset.votes.filter(item => item.startsWith('+')).map(item => item.replace('+', ''));
+          deleted = response.data[0].asset.votes.filter(item => item.startsWith('-')).map(item => item.replace('-', ''));
+        }
+
+        const localStorageDelegates = loadDelegateCache(activePeer);
         deleted.forEach((publicKey) => {
           const address = extractAddress(publicKey);
           const storedDelegate = localStorageDelegates[address];
@@ -129,7 +142,7 @@ export const loadTransaction = ({ activePeer, id }) =>
             getDelegate(activePeer, { publicKey })
               .then((delegateData) => {
                 dispatch({
-                  data: { delegate: delegateData.delegate, voteArrayName: 'deleted' },
+                  data: { delegate: delegateData.data[0], voteArrayName: 'deleted' },
                   type: actionTypes.transactionAddDelegateName,
                 });
               });
@@ -147,15 +160,15 @@ export const loadTransaction = ({ activePeer, id }) =>
             getDelegate(activePeer, { publicKey })
               .then((delegateData) => {
                 dispatch({
-                  data: { delegate: delegateData.delegate, voteArrayName: 'added' },
+                  data: { delegate: delegateData.data[0], voteArrayName: 'added' },
                   type: actionTypes.transactionAddDelegateName,
                 });
               });
           }
         });
-        dispatch({ data: response, type: actionTypes.transactionLoaded });
+        dispatch({ data: response.data[0], type: actionTypes.transactionLoaded });
       }).catch((error) => {
-        dispatch({ data: error, type: actionTypes.transactionLoadFailed });
+        dispatch({ data: { error }, type: actionTypes.transactionLoadFailed });
       });
   };
 
@@ -169,12 +182,18 @@ export const transactionsUpdated = ({
       .then((response) => {
         dispatch({
           data: {
-            confirmed: response.transactions,
-            count: parseInt(response.count, 10),
+            confirmed: response.data,
+            count: parseInt(response.meta.count, 10),
           },
           type: actionTypes.transactionsUpdated,
         });
-        if (pendingTransactions.length) {
+        // eslint-disable-next-line no-constant-condition
+        if (pendingTransactions.length || true) {
+          // "|| true" above was added to disable this, because this caused pending transactions
+          // to disappear from the list before they appeared again as confirmed.
+          // Currently, the problem is that a pending transaction will not be removed
+          // from the list if it fails. Caused by Lisk Core 1.0.0
+          // TODO: figure out how to make this work again
           dispatch(transactionsUpdateUnconfirmed({
             activePeer,
             address,
@@ -185,14 +204,14 @@ export const transactionsUpdated = ({
   };
 
 export const sent = ({
-  activePeer, account, recipientId, amount, passphrase, secondPassphrase,
+  activePeer, account, recipientId, amount, passphrase, secondPassphrase, data,
 }) =>
   (dispatch) => {
-    send(activePeer, recipientId, toRawLsk(amount), passphrase, secondPassphrase)
-      .then((data) => {
+    send(activePeer, recipientId, toRawLsk(amount), passphrase, secondPassphrase, data)
+      .then((response) => {
         dispatch({
           data: {
-            id: data.transactionId,
+            id: response.id,
             senderPublicKey: account.publicKey,
             senderId: account.address,
             recipientId,

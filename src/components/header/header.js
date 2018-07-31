@@ -8,7 +8,7 @@ import CountDownTemplate from './countDownTemplate';
 import CopyToClipboard from '../copyToClipboard';
 import LiskAmount from '../liskAmount';
 import Account from '../account';
-import logo from '../../assets/images/logo-beta.svg';
+import logo from '../../assets/images/Lisk-Logo.svg';
 import PrivateWrapper from '../privateWrapper';
 import { ActionButton } from './../toolbox/buttons/button';
 import styles from './header.css';
@@ -28,8 +28,13 @@ class Header extends React.Component {
 
   shouldShowSearchBar() {
     const { pathname } = this.props.location;
-    return ![`${routes.explorer.path}${routes.search.path}`, routes.register.path, routes.addAccount.path]
-      .some(el => pathname.includes(el)) && pathname !== routes.login.path;
+    return ![routes.register.path, routes.addAccount.path]
+      .some(el => pathname.includes(el));
+  }
+
+  onAccountTimeout() {
+    this.props.removeSavedAccountPassphrase(this.props.account);
+    this.props.removePassphrase();
   }
 
   openLogoutDialog() {
@@ -75,45 +80,47 @@ class Header extends React.Component {
                       copyClassName={styles.copy}
                     />
 
-                    {!this.props.autoLog && this.props.account.passphrase
-                      ? <div className={`${styles.unlocked} unlocked`}>{this.props.t('Unlocked')}</div>
-                      : <div></div>
-                    }
-                    {this.props.autoLog
-                      ? <div className={styles.timer}>
-                        {((this.props.account.expireTime &&
-                          this.props.account.expireTime !== 0) &&
-                          this.props.account.passphrase)
-                          ? <div className={styles.logoutInfo}>
-                            <Countdown
-                              date={this.props.account.expireTime}
-                              renderer={CountDownTemplate}
-                              onComplete={() => {
-                                this.props.logOut();
-                                this.props.history.replace(routes.login.path);
-                              }}
-                            >
-                              <CustomCountDown
-                                closeDialog={this.props.closeDialog}
-                                history={this.props.history}
-                                setActiveDialog={this.props.setActiveDialog}
-                                resetTimer={this.props.resetTimer}
-                                autoLog={this.props.autoLog}
-                                t={this.props.t}
-                              />
-                            </Countdown>
-                          </div>
-                          : <div></div>
-                        }
-                        <div
-                          className={`${styles.logout} logout`}
-                          onClick={() => this.openLogoutDialog() }>
-                          <FontIcon value='logout' className={styles.logoutIcon} />
-                          {this.props.t('Logout')}
+                    <div className={styles.timer}>
+                      {!this.props.autoLog && this.props.account.passphrase
+                        ? <div className={`${styles.unlocked} unlocked`}>{this.props.t('Unlocked')}</div>
+                        : <div></div>
+                      }
+                      {this.props.autoLog
+                        ? <div>
+                          {((this.props.account.expireTime &&
+                            this.props.account.expireTime !== 0) &&
+                            this.props.account.passphrase)
+                            ? <div className={styles.logoutInfo}>
+                              <Countdown
+                                date={this.props.account.expireTime}
+                                renderer={CountDownTemplate}
+                                onComplete={() => {
+                                  this.props.logOut();
+                                  this.props.history.replace(routes.login.path);
+                                }}
+                              >
+                                <CustomCountDown
+                                  closeDialog={this.props.closeDialog}
+                                  history={this.props.history}
+                                  setActiveDialog={this.props.setActiveDialog}
+                                  resetTimer={this.props.resetTimer}
+                                  autoLog={this.props.autoLog}
+                                  t={this.props.t}
+                                />
+                              </Countdown>
+                            </div>
+                            : <div></div>
+                          }
                         </div>
+                        : <div></div>
+                      }
+                      <div
+                        className={`${styles.logout} logout`}
+                        onClick={() => this.openLogoutDialog() }>
+                        <FontIcon value='logout' className={styles.logoutIcon} />
+                        {this.props.t('Logout')}
                       </div>
-                      : <div></div>
-                    }
+                    </div>
                   </div>
                   <AccountVisual
                     address={this.props.account.address}

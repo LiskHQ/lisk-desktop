@@ -123,6 +123,10 @@ class Login extends React.Component {
       [name]: value,
       ...validator(value, error),
     });
+
+    if (name === 'network') {
+      this.props.settingsUpdated({ network: value });
+    }
   }
 
   onFormSubmit(event) {

@@ -24,8 +24,10 @@ describe('VotingHOC', () => {
         delegates: [
           {
             username: 'username1',
-            publicKey: 'sample_key',
-            address: 'sample_address',
+            account: {
+              address: 'sample_address',
+              publicKey: 'sample_key',
+            },
             rank: 12,
           },
         ],

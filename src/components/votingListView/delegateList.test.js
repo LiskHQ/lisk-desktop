@@ -5,13 +5,13 @@ import DelegateList from './delegateList';
 
 describe('DelegateList', () => {
   const delegate1 = {
-    publicKey: 'sample_key_1', address: '100001L', rank: 1, productivity: 99,
+    publicKey: 'sample_key_1', account: { address: '100001L' }, rank: 1, productivity: 99,
   };
   const delegate2 = {
-    publicKey: 'sample_key_2', address: '100002L', rank: 2, productivity: 98,
+    publicKey: 'sample_key_2', account: { address: '100002L' }, rank: 2, productivity: 98,
   };
   const delegate3 = {
-    publicKey: 'sample_key_3', address: '100003L', rank: 3, productivity: 97,
+    publicKey: 'sample_key_3', account: { address: '100003L' }, rank: 3, productivity: 97,
   };
   const props = {
     showChangeSummery: false,

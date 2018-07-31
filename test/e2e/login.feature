@@ -1,4 +1,5 @@
 Feature: Login
+  @pending
   Scenario: should allow to login to Mainnet through network options launch protocol
     Given I go to "/"
     Then I should see no "network"
@@ -8,6 +9,8 @@ Feature: Login
     And I click "login button"
     Then I should be logged in as "genesis" account
     And I should see no "peer network"
+    And I click "joyride-tooltip__button--skip"
+    And I click "joyride-tooltip__button--skip"
     When I click "transactions" menu
     And I should see 0 rows
     Then I should see text "No activity yet" in "empty message" element
@@ -23,6 +26,8 @@ Feature: Login
     And I click "login button"
     Then I should be logged in as "genesis" account
     And I should see text "testnet" in "peer network" element
+    And I click "joyride-tooltip__button--skip"
+    And I click "joyride-tooltip__button--skip"
     When I click "transactions" menu
     Then I should see 25 rows
 
@@ -36,5 +41,7 @@ Feature: Login
     And I click "login button"
     Then I should be logged in as "genesis" account
     And I should see text "custom node" in "peer network" element
+    And I click "joyride-tooltip__button--skip"
+    And I click "joyride-tooltip__button--skip"
     When I click "transactions" menu
     Then I should see 25 rows

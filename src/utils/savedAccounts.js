@@ -1,19 +1,30 @@
 import { validateUrl } from './login';
 import { extractAddress } from './account';
 
-const isValidSavedAccount = ({ publicKey, network, address }) => {
+const isValidSavedAccount = ({ publicKey, network, peerAddress }) => {
   try {
     return extractAddress(publicKey) &&
       network >= 0 && network <= 2 &&
-      (validateUrl(address).addressValidity === '' || network !== 2);
+      (validateUrl(peerAddress).addressValidity === '' || network !== 2);
   } catch (e) {
     return false;
   }
 };
 
+const fixBackwardsCompatibility = (account) => {
+  // 'address' property was renamed to 'peerAddress' to avoid confusion with account address
+  if (account && account.address) {
+    account.peerAddress = account.address;
+    delete account.address;
+  }
+  return account;
+};
+
 export const getSavedAccounts = () => {
   try {
-    return JSON.parse(localStorage.getItem('accounts')).filter(isValidSavedAccount);
+    return JSON.parse(localStorage.getItem('accounts'))
+      .map(fixBackwardsCompatibility)
+      .filter(isValidSavedAccount);
   } catch (e) {
     return [];
   }
@@ -21,26 +32,26 @@ export const getSavedAccounts = () => {
 
 export const setSavedAccounts = (accounts) => {
   accounts = accounts.map(({
-    publicKey, network, address, balance,
+    publicKey, network, balance, peerAddress,
   }) => ({
-    publicKey, network, address, balance,
+    publicKey, network, balance, peerAddress,
   }));
   localStorage.setItem('accounts', JSON.stringify(accounts));
 };
 
 export const getLastActiveAccount = () => (getSavedAccounts()[localStorage.getItem('lastActiveAccountIndex')] || getSavedAccounts()[0]);
 
-export const getIndexOfSavedAccount = (savedAccounts, { publicKey, network, address }) =>
+export const getIndexOfSavedAccount = (savedAccounts, { publicKey, network, peerAddress }) =>
   savedAccounts.findIndex(account => (
     account.publicKey === publicKey &&
     account.network === network &&
-    account.address === address
+    account.peerAddress === peerAddress
   ));
 
-export const setLastActiveAccount = ({ publicKey, network, address }) => {
+export const setLastActiveAccount = ({ publicKey, network, peerAddress }) => {
   const lastActiveAccountIndex = getIndexOfSavedAccount(
     getSavedAccounts(),
-    { publicKey, network, address },
+    { publicKey, network, peerAddress },
   );
 
   if (lastActiveAccountIndex > -1) {

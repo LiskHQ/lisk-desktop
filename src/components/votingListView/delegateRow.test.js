@@ -16,7 +16,7 @@ describe('DelegateRow', () => {
     data: {
       rank: 12,
       username: 'sample_username',
-      address: 'sample_address',
+      account: { address: 'sample_address' },
     },
     voteToggled: () => {},
   };

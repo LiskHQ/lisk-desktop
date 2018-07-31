@@ -68,10 +68,10 @@ export const passphraseUsed = data => ({
  */
 export const accountVotesFetched = ({ activePeer, address }) =>
   dispatch =>
-    getVotes(activePeer, address).then(({ delegates }) => {
+    getVotes(activePeer, address).then(({ data }) => {
       dispatch({
         type: actionTypes.accountAddVotes,
-        votes: delegates,
+        votes: data,
       });
     });
 
@@ -80,10 +80,10 @@ export const accountVotesFetched = ({ activePeer, address }) =>
  */
 export const accountVotersFetched = ({ activePeer, publicKey }) =>
   dispatch =>
-    getVoters(activePeer, publicKey).then(({ accounts }) => {
+    getVoters(activePeer, publicKey).then(({ data }) => {
       dispatch({
         type: actionTypes.accountAddVoters,
-        voters: accounts,
+        voters: data,
       });
     });
 /**
@@ -117,10 +117,10 @@ export const secondPassphraseRegistered = ({
 export const updateDelegateAccount = ({ activePeer, publicKey }) =>
   (dispatch) => {
     getDelegate(activePeer, { publicKey })
-      .then((delegateData) => {
+      .then((response) => {
         dispatch(accountUpdated(Object.assign(
           {},
-          { delegate: delegateData.delegate, isDelegate: true },
+          { delegate: response.data[0], isDelegate: true },
         )));
       });
   };
@@ -176,8 +176,8 @@ export const loadAccount = ({
     getAccount(activePeer, address)
       .then((response) => {
         let accountDataUpdated = {
-          confirmed: transactionsResponse.transactions,
-          count: parseInt(transactionsResponse.count, 10),
+          confirmed: transactionsResponse.data,
+          count: parseInt(transactionsResponse.meta.count, 10),
           balance: response.balance,
           address,
         };

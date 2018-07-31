@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontIcon } from '../fontIcon';
-import styles from './account.css';
 import networks from '../../constants/networks';
+import styles from './account.css';
 
 /**
  * Contains some of the important and basic information about the account
@@ -14,14 +14,14 @@ const Account = ({ peers, t }) => {
     <FontIcon className='online' value='checkmark' /> :
     <FontIcon className='offline' value='error' />;
 
-  return (peers.data && peers.data.options.code !== networks.mainnet.code ?
+  return ((peers.data &&
+      peers.options.code !== networks.mainnet.code) ?
     <section className={styles.peer}>
-      <div className={`${styles.title} inner primary peer-network`}>{t(peers.data.options.name)} <span id="accountStatus" className={`${styles.status} status`}>{status}</span>
+      <div className={`${styles.title} inner primary peer-network`}>{t(peers.options.name)} <span id="accountStatus" className={`${styles.status} status`}>{status}</span>
       </div>
 
       <span className={`${styles.current} inner secondary peer`}>
-        {peers.data.currentPeer}
-        <span>:{peers.data.port}</span>
+        {peers.data.currentNode}
       </span>
     </section> :
     null
