@@ -25,9 +25,12 @@ class Help extends React.Component {
         <aside className={`${grid['col-sm-12']} ${grid['col-md-4']} ${styles.helpSection} ${styles.sideBar}`}>
           <h2>{this.props.t('Help')}</h2>
           <p>{this.props.t('Search through our tutorials, FAQs or connect to our community all over the world.')}</p>
-          <a className='help-onboarding' onClick={() => this.initOnboarding() }>{this.props.t('New to Hub? Take a tour')}
-            <FontIcon>arrow-right</FontIcon>
-          </a>
+          {
+            this.props.account.passphrase ?
+              <a className='help-onboarding' onClick={() => this.initOnboarding() }>{this.props.t('New to Hub? Take a tour')}
+              <FontIcon>arrow-right</FontIcon>
+            </a> : null
+          }
         </aside>
 
         <section className={`${grid['col-sm-12']} ${grid['col-md-8']} ${styles.helpSection} help-articles`}>

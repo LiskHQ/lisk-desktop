@@ -39,7 +39,7 @@ export default {
   help: {
     path: '/help',
     component: Help,
-    isPrivate: true,
+    isPrivate: false,
   },
   sidechains: {
     path: '/sidechains',
