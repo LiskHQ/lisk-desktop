@@ -24,7 +24,7 @@ const TabTemplate = ({ img, label, isFontIcon }) => (
     {
       !isFontIcon ?
       <img src={img} /> :
-      <FontIcon value={img} />
+      <FontIcon className={styles.bottomIcon} value={img} />
     }
     <span>{label}</span>
   </div>
@@ -92,7 +92,7 @@ class MainMenu extends React.Component {
         label: t('Settings'),
         route: `${routes.setting.path}`,
         id: 'settings',
-        image: menuLogos.settings,
+        image: 'settings',
         enabledWhenNotLoggedIn: true,
       },
       {

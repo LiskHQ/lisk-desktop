@@ -18,8 +18,8 @@ class Help extends React.Component {
   }
 
   render() {
-    const fAQIcon = () => (<span className={styles.inlineIcon}><FontIcon>info</FontIcon>{this.props.t(' FAQ')}</span>);
-    const chatIcon = () => (<span className={styles.inlineIcon}><FontIcon>remove</FontIcon>{this.props.t(' Chat')}</span>);
+    const fAQIcon = () => (<span className={styles.inlineIcon}><FontIcon>info</FontIcon><b>{this.props.t(' FAQ')}</b></span>);
+    const chatIcon = () => (<span className={styles.inlineIcon}><FontIcon>conversation</FontIcon><b>{this.props.t(' Chat')}</b></span>);
     return (
       <Box className={styles.wrapper}>
         <aside className={`${grid['col-sm-12']} ${grid['col-md-4']} ${styles.helpSection} ${styles.sideBar}`}>
@@ -36,7 +36,7 @@ class Help extends React.Component {
         <section className={`${grid['col-sm-12']} ${grid['col-md-8']} ${styles.helpSection} help-articles`}>
           <article>
             <h2>
-              <FontIcon className={styles.headerIcon}>remove</FontIcon>
+              <FontIcon className={styles.headerIcon}>logo-icon</FontIcon>
               {this.props.t('Help Center')}
             </h2>
             <div className={styles.articleContainer}>
@@ -57,7 +57,7 @@ class Help extends React.Component {
 
           <article>
             <h2>
-              <FontIcon className={styles.headerIcon}>remove</FontIcon>
+              <FontIcon className={styles.headerIcon}>academy</FontIcon>
               {this.props.t('Academy')}
             </h2>
             <div className={styles.articleContainer}>
@@ -92,7 +92,7 @@ class Help extends React.Component {
 
           <article>
             <h2>
-              <FontIcon className={styles.headerIcon}>remove</FontIcon>
+              <FontIcon className={styles.headerIcon}>lisk-chat</FontIcon>
               {this.props.t('Lisk.Chat')}
             </h2>
             <div className={styles.articleContainer}>

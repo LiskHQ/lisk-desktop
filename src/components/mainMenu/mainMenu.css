@@ -182,12 +182,19 @@
   overflow: hidden;
 }
 
+.bottomIcon {
+  width: 14px;
+  height: 14px;
+  font-size: 14px;
+}
+
 .bottomTabs {
   position: absolute;
   bottom: 32px;
 
   & .label {
     color: var(--color-grayscale-medium);
+    font-family: var(--content-font);
     font-size: 12px;
     font-weight: var(--font-weight-bold);
     line-height: 18px;
@@ -202,7 +209,8 @@
     }
 
     & span:first-child {
-      margin: 0;
+      margin-right: 3px;
+      margin-top: 7px;
     }
 
     & span:last-child {

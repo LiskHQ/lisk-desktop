@@ -71,6 +71,10 @@
     padding: 0;
   }
 
+  & b {
+    font-family: var(--heading-font);
+  }
+
   & button {
     text-align: center;
     width: 228px;
@@ -97,6 +101,7 @@
 .headerIcon {
   width: 40px;
   height: 40px;
+  margin-top: -7px;
   margin-right: 8px;
   font-size: 40px;
 }
