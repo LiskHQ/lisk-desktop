@@ -71,6 +71,7 @@ class Onboarding extends React.Component {
     const skipOnboarding = data.action === 'skip';
     const lastStepReached = data.index === this.state.steps.length - 1;
     const onboardingFinished = data.type === 'finished';
+    const onEscClick = data.type === 'beacon:before';
 
     if (onboardingNotStarted) {
       this.joyride.next(); // skip to welcome step
@@ -89,8 +90,8 @@ class Onboarding extends React.Component {
     if (lastStepReached) {
       this.onboardingFinished = true;
     }
-    if (onboardingFinished) {
-      if (this.onboardingFinished) this.reset();
+    if (onboardingFinished || onEscClick) {
+      if (this.onboardingFinished || onEscClick) this.reset();
       this.onboardingFinished = true;
     }
   }
