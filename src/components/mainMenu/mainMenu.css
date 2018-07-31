@@ -214,6 +214,7 @@
       display: flex;
       flex-direction: row;
       align-items: flex-start;
+      margin-left: 20px;
     }
 
     & img {
