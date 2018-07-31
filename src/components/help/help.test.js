@@ -14,7 +14,7 @@ describe('Help Page', () => {
   beforeEach(() => {
     props = {
       account: {
-        passphrase: 'pass',
+        address: '123L',
       },
       t: key => key,
       settingsUpdated: spy(),

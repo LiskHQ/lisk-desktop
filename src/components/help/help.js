@@ -26,7 +26,7 @@ class Help extends React.Component {
           <h2>{this.props.t('Help')}</h2>
           <p>{this.props.t('Search through our tutorials, FAQs or connect to our community all over the world.')}</p>
           {
-            this.props.account.passphrase ?
+            this.props.account.address ?
               <a className='help-onboarding' onClick={() => this.initOnboarding() }>{this.props.t('New to Hub? Take a tour')}
               <FontIcon>arrow-right</FontIcon>
             </a> : null
