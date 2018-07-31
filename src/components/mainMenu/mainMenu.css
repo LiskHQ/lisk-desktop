@@ -186,7 +186,6 @@
   position: absolute;
   bottom: 32px;
 
-
   & .label {
     color: var(--color-grayscale-medium);
     font-size: 12px;
@@ -197,7 +196,7 @@
       background: linear-gradient(90deg, var(--color-white) 0%, #eaeff7 100%);
       color: var(--color-grayscale-medium);
 
-      &:before {
+      &::before {
         display: none;
       }
     }
