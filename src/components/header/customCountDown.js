@@ -6,7 +6,7 @@ import styles from './customCountDown.css';
 class CustomCountDown extends React.Component {
   componentDidUpdate() {
     const {
-      minutes, seconds, resetTimer, t, setActiveDialog, closeDialog, history,
+      minutes, seconds, resetTimer, t, setActiveDialog, closeDialog,
     } = this.props;
 
     if (minutes === 0 && seconds === 59) {
@@ -17,10 +17,7 @@ class CustomCountDown extends React.Component {
           text: t('You will be signed out in a minute due to no network activity. You can turn off Auto-Logout in the settings.'),
           firstButton: {
             text: t('Go to settings'),
-            onClickHandler: () => {
-              history.replace(routes.setting.path);
-              closeDialog();
-            },
+            onClickHandler: this.goTo(routes.setting.path),
           },
           secondButton: {
             text: t('Reset timer & continue'),
@@ -40,22 +37,22 @@ class CustomCountDown extends React.Component {
           text: t('Your session was timed out after 10 minutes of no network activitiy. You may continue to use certain sections of your Lisk Hub or sign back in to access everything.'),
           firstButton: {
             text: t('Sign back in'),
-            onClickHandler: () => {
-              history.replace(routes.login.path);
-              closeDialog();
-            },
+            onClickHandler: this.goTo(routes.login.path),
           },
           secondButton: {
             text: t('Continue to Dashboard'),
-            onClickHandler: () => {
-              history.replace(routes.dashboard.path);
-              closeDialog();
-            },
+            onClickHandler: this.goTo(routes.dashboard.path),
           },
         },
       });
     }
   }
+
+  goTo(path) {
+    this.props.history.replace(path);
+    this.props.closeDialog();
+  }
+
   render() {
     const {
       minutes, autoLog, seconds, resetTimer, t,

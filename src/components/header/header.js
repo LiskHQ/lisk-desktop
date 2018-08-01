@@ -32,11 +32,6 @@ class Header extends React.Component {
       .some(el => pathname.includes(el));
   }
 
-  onAccountTimeout() {
-    this.props.removeSavedAccountPassphrase(this.props.account);
-    this.props.removePassphrase();
-  }
-
   openLogoutDialog() {
     this.props.setActiveDialog({
       childComponent: Options,

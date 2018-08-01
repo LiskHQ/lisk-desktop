@@ -15,6 +15,10 @@ describe('customCountDown', () => {
       resetTimer: spy(),
       setActiveDialog: () => {},
       t: key => key,
+      history: {
+        replace: () => {},
+      },
+      closeDialog: () => {},
     };
     wrapper = mount(<CustomCountDown {...propsMock} />);
   });
