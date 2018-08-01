@@ -87,11 +87,15 @@ class Onboarding extends React.Component {
       this.setState({ skip: true });
       this.joyride.reset(true); // go to step 0 to show the skip step
     }
+    if (onEscClick) {
+      this.joyride.reset(true); // go to step 0 to show the skip step
+      this.onboardingFinished = true;
+    }
     if (lastStepReached) {
       this.onboardingFinished = true;
     }
-    if (onboardingFinished || onEscClick) {
-      if (this.onboardingFinished || onEscClick) this.reset();
+    if (onboardingFinished) {
+      if (this.onboardingFinished) this.reset();
       this.onboardingFinished = true;
     }
   }
