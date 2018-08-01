@@ -44,7 +44,7 @@ class Help extends React.Component {
                 <p>{this.props.t('Search for advice and answers in our extensive ')}
                   {fAQIcon()}
                   {this.props.t(' or get in touch in the ')}
-                  {chatIcon()}
+                  {chatIcon()}.
                 </p>
               </div>
               <div>

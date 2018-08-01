@@ -156,7 +156,7 @@ class MainMenu extends React.Component {
               onOverlayClick={this.menuToggle.bind(this)}>
               <div>
                 <header className={styles.header}>
-                  <Link to={`${routes.dashboard.path}`}><img src={logo} className={styles.logo} /></Link>
+                  <Link className={styles.homeLink} to={`${routes.dashboard.path}`}><img src={logo} className={styles.logo} /></Link>
                   <FontIcon value='close' className={styles.close} onClick={this.menuToggle.bind(this)} />
                 </header>
                 <ToolboxTabs index={getIndex(history, tabs)}
@@ -170,6 +170,23 @@ class MainMenu extends React.Component {
                     <Tab
                       key={index}
                       label={<TabTemplate label={label} img={image} />}
+                      id={id}
+                      disabled={!account.address && !enabledWhenNotLoggedIn}
+                    />)}
+                </ToolboxTabs>
+
+                <ToolboxTabs index={getIndex(history, bottomMenuTabs)}
+                  theme={styles}
+                  onChange={this.navigate.bind(this, history, bottomMenuTabs)}
+                  disableAnimatedBottomBorder={true}
+                  className={`${styles.tabs} ${styles.bottomTabs} main-tabs`}>
+                  {bottomMenuTabs.map(({
+                      label, image, id, enabledWhenNotLoggedIn,
+                      }, index) =>
+                    <Tab
+                      key={index}
+                      label={<TabTemplate label={label} img={image} isFontIcon />}
+                      className={styles.bottomTab}
                       id={id}
                       disabled={!account.address && !enabledWhenNotLoggedIn}
                     />)}

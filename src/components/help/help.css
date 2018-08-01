@@ -105,3 +105,9 @@
   margin-right: 8px;
   font-size: 40px;
 }
+
+@media (--medium-viewport) {
+  .helpSection:first-child {
+    display: none;
+  }
+}
