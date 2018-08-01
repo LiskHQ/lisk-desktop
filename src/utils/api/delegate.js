@@ -10,14 +10,14 @@ export const getDelegate = (activePeer, options) =>
   activePeer.delegates.get(options);
 
 export const vote = (activePeer, secret, publicKey, votes, unvotes, secondSecret = null) => {
-  const transaiton = Lisk.transaction.castVotes({
+  const transaction = Lisk.transaction.castVotes({
     votes,
     unvotes,
     passphrase: secret,
     secondPassphrase: secondSecret,
   });
 
-  return activePeer.transactions.broadcast(transaiton);
+  return activePeer.transactions.broadcast(transaction);
 };
 
 export const getVotes = (activePeer, address) =>
