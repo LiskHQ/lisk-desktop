@@ -296,15 +296,18 @@
   }
 
   .bottomTabs {
-
     & .label {
+      & > div {
+        margin-left: 0;
+      }
+
       &.active {
         background: none;
       }
     }
 
     & .bottomTab {
-      max-width: 130px;
+      max-width: 100px;
     }
   }
 }
