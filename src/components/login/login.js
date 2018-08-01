@@ -151,7 +151,7 @@ class Login extends React.Component {
 
   render() {
     return (this.props.account.loading ?
-      <span className={styles.loadingWrapper}></span> :
+      <div className={styles.loadingWrapper}></div> :
       <Box className={styles.wrapper}>
         <section className={`${styles.login} ${styles[this.state.passInputState]}`}>
           <section className={styles.table}>
