@@ -43,29 +43,29 @@ module.exports = function (config) {
       ],
       check: {
         global: {
-          // statements: 80,
-          // branches: 79,
-          // functions: 80,
-          // lines: 80,
+          statements: 80,
+          branches: 79,
+          functions: 80,
+          lines: 80,
         },
         each: {
-          // statements: 80,
-          // branches: 80,
-          // functions: 80,
-          // lines: 80,
-          // excludes: [
-          //   'src/components/register/register.js',
-          //   'src/components/voteUrlProcessor/index.js',
-          //   'src/utils/api/liskService.js',
-          //   'src/store/reducers/liskService.js',
-          //   'src/actions/transactions.js',
-          //   'src/components/errorBoundary/index.js',
-          // ],
-          // overrides: {
-          //   'src/store/**/*.js': {
-          //     statements: 100,
-          //   },
-          // },
+          statements: 80,
+          branches: 80,
+          functions: 80,
+          lines: 80,
+          excludes: [
+            'src/components/register/register.js',
+            'src/components/voteUrlProcessor/index.js',
+            'src/utils/api/liskService.js',
+            'src/store/reducers/liskService.js',
+            'src/actions/transactions.js',
+            'src/components/errorBoundary/index.js',
+          ],
+          overrides: {
+            'src/store/**/*.js': {
+              statements: 100,
+            },
+          },
         },
       },
     },
