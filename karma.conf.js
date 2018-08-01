@@ -43,10 +43,10 @@ module.exports = function (config) {
       ],
       check: {
         global: {
-          // statements: 80,
-          // branches: 79,
-          // functions: 80,
-          // lines: 80,
+          statements: 80,
+          branches: 79,
+          functions: 80,
+          lines: 80,
         },
         each: {
           statements: 80,
@@ -60,10 +60,6 @@ module.exports = function (config) {
             'src/store/reducers/liskService.js',
             'src/actions/transactions.js',
             'src/components/errorBoundary/index.js',
-            'src/components/savedAccounts/index.js',
-            'src/store/middlewares/savedAccounts.js',
-            'src/store/reducers/savedAccounts.js',
-            'src/components/header/customCountDown.js',
           ],
           overrides: {
             'src/store/**/*.js': {
