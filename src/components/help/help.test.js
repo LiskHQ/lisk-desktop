@@ -32,5 +32,13 @@ describe('Help Page', () => {
 
     wrapper.find('.help-visit-center').simulate('click');
     expect(windowOpenSpy).to.have.been.calledWith(links.helpCenter, '_blank');
+
+    const propsNotLoggedIn = {
+      ...props,
+    };
+    delete propsNotLoggedIn.account.address;
+    wrapper.setProps(propsNotLoggedIn);
+    wrapper.update();
+    expect(wrapper).to.have.exactly(0).descendants('.help-onboarding');
   });
 });
