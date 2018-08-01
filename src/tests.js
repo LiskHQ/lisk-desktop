@@ -15,6 +15,14 @@ chai.use(chaiAsPromised);
 sinonStubPromise(sinon);
 /* istanbul ignore next */
 window.localStorage.getItem = () => JSON.stringify([]);
+
+const localStorageMock = {
+  getItem: jest.fn(),
+  setItem: jest.fn(),
+  clear: jest.fn(),
+};
+global.localStorage = localStorageMock;
+
 // const testsContext = require.context('.', true, /\.test\.js$/);
 // testsContext.keys().forEach(testsContext);
 
