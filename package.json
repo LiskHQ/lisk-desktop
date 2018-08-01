@@ -234,7 +234,7 @@
   },
   "jest": {
     "modulePaths": ["<rootDir>/src/components"],
-    "testMatch": ["<rootDir>/src/components/passphrase/**/?(*.)+(spec|test).js?(x)"],
+    "testMatch": ["<rootDir>/src/components/passphrase/ConfirmSecond/confirmSecond.test.js"],
     "verbose": true,
     "moduleFileExtensions": ["js"],
     "moduleDirectories": ["node_modules"],
