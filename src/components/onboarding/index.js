@@ -71,7 +71,6 @@ class Onboarding extends React.Component {
     const skipOnboarding = data.action === 'skip';
     const lastStepReached = data.index === this.state.steps.length - 1;
     const onboardingFinished = data.type === 'finished';
-    const onEscClick = data.type === 'beacon:before';
 
     if (onboardingNotStarted) {
       this.joyride.next(); // skip to welcome step
@@ -86,10 +85,6 @@ class Onboarding extends React.Component {
     if (skipOnboarding) {
       this.setState({ skip: true });
       this.joyride.reset(true); // go to step 0 to show the skip step
-    }
-    if (onEscClick) {
-      this.joyride.reset(true); // go to step 0 to show the skip step
-      this.onboardingFinished = true;
     }
     if (lastStepReached) {
       this.onboardingFinished = true;
@@ -117,6 +112,7 @@ class Onboarding extends React.Component {
       autoStart={true}
       type='continuous'
       holePadding={0}
+      keyboardNavigation={false}
     /></div>;
   }
 }
