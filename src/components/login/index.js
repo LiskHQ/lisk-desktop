@@ -1,13 +1,13 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { translate } from 'react-i18next';
+import { setDefaults, translate } from 'react-i18next';
 import { dialogDisplayed } from '../../actions/dialog';
 import Login from './login';
 import { activePeerSet } from '../../actions/peers';
 import { activeAccountSaved } from '../../actions/savedAccounts';
 import { settingsUpdated } from '../../actions/settings';
 
-translate.setDefaults({
+setDefaults({
   wait: true,
   withRef: false,
   bindI18n: 'languageChanged loaded',

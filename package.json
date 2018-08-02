@@ -140,6 +140,8 @@
     "identity-obj-proxy": "3.0.0",
     "imports-loader": "0.7.1",
     "jest": "23.4.2",
+    "jest-localstorage-mock": "2.2.0",
+    "jsdom": "11.11.0",
     "json-loader": "0.5.7",
     "karma": "1.7.1",
     "karma-chai": "=0.1.0",
@@ -233,19 +235,29 @@
     ]
   },
   "jest": {
-    "modulePaths": ["<rootDir>/src/components"],
-    "testMatch": ["<rootDir>/src/components/passphrase/ConfirmSecond/confirmSecond.test.js"],
+    "modulePaths": [
+      "<rootDir>/src/components"
+    ],
+    "testMatch": [
+      "<rootDir>/src/components/passphrase/ConfirmSecond/**/?(*.)+(spec|confirmSecond.test).js?(x)"
+    ],
     "verbose": true,
-    "moduleFileExtensions": ["js"],
-    "moduleDirectories": ["node_modules"],
+    "moduleFileExtensions": [
+      "js"
+    ],
+    "moduleDirectories": [
+      "node_modules"
+    ],
     "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
-      "\\.(css|less)$": "identity-obj-proxy"
+      "^.+\\.css$": "identity-obj-proxy",
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js"
     },
-    "setupFiles": ["<rootDir>/src/tests.js"],
+    "setupFiles": [
+      "<rootDir>/src/tests.js"
+    ],
     "transform": {
       "^.+\\.js$": "babel-jest"
     },
-    "testURL": "http://localhost/"
+    "testURL": "http://localhost"
   }
 }
