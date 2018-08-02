@@ -22,23 +22,26 @@
   position: relative;
 }
 
-.graph {
-  height: calc(40% - 20px);
+.bottomModuleWrapper {
+  height: 50%;
   min-height: 200px;
-  margin-bottom: 20px;
+  overflow: hidden;
+  padding: 0px 8px;
+}
+
+.graph {
   overflow: hidden;
   padding: 0px;
 }
 
 .latestActivity {
-  height: 60%;
-  margin: 0px;
+  height: calc(50% - 20px);
+  margin: 0px 0px 20px;
 }
 
 @media (--medium-viewport) {
   .wrapper {
     & .main {
-      padding: 0;
       max-width: 100%;
       flex-basis: 100%;
     }
@@ -53,7 +56,8 @@
   }
 
   .latestActivity {
-    height: auto;
+    height: unset;
+    min-height: unset;
   }
 }
 

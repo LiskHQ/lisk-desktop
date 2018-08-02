@@ -8,6 +8,7 @@ import offlineMiddleware from './offline';
 // import notificationMiddleware from './notification';
 import votingMiddleware from './voting';
 import savedAccountsMiddleware from './savedAccounts';
+import followedAccountsMiddleware from './followedAccounts';
 import socketMiddleware from './socket';
 import savedSettingsMiddleware from './savedSettings';
 
@@ -22,5 +23,6 @@ export default [
   // notificationMiddleware,
   votingMiddleware,
   savedAccountsMiddleware,
+  followedAccountsMiddleware,
   savedSettingsMiddleware,
 ];

@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { stub, spy } from 'sinon';
+import Lisk from 'lisk-elements';
 
 import * as accountAPI from '../../src/utils/api/account';
 import * as delegateAPI from '../../src/utils/api/delegate';
@@ -23,6 +24,8 @@ import accounts from '../constants/accounts';
 import networks from './../../src/constants/networks';
 import GenericStepDefinition from '../utils/genericStepDefinition';
 
+const nethash = '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d';
+
 describe('@integration: Login', () => {
   let wrapper;
   let helper;
@@ -35,8 +38,29 @@ describe('@integration: Login', () => {
   const errorMessage = 'Unable to connect to the node';
   const { passphrase } = accounts.genesis;
 
+  let APIClientBackup;
+  let getConstantsMock;
+
+  beforeEach(() => {
+    APIClientBackup = Lisk.APIClient;
+    getConstantsMock = stub().returnsPromise();
+
+    // TODO: find a better way of mocking Lisk.APIClient
+    Lisk.APIClient = class MockAPIClient {
+      constructor() {
+        this.node = {
+          getConstants: getConstantsMock,
+        };
+      }
+    };
+    Lisk.APIClient.constants = APIClientBackup.constants;
+
+    getConstantsMock.resolves({ data: { nethash } });
+  });
+
   afterEach(() => {
     wrapper.update();
+    Lisk.APIClient = APIClientBackup;
   });
 
   const createStore = () => (
@@ -95,7 +119,7 @@ describe('@integration: Login', () => {
     // eslint-disable-next-line class-methods-use-this
     checkIfInRoute() {
       expect(this.store.getState().account).to.have.all.keys(
-        'passphrase', 'publicKey', 'address', 'delegate',
+        'passphrase', 'publicKey', 'address', 'peerAddress',
         'isDelegate', 'expireTime', 'u_multisignatures', 'multisignatures', 'unconfirmedBalance',
         'secondSignature', 'secondPublicKey', 'balance', 'unconfirmedSignature', 'network', 'votes', 'voters',
       );

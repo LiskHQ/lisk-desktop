@@ -16,7 +16,7 @@
   flex-direction: column;
   overflow: auto;
   overflow-x: hidden;
-  margin: 0px;
+  margin: 0;
   height: var(--main-box-height);
   -webkit-overflow-scrolling: touch;
 

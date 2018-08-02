@@ -23,7 +23,7 @@ class DelegateList extends React.Component {
       {
         this.state.didMount ?
           this.props.list.map(item =>
-            <DelegateRow key={item.address} data={item}
+            <DelegateRow key={item.account.address} data={item}
               className={this.props.safari}
               voteToggled={this.props.voteToggled}
               voteStatus={this.props.votes[item.username]}

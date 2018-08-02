@@ -17,6 +17,9 @@ class SendReadable extends React.Component {
       amount: {
         value: '',
       },
+      reference: {
+        value: '',
+      },
       loading: false,
     };
     this.fee = fees.send;
@@ -25,13 +28,15 @@ class SendReadable extends React.Component {
   componentDidMount() {
     const recipient = this.props.accountInit ? this.props.account.address : this.props.recipient;
     const amount = this.props.accountInit ? 0.1 : this.props.amount;
-
     const newState = {
       recipient: {
         value: recipient || '',
       },
       amount: {
         value: amount || '',
+      },
+      reference: {
+        value: this.props.reference || '',
       },
     };
     this.setState(newState);
@@ -81,6 +86,7 @@ class SendReadable extends React.Component {
       amount: this.state.amount.value,
       passphrase: this.props.passphrase.value,
       secondPassphrase: this.props.secondPassphrase.value,
+      data: this.props.reference,
     });
   }
 
@@ -113,6 +119,15 @@ class SendReadable extends React.Component {
               onChange={this.handleChange.bind(this, 'recipient')}
               disabled={true}
             />
+            {this.state.reference.value ?
+              <Input label={this.props.t('Reference')}
+                className={`reference ${styles.disabledInput}`}
+                error={this.state.reference.error}
+                value={this.state.reference.value}
+                disabled={true}
+                theme={styles}
+              /> : null
+            }
 
             <Input label={this.props.t('Total incl. {{fee}} LSK Fee', { fee: fromRawLsk(fees.send) })}
               className={`amount ${styles.disabledInput}`}

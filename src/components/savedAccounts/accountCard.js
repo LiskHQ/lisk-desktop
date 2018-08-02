@@ -31,7 +31,7 @@ const AccountCard = ({
       null)}
     {(account.network !== networks.mainnet.code ?
       <strong className={styles.network}>
-        {account.address ? account.address : t(getNetwork(account.network).name)}
+        {account.peerAddress ? account.peerAddress : t(getNetwork(account.network).name)}
       </strong> :
       null)}
     <div className={styles.cardIcon}>

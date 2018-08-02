@@ -12,6 +12,10 @@ Feature: Onboarding
     And I click "joyride-tooltip__button--primary"
     And I wait 0.4 seconds
     Then I should see text "Lisk ID" in "joyride-tooltip__header" element
+    
+    And I click "joyride-tooltip__button--primary"
+    And I wait 0.4 seconds
+    Then I should see text "Explore the network" in "joyride-tooltip__header" element
 
     And I click "joyride-tooltip__button--primary"
     And I wait 0.4 seconds
@@ -20,10 +24,6 @@ Feature: Onboarding
     And I click "joyride-tooltip__button--primary"
     And I wait 0.4 seconds
     Then I should see text "Send LSK" in "joyride-tooltip__header" element
-
-    And I click "joyride-tooltip__button--primary"
-    And I wait 0.4 seconds
-    Then I should see text "Explore the network" in "joyride-tooltip__header" element
 
     And I click "joyride-tooltip__button--primary"
     And I wait 0.4 seconds
@@ -52,15 +52,15 @@ Feature: Onboarding
 
     And I click "joyride-tooltip__button--primary"
     And I wait 0.4 seconds
+    Then I should see text "Explore the network" in "joyride-tooltip__header" element
+
+    And I click "joyride-tooltip__button--primary"
+    And I wait 0.4 seconds
     Then I should see text "Keep the overview" in "joyride-tooltip__header" element
 
     And I click "joyride-tooltip__button--primary"
     And I wait 0.4 seconds
     Then I should see text "Send LSK" in "joyride-tooltip__header" element
-
-    And I click "joyride-tooltip__button--primary"
-    And I wait 0.4 seconds
-    Then I should see text "Explore the network" in "joyride-tooltip__header" element
 
     And I click "joyride-tooltip__button--primary"
     And I wait 0.4 seconds
@@ -81,6 +81,10 @@ Feature: Onboarding
     And I click "joyride-tooltip__button--primary"
     Then I should see no "joyride-tooltip__header"
     When I refresh the page
+    And I click "home-link"
+    And I wait 0.4 seconds
+    Then I should be logged in as "genesis" account
+    And I wait 0.4 seconds
     And I wait 1 seconds
     Then I should see no "joyride-tooltip__header"
 

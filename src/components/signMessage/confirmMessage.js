@@ -1,9 +1,10 @@
 import React from 'react';
-import Lisk from 'lisk-js';
+import Lisk from 'lisk-elements';
 import styles from './confirmMessage.css';
 import { Button } from '../toolbox/buttons/button';
 import Input from '../toolbox/inputs/input';
 import { passphraseIsValid } from '../../utils/form';
+import { extractPublicKey } from '../../utils/account';
 // eslint-disable-next-line import/no-named-as-default
 import PassphraseInput from '../passphraseInput';
 import TransitionWrapper from '../toolbox/transitionWrapper';
@@ -31,6 +32,18 @@ class ConfirmMessage extends React.Component {
   }
 
   handleChange(name, value, error) {
+    if (!error) {
+      const publicKeyMap = {
+        passphrase: 'publicKey',
+        secondPassphrase: 'secondPublicKey',
+      };
+
+      const expectedPublicKey = this.props.account[publicKeyMap[name]];
+
+      if (expectedPublicKey && expectedPublicKey !== extractPublicKey(value)) {
+        error = this.props.t('Entered passphrase does not belong to the active account');
+      }
+    }
     this.setState({
       [name]: {
         value,
@@ -48,14 +61,16 @@ class ConfirmMessage extends React.Component {
 
   sign() {
     const { message } = this.props;
-    const signedMessage = Lisk.crypto.signMessageWithSecret(
+    const signedMessage = Lisk.cryptography.signMessageWithPassphrase(
       message,
-      this.state.passphrase.value,
+      this.state.passphrase.value || this.props.account.passphrase,
+      this.props.account.publicKey,
     );
-    const result = Lisk.crypto.printSignedMessage(
+    const result = Lisk.cryptography.printSignedMessage({
       message,
-      signedMessage, this.props.account.publicKey,
-    );
+      publicKey: this.props.account.publicKey,
+      signature: signedMessage.signature,
+    });
     return result;
   }
 

@@ -1,6 +1,6 @@
 {
   "name": "lisk-hub",
-  "version": "0.9.0-rc.1",
+  "version": "1.0.0-rc.1",
   "description": "Lisk Hub",
   "homepage": "https://github.com/LiskHQ/lisk-hub",
   "bugs": "https://github.com/LiskHQ/lisk-hub/issues",
@@ -22,7 +22,7 @@
     "dist": "build --ia32 --x64 --publish onTag",
     "dist:win": "build --win --ia32 --x64 --publish onTag",
     "dist:mac": "build --mac",
-    "dist:linux": "build --linux --ia32 --x64 --armv7l",
+    "dist:linux": "build --linux --x64 --publish onTag",
     "copy-files": "cpx \"./src/{index.html,assets/**/*}\" ./app/build/",
     "clean-build": "rm -rf app/build",
     "clean-dist": "rm -rf dist",
@@ -51,7 +51,7 @@
     "i18next-localstorage-cache": "=1.1.1",
     "i18next-xhr-backend": "=1.4.2",
     "js-sha256": "0.9.0",
-    "lisk-js": "0.5.1",
+    "lisk-elements": "1.0.0-rc.1",
     "lodash.throttle": "4.1.1",
     "lolex": "=2.3.2",
     "moment": "2.20.1",
@@ -209,7 +209,7 @@
   "bundlesize": [
     {
       "path": "./app/build/bundle.app.*.js",
-      "maxSize": "890 kB"
+      "maxSize": "965 kB"
     },
     {
       "path": "./app/build/bundle.vendor.*.js",

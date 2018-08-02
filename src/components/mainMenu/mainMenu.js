@@ -4,14 +4,12 @@ import { Tab, Tabs as ToolboxTabs } from 'react-toolbox/lib/tabs';
 import Drawer from 'react-toolbox/lib/drawer';
 import MenuBar from '../menuBar';
 import styles from './mainMenu.css';
-import logo from '../../assets/images/logo-beta.svg';
+import logo from '../../assets/images/Lisk-Logo.svg';
 import * as menuLogos from '../../assets/images/main-menu-icons/*.svg'; //eslint-disable-line
 import { FontIcon } from '../fontIcon';
 import routes from '../../constants/routes';
 
 const getIndex = (history, tabs) => {
-  if (history.location.pathname.includes('explorer')) return 2;
-
   let index = -1;
   tabs.map(t => new RegExp(`${t.route}(\\/?)`)).forEach((item, i) => {
     if (history.location.pathname.match(item)) {
@@ -20,9 +18,6 @@ const getIndex = (history, tabs) => {
   });
   return index;
 };
-
-const isCurrent = (history, index, tabs) =>
-  history.location.pathname.indexOf(tabs[index].route) === 6; // after: /main/
 
 const TabTemplate = ({ img, label }) => (
   <div>
@@ -48,10 +43,8 @@ class MainMenu extends React.Component {
   }
 
   navigate(history, tabs, index) {
-    if (!isCurrent(history, index, tabs)) {
-      this.setState({ active: false, index });
-      history.replace(tabs[index].route);
-    }
+    this.setState({ active: false, index });
+    history.push(tabs[index].route);
   }
 
   settingToggle() {
@@ -83,11 +76,6 @@ class MainMenu extends React.Component {
         image: menuLogos.buyLisk,
       }, {
       */
-        label: t('Explorer'),
-        route: `${routes.explorer.path}${routes.search.path}`,
-        id: 'explorer',
-        image: menuLogos.search,
-      }, {
         label: t('Sidechains'),
         route: `${routes.sidechains.path}`,
         id: 'sidechains',
@@ -97,6 +85,7 @@ class MainMenu extends React.Component {
         route: `${routes.setting.path}`,
         id: 'settings',
         image: menuLogos.settings,
+        enabledWhenNotLoggedIn: true,
       },
     ];
 
@@ -109,26 +98,25 @@ class MainMenu extends React.Component {
       });
     }
 
-    const itemShouldBeDisabled = index =>
-      (isCurrent(history, index, tabs) || !account.address) && index !== 2 && index !== 4;
-
     return (
       <Fragment>
         <aside className={styles.aside}>
           <div className={styles.sideBarWrapper}>
-            <Link to={`${routes.dashboard.path}`}><img src={logo} className={styles.logo} /></Link>
+            <Link to={`${routes.dashboard.path}`} className='home-link'><img src={logo} className={styles.logo} /></Link>
             <ToolboxTabs index={getIndex(history, tabs)}
               theme={styles}
               onChange={this.navigate.bind(this, history, tabs)}
               disableAnimatedBottomBorder={true}
               className={`${styles.tabs} main-tabs`}>
-              {tabs.map(({ label, image, id }, index) =>
+              {tabs.map(({
+                   label, image, id, enabledWhenNotLoggedIn,
+                  }, index) =>
                 <Tab
                   key={index}
                   label={<TabTemplate label={label} img={image} />}
                   className={styles.tab}
                   id={id}
-                  disabled={itemShouldBeDisabled(index)}
+                  disabled={!account.address && !enabledWhenNotLoggedIn}
                 />)}
             </ToolboxTabs>
             <Drawer theme={styles}
@@ -145,12 +133,14 @@ class MainMenu extends React.Component {
                   onChange={this.navigate.bind(this, history, tabs)}
                   disableAnimatedBottomBorder={true}
                   className={`${styles.tabs} main-tabs`}>
-                  {tabs.map(({ label, image, id }, index) =>
+                  {tabs.map(({
+                       label, image, id, enabledWhenNotLoggedIn,
+                      }, index) =>
                     <Tab
                       key={index}
                       label={<TabTemplate label={label} img={image} />}
                       id={id}
-                      disabled={itemShouldBeDisabled(index)}
+                      disabled={!account.address && !enabledWhenNotLoggedIn}
                     />)}
                 </ToolboxTabs>
               </div>

@@ -1,12 +1,12 @@
 import i18next from 'i18next';
 import actionTypes from '../constants/actions';
-import { setSecondPassphrase, send, getAccount } from '../utils/api/account';
+import { setSecondPassphrase, getAccount } from '../utils/api/account';
 import { registerDelegate, getDelegate, getVotes, getVoters } from '../utils/api/delegate';
-import { loadTransactionsFinish } from './transactions';
+import { loadTransactionsFinish, transactionsUpdated } from './transactions';
 import { delegateRegisteredFailure } from './delegate';
 import { errorAlertDialogDisplayed } from './dialog';
+import { activePeerUpdate } from './peers';
 import Fees from '../constants/fees';
-import { toRawLsk } from '../utils/lsk';
 import transactionTypes from '../constants/transactionTypes';
 
 /**
@@ -68,10 +68,10 @@ export const passphraseUsed = data => ({
  */
 export const accountVotesFetched = ({ activePeer, address }) =>
   dispatch =>
-    getVotes(activePeer, address).then(({ delegates }) => {
+    getVotes(activePeer, address).then(({ data }) => {
       dispatch({
         type: actionTypes.accountAddVotes,
-        votes: delegates,
+        votes: data,
       });
     });
 
@@ -80,10 +80,10 @@ export const accountVotesFetched = ({ activePeer, address }) =>
  */
 export const accountVotersFetched = ({ activePeer, publicKey }) =>
   dispatch =>
-    getVoters(activePeer, publicKey).then(({ accounts }) => {
+    getVoters(activePeer, publicKey).then(({ data }) => {
       dispatch({
         type: actionTypes.accountAddVoters,
-        voters: accounts,
+        voters: data,
       });
     });
 /**
@@ -111,6 +111,18 @@ export const secondPassphraseRegistered = ({
         dispatch(errorAlertDialogDisplayed({ text }));
       });
     dispatch(passphraseUsed(passphrase));
+  };
+
+
+export const updateDelegateAccount = ({ activePeer, publicKey }) =>
+  (dispatch) => {
+    getDelegate(activePeer, { publicKey })
+      .then((response) => {
+        dispatch(accountUpdated(Object.assign(
+          {},
+          { delegate: response.data[0], isDelegate: true },
+        )));
+      });
   };
 
 /**
@@ -142,36 +154,6 @@ export const delegateRegistered = ({
     dispatch(passphraseUsed(passphrase));
   };
 
-/**
- *
- */
-export const sent = ({
-  activePeer, account, recipientId, amount, passphrase, secondPassphrase,
-}) =>
-  (dispatch) => {
-    send(activePeer, recipientId, toRawLsk(amount), passphrase, secondPassphrase)
-      .then((data) => {
-        dispatch({
-          data: {
-            id: data.transactionId,
-            senderPublicKey: account.publicKey,
-            senderId: account.address,
-            recipientId,
-            amount: toRawLsk(amount),
-            fee: Fees.send,
-            type: transactionTypes.send,
-          },
-          type: actionTypes.transactionAdded,
-        });
-      })
-      .catch((error) => {
-        const errorMessage = error && error.message ? `${error.message}.` : i18next.t('An error occurred while creating the transaction.');
-        dispatch({ data: { errorMessage }, type: actionTypes.transactionFailed });
-      });
-    dispatch(passphraseUsed(passphrase));
-  };
-
-
 export const loadDelegate = ({ activePeer, publicKey }) =>
   (dispatch) => {
     getDelegate(activePeer, { publicKey }).then((response) => {
@@ -190,13 +172,12 @@ export const loadAccount = ({
   transactionsResponse,
   isSameAccount,
 }) =>
-
   (dispatch) => {
     getAccount(activePeer, address)
       .then((response) => {
         let accountDataUpdated = {
-          confirmed: transactionsResponse.transactions,
-          count: parseInt(transactionsResponse.count, 10),
+          confirmed: transactionsResponse.data,
+          count: parseInt(transactionsResponse.meta.count, 10),
           balance: response.balance,
           address,
         };
@@ -214,4 +195,47 @@ export const loadAccount = ({
         }
         dispatch(loadTransactionsFinish(accountDataUpdated));
       });
+  };
+
+export const updateTransactionsIfNeeded = ({ transactions, activePeer, account }, windowFocus) =>
+  (dispatch) => {
+    const hasRecentTransactions = txs => (
+      txs.confirmed.filter(tx => tx.confirmations < 1000).length !== 0 ||
+      txs.pending.length !== 0
+    );
+
+    if (windowFocus || !hasRecentTransactions(transactions)) {
+      const { filter } = transactions;
+      const address = transactions.account ? transactions.account.address : account.address;
+
+      dispatch(transactionsUpdated({
+        pendingTransactions: transactions.pending,
+        activePeer,
+        address,
+        limit: 25,
+        filter,
+      }));
+    }
+  };
+
+export const accountDataUpdated = ({
+  peers, account, windowIsFocused, transactions,
+}) =>
+  (dispatch) => {
+    getAccount(peers.data, account.address).then((result) => {
+      if (result.balance !== account.balance) {
+        dispatch(updateTransactionsIfNeeded(
+          {
+            transactions,
+            activePeer: peers.data,
+            account,
+          },
+          !windowIsFocused,
+        ));
+      }
+      dispatch(accountUpdated(result));
+      dispatch(activePeerUpdate({ online: true }));
+    }).catch((res) => {
+      dispatch(activePeerUpdate({ online: false, code: res.error.code }));
+    });
   };

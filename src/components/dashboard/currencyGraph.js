@@ -44,7 +44,7 @@ const chartOptions = step => ({
     padding: {
       left: 0,
       right: 0,
-      top: 0,
+      top: 80,
       bottom: bottomPadding,
     },
   },
@@ -174,7 +174,7 @@ class CurrencyGraph extends React.Component {
       afterDraw(chartInstance) {
         drawGradientRectangle(chartInstance, {
           bottomPosition: bottomPadding + 32,
-          height: 5,
+          height: 10,
         });
       },
     });

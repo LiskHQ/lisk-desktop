@@ -5,6 +5,7 @@ import { dialogDisplayed } from '../../actions/dialog';
 import Login from './login';
 import { activePeerSet } from '../../actions/peers';
 import { activeAccountSaved } from '../../actions/savedAccounts';
+import { settingsUpdated } from '../../actions/settings';
 
 translate.setDefaults({
   wait: true,
@@ -29,6 +30,7 @@ const mapDispatchToProps = dispatch => ({
   activePeerSet: data => dispatch(activePeerSet(data)),
   setActiveDialog: data => dispatch(dialogDisplayed(data)),
   activeAccountSaved: () => dispatch(activeAccountSaved()),
+  settingsUpdated: data => dispatch(settingsUpdated(data)),
 });
 
 export default connect(

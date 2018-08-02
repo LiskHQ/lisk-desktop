@@ -5,6 +5,7 @@ import EmptyState from '../emptyState';
 import TransactionList from './transactionList';
 import styles from './transactions.css';
 import txFilters from './../../constants/transactionFilters';
+import { getIndexOfFollowedAccount } from './../../utils/followedAccounts';
 
 class TransactionsOverview extends React.Component {
   constructor(props) {
@@ -82,10 +83,20 @@ class TransactionsOverview extends React.Component {
       };
     }
 
+    const index = getIndexOfFollowedAccount(
+      this.props.followedAccounts,
+      { address: this.props.address },
+    );
+    const accountTitle = this.props.followedAccounts[index]
+      && this.props.followedAccounts[index].title;
+    const hasTitle = index !== -1 && accountTitle !== this.props.address;
+
     return (
       <div className={`transactions ${styles.activity}`}>
         <header>
-          <h2 className={styles.title}>{this.props.t('Activity')}</h2>
+          <h2 className={styles.title}>{this.props.t('Activity')} {hasTitle
+            ? (<span>{this.props.t('of')} <span className={`${styles.accountTitle} account-title`}>{accountTitle}</span></span>)
+            : null}</h2>
 
         </header>
         {this.shouldShowEmptyState() ?
@@ -134,8 +145,10 @@ class TransactionsOverview extends React.Component {
   }
 }
 const mapStateToProps = state => ({
+  followedAccounts: state.followedAccounts.accounts,
   peers: state.peers,
   account: state.account,
 });
+
 export default connect(mapStateToProps)(TransactionsOverview);
 

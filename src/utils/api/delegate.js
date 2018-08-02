@@ -1,33 +1,45 @@
-import { requestToActivePeer } from './peers';
+import Lisk from 'lisk-elements';
 
 export const listAccountDelegates = (activePeer, address) =>
-  requestToActivePeer(activePeer, 'accounts/delegates', { address });
-
+  activePeer.votes.get({ address, limit: '101' });
 
 export const listDelegates = (activePeer, options) =>
-  requestToActivePeer(activePeer, `delegates/${options.q ? 'search' : ''}`, options);
+  activePeer.delegates.get(options);
 
 export const getDelegate = (activePeer, options) =>
-  requestToActivePeer(activePeer, 'delegates/get', options);
+  activePeer.delegates.get(options);
 
-export const vote = (activePeer, secret, publicKey, voteList, unvoteList, secondSecret = null) =>
-  requestToActivePeer(activePeer, 'accounts/delegates', {
-    secret,
-    publicKey,
-    delegates: voteList.map(delegate => `+${delegate}`).concat(unvoteList.map(delegate => `-${delegate}`)),
-    secondSecret,
+export const vote = (activePeer, secret, publicKey, votes, unvotes, secondSecret = null) => {
+  const transaction = Lisk.transaction.castVotes({
+    votes,
+    unvotes,
+    passphrase: secret,
+    secondPassphrase: secondSecret,
   });
 
+  return activePeer.transactions.broadcast(transaction);
+};
+
 export const getVotes = (activePeer, address) =>
-  requestToActivePeer(activePeer, 'accounts/delegates/', { address });
+  activePeer.votes.get({ address });
 
 export const getVoters = (activePeer, publicKey) =>
-  requestToActivePeer(activePeer, 'delegates/voters', { publicKey });
+  activePeer.voters.get({ publicKey });
 
-export const registerDelegate = (activePeer, username, secret, secondSecret = null) => {
-  const data = { username, secret };
-  if (secondSecret) {
-    data.secondSecret = secondSecret;
+export const registerDelegate = (activePeer, username, passphrase, secondPassphrase = null) => {
+  const data = { username, passphrase };
+  if (secondPassphrase) {
+    data.secondPassphrase = secondPassphrase;
   }
-  return requestToActivePeer(activePeer, 'delegates', data);
+  return new Promise((resolve, reject) => {
+    const transaction = Lisk.transaction.registerDelegate({ ...data });
+    activePeer.transactions
+      .broadcast(transaction)
+      .then(() => {
+        resolve(transaction);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
 };

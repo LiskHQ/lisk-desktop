@@ -10,7 +10,7 @@ describe('savedAccounts', () => {
   const publicKey = 'fab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88';
   const accounts = [
     {
-      publicKey: 'hab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88',
+      publicKey: 'aab9d261ea050b9e326d7e11587eccc343a20e64e29d8781b50fd06683cacc88',
       network: 0,
       balance: 0,
     },
@@ -22,7 +22,7 @@ describe('savedAccounts', () => {
     {
       publicKey,
       network: 2,
-      address: 'http://localhost:4000',
+      peerAddress: 'http://localhost:4000',
       balance: 0,
     },
   ];

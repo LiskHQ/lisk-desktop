@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import AccountCard from './accountCard';
 
-describe('SavedAccounts', () => {
+describe('AccountCard', () => {
   const account = {
     passsphrase: 'dolphin inhale planet talk insect release maze engine guilt loan attend lawn',
     publicKey: 'ecf6a5cc0b7168c7948ccfaa652cce8a41256bdac1be62eb52f68cde2fb69f2d',

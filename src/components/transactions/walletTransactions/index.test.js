@@ -6,13 +6,15 @@ import { expect } from 'chai';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { prepareStore } from '../../../../test/utils/applicationInit';
-import * as accountAPI from '../../../../src/utils/api/account';
 import * as delegateAPI from '../../../../src/utils/api/delegate';
+import * as transactionsAPI from '../../../../src/utils/api/transactions';
+import followedAccountsReducer from '../../../store/reducers/followedAccounts';
 import peersReducer from '../../../store/reducers/peers';
 import accountReducer from '../../../store/reducers/account';
 import transactionsReducer from '../../../store/reducers/transactions';
 import searchReducer from '../../../store/reducers/search';
 import loadingReducer from '../../../store/reducers/loading';
+import filtersReducer from '../../../store/reducers/filters';
 
 import { accountLoggedIn } from '../../../../src/actions/account';
 import { activePeerSet } from '../../../../src/actions/peers';
@@ -32,20 +34,22 @@ describe('WalletTransactions Component', () => {
   let delegateVotersStub;
 
   const store = prepareStore({
+    followedAccounts: followedAccountsReducer,
     peers: peersReducer,
     account: accountReducer,
     transactions: transactionsReducer,
     search: searchReducer,
     loading: loadingReducer,
+    filters: filtersReducer,
   }, [thunk]);
 
   beforeEach(() => {
-    transactionsActionsStub = stub(accountAPI, 'transactions');
+    transactionsActionsStub = stub(transactionsAPI, 'getTransactions');
     delegateVotesStub = stub(delegateAPI, 'getVotes');
     delegateVotersStub = stub(delegateAPI, 'getVoters');
 
-    delegateVotesStub.returnsPromise().resolves({ delegates: [accounts['delegate candidate']] });
-    delegateVotersStub.returnsPromise().resolves({ accounts: [accounts['empty account']] });
+    delegateVotesStub.returnsPromise().resolves({ data: [accounts['delegate candidate']] });
+    delegateVotersStub.returnsPromise().resolves({ data: [accounts['empty account']] });
 
     props = {
       match: { params: { address: accounts.genesis.address } },
@@ -58,7 +62,7 @@ describe('WalletTransactions Component', () => {
       address: accounts.genesis.address,
       limit: 25,
       filter: txFilters.all,
-    }).returnsPromise().resolves({ transactions: [{ id: 'Some ID' }], count: 1000 });
+    }).returnsPromise().resolves({ data: [{ id: 'Some ID' }], meta: { count: 1000 } });
 
 
     transactionsActionsStub.withArgs({
@@ -66,7 +70,7 @@ describe('WalletTransactions Component', () => {
       address: match.any,
       limit: 25,
       filter: txFilters.statistics,
-    }).returnsPromise().resolves({ transactions: [{ id: 'Some ID' }], count: 1000 });
+    }).returnsPromise().resolves({ data: [{ id: 'Some ID' }], meta: { count: 1000 } });
 
     store.dispatch(accountLoggedIn({
       ...accounts.genesis,
@@ -98,7 +102,7 @@ describe('WalletTransactions Component', () => {
   it('loads votes and voters for a delegate account', () => {
     wrapper.find('.delegate-statistics').first().simulate('click');
     wrapper.update();
-    expect(wrapper.find('.votes-value').first()).to.have.text(`Votes of an account (${1})`);
-    expect(wrapper.find('.voters-value').first()).to.have.text(`Who voted for a delegate (${1})`);
+    expect(wrapper.find('.votes-value').first()).to.have.text(`Votes of this account (${1})`);
+    expect(wrapper.find('.voters-value').first()).to.have.text(`Who voted for this delegate (${1})`);
   });
 });

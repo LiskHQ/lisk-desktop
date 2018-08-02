@@ -58,7 +58,7 @@ module.exports = function (config) {
             'src/components/voteUrlProcessor/index.js',
             'src/utils/api/liskService.js',
             'src/store/reducers/liskService.js',
-            'src/store/reducers/search.js',
+            'src/actions/transactions.js',
             'src/components/errorBoundary/index.js',
           ],
           overrides: {

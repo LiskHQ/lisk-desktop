@@ -1,5 +1,5 @@
 import { getDelegate } from '../../utils/api/delegate';
-import { voteLookupStatusUpdated, voteToggled } from '../../actions/voting';
+import { voteLookupStatusUpdated, voteToggled, votesFetched } from '../../actions/voting';
 import actionTypes from '../../constants/actions';
 
 const updateLookupStatus = (store, list, username) => {
@@ -22,14 +22,14 @@ const lookupDelegate = (store, username) => {
 
 const processVote = (store, options, username) => {
   updateLookupStatus(store, 'pending', username);
-  lookupDelegate(store, username).then((data) => {
+  lookupDelegate(store, username).then((response) => {
     const vote = store.getState().voting.votes[username];
     if (options.isValid(vote)) {
       store.dispatch(voteToggled({
         username,
-        publicKey: data.delegate.publicKey,
-        rank: data.delegate.rank,
-        productivity: data.delegate.productivity,
+        publicKey: response.data[0].account.publicKey,
+        rank: response.data[0].rank,
+        productivity: response.data[0].productivity,
       }));
       updateLookupStatus(store, options.successState, username);
     } else {
@@ -56,10 +56,24 @@ const lookupDelegatesFromUrl = (store, action) => {
   }
 };
 
+const fetchVotes = (store) => {
+  // TODO investigate if this function is needed here at all
+  // or maybe it should be moved somewhere else (e.g. urlVotesFound action)
+  const state = store.getState();
+  const activePeer = state.peers.data;
+  const address = state.account.address;
+  store.dispatch(votesFetched({
+    activePeer,
+    address,
+    type: 'update',
+  }));
+};
+
 const votingMiddleware = store => next => (action) => {
   next(action);
   switch (action.type) {
     case actionTypes.votesAdded:
+      fetchVotes(store);
       lookupDelegatesFromUrl(store, action);
       break;
     default: break;

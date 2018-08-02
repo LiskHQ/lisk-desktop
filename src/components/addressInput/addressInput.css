@@ -5,3 +5,9 @@
 .input input:first-of-type {
   padding-left: 60px;
 }
+
+.accountVisualInInput {
+  position: absolute;
+  left: -40px;
+  top: -15px;
+}

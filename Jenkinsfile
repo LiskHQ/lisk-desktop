@@ -1,39 +1,4 @@
-def get_build_info() {
-  pr_branch = ''
-  if (env.CHANGE_BRANCH != null) {
-    pr_branch = " (${env.CHANGE_BRANCH})"
-  }
-  build_info = "#${env.BUILD_NUMBER} of <${env.BUILD_URL}|${env.JOB_NAME}>${pr_branch}"
-  return build_info
-}
-
-def slack_send(color, message) {
-  /* Slack channel names are limited to 21 characters */
-  CHANNEL_MAX_LEN = 21
-
-  channel = "${env.JOB_NAME}".tokenize('/')[0]
-  channel = channel.replace('lisk-', 'lisk-ci-')
-  if ( channel.size() > CHANNEL_MAX_LEN ) {
-     channel = channel.substring(0, CHANNEL_MAX_LEN)
-  }
-
-  echo "[slack_send] channel: ${channel} "
-  slackSend color: "${color}", message: "${message}", channel: "${channel}"
-}
-
-def fail(reason) {
-  build_info = get_build_info()
-  slack_send('danger', "Build ${build_info} failed (<${env.BUILD_URL}/console|console>, <${env.BUILD_URL}/changes|changes>)\nCause: ${reason}")
-  currentBuild.result = 'FAILURE'
-  pr_branch = ''
-  if (env.CHANGE_BRANCH != null) {
-    pr_branch = " (${env.CHANGE_BRANCH})"
-  }
-  email_subject = "Build #${BUILD_NUMBER} of ${JOB_NAME}${pr_branch} failed"
-  email_body = "${email_subject} - Check console output at $BUILD_URL to view the results."
-  emailext subject: email_subject, body: email_body, recipientProviders: [culprits()]
-  error("${reason}")
-}
+@Library('lisk-jenkins') _
 
 /* comment out the next line to allow concurrent builds on the same branch */
 properties([disableConcurrentBuilds(), pipelineTriggers([])])
@@ -82,22 +47,24 @@ node('lisk-hub') {
 
     stage ('Build and Deploy') {
       try {
-        sh '''
-        cp ~/.coveralls.yml-hub .coveralls.yml
-        npm run --silent build
-        npm run --silent build:testnet
-        rsync -axl --delete --rsync-path="mkdir -p /var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/ && rsync" $WORKSPACE/app/build/ jenkins@master-01:/var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/
-        npm run --silent bundlesize
-        if [ -z $CHANGE_BRANCH ]; then
-          USE_SYSTEM_XORRISO=true npm run dist
-        else
-          echo "Skipping desktop build for Linux because we're not on 'development' branch"
-        fi
-        '''
-        archiveArtifacts artifacts: 'app/build/'
-        archiveArtifacts artifacts: 'app/build-testnet/'
-        archiveArtifacts allowEmptyArchive: true, artifacts: 'dist/lisk-hub*'
-        githubNotify context: 'Jenkins test deployment', description: 'Commit was deployed to test', status: 'SUCCESS', targetUrl: "${HUDSON_URL}test/" + "${JOB_NAME}".tokenize('/')[0] + "/${BRANCH_NAME}"
+        withCredentials([string(credentialsId: 'github-lisk-token', variable: 'GH_TOKEN')]) {
+          sh '''
+          cp ~/.coveralls.yml-hub .coveralls.yml
+          npm run --silent build
+          npm run --silent build:testnet
+          rsync -axl --delete --rsync-path="mkdir -p /var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/ && rsync" $WORKSPACE/app/build/ jenkins@master-01:/var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/
+          npm run --silent bundlesize
+          if [ -z $CHANGE_BRANCH ]; then
+            USE_SYSTEM_XORRISO=true npm run dist:linux
+          else
+            echo "Skipping desktop build for Linux because we're not on 'development' branch"
+          fi
+          '''
+          archiveArtifacts artifacts: 'app/build/'
+          archiveArtifacts artifacts: 'app/build-testnet/'
+          archiveArtifacts allowEmptyArchive: true, artifacts: 'dist/lisk-hub*'
+          githubNotify context: 'Jenkins test deployment', description: 'Commit was deployed to test', status: 'SUCCESS', targetUrl: "${HUDSON_URL}test/" + "${JOB_NAME}".tokenize('/')[0] + "/${BRANCH_NAME}"
+        }
       } catch (err) {
         echo "Error: ${err}"
         fail('Stopping build: build or deploy failed')
@@ -112,7 +79,6 @@ node('lisk-hub') {
           # Submit coverage to coveralls
           cat coverage/*/lcov.info | coveralls -v
           '''
-
         }
       } catch (err) {
         echo "Error: ${err}"
@@ -134,7 +100,7 @@ node('lisk-hub') {
 	    cp -r ~/lisk-docker/examples/development $WORKSPACE/$BRANCH_NAME
 	    cd $WORKSPACE/$BRANCH_NAME
 	    cp /home/lisk/blockchain_explorer.db.gz ./blockchain.db.gz
-	    LISK_VERSION=0.9.12a make coldstart
+	    LISK_VERSION=1.0.0-rc.1 make coldstart
 	    LISK_PORT=$( docker-compose port lisk 4000 |cut -d ":" -f 2 )
 	    cd -
 
@@ -185,7 +151,6 @@ node('lisk-hub') {
     '''
 
     cobertura autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: 'coverage/*/cobertura-coverage.xml', conditionalCoverageTargets: '70, 0, 0', failUnhealthy: false, failUnstable: false, fileCoverageTargets: '100, 0, 0', lineCoverageTargets: '80, 0, 0', maxNumberOfBuilds: 0, methodCoverageTargets: '80, 0, 0', onlyStable: false, sourceEncoding: 'ASCII'
-
     junit 'reports/junit_report.xml'
     junit 'reports/cucumber_report.xml'
 
@@ -199,8 +164,8 @@ node('lisk-hub') {
       /* notify of success if previous build failed */
       previous_build = currentBuild.getPreviousBuild()
       if (previous_build != null && previous_build.result == 'FAILURE') {
-        build_info = get_build_info()
-        slack_send('good', "Recovery: build ${build_info} was successful.")
+        build_info = getBuildInfo()
+        liskSlackSend('good', "Recovery: build ${build_info} was successful.")
       }
     } else {
       archiveArtifacts allowEmptyArchive: true, artifacts: 'e2e-test-screenshots/'

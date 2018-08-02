@@ -107,6 +107,8 @@ or "warn/action" ineastd of "red/green"
   --color-grayscale-light: #ccd9e4;
   --color-grayscale-mobile-background: #f9fbfd;
   --color-grayscale-darker-mobile-background: #eff4f9;
+  --color-console-text: #9bf436;
+  --color-console-background: #06213b;
   --color-white: #fff;
   --color-error: #da1d00;
   --color-action-dark: #c80039;
@@ -122,7 +124,7 @@ or "warn/action" ineastd of "red/green"
   --gradient-action-orange: linear-gradient(-27deg, var(--color-action-dark) 0%, var(--color-action-light) 100%);
   --gradient-action-blue: linear-gradient(136deg, var(--color-tertiary-medium) 0%, var(--color-primary-medium) 100%);
   --gradient-action-blue-hover: linear-gradient(224deg, var(--color-primary-medium) 0%, var(--color-tertiary-medium) 100%);
-  --gradient-greyscale: linear-gradient(to right, var(--row-background-color), #f5f8fc);
+  --gradient-greyscale: linear-gradient(to right, var(--color-white), #f5f8fc);
   --gradient-greyscale-mobile: linear-gradient(to right, var(--color-grayscale-mobile-background), var(--color-grayscale-darker-mobile-background));
   --gradient-tertiary: linear-gradient(45deg, var(--color-tertiary-medium) 0%, var(--color-primary-medium) 100%);
 
@@ -134,7 +136,8 @@ or "warn/action" ineastd of "red/green"
   --headerbar-index: 20;
   --autosuggest-index: 21;
   --searchbar-input-index: 22;
-  --accounts-index: 23;
+  --searchbar-placeholder-index: 23;
+  --accounts-index: 24;
 
   /*************************
         Margins

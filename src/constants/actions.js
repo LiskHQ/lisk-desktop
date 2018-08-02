@@ -57,6 +57,10 @@ const actionTypes = {
   transactionLoaded: 'TRANSACTION_LOADED',
   transactionLoadFailed: 'TRANSACTION_LOAD_FAILED',
   passphraseUsed: 'PASSPHRASE_USED',
+  followedAccountsRetrieved: 'FOLLOWED_ACCOUNTS_RETRIEVED',
+  followedAccountAdded: 'FOLLOWED_ACCOUNT_ADDED',
+  followedAccountUpdated: 'FOLLOWED_ACCOUNT_UPDATED',
+  followedAccountRemoved: 'FOLLOWED_ACCOUNTS_REMOVED',
   accountsRetrieved: 'ACCOUNTS_RETRIEVED',
   accountSaved: 'ACCOUNT_SAVED',
   activeAccountSaved: 'ACTIVE_ACCOUNT_SAVED',
@@ -67,6 +71,7 @@ const actionTypes = {
   settingsReset: 'SETTINGS_RESET',
   removeSavedAccountPassphrase: 'REMOVE_SAVED_ACCOUNT_PASSPHRASE',
   switchChannel: 'SWITCH_CHANNEL',
+  addFilter: 'ADD_FILTER',
 };
 
 export default actionTypes;

@@ -4,11 +4,12 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { stub, match, spy } from 'sinon';
 
-import * as peers from '../../src/utils/api/peers';
 import * as accountAPI from '../../src/utils/api/account';
+import * as transactionsAPI from '../../src/utils/api/transactions';
 import * as delegateAPI from '../../src/utils/api/delegate';
 import * as liskServiceApi from '../../src/utils/api/liskService';
 import { prepareStore, renderWithRouter } from '../utils/applicationInit';
+import followedAccountsReducer from '../../src/store/reducers/followedAccounts';
 import accountReducer from '../../src/store/reducers/account';
 import transactionReducer from '../../src/store/reducers/transaction';
 import transactionsReducer from '../../src/store/reducers/transactions';
@@ -16,6 +17,7 @@ import settingsReducer from '../../src/store/reducers/settings';
 import peersReducer from '../../src/store/reducers/peers';
 import loadingReducer from '../../src/store/reducers/loading';
 import searchReducer from '../../src/store/reducers/search';
+import filtersReducer from '../../src/store/reducers/filters';
 import loginMiddleware from '../../src/store/middlewares/login';
 import accountMiddleware from '../../src/store/middlewares/account';
 import peerMiddleware from '../../src/store/middlewares/peers';
@@ -63,11 +65,11 @@ class Helper extends GenericStepDefinition {
 describe('@integration: Wallet', () => {
   let store;
   let wrapper;
-  let requestToActivePeerStub;
   let accountAPIStub;
   let delegateAPIStub;
   let localStorageStub;
   let getTransactionsStub;
+  let sendTransactionsStub;
   let liskServiceStub;
   let helper;
 
@@ -85,6 +87,7 @@ describe('@integration: Wallet', () => {
 
   const setupStep = (accountType, options = { isLocked: false, withPublicKey: true }) => {
     store = prepareStore({
+      followedAccounts: followedAccountsReducer,
       account: accountReducer,
       transaction: transactionReducer,
       transactions: transactionsReducer,
@@ -92,6 +95,7 @@ describe('@integration: Wallet', () => {
       loading: loadingReducer,
       search: searchReducer,
       settings: settingsReducer,
+      filters: filtersReducer,
     }, [
       thunk,
       accountMiddleware,
@@ -113,14 +117,10 @@ describe('@integration: Wallet', () => {
       delete account.serverPublicKey;
     }
 
-    accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
+    accountAPIStub.withArgs(match.any).returnsPromise().resolves({ data: [...account] });
     store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
-    accountAPIStub.withArgs(match.any).returnsPromise()
-      .resolves({
-        ...account,
-      });
     delegateAPIStub.withArgs(match.any).returnsPromise()
-      .resolves({ delegate: { ...accounts['delegate candidate'] } });
+      .resolves({ data: [{ ...accounts['delegate candidate'] }] });
 
     const targetSavedAccountsInLocalStorage = [{
       publicKey: accounts['without initialization'].publicKey,
@@ -166,33 +166,59 @@ describe('@integration: Wallet', () => {
 
   describe('Send', () => {
     beforeEach(() => {
-      requestToActivePeerStub = stub(peers, 'requestToActivePeer');
+      getTransactionsStub = stub(transactionsAPI, 'getTransactions');
+      sendTransactionsStub = stub(transactionsAPI, 'send');
 
-      requestToActivePeerStub.withArgs(match.any, 'transactions', match({
-        recipientId: '537318935439898807L',
-        amount: 1e8,
-        secret: match.any,
-        secondSecret: match.any,
-      }))
-        .returnsPromise().resolves({ transactionId: 'Some ID' });
+      // transactionsFilterSet do pass filter
+      getTransactionsStub.withArgs({
+        activePeer: match.defined,
+        address: match.defined,
+        limit: 25,
+        filter: txFilters.all,
+      }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 1000 } });
 
-      requestToActivePeerStub.withArgs(match.any, 'transactions', match({ limit: 25, senderId: match.defined, recipientId: match.defined }))
-        .returnsPromise().resolves({ transactions: generateTransactions(25), count: 1000 });
+      // loadTransactions does not pass filter
+      getTransactionsStub.withArgs({
+        activePeer: match.defined,
+        address: match.defined,
+        limit: 25,
+      }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 1000 } });
 
-      // incoming transaction result
-      const transactions = generateTransactions(15);
-      transactions.push({ senderId: 'sample_address', receiverId: 'some_address', type: txTypes.vote });
+      // second passphrase send request
+      sendTransactionsStub.withArgs(
+        match.defined,
+        match.defined,
+        match.defined,
+        match.defined,
+        match.defined,
+        '',
+      ).returnsPromise().resolves({ data: [] });
 
-      requestToActivePeerStub.withArgs(match.any, 'transactions', match({ recipientId: accounts.genesis.address, senderId: undefined }))
-        .returnsPromise().resolves({ transactions, count: 1000 });
+      // rest of accounts send request
+      sendTransactionsStub.withArgs(
+        match.defined,
+        match.defined,
+        match.defined,
+        match.defined,
+        null,
+        '',
+      ).returnsPromise().resolves({ data: [] });
 
-      // outgoing transaction result
-      requestToActivePeerStub.withArgs(match.any, 'transactions', match({ senderId: accounts.genesis.address, recipientId: undefined }))
-        .returnsPromise().resolves({ transactions: generateTransactions(5), count: 1000 });
+
+      // account initialisation send request (no reference field)
+      sendTransactionsStub.withArgs(
+        match.defined,
+        match.defined,
+        match.defined,
+        match.defined,
+        null,
+        undefined,
+      ).returnsPromise().resolves({ data: [] });
     });
 
     afterEach(() => {
-      requestToActivePeerStub.restore();
+      getTransactionsStub.restore();
+      sendTransactionsStub.restore();
     });
 
     describe('Scenario: should not allow to send when not enough funds', () => {
@@ -200,7 +226,7 @@ describe('@integration: Wallet', () => {
       step('And I fill in "1" to "amount" field', () => helper.fillInputField('1', 'amount'));
       step('And I fill in "537318935439898807L" to "recipient" field', () => helper.fillInputField('537318935439898807L', 'recipient'));
       step('Then I should see "Not enough LSK" error message', () => {
-        expect(wrapper.find('Input').at(1).html()).to.contain('Not enough LSK');
+        expect(wrapper.find('Input').at(2).html()).to.contain('Not enough LSK');
       });
       step('And "send next button" should be disabled', () => {
         expect(wrapper.find('.send-next-button button').filterWhere(item => item.prop('disabled') === true)).to.have.lengthOf(1);
@@ -212,10 +238,8 @@ describe('@integration: Wallet', () => {
       step('And I fill in "1" to "amount" field', () => helper.fillInputField('1', 'amount'));
       step('And I fill in "537318935439898807L" to "recipient" field', () => helper.fillInputField('537318935439898807L', 'recipient'));
       step('And I click "send next button"', () => helper.clickOnElement('button.send-next-button'));
-
-
       step('When I click "send button"', () => {
-        requestToActivePeerStub.withArgs(match.any, 'transactions', match.any).returnsPromise().rejects({});
+        sendTransactionsStub.withArgs(match.any, '537318935439898807L', match.any, accounts.genesis.passphrase, match.any, match.any).returnsPromise().rejects({});
         helper.clickOnElement('.send-button button');
       });
       step(`Then I should see text ${errorMessage} in "result box message" element`, () => helper.haveTextOf('.result-box-message', errorMessage));
@@ -317,44 +341,47 @@ describe('@integration: Wallet', () => {
 
   describe('Transactions', () => {
     beforeEach(() => {
-      getTransactionsStub = stub(accountAPI, 'transactions');
+      getTransactionsStub = stub(transactionsAPI, 'getTransactions');
 
+      // transactionsFilterSet do pass filter
       getTransactionsStub.withArgs({
-        activePeer: match.any,
-        address: accounts.genesis.address,
+        activePeer: match.defined,
+        address: match.defined,
         limit: 25,
-        offset: match.any,
         filter: txFilters.all,
-      }).returnsPromise().resolves({ transactions: generateTransactions(25), count: 1000 });
+      }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 50 } });
 
+      // loadTransactions does not pass filter
       getTransactionsStub.withArgs({
-        activePeer: match.any,
-        address: accounts.genesis.address,
+        activePeer: match.defined,
+        address: match.defined,
         limit: 25,
-      }).returnsPromise().resolves({ transactions: generateTransactions(25), count: 1000 });
+      }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 50 } });
 
-
-      // NOTE: transactionsFilterSet does not use offset
+      // transactionsRequested does pass filter, offset
       getTransactionsStub.withArgs({
-        activePeer: match.any,
-        address: accounts.genesis.address,
+        activePeer: match.defined,
+        address: match.defined,
+        limit: 25,
+        offset: match.defined,
+        filter: txFilters.all,
+      }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 50 } });
+
+
+      // // NOTE: transactionsFilterSet does not use offset
+      getTransactionsStub.withArgs({
+        activePeer: match.defined,
+        address: match.defined,
         limit: 25,
         filter: txFilters.outgoing,
-      }).returnsPromise().resolves({ transactions: generateTransactions(20), count: 1000 });
+      }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 25 } });
 
       getTransactionsStub.withArgs({
-        activePeer: match.any,
-        address: accounts.genesis.address,
+        activePeer: match.defined,
+        address: match.defined,
         limit: 25,
         filter: txFilters.incoming,
-      }).returnsPromise().resolves({ transactions: generateTransactions(5), count: 1000 });
-
-      getTransactionsStub.withArgs({
-        activePeer: match.any,
-        address: accounts.genesis.address,
-        limit: 25,
-        filter: txFilters.all,
-      }).returnsPromise().resolves({ transactions: generateTransactions(25), count: 1000 });
+      }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 25 } });
     });
 
     afterEach(() => {
@@ -370,13 +397,13 @@ describe('@integration: Wallet', () => {
       step('Then I should be redirected to transactoinDetails step', () => helper.checkRedirectionToDetails('123456'));
     });
 
-    describe.skip('Scenario: should allow to filter transactions', () => {
+    describe('Scenario: should allow to filter transactions', () => {
       step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
       step('Then the "All" filter should be selected by default', () => helper.checkSelectedFilter('all'));
       step('When I click on the "Outgoing" filter', () => helper.clickOnElement('.filter-out'));
-      step('Then I expect to see the results for "Outgoing"', () => helper.shouldSeeCountInstancesOf(20, 'TransactionRow'));
+      step('Then I expect to see the results for "Outgoing"', () => helper.shouldSeeCountInstancesOf(25, 'TransactionRow'));
       step('When I click on the "Incoming" filter', () => helper.clickOnElement('.filter-in'));
-      step('Then I expect to see the results for "Incoming"', () => helper.shouldSeeCountInstancesOf(5, 'TransactionRow'));
+      step('Then I expect to see the results for "Incoming"', () => helper.shouldSeeCountInstancesOf(25, 'TransactionRow'));
       step('When I click again on the "All" filter', () => helper.clickOnElement('.filter-all'));
       step('Then I expect to see the results for "All"', () => helper.shouldSeeCountInstancesOf(25, 'TransactionRow'));
     });

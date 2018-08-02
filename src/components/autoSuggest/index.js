@@ -6,104 +6,193 @@ import { FontIcon } from '../fontIcon';
 import ResultsList from './resultsList';
 import routes from './../../constants/routes';
 import keyCodes from './../../constants/keyCodes';
-import { visitAndSaveSearch } from './../search/keyAction';
-import mockSearchResults from './searchResults.mock';
+import localJSONStorage from './../../utils/localJSONStorage';
+import regex from './../../utils/regex';
+import { saveSearch } from './../search/keyAction';
+import { searchEntities } from './../../constants/search';
 
-let searchResults = mockSearchResults;
 class AutoSuggest extends React.Component {
   constructor(props) {
     super(props);
-
     this.submitSearch = this.submitSearch.bind(this);
-
-    /* istanbul ignore next */
-    searchResults = this.props.results || searchResults;
-
-    let resultsLength = 0;
-    Object.keys(searchResults).map((resultKey) => {
-      resultsLength += searchResults[resultKey].length;
-      return resultsLength;
-    });
-
     this.selectedRow = null;
-
+    this.lastSearch = null;
     this.state = {
       show: false,
       value: '',
-      selectedIdx: 0,
-      resultsLength,
+      selectedIdx: -1,
+      resultsLength: 0,
+      placeholder: '',
     };
   }
 
-  onResultClick(id, type) {
+  componentWillReceiveProps(nextProps) {
+    this.selectedRow = null;
+    const resultsLength = Object.keys(searchEntities).reduce((total, resultKey) =>
+      total + nextProps.results[resultKey].length, 0);
+    let placeholder = '';
+    let selectedIdx = -1;
+    if (resultsLength > 0) {
+      placeholder = this.getValueFromCurrentIdx(0, nextProps.results);
+      selectedIdx = 0;
+    }
+    this.setState({ resultsLength, selectedIdx, placeholder });
+  }
+
+  onResultClick(id, type, value) {
     let urlSearch;
     switch (type) {
-      case 'addresses':
-      case 'delegates':
+      case searchEntities.addresses:
+      case searchEntities.delegates:
         urlSearch = `${routes.accounts.pathPrefix}${routes.accounts.path}/${id}`;
         break;
-      case 'transactions':
+      case searchEntities.transactions:
         urlSearch = `${routes.transactions.pathPrefix}${routes.transactions.path}/${id}`;
         break;
       /* istanbul ignore next */
       default:
         break;
     }
-    this.submitSearch(urlSearch);
+    saveSearch(value, id);
+    this.props.searchClearSuggestions();
+
+    if (!value && [searchEntities.addresses, searchEntities.transactions].filter(entity =>
+      entity === type).length > 0) {
+      this.setState({ value: id });
+    } else if (value) {
+      this.setState({ value, placeholder: '' });
+    } else {
+      this.setState({ value: this.state.placeholder });
+    }
+
+    this.inputRef.blur();
+    this.props.history.push(urlSearch);
   }
 
   setSelectedRow(el) {
     this.selectedRow = el;
   }
 
-  submitSearch(urlSearch) {
-    this.resetSearch();
-    this.inputRef.blur();
-    if (!urlSearch) {
-      this.selectedRow.click();
+  submitSearch() {
+    this.onResultClick(
+      this.selectedRow.dataset.id,
+      this.selectedRow.dataset.type,
+      this.selectedRow.dataset.value,
+    );
+  }
+
+  submitAnySearch() {
+    let searchType = null;
+    if (this.state.value.match(regex.address)) {
+      searchType = searchEntities.addresses;
+    } else if (this.state.value.match(regex.transactionId)) {
+      searchType = searchEntities.transactions;
+    }
+
+    if (!searchType) {
+      this.props.history.push(`${routes.searchResult.pathPrefix}${routes.searchResult.path}/${encodeURIComponent(this.state.value)}`);
       return;
     }
-    this.props.history.push(urlSearch);
+    this.onResultClick(this.state.value, searchType, this.state.value);
   }
 
   search(searchTerm) {
-    if (searchTerm !== '') {
-      this.setState({ show: true });
-    } else {
-      this.setState({ show: false });
+    this.setState({ value: searchTerm, placeholder: '' });
+    if (searchTerm.length < 3) {
+      this.props.searchClearSuggestions();
+      return;
     }
-    this.setState({ value: searchTerm });
+
+    this.setState({ show: true });
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      if (searchTerm === this.state.value) {
+        this.lastSearch = searchTerm;
+        this.props.searchSuggestions({
+          activePeer: this.props.activePeer,
+          searchTerm: this.state.value,
+        });
+      }
+    }, 250);
   }
 
   handleArrowDown() {
     let currentIdx = this.state.selectedIdx;
-    currentIdx = (currentIdx === this.resultsLength) ? this.resultsLength : currentIdx += 1;
-    this.setState({ selectedIdx: currentIdx });
+    let placeholder = '';
+    if (this.state.resultsLength === 0) {
+      currentIdx = (currentIdx === this.recentSearches.length - 1) ?
+        this.recentSearches.length - 1 : currentIdx += 1;
+      placeholder = this.recentSearches[currentIdx].valueLeft;
+    } else {
+      currentIdx = (currentIdx === this.state.resultsLength) ?
+        this.state.resultsLength : currentIdx += 1;
+      placeholder = this.getValueFromCurrentIdx(currentIdx, this.props.results);
+    }
+    this.setState({ selectedIdx: currentIdx, placeholder });
   }
 
   handleArrowUp() {
     let currentIdx = this.state.selectedIdx;
     currentIdx = (currentIdx === 0) ? 0 : currentIdx -= 1;
-    this.setState({ selectedIdx: currentIdx });
+    let placeholder = '';
+    if (this.state.resultsLength === 0) {
+      placeholder = this.recentSearches[currentIdx].valueLeft;
+    } else {
+      placeholder = this.getValueFromCurrentIdx(currentIdx, this.props.results);
+    }
+    this.setState({ selectedIdx: currentIdx, placeholder });
+  }
+
+  /* eslint-disable class-methods-use-this */
+  getValueFromCurrentIdx(index, results) {
+    let targetVal = '';
+    if (index < results.delegates.length) {
+      targetVal = results.delegates[index].username;
+    } else if (index <
+      results.delegates.length + results.addresses.length) {
+      const targetIdx = index - results.delegates.length;
+      targetVal = results.addresses[targetIdx].address;
+    } else if (index <
+      results.delegates.length +
+      results.addresses.length +
+      results.transactions.length) {
+      const targetIdx = index -
+        results.delegates.length -
+        results.addresses.length;
+      targetVal = results.transactions[targetIdx].id;
+    }
+    return targetVal;
+  }
+  /* eslint-enable class-methods-use-this */
+
+  handleSubmit() {
+    if (this.state.value === '' && this.state.placeholder === '') {
+      return;
+    }
+
+    if (this.state.resultsLength > 0 || this.state.placeholder !== '') {
+      this.submitSearch();
+    } else {
+      this.submitAnySearch();
+    }
   }
 
   handleKey(event) {
     switch (event.keyCode) {
       case keyCodes.arrowDown:
         this.handleArrowDown();
+        event.preventDefault();
         break;
       case keyCodes.arrowUp:
         this.handleArrowUp();
+        event.preventDefault();
         break;
       case keyCodes.escape:
         this.closeDropdown();
         break;
       case keyCodes.enter:
-        visitAndSaveSearch(this.state.value, this.props.history);
-        this.resetSearch();
-        break;
       case keyCodes.tab:
-        this.submitSearch();
+        this.handleSubmit();
         break;
       /* istanbul ignore next */
       default:
@@ -113,7 +202,9 @@ class AutoSuggest extends React.Component {
   }
 
   resetSearch() {
-    this.setState({ value: '' });
+    this.lastSearch = null;
+    this.setState({ value: '', placeholder: '' });
+    this.props.searchClearSuggestions();
     this.closeDropdown();
   }
 
@@ -121,90 +212,142 @@ class AutoSuggest extends React.Component {
     this.setState({ show: false });
   }
 
+  selectInput() {
+    this.inputRef.inputNode.select();
+  }
+
   getDelegatesResults() {
-    return searchResults.delegates.map((delegate, idx) => ({
-      id: delegate.address,
+    return this.props.results.delegates.map((delegate, idx) => ({
+      id: delegate.account.address,
       valueLeft: delegate.username,
       valueRight: delegate.rank,
       isSelected: idx === this.state.selectedIdx,
-      type: 'delegates',
+      type: searchEntities.delegates,
     }));
   }
 
   getAddressesResults() {
-    return searchResults.addresses.map((account, idx) => ({
+    return this.props.results.addresses.map((account, idx) => ({
       id: account.address,
       valueLeft: account.address,
       valueRight: <span><LiskAmount val={account.balance}/> LSK</span>,
-      isSelected: searchResults.delegates.length + idx === this.state.selectedIdx,
-      type: 'addresses',
+      isSelected: this.props.results.delegates.length + idx === this.state.selectedIdx,
+      type: searchEntities.addresses,
     }));
   }
 
   getTransactionsResults() {
-    return searchResults.transactions.map((transaction, idx) => ({
+    return this.props.results.transactions.map((transaction, idx) => ({
       id: transaction.id,
       valueLeft: transaction.id,
       valueRight: transaction.height,
-      isSelected: searchResults.delegates.length +
-        searchResults.addresses.length + idx === this.state.selectedIdx,
-      type: 'transactions',
+      isSelected: this.props.results.delegates.length +
+      this.props.results.addresses.length + idx === this.state.selectedIdx,
+      type: searchEntities.transactions,
     }));
   }
 
+  getRecentSearchResults() {
+    this.recentSearches = localJSONStorage.get('searches', [])
+      .filter(result => typeof result === 'object')
+      .map((result, idx) => {
+        let type = searchEntities.addresses;
+        if (result.id.match(regex.transactionId)) {
+          type = searchEntities.transactions;
+        }
+        return {
+          id: result.id,
+          valueLeft: result.searchTerm,
+          valueRight: '',
+          isSelected: idx === this.state.selectedIdx,
+          type,
+        };
+      });
+    return this.recentSearches;
+  }
+
   render() {
-    // eslint-disable-next-line no-unused-vars
-    const { history, t } = this.props;
+    const { t } = this.props;
+
+    let placeholderValue = '';
+    if (this.state.placeholder === '' && this.state.value === '') {
+      placeholderValue = t('Search for delegate, Lisk ID, transaction ID');
+    } else {
+      placeholderValue = this.state.placeholder;
+    }
 
     return (
       <div className={styles.wrapper}>
-        <Input type='text' placeholder={t('Search delegates, addresses')} name='searchBarInput'
+        <input
+          value={placeholderValue}
+          onChange={() => {}}
+          className={`${styles.placeholder} autosuggest-placeholder`}
+          type='text'
+          name='autosuggest-placeholder' />
+        <Input type='text'
+          id='autosuggest-input'
+          name='searchBarInput'
           value={this.state.value}
           innerRef={(el) => { this.inputRef = el; }}
           className={`${styles.input} autosuggest-input`}
           theme={styles}
+          onClick={this.selectInput.bind(this)}
+          onFocus={() => this.setState({ show: true })}
+          onBlur={this.closeDropdown.bind(this)}
           onKeyDown={this.handleKey.bind(this)}
           onChange={this.search.bind(this)}
           autoComplete='off'>
           {
-            this.state.show ?
-              <FontIcon value='close' className={styles.icon} onClick={this.resetSearch.bind(this)} /> :
-              <FontIcon value='search' className={`${styles.icon} ${styles.iconSearch}`}
-                onClick={() => { visitAndSaveSearch(this.state.value, history); }} />
+            this.state.value !== '' || this.state.placeholder !== '' ?
+              <FontIcon value='close' className={`${styles.icon} autosuggest-btn-close`} onClick={this.resetSearch.bind(this)} /> :
+              <FontIcon value='search' className={`${styles.icon} ${styles.iconSearch} autosuggest-btn-search`}
+                onClick={this.submitSearch.bind(this)} />
           }
         </Input>
-        <div className={`${styles.autoSuggest} ${this.state.show ? styles.show : ''} autosuggest-dropdown`}
-          onMouseLeave={this.closeDropdown.bind(this)}>
+        <div className={`${styles.autoSuggest} ${this.state.show ? styles.show : ''} autosuggest-dropdown`}>
           <ResultsList
-            key='delegates'
+            key={searchEntities.delegates}
             results={this.getDelegatesResults()}
             header={{
               titleLeft: t('Delegate'),
               titleRight: t('Rank'),
             }}
-            onClick={this.onResultClick.bind(this)}
+            onMouseDown={this.onResultClick.bind(this)}
             setSelectedRow={this.setSelectedRow.bind(this)}
           />
           <ResultsList
-            key='addresses'
+            key={searchEntities.addresses}
             results={this.getAddressesResults()}
             header={{
               titleLeft: t('Address'),
               titleRight: t('Balance'),
             }}
-            onClick={this.onResultClick.bind(this)}
+            onMouseDown={this.onResultClick.bind(this)}
             setSelectedRow={this.setSelectedRow.bind(this)}
           />
           <ResultsList
-            key='transactions'
+            key={searchEntities.transactions}
             results={this.getTransactionsResults()}
             header={{
               titleLeft: t('Transaction'),
               titleRight: t('Height'),
             }}
-            onClick={this.onResultClick.bind(this)}
+            onMouseDown={this.onResultClick.bind(this)}
             setSelectedRow={this.setSelectedRow.bind(this)}
           />
+          { this.state.value === '' && this.state.resultsLength === 0 ?
+            <ResultsList
+            key='recent'
+            results={this.getRecentSearchResults()}
+            header={{
+              titleLeft: t('Recent searches'),
+              titleRight: '',
+            }}
+            onMouseDown={this.onResultClick.bind(this)}
+            setSelectedRow={this.setSelectedRow.bind(this)}
+          />
+            : null
+          }
         </div>
       </div>
     );

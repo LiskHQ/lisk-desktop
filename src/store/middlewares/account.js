@@ -1,61 +1,24 @@
-import { getAccount, transactions as getTransactions } from '../../utils/api/account';
-import { accountUpdated } from '../../actions/account';
-import { transactionsUpdateUnconfirmed } from '../../actions/transactions';
-import { activePeerUpdate } from '../../actions/peers';
+import { accountUpdated,
+  accountDataUpdated,
+  updateTransactionsIfNeeded,
+  updateDelegateAccount,
+} from '../../actions/account';
 import { votesFetched } from '../../actions/voting';
 import actionTypes from '../../constants/actions';
 import accountConfig from '../../constants/account';
-import { getDelegate } from '../../utils/api/delegate';
 import transactionTypes from '../../constants/transactionTypes';
 
 const { lockDuration } = accountConfig;
 
-const updateTransactions = (store, peers) => {
-  const state = store.getState();
-  const { filter } = state.transactions;
-  const address = state.transactions.account
-    ? state.transactions.account.address
-    : state.account.address;
-
-  getTransactions({
-    activePeer: peers.data, address, limit: 25, filter,
-  }).then((response) => {
-    store.dispatch({
-      data: {
-        confirmed: response.transactions,
-        count: parseInt(response.count, 10),
-      },
-      type: actionTypes.transactionsUpdated,
-    });
-    if (state.transactions.pending.length) {
-      store.dispatch(transactionsUpdateUnconfirmed({
-        activePeer: peers.data,
-        address,
-        pendingTransactions: state.transactions.pending,
-      }));
-    }
-  });
-};
-
-const hasRecentTransactions = txs => (
-  txs.confirmed.filter(tx => tx.confirmations < 1000).length !== 0 ||
-  txs.pending.length !== 0
-);
-
 const updateAccountData = (store, action) => {
   const { peers, account, transactions } = store.getState();
 
-  getAccount(peers.data, account.address).then((result) => {
-    if (result.balance !== account.balance) {
-      if (!action.data.windowIsFocused || !hasRecentTransactions(transactions)) {
-        updateTransactions(store, peers, account);
-      }
-    }
-    store.dispatch(accountUpdated(result));
-    store.dispatch(activePeerUpdate({ online: true }));
-  }).catch((res) => {
-    store.dispatch(activePeerUpdate({ online: false, code: res.error.code }));
-  });
+  store.dispatch(accountDataUpdated({
+    windowIsFocused: action.data.windowIsFocused,
+    transactions,
+    account,
+    peers,
+  }));
 };
 
 const getRecentTransactionOfType = (transactionsList, type) => (
@@ -74,13 +37,10 @@ const delegateRegistration = (store, action) => {
   const state = store.getState();
 
   if (delegateRegistrationTx) {
-    getDelegate(state.peers.data, { publicKey: state.account.publicKey })
-      .then((delegateData) => {
-        store.dispatch(accountUpdated(Object.assign(
-          {},
-          { delegate: delegateData.delegate, isDelegate: true },
-        )));
-      });
+    store.dispatch(updateDelegateAccount({
+      activePeer: state.peers.data,
+      publicKey: state.account.publicKey,
+    }));
   }
 };
 
@@ -100,25 +60,29 @@ const votePlaced = (store, action) => {
 };
 
 const passphraseUsed = (store, action) => {
+  const data = { expireTime: Date.now() + lockDuration };
+
   if (!store.getState().account.passphrase) {
-    store.dispatch(accountUpdated({
-      passphrase: action.data,
-      expireTime: Date.now() + lockDuration,
-    }));
-  } else {
-    store.dispatch(accountUpdated({ expireTime: Date.now() + lockDuration }));
+    data.passphrase = action.data;
   }
+
+  store.dispatch(accountUpdated(data));
 };
 
 const checkTransactionsAndUpdateAccount = (store, action) => {
   const state = store.getState();
   const { peers, account, transactions } = state;
 
-  if (action.data.windowIsFocused && hasRecentTransactions(transactions)) {
-    updateTransactions(store, peers, account);
-  }
+  store.dispatch(updateTransactionsIfNeeded(
+    {
+      transactions,
+      activePeer: peers.data,
+      account,
+    },
+    action.data.windowIsFocused,
+  ));
 
-  const tx = action.data.block.transactions;
+  const tx = action.data.block.transactions || [];
   const accountAddress = state.account.address;
   const blockContainsRelevantTransaction = tx.filter((transaction) => {
     const sender = transaction ? transaction.senderId : null;
@@ -127,7 +91,11 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
   }).length > 0;
 
   if (blockContainsRelevantTransaction) {
-    updateAccountData(store, action);
+    // it was not getting the account with secondPublicKey right
+    // after a new block with second passphrase registration transaction was received
+    setTimeout(() => {
+      updateAccountData(store, action);
+    }, 5000);
   }
 };
 

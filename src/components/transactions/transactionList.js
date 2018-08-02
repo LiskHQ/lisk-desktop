@@ -36,7 +36,6 @@ class TransactionsList extends React.Component {
   render() {
     const {
       transactions,
-      loading,
       dashboard,
       address,
       onClick,
@@ -56,7 +55,6 @@ class TransactionsList extends React.Component {
       return !(isFilterIncoming && (isTypeNonSend || isAccountInit));
     };
 
-    if (loading) return null;
     // istanbul ignore else
     if (transactions.length === 0) {
       // istanbul ignore else

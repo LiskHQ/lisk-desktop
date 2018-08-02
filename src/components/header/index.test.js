@@ -17,12 +17,19 @@ import HeaderHOC from './index';
 describe('HeaderHOC', () => {
   let wrapper;
   const store = configureMockStore([])({
-    peers: { data: { options: {} } },
+    peers: { data: {}, options: {} },
     account: {},
     activePeerSet: () => {},
     settings: {
       autoLog: true,
       advancedMode: true,
+    },
+    search: {
+      suggestions: {
+        delegates: [],
+        addresses: [],
+        transactions: [],
+      },
     },
   });
 

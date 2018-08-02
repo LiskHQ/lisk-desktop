@@ -8,12 +8,15 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { prepareStore } from '../../../../test/utils/applicationInit';
 import * as accountAPI from '../../../../src/utils/api/account';
 import * as delegateAPI from '../../../../src/utils/api/delegate';
+import * as transactionsAPI from '../../../../src/utils/api/transactions';
+import followedAccountsReducer from '../../../store/reducers/followedAccounts';
 import peersReducer from '../../../store/reducers/peers';
 import accountReducer from '../../../store/reducers/account';
 import transactionReducer from '../../../store/reducers/transaction';
 import transactionsReducer from '../../../store/reducers/transactions';
 import searchReducer from '../../../store/reducers/search';
 import loadingReducer from '../../../store/reducers/loading';
+import filtersReducer from '../../../store/reducers/filters';
 import { activePeerSet } from '../../../../src/actions/peers';
 import networks from './../../../../src/constants/networks';
 import getNetwork from './../../../../src/utils/getNetwork';
@@ -35,28 +38,30 @@ describe('ExplorerTransactions Component', () => {
   let delegateVotersStub;
 
   const store = prepareStore({
+    followedAccounts: followedAccountsReducer,
     peers: peersReducer,
     account: accountReducer,
     transaction: transactionReducer,
     transactions: transactionsReducer,
     search: searchReducer,
     loading: loadingReducer,
+    filters: filtersReducer,
   }, [thunk]);
 
   beforeEach(() => {
-    transactionsActionStub = stub(accountAPI, 'transactions');
-    transactionActionStub = stub(accountAPI, 'transaction');
+    transactionsActionStub = stub(transactionsAPI, 'getTransactions');
+    transactionActionStub = stub(transactionsAPI, 'getSingleTransaction');
     accountStub = stub(accountAPI, 'getAccount');
     delegateStub = stub(delegateAPI, 'getDelegate');
     delegateVotesStub = stub(delegateAPI, 'getVotes');
     delegateVotersStub = stub(delegateAPI, 'getVoters');
 
-    delegateStub.returnsPromise().resolves({ delegate: { ...accounts['delegate candidate'], isDelegate: true } });
-    accountStub.returnsPromise().resolves({ ...accounts.genesis });
-    delegateVotesStub.returnsPromise().resolves({ delegates: [accounts['delegate candidate']] });
-    delegateVotersStub.returnsPromise().resolves({ accounts: [accounts['empty account']] });
+    delegateStub.returnsPromise().resolves({ data: [{ ...accounts['delegate candidate'], isDelegate: true }] });
+    accountStub.returnsPromise().resolves({ data: [...accounts.genesis] });
+    delegateVotesStub.returnsPromise().resolves({ data: [accounts['delegate candidate']] });
+    delegateVotersStub.returnsPromise().resolves({ data: [accounts['empty account']] });
 
-    transactionActionStub.returnsPromise().resolves({ id: 'Some ID', type: txTypes.send });
+    transactionActionStub.returnsPromise().resolves({ data: [{ id: 'Some ID', type: txTypes.send }] });
 
     props = {
       match: { params: { address: accounts.genesis.address } },
@@ -71,14 +76,14 @@ describe('ExplorerTransactions Component', () => {
       address: accounts.genesis.address,
       limit: 25,
       filter: undefined,
-    }).returnsPromise().resolves({ transactions: [{ id: 'Some ID', type: txTypes.vote }], count: 1000 });
+    }).returnsPromise().resolves({ data: [{ id: 'Some ID', type: txTypes.vote }], meta: { count: 1000 } });
 
     transactionsActionStub.withArgs({
       activePeer: match.any,
       address: accounts.genesis.address,
       limit: 25,
       filter: txFilters.all,
-    }).returnsPromise().resolves({ transactions: [{ id: 'Some ID', type: txTypes.vote }], count: 1000 });
+    }).returnsPromise().resolves({ data: [{ id: 'Some ID', type: txTypes.vote }], meta: { count: 1000 } });
 
     store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
 

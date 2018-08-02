@@ -54,6 +54,14 @@
   margin-bottom: 30px;
 }
 
+.network {
+  margin-bottom: 0px;
+}
+
+.description {
+  font-size: 12px;
+}
+
 .sliderInput {
   width: auto;
 

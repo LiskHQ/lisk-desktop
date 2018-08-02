@@ -45,7 +45,7 @@ class confirmSecond extends React.Component {
     }
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.account.secondSignature === 1) {
+    if (nextProps.account.secondPublicKey) {
       this.setState({ step: 'done' });
     }
   }

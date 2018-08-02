@@ -1,15 +1,16 @@
 import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../utils/loading';
-import { transactions, getAccount } from '../utils/api/account';
+import { getAccount } from '../utils/api/account';
+import { getTransactions } from '../utils/api/transactions';
 import { getDelegate, getVoters, getVotes } from '../utils/api/delegate';
-import { searchAll } from '../utils/api/search';
+import searchAll from '../utils/api/search';
 
 const searchDelegate = ({ activePeer, publicKey, address }) =>
   (dispatch) => {
     getDelegate(activePeer, { publicKey }).then((response) => {
       dispatch({
         data: {
-          delegate: response.delegate,
+          delegate: response.data[0],
           address,
         },
         type: actionTypes.searchDelegate,
@@ -19,39 +20,36 @@ const searchDelegate = ({ activePeer, publicKey, address }) =>
 
 const searchVotes = ({ activePeer, address }) =>
   dispatch =>
-    getVotes(activePeer, address).then(({ delegates }) => {
+    getVotes(activePeer, address).then(response =>
       dispatch({
         type: actionTypes.searchVotes,
         data: {
-          votes: delegates,
+          votes: response.data.votes,
           address,
         },
-      });
-    });
+      }));
 
 const searchVoters = ({ activePeer, address, publicKey }) =>
   dispatch =>
-    getVoters(activePeer, publicKey).then(({ accounts }) => {
+    getVoters(activePeer, publicKey).then(response =>
       dispatch({
         type: actionTypes.searchVoters,
         data: {
-          voters: accounts,
+          voters: response.data.voters,
           address,
         },
-      });
-    });
+      }));
 
 export const searchAccount = ({ activePeer, address }) =>
   (dispatch) => {
     dispatch(searchVotes({ activePeer, address }));
     getAccount(activePeer, address).then((response) => {
       const accountData = {
-        balance: response.balance,
-        address,
+        ...response,
       };
-      if (response.publicKey) {
-        dispatch(searchDelegate({ activePeer, publicKey: response.publicKey, address }));
-        dispatch(searchVoters({ activePeer, address, publicKey: response.publicKey }));
+      if (accountData.publicKey) {
+        dispatch(searchDelegate({ activePeer, publicKey: accountData.publicKey, address }));
+        dispatch(searchVoters({ activePeer, address, publicKey: accountData.publicKey }));
       }
       dispatch({ data: accountData, type: actionTypes.searchAccount });
     });
@@ -62,19 +60,28 @@ export const searchTransactions = ({
 }) =>
   (dispatch) => {
     if (showLoading) loadingStarted(actionTypes.searchTransactions);
-    transactions({
+    getTransactions({
       activePeer, address, limit, filter,
     })
       .then((transactionsResponse) => {
         dispatch({
           data: {
             address,
-            transactions: transactionsResponse.transactions,
-            count: parseInt(transactionsResponse.count, 10),
+            transactions: transactionsResponse.data,
+            count: parseInt(transactionsResponse.meta.count, 10) || 0,
             filter,
           },
           type: actionTypes.searchTransactions,
         });
+        if (filter !== undefined) {
+          dispatch({
+            data: {
+              filterName: 'transactions',
+              value: filter,
+            },
+            type: actionTypes.addFilter,
+          });
+        }
         if (showLoading) loadingFinished(actionTypes.searchTransactions);
       });
   };
@@ -83,15 +90,15 @@ export const searchMoreTransactions = ({
   activePeer, address, limit, offset, filter,
 }) =>
   (dispatch) => {
-    transactions({
+    getTransactions({
       activePeer, address, limit, offset, filter,
     })
       .then((transactionsResponse) => {
         dispatch({
           data: {
             address,
-            transactions: transactionsResponse.transactions,
-            count: parseInt(transactionsResponse.count, 10),
+            transactions: transactionsResponse.data,
+            count: parseInt(transactionsResponse.meta.count, 10),
             filter,
           },
           type: actionTypes.searchMoreTransactions,

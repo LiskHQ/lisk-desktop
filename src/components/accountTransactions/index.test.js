@@ -11,6 +11,12 @@ import peersReducer from '../../store/reducers/peers';
 import accountReducer from '../../store/reducers/account';
 import searchReducer from '../../store/reducers/search';
 import loadingReducer from '../../store/reducers/loading';
+import filtersReducer from '../../store/reducers/filters';
+import followedAccountsReducer from '../../store/reducers/followedAccounts';
+
+import { activePeerSet } from './../../../src/actions/peers';
+import networks from './../../../src/constants/networks';
+import getNetwork from './../../../src/utils/getNetwork';
 
 import AccountTransactions from './index';
 import i18n from '../../i18n';
@@ -23,10 +29,12 @@ describe('AccountTransaction Component', () => {
   let searchAccountSpy;
 
   const store = prepareStore({
+    followedAccounts: followedAccountsReducer,
     peers: peersReducer,
     account: accountReducer,
     search: searchReducer,
     loading: loadingReducer,
+    filters: filtersReducer,
   }, [thunk]);
 
   beforeEach(() => {
@@ -38,6 +46,8 @@ describe('AccountTransaction Component', () => {
       history: { push: spy(), location: { search: ' ' } },
       t: key => key,
     };
+
+    store.dispatch(activePeerSet({ network: getNetwork(networks.testnet.code) }));
 
     wrapper = mount(<Provider store={store}>
       <Router>

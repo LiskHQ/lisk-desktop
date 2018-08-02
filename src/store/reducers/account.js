@@ -60,7 +60,12 @@ const account = (state = {}, action) => {
     case actionTypes.transactionsLoadFinish:
       return { ...state, delegate: action.data.delegate };
     case actionTypes.accountLoggedIn:
-      return { ...action.data, votes: state.votes, voters: state.voters };
+      return {
+        ...action.data,
+        votes: state.votes,
+        voters: state.voters,
+        isDelegate: ('delegate' in action.data),
+      };
     case actionTypes.accountLoggedOut:
       return {
         afterLogout: true,

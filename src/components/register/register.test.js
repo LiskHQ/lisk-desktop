@@ -33,6 +33,7 @@ describe('Register', () => {
   const prop = {
     account,
     peers,
+    network: networks.mainnet.code,
     activePeerSet: spy(),
     t: key => key,
   };

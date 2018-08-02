@@ -44,7 +44,7 @@ class Send extends React.Component {
 
   render() {
     const { t } = this.props;
-    const { amount, recipient } = this.getSearchParams();
+    const { amount, recipient, reference } = this.getSearchParams();
 
     return (
       <Fragment>
@@ -76,6 +76,7 @@ class Send extends React.Component {
                 autoFocus={this.state.isActiveOnMobile || window.innerWidth > breakpoints.m}
                 address={recipient}
                 amount={amount}
+                reference={reference}
                 setTabSend={this.setActiveTabSend.bind(this)}
                 settingsUpdated={this.props.settingsUpdated}
                 settings={this.props.settings}
