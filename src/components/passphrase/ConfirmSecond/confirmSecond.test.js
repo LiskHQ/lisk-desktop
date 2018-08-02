@@ -91,7 +91,7 @@ describe('SecondPassphrase: Confirmation', () => {
     expect(props.finalCallback).to.have.been.calledWith();
   });
 
-  it('should show the final Step when secondSecret is set', () => {
+  it('should show the final Step when secondPublicKey is set', () => {
     wrapper = mount(<ConfirmSecond {...props} />, options);
     wrapper.find('SliderCheckbox').at(0).find('input[type="checkbox"]')
       .simulate('change', { target: { checked: true } });
@@ -100,8 +100,8 @@ describe('SecondPassphrase: Confirmation', () => {
     expect(props.finalCallback).to.have.been.calledWith();
     wrapper.setProps({
       account: {
-        passphrase: accounts.passphrase,
-        secondSignature: 1,
+        passphrase: accounts['second passphrase account'].passphrase,
+        secondPublicKey: accounts['second passphrase account'].publicKey,
       },
     });
     clock.tick(501);

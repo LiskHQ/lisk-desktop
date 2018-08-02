@@ -245,7 +245,7 @@ describe('actions: account', () => {
       const data = {
         activePeer: {},
         address: accounts.genesis.address,
-        transactionsResponse: { count: 0, transactions: [] },
+        transactionsResponse: { meta: { count: 0 }, data: [] },
         isSameAccount: false,
       };
 
@@ -269,7 +269,7 @@ describe('actions: account', () => {
       const data = {
         activePeer: {},
         address: accounts.genesis.address,
-        transactionsResponse: { count: 0, transactions: [] },
+        transactionsResponse: { meta: { count: 0 }, data: [] },
         isSameAccount: true,
       };
 
@@ -391,7 +391,7 @@ describe('actions: account', () => {
     });
 
     it('should fetch delegate and update account', () => {
-      delegateApi.getDelegate.resolves({ delegate: 'delegate data' });
+      delegateApi.getDelegate.resolves({ data: [{ account: 'delegate data' }] });
       const data = {
         activePeer: {},
         publicKey: accounts.genesis.publicKey,
@@ -399,7 +399,7 @@ describe('actions: account', () => {
 
       updateDelegateAccount(data)(dispatch);
 
-      const accountUpdatedAction = accountUpdated(Object.assign({}, { delegate: 'delegate data', isDelegate: true }));
+      const accountUpdatedAction = accountUpdated(Object.assign({}, { delegate: { account: 'delegate data' }, isDelegate: true }));
       expect(dispatch).to.have.been.calledWith(accountUpdatedAction);
     });
   });

@@ -12,23 +12,22 @@ describe('Search KeyAction', () => {
 
   it('saves the last 3 searches without duplicates', () => {
     const testValues = [
-      '811299173602533L',
-      '947273526752682L',
-      '',
-      '382923358293526L   ',
-      '947273526752682L',
+      { id: '811299173602533L', searchTerm: '811299173602533L' },
+      { id: '947273526752682L', searchTerm: '947273526752682L' },
+      { id: '', searchTerm: '' },
+      { id: '382923358293526L   ', searchTerm: '382923358293526L   ' },
+      { id: '947273526752682L   ', searchTerm: '947273526752682L' },
     ];
 
     const expectedOutcome = [
-      '947273526752682L',
-      '382923358293526L',
-      '811299173602533L',
+      { id: '947273526752682L   ', searchTerm: '947273526752682L' },
+      { id: '382923358293526L   ', searchTerm: '382923358293526L' },
+      { id: '811299173602533L', searchTerm: '811299173602533L' },
     ];
 
-    testValues.forEach((value) => {
-      saveSearch(value);
+    testValues.forEach((searchObj) => {
+      saveSearch(searchObj.searchTerm, searchObj.id);
     });
-
     expect(localJSONStorage.get('searches')).to.eql(expectedOutcome);
   });
 });

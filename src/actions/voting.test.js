@@ -17,8 +17,8 @@ import Fees from '../constants/fees';
 import * as delegateApi from '../utils/api/delegate';
 
 const delegateList = [
-  { username: 'username1', publicKey: '123HG3452245L' },
-  { username: 'username2', publicKey: '123HG3522345L' },
+  { username: 'username1', publicKey: '123HG3452245L', address: '1234121321L' },
+  { username: 'username2', publicKey: '123HG3522345L', address: '123L' },
 ];
 
 describe('actions: voting', () => {
@@ -173,7 +173,7 @@ describe('actions: voting', () => {
     it('should dispatch votesAdded action when resolved if type !== \'update\'', () => {
       const dispatch = sinon.spy();
 
-      delegateApiMock.resolves({ delegates });
+      delegateApiMock.resolves({ data: { votes: delegates } });
       const expectedAction = { list: delegates };
 
       votesFetched(data)(dispatch);
@@ -183,7 +183,7 @@ describe('actions: voting', () => {
     it('should dispatch votesUpdated action when resolved if type === \'update\'', () => {
       const dispatch = sinon.spy();
 
-      delegateApiMock.resolves({ delegates });
+      delegateApiMock.resolves({ data: { votes: delegates } });
       const expectedAction = { list: delegates };
 
       votesFetched({ ...data, type: 'update' })(dispatch);
@@ -213,8 +213,8 @@ describe('actions: voting', () => {
       const delegateApiMock = sinon.stub(delegateApi, 'listDelegates');
       const dispatch = sinon.spy();
 
-      delegateApiMock.returnsPromise().resolves({ delegates, totalCount: 10 });
-      const expectedAction = { list: delegates, totalDelegates: 10, refresh: true };
+      delegateApiMock.returnsPromise().resolves({ data: delegates });
+      const expectedAction = { list: delegates, totalDelegates: delegates.length, refresh: true };
 
       actionFunction(dispatch);
       expect(dispatch).to.have.been.calledWith(delegatesAdded(expectedAction));
@@ -254,7 +254,7 @@ describe('actions: voting', () => {
 
 
       urlVotesFound(data)(dispatch);
-      delegateApiMock.resolves({ delegates });
+      delegateApiMock.resolves({ data: { votes: delegates } });
       expect(dispatch).to.have.been.calledWith(votesAdded(expectedAction));
     });
 

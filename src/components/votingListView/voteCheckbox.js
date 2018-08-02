@@ -5,16 +5,20 @@ import styles from './voteCheckbox.css';
 
 const VoteCheckbox = ({ data, status, toggle }) => {
   const {
-    username, publicKey, rank, productivity, address,
+    username, rank, productivity, account,
   } = data;
   const template = status && status.pending ?
     <Spinner /> :
-    <label className={styles.checkbox} htmlFor={`vote-${publicKey}`}>
+    <label className={styles.checkbox} htmlFor={`vote-${account.publicKey}`}>
       <input type='checkbox'
-        id={`vote-${publicKey}`}
+        id={`vote-${account.publicKey}`}
         checked={status ? status.unconfirmed : false}
         onChange={toggle.bind(null, {
-          username, publicKey, rank, productivity, address,
+          username,
+          publicKey: account.publicKey,
+          rank,
+          productivity,
+          address: account.address,
         })} />
       <FontIcon value='checkmark-check' className={styles.checked} />
       <FontIcon value='checkmark-uncheck' className={styles.unchecked} />

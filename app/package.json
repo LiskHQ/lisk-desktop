@@ -1,6 +1,6 @@
 {
   "name": "lisk-hub",
-  "version": "0.9.0",
+  "version": "1.0.0-rc.1",
   "description": "Lisk Hub",
   "main": "./build/main.js",
   "author": {

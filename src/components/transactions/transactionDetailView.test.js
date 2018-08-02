@@ -26,9 +26,9 @@ describe('TransactionDetailView', () => {
       t: () => {},
       transaction: {
         type: txTypes.send,
-        amount: 0,
+        amount: '0',
         senderId: '',
-        recipientId: '',
+        recipientId: '123L',
         timestamp: '',
         fee: '',
         confirmations: '',
@@ -48,13 +48,13 @@ describe('TransactionDetailView', () => {
   it('should display 2 voter-address Links', () => {
     const transaction = {
       senderId: '',
-      recipientId: '',
+      recipientId: '123L',
       timestamp: '',
       fee: '',
       confirmations: '',
       id: '',
       type: txTypes.send,
-      amount: 0,
+      amount: '0',
     };
     const context = {
       storeState: {
@@ -75,8 +75,8 @@ describe('TransactionDetailView', () => {
       transaction: {
         ...transaction,
         votesName: {
-          deleted: [{ address: 123, username: 123 }],
-          added: [{ address: 123, username: 123 }],
+          deleted: [{ account: { address: 123 }, username: 123 }],
+          added: [{ account: { address: 123 }, username: 123 }],
         },
       },
       match: { params: {} },

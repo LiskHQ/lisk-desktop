@@ -1,5 +1,5 @@
 Feature: Register delegate
-  Scenario: should allow to register a delegate with second passphrase
+  Scenario: should allow to register a delegate on custom node with second passphrase
     Given I'm logged in as "second passphrase account"
     When I go to "register-delegate"
     And I wait 0.5 seconds
@@ -11,7 +11,7 @@ Feature: Register delegate
     And I click "second-passphrase-next"
     And I wait 1 seconds
     And I click "confirm-delegate-registration"
-    And I wait 15 seconds
+    And I wait 20 seconds
     Then I should see text "Success!" in "success-header" element
     Then I should see text "Your registration is secured on the blockchain" in "success-description" element
     And I click "registration-success"

@@ -1,26 +1,34 @@
-import { requestToActivePeer } from './peers';
+// import { requestToActivePeer } from './peers';
+import Lisk from 'lisk-elements';
 
 export const getAccount = (activePeer, address) =>
   new Promise((resolve, reject) => {
-    activePeer.getAccount(address, (data) => {
-      if (data.success) {
+    activePeer.accounts.get({ address }).then((res) => {
+      if (res.data.length > 0) {
         resolve({
-          ...data.account,
-          serverPublicKey: data.account.publicKey,
+          ...res.data[0],
+          serverPublicKey: res.data[0].publicKey,
         });
-      } else if (!data.success && data.error === 'Account not found') {
+      } else {
         // when the account has no transactions yet (therefore is not saved on the blockchain)
         // this endpoint returns { success: false }
         resolve({
           address,
           balance: 0,
         });
-      } else {
-        reject(data);
       }
-    });
+    }).catch(reject);
   });
 
-export const setSecondPassphrase = (activePeer, secondSecret, publicKey, secret) =>
-  requestToActivePeer(activePeer, 'signatures', { secondSecret, publicKey, secret });
+// export const setSecondPassphrase = (activePeer, secondSecret, publicKey, secret) =>
+//   requestToActivePeer(activePeer, 'signatures', { secondSecret, publicKey, secret });
+
+export const setSecondPassphrase = (activePeer, secondPassphrase, publicKey, passphrase) =>
+  new Promise((resolve, reject) => {
+    const transaction = Lisk.transaction
+      .registerSecondPassphrase({ passphrase, secondPassphrase });
+    activePeer.transactions.broadcast(transaction).then(() => {
+      resolve(transaction);
+    }).catch(reject);
+  });
 

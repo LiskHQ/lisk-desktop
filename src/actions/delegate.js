@@ -25,11 +25,14 @@ export const delegatesRetrieving = data => ({
 export const delegatesFetched = ({ activePeer, username }) =>
   (dispatch) => {
     dispatch(delegatesRetrieving());
-    getDelegate(activePeer, { username }).then(({ delegate }) => {
-      dispatch(delegatesRetrieved({ delegate, username }));
-    }).catch(() => {
-      dispatch(delegatesRetrieved({ delegate: null, username }));
-    });
+    getDelegate(activePeer, { username })
+      .then((response) => {
+        if (response.data.length > 0) {
+          dispatch(delegatesRetrieved({ delegate: response.data[0], username }));
+        } else {
+          dispatch(delegatesRetrieved({ delegate: null, username }));
+        }
+      });
   };
 
 export const delegateRegisteredFailure = data => ({

@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { spy, stub, mock } from 'sinon';
+import { spy, stub, mock, match } from 'sinon';
 
 import { voteLookupStatusUpdated } from '../../actions/voting';
 import * as delegateApi from '../../utils/api/delegate';
@@ -53,6 +53,9 @@ describe('voting middleware', () => {
 
   describe('on votesAdded action', () => {
     const state = {
+      account: {
+        address: '1243987612489124L',
+      },
       voting: {
         delegates: [
           {
@@ -92,7 +95,7 @@ describe('voting middleware', () => {
         data: { },
       };
       middleware(store)(next)(givenAction);
-      expect(store.dispatch).to.not.have.been.calledWith();
+      expect(store.dispatch).to.not.have.been.calledWith(match.hasNested('type', actionTypes.voteLookupStatusUpdated));
     });
 
     it('should dispatch voteLookupStatusUpdated with username from action.data.upvotes and status \'upvotes\'', () => {
@@ -107,7 +110,7 @@ describe('voting middleware', () => {
       };
 
       middleware(store)(next)(givenAction);
-      getDelegateMock.resolves({ delegate: { username, publicKey: 'whatever' } });
+      getDelegateMock.resolves({ data: [{ username, account: { publicKey: 'whatever' } }] });
 
       expect(store.dispatch).to.have.been.calledWith(voteLookupStatusUpdated({ username, status }));
     });
@@ -124,7 +127,7 @@ describe('voting middleware', () => {
       };
 
       middleware(store)(next)(givenAction);
-      getDelegateMock.resolves({ delegate: { username, publicKey: 'whatever' } });
+      getDelegateMock.resolves({ data: [{ username, account: { publicKey: 'whatever' } }] });
 
       expect(store.dispatch).to.have.been.calledWith(voteLookupStatusUpdated({ username, status }));
     });
@@ -141,7 +144,7 @@ describe('voting middleware', () => {
       };
 
       middleware(store)(next)(givenAction);
-      getDelegateMock.resolves({ delegate: { username, publicKey: 'whatever' } });
+      getDelegateMock.resolves({ data: [{ username, account: { publicKey: 'whatever' } }] });
 
       expect(store.dispatch).to.have.been.calledWith(voteLookupStatusUpdated({ username, status }));
     });
@@ -158,7 +161,7 @@ describe('voting middleware', () => {
       };
 
       middleware(store)(next)(givenAction);
-      getDelegateMock.resolves({ delegate: { username, publicKey: 'whatever' } });
+      getDelegateMock.resolves({ data: [{ username, account: { publicKey: 'whatever' } }] });
 
       expect(store.dispatch).to.have.been.calledWith(voteLookupStatusUpdated({ username, status }));
     });

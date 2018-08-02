@@ -1,42 +1,19 @@
 import i18next from 'i18next';
-import Lisk from 'lisk-js';
+import Lisk from 'lisk-elements';
 import actionTypes from '../constants/actions';
-import { getNethash } from './../utils/api/nethash';
-import { errorToastDisplayed } from './toaster';
-import netHashes from '../constants/netHashes';
 import networks from '../constants/networks';
+import { errorToastDisplayed } from './toaster';
+import { loadingStarted, loadingFinished } from '../actions/loading';
 
 const peerSet = (data, config) => ({
   data: Object.assign({
     passphrase: data.passphrase,
     publicKey: data.publicKey,
-    activePeer: Lisk.api(config),
-    noSavedAccounts: data.noSavedAccounts,
+    activePeer: new Lisk.APIClient(config.nodes, { nethash: config.nethash }),
+    options: config,
   }),
   type: actionTypes.activePeerSet,
 });
-
-const pickMainnetNode = () => {
-  const nodes = [
-    'hub21.lisk.io',
-    'hub22.lisk.io',
-    'hub23.lisk.io',
-    'hub24.lisk.io',
-    'hub25.lisk.io',
-    'hub26.lisk.io',
-    'hub27.lisk.io',
-    'hub28.lisk.io',
-    'hub31.lisk.io',
-    'hub32.lisk.io',
-    'hub33.lisk.io',
-    'hub34.lisk.io',
-    'hub35.lisk.io',
-    'hub36.lisk.io',
-    'hub37.lisk.io',
-    'hub38.lisk.io',
-  ];
-  return nodes[Math.floor(Math.random() * nodes.length) % nodes.length];
-};
 
 /**
  * Returns required action object to set
@@ -53,10 +30,6 @@ export const activePeerSet = data =>
       return reg.test(url) ? url : `http://${url}`;
     };
     const config = data.network || {};
-    if (config.code === networks.mainnet.code) {
-      config.node = pickMainnetNode();
-    }
-
 
     if (config.address) {
       const { hostname, port, protocol } = new URL(addHttp(config.address));
@@ -64,21 +37,25 @@ export const activePeerSet = data =>
       config.node = hostname;
       config.ssl = protocol === 'https:';
       config.port = port || (config.ssl ? 443 : 80);
+      config.nodes = [`${protocol}//${hostname}:${port}`];
+    } else if (config.testnet) {
+      config.nethash = Lisk.APIClient.constants.TESTNET_NETHASH;
+      config.nodes = networks.testnet.nodes;
+    } else {
+      config.nethash = Lisk.APIClient.constants.MAINNET_NETHASH;
+      config.nodes = networks.mainnet.nodes;
     }
-    if (config.testnet === undefined && config.port !== undefined) {
-      config.testnet = config.port === '7000';
-    }
+
     if (config.custom) {
-      getNethash(Lisk.api(config)).then((response) => {
-        config.testnet = response.nethash === netHashes.testnet;
-        if (!config.testnet && response.nethash !== netHashes.mainnet) {
-          config.nethash = response.nethash;
-        }
+      const liskAPIClient = new Lisk.APIClient(config.nodes, { nethash: config.nethash });
+      loadingStarted('getConstants');
+      liskAPIClient.node.getConstants().then((response) => {
+        dispatch(loadingFinished('getConstants'));
+        config.nethash = response.data.nethash;
         dispatch(peerSet(data, config));
       }).catch(() => {
-        if (!data.noSavedAccounts) {
-          dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node') }));
-        }
+        dispatch(loadingFinished('getConstants'));
+        dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node') }));
       });
     } else {
       dispatch(peerSet(data, config));

@@ -20,7 +20,7 @@ const savedAccountsMiddleware = (store) => {
 
       /* istanbul ignore if  */
       if (account.network === networks.customNode.code) {
-        network.address = account.address;
+        network.address = account.peerAddress;
       }
 
       store.dispatch(activePeerSet({
@@ -30,8 +30,11 @@ const savedAccountsMiddleware = (store) => {
     }
   });
 
-  const isSameNetwork = (account, peers) => account.address === peers.data.options.address
-    && peers.data.options.code === account.network;
+  const isSameNetwork = (account, peers) => (
+    (peers.options.code !== networks.customNode.code ||
+      peers.data.currentNode.indexOf(account.address) > -1)
+    && peers.options.code === account.network
+  );
 
   const updateSavedAccounts = (peers, accounts) => {
     accounts.forEach((account, i) => {
@@ -73,7 +76,7 @@ const savedAccountsMiddleware = (store) => {
       case actionTypes.newBlockCreated:
         checkTransactionsAndUpdateSavedAccounts(
           peers,
-          action.data.block.transactions,
+          action.data.block.transactions || [],
           savedAccounts,
         );
         break;
@@ -84,7 +87,7 @@ const savedAccountsMiddleware = (store) => {
           passphrase: action.data.passphrase,
           network: {
             ...getNetwork(action.data.network),
-            address: action.data.address,
+            address: action.data.peerAddress,
           },
         }));
         break;
@@ -103,7 +106,7 @@ const savedAccountsMiddleware = (store) => {
           balance: action.data.balance,
           publicKey: action.data.publicKey,
           network: peers.options.code,
-          address: peers.options.address,
+          peerAddress: action.data.peerAddress,
         }));
         break;
       case actionTypes.accountRemoved:

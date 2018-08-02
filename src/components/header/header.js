@@ -8,7 +8,7 @@ import CountDownTemplate from './countDownTemplate';
 import CopyToClipboard from '../copyToClipboard';
 import LiskAmount from '../liskAmount';
 import Account from '../account';
-import logo from '../../assets/images/logo-beta.svg';
+import logo from '../../assets/images/Lisk-Logo.svg';
 import PrivateWrapper from '../privateWrapper';
 import { ActionButton } from './../toolbox/buttons/button';
 import styles from './header.css';
@@ -29,6 +29,11 @@ class Header extends React.Component {
     const { pathname } = this.props.location;
     return ![routes.register.path, routes.addAccount.path]
       .some(el => pathname.includes(el));
+  }
+
+  onAccountTimeout() {
+    this.props.removeSavedAccountPassphrase(this.props.account);
+    this.props.removePassphrase();
   }
 
   render() {
@@ -66,9 +71,7 @@ class Header extends React.Component {
                             <Countdown
                               date={this.props.account.expireTime}
                               renderer={CountDownTemplate}
-                              onComplete={() => {
-                                this.props.removeSavedAccountPassphrase();
-                              }}
+                              onComplete={this.onAccountTimeout.bind(this)}
                             >
                               <CustomCountDown
                                 resetTimer={this.props.resetTimer}

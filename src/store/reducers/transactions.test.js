@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import transactions from './transactions';
 import actionTypes from '../../constants/actions';
+import txFilter from '../../constants/transactionFilters';
 
 describe('Reducer: transactions(state, action)', () => {
   const defaultState = {
@@ -140,6 +141,33 @@ describe('Reducer: transactions(state, action)', () => {
     expect(changedState).to.deep.equal({
       ...defaultState,
       count: 0,
+    });
+  });
+
+  it('should reduce transactions and account when loading Transactions', () => {
+    const state = {
+      ...defaultState,
+    };
+    const data = {
+      confirmed: mockTransactions,
+      count: mockTransactions.length,
+      balance: 100,
+      address: '123L',
+      delegate: { username: 'test1' },
+    };
+    const action = { type: actionTypes.transactionsLoadFinish, data };
+    const changedState = transactions(state, action);
+
+    expect(changedState).to.deep.equal({
+      ...defaultState,
+      confirmed: data.confirmed,
+      count: data.count,
+      account: {
+        address: data.address,
+        balance: data.balance,
+        delegate: data.delegate,
+      },
+      filter: txFilter.all,
     });
   });
 });

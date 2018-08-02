@@ -4,10 +4,10 @@ import { mount } from 'enzyme';
 import { expect } from 'chai';
 import { stub, match, spy } from 'sinon';
 
-import * as peers from '../../src/utils/api/peers';
 import * as accountAPI from '../../src/utils/api/account';
 import * as delegateAPI from '../../src/utils/api/delegate';
 import * as liskServiceAPI from '../../src/utils/api/liskService';
+import * as transactionsAPI from '../../src/utils/api/transactions';
 import { prepareStore, renderWithRouter } from '../utils/applicationInit';
 import accountReducer from '../../src/store/reducers/account';
 import followedAccountsReducer from '../../src/store/reducers/followedAccounts';
@@ -37,11 +37,12 @@ import EmptyState from '../../src/components/emptyState';
 describe('@integration: Dashboard', () => {
   let store;
   let wrapper;
-  let requestToActivePeerStub;
+  let getTransactionsStub;
   let accountAPIStub;
   let delegateAPIStub;
   let liskServiceAPIStub;
   let helper;
+  let sendTransactionsStub;
 
   const history = { push: spy(), location: { search: '' } };
   const successMessage = 'Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain.';
@@ -63,27 +64,44 @@ describe('@integration: Dashboard', () => {
   };
 
   beforeEach(() => {
-    requestToActivePeerStub = stub(peers, 'requestToActivePeer');
+    getTransactionsStub = stub(transactionsAPI, 'getTransactions');
     liskServiceAPIStub = stub(liskServiceAPI, 'getCurrencyGraphData');
     accountAPIStub = stub(accountAPI, 'getAccount');
     delegateAPIStub = stub(delegateAPI, 'getDelegate');
+    sendTransactionsStub = stub(transactionsAPI, 'send');
 
-    requestToActivePeerStub.withArgs(match.any, 'transactions', match({
-      recipientId: '537318935439898807L',
-      amount: 1e8,
-      secret: match.any,
-      secondSecret: match.any,
-    }))
-      .returnsPromise().resolves({ transactionId: 'Some ID' });
-    requestToActivePeerStub.withArgs(match.any, 'transactions', match({ limit: 25, senderId: match.defined, recipientId: match.defined }))
-      .returnsPromise().resolves({ transactions: generateTransactions(25), count: 1000 });
+    sendTransactionsStub.withArgs(
+      match.defined,
+      match.defined,
+      match.defined,
+      match.defined,
+      match.defined,
+      '',
+    ).returnsPromise().resolves({ data: [] });
+    // transactionsFilterSet do pass filter
+    getTransactionsStub.withArgs({
+      activePeer: match.defined,
+      address: match.defined,
+      limit: 25,
+    }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 1000 } });
+
+    // rest of accounts send request
+    sendTransactionsStub.withArgs(
+      match.defined,
+      match.defined,
+      match.defined,
+      match.defined,
+      null,
+      '',
+    ).returnsPromise().resolves({ data: [] });
   });
 
   afterEach(() => {
-    requestToActivePeerStub.restore();
+    getTransactionsStub.restore();
     liskServiceAPIStub.restore();
     accountAPIStub.restore();
     delegateAPIStub.restore();
+    sendTransactionsStub.restore();
   });
 
   const setupStep = (accountType, options = { isLocked: false }) => {
@@ -114,12 +132,8 @@ describe('@integration: Dashboard', () => {
       passphrase,
     };
 
-    accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
+    accountAPIStub.withArgs(match.any).returnsPromise().resolves({ data: [...account] });
     store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
-    accountAPIStub.withArgs(match.any).returnsPromise()
-      .resolves({
-        ...account,
-      });
     delegateAPIStub.withArgs(match.any).returnsPromise()
       .resolves({ delegate: { ...accounts['delegate candidate'] } });
 

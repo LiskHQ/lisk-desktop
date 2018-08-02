@@ -56,7 +56,7 @@ describe('Amount', () => {
   it('should have className "transactions__greyLabel" for outgoing transaction', () => {
     const inputValue = {
       value: {
-        type: 1,
+        type: 0,
         recipientId: '1085993630748340485L',
         senderId: 'address',
       },

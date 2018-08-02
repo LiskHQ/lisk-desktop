@@ -13,13 +13,12 @@ const Amount = (props) => {
   } else if (props.value.senderId !== props.address) {
     params.className = 'greenLabel';
     params.pre = '+';
-  } else if ((props.value.type !== transactionTypes.send ||
-      props.value.recipientId !== props.address) && props.value.amount !== 0) {
+  } else if (props.value.type === transactionTypes.send &&
+      props.value.recipientId !== props.address) {
     params.pre = '-';
     params.className = 'greyLabel';
-    params.clickToSendEnabled = props.value.type === transactionTypes.send;
   }
-  const amount = props.value.amount === 0 ? '-' : <LiskAmount val={props.value.amount} />;
+  const amount = props.value.type !== transactionTypes.send ? '-' : <LiskAmount val={props.value.amount} />;
   return <span id='transactionAmount' className={styles[params.className]}>
     { params.pre }{amount}
   </span>;

@@ -161,14 +161,23 @@ defineSupportCode(({
       : accounts[accountName].passphrase;
     const networkIndex = browser.params.network === 'customNode' ? 3 : 2;
     browser.sleep(100);
+
+    const checkImLoggedIn = () => {
+      const selector = '.account';
+      waitForElem(selector).then(() => {
+        expect(element.all(by.css(selector)).count()).to.eventually.equal(1)
+          .and.notify(callback);
+      }).catch(callback);
+    };
+
     clickOnOptionInList(networkIndex, 'network', () => {
       waitForElemAndSendKeys('.passphrase input', passphrase, () => {
         if (browser.params.network === 'customNode') {
           waitForElemAndSendKeys('.address input', browser.params.liskCoreURL, () => {
-            waitForElemAndClickIt('.login-button', callback);
+            waitForElemAndClickIt('.login-button', checkImLoggedIn);
           });
         } else {
-          waitForElemAndClickIt('.login-button', callback);
+          waitForElemAndClickIt('.login-button', checkImLoggedIn);
         }
       });
     });

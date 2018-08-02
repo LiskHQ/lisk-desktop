@@ -51,7 +51,7 @@ export default class VoteUrlProcessor extends React.Component {
     };
 
     return this.props.show ?
-      <Box>
+      <Box className={styles.noShadow}>
         <section className={styles.wrapper}>
           <header>
               <h2>Your Pre-Selection

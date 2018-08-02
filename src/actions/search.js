@@ -10,7 +10,7 @@ const searchDelegate = ({ activePeer, publicKey, address }) =>
     getDelegate(activePeer, { publicKey }).then((response) => {
       dispatch({
         data: {
-          delegate: response.delegate,
+          delegate: response.data[0],
           address,
         },
         type: actionTypes.searchDelegate,
@@ -20,39 +20,36 @@ const searchDelegate = ({ activePeer, publicKey, address }) =>
 
 const searchVotes = ({ activePeer, address }) =>
   dispatch =>
-    getVotes(activePeer, address).then(({ delegates }) => {
+    getVotes(activePeer, address).then(response =>
       dispatch({
         type: actionTypes.searchVotes,
         data: {
-          votes: delegates,
+          votes: response.data.votes,
           address,
         },
-      });
-    });
+      }));
 
 const searchVoters = ({ activePeer, address, publicKey }) =>
   dispatch =>
-    getVoters(activePeer, publicKey).then(({ accounts }) => {
+    getVoters(activePeer, publicKey).then(response =>
       dispatch({
         type: actionTypes.searchVoters,
         data: {
-          voters: accounts,
+          voters: response.data.voters,
           address,
         },
-      });
-    });
+      }));
 
 export const searchAccount = ({ activePeer, address }) =>
   (dispatch) => {
     dispatch(searchVotes({ activePeer, address }));
     getAccount(activePeer, address).then((response) => {
       const accountData = {
-        balance: response.balance,
-        address,
+        ...response,
       };
-      if (response.publicKey) {
-        dispatch(searchDelegate({ activePeer, publicKey: response.publicKey, address }));
-        dispatch(searchVoters({ activePeer, address, publicKey: response.publicKey }));
+      if (accountData.publicKey) {
+        dispatch(searchDelegate({ activePeer, publicKey: accountData.publicKey, address }));
+        dispatch(searchVoters({ activePeer, address, publicKey: accountData.publicKey }));
       }
       dispatch({ data: accountData, type: actionTypes.searchAccount });
     });
@@ -70,8 +67,8 @@ export const searchTransactions = ({
         dispatch({
           data: {
             address,
-            transactions: transactionsResponse.transactions,
-            count: parseInt(transactionsResponse.count, 10) || 0,
+            transactions: transactionsResponse.data,
+            count: parseInt(transactionsResponse.meta.count, 10) || 0,
             filter,
           },
           type: actionTypes.searchTransactions,
@@ -100,8 +97,8 @@ export const searchMoreTransactions = ({
         dispatch({
           data: {
             address,
-            transactions: transactionsResponse.transactions,
-            count: parseInt(transactionsResponse.count, 10),
+            transactions: transactionsResponse.data,
+            count: parseInt(transactionsResponse.meta.count, 10),
             filter,
           },
           type: actionTypes.searchMoreTransactions,

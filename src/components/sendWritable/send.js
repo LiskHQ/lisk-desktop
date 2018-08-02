@@ -8,6 +8,7 @@ import fees from './../../constants/fees';
 import styles from './sendWritable.css';
 import regex from './../../utils/regex';
 import AddressInput from './../addressInput';
+import ReferenceInput from './../referenceInput';
 
 class SendWritable extends React.Component {
   constructor(props) {
@@ -18,6 +19,9 @@ class SendWritable extends React.Component {
       },
       amount: {
         value: this.props.amount || '',
+      },
+      reference: {
+        value: this.props.reference || '',
       },
       ...authStatePrefill(),
     };
@@ -37,24 +41,30 @@ class SendWritable extends React.Component {
         amount: {
           value: this.props.prevState.amount || this.state.amount.value,
         },
+        reference: {
+          value: this.props.prevState.reference || this.state.reference.value,
+        },
         ...authStatePrefill(this.props.account),
       };
       this.setState(newState);
     }
   }
 
-  handleChange(name, value, error) {
+  handleChange(name, required = true, value, error) {
     this.setState({
       [name]: {
         value,
-        error: typeof error === 'string' ? error : this.validateInput(name, value),
+        error: typeof error === 'string' ? error : this.validateInput(name, value, required),
       },
     });
   }
 
-  validateInput(name, value) {
-    if (!value) {
+  validateInput(name, value, required) {
+    const byteCount = encodeURI(value).split(/%..|./).length - 1;
+    if (!value && required) {
       return this.props.t('Required');
+    } else if (name === 'reference' && byteCount > 64) {
+      return this.props.t('Maximum length exceeded');
     } else if (!value.match(this.inputValidationRegexps[name])) {
       return name === 'amount' ? this.props.t('Invalid amount') : this.props.t('Invalid address');
     } else if (name === 'amount' && value > parseFloat(this.getMaxAmount())) {
@@ -87,7 +97,13 @@ class SendWritable extends React.Component {
             className='recipient'
             label={this.props.t('Send to address')}
             address={this.state.recipient}
-            handleChange={this.handleChange.bind(this, 'recipient')}
+            handleChange={this.handleChange.bind(this, 'recipient', true)}
+          />
+          <ReferenceInput
+            className='reference'
+            label={this.props.t('Reference (optional)')}
+            address={this.state.reference}
+            handleChange={this.handleChange.bind(this, 'reference', false)}
           />
           <Converter
             label={this.props.t('Amount (LSK)')}
@@ -95,7 +111,7 @@ class SendWritable extends React.Component {
             theme={styles}
             error={this.state.amount.error}
             value={this.state.amount.value}
-            onChange={this.handleChange.bind(this, 'amount')}
+            onChange={this.handleChange.bind(this, 'amount', true)}
             t={this.props.t}
           />
         </form>
@@ -103,10 +119,12 @@ class SendWritable extends React.Component {
           <Button onClick={() => this.props.nextStep({
             recipient: this.state.recipient.value,
             amount: this.state.amount.value,
+            reference: this.state.reference.value,
           })}
           disabled={(!!this.state.recipient.error ||
                     !this.state.recipient.value ||
                     !!this.state.amount.error ||
+                    !!this.state.reference.error ||
                     !this.state.amount.value)}
           className={`send-next-button ${styles.nextButton}`}
           >{this.props.t('Next')}</Button>

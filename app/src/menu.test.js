@@ -1,9 +1,10 @@
 import { expect } from 'chai'; // eslint-disable-line import/no-extraneous-dependencies
-import { spy, match } from 'sinon'; // eslint-disable-line import/no-extraneous-dependencies
+import { spy, match, useFakeTimers } from 'sinon'; // eslint-disable-line import/no-extraneous-dependencies
 import menu from './menu';
 
 describe('MenuBuilder', () => {
   let electron;
+  let clock;
 
   beforeEach(() => {
     electron = {
@@ -15,6 +16,14 @@ describe('MenuBuilder', () => {
       app: { getName: () => ('Lisk Hub'), getVersion: () => ('0.2.0') },
       dialog: { showMessageBox: spy() },
     };
+    clock = useFakeTimers({
+      now: new Date(2018, 1, 1),
+      toFake: ['setTimeout', 'clearTimeout', 'Date'],
+    });
+  });
+
+  afterEach(() => {
+    clock.restore();
   });
 
   it('Builds the electron about menu when os is mac', () => {
@@ -47,7 +56,7 @@ describe('MenuBuilder', () => {
     const expectedOptions = {
       buttons: ['OK'],
       icon: '//assets/images/LISK.png',
-      message: `${electron.app.getName()}\nVersion ${electron.app.getVersion()}\nCopyright © 2016 - 2017 Lisk Foundation`,
+      message: `${electron.app.getName()}\nVersion ${electron.app.getVersion()}\nCopyright © 2016 - 2018 Lisk Foundation`,
     };
 
     // make sure message box is shown on click if window is focused

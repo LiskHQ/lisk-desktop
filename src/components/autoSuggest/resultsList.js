@@ -11,7 +11,7 @@ class ResultsList extends React.Component {
         </li>
         {
           this.props.results.map(result =>
-            <li key={result.id}
+            <li key={`${result.id}-${result.valueLeft}`}
               onMouseDown={() => this.props.onMouseDown(result.id, result.type, result.valueLeft)}
               data-id={result.id}
               data-type={result.type}

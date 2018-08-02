@@ -110,7 +110,7 @@ class Setting extends React.Component {
             }}/>
         </div>
         <h4>{t('Advanced features')}</h4>
-        <div className={styles.item}>
+        <div className={`${styles.item} ${styles.network}`}>
           <label>{t('Switch networks (Main-/Testnet, Custom)')}</label>
           <Checkbox
             theme={styles}
@@ -120,6 +120,9 @@ class Setting extends React.Component {
               value: false,
               checked: settings.showNetwork,
             }}/>
+        </div>
+        <div className={`${styles.item} ${styles.description}`}>
+          {t('You will be able to select the desired network when signing in')}
         </div>
         <div className={styles.item}>
           <label className={`${allowAuthClass}`}>{t('Delegate features')}</label>
