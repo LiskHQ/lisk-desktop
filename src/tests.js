@@ -16,10 +16,10 @@ sinonStubPromise(sinon);
 /* istanbul ignore next */
 window.localStorage.getItem = () => JSON.stringify([]);
 const testsContext = require.context('.', true, /\.test\.js$/);
-testsContext.keys().forEach(testsContext);
+testsContext.keys().filter(url => url.indexOf('/src/components/passphrase/') > -1).forEach(testsContext);
 
-const integrationContext = require.context('../test/integration/', true, /\.test\.js$/);
-integrationContext.keys().forEach(integrationContext);
+// const integrationContext = require.context('../test/integration/', true, /\.test\.js$/);
+// integrationContext.keys().forEach(integrationContext);
 
-const electronTestsContext = require.context('../app', true, /\.test\.js$/);
-electronTestsContext.keys().forEach(electronTestsContext);
+// const electronTestsContext = require.context('../app', true, /\.test\.js$/);
+// electronTestsContext.keys().forEach(electronTestsContext);
