@@ -5,7 +5,6 @@ import Checkbox from '../toolbox/sliderCheckbox';
 import styles from './setting.css';
 import i18n from '../../i18n';
 import accountConfig from '../../constants/account';
-import breakpoints from './../../constants/breakpoints';
 import settingsConst from './../../constants/settings';
 // TODO: will be re-enabled when the functionality is updated
 import routes from '../../constants/routes';
@@ -56,7 +55,6 @@ class Setting extends React.Component {
     } = this.props;
 
     const allowAuthClass = !this.props.isAuthenticated ? styles.disable : '';
-    const showOnboardingSetting = window.innerWidth > breakpoints.m;
     const activeCurrency = settings.currency || settingsConst.currencies[0];
 
     return (<Box className={styles.wrapper}>
@@ -65,19 +63,6 @@ class Setting extends React.Component {
           <h4>{t('Settings')}</h4>
           <p>{t('Set up Lisk Hub and your account.')}</p>
         </header>
-        {showOnboardingSetting
-          ? <div className={`${styles.item} onBoarding`}>
-            <label>{t('Start the onboarding')}</label>
-            <button className={`${styles.settingsButton} onboarding-setting`} onClick={() => {
-              this.props.settingsUpdated({ onBoarding: true });
-            }
-            }>
-              {t('Start')}
-              <FontIcon>arrow-right</FontIcon>
-            </button>
-          </div>
-          : null
-        }
       </aside>
       <section>
         <h4 className={`${allowAuthClass}`}>{t('Security')}</h4>
