@@ -66,17 +66,36 @@ node('lisk-hub') {
     }
 
     stage ('Run Unit Tests') {
-      try {
-        ansiColor('xterm') {
-          sh '''
-          ON_JENKINS=true npm run --silent test-jest
-          # Submit coverage to coveralls
-          cat coverage/*/lcov.info | coveralls -v
-          '''
+
+      parallel {
+        stage ('Run Mocha Tests') {
+          try {
+            ansiColor('xterm') {
+              sh '''
+              ON_JENKINS=true npm run --silent test
+              # Submit coverage to coveralls
+              cat coverage/*lcov.info | coveralls -v
+              '''
+            }
+          } catch (err) {
+            echo "Error: ${err}"
+            fail('Stopping build: Mocha test suite failed')
+          }
         }
-      } catch (err) {
-        echo "Error: ${err}"
-        fail('Stopping build: test suite failed')
+        stage ('Run Jest Tests') {
+          try {
+            ansiColor('xterm') {
+              sh '''
+              ON_JENKINS=true npm run --silent test-jest
+              # Submit coverage to coveralls
+              cat coverage/jest/*/lcov.info | coveralls -v
+              '''
+            }
+          } catch (err) {
+            echo "Error: ${err}"
+            fail('Stopping build: Jest test suite failed')
+          }
+        }
       }
     }
 

@@ -241,11 +241,11 @@
     "moduleFileExtensions": ["js"],
     "moduleDirectories": ["node_modules"],
     "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
-      "\\.(css|less)$": "identity-obj-proxy"
+      "^.+\\.css$": "identity-obj-proxy",
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js"
     },
     "collectCoverage": true,
-    "coverageDirectory": "<rootDir>/coverage",
+    "coverageDirectory": "<rootDir>/coverage/jest",
     "collectCoverageFrom": [
       "<rootDir>/src/components/**/*.{js}",
       "!**/node_modules/**"
@@ -258,7 +258,9 @@
         "statements": 80
       }
     },
-    "setupFiles": ["<rootDir>/src/tests.js"],
+    "setupFiles": [
+      "<rootDir>/config/setupJest.js"
+    ],
     "transform": {
       "^.+\\.js$": "babel-jest"
     },
