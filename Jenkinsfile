@@ -75,6 +75,9 @@ node('lisk-hub') {
 
       parallel {
         stage ('Run Mocha Tests') {
+          agent {
+              label "mocha"
+          }
           steps {
             try {
               ansiColor('xterm') {
@@ -91,6 +94,9 @@ node('lisk-hub') {
           }
         }
         stage ('Run Jest Tests') {
+          agent {
+              label "jest"
+          }
           steps {
             try {
               ansiColor('xterm') {
