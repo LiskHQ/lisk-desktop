@@ -63,20 +63,20 @@ class confirmSecond extends React.Component {
     const doneClass = (this.state.step === 'done' || this.state.step === 'pending') ? styles.done : '';
     return (<section className={`${styles.wrapper} ${status}`}>
       <header className={doneClass}>
-        <TransitionWrapper current={this.state.step} step='login'>
+        <TransitionWrapper current={this.state.step} step='login' animationName='slide'>
           <h2>
             {t('Please sign in with your first passphrase')}
           </h2>
         </TransitionWrapper>
-        <TransitionWrapper current={this.state.step} step='confirm'>
+        <TransitionWrapper current={this.state.step} step='confirm' animationName='slide'>
           <h2>
             {t('Great!\nYou’re almost finished')}
           </h2>
         </TransitionWrapper>
-        <TransitionWrapper current={this.state.step} step='pending'>
+        <TransitionWrapper current={this.state.step} step='pending' animationName='slide'>
           <div id='pendingContainer'><FontIcon className={styles.pendingIcon} value="logo-icon"></FontIcon></div>
         </TransitionWrapper>
-        <TransitionWrapper current={this.state.step} step='done'>
+        <TransitionWrapper current={this.state.step} step='done' animationName='slide'>
           <article className={`${styles.resultContainer} doneContainer`}>
             <FontIcon className={styles.headerIcon} value="checkmark"></FontIcon>
             <h2 className={styles.resultHeader}>

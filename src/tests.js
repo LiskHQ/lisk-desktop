@@ -7,6 +7,8 @@ import sinonStubPromise from 'sinon-stub-promise';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
+require('jest-localstorage-mock');
+
 Enzyme.configure({ adapter: new Adapter() });
 
 chai.use(sinonChai);
@@ -14,12 +16,13 @@ chai.use(chaiEnzyme());
 chai.use(chaiAsPromised);
 sinonStubPromise(sinon);
 /* istanbul ignore next */
-window.localStorage.getItem = () => JSON.stringify([]);
-const testsContext = require.context('.', true, /\.test\.js$/);
-testsContext.keys().forEach(testsContext);
+// window.localStorage.getItem = () => JSON.stringify([]);
 
-const integrationContext = require.context('../test/integration/', true, /\.test\.js$/);
-integrationContext.keys().forEach(integrationContext);
+// const testsContext = require.context('.', true, /\.test\.js$/);
+// testsContext.keys().forEach(testsContext);
 
-const electronTestsContext = require.context('../app', true, /\.test\.js$/);
-electronTestsContext.keys().forEach(electronTestsContext);
+// const integrationContext = require.context('../test/integration/', true, /\.test\.js$/);
+// integrationContext.keys().forEach(integrationContext);
+
+// const electronTestsContext = require.context('../app', true, /\.test\.js$/);
+// electronTestsContext.keys().forEach(electronTestsContext);
