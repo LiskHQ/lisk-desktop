@@ -88,7 +88,7 @@ node('lisk-hub') {
               sh '''
               ON_JENKINS=true npm run --silent test-jest
               # Submit coverage to coveralls
-              cat coverage/jest/*/lcov.info | coveralls -v
+              cat coverage/jest/*lcov.info | coveralls -v
               '''
             }
           } catch (err) {
