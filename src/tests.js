@@ -16,7 +16,10 @@ sinonStubPromise(sinon);
 /* istanbul ignore next */
 window.localStorage.getItem = () => JSON.stringify([]);
 const testsContext = require.context('.', true, /\.test\.js$/);
-testsContext.keys().filter(url => url.indexOf('ConfirmSecond') > -1).forEach(testsContext);
+testsContext.keys().filter((url) => {
+  console.log('TESTS', url);
+  return url.indexOf('ConfirmSecond') > -1;
+}).forEach(testsContext);
 
 // const integrationContext = require.context('../test/integration/', true, /\.test\.js$/);
 // integrationContext.keys().forEach(integrationContext);
