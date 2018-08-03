@@ -239,7 +239,7 @@
       "<rootDir>/src/components"
     ],
     "testMatch": [
-      "<rootDir>/src/components/passphrase/ConfirmSecond/**/?(*.)+(spec|index.test).js?(x)"
+      "<rootDir>/src/components/passphrase/**/?(*.)+(spec|index.test).js?(x)"
     ],
     "verbose": true,
     "moduleFileExtensions": [
