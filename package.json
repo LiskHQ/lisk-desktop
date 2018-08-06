@@ -255,7 +255,7 @@
     "collectCoverage": true,
     "coverageDirectory": "<rootDir>/coverage/jest",
     "collectCoverageFrom": [
-      "<rootDir>/src/components/**/*.{js}",
+      "<rootDir>/src/components/transactions/**/*.{js}",
       "!**/node_modules/**"
     ],
     "coverageThreshold": {
