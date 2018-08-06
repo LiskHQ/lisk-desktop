@@ -1,0 +1,17 @@
+.quickTips {
+  height: calc(50% - 20px);
+  margin: 0px 0px 20px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 28px;
+}
+
+.title {
+  font-size: 16px;
+}

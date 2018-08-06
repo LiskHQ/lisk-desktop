@@ -23,7 +23,6 @@ export default {
   dashboard: {
     path: '/dashboard',
     component: Dashboard,
-    isPrivate: true,
   },
   wallet: {
     path: '/wallet',
