@@ -23,10 +23,28 @@ pipeline {
         }
       }
     }
-    stage('Non-Parallel Stage') {
-        steps {
-            echo 'This stage will be executed first.'
+    stage ('Install npm dependencies') {
+      steps {
+        script {
+          try {
+            sh '''
+            cache_file="$HOME/cache/$( sha1sum package.json |awk '{ print $1 }' ).tar.gz"
+            if [ -f "$cache_file" ]; then
+                tar xf "$cache_file"
+            fi
+            npm install
+            ./node_modules/protractor/bin/webdriver-manager update
+            if [ ! -f "$cache_file" ]; then
+                GZIP=-4 tar czf "$cache_file" node_modules/
+                find $HOME/cache/ -name '*.tar.gz' -ctime +7 -delete
+            fi
+            '''
+          } catch (err) {
+            echo "Error: ${err}"
+            fail('Stopping build: npm install failed')
+          }
         }
+      }
     }
     stage('Parallel Stage') {
         failFast true
