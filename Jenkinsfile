@@ -119,6 +119,7 @@ node('lisk-hub') {
         }
       }
     }
+  }
 
     stage ('Run E2E Tests') {
       try {
@@ -176,8 +177,6 @@ node('lisk-hub') {
       make mrproper
       '''
     }
-
-}
     sh '''
     N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
     pgrep --list-full -f "Xvfb :1$N" || true
