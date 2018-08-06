@@ -12,12 +12,14 @@ pipeline {
 
     stage ('Checkout and Start Lisk Core') {
       steps {
-        try {
-          deleteDir()
-          checkout scm
-        } catch (err) {
-          echo "Error: ${err}"
-          fail('Stopping build: checkout failed')
+        script {
+          try {
+            deleteDir()
+            checkout scm
+          } catch (err) {
+            echo "Error: ${err}"
+            fail('Stopping build: checkout failed')
+          }
         }
       }
     }
