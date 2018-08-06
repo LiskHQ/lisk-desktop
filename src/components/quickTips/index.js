@@ -1,6 +1,7 @@
 import React from 'react';
 import Box from '../box';
 import quickTips from '../../constants/quickTips';
+import { FontIcon } from '../fontIcon';
 
 import styles from './index.css';
 
@@ -14,6 +15,7 @@ class QuickTips extends React.Component {
 
   nextStep() {
     const { currentIndex } = this.state;
+    if (currentIndex + 1 === quickTips.length) return;
     const nextIndex = currentIndex + 1;
 
     this.setState({ currentIndex: nextIndex });
@@ -21,6 +23,7 @@ class QuickTips extends React.Component {
 
   previousStep() {
     const { currentIndex } = this.state;
+    if (currentIndex === 0) return;
     const nextIndex = currentIndex - 1;
 
     this.setState({ currentIndex: nextIndex });
@@ -29,20 +32,30 @@ class QuickTips extends React.Component {
   render() {
     const { currentIndex } = this.state;
     const currentSlide = quickTips[currentIndex];
+
     return (
       <Box className={`${styles.quickTips}`}>
         <div className={styles.title}>{currentSlide.title}</div>
-        <div>{currentSlide.description}</div>
-        <div className={styles.footer}>
-          <a href={currentSlide.goTo.link}>{currentSlide.goTo.title}</a>
+        <div className={`${styles.descriptionRow}`}>
           <div>
+            {currentSlide.description.map((desc, key) => <span key={`desc-${key}`}><br/><br/>{desc}</span>)}
+          </div>
+          <div><img src={currentSlide.picture} /></div>
+        </div>
+        <div className={styles.footer}>
+          <a href={currentSlide.goTo.link}>
+            {currentSlide.goTo.title}<FontIcon value='arrow-right'/>
+          </a>
+          <div className={styles.steps}>
             <div
               onClick={() => { this.previousStep(); }}
-              disabled={currentIndex === 0}>Previous</div>
-              {`${currentIndex + 1}/${quickTips.length + 1}`}
+              styles={`${currentIndex === 0 ? styles.disabled : ''}`}
+            ><FontIcon value='arrow-left'/>Previous</div>
+              {`${currentIndex + 1}/${quickTips.length}`}
             <div
               onClick={() => { this.nextStep(); }}
-              disabled={currentIndex === quickTips.length}>Next</div>
+              styles={`${currentIndex + 1 === quickTips.length ? styles.disabled : ''}`}
+            >Next<FontIcon value='arrow-right'/></div>
           </div>
         </div>
       </Box>);

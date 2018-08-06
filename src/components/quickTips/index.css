@@ -15,3 +15,24 @@
 .title {
   font-size: 16px;
 }
+
+.descriptionRow {
+  display: flex;
+  justify-content: space-between;
+
+  & div {
+    width: 50%;
+    & img {
+      margin-top: -100px;
+    }
+  }
+}
+
+.steps {
+  display: flex;
+}
+
+.disabled {
+  pointer-events: none;
+  color: gray;
+}
