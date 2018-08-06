@@ -16,3 +16,5 @@ chai.use(sinonChai);
 chai.use(chaiEnzyme());
 chai.use(chaiAsPromised);
 sinonStubPromise(sinon);
+// eslint-disable-next-line no-undef
+jest.useFakeTimers();

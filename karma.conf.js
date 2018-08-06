@@ -54,7 +54,6 @@ module.exports = function (config) {
           functions: 80,
           lines: 80,
           excludes: [
-            'src/components/transactions/**/*.js',
             'src/components/register/register.js',
             'src/components/voteUrlProcessor/index.js',
             'src/components/savedAccounts/index.js',
@@ -65,6 +64,8 @@ module.exports = function (config) {
             'src/store/reducers/liskService.js',
             'src/actions/transactions.js',
             'src/components/errorBoundary/index.js',
+            // Jest covered
+            'src/components/transactions/**/*.js',
           ],
           overrides: {
             'src/store/**/*.js': {
