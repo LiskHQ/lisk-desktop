@@ -4,6 +4,7 @@
   --menu-background-color: var(--color-white);
   --menu-item-active-gradient: linear-gradient(-27deg, #004aff 4%, #57afff 61%, #93f4fe 100%);
   --menu-item-active-border-width: 7px;
+  --menu-item-active-color: linear-gradient(90deg, #fff 0%, #eaeff7 100%);
   --more-menu-color: var(--color-grayscale-medium);
   --offcanvas-menu-border-color: var(--color-grayscale-light);
   --more-menu-border-color: var(--color-grayscale-medium);
@@ -74,6 +75,10 @@
     flex-direction: column;
     justify-content: space-between;
   }
+}
+
+.homeLink {
+  margin: 5px auto;
 }
 
 @media (max-height: 920px) {
@@ -182,6 +187,67 @@
   overflow: hidden;
 }
 
+.bottomIcon {
+  width: 14px;
+  height: 14px;
+  font-size: 14px;
+}
+
+.bottomTabs {
+  position: absolute;
+  bottom: 32px;
+  right: 0;
+  left: 0;
+
+  & .label {
+    color: var(--color-grayscale-medium);
+    font-family: var(--content-font);
+    font-size: 12px;
+    font-weight: var(--font-weight-bold);
+    line-height: 18px;
+
+    &.active {
+      background: linear-gradient(90deg, var(--color-white) 0%, #eaeff7 100%);
+      color: var(--color-grayscale-medium);
+
+      &::before {
+        display: none;
+      }
+    }
+
+    & span:first-child {
+      margin-right: 3px;
+      margin-top: 7px;
+    }
+
+    & span:last-child {
+      margin: 5px 0 0;
+    }
+
+    & > div {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      margin-left: 20px;
+    }
+
+    & img {
+      width: 25px;
+      height: 25px;
+      margin-right: 10px;
+    }
+  }
+
+  & .bottomTab {
+    background: var(--menu-background-color);
+    box-shadow: none;
+    width: 100%;
+    max-width: 100%;
+    border: none;
+    padding: 5px 10px;
+  }
+}
+
 .pointer {
   display: none;
 }
@@ -192,7 +258,7 @@
 
 .label.active {
   position: relative;
-  background: white;
+  background: var(--menu-item-active-color);
   color: var(--color-black);
   opacity: 1;
 
@@ -224,6 +290,26 @@
 @media (--medium-viewport) {
   .sideBarWrapper {
     display: none;
+  }
+
+  .navigationContainer .navigation {
+    justify-content: center;
+  }
+
+  .bottomTabs {
+    & .label {
+      & > div {
+        margin-left: 0;
+      }
+
+      &.active {
+        background: none;
+      }
+    }
+
+    & .bottomTab {
+      max-width: 100px;
+    }
   }
 }
 

@@ -1,9 +1,6 @@
-
 @font-face {
   font-family: "icons";
-  src:
-    url("../../assets/fonts/iconfont/icons.woff") format("woff"),
-    url("../../assets/fonts/iconfont/icons.ttf") format("truetype");
+  src: url("../../assets/fonts/iconfont/icons.woff") format("woff"), url("../../assets/fonts/iconfont/icons.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
@@ -30,190 +27,228 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.add-circled::before {
+/* Icons */
+
+.academy::before {
   content: "\f101";
 }
 
-.add::before {
+.add-circled::before {
   content: "\f102";
 }
 
-.arrow-down::before {
+.add::before {
   content: "\f103";
 }
 
-.arrow-left::before {
+.arrow-down::before {
   content: "\f104";
 }
 
-.arrow-right::before {
+.arrow-left::before {
   content: "\f105";
 }
 
-.arrow-up::before {
+.arrow-right::before {
   content: "\f106";
 }
 
-.buy-tokens::before {
+.arrow-up::before {
   content: "\f107";
 }
 
-.checkmark-check::before {
+.buy-tokens::before {
   content: "\f108";
 }
 
-.checkmark-circled::before {
+.checkmark-check::before {
   content: "\f109";
 }
 
-.checkmark-uncheck::before {
+.checkmark-circled::before {
   content: "\f10a";
 }
 
-.checkmark::before {
+.checkmark-uncheck::before {
   content: "\f10b";
 }
 
-.close::before {
+.checkmark::before {
   content: "\f10c";
 }
 
-.copy-to-clipboard::before {
+.close::before {
   content: "\f10d";
 }
 
-.dropdown::before {
+.conversation::before {
   content: "\f10e";
 }
 
-.edit::before {
+.copy-to-clipboard::before {
   content: "\f10f";
 }
 
-.error::before {
+.devnet::before {
   content: "\f110";
 }
 
-.external-link::before {
+.dropdown::before {
   content: "\f111";
 }
 
-.hide::before {
+.edit::before {
   content: "\f112";
 }
 
-.info::before {
+.error::before {
   content: "\f113";
 }
 
-.internet::before {
+.external-link::before {
   content: "\f114";
 }
 
-.locked::before {
+.hide::before {
   content: "\f115";
 }
 
-.login::before {
+.info::before {
   content: "\f116";
 }
 
-.logo-beta::before {
+.internet::before {
   content: "\f117";
 }
 
-.logo-icon::before {
+.lisk-chat::before {
   content: "\f118";
 }
 
-.logo-text::before {
+.locked::before {
   content: "\f119";
 }
 
-.menu::before {
+.login::before {
   content: "\f11a";
 }
 
-.more::before {
+.logo-beta::before {
   content: "\f11b";
 }
 
-.network::before {
+.logo-icon::before {
   content: "\f11c";
 }
 
-.remove-circled::before {
+.logo-text::before {
   content: "\f11d";
 }
 
-.remove::before {
+.logout::before {
   content: "\f11e";
 }
 
-.request-token::before {
+.mainnet::before {
   content: "\f11f";
 }
 
-.search::before {
+.menu::before {
   content: "\f120";
 }
 
-.send-token::before {
+.more::before {
   content: "\f121";
 }
 
-.show::before {
+.network::before {
   content: "\f122";
 }
 
-.smiley-angry::before {
+.options::before {
   content: "\f123";
 }
 
-.smiley-happy::before {
+.remove-circled::before {
   content: "\f124";
 }
 
-.smiley-laughing::before {
+.remove::before {
   content: "\f125";
 }
 
-.smiley-neutral::before {
+.request-token::before {
   content: "\f126";
 }
 
-.smiley-sad::before {
+.search::before {
   content: "\f127";
 }
 
-.star-filled::before {
+.send-token::before {
   content: "\f128";
 }
 
-.star-outline::before {
+.settings::before {
   content: "\f129";
 }
 
-.undo::before {
+.show::before {
   content: "\f12a";
 }
 
-.unlocked::before {
+.smiley-angry::before {
   content: "\f12b";
 }
 
-.usb-stick::before {
+.smiley-happy::before {
   content: "\f12c";
 }
 
-.warning::before {
+.smiley-laughing::before {
   content: "\f12d";
 }
 
-.zoom-in::before {
+.smiley-neutral::before {
   content: "\f12e";
 }
 
-.zoom-out::before {
+.smiley-sad::before {
   content: "\f12f";
+}
+
+.star-filled::before {
+  content: "\f130";
+}
+
+.star-outline::before {
+  content: "\f131";
+}
+
+.testnet::before {
+  content: "\f132";
+}
+
+.undo::before {
+  content: "\f133";
+}
+
+.unlocked::before {
+  content: "\f134";
+}
+
+.usb-stick::before {
+  content: "\f135";
+}
+
+.warning::before {
+  content: "\f136";
+}
+
+.zoom-in::before {
+  content: "\f137";
+}
+
+.zoom-out::before {
+  content: "\f138";
 }

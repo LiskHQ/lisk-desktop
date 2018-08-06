@@ -10,8 +10,8 @@
 }
 
 .searchBar {
+  display: none;
   vertical-align: top;
-  display: inline-block;
   position: relative;
   width: var(--search-box-width-l);
   margin-right: 50px;

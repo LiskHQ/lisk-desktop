@@ -83,11 +83,6 @@ describe('Setting', () => {
     clock.tick(300);
   });
 
-  it('should show the onboarding setting when authenticated and not on mobile', () => {
-    wrapper.find('button').props().onClick();
-    expect(props.settingsUpdated).to.have.been.calledWith();
-  });
-
   it('should not show the onboarding setting when on mobile', () => {
     window.innerWidth = breakpoints.m;
     wrapper = mount(<Router>
@@ -96,16 +91,6 @@ describe('Setting', () => {
       />
     </Router>, options);
     expect(wrapper.find('.onBoarding')).to.have.length(0);
-  });
-
-  it('should show the onboarding setting when not authenticated', () => {
-    props.isAuthenticated = false;
-    wrapper = mount(<Router>
-      <Setting
-        {...props}
-      />
-    </Router>, options);
-    expect(wrapper.find('.onBoarding')).to.have.length(1);
   });
 
   it.skip('should click on .autoLog update the setting', () => {
