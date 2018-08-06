@@ -9,6 +9,18 @@ pipeline {
     }
   }
   stages {
+
+    stage ('Checkout and Start Lisk Core') {
+      steps {
+        try {
+          deleteDir()
+          checkout scm
+        } catch (err) {
+          echo "Error: ${err}"
+          fail('Stopping build: checkout failed')
+        }
+      }
+    }
     stage('Non-Parallel Stage') {
         steps {
             echo 'This stage will be executed first.'
