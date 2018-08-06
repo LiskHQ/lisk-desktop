@@ -1,0 +1,983 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="396" height="314" viewBox="0 0 396 314">
+  <defs>
+    <rect id="racing-car-a" width="396" height="314"/>
+    <linearGradient id="racing-car-c" x1="-2.342%" x2="269.63%" y1="168.344%" y2="-410.262%">
+      <stop offset="0%" stop-color="#FFF"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+    <linearGradient id="racing-car-d" x1="32.168%" x2="218.582%" y1="-55.835%" y2="121.024%">
+      <stop offset="0%" stop-color="#FFF"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+    <filter id="racing-car-e" width="103.6%" height="109.8%" x="-.9%" y="-2.4%" filterUnits="objectBoundingBox">
+      <feOffset dx="4" dy="3" in="SourceAlpha" result="shadowOffsetOuter1"/>
+      <feColorMatrix in="shadowOffsetOuter1" result="shadowMatrixOuter1" values="0 0 0 0 0.164705882   0 0 0 0 0.529411765   0 0 0 0 0.882352941  0 0 0 0.13 0"/>
+      <feMerge>
+        <feMergeNode in="shadowMatrixOuter1"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <linearGradient id="racing-car-g" x1="-33.742%" y1="137.763%" y2="0%">
+      <stop offset="0%" stop-color="#004AFF"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+    <path id="racing-car-f" d="M24.1956033,27.2445011 L24.6316423,27.2445011 L24.4136228,27.6757188 L24.6316423,28.1069366 L24.1956033,28.1069366 L21.0657188,34.2974908 L8.69196096,55.075685 L5.90900587,55.075685 L13.2201853,33.0200285 L6.7478184,31.496948 L5.78067916,55.075685 L2.33499346,55.075685 L0.545593341,28.1069366 L0.488369994,28.1069366 L0.516981667,27.6757188 L0.488369994,27.2445011 L0.545593341,27.2445011 L2.33499346,0.27575273 L5.78067916,0.27575273 L6.7478184,23.8544897 L13.2201853,22.3314092 L5.90900587,0.27575273 L8.69196096,0.27575273 L21.0657188,21.0539469 L24.1956033,27.2445011 Z"/>
+    <linearGradient id="racing-car-h" x1="92.225%" x2="19.392%" y1="0%" y2="0%">
+      <stop offset="0%" stop-color="#021755" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0097FF"/>
+    </linearGradient>
+    <linearGradient id="racing-car-k" x1="0%" x2="337.514%" y1="100%" y2="-117.078%">
+      <stop offset="0%" stop-color="#004AFF"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+    <path id="racing-car-j" d="M24.7960609,25.7257614 L25.0087884,25.7257614 L24.9024247,26.1613348 C24.9371326,26.3034681 24.9725872,26.4486593 25.0087884,26.5969082 L24.7960609,26.5969082 L23.6924424,31.1163701 L20.9732688,54.4792191 C18.9786425,54.4792191 17.9813294,54.4792191 17.9813294,54.4792191 L17.9158903,30.4096351 L8.33222302,30.4096351 L17.9158903,53.7618037 L16.0331376,53.7618037 L0,30.4096351 L0,26.5969082 L0,21.9130344 L14.6408563,0.588715101 L17.1360092,0.461173346 L8.33222302,21.9130344 L17.9158903,21.9130344 L17.9751229,0.126291149 L20.9732688,0.588715101 L23.6924424,21.2062995 C23.6924424,21.2062995 24.0603152,22.7127868 24.7960609,25.7257614 Z"/>
+    <linearGradient id="racing-car-l" x1="-95.775%" x2="86.068%" y1="-63.154%" y2="134.302%">
+      <stop offset="0%" stop-color="#008DF1"/>
+      <stop offset="100%" stop-color="#001A56"/>
+    </linearGradient>
+    <linearGradient id="racing-car-n" x1="127.595%" x2="13.046%" y1="132.995%" y2="0%">
+      <stop offset="0%" stop-color="#004AFF"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+    <linearGradient id="racing-car-o" x1="50%" y1="41.131%" y2="70.2%">
+      <stop offset="0%" stop-color="#008DF1"/>
+      <stop offset="100%" stop-color="#001A56"/>
+    </linearGradient>
+    <linearGradient id="racing-car-p" x1="50%" x2="111.763%" y1="41.131%" y2="0%">
+      <stop offset="0%" stop-color="#008DF1"/>
+      <stop offset="100%" stop-color="#001A56"/>
+    </linearGradient>
+    <linearGradient id="racing-car-q" x1="50%" x2="86.068%" y1="41.131%" y2="134.302%">
+      <stop offset="0%" stop-color="#008DF1"/>
+      <stop offset="100%" stop-color="#001A56"/>
+    </linearGradient>
+    <linearGradient id="racing-car-r" x1="33.258%" x2="85.888%" y1="546.094%" y2="-427.617%">
+      <stop offset="0%" stop-color="#008DF1"/>
+      <stop offset="88.943%" stop-color="#002767"/>
+      <stop offset="100%" stop-color="#001A56"/>
+    </linearGradient>
+    <linearGradient id="racing-car-s" x1="-7.447%" x2="32.469%" y1="0%" y2="37.988%">
+      <stop offset="0%" stop-color="#08061E"/>
+      <stop offset="100%" stop-color="#001A55"/>
+    </linearGradient>
+    <linearGradient id="racing-car-t" x1="0%" x2="-254.297%" y1="0%" y2="136.365%">
+      <stop offset="0%" stop-color="#008DF1" stop-opacity=".33"/>
+      <stop offset="100%" stop-color="#001A56"/>
+    </linearGradient>
+    <linearGradient id="racing-car-u" x1="3.826%" x2="70.096%" y1="18.602%" y2="-69.287%">
+      <stop offset="0%" stop-color="#004AFF"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+    <linearGradient id="racing-car-w" x1="33.987%" x2="112.231%" y1="5.521%" y2="171.246%">
+      <stop offset="0%" stop-color="#0462F5"/>
+      <stop offset="100%" stop-color="#00ECFF"/>
+    </linearGradient>
+    <polygon id="racing-car-v" points="0 32.879 3.003 27.154 13.193 24.349 13.193 21.456 69.382 0 89.467 0 93.776 6.47 93.776 10.415 98.751 20.128 98.751 32.879 93.776 32.879"/>
+    <linearGradient id="racing-car-x" x1="18.549%" y1="4.459%" y2="137.036%">
+      <stop offset="0%" stop-color="#74F8F8" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#74F8F8"/>
+    </linearGradient>
+    <linearGradient id="racing-car-z" x1="75.653%" x2="4.666%" y1="66.251%" y2="-168.094%">
+      <stop offset="0%" stop-color="#008DF1"/>
+      <stop offset="100%" stop-color="#001A56"/>
+    </linearGradient>
+    <linearGradient id="racing-car-B" x1="35.443%" x2="89.943%" y1="100%" y2="0%">
+      <stop offset="0%" stop-color="#0462F5"/>
+      <stop offset="100%" stop-color="#00ECFF"/>
+    </linearGradient>
+    <polygon id="racing-car-A" points="0 32.879 3.003 27.154 13.193 24.349 13.193 21.456 69.382 0 89.467 0 93.776 6.47 93.776 10.415 98.751 20.128 98.751 32.879 93.776 32.879"/>
+    <linearGradient id="racing-car-C" x1="0%" x2="36.473%" y1="35.12%" y2="78.662%">
+      <stop offset="0%" stop-color="#74F8F8" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#74F8F8"/>
+    </linearGradient>
+    <linearGradient id="racing-car-E" x1="15.082%" x2="61.951%" y1="84.835%" y2="-42.699%">
+      <stop offset="0%" stop-color="#74F8F8" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#FFF" stop-opacity=".83"/>
+    </linearGradient>
+    <linearGradient id="racing-car-F" x1="0%" y1="100%" y2="0%">
+      <stop offset="0%" stop-color="#004AFF"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+    <linearGradient id="racing-car-G" x1="31.666%" x2="275.138%" y1="39.003%" y2="-85.967%">
+      <stop offset="0%" stop-color="#88E9FC"/>
+      <stop offset="100%" stop-color="#DFFBFD"/>
+    </linearGradient>
+    <linearGradient id="racing-car-H" x1="0%" x2="121.346%" y1="100%" y2="-37.652%">
+      <stop offset="0%" stop-color="#004AFF"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+    <linearGradient id="racing-car-I" x1="100%" x2="-24.626%" y1="100%" y2="-103.483%">
+      <stop offset="0%" stop-color="#88E9FC" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#DFFBFD"/>
+    </linearGradient>
+    <linearGradient id="racing-car-J" x1="-229.471%" y1="382.511%" y2="0%">
+      <stop offset="0%" stop-color="#004AFF"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+    <linearGradient id="racing-car-K" x1="2794.727%" x2="163.525%" y1="285.519%" y2="24.728%">
+      <stop offset="0%" stop-color="#004AFF"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+    <linearGradient id="racing-car-L" x1="172.281%" x2="-173.414%" y1="40.502%" y2="-109.051%">
+      <stop offset="0%" stop-color="#008DF1"/>
+      <stop offset="100%" stop-color="#001A56"/>
+    </linearGradient>
+    <linearGradient id="racing-car-M" x1="-148.457%" x2="134.877%" y1="11.09%" y2="331.729%">
+      <stop offset="0%" stop-color="#0462F5"/>
+      <stop offset="100%" stop-color="#00ECFF"/>
+    </linearGradient>
+    <linearGradient id="racing-car-N" x1="-1947.998%" x2="1867.236%" y1="188.584%" y2="-32.129%">
+      <stop offset="0%" stop-color="#004AFF"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+    <linearGradient id="racing-car-P" x1="151.235%" x2="-20.146%" y1="100%" y2="100%">
+      <stop offset="0%" stop-color="#004AFF"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+    <polygon id="racing-car-O" points="23.787 0 0 26.144 9.371 26.144 26.229 0"/>
+    <linearGradient id="racing-car-R" x1="76.567%" x2="-12.753%" y1="61%" y2="61%">
+      <stop offset="0%" stop-color="#FFF"/>
+      <stop offset="100%" stop-color="#74F8F8"/>
+    </linearGradient>
+    <polygon id="racing-car-Q" points="23.787 0 0 26.144 9.371 26.144 26.229 0"/>
+    <linearGradient id="racing-car-S" x1="35.56%" x2="60.317%" y1="16.254%" y2="60.406%">
+      <stop offset="0%" stop-color="#008DF1"/>
+      <stop offset="100%" stop-color="#001A56"/>
+    </linearGradient>
+    <polygon id="racing-car-U" points="23.787 0 0 26.144 9.371 26.144 26.229 0"/>
+    <linearGradient id="racing-car-W" x1="0%" x2="114.793%" y1="100%" y2="50%">
+      <stop offset="0%" stop-color="#004AFF"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+    <linearGradient id="racing-car-X" x1="68.855%" x2="-12.006%" y1="88.413%" y2="0%">
+      <stop offset="0%" stop-color="#0462F5"/>
+      <stop offset="100%" stop-color="#00ECFF"/>
+    </linearGradient>
+    <linearGradient id="racing-car-Y" x1="220.475%" x2="-353.955%" y1="-62.609%" y2="175.911%">
+      <stop offset="0%" stop-color="#FFF"/>
+      <stop offset="100%" stop-color="#74F8F8"/>
+    </linearGradient>
+    <linearGradient id="racing-car-Z" x1="32.778%" y1="85.824%" y2="-10.559%">
+      <stop offset="0%" stop-color="#74F8F8" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#E6FFFF"/>
+    </linearGradient>
+    <linearGradient id="racing-car-aa" x1="0%" x2="74.424%" y1="100%" y2="100%">
+      <stop offset="0%" stop-color="#004AFF"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+    <linearGradient id="racing-car-ac" x1="0%" x2="209.939%" y1="65.099%" y2="67.952%">
+      <stop offset="0%" stop-color="#8FF0FE"/>
+      <stop offset="45.835%" stop-color="#004AFF" stop-opacity=".89"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+    <polygon id="racing-car-ab" points="3.846 0 21.204 0 25.228 2.05 25.228 13.505 21.204 15.096 3.846 15.096 0 13.505 0 2.05"/>
+    <linearGradient id="racing-car-ae" x1="10.459%" x2="92.743%" y1="39.83%" y2="39.83%">
+      <stop offset="0%" stop-color="#74F8F8" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#FFF"/>
+    </linearGradient>
+    <polygon id="racing-car-ad" points="3.846 0 21.204 0 25.228 2.05 25.228 13.505 21.204 15.096 3.846 15.096 0 13.505 0 2.05"/>
+    <linearGradient id="racing-car-af" x1="42.081%" x2="20.527%" y1="740.234%" y2="100%">
+      <stop offset="0%" stop-color="#FFF"/>
+      <stop offset="100%" stop-color="#74F8F8"/>
+    </linearGradient>
+    <linearGradient id="racing-car-ah" x1="88.486%" x2="7.118%" y1="121.322%" y2="121.322%">
+      <stop offset="0%" stop-color="#021755" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0097FF"/>
+    </linearGradient>
+    <linearGradient id="racing-car-ai" x1="67.874%" x2="0%" y1="50%" y2="0%">
+      <stop offset="0%" stop-color="#021755" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0097FF"/>
+    </linearGradient>
+    <linearGradient id="racing-car-ak" x1="0%" y1="67.952%" y2="67.952%">
+      <stop offset="0%" stop-color="#8FF0FE"/>
+      <stop offset="45.835%" stop-color="#004AFF" stop-opacity=".89"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+    <polygon id="racing-car-aj" points="3.846 0 21.204 0 25.228 2.05 25.228 13.505 21.204 15.096 3.846 15.096 0 13.505 0 2.05"/>
+    <polygon id="racing-car-al" points="3.846 0 21.204 0 25.228 2.05 25.228 13.505 21.204 15.096 3.846 15.096 0 13.505 0 2.05"/>
+    <linearGradient id="racing-car-an" x1="0%" x2="45.041%" y1="78.223%" y2="78.223%">
+      <stop offset="0%" stop-color="#88E9FC"/>
+      <stop offset="100%" stop-color="#DFFBFD"/>
+    </linearGradient>
+    <linearGradient id="racing-car-ap" x1="135.081%" x2="0%" y1="62.335%" y2="50%">
+      <stop offset="0%" stop-color="#004AFF"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+    <polygon id="racing-car-ao" points="143.407 8.626 143.442 8.626 143.442 11.56 138.397 13.984 105.485 17.252 80.245 13.984 0 8.626 80.21 3.269 105.45 0 138.362 3.269 143.407 5.693"/>
+    <linearGradient id="racing-car-aq" x1="68.855%" x2="-108.594%" y1="88.413%" y2="-28.005%">
+      <stop offset="0%" stop-color="#0462F5"/>
+      <stop offset="100%" stop-color="#00ECFF"/>
+    </linearGradient>
+    <linearGradient id="racing-car-as" x1="61.182%" x2="-127.934%" y1="50%" y2="50%">
+      <stop offset="0%" stop-color="#88E9FC"/>
+      <stop offset="100%" stop-color="#DFFBFD"/>
+    </linearGradient>
+    <linearGradient id="racing-car-at" x1="-8.445%" x2="105.751%" y1="-13.79%" y2="316.229%">
+      <stop offset="0%" stop-color="#FFF"/>
+      <stop offset="100%" stop-color="#74F8F8"/>
+    </linearGradient>
+    <linearGradient id="racing-car-av" x1="0%" x2="115.661%" y1="67.952%" y2="0%">
+      <stop offset="0%" stop-color="#8FF0FE"/>
+      <stop offset="45.835%" stop-color="#004AFF" stop-opacity=".89"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+    <polygon id="racing-car-au" points="3.846 0 21.204 0 25.228 2.05 25.228 13.505 21.204 15.096 3.846 15.096 0 13.505 0 2.05"/>
+    <polygon id="racing-car-aw" points="3.846 0 21.204 0 25.228 2.05 25.228 13.505 21.204 15.096 3.846 15.096 0 13.505 0 2.05"/>
+    <linearGradient id="racing-car-ay" x1="10.508%" x2="30.891%" y1="78.428%" y2="-39.49%">
+      <stop offset="0%" stop-color="#0462F5"/>
+      <stop offset="100%" stop-color="#00ECFF"/>
+    </linearGradient>
+    <linearGradient id="racing-car-az" x1="202.102%" x2="28.516%" y1="151.349%" y2="-19.896%">
+      <stop offset="0%" stop-color="#0462F5"/>
+      <stop offset="100%" stop-color="#00ECFF"/>
+    </linearGradient>
+    <linearGradient id="racing-car-aA" x1="78.829%" x2="72.655%" y1="-13.163%" y2="193.873%">
+      <stop offset="0%" stop-color="#74F8F8" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#74F8F8"/>
+    </linearGradient>
+    <linearGradient id="racing-car-aB" x1="-58.716%" y1="100%" y2="0%">
+      <stop offset="0%" stop-color="#004AFF"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+    <linearGradient id="racing-car-aC" x1="-13.027%" x2="59.223%" y1="60.462%" y2="85.727%">
+      <stop offset="0%" stop-color="#021755" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0097FF"/>
+    </linearGradient>
+    <polygon id="racing-car-aD" points="3.846 0 21.204 0 25.228 2.05 25.228 13.505 21.204 15.096 3.846 15.096 0 13.505 0 2.05"/>
+    <polygon id="racing-car-aE" points="3.846 0 21.204 0 25.228 2.05 25.228 13.505 21.204 15.096 3.846 15.096 0 13.505 0 2.05"/>
+    <linearGradient id="racing-car-aG" x1="-98.29%" y1="-6.967%" y2="186.18%">
+      <stop offset="0%" stop-color="#0462F5"/>
+      <stop offset="100%" stop-color="#00ECFF"/>
+    </linearGradient>
+    <linearGradient id="racing-car-aH" x1="-98.29%" x2="158.534%" y1="-6.967%" y2="69.901%">
+      <stop offset="0%" stop-color="#0462F5"/>
+      <stop offset="100%" stop-color="#00ECFF"/>
+    </linearGradient>
+    <linearGradient id="racing-car-aI" x1="152.806%" x2="3.104%" y1="160.21%" y2="50%">
+      <stop offset="0%" stop-color="#0462F5"/>
+      <stop offset="100%" stop-color="#00ECFF"/>
+    </linearGradient>
+    <linearGradient id="racing-car-aJ" x1="120.385%" x2="3.104%" y1="337.678%" y2="50%">
+      <stop offset="0%" stop-color="#0462F5"/>
+      <stop offset="100%" stop-color="#00ECFF"/>
+    </linearGradient>
+    <linearGradient id="racing-car-aL" x1="18.66%" x2="23.907%" y1="124.08%" y2="17.348%">
+      <stop offset="0%" stop-color="#004AFF"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+    <rect id="racing-car-aK" width="11.533" height="12.939" rx="5.41"/>
+    <linearGradient id="racing-car-aN" x1="-14.974%" x2="93.629%" y1="14.974%" y2="118.423%">
+      <stop offset="0%" stop-color="#004AFF"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+    <rect id="racing-car-aM" width="11.533" height="12.939" y="-2.875" rx="5.41"/>
+    <linearGradient id="racing-car-aP" x1="0%" x2="191.741%" y1="100%" y2="-114.052%">
+      <stop offset="0%" stop-color="#88E9FC"/>
+      <stop offset="100%" stop-color="#DFFBFD"/>
+    </linearGradient>
+    <linearGradient id="racing-car-aQ" x1="72.994%" x2="20.314%" y1="50%" y2="50%">
+      <stop offset="0%" stop-color="#0462F5"/>
+      <stop offset="100%" stop-color="#00ECFF"/>
+    </linearGradient>
+    <linearGradient id="racing-car-aR" x1="6.048%" x2="50%" y1="100%" y2="0%">
+      <stop offset="0%" stop-color="#0462F5"/>
+      <stop offset="100%" stop-color="#00ECFF"/>
+    </linearGradient>
+    <rect id="racing-car-aS" width="11.533" height="12.939" rx="5.41"/>
+    <rect id="racing-car-aT" width="11.533" height="12.939" y="-2.875" rx="5.41"/>
+    <linearGradient id="racing-car-aV" x1="193.724%" x2="0%" y1="50%" y2="50%">
+      <stop offset="0%" stop-color="#0462F5"/>
+      <stop offset="100%" stop-color="#00ECFF"/>
+    </linearGradient>
+    <linearGradient id="racing-car-aW" x1="70.218%" x2="70.218%" y1="30.201%" y2="136.183%">
+      <stop offset="0%" stop-color="#74F8F8" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#74F8F8"/>
+    </linearGradient>
+    <linearGradient id="racing-car-aX" x1="15.507%" x2="13.431%" y1="30.486%" y2="140.22%">
+      <stop offset="0%" stop-color="#0462F5"/>
+      <stop offset="100%" stop-color="#00ECFF"/>
+    </linearGradient>
+    <linearGradient id="racing-car-aY" x1="50%" x2="13.431%" y1="50%" y2="140.22%">
+      <stop offset="0%" stop-color="#0462F5"/>
+      <stop offset="100%" stop-color="#00ECFF"/>
+    </linearGradient>
+    <path id="racing-car-aZ" d="M9.57109127,0.164482359 C10.7306742,-0.301922001 12.0498226,0.257467458 12.5174858,1.41389935 C12.6963105,1.85609502 12.7301707,2.34339831 12.6142132,2.8059655 L11.9623133,5.40646609 C11.6871122,6.50427359 10.9927985,7.4505881 10.0281914,8.04257642 L3.89923287,11.8039752 C3.22021567,12.2206944 2.33194585,12.0080598 1.91522669,11.3290426 C1.82981343,11.1898672 1.76865086,11.0371996 1.73434654,10.8775486 L0,2.8059655 C3.5889773,2.29315516 6.46773657,1.41266078 9.57109127,0.164482359 Z"/>
+    <linearGradient id="racing-car-ba" x1="126.789%" x2="-32.709%" y1="59.11%" y2="53.927%">
+      <stop offset="0%" stop-color="#0462F5"/>
+      <stop offset="100%" stop-color="#00ECFF"/>
+    </linearGradient>
+    <linearGradient id="racing-car-bd" x1="84.418%" x2="3.104%" y1="-114.376%" y2="50%">
+      <stop offset="0%" stop-color="#0462F5"/>
+      <stop offset="100%" stop-color="#00ECFF"/>
+    </linearGradient>
+    <path id="racing-car-bc" d="M-10.0913706,2.87539936 L2.16106357,2.87539936 C3.35610257,2.87539936 4.3248731,3.84416988 4.3248731,5.03920888 L4.3248731,8.972313 C4.3248731,11.1632178 2.54879381,12.9392971 0.357888969,12.9392971 L-10.0913706,12.9392971 L-10.0913706,2.87539936 Z"/>
+    <path id="racing-car-bf" d="M9.57109127,0.164482359 C10.7306742,-0.301922001 12.0498226,0.257467458 12.5174858,1.41389935 C12.6963105,1.85609502 12.7301707,2.34339831 12.6142132,2.8059655 L11.9623133,5.40646609 C11.6871122,6.50427359 10.9927985,7.4505881 10.0281914,8.04257642 L3.89923287,11.8039752 C3.22021567,12.2206944 2.33194585,12.0080598 1.91522669,11.3290426 C1.82981343,11.1898672 1.76865086,11.0371996 1.73434654,10.8775486 L0,2.8059655 C3.5889773,2.29315516 6.46773657,1.41266078 9.57109127,0.164482359 Z"/>
+    <path id="racing-car-bh" d="M-10.0913706,2.87539936 L2.16106357,2.87539936 C3.35610257,2.87539936 4.3248731,3.84416988 4.3248731,5.03920888 L4.3248731,8.972313 C4.3248731,11.1632178 2.54879381,12.9392971 0.357888969,12.9392971 L-10.0913706,12.9392971 L-10.0913706,2.87539936 Z"/>
+    <rect id="racing-car-bj" width="11.533" height="12.939" rx="5.41"/>
+    <rect id="racing-car-bk" width="11.533" height="12.939" y="-2.875" rx="5.41"/>
+    <rect id="racing-car-bm" width="11.533" height="12.939" rx="5.41"/>
+    <rect id="racing-car-bn" width="11.533" height="12.939" y="-2.875" rx="5.41"/>
+    <rect id="racing-car-bp" width="11.533" height="12.939" rx="5.41"/>
+    <rect id="racing-car-bq" width="11.533" height="12.939" y="-2.875" rx="5.41"/>
+    <linearGradient id="racing-car-bs" x1="72.655%" x2="72.655%" y1="40.307%" y2="193.873%">
+      <stop offset="0%" stop-color="#74F8F8" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#74F8F8"/>
+    </linearGradient>
+    <rect id="racing-car-bt" width="11.533" height="12.939" rx="5.41"/>
+    <rect id="racing-car-bu" width="11.533" height="12.939" y="-2.875" rx="5.41"/>
+    <polygon id="racing-car-bw" points="3.846 0 21.204 0 25.228 2.05 25.228 13.505 21.204 15.096 3.846 15.096 0 13.505 0 2.05"/>
+    <polygon id="racing-car-bx" points="3.846 0 21.204 0 25.228 2.05 25.228 13.505 21.204 15.096 3.846 15.096 0 13.505 0 2.05"/>
+    <linearGradient id="racing-car-bz" x1="72.655%" x2="68.922%" y1="40.307%" y2="168.082%">
+      <stop offset="0%" stop-color="#74F8F8" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#74F8F8"/>
+    </linearGradient>
+    <rect id="racing-car-bA" width="11.533" height="12.939" rx="5.41"/>
+    <rect id="racing-car-bB" width="11.533" height="12.939" y="-2.875" rx="5.41"/>
+    <polygon id="racing-car-bD" points="3.846 0 21.204 0 25.228 2.05 25.228 13.505 21.204 15.096 3.846 15.096 0 13.505 0 2.05"/>
+    <polygon id="racing-car-bE" points="3.846 0 21.204 0 25.228 2.05 25.228 13.505 21.204 15.096 3.846 15.096 0 13.505 0 2.05"/>
+    <polygon id="racing-car-bG" points="4.534 0 21.919 0 25.949 2.028 25.949 13.357 21.919 14.93 4.534 14.93 .683 13.357 .683 2.028"/>
+    <polygon id="racing-car-bH" points="4.534 0 21.919 0 25.949 2.028 25.949 13.357 21.919 14.93 4.534 14.93 .683 13.357 .683 2.028"/>
+    <linearGradient id="racing-car-bI" x1="59.068%" x2="20.527%" y1="752.409%" y2="100%">
+      <stop offset="0%" stop-color="#FFF"/>
+      <stop offset="100%" stop-color="#74F8F8"/>
+    </linearGradient>
+    <linearGradient id="racing-car-bK" x1="50%" x2="28.516%" y1="184.369%" y2="-19.896%">
+      <stop offset="0%" stop-color="#0462F5"/>
+      <stop offset="100%" stop-color="#00ECFF"/>
+    </linearGradient>
+    <rect id="racing-car-bL" width="11.533" height="12.939" rx="5.41"/>
+    <rect id="racing-car-bM" width="11.533" height="12.939" y="-2.875" rx="5.41"/>
+    <rect id="racing-car-bO" width="11.533" height="12.939" rx="5.41"/>
+    <rect id="racing-car-bP" width="11.533" height="12.939" y="-2.875" rx="5.41"/>
+    <rect id="racing-car-bR" width="11.533" height="12.939" rx="5.41"/>
+    <rect id="racing-car-bS" width="11.533" height="12.939" y="-2.875" rx="5.41"/>
+    <rect id="racing-car-bU" width="11.533" height="12.939" rx="5.41"/>
+    <rect id="racing-car-bV" width="11.533" height="12.939" y="-2.875" rx="5.41"/>
+    <rect id="racing-car-bX" width="11.533" height="12.939" rx="5.41"/>
+    <rect id="racing-car-bY" width="11.533" height="12.939" y="-2.875" rx="5.41"/>
+    <polygon id="racing-car-ca" points="3.846 0 21.204 0 25.228 2.05 25.228 13.505 21.204 15.096 3.846 15.096 0 13.505 0 2.05"/>
+    <polygon id="racing-car-cb" points="3.846 0 21.204 0 25.228 2.05 25.228 13.505 21.204 15.096 3.846 15.096 0 13.505 0 2.05"/>
+    <rect id="racing-car-cd" width="11.533" height="12.939" rx="5.41"/>
+    <rect id="racing-car-ce" width="11.533" height="12.939" y="-2.875" rx="5.41"/>
+    <polygon id="racing-car-cg" points="3.846 0 21.204 0 25.228 2.05 25.228 13.505 21.204 15.096 3.846 15.096 0 13.505 0 2.05"/>
+    <polygon id="racing-car-ch" points="3.846 0 21.204 0 25.228 2.05 25.228 13.505 21.204 15.096 3.846 15.096 0 13.505 0 2.05"/>
+    <rect id="racing-car-cj" width="11.533" height="12.939" rx="5.41"/>
+    <rect id="racing-car-ck" width="11.533" height="12.939" y="-2.875" rx="5.41"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <mask id="racing-car-b" fill="#fff">
+      <use xlink:href="#racing-car-a"/>
+    </mask>
+    <g mask="url(#racing-car-b)">
+      <g transform="translate(-61 -11)">
+        <path fill="url(#racing-car-c)" d="M143.698892,259 L144.135094,274.994053 C107.858743,275.983408 83.3124594,277.630809 70.8303054,279.871196 C57.6781837,282.231833 46.6866978,283.922831 37.8339857,284.944298 L36,269.049755 C44.4806213,268.071222 55.155802,266.428886 68.0036804,264.122857 C81.5215264,261.696577 106.64191,260.010645 143.698892,259 Z" opacity=".5"/>
+        <path fill="url(#racing-car-d)" d="M138.781899,191.002974 L139.218101,206.997026 C102.94175,207.986381 78.3954665,209.633783 65.9133125,211.87417 C52.7611909,214.234807 41.7697049,215.925805 32.9169929,216.947271 L31.0830071,201.052729 C39.5636284,200.074195 50.2388091,198.43186 63.0866875,196.12583 C76.6045335,193.69955 101.724917,192.013619 138.781899,191.002974 Z"/>
+      </g>
+    </g>
+    <g filter="url(#racing-car-e)" mask="url(#racing-car-b)">
+      <g transform="translate(33.365 179.447)">
+        <g>
+          <g transform="translate(175.157 12.94)">
+            <mask id="racing-car-i" fill="#fff">
+              <use xlink:href="#racing-car-f"/>
+            </mask>
+            <use fill="url(#racing-car-g)" transform="matrix(-1 0 0 1 25.12 0)" xlink:href="#racing-car-f"/>
+            <rect width="18.741" height="6.47" x="10.091" y="1.438" fill="url(#racing-car-h)" mask="url(#racing-car-i)"/>
+            <rect width="18.741" height="6.47" x="10.091" y="48.882" fill="url(#racing-car-h)" mask="url(#racing-car-i)"/>
+          </g>
+          <g transform="translate(36.04 14.377)">
+            <mask id="racing-car-m" fill="#fff">
+              <use xlink:href="#racing-car-j"/>
+            </mask>
+            <use fill="url(#racing-car-k)" transform="matrix(-1 0 0 1 25.009 0)" xlink:href="#racing-car-j"/>
+            <path fill="url(#racing-car-l)" d="M26.4504128,25.8785942 L26.6700508,25.8785942 L26.6700508,46.7252396 L-2.16243655,40.9744409 L-2.16243655,25.8785942 L-2.3820745,25.8785942 L-2.3820745,10.7827476 L26.4504128,5.03194888 L26.4504128,25.8785942 Z" mask="url(#racing-car-m)" opacity=".428"/>
+          </g>
+          <polygon fill="url(#racing-car-n)" points="91.543 5.751 176.599 5.751 176.599 14.377 180.924 17.971 203.468 17.971 203.468 39.537 130.467 14.377 121.817 14.377 102.355 14.377 91.543 9.345"/>
+          <g transform="translate(83.614 5.75)">
+            <path fill="url(#racing-car-o)" d="M7.92893401,0 L92.9847716,0 L92.9847716,8.62619808 L97.3096447,12.2204473 L119.853327,12.2204473 L119.853327,33.7859425 L46.8527919,8.62619808 L38.2030457,8.62619808 L18.7411168,8.62619808 L7.92893401,3.5942492 L0,3.5942492 L0,0 L7.92893401,0 Z"/>
+            <polygon fill="url(#racing-car-p)" points="0 0 92.985 0 92.985 3.594 45.411 3.594 0 3.594" opacity=".281"/>
+          </g>
+          <g transform="matrix(1 0 0 -1 83.614 76.198)">
+            <path fill="url(#racing-car-q)" d="M7.91580186,0 L92.8307672,0 L92.8307672,8.62619808 L97.1484773,12.2204473 L119.654822,12.2204473 L119.654822,33.7859425 L46.7751928,8.62619808 L38.1397726,8.62619808 L18.7100771,8.62619808 L7.91580186,3.5942492 L0,3.5942492 L0,0 L7.91580186,0 Z"/>
+            <rect width="92.985" height="3.594" fill="url(#racing-car-r)" opacity=".114"/>
+          </g>
+          <polygon fill="url(#racing-car-s)" points="125.421 41.981 134.792 41.981 193.178 62.827 193.178 73.61 125.421 73.61" opacity=".101" transform="matrix(1 0 0 -1 0 115.591)"/>
+          <rect width="1.802" height="11.502" x="107.401" y="61.821" fill="url(#racing-car-t)" opacity=".205" transform="matrix(-1 0 0 1 216.604 0)"/>
+          <polygon fill="url(#racing-car-s)" points="125.421 7.907 134.792 7.907 193.178 28.754 193.178 39.537 125.421 39.537" opacity=".101"/>
+          <polygon fill="url(#racing-car-u)" points="98.03 40.787 101.034 35.061 111.224 32.257 111.224 29.363 191.806 18.322 196.782 28.035 196.782 40.787 191.806 40.787" transform="matrix(-1 0 0 1 294.812 0)"/>
+          <g transform="matrix(1 0 0 -1 97.31 73.682)">
+            <mask id="racing-car-y" fill="#fff">
+              <use xlink:href="#racing-car-v"/>
+            </mask>
+            <use fill="url(#racing-car-w)" transform="matrix(-1 0 0 1 98.751 0)" xlink:href="#racing-car-v"/>
+            <rect width="13.335" height="23.003" x="-2.162" fill="url(#racing-car-x)" mask="url(#racing-car-y)" opacity=".767" transform="matrix(-1 0 0 1 9.01 0)"/>
+            <polygon fill="url(#racing-car-z)" points="0 32.879 3.003 27.154 13.193 24.349 13.193 21.456 93.776 10.415 98.751 20.128 98.751 32.879 93.776 32.879" opacity=".455" transform="matrix(-1 0 0 1 98.751 0)"/>
+          </g>
+          <g transform="translate(97.31 7.907)">
+            <mask id="racing-car-D" fill="#fff">
+              <use xlink:href="#racing-car-A"/>
+            </mask>
+            <use fill="url(#racing-car-B)" transform="matrix(-1 0 0 1 98.751 0)" xlink:href="#racing-car-A"/>
+            <rect width="13.335" height="23.003" x="-2.162" fill="url(#racing-car-C)" mask="url(#racing-car-D)" opacity=".744" transform="matrix(-1 0 0 1 9.01 0)"/>
+            <polygon fill="url(#racing-car-E)" points="0 32.879 3.003 27.154 13.193 24.349 13.193 21.456 93.776 10.415 98.751 20.128 98.751 32.879 93.776 32.879" opacity=".72" transform="matrix(-1 0 0 1 98.751 0)"/>
+          </g>
+          <rect width="24.508" height="7.188" x="199.665" y="37.38" fill="url(#racing-car-F)" transform="matrix(-1 0 0 1 423.838 0)"/>
+          <rect width="22.345" height="7.188" x="197.503" y="37.38" fill="url(#racing-car-l)" opacity=".516" transform="matrix(-1 0 0 1 417.35 0)"/>
+          <g transform="translate(1.442 3.594)">
+            <path fill="url(#racing-car-G)" d="M17.9053099,36.6613419 C18.0307557,33.8078843 17.9053099,0 17.9053099,0 C5.96843663,0 0,0 0,0 L0,12.0955627 L10.8121827,20.970607 L10.8121827,36.6613419 C15.5178425,37.1865972 17.8822182,37.1865972 17.9053099,36.6613419 Z" transform="matrix(-1 0 0 1 17.961 0)"/>
+            <polygon fill="url(#racing-car-H)" points="0 24.441 8.65 24.441 17.299 28.035 17.299 37.38 0 37.38"/>
+            <polygon fill="url(#racing-car-I)" points="0 24.441 8.65 24.441 17.299 28.035 17.299 37.38 0 37.38"/>
+            <path fill="url(#racing-car-J)" d="M0.00472979835,20.970607 C0.0387457177,6.99020232 0.0557536774,0 0.0557536774,0 C11.9926269,0 17.9610636,0 17.9610636,0 L17.9610636,12.0955627 L7.14888083,20.970607 L0.00472979835,20.970607 Z"/>
+            <rect width="1.442" height="37.38" fill="url(#racing-car-K)"/>
+          </g>
+          <g transform="matrix(1 0 0 -1 1.442 78.355)">
+            <path fill="url(#racing-car-L)" d="M17.9053099,36.6613419 C18.0307557,33.8078843 17.9053099,0 17.9053099,0 C5.96843663,0 0,0 0,0 L0,12.0955627 L10.8121827,20.970607 L10.8121827,36.6613419 C15.5178425,37.1865972 17.8822182,37.1865972 17.9053099,36.6613419 Z" transform="matrix(-1 0 0 1 17.961 0)"/>
+            <polygon fill="url(#racing-car-H)" points="0 24.441 8.65 24.441 17.299 28.035 17.299 37.38 0 37.38"/>
+            <polygon points="0 24.441 8.65 24.441 17.299 28.035 17.299 37.38 0 37.38"/>
+            <path fill="url(#racing-car-M)" d="M0.00472979835,20.970607 C0.0387457177,6.99020232 0.0557536774,0 0.0557536774,0 C11.9926269,0 17.9610636,0 17.9610636,0 L17.9610636,12.0955627 L7.14888083,20.970607 L0.00472979835,20.970607 Z"/>
+            <rect width="18.02" height="5.751" fill="url(#racing-car-F)" opacity=".143"/>
+            <rect width="1.442" height="37.38" fill="url(#racing-car-N)"/>
+          </g>
+          <g transform="translate(165.787 14.377)">
+            <use fill="url(#racing-car-P)" xlink:href="#racing-car-O"/>
+            <mask id="racing-car-T" fill="#fff">
+              <use xlink:href="#racing-car-Q"/>
+            </mask>
+            <use fill="url(#racing-car-R)" opacity=".626" xlink:href="#racing-car-Q"/>
+            <polygon fill="url(#racing-car-S)" points="-12.254 16.534 30.274 22.284 30.274 25.879 -12.254 25.879" mask="url(#racing-car-T)" opacity=".097"/>
+          </g>
+          <g transform="matrix(1 0 0 -1 165.787 67.572)">
+            <mask id="racing-car-V" fill="#fff">
+              <use xlink:href="#racing-car-U"/>
+            </mask>
+            <use fill="url(#racing-car-P)" xlink:href="#racing-car-U"/>
+            <polygon fill="url(#racing-car-S)" points="-12.254 16.534 30.274 22.284 30.274 25.879 -12.254 25.879" mask="url(#racing-car-V)" opacity=".1"/>
+          </g>
+          <g transform="translate(103.797 30.192)">
+            <path fill="url(#racing-car-W)" d="M89.3807107,10.7827476 L89.3807107,12.495632 L0,20.8466454 L0,10.7827476 L0,0 L89.3807107,8.35101338 L89.3807107,10.7827476 Z"/>
+            <polygon fill="url(#racing-car-X)" points="0 10.064 89.381 18.415 89.381 20.847 0 20.847" opacity=".095"/>
+          </g>
+          <path fill="url(#racing-car-l)" d="M193.177665,35.8301707 L193.177665,47.0812759 L190.294416,47.8748096 L190.294416,35.0366371 L193.177665,35.8301707 Z" opacity=".428"/>
+          <g transform="translate(192.457 17.971)">
+            <rect width="26.301" height="44.427" fill="url(#racing-car-F)" transform="matrix(-1 0 0 1 26.3 0)"/>
+            <rect width="13.15" height="44.427" fill="url(#racing-car-Y)" opacity=".641"/>
+            <rect width="26.301" height="22.122" y="22.214" fill="url(#racing-car-Z)" opacity=".408" transform="matrix(-1 0 0 1 26.3 0)"/>
+            <rect width="31.716" height="3.064" fill="url(#racing-car-aa)" transform="matrix(-1 0 0 1 31.716 0)"/>
+            <rect width="31.716" height="3.064" y="43.661" fill="url(#racing-car-F)" transform="matrix(-1 0 0 1 31.716 0)"/>
+          </g>
+          <g transform="translate(31.716)">
+            <use fill="url(#racing-car-ac)" transform="matrix(-1 0 0 1 25.228 0)" xlink:href="#racing-car-ab"/>
+            <mask id="racing-car-ag" fill="#fff">
+              <use xlink:href="#racing-car-ad"/>
+            </mask>
+            <use fill="url(#racing-car-ae)" opacity=".339" transform="matrix(-1 0 0 1 25.228 0)" xlink:href="#racing-car-ad"/>
+            <rect width="25.228" height="2.157" fill="url(#racing-car-af)" mask="url(#racing-car-ag)" opacity=".525"/>
+            <rect width="25.228" height="2.157" y="12.939" fill="url(#racing-car-ah)" mask="url(#racing-car-ag)" opacity=".525"/>
+            <rect width="25.228" height="7.907" y="7.907" fill="url(#racing-car-ai)" mask="url(#racing-car-ag)" opacity=".518"/>
+          </g>
+          <g transform="translate(31.716)">
+            <use fill="url(#racing-car-ak)" transform="matrix(-1 0 0 1 25.228 0)" xlink:href="#racing-car-aj"/>
+            <mask id="racing-car-am" fill="#fff">
+              <use xlink:href="#racing-car-al"/>
+            </mask>
+            <use fill="url(#racing-car-ae)" opacity=".339" transform="matrix(-1 0 0 1 25.228 0)" xlink:href="#racing-car-al"/>
+            <rect width="25.228" height="2.157" fill="url(#racing-car-af)" mask="url(#racing-car-am)" opacity=".525"/>
+            <rect width="25.228" height="2.157" y="12.939" fill="url(#racing-car-ah)" mask="url(#racing-car-am)" opacity=".525"/>
+          </g>
+          <g transform="translate(.526 26.885)">
+            <path fill="url(#racing-car-an)" d="M148.053463,14.422042 L148.053463,15.4474377 L143.220591,19.5414273 L40.9818006,27.7478571 L8.82090202,23.3914585 L0.528549489,19.5414273 L0.528549489,14.422042 L0.528549489,8.4937165 L8.82090202,4.64368522 L40.9818006,0.287286679 L143.220591,8.4937165 L148.053463,12.5877061 L148.053463,14.422042 Z" transform="matrix(-1 0 0 1 148.582 0)"/>
+            <g transform="translate(.72 5.75)">
+              <mask id="racing-car-ar" fill="#fff">
+                <use xlink:href="#racing-car-ao"/>
+              </mask>
+              <use fill="url(#racing-car-ap)" xlink:href="#racing-car-ao"/>
+              <rect width="78.569" height="18.69" x="72.081" y="-.719" fill="url(#racing-car-aq)" mask="url(#racing-car-ar)" opacity=".471"/>
+            </g>
+            <g transform="translate(75.685 4.313)">
+              <polygon fill="url(#racing-car-as)" points="36.586 3.438 36.586 15.971 30.644 19.217 2.712 15.452 .038 11.607 .038 7.802 2.712 3.957 30.644 .192"/>
+              <polygon fill="url(#racing-car-at)" points="36.586 9.704 36.586 15.971 30.644 19.217 2.712 15.452 .038 11.607 .038 9.704" opacity=".36"/>
+            </g>
+            <polygon fill="url(#racing-car-an)" points="8.821 17.97 40.982 13.613 143.221 21.82 148.053 25.914 148.053 27.748 8.821 27.748 .529 27.748 .529 21.82" opacity=".191" transform="matrix(-1 0 0 1 148.582 0)"/>
+          </g>
+        </g>
+        <rect width="1.442" height="46.725" x="192.457" y="17.971" fill="url(#racing-car-Y)" transform="matrix(-1 0 0 1 386.355 0)"/>
+        <g transform="translate(31.716 66.134)">
+          <use fill="url(#racing-car-av)" transform="matrix(-1 0 0 1 25.228 0)" xlink:href="#racing-car-au"/>
+          <mask id="racing-car-ax" fill="#fff">
+            <use xlink:href="#racing-car-aw"/>
+          </mask>
+          <use fill="url(#racing-car-ae)" opacity=".339" transform="matrix(-1 0 0 1 25.228 0)" xlink:href="#racing-car-aw"/>
+          <rect width="25.228" height="2.157" fill="url(#racing-car-af)" mask="url(#racing-car-ax)" opacity=".525"/>
+          <rect width="25.228" height="2.157" y="12.939" fill="url(#racing-car-ah)" mask="url(#racing-car-ax)" opacity=".525"/>
+        </g>
+      </g>
+    </g>
+    <g mask="url(#racing-car-b)">
+      <g transform="translate(-8 117)">
+        <g transform="rotate(-94 176.502 -83.249)">
+          <g transform="matrix(1 0 0 -1 23.706 44.623)">
+            <path fill="url(#racing-car-ay)" d="M8.6701329,23.4074391 L8.76289663,25.1887301 C8.82749029,26.4290866 7.8889954,27.493674 6.65033007,27.585133 L5.92422659,27.638746 C5.1296968,27.6974114 4.43804543,27.1008755 4.37938,26.3063457 C4.37783771,26.2854579 4.37675053,26.264539 4.37611921,26.2436039 L4.27519461,22.8968423 C4.26337852,22.505009 4.56668374,22.175478 4.95815117,22.1548328 L5.72909718,22.1141746 L5.56302592,21.9653653 L5.2987859,12.7089533 L10.0436881,11.6779881 C10.4329518,11.5934095 10.817077,11.8404055 10.9016556,12.2296693 C10.9229895,12.327856 10.9235733,12.4294169 10.9033697,12.5278424 L8.6701329,23.4074391 Z" transform="rotate(37 7.598 19.651)"/>
+            <path fill="url(#racing-car-az)" d="M7.87937226,0.830953739 L15.0872026,0.828580071 L16.2269247,12.5904762 C16.4020696,14.397966 15.3411124,16.0976722 13.6403848,16.7342417 L13.6403848,16.7342417 C12.325373,17.2264408 10.8603391,16.5594192 10.3681401,15.2444074 C10.311564,15.0932526 10.2695099,14.9370538 10.2425473,14.777926 L7.87937226,0.830953739 Z" transform="rotate(2 12.062 8.863)"/>
+          </g>
+          <path fill="url(#racing-car-aA)" d="M9.33950969,39.5910543 L35.7285874,39.5910543 C36.4434142,39.5910543 37.0504322,40.1145595 37.1554689,40.8216271 L39.6101317,57.3454934 C39.7271978,58.1335383 39.183262,58.8672757 38.3952171,58.9843418 C38.3250427,58.9947664 38.2541948,59 38.1832502,59 L6.27118121,59 C5.47448854,59 4.82864153,58.354153 4.82864153,57.5574603 C4.82864153,57.4691151 4.83675727,57.3809566 4.85288644,57.2940962 L7.92121492,40.7702298 C8.04812323,40.0867906 8.64438748,39.5910543 9.33950969,39.5910543 Z" transform="matrix(1 0 0 -1 0 98.591)"/>
+          <path fill="url(#racing-car-aB)" d="M16.8500187,56.8381476 C15.2619794,56.8381476 13.9746193,55.5507874 13.9746193,53.9627482 C13.9746193,52.374709 15.2619794,51.0873488 16.8500187,51.0873488 L19.2458766,51.0873488 C20.8339158,51.0873488 22.1212759,52.374709 22.1212759,53.9627482 C22.1212759,55.5507874 20.8339158,56.8381476 19.2458766,56.8381476 L16.8500187,56.8381476 Z M27.6519172,56.8434505 L25.2560593,56.8434505 C23.6680201,56.8434505 22.3806599,55.5560903 22.3806599,53.9680511 C22.3806599,52.3800119 23.6680201,51.0926518 25.2560593,51.0926518 L27.6519172,51.0926518 C29.2399564,51.0926518 30.5273166,52.3800119 30.5273166,53.9680511 C30.5273166,55.5560903 29.2399564,56.8434505 27.6519172,56.8434505 Z" transform="matrix(1 0 0 -1 0 107.93)"/>
+          <rect width="15.858" height="5.032" x="14.695" y="50.374" fill="url(#racing-car-aC)" rx="2.516" transform="matrix(1 0 0 -1 0 105.78)"/>
+          <g transform="rotate(90 14.5 14.5)">
+            <use fill="url(#racing-car-ak)" transform="matrix(-1 0 0 1 25.228 0)" xlink:href="#racing-car-aD"/>
+            <mask id="racing-car-aF" fill="#fff">
+              <use xlink:href="#racing-car-aE"/>
+            </mask>
+            <use fill="url(#racing-car-ae)" opacity=".339" transform="matrix(-1 0 0 1 25.228 0)" xlink:href="#racing-car-aE"/>
+            <rect width="25.228" height="2.157" fill="url(#racing-car-af)" mask="url(#racing-car-aF)" opacity=".525"/>
+            <rect width="25.228" height="2.157" y="12.939" fill="url(#racing-car-ah)" mask="url(#racing-car-aF)" opacity=".525"/>
+          </g>
+          <g transform="rotate(180 9.404 21.548)">
+            <path fill="url(#racing-car-aG)" d="M9.3072475,27.873401 L9.41537407,29.949696 C9.47996772,31.1900525 8.54147283,32.2546399 7.30280751,32.3460988 L6.57670402,32.3997119 C5.78217424,32.4583773 5.09052286,31.8618414 5.03185743,31.0673116 C5.03031515,31.0464238 5.02922796,31.0255049 5.02859664,31.0045698 L4.98738709,29.6380197 L5.83302891,28.2415607 L5.83727336,27.172341 C5.83833509,26.9048779 5.98484441,26.6719952 6.20158478,26.5483149 L5.27944785,15.084235 L10.409088,15.1175137 C10.807426,15.1200979 11.1282478,15.4451095 11.1256635,15.8434475 C11.1254386,15.8781185 11.122714,15.9127283 11.1175109,15.9470074 L9.3072475,27.873401 Z" transform="rotate(39 8.059 23.745)"/>
+            <path fill="url(#racing-car-aH)" d="M7.86463004,0.5112925 L15.0724604,0.508918832 L15.8270681,16.8099637 C15.9026829,18.4433959 14.9533333,19.9512032 13.4476804,20.5890333 L13.4476804,20.5890333 C12.3797628,21.0414284 11.1473058,20.5424488 10.6949107,19.4745312 C10.6248829,19.3092245 10.5763419,19.1356203 10.5504753,18.9579657 L7.86463004,0.5112925 Z" transform="rotate(-8 11.848 10.633)"/>
+          </g>
+          <path fill="url(#racing-car-aI)" d="M37.476464,45.1252905 C38.6349194,45.7252728 39.426579,46.9350208 39.426579,48.3296708 L39.426579,49.7552705 C39.426579,52.5343391 37.1736988,54.7872193 34.3946302,54.7872193 L9.85954314,54.7872193 C7.08047451,54.7872193 4.82759426,52.5343391 4.82759426,49.7552705 L4.82759426,48.3296708 C4.82759426,47.3581628 5.21174422,46.4763778 5.83643135,45.8279286 L5.79993943,45.828739 L11.2292031,38.6924867 C12.8975635,36.4995852 15.5103602,35.2320799 18.2653608,35.2791453 L26.4485631,35.4189441 C29.0331054,35.4630974 31.4626392,36.6601221 33.0724968,38.6825382 L38.1883887,45.1094806 L37.476464,45.1252905 Z" transform="matrix(1 0 0 -1 0 90.065)"/>
+          <path fill="url(#racing-car-aC)" d="M21.7475532,45.5824745 L38.5798008,44.6083273 L33.1262717,51.3616361 C31.4842949,53.3949574 29.0114646,54.5774602 26.3979459,54.5791089 L22.1241163,54.581805 L21.7475532,45.5824745 Z" opacity=".258"/>
+          <path fill="url(#racing-car-aJ)" d="M21.7500302,39.5910543 L37.2627695,39.5910543 C38.4578085,39.5910543 39.426579,40.5598248 39.426579,41.7548638 L39.426579,45.341853 L21.7500302,45.341853 L21.7500302,39.5910543 Z" transform="matrix(1 0 0 -1 0 84.933)"/>
+          <path fill="url(#racing-car-l)" d="M21.1859447,35.2779553 L30.7768328,35.2779553 L30.7768328,42.4567737 C30.7768328,44.050159 29.4851388,45.341853 27.8917535,45.341853 L16.1370558,45.341853 L16.1370558,40.3268442 C16.1370558,37.5384198 18.3975204,35.2779553 21.1859447,35.2779553 Z" opacity=".297" transform="matrix(1 0 0 -1 0 80.62)"/>
+          <g transform="matrix(1 0 0 -1 16.137 40.31)">
+            <use fill="url(#racing-car-aL)" transform="matrix(1 0 0 -1 0 12.94)" xlink:href="#racing-car-aK"/>
+            <mask id="racing-car-aO" fill="#fff">
+              <use xlink:href="#racing-car-aM"/>
+            </mask>
+            <use fill="url(#racing-car-aN)" transform="matrix(1 0 0 -1 0 7.188)" xlink:href="#racing-car-aM"/>
+            <rect width="5.766" height="16.534" y="-3.594" fill="url(#racing-car-F)" mask="url(#racing-car-aO)" transform="matrix(1 0 0 -1 0 9.345)"/>
+            <path fill="url(#racing-car-aP)" d="M5.58629442,-3.5942492 L5.58629442,-3.5942492 C6.28295817,-3.5942492 6.84771574,-3.02949164 6.84771574,-2.33282788 L6.84771574,5.03194888 L4.3248731,5.03194888 L4.3248731,-2.33282788 C4.3248731,-3.02949164 4.88963066,-3.5942492 5.58629442,-3.5942492 Z" mask="url(#racing-car-aO)" opacity=".613" transform="matrix(1 0 0 -1 0 1.438)"/>
+          </g>
+        </g>
+        <g transform="rotate(149 111.847 128.832)">
+          <g transform="matrix(-1 0 0 1 18.809 15.904)">
+            <path fill="url(#racing-car-aG)" d="M9.3072475,27.873401 L9.41537407,29.949696 C9.47996772,31.1900525 8.54147283,32.2546399 7.30280751,32.3460988 L6.57670402,32.3997119 C5.78217424,32.4583773 5.09052286,31.8618414 5.03185743,31.0673116 C5.03031515,31.0464238 5.02922796,31.0255049 5.02859664,31.0045698 L4.98738709,29.6380197 L5.83302891,28.2415607 L5.83727336,27.172341 C5.83833509,26.9048779 5.98484441,26.6719952 6.20158478,26.5483149 L5.27944785,15.084235 L10.409088,15.1175137 C10.807426,15.1200979 11.1282478,15.4451095 11.1256635,15.8434475 C11.1254386,15.8781185 11.122714,15.9127283 11.1175109,15.9470074 L9.3072475,27.873401 Z" transform="rotate(39 8.059 23.745)"/>
+            <path fill="url(#racing-car-aH)" d="M7.86463004,0.5112925 L15.0724604,0.508918832 L15.8270681,16.8099637 C15.9026829,18.4433959 14.9533333,19.9512032 13.4476804,20.5890333 L13.4476804,20.5890333 C12.3797628,21.0414284 11.1473058,20.5424488 10.6949107,19.4745312 C10.6248829,19.3092245 10.5763419,19.1356203 10.5504753,18.9579657 L7.86463004,0.5112925 Z" transform="rotate(-8 11.848 10.633)"/>
+          </g>
+          <g transform="scale(1 -1) rotate(-30 -88.844 -42.578)">
+            <polygon fill="url(#racing-car-aQ)" points="12.5 19.5 12.5 17 6.5 16.5 6.5 11.5 5 10.5 4.993 8.37 5 7.889 4.391 6 4.391 3.5 6 3.5 6 0 .5 0 .5 3.5 2 3.5 2 6 1.5 7.889 1.5 8.37 1.5 10.5 0 11.5 0 20 6 20.5 6.5 19"/>
+            <polygon fill="url(#racing-car-aR)" points="12.5 19.5 12.5 17 6.5 16.5 6.5 11.5 5 10.5 1.5 10.5 0 11.5 0 20 6 20.5 6.5 19"/>
+          </g>
+          <g transform="translate(22.706 14.377)">
+            <path fill="url(#racing-car-ay)" d="M8.55893969,24.0449287 L8.65170343,25.8262197 C8.71629708,27.0665761 7.77780219,28.1311636 6.53913687,28.2226225 L5.81303338,28.2762355 C5.0185036,28.334901 4.32685222,27.738365 4.26818679,26.9438353 C4.26664451,26.9229475 4.26555732,26.9020286 4.264926,26.8810934 L4.1640014,23.5343319 C4.15218531,23.1424985 4.45549053,22.8129675 4.84695796,22.7923223 L5.36046077,22.7652412 L5.58650606,12.8798582 L9.99621495,12.2303393 C10.3903092,12.172292 10.7568424,12.444712 10.8148897,12.8388062 C10.8271373,12.9219571 10.8247573,13.0066088 10.8078573,13.0889401 L8.55893969,24.0449287 Z" transform="rotate(35 7.493 20.251)"/>
+            <path fill="url(#racing-car-az)" d="M8.48511341,0.799924895 L15.6929438,0.797551227 L16.8326658,12.5594474 C17.0078107,14.3669371 15.9468535,16.0666433 14.246126,16.7032129 L14.246126,16.7032129 C12.9311142,17.1954119 11.4660803,16.5283904 10.9738813,15.2133785 C10.9173051,15.0622237 10.8752511,14.9060249 10.8482885,14.7468971 L8.48511341,0.799924895 Z" transform="rotate(7 12.668 8.832)"/>
+          </g>
+          <path fill="url(#racing-car-aA)" d="M9.33950969,6.80344669e-13 L35.7285874,6.80566714e-13 C36.4434142,6.82340084e-13 37.0504322,0.523505196 37.1554689,1.23057277 L39.6101317,17.7544391 C39.7271978,18.542484 39.183262,19.2762214 38.3952171,19.3932875 C38.3250427,19.4037121 38.2541948,19.4089457 38.1832502,19.4089457 L6.27118121,19.4089457 C5.47448854,19.4089457 4.82864153,18.7630987 4.82864153,17.966406 C4.82864153,17.8780607 4.83675727,17.7899023 4.85288644,17.7030418 L7.92121492,1.17917552 C8.04812323,0.495736297 8.64438748,6.81533843e-13 9.33950969,6.80788759e-13 Z"/>
+          <path fill="url(#racing-car-aB)" d="M16.8500187,7.90734824 C15.2619794,7.90734824 13.9746193,6.6199881 13.9746193,5.03194888 C13.9746193,3.44390967 15.2619794,2.15654952 16.8500187,2.15654952 L19.2458766,2.15654952 C20.8339158,2.15654952 22.1212759,3.44390967 22.1212759,5.03194888 C22.1212759,6.6199881 20.8339158,7.90734824 19.2458766,7.90734824 L16.8500187,7.90734824 Z M27.6519172,7.91265116 L25.2560593,7.91265116 C23.6680201,7.91265116 22.3806599,6.62529101 22.3806599,5.0372518 C22.3806599,3.44921258 23.6680201,2.16185244 25.2560593,2.16185244 L27.6519172,2.16185244 C29.2399564,2.16185244 30.5273166,3.44921258 30.5273166,5.0372518 C30.5273166,6.62529101 29.2399564,7.91265116 27.6519172,7.91265116 Z"/>
+          <rect width="15.858" height="5.032" x="14.695" y="3.594" fill="url(#racing-car-aC)" rx="2.516"/>
+          <path fill="url(#racing-car-aI)" d="M37.476464,14.0601158 C38.6349194,14.6600982 39.426579,15.8698462 39.426579,17.2644962 L39.426579,18.6900958 C39.426579,21.4691645 37.1736988,23.7220447 34.3946302,23.7220447 L9.85954314,23.7220447 C7.08047451,23.7220447 4.82759426,21.4691645 4.82759426,18.6900958 L4.82759426,17.2644962 C4.82759426,16.2929882 5.21174422,15.4112032 5.83643135,14.762754 L5.79993943,14.7635644 L11.2292031,7.62731209 C12.8975635,5.43441057 15.5103602,4.16690527 18.2653608,4.21397068 L26.4485631,4.35376946 C29.0331054,4.39792282 31.4626392,5.5949475 33.0724968,7.61736361 L38.1883887,14.044306 L37.476464,14.0601158 Z"/>
+          <path fill="url(#racing-car-aC)" d="M21.7475532,5.39234216 L38.5798008,4.41819497 L33.1262717,11.1715039 C31.4842949,13.2048251 29.0114646,14.3873279 26.3979459,14.3889766 L22.1241163,14.3916727 L21.7475532,5.39234216 Z" opacity=".258" transform="matrix(1 0 0 -1 0 18.81)"/>
+          <path fill="url(#racing-car-aJ)" d="M21.7500302,13.658147 L37.2627695,13.658147 C38.4578085,13.658147 39.426579,14.6269175 39.426579,15.8219565 L39.426579,19.4089457 L21.7500302,19.4089457 L21.7500302,13.658147 Z"/>
+          <path fill="url(#racing-car-l)" d="M21.1859447,13.658147 L30.7768328,13.658147 L30.7768328,20.8369654 C30.7768328,22.4303507 29.4851388,23.7220447 27.8917535,23.7220447 L16.1370558,23.7220447 L16.1370558,18.7070359 C16.1370558,15.9186115 18.3975204,13.658147 21.1859447,13.658147 Z" opacity=".297"/>
+          <g transform="translate(16.137 18.69)">
+            <use fill="url(#racing-car-aL)" transform="matrix(1 0 0 -1 0 12.94)" xlink:href="#racing-car-aS"/>
+            <mask id="racing-car-aU" fill="#fff">
+              <use xlink:href="#racing-car-aT"/>
+            </mask>
+            <use fill="url(#racing-car-aN)" transform="matrix(1 0 0 -1 0 7.188)" xlink:href="#racing-car-aT"/>
+            <rect width="5.766" height="16.534" y="-3.594" fill="url(#racing-car-F)" mask="url(#racing-car-aU)" transform="matrix(1 0 0 -1 0 9.345)"/>
+            <path fill="url(#racing-car-aP)" d="M5.58629442,-3.5942492 L5.58629442,-3.5942492 C6.28295817,-3.5942492 6.84771574,-3.02949164 6.84771574,-2.33282788 L6.84771574,5.03194888 L4.3248731,5.03194888 L4.3248731,-2.33282788 C4.3248731,-3.02949164 4.88963066,-3.5942492 5.58629442,-3.5942492 Z" mask="url(#racing-car-aU)" opacity=".613" transform="matrix(1 0 0 -1 0 1.438)"/>
+          </g>
+        </g>
+        <g transform="rotate(90 -13.5 65.5)">
+          <path fill="url(#racing-car-aV)" d="M31.7899978,19.4089457 C31.5287608,19.5165778 31.2171312,19.464267 31.0048774,19.2520132 L26.1634584,14.4105942 C25.881785,14.1289208 25.881785,13.672238 26.1634584,13.3905646 L27.1766432,12.3773798 C27.4583166,12.0957064 27.9149994,12.0957064 28.1966728,12.3773798 L32.3528393,16.5335463 L40.9531093,16.5335463 C41.3514556,16.5335463 41.6743791,16.8564698 41.6743791,17.2548162 L41.6743791,18.6876758 C41.6743791,19.0860222 41.3514556,19.4089457 40.9531093,19.4089457 L31.7899978,19.4089457 Z M17.2504738,16.5335463 L21.4066404,12.3773798 C21.6883138,12.0957064 22.1449966,12.0957064 22.42667,12.3773798 L23.4398548,13.3905646 C23.7215282,13.672238 23.7215282,14.1289208 23.4398548,14.4105942 L18.5984358,19.2520132 C18.3861819,19.464267 18.0745523,19.5165778 17.8133153,19.4089457 L8.65020385,19.4089457 C8.25185752,19.4089457 7.92893401,19.0860222 7.92893401,18.6876758 L7.92893401,17.2548162 C7.92893401,16.8564698 8.25185752,16.5335463 8.65020385,16.5335463 L17.2504738,16.5335463 Z"/>
+          <rect width="7.929" height="11.502" x="20.904" y="2.875" fill="url(#racing-car-F)" rx=".721"/>
+          <rect width="7.929" height="11.502" x="20.904" fill="url(#racing-car-aC)" opacity=".257"/>
+          <g transform="matrix(1 0 0 -1 0 51.038)">
+            <path fill="url(#racing-car-aW)" d="M11.2227584,2.25597319e-13 L37.6118362,2.25819363e-13 C38.3266629,2.27592733e-13 38.9336809,0.523505196 39.0387176,1.23057277 L41.4933804,17.7544391 C41.6104465,18.542484 41.0665107,19.2762214 40.2784659,19.3932875 C40.2082914,19.4037121 40.1374435,19.4089457 40.0664989,19.4089457 L8.15442994,19.4089457 C7.35773728,19.4089457 6.71189026,18.7630987 6.71189026,17.966406 C6.71189026,17.8780607 6.720006,17.7899023 6.73613517,17.7030418 L9.80446365,1.17917552 C9.93137196,0.495736297 10.5276362,2.26786492e-13 11.2227584,2.26041408e-13 Z"/>
+            <g transform="translate(11.533 16.534)">
+              <rect width="16.579" height="3.594" x="4.548" y="7.907" fill="url(#racing-car-aB)" rx="1.443"/>
+              <path fill="url(#racing-car-aX)" d="M0.223533348,0 L26.1727719,0 L24.6232765,4.32677579 C23.3909661,7.76785146 20.1298728,10.0638978 16.4747954,10.0638978 L9.63054662,10.0638978 C5.76846586,10.0638978 2.37371642,7.5051529 1.31004431,3.79243564 L0.223533348,0 Z"/>
+              <path fill="url(#racing-car-aY)" d="M12.9746193,0 L26.1727719,0 L24.6232765,4.32677579 C23.3909661,7.76785146 20.1298728,10.0638978 16.4747954,10.0638978 L12.9746193,10.0638978 L12.9746193,0 Z" opacity=".728"/>
+            </g>
+            <g transform="translate(30.274 9.345)">
+              <path fill="url(#racing-car-ay)" d="M8.83025171,18.4949281 L9.26628344,18.8944 L9.53315298,21.8801397 C9.64135271,23.0906795 8.74772944,24.1597292 7.53718956,24.267929 C7.52590749,24.2689374 7.51461781,24.2698586 7.50332152,24.2706927 L6.77721804,24.3243058 C5.98268825,24.3829712 5.29103688,23.7864353 5.23237145,22.9919055 C5.23082916,22.9710177 5.22974198,22.9500988 5.22911066,22.9291637 L5.12508638,19.4796137 C5.11680122,19.2048694 5.2643835,18.9564712 5.49429994,18.8280682 L4.00916793,5.65417174 L9.44405152,0.716975096 C9.73890131,0.449125501 10.1950593,0.471013479 10.4629089,0.765863265 C10.6012166,0.918112904 10.6679415,1.1221702 10.6463042,1.32672046 L8.83025171,18.4949281 Z" transform="rotate(24 .638 17.016)"/>
+              <g transform="translate(5.046)">
+                <mask id="racing-car-bb" fill="#fff">
+                  <use xlink:href="#racing-car-aZ"/>
+                </mask>
+                <use fill="url(#racing-car-aJ)" xlink:href="#racing-car-aZ"/>
+                <path fill="url(#racing-car-ba)" d="M9.57109127,0.164482359 C10.7306742,-0.301922001 12.5174858,0.243827051 12.5174858,1.41389935 C12.5174858,2.8059655 8.04489149,4.5693817 7.92893401,5.03194888 L2.16243655,7.90734824 L-0.720812183,2.8059655 C3.03710208,2.29315516 6.46773657,1.41266078 9.57109127,0.164482359 Z" mask="url(#racing-car-bb)" opacity=".182"/>
+                <mask id="racing-car-be" fill="#fff">
+                  <use xlink:href="#racing-car-bc"/>
+                </mask>
+                <use fill="url(#racing-car-bd)" xlink:href="#racing-car-bc"/>
+                <rect width="17.299" height="6.47" x="-12.975" y=".719" fill="url(#racing-car-aJ)" mask="url(#racing-car-be)"/>
+              </g>
+            </g>
+            <g transform="matrix(-1 0 0 1 18.02 9.345)">
+              <path fill="url(#racing-car-ay)" d="M8.83025171,18.4949281 L9.26628344,18.8944 L9.53315298,21.8801397 C9.64135271,23.0906795 8.74772944,24.1597292 7.53718956,24.267929 C7.52590749,24.2689374 7.51461781,24.2698586 7.50332152,24.2706927 L6.77721804,24.3243058 C5.98268825,24.3829712 5.29103688,23.7864353 5.23237145,22.9919055 C5.23082916,22.9710177 5.22974198,22.9500988 5.22911066,22.9291637 L5.12508638,19.4796137 C5.11680122,19.2048694 5.2643835,18.9564712 5.49429994,18.8280682 L4.00916793,5.65417174 L9.44405152,0.716975096 C9.73890131,0.449125501 10.1950593,0.471013479 10.4629089,0.765863265 C10.6012166,0.918112904 10.6679415,1.1221702 10.6463042,1.32672046 L8.83025171,18.4949281 Z" transform="rotate(24 .638 17.016)"/>
+              <g transform="translate(5.046)">
+                <mask id="racing-car-bg" fill="#fff">
+                  <use xlink:href="#racing-car-bf"/>
+                </mask>
+                <use fill="url(#racing-car-aJ)" xlink:href="#racing-car-bf"/>
+                <path fill="url(#racing-car-ba)" d="M9.57109127,0.164482359 C10.7306742,-0.301922001 12.5174858,0.243827051 12.5174858,1.41389935 C12.5174858,2.8059655 8.04489149,4.5693817 7.92893401,5.03194888 L2.16243655,7.90734824 L-0.720812183,2.8059655 C3.03710208,2.29315516 6.46773657,1.41266078 9.57109127,0.164482359 Z" mask="url(#racing-car-bg)" opacity=".182"/>
+                <mask id="racing-car-bi" fill="#fff">
+                  <use xlink:href="#racing-car-bh"/>
+                </mask>
+                <use fill="url(#racing-car-bd)" xlink:href="#racing-car-bh"/>
+                <rect width="17.299" height="6.47" x="-12.975" y=".719" fill="url(#racing-car-aJ)" mask="url(#racing-car-bi)"/>
+              </g>
+            </g>
+            <path fill="url(#racing-car-l)" d="M21.8497295,12.2204473 L32.6600816,12.2204473 L32.6600816,20.8369654 C32.6600816,22.4303507 31.3683875,23.7220447 29.7750022,23.7220447 L18.9646501,23.7220447 L18.9646501,15.1055266 C18.9646501,13.5121413 20.2563441,12.2204473 21.8497295,12.2204473 Z" opacity=".297"/>
+            <g transform="translate(18.244 15.096)">
+              <use fill="url(#racing-car-aL)" transform="matrix(1 0 0 -1 0 12.94)" xlink:href="#racing-car-bj"/>
+              <mask id="racing-car-bl" fill="#fff">
+                <use xlink:href="#racing-car-bk"/>
+              </mask>
+              <use fill="url(#racing-car-aN)" transform="matrix(1 0 0 -1 0 7.188)" xlink:href="#racing-car-bk"/>
+              <rect width="5.766" height="16.534" y="-3.594" fill="url(#racing-car-F)" mask="url(#racing-car-bl)" transform="matrix(1 0 0 -1 0 9.345)"/>
+              <path fill="url(#racing-car-aP)" d="M5.58629442,-3.5942492 L5.58629442,-3.5942492 C6.28295817,-3.5942492 6.84771574,-3.02949164 6.84771574,-2.33282788 L6.84771574,5.03194888 L4.3248731,5.03194888 L4.3248731,-2.33282788 C4.3248731,-3.02949164 4.88963066,-3.5942492 5.58629442,-3.5942492 Z" mask="url(#racing-car-bl)" opacity=".613" transform="matrix(1 0 0 -1 0 1.438)"/>
+            </g>
+          </g>
+        </g>
+        <g transform="scale(-1 1) rotate(-23 -87.372 668.709)">
+          <g transform="matrix(-1 0 0 1 18.809 13.904)">
+            <path fill="url(#racing-car-aG)" d="M9.3072475,27.873401 L9.41537407,29.949696 C9.47996772,31.1900525 8.54147283,32.2546399 7.30280751,32.3460988 L6.57670402,32.3997119 C5.78217424,32.4583773 5.09052286,31.8618414 5.03185743,31.0673116 C5.03031515,31.0464238 5.02922796,31.0255049 5.02859664,31.0045698 L4.98738709,29.6380197 L5.83302891,28.2415607 L5.83727336,27.172341 C5.83833509,26.9048779 5.98484441,26.6719952 6.20158478,26.5483149 L5.27944785,15.084235 L10.409088,15.1175137 C10.807426,15.1200979 11.1282478,15.4451095 11.1256635,15.8434475 C11.1254386,15.8781185 11.122714,15.9127283 11.1175109,15.9470074 L9.3072475,27.873401 Z" transform="rotate(39 8.059 23.745)"/>
+            <path fill="url(#racing-car-aH)" d="M7.86463004,0.5112925 L15.0724604,0.508918832 L15.8270681,16.8099637 C15.9026829,18.4433959 14.9533333,19.9512032 13.4476804,20.5890333 L13.4476804,20.5890333 C12.3797628,21.0414284 11.1473058,20.5424488 10.6949107,19.4745312 C10.6248829,19.3092245 10.5763419,19.1356203 10.5504753,18.9579657 L7.86463004,0.5112925 Z" transform="rotate(-8 11.848 10.633)"/>
+          </g>
+          <g transform="scale(1 -1) rotate(-30 -85.112 -41.578)">
+            <polygon fill="url(#racing-car-aQ)" points="12.5 19.5 12.5 17 6.5 16.5 6.5 11.5 5 10.5 4.993 8.37 5 7.889 4.391 6 4.391 3.5 6 3.5 6 0 .5 0 .5 3.5 2 3.5 2 6 1.5 7.889 1.5 8.37 1.5 10.5 0 11.5 0 20 6 20.5 6.5 19"/>
+            <polygon fill="url(#racing-car-aR)" points="12.5 19.5 12.5 17 6.5 16.5 6.5 11.5 5 10.5 1.5 10.5 0 11.5 0 20 6 20.5 6.5 19"/>
+          </g>
+          <g transform="translate(22.706 12.377)">
+            <path fill="url(#racing-car-ay)" d="M8.55893969,24.0449287 L8.65170343,25.8262197 C8.71629708,27.0665761 7.77780219,28.1311636 6.53913687,28.2226225 L5.81303338,28.2762355 C5.0185036,28.334901 4.32685222,27.738365 4.26818679,26.9438353 C4.26664451,26.9229475 4.26555732,26.9020286 4.264926,26.8810934 L4.1640014,23.5343319 C4.15218531,23.1424985 4.45549053,22.8129675 4.84695796,22.7923223 L5.36046077,22.7652412 L5.58650606,12.8798582 L9.99621495,12.2303393 C10.3903092,12.172292 10.7568424,12.444712 10.8148897,12.8388062 C10.8271373,12.9219571 10.8247573,13.0066088 10.8078573,13.0889401 L8.55893969,24.0449287 Z" transform="rotate(35 7.493 20.251)"/>
+            <path fill="url(#racing-car-az)" d="M8.48511341,0.799924895 L15.6929438,0.797551227 L16.8326658,12.5594474 C17.0078107,14.3669371 15.9468535,16.0666433 14.246126,16.7032129 L14.246126,16.7032129 C12.9311142,17.1954119 11.4660803,16.5283904 10.9738813,15.2133785 C10.9173051,15.0622237 10.8752511,14.9060249 10.8482885,14.7468971 L8.48511341,0.799924895 Z" transform="rotate(7 12.668 8.832)"/>
+          </g>
+          <path fill="url(#racing-car-aB)" d="M16.8500187,5.90734824 C15.2619794,5.90734824 13.9746193,4.6199881 13.9746193,3.03194888 C13.9746193,1.44390967 15.2619794,0.156549521 16.8500187,0.156549521 L19.2458766,0.156549521 C20.8339158,0.156549521 22.1212759,1.44390967 22.1212759,3.03194888 C22.1212759,4.6199881 20.8339158,5.90734824 19.2458766,5.90734824 L16.8500187,5.90734824 Z M27.6519172,5.91265116 L25.2560593,5.91265116 C23.6680201,5.91265116 22.3806599,4.62529101 22.3806599,3.0372518 C22.3806599,1.44921258 23.6680201,0.161852436 25.2560593,0.161852436 L27.6519172,0.161852436 C29.2399564,0.161852436 30.5273166,1.44921258 30.5273166,3.0372518 C30.5273166,4.62529101 29.2399564,5.91265116 27.6519172,5.91265116 Z"/>
+          <rect width="15.858" height="5.032" x="14.695" y="1.594" fill="url(#racing-car-aC)" rx="2.516"/>
+          <path fill="url(#racing-car-aI)" d="M37.476464,12.0601158 C38.6349194,12.6600982 39.426579,13.8698462 39.426579,15.2644962 L39.426579,16.6900958 C39.426579,19.4691645 37.1736988,21.7220447 34.3946302,21.7220447 L9.85954314,21.7220447 C7.08047451,21.7220447 4.82759426,19.4691645 4.82759426,16.6900958 L4.82759426,15.2644962 C4.82759426,14.2929882 5.21174422,13.4112032 5.83643135,12.762754 L5.79993943,12.7635644 L11.2292031,5.62731209 C12.8975635,3.43441057 15.5103602,2.16690527 18.2653608,2.21397068 L26.4485631,2.35376946 C29.0331054,2.39792282 31.4626392,3.5949475 33.0724968,5.61736361 L38.1883887,12.044306 L37.476464,12.0601158 Z"/>
+          <path fill="url(#racing-car-aC)" d="M21.7475532,3.39234216 L38.5798008,2.41819497 L33.1262717,9.17150385 C31.4842949,11.2048251 29.0114646,12.3873279 26.3979459,12.3889766 L22.1241163,12.3916727 L21.7475532,3.39234216 Z" opacity=".258" transform="matrix(1 0 0 -1 0 14.81)"/>
+          <path fill="url(#racing-car-aJ)" d="M21.7500302,11.658147 L37.2627695,11.658147 C38.4578085,11.658147 39.426579,12.6269175 39.426579,13.8219565 L39.426579,17.4089457 L21.7500302,17.4089457 L21.7500302,11.658147 Z"/>
+          <path fill="url(#racing-car-l)" d="M21.1859447,11.658147 L30.7768328,11.658147 L30.7768328,18.8369654 C30.7768328,20.4303507 29.4851388,21.7220447 27.8917535,21.7220447 L16.1370558,21.7220447 L16.1370558,16.7070359 C16.1370558,13.9186115 18.3975204,11.658147 21.1859447,11.658147 Z" opacity=".297"/>
+          <g transform="translate(16.137 16.69)">
+            <use fill="url(#racing-car-aL)" transform="matrix(1 0 0 -1 0 12.94)" xlink:href="#racing-car-bm"/>
+            <mask id="racing-car-bo" fill="#fff">
+              <use xlink:href="#racing-car-bn"/>
+            </mask>
+            <use fill="url(#racing-car-aN)" transform="matrix(1 0 0 -1 0 7.188)" xlink:href="#racing-car-bn"/>
+            <rect width="5.766" height="16.534" y="-3.594" fill="url(#racing-car-F)" mask="url(#racing-car-bo)" transform="matrix(1 0 0 -1 0 9.345)"/>
+            <path fill="url(#racing-car-aP)" d="M5.58629442,-3.5942492 L5.58629442,-3.5942492 C6.28295817,-3.5942492 6.84771574,-3.02949164 6.84771574,-2.33282788 L6.84771574,5.03194888 L4.3248731,5.03194888 L4.3248731,-2.33282788 C4.3248731,-3.02949164 4.88963066,-3.5942492 5.58629442,-3.5942492 Z" mask="url(#racing-car-bo)" opacity=".613" transform="matrix(1 0 0 -1 0 1.438)"/>
+          </g>
+        </g>
+        <g transform="scale(-1 1) rotate(-25 -17.667 272.495)">
+          <g transform="matrix(-1 0 0 1 18.809 13.904)">
+            <path fill="url(#racing-car-aG)" d="M9.3072475,27.873401 L9.41537407,29.949696 C9.47996772,31.1900525 8.54147283,32.2546399 7.30280751,32.3460988 L6.57670402,32.3997119 C5.78217424,32.4583773 5.09052286,31.8618414 5.03185743,31.0673116 C5.03031515,31.0464238 5.02922796,31.0255049 5.02859664,31.0045698 L4.98738709,29.6380197 L5.83302891,28.2415607 L5.83727336,27.172341 C5.83833509,26.9048779 5.98484441,26.6719952 6.20158478,26.5483149 L5.27944785,15.084235 L10.409088,15.1175137 C10.807426,15.1200979 11.1282478,15.4451095 11.1256635,15.8434475 C11.1254386,15.8781185 11.122714,15.9127283 11.1175109,15.9470074 L9.3072475,27.873401 Z" transform="rotate(39 8.059 23.745)"/>
+            <path fill="url(#racing-car-aH)" d="M7.86463004,0.5112925 L15.0724604,0.508918832 L15.8270681,16.8099637 C15.9026829,18.4433959 14.9533333,19.9512032 13.4476804,20.5890333 L13.4476804,20.5890333 C12.3797628,21.0414284 11.1473058,20.5424488 10.6949107,19.4745312 C10.6248829,19.3092245 10.5763419,19.1356203 10.5504753,18.9579657 L7.86463004,0.5112925 Z" transform="rotate(-8 11.848 10.633)"/>
+          </g>
+          <g transform="scale(1 -1) rotate(-30 -85.112 -41.578)">
+            <polygon fill="url(#racing-car-aQ)" points="12.5 19.5 12.5 17 6.5 16.5 6.5 11.5 5 10.5 4.993 8.37 5 7.889 4.391 6 4.391 3.5 6 3.5 6 0 .5 0 .5 3.5 2 3.5 2 6 1.5 7.889 1.5 8.37 1.5 10.5 0 11.5 0 20 6 20.5 6.5 19"/>
+            <polygon fill="url(#racing-car-aR)" points="12.5 19.5 12.5 17 6.5 16.5 6.5 11.5 5 10.5 1.5 10.5 0 11.5 0 20 6 20.5 6.5 19"/>
+          </g>
+          <g transform="translate(22.706 12.377)">
+            <path fill="url(#racing-car-ay)" d="M8.55893969,24.0449287 L8.65170343,25.8262197 C8.71629708,27.0665761 7.77780219,28.1311636 6.53913687,28.2226225 L5.81303338,28.2762355 C5.0185036,28.334901 4.32685222,27.738365 4.26818679,26.9438353 C4.26664451,26.9229475 4.26555732,26.9020286 4.264926,26.8810934 L4.1640014,23.5343319 C4.15218531,23.1424985 4.45549053,22.8129675 4.84695796,22.7923223 L5.36046077,22.7652412 L5.58650606,12.8798582 L9.99621495,12.2303393 C10.3903092,12.172292 10.7568424,12.444712 10.8148897,12.8388062 C10.8271373,12.9219571 10.8247573,13.0066088 10.8078573,13.0889401 L8.55893969,24.0449287 Z" transform="rotate(35 7.493 20.251)"/>
+            <path fill="url(#racing-car-az)" d="M8.48511341,0.799924895 L15.6929438,0.797551227 L16.8326658,12.5594474 C17.0078107,14.3669371 15.9468535,16.0666433 14.246126,16.7032129 L14.246126,16.7032129 C12.9311142,17.1954119 11.4660803,16.5283904 10.9738813,15.2133785 C10.9173051,15.0622237 10.8752511,14.9060249 10.8482885,14.7468971 L8.48511341,0.799924895 Z" transform="rotate(7 12.668 8.832)"/>
+          </g>
+          <path fill="url(#racing-car-aB)" d="M16.8500187,5.90734824 C15.2619794,5.90734824 13.9746193,4.6199881 13.9746193,3.03194888 C13.9746193,1.44390967 15.2619794,0.156549521 16.8500187,0.156549521 L19.2458766,0.156549521 C20.8339158,0.156549521 22.1212759,1.44390967 22.1212759,3.03194888 C22.1212759,4.6199881 20.8339158,5.90734824 19.2458766,5.90734824 L16.8500187,5.90734824 Z M27.6519172,5.91265116 L25.2560593,5.91265116 C23.6680201,5.91265116 22.3806599,4.62529101 22.3806599,3.0372518 C22.3806599,1.44921258 23.6680201,0.161852436 25.2560593,0.161852436 L27.6519172,0.161852436 C29.2399564,0.161852436 30.5273166,1.44921258 30.5273166,3.0372518 C30.5273166,4.62529101 29.2399564,5.91265116 27.6519172,5.91265116 Z"/>
+          <rect width="15.858" height="5.032" x="14.695" y="1.594" fill="url(#racing-car-aC)" rx="2.516"/>
+          <path fill="url(#racing-car-aI)" d="M37.476464,12.0601158 C38.6349194,12.6600982 39.426579,13.8698462 39.426579,15.2644962 L39.426579,16.6900958 C39.426579,19.4691645 37.1736988,21.7220447 34.3946302,21.7220447 L9.85954314,21.7220447 C7.08047451,21.7220447 4.82759426,19.4691645 4.82759426,16.6900958 L4.82759426,15.2644962 C4.82759426,14.2929882 5.21174422,13.4112032 5.83643135,12.762754 L5.79993943,12.7635644 L11.2292031,5.62731209 C12.8975635,3.43441057 15.5103602,2.16690527 18.2653608,2.21397068 L26.4485631,2.35376946 C29.0331054,2.39792282 31.4626392,3.5949475 33.0724968,5.61736361 L38.1883887,12.044306 L37.476464,12.0601158 Z"/>
+          <path fill="url(#racing-car-aC)" d="M21.7475532,3.39234216 L38.5798008,2.41819497 L33.1262717,9.17150385 C31.4842949,11.2048251 29.0114646,12.3873279 26.3979459,12.3889766 L22.1241163,12.3916727 L21.7475532,3.39234216 Z" opacity=".258" transform="matrix(1 0 0 -1 0 14.81)"/>
+          <path fill="url(#racing-car-aJ)" d="M21.7500302,11.658147 L37.2627695,11.658147 C38.4578085,11.658147 39.426579,12.6269175 39.426579,13.8219565 L39.426579,17.4089457 L21.7500302,17.4089457 L21.7500302,11.658147 Z"/>
+          <path fill="url(#racing-car-l)" d="M21.1859447,11.658147 L30.7768328,11.658147 L30.7768328,18.8369654 C30.7768328,20.4303507 29.4851388,21.7220447 27.8917535,21.7220447 L16.1370558,21.7220447 L16.1370558,16.7070359 C16.1370558,13.9186115 18.3975204,11.658147 21.1859447,11.658147 Z" opacity=".297"/>
+          <g transform="translate(16.137 16.69)">
+            <use fill="url(#racing-car-aL)" transform="matrix(1 0 0 -1 0 12.94)" xlink:href="#racing-car-bp"/>
+            <mask id="racing-car-br" fill="#fff">
+              <use xlink:href="#racing-car-bq"/>
+            </mask>
+            <use fill="url(#racing-car-aN)" transform="matrix(1 0 0 -1 0 7.188)" xlink:href="#racing-car-bq"/>
+            <rect width="5.766" height="16.534" y="-3.594" fill="url(#racing-car-F)" mask="url(#racing-car-br)" transform="matrix(1 0 0 -1 0 9.345)"/>
+            <path fill="url(#racing-car-aP)" d="M5.58629442,-3.5942492 L5.58629442,-3.5942492 C6.28295817,-3.5942492 6.84771574,-3.02949164 6.84771574,-2.33282788 L6.84771574,5.03194888 L4.3248731,5.03194888 L4.3248731,-2.33282788 C4.3248731,-3.02949164 4.88963066,-3.5942492 5.58629442,-3.5942492 Z" mask="url(#racing-car-br)" opacity=".613" transform="matrix(1 0 0 -1 0 1.438)"/>
+          </g>
+        </g>
+        <g transform="rotate(45 95.74 321.497)">
+          <path fill="url(#racing-car-bs)" d="M9.06032187,2.25597319e-13 L35.4493996,2.25597319e-13 C36.1642264,2.23561326e-13 36.7712444,0.523505196 36.8762811,1.23057277 L39.3309439,17.7544391 C39.44801,18.542484 38.9040742,19.2762214 38.1160293,19.3932875 C38.0458548,19.4037121 37.9750069,19.4089457 37.9040624,19.4089457 L5.99199339,19.4089457 C5.19530073,19.4089457 4.54945371,18.7630987 4.54945371,17.966406 C4.54945371,17.8780607 4.55756945,17.7899023 4.57369863,17.7030418 L7.6420271,1.17917552 C7.76893542,0.495736297 8.36519966,2.25947055e-13 9.06032187,2.25819363e-13 Z"/>
+          <rect width="16.579" height="3.594" x="13.919" y="27.316" fill="url(#racing-car-aB)" rx="1.443"/>
+          <path fill="url(#racing-car-aX)" d="M9.59409172,19.4089457 L35.5433303,19.4089457 L33.9938349,23.7357215 C32.7615244,27.1767971 29.5004311,29.4728435 25.8453537,29.4728435 L19.001105,29.4728435 C15.1390242,29.4728435 11.7442748,26.9140986 10.6806027,23.2013813 L9.59409172,19.4089457 Z"/>
+          <path fill="url(#racing-car-aX)" d="M9.59409172,19.4089457 L35.5433303,19.4089457 L33.9938349,23.7357215 C32.7615244,27.1767971 29.5004311,29.4728435 25.8453537,29.4728435 L19.001105,29.4728435 C15.1390242,29.4728435 11.7442748,26.9140986 10.6806027,23.2013813 L9.59409172,19.4089457 Z"/>
+          <path fill="url(#racing-car-aY)" d="M21.6243655,19.4089457 L35.5433303,19.4089457 L33.9938349,23.7357215 C32.7615244,27.1767971 29.5004311,29.4728435 25.8453537,29.4728435 L21.6243655,29.4728435 L21.6243655,19.4089457 Z" opacity=".728"/>
+          <g transform="matrix(-1 0 0 1 12.614 15.096)">
+            <path fill="url(#racing-car-ay)" d="M9.02053056,25.9780226 L9.71167052,28.2413121 C10.0744149,29.4291981 9.42134429,30.6892052 8.24159853,31.0776076 L7.55003359,31.3052885 C6.79329719,31.5544255 5.97787572,31.1429348 5.72873875,30.3861984 C5.72218906,30.3663042 5.71607343,30.3462697 5.7103962,30.3261091 L4.80281458,27.1031766 C4.69655643,26.7258409 4.91113141,26.3327222 5.28597606,26.2179857 L5.36950935,26.192417 L5.31324405,26.1803214 L5.61550045,14.4809285 L10.3527342,14.3852261 C10.7509992,14.3771802 11.0803793,14.6935154 11.0884251,15.0917805 C11.0894426,15.1421462 11.0851808,15.1924798 11.0757094,15.2419574 L9.02053056,25.9780226 Z" transform="rotate(-4 7.933 22.88)"/>
+            <path fill="url(#racing-car-az)" d="M1.80400815,1.22280901 L9.01183852,1.22043534 L10.1515606,12.9823315 C10.3267055,14.7898212 9.26574825,16.4895275 7.56502071,17.126097 L7.56502071,17.126097 C6.25000889,17.618296 4.78497503,16.9512745 4.29277599,15.6362626 C4.23619988,15.4851078 4.19414581,15.328909 4.16718319,15.1697813 L1.80400815,1.22280901 Z" transform="rotate(-9 5.987 9.255)"/>
+          </g>
+          <g transform="translate(27.751 17.971)">
+            <path fill="url(#racing-car-ay)" d="M6.87221894,23.412794 L6.98404152,25.5600617 C7.04863518,26.8004181 6.11014029,27.8650056 4.87147496,27.9564645 L4.14537147,28.0100775 C3.35084169,28.068743 2.65919031,27.472207 2.60052489,26.6776773 C2.5989826,26.6567895 2.59789541,26.6358706 2.59726409,26.6149354 L2.49633949,23.2681739 C2.48452341,22.8763405 2.78782862,22.5468095 3.17929606,22.5261643 L3.94983058,22.4855279 L3.78378049,22.3367375 L2.99420893,14.7653703 L7.25617207,13.1731137 C7.62932721,13.0337041 8.04484305,13.2231923 8.18425269,13.5963474 C8.22648397,13.7093871 8.2396793,13.8312159 8.2226302,13.9506762 L6.87221894,23.412794 Z" transform="rotate(17 5.364 20.57)"/>
+            <path fill="url(#racing-car-az)" d="M2.97712176,0.579953414 L10.1849521,0.577579746 L11.3246742,12.3394759 C11.4998191,14.1469656 10.4388619,15.8466719 8.73813432,16.4832414 L8.73813432,16.4832414 C7.4231225,16.9754404 5.95808864,16.3084189 5.4658896,14.993407 C5.40931349,14.8422522 5.36725942,14.6860534 5.34029681,14.5269257 L2.97712176,0.579953414 Z" transform="rotate(7 7.16 8.612)"/>
+          </g>
+          <rect width="34.599" height="10.064" x="4.548" y="13.658" fill="url(#racing-car-aJ)" rx="3.967"/>
+          <path fill="url(#racing-car-aJ)" d="M6.71221597,13.658147 L36.9835817,13.658147 C38.1786207,13.658147 39.1473912,14.6269175 39.1473912,15.8219565 L39.1473912,19.4089457 L4.54840644,19.4089457 L4.54840644,15.8219565 C4.54840644,14.6269175 5.51717697,13.658147 6.71221597,13.658147 Z"/>
+          <path fill="url(#racing-car-l)" d="M19.6872929,13.658147 L30.497645,13.658147 L30.497645,20.8369654 C30.497645,22.4303507 29.205951,23.7220447 27.6125657,23.7220447 L16.8022136,23.7220447 L16.8022136,16.5432263 C16.8022136,14.949841 18.0939076,13.658147 19.6872929,13.658147 Z" opacity=".297"/>
+          <g transform="translate(16.081 15.096)">
+            <use fill="url(#racing-car-aL)" transform="matrix(1 0 0 -1 0 12.94)" xlink:href="#racing-car-bt"/>
+            <mask id="racing-car-bv" fill="#fff">
+              <use xlink:href="#racing-car-bu"/>
+            </mask>
+            <use fill="url(#racing-car-aN)" transform="matrix(1 0 0 -1 0 7.188)" xlink:href="#racing-car-bu"/>
+            <rect width="5.766" height="16.534" y="-3.594" fill="url(#racing-car-F)" mask="url(#racing-car-bv)" transform="matrix(1 0 0 -1 0 9.345)"/>
+            <path fill="url(#racing-car-aP)" d="M5.58629442,-3.5942492 L5.58629442,-3.5942492 C6.28295817,-3.5942492 6.84771574,-3.02949164 6.84771574,-2.33282788 L6.84771574,5.03194888 L4.3248731,5.03194888 L4.3248731,-2.33282788 C4.3248731,-3.02949164 4.88963066,-3.5942492 5.58629442,-3.5942492 Z" mask="url(#racing-car-bv)" opacity=".613" transform="matrix(1 0 0 -1 0 1.438)"/>
+          </g>
+        </g>
+        <g transform="translate(223.731 62.447)">
+          <use fill="url(#racing-car-ak)" transform="matrix(-1 0 0 1 25.228 0)" xlink:href="#racing-car-bw"/>
+          <mask id="racing-car-by" fill="#fff">
+            <use xlink:href="#racing-car-bx"/>
+          </mask>
+          <use fill="url(#racing-car-ae)" opacity=".339" transform="matrix(-1 0 0 1 25.228 0)" xlink:href="#racing-car-bx"/>
+          <rect width="25.228" height="2.157" fill="url(#racing-car-af)" mask="url(#racing-car-by)" opacity=".525"/>
+          <rect width="25.228" height="2.157" y="12.939" fill="url(#racing-car-ah)" mask="url(#racing-car-by)" opacity=".525"/>
+        </g>
+        <g transform="scale(-1 1) rotate(75 -21.169 -1.953)">
+          <g>
+            <path fill="url(#racing-car-bz)" d="M5.45626096,2.25597319e-13 L31.8453387,2.25819363e-13 C32.5601654,2.23783371e-13 33.1671835,0.523505196 33.2722202,1.23057277 L35.726883,17.7544391 C35.8439491,18.542484 35.3000133,19.2762214 34.5119684,19.3932875 C34.4417939,19.4037121 34.370946,19.4089457 34.3000015,19.4089457 L2.38793248,19.4089457 C1.59123981,19.4089457 0.945392799,18.7630987 0.945392799,17.966406 C0.945392799,17.8780607 0.953508537,17.7899023 0.969637712,17.7030418 L4.03796619,1.17917552 C4.1648745,0.495736297 4.76113875,2.25947055e-13 5.45626096,2.25819363e-13 Z"/>
+            <rect width="16.579" height="3.594" x="10.315" y="27.316" fill="url(#racing-car-aB)" rx="1.443"/>
+            <path fill="url(#racing-car-aX)" d="M5.99003081,19.4089457 L31.9392694,19.4089457 L30.389774,23.7357215 C29.1574635,27.1767971 25.8963702,29.4728435 22.2412928,29.4728435 L15.3970441,29.4728435 C11.5349633,29.4728435 8.14021388,26.9140986 7.07654177,23.2013813 L5.99003081,19.4089457 Z"/>
+            <path fill="url(#racing-car-aX)" d="M5.99003081,19.4089457 L31.9392694,19.4089457 L30.389774,23.7357215 C29.1574635,27.1767971 25.8963702,29.4728435 22.2412928,29.4728435 L15.3970441,29.4728435 C11.5349633,29.4728435 8.14021388,26.9140986 7.07654177,23.2013813 L5.99003081,19.4089457 Z"/>
+            <path fill="url(#racing-car-aY)" d="M18.0203046,19.4089457 L31.9392694,19.4089457 L30.389774,23.7357215 C29.1574635,27.1767971 25.8963702,29.4728435 22.2412928,29.4728435 L18.0203046,29.4728435 L18.0203046,19.4089457 Z" opacity=".728"/>
+            <g transform="translate(23.066 20.426)">
+              <path fill="url(#racing-car-ay)" d="M7.87096058,23.593118 L7.96372432,25.374409 C8.02831798,26.6147655 7.08982308,27.6793529 5.85115776,27.7708118 L5.12505427,27.8244249 C4.33052449,27.8830903 3.63887311,27.2865544 3.58020768,26.4920246 C3.5786654,26.4711368 3.57757821,26.4502179 3.57694689,26.4292827 L3.47602229,23.0825212 C3.4642062,22.6906879 3.76751142,22.3611568 4.15897885,22.3405116 L4.92992486,22.2998535 L4.7638536,22.1510441 L4.49961358,12.8946321 L9.24451579,11.8636669 C9.63377953,11.7790883 10.0179047,12.0260844 10.1024833,12.4153481 C10.1238172,12.5135348 10.124401,12.6150958 10.1041973,12.7135212 L7.87096058,23.593118 Z" transform="rotate(22 6.799 19.837)"/>
+              <path fill="url(#racing-car-az)" d="M4.68725688,0.503959172 L11.8950873,0.501585504 L13.0348093,12.2634817 C13.2099542,14.0709714 12.148997,15.7706776 10.4482694,16.4072472 L10.4482694,16.4072472 C9.13325762,16.8994462 7.66822376,16.2324246 7.17602472,14.9174128 C7.11944861,14.766258 7.07739454,14.6100592 7.05043193,14.4509314 L4.68725688,0.503959172 Z" transform="rotate(2 8.87 8.536)"/>
+            </g>
+            <g transform="matrix(-1 0 0 1 13.876 16.638)">
+              <path fill="url(#racing-car-ay)" d="M7.3612694,21.2260222 L7.45403314,23.0073132 C7.51862679,24.2476697 6.5801319,25.3122571 5.34146658,25.403716 L4.61536309,25.4573291 C3.82083331,25.5159945 3.12918193,24.9194586 3.0705165,24.1249288 C3.06897422,24.104041 3.06788703,24.0831221 3.06725571,24.062187 L2.96633111,20.7154254 C2.95451502,20.3235921 3.25782024,19.9940611 3.64928767,19.9734159 L4.42023368,19.9327577 L4.25416242,19.7839484 L3.9899224,10.5275363 L8.73482461,9.49657117 C9.12408835,9.41199254 9.50821348,9.65898861 9.59279212,10.0482523 C9.61412598,10.146439 9.6147098,10.248 9.59450616,10.3464255 L7.3612694,21.2260222 Z" transform="rotate(22 6.29 17.47)"/>
+              <path fill="url(#racing-car-az)" d="M4.83453441,0.763119342 L12.0220839,0.595571456 L12.8380818,9.57711 C12.9995039,11.3538524 11.9104041,13.0059765 10.2138746,13.5579352 L10.2138746,13.5579352 C8.81643521,14.0125862 7.31501929,13.2483052 6.86036828,11.8508658 C6.82303223,11.7361078 6.79354649,11.6189427 6.77211527,11.500182 L4.83453441,0.763119342 Z" transform="rotate(2 8.844 7.143)"/>
+            </g>
+            <rect width="34.599" height="10.064" x=".944" y="13.658" fill="url(#racing-car-aJ)" rx="3.967"/>
+            <path fill="url(#racing-car-aJ)" d="M3.10815505,13.658147 L33.3795208,13.658147 C34.5745598,13.658147 35.5433303,14.6269175 35.5433303,15.8219565 L35.5433303,19.4089457 L0.944345531,19.4089457 L0.944345531,15.8219565 C0.944345531,14.6269175 1.91311605,13.658147 3.10815505,13.658147 Z"/>
+            <path fill="url(#racing-car-l)" d="M16.083232,13.658147 L26.8935841,13.658147 L26.8935841,20.8369654 C26.8935841,22.4303507 25.6018901,23.7220447 24.0085047,23.7220447 L13.1981526,23.7220447 L13.1981526,16.5432263 C13.1981526,14.949841 14.4898467,13.658147 16.083232,13.658147 Z" opacity=".297"/>
+            <g transform="translate(12.477 15.096)">
+              <use fill="url(#racing-car-aL)" transform="matrix(1 0 0 -1 0 12.94)" xlink:href="#racing-car-bA"/>
+              <mask id="racing-car-bC" fill="#fff">
+                <use xlink:href="#racing-car-bB"/>
+              </mask>
+              <use fill="url(#racing-car-aN)" transform="matrix(1 0 0 -1 0 7.188)" xlink:href="#racing-car-bB"/>
+              <rect width="5.766" height="16.534" y="-3.594" fill="url(#racing-car-F)" mask="url(#racing-car-bC)" transform="matrix(1 0 0 -1 0 9.345)"/>
+              <path fill="url(#racing-car-aP)" d="M5.58629442,-3.5942492 L5.58629442,-3.5942492 C6.28295817,-3.5942492 6.84771574,-3.02949164 6.84771574,-2.33282788 L6.84771574,5.03194888 L4.3248731,5.03194888 L4.3248731,-2.33282788 C4.3248731,-3.02949164 4.88963066,-3.5942492 5.58629442,-3.5942492 Z" mask="url(#racing-car-bC)" opacity=".613" transform="matrix(1 0 0 -1 0 1.438)"/>
+            </g>
+          </g>
+          <g transform="rotate(-90 34.547 23.714)">
+            <use fill="url(#racing-car-ak)" transform="matrix(-1 0 0 1 25.228 0)" xlink:href="#racing-car-bD"/>
+            <mask id="racing-car-bF" fill="#fff">
+              <use xlink:href="#racing-car-bE"/>
+            </mask>
+            <use fill="url(#racing-car-ae)" opacity=".339" transform="matrix(-1 0 0 1 25.228 0)" xlink:href="#racing-car-bE"/>
+            <rect width="25.228" height="2.157" fill="url(#racing-car-af)" mask="url(#racing-car-bF)" opacity=".525"/>
+            <rect width="25.228" height="2.157" y="12.939" fill="url(#racing-car-ah)" mask="url(#racing-car-bF)" opacity=".525"/>
+          </g>
+        </g>
+        <g transform="translate(223.01 129.3)">
+          <use fill="url(#racing-car-ak)" transform="matrix(-1 0 0 1 26.632 0)" xlink:href="#racing-car-bG"/>
+          <mask id="racing-car-bJ" fill="#fff">
+            <use xlink:href="#racing-car-bH"/>
+          </mask>
+          <use fill="url(#racing-car-ae)" opacity=".339" transform="matrix(-1 0 0 1 26.632 0)" xlink:href="#racing-car-bH"/>
+          <rect width="25.228" height="2.157" x=".721" fill="url(#racing-car-bI)" mask="url(#racing-car-bJ)" opacity=".525"/>
+          <rect width="25.228" height="2.157" x=".721" y="12.939" fill="url(#racing-car-ah)" mask="url(#racing-car-bJ)" opacity=".525"/>
+        </g>
+        <g transform="scale(1 -1) rotate(-76 1.074 -182.67)">
+          <path fill="url(#racing-car-bs)" d="M9.78113405,9.07718345e-13 L36.1702118,9.0794039e-13 C36.8850385,9.09713759e-13 37.4920566,0.523505196 37.5970933,1.23057277 L40.0517561,17.7544391 C40.1688222,18.542484 39.6248864,19.2762214 38.8368415,19.3932875 C38.766667,19.4037121 38.6958191,19.4089457 38.6248746,19.4089457 L6.71280558,19.4089457 C5.91611291,19.4089457 5.27026589,18.7630987 5.27026589,17.966406 C5.27026589,17.8780607 5.27838163,17.7899023 5.29451081,17.7030418 L8.36283928,1.17917552 C8.4897476,0.495736297 9.08601184,9.08907519e-13 9.78113405,9.08162434e-13 Z"/>
+          <rect width="16.579" height="3.594" x="15.518" y="7.715" fill="url(#racing-car-aB)" rx="1.443" transform="matrix(1 0 0 -1 0 19.024)"/>
+          <path fill="url(#racing-car-aX)" d="M10.8161018,8.80703092 L36.7653404,8.80703092 L35.215845,13.1338067 C33.9835345,16.5748824 30.7224412,18.8709287 27.0673638,18.8709287 L20.2231151,18.8709287 C16.3610343,18.8709287 12.9662849,16.3121838 11.9026128,12.5994666 L10.8161018,8.80703092 Z" transform="matrix(1 0 0 -1 0 27.678)"/>
+          <path fill="url(#racing-car-aY)" d="M22.8463756,8.80703092 L36.7653404,8.80703092 L35.215845,13.1338067 C33.9835345,16.5748824 30.7224412,18.8709287 27.0673638,18.8709287 L22.8463756,18.8709287 L22.8463756,8.80703092 Z" opacity=".728" transform="matrix(1 0 0 -1 0 27.678)"/>
+          <g transform="matrix(-1 0 0 1 12.614 15.815)">
+            <path fill="url(#racing-car-ay)" d="M9.22039468,28.8984497 L9.32857316,30.9757417 C9.39316682,32.2160981 8.45467193,33.2806856 7.2160066,33.3721445 L6.48990311,33.4257575 C5.69537333,33.484423 5.00372195,32.887887 4.94505652,32.0933573 C4.94351424,32.0724695 4.94242705,32.0515506 4.94179573,32.0306154 L4.90058619,30.6640654 L5.74622801,29.2676064 L5.75047245,28.1983867 C5.75154878,27.927248 5.90209769,27.6916468 6.12375893,27.5693237 L5.86474447,18.4959648 L9.95251969,16.6823816 C10.3166391,16.5208363 10.7427745,16.6850551 10.9043198,17.0491744 C10.9600962,17.1748932 10.978765,17.3139384 10.9581253,17.4499172 L9.22039468,28.8984497 Z" transform="rotate(-7 7.935 25.025)"/>
+            <path fill="url(#racing-car-bK)" d="M1.37732039,0.5112925 L8.58515077,0.508918832 L9.33975847,16.8099637 C9.41537328,18.4433959 8.46602369,19.9512032 6.96037071,20.5890333 L6.96037071,20.5890333 C5.89245312,21.0414284 4.65999617,20.5424488 4.20760107,19.4745312 C4.13757324,19.3092245 4.08903224,19.1356203 4.06316565,18.9579657 L1.37732039,0.5112925 Z" transform="rotate(-8 5.36 10.633)"/>
+          </g>
+          <g transform="translate(24.147 14.377)">
+            <path fill="url(#racing-car-ay)" d="M8.6701329,23.4074391 L8.76289663,25.1887301 C8.82749029,26.4290866 7.8889954,27.493674 6.65033007,27.585133 L5.92422659,27.638746 C5.1296968,27.6974114 4.43804543,27.1008755 4.37938,26.3063457 C4.37783771,26.2854579 4.37675053,26.264539 4.37611921,26.2436039 L4.27519461,22.8968423 C4.26337852,22.505009 4.56668374,22.175478 4.95815117,22.1548328 L5.72909718,22.1141746 L5.56302592,21.9653653 L5.2987859,12.7089533 L10.0436881,11.6779881 C10.4329518,11.5934095 10.817077,11.8404055 10.9016556,12.2296693 C10.9229895,12.327856 10.9235733,12.4294169 10.9033697,12.5278424 L8.6701329,23.4074391 Z" transform="rotate(37 7.598 19.651)"/>
+            <path fill="url(#racing-car-az)" d="M7.87937226,0.830953739 L15.0872026,0.828580071 L16.2269247,12.5904762 C16.4020696,14.397966 15.3411124,16.0976722 13.6403848,16.7342417 L13.6403848,16.7342417 C12.325373,17.2264408 10.8603391,16.5594192 10.3681401,15.2444074 C10.311564,15.0932526 10.2695099,14.9370538 10.2425473,14.777926 L7.87937226,0.830953739 Z" transform="rotate(2 12.062 8.863)"/>
+          </g>
+          <rect width="34.599" height="10.064" x="5.269" y="13.658" fill="url(#racing-car-aJ)" rx="3.967"/>
+          <path fill="url(#racing-car-aJ)" d="M7.43302815,13.658147 L37.7043939,13.658147 C38.8994329,13.658147 39.8682034,14.6269175 39.8682034,15.8219565 L39.8682034,19.4089457 L5.26921863,19.4089457 L5.26921863,15.8219565 C5.26921863,14.6269175 6.23798915,13.658147 7.43302815,13.658147 Z"/>
+          <path fill="url(#racing-car-l)" d="M20.4081051,13.658147 L31.2184572,13.658147 L31.2184572,20.8369654 C31.2184572,22.4303507 29.9267632,23.7220447 28.3333778,23.7220447 L17.5230257,23.7220447 L17.5230257,16.5432263 C17.5230257,14.949841 18.8147198,13.658147 20.4081051,13.658147 Z" opacity=".297"/>
+          <g transform="translate(16.802 15.096)">
+            <use fill="url(#racing-car-aL)" transform="matrix(1 0 0 -1 0 12.94)" xlink:href="#racing-car-bL"/>
+            <mask id="racing-car-bN" fill="#fff">
+              <use xlink:href="#racing-car-bM"/>
+            </mask>
+            <use fill="url(#racing-car-aN)" transform="matrix(1 0 0 -1 0 7.188)" xlink:href="#racing-car-bM"/>
+            <rect width="5.766" height="16.534" y="-3.594" fill="url(#racing-car-F)" mask="url(#racing-car-bN)" transform="matrix(1 0 0 -1 0 9.345)"/>
+            <path fill="url(#racing-car-aP)" d="M5.58629442,-3.5942492 L5.58629442,-3.5942492 C6.28295817,-3.5942492 6.84771574,-3.02949164 6.84771574,-2.33282788 L6.84771574,5.03194888 L4.3248731,5.03194888 L4.3248731,-2.33282788 C4.3248731,-3.02949164 4.88963066,-3.5942492 5.58629442,-3.5942492 Z" mask="url(#racing-car-bN)" opacity=".613" transform="matrix(1 0 0 -1 0 1.438)"/>
+          </g>
+        </g>
+        <g transform="rotate(-15 234.323 -587.343)">
+          <path fill="url(#racing-car-bs)" d="M9.78113405,9.07718345e-13 L36.1702118,9.0794039e-13 C36.8850385,9.09713759e-13 37.4920566,0.523505196 37.5970933,1.23057277 L40.0517561,17.7544391 C40.1688222,18.542484 39.6248864,19.2762214 38.8368415,19.3932875 C38.766667,19.4037121 38.6958191,19.4089457 38.6248746,19.4089457 L6.71280558,19.4089457 C5.91611291,19.4089457 5.27026589,18.7630987 5.27026589,17.966406 C5.27026589,17.8780607 5.27838163,17.7899023 5.29451081,17.7030418 L8.36283928,1.17917552 C8.4897476,0.495736297 9.08601184,9.08907519e-13 9.78113405,9.08162434e-13 Z"/>
+          <rect width="16.579" height="3.594" x="15.518" y="7.715" fill="url(#racing-car-aB)" rx="1.443" transform="matrix(1 0 0 -1 0 19.024)"/>
+          <path fill="url(#racing-car-aX)" d="M10.8161018,8.80703092 L36.7653404,8.80703092 L35.215845,13.1338067 C33.9835345,16.5748824 30.7224412,18.8709287 27.0673638,18.8709287 L20.2231151,18.8709287 C16.3610343,18.8709287 12.9662849,16.3121838 11.9026128,12.5994666 L10.8161018,8.80703092 Z" transform="matrix(1 0 0 -1 0 27.678)"/>
+          <path fill="url(#racing-car-aY)" d="M22.8463756,8.80703092 L36.7653404,8.80703092 L35.215845,13.1338067 C33.9835345,16.5748824 30.7224412,18.8709287 27.0673638,18.8709287 L22.8463756,18.8709287 L22.8463756,8.80703092 Z" opacity=".728" transform="matrix(1 0 0 -1 0 27.678)"/>
+          <g transform="matrix(-1 0 0 1 12.614 15.815)">
+            <path fill="url(#racing-car-ay)" d="M9.22039468,28.8984497 L9.32857316,30.9757417 C9.39316682,32.2160981 8.45467193,33.2806856 7.2160066,33.3721445 L6.48990311,33.4257575 C5.69537333,33.484423 5.00372195,32.887887 4.94505652,32.0933573 C4.94351424,32.0724695 4.94242705,32.0515506 4.94179573,32.0306154 L4.90058619,30.6640654 L5.74622801,29.2676064 L5.75047245,28.1983867 C5.75154878,27.927248 5.90209769,27.6916468 6.12375893,27.5693237 L5.86474447,18.4959648 L9.95251969,16.6823816 C10.3166391,16.5208363 10.7427745,16.6850551 10.9043198,17.0491744 C10.9600962,17.1748932 10.978765,17.3139384 10.9581253,17.4499172 L9.22039468,28.8984497 Z" transform="rotate(-7 7.935 25.025)"/>
+            <path fill="url(#racing-car-bK)" d="M1.37732039,0.5112925 L8.58515077,0.508918832 L9.33975847,16.8099637 C9.41537328,18.4433959 8.46602369,19.9512032 6.96037071,20.5890333 L6.96037071,20.5890333 C5.89245312,21.0414284 4.65999617,20.5424488 4.20760107,19.4745312 C4.13757324,19.3092245 4.08903224,19.1356203 4.06316565,18.9579657 L1.37732039,0.5112925 Z" transform="rotate(-8 5.36 10.633)"/>
+          </g>
+          <g transform="translate(24.147 14.377)">
+            <path fill="url(#racing-car-ay)" d="M8.6701329,23.4074391 L8.76289663,25.1887301 C8.82749029,26.4290866 7.8889954,27.493674 6.65033007,27.585133 L5.92422659,27.638746 C5.1296968,27.6974114 4.43804543,27.1008755 4.37938,26.3063457 C4.37783771,26.2854579 4.37675053,26.264539 4.37611921,26.2436039 L4.27519461,22.8968423 C4.26337852,22.505009 4.56668374,22.175478 4.95815117,22.1548328 L5.72909718,22.1141746 L5.56302592,21.9653653 L5.2987859,12.7089533 L10.0436881,11.6779881 C10.4329518,11.5934095 10.817077,11.8404055 10.9016556,12.2296693 C10.9229895,12.327856 10.9235733,12.4294169 10.9033697,12.5278424 L8.6701329,23.4074391 Z" transform="rotate(37 7.598 19.651)"/>
+            <path fill="url(#racing-car-az)" d="M7.87937226,0.830953739 L15.0872026,0.828580071 L16.2269247,12.5904762 C16.4020696,14.397966 15.3411124,16.0976722 13.6403848,16.7342417 L13.6403848,16.7342417 C12.325373,17.2264408 10.8603391,16.5594192 10.3681401,15.2444074 C10.311564,15.0932526 10.2695099,14.9370538 10.2425473,14.777926 L7.87937226,0.830953739 Z" transform="rotate(2 12.062 8.863)"/>
+          </g>
+          <rect width="34.599" height="10.064" x="5.269" y="13.658" fill="url(#racing-car-aJ)" rx="3.967"/>
+          <path fill="url(#racing-car-aJ)" d="M7.43302815,13.658147 L37.7043939,13.658147 C38.8994329,13.658147 39.8682034,14.6269175 39.8682034,15.8219565 L39.8682034,19.4089457 L5.26921863,19.4089457 L5.26921863,15.8219565 C5.26921863,14.6269175 6.23798915,13.658147 7.43302815,13.658147 Z"/>
+          <path fill="url(#racing-car-l)" d="M20.4081051,13.658147 L31.2184572,13.658147 L31.2184572,20.8369654 C31.2184572,22.4303507 29.9267632,23.7220447 28.3333778,23.7220447 L17.5230257,23.7220447 L17.5230257,16.5432263 C17.5230257,14.949841 18.8147198,13.658147 20.4081051,13.658147 Z" opacity=".297"/>
+          <g transform="translate(16.802 15.096)">
+            <use fill="url(#racing-car-aL)" transform="matrix(1 0 0 -1 0 12.94)" xlink:href="#racing-car-bO"/>
+            <mask id="racing-car-bQ" fill="#fff">
+              <use xlink:href="#racing-car-bP"/>
+            </mask>
+            <use fill="url(#racing-car-aN)" transform="matrix(1 0 0 -1 0 7.188)" xlink:href="#racing-car-bP"/>
+            <rect width="5.766" height="16.534" y="-3.594" fill="url(#racing-car-F)" mask="url(#racing-car-bQ)" transform="matrix(1 0 0 -1 0 9.345)"/>
+            <path fill="url(#racing-car-aP)" d="M5.58629442,-3.5942492 L5.58629442,-3.5942492 C6.28295817,-3.5942492 6.84771574,-3.02949164 6.84771574,-2.33282788 L6.84771574,5.03194888 L4.3248731,5.03194888 L4.3248731,-2.33282788 C4.3248731,-3.02949164 4.88963066,-3.5942492 5.58629442,-3.5942492 Z" mask="url(#racing-car-bQ)" opacity=".613" transform="matrix(1 0 0 -1 0 1.438)"/>
+          </g>
+        </g>
+        <g transform="rotate(30 8.43 180.741)">
+          <path fill="url(#racing-car-bs)" d="M13.7811341,9.07718345e-13 L40.1702118,9.0794039e-13 C40.8850385,9.09713759e-13 41.4920566,0.523505196 41.5970933,1.23057277 L44.0517561,17.7544391 C44.1688222,18.542484 43.6248864,19.2762214 42.8368415,19.3932875 C42.766667,19.4037121 42.6958191,19.4089457 42.6248746,19.4089457 L10.7128056,19.4089457 C9.91611291,19.4089457 9.27026589,18.7630987 9.27026589,17.966406 C9.27026589,17.8780607 9.27838163,17.7899023 9.29451081,17.7030418 L12.3628393,1.17917552 C12.4897476,0.495736297 13.0860118,9.08907519e-13 13.7811341,9.08162434e-13 Z"/>
+          <rect width="16.579" height="3.594" x="19.518" y="7.715" fill="url(#racing-car-aB)" rx="1.443" transform="matrix(1 0 0 -1 0 19.024)"/>
+          <path fill="url(#racing-car-aX)" d="M14.8161018,8.80703092 L40.7653404,8.80703092 L39.215845,13.1338067 C37.9835345,16.5748824 34.7224412,18.8709287 31.0673638,18.8709287 L24.2231151,18.8709287 C20.3610343,18.8709287 16.9662849,16.3121838 15.9026128,12.5994666 L14.8161018,8.80703092 Z" transform="matrix(1 0 0 -1 0 27.678)"/>
+          <path fill="url(#racing-car-aY)" d="M26.8463756,8.80703092 L40.7653404,8.80703092 L39.215845,13.1338067 C37.9835345,16.5748824 34.7224412,18.8709287 31.0673638,18.8709287 L26.8463756,18.8709287 L26.8463756,8.80703092 Z" opacity=".728" transform="matrix(1 0 0 -1 0 27.678)"/>
+          <g transform="scale(-1 1) rotate(-7 125.977 146.227)">
+            <path fill="url(#racing-car-ay)" d="M9.43980504,27.2228824 L9.49844899,27.2288539 L9.66643239,30.4545468 C9.73102605,31.6949033 8.79253116,32.7594908 7.55386583,32.8509497 L6.82776234,32.9045627 C6.03323256,32.9632282 5.34158119,32.3666922 5.28291576,31.5721625 C5.28137347,31.5512747 5.28028628,31.5303557 5.27965497,31.5094206 L5.23844542,30.1428705 L6.08408724,28.7464116 L6.08833168,27.6771919 C6.0884417,27.6494781 6.09011331,27.6221356 6.09326284,27.5952474 L5.83292553,18.4755486 L9.92070075,16.6619654 C10.2848201,16.5004201 10.7109555,16.6646389 10.8725008,17.0287583 C10.9282772,17.154477 10.9469461,17.2935223 10.9263064,17.429501 L9.43980504,27.2228824 Z" transform="rotate(-7 8.086 24.754)"/>
+            <path fill="url(#racing-car-bK)" d="M1.37732039,0.5112925 L8.58515077,0.508918832 L9.33975847,16.8099637 C9.41537328,18.4433959 8.46602369,19.9512032 6.96037071,20.5890333 L6.96037071,20.5890333 C5.89245312,21.0414284 4.65999617,20.5424488 4.20760107,19.4745312 C4.13757324,19.3092245 4.08903224,19.1356203 4.06316565,18.9579657 L1.37732039,0.5112925 Z" transform="rotate(-8 5.36 10.633)"/>
+          </g>
+          <g transform="translate(28.147 14.377)">
+            <path fill="url(#racing-car-ay)" d="M8.71467346,23.1397936 C9.8488503,23.6295069 10.3885011,24.9338964 9.92953109,26.0827328 L9.65941537,26.7588527 C9.36384458,27.4986886 8.52448163,27.8588366 7.78464576,27.5632658 C7.76519585,27.5554954 7.74591746,27.5473023 7.72682433,27.5386923 L4.67474433,26.1623746 C4.31730286,26.0011884 4.15410463,25.5839765 4.30731179,25.223043 L5.65563672,22.0465885 L5.5545482,21.9560075 L5.29030817,12.6995954 L10.0352104,11.6686302 C10.4244741,11.5840516 10.8085993,11.8310477 10.8931779,12.2203114 C10.9145118,12.3184981 10.9150956,12.4200591 10.8948919,12.5184845 L8.71467346,23.1397936 Z" transform="rotate(37 7.58 19.66)"/>
+            <path fill="url(#racing-car-az)" d="M7.87937226,0.830953739 L15.0872026,0.828580071 L16.2269247,12.5904762 C16.4020696,14.397966 15.3411124,16.0976722 13.6403848,16.7342417 L13.6403848,16.7342417 C12.325373,17.2264408 10.8603391,16.5594192 10.3681401,15.2444074 C10.311564,15.0932526 10.2695099,14.9370538 10.2425473,14.777926 L7.87937226,0.830953739 Z" transform="rotate(2 12.062 8.863)"/>
+          </g>
+          <rect width="34.599" height="10.064" x="9.269" y="13.658" fill="url(#racing-car-aJ)" rx="3.967"/>
+          <path fill="url(#racing-car-aJ)" d="M11.4330282,13.658147 L41.7043939,13.658147 C42.8994329,13.658147 43.8682034,14.6269175 43.8682034,15.8219565 L43.8682034,19.4089457 L9.26921863,19.4089457 L9.26921863,15.8219565 C9.26921863,14.6269175 10.2379891,13.658147 11.4330282,13.658147 Z"/>
+          <path fill="url(#racing-car-l)" d="M24.4081051,13.658147 L35.2184572,13.658147 L35.2184572,20.8369654 C35.2184572,22.4303507 33.9267632,23.7220447 32.3333778,23.7220447 L21.5230257,23.7220447 L21.5230257,16.5432263 C21.5230257,14.949841 22.8147198,13.658147 24.4081051,13.658147 Z" opacity=".297"/>
+          <g transform="translate(20.802 15.096)">
+            <use fill="url(#racing-car-aL)" transform="matrix(1 0 0 -1 0 12.94)" xlink:href="#racing-car-bR"/>
+            <mask id="racing-car-bT" fill="#fff">
+              <use xlink:href="#racing-car-bS"/>
+            </mask>
+            <use fill="url(#racing-car-aN)" transform="matrix(1 0 0 -1 0 7.188)" xlink:href="#racing-car-bS"/>
+            <rect width="5.766" height="16.534" y="-3.594" fill="url(#racing-car-F)" mask="url(#racing-car-bT)" transform="matrix(1 0 0 -1 0 9.345)"/>
+            <path fill="url(#racing-car-aP)" d="M5.58629442,-3.5942492 L5.58629442,-3.5942492 C6.28295817,-3.5942492 6.84771574,-3.02949164 6.84771574,-2.33282788 L6.84771574,5.03194888 L4.3248731,5.03194888 L4.3248731,-2.33282788 C4.3248731,-3.02949164 4.88963066,-3.5942492 5.58629442,-3.5942492 Z" mask="url(#racing-car-bT)" opacity=".613" transform="matrix(1 0 0 -1 0 1.438)"/>
+          </g>
+        </g>
+        <g transform="scale(1 -1) rotate(-25 -394.483 -212.864)">
+          <g transform="matrix(-1 0 0 1 18.809 15.904)">
+            <path fill="url(#racing-car-aG)" d="M9.3072475,27.873401 L9.41537407,29.949696 C9.47996772,31.1900525 8.54147283,32.2546399 7.30280751,32.3460988 L6.57670402,32.3997119 C5.78217424,32.4583773 5.09052286,31.8618414 5.03185743,31.0673116 C5.03031515,31.0464238 5.02922796,31.0255049 5.02859664,31.0045698 L4.98738709,29.6380197 L5.83302891,28.2415607 L5.83727336,27.172341 C5.83833509,26.9048779 5.98484441,26.6719952 6.20158478,26.5483149 L5.27944785,15.084235 L10.409088,15.1175137 C10.807426,15.1200979 11.1282478,15.4451095 11.1256635,15.8434475 C11.1254386,15.8781185 11.122714,15.9127283 11.1175109,15.9470074 L9.3072475,27.873401 Z" transform="rotate(39 8.059 23.745)"/>
+            <path fill="url(#racing-car-aH)" d="M7.86463004,0.5112925 L15.0724604,0.508918832 L15.8270681,16.8099637 C15.9026829,18.4433959 14.9533333,19.9512032 13.4476804,20.5890333 L13.4476804,20.5890333 C12.3797628,21.0414284 11.1473058,20.5424488 10.6949107,19.4745312 C10.6248829,19.3092245 10.5763419,19.1356203 10.5504753,18.9579657 L7.86463004,0.5112925 Z" transform="rotate(-8 11.848 10.633)"/>
+          </g>
+          <g transform="scale(1 -1) rotate(-30 -88.844 -42.578)">
+            <polygon fill="url(#racing-car-aQ)" points="12.5 19.5 12.5 17 6.5 16.5 6.5 11.5 5 10.5 4.993 8.37 5 7.889 4.391 6 4.391 3.5 6 3.5 6 0 .5 0 .5 3.5 2 3.5 2 6 1.5 7.889 1.5 8.37 1.5 10.5 0 11.5 0 20 6 20.5 6.5 19"/>
+            <polygon fill="url(#racing-car-aR)" points="12.5 19.5 12.5 17 6.5 16.5 6.5 11.5 5 10.5 1.5 10.5 0 11.5 0 20 6 20.5 6.5 19"/>
+          </g>
+          <g transform="translate(22.706 14.377)">
+            <path fill="url(#racing-car-ay)" d="M8.55893969,24.0449287 L8.65170343,25.8262197 C8.71629708,27.0665761 7.77780219,28.1311636 6.53913687,28.2226225 L5.81303338,28.2762355 C5.0185036,28.334901 4.32685222,27.738365 4.26818679,26.9438353 C4.26664451,26.9229475 4.26555732,26.9020286 4.264926,26.8810934 L4.1640014,23.5343319 C4.15218531,23.1424985 4.45549053,22.8129675 4.84695796,22.7923223 L5.36046077,22.7652412 L5.58650606,12.8798582 L9.99621495,12.2303393 C10.3903092,12.172292 10.7568424,12.444712 10.8148897,12.8388062 C10.8271373,12.9219571 10.8247573,13.0066088 10.8078573,13.0889401 L8.55893969,24.0449287 Z" transform="rotate(35 7.493 20.251)"/>
+            <path fill="url(#racing-car-az)" d="M8.48511341,0.799924895 L15.6929438,0.797551227 L16.8326658,12.5594474 C17.0078107,14.3669371 15.9468535,16.0666433 14.246126,16.7032129 L14.246126,16.7032129 C12.9311142,17.1954119 11.4660803,16.5283904 10.9738813,15.2133785 C10.9173051,15.0622237 10.8752511,14.9060249 10.8482885,14.7468971 L8.48511341,0.799924895 Z" transform="rotate(7 12.668 8.832)"/>
+          </g>
+          <path fill="url(#racing-car-aA)" d="M9.33950969,6.80344669e-13 L35.7285874,6.80566714e-13 C36.4434142,6.82340084e-13 37.0504322,0.523505196 37.1554689,1.23057277 L39.6101317,17.7544391 C39.7271978,18.542484 39.183262,19.2762214 38.3952171,19.3932875 C38.3250427,19.4037121 38.2541948,19.4089457 38.1832502,19.4089457 L6.27118121,19.4089457 C5.47448854,19.4089457 4.82864153,18.7630987 4.82864153,17.966406 C4.82864153,17.8780607 4.83675727,17.7899023 4.85288644,17.7030418 L7.92121492,1.17917552 C8.04812323,0.495736297 8.64438748,6.81533843e-13 9.33950969,6.80788759e-13 Z"/>
+          <path fill="url(#racing-car-aB)" d="M16.8500187,7.90734824 C15.2619794,7.90734824 13.9746193,6.6199881 13.9746193,5.03194888 C13.9746193,3.44390967 15.2619794,2.15654952 16.8500187,2.15654952 L19.2458766,2.15654952 C20.8339158,2.15654952 22.1212759,3.44390967 22.1212759,5.03194888 C22.1212759,6.6199881 20.8339158,7.90734824 19.2458766,7.90734824 L16.8500187,7.90734824 Z M27.6519172,7.91265116 L25.2560593,7.91265116 C23.6680201,7.91265116 22.3806599,6.62529101 22.3806599,5.0372518 C22.3806599,3.44921258 23.6680201,2.16185244 25.2560593,2.16185244 L27.6519172,2.16185244 C29.2399564,2.16185244 30.5273166,3.44921258 30.5273166,5.0372518 C30.5273166,6.62529101 29.2399564,7.91265116 27.6519172,7.91265116 Z"/>
+          <rect width="15.858" height="5.032" x="14.695" y="3.594" fill="url(#racing-car-aC)" rx="2.516"/>
+          <path fill="url(#racing-car-aI)" d="M37.476464,14.0601158 C38.6349194,14.6600982 39.426579,15.8698462 39.426579,17.2644962 L39.426579,18.6900958 C39.426579,21.4691645 37.1736988,23.7220447 34.3946302,23.7220447 L9.85954314,23.7220447 C7.08047451,23.7220447 4.82759426,21.4691645 4.82759426,18.6900958 L4.82759426,17.2644962 C4.82759426,16.2929882 5.21174422,15.4112032 5.83643135,14.762754 L5.79993943,14.7635644 L11.2292031,7.62731209 C12.8975635,5.43441057 15.5103602,4.16690527 18.2653608,4.21397068 L26.4485631,4.35376946 C29.0331054,4.39792282 31.4626392,5.5949475 33.0724968,7.61736361 L38.1883887,14.044306 L37.476464,14.0601158 Z"/>
+          <path fill="url(#racing-car-aC)" d="M21.7475532,5.39234216 L38.5798008,4.41819497 L33.1262717,11.1715039 C31.4842949,13.2048251 29.0114646,14.3873279 26.3979459,14.3889766 L22.1241163,14.3916727 L21.7475532,5.39234216 Z" opacity=".258" transform="matrix(1 0 0 -1 0 18.81)"/>
+          <path fill="url(#racing-car-aJ)" d="M21.7500302,13.658147 L37.2627695,13.658147 C38.4578085,13.658147 39.426579,14.6269175 39.426579,15.8219565 L39.426579,19.4089457 L21.7500302,19.4089457 L21.7500302,13.658147 Z"/>
+          <path fill="url(#racing-car-l)" d="M21.1859447,13.658147 L30.7768328,13.658147 L30.7768328,20.8369654 C30.7768328,22.4303507 29.4851388,23.7220447 27.8917535,23.7220447 L16.1370558,23.7220447 L16.1370558,18.7070359 C16.1370558,15.9186115 18.3975204,13.658147 21.1859447,13.658147 Z" opacity=".297"/>
+          <g transform="translate(16.137 18.69)">
+            <use fill="url(#racing-car-aL)" transform="matrix(1 0 0 -1 0 12.94)" xlink:href="#racing-car-bU"/>
+            <mask id="racing-car-bW" fill="#fff">
+              <use xlink:href="#racing-car-bV"/>
+            </mask>
+            <use fill="url(#racing-car-aN)" transform="matrix(1 0 0 -1 0 7.188)" xlink:href="#racing-car-bV"/>
+            <rect width="5.766" height="16.534" y="-3.594" fill="url(#racing-car-F)" mask="url(#racing-car-bW)" transform="matrix(1 0 0 -1 0 9.345)"/>
+            <path fill="url(#racing-car-aP)" d="M5.58629442,-3.5942492 L5.58629442,-3.5942492 C6.28295817,-3.5942492 6.84771574,-3.02949164 6.84771574,-2.33282788 L6.84771574,5.03194888 L4.3248731,5.03194888 L4.3248731,-2.33282788 C4.3248731,-3.02949164 4.88963066,-3.5942492 5.58629442,-3.5942492 Z" mask="url(#racing-car-bW)" opacity=".613" transform="matrix(1 0 0 -1 0 1.438)"/>
+          </g>
+        </g>
+        <g transform="scale(1 -1) rotate(29 400.92 83.45)">
+          <path fill="url(#racing-car-bs)" d="M13.7811341,9.07718345e-13 L40.1702118,9.0794039e-13 C40.8850385,9.09713759e-13 41.4920566,0.523505196 41.5970933,1.23057277 L44.0517561,17.7544391 C44.1688222,18.542484 43.6248864,19.2762214 42.8368415,19.3932875 C42.766667,19.4037121 42.6958191,19.4089457 42.6248746,19.4089457 L10.7128056,19.4089457 C9.91611291,19.4089457 9.27026589,18.7630987 9.27026589,17.966406 C9.27026589,17.8780607 9.27838163,17.7899023 9.29451081,17.7030418 L12.3628393,1.17917552 C12.4897476,0.495736297 13.0860118,9.08907519e-13 13.7811341,9.08162434e-13 Z"/>
+          <rect width="16.579" height="3.594" x="19.518" y="7.715" fill="url(#racing-car-aB)" rx="1.443" transform="matrix(1 0 0 -1 0 19.024)"/>
+          <path fill="url(#racing-car-aX)" d="M14.8161018,8.80703092 L40.7653404,8.80703092 L39.215845,13.1338067 C37.9835345,16.5748824 34.7224412,18.8709287 31.0673638,18.8709287 L24.2231151,18.8709287 C20.3610343,18.8709287 16.9662849,16.3121838 15.9026128,12.5994666 L14.8161018,8.80703092 Z" transform="matrix(1 0 0 -1 0 27.678)"/>
+          <path fill="url(#racing-car-aY)" d="M26.8463756,8.80703092 L40.7653404,8.80703092 L39.215845,13.1338067 C37.9835345,16.5748824 34.7224412,18.8709287 31.0673638,18.8709287 L26.8463756,18.8709287 L26.8463756,8.80703092 Z" opacity=".728" transform="matrix(1 0 0 -1 0 27.678)"/>
+          <g transform="scale(-1 1) rotate(-7 125.977 146.227)">
+            <path fill="url(#racing-car-ay)" d="M9.43980504,27.2228824 L9.49844899,27.2288539 L9.66643239,30.4545468 C9.73102605,31.6949033 8.79253116,32.7594908 7.55386583,32.8509497 L6.82776234,32.9045627 C6.03323256,32.9632282 5.34158119,32.3666922 5.28291576,31.5721625 C5.28137347,31.5512747 5.28028628,31.5303557 5.27965497,31.5094206 L5.23844542,30.1428705 L6.08408724,28.7464116 L6.08833168,27.6771919 C6.0884417,27.6494781 6.09011331,27.6221356 6.09326284,27.5952474 L5.83292553,18.4755486 L9.92070075,16.6619654 C10.2848201,16.5004201 10.7109555,16.6646389 10.8725008,17.0287583 C10.9282772,17.154477 10.9469461,17.2935223 10.9263064,17.429501 L9.43980504,27.2228824 Z" transform="rotate(-7 8.086 24.754)"/>
+            <path fill="url(#racing-car-bK)" d="M1.37732039,0.5112925 L8.58515077,0.508918832 L9.33975847,16.8099637 C9.41537328,18.4433959 8.46602369,19.9512032 6.96037071,20.5890333 L6.96037071,20.5890333 C5.89245312,21.0414284 4.65999617,20.5424488 4.20760107,19.4745312 C4.13757324,19.3092245 4.08903224,19.1356203 4.06316565,18.9579657 L1.37732039,0.5112925 Z" transform="rotate(-8 5.36 10.633)"/>
+          </g>
+          <g transform="translate(28.147 14.377)">
+            <path fill="url(#racing-car-ay)" d="M8.71467346,23.1397936 C9.8488503,23.6295069 10.3885011,24.9338964 9.92953109,26.0827328 L9.65941537,26.7588527 C9.36384458,27.4986886 8.52448163,27.8588366 7.78464576,27.5632658 C7.76519585,27.5554954 7.74591746,27.5473023 7.72682433,27.5386923 L4.67474433,26.1623746 C4.31730286,26.0011884 4.15410463,25.5839765 4.30731179,25.223043 L5.65563672,22.0465885 L5.5545482,21.9560075 L5.29030817,12.6995954 L10.0352104,11.6686302 C10.4244741,11.5840516 10.8085993,11.8310477 10.8931779,12.2203114 C10.9145118,12.3184981 10.9150956,12.4200591 10.8948919,12.5184845 L8.71467346,23.1397936 Z" transform="rotate(37 7.58 19.66)"/>
+            <path fill="url(#racing-car-az)" d="M7.87937226,0.830953739 L15.0872026,0.828580071 L16.2269247,12.5904762 C16.4020696,14.397966 15.3411124,16.0976722 13.6403848,16.7342417 L13.6403848,16.7342417 C12.325373,17.2264408 10.8603391,16.5594192 10.3681401,15.2444074 C10.311564,15.0932526 10.2695099,14.9370538 10.2425473,14.777926 L7.87937226,0.830953739 Z" transform="rotate(2 12.062 8.863)"/>
+          </g>
+          <rect width="34.599" height="10.064" x="9.269" y="13.658" fill="url(#racing-car-aJ)" rx="3.967"/>
+          <path fill="url(#racing-car-aJ)" d="M11.4330282,13.658147 L41.7043939,13.658147 C42.8994329,13.658147 43.8682034,14.6269175 43.8682034,15.8219565 L43.8682034,19.4089457 L9.26921863,19.4089457 L9.26921863,15.8219565 C9.26921863,14.6269175 10.2379891,13.658147 11.4330282,13.658147 Z"/>
+          <path fill="url(#racing-car-l)" d="M24.4081051,13.658147 L35.2184572,13.658147 L35.2184572,20.8369654 C35.2184572,22.4303507 33.9267632,23.7220447 32.3333778,23.7220447 L21.5230257,23.7220447 L21.5230257,16.5432263 C21.5230257,14.949841 22.8147198,13.658147 24.4081051,13.658147 Z" opacity=".297"/>
+          <g transform="translate(20.802 15.096)">
+            <use fill="url(#racing-car-aL)" transform="matrix(1 0 0 -1 0 12.94)" xlink:href="#racing-car-bX"/>
+            <mask id="racing-car-bZ" fill="#fff">
+              <use xlink:href="#racing-car-bY"/>
+            </mask>
+            <use fill="url(#racing-car-aN)" transform="matrix(1 0 0 -1 0 7.188)" xlink:href="#racing-car-bY"/>
+            <rect width="5.766" height="16.534" y="-3.594" fill="url(#racing-car-F)" mask="url(#racing-car-bZ)" transform="matrix(1 0 0 -1 0 9.345)"/>
+            <path fill="url(#racing-car-aP)" d="M5.58629442,-3.5942492 L5.58629442,-3.5942492 C6.28295817,-3.5942492 6.84771574,-3.02949164 6.84771574,-2.33282788 L6.84771574,5.03194888 L4.3248731,5.03194888 L4.3248731,-2.33282788 C4.3248731,-3.02949164 4.88963066,-3.5942492 5.58629442,-3.5942492 Z" mask="url(#racing-car-bZ)" opacity=".613" transform="matrix(1 0 0 -1 0 1.438)"/>
+          </g>
+        </g>
+        <g transform="rotate(-75 230.15 -83.253)">
+          <g transform="matrix(1 0 0 -1 23.706 44.623)">
+            <path fill="url(#racing-car-ay)" d="M8.6701329,23.4074391 L8.76289663,25.1887301 C8.82749029,26.4290866 7.8889954,27.493674 6.65033007,27.585133 L5.92422659,27.638746 C5.1296968,27.6974114 4.43804543,27.1008755 4.37938,26.3063457 C4.37783771,26.2854579 4.37675053,26.264539 4.37611921,26.2436039 L4.27519461,22.8968423 C4.26337852,22.505009 4.56668374,22.175478 4.95815117,22.1548328 L5.72909718,22.1141746 L5.56302592,21.9653653 L5.2987859,12.7089533 L10.0436881,11.6779881 C10.4329518,11.5934095 10.817077,11.8404055 10.9016556,12.2296693 C10.9229895,12.327856 10.9235733,12.4294169 10.9033697,12.5278424 L8.6701329,23.4074391 Z" transform="rotate(37 7.598 19.651)"/>
+            <path fill="url(#racing-car-az)" d="M7.87937226,0.830953739 L15.0872026,0.828580071 L16.2269247,12.5904762 C16.4020696,14.397966 15.3411124,16.0976722 13.6403848,16.7342417 L13.6403848,16.7342417 C12.325373,17.2264408 10.8603391,16.5594192 10.3681401,15.2444074 C10.311564,15.0932526 10.2695099,14.9370538 10.2425473,14.777926 L7.87937226,0.830953739 Z" transform="rotate(2 12.062 8.863)"/>
+          </g>
+          <path fill="url(#racing-car-aA)" d="M9.33950969,39.5910543 L35.7285874,39.5910543 C36.4434142,39.5910543 37.0504322,40.1145595 37.1554689,40.8216271 L39.6101317,57.3454934 C39.7271978,58.1335383 39.183262,58.8672757 38.3952171,58.9843418 C38.3250427,58.9947664 38.2541948,59 38.1832502,59 L6.27118121,59 C5.47448854,59 4.82864153,58.354153 4.82864153,57.5574603 C4.82864153,57.4691151 4.83675727,57.3809566 4.85288644,57.2940962 L7.92121492,40.7702298 C8.04812323,40.0867906 8.64438748,39.5910543 9.33950969,39.5910543 Z" transform="matrix(1 0 0 -1 0 98.591)"/>
+          <path fill="url(#racing-car-aB)" d="M16.8500187,56.8381476 C15.2619794,56.8381476 13.9746193,55.5507874 13.9746193,53.9627482 C13.9746193,52.374709 15.2619794,51.0873488 16.8500187,51.0873488 L19.2458766,51.0873488 C20.8339158,51.0873488 22.1212759,52.374709 22.1212759,53.9627482 C22.1212759,55.5507874 20.8339158,56.8381476 19.2458766,56.8381476 L16.8500187,56.8381476 Z M27.6519172,56.8434505 L25.2560593,56.8434505 C23.6680201,56.8434505 22.3806599,55.5560903 22.3806599,53.9680511 C22.3806599,52.3800119 23.6680201,51.0926518 25.2560593,51.0926518 L27.6519172,51.0926518 C29.2399564,51.0926518 30.5273166,52.3800119 30.5273166,53.9680511 C30.5273166,55.5560903 29.2399564,56.8434505 27.6519172,56.8434505 Z" transform="matrix(1 0 0 -1 0 107.93)"/>
+          <rect width="15.858" height="5.032" x="14.695" y="50.374" fill="url(#racing-car-aC)" rx="2.516" transform="matrix(1 0 0 -1 0 105.78)"/>
+          <g transform="rotate(90 14.5 14.5)">
+            <use fill="url(#racing-car-ak)" transform="matrix(-1 0 0 1 25.228 0)" xlink:href="#racing-car-ca"/>
+            <mask id="racing-car-cc" fill="#fff">
+              <use xlink:href="#racing-car-cb"/>
+            </mask>
+            <use fill="url(#racing-car-ae)" opacity=".339" transform="matrix(-1 0 0 1 25.228 0)" xlink:href="#racing-car-cb"/>
+            <rect width="25.228" height="2.157" fill="url(#racing-car-af)" mask="url(#racing-car-cc)" opacity=".525"/>
+            <rect width="25.228" height="2.157" y="12.939" fill="url(#racing-car-ah)" mask="url(#racing-car-cc)" opacity=".525"/>
+          </g>
+          <g transform="rotate(180 9.404 21.548)">
+            <path fill="url(#racing-car-aG)" d="M9.3072475,27.873401 L9.41537407,29.949696 C9.47996772,31.1900525 8.54147283,32.2546399 7.30280751,32.3460988 L6.57670402,32.3997119 C5.78217424,32.4583773 5.09052286,31.8618414 5.03185743,31.0673116 C5.03031515,31.0464238 5.02922796,31.0255049 5.02859664,31.0045698 L4.98738709,29.6380197 L5.83302891,28.2415607 L5.83727336,27.172341 C5.83833509,26.9048779 5.98484441,26.6719952 6.20158478,26.5483149 L5.27944785,15.084235 L10.409088,15.1175137 C10.807426,15.1200979 11.1282478,15.4451095 11.1256635,15.8434475 C11.1254386,15.8781185 11.122714,15.9127283 11.1175109,15.9470074 L9.3072475,27.873401 Z" transform="rotate(39 8.059 23.745)"/>
+            <path fill="url(#racing-car-aH)" d="M7.86463004,0.5112925 L15.0724604,0.508918832 L15.8270681,16.8099637 C15.9026829,18.4433959 14.9533333,19.9512032 13.4476804,20.5890333 L13.4476804,20.5890333 C12.3797628,21.0414284 11.1473058,20.5424488 10.6949107,19.4745312 C10.6248829,19.3092245 10.5763419,19.1356203 10.5504753,18.9579657 L7.86463004,0.5112925 Z" transform="rotate(-8 11.848 10.633)"/>
+          </g>
+          <path fill="url(#racing-car-aI)" d="M37.476464,45.1252905 C38.6349194,45.7252728 39.426579,46.9350208 39.426579,48.3296708 L39.426579,49.7552705 C39.426579,52.5343391 37.1736988,54.7872193 34.3946302,54.7872193 L9.85954314,54.7872193 C7.08047451,54.7872193 4.82759426,52.5343391 4.82759426,49.7552705 L4.82759426,48.3296708 C4.82759426,47.3581628 5.21174422,46.4763778 5.83643135,45.8279286 L5.79993943,45.828739 L11.2292031,38.6924867 C12.8975635,36.4995852 15.5103602,35.2320799 18.2653608,35.2791453 L26.4485631,35.4189441 C29.0331054,35.4630974 31.4626392,36.6601221 33.0724968,38.6825382 L38.1883887,45.1094806 L37.476464,45.1252905 Z" transform="matrix(1 0 0 -1 0 90.065)"/>
+          <path fill="url(#racing-car-aC)" d="M21.7475532,45.5824745 L38.5798008,44.6083273 L33.1262717,51.3616361 C31.4842949,53.3949574 29.0114646,54.5774602 26.3979459,54.5791089 L22.1241163,54.581805 L21.7475532,45.5824745 Z" opacity=".258"/>
+          <path fill="url(#racing-car-aJ)" d="M21.7500302,39.5910543 L37.2627695,39.5910543 C38.4578085,39.5910543 39.426579,40.5598248 39.426579,41.7548638 L39.426579,45.341853 L21.7500302,45.341853 L21.7500302,39.5910543 Z" transform="matrix(1 0 0 -1 0 84.933)"/>
+          <path fill="url(#racing-car-l)" d="M21.1859447,35.2779553 L30.7768328,35.2779553 L30.7768328,42.4567737 C30.7768328,44.050159 29.4851388,45.341853 27.8917535,45.341853 L16.1370558,45.341853 L16.1370558,40.3268442 C16.1370558,37.5384198 18.3975204,35.2779553 21.1859447,35.2779553 Z" opacity=".297" transform="matrix(1 0 0 -1 0 80.62)"/>
+          <g transform="matrix(1 0 0 -1 16.137 40.31)">
+            <use fill="url(#racing-car-aL)" transform="matrix(1 0 0 -1 0 12.94)" xlink:href="#racing-car-cd"/>
+            <mask id="racing-car-cf" fill="#fff">
+              <use xlink:href="#racing-car-ce"/>
+            </mask>
+            <use fill="url(#racing-car-aN)" transform="matrix(1 0 0 -1 0 7.188)" xlink:href="#racing-car-ce"/>
+            <rect width="5.766" height="16.534" y="-3.594" fill="url(#racing-car-F)" mask="url(#racing-car-cf)" transform="matrix(1 0 0 -1 0 9.345)"/>
+            <path fill="url(#racing-car-aP)" d="M5.58629442,-3.5942492 L5.58629442,-3.5942492 C6.28295817,-3.5942492 6.84771574,-3.02949164 6.84771574,-2.33282788 L6.84771574,5.03194888 L4.3248731,5.03194888 L4.3248731,-2.33282788 C4.3248731,-3.02949164 4.88963066,-3.5942492 5.58629442,-3.5942492 Z" mask="url(#racing-car-cf)" opacity=".613" transform="matrix(1 0 0 -1 0 1.438)"/>
+          </g>
+        </g>
+        <g transform="rotate(49 -124.564 118.73)">
+          <g transform="matrix(1 0 0 -1 23.706 44.623)">
+            <path fill="url(#racing-car-ay)" d="M8.6701329,23.4074391 L8.76289663,25.1887301 C8.82749029,26.4290866 7.8889954,27.493674 6.65033007,27.585133 L5.92422659,27.638746 C5.1296968,27.6974114 4.43804543,27.1008755 4.37938,26.3063457 C4.37783771,26.2854579 4.37675053,26.264539 4.37611921,26.2436039 L4.27519461,22.8968423 C4.26337852,22.505009 4.56668374,22.175478 4.95815117,22.1548328 L5.72909718,22.1141746 L5.56302592,21.9653653 L5.2987859,12.7089533 L10.0436881,11.6779881 C10.4329518,11.5934095 10.817077,11.8404055 10.9016556,12.2296693 C10.9229895,12.327856 10.9235733,12.4294169 10.9033697,12.5278424 L8.6701329,23.4074391 Z" transform="rotate(37 7.598 19.651)"/>
+            <path fill="url(#racing-car-az)" d="M7.87937226,0.830953739 L15.0872026,0.828580071 L16.2269247,12.5904762 C16.4020696,14.397966 15.3411124,16.0976722 13.6403848,16.7342417 L13.6403848,16.7342417 C12.325373,17.2264408 10.8603391,16.5594192 10.3681401,15.2444074 C10.311564,15.0932526 10.2695099,14.9370538 10.2425473,14.777926 L7.87937226,0.830953739 Z" transform="rotate(2 12.062 8.863)"/>
+          </g>
+          <path fill="url(#racing-car-aA)" d="M9.33950969,39.5910543 L35.7285874,39.5910543 C36.4434142,39.5910543 37.0504322,40.1145595 37.1554689,40.8216271 L39.6101317,57.3454934 C39.7271978,58.1335383 39.183262,58.8672757 38.3952171,58.9843418 C38.3250427,58.9947664 38.2541948,59 38.1832502,59 L6.27118121,59 C5.47448854,59 4.82864153,58.354153 4.82864153,57.5574603 C4.82864153,57.4691151 4.83675727,57.3809566 4.85288644,57.2940962 L7.92121492,40.7702298 C8.04812323,40.0867906 8.64438748,39.5910543 9.33950969,39.5910543 Z" transform="matrix(1 0 0 -1 0 98.591)"/>
+          <path fill="url(#racing-car-aB)" d="M16.8500187,56.8381476 C15.2619794,56.8381476 13.9746193,55.5507874 13.9746193,53.9627482 C13.9746193,52.374709 15.2619794,51.0873488 16.8500187,51.0873488 L19.2458766,51.0873488 C20.8339158,51.0873488 22.1212759,52.374709 22.1212759,53.9627482 C22.1212759,55.5507874 20.8339158,56.8381476 19.2458766,56.8381476 L16.8500187,56.8381476 Z M27.6519172,56.8434505 L25.2560593,56.8434505 C23.6680201,56.8434505 22.3806599,55.5560903 22.3806599,53.9680511 C22.3806599,52.3800119 23.6680201,51.0926518 25.2560593,51.0926518 L27.6519172,51.0926518 C29.2399564,51.0926518 30.5273166,52.3800119 30.5273166,53.9680511 C30.5273166,55.5560903 29.2399564,56.8434505 27.6519172,56.8434505 Z" transform="matrix(1 0 0 -1 0 107.93)"/>
+          <rect width="15.858" height="5.032" x="14.695" y="50.374" fill="url(#racing-car-aC)" rx="2.516" transform="matrix(1 0 0 -1 0 105.78)"/>
+          <g transform="rotate(90 14.5 14.5)">
+            <use fill="url(#racing-car-ak)" transform="matrix(-1 0 0 1 25.228 0)" xlink:href="#racing-car-cg"/>
+            <mask id="racing-car-ci" fill="#fff">
+              <use xlink:href="#racing-car-ch"/>
+            </mask>
+            <use fill="url(#racing-car-ae)" opacity=".339" transform="matrix(-1 0 0 1 25.228 0)" xlink:href="#racing-car-ch"/>
+            <rect width="25.228" height="2.157" fill="url(#racing-car-af)" mask="url(#racing-car-ci)" opacity=".525"/>
+            <rect width="25.228" height="2.157" y="12.939" fill="url(#racing-car-ah)" mask="url(#racing-car-ci)" opacity=".525"/>
+          </g>
+          <g transform="rotate(180 9.404 21.548)">
+            <path fill="url(#racing-car-aG)" d="M9.3072475,27.873401 L9.41537407,29.949696 C9.47996772,31.1900525 8.54147283,32.2546399 7.30280751,32.3460988 L6.57670402,32.3997119 C5.78217424,32.4583773 5.09052286,31.8618414 5.03185743,31.0673116 C5.03031515,31.0464238 5.02922796,31.0255049 5.02859664,31.0045698 L4.98738709,29.6380197 L5.83302891,28.2415607 L5.83727336,27.172341 C5.83833509,26.9048779 5.98484441,26.6719952 6.20158478,26.5483149 L5.27944785,15.084235 L10.409088,15.1175137 C10.807426,15.1200979 11.1282478,15.4451095 11.1256635,15.8434475 C11.1254386,15.8781185 11.122714,15.9127283 11.1175109,15.9470074 L9.3072475,27.873401 Z" transform="rotate(39 8.059 23.745)"/>
+            <path fill="url(#racing-car-aH)" d="M7.86463004,0.5112925 L15.0724604,0.508918832 L15.8270681,16.8099637 C15.9026829,18.4433959 14.9533333,19.9512032 13.4476804,20.5890333 L13.4476804,20.5890333 C12.3797628,21.0414284 11.1473058,20.5424488 10.6949107,19.4745312 C10.6248829,19.3092245 10.5763419,19.1356203 10.5504753,18.9579657 L7.86463004,0.5112925 Z" transform="rotate(-8 11.848 10.633)"/>
+          </g>
+          <path fill="url(#racing-car-aI)" d="M37.476464,45.1252905 C38.6349194,45.7252728 39.426579,46.9350208 39.426579,48.3296708 L39.426579,49.7552705 C39.426579,52.5343391 37.1736988,54.7872193 34.3946302,54.7872193 L9.85954314,54.7872193 C7.08047451,54.7872193 4.82759426,52.5343391 4.82759426,49.7552705 L4.82759426,48.3296708 C4.82759426,47.3581628 5.21174422,46.4763778 5.83643135,45.8279286 L5.79993943,45.828739 L11.2292031,38.6924867 C12.8975635,36.4995852 15.5103602,35.2320799 18.2653608,35.2791453 L26.4485631,35.4189441 C29.0331054,35.4630974 31.4626392,36.6601221 33.0724968,38.6825382 L38.1883887,45.1094806 L37.476464,45.1252905 Z" transform="matrix(1 0 0 -1 0 90.065)"/>
+          <path fill="url(#racing-car-aC)" d="M21.7475532,45.5824745 L38.5798008,44.6083273 L33.1262717,51.3616361 C31.4842949,53.3949574 29.0114646,54.5774602 26.3979459,54.5791089 L22.1241163,54.581805 L21.7475532,45.5824745 Z" opacity=".258"/>
+          <path fill="url(#racing-car-aJ)" d="M21.7500302,39.5910543 L37.2627695,39.5910543 C38.4578085,39.5910543 39.426579,40.5598248 39.426579,41.7548638 L39.426579,45.341853 L21.7500302,45.341853 L21.7500302,39.5910543 Z" transform="matrix(1 0 0 -1 0 84.933)"/>
+          <path fill="url(#racing-car-l)" d="M21.1859447,35.2779553 L30.7768328,35.2779553 L30.7768328,42.4567737 C30.7768328,44.050159 29.4851388,45.341853 27.8917535,45.341853 L16.1370558,45.341853 L16.1370558,40.3268442 C16.1370558,37.5384198 18.3975204,35.2779553 21.1859447,35.2779553 Z" opacity=".297" transform="matrix(1 0 0 -1 0 80.62)"/>
+          <g transform="matrix(1 0 0 -1 16.137 40.31)">
+            <use fill="url(#racing-car-aL)" transform="matrix(1 0 0 -1 0 12.94)" xlink:href="#racing-car-cj"/>
+            <mask id="racing-car-cl" fill="#fff">
+              <use xlink:href="#racing-car-ck"/>
+            </mask>
+            <use fill="url(#racing-car-aN)" transform="matrix(1 0 0 -1 0 7.188)" xlink:href="#racing-car-ck"/>
+            <rect width="5.766" height="16.534" y="-3.594" fill="url(#racing-car-F)" mask="url(#racing-car-cl)" transform="matrix(1 0 0 -1 0 9.345)"/>
+            <path fill="url(#racing-car-aP)" d="M5.58629442,-3.5942492 L5.58629442,-3.5942492 C6.28295817,-3.5942492 6.84771574,-3.02949164 6.84771574,-2.33282788 L6.84771574,5.03194888 L4.3248731,5.03194888 L4.3248731,-2.33282788 C4.3248731,-3.02949164 4.88963066,-3.5942492 5.58629442,-3.5942492 Z" mask="url(#racing-car-cl)" opacity=".613" transform="matrix(1 0 0 -1 0 1.438)"/>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
