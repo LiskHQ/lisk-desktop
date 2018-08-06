@@ -55,7 +55,7 @@ class Choose extends React.Component {
       },
     });
 
-    if (error) {
+    if (error || value === '') {
       return;
     }
 
