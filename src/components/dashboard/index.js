@@ -7,7 +7,7 @@ import { FontIcon } from '../fontIcon';
 import Box from '../box';
 import { loadTransactions } from '../../actions/transactions';
 import TransactionList from './../transactions/transactionList';
-// import Send from '../send';
+import Send from '../send';
 import CurrencyGraph from './currencyGraph';
 import routes from '../../constants/routes';
 import { settingsUpdated } from '../../actions/settings';
@@ -74,9 +74,9 @@ class Dashboard extends React.Component {
           </div>
         </div>
       </div>
-      {/* <div className={`${grid['col-md-4']} ${styles.sendWrapper}`}>
+      {isLoggedIn ? <div className={`${grid['col-md-4']} ${styles.sendWrapper}`}>
         <Send {...this.props} />
-      </div> */}
+      </div> : <div></div>}
     </div>;
   }
 }

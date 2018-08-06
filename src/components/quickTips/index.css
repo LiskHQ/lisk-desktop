@@ -56,12 +56,12 @@
   }
 
   & .previousStep {
-    cursor: pointer; 
+    cursor: pointer;
     margin-right: 20px;
   }
 
   & .nextStep {
-    cursor: pointer; 
+    cursor: pointer;
     margin-left: 20px;
   }
 }
@@ -88,6 +88,7 @@
     flex-direction: column;
     justify-content: space-between;
   }
+
   .quickTips {
     min-height: 200px;
   }
