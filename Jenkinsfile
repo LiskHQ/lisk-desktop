@@ -2,6 +2,45 @@
 
 /* comment out the next line to allow concurrent builds on the same branch */
 // properties([disableConcurrentBuilds(), pipelineTriggers([])])
+pipeline {
+  agent {
+    node {
+      label 'lisk-hub'
+    }
+  }
+  stages {
+    stage('Non-Parallel Stage') {
+        steps {
+            echo 'This stage will be executed first.'
+        }
+    }
+    stage('Parallel Stage') {
+        failFast true
+        parallel {
+
+          stage('Stage A') {
+              agent {
+                  label "lisk-hub"
+              }
+              steps {
+                  echo "On Stage A"
+              }
+          }
+
+          stage('Stage B') {
+              agent {
+                  label "lisk-hub"
+              }
+              steps {
+                  echo "On Stage B"
+              }
+          }
+        }
+      }
+    }
+  }
+}
+/*
 node('lisk-hub') {
   try {
     stage ('Checkout and Start Lisk Core') {
@@ -162,33 +201,34 @@ node('lisk-hub') {
       make mrproper
       '''
     }
-    sh '''
-    N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
-    pgrep --list-full -f "Xvfb :1$N" || true
-    pkill --echo -f "Xvfb :1$N" -9 || echo "pkill returned code $?"
+    */
+//     sh '''
+//     N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
+//     pgrep --list-full -f "Xvfb :1$N" || true
+//     pkill --echo -f "Xvfb :1$N" -9 || echo "pkill returned code $?"
 
-    cat reports/cucumber_report.json | ./node_modules/.bin/cucumber-junit > reports/cucumber_report.xml
-    '''
+//     cat reports/cucumber_report.json | ./node_modules/.bin/cucumber-junit > reports/cucumber_report.xml
+//     '''
 
-    cobertura autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: 'coverage/*/cobertura-coverage.xml', conditionalCoverageTargets: '70, 0, 0', failUnhealthy: false, failUnstable: false, fileCoverageTargets: '100, 0, 0', lineCoverageTargets: '80, 0, 0', maxNumberOfBuilds: 0, methodCoverageTargets: '80, 0, 0', onlyStable: false, sourceEncoding: 'ASCII'
-    junit 'reports/junit_report.xml'
-    junit 'reports/cucumber_report.xml'
+//     cobertura autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: 'coverage/*/cobertura-coverage.xml', conditionalCoverageTargets: '70, 0, 0', failUnhealthy: false, failUnstable: false, fileCoverageTargets: '100, 0, 0', lineCoverageTargets: '80, 0, 0', maxNumberOfBuilds: 0, methodCoverageTargets: '80, 0, 0', onlyStable: false, sourceEncoding: 'ASCII'
+//     junit 'reports/junit_report.xml'
+//     junit 'reports/cucumber_report.xml'
 
-    dir('node_modules') {
-      deleteDir()
-    }
+//     dir('node_modules') {
+//       deleteDir()
+//     }
 
-    if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
-      /* delete all files on success */
-      deleteDir()
-      /* notify of success if previous build failed */
-      previous_build = currentBuild.getPreviousBuild()
-      if (previous_build != null && previous_build.result == 'FAILURE') {
-        build_info = getBuildInfo()
-        liskSlackSend('good', "Recovery: build ${build_info} was successful.")
-      }
-    } else {
-      archiveArtifacts allowEmptyArchive: true, artifacts: 'e2e-test-screenshots/'
-    }
-  }
-}
+//     if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {
+//       /* delete all files on success */
+//       deleteDir()
+//       /* notify of success if previous build failed */
+//       previous_build = currentBuild.getPreviousBuild()
+//       if (previous_build != null && previous_build.result == 'FAILURE') {
+//         build_info = getBuildInfo()
+//         liskSlackSend('good', "Recovery: build ${build_info} was successful.")
+//       }
+//     } else {
+//       archiveArtifacts allowEmptyArchive: true, artifacts: 'e2e-test-screenshots/'
+//     }
+//   }
+// }
