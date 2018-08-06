@@ -16,3 +16,5 @@ chai.use(sinonChai);
 chai.use(chaiEnzyme());
 chai.use(chaiAsPromised);
 sinonStubPromise(sinon);
+
+jest.useFakeTimers();
