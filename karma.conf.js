@@ -54,6 +54,7 @@ module.exports = function (config) {
           functions: 80,
           lines: 80,
           excludes: [
+            'src/components/transactions/**/*.js',
             'src/components/register/register.js',
             'src/components/voteUrlProcessor/index.js',
             'src/components/savedAccounts/index.js',
