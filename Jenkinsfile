@@ -46,19 +46,56 @@ pipeline {
         }
       }
     }
-    stage('Parallel Stage') {
+    stage ('Build and Deploy') {
+      steps {
+        script {
+          try {
+            withCredentials([string(credentialsId: 'github-lisk-token', variable: 'GH_TOKEN')]) {
+              sh '''
+              cp ~/.coveralls.yml-hub .coveralls.yml
+              npm run --silent build
+              npm run --silent build:testnet
+              rsync -axl --delete --rsync-path="mkdir -p /var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/ && rsync" $WORKSPACE/app/build/ jenkins@master-01:/var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/
+              npm run --silent bundlesize
+              if [ -z $CHANGE_BRANCH ]; then
+                USE_SYSTEM_XORRISO=true npm run dist:linux
+              else
+                echo "Skipping desktop build for Linux because we're not on 'development' branch"
+              fi
+              '''
+              archiveArtifacts artifacts: 'app/build/'
+              archiveArtifacts artifacts: 'app/build-testnet/'
+              archiveArtifacts allowEmptyArchive: true, artifacts: 'dist/lisk-hub*'
+              githubNotify context: 'Jenkins test deployment', description: 'Commit was deployed to test', status: 'SUCCESS', targetUrl: "${HUDSON_URL}test/" + "${JOB_NAME}".tokenize('/')[0] + "/${BRANCH_NAME}"
+            }
+          } catch (err) {
+            echo "Error: ${err}"
+            fail('Stopping build: build or deploy failed')
+          }
+        }
+      }
+    }
+    stage('Parallel Stages') {
         failFast true
         parallel {
 
-          stage('Stage A') {
+          stage('Run Eslint') {
               agent {
                   label "lisk-hub"
               }
               steps {
-                  echo "On Stage A"
+                  script {
+                    try {
+                      ansiColor('xterm') {
+                        sh 'npm run --silent clean-build && npm run --silent copy-files && npm run --silent eslint'
+                      }
+                    } catch (err) {
+                      echo "Error: ${err}"
+                      fail('Stopping build: Eslint failed')
+                    }
+                }
               }
           }
-
           stage('Stage B') {
               agent {
                   label "lisk-hub"
