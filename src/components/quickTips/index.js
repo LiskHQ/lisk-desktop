@@ -33,7 +33,7 @@ class QuickTips extends React.Component {
     const currentSlide = quickTips(this.props.t)[currentIndex];
 
     return (
-      <Box className={`${styles.quickTips}`}>
+      <Box className={`quickTips ${styles.quickTips}`}>
         <div className={styles.title}>{
           currentSlide.title
         }</div>
@@ -54,10 +54,10 @@ class QuickTips extends React.Component {
                 onClick={() => { this.previousStep(); }}
                 className={`${styles.previousStep} ${currentIndex === 0 ? styles.disabled : ''}`}
               ><FontIcon className={styles.arrow} value='arrow-left'/>{this.props.t('Previous')}</div>
-                {`${currentIndex + 1}  /  ${quickTips.length}`}
+                {`${currentIndex + 1}  /  ${quickTips(this.props.t).length}`}
               <div
                 onClick={() => { this.nextStep(); }}
-                className={`${styles.nextStep} ${currentIndex + 1 === quickTips.length ? styles.disabled : ''}`}
+                className={`${styles.nextStep} ${currentIndex + 1 === quickTips(this.props.t).length ? styles.disabled : ''}`}
               >{this.props.t('Next')}<FontIcon className={styles.arrow} value='arrow-right'/></div>
             </div>
           </div>
