@@ -74,41 +74,45 @@ node('lisk-hub') {
     stage ('Run Unit Tests') {
 
       parallel {
-        stage ('Run Mocha Tests') {
-          agent {
-              label "mocha"
-          }
-          steps {
-            try {
-              ansiColor('xterm') {
-                sh '''
-                ON_JENKINS=true npm run --silent test
-                # Submit coverage to coveralls
-                cat coverage/*lcov.info | coveralls -v
-                '''
+        'mocha' {
+          stage ('Run Mocha Tests') {
+            agent {
+                label "mocha"
+            }
+            steps {
+              try {
+                ansiColor('xterm') {
+                  sh '''
+                  ON_JENKINS=true npm run --silent test
+                  # Submit coverage to coveralls
+                  cat coverage/*lcov.info | coveralls -v
+                  '''
+                }
+              } catch (err) {
+                echo "Error: ${err}"
+                fail('Stopping build: Mocha test suite failed')
               }
-            } catch (err) {
-              echo "Error: ${err}"
-              fail('Stopping build: Mocha test suite failed')
             }
           }
         }
-        stage ('Run Jest Tests') {
-          agent {
-              label "jest"
-          }
-          steps {
-            try {
-              ansiColor('xterm') {
-                sh '''
-                ON_JENKINS=true npm run --silent test-jest
-                # Submit coverage to coveralls
-                cat coverage/jest/*lcov.info | coveralls -v
-                '''
+        'jest' {
+          stage ('Run Jest Tests') {
+            agent {
+                label "jest"
+            }
+            steps {
+              try {
+                ansiColor('xterm') {
+                  sh '''
+                  ON_JENKINS=true npm run --silent test-jest
+                  # Submit coverage to coveralls
+                  cat coverage/jest/*lcov.info | coveralls -v
+                  '''
+                }
+              } catch (err) {
+                echo "Error: ${err}"
+                fail('Stopping build: Jest test suite failed')
               }
-            } catch (err) {
-              echo "Error: ${err}"
-              fail('Stopping build: Jest test suite failed')
             }
           }
         }
