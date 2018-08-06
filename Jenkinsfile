@@ -37,9 +37,9 @@ pipeline {
           }
         }
       }
-    }
   }
 }
+
 /*
 node('lisk-hub') {
   try {
