@@ -4,9 +4,6 @@
 // properties([disableConcurrentBuilds(), pipelineTriggers([])])
 node('lisk-hub') {
   try {
-  pipeline {
-    agent { label 'lisk-hub' }
-    stages {
       stage ('Checkout and Start Lisk Core') {
         try {
           deleteDir()
@@ -98,7 +95,7 @@ node('lisk-hub') {
                 }
               }
             },
-            'jest' : {
+            'jest': {
               stage ('Run Jest Tests') {
                 agent {
                     label "lisk-hub"
@@ -121,11 +118,7 @@ node('lisk-hub') {
             }
           )
         }
-      }
-    }
-  }
-}
-
+        
     stage ('Run E2E Tests') {
       try {
         ansiColor('xterm') {
