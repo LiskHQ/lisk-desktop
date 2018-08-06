@@ -1,9 +1,12 @@
 @Library('lisk-jenkins') _
 
 /* comment out the next line to allow concurrent builds on the same branch */
-properties([disableConcurrentBuilds(), pipelineTriggers([])])
+// properties([disableConcurrentBuilds(), pipelineTriggers([])])
 node('lisk-hub') {
   try {
+  pipeline {
+
+  
     stage ('Checkout and Start Lisk Core') {
       try {
         deleteDir()
@@ -74,45 +77,43 @@ node('lisk-hub') {
     stage ('Run Unit Tests') {
 
       parallel {
-        'mocha' {
-          stage ('Run Mocha Tests') {
-            agent {
-                label "mocha"
-            }
-            steps {
-              try {
-                ansiColor('xterm') {
-                  sh '''
-                  ON_JENKINS=true npm run --silent test
-                  # Submit coverage to coveralls
-                  cat coverage/*lcov.info | coveralls -v
-                  '''
-                }
-              } catch (err) {
-                echo "Error: ${err}"
-                fail('Stopping build: Mocha test suite failed')
+        
+        stage ('Run Mocha Tests') {
+          agent {
+              label "lisk-hub"
+          }
+          steps {
+            try {
+              ansiColor('xterm') {
+                sh '''
+                ON_JENKINS=true npm run --silent test
+                # Submit coverage to coveralls
+                cat coverage/*lcov.info | coveralls -v
+                '''
               }
+            } catch (err) {
+              echo "Error: ${err}"
+              fail('Stopping build: Mocha test suite failed')
             }
           }
         }
-        'jest' {
-          stage ('Run Jest Tests') {
-            agent {
-                label "jest"
-            }
-            steps {
-              try {
-                ansiColor('xterm') {
-                  sh '''
-                  ON_JENKINS=true npm run --silent test-jest
-                  # Submit coverage to coveralls
-                  cat coverage/jest/*lcov.info | coveralls -v
-                  '''
-                }
-              } catch (err) {
-                echo "Error: ${err}"
-                fail('Stopping build: Jest test suite failed')
+        
+        stage ('Run Jest Tests') {
+          agent {
+              label "lisk-hub"
+          }
+          steps {
+            try {
+              ansiColor('xterm') {
+                sh '''
+                ON_JENKINS=true npm run --silent test-jest
+                # Submit coverage to coveralls
+                cat coverage/jest/*lcov.info | coveralls -v
+                '''
               }
+            } catch (err) {
+              echo "Error: ${err}"
+              fail('Stopping build: Jest test suite failed')
             }
           }
         }
@@ -175,6 +176,8 @@ node('lisk-hub') {
       make mrproper
       '''
     }
+
+}
     sh '''
     N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
     pgrep --list-full -f "Xvfb :1$N" || true
