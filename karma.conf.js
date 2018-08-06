@@ -54,12 +54,13 @@ module.exports = function (config) {
           functions: 80,
           lines: 80,
           excludes: [
-            'src/components/register/register.js',
-            'src/components/voteUrlProcessor/index.js',
-            'src/utils/api/liskService.js',
-            'src/store/reducers/liskService.js',
-            'src/actions/transactions.js',
-            'src/components/errorBoundary/index.js',
+            '!src/components/transactions/**/*.js',
+            // 'src/components/register/register.js',
+            // 'src/components/voteUrlProcessor/index.js',
+            // 'src/utils/api/liskService.js',
+            // 'src/store/reducers/liskService.js',
+            // 'src/actions/transactions.js',
+            // 'src/components/errorBoundary/index.js',
           ],
           overrides: {
             'src/store/**/*.js': {
