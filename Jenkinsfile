@@ -4,121 +4,122 @@
 // properties([disableConcurrentBuilds(), pipelineTriggers([])])
 node('lisk-hub') {
   try {
-      stage ('Checkout and Start Lisk Core') {
-        try {
-          deleteDir()
-          checkout scm
-        } catch (err) {
-          echo "Error: ${err}"
-          fail('Stopping build: checkout failed')
-        }
+    stage ('Checkout and Start Lisk Core') {
+      try {
+        deleteDir()
+        checkout scm
+      } catch (err) {
+        echo "Error: ${err}"
+        fail('Stopping build: checkout failed')
       }
+    }
 
-      stage ('Install npm dependencies') {
-        try {
+    stage ('Install npm dependencies') {
+      try {
+        sh '''
+        cache_file="$HOME/cache/$( sha1sum package.json |awk '{ print $1 }' ).tar.gz"
+        if [ -f "$cache_file" ]; then
+            tar xf "$cache_file"
+        fi
+        npm install
+        ./node_modules/protractor/bin/webdriver-manager update
+        if [ ! -f "$cache_file" ]; then
+            GZIP=-4 tar czf "$cache_file" node_modules/
+            find $HOME/cache/ -name '*.tar.gz' -ctime +7 -delete
+        fi
+        '''
+      } catch (err) {
+        echo "Error: ${err}"
+        fail('Stopping build: npm install failed')
+      }
+    }
+
+    stage ('Run Eslint') {
+      try {
+        ansiColor('xterm') {
+          sh 'npm run --silent clean-build && npm run --silent copy-files && npm run --silent eslint'
+        }
+      } catch (err) {
+        echo "Error: ${err}"
+        fail('Stopping build: Eslint failed')
+      }
+    }
+
+    stage ('Build and Deploy') {
+      try {
+        withCredentials([string(credentialsId: 'github-lisk-token', variable: 'GH_TOKEN')]) {
           sh '''
-          cache_file="$HOME/cache/$( sha1sum package.json |awk '{ print $1 }' ).tar.gz"
-          if [ -f "$cache_file" ]; then
-              tar xf "$cache_file"
-          fi
-          npm install
-          ./node_modules/protractor/bin/webdriver-manager update
-          if [ ! -f "$cache_file" ]; then
-              GZIP=-4 tar czf "$cache_file" node_modules/
-              find $HOME/cache/ -name '*.tar.gz' -ctime +7 -delete
+          cp ~/.coveralls.yml-hub .coveralls.yml
+          npm run --silent build
+          npm run --silent build:testnet
+          rsync -axl --delete --rsync-path="mkdir -p /var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/ && rsync" $WORKSPACE/app/build/ jenkins@master-01:/var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/
+          npm run --silent bundlesize
+          if [ -z $CHANGE_BRANCH ]; then
+            USE_SYSTEM_XORRISO=true npm run dist:linux
+          else
+            echo "Skipping desktop build for Linux because we're not on 'development' branch"
           fi
           '''
-        } catch (err) {
-          echo "Error: ${err}"
-          fail('Stopping build: npm install failed')
+          archiveArtifacts artifacts: 'app/build/'
+          archiveArtifacts artifacts: 'app/build-testnet/'
+          archiveArtifacts allowEmptyArchive: true, artifacts: 'dist/lisk-hub*'
+          githubNotify context: 'Jenkins test deployment', description: 'Commit was deployed to test', status: 'SUCCESS', targetUrl: "${HUDSON_URL}test/" + "${JOB_NAME}".tokenize('/')[0] + "/${BRANCH_NAME}"
         }
+      } catch (err) {
+        echo "Error: ${err}"
+        fail('Stopping build: build or deploy failed')
       }
+    }
 
-      stage ('Run Eslint') {
-        try {
-          ansiColor('xterm') {
-            sh 'npm run --silent clean-build && npm run --silent copy-files && npm run --silent eslint'
-          }
-        } catch (err) {
-          echo "Error: ${err}"
-          fail('Stopping build: Eslint failed')
-        }
-      }
-
-      stage ('Build and Deploy') {
-        try {
-          withCredentials([string(credentialsId: 'github-lisk-token', variable: 'GH_TOKEN')]) {
-            sh '''
-            cp ~/.coveralls.yml-hub .coveralls.yml
-            npm run --silent build
-            npm run --silent build:testnet
-            rsync -axl --delete --rsync-path="mkdir -p /var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/ && rsync" $WORKSPACE/app/build/ jenkins@master-01:/var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/
-            npm run --silent bundlesize
-            if [ -z $CHANGE_BRANCH ]; then
-              USE_SYSTEM_XORRISO=true npm run dist:linux
-            else
-              echo "Skipping desktop build for Linux because we're not on 'development' branch"
-            fi
-            '''
-            archiveArtifacts artifacts: 'app/build/'
-            archiveArtifacts artifacts: 'app/build-testnet/'
-            archiveArtifacts allowEmptyArchive: true, artifacts: 'dist/lisk-hub*'
-            githubNotify context: 'Jenkins test deployment', description: 'Commit was deployed to test', status: 'SUCCESS', targetUrl: "${HUDSON_URL}test/" + "${JOB_NAME}".tokenize('/')[0] + "/${BRANCH_NAME}"
-          }
-        } catch (err) {
-          echo "Error: ${err}"
-          fail('Stopping build: build or deploy failed')
-        }
-      }
-
-      stage ('Run Unit Tests') {
-        steps {
-          parallel (
-            'mocha': {
-              stage ('Run Mocha Tests') {
-                agent {
-                    label "lisk-hub"
-                }
-                steps {
-                  try {
-                    ansiColor('xterm') {
-                      sh '''
-                      ON_JENKINS=true npm run --silent test
-                      # Submit coverage to coveralls
-                      cat coverage/*lcov.info | coveralls -v
-                      '''
-                    }
-                  } catch (err) {
-                    echo "Error: ${err}"
-                    fail('Stopping build: Mocha test suite failed')
-                  }
-                }
+    stage ('Run Unit Tests') {
+      steps {
+        parallel (
+          'mocha': {
+            stage ('Run Mocha Tests') {
+              agent {
+                  label "lisk-hub"
               }
-            },
-            'jest': {
-              stage ('Run Jest Tests') {
-                agent {
-                    label "lisk-hub"
-                }
-                steps {
-                  try {
-                    ansiColor('xterm') {
-                      sh '''
-                      ON_JENKINS=true npm run --silent test-jest
-                      # Submit coverage to coveralls
-                      cat coverage/jest/*lcov.info | coveralls -v
-                      '''
-                    }
-                  } catch (err) {
-                    echo "Error: ${err}"
-                    fail('Stopping build: Jest test suite failed')
+              steps {
+                try {
+                  ansiColor('xterm') {
+                    sh '''
+                    ON_JENKINS=true npm run --silent test
+                    # Submit coverage to coveralls
+                    cat coverage/*lcov.info | coveralls -v
+                    '''
                   }
+                } catch (err) {
+                  echo "Error: ${err}"
+                  fail('Stopping build: Mocha test suite failed')
                 }
               }
             }
-          )
-        }
-        
+          },
+          'jest': {
+            stage ('Run Jest Tests') {
+              agent {
+                  label "lisk-hub"
+              }
+              steps {
+                try {
+                  ansiColor('xterm') {
+                    sh '''
+                    ON_JENKINS=true npm run --silent test-jest
+                    # Submit coverage to coveralls
+                    cat coverage/jest/*lcov.info | coveralls -v
+                    '''
+                  }
+                } catch (err) {
+                  echo "Error: ${err}"
+                  fail('Stopping build: Jest test suite failed')
+                }
+              }
+            }
+          }
+        )
+      }
+    }
+
     stage ('Run E2E Tests') {
       try {
         ansiColor('xterm') {
