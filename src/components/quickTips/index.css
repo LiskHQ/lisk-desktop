@@ -1,38 +1,94 @@
+@import '../app/variables.css';
+
 .quickTips {
   height: calc(50% - 20px);
   margin: 0px 0px 20px;
+  overflow: hidden;
 }
 
 .footer {
   display: flex;
   justify-content: space-between;
+  padding: 20px 0;
+
+  & .goTo {
+    color: #2475b9;
+    text-decoration: none;
+    font-weight: 600;
+  }
 }
 
 .title {
-  font-size: 28px;
-}
-
-.title {
-  font-size: 16px;
+  font-size: 24px;
+  font-weight: 800;
+  padding: 15px 0;
 }
 
 .descriptionRow {
   display: flex;
   justify-content: space-between;
+  font-family: "Open Sans";
+  height: 200px;
+  font-size: 16px;
 
-  & div {
-    width: 50%;
+  & .description {
+    width: 60%;
+    overflow-y: auto;
+  }
+
+  & .picture {
+    width: 40%;
+
     & img {
-      margin-top: -100px;
+      margin-top: -150px;
     }
   }
 }
 
 .steps {
   display: flex;
+  color: #2475b9;
+  font-size: 16px;
+  font-weight: 600;
+
+  & span {
+    font-size: 16px;
+  }
+
+  & .previousStep {
+    cursor: pointer; 
+    margin-right: 20px;
+  }
+
+  & .nextStep {
+    cursor: pointer; 
+    margin-left: 20px;
+  }
 }
 
 .disabled {
   pointer-events: none;
-  color: gray;
+  color: #ccd9e4;
+}
+
+.arrow {
+  line-height: 14px !important;
+}
+
+.quickTipBody {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+@media (--medium-viewport) {
+  .quickTipBody {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .quickTips {
+    min-height: 200px;
+  }
 }
