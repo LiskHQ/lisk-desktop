@@ -113,6 +113,31 @@ describe('actions: peers', () => {
       expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.nodes[0]', 'http://localhost:4000'));
     });
 
+    it('sets port 443, when address is https and no port used', () => {
+      getNetHash.returnsPromise();
+      const network = {
+        address: 'https://localhost',
+        custom: true,
+      };
+
+      activePeerSet({ passphrase, network })(dispatch);
+      expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.port', 443));
+      expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.ssl', true));
+    });
+
+    it('displays the error toast if the network is custom and request to constants fails', () => {
+      getConstantsMock.rejects({});
+      const network = {
+        address: 'http://localhost:4000',
+        custom: true,
+      };
+      activePeerSet({ passphrase, network })(dispatch);
+      expect(dispatch).to.have.been.calledWith({
+        data: { label: 'Unable to connect to the node', type: 'error' },
+        type: actionTypes.toastDisplayed,
+      });
+    });
+
     it('does not display the error toast if the network is a custom node and there are not saved account and getnethash fails', () => {
       getNetHash.returnsPromise();
       const network = {

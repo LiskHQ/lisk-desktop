@@ -154,7 +154,7 @@ export const styles = {
 export const steps = t => ([
   {
     title: t('Onboarding whenever you need'),
-    text: t('Go to "Settings" on your Sidebar to start the onboarding whenever you need.'),
+    text: t('Go to "Help" on your Sidebar to start the onboarding whenever you need.'),
     selector: '#onboardingAnchor',
     position: 'bottom',
     style: styles.skip,

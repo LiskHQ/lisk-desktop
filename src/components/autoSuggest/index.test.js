@@ -185,13 +185,13 @@ describe('AutoSuggest', () => {
 
     wrapper.setProps({
       results: {
-        delegates: [results.delegates[0]],
+        delegates: results.delegates,
         addresses: [results.addresses[0]],
         transactions: [results.transactions[0]],
       },
     });
     wrapper.update();
-    autosuggestInput.simulate('change');
+    autosuggestInput.simulate('change', { target: { value: 'peter' } });
     autosuggestInput.simulate('keyDown', {
       keyCode: keyCodes.arrowDown,
       which: keyCodes.arrowDown,
@@ -202,7 +202,7 @@ describe('AutoSuggest', () => {
     });
     wrapper.update();
     // first result of transactions mock data
-    expect(wrapper.find('.autosuggest-placeholder')).to.have.value('1234');
+    expect(wrapper.find('.autosuggest-placeholder')).to.have.value(results.delegates[2].username);
     autosuggestInput.simulate('keyDown', {
       keyCode: keyCodes.arrowUp,
       which: keyCodes.arrowUp,
@@ -215,10 +215,30 @@ describe('AutoSuggest', () => {
     expect(props.searchClearSuggestions).to.have.been.calledWith();
   });
 
-  it('should close dropdown on keyboard event {escape}', () => {
+  it('should show recent searches and close dropdown on keyboard event {escape}', () => {
     const autosuggestInput = wrapper.find('.autosuggest-input').find('input').first();
+    localStorageStub.withArgs('searches', []).returns([
+      { searchTerm: 'genesis_11', id: '1478505779553195737L' },
+      { searchTerm: '8500285156990763245', id: '8500285156990763245' },
+      { searchTerm: '10881167371402274308L', id: '10881167371402274308L' },
+    ]);
+    wrapper.setProps({
+      results: {
+        delegates: [],
+        addresses: [],
+        transactions: [],
+      },
+    });
+    wrapper.update();
 
     autosuggestInput.simulate('change');
+
+    autosuggestInput.simulate('keyDown', {
+      keyCode: keyCodes.arrowDown,
+      which: keyCodes.arrowDown,
+    });
+    expect(wrapper.find('.autosuggest-placeholder')).to.have.value('genesis_11');
+
     autosuggestInput.simulate('keyDown', {
       keyCode: keyCodes.escape,
       which: keyCodes.escape,

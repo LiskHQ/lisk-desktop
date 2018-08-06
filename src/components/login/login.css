@@ -13,6 +13,10 @@
   --forward-to-link-icon-font-size-L: 16px;
 }
 
+.loadingWrapper {
+  height: var(--main-box-height);
+}
+
 .login {
   height: 100%;
   width: 42%;
