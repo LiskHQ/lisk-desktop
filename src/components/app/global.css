@@ -39,6 +39,12 @@ order to be available application wide
   padding: 0px 30px;
 }
 
+:global .appLoaded {
+  & .searchBar {
+    display: inline-block;
+  }
+}
+
 @media (--medium-viewport) {
   :global body.contentFocused {
     margin-top: 0;

@@ -14,7 +14,7 @@ class Search extends React.Component {
   }
 
   render() {
-    return (<div className={`${styles.searchBar} search-bar-input ${this.shouldShowSearchBarOnMobile() ? styles.show : ''}`}>
+    return (<div className={`${styles.searchBar} searchBar search-bar-input ${this.shouldShowSearchBarOnMobile() ? styles.show : ''}`}>
       <AutoSuggest
         history={this.props.history}
         t={this.props.t}

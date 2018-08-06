@@ -112,6 +112,7 @@ class Onboarding extends React.Component {
       autoStart={true}
       type='continuous'
       holePadding={0}
+      keyboardNavigation={false}
     /></div>;
   }
 }

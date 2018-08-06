@@ -1,4 +1,5 @@
 import Dashboard from '../components/dashboard';
+import Help from '../components/help';
 import Sidechains from '../components/sidechains';
 import Setting from '../components/setting';
 import Login from '../components/login';
@@ -34,6 +35,11 @@ export default {
     path: '/delegates',
     component: Voting,
     isPrivate: true,
+  },
+  help: {
+    path: '/help',
+    component: Help,
+    isPrivate: false,
   },
   sidechains: {
     path: '/sidechains',

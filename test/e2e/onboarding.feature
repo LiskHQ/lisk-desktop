@@ -43,7 +43,8 @@ Feature: Onboarding
     When I go to "/setting"
     And I click "advancedMode"
     And I wait 0.1 seconds
-    And I click "onboarding-setting"
+    When I go to "/help"
+    And I click "help-onboarding"
     Then I should see text "Welcome to Lisk Hub" in "joyride-tooltip__header" element
 
     And I click "joyride-tooltip__button--primary"
@@ -88,9 +89,9 @@ Feature: Onboarding
     And I wait 1 seconds
     Then I should see no "joyride-tooltip__header"
 
-    When I click "settings" menu
+    When I click "help" menu
     And I wait 0.4 seconds
-    And I click "onboarding-setting"
+    And I click "help-onboarding"
     And I wait 0.4 seconds
     Then I should see text "Welcome to Lisk Hub" in "joyride-tooltip__header" element
 

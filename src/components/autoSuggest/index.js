@@ -143,27 +143,15 @@ class AutoSuggest extends React.Component {
     this.setState({ selectedIdx: currentIdx, placeholder });
   }
 
-  /* eslint-disable class-methods-use-this */
-  getValueFromCurrentIdx(index, results) {
-    let targetVal = '';
-    if (index < results.delegates.length) {
-      targetVal = results.delegates[index].username;
-    } else if (index <
-      results.delegates.length + results.addresses.length) {
-      const targetIdx = index - results.delegates.length;
-      targetVal = results.addresses[targetIdx].address;
-    } else if (index <
-      results.delegates.length +
-      results.addresses.length +
-      results.transactions.length) {
-      const targetIdx = index -
-        results.delegates.length -
-        results.addresses.length;
-      targetVal = results.transactions[targetIdx].id;
-    }
-    return targetVal;
+  // eslint-disable-next-line class-methods-use-this
+  getValueFromCurrentIdx(index, resultsObj) {
+    const targetResult = [
+      { results: resultsObj.delegates, key: 'username' },
+      { results: resultsObj.addresses, key: 'address' },
+      { results: resultsObj.transactions, key: 'id' },
+    ].filter(resultObj => index < resultObj.results.length);
+    return (targetResult.length && targetResult[0].results[index][targetResult[0].key]) || '';
   }
-  /* eslint-enable class-methods-use-this */
 
   handleSubmit() {
     if (this.state.value === '' && this.state.placeholder === '') {
