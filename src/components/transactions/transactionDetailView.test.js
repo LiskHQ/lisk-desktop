@@ -38,7 +38,7 @@ describe('TransactionDetailView', () => {
       history: { push: spy(), location: { search: '' } },
     };
     const wrapper = mountWithContext(<TransactionDetailView {...props} />, context);
-    const expectedValue = / row/g;
+    const expectedValue = /grid-row/g;
     const html = wrapper.html();
     expect(html.match(expectedValue)).to.have.lengthOf(5);
     wrapper.find('.transaction-details-back-button').simulate('click');
