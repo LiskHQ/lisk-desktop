@@ -4,9 +4,7 @@
 // properties([disableConcurrentBuilds(), pipelineTriggers([])])
 pipeline {
   agent {
-    node {
       label 'lisk-hub'
-    }
   }
   stages {
 
@@ -96,8 +94,8 @@ pipeline {
         parallel {
 
           stage('Mocha') {
-              agent {
-                  label "lisk-hub"
+              agent {             
+                label "lisk-hub"
               }
               steps {
                   script {
@@ -117,8 +115,8 @@ pipeline {
               }
           }
           stage('Jest') {
-              agent {
-                  label "lisk-hub"
+              agent {             
+                label "lisk-hub"
               }
               steps {
                   script {
