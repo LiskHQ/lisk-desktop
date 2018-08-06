@@ -46,6 +46,22 @@ pipeline {
         }
       }
     }
+
+    stage ('Run Eslint') {
+      steps {
+        script {
+          try {
+            ansiColor('xterm') {
+              sh 'npm run --silent clean-build && npm run --silent copy-files && npm run --silent eslint'
+            }
+          } catch (err) {
+            echo "Error: ${err}"
+            fail('Stopping build: Eslint failed')
+          }
+        }
+      }
+    }
+
     stage ('Build and Deploy') {
       steps {
         script {
@@ -75,11 +91,11 @@ pipeline {
         }
       }
     }
-    stage('Parallel Stages') {
+    stage('Run Unit Tests') {
         failFast true
         parallel {
 
-          stage('Run Eslint') {
+          stage('Mocha') {
               agent {
                   label "lisk-hub"
               }
@@ -87,21 +103,38 @@ pipeline {
                   script {
                     try {
                       ansiColor('xterm') {
-                        sh 'npm run --silent clean-build && npm run --silent copy-files && npm run --silent eslint'
+                        sh '''
+                        ON_JENKINS=true npm run --silent test
+                        # Submit coverage to coveralls
+                        cat coverage/*lcov.info | coveralls -v
+                        '''
                       }
                     } catch (err) {
                       echo "Error: ${err}"
-                      fail('Stopping build: Eslint failed')
+                      fail('Stopping build: Mocha test suite failed')
                     }
-                }
+                  }
               }
           }
-          stage('Stage B') {
+          stage('Jest') {
               agent {
                   label "lisk-hub"
               }
               steps {
-                  echo "On Stage B"
+                  script {
+                     try {
+                        ansiColor('xterm') {
+                          sh '''
+                          ON_JENKINS=true npm run --silent test-jest
+                          # Submit coverage to coveralls
+                          cat coverage/jest/*lcov.info | coveralls -v
+                          '''
+                        }
+                      } catch (err) {
+                        echo "Error: ${err}"
+                        fail('Stopping build: Jest test suite failed')
+                      }
+                  }
               }
           }
         }
