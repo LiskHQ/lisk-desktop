@@ -11,7 +11,7 @@
 }
 
 .settingsNewsFeed {
-  width: 100%;
+  padding: 0 20px;
 }
 
 .form {
@@ -63,6 +63,13 @@
   & input[type='checkbox'] {
     &:checked + label .button {
       transform: translateX(calc(-1 * var(--check-box-height)));
+    }
+  }
+
+  & input[type='checkbox']:disabled {
+    & span.circle {
+      color: gray;
+      background: grey;
     }
   }
 }

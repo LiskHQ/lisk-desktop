@@ -42,11 +42,13 @@ class NewsFeed extends React.Component {
   render() {
     const settingsButton = this.state.showSettings ?
       (<div className={styles.settingsButton} onClick={() => { this.hideSettings(); }}>
-        <span>BACK</span>
+        <span>Done</span>
       </div>) :
       (<div className={styles.settingsButton} onClick={() => { this.openSettings(); }}>
         <FontIcon className='online' value='edit' />
       </div>);
+
+    const filteredNewsFeed = this.state.newsFeed.filter(feed => this.props.channels[feed.source]);
     return (
       <div className={styles.newsFeed}>
         <div className={styles.header}>
@@ -64,7 +66,7 @@ class NewsFeed extends React.Component {
               setNewsChannels={this.setNewsChannels.bind(this)} />
           </form> :
           <form className={styles.form}>
-            {this.state.newsFeed.map((news, index) => (
+            {filteredNewsFeed.map((news, index) => (
               <div className={styles.newsWrapper} key={`newsWrapper-${index}`}>
                 <News {...news} />
               </div>
