@@ -104,10 +104,10 @@ class Header extends React.Component {
                                 />
                               </Countdown>
                             </div>
-                            : <div></div>
+                            : null
                           }
                         </div>
-                        : <div></div>
+                        : null
                       }
                       <div
                         className={`${styles.logout} logout`}
