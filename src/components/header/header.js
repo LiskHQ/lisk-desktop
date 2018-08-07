@@ -56,6 +56,12 @@ class Header extends React.Component {
   render() {
     return (
       <header className={`${styles.wrapper} mainHeader`}>
+        <div className={`${styles.searchBar}`}>
+          {this.shouldShowSearchBar() && <SearchBar/>}
+        </div>
+        {this.props.account.loading
+            ? null
+            : <Account peers={this.props.peers} t={this.props.t}/>}
         <div className={`${styles.loginInfo}`}>
           <div>
             <div style={{ display: 'inline-block', float: 'left' }}>
@@ -129,12 +135,6 @@ class Header extends React.Component {
               }
             </div>
           </div>
-        </div>
-        <div className={`${styles.searchBar}`}>
-          {this.shouldShowSearchBar() && <SearchBar/>}
-          {this.props.account.loading
-            ? null
-            : <Account peers={this.props.peers} t={this.props.t}/>}
         </div>
       </header>
     );

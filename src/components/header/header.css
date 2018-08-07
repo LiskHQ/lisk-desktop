@@ -15,7 +15,9 @@
 }
 
 .wrapper {
-  text-align: right;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 
   & .noPadding {
     padding: 0px;

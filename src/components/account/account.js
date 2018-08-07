@@ -10,19 +10,26 @@ import styles from './account.css';
  */
 
 const Account = ({ peers, t }) => {
+  const iconMap = ['mainnet', 'testnet', 'devnet'];
+  const translations = iconMap.map(code => t(code));
+
+  
   const status = (peers.status && peers.status.online) ?
-    <FontIcon className='online' value='checkmark' /> :
+    <FontIcon className={styles.network} value={iconMap[peers.options.code]} /> :
     <FontIcon className='offline' value='error' />;
 
   return ((peers.data &&
       peers.options.code !== networks.mainnet.code) ?
     <section className={styles.peer}>
-      <div className={`${styles.title} inner primary peer-network`}>{t(peers.options.name)} <span id="accountStatus" className={`${styles.status} status`}>{status}</span>
+      <div className={`${styles.title} inner primary peer-network`}>
+        <span id="accountStatus" className={`${styles.status} status`}>
+          {status}
+          {t('Connected to ')}{translations[peers.options.code]}
+        </span>
+        <span className={`${styles.current} inner secondary peer`}>
+          {peers.data.currentNode}
+        </span>
       </div>
-
-      <span className={`${styles.current} inner secondary peer`}>
-        {peers.data.currentNode}
-      </span>
     </section> :
     null
   );
