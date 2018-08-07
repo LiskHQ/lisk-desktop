@@ -26,6 +26,17 @@ const liskServiceApi = {
         }
       }).catch(reject);
   }),
+  getNewsFeed: () => new Promise((resolve, reject) => {
+    popsicle.get(`${liskServiceUrl}/api/newsfeed`)
+      .use(popsicle.plugins.parse('json'))
+      .then((response) => {
+        if (response.body) {
+          resolve(response.body);
+        } else {
+          reject(response.body);
+        }
+      }).catch(reject);
+  }),
 };
 
 export default liskServiceApi;

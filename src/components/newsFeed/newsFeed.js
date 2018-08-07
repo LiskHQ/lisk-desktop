@@ -3,13 +3,28 @@ import styles from './newsFeed.css';
 import News from './news';
 import { FontIcon } from '../fontIcon';
 import SettingsNewsFeed from './settingsNewsFeed';
+import liskServiceApi from '../../utils/api/liskService';
 
 class NewsFeed extends React.Component {
   constructor() {
     super();
     this.state = {
       showSettings: false,
+      newsFeed: [],
     };
+    this.updateData();
+  }
+
+
+  updateData() {
+    liskServiceApi.getNewsFeed().then((newsFeed) => {
+      const sortedNewsFeed = newsFeed.sort((newsFeedA, newsFeedB) => (
+        new Date(newsFeedB.timestamp) - new Date(newsFeedA.timestamp)
+      ));
+      this.setState({ newsFeed: sortedNewsFeed });
+    }).catch((error) => {
+      this.setState({ error });
+    });
   }
 
   openSettings() {
@@ -49,7 +64,7 @@ class NewsFeed extends React.Component {
               setNewsChannels={this.setNewsChannels.bind(this)} />
           </form> :
           <form className={styles.form}>
-            {this.props.newsFeed.map((news, index) => (
+            {this.state.newsFeed.map((news, index) => (
               <div className={styles.newsWrapper} key={`newsWrapper-${index}`}>
                 <News {...news} />
               </div>

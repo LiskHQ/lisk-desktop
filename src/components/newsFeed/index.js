@@ -11,7 +11,13 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-  channels: state.settings.channels,
+  channels: state.settings.channels || {
+    academy: false,
+    twitter: true,
+    blog: false,
+    github: false,
+    reddit: false,
+  },
   newsFeed: state.news.messages,
 });
 
