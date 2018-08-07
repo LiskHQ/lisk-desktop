@@ -17,7 +17,7 @@ class CustomCountDown extends React.Component {
           text: t('You will be signed out in a minute due to no network activity. You can turn off Auto-Logout in the settings.'),
           firstButton: {
             text: t('Go to settings'),
-            onClickHandler: this.goTo(routes.setting.path),
+            onClickHandler: this.goTo.bind(this, routes.setting.path),
           },
           secondButton: {
             text: t('Reset timer & continue'),
@@ -37,11 +37,11 @@ class CustomCountDown extends React.Component {
           text: t('Your session was timed out after 10 minutes of no network activitiy. You may continue to use certain sections of your Lisk Hub or sign back in to access everything.'),
           firstButton: {
             text: t('Sign back in'),
-            onClickHandler: this.goTo(routes.login.path),
+            onClickHandler: this.goTo.bind(this, routes.login.path),
           },
           secondButton: {
             text: t('Continue to Dashboard'),
-            onClickHandler: this.goTo(routes.dashboard.path),
+            onClickHandler: this.goTo.bind(this, routes.dashboard.path),
           },
         },
       });
