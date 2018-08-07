@@ -9,6 +9,10 @@
   --fee-color: var(--color-grayscale-dark);
 }
 
+.input input {
+  padding-right: 120px;
+}
+
 .form {
   position: relative;
   margin-bottom: 15px;
