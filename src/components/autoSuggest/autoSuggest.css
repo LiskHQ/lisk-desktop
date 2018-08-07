@@ -45,7 +45,7 @@
   pointer-events: none;
   opacity: 0.5;
   padding: 0;
-  width: calc(30vw - 74px);
+  width: calc(30vw - 74px); /* stylelint-disable-line */
 
   text-overflow: ellipsis;
 }
