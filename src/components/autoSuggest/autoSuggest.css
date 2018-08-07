@@ -45,7 +45,9 @@
   pointer-events: none;
   opacity: 0.5;
   padding: 0;
-  width: 100%;
+  width: calc(30vw - 74px);
+
+  text-overflow: ellipsis;
 }
 
 .input {
