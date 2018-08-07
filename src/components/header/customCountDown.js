@@ -21,7 +21,7 @@ class CustomCountDown extends React.Component {
           },
           secondButton: {
             text: t('Reset timer & continue'),
-            onClickHandler: () => {
+            onClickHandler: /* istanbul ignore next */ () => {
               resetTimer();
               closeDialog();
             },
@@ -48,6 +48,7 @@ class CustomCountDown extends React.Component {
     }
   }
 
+  /* istanbul ignore next */
   goTo(path) {
     this.props.history.replace(path);
     this.props.closeDialog();
