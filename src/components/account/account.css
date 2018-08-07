@@ -76,6 +76,8 @@
   justify-content: center;
 
   &:hover {
+    color: var(--color-grayscale-medium);
+
     & span {
       display: inline-block;
     }
@@ -84,6 +86,7 @@
 
 .current {
   color: var(--color-grayscale-medium);
+  margin-top: 8px;
   margin-left: 32px;
   display: none;
 }
@@ -92,8 +95,7 @@
   font-size: 16px;
   display: inline-block;
   text-align: left;
-  display: inline-block;
-  width: 250px;
+  width: auto;
   height: 56px;
 }
 

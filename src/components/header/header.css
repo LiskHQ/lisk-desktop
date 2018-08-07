@@ -27,6 +27,7 @@
     display: inline-block;
     float: left;
     margin-bottom: 30px;
+    margin-right: 32px;
   }
 }
 
@@ -216,6 +217,12 @@
   .loginInfo {
     width: 100%;
     float: none;
+
+    & > div {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
   }
 
   .wrapper {
@@ -231,6 +238,7 @@
     & .searchBar {
       width: 100%;
       margin-bottom: 0;
+      display: none;
     }
   }
 
