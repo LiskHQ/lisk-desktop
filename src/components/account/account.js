@@ -13,7 +13,7 @@ const Account = ({ peers, t }) => {
   const iconMap = ['mainnet', 'testnet', 'devnet'];
   const translations = iconMap.map(code => t(code));
   const status = (peers.status && peers.status.online) ?
-    <FontIcon className={styles.network} value={iconMap[peers.options.code]} /> :
+    <FontIcon className={`${styles.network} online`} value={iconMap[peers.options.code]} /> :
     <FontIcon className='offline' value='error' />;
 
   return ((peers.data &&
