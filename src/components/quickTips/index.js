@@ -52,12 +52,14 @@ class QuickTips extends React.Component {
             <div className={styles.steps}>
               <div
                 onClick={() => { this.previousStep(); }}
-                className={`${styles.previousStep} ${currentIndex === 0 ? styles.disabled : ''}`}
+                className={`previousStep ${styles.previousStep}
+                  ${currentIndex === 0 ? `${styles.disabled} disabled` : ''}`}
               ><FontIcon className={styles.arrow} value='arrow-left'/>{this.props.t('Previous')}</div>
-                {`${currentIndex + 1}  /  ${quickTips(this.props.t).length}`}
+                <div className="pagination">{`${currentIndex + 1}  /  ${quickTips(this.props.t).length}`}</div>
               <div
                 onClick={() => { this.nextStep(); }}
-                className={`${styles.nextStep} ${currentIndex + 1 === quickTips(this.props.t).length ? styles.disabled : ''}`}
+                className={`nextStep ${styles.nextStep}
+                  ${currentIndex + 1 === quickTips(this.props.t).length ? `${styles.disabled} disabled` : ''}`}
               >{this.props.t('Next')}<FontIcon className={styles.arrow} value='arrow-right'/></div>
             </div>
           </div>

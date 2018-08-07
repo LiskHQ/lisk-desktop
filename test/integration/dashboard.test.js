@@ -33,6 +33,8 @@ import CurrencyGraph from '../../src/components/dashboard/currencyGraph';
 import accounts from '../constants/accounts';
 import GenericStepDefinition from '../utils/genericStepDefinition';
 import EmptyState from '../../src/components/emptyState';
+import TransactionRow from '../../src/components/transactions/transactionRow';
+import QuickTips from '../../src/components/quickTips';
 
 describe('@integration: Dashboard', () => {
   let store;
@@ -104,7 +106,7 @@ describe('@integration: Dashboard', () => {
     sendTransactionsStub.restore();
   });
 
-  const setupStep = (accountType, options = { isLocked: false }) => {
+  const setupStep = (accountType, options = { isLocked: false, isLoggedIn: true }) => {
     store = prepareStore({
       account: accountReducer,
       transactions: transactionsReducer,
@@ -131,7 +133,6 @@ describe('@integration: Dashboard', () => {
       unconfirmedBalance: '0',
       passphrase,
     };
-
     accountAPIStub.withArgs(match.any).returnsPromise().resolves({ data: [...account] });
     store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
     delegateAPIStub.withArgs(match.any).returnsPromise()
@@ -145,7 +146,9 @@ describe('@integration: Dashboard', () => {
       });
 
     store.dispatch(accountsRetrieved());
-    store.dispatch(accountLoggedIn(account));
+    if (options.isLoggedIn) {
+      store.dispatch(accountLoggedIn(account));
+    }
 
     wrapper = mount(renderWithRouter(Dashboard, store, { history }));
     helper = new Helper(wrapper, store);
@@ -163,7 +166,7 @@ describe('@integration: Dashboard', () => {
 
     describe('Scenario: should allow to send LSK from locked account', () => {
       const { passphrase } = accounts.genesis;
-      step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis', { isLocked: true }));
+      step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis', { isLocked: true, isLoggedIn: true }));
       step('And I fill in "1" to "amount" field', () => { helper.fillInputField('1', 'amount'); });
       step('And I fill in "537318935439898807L" to "recipient" field', () => { helper.fillInputField('537318935439898807L', 'recipient'); });
       step('And I click "send next button"', () => helper.clickOnElement('button.send-next-button'));
@@ -179,6 +182,12 @@ describe('@integration: Dashboard', () => {
       step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
       step('Then I should see 5 rows', () => helper.shouldSeeCountInstancesOf(5, 'TransactionRow'));
       step('Then I click on one of the transactions and expect to get directed to its details', () => helper.clickOnTransaction());
+    });
+
+    describe('Scenario: should not display Transactions', () => {
+      step('Given I\'m on "wallet" as "genesis" account not Logged in', () => setupStep('genesis', { isLoggedIn: false }));
+      step('Then I should see 0 instances of "send box"', () => helper.shouldSeeCountInstancesOf(0, TransactionRow));
+      step('Then I should see 1 instance of "quickTips"', () => helper.shouldSeeCountInstancesOf(1, QuickTips));
     });
   });
 
