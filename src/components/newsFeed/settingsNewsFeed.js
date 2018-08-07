@@ -3,15 +3,14 @@ import Checkbox from '../toolbox/sliderCheckbox';
 import styles from './settingsNewsFeed.css';
 
 const unlockedOptions = ['twitter'];
-
 const SettingsNewsFeed = props => (
   <div className={styles.settingsNewsFeed}>
-    <div>Choose which feeds to display.</div>
+    <div className={styles.header}>Choose which feeds to display.</div>
     {Object.keys(props.channels)
       .filter(channel => unlockedOptions.indexOf(channel) !== -1)
       .map((channel, index) => (
         <div className={styles.item} key={`channel-${index}`}>
-          <label>{props.t(channel)}</label>
+          <label>{channel.charAt(0).toUpperCase() + channel.substr(1)}</label>
           <Checkbox
             onChange={() =>
               props.setNewsChannels({

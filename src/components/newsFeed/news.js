@@ -25,7 +25,7 @@ class News extends React.Component {
     // hours, just now
     let timestampMessage = hours ? `${hours}h ago` : 'just now';
     // days
-    timestampMessage = hours > 24 ? `${Math.floor(hours / 24)}days ago` : timestampMessage;
+    timestampMessage = hours > 24 ? `${Math.floor(hours / 24)} days ago` : timestampMessage;
 
     // Makes first letter capital
     const sourceName = source.charAt(0).toUpperCase() + source.substr(1);
@@ -40,7 +40,7 @@ class News extends React.Component {
             content : content.slice(0, 50)} */}
           {content}
         </div>
-        <a href={url}>Read More</a>
+        <a className={styles.readMore} href={url}>Read More</a>
         {/* {!this.state.readMore ?
           <div
             className={styles.readMore}

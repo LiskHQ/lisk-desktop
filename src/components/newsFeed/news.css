@@ -4,7 +4,7 @@
 }
 
 .header {
-  padding: 5px 0;
+  padding: 25px 0 0;
   display: flex;
 }
 
@@ -22,7 +22,7 @@
   padding-bottom: 10px;
 }
 
-.tag {
+.source {
   font-weight: 600;
 }
 
@@ -30,5 +30,6 @@
   color: #2475b9;
   font-weight: 600;
   cursor: pointer;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
+  text-decoration: none;
 }
