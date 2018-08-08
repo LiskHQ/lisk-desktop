@@ -64,6 +64,9 @@ module.exports = function (config) {
             'src/store/reducers/liskService.js',
             'src/actions/transactions.js',
             'src/components/errorBoundary/index.js',
+            // moving to jest, causes uncovered branches in
+            'src/actions/search.js',
+            'src/components/searchBar/index.js',
             // Jest covered
             'src/components/transactions/**/*.js',
           ],

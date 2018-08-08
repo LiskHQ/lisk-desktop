@@ -247,8 +247,8 @@
     "collectCoverage": true,
     "coverageDirectory": "<rootDir>/coverage/jest",
     "collectCoverageFrom": [
-      "<rootDir>/src",
-      "<rootDir>/app/src",
+      "<rootDir>/src/**/*.{js}",
+      "<rootDir>/app/src/**/*.{js}",
       "!**/node_modules/**"
     ],
     "coverageThreshold": {

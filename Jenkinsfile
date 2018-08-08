@@ -71,7 +71,7 @@ node('lisk-hub') {
           sh '''
           ON_JENKINS=true npm run --silent test
           # Submit coverage to coveralls
-          cat coverage/*lcov.info | coveralls -v
+          cat coverage/*/lcov.info | coveralls -v
           '''
         }
       } catch (err) {
