@@ -43,7 +43,7 @@ class NewsFeed extends React.Component {
   render() {
     const settingsButton = this.state.showSettings ?
       (<div className={styles.settingsButton} onClick={() => { this.hideSettings(); }}>
-        <span>Done</span>
+        <span>{this.props.t('Done')}</span>
       </div>) :
       (<div className={styles.settingsButton} onClick={() => { this.openSettings(); }}>
         <FontIcon className='online' value='edit' />
@@ -70,7 +70,9 @@ class NewsFeed extends React.Component {
             <form className={styles.form}>
               {filteredNewsFeed.map((news, index) => (
                 <div className={styles.newsWrapper} key={`newsWrapper-${index}`}>
-                  <News {...news} />
+                  <News
+                    t={this.props.t}
+                    {...news} />
                 </div>
               ))}
             </form>

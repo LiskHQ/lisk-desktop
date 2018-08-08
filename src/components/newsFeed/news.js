@@ -18,7 +18,7 @@ class News extends React.Component {
 
   render() {
     const {
-      source, content, timestamp, url,
+      source, content, timestamp, url, t,
     } = this.props;
 
     const hours = this.diffHours(new Date(), new Date(timestamp));
@@ -38,7 +38,7 @@ class News extends React.Component {
         <div className={styles.description}>
           {content}
         </div>
-        <a className={styles.readMore} href={url}>Read More</a>
+        <a className={styles.readMore} href={url}>{t('Read More')}</a>
       </div>
     );
   }

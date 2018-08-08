@@ -37,7 +37,6 @@ class Dashboard extends React.Component {
     } = this.props;
 
     const isLoggedIn = !!account.address;
-    console.log(!!isLoggedIn);
 
     return <div className={`${grid.row} ${styles.wrapper}`}>
       <div className={`${grid['col-md-8']} ${grid['col-xs-12']} ${styles.main}`}>
