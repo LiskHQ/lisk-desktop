@@ -12,5 +12,4 @@ export { default as search } from './search';
 export { default as settings } from './settings';
 export { default as delegate } from './delegate';
 export { default as liskService } from './liskService';
-export { default as news } from './news';
 export { default as filters } from './filters';

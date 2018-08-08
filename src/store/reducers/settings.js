@@ -8,7 +8,7 @@ const initialState = JSON.parse(localStorage.getItem('settings')) || {
   showNetwork: false,
   channels: {
     academy: false,
-    twitter: false,
+    twitter: true,
     blog: false,
     github: false,
     reddit: false,

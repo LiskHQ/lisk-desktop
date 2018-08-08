@@ -36,18 +36,9 @@ class News extends React.Component {
           <div className={styles.timestampMessage}>{timestampMessage}</div>
         </div>
         <div className={styles.description}>
-          {/* {this.state.readMore && content.length > 50 ?
-            content : content.slice(0, 50)} */}
           {content}
         </div>
         <a className={styles.readMore} href={url}>Read More</a>
-        {/* {!this.state.readMore ?
-          <div
-            className={styles.readMore}
-            onClick={() => {
-              this.setState({ readMore: true });
-            }}>Read more</div>
-          : ''} */}
       </div>
     );
   }

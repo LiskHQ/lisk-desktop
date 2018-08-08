@@ -5,7 +5,7 @@ import { FontIcon } from '../fontIcon';
 import Box from '../box';
 import MultiStep from './../multiStep';
 import ResultBox from '../resultBox';
-import NewsFeed from '../newsFeed';
+import SendWritable from './../sendWritable';
 import SendReadable from './../sendReadable';
 import Request from '../request';
 import SpecifyRequest from '../request/specifyRequest';
@@ -72,7 +72,7 @@ class Send extends React.Component {
               finalCallback={this.setActiveOnMobile.bind(this, { isActiveOnMobile: false })}
               className={styles.wrapper}>
               <AccountInitialization address={recipient}/>
-              <NewsFeed
+              <SendWritable
                 autoFocus={this.state.isActiveOnMobile || window.innerWidth > breakpoints.m}
                 address={recipient}
                 amount={amount}

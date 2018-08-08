@@ -12,7 +12,7 @@ import CurrencyGraph from './currencyGraph';
 import routes from '../../constants/routes';
 import { settingsUpdated } from '../../actions/settings';
 import FollowedAccounts from '../followedAccounts/index';
-// import NewsFeed from '../newsFeed';
+import NewsFeed from '../newsFeed';
 
 import styles from './dashboard.css';
 
@@ -20,7 +20,7 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
 
-    const isLoggedIn = props.account.address;
+    const isLoggedIn = !!props.account.address;
 
     if (isLoggedIn) {
       this.props.loadTransactions({
@@ -36,7 +36,8 @@ class Dashboard extends React.Component {
       transactions, t, account, loading, history,
     } = this.props;
 
-    const isLoggedIn = account.address;
+    const isLoggedIn = !!account.address;
+    console.log(!!isLoggedIn);
 
     return <div className={`${grid.row} ${styles.wrapper}`}>
       <div className={`${grid['col-md-8']} ${grid['col-xs-12']} ${styles.main}`}>
@@ -76,9 +77,9 @@ class Dashboard extends React.Component {
           </div>
         </div>
       </div>
-      {isLoggedIn ? <div className={`${grid['col-md-4']} ${styles.sendWrapper}`}>
-        <Send {...this.props} />
-      </div> : <div></div>}
+      <div className={`${grid['col-md-4']} ${styles.sendWrapper}`}>
+        {isLoggedIn ? <Send {...this.props} /> : <NewsFeed />}
+      </div>
     </div>;
   }
 }
