@@ -1,3 +1,5 @@
+import academy from '../assets/images/dashboard/academy.svg';
+
 const quickTips = t => [
   {
     title: t('What makes Lisk IDs special?'),
@@ -9,7 +11,7 @@ const quickTips = t => [
       title: t('More about accounts'),
       link: 'https://lisk.io/academy',
     },
-    picture: '../../assets/images/dashboard/universe.svg',
+    picture: academy,
   },
   {
     title: t('Why should I vote?'),
@@ -21,7 +23,7 @@ const quickTips = t => [
       title: t('More about voting'),
       link: 'https://lisk.io/academy',
     },
-    picture: '../../assets/images/dashboard/racing-car.svg',
+    picture: academy,
   },
   {
     title: t('How is Lisk transparent?'),
@@ -33,7 +35,7 @@ const quickTips = t => [
       title: t('More about transparency'),
       link: 'https://lisk.io/academy',
     },
-    picture: '../../assets/images/dashboard/soccer.svg',
+    picture: academy,
   },
   {
     title: t('Dive in to the Academy'),
@@ -44,7 +46,7 @@ const quickTips = t => [
       title: t('Take a look'),
       link: 'https://lisk.io/academy',
     },
-    picture: '../../assets/images/dashboard/academy.svg',
+    picture: academy,
   },
 ];
 
