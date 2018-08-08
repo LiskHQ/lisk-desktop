@@ -1,34 +1,25 @@
-import { validateUrl } from './login';
-import { extractAddress } from './account';
+// import { validatAddress } from './account';
 
-const isValidSavedAccount = ({ publicKey, network, peerAddress }) => {
-  try {
-    return extractAddress(publicKey) &&
-      network >= 0 && network <= 2 &&
-      (validateUrl(peerAddress).addressValidity === '' || network !== 2);
-  } catch (e) {
-    return false;
-  }
-};
+// const isValidSavedAccount = ({ publicKey, network, peerAddress }) => {
+//   try {
+//     return extractAddress(publicKey) &&
+//       network >= 0 && network <= 2 &&
+//       (validateUrl(peerAddress).addressValidity === '' || network !== 2);
+//   } catch (e) {
+//     return false;
+//   }
+// };
 
-const fixBackwardsCompatibility = (account) => {
-  // 'address' property was renamed to 'peerAddress' to avoid confusion with account address
-  if (account && account.address) {
-    account.peerAddress = account.address;
-    delete account.address;
-  }
-  return account;
-};
+// const fixBackwardsCompatibility = (account) => {
+//   // 'address' property was renamed to 'peerAddress' to avoid confusion with account address
+//   if (account && account.address) {
+//     account.peerAddress = account.address;
+//     delete account.address;
+//   }
+//   return account;
+// };
 
-export const getSavedAccounts = () => {
-  try {
-    return JSON.parse(localStorage.getItem('accounts'))
-      .map(fixBackwardsCompatibility)
-      .filter(isValidSavedAccount);
-  } catch (e) {
-    return [];
-  }
-};
+export const getSavedAccounts = () => [];
 
 export const setSavedAccounts = (accounts) => {
   accounts = accounts.map(({
