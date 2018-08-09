@@ -37,7 +37,7 @@ class Header extends React.Component {
       childComponent: Options,
       childComponentProps: {
         title: this.props.t('Logout'),
-        text: this.props.t('After logging out of your account you will be able to access the Dashbard, Settings and Explorer.'),
+        text: this.props.t('After logging out of your account you will be able to access the Dashboard, Settings and Explorer.'),
         firstButton: {
           text: this.props.t('Cancel'),
           onClickHandler: this.props.closeDialog,
