@@ -30,6 +30,7 @@
   font-family: "Open Sans";
   height: 200px;
   font-size: 16px;
+  color: #3c5068;
 
   & .description {
     width: 70%;
@@ -52,7 +53,7 @@
   font-weight: 600;
 
   & span {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   & .previousStep {
@@ -72,7 +73,7 @@
 }
 
 .arrow {
-  line-height: 14px !important;
+  line-height: 18px !important;
 }
 
 .quickTipBody {
@@ -84,7 +85,6 @@
 
 @media (--xLarge-viewport) {
   .descriptionRow {
-
     & .description {
       width: 70%;
     }
@@ -97,7 +97,6 @@
 
 @media (--large-viewport) {
   .descriptionRow {
-
     & .description {
       width: 60%;
     }
@@ -107,7 +106,6 @@
     }
   }
 }
-
 
 @media (--medium-viewport) {
   .descriptionRow {
