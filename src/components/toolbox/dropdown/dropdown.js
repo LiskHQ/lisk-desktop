@@ -13,7 +13,7 @@ class ToolBoxDropdown extends React.Component {
           innerRef={(ref) => { this.dropdownEl = ref; }}>
             <FontIcon
               className={theme.arrow}
-               onClick={() => {
+               onClick={/* istanbul ignore next */ () => {
                  this.dropdownEl.open({ target: this.dropdownEl.inputNode.inputNode });
                }}
               value='arrow-down'/>
