@@ -19,9 +19,6 @@ class NewsFeed extends React.Component {
 
   updateData() {
     liskServiceApi.getNewsFeed().then((newsFeed) => {
-      // const sortedNewsFeed = newsFeed.sort((newsFeedA, newsFeedB) => (
-      //   new Date(newsFeedB.timestamp) - new Date(newsFeedA.timestamp)
-      // ));
       this.setState({ newsFeed });
     }).catch((error) => {
       this.setState({ error });
