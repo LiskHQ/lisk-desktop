@@ -27,9 +27,12 @@
 }
 
 .readMore {
-  color: #2475b9;
-  font-weight: 600;
-  cursor: pointer;
-  padding-bottom: 20px;
-  text-decoration: none;
+  padding-bottom: 10px;
+
+  & a {
+    color: #2475b9;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+  }
 }

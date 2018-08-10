@@ -57,24 +57,24 @@ class NewsFeed extends React.Component {
             </header>
             {settingsButton}
           </div>
-          {this.state.showSettings ?
-            <form className={styles.form}>
+          <div className={styles.container}>
+            {this.state.showSettings ?
               <SettingsNewsFeed
                 t={this.props.t}
                 channels={this.props.channels}
                 hideSettings={this.hideSettings.bind(this)}
-                setNewsChannels={this.setNewsChannels.bind(this)} />
-            </form> :
-            <form className={styles.form}>
-              {filteredNewsFeed.map((news, index) => (
-                <div className={styles.newsWrapper} key={`newsWrapper-${index}`}>
-                  <News
-                    t={this.props.t}
-                    {...news} />
-                </div>
-              ))}
-            </form>
-          }
+                setNewsChannels={this.setNewsChannels.bind(this)} /> :
+              <div>
+                {filteredNewsFeed.map((news, index) => (
+                  <div className={styles.newsWrapper} key={`newsWrapper-${index}`}>
+                    <News
+                      t={this.props.t}
+                      {...news} />
+                  </div>
+                ))}
+              </div>
+            }
+          </div>
           <footer>
           </footer>
         </div>

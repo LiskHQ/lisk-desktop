@@ -81,6 +81,6 @@ describe('NewsFeed', () => {
     liskServiceApiMock.resolves(newsFeed);
     wrapper.update();
 
-    expect(wrapper).to.have.descendants('.news');
+    expect(wrapper).to.have.descendants('.news-item');
   });
 });

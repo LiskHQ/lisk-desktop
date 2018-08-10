@@ -61,7 +61,7 @@ class Dashboard extends React.Component {
               onClick: props => history.push(`${routes.wallet.path}?id=${props.value.id}`),
             }} />
           </Box> :
-          <div></div>
+          null
         }
         <div className={`${grid.row} ${styles.bottomModuleWrapper} `}>
           <div className={`${grid['col-md-6']} ${grid['col-lg-6']} ${grid['col-xs-6']}`} style={{ paddingLeft: '0px' }}>
