@@ -30,7 +30,7 @@ class News extends React.Component {
     // Makes first letter capital
     const sourceName = source.charAt(0).toUpperCase() + source.substr(1);
     return (
-      <div className={styles.news}>
+      <div className={`news ${styles.news}`}>
         <div className={styles.header}>
           <div className={styles.source}>{sourceName}</div>
           <div className={styles.timestampMessage}>{timestampMessage}</div>

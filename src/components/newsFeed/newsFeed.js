@@ -19,10 +19,10 @@ class NewsFeed extends React.Component {
 
   updateData() {
     liskServiceApi.getNewsFeed().then((newsFeed) => {
-      const sortedNewsFeed = newsFeed.sort((newsFeedA, newsFeedB) => (
-        new Date(newsFeedB.timestamp) - new Date(newsFeedA.timestamp)
-      ));
-      this.setState({ newsFeed: sortedNewsFeed });
+      // const sortedNewsFeed = newsFeed.sort((newsFeedA, newsFeedB) => (
+      //   new Date(newsFeedB.timestamp) - new Date(newsFeedA.timestamp)
+      // ));
+      this.setState({ newsFeed });
     }).catch((error) => {
       this.setState({ error });
     });
@@ -42,14 +42,15 @@ class NewsFeed extends React.Component {
 
   render() {
     const settingsButton = this.state.showSettings ?
-      (<div className={styles.settingsButton} onClick={() => { this.hideSettings(); }}>
+      (<div className={`settingsButton ${styles.settingsButton}`} onClick={() => { this.hideSettings(); }}>
         <span>{this.props.t('Done')}</span>
       </div>) :
-      (<div className={styles.settingsButton} onClick={() => { this.openSettings(); }}>
+      (<div className={`settingsButton ${styles.settingsButton}`} onClick={() => { this.openSettings(); }}>
         <FontIcon className='online' value='edit' />
       </div>);
 
     const filteredNewsFeed = this.state.newsFeed.filter(feed => this.props.channels[feed.source]);
+
     return (
       <Box className={`newsFeed-box ${styles.newsFeedBox}`}>
         <div className={styles.newsFeed}>
