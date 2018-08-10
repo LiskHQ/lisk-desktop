@@ -153,9 +153,7 @@ class TransactionsDetailView extends React.Component {
               style={styles.amount} />
           </TransactionDetailViewRow>
 
-          <TransactionDetailViewRow shouldShow={
-            this.props.transaction.amount === '0' &&
-            this.props.transaction.recipientId}>
+          <TransactionDetailViewRow shouldShow={this.props.transaction.type === transactions.vote}>
             <TransactionDetailViewField
               label={this.props.t('Added votes')}
               value={this.getVoters('added')} />

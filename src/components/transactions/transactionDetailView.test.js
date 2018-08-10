@@ -40,7 +40,7 @@ describe('TransactionDetailView', () => {
     const wrapper = mountWithContext(<TransactionDetailView {...props} />, context);
     const expectedValue = /flexboxgrid__row/g;
     const html = wrapper.html();
-    expect(html.match(expectedValue)).to.have.lengthOf(6);
+    expect(html.match(expectedValue)).to.have.lengthOf(5);
     wrapper.find('.transaction-details-back-button').simulate('click');
     expect(props.history.push).to.have.been.calledWith();
   });
@@ -53,7 +53,7 @@ describe('TransactionDetailView', () => {
       fee: '',
       confirmations: '',
       id: '',
-      type: txTypes.send,
+      type: txTypes.vote,
       amount: '0',
     };
     const context = {
