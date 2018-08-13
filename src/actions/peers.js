@@ -25,19 +25,10 @@ const peerSet = (data, config) => ({
  */
 export const activePeerSet = data =>
   (dispatch) => {
-    const addHttp = (url) => {
-      const reg = /^(?:f|ht)tps?:\/\//i;
-      return reg.test(url) ? url : `http://${url}`;
-    };
     const config = data.network || {};
 
     if (config.address) {
-      const { hostname, port, protocol } = new URL(addHttp(config.address));
-
-      config.node = hostname;
-      config.ssl = protocol === 'https:';
-      config.port = port || (config.ssl ? 443 : 80);
-      config.nodes = [`${protocol}//${hostname}:${port}`];
+      config.nodes = [config.address];
     } else if (config.testnet) {
       config.nethash = Lisk.APIClient.constants.TESTNET_NETHASH;
       config.nodes = networks.testnet.nodes;
