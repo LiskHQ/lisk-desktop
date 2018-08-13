@@ -54,6 +54,7 @@ class Header extends React.Component {
   }
 
   render() {
+    const { peers, t, showNetworkIndicator } = this.props;
     return (
       <header className={`${styles.wrapper} mainHeader`}>
         <div>
@@ -62,7 +63,7 @@ class Header extends React.Component {
           </div>
           {this.props.account.loading
                 ? null
-                : <Account peers={this.props.peers} t={this.props.t}/>}
+                : <Account {...{ peers, t, showNetworkIndicator }} />}
         </div>
 
         <div className={`${styles.loginInfo}`}>

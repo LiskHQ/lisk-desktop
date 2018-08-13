@@ -9,14 +9,14 @@ import styles from './account.css';
  * @param {object} props - include properties of component
  */
 
-const Account = ({ peers, t }) => {
+const Account = ({ peers, t, showNetworkIndicator }) => {
   const iconMap = ['mainnet', 'testnet', 'devnet'];
   const translations = iconMap.map(code => t(code));
   const status = (peers.status && peers.status.online) ?
     <FontIcon className={`${styles.network} online`} value={iconMap[peers.options.code]} /> :
     <FontIcon className='offline' value='error' />;
 
-  return ((peers.data &&
+  return ((showNetworkIndicator && peers.data &&
       peers.options.code !== networks.mainnet.code) ?
     <section className={styles.peer}>
       <div className={`${styles.title} inner primary peer-network`}>
