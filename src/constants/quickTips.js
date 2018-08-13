@@ -2,13 +2,13 @@ import academy from '../assets/images/dashboard/academy.svg';
 
 const quickTips = t => [
   {
-    title: t('What makes Lisk IDs special?'),
+    title: t('What is a Lisk ID?'),
     description: [
-      t('Your passphrase is like the only map to a hidden planet in a universe with billions and billions of galaxies. Without the map, it would take impossibly long to find.'),
-      t('Any app capable of reading it can lead you to your account – Lisk Hub, Nano or Commander.'),
+      t('Your Lisk ID is how you recognize and interact with your unique Lisk account, think of it as your email.'),
+      t('You can share your Lisk ID with anyone you wish, but never reveal your passphrase to anyone as it would allow full access to your account.'),
     ],
     goTo: {
-      title: t('More about accounts'),
+      title: t('Learn more'),
       link: 'https://lisk.io/academy',
     },
     picture: academy,
@@ -16,11 +16,11 @@ const quickTips = t => [
   {
     title: t('Why should I vote?'),
     description: [
-      t('For the pit stop of a racing car you want your best people to change wheels and refuel as fast as possible.'),
-      t('Lisk calls them delegates. They contribute  tools, resources and ensure a safe journey. It’s up to you to choose who makes the cut.'),
+      t('By voting you decide who is trusted to verify transactions and maintain the Lisk network, whilst collecting the rewards for doing so.'),
+      t('Each LSK token is worth one vote. Voters can also be rewarded for voting for certain delegates, giving them an incentive to do so.'),
     ],
     goTo: {
-      title: t('More about voting'),
+      title: t('Learn more'),
       link: 'https://lisk.io/academy',
     },
     picture: academy,
@@ -28,22 +28,22 @@ const quickTips = t => [
   {
     title: t('How is Lisk transparent?'),
     description: [
-      t('Activity on a blockchain is like watching a game of football. Thousands of people can see exactly whats happening on the field and disagreements are resolved quickly.'),
-      t('Using this record, you can explore the activities of all players with Lisk Hub.'),
+      t('Like almost all blockchains Lisk has transparency at it’s core. This means that anyone can view everything that happens on the Lisk network, including the holdings of each account.'),
+      t('This helps to keep the network fair, open and honest.'),
     ],
     goTo: {
-      title: t('More about transparency'),
+      title: t('Learn more'),
       link: 'https://lisk.io/academy',
     },
     picture: academy,
   },
   {
-    title: t('Dive in to the Academy'),
+    title: t('Learn more about blockchain'),
     description: [
-      t('The Lisk Academy is a comprehensive and unbiased educational platform on blockchain technology, free and open to everyone.'),
+      t('The Lisk Academy is an entirely free, unbiased and comprehensive educational platform about blockchain technology, containing something for everyone, regardless of what level of knowledge you are at.'),
     ],
     goTo: {
-      title: t('Take a look'),
+      title: t('Learn more'),
       link: 'https://lisk.io/academy',
     },
     picture: academy,
