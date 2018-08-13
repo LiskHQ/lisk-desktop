@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { settingsUpdated } from '../../actions/settings';
+import { channels } from '../../store/reducers/settings';
 import NewsFeed from './newsFeed';
 
 
@@ -9,7 +10,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-  channels: state.settings.channels,
+  channels: state.settings.channels || channels,
 });
 
 export default connect(

@@ -1,18 +1,20 @@
 import actionTypes from '../../constants/actions';
 
+export const channels = {
+  academy: false,
+  twitter: true,
+  blog: false,
+  github: false,
+  reddit: false,
+};
+
 // load setting data from localStorage if it exists
 const initialState = JSON.parse(localStorage.getItem('settings')) || {
   advancedMode: false,
   autoLog: true,
   onBoarding: localStorage.getItem('onboarding') !== 'false',
   showNetwork: false,
-  channels: {
-    academy: false,
-    twitter: true,
-    blog: false,
-    github: false,
-    reddit: false,
-  },
+  channels,
 };
 
 /**

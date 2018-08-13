@@ -46,7 +46,8 @@ class NewsFeed extends React.Component {
         <FontIcon className='online' value='edit' />
       </div>);
 
-    const filteredNewsFeed = this.state.newsFeed.filter(feed => this.props.channels[feed.source]);
+    const filteredNewsFeed =
+      this.state.newsFeed.filter(feed => this.props.channels[feed.source]) || [];
 
     return (
       <Box className={`newsFeed-box ${styles.newsFeedBox}`}>
