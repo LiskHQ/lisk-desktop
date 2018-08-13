@@ -27,8 +27,13 @@
   height: 100%;
 }
 
+header {
+  width: 100%;
+}
+
 .outTaken {
   position: absolute;
+  width: 100%;
 }
 
 .loading {

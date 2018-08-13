@@ -48,7 +48,7 @@
     position: absolute;
     left: 0;
     top: 0;
-    margin-top: 50px;
+    margin-top: 32px;
 
     & .forwardToLink {
       color: var(--color-primary-standard);
@@ -62,20 +62,6 @@
 
       & .icon {
         vertical-align: middle;
-      }
-    }
-  }
-
-  /* @todo remove these with #3 */
-
-  & .outTaken {
-    top: 100px;
-
-    & + .outTaken {
-      top: 150px;
-
-      & + .outTaken {
-        top: 200px;
       }
     }
   }
