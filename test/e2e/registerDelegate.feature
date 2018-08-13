@@ -5,7 +5,7 @@ Feature: Register delegate
     And I wait 0.5 seconds
     And I click "choose-name"
     And I wait 0.5 seconds
-    And I fill in "test2" to "delegate-name" field
+    And I fill in "test3" to "delegate-name" field
     And I click "submit-delegate-name"
     And I fill in second passphrase of "second passphrase account" to "second-passphrase" field
     And I click "second-passphrase-next"
