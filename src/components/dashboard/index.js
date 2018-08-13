@@ -9,7 +9,6 @@ import { loadTransactions } from '../../actions/transactions';
 import TransactionList from './../transactions/transactionList';
 import CurrencyGraph from './currencyGraph';
 import routes from '../../constants/routes';
-import { settingsUpdated } from '../../actions/settings';
 import FollowedAccounts from '../followedAccounts/index';
 import NewsFeed from '../newsFeed';
 
@@ -93,7 +92,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   loadTransactions: data => dispatch(loadTransactions(data)),
-  settingsUpdated: data => dispatch(settingsUpdated(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(Dashboard));
