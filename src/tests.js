@@ -16,13 +16,7 @@ sinonStubPromise(sinon);
 /* istanbul ignore next */
 window.localStorage.getItem = () => JSON.stringify([]);
 const testsContext = require.context('.', true, /\.test\.js$/);
-
-const jestExcludePatterns = ['components/transactions'];
-
-testsContext.keys().filter(url =>
-  !jestExcludePatterns.filter(excludePattern =>
-    url.indexOf(excludePattern) > -1).length)
-  .forEach(testsContext);
+testsContext.keys().forEach(testsContext);
 
 const integrationContext = require.context('../test/integration/', true, /\.test\.js$/);
 integrationContext.keys().forEach(integrationContext);
