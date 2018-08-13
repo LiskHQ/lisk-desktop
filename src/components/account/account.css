@@ -77,12 +77,15 @@
   justify-content: center;
 
   &:hover {
-    color: var(--color-grayscale-medium);
-
     & span {
       display: inline-block;
     }
   }
+}
+
+.testnetTitle,
+.devnetTitle {
+  color: var(--color-grayscale-medium);
 }
 
 .current {
