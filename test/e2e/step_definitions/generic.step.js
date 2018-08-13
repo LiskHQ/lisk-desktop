@@ -159,7 +159,7 @@ defineSupportCode(({
     const passphrase = browser.params.useTestnetPassphrase
       ? browser.params.testnetPassphrase
       : accounts[accountName].passphrase;
-    const networkIndex = browser.params.network === 'customNode' ? 3 : 2;
+    const networkIndex = browser.params.network === 'customNode' ? 4 : 3;
     browser.sleep(100);
 
     const checkImLoggedIn = () => {

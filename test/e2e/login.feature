@@ -5,7 +5,7 @@ Feature: Login
     Then I should see no "network"
     When I'm on login page
     And I fill in passphrase of "genesis" to "passphrase" field
-    And I select option no. 1 from "network" select
+    And I select option no. 2 from "network" select
     And I click "login button"
     Then I should be logged in as "genesis" account
     And I should see no "peer network"
@@ -22,7 +22,7 @@ Feature: Login
     Then I should see no "network"
     When I'm on login page
     Then I fill in passphrase of "genesis" to "passphrase" field
-    And I select option no. 2 from "network" select
+    And I select option no. 3 from "network" select
     And I click "login button"
     Then I should be logged in as "genesis" account
     And I should see text "testnet" in "peer network" element
@@ -36,7 +36,7 @@ Feature: Login
     Then I should see no "network"
     When I'm on login page
     Then I fill in passphrase of "genesis" to "passphrase" field
-    And I select option no. 3 from "network" select
+    And I select option no. 4 from "network" select
     When I fill in "https://testnet.lisk.io" to "address" field
     And I click "login button"
     Then I should be logged in as "genesis" account
