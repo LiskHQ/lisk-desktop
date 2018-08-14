@@ -23,12 +23,10 @@
 }
 
 .fee {
-  text-align: right;
   margin-bottom: 24px;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
   position: absolute;
-  right: 0;
   top: 70px;
   color: var(--fee-color);
 }
