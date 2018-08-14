@@ -49,7 +49,7 @@ class Converter extends React.Component {
             <div className={this.props.error ? `${styles.convertorErr} convertorErr` : `${styles.convertor} convertor`}>
               <div className={`${styles.convertElem}`}>
                 {this.props.t('ca.')}
-                  <div className='converted-price'>{price} {this.props.settings.currency}</div>
+                <div className='converted-price'>{price} {this.props.settings.currency}</div>
               </div>
             </div>
             : <div></div>

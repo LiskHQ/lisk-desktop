@@ -31,6 +31,10 @@
   color: var(--fee-color);
 }
 
+.convertElem {
+  display: flex;
+}
+
 .convertorWrapper {
   text-align: right;
   font-size: 14px;
