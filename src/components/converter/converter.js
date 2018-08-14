@@ -47,7 +47,10 @@ class Converter extends React.Component {
         <div className={styles.convertorWrapper}>
           {this.props.value !== '' && this.state.LSK[this.props.settings.currency] ?
             <div className={this.props.error ? `${styles.convertorErr} convertorErr` : `${styles.convertor} convertor`}>
-              <div className={`${styles.convertElem} converted-price`}>{`${this.props.t('ca.')} ${price} ${this.props.settings.currency}`}</div>
+              <div className={`${styles.convertElem}`}>
+                {this.props.t('ca.')}
+                  <div className='converted-price'>{price} {this.props.settings.currency}</div>
+              </div>
             </div>
             : <div></div>
           }
