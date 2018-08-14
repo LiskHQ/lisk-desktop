@@ -17,9 +17,11 @@ class ConfirmRequest extends React.Component {
 
   render() {
     const {
-      address, amount, prevStep, finalCallback, t,
+      address, amount, reference, prevStep, finalCallback, t,
     } = this.props;
-    const link = `lisk://wallet?recipient=${address}&amount=${amount}`;
+    let link = `lisk://wallet?recipient=${address}&amount=${amount}`;
+    link = reference ? `${link}&reference=${reference}` : link;
+
     return (
       <div className={`${styles.wrapper} confirm-request-step`}>
         <div className={styles.header}>
@@ -37,6 +39,12 @@ class ConfirmRequest extends React.Component {
               <AccountVisual address={address} size={50} />
             </figure>
           </Input>
+
+          {reference ?
+            <Input label={t('Reference')}
+              className={`recipient ${styles.disabledInput}`}
+              value={reference}
+              disabled={true}/> : null}
 
           <Input label={t('Request amount (LSK)')}
             className={`recipient ${styles.disabledInput}`}

@@ -13,6 +13,7 @@ describe('Confirm Request', () => {
       t: key => key,
       address: '234l',
       amount: '2345',
+      reference: 'test',
       prevStep: spy(),
       finalCallback: spy(),
     };
