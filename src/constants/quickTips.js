@@ -1,4 +1,7 @@
 import academy from '../assets/images/dashboard/academy.svg';
+import id from '../assets/images/dashboard/id.svg';
+import transparent from '../assets/images/dashboard/transparent.svg';
+import vote from '../assets/images/dashboard/vote.svg';
 
 const quickTips = t => [
   {
@@ -11,7 +14,7 @@ const quickTips = t => [
       title: t('Learn more'),
       link: 'https://lisk.io/academy',
     },
-    picture: academy,
+    picture: id,
   },
   {
     title: t('Why should I vote?'),
@@ -23,7 +26,7 @@ const quickTips = t => [
       title: t('Learn more'),
       link: 'https://lisk.io/academy',
     },
-    picture: academy,
+    picture: vote,
   },
   {
     title: t('How is Lisk transparent?'),
@@ -35,7 +38,7 @@ const quickTips = t => [
       title: t('Learn more'),
       link: 'https://lisk.io/academy',
     },
-    picture: academy,
+    picture: transparent,
   },
   {
     title: t('Learn more about blockchain'),
