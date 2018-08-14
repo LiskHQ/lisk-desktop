@@ -32,9 +32,10 @@ class Converter extends React.Component {
 
   render() {
     const { LSK } = this.state;
+    const currency = this.props.settings.currency || 'USD';
 
     let price = !!this.props.error && Number.isNaN(this.props.value) ?
-      (0).toFixed(2) : (this.props.value * LSK[this.props.settings.currency]).toFixed(2);
+      (0).toFixed(2) : (this.props.value * LSK[currency]).toFixed(2);
     price = price > converter.maxLSKSupply || price === 'NaN' || price < 0 ? (0).toFixed(2) : price;
     return (
       <Input
@@ -45,11 +46,11 @@ class Converter extends React.Component {
         theme={styles}
         onChange={this.props.onChange} >
         <div className={styles.convertorWrapper}>
-          {this.props.value !== '' && this.state.LSK[this.props.settings.currency] ?
+          {this.props.value !== '' && this.state.LSK[currency] ?
             <div className={this.props.error ? `${styles.convertorErr} convertorErr` : `${styles.convertor} convertor`}>
               <div className={`${styles.convertElem}`}>
                 {this.props.t('ca.')}
-                <div className='converted-price'>{price} {this.props.settings.currency}</div>
+                <div className='converted-price'>{price} {currency}</div>
               </div>
             </div>
             : <div></div>
@@ -58,8 +59,8 @@ class Converter extends React.Component {
         { this.props.isRequesting || this.props.error ? null :
           <div className={styles.fee}>{this.props.t('Additional fee: {{fee}} LSK', { fee: fromRawLsk(this.fee) })}
           {`, ${this.props.t('ca. {{price}} {{currency}}', {
-            currency: this.props.settings.currency,
-            price: (1 * LSK[this.props.settings.currency]).toFixed(1),
+            currency,
+            price: (1 * LSK[currency]).toFixed(1),
           })}`}</div> }
       </Input>
     );
