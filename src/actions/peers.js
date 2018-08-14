@@ -38,7 +38,7 @@ export const activePeerSet = data =>
     }
 
     if (config.custom) {
-      const liskAPIClient = new Lisk.APIClient(config.nodes, { nethash: config.nethash });
+      const liskAPIClient = new Lisk.APIClient(config.nodes, {});
       loadingStarted('getConstants');
       liskAPIClient.node.getConstants().then((response) => {
         dispatch(loadingFinished('getConstants'));
