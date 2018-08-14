@@ -16,8 +16,9 @@ export const vote = (activePeer, secret, publicKey, votes, unvotes, secondSecret
     passphrase: secret,
     secondPassphrase: secondSecret,
   });
-
-  return activePeer.transactions.broadcast(transaction);
+  return new Promise((resolve, reject) => {
+    activePeer.transactions.broadcast(transaction).then(() => resolve(transaction)).catch(reject);
+  });
 };
 
 export const getVotes = (activePeer, address) =>
