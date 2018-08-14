@@ -14,8 +14,8 @@ const isValidLocalhost = url => url.hostname === 'localhost' && url.port.length 
 const isValidRemote = url => /(([a-z\d]([a-z\d-]*[a-z\d])*)\.)+[a-z]{2,}|((\d{1,3}\.){3})/.test(url.hostname);
 
 const isValidIp = url => (isValidLocalhost(url) ||
-    isValidRemote(url) ||
-    isValidUrlRegEx(url.toString()));
+  isValidRemote(url) ||
+  isValidUrlRegEx(url.toString()));
 
 // eslint-disable-next-line import/prefer-default-export
 export const validateUrl = (value) => {
@@ -23,7 +23,7 @@ export const validateUrl = (value) => {
   let addressValidity = '';
   try {
     const url = new URL(addHttp(value));
-    addressValidity = url && isValidIp(url) ? '' : errorMessage;
+    addressValidity = url && value.indexOf(' ') === -1 && isValidIp(url) ? '' : errorMessage;
   } catch (e) {
     addressValidity = errorMessage;
   }
