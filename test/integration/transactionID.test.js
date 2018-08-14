@@ -1,8 +1,11 @@
+import React from 'react';
 import thunk from 'redux-thunk';
 import { step } from 'mocha-steps';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { stub, match } from 'sinon';
+import configureStore from 'redux-mock-store';
+import { Provider } from 'react-redux';
 
 import * as accountAPI from '../../src/utils/api/account';
 import * as transactionsAPI from '../../src/utils/api/transactions';
@@ -74,17 +77,18 @@ describe('@integration: Single Transaction', () => {
   });
 
   const setupStep = ({ accountType, id }) => {
-    store = prepareStore({
-      account: accountReducer,
-      transaction: transactionReducer,
-      peers: peersReducer,
-      voting: votingReducer,
-    }, [
+    const mockStore = configureStore([
       thunk,
       accountMiddleware,
       loginMiddleware,
       votingMiddleware,
     ]);
+    store = mockStore({
+      account: accountReducer,
+      transaction: transactionReducer,
+      peers: peersReducer,
+      voting: votingReducer,
+    });
 
     const account = {
       ...accounts[accountType],
