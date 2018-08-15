@@ -19,7 +19,7 @@ class News extends React.Component {
     // hours, just now
     let timestampMessage = hours ? `${hours}h ago` : 'just now';
     // more than day
-    timestampMessage = hours > 24 ? `${Math.floor(hours / 24)} days ago` : timestampMessage;
+    timestampMessage = hours > 24 ? `${Math.floor(hours / 24)}d ago` : timestampMessage;
 
     // Makes first letter capital
     const sourceName = source.charAt(0).toUpperCase() + source.substr(1);
