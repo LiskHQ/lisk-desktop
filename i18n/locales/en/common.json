@@ -38,7 +38,7 @@
   "Blocks": "Blocks",
   "Buy Lisk": "Buy Lisk",
   "Cancel": "Cancel",
-  "Change account settings, enable delegate voting and repeat the onboarding here.": "Change account settings, enable delegate voting and repeat the onboarding here.",
+  "Change account settings, enable delegate voting.": "Change account settings, enable delegate voting.",
   "Check for updates...": "Check for updates...",
   "Check spelling – name does not exist on mainnet": "Check spelling – name does not exist on mainnet",
   "Choose": "Choose",
@@ -350,7 +350,7 @@
   "You are responsible for keeping your 2nd passphrase safe. No one can restore it, not even Lisk.": "You are responsible for keeping your 2nd passphrase safe. No one can restore it, not even Lisk.",
   "You can always get it back.": "You can always get it back.",
   "You can now use Lisk Hub.<br": {
-    " If you want to repeat the onboarding, navigate to \"Settings\" on the sidebar.": "You can now use Lisk Hub.<br> If you want to repeat the onboarding, navigate to \"Settings\" on the sidebar."
+    " If you want to repeat the onboarding, navigate to \"Help\" on the sidebar.": "You can now use Lisk Hub.<br> If you want to repeat the onboarding, navigate to \"Help\" on the sidebar."
   },
   "You can use your passphrase to sign a message. ": "You can use your passphrase to sign a message. ",
   "You have already registered as a delegate.": "You have already registered as a delegate.",
