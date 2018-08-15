@@ -30,7 +30,7 @@ class News extends React.Component {
           <div className={styles.timestampMessage}>{timestampMessage}</div>
         </div>
         <div className={styles.description}>
-          {content}
+          {url ? content.replace(url, '') : url}
         </div>
         <div className={styles.readMore}>
           <a href={url} target="_blank">{t('Read More')}</a>
