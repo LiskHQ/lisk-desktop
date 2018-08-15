@@ -75,7 +75,7 @@ const account = (state = {}, action) => {
         loading: true,
       };
     case actionTypes.accountAddVotes:
-      return { ...state, votes: { ...action.votes } };
+      return { ...state, votes: action.votes };
     case actionTypes.accountAddVoters:
       return { ...state, voters: action.voters };
     case actionTypes.updateDelegate:
