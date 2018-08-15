@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="168px" height="178px" viewBox="0 0 168 178" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="315px" height="250px" viewBox="0 0 315 250" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
-    <title>components/illustrations/academy</title>
+    <title>academy</title>
     <desc>Created with Sketch.</desc>
     <defs>
-        <rect id="path-1" x="0" y="0" width="315" height="251"></rect>
+        <rect id="path-1" x="0" y="0" width="315" height="250"></rect>
         <linearGradient x1="10.0351562%" y1="14.0273437%" x2="143.3125%" y2="186.242188%" id="linearGradient-3">
             <stop stop-color="#008DF1" offset="0%"></stop>
             <stop stop-color="#001A56" offset="100%"></stop>
@@ -30,8 +30,8 @@
             <stop stop-color="#93F4FE" offset="100%"></stop>
         </linearGradient>
     </defs>
-    <g id="02_Dashboard_L" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="components/illustrations/academy" transform="translate(-74.000000, -44.000000)">
+    <g id="academy" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="components/illustrations/academy">
             <mask id="mask-2" fill="white">
                 <use xlink:href="#path-1"></use>
             </mask>
