@@ -80,7 +80,6 @@
 }
 
 @media (--large-viewport) {
-
   .picture {
     position: absolute;
     right: -80px;
