@@ -21,13 +21,13 @@
 
 export const getSavedAccounts = () => [];
 
+// eslint-disable-next-line
 export const setSavedAccounts = (accounts) => {
   accounts = accounts.map(({
     publicKey, network, balance, peerAddress,
   }) => ({
     publicKey, network, balance, peerAddress,
   }));
-  localStorage.setItem('accounts', JSON.stringify(accounts));
 };
 
 export const getLastActiveAccount = () => (getSavedAccounts()[localStorage.getItem('lastActiveAccountIndex')] || getSavedAccounts()[0]);

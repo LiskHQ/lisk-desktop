@@ -20,7 +20,7 @@
   "Address": "Address",
   "Advanced features": "Advanced features",
   "After 10 minutes of not using your passphrase,\n  // your Lisk ID will be locked to prevent an unauthorized use of your Lisk ID. .\n  // The timer will reset as soon as you make an transaction.\n  // After 5 minutes, you can also reset the timer by clicking on \"reset\".": "After 10 minutes of not using your passphrase,\n  // your Lisk ID will be locked to prevent an unauthorized use of your Lisk ID. .\n  // The timer will reset as soon as you make an transaction.\n  // After 5 minutes, you can also reset the timer by clicking on \"reset\".",
-  "After logging out of your account you will be able to access the Dashboard, Settings and Explorer.": "After logging out of your account you will be able to access the Dashboard, Settings and Explorer.",
+  "After logging out of your account you will be able to access the Dashboard, Settings and Search.": "After logging out of your account you will be able to access the Dashboard, Settings and Search.",
   "After registration, you will need it to use your Lisk ID, like sending and voting.": "After registration, you will need it to use your Lisk ID, like sending and voting.",
   "All": "All",
   "Amount (LSK)": "Amount (LSK)",
