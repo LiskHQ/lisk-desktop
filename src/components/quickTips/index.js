@@ -38,12 +38,16 @@ class QuickTips extends React.Component {
       <Box className={`quickTips ${styles.quickTips}`}>
         {slides.map(slide =>
           <TransitionWrapper current={currentSlide.title} step={slide.title} key={`transition-title-${slide.title}`}>
-            <div className={`${styles.picture}`}><img src={currentSlide.picture} /></div>
+            <div className={styles.picture}>
+              <img src={currentSlide.picture} />
+            </div>
           </TransitionWrapper>)
         }
         {slides.map(slide =>
           <TransitionWrapper current={currentSlide.title} step={slide.title} key={`transition-title-${slide.title}`}>
-            <div className={styles.title}>{currentSlide.title}</div>
+            <div className={styles.header}>
+              <h2>{currentSlide.title}</h2>
+            </div>
           </TransitionWrapper>)
         }
         <div className={styles.quickTipBody}>

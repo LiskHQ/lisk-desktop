@@ -41,7 +41,7 @@ const quickTips = t => [
     picture: transparent,
   },
   {
-    title: t('Learn more about blockchain'),
+    title: t('What is Lisk Academy?'),
     description: [
       t('The Lisk Academy is an entirely free, unbiased and comprehensive educational platform about blockchain technology, containing something for everyone, regardless of what level of knowledge you are at.'),
     ],

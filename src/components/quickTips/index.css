@@ -18,10 +18,8 @@
   }
 }
 
-.title {
-  font-size: 24px;
-  font-weight: 800;
-  padding: 25px 0 15px;
+.header {
+  padding-top: 20px;
 }
 
 .picture {
@@ -51,7 +49,7 @@
   font-weight: 600;
 
   & span {
-    font-size: 18px;
+    font-size: 24px;
   }
 
   & .previousStep {
@@ -71,7 +69,7 @@
 }
 
 .arrow {
-  line-height: 18px !important;
+  line-height: 22px !important;
 }
 
 .quickTipBody {
@@ -81,55 +79,20 @@
   height: 100%;
 }
 
-/* @media (--xLarge-viewport) {
-  .descriptionRow {
-    & .description {
-      width: 60%;
-    }
+@media (--large-viewport) {
 
-    & .picture {
-      position: absolute;
-      right: 0;
-      top: 0;
-    }
-  }
-} */
+  .picture {
+    position: absolute;
+    right: -80px;
+    width: 50%;
 
-/* @media (--large-viewport) {
-  .descriptionRow {
-    & .description {
-      width: 60%;
-    }
-
-    & .picture {
-      width: 40%;
+    & img {
+      width: 80%;
     }
   }
 }
 
 @media (--medium-viewport) {
-  .descriptionRow {
-    & .description {
-      width: 65%;
-    }
-
-    & .picture {
-      width: 35%;
-    }
-  }
-} */
-
-@media (--small-viewport) {
-  .descriptionRow {
-    & .description {
-      width: 65%;
-    }
-
-    & .picture {
-      width: 35%;
-    }
-  }
-
   .quickTipBody {
     display: flex;
     flex-direction: column;
