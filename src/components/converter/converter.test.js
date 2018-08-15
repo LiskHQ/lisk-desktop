@@ -26,22 +26,10 @@ describe('Converter', () => {
 
   it('shold render Converter component', () => {
     const props = {
-      t: () => {},
+      t: key => key,
     };
     wrapper = mountWithContext(<Converter {...props} store={store}/>, { storeState: store });
     expect(wrapper.find('Converter')).to.have.present();
-  });
-
-  it('should change active price', () => {
-    const props = {
-      t: () => {},
-      value: 0,
-      error: false,
-    };
-    wrapper = mountWithContext(<Converter {...props} store={store}/>, { storeState: store });
-    expect(wrapper.find('.converted-currency').at(0)).to.have.text('USD');
-    wrapper.find('.converted-currency').at(1).simulate('click');
-    expect(wrapper.find('.converted-currency').at(0)).to.have.text('EUR');
   });
 
   it('should convert price to EUR from localStorage', () => {
@@ -51,7 +39,7 @@ describe('Converter', () => {
     });
 
     const props = {
-      t: () => {},
+      t: key => key,
       value: 2,
       error: false,
       currency: 'USD',
@@ -64,7 +52,7 @@ describe('Converter', () => {
 
     explorereApiMock.resolves({ LSK: { USD: 123, EUR: 12 } });
     wrapper.update();
-    expect(wrapper.find('.converted-price').at(0)).to.have.text('~ 246.00');
+    expect(wrapper.find('.converted-price').at(0)).to.have.text('246.00 USD');
   });
 });
 
