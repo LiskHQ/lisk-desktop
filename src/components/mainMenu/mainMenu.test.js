@@ -10,7 +10,6 @@ import i18n from '../../i18n';
 import MainMenu from './mainMenu';
 import routes from '../../constants/routes';
 
-
 describe('MainMenu', () => {
   // Mocking store
   const peers = {

@@ -1,0 +1,104 @@
+@import '../app/variables.css';
+
+.quickTips {
+  height: calc(50% - 20px);
+  margin: 0px 0px 20px;
+  overflow: hidden;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0;
+
+  & .goTo {
+    color: #2475b9;
+    text-decoration: none;
+    font-weight: 600;
+  }
+}
+
+.header {
+  padding-top: 20px;
+}
+
+.picture {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.descriptionRow {
+  display: flex;
+  justify-content: space-between;
+  font-family: "Open Sans";
+  height: 200px;
+  font-size: 16px;
+  color: #3c5068;
+
+  & .description {
+    width: 60%;
+    overflow-y: auto;
+  }
+}
+
+.steps {
+  display: flex;
+  color: #2475b9;
+  font-size: 16px;
+  font-weight: 600;
+
+  & span {
+    font-size: 24px;
+  }
+
+  & .previousStep {
+    cursor: pointer;
+    margin-right: 20px;
+  }
+
+  & .nextStep {
+    cursor: pointer;
+    margin-left: 20px;
+  }
+}
+
+.disabled {
+  pointer-events: none;
+  color: #ccd9e4;
+}
+
+.arrow {
+  line-height: 22px !important;
+}
+
+.quickTipBody {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+@media (--large-viewport) {
+  .picture {
+    position: absolute;
+    right: -80px;
+    width: 50%;
+
+    & img {
+      width: 80%;
+    }
+  }
+}
+
+@media (--medium-viewport) {
+  .quickTipBody {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .quickTips {
+    min-height: 200px;
+  }
+}

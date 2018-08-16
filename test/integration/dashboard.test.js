@@ -33,6 +33,8 @@ import CurrencyGraph from '../../src/components/dashboard/currencyGraph';
 import accounts from '../constants/accounts';
 import GenericStepDefinition from '../utils/genericStepDefinition';
 import EmptyState from '../../src/components/emptyState';
+import TransactionRow from '../../src/components/transactions/transactionRow';
+import QuickTips from '../../src/components/quickTips';
 import NewsFeed from '../../src/components/newsFeed';
 
 describe('@integration: Dashboard', () => {
@@ -131,7 +133,6 @@ describe('@integration: Dashboard', () => {
       unconfirmedBalance: '0',
       passphrase,
     };
-
     accountAPIStub.withArgs(match.any).returnsPromise().resolves({ data: [...account] });
     store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
     delegateAPIStub.withArgs(match.any).returnsPromise()
@@ -170,6 +171,12 @@ describe('@integration: Dashboard', () => {
       step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
       step('Then I should see 5 rows', () => helper.shouldSeeCountInstancesOf(5, 'TransactionRow'));
       step('Then I click on one of the transactions and expect to get directed to its details', () => helper.clickOnTransaction());
+    });
+
+    describe('Scenario: should not display Transactions', () => {
+      step('Given I\'m on "wallet" as "genesis" account not Logged in', () => setupStep('genesis', { isLoggedIn: false }));
+      step('Then I should see 0 instances of "send box"', () => helper.shouldSeeCountInstancesOf(0, TransactionRow));
+      step('Then I should see 1 instance of "quickTips"', () => helper.shouldSeeCountInstancesOf(1, QuickTips));
     });
   });
 
