@@ -80,7 +80,6 @@ class SendReadable extends React.Component {
     event.preventDefault();
     this.setState({ loading: true });
     this.props.sent({
-      activePeer: this.props.activePeer,
       account: this.props.account,
       recipientId: this.state.recipient.value,
       amount: this.state.amount.value,

@@ -50,7 +50,6 @@ describe('actions: transactions', () => {
   describe('transactionsRequested', () => {
     let transactionsApiMock;
     const data = {
-      activePeer: {},
       address: '15626650747375562521L',
       limit: 20,
       offset: 0,

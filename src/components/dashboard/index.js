@@ -20,7 +20,6 @@ class Dashboard extends React.Component {
     super(props);
 
     this.props.loadTransactions({
-      activePeer: this.props.peers.data,
       address: this.props.account.address,
       publicKey: this.props.account.publicKey,
     });
