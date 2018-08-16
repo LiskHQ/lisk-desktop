@@ -23,13 +23,13 @@ describe('customCountDown', () => {
     wrapper = mount(<CustomCountDown {...propsMock} />);
   });
 
-  it('should render "ID lock in 10:25"', () => {
-    expect(wrapper.find('span').text()).to.be.equal('ID lock in 10:25');
+  it('should render "Timeout in 10:25"', () => {
+    expect(wrapper.find('span').text()).to.be.equal('Timeout in 10:25');
   });
 
   it('should render reset button', () => {
     wrapper.setProps({ minutes: 0, seconds: 59 });
-    expect(wrapper.find('span').text()).to.be.equal('ID lock in 00:59');
+    expect(wrapper.find('span').text()).to.be.equal('Timeout in 00:59');
     expect(wrapper).to.have.descendants('.reset');
   });
 
