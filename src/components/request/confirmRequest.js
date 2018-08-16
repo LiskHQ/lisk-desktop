@@ -20,7 +20,7 @@ class ConfirmRequest extends React.Component {
       address, amount, reference, prevStep, finalCallback, t,
     } = this.props;
     let link = `lisk://wallet?recipient=${address}&amount=${amount}`;
-    link = reference ? `${link}&reference=${reference}` : link;
+    link = reference ? `${link}&reference=${encodeURIComponent(reference)}` : link;
     link = encodeURI(link);
 
     return (
