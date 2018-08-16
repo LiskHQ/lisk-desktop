@@ -60,7 +60,6 @@ class VotingListView extends React.Component {
     /* istanbul-ignore-else */
     if (!this.freezeLoading) {
       this.props.votesFetched({
-        activePeer: this.props.activePeer,
         address: this.props.address,
       });
       this.loadDelegates('', refresh);
@@ -91,7 +90,6 @@ class VotingListView extends React.Component {
     this.freezeLoading = true;
     this.offset = refresh ? -1 : this.offset;
     this.props.delegatesFetched({
-      activePeer: this.props.activePeer,
       offset: this.offset > -1 ? this.offset : 0,
       q,
       refresh,

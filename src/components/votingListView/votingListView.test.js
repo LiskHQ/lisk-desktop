@@ -77,7 +77,6 @@ describe('VotingListView', () => {
       .at(0).simulate('change', { nativeEvent: { target: { value: 'query' } } });
     clock.tick(251);
     expect(props.delegatesFetched).to.be.calledWith({
-      activePeer: props.activePeer,
       offset: 0,
       q: 'query',
       refresh: true,
