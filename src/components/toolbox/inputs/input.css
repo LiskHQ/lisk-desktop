@@ -30,6 +30,10 @@
   color: var(--input-color);
 }
 
+.inputElement {
+  margin-top: 1px;
+}
+
 .label {
   color: var(--input-color);
   font-size: var(--input-font-size);

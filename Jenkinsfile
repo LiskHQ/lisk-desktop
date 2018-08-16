@@ -16,18 +16,12 @@ node('lisk-hub') {
 
     stage ('Install npm dependencies') {
       try {
+        cache_file = restoreCache("package.json")
         sh '''
-        cache_file="$HOME/cache/$( sha1sum package.json |awk '{ print $1 }' ).tar.gz"
-        if [ -f "$cache_file" ]; then
-            tar xf "$cache_file"
-        fi
         npm install
         ./node_modules/protractor/bin/webdriver-manager update
-        if [ ! -f "$cache_file" ]; then
-            GZIP=-4 tar czf "$cache_file" node_modules/
-            find $HOME/cache/ -name '*.tar.gz' -ctime +7 -delete
-        fi
         '''
+        saveCache(cache_file, './node_modules', 10)
       } catch (err) {
         echo "Error: ${err}"
         fail('Stopping build: npm install failed')

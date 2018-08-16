@@ -7,12 +7,11 @@ import { FontIcon } from '../fontIcon';
 import Box from '../box';
 import { loadTransactions } from '../../actions/transactions';
 import TransactionList from './../transactions/transactionList';
-import Send from '../send';
 import CurrencyGraph from './currencyGraph';
 import routes from '../../constants/routes';
-import { settingsUpdated } from '../../actions/settings';
 import FollowedAccounts from '../followedAccounts/index';
 import QuickTips from '../quickTips';
+import NewsFeed from '../newsFeed';
 
 import styles from './dashboard.css';
 
@@ -74,9 +73,9 @@ class Dashboard extends React.Component {
           </div>
         </div>
       </div>
-      {isLoggedIn ? <div className={`${grid['col-md-4']} ${styles.sendWrapper}`}>
-        <Send {...this.props} />
-      </div> : <div></div>}
+      <div className={`${grid['col-md-4']} ${styles.sendWrapper}`}>
+        <NewsFeed />
+      </div>
     </div>;
   }
 }
@@ -92,7 +91,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   loadTransactions: data => dispatch(loadTransactions(data)),
-  settingsUpdated: data => dispatch(settingsUpdated(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(Dashboard));

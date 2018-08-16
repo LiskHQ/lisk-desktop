@@ -16,6 +16,7 @@ Feature: Register second passphrase
     And I swipe "confirm checkbox" to right
     And I wait 15 seconds
     And I click "get to your dashboard button"
+    Then I go to "/wallet"
     And I fill in "1" to "amount" field
     And I fill in "94495548317450502L" to "recipient" field
     And I click "send next button"

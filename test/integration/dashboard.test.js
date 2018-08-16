@@ -35,6 +35,7 @@ import GenericStepDefinition from '../utils/genericStepDefinition';
 import EmptyState from '../../src/components/emptyState';
 import TransactionRow from '../../src/components/transactions/transactionRow';
 import QuickTips from '../../src/components/quickTips';
+import NewsFeed from '../../src/components/newsFeed';
 
 describe('@integration: Dashboard', () => {
   let store;
@@ -47,7 +48,6 @@ describe('@integration: Dashboard', () => {
   let sendTransactionsStub;
 
   const history = { push: spy(), location: { search: '' } };
-  const successMessage = 'Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain.';
 
   class Helper extends GenericStepDefinition {
     clickOnTransaction() {
@@ -154,26 +154,15 @@ describe('@integration: Dashboard', () => {
     helper = new Helper(wrapper, store);
   };
 
-  describe('Send', () => {
-    describe('Scenario: should allow to send LSK from unlocked account', () => {
-      step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
-      step('And I fill in "1" to "amount" field', () => { helper.fillInputField('1', 'amount'); });
-      step('And I fill in "537318935439898807L" to "recipient" field', () => { helper.fillInputField('537318935439898807L', 'recipient'); });
-      step('And I click "send next button"', () => { helper.clickOnElement('button.send-next-button'); });
-      step('When I click "send button"', () => helper.clickOnElement('button.send-button button'));
-      step(`Then I should see text ${successMessage} in "result box message" element`, () => helper.haveTextOf('.result-box-message', successMessage));
+  describe('QuickTips', () => {
+    describe('Scenario: should display QuickTips on Dashboard even loggedIn', () => {
+      step('Given I\'m on not Logged in', () => setupStep('genesis', { isLoggedIn: false }));
+      step('Then I should see 1 instance of "quickTips"', () => helper.shouldSeeCountInstancesOf(1, NewsFeed));
     });
 
-    describe('Scenario: should allow to send LSK from locked account', () => {
-      const { passphrase } = accounts.genesis;
-      step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis', { isLocked: true, isLoggedIn: true }));
-      step('And I fill in "1" to "amount" field', () => { helper.fillInputField('1', 'amount'); });
-      step('And I fill in "537318935439898807L" to "recipient" field', () => { helper.fillInputField('537318935439898807L', 'recipient'); });
-      step('And I click "send next button"', () => helper.clickOnElement('button.send-next-button'));
-      step('And I fill in passphrase of "genesis" to "passphrase" field', () => { helper.fillInputField(passphrase, 'passphrase'); });
-      step('When I click "next button"', () => helper.clickOnElement('.first-passphrase-next button'));
-      step('When I click "send button"', () => helper.clickOnElement('.send-button button'));
-      step(`Then I should see text ${successMessage} in "result box message" element`, () => helper.haveTextOf('.result-box-message', successMessage));
+    describe('Scenario: should display QuickTips on Dashboard even logout', () => {
+      step('Given I\'m on not Logged in', () => setupStep('genesis'));
+      step('Then I should see 1 instance of "quickTips"', () => helper.shouldSeeCountInstancesOf(1, NewsFeed));
     });
   });
 

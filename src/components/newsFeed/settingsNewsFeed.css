@@ -1,0 +1,68 @@
+@import '../app/variables.css';
+
+:root {
+  --secondPassphrase-color: var(--color-primary-standard);
+  --carousel-nav-background-color: #3c506b;
+  --slide-header-font: var(--heading-font);
+  --secured-account-color: var(--color-success-dark);
+  --check-box-height: 35px;
+  --check-box-width: 65px;
+  --check-box-font-size: 23px;
+}
+
+.header {
+  margin: 0 20px 20px;
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+
+  &:nth-child(even) {
+    background: linear-gradient(90deg, #fff, #f5f8fc);
+  }
+}
+
+.sliderInput {
+  width: auto;
+
+  & label {
+    height: var(--check-box-height);
+    line-height: var(--check-box-height);
+    width: var(--check-box-width);
+    background: var(--color-grayscale-light);
+    display: inline-block;
+  }
+
+  & span.circle {
+    background: var(--gradient-action-blue);
+    width: var(--check-box-height);
+
+    &.goal,
+    &.begin {
+      background: transparent;
+    }
+
+    & span {
+      width: 100%;
+      font-size: var(--check-box-font-size);
+    }
+  }
+
+  & input[type='radio'],
+  & input[type='checkbox'] {
+    &:checked + label .button {
+      transform: translateX(calc(-1 * var(--check-box-height)));
+    }
+  }
+
+  & input[type='checkbox']:disabled {
+    & span.circle {
+      color: gray;
+      background: grey;
+    }
+  }
+}

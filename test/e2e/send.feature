@@ -2,6 +2,7 @@ Feature: Send dialog
   @testnet
   Scenario: should allow to send when enough funds and correct address form
     Given I'm logged in as "genesis"
+    Then I go to "/wallet"
     And I fill in "1" to "amount" field
     Then I should see "convertor" element
     Then I should see "converted price" element with text matching coverter price
@@ -10,8 +11,10 @@ Feature: Send dialog
     And I click "send button"
     And I wait 1 seconds
     Then I should see text "Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain." in "result box message" element
+
+  Scenario: should be correct number of transactions in a table
+    Given I'm logged in as "genesis"
     And I should see 5 rows
-    And I wait 15 seconds
     When I click "seeAllLink"
     And I should see 25 rows
     When I scroll to the bottom of "transaction results"
