@@ -70,7 +70,7 @@ class CustomCountDown extends React.Component {
 
     const resetStyle = resetCondition ? styles.timeout : styles.default;
     const timer = !timeoutCondition &&
-      <span className={resetStyle}>{t('ID lock in')} {min}:{sec}</span>;
+      <span className={resetStyle}>{t('Timeout in')} {min}:{sec}</span>;
 
     const renderComponent = autoLog ? (<div className={styles.timerRow}>
       {resetButton}
