@@ -39,14 +39,14 @@ class QuickTips extends React.Component {
         {slides.map(slide =>
           <TransitionWrapper current={currentSlide.title} step={slide.title} key={`transition-title-${slide.title}`}>
             <div className={styles.picture}>
-              <img src={currentSlide.picture} />
+              <img src={slide.picture} />
             </div>
           </TransitionWrapper>)
         }
         {slides.map(slide =>
           <TransitionWrapper current={currentSlide.title} step={slide.title} key={`transition-title-${slide.title}`}>
             <div className={styles.header}>
-              <h2>{currentSlide.title}</h2>
+              <h2>{slide.title}</h2>
             </div>
           </TransitionWrapper>)
         }
@@ -55,7 +55,7 @@ class QuickTips extends React.Component {
             <TransitionWrapper current={currentSlide.title} step={slide.title} key={`transition-body-${slide.title}`}>
               <div className={`${styles.descriptionRow}`}>
                 <div className={`${styles.description}`}>
-                  {currentSlide.description.map((desc, key) =>
+                  {slide.description.map((desc, key) =>
                     <span key={`desc-${key}`}>{desc}<br/><br/></span>)}
                 </div>
               </div>
@@ -64,8 +64,8 @@ class QuickTips extends React.Component {
           {slides.map(slide =>
             <TransitionWrapper current={currentSlide.title} step={slide.title} key={`transition-goto-${slide.title}`}>
               <div className={styles.footer}>
-                <a href={currentSlide.goTo.link} className={styles.goTo} target='_blank'>
-                  {currentSlide.goTo.title}<FontIcon value='arrow-right'/>
+                <a href={slide.goTo.link} className={styles.goTo} target='_blank'>
+                  {slide.goTo.title}<FontIcon value='arrow-right'/>
                 </a>
 
                 <div className={styles.steps}>
