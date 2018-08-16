@@ -7,11 +7,10 @@ import { FontIcon } from '../fontIcon';
 import Box from '../box';
 import { loadTransactions } from '../../actions/transactions';
 import TransactionList from './../transactions/transactionList';
-import Send from '../send';
 import CurrencyGraph from './currencyGraph';
 import routes from '../../constants/routes';
-import { settingsUpdated } from '../../actions/settings';
 import FollowedAccounts from '../followedAccounts/index';
+import NewsFeed from '../newsFeed';
 
 import styles from './dashboard.css';
 
@@ -19,11 +18,15 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
 
-    this.props.loadTransactions({
-      activePeer: this.props.peers.data,
-      address: this.props.account.address,
-      publicKey: this.props.account.publicKey,
-    });
+    const isLoggedIn = !!props.account.address;
+
+    if (isLoggedIn) {
+      this.props.loadTransactions({
+        activePeer: this.props.peers.data,
+        address: this.props.account.address,
+        publicKey: this.props.account.publicKey,
+      });
+    }
   }
 
   render() {
@@ -31,28 +34,33 @@ class Dashboard extends React.Component {
       transactions, t, account, loading, history,
     } = this.props;
 
+    const isLoggedIn = !!account.address;
+
     return <div className={`${grid.row} ${styles.wrapper}`}>
       <div className={`${grid['col-md-8']} ${grid['col-xs-12']} ${styles.main}`}>
-        <Box className={`${styles.latestActivity}`}>
-          <header>
-            <h2 className={styles.title}>
-              {t('Latest activity')}
-              <Link to={`${routes.wallet.path}`} className={`${styles.seeAllLink} seeAllLink`}>
-                {t('See all transactions')}
-                <FontIcon value='arrow-right'/>
-              </Link>
-            </h2>
-          </header>
-          <TransactionList {...{
-            transactions,
-            t,
-            address: account.address,
-            dashboard: true,
-            loading,
-            history,
-            onClick: props => history.push(`${routes.wallet.path}?id=${props.value.id}`),
-          }} />
-        </Box>
+        {isLoggedIn ?
+          <Box className={`${styles.latestActivity}`}>
+            <header>
+              <h2 className={styles.title}>
+                {t('Latest activity')}
+                <Link to={`${routes.wallet.path}`} className={`${styles.seeAllLink} seeAllLink`}>
+                  {t('See all transactions')}
+                  <FontIcon value='arrow-right'/>
+                </Link>
+              </h2>
+            </header>
+            <TransactionList {...{
+              transactions,
+              t,
+              address: account.address,
+              dashboard: true,
+              loading,
+              history,
+              onClick: props => history.push(`${routes.wallet.path}?id=${props.value.id}`),
+            }} />
+          </Box> :
+          null
+        }
         <div className={`${grid.row} ${styles.bottomModuleWrapper} `}>
           <div className={`${grid['col-md-6']} ${grid['col-lg-6']} ${grid['col-xs-6']}`} style={{ paddingLeft: '0px' }}>
             <Box>
@@ -67,7 +75,7 @@ class Dashboard extends React.Component {
         </div>
       </div>
       <div className={`${grid['col-md-4']} ${styles.sendWrapper}`}>
-        <Send {...this.props} />
+        <NewsFeed />
       </div>
     </div>;
   }
@@ -84,7 +92,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   loadTransactions: data => dispatch(loadTransactions(data)),
-  settingsUpdated: data => dispatch(settingsUpdated(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(Dashboard));

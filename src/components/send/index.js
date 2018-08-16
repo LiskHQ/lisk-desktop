@@ -5,7 +5,7 @@ import { FontIcon } from '../fontIcon';
 import Box from '../box';
 import MultiStep from './../multiStep';
 import ResultBox from '../resultBox';
-import SendWritable from '../sendWritable';
+import SendWritable from './../sendWritable';
 import SendReadable from './../sendReadable';
 import Request from '../request';
 import SpecifyRequest from '../request/specifyRequest';
