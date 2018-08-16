@@ -71,7 +71,7 @@ export const accountVotesFetched = ({ activePeer, address }) =>
     getVotes(activePeer, address).then(({ data }) => {
       dispatch({
         type: actionTypes.accountAddVotes,
-        votes: data,
+        votes: data.votes,
       });
     });
 
