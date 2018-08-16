@@ -77,7 +77,7 @@ describe('actions: account', () => {
     });
 
     it('should dispatch transactionAdded action if resolved', () => {
-      accountApiMock.returnsPromise().resolves({ transactionId: '15626650747375562521' });
+      accountApiMock.returnsPromise().resolves({ id: '15626650747375562521' });
       const expectedAction = {
         id: '15626650747375562521',
         senderPublicKey: 'test_public-key',
@@ -138,7 +138,7 @@ describe('actions: account', () => {
     });
 
     it('should dispatch transactionAdded action if resolved', () => {
-      delegateApiMock.returnsPromise().resolves({ transactionId: '15626650747375562521' });
+      delegateApiMock.returnsPromise().resolves({ id: '15626650747375562521' });
       const expectedAction = {
         id: '15626650747375562521',
         senderPublicKey: 'test_public-key',
@@ -370,7 +370,7 @@ describe('actions: account', () => {
     it('should update transactions when there are no recent transactions', () => {
       const data = {
         activePeer: {},
-        transactions: { confirmed: [{ confirmations: 10000 }], pending: [] },
+        transactions: { confirmed: [{ confirmations: 10000 }], pending: [{ id: '123' }] },
         account: { address: accounts.genesis.address },
       };
 

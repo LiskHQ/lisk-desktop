@@ -97,7 +97,7 @@ export const secondPassphraseRegistered = ({
       .then((data) => {
         dispatch({
           data: {
-            id: data.transactionId,
+            id: data.id,
             senderPublicKey: account.publicKey,
             senderId: account.address,
             amount: 0,
@@ -137,7 +137,7 @@ export const delegateRegistered = ({
         // dispatch to add to pending transaction
         dispatch({
           data: {
-            id: data.transactionId,
+            id: data.id,
             senderPublicKey: account.publicKey,
             senderId: account.address,
             username,
@@ -204,7 +204,7 @@ export const updateTransactionsIfNeeded = ({ transactions, activePeer, account }
       txs.pending.length !== 0
     );
 
-    if (windowFocus || !hasRecentTransactions(transactions)) {
+    if (windowFocus || hasRecentTransactions(transactions)) {
       const { filter } = transactions;
       const address = transactions.account ? transactions.account.address : account.address;
 
