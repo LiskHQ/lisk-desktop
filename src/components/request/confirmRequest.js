@@ -21,7 +21,6 @@ class ConfirmRequest extends React.Component {
     } = this.props;
     let link = `lisk://wallet?recipient=${address}&amount=${amount}`;
     link = reference ? `${link}&reference=${encodeURIComponent(reference)}` : link;
-    link = encodeURI(link);
 
     return (
       <div className={`${styles.wrapper} confirm-request-step`}>
