@@ -62,10 +62,14 @@ describe('actions: account', () => {
     };
     const actionFunction = secondPassphraseRegistered(data);
     let dispatch;
+    let getState;
 
     beforeEach(() => {
       accountApiMock = stub(accountApi, 'setSecondPassphrase');
       dispatch = spy();
+      getState = () => ({
+        peers: { data: {} },
+      });
     });
 
     afterEach(() => {
@@ -87,7 +91,7 @@ describe('actions: account', () => {
         type: transactionTypes.setSecondPassphrase,
       };
 
-      actionFunction(dispatch);
+      actionFunction(dispatch, getState);
       expect(dispatch).to.have.been
         .calledWith({ data: expectedAction, type: actionTypes.transactionAdded });
     });
@@ -95,7 +99,7 @@ describe('actions: account', () => {
     it('should dispatch errorAlertDialogDisplayed action if caught', () => {
       accountApiMock.returnsPromise().rejects({ message: 'sample message' });
 
-      actionFunction(dispatch);
+      actionFunction(dispatch, getState);
       const expectedAction = errorAlertDialogDisplayed({ text: 'sample message' });
       expect(dispatch).to.have.been.calledWith(expectedAction);
     });
@@ -103,7 +107,7 @@ describe('actions: account', () => {
     it('should dispatch errorAlertDialogDisplayed action if caught but no message returned', () => {
       accountApiMock.returnsPromise().rejects({});
 
-      actionFunction(dispatch);
+      actionFunction(dispatch, getState);
       const expectedAction = errorAlertDialogDisplayed({ text: 'An error occurred while registering your second passphrase. Please try again.' });
       expect(dispatch).to.have.been.calledWith(expectedAction);
     });
@@ -112,7 +116,6 @@ describe('actions: account', () => {
   describe('delegateRegistered', () => {
     let delegateApiMock;
     const data = {
-      activePeer: {},
       username: 'test',
       passphrase: accounts.genesis.passphrase,
       secondPassphrase: null,
@@ -123,10 +126,14 @@ describe('actions: account', () => {
     };
     const actionFunction = delegateRegistered(data);
     let dispatch;
+    let getState;
 
     beforeEach(() => {
       delegateApiMock = stub(delegateApi, 'registerDelegate');
       dispatch = spy();
+      getState = () => ({
+        peers: { data: {} },
+      });
     });
 
     afterEach(() => {
@@ -149,7 +156,7 @@ describe('actions: account', () => {
         type: transactionTypes.registerDelegate,
       };
 
-      actionFunction(dispatch);
+      actionFunction(dispatch, getState);
       expect(dispatch).to.have.been
         .calledWith({ data: expectedAction, type: actionTypes.transactionAdded });
     });
@@ -157,7 +164,7 @@ describe('actions: account', () => {
     it('should dispatch delegateRegisteredFailure action if caught', () => {
       delegateApiMock.returnsPromise().rejects({ message: 'sample message.' });
 
-      actionFunction(dispatch);
+      actionFunction(dispatch, getState);
       const delegateRegisteredFailureAction = delegateRegisteredFailure({ message: 'sample message.' });
       expect(dispatch).to.have.been.calledWith(delegateRegisteredFailureAction);
     });
@@ -165,7 +172,7 @@ describe('actions: account', () => {
     it('should dispatch passphraseUsed action always', () => {
       delegateApiMock.returnsPromise().rejects({ message: 'sample message.' });
 
-      actionFunction(dispatch);
+      actionFunction(dispatch, getState);
       const passphraseUsedAction = passphraseUsed(accounts.genesis.passphrase);
       expect(dispatch).to.have.been.calledWith(passphraseUsedAction);
     });
@@ -174,8 +181,9 @@ describe('actions: account', () => {
   describe('loadDelegate', () => {
     let delegateApiMock;
     let dispatch;
+    let getState;
+
     const data = {
-      activePeer: {},
       publicKey: accounts.genesis.publicKey,
     };
     const actionFunction = loadDelegate(data);
@@ -183,6 +191,9 @@ describe('actions: account', () => {
     beforeEach(() => {
       delegateApiMock = stub(delegateApi, 'getDelegate');
       dispatch = spy();
+      getState = () => ({
+        peers: { data: {} },
+      });
     });
 
     afterEach(() => {
@@ -193,7 +204,7 @@ describe('actions: account', () => {
       const delegateResponse = { delegate: { ...accounts['delegate candidate'] } };
       delegateApiMock.returnsPromise().resolves(delegateResponse);
 
-      actionFunction(dispatch);
+      actionFunction(dispatch, getState);
       const updateDelegateAction = {
         data: delegateResponse,
         type: actionTypes.updateDelegate,
@@ -222,12 +233,16 @@ describe('actions: account', () => {
   describe('loadAccount', () => {
     let getAccountStub;
     let transactionsActionsStub;
+    let getState;
 
     const dispatch = spy();
 
     beforeEach(() => {
       getAccountStub = stub(accountApi, 'getAccount').returnsPromise();
       transactionsActionsStub = spy(transactionsActions, 'loadTransactionsFinish');
+      getState = () => ({
+        peers: { data: {} },
+      });
     });
 
     afterEach(() => {
@@ -249,7 +264,7 @@ describe('actions: account', () => {
         isSameAccount: false,
       };
 
-      loadAccount(data)(dispatch);
+      loadAccount(data)(dispatch, getState);
       expect(transactionsActionsStub).to.have.been.calledWith({
         confirmed: [],
         count: 0,
@@ -273,7 +288,7 @@ describe('actions: account', () => {
         isSameAccount: true,
       };
 
-      loadAccount(data)(dispatch);
+      loadAccount(data)(dispatch, getState);
       expect(transactionsActionsStub).to.have.been.calledWith({
         confirmed: [],
         count: 0,
@@ -288,6 +303,7 @@ describe('actions: account', () => {
     let peersActionsStub;
     let getAccountStub;
     let transactionsActionsStub;
+    let getState;
 
     const dispatch = spy();
 
@@ -295,6 +311,9 @@ describe('actions: account', () => {
       peersActionsStub = spy(peersActions, 'activePeerUpdate');
       getAccountStub = stub(accountApi, 'getAccount').returnsPromise();
       transactionsActionsStub = spy(transactionsActions, 'transactionsUpdated');
+      getState = () => ({
+        peers: { data: {} },
+      });
     });
 
     afterEach(() => {
@@ -308,7 +327,6 @@ describe('actions: account', () => {
 
       const data = {
         windowIsFocused: false,
-        peers: { data: {} },
         transactions: {
           pending: [{
             id: 12498250891724098,
@@ -319,7 +337,7 @@ describe('actions: account', () => {
         account: { address: accounts.genesis.address, balance: 0 },
       };
 
-      accountDataUpdated(data)(dispatch);
+      accountDataUpdated(data)(dispatch, getState);
       expect(dispatch).to.have.callCount(3);
       expect(peersActionsStub).to.have.not.been.calledWith({ online: false, code: 'EUNAVAILABLE' });
     });
@@ -329,7 +347,6 @@ describe('actions: account', () => {
 
       const data = {
         windowIsFocused: true,
-        peers: { data: {} },
         transactions: {
           pending: [{ id: 12498250891724098 }],
           confirmed: [],
@@ -338,18 +355,22 @@ describe('actions: account', () => {
         account: { address: accounts.genesis.address },
       };
 
-      accountDataUpdated(data)(dispatch);
+      accountDataUpdated(data)(dispatch, getState);
       expect(peersActionsStub).to.have.been.calledWith({ online: false, code: 'EUNAVAILABLE' });
     });
   });
 
   describe('updateTransactionsIfNeeded', () => {
     let transactionsActionsStub;
+    let getState;
 
     const dispatch = spy();
 
     beforeEach(() => {
       transactionsActionsStub = spy(transactionsActions, 'transactionsUpdated');
+      getState = () => ({
+        peers: { data: {} },
+      });
     });
 
     afterEach(() => {
@@ -358,32 +379,34 @@ describe('actions: account', () => {
 
     it('should update transactions when window is in focus', () => {
       const data = {
-        activePeer: {},
         transactions: { confirmed: [{ confirmations: 10 }], pending: [] },
         account: { address: accounts.genesis.address },
       };
 
-      updateTransactionsIfNeeded(data, true)(dispatch);
+      updateTransactionsIfNeeded(data, true)(dispatch, getState);
       expect(transactionsActionsStub).to.have.been.calledWith();
     });
 
     it('should update transactions when there are no recent transactions', () => {
       const data = {
-        activePeer: {},
         transactions: { confirmed: [{ confirmations: 10000 }], pending: [] },
         account: { address: accounts.genesis.address },
       };
 
-      updateTransactionsIfNeeded(data, false)(dispatch);
+      updateTransactionsIfNeeded(data, false)(dispatch, getState);
       expect(transactionsActionsStub).to.have.been.calledWith();
     });
   });
 
   describe('updateDelegateAccount', () => {
     const dispatch = spy();
+    let getState;
 
     beforeEach(() => {
       stub(delegateApi, 'getDelegate').returnsPromise();
+      getState = () => ({
+        peers: { data: {} },
+      });
     });
 
     afterEach(() => {
@@ -393,11 +416,10 @@ describe('actions: account', () => {
     it('should fetch delegate and update account', () => {
       delegateApi.getDelegate.resolves({ data: [{ account: 'delegate data' }] });
       const data = {
-        activePeer: {},
         publicKey: accounts.genesis.publicKey,
       };
 
-      updateDelegateAccount(data)(dispatch);
+      updateDelegateAccount(data)(dispatch, getState);
 
       const accountUpdatedAction = accountUpdated(Object.assign({}, { delegate: { account: 'delegate data' }, isDelegate: true }));
       expect(dispatch).to.have.been.calledWith(accountUpdatedAction);

@@ -68,7 +68,6 @@ export const loadTransactions = ({ activePeer, publicKey, address }) =>
     getTransactions({ activePeer, address, limit: 25 })
       .then((transactionsResponse) => {
         dispatch(loadAccount({
-          activePeer,
           address,
           transactionsResponse,
           isSameAccount,

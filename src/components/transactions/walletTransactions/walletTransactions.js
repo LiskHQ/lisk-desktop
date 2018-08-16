@@ -21,12 +21,10 @@ class WalletTransactions extends React.Component {
       this.props.account.delegate &&
       this.props.account.delegate.publicKey) {
       this.props.accountVotersFetched({
-        activePeer: this.props.activePeer,
         publicKey: this.props.account.delegate.publicKey,
       });
     }
     this.props.accountVotesFetched({
-      activePeer: this.props.activePeer,
       address: this.props.address,
     });
 
