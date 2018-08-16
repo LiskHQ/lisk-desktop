@@ -23,13 +23,13 @@ describe('customCountDown', () => {
     wrapper = mount(<CustomCountDown {...propsMock} />);
   });
 
-  it('should render "Session timeout 10:25"', () => {
-    expect(wrapper.find('span').text()).to.be.equal('Session timeout 10:25');
+  it('should render "Session timeout in 10:25"', () => {
+    expect(wrapper.find('span').text()).to.be.equal('Session timeout in 10:25');
   });
 
   it('should render reset button', () => {
     wrapper.setProps({ minutes: 0, seconds: 59 });
-    expect(wrapper.find('span').text()).to.be.equal('Session timeout 00:59');
+    expect(wrapper.find('span').text()).to.be.equal('Session timeout in 00:59');
     expect(wrapper).to.have.descendants('.reset');
   });
 
