@@ -41,9 +41,4 @@ describe('customCountDown', () => {
     wrapper.update();
     expect(wrapper.props().resetTimer).to.be.calledWith();
   });
-
-  it('should render "Unlocked"', () => {
-    wrapper.setProps({ autoLog: false });
-    expect(wrapper.find('.unlocked').text()).to.be.equal('Unlocked');
-  });
 });

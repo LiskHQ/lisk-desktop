@@ -75,7 +75,7 @@ class CustomCountDown extends React.Component {
     const renderComponent = autoLog ? (<div className={styles.timerRow}>
       {resetButton}
       {timer}
-    </div>) : <div className='unlocked'>{t('Unlocked')}</div>;
+    </div>) : null;
 
     return (<Fragment>{renderComponent}</Fragment>);
   }

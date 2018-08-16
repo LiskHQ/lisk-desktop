@@ -76,10 +76,6 @@ class Header extends React.Component {
                     />
 
                     <div className={styles.timer}>
-                      {!this.props.autoLog && this.props.account.passphrase
-                        ? <div className={`${styles.unlocked} unlocked`}>{this.props.t('Unlocked')}</div>
-                        : <div></div>
-                      }
                       {this.props.autoLog
                         ? <div>
                           {((this.props.account.expireTime &&
