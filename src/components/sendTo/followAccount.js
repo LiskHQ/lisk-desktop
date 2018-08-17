@@ -30,30 +30,30 @@ class FollowAccount extends React.Component {
     const title = this.state.title.value || address;
 
     return (<Box className={`${styles.wrapper}`}>
-          <header>
-            <h2>Follow Account</h2>
-            <p>{t('Add this account to your dashboard to keep track of its balance.')}</p>
-          </header>
-          <AccountTitleInput
-            title={this.state.title}
-            className={styles.titleInput}
-            onChange={this.handleChange.bind(this)}
-          />
-          <footer>
-            <TertiaryButton className={`${styles.button} follow-account`}
-                disabled={!!this.state.title.error}
-                onClick={() => {
-                addAccount({ title, address });
-                prevStep();
-              }}>
-              {t('Add to dashboard')}
-            </TertiaryButton>
+      <header>
+        <h2>{t('Follow Account')}</h2>
+        <p>{t('Add this account to your dashboard to keep track of its balance.')}</p>
+      </header>
+      <AccountTitleInput
+        title={this.state.title}
+        className={styles.titleInput}
+        onChange={this.handleChange.bind(this)}
+      />
+      <footer>
+        <TertiaryButton className={`${styles.button} follow-account`}
+          disabled={!!this.state.title.error}
+          onClick={() => {
+            addAccount({ title, address });
+            prevStep();
+          }}>
+          {t('Add to dashboard')}
+        </TertiaryButton>
 
-            <Button onClick={() => prevStep()} className={`${styles.button} ${styles.follow} cancel`} >
-              <span className={styles.label}>{t('Cancel')}</span>
-            </Button>
-          </footer>
-      </Box>
+        <Button onClick={() => prevStep()} className={`${styles.button} ${styles.follow} cancel`} >
+          <span className={styles.label}>{t('Cancel')}</span>
+        </Button>
+      </footer>
+    </Box>
     );
   }
 }

@@ -8,6 +8,7 @@ import LoadingBar from '../loadingBar';
 import OfflineWrapper from '../offlineWrapper';
 import CustomRoute from '../customRoute';
 import Header from '../header';
+import Dialog from '../dialog';
 import SavedAccounts from '../savedAccounts';
 import NotFound from '../notFound';
 
@@ -49,6 +50,7 @@ class App extends React.Component {
     return (
       <OfflineWrapper>
         <Onboarding appLoaded={this.state.loaded} />
+        <Dialog />
         <main className={`${styles.bodyWrapper}`} ref={(el) => { this.main = el; }}>
           <MainMenu />
           <Route path={routes.accounts.path} component={SavedAccounts} />

@@ -83,7 +83,7 @@ class Setting extends React.Component {
           }
         </div>
         <div className={styles.item}>
-          <label className={`${allowAuthClass}`}>{t('Auto-Lock')}</label>
+          <label className={`${allowAuthClass}`}>{t('Auto-logout')}</label>
           <Checkbox
             theme={styles}
             disabled={!this.props.isAuthenticated}

@@ -25,68 +25,69 @@ class ViewAccounts extends React.Component {
       <header><h2>
         {t('Following')}
         {accounts.length > 0
-        ? <div className={`${styles.clickable} ${styles.edit} edit-accounts`}
-             onClick={() => this.setState({ edit: !this.state.edit })}>
+          ? <div className={`${styles.clickable} ${styles.edit} edit-accounts`}
+            onClick={() => this.setState({ edit: !this.state.edit })}>
             {this.state.edit ? <span>{t('Done')}</span> : <FontIcon value='edit'/>}
-        </div>
+          </div>
           : null
         }
       </h2></header>
-        {accounts.length
-          ? <div className={`${styles.accounts} followed-accounts-list`}>
-              <div className={styles.list}>
-                {accounts.map((account, i) =>
-                (<div
-                  key={i}
-                  className={`${grid.row} ${styles.rows} ${styles.clickable} followed-account`}
-                  onClick={() => {
-                    if (!this.state.edit) history.push(`${routes.explorer.path}${routes.accounts.path}/${account.address}`);
-                  }}
-                >
-                  <div className={`${styles.leftText} ${grid['col-md-2']}`}>
-                    <AccountVisual
-                      className={styles.accountVisual}
-                      address={account.address}
-                      size={43}
+      {accounts.length
+        ? <div className={`${styles.accounts} followed-accounts-list`}>
+          <div className={styles.list}>
+            {accounts.map((account, i) =>
+              (<div
+                key={i}
+                className={`${grid.row} ${styles.rows} ${styles.clickable} followed-account`}
+                onClick={() => {
+                  if (!this.state.edit) history.push(`${routes.explorer.path}${routes.accounts.path}/${account.address}`);
+                }}
+              >
+                <div className={`${styles.leftText} ${grid['col-md-2']}`}>
+                  <AccountVisual
+                    className={styles.accountVisual}
+                    address={account.address}
+                    size={43}
+                  />
+                </div>
+                <div className={`${styles.rightText} ${styles.accountInformation} ${grid['col-md-10']}`}>
+                  <div className={this.state.edit ? styles.editMode : null}>
+                    <div className={styles.balance}>
+                      <LiskAmount val={account.balance} /> <span>LSK</span>
+                    </div>
+                    <TitleInput
+                      key={account.address}
+                      edit={this.state.edit}
+                      account={{
+                        title: account.title || account.address,
+                        address: account.address,
+                        balance: account.balance,
+                      }}
                     />
                   </div>
-                  <div className={`${styles.rightText} ${styles.accountInformation} ${grid['col-md-10']}`}>
-                    <div className={this.state.edit ? styles.editMode : null}>
-                      <div className={styles.balance}>
-                        <LiskAmount val={account.balance} /> <span>LSK</span>
-                      </div>
-                      <TitleInput key={account.address}
-                                  edit={this.state.edit}
-                                  account={{
-                                    title: account.title || account.address,
-                                    address: account.address,
-                                    balance: account.balance,
-                                  }}
-                        />
+                  {this.state.edit
+                    ? <div className={`${styles.removeAccount} remove-account`}
+                      onClick={() => removeAccount(account) }>
+                      <FontIcon value='remove'/>
                     </div>
-                    {this.state.edit
-                      ? <div className={`${styles.removeAccount} remove-account`}
-                             onClick={() => removeAccount(account) }>
-                          <FontIcon value='remove'/>
-                        </div>
-                      : null
-                    }
-                  </div>
-                </div>))
-                }
-                <div className={`${styles.addAccountLink} ${styles.rows} ${styles.clickable} add-account-button`} onClick={() => nextStep()}>
-                  {t('Add a Lisk ID')} <FontIcon value='arrow-right'/>
+                    : null
+                  }
                 </div>
-              </div>
+              </div>))
+            }
+            <div className={`${styles.addAccountLink} ${styles.rows} ${styles.clickable} add-account-button`} onClick={() => nextStep()}>
+              {t('Add a Lisk ID')} <FontIcon value='arrow-right'/>
             </div>
-          : <div className={`${styles.emptyList} followed-accounts-empty-list`}>
-              <p>{t('Keep track of any Lisk ID balance. Only you will see who you follow.')}</p>
+          </div>
+        </div>
+        : <div className={`${styles.emptyList} followed-accounts-empty-list`}>
+          <p>{t('Keep track of any Lisk ID balance. Only you will see who you follow.')}</p>
 
-              <div className={`${styles.addAccountLink} ${styles.clickable} add-account-button`} onClick={() => nextStep()}>
-                {t('Add a Lisk ID')} <FontIcon value='arrow-right'/>
-              </div>
-            </div>
-        }
+          <div className={`${styles.addAccountLink} ${styles.clickable} add-account-button`} onClick={() => nextStep()}>
+            {t('Add a Lisk ID')} <FontIcon value='arrow-right'/>
+          </div>
+        </div>
+      }
     </div>;
   }
 }

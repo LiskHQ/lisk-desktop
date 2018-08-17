@@ -16,14 +16,14 @@ const AddAccountID = ({
     autoFocus={true}
     onChange={val => handleChange(val)}
     theme={showAccountVisual ? styles : {}}
-    >
-      {showAccountVisual
-        ? <figure className={styles.accountVisualInInput}>
-            <AccountVisual address={address.value} size={50} />
-          </figure>
-        : null
-      }
-    </Input>;
+  >
+    {showAccountVisual
+      ? <figure className={styles.accountVisualInInput}>
+        <AccountVisual address={address.value} size={50} />
+      </figure>
+      : null
+    }
+  </Input>;
 };
 
 export default AddAccountID;

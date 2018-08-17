@@ -13,32 +13,32 @@ describe('customCountDown', () => {
       seconds: 25,
       autoLog: true,
       resetTimer: spy(),
+      setActiveDialog: () => {},
       t: key => key,
+      history: {
+        replace: () => {},
+      },
+      closeDialog: () => {},
     };
     wrapper = mount(<CustomCountDown {...propsMock} />);
   });
 
-  it('should render "ID lock in 10:25"', () => {
-    expect(wrapper.find('span').text()).to.be.equal('ID lock in 10:25');
+  it('should render "Session timeout in 10:25"', () => {
+    expect(wrapper.find('span').text()).to.be.equal('Session timeout in 10:25');
   });
 
   it('should render reset button', () => {
-    wrapper.setProps({ minutes: 4, seconds: 49 });
-    expect(wrapper.find('span').text()).to.be.equal('ID lock in 04:49');
+    wrapper.setProps({ minutes: 0, seconds: 59 });
+    expect(wrapper.find('span').text()).to.be.equal('Session timeout in 00:59');
     expect(wrapper).to.have.descendants('.reset');
   });
 
   it('should call resetTimer', () => {
-    wrapper.setProps({ minutes: 1, seconds: 5 });
+    wrapper.setProps({ minutes: 0, seconds: 1 });
     expect(wrapper).to.have.descendants('.reset');
     expect(wrapper.props().resetTimer).to.not.be.calledWith();
     wrapper.find('.reset').simulate('click');
     wrapper.update();
     expect(wrapper.props().resetTimer).to.be.calledWith();
-  });
-
-  it('should render "Unlocked"', () => {
-    wrapper.setProps({ autoLog: false });
-    expect(wrapper.find('.unlocked').text()).to.be.equal('Unlocked');
   });
 });

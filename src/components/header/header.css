@@ -102,6 +102,21 @@
   width: 32vw; /* stylelint-disable-line */
 }
 
+.logout {
+  cursor: pointer;
+  padding-left: 20px;
+  color: #fff;
+}
+
+.logoutIcon {
+  font-size: 18px;
+}
+
+.logoutInfo {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .account {
   position: relative;
   height: 80px;
@@ -122,7 +137,6 @@
 
   & .information {
     display: inline-block;
-    vertical-align: middle;
     line-height: 25px;
     padding-right: 20px;
     height: var(--avatar-height);
@@ -153,6 +167,8 @@
     }
 
     & .timer {
+      display: flex;
+      justify-content: flex-end;
       font-size: var(--font-size-small);
       color: var(--color-grayscale-medium);
       line-height: 1.5em; /* stylelint-disable-line */
@@ -280,6 +296,8 @@
   .account {
     margin: var(--header-margin-top-bottom-S) var(--header-margin-right-left-S) 0px 0px;
     height: auto;
+    display: flex;
+    padding-bottom: 30px;
 
     & .avatar {
       margin-top: 4px;
@@ -299,10 +317,6 @@
         & small {
           font-size: 10px;
         }
-      }
-
-      & .timer {
-        display: none;
       }
     }
   }
