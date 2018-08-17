@@ -9,7 +9,6 @@ import txFilters from './../../../constants/transactionFilters';
 
 /* istanbul ignore next */
 const mapStateToProps = state => ({
-  activePeer: state.peers.data,
   account: state.account,
   transaction: state.transaction,
   transactions: [...state.transactions.pending, ...state.transactions.confirmed],
