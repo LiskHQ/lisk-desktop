@@ -109,7 +109,6 @@ class AutoSuggest extends React.Component {
       if (searchTerm === this.state.value) {
         this.lastSearch = searchTerm;
         this.props.searchSuggestions({
-          activePeer: this.props.activePeer,
           searchTerm: this.state.value,
         });
       }
