@@ -2,6 +2,7 @@ Feature: Send dialog
   @testnet
   Scenario: should allow to send when enough funds and correct address form
     Given I'm logged in as "genesis"
+    Then I go to "/wallet"
     And I fill in "1" to "amount" field
     Then I should see "convertor" element
     Then I should see "converted price" element with text matching coverter price

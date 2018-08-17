@@ -29,5 +29,14 @@ describe('Reducer: settings(state, action)', () => {
     const FinalStep = settings(changedState, action);
     expect(FinalStep).to.deep.equal(initializeState);
   });
+
+  it('should return updated settings if action.type = actionTypes.switchChannel', () => {
+    const action = {
+      type: actionTypes.switchChannel,
+      data: { name: 'twitter', value: true },
+    };
+    const changedState = settings(initializeState, action);
+    expect(changedState.channels).to.deep.equal({ twitter: true });
+  });
 });
 
