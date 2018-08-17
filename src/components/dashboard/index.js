@@ -23,7 +23,6 @@ class Dashboard extends React.Component {
 
     if (isLoggedIn) {
       props.loadTransactions({
-        activePeer: props.peers.data,
         address: props.account.address,
         publicKey: props.account.publicKey,
       });
@@ -85,7 +84,6 @@ const mapStateToProps = state => ({
   pendingTransactions: state.transactions.pending,
   account: state.account,
   loading: state.loading.length > 0,
-  peers: state.peers,
   settings: state.settings,
 });
 

@@ -14,7 +14,6 @@ describe('actions: transactions', () => {
   describe('transactionsUpdated', () => {
     let transactionsApiMock;
     const data = {
-      activePeer: {},
       address: '15626650747375562521',
       limit: 20,
       offset: 0,
@@ -22,10 +21,14 @@ describe('actions: transactions', () => {
     };
     const actionFunction = transactionsUpdated(data);
     let dispatch;
+    let getState;
 
     beforeEach(() => {
       transactionsApiMock = sinon.stub(transactionsApi, 'getTransactions');
       dispatch = sinon.spy();
+      getState = () => ({
+        peers: { data: {} },
+      });
     });
 
     afterEach(() => {
@@ -39,7 +42,7 @@ describe('actions: transactions', () => {
         confirmed: [],
       };
 
-      actionFunction(dispatch);
+      actionFunction(dispatch, getState);
       expect(dispatch).to.have.been.calledWith({
         data: expectedAction,
         type: actionTypes.transactionsUpdated,
@@ -50,7 +53,6 @@ describe('actions: transactions', () => {
   describe('transactionsRequested', () => {
     let transactionsApiMock;
     const data = {
-      activePeer: {},
       address: '15626650747375562521L',
       limit: 20,
       offset: 0,
@@ -58,10 +60,14 @@ describe('actions: transactions', () => {
     };
     const actionFunction = transactionsRequested(data);
     let dispatch;
+    let getState;
 
     beforeEach(() => {
       transactionsApiMock = sinon.stub(transactionsApi, 'getTransactions');
       dispatch = sinon.spy();
+      getState = () => ({
+        peers: { data: {} },
+      });
     });
 
     afterEach(() => {
@@ -81,7 +87,7 @@ describe('actions: transactions', () => {
         filter: data.filter,
       };
 
-      actionFunction(dispatch);
+      actionFunction(dispatch, getState);
       expect(dispatch).to.have.been
         .calledWith({ data: expectedAction, type: actionTypes.transactionsLoaded });
     });
@@ -103,11 +109,21 @@ describe('actions: transactions', () => {
     };
     const actionFunction = loadTransaction(data);
     let dispatch;
+    let getState;
 
     beforeEach(() => {
       transactionApiMock = sinon.stub(transactionsApi, 'getSingleTransaction');
       delegateApiMock = sinon.stub(delegateApi, 'getDelegate');
       dispatch = sinon.spy();
+      getState = () => ({
+        peers: {
+          data: {
+            options: {
+              name: 'Mainnet',
+            },
+          },
+        },
+      });
     });
 
     afterEach(() => {
@@ -133,7 +149,7 @@ describe('actions: transactions', () => {
         voteArrayName: 'added',
       };
 
-      actionFunction(dispatch);
+      actionFunction(dispatch, getState);
       expect(dispatch).to.have.been
         .calledWith({ data: transactionResponse, type: actionTypes.transactionLoaded });
       expect(dispatch).to.have.been
@@ -150,7 +166,7 @@ describe('actions: transactions', () => {
         voteArrayName: 'deleted',
       };
 
-      actionFunction(dispatch);
+      actionFunction(dispatch, getState);
       expect(dispatch).to.have.been
         .calledWith({ data: transactionResponse, type: actionTypes.transactionLoaded });
       expect(dispatch).to.have.been
@@ -161,7 +177,6 @@ describe('actions: transactions', () => {
   describe('sent', () => {
     let transactionsApiMock;
     const data = {
-      activePeer: {},
       recipientId: '15833198055097037957L',
       amount: 100,
       passphrase: 'sample passphrase',
@@ -173,10 +188,14 @@ describe('actions: transactions', () => {
     };
     const actionFunction = sent(data);
     let dispatch;
+    let getState;
 
     beforeEach(() => {
       transactionsApiMock = sinon.stub(transactionsApi, 'send');
       dispatch = sinon.spy();
+      getState = () => ({
+        peers: { data: {} },
+      });
     });
 
     afterEach(() => {
@@ -199,7 +218,7 @@ describe('actions: transactions', () => {
         type: transactionTypes.send,
       };
 
-      actionFunction(dispatch);
+      actionFunction(dispatch, getState);
       expect(dispatch).to.have.been
         .calledWith({ data: expectedAction, type: actionTypes.transactionAdded });
     });
@@ -207,7 +226,7 @@ describe('actions: transactions', () => {
     it('should dispatch transactionFailed action if caught', () => {
       transactionsApiMock.returnsPromise().rejects({ message: 'sample message' });
 
-      actionFunction(dispatch);
+      actionFunction(dispatch, getState);
       const expectedAction = {
         data: {
           errorMessage: 'sample message.',
@@ -220,7 +239,7 @@ describe('actions: transactions', () => {
     it('should dispatch transactionFailed action if caught but no message returned', () => {
       transactionsApiMock.returnsPromise().rejects({});
 
-      actionFunction(dispatch);
+      actionFunction(dispatch, getState);
       const expectedAction = {
         data: {
           errorMessage: 'An error occurred while creating the transaction.',
