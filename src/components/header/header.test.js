@@ -67,7 +67,7 @@ describe('Header', () => {
     mockInputProps.account.passphrase = accounts.genesis.passphrase;
     storeObject.account = { publicKey: '123' };
     wrapper = mountWithRouter(<Header {...mockInputProps} />, options);
-    expect(wrapper.find('.unlocked')).to.have.length(1);
+    expect(wrapper.find('Countdown')).to.have.length(0);
   });
 
   it('does show timer if account is not locked auto logout it turned on', () => {
