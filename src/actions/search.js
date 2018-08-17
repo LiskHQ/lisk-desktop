@@ -5,8 +5,9 @@ import { getTransactions } from '../utils/api/transactions';
 import { getDelegate, getVoters, getVotes } from '../utils/api/delegate';
 import searchAll from '../utils/api/search';
 
-const searchDelegate = ({ activePeer, publicKey, address }) =>
-  (dispatch) => {
+const searchDelegate = ({ publicKey, address }) =>
+  (dispatch, getState) => {
+    const activePeer = getState().peers.data;
     getDelegate(activePeer, { publicKey }).then((response) => {
       dispatch({
         data: {
@@ -18,8 +19,9 @@ const searchDelegate = ({ activePeer, publicKey, address }) =>
     });
   };
 
-const searchVotes = ({ activePeer, address }) =>
-  dispatch =>
+const searchVotes = ({ address }) =>
+  (dispatch, getState) => {
+    const activePeer = getState().peers.data;
     getVotes(activePeer, address).then(response =>
       dispatch({
         type: actionTypes.searchVotes,
@@ -28,9 +30,11 @@ const searchVotes = ({ activePeer, address }) =>
           address,
         },
       }));
+  };
 
-const searchVoters = ({ activePeer, address, publicKey }) =>
-  dispatch =>
+const searchVoters = ({ address, publicKey }) =>
+  (dispatch, getState) => {
+    const activePeer = getState().peers.data;
     getVoters(activePeer, publicKey).then(response =>
       dispatch({
         type: actionTypes.searchVoters,
@@ -39,26 +43,29 @@ const searchVoters = ({ activePeer, address, publicKey }) =>
           address,
         },
       }));
+  };
 
-export const searchAccount = ({ activePeer, address }) =>
-  (dispatch) => {
-    dispatch(searchVotes({ activePeer, address }));
+export const searchAccount = ({ address }) =>
+  (dispatch, getState) => {
+    const activePeer = getState().peers.data;
+    dispatch(searchVotes({ address }));
     getAccount(activePeer, address).then((response) => {
       const accountData = {
         ...response,
       };
       if (accountData.publicKey) {
-        dispatch(searchDelegate({ activePeer, publicKey: accountData.publicKey, address }));
-        dispatch(searchVoters({ activePeer, address, publicKey: accountData.publicKey }));
+        dispatch(searchDelegate({ publicKey: accountData.publicKey, address }));
+        dispatch(searchVoters({ address, publicKey: accountData.publicKey }));
       }
       dispatch({ data: accountData, type: actionTypes.searchAccount });
     });
   };
 
 export const searchTransactions = ({
-  activePeer, address, limit, filter, showLoading = true,
+  address, limit, filter, showLoading = true,
 }) =>
-  (dispatch) => {
+  (dispatch, getState) => {
+    const activePeer = getState().peers.data;
     if (showLoading) loadingStarted(actionTypes.searchTransactions);
     getTransactions({
       activePeer, address, limit, filter,
@@ -87,9 +94,10 @@ export const searchTransactions = ({
   };
 
 export const searchMoreTransactions = ({
-  activePeer, address, limit, offset, filter,
+  address, limit, offset, filter,
 }) =>
-  (dispatch) => {
+  (dispatch, getState) => {
+    const activePeer = getState().peers.data;
     getTransactions({
       activePeer, address, limit, offset, filter,
     })
@@ -106,8 +114,9 @@ export const searchMoreTransactions = ({
       });
   };
 
-export const searchSuggestions = ({ activePeer, searchTerm }) =>
-  (dispatch) => {
+export const searchSuggestions = ({ searchTerm }) =>
+  (dispatch, getState) => {
+    const activePeer = getState().peers.data;
     dispatch({
       data: {},
       type: actionTypes.searchClearSuggestions,

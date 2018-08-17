@@ -10,11 +10,9 @@ import routes from './../../../constants/routes';
 class ExplorerTransactions extends React.Component {
   onInit() {
     this.props.searchAccount({
-      activePeer: this.props.activePeer,
       address: this.props.address,
     });
     this.props.searchTransactions({
-      activePeer: this.props.activePeer,
       address: this.props.address,
       limit: 25,
       filter: txFilters.all,
@@ -27,7 +25,6 @@ class ExplorerTransactions extends React.Component {
   }
   onLoadMore() {
     this.props.searchMoreTransactions({
-      activePeer: this.props.activePeer,
       address: this.props.address,
       limit: 25,
       offset: this.props.offset,
@@ -42,7 +39,6 @@ class ExplorerTransactions extends React.Component {
   onFilterSet(filter) {
     if (filter <= 2) {
       this.props.searchTransactions({
-        activePeer: this.props.activePeer,
         address: this.props.address,
         limit: 25,
         filter,
