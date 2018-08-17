@@ -93,7 +93,6 @@ describe('Account middleware', () => {
 
     const data = {
       windowIsFocused: true,
-      peers: state.peers,
       account: state.account,
       transactions: state.transactions,
     };

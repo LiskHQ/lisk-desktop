@@ -57,7 +57,6 @@ describe('SecondPassphrase', () => {
     it('should call activePeerSet with network and passphrase', () => {
       wrapper.find('MultiStep').props().finalCallback(secPassphrase, account.passphrase);
       expect(props.registerSecondPassphrase).to.have.been.calledWith({
-        activePeer: peers.data,
         secondPassphrase: secPassphrase,
         account,
         passphrase: account.passphrase,
