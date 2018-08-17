@@ -11,4 +11,33 @@ export const isPathCorrect = (location, explorerRoutes) => {
   return isValid ? location.pathname : false;
 };
 
+export const getDeviceMetadata = () => {
+  const {
+    platform,
+    appCodeName,
+    appName,
+    appVersion,
+    language,
+    oscpu,
+    vendor,
+    vendorSub,
+    product,
+    userAgent,
+    cookieEnabled,
+  } = window.navigator;
+  return {
+    platform,
+    appCodeName,
+    appName,
+    appVersion,
+    language,
+    oscpu,
+    vendor,
+    vendorSub,
+    product,
+    userAgent,
+    cookieEnabled,
+  };
+};
+
 export default isPathCorrect;

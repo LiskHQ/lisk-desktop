@@ -48,6 +48,14 @@ class MainMenu extends React.Component {
 
   navigate(history, tabs, index) {
     this.setState({ active: false, index });
+    if (tabs[index].id === 'feedback') {
+      this.props.showFeedback({
+        childComponentProps: {
+          title: this.props.t('Tell us what you think'),
+        },
+      });
+      return;
+    }
     history.push(tabs[index].route);
   }
 
@@ -92,6 +100,12 @@ class MainMenu extends React.Component {
         route: `${routes.setting.path}`,
         id: 'settings',
         image: 'settings',
+        enabledWhenNotLoggedIn: true,
+      },
+      {
+        label: t('Feedback'),
+        id: 'feedback',
+        image: 'conversation',
         enabledWhenNotLoggedIn: true,
       },
       {
