@@ -358,7 +358,6 @@ describe('actions: account', () => {
 
     it('should update transactions when window is in focus', () => {
       const data = {
-        activePeer: {},
         transactions: { confirmed: [{ confirmations: 10 }], pending: [] },
         account: { address: accounts.genesis.address },
       };
@@ -369,7 +368,6 @@ describe('actions: account', () => {
 
     it('should update transactions when there are no recent transactions', () => {
       const data = {
-        activePeer: {},
         transactions: { confirmed: [{ confirmations: 10000 }], pending: [] },
         account: { address: accounts.genesis.address },
       };
