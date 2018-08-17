@@ -11,15 +11,18 @@ import {
 describe('actions: delegate', () => {
   let dispatch;
   let getDelegateStub;
+  let getState;
 
   describe('delegatesFetched', () => {
-    const activePeer = {};
     const username = 'username';
-    const delegatesFetchedAction = delegatesFetched({ activePeer, username });
+    const delegatesFetchedAction = delegatesFetched({ username });
 
     beforeEach(() => {
       getDelegateStub = sinon.stub(delegateApi, 'getDelegate');
       dispatch = sinon.spy();
+      getState = () => ({
+        peers: { data: {} },
+      });
     });
 
     afterEach(() => {
@@ -34,7 +37,7 @@ describe('actions: delegate', () => {
         delegate: responseData,
         username,
       };
-      delegatesFetchedAction(dispatch);
+      delegatesFetchedAction(dispatch, getState);
       expect(dispatch).to.have.been
         .calledWith(delegatesRetrieving());
       expect(dispatch).to.have.been
@@ -49,7 +52,7 @@ describe('actions: delegate', () => {
         ...responseData,
         username,
       };
-      delegatesFetchedAction(dispatch);
+      delegatesFetchedAction(dispatch, getState);
       expect(dispatch).to.have.been
         .calledWith(delegatesRetrieving());
       expect(dispatch).to.have.been

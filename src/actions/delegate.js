@@ -22,8 +22,9 @@ export const delegatesRetrieving = data => ({
 /**
  * Retrieves delegates matching a username
  */
-export const delegatesFetched = ({ activePeer, username }) =>
-  (dispatch) => {
+export const delegatesFetched = ({ username }) =>
+  (dispatch, getState) => {
+    const activePeer = getState().peers.data;
     dispatch(delegatesRetrieving());
     getDelegate(activePeer, { username })
       .then((response) => {
