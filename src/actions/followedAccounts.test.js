@@ -18,6 +18,9 @@ describe('actions: followedAccount', () => {
     balance: accounts.genesis.balance,
     title: accounts.genesis.address,
   };
+  const getState = () => ({
+    peers: { data: {} },
+  });
 
   it('should create an action to retrieve the followed accounts list', () => {
     const expectedAction = {
@@ -57,13 +60,13 @@ describe('actions: followedAccount', () => {
     // Case 1: balance does not change
     accountApi.getAccount.resolves({ balance: accounts.genesis.balance });
 
-    followedAccountFetchedAndUpdated({ activePeer: {}, account: data })(dispatch);
+    followedAccountFetchedAndUpdated({ account: data })(dispatch, getState);
     expect(dispatch).to.not.have.been.calledWith();
 
     // Case 2: balance does change
     accountApi.getAccount.resolves({ balance: 0 });
 
-    followedAccountFetchedAndUpdated({ activePeer: {}, account: data })(dispatch);
+    followedAccountFetchedAndUpdated({ account: data })(dispatch, getState);
     expect(dispatch).to.been.calledWith(followedAccountUpdated({
       publicKey: accounts.genesis.publicKey,
       balance: 0,

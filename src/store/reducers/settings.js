@@ -1,11 +1,20 @@
 import actionTypes from '../../constants/actions';
 
+export const channels = {
+  academy: false,
+  twitter: true,
+  blog: false,
+  github: false,
+  reddit: false,
+};
+
 // load setting data from localStorage if it exists
 const initialState = JSON.parse(localStorage.getItem('settings')) || {
   advancedMode: false,
   autoLog: true,
   onBoarding: localStorage.getItem('onboarding') !== 'false',
   showNetwork: false,
+  channels,
 };
 
 /**
@@ -22,6 +31,14 @@ const settings = (state = initialState, action) => {
         advancedMode: false,
         autoLog: true,
       });
+    case actionTypes.switchChannel:
+      return {
+        ...state,
+        channels: {
+          ...state.channels,
+          [action.data.name]: action.data.value,
+        },
+      };
     default:
       return state;
   }

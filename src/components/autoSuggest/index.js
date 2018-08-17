@@ -109,7 +109,6 @@ class AutoSuggest extends React.Component {
       if (searchTerm === this.state.value) {
         this.lastSearch = searchTerm;
         this.props.searchSuggestions({
-          activePeer: this.props.activePeer,
           searchTerm: this.state.value,
         });
       }
@@ -325,15 +324,15 @@ class AutoSuggest extends React.Component {
           />
           { this.state.value === '' && this.state.resultsLength === 0 ?
             <ResultsList
-            key='recent'
-            results={this.getRecentSearchResults()}
-            header={{
-              titleLeft: t('Recent searches'),
-              titleRight: '',
-            }}
-            onMouseDown={this.onResultClick.bind(this)}
-            setSelectedRow={this.setSelectedRow.bind(this)}
-          />
+              key='recent'
+              results={this.getRecentSearchResults()}
+              header={{
+                titleLeft: t('Recent searches'),
+                titleRight: '',
+              }}
+              onMouseDown={this.onResultClick.bind(this)}
+              setSelectedRow={this.setSelectedRow.bind(this)}
+            />
             : null
           }
         </div>

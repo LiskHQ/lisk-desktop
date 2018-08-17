@@ -14,7 +14,6 @@ class SingleTransaction extends React.Component {
     super(props);
     if (props.peers.data) {
       this.props.loadTransaction({
-        activePeer: props.peers.data,
         id: this.props.match.params.id,
       });
     }
@@ -24,7 +23,6 @@ class SingleTransaction extends React.Component {
     if (nextProps.peers.data !== this.props.peers.data
       || nextProps.match.params.id !== this.props.match.params.id) {
       this.props.loadTransaction({
-        activePeer: nextProps.peers.data,
         id: nextProps.match.params.id,
       });
     }

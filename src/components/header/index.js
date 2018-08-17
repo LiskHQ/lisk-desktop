@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
-import { dialogDisplayed } from '../../actions/dialog';
+import { dialogDisplayed, dialogHidden } from '../../actions/dialog';
 import { accountLoggedOut, removePassphrase, accountUpdated } from '../../actions/account';
 import { removeSavedAccountPassphrase } from '../../actions/savedAccounts';
 import accountConfig from '../../constants/account';
@@ -18,6 +18,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   setActiveDialog: data => dispatch(dialogDisplayed(data)),
+  closeDialog: () => dispatch(dialogHidden()),
   logOut: () => dispatch(accountLoggedOut()),
   removePassphrase: data => dispatch(removePassphrase(data)),
   removeSavedAccountPassphrase: data => dispatch(removeSavedAccountPassphrase(data)),

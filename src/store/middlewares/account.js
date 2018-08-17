@@ -115,6 +115,9 @@ const accountMiddleware = store => next => (action) => {
     case actionTypes.passphraseUsed:
       passphraseUsed(store, action);
       break;
+    case actionTypes.accountLoggedOut:
+      localStorage.removeItem('accounts');
+      break;
     default: break;
   }
 };

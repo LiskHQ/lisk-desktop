@@ -202,8 +202,7 @@ export const loadAccount = ({
   };
 
 export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocus) =>
-  (dispatch, getState) => {
-    const activePeer = getState().peers.data;
+  (dispatch) => {
     const hasRecentTransactions = txs => (
       txs.confirmed.filter(tx => tx.confirmations < 1000).length !== 0 ||
       txs.pending.length !== 0
@@ -215,7 +214,6 @@ export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocu
 
       dispatch(transactionsUpdated({
         pendingTransactions: transactions.pending,
-        activePeer,
         address,
         limit: 25,
         filter,

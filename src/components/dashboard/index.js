@@ -7,11 +7,11 @@ import { FontIcon } from '../fontIcon';
 import Box from '../box';
 import { loadTransactions } from '../../actions/transactions';
 import TransactionList from './../transactions/transactionList';
-import Send from '../send';
 import CurrencyGraph from './currencyGraph';
 import routes from '../../constants/routes';
-import { settingsUpdated } from '../../actions/settings';
 import FollowedAccounts from '../followedAccounts/index';
+import QuickTips from '../quickTips';
+import NewsFeed from '../newsFeed';
 
 import styles from './dashboard.css';
 
@@ -19,11 +19,14 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
 
-    this.props.loadTransactions({
-      activePeer: this.props.peers.data,
-      address: this.props.account.address,
-      publicKey: this.props.account.publicKey,
-    });
+    const isLoggedIn = props.account.address;
+
+    if (isLoggedIn) {
+      props.loadTransactions({
+        address: props.account.address,
+        publicKey: props.account.publicKey,
+      });
+    }
   }
 
   render() {
@@ -31,9 +34,11 @@ class Dashboard extends React.Component {
       transactions, t, account, loading, history,
     } = this.props;
 
+    const isLoggedIn = account.address;
+
     return <div className={`${grid.row} ${styles.wrapper}`}>
       <div className={`${grid['col-md-8']} ${grid['col-xs-12']} ${styles.main}`}>
-        <Box className={`${styles.latestActivity}`}>
+        {isLoggedIn ? <Box className={`${styles.latestActivity}`}>
           <header>
             <h2 className={styles.title}>
               {t('Latest activity')}
@@ -52,7 +57,8 @@ class Dashboard extends React.Component {
             history,
             onClick: props => history.push(`${routes.wallet.path}?id=${props.value.id}`),
           }} />
-        </Box>
+        </Box> :
+        <QuickTips />}
         <div className={`${grid.row} ${styles.bottomModuleWrapper} `}>
           <div className={`${grid['col-md-6']} ${grid['col-lg-6']} ${grid['col-xs-6']}`} style={{ paddingLeft: '0px' }}>
             <Box>
@@ -67,7 +73,7 @@ class Dashboard extends React.Component {
         </div>
       </div>
       <div className={`${grid['col-md-4']} ${styles.sendWrapper}`}>
-        <Send {...this.props} />
+        <NewsFeed />
       </div>
     </div>;
   }
@@ -78,13 +84,11 @@ const mapStateToProps = state => ({
   pendingTransactions: state.transactions.pending,
   account: state.account,
   loading: state.loading.length > 0,
-  peers: state.peers,
   settings: state.settings,
 });
 
 const mapDispatchToProps = dispatch => ({
   loadTransactions: data => dispatch(loadTransactions(data)),
-  settingsUpdated: data => dispatch(settingsUpdated(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(Dashboard));

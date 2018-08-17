@@ -10,7 +10,6 @@ import i18n from '../../i18n';
 import MainMenu from './mainMenu';
 import routes from '../../constants/routes';
 
-
 describe('MainMenu', () => {
   // Mocking store
   const peers = {
@@ -99,11 +98,11 @@ describe('MainMenu', () => {
     expect(wrapper.find(Tab)).to.have.lengthOf(5);
   });
 
-  it('should all Tab be disabled except Settings if !props.account.address', () => {
+  it('should all Tab be disabled except Settings, Dashboard and Help if !props.account.address', () => {
     const wrapper = mount(<MemoryRouter>
       <MainMenu {...props} account={{}} />
     </MemoryRouter>, options);
-    expect(wrapper.find(Tab).at(0).props().disabled).to.be.equal(true);
+    expect(wrapper.find(Tab).at(0).props().disabled).not.to.be.equal(true);
     expect(wrapper.find(Tab).at(1).props().disabled).to.be.equal(true);
     expect(wrapper.find(Tab).at(2).props().disabled).to.be.equal(true);
     expect(wrapper.find(Tab).at(3).props().disabled).not.to.be.equal(true);

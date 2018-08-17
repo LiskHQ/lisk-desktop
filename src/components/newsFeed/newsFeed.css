@@ -1,0 +1,39 @@
+.headerWrapper {
+  display: flex;
+  padding: 0 20px;
+}
+
+.newsFeedBox {
+  padding: 0;
+}
+
+.settingsButton {
+  display: flex;
+  padding: 20px 20px 0;
+  align-items: center;
+  font-weight: 600;
+
+  & span {
+    cursor: pointer;
+    color: #2475b9;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.container {
+  & .newsWrapper {
+    padding: 0 20px;
+  }
+
+  & .newsWrapper:nth-child(odd) {
+    background: linear-gradient(90deg, #fff, #f5f8fc);
+  }
+}
+
+.newsFeed {
+  width: 100%;
+}

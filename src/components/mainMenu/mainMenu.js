@@ -67,6 +67,7 @@ class MainMenu extends React.Component {
         route: `${routes.dashboard.path}`,
         id: 'dashboard',
         image: menuLogos.dashboard,
+        enabledWhenNotLoggedIn: true,
       }, {
         label: t('Wallet'),
         route: `${routes.wallet.path}`,

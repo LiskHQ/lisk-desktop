@@ -1,0 +1,38 @@
+
+.news {
+  width: 100%;
+}
+
+.header {
+  padding: 25px 0 0;
+  display: flex;
+}
+
+.timestampMessage {
+  color: grey;
+  padding-left: 10px;
+  font-weight: 500;
+}
+
+.description {
+  padding: 5px 0;
+  font-family: Open Sans, sans-serif;
+  font-weight: 300;
+  color: #3c5068;
+  padding-bottom: 10px;
+}
+
+.source {
+  font-weight: 600;
+}
+
+.readMore {
+  padding-bottom: 10px;
+
+  & a {
+    color: #2475b9;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+  }
+}
