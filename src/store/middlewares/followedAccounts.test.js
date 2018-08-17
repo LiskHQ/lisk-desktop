@@ -25,7 +25,6 @@ describe('FollowedAccounts middleware', () => {
     store = mock();
     store.dispatch = spy();
     store.getState = () => ({
-      peers: { data: {} },
       followedAccounts: { accounts: [account, account2] },
     });
     next = spy();
