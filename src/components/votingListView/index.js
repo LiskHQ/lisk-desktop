@@ -7,7 +7,6 @@ const mapStateToProps = state => ({
   address: state.account.address,
   isDelegate: state.account.isDelegate,
   serverPublicKey: state.account.serverPublicKey,
-  activePeer: state.peers.data,
   votes: state.voting.votes,
   delegates: state.voting.delegates,
   totalDelegates: state.voting.totalDelegates,

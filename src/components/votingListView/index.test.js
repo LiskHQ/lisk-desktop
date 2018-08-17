@@ -13,7 +13,6 @@ import history from '../../history';
 describe.skip('VotingListView', () => {
   let wrapper;
   const account = { address: '16313739661670634666L' };
-  const peers = { data: {} };
   const voting = {
     votes: {},
     delegates: [],
@@ -30,7 +29,6 @@ describe.skip('VotingListView', () => {
 
   beforeEach(() => {
     store.getState = () => ({
-      peers,
       account,
       voting,
       transactions,
@@ -61,7 +59,6 @@ describe.skip('VotingListView', () => {
     expect(props.delegates).to.be.equal(voting.delegates);
     expect(props.votes).to.be.equal(voting.votes);
     expect(props.totalDelegates).to.be.equal(voting.totalDelegates);
-    expect(props.activePeer).to.be.equal(peers.data);
     expect(props.address).to.be.equal(account.address);
     expect(typeof props.voteToggled).to.be.equal('function');
     expect(typeof props.votesFetched).to.be.equal('function');

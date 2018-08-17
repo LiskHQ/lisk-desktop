@@ -88,7 +88,7 @@ describe('actions: voting', () => {
       publicKey: 'test_public-key',
       address: 'test_address',
     };
-    const activePeer = {};
+
     const secondSecret = null;
     const votes = {
       username1: { publicKey: 'sample_key', confirmed: true, unconfirmed: false },
@@ -105,7 +105,7 @@ describe('actions: voting', () => {
       dispatch = sinon.spy();
       goToNextStep = sinon.spy();
       actionFunction = votePlaced({
-        activePeer, account, votes, secondSecret, goToNextStep,
+        account, votes, secondSecret, goToNextStep,
       });
       getState = () => ({
         peers: { data: {} },
@@ -155,7 +155,6 @@ describe('actions: voting', () => {
   describe('votesFetched', () => {
     let delegateApiMock;
     const data = {
-      activePeer: {},
       address: '8096217735672704724L',
     };
     const delegates = delegateList;
@@ -201,11 +200,6 @@ describe('actions: voting', () => {
 
   describe('delegatesFetched', () => {
     const data = {
-      activePeer: {
-        options: {
-          name: 'Mainnet',
-        },
-      },
       q: '',
       offset: 0,
       refresh: true,
@@ -221,7 +215,13 @@ describe('actions: voting', () => {
       const delegateApiMock = sinon.stub(delegateApi, 'listDelegates');
       const dispatch = sinon.spy();
       const getState = () => ({
-        peers: { data: {} },
+        peers: {
+          data: {
+            options: {
+              name: 'Mainnet',
+            },
+          },
+        },
       });
 
       delegateApiMock.returnsPromise().resolves({ data: delegates });
@@ -236,7 +236,6 @@ describe('actions: voting', () => {
   describe('urlVotesFound', () => {
     let delegateApiMock;
     const data = {
-      activePeer: {},
       address: '8096217735672704724L',
       upvotes: [],
       unvotes: [],
