@@ -66,33 +66,36 @@ export const passphraseUsed = data => ({
 /**
  * Gets list of all votes
  */
-export const accountVotesFetched = ({ activePeer, address }) =>
-  dispatch =>
-    getVotes(activePeer, address).then(({ data }) => {
+export const accountVotesFetched = ({ address }) =>
+  (dispatch, getState) => {
+    const activePeer = getState().peers.data;
+    return getVotes(activePeer, address).then(({ data }) => {
       dispatch({
         type: actionTypes.accountAddVotes,
         votes: data,
       });
     });
+  };
 
 /**
  * Gets list of all voters
  */
-export const accountVotersFetched = ({ activePeer, publicKey }) =>
-  dispatch =>
-    getVoters(activePeer, publicKey).then(({ data }) => {
+export const accountVotersFetched = ({ publicKey }) =>
+  (dispatch, getState) => {
+    const activePeer = getState().peers.data;
+    return getVoters(activePeer, publicKey).then(({ data }) => {
       dispatch({
         type: actionTypes.accountAddVoters,
         voters: data,
       });
     });
+  };
 /**
  *
  */
-export const secondPassphraseRegistered = ({
-  activePeer, secondPassphrase, account, passphrase,
-}) =>
-  (dispatch) => {
+export const secondPassphraseRegistered = ({ secondPassphrase, account, passphrase }) =>
+  (dispatch, getState) => {
+    const activePeer = getState().peers.data;
     setSecondPassphrase(activePeer, secondPassphrase, account.publicKey, passphrase)
       .then((data) => {
         dispatch({
@@ -113,10 +116,10 @@ export const secondPassphraseRegistered = ({
     dispatch(passphraseUsed(passphrase));
   };
 
-
-export const updateDelegateAccount = ({ activePeer, publicKey }) =>
-  (dispatch) => {
-    getDelegate(activePeer, { publicKey })
+export const updateDelegateAccount = ({ publicKey }) =>
+  (dispatch, getState) => {
+    const activePeer = getState().peers.data;
+    return getDelegate(activePeer, { publicKey })
       .then((response) => {
         dispatch(accountUpdated(Object.assign(
           {},
@@ -129,9 +132,10 @@ export const updateDelegateAccount = ({ activePeer, publicKey }) =>
  *
  */
 export const delegateRegistered = ({
-  activePeer, account, passphrase, username, secondPassphrase,
+  account, passphrase, username, secondPassphrase,
 }) =>
-  (dispatch) => {
+  (dispatch, getState) => {
+    const activePeer = getState().peers.data;
     registerDelegate(activePeer, username, passphrase, secondPassphrase)
       .then((data) => {
         // dispatch to add to pending transaction
@@ -154,8 +158,9 @@ export const delegateRegistered = ({
     dispatch(passphraseUsed(passphrase));
   };
 
-export const loadDelegate = ({ activePeer, publicKey }) =>
-  (dispatch) => {
+export const loadDelegate = ({ publicKey }) =>
+  (dispatch, getState) => {
+    const activePeer = getState().peers.data;
     getDelegate(activePeer, { publicKey }).then((response) => {
       dispatch({
         data: {
@@ -167,12 +172,12 @@ export const loadDelegate = ({ activePeer, publicKey }) =>
   };
 
 export const loadAccount = ({
-  activePeer,
   address,
   transactionsResponse,
   isSameAccount,
 }) =>
-  (dispatch) => {
+  (dispatch, getState) => {
+    const activePeer = getState().peers.data;
     getAccount(activePeer, address)
       .then((response) => {
         let accountDataUpdated = {
@@ -184,7 +189,6 @@ export const loadAccount = ({
 
         if (!isSameAccount && response.publicKey) {
           dispatch(loadDelegate({
-            activePeer,
             publicKey: response.publicKey,
           }));
         } else if (isSameAccount && response.isDelegate) {
@@ -218,15 +222,15 @@ export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocu
   };
 
 export const accountDataUpdated = ({
-  peers, account, windowIsFocused, transactions,
+  account, windowIsFocused, transactions,
 }) =>
-  (dispatch) => {
-    getAccount(peers.data, account.address).then((result) => {
+  (dispatch, getState) => {
+    const activePeer = getState().peers.data;
+    getAccount(activePeer, account.address).then((result) => {
       if (result.balance !== account.balance) {
         dispatch(updateTransactionsIfNeeded(
           {
             transactions,
-            activePeer: peers.data,
             account,
           },
           !windowIsFocused,

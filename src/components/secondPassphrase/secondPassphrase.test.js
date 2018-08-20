@@ -14,7 +14,6 @@ describe('SecondPassphrase', () => {
   let wrapper;
   const peers = { data: {} };
   const account = accounts.delegate;
-  const secPassphrase = accounts['delegate candidate'].passphrase;
   const store = configureMockStore([])({
     peers,
     account,
@@ -52,16 +51,6 @@ describe('SecondPassphrase', () => {
       expect(document.getElementsByClassName('contentFocused')).to.have.length(1);
       wrapper.unmount();
       expect(document.getElementsByClassName('contentFocused')).to.have.length(0);
-    });
-
-    it('should call activePeerSet with network and passphrase', () => {
-      wrapper.find('MultiStep').props().finalCallback(secPassphrase, account.passphrase);
-      expect(props.registerSecondPassphrase).to.have.been.calledWith({
-        activePeer: peers.data,
-        secondPassphrase: secPassphrase,
-        account,
-        passphrase: account.passphrase,
-      });
     });
 
     it('should go back in history when back button is clicked', () => {

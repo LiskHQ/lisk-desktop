@@ -11,13 +11,12 @@ import transactionTypes from '../../constants/transactionTypes';
 const { lockDuration } = accountConfig;
 
 const updateAccountData = (store, action) => {
-  const { peers, account, transactions } = store.getState();
+  const { account, transactions } = store.getState();
 
   store.dispatch(accountDataUpdated({
     windowIsFocused: action.data.windowIsFocused,
     transactions,
     account,
-    peers,
   }));
 };
 
@@ -38,7 +37,6 @@ const delegateRegistration = (store, action) => {
 
   if (delegateRegistrationTx) {
     store.dispatch(updateDelegateAccount({
-      activePeer: state.peers.data,
       publicKey: state.account.publicKey,
     }));
   }
