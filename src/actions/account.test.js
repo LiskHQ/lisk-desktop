@@ -389,7 +389,7 @@ describe('actions: account', () => {
 
     it('should update transactions when there are no recent transactions', () => {
       const data = {
-        transactions: { confirmed: [{ confirmations: 10000 }], pending: [] },
+        transactions: { confirmed: [{ confirmations: 10000 }], pending: [{ id: '123' }] },
         account: { address: accounts.genesis.address },
       };
 
