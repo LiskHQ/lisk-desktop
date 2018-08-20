@@ -96,7 +96,7 @@ const savedAccountsMiddleware = (store) => {
           balance: account.balance,
           publicKey: account.publicKey,
           network: peers.options.code,
-          address: peers.options.address,
+          peerAddress: peers.options.address,
         }));
         break;
       case actionTypes.accountLoggedIn:

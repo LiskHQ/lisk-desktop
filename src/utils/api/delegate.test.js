@@ -17,7 +17,7 @@ describe('Utils: Delegate', () => {
   let activePeerMockVoters;
   let activePeerMockTransations;
   let liskTransactionsCastVotesStub;
-  let liskTransactionsRegisterDelegateStub;
+  let liskTransactionsRegisterDelegateSpy;
 
   const activePeer = {
     delegates: {
@@ -30,17 +30,17 @@ describe('Utils: Delegate', () => {
       get: () => { },
     },
     transactions: {
-      broadcast: sinon.spy(),
+      broadcast: () => {},
     },
   };
 
   beforeEach(() => {
     liskTransactionsCastVotesStub = sinon.stub(Lisk.transaction, 'castVotes');
-    liskTransactionsRegisterDelegateStub = sinon.stub(Lisk.transaction, 'registerDelegate');
+    liskTransactionsRegisterDelegateSpy = sinon.spy(Lisk.transaction, 'registerDelegate');
     activePeerMockDelegates = sinon.mock(activePeer.delegates);
     activePeerMockVotes = sinon.mock(activePeer.votes);
     activePeerMockVoters = sinon.mock(activePeer.voters);
-    activePeerMockTransations = sinon.mock(activePeer.transactions);
+    activePeerMockTransations = sinon.stub(activePeer.transactions, 'broadcast').returnsPromise().resolves({ id: '1234' });
   });
 
   afterEach(() => {
@@ -53,11 +53,10 @@ describe('Utils: Delegate', () => {
     activePeerMockVoters.verify();
     activePeerMockVoters.restore();
 
-    activePeerMockTransations.verify();
     activePeerMockTransations.restore();
 
     liskTransactionsCastVotesStub.restore();
-    liskTransactionsRegisterDelegateStub.restore();
+    liskTransactionsRegisterDelegateSpy.restore();
   });
 
   describe('listAccountDelegates', () => {
@@ -146,14 +145,12 @@ describe('Utils: Delegate', () => {
   describe('registerDelegate', () => {
     it('should broadcast a registerDelegate transaction', () => {
       const registerDelegateArgs = [null, 'username', 'passphrase', 'secondPassphrase'];
-      const transaction = { id: '1234' };
-      liskTransactionsRegisterDelegateStub.withArgs({
-        username: registerDelegateArgs[1],
-        passphrase: registerDelegateArgs[2],
-        secondPassphrase: registerDelegateArgs[3],
-      }).returns(transaction);
       registerDelegate(...registerDelegateArgs);
-      return expect(activePeer.transactions.broadcast).to.have.been.calledWith(transaction);
+      return expect(liskTransactionsRegisterDelegateSpy).to.have.been.calledWith({
+        username: 'username',
+        passphrase: 'passphrase',
+        secondPassphrase: 'secondPassphrase',
+      });
     });
   });
 });

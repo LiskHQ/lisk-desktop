@@ -72,7 +72,7 @@ export const accountVotesFetched = ({ address }) =>
     return getVotes(activePeer, address).then(({ data }) => {
       dispatch({
         type: actionTypes.accountAddVotes,
-        votes: data,
+        votes: data.votes,
       });
     });
   };
@@ -100,7 +100,7 @@ export const secondPassphraseRegistered = ({ secondPassphrase, account, passphra
       .then((data) => {
         dispatch({
           data: {
-            id: data.transactionId,
+            id: data.id,
             senderPublicKey: account.publicKey,
             senderId: account.address,
             amount: 0,
@@ -141,7 +141,7 @@ export const delegateRegistered = ({
         // dispatch to add to pending transaction
         dispatch({
           data: {
-            id: data.transactionId,
+            id: data.id,
             senderPublicKey: account.publicKey,
             senderId: account.address,
             username,
@@ -208,7 +208,7 @@ export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocu
       txs.pending.length !== 0
     );
 
-    if (windowFocus || !hasRecentTransactions(transactions)) {
+    if (windowFocus || hasRecentTransactions(transactions)) {
       const { filter } = transactions;
       const address = transactions.account ? transactions.account.address : account.address;
 

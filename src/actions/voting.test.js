@@ -121,7 +121,7 @@ describe('actions: voting', () => {
     });
 
     it('should dispatch transactionAdded action if resolved', () => {
-      delegateApiMock.returnsPromise().resolves({ transactionId: '15626650747375562521' });
+      delegateApiMock.returnsPromise().resolves({ id: '15626650747375562521' });
       const expectedAction = {
         id: '15626650747375562521',
         senderPublicKey: account.publicKey,

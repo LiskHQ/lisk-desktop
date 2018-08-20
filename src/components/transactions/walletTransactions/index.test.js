@@ -48,7 +48,7 @@ describe('WalletTransactions Component', () => {
     delegateVotesStub = stub(delegateAPI, 'getVotes');
     delegateVotersStub = stub(delegateAPI, 'getVoters');
 
-    delegateVotesStub.returnsPromise().resolves({ data: [accounts['delegate candidate']] });
+    delegateVotesStub.returnsPromise().resolves({ data: { votes: [accounts['delegate candidate']] } });
     delegateVotersStub.returnsPromise().resolves({ data: [accounts['empty account']] });
 
     props = {
