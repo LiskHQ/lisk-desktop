@@ -9,7 +9,7 @@ import { getDeviceMetadata } from '../../utils/app';
 const ratingValues = ['angry', 'sad', 'neutral', 'happy', 'laughing'];
 const ratingIcons = ratingValues.map(ratingVal => [ratingVal]);
 const metaValues = [true, false];
-const metaIcons = metaValues.map(() => ['check', 'uncheck']);
+const metaIcons = metaValues.map(() => ['active', 'inactive']);
 
 class Questionare extends React.Component {
   constructor(props) {
@@ -37,7 +37,7 @@ class Questionare extends React.Component {
       values: metaValues,
       icons: metaIcons,
       onChange: this.setFeedbackValue.bind(this),
-      iconPrefix: 'checkmark-',
+      iconPrefix: 'radio-button-',
       name: 'metadata',
       labels: [this.props.t('Okay'), this.props.t('No, thanks')],
       styles: {

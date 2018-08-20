@@ -48,15 +48,15 @@
     padding: 0;
   }
 
-  & ~ span[class*='-check'] {
+  & ~ span[class*='-active'] {
     display: none;
   }
 
-  &:checked ~ span[class*='uncheck'] {
+  &:checked ~ span[class*='inactive'] {
     display: none;
   }
 
-  &:checked ~ span[class*='-check'] {
+  &:checked ~ span[class*='-active'] {
     display: inline-block;
   }
 }
