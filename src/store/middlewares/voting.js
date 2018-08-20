@@ -60,10 +60,8 @@ const fetchVotes = (store) => {
   // TODO investigate if this function is needed here at all
   // or maybe it should be moved somewhere else (e.g. urlVotesFound action)
   const state = store.getState();
-  const activePeer = state.peers.data;
   const address = state.account.address;
   store.dispatch(votesFetched({
-    activePeer,
     address,
     type: 'update',
   }));

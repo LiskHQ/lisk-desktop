@@ -88,7 +88,7 @@ describe('actions: voting', () => {
       publicKey: 'test_public-key',
       address: 'test_address',
     };
-    const activePeer = {};
+
     const secondSecret = null;
     const votes = {
       username1: { publicKey: 'sample_key', confirmed: true, unconfirmed: false },
@@ -98,13 +98,17 @@ describe('actions: voting', () => {
     let dispatch;
     let goToNextStep;
     let actionFunction;
+    let getState;
 
     beforeEach(() => {
       delegateApiMock = sinon.stub(delegateApi, 'vote');
       dispatch = sinon.spy();
       goToNextStep = sinon.spy();
       actionFunction = votePlaced({
-        activePeer, account, votes, secondSecret, goToNextStep,
+        account, votes, secondSecret, goToNextStep,
+      });
+      getState = () => ({
+        peers: { data: {} },
       });
     });
 
@@ -127,7 +131,7 @@ describe('actions: voting', () => {
         type: 3,
       };
 
-      actionFunction(dispatch);
+      actionFunction(dispatch, getState);
       expect(dispatch).to.have.been
         .calledWith({ data: expectedAction, type: actionTypes.transactionAdded });
     });
@@ -135,14 +139,14 @@ describe('actions: voting', () => {
     it('should call goToNextStep with "success: false" if caught an error', () => {
       delegateApiMock.returnsPromise().rejects({ message: 'sample message' });
 
-      actionFunction(dispatch);
+      actionFunction(dispatch, getState);
       const expectedAction = { success: false, text: 'sample message.' };
       expect(goToNextStep).to.have.been.calledWith(expectedAction);
     });
 
     it('should call goToNextStep with "success: false" and default message if caught an error but no message returned', () => {
       delegateApiMock.returnsPromise().rejects({});
-      actionFunction(dispatch);
+      actionFunction(dispatch, getState);
       const expectedAction = { success: false, text: 'An error occurred while placing your vote.' };
       expect(goToNextStep).to.have.been.calledWith(expectedAction);
     });
@@ -151,13 +155,16 @@ describe('actions: voting', () => {
   describe('votesFetched', () => {
     let delegateApiMock;
     const data = {
-      activePeer: {},
       address: '8096217735672704724L',
     };
     const delegates = delegateList;
+    let getState;
 
     beforeEach(() => {
       delegateApiMock = sinon.stub(delegateApi, 'listAccountDelegates').returnsPromise();
+      getState = () => ({
+        peers: { data: {} },
+      });
     });
 
     afterEach(() => {
@@ -176,7 +183,7 @@ describe('actions: voting', () => {
       delegateApiMock.resolves({ data: { votes: delegates } });
       const expectedAction = { list: delegates };
 
-      votesFetched(data)(dispatch);
+      votesFetched(data)(dispatch, getState);
       expect(dispatch).to.have.been.calledWith(votesAdded(expectedAction));
     });
 
@@ -186,18 +193,13 @@ describe('actions: voting', () => {
       delegateApiMock.resolves({ data: { votes: delegates } });
       const expectedAction = { list: delegates };
 
-      votesFetched({ ...data, type: 'update' })(dispatch);
+      votesFetched({ ...data, type: 'update' })(dispatch, getState);
       expect(dispatch).to.have.been.calledWith(votesUpdated(expectedAction));
     });
   });
 
   describe('delegatesFetched', () => {
     const data = {
-      activePeer: {
-        options: {
-          name: 'Mainnet',
-        },
-      },
       q: '',
       offset: 0,
       refresh: true,
@@ -212,11 +214,20 @@ describe('actions: voting', () => {
     it('should dispatch delegatesAdded action if resolved', () => {
       const delegateApiMock = sinon.stub(delegateApi, 'listDelegates');
       const dispatch = sinon.spy();
+      const getState = () => ({
+        peers: {
+          data: {
+            options: {
+              name: 'Mainnet',
+            },
+          },
+        },
+      });
 
       delegateApiMock.returnsPromise().resolves({ data: delegates });
       const expectedAction = { list: delegates, totalDelegates: delegates.length, refresh: true };
 
-      actionFunction(dispatch);
+      actionFunction(dispatch, getState);
       expect(dispatch).to.have.been.calledWith(delegatesAdded(expectedAction));
       delegateApiMock.restore();
     });
@@ -225,7 +236,6 @@ describe('actions: voting', () => {
   describe('urlVotesFound', () => {
     let delegateApiMock;
     const data = {
-      activePeer: {},
       address: '8096217735672704724L',
       upvotes: [],
       unvotes: [],
@@ -236,9 +246,13 @@ describe('actions: voting', () => {
       upvotes: [],
       unvotes: [],
     };
+    let getState;
 
     beforeEach(() => {
       delegateApiMock = sinon.stub(delegateApi, 'listAccountDelegates').returnsPromise();
+      getState = () => ({
+        peers: { data: {} },
+      });
     });
 
     afterEach(() => {
@@ -253,7 +267,7 @@ describe('actions: voting', () => {
       const dispatch = sinon.spy();
 
 
-      urlVotesFound(data)(dispatch);
+      urlVotesFound(data)(dispatch, getState);
       delegateApiMock.resolves({ data: { votes: delegates } });
       expect(dispatch).to.have.been.calledWith(votesAdded(expectedAction));
     });
@@ -266,7 +280,7 @@ describe('actions: voting', () => {
         list: [],
       };
 
-      urlVotesFound(data)(dispatch);
+      urlVotesFound(data)(dispatch, getState);
       delegateApiMock.rejects();
       expect(dispatch).to.have.been.calledWith(votesAdded(expectedAction));
     });

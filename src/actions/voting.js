@@ -74,10 +74,11 @@ export const clearVotes = () => ({
  * cleans the pending state
  */
 export const votePlaced = ({
-  activePeer, passphrase, account,
+  passphrase, account,
   votes, secondSecret, goToNextStep,
 }) =>
-  (dispatch) => {
+  (dispatch, getState) => {
+    const activePeer = getState().peers.data;
     const votedList = [];
     const unvotedList = [];
 
@@ -126,8 +127,9 @@ export const votePlaced = ({
  * Gets the list of delegates current account has voted for
  *
  */
-export const votesFetched = ({ activePeer, address, type }) =>
-  (dispatch) => {
+export const votesFetched = ({ address, type }) =>
+  (dispatch, getState) => {
+    const activePeer = getState().peers.data;
     listAccountDelegates(activePeer, address).then((response) => {
       if (type === 'update') {
         dispatch(votesUpdated({ list: response.data.votes }));
@@ -141,9 +143,10 @@ export const votesFetched = ({ activePeer, address, type }) =>
  * Gets list of all delegates
  */
 export const delegatesFetched = ({
-  activePeer, offset, refresh, q,
+  offset, refresh, q,
 }) =>
-  (dispatch) => {
+  (dispatch, getState) => {
+    const activePeer = getState().peers.data;
     let params = {
       offset,
       limit: '100',
@@ -165,9 +168,10 @@ export const delegatesFetched = ({
  * Get list of delegates current account has voted for and dispatch it with votes from url
  */
 export const urlVotesFound = ({
-  activePeer, upvotes, unvotes, address,
+  upvotes, unvotes, address,
 }) =>
-  (dispatch) => {
+  (dispatch, getState) => {
+    const activePeer = getState().peers.data;
     const processUrlVotes = (votes) => {
       dispatch(votesAdded({ list: votes, upvotes, unvotes }));
     };

@@ -47,10 +47,9 @@ const votePlaced = (store, action) => {
 
   if (voteTransaction) {
     const state = store.getState();
-    const { peers, account } = state;
+    const { account } = state;
 
     store.dispatch(votesFetched({
-      activePeer: peers.data,
       address: account.address,
       type: 'update',
     }));

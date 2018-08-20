@@ -14,7 +14,6 @@ describe('VoteUrlProcessor', () => {
     const account = accounts.delegate;
 
     props = {
-      activePeer: {},
       account,
       clearVoteLookupStatus: sinon.spy(),
       clearVotes: sinon.spy(),
@@ -48,7 +47,6 @@ describe('VoteUrlProcessor', () => {
       },
     }} />);
     expect(props.urlVotesFound).to.have.been.calledWith({
-      activePeer: props.activePeer,
       upvotes: ['delegate_name'],
       unvotes: [],
       address: props.account.address,
@@ -66,7 +64,6 @@ describe('VoteUrlProcessor', () => {
       },
     }} />);
     expect(props.urlVotesFound).to.have.been.calledWith({
-      activePeer: props.activePeer,
       upvotes: [],
       unvotes: ['delegate_name'],
       address: props.account.address,
