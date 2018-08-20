@@ -57,24 +57,30 @@ class Questionare extends React.Component {
 
   render() {
     return (<div>
-      <label className={styles.label} htmlFor='rating'>{`${this.props.t('How do you like the hub?')}*`}</label>
-      <RadioSelector {...this.ratingProps} />
-      <Input
-        multiline
-        label={'Is there something different from what you expected?'}
-        className={styles.textInput}
-        value={this.state.expected}
-        onChange={val => this.setFeedbackValue(val, 'expected')} >
-      </Input>
-      <Input
-        multiline
-        label={'Do you have other input for us?'}
-        className={styles.textInput}
-        value={this.state.otherInput}
-        onChange={val => this.setFeedbackValue(val, 'otherInput')} >
-      </Input>
-      <label className={styles.label} htmlFor='metadata'>{`${this.props.t('Include your operating system and screen resolution in your report')}`}</label>
-      <RadioSelector {...this.metadataProps} />
+      <div className={styles.main}>
+        <label className={styles.label} htmlFor='rating'>
+          {`${this.props.t('How do you like the hub?')}*`}
+          <RadioSelector {...this.ratingProps} />
+        </label>
+        <Input
+          multiline
+          label={'Is there something different from what you expected?'}
+          className={styles.textInput}
+          value={this.state.expected}
+          onChange={val => this.setFeedbackValue(val, 'expected')} >
+        </Input>
+        <Input
+          multiline
+          label={'Do you have other input for us?'}
+          className={styles.textInput}
+          value={this.state.otherInput}
+          onChange={val => this.setFeedbackValue(val, 'otherInput')} >
+        </Input>
+        <label className={styles.label} htmlFor='metadata'>
+          {`${this.props.t('Include your operating system and screen resolution in your report')}`}
+          <RadioSelector {...this.metadataProps} />
+        </label>
+      </div>
       <div className={styles.actions}>
         <Button label={this.props.t('Cancel')}
           onClick={() => this.props.onCancel()}
