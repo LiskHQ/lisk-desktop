@@ -3,8 +3,8 @@ import sinon from 'sinon';
 import * as delegateApi from '../utils/api/delegate';
 
 import {
-  delegatesRetrieving,
-  delegatesRetrieved,
+  delegateRetrieving,
+  delegateRetrieved,
   delegatesFetched,
 } from './delegate';
 
@@ -33,30 +33,30 @@ describe('actions: delegate', () => {
       const responseData = { delegate: {} };
       getDelegateStub.returnsPromise().resolves({ data: [{ ...responseData }] });
 
-      const expectedActionDelegatesRetrieved = {
+      const expectedActionDelegateRetrieved = {
         delegate: responseData,
         username,
       };
       delegatesFetchedAction(dispatch, getState);
       expect(dispatch).to.have.been
-        .calledWith(delegatesRetrieving());
+        .calledWith(delegateRetrieving());
       expect(dispatch).to.have.been
-        .calledWith(delegatesRetrieved(expectedActionDelegatesRetrieved));
+        .calledWith(delegateRetrieved(expectedActionDelegateRetrieved));
     });
 
     it('should create actions to handle getDelegate response failure', () => {
       const responseData = { delegate: null };
       getDelegateStub.returnsPromise().resolves({ data: [] });
 
-      const expectedActionDelegatesRetrieved = {
+      const expectedActionDelegateRetrieved = {
         ...responseData,
         username,
       };
       delegatesFetchedAction(dispatch, getState);
       expect(dispatch).to.have.been
-        .calledWith(delegatesRetrieving());
+        .calledWith(delegateRetrieving());
       expect(dispatch).to.have.been
-        .calledWith(delegatesRetrieved(expectedActionDelegatesRetrieved));
+        .calledWith(delegateRetrieved(expectedActionDelegateRetrieved));
     });
   });
 });
