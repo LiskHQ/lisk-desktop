@@ -17,9 +17,9 @@ const Account = ({ peers, t, showNetworkIndicator }) => {
 
   let iconCode = peers.options.code;
   if (iconCode === 2) {
-    iconCode = (peers.options.nethash === Lisk.APIClient.constants.MAINNET_NETHASH) ?
+    iconCode = (peers.options.nethash === Lisk.constants.MAINNET_NETHASH) ?
       networks.mainnet.code : iconCode;
-    iconCode = (peers.options.nethash === Lisk.APIClient.constants.TESTNET_NETHASH) ?
+    iconCode = (peers.options.nethash === Lisk.constants.TESTNET_NETHASH) ?
       networks.testnet.code : iconCode;
   }
 
@@ -30,10 +30,10 @@ const Account = ({ peers, t, showNetworkIndicator }) => {
   return ((showNetworkIndicator && peers.data &&
       peers.options.code !== networks.mainnet.code) ?
     <section className={styles.peer}>
-      <div className={`${styles.title} ${`${styles[iconMap[iconCode]]}Title`} inner primary peer-network`}>
+      <div className={`${styles.title} ${`${styles[`${iconMap[iconCode]}Title`]}`} inner primary peer-network`}>
         <span id="accountStatus" className={`${styles.status} status`}>
           {status}
-          {t('Connected to ')}{translations[peers.options.code]}
+          {t('Connected to ')}{translations[iconCode]}
         </span>
         <span className={`${styles.current} inner secondary peer`}>
           {peers.data.currentNode}
