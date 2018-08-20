@@ -2,6 +2,8 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Tab, Tabs as ToolboxTabs } from 'react-toolbox/lib/tabs';
 import Drawer from 'react-toolbox/lib/drawer';
+
+import { parseSearchParams } from './../../utils/searchParams';
 import MenuBar from '../menuBar';
 import styles from './mainMenu.css';
 import logo from '../../assets/images/Lisk-Logo.svg';
@@ -39,6 +41,10 @@ class MainMenu extends React.Component {
       setting: false,
       index: 0,
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const params = parseSearchParams(nextProps.history.location.search);
   }
 
   menuToggle() {

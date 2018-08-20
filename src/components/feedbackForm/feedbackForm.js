@@ -11,6 +11,7 @@ class FeedbackForm extends Component {
   onSubmit(feedbackState) {
     // TODO: integrate with api
     this.props.sendFeedback(feedbackState);
+    this.props.hideDialog();
   }
 
   render() {
