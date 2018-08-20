@@ -60,12 +60,14 @@ class Questionare extends React.Component {
       <label className={styles.label} htmlFor='rating'>{`${this.props.t('How do you like the hub?')}*`}</label>
       <RadioSelector {...this.ratingProps} />
       <Input
+        multiline
         label={'Is there something different from what you expected?'}
         className={styles.textInput}
         value={this.state.expected}
         onChange={val => this.setFeedbackValue(val, 'expected')} >
       </Input>
       <Input
+        multiline
         label={'Do you have other input for us?'}
         className={styles.textInput}
         value={this.state.otherInput}

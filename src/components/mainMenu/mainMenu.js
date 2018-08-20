@@ -40,11 +40,13 @@ class MainMenu extends React.Component {
       active: false,
       setting: false,
       index: 0,
+      showFeedback: false,
     };
   }
 
   componentWillReceiveProps(nextProps) {
     const params = parseSearchParams(nextProps.history.location.search);
+    this.setState({ showFeedback: params.showFeedback });
   }
 
   menuToggle() {
@@ -100,7 +102,7 @@ class MainMenu extends React.Component {
       },
     ];
 
-    const bottomMenuTabs = [
+    let bottomMenuTabs = [
       {
         label: t('Settings'),
         route: `${routes.setting.path}`,
@@ -125,6 +127,10 @@ class MainMenu extends React.Component {
 
     if (!showDelegate) {
       tabs = tabs.filter(tab => tab.id !== 'delegates');
+    }
+
+    if (!this.state.showFeedback) {
+      bottomMenuTabs = bottomMenuTabs.filter(tab => tab.id !== 'feedback');
     }
 
     return (
