@@ -24,6 +24,13 @@ class TransactionRow extends React.Component {
             <TransactionType {...props.value} address={props.address}></TransactionType>
           </div>
         </div>
+        {props.value.asset && props.value.asset.data ?
+          <div className={`${styles.rightText} ${grid['col-sm-2']} transactions-cell`}>
+            <div className={`${styles.hiddenXs}`}>
+              <span className={styles.reference}>{props.value.asset.data}</span>
+            </div>
+          </div>
+        : null}
         <div className={`${styles.rightText} ${grid['col-sm-2']} transactions-cell`}>
           <div className={`${styles.hiddenXs}`}>
             {props.value.confirmations ? <DateFromTimestamp time={props.value.timestamp} />
