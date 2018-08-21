@@ -85,7 +85,7 @@ node('lisk-hub') {
         ansiColor('xterm') {
           withCredentials([string(credentialsId: 'lisk-hub-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
             sh '''
-            N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
+            export N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
 
             # End to End test configuration
             export DISPLAY=:1$N
@@ -94,7 +94,7 @@ node('lisk-hub') {
 	    cp -r ~/lisk-docker/examples/development $WORKSPACE/$BRANCH_NAME
 	    cd $WORKSPACE/$BRANCH_NAME
 	    cp /home/lisk/blockchain_explorer.db.gz ./blockchain.db.gz
-	    export LISK_VERSION=1.0.0-rc.1 make coldstart
+	    LISK_VERSION=1.0.0-rc.1 make coldstart
 	    export LISK_PORT=$( docker-compose port lisk 4000 |cut -d ":" -f 2 )
 	    cd -
 
