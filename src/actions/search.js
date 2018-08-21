@@ -1,5 +1,5 @@
 import actionTypes from '../constants/actions';
-import { loadingStarted, loadingFinished } from '../utils/loading';
+import { loadingStarted, loadingFinished } from '../actions/loading';
 import { getAccount } from '../utils/api/account';
 import { getTransactions } from '../utils/api/transactions';
 import { getDelegate, getVoters, getVotes } from '../utils/api/delegate';
@@ -66,7 +66,7 @@ export const searchTransactions = ({
 }) =>
   (dispatch, getState) => {
     const activePeer = getState().peers.data;
-    if (showLoading) loadingStarted(actionTypes.searchTransactions);
+    if (showLoading) dispatch(loadingStarted(actionTypes.searchTransactions));
     getTransactions({
       activePeer, address, limit, filter,
     })
@@ -89,7 +89,7 @@ export const searchTransactions = ({
             type: actionTypes.addFilter,
           });
         }
-        if (showLoading) loadingFinished(actionTypes.searchTransactions);
+        if (showLoading) dispatch(loadingFinished(actionTypes.searchTransactions));
       });
   };
 
