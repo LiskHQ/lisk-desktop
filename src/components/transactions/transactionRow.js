@@ -19,18 +19,18 @@ class TransactionRow extends React.Component {
     const onClick = !props.onClick ? (() => {}) : () => props.onClick(this.props);
     return (
       <div className={`${grid.row} ${styles.rows} ${styles.clickable} transactions-row`} onClick={onClick}>
-        <div className={`${styles.leftText} ${grid['col-xs-6']} ${grid['col-sm-6']} transactions-cell`}>
+        <div className={`${styles.leftText} ${grid['col-xs-6']} ${grid['col-sm-4']} transactions-cell`}>
           <div className={`${styles.address}`}>
             <TransactionType {...props.value} address={props.address}></TransactionType>
           </div>
         </div>
-        {props.value.asset && props.value.asset.data ?
           <div className={`${styles.rightText} ${grid['col-sm-2']} transactions-cell`}>
-            <div className={`${styles.hiddenXs}`}>
-              <span className={styles.reference}>{props.value.asset.data}</span>
+            <div className={`${styles.hiddenXs} ${styles.reference}`}>
+                {props.value.asset && props.value.asset.data ?
+                  <span>{props.value.asset.data}</span>
+                : '-'}
             </div>
           </div>
-        : null}
         <div className={`${styles.rightText} ${grid['col-sm-2']} transactions-cell`}>
           <div className={`${styles.hiddenXs}`}>
             {props.value.confirmations ? <DateFromTimestamp time={props.value.timestamp} />

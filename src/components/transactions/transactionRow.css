@@ -17,6 +17,13 @@
   font-weight: var(--font-weight-very-bold);
 }
 
+.reference {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 110px;
+}
+
 .rows {
   color: var(--amount-negative-color);
   border-bottom: 0;
