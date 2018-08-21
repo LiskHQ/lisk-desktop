@@ -3,7 +3,6 @@ import { step } from 'mocha-steps';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { stub, match } from 'sinon';
-import configureStore from 'redux-mock-store';
 
 import * as accountAPI from '../../src/utils/api/account';
 import * as transactionsAPI from '../../src/utils/api/transactions';
