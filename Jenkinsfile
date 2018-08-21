@@ -85,7 +85,7 @@ node('lisk-hub') {
         ansiColor('xterm') {
           withCredentials([string(credentialsId: 'lisk-hub-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
             sh '''
-            export N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
+            export N=${EXECUTOR_NUMBER:-0}; export N=$((N+1))
 
             # End to End test configuration
             export DISPLAY=:1$N
