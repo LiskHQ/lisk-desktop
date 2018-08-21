@@ -1,18 +1,16 @@
-// import React from 'react';
 import thunk from 'redux-thunk';
 import { step } from 'mocha-steps';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { stub, match } from 'sinon';
 import configureStore from 'redux-mock-store';
-// import { Provider } from 'react-redux';
 
 import * as accountAPI from '../../src/utils/api/account';
 import * as transactionsAPI from '../../src/utils/api/transactions';
-import { renderWithRouter } from '../utils/applicationInit';
+import { renderWithRouter, prepareStore } from '../utils/applicationInit';
 import accountReducer from '../../src/store/reducers/account';
-// import transactionReducer from '../../src/store/reducers/transaction';
-// import peersReducer from '../../src/store/reducers/peers';
+import transactionReducer from '../../src/store/reducers/transaction';
+import peersReducer from '../../src/store/reducers/peers';
 import votingReducer from '../../src/store/reducers/voting';
 import loginMiddleware from '../../src/store/middlewares/login';
 import accountMiddleware from '../../src/store/middlewares/account';
@@ -30,7 +28,7 @@ class Helper extends GenericStepDefinition {
     expect(this.wrapper).to.have.descendants('.transaction-id');
     expect(this.wrapper.find('.transaction-id').first()).to.include.text('123456789');
     expect(this.wrapper).to.have.descendants('#sender-address');
-    expect(this.wrapper.find('#sender-address').first()).to.include.text('123L');
+    expect(this.wrapper.find('#sender-address').first()).to.include.text('123l');
   }
 }
 
@@ -79,23 +77,21 @@ describe('@integration: Single Transaction', () => {
   });
 
   const setupStep = ({ accountType, id }) => {
-    const mockStore = configureStore([
+    const transactionMock = {
+      id,
+      senderId: '123L',
+    };
+    store = prepareStore({
+      account: accountReducer,
+      transaction: transactionReducer,
+      peers: peersReducer,
+      voting: votingReducer,
+    }, [
       thunk,
       accountMiddleware,
       loginMiddleware,
       votingMiddleware,
     ]);
-
-    const transactionMock = {
-      id,
-      senderId: '123L',
-    };
-    store = mockStore({
-      account: accountReducer,
-      transaction: transactionMock,
-      peers: { data: {} },
-      voting: votingReducer,
-    });
 
     const account = {
       ...accounts[accountType],
