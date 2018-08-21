@@ -9,10 +9,10 @@ import { Provider } from 'react-redux';
 
 import * as accountAPI from '../../src/utils/api/account';
 import * as transactionsAPI from '../../src/utils/api/transactions';
-import { prepareStore, renderWithRouter } from '../utils/applicationInit';
+import { renderWithRouter } from '../utils/applicationInit';
 import accountReducer from '../../src/store/reducers/account';
 import transactionReducer from '../../src/store/reducers/transaction';
-import peersReducer from '../../src/store/reducers/peers';
+// import peersReducer from '../../src/store/reducers/peers';
 import votingReducer from '../../src/store/reducers/voting';
 import loginMiddleware from '../../src/store/middlewares/login';
 import accountMiddleware from '../../src/store/middlewares/account';
@@ -30,7 +30,7 @@ class Helper extends GenericStepDefinition {
     expect(this.wrapper).to.have.descendants('.transaction-id');
     expect(this.wrapper.find('.transaction-id').first()).to.include.text('123456789');
     expect(this.wrapper).to.have.descendants('#sender-address');
-    expect(this.wrapper.find('#sender-address').first()).to.include.text('123l');
+    expect(this.wrapper.find('#sender-address').first()).to.include.text('123L');
   }
 }
 
@@ -64,7 +64,10 @@ describe('@integration: Single Transaction', () => {
       .returnsPromise()
       .resolves({
         data: [{
-          id: '123456789', senderId: '123l', recipientId: '456l', asset: {},
+          id: '123456789',
+          senderId: '123l',
+          recipientId: '456l',
+          asset: {},
         }],
       });
   });
@@ -73,7 +76,6 @@ describe('@integration: Single Transaction', () => {
     getTransactionsAPIStub.restore();
     getSingleTransactionAPIStub.restore();
     accountAPIStub.restore();
-    wrapper.update();
   });
 
   const setupStep = ({ accountType, id }) => {
@@ -83,10 +85,15 @@ describe('@integration: Single Transaction', () => {
       loginMiddleware,
       votingMiddleware,
     ]);
+
+    const transactionMock = {
+      id,
+      senderId: '123L',
+    };
     store = mockStore({
       account: accountReducer,
-      transaction: transactionReducer,
-      peers: peersReducer,
+      transaction: transactionMock,
+      peers: { data: {} },
       voting: votingReducer,
     });
 
@@ -104,7 +111,7 @@ describe('@integration: Single Transaction', () => {
     if (accountType) { store.dispatch(accountLoggedIn(account)); }
     wrapper = mount(renderWithRouter(
       SingleTransaction, store,
-      { match: { params: { id } }, transaction: { id } },
+      { match: { params: { id } }, transaction: transactionMock },
     ));
     helper = new Helper(wrapper, store);
   };
