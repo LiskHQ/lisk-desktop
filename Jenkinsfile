@@ -100,7 +100,7 @@ node('lisk-hub') {
 
             # Run end-to-end tests
 
-            npm run serve --  $WORKSPACE/app/build -p 300$N -a 127.0.0.1 &>server.log &
+            npm run serve --  $WORKSPACE/app/build -p 300$N -a 127.0.0.1 &>server.log & sleep 3 &&
             if [ -z $CHANGE_BRANCH ]; then
               npm run --silent e2e-test -- --params.baseURL http://127.0.0.1:300$N --params.liskCoreURL http://127.0.0.1:$LISK_PORT --cucumberOpts.tags @advanced
               npm run --silent e2e-test -- --params.baseURL http://127.0.0.1:300$N --params.liskCoreURL https://testnet.lisk.io --cucumberOpts.tags @testnet --params.useTestnetPassphrase true
