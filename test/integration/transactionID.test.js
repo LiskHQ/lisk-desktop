@@ -1,17 +1,17 @@
-import React from 'react';
+// import React from 'react';
 import thunk from 'redux-thunk';
 import { step } from 'mocha-steps';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { stub, match } from 'sinon';
 import configureStore from 'redux-mock-store';
-import { Provider } from 'react-redux';
+// import { Provider } from 'react-redux';
 
 import * as accountAPI from '../../src/utils/api/account';
 import * as transactionsAPI from '../../src/utils/api/transactions';
 import { renderWithRouter } from '../utils/applicationInit';
 import accountReducer from '../../src/store/reducers/account';
-import transactionReducer from '../../src/store/reducers/transaction';
+// import transactionReducer from '../../src/store/reducers/transaction';
 // import peersReducer from '../../src/store/reducers/peers';
 import votingReducer from '../../src/store/reducers/voting';
 import loginMiddleware from '../../src/store/middlewares/login';
