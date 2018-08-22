@@ -45,15 +45,23 @@ class Login extends React.Component {
       this.getNetworksList();
     });
 
-    if (this.shouldAutoLogin()) {
-      console.log('autologin');
+    const autologinData = this.getAutoLoginData();
+    if (autologinData[settings.keys.autologin] &&
+      autologinData[settings.keys.autologinKey]) {
+      this.onLoginSubmission(
+        autologinData[settings.keys.autologinKey],
+        autologinData[settings.keys.autologinUrl],
+      );
     }
   }
 
   /* eslint-disable class-methods-use-this */
-  shouldAutoLogin() {
-    return localStorage.getItem(settings.storageKeys.autologin) &&
-        localStorage.getItem(settings.storageKeys.autologinKey);
+  getAutoLoginData() {
+    return {
+      [settings.keys.autologin]: localStorage.getItem(settings.keys.autologin),
+      [settings.keys.autologinKey]: localStorage.getItem(settings.keys.autologinKey),
+      [settings.keys.autologinUrl]: localStorage.getItem(settings.keys.autologinUrl),
+    };
   }
 
   getNetworksList() {
@@ -99,8 +107,10 @@ class Login extends React.Component {
     return network;
   }
 
-  onLoginSubmission(passphrase) {
-    const network = this.getNetwork();
+  onLoginSubmission(passphrase, autologinUrl) {
+    const network = !autologinUrl ?
+      this.getNetwork() : { ...networks.customNode, address: autologinUrl };
+
     this.secondIteration = true;
     if (this.alreadyLoggedWithThisAddress(extractAddress(passphrase), network)) {
       this.redirectToReferrer();

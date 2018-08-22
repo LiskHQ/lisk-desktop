@@ -1,8 +1,9 @@
 const settings = {
   currencies: ['USD', 'EUR'],
-  storageKeys: {
+  keys: {
     autologin: 'autologin',
     autologinKey: 'passphrase',
+    autologinUrl: 'autologinUrl',
   },
 };
 export default settings;
