@@ -1,6 +1,8 @@
+@import '../app/variables.css';
+
 .headerWrapper {
   display: flex;
-  padding: 0 20px;
+  padding: 0 32px;
 }
 
 .newsFeedBox {
@@ -9,7 +11,7 @@
 
 .settingsButton {
   display: flex;
-  padding: 20px 20px 0;
+  padding: 20px 32px 0;
   align-items: center;
   font-weight: 600;
 
@@ -24,9 +26,21 @@
   justify-content: space-between;
 }
 
+.emptyNews {
+  padding: 0 32px
+}
+
+.liskLogo {
+  position: absolute;
+  bottom: 0;
+  left: -50px;
+  height: 400px;
+  opacity: 0.2;
+}
+
 .container {
   & .newsWrapper {
-    padding: 0 20px;
+    padding: 0 32px;
   }
 
   & .newsWrapper:nth-child(odd) {
@@ -36,4 +50,10 @@
 
 .newsFeed {
   width: 100%;
+}
+
+@media (--medium-viewport) {
+  .liskLogo {
+    display: none;
+  }
 }

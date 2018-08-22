@@ -72,7 +72,7 @@ class Dashboard extends React.Component {
           </div>
         </div>
       </div>
-      <div className={`${grid['col-md-4']} ${styles.sendWrapper}`}>
+      <div className={`${grid['col-md-4']}   ${grid['col-xs-12']} ${styles.newsFeedWrapper}`}>
         <NewsFeed />
       </div>
     </div>;

@@ -5,6 +5,7 @@ import Box from '../box';
 import { FontIcon } from '../fontIcon';
 import SettingsNewsFeed from './settingsNewsFeed';
 import liskServiceApi from '../../utils/api/liskService';
+import logo from '../../assets/images/Lisk-Logo.svg';
 
 class NewsFeed extends React.Component {
   constructor() {
@@ -66,13 +67,16 @@ class NewsFeed extends React.Component {
                 hideSettings={this.hideSettings.bind(this)}
                 setNewsChannels={this.setNewsChannels.bind(this)} /> :
               <div>
-                {filteredNewsFeed.map((news, index) => (
+                {filteredNewsFeed.length > 0 ? filteredNewsFeed.map((news, index) => (
                   <div className={styles.newsWrapper} key={`newsWrapper-${index}`}>
                     <News
                       t={this.props.t}
                       {...news} />
                   </div>
-                ))}
+                )) : <div className={styles.emptyNews}>
+                  {this.props.t('No newsfeed chosen – click on edit in the top right corner to add a feed.')}
+                  <img className={styles.liskLogo} src={logo} />
+                </div>}
               </div>
             }
           </div>
