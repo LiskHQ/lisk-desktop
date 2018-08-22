@@ -8,6 +8,8 @@ import middleWares from './middlewares';
 import savedAccountsSubscriber from './subscribers/savedAccounts';
 import followedAccountsSubscriber from './subscribers/followedAccounts';
 
+import actionTypes from './../constants/actions';
+
 const App = combineReducers(reducers);
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -22,6 +24,8 @@ if (!env.test) {
 
 store.subscribe(throttle(savedAccountsSubscriber.bind(null, store), 1000));
 store.subscribe(throttle(followedAccountsSubscriber.bind(null, store), 1000));
+
+store.dispatch({ data: {}, type: actionTypes.storeCreated });
 
 // ignore this in coverage as it is hard to test and does not run in production
 /* istanbul ignore if */

@@ -9,7 +9,6 @@ import { extractAddress } from '../../utils/account';
 import PassphraseInput from '../passphraseInput';
 import styles from './login.css';
 import networks from '../../constants/networks';
-import settings from '../../constants/settings';
 import routes from '../../constants/routes';
 import getNetwork from '../../utils/getNetwork';
 import { parseSearchParams } from './../../utils/searchParams';
@@ -44,24 +43,6 @@ class Login extends React.Component {
     i18next.on('languageChanged', () => {
       this.getNetworksList();
     });
-
-    const autologinData = this.getAutoLoginData();
-    if (autologinData[settings.keys.autologin] &&
-      autologinData[settings.keys.autologinKey]) {
-      this.onLoginSubmission(
-        autologinData[settings.keys.autologinKey],
-        autologinData[settings.keys.autologinUrl],
-      );
-    }
-  }
-
-  /* eslint-disable class-methods-use-this */
-  getAutoLoginData() {
-    return {
-      [settings.keys.autologin]: localStorage.getItem(settings.keys.autologin),
-      [settings.keys.autologinKey]: localStorage.getItem(settings.keys.autologinKey),
-      [settings.keys.autologinUrl]: localStorage.getItem(settings.keys.autologinUrl),
-    };
   }
 
   getNetworksList() {
@@ -107,10 +88,8 @@ class Login extends React.Component {
     return network;
   }
 
-  onLoginSubmission(passphrase, autologinUrl) {
-    const network = !autologinUrl ?
-      this.getNetwork() : { ...networks.customNode, address: autologinUrl };
-
+  onLoginSubmission(passphrase) {
+    const network = this.getNetwork();
     this.secondIteration = true;
     if (this.alreadyLoggedWithThisAddress(extractAddress(passphrase), network)) {
       this.redirectToReferrer();
