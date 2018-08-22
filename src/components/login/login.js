@@ -45,11 +45,12 @@ class Login extends React.Component {
       this.getNetworksList();
     });
 
-    if(this.shouldAutoLogin()) {
+    if (this.shouldAutoLogin()) {
       console.log('autologin');
     }
   }
 
+  /* eslint-disable class-methods-use-this */
   shouldAutoLogin() {
     return localStorage.getItem(settings.storageKeys.autologin) &&
         localStorage.getItem(settings.storageKeys.autologinKey);
