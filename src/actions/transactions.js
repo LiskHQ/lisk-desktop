@@ -226,6 +226,9 @@ export const sent = ({
             amount: toRawLsk(amount),
             fee: Fees.send,
             type: transactionTypes.send,
+            asset: {
+              data,
+            },
           },
           type: actionTypes.transactionAdded,
         });
