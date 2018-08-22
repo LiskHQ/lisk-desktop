@@ -1,0 +1,85 @@
+@import './../app/variables.css';
+
+.resultList {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  width: 100%;
+  z-index: 20;
+  border-radius: 3px;
+  box-shadow: 0 22px 22px 0 rgba(0,0,0,.22);
+  border-top: none;
+  background-color: #fff;
+
+  &:last-child {
+    padding-bottom: 15px;
+  }
+}
+
+.bookmarkInput {
+  z-index: 20;
+}
+
+.followedRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+  color: var(--color-primary-standard);
+  font-family: var(--content-font);
+  font-size: var(--paragraph-font-size-l);
+
+  &:hover {
+    background-color: rgba(205, 218, 229, 0.2);
+  }
+
+  & > span {
+    margin: 0 24px;
+    line-height: 36px;
+  }
+}
+
+.rowResult {
+  cursor: pointer;
+}
+
+.show {
+  display: block;
+}
+
+
+.rowSelected {
+  background-color: rgba(204, 217, 228, 0.2);
+}
+
+.removeButton {
+  display: block;
+  float: right;
+  top: -30px;
+  position: relative;
+}
+
+.heading {
+  margin-top: 24px;
+  color: var(--color-grayscale-medium);
+  font-family: var(--content-font);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-bold);
+
+  &:hover {
+    background-color: inherit;
+  }
+}
+
+@media (--medium-viewport) {
+  .row {
+    & > span {
+      margin: 0 21px;
+    }
+  }
+}

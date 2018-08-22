@@ -9,6 +9,7 @@ import styles from './sendWritable.css';
 import regex from './../../utils/regex';
 import AddressInput from './../addressInput';
 import ReferenceInput from './../referenceInput';
+import Bookmark from './../bookmark';
 
 class SendWritable extends React.Component {
   constructor(props) {
@@ -23,6 +24,7 @@ class SendWritable extends React.Component {
       reference: {
         value: this.props.reference || '',
       },
+      openFollowedAccountSuggestion: true,
       ...authStatePrefill(),
     };
     this.fee = fees.send;
@@ -83,6 +85,10 @@ class SendWritable extends React.Component {
     return fromRawLsk(Math.max(0, this.props.account.balance - this.fee));
   }
 
+  hideFollowedAccounts() {
+    return this.setState({});
+  }
+
   render() {
     return (
       <div className={`${styles.sendWrapper}`}>
@@ -93,12 +99,20 @@ class SendWritable extends React.Component {
           <TransferTabs setTabSend={this.props.setTabSend} isActiveTabSend={true}/>
         </div>
         <form className={styles.form}>
-          <AddressInput
-            className='recipient'
-            label={this.props.t('Send to address')}
-            address={this.state.recipient}
-            handleChange={this.handleChange.bind(this, 'recipient', true)}
-          />
+          { this.props.followedAccounts.length > 0 && this.state.openFollowedAccountSuggestion ?
+            <Bookmark
+              className='recipient'
+              label={this.props.t('Send to address')}
+              address={this.state.recipient}
+              handleChange={this.handleChange.bind(this, 'recipient', true)}
+            /> :
+            <AddressInput
+              className='recipient'
+              label={this.props.t('Send to address')}
+              address={this.state.recipient}
+              handleChange={this.handleChange.bind(this, 'recipient', true)}
+            />
+          }
           <ReferenceInput
             className='reference'
             label={this.props.t('Reference (optional)')}

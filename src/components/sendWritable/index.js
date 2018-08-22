@@ -7,6 +7,7 @@ const mapStateToProps = state => ({
   account: state.account,
   activePeer: state.peers.data,
   pendingTransactions: state.transactions.pending,
+  followedAccounts: state.followedAccounts.accounts,
 });
 
 export default connect(mapStateToProps)(translate()(Send));
