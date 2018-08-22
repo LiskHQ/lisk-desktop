@@ -9,6 +9,7 @@ import { extractAddress } from '../../utils/account';
 import PassphraseInput from '../passphraseInput';
 import styles from './login.css';
 import networks from '../../constants/networks';
+import settings from '../../constants/settings';
 import routes from '../../constants/routes';
 import getNetwork from '../../utils/getNetwork';
 import { parseSearchParams } from './../../utils/searchParams';
@@ -43,6 +44,15 @@ class Login extends React.Component {
     i18next.on('languageChanged', () => {
       this.getNetworksList();
     });
+
+    if(this.shouldAutoLogin()) {
+      console.log('autologin');
+    }
+  }
+
+  shouldAutoLogin() {
+    return localStorage.getItem(settings.storageKeys.autologin) &&
+        localStorage.getItem(settings.storageKeys.autologinKey);
   }
 
   getNetworksList() {
