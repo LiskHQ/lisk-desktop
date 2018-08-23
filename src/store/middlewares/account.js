@@ -95,30 +95,39 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
   }
 };
 
-const accountMiddleware = store => next => (action) => {
-  next(action);
-  switch (action.type) {
-    // update on login because the 'save account' button
-    // depends on a rerendering of the page
-    // TODO: fix the 'save account' path problem, so we can remove this
-    case actionTypes.accountLoggedIn:
-      updateAccountData(store, action);
-      break;
-    case actionTypes.newBlockCreated:
-      checkTransactionsAndUpdateAccount(store, action);
-      break;
-    case actionTypes.transactionsUpdated:
-      delegateRegistration(store, action);
-      votePlaced(store, action);
-      break;
-    case actionTypes.passphraseUsed:
-      passphraseUsed(store, action);
-      break;
-    case actionTypes.accountLoggedOut:
-      localStorage.removeItem('accounts');
-      break;
-    default: break;
-  }
+const accountMiddleware = (store) => {
+  // Checking sessionStorage if acccount is already logged in
+  setImmediate(() => {
+    const account = JSON.parse(sessionStorage.getItem('account')) || {};
+    store.dispatch(accountUpdated(account));
+  });
+
+  return next => (action) => {
+    next(action);
+    switch (action.type) {
+      // update on login because the 'save account' button
+      // depends on a rerendering of the page
+      // TODO: fix the 'save account' path problem, so we can remove this
+      case actionTypes.accountLoggedIn:
+        updateAccountData(store, action);
+        break;
+      case actionTypes.newBlockCreated:
+        checkTransactionsAndUpdateAccount(store, action);
+        break;
+      case actionTypes.transactionsUpdated:
+        delegateRegistration(store, action);
+        votePlaced(store, action);
+        break;
+      case actionTypes.passphraseUsed:
+        passphraseUsed(store, action);
+        break;
+      case actionTypes.accountLoggedOut:
+        localStorage.removeItem('accounts');
+        sessionStorage.removeItem('account');
+        break;
+      default: break;
+    }
+  };
 };
 
 export default accountMiddleware;
