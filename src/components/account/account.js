@@ -31,7 +31,7 @@ const Account = ({ peers, t, showNetworkIndicator }) => {
       peers.options.code !== networks.mainnet.code) ?
     <section className={styles.peer}>
       <div className={`${styles.title} ${`${styles[`${iconMap[iconCode]}Title`]}`} inner primary peer-network ${iconMap[iconCode]}-title`}>
-        <span id="accountStatus" className={`${styles.status} status`}>
+        <span id="accountStatus" className={`${styles.status} network-status`}>
           {status}
           {t('Connected to ')}{translations[iconCode]}
         </span>

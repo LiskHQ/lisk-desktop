@@ -27,7 +27,7 @@ Feature: Login
     And I select option no. 3 from "network" select
     And I click "login button"
     Then I should be logged in as "genesis" account
-    And I should see text "Connected to testnet" in "status" element
+    And I should see text "Connected to testnet" in "network-status" element
     And I click "joyride-tooltip__button--skip"
     And I click "joyride-tooltip__button--skip"
     When I click "transactions" menu
@@ -44,7 +44,7 @@ Feature: Login
     When I fill in "https://testnet.lisk.io" to "address" field
     And I click "login button"
     Then I should be logged in as "genesis" account
-    And I should see text "Connected to testnet" in "status" element
+    And I should see text "Connected to testnet" in "network-status" element
     And I click "joyride-tooltip__button--skip"
     And I click "joyride-tooltip__button--skip"
     When I click "transactions" menu
