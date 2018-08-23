@@ -9,7 +9,6 @@
   --result-address-font-weight: var(--font-weight-semi-bold);
   --grid-header-line-height: 60px;
   --main-row-line-height: 70px;
-
   --box-padding-right-M: 0;
   --box-padding-right-L: 0;
   --box-padding-right-XL: 0;
@@ -33,7 +32,6 @@
 }
 
 .arrowRow {
-
   & span {
     margin-right: 8px;
   }
