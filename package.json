@@ -15,7 +15,7 @@
     "build-electron": "webpack --config ./config/webpack.config.electron",
     "e2e-test": "protractor protractor.conf.js",
     "test": "karma start",
-    "test-jest": "jest",
+    "test-jest": "jest --config ./config/jest.config.js",
     "bundlesize": "bundlesize",
     "analyze-bundles": "webpack  --config ./config/webpack.config.analyze",
     "test-live": "npm test -- --auto-watch --no-single-run",
@@ -233,41 +233,5 @@
       "protractor-cucumber-framework",
       "postcss-cssnext"
     ]
-  },
-  "jest": {
-    "modulePaths": ["<rootDir>/src/components"],
-    "testMatch": [
-      "<rootDir>/src/components/transactions/**/?(*.)+(spec|test).js?(x)",
-      "<rootDir>/test/**/?(*.)+(spec|transactionID.test).js?(x)"
-    ],
-    "verbose": true,
-    "moduleFileExtensions": ["js"],
-    "moduleDirectories": ["node_modules"],
-    "moduleNameMapper": {
-      "^.+\\.css$": "identity-obj-proxy",
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js"
-    },
-    "collectCoverage": true,
-    "coverageDirectory": "<rootDir>/coverage/jest",
-    "collectCoverageFrom": [
-      "<rootDir>/src/**/*.{js}",
-      "<rootDir>/app/src/**/*.{js}",
-      "!**/node_modules/**"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 79,
-        "functions": 80,
-        "lines": 80,
-        "statements": 80
-      }
-    },
-    "setupFiles": [
-      "<rootDir>/config/setupJest.js"
-    ],
-    "transform": {
-      "^.+\\.js$": "babel-jest"
-    },
-    "testURL": "http://localhost"
   }
 }
