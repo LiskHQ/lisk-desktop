@@ -12,7 +12,7 @@ const quickTips = t => [
     ],
     goTo: {
       title: t('Learn more'),
-      link: 'https://lisk.io/academy',
+      link: 'https://lisk.io/academy/welcome-to-the-lisk-academy/getting-started-with-lisk',
     },
     picture: id,
   },
@@ -20,11 +20,11 @@ const quickTips = t => [
     title: t('Why should I vote?'),
     description: [
       t('By voting you decide who is trusted to verify transactions and maintain the Lisk network, whilst collecting the rewards for doing so.'),
-      t('Each LSK token is worth one vote. Voters can also be rewarded for voting for certain delegates, giving them an incentive to do so.'),
+      t('Each LSK token is worth one vote.'),
     ],
     goTo: {
       title: t('Learn more'),
-      link: 'https://lisk.io/academy',
+      link: 'https://lisk.io/academy/welcome-to-the-lisk-academy/getting-started-with-lisk/voting-on-lisk',
     },
     picture: vote,
   },
@@ -36,7 +36,7 @@ const quickTips = t => [
     ],
     goTo: {
       title: t('Learn more'),
-      link: 'https://lisk.io/academy',
+      link: 'https://lisk.io/academy/blockchain-basics/benefits-of-blockchain/blockchain-transparency-explained',
     },
     picture: transparent,
   },

@@ -17,6 +17,13 @@ import Options from '../dialog/options';
 import routes from './../../constants/routes';
 
 class Header extends React.Component {
+  /* istanbul ignore next */
+  logOut() {
+    this.props.logOut();
+    this.props.closeDialog();
+    this.props.history.replace(`${routes.dashboard.path}`);
+  }
+
   shouldShowActionButton() {
     const { pathname } = this.props.location;
     return !this.props.isAuthenticated
@@ -44,18 +51,25 @@ class Header extends React.Component {
         },
         secondButton: {
           text: this.props.t('Logout'),
-          onClickHandler: () => {
-            this.props.logOut();
-            this.props.closeDialog();
-          },
+          onClickHandler: this.logOut.bind(this),
         },
       },
     });
   }
 
   render() {
+    const { peers, t, showNetworkIndicator } = this.props;
     return (
       <header className={`${styles.wrapper} mainHeader`}>
+        <div>
+          <div className={`${styles.searchBar}`}>
+            {this.shouldShowSearchBar() && <SearchBar/>}
+          </div>
+          {this.props.account.loading
+                ? null
+                : <Account {...{ peers, t, showNetworkIndicator }} />}
+        </div>
+
         <div className={`${styles.loginInfo}`}>
           <div>
             <div style={{ display: 'inline-block', float: 'left' }}>
@@ -129,12 +143,6 @@ class Header extends React.Component {
               }
             </div>
           </div>
-        </div>
-        <div className={`${styles.searchBar}`}>
-          {this.shouldShowSearchBar() && <SearchBar/>}
-          {this.props.account.loading
-            ? null
-            : <Account peers={this.props.peers} t={this.props.t}/>}
         </div>
       </header>
     );

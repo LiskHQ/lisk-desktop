@@ -57,4 +57,9 @@
   .liskLogo {
     display: none;
   }
+
+  .newsFeedBox {
+    height: auto;
+    margin-bottom: var(--footer-height-m);
+  }
 }
