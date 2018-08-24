@@ -20,7 +20,7 @@ const quickTips = t => [
     title: t('Why should I vote?'),
     description: [
       t('By voting you decide who is trusted to verify transactions and maintain the Lisk network, whilst collecting the rewards for doing so.'),
-      t('Each LSK token is worth one vote. Voters can also be rewarded for voting for certain delegates, giving them an incentive to do so.'),
+      t('Each LSK token is worth one vote.'),
     ],
     goTo: {
       title: t('Learn more'),
