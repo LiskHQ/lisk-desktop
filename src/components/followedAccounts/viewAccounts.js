@@ -53,7 +53,8 @@ class ViewAccounts extends React.Component {
                 <div className={`${styles.rightText} ${styles.accountInformation} ${grid['col-md-10']}`}>
                   <div className={this.state.edit ? styles.editMode : null}>
                     <div className={styles.balance}>
-                      <LiskAmount val={account.address === loggedAccount.address ?
+                      <LiskAmount val={loggedAccount &&
+                        (account.address === loggedAccount.address) ?
                         loggedAccount.balance : account.balance} /> <span>LSK</span>
                     </div>
                     <TitleInput

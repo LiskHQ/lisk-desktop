@@ -22,7 +22,7 @@ describe('Followed accounts list Component', () => {
 
   describe('Without followed accounts', () => {
     beforeEach(() => {
-      const store = fakeStore({ followedAccounts: { accounts: [] } });
+      const store = fakeStore({ followedAccounts: { accounts: [] }, account: { address: '16313739661670634666L' } });
 
       wrapper = mount(<ViewAccounts {...props} />, {
         context: { store, i18n },
@@ -57,6 +57,7 @@ describe('Followed accounts list Component', () => {
             { address: '567L', balance: 100000, title: '' },
           ],
         },
+        account: { address: '16313739661670634666L' },
       });
 
       wrapper = mount(<ViewAccounts {...props} />, {
