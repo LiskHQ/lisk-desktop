@@ -10,8 +10,8 @@ export const isPathCorrect = (location, explorerRoutes) => {
   });
   return isValid ? location.pathname : false;
 };
-/* istanbul ignore next */
-export const getDeviceMetadata = () => {
+export const getDeviceMetadata = /* istanbul ignore next */() => {
+  /* istanbul ignore next */
   const {
     platform,
     appCodeName,
