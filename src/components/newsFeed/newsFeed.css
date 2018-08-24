@@ -28,6 +28,7 @@
 
 .emptyNews {
   padding: 0 32px;
+  font-size: var(--subtitle-font-size);
 }
 
 .liskLogo {
