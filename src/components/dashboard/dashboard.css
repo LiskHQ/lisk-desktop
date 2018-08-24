@@ -44,6 +44,8 @@
     & .main {
       max-width: 100%;
       flex-basis: 100%;
+      max-height: unset;
+      overflow: hidden;
     }
 
     margin: 0;
@@ -53,6 +55,15 @@
     height: 60%;
     min-height: 300px;
     margin-bottom: 0;
+  }
+
+  .following {
+    height: auto;
+    min-height: 300px;
+  }
+
+  .bottomModuleWrapper {
+    height: auto;
   }
 
   .latestActivity {
