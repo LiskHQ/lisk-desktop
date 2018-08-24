@@ -9,6 +9,7 @@ const mapStateToProps = state => ({
   showDelegate: state.settings.advancedMode,
 });
 
+/* istanbul ignore next */
 const mapDispatchToProps = dispatch => ({
   showFeedback: data => dispatch(feedbackDialogDisplayed(data)),
 });
