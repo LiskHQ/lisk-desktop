@@ -62,13 +62,18 @@ Configuration is in [karma.conf.js](/LiskHQ/lisk-hub/blob/development/karma.conf
 Configuration is in [jest.config.js](/LiskHQ/lisk-hub/blob/development/jest.config.js) and [config/setupJest.js](/LiskHQ/lisk-hub/blob/development/config/setupJest.js).
 
 ### How to run them?
-See [relevant sections of README](/LiskHQ/lisk-hub#run-unit-tests)
 
-*NOTE:* We are currently transitioning from Mocha to Jest suites. The preferred method should then be to cover new features as well as exising code base with Jest suites. 
+*NOTE:* We are currently transitioning from Mocha to Jest suites. The preferred method should then be to cover new features as well as exising code base with Jest suites.
+
 Run Jest suites with:
 ```
 npm run test-jest
 ```
+Enable suites by uncommenting lines in [jest.config.js](/LiskHQ/lisk-hub/blob/development/jest.config.js)
+
+Please refer to [Jest examples](https://github.com/facebook/jest/tree/master/examples) for more info. 
+
+See [relevant sections of README](/LiskHQ/lisk-hub#run-unit-tests)
 
 ### What tools are used?
 - **Assertions** use `expect` syntax of [chai](http://www.chaijs.com/), e.g.:
