@@ -13,7 +13,7 @@ const closeConnection = () => {
   }
 };
 
-const socketSetup = (store) => {
+const socketSetup = (store, action) => {
   let windowIsFocused = true;
   const { ipc } = window;
   if (ipc && ipc.on) {
