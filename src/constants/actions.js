@@ -42,6 +42,7 @@ const actionTypes = {
   searchVotes: 'SEARCH_VOTES',
   searchVoters: 'SEARCH_VOTERS',
   searchUpdateLast: 'SEARCH_UPDATE_LAST',
+  sendFeedback: 'SEND_FEEDBACK',
   transactionsFailed: 'TRANSACTIONS_FAILED',
   transactionsUpdated: 'TRANSACTIONS_UPDATED',
   transactionsLoad: 'TRANSACTIONS_LOAD',

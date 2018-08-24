@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './questionare.css';
 import Input from '../toolbox/inputs/input';
-import { Button, RedButton } from '../toolbox/buttons/button';
+import { Button, PrimaryButton } from '../toolbox/buttons/button';
 import RadioSelector from './radioSelector';
 import { getDeviceMetadata } from '../../utils/app';
 
@@ -85,7 +85,7 @@ class Questionare extends React.Component {
         <Button label={this.props.t('Cancel')}
           onClick={() => this.props.onCancel()}
           className='cancel-button' />
-        <RedButton label={this.props.t('Send')} disabled={!this.state.rating}
+        <PrimaryButton label={this.props.t('Send')} disabled={!this.state.rating}
           onClick={() => this.props.onSubmit(this.state).bind(this)}
           className='send-button'/>
       </div>
