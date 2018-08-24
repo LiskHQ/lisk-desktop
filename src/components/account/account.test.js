@@ -1,7 +1,9 @@
 import React from 'react';
+import Lisk from 'lisk-elements';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
+import networks from '../../constants/networks';
 import Account from './account';
 
 describe('Account', () => {
@@ -13,6 +15,7 @@ describe('Account', () => {
       i18n: {},
       store: {},
       onActivePeerUpdated: sinon.spy(),
+      showNetworkIndicator: true,
       peers: {
         status: {
           online: false,
@@ -41,9 +44,28 @@ describe('Account', () => {
     expect(wrapper.find('Address')).to.have.lengthOf(1);
   });
 
-  it('depicts being online when peers.status.online is true', () => {
+  it('shows network indicator online', () => {
     props.peers.status.online = true;
     const wrapper = shallow(<Account {...props} />);
-    expect(wrapper.find('.status FontIcon')).to.have.className('online');
+    wrapper.update();
+    expect(wrapper).to.have.exactly(1).descendants('.online');
+  });
+
+  it('shows network indicator offline', () => {
+    props.peers.status.online = false;
+    const wrapper = shallow(<Account {...props} />);
+    wrapper.update();
+    expect(wrapper).to.have.exactly(1).descendants('.offline');
+  });
+
+  it('shows testnet icon when online and nethash matches', () => {
+    props.peers.status.online = true;
+    props.peers.options.nethash = Lisk.constants.TESTNET_NETHASH;
+    props.peers.options.code = networks.customNode.code;
+    props.peers.data.currentNode = 'http://localhost:4000';
+    const wrapper = shallow(<Account {...props} />);
+    wrapper.update();
+    expect(wrapper).to.have.exactly(1).descendants('.online');
+    expect(wrapper).to.have.exactly(1).descendants('.testnet-title');
   });
 });

@@ -14,6 +14,7 @@ const mapStateToProps = state => ({
   autoLog: state.settings.autoLog,
   isAuthenticated: !!state.account.publicKey,
   peers: state.peers,
+  showNetworkIndicator: state.settings.showNetwork,
 });
 
 const mapDispatchToProps = dispatch => ({
