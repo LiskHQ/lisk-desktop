@@ -58,6 +58,7 @@
   .latestActivity {
     height: unset;
     min-height: unset;
+    overflow: hidden;
   }
 }
 

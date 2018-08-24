@@ -9,7 +9,7 @@ const Options = ({ firstButton, secondButton, text }) =>
     <p className={styles.text}>{text}</p>
     <section className={`${grid.row} ${styles.buttonsRow} ${grid['between-xs']}`}>
       <Button label={firstButton.text} onClick={firstButton.onClickHandler} className='ok-button' />
-      <RedButton label={secondButton.text} onClick={secondButton.onClickHandler} className='ok-button'/>
+      <RedButton label={secondButton.text} onClick={secondButton.onClickHandler} className={`${styles.redButton} ok-button`}/>
     </section>
   </div>);
 

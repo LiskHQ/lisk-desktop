@@ -76,6 +76,6 @@
   background: var(--gradient-red);
 
   &:hover {
-    background: var(--gradient-action-blue-hover) !important;
+    background: var(--gradient-action-orange) !important;
   }
 }

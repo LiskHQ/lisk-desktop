@@ -211,6 +211,10 @@
 }
 
 @media (--medium-viewport) {
+  .logout {
+    color: var(--color-grayscale-medium);
+  }
+
   .loginInfo {
     width: 100%;
     float: none;

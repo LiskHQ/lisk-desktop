@@ -47,6 +47,7 @@ class Header extends React.Component {
           onClickHandler: () => {
             this.props.logOut();
             this.props.closeDialog();
+            this.props.history.replace(`${routes.dashboard.path}`);
           },
         },
       },

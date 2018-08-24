@@ -178,6 +178,10 @@ header {
 }
 
 @media (--medium-viewport) {
+  .addAccount {
+    display: block;
+  }
+
   .accounts {
     & .list {
       overflow-y: initial;

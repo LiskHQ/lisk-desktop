@@ -60,7 +60,7 @@ class Dashboard extends React.Component {
         </Box> :
         <QuickTips />}
         <div className={`${grid.row} ${styles.bottomModuleWrapper} `}>
-          <div className={`${grid['col-md-6']} ${grid['col-lg-6']} ${grid['col-xs-6']}`} style={{ paddingLeft: '0px' }}>
+          <div className={`${grid['col-md-6']} ${grid['col-lg-6']} ${grid['col-xs-6']}`} style={{ paddingLeft: '0px', overflowY: 'auto' }}>
             <Box>
               <FollowedAccounts history={history}/>
             </Box>
@@ -72,7 +72,7 @@ class Dashboard extends React.Component {
           </div>
         </div>
       </div>
-      <div className={`${grid['col-md-4']} ${styles.sendWrapper}`}>
+      <div className={`${grid['col-md-4']} ${grid['col-xs-12']} ${styles.sendWrapper}`}>
         <NewsFeed />
       </div>
     </div>;
