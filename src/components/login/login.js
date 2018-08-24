@@ -15,7 +15,7 @@ import { parseSearchParams } from './../../utils/searchParams';
 import Box from '../box';
 // eslint-disable-next-line import/no-unresolved
 import SignUp from './signUp';
-import { validateUrl } from '../../utils/login';
+import { validateUrl, addHttp } from '../../utils/login';
 
 /**
  * The container component containing login
@@ -83,7 +83,7 @@ class Login extends React.Component {
   getNetwork() {
     const network = Object.assign({}, getNetwork(this.state.network));
     if (this.state.network === networks.customNode.code) {
-      network.address = this.state.address;
+      network.address = addHttp(this.state.address);
     }
     return network;
   }
