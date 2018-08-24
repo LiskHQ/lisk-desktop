@@ -10,11 +10,10 @@
 }
 
 .searchBar {
-  display: none;
   vertical-align: top;
   position: relative;
   width: var(--search-box-width-l);
-  margin-right: 50px;
+  margin-right: 32px;
 
   & .icon {
     position: absolute;
