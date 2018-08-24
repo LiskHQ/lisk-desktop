@@ -66,6 +66,7 @@ describe('MainMenu', () => {
     account,
     store,
     history,
+    showFeedback: sinon.spy(),
   };
 
   beforeEach(() => {
@@ -132,8 +133,17 @@ describe('MainMenu', () => {
 
   it('should show feedback when param in url', () => {
     const wrapper = shallow(<MainMenu {...props} />, options);
-    wrapper.setProps({ history: { location: { pathname: `${routes.wallet.path}`, search: '?showFeedback=true' } } });
+    wrapper.setProps({
+      history: {
+        push: sinon.spy(),
+        location: { pathname: `${routes.wallet.path}`, search: '?showFeedback=true' },
+      },
+    });
     wrapper.update();
-    expect(wrapper.find('#feedback').first().props().disabled).to.be.equal(false);
+
+    const feedbackBtn = wrapper.find('#feedback').first();
+    expect(feedbackBtn.props().disabled).to.be.equal(false);
+    wrapper.find(ToolboxTabs).at(1).props().onChange(1);
+    expect(props.showFeedback).to.have.been.calledWith();
   });
 });
