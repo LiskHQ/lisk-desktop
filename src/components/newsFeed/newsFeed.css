@@ -1,3 +1,5 @@
+@import '../app/variables.css';
+
 .headerWrapper {
   display: flex;
   padding: 0 20px;
@@ -36,4 +38,11 @@
 
 .newsFeed {
   width: 100%;
+}
+
+@media (--medium-viewport) {
+  .newsFeedBox {
+    height: auto;
+    margin-bottom: var(--footer-height-m);
+  }
 }
