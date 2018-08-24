@@ -15,7 +15,7 @@
     "build-electron": "webpack --config ./config/webpack.config.electron",
     "e2e-test": "protractor protractor.conf.js",
     "test": "karma start",
-    "test-jest": "jest --config ./config/jest.config.js",
+    "test-jest": "jest --config ./jest.config.js",
     "bundlesize": "bundlesize",
     "analyze-bundles": "webpack  --config ./config/webpack.config.analyze",
     "test-live": "npm test -- --auto-watch --no-single-run",
