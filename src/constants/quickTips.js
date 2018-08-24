@@ -12,7 +12,7 @@ const quickTips = t => [
     ],
     goTo: {
       title: t('Learn more'),
-      link: 'https://lisk.io/academy',
+      link: 'https://lisk.io/academy/welcome-to-the-lisk-academy/getting-started-with-lisk',
     },
     picture: id,
   },
@@ -24,7 +24,7 @@ const quickTips = t => [
     ],
     goTo: {
       title: t('Learn more'),
-      link: 'https://lisk.io/academy',
+      link: 'https://lisk.io/academy/welcome-to-the-lisk-academy/getting-started-with-lisk/voting-on-lisk',
     },
     picture: vote,
   },
@@ -36,7 +36,7 @@ const quickTips = t => [
     ],
     goTo: {
       title: t('Learn more'),
-      link: 'https://lisk.io/academy',
+      link: 'https://lisk.io/academy/blockchain-basics/benefits-of-blockchain/blockchain-transparency-explained',
     },
     picture: transparent,
   },
