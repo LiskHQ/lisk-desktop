@@ -2,11 +2,13 @@
 
 .wrapper {
   width: 100%;
+  margin: 0px;
 }
 
 .main {
   max-height: 75vh; /* stylelint-disable-line */
   overflow: auto;
+  padding-left: 0px;
 }
 
 .seeAllLink {
@@ -16,6 +18,10 @@
   text-decoration: none;
   font-family: var(--content-font);
   font-weight: var(--font-weight-bold);
+}
+
+.newsFeedWrapper {
+  padding-right: 0px;
 }
 
 .send {
