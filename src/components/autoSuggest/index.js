@@ -335,6 +335,26 @@ class AutoSuggest extends React.Component {
             />
             : null
           }
+
+          { this.state.value !== '' && this.state.resultsLength === 0 ?
+            <ResultsList
+              key='no-results'
+              results={[{
+                id: 'no-results',
+                valueLeft: t('No results found'),
+                valueRight: '',
+                isSelected: false,
+                type: 'no-results',
+              }]}
+              header={{
+                titleLeft: '',
+                titleRight: '',
+              }}
+              onMouseDown={() => {}}
+              setSelectedRow={() => {}}
+            />
+            : null
+          }
         </div>
       </div>
     );
