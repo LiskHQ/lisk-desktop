@@ -13,6 +13,7 @@ class NewsFeed extends React.Component {
     this.state = {
       showSettings: false,
       newsFeed: [],
+      showEmptyState: false, // To prevent dispalying empty View before fetching data
     };
     this.updateData();
   }
@@ -23,6 +24,8 @@ class NewsFeed extends React.Component {
       this.setState({ newsFeed });
     }).catch((error) => {
       this.setState({ error });
+    }).finally(() => {
+      this.setState({ showEmptyState: true });
     });
   }
 
@@ -73,10 +76,12 @@ class NewsFeed extends React.Component {
                       t={this.props.t}
                       {...news} />
                   </div>
-                )) : <div className={styles.emptyNews}>
-                  {this.props.t('No newsfeed chosen – click on edit in the top right corner to add a feed.')}
-                  <img className={styles.liskLogo} src={logo} />
-                </div>}
+                )) : null}
+                {this.state.showEmptyState && filteredNewsFeed.length === 0 ?
+                  <div className={styles.emptyNews}>
+                    {this.props.t('No newsfeed chosen – click on edit in the top right corner to add a feed.')}
+                    <img className={styles.liskLogo} src={logo} />
+                  </div> : null}
               </div>
             }
           </div>
