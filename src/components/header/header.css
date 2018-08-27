@@ -15,7 +15,9 @@
 }
 
 .wrapper {
-  text-align: right;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 
   & .noPadding {
     padding: 0px;
@@ -25,6 +27,7 @@
     display: inline-block;
     float: left;
     margin-bottom: 30px;
+    margin-right: 32px;
   }
 }
 
@@ -211,9 +214,19 @@
 }
 
 @media (--medium-viewport) {
+  .logout {
+    color: var(--color-grayscale-medium);
+  }
+
   .loginInfo {
     width: 100%;
     float: none;
+
+    & > div {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
   }
 
   .wrapper {
@@ -229,6 +242,7 @@
     & .searchBar {
       width: 100%;
       margin-bottom: 0;
+      display: none;
     }
   }
 

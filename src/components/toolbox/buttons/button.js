@@ -5,7 +5,6 @@ import secondaryBlueButtonTheme from './css/secondaryBlueButton.css';
 import secondaryLightButtonTheme from './css/secondaryLightButton.css';
 import primaryButtonTheme from './css/primaryButton.css';
 import tertiaryButtonTheme from './css/tertiaryButton.css';
-import redButtonTheme from './css/redButton.css';
 import actionButtonTheme from './css/actionButton.css';
 
 class TBSecondaryBlueButton extends React.Component {
@@ -38,18 +37,11 @@ class TBActionButton extends React.Component {
   }
 }
 
-class TBRedButton extends React.Component {
-  render() {
-    return <ToolBoxButton {...this.props} theme={this.props.theme}/>;
-  }
-}
-
 const PrimaryButton = themr('importantButton', primaryButtonTheme)(TBPrimaryButton);
 const SecondaryLightButton = themr('lightButton', secondaryLightButtonTheme)(TBSecondaryLightButton);
 const TertiaryButton = themr('tertiaryButton', tertiaryButtonTheme)(TBTertiaryButton);
 const ActionButton = themr('actionButton', actionButtonTheme)(TBActionButton);
-const RedButton = themr('actionButton', redButtonTheme)(TBRedButton);
 const Button = themr('button', secondaryBlueButtonTheme)(TBSecondaryBlueButton);
 
-export { Button, PrimaryButton, SecondaryLightButton, TertiaryButton, ActionButton, RedButton };
+export { Button, PrimaryButton, SecondaryLightButton, TertiaryButton, ActionButton };
 export default Button;

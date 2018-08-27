@@ -1,6 +1,6 @@
 {
   "name": "lisk-hub",
-  "version": "1.1.0-rc.1",
+  "version": "1.2.0-beta.1",
   "description": "Lisk Hub",
   "homepage": "https://github.com/LiskHQ/lisk-hub",
   "bugs": "https://github.com/LiskHQ/lisk-hub/issues",
@@ -110,7 +110,7 @@
     "cucumber": "2.2.0",
     "cucumber-junit": "1.7.0",
     "del-cli": "1.1.0",
-    "electron": "1.8.4",
+    "electron": "1.8.8",
     "electron-builder": "19.32.2",
     "electron-ipc-mock": "0.0.3",
     "electron-json-storage": "=3.2.0",
