@@ -12,7 +12,7 @@
   width: 100%;
   margin: 0;
   padding: var(--register-delegate-vertical-padding) 0;
-  overflow: hidden;
+  overflow-y: auto;
 }
 
 .background {
@@ -24,6 +24,16 @@
 
 .multiStep {
   width: 100%;
+  margin-bottom: -48px;
+
+  & div[class*='passphraseSteps__wrapper'] {
+
+    &::before {
+      top: 250px;
+      height: 100%;
+      bottom: 0;
+    }
+  }
 
   & > section {
     display: flex;
