@@ -10,4 +10,17 @@ const getVoteList = votes => (Object.keys(votes).filter(key =>
 const getTotalVotesCount = votes => ((getVotedList(votes).length - getUnvoteList(votes).length)
   + getVoteList(votes).length);
 
-export { getTotalVotesCount, getVotedList, getVoteList, getUnvoteList };
+const getVoteClass = (voteStatus, styles) => {
+  if (!voteStatus) {
+    return '';
+  }
+  const { pending, confirmed, unconfirmed } = voteStatus;
+  if (pending) {
+    return 'pendingRow';
+  } else if (confirmed !== unconfirmed) {
+    return confirmed ? `${styles.downVoteRow} selected-row` : `${styles.upVoteRow} selected-row`;
+  }
+  return confirmed ? styles.votedRow : '';
+};
+
+export { getTotalVotesCount, getVotedList, getVoteList, getUnvoteList, getVoteClass };

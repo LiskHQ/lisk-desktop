@@ -1,7 +1,8 @@
 import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import React, { Fragment } from 'react';
-import CircularProgressBar from 'react-circular-progressbar';
+
+import VoteMatrix from './voteMatrix';
 import votingConst from '../../constants/voting';
 import fees from './../../constants/fees';
 import GradientSVG from './gradientSVG';
@@ -39,9 +40,6 @@ class VotesPreview extends React.Component {
     const unvoteList = getUnvoteList(votes);
     const totalVotesCount = getTotalVotesCount(votes);
     const totalNewVotesCount = voteList.length + unvoteList.length;
-    const selectionClass = totalNewVotesCount > maxCountOfVotesInOneTurn ? styles.red : '';
-    const totalClass = totalVotesCount > 101 ? styles.red : '';
-    const createPercentage = (count, total) => ((count / total) * 100);
     const surpassedVoteLimit = totalNewVotesCount > maxCountOfVotesInOneTurn ||
       totalVotesCount > 101;
     const insufficientFunds = this.props.account.balance - fees.vote < 0;
@@ -51,7 +49,7 @@ class VotesPreview extends React.Component {
         ? t('Maximum of 101 votes in total')
         : t('Maximum of {{maxcount}} votes at a time', { maxcount: maxCountOfVotesInOneTurn });
     };
-    const progressBarStyles = { path: { strokeLinecap: 'round' } };
+    // const progressBarStyles = { path: { strokeLinecap: 'round' } };
 
     return (<Fragment>
       <section className={`${styles.wrapper} votes-preview ${surpassedVoteLimit ? styles.surpassed : ''}
@@ -63,28 +61,18 @@ class VotesPreview extends React.Component {
           </a>
         </header>
         <section className={styles.progress}>
-          <div className={`${styles.progressWrapper} ${selectionClass} selection-wrapper`}>
-            <CircularProgressBar
-              styles={progressBarStyles}
-              percentage={createPercentage(totalNewVotesCount, maxCountOfVotesInOneTurn)}
-              textForPercentage={() => ''}/>
-            <article className='selection'>
-              <span>{t('Selection')} </span>
-              <h4>{totalNewVotesCount}</h4>
-              <span>/ {maxCountOfVotesInOneTurn}</span>
-            </article>
-          </div>
-          <div className={`${styles.progressWrapper} ${totalClass} ${styles.totalWrapper} total-wrapper`}>
-            <CircularProgressBar
-              styles={progressBarStyles}
-              percentage={createPercentage(totalVotesCount, maxCountOfVotes)}
-              textForPercentage={() => ''}/>
-            <article className='total'>
-              <span>{t('Total')} </span>
-              <h4>{totalVotesCount}</h4>
-              <span>/ {maxCountOfVotes}</span>
-            </article>
-          </div>
+            <VoteMatrix
+              {
+                ...{
+                  delegates: this.props.delegates,
+                  votes: this.props.votes,
+                  totalNewVotesCount,
+                  maxCountOfVotesInOneTurn,
+                  totalVotesCount,
+                  maxCountOfVotes,
+                }
+              }
+            />
         </section>
         <footer className={`${styles.surpassMessage} ${(surpassedVoteLimit || insufficientFunds) && !this.state.surpassMessageDismissed ? styles.visible : ''}`}>
           <span>{surpassMessage()}</span>
@@ -120,6 +108,8 @@ class VotesPreview extends React.Component {
 
 const mapStateToProps = state => ({
   account: state.account,
+  delegates: state.voting.delegates,
+  votes: state.voting.votes,
 });
 
 export default connect(mapStateToProps)(translate()(VotesPreview));

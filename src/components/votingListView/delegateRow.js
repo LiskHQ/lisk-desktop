@@ -2,19 +2,7 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './votingListView.css';
 import Checkbox from './voteCheckbox';
-
-const setRowClass = (voteStatus) => {
-  if (!voteStatus) {
-    return '';
-  }
-  const { pending, confirmed, unconfirmed } = voteStatus;
-  if (pending) {
-    return 'pendingRow';
-  } else if (confirmed !== unconfirmed) {
-    return confirmed ? `${styles.downVoteRow} selected-row` : `${styles.upVoteRow} selected-row`;
-  }
-  return confirmed ? styles.votedRow : '';
-};
+import { getVoteClass } from '../../utils/voting';
 
 class VotingRow extends React.Component {
   // eslint-disable-next-line class-methods-use-this
@@ -31,7 +19,7 @@ class VotingRow extends React.Component {
     const {
       data, voteStatus, voteToggled, className,
     } = this.props;
-    return (<ul className={`delegate-row ${styles.row} ${grid.row} ${className} ${setRowClass(voteStatus)}`}>
+    return (<ul className={`delegate-row ${styles.row} ${grid.row} ${className} ${getVoteClass(voteStatus, styles)}`}>
       <li className={`${grid['col-md-1']} ${grid['col-xs-2']} ${styles.leftText}`}>
         <Checkbox styles={styles}
           toggle={voteToggled}
