@@ -24,19 +24,19 @@ Pseudo code for rendering a component:
 ```
 onFeedbackShouldShow() =>
 
-componentObj  = settings.feedback.components.componentId
+if settings.feedback.enabledIn[componentId]
 
-if componentId
-	todayDate = new Date().getTime()
-	if not componentObj.choosenToBeHIdden
-		if componentObj.lastGivenOn > todayDate + settings.feedback.showInterval
-		componentObj.lastGivenOn = todayDate;
-		render feature feedback
-		return;
+  componentObj  = settings.feedback.components.componentId
+  todayDate = new Date().getTime()
+
+  if componentObj && not componentObj.choosenToBeHIdden
+      if componentObj.lastGivenOn > todayDate + settings.feedback.showInterval
+      componentObj.lastGivenOn = todayDate;
+      render feature feedback
+      return;
+
 render component;
-
 ...
-
 on feedback closed
 if user choosenToBeHIdden 
 	componentObj.choosenToBeHIdden = true
