@@ -27,7 +27,6 @@
   margin-bottom: -48px;
 
   & div[class*='passphraseSteps__wrapper'] {
-
     &::before {
       top: 250px;
       height: 100%;
