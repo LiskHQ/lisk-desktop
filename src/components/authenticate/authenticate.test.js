@@ -85,7 +85,6 @@ describe('Authenticate', () => {
     wrapper.find('Button.authenticate-button').simulate('click');
     wrapper.update();
     expect(props.accountUpdated).to.have.been.calledWith({
-      activePeer: props.peers.data,
       passphrase,
       secondPassphrase: null,
     });
@@ -122,7 +121,6 @@ describe('Authenticate', () => {
     customWrapper.find('Button.authenticate-button').simulate('click');
     customWrapper.update();
     expect(props.accountUpdated).to.have.been.calledWith({
-      activePeer: props.peers.data,
       passphrase,
     });
   });

@@ -27,7 +27,6 @@ class TransactionsDetailView extends React.Component {
 
     if (props.peers.data && transactionId) {
       this.props.loadTransaction({
-        activePeer: props.peers.data,
         id: transactionId,
       });
     }

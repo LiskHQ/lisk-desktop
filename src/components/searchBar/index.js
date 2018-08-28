@@ -19,7 +19,6 @@ class Search extends React.Component {
         history={this.props.history}
         t={this.props.t}
         results={this.props.suggestions}
-        activePeer={this.props.activePeer}
         searchClearSuggestions={this.props.searchClearSuggestions}
         searchSuggestions={this.props.searchSuggestions}
       />
@@ -29,7 +28,6 @@ class Search extends React.Component {
 
 const mapStateToProps = state => ({
   suggestions: state.search.suggestions,
-  activePeer: state.peers.data,
 });
 /* istanbul ignore next */
 const mapDispatchToProps = dispatch => ({

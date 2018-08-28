@@ -31,7 +31,6 @@ describe('SendReadableHOC', () => {
 
   it('should mount Send with appropriate properties', () => {
     const props = wrapper.find('SendReadable').props();
-    expect(props.activePeer).to.be.equal(peers.data);
     expect(props.account).to.be.equal(account);
     expect(typeof props.sent).to.be.equal('function');
   });

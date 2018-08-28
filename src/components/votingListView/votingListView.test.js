@@ -32,7 +32,6 @@ describe('VotingListView', () => {
     totalDelegates: 10,
     votes,
     serverPublicKey: null,
-    activePeer: {},
     address: '16313739661670634666L',
     setActiveDialog: sinon.spy(),
     voteToggled: sinon.spy(),
@@ -77,7 +76,6 @@ describe('VotingListView', () => {
       .at(0).simulate('change', { nativeEvent: { target: { value: 'query' } } });
     clock.tick(251);
     expect(props.delegatesFetched).to.be.calledWith({
-      activePeer: props.activePeer,
       offset: 0,
       q: 'query',
       refresh: true,

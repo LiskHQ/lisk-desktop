@@ -12,11 +12,9 @@ import routes from '../../constants/routes';
 
 describe('SecondPassphrase', () => {
   let wrapper;
-  const peers = { data: {} };
   const account = accounts.delegate;
   const secPassphrase = accounts['delegate candidate'].passphrase;
   const store = configureMockStore([])({
-    peers,
     account,
   });
   const options = {
@@ -28,7 +26,6 @@ describe('SecondPassphrase', () => {
   };
   const props = {
     account,
-    peers,
     closeDialog: () => {},
     passphrase: account.passphrase,
     registerSecondPassphrase: spy(),
@@ -57,7 +54,6 @@ describe('SecondPassphrase', () => {
     it('should call activePeerSet with network and passphrase', () => {
       wrapper.find('MultiStep').props().finalCallback(secPassphrase, account.passphrase);
       expect(props.registerSecondPassphrase).to.have.been.calledWith({
-        activePeer: peers.data,
         secondPassphrase: secPassphrase,
         account,
         passphrase: account.passphrase,

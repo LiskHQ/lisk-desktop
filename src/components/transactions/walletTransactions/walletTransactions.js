@@ -11,7 +11,6 @@ import routes from './../../../constants/routes';
 class WalletTransactions extends React.Component {
   onInit() {
     this.props.transactionsFilterSet({
-      activePeer: this.props.activePeer,
       address: this.props.account.address,
       limit: 25,
       filter: txFilters.all,
@@ -21,12 +20,10 @@ class WalletTransactions extends React.Component {
       this.props.account.delegate &&
       this.props.account.delegate.publicKey) {
       this.props.accountVotersFetched({
-        activePeer: this.props.activePeer,
         publicKey: this.props.account.delegate.publicKey,
       });
     }
     this.props.accountVotesFetched({
-      activePeer: this.props.activePeer,
       address: this.props.address,
     });
 
@@ -37,7 +34,6 @@ class WalletTransactions extends React.Component {
   }
   onLoadMore() {
     this.props.transactionsRequested({
-      activePeer: this.props.activePeer,
       address: this.props.address,
       limit: 25,
       offset: this.props.transactions.length,
@@ -52,7 +48,6 @@ class WalletTransactions extends React.Component {
   onFilterSet(filter) {
     if (filter <= 2) {
       this.props.transactionsFilterSet({
-        activePeer: this.props.activePeer,
         address: this.props.address,
         limit: 25,
         filter,

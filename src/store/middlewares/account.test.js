@@ -160,7 +160,6 @@ describe('Account middleware', () => {
     transactionsUpdatedAction.data.confirmed[0].type = transactionTypes.vote;
     middleware(store)(next)(transactionsUpdatedAction);
     expect(actionSpy).to.have.been.calledWith({
-      activePeer: state.peers.data,
       address: state.account.address,
       type: 'update',
     });

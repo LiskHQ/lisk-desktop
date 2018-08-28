@@ -38,7 +38,6 @@ const delegateRegistration = (store, action) => {
 
   if (delegateRegistrationTx) {
     store.dispatch(updateDelegateAccount({
-      activePeer: state.peers.data,
       publicKey: state.account.publicKey,
     }));
   }
@@ -49,10 +48,9 @@ const votePlaced = (store, action) => {
 
   if (voteTransaction) {
     const state = store.getState();
-    const { peers, account } = state;
+    const { account } = state;
 
     store.dispatch(votesFetched({
-      activePeer: peers.data,
       address: account.address,
       type: 'update',
     }));
@@ -71,12 +69,11 @@ const passphraseUsed = (store, action) => {
 
 const checkTransactionsAndUpdateAccount = (store, action) => {
   const state = store.getState();
-  const { peers, account, transactions } = state;
+  const { account, transactions } = state;
 
   store.dispatch(updateTransactionsIfNeeded(
     {
       transactions,
-      activePeer: peers.data,
       account,
     },
     action.data.windowIsFocused,

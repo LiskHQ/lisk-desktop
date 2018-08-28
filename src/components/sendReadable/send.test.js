@@ -15,7 +15,6 @@ describe('Send Readable Component', () => {
   let wrapper;
   const account = accounts.delegate;
   const props = {
-    activePeer: {},
     account,
     pendingTransactions: [],
     passphrase: { value: account.passphrase },
@@ -54,7 +53,6 @@ describe('Send Readable Component', () => {
       wrapper.find('.send-button button').simulate('click');
       expect(props.sent).to.have.been.calledWith({
         account: props.account,
-        activePeer: {},
         amount: '120.25',
         data: undefined,
         passphrase: props.account.passphrase,
