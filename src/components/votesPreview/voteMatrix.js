@@ -10,7 +10,7 @@ class VotesMatrix extends React.Component {
         <div className={styles.header}>
             <div className={styles.headerItem}>
               {this.props.t('Total')}
-              <div className={styles.ratio}>
+              <div className={`${styles.ratio} total-votes`}>
                 {this.props.totalVotesCount}
                 <span>/</span>
                 <span>{this.props.maxCountOfVotes}</span>
@@ -18,7 +18,7 @@ class VotesMatrix extends React.Component {
             </div>
             <div className={styles.headerItem}>
               {this.props.t('Selection')}
-              <div className={styles.ratio}>
+              <div className={`${styles.ratio} current-votes`}>
                 {this.props.totalNewVotesCount}
                 <span>/</span>
                 <span>{this.props.maxCountOfVotesInOneTurn}</span>

@@ -42,39 +42,37 @@ describe('votesPreview', () => {
     }, {})
   );
 
-  beforeEach(() => {
-    const storeState = { account: { balance: 100e8 } };
+  const setupStep = ((votes) => {
+    const storeState = {
+      account: { balance: 100e8 },
+      voting: {
+        votes,
+        delegates: [],
+      },
+    };
     wrapper = mountWithContext(<VotesPreview {...props} />, { storeState });
   });
 
 
   it('should render number of selection', () => {
-    expect(wrapper.find('article.selection h4')).to.have.text('3');
+    setupStep(props.votes);
+    expect(wrapper.find('.current-votes')).to.have.text('3/33');
   });
 
   it('should render number of total votes', () => {
-    expect(wrapper.find('article.total h4')).to.have.text('3');
+    setupStep(props.votes);
+    expect(wrapper.find('.total-votes')).to.have.text('3/101');
   });
 
-  it('should render number of total votes in red if 101 exceeded', () => {
-    let className = wrapper.find('.total-wrapper').props().className;
-    expect(className.match(/red/g)).to.be.equal(null);
-    const votes = generateNVotes(102);
-    wrapper.setProps({ votes });
-    wrapper.update();
-    expect(wrapper.find('article.total h4')).to.have.text('102');
-    className = wrapper.find('.total-wrapper').props().className;
-    expect(className.match(/red/g)).to.have.lengthOf(1);
+  it('should provide error message if number of votes exceeds 102', () => {
+    setupStep(generateNVotes(102));
+    expect(wrapper.find('.total-votes')).to.have.text('102/101');
+    expect(wrapper).to.exactly(1).descendants('.votes-error');
   });
 
-  it('should render number of selection votes in red if 33 exceeded', () => {
-    let className = wrapper.find('.selection-wrapper').props().className;
-    expect(className.match(/red/g)).to.be.equal(null);
-    const votes = generateNVotes(34);
-    wrapper.setProps({ votes });
-    wrapper.update();
-    expect(wrapper.find('article.selection h4')).to.have.text('34');
-    className = wrapper.find('.selection-wrapper').props().className;
-    expect(className.match(/red/g)).to.have.lengthOf(1);
+  it('should provide error message if number votes exceeds 33', () => {
+    setupStep(generateNVotes(34));
+    expect(wrapper.find('.current-votes')).to.have.text('34/33');
+    expect(wrapper).to.exactly(1).descendants('.votes-error');
   });
 });

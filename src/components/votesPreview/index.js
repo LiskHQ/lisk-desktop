@@ -87,7 +87,7 @@ class VotesPreview extends React.Component {
             <span>{t('Next')}</span>
             <FontIcon value='arrow-right' className={styles.arrow} />
           </Button>
-          <div className={styles.errorMessage}>
+          <div className={`${styles.errorMessage} votes-error`}>
             {surpassedVoteLimit || insufficientFunds ? surpassMessage() : null}
           </div>
         </div>

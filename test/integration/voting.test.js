@@ -167,12 +167,12 @@ describe('@integration test of Voting', () => {
     step('When I click checkbox on list item no. 0', () => helper.voteToDelegates(0, true));
     step('When I click checkbox on list item no. 1', () => helper.voteToDelegates(1, true));
     step('Then next button should be enabled', () => helper.checkDisableInput('button.next', 'not'));
-    step('And selectionHeader should be equal to "2"', () => helper.haveTextOf('.selection h4', 2));
+    step('And selectionHeader should be equal to "2"', () => helper.haveTextOf('.current-votes', '2/33'));
     step('Then I go to confirmation step', () => helper.goToConfirmation());
     step('When I click on confirm button', () => helper.clickOnElement('button.confirm'));
     step('Then I should see result box', () => helper.haveTextOf('h2.result-box-header', 'Votes submitted'));
     step('Then I click Okey button', () => helper.clickOnElement('button.okay-button'));
-    step('And selectionHeader should be equal to "0"', () => helper.haveTextOf('.selection h4', 0));
+    step('And selectionHeader should be equal to "0"', () => helper.haveTextOf('.current-votes', '0/33'));
     step('Then I restore Api mocks', restoreApiMocks);
   });
 
@@ -193,7 +193,7 @@ describe('@integration test of Voting', () => {
     step('And next button should be disabled', () => helper.checkDisableInput('button.next'));
     step('When I click checkbox on list item no. 0', () => helper.voteToDelegates(0, false));
     step('Then next button should be enabled', () => helper.checkDisableInput('button.next', 'not'));
-    step('And selectionHeader should be equal to "2"', () => helper.haveTextOf('.selection h4', 1));
+    step('And selectionHeader should be equal to "1"', () => helper.haveTextOf('.current-votes', '1/33'));
     step('Then I go to confirmation step', () => helper.goToConfirmation());
     step('When I click on confirm button', () => helper.clickOnElement('button.confirm'));
     step('Then I should see result box', () => helper.haveTextOf('h2.result-box-header', 'Votes submitted'));
