@@ -2,16 +2,15 @@ import actionTypes from '../../constants/actions';
 import { followedAccountFetchedAndUpdated } from '../../actions/followedAccounts';
 
 const followedAccountsMiddleware = (store) => {
-  const updateFollowedAccounts = (peers, accounts) => {
+  const updateFollowedAccounts = (accounts) => {
     accounts.forEach((account) => {
       store.dispatch(followedAccountFetchedAndUpdated({
-        activePeer: peers.data,
         account,
       }));
     });
   };
 
-  const checkTransactionsAndUpdateFollowedAccounts = (peers, tx, followedAccounts) => {
+  const checkTransactionsAndUpdateFollowedAccounts = (tx, followedAccounts) => {
     const changedAccounts = followedAccounts.accounts.filter((account) => {
       const relevantTransactions = tx.filter((transaction) => {
         const { senderId, recipientId } = transaction;
@@ -21,28 +20,26 @@ const followedAccountsMiddleware = (store) => {
       return relevantTransactions.length > 0;
     });
 
-    updateFollowedAccounts(peers, changedAccounts);
+    updateFollowedAccounts(changedAccounts);
   };
 
   return next => (action) => {
     next(action);
-    const { peers, followedAccounts } = store.getState();
+    const { followedAccounts } = store.getState();
     switch (action.type) {
       case actionTypes.newBlockCreated:
         checkTransactionsAndUpdateFollowedAccounts(
-          peers,
           action.data.block.transactions || [],
           followedAccounts,
         );
         break;
       case actionTypes.followedAccountAdded:
         store.dispatch(followedAccountFetchedAndUpdated({
-          activePeer: peers.data,
           account: action.data,
         }));
         break;
       case actionTypes.activePeerSet:
-        updateFollowedAccounts(peers, followedAccounts.accounts);
+        updateFollowedAccounts(followedAccounts.accounts);
         break;
       default:
         break;
