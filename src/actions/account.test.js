@@ -26,10 +26,6 @@ import * as peersActions from './peers';
 import * as transactionsActions from './transactions';
 
 describe('actions: account', () => {
-  const getState = () => ({
-    peers: { data: {} },
-  });
-
   describe('accountUpdated', () => {
     it('should create an action to set values to account', () => {
       const data = {
@@ -65,10 +61,14 @@ describe('actions: account', () => {
     };
     const actionFunction = secondPassphraseRegistered(data);
     let dispatch;
+    let getState;
 
     beforeEach(() => {
       accountApiMock = stub(accountApi, 'setSecondPassphrase');
       dispatch = spy();
+      getState = () => ({
+        peers: { data: {} },
+      });
     });
 
     afterEach(() => {
@@ -80,7 +80,7 @@ describe('actions: account', () => {
     });
 
     it('should dispatch transactionAdded action if resolved', () => {
-      accountApiMock.returnsPromise().resolves({ transactionId: '15626650747375562521' });
+      accountApiMock.returnsPromise().resolves({ id: '15626650747375562521' });
       const expectedAction = {
         id: '15626650747375562521',
         senderPublicKey: 'test_public-key',
@@ -125,10 +125,14 @@ describe('actions: account', () => {
     };
     const actionFunction = delegateRegistered(data);
     let dispatch;
+    let getState;
 
     beforeEach(() => {
       delegateApiMock = stub(delegateApi, 'registerDelegate');
       dispatch = spy();
+      getState = () => ({
+        peers: { data: {} },
+      });
     });
 
     afterEach(() => {
@@ -140,7 +144,7 @@ describe('actions: account', () => {
     });
 
     it('should dispatch transactionAdded action if resolved', () => {
-      delegateApiMock.returnsPromise().resolves({ transactionId: '15626650747375562521' });
+      delegateApiMock.returnsPromise().resolves({ id: '15626650747375562521' });
       const expectedAction = {
         id: '15626650747375562521',
         senderPublicKey: 'test_public-key',
@@ -176,6 +180,8 @@ describe('actions: account', () => {
   describe('loadDelegate', () => {
     let delegateApiMock;
     let dispatch;
+    let getState;
+
     const data = {
       publicKey: accounts.genesis.publicKey,
     };
@@ -184,6 +190,9 @@ describe('actions: account', () => {
     beforeEach(() => {
       delegateApiMock = stub(delegateApi, 'getDelegate');
       dispatch = spy();
+      getState = () => ({
+        peers: { data: {} },
+      });
     });
 
     afterEach(() => {
@@ -223,12 +232,16 @@ describe('actions: account', () => {
   describe('loadAccount', () => {
     let getAccountStub;
     let transactionsActionsStub;
+    let getState;
 
     const dispatch = spy();
 
     beforeEach(() => {
       getAccountStub = stub(accountApi, 'getAccount').returnsPromise();
       transactionsActionsStub = spy(transactionsActions, 'loadTransactionsFinish');
+      getState = () => ({
+        peers: { data: {} },
+      });
     });
 
     afterEach(() => {
@@ -287,6 +300,7 @@ describe('actions: account', () => {
     let peersActionsStub;
     let getAccountStub;
     let transactionsActionsStub;
+    let getState;
 
     const dispatch = spy();
 
@@ -294,6 +308,9 @@ describe('actions: account', () => {
       peersActionsStub = spy(peersActions, 'activePeerUpdate');
       getAccountStub = stub(accountApi, 'getAccount').returnsPromise();
       transactionsActionsStub = spy(transactionsActions, 'transactionsUpdated');
+      getState = () => ({
+        peers: { data: {} },
+      });
     });
 
     afterEach(() => {
@@ -342,11 +359,15 @@ describe('actions: account', () => {
 
   describe('updateTransactionsIfNeeded', () => {
     let transactionsActionsStub;
+    let getState;
 
     const dispatch = spy();
 
     beforeEach(() => {
       transactionsActionsStub = spy(transactionsActions, 'transactionsUpdated');
+      getState = () => ({
+        peers: { data: {} },
+      });
     });
 
     afterEach(() => {
@@ -365,7 +386,7 @@ describe('actions: account', () => {
 
     it('should update transactions when there are no recent transactions', () => {
       const data = {
-        transactions: { confirmed: [{ confirmations: 10000 }], pending: [] },
+        transactions: { confirmed: [{ confirmations: 10000 }], pending: [{ id: '123' }] },
         account: { address: accounts.genesis.address },
       };
 
@@ -376,9 +397,13 @@ describe('actions: account', () => {
 
   describe('updateDelegateAccount', () => {
     const dispatch = spy();
+    let getState;
 
     beforeEach(() => {
       stub(delegateApi, 'getDelegate').returnsPromise();
+      getState = () => ({
+        peers: { data: {} },
+      });
     });
 
     afterEach(() => {

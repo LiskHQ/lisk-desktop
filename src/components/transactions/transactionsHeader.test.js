@@ -18,6 +18,6 @@ describe('TransactionsHeader', () => {
 },
     );
 
-    expect(wrapper.find('.transactions-header')).to.have.lengthOf(3);
+    expect(wrapper.find('.transactions-header')).to.have.lengthOf(4);
   });
 });

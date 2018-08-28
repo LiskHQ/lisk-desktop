@@ -37,7 +37,6 @@ class TBActionButton extends React.Component {
   }
 }
 
-
 const PrimaryButton = themr('importantButton', primaryButtonTheme)(TBPrimaryButton);
 const SecondaryLightButton = themr('lightButton', secondaryLightButtonTheme)(TBSecondaryLightButton);
 const TertiaryButton = themr('tertiaryButton', tertiaryButtonTheme)(TBTertiaryButton);

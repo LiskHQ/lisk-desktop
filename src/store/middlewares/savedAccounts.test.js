@@ -134,7 +134,7 @@ describe('SavedAccounts middleware', () => {
     };
     middleware(store)(next)(action);
     expect(store.dispatch).to.have.been.calledWith(accountSaved({
-      address: undefined,
+      peerAddress: undefined,
       balance,
       network: networks.mainnet.code,
       publicKey: publicKey2,

@@ -18,7 +18,6 @@ describe('actions: followedAccount', () => {
     balance: accounts.genesis.balance,
     title: accounts.genesis.address,
   };
-
   const getState = () => ({
     peers: { data: {} },
   });

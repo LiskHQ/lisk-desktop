@@ -29,3 +29,9 @@
   font-size: 12px;
   font-family: 'Open Sans';
 }
+
+@media (--medium-viewport) {
+  .default {
+    color: var(--color-grayscale-medium);
+  }
+}

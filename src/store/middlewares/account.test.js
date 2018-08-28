@@ -93,7 +93,6 @@ describe('Account middleware', () => {
 
     const data = {
       windowIsFocused: true,
-      peers: state.peers,
       account: state.account,
       transactions: state.transactions,
     };
@@ -134,6 +133,7 @@ describe('Account middleware', () => {
         }],
         confirmed: [{ confirmations: 10, address: 'sample_address' }],
       },
+      peers: { data: {} },
     });
 
     middleware(store)(next)(newBlockCreated);

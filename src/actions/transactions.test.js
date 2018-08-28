@@ -114,6 +114,15 @@ describe('actions: transactions', () => {
       transactionApiMock = sinon.stub(transactionsApi, 'getSingleTransaction');
       delegateApiMock = sinon.stub(delegateApi, 'getDelegate');
       dispatch = sinon.spy();
+      getState = () => ({
+        peers: {
+          data: {
+            options: {
+              name: 'Mainnet',
+            },
+          },
+        },
+      });
     });
 
     afterEach(() => {
@@ -185,6 +194,9 @@ describe('actions: transactions', () => {
     beforeEach(() => {
       transactionsApiMock = sinon.stub(transactionsApi, 'send');
       dispatch = sinon.spy();
+      getState = () => ({
+        peers: { data: {} },
+      });
     });
 
     afterEach(() => {
@@ -202,6 +214,7 @@ describe('actions: transactions', () => {
         senderPublicKey: 'test_public-key',
         senderId: 'test_address',
         recipientId: data.recipientId,
+        asset: { data: undefined },
         amount: toRawLsk(data.amount),
         fee: Fees.send,
         type: transactionTypes.send,

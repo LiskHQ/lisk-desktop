@@ -30,72 +30,72 @@ class SendTo extends React.Component {
     };
 
     return (<Box className={`${styles.wrapper} ${grid.row}`}>
-        <section className={styles.content}>
-          <div className={`
-      ${grid['col-xs-12']}
-      ${grid['col-sm-7']}
-      ${grid['col-md-12']}
-      ${grid['col-lg-12']}
-      ${grid['middle-sm']}
-      ${grid.row}
-      `}>
-            {account.address ?
-              <AccountVisual
-                address={account.address}
-                size={144}
-                sizeS={90}
-                className={`
-            ${grid['col-xs-4']}
-            ${grid['col-sm-5']}
-            ${grid['col-md-12']}
-            ${grid['col-lg-12']}
-            ${grid['middle-sm']}
-            `} /> : null
-            }
-            <div className={`${styles.account}
-        ${grid['col-xs-8']}
-        ${grid['col-sm-7']}
-        ${grid['col-md-12']}
-        ${grid['col-lg-12']}
+      <section className={styles.content}>
+        <div className={`
+          ${grid['col-xs-12']}
+          ${grid['col-sm-7']}
+          ${grid['col-md-12']}
+          ${grid['col-lg-12']}
+          ${grid['middle-sm']}
+          ${grid.row}
         `}>
-              <h2>
+          {account.address ?
+            <AccountVisual
+              address={account.address}
+              size={144}
+              sizeS={90}
+              className={`
+          ${grid['col-xs-4']}
+          ${grid['col-sm-5']}
+          ${grid['col-md-12']}
+          ${grid['col-lg-12']}
+          ${grid['middle-sm']}
+          `} /> : null
+          }
+          <div className={`${styles.account}
+              ${grid['col-xs-8']}
+              ${grid['col-sm-7']}
+              ${grid['col-md-12']}
+              ${grid['col-lg-12']}
+            `}>
+            <h2>
               <span>
                 <LiskAmount val={account.balance}/>
                 <small className={styles.balanceUnit}>LSK</small>
               </span>
-              </h2>
-              <CopyToClipboard value={account.address} className={`${styles.address}`} copyClassName={styles.copy} />
-              {
-                delegate.username ?
-                  <div className={styles.delegateRow}>
-                    {t('Delegate')}
-                    <span className={`${styles.delegateUsername} delegate-name`}>{delegate.username}</span>
-                  </div>
-                  : null
-              }
-            </div>
+            </h2>
+            <CopyToClipboard value={account.address} className={`${styles.address}`} copyClassName={styles.copy} />
+            {
+              delegate.username ?
+                <div className={styles.delegateRow}>
+                  {t('Delegate')}
+                  <span className={`${styles.delegateUsername} delegate-name`}>{delegate.username}</span>
+                </div>
+                : null
+            }
           </div>
-          <div className={`
-      ${grid['col-xs-12']}
-      ${grid['col-sm-5']}
-      ${grid['col-md-12']}
-      ${grid['col-lg-12']}
-      ${grid['middle-sm']}
-      ${styles.sendButton}
-      `}>
-            <Link to={`${routes.wallet.path}?recipient=${address}`}>
-              <TertiaryButton className={`${styles.button} send-to-address`} >
-                <FontIcon value={'send-token'}/> {t('Send to this address')}
-              </TertiaryButton>
-            </Link>
-
-            <Button onClick={() => handleClick()}
-                    className={`${styles.button} ${styles.follow} follow-account`} >
-              <FontIcon value={isFollowing ? 'star-filled' : 'star-outline'}/> <span className={`${styles.label} follow-label`}>{isFollowing ? t('Unfollow') : t('Follow')}</span>
-            </Button>
-          </div>
-        </section>
-      </Box>
+        </div>
+        <div className={`
+          ${grid['col-xs-12']}
+          ${grid['col-sm-5']}
+          ${grid['col-md-12']}
+          ${grid['col-lg-12']}
+          ${grid['middle-sm']}
+          ${styles.sendButton}
+        `}>
+          <Link to={`${routes.wallet.path}?recipient=${address}`}>
+            <TertiaryButton className={`${styles.button} send-to-address`} >
+              <FontIcon value={'send-token'}/> {t('Send to this address')}
+            </TertiaryButton>
+          </Link>
+          <Button
+            onClick={() => handleClick()}
+            className={`${styles.button} ${styles.follow} follow-account`} >
+            <FontIcon value={isFollowing ? 'star-filled' : 'star-outline'}/> <span className={styles.label}>{isFollowing ? t('Unfollow') : t('Follow')}</span>
+          </Button>
+        </div>
+      </section>
+    </Box>
     );
   }
 }

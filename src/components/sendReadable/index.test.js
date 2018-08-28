@@ -8,15 +8,10 @@ import SendHOC from './index';
 describe('SendReadableHOC', () => {
   let wrapper;
   const store = {};
-  const peers = {
-    data: {},
-    status: true,
-  };
   const account = {};
   const transactions = { pending: [] };
   beforeEach(() => {
     store.getState = () => ({
-      peers,
       account,
       transactions,
     });

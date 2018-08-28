@@ -56,6 +56,10 @@ module.exports = function (config) {
           excludes: [
             'src/components/register/register.js',
             'src/components/voteUrlProcessor/index.js',
+            'src/components/savedAccounts/index.js',
+            'src/utils/savedAccounts.js',
+            'src/store/middlewares/savedAccounts.js',
+            'src/store/reducers/savedAccounts.js',
             'src/utils/api/liskService.js',
             'src/store/reducers/liskService.js',
             'src/actions/transactions.js',

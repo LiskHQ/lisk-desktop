@@ -11,13 +11,12 @@ import transactionTypes from '../../constants/transactionTypes';
 const { lockDuration } = accountConfig;
 
 const updateAccountData = (store, action) => {
-  const { peers, account, transactions } = store.getState();
+  const { account, transactions } = store.getState();
 
   store.dispatch(accountDataUpdated({
     windowIsFocused: action.data.windowIsFocused,
     transactions,
     account,
-    peers,
   }));
 };
 
@@ -114,6 +113,9 @@ const accountMiddleware = store => next => (action) => {
       break;
     case actionTypes.passphraseUsed:
       passphraseUsed(store, action);
+      break;
+    case actionTypes.accountLoggedOut:
+      localStorage.removeItem('accounts');
       break;
     default: break;
   }

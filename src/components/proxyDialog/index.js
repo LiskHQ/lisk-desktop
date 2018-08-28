@@ -2,6 +2,7 @@ import React from 'react';
 import { translate } from 'react-i18next';
 import Input from '../toolbox/inputs/input';
 import { Button } from '../toolbox/buttons/button';
+import styles from './index.css';
 
 class ProxyDialog extends React.Component {
   constructor() {
@@ -35,9 +36,9 @@ class ProxyDialog extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit.bind(this)}>
-        <p>
-          To connect to Lisk network, you need to enter a username and password for proxy
+      <form className={styles.form} onSubmit={this.handleSubmit.bind(this)}>
+        <p className={styles.text}>
+          {this.props.text}
           <b> {this.props.authInfo.host} </b>
         </p>
         <Input label={this.props.t('Username')} required
@@ -50,10 +51,11 @@ class ProxyDialog extends React.Component {
           onChange={this.handleChange.bind(this, 'password')}
           error={this.state.password.error}
           value={this.state.password.value}/>
-        <Button primary raised
-          style={{ float: 'right' }}
-          disabled = {this.state.password.value === '' || this.state.username.value === ''}
-          label={this.props.t('Submit')} type='submit' />
+        <div className={styles.submitButton}>
+          <Button primary raised
+            disabled = {this.state.password.value === '' || this.state.username.value === ''}
+            label={this.props.t('Submit')} type='submit' />
+        </div>
       </form>);
   }
 }

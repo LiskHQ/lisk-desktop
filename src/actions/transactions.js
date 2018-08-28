@@ -12,39 +12,39 @@ import transactionTypes from '../constants/transactionTypes';
 
 export const transactionsFilterSet = ({
   address, limit, filter,
-}) =>
-  (dispatch, getState) => {
-    const activePeer = getState().peers.data;
-    getTransactions({
-      activePeer,
-      address,
-      limit,
-      filter,
-    }).then((response) => {
+}) => (dispatch, getState) => {
+  const activePeer = getState().peers.data;
+
+  return getTransactions({
+    activePeer,
+    address,
+    limit,
+    filter,
+  }).then((response) => {
+    dispatch({
+      data: {
+        confirmed: response.data,
+        count: parseInt(response.meta.count, 10),
+        filter,
+      },
+      type: actionTypes.transactionsFiltered,
+    });
+    if (filter !== undefined) {
       dispatch({
         data: {
-          confirmed: response.data,
-          count: parseInt(response.meta.count, 10),
-          filter,
+          filterName: 'wallet',
+          value: filter,
         },
-        type: actionTypes.transactionsFiltered,
+        type: actionTypes.addFilter,
       });
-      if (filter !== undefined) {
-        dispatch({
-          data: {
-            filterName: 'wallet',
-            value: filter,
-          },
-          type: actionTypes.addFilter,
-        });
-      }
-    });
-  };
+    }
+  });
+};
 
 export const transactionsUpdateUnconfirmed = ({ address, pendingTransactions }) =>
   (dispatch, getState) => {
     const activePeer = getState().peers.data;
-    unconfirmedTransactions(activePeer, address).then(response => dispatch({
+    return unconfirmedTransactions(activePeer, address).then(response => dispatch({
       data: {
         failed: pendingTransactions.filter(tx =>
           response.data.filter(unconfirmedTx => tx.id === unconfirmedTx.id).length === 0),
@@ -71,7 +71,6 @@ export const loadTransactions = ({ publicKey, address }) =>
     getTransactions({ activePeer, address, limit: 25 })
       .then((transactionsResponse) => {
         dispatch(loadAccount({
-          activePeer,
           address,
           transactionsResponse,
           isSameAccount,
@@ -227,6 +226,9 @@ export const sent = ({
             amount: toRawLsk(amount),
             fee: Fees.send,
             type: transactionTypes.send,
+            asset: {
+              data,
+            },
           },
           type: actionTypes.transactionAdded,
         });

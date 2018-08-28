@@ -61,7 +61,7 @@ class MainMenu extends React.Component {
     const {
       history, t, showDelegate, account,
     } = this.props;
-    const tabs = [
+    let tabs = [
       {
         label: t('Dashboard'),
         route: `${routes.dashboard.path}`,
@@ -74,13 +74,11 @@ class MainMenu extends React.Component {
         id: 'transactions',
         image: menuLogos.wallet,
       }, {
-      /* TODO: uncomment when the page is created
-        label: t('Buy Lisk'),
-        route: '/main/buyLisk',
-        id: 'buyLisk',
-        image: menuLogos.buyLisk,
+        label: t('Delegates'),
+        id: 'delegates',
+        route: `${routes.delegates.path}`,
+        image: menuLogos.delegates,
       }, {
-      */
         label: t('Sidechains'),
         route: `${routes.sidechains.path}`,
         id: 'sidechains',
@@ -105,13 +103,8 @@ class MainMenu extends React.Component {
       },
     ];
 
-    if (showDelegate) {
-      tabs.splice(tabs.length - 2, 0, {
-        label: t('Delegates'),
-        id: 'delegates',
-        route: `${routes.delegates.path}`,
-        image: menuLogos.delegates,
-      });
+    if (!showDelegate) {
+      tabs = tabs.filter(tab => tab.id !== 'delegates');
     }
 
     return (

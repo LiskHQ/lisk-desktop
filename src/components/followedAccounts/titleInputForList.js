@@ -36,11 +36,11 @@ class TitleInputForList extends React.Component {
 
   render() {
     return <TitleInput
-    className={styles.title}
-    title={this.state.title}
-    disabled={!this.props.edit}
-    hideLabel={true}
-    onChange={this.handleChange.bind(this)}
+      className={styles.title}
+      title={this.state.title}
+      disabled={!this.props.edit}
+      hideLabel={true}
+      onChange={this.handleChange.bind(this)}
     />;
   }
 }

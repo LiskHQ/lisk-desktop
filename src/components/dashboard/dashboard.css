@@ -2,11 +2,13 @@
 
 .wrapper {
   width: 100%;
+  margin: 0px;
 }
 
 .main {
   max-height: 75vh; /* stylelint-disable-line */
   overflow: auto;
+  padding-left: 0px;
 }
 
 .seeAllLink {
@@ -16,6 +18,10 @@
   text-decoration: none;
   font-family: var(--content-font);
   font-weight: var(--font-weight-bold);
+}
+
+.newsFeedWrapper {
+  padding-right: 0px;
 }
 
 .send {
@@ -44,6 +50,8 @@
     & .main {
       max-width: 100%;
       flex-basis: 100%;
+      max-height: unset;
+      overflow: hidden;
     }
 
     margin: 0;
@@ -55,9 +63,19 @@
     margin-bottom: 0;
   }
 
+  .following {
+    height: auto;
+    min-height: 300px;
+  }
+
+  .bottomModuleWrapper {
+    height: auto;
+  }
+
   .latestActivity {
     height: unset;
     min-height: unset;
+    overflow: hidden;
   }
 }
 

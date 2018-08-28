@@ -110,6 +110,9 @@ describe('actions: voting', () => {
       actionFunction = votePlaced({
         account, votes, secondSecret, goToNextStep,
       });
+      getState = () => ({
+        peers: { data: {} },
+      });
     });
 
     afterEach(() => {
@@ -121,7 +124,7 @@ describe('actions: voting', () => {
     });
 
     it('should dispatch transactionAdded action if resolved', () => {
-      delegateApiMock.returnsPromise().resolves({ transactionId: '15626650747375562521' });
+      delegateApiMock.returnsPromise().resolves({ id: '15626650747375562521' });
       const expectedAction = {
         id: '15626650747375562521',
         senderPublicKey: account.publicKey,
@@ -161,6 +164,9 @@ describe('actions: voting', () => {
 
     beforeEach(() => {
       delegateApiMock = sinon.stub(delegateApi, 'listAccountDelegates').returnsPromise();
+      getState = () => ({
+        peers: { data: {} },
+      });
     });
 
     afterEach(() => {
@@ -220,6 +226,15 @@ describe('actions: voting', () => {
     it('should dispatch delegatesAdded action if resolved', () => {
       const delegateApiMock = sinon.stub(delegateApi, 'listDelegates');
       const dispatch = sinon.spy();
+      getState = () => ({
+        peers: {
+          data: {
+            options: {
+              name: 'Mainnet',
+            },
+          },
+        },
+      });
 
       delegateApiMock.returnsPromise().resolves({ data: delegates });
       const expectedAction = { list: delegates, totalDelegates: delegates.length, refresh: true };
@@ -250,6 +265,9 @@ describe('actions: voting', () => {
 
     beforeEach(() => {
       delegateApiMock = sinon.stub(delegateApi, 'listAccountDelegates').returnsPromise();
+      getState = () => ({
+        peers: { data: {} },
+      });
     });
 
     afterEach(() => {

@@ -7,9 +7,9 @@ import MultiStep from '../multiStep/index';
 import styles from './followedAccounts.css';
 
 const FollowedAccounts = ({ history }) => (<MultiStep className={styles.followedAccountsWrapper}>
-        <ViewAccounts history={history}/>
-        <AddAccountID />
-        <AddAccountTitle />
-      </MultiStep>);
+  <ViewAccounts history={history}/>
+  <AddAccountID />
+  <AddAccountTitle />
+</MultiStep>);
 
 export default translate()(FollowedAccounts);

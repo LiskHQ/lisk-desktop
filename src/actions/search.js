@@ -31,6 +31,7 @@ const searchVotes = ({ address }) =>
         },
       }));
   };
+
 const searchVoters = ({ address, publicKey }) =>
   (dispatch, getState) => {
     const activePeer = getState().peers.data;
@@ -47,14 +48,14 @@ const searchVoters = ({ address, publicKey }) =>
 export const searchAccount = ({ address }) =>
   (dispatch, getState) => {
     const activePeer = getState().peers.data;
-    dispatch(searchVotes({ activePeer, address }));
+    dispatch(searchVotes({ address }));
     getAccount(activePeer, address).then((response) => {
       const accountData = {
         ...response,
       };
       if (accountData.publicKey) {
-        dispatch(searchDelegate({ activePeer, publicKey: accountData.publicKey, address }));
-        dispatch(searchVoters({ activePeer, address, publicKey: accountData.publicKey }));
+        dispatch(searchDelegate({ publicKey: accountData.publicKey, address }));
+        dispatch(searchVoters({ address, publicKey: accountData.publicKey }));
       }
       dispatch({ data: accountData, type: actionTypes.searchAccount });
     });

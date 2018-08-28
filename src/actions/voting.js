@@ -106,7 +106,7 @@ export const votePlaced = ({
       // @todo Handle alerts either in transactionAdded action or middleware
       dispatch({
         data: {
-          id: response.transactionId,
+          id: response.id,
           senderPublicKey: account.publicKey,
           senderId: account.address,
           amount: 0,

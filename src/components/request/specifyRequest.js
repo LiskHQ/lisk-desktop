@@ -3,6 +3,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Button, PrimaryButton } from './../toolbox/buttons/button';
 import AccountVisual from '../accountVisual';
 import Converter from '../converter';
+import ReferenceInput from '../referenceInput';
 import Input from '../toolbox/inputs/input';
 import fees from './../../constants/fees';
 import regex from './../../utils/regex';
@@ -15,6 +16,9 @@ class SpecifyRequest extends React.Component {
     this.state = {
       recipient: { value: props.address },
       amount: { value: '' },
+      reference: {
+        value: props.reference || '',
+      },
     };
     this.fee = fees.send;
     this.inputValidationRegexps = {
@@ -23,20 +27,24 @@ class SpecifyRequest extends React.Component {
     };
   }
 
-  validateInput(name, value) {
-    if (!value || value === '0') {
+  validateInput(name, value, required) {
+    const byteCount = encodeURI(value).split(/%..|./).length - 1;
+
+    if ((!value || value === '0') && required) {
       return this.props.t('Required');
+    } else if (name === 'reference' && byteCount > 64) {
+      return this.props.t('Maximum length exceeded');
     } else if (!value.match(this.inputValidationRegexps[name])) {
       return this.props.t('Invalid amount');
     }
     return undefined;
   }
 
-  handleChange(name, value, error) {
+  handleChange(name, required = true, value, error) {
     this.setState({
       [name]: {
         value,
-        error: typeof error === 'string' ? error : this.validateInput(name, value),
+        error: typeof error === 'string' ? error : this.validateInput(name, value, required),
       },
     });
   }
@@ -60,13 +68,20 @@ class SpecifyRequest extends React.Component {
             </figure>
           </Input>
 
+          <ReferenceInput
+            className='reference'
+            label={this.props.t('Reference (optional)')}
+            address={this.state.reference}
+            handleChange={this.handleChange.bind(this, 'reference', false)}
+          />
+
           <Converter
             label={this.props.t('Request amount (LSK)')}
             className='amount'
             theme={styles}
             error={this.state.amount.error}
             value={this.state.amount.value}
-            onChange={this.handleChange.bind(this, 'amount')}
+            onChange={this.handleChange.bind(this, 'amount', true)}
             t={this.props.t}
             isRequesting
           />
@@ -91,9 +106,11 @@ class SpecifyRequest extends React.Component {
                 onClick={() => this.props.nextStep({
                   address: this.state.recipient.value,
                   amount: this.state.amount.value,
+                  reference: this.state.reference.value,
                 })}
                 disabled={(!!this.state.recipient.error ||
                   !this.state.recipient.value ||
+                  !!this.state.reference.error ||
                   !!this.state.amount.error ||
                   !this.state.amount.value)}
               />

@@ -11,7 +11,7 @@
 }
 
 .header {
-  margin: 0 20px 20px;
+  margin: 0 32px 20px;
 }
 
 .item {
@@ -19,7 +19,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 20px;
+  padding: 10px 32px;
 
   &:nth-child(even) {
     background: linear-gradient(90deg, #fff, #f5f8fc);

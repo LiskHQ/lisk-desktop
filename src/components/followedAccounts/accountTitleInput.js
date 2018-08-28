@@ -9,14 +9,14 @@ const AccountTitleInput = ({
   const validateInput = value => (value.length > 20 ? t('Title too long') : undefined);
 
   return <Input
-            label={hideLabel ? null : t('Title (optional)')}
-            className={`${styles.titleInput} ${className} account-title `}
-            error={title.error}
-            value={title.value}
-            autoFocus={true}
-            disabled={disabled}
-            onChange={val => onChange(val, validateInput)}
-          />;
+    label={hideLabel ? null : t('Title (optional)')}
+    className={`${styles.titleInput} ${className} account-title `}
+    error={title.error}
+    value={title.value}
+    autoFocus={true}
+    disabled={disabled}
+    onChange={val => onChange(val, validateInput)}
+  />;
 };
 
 export default translate()(AccountTitleInput);

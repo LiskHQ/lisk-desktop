@@ -324,15 +324,15 @@ class AutoSuggest extends React.Component {
           />
           { this.state.value === '' && this.state.resultsLength === 0 ?
             <ResultsList
-            key='recent'
-            results={this.getRecentSearchResults()}
-            header={{
-              titleLeft: t('Recent searches'),
-              titleRight: '',
-            }}
-            onMouseDown={this.onResultClick.bind(this)}
-            setSelectedRow={this.setSelectedRow.bind(this)}
-          />
+              key='recent'
+              results={this.getRecentSearchResults()}
+              header={{
+                titleLeft: t('Recent searches'),
+                titleRight: '',
+              }}
+              onMouseDown={this.onResultClick.bind(this)}
+              setSelectedRow={this.setSelectedRow.bind(this)}
+            />
             : null
           }
         </div>

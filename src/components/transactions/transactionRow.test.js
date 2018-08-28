@@ -56,7 +56,7 @@ describe('TransactionRow', () => {
       </Router>
     </Provider>, options);
 
-    expect(wrapper.find('.transactions-cell')).to.have.lengthOf(4);
+    expect(wrapper.find('.transactions-cell')).to.have.lengthOf(5);
   });
 
   it('should not cause any error on click if props.onClick is not defined', () => {

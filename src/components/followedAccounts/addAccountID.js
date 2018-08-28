@@ -39,32 +39,32 @@ class AddAccountID extends React.Component {
 
   render() {
     return <div className={styles.addAccount}>
-        <header><h2>{this.props.t('Choose an ID')}</h2></header>
-        <div>
-          <AddressInput
-            label={this.props.t('Enter a Lisk ID')}
-            className='address'
-            address={this.state.address}
-            handleChange={this.handleChange.bind(this)}
+      <header><h2>{this.props.t('Choose an ID')}</h2></header>
+      <div>
+        <AddressInput
+          label={this.props.t('Enter a Lisk ID')}
+          className='address'
+          address={this.state.address}
+          handleChange={this.handleChange.bind(this)}
+        />
+      </div>
+      <footer className={grid.row} >
+        <div className={grid['col-xs-4']}>
+          <Button
+            label={this.props.t('Cancel')}
+            className={`${styles.cancelButton} cancel`}
+            onClick={() => this.props.prevStep()}
           />
         </div>
-        <footer className={grid.row} >
-          <div className={grid['col-xs-4']}>
-            <Button
-              label={this.props.t('Cancel')}
-              className={`${styles.cancelButton} cancel`}
-              onClick={() => this.props.prevStep()}
-            />
-          </div>
-          <div className={grid['col-xs-8']}>
-            <TertiaryButton
-              label={this.props.t('Next')}
-              className='next'
-              disabled={(!!this.state.address.error || !this.state.address.value)}
-              onClick={() => this.props.nextStep({ address: this.state.address.value })}
-            />
-          </div>
-        </footer>
+        <div className={grid['col-xs-8']}>
+          <TertiaryButton
+            label={this.props.t('Next')}
+            className='next'
+            disabled={(!!this.state.address.error || !this.state.address.value)}
+            onClick={() => this.props.nextStep({ address: this.state.address.value })}
+          />
+        </div>
+      </footer>
     </div>;
   }
 }
