@@ -26,6 +26,10 @@ import * as peersActions from './peers';
 import * as transactionsActions from './transactions';
 
 describe('actions: account', () => {
+  const getState = () => ({
+    peers: { data: {} },
+  });
+
   describe('accountUpdated', () => {
     it('should create an action to set values to account', () => {
       const data = {
@@ -53,7 +57,6 @@ describe('actions: account', () => {
   describe('secondPassphraseRegistered', () => {
     let accountApiMock;
     const data = {
-      activePeer: {},
       secondPassphrase: 'sample second passphrase',
       account: {
         publicKey: 'test_public-key',
@@ -87,7 +90,7 @@ describe('actions: account', () => {
         type: transactionTypes.setSecondPassphrase,
       };
 
-      actionFunction(dispatch);
+      actionFunction(dispatch, getState);
       expect(dispatch).to.have.been
         .calledWith({ data: expectedAction, type: actionTypes.transactionAdded });
     });
@@ -95,7 +98,7 @@ describe('actions: account', () => {
     it('should dispatch errorAlertDialogDisplayed action if caught', () => {
       accountApiMock.returnsPromise().rejects({ message: 'sample message' });
 
-      actionFunction(dispatch);
+      actionFunction(dispatch, getState);
       const expectedAction = errorAlertDialogDisplayed({ text: 'sample message' });
       expect(dispatch).to.have.been.calledWith(expectedAction);
     });
@@ -103,7 +106,7 @@ describe('actions: account', () => {
     it('should dispatch errorAlertDialogDisplayed action if caught but no message returned', () => {
       accountApiMock.returnsPromise().rejects({});
 
-      actionFunction(dispatch);
+      actionFunction(dispatch, getState);
       const expectedAction = errorAlertDialogDisplayed({ text: 'An error occurred while registering your second passphrase. Please try again.' });
       expect(dispatch).to.have.been.calledWith(expectedAction);
     });
@@ -112,7 +115,6 @@ describe('actions: account', () => {
   describe('delegateRegistered', () => {
     let delegateApiMock;
     const data = {
-      activePeer: {},
       username: 'test',
       passphrase: accounts.genesis.passphrase,
       secondPassphrase: null,
@@ -149,7 +151,7 @@ describe('actions: account', () => {
         type: transactionTypes.registerDelegate,
       };
 
-      actionFunction(dispatch);
+      actionFunction(dispatch, getState);
       expect(dispatch).to.have.been
         .calledWith({ data: expectedAction, type: actionTypes.transactionAdded });
     });
@@ -157,7 +159,7 @@ describe('actions: account', () => {
     it('should dispatch delegateRegisteredFailure action if caught', () => {
       delegateApiMock.returnsPromise().rejects({ message: 'sample message.' });
 
-      actionFunction(dispatch);
+      actionFunction(dispatch, getState);
       const delegateRegisteredFailureAction = delegateRegisteredFailure({ message: 'sample message.' });
       expect(dispatch).to.have.been.calledWith(delegateRegisteredFailureAction);
     });
@@ -165,7 +167,7 @@ describe('actions: account', () => {
     it('should dispatch passphraseUsed action always', () => {
       delegateApiMock.returnsPromise().rejects({ message: 'sample message.' });
 
-      actionFunction(dispatch);
+      actionFunction(dispatch, getState);
       const passphraseUsedAction = passphraseUsed(accounts.genesis.passphrase);
       expect(dispatch).to.have.been.calledWith(passphraseUsedAction);
     });
@@ -175,7 +177,6 @@ describe('actions: account', () => {
     let delegateApiMock;
     let dispatch;
     const data = {
-      activePeer: {},
       publicKey: accounts.genesis.publicKey,
     };
     const actionFunction = loadDelegate(data);
@@ -193,7 +194,7 @@ describe('actions: account', () => {
       const delegateResponse = { delegate: { ...accounts['delegate candidate'] } };
       delegateApiMock.returnsPromise().resolves(delegateResponse);
 
-      actionFunction(dispatch);
+      actionFunction(dispatch, getState);
       const updateDelegateAction = {
         data: delegateResponse,
         type: actionTypes.updateDelegate,
@@ -243,13 +244,12 @@ describe('actions: account', () => {
       });
 
       const data = {
-        activePeer: {},
         address: accounts.genesis.address,
         transactionsResponse: { meta: { count: 0 }, data: [] },
         isSameAccount: false,
       };
 
-      loadAccount(data)(dispatch);
+      loadAccount(data)(dispatch, getState);
       expect(transactionsActionsStub).to.have.been.calledWith({
         confirmed: [],
         count: 0,
@@ -267,13 +267,12 @@ describe('actions: account', () => {
       });
 
       const data = {
-        activePeer: {},
         address: accounts.genesis.address,
         transactionsResponse: { meta: { count: 0 }, data: [] },
         isSameAccount: true,
       };
 
-      loadAccount(data)(dispatch);
+      loadAccount(data)(dispatch, getState);
       expect(transactionsActionsStub).to.have.been.calledWith({
         confirmed: [],
         count: 0,
@@ -308,7 +307,6 @@ describe('actions: account', () => {
 
       const data = {
         windowIsFocused: false,
-        peers: { data: {} },
         transactions: {
           pending: [{
             id: 12498250891724098,
@@ -319,7 +317,7 @@ describe('actions: account', () => {
         account: { address: accounts.genesis.address, balance: 0 },
       };
 
-      accountDataUpdated(data)(dispatch);
+      accountDataUpdated(data)(dispatch, getState);
       expect(dispatch).to.have.callCount(3);
       expect(peersActionsStub).to.have.not.been.calledWith({ online: false, code: 'EUNAVAILABLE' });
     });
@@ -329,7 +327,6 @@ describe('actions: account', () => {
 
       const data = {
         windowIsFocused: true,
-        peers: { data: {} },
         transactions: {
           pending: [{ id: 12498250891724098 }],
           confirmed: [],
@@ -338,7 +335,7 @@ describe('actions: account', () => {
         account: { address: accounts.genesis.address },
       };
 
-      accountDataUpdated(data)(dispatch);
+      accountDataUpdated(data)(dispatch, getState);
       expect(peersActionsStub).to.have.been.calledWith({ online: false, code: 'EUNAVAILABLE' });
     });
   });
@@ -358,23 +355,21 @@ describe('actions: account', () => {
 
     it('should update transactions when window is in focus', () => {
       const data = {
-        activePeer: {},
         transactions: { confirmed: [{ confirmations: 10 }], pending: [] },
         account: { address: accounts.genesis.address },
       };
 
-      updateTransactionsIfNeeded(data, true)(dispatch);
+      updateTransactionsIfNeeded(data, true)(dispatch, getState);
       expect(transactionsActionsStub).to.have.been.calledWith();
     });
 
     it('should update transactions when there are no recent transactions', () => {
       const data = {
-        activePeer: {},
         transactions: { confirmed: [{ confirmations: 10000 }], pending: [] },
         account: { address: accounts.genesis.address },
       };
 
-      updateTransactionsIfNeeded(data, false)(dispatch);
+      updateTransactionsIfNeeded(data, false)(dispatch, getState);
       expect(transactionsActionsStub).to.have.been.calledWith();
     });
   });
@@ -393,11 +388,10 @@ describe('actions: account', () => {
     it('should fetch delegate and update account', () => {
       delegateApi.getDelegate.resolves({ data: [{ account: 'delegate data' }] });
       const data = {
-        activePeer: {},
         publicKey: accounts.genesis.publicKey,
       };
 
-      updateDelegateAccount(data)(dispatch);
+      updateDelegateAccount(data)(dispatch, getState);
 
       const accountUpdatedAction = accountUpdated(Object.assign({}, { delegate: { account: 'delegate data' }, isDelegate: true }));
       expect(dispatch).to.have.been.calledWith(accountUpdatedAction);

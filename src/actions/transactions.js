@@ -11,9 +11,10 @@ import { toRawLsk } from '../utils/lsk';
 import transactionTypes from '../constants/transactionTypes';
 
 export const transactionsFilterSet = ({
-  activePeer, address, limit, filter,
+  address, limit, filter,
 }) =>
-  (dispatch) => {
+  (dispatch, getState) => {
+    const activePeer = getState().peers.data;
     getTransactions({
       activePeer,
       address,
@@ -40,8 +41,9 @@ export const transactionsFilterSet = ({
     });
   };
 
-export const transactionsUpdateUnconfirmed = ({ activePeer, address, pendingTransactions }) =>
-  (dispatch) => {
+export const transactionsUpdateUnconfirmed = ({ address, pendingTransactions }) =>
+  (dispatch, getState) => {
+    const activePeer = getState().peers.data;
     unconfirmedTransactions(activePeer, address).then(response => dispatch({
       data: {
         failed: pendingTransactions.filter(tx =>
@@ -60,8 +62,9 @@ export const loadTransactionsFinish = accountUpdated =>
     });
   };
 
-export const loadTransactions = ({ activePeer, publicKey, address }) =>
-  (dispatch) => {
+export const loadTransactions = ({ publicKey, address }) =>
+  (dispatch, getState) => {
+    const activePeer = getState().peers.data;
     const lastActiveAddress = publicKey && extractAddress(publicKey);
     const isSameAccount = lastActiveAddress === address;
     loadingStarted(actionTypes.transactionsLoad);
@@ -84,9 +87,10 @@ export const loadTransactions = ({ activePeer, publicKey, address }) =>
   };
 
 export const transactionsRequested = ({
-  activePeer, address, limit, offset, filter,
+  address, limit, offset, filter,
 }) =>
-  (dispatch) => {
+  (dispatch, getState) => {
+    const activePeer = getState().peers.data;
     getTransactions({
       activePeer, address, limit, offset, filter,
     })
@@ -103,8 +107,9 @@ export const transactionsRequested = ({
       });
   };
 
-export const loadTransaction = ({ activePeer, id }) =>
-  (dispatch) => {
+export const loadTransaction = ({ id }) =>
+  (dispatch, getState) => {
+    const activePeer = getState().peers.data;
     dispatch({ type: actionTypes.transactionCleared });
     getSingleTransaction({ activePeer, id })
       .then((response) => {
@@ -173,9 +178,10 @@ export const loadTransaction = ({ activePeer, id }) =>
   };
 
 export const transactionsUpdated = ({
-  activePeer, address, limit, filter, pendingTransactions,
+  address, limit, filter, pendingTransactions,
 }) =>
-  (dispatch) => {
+  (dispatch, getState) => {
+    const activePeer = getState().peers.data;
     getTransactions({
       activePeer, address, limit, filter,
     })
@@ -206,9 +212,10 @@ export const transactionsUpdated = ({
   };
 
 export const sent = ({
-  activePeer, account, recipientId, amount, passphrase, secondPassphrase, data,
+  account, recipientId, amount, passphrase, secondPassphrase, data,
 }) =>
-  (dispatch) => {
+  (dispatch, getState) => {
+    const activePeer = getState().peers.data;
     send(activePeer, recipientId, toRawLsk(amount), passphrase, secondPassphrase, data)
       .then((response) => {
         dispatch({
