@@ -21,8 +21,9 @@ class VotesMatrix extends React.Component {
       vote.confirmed !== vote.unconfirmed && !vote.confirmed);
     // const downVotedDelegates = votesArray.filter(vote =>
     //   vote.confirmed !== vote.unconfirmed && vote.confirmed);
-    const votedDelegates = votesArray.filter(vote =>
-      vote.confirmed === vote.unconfirmed && vote.confirmed);
+    const votedAndDownVotedDelegates = votesArray.filter(vote =>
+      (vote.confirmed === vote.unconfirmed && vote.confirmed) ||
+      (vote.confirmed !== vote.unconfirmed && vote.confirmed));
 
     const freeSlotLength =
       this.props.maxCountOfVotes -
@@ -64,7 +65,7 @@ class VotesMatrix extends React.Component {
         </div>
         <ul className={styles.list}>
           {
-            generateSeats(votedDelegates)
+            generateSeats(votedAndDownVotedDelegates)
           }{
             generateSeats(upVotedDelegates)
           }{
