@@ -4,6 +4,8 @@ import { accountUpdated,
   updateDelegateAccount,
 } from '../../actions/account';
 import { votesFetched } from '../../actions/voting';
+import { loadTransactions } from '../../actions/transactions';
+import { activePeerSet } from '../../actions/peers';
 import actionTypes from '../../constants/actions';
 import accountConfig from '../../constants/account';
 import transactionTypes from '../../constants/transactionTypes';
@@ -99,7 +101,15 @@ const accountMiddleware = (store) => {
   // Checking sessionStorage if acccount is already logged in
   setImmediate(() => {
     const account = JSON.parse(sessionStorage.getItem('account')) || {};
-    store.dispatch(accountUpdated(account));
+    if (account !== {}) {
+      const activePeerData = JSON.parse(sessionStorage.getItem('activePeerData')) || {};
+      store.dispatch(accountUpdated(account));
+      store.dispatch(activePeerSet(activePeerData));
+      store.dispatch(loadTransactions({
+        address: account.address,
+        publicKey: account.publicKey,
+      }));
+    }
   });
 
   return next => (action) => {
