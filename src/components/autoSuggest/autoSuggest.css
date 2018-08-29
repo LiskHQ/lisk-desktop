@@ -49,6 +49,14 @@
   text-overflow: ellipsis;
 }
 
+.noResults {
+  color: var(--color-primary-standard);
+  font-family: var(--content-font);
+  font-size: var(--paragraph-font-size-l);
+  padding: 0 24px;
+  margin: 15px 0 0;
+}
+
 .input {
   padding: 0;
   z-index: var(--searchbar-input-index);
