@@ -83,11 +83,10 @@ class Setting extends React.Component {
           }
         </div>
         <div className={styles.item}>
-          <label className={`${allowAuthClass}`}>{t('Auto-logout')}</label>
+          <label>{t('Auto-logout')}</label>
           <Checkbox
             theme={styles}
-            disabled={!this.props.isAuthenticated}
-            className={`${styles.smallSlider} autoLog ${allowAuthClass}`}
+            className={`${styles.smallSlider} autoLog`}
             onChange={() => this.toggleAutoLog(!settings.autoLog)}
             input={{
               value: true,
@@ -110,11 +109,10 @@ class Setting extends React.Component {
           {t('You will be able to select the desired network when signing in')}
         </div>
         <div className={styles.item}>
-          <label className={`${allowAuthClass}`}>{t('Delegate features')}</label>
+          <label>{t('Delegate features')}</label>
           <Checkbox
             theme={styles}
-            disabled={!this.props.isAuthenticated}
-            className={`${styles.smallSlider} advancedMode ${allowAuthClass}`}
+            className={`${styles.smallSlider} advancedMode`}
             onChange={() => settingsUpdated({ advancedMode: !settings.advancedMode })}
             input={{
               value: true,
