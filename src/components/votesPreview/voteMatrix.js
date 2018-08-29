@@ -5,6 +5,44 @@ import styles from './voteMatrix.css';
 
 class VotesMatrix extends React.Component {
   render() {
+    const { votes, delegates } = this.props;
+    const votesArray = delegates
+      .filter(delegate => Object.keys(votes).indexOf(delegate.username) > -1)
+      .reduce((total, delegate) => {
+        total.push({
+          username: delegate.username,
+          ...votes[delegate.username],
+          rank: delegate.rank,
+        });
+        return total;
+      }, []);
+
+    const upVotedDelegates = votesArray.filter(vote =>
+      vote.confirmed !== vote.unconfirmed && !vote.confirmed);
+    // const downVotedDelegates = votesArray.filter(vote =>
+    //   vote.confirmed !== vote.unconfirmed && vote.confirmed);
+    const votedAndDownVotedDelegates = votesArray.filter(vote =>
+      (vote.confirmed === vote.unconfirmed && vote.confirmed) ||
+      (vote.confirmed !== vote.unconfirmed && vote.confirmed));
+
+    const freeSlotLength =
+      this.props.maxCountOfVotes -
+      this.props.totalVotesCount;
+
+    const freeSlots = freeSlotLength > 0 ? new Array(freeSlotLength).fill({ username: '' }) : [];
+
+    const generateSeats = array => array.map((vote, idx) => (
+      <li className={`${styles.listItem} ${getVoteClass(vote, styles)}`} key={idx}>
+          <p className={`${styles.tooltip}`}>
+            <span data-delegate>{vote.username}</span>
+            <span data-unvote> {this.props.t('(unvote)')}</span>
+            <span data-vote> {this.props.t('(vote)')}</span>
+            <span data-voted> {this.props.t('(voted)')}</span>
+            <span data-free>{this.props.t('Free slot')}</span>
+          </p>
+      </li>
+    ));
+
     return (
       <section>
         <div className={styles.header}>
@@ -27,21 +65,11 @@ class VotesMatrix extends React.Component {
         </div>
         <ul className={styles.list}>
           {
-            this.props.delegates.map((delegate, idx) => {
-              const voteObj = this.props.votes[delegate.username];
-              const voteClass = getVoteClass(voteObj, styles);
-              return (
-                <li className={`${styles.listItem} ${voteClass}`} key={idx}>
-                  <p className={`${styles.tooltip}`}>
-                    <span data-delegate>{delegate.username}</span>
-                    <span data-unvote> {this.props.t('(unvote)')}</span>
-                    <span data-vote> {this.props.t('(vote)')}</span>
-                    <span data-voted> {this.props.t('(voted)')}</span>
-                    <span data-free>{this.props.t('Free slot')}</span>
-                  </p>
-                </li>
-              );
-            })
+            generateSeats(votedAndDownVotedDelegates)
+          }{
+            generateSeats(upVotedDelegates)
+          }{
+            generateSeats(freeSlots)
           }
         </ul>
       </section>
