@@ -16,3 +16,5 @@ app/app.js
 blockchain_explorer.db.gz
 package-lock.json
 reports
+/test/cypress/screenshots/
+/test/cypress/videos/
