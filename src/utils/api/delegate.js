@@ -3,8 +3,13 @@ import Lisk from 'lisk-elements';
 export const listAccountDelegates = (activePeer, address) =>
   activePeer.votes.get({ address, limit: '101' });
 
-export const listDelegates = (activePeer, options) =>
-  activePeer.delegates.get(options);
+export const listDelegates = (activePeer, options) => new Promise((resolve, reject) => {
+  if (!activePeer) {
+    reject();
+  } else {
+    activePeer.delegates.get(options).then(response => resolve(response));
+  }
+});
 
 export const getDelegate = (activePeer, options) =>
   activePeer.delegates.get(options);
