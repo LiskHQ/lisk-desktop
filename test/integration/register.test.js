@@ -6,7 +6,6 @@ import { stub, useFakeTimers, spy, match } from 'sinon';
 
 import * as accountAPI from '../../src/utils/api/account';
 import * as delegateAPI from '../../src/utils/api/delegate';
-import * as netHash from '../../src/utils/api/nethash';
 import Register from './../../src/components/register';
 import * as peersActions from '../../src/actions/peers';
 import accountReducer from '../../src/store/reducers/account';
@@ -22,7 +21,6 @@ describe('@integration: Register', () => {
   let helper;
   let localStorageStub;
   let activePeerSetSpy;
-  let netHashAPIStub;
   let clock;
   let passphrase;
   let accountAPIStub;
@@ -46,7 +44,6 @@ describe('@integration: Register', () => {
     activePeerSetSpy.restore();
     accountAPIStub.restore();
     delegateAPIStub.restore();
-    netHashAPIStub.restore();
     clock.restore();
   };
 
@@ -58,7 +55,6 @@ describe('@integration: Register', () => {
       success: false,
       error: 'Account not found',
     });
-    netHashAPIStub = stub(netHash, 'getNethash').returnsPromise().rejects();
     delegateAPIStub = stub(delegateAPI, 'getDelegate').returnsPromise().rejects();
     clock = useFakeTimers({
       toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
