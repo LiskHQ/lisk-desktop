@@ -6,6 +6,7 @@ import { loadTransactionsFinish, transactionsUpdated } from './transactions';
 import { delegateRegisteredFailure } from './delegate';
 import { errorAlertDialogDisplayed } from './dialog';
 import { activePeerUpdate } from './peers';
+import { followedAccountFetchedAndUpdated } from './followedAccounts';
 import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
 
@@ -202,7 +203,7 @@ export const loadAccount = ({
   };
 
 export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocus) =>
-  (dispatch) => {
+  (dispatch, getState) => {
     const hasRecentTransactions = txs => (
       txs.confirmed.filter(tx => tx.confirmations < 1000).length !== 0 ||
       txs.pending.length !== 0
@@ -211,7 +212,21 @@ export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocu
     if (windowFocus || hasRecentTransactions(transactions)) {
       const { filter } = transactions;
       const address = transactions.account ? transactions.account.address : account.address;
-
+      // Update followedAccount
+      const { followedAccounts } = getState();
+      const accounts = followedAccounts ? followedAccounts.accounts : [];
+      accounts.forEach((followedAcconut) => {
+        transactions.pending.forEach((transactionPending) => {
+          if (followedAcconut.address === transactionPending.recipientId) {
+            const activePeer = getState().peers.data;
+            getAccount(activePeer, transactionPending.recipientId).then((result) => {
+              dispatch(followedAccountFetchedAndUpdated({
+                account: result,
+              }));
+            });
+          }
+        });
+      });
       dispatch(transactionsUpdated({
         pendingTransactions: transactions.pending,
         address,
