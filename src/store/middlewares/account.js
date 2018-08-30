@@ -101,7 +101,7 @@ const accountMiddleware = (store) => {
   // Checking sessionStorage if acccount is already logged in
   setImmediate(() => {
     const account = JSON.parse(sessionStorage.getItem('account')) || {};
-    if (account !== {}) {
+    if (account.address || account.success) {
       const activePeerData = JSON.parse(sessionStorage.getItem('activePeerData')) || {};
       store.dispatch(accountUpdated(account));
       store.dispatch(activePeerSet(activePeerData));
