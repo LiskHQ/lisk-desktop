@@ -7,7 +7,6 @@ import Lisk from 'lisk-elements';
 
 import * as accountAPI from '../../src/utils/api/account';
 import * as delegateAPI from '../../src/utils/api/delegate';
-import * as netHash from '../../src/utils/api/nethash';
 import { prepareStore, renderWithRouter } from '../utils/applicationInit';
 import accountReducer from '../../src/store/reducers/account';
 import peersReducer from '../../src/store/reducers/peers';
@@ -31,7 +30,6 @@ describe('@integration: Login', () => {
   let helper;
   let accountAPIStub;
   let delegateAPIStub;
-  let netHashAPIStub;
   let localStorageStub;
   let errorToastDisplayedSpy;
   const localhostUrl = 'http://localhost:4218';
@@ -81,12 +79,10 @@ describe('@integration: Login', () => {
     localStorageStub.restore();
     accountAPIStub.restore();
     delegateAPIStub.restore();
-    netHashAPIStub.restore();
     errorToastDisplayedSpy.restore();
   };
 
   const stubApisDefaultScenario = () => {
-    netHashAPIStub = stub(netHash, 'getNethash').returnsPromise().rejects();
     localStorageStub = stub(localStorage, 'getItem');
     localStorageStub.withArgs('accounts').returns(JSON.stringify([{}, {}]));
     accountAPIStub = stub(accountAPI, 'getAccount');
@@ -109,7 +105,6 @@ describe('@integration: Login', () => {
   const stubApisScenarioInvalidNode = () => {
     localStorageStub = stub(localStorage, 'getItem');
     localStorageStub.withArgs('accounts').returns(JSON.stringify([{}, {}]));
-    netHashAPIStub = stub(netHash, 'getNethash').returnsPromise().rejects();
     accountAPIStub = stub(accountAPI, 'getAccount').returnsPromise().rejects();
     delegateAPIStub = stub(delegateAPI, 'getDelegate').returnsPromise().rejects();
     errorToastDisplayedSpy = spy(toasterActions, 'errorToastDisplayed');
