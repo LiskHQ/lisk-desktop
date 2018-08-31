@@ -21,11 +21,11 @@ export const followedAccountsRetrieved = accounts => ({
   type: actionTypes.followedAccountsRetrieved,
 });
 
-export const followedAccountFetchedAndUpdated = ({ account }) =>
+export const followedAccountFetchedAndUpdated = ({ account, forceUpdate }) =>
   (dispatch, getState) => {
     const activePeer = getState().peers.data;
     getAccount(activePeer, account.address).then((result) => {
-      if (result.balance !== account.balance) {
+      if (result.balance !== account.balance || forceUpdate) {
         account.balance = result.balance;
         dispatch(followedAccountUpdated(account));
       }

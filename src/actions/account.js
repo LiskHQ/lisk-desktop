@@ -202,6 +202,24 @@ export const loadAccount = ({
       });
   };
 
+const updateFollowedAccount = (state, transactions, dispatch) => {
+  const { followedAccounts } = state;
+  const accounts = followedAccounts ? followedAccounts.accounts : [];
+  accounts.forEach((followedAcconut) => {
+    transactions.pending.forEach((transactionPending) => {
+      if (followedAcconut.address === transactionPending.recipientId) {
+        const activePeer = state.peers.data;
+        getAccount(activePeer, transactionPending.recipientId).then((result) => {
+          dispatch(followedAccountFetchedAndUpdated({
+            account: result,
+            forceUpdate: true,
+          }));
+        });
+      }
+    });
+  });
+};
+
 export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocus) =>
   (dispatch, getState) => {
     const hasRecentTransactions = txs => (
@@ -212,21 +230,8 @@ export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocu
     if (windowFocus || hasRecentTransactions(transactions)) {
       const { filter } = transactions;
       const address = transactions.account ? transactions.account.address : account.address;
-      // Update followedAccount
-      const { followedAccounts } = getState();
-      const accounts = followedAccounts ? followedAccounts.accounts : [];
-      accounts.forEach((followedAcconut) => {
-        transactions.pending.forEach((transactionPending) => {
-          if (followedAcconut.address === transactionPending.recipientId) {
-            const activePeer = getState().peers.data;
-            getAccount(activePeer, transactionPending.recipientId).then((result) => {
-              dispatch(followedAccountFetchedAndUpdated({
-                account: result,
-              }));
-            });
-          }
-        });
-      });
+
+      updateFollowedAccount(getState(), transactions, dispatch);
       dispatch(transactionsUpdated({
         pendingTransactions: transactions.pending,
         address,
