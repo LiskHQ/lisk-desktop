@@ -12,7 +12,7 @@
 
 ## PR workflow
 
-![PR workflow](./docs/assets/PR-workflow.png?raw=true "PR workflow")
+![PR workflow](./assets/PR-workflow.png?raw=true "PR workflow")
 
 ## PR practices
 
