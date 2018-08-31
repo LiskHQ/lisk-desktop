@@ -25,6 +25,8 @@ const peerSet = (data, config) => ({
  */
 export const activePeerSet = data =>
   (dispatch) => {
+    sessionStorage.setItem('activePeerData', JSON.stringify(data));
+
     const config = data.network || {};
 
     if (config.address) {

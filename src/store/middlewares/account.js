@@ -4,6 +4,8 @@ import { accountUpdated,
   updateDelegateAccount,
 } from '../../actions/account';
 import { votesFetched } from '../../actions/voting';
+import { loadTransactions } from '../../actions/transactions';
+import { activePeerSet } from '../../actions/peers';
 import actionTypes from '../../constants/actions';
 import accountConfig from '../../constants/account';
 import transactionTypes from '../../constants/transactionTypes';
@@ -95,30 +97,47 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
   }
 };
 
-const accountMiddleware = store => next => (action) => {
-  next(action);
-  switch (action.type) {
-    // update on login because the 'save account' button
-    // depends on a rerendering of the page
-    // TODO: fix the 'save account' path problem, so we can remove this
-    case actionTypes.accountLoggedIn:
-      updateAccountData(store, action);
-      break;
-    case actionTypes.newBlockCreated:
-      checkTransactionsAndUpdateAccount(store, action);
-      break;
-    case actionTypes.transactionsUpdated:
-      delegateRegistration(store, action);
-      votePlaced(store, action);
-      break;
-    case actionTypes.passphraseUsed:
-      passphraseUsed(store, action);
-      break;
-    case actionTypes.accountLoggedOut:
-      localStorage.removeItem('accounts');
-      break;
-    default: break;
-  }
+const accountMiddleware = (store) => {
+  // Checking sessionStorage if acccount is already logged in
+  setImmediate(() => {
+    const account = JSON.parse(sessionStorage.getItem('account')) || {};
+    if (account.address || account.success) {
+      const activePeerData = JSON.parse(sessionStorage.getItem('activePeerData')) || {};
+      store.dispatch(accountUpdated(account));
+      store.dispatch(activePeerSet(activePeerData));
+      store.dispatch(loadTransactions({
+        address: account.address,
+        publicKey: account.publicKey,
+      }));
+    }
+  });
+
+  return next => (action) => {
+    next(action);
+    switch (action.type) {
+      // update on login because the 'save account' button
+      // depends on a rerendering of the page
+      // TODO: fix the 'save account' path problem, so we can remove this
+      case actionTypes.accountLoggedIn:
+        updateAccountData(store, action);
+        break;
+      case actionTypes.newBlockCreated:
+        checkTransactionsAndUpdateAccount(store, action);
+        break;
+      case actionTypes.transactionsUpdated:
+        delegateRegistration(store, action);
+        votePlaced(store, action);
+        break;
+      case actionTypes.passphraseUsed:
+        passphraseUsed(store, action);
+        break;
+      case actionTypes.accountLoggedOut:
+        localStorage.removeItem('accounts');
+        sessionStorage.removeItem('account');
+        break;
+      default: break;
+    }
+  };
 };
 
 export default accountMiddleware;

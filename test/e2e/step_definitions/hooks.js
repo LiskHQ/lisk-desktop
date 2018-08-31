@@ -4,6 +4,7 @@ const Cucumber = require('cucumber');
 const fs = require('fs');
 const util = require('util');
 const localStorage = require('../support/localStorage.js');
+const sessionStorage = require('../support/sessionStorage.js');
 
 const jsonFormatter = new Cucumber.JsonFormatter();
 
@@ -60,6 +61,7 @@ defineSupportCode(({ Before, After, registerListener }) => {
 
   After((scenario, callback) => {
     localStorage.clear();
+    sessionStorage.clear();
 
     browser.manage().logs().get('browser').then((browserLog) => {
       console.log(`BROWSER LOG: ${util.inspect(browserLog)}`); // eslint-disable-line no-console

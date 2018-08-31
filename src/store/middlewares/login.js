@@ -36,6 +36,7 @@ const loginMiddleware = store => next => (action) => {
       expireTime: duration,
     };
     store.dispatch(accountLoggedIn(accountUpdated));
+    sessionStorage.setItem('account', JSON.stringify(accountUpdated));
   }).catch(() => {
     store.dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node') }));
     store.dispatch(accountLoggedOut());

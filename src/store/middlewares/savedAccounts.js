@@ -1,6 +1,6 @@
 import actionTypes from '../../constants/actions';
 import { accountLoading, accountLoggedOut } from '../../actions/account';
-import { accountsRetrieved, accountSaved } from '../../actions/savedAccounts';
+import { accountSaved } from '../../actions/savedAccounts';
 import { activePeerSet } from '../../actions/peers';
 import { getAccount } from '../../utils/api/account';
 import { extractAddress } from '../../utils/account';
@@ -9,27 +9,6 @@ import getNetwork from '../../utils/getNetwork';
 import networks from '../../constants/networks';
 
 const savedAccountsMiddleware = (store) => {
-  setImmediate(() => {
-    const accountsRetrievedAction = accountsRetrieved();
-    const savedAccounts = accountsRetrievedAction.data;
-    store.dispatch(accountsRetrievedAction);
-
-    if (savedAccounts && savedAccounts.lastActive) {
-      const account = savedAccounts.lastActive;
-      const network = Object.assign({}, getNetwork(account.network));
-
-      /* istanbul ignore if  */
-      if (account.network === networks.customNode.code) {
-        network.address = account.peerAddress;
-      }
-
-      store.dispatch(activePeerSet({
-        publicKey: account.publicKey,
-        network,
-      }));
-    }
-  });
-
   const isSameNetwork = (account, peers) => (
     (peers.options.code !== networks.customNode.code ||
       peers.data.currentNode.indexOf(account.address) > -1)
