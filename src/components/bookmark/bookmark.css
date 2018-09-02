@@ -1,23 +1,45 @@
 @import './../app/variables.css';
 
+.bookmark {
+  border-radius: 3px;
+  box-shadow: 0 22px 22px 0 rgba(0, 0, 0, 0.22);
+  z-index: 20;
+  padding: 0 20px;
+}
+
 .resultList {
   list-style-type: none;
   display: flex;
   flex-direction: column;
   align-content: flex-start;
-  margin: 0;
+  margin: -20px 0 0 -20px;
   padding: 0;
   position: absolute;
   width: 100%;
   z-index: 20;
   border-radius: 3px;
-  box-shadow: 0 22px 22px 0 rgba(0,0,0,.22);
+  box-shadow: 0 22px 22px 0 rgba(0, 0, 0, 0.22);
   border-top: none;
   background-color: #fff;
+}
 
-  &:last-child {
-    padding-bottom: 15px;
-  }
+.accountVisual {
+  padding: 10px 10px 5px 20px;
+}
+
+.text {
+  padding: 10px 0;
+  color: #74869b;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 600;
+  padding-bottom: 5px;
+}
+
+.address {
+  font-size: 12px;
 }
 
 .bookmarkInput {
@@ -27,15 +49,14 @@
 .followedRow {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   margin: 0;
   padding: 0;
-  color: var(--color-primary-standard);
   font-family: var(--content-font);
   font-size: var(--paragraph-font-size-l);
 
   &:hover {
     background-color: rgba(205, 218, 229, 0.2);
+    cursor: pointer;
   }
 
   & > span {
@@ -51,7 +72,6 @@
 .show {
   display: block;
 }
-
 
 .rowSelected {
   background-color: rgba(204, 217, 228, 0.2);
