@@ -1,10 +1,17 @@
-### What was the problem?
+<!--- Provide a general summary of your changes in the Title above -->
 
-### How did I fix it?
+### What issue have I solved?
+<!--- Complementary description if needed -->
+-- #INSERT_ISSUE_NUMBER
 
-### How to test it?
+### How have I implemented/fixed it?
+<!--- Describe your technical implementation -->
+
+
+### How has this been tested?
+<!--- Please describe how you tested your changes. -->
+
 
 ### Review checklist
-- The PR solves #INSERT_ISSUE_NUMBER
 - The PR follows our [Test guide](/LiskHQ/lisk-hub/blob/development/docs/TEST_GUIDE.md)
 - The PR follows our [CSS guide](/LiskHQ/lisk-hub/blob/development/docs/CSS_GUIDE.md)
