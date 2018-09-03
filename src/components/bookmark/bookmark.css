@@ -65,6 +65,7 @@
   & input:not(:focus) {
     padding-left: 60px;
   }
+
   & label {
     padding-left: 60px;
   }
