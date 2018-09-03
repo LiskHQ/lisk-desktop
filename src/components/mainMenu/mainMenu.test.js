@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import { Tab, Tabs as ToolboxTabs } from 'react-toolbox';
 import { MemoryRouter } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
@@ -54,6 +54,7 @@ describe('MainMenu', () => {
       history: PropTypes.object.isRequired,
       i18n: PropTypes.object.isRequired,
     },
+    lifecycleExperimental: true,
   };
   let clock;
 
@@ -65,6 +66,7 @@ describe('MainMenu', () => {
     account,
     store,
     history,
+    showFeedback: sinon.spy(),
   };
 
   beforeEach(() => {
@@ -113,6 +115,8 @@ describe('MainMenu', () => {
     const wrapper = mount(<MemoryRouter>
       <MainMenu {...props} />
     </MemoryRouter>, options);
+
+    expect(wrapper).to.not.have.descendants('#feedback');
     wrapper.find(Tab).at(1).simulate('click');
     expect(history.push).to.have.been.calledWith(`${routes.wallet.path}`);
   });
@@ -125,5 +129,21 @@ describe('MainMenu', () => {
     clock.tick(100);
     wrapper.update();
     expect(wrapper.find('Drawer').props().active).to.be.equal(true);
+  });
+
+  it('should show feedback when param in url', () => {
+    const wrapper = shallow(<MainMenu {...props} />, options);
+    wrapper.setProps({
+      history: {
+        push: sinon.spy(),
+        location: { pathname: `${routes.wallet.path}`, search: '?showFeedback=true' },
+      },
+    });
+    wrapper.update();
+
+    const feedbackBtn = wrapper.find('#feedback').first();
+    expect(feedbackBtn.props().disabled).to.be.equal(false);
+    wrapper.find(ToolboxTabs).at(1).props().onChange(1);
+    expect(props.showFeedback).to.have.been.calledWith();
   });
 });

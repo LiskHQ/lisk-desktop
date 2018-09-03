@@ -1,0 +1,86 @@
+@import '../app/variables.css';
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  min-height: 500px;
+  margin-bottom: 32px;
+}
+
+.radioInput {
+  display: none;
+
+  & ~ span {
+    color: var(--color-grayscale-light);
+    height: 32px;
+    width: 32px;
+    font-size: 32px;
+    opacity: 0.8;
+    margin-right: 16px;
+    cursor: pointer;
+  }
+
+  &:checked ~ span {
+    color: var(--color-primary-standard);
+  }
+}
+
+.textInput {
+  margin-bottom: 30px;
+
+  & label {
+    font-family: var(--content-font);
+    font-weight: 600;
+    color: var(--color-grayscale-dark);
+  }
+}
+
+.checkboxInput {
+  display: none;
+
+  & ~ span {
+    color: var(--color-primary-standard);
+    margin-top: -4px;
+    cursor: pointer;
+  }
+
+  & ~ span:last-child {
+    margin: 0 24px 0 8px;
+    padding: 0;
+  }
+
+  & ~ span[class*='-active'] {
+    display: none;
+  }
+
+  &:checked ~ span[class*='inactive'] {
+    display: none;
+  }
+
+  &:checked ~ span[class*='-active'] {
+    display: inline-block;
+  }
+}
+
+.checkboxGroup,
+.radioGroup {
+  margin-top: 15px;
+}
+
+.label {
+  display: inline-block;
+  margin-bottom: 16px;
+  color: var(--color-grayscale-dark);
+  font-size: var(--font-size-h6);
+  font-family: var(--content-font);
+  font-weight: 600;
+  line-height: 22px;
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
