@@ -24,14 +24,38 @@ class Bookmark extends React.Component {
     const filteredFollowedAccounts = followedAccounts
       .filter(account => account.title.toLowerCase()
         .includes(address.value.toLowerCase()));
+    const isValidAccount = Number.isInteger(Number(address.value.substring(0, address.value.length - 1))) && address.value[address.value.length - 1] === 'L';
+
+    const isAddressFollowedAccounts = followedAccounts
+      .find(account => account.address === address.value);
+
+    const showBigVisualAccountStyles = isValidAccount &&
+      !this.state.show &&
+      !isAddressFollowedAccounts &&
+      !address.error && address.value;
+
+    const showSmallVisualAccountStyles = !(!isValidAccount && address.error && address.value);
 
     return (
       <div className={styles.scale}>
         <div className={this.state.show ? styles.bookmark : ''}>
+          {isValidAccount && !this.state.show && !!isAddressFollowedAccounts ? <AccountVisual
+            className={styles.smallAccountVisual}
+            address={address.value}
+            size={25}
+          /> : null}
+
+          {isValidAccount && !this.state.show && !isAddressFollowedAccounts ? <AccountVisual
+            className={styles.bigAccountVisual}
+            address={address.value}
+            size={50}
+          /> : null}
           <Input
-            className={`${className} ${styles.bookmarkInput}`}
+            className={`${className}
+              ${showSmallVisualAccountStyles ? styles.bookmarkInput : ''}
+              ${showBigVisualAccountStyles ? styles.bigAccountVisualBookmarkInput : ''}`}
             label={label}
-            error={''}
+            error={!this.state.show ? address.error : ''}
             value={address.value}
             onFocus={() => this.setState({ show: true })}
             onBlur={() => this.setState({ show: false })}

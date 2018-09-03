@@ -27,6 +27,15 @@
   padding: 10px 10px 5px 20px;
 }
 
+.smallAccountVisual {
+  padding-top: 25px;
+  position: absolute;
+}
+
+.bigAccountVisual {
+  position: absolute;
+}
+
 .text {
   padding: 10px 0;
   color: #74869b;
@@ -44,6 +53,21 @@
 
 .bookmarkInput {
   z-index: 20;
+
+  & input:not(:focus) {
+    padding-left: 30px;
+  }
+}
+
+.bigAccountVisualBookmarkInput {
+  z-index: 20;
+
+  & input:not(:focus) {
+    padding-left: 60px;
+  }
+  & label {
+    padding-left: 60px;
+  }
 }
 
 .followedRow {
