@@ -7,7 +7,7 @@ class TransactionDetailViewRow extends React.Component {
   render() {
     const { children, shouldShow } = this.props;
     return ((shouldShow !== undefined && !shouldShow) ? null :
-      <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}`}>
+      <div className={`${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row}  grid-row`}>
         {children}
       </div>
     );

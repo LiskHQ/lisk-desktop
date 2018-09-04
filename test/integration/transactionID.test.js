@@ -6,7 +6,7 @@ import { stub, match } from 'sinon';
 
 import * as accountAPI from '../../src/utils/api/account';
 import * as transactionsAPI from '../../src/utils/api/transactions';
-import { prepareStore, renderWithRouter } from '../utils/applicationInit';
+import { renderWithRouter, prepareStore } from '../utils/applicationInit';
 import accountReducer from '../../src/store/reducers/account';
 import transactionReducer from '../../src/store/reducers/transaction';
 import peersReducer from '../../src/store/reducers/peers';
@@ -61,7 +61,10 @@ describe('@integration: Single Transaction', () => {
       .returnsPromise()
       .resolves({
         data: [{
-          id: '123456789', senderId: '123l', recipientId: '456l', asset: {},
+          id: '123456789',
+          senderId: '123l',
+          recipientId: '456l',
+          asset: {},
         }],
       });
   });
@@ -70,10 +73,13 @@ describe('@integration: Single Transaction', () => {
     getTransactionsAPIStub.restore();
     getSingleTransactionAPIStub.restore();
     accountAPIStub.restore();
-    wrapper.update();
   });
 
   const setupStep = ({ accountType, id }) => {
+    const transactionMock = {
+      id,
+      senderId: '123L',
+    };
     store = prepareStore({
       account: accountReducer,
       transaction: transactionReducer,
@@ -100,7 +106,7 @@ describe('@integration: Single Transaction', () => {
     if (accountType) { store.dispatch(accountLoggedIn(account)); }
     wrapper = mount(renderWithRouter(
       SingleTransaction, store,
-      { match: { params: { id } }, transaction: { id } },
+      { match: { params: { id } }, transaction: transactionMock },
     ));
     helper = new Helper(wrapper, store);
   };
