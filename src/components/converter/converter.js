@@ -60,7 +60,7 @@ class Converter extends React.Component {
           <div className={styles.fee}>{this.props.t('Additional fee: {{fee}} LSK', { fee: fromRawLsk(this.fee) })}
           {`, ${this.props.t('ca. {{price}} {{currency}}', {
             currency,
-            price: (1 * LSK[currency]).toFixed(1),
+            price: (fromRawLsk(this.fee) * LSK[currency]).toFixed(2),
           })}`}</div> }
       </Input>
     );
