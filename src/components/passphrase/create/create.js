@@ -31,7 +31,7 @@ class CreateFirst extends React.Component {
     };
 
     return (
-      <div>
+      <div className={styles.container}>
         <Shapes percentage={percentage} addressCreated={address}/>
         <header>
           <TransitionWrapper current={step} step='generate'>
