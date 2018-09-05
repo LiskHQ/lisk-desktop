@@ -14,7 +14,7 @@ import {
   delegatesAdded,
 } from './voting';
 import Fees from '../constants/fees';
-import Networks from '../constants/networks';
+import networks from '../constants/networks';
 import * as delegateApi from '../utils/api/delegate';
 
 const delegateList = [
@@ -214,7 +214,7 @@ describe('actions: voting', () => {
       peers: {
         data: {
           options: {
-            name: Networks.mainnet.name,
+            name: networks.mainnet.name,
           },
         },
       },
@@ -231,7 +231,7 @@ describe('actions: voting', () => {
         peers: {
           data: {
             options: {
-              name: Networks.mainnet.name,
+              name: networks.mainnet.name,
             },
           },
         },
