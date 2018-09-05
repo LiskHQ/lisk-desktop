@@ -22,5 +22,9 @@ describe('Utils: Account', () => {
       const derivedAddress = '440670704090200331L';
       expect(extractAddress(publicKey)).to.be.equal(derivedAddress);
     });
+
+    it('should return false if no param passed to it', () => {
+      expect(extractAddress()).to.be.equal(false);
+    });
   });
 });
