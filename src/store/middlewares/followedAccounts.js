@@ -11,22 +11,43 @@ const followedAccountsMiddleware = (store) => {
   };
 
   const checkTransactionsAndUpdateFollowedAccounts = (tx, followedAccounts) => {
+    const loggedAccount = store.getState().account;
+    let loggedAccountFollowed;
     const changedAccounts = followedAccounts.accounts.filter((account) => {
       const relevantTransactions = tx.filter((transaction) => {
         const { senderId, recipientId } = transaction;
-        return (account.address === recipientId || account.address === senderId);
+        loggedAccountFollowed = (loggedAccount.address === senderId
+          || loggedAccount.address === recipientId) ? account : null;
+        return (account.address === senderId || account.address === recipientId);
       });
 
       return relevantTransactions.length > 0;
     });
 
+    if (loggedAccountFollowed) {
+      changedAccounts.push(loggedAccountFollowed);
+    }
+
     updateFollowedAccounts(changedAccounts);
+  };
+
+  const updateFollowedAccountsOnTransactionUpdated = (action, transactions, followedAccounts) => {
+    const lengthIndex = action.data.confirmed.length - 1;
+    if (transactions.confirmed[lengthIndex].id !== action.data.confirmed[lengthIndex].id) {
+      checkTransactionsAndUpdateFollowedAccounts(
+        [action.data.confirmed[0]],
+        followedAccounts,
+      );
+    }
   };
 
   return next => (action) => {
     next(action);
-    const { followedAccounts } = store.getState();
+    const { followedAccounts, transactions } = store.getState();
     switch (action.type) {
+      case actionTypes.transactionsUpdated:
+        updateFollowedAccountsOnTransactionUpdated(action, transactions, followedAccounts);
+        break;
       case actionTypes.newBlockCreated:
         checkTransactionsAndUpdateFollowedAccounts(
           action.data.block.transactions || [],

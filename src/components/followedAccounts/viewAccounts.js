@@ -18,7 +18,7 @@ class ViewAccounts extends React.Component {
 
   render() {
     const {
-      t, loggedAccount, accounts, history, nextStep, removeAccount,
+      t, accounts, history, nextStep, removeAccount,
     } = this.props;
 
     return <div>
@@ -53,9 +53,7 @@ class ViewAccounts extends React.Component {
                 <div className={`${styles.rightText} ${styles.accountInformation} ${grid['col-md-10']}`}>
                   <div className={this.state.edit ? styles.editMode : null}>
                     <div className={styles.balance}>
-                      <LiskAmount val={loggedAccount &&
-                        (account.address === loggedAccount.address) ?
-                        loggedAccount.balance : account.balance} /> <span>LSK</span>
+                      <LiskAmount val={account.balance} /> <span>LSK</span>
                     </div>
                     <TitleInput
                       key={account.address}
@@ -96,7 +94,6 @@ class ViewAccounts extends React.Component {
 
 const mapStateToProps = state => ({
   accounts: state.followedAccounts.accounts,
-  loggedAccount: state.account,
 });
 
 const mapDispatchToProps = dispatch => ({
