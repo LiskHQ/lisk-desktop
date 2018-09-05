@@ -100,11 +100,6 @@ class SendReadable extends React.Component {
           <header className={styles.headerWrapper}>
             <h2>{this.props.accountInit ? this.props.t('Initialize Lisk ID') : this.props.t('Confirm transfer')}</h2>
           </header>
-          {this.props.accountInit
-            ? null
-            : <figure className={styles.accountVisual}>
-              <AccountVisual address={this.state.recipient.value} size={150} sizeS={60} />
-            </figure>}
         </div>
         {this.props.accountInit
           ? <div>
@@ -112,12 +107,21 @@ class SendReadable extends React.Component {
             <p>{this.props.t('You only need to do this once for each Lisk ID.')}</p>
           </div>
           : <form>
-            <Input label={this.props.t('Send to Address')}
-              className={`recipient ${styles.disabledInput}`}
-              value={this.state.recipient.value}
-              onChange={this.handleChange.bind(this, 'recipient')}
-              disabled={true}
-            />
+            {this.props.accountInit
+            ? null
+            :
+              <div className={styles.sendTo}>
+                <figure className={styles.accountVisual}>
+                  <AccountVisual address={this.state.recipient.value} size={42} sizeS={42} />
+                </figure>
+                <Input label={this.props.t('Send to Address')}
+                  className={`recipient ${styles.disabledInput}`}
+                  value={this.state.recipient.value}
+                  onChange={this.handleChange.bind(this, 'recipient')}
+                  disabled={true}
+                />
+              </div>
+            }
             {this.state.reference.value ?
               <Input label={this.props.t('Reference')}
                 className={`reference ${styles.disabledInput}`}
@@ -127,7 +131,6 @@ class SendReadable extends React.Component {
                 theme={styles}
               /> : null
             }
-
             <Input label={this.props.t('Total incl. {{fee}} LSK Fee', { fee: fromRawLsk(fees.send) })}
               className={`amount ${styles.disabledInput}`}
               error={this.state.amount.error}
