@@ -16,7 +16,7 @@ const getVoteClass = (voteStatus, styles) => {
   }
   const { pending, confirmed, unconfirmed } = voteStatus;
   if (pending) {
-    return 'pendingRow';
+    return styles.pendingRow || 'pendingRow';
   } else if (confirmed !== unconfirmed) {
     return confirmed ? `${styles.downVoteRow} selected-row` : `${styles.upVoteRow} selected-row`;
   }

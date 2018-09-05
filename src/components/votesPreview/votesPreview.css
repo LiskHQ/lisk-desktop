@@ -52,6 +52,7 @@
 
   & .progress {
     overflow: auto;
+    height: 100%;
   }
 
   & header {

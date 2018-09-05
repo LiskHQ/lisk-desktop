@@ -1,5 +1,25 @@
 @import '../app/variables.css';
 
+@keyframes pending {
+  0% {
+    background-color: rgba(204, 217, 228, 0.4);
+  }
+
+  50% {
+    background-color: var(--color-grayscale-dark);
+  }
+
+  100% {
+    background-color: rgba(204, 217, 228, 0.4);
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+}
+
 .header {
   display: flex;
   flex-direction: row;
@@ -31,23 +51,31 @@
   }
 }
 
+.listWrapper {
+  margin: 0 auto;
+}
+
 .list {
   list-style: none;
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
-  margin: 0 40px;
-  padding: 0 0 0 9px;
+  margin: 0 20px;
+  padding-left: 12px;
+}
+
+.listUnvoted {
+  margin-top: 20px;
 }
 
 .listItem {
-  height: 21px;
-  width: 21px;
+  height: 18px;
+  width: 18px;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 9px 9px 0;
+  margin: 0 10px 10px 0;
 
   &::before {
     content: '';
@@ -87,6 +115,12 @@
       height: 80%;
       width: 80%;
     }
+  }
+}
+
+.pendingRow {
+  &::before {
+    animation: pending 2000ms infinite linear;
   }
 }
 

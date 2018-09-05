@@ -19,11 +19,10 @@ class VotesMatrix extends React.Component {
 
     const upVotedDelegates = votesArray.filter(vote =>
       vote.confirmed !== vote.unconfirmed && !vote.confirmed);
-    // const downVotedDelegates = votesArray.filter(vote =>
-    //   vote.confirmed !== vote.unconfirmed && vote.confirmed);
-    const votedAndDownVotedDelegates = votesArray.filter(vote =>
-      (vote.confirmed === vote.unconfirmed && vote.confirmed) ||
-      (vote.confirmed !== vote.unconfirmed && vote.confirmed));
+    const downVotedDelegates = votesArray.filter(vote =>
+      vote.confirmed !== vote.unconfirmed && vote.confirmed);
+    const votedDelegates = votesArray.filter(vote =>
+      (vote.confirmed === vote.unconfirmed && vote.confirmed));
 
     const freeSlotLength =
       this.props.maxCountOfVotes -
@@ -44,7 +43,7 @@ class VotesMatrix extends React.Component {
     ));
 
     return (
-      <section>
+      <section className={styles.container}>
         <div className={styles.header}>
             <div className={styles.headerItem}>
               {this.props.t('Total')}
@@ -63,15 +62,22 @@ class VotesMatrix extends React.Component {
               </div>
             </div>
         </div>
-        <ul className={styles.list}>
-          {
-            generateSeats(votedAndDownVotedDelegates)
-          }{
-            generateSeats(upVotedDelegates)
-          }{
-            generateSeats(freeSlots)
-          }
-        </ul>
+        <div className={styles.listWrapper}>
+          <ul className={styles.list}>
+            {
+              generateSeats(votedDelegates)
+            }{
+              generateSeats(upVotedDelegates)
+            }{
+              generateSeats(freeSlots)
+            }
+          </ul>
+          <ul className={`${styles.list} ${styles.listUnvoted}`}>
+            {
+              generateSeats(downVotedDelegates)
+            }
+          </ul>
+        </div>
       </section>
     );
   }
