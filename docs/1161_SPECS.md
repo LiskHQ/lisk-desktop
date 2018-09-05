@@ -5,46 +5,93 @@
 - Settings store will be enhanced with a new key `feedback`
 - each entry in feedback will be indexed by componentID, and containing the following fields
 
-#### Data model
+#### Settings Data model
 ```
 settings: {
 	feedback: {
-		enabledIn: [[String], [String]],
-		showInterval: [Date/Millisecconds],
-		components: {
-			[componentID]: {
-				lastGivenOn: [Date/Millisecconds],
-				choosenToBeHidden: [Boolean],
-			}
-		}
+    choosenToBeHidden: [Boolean], // false
 	}
 }
 ```
 
+- **choosenToBeHidden** = `false`, setted to `true` when user clicks _"I don't want to see these again"_
+
+#### Feedback Data model
+
+
+```
+Question {
+  title: [String],
+  type: [String],
+  options: [[String],...]
+}
+```
+
+
+```
+feedback: {
+  enabledIn: [[String], [String]],
+	general: {
+		questions: [Question, ...],
+	},
+  components: {
+    [componentID]: { 
+      showInterval: [Date/Millisecconds],
+      questions: [Question, ...],
+      lastGivenOn: [Date/Millisecconds],
+    }
+  }
+}
+```
+- **showInterval** = `-1` indicates to show feedback in &#8734; periods, (never repeat)
+
 #### Implementation details
+
+Pseudo code for loading feedback data:
+
+---
+
+```
+onApplicationStart () => {
+  getFeedbackData = reponse =>
+    update state.settings.feedback.choosenToBeHidden = response.choosenToBeHiddenForced
+    update state.feedback = {...response}
+}
+```
+- **choosenToBeHiddenForced** = `true` indicates to force reset the flag from server response and never show any feedback on clients.
+
+
+---
+
 Pseudo code for rendering a component:
 
-```
-onFeedbackShouldShow() =>
-
-if settings.feedback.enabledIn[componentId]
-
-  componentObj  = settings.feedback.components.componentId
-  todayDate = new Date().getTime()
-
-  if !componentObj || !componentObj.choosenToBeHIdden
-      if componentObj.lastGivenOn > todayDate + settings.feedback.showInterval
-      componentObj.lastGivenOn = todayDate;
-      render feature feedback;
-      return;
-
-render component;
-...
-on feedback closed
-if user choosenToBeHIdden 
-	componentObj.choosenToBeHIdden = true
+---
 
 ```
+onFeedbackShouldShow(componentId) =>
+
+  settingsObj = state.settings.feedback
+  if state.feedback.enabledIn[componentId] && !settingsObj.choosenToBeHidden
+
+    componentObj  = feedback.components.componentId
+    todayDate = new Date().getTime()
+
+      if !componentObj.lastGivenOn ||
+        componentObj.lastGivenOn > todayDate + settings.feedback.showInterval
+
+        componentObj.lastGivenOn = todayDate;
+        render feature feedback;
+        return;
+
+  render component;
+  ...
+  on feedback closed
+  if user choosenToBeHidden 
+    state.feedback.choosenToBeHidden = true
+
+```
+
+---
 
 #### When to show feature feedback
 
