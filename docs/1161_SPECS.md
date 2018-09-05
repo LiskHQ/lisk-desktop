@@ -1,5 +1,8 @@
 ### Specification
 
+This document describes how showing and gathering feedback data from lisk-service will he handled by lisk-hub application logic. 
+
+
 - Each component will have a uniqueID
 - uniqueID should be formed by componentName. 
 - Settings store will be enhanced with a new key `feedback`
@@ -9,7 +12,7 @@
 ```
 settings: {
 	feedback: {
-    choosenToBeHidden: [Boolean], // false
+    	choosenToBeHidden: [Boolean], // false
 	}
 }
 ```
@@ -21,26 +24,26 @@ settings: {
 
 ```
 Question {
-  title: [String],
-  type: [String],
-  options: [[String],...]
+	title: [String],
+	type: [String],
+	options: [[String],...]
 }
 ```
 
 
 ```
 feedback: {
-  enabledIn: [[String], [String]],
+  	enabledIn: [[String], [String]],
 	general: {
 		questions: [Question, ...],
 	},
-  components: {
-    [componentID]: { 
-      showInterval: [Date/Millisecconds],
-      questions: [Question, ...],
-      lastGivenOn: [Date/Millisecconds],
-    }
-  }
+	components: {
+		[componentID]: { 
+			showInterval: [Date/Millisecconds],
+			questions: [Question, ...],
+			lastGivenOn: [Date/Millisecconds],
+		}
+	}
 }
 ```
 - **showInterval** = `-1` indicates to show feedback in &#8734; periods, (never repeat)
