@@ -5,7 +5,7 @@ module.exports = {
 
     // '<rootDir>/app/src/menu.test.js',
     // '<rootDir>/app/src/modules/updateModal.test.js',
-    // '<rootDir>/app/src/modules/autoUpdater.test.js',
+    '<rootDir>/app/src/modules/autoUpdater.test.js',
     // '<rootDir>/app/src/modules/win.test.js',
     // '<rootDir>/app/src/modules/localeHandler.test.js',
 
