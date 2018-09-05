@@ -8,6 +8,7 @@ import * as delegateApi from '../utils/api/delegate';
 import accounts from '../../test/constants/accounts';
 import transactionTypes from '../constants/transactionTypes';
 import Fees from '../constants/fees';
+import networks from '../constants/networks';
 import { toRawLsk } from '../utils/lsk';
 
 describe('actions: transactions', () => {
@@ -94,7 +95,7 @@ describe('actions: transactions', () => {
       peers: {
         data: {
           options: {
-            name: 'Mainnet',
+            name: networks.mainnet.name,
           },
         },
       },
