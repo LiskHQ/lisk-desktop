@@ -37,6 +37,7 @@ class VotesMatrix extends React.Component {
             <span data-unvote> {this.props.t('(unvote)')}</span>
             <span data-vote> {this.props.t('(vote)')}</span>
             <span data-voted> {this.props.t('(voted)')}</span>
+            <span data-pending> {this.props.t('(pending)')}</span>
             <span data-free>{this.props.t('Free slot')}</span>
           </p>
       </li>

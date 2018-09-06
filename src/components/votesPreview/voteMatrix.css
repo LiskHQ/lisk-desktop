@@ -52,7 +52,7 @@
 }
 
 .listWrapper {
-  margin: 0 auto;
+  margin: 0 46px;
 }
 
 .list {
@@ -60,8 +60,7 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
-  margin: 0 20px;
-  padding-left: 12px;
+  padding: 0;
 }
 
 .listUnvoted {
@@ -75,7 +74,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 10px 10px 0;
+  margin: 6px;
 
   &::before {
     content: '';
@@ -95,14 +94,16 @@
 
   & span[data-unvote='true'],
   & span[data-vote='true'],
-  & span[data-voted='true'] {
+  & span[data-voted='true'],
+  & span[data-pending='true'] {
     margin-left: 4px;
   }
 
   & span[data-delegate='true'],
   & span[data-unvote='true'],
   & span[data-vote='true'],
-  & span[data-voted='true'] {
+  & span[data-voted='true'],
+  & span[data-pending='true'] {
     display: none;
   }
 
@@ -121,6 +122,15 @@
 .pendingRow {
   &::before {
     animation: pending 2000ms infinite linear;
+  }
+
+  & span[data-delegate='true'],
+  & span[data-pending='true'] {
+    display: inline-block;
+  }
+
+  & span[data-free='true'] {
+    display: none;
   }
 }
 
