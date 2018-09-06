@@ -27,7 +27,13 @@ export const getTransactions = ({
   return activePeer.transactions.get(params);
 };
 
-export const getSingleTransaction = ({ activePeer, id }) => activePeer.transactions.get({ id });
+export const getSingleTransaction = ({ activePeer, id }) => new Promise((resolve, reject) => {
+  if (!activePeer) {
+    reject();
+  } else {
+    activePeer.transactions.get({ id }).then(response => resolve(response));
+  }
+});
 
 export const unconfirmedTransactions = (activePeer, address, limit = 20, offset = 0, sort = 'timestamp:desc') =>
   activePeer.node.getTransactions('unconfirmed', {

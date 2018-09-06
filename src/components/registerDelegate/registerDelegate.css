@@ -12,7 +12,7 @@
   width: 100%;
   margin: 0;
   padding: var(--register-delegate-vertical-padding) 0;
-  overflow: hidden;
+  overflow-y: auto;
 }
 
 .background {
@@ -24,6 +24,7 @@
 
 .multiStep {
   width: 100%;
+  margin-bottom: -48px;
 
   & > section {
     display: flex;

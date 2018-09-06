@@ -45,8 +45,16 @@
   pointer-events: none;
   opacity: 0.5;
   padding: 0;
-  width: calc(30vw - 74px); /* stylelint-disable-line */
+  width: calc(100% - 44px);
   text-overflow: ellipsis;
+}
+
+.noResults {
+  color: var(--color-primary-standard);
+  font-family: var(--content-font);
+  font-size: var(--paragraph-font-size-l);
+  padding: 0 24px;
+  margin: 15px 0 0;
 }
 
 .input {
