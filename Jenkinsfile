@@ -69,7 +69,7 @@ node('lisk-hub') {
         ansiColor('xterm') {
           sh '''
           ON_JENKINS=true npm run --silent test
-          Submit coverage to coveralls
+          # Submit coverage to coveralls
           cat coverage/*/lcov.info | coveralls -v
           '''
         }
