@@ -8,7 +8,7 @@ const mapStateToProps = state => ({
   account: state.account,
   pendingTransactions: state.transactions.pending,
   failedTransactions: state.transactions.failed,
-  followedAccounts: state.followedAccounts.accounts,
+  followedAccounts: state.followedAccounts ? state.followedAccounts.accounts : [],
 });
 
 const mapDispatchToProps = dispatch => ({

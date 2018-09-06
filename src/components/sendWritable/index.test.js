@@ -21,6 +21,7 @@ describe('SendWritableHOC', () => {
       account,
       transactions,
       settings: {},
+      followedAccounts: { accounts: [] },
     });
     store.subscribe = () => {};
     store.dispatch = () => {};

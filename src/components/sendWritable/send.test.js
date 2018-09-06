@@ -30,6 +30,7 @@ describe('Send Writable Component', () => {
       t: key => key,
       nextStep: () => {},
       history: { location: { search: '' } },
+      followedAccounts: [],
     };
     wrapper = mount(<SendWritable {...props} />, {
       context: { store, i18n },
