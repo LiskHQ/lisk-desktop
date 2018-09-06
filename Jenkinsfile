@@ -101,7 +101,7 @@ node('lisk-hub') {
         ansiColor('xterm') {
           withCredentials([string(credentialsId: 'lisk-hub-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
             sh '''
-            N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
+            export N=${EXECUTOR_NUMBER:-0}; export N=$((N+1))
 
             # End to End test configuration
             export DISPLAY=:1$N
@@ -111,12 +111,12 @@ node('lisk-hub') {
 	    cd $WORKSPACE/$BRANCH_NAME
 	    cp /home/lisk/blockchain_explorer.db.gz ./blockchain.db.gz
 	    LISK_VERSION=1.0.0-rc.1 make coldstart
-	    LISK_PORT=$( docker-compose port lisk 4000 |cut -d ":" -f 2 )
+	    export LISK_PORT=$( docker-compose port lisk 4000 |cut -d ":" -f 2 )
 	    cd -
 
             # Run end-to-end tests
 
-            npm run serve --  $WORKSPACE/app/build -p 300$N -a 127.0.0.1 &>server.log &
+            npm run serve --  $WORKSPACE/app/build -p 300$N -a 127.0.0.1 &>server.log & sleep 3 &&
             if [ -z $CHANGE_BRANCH ]; then
               npm run --silent e2e-test -- --params.baseURL http://127.0.0.1:300$N --params.liskCoreURL http://127.0.0.1:$LISK_PORT --cucumberOpts.tags @advanced
               npm run --silent e2e-test -- --params.baseURL http://127.0.0.1:300$N --params.liskCoreURL https://testnet.lisk.io --cucumberOpts.tags @testnet --params.useTestnetPassphrase true
