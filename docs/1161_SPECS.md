@@ -46,7 +46,7 @@ feedback: {
 	}
 }
 ```
-- **showInterval** = `-1` indicates to show feedback in &#8734; periods, (never repeat)
+- **showInterval** = `undefined` indicates to show feedback in &#8734; periods, (never repeat)
 
 #### Implementation details
 
