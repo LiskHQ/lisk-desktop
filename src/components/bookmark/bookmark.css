@@ -51,6 +51,15 @@
   font-size: 12px;
 }
 
+.scale {
+  width: 110%;
+  margin-left: -15px;
+}
+
+.selectedRow {
+  background-color: rgba(205, 218, 229, 0.2);
+}
+
 .bookmarkInput {
   z-index: 20;
 
@@ -76,6 +85,7 @@
   flex-direction: row;
   margin: 0;
   padding: 0;
+  height: 50px;
   font-family: var(--content-font);
   font-size: var(--paragraph-font-size-l);
 
@@ -96,6 +106,7 @@
 
 .show {
   display: block;
+  width: 110%;
 }
 
 .rowSelected {

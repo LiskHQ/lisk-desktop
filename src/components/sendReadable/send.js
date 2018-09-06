@@ -94,17 +94,19 @@ class SendReadable extends React.Component {
   }
 
   render() {
+    const followedAccount = this.props.followedAccounts
+      .find(account => account.address === this.state.recipient.value);
     return (
       <div className={`${styles.wrapper} send`}>
         <div className={styles.header}>
           <header className={styles.headerWrapper}>
             <h2>{this.props.accountInit ? this.props.t('Initialize Lisk ID') : this.props.t('Confirm transfer')}</h2>
           </header>
-          {this.props.accountInit
+          {/* {this.props.accountInit
             ? null
             : <figure className={styles.accountVisual}>
               <AccountVisual address={this.state.recipient.value} size={150} sizeS={60} />
-            </figure>}
+            </figure>} */}
         </div>
         {this.props.accountInit
           ? <div>
@@ -114,10 +116,22 @@ class SendReadable extends React.Component {
           : <form>
             <Input label={this.props.t('Send to Address')}
               className={`recipient ${styles.disabledInput}`}
-              value={this.state.recipient.value}
+              // value={this.state.recipient.value}
               onChange={this.handleChange.bind(this, 'recipient')}
               disabled={true}
-            />
+            >
+              <div className={styles.recepientRow}>
+                <AccountVisual
+                  className={styles.accountVisual}
+                  address={this.state.recipient.value}
+                  size={35}
+                />
+                <div className={styles.text}>
+                  <div className={styles.title}>{followedAccount && followedAccount.title}</div>
+                  <div className={styles.address}>{this.state.recipient.value}</div>
+                </div>
+              </div>
+            </Input>
             {this.state.reference.value ?
               <Input label={this.props.t('Reference')}
                 className={`reference ${styles.disabledInput}`}

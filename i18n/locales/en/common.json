@@ -318,7 +318,7 @@
   "This signed message can prove that you are the owner of the account, since only your passphrase can produce it.": "This signed message can prove that you are the owner of the account, since only your passphrase can produce it.",
   "Timeout": "Timeout",
   "Timeout soon": "Timeout soon",
-  "Title (optional)": "Title (optional)",
+  "Title": "Title",
   "Title too long": "Title too long",
   "To connect to Lisk network, you need to enter a username and password for proxy.": "To connect to Lisk network, you need to enter a username and password for proxy.",
   "To recover you can": "To recover you can",
