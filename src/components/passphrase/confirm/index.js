@@ -225,7 +225,7 @@ class Confirm extends React.Component {
             <section className={`${styles.table} ${styles.done}`}>
               <div className={styles.tableCell}>
                 <figure>
-                  <AccountVisual address={this.getAddress()} size={200} />
+                  <AccountVisual address={this.getAddress()} size={150} />
                 </figure>
                 <h4 className={styles.address}>{this.address}</h4>
                 <PrimaryButton
