@@ -199,3 +199,13 @@
   margin: 0;
   white-space: nowrap;
 }
+
+@media (--large-viewport) {
+  .header {
+    margin: 0 32px 22px;
+  }
+
+  .listWrapper {
+    margin: 0 32px;
+  }
+}
