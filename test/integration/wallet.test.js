@@ -7,7 +7,7 @@ import { stub, match, spy } from 'sinon';
 import * as accountAPI from '../../src/utils/api/account';
 import * as transactionsAPI from '../../src/utils/api/transactions';
 import * as delegateAPI from '../../src/utils/api/delegate';
-import * as liskServiceApi from '../../src/utils/api/liskService';
+import liskServiceApi from '../../src/utils/api/liskService';
 import { prepareStore, renderWithRouter } from '../utils/applicationInit';
 import followedAccountsReducer from '../../src/store/reducers/followedAccounts';
 import accountReducer from '../../src/store/reducers/account';
@@ -149,23 +149,13 @@ describe('@integration: Wallet', () => {
     helper = new Helper(wrapper, store);
   };
 
-  beforeEach(() => {
-    accountAPIStub = stub(accountAPI, 'getAccount');
-    delegateAPIStub = stub(delegateAPI, 'getDelegate');
-    localStorageStub = stub(localStorage, 'getItem');
-    liskServiceStub = stub(liskServiceApi, 'getPriceTicker');
-    liskServiceStub.withArgs(match.any).returnsPromise().resolves({ tickers: {} });
-  });
-
-  afterEach(() => {
-    accountAPIStub.restore();
-    delegateAPIStub.restore();
-    localStorageStub.restore();
-    liskServiceStub.restore();
-  });
-
   describe('Send', () => {
     beforeEach(() => {
+      accountAPIStub = stub(accountAPI, 'getAccount');
+      delegateAPIStub = stub(delegateAPI, 'getDelegate');
+      localStorageStub = stub(localStorage, 'getItem');
+      liskServiceStub = stub(liskServiceApi, 'getPriceTicker');
+      liskServiceStub.withArgs().returnsPromise().resolves({ tickers: {} });
       getTransactionsStub = stub(transactionsAPI, 'getTransactions');
       sendTransactionsStub = stub(transactionsAPI, 'send');
 
@@ -217,6 +207,10 @@ describe('@integration: Wallet', () => {
     });
 
     afterEach(() => {
+      accountAPIStub.restore();
+      delegateAPIStub.restore();
+      localStorageStub.restore();
+      liskServiceStub.restore();
       getTransactionsStub.restore();
       sendTransactionsStub.restore();
     });
@@ -341,6 +335,11 @@ describe('@integration: Wallet', () => {
 
   describe('Transactions', () => {
     beforeEach(() => {
+      accountAPIStub = stub(accountAPI, 'getAccount');
+      delegateAPIStub = stub(delegateAPI, 'getDelegate');
+      localStorageStub = stub(localStorage, 'getItem');
+      liskServiceStub = stub(liskServiceApi, 'getPriceTicker');
+      liskServiceStub.withArgs().returnsPromise().resolves({ tickers: {} });
       getTransactionsStub = stub(transactionsAPI, 'getTransactions');
 
       // transactionsFilterSet do pass filter
@@ -385,6 +384,10 @@ describe('@integration: Wallet', () => {
     });
 
     afterEach(() => {
+      accountAPIStub.restore();
+      delegateAPIStub.restore();
+      localStorageStub.restore();
+      liskServiceStub.restore();
       getTransactionsStub.restore();
     });
 
