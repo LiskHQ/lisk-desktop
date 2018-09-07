@@ -1,4 +1,4 @@
-# Lisk Hub Pull Request Guideline
+# Lisk Hub Redux State Guideline
 
 ## Table Of Contents
 
@@ -11,7 +11,65 @@
 
 ## Redux state
 
+**Current store keys**
+```
+{
+	account: {}, // current account logged in
+	peers: {}, // where the application connects to
+	dialog: {}, // used internally for application UI interactions
+	voting: {}, // which delegates an account has voted
+	loading: [], // used internally for application UI interactions
+	toaster: [], // used internally for application UI interactions
+	transactions: {}, // transactions belonging to logged in account
+	transaction: {}, // a single transaction belonging to any account
+	followedAccounts: {}, // accounts followed by logged in account
+	search: {}, // data entities searched in Core {accounts, transactions, delegates, blocks}
+	settings: {}, // flags setted by user for preferences, as well as application settings
+	delegate: [], // if the account is a delegate
+	liskService: [], // external services outside Core api {price candles, feednews, feedback, analytics}
+	filters: {}, // used internally for application UI interactions
+}
+```
+
 ## Redux state practices
+
+_Data belonging to the same entity must hang under the same entity store key._
+
+Lisk Hub and Lisk Core have multiple data entities {account, transaction, block, node, settings, toast}, and an application also has it's own data entities {dialog status, filter setted, application settings, services} etc. 
+
+
+- Patterns should be defined so that data belonging to the same entitiy hang in the tree structure of the parent key they belong.
+
+`An account has transactions, has some followedAccounts, has voted to some delegates, has some preffered settings`
+
+`An application has services, has settings, has data entities, has filters, has loading dialogs, has toast messages`
+
+**Ideal store structure**
+
+```
+{
+	account: {
+		followedAccounts: {},
+		transactions: {},
+		transaction: {},
+		voting: {},
+		delegate: [],
+		settings: {},
+	},
+	application: {
+		peers: {},
+		dialog: {},
+		loading: [],
+		toaster: [],
+		search: {
+			transaction: {},
+		},
+		settings: {},
+		liskService: [],
+		filters: {},
+	}
+}
+```
 
 ## Refactor proposals
 
