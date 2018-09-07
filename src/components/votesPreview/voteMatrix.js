@@ -24,7 +24,8 @@ class VotesMatrix extends React.Component {
     const votedDelegates = votesArray.filter(vote =>
       (vote.confirmed === vote.unconfirmed && vote.confirmed));
 
-    const freeSlotLength =
+    const freeSlotLength = !votesArray.length ?
+      this.props.maxCountOfVotes :
       this.props.maxCountOfVotes -
       this.props.totalVotesCount;
 
