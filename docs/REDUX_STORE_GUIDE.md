@@ -2,8 +2,8 @@
 
 ## Table Of Contents
 
-1. [Redux state](#redux-stores)
-1. [Redux state practices](#redux-practices)
+1. [Redux state](#redux-state)
+1. [Redux state practices](#redux-state-practices)
 
 1. [Refactor proposals](#refactor-proposals)
 	1. [Reducing number of actions](#reducing-number-of-actions)
