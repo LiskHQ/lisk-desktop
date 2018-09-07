@@ -14,5 +14,3 @@ app/app.js
 .idea
 blockchain_explorer.db.gz
 package-lock.json
-/test/cypress/screenshots/
-/test/cypress/videos/
