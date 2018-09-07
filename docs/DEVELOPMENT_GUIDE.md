@@ -10,6 +10,7 @@ This is a live document, please expect updates and unfinished content.
 1. [How Can I Contribute?](CONTRIBUTING_GUIDE.md)
 1. [ES6](ES6_GUIDE.md)
 1. [Functional programming](FP_GUIDE.md)
+1. [Redux state](REDUX_STATE_GUIDE.md)
 1. [React](REACT_GUIDE.md)
 1. [PostCSS](CSS_GUIDE.md)
 1. [HTML](HTML_GUIDE.md)
