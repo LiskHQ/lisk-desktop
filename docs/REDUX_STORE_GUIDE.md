@@ -35,14 +35,14 @@
 
 _Data belonging to the same entity must hang under the same entity store key._
 
-Lisk Hub and Lisk Core have multiple data entities {account, transaction, block, node, settings, toast}, and an application also has it's own data entities {dialog status, filter setted, application settings, services} etc. 
+Lisk Hub and Lisk Core have multiple data entities {account, transaction, block, node, settings,}, and an application also has it's own data entities {dialog status, toast messages, filter setted, application settings, services} etc. 
 
 
-- Patterns should be defined so that data belonging to the same entitiy hang in the tree structure of the parent key they belong.
+Patterns should be defined so that data belonging to the same entitiy hang in the tree structure of the parent key they belong.
 
-`An account has transactions, has some followedAccounts, has voted to some delegates, has some preffered settings`
+- `An account has transactions, has some followedAccounts, has voted to some delegates, has some preffered settings`
 
-`An application has services, has settings, has data entities, has filters, has loading dialogs, has toast messages`
+- `An application has services, has settings, has data entities, has filters, has loading dialogs, has toast messages`
 
 **Ideal store structure**
 
