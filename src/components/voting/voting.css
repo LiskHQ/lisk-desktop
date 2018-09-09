@@ -8,6 +8,17 @@
 .wrapper {
   width: 100%;
   box-shadow: var(--normal-shadow);
+  margin: 0;
+
+  & > aside {
+    padding-right: 8px;
+    padding-left: 0;
+  }
+
+  & > section {
+    padding-left: 8px;
+    padding-right: 0;
+  }
 }
 
 .sideBar {
