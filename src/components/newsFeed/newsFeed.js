@@ -5,6 +5,7 @@ import Box from '../box';
 import { FontIcon } from '../fontIcon';
 import SettingsNewsFeed from './settingsNewsFeed';
 import liskServiceApi from '../../utils/api/liskService';
+import logo from '../../assets/images/Lisk-Logo.svg';
 
 class NewsFeed extends React.Component {
   constructor() {
@@ -12,6 +13,7 @@ class NewsFeed extends React.Component {
     this.state = {
       showSettings: false,
       newsFeed: [],
+      showEmptyState: false, // To prevent dispalying empty View before fetching data
     };
     this.updateData();
   }
@@ -22,6 +24,8 @@ class NewsFeed extends React.Component {
       this.setState({ newsFeed });
     }).catch((error) => {
       this.setState({ error });
+    }).finally(() => {
+      this.setState({ showEmptyState: true });
     });
   }
 
@@ -66,13 +70,18 @@ class NewsFeed extends React.Component {
                 hideSettings={this.hideSettings.bind(this)}
                 setNewsChannels={this.setNewsChannels.bind(this)} /> :
               <div>
-                {filteredNewsFeed.map((news, index) => (
+                {filteredNewsFeed.length > 0 ? filteredNewsFeed.map((news, index) => (
                   <div className={styles.newsWrapper} key={`newsWrapper-${index}`}>
                     <News
                       t={this.props.t}
                       {...news} />
                   </div>
-                ))}
+                )) : null}
+                {this.state.showEmptyState && filteredNewsFeed.length === 0 ?
+                  <div className={styles.emptyNews}>
+                    {this.props.t('No newsfeed chosen – click on edit in the top right corner to add a feed.')}
+                    <img className={styles.liskLogo} src={logo} />
+                  </div> : null}
               </div>
             }
           </div>

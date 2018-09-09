@@ -72,7 +72,15 @@ input:read-only {
 }
 
 .accountVisual {
-  margin: 13px 0px;
+  margin: 6px 16px 0 0;
+  height: 42px;
+  width: 42px;
+}
+
+.sendTo {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row;
 }
 
 .disabledInput input:disabled {

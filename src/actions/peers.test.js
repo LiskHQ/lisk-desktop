@@ -4,7 +4,6 @@ import { spy, stub, match } from 'sinon';
 import actionTypes from '../constants/actions';
 import { activePeerSet, activePeerUpdate } from './peers';
 import { errorToastDisplayed } from './toaster';
-import * as nethashApi from './../utils/api/nethash';
 import accounts from '../../test/constants/accounts';
 import networks from '../constants/networks';
 
@@ -29,13 +28,11 @@ describe('actions: peers', () => {
 
   describe('activePeerSet', () => {
     let dispatch;
-    let getNetHash;
     let APIClientBackup;
     let getConstantsMock;
 
     beforeEach(() => {
       dispatch = spy();
-      getNetHash = stub(nethashApi, 'getNethash');
       APIClientBackup = Lisk.APIClient;
       getConstantsMock = stub().returnsPromise();
 
@@ -53,7 +50,6 @@ describe('actions: peers', () => {
     });
 
     afterEach(() => {
-      getNetHash.restore();
       Lisk.APIClient = APIClientBackup;
     });
 
@@ -92,8 +88,6 @@ describe('actions: peers', () => {
     });
 
     it('dispatch activePeerSet action with testnet nodes if testnet option is set', () => {
-      getNetHash.returnsPromise();
-
       const network = {
         testnet: true,
       };
@@ -103,7 +97,6 @@ describe('actions: peers', () => {
     });
 
     it('dispatch activePeerSet with custom node', () => {
-      getNetHash.returnsPromise();
       const network = {
         address: 'http://localhost:4000',
         custom: true,
@@ -126,15 +119,13 @@ describe('actions: peers', () => {
       });
     });
 
-    it('does not display the error toast if the network is a custom node and there are not saved account and getnethash fails', () => {
-      getNetHash.returnsPromise();
+    it('does not display the error toast if the network is a custom node and there are not saved account', () => {
       const network = {
         address: 'http://localhost:4000',
         custom: true,
       };
 
       activePeerSet({ passphrase, network, noSavedAccounts: true })(dispatch);
-      getNetHash.rejects();
 
       expect(dispatch).to.not.have.been.calledWith(errorToastDisplayed);
     });

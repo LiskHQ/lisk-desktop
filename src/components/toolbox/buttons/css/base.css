@@ -70,12 +70,3 @@
     background: var(--gradient-action-blue-hover) !important;
   }
 }
-
-@define-mixin buttonRed {
-  color: var(--color-white) !important;
-  background: var(--gradient-red);
-
-  &:hover {
-    background: var(--gradient-action-blue-hover) !important;
-  }
-}

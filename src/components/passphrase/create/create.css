@@ -53,12 +53,20 @@ hr {
   display: none;
 }
 
+.container {
+  height: 100%;
+}
+
 .generation {
   justify-content: space-around;
   align-items: center;
 
   & h2 {
     font-size: 48px;
+  }
+
+  & h4 {
+    margin: 16px auto;
   }
 
   & > div {

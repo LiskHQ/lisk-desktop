@@ -45,13 +45,14 @@
   }
 
   &::before {
-    height: 200%;
+    height: 100%;
     width: 100%;
     content: '';
     position: absolute;
     background-color: var(--color-form-bg);
     left: 0;
-    bottom: calc(-150% + 144px);
+    top: 250px;
+    bottom: 0;
   }
 }
 

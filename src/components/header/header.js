@@ -17,6 +17,13 @@ import Options from '../dialog/options';
 import routes from './../../constants/routes';
 
 class Header extends React.Component {
+  /* istanbul ignore next */
+  logOut() {
+    this.props.logOut();
+    this.props.closeDialog();
+    this.props.history.replace(`${routes.dashboard.path}`);
+  }
+
   shouldShowActionButton() {
     const { pathname } = this.props.location;
     return !this.props.isAuthenticated
@@ -44,10 +51,7 @@ class Header extends React.Component {
         },
         secondButton: {
           text: this.props.t('Logout'),
-          onClickHandler: () => {
-            this.props.logOut();
-            this.props.closeDialog();
-          },
+          onClickHandler: this.logOut.bind(this),
         },
       },
     });

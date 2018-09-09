@@ -24,7 +24,7 @@ export default (electron, releaseNotes, updateCallBack, versions) => {
     win.webContents.send('loadNotes', {
       title: i18n.t('New version available'),
       message: `<h3>${i18n.t('Release Notes')}</h3>${releaseNotes}`,
-      versions: i18n.t('Lisk hub {{newVersion}} is available. You have {{oldVersion}}. Would you like to download it now?', versions),
+      versions: i18n.t('Lisk Hub {{newVersion}} is available. You have {{oldVersion}}. Would you like to download it now?', versions),
       buttons: [i18n.t('Update now'), i18n.t('Later')],
     });
     win.show();

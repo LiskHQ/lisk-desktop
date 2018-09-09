@@ -2,6 +2,8 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Tab, Tabs as ToolboxTabs } from 'react-toolbox/lib/tabs';
 import Drawer from 'react-toolbox/lib/drawer';
+
+import { parseSearchParams } from './../../utils/searchParams';
 import MenuBar from '../menuBar';
 import styles from './mainMenu.css';
 import logo from '../../assets/images/Lisk-Logo.svg';
@@ -38,7 +40,13 @@ class MainMenu extends React.Component {
       active: false,
       setting: false,
       index: 0,
+      showFeedback: false,
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const params = parseSearchParams(nextProps.history.location.search);
+    this.setState({ showFeedback: params.showFeedback });
   }
 
   menuToggle() {
@@ -48,6 +56,14 @@ class MainMenu extends React.Component {
 
   navigate(history, tabs, index) {
     this.setState({ active: false, index });
+    if (tabs[index].id === 'feedback') {
+      this.props.showFeedback({
+        childComponentProps: {
+          title: this.props.t('Tell us what you think'),
+        },
+      });
+      return;
+    }
     history.push(tabs[index].route);
   }
 
@@ -86,12 +102,18 @@ class MainMenu extends React.Component {
       },
     ];
 
-    const bottomMenuTabs = [
+    let bottomMenuTabs = [
       {
         label: t('Settings'),
         route: `${routes.setting.path}`,
         id: 'settings',
         image: 'settings',
+        enabledWhenNotLoggedIn: true,
+      },
+      {
+        label: t('Feedback'),
+        id: 'feedback',
+        image: 'conversation',
         enabledWhenNotLoggedIn: true,
       },
       {
@@ -105,6 +127,10 @@ class MainMenu extends React.Component {
 
     if (!showDelegate) {
       tabs = tabs.filter(tab => tab.id !== 'delegates');
+    }
+
+    if (!this.state.showFeedback) {
+      bottomMenuTabs = bottomMenuTabs.filter(tab => tab.id !== 'feedback');
     }
 
     return (

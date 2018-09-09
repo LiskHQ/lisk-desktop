@@ -65,7 +65,7 @@ describe('Passphrase: Confirm', () => {
       });
     });
     wrapper.update();
-    let expectedClass = '_invalid';
+    let expectedClass = 'invalid';
     let className = wrapper.find('form').prop('className');
     expect(className).to.contain(expectedClass);
 
@@ -77,7 +77,7 @@ describe('Passphrase: Confirm', () => {
       });
     });
     wrapper.update();
-    expectedClass = '_valid';
+    expectedClass = 'valid';
     className = wrapper.find('form').prop('className');
     expect(className).to.contain(expectedClass);
   });

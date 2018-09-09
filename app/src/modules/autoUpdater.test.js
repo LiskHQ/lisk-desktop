@@ -182,6 +182,21 @@ describe('autoUpdater', () => {
     expect(params.win.browser.setProgressBar).to.have.been.calledWith(50 / 100);
   });
 
+  it('should not fail if browser is not defined when being in download progress', () => {
+    let error;
+    try {
+      autoUpdater({
+        ...params,
+        win: {},
+      });
+      callbacks['download-progress']({ transferred: 50, total: 100 });
+      error = false;
+    } catch (e) {
+      error = e;
+    }
+    expect(error).to.equal(false);
+  });
+
   it('should log any update error', () => {
     const error = new Error('Error: Can not find Squirrel');
     const consoleSpy = spy(console, 'error');

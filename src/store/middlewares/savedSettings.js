@@ -10,6 +10,7 @@ const savedSettingsMiddleware = store => next => (action) => {
     case actionsType.settingsReset:
       localStorage.removeItem('settings');
       break;
+    /* istanbul ignore next */
     default: break;
   }
 };
