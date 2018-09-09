@@ -19,6 +19,7 @@ class Bookmark extends React.Component {
 
   getFilteredFollowedAccounts() {
     const { followedAccounts, address } = this.props;
+
     return followedAccounts
       .filter(account => account.title &&
         account.title.toLowerCase().includes(address.value.toLowerCase()));
@@ -28,9 +29,8 @@ class Bookmark extends React.Component {
     let currentIdx = this.state.selectedIdx;
     const filteredFollowedAccounts = this.getFilteredFollowedAccounts();
     const searchListLength = filteredFollowedAccounts.length;
-    if (searchListLength !== 0) {
-      currentIdx = (currentIdx === searchListLength - 1) ?
-        searchListLength - 1 : currentIdx += 1;
+    if (searchListLength !== 0 && currentIdx !== searchListLength - 1) {
+      currentIdx += 1;
     }
 
     this.setState({ selectedIdx: currentIdx });
@@ -41,8 +41,8 @@ class Bookmark extends React.Component {
     const filteredFollowedAccounts = this.getFilteredFollowedAccounts();
     const searchListLength = filteredFollowedAccounts.length;
 
-    if (searchListLength !== 0 && currentIdx !== -1) {
-      currentIdx = (currentIdx === 0) ? 0 : currentIdx -= 1;
+    if (searchListLength !== 0 && currentIdx !== -1 && currentIdx !== 0) {
+      currentIdx -= 1;
     }
     this.setState({ selectedIdx: currentIdx });
   }
@@ -57,13 +57,12 @@ class Bookmark extends React.Component {
         this.handleArrowUp();
         event.preventDefault();
         break;
-      case keyCodes.escape:
-        this.setState({ show: false });
-        break;
       case keyCodes.enter:
       case keyCodes.tab: // eslint-disable-line
-        const address = this.props.followedAccounts[this.state.selectedIdx].address;
-        this.props.handleChange(address);
+        if (this.props.followedAccounts[this.state.selectedIdx]) {
+          const address = this.props.followedAccounts[this.state.selectedIdx].address;
+          this.props.handleChange(address);
+        }
 
         break;
       /* istanbul ignore next */
@@ -110,11 +109,14 @@ class Bookmark extends React.Component {
             size={50}
           /> : null}
           <Input
+            type='text'
+            id='bookmark-input'
             className={`${className}
-              ${showSmallVisualAccountStyles ? styles.bookmarkInput : ''}
-              ${showBigVisualAccountStyles ? styles.bigAccountVisualBookmarkInput : ''}`}
+              ${showSmallVisualAccountStyles ? `${styles.bookmarkInput} bookmarkInput` : ''}
+              ${showBigVisualAccountStyles ? `${styles.bigAccountVisualBookmarkInput} bigAccountVisualBookmarkInput` : ''}`}
             label={label}
             error={!this.state.show ? address.error : ''}
+            autocomplete={false}
             value={address.value}
             innerRef={(el) => { this.inputRef = el; }}
             onFocus={() => this.setState({ show: true })}
@@ -124,10 +126,12 @@ class Bookmark extends React.Component {
             >
           </Input>
           { this.state.show ?
-            <ul className={`${filteredFollowedAccounts.length > 0 ? styles.resultList : ''} ${this.state.show ? styles.show : ''}`}>
+            <ul className={`${filteredFollowedAccounts.length > 0 ? styles.resultList : ''}
+              ${this.state.show ? styles.show : ''}
+              bookmarkList`}>
               {
                 filteredFollowedAccounts
-                  .map((account, index) =>
+                  .map((account, index) => (
                     <li
                       onMouseDown={() => {
                         handleChange(account.address);
@@ -143,7 +147,7 @@ class Bookmark extends React.Component {
                         <div className={styles.title}>{account.title}</div>
                         <div className={styles.address}>{account.address}</div>
                       </div>
-                    </li>)
+                    </li>))
               }
             </ul> : null }
         </div>

@@ -85,10 +85,6 @@ class SendWritable extends React.Component {
     return fromRawLsk(Math.max(0, this.props.account.balance - this.fee));
   }
 
-  hideFollowedAccounts() {
-    return this.setState({});
-  }
-
   render() {
     return (
       <div className={`${styles.sendWrapper}`}>
