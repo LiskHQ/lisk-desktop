@@ -5,7 +5,7 @@ import styles from './settingsNewsFeed.css';
 const unlockedOptions = ['twitter'];
 const SettingsNewsFeed = props => (
   <div className={`settingsNewsFeed ${styles.settingsNewsFeed}`}>
-    <div className={styles.header}>Choose which feeds to display.</div>
+    <div className={styles.header}>{props.t('Choose which feeds to display.')}</div>
     {Object.keys(props.channels)
       .filter(channel => unlockedOptions.indexOf(channel) !== -1)
       .map((channel, index) => (

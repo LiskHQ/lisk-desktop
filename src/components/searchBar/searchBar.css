@@ -1,7 +1,7 @@
 @import './../app/variables.css';
 
 :root {
-  --search-box-width-l: 30vw; /* stylelint-disable-line */
+  --search-box-width-l: 100%; /* stylelint-disable-line */
   --search-box-width-xl: 558px;
   --search-box-font-size: 16px;
   --search-box-line-height: 56px;
@@ -10,11 +10,10 @@
 }
 
 .searchBar {
-  display: none;
   vertical-align: top;
   position: relative;
   width: var(--search-box-width-l);
-  margin-right: 50px;
+  margin-right: 32px;
 
   & .icon {
     position: absolute;

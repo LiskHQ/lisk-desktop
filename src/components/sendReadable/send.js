@@ -102,11 +102,6 @@ class SendReadable extends React.Component {
           <header className={styles.headerWrapper}>
             <h2>{this.props.accountInit ? this.props.t('Initialize Lisk ID') : this.props.t('Confirm transfer')}</h2>
           </header>
-          {/* {this.props.accountInit
-            ? null
-            : <figure className={styles.accountVisual}>
-              <AccountVisual address={this.state.recipient.value} size={150} sizeS={60} />
-            </figure>} */}
         </div>
         {this.props.accountInit
           ? <div>
@@ -141,7 +136,6 @@ class SendReadable extends React.Component {
                 theme={styles}
               /> : null
             }
-
             <Input label={this.props.t('Total incl. {{fee}} LSK Fee', { fee: fromRawLsk(fees.send) })}
               className={`amount ${styles.disabledInput}`}
               error={this.state.amount.error}

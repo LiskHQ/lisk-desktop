@@ -335,6 +335,11 @@ class AutoSuggest extends React.Component {
             />
             : null
           }
+
+          { this.state.value !== '' && this.state.resultsLength === 0 ?
+            <p className={styles.noResults}>{t('No results found')}</p>
+            : null
+          }
         </div>
       </div>
     );

@@ -2,6 +2,7 @@ import React from 'react';
 import { generateSeed, generatePassphrase } from './../../utils/passphrase';
 import { extractAddress } from '../../utils/account';
 import isMobile from '../../utils/isMobile';
+import styles from './passphraseCreation.css';
 
 class PassphraseCreation extends React.Component {
   constructor() {
@@ -105,7 +106,7 @@ class PassphraseCreation extends React.Component {
       this.props.t('by moving your mouse.');
 
     return (
-      <section id='generatorContainer'>
+      <section id='generatorContainer' className={styles.generator}>
         {React.cloneElement(this.props.children, {
           percentage,
           hintTitle,

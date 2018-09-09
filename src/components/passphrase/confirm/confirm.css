@@ -60,6 +60,7 @@
 
     & h5 {
       visibility: hidden;
+      height: 0;
       opacity: 0;
       font-size: 18px;
       color: var(--color-error);
@@ -75,6 +76,7 @@
     & h5 {
       &.visible {
         visibility: visible;
+        height: auto;
         opacity: 1;
         transition-delay: 500ms;
       }
@@ -94,6 +96,7 @@
 
     & h4 {
       color: var(--address-color);
+      margin: 16px auto;
     }
 
     & figure {

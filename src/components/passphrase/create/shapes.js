@@ -17,8 +17,8 @@ const Shapes = ({ percentage, addressCreated }) => (<div
       </g>}
     backGroundIndex={2}
     foreGroundIndex={3}
-    width='220'
-    height='220'
+    width='150'
+    height='150'
     className={styles.circle}
     percentage={percentage}
     initial={['100%', '20%']}>

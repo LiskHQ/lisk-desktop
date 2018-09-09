@@ -36,7 +36,9 @@ export default ({
     logMessage = `${logMessage} (${progressObj.transferred}/${progressObj.total})`;
     // eslint-disable-next-line no-console
     console.log(logMessage);
-    win.browser.setProgressBar(progressObj.transferred / progressObj.total);
+    if (win && win.browser) {
+      win.browser.setProgressBar(progressObj.transferred / progressObj.total);
+    }
   });
 
   autoUpdater.on('update-available', ({ releaseNotes, version }) => {

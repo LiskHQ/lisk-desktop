@@ -62,7 +62,7 @@
 
     &.magnified {
       & canvas {
-        max-width: 260px;
+        max-width: 170px;
         width: 100% !important;
         height: auto !important;
       }

@@ -90,6 +90,12 @@ input:read-only {
   font-weight: 400;
 }
 
+.sendTo {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row;
+}
+
 .disabledInput input:disabled {
   opacity: 1;
   border: none;

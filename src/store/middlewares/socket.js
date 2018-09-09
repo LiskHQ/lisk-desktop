@@ -47,6 +47,7 @@ const socketMiddleware = store => (
       case actionTypes.accountLoggedOut:
         closeConnection();
         break;
+      /* istanbul ignore next */
       default: break;
     }
     next(action);

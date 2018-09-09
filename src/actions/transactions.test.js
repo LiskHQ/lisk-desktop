@@ -213,6 +213,7 @@ describe('actions: transactions', () => {
         senderPublicKey: 'test_public-key',
         senderId: 'test_address',
         recipientId: data.recipientId,
+        asset: { data: undefined },
         amount: toRawLsk(data.amount),
         fee: Fees.send,
         type: transactionTypes.send,

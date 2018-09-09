@@ -18,7 +18,7 @@ describe('Amount', () => {
       },
       address: 'address',
     };
-    const expectedValue = /transactions__greyLabel/g;
+    const expectedValue = /greyLabel/g;
     const wrapper = mount(<Amount {...inputValue} />, {
       context: { i18n, store },
       childContextTypes: {
@@ -40,7 +40,7 @@ describe('Amount', () => {
       },
       address: 'address',
     };
-    const expectedValue = /transactions__greenLabel/g;
+    const expectedValue = /greenLabel/g;
     const wrapper = mount(<Amount {...inputValue} />, {
       context: { i18n, store },
       childContextTypes: {
@@ -62,7 +62,7 @@ describe('Amount', () => {
       },
       address: 'address',
     };
-    const expectedValue = /transactions__greyLabel/g;
+    const expectedValue = /greyLabel/g;
     const wrapper = mount(<Amount {...inputValue} />, {
       context: { i18n, store },
       childContextTypes: {

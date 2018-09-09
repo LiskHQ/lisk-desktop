@@ -19,21 +19,28 @@ class TransactionRow extends React.Component {
     const onClick = !props.onClick ? (() => {}) : () => props.onClick(this.props);
     return (
       <div className={`${grid.row} ${styles.rows} ${styles.clickable} transactions-row`} onClick={onClick}>
-        <div className={`${styles.leftText} ${grid['col-xs-6']} ${grid['col-sm-6']} transactions-cell`}>
+        <div className={`${styles.leftText} ${grid['col-xs-6']} ${grid['col-sm-4']} transactions-cell`}>
           <div className={`${styles.address}`}>
             <TransactionType {...props.value} address={props.address}></TransactionType>
           </div>
         </div>
+          <div className={`${styles.rightText} ${grid['col-sm-3']} transactions-cell`}>
+            <div className={`${styles.hiddenXs} ${styles.reference}`}>
+                {props.value.asset && props.value.asset.data ?
+                  <span>{props.value.asset.data}</span>
+                : '-'}
+            </div>
+          </div>
         <div className={`${styles.rightText} ${grid['col-sm-2']} transactions-cell`}>
           <div className={`${styles.hiddenXs}`}>
             {props.value.confirmations ? <DateFromTimestamp time={props.value.timestamp} />
               : <Spinner />}
           </div>
         </div>
-        <div className={`${styles.rightText} ${grid['col-xs-5']} ${grid['col-sm-3']} transactions-cell`}>
+        <div className={`${styles.rightText} ${grid['col-xs-5']} ${grid['col-sm-2']} transactions-cell`}>
           <Amount {...props}></Amount>
         </div>
-        <div className={`${styles.rightText} ${grid['col-xs-1']} ${grid['col-sm-1']} transactions-cell`}>
+        <div className={`${grid['col-xs-1']} ${grid['col-sm-1']} ${styles.arrowRow} transactions-cell`}>
           <FontIcon value='arrow-right'/>
         </div>
       </div>

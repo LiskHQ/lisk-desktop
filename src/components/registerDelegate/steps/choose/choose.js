@@ -19,7 +19,7 @@ class Choose extends React.Component {
         error: '',
       },
     };
-    this.delegateNameRegEx = new RegExp(/[a-zA-Z0-9!@$&_.]+/g); // !@$&_.
+    this.delegateNameRegEx = new RegExp(/[a-z0-9!@$&_.]+/g); // !@$&_.
     this.delegateNameMaxChars = 20;
   }
 

@@ -31,7 +31,7 @@ class CreateFirst extends React.Component {
     };
 
     return (
-      <div>
+      <div className={styles.container}>
         <Shapes percentage={percentage} addressCreated={address}/>
         <header>
           <TransitionWrapper current={step} step='generate'>
@@ -65,7 +65,7 @@ class CreateFirst extends React.Component {
         {address ?
           <Fragment>
             <figure>
-              <AccountVisual address={address} size={200} />
+              <AccountVisual address={address} size={150} />
             </figure>
             <h4 className={styles.address}>{modifyID(address)}</h4>
             <PrimaryButton

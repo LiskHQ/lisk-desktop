@@ -9,7 +9,6 @@ import OfflineWrapper from '../offlineWrapper';
 import CustomRoute from '../customRoute';
 import Header from '../header';
 import Dialog from '../dialog';
-import SavedAccounts from '../savedAccounts';
 import NotFound from '../notFound';
 
 import routes from '../../constants/routes';
@@ -53,7 +52,6 @@ class App extends React.Component {
         <Dialog />
         <main className={`${styles.bodyWrapper}`} ref={(el) => { this.main = el; }}>
           <MainMenu />
-          <Route path={routes.accounts.path} component={SavedAccounts} />
           <section>
             <div className={styles.mainBox}>
               <Header />

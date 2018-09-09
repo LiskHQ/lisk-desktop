@@ -3,6 +3,9 @@ import Lisk from 'lisk-elements';
 
 export const getAccount = (activePeer, address) =>
   new Promise((resolve, reject) => {
+    if (!activePeer) {
+      reject();
+    }
     activePeer.accounts.get({ address }).then((res) => {
       if (res.data.length > 0) {
         resolve({
