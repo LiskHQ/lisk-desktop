@@ -25,7 +25,9 @@ describe('FollowedAccounts middleware', () => {
     store = mock();
     store.dispatch = spy();
     store.getState = () => ({
+      account,
       followedAccounts: { accounts: [account, account2] },
+      transactions: { confirmed: [{ id: '123', senderId: account.address, recipientId: '11' }] },
     });
     next = spy();
   });
@@ -75,7 +77,7 @@ describe('FollowedAccounts middleware', () => {
       data: { block: transactions },
     });
 
-    expect(followedAccountsActions.followedAccountFetchedAndUpdated).to.have.callCount(1);
+    expect(followedAccountsActions.followedAccountFetchedAndUpdated).to.have.callCount(2);
   });
 
   it('should not make a request for the account information, if no relevant transaction was made', () => {
@@ -86,5 +88,15 @@ describe('FollowedAccounts middleware', () => {
     });
 
     expect(followedAccountsActions.followedAccountFetchedAndUpdated).to.have.callCount(0);
+  });
+
+  it('should update followedAcconts on transactionsUpdated action', () => {
+    const transactions = { transactions: [{ senderId: '1234L', recipientId: '4321L' }] };
+    middleware(store)(next)({
+      type: actionTypes.transactionsUpdated,
+      data: { block: transactions, confirmed: [{ id: '12345', senderId: account.address }] },
+    });
+
+    expect(followedAccountsActions.followedAccountFetchedAndUpdated).to.have.callCount(2);
   });
 });

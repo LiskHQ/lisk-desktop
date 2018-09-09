@@ -16,8 +16,8 @@ const followedAccountsMiddleware = (store) => {
     const changedAccounts = followedAccounts.accounts.filter((account) => {
       const relevantTransactions = tx.filter((transaction) => {
         const { senderId, recipientId } = transaction;
-        loggedAccountFollowed = (loggedAccount.address === senderId
-          || loggedAccount.address === recipientId) ? account : null;
+        loggedAccountFollowed = (loggedAccount && (loggedAccount.address === senderId
+          || loggedAccount.address === recipientId)) ? account : null;
         return (account.address === senderId || account.address === recipientId);
       });
 
