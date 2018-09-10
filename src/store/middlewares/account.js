@@ -4,14 +4,17 @@ import { accountUpdated,
   updateDelegateAccount,
 } from '../../actions/account';
 import { votesFetched } from '../../actions/voting';
+import { transactionsFilterSet } from '../../actions/transactions';
 import actionTypes from '../../constants/actions';
 import accountConfig from '../../constants/account';
 import transactionTypes from '../../constants/transactionTypes';
 
+import { extractAddress, extractPublicKey } from '../../utils/account';
 import { getAutoLogInData, shouldAutoLogIn } from '../../utils/login';
 import { activePeerSet, activePeerUpdate } from '../../actions/peers';
 import networks from '../../constants/networks';
 import settings from '../../constants/settings';
+import txFilters from '../../constants/transactionFilters';
 
 const { lockDuration } = accountConfig;
 
@@ -22,6 +25,12 @@ const updateAccountData = (store, action) => {
     windowIsFocused: action.data.windowIsFocused,
     transactions,
     account,
+  }));
+
+  store.dispatch(transactionsFilterSet({
+    address: extractAddress(extractPublicKey(action.data.passphrase)),
+    limit: 25,
+    filter: txFilters.all,
   }));
 };
 
@@ -106,6 +115,10 @@ const autoLogInIfNecessary = (store) => {
     store.dispatch(activePeerSet({
       passphrase: autologinData[settings.keys.autologinKey],
       network: { ...networks.customNode, address: autologinData[settings.keys.autologinUrl] },
+      options: {
+        code: networks.customNode.code,
+        address: autologinData[settings.keys.autologinUrl],
+      },
     }));
     store.dispatch(activePeerUpdate({
       online: true,
