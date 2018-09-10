@@ -3,10 +3,8 @@ import { getAccount } from '../../utils/api/account';
 
 import { extractAddress, extractPublicKey } from '../../utils/account';
 import { accountLoggedIn, accountLoading, accountLoggedOut } from '../../actions/account';
-
 import actionTypes from '../../constants/actions';
 import accountConfig from '../../constants/account';
-
 import { errorToastDisplayed } from '../../actions/toaster';
 
 const { lockDuration } = accountConfig;
