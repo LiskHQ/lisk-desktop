@@ -3,12 +3,10 @@ import accounts from '../../../constants/accounts';
 describe('Explorer page', () => {
   it('should show search results on custom node for an account and a transactions while being logged in', () => {
     cy.loginUI(accounts.genesis, 'dev');
-    cy.get('#autosuggest-input').click().type('15610359283786884938L');
-    cy.get('.addresses-result').click();
+    cy.get('#autosuggest-input').click().type('15610359283786884938L{enter}');
     cy.get('.empty-message').should('have.text', 'No activity yet');
     cy.get('.autosuggest-btn-close').click();
-    cy.get('#autosuggest-input').click().type('16313739661670634666L');
-    cy.get('.addresses-result').click();
+    cy.get('#autosuggest-input').click().type('16313739661670634666L{enter}');
     cy.url().should('contains', '/explorer/accounts/16313739661670634666L');
     cy.get('.transactions-row').should('have.length', 25);
     cy.get('.send-to-address').click();
