@@ -52,3 +52,4 @@ describe('Peer middleware', () => {
     expect(store.dispatch).to.not.have.been.calledWith(activePeerSet());
   });
 });
+

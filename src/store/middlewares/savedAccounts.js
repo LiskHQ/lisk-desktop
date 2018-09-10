@@ -8,40 +8,26 @@ import { getLastActiveAccount } from '../../utils/savedAccounts';
 import getNetwork from '../../utils/getNetwork';
 import networks from '../../constants/networks';
 
-import { getAutoLogInData, shouldAutoLogIn } from '../../utils/login';
-import settings from '../../constants/settings';
-
 const savedAccountsMiddleware = (store) => {
   setImmediate(() => {
     const accountsRetrievedAction = accountsRetrieved();
-    // const savedAccounts = accountsRetrievedAction.data;
+    const savedAccounts = accountsRetrievedAction.data;
     store.dispatch(accountsRetrievedAction);
 
-    const autologinData = getAutoLogInData();
-    const passphrase = autologinData[settings.keys.autologinKey];
-    const network = { ...networks.customNode, address: autologinData[settings.keys.autologinUrl] };
+    if (savedAccounts && savedAccounts.lastActive) {
+      const account = savedAccounts.lastActive;
+      const network = Object.assign({}, getNetwork(account.network));
 
-    if (shouldAutoLogIn(autologinData)) {
+      /* istanbul ignore if  */
+      if (account.network === networks.customNode.code) {
+        network.address = account.peerAddress;
+      }
+
       store.dispatch(activePeerSet({
-        passphrase,
+        publicKey: account.publicKey,
         network,
       }));
     }
-
-    // if (savedAccounts && savedAccounts.lastActive) {
-    //   const account = savedAccounts.lastActive;
-    //   const network = Object.assign({}, getNetwork(account.network));
-
-    //   /* istanbul ignore if  */
-    //   if (account.network === networks.customNode.code) {
-    //     network.address = account.peerAddress;
-    //   }
-
-    //   store.dispatch(activePeerSet({
-    //     publicKey: account.publicKey,
-    //     network,
-    //   }));
-    // }
   });
 
   const isSameNetwork = (account, peers) => (
