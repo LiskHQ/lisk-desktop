@@ -80,6 +80,7 @@ class MultiStep extends React.Component {
     const extraProps = {
       nextStep: step.nextStep,
       prevStep: step.prevStep,
+      reset: this.reset.bind(this),
       ...step.data[step.current],
     };
 
@@ -87,7 +88,6 @@ class MultiStep extends React.Component {
       if (typeof finalCallback === 'function') {
         extraProps.finalCallback = finalCallback;
       }
-      extraProps.reset = this.reset.bind(this);
     } else {
       extraProps.prevState = Object.assign({}, step.data[step.current + 1]);
     }

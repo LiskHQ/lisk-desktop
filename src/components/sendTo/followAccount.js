@@ -44,7 +44,13 @@ class FollowAccount extends React.Component {
           disabled={!!this.state.title.error}
           onClick={() => {
             addAccount({ title, address });
-            prevStep();
+            // istanbul ignore else
+            if (typeof this.props.finalCallback === 'function') {
+              this.props.finalCallback();
+              this.props.reset();
+            } else {
+              prevStep();
+            }
           }}>
           {t('Add to dashboard')}
         </TertiaryButton>

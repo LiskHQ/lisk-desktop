@@ -7,7 +7,7 @@ import * as followedAccounts from '../../actions/followedAccounts';
 
 describe('SendTo: follow account Component', () => {
   let wrapper;
-  const props = {
+  let props = {
     prevStep: spy(),
     address: '12345L',
     t: key => key,
@@ -49,5 +49,23 @@ describe('SendTo: follow account Component', () => {
     wrapper.find('.cancel').first().simulate('click');
     expect(followedAccounts.followedAccountAdded).to.not.have.been.calledWith();
     expect(props.prevStep).to.have.been.calledWith();
+  });
+
+  it('adds the account as last step in multiStep', () => {
+    props = {
+      prevStep: spy(),
+      address: '12345L',
+      t: key => key,
+      reset: () => {},
+      finalCallback: spy(),
+    };
+    wrapper = mountWithContext(<FollowAccount {...props} />, {});
+
+    wrapper.find('.follow-account').first().simulate('click');
+    expect(followedAccounts.followedAccountAdded).to.have.been.calledWith({
+      title: props.address, address: props.address,
+    });
+
+    expect(props.finalCallback).to.have.been.calledWith();
   });
 });

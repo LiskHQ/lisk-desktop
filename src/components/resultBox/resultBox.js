@@ -13,6 +13,9 @@ class ResultBox extends React.Component {
     }
   }
   render() {
+    const followedAccount = this.props.followedAccounts.find(account =>
+      account.address === this.props.reciepientId);
+
     return (
       <div className={`${styles.resultBox}`}>
         <div></div>
@@ -51,6 +54,14 @@ class ResultBox extends React.Component {
             }}>
             {this.props.t('Okay')}
           </Button>
+          {followedAccount === undefined && this.props.followedAccounts.length > 0 ?
+            <Button className={`add-follwed-account-button ${styles.addFollowedAccountButton}`}
+              onClick={() => {
+                this.props.nextStep({ address: this.props.reciepientId });
+              }}>
+              {this.props.t('Add Followed Account')}
+            </Button> : null
+          }
           <div className='subTitle'>{this.props.subTitle}</div>
         </footer>
       </div>
