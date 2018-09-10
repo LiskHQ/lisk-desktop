@@ -2,6 +2,8 @@ import numeral from 'numeral';
 import accounts from '../../constants/accounts';
 import { fromRawLsk } from '../../../src/utils/lsk';
 
+// This file is skipped cause it is not part of the existing selenium tests migration.
+// It should be reenabled with the new tests structure
 describe.skip('Header', () => {
   beforeEach(() => {
     cy.login(accounts.genesis, 2);

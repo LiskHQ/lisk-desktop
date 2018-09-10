@@ -1,5 +1,7 @@
 import accounts from '../../constants/accounts';
 
+// This file is skipped cause it is not part of the existing selenium tests migration.
+// It should be reenabled with the new tests structure
 describe.skip('Login Page', () => {
   beforeEach(() => cy.visit('/'));
 
