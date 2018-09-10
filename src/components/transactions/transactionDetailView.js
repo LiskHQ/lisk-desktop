@@ -34,6 +34,20 @@ class TransactionsDetailView extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.location && !nextProps.location.search) this.props.prevStep();
+
+    // It rerenders component when pending status changed to confirmed
+    if (nextProps.pendingTransactions.length === 0 && typeof nextProps.transaction === 'string') {
+      const { search } = this.props.location || window.location;
+      const params = new URLSearchParams(search);
+
+      const transactionId = params.get('id');
+
+      if (this.props.peers.data && transactionId) {
+        this.props.loadTransaction({
+          id: transactionId,
+        });
+      }
+    }
   }
 
   getVoters(dataName) {
@@ -66,7 +80,13 @@ class TransactionsDetailView extends React.Component {
   }
 
   getFirstRow() {
-    const isSendTransaction = this.props.transaction.type === transactions.send;
+    const transaction = (typeof this.props.transaction === 'object' &&
+      Object.keys(this.props.transaction).length !== 0) ||
+      this.props.pendingTransactions.length === 0
+      ? this.props.transaction : this.props.pendingTransactions;
+
+    const isSendTransaction = this.props.transaction.type === transactions.send
+      || this.props.pendingTransactions.length > 0;
 
     return (
       <TransactionDetailViewRow>
@@ -74,32 +94,32 @@ class TransactionsDetailView extends React.Component {
           label={this.props.t('Sender')}
           value={
             <Link className={`${styles.addressLink} ${styles.clickable}`} id='sender-address'
-              to={`${routes.explorer.path}${routes.accounts.path}/${this.props.transaction.senderId}`}>
-              {this.props.transaction.senderId}
+              to={`${routes.explorer.path}${routes.accounts.path}/${transaction.senderId}`}>
+              {transaction.senderId}
             </Link>
           }
           column>
-          {this.props.transaction.senderId ?
+          {transaction.senderId ?
             <figure className={styles.accountVisual}>
-              <AccountVisual address={this.props.transaction.senderId} size={43} />
+              <AccountVisual address={transaction.senderId} size={43} />
             </figure> : null}
         </TransactionDetailViewField>
 
         {!isSendTransaction ? this.getDateField() :
           <TransactionDetailViewField
-            shouldShow={this.props.transaction.recipientId}
+            shouldShow={transaction.recipientId}
             label={this.props.t('Recipient')}
             style={styles.sender}
             value={
               <Link className={`${styles.addressLink} ${styles.clickable}`} id='receiver-address'
-                to={`${routes.explorer.path}${routes.accounts.path}/${this.props.transaction.recipientId}`}>
-                {this.props.transaction.recipientId}
+                to={`${routes.explorer.path}${routes.accounts.path}/${transaction.recipientId}`}>
+                {transaction.recipientId}
               </Link>
             }
             column>
-            {this.props.transaction.recipientId ?
+            {transaction.recipientId ?
               <figure className={styles.accountVisual}>
-                <AccountVisual address={this.props.transaction.recipientId} size={43} />
+                <AccountVisual address={transaction.recipientId} size={43} />
               </figure> : null
             }
           </TransactionDetailViewField>
@@ -109,6 +129,11 @@ class TransactionsDetailView extends React.Component {
   }
 
   render() {
+    const transaction = (typeof this.props.transaction === 'object' &&
+      Object.keys(this.props.transaction).length !== 0) ||
+      this.props.pendingTransactions.length === 0
+      ? this.props.transaction : this.props.pendingTransactions[0];
+
     return (
       <div className={`${styles.details}`}>
         {
@@ -129,8 +154,8 @@ class TransactionsDetailView extends React.Component {
               <header>
                 <h2 className={styles.title}>
                   <TransactionType
-                    {...this.props.transaction}
-                    address={this.props.transaction.senderId}
+                    {...transaction}
+                    address={transaction.senderId}
                     showTransaction />
                 </h2>
               </header>
@@ -139,20 +164,20 @@ class TransactionsDetailView extends React.Component {
 
           {this.getFirstRow()}
 
-          <TransactionDetailViewRow shouldShow={this.props.transaction.type === 0}>
+          <TransactionDetailViewRow shouldShow={transaction.type === 0}>
             {this.getDateField()}
             <TransactionDetailViewField
               label={this.props.t('Amount (LSK)')}
               value={
                 <Amount
-                  value={this.props.transaction}
+                  value={transaction}
                   address={this.props.address}>
                 </Amount>
               }
               style={styles.amount} />
           </TransactionDetailViewRow>
 
-          <TransactionDetailViewRow shouldShow={this.props.transaction.type === transactions.vote}>
+          <TransactionDetailViewRow shouldShow={transaction.type === transactions.vote}>
             <TransactionDetailViewField
               label={this.props.t('Added votes')}
               value={this.getVoters('added')} />
@@ -164,10 +189,10 @@ class TransactionsDetailView extends React.Component {
           <TransactionDetailViewRow>
             <TransactionDetailViewField
               label={this.props.t('Additional fee')}
-              value={<LiskAmount val={this.props.transaction.fee} />} />
+              value={<LiskAmount val={transaction.fee} />} />
             <TransactionDetailViewField
               label={this.props.t('Confirmations')}
-              value={<span>{this.props.transaction.confirmations}</span>} />
+              value={<span>{transaction.confirmations}</span>} />
           </TransactionDetailViewRow>
 
           <TransactionDetailViewRow>
@@ -176,15 +201,15 @@ class TransactionsDetailView extends React.Component {
                 label={this.props.t('Transaction ID')}
                 value={
                   <CopyToClipboard
-                    value={this.props.transaction.id}
-                    text={this.props.transaction.id}
+                    value={transaction.id}
+                    text={transaction.id}
                     copyClassName={`${styles.copy}`} />
                 } />
             }
             <TransactionDetailViewField
-              shouldShow={this.props.transaction.asset && this.props.transaction.asset.data}
+              shouldShow={transaction.asset && transaction.asset.data}
               label={this.props.t('Reference')}
-              value={(this.props.transaction.asset && this.props.transaction.asset.data) || '-'} />
+              value={(transaction.asset && transaction.asset.data) || '-'} />
           </TransactionDetailViewRow>
         </div>
         <footer>
