@@ -1,4 +1,4 @@
-# Lisk Hub Pull Issue Specificaiton Guideline
+# Lisk Hub Issue Specificaiton Guideline
 
 Lisk Hub team will gather community enhancement proposals in the backlog of the project. 
 
