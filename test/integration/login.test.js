@@ -7,8 +7,10 @@ import Lisk from 'lisk-elements';
 
 import * as accountAPI from '../../src/utils/api/account';
 import * as delegateAPI from '../../src/utils/api/delegate';
+import * as transactionsAPI from '../../src/utils/api/transactions';
 import { prepareStore, renderWithRouter } from '../utils/applicationInit';
 import accountReducer from '../../src/store/reducers/account';
+import transactionsReducer from '../../src/store/reducers/transactions';
 import peersReducer from '../../src/store/reducers/peers';
 import settingsReducer from '../../src/store/reducers/settings';
 import savedAccountsReducer from '../../src/store/reducers/savedAccounts';
@@ -29,6 +31,7 @@ describe('@integration: Login', () => {
   let wrapper;
   let helper;
   let accountAPIStub;
+  let transactionsAPIStub;
   let delegateAPIStub;
   let localStorageStub;
   let errorToastDisplayedSpy;
@@ -65,6 +68,7 @@ describe('@integration: Login', () => {
     prepareStore({
       account: accountReducer,
       peers: peersReducer,
+      transactions: transactionsReducer,
       savedAccounts: savedAccountsReducer,
       settings: settingsReducer,
     }, [
@@ -78,6 +82,7 @@ describe('@integration: Login', () => {
   const restoreStubs = () => {
     localStorageStub.restore();
     accountAPIStub.restore();
+    transactionsAPIStub.restore();
     delegateAPIStub.restore();
     errorToastDisplayedSpy.restore();
   };
@@ -86,6 +91,8 @@ describe('@integration: Login', () => {
     localStorageStub = stub(localStorage, 'getItem');
     localStorageStub.withArgs('accounts').returns(JSON.stringify([{}, {}]));
     accountAPIStub = stub(accountAPI, 'getAccount');
+    transactionsAPIStub = stub(transactionsAPI, 'getTransactions');
+    transactionsAPIStub.returnsPromise().resolves({ data: [] });
     accountAPIStub.returnsPromise().resolves({
       address: '6307319849853921018L',
       unconfirmedBalance: '10190054753073',

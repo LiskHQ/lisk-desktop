@@ -27,11 +27,13 @@ const updateAccountData = (store, action) => {
     account,
   }));
 
-  store.dispatch(transactionsFilterSet({
-    address: extractAddress(extractPublicKey(action.data.passphrase)),
-    limit: 25,
-    filter: txFilters.all,
-  }));
+  if (action.data.passphrase) {
+    store.dispatch(transactionsFilterSet({
+      address: extractAddress(extractPublicKey(action.data.passphrase)),
+      limit: 25,
+      filter: txFilters.all,
+    }));
+  }
 };
 
 const getRecentTransactionOfType = (transactionsList, type) => (
