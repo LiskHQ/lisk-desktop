@@ -1,6 +1,5 @@
 import i18next from 'i18next';
 import { getAccount } from '../../utils/api/account';
-
 import { extractAddress, extractPublicKey } from '../../utils/account';
 import { accountLoggedIn, accountLoading, accountLoggedOut } from '../../actions/account';
 import actionTypes from '../../constants/actions';
