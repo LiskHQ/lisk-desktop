@@ -8,6 +8,11 @@ import actionTypes from '../../constants/actions';
 import accountConfig from '../../constants/account';
 import transactionTypes from '../../constants/transactionTypes';
 
+import { getAutoLogInData, shouldAutoLogIn } from '../../utils/login';
+import { activePeerSet, activePeerUpdate } from '../../actions/peers';
+import networks from '../../constants/networks';
+import settings from '../../constants/settings';
+
 const { lockDuration } = accountConfig;
 
 const updateAccountData = (store, action) => {
@@ -95,12 +100,28 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
   }
 };
 
+const autoLogInIfNecessary = (store) => {
+  const autologinData = getAutoLogInData();
+  if (shouldAutoLogIn(autologinData)) {
+    store.dispatch(activePeerSet({
+      passphrase: autologinData[settings.keys.autologinKey],
+      network: { ...networks.customNode, address: autologinData[settings.keys.autologinUrl] },
+    }));
+    store.dispatch(activePeerUpdate({
+      online: true,
+    }));
+  }
+};
+
 const accountMiddleware = store => next => (action) => {
   next(action);
   switch (action.type) {
     // update on login because the 'save account' button
     // depends on a rerendering of the page
     // TODO: fix the 'save account' path problem, so we can remove this
+    case actionTypes.storeCreated:
+      autoLogInIfNecessary(store, next, action);
+      break;
     case actionTypes.accountLoggedIn:
       updateAccountData(store, action);
       break;
