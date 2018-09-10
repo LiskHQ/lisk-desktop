@@ -15,7 +15,6 @@ describe('Send Readable Component', () => {
   let wrapper;
   const account = accounts.delegate;
   const props = {
-    activePeer: {},
     account,
     pendingTransactions: [],
     passphrase: { value: account.passphrase },

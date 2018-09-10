@@ -23,7 +23,6 @@ describe('Send Writable Component', () => {
     });
 
     props = {
-      activePeer: {},
       account,
       pendingTransactions: [],
       closeDialog: () => {},

@@ -53,7 +53,6 @@ describe('actions: account', () => {
   describe('secondPassphraseRegistered', () => {
     let accountApiMock;
     const data = {
-      activePeer: {},
       secondPassphrase: 'sample second passphrase',
       account: {
         publicKey: 'test_public-key',
@@ -258,7 +257,6 @@ describe('actions: account', () => {
       });
 
       const data = {
-        activePeer: {},
         address: accounts.genesis.address,
         transactionsResponse: { meta: { count: 0 }, data: [] },
         isSameAccount: false,
@@ -282,7 +280,6 @@ describe('actions: account', () => {
       });
 
       const data = {
-        activePeer: {},
         address: accounts.genesis.address,
         transactionsResponse: { meta: { count: 0 }, data: [] },
         isSameAccount: true,

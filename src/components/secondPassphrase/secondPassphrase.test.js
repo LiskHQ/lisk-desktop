@@ -12,10 +12,8 @@ import routes from '../../constants/routes';
 
 describe('SecondPassphrase', () => {
   let wrapper;
-  const peers = { data: {} };
   const account = accounts.delegate;
   const store = configureMockStore([])({
-    peers,
     account,
   });
   const options = {
@@ -27,7 +25,6 @@ describe('SecondPassphrase', () => {
   };
   const props = {
     account,
-    peers,
     closeDialog: () => {},
     passphrase: account.passphrase,
     registerSecondPassphrase: spy(),
