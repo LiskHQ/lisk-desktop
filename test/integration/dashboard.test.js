@@ -6,8 +6,8 @@ import { stub, match, spy } from 'sinon';
 
 import * as accountAPI from '../../src/utils/api/account';
 import * as delegateAPI from '../../src/utils/api/delegate';
+import * as liskServiceAPI from '../../src/utils/api/liskService';
 import * as transactionsAPI from '../../src/utils/api/transactions';
-import liskServiceApi from '../../src/utils/api/liskService';
 import { prepareStore, renderWithRouter } from '../utils/applicationInit';
 import accountReducer from '../../src/store/reducers/account';
 import followedAccountsReducer from '../../src/store/reducers/followedAccounts';
@@ -67,7 +67,7 @@ describe('@integration: Dashboard', () => {
 
   beforeEach(() => {
     getTransactionsStub = stub(transactionsAPI, 'getTransactions');
-    liskServiceAPIStub = stub(liskServiceApi, 'getCurrencyGraphData');
+    liskServiceAPIStub = stub(liskServiceAPI, 'getCurrencyGraphData');
     accountAPIStub = stub(accountAPI, 'getAccount');
     delegateAPIStub = stub(delegateAPI, 'getDelegate');
     sendTransactionsStub = stub(transactionsAPI, 'send');
@@ -180,7 +180,7 @@ describe('@integration: Dashboard', () => {
     });
   });
 
-  describe.skip('Currency Graph', () => {
+  describe('Currency Graph', () => {
     describe('Scenario: displays the currency graph', () => {
       step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
       step('Then I should see the currency graph', () => helper.shouldSeeCountInstancesOf(1, CurrencyGraph));
