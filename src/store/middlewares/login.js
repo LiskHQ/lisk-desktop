@@ -3,7 +3,7 @@ import { getAccount } from '../../utils/api/account';
 import { getAutoLogInData, shouldAutoLogIn } from '../../utils/login';
 import { extractAddress, extractPublicKey } from '../../utils/account';
 import { accountLoggedIn, accountLoading, accountLoggedOut } from '../../actions/account';
-import { activePeerSet } from '../../actions/peers';
+import { activePeerSet, activePeerUpdate } from '../../actions/peers';
 import networks from '../../constants/networks';
 import actionTypes from '../../constants/actions';
 import accountConfig from '../../constants/account';
@@ -18,12 +18,16 @@ const autoLogInIfNecessary = (store) => {
       passphrase: autologinData[settings.keys.autologinKey],
       network: { ...networks.customNode, address: autologinData[settings.keys.autologinUrl] },
     }));
+    store.dispatch(activePeerUpdate({
+      online: true,
+    }));
   }
 };
 
 const loginMiddleware = store => next => (action) => {
   if (action.type !== actionTypes.activePeerSet ||
       (!action.data.publicKey && !action.data.passphrase)) {
+    autoLogInIfNecessary();
     return next(action);
   }
   next(action);
