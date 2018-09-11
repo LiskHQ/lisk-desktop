@@ -131,12 +131,12 @@ const autoLogInIfNecessary = (store) => {
 const accountMiddleware = store => next => (action) => {
   next(action);
   switch (action.type) {
-    // update on login because the 'save account' button
-    // depends on a rerendering of the page
-    // TODO: fix the 'save account' path problem, so we can remove this
     case actionTypes.storeCreated:
       autoLogInIfNecessary(store, next, action);
       break;
+    // update on login because the 'save account' button
+    // depends on a rerendering of the page
+    // TODO: fix the 'save account' path problem, so we can remove this
     case actionTypes.accountLoggedIn:
       updateAccountData(store, action);
       break;
