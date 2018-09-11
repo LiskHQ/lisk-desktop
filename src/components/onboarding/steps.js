@@ -178,7 +178,7 @@ export const steps = t => ([
   // },
   {
     title: t('Lisk ID'),
-    text: t('Here you see your address and balance.'),
+    text: t('Here you see your address, balance, and avatar.'),
     selector: '.account',
     position: 'bottom',
     style: styles.step,
