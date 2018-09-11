@@ -4,7 +4,6 @@ node_modules
 npm-debug.log
 src/.nyc_output
 coverage
-e2e-test-screenshots
 app/report.html
 app/*.map
 app/build
@@ -16,3 +15,5 @@ app/app.js
 .idea
 blockchain_explorer.db.gz
 reports
+test/cypress/screenshots/
+test/cypress/videos/
