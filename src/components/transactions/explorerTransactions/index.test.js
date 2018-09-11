@@ -68,6 +68,7 @@ describe('ExplorerTransactions Component', () => {
       address: accounts.genesis.address,
       activeFilter: txFilters.all,
       history: { push: spy(), location: { search: ' ' } },
+      pendingTransactions: [],
       t: key => key,
     };
 
