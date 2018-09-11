@@ -21,9 +21,7 @@ class TransactionsDetailView extends React.Component {
   constructor(props) {
     super(props);
 
-    const { search } = this.props.location || window.location;
-    const params = new URLSearchParams(search);
-    const transactionId = params.get('id');
+    const transactionId = this.getTransactionIdFromURL();
 
     if (props.peers.data && transactionId) {
       this.props.loadTransaction({
@@ -37,10 +35,7 @@ class TransactionsDetailView extends React.Component {
 
     // It rerenders component when pending status changed to confirmed
     if (nextProps.pendingTransactions.length === 0 && typeof nextProps.transaction === 'string') {
-      const { search } = this.props.location || window.location;
-      const params = new URLSearchParams(search);
-
-      const transactionId = params.get('id');
+      const transactionId = this.getTransactionIdFromURL();
 
       if (this.props.peers.data && transactionId) {
         this.props.loadTransaction({
@@ -48,6 +43,13 @@ class TransactionsDetailView extends React.Component {
         });
       }
     }
+  }
+
+  getTransactionIdFromURL() {
+    const { search } = this.props.location || window.location;
+    const params = new URLSearchParams(search);
+
+    return params.get('id');
   }
 
   getVoters(dataName) {
@@ -80,10 +82,14 @@ class TransactionsDetailView extends React.Component {
   }
 
   getFirstRow() {
-    const transaction = (typeof this.props.transaction === 'object' &&
-      Object.keys(this.props.transaction).length !== 0) ||
-      this.props.pendingTransactions.length === 0
-      ? this.props.transaction : this.props.pendingTransactions;
+    const transactionId = this.getTransactionIdFromURL();
+    const isTransactionEmpty = (typeof this.props.transaction === 'object' &&
+    Object.keys(this.props.transaction).length !== 0);
+
+    const transaction = isTransactionEmpty || (isTransactionEmpty &&
+      this.props.pendingTransactions.find(tx => tx.id === transactionId)) ?
+      this.props.transaction :
+      (this.props.pendingTransactions.find(tx => tx.id === transactionId) || {});
 
     const isSendTransaction = this.props.transaction.type === transactions.send
       || this.props.pendingTransactions.length > 0;
@@ -129,10 +135,14 @@ class TransactionsDetailView extends React.Component {
   }
 
   render() {
-    const transaction = (typeof this.props.transaction === 'object' &&
-      Object.keys(this.props.transaction).length !== 0) ||
-      this.props.pendingTransactions.length === 0
-      ? this.props.transaction : this.props.pendingTransactions[0];
+    const transactionId = this.getTransactionIdFromURL();
+    const isTransactionEmpty = (typeof this.props.transaction === 'object' &&
+    Object.keys(this.props.transaction).length !== 0);
+
+    const transaction = isTransactionEmpty || (isTransactionEmpty &&
+      this.props.pendingTransactions.find(tx => tx.id === transactionId)) ?
+      this.props.transaction :
+      (this.props.pendingTransactions.find(tx => tx.id === transactionId) || {});
 
     return (
       <div className={`${styles.details}`}>
