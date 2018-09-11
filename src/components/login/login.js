@@ -93,7 +93,6 @@ class Login extends React.Component {
     this.secondIteration = true;
     if (this.alreadyLoggedWithThisAddress(extractAddress(passphrase), network)) {
       this.redirectToReferrer();
-      this.props.activeAccountSaved();
     } else {
       this.props.activePeerSet({
         passphrase,
