@@ -198,14 +198,14 @@ module.exports = {
 
     // integration
 
-    // '<rootDir>/test/integration/dashboard.test.js',
+    '<rootDir>/test/integration/dashboard.test.js',
     '<rootDir>/test/integration/transactionID.test.js',
     // '<rootDir>/test/integration/wallet.test.js',
     // '<rootDir>/test/integration/voting.test.js',
     // '<rootDir>/test/integration/accountTransactions.test.js',
-    // '<rootDir>/test/integration/registerDelegate.test.js',
+    '<rootDir>/test/integration/registerDelegate.test.js',
     // '<rootDir>/test/integration/register.test.js',
-    // '<rootDir>/test/integration/login.test.js',
+    '<rootDir>/test/integration/login.test.js',
   ],
   verbose: true,
   moduleFileExtensions: ['js'],
@@ -238,4 +238,8 @@ module.exports = {
     '^.+\\.js$': 'babel-jest',
   },
   testURL: 'http://localhost',
+  globals: {
+    PRODUCTION: true,
+    TEST: true,
+  },
 };
