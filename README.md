@@ -43,7 +43,7 @@ npm run build
 #### Start
 
 
-Start the Electron client. Before staring you need to make sure the application is built. If you need to built the entire application, run
+Start the Electron client. Before staring you need to make sure the application is built. If you need to build the entire application, run
 
 ```
 npm run build
