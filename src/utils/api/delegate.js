@@ -14,12 +14,21 @@ export const listDelegates = (activePeer, options) => new Promise((resolve, reje
 export const getDelegate = (activePeer, options) =>
   activePeer.delegates.get(options);
 
-export const vote = (activePeer, secret, publicKey, votes, unvotes, secondSecret = null) => {
+export const vote = (
+  activePeer,
+  secret,
+  publicKey,
+  votes,
+  unvotes,
+  secondSecret = null,
+  timeOffset,
+) => {
   const transaction = Lisk.transaction.castVotes({
     votes,
     unvotes,
     passphrase: secret,
     secondPassphrase: secondSecret,
+    timeOffset,
   });
   return new Promise((resolve, reject) => {
     activePeer.transactions.broadcast(transaction).then(() => resolve(transaction)).catch(reject);
@@ -32,8 +41,14 @@ export const getVotes = (activePeer, address) =>
 export const getVoters = (activePeer, publicKey) =>
   activePeer.voters.get({ publicKey });
 
-export const registerDelegate = (activePeer, username, passphrase, secondPassphrase = null) => {
-  const data = { username, passphrase };
+export const registerDelegate = (
+  activePeer,
+  username,
+  passphrase,
+  secondPassphrase = null,
+  timeOffset,
+) => {
+  const data = { username, passphrase, timeOffset };
   if (secondPassphrase) {
     data.secondPassphrase = secondPassphrase;
   }
