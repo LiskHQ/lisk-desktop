@@ -127,7 +127,7 @@ module.exports = {
     // '<rootDir>/src/components/passphraseCreation/index.test.js',
     // '<rootDir>/src/components/authInputs/authInputs.test.js',
     // '<rootDir>/src/components/authInputs/index.test.js',
-    // '<rootDir>/src/components/account/account.test.js',
+    '<rootDir>/src/components/account/account.test.js',
     // '<rootDir>/src/components/account/index.test.js',
     // '<rootDir>/src/components/setting/index.test.js',
     // '<rootDir>/src/components/setting/setting.test.js',
@@ -238,4 +238,8 @@ module.exports = {
     '^.+\\.js$': 'babel-jest',
   },
   testURL: 'http://localhost',
+  globals: {
+    PRODUCTION: true,
+    TEST: true,
+  },
 };
