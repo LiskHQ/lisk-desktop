@@ -4,7 +4,7 @@
 
 # Comment to be posted to on first time issues
 newIssueWelcomeComment: >
-  Thanks for opening your first issue here! Be sure to follow the [issue template](https://github.com/LiskHQ/lisk-hub/blob/development/.github/issue_template.md)!
+  Thanks for opening your first issue here! Be sure to follow the issue template for [bug report](https://github.com/LiskHQ/lisk-hub/blob/development/.github/ISSUE_TEMPLATE/bug_report.md) or [feature request](https://github.com/LiskHQ/lisk-hub/blob/development/.github/ISSUE_TEMPLATE/feature_request.md)!
 
 # Configuration for new-pr-welcome - https://github.com/behaviorbot/new-pr-welcome
 
