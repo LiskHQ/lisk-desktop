@@ -2,12 +2,14 @@ import Lisk from 'lisk-elements';
 import txFilters from './../../constants/transactionFilters';
 
 export const send = (activePeer, recipientId, amount, passphrase, secondPassphrase = null, data) =>
-  new Promise((resolve) => {
+  new Promise((resolve, reject) => {
     const transaction = Lisk.transaction.transfer({
       recipientId, amount, passphrase, secondPassphrase, data,
     });
     activePeer.transactions.broadcast(transaction).then(() => {
       resolve(transaction);
+    }).catch((error) => {
+      reject(error);
     });
   });
 
