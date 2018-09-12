@@ -88,8 +88,6 @@ describe('@integration: Login', () => {
   };
 
   const stubApisDefaultScenario = () => {
-    localStorageStub = stub(localStorage, 'getItem');
-    localStorageStub.withArgs('accounts').returns(JSON.stringify([{}, {}]));
     accountAPIStub = stub(accountAPI, 'getAccount');
     transactionsAPIStub = stub(transactionsAPI, 'getTransactions');
     transactionsAPIStub.returnsPromise().resolves({ data: [] });
@@ -110,8 +108,6 @@ describe('@integration: Login', () => {
   };
 
   const stubApisScenarioInvalidNode = () => {
-    localStorageStub = stub(localStorage, 'getItem');
-    localStorageStub.withArgs('accounts').returns(JSON.stringify([{}, {}]));
     accountAPIStub = stub(accountAPI, 'getAccount').returnsPromise().rejects();
     delegateAPIStub = stub(delegateAPI, 'getDelegate').returnsPromise().rejects();
     errorToastDisplayedSpy = spy(toasterActions, 'errorToastDisplayed');
