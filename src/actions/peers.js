@@ -5,6 +5,11 @@ import networks from '../constants/networks';
 import { errorToastDisplayed } from './toaster';
 import { loadingStarted, loadingFinished } from '../actions/loading';
 
+import { getAccount } from '../utils/api/account';
+import { extractAddress, extractPublicKey } from '../utils/account';
+import { accountLoggedIn, accountLoading, accountLoggedOut } from './account';
+import accountConfig from '../constants/account';
+
 const peerSet = (data, config) => ({
   data: Object.assign({
     passphrase: data.passphrase,
@@ -24,7 +29,7 @@ const peerSet = (data, config) => ({
  * @returns {Object} Action object
  */
 export const activePeerSet = data =>
-  (dispatch) => {
+  (dispatch, getState) => {
     const config = data.network || {};
 
     if (config.address) {
@@ -50,6 +55,40 @@ export const activePeerSet = data =>
       });
     } else {
       dispatch(peerSet(data, config));
+    }
+
+    if (data.passphrase) {
+      const store = getState();
+      const { lockDuration } = accountConfig;
+      const { passphrase } = data;
+      const { code } = data.network;
+      const activePeer = store.peers.data;
+      const publicKey = passphrase ? extractPublicKey(passphrase) : data.publicKey;
+      const address = extractAddress(publicKey);
+      const accountBasics = {
+        passphrase,
+        publicKey,
+        address,
+        network: code || 0,
+        peerAddress: data.network.nodes[0],
+      };
+
+      dispatch(accountLoading());
+
+      // redirect to main/transactions
+      getAccount(activePeer, address).then((accountData) => {
+        const duration = (passphrase && store.settings.autoLog) ?
+          Date.now() + lockDuration : 0;
+        const accountUpdated = {
+          ...accountData,
+          ...accountBasics,
+          expireTime: duration,
+        };
+        dispatch(accountLoggedIn(accountUpdated));
+      }).catch(() => {
+        dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node') }));
+        dispatch(accountLoggedOut());
+      });
     }
   };
 
