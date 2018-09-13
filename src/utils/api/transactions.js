@@ -8,9 +8,7 @@ export const send = (activePeer, recipientId, amount, passphrase, secondPassphra
     });
     activePeer.transactions.broadcast(transaction).then(() => {
       resolve(transaction);
-    }).catch((error) => {
-      reject(error);
-    });
+    }).catch(reject);
   });
 
 export const getTransactions = ({
