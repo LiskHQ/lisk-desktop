@@ -32,6 +32,7 @@ module.exports = {
     '<rootDir>/src/utils/api/delegate.test.js',
     // '<rootDir>/src/utils/generateUniqueId.test.js',
     // '<rootDir>/src/utils/login.test.js',
+    '<rootDir>/src/utils/hacks.test.js',
     // '<rootDir>/src/components/searchBar/index.test.js',
     // '<rootDir>/src/components/accountTransactions/index.test.js',
     // '<rootDir>/src/components/multiStep/index.test.js',
@@ -195,6 +196,7 @@ module.exports = {
     // '<rootDir>/src/store/reducers/settings.test.js',
     // '<rootDir>/src/store/reducers/delegate.test.js',
     // '<rootDir>/src/store/reducers/transaction.test.js',
+    '<rootDir>/src/store/reducers/blocks.test.js',
 
     // integration
 

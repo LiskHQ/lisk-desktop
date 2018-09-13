@@ -1,13 +1,13 @@
 import actionTypes from '../../constants/actions';
 
-const blocks = (state = {}, action) => {
+const blocks = (state = { latestBlocks: [] }, action) => {
   switch (action.type) {
     case actionTypes.newBlockCreated:
       return {
         ...state,
         latestBlocks: [
           action.data.block,
-          ...state.blocks.slice(0, 9),
+          ...state.latestBlocks.slice(0, 9),
         ],
       };
     default:
