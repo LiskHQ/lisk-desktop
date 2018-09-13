@@ -16,18 +16,18 @@ export const getDelegate = (activePeer, options) =>
 
 export const vote = (
   activePeer,
-  secret,
+  passphrase,
   publicKey,
   votes,
   unvotes,
-  secondSecret = null,
+  secondPassphrase = null,
   timeOffset,
 ) => {
   const transaction = Lisk.transaction.castVotes({
     votes,
     unvotes,
-    passphrase: secret,
-    secondPassphrase: secondSecret,
+    passphrase,
+    secondPassphrase,
     timeOffset,
   });
   return new Promise((resolve, reject) => {

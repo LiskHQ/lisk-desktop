@@ -18,6 +18,7 @@ describe('Utils: Delegate', () => {
   let activePeerMockTransations;
   let liskTransactionsCastVotesStub;
   let liskTransactionsRegisterDelegateSpy;
+  const timeOffset = 0;
 
   const activePeer = {
     delegates: {
@@ -63,7 +64,7 @@ describe('Utils: Delegate', () => {
     it('should get votes for an address with 101 limit', () => {
       const address = '123L';
       listAccountDelegates(activePeer, address);
-      return expect(activePeer.votes.get).to.have.been.calledWith({ address, limit: '101' });
+      expect(activePeer.votes.get).to.have.been.calledWith({ address, limit: '101' });
     });
   });
 
@@ -74,7 +75,7 @@ describe('Utils: Delegate', () => {
       activePeerMockDelegates.expects('get').withArgs(options).returnsPromise().resolves(response);
 
       const returnedPromise = listDelegates(activePeer, options);
-      return expect(returnedPromise).to.eventually.equal(response);
+      expect(returnedPromise).to.eventually.equal(response);
     });
 
     it('should return getDelegate(activePeer, options) if options.q is set', () => {
@@ -100,26 +101,34 @@ describe('Utils: Delegate', () => {
 
   describe('vote', () => {
     it('should call castVotes and broadcast transaction', () => {
-      const votes = [{
-        username: 'user1',
-      }, {
-        username: 'user2',
-      }];
-      const unvotes = [{
-        username: 'user3',
-      }, {
-        username: 'user4',
-      }];
+      const votes = [
+        accounts.genesis.publicKey,
+        accounts.delegate.publicKey,
+      ];
+      const unvotes = [
+        accounts['empty account'].publicKey,
+        accounts['delegate candidate'].publicKey,
+      ];
       const transaction = { id: '1234' };
+      const secondPassphrase = null;
       liskTransactionsCastVotesStub.withArgs({
         votes,
         unvotes,
         passphrase: accounts.genesis.passphrase,
-        secondPassphrase: null,
+        secondPassphrase,
+        timeOffset,
       }).returns(transaction);
 
-      vote(activePeer, accounts.genesis.passphrase, accounts.genesis.publicKey, votes, unvotes);
-      return expect(activePeer.transactions.broadcast).to.have.been.calledWith(transaction);
+      vote(
+        activePeer,
+        accounts.genesis.passphrase,
+        accounts.genesis.publicKey,
+        votes,
+        unvotes,
+        secondPassphrase,
+        timeOffset,
+      );
+      expect(activePeer.transactions.broadcast).to.have.been.calledWith(transaction);
     });
   });
 
@@ -127,7 +136,7 @@ describe('Utils: Delegate', () => {
     it('should get votes for an address with no parameters', () => {
       const address = '123L';
       getVotes(activePeer, address);
-      return expect(activePeer.votes.get).to.have.been.calledWith({ address });
+      expect(activePeer.votes.get).to.have.been.calledWith({ address });
     });
   });
 
@@ -138,18 +147,19 @@ describe('Utils: Delegate', () => {
         .returnsPromise().resolves('resolved promise');
 
       const returnedPromise = getVoters(activePeer, publicKey);
-      return expect(returnedPromise).to.eventually.equal('resolved promise');
+      expect(returnedPromise).to.eventually.equal('resolved promise');
     });
   });
 
   describe('registerDelegate', () => {
     it('should broadcast a registerDelegate transaction', () => {
-      const registerDelegateArgs = [null, 'username', 'passphrase', 'secondPassphrase'];
+      const registerDelegateArgs = [null, 'username', 'passphrase', 'secondPassphrase', timeOffset];
       registerDelegate(...registerDelegateArgs);
-      return expect(liskTransactionsRegisterDelegateSpy).to.have.been.calledWith({
+      expect(liskTransactionsRegisterDelegateSpy).to.have.been.calledWith({
         username: 'username',
         passphrase: 'passphrase',
         secondPassphrase: 'secondPassphrase',
+        timeOffset,
       });
     });
   });
