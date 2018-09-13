@@ -17,7 +17,7 @@ describe('Utils: Delegate', () => {
   let activePeerMockVoters;
   let activePeerMockTransations;
   let liskTransactionsCastVotesStub;
-  let liskTransactionsRegisterDelegateSpy;
+  let liskTransactionsRegisterDelegateStub;
   const timeOffset = 0;
 
   const activePeer = {
@@ -37,7 +37,7 @@ describe('Utils: Delegate', () => {
 
   beforeEach(() => {
     liskTransactionsCastVotesStub = sinon.stub(Lisk.transaction, 'castVotes');
-    liskTransactionsRegisterDelegateSpy = sinon.spy(Lisk.transaction, 'registerDelegate');
+    liskTransactionsRegisterDelegateStub = sinon.stub(Lisk.transaction, 'registerDelegate');
     activePeerMockDelegates = sinon.mock(activePeer.delegates);
     activePeerMockVotes = sinon.mock(activePeer.votes);
     activePeerMockVoters = sinon.mock(activePeer.voters);
@@ -57,7 +57,7 @@ describe('Utils: Delegate', () => {
     activePeerMockTransations.restore();
 
     liskTransactionsCastVotesStub.restore();
-    liskTransactionsRegisterDelegateSpy.restore();
+    liskTransactionsRegisterDelegateStub.restore();
   });
 
   describe('listAccountDelegates', () => {
@@ -152,15 +152,37 @@ describe('Utils: Delegate', () => {
   });
 
   describe('registerDelegate', () => {
-    it('should broadcast a registerDelegate transaction', () => {
-      const registerDelegateArgs = [null, 'username', 'passphrase', 'secondPassphrase', timeOffset];
-      registerDelegate(...registerDelegateArgs);
-      expect(liskTransactionsRegisterDelegateSpy).to.have.been.calledWith({
-        username: 'username',
-        passphrase: 'passphrase',
-        secondPassphrase: 'secondPassphrase',
+    it('should broadcast a registerDelegate transaction without second passphrase', () => {
+      const transaction = { id: '1234' };
+      const username = 'username';
+      const passphrase = 'passphrase';
+      const secondPassphrase = undefined;
+
+      liskTransactionsRegisterDelegateStub.withArgs({
+        username,
+        passphrase,
         timeOffset,
-      });
+      }).returns(transaction);
+
+      registerDelegate(activePeer, username, passphrase, secondPassphrase, timeOffset);
+      expect(activePeer.transactions.broadcast).to.have.been.calledWith(transaction);
+    });
+
+    it('should broadcast a registerDelegate transaction with second passphrase', () => {
+      const transaction = { id: '1234' };
+      const username = 'username';
+      const passphrase = 'passphrase';
+      const secondPassphrase = 'secondPassphrase';
+
+      liskTransactionsRegisterDelegateStub.withArgs({
+        username,
+        passphrase,
+        secondPassphrase,
+        timeOffset,
+      }).returns(transaction);
+
+      registerDelegate(activePeer, username, passphrase, secondPassphrase, timeOffset);
+      expect(activePeer.transactions.broadcast).to.have.been.calledWith(transaction);
     });
   });
 });

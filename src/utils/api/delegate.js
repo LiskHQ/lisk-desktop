@@ -20,7 +20,7 @@ export const vote = (
   publicKey,
   votes,
   unvotes,
-  secondPassphrase = null,
+  secondPassphrase,
   timeOffset,
 ) => {
   const transaction = Lisk.transaction.castVotes({
