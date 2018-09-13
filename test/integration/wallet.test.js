@@ -18,7 +18,6 @@ import peersReducer from '../../src/store/reducers/peers';
 import loadingReducer from '../../src/store/reducers/loading';
 import searchReducer from '../../src/store/reducers/search';
 import filtersReducer from '../../src/store/reducers/filters';
-import loginMiddleware from '../../src/store/middlewares/login';
 import accountMiddleware from '../../src/store/middlewares/account';
 import peerMiddleware from '../../src/store/middlewares/peers';
 import { accountLoggedIn } from '../../src/actions/account';
@@ -99,7 +98,6 @@ describe('@integration: Wallet', () => {
     }, [
       thunk,
       accountMiddleware,
-      loginMiddleware,
       peerMiddleware,
     ]);
 
