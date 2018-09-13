@@ -34,7 +34,8 @@ class TransactionsDetailView extends React.Component {
     if (nextProps.location && !nextProps.location.search) this.props.prevStep();
 
     // It rerenders component when pending status changed to confirmed
-    if (nextProps.pendingTransactions.length === 0 && typeof nextProps.transaction === 'string') {
+    if (nextProps.pendingTransactions &&
+      nextProps.pendingTransactions.length === 0 && typeof nextProps.transaction === 'string') {
       const transactionId = this.getTransactionIdFromURL();
 
       if (this.props.peers.data && transactionId) {
