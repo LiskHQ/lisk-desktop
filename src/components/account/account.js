@@ -27,8 +27,10 @@ const Account = ({ peers, t, showNetworkIndicator }) => {
     <FontIcon className={`${styles.network} online`} value={iconMap[iconCode]} /> :
     <FontIcon className='offline' value='error' />;
 
-  return ((showNetworkIndicator && peers.data &&
-      peers.options.code !== networks.mainnet.code) ?
+  const shouldShowNetworkIndicator = (peers.data &&
+      (showNetworkIndicator || peers.options.code !== networks.mainnet.code));
+
+  return (shouldShowNetworkIndicator ?
     <section className={styles.peer}>
       <div className={`${styles.title} ${`${styles[`${iconMap[iconCode]}Title`]}`} inner primary peer-network ${iconMap[iconCode]}-title`}>
         <span id="accountStatus" className={`${styles.status} network-status`}>
