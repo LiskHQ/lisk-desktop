@@ -14,18 +14,15 @@
 
   & > aside {
     display: flex;
-    flex: 0 0 30%;
     height: 100%;
     background: #f5f8fc;
     padding: 40px 30px;
     justify-content: space-between;
     flex-direction: column;
     box-sizing: border-box;
-    margin-right: 8px;
   }
 
   & > section {
-    margin-left: 8px;
     background: var(--color-white);
     flex-basis: 70%;
     max-width: 70%;
