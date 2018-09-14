@@ -80,7 +80,6 @@ describe('@integration: Login', () => {
   );
 
   const restoreStubs = () => {
-    localStorageStub.restore();
     accountAPIStub.restore();
     transactionsAPIStub.restore();
     delegateAPIStub.restore();
