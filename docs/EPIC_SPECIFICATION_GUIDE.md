@@ -12,11 +12,13 @@ Once a substantial ammount of proposals have been identified as belonging to the
 
 
 ## Requirements
-- [ZenHub](https://www.zenhub.com/)
+Install [ZenHub](https://www.zenhub.com/) browser extension to your browser (Chrome and Firefox supported) to be able to access the Epic feature of ZenHub in Github
 
 ## Epic creation best practices
 
 Please ensure you follow this practices when creating or working in an epic. 
+
+_NOTE_ we use the following representation *{:parent:}* to express adding *parent* label to the issue.
 
 1. A functional requirement triggers the creation of an Epic {:parent:} in the backlog. 
 1. All information regarding the specifications of the epic resides in the {:parent:} epic.
