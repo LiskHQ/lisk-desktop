@@ -27,7 +27,12 @@ const updateAccountData = (store, action) => {
     account,
   }));
 
-  if (action.data.passphrase) {
+  /**
+   * NOTE: dashboard transactionsList are not loaded when rendering the component,
+   *  as this component just reads transactions from state.
+   *  When autologin in, we need to explicitly request the transactions for that account.
+   */
+  if (shouldAutoLogIn(getAutoLogInData()) && action.data.passphrase) {
     store.dispatch(transactionsFilterSet({
       address: extractAddress(extractPublicKey(action.data.passphrase)),
       limit: 25,
