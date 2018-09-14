@@ -29,7 +29,7 @@ class Request extends React.Component {
             value={account.address}
             className={styles.copy}/>
           <a className={`${styles.emailLink} ${styles.paddingLeft}`}
-            href={`mailto:?subject=Request LSK to ${account.address}&body=Hey there, here is a link you can use to send me LSK via your wallet: ${link}`}>
+            href={`mailto:?subject=Request LSK to ${account.address}&body=Hey there, here is a link you can use to send me LSK via your wallet: ${encodeURIComponent(link)}`}>
             {t('Send request via E-mail')} <FontIcon value='arrow-right'/>
           </a>
         </div>

@@ -3,6 +3,7 @@ import {
   listDelegates,
   vote,
 } from '../utils/api/delegate';
+import { getTimeOffset } from '../utils/hacks';
 import { updateDelegateCache } from '../utils/delegates';
 import { passphraseUsed } from './account';
 import Fees from '../constants/fees';
@@ -81,7 +82,7 @@ export const votePlaced = ({
     const activePeer = getState().peers.data;
     const votedList = [];
     const unvotedList = [];
-
+    const timeOffset = getTimeOffset(getState());
     Object.keys(votes).forEach((username) => {
       /* istanbul ignore else */
       if (!votes[username].confirmed && votes[username].unconfirmed) {
@@ -98,6 +99,7 @@ export const votePlaced = ({
       votedList,
       unvotedList,
       secondSecret,
+      timeOffset,
     ).then((response) => {
       // Add to list
       dispatch(pendingVotesAdded());
