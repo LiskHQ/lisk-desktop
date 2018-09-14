@@ -33,7 +33,6 @@ describe('@integration: Login', () => {
   let accountAPIStub;
   let transactionsAPIStub;
   let delegateAPIStub;
-  let localStorageStub;
   let errorToastDisplayedSpy;
   const localhostUrl = 'http://localhost:4218';
   const errorMessage = 'Unable to connect to the node';
