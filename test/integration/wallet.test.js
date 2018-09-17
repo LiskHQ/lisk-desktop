@@ -22,7 +22,6 @@ import loginMiddleware from '../../src/store/middlewares/login';
 import accountMiddleware from '../../src/store/middlewares/account';
 import peerMiddleware from '../../src/store/middlewares/peers';
 import { accountLoggedIn } from '../../src/actions/account';
-import { accountsRetrieved } from '../../src/actions/savedAccounts';
 import { activePeerSet } from '../../src/actions/peers';
 import networks from './../../src/constants/networks';
 import txTypes from './../../src/constants/transactionTypes';
@@ -122,15 +121,6 @@ describe('@integration: Wallet', () => {
     delegateAPIStub.withArgs(match.any).returnsPromise()
       .resolves({ data: [{ ...accounts['delegate candidate'] }] });
 
-    const targetSavedAccountsInLocalStorage = [{
-      publicKey: accounts['without initialization'].publicKey,
-      network: 1,
-      balance: 0,
-    }];
-
-    localStorageStub.withArgs('accounts').returns(JSON.stringify(targetSavedAccountsInLocalStorage));
-
-    store.dispatch(accountsRetrieved());
     store.dispatch(accountLoggedIn(account));
 
     const history = {

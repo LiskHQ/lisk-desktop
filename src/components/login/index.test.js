@@ -1,13 +1,11 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import sinon from 'sinon';
 import { MemoryRouter } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import LoginHOC from './index';
-import * as savedAccounts from '../../actions/savedAccounts';
 
 describe('LoginHOC', () => {
   // Mocking store
@@ -69,12 +67,5 @@ options,
     expect(props.peers).to.be.equal(peers);
     expect(props.account).to.be.equal(account);
     expect(typeof props.activePeerSet).to.be.equal('function');
-  });
-
-  it('should bind activeAccountSaved action to Login props.activeAccountSaved', () => {
-    const actionsSpy = sinon.spy(savedAccounts, 'activeAccountSaved');
-    wrapper.find('Login').props().activeAccountSaved();
-    expect(actionsSpy).to.be.calledWith();
-    actionsSpy.restore();
   });
 });
