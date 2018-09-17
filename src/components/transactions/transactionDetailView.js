@@ -84,13 +84,13 @@ class TransactionsDetailView extends React.Component {
 
   getFirstRow() {
     const transactionId = this.getTransactionIdFromURL();
+    const isPendingTransaction = this.props.pendingTransactions &&
+      this.props.pendingTransactions.find(tx => tx.id === transactionId);
     const isTransactionEmpty = (typeof this.props.transaction === 'object' &&
     Object.keys(this.props.transaction).length !== 0);
 
-    const transaction = isTransactionEmpty || (isTransactionEmpty &&
-      this.props.pendingTransactions.find(tx => tx.id === transactionId)) ?
-      this.props.transaction :
-      (this.props.pendingTransactions.find(tx => tx.id === transactionId) || {});
+    const transaction = isTransactionEmpty || (isTransactionEmpty && isPendingTransaction) ?
+      this.props.transaction : (isPendingTransaction || {});
 
     const isSendTransaction = this.props.transaction.type === transactions.send
       || (this.props.pendingTransactions && this.props.pendingTransactions.length > 0);
@@ -137,13 +137,11 @@ class TransactionsDetailView extends React.Component {
 
   render() {
     const transactionId = this.getTransactionIdFromURL();
-    const isTransactionEmpty = (typeof this.props.transaction === 'object' &&
-    Object.keys(this.props.transaction).length !== 0);
-
-    const transaction = isTransactionEmpty || (isTransactionEmpty &&
-      this.props.pendingTransactions.find(tx => tx.id === transactionId)) ?
-      this.props.transaction :
-      (this.props.pendingTransactions.find(tx => tx.id === transactionId) || {});
+    const isPendingTransaction = this.props.pendingTransactions &&
+      this.props.pendingTransactions.find(tx => tx.id === transactionId);
+    const isTransactionEmpty = (typeof this.props.transaction === 'object' && Object.keys(this.props.transaction).length !== 0);
+    const transaction = isTransactionEmpty || (isTransactionEmpty && isPendingTransaction) ?
+      this.props.transaction : (isPendingTransaction || {});
 
     return (
       <div className={`${styles.details}`}>
@@ -232,6 +230,7 @@ class TransactionsDetailView extends React.Component {
 
 const mapStateToProps = state => ({
   peers: state.peers,
+  transaction: state.transaction,
 });
 
 const mapDispatchToProps = dispatch => ({
