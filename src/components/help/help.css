@@ -124,7 +124,18 @@
 }
 
 @media (--medium-viewport) {
-  .helpSection:first-child {
-    display: none;
+  .sideBar:first-child {
+    flex: 0 0 30%;
+    width: 100%;
+  }
+
+  .wrapper {
+    flex-direction: column;
+
+    & > section {
+      background: none;
+      flex-basis: 100%;
+      max-width: 100%;
+    }
   }
 }
