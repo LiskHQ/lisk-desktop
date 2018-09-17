@@ -26,10 +26,16 @@ export const getAccount = (activePeer, address) =>
 // export const setSecondPassphrase = (activePeer, secondSecret, publicKey, secret) =>
 //   requestToActivePeer(activePeer, 'signatures', { secondSecret, publicKey, secret });
 
-export const setSecondPassphrase = (activePeer, secondPassphrase, publicKey, passphrase) =>
+export const setSecondPassphrase = (
+  activePeer,
+  secondPassphrase,
+  publicKey,
+  passphrase,
+  timeOffset,
+) =>
   new Promise((resolve, reject) => {
     const transaction = Lisk.transaction
-      .registerSecondPassphrase({ passphrase, secondPassphrase });
+      .registerSecondPassphrase({ passphrase, secondPassphrase, timeOffset });
     activePeer.transactions.broadcast(transaction).then(() => {
       resolve(transaction);
     }).catch(reject);

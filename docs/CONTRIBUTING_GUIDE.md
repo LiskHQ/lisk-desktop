@@ -25,7 +25,7 @@ Go to [issues tab](https://github.com/LiskHQ/lisk-hub/issues) and look for
 ## Reporting issues
 
  1. Check if problem already exist in [issues tab](https://github.com/LiskHQ/lisk-hub/issues)
- 2. If not, create a new [issue](https://github.com/LiskHQ/lisk-hub/issues/new)
+ 2. If not, create a new [issue](https://github.com/LiskHQ/lisk-hub/issues/new/choose)
  3. Fill our [template](/.github/issue_template.md)
  4. Click `Submit new issue`
 ##### Guidance
