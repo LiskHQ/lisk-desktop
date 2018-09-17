@@ -8,12 +8,12 @@ app/report.html
 app/*.map
 app/build
 app/build-testnet
+app/package-lock.json
 *.sw[pon]
 app/app.js
 .vscode
 .idea
 blockchain_explorer.db.gz
-package-lock.json
 reports
 test/cypress/screenshots/
 test/cypress/videos/

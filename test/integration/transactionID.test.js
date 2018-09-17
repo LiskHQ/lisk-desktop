@@ -104,7 +104,7 @@ describe('@integration: Single Transaction', () => {
     if (accountType) { store.dispatch(accountLoggedIn(account)); }
     wrapper = mount(renderWithRouter(
       SingleTransaction, store,
-      { match: { params: { id } }, transaction: transactionMock },
+      { match: { params: { id } }, transaction: transactionMock, pendingTransactions: [] },
     ));
     helper = new Helper(wrapper, store);
   };
