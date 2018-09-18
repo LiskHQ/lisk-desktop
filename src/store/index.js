@@ -21,9 +21,6 @@ if (!env.test) {
 
 store.subscribe(throttle(followedAccountsSubscriber.bind(null, store), 1000));
 
-
-store.dispatch({ type: actionTypes.storeCreated });
-
 // ignore this in coverage as it is hard to test and does not run in production
 /* istanbul ignore if */
 if (module.hot) {
