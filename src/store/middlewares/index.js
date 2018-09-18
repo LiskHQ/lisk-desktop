@@ -9,7 +9,6 @@ import offlineMiddleware from './offline';
 import votingMiddleware from './voting';
 import followedAccountsMiddleware from './followedAccounts';
 import socketMiddleware from './socket';
-import savedSettingsMiddleware from './savedSettings';
 
 export default [
   thunk,
@@ -22,5 +21,4 @@ export default [
   // notificationMiddleware,
   votingMiddleware,
   followedAccountsMiddleware,
-  savedSettingsMiddleware,
 ];
