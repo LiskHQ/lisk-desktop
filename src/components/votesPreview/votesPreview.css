@@ -296,6 +296,7 @@
       bottom: 63px;
     }
   }
+
   .surpassMessage.visible {
     bottom: var(--footer-height-s);
   }
