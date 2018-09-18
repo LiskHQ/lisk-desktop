@@ -6,6 +6,7 @@ import env from '../constants/env';
 import * as reducers from './reducers';
 import middleWares from './middlewares';
 import followedAccountsSubscriber from './subscribers/followedAccounts';
+import settingsSubscriber from './subscribers/settings';
 
 const App = combineReducers(reducers);
 
@@ -20,6 +21,7 @@ if (!env.test) {
 }
 
 store.subscribe(throttle(followedAccountsSubscriber.bind(null, store), 1000));
+store.subscribe(throttle(settingsSubscriber.bind(null, store), 1000));
 
 // ignore this in coverage as it is hard to test and does not run in production
 /* istanbul ignore if */
