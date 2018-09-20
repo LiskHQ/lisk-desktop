@@ -4,9 +4,13 @@ import * as accountActions from '../../actions/account';
 import * as transactionsActions from '../../actions/transactions';
 import accountConfig from '../../constants/account';
 import * as votingActions from '../../actions/voting';
+import * as peersActions from '../../actions/peers';
 import * as accountApi from '../../utils/api/account';
 import * as transactionsApi from '../../utils/api/transactions';
+import * as accountUtils from '../../utils/login';
 import accounts from '../../../test/constants/accounts';
+import networks from '../../constants/networks';
+import settings from '../../constants/settings';
 import actionTypes from '../../constants/actions';
 import middleware from './account';
 import transactionTypes from '../../constants/transactionTypes';
@@ -19,6 +23,14 @@ describe('Account middleware', () => {
   let stubGetAccount;
   let stubTransactions;
   let transactionsActionsStub;
+  let getAutoLogInDataMock;
+  let activePeerSetMock;
+  let accountDataUpdatedSpy;
+  const activePeerMock = 'DUMMY_ACTIVE_PEER';
+  const storeCreatedAction = {
+    type: actionTypes.storeCreated,
+  };
+
   const { passphrase } = accounts.genesis;
 
   const transactions = { transactions: [{ senderId: 'sample_address', receiverId: 'some_address' }] };
@@ -71,6 +83,10 @@ describe('Account middleware', () => {
     stubGetAccount = stub(accountApi, 'getAccount').returnsPromise();
     transactionsActionsStub = spy(transactionsActions, 'transactionsUpdated');
     stubTransactions = stub(transactionsApi, 'getTransactions').returnsPromise().resolves(true);
+    getAutoLogInDataMock = stub(accountUtils, 'getAutoLogInData');
+    getAutoLogInDataMock.withArgs().returns({ });
+    activePeerSetMock = stub(peersActions, 'activePeerSet').returns(activePeerMock);
+    accountDataUpdatedSpy = spy(accountActions, 'accountDataUpdated');
   });
 
   afterEach(() => {
@@ -80,6 +96,9 @@ describe('Account middleware', () => {
     stubGetAccount.restore();
     stubTransactions.restore();
     clock.restore();
+    getAutoLogInDataMock.restore();
+    activePeerSetMock.restore();
+    accountDataUpdatedSpy.restore();
   });
 
   it('should pass the action to next middleware', () => {
@@ -88,7 +107,6 @@ describe('Account middleware', () => {
   });
 
   it(`should call account API methods on ${actionTypes.newBlockCreated} action when online`, () => {
-    const accountDataUpdatedSpy = spy(accountActions, 'accountDataUpdated');
     middleware(store)(next)(newBlockCreated);
 
     const data = {
@@ -100,12 +118,9 @@ describe('Account middleware', () => {
     clock.tick(7000);
     expect(accountDataUpdatedSpy).to.have.been.calledWith(data);
     expect(accountActions.updateTransactionsIfNeeded).to.have.been.calledWith();
-    accountDataUpdatedSpy.restore();
   });
 
   it(`should call API methods on ${actionTypes.newBlockCreated} action if state.transaction.transactions.confirmed does not contain recent transaction. Case with transactions address`, () => {
-    const accountDataUpdatedSpy = spy(accountActions, 'accountDataUpdated');
-
     store.getState = () => ({
       ...state,
       transactions: {
@@ -119,12 +134,9 @@ describe('Account middleware', () => {
 
     clock.tick(7000);
     expect(accountDataUpdatedSpy).to.have.been.calledWith();
-    accountDataUpdatedSpy.restore();
   });
 
   it(`should call API methods on ${actionTypes.newBlockCreated} action if state.transaction.transactions.confirmed does not contain recent transaction. Case with confirmed address`, () => {
-    const accountDataUpdatedSpy = spy(accountActions, 'accountDataUpdated');
-
     store.getState = () => ({
       ...state,
       transactions: {
@@ -140,7 +152,6 @@ describe('Account middleware', () => {
 
     clock.tick(7000);
     expect(accountDataUpdatedSpy).to.have.been.calledWith();
-    accountDataUpdatedSpy.restore();
   });
 
   it(`should fetch delegate info on ${actionTypes.transactionsUpdated} action if action.data.confirmed contains delegateRegistration transactions`, () => {
@@ -194,5 +205,19 @@ describe('Account middleware', () => {
     middleware(store)(next)(action);
     expect(accountUpdatedSpy).to.have.been.calledWith({ expireTime: clock.now + lockDuration });
     accountUpdatedSpy.restore();
+  });
+
+  it(`should dispatch ${actionTypes.activePeerSet} action on ${actionTypes.storeCreated} if autologin data found in localStorage`, () => {
+    getAutoLogInDataMock.withArgs().returns({
+      [settings.keys.autologinKey]: passphrase,
+      [settings.keys.autologinUrl]: networks.testnet.nodes[0],
+    });
+    middleware(store)(next)(storeCreatedAction);
+    expect(store.dispatch).to.have.been.calledWith(activePeerMock);
+  });
+
+  it(`should do nothing on ${actionTypes.storeCreated} if autologin data NOT found in localStorage`, () => {
+    middleware(store)(next)(storeCreatedAction);
+    expect(store.dispatch).to.not.have.been.calledWith(activePeerMock);
   });
 });
