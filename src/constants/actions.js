@@ -70,6 +70,8 @@ const actionTypes = {
   settingsReset: 'SETTINGS_RESET',
   switchChannel: 'SWITCH_CHANNEL',
   addFilter: 'ADD_FILTER',
+  getNewsFeed: 'GET_NEWS_FEED',
+  showEmptyNewsFeed: 'SHOW_EMPTY_NEWS_FEED',
 };
 
 export default actionTypes;
