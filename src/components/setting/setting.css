@@ -24,7 +24,6 @@
 
   & > aside {
     display: flex;
-    flex: 0 0 30%;
     height: 100%;
     background: #f5f8fc;
     padding: 40px 30px;
@@ -38,7 +37,6 @@
   }
 
   & > section {
-    flex: 1;
     background: #fff;
     overflow: auto;
     padding: 40px 50px;
@@ -156,11 +154,35 @@
   }
 }
 
+@media (--medium-viewport) {
+  aside:first-child {
+    flex-basis: 30%;
+    max-width: 30%;
+  }
+
+  .wrapper {
+    & > section {
+      flex-basis: 70%;
+      max-width: 70%;
+    }
+  }
+}
+
 @media (--small-viewport) {
+  aside:first-child {
+    flex: 0 0 30%;
+    max-width: 100%;
+  }
+
   .wrapper {
     position: relative;
     margin-bottom: 62px;
     flex-direction: column;
+
+    & > section {
+      flex-basis: 100%;
+      max-width: 100%;
+    }
   }
 
   .carouselNav {
