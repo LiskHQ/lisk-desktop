@@ -4,9 +4,17 @@ import { accountUpdated,
   updateDelegateAccount,
 } from '../../actions/account';
 import { votesFetched } from '../../actions/voting';
+import { transactionsFilterSet } from '../../actions/transactions';
 import actionTypes from '../../constants/actions';
 import accountConfig from '../../constants/account';
 import transactionTypes from '../../constants/transactionTypes';
+
+import { extractAddress, extractPublicKey } from '../../utils/account';
+import { getAutoLogInData, shouldAutoLogIn } from '../../utils/login';
+import { activePeerSet, activePeerUpdate } from '../../actions/peers';
+import networks from '../../constants/networks';
+import settings from '../../constants/settings';
+import txFilters from '../../constants/transactionFilters';
 
 const { lockDuration } = accountConfig;
 
@@ -18,6 +26,22 @@ const updateAccountData = (store, action) => {
     transactions,
     account,
   }));
+
+  /**
+   * NOTE: dashboard transactionsList are not loaded when rendering the component,
+   *  as this component just reads transactions from state.
+   *  When autologin in, we need to explicitly request the transactions for that account.
+   *
+   *  Ignoring coverage because autologin is a development feature not accessible by end users
+   */
+  /* istanbul ignore if */
+  if (shouldAutoLogIn(getAutoLogInData()) && action.data.passphrase) {
+    store.dispatch(transactionsFilterSet({
+      address: extractAddress(extractPublicKey(action.data.passphrase)),
+      limit: 25,
+      filter: txFilters.all,
+    }));
+  }
 };
 
 const getRecentTransactionOfType = (transactionsList, type) => (
@@ -92,6 +116,23 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
     setTimeout(() => {
       updateAccountData(store, action);
     }, 5000);
+  }
+};
+
+const autoLogInIfNecessary = (store) => {
+  const autologinData = getAutoLogInData();
+  if (shouldAutoLogIn(autologinData)) {
+    store.dispatch(activePeerSet({
+      passphrase: autologinData[settings.keys.autologinKey],
+      network: { ...networks.customNode, address: autologinData[settings.keys.autologinUrl] },
+      options: {
+        code: networks.customNode.code,
+        address: autologinData[settings.keys.autologinUrl],
+      },
+    }));
+    store.dispatch(activePeerUpdate({
+      online: true,
+    }));
   }
 };
 
