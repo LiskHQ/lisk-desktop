@@ -25,6 +25,11 @@ export const showEmptyNewsFeedState = data => ({
   data,
 });
 
+export const addPriceTicker = data => ({
+  type: actionTypes.addPriceTicker,
+  data,
+});
+
 export const getCurrencyGraphData = step => (dispatch) => {
   dispatch(clearDataOfCurrencyGraph());
   liskServiceApi.getCurrencyGraphData(step).then((response) => {
@@ -42,5 +47,13 @@ export const getNewsFeed = () => (dispatch) => {
   }).finally(() => {
     // To prevent dispalying empty View before fetching data
     dispatch(showEmptyNewsFeedState({ showNewsFeedEmptyState: true }));
+  });
+};
+
+export const getPriceTicker = () => (dispatch) => {
+  liskServiceApi.getPriceTicker().then((response) => {
+    dispatch(addPriceTicker({ ...response }));
+  }).catch((error) => {
+    dispatch(addPriceTicker({ error }));
   });
 };

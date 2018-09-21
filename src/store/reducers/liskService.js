@@ -47,6 +47,11 @@ const liskService = (state = {}, action) => {
         ...state,
         graphError: action.data,
       };
+    case actionTypes.addPriceTicker:
+      return {
+        ...state,
+        priceTicker: action.data,
+      };
     default:
       return state;
   }
