@@ -45,9 +45,9 @@ After clicking `Log in` it executes:
 - [`activePeerSet`](https://github.com/LiskHQ/lisk-hub/blob/86ab1874d89519a37d817c326c37d594f29b94eb/src/components/login/index.js#L28) with passphrase<br/>
   ↪️ Login Middleware<br/>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️ [`getAccount`](https://github.com/LiskHQ/lisk-hub/blob/ea41bf3a898b2955de2d39e3a2bdd79ad150842e/src/store/middlewares/login.js#L31)<br/>
-  &nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;&nbsp;
  ↪️ Socket Middleware<br/>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️ [`socketSetup`](https://github.com/LiskHQ/lisk-hub/blob/3793f0b0882309335a2ed3444b326ceebabd1bcf/src/store/middlewares/socket.js#L16)<br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️ [`socketSetup`](https://github.com/LiskHQ/lisk-hub/blob/3793f0b0882309335a2ed3444b326ceebabd1bcf/src/store/middlewares/socket.js#L16)<br/>
 
   ↪️ FollowedAccount Middleware<br/>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️ [`followedAccountFetchedAndUpdated`](https://github.com/LiskHQ/lisk-hub/blob/a525a1c54510a45cf14a0a3c37be231ee316088b/src/store/middlewares/followedAccounts.js#L7) for each followed account
@@ -98,9 +98,9 @@ and every 10 seconds dispatches [`newBlockCreated`](https://github.com/LiskHQ/li
   ↪️ Account Middleware<br/>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️ [`updateAccountData`](https://github.com/LiskHQ/lisk-hub/blob/77b6defdf98b6f67f005c25c28ea85378d375817/src/store/middlewares/account.js#L21)<br/>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️ [`transactionsUpdated`](https://github.com/LiskHQ/lisk-hub/blob/77b6defdf98b6f67f005c25c28ea85378d375817/src/store/middlewares/account.js#L97)<br/>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↪️ Account Middleware<br/>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️ [`votesFetched`](https://github.com/LiskHQ/lisk-hub/blob/77b6defdf98b6f67f005c25c28ea85378d375817/src/store/middlewares/account.js#L156) (sometimes)<br/>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️ [`updateDelegateAccount`](https://github.com/LiskHQ/lisk-hub/blob/77b6defdf98b6f67f005c25c28ea85378d375817/src/store/middlewares/account.js#L155)  (sometimes)<br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↪️ Account Middleware<br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️ [`votesFetched`](https://github.com/LiskHQ/lisk-hub/blob/77b6defdf98b6f67f005c25c28ea85378d375817/src/store/middlewares/account.js#L156) (sometimes)<br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️ [`updateDelegateAccount`](https://github.com/LiskHQ/lisk-hub/blob/77b6defdf98b6f67f005c25c28ea85378d375817/src/store/middlewares/account.js#L155)  (sometimes)<br/>
   ↪️ Followed Account Middleware<br/>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️ [`followedAccountFetchedAndUpdated`](https://github.com/LiskHQ/lisk-hub/blob/a525a1c54510a45cf14a0a3c37be231ee316088b/src/store/middlewares/followedAccounts.js#L7)<br/>
 
