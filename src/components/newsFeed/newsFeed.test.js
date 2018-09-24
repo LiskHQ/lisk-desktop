@@ -25,6 +25,13 @@ describe('NewsFeed', () => {
   const props = {
     channels: { test: true },
     t,
+    getNewsFeed: () => {},
+    newsFeed: [{
+      source: 'test',
+      content: '',
+      timestamp: '',
+      url: '',
+    }],
   };
   const timestampNow = 1483228800000;
   const newsFeed = [

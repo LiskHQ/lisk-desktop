@@ -12,9 +12,9 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-  channels: state.settings.channels || channels,
-  newsFeed: state.liskService.newsFeed || [],
-  showNewsFeedEmptyState: state.liskService.showNewsFeedEmptyState,
+  channels: (state.settings && state.settings.channels) ? state.settings.channels : channels,
+  newsFeed: (state.liskService && state.liskService.newsFeed) ? state.liskService.newsFeed : [],
+  showNewsFeedEmptyState: (state.liskService && state.liskService.showNewsFeedEmptyState) || false,
 });
 
 export default connect(
