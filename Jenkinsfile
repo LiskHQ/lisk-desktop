@@ -23,36 +23,38 @@ pipeline {
 				}
 			}
 		}
-		stage('Run ESLint') {
-			steps {
-				ansiColor('xterm') {
-					sh '''
-					npm run --silent clean-build
-					npm run --silent copy-files
-					npm run --silent eslint
-					'''
-				}
-			}
-		}
 		stage('Build') {
 			steps {
-				withCredentials([string(credentialsId: 'github-lisk-token', variable: 'GH_TOKEN')]) {
-					sh '''
-					npm run --silent build
-					npm run --silent build:testnet
-					npm run --silent bundlesize
+				parallel (
+					"ESLint": {
+						ansiColor('xterm') {
+							sh '''
+							npm run --silent clean-build
+							npm run --silent copy-files
+							npm run --silent eslint
+							'''
+						}
+					},
+					"build": {
+						withCredentials([string(credentialsId: 'github-lisk-token', variable: 'GH_TOKEN')]) {
+							sh '''
+							npm run --silent build
+							npm run --silent build:testnet
+							npm run --silent bundlesize
 
-					if [ -z $CHANGE_BRANCH ]; then
-					    USE_SYSTEM_XORRISO=true npm run dist:linux
-					else
-					    echo "Skipping desktop build for Linux because we're building a PR."
-					fi
-					'''
-					archiveArtifacts artifacts: 'app/build/'
-					archiveArtifacts artifacts: 'app/build-testnet/'
-					archiveArtifacts allowEmptyArchive: true, artifacts: 'dist/lisk-hub*'
-					stash includes: 'app/build/', name: 'build'
-				}
+							if [ -z $CHANGE_BRANCH ]; then
+							    USE_SYSTEM_XORRISO=true npm run dist:linux
+							else
+							    echo "Skipping desktop build for Linux because we're building a PR."
+							fi
+							'''
+						}
+						archiveArtifacts artifacts: 'app/build/'
+						archiveArtifacts artifacts: 'app/build-testnet/'
+						archiveArtifacts allowEmptyArchive: true, artifacts: 'dist/lisk-hub*'
+						stash includes: 'app/build/', name: 'build'
+					}
+				)
 			}
 		}
 		stage('Deploy build') {
