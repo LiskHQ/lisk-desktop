@@ -67,7 +67,7 @@ pipeline {
 
 			}
 		}
-		stage('Run unit tests') {
+		stage('Run tests') {
 			steps {
 				parallel (
 					"mocha": {
@@ -76,34 +76,33 @@ pipeline {
 					"jest": {
 						ansiColor('xterm') {
 							// TODO: fail on errors when jest test suite is ready
+							// see https://github.com/LiskHQ/lisk-hub/issues/1302
 							sh 'ON_JENKINS=true npm run --silent test-jest || true'
+						}
+					},
+					"cypress": {
+						withCredentials([string(credentialsId: 'lisk-hub-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
+							ansiColor('xterm') {
+								wrap([$class: 'Xvfb']) {
+									sh '''
+									export N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
+
+									rsync -axl --delete ~/lisk-docker/examples/development/ $WORKSPACE/$BRANCH_NAME/
+									cp /home/lisk/blockchain_explorer.db.gz $WORKSPACE/$BRANCH_NAME/blockchain.db.gz
+									cd $WORKSPACE/$BRANCH_NAME
+									LISK_VERSION=1.0.0-rc.1 make coldstart
+									export CYPRESS_baseUrl=http://127.0.0.1:300$N/#/
+									export CYPRESS_coreUrl=http://127.0.0.1:$( docker-compose port lisk 4000 |cut -d ":" -f 2 )
+									cd -
+
+									npm run serve -- $WORKSPACE/app/build -p 300$N -a 127.0.0.1 &>server.log &
+									npm run cypress:run -- --record
+									'''
+								}
+							}
 						}
 					}
 				)
-			}
-		}
-		stage('Run E2E tests') {
-			steps {
-				withCredentials([string(credentialsId: 'lisk-hub-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
-					ansiColor('xterm') {
-						wrap([$class: 'Xvfb']) {
-							sh '''
-							export N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
-
-							rsync -axl --delete ~/lisk-docker/examples/development/ $WORKSPACE/$BRANCH_NAME/
-							cp /home/lisk/blockchain_explorer.db.gz $WORKSPACE/$BRANCH_NAME/blockchain.db.gz
-							cd $WORKSPACE/$BRANCH_NAME
-							LISK_VERSION=1.0.0-rc.1 make coldstart
-							export CYPRESS_baseUrl=http://127.0.0.1:300$N/#/
-							export CYPRESS_coreUrl=http://127.0.0.1:$( docker-compose port lisk 4000 |cut -d ":" -f 2 )
-							cd -
-
-							npm run serve -- $WORKSPACE/app/build -p 300$N -a 127.0.0.1 &>server.log &
-							npm run cypress:run -- --record
-							'''
-						}
-					}
-				}
 			}
 		}
 	}
