@@ -67,17 +67,19 @@ pipeline {
 
 			}
 		}
-		stage('Run mocha unit tests') {
+		stage('Run unit tests') {
 			steps {
-				sh 'ON_JENKINS=true npm run --silent test'
-			}
-		}
-		stage('Run jest unit tests') {
-			steps {
-				ansiColor('xterm') {
-					// TODO: fail on errors when jest test suite is ready
-					sh 'ON_JENKINS=true npm run --silent test-jest || true'
-				}
+				parallel (
+					"mocha": {
+						sh 'ON_JENKINS=true npm run --silent test'
+					},
+					"jest": {
+						ansiColor('xterm') {
+							// TODO: fail on errors when jest test suite is ready
+							sh 'ON_JENKINS=true npm run --silent test-jest || true'
+						}
+					}
+				)
 			}
 		}
 		stage('Run E2E tests') {
