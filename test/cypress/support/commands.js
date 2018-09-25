@@ -35,14 +35,13 @@ Cypress.Commands.add('addLocalStorage', (item, key, value) => {
   window.localStorage.setItem(item, JSON.stringify(itemObject));
 });
 
-Cypress.Commands.add('login', (account, network) => {
-  const accounts = [];
-  accounts.push({
-    publicKey: account.publicKey,
-    network,
-    peerAddress: network === 2 ? Cypress.env('CORE_URL') : undefined,
-  });
-  window.localStorage.setItem('accounts', JSON.stringify(accounts));
+Cypress.Commands.add('login', (passphrase, network) => {
+  localStorage.setItem('autologinUrl', network);
+  localStorage.setItem('autologinKey', passphrase);
+});
+
+Cypress.Commands.add('logout', () => {
+  localStorage.clear();
 });
 
 Cypress.Commands.add('loginUI', (account, network) => {
