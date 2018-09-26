@@ -40,10 +40,8 @@ Cypress.Commands.add('autologin', (passphrase, network) => {
   localStorage.setItem('autologinKey', passphrase);
 });
 
-Cypress.Commands.add('logout', () => {
-  localStorage.clear();
-});
 
+// TODO: Remove after cucumber tests are gone
 Cypress.Commands.add('loginUI', (account, network) => {
   cy.visit('/');
   cy.addLocalStorage('settings', 'showNetwork', true);
