@@ -38,14 +38,14 @@ describe('Settings', () => {
   });
 
   it('2nd passphrase Register -> Second passphrase page', () => {
-    cy.login(accounts.genesis.passphrase, networks.devnet.node);
+    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(settingsUrl);
     cy.get(ss.registerSecondPassphraseBtn).should('not.have.class', 'disabled').click();
     cy.url().should('contain', 'second-passphrase');
   });
 
   it('2nd passphrase registration is disabled if already registered', () => {
-    cy.login(accounts['second passphrase account'].passphrase, networks.devnet.node);
+    cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
     cy.visit(settingsUrl);
     cy.get(ss.secondPassphraseIsRegisteredLabel).should('be.visible');
   });
