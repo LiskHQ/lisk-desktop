@@ -1,13 +1,15 @@
 /* global Cypress */
+import nets from '../../src/constants/networks';
+
 const networks = {
-  mainnet: {
-    url: 'https://hub21.lisk.io',
-  },
-  testnet: {
-    url: 'https://testnet.lisk.io',
-  },
+  mainnet: Object.assign(nets.mainnet, {
+    node: nets.mainnet.nodes[0],
+  }),
+  testnet: Object.assign(nets.testnet, {
+    node: nets.testnet.nodes[0],
+  }),
   devnet: {
-    url: Cypress.env('coreUrl'),
+    node: Cypress.env('coreUrl'),
   },
 };
 

@@ -38,14 +38,14 @@ describe('Settings', () => {
   });
 
   it('2nd passphrase Register -> Second passphrase page', () => {
-    cy.login(accounts.genesis.passphrase, networks.mainnet.url);
+    cy.login(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(settingsUrl);
     cy.get(ss.registerSecondPassphraseBtn).should('not.have.class', 'disabled').click();
     cy.url().should('contain', 'second-passphrase');
   });
 
   it('2nd passphrase registration is disabled if already registered', () => {
-    cy.login(accounts['second passphrase account'].passphrase, networks.devnet.url);
+    cy.login(accounts['second passphrase account'].passphrase, networks.devnet.node);
     cy.visit(settingsUrl);
     cy.get(ss.secondPassphraseIsRegisteredLabel).should('be.visible');
   });
@@ -56,7 +56,7 @@ describe('Settings', () => {
     ss.delegateFeaturesTrigger,
   ]
     .forEach((selector) => {
-      it(`${selector.substr(1)} default position and toggling`, () => {
+      it(`${selector.substr(1)} default position is off and can be toggled to on and back`, () => {
         cy.visit(settingsUrl);
         cy.get(`${selector}`).click().should(() => {
           expect(getSettingsObjFromLS()[`${selector.substr(1)}`]).to.equal(true);
@@ -67,7 +67,7 @@ describe('Settings', () => {
       });
     });
 
-  it('currency default position and toggling', () => {
+  it('currency default position should be USD and can be toggled to USD and back', () => {
     cy.visit(settingsUrl);
     cy.get(ss.currencyUSDBtn).should('have.class', 'active');
     cy.get(ss.currencyEURBtn).click().should(($button) => {
