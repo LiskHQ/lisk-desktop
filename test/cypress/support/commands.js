@@ -35,7 +35,7 @@ Cypress.Commands.add('addLocalStorage', (item, key, value) => {
   window.localStorage.setItem(item, JSON.stringify(itemObject));
 });
 
-Cypress.Commands.add('login', (passphrase, network) => {
+Cypress.Commands.add('autologin', (passphrase, network) => {
   localStorage.setItem('autologinUrl', network);
   localStorage.setItem('autologinKey', passphrase);
 });
