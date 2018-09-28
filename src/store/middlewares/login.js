@@ -12,6 +12,10 @@ const loginMiddleware = store => next => (action) => {
       (!action.data.publicKey && !action.data.passphrase)) {
     return next(action);
   }
+  if (action.type === actionTypes.activePeerSet && action.data.loginType === 1) {
+    console.log(action);
+    return next(action);
+  }
   next(action);
 
   const { passphrase, activePeer, options } = action.data;

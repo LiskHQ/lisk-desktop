@@ -3,6 +3,10 @@ module.exports = {
     fs: 'empty',
     child_process: 'empty',
   },
+  externals: {
+    'node-hid': 'commonjs node-hid',
+    'usb': 'commonjs usb',
+  },
   module: {
     rules: [
       {

@@ -11,11 +11,15 @@ import styles from './login.css';
 import networks from '../../constants/networks';
 import routes from '../../constants/routes';
 import getNetwork from '../../utils/getNetwork';
+import { getAccountFromLedgerIndex } from '../../utils/ledger';
+import to from '../../utils/to';
 import { parseSearchParams } from './../../utils/searchParams';
 import Box from '../box';
 // eslint-disable-next-line import/no-unresolved
 import SignUp from './signUp';
 import { validateUrl, addHttp } from '../../utils/login';
+
+import LoginLedger from './ledgerLogin';
 
 /**
  * The container component containing login
@@ -29,6 +33,7 @@ class Login extends React.Component {
       passphrase: '',
       address: '',
       network: networks.default.code,
+      isLedgerLogin: false,
     };
 
     this.secondIteration = false;
@@ -43,6 +48,41 @@ class Login extends React.Component {
     i18next.on('languageChanged', () => {
       this.getNetworksList();
     });
+  }
+
+  async ledgerLogin() {
+    // loadingStarted('ledgerLogin');
+     let error;
+    let ledgerAccount;
+    // eslint-disable-next-line prefer-const
+    [error, ledgerAccount] = await to(getAccountFromLedgerIndex()); // by default index 0
+    console.log('ledgerAccount', ledgerAccount);
+
+    if (error) {
+      console.log('ERROR', error);
+      const text = error && error.message ? `${error.message}.` : i18next.t('Error during login with Ledger.');
+      this.props.errorToastDisplayed({ label: text });
+    } else {
+      const network = Object.assign({}, getNetwork(this.state.network));
+      if (this.state.network === networks.customNode.code) {
+        network.address = this.state.address;
+      }
+      console.log('TROLOLOLO', ledgerAccount, network);
+      if (ledgerAccount.publicKey) {
+        this.setState({ isLedgerLogin: true });
+      }
+      // set active peer
+      this.props.activePeerSet({
+        publicKey: ledgerAccount.publicKey,
+        loginType: 1,
+        network,
+        hwInfo: { // Use pubKey[0] first 10 char as device id
+          deviceId: ledgerAccount.publicKey.substring(0, 10),
+          derivationIndex: 0,
+        },
+      });
+    }
+    //  loadingFinished('ledgerLogin');
   }
 
   getNetworksList() {
@@ -148,6 +188,10 @@ class Login extends React.Component {
   }
 
   render() {
+    if (this.state.isLedgerLogin) {
+      return <LoginLedger loginType={0} {...this.props} />;
+    }
+
     const networkList = [{ label: this.props.t('Choose Network'), disabled: true }, ...this.networks];
     return (this.props.account.loading ?
       <div className={styles.loadingWrapper}></div> :
@@ -200,6 +244,8 @@ class Login extends React.Component {
                   </div>
                 </footer>
               </form>
+              <PrimaryButton label={this.props.t('Log in with Ledger')}
+                onClick={() => { this.ledgerLogin(); }}/>
             </div>
           </section>
         </section>
