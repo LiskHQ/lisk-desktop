@@ -19,7 +19,7 @@ import Box from '../box';
 import SignUp from './signUp';
 import { validateUrl, addHttp } from '../../utils/login';
 
-import LoginLedger from './ledgerLogin';
+import Ledger from '../ledger';
 
 /**
  * The container component containing login
@@ -189,7 +189,7 @@ class Login extends React.Component {
 
   render() {
     if (this.state.isLedgerLogin) {
-      return <LoginLedger loginType={0} {...this.props} />;
+      return <Ledger />;
     }
 
     const networkList = [{ label: this.props.t('Choose Network'), disabled: true }, ...this.networks];

@@ -114,11 +114,11 @@ export const setSecondPassphraseWithLedger = (activePeer, account, pin) =>
   // Set PublicKey from Ledger Info
   // so we can switch on this account even if publicKey is not revealed to the network
   Object.assign(resAccount, { publicKey: liskAccount.publicKey });
-   if (isInitialized) {
-    const txAccount = await getTransactions(activePeer, liskAccount.address);
-    Object.assign(resAccount, { txCount: txAccount.meta.count });
-     const votesAccount = await getVotes(activePeer, liskAccount.address);
-    Object.assign(resAccount, { votesCount: votesAccount.data.votesUsed });
-  }
+  //  if (isInitialized) {
+  //   const txAccount = await getTransactions(activePeer, liskAccount.address);
+  //   Object.assign(resAccount, { txCount: txAccount.meta.count });
+  //    const votesAccount = await getVotes(activePeer, liskAccount.address);
+  //   Object.assign(resAccount, { votesCount: votesAccount.data.votesUsed });
+  // }
    return resAccount;
 };
