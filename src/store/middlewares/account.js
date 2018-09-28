@@ -142,6 +142,12 @@ const accountMiddleware = store => next => (action) => {
     case actionTypes.storeCreated:
       autoLogInIfNecessary(store, next, action);
       break;
+    // update on login because the 'save account' button
+    // depends on a rerendering of the page
+    // TODO: fix the 'save account' path problem, so we can remove this
+    case actionTypes.accountLoggedIn:
+      updateAccountData(store, action);
+      break;
     case actionTypes.newBlockCreated:
       checkTransactionsAndUpdateAccount(store, action);
       break;
