@@ -56,7 +56,7 @@ class Setting extends React.Component {
       hasSecondPassphrase,
     } = this.props;
 
-    const allowAuthClass = !this.props.isAuthenticated ? styles.disable : '';
+    const allowAuthClass = !this.props.isAuthenticated ? `${styles.disable} disabled` : '';
     const activeCurrency = settings.currency || settingsConst.currencies[0];
 
     return (<Box className={styles.wrapper}>
@@ -78,7 +78,7 @@ class Setting extends React.Component {
               <FontIcon>arrow-right</FontIcon>
             </Link> :
             <span
-              className={`register-second-passphrase ${styles.secondPassphraseEnabled}`}>
+              className={`second-passphrase-registered ${styles.secondPassphraseEnabled}`}>
               {t('Registered')}
               <FontIcon>checkmark</FontIcon>
             </span>
@@ -128,7 +128,7 @@ class Setting extends React.Component {
             {this.state.currencies.map(currency => (
               <li
                 key={`currency-${currency}`}
-                className={`currency ${currency === activeCurrency ? styles.active : ''}`}
+                className={`currency currency-${currency} ${currency === activeCurrency ? `${styles.active} active` : ''}`}
                 onClick={() => settingsUpdated({ currency })}>
                 {currency}
               </li>
