@@ -8,6 +8,11 @@ import { fromRawLsk } from '../../utils/lsk';
 import MultiStep from '../multiStep/index';
 // import loginTypes from '../../constants/loginTypes';
 import { getLedgerAccountInfo } from '../../utils/api/ledger';
+import { activePeerSet } from '../../actions/peers';
+import AccountCard from './accountCard.js'
+import AddAccountCard from './addAccountCard.js'
+
+import styles from './ledgerLogin.css';
 
  class LoginLedger extends React.Component {
   constructor() {
@@ -16,6 +21,7 @@ import { getLedgerAccountInfo } from '../../utils/api/ledger';
       hwAccounts: [],
       isLoading: false,
       showNextAvailable: false,
+      displayAccountAmount: 0,
     };
   }
    componentWillMount() {
@@ -24,6 +30,7 @@ import { getLedgerAccountInfo } from '../../utils/api/ledger';
    /* eslint-disable no-await-in-loop */
   async componentDidMount() {
     let index = 0;
+    let displayed = this.state.displayAccountAmount;
     let accountInfo;
     console.log('ledgerLOGIN', this.props.activePeer);
     do {
@@ -49,7 +56,8 @@ import { getLedgerAccountInfo } from '../../utils/api/ledger';
       this.setState({ hwAccounts: this.state.hwAccounts });
       index++;
     }
-    while (accountInfo.isInitialized);
+    while (displayed || accountInfo.isInitialized);
+
     //  loadingFinished('hwDiscovery');
      this.setState({
       isLoading: false,
@@ -80,13 +88,31 @@ import { getLedgerAccountInfo } from '../../utils/api/ledger';
     };
     this.props.accountSwitched(newAccount);
   }
+  selectAccount(ledgerAccount) {
+    // set active peer
+    this.props.activePeerSet({
+      publicKey: ledgerAccount.publicKey,
+      network: this.props.network,
+      hwInfo: { // Use pubKey[0] first 10 char as device id
+        deviceId: ledgerAccount.publicKey.substring(0, 10),
+        derivationIndex: 0,
+      },
+    });
+  }
+
+  addAccount() {
+    this.setState({
+      displayAccountAmount: this.state.displayAccountAmount++,
+    })
+  }
+
    render() {
-     console.log('DUPA', this.state, this.props);
-    // const { maxCountOfVotes } = votingConst;
     const maxCountOfVotes = 12;
-    return <div>{this.state.hwAccounts.map((account, index) => (<div>
-      {account.address}
-    </div>))}</div>;
+    
+    return <div className={styles.accountList}>{this.state.hwAccounts.map((account, index) => (
+      <AccountCard account={account} onClickHandler={this.selectAccount.bind(this)} />))}
+      <AddAccountCard addAccount={() => { this.addAccount(); }} />
+    </div>;
   }
 }
 
@@ -94,7 +120,9 @@ const mapStateToProps = state => ({
   activePeer: state.peers && state.peers.data,
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+  activePeerSet: data => dispatch(activePeerSet(data)),
+});
 
  export default connect(
   mapStateToProps,

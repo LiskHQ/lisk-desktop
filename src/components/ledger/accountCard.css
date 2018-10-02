@@ -1,0 +1,27 @@
+.card {
+  width: 234px;
+  height: 277px;
+  border-radius: 3px;
+  background-color: #FFF;
+  box-shadow: 0 8px 16px 0 rgba(29,72,119,0.16);
+  margin: 10px;
+  cursor: pointer;
+
+  & div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.accountVisualWrapper {
+  margin: 30px 0;
+}
+
+.balance {
+  font-style: bold;
+}
+
+.addressField {
+  margin-top: 10px;
+}

@@ -1,0 +1,18 @@
+.buttonWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.title {
+  text-align: center;
+}
+
+.description {
+  text-align: center;
+}
+
+.button {
+  height: 60px;
+  width: 230px;
+  margin: 0 15px;
+}
