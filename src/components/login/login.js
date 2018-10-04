@@ -18,6 +18,7 @@ import Box from '../box';
 // eslint-disable-next-line import/no-unresolved
 import SignUp from './signUp';
 import { validateUrl, addHttp } from '../../utils/login';
+import { FontIcon } from '../fontIcon';
 
 import Ledger from '../ledger';
 
@@ -51,15 +52,13 @@ class Login extends React.Component {
   }
 
   async ledgerLogin() {
-    // loadingStarted('ledgerLogin');
-     let error;
+    this.props.loadingStarted('ledgerLogin');
+    let error;
     let ledgerAccount;
     // eslint-disable-next-line prefer-const
     [error, ledgerAccount] = await to(getAccountFromLedgerIndex()); // by default index 0
-    console.log('ledgerAccount', ledgerAccount);
 
     if (error) {
-      console.log('ERROR', error);
       const text = error && error.message ? `${error.message}.` : i18next.t('Error during login with Ledger.');
       this.props.errorToastDisplayed({ label: text });
     } else {
@@ -67,7 +66,7 @@ class Login extends React.Component {
       if (this.state.network === networks.customNode.code) {
         network.address = this.state.address;
       }
-      console.log('TROLOLOLO', ledgerAccount, network);
+
       if (ledgerAccount.publicKey) {
         this.setState({ isLedgerLogin: true });
       }
@@ -82,7 +81,7 @@ class Login extends React.Component {
         },
       });
     }
-    //  loadingFinished('ledgerLogin');
+    this.props.loadingFinished('ledgerLogin');
   }
 
   getNetworksList() {
@@ -187,9 +186,14 @@ class Login extends React.Component {
     return showNetworkParam === 'true' || (showNetwork && showNetworkParam !== 'false');
   }
 
+  cancelLedgerLogin() {
+    this.setState({ isLedgerLogin: false });
+  }
+
   render() {
+    const network = this.getNetwork();
     if (this.state.isLedgerLogin) {
-      return <Ledger />;
+      return <Ledger network={network} cancelLedgerLogin={this.cancelLedgerLogin.bind(this)} />;
     }
 
     const networkList = [{ label: this.props.t('Choose Network'), disabled: true }, ...this.networks];
@@ -234,6 +238,10 @@ class Login extends React.Component {
                   error={this.state.passphraseValidity}
                   value={this.state.passphrase}
                   onChange={this.changeHandler.bind(this, 'passphrase')} />
+                <div className={styles.hardwareWalletLink} onClick={() => { this.ledgerLogin(); }}>
+                  Ledger Nano S
+                  <FontIcon className={styles.singUpArrow} value='arrow-right' />
+                </div>
                 <footer className={ `${grid.row} ${grid['center-xs']}` }>
                   <div className={grid['col-xs-12']}>
                     <PrimaryButton label={this.props.t('Log in')}
@@ -244,8 +252,8 @@ class Login extends React.Component {
                   </div>
                 </footer>
               </form>
-              <PrimaryButton label={this.props.t('Log in with Ledger')}
-                onClick={() => { this.ledgerLogin(); }}/>
+              {/* <PrimaryButton label={this.props.t('Log in with Ledger')}
+                onClick={() => { this.ledgerLogin(); }}/> */}
             </div>
           </section>
         </section>

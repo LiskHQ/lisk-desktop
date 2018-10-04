@@ -5,6 +5,8 @@ import { dialogDisplayed } from '../../actions/dialog';
 import Login from './login';
 import { activePeerSet } from '../../actions/peers';
 import { settingsUpdated } from '../../actions/settings';
+import { errorToastDisplayed } from '../../actions/toaster';
+import { loadingStarted, loadingFinished } from '../../actions/loading';
 
 setDefaults({
   wait: true,
@@ -29,6 +31,9 @@ const mapDispatchToProps = dispatch => ({
   activePeerSet: data => dispatch(activePeerSet(data)),
   setActiveDialog: data => dispatch(dialogDisplayed(data)),
   settingsUpdated: data => dispatch(settingsUpdated(data)),
+  errorToastDisplayed: data => dispatch(errorToastDisplayed(data)),
+  loadingFinished: data => dispatch(loadingFinished(data)),
+  loadingStarted: data => dispatch(loadingStarted(data)),
 });
 
 export default connect(

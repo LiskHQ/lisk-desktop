@@ -13,7 +13,6 @@ const loginMiddleware = store => next => (action) => {
     return next(action);
   }
   if (action.type === actionTypes.activePeerSet && action.data.loginType === 1) {
-    console.log(action);
     return next(action);
   }
   next(action);

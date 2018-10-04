@@ -2,8 +2,8 @@
   width: 234px;
   height: 277px;
   border-radius: 3px;
-  background-color: #FFF;
-  box-shadow: 0 8px 16px 0 rgba(29,72,119,0.16);
+  background-color: #fff;
+  box-shadow: 0 8px 16px 0 rgba(29, 72, 119, 0.16);
   margin: 10px;
   cursor: pointer;
 
@@ -24,4 +24,15 @@
 
 .addressField {
   margin-top: 10px;
+}
+
+.addAccountCard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.addIcon {
+  font-size: 120px;
+  color: #74869b;
 }

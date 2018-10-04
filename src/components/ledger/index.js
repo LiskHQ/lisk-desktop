@@ -2,7 +2,6 @@ import React from 'react';
 import Box from '../box';
 import UnlockWallet from './unlockWallet';
 import LedgerLogin from './ledgerLogin';
-import MultiStep from '../multiStep/index';
 
 class Ledger extends React.Component {
   constructor() {
@@ -15,19 +14,24 @@ class Ledger extends React.Component {
   handleOnClick() {
     this.setState({
       showAccounts: true,
-    })
+    });
   }
 
   render() {
     if (this.state.showAccounts) {
-      return (<Box>
-        <LedgerLogin loginType={0} />
-      </Box>)
+      return (
+        <Box>
+          <LedgerLogin loginType={0} network={this.props.network} />
+        </Box>);
     }
-    return <Box>
-      <UnlockWallet handleOnClick={this.handleOnClick.bind(this)}/>
-    </Box>;
+
+    return (
+      <Box>
+        <UnlockWallet
+          handleOnClick={this.handleOnClick.bind(this)}
+          cancelLedgerLogin={this.props.cancelLedgerLogin} />
+      </Box>);
   }
-};
+}
 
 export default Ledger;
