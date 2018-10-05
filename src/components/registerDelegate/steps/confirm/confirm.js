@@ -57,7 +57,7 @@ class Confirm extends React.Component {
                 </h5>
               </header>
               <p className={stepStyles.description}>
-                {t('Names are unique. Once you register the name, it can\'t be changed.')}
+                {t('Names are unique. Once you register a name, it can\'t be changed.')}
               </p>
             </div>
             <div className={stepStyles.secondContainer}>

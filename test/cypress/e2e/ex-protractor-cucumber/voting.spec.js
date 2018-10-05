@@ -19,7 +19,7 @@ describe('Voting page', () => {
     cy.get('.delegate-row li label').eq(8).click();
     cy.get('.next').click();
     cy.get('.confirm').click();
-    cy.get('.result-box-message').should('have.text', 'You’re votes are being processed and will be confirmed. It may take up to 10 minutes to be secured in the blockchain.');
+    cy.get('.result-box-message').should('have.text', 'Your votes are being processed. It may take up to 10 minutes for it to be secured in the blockchain.');
   });
 
   it.skip('should allow to select delegates by URL', () => {
@@ -28,7 +28,7 @@ describe('Voting page', () => {
     cy.get('.upvotes-message').should('have.text', 'genesis_12, genesis_14, genesis_16');
     cy.get('.next').click();
     cy.get('.confirm').click();
-    cy.get('.result-box-message').should('have.text', 'You’re votes are being processed and will be confirmed. It may take up to 10 minutes to be secured in the blockchain.');
+    cy.get('.result-box-message').should('have.text', 'Your votes are being processed. It may take up to 10 minutes for it to be secured in the blockchain.');
     cy.wait(10000);
     cy.visit('/wallet');
     cy.wait(20000);

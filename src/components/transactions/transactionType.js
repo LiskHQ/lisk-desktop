@@ -13,7 +13,7 @@ const TransactionType = (props) => {
       type = t('Second Passphrase Registration');
       break;
     case 2:
-      type = t('Delegate Registration');
+      type = t('Delegate registration');
       break;
     case 3:
       type = t('Delegate vote', { context: 'noun' });

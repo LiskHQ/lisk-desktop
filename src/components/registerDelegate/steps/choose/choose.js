@@ -100,7 +100,7 @@ class Choose extends React.Component {
                 </h5>
               </header>
               <p className={stepStyles.description}>
-                {t('Delegates have great responsibility within the Lisk system, securing the blockchain. Becoming a delegate requires the registration of a name. The top 101 delegates are eligible to forge.')}
+                {t('Delegates have great responsibility within the Lisk system for securing the blockchain. Becoming a delegate requires the registration of a name. The top 101 delegates are eligible to forge.')}
               </p>
             </div>
             <div className={stepStyles.secondContainer}>
@@ -154,7 +154,7 @@ class Choose extends React.Component {
                   {t('Name is available')}
                 </p> : null }
                 {showInfoValidation ? <p className={stepStyles.info}>
-                  {t('Max 20 characters a-z 0-1, no special characters except “!@$&_.”')}
+                  {t('Max 20 characters, a-z and 0-1, no special characters except for “!@$&.”')}
                 </p> : null }
                 <PrimaryButton
                   disabled={disableSubmitButton}

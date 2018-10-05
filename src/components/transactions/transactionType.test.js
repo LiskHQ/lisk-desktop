@@ -34,7 +34,7 @@ const createTest = (type) => {
       expectedValue = 'Second Passphrase Registration';
       break;
     case 2:
-      expectedValue = 'Delegate Registration';
+      expectedValue = 'Delegate registration';
       break;
     case 3:
       expectedValue = 'Delegate vote';
