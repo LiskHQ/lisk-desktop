@@ -32,8 +32,9 @@ class Bookmark extends React.Component {
     if (searchListLength !== 0 && currentIdx !== searchListLength - 1) {
       currentIdx += 1;
     }
+    const placeholder = filteredFollowedAccounts[currentIdx].address;
 
-    this.setState({ selectedIdx: currentIdx });
+    this.setState({ selectedIdx: currentIdx, placeholder });
   }
 
   handleArrowUp() {
@@ -44,7 +45,9 @@ class Bookmark extends React.Component {
     if (searchListLength !== 0 && currentIdx !== -1 && currentIdx !== 0) {
       currentIdx -= 1;
     }
-    this.setState({ selectedIdx: currentIdx });
+    const placeholder = filteredFollowedAccounts[currentIdx].address;
+
+    this.setState({ selectedIdx: currentIdx, placeholder });
   }
 
   handleKey(event) {
@@ -116,7 +119,8 @@ class Bookmark extends React.Component {
               ${showBigVisualAccountStyles ? `${styles.bigAccountVisualBookmarkInput} bigAccountVisualBookmarkInput` : ''}`}
             label={label}
             error={!this.state.show ? address.error : ''}
-            autocomplete={false}
+            autocomplete="off"
+            placeholder={this.state.placeholder}
             value={address.value}
             innerRef={(el) => { this.inputRef = el; }}
             onFocus={() => this.setState({ show: true })}
