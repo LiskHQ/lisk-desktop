@@ -1,4 +1,5 @@
 import React from 'react';
+// import Input from 'react-toolbox/lib/input';
 import TransferTabs from './../transferTabs';
 import { fromRawLsk } from '../../utils/lsk';
 import { Button } from './../toolbox/buttons/button';
@@ -59,6 +60,7 @@ class SendWritable extends React.Component {
         error: typeof error === 'string' ? error : this.validateInput(name, value, required),
       },
     });
+    this.focusReference();
   }
 
   validateInput(name, value, required) {
@@ -85,6 +87,10 @@ class SendWritable extends React.Component {
     return fromRawLsk(Math.max(0, this.props.account.balance - this.fee));
   }
 
+  focusReference() {
+    this.referenceInput.focus();
+  }
+
   render() {
     return (
       <div className={`${styles.sendWrapper}`}>
@@ -97,6 +103,7 @@ class SendWritable extends React.Component {
         <form className={styles.form}>
           { this.props.followedAccounts.length > 0 && this.state.openFollowedAccountSuggestion ?
             <Bookmark
+              focusReference={this.focusReference.bind(this)}
               className='recipient'
               label={this.props.t('Send to address')}
               address={this.state.recipient}
@@ -110,11 +117,19 @@ class SendWritable extends React.Component {
             />
           }
           <ReferenceInput
-            className='reference'
+            context={this}
             label={this.props.t('Reference (optional)')}
             address={this.state.reference}
             handleChange={this.handleChange.bind(this, 'reference', false)}
           />
+          {/* <Input
+            innerRef={(ref) => { this.referenceInput = ref; }}
+            className='reference'
+            label={this.props.t('Reference (optional)')}
+            error={this.state.reference.error}
+            value={this.state.reference.value}
+            onChange={val => this.handleChange(val)}
+          /> */}
           <Converter
             label={this.props.t('Amount (LSK)')}
             className='amount'

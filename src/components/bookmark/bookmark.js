@@ -65,6 +65,7 @@ class Bookmark extends React.Component {
         if (this.props.followedAccounts[this.state.selectedIdx]) {
           const address = this.props.followedAccounts[this.state.selectedIdx].address;
           this.props.handleChange(address);
+          this.props.focusReference();
         }
 
         break;
@@ -119,11 +120,14 @@ class Bookmark extends React.Component {
               ${showBigVisualAccountStyles ? `${styles.bigAccountVisualBookmarkInput} bigAccountVisualBookmarkInput` : ''}`}
             label={label}
             error={!this.state.show ? address.error : ''}
+            ref={(input) => { this.bookmarkInput = input; }}
             autoComplete="off"
             placeholder={this.state.placeholder}
             value={address.value}
-            innerRef={(el) => { this.inputRef = el; }}
-            onFocus={() => this.setState({ show: true })}
+            onFocus={() => {
+              this.setState({ show: true });
+              this.handleArrowDown();
+            }}
             onBlur={() => this.setState({ show: false, selectedIdx: -1 })}
             onKeyDown={this.handleKey.bind(this)}
             onChange={(val) => { handleChange(val); }}
