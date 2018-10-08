@@ -10,10 +10,10 @@ const TransactionType = (props) => {
       type = props.senderId === props.recipientId ? t('Account initialization') : false;
       break;
     case 1:
-      type = t('Second Passphrase Registration');
+      type = t('Second passphrase registration');
       break;
     case 2:
-      type = t('Delegate Registration');
+      type = t('Delegate registration');
       break;
     case 3:
       type = t('Delegate vote', { context: 'noun' });

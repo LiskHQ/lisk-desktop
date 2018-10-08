@@ -27,7 +27,7 @@ class ConfirmVotes extends React.Component {
       message = {
         title: t('Votes submitted'),
         success: true,
-        body: t('You’re votes are being processed and will be confirmed. It may take up to 10 minutes to be secured in the blockchain.'),
+        body: t('Your votes are being processed. It may take up to 10 minutes for it to be secured in the blockchain.'),
       };
     }
     updateList(false);
@@ -58,7 +58,7 @@ class ConfirmVotes extends React.Component {
         <article className={styles.content}>
           <h2 className={styles.header}>{t('Final confirmation')}</h2>
           <p className={styles.message}>
-            {t('Are you sure to confirm this selection?')}
+            {t('Are you certain of your choice?')}
           </p>
           <PrimaryButton
             className={`${styles.confirmButton} confirm`}
