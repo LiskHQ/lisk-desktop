@@ -3,7 +3,8 @@ import TransportNodeHid from '@ledgerhq/hw-transport-node-hid'; // eslint-disabl
 import Lisk from 'lisk-elements'; // eslint-disable-line import/no-extraneous-dependencies
 import { LedgerAccount, SupportedCoin, DposLedger } from 'dpos-ledger-api'; // eslint-disable-line import/no-extraneous-dependencies
 import win from './modules/win';
- TransportNodeHid.setListenDevicesDebounce(200);
+
+TransportNodeHid.setListenDevicesDebounce(200);
 /*
 TransportNodeHid.setListenDevicesDebug((msg, ...args) => {
   console.log(msg);
@@ -13,28 +14,30 @@ TransportNodeHid.setListenDevicesDebug((msg, ...args) => {
   });
 });
 */
- let busy = false;
+let busy = false;
 TransportNodeHid.setListenDevicesPollingSkip(() => busy);
- let ledgerPath = null;
- const getLedgerAccount = (index = 0) => {
+let ledgerPath = null;
+const getLedgerAccount = (index = 0) => {
   const ledgerAccount = new LedgerAccount();
   ledgerAccount.coinIndex(SupportedCoin.LISK);
   ledgerAccount.account(index);
   return ledgerAccount;
 };
- const isValidAddress = address => address.length > 2 && address.length < 22 && address[address.length - 1] === 'L';
- const isInsideLedgerApp = async (path) => {
+
+const isValidAddress = address => address.length > 2 && address.length < 22 && address[address.length - 1] === 'L';
+const isInsideLedgerApp = async (path) => {
   try {
     const transport = await TransportNodeHid.open(path);
     const liskLedger = new DposLedger(transport);
     const ledgerAccount = getLedgerAccount(0);
     const liskAccount = await liskLedger.getPubKey(ledgerAccount);
+    transport.close();
     return isValidAddress(liskAccount.address);
   } catch (e) {
     return false;
   }
 };
- const ledgerObserver = {
+const ledgerObserver = {
   next: async ({ device, type }) => {
     if (device) {
       if (type === 'add') {
@@ -51,7 +54,8 @@ TransportNodeHid.setListenDevicesPollingSkip(() => busy);
     }
   },
 };
- let observableListen = null;
+
+let observableListen = null;
 const syncDevices = () => {
   try {
     observableListen = TransportNodeHid.listen(ledgerObserver);
@@ -60,15 +64,16 @@ const syncDevices = () => {
     syncDevices();
   }
 };
- syncDevices();
- app.on('will-quit', () => {
+syncDevices();
+app.on('will-quit', () => {
   if (observableListen) {
     observableListen.unsubscribe();
     observableListen = null;
   }
 });
- const getBufferToHex = buffer => Lisk.cryptography.bufferToHex(buffer);
- const createCommand = (k, fn) => {
+
+const getBufferToHex = buffer => Lisk.cryptography.bufferToHex(buffer);
+const createCommand = (k, fn) => {
   ipcMain.on(`${k}.request`, (event, ...args) => {
     fn(...args)
       .then(r => ({ success: true, data: r }))
@@ -76,17 +81,17 @@ const syncDevices = () => {
       .then(r => event.sender.send(`${k}.result`, r));
   });
 };
- // eslint-disable-next-line arrow-body-style
+// eslint-disable-next-line arrow-body-style
 createCommand('ledgerCommand', (command) => {
   if (ledgerPath) {
     return TransportNodeHid.open(ledgerPath)
       .then(async (transport) => {
         busy = true;
-         try {
+        try {
           const liskLedger = new DposLedger(transport);
           const ledgerAccount = getLedgerAccount(command.data.index);
           let commandResult;
-           if (command.action === 'GET_ACCOUNT') {
+          if (command.action === 'GET_ACCOUNT') {
             commandResult = await liskLedger.getPubKey(ledgerAccount);
           }
           if (command.action === 'SIGN_MSG') {
@@ -96,24 +101,24 @@ createCommand('ledgerCommand', (command) => {
           if (command.action === 'SIGN_TX') {
             commandResult = await liskLedger.signTX(ledgerAccount, command.data.tx, false);
           }
-           transport.close();
+          transport.close();
           busy = false;
           return Promise.resolve(commandResult);
         } catch (err) {
           transport.close();
           busy = false;
           if (err.statusText && err.statusText === 'CONDITIONS_OF_USE_NOT_SATISFIED') {
-            return Promise.reject('LEDGER_ACTION_DENIED_BY_USER');
+            return Promise.reject(new Error('LEDGER_ACTION_DENIED_BY_USER'));
           }
-          return Promise.reject('LEDGER_ERR_DURING_CONNECTION');
+          return Promise.reject(new Error('LEDGER_ERR_DURING_CONNECTION'));
         }
       })
       .catch((e) => {
         if (typeof e === 'string') {
           return Promise.reject(e);
         }
-        return Promise.reject('LEDGER_ERR_DURING_CONNECTION');
+        return Promise.reject(new Error('LEDGER_ERR_DURING_CONNECTION'));
       });
   }
-  return Promise.reject('LEDGER_IS_NOT_CONNECTED');
+  return Promise.reject(new Error('LEDGER_IS_NOT_CONNECTED'));
 });
