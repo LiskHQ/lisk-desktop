@@ -127,7 +127,7 @@ pipeline {
 				  sourceEncoding: 'ASCII'
 			junit 'reports/junit_report.xml'
 			withCredentials([string(credentialsId: 'lisk-hub-coveralls-token', variable: 'COVERALLS_REPO_TOKEN')]) {
-				sh 'cat coverage/*/lcov.info coverage/jest/*lcov.info |coveralls -v'
+				sh 'cat coverage/HeadlessChrome*/lcov.info |coveralls -v'
 			}
 		}
 		success {
