@@ -69,7 +69,7 @@ class Setting extends React.Component {
       <section className={`${grid['col-sm-12']} ${grid['col-md-8']}`}>
         <h4 className={`${allowAuthClass}`}>{t('Security')}</h4>
         <div className={styles.item}>
-          <label className={`${allowAuthClass}`}>{t('second passphrase (Fee: 5 LSK)')}</label>
+          <label className={`${allowAuthClass}`}>{t('Second passphrase (Fee: 5 LSK)')}</label>
           {!hasSecondPassphrase ?
             <Link
               className={`register-second-passphrase ${styles.secondPassphrase} ${allowAuthClass}`}
