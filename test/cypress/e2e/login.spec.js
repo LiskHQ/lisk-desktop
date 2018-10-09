@@ -1,7 +1,8 @@
 import numeral from 'numeral';
+import { fromRawLsk } from '../../../src/utils/lsk';
 import accounts from '../../constants/accounts';
 import networks from '../../constants/networks';
-import { fromRawLsk } from '../../../src/utils/lsk';
+import chooseNetwork from './utils/chooseNetwork';
 
 const ss = {
   newAccountBtn: '.new-account-button',
@@ -10,34 +11,9 @@ const ss = {
   networkDropdown: '.network',
   headerAddress: '.copy-title',
   headerBalance: '.balance span',
-  networkStatus: '.network-status',
   nodeAddress: '.peer',
+  networkStatus: '.network-status',
   errorPopup: '.toast',
-};
-
-const chooseNetwork = (network) => {
-  switch (network) {
-    case 'main':
-      cy.get(ss.networkDropdown).click();
-      cy.get('ul li').eq(1).click();
-      break;
-    case 'test':
-      cy.get(ss.networkDropdown).click();
-      cy.get('ul li').eq(2).click();
-      break;
-    case 'dev':
-      cy.get(ss.networkDropdown).click();
-      cy.get('ul li').eq(3).click();
-      cy.get('.address input').type(networks.devnet.node);
-      break;
-    case 'invalid':
-      cy.get(ss.networkDropdown).click();
-      cy.get('ul li').eq(3).click();
-      cy.get('.address input').type('http://silk.road');
-      break;
-    default:
-      throw new Error(`Network should be one of : main , test, dev, invalid . Was: ${network}`);
-  }
 };
 
 const loginUI = (passphrase) => {

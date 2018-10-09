@@ -1,12 +1,22 @@
 import networks from '../../constants/networks';
+import chooseNetwork from './utils/chooseNetwork';
 
 const ss = {
-  networkDropdown: '.network',
   networkStatus: '.network-status',
   newAccountBtn: '.new-account-button',
   nodeAddress: '.peer',
   errorPopup: '.toast',
+  getPassphraseButton: '.get-passphrase-button',
+  iUnderstandCheckbox: '.i-understand-checkbox',
+  revealCheckbox: '.reveal-checkbox',
+  passphraseTextarea: 'textarea.passphrase',
+  itsSafeBtn: '.yes-its-safe-button',
+  passphraseWordHolder: '.passphrase-holder label',
+  getToDashboardBtn: '.get-to-your-dashboard-button',
+  backButton: '.multistep-back',
 };
+
+const registerUrl = '/register';
 
 /**
  * Generates a sequence of random pairs of x,y coordinates on the screen that simulates
@@ -22,57 +32,38 @@ const moveMouseRandomly = () => {
   }
 };
 
-const chooseNetwork = (network) => {
-  switch (network) {
-    case 'main':
-      cy.get(ss.networkDropdown).click();
-      cy.get('ul li').eq(1).click();
-      break;
-    case 'test':
-      cy.get(ss.networkDropdown).click();
-      cy.get('ul li').eq(2).click();
-      break;
-    case 'dev':
-      cy.get(ss.networkDropdown).click();
-      cy.get('ul li').eq(3).click();
-      cy.get('.address input').type(networks.devnet.node);
-      break;
-    case 'invalid':
-      cy.get(ss.networkDropdown).click();
-      cy.get('ul li').eq(3).click();
-      cy.get('.address input').type('http://silk.road');
-      break;
-    default:
-      throw new Error(`Network should be one of : main , test, dev, invalid . Was: ${network}`);
-  }
-};
-
 const registerUI = function () {
   moveMouseRandomly();
-  cy.get('.get-passphrase-button').click();
-  cy.get('.i-understand-checkbox').click();
-  cy.get('.reveal-checkbox')
+  cy.get(ss.getPassphraseButton).click();
+  cy.get(ss.iUnderstandCheckbox).click();
+  cy.get(ss.revealCheckbox)
     .trigger('mousedown')
     .trigger('mousemove', { which: 1, pageX: 100, pageY: 0 })
     .trigger('mouseup');
-  cy.get('textarea.passphrase').invoke('text').as('passphrase');
-  cy.get('.yes-its-safe-button').click();
-  cy.get('.passphrase-holder label').each(($el) => {
+  cy.get(ss.passphraseTextarea).invoke('text').as('passphrase');
+  cy.get(ss.itsSafeBtn).click();
+  cy.get(ss.passphraseWordHolder).each(($el) => {
     if (this.passphrase.includes($el[0].textContent)) cy.wrap($el).click();
   });
-  cy.get('.get-to-your-dashboard-button').click();
+  cy.get(ss.getToDashboardBtn).click();
 };
 
 describe('Registration', () => {
+  it(`Opens by url ${registerUrl}`, () => {
+    cy.visit(registerUrl);
+    cy.url().should('contain', 'register');
+    cy.get(ss.backButton);
+  });
+
   it('Create Lisk ID for Mainnet by default ("Switch Network" is not set)', function () {
-    cy.visit('/register');
+    cy.visit(registerUrl);
     registerUI.call(this);
     cy.get(ss.networkStatus).should('not.exist');
   });
 
   it('Create Lisk ID for Mainnet ("Switch Network" is false)', function () {
     cy.addLocalStorage('settings', 'showNetwork', false);
-    cy.visit('/register');
+    cy.visit(registerUrl);
     registerUI.call(this);
     cy.get(ss.networkStatus).should('not.exist');
   });
