@@ -109,7 +109,8 @@ class SendReadable extends React.Component {
             <p>{this.props.t('You only need to do this once for each Lisk ID.')}</p>
           </div>
           : <form>
-            <Input label={this.props.t('Send to Address')}
+            <Input
+              label={this.props.t('Send to Address')}
               className={`recipient ${styles.disabledInput}`}
               // value={this.state.recipient.value}
               onChange={this.handleChange.bind(this, 'recipient')}

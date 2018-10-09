@@ -122,7 +122,7 @@ class Bookmark extends React.Component {
             error={!this.state.show ? address.error : ''}
             ref={(input) => { this.bookmarkInput = input; }}
             autoComplete="off"
-            placeholder={this.state.placeholder}
+            placeholder={this.state.show ? this.state.placeholder : ''}
             value={address.value}
             onFocus={() => {
               this.setState({ show: true });

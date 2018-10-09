@@ -9,7 +9,7 @@ class ReferenceInput extends React.Component {
     return (
       <Input
         innerRef={(ref) => { context.referenceInput = ref; }}
-        className={`${styles.input} reference`}
+        theme={styles}
         label={label}
         error={address.error}
         value={address.value}

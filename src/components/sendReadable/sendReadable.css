@@ -36,6 +36,10 @@ input:read-only {
   border-bottom: solid 1px var(--color-white) !important;
 }
 
+.disabledInput label {
+  font-size: 14px;
+}
+
 .button {
   min-width: 0;
   width: 100%;
@@ -81,12 +85,12 @@ input:read-only {
 
 .text {
   color: #3c5068;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 600;
 }
 
 .address {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 400;
 }
 

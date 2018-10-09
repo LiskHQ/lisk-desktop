@@ -6,22 +6,11 @@
     font-size: var(--search-box-font-size);
     border-bottom: 1px solid var(--color-grayscale-dark);
     color: var(--color-grayscale-dark);
-    transition: background-color 300ms linear;
-
-    &::selection {
-      color: #fff;
-      background: var(--search-box-selection-background);
-    }
-
-    &::placeholder {
-      color: var(--color-grayscale-dark);
-      font-weight: 200;
-      letter-spacing: 0;
-    }
-
-    &:focus {
-      outline: none;
-      background-color: var(--color-white);
-    }
   }
+}
+
+.label {
+  color: var(--color-grayscale-dark);
+  font-weight: 400;
+  letter-spacing: 0;
 }

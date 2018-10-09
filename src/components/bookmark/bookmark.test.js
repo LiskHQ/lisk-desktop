@@ -21,6 +21,7 @@ describe('Bookmark', () => {
         push: spy(),
       },
       handleChange: spy(),
+      focusReference: spy(),
       followedAccounts: followedAccounts.accounts,
       address: { value: 'p' },
     };
@@ -36,9 +37,6 @@ describe('Bookmark', () => {
         i18n: PropTypes.object.isRequired,
       },
     });
-  });
-
-  afterEach(() => {
   });
 
   it('should render a component', () => {

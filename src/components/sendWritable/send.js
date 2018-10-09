@@ -1,5 +1,4 @@
 import React from 'react';
-// import Input from 'react-toolbox/lib/input';
 import TransferTabs from './../transferTabs';
 import { fromRawLsk } from '../../utils/lsk';
 import { Button } from './../toolbox/buttons/button';
@@ -60,7 +59,6 @@ class SendWritable extends React.Component {
         error: typeof error === 'string' ? error : this.validateInput(name, value, required),
       },
     });
-    this.focusReference();
   }
 
   validateInput(name, value, required) {
@@ -122,14 +120,6 @@ class SendWritable extends React.Component {
             address={this.state.reference}
             handleChange={this.handleChange.bind(this, 'reference', false)}
           />
-          {/* <Input
-            innerRef={(ref) => { this.referenceInput = ref; }}
-            className='reference'
-            label={this.props.t('Reference (optional)')}
-            error={this.state.reference.error}
-            value={this.state.reference.value}
-            onChange={val => this.handleChange(val)}
-          /> */}
           <Converter
             label={this.props.t('Amount (LSK)')}
             className='amount'
