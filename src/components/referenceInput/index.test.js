@@ -14,6 +14,7 @@ describe('ReferenceInput', () => {
       className: 'test',
       address: '123L',
       label: 'test',
+      context: { referenceInput: {} },
     };
     wrapper = mount(<ReferenceInput {...props} />);
   });

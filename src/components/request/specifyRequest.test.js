@@ -44,7 +44,6 @@ describe('Specify Request', () => {
     expect(wrapper.find('Input.amount').text()).to.contain('Required');
   });
 
-
   it('recognizes empty amount', () => {
     wrapper.find('.amount input').simulate('change', { target: { value: '12000' } });
     wrapper.find('.amount input').simulate('change', { target: { value: '' } });

@@ -77,10 +77,6 @@ class SendWritable extends React.Component {
     return undefined;
   }
 
-  showAccountVisual() {
-    return this.state.recipient.value.length && !this.state.recipient.error;
-  }
-
   getMaxAmount() {
     return fromRawLsk(Math.max(0, this.props.account.balance - this.fee));
   }

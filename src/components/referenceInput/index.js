@@ -1,5 +1,4 @@
 import React from 'react';
-// import Input from '../toolbox/inputs/input';
 import Input from 'react-toolbox/lib/input';
 import styles from './index.css';
 
@@ -8,7 +7,12 @@ class ReferenceInput extends React.Component {
     const { handleChange, address, label, context } = this.props; // eslint-disable-line
     return (
       <Input
-        innerRef={(ref) => { context.referenceInput = ref; }}
+        className="reference"
+        innerRef={(ref) => {
+          if (context) {
+            context.referenceInput = ref;
+          }
+        }}
         theme={styles}
         label={label}
         error={address.error}
