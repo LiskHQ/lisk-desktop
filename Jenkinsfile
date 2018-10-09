@@ -74,12 +74,22 @@ pipeline {
 				parallel (
 					"mocha": {
 						sh 'ON_JENKINS=true npm run --silent test'
+						sh 'ON_JENKINS=true npm run --silent test'
+						withCredentials([string(credentialsId: 'lisk-hub-coveralls-token', variable: 'COVERALLS_REPO_TOKEN')]) {
+							sh 'cat coverage/HeadlessChrome*/lcov.info |coveralls -v'
+						}
 					},
 					"jest": {
 						ansiColor('xterm') {
 							// TODO: fail on errors when jest test suite is ready
 							// see https://github.com/LiskHQ/lisk-hub/issues/1302
 							sh 'ON_JENKINS=true npm run --silent test-jest || true'
+
+							// TODO: uncomment sending coverage to coveralls when 
+							// all tests are migrated from mocha to jest
+						// withCredentials([string(credentialsId: 'lisk-hub-coveralls-token', variable: 'COVERALLS_REPO_TOKEN')]) {
+							// sh 'cat coverage/HeadlessChrome*/lcov.info |coveralls -v'
+						// }
 						}
 					},
 					"cypress": {
@@ -126,9 +136,6 @@ pipeline {
 				  onlyStable: false,
 				  sourceEncoding: 'ASCII'
 			junit 'reports/junit_report.xml'
-			withCredentials([string(credentialsId: 'lisk-hub-coveralls-token', variable: 'COVERALLS_REPO_TOKEN')]) {
-				sh 'coveralls -v <coverage/HeadlessChrome*/lcov.info'
-			}
 		}
 		success {
 			script {
