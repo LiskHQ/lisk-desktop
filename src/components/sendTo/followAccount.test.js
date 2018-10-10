@@ -9,6 +9,7 @@ describe('SendTo: follow account Component', () => {
   let wrapper;
   let props = {
     prevStep: spy(),
+    nextStep: spy(),
     address: '12345L',
     t: key => key,
   };
@@ -34,7 +35,7 @@ describe('SendTo: follow account Component', () => {
     expect(followedAccounts.followedAccountAdded).to.have.been.calledWith({
       title: 'some title', address: props.address,
     });
-    expect(props.prevStep).to.have.been.calledWith();
+    expect(props.nextStep).to.have.been.calledWith();
   });
 
   it('adds the account with address as title', () => {
@@ -42,7 +43,7 @@ describe('SendTo: follow account Component', () => {
     expect(followedAccounts.followedAccountAdded).to.have.been.calledWith({
       title: props.address, address: props.address,
     });
-    expect(props.prevStep).to.have.been.calledWith();
+    expect(props.nextStep).to.have.been.calledWith();
   });
 
   it('cancels following', () => {
