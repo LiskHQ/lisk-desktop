@@ -1,7 +1,8 @@
 import numeral from 'numeral';
+import { fromRawLsk } from '../../../src/utils/lsk';
 import accounts from '../../constants/accounts';
 import networks from '../../constants/networks';
-import { fromRawLsk } from '../../../src/utils/lsk';
+import chooseNetwork from './utils/chooseNetwork';
 
 const ss = {
   newAccountBtn: '.new-account-button',
@@ -10,37 +11,12 @@ const ss = {
   networkDropdown: '.network',
   headerAddress: '.copy-title',
   headerBalance: '.balance span',
-  networkStatus: '.network-status',
   nodeAddress: '.peer',
+  networkStatus: '.network-status',
   errorPopup: '.toast',
 };
 
-const loginUI = (passphrase, network) => {
-  cy.visit('/');
-  switch (network) {
-    case 'default':
-      break;
-    case 'mainnet':
-      cy.get(ss.networkDropdown).click();
-      cy.get('ul li').eq(1).click();
-      break;
-    case 'testnet':
-      cy.get(ss.networkDropdown).click();
-      cy.get('ul li').eq(2).click();
-      break;
-    case 'devnet':
-      cy.get(ss.networkDropdown).click();
-      cy.get('ul li').eq(3).click();
-      cy.get('.address input').type(networks.devnet.node);
-      break;
-    case 'invalid':
-      cy.get(ss.networkDropdown).click();
-      cy.get('ul li').eq(3).click();
-      cy.get('.address input').type('http://silk.road');
-      break;
-    default:
-      throw new Error(`Network should be one of : default, main , test, dev, invalid . Was: , ${network}`);
-  }
+const loginUI = (passphrase) => {
   cy.get(ss.passphraseInput).click();
   cy.get(ss.passphraseInput).each(($el, index) => {
     const passphraseWordsArray = passphrase.split(' ');
@@ -60,7 +36,8 @@ describe('Login Page', () => {
   });
 
   it('Log in to Mainnet by default ("Switch Network" is not set)', () => {
-    loginUI(accounts.genesis.passphrase, 'default');
+    cy.visit('/');
+    loginUI(accounts.genesis.passphrase);
     cy.get(ss.headerAddress).should('have.text', accounts.genesis.address);
     cy.get(ss.headerBalance).should('have.text', castNumberToBalanceString(0));
     cy.get(ss.networkStatus).should('not.exist');
@@ -68,7 +45,8 @@ describe('Login Page', () => {
 
   it('Log in to Mainnet by default ("Switch Network" is false)', () => {
     cy.addLocalStorage('settings', 'showNetwork', false);
-    loginUI(accounts.genesis.passphrase, 'default');
+    cy.visit('/');
+    loginUI(accounts.genesis.passphrase);
     cy.get(ss.headerAddress).should('have.text', accounts.genesis.address);
     cy.get(ss.headerBalance).should('have.text', castNumberToBalanceString(0));
     cy.get(ss.networkStatus).should('not.exist');
@@ -76,7 +54,9 @@ describe('Login Page', () => {
 
   it('Log in to Mainnet (Selected network)', () => {
     cy.addLocalStorage('settings', 'showNetwork', true);
-    loginUI(accounts.genesis.passphrase, 'mainnet');
+    cy.visit('/');
+    chooseNetwork('main');
+    loginUI(accounts.genesis.passphrase);
     cy.get(ss.networkStatus).contains('Connected to mainnet');
     cy.get(ss.headerAddress).should('have.text', accounts.genesis.address);
     cy.get(ss.headerBalance).should('have.text', castNumberToBalanceString(0));
@@ -84,7 +64,9 @@ describe('Login Page', () => {
 
   it('Log in to Testnet', () => {
     cy.addLocalStorage('settings', 'showNetwork', true);
-    loginUI(accounts['testnet guy'].passphrase, 'testnet');
+    cy.visit('/');
+    chooseNetwork('test');
+    loginUI(accounts['testnet guy'].passphrase);
     cy.get(ss.networkStatus).contains('Connected to testnet');
     cy.get(ss.headerAddress).should('have.text', accounts['testnet guy'].address);
     cy.get(ss.headerBalance).should('have.text', castNumberToBalanceString(accounts['testnet guy'].balance));
@@ -92,7 +74,9 @@ describe('Login Page', () => {
 
   it('Log in to Devnet', () => {
     cy.addLocalStorage('settings', 'showNetwork', true);
-    loginUI(accounts.genesis.passphrase, 'devnet');
+    cy.visit('/');
+    chooseNetwork('dev');
+    loginUI(accounts.genesis.passphrase);
     cy.get(ss.networkStatus).contains('Connected to devnet');
     cy.get(ss.headerAddress).should('have.text', accounts.genesis.address);
     cy.get(ss.headerBalance).should('contain', castNumberToBalanceString(accounts.genesis.balance).substring(0, 6));
@@ -106,7 +90,9 @@ describe('Login Page', () => {
 
   it('Log in to invalid address', () => {
     cy.addLocalStorage('settings', 'showNetwork', true);
-    loginUI(accounts.genesis.passphrase, 'invalid');
+    cy.visit('/');
+    chooseNetwork('invalid');
+    loginUI(accounts.genesis.passphrase);
     cy.get(ss.errorPopup).contains('Unable to connect to the node');
   });
 });
