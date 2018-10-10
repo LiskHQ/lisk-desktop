@@ -23,7 +23,7 @@ describe('Bookmark', () => {
       handleChange: spy(),
       focusReference: spy(),
       followedAccounts: followedAccounts.accounts,
-      address: { value: 'p' },
+      address: { value: 'peter' },
     };
 
     const store = configureMockStore([])({
@@ -75,16 +75,6 @@ describe('Bookmark', () => {
 
     bookmarkInput.simulate('change', { target: { value: followedAccounts.accounts[0].title } });
     wrapper.update();
-    bookmarkInput.simulate('keyDown', {
-      keyCode: keyCodes.arrowUp,
-      which: keyCodes.arrowUp,
-    });
-    bookmarkInput.simulate('keyDown', {
-      keyCode: keyCodes.enter,
-      which: keyCodes.enter,
-    });
-    wrapper.update();
-    expect(props.handleChange).to.not.have.been.calledWith(followedAccounts.accounts[0].address);
 
     bookmarkInput.simulate('keyDown', {
       keyCode: keyCodes.arrowDown,
@@ -95,7 +85,7 @@ describe('Bookmark', () => {
       which: keyCodes.enter,
     });
     wrapper.update();
-    expect(props.handleChange).to.have.been.calledWith(followedAccounts.accounts[0].address);
+    expect(props.handleChange).to.have.been.calledWith(followedAccounts.accounts[1].address);
 
     bookmarkInput.simulate('keyDown', {
       keyCode: keyCodes.arrowDown,
@@ -107,7 +97,7 @@ describe('Bookmark', () => {
     });
     wrapper.update();
 
-    expect(props.handleChange).to.have.been.calledWith(followedAccounts.accounts[0].address);
+    expect(props.handleChange).to.have.been.calledWith(followedAccounts.accounts[1].address);
   });
 
   it('should display bigAccountVisual', () => {
