@@ -22,11 +22,13 @@ const searchDelegate = ({ publicKey, address }) =>
 const searchVotes = ({ address }) =>
   (dispatch, getState) => {
     const activePeer = getState().peers.data;
-    getVotes(activePeer, address).then(response =>
+    const votesEarlyBatch = getVotes(activePeer, address, 0, 100);
+    const votesLasteBatch = getVotes(activePeer, address, 101, 1);
+    Promise.all([votesEarlyBatch, votesLasteBatch]).then(([a, b]) =>
       dispatch({
         type: actionTypes.searchVotes,
         data: {
-          votes: response.data.votes,
+          votes: [...a.data.votes, ...b.data.votes],
           address,
         },
       }));

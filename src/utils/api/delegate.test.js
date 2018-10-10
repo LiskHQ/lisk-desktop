@@ -135,8 +135,10 @@ describe('Utils: Delegate', () => {
   describe('getVotes', () => {
     it('should get votes for an address with no parameters', () => {
       const address = '123L';
-      getVotes(activePeer, address);
-      expect(activePeer.votes.get).to.have.been.calledWith({ address });
+      const offset = 0;
+      const limit = 100;
+      getVotes(activePeer, address, offset, limit);
+      expect(activePeer.votes.get).to.have.been.calledWith({ address, offset, limit });
     });
   });
 

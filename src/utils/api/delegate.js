@@ -35,8 +35,8 @@ export const vote = (
   });
 };
 
-export const getVotes = (activePeer, address) =>
-  activePeer.votes.get({ address });
+export const getVotes = (activePeer, address, offset, limit) =>
+  activePeer.votes.get({ address, limit, offset });
 
 export const getVoters = (activePeer, publicKey) =>
   activePeer.voters.get({ publicKey });
