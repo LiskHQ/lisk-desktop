@@ -3,7 +3,6 @@ import Lisk from 'lisk-elements';
 import { spy, stub, match } from 'sinon';
 import actionTypes from '../constants/actions';
 import { activePeerSet, activePeerUpdate } from './peers';
-import { errorToastDisplayed } from './toaster';
 import accounts from '../../test/constants/accounts';
 import networks from '../constants/networks';
 
@@ -117,17 +116,6 @@ describe('actions: peers', () => {
         data: { label: 'Unable to connect to the node', type: 'error' },
         type: actionTypes.toastDisplayed,
       });
-    });
-
-    it('does not display the error toast if the network is a custom node and there are not saved account', () => {
-      const network = {
-        address: 'http://localhost:4000',
-        custom: true,
-      };
-
-      activePeerSet({ passphrase, network, noSavedAccounts: true })(dispatch);
-
-      expect(dispatch).to.not.have.been.calledWith(errorToastDisplayed);
     });
 
     it('dispatch activePeerSet action even if network is undefined', () => {

@@ -28,7 +28,6 @@ class Authenticate extends React.Component {
   update(e) {
     e.preventDefault();
     const data = {
-      activePeer: this.props.peers.data,
       passphrase: this.state.passphrase.value,
     };
     if (typeof this.props.account.secondPublicKey === 'string') {

@@ -14,6 +14,7 @@ import {
   delegatesAdded,
 } from './voting';
 import Fees from '../constants/fees';
+import networks from '../constants/networks';
 import * as delegateApi from '../utils/api/delegate';
 
 const delegateList = [
@@ -22,6 +23,10 @@ const delegateList = [
 ];
 
 describe('actions: voting', () => {
+  let getState = () => ({
+    peers: { data: {} },
+  });
+
   describe('voteToggled', () => {
     it('should create an action to add data to toggle the vote status for any given delegate', () => {
       const data = {
@@ -98,7 +103,6 @@ describe('actions: voting', () => {
     let dispatch;
     let goToNextStep;
     let actionFunction;
-    let getState;
 
     beforeEach(() => {
       delegateApiMock = sinon.stub(delegateApi, 'vote');
@@ -158,7 +162,6 @@ describe('actions: voting', () => {
       address: '8096217735672704724L',
     };
     const delegates = delegateList;
-    let getState;
 
     beforeEach(() => {
       delegateApiMock = sinon.stub(delegateApi, 'listAccountDelegates').returnsPromise();
@@ -207,6 +210,16 @@ describe('actions: voting', () => {
     const delegates = delegateList;
     const actionFunction = delegatesFetched(data);
 
+    getState = () => ({
+      peers: {
+        data: {
+          options: {
+            name: networks.mainnet.name,
+          },
+        },
+      },
+    });
+
     it('should create an action function', () => {
       expect(typeof actionFunction).to.be.deep.equal('function');
     });
@@ -214,11 +227,11 @@ describe('actions: voting', () => {
     it('should dispatch delegatesAdded action if resolved', () => {
       const delegateApiMock = sinon.stub(delegateApi, 'listDelegates');
       const dispatch = sinon.spy();
-      const getState = () => ({
+      getState = () => ({
         peers: {
           data: {
             options: {
-              name: 'Mainnet',
+              name: networks.mainnet.name,
             },
           },
         },
@@ -246,7 +259,10 @@ describe('actions: voting', () => {
       upvotes: [],
       unvotes: [],
     };
-    let getState;
+
+    getState = () => ({
+      peers: { data: {} },
+    });
 
     beforeEach(() => {
       delegateApiMock = sinon.stub(delegateApi, 'listAccountDelegates').returnsPromise();

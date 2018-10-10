@@ -46,6 +46,7 @@ describe('Account', () => {
 
   it('shows network indicator online', () => {
     props.peers.status.online = true;
+    props.peers.options.code = networks.mainnet.code;
     const wrapper = shallow(<Account {...props} />);
     wrapper.update();
     expect(wrapper).to.have.exactly(1).descendants('.online');

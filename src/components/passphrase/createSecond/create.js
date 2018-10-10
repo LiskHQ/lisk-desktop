@@ -34,13 +34,13 @@ class Create extends React.Component {
                 id="generatorHeader" >
                 {t('Secure the use of your Lisk ID')}
                 <br />
-                {t('with a 2nd passphrase')}
+                {t('with a second passphrase')}
               </h2>
             </header>
             <p className={styles.info}>
-              {t('After registration, you will need it to use your Lisk ID, like sending and voting.')}
+              {t('After registration, your second passphrase will be required when confirming every transaction and every vote.')}
               <br />
-              {t('You are responsible for keeping your 2nd passphrase safe. No one can restore it, not even Lisk.')}
+              {t('You are responsible for safekeeping your second passphrase. No one can restore it, not even Lisk.')}
             </p>
             <PrimaryButton
               className={`${styles.nextButton} next`}

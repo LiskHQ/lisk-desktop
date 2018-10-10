@@ -46,7 +46,7 @@ class ConfirmRequest extends React.Component {
               value={reference}
               disabled={true}/> : null}
 
-          <Input label={t('Request amount (LSK)')}
+          <Input label={t('Request specific amount (LSK)')}
             className={`recipient ${styles.disabledInput}`}
             value={amount}
             disabled={true}/>
@@ -58,7 +58,7 @@ class ConfirmRequest extends React.Component {
             value={link}
             className={styles.copy}/>
           <a className={styles.emailLink}
-            href={`mailto:?subject=Request ${amount} LSK to ${address}&body=Hey there, here is a link you can use to send me ${amount} LSK via your wallet: ${link}`}>
+            href={`mailto:?subject=Request ${amount} LSK to ${address}&body=Hey there, here is a link you can use to send me ${amount} LSK via your wallet: ${encodeURIComponent(link)}`}>
             {t('Send request via E-mail')} <FontIcon value='arrow-right'/>
           </a>
         </div>

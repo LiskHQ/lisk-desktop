@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import { spy, stub } from 'sinon';
+import i18next from 'i18next';
 import actionTypes from '../constants/actions';
 import {
   accountUpdated,
@@ -52,12 +53,13 @@ describe('actions: account', () => {
 
   describe('secondPassphraseRegistered', () => {
     let accountApiMock;
+    let i18nextMock;
     const data = {
-      activePeer: {},
-      secondPassphrase: 'sample second passphrase',
+      passphrase: accounts['second passphrase account'].passphrase,
+      secondPassphrase: accounts['second passphrase account'].secondPassphrase,
       account: {
-        publicKey: 'test_public-key',
-        address: 'test_address',
+        publicKey: accounts['second passphrase account'].publicKey,
+        address: accounts['second passphrase account'].address,
       },
     };
     const actionFunction = secondPassphraseRegistered(data);
@@ -70,10 +72,13 @@ describe('actions: account', () => {
       getState = () => ({
         peers: { data: {} },
       });
+      i18nextMock = stub(i18next, 't');
+      i18next.t = key => key;
     });
 
     afterEach(() => {
       accountApiMock.restore();
+      i18nextMock.restore();
     });
 
     it('should create an action function', () => {
@@ -84,8 +89,8 @@ describe('actions: account', () => {
       accountApiMock.returnsPromise().resolves({ id: '15626650747375562521' });
       const expectedAction = {
         id: '15626650747375562521',
-        senderPublicKey: 'test_public-key',
-        senderId: 'test_address',
+        senderPublicKey: accounts['second passphrase account'].publicKey,
+        senderId: accounts['second passphrase account'].address,
         amount: 0,
         fee: Fees.setSecondPassphrase,
         type: transactionTypes.setSecondPassphrase,
@@ -120,8 +125,8 @@ describe('actions: account', () => {
       passphrase: accounts.genesis.passphrase,
       secondPassphrase: null,
       account: {
-        publicKey: 'test_public-key',
-        address: 'test_address',
+        publicKey: accounts['second passphrase account'].publicKey,
+        address: accounts['second passphrase account'].address,
       },
     };
     const actionFunction = delegateRegistered(data);
@@ -133,6 +138,7 @@ describe('actions: account', () => {
       dispatch = spy();
       getState = () => ({
         peers: { data: {} },
+        blocks: { latestBlocks: [] },
       });
     });
 
@@ -148,8 +154,8 @@ describe('actions: account', () => {
       delegateApiMock.returnsPromise().resolves({ id: '15626650747375562521' });
       const expectedAction = {
         id: '15626650747375562521',
-        senderPublicKey: 'test_public-key',
-        senderId: 'test_address',
+        senderPublicKey: accounts['second passphrase account'].publicKey,
+        senderId: accounts['second passphrase account'].address,
         username: data.username,
         amount: 0,
         fee: Fees.registerDelegate,
@@ -258,7 +264,6 @@ describe('actions: account', () => {
       });
 
       const data = {
-        activePeer: {},
         address: accounts.genesis.address,
         transactionsResponse: { meta: { count: 0 }, data: [] },
         isSameAccount: false,
@@ -282,7 +287,6 @@ describe('actions: account', () => {
       });
 
       const data = {
-        activePeer: {},
         address: accounts.genesis.address,
         transactionsResponse: { meta: { count: 0 }, data: [] },
         isSameAccount: true,
@@ -332,7 +336,7 @@ describe('actions: account', () => {
             id: 12498250891724098,
           }],
           confirmed: [],
-          account: { address: 'test_address', balance: 0 },
+          account: { address: accounts['second passphrase account'].address, balance: 0 },
         },
         account: { address: accounts.genesis.address, balance: 0 },
       };
@@ -350,7 +354,7 @@ describe('actions: account', () => {
         transactions: {
           pending: [{ id: 12498250891724098 }],
           confirmed: [],
-          account: { address: 'test_address', balance: 0 },
+          account: { address: accounts['second passphrase account'].address, balance: 0 },
         },
         account: { address: accounts.genesis.address },
       };

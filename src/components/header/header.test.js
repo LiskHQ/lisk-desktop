@@ -34,7 +34,6 @@ describe('Header', () => {
     t: key => key,
     location: { pathname: `${routes.explorer.path}${routes.search}` },
     isAuthenticated: false,
-    removeSavedAccountPassphrase: sinon.spy(),
     removePassphrase: sinon.spy(),
   };
 

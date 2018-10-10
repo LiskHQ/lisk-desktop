@@ -1,0 +1,17 @@
+{
+  "baseUrl": "http://localhost:8080/#/",
+  "viewportWidth": 1500,
+  "viewportHeight": 1000,
+  "projectId": "1it63b",
+  "video": true,
+  "env": {
+    "coreUrl": "http://localhost:4000"
+  },
+  "integrationFolder": "./e2e",
+  "fixturesFolder": "./fixtures",
+  "pluginsFile": "./plugins/index.js",
+  "screenshotsFolder": "./screenshots",
+  "supportFile": "./support/index.js",
+  "videosFolder": "./videos",
+  "trashAssetsBeforeRuns": true
+}

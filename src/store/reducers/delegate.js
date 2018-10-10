@@ -3,12 +3,12 @@ import actionTypes from '../../constants/actions';
 const delegate = (state = [], action) => {
   let targetState = { ...state };
   switch (action.type) {
-    case actionTypes.delegatesRetrieving:
+    case actionTypes.delegateRetrieving:
       return {
         ...state,
         delegateNameQueried: true,
       };
-    case actionTypes.delegatesRetrieved:
+    case actionTypes.delegateRetrieved:
       return {
         ...state,
         delegateNameQueried: false,

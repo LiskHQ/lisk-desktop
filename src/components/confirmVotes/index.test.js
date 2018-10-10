@@ -84,15 +84,7 @@ options,
 
   it.skip('should click to confirm button call votePlaced', () => {
     const votePlacedSpy = sinon.spy(votingActions, 'votePlaced');
-    // wrapper.find('ConfirmVotes').props().votePlaced({
-    //   activePeer: peers,
-    //   account,
-    //   votes,
-    //   passphrase: props.passphrase.value,
-    //   secondSecret: props.secondPassphrase.value,
-    //   goToNextStep,
-    // });
-    // expect(votePlacedSpy).to.be.calledWith();
+
     wrapper.find('button.confirm').simulate('click');
     votePlacedSpy.restore();
     expect(votePlacedSpy).to.be.calledWith();

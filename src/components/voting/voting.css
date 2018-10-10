@@ -8,6 +8,15 @@
 .wrapper {
   width: 100%;
   box-shadow: var(--normal-shadow);
+  margin: 0;
+
+  & > aside {
+    padding-left: 0;
+  }
+
+  & > section {
+    padding-right: 0;
+  }
 }
 
 .sideBar {
@@ -40,6 +49,7 @@
       bottom: var(--footer-height-m);
       max-height: 100%;
       height: auto;
+      max-width: 100%;
     }
   }
 

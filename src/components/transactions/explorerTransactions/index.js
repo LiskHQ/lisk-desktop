@@ -7,7 +7,6 @@ import ExplorerTransactions from './explorerTransactions';
 import txFilters from './../../../constants/transactionFilters';
 
 const mapStateToProps = (state, ownProps) => ({
-  activePeer: state.peers.data,
   delegate: state.search.delegates[state.search.lastSearch],
   transaction: state.transaction,
   transactions: state.search.searchResults,

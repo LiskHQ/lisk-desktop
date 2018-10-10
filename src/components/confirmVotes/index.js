@@ -8,7 +8,6 @@ const mapStateToProps = state => ({
   votes: state.voting.votes,
   delegates: state.voting.delegates,
   account: state.account,
-  activePeer: state.peers.data,
 });
 
 const mapDispatchToProps = dispatch => ({

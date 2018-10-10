@@ -8,9 +8,14 @@ import * as delegateApi from '../utils/api/delegate';
 import accounts from '../../test/constants/accounts';
 import transactionTypes from '../constants/transactionTypes';
 import Fees from '../constants/fees';
+import networks from '../constants/networks';
 import { toRawLsk } from '../utils/lsk';
 
 describe('actions: transactions', () => {
+  let getState = () => ({
+    peers: { data: {} },
+  });
+
   describe('transactionsUpdated', () => {
     let transactionsApiMock;
     const data = {
@@ -21,14 +26,10 @@ describe('actions: transactions', () => {
     };
     const actionFunction = transactionsUpdated(data);
     let dispatch;
-    let getState;
 
     beforeEach(() => {
       transactionsApiMock = sinon.stub(transactionsApi, 'getTransactions');
       dispatch = sinon.spy();
-      getState = () => ({
-        peers: { data: {} },
-      });
     });
 
     afterEach(() => {
@@ -60,14 +61,10 @@ describe('actions: transactions', () => {
     };
     const actionFunction = transactionsRequested(data);
     let dispatch;
-    let getState;
 
     beforeEach(() => {
       transactionsApiMock = sinon.stub(transactionsApi, 'getTransactions');
       dispatch = sinon.spy();
-      getState = () => ({
-        peers: { data: {} },
-      });
     });
 
     afterEach(() => {
@@ -94,14 +91,18 @@ describe('actions: transactions', () => {
   });
 
   describe('loadTransaction', () => {
+    getState = () => ({
+      peers: {
+        data: {
+          options: {
+            name: networks.mainnet.name,
+          },
+        },
+      },
+    });
     let transactionApiMock;
     let delegateApiMock;
     const data = {
-      activePeer: {
-        options: {
-          name: 'Mainnet',
-        },
-      },
       address: '15626650747375562521',
       limit: 20,
       offset: 0,
@@ -109,7 +110,6 @@ describe('actions: transactions', () => {
     };
     const actionFunction = loadTransaction(data);
     let dispatch;
-    let getState;
 
     beforeEach(() => {
       transactionApiMock = sinon.stub(transactionsApi, 'getSingleTransaction');
@@ -175,6 +175,9 @@ describe('actions: transactions', () => {
   });
 
   describe('sent', () => {
+    getState = () => ({
+      peers: { data: {} },
+    });
     let transactionsApiMock;
     const data = {
       recipientId: '15833198055097037957L',
@@ -188,7 +191,6 @@ describe('actions: transactions', () => {
     };
     const actionFunction = sent(data);
     let dispatch;
-    let getState;
 
     beforeEach(() => {
       transactionsApiMock = sinon.stub(transactionsApi, 'send');
