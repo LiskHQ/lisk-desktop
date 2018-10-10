@@ -124,7 +124,9 @@ class SendReadable extends React.Component {
                 />
                 <div className={styles.text}>
                   <div className={styles.title}>{followedAccount && followedAccount.title}</div>
-                  <div className={styles.address}>{this.state.recipient.value}</div>
+                  <div className={`${followedAccount && followedAccount.title ? styles.smallAddress : styles.address}`}>
+                    {this.state.recipient.value}
+                  </div>
                 </div>
               </div>
             </Input>

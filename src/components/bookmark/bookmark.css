@@ -135,6 +135,23 @@
   }
 }
 
+.children {
+  padding-left: 30px;
+  top: 23px;
+  position: absolute;
+}
+
+.inputChildren {
+  padding-bottom: 60px;
+
+  & input {
+    padding-bottom: 0px;
+    top: 30px;
+    position: absolute;
+    font-size: 12px !important;
+  }
+}
+
 @media (--medium-viewport) {
   .row {
     & > span {

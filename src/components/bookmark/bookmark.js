@@ -14,6 +14,7 @@ class Bookmark extends React.Component {
       selectedIdx: -1,
       resultsLength: 0,
       placeholder: '',
+      title: '',
     };
   }
 
@@ -62,8 +63,12 @@ class Bookmark extends React.Component {
         break;
       case keyCodes.enter:
       case keyCodes.tab: // eslint-disable-line
-        if (this.props.followedAccounts[this.state.selectedIdx]) {
-          const address = this.props.followedAccounts[this.state.selectedIdx].address;
+        const filteredFollowedAccounts = this.getFilteredFollowedAccounts();
+
+        if (filteredFollowedAccounts[this.state.selectedIdx]) {
+          const { title, address } = filteredFollowedAccounts[this.state.selectedIdx];
+
+          this.setState({ title });
           this.props.handleChange(address);
           this.props.focusReference();
         }
@@ -116,6 +121,7 @@ class Bookmark extends React.Component {
             type='text'
             id='bookmark-input'
             className={`${className}
+              ${this.state.title ? styles.inputChildren : ''}
               ${showSmallVisualAccountStyles ? `${styles.bookmarkInput} bookmarkInput` : ''}
               ${showBigVisualAccountStyles ? `${styles.bigAccountVisualBookmarkInput} bigAccountVisualBookmarkInput` : ''}`}
             label={label}
@@ -125,13 +131,23 @@ class Bookmark extends React.Component {
             placeholder={this.state.show ? this.state.placeholder : ''}
             value={address.value}
             onFocus={() => {
-              this.setState({ show: true });
+              this.setState({ show: true, title: '' });
               this.handleArrowDown();
             }}
-            onBlur={() => this.setState({ show: false, selectedIdx: -1 })}
+            onBlur={() => {
+              const followedAccount = this.props.followedAccounts
+                .find(account => account.address === this.props.address.value);
+              const title = followedAccount ? followedAccount.title : '';
+
+              this.setState({ show: false, selectedIdx: -1, title });
+            }}
             onKeyDown={this.handleKey.bind(this)}
-            onChange={(val) => { handleChange(val); }}
+            onChange={(val) => {
+              this.setState({ selectedIdx: 0, placeholder: '', title: '' });
+              handleChange(val);
+            }}
             >
+            <div className={styles.children}>{this.state.title}</div>
           </Input>
           { this.state.show ?
             <ul className={`${filteredFollowedAccounts.length > 0 ? styles.resultList : ''}
@@ -142,6 +158,7 @@ class Bookmark extends React.Component {
                   .map((account, index) => (
                     <li
                       onMouseDown={() => {
+                        this.setState({ selectedIdx: 0, placeholder: '', title: account.title });
                         handleChange(account.address);
                       }}
                       key={`followed-${index}`}
