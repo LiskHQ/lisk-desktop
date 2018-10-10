@@ -52,7 +52,7 @@ class ViewAccounts extends React.Component {
                 </div>
                 <div className={`${styles.rightText} ${styles.accountInformation} ${grid['col-md-10']}`}>
                   <div className={this.state.edit ? styles.editMode : null}>
-                    <div className={styles.balance}>
+                    <div className={`${styles.balance} followed-account-balance`}>
                       <LiskAmount val={account.balance} /> <span>LSK</span>
                     </div>
                     <TitleInput
