@@ -13,10 +13,6 @@
   color: #ff6236;
 }
 
-.addFollowedAccountButton {
-  margin: 20px;
-}
-
 .resultBox {
   text-align: center;
   justify-content: space-around;
@@ -40,6 +36,17 @@
   & .copy {
     color: var(--copy-color);
     cursor: pointer;
+  }
+}
+
+.okButton {
+  margin-bottom: 20px;
+}
+
+
+@media (--large-viewport) {
+  .addFollowedAccountButton {
+    margin: 20px 20px 20px 0;
   }
 }
 

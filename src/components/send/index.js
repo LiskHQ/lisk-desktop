@@ -86,6 +86,7 @@ class Send extends React.Component {
               <SendReadable/>
               <ResultBox history={this.props.history}/>
               <FollowAccount/>
+              <ResultBox history={this.props.history}/>
             </MultiStep>
             :
             <MultiStep
