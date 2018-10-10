@@ -63,6 +63,7 @@ describe('Wallet', () => {
   it('Opens by sidebar button', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit('/dashboard');
+    cy.wait(100);
     cy.get(ss.sidebarMenuWalletBtn).click();
     cy.url().should('contain', 'wallet');
     checkWalletPageLoaded();
