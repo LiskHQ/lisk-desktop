@@ -8,7 +8,7 @@
 
 .menuBar {
   display: none;
-  z-index: 4 !important;
+  z-index: 100 !important;
 }
 
 .openMenu {
@@ -39,7 +39,6 @@
     font-size: var(--menu-bar-font-size-m);
     font-family: var(--heading-font);
     background-color: var(--color-white);
-    z-index: var(--menubar-index);
     flex-direction: row-reverse;
     justify-content: space-between;
   }

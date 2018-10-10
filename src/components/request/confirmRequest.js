@@ -46,7 +46,7 @@ class ConfirmRequest extends React.Component {
               value={reference}
               disabled={true}/> : null}
 
-          <Input label={t('Request amount (LSK)')}
+          <Input label={t('Request specific amount (LSK)')}
             className={`recipient ${styles.disabledInput}`}
             value={amount}
             disabled={true}/>

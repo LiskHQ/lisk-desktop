@@ -1,80 +1,112 @@
+import numeral from 'numeral';
 import accounts from '../../constants/accounts';
+import networks from '../../constants/networks';
+import { fromRawLsk } from '../../../src/utils/lsk';
 
-// This file is skipped cause it is not part of the existing selenium tests migration.
-// It should be reenabled with the new tests structure
-describe.skip('Login Page', () => {
-  beforeEach(() => cy.visit('/'));
+const ss = {
+  newAccountBtn: '.new-account-button',
+  passphraseInput: '.passphrase input',
+  loginBtn: '.login-button',
+  networkDropdown: '.network',
+  headerAddress: '.copy-title',
+  headerBalance: '.balance span',
+  networkStatus: '.network-status',
+  nodeAddress: '.peer',
+  errorPopup: '.toast',
+};
 
+const loginUI = (passphrase, network) => {
+  cy.visit('/');
+  switch (network) {
+    case 'default':
+      break;
+    case 'mainnet':
+      cy.get(ss.networkDropdown).click();
+      cy.get('ul li').eq(1).click();
+      break;
+    case 'testnet':
+      cy.get(ss.networkDropdown).click();
+      cy.get('ul li').eq(2).click();
+      break;
+    case 'devnet':
+      cy.get(ss.networkDropdown).click();
+      cy.get('ul li').eq(3).click();
+      cy.get('.address input').type(networks.devnet.node);
+      break;
+    case 'invalid':
+      cy.get(ss.networkDropdown).click();
+      cy.get('ul li').eq(3).click();
+      cy.get('.address input').type('http://silk.road');
+      break;
+    default:
+      throw new Error(`Network should be one of : default, main , test, dev, invalid . Was: , ${network}`);
+  }
+  cy.get(ss.passphraseInput).click();
+  cy.get(ss.passphraseInput).each(($el, index) => {
+    const passphraseWordsArray = passphrase.split(' ');
+    cy.wrap($el).type(passphraseWordsArray[index]);
+  });
+  cy.get(ss.loginBtn).click();
+};
+
+const castNumberToBalanceString = number => numeral(fromRawLsk(number)).format('0,0.[0000000000000]');
+
+describe('Login Page', () => {
   it('Create lisk id -> Register account page', () => {
-    cy.get('.new-account-button').click();
+    cy.visit('/');
+    cy.get(ss.newAccountBtn).click();
     cy.url().should('include', '/register');
     cy.get('.multistep-back');
   });
 
-  // Enable after lisk core 1.0 release on mainnet
-  xit('Logging in Mainnet by default ("Switch Network" is not set)', () => {
+  it('Log in to Mainnet by default ("Switch Network" is not set)', () => {
+    loginUI(accounts.genesis.passphrase, 'default');
+    cy.get(ss.headerAddress).should('have.text', accounts.genesis.address);
+    cy.get(ss.headerBalance).should('have.text', castNumberToBalanceString(0));
+    cy.get(ss.networkStatus).should('not.exist');
   });
 
-  xit('Logging in Mainnet by default ("Switch Network" is false)', () => {
+  it('Log in to Mainnet by default ("Switch Network" is false)', () => {
+    cy.addLocalStorage('settings', 'showNetwork', false);
+    loginUI(accounts.genesis.passphrase, 'default');
+    cy.get(ss.headerAddress).should('have.text', accounts.genesis.address);
+    cy.get(ss.headerBalance).should('have.text', castNumberToBalanceString(0));
+    cy.get(ss.networkStatus).should('not.exist');
   });
 
-  xit('Logging in Mainnet (Selected network)', () => {
+  it('Log in to Mainnet (Selected network)', () => {
+    cy.addLocalStorage('settings', 'showNetwork', true);
+    loginUI(accounts.genesis.passphrase, 'mainnet');
+    cy.get(ss.networkStatus).contains('Connected to mainnet');
+    cy.get(ss.headerAddress).should('have.text', accounts.genesis.address);
+    cy.get(ss.headerBalance).should('have.text', castNumberToBalanceString(0));
   });
 
-  it('Logging in Testnet', () => {
-    cy.server();
-    cy.route('GET', `https://testnet.lisk.io/api/accounts?address=${accounts.genesis.address}`).as('account');
-    window.localStorage.setItem('settings', '{"showNetwork": true}');
-    cy.reload();
-    cy.get('.network').click();
-    cy.get('ul li').eq(2).click();
-    cy.get('.passphrase input').click();
-    cy.get('.passphrase input').each(($el, index) => {
-      const passphraseWordsArray = accounts.genesis.passphrase.split(' ');
-      cy.wrap($el).type(passphraseWordsArray[index]);
-    });
-    cy.get('.login-button').click();
-    cy.wait('@account').its('responseBody.data.0.address').should('be.equal', accounts.genesis.address);
-    cy.url().should('include', '/dashboard');
-    cy.contains('testnet');
-    cy.contains('https://testnet.lisk.io');
-    cy.wait(1000).then(() => {
-      // const account = JSON.parse(window.localStorage.getItem('accounts'))[0];
-      // expect(account.network).to.eq(1);
-      // expect(account.publicKey).to.eq(accounts.genesis.publicKey);
-    });
+  it('Log in to Testnet', () => {
+    cy.addLocalStorage('settings', 'showNetwork', true);
+    loginUI(accounts['testnet guy'].passphrase, 'testnet');
+    cy.get(ss.networkStatus).contains('Connected to testnet');
+    cy.get(ss.headerAddress).should('have.text', accounts['testnet guy'].address);
+    cy.get(ss.headerBalance).should('have.text', castNumberToBalanceString(accounts['testnet guy'].balance));
   });
 
-  it('Logging in Devnet', () => {
-    cy.server();
-    cy.route('GET', `${Cypress.env('coreUrl')}/api/accounts?address=${accounts.genesis.address}`).as('account');
-    window.localStorage.setItem('settings', '{"showNetwork": true}');
-    cy.reload();
-    cy.get('.network').click();
-    cy.get('ul li').eq(3).click();
-    cy.get('.address input').type(Cypress.env('coreUrl'));
-    cy.get('.passphrase input').click();
-    cy.get('.passphrase input').each(($el, index) => {
-      const passphraseWordsArray = accounts.genesis.passphrase.split(' ');
-      cy.wrap($el).type(passphraseWordsArray[index]);
-    });
-    cy.get('.login-button').click();
-    cy.wait('@account');
-    cy.url().should('include', '/dashboard');
-    cy.contains('devnet');
-    cy.contains(Cypress.env('coreUrl'));
-    cy.wait(1000).then(() => {
-      // const account = JSON.parse(window.localStorage.getItem('accounts'))[0];
-      // expect(account.network).to.eq(2);
-      // expect(account.publicKey).to.eq(accounts.genesis.publicKey);
-      // expect(account.peerAddress).to.eq(Cypress.env('CORE_URL'));
-      // expect(JSON.parse(window.localStorage.getItem('accounts'))[0].balance)
-      // .to.eq(accounts.genesis.balance);
-    });
+  it('Log in to Devnet', () => {
+    cy.addLocalStorage('settings', 'showNetwork', true);
+    loginUI(accounts.genesis.passphrase, 'devnet');
+    cy.get(ss.networkStatus).contains('Connected to devnet');
+    cy.get(ss.headerAddress).should('have.text', accounts.genesis.address);
+    cy.get(ss.headerBalance).should('contain', castNumberToBalanceString(accounts.genesis.balance).substring(0, 6));
+    cy.get(ss.nodeAddress).contains(networks.devnet.node);
   });
 
-  it('Network switcher available with ?showNetwork=true', () => {
+  it('Network switcher available by url ?showNetwork=true', () => {
     cy.visit('?showNetwork=true');
-    cy.get('.network').should('be.visible');
+    cy.get(ss.networkDropdown).should('be.visible');
+  });
+
+  it('Log in to invalid address', () => {
+    cy.addLocalStorage('settings', 'showNetwork', true);
+    loginUI(accounts.genesis.passphrase, 'invalid');
+    cy.get(ss.errorPopup).contains('Unable to connect to the node');
   });
 });

@@ -171,7 +171,7 @@ module.exports = {
     // '<rootDir>/src/store/middlewares/offline.test.js',
     // '<rootDir>/src/store/middlewares/notification.test.js',
     // '<rootDir>/src/store/middlewares/voting.test.js',
-    // '<rootDir>/src/store/middlewares/account.test.js',
+    '<rootDir>/src/store/middlewares/account.test.js',
     '<rootDir>/src/store/middlewares/followedAccounts.test.js',
     // '<rootDir>/src/store/middlewares/peers.test.js',
     // '<rootDir>/src/store/middlewares/loadingBar.test.js',
@@ -193,14 +193,14 @@ module.exports = {
 
     // integration
 
-    // '<rootDir>/test/integration/dashboard.test.js',
+    '<rootDir>/test/integration/dashboard.test.js',
     '<rootDir>/test/integration/transactionID.test.js',
     // '<rootDir>/test/integration/wallet.test.js',
     // '<rootDir>/test/integration/voting.test.js',
     // '<rootDir>/test/integration/accountTransactions.test.js',
-    // '<rootDir>/test/integration/registerDelegate.test.js',
+    '<rootDir>/test/integration/registerDelegate.test.js',
     // '<rootDir>/test/integration/register.test.js',
-    // '<rootDir>/test/integration/login.test.js',
+    '<rootDir>/test/integration/login.test.js',
   ],
   verbose: true,
   moduleFileExtensions: ['js'],

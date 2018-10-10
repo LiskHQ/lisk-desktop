@@ -21,7 +21,7 @@ class Sidechains extends React.Component {
       <div className={styles.header}>
         <h2>{t('Coming soon.')}</h2>
         <div className={styles.subHeader}>
-          {t('Sidechains will revolutionize the way decentralised apps are developed. Here you will be able to find hosts, and monitor your sidechains soon.')}
+          {t('Sidechains will revolutionize the way decentralized apps are developed. Here you will be able to find hosts, and monitor your sidechains soon.')}
         </div>
         <a target='_blank' href='http://help.lisk.io/faq#sidechains' rel='noopener noreferrer'>
           {t('Learn more about Lisk sidechains')}&nbsp;<FontIcon>arrow-right</FontIcon>
