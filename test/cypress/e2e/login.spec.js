@@ -2,7 +2,7 @@ import numeral from 'numeral';
 import { fromRawLsk } from '../../../src/utils/lsk';
 import accounts from '../../constants/accounts';
 import networks from '../../constants/networks';
-import chooseNetwork from './utils/chooseNetwork';
+import chooseNetwork from '../utils/chooseNetwork';
 
 const ss = {
   newAccountBtn: '.new-account-button',
