@@ -10,13 +10,13 @@ export const send = (
   data,
   timeOffset,
 ) =>
-  new Promise((resolve) => {
+  new Promise((resolve, reject) => {
     const transaction = Lisk.transaction.transfer({
       recipientId, amount, passphrase, secondPassphrase, data, timeOffset,
     });
     activePeer.transactions.broadcast(transaction).then(() => {
       resolve(transaction);
-    });
+    }).catch(reject);
   });
 
 export const getTransactions = ({
