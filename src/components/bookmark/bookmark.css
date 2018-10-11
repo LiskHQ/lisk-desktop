@@ -78,9 +78,19 @@
     padding-left: 60px;
   }
 
+  & input:focus {
+    padding-left: 60px;
+    border-bottom: 1px solid red;
+  }
+
   & label {
     padding-left: 60px;
   }
+}
+
+.bar::before,
+.bar::after {
+  background-color: transparent;
 }
 
 .followedRow {

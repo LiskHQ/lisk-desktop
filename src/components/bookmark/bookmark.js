@@ -125,6 +125,7 @@ class Bookmark extends React.Component {
               ${showSmallVisualAccountStyles ? `${styles.bookmarkInput} bookmarkInput` : ''}
               ${showBigVisualAccountStyles ? `${styles.bigAccountVisualBookmarkInput} bigAccountVisualBookmarkInput` : ''}`}
             label={label}
+            theme={styles}
             error={!this.state.show ? address.error : ''}
             ref={(input) => { this.bookmarkInput = input; }}
             autoComplete="off"
