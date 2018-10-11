@@ -11,6 +11,10 @@ import Fees from '../constants/fees';
 import { toRawLsk } from '../utils/lsk';
 import transactionTypes from '../constants/transactionTypes';
 
+export const cleanTransactions = () => ({
+  type: actionTypes.cleanTransactions,
+});
+
 export const transactionsFilterSet = ({
   address, limit, filter,
 }) => (dispatch, getState) => {
