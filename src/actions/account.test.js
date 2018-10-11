@@ -55,7 +55,6 @@ describe('actions: account', () => {
     let accountApiMock;
     let i18nextMock;
     const data = {
-      activePeer: {},
       passphrase: accounts['second passphrase account'].passphrase,
       secondPassphrase: accounts['second passphrase account'].secondPassphrase,
       account: {
@@ -265,7 +264,6 @@ describe('actions: account', () => {
       });
 
       const data = {
-        activePeer: {},
         address: accounts.genesis.address,
         transactionsResponse: { meta: { count: 0 }, data: [] },
         isSameAccount: false,
@@ -289,7 +287,6 @@ describe('actions: account', () => {
       });
 
       const data = {
-        activePeer: {},
         address: accounts.genesis.address,
         transactionsResponse: { meta: { count: 0 }, data: [] },
         isSameAccount: true,

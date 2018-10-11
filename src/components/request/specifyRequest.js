@@ -76,7 +76,7 @@ class SpecifyRequest extends React.Component {
           />
 
           <Converter
-            label={this.props.t('Request amount (LSK)')}
+            label={this.props.t('Request specific amount (LSK)')}
             className='amount'
             theme={styles}
             error={this.state.amount.error}

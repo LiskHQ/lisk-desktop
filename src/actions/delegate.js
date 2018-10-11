@@ -6,31 +6,32 @@ import actionTypes from '../constants/actions';
 /**
  * Pass response from getDelegate to reducers
  */
-export const delegatesRetrieved = data => ({
-  type: actionTypes.delegatesRetrieved,
+export const delegateRetrieved = data => ({
+  type: actionTypes.delegateRetrieved,
   data,
 });
 
 /**
  * Set a flag until response from getDelegate is resolved
  */
-export const delegatesRetrieving = data => ({
-  type: actionTypes.delegatesRetrieving,
+export const delegateRetrieving = data => ({
+  type: actionTypes.delegateRetrieving,
   data,
 });
 
 /**
  * Retrieves delegates matching a username
  */
-export const delegatesFetched = ({ activePeer, username }) =>
-  (dispatch) => {
-    dispatch(delegatesRetrieving());
+export const delegatesFetched = ({ username }) =>
+  (dispatch, getState) => {
+    const activePeer = getState().peers.data;
+    dispatch(delegateRetrieving());
     getDelegate(activePeer, { username })
       .then((response) => {
         if (response.data.length > 0) {
-          dispatch(delegatesRetrieved({ delegate: response.data[0], username }));
+          dispatch(delegateRetrieved({ delegate: response.data[0], username }));
         } else {
-          dispatch(delegatesRetrieved({ delegate: null, username }));
+          dispatch(delegateRetrieved({ delegate: null, username }));
         }
       });
   };

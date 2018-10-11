@@ -23,7 +23,6 @@ const mapStateToProps = state => ({
   alreadyVoted: filterObjectPropsWithValue(state.voting.voteLookupStatus, 'alreadyVoted').concat(filterObjectPropsWithValue(state.voting.voteLookupStatus, 'notVotedYet')),
   notFound: filterObjectPropsWithValue(state.voting.voteLookupStatus, 'notFound'),
   account: state.account,
-  activePeer: state.peers.data,
 });
 
 const mapDispatchToProps = dispatch => ({

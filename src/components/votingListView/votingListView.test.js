@@ -32,7 +32,6 @@ describe('VotingListView', () => {
     totalDelegates: 10,
     votes,
     serverPublicKey: null,
-    activePeer: {},
     address: '16313739661670634666L',
     setActiveDialog: sinon.spy(),
     voteToggled: sinon.spy(),

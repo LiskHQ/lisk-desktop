@@ -30,8 +30,6 @@ class AccountTransactions extends React.Component {
 
 const mapStateToProps = state => ({
   publicKey: state.account.publicKey,
-  activePeer: state.peers.data,
-  peers: state.peers,
   account: state.search.accounts[state.search.lastSearch] || {},
   delegate: state.search.delegates[state.search.lastSearch] || {},
 });

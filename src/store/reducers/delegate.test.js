@@ -12,7 +12,7 @@ describe('Reducer: delegate(state, action)', () => {
 
   it('should set delegateNameQueried flag', () => {
     const action = {
-      type: actionTypes.delegatesRetrieving,
+      type: actionTypes.delegateRetrieving,
       data: {
       },
     };
@@ -24,7 +24,7 @@ describe('Reducer: delegate(state, action)', () => {
 
   it('should reset delegateNameQueried flag and invalidate delegateName', () => {
     const action = {
-      type: actionTypes.delegatesRetrieved,
+      type: actionTypes.delegateRetrieved,
       data: {
         delegate: null,
       },
@@ -38,7 +38,7 @@ describe('Reducer: delegate(state, action)', () => {
 
   it('should reset delegateNameQueried flag and invalidate delegateName', () => {
     const action = {
-      type: actionTypes.delegatesRetrieved,
+      type: actionTypes.delegateRetrieved,
       data: {
         delegate: {
           username: 'sample_username',
