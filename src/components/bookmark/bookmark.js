@@ -68,9 +68,9 @@ class Bookmark extends React.Component {
         if (filteredFollowedAccounts[this.state.selectedIdx]) {
           const { title, address } = filteredFollowedAccounts[this.state.selectedIdx];
 
-          this.setState({ title });
           this.props.handleChange(address);
           this.props.focusReference();
+          this.setState({ selectedIdx: 0, placeholder: '', title });
         }
 
         break;
@@ -109,7 +109,7 @@ class Bookmark extends React.Component {
           {isValidAccount && !this.state.show && !!isAddressFollowedAccounts ? <AccountVisual
             className={styles.smallAccountVisual}
             address={address.value}
-            size={25}
+            size={35}
           /> : null}
 
           {isValidAccount && !this.state.show && !isAddressFollowedAccounts ? <AccountVisual
