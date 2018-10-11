@@ -35,8 +35,19 @@ export const vote = (
   });
 };
 
-export const getVotes = (activePeer, address, offset, limit) =>
+export const getVotes = (activePeer, { address, offset, limit }) =>
   activePeer.votes.get({ address, limit, offset });
+
+export const getAlllVotes = (activePeer, address) =>
+  new Promise((resolve, reject) => {
+    getVotes(activePeer, { address, offset: 0, limit: 100 }).then((votesEarlyBatch) => {
+      if (votesEarlyBatch.data.votes && votesEarlyBatch.data.votes.length < 50) {
+        return resolve(votesEarlyBatch.data.votes);
+      }
+      return getVotes(activePeer, { address, offset: 101, limit: 1 }).then(votesLasteBatch =>
+        resolve([...votesEarlyBatch.data.votes, ...votesLasteBatch.data.votes])).catch(reject);
+    }).catch(reject);
+  });
 
 export const getVoters = (activePeer, publicKey) =>
   activePeer.voters.get({ publicKey });
