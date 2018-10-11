@@ -19,6 +19,13 @@
   }
 }
 
+.disabled > .inputElement {
+  border-bottom: none;
+  color: #212121;
+  overflow: auto;
+  resize: none;
+}
+
 .fee {
   text-align: right;
   margin-top: -12px;
