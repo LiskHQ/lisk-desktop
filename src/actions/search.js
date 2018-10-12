@@ -22,11 +22,11 @@ const searchDelegate = ({ publicKey, address }) =>
 const searchVotes = ({ address }) =>
   (dispatch, getState) => {
     const activePeer = getState().peers.data;
-    getAlllVotes(activePeer, address).then(votes =>
+    getAlllVotes(activePeer, address).then(response =>
       dispatch({
         type: actionTypes.searchVotes,
         data: {
-          votes,
+          votes: response.data.votes,
           address,
         },
       }));
