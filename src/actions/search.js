@@ -2,7 +2,7 @@ import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../actions/loading';
 import { getAccount } from '../utils/api/account';
 import { getTransactions } from '../utils/api/transactions';
-import { getDelegate, getVoters, getAlllVotes } from '../utils/api/delegate';
+import { getDelegate, getVoters, getAllVotes } from '../utils/api/delegate';
 import searchAll from '../utils/api/search';
 
 const searchDelegate = ({ publicKey, address }) =>
@@ -22,7 +22,7 @@ const searchDelegate = ({ publicKey, address }) =>
 const searchVotes = ({ address }) =>
   (dispatch, getState) => {
     const activePeer = getState().peers.data;
-    getAlllVotes(activePeer, address).then(response =>
+    getAllVotes(activePeer, address).then(response =>
       dispatch({
         type: actionTypes.searchVotes,
         data: {
