@@ -60,6 +60,10 @@ const accounts = {
     address: '9819477579273755847L',
     balance: 200000000,
   },
+  'mainnet delegate': {
+    address: '2433857930558702776L',
+    username: 'tembo',
+  },
 };
 accounts['any account'] = accounts.genesis;
 

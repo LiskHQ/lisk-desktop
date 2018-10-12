@@ -59,8 +59,8 @@ class SendTo extends React.Component {
               ${grid['col-lg-12']}
             `}>
             <h2>
-              <span>
-                <LiskAmount val={account.balance} className={'balance'}/>
+              <span className={'balance'}>
+                <LiskAmount val={account.balance}/>
                 <small className={styles.balanceUnit}>LSK</small>
               </span>
             </h2>
