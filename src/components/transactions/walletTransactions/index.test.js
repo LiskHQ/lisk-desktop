@@ -45,7 +45,7 @@ describe('WalletTransactions Component', () => {
 
   beforeEach(() => {
     transactionsActionsStub = stub(transactionsAPI, 'getTransactions');
-    delegateVotesStub = stub(delegateAPI, 'getAlllVotes');
+    delegateVotesStub = stub(delegateAPI, 'getAllVotes');
     delegateVotersStub = stub(delegateAPI, 'getVoters');
 
     delegateVotesStub.returnsPromise().resolves({ data: { votes: [accounts['delegate candidate']] } });

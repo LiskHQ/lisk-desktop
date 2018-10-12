@@ -38,7 +38,7 @@ export const vote = (
 export const getVotes = (activePeer, { address, offset, limit }) =>
   activePeer.votes.get({ address, limit, offset });
 
-export const getAlllVotes = (activePeer, address) =>
+export const getAllVotes = (activePeer, address) =>
   new Promise((resolve, reject) => {
     getVotes(activePeer, { address, offset: 0, limit: 100 }).then((votesEarlyBatch) => {
       if (votesEarlyBatch.data.votes && votesEarlyBatch.data.votesUsed < 101) {
