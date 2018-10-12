@@ -8,7 +8,7 @@ import {
   vote,
   getVotes,
   getVoters,
-  getAlllVotes,
+  getAllVotes,
   registerDelegate } from './delegate';
 import accounts from '../../../test/constants/accounts';
 
@@ -143,14 +143,14 @@ describe('Utils: Delegate', () => {
     });
   });
 
-  describe('getAlllVotes', () => {
+  describe('getAllVotes', () => {
     it('should get all votes for an address with no parameters > 100', () => {
       const address = '123L';
       activePeerMockVotes.expects('get').withArgs({ address, offset: 0, limit: 100 })
         .returnsPromise().resolves({ data: { votes: [1, 2, 3], votesUsed: 101 } });
       activePeerMockVotes.expects('get').withArgs({ address, offset: 100, limit: 1 })
         .returnsPromise().resolves({ data: { votes: [4], votesUsed: 101 } });
-      const returnedPromise = getAlllVotes(activePeer, address);
+      const returnedPromise = getAllVotes(activePeer, address);
       expect(returnedPromise).to.eventually.equal([1, 2, 3, 4]);
     });
 
@@ -158,7 +158,7 @@ describe('Utils: Delegate', () => {
       const address = '123L';
       activePeerMockVotes.expects('get').withArgs({ address, offset: 0, limit: 100 })
         .returnsPromise().resolves({ data: { votes: [1], votesUsed: 1 } });
-      const returnedPromise = getAlllVotes(activePeer, address);
+      const returnedPromise = getAllVotes(activePeer, address);
       expect(returnedPromise).to.eventually.equal([1]);
     });
   });
