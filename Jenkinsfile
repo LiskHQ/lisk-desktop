@@ -87,9 +87,9 @@ pipeline {
 
 							// TODO: uncomment sending coverage to coveralls when 
 							// all tests are migrated from mocha to jest
-						// withCredentials([string(credentialsId: 'lisk-hub-coveralls-token', variable: 'COVERALLS_REPO_TOKEN')]) {
-							// sh 'cat coverage/HeadlessChrome*/lcov.info |coveralls -v'
-						// }
+							withCredentials([string(credentialsId: 'lisk-hub-coveralls-token', variable: 'COVERALLS_REPO_TOKEN')]) {
+								sh 'cat coverage/HeadlessChrome*/lcov.info |coveralls -v'
+							}
 						}
 					},
 					"cypress": {
