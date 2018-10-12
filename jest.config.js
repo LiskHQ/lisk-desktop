@@ -172,7 +172,7 @@ module.exports = {
     // '<rootDir>/src/store/middlewares/notification.test.js',
     // '<rootDir>/src/store/middlewares/voting.test.js',
     '<rootDir>/src/store/middlewares/account.test.js',
-    // '<rootDir>/src/store/middlewares/followedAccounts.test.js',
+    '<rootDir>/src/store/middlewares/followedAccounts.test.js',
     // '<rootDir>/src/store/middlewares/peers.test.js',
     // '<rootDir>/src/store/middlewares/loadingBar.test.js',
     // '<rootDir>/src/store/middlewares/login.test.js',

@@ -38,6 +38,6 @@ describe('Explorer page', () => {
     cy.get('.addresses-result').click();
     cy.wait(3000);
     cy.get('.delegate-statistics').click();
-    cy.get('.votesFilterQuery-row').should('have.length', 10);
+    cy.get('.votesFilterQuery-row').should('have.length', 35);
   });
 });

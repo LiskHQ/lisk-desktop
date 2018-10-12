@@ -78,6 +78,26 @@ describe('FollowedAccounts middleware', () => {
     expect(followedAccountsActions.followedAccountFetchedAndUpdated).to.have.callCount(1);
   });
 
+  it('should make request for the account information, if there is a relevant transaction in recent blocks', () => {
+    const storeState = store.getState();
+    store.getState = () => ({
+      ...storeState,
+      blocks: {
+        latestBlocks: [{
+        }, {
+          transactions: [{ senderId: '1234L', recipientId: accounts.genesis.address }],
+        }],
+      },
+    });
+
+    middleware(store)(next)({
+      type: actionTypes.newBlockCreated,
+      data: { block: {} },
+    });
+
+    expect(followedAccountsActions.followedAccountFetchedAndUpdated).to.have.callCount(1);
+  });
+
   it('should not make a request for the account information, if no relevant transaction was made', () => {
     const transactions = { transactions: [{ senderId: '1234L', recipientId: '4321L' }] };
     middleware(store)(next)({

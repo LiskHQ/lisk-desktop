@@ -4,7 +4,7 @@ import { accountUpdated,
   updateDelegateAccount,
 } from '../../actions/account';
 import { votesFetched } from '../../actions/voting';
-import { transactionsFilterSet } from '../../actions/transactions';
+import { transactionsFilterSet, cleanTransactions } from '../../actions/transactions';
 import actionTypes from '../../constants/actions';
 import accountConfig from '../../constants/account';
 import transactionTypes from '../../constants/transactionTypes';
@@ -159,6 +159,7 @@ const accountMiddleware = store => next => (action) => {
       passphraseUsed(store, action);
       break;
     case actionTypes.accountLoggedOut:
+      store.dispatch(cleanTransactions());
       localStorage.removeItem('accounts');
       break;
     default: break;

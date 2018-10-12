@@ -70,6 +70,7 @@ const actionTypes = {
   settingsReset: 'SETTINGS_RESET',
   switchChannel: 'SWITCH_CHANNEL',
   addFilter: 'ADD_FILTER',
+  cleanTransactions: 'CLEAN_TRANSACTIONS',
 };
 
 export default actionTypes;

@@ -70,7 +70,7 @@ export const passphraseUsed = data => ({
 export const accountVotesFetched = ({ address }) =>
   (dispatch, getState) => {
     const activePeer = getState().peers.data;
-    return getVotes(activePeer, address).then(({ data }) => {
+    return getVotes(activePeer, { address }).then(({ data }) => {
       dispatch({
         type: actionTypes.accountAddVotes,
         votes: data.votes,
