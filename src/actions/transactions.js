@@ -117,7 +117,7 @@ export const loadTransaction = ({ id }) =>
         let deleted = [];
 
         if (!response.data.length) {
-          dispatch({ data: { error: 'Transaction not found' }, type: actionTypes.transactionLoadFailed });
+          dispatch({ data: { error: i18next.t('Transaction not found') }, type: actionTypes.transactionLoadFailed });
           return;
         }
 
