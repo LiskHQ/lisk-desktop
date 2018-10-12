@@ -23,13 +23,23 @@ const followedAccountsMiddleware = (store) => {
     updateFollowedAccounts(changedAccounts);
   };
 
+  const getLatestTransactions = blocks => (
+    ((blocks && blocks.latestBlocks) || []).reduce((transactions, block) => ([
+      ...transactions,
+      ...(block.transactions || []),
+    ]), [])
+  );
+
   return next => (action) => {
     next(action);
     const { followedAccounts } = store.getState();
     switch (action.type) {
       case actionTypes.newBlockCreated:
         checkTransactionsAndUpdateFollowedAccounts(
-          action.data.block.transactions || [],
+          [
+            ...(action.data.block.transactions || []),
+            ...getLatestTransactions(store.getState().blocks),
+          ],
           followedAccounts,
         );
         break;
