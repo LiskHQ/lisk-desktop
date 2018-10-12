@@ -78,16 +78,6 @@ export const accountVotesFetched = ({ address }) =>
     });
   };
 
-  // export const accountVotesFetched = ({ address }) =>
-  // (dispatch, getState) => {
-  //   const activePeer = getState().peers.data;
-  //   return getAlllVotes(activePeer, address).then((votes) => {
-  //     dispatch({
-  //       type: actionTypes.accountAddVotes,
-  //       votes,
-  //     });
-  //   });
-  // };
 /**
  * Gets list of all voters
  */
