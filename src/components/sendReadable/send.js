@@ -128,6 +128,7 @@ class SendReadable extends React.Component {
                 error={this.state.reference.error}
                 value={this.state.reference.value}
                 disabled={true}
+                multiline={true}
                 theme={styles}
               /> : null
             }
