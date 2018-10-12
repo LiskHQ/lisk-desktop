@@ -5,8 +5,11 @@ import txFilter from '../../constants/transactionFilters';
  * @param {Array} state
  * @param {Object} action
  */
-const transactions = (state = { pending: [], confirmed: [], count: null }, action) => {
+const initialState = { pending: [], confirmed: [], count: null };
+const transactions = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.cleanTransactions:
+      return initialState;
     case actionTypes.transactionAdded:
       return Object.assign({}, state, {
         pending: [action.data, ...state.pending],
