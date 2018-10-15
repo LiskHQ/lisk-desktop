@@ -1,11 +1,12 @@
 import i18next from 'i18next';
 import actionTypes from '../constants/actions';
 import { setSecondPassphrase, getAccount } from '../utils/api/account';
-import { registerDelegate, getDelegate, getVotes, getVoters } from '../utils/api/delegate';
+import { registerDelegate, getDelegate, getAllVotes, getVoters } from '../utils/api/delegate';
 import { loadTransactionsFinish, transactionsUpdated } from './transactions';
 import { delegateRegisteredFailure } from './delegate';
 import { errorAlertDialogDisplayed } from './dialog';
 import { activePeerUpdate } from './peers';
+import { getTimeOffset } from '../utils/hacks';
 import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
 
@@ -69,7 +70,7 @@ export const passphraseUsed = data => ({
 export const accountVotesFetched = ({ address }) =>
   (dispatch, getState) => {
     const activePeer = getState().peers.data;
-    return getVotes(activePeer, address).then(({ data }) => {
+    return getAllVotes(activePeer, address).then(({ data }) => {
       dispatch({
         type: actionTypes.accountAddVotes,
         votes: data.votes,
@@ -96,7 +97,8 @@ export const accountVotersFetched = ({ publicKey }) =>
 export const secondPassphraseRegistered = ({ secondPassphrase, account, passphrase }) =>
   (dispatch, getState) => {
     const activePeer = getState().peers.data;
-    setSecondPassphrase(activePeer, secondPassphrase, account.publicKey, passphrase)
+    const timeOffset = getTimeOffset(getState());
+    setSecondPassphrase(activePeer, secondPassphrase, account.publicKey, passphrase, timeOffset)
       .then((data) => {
         dispatch({
           data: {
@@ -135,8 +137,9 @@ export const delegateRegistered = ({
   account, passphrase, username, secondPassphrase,
 }) =>
   (dispatch, getState) => {
+    const timeOffset = getTimeOffset(getState());
     const activePeer = getState().peers.data;
-    registerDelegate(activePeer, username, passphrase, secondPassphrase)
+    registerDelegate(activePeer, username, passphrase, secondPassphrase, timeOffset)
       .then((data) => {
         // dispatch to add to pending transaction
         dispatch({

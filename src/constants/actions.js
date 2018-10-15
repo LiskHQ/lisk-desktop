@@ -63,16 +63,14 @@ const actionTypes = {
   followedAccountUpdated: 'FOLLOWED_ACCOUNT_UPDATED',
   followedAccountRemoved: 'FOLLOWED_ACCOUNTS_REMOVED',
   accountsRetrieved: 'ACCOUNTS_RETRIEVED',
-  accountSaved: 'ACCOUNT_SAVED',
-  activeAccountSaved: 'ACTIVE_ACCOUNT_SAVED',
   accountRemoved: 'ACCOUNT_REMOVED',
   accountSwitched: 'ACCOUNT_SWITCHED',
   removePassphrase: 'REMOVE_PASSPHRASE',
   settingsUpdated: 'SETTINGS_UPDATED',
   settingsReset: 'SETTINGS_RESET',
-  removeSavedAccountPassphrase: 'REMOVE_SAVED_ACCOUNT_PASSPHRASE',
   switchChannel: 'SWITCH_CHANNEL',
   addFilter: 'ADD_FILTER',
+  cleanTransactions: 'CLEAN_TRANSACTIONS',
 };
 
 export default actionTypes;

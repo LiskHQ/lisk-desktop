@@ -22,7 +22,6 @@ import accountMiddleware from '../../src/store/middlewares/account';
 import followedAccountsMiddleware from '../../src/store/middlewares/followedAccounts';
 import peerMiddleware from '../../src/store/middlewares/peers';
 import { accountLoggedIn } from '../../src/actions/account';
-import { accountsRetrieved } from '../../src/actions/savedAccounts';
 import { activePeerSet } from '../../src/actions/peers';
 import networks from './../../src/constants/networks';
 import txTypes from './../../src/constants/transactionTypes';
@@ -81,11 +80,8 @@ describe('@integration: Dashboard', () => {
       '',
     ).returnsPromise().resolves({ data: [] });
     // transactionsFilterSet do pass filter
-    getTransactionsStub.withArgs({
-      activePeer: match.defined,
-      address: match.defined,
-      limit: 25,
-    }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 1000 } });
+    getTransactionsStub.withArgs(match.any)
+      .returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 1000 } });
 
     // rest of accounts send request
     sendTransactionsStub.withArgs(
@@ -145,7 +141,6 @@ describe('@integration: Dashboard', () => {
         },
       });
 
-    store.dispatch(accountsRetrieved());
     if (options.isLoggedIn) {
       store.dispatch(accountLoggedIn(account));
     }

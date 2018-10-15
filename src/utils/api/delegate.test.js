@@ -8,6 +8,7 @@ import {
   vote,
   getVotes,
   getVoters,
+  getAllVotes,
   registerDelegate } from './delegate';
 import accounts from '../../../test/constants/accounts';
 
@@ -17,14 +18,15 @@ describe('Utils: Delegate', () => {
   let activePeerMockVoters;
   let activePeerMockTransations;
   let liskTransactionsCastVotesStub;
-  let liskTransactionsRegisterDelegateSpy;
+  let liskTransactionsRegisterDelegateStub;
+  const timeOffset = 0;
 
   const activePeer = {
     delegates: {
       get: () => { },
     },
     votes: {
-      get: sinon.spy(),
+      get: () => { },
     },
     voters: {
       get: () => { },
@@ -36,7 +38,7 @@ describe('Utils: Delegate', () => {
 
   beforeEach(() => {
     liskTransactionsCastVotesStub = sinon.stub(Lisk.transaction, 'castVotes');
-    liskTransactionsRegisterDelegateSpy = sinon.spy(Lisk.transaction, 'registerDelegate');
+    liskTransactionsRegisterDelegateStub = sinon.stub(Lisk.transaction, 'registerDelegate');
     activePeerMockDelegates = sinon.mock(activePeer.delegates);
     activePeerMockVotes = sinon.mock(activePeer.votes);
     activePeerMockVoters = sinon.mock(activePeer.voters);
@@ -56,14 +58,14 @@ describe('Utils: Delegate', () => {
     activePeerMockTransations.restore();
 
     liskTransactionsCastVotesStub.restore();
-    liskTransactionsRegisterDelegateSpy.restore();
+    liskTransactionsRegisterDelegateStub.restore();
   });
 
   describe('listAccountDelegates', () => {
     it('should get votes for an address with 101 limit', () => {
       const address = '123L';
+      activePeerMockVotes.expects('get').withArgs({ address, limit: '101' }).once();
       listAccountDelegates(activePeer, address);
-      return expect(activePeer.votes.get).to.have.been.calledWith({ address, limit: '101' });
     });
   });
 
@@ -74,7 +76,7 @@ describe('Utils: Delegate', () => {
       activePeerMockDelegates.expects('get').withArgs(options).returnsPromise().resolves(response);
 
       const returnedPromise = listDelegates(activePeer, options);
-      return expect(returnedPromise).to.eventually.equal(response);
+      expect(returnedPromise).to.eventually.equal(response);
     });
 
     it('should return getDelegate(activePeer, options) if options.q is set', () => {
@@ -100,34 +102,64 @@ describe('Utils: Delegate', () => {
 
   describe('vote', () => {
     it('should call castVotes and broadcast transaction', () => {
-      const votes = [{
-        username: 'user1',
-      }, {
-        username: 'user2',
-      }];
-      const unvotes = [{
-        username: 'user3',
-      }, {
-        username: 'user4',
-      }];
+      const votes = [
+        accounts.genesis.publicKey,
+        accounts.delegate.publicKey,
+      ];
+      const unvotes = [
+        accounts['empty account'].publicKey,
+        accounts['delegate candidate'].publicKey,
+      ];
       const transaction = { id: '1234' };
+      const secondPassphrase = null;
       liskTransactionsCastVotesStub.withArgs({
         votes,
         unvotes,
         passphrase: accounts.genesis.passphrase,
-        secondPassphrase: null,
+        secondPassphrase,
+        timeOffset,
       }).returns(transaction);
 
-      vote(activePeer, accounts.genesis.passphrase, accounts.genesis.publicKey, votes, unvotes);
-      return expect(activePeer.transactions.broadcast).to.have.been.calledWith(transaction);
+      vote(
+        activePeer,
+        accounts.genesis.passphrase,
+        accounts.genesis.publicKey,
+        votes,
+        unvotes,
+        secondPassphrase,
+        timeOffset,
+      );
+      expect(activePeer.transactions.broadcast).to.have.been.calledWith(transaction);
     });
   });
 
   describe('getVotes', () => {
     it('should get votes for an address with no parameters', () => {
       const address = '123L';
-      getVotes(activePeer, address);
-      return expect(activePeer.votes.get).to.have.been.calledWith({ address });
+      const offset = 0;
+      const limit = 100;
+      activePeerMockVotes.expects('get').withArgs({ address, offset, limit }).once();
+      getVotes(activePeer, { address, offset, limit });
+    });
+  });
+
+  describe('getAllVotes', () => {
+    it('should get all votes for an address with no parameters > 100', () => {
+      const address = '123L';
+      activePeerMockVotes.expects('get').withArgs({ address, offset: 0, limit: 100 })
+        .returnsPromise().resolves({ data: { votes: [1, 2, 3], votesUsed: 101 } });
+      activePeerMockVotes.expects('get').withArgs({ address, offset: 100, limit: 1 })
+        .returnsPromise().resolves({ data: { votes: [4], votesUsed: 101 } });
+      const returnedPromise = getAllVotes(activePeer, address);
+      expect(returnedPromise).to.eventually.equal([1, 2, 3, 4]);
+    });
+
+    it('should get all votes for an address with no parameters < 100', () => {
+      const address = '123L';
+      activePeerMockVotes.expects('get').withArgs({ address, offset: 0, limit: 100 })
+        .returnsPromise().resolves({ data: { votes: [1], votesUsed: 1 } });
+      const returnedPromise = getAllVotes(activePeer, address);
+      expect(returnedPromise).to.eventually.equal([1]);
     });
   });
 
@@ -138,19 +170,42 @@ describe('Utils: Delegate', () => {
         .returnsPromise().resolves('resolved promise');
 
       const returnedPromise = getVoters(activePeer, publicKey);
-      return expect(returnedPromise).to.eventually.equal('resolved promise');
+      expect(returnedPromise).to.eventually.equal('resolved promise');
     });
   });
 
   describe('registerDelegate', () => {
-    it('should broadcast a registerDelegate transaction', () => {
-      const registerDelegateArgs = [null, 'username', 'passphrase', 'secondPassphrase'];
-      registerDelegate(...registerDelegateArgs);
-      return expect(liskTransactionsRegisterDelegateSpy).to.have.been.calledWith({
-        username: 'username',
-        passphrase: 'passphrase',
-        secondPassphrase: 'secondPassphrase',
-      });
+    it('should broadcast a registerDelegate transaction without second passphrase', () => {
+      const transaction = { id: '1234' };
+      const username = 'username';
+      const passphrase = 'passphrase';
+      const secondPassphrase = undefined;
+
+      liskTransactionsRegisterDelegateStub.withArgs({
+        username,
+        passphrase,
+        timeOffset,
+      }).returns(transaction);
+
+      registerDelegate(activePeer, username, passphrase, secondPassphrase, timeOffset);
+      expect(activePeer.transactions.broadcast).to.have.been.calledWith(transaction);
+    });
+
+    it('should broadcast a registerDelegate transaction with second passphrase', () => {
+      const transaction = { id: '1234' };
+      const username = 'username';
+      const passphrase = 'passphrase';
+      const secondPassphrase = 'secondPassphrase';
+
+      liskTransactionsRegisterDelegateStub.withArgs({
+        username,
+        passphrase,
+        secondPassphrase,
+        timeOffset,
+      }).returns(transaction);
+
+      registerDelegate(activePeer, username, passphrase, secondPassphrase, timeOffset);
+      expect(activePeer.transactions.broadcast).to.have.been.calledWith(transaction);
     });
   });
 });

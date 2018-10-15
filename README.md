@@ -25,6 +25,12 @@ For ease of development, you can set the following query string to see network o
 http://localhost:8080/#/?showNetwork=true
 ```
 
+If you are actively developing in a specific route, and want to be autologged in everytime you reload the page, please add the following to localStorage:
+
+```
+localStorage.setItem('autologinUrl', 'http://localhost:4000') // desired node to log in into
+localStorage.setItem('autologinKey', 'wagon stock borrow episode laundry kitten salute link globe zero feed marble') // desired account passphrase
+```
 
 #### Build
 
@@ -37,7 +43,7 @@ npm run build
 #### Start
 
 
-Start the Electron client. Before staring you need to make sure the application is built. If you need to built the entire application, run
+Start the Electron client. Before staring you need to make sure the application is built. If you need to build the entire application, run
 
 ```
 npm run build

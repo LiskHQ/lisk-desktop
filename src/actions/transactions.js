@@ -6,9 +6,14 @@ import { getDelegate } from '../utils/api/delegate';
 import { loadDelegateCache } from '../utils/delegates';
 import { extractAddress } from '../utils/account';
 import { loadAccount, passphraseUsed } from './account';
+import { getTimeOffset } from '../utils/hacks';
 import Fees from '../constants/fees';
 import { toRawLsk } from '../utils/lsk';
 import transactionTypes from '../constants/transactionTypes';
+
+export const cleanTransactions = () => ({
+  type: actionTypes.cleanTransactions,
+});
 
 export const transactionsFilterSet = ({
   address, limit, filter,
@@ -215,7 +220,8 @@ export const sent = ({
 }) =>
   (dispatch, getState) => {
     const activePeer = getState().peers.data;
-    send(activePeer, recipientId, toRawLsk(amount), passphrase, secondPassphrase, data)
+    const timeOffset = getTimeOffset(getState());
+    send(activePeer, recipientId, toRawLsk(amount), passphrase, secondPassphrase, data, timeOffset)
       .then((response) => {
         dispatch({
           data: {

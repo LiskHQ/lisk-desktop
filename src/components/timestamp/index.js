@@ -53,7 +53,7 @@ export const Time = translate()((props) => {
 export const DateFromTimestamp = translate()((props) => {
   moment.locale(i18n.language);
   const day = moment(_convertTimeFromFirstBlock(props.time));
-  return (<span>{day.format('ll')}</span>);
+  return (<span className={'date'}>{day.format('ll')}</span>);
 });
 
 export const TimeFromTimestamp = translate()((props) => {

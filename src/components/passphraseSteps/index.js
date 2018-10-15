@@ -113,7 +113,7 @@ class PassphraseSteps extends React.Component {
       },
       secondPassphrase: {
         key: 'secondPassphrase',
-        header: this.props.t('Enter your 2nd passphrase'),
+        header: this.props.t('Enter your second passphrase'),
         state: this.state.secondPassphrase,
         className: 'second-passphrase',
         buttonClassName: 'second-passphrase-next',

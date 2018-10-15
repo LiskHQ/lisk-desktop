@@ -240,6 +240,11 @@
 
     & .footerWrapper {
       margin: 0 calc(-1 * var(--box-padding-left-M));
+      position: fixed;
+      width: 100%;
+      bottom: 72px;
+      left: var(--box-padding-left-M);
+      z-index: 3;
 
       & .button {
         width: 100%;
@@ -287,6 +292,12 @@
 }
 
 @media (--small-viewport) {
+  .wrapper {
+    & .footerWrapper {
+      bottom: 63px;
+    }
+  }
+
   .surpassMessage.visible {
     bottom: var(--footer-height-s);
   }

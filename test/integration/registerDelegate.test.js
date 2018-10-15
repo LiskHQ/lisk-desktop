@@ -9,9 +9,11 @@ import GenericStepDefinition from '../utils/genericStepDefinition';
 import RegisterDelegate from '../../src/components/registerDelegate';
 import { accountLoggedIn } from '../../src/actions/account';
 import * as delegateApi from '../../src/utils/api/delegate';
+import * as transactionsApi from '../../src/utils/api/transactions';
 import accountMiddleware from '../../src/store/middlewares/account';
 import peerMiddleware from '../../src/store/middlewares/peers';
 import delegateReducer from '../../src/store/reducers/delegate';
+import transactionsReducer from '../../src/store/reducers/transactions';
 import accountReducer from '../../src/store/reducers/account';
 import peersReducer from '../../src/store/reducers/peers';
 import loginMiddleware from '../../src/store/middlewares/login';
@@ -29,10 +31,12 @@ let helper;
 describe('@integration RegisterDelegate', () => {
   let wrapper;
   let delegateApiMock;
+  let transactionsApiStub;
 
   const setupStep = (account) => {
     store = prepareStore({
       peers: peersReducer,
+      transactions: transactionsReducer,
       account: accountReducer,
       delegate: delegateReducer,
     }, [
@@ -46,6 +50,16 @@ describe('@integration RegisterDelegate', () => {
     store.dispatch(accountLoggedIn(account));
     helper = new GenericStepDefinition(wrapper, store);
   };
+
+
+  beforeEach(() => {
+    transactionsApiStub = sinon.stub(transactionsApi, 'getTransactions');
+    transactionsApiStub.returnsPromise().resolves({ data: [] });
+  });
+
+  afterEach(() => {
+    transactionsApiStub.restore();
+  });
 
   describe('Scenario: allows register as a delegate for a non delegate account', () => {
     step('Given I am in "register-delegate" page', () => setupStep(normalAccount));

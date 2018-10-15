@@ -37,7 +37,7 @@ class AuthInputs extends React.Component {
           theme={this.props.theme}
         />)}
       {(this.props.account.secondPublicKey &&
-        <PassphraseInput label={this.props.t('Enter your 2nd passphrase to confirm')}
+        <PassphraseInput label={this.props.t('Enter your second passphrase to confirm')}
           className='second-passphrase'
           error={this.props.secondPassphrase.error}
           value={this.props.secondPassphrase.value}

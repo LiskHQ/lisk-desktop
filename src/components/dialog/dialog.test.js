@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { shallow } from 'enzyme';
 import { Dialog as ReactToolboxDialog } from 'react-toolbox/lib/dialog';
 import Dialog from './dialog';
-import SavedAccounts from '../savedAccounts';
+import EmptyState from '../emptyState';
 import routes from '../../constants/routes';
 
 describe('Dialog', () => {
@@ -22,11 +22,11 @@ describe('Dialog', () => {
       goBack: sinon.spy(),
     };
     dialogProps = {
-      title: 'Saved Accounts',
+      title: 'Empty State',
       childComponentProps: {
-        name: 'saved-accounts',
+        name: 'empty-state',
       },
-      childComponent: SavedAccounts,
+      childComponent: EmptyState,
     };
 
     props = {
@@ -41,9 +41,6 @@ describe('Dialog', () => {
     expect(wrapper.find(ReactToolboxDialog)).to.have.length(1);
   });
 
-  it('renders a child component based on the path defined in history', () => {
-    expect(wrapper.find(SavedAccounts)).to.have.length(1);
-  });
 
   it('doesn\'t render appBar if title not provided', () => {
     const propsWithoutTitle = { ...dialogProps };
@@ -56,7 +53,7 @@ describe('Dialog', () => {
     const propsWithoutChildComponent = { ...dialogProps };
     delete propsWithoutChildComponent.childComponent;
     wrapper = shallow(<Dialog dialog={propsWithoutChildComponent} history={history} {...props}/>);
-    expect(wrapper.find(SavedAccounts)).to.have.length(0);
+    expect(wrapper.find(EmptyState)).to.have.length(0);
   });
 
   // this test used to pass only because the history.push spy was not in beforeEach
