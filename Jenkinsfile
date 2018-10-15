@@ -82,10 +82,12 @@ pipeline {
 					"jest": {
 						ansiColor('xterm') {
 							sh 'ON_JENKINS=true npm run --silent test-jest'
-
-							withCredentials([string(credentialsId: 'lisk-hub-coveralls-token', variable: 'COVERALLS_REPO_TOKEN')]) {
-								sh 'cat coverage/HeadlessChrome*/lcov.info |coveralls -v'
-							}
+							
+							// TODO: uncomment sending coverage to coveralls when 
+							// all tests are migrated from mocha to jest
+							// withCredentials([string(credentialsId: 'lisk-hub-coveralls-token', variable: 'COVERALLS_REPO_TOKEN')]) {
+								//	sh 'cat coverage/HeadlessChrome*/lcov.info |coveralls -v'
+							// }
 						}
 					},
 					"cypress": {
