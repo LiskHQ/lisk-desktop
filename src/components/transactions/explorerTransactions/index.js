@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
-import { searchTransactions, searchMoreTransactions, searchAccount } from '../../../actions/search';
+import { searchTransactions, searchMoreTransactions, searchAccount, searchMoreVoters } from '../../../actions/search';
 import actionTypes from '../../../constants/actions';
 import ExplorerTransactions from './explorerTransactions';
 import txFilters from './../../../constants/transactionFilters';
@@ -19,6 +19,7 @@ const mapStateToProps = (state, ownProps) => ({
   activeFilter: state.filters.transactions || txFilters.all,
   isSearchInStore: state.search.transactions[ownProps.address] !== undefined,
   loading: state.loading,
+  caca: 'caca',
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -28,6 +29,7 @@ const mapDispatchToProps = dispatch => ({
   addFilter: data => dispatch({ type: actionTypes.addFilter, data }),
   searchUpdateLast: data =>
     dispatch({ data, type: actionTypes.searchUpdateLast }),
+  searchMoreVoters: data => dispatch(searchMoreVoters(data)),
 });
 
 export default withRouter(connect(

@@ -48,6 +48,21 @@ const searchVoters = ({
       }));
   };
 
+export const searchMoreVoters = ({ address, offset = 0, limit = 100}) => 
+  (dispatch, getState) => {
+    const activePeer = getState().peers.data;
+    getAccount(activePeer, address).then((response) => {
+      const accountData = {
+        ...response,
+      };
+      if (accountData.publicKey) {
+        dispatch(searchVoters({
+          address, publicKey: accountData.publicKey, offset, limit,
+        }));
+      }
+    });
+  };
+
 export const searchAccount = ({ address }) =>
   (dispatch, getState) => {
     const activePeer = getState().peers.data;
