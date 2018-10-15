@@ -32,10 +32,12 @@ const searchVotes = ({ address }) =>
       }));
   };
 
-const searchVoters = ({ address, publicKey }) =>
+const searchVoters = ({
+  address, publicKey, offset = 0, limit = 100,
+}) =>
   (dispatch, getState) => {
     const activePeer = getState().peers.data;
-    getVoters(activePeer, { publicKey }).then(response =>
+    getVoters(activePeer, { publicKey, offset, limit }).then(response =>
       dispatch({
         type: actionTypes.searchVoters,
         data: {

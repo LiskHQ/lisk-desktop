@@ -1,4 +1,5 @@
 import React from 'react';
+import Waypoint from 'react-waypoint';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { translate } from 'react-i18next';
 import { FontIcon } from '../fontIcon';
@@ -17,19 +18,27 @@ class VotedDelegates extends AccountList {
           <div className={styles.label}>
             <div className='voters-value'>
               {this.props.t('Who voted for this delegate')}
-              {` (${this.state.votersSize})`}
+              {` (${this.props.votersSize})`}
             </div>
             {super.renderSearchFilter('votersFilterQuery', t('Filter voters'))}
           </div>
           <div className={styles.value}>
-            {voters && voters
-              .slice(0, this.state.showVotersNumber)}
+            { voters }
           </div>
-          {voters.length > this.state.showVotersNumber ?
+          <Waypoint bottomOffset='-80%'
+            key={voters.length}
+            onEnter={() => {
+              console.log('loadMore');
+            }}>
+          </Waypoint>
+          {
+            /*
+            voters.length > this.state.showVotersNumber ?
             <div onClick={() => { super.showMore('showVotersNumber'); }} className={`${styles.showMore} showMore  show-voters`}>
               <FontIcon className={styles.arrowDown} value='arrow-down'/>
               {this.props.t('Show more')}
             </div> : ''
+            */
           }
         </div>
       </div>
