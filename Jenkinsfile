@@ -81,12 +81,8 @@ pipeline {
 					},
 					"jest": {
 						ansiColor('xterm') {
-							// TODO: fail on errors when jest test suite is ready
-							// see https://github.com/LiskHQ/lisk-hub/issues/1302
-							sh 'ON_JENKINS=true npm run --silent test-jest || true'
+							sh 'ON_JENKINS=true npm run --silent test-jest'
 
-							// TODO: uncomment sending coverage to coveralls when 
-							// all tests are migrated from mocha to jest
 							withCredentials([string(credentialsId: 'lisk-hub-coveralls-token', variable: 'COVERALLS_REPO_TOKEN')]) {
 								sh 'cat coverage/HeadlessChrome*/lcov.info |coveralls -v'
 							}
