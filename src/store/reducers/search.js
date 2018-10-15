@@ -80,6 +80,7 @@ const search = (state = {
           ...state.voters,
           [action.data.address]: action.data.voters,
         },
+        votersSize: action.data.votersSize,
       };
     case actionTypes.searchSuggestions:
       return {

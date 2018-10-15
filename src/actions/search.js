@@ -35,11 +35,12 @@ const searchVotes = ({ address }) =>
 const searchVoters = ({ address, publicKey }) =>
   (dispatch, getState) => {
     const activePeer = getState().peers.data;
-    getVoters(activePeer, publicKey).then(response =>
+    getVoters(activePeer, { publicKey }).then(response =>
       dispatch({
         type: actionTypes.searchVoters,
         data: {
           voters: response.data.voters,
+          votersSize: response.data.votes,
           address,
         },
       }));

@@ -12,6 +12,7 @@ const mapStateToProps = (state, ownProps) => ({
   transactions: state.search.searchResults,
   votes: state.search.votes[state.search.lastSearch],
   voters: state.search.voters[state.search.lastSearch],
+  votersSize: state.search.votersSize,
   count: state.search.transactions[state.search.lastSearch] &&
     (state.search.transactions[state.search.lastSearch].count || null),
   offset: state.search.searchResults.length,
