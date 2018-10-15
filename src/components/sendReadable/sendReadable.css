@@ -85,11 +85,12 @@ input:read-only {
 
 .text {
   color: #3c5068;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 600;
 }
 
 .smallAddress {
+  margin-top: 5px;
   font-size: 12px;
   font-weight: 400;
 }

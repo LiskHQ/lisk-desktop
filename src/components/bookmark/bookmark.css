@@ -120,7 +120,6 @@
 .show {
   display: block;
   width: 110%;
-  padding-bottom: 5px;
 }
 
 .rowSelected {
@@ -148,7 +147,8 @@
 
 .children {
   padding-left: 40px;
-  top: 23px;
+  top: 25px;
+  font-weight: 600;
   position: absolute;
 }
 

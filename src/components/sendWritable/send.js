@@ -113,7 +113,7 @@ class SendWritable extends React.Component {
           <ReferenceInput
             context={this}
             label={this.props.t('Reference (optional)')}
-            address={this.state.reference}
+            reference={this.state.reference}
             handleChange={this.handleChange.bind(this, 'reference', false)}
           />
           <Converter

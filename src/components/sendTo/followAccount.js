@@ -53,7 +53,7 @@ class FollowAccount extends React.Component {
               this.props.nextStep({
                 success: true,
                 title: this.props.t('Success'),
-                body: title + this.props.t(' has been added to your Dashboard'),
+                body: this.props.t('{{title}} has been added to your Dashboard', { title }),
                 followedAccount: [{ address }],
                 reciepientId: address,
               });

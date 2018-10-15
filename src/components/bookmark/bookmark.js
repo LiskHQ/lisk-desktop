@@ -18,6 +18,15 @@ class Bookmark extends React.Component {
     };
   }
 
+  componentDidMount() {
+    const followedAccount = this.props.followedAccounts
+      .find(account => account.address === this.props.address.value);
+    const title = followedAccount ? followedAccount.title : '';
+
+    if (title) {
+      this.setState({ show: false, selectedIdx: -1, title });
+    }
+  }
   getFilteredFollowedAccounts() {
     const { followedAccounts, address } = this.props;
 
@@ -69,7 +78,9 @@ class Bookmark extends React.Component {
           const { title, address } = filteredFollowedAccounts[this.state.selectedIdx];
 
           this.props.handleChange(address);
-          this.props.focusReference();
+          if (keyCodes.enter) {
+            this.props.focusReference();
+          }
           this.setState({ selectedIdx: 0, placeholder: '', title });
         }
 

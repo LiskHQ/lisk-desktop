@@ -39,10 +39,6 @@ describe('Bookmark', () => {
     });
   });
 
-  it('should render a component', () => {
-    expect(wrapper).to.have.exactly(1).descendants('Bookmark');
-  });
-
   it('should select address account', () => {
     const bookmarkInput = wrapper.find('#bookmark-input').find('input').first();
 

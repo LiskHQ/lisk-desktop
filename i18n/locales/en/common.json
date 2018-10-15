@@ -2,7 +2,6 @@
   " Chat": " Chat",
   " FAQ": " FAQ",
   " Make sure that you are using the latest version of Lisk Hub.": " Make sure that you are using the latest version of Lisk Hub.",
-  " has been added to your Dashboard": " has been added to your Dashboard",
   " or get in touch in via chat ": " or get in touch in via chat ",
   "About": "About",
   "Academy": "Academy",
@@ -415,5 +414,6 @@
   "{{count}} delegate(s) selected to unvote": "{{count}} delegate selected to unvote",
   "{{count}} delegate(s) selected to unvote_plural": "{{count}} delegates selected to unvote",
   "{{count}} delegate(s) selected to vote": "{{count}} delegate selected to vote",
-  "{{count}} delegate(s) selected to vote_plural": "{{count}} delegates selected to vote"
+  "{{count}} delegate(s) selected to vote_plural": "{{count}} delegates selected to vote",
+  "{{title}} has been added to your Dashboard": "{{title}} has been added to your Dashboard"
 }

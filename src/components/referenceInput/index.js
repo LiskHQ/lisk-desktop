@@ -4,7 +4,7 @@ import styles from './index.css';
 
 class ReferenceInput extends React.Component {
   render() {
-    const { handleChange, address, label, context } = this.props; // eslint-disable-line
+    const { handleChange, reference, label, context } = this.props; // eslint-disable-line
     return (
       <Input
         className="reference"
@@ -15,8 +15,8 @@ class ReferenceInput extends React.Component {
         }}
         theme={styles}
         label={label}
-        error={address.error}
-        value={address.value}
+        error={reference.error}
+        value={reference.value}
         onChange={val => handleChange(val)} />
     );
   }
