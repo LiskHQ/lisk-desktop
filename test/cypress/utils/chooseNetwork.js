@@ -1,4 +1,4 @@
-import networks from '../../../constants/networks';
+import networks from '../../constants/networks';
 
 const ss = {
   networkDropdown: '.network',

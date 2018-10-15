@@ -1,5 +1,5 @@
 import networks from '../../constants/networks';
-import chooseNetwork from './utils/chooseNetwork';
+import chooseNetwork from '../utils/chooseNetwork';
 
 const ss = {
   networkStatus: '.network-status',
@@ -74,7 +74,7 @@ describe('Registration', () => {
     chooseNetwork('main');
     cy.get(ss.newAccountBtn).click();
     registerUI.call(this);
-    cy.get(ss.networkStatus).should('not.exist');
+    cy.get(ss.networkStatus).contains('Connected to mainnet');
   });
 
   it('Create Lisk ID for Testnet', function () {
