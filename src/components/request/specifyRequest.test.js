@@ -22,6 +22,7 @@ describe('Specify Request', () => {
     props = {
       t: key => key,
       address: '234l',
+      reference: '',
       nextStep: spy(),
       prevStep: spy(),
     };
