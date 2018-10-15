@@ -166,10 +166,10 @@ describe('Utils: Delegate', () => {
   describe('getVoters', () => {
     it('should return getVoters(activePeer, publicKey)', () => {
       const publicKey = '';
-      activePeerMockVoters.expects('get').withArgs({ publicKey })
+      activePeerMockVoters.expects('get').withArgs({ publicKey, offset: 0, limit: 100 })
         .returnsPromise().resolves('resolved promise');
 
-      const returnedPromise = getVoters(activePeer, publicKey);
+      const returnedPromise = getVoters(activePeer, { publicKey, offset: 0, limit: 100 });
       expect(returnedPromise).to.eventually.equal('resolved promise');
     });
   });
