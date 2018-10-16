@@ -98,10 +98,14 @@ pipeline {
 									sh '''
 									export N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
 
-									rsync -axl --delete ~/lisk-docker/examples/development/ $WORKSPACE/$BRANCH_NAME/
-									cp /home/lisk/blockchain_explorer.db.gz $WORKSPACE/$BRANCH_NAME/blockchain.db.gz
+									wget -nv -c https://github.com/LiskHQ/lisk-docker/archive/2.2.0.tar.gz
+									rm -rf $WORKSPACE/$BRANCH_NAME/
+									mkdir -p $WORKSPACE/$BRANCH_NAME/
+									tar xf 2.2.0.tar.gz -C $WORKSPACE/$BRANCH_NAME/ --strip-component=2 lisk-docker-2.2.0/examples/
+									cp /home/lisk/blockchain.db.gz $WORKSPACE/$BRANCH_NAME/dev_blockchain.db.gz
 									cd $WORKSPACE/$BRANCH_NAME
-									LISK_VERSION=1.0.0-rc.1 make coldstart
+									cp .env.development .env
+									LISK_VERSION=1.1.0-alpha.8 make coldstart
 									export CYPRESS_baseUrl=http://127.0.0.1:300$N/#/
 									export CYPRESS_coreUrl=http://127.0.0.1:$( docker-compose port lisk 4000 |cut -d ":" -f 2 )
 									cd -
