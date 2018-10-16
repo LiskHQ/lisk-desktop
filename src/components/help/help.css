@@ -10,6 +10,23 @@
   flex-direction: row;
   align-items: flex-start;
   padding: 0;
+  background-color: rgb(0, 0, 0, 0);
+
+  & > aside {
+    display: flex;
+    height: 100%;
+    background: #f5f8fc;
+    padding: 40px 30px;
+    justify-content: space-between;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+
+  & > section {
+    background: var(--color-white);
+    flex-basis: 70%;
+    max-width: 70%;
+  }
 
   & h2 {
     font-size: var(--font-size-h3);
@@ -107,7 +124,19 @@
 }
 
 @media (--medium-viewport) {
-  .helpSection:first-child {
-    display: none;
+  .sideBar:first-child {
+    flex: 0 0 30%;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .wrapper {
+    flex-direction: column;
+
+    & > section {
+      background: none;
+      flex-basis: 100%;
+      max-width: 100%;
+    }
   }
 }

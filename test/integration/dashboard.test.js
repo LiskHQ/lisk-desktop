@@ -79,11 +79,8 @@ describe('@integration: Dashboard', () => {
       '',
     ).returnsPromise().resolves({ data: [] });
     // transactionsFilterSet do pass filter
-    getTransactionsStub.withArgs({
-      activePeer: match.defined,
-      address: match.defined,
-      limit: 25,
-    }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 1000 } });
+    getTransactionsStub.withArgs(match.any)
+      .returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 1000 } });
 
     // rest of accounts send request
     sendTransactionsStub.withArgs(

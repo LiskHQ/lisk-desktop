@@ -8,6 +8,7 @@ import {
   vote,
   getVotes,
   getVoters,
+  getAllVotes,
   registerDelegate } from './delegate';
 import accounts from '../../../test/constants/accounts';
 
@@ -25,7 +26,7 @@ describe('Utils: Delegate', () => {
       get: () => { },
     },
     votes: {
-      get: sinon.spy(),
+      get: () => { },
     },
     voters: {
       get: () => { },
@@ -63,8 +64,8 @@ describe('Utils: Delegate', () => {
   describe('listAccountDelegates', () => {
     it('should get votes for an address with 101 limit', () => {
       const address = '123L';
+      activePeerMockVotes.expects('get').withArgs({ address, limit: '101' }).once();
       listAccountDelegates(activePeer, address);
-      expect(activePeer.votes.get).to.have.been.calledWith({ address, limit: '101' });
     });
   });
 
@@ -135,8 +136,30 @@ describe('Utils: Delegate', () => {
   describe('getVotes', () => {
     it('should get votes for an address with no parameters', () => {
       const address = '123L';
-      getVotes(activePeer, address);
-      expect(activePeer.votes.get).to.have.been.calledWith({ address });
+      const offset = 0;
+      const limit = 100;
+      activePeerMockVotes.expects('get').withArgs({ address, offset, limit }).once();
+      getVotes(activePeer, { address, offset, limit });
+    });
+  });
+
+  describe('getAllVotes', () => {
+    it('should get all votes for an address with no parameters > 100', () => {
+      const address = '123L';
+      activePeerMockVotes.expects('get').withArgs({ address, offset: 0, limit: 100 })
+        .returnsPromise().resolves({ data: { votes: [1, 2, 3], votesUsed: 101 } });
+      activePeerMockVotes.expects('get').withArgs({ address, offset: 100, limit: 1 })
+        .returnsPromise().resolves({ data: { votes: [4], votesUsed: 101 } });
+      const returnedPromise = getAllVotes(activePeer, address);
+      expect(returnedPromise).to.eventually.equal([1, 2, 3, 4]);
+    });
+
+    it('should get all votes for an address with no parameters < 100', () => {
+      const address = '123L';
+      activePeerMockVotes.expects('get').withArgs({ address, offset: 0, limit: 100 })
+        .returnsPromise().resolves({ data: { votes: [1], votesUsed: 1 } });
+      const returnedPromise = getAllVotes(activePeer, address);
+      expect(returnedPromise).to.eventually.equal([1]);
     });
   });
 

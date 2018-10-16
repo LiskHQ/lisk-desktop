@@ -4,7 +4,7 @@
   width: 250px;
   max-width: 100%;
   border-radius: 3px;
-  text-transform: capitalize;
+  text-transform: none;
   font-weight: var(--font-weight-bold);
   font-family: var(--content-font) !important;
   transition: none !important;
