@@ -9,17 +9,22 @@ import actionTypes from '../../../constants/actions';
 import txFilters from './../../../constants/transactionFilters';
 
 /* istanbul ignore next */
-const mapStateToProps = state => ({
-  account: state.account,
-  transaction: state.transaction,
-  transactions: [...state.transactions.pending, ...state.transactions.confirmed],
-  votes: state.account.votes,
-  voters: state.account.voters,
-  count: state.transactions.count,
-  delegate: state.account && (state.account.delegate || null),
-  activeFilter: state.filters.wallet || txFilters.all,
-  loading: state.loading,
-});
+const mapStateToProps = (state) => {
+  const address = state.account.address;
+  const delegate = (state.search && state.search.delegates) ?
+    state.search.delegates[address] : state.account && (state.account.delegate || null);
+  return {
+    account: state.account,
+    transaction: state.transaction,
+    transactions: [...state.transactions.pending, ...state.transactions.confirmed],
+    votes: state.account.votes,
+    voters: state.account.voters,
+    count: state.transactions.count,
+    delegate,
+    activeFilter: state.filters.wallet || txFilters.all,
+    loading: state.loading,
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
   searchAccount: data => dispatch(searchAccount(data)),
