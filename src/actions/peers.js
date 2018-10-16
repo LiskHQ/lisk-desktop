@@ -62,8 +62,9 @@ export const activePeerSet = data =>
       const { lockDuration } = accountConfig;
       const { passphrase } = data;
       const { code } = data.network;
-      const activePeer = store.peers.data;
       const publicKey = passphrase ? extractPublicKey(passphrase) : data.publicKey;
+      const activePeer = store.peers.data ||
+        new Lisk.APIClient(config.nodes, { nethash: config.nethash });
       const address = extractAddress(publicKey);
       const accountBasics = {
         passphrase,
