@@ -35,16 +35,13 @@ Cypress.Commands.add('addLocalStorage', (item, key, value) => {
   window.localStorage.setItem(item, JSON.stringify(itemObject));
 });
 
-Cypress.Commands.add('login', (account, network) => {
-  const accounts = [];
-  accounts.push({
-    publicKey: account.publicKey,
-    network,
-    peerAddress: network === 2 ? Cypress.env('CORE_URL') : undefined,
-  });
-  window.localStorage.setItem('accounts', JSON.stringify(accounts));
+Cypress.Commands.add('autologin', (passphrase, network) => {
+  localStorage.setItem('autologinUrl', network);
+  localStorage.setItem('autologinKey', passphrase);
 });
 
+
+// TODO: Remove after cucumber tests are gone
 Cypress.Commands.add('loginUI', (account, network) => {
   cy.visit('/');
   cy.addLocalStorage('settings', 'showNetwork', true);

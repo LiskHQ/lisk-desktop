@@ -180,6 +180,10 @@
   }
 }
 
+.referenceField {
+  word-break: break-word;
+}
+
 @media (--small-viewport) {
   .details {
     & .row {

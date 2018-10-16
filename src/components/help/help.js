@@ -22,15 +22,17 @@ class Help extends React.Component {
     const chatIcon = () => (<span className={styles.inlineIcon}><FontIcon>conversation</FontIcon><b>{this.props.t(' Chat')}</b></span>);
     return (
       <Box className={styles.wrapper}>
-        <aside className={`${grid['col-sm-12']} ${grid['col-md-4']} ${styles.helpSection} ${styles.sideBar}`}>
-          <h2>{this.props.t('Help')}</h2>
-          <p>{this.props.t('Search through our tutorials, FAQs or connect to our community all over the world.')}</p>
-          {
-            this.props.account.address ?
-              <a className='help-onboarding' onClick={() => this.initOnboarding() }>{this.props.t('New to Hub? Take a tour')}
-              <FontIcon>arrow-right</FontIcon>
-            </a> : null
-          }
+        <aside className={`${grid['col-sm-12']} ${grid['col-md-4']} ${styles.sideBar}`}>
+          <header>
+            <h2>{this.props.t('Help')}</h2>
+            <p>{this.props.t('Browse through our tutorials, check out the FAQ or connect with our knowledgeable community.')}</p>
+            {
+              this.props.account.address ?
+                <a className='help-onboarding' onClick={() => this.initOnboarding() }>{this.props.t('New to Hub? Take a tour')}
+                <FontIcon>arrow-right</FontIcon>
+              </a> : null
+            }
+          </header>
         </aside>
 
         <section className={`${grid['col-sm-12']} ${grid['col-md-8']} ${styles.helpSection} help-articles`}>
@@ -41,9 +43,9 @@ class Help extends React.Component {
             </h2>
             <div className={styles.articleContainer}>
               <div>
-                <p>{this.props.t('Search for advice and answers in our extensive ')}
+                <p>{this.props.t('Search for answers in our extensive FAQ')}
                   {fAQIcon()}
-                  {this.props.t(' or get in touch in the ')}
+                  {this.props.t(' or get in touch in via chat ')}
                   {chatIcon()}.
                 </p>
               </div>
@@ -62,7 +64,7 @@ class Help extends React.Component {
             </h2>
             <div className={styles.articleContainer}>
               <div>
-                <p>{this.props.t('The Lisk Academy aims to make learning about blockchain technology interactive and enjoyable.')}
+                <p>{this.props.t('Learn about blockchain with our comprehensive knowledge base.')}
                 </p>
               </div>
               <div>
@@ -97,7 +99,7 @@ class Help extends React.Component {
             </h2>
             <div className={styles.articleContainer}>
               <div>
-                <p>{this.props.t('Don’t be a stranger! Connect to our community all over the world.')}
+                <p>{this.props.t('Don’t be a stranger! Connect with our worldwide community.')}
                 </p>
               </div>
               <div>

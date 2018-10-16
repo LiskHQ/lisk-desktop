@@ -1,7 +1,7 @@
 import accounts from '../../../constants/accounts';
 
 describe('Register second passphrase', () => {
-  it('should allow to set 2nd passphrase and should ask it before any transactions', function () {
+  it('should allow to set second passphrase and should ask it before any transactions', function () {
     cy.loginUI(accounts['second passphrase candidate'], 'dev');
     cy.get('#settings').click();
     cy.get('.register-second-passphrase').click();
@@ -56,6 +56,6 @@ describe('Register second passphrase', () => {
     });
     cy.get('.second-passphrase-next').click();
     cy.get('.confirm').click();
-    cy.get('.result-box-message').should('have.text', 'You’re votes are being processed and will be confirmed. It may take up to 10 minutes to be secured in the blockchain.');
+    cy.get('.result-box-message').should('have.text', 'Your votes are being processed. It may take up to 10 minutes for it to be secured in the blockchain.');
   });
 });

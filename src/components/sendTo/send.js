@@ -30,7 +30,7 @@ class SendTo extends React.Component {
     };
 
     return (<Box className={`${styles.wrapper} ${grid.row}`}>
-      <section className={styles.content}>
+      <section className={`${styles.content} explorer-account-left-block`}>
         <div className={`
           ${grid['col-xs-12']}
           ${grid['col-sm-7']}
@@ -59,7 +59,7 @@ class SendTo extends React.Component {
               ${grid['col-lg-12']}
             `}>
             <h2>
-              <span>
+              <span className={'balance'}>
                 <LiskAmount val={account.balance}/>
                 <small className={styles.balanceUnit}>LSK</small>
               </span>

@@ -73,6 +73,7 @@ const actionTypes = {
   getNewsFeed: 'GET_NEWS_FEED',
   showEmptyNewsFeed: 'SHOW_EMPTY_NEWS_FEED',
   addPriceTicker: 'ADD_PRICE_TICKER',
+  cleanTransactions: 'CLEAN_TRANSACTIONS',
 };
 
 export default actionTypes;

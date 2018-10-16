@@ -216,6 +216,7 @@ class TransactionsDetailView extends React.Component {
                 } />
             }
             <TransactionDetailViewField
+              style={styles.referenceField}
               shouldShow={transaction.asset && transaction.asset.data}
               label={this.props.t('Reference')}
               value={(transaction.asset && transaction.asset.data) || '-'} />
