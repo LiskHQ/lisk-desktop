@@ -27,16 +27,13 @@ describe('DelegateStatistics', () => {
   it('should not display showAll button, if all votes are already shown', () => {
     const wrapper = mountWithContext(<DelegateStatistics {...props}/>, {});
 
-    expect(wrapper.find('.showMore').length).to.have.equal(2);
-    wrapper.find('.showMore').at(0).simulate('click');
     expect(wrapper.find('.showMore').length).to.have.equal(1);
+    wrapper.find('.showMore').at(0).simulate('click');
   });
 
-  it('should not display showMore button, if all voters are already shown', () => {
+  it('should render Waypoint component', () => {
     const wrapper = mountWithContext(<DelegateStatistics {...props} />, {});
 
-    expect(wrapper.find('.showMore').length).to.have.equal(2);
-    wrapper.find('.showMore').at(1).simulate('click');
-    expect(wrapper.find('.showMore').length).to.have.equal(1);
+    expect(wrapper).to.have.descendants('Waypoint');
   });
 });
