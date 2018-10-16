@@ -17,6 +17,7 @@ describe('DelegateStatistics', () => {
       publicKey: 'bd56ce59f413370cf45dbc4be094acbd4de9c6894443476e5406dfc458337889',
       balance: '0',
     }),
+    votersSize: 100,
   };
 
   it('should render DelegateStatistics', () => {
@@ -35,5 +36,16 @@ describe('DelegateStatistics', () => {
     const wrapper = mountWithContext(<DelegateStatistics {...props} />, {});
 
     expect(wrapper).to.have.descendants('Waypoint');
+    const waypoint = wrapper.find('Waypoint').at(0);
+    waypoint.props().onEnter();
+  });
+
+  it('should render Waypoint when votersSize > votes', () => {
+    const propsCpy = { ...props, votersSize: 40 };
+    const wrapper = mountWithContext(<DelegateStatistics {...propsCpy} />, {});
+
+    expect(wrapper).to.have.descendants('Waypoint');
+    const waypoint = wrapper.find('Waypoint').at(0);
+    waypoint.props().onEnter();
   });
 });

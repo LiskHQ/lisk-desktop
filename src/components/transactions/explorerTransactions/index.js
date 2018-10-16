@@ -22,6 +22,7 @@ const mapStateToProps = (state, ownProps) => ({
   caca: 'caca',
 });
 
+/* istanbul ignore next */
 const mapDispatchToProps = dispatch => ({
   searchAccount: data => dispatch(searchAccount(data)),
   searchTransactions: data => dispatch(searchTransactions(data)),
