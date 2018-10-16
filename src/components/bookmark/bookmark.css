@@ -120,6 +120,7 @@
 .show {
   display: block;
   width: 110%;
+  padding-bottom: 5px;
 }
 
 .rowSelected {

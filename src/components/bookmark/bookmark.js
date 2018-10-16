@@ -161,7 +161,7 @@ class Bookmark extends React.Component {
             >
             <div className={styles.children}>{this.state.title}</div>
           </Input>
-          { this.state.show ?
+          { this.state.show && filteredFollowedAccounts.length !== 0 ?
             <ul className={`${filteredFollowedAccounts.length > 0 ? styles.resultList : ''}
               ${this.state.show ? styles.show : ''}
               bookmarkList`}>
