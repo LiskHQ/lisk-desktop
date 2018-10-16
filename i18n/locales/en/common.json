@@ -334,6 +334,7 @@
   "Transaction": "Transaction",
   "Transaction ID": "Transaction ID",
   "Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain.": "Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain.",
+  "Transaction not found": "Transaction not found",
   "Transactions can’t be reversed": "Transactions can’t be reversed",
   "Transfer": "Transfer",
   "Try again": "Try again",
