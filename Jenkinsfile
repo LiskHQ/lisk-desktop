@@ -1,5 +1,6 @@
 @Library('lisk-jenkins') _
 
+properties([disableConcurrentBuilds(), pipelineTriggers([])])
 pipeline {
 	agent { node { label 'lisk-hub' } }
 	options {
