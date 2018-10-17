@@ -16,6 +16,7 @@ const mapStateToProps = state => ({
   votes: state.account.votes,
   voters: state.account.voters,
   count: state.transactions.count,
+  // Pick delegate from source
   delegate: (state.account && state.account.delegate) ?
     state.account && (state.account.delegate || null) :
     state.search.delegates[state.account.address],
