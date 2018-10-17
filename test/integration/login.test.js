@@ -13,7 +13,6 @@ import accountReducer from '../../src/store/reducers/account';
 import transactionsReducer from '../../src/store/reducers/transactions';
 import peersReducer from '../../src/store/reducers/peers';
 import settingsReducer from '../../src/store/reducers/settings';
-import loginMiddleware from '../../src/store/middlewares/login';
 import accountMiddleware from '../../src/store/middlewares/account';
 import peerMiddleware from '../../src/store/middlewares/peers';
 import { activePeerSet } from '../../src/actions/peers';
@@ -71,7 +70,6 @@ describe('@integration: Login', () => {
     }, [
       thunk,
       accountMiddleware,
-      loginMiddleware,
       peerMiddleware,
     ])
   );

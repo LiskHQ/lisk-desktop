@@ -16,7 +16,6 @@ import delegateReducer from '../../src/store/reducers/delegate';
 import transactionsReducer from '../../src/store/reducers/transactions';
 import accountReducer from '../../src/store/reducers/account';
 import peersReducer from '../../src/store/reducers/peers';
-import loginMiddleware from '../../src/store/middlewares/login';
 
 import accounts from '../../test/constants/accounts';
 
@@ -43,7 +42,6 @@ describe('@integration RegisterDelegate', () => {
       thunk,
       accountMiddleware,
       peerMiddleware,
-      loginMiddleware,
     ]);
     wrapper = mount(renderWithRouter(RegisterDelegate, store, { history }));
     delegateApiMock = sinon.mock(delegateApi);

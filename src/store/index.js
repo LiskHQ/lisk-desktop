@@ -11,7 +11,6 @@ import settingsSubscriber from './subscribers/settings';
 const App = combineReducers(reducers);
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
 const store = createStore(App, composeEnhancers(applyMiddleware(...middleWares)));
 
 // ignore this in coverage because it is not run in tests, because it causes mock issues

@@ -14,7 +14,6 @@ import peersReducer from '../../src/store/reducers/peers';
 import GenericStepDefinition from '../utils/genericStepDefinition';
 import accountMiddleware from '../../src/store/middlewares/account';
 import peerMiddleware from '../../src/store/middlewares/peers';
-import loginMiddleware from '../../src/store/middlewares/login';
 import { prepareStore, renderWithRouter } from '../utils/applicationInit';
 
 describe('@integration: Register', () => {
@@ -36,7 +35,6 @@ describe('@integration: Register', () => {
       thunk,
       accountMiddleware,
       peerMiddleware,
-      loginMiddleware,
     ]);
 
   const restoreStubs = () => {
