@@ -2,11 +2,11 @@ import { expect } from 'chai';
 import { stub, match, spy } from 'sinon';
 import actionTypes from '../constants/actions';
 import * as searchAPI from '../utils/api/search';
-import * as accountApi from '../utils/api/account';
+import * as accountAPI from '../utils/api/account';
+import * as delegateAPI from '../utils/api/delegate';
 import {
   searchSuggestions,
   searchMoreVoters,
-  searchVoters,
 } from './search';
 
 
@@ -45,11 +45,11 @@ describe('actions: search', () => {
     });
   });
 
-  it('should call to searchMoreVoters', () => {
-    stub(accountApi, 'getAccount').returnsPromise();
+  it('should call to searchMoreVoters no publicKey', () => {
+    stub(accountAPI, 'getAccount').returnsPromise();
 
     // Case 1: return publicKey
-    accountApi.getAccount.resolves({ publicKey: null });
+    accountAPI.getAccount.resolves({ publicKey: null });
 
     const address = '123L';
     const offset = 0;
@@ -59,7 +59,7 @@ describe('actions: search', () => {
     expect(dispatch).to.not.have.been.calledWith();
 
     // Case 2: balance does change
-    // accountApi.getAccount.resolves({ publicKey: 'my-key' });
+    // accountAPI.getAccount.resolves({ publicKey: 'my-key' });
 
     // searchMoreVoters({ address, offset, limit })(dispatch, getState);
     // expect(dispatch).to.been.calledWith(searchVoters({
@@ -69,33 +69,72 @@ describe('actions: search', () => {
     //   limit,
     // }));
 
-    accountApi.getAccount.restore();
+    accountAPI.getAccount.restore();
   });
 
-  it('should call to searchMoreVoters', () => {
-    stub(accountApi, 'getAccount').returnsPromise();
+  it('should call to searchMoreVoters no publicKey offset or limit', () => {
+    stub(accountAPI, 'getAccount').returnsPromise();
 
     // Case 1: return publicKey
-    accountApi.getAccount.resolves({ publicKey: null });
+    accountAPI.getAccount.resolves({ publicKey: null });
 
     const address = '123L';
-    const offset = 0;
-    const limit = 100;
     const action = searchMoreVoters({ address });
     action(dispatch, getState);
     expect(dispatch).to.not.have.been.calledWith();
 
-    // Case 2: balance does change
-    // accountApi.getAccount.resolves({ publicKey: 'my-key' });
+    accountAPI.getAccount.restore();
+  });
 
-    // searchMoreVoters({ address, offset, limit })(dispatch, getState);
-    // expect(dispatch).to.been.calledWith(searchVoters({
-    //   address,
-    //   publicKey,
-    //   offset,
-    //   limit,
-    // }));
+  it('should call to searchMoreVoters no offset or limit', () => {
+    stub(accountAPI, 'getAccount').returnsPromise();
+    stub(delegateAPI, 'getVoters');
 
-    accountApi.getAccount.restore();
+    // Case 1: return publicKey
+    const publicKey = 'my-key';
+    accountAPI.getAccount.resolves({ publicKey });
+    delegateAPI.getVoters.resolves({
+      data: { voters: [] },
+    });
+
+    const address = '123L';
+    const action = searchMoreVoters({ address });
+    action(dispatch, getState);
+    expect(dispatch).to.not.have.been.calledWith({
+      type: actionTypes.searchVoters,
+      data: {
+        voters: [],
+      },
+    });
+
+    delegateAPI.getVoters.restore();
+    accountAPI.getAccount.restore();
+  });
+
+  it.skip('should call to searchMoreVoters', () => {
+    stub(accountAPI, 'getAccount').returnsPromise();
+    stub(delegateAPI, 'getVoters');
+
+    const publicKey = 'my-key';
+    // Case 1: return publicKey
+    accountAPI.getAccount.resolves({ publicKey });
+    delegateAPI.getVoters.resolves({
+      data: { voters: [] },
+    });
+
+    const address = '123L';
+    const offset = 0;
+    const limit = 100;
+    const action = searchMoreVoters({ address, offset, limit });
+    action(dispatch, getState);
+    expect(dispatch).to.have.been.calledWith({
+      type: actionTypes.searchVoters,
+      data: {
+        voters: [],
+      },
+    });
+
+    accountAPI.getAccount.restore();
+    delegateAPI.getVoters.restore();
   });
 });
