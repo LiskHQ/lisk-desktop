@@ -58,17 +58,6 @@ describe('actions: search', () => {
     action(dispatch, getState);
     expect(dispatch).to.not.have.been.calledWith();
 
-    // Case 2: balance does change
-    // accountAPI.getAccount.resolves({ publicKey: 'my-key' });
-
-    // searchMoreVoters({ address, offset, limit })(dispatch, getState);
-    // expect(dispatch).to.been.calledWith(searchVoters({
-    //   address,
-    //   publicKey,
-    //   offset,
-    //   limit,
-    // }));
-
     accountAPI.getAccount.restore();
   });
 
@@ -109,32 +98,5 @@ describe('actions: search', () => {
 
     delegateAPI.getVoters.restore();
     accountAPI.getAccount.restore();
-  });
-
-  it.skip('should call to searchMoreVoters', () => {
-    stub(accountAPI, 'getAccount').returnsPromise();
-    stub(delegateAPI, 'getVoters');
-
-    const publicKey = 'my-key';
-    // Case 1: return publicKey
-    accountAPI.getAccount.resolves({ publicKey });
-    delegateAPI.getVoters.resolves({
-      data: { voters: [] },
-    });
-
-    const address = '123L';
-    const offset = 0;
-    const limit = 100;
-    const action = searchMoreVoters({ address, offset, limit });
-    action(dispatch, getState);
-    expect(dispatch).to.have.been.calledWith({
-      type: actionTypes.searchVoters,
-      data: {
-        voters: [],
-      },
-    });
-
-    accountAPI.getAccount.restore();
-    delegateAPI.getVoters.restore();
   });
 });
