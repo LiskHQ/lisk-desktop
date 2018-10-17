@@ -6,7 +6,7 @@ describe('Voting page', () => {
     cy.visit('delegates');
     cy.get('.delegate-row').should('have.length', 100);
     cy.get('.delegate-list').scrollTo('bottom');
-    cy.get('.delegate-row').should('have.length', 200);
+    cy.get('.delegate-row').should('have.length', 101); // TODO Change to testnet to be independant from core devnet configuration
     cy.get('input.search').click().type('genesis_42');
     cy.get('.delegate-row').should('have.length', 1);
     cy.get('.clean-icon').click();
