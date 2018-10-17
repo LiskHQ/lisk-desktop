@@ -1,13 +1,12 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import configureMockStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
 import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
 import SendWritable from './send';
-
-const fakeStore = configureStore();
 
 describe('Send Writable Component', () => {
   let wrapper;
@@ -16,10 +15,18 @@ describe('Send Writable Component', () => {
   beforeEach(() => {
     const account = accounts.delegate;
 
-    const store = fakeStore({
+    const priceTicker = {
+      success: true,
+      LSK: {
+        USD: 1,
+      },
+    };
+
+    const store = configureMockStore([thunk])({
       account,
       settings: {},
       settingsUpdated: () => {},
+      liskService: { priceTicker },
     });
 
     props = {

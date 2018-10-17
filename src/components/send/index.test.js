@@ -1,17 +1,26 @@
 import React from 'react';
 import { expect } from 'chai';
+import thunk from 'redux-thunk';
+import configureMockStore from 'redux-mock-store';
+import { mount } from 'enzyme';
+import { Provider } from 'react-redux';
 
-import { mountWithContext } from '../../../test/utils/mountHelpers';
 import MultiStep from '../multiStep';
 import Send from './index';
+import i18n from '../../i18n';
+
 import styles from './send.css';
 
 describe('Send', () => {
   let wrapper;
   let transactions;
   let peers;
-  let storeState;
-  let context;
+  const priceTicker = {
+    success: true,
+    LSK: {
+      USD: 1,
+    },
+  };
 
   beforeEach(() => {
     transactions = {};
@@ -19,23 +28,22 @@ describe('Send', () => {
       data: {},
       options: {},
     };
-    storeState = {
+
+    const store = configureMockStore([thunk])({
       peers,
       transactions,
       account: { serverPublicKey: 'public_key', balance: 0 },
       settings: {},
       settingsUpdated: () => {},
-    };
+      liskService: { priceTicker },
+    });
 
-    context = {
-      storeState,
-    };
-    wrapper = mountWithContext(
+    wrapper = mount(<Provider store={store}>
       <Send
         history={ { location: {} } }
-        account={storeState.account} />,
-      context,
-    );
+        account={{ serverPublicKey: 'public_key', balance: 0 }}
+        i18n={i18n} />
+    </Provider>);
   });
 
   it('should render MultiStep component ', () => {

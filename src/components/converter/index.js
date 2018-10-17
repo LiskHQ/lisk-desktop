@@ -6,12 +6,14 @@ import Converter from './converter';
 
 const mapStateToProps = state => ({
   settings: state.settings,
-  priceTicker: state.liskService.priceTicker || {
-    LSK: {
-      USD: '0',
-      EUR: '0',
+  priceTicker: (state.liskService && state.liskService.priceTicker) ?
+    state.liskService.priceTicker :
+    {
+      LSK: {
+        USD: '0',
+        EUR: '0',
+      },
     },
-  },
 });
 
 const mapDispatchToProps = dispatch => ({
