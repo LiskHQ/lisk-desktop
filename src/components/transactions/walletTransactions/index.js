@@ -16,7 +16,10 @@ const mapStateToProps = state => ({
   votes: state.account.votes,
   voters: state.account.voters,
   count: state.transactions.count,
-  delegate: state.account && (state.account.delegate || null),
+  // Pick delegate from source
+  delegate: (state.account && state.account.delegate) ?
+    state.account && (state.account.delegate || null) :
+    state.search.delegates[state.account.address],
   activeFilter: state.filters.wallet || txFilters.all,
   loading: state.loading,
 });
