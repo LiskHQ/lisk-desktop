@@ -155,7 +155,7 @@ module.exports = {
     // '<rootDir>/src/components/newsFeed/index.test.js',
     // '<rootDir>/src/components/newsFeed/newsFeed.test.js',
     // '<rootDir>/src/components/newsFeed/settingsNewsFeed.test.js',
-    // '<rootDir>/src/actions/search.test.js',
+    '<rootDir>/src/actions/search.test.js',
     // '<rootDir>/src/actions/toaster.test.js',
     // '<rootDir>/src/actions/dialog.test.js',
     '<rootDir>/src/actions/voting.test.js',
