@@ -100,31 +100,29 @@ npm run test-live
 ## Run end-to-end tests
 In order to run e2e tests you need to install [lisk-core](https://github.com/LiskHQ/lisk)
 
-#### Setup
+#### Setup core
 
-Setup protractor
+Setup a lisk test node as described in [https://github.com/LiskHQ/lisk#tests](https://github.com/LiskHQ/lisk#tests)
 
-```
-./node_modules/protractor/bin/webdriver-manager update
-```
-
-Setup a lisk test node to run on localhost:4000 as described in https://github.com/LiskHQ/lisk#tests
-
-And run it with [pm2](http://pm2.keymetrics.io/).
+Run lisk test node with [pm2](http://pm2.keymetrics.io/)  on `localhost:4000`
 
 #### Run
 
 Start the development version of lisk-hub:
-
 ```
 npm run dev
 ```
-
-Run the protractor tests (replace `~/git/lisk/` with your path to lisk core):
-
+Apply blockchain snapshot
+ 
 ```
 ./e2e-test-setup.sh ~/git/lisk/
-npm run e2e-test
+```
+
+(replace `~/git/lisk/` with your path to lisk core)
+
+Run e2e tests
+```
+npm run cypress:run
 ```
 
 ## Launch React Storybook
