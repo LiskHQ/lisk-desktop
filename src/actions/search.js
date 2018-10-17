@@ -33,11 +33,11 @@ const searchVotes = ({ address }) =>
   };
 
 const searchVoters = ({
-  address, publicKey, offset = 0, limit = 100,
+  address, publicKey, offset, limit,
 }) =>
   (dispatch, getState) => {
     const activePeer = getState().peers.data;
-    getVoters(activePeer, { publicKey, offset, limit }).then(response =>
+    getVoters(activePeer, { publicKey, offset: (offset || 0), limit: (limit || 100) }).then(response =>
       dispatch({
         type: actionTypes.searchVoters,
         data: {

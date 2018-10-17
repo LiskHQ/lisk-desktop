@@ -71,4 +71,31 @@ describe('actions: search', () => {
 
     accountApi.getAccount.restore();
   });
+
+  it('should call to searchMoreVoters', () => {
+    stub(accountApi, 'getAccount').returnsPromise();
+
+    // Case 1: return publicKey
+    accountApi.getAccount.resolves({ publicKey: null });
+
+    const address = '123L';
+    const offset = 0;
+    const limit = 100;
+    const action = searchMoreVoters({ address });
+    action(dispatch, getState);
+    expect(dispatch).to.not.have.been.calledWith();
+
+    // Case 2: balance does change
+    // accountApi.getAccount.resolves({ publicKey: 'my-key' });
+
+    // searchMoreVoters({ address, offset, limit })(dispatch, getState);
+    // expect(dispatch).to.been.calledWith(searchVoters({
+    //   address,
+    //   publicKey,
+    //   offset,
+    //   limit,
+    // }));
+
+    accountApi.getAccount.restore();
+  });
 });
