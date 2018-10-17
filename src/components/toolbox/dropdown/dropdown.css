@@ -27,7 +27,7 @@
 
   & .inputLabel {
     color: var(--color-grayscale-dark) !important;
-    font-weight: var(--font-weight-semi-bold);
+    font-weight: var(--font-weight-bold);
   }
 
   & .inputFilled {
