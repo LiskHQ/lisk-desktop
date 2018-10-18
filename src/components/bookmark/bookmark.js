@@ -27,12 +27,14 @@ class Bookmark extends React.Component {
       this.setState({ show: false, selectedIdx: -1, title });
     }
   }
+
   getFilteredFollowedAccounts() {
     const { followedAccounts, address } = this.props;
 
-    return followedAccounts
-      .filter(account => account.title &&
-        account.title.toLowerCase().includes(address.value.toLowerCase()));
+    return followedAccounts.filter(account => (
+      (account.title && account.title.toLowerCase().includes(address.value.toLowerCase())) ||
+      (account.address && account.address.toLowerCase().includes(address.value.toLowerCase()))
+    ));
   }
 
   handleArrowDown() {
