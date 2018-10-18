@@ -26,7 +26,7 @@
 }
 
 .accountVisual {
-  padding: 10px 20px 5px;
+  padding: 12px 20px 5px;
 }
 
 .smallAccountVisual {
@@ -58,10 +58,6 @@
   margin-left: -15px;
 }
 
-.selectedRow {
-  background-color: rgba(205, 218, 229, 0.2);
-}
-
 .bookmarkInput {
   z-index: 20;
 
@@ -88,6 +84,12 @@
   }
 }
 
+.suggestionsActive {
+  & input:focus {
+    border-bottom: 0px;
+  }
+}
+
 .bar::before,
 .bar::after {
   background-color: transparent;
@@ -98,18 +100,27 @@
   flex-direction: row;
   margin: 0;
   padding: 0;
+  padding-bottom: 10px;
   height: 50px;
   font-family: var(--content-font);
   font-size: var(--paragraph-font-size-l);
+  cursor: pointer;
+
+  &:nth-child(2n) {
+    background: linear-gradient(90deg, var(--color-white) 0%, #f5f8fc 82%);
+  }
 
   &:hover {
-    background-color: rgba(205, 218, 229, 0.2);
-    cursor: pointer;
+    background: #e6f0fb;
   }
 
   & > span {
     margin: 0 24px;
     line-height: 36px;
+  }
+
+  &.selectedRow {
+    background: #e6f0fb;
   }
 }
 
@@ -120,7 +131,6 @@
 .show {
   display: block;
   width: 110%;
-  padding-bottom: 5px;
 }
 
 .rowSelected {
@@ -161,6 +171,10 @@
     padding-top: 25px !important;
     position: absolute;
     font-size: 10px !important;
+  }
+
+  & label {
+    top: 4px !important;
   }
 }
 

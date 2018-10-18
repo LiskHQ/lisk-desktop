@@ -138,6 +138,7 @@ class Bookmark extends React.Component {
             className={`${className}
               ${this.state.title ? styles.inputChildren : ''}
               ${showSmallVisualAccountStyles ? `${styles.bookmarkInput} bookmarkInput` : ''}
+              ${this.state.show ? styles.suggestionsActive : ''}
               ${showBigVisualAccountStyles ? `${styles.bigAccountVisualBookmarkInput} bigAccountVisualBookmarkInput` : ''}`}
             label={label}
             theme={styles}
