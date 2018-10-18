@@ -165,13 +165,6 @@ describe('Wallet', () => {
   });
 
   it('Should be able to init account when needed', () => {
-    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(urls.wallet);
-    cy.get(ss.recipientInput).type(accounts['without initialization'].address);
-    cy.get(ss.amountInput).click().type(randomAmount);
-    cy.get(ss.nextButton).click();
-    cy.get(ss.sendButton).click();
-    cy.wait(txConfirmationTimeout);
     cy.autologin(accounts['without initialization'].passphrase, networks.devnet.node);
     cy.reload();
     cy.visit(urls.wallet);
