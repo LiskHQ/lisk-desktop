@@ -10,10 +10,10 @@
   "Account initialization": "Account initialization",
   "Active": "Active",
   "Activity": "Activity",
-  "Add Followed Account": "Add Followed Account",
   "Add a Lisk ID": "Add a Lisk ID",
-  "Add this account to your dashboard to keep track of its balance.": "Add this account to your dashboard to keep track of its balance.",
+  "Add this account to your dashboard to keep track of its balance, and use it as a bookmark in the future.": "Add this account to your dashboard to keep track of its balance, and use it as a bookmark in the future.",
   "Add to dashboard": "Add to dashboard",
+  "Add to followed accounts": "Add to followed accounts",
   "Add to list": "Add to list",
   "Added votes": "Added votes",
   "Additional fee": "Additional fee",
@@ -415,5 +415,5 @@
   "{{count}} delegate(s) selected to unvote_plural": "{{count}} delegates selected to unvote",
   "{{count}} delegate(s) selected to vote": "{{count}} delegate selected to vote",
   "{{count}} delegate(s) selected to vote_plural": "{{count}} delegates selected to vote",
-  "{{title}} has been added to your Dashboard": "{{title}} has been added to your Dashboard"
+  "{{title}} has been added to your Dashboard.": "{{title}} has been added to your Dashboard."
 }

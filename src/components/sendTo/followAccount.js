@@ -33,7 +33,7 @@ class FollowAccount extends React.Component {
       ${(typeof this.props.finalCallback !== 'function') ? styles.followedAccountsStep : ''}`}>
       <header>
         <h2>{t('Follow Account')}</h2>
-        <p>{t('Add this account to your dashboard to keep track of its balance.')}</p>
+        <p>{t('Add this account to your dashboard to keep track of its balance, and use it as a bookmark in the future.')}</p>
       </header>
       <AccountTitleInput
         title={this.state.title}

@@ -59,7 +59,7 @@ class ResultBox extends React.Component {
               onClick={() => {
                 this.props.nextStep({ address: this.props.reciepientId });
               }}>
-              {this.props.t('Add Followed Account')}
+              {this.props.t('Add to followed accounts')}
             </Button> : null
           }
           <div className='subTitle'>{this.props.subTitle}</div>
