@@ -8,7 +8,7 @@ COMMANDER="lisk"
 PASSPHRASE="wagon stock borrow episode laundry kitten salute link globe zero feed marble"
 
 function create_transaction(){
-	REQUEST=$( mktemp --tmpdir=. )
+	REQUEST=$( mktemp -t . ) # for Linux command should be $( mktemp --tmpdir=. )
 	$COMMANDER create transaction transfer --passphrase="pass:$PASSPHRASE" $1 $2 >$REQUEST
 	echo $REQUEST
 }
@@ -25,7 +25,7 @@ function transfer(){
 }
 transfer 100.1 1155682438012955434L
 
-for i in {1..20}; do
+for i in {1..50}; do
 	transfer ${i}00 537318935439898807L
 done
 
