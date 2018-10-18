@@ -6,7 +6,7 @@ describe('Voting page', () => {
     cy.visit('delegates');
     cy.get('.delegate-row').should('have.length', 100);
     cy.get('.delegate-list').scrollTo('bottom');
-    // TODO Change to testnet to be independant from core devnet configuration and delegate registration test
+    // TODO Change to testnet to be independant from core devnet conf and delegate registration test
     // cy.get('.delegate-row').should('have.length', 101);
     cy.get('input.search').click().type('genesis_42');
     cy.get('.delegate-row').should('have.length', 1);
