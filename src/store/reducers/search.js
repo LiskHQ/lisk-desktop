@@ -82,7 +82,10 @@ const search = (state = {
             && state.voters[action.data.address].length > 0)
             ? [...state.voters[action.data.address], ...action.data.voters] : action.data.voters,
         },
-        votersSize: action.data.votersSize,
+        votersSize: {
+          ...state.voters,
+          [action.data.address]: action.data.votersSize,
+        },
       };
     case actionTypes.searchSuggestions:
       return {
