@@ -27,7 +27,7 @@ class FollowAccount extends React.Component {
       prevStep, t, addAccount, address,
     } = this.props;
 
-    const title = this.state.title.value || address;
+    const title = this.state.title.value;
 
     return (<Box className={`${styles.wrapper}
       ${(typeof this.props.finalCallback !== 'function') ? styles.followedAccountsStep : ''}`}>
@@ -41,8 +41,8 @@ class FollowAccount extends React.Component {
         onChange={this.handleChange.bind(this)}
       />
       <footer>
-        <TertiaryButton className={`${styles.button} follow-account`}
-          disabled={!!this.state.title.error}
+        <TertiaryButton className={`${styles.button} follow-account-button`}
+          disabled={!this.state.title.value || !!this.state.title.error}
           onClick={() => {
             addAccount({ title, address });
             // istanbul ignore else
@@ -53,7 +53,7 @@ class FollowAccount extends React.Component {
               this.props.nextStep({
                 success: true,
                 title: this.props.t('Success'),
-                body: this.props.t('{{title}} has been added to your Dashboard', { title }),
+                body: this.props.t('{{title}} has been added to your Dashboard.', { title: this.state.title.value }),
                 followedAccount: [{ address }],
                 reciepientId: address,
               });
