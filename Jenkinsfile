@@ -102,7 +102,7 @@ pipeline {
 									rm -rf $WORKSPACE/$BRANCH_NAME/
 									mkdir -p $WORKSPACE/$BRANCH_NAME/
 									tar xf 2.2.0.tar.gz -C $WORKSPACE/$BRANCH_NAME/ --strip-component=2 lisk-docker-2.2.0/examples/
-									cp /home/lisk/blockchain.db.gz $WORKSPACE/$BRANCH_NAME/dev_blockchain.db.gz
+									cp $WORKSPACE/test/blockchain.db.gz $WORKSPACE/$BRANCH_NAME/dev_blockchain.db.gz
 									cd $WORKSPACE/$BRANCH_NAME
 									cp .env.development .env
 									LISK_VERSION=1.1.0-alpha.8 make coldstart
