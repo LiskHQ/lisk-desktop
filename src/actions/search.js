@@ -33,7 +33,7 @@ const searchVotes = ({ address }) =>
   };
 
 const searchVoters = ({
-  address, publicKey, offset, limit,
+  address, publicKey, offset, limit, append,
 }) =>
   (dispatch, getState) => {
     const activePeer = getState().peers.data;
@@ -43,6 +43,7 @@ const searchVoters = ({
       dispatch({
         type: actionTypes.searchVoters,
         data: {
+          append: append || false,
           voters: response.data.voters,
           votersSize: response.data.votes,
           address,
@@ -59,7 +60,7 @@ export const searchMoreVoters = ({ address, offset = 0, limit = 100 }) =>
       };
       if (accountData.publicKey) {
         dispatch(searchVoters({
-          address, publicKey: accountData.publicKey, offset, limit,
+          address, publicKey: accountData.publicKey, offset, limit, append: true,
         }));
       }
     });

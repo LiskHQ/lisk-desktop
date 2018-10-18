@@ -6,13 +6,16 @@ import actionTypes from '../../../constants/actions';
 import ExplorerTransactions from './explorerTransactions';
 import txFilters from './../../../constants/transactionFilters';
 
+/* istanbul ignore next */
 const mapStateToProps = (state, ownProps) => ({
   delegate: state.search.delegates[state.search.lastSearch],
   transaction: state.transaction,
   transactions: state.search.searchResults,
   votes: state.search.votes[state.search.lastSearch],
   voters: state.search.voters[state.search.lastSearch],
-  votersSize: state.search.votersSize[state.search.lastSearch],
+  votersSize: state.search.votersSize &&
+    state.search.votersSize[state.search.lastSearch] ?
+    state.search.votersSize[state.search.lastSearch] : 0,
   count: state.search.transactions[state.search.lastSearch] &&
     (state.search.transactions[state.search.lastSearch].count || null),
   offset: state.search.searchResults.length,
