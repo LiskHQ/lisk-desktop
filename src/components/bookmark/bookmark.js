@@ -2,6 +2,7 @@ import React from 'react';
 import AccountVisual from '../accountVisual/index';
 import Input from '../toolbox/inputs/input';
 import keyCodes from './../../constants/keyCodes';
+import regex from './../../utils/regex';
 
 import styles from './bookmark.css';
 
@@ -104,28 +105,28 @@ class Bookmark extends React.Component {
     } = this.props;
 
     const filteredFollowedAccounts = this.getFilteredFollowedAccounts();
-    const isValidAccount = Number.isInteger(Number(address.value.substring(0, address.value.length - 1))) && address.value[address.value.length - 1] === 'L';
+    const isValidAddress = address.value.match(regex.address);
 
     const isAddressFollowedAccounts = followedAccounts
       .find(account => account.address === address.value);
 
-    const showBigVisualAccountStyles = isValidAccount &&
+    const showBigVisualAccountStyles = isValidAddress &&
       !this.state.show &&
       !isAddressFollowedAccounts &&
       !address.error && address.value;
 
-    const showSmallVisualAccountStyles = !(!isValidAccount && address.error && address.value);
+    const showSmallVisualAccountStyles = !(!isValidAddress && address.error && address.value);
 
     return (
       <div className={this.state.show ? styles.scale : ''}>
         <div className={this.state.show ? styles.bookmark : ''}>
-          {isValidAccount && !this.state.show && !!isAddressFollowedAccounts ? <AccountVisual
+          {isValidAddress && !this.state.show && !!isAddressFollowedAccounts ? <AccountVisual
             className={styles.smallAccountVisual}
             address={address.value}
             size={35}
           /> : null}
 
-          {isValidAccount && !this.state.show && !isAddressFollowedAccounts ? <AccountVisual
+          {isValidAddress && !this.state.show && !isAddressFollowedAccounts ? <AccountVisual
             className={styles.bigAccountVisual}
             address={address.value}
             size={50}
