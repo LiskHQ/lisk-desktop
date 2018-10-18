@@ -131,6 +131,7 @@ class Bookmark extends React.Component {
             address={address.value}
             size={50}
           /> : null}
+          <div className={styles.children}>{this.state.title}</div>
           <Input
             type='text'
             id='bookmark-input'
@@ -162,7 +163,6 @@ class Bookmark extends React.Component {
               handleChange(val);
             }}
             >
-            <div className={styles.children}>{this.state.title}</div>
           </Input>
           { this.state.show && filteredFollowedAccounts.length !== 0 ?
             <ul className={`${filteredFollowedAccounts.length > 0 ? styles.resultList : ''}

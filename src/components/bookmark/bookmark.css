@@ -158,7 +158,7 @@
 
   & input {
     padding-bottom: 5px;
-    top: 40px;
+    padding-top: 25px !important;
     position: absolute;
     font-size: 10px !important;
   }
