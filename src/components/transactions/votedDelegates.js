@@ -8,7 +8,6 @@ import styles from './delegateStatistics.css';
 
 class VotedDelegates extends AccountList {
   render() {
-    const { t } = this.props;
     const voters = super.getFormatedDelegates('voters', 'votersFilterQuery');
 
     return (
@@ -19,7 +18,6 @@ class VotedDelegates extends AccountList {
               {this.props.t('Who voted for this delegate')}
               {` (${this.props.votersSize || 0})`}
             </div>
-            {super.renderSearchFilter('votersFilterQuery', t('Filter voters'))}
           </div>
           <div className={styles.value}>
             { voters }
