@@ -15,6 +15,10 @@
 
 .sideBarWrapper {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%;
 }
 
 .aside {
@@ -191,6 +195,13 @@
   width: 22px;
   height: 22px;
   font-size: 22px;
+}
+
+.topTabs {
+  overflow-y: scroll;
+  height: auto;
+  display: block;
+  margin-bottom: 120px;
 }
 
 .bottomTabs {
