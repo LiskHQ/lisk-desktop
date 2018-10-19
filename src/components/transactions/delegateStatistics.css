@@ -61,7 +61,6 @@
 
 .search {
   position: relative;
-  padding-bottom: 10px;
   color: var(--color-grayscale-medium);
 
   & input {
@@ -162,6 +161,7 @@
   }
 
   & .label {
+    padding-bottom: 10px;
     font-weight: var(--font-weight-very-bold);
     display: flex;
     justify-content: space-between;
