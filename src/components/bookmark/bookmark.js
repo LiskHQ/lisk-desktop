@@ -73,8 +73,7 @@ class Bookmark extends React.Component {
         this.handleArrowUp();
         event.preventDefault();
         break;
-      case keyCodes.enter:
-      case keyCodes.tab: // eslint-disable-line
+      case keyCodes.enter: // eslint-disable-line no-case-declarations
         const filteredFollowedAccounts = this.getFilteredFollowedAccounts();
 
         if (filteredFollowedAccounts[this.state.selectedIdx]) {
