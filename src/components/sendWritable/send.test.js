@@ -29,6 +29,7 @@ describe('Send Writable Component', () => {
       t: key => key,
       nextStep: () => {},
       history: { location: { search: '' } },
+      followedAccounts: { accounts: [{ address: '123L', title: 'test' }] },
     };
     wrapper = mount(<SendWritable {...props} />, {
       context: { store, i18n },
@@ -81,5 +82,32 @@ describe('Send Writable Component', () => {
   it('recognizes invalid recipient', () => {
     wrapper.find('.recipient input').simulate('change', { target: { value: '11004588490103196952' } });
     expect(wrapper.find('Input.recipient').text()).to.contain('Invalid address');
+  });
+
+  it('recognizes too big reference length', () => {
+    wrapper.find('.reference input').simulate('change', { target: { value: 'test'.repeat(100) } });
+    expect(wrapper.find('Input.reference').text()).to.contain('Maximum length exceeded');
+  });
+
+  it('displays bookmark', () => {
+    const account = accounts.delegate;
+    const followedAccounts = { accounts: [{ address: '123L', title: '123' }] };
+
+    const store = fakeStore({
+      account,
+      settings: {},
+      settingsUpdated: () => {},
+      followedAccounts,
+    });
+    props.followedAccounts = followedAccounts.accounts;
+    wrapper = mount(<SendWritable {...props} />, {
+      context: { store, i18n },
+      childContextTypes: {
+        store: PropTypes.object.isRequired,
+        i18n: PropTypes.object.isRequired,
+      },
+    });
+
+    expect(wrapper.find('Bookmark')).to.have.length(1);
   });
 });

@@ -71,7 +71,7 @@ class SpecifyRequest extends React.Component {
           <ReferenceInput
             className='reference'
             label={this.props.t('Reference (optional)')}
-            address={this.state.reference}
+            reference={this.state.reference}
             handleChange={this.handleChange.bind(this, 'reference', false)}
           />
 

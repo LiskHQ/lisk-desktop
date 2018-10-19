@@ -22,6 +22,7 @@ describe('Specify Request', () => {
     props = {
       t: key => key,
       address: '234l',
+      reference: '',
       nextStep: spy(),
       prevStep: spy(),
     };
@@ -43,7 +44,6 @@ describe('Specify Request', () => {
     wrapper.find('.amount input').simulate('change', { target: { value: '0' } });
     expect(wrapper.find('Input.amount').text()).to.contain('Required');
   });
-
 
   it('recognizes empty amount', () => {
     wrapper.find('.amount input').simulate('change', { target: { value: '12000' } });

@@ -9,6 +9,7 @@ import styles from './sendWritable.css';
 import regex from './../../utils/regex';
 import AddressInput from './../addressInput';
 import ReferenceInput from './../referenceInput';
+import Bookmark from './../bookmark';
 
 class SendWritable extends React.Component {
   constructor(props) {
@@ -23,6 +24,7 @@ class SendWritable extends React.Component {
       reference: {
         value: this.props.reference || '',
       },
+      openFollowedAccountSuggestion: true,
       ...authStatePrefill(),
     };
     this.fee = fees.send;
@@ -73,12 +75,12 @@ class SendWritable extends React.Component {
     return undefined;
   }
 
-  showAccountVisual() {
-    return this.state.recipient.value.length && !this.state.recipient.error;
-  }
-
   getMaxAmount() {
     return fromRawLsk(Math.max(0, this.props.account.balance - this.fee));
+  }
+
+  focusReference() {
+    this.referenceInput.focus();
   }
 
   render() {
@@ -91,16 +93,25 @@ class SendWritable extends React.Component {
           <TransferTabs setTabSend={this.props.setTabSend} isActiveTabSend={true}/>
         </div>
         <form className={styles.form}>
-          <AddressInput
-            className='recipient'
-            label={this.props.t('Send to address')}
-            address={this.state.recipient}
-            handleChange={this.handleChange.bind(this, 'recipient', true)}
-          />
+          { this.props.followedAccounts.length > 0 && this.state.openFollowedAccountSuggestion ?
+            <Bookmark
+              focusReference={this.focusReference.bind(this)}
+              className='recipient'
+              label={this.props.t('Send to address')}
+              address={this.state.recipient}
+              handleChange={this.handleChange.bind(this, 'recipient', true)}
+            /> :
+            <AddressInput
+              className='recipient'
+              label={this.props.t('Send to address')}
+              address={this.state.recipient}
+              handleChange={this.handleChange.bind(this, 'recipient', true)}
+            />
+          }
           <ReferenceInput
-            className='reference'
+            context={this}
             label={this.props.t('Reference (optional)')}
-            address={this.state.reference}
+            reference={this.state.reference}
             handleChange={this.handleChange.bind(this, 'reference', false)}
           />
           <Converter

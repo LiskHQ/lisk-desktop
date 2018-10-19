@@ -13,20 +13,6 @@ const ss = {
 const getFollowedAccountObjFromLS = () => JSON.parse(localStorage.getItem('followedAccounts'));
 
 describe('Following', () => {
-  it('Add follower without title as guest', () => {
-    cy.visit('/dashboard');
-    cy.get(ss.addAccountButton).click();
-    cy.get(ss.addressInput).click().type(accounts.genesis.address);
-    cy.get(ss.nextButton).click();
-    cy.get(ss.nextButton).click()
-      .should(() => {
-        expect(getFollowedAccountObjFromLS()[0].address).to.equal(accounts.genesis.address);
-        expect(getFollowedAccountObjFromLS()[0].title).to.equal(accounts.genesis.address);
-      });
-    cy.get(ss.followedAccountItem).should('have.length', 1);
-    cy.get(ss.titleInput).should('have.value', accounts.genesis.address);
-  });
-
   it('Add follower with title while logged in', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit('/dashboard');

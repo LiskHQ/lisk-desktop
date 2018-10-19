@@ -25,6 +25,7 @@ describe('Send', () => {
       account: { serverPublicKey: 'public_key', balance: 0 },
       settings: {},
       settingsUpdated: () => {},
+      followedAccounts: { accounts: [] },
     };
 
     context = {
