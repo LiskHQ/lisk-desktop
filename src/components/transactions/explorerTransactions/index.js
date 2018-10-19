@@ -22,7 +22,6 @@ const mapStateToProps = (state, ownProps) => ({
   activeFilter: state.filters.transactions || txFilters.all,
   isSearchInStore: state.search.transactions[ownProps.address] !== undefined,
   loading: state.loading,
-  caca: 'caca',
 });
 
 /* istanbul ignore next */
