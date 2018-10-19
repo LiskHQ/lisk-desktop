@@ -115,7 +115,7 @@ npm run dev
 Apply blockchain snapshot
  
 ```
-./e2e-test-setup.sh ~/git/lisk/
+./test/e2e-test-setup.sh ~/git/lisk/
 ```
 
 (replace `~/git/lisk/` with your path to lisk core)
