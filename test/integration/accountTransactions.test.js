@@ -75,7 +75,7 @@ describe('@integration: Account Transactions', () => {
       expect(this.wrapper.find('.productivity').first()).to.have.text(`Uptime${delegateProductivity.productivity}%`);
     }
     countLinks(expectedNumber) {
-      expect(this.wrapper.find('.voters Link')).to.have.length(expectedNumber);
+      expect(this.wrapper.find('.votes Link')).to.have.length(expectedNumber);
     }
     // eslint-disable-next-line class-methods-use-this
     checkRedirectionToDetails(address, transactionId) {
@@ -124,7 +124,7 @@ describe('@integration: Account Transactions', () => {
     accountAPIStub = stub(accountAPI, 'getAccount');
     transactionAPIStub = stub(accountAPI, 'transaction');
     delegateAPIStub = stub(delegateAPI, 'getDelegate');
-    votesAPIStub = stub(delegateAPI, 'getVotes');
+    votesAPIStub = stub(delegateAPI, 'getAllVotes');
     votersAPIStub = stub(delegateAPI, 'getVoters');
 
     const transactionExample = {
@@ -282,8 +282,8 @@ describe('@integration: Account Transactions', () => {
     }));
     step('When I click on the "delegate-statistics" filter', () => helper.clickOnElement('.delegate-statistics'));
     step('Then I should see the delegate statistics details rendered', () => helper.checkDelegateDetails());
-    step('Then I should see 2 voters', () => helper.countLinks(2));
-    step('When I fill voters filter input', () => helper.fillInputField('123L', 'votes'));
-    step('Then I should see 1 voter', () => helper.countLinks(2));
+    step('Then I should see 2 votes', () => helper.countLinks(2));
+    step('When I fill votes filter input', () => helper.fillInputField('123', 'votes'));
+    step('Then I should see 1 vote', () => helper.countLinks(1));
   });
 });
