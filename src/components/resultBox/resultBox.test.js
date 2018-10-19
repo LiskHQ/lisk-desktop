@@ -47,7 +47,7 @@ describe('Result Box', () => {
     expect(wrapper.find('img')).to.have.length(1);
     expect(wrapper.find('.copy-title').text()).to.contain(copy.title);
 
-    wrapper.find('Button').simulate('click');
+    wrapper.find('.okay-button').first().simulate('click');
     expect(props.reset).to.have.been.calledWith();
   });
 

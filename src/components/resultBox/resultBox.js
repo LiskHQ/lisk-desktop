@@ -12,10 +12,12 @@ class ResultBox extends React.Component {
       this.props.onMount(true, 'ResultBox');
     }
   }
-  render() {
-    const followedAccount = this.props.followedAccounts.find(account =>
-      account.address === this.props.reciepientId);
 
+  isNotYetFollowed(address) {
+    return this.props.followedAccounts.find(account => account.address === address) === undefined;
+  }
+
+  render() {
     return (
       <div className={`${styles.resultBox}`}>
         <div></div>
@@ -54,7 +56,7 @@ class ResultBox extends React.Component {
             }}>
             {this.props.t('Okay')}
           </Button>
-          {followedAccount === undefined && this.props.followedAccounts.length > 0 ?
+          {this.isNotYetFollowed(this.props.reciepientId) ?
             <Button className={`add-follwed-account-button ${styles.addFollowedAccountButton}`}
               onClick={() => {
                 this.props.nextStep({ address: this.props.reciepientId });
