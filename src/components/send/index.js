@@ -85,7 +85,7 @@ class Send extends React.Component {
               <PassphraseSteps/>
               <SendReadable/>
               <ResultBox history={this.props.history}/>
-              <FollowAccount/>
+              <FollowAccount showConfirmationStep={true}/>
               <ResultBox history={this.props.history}/>
             </MultiStep>
             :

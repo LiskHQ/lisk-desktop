@@ -12,6 +12,7 @@ describe('SendTo: follow account Component', () => {
     nextStep: spy(),
     address: '12345L',
     t: key => key,
+    showConfirmationStep: true,
   };
 
   beforeEach(() => {
@@ -55,7 +56,6 @@ describe('SendTo: follow account Component', () => {
       address: '12345L',
       t: key => key,
       reset: () => {},
-      finalCallback: spy(),
     };
     wrapper = mountWithContext(<FollowAccount {...props} />, {});
 
@@ -65,6 +65,6 @@ describe('SendTo: follow account Component', () => {
       title, address: props.address,
     });
 
-    expect(props.finalCallback).to.have.been.calledWith();
+    expect(props.prevStep).to.have.been.calledWith();
   });
 });

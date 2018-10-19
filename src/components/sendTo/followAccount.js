@@ -30,7 +30,7 @@ class FollowAccount extends React.Component {
     const title = this.state.title.value;
 
     return (<Box className={`${styles.wrapper}
-      ${(typeof this.props.finalCallback !== 'function') ? styles.followedAccountsStep : ''}`}>
+      ${this.props.showConfirmationStep ? styles.followedAccountsStep : ''}`}>
       <header>
         <h2>{t('Follow Account')}</h2>
         <p>{t('Add this account to your dashboard to keep track of its balance, and use it as a bookmark in the future.')}</p>
@@ -46,14 +46,13 @@ class FollowAccount extends React.Component {
           onClick={() => {
             addAccount({ title, address });
             // istanbul ignore else
-            if (typeof this.props.finalCallback === 'function') {
-              this.props.finalCallback();
-              this.props.reset();
+            if (!this.props.showConfirmationStep) {
+              this.props.prevStep();
             } else {
               this.props.nextStep({
                 success: true,
                 title: this.props.t('Success'),
-                body: this.props.t('{{title}} has been added to your Dashboard.', { title: this.state.title.value }),
+                body: this.props.t('{{title}} has been added to your Dashboard.', { title }),
                 followedAccount: [{ address }],
                 reciepientId: address,
               });
