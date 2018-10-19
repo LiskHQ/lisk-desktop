@@ -94,7 +94,7 @@ pipeline {
 					"cypress": {
 						withCredentials([string(credentialsId: 'lisk-hub-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
 							ansiColor('xterm') {
-								wrap([$class: 'Xvfb']) {
+								wrap([$class: 'Xvfb', parallelBuild: true]) {
 									sh '''
 									export N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
 
