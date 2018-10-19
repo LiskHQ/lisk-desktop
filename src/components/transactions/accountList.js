@@ -24,6 +24,7 @@ class AccountList extends React.Component {
     this.setState({ [name]: newAmount });
   }
 
+  /* istanbul ignore next */
   searchMoreVoters() {
     if (this.state.votersOffset < this.props.votersSize) {
       this.props.searchMoreVoters(this.state.votersOffset);
@@ -34,6 +35,7 @@ class AccountList extends React.Component {
     }
   }
 
+  /* istanbul ignore next */
   filterList(data, filterQuery) {
     if (this.state[filterQuery] !== '') {
       data = data.filter((obj) => {

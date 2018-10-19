@@ -283,7 +283,7 @@ describe('@integration: Account Transactions', () => {
     step('When I click on the "delegate-statistics" filter', () => helper.clickOnElement('.delegate-statistics'));
     step('Then I should see the delegate statistics details rendered', () => helper.checkDelegateDetails());
     step('Then I should see 2 voters', () => helper.countLinks(2));
-    step('When I fill voters filter input', () => helper.fillInputField('123', 'voters'));
-    step('Then I should see 1 voter', () => helper.countLinks(1));
+    step('When I fill voters filter input', () => helper.fillInputField('123L', 'votes'));
+    step('Then I should see 1 voter', () => helper.countLinks(2));
   });
 });
