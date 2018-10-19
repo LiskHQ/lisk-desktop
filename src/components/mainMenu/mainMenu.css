@@ -198,7 +198,7 @@
 }
 
 .topTabs {
-  overflow-y: scroll;
+  overflow-y: auto;
   height: auto;
   display: block;
   margin-bottom: 120px;
