@@ -61,9 +61,10 @@ class Converter extends React.Component {
                 <div className='converted-price'>{price} {currency}</div>
               </div>
             </div>
-            : <div></div>
+            : <div className={this.props.error ? `${styles.convertorErr} convertorErr` : `${styles.convertor} convertor`}>
+                <a onClick={this.setMaxAmount.bind(this)} className={`${styles.convertElem}`}>{ this.props.t('Set max. amount') }</a>
+              </div>
           }
-        <a onClick={this.setMaxAmount.bind(this)} className={`${styles.setMaxAmount}`}>{ this.props.t('Set max. amount') }</a>
         </div>
         { this.props.isRequesting || this.props.error ? null :
           <div className={styles.fee}>{this.props.t('Additional fee: {{fee}} LSK', { fee: fromRawLsk(this.fee) })}
