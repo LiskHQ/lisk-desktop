@@ -40,7 +40,7 @@ class LoginLedger extends React.Component {
     let index = 0;
     let displayed = this.state.displayAccountAmount;
     let accountInfo;
-
+    this.setState({ isLoading: true });
     do {
       try {
         switch (this.props.loginType) {   // eslint-disable-line
@@ -109,9 +109,10 @@ class LoginLedger extends React.Component {
   }
 
   render() {
-    return <div className={styles.accountList}>{this.state.hwAccounts.map((account, index) => (
+    return <div className={styles.accountList}>{
+      !this.state.isLoading ? this.state.hwAccounts.map((account, index) => (
         <AccountCard key={`accountCard-${index}`} account={account} onClickHandler={this.selectAccount.bind(this)} />
-      ))}
+      )) : <div>LOADING ANIMATION</div>}
       <AddAccountCard addAccount={this.addAccount.bind(this)} />
     </div>;
   }

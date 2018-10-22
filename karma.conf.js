@@ -57,6 +57,7 @@ module.exports = function (config) {
             'src/components/register/register.js',
             'src/components/voteUrlProcessor/index.js',
             'src/utils/api/liskService.js',
+            'src/utils/ledger.js',
             'src/store/reducers/liskService.js',
             'src/actions/transactions.js',
             'src/components/errorBoundary/index.js',

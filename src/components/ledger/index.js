@@ -7,7 +7,7 @@ class Ledger extends React.Component {
   constructor() {
     super();
     this.state = {
-      showAccounts: false,
+      showAccounts: true,
     };
   }
 

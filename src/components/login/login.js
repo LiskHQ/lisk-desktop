@@ -238,7 +238,7 @@ class Login extends React.Component {
                   error={this.state.passphraseValidity}
                   value={this.state.passphrase}
                   onChange={this.changeHandler.bind(this, 'passphrase')} />
-                <div className={styles.hardwareWalletLink} onClick={() => { this.ledgerLogin(); }}>
+                <div className={`${styles.hardwareWalletLink} hardwareWalletLink`} onClick={() => { this.ledgerLogin(); }}>
                   Ledger Nano S
                   <FontIcon className={styles.singUpArrow} value='arrow-right' />
                 </div>
