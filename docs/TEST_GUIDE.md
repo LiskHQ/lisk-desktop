@@ -121,3 +121,24 @@ Configuration is in [cypress.conf.js](/LiskHQ/lisk-hub/blob/development/cypress/
 
 ### What tools are used?
 - [Cypress](https://www.cypress.io/) - JavaScript End to End Testing Framework
+
+### How to update blockchain snapshot needed to be applied before run?
+Recreate db
+```
+pm2 stop app
+dropdb lisk_dev
+createdb lisk_dev
+pm2 start app
+```
+Fire a script to create necessary transactions (you need [Lisk Commander](https://github.com/LiskHQ/lisk-commander) installed globally for that)
+```
+COMMANDER="$(command -v lisk)" ./test/e2e-transactions.sh
+```
+Dump database
+```
+pg_dump lisk_dev > ./test/blockchain.db
+```
+Gzip snapshot
+```
+gzip ./test/blockchain.db
+```
