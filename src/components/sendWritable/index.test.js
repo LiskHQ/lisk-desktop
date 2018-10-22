@@ -30,6 +30,7 @@ describe('SendWritableHOC', () => {
       transactions,
       settings: {},
       liskService: { priceTicker },
+      followedAccounts: { accounts: [] },
     });
     store.subscribe = () => {};
     store.dispatch = () => {};

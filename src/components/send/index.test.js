@@ -36,7 +36,8 @@ describe('Send', () => {
       settings: {},
       settingsUpdated: () => {},
       liskService: { priceTicker },
-    });
+      followedAccounts: { accounts: [] },
+    };
 
     wrapper = mount(<Provider store={store}>
       <Send

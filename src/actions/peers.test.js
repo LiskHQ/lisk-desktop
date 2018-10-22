@@ -8,6 +8,7 @@ import networks from '../constants/networks';
 
 
 describe('actions: peers', () => {
+  let getState;
   const { passphrase } = accounts.genesis;
   const nethash = '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d';
 
@@ -34,6 +35,14 @@ describe('actions: peers', () => {
       dispatch = spy();
       APIClientBackup = Lisk.APIClient;
       getConstantsMock = stub().returnsPromise();
+
+      getState = () => ({
+        peers: {
+          data: {},
+        },
+        account: {},
+        settings: { autoLog: true },
+      });
 
       // TODO: find a better way of mocking Lisk.APIClient
       Lisk.APIClient = class MockAPIClient {
@@ -63,14 +72,14 @@ describe('actions: peers', () => {
           nethash,
         },
       };
-      activePeerSet(data)(dispatch);
+      activePeerSet(data)(dispatch, getState);
       expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.address', 'localhost:8000'));
     });
 
     it('dispatch activePeerSet action also when address http missing', () => {
       const network = { address: 'localhost:8000' };
 
-      activePeerSet({ passphrase, network })(dispatch);
+      activePeerSet({ passphrase, network })(dispatch, getState);
 
       expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.address', 'localhost:8000'));
     });
@@ -78,7 +87,7 @@ describe('actions: peers', () => {
     it('dispatch activePeerSet action with nodeXX.lisk.io node if mainnet', () => {
       const network = networks.mainnet;
 
-      activePeerSet({ passphrase, network })(dispatch);
+      activePeerSet({ passphrase, network })(dispatch, getState);
 
       expect(dispatch).to.have.been.calledWith(match.hasNested(
         'data.options.nodes',
@@ -91,7 +100,7 @@ describe('actions: peers', () => {
         testnet: true,
       };
 
-      activePeerSet({ passphrase, network })(dispatch);
+      activePeerSet({ passphrase, network })(dispatch, getState);
       expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.nodes', networks.testnet.nodes));
     });
 
@@ -101,7 +110,7 @@ describe('actions: peers', () => {
         custom: true,
       };
 
-      activePeerSet({ passphrase, network })(dispatch);
+      activePeerSet({ passphrase, network })(dispatch, getState);
       expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.nodes[0]', 'http://localhost:4000'));
     });
 
@@ -111,7 +120,7 @@ describe('actions: peers', () => {
         address: 'http://localhost:4000',
         custom: true,
       };
-      activePeerSet({ passphrase, network })(dispatch);
+      activePeerSet({ passphrase, network })(dispatch, getState);
       expect(dispatch).to.have.been.calledWith({
         data: { label: 'Unable to connect to the node', type: 'error' },
         type: actionTypes.toastDisplayed,
@@ -119,13 +128,13 @@ describe('actions: peers', () => {
     });
 
     it('dispatch activePeerSet action even if network is undefined', () => {
-      activePeerSet({ passphrase })(dispatch);
+      activePeerSet({ passphrase, network: {} })(dispatch, getState);
 
       expect(dispatch).to.have.been.calledWith();
     });
 
     it('dispatch activePeerSet action even if network.address is undefined', () => {
-      activePeerSet({ passphrase, network: {} })(dispatch);
+      activePeerSet({ passphrase, network: {} })(dispatch, getState);
 
       expect(dispatch).to.have.been.calledWith();
     });
@@ -134,11 +143,11 @@ describe('actions: peers', () => {
       const network7000 = { address: 'http://127.0.0.1:7000', nethash };
       const network4000 = { address: 'http://127.0.0.1:4000', nethash };
 
-      activePeerSet({ passphrase, network: network7000 })(dispatch);
+      activePeerSet({ passphrase, network: network7000 })(dispatch, getState);
       expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.nodes[0]', network7000.address));
       expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.nethash', nethash));
 
-      activePeerSet({ passphrase, network: network4000 })(dispatch);
+      activePeerSet({ passphrase, network: network4000 })(dispatch, getState);
       expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.nodes[0]', network4000.address));
       expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.nethash', nethash));
     });

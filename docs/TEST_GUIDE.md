@@ -115,11 +115,9 @@ Full user scenarios in the application as a whole, including the communication w
 See [relevant sections of README](/LiskHQ/lisk-hub#run-end-to-end-tests)
 
 ### How are they organized?
-E2E tests for each major feature have the tests specified in its own `*.feature` in [/test/e2e/](/LiskHQ/lisk-hub/blob/development/test/e2e). The test specifications in `*.feature` files use [Gherkin](https://github.com/cucumber/cucumber/wiki/Gherkin) language. The implementation of the steps is in [/test/e2e/step_definitions](/LiskHQ/lisk-hub/blob/development/test/e2e/step_definitions). If the step is used just in multiple `*.feature` files, then its definition is in [test/e2e/step_definitions/generic.step.js](test/e2e/step_definitions/generic.step.js). The definition for unique steps of `featureName.feature` is in `featurename.step.js`.
+E2E tests for each major feature have the tests specified in its own `*.spec.js` in [/test/cypress/e2e/](/LiskHQ/lisk-hub/blob/development/test/cypress/e2e)
 
-Configuration is in [protractor.conf.js](/LiskHQ/lisk-hub/blob/development/protractor.conf.js).
+Configuration is in [cypress.conf.js](/LiskHQ/lisk-hub/blob/development/cypress/cypress.conf.js).
 
 ### What tools are used?
-- [Cucumber-js](https://github.com/cucumber/cucumber-js) for Given-When-Then Scenarios and Behaviour-Driven Development.
-- [protractor](https://www.protractortest.org/) for E2E test implementation. We use `expect` syntax of [chai](http://www.chaijs.com/) assertions (`expect(...).to.equal(...)`) instead of protractor default jasmine assertions (`expect(...).toEqual(...)`)  to be consistent with unit and integration tests.
-- [protractor-cucumber-framework](https://github.com/protractor-cucumber-framework/protractor-cucumber-framework) to connect Cucumber with protractor.
+- [Cypress](https://www.cypress.io/) - JavaScript End to End Testing Framework

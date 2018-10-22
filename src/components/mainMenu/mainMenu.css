@@ -15,6 +15,10 @@
 
 .sideBarWrapper {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%;
 }
 
 .aside {
@@ -188,9 +192,16 @@
 }
 
 .bottomIcon {
-  width: 14px;
-  height: 14px;
-  font-size: 14px;
+  width: 22px;
+  height: 22px;
+  font-size: 22px;
+}
+
+.topTabs {
+  overflow-y: auto;
+  height: auto;
+  display: block;
+  margin-bottom: 120px;
 }
 
 .bottomTabs {
@@ -217,7 +228,7 @@
 
     & span:first-child {
       margin-right: 3px;
-      margin-top: 7px;
+      margin-top: 3px;
     }
 
     & span:last-child {
@@ -228,7 +239,8 @@
       display: flex;
       flex-direction: row;
       align-items: flex-start;
-      margin-left: 20px;
+      transition: all ease 300ms;
+      margin-left: 10px;
     }
 
     & img {
@@ -327,5 +339,15 @@
     width: 100%;
     bottom: 0;
     height: 5px;
+  }
+}
+
+@media (--xLarge-viewport) {
+  .bottomTabs {
+    & .label {
+      & > div {
+        margin-left: 20px;
+      }
+    }
   }
 }

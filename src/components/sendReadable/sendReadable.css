@@ -19,6 +19,10 @@
   }
 }
 
+.recepientRow {
+  display: flex;
+}
+
 .disabled > .inputElement {
   border-bottom: none;
   color: #212121;
@@ -37,6 +41,10 @@
 
 input:read-only {
   border-bottom: solid 1px var(--color-white) !important;
+}
+
+.disabledInput label {
+  font-size: 14px;
 }
 
 .button {
@@ -79,9 +87,25 @@ input:read-only {
 }
 
 .accountVisual {
-  margin: 6px 16px 0 0;
-  height: 42px;
-  width: 42px;
+  margin-right: 10px;
+}
+
+.text {
+  color: #3c5068;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.smallAddress {
+  margin-top: 5px;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.address {
+  font-size: 16px;
+  font-weight: 400;
+  padding-top: 10px;
 }
 
 .sendTo {

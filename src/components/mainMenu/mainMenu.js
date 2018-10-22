@@ -142,7 +142,7 @@ class MainMenu extends React.Component {
               theme={styles}
               onChange={this.navigate.bind(this, history, tabs)}
               disableAnimatedBottomBorder={true}
-              className={`${styles.tabs} main-tabs`}>
+              className={`${styles.tabs} ${styles.topTabs} main-tabs`}>
               {tabs.map(({
                    label, image, id, enabledWhenNotLoggedIn,
                   }, index) =>

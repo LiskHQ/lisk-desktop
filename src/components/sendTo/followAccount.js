@@ -27,12 +27,13 @@ class FollowAccount extends React.Component {
       prevStep, t, addAccount, address,
     } = this.props;
 
-    const title = this.state.title.value || address;
+    const title = this.state.title.value;
 
-    return (<Box className={`${styles.wrapper}`}>
+    return (<Box className={`${styles.wrapper}
+      ${this.props.showConfirmationStep ? styles.followedAccountsStep : ''}`}>
       <header>
         <h2>{t('Follow Account')}</h2>
-        <p>{t('Add this account to your dashboard to keep track of its balance.')}</p>
+        <p>{t('Add this account to your dashboard to keep track of its balance, and use it as a bookmark in the future.')}</p>
       </header>
       <AccountTitleInput
         title={this.state.title}
@@ -40,11 +41,22 @@ class FollowAccount extends React.Component {
         onChange={this.handleChange.bind(this)}
       />
       <footer>
-        <TertiaryButton className={`${styles.button} follow-account`}
-          disabled={!!this.state.title.error}
+        <TertiaryButton className={`${styles.button} follow-account-button`}
+          disabled={!this.state.title.value || !!this.state.title.error}
           onClick={() => {
             addAccount({ title, address });
-            prevStep();
+            // istanbul ignore else
+            if (!this.props.showConfirmationStep) {
+              this.props.prevStep();
+            } else {
+              this.props.nextStep({
+                success: true,
+                title: this.props.t('Success'),
+                body: this.props.t('{{title}} has been added to your Dashboard.', { title }),
+                followedAccount: [{ address }],
+                reciepientId: address,
+              });
+            }
           }}>
           {t('Add to dashboard')}
         </TertiaryButton>

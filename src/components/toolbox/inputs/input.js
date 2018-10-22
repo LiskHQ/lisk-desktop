@@ -11,6 +11,6 @@ const ToolBoxInput = props => <Input
       ref.focus();
     }
   }}
-/>;
+>{props.children}</Input>;
 
 export default themr('TBInput', inputTheme)(ToolBoxInput);

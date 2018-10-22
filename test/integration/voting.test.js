@@ -15,7 +15,6 @@ import * as delegateApi from '../../src/utils/api/delegate';
 import * as accountAPI from '../../src/utils/api/account';
 import Voting from '../../src/components/voting';
 import peersReducer from '../../src/store/reducers/peers';
-import loginMiddleware from '../../src/store/middlewares/login';
 import accountMiddleware from '../../src/store/middlewares/account';
 import peerMiddleware from '../../src/store/middlewares/peers';
 import { activePeerSet } from '../../src/actions/peers';
@@ -117,7 +116,6 @@ const loginProcess = (votes = []) => {
   }, [
     thunk,
     accountMiddleware,
-    loginMiddleware,
     peerMiddleware,
   ]);
 

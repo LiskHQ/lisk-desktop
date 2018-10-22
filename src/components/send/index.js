@@ -8,6 +8,7 @@ import ResultBox from '../resultBox';
 import SendWritable from './../sendWritable';
 import SendReadable from './../sendReadable';
 import Request from '../request';
+import FollowAccount from '../sendTo/followAccount';
 import SpecifyRequest from '../request/specifyRequest';
 import ConfirmRequest from '../request/confirmRequest';
 import PassphraseSteps from './../passphraseSteps';
@@ -83,6 +84,8 @@ class Send extends React.Component {
               />
               <PassphraseSteps/>
               <SendReadable/>
+              <ResultBox history={this.props.history}/>
+              <FollowAccount showConfirmationStep={true}/>
               <ResultBox history={this.props.history}/>
             </MultiStep>
             :
