@@ -62,7 +62,7 @@ class Converter extends React.Component {
               </div>
             </div>
             : <div className={this.props.error ? `${styles.convertorErr} convertorErr` : `${styles.convertor} convertor`}>
-                <a onClick={this.setMaxAmount.bind(this)} className={`${styles.convertElem}`}>{ this.props.t('Set max. amount') }</a>
+                <a onClick={this.setMaxAmount.bind(this)} className={`${styles.convertElem} ${styles.setMaxAmount}`}>{ this.props.t('Set max. amount') }</a>
               </div>
           }
         </div>

@@ -23,7 +23,7 @@
 }
 
 .setMaxAmount {
-  position: absolute;
+  /* position: absolute;
   right: 0px;
   bottom: 0px;
   width: max-content;
@@ -33,7 +33,9 @@
   font-size: 12px;
   background: transparent;
   user-select: none;
-  cursor: pointer;
+  cursor: pointer; */
+  color: var(--color-primary-medium);
+  font-size: var(--input-font-size);
 }
 
 .fee {
