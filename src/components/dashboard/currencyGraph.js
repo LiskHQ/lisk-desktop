@@ -25,7 +25,7 @@ const chartOptions = step => ({
       time: step.timeFormat,
       distribution: 'linear',
       ticks: {
-        fontColor: '#204F9F',
+        fontColor: '#FFFFFF',
         fontSize: 14,
         fontFamily: '\'Open Sans\', sans-serif',
       },
