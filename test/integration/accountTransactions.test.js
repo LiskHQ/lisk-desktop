@@ -62,21 +62,24 @@ describe('@integration: Account Transactions', () => {
 
   class Helper extends GenericStepDefinition {
     checkSelectedFilter(filter) {
-      const expectedClass = '_active';
+      const expectedClass = 'active';
       const activeFilter = this.wrapper.find('.transaction-filter-item').filterWhere((item) => {
         const className = item.prop('className');
         return className.includes(expectedClass);
       });
       expect(activeFilter.text().toLowerCase()).to.equal(filter);
     }
+
     checkDelegateDetails() {
       expect(this.wrapper.find('.approval').first()).to.have.text(`Approval${delegateProductivity.approval}%`);
       expect(this.wrapper.find('.rank').first()).to.have.text(`Rank / Status${delegateProductivity.rank} / Active`);
       expect(this.wrapper.find('.productivity').first()).to.have.text(`Uptime${delegateProductivity.productivity}%`);
     }
+
     countLinks(expectedNumber) {
       expect(this.wrapper.find('.votes Link')).to.have.length(expectedNumber);
     }
+
     // eslint-disable-next-line class-methods-use-this
     checkRedirectionToDetails(address, transactionId) {
       expect(explorerTransactionsProps.history.push).to.have.been.calledWith(`${routes.accounts.pathPrefix}${routes.accounts.path}/${address}?id=${transactionId}`);
