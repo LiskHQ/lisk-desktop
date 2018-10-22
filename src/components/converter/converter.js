@@ -1,5 +1,6 @@
 import React from 'react';
 import liskServiceApi from '../../utils/api/liskService';
+import { Link } from 'react-router-dom';
 import Input from '../toolbox/inputs/input';
 import { fromRawLsk } from '../../utils/lsk';
 
@@ -30,6 +31,13 @@ class Converter extends React.Component {
     });
   }
 
+  setMaxAmount(event) {
+    const { onSetMaxAmount } = this.props;
+    if (typeof onSetMaxAmount === 'function') {
+      onSetMaxAmount(event);
+    }
+  }
+
   render() {
     const { LSK } = this.state;
     const currency = this.props.settings.currency || 'USD';
@@ -44,7 +52,7 @@ class Converter extends React.Component {
         error={this.props.error}
         value={this.props.value}
         theme={styles}
-        onChange={this.props.onChange} >
+        onChange={this.props.onChange}>
         <div className={styles.convertorWrapper}>
           {this.props.value !== '' && this.state.LSK[currency] ?
             <div className={this.props.error ? `${styles.convertorErr} convertorErr` : `${styles.convertor} convertor`}>
@@ -55,6 +63,7 @@ class Converter extends React.Component {
             </div>
             : <div></div>
           }
+        <a onClick={this.setMaxAmount.bind(this)} className={`${styles.setMaxAmount}`}>{ this.props.t('Set max. amount') }</a>
         </div>
         { this.props.isRequesting || this.props.error ? null :
           <div className={styles.fee}>{this.props.t('Additional fee: {{fee}} LSK', { fee: fromRawLsk(this.fee) })}

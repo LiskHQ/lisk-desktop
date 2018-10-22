@@ -79,6 +79,15 @@ class SendWritable extends React.Component {
     return fromRawLsk(Math.max(0, this.props.account.balance - this.fee));
   }
 
+  handleSetMaxAmount() {
+    const amount = parseFloat(this.getMaxAmount());
+    this.setState({
+      amount: {
+        value: amount,
+      },
+    });
+  }
+
   focusReference() {
     this.referenceInput.focus();
   }
@@ -121,6 +130,7 @@ class SendWritable extends React.Component {
             error={this.state.amount.error}
             value={this.state.amount.value}
             onChange={this.handleChange.bind(this, 'amount', true)}
+            onSetMaxAmount={this.handleSetMaxAmount.bind(this)}
             t={this.props.t}
           />
         </form>
