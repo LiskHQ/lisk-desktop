@@ -1,9 +1,7 @@
 import React from 'react';
 import liskServiceApi from '../../utils/api/liskService';
-import { Link } from 'react-router-dom';
 import Input from '../toolbox/inputs/input';
 import { fromRawLsk } from '../../utils/lsk';
-
 import fees from './../../constants/fees';
 import converter from './../../constants/converter';
 
