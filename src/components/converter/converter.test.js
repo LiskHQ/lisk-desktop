@@ -78,5 +78,6 @@ describe('Converter', () => {
     wrapper.find('.set-max-amount').simulate('click');
     /* eslint-disable no-unused-expressions */
     expect(props.onSetMaxAmount).to.have.been.calledOnce;
+    /* eslint-enable no-unused-expressions */
   });
 });
