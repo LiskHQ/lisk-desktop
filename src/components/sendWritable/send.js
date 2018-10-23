@@ -92,6 +92,18 @@ class SendWritable extends React.Component {
     this.referenceInput.focus();
   }
 
+  handleFocus() {
+    this.setState({
+      showSetMaxAmount: true,
+    });
+  }
+
+  handleBlur() {
+    this.setState({
+      showSetMaxAmount: false && this.state.amount.value,
+    });
+  }
+
   render() {
     return (
       <div className={`${styles.sendWrapper}`}>
@@ -123,16 +135,25 @@ class SendWritable extends React.Component {
             reference={this.state.reference}
             handleChange={this.handleChange.bind(this, 'reference', false)}
           />
-          <Converter
-            label={this.props.t('Amount (LSK)')}
-            className='amount'
-            theme={styles}
-            error={this.state.amount.error}
-            value={this.state.amount.value}
-            onChange={this.handleChange.bind(this, 'amount', true)}
-            onSetMaxAmount={this.handleSetMaxAmount.bind(this)}
-            t={this.props.t}
-          />
+          <div className={`amount-wrapper ${styles.amountWrapper}`}>
+            <Converter
+              label={this.props.t('Amount (LSK)')}
+              className='amount'
+              theme={styles}
+              error={this.state.amount.error}
+              value={this.state.amount.value}
+              onChange={this.handleChange.bind(this, 'amount', true)}
+              onFocus={this.handleFocus.bind(this)}
+              onBlur={this.handleBlur.bind(this)}
+              onSetMaxAmount={this.handleSetMaxAmount.bind(this)}
+              t={this.props.t}
+            />
+            {
+              this.state.showSetMaxAmount && !this.state.amount.value ?
+                <a onClick={this.handleSetMaxAmount.bind(this)} className={`set-max-amount ${styles.setMaxAmount}`}>{ this.props.t('Set max. amount') }</a> 
+              : <div></div>
+            }
+          </div>
         </form>
         <footer>
           <Button onClick={() => this.props.nextStep({

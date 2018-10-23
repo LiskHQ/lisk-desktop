@@ -29,13 +29,6 @@ class Converter extends React.Component {
     });
   }
 
-  setMaxAmount(event) {
-    const { onSetMaxAmount } = this.props;
-    if (typeof onSetMaxAmount === 'function') {
-      onSetMaxAmount(event);
-    }
-  }
-
   render() {
     const { LSK } = this.state;
     const currency = this.props.settings.currency || 'USD';
@@ -50,6 +43,8 @@ class Converter extends React.Component {
         error={this.props.error}
         value={this.props.value}
         theme={styles}
+        onFocus={this.props.onFocus}
+        onBlur={this.props.onBlur}
         onChange={this.props.onChange}>
         <div className={styles.convertorWrapper}>
           {this.props.value !== '' && this.state.LSK[currency] ?
@@ -59,9 +54,7 @@ class Converter extends React.Component {
                 <div className='converted-price'>{price} {currency}</div>
               </div>
             </div>
-            : <div className={this.props.error ? `${styles.convertorErr} convertorErr` : `${styles.convertor} convertor`}>
-                <a onClick={this.setMaxAmount.bind(this)} className={`set-max-amount ${styles.convertElem} ${styles.setMaxAmount}`}>{ this.props.t('Set max. amount') }</a>
-              </div>
+            : <div></div>
           }
         </div>
         { this.props.isRequesting || this.props.error ? null :

@@ -22,22 +22,6 @@
   }
 }
 
-.setMaxAmount {
-  /* position: absolute;
-  right: 0px;
-  bottom: 0px;
-  width: max-content;
-  transform: translateY(-100%);
-  font-family: 'Open Sans', sans-serif;
-  border: none;
-  font-size: 12px;
-  background: transparent;
-  user-select: none;
-  cursor: pointer; */
-  font-size: 14px;
-  color: var(--color-primary-medium);
-}
-
 .fee {
   margin-bottom: 24px;
   font-size: 12px;
