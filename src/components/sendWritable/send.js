@@ -98,12 +98,6 @@ class SendWritable extends React.Component {
     });
   }
 
-  handleBlur() {
-    this.setState({
-      showSetMaxAmount: false && this.state.amount.value,
-    });
-  }
-
   render() {
     return (
       <div className={`${styles.sendWrapper}`}>
@@ -144,7 +138,6 @@ class SendWritable extends React.Component {
               value={this.state.amount.value}
               onChange={this.handleChange.bind(this, 'amount', true)}
               onFocus={this.handleFocus.bind(this)}
-              onBlur={this.handleBlur.bind(this)}
               onSetMaxAmount={this.handleSetMaxAmount.bind(this)}
               t={this.props.t}
             />
