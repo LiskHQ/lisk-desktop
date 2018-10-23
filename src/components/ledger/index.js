@@ -4,25 +4,16 @@ import UnlockWallet from './unlockWallet';
 import LedgerLogin from './ledgerLogin';
 
 class Ledger extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      showAccounts: true,
-    };
-  }
-
   handleOnClick() {
-    this.setState({
-      showAccounts: true,
-    });
+    this.props.ledgerLogin();
   }
 
   render() {
-    if (this.state.showAccounts) {
+    if (this.props.isLedgerLogin) {
       return (
-        <Box>
-          <LedgerLogin loginType={0} network={this.props.network} />
-        </Box>);
+          <Box>
+            <LedgerLogin loginType={0} network={this.props.network} />
+          </Box>);
     }
 
     return (

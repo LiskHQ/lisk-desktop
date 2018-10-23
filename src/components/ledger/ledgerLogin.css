@@ -1,6 +1,64 @@
+
+@import '../app/variables.css';
+
+:root {
+  --float-animation-distance: 100px;
+}
+
 .accountList {
   display: grid;
   grid-template-columns: 250px 250px 250px;
   max-width: 800px;
   margin: 0 auto;
+}
+
+.title {
+  text-align: center;
+}
+
+.loading {
+  position: absolute;
+  left: 32%;
+  top: 200px;
+}
+
+/* stylelint-disable */
+@for $i from 1 to 4 {
+  @keyframes float-$i {
+    0% {
+      margin-top: 0px;
+      margin-bottom: var(--float-animation-distance);
+    }
+
+    20% {
+      margin-top: 0px;
+      margin-bottom: var(--float-animation-distance);
+    }
+
+    50% {
+      margin-top: var(--float-animation-distance);
+      margin-bottom: 0px;
+    }
+
+    60% {
+      margin-top: var(--float-animation-distance);
+      margin-bottom: 0px;
+    }
+
+    100% {
+      margin-top: 0px;
+      margin-bottom: var(--float-animation-distance);
+    }
+  }
+
+  .cube-$i {
+    animation: float-$i 2000ms .5ms infinite ease-in;
+    animation-delay: calc($i * 0.2)s;
+    z-index: calc(5 - $i);
+    position: absolute;
+    & img {
+      margin-left: calc(70px * $i);
+      margin-top: calc(200px - (40 * $i));
+    }
+  }
 }

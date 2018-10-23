@@ -10,6 +10,7 @@ import { errorToastDisplayed } from '../../actions/toaster';
 import AccountCard from './accountCard';
 import AddAccountCard from './addAccountCard';
 
+import cubeImage from '../../assets/images/dark-blue-cube.svg';
 import styles from './ledgerLogin.css';
 
 class LoginLedger extends React.Component {
@@ -109,11 +110,31 @@ class LoginLedger extends React.Component {
   }
 
   render() {
-    return <div className={styles.accountList}>{
-      !this.state.isLoading ? this.state.hwAccounts.map((account, index) => (
-        <AccountCard key={`accountCard-${index}`} account={account} onClickHandler={this.selectAccount.bind(this)} />
-      )) : <div>LOADING ANIMATION</div>}
-      <AddAccountCard addAccount={this.addAccount.bind(this)} />
+    const loadingAnimation = (<div className={styles.cubeRow}>
+        <div className={`${styles.cube} ${styles['cube-1']}`}>
+          <img src={cubeImage} />
+        </div>
+        <div className={`${styles.cube} ${styles['cube-2']}`}>
+          <img src={cubeImage} />
+        </div>
+        <div className={`${styles.cube} ${styles['cube-3']}`}>
+          <img src={cubeImage} />
+        </div>
+        <div className={`${styles.cube} ${styles['cube-4']}`}>
+          <img src={cubeImage} />
+        </div>
+      </div>);
+
+    return <div>
+      <h1 className={styles.title}>{this.state.isLoading && this.props.t('Loading accounts')}</h1>
+      <div className={this.state.isLoading ? styles.loading : null}>
+      {!this.state.isLoading ?
+          <div className={styles.accountList}>{this.state.hwAccounts.map((account, index) => (
+                <AccountCard key={`accountCard-${index}`} account={account} onClickHandler={this.selectAccount.bind(this)} />
+              ))}
+            <AddAccountCard addAccount={this.addAccount.bind(this)} />
+        </div> : loadingAnimation}
+      </div>
     </div>;
   }
 }

@@ -35,6 +35,7 @@ class Login extends React.Component {
       address: '',
       network: networks.default.code,
       isLedgerLogin: false,
+      isLedgerFirstLogin: false,
     };
 
     this.secondIteration = false;
@@ -53,14 +54,20 @@ class Login extends React.Component {
 
   async ledgerLogin() {
     this.props.loadingStarted('ledgerLogin');
+
+    setTimeout(() => {
+      this.setState({ isLedgerFirstLogin: true });
+      this.props.loadingFinished('ledgerLogin');
+    }, 2000);
     let error;
     let ledgerAccount;
     // eslint-disable-next-line prefer-const
     [error, ledgerAccount] = await to(getAccountFromLedgerIndex()); // by default index 0
 
     if (error) {
-      const text = error && error.message ? `${error.message}.` : i18next.t('Error during login with Ledger.');
-      this.props.errorToastDisplayed({ label: text });
+      // const text = error && error.message ?
+      // `${error.message}.` : i18next.t('Error during login with Ledger.');
+      // this.props.errorToastDisplayed({ label: text });
     } else {
       const network = Object.assign({}, getNetwork(this.state.network));
       if (this.state.network === networks.customNode.code) {
@@ -68,8 +75,9 @@ class Login extends React.Component {
       }
 
       if (ledgerAccount.publicKey) {
-        this.setState({ isLedgerLogin: true });
+        this.setState({ isLedgerLogin: true, isLedgerFirstLogin: true });
       }
+
       // set active peer
       this.props.activePeerSet({
         publicKey: ledgerAccount.publicKey,
@@ -81,7 +89,6 @@ class Login extends React.Component {
         },
       });
     }
-    this.props.loadingFinished('ledgerLogin');
   }
 
   getNetworksList() {
@@ -192,8 +199,12 @@ class Login extends React.Component {
 
   render() {
     const network = this.getNetwork();
-    if (this.state.isLedgerLogin) {
-      return <Ledger network={network} cancelLedgerLogin={this.cancelLedgerLogin.bind(this)} />;
+    if (this.state.isLedgerFirstLogin) {
+      return <Ledger
+        network={network}
+        cancelLedgerLogin={this.cancelLedgerLogin.bind(this)}
+        ledgerLogin={this.ledgerLogin.bind(this)}
+        isLedgerLogin={this.state.isLedgerLogin} />;
     }
 
     const networkList = [{ label: this.props.t('Choose Network'), disabled: true }, ...this.networks];
