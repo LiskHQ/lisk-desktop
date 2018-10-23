@@ -23,7 +23,7 @@ function post_transaction(){
 function transfer(){
 	post_transaction $( create_transaction $1 $2 )
 }
-transfer 100.1 1155682438012955434L
+transfer 200 1155682438012955434L
 
 for i in {1..50}; do
 	transfer ${i}00 537318935439898807L
@@ -38,4 +38,9 @@ sleep 10
 $COMMANDER create transaction register second passphrase \
   --passphrase="pass:awkward service glimpse punch genre calm grow life bullet boil match like" \
   --second-passphrase="pass:forest around decrease farm vanish permit hotel clay senior matter endorse domain" >data
+post_transaction data
+
+$COMMANDER create transaction cast vote \
+    --votes 86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19 \
+    --passphrase "pass:recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit" >data
 post_transaction data
