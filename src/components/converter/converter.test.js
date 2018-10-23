@@ -67,15 +67,16 @@ describe('Converter', () => {
       value: '',
       error: false,
       currency: 'USD',
-      onSetMaxAmount: sinon.spy()
+      onSetMaxAmount: sinon.spy(),
     };
 
-    wrapper = mountWithContext(<Converter {...props} store={storeWithCurrency}/>, 
-      { storeState: storeWithCurrency }
+    wrapper = mountWithContext(
+      <Converter {...props} store={storeWithCurrency}/>,
+      { storeState: storeWithCurrency },
     );
-    
+
     wrapper.find('.set-max-amount').simulate('click');
+    /* eslint-disable no-unused-expressions */
     expect(props.onSetMaxAmount).to.have.been.calledOnce;
   });
 });
-
