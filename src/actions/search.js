@@ -38,7 +38,7 @@ const searchVoters = ({
   (dispatch, getState) => {
     const activePeer = getState().peers.data;
     getVoters(activePeer, {
-      publicKey, offset: (offset || 0), limit: (limit || 100),
+      publicKey, offset, limit,
     }).then(response =>
       dispatch({
         type: actionTypes.searchVoters,
