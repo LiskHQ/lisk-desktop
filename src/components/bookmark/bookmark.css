@@ -26,7 +26,7 @@
 }
 
 .accountVisual {
-  padding: 12px 20px 5px;
+  padding: 10px 12px;
 }
 
 .smallAccountVisual {
@@ -35,6 +35,7 @@
 }
 
 .bigAccountVisual {
+  padding-top: 25px;
   position: absolute;
 }
 
@@ -62,8 +63,8 @@
   z-index: 20;
 
   & input:not(:focus) {
-    padding-left: 40px;
-    padding-top: 5px;
+    padding-left: 50px;
+    padding-top: 30px !important;
   }
 }
 
@@ -81,6 +82,7 @@
 
   & label {
     padding-left: 60px;
+    padding-top: 20px !important;
   }
 }
 
@@ -157,7 +159,7 @@
 }
 
 .children {
-  padding-left: 40px;
+  padding-left: 50px;
   top: 25px;
   font-weight: 600;
   position: absolute;
