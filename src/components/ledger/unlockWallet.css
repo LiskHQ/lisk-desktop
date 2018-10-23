@@ -9,6 +9,13 @@
 
 .description {
   text-align: center;
+  padding-top: 20px;
+  padding-bottom: 50px;
+}
+
+.image {
+  display: flex;
+  justify-content: center;
 }
 
 .button {
