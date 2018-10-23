@@ -98,6 +98,16 @@ class SendWritable extends React.Component {
     });
   }
 
+  handleBlur() {
+    /* when click on set max amount link we need a small delay */
+    /* to process the click event before hiding */
+    setTimeout(() => {
+      this.setState({
+        showSetMaxAmount: false,
+      });
+    }, 100);
+  }
+
   render() {
     return (
       <div className={`${styles.sendWrapper}`}>
@@ -138,12 +148,12 @@ class SendWritable extends React.Component {
               value={this.state.amount.value}
               onChange={this.handleChange.bind(this, 'amount', true)}
               onFocus={this.handleFocus.bind(this)}
-              onSetMaxAmount={this.handleSetMaxAmount.bind(this)}
+              onBlur={this.handleBlur.bind(this)}
               t={this.props.t}
             />
             {
               this.state.showSetMaxAmount && !this.state.amount.value ?
-                <a onClick={this.handleSetMaxAmount.bind(this)} className={`set-max-amount ${styles.setMaxAmount}`}>{ this.props.t('Set max. amount') }</a> 
+                <a onClick={this.handleSetMaxAmount.bind(this)} className={`set-max-amount ${styles.setMaxAmount}`}>{ this.props.t('Set max. amount') }</a>
               : <div></div>
             }
           </div>
