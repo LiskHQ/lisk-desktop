@@ -34,8 +34,8 @@
   background: transparent;
   user-select: none;
   cursor: pointer; */
+  font-size: 14px;
   color: var(--color-primary-medium);
-  font-size: var(--input-font-size);
 }
 
 .fee {
