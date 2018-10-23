@@ -54,30 +54,4 @@ describe('Converter', () => {
     wrapper.update();
     expect(wrapper.find('.converted-price').at(0)).to.have.text('246.00 USD');
   });
-
-
-  it('shold set max. amount', () => {
-    const storeWithCurrency = fakeStore({
-      settings: { currency: 'USD' },
-      settingsUpdated: () => {},
-    });
-
-    const props = {
-      t: key => key,
-      value: '',
-      error: false,
-      currency: 'USD',
-      onSetMaxAmount: sinon.spy(),
-    };
-
-    wrapper = mountWithContext(
-      <Converter {...props} store={storeWithCurrency}/>,
-      { storeState: storeWithCurrency },
-    );
-
-    wrapper.find('.set-max-amount').simulate('click');
-    /* eslint-disable no-unused-expressions */
-    expect(props.onSetMaxAmount).to.have.been.calledOnce;
-    /* eslint-enable no-unused-expressions */
-  });
 });
