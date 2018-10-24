@@ -114,7 +114,11 @@ pipeline {
 									cd -
 
 									npm run serve -- $WORKSPACE/app/build -p 300$N -a 127.0.0.1 &>server.log &
-									npm run cypress:run -- --record
+									set +e
+									npm run cypress:run -- --record |tee cypress.log
+									ret=$?
+									grep --extended-regexp --only-matching 'https://dashboard.cypress.io/#/projects/1it63b/runs/[0-9]+' cypress.log |tail --lines=1 >.cypress
+									exit $ret
 									'''
 								}
 							}
@@ -151,18 +155,24 @@ pipeline {
 					liskSlackSend('good', "Recovery: build ${build_info} was successful.")
 				}
 			}
-			githubNotify context: 'Jenkins e2e tests',
-				     description: 'All e2e tests passed.',
-				     status: 'SUCCESS'
+			catchError {
+				githubNotify context: 'Jenkins e2e tests',
+					     description: 'All e2e tests passed.',
+					     status: 'SUCCESS',
+					     targetUrl: readFile(".cypress").trim()
+			}
 		}
 		failure {
 			script {
 				build_info = getBuildInfo()
 				liskSlackSend('danger', "Build ${build_info} failed (<${env.BUILD_URL}/console|console>, <${env.BUILD_URL}/changes|changes>)")
 			}
-			githubNotify context: 'Jenkins e2e tests',
-				     description: 'Some e2e tests failed.',
-				     status: 'FAILURE'
+			catchError {
+				githubNotify context: 'Jenkins e2e tests',
+					     description: 'Some e2e tests failed.',
+					     status: 'FAILURE',
+					     targetUrl: readFile(".cypress").trim()
+			}
 		}
 	}
 }
