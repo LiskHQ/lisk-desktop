@@ -92,6 +92,9 @@ pipeline {
 						}
 					},
 					"cypress": {
+						githubNotify context: 'Jenkins e2e tests',
+							     description: 'e2e tests in progress...',
+							     status: 'PENDING'
 						withCredentials([string(credentialsId: 'lisk-hub-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
 							ansiColor('xterm') {
 								wrap([$class: 'Xvfb', parallelBuild: true, autoDisplayName: true]) {
@@ -148,12 +151,18 @@ pipeline {
 					liskSlackSend('good', "Recovery: build ${build_info} was successful.")
 				}
 			}
+			githubNotify context: 'Jenkins e2e tests',
+				     description: 'All e2e tests passed.',
+				     status: 'SUCCESS'
 		}
 		failure {
 			script {
 				build_info = getBuildInfo()
 				liskSlackSend('danger', "Build ${build_info} failed (<${env.BUILD_URL}/console|console>, <${env.BUILD_URL}/changes|changes>)")
 			}
+			githubNotify context: 'Jenkins e2e tests',
+				     description: 'Some e2e tests failed.',
+				     status: 'FAILURE'
 		}
 	}
 }
