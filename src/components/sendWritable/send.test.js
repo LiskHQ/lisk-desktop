@@ -100,7 +100,7 @@ describe('Send Writable Component', () => {
     const account = accounts.delegate;
     const followedAccounts = { accounts: [{ address: '123L', title: '123' }] };
 
-    const store = fakeStore({
+    const store = configureMockStore([thunk])({
       account,
       settings: {},
       settingsUpdated: () => {},
