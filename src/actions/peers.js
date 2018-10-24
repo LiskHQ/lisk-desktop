@@ -49,9 +49,14 @@ export const activePeerSet = data =>
         dispatch(loadingFinished('getConstants'));
         config.nethash = response.data.nethash;
         dispatch(peerSet(data, config));
-      }).catch(() => {
+      }).catch((error) => {
+        console.log(error);
         dispatch(loadingFinished('getConstants'));
-        dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node') }));
+        if (error && error.message) {
+          dispatch(errorToastDisplayed({ label: i18next.t(`Unable to connect to the node, Error: ${error.message}`) }));
+        } else {
+          dispatch(errorToastDisplayed({ label: i18next.t(`Unable to connect to the node, no response from the server.`) }));
+        }
       });
     } else {
       dispatch(peerSet(data, config));
@@ -86,8 +91,12 @@ export const activePeerSet = data =>
           expireTime: duration,
         };
         dispatch(accountLoggedIn(accountUpdated));
-      }).catch(() => {
-        dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node') }));
+      }).catch((error) => {
+        if (error && error.message) {
+          dispatch(errorToastDisplayed({ label: i18next.t(`Unable to connect to the node, Error: ${error.message}`) }));
+        } else {
+          dispatch(errorToastDisplayed({ label: i18next.t(`Unable to connect to the node, no response from the server.`) }));
+        }
         dispatch(accountLoggedOut());
       });
     }

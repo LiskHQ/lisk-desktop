@@ -104,6 +104,6 @@ describe('Registration', () => {
     chooseNetwork('invalid');
     cy.get(ss.newAccountBtn).click();
     registerUI.call(this);
-    cy.get(ss.errorPopup).contains('Unable to connect to the node');
+    cy.get(ss.errorPopup).contains('Unable to connect to the node, no response from the server.');
   });
 });
