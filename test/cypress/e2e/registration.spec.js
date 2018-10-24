@@ -23,7 +23,7 @@ const registerUI = function () {
   moveMouseRandomly();
   cy.get(ss.getPassphraseButton).click();
   cy.get(ss.iUnderstandCheckbox).click();
-  slideCheckbox();
+  slideCheckbox(ss.revealCheckbox);
   cy.get(ss.passphraseTextarea).invoke('text').as('passphrase');
   cy.get(ss.itsSafeBtn).click();
   cy.get(ss.passphraseWordHolder).each(($el) => {
