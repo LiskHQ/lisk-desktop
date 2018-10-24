@@ -19,14 +19,15 @@
 }
 
 .amountWrapper {
-  display: flex;
+  /* display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: center; */
 }
 
 .setMaxAmount {
   position: absolute;
   right: 0px;
+  bottom: 40px;
   cursor: pointer;
   font-size: 14px;
   color: var(--color-primary-medium);
