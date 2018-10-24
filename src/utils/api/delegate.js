@@ -7,7 +7,9 @@ export const listDelegates = (activePeer, options) => new Promise((resolve, reje
   if (!activePeer) {
     reject();
   } else {
-    activePeer.delegates.get(options).then(response => resolve(response));
+    activePeer.delegates.get(options)
+      .then(response => resolve(response))
+      .catch(error => reject(error));
   }
 });
 

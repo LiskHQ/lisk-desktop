@@ -20,7 +20,7 @@ const searchAddresses = ({ activePeer, searchTerm }) => new Promise((resolve, re
     .then(response => resolve({ addresses: [response] }))
     .catch(() => reject({ addresses: [] })));
 
-const searchDelegates = ({ activePeer, searchTerm }) => new Promise((resolve, reject) =>
+const searchDelegates = ({ activePeer, searchTerm }) => new Promise(resolve =>
   listDelegates(activePeer, {
     search: searchTerm,
     sort: 'username:asc',
@@ -31,7 +31,7 @@ const searchDelegates = ({ activePeer, searchTerm }) => new Promise((resolve, re
     }
     resolve({ delegates: delegatesSorted });
   })
-    .catch(() => reject({ delegates: [] })));
+    .catch(() => resolve({ delegates: [] })));
 
 const searchTransactions = ({ activePeer, searchTerm }) => new Promise((resolve, reject) =>
   getSingleTransaction({
