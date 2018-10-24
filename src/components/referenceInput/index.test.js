@@ -12,8 +12,9 @@ describe('ReferenceInput', () => {
     props = {
       handleChange: spy(),
       className: 'test',
-      address: '123L',
+      reference: { value: '123L', error: '' },
       label: 'test',
+      context: { referenceInput: {} },
     };
     wrapper = mount(<ReferenceInput {...props} />);
   });

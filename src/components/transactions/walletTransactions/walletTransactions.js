@@ -23,6 +23,11 @@ class WalletTransactions extends React.Component {
         publicKey: this.props.account.delegate.publicKey,
       });
     }
+
+    this.props.searchAccount({
+      address: this.props.address,
+    });
+
     this.props.accountVotesFetched({
       address: this.props.address,
     });

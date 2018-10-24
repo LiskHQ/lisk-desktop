@@ -20,12 +20,12 @@ class TransactionRow extends React.Component {
     return (
       <div className={`${grid.row} ${styles.rows} ${styles.clickable} transactions-row`} onClick={onClick}>
         <div className={`${styles.leftText} ${grid['col-xs-6']} ${grid['col-sm-4']} transactions-cell`}>
-          <div className={`${styles.address}`}>
+          <div className={`${styles.address} transaction-address`}>
             <TransactionType {...props.value} address={props.address}></TransactionType>
           </div>
         </div>
           <div className={`${styles.rightText} ${grid['col-sm-3']} transactions-cell`}>
-            <div className={`${styles.hiddenXs} ${styles.reference}`}>
+            <div className={`${styles.hiddenXs} ${styles.reference} transaction-reference`}>
                 {props.value.asset && props.value.asset.data ?
                   <span>{props.value.asset.data}</span>
                 : '-'}

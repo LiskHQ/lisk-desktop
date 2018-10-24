@@ -70,7 +70,7 @@ class confirmSecond extends React.Component {
         </TransitionWrapper>
         <TransitionWrapper current={this.state.step} step='confirm' animationName='slide'>
           <h2>
-            {t('Great!\nYou’re almost finished')}
+            {t('Great!\nYou’re almost done')}
           </h2>
         </TransitionWrapper>
         <TransitionWrapper current={this.state.step} step='pending' animationName='slide'>

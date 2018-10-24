@@ -23,6 +23,7 @@ describe('Send Readable Component', () => {
     sent: sinon.spy(),
     t: key => key,
     nextStep: () => {},
+    followedAccounts: [],
   };
 
   describe('Without account init', () => {

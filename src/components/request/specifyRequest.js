@@ -71,12 +71,12 @@ class SpecifyRequest extends React.Component {
           <ReferenceInput
             className='reference'
             label={this.props.t('Reference (optional)')}
-            address={this.state.reference}
+            reference={this.state.reference}
             handleChange={this.handleChange.bind(this, 'reference', false)}
           />
 
           <Converter
-            label={this.props.t('Request amount (LSK)')}
+            label={this.props.t('Request specific amount (LSK)')}
             className='amount'
             theme={styles}
             error={this.state.amount.error}

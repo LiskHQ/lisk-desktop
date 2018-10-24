@@ -4,7 +4,7 @@ const accounts = {
     publicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
     serverPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
     address: '16313739661670634666L',
-    balance: '9967542080836600',
+    balance: '9980000000000000',
   },
   delegate: {
     passphrase: 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit',
@@ -54,6 +54,15 @@ const accounts = {
     publicKey: 'a1fa251b368939ed2aa8c620e955cb4537c06a351fa50e928ec21e89372e7494',
     address: '94495548317450502L',
     balance: 0,
+  },
+  'testnet guy': {
+    passphrase: 'call scene goat common morning immune oxygen reunion skirt amazing current hire',
+    address: '9819477579273755847L',
+    balance: 200000000,
+  },
+  'mainnet delegate': {
+    address: '2433857930558702776L',
+    username: 'tembo',
   },
 };
 accounts['any account'] = accounts.genesis;

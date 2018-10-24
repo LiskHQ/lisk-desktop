@@ -3,6 +3,7 @@ import { translate } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import { transactionsRequested, transactionsFilterSet } from '../../../actions/transactions';
 import { accountVotersFetched, accountVotesFetched } from '../../../actions/account';
+import { searchAccount } from '../../../actions/search';
 import WalletTransactions from './walletTransactions';
 import actionTypes from '../../../constants/actions';
 import txFilters from './../../../constants/transactionFilters';
@@ -12,15 +13,23 @@ const mapStateToProps = state => ({
   account: state.account,
   transaction: state.transaction,
   transactions: [...state.transactions.pending, ...state.transactions.confirmed],
-  votes: state.account.votes,
-  voters: state.account.voters,
+  votes: state.account.votes ?
+    state.account.votes :
+    state.search.votes[state.account.addres],
+  voters: state.account.voters ?
+    state.account.voters :
+    state.search.voters[state.account.address],
   count: state.transactions.count,
-  delegate: state.account && (state.account.delegate || null),
+  // Pick delegate from source
+  delegate: (state.account && state.account.delegate) ?
+    state.account && (state.account.delegate || null) :
+    state.search.delegates[state.account.address],
   activeFilter: state.filters.wallet || txFilters.all,
   loading: state.loading,
 });
 
 const mapDispatchToProps = dispatch => ({
+  searchAccount: data => dispatch(searchAccount(data)),
   transactionsRequested: data => dispatch(transactionsRequested(data)),
   transactionsFilterSet: data => dispatch(transactionsFilterSet(data)),
   accountVotersFetched: data => dispatch(accountVotersFetched(data)),

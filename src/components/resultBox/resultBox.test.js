@@ -36,6 +36,7 @@ describe('Result Box', () => {
       finalCallback: () => {},
       t: () => {},
       history: { location: {}, push: () => {}, replace: () => {} },
+      followedAccounts: [],
     };
 
     wrapper = mount(<ResultBox {...props} />, options);
@@ -46,7 +47,7 @@ describe('Result Box', () => {
     expect(wrapper.find('img')).to.have.length(1);
     expect(wrapper.find('.copy-title').text()).to.contain(copy.title);
 
-    wrapper.find('Button').simulate('click');
+    wrapper.find('.okay-button').first().simulate('click');
     expect(props.reset).to.have.been.calledWith();
   });
 
@@ -61,6 +62,7 @@ describe('Result Box', () => {
       reset: () => {},
       copyToClipboard: () => {},
       t: () => {},
+      followedAccounts: [],
     };
 
     wrapper = mount(<ResultBox {...props} />, options);
@@ -82,10 +84,32 @@ describe('Result Box', () => {
       copyToClipboard: () => {},
       t: () => {},
       onMount: spy(),
+      followedAccounts: [],
     };
 
     wrapper = mount(<ResultBox {...props} />, options);
 
     expect(props.onMount).to.have.been.calledWith(true, 'ResultBox');
+  });
+
+  it('display add follwed account button', () => {
+    props = {
+      copy: null,
+      title: 'Sorry',
+      body: 'An error occurred while creating the transaction.',
+      success: false,
+      reset: () => {},
+      copyToClipboard: () => {},
+      t: () => {},
+      onMount: spy(),
+      reciepientId: '123L',
+      followedAccounts: [{
+        address: '1L',
+      }],
+    };
+
+    wrapper = mount(<ResultBox {...props} />, options);
+
+    expect(wrapper).to.have.descendants('.add-follwed-account-button');
   });
 });

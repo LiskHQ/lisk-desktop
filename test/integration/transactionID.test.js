@@ -11,7 +11,6 @@ import accountReducer from '../../src/store/reducers/account';
 import transactionReducer from '../../src/store/reducers/transaction';
 import peersReducer from '../../src/store/reducers/peers';
 import votingReducer from '../../src/store/reducers/voting';
-import loginMiddleware from '../../src/store/middlewares/login';
 import accountMiddleware from '../../src/store/middlewares/account';
 import votingMiddleware from '../../src/store/middlewares/voting';
 import { activePeerSet } from '../../src/actions/peers';
@@ -88,7 +87,6 @@ describe('@integration: Single Transaction', () => {
     }, [
       thunk,
       accountMiddleware,
-      loginMiddleware,
       votingMiddleware,
     ]);
 

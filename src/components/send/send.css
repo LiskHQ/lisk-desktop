@@ -2,6 +2,7 @@
 
 .send {
   position: relative;
+  background: linear-gradient(90deg, #fff, #f5f8fc);
 }
 
 .mobileMenu,

@@ -11,6 +11,10 @@ import Fees from '../constants/fees';
 import { toRawLsk } from '../utils/lsk';
 import transactionTypes from '../constants/transactionTypes';
 
+export const cleanTransactions = () => ({
+  type: actionTypes.cleanTransactions,
+});
+
 export const transactionsFilterSet = ({
   address, limit, filter,
 }) => (dispatch, getState) => {
@@ -117,7 +121,7 @@ export const loadTransaction = ({ id }) =>
         let deleted = [];
 
         if (!response.data.length) {
-          dispatch({ data: { error: 'Transaction not found' }, type: actionTypes.transactionLoadFailed });
+          dispatch({ data: { error: i18next.t('Transaction not found') }, type: actionTypes.transactionLoadFailed });
           return;
         }
 
