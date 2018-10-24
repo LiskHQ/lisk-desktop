@@ -98,7 +98,7 @@ pipeline {
 						withCredentials([string(credentialsId: 'lisk-hub-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
 							ansiColor('xterm') {
 								wrap([$class: 'Xvfb', parallelBuild: true, autoDisplayName: true]) {
-									sh '''
+									sh '''#!/bin/bash -xe
 									export N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
 
 									wget -nv -c https://github.com/LiskHQ/lisk-docker/archive/2.2.0.tar.gz
@@ -115,6 +115,7 @@ pipeline {
 
 									npm run serve -- $WORKSPACE/app/build -p 300$N -a 127.0.0.1 &>server.log &
 									set +e
+									set -o pipefail
 									npm run cypress:run -- --record |tee cypress.log
 									ret=$?
 									grep --extended-regexp --only-matching 'https://dashboard.cypress.io/#/projects/1it63b/runs/[0-9]+' cypress.log |tail --lines=1 >.cypress
