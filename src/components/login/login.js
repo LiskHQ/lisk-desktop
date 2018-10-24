@@ -11,6 +11,7 @@ import styles from './login.css';
 import networks from '../../constants/networks';
 import routes from '../../constants/routes';
 import getNetwork from '../../utils/getNetwork';
+import { getAutoLogInData } from '../../utils/login';
 import { parseSearchParams } from './../../utils/searchParams';
 import Box from '../box';
 // eslint-disable-next-line import/no-unresolved
@@ -25,10 +26,26 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
 
+    const { autologinUrl } = getAutoLogInData();
+
+    let loginNetwork = Object.entries(networks).find((network) => {
+      const { nodes } = network.slice(-1).shift();
+      return Array.isArray(nodes) ? nodes.includes(autologinUrl) : false;
+    });
+
+    let address = '';
+
+    if (loginNetwork) {
+      loginNetwork = loginNetwork.slice(-1).shift();
+    } else if (!loginNetwork) {
+      loginNetwork = autologinUrl ? networks.customNode : networks.default;
+      address = autologinUrl;
+    }
+
     this.state = {
       passphrase: '',
-      address: '',
-      network: networks.default.code,
+      address,
+      network: loginNetwork.code, // networks.default.code,
     };
 
     this.secondIteration = false;
