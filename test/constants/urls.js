@@ -6,6 +6,8 @@ const urls = {
   accounts: '/explorer/accounts',
   register: '/register',
   secondPassphrase: '/second-passphrase',
+  registerDelegate: '/register-delegate',
+  delegates: '/delegates',
 };
 
 export default urls;
