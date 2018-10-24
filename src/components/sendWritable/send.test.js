@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { spy, useFakeTimers } from 'sinon';
+import { useFakeTimers } from 'sinon';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
@@ -13,12 +13,14 @@ const fakeStore = configureStore();
 describe('Send Writable Component', () => {
   let wrapper;
   let props;
-  // const clock = useFakeTimers({
-  //   toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
-  // });
+  let clock;
 
   beforeEach(() => {
     const account = accounts.delegate;
+
+    clock = useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
+    });
 
     const store = fakeStore({
       account,
@@ -45,8 +47,8 @@ describe('Send Writable Component', () => {
   });
 
   afterEach(() => {
-    // clock.restore();
-  })
+    clock.restore();
+  });
 
   it('renders three Input components', () => {
     expect(wrapper.find('Input')).to.have.length(3);
@@ -120,18 +122,9 @@ describe('Send Writable Component', () => {
   });
 
   it('Shows the Set max. amount link on amount focus', () => {
-    // const handleFocusSpy = spy(wrapper.instance(), 'handleFocus');
     wrapper.find('.amount input').simulate('focus');
-    const component = wrapper.instance();
     expect(wrapper.state('showSetMaxAmount')).to.equal(true);
-
-    // console.log(component.handleFocus.toString());
-    /* eslint-disable no-unused-expressions */
-    // expect(handleFocusSpy).to.have.been.calledOnce;
-    /* eslint-enable no-unused-expressions */
-    // expect(wrapper.find('Input.amount').text()).to.contain('Required');
   });
-
 
   it('Puts max amount into input field', () => {
     wrapper.find('.amount input').simulate('focus');
@@ -139,36 +132,9 @@ describe('Send Writable Component', () => {
     expect(wrapper.state('amount').value).to.equal(999.9);
   });
 
-  // it('Shows the Set max. amount link on amount focus', () => {
-  //   wrapper.find('.amount input').simulate('focus');
-  //   expect(wrapper.state('showSetMaxAmount')).to.equal(true);
-  //   wrapper.find('.amount input').simulate('blur');
-  //   clock.tick(1200);
-  //   expect(wrapper.state('showSetMaxAmount')).to.equal(false);
-  // });
-
-  // it('shold set max. amount', () => {
-  //   const storeWithCurrency = fakeStore({
-  //     settings: { currency: 'USD' },
-  //     settingsUpdated: () => {},
-  //   });
-
-  //   const props = {
-  //     t: key => key,
-  //     value: '',
-  //     error: false,
-  //     currency: 'USD',
-  //     onSetMaxAmount: sinon.spy(),
-  //   };
-
-  //   wrapper = mountWithContext(
-  //     <Converter {...props} store={storeWithCurrency}/>,
-  //     { storeState: storeWithCurrency },
-  //   );
-
-  //   wrapper.find('.set-max-amount').simulate('click');
-  //   /* eslint-disable no-unused-expressions */
-  //   expect(props.onSetMaxAmount).to.have.been.calledOnce;
-  //   /* eslint-enable no-unused-expressions */
-  // });
+  it('Hides the Set max. amount link on amount blur', () => {
+    wrapper.find('.amount input').simulate('blur');
+    clock.tick(1200);
+    expect(wrapper.state('showSetMaxAmount')).to.equal(false);
+  });
 });
