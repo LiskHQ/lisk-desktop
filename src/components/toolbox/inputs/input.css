@@ -48,7 +48,7 @@
 
 .error {
   font-size: var(--label-font-size);
-  line-height: 30px;
+  line-height: 22px;
   color: var(--color-error);
 
   .label {

@@ -27,10 +27,11 @@
 .setMaxAmount {
   position: absolute;
   right: 0px;
-  bottom: 40px;
+  bottom: 30px;
   cursor: pointer;
   font-size: 14px;
   color: var(--color-primary-medium);
+  font-weight: var(--font-weight-bold);
 }
 
 .fee {
