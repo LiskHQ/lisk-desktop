@@ -30,7 +30,7 @@ describe('Second Passphrase Registration', () => {
     cy.url().should('contain', urls.secondPassphrase);
     cy.get(ss.nextButton);
   });
-
+  // TODO Add balance substraction check after #1391 is fixed
   it('set up second passphrase', function () {
     cy.autologin(accounts['second passphrase candidate'].passphrase, networks.devnet.node);
     cy.visit(urls.secondPassphrase);
