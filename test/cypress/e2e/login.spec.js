@@ -93,6 +93,6 @@ describe('Login Page', () => {
     cy.visit('/');
     chooseNetwork('invalid');
     loginUI(accounts.genesis.passphrase);
-    cy.get(ss.errorPopup).contains('Unable to connect to the node, no response from the server.');
+    cy.get(ss.errorPopup).contains('Unable to connect to the node');
   });
 });
