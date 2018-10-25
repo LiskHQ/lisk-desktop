@@ -55,7 +55,7 @@ export const activePeerSet = data =>
         if (error && error.message) {
           dispatch(errorToastDisplayed({ label: i18next.t(`Unable to connect to the node, Error: ${error.message}`) }));
         } else {
-          dispatch(errorToastDisplayed({ label: i18next.t(`Unable to connect to the node, no response from the server.`) }));
+          dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node, no response from the server.') }));
         }
       });
     } else {
@@ -95,7 +95,7 @@ export const activePeerSet = data =>
         if (error && error.message) {
           dispatch(errorToastDisplayed({ label: i18next.t(`Unable to connect to the node, Error: ${error.message}`) }));
         } else {
-          dispatch(errorToastDisplayed({ label: i18next.t(`Unable to connect to the node, no response from the server.`) }));
+          dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node, no response from the server.') }));
         }
         dispatch(accountLoggedOut());
       });
