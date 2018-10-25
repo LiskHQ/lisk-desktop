@@ -5,7 +5,7 @@ module.exports = {
   },
   externals: {
     'node-hid': 'commonjs node-hid',
-    'usb': 'commonjs usb',
+    usb: 'commonjs usb',
   },
   module: {
     rules: [
