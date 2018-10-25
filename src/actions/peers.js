@@ -50,7 +50,6 @@ export const activePeerSet = data =>
         config.nethash = response.data.nethash;
         dispatch(peerSet(data, config));
       }).catch((error) => {
-        console.log(error);
         dispatch(loadingFinished('getConstants'));
         if (error && error.message) {
           dispatch(errorToastDisplayed({ label: i18next.t(`Unable to connect to the node, Error: ${error.message}`) }));
