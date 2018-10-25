@@ -1,6 +1,8 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import i18next from 'i18next';
+import Lisk from 'lisk-elements';
+
 import Dropdown from '../toolbox/dropdown/dropdown';
 import Input from '../toolbox/inputs/input';
 import { PrimaryButton } from '../toolbox/buttons/button';
@@ -115,6 +117,23 @@ class Login extends React.Component {
     return data;
   }
 
+  validateCorrectNode(value) {
+    const liskAPIClient = new Lisk.APIClient([addHttp(value)], {});
+    let addressValidity = '';
+    liskAPIClient.node.getConstants()
+      .then((res) => {
+        if (res.data) {
+          this.props.activePeerSet({
+            network: this.getNetwork(),
+          });
+        }
+      }).catch(() => {
+        addressValidity = this.props.t('Unable to connect to the node');
+      }).finally(() => {
+        this.setState({ addressValidity });
+      });
+  }
+
   changeHandler(name, value, error) {
     const validator = this.validators[name] || (() => ({}));
     this.setState({
@@ -124,6 +143,13 @@ class Login extends React.Component {
 
     if (name === 'network') {
       this.props.settingsUpdated({ network: value });
+    }
+
+    // Validation based on promises is not working
+    // So I'm checking if address node is valid here
+    // and set up new node if it is correct
+    if (name === 'address' && validateUrl(value).addressValidity === '') {
+      this.validateCorrectNode(value);
     }
   }
 
