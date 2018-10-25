@@ -11,12 +11,11 @@ import styles from './login.css';
 import networks from '../../constants/networks';
 import routes from '../../constants/routes';
 import getNetwork from '../../utils/getNetwork';
-import { getAutoLogInData } from '../../utils/login';
 import { parseSearchParams } from './../../utils/searchParams';
 import Box from '../box';
 // eslint-disable-next-line import/no-unresolved
 import SignUp from './signUp';
-import { validateUrl, addHttp } from '../../utils/login';
+import { validateUrl, addHttp, getAutoLogInData } from '../../utils/login';
 
 /**
  * The container component containing login
@@ -107,6 +106,8 @@ class Login extends React.Component {
 
   onLoginSubmission(passphrase) {
     const network = this.getNetwork();
+    const address = network.address || network.nodes[0];
+    window.localStorage.setItem('autologinUrl', address);
     this.secondIteration = true;
     if (this.alreadyLoggedWithThisAddress(extractAddress(passphrase), network)) {
       this.redirectToReferrer();
