@@ -120,7 +120,7 @@ class SendReadable extends React.Component {
                 <AccountVisual
                   className={styles.accountVisual}
                   address={this.state.recipient.value}
-                  size={35}
+                  size={40}
                 />
                 <div className={styles.text}>
                   <div className={styles.title}>{followedAccount && followedAccount.title}</div>
