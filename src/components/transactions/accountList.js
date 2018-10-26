@@ -10,6 +10,7 @@ class AccountList extends React.Component {
     this.state = {
       showVotesNumber: 35,
       showVotersNumber: 35,
+      showMoreVoters: true,
       votersOffset: 100,
       loadAllVotes: false,
       votersFilterQuery: '',
@@ -30,6 +31,7 @@ class AccountList extends React.Component {
       const votersOffset = this.state.votersOffset + 100;
       this.setState({
         votersOffset,
+        showMoreVoters: false,
       });
     }
   }
