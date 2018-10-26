@@ -24,16 +24,7 @@ describe('VotedDelegates', () => {
 
   it('should render 100 voters', () => {
     const wrapper = mountWithContext(<VotedDelegates {...props}/>, {});
-    expect(wrapper.find('.voters Link').length).to.have.equal(100);
-  });
-
-  it('should render Waypoint when votersSize > votes', () => {
-    const propsCpy = { ...props, votersSize: 400 };
-    const wrapper = mountWithContext(<VotedDelegates {...propsCpy}/>, {});
-
-    expect(wrapper).to.have.descendants('Waypoint');
-    const waypoint = wrapper.find('Waypoint').at(0);
-    waypoint.props().onEnter();
+    expect(wrapper.find('.voters Link').length).to.have.equal(35);
   });
 });
 
