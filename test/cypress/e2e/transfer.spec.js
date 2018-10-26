@@ -37,7 +37,7 @@ const txConfirmationTimeout = 12000;
 const checkWalletPageLoaded = () => cy.get(ss.recipientInput);
 
 const getRandomAddress = () => `23495548666${Math.floor((Math.random() * 8990000) + 1000000)}L`;
-const getRandomAmount = () => Math.floor((Math.random() * 100) + 1);
+const getRandomAmount = () => Math.floor((Math.random() * 10) + 1);
 const getRandomReference = () => Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
 
 const castBalanceStringToNumber = number => parseFloat(number.replace(/,/g, ''));
@@ -63,7 +63,7 @@ describe('Transfer', () => {
 
   it('Wallet page opens by sidebar button', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit('/dashboard');
+    cy.visit(urls.dashboard);
     cy.wait(100);
     cy.get(ss.sidebarMenuWalletBtn).click();
     cy.url().should('contain', 'wallet');
