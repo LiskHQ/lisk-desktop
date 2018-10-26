@@ -7,7 +7,7 @@ const TransactionType = (props) => {
   let type;
   switch (props.type) {
     case 0:
-      type = props.senderId === props.recipientId ? t('Account initialization') : false;
+      type = false;
       break;
     case 1:
       type = t('Second passphrase registration');
