@@ -20,6 +20,43 @@ const peerSet = (data, config) => ({
   type: actionTypes.activePeerSet,
 });
 
+const login = (dispatch, getState, data, config) => {
+  if (data.passphrase) {
+    const store = getState();
+    const { lockDuration } = accountConfig;
+    const { passphrase } = data;
+    const { code } = data.network;
+    const publicKey = passphrase ? extractPublicKey(passphrase) : data.publicKey;
+    const activePeer = store.peers.data ||
+      new Lisk.APIClient(config.nodes, { nethash: config.nethash });
+    const address = extractAddress(publicKey);
+    const accountBasics = {
+      passphrase,
+      publicKey,
+      address,
+      network: code || 0,
+      peerAddress: data.network.nodes[0],
+    };
+
+    dispatch(accountLoading());
+
+    // redirect to main/transactions
+    getAccount(activePeer, address).then((accountData) => {
+      const duration = (passphrase && store.settings.autoLog) ?
+        Date.now() + lockDuration : 0;
+      const accountUpdated = {
+        ...accountData,
+        ...accountBasics,
+        expireTime: duration,
+      };
+      dispatch(accountLoggedIn(accountUpdated));
+    }).catch(() => {
+      dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node') }));
+      dispatch(accountLoggedOut());
+    });
+  }
+};
+
 /**
  * Returns required action object to set
  * the given peer data as active peer
@@ -49,47 +86,14 @@ export const activePeerSet = data =>
         dispatch(loadingFinished('getConstants'));
         config.nethash = response.data.nethash;
         dispatch(peerSet(data, config));
+        login(dispatch, getState, data, config);
       }).catch(() => {
         dispatch(loadingFinished('getConstants'));
         dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node') }));
       });
     } else {
       dispatch(peerSet(data, config));
-    }
-
-    if (data.passphrase) {
-      const store = getState();
-      const { lockDuration } = accountConfig;
-      const { passphrase } = data;
-      const { code } = data.network;
-      const publicKey = passphrase ? extractPublicKey(passphrase) : data.publicKey;
-      const activePeer = store.peers.data ||
-        new Lisk.APIClient(config.nodes, { nethash: config.nethash });
-      const address = extractAddress(publicKey);
-      const accountBasics = {
-        passphrase,
-        publicKey,
-        address,
-        network: code || 0,
-        peerAddress: data.network.nodes[0],
-      };
-
-      dispatch(accountLoading());
-
-      // redirect to main/transactions
-      getAccount(activePeer, address).then((accountData) => {
-        const duration = (passphrase && store.settings.autoLog) ?
-          Date.now() + lockDuration : 0;
-        const accountUpdated = {
-          ...accountData,
-          ...accountBasics,
-          expireTime: duration,
-        };
-        dispatch(accountLoggedIn(accountUpdated));
-      }).catch(() => {
-        dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node') }));
-        dispatch(accountLoggedOut());
-      });
+      login(dispatch, getState, data, config);
     }
   };
 
