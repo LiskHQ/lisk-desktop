@@ -122,7 +122,7 @@ describe('actions: peers', () => {
       };
       activePeerSet({ passphrase, network })(dispatch, getState);
       expect(dispatch).to.have.been.calledWith({
-        data: { label: 'Unable to connect to the node', type: 'error' },
+        data: { label: 'Unable to connect to the node, no response from the server.', type: 'error' },
         type: actionTypes.toastDisplayed,
       });
     });
