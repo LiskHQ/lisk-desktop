@@ -30,7 +30,8 @@ class VotedDelegates extends AccountList {
             <div onClick={() => { super.showMore('showVotersNumber'); }} className={`${styles.showMore} showMore  show-voters`}>
               <FontIcon className={styles.arrowDown} value='arrow-down'/>
               {this.props.t('Show more')}
-            </div> : <Waypoint
+            </div> :
+            <Waypoint
               key={voters.length}
               onEnter={() => {
                 if (voters.length < this.props.votersSize) {
