@@ -84,7 +84,7 @@ export const accountVotesFetched = ({ address }) =>
 export const accountVotersFetched = ({ publicKey }) =>
   (dispatch, getState) => {
     const activePeer = getState().peers.data;
-    return getVoters(activePeer, publicKey).then(({ data }) => {
+    return getVoters(activePeer, { publicKey }).then(({ data }) => {
       dispatch({
         type: actionTypes.accountAddVoters,
         voters: data,

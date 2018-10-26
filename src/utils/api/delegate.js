@@ -53,8 +53,8 @@ export const getAllVotes = (activePeer, address) =>
     }).catch(reject);
   });
 
-export const getVoters = (activePeer, publicKey) =>
-  activePeer.voters.get({ publicKey });
+export const getVoters = (activePeer, { publicKey, offset = 0, limit = 100 }) =>
+  activePeer.voters.get({ publicKey, offset, limit });
 
 export const registerDelegate = (
   activePeer,
