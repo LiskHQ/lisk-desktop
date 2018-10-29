@@ -209,8 +209,8 @@ describe('Account middleware', () => {
 
   it(`should dispatch ${actionTypes.activePeerSet} action on ${actionTypes.storeCreated} if autologin data found in localStorage`, () => {
     getAutoLogInDataMock.withArgs().returns({
-      [settings.keys.autologinKey]: passphrase,
-      [settings.keys.autologinUrl]: networks.testnet.nodes[0],
+      [settings.keys.loginKey]: passphrase,
+      [settings.keys.loginUrl]: networks.testnet.nodes[0],
     });
     middleware(store)(next)(storeCreatedAction);
     expect(store.dispatch).to.have.been.calledWith(activePeerMock);

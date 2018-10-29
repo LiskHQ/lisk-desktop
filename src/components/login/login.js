@@ -16,6 +16,7 @@ import Box from '../box';
 // eslint-disable-next-line import/no-unresolved
 import SignUp from './signUp';
 import { validateUrl, addHttp, getAutoLogInData } from '../../utils/login';
+import settings from '../../constants/settings';
 
 /**
  * The container component containing login
@@ -25,11 +26,11 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
 
-    const { autologinUrl } = getAutoLogInData();
+    const { loginUrl } = getAutoLogInData();
 
     let loginNetwork = Object.entries(networks).find((network) => {
       const { nodes } = network.slice(-1).shift();
-      return Array.isArray(nodes) ? nodes.includes(autologinUrl) : false;
+      return Array.isArray(nodes) ? nodes.includes(loginUrl) : false;
     });
 
     let address = '';
@@ -37,8 +38,8 @@ class Login extends React.Component {
     if (loginNetwork) {
       loginNetwork = loginNetwork.slice(-1).shift();
     } else if (!loginNetwork) {
-      loginNetwork = autologinUrl ? networks.customNode : networks.default;
-      address = autologinUrl;
+      loginNetwork = loginUrl ? networks.customNode : networks.default;
+      address = loginUrl;
     }
 
     this.state = {
@@ -107,7 +108,7 @@ class Login extends React.Component {
   onLoginSubmission(passphrase) {
     const network = this.getNetwork();
     const address = network.address || network.nodes[0];
-    window.localStorage.setItem('autologinUrl', address);
+    window.localStorage.setItem(settings.keys.loginUrl, address);
     this.secondIteration = true;
     if (this.alreadyLoggedWithThisAddress(extractAddress(passphrase), network)) {
       this.redirectToReferrer();

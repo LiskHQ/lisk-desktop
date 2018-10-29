@@ -1,8 +1,8 @@
 const settings = {
   currencies: ['USD', 'EUR'],
   keys: {
-    autologinKey: 'autologinKey',
-    autologinUrl: 'autologinUrl',
+    loginKey: 'loginKey',
+    loginUrl: 'loginUrl',
   },
 };
 export default settings;

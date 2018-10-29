@@ -35,10 +35,10 @@ export const validateUrl = (value) => {
 
 
 export const getAutoLogInData = () => ({
-  [settings.keys.autologinKey]: localStorage.getItem(settings.keys.autologinKey),
-  [settings.keys.autologinUrl]: localStorage.getItem(settings.keys.autologinUrl),
+  [settings.keys.loginKey]: localStorage.getItem(settings.keys.loginKey),
+  [settings.keys.loginUrl]: localStorage.getItem(settings.keys.loginUrl),
 });
 
 export const shouldAutoLogIn = autologin =>
-  autologin[settings.keys.autologinUrl] && autologin[settings.keys.autologinUrl] !== '' &&
-    autologin[settings.keys.autologinKey] && autologin[settings.keys.autologinKey] !== '';
+  autologin[settings.keys.loginUrl] && autologin[settings.keys.loginUrl] !== '' &&
+    autologin[settings.keys.loginKey] && autologin[settings.keys.loginKey] !== '';
