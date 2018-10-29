@@ -92,10 +92,13 @@ pipeline {
 						}
 					},
 					"cypress": {
+						githubNotify context: 'Jenkins e2e tests',
+							     description: 'e2e tests in progress...',
+							     status: 'PENDING'
 						withCredentials([string(credentialsId: 'lisk-hub-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
 							ansiColor('xterm') {
-								wrap([$class: 'Xvfb', parallelBuild: true]) {
-									sh '''
+								wrap([$class: 'Xvfb', parallelBuild: true, autoDisplayName: true]) {
+									sh '''#!/bin/bash -xe
 									export N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
 
 									wget -nv -c https://github.com/LiskHQ/lisk-docker/archive/2.2.0.tar.gz
@@ -111,7 +114,12 @@ pipeline {
 									cd -
 
 									npm run serve -- $WORKSPACE/app/build -p 300$N -a 127.0.0.1 &>server.log &
-									npm run cypress:run -- --record
+									set +e
+									set -o pipefail
+									npm run cypress:run -- --record |tee cypress.log
+									ret=$?
+									grep --extended-regexp --only-matching 'https://dashboard.cypress.io/#/projects/1it63b/runs/[0-9]+' cypress.log |tail --lines=1 >.cypress
+									exit $ret
 									'''
 								}
 							}
@@ -148,11 +156,23 @@ pipeline {
 					liskSlackSend('good', "Recovery: build ${build_info} was successful.")
 				}
 			}
+			catchError {
+				githubNotify context: 'Jenkins e2e tests',
+					     description: 'All e2e tests passed.',
+					     status: 'SUCCESS',
+					     targetUrl: readFile(".cypress").trim()
+			}
 		}
 		failure {
 			script {
 				build_info = getBuildInfo()
 				liskSlackSend('danger', "Build ${build_info} failed (<${env.BUILD_URL}/console|console>, <${env.BUILD_URL}/changes|changes>)")
+			}
+			catchError {
+				githubNotify context: 'Jenkins e2e tests',
+					     description: 'Some e2e tests failed.',
+					     status: 'FAILURE',
+					     targetUrl: readFile(".cypress").trim()
 			}
 		}
 	}

@@ -23,6 +23,14 @@ class ExplorerTransactions extends React.Component {
       value: txFilters.all,
     });
   }
+
+  searchMoreVoters(offset) {
+    this.props.searchMoreVoters({
+      address: this.props.address,
+      offset,
+    });
+  }
+
   onLoadMore() {
     this.props.searchMoreTransactions({
       address: this.props.address,
@@ -66,6 +74,7 @@ class ExplorerTransactions extends React.Component {
       onLoadMore: this.onLoadMore.bind(this),
       onFilterSet: this.onFilterSet.bind(this),
       onTransactionRowClick: this.onTransactionRowClick.bind(this),
+      searchMoreVoters: this.searchMoreVoters.bind(this),
     };
 
     return (

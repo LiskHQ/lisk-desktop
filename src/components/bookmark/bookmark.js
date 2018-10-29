@@ -122,7 +122,7 @@ class Bookmark extends React.Component {
           {isValidAddress && !this.state.show && !!isAddressFollowedAccounts ? <AccountVisual
             className={styles.smallAccountVisual}
             address={address.value}
-            size={35}
+            size={40}
           /> : null}
 
           {isValidAddress && !this.state.show && !isAddressFollowedAccounts ? <AccountVisual
@@ -181,7 +181,7 @@ class Bookmark extends React.Component {
                       <AccountVisual
                         className={styles.accountVisual}
                         address={account.address}
-                        size={35}
+                        size={40}
                       />
                       <div className={styles.text}>
                         <div className={styles.title}>{account.title}</div>

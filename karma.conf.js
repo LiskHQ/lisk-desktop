@@ -60,6 +60,7 @@ module.exports = function (config) {
             'src/store/reducers/liskService.js',
             'src/actions/transactions.js',
             'src/components/errorBoundary/index.js',
+            'src/components/request/specifyRequest.test.js',
             'src/components/feedbackForm/**/*.js',
           ],
           overrides: {

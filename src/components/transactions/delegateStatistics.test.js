@@ -17,6 +17,7 @@ describe('DelegateStatistics', () => {
       publicKey: 'bd56ce59f413370cf45dbc4be094acbd4de9c6894443476e5406dfc458337889',
       balance: '0',
     }),
+    votersSize: 100,
   };
 
   it('should render DelegateStatistics', () => {
@@ -29,14 +30,14 @@ describe('DelegateStatistics', () => {
 
     expect(wrapper.find('.showMore').length).to.have.equal(2);
     wrapper.find('.showMore').at(0).simulate('click');
-    expect(wrapper.find('.showMore').length).to.have.equal(1);
   });
 
-  it('should not display showMore button, if all voters are already shown', () => {
+  it('should render Waypoint component', () => {
     const wrapper = mountWithContext(<DelegateStatistics {...props} />, {});
 
-    expect(wrapper.find('.showMore').length).to.have.equal(2);
     wrapper.find('.showMore').at(1).simulate('click');
-    expect(wrapper.find('.showMore').length).to.have.equal(1);
+    expect(wrapper).to.have.descendants('Waypoint');
+    const waypoint = wrapper.find('Waypoint').at(0);
+    waypoint.props().onEnter();
   });
 });
