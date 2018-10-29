@@ -39,6 +39,7 @@ describe('Delegates', () => {
     cy.addLocalStorage('settings', 'advancedMode', true);
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.dashboard);
+    cy.wait(200); // Wait for wallet sidebar button to appear
     cy.get(ss.sidebarMenuDelegatesBtn).click();
     cy.url().should('contain', urls.delegates);
     cy.get(ss.confirmVotesSidebar).find(ss.nextButton);
