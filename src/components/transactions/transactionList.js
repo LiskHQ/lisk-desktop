@@ -73,7 +73,9 @@ class TransactionsList extends React.Component {
       return <DelegateStatistics
         delegate={this.props.delegate}
         votes={this.props.votes}
-        voters={this.props.voters} />;
+        voters={this.props.voters}
+        votersSize={this.props.votersSize}
+        searchMoreVoters={this.props.searchMoreVoters} />;
     }
 
     const isAccountInfo = tabObj && (tabObj.value === txFilters.accountInfo);
@@ -82,7 +84,9 @@ class TransactionsList extends React.Component {
       return <UserVotes
         delegate={this.props.delegate}
         votes={this.props.votes}
-        voters={this.props.voters} />;
+        voters={this.props.voters}
+        votersSize={this.props.votersSize}
+        searchMoreVoters={this.props.searchMoreVoters} />;
     }
 
     return <div className={`${styles.results} transaction-results`}>

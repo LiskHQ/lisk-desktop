@@ -1,5 +1,6 @@
 import accounts from '../../constants/accounts';
 import networks from '../../constants/networks';
+import urls from '../../constants/urls';
 
 const ss = {
   sidebarMenuHelpBtn: '#help',
@@ -9,16 +10,14 @@ const ss = {
   onBoardingHeader: '.joyride-tooltip__header',
 };
 
-const helpUrl = '/help';
-
 const checkHelpPageLoaded = () => cy.get('.help-onboarding');
 
 const getSettingsObjFromLS = () => JSON.parse(localStorage.getItem('settings'));
 
 describe('Help', () => {
-  it(`opens by url ${helpUrl}`, () => {
+  it(`opens by url ${urls.help}`, () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(helpUrl);
+    cy.visit(urls.help);
     cy.url().should('contain', 'help');
     checkHelpPageLoaded();
   });
@@ -74,7 +73,7 @@ describe('Help', () => {
     });
 
     it('link for onboarding is not there if not logged in', () => {
-      cy.visit(helpUrl);
+      cy.visit(urls.help);
       cy.get(ss.startOnBoardingLink).should('not.exist');
     });
 

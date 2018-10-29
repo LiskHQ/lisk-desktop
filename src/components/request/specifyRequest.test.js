@@ -1,23 +1,31 @@
 import React from 'react';
 import { expect } from 'chai';
+import thunk from 'redux-thunk';
+import { mount } from 'enzyme';
 import { spy } from 'sinon';
-import { mountWithContext } from './../../../test/utils/mountHelpers';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
+import configureMockStore from 'redux-mock-store';
+
 import SpecifyRequest from './specifyRequest';
 
 describe('Specify Request', () => {
   let wrapper;
   let props;
-  let storeState;
 
   beforeEach(() => {
-    storeState = {
-      settings: {},
-      settingsUpdated: () => {},
+    const priceTicker = {
+      success: true,
+      LSK: {
+        USD: 1,
+      },
     };
 
-    const context = {
-      storeState,
-    };
+    const store = configureMockStore([thunk])({
+      settings: {},
+      settingsUpdated: () => {},
+      liskService: { priceTicker },
+    });
 
     props = {
       t: key => key,
@@ -27,7 +35,11 @@ describe('Specify Request', () => {
       prevStep: spy(),
     };
 
-    wrapper = mountWithContext(<SpecifyRequest {...props} />, context);
+    wrapper = mount(<Provider store={store}>
+      <Router>
+        <SpecifyRequest {...props}/>
+      </Router>
+    </Provider>);
   });
 
   it('accepts valid amount', () => {

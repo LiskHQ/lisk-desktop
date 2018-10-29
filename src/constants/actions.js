@@ -70,6 +70,9 @@ const actionTypes = {
   settingsReset: 'SETTINGS_RESET',
   switchChannel: 'SWITCH_CHANNEL',
   addFilter: 'ADD_FILTER',
+  getNewsFeed: 'GET_NEWS_FEED',
+  showEmptyNewsFeed: 'SHOW_EMPTY_NEWS_FEED',
+  addPriceTicker: 'ADD_PRICE_TICKER',
   cleanTransactions: 'CLEAN_TRANSACTIONS',
 };
 

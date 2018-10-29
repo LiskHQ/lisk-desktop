@@ -1,4 +1,5 @@
 import React from 'react';
+import thunk from 'redux-thunk';
 import { expect } from 'chai';
 import { spy } from 'sinon';
 import configureMockStore from 'redux-mock-store';
@@ -15,12 +16,14 @@ describe('ConverterHOC', () => {
   const account = {};
   const transactions = { pending: [] };
   beforeEach(() => {
-    const store = configureMockStore([])({
+    const store = configureMockStore([thunk])({
       peers,
       account,
       transactions,
       settings: { currency: 'USD' },
       settingsUpdated: () => {},
+      getPriceTicker: () => {},
+      liskService: {},
     });
     const props = {
       t: () => {},

@@ -1,6 +1,7 @@
 import accounts from '../../constants/accounts';
 import networks from '../../constants/networks';
 import urls from '../../constants/urls';
+import enterSecondPassphrase from '../utils/enterSecondPassphrase';
 
 const ss = {
   sidebarMenuWalletBtn: '#transactions',
@@ -36,12 +37,12 @@ const txConfirmationTimeout = 12000;
 const checkWalletPageLoaded = () => cy.get(ss.recipientInput);
 
 const getRandomAddress = () => `23495548666${Math.floor((Math.random() * 8990000) + 1000000)}L`;
-const getRandomAmount = () => Math.floor((Math.random() * 100) + 1);
+const getRandomAmount = () => Math.floor((Math.random() * 10) + 1);
 const getRandomReference = () => Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
 
 const castBalanceStringToNumber = number => parseFloat(number.replace(/,/g, ''));
 
-describe('Wallet', () => {
+describe('Transfer', () => {
   let randomAddress;
   let randomAmount;
   let randomReference;
@@ -53,16 +54,16 @@ describe('Wallet', () => {
     randomReference = getRandomReference();
   });
 
-  it(`Opens by url ${urls.wallet}`, () => {
+  it(`Wallet page opens by url ${urls.wallet}`, () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.wallet);
     cy.url().should('contain', 'wallet');
     checkWalletPageLoaded();
   });
 
-  it('Opens by sidebar button', () => {
+  it('Wallet page opens by sidebar button', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit('/dashboard');
+    cy.visit(urls.dashboard);
     cy.wait(100);
     cy.get(ss.sidebarMenuWalletBtn).click();
     cy.url().should('contain', 'wallet');
@@ -120,11 +121,7 @@ describe('Wallet', () => {
     cy.get(ss.referenceInput).click().type(randomReference);
     cy.get(ss.amountInput).click().type(randomAmount);
     cy.get(ss.nextButton).click();
-    cy.get(ss.secondPassphraseInput).each(($el, index) => {
-      const passphraseWordsArray = accounts['second passphrase account'].secondPassphrase.split(' ');
-      cy.wrap($el).type(passphraseWordsArray[index]);
-    });
-    cy.get(ss.secondPassphraseNextBtn).click();
+    enterSecondPassphrase(accounts['second passphrase account'].secondPassphrase);
     cy.get(ss.sendButton).click();
     cy.get(ss.resultMessage).should('have.text', msg.transferTxSuccess);
     cy.get(ss.transactionRow).eq(0).as('tx');
