@@ -1,17 +1,21 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
-import { searchTransactions, searchMoreTransactions, searchAccount } from '../../../actions/search';
+import { searchTransactions, searchMoreTransactions, searchAccount, searchMoreVoters } from '../../../actions/search';
 import actionTypes from '../../../constants/actions';
 import ExplorerTransactions from './explorerTransactions';
 import txFilters from './../../../constants/transactionFilters';
 
+/* istanbul ignore next */
 const mapStateToProps = (state, ownProps) => ({
   delegate: state.search.delegates[state.search.lastSearch],
   transaction: state.transaction,
   transactions: state.search.searchResults,
   votes: state.search.votes[state.search.lastSearch],
   voters: state.search.voters[state.search.lastSearch],
+  votersSize: state.search.votersSize &&
+    state.search.votersSize[state.search.lastSearch] ?
+    state.search.votersSize[state.search.lastSearch] : 0,
   count: state.search.transactions[state.search.lastSearch] &&
     (state.search.transactions[state.search.lastSearch].count || null),
   offset: state.search.searchResults.length,
@@ -20,6 +24,7 @@ const mapStateToProps = (state, ownProps) => ({
   loading: state.loading,
 });
 
+/* istanbul ignore next */
 const mapDispatchToProps = dispatch => ({
   searchAccount: data => dispatch(searchAccount(data)),
   searchTransactions: data => dispatch(searchTransactions(data)),
@@ -27,6 +32,7 @@ const mapDispatchToProps = dispatch => ({
   addFilter: data => dispatch({ type: actionTypes.addFilter, data }),
   searchUpdateLast: data =>
     dispatch({ data, type: actionTypes.searchUpdateLast }),
+  searchMoreVoters: data => dispatch(searchMoreVoters(data)),
 });
 
 export default withRouter(connect(

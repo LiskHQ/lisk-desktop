@@ -33,7 +33,7 @@ describe('@integration: Login', () => {
   let delegateAPIStub;
   let errorToastDisplayedSpy;
   const localhostUrl = 'http://localhost:4218';
-  const errorMessage = 'Unable to connect to the node';
+  const errorMessage = 'Unable to connect to the node, no response from the server.';
   const { passphrase } = accounts.genesis;
 
   let APIClientBackup;

@@ -15,12 +15,21 @@ describe('SendWritableHOC', () => {
   };
   const account = {};
   const transactions = { pending: [] };
+
+  const priceTicker = {
+    success: true,
+    LSK: {
+      USD: 1,
+    },
+  };
+
   beforeEach(() => {
     store.getState = () => ({
       peers,
       account,
       transactions,
       settings: {},
+      liskService: { priceTicker },
       followedAccounts: { accounts: [] },
     });
     store.subscribe = () => {};

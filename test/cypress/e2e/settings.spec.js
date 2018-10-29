@@ -1,5 +1,6 @@
 import accounts from '../../constants/accounts';
 import networks from '../../constants/networks';
+import urls from '../../constants/urls';
 
 const ss = {
   sidebarMenuSettingsBtn: '#settings',
@@ -12,15 +13,13 @@ const ss = {
   delegateFeaturesTrigger: '.advancedMode',
 };
 
-const settingsUrl = '/setting';
-
 const checkSettingsPageLoaded = () => cy.get('.showNetwork');
 
 const getSettingsObjFromLS = () => JSON.parse(localStorage.getItem('settings'));
 
 describe('Settings', () => {
-  it(`opens by url ${settingsUrl}`, () => {
-    cy.visit(settingsUrl);
+  it(`opens by url ${urls.settings}`, () => {
+    cy.visit(urls.settings);
     cy.url().should('contain', 'setting');
     checkSettingsPageLoaded();
   });
@@ -33,20 +32,20 @@ describe('Settings', () => {
   });
 
   it('second passphrase registration is disabled if not logged in', () => {
-    cy.visit(settingsUrl);
+    cy.visit(urls.settings);
     cy.get(ss.registerSecondPassphraseBtn).should('have.class', 'disabled');
   });
 
   it('second passphrase Register -> Second passphrase page', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(settingsUrl);
+    cy.visit(urls.settings);
     cy.get(ss.registerSecondPassphraseBtn).should('not.have.class', 'disabled').click();
     cy.url().should('contain', 'second-passphrase');
   });
 
   it('second passphrase registration is disabled if already registered', () => {
     cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
-    cy.visit(settingsUrl);
+    cy.visit(urls.settings);
     cy.get(ss.secondPassphraseIsRegisteredLabel).should('be.visible');
   });
 
@@ -57,7 +56,7 @@ describe('Settings', () => {
   ]
     .forEach((selector) => {
       it(`${selector.substr(1)} default position is off and can be toggled to on and back`, () => {
-        cy.visit(settingsUrl);
+        cy.visit(urls.settings);
         cy.get(`${selector}`).click().should(() => {
           expect(getSettingsObjFromLS()[`${selector.substr(1)}`]).to.equal(true);
         });
@@ -68,7 +67,7 @@ describe('Settings', () => {
     });
 
   it('currency default position should be USD and can be toggled to USD and back', () => {
-    cy.visit(settingsUrl);
+    cy.visit(urls.settings);
     cy.get(ss.currencyUSDBtn).should('have.class', 'active');
     cy.get(ss.currencyEURBtn).click().should(($button) => {
       expect($button).to.have.class('active');

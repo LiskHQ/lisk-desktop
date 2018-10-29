@@ -103,6 +103,6 @@ describe('WalletTransactions Component', () => {
     wrapper.find('.delegate-statistics').first().simulate('click');
     wrapper.update();
     expect(wrapper.find('.votes-value').first()).to.have.text(`Votes of this account (${1})`);
-    expect(wrapper.find('.voters-value').first()).to.have.text(`Who voted for this delegate (${1})`);
+    expect(wrapper.find('.voters-value').first()).to.have.text(`Who voted for this delegate (${0})`);
   });
 });
