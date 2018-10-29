@@ -24,7 +24,7 @@ const peersMiddleware = store => next => (action) => {
   }
 
   const network = Object.assign({}, getNetwork(loginNetwork.code));
-  
+
   switch (action.type) {
     case actionTypes.storeCreated:
       // It stops activePeer to be overridden to mainnet
