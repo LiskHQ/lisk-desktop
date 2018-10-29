@@ -136,7 +136,7 @@ describe('Transfer', () => {
     cy.get(ss.amountInput).click().type(randomAmount);
     cy.get(ss.nextButton).click();
     cy.get(ss.sendButton).click();
-    cy.get(ss.transactionRow).eq(0).find(ss.transactionAddress).should('have.text', msg.accountInitializatoinAddress);
+    cy.get(ss.transactionRow).eq(0).find(ss.transactionReference).should('have.text', msg.accountInitializatoinAddress);
   });
 
   it('Launch protocol link prefills recipient, amount and reference', () => {
