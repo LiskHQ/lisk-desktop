@@ -27,7 +27,6 @@
 .inputElement:focus:not([disabled]):not([readonly]) ~ .label:not(.fixed),
 .inputElement.filled ~ .label:not(.fixed) {
   font-size: var(--label-font-size);
-  /* color: var(--input-color); */
 }
 
 .inputElement {
