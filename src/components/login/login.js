@@ -44,7 +44,7 @@ class Login extends React.Component {
     this.state = {
       passphrase: '',
       address,
-      network: loginNetwork.code, // networks.default.code,
+      network: loginNetwork.code,
     };
 
     this.secondIteration = false;

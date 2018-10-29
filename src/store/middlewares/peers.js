@@ -7,9 +7,24 @@ import { shouldAutoLogIn, getAutoLogInData } from './../../utils/login';
 const peersMiddleware = store => next => (action) => {
   next(action);
 
-  const network = Object.assign({}, getNetwork(networks.mainnet.code));
   const autologinData = getAutoLogInData();
+  const { autologinUrl } = autologinData;
 
+  let loginNetwork = Object.entries(networks).find((network) => {
+    const { nodes } = network.slice(-1).shift();
+    return Array.isArray(nodes) ? nodes.includes(autologinUrl) : false;
+  });
+
+  // if cant find login network but loginUrl is set then is custom node
+  // else default network
+  if (loginNetwork) {
+    loginNetwork = loginNetwork.slice(-1).shift();
+  } else if (!loginNetwork) {
+    loginNetwork = autologinUrl ? networks.customNode : networks.default;
+  }
+
+  const network = Object.assign({}, getNetwork(loginNetwork.code));
+  
   switch (action.type) {
     case actionTypes.storeCreated:
       // It stops activePeer to be overridden to mainnet
