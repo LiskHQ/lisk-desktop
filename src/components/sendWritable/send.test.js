@@ -16,7 +16,7 @@ describe('Send Writable Component', () => {
 
   beforeEach(() => {
     const account = accounts.delegate;
-    
+
     clock = useFakeTimers({
       toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
     });
