@@ -1,5 +1,7 @@
 import i18next from 'i18next';
 import settings from './../constants/settings';
+import networks from './../constants/networks';
+
 
 // https://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
 // eslint-disable-next-line no-useless-escape
@@ -42,3 +44,11 @@ export const getAutoLogInData = () => ({
 export const shouldAutoLogIn = autologin =>
   autologin[settings.keys.loginUrl] && autologin[settings.keys.loginUrl] !== '' &&
     autologin[settings.keys.loginKey] && autologin[settings.keys.loginKey] !== '';
+
+export const findMatchingLoginNetwork = () => {
+  const { loginUrl } = getAutoLogInData();
+  return Object.entries(networks).find((network) => {
+    const { nodes } = network.slice(-1).shift();
+    return Array.isArray(nodes) ? nodes.includes(loginUrl) : false;
+  });
+};

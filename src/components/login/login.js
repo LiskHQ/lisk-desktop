@@ -15,7 +15,7 @@ import { parseSearchParams } from './../../utils/searchParams';
 import Box from '../box';
 // eslint-disable-next-line import/no-unresolved
 import SignUp from './signUp';
-import { validateUrl, addHttp, getAutoLogInData } from '../../utils/login';
+import { validateUrl, addHttp, getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
 import settings from '../../constants/settings';
 
 /**
@@ -28,10 +28,7 @@ class Login extends React.Component {
 
     const { loginUrl } = getAutoLogInData();
 
-    let loginNetwork = Object.entries(networks).find((network) => {
-      const { nodes } = network.slice(-1).shift();
-      return Array.isArray(nodes) ? nodes.includes(loginUrl) : false;
-    });
+    let loginNetwork = findMatchingLoginNetwork();
 
     let address = '';
 

@@ -2,7 +2,7 @@ import { activePeerSet, activePeerUpdate } from '../../actions/peers';
 import actionTypes from '../../constants/actions';
 import networks from './../../constants/networks';
 import getNetwork from './../../utils/getNetwork';
-import { shouldAutoLogIn, getAutoLogInData } from './../../utils/login';
+import { shouldAutoLogIn, getAutoLogInData, findMatchingLoginNetwork } from './../../utils/login';
 
 const peersMiddleware = store => next => (action) => {
   next(action);
@@ -10,10 +10,7 @@ const peersMiddleware = store => next => (action) => {
   const autologinData = getAutoLogInData();
   const { loginUrl } = autologinData;
 
-  let loginNetwork = Object.entries(networks).find((network) => {
-    const { nodes } = network.slice(-1).shift();
-    return Array.isArray(nodes) ? nodes.includes(loginUrl) : false;
-  });
+  let loginNetwork = findMatchingLoginNetwork();
 
   // if cant find login network but loginUrl is set then is custom node
   // else default network
