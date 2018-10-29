@@ -83,7 +83,7 @@ class SendWritable extends React.Component {
     const amount = parseFloat(this.getMaxAmount());
     this.setState({
       amount: {
-        value: amount,
+        value: amount.toString(),
       },
     });
   }
