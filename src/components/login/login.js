@@ -58,7 +58,7 @@ class Login extends React.Component {
     setTimeout(() => {
       this.setState({ isLedgerFirstLogin: true });
       this.props.loadingFinished('ledgerLogin');
-    }, 2000);
+    }, 4500);
     let error;
     let ledgerAccount;
     // eslint-disable-next-line prefer-const
@@ -83,10 +83,10 @@ class Login extends React.Component {
         publicKey: ledgerAccount.publicKey,
         loginType: 1,
         network,
-        hwInfo: { // Use pubKey[0] first 10 char as device id
-          deviceId: ledgerAccount.publicKey.substring(0, 10),
-          derivationIndex: 0,
-        },
+        // hwInfo: { // Use pubKey[0] first 10 char as device id
+        //   deviceId: ledgerAccount.publicKey.substring(0, 10),
+        //   derivationIndex: 0,
+        // },
       });
     }
   }
@@ -194,7 +194,7 @@ class Login extends React.Component {
   }
 
   cancelLedgerLogin() {
-    this.setState({ isLedgerLogin: false });
+    this.setState({ isLedgerLogin: false, isLedgerFirstLogin: false });
   }
 
   render() {
@@ -249,10 +249,11 @@ class Login extends React.Component {
                   error={this.state.passphraseValidity}
                   value={this.state.passphrase}
                   onChange={this.changeHandler.bind(this, 'passphrase')} />
-                <div className={`${styles.hardwareWalletLink} hardwareWalletLink`} onClick={() => { this.ledgerLogin(); }}>
-                  Ledger Nano S
-                  <FontIcon className={styles.singUpArrow} value='arrow-right' />
-                </div>
+                {localStorage.getItem('ledger') ?
+                  <div className={`${styles.hardwareWalletLink} hardwareWalletLink`} onClick={() => { this.ledgerLogin(); }}>
+                    Ledger Nano S
+                    <FontIcon className={styles.singUpArrow} value='arrow-right' />
+                  </div> : null }
                 <footer className={ `${grid.row} ${grid['center-xs']}` }>
                   <div className={grid['col-xs-12']}>
                     <PrimaryButton label={this.props.t('Log in')}

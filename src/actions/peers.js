@@ -58,7 +58,7 @@ export const activePeerSet = data =>
       dispatch(peerSet(data, config));
     }
 
-    if (data.passphrase) {
+    if (data.passphrase || data.hwInfo) {
       const store = getState();
       const { lockDuration } = accountConfig;
       const { passphrase } = data;

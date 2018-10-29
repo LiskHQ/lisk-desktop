@@ -12,7 +12,10 @@ class Ledger extends React.Component {
     if (this.props.isLedgerLogin) {
       return (
           <Box>
-            <LedgerLogin loginType={0} network={this.props.network} />
+            <LedgerLogin
+              loginType={0}
+              network={this.props.network}
+              cancelLedgerLogin={this.props.cancelLedgerLogin} />
           </Box>);
     }
 

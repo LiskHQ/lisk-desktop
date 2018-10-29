@@ -3,9 +3,10 @@ import { FontIcon } from '../fontIcon';
 
 import styles from './accountCard.css';
 
-const AddAccountCard = ({ addAccount }) => (
+const AddAccountCard = ({ addAccount, t }) => (
   <div className={`${styles.card} ${styles.addAccountCard}`} onClick={() => { addAccount(); }}>
-    <FontIcon className={styles.addIcon} value='add' />
+    <div><FontIcon className={styles.addIcon} value='add' /></div>
+    <div>{t('Add new')}</div>
   </div>);
 
 export default AddAccountCard;

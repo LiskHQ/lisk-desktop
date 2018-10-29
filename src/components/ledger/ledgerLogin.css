@@ -8,7 +8,17 @@
 .accountList {
   display: grid;
   grid-template-columns: 250px 250px 250px;
-  max-width: 800px;
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+.edit {
+  display: flex;
+  flex-direction: row-reverse;
+  cursor: pointer;
+  color: var(--color-primary-standard);
+  max-width: 750px;
+  font-weight: 600;
   margin: 0 auto;
 }
 

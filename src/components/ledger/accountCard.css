@@ -1,3 +1,5 @@
+@import '../app/variables';
+
 .card {
   width: 234px;
   height: 277px;
@@ -5,7 +7,6 @@
   background-color: #fff;
   box-shadow: 0 8px 16px 0 rgba(29, 72, 119, 0.16);
   margin: 10px;
-  cursor: pointer;
 
   & div {
     width: 100%;
@@ -15,11 +16,20 @@
 }
 
 .accountVisualWrapper {
+  cursor: pointer;
   margin: 30px 0;
 }
 
 .balance {
-  font-style: bold;
+  font-weight: 600;
+  font-size: 25px;
+  font-family: var(--heading-font);
+
+  & p {
+    font-size: 16px;
+    margin-top: 8px;
+    margin-bottom: 0;
+  }
 }
 
 .addressField {
@@ -30,9 +40,37 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  margin-bottom: 50px;
 }
 
 .addIcon {
   font-size: 120px;
   color: #74869b;
+}
+
+.input {
+  padding: 0;
+  width: 100%;
+}
+
+.inputElement {
+  margin: 0 20px;
+}
+
+.edit {
+  display: flex;
+  justify-content: center;
+}
+
+.editTitle {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: var(--heading-font);
+  margin-top: 12px;
+}
+
+.bar {
+  width: 0;
 }

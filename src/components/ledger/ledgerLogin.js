@@ -9,6 +9,7 @@ import { errorToastDisplayed } from '../../actions/toaster';
 
 import AccountCard from './accountCard';
 import AddAccountCard from './addAccountCard';
+import { FontIcon } from '../fontIcon';
 
 import cubeImage from '../../assets/images/dark-blue-cube.svg';
 import styles from './ledgerLogin.css';
@@ -20,7 +21,9 @@ class LoginLedger extends React.Component {
     this.state = {
       hwAccounts: [],
       isLoading: false,
+      isEditMode: false,
       showNextAvailable: false,
+      hardwareAccountsName: props.settings.hardwareAccounts || {},
       displayAccountAmount: props.settings.ledgerAccountAmount || 0,
     };
   }
@@ -109,6 +112,26 @@ class LoginLedger extends React.Component {
     this.forceUpdate();
   }
 
+  turnOnEditMode() {
+    this.setState({ isEditMode: true });
+  }
+
+  saveAccountNames() {
+    this.props.settingsUpdated({
+      hardwareAccounts: this.state.hardwareAccountsName,
+    });
+    this.setState({ isEditMode: !this.state.isEditMode });
+  }
+
+  changeAccountNameInput(value, account) {
+    const newHardwareAccountsName = Object.assign(
+      {},
+      this.state.hardwareAccountsName,
+      { [account]: value },
+    );
+    this.setState({ hardwareAccountsName: newHardwareAccountsName });
+  }
+
   render() {
     const loadingAnimation = (<div className={styles.cubeRow}>
         <div className={`${styles.cube} ${styles['cube-1']}`}>
@@ -126,14 +149,30 @@ class LoginLedger extends React.Component {
       </div>);
 
     return <div>
-      <h1 className={styles.title}>{this.state.isLoading && this.props.t('Loading accounts')}</h1>
       <div className={this.state.isLoading ? styles.loading : null}>
       {!this.state.isLoading ?
-          <div className={styles.accountList}>{this.state.hwAccounts.map((account, index) => (
-                <AccountCard key={`accountCard-${index}`} account={account} onClickHandler={this.selectAccount.bind(this)} />
-              ))}
-            <AddAccountCard addAccount={this.addAccount.bind(this)} />
-        </div> : loadingAnimation}
+          <div>
+            <div className={styles.back}><FontIcon value='edit'/>{this.props.t('Back')}</div>
+            <div className={styles.title}><h2>{this.props.t('Accounts on Trezor')}</h2></div>
+            {this.state.isEditMode ?
+              <div className={styles.edit} onClick={() => this.saveAccountNames()}>
+                {this.props.t('Done')}
+              </div> :
+              <div className={styles.edit} onClick={() => this.turnOnEditMode()}>
+                <FontIcon value='edit'/>{this.props.t('Edit')}
+              </div>}
+            <div className={styles.accountList}>{this.state.hwAccounts.map((account, index) => (
+                  <AccountCard
+                    hardwareAccountName={this.state.hardwareAccountsName[account.address]}
+                    isEditMode={this.state.isEditMode}
+                    key={`accountCard-${index}`}
+                    account={account}
+                    changeInput={this.changeAccountNameInput.bind(this)}
+                    onClickHandler={this.selectAccount.bind(this)} />
+                ))}
+              <AddAccountCard addAccount={this.addAccount.bind(this)} t={this.props.t} />
+            </div>
+          </div> : loadingAnimation}
       </div>
     </div>;
   }
