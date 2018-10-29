@@ -136,7 +136,7 @@ describe('Send Writable Component', () => {
   it('Puts max amount into input field', () => {
     wrapper.find('.amount input').simulate('focus');
     wrapper.find('.set-max-amount').simulate('click');
-    expect(wrapper.state('amount').value).to.equal(999.9);
+    expect(wrapper.state('amount').value).to.equal('999.9');
   });
 
   it('Hides the Set max. amount link on amount blur', () => {
