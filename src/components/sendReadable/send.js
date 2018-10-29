@@ -79,13 +79,14 @@ class SendReadable extends React.Component {
   send(event) {
     event.preventDefault();
     this.setState({ loading: true });
+    const isAccountInit = this.props.accountInit && (this.props.account.address === this.state.recipient.value);
     this.props.sent({
       account: this.props.account,
       recipientId: this.state.recipient.value,
       amount: this.state.amount.value,
       passphrase: this.props.passphrase.value,
       secondPassphrase: this.props.secondPassphrase.value,
-      data: this.props.reference,
+      data: isAccountInit ? this.props.t('Account initialization') : this.props.reference,
     });
   }
 
