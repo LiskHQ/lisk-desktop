@@ -117,24 +117,6 @@ class Login extends React.Component {
     return data;
   }
 
-  validateCorrectNode(value) {
-    const nodeURL = value !== '' ? addHttp(value) : value;
-    const liskAPIClient = new Lisk.APIClient([nodeURL], {});
-    let addressValidity = '';
-    liskAPIClient.node.getConstants()
-      .then((res) => {
-        if (res.data) {
-          this.props.activePeerSet({
-            network: this.getNetwork(this.state.network),
-          });
-        }
-      }).catch(() => {
-        addressValidity = this.props.t('Unable to connect to the node');
-      }).finally(() => {
-        this.setState({ addressValidity });
-      });
-  }
-
   changeHandler(name, value, error) {
     const validator = this.validators[name] || (() => ({}));
     this.setState({
@@ -147,13 +129,6 @@ class Login extends React.Component {
       this.props.activePeerSet({
         network: this.getNetwork(value),
       });
-    }
-
-    // Validation based on promises is not working
-    // So I'm checking if address node is valid here
-    // and set up new node if it is correct
-    if (name === 'address' && validateUrl(value).addressValidity === '') {
-      this.validateCorrectNode(value);
     }
   }
 
@@ -175,6 +150,23 @@ class Login extends React.Component {
     const showNetworkParam = params.showNetwork || params.shownetwork;
 
     return showNetworkParam === 'true' || (showNetwork && showNetworkParam !== 'false');
+  }
+
+  validateCorrectNode() {
+    const { address } = this.state;
+    const nodeURL = address !== '' ? addHttp(address) : address;
+    const liskAPIClient = new Lisk.APIClient([nodeURL], {});
+    liskAPIClient.node.getConstants()
+      .then((res) => {
+        if (res.data) {
+          this.props.activePeerSet({
+            network: this.getNetwork(this.state.network),
+          });
+          this.props.history.replace(routes.register.path);
+        }
+      }).catch(() => {
+        this.props.errorToastDisplayed({ label: i18next.t('Unable to connect to the node') });
+      });
   }
 
   render() {
@@ -233,7 +225,10 @@ class Login extends React.Component {
             </div>
           </section>
         </section>
-        <SignUp t={this.props.t} passInputState={this.state.passInputState} />
+        <SignUp
+          t={this.props.t}
+          passInputState={this.state.passInputState}
+          validateCorrectNode={this.validateCorrectNode.bind(this)}/>
       </Box>
     );
   }

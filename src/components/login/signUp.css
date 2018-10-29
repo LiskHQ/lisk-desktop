@@ -45,6 +45,7 @@
 
   & .singUpArrow {
     font-size: var(--arrow-font-size);
+    margin-top: 6px;
   }
 
   & .subTitle {
@@ -102,6 +103,8 @@
 
     & h2 {
       font-size: 65px;
+      display: flex;
+      cursor: pointer;
     }
   }
 }

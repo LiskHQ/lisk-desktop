@@ -3,6 +3,7 @@ import { withRouter } from 'react-router';
 import { setDefaults, translate } from 'react-i18next';
 import { dialogDisplayed } from '../../actions/dialog';
 import Login from './login';
+import { errorToastDisplayed } from '../../actions/toaster';
 import { activePeerSet } from '../../actions/peers';
 import { settingsUpdated } from '../../actions/settings';
 
@@ -28,6 +29,7 @@ const mapDispatchToProps = dispatch => ({
   activePeerSet: data => dispatch(activePeerSet(data)),
   setActiveDialog: data => dispatch(dialogDisplayed(data)),
   settingsUpdated: data => dispatch(settingsUpdated(data)),
+  errorToastDisplayed: data => dispatch(errorToastDisplayed(data)),
 });
 
 export default connect(
