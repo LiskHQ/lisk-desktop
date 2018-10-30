@@ -105,7 +105,7 @@ class SendWritable extends React.Component {
       this.setState({
         showSetMaxAmount: false,
       });
-    }, 100);
+    }, 200);
   }
 
   render() {
