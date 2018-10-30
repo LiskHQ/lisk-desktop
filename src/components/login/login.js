@@ -155,18 +155,22 @@ class Login extends React.Component {
   validateCorrectNode() {
     const { address } = this.state;
     const nodeURL = address !== '' ? addHttp(address) : address;
-    const liskAPIClient = new Lisk.APIClient([nodeURL], {});
-    liskAPIClient.node.getConstants()
-      .then((res) => {
-        if (res.data) {
-          this.props.activePeerSet({
-            network: this.getNetwork(this.state.network),
-          });
-          this.props.history.replace(routes.register.path);
-        }
-      }).catch(() => {
-        this.props.errorToastDisplayed({ label: i18next.t('Unable to connect to the node') });
-      });
+    if (this.props.peers.options.code === networks.customNode.code) {
+      const liskAPIClient = new Lisk.APIClient([nodeURL], {});
+      liskAPIClient.node.getConstants()
+        .then((res) => {
+          if (res.data) {
+            this.props.activePeerSet({
+              network: this.getNetwork(this.state.network),
+            });
+            this.props.history.replace(routes.register.path);
+          }
+        }).catch(() => {
+          this.props.errorToastDisplayed({ label: i18next.t('Unable to connect to the node') });
+        });
+    } else {
+      this.props.history.replace(routes.register.path);
+    }
   }
 
   render() {

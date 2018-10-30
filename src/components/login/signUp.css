@@ -33,6 +33,8 @@
     margin-top: 32vh; /* stylelint-disable-line */
     margin-bottom: 24px;
     white-space: nowrap;
+    display: flex;
+    cursor: pointer;
   }
 
   & .subTitle,
@@ -45,7 +47,6 @@
 
   & .singUpArrow {
     font-size: var(--arrow-font-size);
-    margin-top: 6px;
   }
 
   & .subTitle {
@@ -103,8 +104,6 @@
 
     & h2 {
       font-size: 65px;
-      display: flex;
-      cursor: pointer;
     }
   }
 }
@@ -124,6 +123,7 @@
 
     & h2 {
       font-size: 50px;
+      display: flex;
     }
   }
 }
