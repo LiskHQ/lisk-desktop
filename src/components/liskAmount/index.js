@@ -10,8 +10,12 @@ const roundTo = (value, places) => {
   return Math.round(value * x) / x;
 };
 
-const LiskAmount = props => (<FormattedNumber val={
-  roundTo(parseFloat(fromRawLsk(props.val)), props.roundTo)} />);
+const LiskAmount = props => (
+  props.val !== undefined ?
+    <FormattedNumber val={roundTo(parseFloat(fromRawLsk(props.val)), props.roundTo)} /> :
+    <span />
+);
+
 
 export default LiskAmount;
 
