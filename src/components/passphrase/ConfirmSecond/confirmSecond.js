@@ -57,6 +57,9 @@ class confirmSecond extends React.Component {
       step: 'pending',
     });
   }
+  redirectToFirstStep() {
+    this.props.prevStep({ reset: true });
+  }
   render() {
     const { hidden, t, history } = this.props;
     const status = hidden ? styles.hidden : '';
@@ -141,6 +144,29 @@ class confirmSecond extends React.Component {
             className={`${styles.resultButton} get-to-your-dashboard-button`}
             onClick={() => history.push(`${routes.dashboard.path}`) }
           />
+        </TransitionWrapper>
+        <TransitionWrapper current={this.state.step} step='register-failure'>
+          <div>
+            <header>
+              <FontIcon value='add'></FontIcon>
+              <h5 >
+                {t('Connecting to network')}
+              </h5>
+            </header>
+            <p >
+              {t('Could not reach the network. Please try again.')}
+            </p>
+            <div>
+              <form onSubmit={this.redirectToFirstStep.bind(this)}>
+                <button
+                  disabled={false}
+                  label={t('Try again')}
+                  className={'registration-failure'}
+                  onClick={this.redirectToFirstStep.bind(this)}
+                />
+              </form>
+            </div>
+          </div>
         </TransitionWrapper>
       </div>
     </section>);
