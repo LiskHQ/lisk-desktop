@@ -22,6 +22,14 @@
   margin: 0 auto;
 }
 
+.back {
+  cursor: pointer;
+  color: var(--color-primary-standard);
+  max-width: 750px;
+  font-weight: 600;
+  margin-top: 40px;
+}
+
 .title {
   text-align: center;
 }

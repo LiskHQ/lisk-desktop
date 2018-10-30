@@ -149,11 +149,14 @@ class LoginLedger extends React.Component {
       </div>);
 
     return <div>
+      {this.state.isLoading ? <h1 className={styles.title}>{this.state.isLoading && this.props.t('Loading accounts')}</h1> : null}
       <div className={this.state.isLoading ? styles.loading : null}>
       {!this.state.isLoading ?
           <div>
-            <div className={styles.back}><FontIcon value='edit'/>{this.props.t('Back')}</div>
-            <div className={styles.title}><h2>{this.props.t('Accounts on Trezor')}</h2></div>
+            <div className={styles.back} onClick={() => { this.props.cancelLedgerLogin(); }}>
+              <FontIcon value='arrow-left'/>{this.props.t('Back')}
+            </div>
+            <div className={styles.title}><h2>{this.props.t('Accounts on Ledger')}</h2></div>
             {this.state.isEditMode ?
               <div className={styles.edit} onClick={() => this.saveAccountNames()}>
                 {this.props.t('Done')}

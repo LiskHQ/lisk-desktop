@@ -58,7 +58,7 @@ class Login extends React.Component {
     setTimeout(() => {
       this.setState({ isLedgerFirstLogin: true });
       this.props.loadingFinished('ledgerLogin');
-    }, 4500);
+    }, 3000);
     let error;
     let ledgerAccount;
     // eslint-disable-next-line prefer-const
