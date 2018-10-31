@@ -16,6 +16,9 @@ describe('SecondPassphrase: ConfirmationHOC', () => {
   const fakeStore = configureStore();
   const store = fakeStore({
     account,
+    secondPassphrase: {
+      secondPassphraseStep: '',
+    },
   });
   let wrapper;
 

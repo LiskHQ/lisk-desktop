@@ -67,7 +67,9 @@ class confirmSecond extends React.Component {
   render() {
     const { hidden, t, history } = this.props;
     const status = hidden ? styles.hidden : '';
-    const doneClass = (this.state.step === 'done' || this.state.step === 'pending') ? styles.done : '';
+    const doneClass = (this.state.step === 'done' ||
+      this.state.step === 'pending' ||
+      this.state.step === 'second-passphrase-register-failure') ? styles.done : '';
     return (<section className={`${styles.wrapper} ${status}`}>
       <header className={doneClass}>
         <TransitionWrapper current={this.state.step} step='login' animationName='slide'>
@@ -103,6 +105,14 @@ class confirmSecond extends React.Component {
             <p>
               {t('Could not reach the network. Please try again.')}
             </p>
+            <form onSubmit={this.redirectToFirstStep.bind(this)}>
+              <PrimaryButton
+                disabled={false}
+                label={t('Try again')}
+                className={'second-passphrase-register-failure'}
+                onClick={this.redirectToFirstStep.bind(this)}
+              />
+            </form>
           </div>
         </TransitionWrapper>
       </header>
@@ -160,6 +170,7 @@ class confirmSecond extends React.Component {
             onClick={() => history.push(`${routes.dashboard.path}`) }
           />
         </TransitionWrapper>
+        {/*
         <TransitionWrapper current={this.state.step} step='second-passphrase-register-failure'>
           <form onSubmit={this.redirectToFirstStep.bind(this)}>
             <PrimaryButton
@@ -170,31 +181,7 @@ class confirmSecond extends React.Component {
             />
           </form>
         </TransitionWrapper>
-        {/*
-        <TransitionWrapper current={this.state.step} step='second-passphrase-register-failure'>
-          <div>
-            <header>
-              <FontIcon value='add'></FontIcon>
-              <h5 >
-                {t('Connecting to network')}
-              </h5>
-            </header>
-            <p >
-              {t('Could not reach the network. Please try again.')}
-            </p>
-            <div>
-              <form onSubmit={this.redirectToFirstStep.bind(this)}>
-                <button
-                  disabled={false}
-                  label={t('Try again')}
-                  className={'registration-failure'}
-                  onClick={this.redirectToFirstStep.bind(this)}
-                />
-              </form>
-            </div>
-          </div>
-        </TransitionWrapper>
-        */}
+        */ }
       </div>
     </section>);
   }
