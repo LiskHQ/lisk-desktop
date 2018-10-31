@@ -10,6 +10,7 @@ import logo from '../../assets/images/Lisk-Logo.svg';
 import * as menuLogos from '../../assets/images/main-menu-icons/*.svg'; //eslint-disable-line
 import { FontIcon } from '../fontIcon';
 import routes from '../../constants/routes';
+import feedbackLinks from '../../constants/feedbackLinks';
 
 const getIndex = (history, tabs) => {
   let index = -1;
@@ -154,22 +155,28 @@ class MainMenu extends React.Component {
                   disabled={!account.address && !enabledWhenNotLoggedIn}
                 />)}
             </ToolboxTabs>
-            <ToolboxTabs index={getIndex(history, bottomMenuTabs)}
-              theme={styles}
-              onChange={this.navigate.bind(this, history, bottomMenuTabs)}
-              disableAnimatedBottomBorder={true}
-              className={`${styles.tabs} ${styles.bottomTabs} main-tabs`}>
-              {bottomMenuTabs.map(({
-                   label, image, id, enabledWhenNotLoggedIn,
-                  }, index) =>
-                <Tab
-                  key={index}
-                  label={<TabTemplate label={label} img={image} isFontIcon />}
-                  className={styles.bottomTab}
-                  id={id}
-                  disabled={!account.address && !enabledWhenNotLoggedIn}
-                />)}
-            </ToolboxTabs>
+            <div className={`${styles.tabs} ${styles.bottomTabs} main-tabs`}>
+              <ToolboxTabs index={getIndex(history, bottomMenuTabs)}
+                theme={styles}
+                onChange={this.navigate.bind(this, history, bottomMenuTabs)}
+                disableAnimatedBottomBorder={true}>
+                {bottomMenuTabs.map(({
+                     label, image, id, enabledWhenNotLoggedIn,
+                    }, index) =>
+                  <Tab
+                    key={index}
+                    label={<TabTemplate label={label} img={image} isFontIcon />}
+                    className={styles.bottomTab}
+                    id={id}
+                    disabled={!account.address && !enabledWhenNotLoggedIn}
+                  />)}
+              </ToolboxTabs>
+              <a target='_blank' href={feedbackLinks.general}
+                  className={`${styles.bottomTab} ${styles.label} ${styles.feedbackLink}`}
+                  rel='noopener noreferrer'>
+                <TabTemplate label={this.props.t('Feedback')} img='conversation' isFontIcon />
+              </a>
+            </div>
             <Drawer theme={styles}
               className='drawer'
               active={this.state.active}

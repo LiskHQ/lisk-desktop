@@ -201,7 +201,7 @@
   overflow-y: auto;
   height: auto;
   display: block;
-  margin-bottom: 120px;
+  margin-bottom: 150px;
 }
 
 .bottomTabs {
@@ -209,6 +209,7 @@
   bottom: 32px;
   right: 0;
   left: 0;
+  overflow-x: hidden;
 
   & .label {
     color: var(--color-grayscale-medium);
@@ -240,13 +241,18 @@
       flex-direction: row;
       align-items: flex-start;
       transition: all ease 300ms;
-      margin-left: 10px;
+      margin-left: 5px;
     }
 
     & img {
       width: 25px;
       height: 25px;
       margin-right: 10px;
+    }
+
+    &.feedbackLink {
+      text-decoration: none;
+      font-weight: var(--font-weight-normal);
     }
   }
 
