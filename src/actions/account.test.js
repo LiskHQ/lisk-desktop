@@ -15,7 +15,6 @@ import {
   updateTransactionsIfNeeded,
   updateDelegateAccount,
 } from './account';
-import { errorAlertDialogDisplayed } from './dialog';
 import { secondPassphraseRegisteredFailure } from './secondPassphrase';
 import { delegateRegisteredFailure } from './delegate';
 import * as accountApi from '../utils/api/account';

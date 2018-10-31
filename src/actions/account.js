@@ -4,7 +4,7 @@ import { setSecondPassphrase, getAccount } from '../utils/api/account';
 import { registerDelegate, getDelegate, getAllVotes, getVoters } from '../utils/api/delegate';
 import { loadTransactionsFinish, transactionsUpdated } from './transactions';
 import { delegateRegisteredFailure } from './delegate';
-import { errorAlertDialogDisplayed } from './dialog';
+import { secondPassphraseRegisteredFailure } from './secondPassphrase';
 import { activePeerUpdate } from './peers';
 import { getTimeOffset } from '../utils/hacks';
 import Fees from '../constants/fees';
@@ -113,7 +113,7 @@ export const secondPassphraseRegistered = ({ secondPassphrase, account, passphra
         });
       }).catch((error) => {
         const text = (error && error.message) ? error.message : i18next.t('An error occurred while registering your second passphrase. Please try again.');
-        dispatch(errorAlertDialogDisplayed({ text }));
+        dispatch(secondPassphraseRegisteredFailure({ text }));
       });
     dispatch(passphraseUsed(passphrase));
   };
