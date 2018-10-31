@@ -16,6 +16,7 @@ import {
   updateDelegateAccount,
 } from './account';
 import { errorAlertDialogDisplayed } from './dialog';
+import { secondPassphraseRegisteredFailure } from './secondPassphrase';
 import { delegateRegisteredFailure } from './delegate';
 import * as accountApi from '../utils/api/account';
 import * as delegateApi from '../utils/api/delegate';
@@ -51,7 +52,7 @@ describe('actions: account', () => {
     });
   });
 
-  describe('secondPassphraseRegistered', () => {
+  describe.only('secondPassphraseRegistered', () => {
     let accountApiMock;
     let i18nextMock;
     const data = {
@@ -101,19 +102,19 @@ describe('actions: account', () => {
         .calledWith({ data: expectedAction, type: actionTypes.transactionAdded });
     });
 
-    it('should dispatch errorAlertDialogDisplayed action if caught', () => {
+    it('should dispatch secondPassphraseRegisteredFailure action if caught', () => {
       accountApiMock.returnsPromise().rejects({ message: 'sample message' });
 
       actionFunction(dispatch, getState);
-      const expectedAction = errorAlertDialogDisplayed({ text: 'sample message' });
+      const expectedAction = secondPassphraseRegisteredFailure({ text: 'sample message' });
       expect(dispatch).to.have.been.calledWith(expectedAction);
     });
 
-    it('should dispatch errorAlertDialogDisplayed action if caught but no message returned', () => {
+    it('should dispatch secondPassphraseRegisteredFailure action if caught but no message returned', () => {
       accountApiMock.returnsPromise().rejects({});
 
       actionFunction(dispatch, getState);
-      const expectedAction = errorAlertDialogDisplayed({ text: 'An error occurred while registering your second passphrase. Please try again.' });
+      const expectedAction = secondPassphraseRegisteredFailure({ text: 'An error occurred while registering your second passphrase. Please try again.' });
       expect(dispatch).to.have.been.calledWith(expectedAction);
     });
   });

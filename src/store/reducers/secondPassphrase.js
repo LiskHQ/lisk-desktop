@@ -2,13 +2,16 @@ import actionTypes from '../../constants/actions';
 
 const secondPassphrase = (state = {}, action) => {
   switch (action.type) {
-    case actionTypes.secondPassphraseRegisteredFailure: {
-      const newState = {
+    case actionTypes.secondPassphraseRegisteredFailure:
+      return {
         ...state,
         secondPassphraseStep: 'second-passphrase-register-failure',
       };
-      return newState;
-    }
+    case actionTypes.secondPassphraseRegisteredFailureReset:
+      return {
+        ...state,
+        secondPassphraseStep: false,
+      };
     default:
       return state;
   }

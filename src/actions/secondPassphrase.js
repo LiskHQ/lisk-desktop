@@ -1,8 +1,10 @@
 import actionTypes from '../constants/actions';
 
-const secondPassphraseRegisteredFailure = data => ({
+export const secondPassphraseRegisteredFailure = data => ({
   type: actionTypes.secondPassphraseRegisteredFailure,
-  data,
+  text: data.text,
 });
 
-export default secondPassphraseRegisteredFailure;
+export const secondPassphraseRegisteredFailureReset = () => ({
+  type: actionTypes.secondPassphraseRegisteredFailureReset,
+});

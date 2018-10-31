@@ -25,6 +25,7 @@ const actionTypes = {
   delegateRegisteredSuccess: 'DELEGATE_REGISTERED_SUCCESS',
   delegateRegisteredFailure: 'DELEGATE_REGISTERED_FAILURE',
   secondPassphraseRegisteredFailure: 'SECOND_PASSPHRASE_REGISTRATION_FAILIRE',
+  secondPassphraseRegisteredFailureReset: 'SECOND_PASSPHRASE_REGISTRATION_FAILIRE_RESET',
   updateDelegate: 'UPDATE_DELEGATE',
   pendingVotesAdded: 'PENDING_VOTES_ADDED',
   toastDisplayed: 'TOAST_DISPLAYED',
