@@ -83,8 +83,8 @@ pipeline {
 					"jest": {
 						ansiColor('xterm') {
 							sh 'ON_JENKINS=true npm run --silent test-jest'
-							
-							// TODO: uncomment sending coverage to coveralls when 
+
+							// TODO: uncomment sending coverage to coveralls when
 							// all tests are migrated from mocha to jest
 							// withCredentials([string(credentialsId: 'lisk-hub-coveralls-token', variable: 'COVERALLS_REPO_TOKEN')]) {
 								//	sh 'cat coverage/HeadlessChrome*/lcov.info |coveralls -v'
@@ -108,6 +108,10 @@ pipeline {
 									cp $WORKSPACE/test/blockchain.db.gz $WORKSPACE/$BRANCH_NAME/dev_blockchain.db.gz
 									cd $WORKSPACE/$BRANCH_NAME
 									cp .env.development .env
+
+									# random port assignment
+									yq --yaml-output '.services.lisk.ports[0]="${ENV_LISK_HTTP_PORT}"|.services.lisk.ports[1]="${ENV_LISK_WS_PORT}"' docker-compose.yml |sponge docker-compose.yml
+
 									LISK_VERSION=1.1.0-alpha.8 make coldstart
 									export CYPRESS_baseUrl=http://127.0.0.1:300$N/#/
 									export CYPRESS_coreUrl=http://127.0.0.1:$( docker-compose port lisk 4000 |cut -d ":" -f 2 )
