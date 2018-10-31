@@ -15,8 +15,8 @@ const ss = {
   transactionRow: '.transactions-row',
   transactionAddress: '.transaction-address span',
   transactionReference: '.transaction-reference',
-  transactionAmount: '#transactionAmount span',
-  transactionAmountPlaceholder: '#transactionAmount',
+  transactionAmount: '.transactionAmount span',
+  transactionAmountPlaceholder: '.transactionAmount',
   duplicateNameError: '.error-name-duplicate',
 };
 

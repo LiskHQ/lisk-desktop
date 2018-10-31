@@ -17,8 +17,8 @@ const ss = {
   spinner: '.spinner',
   transactionAddress: '.transaction-address span',
   transactionReference: '.transaction-reference',
-  transactionAmount: '#transactionAmount span',
-  transactionAmountPlaceholder: '#transactionAmount',
+  transactionAmount: '.transactionAmount span',
+  transactionAmountPlaceholder: '.transactionAmount',
 };
 
 describe('Second Passphrase Registration', () => {

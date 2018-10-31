@@ -26,7 +26,7 @@ describe('Amount', () => {
         store: PropTypes.object.isRequired,
       },
     });
-    const html = wrapper.find('#transactionAmount').html();
+    const html = wrapper.find('.transactionAmount').html();
     expect(html.match(expectedValue))
       .to.have.lengthOf(1);
   });
@@ -48,7 +48,7 @@ describe('Amount', () => {
         store: PropTypes.object.isRequired,
       },
     });
-    const html = wrapper.find('#transactionAmount').html();
+    const html = wrapper.find('.transactionAmount').html();
     expect(html.match(expectedValue))
       .to.have.lengthOf(1);
   });
@@ -70,7 +70,7 @@ describe('Amount', () => {
         store: PropTypes.object.isRequired,
       },
     });
-    const html = wrapper.find('#transactionAmount').html();
+    const html = wrapper.find('.transactionAmount').html();
     expect(html.match(expectedValue))
       .to.have.lengthOf(1);
   });
