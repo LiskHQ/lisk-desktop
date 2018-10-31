@@ -5,12 +5,15 @@
 
 .title {
   text-align: center;
+  margin-top: 0;
+  font-size: 40px;
 }
 
 .description {
   text-align: center;
   padding-top: 20px;
   padding-bottom: 50px;
+  color: #3c5068;
 }
 
 .image {
@@ -22,4 +25,10 @@
   height: 60px;
   width: 230px;
   margin: 0 15px;
+}
+
+.unlockWallet {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }

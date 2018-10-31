@@ -27,13 +27,21 @@
 
   & p {
     font-size: 16px;
-    margin-top: 8px;
-    margin-bottom: 0;
+    margin: 8px 0 0 5px;
   }
+}
+
+.addLabel {
+  font-weight: 600;
+  color: #2475b9;
+  margin-top: 20px;
 }
 
 .addressField {
   margin-top: 10px;
+  font-size: 14px;
+  color: #74869b;
+  font-weight: 600;
 }
 
 .addAccountCard {
@@ -42,11 +50,12 @@
   align-items: center;
   flex-direction: column;
   margin-bottom: 50px;
+  cursor: pointer;
 }
 
 .addIcon {
-  font-size: 120px;
-  color: #74869b;
+  font-size: 100px;
+  color: #ccd9e4;
 }
 
 .input {

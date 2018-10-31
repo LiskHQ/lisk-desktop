@@ -67,7 +67,7 @@ class Login extends React.Component {
     if (error) {
       // const text = error && error.message ?
       // `${error.message}.` : i18next.t('Error during login with Ledger.');
-      // this.props.errorToastDisplayed({ label: text });
+      // this.props.errorToastDisplayed({ label: error.message });
     } else {
       const network = Object.assign({}, getNetwork(this.state.network));
       if (this.state.network === networks.customNode.code) {

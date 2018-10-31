@@ -28,23 +28,25 @@ class LoginLedger extends React.Component {
     };
   }
 
-  async componentDidUpdate(prevProps) {
-    if (this.props.settings.ledgerAccountAmount !== prevProps.settings.ledgerAccountAmount) {
-      const accountInfo = await getLedgerAccountInfo(this.props.activePeer, this.state.hwAccounts.length);  // eslint-disable-line
+  // async componentDidUpdate(prevProps) {
+  // if (this.props.settings.ledgerAccountAmount !== prevProps.settings.ledgerAccountAmount) {
+  //   const accountInfo = await getLedgerAccountInfo
+  // (this.props.activePeer, this.state.hwAccounts.length);  // eslint-disable-line
 
-      this.setState({ hwAccounts: this.state.hwAccounts.concat([accountInfo]) });
-    }
-  }
+  //   this.setState({ hwAccounts: this.state.hwAccounts.concat([accountInfo]) });
+  // }
+  // }
 
   async componentDidMount() {
     this.displayAccounts();
   }
   /* eslint-disable no-await-in-loop */
-  async displayAccounts() {
-    let index = 0;
-    let displayed = this.state.displayAccountAmount;
+  async displayAccounts(unInitializedAdded = false) {
+    let index = unInitializedAdded ? this.state.hwAccounts.length : 0;
     let accountInfo;
-    this.setState({ isLoading: true });
+    if (!unInitializedAdded) {
+      this.setState({ isLoading: true });
+    }
     do {
       try {
         switch (this.props.loginType) {   // eslint-disable-line
@@ -67,16 +69,15 @@ class LoginLedger extends React.Component {
 
         return;
       }
-      this.state.hwAccounts.push(accountInfo);
-      this.setState({ hwAccounts: this.state.hwAccounts });
-      index++;
-      if (displayed !== 0) {
-        displayed--;
+      if ((!unInitializedAdded && (index === 0 || accountInfo.isInitialized)) ||
+        (unInitializedAdded && !accountInfo.isInitialized)) {
+        this.state.hwAccounts.push(accountInfo);
+        this.setState({ hwAccounts: this.state.hwAccounts });
       }
+      index++;
     }
-    while (displayed || accountInfo.isInitialized);
+    while (accountInfo.isInitialized || index === 0);
     this.props.settingsUpdated({ ledgerAccountAmount: index });
-    // loadingFinished('hwDiscovery');
     this.setState({
       isLoading: false,
       showNextAvailable: (index === 1),
@@ -105,11 +106,14 @@ class LoginLedger extends React.Component {
     });
   }
 
-  addAccount() {
-    this.props.settingsUpdated({
-      ledgerAccountAmount: this.props.settings.ledgerAccountAmount + 1,
-    });
-    this.forceUpdate();
+  async addAccount() {
+    if (this.state.hwAccounts[this.state.hwAccounts.length - 1].isInitialized) {
+      this.displayAccounts(true);
+    }
+    // this.props.settingsUpdated({
+    //   ledgerAccountAmount: this.props.settings.ledgerAccountAmount + 1,
+    // });
+    // this.forceUpdate();
   }
 
   turnOnEditMode() {

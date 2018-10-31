@@ -3,6 +3,8 @@ import Box from '../box';
 import UnlockWallet from './unlockWallet';
 import LedgerLogin from './ledgerLogin';
 
+import styles from './unlockWallet.css';
+
 class Ledger extends React.Component {
   handleOnClick() {
     this.props.ledgerLogin();
@@ -20,7 +22,7 @@ class Ledger extends React.Component {
     }
 
     return (
-      <Box>
+      <Box className={styles.unlockWallet}>
         <UnlockWallet
           handleOnClick={this.handleOnClick.bind(this)}
           cancelLedgerLogin={this.props.cancelLedgerLogin} />
