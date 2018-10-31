@@ -85,7 +85,7 @@ class SendReadable extends React.Component {
       amount: this.state.amount.value,
       passphrase: this.props.passphrase.value,
       secondPassphrase: this.props.secondPassphrase.value,
-      data: this.props.reference,
+      data: this.props.accountInit ? this.props.t('Account initialization') : this.props.reference,
     });
   }
 

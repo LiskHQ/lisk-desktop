@@ -129,16 +129,6 @@ describe('Transfer', () => {
     cy.get('@tx').find(ss.transactionAddress).should('have.text', randomAddress);
   });
 
-  it('Transfer to myself appears as account initialization', () => {
-    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(urls.wallet);
-    cy.get(ss.recipientInput).type(accounts.genesis.address);
-    cy.get(ss.amountInput).click().type(randomAmount);
-    cy.get(ss.nextButton).click();
-    cy.get(ss.sendButton).click();
-    cy.get(ss.transactionRow).eq(0).find(ss.transactionAddress).should('have.text', msg.accountInitializatoinAddress);
-  });
-
   it('Launch protocol link prefills recipient, amount and reference', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit('/wallet?recipient=4995063339468361088L&amount=5&reference=test');
@@ -172,5 +162,8 @@ describe('Transfer', () => {
     cy.wait(txConfirmationTimeout);
     cy.reload();
     cy.get(ss.accountInitializationMsg).should('not.exist');
+    cy.get(ss.transactionRow).eq(0).as('tx');
+    cy.get('@tx').find(ss.transactionAddress).should('have.text', accounts['without initialization'].address);
+    cy.get('@tx').find(ss.transactionReference).should('have.text', 'Account initialization');
   });
 });
