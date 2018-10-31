@@ -52,7 +52,7 @@ describe('actions: account', () => {
     });
   });
 
-  describe.only('secondPassphraseRegistered', () => {
+  describe('secondPassphraseRegistered', () => {
     let accountApiMock;
     let i18nextMock;
     const data = {
