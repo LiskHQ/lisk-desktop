@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '../../toolbox/buttons/button';
+import { PrimaryButton, Button } from '../../toolbox/buttons/button';
 import styles from './confirmSecond.css';
 import { passphraseIsValid } from '../../../utils/form';
 import TransitionWrapper from '../../toolbox/transitionWrapper';
@@ -45,8 +45,12 @@ class confirmSecond extends React.Component {
     }
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.account.secondPublicKey) {
+    if (nextProps.account.secondPublicKey && !nextProps.secondPassphraseStep) {
       this.setState({ step: 'done' });
+    } else if (nextProps.secondPassphraseStep) {
+      this.setState({
+        step: nextProps.secondPassphraseStep,
+      });
     }
   }
   confirm() {
@@ -89,6 +93,17 @@ class confirmSecond extends React.Component {
               {t('Your registration is secured on the blockchain.')}
             </div>
           </article>
+        </TransitionWrapper>
+        <TransitionWrapper current={this.state.step} step='second-passphrase-register-failure'>
+          <div>
+            <FontIcon className={`${styles.headerIcon} ${styles.iconError}`} value='add'></FontIcon>
+            <h2>
+              {t('Connecting to network')}
+            </h2>
+            <p>
+              {t('Could not reach the network. Please try again.')}
+            </p>
+          </div>
         </TransitionWrapper>
       </header>
       <div className={`${styles.content} ${doneClass}`}>
@@ -145,7 +160,18 @@ class confirmSecond extends React.Component {
             onClick={() => history.push(`${routes.dashboard.path}`) }
           />
         </TransitionWrapper>
-        <TransitionWrapper current={this.state.step} step='register-failure'>
+        <TransitionWrapper current={this.state.step} step='second-passphrase-register-failure'>
+          <form onSubmit={this.redirectToFirstStep.bind(this)}>
+            <PrimaryButton
+              disabled={false}
+              label={t('Try again')}
+              className={'second-passphrase-register-failure'}
+              onClick={this.redirectToFirstStep.bind(this)}
+            />
+          </form>
+        </TransitionWrapper>
+        {/*
+        <TransitionWrapper current={this.state.step} step='second-passphrase-register-failure'>
           <div>
             <header>
               <FontIcon value='add'></FontIcon>
@@ -168,6 +194,7 @@ class confirmSecond extends React.Component {
             </div>
           </div>
         </TransitionWrapper>
+        */}
       </div>
     </section>);
   }
