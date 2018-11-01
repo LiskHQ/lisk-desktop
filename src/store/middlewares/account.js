@@ -124,10 +124,10 @@ const autoLogInIfNecessary = (store) => {
   if (shouldAutoLogIn(autologinData)) {
     store.dispatch(activePeerSet({
       passphrase: autologinData[settings.keys.loginKey],
-      network: { ...networks.customNode, address: autologinData[settings.keys.loginCoreUrl] },
+      network: { ...networks.customNode, address: autologinData[settings.keys.liskCoreUrl] },
       options: {
         code: networks.customNode.code,
-        address: autologinData[settings.keys.loginCoreUrl],
+        address: autologinData[settings.keys.liskCoreUrl],
       },
     }));
     store.dispatch(activePeerUpdate({

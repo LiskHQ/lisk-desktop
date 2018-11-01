@@ -37,11 +37,11 @@ export const validateUrl = (value) => {
 
 export const getAutoLogInData = () => ({
   [settings.keys.loginKey]: localStorage.getItem(settings.keys.loginKey),
-  [settings.keys.loginCoreUrl]: localStorage.getItem(settings.keys.loginCoreUrl),
+  [settings.keys.liskCoreUrl]: localStorage.getItem(settings.keys.liskCoreUrl),
 });
 
 export const shouldAutoLogIn = autologin =>
-  autologin[settings.keys.loginCoreUrl] && autologin[settings.keys.loginCoreUrl] !== '' &&
+  autologin[settings.keys.liskCoreUrl] && autologin[settings.keys.liskCoreUrl] !== '' &&
     autologin[settings.keys.loginKey] && autologin[settings.keys.loginKey] !== '';
 
 export const findMatchingLoginNetwork = () => {
