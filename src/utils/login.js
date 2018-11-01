@@ -45,9 +45,9 @@ export const shouldAutoLogIn = autologin =>
     autologin[settings.keys.loginKey] && autologin[settings.keys.loginKey] !== '';
 
 export const findMatchingLoginNetwork = () => {
-  const { loginUrl } = getAutoLogInData();
+  const { liskCoreUrl } = getAutoLogInData();
   return Object.entries(networks).find((network) => {
     const { nodes } = network.slice(-1).shift();
-    return Array.isArray(nodes) ? nodes.includes(loginUrl) : false;
+    return Array.isArray(nodes) ? nodes.includes(liskCoreUrl) : false;
   });
 };
