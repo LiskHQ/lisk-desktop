@@ -122,7 +122,8 @@ pipeline {
 									set -o pipefail
 									npm run cypress:run -- --record |tee cypress.log
 									ret=$?
-									grep --extended-regexp --only-matching 'https://dashboard.cypress.io/#/projects/1it63b/runs/[0-9]+' cypress.log |tail --lines=1 >.cypress
+									grep --extended-regexp --only-matching 'https://dashboard.cypress.io/#/projects/1it63b/runs/[0-9]+' cypress.log |tail --lines=1 >.cypress_url
+									echo $ret >.cypress_status
 									exit $ret
 									'''
 								}
@@ -151,6 +152,21 @@ pipeline {
 				  onlyStable: false,
 				  sourceEncoding: 'ASCII'
 			junit 'reports/junit_report.xml'
+			script {
+				catchError {
+					if(readFile(".cypress_status").trim() == '0'){
+					    status = 'SUCCESS'
+					    adjective = 'passed'
+					} else {
+					    status = 'FAILURE'
+					    adjective = 'failed'
+					}
+					githubNotify context: 'Jenkins e2e tests',
+						     description: 'All e2e tests ' + adjective,
+						     status: status,
+						     targetUrl: readFile(".cypress_url").trim()
+				}
+			}
 		}
 		success {
 			script {
@@ -160,23 +176,11 @@ pipeline {
 					liskSlackSend('good', "Recovery: build ${build_info} was successful.")
 				}
 			}
-			catchError {
-				githubNotify context: 'Jenkins e2e tests',
-					     description: 'All e2e tests passed.',
-					     status: 'SUCCESS',
-					     targetUrl: readFile(".cypress").trim()
-			}
 		}
 		failure {
 			script {
 				build_info = getBuildInfo()
 				liskSlackSend('danger', "Build ${build_info} failed (<${env.BUILD_URL}/console|console>, <${env.BUILD_URL}/changes|changes>)")
-			}
-			catchError {
-				githubNotify context: 'Jenkins e2e tests',
-					     description: 'Some e2e tests failed.',
-					     status: 'FAILURE',
-					     targetUrl: readFile(".cypress").trim()
 			}
 		}
 	}
