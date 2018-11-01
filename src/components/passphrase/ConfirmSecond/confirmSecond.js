@@ -44,6 +44,9 @@ class confirmSecond extends React.Component {
       this.setState({ step: 'confirm' });
     }
   }
+  componentWillUnmount() {
+    this.props.secondPassphraseRegisteredFailureReset();
+  }
   componentWillReceiveProps(nextProps) {
     if (nextProps.account.secondPublicKey && !nextProps.secondPassphraseStep) {
       this.setState({ step: 'done' });
@@ -62,7 +65,8 @@ class confirmSecond extends React.Component {
     });
   }
   redirectToFirstStep() {
-    this.props.prevStep({ reset: true });
+    this.props.secondPassphraseRegisteredFailureReset();
+    this.props.history.goBack();
   }
   render() {
     const { hidden, t, history } = this.props;
