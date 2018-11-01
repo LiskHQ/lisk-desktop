@@ -120,6 +120,10 @@ pipeline {
 									npm run serve -- $WORKSPACE/app/build -p 300$N -a 127.0.0.1 &>server.log &
 									set +e
 									set -o pipefail
+
+									githubNotify context: 'Jenkins e2e tests',
+										     description: 'e2e tests are running',
+										     status: 'PENDING'
 									npm run cypress:run -- --record |tee cypress.log
 									ret=$?
 									grep --extended-regexp --only-matching 'https://dashboard.cypress.io/#/projects/1it63b/runs/[0-9]+' cypress.log |tail --lines=1 >.cypress_url
