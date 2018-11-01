@@ -38,7 +38,10 @@ class LoginLedger extends React.Component {
   // }
 
   async componentDidMount() {
-    this.displayAccounts();
+    this.setState({ isLoading: true });
+    setTimeout(() => {
+      this.displayAccounts();
+    }, 2000);
   }
   /* eslint-disable no-await-in-loop */
   async displayAccounts(unInitializedAdded = false) {
@@ -109,6 +112,9 @@ class LoginLedger extends React.Component {
   async addAccount() {
     if (this.state.hwAccounts[this.state.hwAccounts.length - 1].isInitialized) {
       this.displayAccounts(true);
+    } else {
+      const label = this.props.t('Please use the last not-initialized account before creating a new one!');
+      this.props.errorToastDisplayed({ label });
     }
     // this.props.settingsUpdated({
     //   ledgerAccountAmount: this.props.settings.ledgerAccountAmount + 1,
