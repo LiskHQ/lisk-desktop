@@ -14,6 +14,7 @@ const peersMiddleware = store => next => (action) => {
 
   // if cant find login network but liskCoreUrl is set then is custom node
   // else default network
+  /* istanbul ignore next */
   if (loginNetwork) {
     loginNetwork = loginNetwork.slice(-1).shift();
   } else if (!loginNetwork) {

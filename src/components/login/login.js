@@ -16,7 +16,6 @@ import Box from '../box';
 // eslint-disable-next-line import/no-unresolved
 import SignUp from './signUp';
 import { validateUrl, addHttp, getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
-import settings from '../../constants/settings';
 
 /**
  * The container component containing login
@@ -104,8 +103,6 @@ class Login extends React.Component {
 
   onLoginSubmission(passphrase) {
     const network = this.getNetwork();
-    const address = network.address || network.nodes[0];
-    window.localStorage.setItem(settings.keys.liskCoreUrl, address);
     this.secondIteration = true;
     if (this.alreadyLoggedWithThisAddress(extractAddress(passphrase), network)) {
       this.redirectToReferrer();
