@@ -1,7 +1,6 @@
 import React from 'react';
 import Input from '../toolbox/inputs/input';
 import { fromRawLsk } from '../../utils/lsk';
-
 import fees from './../../constants/fees';
 import converter from './../../constants/converter';
 
@@ -35,7 +34,9 @@ class Converter extends React.Component {
         error={this.props.error}
         value={this.props.value}
         theme={styles}
-        onChange={this.props.onChange} >
+        onFocus={this.props.onFocus}
+        onBlur={this.props.onBlur}
+        onChange={this.props.onChange}>
         <div className={styles.convertorWrapper}>
           {this.props.value !== '' && this.props.priceTicker.LSK[currency] ?
             <div className={this.props.error ? `${styles.convertorErr} convertorErr` : `${styles.convertor} convertor`}>
