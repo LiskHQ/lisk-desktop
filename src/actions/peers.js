@@ -16,12 +16,13 @@ const peerSet = (data, config) => ({
     publicKey: data.publicKey,
     activePeer: new Lisk.APIClient(config.nodes, { nethash: config.nethash }),
     options: config,
+    loginType: data.loginType,
   }),
   type: actionTypes.activePeerSet,
 });
 
 const login = (dispatch, getState, data, config) => {
-  if (data.passphrase) {
+  if (data.passphrase || data.hwInfo) {
     const store = getState();
     const { lockDuration } = accountConfig;
     const { passphrase } = data;

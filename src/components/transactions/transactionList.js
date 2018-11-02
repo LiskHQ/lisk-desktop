@@ -45,7 +45,6 @@ class TransactionsList extends React.Component {
     // All, incoming, outgoing are filter values. To be more consistance with other possible tabs
     // We can refer to props.filter as tabObj
     const tabObj = this.props.filter;
-
     const fixIncomingFilter = (transaction) => {
       const isTypeNonSend = transaction.type !== txTypes.send;
       const isFilterIncoming = tabObj && tabObj.value === txFilters.incoming;

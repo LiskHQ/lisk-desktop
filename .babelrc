@@ -3,7 +3,10 @@
   "env": {
     "test": {
       "presets": [["env"], "react", "stage-3"],
-      "plugins": ["transform-es2015-modules-commonjs"]
+      "plugins": ["transform-es2015-modules-commonjs", ["transform-runtime", {
+        "polyfill": false,
+        "regenerator": true
+      }]]
     }
   }
 }
