@@ -53,7 +53,7 @@ const login = (dispatch, getState, data, config) => {
       /* Save selected network to localStorage */
       const networkAddress = data.network.address ? data.network.address : data.network.nodes[0];
       window.localStorage.setItem(settings.keys.liskCoreUrl, networkAddress);
-      
+
       dispatch(accountLoggedIn(accountUpdated));
     }).catch((error) => {
       if (error && error.message) {
