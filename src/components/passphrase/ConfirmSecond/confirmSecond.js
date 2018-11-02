@@ -101,23 +101,25 @@ class confirmSecond extends React.Component {
           </article>
         </TransitionWrapper>
         <TransitionWrapper current={this.state.step} step='second-passphrase-register-failure'>
-          <div>
-            <FontIcon className={`${styles.headerIcon} ${styles.iconError}`} value='add'></FontIcon>
-            <h2>
-              {t('Connecting to network')}
-            </h2>
-            <p>
-              {t('Could not reach the network. Please try again.')}
-            </p>
-            <form onSubmit={this.redirectToFirstStep.bind(this)}>
-              <PrimaryButton
-                disabled={false}
-                label={t('Try again')}
-                className={'second-passphrase-register-failure'}
-                onClick={this.redirectToFirstStep.bind(this)}
-              />
-            </form>
-          </div>
+          <article className={`${styles.resultContainer} failContainer`}>
+            <div>
+              <FontIcon className={`${styles.headerIcon} ${styles.iconError}`} value='add'></FontIcon>
+              <h2>
+                {t('Connecting to network')}
+              </h2>
+              <p>
+                {t('Could not reach the network. Please try again.')}
+              </p>
+              <form onSubmit={this.redirectToFirstStep.bind(this)}>
+                <PrimaryButton
+                  disabled={false}
+                  label={t('Try again')}
+                  className={'try-again'}
+                  onClick={this.redirectToFirstStep.bind(this)}
+                />
+              </form>
+            </div>
+          </article>
         </TransitionWrapper>
       </header>
       <div className={`${styles.content} ${doneClass}`}>
