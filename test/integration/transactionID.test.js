@@ -25,8 +25,8 @@ class Helper extends GenericStepDefinition {
   checkTxDetails() {
     expect(this.wrapper).to.have.descendants('.transaction-id');
     expect(this.wrapper.find('.transaction-id').first()).to.include.text('123456789');
-    expect(this.wrapper).to.have.descendants('#sender-address');
-    expect(this.wrapper.find('#sender-address').first()).to.include.text('123l');
+    expect(this.wrapper).to.have.descendants('.sender-address');
+    expect(this.wrapper.find('.sender-address').first()).to.include.text('123l');
   }
 }
 

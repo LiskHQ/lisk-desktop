@@ -8,6 +8,7 @@ const urls = {
   secondPassphrase: '/second-passphrase',
   registerDelegate: '/register-delegate',
   delegates: '/delegates',
+  signMessage: '/sign-message',
 };
 
 export default urls;

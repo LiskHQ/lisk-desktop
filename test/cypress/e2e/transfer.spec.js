@@ -23,7 +23,7 @@ const ss = {
   spinner: '.spinner',
   transactionAddress: '.transaction-address span',
   transactionReference: '.transaction-reference',
-  transactionAmount: '#transactionAmount span',
+  transactionAmount: '.transactionAmount span',
   headerBalance: '.balance span',
 };
 
