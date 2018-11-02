@@ -5,7 +5,6 @@ import {
   secondPassphraseRegisteredFailureReset,
 } from './secondPassphrase';
 
-
 describe('actions: secondPassphrase', () => {
   describe('secondPassphraseRegisteredFailure', () => {
     it('should create an action to show secondPassphraseRegisteredFailure', () => {
@@ -17,7 +16,6 @@ describe('actions: secondPassphrase', () => {
       expect(secondPassphraseRegisteredFailure({ text })).to.be.deep.equal(expectedAction);
     });
   });
-
   describe('secondPassphraseRegisteredFailureReset', () => {
     it('should create an action to hide secondPassphraseRegisteredFailureReset', () => {
       const expectedAction = {
