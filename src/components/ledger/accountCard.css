@@ -1,0 +1,85 @@
+@import '../app/variables';
+
+.card {
+  width: 234px;
+  height: 277px;
+  border-radius: 3px;
+  background-color: #fff;
+  box-shadow: 0 8px 16px 0 rgba(29, 72, 119, 0.16);
+  margin: 10px;
+
+  & div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.accountVisualWrapper {
+  cursor: pointer;
+  margin: 30px 0;
+}
+
+.balance {
+  font-weight: 600;
+  font-size: 25px;
+  font-family: var(--heading-font);
+
+  & p {
+    font-size: 16px;
+    margin: 8px 0 0 5px;
+  }
+}
+
+.addLabel {
+  font-weight: 600;
+  color: #2475b9;
+  margin-top: 20px;
+}
+
+.addressField {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #74869b;
+  font-weight: 600;
+}
+
+.addAccountCard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 50px;
+  cursor: pointer;
+}
+
+.addIcon {
+  font-size: 100px;
+  color: #ccd9e4;
+}
+
+.input {
+  padding: 0;
+  width: 100%;
+}
+
+.inputElement {
+  margin: 0 20px;
+}
+
+.edit {
+  display: flex;
+  justify-content: center;
+}
+
+.editTitle {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: var(--heading-font);
+  margin-top: 12px;
+}
+
+.bar {
+  width: 0;
+}
