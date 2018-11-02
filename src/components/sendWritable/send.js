@@ -152,7 +152,9 @@ class SendWritable extends React.Component {
               t={this.props.t}
             />
             {
-              this.state.showSetMaxAmount && !this.state.amount.value ?
+              this.state.showSetMaxAmount &&
+              !this.state.amount.value &&
+              this.getMaxAmount() > 0 ?
                 <a onClick={this.handleSetMaxAmount.bind(this)} className={`set-max-amount ${styles.setMaxAmount}`}>{ this.props.t('Set max. amount') }</a>
               : <div></div>
             }
