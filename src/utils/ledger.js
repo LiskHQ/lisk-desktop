@@ -8,7 +8,7 @@ import { hwConstants, LEDGER_COMMANDS, loginType as loginTypesConst } from '../c
 // import signPrefix from '../constants/signPrefix';
 import { getLedgerAccountInfo } from './api/ledger';
 import { infoToastDisplayed, errorToastDisplayed } from '../actions/toaster';
-import { getBufferToHex } from './rawTransactionWrapper';
+import { getBufferToHex, getTransactionBytes, calculateTxId } from './rawTransactionWrapper';
 import store from '../store';
 
 export const LEDGER_MSG = {
@@ -156,46 +156,46 @@ export const displayAccounts = async ({ liskAPIClient, loginType, hwAccounts, t,
 //    return ledgerPlatformHendler(command);
 // };
 /* eslint-disable prefer-const */
-// export const signTransactionWithLedger = async (tx, account, pin) => {
-//   const command = {
-//     action: LEDGER_COMMANDS.SIGN_TX,
-//     data: {
-//       index: account.hwInfo.derivationIndex,
-//       tx: getTransactionBytes(tx),
-//     },
-//   };
-//    loadingStarted('ledgerUserAction');
-//   store.dispatch(infoToastDisplayed({ label: LEDGER_MSG.LEDGER_ASK_FOR_CONFIRMATION }));
-//    let signature;
-//   try {
-//     signature = await ledgerPlatformHendler(command);
-//   } catch (err) {
-//     loadingFinished('ledgerUserAction');
-//     throw err;
-//   }
-//    tx.signature = getBufferToHex(signature);
-//   loadingFinished('ledgerUserAction');
-//    // In case of second signature (PIN)
-//   if (typeof pin === 'string' && pin !== '') {
-//     const command2 = {
-//       action: LEDGER_COMMANDS.SIGN_TX,
-//       data: {
-//         index: calculateSecondPassphraseIndex(account.hwInfo.derivationIndex, pin),
-//         tx: getTransactionBytes(tx),
-//       },
-//     };
-//      loadingStarted('ledgerUserAction');
-//     store.dispatch(infoToastDisplayed({ label: LEDGER_MSG.LEDGER_ASK_FOR_CONFIRMATION_PIN }));
-//      let signSignature;
-//     try {
-//       signSignature = await ledgerPlatformHendler(command2);
-//     } catch (err) {
-//       loadingFinished('ledgerUserAction');
-//       throw err;
-//     }
-//      tx.signSignature = getBufferToHex(signSignature);
-//     loadingFinished('ledgerUserAction');
-//   }
-//    tx.id = calculateTxId(tx);
-//   return tx;
-// };
+export const signTransactionWithLedger = async (tx, account, pin) => {
+  const command = {
+    action: LEDGER_COMMANDS.SIGN_TX,
+    data: {
+      index: account.hwInfo.derivationIndex,
+      tx: getTransactionBytes(tx),
+    },
+  };
+  //  loadingStarted('ledgerUserAction');
+  // store.dispatch(infoToastDisplayed({ label: LEDGER_MSG.LEDGER_ASK_FOR_CONFIRMATION }));
+  let signature;
+  try {
+    signature = await ledgerPlatformHendler(command);
+  } catch (err) {
+    // loadingFinished('ledgerUserAction');
+    throw err;
+  }
+  tx.signature = getBufferToHex(signature);
+  // loadingFinished('ledgerUserAction');
+  // In case of second signature (PIN)
+  if (typeof pin === 'string' && pin !== '') {
+    const command2 = {
+      action: LEDGER_COMMANDS.SIGN_TX,
+      data: {
+        index: calculateSecondPassphraseIndex(account.hwInfo.derivationIndex, pin),
+        tx: getTransactionBytes(tx),
+      },
+    };
+    //  loadingStarted('ledgerUserAction');
+    // store.dispatch(infoToastDisplayed({ label: LEDGER_MSG.LEDGER_ASK_FOR_CONFIRMATION_PIN }));
+    let signSignature;
+    try {
+      signSignature = await ledgerPlatformHendler(command2);
+    } catch (err) {
+      // loadingFinished('ledgerUserAction');
+      throw err;
+    }
+    tx.signSignature = getBufferToHex(signSignature);
+    // loadingFinished('ledgerUserAction');
+  }
+  tx.id = calculateTxId(tx);
+  return tx;
+};

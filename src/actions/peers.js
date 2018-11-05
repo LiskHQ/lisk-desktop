@@ -32,13 +32,19 @@ const login = (dispatch, getState, data, config) => { // eslint-disable-line max
     const liskAPIClient = store.peers.liskAPIClient ||
       new Lisk.APIClient(config.nodes, { nethash: config.nethash });
     const address = extractAddress(publicKey);
-    const accountBasics = {
+    let accountBasics = {
       passphrase,
       publicKey,
       address,
       network: code || 0,
+      loginType: 0,
       peerAddress: data.network.nodes[0],
     };
+
+    accountBasics = data.hwInfo ? Object.assign({}, accountBasics, {
+      hwInfo: data.hwInfo,
+      loginType: 1,
+    }) : accountBasics;
 
     dispatch(accountLoading());
 

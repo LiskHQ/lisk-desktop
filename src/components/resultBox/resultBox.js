@@ -56,12 +56,26 @@ class ResultBox extends React.Component {
             }}>
             {this.props.t('Okay')}
           </Button>
-          {this.props.reciepientId && this.isNotYetFollowed(this.props.reciepientId) ?
+          {this.props.success &&
+            this.props.reciepientId && this.isNotYetFollowed(this.props.reciepientId) ?
             <Button className={`add-follwed-account-button ${styles.addFollowedAccountButton}`}
               onClick={() => {
                 this.props.nextStep({ address: this.props.reciepientId });
               }}>
               {this.props.t('Add to followed accounts')}
+            </Button> : null
+          }
+          {!this.props.success && this.props.account.hwInfo ?
+            <Button className={`add-follwed-account-button ${styles.addFollowedAccountButton}`}
+              onClick={() => {
+                this.props.prevStep({
+                  account: this.props.account,
+                  recipient: this.props.recipient,
+                  amount: this.props.amount,
+                  password: { value: '' },
+                });
+              }}>
+              {this.props.t('Retry')}
             </Button> : null
           }
           <div className='subTitle'>{this.props.subTitle}</div>

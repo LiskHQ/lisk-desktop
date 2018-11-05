@@ -18,6 +18,10 @@ const transactions = (state = initialState, action) => {
       return Object.assign({}, state, {
         failed: { errorMessage: action.data.errorMessage },
       });
+    case actionTypes.transactionFailedClear:
+      return Object.assign({}, state, {
+        failed: {},
+      });
     case actionTypes.transactionsFailed:
       return Object.assign({}, state, {
         // Filter any failed transaction from pending

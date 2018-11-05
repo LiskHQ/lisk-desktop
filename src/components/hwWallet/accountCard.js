@@ -9,10 +9,12 @@ import styles from './accountCard.css';
 
 const AccountCard = ({
   account, hardwareAccountName, isEditMode,
-  changeInput, onClickHandler,
+  changeInput, onClickHandler, index,
 }) => (
   <div className={styles.card}>
-    <div className={styles.accountVisualWrapper} onClick={() => { onClickHandler(account); }}>
+    <div
+      className={styles.accountVisualWrapper}
+      onClick={() => { onClickHandler(account, index); }}>
       <AccountVisual
         address={account.address}
         size={100} sizeS={60}
