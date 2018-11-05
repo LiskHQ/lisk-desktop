@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import { expect } from 'chai';
 import { spy } from 'sinon';
 import { mountWithContext } from '../../../../test/utils/mountHelpers';
-import TransactionDetailView from './transactionDetailView';
+import TransactionDetailView from './index';
 import txTypes from '../../../constants/transactionTypes';
 
 describe('TransactionDetailView', () => {
