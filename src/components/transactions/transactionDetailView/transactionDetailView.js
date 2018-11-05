@@ -13,6 +13,7 @@ import routes from './../../../constants/routes';
 import transactions from './../../../constants/transactionTypes';
 import TransactionDetailViewField from './transactionDetailViewField';
 import TransactionDetailViewRow from './transactionDetailViewRow';
+import DateField from './transactionDetailDateField';
 
 class TransactionsDetailView extends React.Component {
   constructor(props) {
@@ -64,33 +65,32 @@ class TransactionsDetailView extends React.Component {
       )) : '';
   }
 
-  getDateField() {
-    return (
-      <TransactionDetailViewField className={'tx-date'}
-        label={this.props.t('Date')}
-        value={ this.props.transaction.timestamp ?
-          <span>
-            <DateFromTimestamp
-              time={this.props.transaction.timestamp} /> - <TimeFromTimestamp
-              time={this.props.transaction.timestamp}/>
-          </span> :
-          <span>{this.props.t('Pending')}</span>
-        } />
-    );
+  isPendingTransaction() {
+    const transactionId = this.getTransactionIdFromURL();
+    return this.props.pendingTransactions &&
+    this.props.pendingTransactions.find(tx => tx.id === transactionId);
+  }
+
+  isTransactionEmpty() {
+    return (typeof this.props.transaction === 'object' &&
+    Object.keys(this.props.transaction).length !== 0);
+  }
+
+  getTransaction() {
+    const isPendingTransaction = this.isPendingTransaction();
+    const isTransactionEmpty = this.isTransactionEmpty();
+    return isTransactionEmpty || (isTransactionEmpty && isPendingTransaction) ?
+      this.props.transaction : (isPendingTransaction || {});
+  }
+
+  isSendTransaction() {
+    return this.props.transaction.type === transactions.send
+      || (this.props.pendingTransactions && this.props.pendingTransactions.length > 0);
   }
 
   getFirstRow() {
-    const transactionId = this.getTransactionIdFromURL();
-    const isPendingTransaction = this.props.pendingTransactions &&
-      this.props.pendingTransactions.find(tx => tx.id === transactionId);
-    const isTransactionEmpty = (typeof this.props.transaction === 'object' &&
-    Object.keys(this.props.transaction).length !== 0);
-
-    const transaction = isTransactionEmpty || (isTransactionEmpty && isPendingTransaction) ?
-      this.props.transaction : (isPendingTransaction || {});
-
-    const isSendTransaction = this.props.transaction.type === transactions.send
-      || (this.props.pendingTransactions && this.props.pendingTransactions.length > 0);
+    const transaction = this.getTransaction();
+    const isSendTransaction = this.isSendTransaction();
 
     return (
       <TransactionDetailViewRow>
@@ -109,7 +109,7 @@ class TransactionsDetailView extends React.Component {
             </figure> : null}
         </TransactionDetailViewField>
 
-        {!isSendTransaction ? this.getDateField() :
+        {!isSendTransaction ? <DateField {...this.props} /> :
           <TransactionDetailViewField
             shouldShow={transaction.recipientId}
             label={this.props.t('Recipient')}
@@ -133,12 +133,7 @@ class TransactionsDetailView extends React.Component {
   }
 
   render() {
-    const transactionId = this.getTransactionIdFromURL();
-    const isPendingTransaction = this.props.pendingTransactions &&
-      this.props.pendingTransactions.find(tx => tx.id === transactionId);
-    const isTransactionEmpty = (typeof this.props.transaction === 'object' && Object.keys(this.props.transaction).length !== 0);
-    const transaction = isTransactionEmpty || (isTransactionEmpty && isPendingTransaction) ?
-      this.props.transaction : (isPendingTransaction || {});
+    const transaction = this.getTransaction();
 
     return (
       <div className={`${styles.details}`}>
@@ -171,7 +166,7 @@ class TransactionsDetailView extends React.Component {
           {this.getFirstRow()}
 
           <TransactionDetailViewRow shouldShow={transaction.type === 0}>
-            {this.getDateField()}
+            <DateField {...this.props} />
             <TransactionDetailViewField className={'tx-amount'}
               label={this.props.t('Amount (LSK)')}
               value={
@@ -227,4 +222,3 @@ class TransactionsDetailView extends React.Component {
 }
 
 export default TransactionsDetailView;
-
