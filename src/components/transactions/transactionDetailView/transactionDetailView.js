@@ -1,19 +1,16 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { loadTransaction } from '../../actions/transactions';
-import { TimeFromTimestamp, DateFromTimestamp } from './../timestamp/index';
-import CopyToClipboard from '../copyToClipboard';
-import AccountVisual from '../accountVisual';
+import { TimeFromTimestamp, DateFromTimestamp } from './../../timestamp/index';
+import CopyToClipboard from '../../copyToClipboard';
+import AccountVisual from '../../accountVisual';
 import styles from './transactionDetailView.css';
-import { FontIcon } from '../fontIcon';
-import TransactionType from './transactionType';
-import LiskAmount from '../liskAmount';
-import Amount from './amount';
-import routes from './../../constants/routes';
-import transactions from './../../constants/transactionTypes';
+import { FontIcon } from '../../fontIcon';
+import TransactionType from '../transactionType';
+import LiskAmount from '../../liskAmount';
+import Amount from '../amount';
+import routes from './../../../constants/routes';
+import transactions from './../../../constants/transactionTypes';
 import TransactionDetailViewField from './transactionDetailViewField';
 import TransactionDetailViewRow from './transactionDetailViewRow';
 
@@ -229,13 +226,5 @@ class TransactionsDetailView extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  peers: state.peers,
-});
-
-const mapDispatchToProps = dispatch => ({
-  loadTransaction: data => dispatch(loadTransaction(data)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(TransactionsDetailView));
+export default TransactionsDetailView;
 
