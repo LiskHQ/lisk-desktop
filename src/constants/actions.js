@@ -52,6 +52,7 @@ const actionTypes = {
   transactionsFiltered: 'TRANSACTIONS_FILTERED',
   transactionAdded: 'TRANSACTION_ADDED',
   transactionFailed: 'TRANSACTION_FAILED',
+  transactionFailedClear: 'TRANSACTION_FAILED_CLEAR',
   transactionAddDelegateName: 'TRANSACTION_ADD_DELEGATE_NAME',
   transactionCleared: 'TRANSACTION_CLEARED',
   transactionLoadRequested: 'TRANSACTION_LOAD_REQUESTED',

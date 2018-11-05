@@ -53,7 +53,7 @@ class LoginLedger extends React.Component {
     do {
       try {
         switch (this.props.loginType) {   // eslint-disable-line
-          case 0:
+          case 1:
             accountInfo = await getLedgerAccountInfo(this.props.activePeer, index);
             break;
           // case loginTypes.trezor:
@@ -97,14 +97,14 @@ class LoginLedger extends React.Component {
   //   }
   // }
 
-  selectAccount(ledgerAccount) {
+  selectAccount(ledgerAccount, index) {
     // set active peer
     this.props.activePeerSet({
       publicKey: ledgerAccount.publicKey,
       network: this.props.network,
       hwInfo: { // Use pubKey[0] first 10 char as device id
         deviceId: ledgerAccount.publicKey.substring(0, 10),
-        derivationIndex: 0,
+        derivationIndex: index,
       },
     });
   }
@@ -116,10 +116,6 @@ class LoginLedger extends React.Component {
       const label = this.props.t('Please use the last not-initialized account before creating a new one!');
       this.props.errorToastDisplayed({ label });
     }
-    // this.props.settingsUpdated({
-    //   ledgerAccountAmount: this.props.settings.ledgerAccountAmount + 1,
-    // });
-    // this.forceUpdate();
   }
 
   turnOnEditMode() {
@@ -179,6 +175,7 @@ class LoginLedger extends React.Component {
                     hardwareAccountName={this.state.hardwareAccountsName[account.address]}
                     isEditMode={this.state.isEditMode}
                     key={`accountCard-${index}`}
+                    index={index}
                     account={account}
                     changeInput={this.changeAccountNameInput.bind(this)}
                     onClickHandler={this.selectAccount.bind(this)} />
@@ -194,6 +191,7 @@ class LoginLedger extends React.Component {
 const mapStateToProps = state => ({
   activePeer: state.peers && state.peers.data,
   settings: state.settings,
+  loginType: state.account.loginType || 1,
 });
 
 const mapDispatchToProps = dispatch => ({

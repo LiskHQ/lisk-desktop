@@ -15,7 +15,6 @@ class Ledger extends React.Component {
       return (
           <Box>
             <LedgerLogin
-              loginType={0}
               network={this.props.network}
               cancelLedgerLogin={this.props.cancelLedgerLogin} />
           </Box>);

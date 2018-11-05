@@ -46,7 +46,12 @@ class SendReadable extends React.Component {
     if (this.state.loading &&
       (this.props.pendingTransactions.length > 0 || this.props.failedTransactions)) {
       const data = this.getTransactionState();
-      this.props.nextStep({ ...data, reciepientId: this.state.recipient.value });
+      this.props.nextStep({
+        ...data,
+        amount: this.props.amount,
+        account: this.props.account,
+        reciepientId: this.state.recipient.value,
+      });
       this.setState({ loading: false });
     }
   }
@@ -94,13 +99,17 @@ class SendReadable extends React.Component {
   }
 
   render() {
+    // eslint-disable-next-line
+    const title = this.props.accountInit ?
+      this.props.t('Initialize Lisk ID') :
+      (this.props.account.hwInfo ? this.props.t('Confirm transaction on Ledger Nano S') : this.props.t('Confirm transfer'));
     const followedAccount = this.props.followedAccounts
       .find(account => account.address === this.state.recipient.value);
     return (
       <div className={`${styles.wrapper} send`}>
         <div className={styles.header}>
           <header className={styles.headerWrapper}>
-            <h2>{this.props.accountInit ? this.props.t('Initialize Lisk ID') : this.props.t('Confirm transfer')}</h2>
+            <h2>{title}</h2>
           </header>
         </div>
         {this.props.accountInit

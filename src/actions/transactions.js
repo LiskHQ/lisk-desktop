@@ -9,10 +9,16 @@ import { loadAccount, passphraseUsed } from './account';
 import { getTimeOffset } from '../utils/hacks';
 import Fees from '../constants/fees';
 import { toRawLsk } from '../utils/lsk';
-import transactionTypes from '../constants/transactionTypes';
+import { sendWithLedger } from '../utils/api/ledger';
+import to from '../utils/to';
 
 export const cleanTransactions = () => ({
   type: actionTypes.cleanTransactions,
+});
+
+export const transactionAdded = data => ({
+  data,
+  type: actionTypes.transactionAdded,
 });
 
 export const transactionsFilterSet = ({
@@ -218,30 +224,56 @@ export const transactionsUpdated = ({
 export const sent = ({
   account, recipientId, amount, passphrase, secondPassphrase, data,
 }) =>
-  (dispatch, getState) => {
+  async (dispatch, getState) => {
+    // account.loginType = 1;
+    let error;
+    let callReslut;
+    let errorMessage;
     const activePeer = getState().peers.data;
     const timeOffset = getTimeOffset(getState());
-    send(activePeer, recipientId, toRawLsk(amount), passphrase, secondPassphrase, data, timeOffset)
-      .then((response) => {
-        dispatch({
-          data: {
-            id: response.id,
-            senderPublicKey: account.publicKey,
-            senderId: account.address,
-            recipientId,
-            amount: toRawLsk(amount),
-            fee: Fees.send,
-            type: transactionTypes.send,
-            asset: {
-              data,
-            },
-          },
-          type: actionTypes.transactionAdded,
-        });
-      })
-      .catch((error) => {
-        const errorMessage = error && error.message ? `${error.message}.` : i18next.t('An error occurred while creating the transaction.');
+    switch (account.loginType) {
+      case 0:
+        // eslint-disable-next-line
+        [error, callReslut] = await to(send(activePeer, recipientId, toRawLsk(amount), passphrase, secondPassphrase, data, timeOffset));
+        break;
+      case 1:
+        // eslint-disable-next-line
+        [error, callReslut] = await to(sendWithLedger(activePeer, account, recipientId, toRawLsk(amount), secondPassphrase, data, timeOffset));
+        break;
+      case 2:
+        errorMessage = i18next.t('Not Yet Implemented. Sorry.');
         dispatch({ data: { errorMessage }, type: actionTypes.transactionFailed });
+        break;
+      default:
+        errorMessage = i18next.t('Login Type not recognized.');
+        dispatch({ data: { errorMessage }, type: actionTypes.transactionFailed });
+    }
+    loadingFinished('sent');
+    if (error) {
+      let text;
+      switch (account.loginType) {
+        case 0:
+          text = error && error.message ? `${error.message}.` : i18next.t('An error occurred while creating the transaction.');
+          break;
+        case 1:
+          text = i18next.t('You have cancelled the transaction on your hardware wallet. You can either continue or retry.');
+          break;
+        default:
+          text = error.message;
+      }
+      dispatch({
+        data: { errorMessage: text },
+        type: actionTypes.transactionFailed,
       });
-    dispatch(passphraseUsed(passphrase));
+    } else {
+      dispatch(transactionAdded({
+        id: callReslut.id,
+        senderPublicKey: account.publicKey,
+        senderId: account.address,
+        recipientId,
+        amount: toRawLsk(amount),
+        fee: Fees.send,
+      }));
+      dispatch(passphraseUsed(passphrase));
+    }
   };
