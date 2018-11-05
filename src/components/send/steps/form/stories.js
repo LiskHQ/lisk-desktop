@@ -5,8 +5,8 @@ import { storiesOf } from '@storybook/react';
 
 import Send from './send';
 
-import accounts from '../../../test/constants/accounts';
-import store from '../../store';
+import accounts from '../../../../../test/constants/accounts';
+import store from '../../../../store';
 
 const account = accounts.genesis;
 

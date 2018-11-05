@@ -1,4 +1,4 @@
-@import '../app/variables.css';
+@import '../../../app/variables.css';
 
 :root {
   --tab-inactive-color: var(--color-grayscale-dark);
@@ -16,22 +16,6 @@
   & input {
     border-radius: 0;
   }
-}
-
-.amountWrapper {
-  /* display: flex;
-  flex-direction: row;
-  align-items: center; */
-}
-
-.setMaxAmount {
-  position: absolute;
-  right: 0px;
-  bottom: 30px;
-  cursor: pointer;
-  font-size: 14px;
-  color: var(--color-primary-medium);
-  font-weight: var(--font-weight-bold);
 }
 
 .fee {
