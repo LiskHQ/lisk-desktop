@@ -39,12 +39,11 @@ pipeline {
 					"build": {
 						withCredentials([string(credentialsId: 'github-lisk-token', variable: 'GH_TOKEN')]) {
 							sh '''
-							npm run --silent build || true # temporarily allow build to fail, remove true after #1439
+							npm run --silent build
 							npm run --silent build:testnet
 							npm run --silent bundlesize
 
 							if [ -z $CHANGE_BRANCH ]; then
-							    npm run build-electron # TODO remove after #1439 is fixed
 							    USE_SYSTEM_XORRISO=true npm run dist:linux
 							else
 							    echo "Skipping desktop build for Linux because we're building a PR."
